@@ -49,7 +49,7 @@ static GList * gimp_document_view_drag_uri_list (GtkWidget           *widget,
 
 
 G_DEFINE_TYPE (GimpDocumentView, gimp_document_view,
-               GIMP_TYPE_CONTAINER_EDITOR);
+               GIMP_TYPE_CONTAINER_EDITOR)
 
 #define parent_class gimp_document_view_parent_class
 

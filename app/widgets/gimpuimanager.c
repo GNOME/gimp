@@ -112,7 +112,7 @@ static gboolean gimp_ui_manager_item_key_press  (GtkWidget          *widget,
                                                  GimpUIManager      *manager);
 
 
-G_DEFINE_TYPE (GimpUIManager, gimp_ui_manager, GTK_TYPE_UI_MANAGER);
+G_DEFINE_TYPE (GimpUIManager, gimp_ui_manager, GTK_TYPE_UI_MANAGER)
 
 #define parent_class gimp_ui_manager_parent_class
 

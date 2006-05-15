@@ -67,7 +67,7 @@ static void   gimp_stroke_options_get_property  (GObject      *object,
                                                  GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpStrokeOptions, gimp_stroke_options, GIMP_TYPE_CONTEXT);
+G_DEFINE_TYPE (GimpStrokeOptions, gimp_stroke_options, GIMP_TYPE_CONTEXT)
 
 static guint stroke_options_signals[LAST_SIGNAL] = { 0 };
 

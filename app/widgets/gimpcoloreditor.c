@@ -95,7 +95,7 @@ static void   gimp_color_editor_entry_changed   (GimpColorHexEntry *entry,
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorEditor, gimp_color_editor, GIMP_TYPE_EDITOR,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_color_editor_docked_iface_init));
+                                                gimp_color_editor_docked_iface_init))
 
 #define parent_class gimp_color_editor_parent_class
 

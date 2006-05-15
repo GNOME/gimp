@@ -81,7 +81,7 @@ static void     gimp_histogram_view_draw_spike (GimpHistogramView    *view,
 
 
 G_DEFINE_TYPE (GimpHistogramView, gimp_histogram_view,
-               GTK_TYPE_DRAWING_AREA);
+               GTK_TYPE_DRAWING_AREA)
 
 #define parent_class gimp_histogram_view_parent_class
 

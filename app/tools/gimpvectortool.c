@@ -138,7 +138,7 @@ static void     gimp_vector_tool_stroke_vectors  (GimpVectorTool  *vector_tool,
                                                   GtkWidget       *button);
 
 
-G_DEFINE_TYPE (GimpVectorTool, gimp_vector_tool, GIMP_TYPE_DRAW_TOOL);
+G_DEFINE_TYPE (GimpVectorTool, gimp_vector_tool, GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_vector_tool_parent_class
 

@@ -54,7 +54,7 @@ static void   gimp_measure_options_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpMeasureOptions, gimp_measure_options,
-               GIMP_TYPE_TOOL_OPTIONS);
+               GIMP_TYPE_TOOL_OPTIONS)
 
 
 static void

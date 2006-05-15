@@ -121,7 +121,7 @@ static void   gimp_paint_tool_notify_brush   (GimpDisplayConfig   *config,
                                               GimpPaintTool       *paint_tool);
 
 
-G_DEFINE_TYPE (GimpPaintTool, gimp_paint_tool, GIMP_TYPE_COLOR_TOOL);
+G_DEFINE_TYPE (GimpPaintTool, gimp_paint_tool, GIMP_TYPE_COLOR_TOOL)
 
 #define parent_class gimp_paint_tool_parent_class
 

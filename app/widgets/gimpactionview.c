@@ -62,7 +62,7 @@ static void     gimp_action_view_accel_edited    (GimpCellRendererAccel *accel,
                                                   GimpActionView  *view);
 
 
-G_DEFINE_TYPE (GimpActionView, gimp_action_view, GTK_TYPE_TREE_VIEW);
+G_DEFINE_TYPE (GimpActionView, gimp_action_view, GTK_TYPE_TREE_VIEW)
 
 #define parent_class gimp_action_view_parent_class
 

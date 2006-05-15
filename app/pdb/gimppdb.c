@@ -78,7 +78,7 @@ static void     gimp_pdb_entry_memsize             (gpointer       key,
                                                     gpointer       user_data);
 
 
-G_DEFINE_TYPE (GimpPDB, gimp_pdb, GIMP_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpPDB, gimp_pdb, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_pdb_parent_class
 

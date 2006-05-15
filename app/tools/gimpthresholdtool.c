@@ -66,7 +66,7 @@ static void     gimp_threshold_tool_auto_clicked    (GtkWidget         *button,
 
 
 G_DEFINE_TYPE (GimpThresholdTool, gimp_threshold_tool,
-               GIMP_TYPE_IMAGE_MAP_TOOL);
+               GIMP_TYPE_IMAGE_MAP_TOOL)
 
 #define parent_class gimp_threshold_tool_parent_class
 

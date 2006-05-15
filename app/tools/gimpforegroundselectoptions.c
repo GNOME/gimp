@@ -63,7 +63,7 @@ static void   gimp_foreground_select_options_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpForegroundSelectOptions, gimp_foreground_select_options,
-               GIMP_TYPE_SELECTION_OPTIONS);
+               GIMP_TYPE_SELECTION_OPTIONS)
 
 
 static void

@@ -57,7 +57,7 @@ static gchar * gimp_tool_info_get_description (GimpViewable  *viewable,
                                                gchar        **tooltip);
 
 
-G_DEFINE_TYPE (GimpToolInfo, gimp_tool_info, GIMP_TYPE_VIEWABLE);
+G_DEFINE_TYPE (GimpToolInfo, gimp_tool_info, GIMP_TYPE_VIEWABLE)
 
 #define parent_class gimp_tool_info_parent_class
 

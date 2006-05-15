@@ -1,5 +1,10 @@
 2006-05-15  Sven Neumann  <sven@gimp.org>
 
+	* app/*/*.c:
+	* lib*/*.c: removed erroneous semicolon after G_DEFINE_TYPE macros.
+
+2006-05-15  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-utils.c: include "libgimpconfig/gimpconfig.h".
 
 2006-05-14  Michael Natterer  <mitch@gimp.org>

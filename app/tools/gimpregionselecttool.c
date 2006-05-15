@@ -80,7 +80,7 @@ static GdkSegment *
 
 
 G_DEFINE_TYPE (GimpFuzzySelectTool, gimp_fuzzy_select_tool,
-               GIMP_TYPE_SELECTION_TOOL);
+               GIMP_TYPE_SELECTION_TOOL)
 
 #define parent_class gimp_fuzzy_select_tool_parent_class
 

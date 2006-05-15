@@ -63,7 +63,7 @@ static void       gimp_pick_button_pick          (GdkScreen      *screen,
                                                   GimpPickButton *button);
 
 
-G_DEFINE_TYPE (GimpPickButton, gimp_pick_button, GTK_TYPE_BUTTON);
+G_DEFINE_TYPE (GimpPickButton, gimp_pick_button, GTK_TYPE_BUTTON)
 
 #define parent_class gimp_pick_button_parent_class
 

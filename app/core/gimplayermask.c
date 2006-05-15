@@ -54,7 +54,7 @@ static gboolean   gimp_layer_mask_rename       (GimpItem    *item,
                                                 const gchar *undo_desc);
 
 
-G_DEFINE_TYPE (GimpLayerMask, gimp_layer_mask, GIMP_TYPE_CHANNEL);
+G_DEFINE_TYPE (GimpLayerMask, gimp_layer_mask, GIMP_TYPE_CHANNEL)
 
 #define parent_class gimp_layer_mask_parent_class
 

@@ -87,7 +87,7 @@ static void  gimp_display_config_fullscreen_notify (GObject      *object,
                                                     gpointer      data);
 
 
-G_DEFINE_TYPE (GimpDisplayConfig, gimp_display_config, GIMP_TYPE_CORE_CONFIG);
+G_DEFINE_TYPE (GimpDisplayConfig, gimp_display_config, GIMP_TYPE_CORE_CONFIG)
 
 #define parent_class gimp_display_config_parent_class
 

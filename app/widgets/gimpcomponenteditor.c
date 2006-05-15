@@ -88,7 +88,7 @@ static GimpImage * gimp_component_editor_drag_component (GtkWidget       *widget
 
 
 G_DEFINE_TYPE (GimpComponentEditor, gimp_component_editor,
-               GIMP_TYPE_IMAGE_EDITOR);
+               GIMP_TYPE_IMAGE_EDITOR)
 
 #define parent_class gimp_component_editor_parent_class
 
@@ -394,9 +394,9 @@ gimp_component_editor_clear_components (GimpComponentEditor *editor)
 {
   gtk_list_store_clear (GTK_LIST_STORE (editor->model));
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as bug #149906 is fixed
-#endif
+  /*  Clear the renderer so that it don't reference the viewable.
+   *  See bug #149906.
+   */
   g_object_set (editor->renderer_cell, "renderer", NULL, NULL);
 }
 

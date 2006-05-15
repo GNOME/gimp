@@ -76,7 +76,7 @@ static GtkWidget * gimp_color_notebook_add_page   (GimpColorNotebook *notebook,
 
 
 G_DEFINE_TYPE (GimpColorNotebook, gimp_color_notebook,
-               GIMP_TYPE_COLOR_SELECTOR);
+               GIMP_TYPE_COLOR_SELECTOR)
 
 #define parent_class gimp_color_notebook_parent_class
 

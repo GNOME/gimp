@@ -71,7 +71,7 @@ static void gimp_container_entry_renderer_update  (GimpViewRenderer       *rende
 G_DEFINE_TYPE_WITH_CODE (GimpContainerEntry, gimp_container_entry,
                          GTK_TYPE_ENTRY,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
-                                                gimp_container_entry_view_iface_init));
+                                                gimp_container_entry_view_iface_init))
 
 #define parent_class gimp_container_entry_parent_class
 

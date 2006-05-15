@@ -44,7 +44,7 @@ enum
 };
 
 
-G_DEFINE_TYPE (GimpColorSelector, gimp_color_selector, GTK_TYPE_VBOX);
+G_DEFINE_TYPE (GimpColorSelector, gimp_color_selector, GTK_TYPE_VBOX)
 
 #define parent_class gimp_color_selector_parent_class
 

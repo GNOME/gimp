@@ -103,7 +103,7 @@ static void   gimp_container_disconnect_callback (GimpObject       *object,
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainer, gimp_container, GIMP_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_container_config_iface_init));
+                                                gimp_container_config_iface_init))
 
 #define parent_class gimp_container_parent_class
 

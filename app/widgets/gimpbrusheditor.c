@@ -62,7 +62,7 @@ static void   gimp_brush_editor_notify_brush   (GimpBrushGenerated *brush,
                                                 GimpBrushEditor    *editor);
 
 
-G_DEFINE_TYPE (GimpBrushEditor, gimp_brush_editor, GIMP_TYPE_DATA_EDITOR);
+G_DEFINE_TYPE (GimpBrushEditor, gimp_brush_editor, GIMP_TYPE_DATA_EDITOR)
 
 #define parent_class gimp_brush_editor_parent_class
 

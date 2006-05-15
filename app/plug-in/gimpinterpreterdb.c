@@ -102,7 +102,7 @@ static void     gimp_interpreter_db_clear_magics     (GimpInterpreterDB       *d
 static void     gimp_interpreter_db_resolve_programs (GimpInterpreterDB       *db);
 
 
-G_DEFINE_TYPE (GimpInterpreterDB, gimp_interpreter_db, G_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpInterpreterDB, gimp_interpreter_db, G_TYPE_OBJECT)
 
 #define parent_class gimp_interpreter_db_parent_class
 

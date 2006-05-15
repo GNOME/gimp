@@ -63,7 +63,7 @@ static gboolean gimp_dock_separator_drag_drop     (GtkWidget      *widget,
                                                    guint           time);
 
 
-G_DEFINE_TYPE (GimpDockSeparator, gimp_dock_separator, GTK_TYPE_EVENT_BOX);
+G_DEFINE_TYPE (GimpDockSeparator, gimp_dock_separator, GTK_TYPE_EVENT_BOX)
 
 #define parent_class gimp_dock_separator_parent_class
 

@@ -74,10 +74,13 @@ static void  gimp_zoom_model_get_property (GObject      *object,
                                            GValue       *value,
                                            GParamSpec   *pspec);
 
+
 static guint zoom_model_signals[LAST_SIGNAL] = { 0, };
 
-G_DEFINE_TYPE (GimpZoomModel, gimp_zoom_model, G_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpZoomModel, gimp_zoom_model, G_TYPE_OBJECT)
+
 #define parent_class gimp_zoom_model_parent_class
+
 
 static void
 gimp_zoom_model_class_init (GimpZoomModelClass *klass)
@@ -90,7 +93,7 @@ gimp_zoom_model_class_init (GimpZoomModelClass *klass)
    * @old_factor: the zoom factor before it changes
    * @new_factor: the zoom factor after it has changed.
    *
-   * Emitted the zoom factor of the zoom model changes.
+   * Emitted when the zoom factor of the zoom model changes.
    */
   zoom_model_signals[ZOOMED] =
       g_signal_new ("zoomed",

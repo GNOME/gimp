@@ -43,7 +43,7 @@ static void  gimp_int_store_add_empty       (GimpIntStore      *store);
 
 G_DEFINE_TYPE_WITH_CODE (GimpIntStore, gimp_int_store, GTK_TYPE_LIST_STORE,
                          G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_MODEL,
-                                                gimp_int_store_tree_model_init));
+                                                gimp_int_store_tree_model_init))
 
 #define parent_class gimp_int_store_parent_class
 

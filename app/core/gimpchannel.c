@@ -210,7 +210,7 @@ static void       gimp_channel_validate      (TileManager      *tm,
 
 G_DEFINE_TYPE_WITH_CODE (GimpChannel, gimp_channel, GIMP_TYPE_DRAWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_channel_pickable_iface_init));
+                                                gimp_channel_pickable_iface_init))
 
 #define parent_class gimp_channel_parent_class
 

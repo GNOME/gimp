@@ -52,7 +52,7 @@ static void   gimp_align_options_get_property (GObject      *object,
                                                GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpAlignOptions, gimp_align_options, GIMP_TYPE_TOOL_OPTIONS);
+G_DEFINE_TYPE (GimpAlignOptions, gimp_align_options, GIMP_TYPE_TOOL_OPTIONS)
 
 
 static void

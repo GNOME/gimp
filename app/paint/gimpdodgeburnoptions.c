@@ -52,7 +52,7 @@ static void   gimp_dodge_burn_options_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpDodgeBurnOptions, gimp_dodge_burn_options,
-               GIMP_TYPE_PAINT_OPTIONS);
+               GIMP_TYPE_PAINT_OPTIONS)
 
 
 static void

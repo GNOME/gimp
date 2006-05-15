@@ -87,7 +87,7 @@ static void     gimp_thumbnail_set_info            (GimpThumbnail  *thumbnail,
                                                     gint            height);
 
 
-G_DEFINE_TYPE (GimpImagefile, gimp_imagefile, GIMP_TYPE_VIEWABLE);
+G_DEFINE_TYPE (GimpImagefile, gimp_imagefile, GIMP_TYPE_VIEWABLE)
 
 #define parent_class gimp_imagefile_parent_class
 

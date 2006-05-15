@@ -50,7 +50,7 @@ static gboolean  gimp_color_bar_expose       (GtkWidget      *widget,
                                               GdkEventExpose *event);
 
 
-G_DEFINE_TYPE (GimpColorBar, gimp_color_bar, GTK_TYPE_MISC);
+G_DEFINE_TYPE (GimpColorBar, gimp_color_bar, GTK_TYPE_MISC)
 
 #define parent_class gimp_color_bar_parent_class
 

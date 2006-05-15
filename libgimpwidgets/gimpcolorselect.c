@@ -193,7 +193,7 @@ static void   color_select_update_hue_value        (ColorSelectFill *csf);
 static void   color_select_update_saturation_value (ColorSelectFill *csf);
 
 
-G_DEFINE_TYPE (GimpColorSelect, gimp_color_select, GIMP_TYPE_COLOR_SELECTOR);
+G_DEFINE_TYPE (GimpColorSelect, gimp_color_select, GIMP_TYPE_COLOR_SELECTOR)
 
 #define parent_class gimp_color_select_parent_class
 

@@ -69,7 +69,7 @@ static void gimp_cell_renderer_color_render       (GtkCellRenderer *cell,
 
 
 G_DEFINE_TYPE (GimpCellRendererColor, gimp_cell_renderer_color,
-               GTK_TYPE_CELL_RENDERER);
+               GTK_TYPE_CELL_RENDERER)
 
 #define parent_class gimp_cell_renderer_color_parent_class
 

@@ -60,7 +60,7 @@ static void   gimp_base_config_get_property (GObject      *object,
                                              GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpBaseConfig, gimp_base_config, G_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpBaseConfig, gimp_base_config, G_TYPE_OBJECT)
 
 #define parent_class gimp_base_config_parent_class
 

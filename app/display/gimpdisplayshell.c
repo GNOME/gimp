@@ -120,7 +120,7 @@ static void      gimp_display_shell_hide_tooltip   (GimpUIManager    *manager,
                                                     GimpDisplayShell *shell);
 
 
-G_DEFINE_TYPE (GimpDisplayShell, gimp_display_shell, GTK_TYPE_WINDOW);
+G_DEFINE_TYPE (GimpDisplayShell, gimp_display_shell, GTK_TYPE_WINDOW)
 
 #define parent_class gimp_display_shell_parent_class
 

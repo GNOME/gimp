@@ -41,7 +41,7 @@ static void   gimp_new_rect_select_options_rectangle_options_iface_init (GimpRec
 G_DEFINE_TYPE_WITH_CODE (GimpNewRectSelectOptions, gimp_new_rect_select_options,
                          GIMP_TYPE_SELECTION_OPTIONS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_OPTIONS,
-                                                gimp_new_rect_select_options_rectangle_options_iface_init));
+                                                gimp_new_rect_select_options_rectangle_options_iface_init))
 
 
 static void

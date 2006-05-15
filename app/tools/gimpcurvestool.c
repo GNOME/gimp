@@ -126,7 +126,7 @@ static gboolean curves_graph_expose             (GtkWidget        *widget,
                                                  GimpCurvesTool   *tool);
 
 
-G_DEFINE_TYPE (GimpCurvesTool, gimp_curves_tool, GIMP_TYPE_IMAGE_MAP_TOOL);
+G_DEFINE_TYPE (GimpCurvesTool, gimp_curves_tool, GIMP_TYPE_IMAGE_MAP_TOOL)
 
 #define parent_class gimp_curves_tool_parent_class
 

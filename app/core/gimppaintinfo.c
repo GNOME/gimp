@@ -33,7 +33,7 @@ static gchar * gimp_paint_info_get_description (GimpViewable  *viewable,
                                                 gchar        **tooltip);
 
 
-G_DEFINE_TYPE (GimpPaintInfo, gimp_paint_info, GIMP_TYPE_VIEWABLE);
+G_DEFINE_TYPE (GimpPaintInfo, gimp_paint_info, GIMP_TYPE_VIEWABLE)
 
 #define parent_class gimp_paint_info_parent_class
 

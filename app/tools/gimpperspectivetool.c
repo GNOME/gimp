@@ -54,7 +54,7 @@ static void   gimp_perspective_tool_recalc        (GimpTransformTool *tr_tool,
 
 
 G_DEFINE_TYPE (GimpPerspectiveTool, gimp_perspective_tool,
-               GIMP_TYPE_TRANSFORM_TOOL);
+               GIMP_TYPE_TRANSFORM_TOOL)
 
 
 void

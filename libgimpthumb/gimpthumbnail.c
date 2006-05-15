@@ -118,7 +118,7 @@ static void      gimp_thumbnail_debug_notify (GObject        *object,
 #endif
 
 
-G_DEFINE_TYPE (GimpThumbnail, gimp_thumbnail, G_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpThumbnail, gimp_thumbnail, G_TYPE_OBJECT)
 
 #define parent_class gimp_thumbnail_parent_class
 

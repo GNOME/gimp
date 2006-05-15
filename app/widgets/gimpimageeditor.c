@@ -43,7 +43,7 @@ static void   gimp_image_editor_image_flush    (GimpImage        *image,
 
 G_DEFINE_TYPE_WITH_CODE (GimpImageEditor, gimp_image_editor, GIMP_TYPE_EDITOR,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_image_editor_docked_iface_init));
+                                                gimp_image_editor_docked_iface_init))
 
 #define parent_class gimp_image_editor_parent_class
 

@@ -95,7 +95,7 @@ static gboolean  gimp_undo_create_preview_idle (gpointer             data);
 static void   gimp_undo_create_preview_private (GimpUndo            *undo);
 
 
-G_DEFINE_TYPE (GimpUndo, gimp_undo, GIMP_TYPE_VIEWABLE);
+G_DEFINE_TYPE (GimpUndo, gimp_undo, GIMP_TYPE_VIEWABLE)
 
 #define parent_class gimp_undo_parent_class
 

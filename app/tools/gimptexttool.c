@@ -126,7 +126,7 @@ static gboolean  gimp_text_tool_set_drawable   (GimpTextTool      *text_tool,
                                                 gboolean           confirm);
 
 
-G_DEFINE_TYPE (GimpTextTool, gimp_text_tool, GIMP_TYPE_TOOL);
+G_DEFINE_TYPE (GimpTextTool, gimp_text_tool, GIMP_TYPE_TOOL)
 
 #define parent_class gimp_text_tool_parent_class
 

@@ -48,7 +48,7 @@ static void   gimp_smudge_options_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpSmudgeOptions, gimp_smudge_options,
-               GIMP_TYPE_PAINT_OPTIONS);
+               GIMP_TYPE_PAINT_OPTIONS)
 
 
 static void

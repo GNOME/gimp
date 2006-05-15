@@ -68,7 +68,7 @@ static void   gimp_display_options_get_property (GObject      *object,
 G_DEFINE_TYPE_WITH_CODE (GimpDisplayOptions,
                          gimp_display_options,
                          G_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL));
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 typedef struct _GimpDisplayOptions      GimpDisplayOptionsFullscreen;
 typedef struct _GimpDisplayOptionsClass GimpDisplayOptionsFullscreenClass;
@@ -78,7 +78,7 @@ typedef struct _GimpDisplayOptionsClass GimpDisplayOptionsFullscreenClass;
 G_DEFINE_TYPE_WITH_CODE (GimpDisplayOptionsFullscreen,
                          gimp_display_options_fullscreen,
                          GIMP_TYPE_DISPLAY_OPTIONS,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL));
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 
 static void

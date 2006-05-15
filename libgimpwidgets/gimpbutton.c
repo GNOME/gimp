@@ -42,7 +42,7 @@ static gboolean   gimp_button_button_release (GtkWidget      *widget,
                                               GdkEventButton *event);
 
 
-G_DEFINE_TYPE (GimpButton, gimp_button, GTK_TYPE_BUTTON);
+G_DEFINE_TYPE (GimpButton, gimp_button, GTK_TYPE_BUTTON)
 
 #define parent_class gimp_button_parent_class
 

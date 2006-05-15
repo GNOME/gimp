@@ -48,7 +48,7 @@ static void   gimp_eraser_motion (GimpPaintCore    *paint_core,
                                   GimpPaintOptions *paint_options);
 
 
-G_DEFINE_TYPE (GimpEraser, gimp_eraser, GIMP_TYPE_BRUSH_CORE);
+G_DEFINE_TYPE (GimpEraser, gimp_eraser, GIMP_TYPE_BRUSH_CORE)
 
 
 void

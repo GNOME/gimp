@@ -67,7 +67,7 @@ static void   gimp_path_editor_writable_toggled   (GtkCellRendererToggle *toggle
                                                    GimpPathEditor      *editor);
 
 
-G_DEFINE_TYPE (GimpPathEditor, gimp_path_editor, GTK_TYPE_VBOX);
+G_DEFINE_TYPE (GimpPathEditor, gimp_path_editor, GTK_TYPE_VBOX)
 
 #define parent_class gimp_path_editor_parent_class
 

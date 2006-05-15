@@ -78,7 +78,7 @@ static gboolean        gimp_image_map_do             (GimpImageMap *image_map);
 
 G_DEFINE_TYPE_WITH_CODE (GimpImageMap, gimp_image_map, GIMP_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_image_map_pickable_iface_init));
+                                                gimp_image_map_pickable_iface_init))
 
 #define parent_class gimp_image_map_parent_class
 

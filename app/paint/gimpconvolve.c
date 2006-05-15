@@ -107,7 +107,7 @@ static const gfloat sharpen_matrix[25] =
 };
 
 
-G_DEFINE_TYPE (GimpConvolve, gimp_convolve, GIMP_TYPE_BRUSH_CORE);
+G_DEFINE_TYPE (GimpConvolve, gimp_convolve, GIMP_TYPE_BRUSH_CORE)
 
 
 void

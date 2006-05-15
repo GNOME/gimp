@@ -89,7 +89,9 @@ static void     gimp_zoom_preview_set_drawable    (GimpZoomPreview *preview,
 
 
 G_DEFINE_TYPE (GimpZoomPreview, gimp_zoom_preview, GIMP_TYPE_SCROLLED_PREVIEW)
+
 #define parent_class gimp_zoom_preview_parent_class
+
 
 static void
 gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)

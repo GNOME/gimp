@@ -99,7 +99,7 @@ static void gimp_controller_editor_edit_response  (GtkWidget            *dialog,
                                                    GimpControllerEditor *editor);
 
 
-G_DEFINE_TYPE (GimpControllerEditor, gimp_controller_editor, GTK_TYPE_VBOX);
+G_DEFINE_TYPE (GimpControllerEditor, gimp_controller_editor, GTK_TYPE_VBOX)
 
 #define parent_class gimp_controller_editor_parent_class
 

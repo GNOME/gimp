@@ -56,7 +56,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpContainerBox, gimp_container_box,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
                                                 gimp_container_box_view_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_container_box_docked_iface_init));
+                                                gimp_container_box_docked_iface_init))
 
 #define parent_class gimp_container_box_parent_class
 

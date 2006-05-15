@@ -103,7 +103,7 @@ static void       gimp_text_layer_render_layout  (GimpTextLayer  *layer,
                                                   GimpTextLayout *layout);
 
 
-G_DEFINE_TYPE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER);
+G_DEFINE_TYPE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER)
 
 #define parent_class gimp_text_layer_parent_class
 

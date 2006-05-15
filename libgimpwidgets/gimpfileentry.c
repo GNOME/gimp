@@ -52,7 +52,7 @@ static void   gimp_file_entry_browse_clicked  (GtkWidget     *widget,
 static void   gimp_file_entry_check_filename  (GimpFileEntry *entry);
 
 
-G_DEFINE_TYPE (GimpFileEntry, gimp_file_entry, GTK_TYPE_HBOX);
+G_DEFINE_TYPE (GimpFileEntry, gimp_file_entry, GTK_TYPE_HBOX)
 
 #define parent_class gimp_file_entry_parent_class
 

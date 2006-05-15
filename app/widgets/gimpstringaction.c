@@ -56,7 +56,7 @@ static void   gimp_string_action_get_property (GObject      *object,
 static void   gimp_string_action_activate     (GtkAction    *action);
 
 
-G_DEFINE_TYPE (GimpStringAction, gimp_string_action, GIMP_TYPE_ACTION);
+G_DEFINE_TYPE (GimpStringAction, gimp_string_action, GIMP_TYPE_ACTION)
 
 #define parent_class gimp_string_action_parent_class
 

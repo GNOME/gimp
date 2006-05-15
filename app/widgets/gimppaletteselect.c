@@ -48,7 +48,7 @@ static GValueArray * gimp_palette_select_run_callback (GimpPdbDialog *dialog,
                                                        gboolean       closing);
 
 
-G_DEFINE_TYPE (GimpPaletteSelect, gimp_palette_select, GIMP_TYPE_PDB_DIALOG);
+G_DEFINE_TYPE (GimpPaletteSelect, gimp_palette_select, GIMP_TYPE_PDB_DIALOG)
 
 #define parent_class gimp_palette_select_parent_class
 

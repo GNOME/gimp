@@ -53,7 +53,7 @@ static void       gimp_airbrush_motion   (GimpPaintCore    *paint_core,
 static gboolean   gimp_airbrush_timeout  (gpointer          data);
 
 
-G_DEFINE_TYPE (GimpAirbrush, gimp_airbrush, GIMP_TYPE_PAINTBRUSH);
+G_DEFINE_TYPE (GimpAirbrush, gimp_airbrush, GIMP_TYPE_PAINTBRUSH)
 
 #define parent_class gimp_airbrush_parent_class
 

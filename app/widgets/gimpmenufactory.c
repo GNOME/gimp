@@ -39,7 +39,7 @@
 static void   gimp_menu_factory_finalize (GObject *object);
 
 
-G_DEFINE_TYPE (GimpMenuFactory, gimp_menu_factory, GIMP_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpMenuFactory, gimp_menu_factory, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_menu_factory_parent_class
 

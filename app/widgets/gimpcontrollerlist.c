@@ -114,7 +114,7 @@ static void gimp_controller_list_down_clicked    (GtkWidget          *button,
                                                   GimpControllerList *list);
 
 
-G_DEFINE_TYPE (GimpControllerList, gimp_controller_list, GTK_TYPE_VBOX);
+G_DEFINE_TYPE (GimpControllerList, gimp_controller_list, GTK_TYPE_VBOX)
 
 #define parent_class gimp_controller_list_parent_class
 

@@ -150,7 +150,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpItemTreeView, gimp_item_tree_view,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
                                                 gimp_item_tree_view_view_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_item_tree_view_docked_iface_init));
+                                                gimp_item_tree_view_docked_iface_init))
 
 #define parent_class gimp_item_tree_view_parent_class
 

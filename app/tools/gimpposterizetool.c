@@ -60,7 +60,7 @@ static void     posterize_levels_adjustment_update (GtkAdjustment     *adjustmen
 
 
 G_DEFINE_TYPE (GimpPosterizeTool, gimp_posterize_tool,
-               GIMP_TYPE_IMAGE_MAP_TOOL);
+               GIMP_TYPE_IMAGE_MAP_TOOL)
 
 #define parent_class gimp_posterize_tool_parent_class
 

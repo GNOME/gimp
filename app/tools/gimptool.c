@@ -90,7 +90,7 @@ static void     gimp_tool_real_cursor_update  (GimpTool        *tool,
                                                GimpDisplay     *display);
 
 
-G_DEFINE_TYPE (GimpTool, gimp_tool, GIMP_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpTool, gimp_tool, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_tool_parent_class
 

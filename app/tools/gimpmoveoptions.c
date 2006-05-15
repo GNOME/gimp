@@ -53,7 +53,7 @@ static void   gimp_move_options_get_property (GObject      *object,
                                               GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpMoveOptions, gimp_move_options, GIMP_TYPE_TOOL_OPTIONS);
+G_DEFINE_TYPE (GimpMoveOptions, gimp_move_options, GIMP_TYPE_TOOL_OPTIONS)
 
 
 static void

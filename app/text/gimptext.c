@@ -82,7 +82,7 @@ static gint64   gimp_text_get_memsize  (GimpObject   *object,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpText, gimp_text, GIMP_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL));
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_text_parent_class
 

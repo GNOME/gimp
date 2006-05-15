@@ -59,7 +59,7 @@ static void   gimp_color_display_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorDisplay, gimp_color_display, G_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL));
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_color_display_parent_class
 

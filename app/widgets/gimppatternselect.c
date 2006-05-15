@@ -50,7 +50,7 @@ static GValueArray * gimp_pattern_select_run_callback (GimpPdbDialog *dialog,
                                                        gboolean       closing);
 
 
-G_DEFINE_TYPE (GimpPatternSelect, gimp_pattern_select, GIMP_TYPE_PDB_DIALOG);
+G_DEFINE_TYPE (GimpPatternSelect, gimp_pattern_select, GIMP_TYPE_PDB_DIALOG)
 
 #define parent_class gimp_pattern_select_parent_class
 

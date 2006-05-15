@@ -64,7 +64,7 @@ static void   blend_options_gradient_type_notify (GimpBlendOptions *options,
                                                   GtkWidget        *repeat_combo);
 
 
-G_DEFINE_TYPE (GimpBlendOptions, gimp_blend_options, GIMP_TYPE_PAINT_OPTIONS);
+G_DEFINE_TYPE (GimpBlendOptions, gimp_blend_options, GIMP_TYPE_PAINT_OPTIONS)
 
 
 static void

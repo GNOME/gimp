@@ -65,7 +65,7 @@ static void   gimp_action_group_get_property   (GObject               *object,
                                                 GParamSpec            *pspec);
 
 
-G_DEFINE_TYPE (GimpActionGroup, gimp_action_group, GTK_TYPE_ACTION_GROUP);
+G_DEFINE_TYPE (GimpActionGroup, gimp_action_group, GTK_TYPE_ACTION_GROUP)
 
 #define parent_class gimp_action_group_parent_class
 

@@ -60,7 +60,7 @@ static void   gimp_controller_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpController, gimp_controller, G_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL));
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_controller_parent_class
 

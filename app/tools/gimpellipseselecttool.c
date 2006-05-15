@@ -52,7 +52,7 @@ static void   gimp_ellipse_select_tool_rect_select (GimpNewRectSelectTool *rect_
 
 
 G_DEFINE_TYPE (GimpEllipseSelectTool, gimp_ellipse_select_tool,
-               GIMP_TYPE_NEW_RECT_SELECT_TOOL);
+               GIMP_TYPE_NEW_RECT_SELECT_TOOL)
 
 #define parent_class gimp_ellipse_select_tool_parent_class
 

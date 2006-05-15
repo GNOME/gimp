@@ -70,7 +70,7 @@ static void gimp_cell_renderer_dashes_render       (GtkCellRenderer *cell,
 
 
 G_DEFINE_TYPE (GimpCellRendererDashes, gimp_cell_renderer_dashes,
-               GTK_TYPE_CELL_RENDERER);
+               GTK_TYPE_CELL_RENDERER)
 
 #define parent_class gimp_cell_renderer_dashes_parent_class
 

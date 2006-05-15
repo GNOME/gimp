@@ -62,7 +62,7 @@ static void      gimp_blob_editor_draw_blob      (GimpBlobEditor *editor,
                                                   gdouble         radius);
 
 
-G_DEFINE_TYPE (GimpBlobEditor, gimp_blob_editor, GTK_TYPE_DRAWING_AREA);
+G_DEFINE_TYPE (GimpBlobEditor, gimp_blob_editor, GTK_TYPE_DRAWING_AREA)
 
 #define parent_class gimp_blob_editor_parent_class
 

@@ -49,7 +49,7 @@ static void   gimp_paintbrush_paint (GimpPaintCore    *paint_core,
                                      guint32           time);
 
 
-G_DEFINE_TYPE (GimpPaintbrush, gimp_paintbrush, GIMP_TYPE_BRUSH_CORE);
+G_DEFINE_TYPE (GimpPaintbrush, gimp_paintbrush, GIMP_TYPE_BRUSH_CORE)
 
 
 void

@@ -76,7 +76,7 @@ static void     parasite_count_if_persistent (const gchar      *key,
 
 G_DEFINE_TYPE_WITH_CODE (GimpParasiteList, gimp_parasite_list, GIMP_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_parasite_list_config_iface_init));
+                                                gimp_parasite_list_config_iface_init))
 
 #define parent_class gimp_parasite_list_parent_class
 

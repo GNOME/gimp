@@ -69,7 +69,7 @@ static void   gimp_bucket_fill_options_notify (GimpBucketFillOptions *options,
 
 
 G_DEFINE_TYPE (GimpBucketFillOptions, gimp_bucket_fill_options,
-               GIMP_TYPE_PAINT_OPTIONS);
+               GIMP_TYPE_PAINT_OPTIONS)
 
 #define parent_class gimp_bucket_fill_options_parent_class
 

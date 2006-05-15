@@ -51,7 +51,7 @@ static void   gimp_clone_options_get_property (GObject      *object,
                                                GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpCloneOptions, gimp_clone_options, GIMP_TYPE_PAINT_OPTIONS);
+G_DEFINE_TYPE (GimpCloneOptions, gimp_clone_options, GIMP_TYPE_PAINT_OPTIONS)
 
 
 static void

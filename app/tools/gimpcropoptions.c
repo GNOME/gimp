@@ -57,7 +57,7 @@ static void   gimp_crop_options_get_property (GObject      *object,
 G_DEFINE_TYPE_WITH_CODE (GimpCropOptions, gimp_crop_options,
                          GIMP_TYPE_TOOL_OPTIONS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_OPTIONS,
-                                                gimp_crop_options_rectangle_options_iface_init));
+                                                gimp_crop_options_rectangle_options_iface_init))
 
 
 static void

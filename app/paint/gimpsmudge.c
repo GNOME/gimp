@@ -62,7 +62,7 @@ static void  gimp_smudge_nonclipped_painthit_coords (GimpPaintCore *paint_core,
                                                      gint          *h);
 
 
-G_DEFINE_TYPE (GimpSmudge, gimp_smudge, GIMP_TYPE_BRUSH_CORE);
+G_DEFINE_TYPE (GimpSmudge, gimp_smudge, GIMP_TYPE_BRUSH_CORE)
 
 #define parent_class gimp_smudge_parent_class
 

@@ -37,7 +37,7 @@
 
 
 G_DEFINE_TYPE (GimpPatternFactoryView, gimp_pattern_factory_view,
-               GIMP_TYPE_DATA_FACTORY_VIEW);
+               GIMP_TYPE_DATA_FACTORY_VIEW)
 
 
 static void

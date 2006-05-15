@@ -34,7 +34,7 @@
 #include "gimptooldialog.h"
 
 
-G_DEFINE_TYPE (GimpToolDialog, gimp_tool_dialog, GIMP_TYPE_VIEWABLE_DIALOG);
+G_DEFINE_TYPE (GimpToolDialog, gimp_tool_dialog, GIMP_TYPE_VIEWABLE_DIALOG)
 
 
 static void

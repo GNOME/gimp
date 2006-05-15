@@ -42,7 +42,7 @@ static gboolean  gimp_chain_button_draw_lines       (GtkWidget       *widget,
                                                      GimpChainButton *button);
 
 
-G_DEFINE_TYPE (GimpChainButton, gimp_chain_button, GTK_TYPE_TABLE);
+G_DEFINE_TYPE (GimpChainButton, gimp_chain_button, GTK_TYPE_TABLE)
 
 #define parent_class gimp_chain_button_parent_class
 

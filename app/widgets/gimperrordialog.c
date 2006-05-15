@@ -42,7 +42,7 @@ static void   gimp_error_dialog_response (GtkDialog *dialog,
                                           gint       response_id);
 
 
-G_DEFINE_TYPE (GimpErrorDialog, gimp_error_dialog, GIMP_TYPE_DIALOG);
+G_DEFINE_TYPE (GimpErrorDialog, gimp_error_dialog, GIMP_TYPE_DIALOG)
 
 #define parent_class gimp_error_dialog_parent_class
 

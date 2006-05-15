@@ -136,7 +136,7 @@ static gboolean levels_output_area_expose            (GtkWidget      *widget,
                                                       GimpLevelsTool *tool);
 
 
-G_DEFINE_TYPE (GimpLevelsTool, gimp_levels_tool, GIMP_TYPE_IMAGE_MAP_TOOL);
+G_DEFINE_TYPE (GimpLevelsTool, gimp_levels_tool, GIMP_TYPE_IMAGE_MAP_TOOL)
 
 #define parent_class gimp_levels_tool_parent_class
 

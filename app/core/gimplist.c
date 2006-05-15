@@ -77,7 +77,7 @@ static void         gimp_list_object_renamed     (GimpObject          *object,
                                                   GimpList            *list);
 
 
-G_DEFINE_TYPE (GimpList, gimp_list, GIMP_TYPE_CONTAINER);
+G_DEFINE_TYPE (GimpList, gimp_list, GIMP_TYPE_CONTAINER)
 
 #define parent_class gimp_list_parent_class
 

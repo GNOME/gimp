@@ -105,7 +105,7 @@ static gchar  * gimp_file_dialog_pattern_from_extension (const gchar  *extension
 G_DEFINE_TYPE_WITH_CODE (GimpFileDialog, gimp_file_dialog,
                          GTK_TYPE_FILE_CHOOSER_DIALOG,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
-                                                gimp_file_dialog_progress_iface_init));
+                                                gimp_file_dialog_progress_iface_init))
 
 #define parent_class gimp_file_dialog_parent_class
 

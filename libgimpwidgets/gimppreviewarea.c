@@ -71,7 +71,7 @@ static void      gimp_preview_area_queue_draw       (GimpPreviewArea *area,
 static gint      gimp_preview_area_image_type_bytes (GimpImageType    type);
 
 
-G_DEFINE_TYPE (GimpPreviewArea, gimp_preview_area, GTK_TYPE_DRAWING_AREA);
+G_DEFINE_TYPE (GimpPreviewArea, gimp_preview_area, GTK_TYPE_DRAWING_AREA)
 
 #define parent_class gimp_preview_area_parent_class
 

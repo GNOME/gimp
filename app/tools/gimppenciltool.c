@@ -35,7 +35,7 @@
 #include "gimp-intl.h"
 
 
-G_DEFINE_TYPE (GimpPencilTool, gimp_pencil_tool, GIMP_TYPE_PAINTBRUSH_TOOL);
+G_DEFINE_TYPE (GimpPencilTool, gimp_pencil_tool, GIMP_TYPE_PAINTBRUSH_TOOL)
 
 
 void

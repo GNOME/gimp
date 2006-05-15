@@ -50,7 +50,7 @@ static void   gimp_convolve_options_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpConvolveOptions, gimp_convolve_options,
-               GIMP_TYPE_PAINT_OPTIONS);
+               GIMP_TYPE_PAINT_OPTIONS)
 
 
 static void

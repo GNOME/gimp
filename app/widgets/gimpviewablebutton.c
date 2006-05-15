@@ -65,7 +65,7 @@ static void     gimp_viewable_button_popup_closed (GimpContainerPopup *popup,
                                                    GimpViewableButton *button);
 
 
-G_DEFINE_TYPE (GimpViewableButton, gimp_viewable_button, GIMP_TYPE_BUTTON);
+G_DEFINE_TYPE (GimpViewableButton, gimp_viewable_button, GIMP_TYPE_BUTTON)
 
 #define parent_class gimp_viewable_button_parent_class
 

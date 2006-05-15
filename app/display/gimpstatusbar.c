@@ -89,7 +89,7 @@ static guint    gimp_statusbar_get_context_id     (GimpStatusbar     *statusbar,
 
 G_DEFINE_TYPE_WITH_CODE (GimpStatusbar, gimp_statusbar, GTK_TYPE_HBOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
-                                                gimp_statusbar_progress_iface_init));
+                                                gimp_statusbar_progress_iface_init))
 
 #define parent_class gimp_statusbar_parent_class
 

@@ -60,7 +60,7 @@ static gchar   * gimp_buffer_get_description  (GimpViewable  *viewable,
                                                gchar        **tooltip);
 
 
-G_DEFINE_TYPE (GimpBuffer, gimp_buffer, GIMP_TYPE_VIEWABLE);
+G_DEFINE_TYPE (GimpBuffer, gimp_buffer, GIMP_TYPE_VIEWABLE)
 
 #define parent_class gimp_buffer_parent_class
 

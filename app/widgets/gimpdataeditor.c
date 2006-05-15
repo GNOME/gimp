@@ -97,7 +97,7 @@ static void       gimp_data_editor_save_dirty        (GimpDataEditor *editor);
 
 G_DEFINE_TYPE_WITH_CODE (GimpDataEditor, gimp_data_editor, GIMP_TYPE_EDITOR,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_data_editor_docked_iface_init));
+                                                gimp_data_editor_docked_iface_init))
 
 #define parent_class gimp_data_editor_parent_class
 

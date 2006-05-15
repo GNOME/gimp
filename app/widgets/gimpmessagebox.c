@@ -69,7 +69,7 @@ static void      gimp_message_box_size_allocate (GtkWidget      *widget,
                                                  GtkAllocation  *allocation);
 
 
-G_DEFINE_TYPE (GimpMessageBox, gimp_message_box, GTK_TYPE_VBOX);
+G_DEFINE_TYPE (GimpMessageBox, gimp_message_box, GTK_TYPE_VBOX)
 
 #define parent_class gimp_message_box_parent_class
 

@@ -67,7 +67,7 @@ static guchar  * gimp_vectors_tree_view_drag_svg      (GtkWidget             *wi
 G_DEFINE_TYPE_WITH_CODE (GimpVectorsTreeView, gimp_vectors_tree_view,
                          GIMP_TYPE_ITEM_TREE_VIEW,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
-                                                gimp_vectors_tree_view_view_iface_init));
+                                                gimp_vectors_tree_view_view_iface_init))
 
 #define parent_class gimp_vectors_tree_view_parent_class
 

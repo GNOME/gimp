@@ -75,7 +75,7 @@ static void gimp_container_popup_dialog_clicked   (GtkWidget          *button,
                                                    GimpContainerPopup *popup);
 
 
-G_DEFINE_TYPE (GimpContainerPopup, gimp_container_popup, GTK_TYPE_WINDOW);
+G_DEFINE_TYPE (GimpContainerPopup, gimp_container_popup, GTK_TYPE_WINDOW)
 
 #define parent_class gimp_container_popup_parent_class
 

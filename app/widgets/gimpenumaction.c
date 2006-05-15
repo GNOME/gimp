@@ -56,7 +56,7 @@ static void   gimp_enum_action_get_property (GObject      *object,
 static void   gimp_enum_action_activate     (GtkAction    *action);
 
 
-G_DEFINE_TYPE (GimpEnumAction, gimp_enum_action, GIMP_TYPE_ACTION);
+G_DEFINE_TYPE (GimpEnumAction, gimp_enum_action, GIMP_TYPE_ACTION)
 
 #define parent_class gimp_enum_action_parent_class
 

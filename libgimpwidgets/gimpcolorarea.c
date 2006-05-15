@@ -88,7 +88,7 @@ static void  gimp_color_area_drag_data_get      (GtkWidget        *widget,
                                                  guint             time);
 
 
-G_DEFINE_TYPE (GimpColorArea, gimp_color_area, GTK_TYPE_DRAWING_AREA);
+G_DEFINE_TYPE (GimpColorArea, gimp_color_area, GTK_TYPE_DRAWING_AREA)
 
 #define parent_class gimp_color_area_parent_class
 

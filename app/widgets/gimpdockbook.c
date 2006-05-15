@@ -95,7 +95,7 @@ static void      gimp_dockbook_help_func        (const gchar    *help_id,
                                                  gpointer        help_data);
 
 
-G_DEFINE_TYPE (GimpDockbook, gimp_dockbook, GTK_TYPE_NOTEBOOK);
+G_DEFINE_TYPE (GimpDockbook, gimp_dockbook, GTK_TYPE_NOTEBOOK)
 
 #define parent_class gimp_dockbook_parent_class
 

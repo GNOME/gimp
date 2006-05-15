@@ -110,7 +110,7 @@ static void       gimp_plug_in_prep_for_exec (gpointer      data);
 #endif
 
 
-G_DEFINE_TYPE (GimpPlugIn, gimp_plug_in, GIMP_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpPlugIn, gimp_plug_in, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_plug_in_parent_class
 

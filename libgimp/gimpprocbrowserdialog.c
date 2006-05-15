@@ -82,7 +82,7 @@ static void       browser_search            (GimpBrowser           *browser,
 
 
 G_DEFINE_TYPE (GimpProcBrowserDialog, gimp_proc_browser_dialog,
-               GIMP_TYPE_DIALOG);
+               GIMP_TYPE_DIALOG)
 
 #define parent_class gimp_proc_browser_dialog_parent_class
 

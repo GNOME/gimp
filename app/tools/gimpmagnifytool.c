@@ -75,7 +75,7 @@ static void   gimp_magnify_tool_cursor_update   (GimpTool        *tool,
 static void   gimp_magnify_tool_draw            (GimpDrawTool    *draw_tool);
 
 
-G_DEFINE_TYPE (GimpMagnifyTool, gimp_magnify_tool, GIMP_TYPE_DRAW_TOOL);
+G_DEFINE_TYPE (GimpMagnifyTool, gimp_magnify_tool, GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_magnify_tool_parent_class
 

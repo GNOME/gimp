@@ -198,7 +198,7 @@ static const gint valid_combinations[][MAX_CHANNELS + 1] =
 };
 
 
-G_DEFINE_TYPE (GimpImage, gimp_image, GIMP_TYPE_VIEWABLE);
+G_DEFINE_TYPE (GimpImage, gimp_image, GIMP_TYPE_VIEWABLE)
 
 #define parent_class gimp_image_parent_class
 

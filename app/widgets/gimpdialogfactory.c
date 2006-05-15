@@ -93,7 +93,7 @@ static GtkWidget *
               gimp_dialog_factory_get_toolbox     (GimpDialogFactory *toolbox_factory);
 
 
-G_DEFINE_TYPE (GimpDialogFactory, gimp_dialog_factory, GIMP_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpDialogFactory, gimp_dialog_factory, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_dialog_factory_parent_class
 

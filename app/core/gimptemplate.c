@@ -83,7 +83,7 @@ static void      gimp_template_notify       (GObject      *object,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpTemplate, gimp_template, GIMP_TYPE_VIEWABLE,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL));
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_template_parent_class
 

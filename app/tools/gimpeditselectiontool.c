@@ -117,7 +117,7 @@ static void    gimp_edit_selection_tool_draw           (GimpDrawTool    *tool);
 
 
 G_DEFINE_TYPE (GimpEditSelectionTool, gimp_edit_selection_tool,
-               GIMP_TYPE_DRAW_TOOL);
+               GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_edit_selection_tool_parent_class
 

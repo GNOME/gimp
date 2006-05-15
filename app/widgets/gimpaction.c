@@ -62,7 +62,7 @@ static void   gimp_action_set_proxy     (GimpAction   *action,
                                          GtkWidget    *proxy);
 
 
-G_DEFINE_TYPE (GimpAction, gimp_action, GTK_TYPE_ACTION);
+G_DEFINE_TYPE (GimpAction, gimp_action, GTK_TYPE_ACTION)
 
 #define parent_class gimp_action_parent_class
 

@@ -47,7 +47,7 @@ static void       gimp_color_panel_dialog_update   (GimpColorDialog    *dialog,
                                                     GimpColorPanel     *panel);
 
 
-G_DEFINE_TYPE (GimpColorPanel, gimp_color_panel, GIMP_TYPE_COLOR_BUTTON);
+G_DEFINE_TYPE (GimpColorPanel, gimp_color_panel, GIMP_TYPE_COLOR_BUTTON)
 
 #define parent_class gimp_color_panel_parent_class
 

@@ -95,7 +95,7 @@ static gboolean gimp_thumb_box_auto_thumbnail     (GimpThumbBox      *box);
 
 G_DEFINE_TYPE_WITH_CODE (GimpThumbBox, gimp_thumb_box, GTK_TYPE_FRAME,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
-                                                gimp_thumb_box_progress_iface_init));
+                                                gimp_thumb_box_progress_iface_init))
 
 #define parent_class gimp_thumb_box_parent_class
 

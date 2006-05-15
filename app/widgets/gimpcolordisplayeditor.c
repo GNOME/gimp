@@ -93,8 +93,7 @@ static void   gimp_color_display_editor_enable_toggled (GtkCellRendererToggle  *
 static void   gimp_color_display_editor_update_buttons (GimpColorDisplayEditor *editor);
 
 
-G_DEFINE_TYPE (GimpColorDisplayEditor, gimp_color_display_editor,
-               GTK_TYPE_VBOX);
+G_DEFINE_TYPE (GimpColorDisplayEditor, gimp_color_display_editor, GTK_TYPE_VBOX)
 
 #define parent_class gimp_color_display_editor_parent_class
 

@@ -47,7 +47,7 @@ static void   gimp_image_map_options_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpImageMapOptions, gimp_image_map_options,
-               GIMP_TYPE_TOOL_OPTIONS);
+               GIMP_TYPE_TOOL_OPTIONS)
 
 #define parent_class gimp_image_map_options_parent_class
 

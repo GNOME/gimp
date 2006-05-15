@@ -118,7 +118,7 @@ static GdkPixbuf * gimp_page_selector_add_frame    (GtkWidget        *widget,
                                                     GdkPixbuf        *pixbuf);
 
 
-G_DEFINE_TYPE (GimpPageSelector, gimp_page_selector, GTK_TYPE_VBOX);
+G_DEFINE_TYPE (GimpPageSelector, gimp_page_selector, GTK_TYPE_VBOX)
 
 #define parent_class gimp_page_selector_parent_class
 

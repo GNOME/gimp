@@ -200,7 +200,7 @@ static GPtrArray   * plot_pixels               (GimpIscissorsTool *iscissors,
 
 
 G_DEFINE_TYPE (GimpIscissorsTool, gimp_iscissors_tool,
-               GIMP_TYPE_SELECTION_TOOL);
+               GIMP_TYPE_SELECTION_TOOL)
 
 #define parent_class gimp_iscissors_tool_parent_class
 

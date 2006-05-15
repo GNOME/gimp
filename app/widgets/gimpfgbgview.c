@@ -58,7 +58,7 @@ static gboolean gimp_fg_bg_view_expose       (GtkWidget      *widget,
                                               GdkEventExpose *eevent);
 
 
-G_DEFINE_TYPE (GimpFgBgView, gimp_fg_bg_view, GTK_TYPE_DRAWING_AREA);
+G_DEFINE_TYPE (GimpFgBgView, gimp_fg_bg_view, GTK_TYPE_DRAWING_AREA)
 
 #define parent_class gimp_fg_bg_view_parent_class
 

@@ -55,7 +55,7 @@ static void   gimp_buffer_view_view_notify    (GimpContainerView   *view,
                                                GimpBufferView      *buffer_view);
 
 
-G_DEFINE_TYPE (GimpBufferView, gimp_buffer_view, GIMP_TYPE_CONTAINER_EDITOR);
+G_DEFINE_TYPE (GimpBufferView, gimp_buffer_view, GIMP_TYPE_CONTAINER_EDITOR)
 
 #define parent_class gimp_buffer_view_parent_class
 

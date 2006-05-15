@@ -154,7 +154,7 @@ static gboolean gimp_bezier_coords_is_straight
                                             const gdouble          precision);
 
 
-G_DEFINE_TYPE (GimpBezierStroke, gimp_bezier_stroke, GIMP_TYPE_STROKE);
+G_DEFINE_TYPE (GimpBezierStroke, gimp_bezier_stroke, GIMP_TYPE_STROKE)
 
 #define parent_class gimp_bezier_stroke_parent_class
 

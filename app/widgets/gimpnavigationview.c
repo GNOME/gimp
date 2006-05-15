@@ -72,7 +72,7 @@ static void     gimp_navigation_view_draw_marker    (GimpNavigationView *nav_vie
                                                      GdkRectangle       *area);
 
 
-G_DEFINE_TYPE (GimpNavigationView, gimp_navigation_view, GIMP_TYPE_VIEW);
+G_DEFINE_TYPE (GimpNavigationView, gimp_navigation_view, GIMP_TYPE_VIEW)
 
 #define parent_class gimp_navigation_view_parent_class
 

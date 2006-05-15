@@ -57,7 +57,7 @@ static void     gimp_progress_dialog_progress_pulse     (GimpProgress *progress)
 G_DEFINE_TYPE_WITH_CODE (GimpProgressDialog, gimp_progress_dialog,
                          GIMP_TYPE_DIALOG,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
-                                                gimp_progress_dialog_progress_iface_init));
+                                                gimp_progress_dialog_progress_iface_init))
 
 #define parent_class gimp_progress_dialog_parent_class
 

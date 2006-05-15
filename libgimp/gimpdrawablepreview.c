@@ -78,7 +78,7 @@ static void  gimp_drawable_preview_set_drawable (GimpDrawablePreview *preview,
 
 
 G_DEFINE_TYPE (GimpDrawablePreview, gimp_drawable_preview,
-               GIMP_TYPE_SCROLLED_PREVIEW);
+               GIMP_TYPE_SCROLLED_PREVIEW)
 
 #define parent_class gimp_drawable_preview_parent_class
 

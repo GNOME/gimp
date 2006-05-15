@@ -69,7 +69,7 @@ static GdkGC   * gimp_view_renderer_create_gc    (GimpViewRenderer   *renderer,
                                                   GtkWidget          *widget);
 
 
-G_DEFINE_TYPE (GimpViewRenderer, gimp_view_renderer, G_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpViewRenderer, gimp_view_renderer, G_TYPE_OBJECT)
 
 #define parent_class gimp_view_renderer_parent_class
 

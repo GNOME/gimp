@@ -72,7 +72,7 @@ static void   shear_y_mag_changed           (GtkAdjustment      *adj,
                                              GimpTransformTool  *tr_tool);
 
 
-G_DEFINE_TYPE (GimpShearTool, gimp_shear_tool, GIMP_TYPE_TRANSFORM_TOOL);
+G_DEFINE_TYPE (GimpShearTool, gimp_shear_tool, GIMP_TYPE_TRANSFORM_TOOL)
 
 
 void

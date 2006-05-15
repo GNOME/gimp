@@ -41,7 +41,7 @@ static gboolean gimp_view_renderer_brush_render_timeout (gpointer  data);
 
 
 G_DEFINE_TYPE (GimpViewRendererBrush, gimp_view_renderer_brush,
-               GIMP_TYPE_VIEW_RENDERER);
+               GIMP_TYPE_VIEW_RENDERER)
 
 #define parent_class gimp_view_renderer_brush_parent_class
 

@@ -45,7 +45,7 @@ static void   gimp_view_renderer_palette_render   (GimpViewRenderer *renderer,
 
 
 G_DEFINE_TYPE (GimpViewRendererPalette, gimp_view_renderer_palette,
-               GIMP_TYPE_VIEW_RENDERER);
+               GIMP_TYPE_VIEW_RENDERER)
 
 #define parent_class gimp_view_renderer_palette_parent_class
 

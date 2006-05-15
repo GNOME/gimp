@@ -127,7 +127,7 @@ static void   gimp_foreground_select_options_notify (GimpForegroundSelectOptions
 
 
 G_DEFINE_TYPE (GimpForegroundSelectTool, gimp_foreground_select_tool,
-               GIMP_TYPE_FREE_SELECT_TOOL);
+               GIMP_TYPE_FREE_SELECT_TOOL)
 
 #define parent_class gimp_foreground_select_tool_parent_class
 

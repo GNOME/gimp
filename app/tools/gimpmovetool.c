@@ -99,7 +99,7 @@ static void   gimp_move_tool_start_guide    (GimpMoveTool      *move,
                                              GimpOrientationType  orientation);
 
 
-G_DEFINE_TYPE (GimpMoveTool, gimp_move_tool, GIMP_TYPE_DRAW_TOOL);
+G_DEFINE_TYPE (GimpMoveTool, gimp_move_tool, GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_move_tool_parent_class
 

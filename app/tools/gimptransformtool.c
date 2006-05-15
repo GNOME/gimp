@@ -146,7 +146,7 @@ static void     gimp_transform_tool_notify_preview (GimpTransformOptions *option
                                                     GimpTransformTool    *tr_tool);
 
 
-G_DEFINE_TYPE (GimpTransformTool, gimp_transform_tool, GIMP_TYPE_DRAW_TOOL);
+G_DEFINE_TYPE (GimpTransformTool, gimp_transform_tool, GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_transform_tool_parent_class
 

@@ -51,7 +51,7 @@ static void   gimp_convolve_tool_cursor_update (GimpTool        *tool,
 static GtkWidget * gimp_convolve_options_gui   (GimpToolOptions *options);
 
 
-G_DEFINE_TYPE (GimpConvolveTool, gimp_convolve_tool, GIMP_TYPE_PAINT_TOOL);
+G_DEFINE_TYPE (GimpConvolveTool, gimp_convolve_tool, GIMP_TYPE_PAINT_TOOL)
 
 #define parent_class gimp_convolve_tool_parent_class
 

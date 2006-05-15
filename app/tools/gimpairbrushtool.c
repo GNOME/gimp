@@ -40,7 +40,7 @@
 static GtkWidget * gimp_airbrush_options_gui (GimpToolOptions  *tool_options);
 
 
-G_DEFINE_TYPE (GimpAirbrushTool, gimp_airbrush_tool, GIMP_TYPE_PAINTBRUSH_TOOL);
+G_DEFINE_TYPE (GimpAirbrushTool, gimp_airbrush_tool, GIMP_TYPE_PAINTBRUSH_TOOL)
 
 
 void

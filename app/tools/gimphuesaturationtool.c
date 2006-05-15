@@ -86,7 +86,7 @@ static void     hue_saturation_overlap_adjustment_update    (GtkAdjustment *adj,
 
 
 G_DEFINE_TYPE (GimpHueSaturationTool, gimp_hue_saturation_tool,
-               GIMP_TYPE_IMAGE_MAP_TOOL);
+               GIMP_TYPE_IMAGE_MAP_TOOL)
 
 #define parent_class gimp_hue_saturation_tool_parent_class
 

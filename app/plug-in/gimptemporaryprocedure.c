@@ -53,7 +53,7 @@ const gchar    * gimp_temporary_procedure_get_progname (const GimpPlugInProcedur
 
 
 G_DEFINE_TYPE (GimpTemporaryProcedure, gimp_temporary_procedure,
-               GIMP_TYPE_PLUG_IN_PROCEDURE);
+               GIMP_TYPE_PLUG_IN_PROCEDURE)
 
 #define parent_class gimp_temporary_procedure_parent_class
 

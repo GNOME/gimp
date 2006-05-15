@@ -92,7 +92,7 @@ static void  gimp_text_options_notify_text_color  (GimpText     *text,
                                                    GimpContext  *context);
 
 
-G_DEFINE_TYPE (GimpTextOptions, gimp_text_options, GIMP_TYPE_TOOL_OPTIONS);
+G_DEFINE_TYPE (GimpTextOptions, gimp_text_options, GIMP_TYPE_TOOL_OPTIONS)
 
 
 static void

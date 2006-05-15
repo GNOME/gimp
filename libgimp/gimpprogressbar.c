@@ -53,7 +53,7 @@ static void     gimp_progress_bar_pulse      (gpointer     user_data);
 static guint32  gimp_progress_bar_get_window (gpointer     user_data);
 
 
-G_DEFINE_TYPE (GimpProgressBar, gimp_progress_bar, GTK_TYPE_PROGRESS_BAR);
+G_DEFINE_TYPE (GimpProgressBar, gimp_progress_bar, GTK_TYPE_PROGRESS_BAR)
 
 #define parent_class gimp_progress_bar_parent_class
 

@@ -48,7 +48,7 @@ static void   gimp_eraser_options_get_property (GObject         *object,
 
 
 G_DEFINE_TYPE (GimpEraserOptions, gimp_eraser_options,
-               GIMP_TYPE_PAINT_OPTIONS);
+               GIMP_TYPE_PAINT_OPTIONS)
 
 
 static void

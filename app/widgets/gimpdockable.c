@@ -90,7 +90,7 @@ static void       gimp_dockable_title_changed     (GimpDocked     *docked,
                                                    GimpDockable   *dockable);
 
 
-G_DEFINE_TYPE (GimpDockable, gimp_dockable, GTK_TYPE_BIN);
+G_DEFINE_TYPE (GimpDockable, gimp_dockable, GTK_TYPE_BIN)
 
 #define parent_class gimp_dockable_parent_class
 

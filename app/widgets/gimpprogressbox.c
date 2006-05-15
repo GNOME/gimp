@@ -52,7 +52,7 @@ static void     gimp_progress_box_progress_pulse     (GimpProgress *progress);
 
 G_DEFINE_TYPE_WITH_CODE (GimpProgressBox, gimp_progress_box, GTK_TYPE_VBOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
-                                                gimp_progress_box_progress_iface_init));
+                                                gimp_progress_box_progress_iface_init))
 
 
 static void

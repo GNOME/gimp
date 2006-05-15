@@ -70,9 +70,8 @@ static void  gimp_image_combo_box_drag_data_received (GtkWidget        *widget,
 static const GtkTargetEntry target = { "application/x-gimp-image-id", 0 };
 
 
-G_DEFINE_TYPE(GimpImageComboBox,
-              gimp_image_combo_box,
-              GIMP_TYPE_INT_COMBO_BOX);
+G_DEFINE_TYPE (GimpImageComboBox, gimp_image_combo_box, GIMP_TYPE_INT_COMBO_BOX)
+
 
 static void
 gimp_image_combo_box_class_init (GimpImageComboBoxClass *klass)

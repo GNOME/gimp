@@ -68,7 +68,7 @@ static inline void   gimp_draw_tool_shift_to_center
                                                 gdouble        *shifted_y);
 
 
-G_DEFINE_TYPE (GimpDrawTool, gimp_draw_tool, GIMP_TYPE_TOOL);
+G_DEFINE_TYPE (GimpDrawTool, gimp_draw_tool, GIMP_TYPE_TOOL)
 
 #define parent_class gimp_draw_tool_parent_class
 

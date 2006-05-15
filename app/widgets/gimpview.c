@@ -85,7 +85,7 @@ static GdkPixbuf    * gimp_view_drag_pixbuf       (GtkWidget        *widget,
                                                    gpointer          data);
 
 
-G_DEFINE_TYPE (GimpView, gimp_view, GTK_TYPE_WIDGET);
+G_DEFINE_TYPE (GimpView, gimp_view, GTK_TYPE_WIDGET)
 
 #define parent_class gimp_view_parent_class
 

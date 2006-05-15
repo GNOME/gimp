@@ -84,7 +84,7 @@ static GtkIconSize gimp_editor_ensure_button_box   (GimpEditor      *editor);
 
 G_DEFINE_TYPE_WITH_CODE (GimpEditor, gimp_editor, GTK_TYPE_VBOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_editor_docked_iface_init));
+                                                gimp_editor_docked_iface_init))
 
 #define parent_class gimp_editor_parent_class
 

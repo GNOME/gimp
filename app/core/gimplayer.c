@@ -167,7 +167,7 @@ static void       gimp_layer_layer_mask_update  (GimpDrawable       *layer_mask,
 
 G_DEFINE_TYPE_WITH_CODE (GimpLayer, gimp_layer, GIMP_TYPE_DRAWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_layer_pickable_iface_init));
+                                                gimp_layer_pickable_iface_init))
 
 #define parent_class gimp_layer_parent_class
 

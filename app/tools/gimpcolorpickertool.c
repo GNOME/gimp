@@ -88,7 +88,7 @@ static void   gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_to
 
 
 G_DEFINE_TYPE (GimpColorPickerTool, gimp_color_picker_tool,
-               GIMP_TYPE_COLOR_TOOL);
+               GIMP_TYPE_COLOR_TOOL)
 
 #define parent_class gimp_color_picker_tool_parent_class
 

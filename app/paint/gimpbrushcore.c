@@ -127,7 +127,7 @@ static void      paint_line_pixmap_mask           (GimpImage        *dest,
                                                    GimpBrushApplicationMode  mode);
 
 
-G_DEFINE_TYPE (GimpBrushCore, gimp_brush_core, GIMP_TYPE_PAINT_CORE);
+G_DEFINE_TYPE (GimpBrushCore, gimp_brush_core, GIMP_TYPE_PAINT_CORE)
 
 #define parent_class gimp_brush_core_parent_class
 

@@ -53,7 +53,7 @@ static gint      gimp_frame_get_indent          (GtkWidget      *widget);
 static gint      gimp_frame_get_label_spacing   (GtkFrame       *frame);
 
 
-G_DEFINE_TYPE (GimpFrame, gimp_frame, GTK_TYPE_FRAME);
+G_DEFINE_TYPE (GimpFrame, gimp_frame, GTK_TYPE_FRAME)
 
 #define parent_class gimp_frame_parent_class
 

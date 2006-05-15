@@ -75,7 +75,7 @@ static void     colorize_lightness_adj_update  (GtkAdjustment    *adj,
                                                 GimpColorizeTool *col_tool);
 
 
-G_DEFINE_TYPE (GimpColorizeTool, gimp_colorize_tool, GIMP_TYPE_IMAGE_MAP_TOOL);
+G_DEFINE_TYPE (GimpColorizeTool, gimp_colorize_tool, GIMP_TYPE_IMAGE_MAP_TOOL)
 
 #define parent_class gimp_colorize_tool_parent_class
 

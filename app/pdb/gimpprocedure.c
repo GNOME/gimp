@@ -66,7 +66,7 @@ static gboolean      gimp_procedure_validate_args (GimpProcedure *procedure,
                                                    GValueArray   *args);
 
 
-G_DEFINE_TYPE (GimpProcedure, gimp_procedure, GIMP_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpProcedure, gimp_procedure, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_procedure_parent_class
 

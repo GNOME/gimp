@@ -49,7 +49,7 @@ static gboolean  gimp_offset_area_expose_event  (GtkWidget      *widget,
                                                  GdkEventExpose *eevent);
 
 
-G_DEFINE_TYPE (GimpOffsetArea, gimp_offset_area, GTK_TYPE_DRAWING_AREA);
+G_DEFINE_TYPE (GimpOffsetArea, gimp_offset_area, GTK_TYPE_DRAWING_AREA)
 
 #define parent_class gimp_offset_area_parent_class
 

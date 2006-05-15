@@ -95,7 +95,7 @@ static const gchar * gimp_font_get_sample_string (PangoContext         *context,
                                                   PangoFontDescription *font_desc);
 
 
-G_DEFINE_TYPE (GimpFont, gimp_font, GIMP_TYPE_VIEWABLE);
+G_DEFINE_TYPE (GimpFont, gimp_font, GIMP_TYPE_VIEWABLE)
 
 #define parent_class gimp_font_parent_class
 

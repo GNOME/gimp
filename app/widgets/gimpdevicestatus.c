@@ -99,7 +99,7 @@ static void gimp_device_status_view_clicked    (GtkWidget             *widget,
                                                 const gchar           *identifier);
 
 
-G_DEFINE_TYPE (GimpDeviceStatus, gimp_device_status, GIMP_TYPE_EDITOR);
+G_DEFINE_TYPE (GimpDeviceStatus, gimp_device_status, GIMP_TYPE_EDITOR)
 
 #define parent_class gimp_device_status_parent_class
 

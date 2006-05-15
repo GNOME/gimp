@@ -64,7 +64,7 @@ static void   gimp_by_color_select_tool_cursor_update  (GimpTool        *tool,
 
 
 G_DEFINE_TYPE (GimpByColorSelectTool, gimp_by_color_select_tool,
-               GIMP_TYPE_SELECTION_TOOL);
+               GIMP_TYPE_SELECTION_TOOL)
 
 #define parent_class gimp_by_color_select_tool_parent_class
 

@@ -69,7 +69,7 @@ static void        gimp_image_prop_view_undo_event (GimpImage         *image,
 static void        gimp_image_prop_view_update     (GimpImagePropView *view);
 
 
-G_DEFINE_TYPE (GimpImagePropView, gimp_image_prop_view, GTK_TYPE_TABLE);
+G_DEFINE_TYPE (GimpImagePropView, gimp_image_prop_view, GTK_TYPE_TABLE)
 
 #define parent_class gimp_image_prop_view_parent_class
 

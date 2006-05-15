@@ -73,7 +73,7 @@ static GList *gimp_cursor_view_get_aux_info      (GimpDocked   *docked);
 
 G_DEFINE_TYPE_WITH_CODE (GimpCursorView, gimp_cursor_view, GIMP_TYPE_EDITOR,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_cursor_view_docked_iface_init));
+                                                gimp_cursor_view_docked_iface_init))
 
 #define parent_class gimp_cursor_view_parent_class
 

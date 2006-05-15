@@ -50,7 +50,7 @@ static void  gimp_enum_combo_box_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpEnumComboBox, gimp_enum_combo_box,
-               GIMP_TYPE_INT_COMBO_BOX);
+               GIMP_TYPE_INT_COMBO_BOX)
 
 #define parent_class gimp_enum_combo_box_parent_class
 

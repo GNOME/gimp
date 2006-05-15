@@ -53,7 +53,7 @@ static void   gimp_text_editor_font_toggled (GtkToggleButton *button,
                                              GimpTextEditor  *editor);
 
 
-G_DEFINE_TYPE (GimpTextEditor, gimp_text_editor, GIMP_TYPE_DIALOG);
+G_DEFINE_TYPE (GimpTextEditor, gimp_text_editor, GIMP_TYPE_DIALOG)
 
 #define parent_class gimp_text_editor_parent_class
 

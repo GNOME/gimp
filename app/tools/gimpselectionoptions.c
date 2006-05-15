@@ -83,7 +83,7 @@ static void   selection_options_fixed_mode_notify (GimpSelectionOptions *options
 
 
 G_DEFINE_TYPE (GimpSelectionOptions, gimp_selection_options,
-               GIMP_TYPE_TOOL_OPTIONS);
+               GIMP_TYPE_TOOL_OPTIONS)
 
 #define parent_class gimp_selection_options_parent_class
 

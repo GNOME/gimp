@@ -70,7 +70,7 @@ static void  gimp_int_combo_box_data_func    (GtkCellLayout   *layout,
                                               gpointer         data);
 
 
-G_DEFINE_TYPE (GimpIntComboBox, gimp_int_combo_box, GTK_TYPE_COMBO_BOX);
+G_DEFINE_TYPE (GimpIntComboBox, gimp_int_combo_box, GTK_TYPE_COMBO_BOX)
 
 #define parent_class gimp_int_combo_box_parent_class
 

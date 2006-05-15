@@ -47,7 +47,7 @@ static void  gimp_memsize_entry_unit_callback (GtkWidget        *widget,
                                                GimpMemsizeEntry *entry);
 
 
-G_DEFINE_TYPE (GimpMemsizeEntry, gimp_memsize_entry, GTK_TYPE_HBOX);
+G_DEFINE_TYPE (GimpMemsizeEntry, gimp_memsize_entry, GTK_TYPE_HBOX)
 
 #define parent_class gimp_memsize_entry_parent_class
 

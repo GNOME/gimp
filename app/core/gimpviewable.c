@@ -95,7 +95,7 @@ static gboolean gimp_viewable_serialize_property     (GimpConfig    *config,
 
 G_DEFINE_TYPE_WITH_CODE (GimpViewable, gimp_viewable, GIMP_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_viewable_config_iface_init));
+                                                gimp_viewable_config_iface_init))
 
 #define parent_class gimp_viewable_parent_class
 

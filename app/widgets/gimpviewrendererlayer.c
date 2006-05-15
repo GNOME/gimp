@@ -37,7 +37,7 @@ static void   gimp_view_renderer_layer_render (GimpViewRenderer *renderer,
 
 
 G_DEFINE_TYPE (GimpViewRendererLayer, gimp_view_renderer_layer,
-               GIMP_TYPE_VIEW_RENDERER_DRAWABLE);
+               GIMP_TYPE_VIEW_RENDERER_DRAWABLE)
 
 #define parent_class gimp_view_renderer_layer_parent_class
 

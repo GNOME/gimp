@@ -90,7 +90,7 @@ static gboolean gimp_controller_info_event (GimpController            *controlle
 G_DEFINE_TYPE_WITH_CODE (GimpControllerInfo, gimp_controller_info,
                          GIMP_TYPE_VIEWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_controller_info_config_iface_init));
+                                                gimp_controller_info_config_iface_init))
 
 #define parent_class gimp_controller_info_parent_class
 

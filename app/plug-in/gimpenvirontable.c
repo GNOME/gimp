@@ -70,7 +70,7 @@ static void     gimp_environ_table_clear_envp     (GimpEnvironTable      *enviro
 static void     gimp_environ_table_free_value     (gpointer               value);
 
 
-G_DEFINE_TYPE (GimpEnvironTable, gimp_environ_table, G_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpEnvironTable, gimp_environ_table, G_TYPE_OBJECT)
 
 #define parent_class gimp_environ_table_parent_class
 

@@ -85,7 +85,7 @@ static void   gimp_color_scales_scale_update   (GtkAdjustment     *adjustment,
                                                 GimpColorScales   *scales);
 
 
-G_DEFINE_TYPE (GimpColorScales, gimp_color_scales, GIMP_TYPE_COLOR_SELECTOR);
+G_DEFINE_TYPE (GimpColorScales, gimp_color_scales, GIMP_TYPE_COLOR_SELECTOR)
 
 #define parent_class gimp_color_scales_parent_class
 

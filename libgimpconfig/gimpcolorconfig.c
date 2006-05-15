@@ -98,7 +98,7 @@ static void  gimp_color_config_get_property (GObject      *object,
 G_DEFINE_TYPE_WITH_CODE (GimpColorConfig, gimp_color_config, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL)
                          gimp_type_set_translation_domain (g_define_type_id,
-                                                           GETTEXT_PACKAGE "-libgimp"));
+                                                           GETTEXT_PACKAGE "-libgimp"))
 
 #define parent_class gimp_color_config_parent_class
 

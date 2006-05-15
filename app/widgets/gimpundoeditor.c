@@ -73,7 +73,7 @@ static void      gimp_undo_editor_select_item    (GimpContainerView *view,
                                                   GimpUndoEditor    *editor);
 
 
-G_DEFINE_TYPE (GimpUndoEditor, gimp_undo_editor, GIMP_TYPE_IMAGE_EDITOR);
+G_DEFINE_TYPE (GimpUndoEditor, gimp_undo_editor, GIMP_TYPE_IMAGE_EDITOR)
 
 #define parent_class gimp_undo_editor_parent_class
 

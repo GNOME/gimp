@@ -57,7 +57,7 @@ static void    gimp_data_factory_load_data  (const GimpDatafileData *file_data,
                                              gpointer                data);
 
 
-G_DEFINE_TYPE (GimpDataFactory, gimp_data_factory, GIMP_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpDataFactory, gimp_data_factory, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_data_factory_parent_class
 

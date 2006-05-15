@@ -61,7 +61,7 @@ static void   gimp_scale_tool_size_notify   (GtkWidget          *box,
                                              GimpTransformTool  *tr_tool);
 
 
-G_DEFINE_TYPE (GimpScaleTool, gimp_scale_tool, GIMP_TYPE_TRANSFORM_TOOL);
+G_DEFINE_TYPE (GimpScaleTool, gimp_scale_tool, GIMP_TYPE_TRANSFORM_TOOL)
 
 #define parent_class gimp_scale_tool_parent_class
 

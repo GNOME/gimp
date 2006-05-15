@@ -73,7 +73,7 @@ static void gimp_template_editor_icon_changed    (GimpContext        *context,
                                                   GimpTemplateEditor *editor);
 
 
-G_DEFINE_TYPE (GimpTemplateEditor, gimp_template_editor, GTK_TYPE_VBOX);
+G_DEFINE_TYPE (GimpTemplateEditor, gimp_template_editor, GTK_TYPE_VBOX)
 
 #define parent_class gimp_template_editor_parent_class
 

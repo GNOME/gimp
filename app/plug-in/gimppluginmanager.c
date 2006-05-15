@@ -84,7 +84,7 @@ static gint     gimp_plug_in_manager_file_proc_compare (gconstpointer           
                                                         gpointer                data);
 
 
-G_DEFINE_TYPE (GimpPlugInManager, gimp_plug_in_manager, GIMP_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpPlugInManager, gimp_plug_in_manager, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_plug_in_manager_parent_class
 

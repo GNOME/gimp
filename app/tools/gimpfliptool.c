@@ -61,7 +61,7 @@ static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
                                                    GimpDisplay       *display);
 
 
-G_DEFINE_TYPE (GimpFlipTool, gimp_flip_tool, GIMP_TYPE_TRANSFORM_TOOL);
+G_DEFINE_TYPE (GimpFlipTool, gimp_flip_tool, GIMP_TYPE_TRANSFORM_TOOL)
 
 #define parent_class gimp_flip_tool_parent_class
 

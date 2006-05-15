@@ -59,7 +59,7 @@ static void gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
 
 
 G_DEFINE_TYPE (GimpDataFactoryView, gimp_data_factory_view,
-               GIMP_TYPE_CONTAINER_EDITOR);
+               GIMP_TYPE_CONTAINER_EDITOR)
 
 #define parent_class gimp_data_factory_view_parent_class
 

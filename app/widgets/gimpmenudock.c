@@ -88,7 +88,7 @@ static void   gimp_menu_dock_auto_clicked            (GtkWidget      *widget,
                                                       GimpDock       *dock);
 
 
-G_DEFINE_TYPE (GimpMenuDock, gimp_menu_dock, GIMP_TYPE_IMAGE_DOCK);
+G_DEFINE_TYPE (GimpMenuDock, gimp_menu_dock, GIMP_TYPE_IMAGE_DOCK)
 
 #define parent_class gimp_menu_dock_parent_class
 

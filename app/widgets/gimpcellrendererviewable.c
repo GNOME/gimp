@@ -79,7 +79,7 @@ static gboolean gimp_cell_renderer_viewable_activate (GtkCellRenderer *cell,
 
 
 G_DEFINE_TYPE (GimpCellRendererViewable, gimp_cell_renderer_viewable,
-               GTK_TYPE_CELL_RENDERER);
+               GTK_TYPE_CELL_RENDERER)
 
 #define parent_class gimp_cell_renderer_viewable_parent_class
 

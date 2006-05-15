@@ -73,7 +73,7 @@ static void   gimp_selection_editor_mask_changed   (GimpImage           *image,
 
 
 G_DEFINE_TYPE (GimpSelectionEditor, gimp_selection_editor,
-               GIMP_TYPE_IMAGE_EDITOR);
+               GIMP_TYPE_IMAGE_EDITOR)
 
 #define parent_class gimp_selection_editor_parent_class
 

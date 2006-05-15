@@ -138,7 +138,7 @@ static gint       gimp_vectors_real_interpolate     (const GimpVectors *vectors,
 static GimpVectors * gimp_vectors_real_make_bezier  (const GimpVectors *vectors);
 
 
-G_DEFINE_TYPE (GimpVectors, gimp_vectors, GIMP_TYPE_ITEM);
+G_DEFINE_TYPE (GimpVectors, gimp_vectors, GIMP_TYPE_ITEM)
 
 #define parent_class gimp_vectors_parent_class
 

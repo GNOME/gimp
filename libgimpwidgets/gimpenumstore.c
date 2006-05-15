@@ -37,7 +37,7 @@ static void   gimp_enum_store_add_value    (GtkListStore *store,
                                             GEnumValue   *value);
 
 
-G_DEFINE_TYPE (GimpEnumStore, gimp_enum_store, GIMP_TYPE_INT_STORE);
+G_DEFINE_TYPE (GimpEnumStore, gimp_enum_store, GIMP_TYPE_INT_STORE)
 
 #define parent_class gimp_enum_store_parent_class
 

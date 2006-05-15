@@ -60,7 +60,7 @@ static gint64  gimp_object_real_get_memsize (GimpObject   *object,
 static void    gimp_object_name_normalize   (GimpObject   *object);
 
 
-G_DEFINE_TYPE (GimpObject, gimp_object, G_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpObject, gimp_object, G_TYPE_OBJECT)
 
 #define parent_class gimp_object_parent_class
 

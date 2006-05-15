@@ -91,9 +91,8 @@ static const GtkTargetEntry target = { "application/x-gimp-font-name", 0 };
 static guint font_button_signals[LAST_SIGNAL] = { 0 };
 
 
-G_DEFINE_TYPE(GimpFontSelectButton,
-              gimp_font_select_button,
-              GTK_TYPE_BUTTON);
+G_DEFINE_TYPE (GimpFontSelectButton, gimp_font_select_button, GTK_TYPE_BUTTON)
+
 
 static void
 gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)

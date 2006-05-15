@@ -92,7 +92,7 @@ static void     gimp_fg_bg_editor_drop_color      (GtkWidget      *widget,
                                                    gpointer        data);
 
 
-G_DEFINE_TYPE (GimpFgBgEditor, gimp_fg_bg_editor, GTK_TYPE_DRAWING_AREA);
+G_DEFINE_TYPE (GimpFgBgEditor, gimp_fg_bg_editor, GTK_TYPE_DRAWING_AREA)
 
 #define parent_class gimp_fg_bg_editor_parent_class
 

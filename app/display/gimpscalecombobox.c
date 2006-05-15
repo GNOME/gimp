@@ -56,7 +56,7 @@ static gboolean  gimp_scale_combo_box_row_separator  (GtkTreeModel  *model,
                                                       gpointer       data);
 
 
-G_DEFINE_TYPE (GimpScaleComboBox, gimp_scale_combo_box, GTK_TYPE_COMBO_BOX);
+G_DEFINE_TYPE (GimpScaleComboBox, gimp_scale_combo_box, GTK_TYPE_COMBO_BOX)
 
 #define parent_class gimp_scale_combo_box_parent_class
 

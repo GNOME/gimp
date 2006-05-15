@@ -53,7 +53,7 @@ static void   gimp_flip_options_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpFlipOptions, gimp_flip_options,
-               GIMP_TYPE_TRANSFORM_OPTIONS);
+               GIMP_TYPE_TRANSFORM_OPTIONS)
 
 
 static void

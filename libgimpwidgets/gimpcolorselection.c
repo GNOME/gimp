@@ -93,7 +93,7 @@ static void   gimp_color_selection_update            (GimpColorSelection *select
                                                       UpdateType          update);
 
 
-G_DEFINE_TYPE (GimpColorSelection, gimp_color_selection, GTK_TYPE_VBOX);
+G_DEFINE_TYPE (GimpColorSelection, gimp_color_selection, GTK_TYPE_VBOX)
 
 #define parent_class gimp_color_selection_parent_class
 

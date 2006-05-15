@@ -66,7 +66,7 @@ static void   gimp_color_history_add_clicked   (GtkWidget          *widget,
                                                 GimpColorDialog    *dialog);
 
 
-G_DEFINE_TYPE (GimpColorDialog, gimp_color_dialog, GIMP_TYPE_VIEWABLE_DIALOG);
+G_DEFINE_TYPE (GimpColorDialog, gimp_color_dialog, GIMP_TYPE_VIEWABLE_DIALOG)
 
 #define parent_class gimp_color_dialog_parent_class
 

@@ -77,7 +77,7 @@ static void gimp_container_combo_box_renderer_update  (GimpViewRenderer       *r
 G_DEFINE_TYPE_WITH_CODE (GimpContainerComboBox, gimp_container_combo_box,
                          GTK_TYPE_COMBO_BOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
-                                                gimp_container_combo_box_view_iface_init));
+                                                gimp_container_combo_box_view_iface_init))
 
 #define parent_class gimp_container_combo_box_parent_class
 

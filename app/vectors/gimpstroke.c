@@ -149,7 +149,7 @@ static gboolean   gimp_stroke_real_get_point_at_dist (const GimpStroke *stroke,
                                                       gdouble          *slope);
 
 
-G_DEFINE_TYPE (GimpStroke, gimp_stroke, GIMP_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpStroke, gimp_stroke, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_stroke_parent_class
 

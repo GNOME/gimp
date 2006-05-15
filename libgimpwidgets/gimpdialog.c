@@ -61,7 +61,7 @@ static void       gimp_dialog_response     (GtkDialog       *dialog,
                                             gint             response_id);
 
 
-G_DEFINE_TYPE (GimpDialog, gimp_dialog, GTK_TYPE_DIALOG);
+G_DEFINE_TYPE (GimpDialog, gimp_dialog, GTK_TYPE_DIALOG)
 
 #define parent_class gimp_dialog_parent_class
 

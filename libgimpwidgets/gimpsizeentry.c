@@ -87,7 +87,7 @@ static void   gimp_size_entry_unit_callback   (GtkWidget          *widget,
                                                GimpSizeEntry      *sizeentry);
 
 
-G_DEFINE_TYPE (GimpSizeEntry, gimp_size_entry, GTK_TYPE_TABLE);
+G_DEFINE_TYPE (GimpSizeEntry, gimp_size_entry, GTK_TYPE_TABLE)
 
 #define parent_class gimp_size_entry_parent_class
 

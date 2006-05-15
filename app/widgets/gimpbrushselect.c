@@ -81,7 +81,7 @@ static void   gimp_brush_select_spacing_update   (GtkAdjustment   *adj,
                                                   GimpBrushSelect *select);
 
 
-G_DEFINE_TYPE (GimpBrushSelect, gimp_brush_select, GIMP_TYPE_PDB_DIALOG);
+G_DEFINE_TYPE (GimpBrushSelect, gimp_brush_select, GIMP_TYPE_PDB_DIALOG)
 
 #define parent_class gimp_brush_select_parent_class
 

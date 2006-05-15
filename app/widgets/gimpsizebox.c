@@ -84,7 +84,7 @@ static void      gimp_size_box_update_size       (GimpSizeBox *box);
 static void      gimp_size_box_update_resolution (GimpSizeBox *box);
 
 
-G_DEFINE_TYPE (GimpSizeBox, gimp_size_box, GTK_TYPE_VBOX);
+G_DEFINE_TYPE (GimpSizeBox, gimp_size_box, GTK_TYPE_VBOX)
 
 #define parent_class gimp_size_box_parent_class
 

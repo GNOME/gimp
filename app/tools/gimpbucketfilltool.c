@@ -68,7 +68,7 @@ static void   gimp_bucket_fill_tool_cursor_update  (GimpTool        *tool,
                                                     GimpDisplay     *display);
 
 
-G_DEFINE_TYPE (GimpBucketFillTool, gimp_bucket_fill_tool, GIMP_TYPE_TOOL);
+G_DEFINE_TYPE (GimpBucketFillTool, gimp_bucket_fill_tool, GIMP_TYPE_TOOL)
 
 #define parent_class gimp_bucket_fill_tool_parent_class
 

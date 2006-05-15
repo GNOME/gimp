@@ -43,7 +43,7 @@ static void   gimp_font_view_activate_item (GimpContainerEditor *editor,
                                             GimpViewable        *viewable);
 
 
-G_DEFINE_TYPE (GimpFontView, gimp_font_view, GIMP_TYPE_CONTAINER_EDITOR);
+G_DEFINE_TYPE (GimpFontView, gimp_font_view, GIMP_TYPE_CONTAINER_EDITOR)
 
 #define parent_class gimp_font_view_parent_class
 

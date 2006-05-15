@@ -60,7 +60,7 @@ static GValueArray * gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
 
 
 G_DEFINE_TYPE (GimpGradientSelect, gimp_gradient_select,
-               GIMP_TYPE_PDB_DIALOG);
+               GIMP_TYPE_PDB_DIALOG)
 
 #define parent_class gimp_gradient_select_parent_class
 

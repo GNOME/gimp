@@ -60,7 +60,7 @@ static void   gimp_selection_tool_cursor_update (GimpTool        *tool,
                                                  GimpDisplay     *display);
 
 
-G_DEFINE_TYPE (GimpSelectionTool, gimp_selection_tool, GIMP_TYPE_DRAW_TOOL);
+G_DEFINE_TYPE (GimpSelectionTool, gimp_selection_tool, GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_selection_tool_parent_class
 

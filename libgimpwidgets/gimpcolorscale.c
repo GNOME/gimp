@@ -50,7 +50,7 @@ static void     gimp_color_scale_render_alpha   (GimpColorScale  *scale);
 static void     gimp_color_scale_render_stipple (GimpColorScale  *scale);
 
 
-G_DEFINE_TYPE (GimpColorScale, gimp_color_scale, GTK_TYPE_SCALE);
+G_DEFINE_TYPE (GimpColorScale, gimp_color_scale, GTK_TYPE_SCALE)
 
 #define parent_class gimp_color_scale_parent_class
 

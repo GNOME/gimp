@@ -68,7 +68,7 @@ static void      gimp_device_info_get_property (GObject               *object,
                                                 GParamSpec            *pspec);
 
 
-G_DEFINE_TYPE (GimpDeviceInfo, gimp_device_info, GIMP_TYPE_CONTEXT);
+G_DEFINE_TYPE (GimpDeviceInfo, gimp_device_info, GIMP_TYPE_CONTEXT)
 
 #define parent_class gimp_device_info_parent_class
 

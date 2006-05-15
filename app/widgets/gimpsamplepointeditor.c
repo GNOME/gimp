@@ -88,7 +88,7 @@ static gboolean gimp_sample_point_editor_update       (GimpSamplePointEditor *ed
 
 
 G_DEFINE_TYPE (GimpSamplePointEditor, gimp_sample_point_editor,
-               GIMP_TYPE_IMAGE_EDITOR);
+               GIMP_TYPE_IMAGE_EDITOR)
 
 #define parent_class gimp_sample_point_editor_parent_class
 

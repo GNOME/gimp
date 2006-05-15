@@ -65,7 +65,7 @@ static gboolean    gimp_brush_real_want_null_motion (GimpBrush     *brush,
                                                      GimpCoords    *cur_coords);
 
 
-G_DEFINE_TYPE (GimpBrush, gimp_brush, GIMP_TYPE_DATA);
+G_DEFINE_TYPE (GimpBrush, gimp_brush, GIMP_TYPE_DATA)
 
 #define parent_class gimp_brush_parent_class
 

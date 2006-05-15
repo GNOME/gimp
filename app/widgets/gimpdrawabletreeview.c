@@ -92,7 +92,7 @@ static void   gimp_drawable_tree_view_new_color_dropped
 G_DEFINE_TYPE_WITH_CODE (GimpDrawableTreeView, gimp_drawable_tree_view,
                          GIMP_TYPE_ITEM_TREE_VIEW,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
-                                                gimp_drawable_tree_view_view_iface_init));
+                                                gimp_drawable_tree_view_view_iface_init))
 
 #define parent_class gimp_drawable_tree_view_parent_class
 

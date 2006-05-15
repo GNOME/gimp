@@ -49,7 +49,7 @@ static void   gimp_tool_options_get_property (GObject         *object,
 static void   gimp_tool_options_real_reset   (GimpToolOptions *tool_options);
 
 
-G_DEFINE_TYPE (GimpToolOptions, gimp_tool_options, GIMP_TYPE_CONTEXT);
+G_DEFINE_TYPE (GimpToolOptions, gimp_tool_options, GIMP_TYPE_CONTEXT)
 
 
 static void

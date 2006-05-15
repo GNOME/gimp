@@ -71,7 +71,7 @@ static void         gimp_rc_notify            (GimpRc       *rc,
 
 G_DEFINE_TYPE_WITH_CODE (GimpRc, gimp_rc, GIMP_TYPE_PLUGIN_CONFIG,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_rc_config_iface_init));
+                                                gimp_rc_config_iface_init))
 
 #define parent_class gimp_rc_parent_class
 

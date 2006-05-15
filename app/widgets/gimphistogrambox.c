@@ -73,7 +73,7 @@ static void gimp_histogram_draw_slider           (GtkWidget *widget,
                                                   gint       xpos);
 
 
-G_DEFINE_TYPE (GimpHistogramBox, gimp_histogram_box, GTK_TYPE_VBOX);
+G_DEFINE_TYPE (GimpHistogramBox, gimp_histogram_box, GTK_TYPE_VBOX)
 
 
 static void

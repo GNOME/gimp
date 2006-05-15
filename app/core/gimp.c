@@ -102,7 +102,7 @@ static void       gimp_edit_config_notify   (GObject           *edit_config,
                                              GObject           *global_config);
 
 
-G_DEFINE_TYPE (Gimp, gimp, GIMP_TYPE_OBJECT);
+G_DEFINE_TYPE (Gimp, gimp, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_parent_class
 

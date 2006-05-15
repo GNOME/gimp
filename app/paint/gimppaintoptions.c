@@ -105,7 +105,7 @@ static void   gimp_paint_options_notify       (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpPaintOptions, gimp_paint_options,
-               GIMP_TYPE_TOOL_OPTIONS);
+               GIMP_TYPE_TOOL_OPTIONS)
 
 #define parent_class gimp_paint_options_parent_class
 

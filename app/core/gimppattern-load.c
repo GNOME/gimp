@@ -72,7 +72,7 @@ static gchar    * gimp_pattern_get_extension   (GimpData      *data);
 static GimpData * gimp_pattern_duplicate       (GimpData      *data);
 
 
-G_DEFINE_TYPE (GimpPattern, gimp_pattern, GIMP_TYPE_DATA);
+G_DEFINE_TYPE (GimpPattern, gimp_pattern, GIMP_TYPE_DATA)
 
 #define parent_class gimp_pattern_parent_class
 

@@ -42,7 +42,7 @@ static void   gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
 
 G_DEFINE_TYPE (GimpViewRendererDrawable, gimp_view_renderer_drawable,
-               GIMP_TYPE_VIEW_RENDERER);
+               GIMP_TYPE_VIEW_RENDERER)
 
 #define parent_class gimp_view_renderer_drawable_parent_class
 

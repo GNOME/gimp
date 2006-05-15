@@ -52,7 +52,7 @@ static gint   gimp_text_layout_point_size         (Gimp           *gimp,
                                                    gdouble         res);
 
 
-G_DEFINE_TYPE (GimpTextLayout, gimp_text_layout, G_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpTextLayout, gimp_text_layout, G_TYPE_OBJECT)
 
 #define parent_class gimp_text_layout_parent_class
 

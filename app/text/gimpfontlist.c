@@ -61,7 +61,7 @@ static void   gimp_font_list_load_names (GimpFontList         *list,
                                          PangoContext         *context);
 
 
-G_DEFINE_TYPE (GimpFontList, gimp_font_list, GIMP_TYPE_LIST);
+G_DEFINE_TYPE (GimpFontList, gimp_font_list, GIMP_TYPE_LIST)
 
 static GimpFontDescToStringFunc font_desc_to_string = NULL;
 

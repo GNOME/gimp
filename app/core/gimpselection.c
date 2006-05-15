@@ -123,7 +123,7 @@ static void       gimp_selection_validate      (TileManager     *tm,
                                                 Tile            *tile);
 
 
-G_DEFINE_TYPE (GimpSelection, gimp_selection, GIMP_TYPE_CHANNEL);
+G_DEFINE_TYPE (GimpSelection, gimp_selection, GIMP_TYPE_CHANNEL)
 
 #define parent_class gimp_selection_parent_class
 

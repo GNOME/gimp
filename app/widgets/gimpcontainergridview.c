@@ -100,7 +100,7 @@ static gboolean gimp_container_grid_view_button_press (GtkWidget              *w
 G_DEFINE_TYPE_WITH_CODE (GimpContainerGridView, gimp_container_grid_view,
                          GIMP_TYPE_CONTAINER_BOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
-                                                gimp_container_grid_view_view_iface_init));
+                                                gimp_container_grid_view_view_iface_init))
 
 #define parent_class gimp_container_grid_view_parent_class
 

@@ -78,7 +78,7 @@ static inline gdouble  gimp_gradient_calc_sphere_decreasing_factor (gdouble  mid
                                                                     gdouble  pos);
 
 
-G_DEFINE_TYPE (GimpGradient, gimp_gradient, GIMP_TYPE_DATA);
+G_DEFINE_TYPE (GimpGradient, gimp_gradient, GIMP_TYPE_DATA)
 
 #define parent_class gimp_gradient_parent_class
 

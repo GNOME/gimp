@@ -152,7 +152,7 @@ static void       gimp_drawable_real_swap_pixels   (GimpDrawable      *drawable,
 
 G_DEFINE_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_drawable_pickable_iface_init));
+                                                gimp_drawable_pickable_iface_init))
 
 #define parent_class gimp_drawable_parent_class
 

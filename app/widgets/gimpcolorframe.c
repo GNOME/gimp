@@ -57,7 +57,7 @@ static void   gimp_color_frame_menu_callback (GtkWidget      *widget,
 static void   gimp_color_frame_update        (GimpColorFrame *frame);
 
 
-G_DEFINE_TYPE (GimpColorFrame, gimp_color_frame, GIMP_TYPE_FRAME);
+G_DEFINE_TYPE (GimpColorFrame, gimp_color_frame, GIMP_TYPE_FRAME)
 
 #define parent_class gimp_color_frame_parent_class
 

@@ -102,7 +102,7 @@ static void     gimp_image_map_tool_notify_preview   (GObject          *config,
                                                       GimpImageMapTool *im_tool);
 
 
-G_DEFINE_TYPE (GimpImageMapTool, gimp_image_map_tool, GIMP_TYPE_COLOR_TOOL);
+G_DEFINE_TYPE (GimpImageMapTool, gimp_image_map_tool, GIMP_TYPE_COLOR_TOOL)
 
 #define parent_class gimp_image_map_tool_parent_class
 

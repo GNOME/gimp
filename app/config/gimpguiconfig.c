@@ -95,7 +95,7 @@ static void   gimp_gui_config_get_property (GObject      *object,
                                             GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpGuiConfig, gimp_gui_config, GIMP_TYPE_DISPLAY_CONFIG);
+G_DEFINE_TYPE (GimpGuiConfig, gimp_gui_config, GIMP_TYPE_DISPLAY_CONFIG)
 
 #define parent_class gimp_gui_config_parent_class
 

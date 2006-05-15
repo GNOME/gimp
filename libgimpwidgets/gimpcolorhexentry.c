@@ -58,7 +58,7 @@ static gboolean  gimp_color_hex_entry_matched    (GtkEntryCompletion *completion
                                                   GimpColorHexEntry  *entry);
 
 
-G_DEFINE_TYPE (GimpColorHexEntry, gimp_color_hex_entry, GTK_TYPE_ENTRY);
+G_DEFINE_TYPE (GimpColorHexEntry, gimp_color_hex_entry, GTK_TYPE_ENTRY)
 
 #define parent_class gimp_color_hex_entry_parent_class
 

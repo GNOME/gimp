@@ -69,7 +69,7 @@ const gchar * gimp_plug_in_procedure_real_get_progname (const GimpPlugInProcedur
 
 
 G_DEFINE_TYPE (GimpPlugInProcedure, gimp_plug_in_procedure,
-               GIMP_TYPE_PROCEDURE);
+               GIMP_TYPE_PROCEDURE)
 
 #define parent_class gimp_plug_in_procedure_parent_class
 

@@ -68,7 +68,7 @@ static gboolean gimp_histogram_view_expose        (GimpHistogramEditor *editor);
 G_DEFINE_TYPE_WITH_CODE (GimpHistogramEditor, gimp_histogram_editor,
                          GIMP_TYPE_IMAGE_EDITOR,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_histogram_editor_docked_iface_init));
+                                                gimp_histogram_editor_docked_iface_init))
 
 #define parent_class gimp_histogram_editor_parent_class
 

@@ -242,7 +242,7 @@ static GtkWidget * gradient_hint_label_add        (GtkBox *box);
 
 
 G_DEFINE_TYPE (GimpGradientEditor, gimp_gradient_editor,
-               GIMP_TYPE_DATA_EDITOR);
+               GIMP_TYPE_DATA_EDITOR)
 
 #define parent_class gimp_gradient_editor_parent_class
 

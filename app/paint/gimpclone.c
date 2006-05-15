@@ -94,7 +94,7 @@ static void   gimp_clone_set_src_drawable (GimpClone        *clone,
                                            GimpDrawable     *drawable);
 
 
-G_DEFINE_TYPE (GimpClone, gimp_clone, GIMP_TYPE_BRUSH_CORE);
+G_DEFINE_TYPE (GimpClone, gimp_clone, GIMP_TYPE_BRUSH_CORE)
 
 
 void

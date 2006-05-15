@@ -29,7 +29,7 @@
 #include "gimpunitstore.h"
 
 
-G_DEFINE_TYPE (GimpUnitComboBox, gimp_unit_combo_box, GTK_TYPE_COMBO_BOX);
+G_DEFINE_TYPE (GimpUnitComboBox, gimp_unit_combo_box, GTK_TYPE_COMBO_BOX)
 
 #define parent_class gimp_unit_combo_box_parent_class
 

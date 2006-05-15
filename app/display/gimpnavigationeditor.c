@@ -95,7 +95,7 @@ static void   gimp_navigation_editor_update_marker     (GimpNavigationEditor *ed
 G_DEFINE_TYPE_WITH_CODE (GimpNavigationEditor, gimp_navigation_editor,
                          GIMP_TYPE_EDITOR,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_navigation_editor_docked_iface_init));
+                                                gimp_navigation_editor_docked_iface_init))
 
 #define parent_class gimp_navigation_editor_parent_class
 

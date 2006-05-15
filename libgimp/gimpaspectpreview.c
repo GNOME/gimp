@@ -60,7 +60,7 @@ static void  gimp_aspect_preview_set_drawable (GimpAspectPreview *preview,
                                                GimpDrawable      *drawable);
 
 
-G_DEFINE_TYPE (GimpAspectPreview, gimp_aspect_preview, GIMP_TYPE_PREVIEW);
+G_DEFINE_TYPE (GimpAspectPreview, gimp_aspect_preview, GIMP_TYPE_PREVIEW)
 
 #define parent_class gimp_aspect_preview_parent_class
 

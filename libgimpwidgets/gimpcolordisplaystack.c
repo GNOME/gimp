@@ -52,7 +52,7 @@ static void   gimp_color_display_stack_display_enabled (GimpColorDisplay      *d
                                                         GimpColorDisplayStack *stack);
 
 
-G_DEFINE_TYPE (GimpColorDisplayStack, gimp_color_display_stack, G_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpColorDisplayStack, gimp_color_display_stack, G_TYPE_OBJECT)
 
 #define parent_class gimp_color_display_stack_parent_class
 

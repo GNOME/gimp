@@ -31,7 +31,7 @@
 #include "gimpmessagedialog.h"
 
 
-G_DEFINE_TYPE (GimpMessageDialog, gimp_message_dialog, GIMP_TYPE_DIALOG);
+G_DEFINE_TYPE (GimpMessageDialog, gimp_message_dialog, GIMP_TYPE_DIALOG)
 
 
 static void

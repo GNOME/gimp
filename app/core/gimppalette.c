@@ -73,7 +73,7 @@ static GimpData * gimp_palette_duplicate        (GimpData          *data);
 static void       gimp_palette_entry_free       (GimpPaletteEntry  *entry);
 
 
-G_DEFINE_TYPE (GimpPalette, gimp_palette, GIMP_TYPE_DATA);
+G_DEFINE_TYPE (GimpPalette, gimp_palette, GIMP_TYPE_DATA)
 
 #define parent_class gimp_palette_parent_class
 

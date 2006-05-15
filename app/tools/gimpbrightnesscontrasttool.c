@@ -83,7 +83,7 @@ static void     brightness_contrast_contrast_adjustment_update   (GtkAdjustment 
 
 
 G_DEFINE_TYPE (GimpBrightnessContrastTool, gimp_brightness_contrast_tool,
-               GIMP_TYPE_IMAGE_MAP_TOOL);
+               GIMP_TYPE_IMAGE_MAP_TOOL)
 
 #define parent_class gimp_brightness_contrast_tool_parent_class
 

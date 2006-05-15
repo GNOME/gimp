@@ -59,7 +59,7 @@ static const gchar * gimp_controller_keyboard_get_event_blurb (GimpController *c
 
 
 G_DEFINE_TYPE (GimpControllerKeyboard, gimp_controller_keyboard,
-               GIMP_TYPE_CONTROLLER);
+               GIMP_TYPE_CONTROLLER)
 
 #define parent_class gimp_controller_keyboard_parent_class
 

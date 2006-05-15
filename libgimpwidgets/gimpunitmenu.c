@@ -59,7 +59,7 @@ static void          gimp_unit_menu_callback     (GtkWidget   *widget,
                                                   gpointer     data);
 
 
-G_DEFINE_TYPE (GimpUnitMenu, gimp_unit_menu, GTK_TYPE_OPTION_MENU);
+G_DEFINE_TYPE (GimpUnitMenu, gimp_unit_menu, GTK_TYPE_OPTION_MENU)
 
 #define parent_class gimp_unit_menu_parent_class
 

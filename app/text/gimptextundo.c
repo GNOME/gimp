@@ -62,7 +62,7 @@ static void      gimp_text_undo_free         (GimpUndo              *undo,
                                               GimpUndoMode           undo_mode);
 
 
-G_DEFINE_TYPE (GimpTextUndo, gimp_text_undo, GIMP_TYPE_ITEM_UNDO);
+G_DEFINE_TYPE (GimpTextUndo, gimp_text_undo, GIMP_TYPE_ITEM_UNDO)
 
 #define parent_class gimp_text_undo_parent_class
 

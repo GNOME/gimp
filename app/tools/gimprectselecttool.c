@@ -77,7 +77,7 @@ static void   gimp_rect_select_tool_update_options   (GimpRectSelectTool *rect_s
 
 
 G_DEFINE_TYPE (GimpRectSelectTool, gimp_rect_select_tool,
-               GIMP_TYPE_SELECTION_TOOL);
+               GIMP_TYPE_SELECTION_TOOL)
 
 #define parent_class gimp_rect_select_tool_parent_class
 

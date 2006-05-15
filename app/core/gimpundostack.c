@@ -40,7 +40,7 @@ static void    gimp_undo_stack_free        (GimpUndo            *undo,
                                             GimpUndoMode         undo_mode);
 
 
-G_DEFINE_TYPE (GimpUndoStack, gimp_undo_stack, GIMP_TYPE_UNDO);
+G_DEFINE_TYPE (GimpUndoStack, gimp_undo_stack, GIMP_TYPE_UNDO)
 
 #define parent_class gimp_undo_stack_parent_class
 

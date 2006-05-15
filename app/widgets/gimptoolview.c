@@ -64,7 +64,7 @@ static void   gimp_tool_view_eye_clicked    (GtkCellRendererToggle *toggle,
                                              GimpContainerTreeView *tree_view);
 
 
-G_DEFINE_TYPE (GimpToolView, gimp_tool_view, GIMP_TYPE_CONTAINER_EDITOR);
+G_DEFINE_TYPE (GimpToolView, gimp_tool_view, GIMP_TYPE_CONTAINER_EDITOR)
 
 #define parent_class gimp_tool_view_parent_class
 

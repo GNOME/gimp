@@ -118,7 +118,7 @@ static void   gimp_colormap_image_colormap_changed (GimpImage          *image,
 
 
 G_DEFINE_TYPE (GimpColormapEditor, gimp_colormap_editor,
-               GIMP_TYPE_IMAGE_EDITOR);
+               GIMP_TYPE_IMAGE_EDITOR)
 
 #define parent_class gimp_colormap_editor_parent_class
 

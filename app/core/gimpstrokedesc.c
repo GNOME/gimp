@@ -66,7 +66,7 @@ static void      gimp_stroke_desc_get_property (GObject         *object,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpStrokeDesc, gimp_stroke_desc, GIMP_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL));
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_stroke_desc_parent_class
 

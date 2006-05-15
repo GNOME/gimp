@@ -100,7 +100,7 @@ static void        gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
                                                     GimpDisplay     *display);
 
 
-G_DEFINE_TYPE (GimpMeasureTool, gimp_measure_tool, GIMP_TYPE_DRAW_TOOL);
+G_DEFINE_TYPE (GimpMeasureTool, gimp_measure_tool, GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_measure_tool_parent_class
 

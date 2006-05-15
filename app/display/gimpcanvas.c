@@ -35,7 +35,7 @@ static GdkGC * gimp_canvas_gc_new    (GimpCanvas      *canvas,
                                       GimpCanvasStyle  style);
 
 
-G_DEFINE_TYPE (GimpCanvas, gimp_canvas, GTK_TYPE_DRAWING_AREA);
+G_DEFINE_TYPE (GimpCanvas, gimp_canvas, GTK_TYPE_DRAWING_AREA)
 
 #define parent_class gimp_canvas_parent_class
 

@@ -80,7 +80,7 @@ static void   gimp_scale_options_constrain_notify   (GimpTransformOptions *optio
 
 
 G_DEFINE_TYPE (GimpTransformOptions, gimp_transform_options,
-               GIMP_TYPE_TOOL_OPTIONS);
+               GIMP_TYPE_TOOL_OPTIONS)
 
 #define parent_class gimp_transform_options_parent_class
 

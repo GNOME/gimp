@@ -99,7 +99,7 @@ static void       gimp_projection_image_flush           (GimpImage      *image,
 
 G_DEFINE_TYPE_WITH_CODE (GimpProjection, gimp_projection, GIMP_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_projection_pickable_iface_init));
+                                                gimp_projection_pickable_iface_init))
 
 #define parent_class gimp_projection_parent_class
 

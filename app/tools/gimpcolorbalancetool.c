@@ -77,7 +77,7 @@ static void     color_balance_yb_adjustment_update (GtkAdjustment        *adj,
 
 
 G_DEFINE_TYPE (GimpColorBalanceTool, gimp_color_balance_tool,
-               GIMP_TYPE_IMAGE_MAP_TOOL);
+               GIMP_TYPE_IMAGE_MAP_TOOL)
 
 #define parent_class gimp_color_balance_tool_parent_class
 

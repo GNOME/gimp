@@ -34,7 +34,7 @@ static void   gimp_pixmap_realize           (GtkWidget  *widget);
 static void   gimp_pixmap_create_from_xpm_d (GimpPixmap *pixmap);
 
 
-G_DEFINE_TYPE (GimpPixmap, gimp_pixmap, GTK_TYPE_IMAGE);
+G_DEFINE_TYPE (GimpPixmap, gimp_pixmap, GTK_TYPE_IMAGE)
 
 #define parent_class gimp_pixmap_parent_class
 

@@ -54,7 +54,7 @@ static void      gimp_image_dock_notify_transient (GimpConfig        *config,
                                                    GimpDock          *dock);
 
 
-G_DEFINE_TYPE (GimpImageDock, gimp_image_dock, GIMP_TYPE_DOCK);
+G_DEFINE_TYPE (GimpImageDock, gimp_image_dock, GIMP_TYPE_DOCK)
 
 #define parent_class gimp_image_dock_parent_class
 

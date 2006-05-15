@@ -70,7 +70,7 @@ static void   rotate_center_changed          (GtkWidget           *entry,
                                               GimpTransformTool   *tr_tool);
 
 
-G_DEFINE_TYPE (GimpRotateTool, gimp_rotate_tool, GIMP_TYPE_TRANSFORM_TOOL);
+G_DEFINE_TYPE (GimpRotateTool, gimp_rotate_tool, GIMP_TYPE_TRANSFORM_TOOL)
 
 #define parent_class gimp_rotate_tool_parent_class
 

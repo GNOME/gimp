@@ -83,7 +83,7 @@ static gboolean     gimp_unit_store_iter_parent     (GtkTreeModel *tree_model,
 
 G_DEFINE_TYPE_WITH_CODE (GimpUnitStore, gimp_unit_store, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_MODEL,
-                                                gimp_unit_store_tree_model_init));
+                                                gimp_unit_store_tree_model_init))
 
 #define parent_class gimp_unit_store_parent_class
 

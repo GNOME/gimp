@@ -161,7 +161,7 @@ static void   gimp_layer_tree_view_alpha_changed  (GimpLayer           *layer,
 G_DEFINE_TYPE_WITH_CODE (GimpLayerTreeView, gimp_layer_tree_view,
                          GIMP_TYPE_DRAWABLE_TREE_VIEW,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
-                                                gimp_layer_tree_view_view_iface_init));
+                                                gimp_layer_tree_view_view_iface_init))
 
 #define parent_class gimp_layer_tree_view_parent_class
 

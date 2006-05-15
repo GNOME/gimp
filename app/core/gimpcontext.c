@@ -326,7 +326,7 @@ static GType gimp_context_prop_types[] =
 
 G_DEFINE_TYPE_WITH_CODE (GimpContext, gimp_context, GIMP_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_context_config_iface_init));
+                                                gimp_context_config_iface_init))
 
 #define parent_class gimp_context_parent_class
 

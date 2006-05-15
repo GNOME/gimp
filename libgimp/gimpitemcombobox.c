@@ -97,9 +97,9 @@ static const GtkTargetEntry targets[] =
 };
 
 
-G_DEFINE_TYPE(GimpDrawableComboBox,
-              gimp_drawable_combo_box,
-              GIMP_TYPE_INT_COMBO_BOX);
+G_DEFINE_TYPE (GimpDrawableComboBox, gimp_drawable_combo_box,
+               GIMP_TYPE_INT_COMBO_BOX)
+
 
 static void
 gimp_drawable_combo_box_class_init (GimpDrawableComboBoxClass *klass)

@@ -62,7 +62,7 @@ static void   gimp_viewable_dialog_name_changed (GimpObject         *object,
 static void   gimp_viewable_dialog_close        (GimpViewableDialog *dialog);
 
 
-G_DEFINE_TYPE (GimpViewableDialog, gimp_viewable_dialog, GIMP_TYPE_DIALOG);
+G_DEFINE_TYPE (GimpViewableDialog, gimp_viewable_dialog, GIMP_TYPE_DIALOG)
 
 #define parent_class gimp_viewable_dialog_parent_class
 

@@ -80,7 +80,7 @@ static void     gimp_palette_view_drop_color     (GtkWidget        *widget,
                                                   gpointer          data);
 
 
-G_DEFINE_TYPE (GimpPaletteView, gimp_palette_view, GIMP_TYPE_VIEW);
+G_DEFINE_TYPE (GimpPaletteView, gimp_palette_view, GIMP_TYPE_VIEW)
 
 #define parent_class gimp_palette_view_parent_class
 

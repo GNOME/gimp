@@ -58,7 +58,7 @@ static const gchar * gimp_controller_wheel_get_event_blurb (GimpController *cont
 
 
 G_DEFINE_TYPE (GimpControllerWheel, gimp_controller_wheel,
-               GIMP_TYPE_CONTROLLER);
+               GIMP_TYPE_CONTROLLER)
 
 #define parent_class gimp_controller_wheel_parent_class
 

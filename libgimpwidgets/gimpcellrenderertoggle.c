@@ -82,7 +82,7 @@ static void gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *tog
 
 
 G_DEFINE_TYPE (GimpCellRendererToggle, gimp_cell_renderer_toggle,
-               GTK_TYPE_CELL_RENDERER_TOGGLE);
+               GTK_TYPE_CELL_RENDERER_TOGGLE)
 
 #define parent_class gimp_cell_renderer_toggle_parent_class
 

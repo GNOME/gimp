@@ -50,7 +50,7 @@ static gboolean  gimp_error_console_button_press (GtkWidget        *widget,
                                                   GimpErrorConsole *console);
 
 
-G_DEFINE_TYPE (GimpErrorConsole, gimp_error_console, GIMP_TYPE_EDITOR);
+G_DEFINE_TYPE (GimpErrorConsole, gimp_error_console, GIMP_TYPE_EDITOR)
 
 #define parent_class gimp_error_console_parent_class
 

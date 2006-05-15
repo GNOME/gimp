@@ -38,7 +38,7 @@
 static void   gimp_action_factory_finalize (GObject *object);
 
 
-G_DEFINE_TYPE (GimpActionFactory, gimp_action_factory, GIMP_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpActionFactory, gimp_action_factory, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_action_factory_parent_class
 

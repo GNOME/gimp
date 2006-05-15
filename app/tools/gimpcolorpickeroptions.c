@@ -53,7 +53,7 @@ static void   gimp_color_picker_options_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpColorPickerOptions, gimp_color_picker_options,
-               GIMP_TYPE_COLOR_OPTIONS);
+               GIMP_TYPE_COLOR_OPTIONS)
 
 
 static void

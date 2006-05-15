@@ -88,7 +88,7 @@ static void      paint_mask_to_canvas_buf            (GimpPaintCore    *core,
 static void      canvas_tiles_to_canvas_buf          (GimpPaintCore    *core);
 
 
-G_DEFINE_TYPE (GimpPaintCore, gimp_paint_core, GIMP_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpPaintCore, gimp_paint_core, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_paint_core_parent_class
 

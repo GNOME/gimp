@@ -60,7 +60,7 @@ static void   gimp_magnify_options_reset        (GimpToolOptions *tool_options);
 
 
 G_DEFINE_TYPE (GimpMagnifyOptions, gimp_magnify_options,
-               GIMP_TYPE_TOOL_OPTIONS);
+               GIMP_TYPE_TOOL_OPTIONS)
 
 #define parent_class gimp_magnify_options_parent_class
 

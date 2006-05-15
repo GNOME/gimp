@@ -103,7 +103,7 @@ static void       gimp_item_real_resize       (GimpItem      *item,
                                                gint           offset_y);
 
 
-G_DEFINE_TYPE (GimpItem, gimp_item, GIMP_TYPE_VIEWABLE);
+G_DEFINE_TYPE (GimpItem, gimp_item, GIMP_TYPE_VIEWABLE)
 
 #define parent_class gimp_item_parent_class
 

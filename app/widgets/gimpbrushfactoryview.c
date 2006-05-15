@@ -52,7 +52,7 @@ static void   gimp_brush_factory_view_spacing_update  (GtkAdjustment        *adj
 
 
 G_DEFINE_TYPE (GimpBrushFactoryView, gimp_brush_factory_view,
-               GIMP_TYPE_DATA_FACTORY_VIEW);
+               GIMP_TYPE_DATA_FACTORY_VIEW)
 
 #define parent_class gimp_brush_factory_view_parent_class
 

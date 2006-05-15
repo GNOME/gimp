@@ -58,7 +58,7 @@ static void   gimp_ink_options_get_property (GObject      *object,
                                              GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpInkOptions, gimp_ink_options, GIMP_TYPE_PAINT_OPTIONS);
+G_DEFINE_TYPE (GimpInkOptions, gimp_ink_options, GIMP_TYPE_PAINT_OPTIONS)
 
 
 static void

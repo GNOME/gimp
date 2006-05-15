@@ -81,7 +81,7 @@ static GtkCellEditable *
 
 
 G_DEFINE_TYPE (GimpCellRendererAccel, gimp_cell_renderer_accel,
-               GTK_TYPE_CELL_RENDERER_TEXT);
+               GTK_TYPE_CELL_RENDERER_TEXT)
 
 #define parent_class gimp_cell_renderer_accel_parent_class
 

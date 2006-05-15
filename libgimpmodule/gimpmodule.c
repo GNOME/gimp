@@ -51,7 +51,7 @@ static void       gimp_module_set_last_error (GimpModule  *module,
                                               const gchar *error_str);
 
 
-G_DEFINE_TYPE (GimpModule, gimp_module, G_TYPE_TYPE_MODULE);
+G_DEFINE_TYPE (GimpModule, gimp_module, G_TYPE_TYPE_MODULE)
 
 #define parent_class gimp_module_parent_class
 

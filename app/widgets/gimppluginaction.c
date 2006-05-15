@@ -60,7 +60,7 @@ static void   gimp_plug_in_action_connect_proxy (GtkAction    *action,
                                                  GtkWidget    *proxy);
 
 
-G_DEFINE_TYPE (GimpPlugInAction, gimp_plug_in_action, GIMP_TYPE_ACTION);
+G_DEFINE_TYPE (GimpPlugInAction, gimp_plug_in_action, GIMP_TYPE_ACTION)
 
 #define parent_class gimp_plug_in_action_parent_class
 

@@ -76,7 +76,7 @@ static gboolean  gimp_container_editor_get_show_button_bar (GimpDocked *docked);
 G_DEFINE_TYPE_WITH_CODE (GimpContainerEditor, gimp_container_editor,
                          GTK_TYPE_VBOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_container_editor_docked_iface_init));
+                                                gimp_container_editor_docked_iface_init))
 
 #define parent_class gimp_container_editor_parent_class
 

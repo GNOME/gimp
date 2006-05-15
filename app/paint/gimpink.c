@@ -87,7 +87,7 @@ static void      render_blob             (Blob             *blob,
                                           PixelRegion      *dest);
 
 
-G_DEFINE_TYPE (GimpInk, gimp_ink, GIMP_TYPE_PAINT_CORE);
+G_DEFINE_TYPE (GimpInk, gimp_ink, GIMP_TYPE_PAINT_CORE)
 
 #define parent_class gimp_ink_parent_class
 

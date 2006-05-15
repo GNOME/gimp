@@ -100,7 +100,7 @@ static void     gimp_new_rect_select_tool_real_rect_select (GimpNewRectSelectToo
 G_DEFINE_TYPE_WITH_CODE (GimpNewRectSelectTool, gimp_new_rect_select_tool,
                          GIMP_TYPE_SELECTION_TOOL,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_TOOL,
-                                                gimp_new_rect_select_tool_rectangle_tool_iface_init));
+                                                gimp_new_rect_select_tool_rectangle_tool_iface_init))
 
 #define parent_class gimp_new_rect_select_tool_parent_class
 

@@ -49,7 +49,7 @@ static GValueArray * gimp_font_select_run_callback (GimpPdbDialog *dialog,
                                                     gboolean       closing);
 
 
-G_DEFINE_TYPE (GimpFontSelect, gimp_font_select, GIMP_TYPE_PDB_DIALOG);
+G_DEFINE_TYPE (GimpFontSelect, gimp_font_select, GIMP_TYPE_PDB_DIALOG)
 
 #define parent_class gimp_font_select_parent_class
 

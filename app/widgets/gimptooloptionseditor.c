@@ -84,7 +84,7 @@ static void   gimp_tool_options_editor_presets_changed (GimpContainer         *c
 G_DEFINE_TYPE_WITH_CODE (GimpToolOptionsEditor, gimp_tool_options_editor,
                          GIMP_TYPE_EDITOR,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_tool_options_editor_docked_iface_init));
+                                                gimp_tool_options_editor_docked_iface_init))
 
 #define parent_class gimp_tool_options_editor_parent_class
 

@@ -46,7 +46,7 @@ static void   gimp_view_renderer_imagefile_render (GimpViewRenderer *renderer,
 
 
 G_DEFINE_TYPE (GimpViewRendererImagefile, gimp_view_renderer_imagefile,
-               GIMP_TYPE_VIEW_RENDERER);
+               GIMP_TYPE_VIEW_RENDERER)
 
 #define parent_class gimp_view_renderer_imagefile_parent_class
 

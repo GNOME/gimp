@@ -64,7 +64,7 @@ static void         gimp_module_db_module_modified     (GimpModule   *module,
                                                         GimpModuleDB *db);
 
 
-G_DEFINE_TYPE (GimpModuleDB, gimp_module_db, G_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpModuleDB, gimp_module_db, G_TYPE_OBJECT)
 
 #define parent_class gimp_module_db_parent_class
 

@@ -128,7 +128,7 @@ static void   palette_editor_scroll_top_left       (GimpPaletteEditor *editor);
 G_DEFINE_TYPE_WITH_CODE (GimpPaletteEditor, gimp_palette_editor,
                          GIMP_TYPE_DATA_EDITOR,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_palette_editor_docked_iface_init));
+                                                gimp_palette_editor_docked_iface_init))
 
 #define parent_class gimp_palette_editor_parent_class
 

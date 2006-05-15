@@ -40,7 +40,7 @@
 static GtkWidget * gimp_smudge_options_gui (GimpToolOptions *tool_options);
 
 
-G_DEFINE_TYPE (GimpSmudgeTool, gimp_smudge_tool, GIMP_TYPE_PAINT_TOOL);
+G_DEFINE_TYPE (GimpSmudgeTool, gimp_smudge_tool, GIMP_TYPE_PAINT_TOOL)
 
 
 void

@@ -34,7 +34,7 @@
 static void   gimp_enum_label_finalize (GObject *object);
 
 
-G_DEFINE_TYPE (GimpEnumLabel, gimp_enum_label, GTK_TYPE_LABEL);
+G_DEFINE_TYPE (GimpEnumLabel, gimp_enum_label, GTK_TYPE_LABEL)
 
 #define parent_class gimp_enum_label_parent_class
 

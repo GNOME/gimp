@@ -71,7 +71,7 @@ static gfloat gimp_dodge_burn_shadows_lut_func    (gpointer   user_data,
                                                    gfloat     value);
 
 
-G_DEFINE_TYPE (GimpDodgeBurn, gimp_dodge_burn, GIMP_TYPE_BRUSH_CORE);
+G_DEFINE_TYPE (GimpDodgeBurn, gimp_dodge_burn, GIMP_TYPE_BRUSH_CORE)
 
 #define parent_class gimp_dodge_burn_parent_class
 

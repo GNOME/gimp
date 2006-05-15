@@ -79,7 +79,7 @@ static void   clear_target                   (GimpItem          *target_item,
                                               GimpAlignTool     *align_tool);
 
 
-G_DEFINE_TYPE (GimpAlignTool, gimp_align_tool, GIMP_TYPE_DRAW_TOOL);
+G_DEFINE_TYPE (GimpAlignTool, gimp_align_tool, GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_align_tool_parent_class
 

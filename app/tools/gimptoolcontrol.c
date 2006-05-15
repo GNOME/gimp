@@ -28,7 +28,7 @@
 static void gimp_tool_control_finalize (GObject *object);
 
 
-G_DEFINE_TYPE (GimpToolControl, gimp_tool_control, GIMP_TYPE_OBJECT);
+G_DEFINE_TYPE (GimpToolControl, gimp_tool_control, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_tool_control_parent_class
 

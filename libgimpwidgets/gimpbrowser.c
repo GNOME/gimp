@@ -48,7 +48,7 @@ static void       gimp_browser_entry_changed  (GtkEditable *editable,
 static gboolean   gimp_browser_search_timeout (gpointer     data);
 
 
-G_DEFINE_TYPE (GimpBrowser, gimp_browser, GTK_TYPE_HPANED);
+G_DEFINE_TYPE (GimpBrowser, gimp_browser, GTK_TYPE_HPANED)
 
 #define parent_class gimp_browser_parent_class
 

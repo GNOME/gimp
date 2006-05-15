@@ -75,7 +75,7 @@ static void   gimp_blend_tool_cursor_update  (GimpTool        *tool,
 static void   gimp_blend_tool_draw           (GimpDrawTool    *draw_tool);
 
 
-G_DEFINE_TYPE (GimpBlendTool, gimp_blend_tool, GIMP_TYPE_DRAW_TOOL);
+G_DEFINE_TYPE (GimpBlendTool, gimp_blend_tool, GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_blend_tool_parent_class
 

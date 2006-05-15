@@ -41,7 +41,7 @@ static void   gimp_ink_tool_cursor_update (GimpTool        *tool,
                                            GimpDisplay     *display);
 
 
-G_DEFINE_TYPE (GimpInkTool, gimp_ink_tool, GIMP_TYPE_PAINT_TOOL);
+G_DEFINE_TYPE (GimpInkTool, gimp_ink_tool, GIMP_TYPE_PAINT_TOOL)
 
 #define parent_class gimp_ink_tool_parent_class
 

@@ -62,7 +62,7 @@ static void  gimp_file_proc_view_selection_changed (GtkTreeSelection *selection,
                                                     GimpFileProcView *view);
 
 
-G_DEFINE_TYPE (GimpFileProcView, gimp_file_proc_view, GTK_TYPE_TREE_VIEW);
+G_DEFINE_TYPE (GimpFileProcView, gimp_file_proc_view, GTK_TYPE_TREE_VIEW)
 
 #define parent_class gimp_file_proc_view_parent_class
 

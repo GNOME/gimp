@@ -44,7 +44,7 @@ static void   gimp_image_view_activate_item (GimpContainerEditor *editor,
                                              GimpViewable        *viewable);
 
 
-G_DEFINE_TYPE (GimpImageView, gimp_image_view, GIMP_TYPE_CONTAINER_EDITOR);
+G_DEFINE_TYPE (GimpImageView, gimp_image_view, GIMP_TYPE_CONTAINER_EDITOR)
 
 #define parent_class gimp_image_view_parent_class
 

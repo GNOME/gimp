@@ -78,7 +78,7 @@ static gint dash_x_to_index                     (GimpDashEditor *editor,
                                                  gint            x);
 
 
-G_DEFINE_TYPE (GimpDashEditor, gimp_dash_editor, GTK_TYPE_DRAWING_AREA);
+G_DEFINE_TYPE (GimpDashEditor, gimp_dash_editor, GTK_TYPE_DRAWING_AREA)
 
 #define parent_class gimp_dash_editor_parent_class
 
