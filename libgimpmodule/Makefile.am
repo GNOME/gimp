@@ -78,7 +78,8 @@ libgimpmodule_2_0_la_DEPENDENCIES = $(gimpmodule_def)
 
 libgimpmodule_2_0_la_LIBADD = \
 	$(libgimpbase)			\
-	$(GMODULE_NO_EXPORT_LIBS)
+	$(GMODULE_NO_EXPORT_LIBS) 	\
+	$(GLIB_LIBS)
 
 install-data-local: install-ms-lib install-libtool-import-lib
 

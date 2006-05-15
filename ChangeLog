@@ -1,3 +1,9 @@
+2006-05-15  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* libgimpmodule/Makefile.am: added missing GLIB_LIBS to
+	LIBADD. The recent changes to the gmodule check in configure.in
+	had broken the build.
+	
 2006-05-15  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/gimpplugin.c: removed debugging output.
