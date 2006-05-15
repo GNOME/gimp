@@ -43,11 +43,11 @@ GTKDOC_CFLAGS = \
 	@CFLAGS@		\
 	-I$(top_srcdir)		\
 	-I$(top_builddir)	\
-	@GMODULE_CFLAGS@
+	@GMODULE_NO_EXPORT_CFLAGS@
 
 GTKDOC_LIBS = \
 	$(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la \
-	@GMODULE_LIBS@
+	@GMODULE_NO_EXPORT_LIBS@
 
 
 include $(top_srcdir)/gtk-doc.make
