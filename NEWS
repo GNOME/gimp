@@ -18,6 +18,10 @@ Changes in GIMP 2.3.9
 - declared even more data as const
 - refactoring of the PDB and plug-in management code
 - allow Merge to work on a single layer
+- added a way to remove all keyboard shortcuts from the Preferences dialog
+- added menu items for "Text to Path", "Text along Path" and "Text to
+  Selection"
+- allow to initialize a new layer mask with any of the image's channels
 - bug fixes and code cleanup
 
 
