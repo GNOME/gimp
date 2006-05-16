@@ -1630,7 +1630,7 @@ gimp_rectangle_tool_response (GtkWidget         *widget,
 
       gimp_image_flush (tool->display->image);
 
-      tool->display    = NULL;
+      tool->display  = NULL;
       tool->drawable = NULL;
 
     }
@@ -1970,11 +1970,16 @@ gimp_rectangle_tool_notify_highlight (GimpRectangleOptions *options,
                                       GParamSpec           *pspec,
                                       GimpRectangleTool    *rectangle)
 {
-  GimpTool             *tool     = GIMP_TOOL (rectangle);
-  GimpDisplayShell     *shell    = GIMP_DISPLAY_SHELL (tool->display->shell);
+  GimpTool             *tool = GIMP_TOOL (rectangle);
+  GimpDisplayShell     *shell;
   gboolean              highlight;
   gint                  x1, y1;
   gint                  x2, y2;
+
+  if (! tool->display)
+    return;
+
+  shell = GIMP_DISPLAY_SHELL (tool->display->shell);
 
   g_object_get (options, "highlight", &highlight, NULL);
 
