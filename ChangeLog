@@ -1,5 +1,12 @@
 2006-05-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu.c: removed empty quit() method.
+	Only load scripts when extension-script-fu is started.
+
+	* plug-ins/script-fu/script-fu-scripts.c: minor cleanup.
+
+2006-05-16  Sven Neumann  <sven@gimp.org>
+
 	* app/app_procs.c (app_run): indentation.
 
 	* app/core/gimp.c (gimp_real_initialize) 
