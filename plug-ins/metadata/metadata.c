@@ -53,7 +53,7 @@ static void      run             (const gchar      *name,
 				  GimpParam       **return_vals);
 
 /* local variables */
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -67,61 +67,61 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef editor_args[] =
+  static const GimpParamDef editor_args[] =
   {
     { GIMP_PDB_INT32,       "run-mode",  "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_DRAWABLE,    "drawable",  "Input drawable (unused)"      }
   };
 
-  static GimpParamDef decode_xmp_args[] =
+  static const GimpParamDef decode_xmp_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_STRING,      "xmp",       "XMP packet"                   }
   };
 
-  static GimpParamDef encode_xmp_args[] =
+  static const GimpParamDef encode_xmp_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  }
   };
-  static GimpParamDef encode_xmp_return_vals[] =
+  static const GimpParamDef encode_xmp_return_vals[] =
   {
     { GIMP_PDB_STRING,      "xmp",       "XMP packet"                   }
   };
 
 /* FIXME: uncomment when these are working
-  static GimpParamDef decode_exif_args[] =
+  static const GimpParamDef decode_exif_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_INT32,       "exif-size", "size of the EXIF block"       },
     { GIMP_PDB_INT8ARRAY,   "exif",      "EXIF block"                   }
   };
 
-  static GimpParamDef encode_exif_args[] =
+  static const GimpParamDef encode_exif_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  }
   };
-  static GimpParamDef encode_exif_return_vals[] =
+  static const GimpParamDef encode_exif_return_vals[] =
   {
     { GIMP_PDB_INT32,       "exif-size", "size of the EXIF block"       },
     { GIMP_PDB_INT8ARRAY,   "exif",      "EXIF block"                   }
   };
 */
 
-  static GimpParamDef get_args[] =
+  static const GimpParamDef get_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_STRING,      "schema",    "XMP schema prefix or URI"     },
     { GIMP_PDB_STRING,      "property",  "XMP property name"            }
   };
-  static GimpParamDef get_return_vals[] =
+  static const GimpParamDef get_return_vals[] =
   {
     { GIMP_PDB_INT32,       "type",      "XMP property type"            },
     { GIMP_PDB_INT32,       "num-vals",  "number of values"             },
     { GIMP_PDB_STRINGARRAY, "vals",      "XMP property values"          }
   };
 
-  static GimpParamDef set_args[] =
+  static const GimpParamDef set_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_STRING,      "schema",    "XMP schema prefix or URI"     },
@@ -131,18 +131,18 @@ query (void)
     { GIMP_PDB_STRINGARRAY, "vals",      "XMP property values"          }
   };
 
-  static GimpParamDef get_simple_args[] =
+  static const GimpParamDef get_simple_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_STRING,      "schema",    "XMP schema prefix or URI"     },
     { GIMP_PDB_STRING,      "property",  "XMP property name"            }
   };
-  static GimpParamDef get_simple_return_vals[] =
+  static const GimpParamDef get_simple_return_vals[] =
   {
     { GIMP_PDB_STRING,      "value",     "XMP property value"           }
   };
 
-  static GimpParamDef set_simple_args[] =
+  static const GimpParamDef set_simple_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_STRING,      "schema",    "XMP schema prefix or URI"     },
@@ -151,14 +151,14 @@ query (void)
   };
 
 /* FIXME: uncomment when these are working
-  static GimpParamDef delete_args[] =
+  static const GimpParamDef delete_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_STRING,      "schema",    "XMP schema prefix or URI"     },
     { GIMP_PDB_STRING,      "property",  "XMP property name"            }
   };
 
-  static GimpParamDef add_schema_args[] =
+  static const GimpParamDef add_schema_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_STRING,      "prefix",    "XMP schema prefix"            },
@@ -166,13 +166,13 @@ query (void)
   };
 */
 
-  static GimpParamDef import_args[] =
+  static const GimpParamDef import_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                        },
     { GIMP_PDB_STRING,      "filename",  "The name of the XMP file to import" }
   };
 
-  static GimpParamDef export_args[] =
+  static const GimpParamDef export_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_STRING,      "filename",  "The name of the file to save the XMP packet in" },

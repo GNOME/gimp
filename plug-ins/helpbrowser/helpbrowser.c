@@ -61,7 +61,7 @@ static void   temp_proc_run     (const gchar      *name,
 
 /*  local variables  */
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -75,7 +75,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32, "run-mode", "Interactive" },
   };
@@ -153,7 +153,7 @@ run (const gchar      *name,
 static void
 temp_proc_install (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_STRING, "uri", "Full uri of the file to open" }
   };

@@ -1566,7 +1566,7 @@ mng_save_dialog (gint32 image_id)
 static void
 query (void)
 {
-  static GimpParamDef save_args[] =
+  static const GimpParamDef save_args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",        "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",           "Input image" },
@@ -1739,7 +1739,7 @@ run (const gchar      *name,
 
 /* Only query and run are implemented by this plug-in. */
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,
   NULL,

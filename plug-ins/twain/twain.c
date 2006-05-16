@@ -130,7 +130,7 @@ static void run   (const gchar      *name,
 		   GimpParam       **return_vals);
 
 /* This plug-in's functions */
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
   NULL,    /* quit_proc */
@@ -297,8 +297,8 @@ initializeTwain(void)
 static void
 query (void)
 {
-  static GimpParamDef args[] = { IN_ARGS };
-  static GimpParamDef return_vals[] = { OUT_ARGS };
+  static const GimpParamDef args[] = { IN_ARGS };
+  static const GimpParamDef return_vals[] = { OUT_ARGS };
 
 #ifdef _DEBUG
   if (twain_run_mode == RUN_DUMP)

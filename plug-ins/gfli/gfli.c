@@ -98,7 +98,7 @@ static gboolean  get_info    (const gchar  *filename,
 /*
  * GIMP interface
  */
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */

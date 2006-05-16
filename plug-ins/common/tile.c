@@ -59,7 +59,7 @@ static gboolean  tile_dialog   (gint32     image_ID,
                                 gint32     drawable_ID);
 
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -81,7 +81,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",      "Input image (unused)"        },
@@ -91,7 +91,7 @@ query (void)
     { GIMP_PDB_INT32,    "new-image",  "Create a new image?"         }
   };
 
-  static GimpParamDef return_vals[] =
+  static const GimpParamDef return_vals[] =
   {
     { GIMP_PDB_IMAGE, "new-image", "Output image (N/A if new-image == FALSE)" },
     { GIMP_PDB_LAYER, "new-layer", "Output layer (N/A if new-image == FALSE)" }

@@ -130,7 +130,7 @@ static guchar   * get_gradient_samples (gint32            drawable_id,
 
 /***** Variables *****/
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -194,7 +194,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run_mode",    "Interactive (0), non-interactive (1)" },
     { GIMP_PDB_IMAGE,    "image",       "Input image"                          },
@@ -207,7 +207,7 @@ query (void)
         "Shade the region under the curl (1) or not (0)"                    },
   };
 
-  static GimpParamDef return_vals[] =
+  static const GimpParamDef return_vals[] =
   {
     { GIMP_PDB_LAYER, "Curl Layer", "The new layer with the curl." }
   };

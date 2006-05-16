@@ -153,7 +153,7 @@ static gboolean  gih_save_image      (const gchar  *filename,
 				      gint32        drawable_ID);
 
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -166,7 +166,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef gih_save_args[] =
+  static const GimpParamDef gih_save_args[] =
   {
     { GIMP_PDB_INT32,       "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,       "image",        "Input image" },
@@ -186,13 +186,13 @@ query (void)
     { GIMP_PDB_STRINGARRAY, "sel",	    "Selection modes" }
   };
 
-  static GimpParamDef gih_load_args[] =
+  static const GimpParamDef gih_load_args[] =
   {
     { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
     { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
   };
-  static GimpParamDef gih_load_return_vals[] =
+  static const GimpParamDef gih_load_return_vals[] =
   {
     { GIMP_PDB_IMAGE,  "image",        "Output image" }
   };

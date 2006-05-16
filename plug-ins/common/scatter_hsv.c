@@ -59,7 +59,7 @@ static gint     randomize_value     (gint              now,
                                      gint              rand_max);
 
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -90,7 +90,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args [] =
+  static const GimpParamDef args [] =
   {
     { GIMP_PDB_INT32,    "run-mode",            "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",               "Input image (not used)" },

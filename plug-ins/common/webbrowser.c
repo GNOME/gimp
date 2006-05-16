@@ -50,7 +50,7 @@ static gchar*   strreplace       (const gchar      *string,
                                   const gchar      *replacement);
 #endif
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,	 /* quit_proc  */
@@ -64,7 +64,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_STRING, "url", "URL to open" }
   };

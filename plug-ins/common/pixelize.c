@@ -120,7 +120,7 @@ static void      pixelize_sub      (gint           pixelwidth,
 
 /***** Local vars *****/
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -143,7 +143,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef pixelize_args[]=
+  static const GimpParamDef pixelize_args[]=
   {
     { GIMP_PDB_INT32,    "run-mode",    "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",       "Input image (unused)"         },
@@ -151,7 +151,7 @@ query (void)
     { GIMP_PDB_INT32,    "pixel-width", "Pixel width (the decrease in resolution)" }
   };
 
-  static GimpParamDef pixelize2_args[]=
+  static const GimpParamDef pixelize2_args[]=
   {
     { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",        "Input image (unused)"         },

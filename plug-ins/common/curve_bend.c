@@ -301,7 +301,7 @@ static int             p_save_pointfile               (BenderDialog *cd, const g
 
 
 /* Global Variables */
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,   /* init_proc  */
   NULL,   /* quit_proc  */
@@ -481,7 +481,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,      "run_mode", "Interactive, non-interactive"},
     { GIMP_PDB_IMAGE,      "image", "Input image" },
@@ -505,12 +505,12 @@ query (void)
     { GIMP_PDB_INT8ARRAY,  "lower_val_y",   "array of 256 y freehand koord { 0 <= y <= 255 }"}
   };
 
-  static GimpParamDef return_vals[] =
+  static const GimpParamDef return_vals[] =
   {
     { GIMP_PDB_LAYER, "bent_layer", "the handled layer" }
   };
 
-  static GimpParamDef args_iter[] =
+  static const GimpParamDef args_iter[] =
   {
     { GIMP_PDB_INT32, "run_mode", "non-interactive" },
     { GIMP_PDB_INT32, "total_steps", "total number of steps (# of layers-1 to apply the related plug-in)" },

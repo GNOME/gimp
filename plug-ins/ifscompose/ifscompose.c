@@ -307,7 +307,7 @@ static IfsComposeInterface ifscint =
   FALSE,   /* run          */
 };
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
   NULL,    /* quit_proc */
@@ -321,14 +321,14 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
   };
 
-  static GimpParamDef *return_vals = NULL;
+  static const GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
   gimp_install_procedure (IFSCOMPOSE_PROC,

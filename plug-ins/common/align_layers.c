@@ -77,7 +77,7 @@ static void              align_layers_get_align_offsets (gint32  drawable_id,
 static gint              align_layers_dialog             (void);
 
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -115,7 +115,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args [] =
+  static const GimpParamDef args [] =
   {
     { GIMP_PDB_INT32,    "run-mode",             "Interactive, non-interactive"},
     { GIMP_PDB_IMAGE,    "image",                "Input image"},

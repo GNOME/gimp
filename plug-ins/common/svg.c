@@ -81,7 +81,7 @@ static gboolean    load_rsvg_size    (const gchar  *filename,
 static gboolean    load_dialog       (const gchar  *filename);
 
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,
   NULL,
@@ -95,7 +95,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef load_args[] =
+  static const GimpParamDef load_args[] =
   {
     { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive"        },
     { GIMP_PDB_STRING, "filename",     "The name of the file to load"        },
@@ -112,17 +112,17 @@ query (void)
       "Whether to not import paths (0), import paths individually (1) "
       "or merge all imported paths (2)"                                      }
   };
-  static GimpParamDef load_return_vals[] =
+  static const GimpParamDef load_return_vals[] =
   {
     { GIMP_PDB_IMAGE,  "image",        "Output image" }
   };
 
-  static GimpParamDef thumb_args[] =
+  static const GimpParamDef thumb_args[] =
   {
     { GIMP_PDB_STRING, "filename",     "The name of the file to load"  },
     { GIMP_PDB_INT32,  "thumb-size",   "Preferred thumbnail size"      }
   };
-  static GimpParamDef thumb_return_vals[] =
+  static const GimpParamDef thumb_return_vals[] =
   {
     { GIMP_PDB_IMAGE,  "image",        "Thumbnail image"               },
     { GIMP_PDB_INT32,  "image-width",  "Width of full-sized image"     },

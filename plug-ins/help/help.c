@@ -78,7 +78,7 @@ static gboolean load_help_idle    (gpointer          data);
 
 static GMainLoop *main_loop = NULL;
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -100,7 +100,7 @@ help_exit (void)
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,       "num-domain-names", "" },
     { GIMP_PDB_STRINGARRAY, "domain-names",     "" },
@@ -217,7 +217,7 @@ run (const gchar      *name,
 static void
 temp_proc_install (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_STRING, "procedure",    "The procedure of the browser to use" },
     { GIMP_PDB_STRING, "help-domain",  "Help domain to use" },

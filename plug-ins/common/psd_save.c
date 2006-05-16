@@ -163,7 +163,7 @@ static void   write_pixel_data     (FILE *fd, gint32 drawableID,
 				    gint32 rowlenOffset);
 
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
   NULL,    /* quit_proc */
@@ -178,7 +178,7 @@ MAIN()
 static void
 query (void)
 {
-  static GimpParamDef save_args[] =
+  static const GimpParamDef save_args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },

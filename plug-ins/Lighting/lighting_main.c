@@ -160,7 +160,7 @@ check_drawables (void)
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run_mode",              "Interactive (0), non-interactive (1)" },
     { GIMP_PDB_IMAGE,    "image",                 "Input image" },
@@ -324,7 +324,7 @@ run (const gchar      *name,
   g_free (ypostab);
 }
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */

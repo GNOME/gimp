@@ -98,7 +98,7 @@ static inline void EmbossRow  (guchar       *src,
 
 #define DtoR(d) ((d)*(G_PI/(gdouble)180))
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init  */
   NULL,  /* quit  */
@@ -111,7 +111,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive"  },
     { GIMP_PDB_IMAGE,    "image",     "The Image"                     },

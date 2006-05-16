@@ -283,7 +283,7 @@ static gboolean  save_dialog              (void);
 static void      save_unit_toggle_update  (GtkWidget *widget,
                                            gpointer   data);
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -527,18 +527,18 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef load_args[] =
+  static const GimpParamDef load_args[] =
   {
     { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
     { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
   };
-  static GimpParamDef load_return_vals[] =
+  static const GimpParamDef load_return_vals[] =
   {
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };
 
-  static GimpParamDef set_load_args[] =
+  static const GimpParamDef set_load_args[] =
   {
     { GIMP_PDB_INT32,  "resolution", "Resolution to interprete image (dpi)"    },
     { GIMP_PDB_INT32,  "width",      "Desired width"                           },
@@ -550,17 +550,17 @@ query (void)
     { GIMP_PDB_INT32,  "GraphicsAlphaBits", "1, 2, or 4" }
   };
 
-  static GimpParamDef thumb_args[] =
+  static const GimpParamDef thumb_args[] =
   {
     { GIMP_PDB_STRING, "filename",     "The name of the file to load"  },
     { GIMP_PDB_INT32,  "thumb-size",   "Preferred thumbnail size"      }
   };
-  static GimpParamDef thumb_return_vals[] =
+  static const GimpParamDef thumb_return_vals[] =
   {
     { GIMP_PDB_IMAGE, "image",         "Output image" }
   };
 
-  static GimpParamDef save_args[] =
+  static const GimpParamDef save_args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },

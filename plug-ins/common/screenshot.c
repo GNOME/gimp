@@ -191,7 +191,7 @@ static gboolean  shoot_quit_timeout   (gpointer          data);
 
 
 /* Global Variables */
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,	 /* quit_proc  */
@@ -207,7 +207,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32, "run-mode",  "Interactive, non-interactive"     },
     { GIMP_PDB_INT32, "root",      "Root window { TRUE, FALSE }"      },
@@ -218,7 +218,7 @@ query (void)
     { GIMP_PDB_INT32, "y2",        "(optional) Region bottom y coord" }
   };
 
-  static GimpParamDef return_vals[] =
+  static const GimpParamDef return_vals[] =
   {
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };

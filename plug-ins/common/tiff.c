@@ -166,7 +166,7 @@ static void      byte2bit               (const guchar *byteline,
 static void      fill_bit2byte          (void);
 
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -192,13 +192,13 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef load_args[] =
+  static const GimpParamDef load_args[] =
   {
     { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
     { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
   };
-  static GimpParamDef load_return_vals[] =
+  static const GimpParamDef load_return_vals[] =
   {
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };
@@ -211,12 +211,12 @@ query (void)
     { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },\
     { GIMP_PDB_INT32,    "compression",  "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4)" }
 
-  static GimpParamDef save_args_old[] =
+  static const GimpParamDef save_args_old[] =
   {
     COMMON_SAVE_ARGS
   };
 
-  static GimpParamDef save_args[] =
+  static const GimpParamDef save_args[] =
   {
     COMMON_SAVE_ARGS,
     { GIMP_PDB_INT32, "save-transp-pixels", "Keep the color data masked by an alpha channel intact" }

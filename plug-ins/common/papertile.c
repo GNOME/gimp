@@ -795,7 +795,7 @@ filter (void)
 static void
 plugin_query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",         "run mode"                       },
     { GIMP_PDB_IMAGE,    "image",            "input image"                    },
@@ -909,7 +909,7 @@ plugin_run (const gchar      *name,
   }
 }
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,
   NULL,

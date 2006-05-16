@@ -60,7 +60,7 @@ static void   run   (const gchar      *name,
                      gint             *nreturn_vals,
                      GimpParam       **return_vals);
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -74,7 +74,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32, "run-mode", "Interactive, [non-interactive]" }
   };

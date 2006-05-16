@@ -283,7 +283,7 @@ static void check_config           (gint width, gint height);
   while (0)
 
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,
   NULL,
@@ -340,7 +340,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",     "Interactive, Non-interactive, Last-Vals" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },

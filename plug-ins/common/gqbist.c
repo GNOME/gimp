@@ -375,7 +375,7 @@ qbist (ExpInfo *info,
 
 /** Plugin interface *********************************************************/
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,                         /* init_proc  */
   NULL,                         /* quit_proc  */

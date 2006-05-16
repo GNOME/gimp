@@ -44,7 +44,7 @@ static gboolean  glob_fnmatch (const gchar      *pattern,
                                const gchar      *string);
 
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,
   NULL,
@@ -57,14 +57,14 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef glob_args[] =
+  static const GimpParamDef glob_args[] =
   {
     { GIMP_PDB_STRING,  "pattern" ,  "The glob pattern (in UTF-8 encoding)" },
     { GIMP_PDB_INT32,   "encoding",  "Encoding of the returned names: "
                                      "{ UTF-8 (0), filename encoding (1) }" }
   };
 
-  static GimpParamDef glob_return_vals[] =
+  static const GimpParamDef glob_return_vals[] =
   {
     { GIMP_PDB_INT32,       "num-files", "The number of returned names" },
     { GIMP_PDB_STRINGARRAY, "files",     "The list of matching names"   }

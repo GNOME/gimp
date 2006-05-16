@@ -54,7 +54,7 @@ static void      add_new_color        (gint          bytes,
 static void      thickness_callback   (GtkWidget    *widget,
                                        gpointer      data);
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init  */
   NULL,  /* quit  */
@@ -82,7 +82,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",        "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",           "Input image (unused)" },
@@ -90,7 +90,7 @@ query (void)
     { GIMP_PDB_INT32,    "thickness",       "Border size to take in count" },
     { GIMP_PDB_INT32,    "bucket-exponent", "Bits for bucket size (default=4: 16 Levels)" },
   };
-  static GimpParamDef return_vals[] =
+  static const GimpParamDef return_vals[] =
   {
     { GIMP_PDB_COLOR,    "borderaverage",   "Sends the average color of the specified border to the Toolbox foreground." },
   };

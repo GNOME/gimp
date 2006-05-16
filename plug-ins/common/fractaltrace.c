@@ -53,7 +53,7 @@ static void dialog_preview_draw (void);
 
 /******************************************************************************/
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -98,7 +98,7 @@ static parameter_t parameters =
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run_mode",     "interactive / non-interactive"    },
     { GIMP_PDB_IMAGE,    "image",        "input image (not used)"           },

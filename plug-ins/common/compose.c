@@ -293,7 +293,7 @@ typedef struct
   gint          compose_idx;                              /* Compose type */
 } ComposeInterface;
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -329,7 +329,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image1",       "First input image" },
@@ -344,12 +344,12 @@ query (void)
     { GIMP_PDB_INT8,     "value4",       "Mask value if image 4 is -1" }
   };
 
-  static GimpParamDef return_vals[] =
+  static const GimpParamDef return_vals[] =
   {
     { GIMP_PDB_IMAGE, "new_image", "Output image" }
   };
 
-  static GimpParamDef drw_args[] =
+  static const GimpParamDef drw_args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image1",       "First input image (not used)" },
@@ -364,12 +364,12 @@ query (void)
     { GIMP_PDB_INT8,     "value4",       "Mask value if image 4 is -1" }
   };
 
-  static GimpParamDef drw_return_vals[] =
+  static const GimpParamDef drw_return_vals[] =
   {
     { GIMP_PDB_IMAGE, "new_image", "Output image" }
   };
 
-  static GimpParamDef recompose_args[] =
+  static const GimpParamDef recompose_args[] =
   {
     { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Image to recompose from" },

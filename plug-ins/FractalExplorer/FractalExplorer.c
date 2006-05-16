@@ -184,7 +184,7 @@ static void       fractalexplorer_list_load_all    (const gchar *path);
 static void       fractalexplorer_rescan_list      (GtkWidget *widget,
                                                     gpointer   data);
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -205,7 +205,7 @@ MAIN()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE, "image", "Input image" },

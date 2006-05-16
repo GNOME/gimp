@@ -28,7 +28,7 @@ static void run                 (const gchar      *name,
 static void gimpressionist_main (void);
 
 
-GimpPlugInInfo PLUG_IN_INFO = {
+const GimpPlugInInfo PLUG_IN_INFO = {
         NULL,   /* init_proc */
         NULL,   /* quit_proc */
         query,  /* query_proc */
@@ -62,7 +62,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run_mode",  "Interactive"    },
     { GIMP_PDB_IMAGE,    "image",     "Input image"    },

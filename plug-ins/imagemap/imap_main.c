@@ -93,7 +93,7 @@ static void  run    (const gchar      *name,
                      GimpParam       **return_vals);
 static gint  dialog (GimpDrawable     *drawable);
 
-GimpPlugInInfo PLUG_IN_INFO = {
+const GimpPlugInInfo PLUG_IN_INFO = {
    NULL,                        /* init_proc */
    NULL,                        /* quit_proc */
    query,                       /* query_proc */
@@ -107,12 +107,12 @@ MAIN ()
 
 static void query(void)
 {
-   static GimpParamDef args[] = {
+   static const GimpParamDef args[] = {
       {GIMP_PDB_INT32, "run_mode", "Interactive"},
       {GIMP_PDB_IMAGE, "image", "Input image (unused)"},
       {GIMP_PDB_DRAWABLE, "drawable", "Input drawable"},
    };
-   static GimpParamDef *return_vals = NULL;
+   static const GimpParamDef *return_vals = NULL;
    static int nreturn_vals = 0;
 
    gimp_install_procedure("plug_in_imagemap",

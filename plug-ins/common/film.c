@@ -153,7 +153,7 @@ static void        film_font_select_callback (GimpFontSelectButton *button,
                                               gpointer              data);
 
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -208,7 +208,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,      "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,      "image",        "Input image (only used as default image in interactive mode)" },
@@ -224,7 +224,7 @@ query (void)
     { GIMP_PDB_INT32ARRAY, "image-ids",    "num_images image IDs to be used for film"}
   };
 
-  static GimpParamDef return_vals[] =
+  static const GimpParamDef return_vals[] =
   {
     { GIMP_PDB_IMAGE, "new-image", "Output image" }
   };

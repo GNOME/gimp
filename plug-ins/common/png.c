@@ -157,7 +157,7 @@ static void      load_gui_defaults         (PngSaveGui       *pg);
  * Globals...
  */
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,
   NULL,
@@ -192,13 +192,13 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef load_args[] =
+  static const GimpParamDef load_args[] =
   {
     { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
     { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
   };
-  static GimpParamDef load_return_vals[] =
+  static const GimpParamDef load_return_vals[] =
   {
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };
@@ -224,29 +224,29 @@ query (void)
     { GIMP_PDB_INT32, "comment", "Write comment?"                        }, \
     { GIMP_PDB_INT32, "svtrans", "Preserve color of transparent pixels?" }
 
-  static GimpParamDef save_args[] =
+  static const GimpParamDef save_args[] =
   {
     COMMON_SAVE_ARGS,
     OLD_CONFIG_ARGS
   };
 
-  static GimpParamDef save_args2[] =
+  static const GimpParamDef save_args2[] =
   {
     COMMON_SAVE_ARGS,
     FULL_CONFIG_ARGS
   };
 
-  static GimpParamDef save_args_defaults[] =
+  static const GimpParamDef save_args_defaults[] =
   {
     COMMON_SAVE_ARGS
   };
 
-  static GimpParamDef save_get_defaults_return_vals[] =
+  static const GimpParamDef save_get_defaults_return_vals[] =
   {
     FULL_CONFIG_ARGS
   };
 
-  static GimpParamDef save_args_set_defaults[] =
+  static const GimpParamDef save_args_set_defaults[] =
   {
     FULL_CONFIG_ARGS
   };

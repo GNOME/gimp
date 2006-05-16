@@ -69,7 +69,7 @@ RcmParams Current =
   GRAY_TO
 };
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
   NULL,    /* quit_proc */

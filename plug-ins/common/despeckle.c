@@ -96,7 +96,7 @@ static inline void    pixel_copy           (guchar        *dest,
  * Globals...
  */
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init  */
   NULL,  /* quit  */
@@ -131,7 +131,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef   args[] =
+  static const GimpParamDef   args[] =
   {
     { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image" },

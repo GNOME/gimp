@@ -189,7 +189,7 @@ rgb_to_bgr(guchar *rgbin,
 static void
 query (void)
 {
-  static GimpParamDef	print_args[] =
+  static const GimpParamDef	print_args[] =
   {
     { GIMP_PDB_INT32,	"run_mode",	"Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,	"image",	"Input image" },
@@ -208,7 +208,7 @@ query (void)
     { GIMP_PDB_INT32,	"top",		"Top offset (points, -1 = centered)" }
   };
 
-  static GimpParamDef	pagesetup_args[] =
+  static const GimpParamDef	pagesetup_args[] =
   {
     { GIMP_PDB_INT32,	"run_mode",	"Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,	"image",	"Input image" },
@@ -716,7 +716,7 @@ run (const gchar      *name,
   gimp_drawable_detach(drawable);
 }
 
-GimpPlugInInfo	PLUG_IN_INFO =		/* Plug-in information */
+const GimpPlugInInfo	PLUG_IN_INFO =		/* Plug-in information */
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */

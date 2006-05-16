@@ -48,7 +48,7 @@ static gint32    smooth_palette (GimpDrawable     *drawable,
                                  gint32           *layer_id);
 
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -62,7 +62,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",   "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",      "Input image (unused)"         },
@@ -73,7 +73,7 @@ query (void)
     { GIMP_PDB_INT32,    "show-image", "Show Image?"                  }
   };
 
-  static GimpParamDef return_vals[] =
+  static const GimpParamDef return_vals[] =
   {
     { GIMP_PDB_IMAGE, "new-image", "Output image" },
     { GIMP_PDB_LAYER, "new-layer", "Output layer" }

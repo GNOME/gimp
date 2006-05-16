@@ -63,7 +63,7 @@ static void      print_fit_size (GnomePrintConfig  *config,
                                  gdouble           *trans_y);
 
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -77,7 +77,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef print_args[] =
+  static const GimpParamDef print_args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },

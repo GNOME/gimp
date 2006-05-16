@@ -105,7 +105,7 @@ static inline gint run_length_encode (const guchar *src,
                                       gboolean      pack);
 
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -126,7 +126,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",   "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",      "Input image" },
@@ -136,7 +136,7 @@ query (void)
     { GIMP_PDB_INT32,    "method",     "IIR (0) or RLE (1)" }
   };
 
-  static GimpParamDef args1[] =
+  static const GimpParamDef args1[] =
   {
     { GIMP_PDB_INT32,    "run-mode",   "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",      "Input image (unused)" },
@@ -146,7 +146,7 @@ query (void)
     { GIMP_PDB_INT32,    "vertical",   "Blur in vertical direction" }
   };
 
-  static GimpParamDef args2[] =
+  static const GimpParamDef args2[] =
   {
     { GIMP_PDB_INT32,    "run-mode",   "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",      "Input image" },

@@ -87,7 +87,7 @@ static void     noisify_double_adjustment_update (GtkAdjustment *adjustment,
                                                   gpointer       data);
 
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc */
   NULL,  /* quit_proc */
@@ -115,7 +115,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef scatter_args[] =
+  static const GimpParamDef scatter_args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",    "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },
@@ -127,7 +127,7 @@ query (void)
     { GIMP_PDB_FLOAT,    "noise-3",     "Noise in the third channel (blue)" },
     { GIMP_PDB_FLOAT,    "noise-4",     "Noise in the fourth channel (alpha)" }
   };
-  static GimpParamDef noisify_args[] =
+  static const GimpParamDef noisify_args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",    "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },

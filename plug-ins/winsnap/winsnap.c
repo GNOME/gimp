@@ -132,7 +132,7 @@ static WinSnapInterface winsnapintf =
 };
 
 /* This plug-in's functions */
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
   NULL,    /* quit_proc */
@@ -980,8 +980,8 @@ snap_dialog (void)
 static void
 query(void)
 {
-  static GimpParamDef args[] = { IN_ARGS };
-  static GimpParamDef return_vals[] = { OUT_ARGS };
+  static const GimpParamDef args[] = { IN_ARGS };
+  static const GimpParamDef return_vals[] = { OUT_ARGS };
 
   /* the installation of the plugin */
   gimp_install_procedure (PLUG_IN_NAME,

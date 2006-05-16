@@ -68,7 +68,7 @@ static void      dialog_print_selVals    (SELVALS   *sels);
 static gboolean  sel2path                (gint32     image_ID);
 
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
   NULL,    /* quit_proc */
@@ -87,14 +87,14 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)" },
   };
 
-  static GimpParamDef advanced_args[] =
+  static const GimpParamDef advanced_args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",                    "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",                       "Input image" },

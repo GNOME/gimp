@@ -798,7 +798,7 @@ set_default_settings (void)
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode", "Interactive"    },
     { GIMP_PDB_IMAGE,    "image",    "Input image"    },
@@ -892,7 +892,7 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-GimpPlugInInfo PLUG_IN_INFO =
+const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
