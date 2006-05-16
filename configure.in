@@ -1385,7 +1385,7 @@ if test "x$with_alsa" != xno; then
   have_alsa=yes
   AM_PATH_ALSA(alsa_required_version,
                AC_DEFINE(HAVE_ALSA, 1, [Define to 1 if alsa is available]),
-               have_alsa="no (alsa not found or unuseable)")
+               have_alsa="no (alsa not found or unusable)")
 fi
 
 
