@@ -85,15 +85,16 @@ typedef struct _GimpToolInfo        GimpToolInfo;
 
 /*  data objects  */
 
-typedef struct _GimpDataFactory     GimpDataFactory;
-typedef struct _GimpData            GimpData;
-typedef struct _GimpBrush           GimpBrush;
-typedef struct _GimpBrushClipboard  GimpBrushClipboard;
-typedef struct _GimpBrushGenerated  GimpBrushGenerated;
-typedef struct _GimpBrushPipe       GimpBrushPipe;
-typedef struct _GimpGradient        GimpGradient;
-typedef struct _GimpPattern         GimpPattern;
-typedef struct _GimpPalette         GimpPalette;
+typedef struct _GimpDataFactory      GimpDataFactory;
+typedef struct _GimpData             GimpData;
+typedef struct _GimpBrush            GimpBrush;
+typedef struct _GimpBrushClipboard   GimpBrushClipboard;
+typedef struct _GimpBrushGenerated   GimpBrushGenerated;
+typedef struct _GimpBrushPipe        GimpBrushPipe;
+typedef struct _GimpGradient         GimpGradient;
+typedef struct _GimpPattern          GimpPattern;
+typedef struct _GimpPatternClipboard GimpPatternClipboard;
+typedef struct _GimpPalette          GimpPalette;
 
 
 /*  drawable objects  */

@@ -1,3 +1,18 @@
+2006-05-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimppatternclipboard.[ch]: new GimpPattern subclass
+	that auto-updates its contents from gimp->global_buffer.
+
+	* app/core/gimp.c (gimp_real_initialize): add a clipboard pattern
+	to the pattern factory.
+
+	* app/widgets/gimpaction.c (gimp_action_set_proxy): replace the
+	GimpView by a new one if the viewable type changes, instead of
+	running into a warning (didn't happen before because this is only
+	used for imagefiles and patterns, which didn't have subclasses).
+
 2006-05-16  Karine Delvare  <edhel@gimp.org>
 
 	* app/tools/gimprectangletool.c: check if the tool has a display

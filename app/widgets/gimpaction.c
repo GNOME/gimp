@@ -37,6 +37,7 @@
 
 #include "gimpaction.h"
 #include "gimpview.h"
+#include "gimpviewrenderer.h"
 
 
 enum
@@ -298,7 +299,9 @@ gimp_action_set_proxy (GimpAction *action,
 
       view = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (proxy));
 
-      if (view && ! GIMP_IS_VIEW (view))
+      if (view && (! GIMP_IS_VIEW (view) ||
+                   ! g_type_is_a (G_TYPE_FROM_INSTANCE (action->viewable),
+                                  GIMP_VIEW (view)->renderer->viewable_type)))
         {
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), NULL);
           view = NULL;
