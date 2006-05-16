@@ -1,3 +1,11 @@
+2006-05-16  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c (app_run): indentation.
+
+	* app/core/gimp.c (gimp_real_initialize) 
+	* app/plug-in/gimppluginmanager.c (gimp_plug_in_manager_restore):
+	moved a call to status_callback() to the plug-in manager.
+
 2006-05-16  Kristian Rietveld  <kris@gtk.org>
 
 	* configure.in: correct small typo.

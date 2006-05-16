@@ -596,6 +596,8 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
           }
 
         g_list_free (extensions);
+
+        status_callback (NULL, "", 1.0);
       }
   }
 }

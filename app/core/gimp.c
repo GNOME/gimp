@@ -565,7 +565,7 @@ gimp_real_initialize (Gimp               *gimp,
   gimp_gradients_init (gimp);
 
   /*  register all internal procedures  */
-  status_callback (NULL,_("Internal Procedures"), 0.2);
+  status_callback (NULL, _("Internal Procedures"), 0.2);
   gimp_pdb_init_procs (gimp);
 
   gimp_plug_in_manager_initialize (gimp->plug_in_manager, status_callback);
@@ -582,8 +582,6 @@ gimp_real_restore (Gimp               *gimp,
 
   gimp_plug_in_manager_restore (gimp->plug_in_manager,
                                 gimp_get_user_context (gimp), status_callback);
-
-  status_callback ("", "", 1.0);
 }
 
 static gboolean

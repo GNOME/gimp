@@ -304,8 +304,9 @@ app_run (const gchar         *full_prog_name,
             }
           else
             {
-              uri = file_utils_filename_to_uri (gimp->plug_in_manager->load_procs,
-                                                filenames[i], &error);
+              uri =
+                file_utils_filename_to_uri (gimp->plug_in_manager->load_procs,
+                                            filenames[i], &error);
             }
 
           if (! uri)
