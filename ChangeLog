@@ -1,3 +1,19 @@
+2006-05-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/paint-funcs/paint-funcs.[ch]: implement copy_color() and
+	copy_color_pixels() which copy only the color bytes into a dest
+	that has one byte less than src. Renamed component_pixels() to
+	copy_component_pixels().
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpbrushclipboard.[ch]: new GimpBrush subclass that
+	auto-updates its contents from gimp->global_buffer.
+
+	* app/core/gimp.c (gimp_real_initialize): add a clipboard brush to
+	the brush factory. Fixes bug #111082.
+
 2006-05-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/*/*.c: declared GimpPlugInInfo and GimpParamDef arrays

@@ -1844,11 +1844,11 @@ initial_inten_a_pixels (const guchar   *src,
 }
 
 inline void
-component_pixels (const guchar *src,
-                  guchar       *dest,
-                  guint         length,
-                  guint         bytes,
-                  guint         pixel)
+copy_component_pixels (const guchar *src,
+                       guchar       *dest,
+                       guint         length,
+                       guint         bytes,
+                       guint         pixel)
 {
   src += pixel;
 
@@ -1858,6 +1858,26 @@ component_pixels (const guchar *src,
 
       src += bytes;
       dest++;
+    }
+}
+
+inline void
+copy_color_pixels (const guchar *src,
+                   guchar       *dest,
+                   guint         length,
+                   guint         bytes)
+{
+  const guint alpha = bytes - 1;
+
+  while (length --)
+    {
+      guint b;
+
+      for (b = 0; b < alpha; b++)
+        dest[b] = src[b];
+
+      src  += bytes;
+      dest += bytes - 1;
     }
 }
 

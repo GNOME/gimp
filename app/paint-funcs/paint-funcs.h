@@ -78,11 +78,16 @@ void  gray_to_rgb_pixels    (const guchar *src,
                              guint         length,
                              guint         bytes);
 
-void  component_pixels      (const guchar *src,
+void  copy_component_pixels (const guchar *src,
                              guchar       *dest,
                              guint         length,
                              guint         bytes,
                              guint         pixel);
+
+void  copy_color_pixels     (const guchar *src,
+                             guchar       *dest,
+                             guint         length,
+                             guint         bytes);
 
 /*  apply the mask data to the alpha channel of the pixel data  */
 void  apply_mask_to_alpha_channel         (guchar       *src,
@@ -423,6 +428,10 @@ void  copy_gray_to_region                 (PixelRegion *src,
 void  copy_component                      (PixelRegion *src,
                                            PixelRegion *dest,
                                            guint        pixel);
+
+/*  Copy the color bytes (without alpha channel) to a src_bytes-1 - byte region  */
+void  copy_color                          (PixelRegion *src,
+                                           PixelRegion *dest);
 
 void  initial_region                      (PixelRegion    *src,
                                            PixelRegion    *dest,

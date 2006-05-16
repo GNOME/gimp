@@ -4056,7 +4056,30 @@ copy_component (PixelRegion *src,
 
       while (h--)
         {
-          component_pixels (s, d, src->w, src->bytes, pixel);
+          copy_component_pixels (s, d, src->w, src->bytes, pixel);
+          s += src->rowstride;
+          d += dest->rowstride;
+        }
+    }
+}
+
+void
+copy_color (PixelRegion *src,
+            PixelRegion *dest)
+{
+  gpointer pr;
+
+  for (pr = pixel_regions_register (2, src, dest);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      const guchar *s = src->data;
+      guchar       *d = dest->data;
+      gint          h = src->h;
+
+      while (h--)
+        {
+          copy_color_pixels (s, d, src->w, src->bytes);
           s += src->rowstride;
           d += dest->rowstride;
         }

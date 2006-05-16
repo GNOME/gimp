@@ -51,6 +51,7 @@
 #include "gimpbrush.h"
 #include "gimpbrush-load.h"
 #include "gimpbrushgenerated.h"
+#include "gimpbrushclipboard.h"
 #include "gimpbrushpipe.h"
 #include "gimpbuffer.h"
 #include "gimpcontext.h"
@@ -501,6 +502,8 @@ gimp_real_initialize (Gimp               *gimp,
     { gimp_palette_load,         NULL /* legacy loader */,            TRUE  }
   };
 
+  GimpData *clipboard_brush;
+
   if (gimp->be_verbose)
     g_print ("INIT: gimp_real_initialize\n");
 
@@ -563,6 +566,13 @@ gimp_real_initialize (Gimp               *gimp,
 
   /*  add the builtin FG -> BG etc. gradients  */
   gimp_gradients_init (gimp);
+
+  /*  add the clipboard brush  */
+  clipboard_brush = gimp_brush_clipboard_new (gimp);
+  gimp_data_make_internal (GIMP_DATA (clipboard_brush));
+  gimp_container_add (gimp->brush_factory->container,
+                      GIMP_OBJECT (clipboard_brush));
+  g_object_unref (clipboard_brush);
 
   /*  register all internal procedures  */
   status_callback (NULL, _("Internal Procedures"), 0.2);

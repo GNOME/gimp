@@ -87,7 +87,8 @@ typedef struct _GimpToolInfo        GimpToolInfo;
 
 typedef struct _GimpDataFactory     GimpDataFactory;
 typedef struct _GimpData            GimpData;
-typedef struct _GimpBrush            GimpBrush;
+typedef struct _GimpBrush           GimpBrush;
+typedef struct _GimpBrushClipboard  GimpBrushClipboard;
 typedef struct _GimpBrushGenerated  GimpBrushGenerated;
 typedef struct _GimpBrushPipe       GimpBrushPipe;
 typedef struct _GimpGradient        GimpGradient;
