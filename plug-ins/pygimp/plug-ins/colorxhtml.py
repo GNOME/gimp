@@ -25,6 +25,8 @@ import os.path
 import gimp
 from gimpfu import *
 
+(CHARS_SOURCE, CHARS_FILE, CHARS_PARAMETER) = range(3)
+
 escape_table = {
     '&': '&amp;',
     '<': '&lt;',
@@ -54,7 +56,7 @@ preamble = """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 postamble = """\n</pre>\n</html>\n"""
 
 def python_colorxhtml(img, drawable, filename, raw_filename,
-                     source_type, characters, size, separate):
+                      source_type, characters, size, separate):
     width = drawable.width
     height = drawable.height
     bpp = drawable.bpp
@@ -73,11 +75,11 @@ def python_colorxhtml(img, drawable, filename, raw_filename,
 
         css = file(cssname, 'w')
 
-    if source_type == 0:
+    if source_type == CHARS_SOURCE:
         chars = file(inspect.getsourcefile(python_colorxhtml)).read()
-    elif source_type == 1:
+    elif source_type == CHARS_FILE:
         chars = file(characters).read()
-    elif source_type == 2:
+    elif source_type == CHARS_PARAMETER:
         chars = characters
 
     allchars = string.maketrans('', '')
@@ -178,14 +180,16 @@ register(
     "file_colorxhtml_save",
     "Saves the image as colored xhtml text",
     "Saves the image as colored xhtml text (based on perl version by Marc Lehmann)",
-    "Manish Singh",
-    "Manish Singh",
+    "Manish Singh and Carol Spears",
+    "Manish Singh and Carol Spears",
     "2003",
     "<Save>/COLORXHTML",
     "RGB",
     [
         (PF_RADIO, "source", "Where to take the characters from", 0,
-                   (("sourcecode", 0), ("textfile", 1), ("filename", 2))),
+                   (("Source code", CHARS_SOURCE),
+                    ("Text file",   CHARS_FILE),
+                    ("Entry box",   CHARS_PARAMETER))),
         (PF_FILE, "characters", "The filename to read or the characters to use",
                   ""),
         (PF_INT, "font_size", "The font size in pixels", 10),

@@ -1,3 +1,7 @@
+2006-05-15  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/colorxhtml.py: Minor cleanups.
+
 2006-05-15  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* libgimpmodule/Makefile.am: added missing GLIB_LIBS to
