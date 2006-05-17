@@ -150,8 +150,8 @@ gimp_tools_init (Gimp *gimp)
     gimp_scale_tool_register,
     gimp_rotate_tool_register,
     gimp_crop_tool_register,
-    gimp_move_tool_register,
     gimp_align_tool_register,
+    gimp_move_tool_register,
 
     /*  non-modifying tools  */
 
