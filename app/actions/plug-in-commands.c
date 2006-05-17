@@ -28,6 +28,8 @@
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
@@ -39,6 +41,10 @@
 
 #include "pdb/gimpprocedure.h"
 
+#include "widgets/gimpbufferview.h"
+#include "widgets/gimpcontainerview.h"
+#include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimpfontview.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
@@ -53,9 +59,17 @@
 
 /*  local function prototypes  */
 
-static void  plug_in_reset_all_response (GtkWidget *dialog,
-                                         gint       response_id,
-                                         Gimp      *gimp);
+static gint  plug_in_collect_data_args  (GtkAction   *action,
+                                         GimpObject  *object,
+                                         GValueArray *args,
+                                         gint         n_args);
+static gint  plug_in_collect_image_args (GtkAction   *action,
+                                         GimpDisplay *display,
+                                         GValueArray *args,
+                                         gint         n_args);
+static void  plug_in_reset_all_response (GtkWidget   *dialog,
+                                         gint         response_id,
+                                         Gimp        *gimp);
 
 
 /*  public functions  */
@@ -85,60 +99,58 @@ plug_in_run_cmd_callback (GtkAction           *action,
 
     case GIMP_PLUGIN:
     case GIMP_TEMPORARY:
-      if (args->n_values > n_args &&
-          GIMP_VALUE_HOLDS_IMAGE_ID (&args->values[n_args]))
+      if (GIMP_IS_DATA_FACTORY_VIEW (data) ||
+          GIMP_IS_FONT_VIEW (data)         ||
+          GIMP_IS_BUFFER_VIEW (data))
+        {
+          GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+          GimpContainer       *container;
+          GimpContext         *context;
+          GimpObject          *object;
+
+          container = gimp_container_view_get_container (editor->view);
+          context   = gimp_container_view_get_context (editor->view);
+
+          object = gimp_context_get_by_type (context,
+                                             container->children_type);
+
+          n_args = plug_in_collect_data_args (action, object,
+                                              args, n_args);
+        }
+      else
         {
           display = action_data_get_display (data);
 
-          if (display)
-            {
-              gimp_value_set_image (&args->values[n_args], display->image);
-              n_args++;
-
-              if (args->n_values > n_args &&
-                  GIMP_VALUE_HOLDS_DRAWABLE_ID (&args->values[n_args]));
-                {
-                  GimpDrawable *drawable;
-
-                  drawable = gimp_image_active_drawable (display->image);
-
-                  if (drawable)
-                    {
-                      gimp_value_set_drawable (&args->values[n_args], drawable);
-                      n_args++;
-                    }
-                  else
-                    {
-                      g_warning ("Uh-oh, no active drawable for the plug-in!");
-                      goto error;
-                    }
-                }
-            }
+          n_args = plug_in_collect_image_args (action, display,
+                                               args, n_args);
         }
       break;
 
     default:
       g_error ("Unknown procedure type.");
-      goto error;
+      n_args = -1;
     }
 
-  gimp_value_array_truncate (args, n_args);
-
-  /* run the plug-in procedure */
-  gimp_procedure_execute_async (procedure, gimp, gimp_get_user_context (gimp),
-                                GIMP_PROGRESS (display), args,
-                                GIMP_OBJECT (display));
-
-  /* remember only "standard" plug-ins */
-  if (procedure->proc_type == GIMP_PLUGIN                 &&
-      procedure->num_args  >= 3                           &&
-      GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) &&
-      GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]))
+  if (n_args >= 1)
     {
-      gimp_plug_in_manager_set_last_plug_in (gimp->plug_in_manager, proc);
+      gimp_value_array_truncate (args, n_args);
+
+      /* run the plug-in procedure */
+      gimp_procedure_execute_async (procedure,
+                                    gimp, gimp_get_user_context (gimp),
+                                    GIMP_PROGRESS (display), args,
+                                    GIMP_OBJECT (display));
+
+      /* remember only "standard" plug-ins */
+      if (procedure->proc_type == GIMP_PLUGIN                 &&
+          procedure->num_args  >= 3                           &&
+          GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) &&
+          GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]))
+        {
+          gimp_plug_in_manager_set_last_plug_in (gimp->plug_in_manager, proc);
+        }
     }
 
- error:
   g_value_array_free (args);
 }
 
@@ -221,6 +233,71 @@ plug_in_reset_all_cmd_callback (GtkAction *action,
 
 
 /*  private functions  */
+
+static gint
+plug_in_collect_data_args (GtkAction   *action,
+                           GimpObject  *object,
+                           GValueArray *args,
+                           gint         n_args)
+{
+  if (args->n_values > n_args &&
+      G_VALUE_HOLDS_STRING (&args->values[n_args]))
+    {
+      if (object)
+        {
+          g_value_set_string (&args->values[n_args],
+                              gimp_object_get_name (object));
+          n_args++;
+        }
+      else
+        {
+          g_warning ("Uh-oh, no active data object for the plug-in!");
+          return -1;
+        }
+    }
+
+  return n_args;
+}
+
+static gint
+plug_in_collect_image_args (GtkAction   *action,
+                            GimpDisplay *display,
+                            GValueArray *args,
+                            gint         n_args)
+{
+  g_printerr ("%s\n", G_STRFUNC);
+
+  if (args->n_values > n_args &&
+      GIMP_VALUE_HOLDS_IMAGE_ID (&args->values[n_args]))
+    {
+      if (display)
+        {
+          gimp_value_set_image (&args->values[n_args], display->image);
+          n_args++;
+
+          if (args->n_values > n_args &&
+              GIMP_VALUE_HOLDS_DRAWABLE_ID (&args->values[n_args]))
+            {
+              GimpDrawable *drawable;
+
+              drawable = gimp_image_active_drawable (display->image);
+
+              if (drawable)
+                {
+                  gimp_value_set_drawable (&args->values[n_args], drawable);
+                  n_args++;
+                }
+              else
+                {
+                  g_warning ("Uh-oh, no active drawable for the plug-in!");
+                  return -1;
+                }
+            }
+        }
+    }
+
+  return n_args;
+}
 
 static void
 plug_in_reset_all_response (GtkWidget *dialog,

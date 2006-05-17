@@ -1,5 +1,22 @@
 2006-05-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/plug-in-commands.c: moved the collection of plug-in
+	args to a utilty function. Add another function that is called
+	when the plug-in lives in <Brushes>, <Palettes> etc. and pass the
+	active object's name to the plug-in.
+
+	* plug-ins/pygimp/plug-ins/Makefile.am
+	* plug-ins/pygimp/plug-ins/palette-offset.py
+	* plug-ins/pygimp/plug-ins/palette-sort.py
+	* plug-ins/pygimp/plug-ins/palette-to-gradient.py: added new
+	scripts written by Joao S. O. Bueno Calligaris and fixed by Carol
+	Spears. Changed them myself again. The stuff doesn't work as
+	expected because python-fu has too much asumptions in its
+	register() code, and the sort script doesn't implement all modes
+	of Adrian's palette sorting perl script. Addresses bug #104639.
+
+2006-05-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpbrushclipboard.c
 	(gimp_brush_clipboard_buffer_changed)
 	* app/core/gimppatternclipboard.c
