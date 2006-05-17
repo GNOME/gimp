@@ -738,7 +738,7 @@ button_with_stock (GimpAlignmentType  action,
 
   g_object_set_data (G_OBJECT (button), "action", GINT_TO_POINTER (action));
 
-  g_signal_connect (button, "pressed",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (set_action),
                     align_tool);
 

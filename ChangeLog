@@ -1,3 +1,15 @@
+2006-05-17  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* themes/Default/images/tools/stock-tool-align-16.png
+	* themes/Default/images/tools/stock-tool-align-22.png
+	* libgimpwidgets/gimpstock.c
+	* libgimpwidgets/gimpstock.h
+	* themes/Default/images/Makefile.am: add new (ugly) icon
+	for alignment tool.
+	
+	* app/tools/gimpaligntool.c: use the new icon; change
+	"pressed" to "clicked" for buttons.
+	
 2006-05-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpvectortool.c (gimp_vector_tool_set_vectors): use

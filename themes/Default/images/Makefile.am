@@ -232,6 +232,8 @@ STOCK_DIALOG_IMAGES = \
 STOCK_TOOL_IMAGES = \
 	tools/stock-tool-airbrush-16.png		\
 	tools/stock-tool-airbrush-22.png		\
+	tools/stock-tool-align-16.png			\
+	tools/stock-tool-align-22.png			\
 	tools/stock-tool-blend-16.png			\
 	tools/stock-tool-blend-22.png			\
 	tools/stock-tool-blur-16.png			\

@@ -266,6 +266,7 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TEXTURE,                  NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_TOOL_ALIGN,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_BLEND,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_BLUR,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST, NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -400,6 +401,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_MOVE_TO_SCREEN,           stock_move_to_screen_24           },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            stock_tool_airbrush_22            },
+  { GIMP_STOCK_TOOL_ALIGN,               stock_tool_align_22               },
   { GIMP_STOCK_TOOL_BLEND,               stock_tool_blend_22               },
   { GIMP_STOCK_TOOL_BLUR,                stock_tool_blur_22                },
   { GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST, stock_tool_brightness_contrast_22 },
@@ -544,6 +546,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_GRADIENT_SPIRAL_ANTICLOCKWISE, stock_gradient_spiral_anticlockwise_16 },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            stock_tool_airbrush_16            },
+  { GIMP_STOCK_TOOL_ALIGN,               stock_tool_align_16               },
   { GIMP_STOCK_TOOL_BLEND,               stock_tool_blend_16               },
   { GIMP_STOCK_TOOL_BLUR,                stock_tool_blur_16                },
   { GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST, stock_tool_brightness_contrast_16 },
