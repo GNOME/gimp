@@ -1,3 +1,11 @@
+2006-05-17  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpaligntool.[ch]: major change in ui, to make
+	this tool behave like alignment tools found in vector apps.
+	now you select items by clicking or drawing a rubber-band
+	rectangle, add items by holding down shift, and then press
+	a button to align all the selected items.
+
 2006-05-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/plug-in-commands.c: moved the collection of plug-in

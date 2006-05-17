@@ -42,15 +42,10 @@ struct _GimpAlignTool
   GtkWidget           *controls;
   GtkWidget           *button[ALIGN_TOOL_NUM_BUTTONS];
 
-  GimpItem            *target_item;
-  GimpItem            *reference_item;
+  GList               *selected_items;
 
-  gboolean             select_reference;
-
-  GimpAlignmentType    target_horz_align_type;
-  GimpAlignmentType    target_vert_align_type;
-  GimpAlignmentType    ref_horz_align_type;
-  GimpAlignmentType    ref_vert_align_type;
+  GimpAlignmentType    horz_align_type;
+  GimpAlignmentType    vert_align_type;
 
   gdouble              horz_offset;
   gdouble              vert_offset;
@@ -58,6 +53,7 @@ struct _GimpAlignTool
   GtkObject           *horz_offset_adjustment;
   GtkObject           *vert_offset_adjustment;
 
+  gint                 x0, y0, x1, y1;   /* rubber-band rectangle */
 };
 
 struct _GimpAlignToolClass

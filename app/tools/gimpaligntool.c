@@ -26,9 +26,11 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpitem-align.h"
+#include "core/gimplist.h"
 
 #include "display/gimpdisplay.h"
 
@@ -57,6 +59,16 @@ static void   gimp_align_tool_button_press   (GimpTool          *tool,
                                               guint32            time,
                                               GdkModifierType    state,
                                               GimpDisplay       *display);
+static void   gimp_align_tool_button_release (GimpTool          *tool,
+                                              GimpCoords        *coords,
+                                              guint32            time,
+                                              GdkModifierType    state,
+                                              GimpDisplay       *display);
+static void   gimp_align_tool_motion         (GimpTool          *tool,
+                                              GimpCoords        *coords,
+                                              guint32            time,
+                                              GdkModifierType    state,
+                                              GimpDisplay       *display);
 static void   gimp_align_tool_cursor_update  (GimpTool          *tool,
                                               GimpCoords        *coords,
                                               GdkModifierType    state,
@@ -73,11 +85,12 @@ static void   do_horizontal_alignment        (GtkWidget         *widget,
                                               gpointer           data);
 static void   do_vertical_alignment          (GtkWidget         *widget,
                                               gpointer           data);
-static void   clear_reference                (GimpItem          *reference_item,
+static void   clear_selected                 (GimpItem          *item,
                                               GimpAlignTool     *align_tool);
-static void   clear_target                   (GimpItem          *target_item,
-                                              GimpAlignTool     *align_tool);
-
+static void   clear_selected_items           (GimpAlignTool     *align_tool);
+static GimpLayer *select_layer_by_coords     (GimpImage         *image,
+                                              gint               x,
+                                              gint               y);
 
 G_DEFINE_TYPE (GimpAlignTool, gimp_align_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -94,7 +107,7 @@ gimp_align_tool_register (GimpToolRegisterCallback  callback,
                 0,
                 "gimp-align-tool",
                 _("Align"),
-                _("Align layers & other items"),
+                _("Align or arrange layers and other items"),
                 N_("_Align"), "Q",
                 NULL, GIMP_HELP_TOOL_MOVE,
                 GIMP_STOCK_CENTER,
@@ -114,6 +127,8 @@ gimp_align_tool_class_init (GimpAlignToolClass *klass)
 
   tool_class->initialize     = gimp_align_tool_initialize;
   tool_class->button_press   = gimp_align_tool_button_press;
+  tool_class->button_release = gimp_align_tool_button_release;
+  tool_class->motion         = gimp_align_tool_motion;
   tool_class->cursor_update  = gimp_align_tool_cursor_update;
 
   draw_tool_class->draw      = gimp_align_tool_draw;
@@ -126,15 +141,10 @@ gimp_align_tool_init (GimpAlignTool *align_tool)
 
   align_tool->controls        = NULL;
 
-  align_tool->target_item     = NULL;
-  align_tool->reference_item  = NULL;
+  align_tool->selected_items  = NULL;
 
-  align_tool->select_reference = FALSE;
-
-  align_tool->target_horz_align_type = GIMP_ALIGN_LEFT;
-  align_tool->ref_horz_align_type    = GIMP_ALIGN_LEFT;
-  align_tool->target_vert_align_type = GIMP_ALIGN_TOP;
-  align_tool->ref_vert_align_type    = GIMP_ALIGN_TOP;
+  align_tool->horz_align_type = GIMP_ALIGN_LEFT;
+  align_tool->vert_align_type = GIMP_ALIGN_TOP;
 
   align_tool->horz_offset = 0;
   align_tool->vert_offset = 0;
@@ -178,21 +188,7 @@ gimp_align_tool_dispose (GObject *object)
 {
   GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (object);
 
-  if (align_tool->reference_item)
-    {
-      g_signal_handlers_disconnect_by_func (align_tool->reference_item,
-                                            G_CALLBACK (clear_reference),
-                                            (gpointer) align_tool);
-      align_tool->reference_item = NULL;
-    }
-
-  if (align_tool->target_item)
-    {
-      g_signal_handlers_disconnect_by_func (align_tool->target_item,
-                                            G_CALLBACK (clear_target),
-                                            (gpointer) align_tool);
-      align_tool->target_item = NULL;
-    }
+  clear_selected_items (align_tool);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -222,12 +218,8 @@ static gboolean
 gimp_align_tool_initialize (GimpTool    *tool,
                             GimpDisplay *display)
 {
-  GimpAlignTool    *align_tool = GIMP_ALIGN_TOOL (tool);
-
   if (tool->display != display)
     {
-/*       align_tool->target_item     = NULL; */
-/*       align_tool->reference_item  = NULL; */
     }
 
   return TRUE;
@@ -241,8 +233,8 @@ gimp_align_tool_button_press (GimpTool        *tool,
                               GimpDisplay     *display)
 {
   GimpAlignTool    *align_tool  = GIMP_ALIGN_TOOL (tool);
-  GimpAlignOptions *options     = GIMP_ALIGN_OPTIONS (tool->tool_info->tool_options);
-  GimpItem         *item        = NULL;
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   /*  If the tool was being used in another image...reset it  */
 
@@ -251,8 +243,7 @@ gimp_align_tool_button_press (GimpTool        *tool,
       if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
         gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-      align_tool->target_item     = NULL;
-      align_tool->reference_item  = NULL;
+      clear_selected_items (align_tool);
     }
 
   if (! gimp_tool_control_is_active (tool->control))
@@ -260,66 +251,125 @@ gimp_align_tool_button_press (GimpTool        *tool,
 
   tool->display = display;
 
+  align_tool->x1 = align_tool->x0 = coords->x;
+  align_tool->y1 = align_tool->y0 = coords->y;
+
   if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
     gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+}
+
+static void
+gimp_align_tool_button_release (GimpTool        *tool,
+                                GimpCoords      *coords,
+                                guint32          time,
+                                GdkModifierType  state,
+                                GimpDisplay     *display)
+{
+  GimpAlignTool    *align_tool  = GIMP_ALIGN_TOOL (tool);
+  GimpAlignOptions *options     = GIMP_ALIGN_OPTIONS (tool->tool_info->tool_options);
+  GimpItem         *item        = NULL;
+  GimpImage        *image       = display->image;
+  gint              i;
+
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  if (options->align_type == GIMP_TRANSFORM_TYPE_PATH)
-    {
-      GimpVectors *vectors;
+  if (! (state & GDK_SHIFT_MASK))
+    clear_selected_items (align_tool);
 
-      if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
-                                     coords, 7, 7,
-                                     NULL, NULL, NULL, NULL, NULL,
-                                     &vectors))
+  if (coords->x == align_tool->x0 && coords->y == align_tool->y0)
+    {
+      if (options->align_type == GIMP_TRANSFORM_TYPE_PATH)
         {
-          item = GIMP_ITEM (vectors);
+          GimpVectors *vectors;
+
+          if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
+                                         coords, 7, 7,
+                                         NULL, NULL, NULL, NULL, NULL,
+                                         &vectors))
+            {
+              item = GIMP_ITEM (vectors);
+            }
+        }
+      else if (options->align_type == GIMP_TRANSFORM_TYPE_LAYER)
+        {
+          GimpLayer *layer;
+
+          if ((layer = select_layer_by_coords (display->image,
+                                               coords->x, coords->y)))
+            {
+              item = GIMP_ITEM (layer);
+            }
+        }
+
+      if (item)
+        {
+          if (! g_list_find (align_tool->selected_items, item))
+            {
+              align_tool->selected_items = g_list_append (align_tool->selected_items, item);
+              g_signal_connect (item, "removed", G_CALLBACK (clear_selected),
+                                (gpointer) align_tool);
+            }
         }
     }
-  else if (options->align_type == GIMP_TRANSFORM_TYPE_LAYER)
+  else
     {
+      gint   X0    = MIN (coords->x, align_tool->x0);
+      gint   X1    = MAX (coords->x, align_tool->x0);
+      gint   Y0    = MIN (coords->y, align_tool->y0);
+      gint   Y1    = MAX (coords->y, align_tool->y0);
+      GList *list;
 
-      GimpLayer *layer;
-
-      if ((layer = gimp_image_pick_correlate_layer (display->image,
-                                                    coords->x, coords->y)))
+      for (list = GIMP_LIST (image->layers)->list;
+           list;
+           list = g_list_next (list))
         {
-          item = GIMP_ITEM (layer);
+          GimpLayer *layer = list->data;
+          gint       x0, y0, x1, y1;
+
+          if (! gimp_item_get_visible (GIMP_ITEM (layer)))
+            continue;
+
+          gimp_item_offsets (GIMP_ITEM (layer), &x0, &y0);
+          x1 = x0 + gimp_item_width (GIMP_ITEM (layer));
+          y1 = y0 + gimp_item_height (GIMP_ITEM (layer));
+
+          if (x0 < X0 || y0 < Y0 || x1 > X1 || y1 > Y1)
+            continue;
+
+          if (g_list_find (align_tool->selected_items, layer))
+            continue;
+
+          align_tool->selected_items = g_list_append (align_tool->selected_items, layer);
+          g_signal_connect (layer, "removed", G_CALLBACK (clear_selected),
+                            (gpointer) align_tool);
         }
     }
 
-  if (item)
-    {
-      if (state & GDK_CONTROL_MASK || align_tool->select_reference)
-        {
-          if (align_tool->reference_item)
-            g_signal_handlers_disconnect_by_func (align_tool->reference_item,
-                                                  G_CALLBACK (clear_reference),
-                                                  (gpointer) align_tool);
-          align_tool->reference_item = item;
-          g_signal_connect (item, "removed",
-                            G_CALLBACK (clear_reference), (gpointer) align_tool);
-        }
-      else
-        {
-          if (align_tool->target_item)
-            g_signal_handlers_disconnect_by_func (align_tool->target_item,
-                                                  G_CALLBACK (clear_target),
-                                                  (gpointer) align_tool);
-          align_tool->target_item = item;
-          g_signal_connect (item, "removed",
-                            G_CALLBACK (clear_target), (gpointer) align_tool);
-        }
-    }
+  for (i = 0; i < ALIGN_TOOL_NUM_BUTTONS; i++)
+    gtk_widget_set_sensitive (align_tool->button[i],
+                              (align_tool->selected_items != NULL));
 
-  if (align_tool->target_item)
-    {
-      gint i;
+  align_tool->x1 = align_tool->x0;
+  align_tool->y1 = align_tool->y0;
 
-      for (i = 0; i < ALIGN_TOOL_NUM_BUTTONS; i++)
-        gtk_widget_set_sensitive (align_tool->button[i], TRUE);
-    }
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+}
+
+static void
+gimp_align_tool_motion (GimpTool        *tool,
+                        GimpCoords      *coords,
+                        guint32          time,
+                        GdkModifierType  state,
+                        GimpDisplay     *display)
+{
+  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (tool);
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+  align_tool->x1 = coords->x;
+  align_tool->y1 = coords->y;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -387,35 +437,42 @@ gimp_align_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_align_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpAlignTool *align = GIMP_ALIGN_TOOL (draw_tool);
-  GimpItem      *item;
+  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (draw_tool);
+  GList         *list;
+  gint           x, y, w, h;
 
-  if ((item = align->target_item))
-    {
-      gimp_draw_tool_draw_rectangle (draw_tool, FALSE,
-                                     item->offset_x + 1, item->offset_y + 1,
-                                     item->width - 2, item->height - 2,
-                                     FALSE);
-    }
+  /* draw rubber-band rectangle */
+  x = MIN (align_tool->x1, align_tool->x0);
+  y = MIN (align_tool->y1, align_tool->y0);
+  w = MAX (align_tool->x1, align_tool->x0) - x;
+  h = MAX (align_tool->y1, align_tool->y0) - y;
 
-  if ((item = align->reference_item))
+  gimp_draw_tool_draw_rectangle (draw_tool,
+                                 FALSE,
+                                 x, y,w, h,
+                                 FALSE);
+
+  for (list = g_list_first (align_tool->selected_items); list;
+       list = g_list_next (list))
     {
-      gimp_draw_tool_draw_rectangle (draw_tool, FALSE,
-                                     item->offset_x, item->offset_y,
-                                     item->width, item->height,
-                                     FALSE);
-      gimp_draw_tool_draw_dashed_line (draw_tool,
-                                       item->offset_x,
-                                       item->offset_y,
-                                       item->offset_x + item->width,
-                                       item->offset_y + item->height,
-                                       FALSE);
-      gimp_draw_tool_draw_dashed_line (draw_tool,
-                                       item->offset_x,
-                                       item->offset_y + item->height,
-                                       item->offset_x + item->width,
-                                       item->offset_y,
-                                       FALSE);
+      GimpItem *item = list->data;
+
+      gimp_item_offsets (item, &x, &y);
+      w = gimp_item_width (item);
+      h = gimp_item_height (item);
+
+      gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                                  x, y, 4, 4,
+                                  GTK_ANCHOR_NORTH_WEST, FALSE);
+      gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                                  x + w, y, 4, 4,
+                                  GTK_ANCHOR_NORTH_EAST, FALSE);
+      gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                                  x, y + h, 4, 4,
+                                  GTK_ANCHOR_SOUTH_WEST, FALSE);
+      gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                                  x + w, y + h, 4, 4,
+                                  GTK_ANCHOR_SOUTH_EAST, FALSE);
     }
 }
 
@@ -424,13 +481,11 @@ static GtkWidget *
 gimp_align_tool_controls (GimpAlignTool *align_tool)
 {
   GtkWidget *main_vbox;
-  GtkWidget *vbox2;
   GtkWidget *hbox;
   GtkWidget *hbox2;
   GtkWidget *table;
   GtkWidget *label;
   GtkWidget *button;
-  GtkWidget *spinbutton;
   gint       row, col, n;
 
   hbox = gtk_hbox_new (FALSE, 0);
@@ -439,19 +494,6 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   gtk_box_pack_start (GTK_BOX (hbox), main_vbox, FALSE, FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
   gtk_widget_show (main_vbox);
-
-  vbox2 = gimp_int_radio_group_new (FALSE, NULL,
-                                    G_CALLBACK (gimp_radio_button_update),
-                                    &align_tool->select_reference, FALSE,
-
-                                    _("Select target"),
-                                    FALSE, NULL,
-
-                                    _("Select reference (Ctrl)"),
-                                    TRUE, NULL,
-                                    NULL);
-  gtk_box_pack_start (GTK_BOX (main_vbox), vbox2, FALSE, FALSE, 0);
-  gtk_widget_show (vbox2);
 
   table = gtk_table_new (7, 9, FALSE);
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 5);
@@ -501,22 +543,22 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   row++;
 
   /* next row */
-  label = gtk_label_new (_("Offset:"));
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, row, row + 1);
-  gtk_widget_show (label);
+/*   label = gtk_label_new (_("Offset:")); */
+/*   gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, row, row + 1); */
+/*   gtk_widget_show (label); */
 
-  spinbutton = gimp_spin_button_new (&align_tool->horz_offset_adjustment,
-                                     0,
-                                     -100000.,
-                                     100000.,
-                                     1., 20., 20., 1., 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 3, 7, row, row + 1);
-  g_signal_connect (align_tool->horz_offset_adjustment, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &align_tool->horz_offset);
-  gtk_widget_show (spinbutton);
+/*   spinbutton = gimp_spin_button_new (&align_tool->horz_offset_adjustment, */
+/*                                      0, */
+/*                                      -100000., */
+/*                                      100000., */
+/*                                      1., 20., 20., 1., 0); */
+/*   gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 3, 7, row, row + 1); */
+/*   g_signal_connect (align_tool->horz_offset_adjustment, "value-changed", */
+/*                     G_CALLBACK (gimp_double_adjustment_update), */
+/*                     &align_tool->horz_offset); */
+/*   gtk_widget_show (spinbutton); */
 
-  row++;
+/*   row++; */
 
   hbox2 = gtk_hbox_new (FALSE, 0);
   gtk_table_attach_defaults (GTK_TABLE (table), hbox2, 0, 8, row, row + 1);
@@ -555,20 +597,20 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   row++;
 
   /* next row */
-  label = gtk_label_new (_("Offset:"));
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, row, row + 1);
-  gtk_widget_show (label);
+/*   label = gtk_label_new (_("Offset:")); */
+/*   gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, row, row + 1); */
+/*   gtk_widget_show (label); */
 
-  spinbutton = gimp_spin_button_new (&align_tool->vert_offset_adjustment,
-                                     0,
-                                     -100000.,
-                                     100000.,
-                                     1., 20., 20., 1., 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 3, 7, row, row + 1);
-  g_signal_connect (align_tool->vert_offset_adjustment, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &align_tool->vert_offset);
-  gtk_widget_show (spinbutton);
+/*   spinbutton = gimp_spin_button_new (&align_tool->vert_offset_adjustment, */
+/*                                      0, */
+/*                                      -100000., */
+/*                                      100000., */
+/*                                      1., 20., 20., 1., 0); */
+/*   gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 3, 7, row, row + 1); */
+/*   g_signal_connect (align_tool->vert_offset_adjustment, "value-changed", */
+/*                     G_CALLBACK (gimp_double_adjustment_update), */
+/*                     &align_tool->vert_offset); */
+/*   gtk_widget_show (spinbutton); */
 
   gtk_widget_show (hbox);
   return hbox;
@@ -580,18 +622,38 @@ do_horizontal_alignment (GtkWidget *widget,
                          gpointer   data)
 {
   GimpAlignTool *align_tool = data;
+  GimpImage     *image;
+  GimpItem      *item0;
+  GList         *list;
+
+  /* make sure there is something to align */
+  if (! g_list_nth (align_tool->selected_items, 1))
+    return;
+
+  image = GIMP_TOOL (align_tool)->display->image;
+  item0 = g_list_first (align_tool->selected_items)->data;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));
 
-  if (align_tool->target_item)
-    gimp_item_align (align_tool->target_item,
-                     align_tool->target_horz_align_type,
-                     align_tool->reference_item,
-                     align_tool->ref_horz_align_type,
-                     align_tool->horz_offset);
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                               _("Align items"));
+
+  for (list = g_list_next (align_tool->selected_items); list;
+       list = g_list_next (list))
+    {
+      GimpItem *item = list->data;
+
+      gimp_item_align (item,
+                       align_tool->horz_align_type,
+                       item0,
+                       align_tool->horz_align_type,
+                       align_tool->horz_offset);
+    }
+
+  gimp_image_undo_group_end (image);
 
   if (GIMP_TOOL (align_tool)->display)
-    gimp_image_flush (GIMP_TOOL (align_tool)->display->image);
+    gimp_image_flush (image);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
 }
@@ -602,15 +664,35 @@ do_vertical_alignment (GtkWidget *widget,
                        gpointer   data)
 {
   GimpAlignTool *align_tool = data;
+  GimpImage     *image;
+  GimpItem      *item0;
+  GList         *list;
+
+  /* make sure there is something to align */
+  if (! g_list_nth (align_tool->selected_items, 1))
+    return;
+
+  image = GIMP_TOOL (align_tool)->display->image;
+  item0 = g_list_first (align_tool->selected_items)->data;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));
 
-  if (align_tool->target_item)
-    gimp_item_align (align_tool->target_item,
-                     align_tool->target_vert_align_type,
-                     align_tool->reference_item,
-                     align_tool->ref_vert_align_type,
-                     align_tool->vert_offset);
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                               _("Align items"));
+
+  for (list = g_list_next (align_tool->selected_items); list;
+       list = g_list_next (list))
+    {
+      GimpItem *item = list->data;
+
+      gimp_item_align (item,
+                       align_tool->vert_align_type,
+                       item0,
+                       align_tool->vert_align_type,
+                       align_tool->vert_offset);
+    }
+
+  gimp_image_undo_group_end (image);
 
   if (GIMP_TOOL (align_tool)->display)
       gimp_image_flush (GIMP_TOOL (align_tool)->display->image);
@@ -680,15 +762,13 @@ set_action (GtkWidget *widget,
     case GIMP_ALIGN_LEFT:
     case GIMP_ALIGN_CENTER:
     case GIMP_ALIGN_RIGHT:
-      align_tool->ref_horz_align_type = action;
-      align_tool->target_horz_align_type = action;
+      align_tool->horz_align_type = action;
       do_horizontal_alignment (widget, data);
       break;
     case GIMP_ALIGN_TOP:
     case GIMP_ALIGN_MIDDLE:
     case GIMP_ALIGN_BOTTOM:
-      align_tool->ref_vert_align_type = action;
-      align_tool->target_vert_align_type = action;
+      align_tool->vert_align_type = action;
       do_vertical_alignment (widget, data);
       break;
     default:
@@ -697,34 +777,70 @@ set_action (GtkWidget *widget,
 }
 
 static void
-clear_target (GimpItem      *target_item,
-              GimpAlignTool *align_tool)
+clear_selected (GimpItem       *item,
+                GimpAlignTool  *align_tool)
 {
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));
 
-  if (align_tool->target_item)
-    g_signal_handlers_disconnect_by_func (align_tool->target_item,
-                                          G_CALLBACK (clear_target),
+  if (align_tool->selected_items)
+    g_signal_handlers_disconnect_by_func (item,
+                                          G_CALLBACK (clear_selected),
                                           (gpointer) align_tool);
 
-  align_tool->target_item = NULL;
+  align_tool->selected_items = g_list_remove (align_tool->selected_items,
+                                              item);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
 }
 
 static void
-clear_reference (GimpItem      *reference_item,
-                 GimpAlignTool *align_tool)
+clear_selected_items (GimpAlignTool *align_tool)
 {
+  while (align_tool->selected_items)
+    {
+      GimpItem *item = g_list_first (align_tool->selected_items)->data;
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));
+      g_signal_handlers_disconnect_by_func (item,
+                                            G_CALLBACK (clear_selected),
+                                            (gpointer) align_tool);
 
-  if (align_tool->reference_item)
-    g_signal_handlers_disconnect_by_func (align_tool->reference_item,
-                                          G_CALLBACK (clear_reference),
-                                          (gpointer) align_tool);
+      align_tool->selected_items = g_list_remove (align_tool->selected_items,
+                                                  item);
+    }
+}
 
-  align_tool->reference_item = NULL;
+static GimpLayer *
+select_layer_by_coords (GimpImage *image,
+                        gint       x,
+                        gint       y)
+{
+  GList *list;
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  for (list = GIMP_LIST (image->layers)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpLayer *layer = list->data;
+      gint       off_x, off_y;
+      gint       width, height;
+
+      if (! gimp_item_get_visible (GIMP_ITEM (layer)))
+        continue;
+
+      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+      width = gimp_item_width (GIMP_ITEM (layer));
+      height = gimp_item_height (GIMP_ITEM (layer));
+
+      if (off_x <= x &&
+          off_y <= y &&
+          x < off_x + width &&
+          y < off_y + height)
+        {
+          return layer;
+        }
+    }
+
+  return NULL;
 }
