@@ -1,3 +1,8 @@
+2006-05-17  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* configure.in: Added quotes in two AM_CONDITIONAL lines to avoid
+	complaints of "test: too many arguments" when running ./configure.
+
 2006-05-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimp-tools.c (gimp_tools_init): move the align tool

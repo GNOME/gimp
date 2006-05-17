@@ -1160,7 +1160,7 @@ else
   have_gtkhtml2="no (GtkHtml2 support disabled)"
 fi
 
-AM_CONDITIONAL(BUILD_HELPBROWSER, test x$have_gtkhtml2 = xyes)
+AM_CONDITIONAL(BUILD_HELPBROWSER, test "x$have_gtkhtml2" = xyes)
 
 
 ###################
@@ -1274,7 +1274,7 @@ if test "x$with_gnomeprint" != xno; then
     have_gnomeprint="no (libgnomeprintui not found!)")
 fi
 
-AM_CONDITIONAL(HAVE_GNOMEPRINT, test x$have_gnomeprint = xyes)
+AM_CONDITIONAL(HAVE_GNOMEPRINT, test "x$have_gnomeprint" = xyes)
 
 if test "x$have_gnomeprint" = xyes; then
   GNOMEPRINT='gnomeprint$(EXEEXT)'
