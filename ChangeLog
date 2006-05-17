@@ -1,3 +1,8 @@
+2006-05-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.c (gimp_real_initialize): add a clipboard pattern
+	to the pattern factory (forgot to commit this file).
+
 2006-05-17  Manish Singh  <yosh@gimp.org>
 
 	* po-libgimp/Makefile.in.in

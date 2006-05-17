@@ -65,6 +65,7 @@
 #include "gimpmarshal.h"
 #include "gimppalette.h"
 #include "gimppattern.h"
+#include "gimppatternclipboard.h"
 #include "gimpparasitelist.h"
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
@@ -503,6 +504,7 @@ gimp_real_initialize (Gimp               *gimp,
   };
 
   GimpData *clipboard_brush;
+  GimpData *clipboard_pattern;
 
   if (gimp->be_verbose)
     g_print ("INIT: gimp_real_initialize\n");
@@ -573,6 +575,13 @@ gimp_real_initialize (Gimp               *gimp,
   gimp_container_add (gimp->brush_factory->container,
                       GIMP_OBJECT (clipboard_brush));
   g_object_unref (clipboard_brush);
+
+  /*  add the clipboard pattern  */
+  clipboard_pattern = gimp_pattern_clipboard_new (gimp);
+  gimp_data_make_internal (GIMP_DATA (clipboard_pattern));
+  gimp_container_add (gimp->pattern_factory->container,
+                      GIMP_OBJECT (clipboard_pattern));
+  g_object_unref (clipboard_pattern);
 
   /*  register all internal procedures  */
   status_callback (NULL, _("Internal Procedures"), 0.2);
