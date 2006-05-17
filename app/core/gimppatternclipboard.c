@@ -198,16 +198,19 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
 
   if (gimp->global_buffer)
     {
-      TileManager *tiles  = gimp->global_buffer->tiles;
-      gint         width  = gimp_buffer_get_width  (gimp->global_buffer);
-      gint         height = gimp_buffer_get_height (gimp->global_buffer);
-      gint         bytes  = gimp_buffer_get_bytes  (gimp->global_buffer);
+      gint         width;
+      gint         height;
+      gint         bytes;
       PixelRegion  bufferPR;
       PixelRegion  maskPR;
 
+      width  = MIN (gimp_buffer_get_width  (gimp->global_buffer), 512);
+      height = MIN (gimp_buffer_get_height (gimp->global_buffer), 512);
+      bytes  = gimp_buffer_get_bytes (gimp->global_buffer);
+
       pattern->mask = temp_buf_new (width, height, bytes, 0, 0, NULL);
 
-      pixel_region_init (&bufferPR, tiles,
+      pixel_region_init (&bufferPR, gimp->global_buffer->tiles,
                          0, 0, width, height, FALSE);
       pixel_region_init_temp_buf (&maskPR, pattern->mask,
                                   0, 0, width, height);

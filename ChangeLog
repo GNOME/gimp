@@ -1,3 +1,12 @@
+2006-05-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpbrushclipboard.c
+	(gimp_brush_clipboard_buffer_changed)
+	* app/core/gimppatternclipboard.c
+	(gimp_pattern_clipboard_buffer_changed): limit the size of
+	clipboard brushes and patterns to 512x512 pixels to prevent OOM
+	conditions when copying from huge drawables.
+
 2006-05-17  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpaligntool.[ch]: major change in ui, to make
