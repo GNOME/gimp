@@ -1,3 +1,12 @@
+2006-05-17  Manish Singh  <yosh@gimp.org>
+
+	* po-libgimp/Makefile.in.in
+	* po-plug-ins/Makefile.in.in
+	* po-script-fu/Makefile.in.in
+	* po-tips/Makefile.in.in: revert previous changes, it doesn't
+	look straightforward to change these without bumping up the
+	intltool dependency.
+
 2006-05-17  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpresolutionentry.c: synced function names with
