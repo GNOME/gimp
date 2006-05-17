@@ -1,3 +1,11 @@
+2006-05-17  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpbrushclipboard.c
+	(gimp_brush_clipboard_buffer_changed)
+	* app/core/gimppatternclipboard.c
+	(gimp_pattern_clipboard_buffer_changed): emit "name-changed" so that
+	the description is being updated.
+
 2006-05-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp.c (gimp_real_initialize): add a clipboard pattern

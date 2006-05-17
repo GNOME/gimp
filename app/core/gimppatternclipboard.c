@@ -175,16 +175,12 @@ gimp_pattern_clipboard_duplicate (GimpData *data)
 GimpData *
 gimp_pattern_clipboard_new (Gimp *gimp)
 {
-  GimpPatternClipboard *pattern;
-
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  pattern = g_object_new (GIMP_TYPE_PATTERN_CLIPBOARD,
-                          "name", _("Clipboard"),
-                          "gimp", gimp,
-                          NULL);
-
-  return GIMP_DATA (pattern);
+  return g_object_new (GIMP_TYPE_PATTERN_CLIPBOARD,
+                       "name", _("Clipboard"),
+                       "gimp", gimp,
+                       NULL);
 }
 
 
@@ -226,4 +222,7 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
     }
 
   gimp_data_dirty (GIMP_DATA (pattern));
+
+  /* emit "name-changed" so that the description is updated */
+  gimp_object_name_changed (GIMP_OBJECT (pattern));
 }

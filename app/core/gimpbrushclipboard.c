@@ -175,16 +175,12 @@ gimp_brush_clipboard_duplicate (GimpData *data)
 GimpData *
 gimp_brush_clipboard_new (Gimp *gimp)
 {
-  GimpBrushClipboard *brush;
-
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  brush = g_object_new (GIMP_TYPE_BRUSH_CLIPBOARD,
-                        "name", _("Clipboard"),
-                        "gimp", gimp,
-                        NULL);
-
-  return GIMP_DATA (brush);
+  return g_object_new (GIMP_TYPE_BRUSH_CLIPBOARD,
+                       "name", _("Clipboard"),
+                       "gimp", gimp,
+                       NULL);
 }
 
 
@@ -290,4 +286,7 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
   brush->y_axis.y = height / 2;
 
   gimp_data_dirty (GIMP_DATA (brush));
+
+  /* emit "name-changed" so that the description is updated */
+  gimp_object_name_changed (GIMP_OBJECT (brush));
 }
