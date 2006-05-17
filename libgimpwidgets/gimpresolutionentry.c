@@ -57,13 +57,13 @@ static void   gimp_resolution_entry_init            (GimpResolutionEntry      *g
 static void   gimp_resolution_entry_finalize        (GObject            *object);
 
 static void   gimp_resolution_entry_update_value    (GimpResolutionEntryField *gref,
-                                               gdouble             value);
-static void   gimp_resolution_entry_value_callback  (GtkWidget          *widget,
-                                               gpointer            data);
-static void   gimp_resolution_entry_update_unit     (GimpResolutionEntry      *gre,
-                                               GimpUnit            unit);
-static void   gimp_resolution_entry_unit_callback   (GtkWidget          *widget,
-                                               GimpResolutionEntry      *gre);
+                                                     gdouble              value);
+static void   gimp_resolution_entry_value_callback  (GtkWidget           *widget,
+                                                     gpointer             data);
+static void   gimp_resolution_entry_update_unit     (GimpResolutionEntry *gre,
+                                                     GimpUnit             unit);
+static void   gimp_resolution_entry_unit_callback   (GtkWidget           *widget,
+                                                     GimpResolutionEntry *gre);
 
 static void   gimp_resolution_entry_field_init (GimpResolutionEntry      *gre,
                                                 GimpResolutionEntryField *gref,
@@ -282,7 +282,7 @@ gimp_resolution_entry_field_init (GimpResolutionEntry      *gre,
  * gimp_resolution_entry_new:
  * @width_label:       Optional label for the width control.
  * @width:             Width of the item, specified in terms of @size_unit.
- * @width_label:       Optional label for the height control.
+ * @height_label:      Optional label for the height control.
  * @height:            Height of the item, specified in terms of @size_unit.
  * @size_unit:         Unit used to specify the width and height.
  * @x_label:           Optional label for the X resolution entry.
@@ -466,10 +466,10 @@ gimp_resolution_entry_new (const gchar *width_label,
  **/
 GtkWidget *
 gimp_resolution_entry_attach_label (GimpResolutionEntry *gre,
-                                    const gchar   *text,
-                                    gint           row,
-                                    gint           column,
-                                    gfloat         alignment)
+                                    const gchar         *text,
+                                    gint                 row,
+                                    gint                 column,
+                                    gfloat               alignment)
 {
   GtkWidget *label;
 
@@ -506,7 +506,7 @@ gimp_resolution_entry_attach_label (GimpResolutionEntry *gre,
 }
 
 /**
- * gimp_resolution_entry_set_width_value_boundaries:
+ * gimp_resolution_entry_set_width_boundaries:
  * @gre:   The #GimpResolutionEntry you want to set value boundaries for.
  * @lower: The new lower boundary of the value of the field in pixels.
  * @upper: The new upper boundary of the value of the field in pixels.
@@ -520,9 +520,9 @@ gimp_resolution_entry_attach_label (GimpResolutionEntry *gre,
  * Since: GIMP 2.4
  **/
 void
-gimp_resolution_entry_set_width_value_boundaries (GimpResolutionEntry *gre,
-                                                  gdouble              lower,
-                                                  gdouble              upper)
+gimp_resolution_entry_set_width_boundaries (GimpResolutionEntry *gre,
+                                            gdouble              lower,
+                                            gdouble              upper)
 {
   g_return_if_fail (GIMP_IS_RESOLUTION_ENTRY (gre));
 
@@ -532,7 +532,7 @@ gimp_resolution_entry_set_width_value_boundaries (GimpResolutionEntry *gre,
 }
 
 /**
- * gimp_resolution_entry_set_height_value_boundaries:
+ * gimp_resolution_entry_set_height_boundaries:
  * @gre:   The #GimpResolutionEntry you want to set value boundaries for.
  * @lower: The new lower boundary of the value of the field in pixels.
  * @upper: The new upper boundary of the value of the field in pixels.
@@ -546,9 +546,9 @@ gimp_resolution_entry_set_width_value_boundaries (GimpResolutionEntry *gre,
  * Since: GIMP 2.4
  **/
 void
-gimp_resolution_entry_set_height_value_boundaries (GimpResolutionEntry *gre,
-                                                   gdouble              lower,
-                                                   gdouble              upper)
+gimp_resolution_entry_set_height_boundaries (GimpResolutionEntry *gre,
+                                             gdouble              lower,
+                                             gdouble              upper)
 {
   g_return_if_fail (GIMP_IS_RESOLUTION_ENTRY (gre));
 
@@ -600,8 +600,8 @@ gimp_resolution_entry_set_x_boundaries (GimpResolutionEntry *gre,
  **/
 void
 gimp_resolution_entry_set_y_boundaries (GimpResolutionEntry *gre,
-                                        gdouble        lower,
-                                        gdouble        upper)
+                                        gdouble              lower,
+                                        gdouble              upper)
 {
   g_return_if_fail (GIMP_IS_RESOLUTION_ENTRY (gre));
   g_return_if_fail (gre->independent);
@@ -1036,7 +1036,7 @@ gimp_resolution_entry_show_unit_menu (GimpResolutionEntry *gre,
  **/
 void
 gimp_resolution_entry_set_pixel_digits (GimpResolutionEntry *gre,
-                                  gint           digits)
+                                        gint                 digits)
 {
   GimpUnitMenu *menu;
 

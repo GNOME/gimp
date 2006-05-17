@@ -1,3 +1,10 @@
+2006-05-17  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpresolutionentry.c: synced function names with
+	the header file.
+
+	* libgimpwidgets/gimpwidgets.def: added missing entries.
+
 2005-05-16  Manish Singh  <yosh@gimp.org>
 
 	* po-libgimp/Makefile.in.in
