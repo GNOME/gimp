@@ -285,8 +285,6 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
   brush->y_axis.x = 0;
   brush->y_axis.y = height / 2;
 
-  gimp_data_dirty (GIMP_DATA (brush));
-
-  /* emit "name-changed" so that the description is updated */
+  /* emit "name-changed" so the description is updated (emits "dirty" too) */
   gimp_object_name_changed (GIMP_OBJECT (brush));
 }

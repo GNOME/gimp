@@ -1,3 +1,12 @@
+2006-05-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpbrushclipboard.c
+	(gimp_brush_clipboard_buffer_changed)
+	* app/core/gimppatternclipboard.c
+	(gimp_pattern_clipboard_buffer_changed): remove calls to
+	gimp_data_dirty() because the emission of "name-changed" takes
+	care of that.
+
 2006-05-17  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpbrushclipboard.c
