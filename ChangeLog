@@ -1,3 +1,13 @@
+2005-05-16  Manish Singh  <yosh@gimp.org>
+
+	* po-libgimp/Makefile.in.in
+	* po-plug-ins/Makefile.in.in
+	* po-script-fu/Makefile.in.in
+	* po-tips/Makefile.in.in: synchronized with po/Makefile.in.in.
+
+	* gimptool-2.0.in
+	* gimptool-win32.c.in: add reference to datarootdir.
+
 2006-05-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am
