@@ -1,5 +1,11 @@
 2006-05-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpvectortool.c (gimp_vector_tool_set_vectors): use
+	the same method as the newly added text tool code for finding a
+	suitable display for the vectors.
+
+2006-05-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpbrushclipboard.c
 	(gimp_brush_clipboard_buffer_changed)
 	* app/core/gimppatternclipboard.c

@@ -1618,7 +1618,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
           GimpDisplay *display;
 
           context = gimp_get_user_context (tool->tool_info->gimp);
-          display   = gimp_context_get_display (context);
+          display = gimp_context_get_display (context);
 
           if (! display || display->image != item->image)
             {
@@ -1630,23 +1630,22 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                    list;
                    list = g_list_next (list))
                 {
-                  if (((GimpDisplay *) list->data)->image == item->image)
-                    {
-                      gimp_context_set_display (context,
-                                                (GimpDisplay *) list->data);
+                  display = list->data;
 
-                      display = gimp_context_get_display (context);
+                  if (display->image == item->image)
+                    {
+                      gimp_context_set_display (context, display);
                       break;
                     }
+
+                  display = NULL;
                 }
             }
 
           tool->display = display;
 
           if (tool->display)
-            {
-              gimp_draw_tool_start (draw_tool, tool->display);
-            }
+            gimp_draw_tool_start (draw_tool, tool->display);
         }
     }
 
