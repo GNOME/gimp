@@ -123,6 +123,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
   gchar               *uri;
   gchar               *basename;
   GimpPlugInProcedure *save_proc;
+  gulong               handler_id;
 
   if (response_id != GTK_RESPONSE_OK)
     {
@@ -133,9 +134,9 @@ file_save_dialog_response (GtkWidget *save_dialog,
     }
 
   gimp_file_dialog_set_sensitive (dialog, FALSE);
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &dialog);
+  handler_id = g_signal_connect (dialog, "destroy",
+                                 G_CALLBACK (gtk_widget_destroyed),
+                                 &dialog);
 
   if (file_save_dialog_check_uri (save_dialog, gimp,
                                   &uri, &basename, &save_proc))
@@ -156,7 +157,10 @@ file_save_dialog_response (GtkWidget *save_dialog,
 
   /* dialog may have been destroyed while save plugin was running */
   if (dialog)
-    gimp_file_dialog_set_sensitive (dialog, TRUE);
+    {
+      gimp_file_dialog_set_sensitive (dialog, TRUE);
+      g_signal_handler_disconnect (dialog, handler_id);
+    }
 }
 
 static gboolean

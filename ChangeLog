@@ -1,5 +1,10 @@
 2006-05-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/dialogs/file-save-dialog.c: make sure to disconnect
+	callback added in previous change.
+
+2006-05-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/dialogs/file-save-dialog.c: make sure dialog has
 	not been destroyed when setting sensitive; fixes 
 	bug #322978.
