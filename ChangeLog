@@ -1,3 +1,9 @@
+2006-05-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/dialogs/file-save-dialog.c: make sure dialog has
+	not been destroyed when setting sensitive; fixes 
+	bug #322978.
+
 2006-05-18  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpparamspecs-desc.c: use the enum's name instead of

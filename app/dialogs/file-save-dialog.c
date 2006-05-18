@@ -133,6 +133,9 @@ file_save_dialog_response (GtkWidget *save_dialog,
     }
 
   gimp_file_dialog_set_sensitive (dialog, FALSE);
+  g_signal_connect (dialog, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &dialog);
 
   if (file_save_dialog_check_uri (save_dialog, gimp,
                                   &uri, &basename, &save_proc))
@@ -143,14 +146,17 @@ file_save_dialog_response (GtkWidget *save_dialog,
                                        save_proc,
                                        dialog->save_a_copy))
         {
-          gtk_widget_hide (save_dialog);
+          if (dialog)
+            gtk_widget_hide (save_dialog);
         }
 
       g_free (uri);
       g_free (basename);
     }
 
-  gimp_file_dialog_set_sensitive (dialog, TRUE);
+  /* dialog may have been destroyed while save plugin was running */
+  if (dialog)
+    gimp_file_dialog_set_sensitive (dialog, TRUE);
 }
 
 static gboolean
