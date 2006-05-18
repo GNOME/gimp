@@ -1,5 +1,10 @@
 2006-05-18  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpparamspecs-desc.c: use the enum's name instead of
+	the nick, strip the "GIMP_" prefix and canonicalize it.
+
+2006-05-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu.c (script_fu_run): reverted one
 	aspect of the last change and always load the scripts again.
 

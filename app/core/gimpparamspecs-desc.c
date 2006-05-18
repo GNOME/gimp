@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -116,7 +118,7 @@ gimp_param_spec_enum_desc (GParamSpec *pspec)
        i++, enum_value++)
     {
       GSList *list;
-      gchar  *nick;
+      gchar  *name;
 
       for (list = excluded; list; list = list->next)
         {
@@ -129,13 +131,16 @@ gimp_param_spec_enum_desc (GParamSpec *pspec)
       if (list)
         continue;
 
-      nick = g_ascii_strup (enum_value->value_nick, -1);
-
       if (n > 0)
         g_string_append (str, ", ");
 
-      g_string_append (str, nick);
-      g_free (nick);
+      if (G_LIKELY (strncmp ("GIMP_", enum_value->value_name, 5) == 0))
+        name = gimp_canonicalize_identifier (enum_value->value_name + 5);
+      else
+        name = gimp_canonicalize_identifier (enum_value->value_name);
+
+      g_string_append (str, name);
+      g_free (name);
 
       g_string_append_printf (str, " (%d)", enum_value->value);
 
