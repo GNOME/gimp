@@ -6,10 +6,10 @@
 2006-05-18  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/app.pl
-	* tools/pdbgen/lib.pl: removed code that used to fiddles with the
+	* tools/pdbgen/lib.pl: removed code that used to fiddle with the
 	argument descriptions.
 
-	* tools/pdbgen/pdb/*.pdb: removed %%desc%% placeholder, added some
+	* tools/pdbgen/pdb/*.pdb: removed %%desc%% placeholders, added some
 	missing argument descriptions.
 
 	* app/pdb/*_cmds.c
