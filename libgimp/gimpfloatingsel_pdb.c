@@ -160,7 +160,7 @@ gimp_floating_sel_attach (gint32 layer_ID,
 /**
  * gimp_floating_sel_rigor:
  * @floating_sel_ID: The floating selection.
- * @undo: %%desc%%.
+ * @undo: .
  *
  * Rigor the floating selection.
  *
@@ -192,7 +192,7 @@ gimp_floating_sel_rigor (gint32   floating_sel_ID,
 /**
  * gimp_floating_sel_relax:
  * @floating_sel_ID: The floating selection.
- * @undo: %%desc%%.
+ * @undo: .
  *
  * Relax the floating selection.
  *

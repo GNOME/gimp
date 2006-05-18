@@ -634,7 +634,7 @@ register_grid_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("style",
                                                       "style",
-                                                      "The image's grid style: { GIMP_GRID_DOTS (0), GIMP_GRID_INTERSECTIONS (1), GIMP_GRID_ON_OFF_DASH (2), GIMP_GRID_DOUBLE_DASH (3), GIMP_GRID_SOLID (4) }",
+                                                      "The image's grid style",
                                                       GIMP_TYPE_GRID_STYLE,
                                                       GIMP_GRID_DOTS,
                                                       GIMP_PARAM_READWRITE));
@@ -663,7 +663,7 @@ register_grid_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("style",
                                                   "style",
-                                                  "The image's grid style: { GIMP_GRID_DOTS (0), GIMP_GRID_INTERSECTIONS (1), GIMP_GRID_ON_OFF_DASH (2), GIMP_GRID_DOUBLE_DASH (3), GIMP_GRID_SOLID (4) }",
+                                                  "The image's grid style",
                                                   GIMP_TYPE_GRID_STYLE,
                                                   GIMP_GRID_DOTS,
                                                   GIMP_PARAM_READWRITE));

@@ -323,7 +323,7 @@ register_brushes_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("spacing",
                                                           "spacing",
-                                                          "The brush spacing (0 <= spacing <= 1000)",
+                                                          "The brush spacing",
                                                           0, 1000, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -345,7 +345,7 @@ register_brushes_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("spacing",
                                                           "spacing",
-                                                          "The brush spacing (0 <= spacing <= 1000)",
+                                                          "The brush spacing",
                                                           0, 1000, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -367,7 +367,7 @@ register_brushes_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("spacing",
                                                       "spacing",
-                                                      "The brush spacing (0 <= spacing <= 1000)",
+                                                      "The brush spacing",
                                                       0, 1000, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -403,19 +403,19 @@ register_brushes_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("opacity",
                                                         "opacity",
-                                                        "The brush opacity (0 <= opacity <= 100)",
+                                                        "The brush opacity",
                                                         0, 100, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("spacing",
                                                           "spacing",
-                                                          "The brush spacing (0 <= spacing <= 1000)",
+                                                          "The brush spacing",
                                                           0, 1000, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("paint-mode",
                                                       "paint mode",
-                                                      "The paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
+                                                      "The paint mode",
                                                       GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                       GIMP_NORMAL_MODE,
                                                       GIMP_PARAM_READWRITE));

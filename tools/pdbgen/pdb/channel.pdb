@@ -35,13 +35,13 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image to which to add the channel' },
 	{ name => 'width', type => '1 <= int32',
-	  desc => 'The channel width %%desc%%' },
+	  desc => 'The channel width' },
 	{ name => 'height', type => '1 <= int32',
-	  desc => 'The channel height %%desc%%' },
+	  desc => 'The channel height' },
 	{ name => 'name', type => 'string',
 	  desc => 'The channel name' },
 	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The channel opacity %%desc%%' },
+	  desc => 'The channel opacity' },
 	{ name => 'color', type => 'color',
 	  desc => 'The channel compositing color'
 	}
@@ -115,7 +115,7 @@ HELP
 	{ name => 'channel2', type => 'channel',
 	  desc => 'The channel2' },
 	{ name => 'operation', type => 'enum GimpChannelOps',
-	  desc => 'The selection operation: %%desc%%' },
+	  desc => 'The selection operation' },
 	{ name => 'offx', type => 'int32',
 	  desc => 'x offset between upper left corner of
                    channels: (second - first)' },
@@ -147,7 +147,7 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image to which to add the channel' },
 	{ name => 'component', type => 'enum GimpChannelType',
-	  desc => 'The image component: %%desc%%' },
+	  desc => 'The image component' },
 	{ name => 'name', type => 'string',
 	  desc => 'The channel name' },
     );
@@ -271,7 +271,7 @@ HELP
 	{ name => 'channel', type => 'channel',
 	  desc => 'The channel' },
 	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The new channel opacity %%desc%%' }
+	  desc => 'The new channel opacity' }
     );
 
     %invoke = (

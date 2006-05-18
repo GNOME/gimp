@@ -843,7 +843,7 @@ gimp_gradient_segment_get_coloring_type (const gchar              *name,
  * @name: The gradient name.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
- * @blending_function: The Blending Function.
+ * @blending_function: The blending function.
  *
  * Change the blending function of a segments range
  *
@@ -884,7 +884,7 @@ gimp_gradient_segment_range_set_blending_function (const gchar             *name
  * @name: The gradient name.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
- * @coloring_type: The Coloring Type.
+ * @coloring_type: The coloring type.
  *
  * Change the coloring type of a segments range
  *

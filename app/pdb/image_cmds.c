@@ -2200,7 +2200,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("type",
                                                   "type",
-                                                  "The type of image: { GIMP_RGB (0), GIMP_GRAY (1), GIMP_INDEXED (2) }",
+                                                  "The type of image",
                                                   GIMP_TYPE_IMAGE_BASE_TYPE,
                                                   GIMP_RGB,
                                                   GIMP_PARAM_READWRITE));
@@ -2285,7 +2285,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("base-type",
                                                       "base type",
-                                                      "The image's base type: { GIMP_RGB (0), GIMP_GRAY (1), GIMP_INDEXED (2) }",
+                                                      "The image's base type",
                                                       GIMP_TYPE_IMAGE_BASE_TYPE,
                                                       GIMP_RGB,
                                                       GIMP_PARAM_READWRITE));
@@ -2392,13 +2392,13 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("new-width",
                                                       "new width",
-                                                      "New image width (1 <= new_width)",
+                                                      "New image width",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("new-height",
                                                       "new height",
-                                                      "New image height (1 <= new_height)",
+                                                      "New image height",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2460,13 +2460,13 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("new-width",
                                                       "new width",
-                                                      "New image width (1 <= new_width)",
+                                                      "New image width",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("new-height",
                                                       "new height",
-                                                      "New image height (1 <= new_height)",
+                                                      "New image height",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2540,7 +2540,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("flip-type",
                                                      "flip type",
-                                                     "Type of flip: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
+                                                     "Type of flip",
                                                      GIMP_TYPE_ORIENTATION_TYPE,
                                                      GIMP_ORIENTATION_HORIZONTAL,
                                                      GIMP_PARAM_READWRITE));
@@ -2571,7 +2571,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("rotate-type",
                                                   "rotate type",
-                                                  "Angle of rotation: { GIMP_ROTATE_90 (0), GIMP_ROTATE_180 (1), GIMP_ROTATE_270 (2) }",
+                                                  "Angle of rotation",
                                                   GIMP_TYPE_ROTATION_TYPE,
                                                   GIMP_ROTATE_90,
                                                   GIMP_PARAM_READWRITE));
@@ -3404,7 +3404,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("merge-type",
                                                      "merge type",
-                                                     "The type of merge: { GIMP_EXPAND_AS_NECESSARY (0), GIMP_CLIP_TO_IMAGE (1), GIMP_CLIP_TO_BOTTOM_LAYER (2) }",
+                                                     "The type of merge",
                                                      GIMP_TYPE_MERGE_TYPE,
                                                      GIMP_EXPAND_AS_NECESSARY,
                                                      GIMP_PARAM_READWRITE));
@@ -3447,7 +3447,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("merge-type",
                                                      "merge type",
-                                                     "The type of merge: { GIMP_EXPAND_AS_NECESSARY (0), GIMP_CLIP_TO_IMAGE (1), GIMP_CLIP_TO_BOTTOM_LAYER (2) }",
+                                                     "The type of merge",
                                                      GIMP_TYPE_MERGE_TYPE,
                                                      GIMP_EXPAND_AS_NECESSARY,
                                                      GIMP_PARAM_READWRITE));
@@ -3524,7 +3524,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("mode",
                                                   "mode",
-                                                  "Removal mode: { GIMP_MASK_APPLY (0), GIMP_MASK_DISCARD (1) }",
+                                                  "Removal mode",
                                                   GIMP_TYPE_MASK_APPLY_MODE,
                                                   GIMP_MASK_APPLY,
                                                   GIMP_PARAM_READWRITE));
@@ -3553,7 +3553,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("num-bytes",
                                                           "num bytes",
-                                                          "Number of bytes in the colormap array (0 < num_bytes)",
+                                                          "Number of bytes in the colormap array",
                                                           0, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -3586,7 +3586,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-bytes",
                                                       "num bytes",
-                                                      "Number of bytes in the colormap array (0 <= num_bytes <= 768)",
+                                                      "Number of bytes in the colormap array",
                                                       0, 768, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -3928,14 +3928,14 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("component",
                                                   "component",
-                                                  "The image component: { GIMP_RED_CHANNEL (0), GIMP_GREEN_CHANNEL (1), GIMP_BLUE_CHANNEL (2), GIMP_GRAY_CHANNEL (3), GIMP_INDEXED_CHANNEL (4), GIMP_ALPHA_CHANNEL (5) }",
+                                                  "The image component",
                                                   GIMP_TYPE_CHANNEL_TYPE,
                                                   GIMP_RED_CHANNEL,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("active",
                                                          "active",
-                                                         "Component is active (TRUE or FALSE)",
+                                                         "Component is active",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -3963,14 +3963,14 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("component",
                                                   "component",
-                                                  "The image component: { GIMP_RED_CHANNEL (0), GIMP_GREEN_CHANNEL (1), GIMP_BLUE_CHANNEL (2), GIMP_GRAY_CHANNEL (3), GIMP_INDEXED_CHANNEL (4), GIMP_ALPHA_CHANNEL (5) }",
+                                                  "The image component",
                                                   GIMP_TYPE_CHANNEL_TYPE,
                                                   GIMP_RED_CHANNEL,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("active",
                                                      "active",
-                                                     "Component is active (TRUE or FALSE)",
+                                                     "Component is active",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -3998,14 +3998,14 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("component",
                                                   "component",
-                                                  "The image component: { GIMP_RED_CHANNEL (0), GIMP_GREEN_CHANNEL (1), GIMP_BLUE_CHANNEL (2), GIMP_GRAY_CHANNEL (3), GIMP_INDEXED_CHANNEL (4), GIMP_ALPHA_CHANNEL (5) }",
+                                                  "The image component",
                                                   GIMP_TYPE_CHANNEL_TYPE,
                                                   GIMP_RED_CHANNEL,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("visible",
                                                          "visible",
-                                                         "Component is visible (TRUE or FALSE)",
+                                                         "Component is visible",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -4033,14 +4033,14 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("component",
                                                   "component",
-                                                  "The image component: { GIMP_RED_CHANNEL (0), GIMP_GREEN_CHANNEL (1), GIMP_BLUE_CHANNEL (2), GIMP_GRAY_CHANNEL (3), GIMP_INDEXED_CHANNEL (4), GIMP_ALPHA_CHANNEL (5) }",
+                                                  "The image component",
                                                   GIMP_TYPE_CHANNEL_TYPE,
                                                   GIMP_RED_CHANNEL,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("visible",
                                                      "visible",
-                                                     "Component is visible (TRUE or FALSE)",
+                                                     "Component is visible",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

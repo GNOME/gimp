@@ -86,7 +86,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'fill_type', type => 'enum GimpFillType',
-	  desc => 'The type of fill: %%desc%%' }
+	  desc => 'The type of fill' }
     );
 
     %invoke = (
@@ -264,7 +264,7 @@ sub drawable_type {
 
     @outargs = (
 	{ name => 'type', type => 'enum GimpImageType',
-	  desc => "The drawable's type: %%desc%%" }
+	  desc => "The drawable's type" }
     );
 
     %invoke = (
@@ -328,7 +328,7 @@ HELP
 					      (no GIMP_RGB_IMAGE,
 					       GIMP_GRAY_IMAGE,
 					       GIMP_INDEXED_IMAGE)',
-	  desc => "The drawable's type with alpha: %%desc%%" }
+	  desc => "The drawable's type with alpha" }
     );
 
     %invoke = (
@@ -1152,7 +1152,7 @@ HELP
 	  desc => 'wrap image around or fill vacated regions' },
 	{ name => 'fill_type', type => 'enum GimpOffsetType',
 	  desc => 'fill vacated regions of drawable with background or
-		   transparent: %%desc%%' },
+		   transparent' },
 	{ name => 'offset_x', type => 'int32',
 	  desc => 'offset by this amount in X direction' },
 	{ name => 'offset_y', type => 'int32',
@@ -1219,7 +1219,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
         { name => 'mode', type => 'enum GimpForegroundExtractMode',
-	  desc => 'The algorithm to use: %%desc%%' },
+	  desc => 'The algorithm to use' },
         { name => 'mask', type => 'drawable', desc => 'Tri-Map' }
     );
 

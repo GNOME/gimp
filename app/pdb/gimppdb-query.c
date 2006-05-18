@@ -34,6 +34,8 @@
 
 #include "pdb-types.h"
 
+#include "core/gimpparamspecs-desc.h"
+
 #include "gimppdb.h"
 #include "gimppdb-query.h"
 #include "gimp-pdb-compat.h"
@@ -410,6 +412,7 @@ gimp_pdb_print_entry (gpointer key,
         {
           GParamSpec     *pspec = procedure->args[i];
           GimpPDBArgType  arg_type;
+          gchar          *desc  = gimp_param_spec_get_desc (pspec);
 
           fprintf (file, "\n    (\n");
 
@@ -422,7 +425,8 @@ gimp_pdb_print_entry (gpointer key,
           fprintf (file, "      ");
           output_string (file, arg_value->value_name);
           fprintf (file, "      ");
-          output_string (file, g_param_spec_get_blurb (pspec));
+          output_string (file, desc);
+          g_free (desc);
 
           fprintf (file, "    )");
         }
@@ -433,6 +437,7 @@ gimp_pdb_print_entry (gpointer key,
         {
           GParamSpec     *pspec = procedure->values[i];
           GimpPDBArgType  arg_type;
+          gchar          *desc  = gimp_param_spec_get_desc (pspec);
 
           fprintf (file, "\n    (\n");
 
@@ -445,7 +450,8 @@ gimp_pdb_print_entry (gpointer key,
           fprintf (file, "      ");
           output_string (file, arg_value->value_name);
           fprintf (file, "      ");
-          output_string (file, g_param_spec_get_blurb (pspec));
+          output_string (file, desc);
+          g_free (desc);
 
           fprintf (file, "    )");
         }

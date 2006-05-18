@@ -84,7 +84,7 @@ gimp_drawable_transform_flip_simple (gint32              drawable_ID,
  * @y0: vert. coord. of one end of axis.
  * @x1: horz. coord. of other end of axis.
  * @y1: vert. coord. of other end of axis.
- * @transform_direction: Direction of Transformation.
+ * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
  * @recursion_level: Level of recursion (3 is a nice default).
@@ -208,7 +208,7 @@ gimp_drawable_transform_flip_default (gint32   drawable_ID,
  * @y2: The new y coordinate of lower-left corner of original bounding box.
  * @x3: The new x coordinate of lower-right corner of original bounding box.
  * @y3: The new y coordinate of lower-right corner of original bounding box.
- * @transform_direction: Direction of Transformation.
+ * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
  * @recursion_level: Level of recursion (3 is a nice default).
@@ -409,7 +409,7 @@ gimp_drawable_transform_rotate_simple (gint32           drawable_ID,
  * @auto_center: Whether to automatically rotate around the selection center.
  * @center_x: The hor. coordinate of the center of rotation.
  * @center_y: The vert. coordinate of the center of rotation.
- * @transform_direction: Direction of Transformation.
+ * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
  * @recursion_level: Level of recursion (3 is a nice default).
@@ -528,7 +528,7 @@ gimp_drawable_transform_rotate_default (gint32   drawable_ID,
  * @y0: The new y coordinate of the upper-left corner of the scaled region.
  * @x1: The new x coordinate of the lower-right corner of the scaled region.
  * @y1: The new y coordinate of the lower-right corner of the scaled region.
- * @transform_direction: Direction of Transformation.
+ * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
  * @recursion_level: Level of recursion (3 is a nice default).
@@ -643,7 +643,7 @@ gimp_drawable_transform_scale_default (gint32   drawable_ID,
  * @drawable_ID: The affected drawable.
  * @shear_type: Type of shear.
  * @magnitude: The magnitude of the shear.
- * @transform_direction: Direction of Transformation.
+ * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
  * @recursion_level: Level of recursion (3 is a nice default).
@@ -758,7 +758,7 @@ gimp_drawable_transform_shear_default (gint32              drawable_ID,
  * @angle: The angle of rotation (radians).
  * @dest_x: X coordinate of where the center goes.
  * @dest_y: Y coordinate of where the center goes.
- * @transform_direction: Direction of Transformation.
+ * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
  * @recursion_level: Level of recursion (3 is a nice default).
@@ -898,7 +898,7 @@ gimp_drawable_transform_2d_default (gint32   drawable_ID,
  * @coeff_2_0: coefficient (2,0) of the transformation matrix.
  * @coeff_2_1: coefficient (2,1) of the transformation matrix.
  * @coeff_2_2: coefficient (2,2) of the transformation matrix.
- * @transform_direction: Direction of Transformation.
+ * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
  * @recursion_level: Level of recursion (3 is a nice default).

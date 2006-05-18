@@ -59,7 +59,7 @@ HELP
 
     @outargs = (
 	{ name => 'handler', type => 'enum GimpMessageHandlerType',
-	  desc => 'The current handler type: %%desc%%' }
+	  desc => 'The current handler type' }
     );
 
     %invoke = (
@@ -83,7 +83,7 @@ HELP
 
     @inargs = (
 	{ name => 'handler', type => 'enum GimpMessageHandlerType',
-	  desc => 'The new handler type: %%desc%%' }
+	  desc => 'The new handler type' }
     );
 
     %invoke = (

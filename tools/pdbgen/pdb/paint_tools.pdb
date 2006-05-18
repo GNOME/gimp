@@ -46,7 +46,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	{ name => 'pressure', type => '0 <= float <= 100',
-	  desc => 'The pressure of the airbrush strokes %%desc%%' },
+	  desc => 'The pressure of the airbrush strokes' },
 	&stroke_arg
     );
 
@@ -141,7 +141,7 @@ HELP
 	{ name => 'src_drawable', type => 'drawable',
 	  desc => 'The source drawable' },
 	{ name => 'clone_type', type => 'enum GimpCloneType',
-	  desc => 'The type of clone: %%desc%%' },
+	  desc => 'The type of clone' },
 	{ name => 'src_x', type => 'float',
 	  desc => 'The x coordinate in the source image' },
 	{ name => 'src_y', type => 'float',
@@ -274,9 +274,9 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	{ name => 'pressure', type => '0 <= float <= 100',
-	  desc => 'The pressure %%desc%%' },
+	  desc => 'The pressure' },
 	{ name => 'convolve_type', type => 'enum GimpConvolveType',
-	  desc => 'Convolve type: %%desc%%' },
+	  desc => 'Convolve type' },
 	&stroke_arg
     );
 
@@ -361,9 +361,9 @@ HELP
 	  desc => 'The affected drawable' },
 	&stroke_arg,
 	{ name => 'hardness', type => 'enum GimpBrushApplicationMode',
-	  desc => '%%desc%%' },
+	  desc => 'How to apply the brush' },
 	{ name => 'method', type => 'enum GimpPaintApplicationMode',
-	  desc => '%%desc%%' }
+	  desc => 'The paint method to use' }
     );
 
     %invoke = (
@@ -409,9 +409,9 @@ HELP
 	  desc => 'The affected drawable' },
 	&stroke_arg,
 	{ name => 'hardness', type => 'enum GimpBrushApplicationMode',
-	  desc => '%%desc%%' },
+	  desc => 'How to apply the brush' },
 	{ name => 'method', type => 'enum GimpPaintApplicationMode',
-	  desc => '%%desc%%' }
+	  desc => 'The paint method to use' }
     );
 
     %invoke = (
@@ -463,12 +463,12 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	{ name => 'fade_out', type => '0 <= float',
-	  desc => 'Fade out parameter %%desc%%' },
-	&stroke_arg,
+	  desc => 'Fade out parameter' },
+	  &stroke_arg,
 	{ name => 'method', type => 'enum GimpPaintApplicationMode',
-	  desc => '%%desc%%' },
+	  desc => 'The paint method to use' },
 	{ name => 'gradient_length', type => '0 <= float',
-	  desc => 'Length of gradient to draw %%desc%%' }
+	  desc => 'Length of gradient to draw' }
     );
 
     %invoke = (
@@ -600,8 +600,8 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	 { name => 'pressure', type => '0 <= float <= 100',
-	   desc => 'The pressure of the smudge strokes %%desc%%' },
-	&stroke_arg
+	   desc => 'The pressure of the smudge strokes' },
+	   &stroke_arg
     );
 
     %invoke = (
@@ -683,11 +683,11 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	 { name => 'exposure', type => '0 <= float <= 100',
-	   desc => 'The exposure of the  strokes %%desc%%' },
+	   desc => 'The exposure of the  strokes' },
         { name => 'dodgeburn_type', type => 'enum GimpDodgeBurnType',
-	  desc => 'The type either dodge or burn: %%desc%%' },
+	  desc => 'The type either dodge or burn' },
         { name => 'dodgeburn_mode', type => 'enum GimpTransferMode',
-	  desc => 'The mode: %%desc%%' },
+	  desc => 'The mode' },
 	&stroke_arg
     );
 

@@ -203,6 +203,8 @@ libappcore_a_sources = \
 	gimppalette-import.h		\
 	gimpparamspecs.c		\
 	gimpparamspecs.h		\
+	gimpparamspecs-desc.c		\
+	gimpparamspecs-desc.h		\
 	gimpparasitelist.c		\
 	gimpparasitelist.h		\
 	gimppdbprogress.c		\

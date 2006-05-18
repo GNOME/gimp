@@ -492,7 +492,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => "The drawable to fill to" },
 	{ name => 'fill_type', type => 'enum GimpFillType',
-	  desc => 'The type of fill: %%desc%%' }
+	  desc => 'The type of fill' }
     );
 
     %invoke = (
@@ -539,16 +539,16 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	{ name => 'fill_mode', type => 'enum GimpBucketFillMode',
-	  desc => 'The type of fill: %%desc%%' },
+	  desc => 'The type of fill' },
 	{ name => paint_mode, type => 'enum GimpLayerModeEffects',
-	  desc => 'The paint application mode: %%desc%%' },
+	  desc => 'The paint application mode' },
 	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The opacity of the final bucket fill %%desc%%' },
+	  desc => 'The opacity of the final bucket fill' },
 	{ name => 'threshold', type => '0 <= float <= 255',
 	  desc => "The threshold determines how extensive the seed fill will
-		   be. It's value is specified in terms of intensity levels
-		   %%desc%%. This parameter is only valid when there is
-                   no selection in the specified image." },
+		   be. It's value is specified in terms of intensity levels.
+                   This parameter is only valid when there is no selection in
+		   the specified image." },
 	{ name => 'sample_merged', type => 'boolean',
 	  desc => 'Use the composite image, not the drawable' },
 	{ name => 'x', type => 'float',
@@ -605,29 +605,28 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
         { name => 'blend_mode', type => 'enum GimpBlendMode',
-	  desc => 'The type of blend: %%desc%%' },
+	  desc => 'The type of blend' },
 	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects',
-	  desc => 'The paint application mode: %%desc%%' },
+	  desc => 'The paint application mode' },
 	{ name => 'gradient_type',  type => 'enum GimpGradientType',
-	  desc => 'The type of gradient: %%desc%%' },
+	  desc => 'The type of gradient' },
 	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The opacity of the final blend %%desc%%' },
+	  desc => 'The opacity of the final blend' },
 	{ name => 'offset', type => '0 <= float',
 	  desc => 'Offset relates to the starting and ending coordinates
-		   specified for the blend. This parameter is mode dependent
-		   %%desc%%' },
+		   specified for the blend. This parameter is mode dependent.' },
 	{ name => 'repeat', type => 'enum GimpRepeatMode',
-	  desc => 'Repeat mode: %%desc%%' },
+	  desc => 'Repeat mode' },
 	{ name => 'reverse', type => 'boolean',
-	  desc => 'Use the reverse gradient %%desc%%' },
+	  desc => 'Use the reverse gradient' },
 	{ name => 'supersample', type => 'boolean',
-	  desc => 'Do adaptive supersampling %%desc%%' },
+	  desc => 'Do adaptive supersampling' },
 	{ name => 'max_depth', type => '1 <= int32 <= 9', no_success => 1,
 	  desc => 'Maximum recursion levels for supersampling' },
 	{ name => 'threshold', type => '0 <= float <= 4', no_success => 1,
 	  desc => 'Supersampling threshold' },
 	{ name => 'dither', type => 'boolean',
-	  desc => 'Use dithering to reduce banding %%desc%%' },
+	  desc => 'Use dithering to reduce banding' },
 	{ name => 'x1', type => 'float',
 	  desc => "The x coordinate of this blend's starting point" },
 	{ name => 'y1', type => 'float',

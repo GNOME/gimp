@@ -397,7 +397,7 @@ register_guides_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_enum ("orientation",
                                                          "orientation",
-                                                         "The guide's orientation: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
+                                                         "The guide's orientation",
                                                          GIMP_TYPE_ORIENTATION_TYPE,
                                                          GIMP_ORIENTATION_HORIZONTAL,
                                                          GIMP_PARAM_READWRITE));

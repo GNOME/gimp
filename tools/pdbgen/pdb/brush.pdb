@@ -353,7 +353,7 @@ HELP
 
     @outargs = (
 	{ name => 'spacing', type => '0 <= int32 <= 1000',
-	  desc => 'The brush spacing %%desc%%',
+	  desc => 'The brush spacing',
 	  void_ret => 1 }
     );
 
@@ -393,7 +393,7 @@ HELP
 
     @outargs = (
 	{ name => 'shape', type => 'enum GimpBrushGeneratedShape',
-          desc => 'The brush shape: %%desc%%' }
+          desc => 'The brush shape' }
     );
 
     %invoke = (
@@ -602,7 +602,7 @@ HELP
 	{ name => 'name', type => 'string',
 	  desc => 'The brush name' },
 	{ name => 'spacing', type => '0 <= int32 <= 1000',
-	  desc => 'The brush spacing %%desc%%' }
+	  desc => 'The brush spacing' }
     );
 
     %invoke = (
@@ -638,12 +638,12 @@ HELP
 	{ name => 'name', type => 'string',
 	  desc => 'The brush name' },
 	{ name => 'shape_in', type => 'enum GimpBrushGeneratedShape',
-          desc => 'The brush shape: %%desc%%' }
+          desc => 'The brush shape' }
     );
 
     @outargs = (
 	{ name => 'shape_out', type => 'enum GimpBrushGeneratedShape',
-          desc => 'The brush shape actually assigned: %%desc%%' }
+          desc => 'The brush shape actually assigned' }
     );
 
     %invoke = (

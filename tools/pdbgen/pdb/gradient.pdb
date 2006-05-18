@@ -215,7 +215,7 @@ HELP
 	{ name => 'num_samples', type => '2 <= int32',
 	  desc => 'The number of samples to take' },
 	{ name => 'reverse', type => 'boolean',
-	  desc => 'Use the reverse gradient %%desc%%' }
+	  desc => 'Use the reverse gradient' }
     );
 
     @outargs = (
@@ -285,7 +285,7 @@ HELP
 	  array => { name => 'num_samples', type => '1 <= int32',
 		     desc => 'The number of samples to take' } },
 	{ name => 'reverse', type => 'boolean',
-	  desc => 'Use the reverse gradient %%desc%%' }
+	  desc => 'Use the reverse gradient' }
     );
 
     @outargs = (
@@ -786,7 +786,7 @@ HELP
 
     @outargs = (
         { name => 'blend_func', type => 'enum GimpGradientSegmentType',
-          desc => 'The blending function of the segment: %%desc%%',
+          desc => 'The blending function of the segment',
           void_ret => 1 }
     );
 
@@ -828,7 +828,7 @@ HELP
 
     @outargs = (
         { name => 'coloring_type', type => 'enum GimpGradientSegmentColor',
-          desc => 'The coloring type of the segment: %%desc%%',
+          desc => 'The coloring type of the segment',
           void_ret => 1 }
     );
 
@@ -870,7 +870,7 @@ HELP
           desc => 'The index of the last segment to operate on. If negative,
                    the selection will extend to the end of the string.' },
         { name => 'blending_function', type => 'enum GimpGradientSegmentType',
-          desc => 'The Blending Function: %%desc%%' }
+          desc => 'The blending function' }
     );
 
     %invoke = (
@@ -915,7 +915,7 @@ HELP
           desc => 'The index of the last segment to operate on. If negative,
                    the selection will extend to the end of the string.' },
         { name => 'coloring_type', type => 'enum GimpGradientSegmentColor',
-          desc => 'The Coloring Type: %%desc%%' }
+          desc => 'The coloring type' }
     );
 
     %invoke = (

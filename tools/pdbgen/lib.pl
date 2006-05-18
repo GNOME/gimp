@@ -40,16 +40,6 @@ sub desc_wrap {
     wrap($leading, $leading, $str);
 }
 
-sub desc_clean {
-    my ($str) = @_;
-    $str =~ s/\(\s*%%desc%%\s*\)//g;
-    $str =~ s/:*\s+%%desc%%//g;
-    $str =~ s/\{\s*%%desc%%\s*\}//g;
-    $str =~ s/\s*$//g;
-    $str =~ s/:$//g;
-    $str;
-}
-
 sub generate {
     my @procs = @{(shift)};
     my %out;
@@ -127,7 +117,7 @@ sub generate {
 
 	    $retarg->{retval} = 1;
 
-	    $retdesc = &desc_clean ($retarg->{desc});
+	    $retdesc = exists $retarg->{desc} ? $retarg->{desc} : "";
 	}
 	else {
 	    # No return values
@@ -139,7 +129,7 @@ sub generate {
 	my $argdesc = ""; my $sincedesc = "";
 	foreach (@inargs) {
 	    my ($type) = &arg_parse($_->{type});
-	    my $desc = &desc_clean($_->{desc});
+	    my $desc = exists $_->{desc} ? $_->{desc} : "";
 	    my $arg = $arg_types{$type};
 
 	    $wrapped = "_" if exists $_->{wrap};
@@ -270,7 +260,7 @@ CODE
 	    my $argc = 1; my ($numpos, $numtype);
 	    foreach (@outargs) {
 		my ($type) = &arg_parse($_->{type});
-                my $desc = &desc_clean($_->{desc});
+                my $desc = exists $_->{desc} ? $_->{desc} : "";
 		my $arg = $arg_types{$type};
 		my $var;
 	    

@@ -1287,7 +1287,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("type",
                                                       "type",
-                                                      "The drawable's type: { GIMP_RGB_IMAGE (0), GIMP_RGBA_IMAGE (1), GIMP_GRAY_IMAGE (2), GIMP_GRAYA_IMAGE (3), GIMP_INDEXED_IMAGE (4), GIMP_INDEXEDA_IMAGE (5) }",
+                                                      "The drawable's type",
                                                       GIMP_TYPE_IMAGE_TYPE,
                                                       GIMP_RGB_IMAGE,
                                                       GIMP_PARAM_READWRITE));
@@ -1316,7 +1316,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_enum ("type-with-alpha",
                                                          "type with alpha",
-                                                         "The drawable's type with alpha: { GIMP_RGBA_IMAGE (1), GIMP_GRAYA_IMAGE (3), GIMP_INDEXEDA_IMAGE (5) }",
+                                                         "The drawable's type with alpha",
                                                          GIMP_TYPE_IMAGE_TYPE,
                                                          GIMP_RGB_IMAGE,
                                                          GIMP_PARAM_READWRITE));
@@ -2131,7 +2131,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("fill-type",
                                                   "fill type",
-                                                  "The type of fill: { GIMP_FOREGROUND_FILL (0), GIMP_BACKGROUND_FILL (1), GIMP_WHITE_FILL (2), GIMP_TRANSPARENT_FILL (3), GIMP_PATTERN_FILL (4) }",
+                                                  "The type of fill",
                                                   GIMP_TYPE_FILL_TYPE,
                                                   GIMP_FOREGROUND_FILL,
                                                   GIMP_PARAM_READWRITE));
@@ -2166,7 +2166,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("fill-type",
                                                   "fill type",
-                                                  "fill vacated regions of drawable with background or transparent: { GIMP_OFFSET_BACKGROUND (0), GIMP_OFFSET_TRANSPARENT (1) }",
+                                                  "fill vacated regions of drawable with background or transparent",
                                                   GIMP_TYPE_OFFSET_TYPE,
                                                   GIMP_OFFSET_BACKGROUND,
                                                   GIMP_PARAM_READWRITE));
@@ -2357,7 +2357,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("mode",
                                                   "mode",
-                                                  "The algorithm to use: { GIMP_FOREGROUND_EXTRACT_SIOX (0) }",
+                                                  "The algorithm to use",
                                                   GIMP_TYPE_FOREGROUND_EXTRACT_MODE,
                                                   GIMP_FOREGROUND_EXTRACT_SIOX,
                                                   GIMP_PARAM_READWRITE));

@@ -73,7 +73,7 @@ HELP
 	{ name => 'height', type => '1 <= int32',
 	  desc => 'The height of the image' },
 	{ name => 'type', type => 'enum GimpImageBaseType',
-	  desc => 'The type of image: %%desc%%' }
+	  desc => 'The type of image' }
     );
 
     @outargs = (
@@ -176,9 +176,9 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'new_width', type => '1 <= int32',
-	  desc => 'New image width %%desc%%' },
+	  desc => 'New image width' },
 	{ name => 'new_height', type => '1 <= int32',
-	  desc => 'New image height %%desc%%' },
+	  desc => 'New image height' },
 	{ name => 'offx', type => 'int32',
 	  desc => 'x offset between upper left corner of old and
 		   new images: (new - old)' },
@@ -244,9 +244,9 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'new_width', type => '1 <= int32',
-	  desc => 'New image width %%desc%%' },
+	  desc => 'New image width' },
 	{ name => 'new_height', type => '1 <= int32',
-	  desc => 'New image height %%desc%%' }
+	  desc => 'New image height' }
     );
 
     %invoke = (
@@ -319,7 +319,7 @@ HELP
 	  desc => 'The image' },
 	{ name => 'flip_type',
 	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
-	  desc => 'Type of flip: %%desc%%' }
+	  desc => 'Type of flip' }
     );
 
     %invoke = (
@@ -342,7 +342,7 @@ sub image_rotate {
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'rotate_type', type => 'enum GimpRotationType',
-	  desc => 'Angle of rotation: %%desc%%' }
+	  desc => 'Angle of rotation' }
     );
 
     %invoke = (
@@ -778,7 +778,7 @@ HELP
 	  desc => 'The image' },
 	{ name => 'merge_type',
 	  type => 'enum GimpMergeType (no GIMP_FLATTEN_IMAGE)',
-	  desc => 'The type of merge: %%desc%%' }
+	  desc => 'The type of merge' }
     );
 
     @outargs = (
@@ -820,7 +820,7 @@ HELP
 	  desc => 'The layer to merge down from' },
 	{ name => 'merge_type',
 	  type => 'enum GimpMergeType (no GIMP_FLATTEN_IMAGE)',
-	  desc => 'The type of merge: %%desc%%' }
+	  desc => 'The type of merge' }
     );
 
     @outargs = (
@@ -973,7 +973,7 @@ sub image_remove_layer_mask {
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer from which to remove mask' },
 	{ name => 'mode', type => 'enum GimpMaskApplyMode',
-	  desc => 'Removal mode: %%desc%%' }
+	  desc => 'Removal mode' }
     );
 
     %invoke = (
@@ -1314,7 +1314,7 @@ HELP
 
     @outargs = (
 	{ name => 'base_type', type => 'enum GimpImageBaseType',
-	  desc => "The image's base type: %%desc%%" }
+	  desc => "The image's base type" }
     );
 
     %invoke = (
@@ -1347,8 +1347,7 @@ HELP
 	{ name => 'colormap', type => 'int8array', wrap => 1,
 	  desc => "The image's colormap",
 	  array => { name => 'num_bytes',
-		     desc => 'Number of bytes in the colormap array
-			      %%desc%%' } }
+		     desc => 'Number of bytes in the colormap array' } }
     );
 
     %invoke = (
@@ -1380,8 +1379,7 @@ HELP
 	{ name => 'colormap', type => 'int8array', wrap => 1,
 	  desc => 'The new colormap values',
 	  array => { name => 'num_bytes', type => '0 <= int32 <= 768',
-		     desc => 'Number of bytes in the colormap array
-			      %%desc%%' } }
+		     desc => 'Number of bytes in the colormap array' } }
     );
 
     %invoke = (
@@ -1792,12 +1790,12 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'component', type => 'enum GimpChannelType',
-	  desc => 'The image component: %%desc%%' }
+	  desc => 'The image component' }
     );
 
     @outargs = (
 	{ name => 'active', type => 'boolean',
-	  desc => 'Component is active %%desc%%' }
+	  desc => 'Component is active' }
     );
 
     %invoke = (
@@ -1833,9 +1831,9 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'component', type => 'enum GimpChannelType',
-	  desc => 'The image component: %%desc%%' },
+	  desc => 'The image component' },
 	{ name => 'active', type => 'boolean',
-	  desc => 'Component is active %%desc%%' }
+	  desc => 'Component is active' }
     );
 
     %invoke = (
@@ -1871,12 +1869,12 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'component', type => 'enum GimpChannelType',
-	  desc => 'The image component: %%desc%%' }
+	  desc => 'The image component' }
     );
 
     @outargs = (
 	{ name => 'visible', type => 'boolean',
-	  desc => 'Component is visible %%desc%%' }
+	  desc => 'Component is visible' }
     );
 
     %invoke = (
@@ -1912,9 +1910,9 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'component', type => 'enum GimpChannelType',
-	  desc => 'The image component: %%desc%%' },
+	  desc => 'The image component' },
 	{ name => 'visible', type => 'boolean',
-	  desc => 'Component is visible %%desc%%' }
+	  desc => 'Component is visible' }
     );
 
     %invoke = (

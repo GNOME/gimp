@@ -218,7 +218,7 @@ sub buffer_get_image_type {
 
     @outargs = (
 	{ name => 'image_type', type => 'enum GimpImageBaseType',
-          desc => "The buffer image type: %%desc%%" }
+          desc => "The buffer image type" }
     );
 
     %invoke = (

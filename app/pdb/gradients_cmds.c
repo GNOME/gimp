@@ -354,7 +354,7 @@ register_gradients_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("reverse",
                                                      "reverse",
-                                                     "Use the reverse gradient (TRUE or FALSE)",
+                                                     "Use the reverse gradient",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -398,7 +398,7 @@ register_gradients_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("reverse",
                                                      "reverse",
-                                                     "Use the reverse gradient (TRUE or FALSE)",
+                                                     "Use the reverse gradient",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -438,13 +438,13 @@ register_gradients_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("sample-size",
                                                       "sample size",
-                                                      "Size of the sample to return when the gradient is changed: (1 <= sample_size <= 10000)",
+                                                      "Size of the sample to return when the gradient is changed",
                                                       1, 10000, 1,
                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("reverse",
                                                      "reverse",
-                                                     "Use the reverse gradient (TRUE or FALSE)",
+                                                     "Use the reverse gradient",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,

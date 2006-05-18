@@ -81,7 +81,7 @@ HELP
 
     @outargs = (
 	{ name => 'value', type => '0 <= int32 <= 255',
-	  desc => 'Value of the selection %%desc%%' }
+	  desc => 'Value of the selection' }
     );
 
     %invoke = (
@@ -488,7 +488,7 @@ HELP
 	{ name => 'channel', type => 'channel',
 	  desc => 'The channel' },
 	{ name => 'operation', type => 'enum GimpChannelOps',
-	  desc => 'The selection operation: %%desc%%' }
+	  desc => 'The selection operation' }
     );
 
     %invoke = (

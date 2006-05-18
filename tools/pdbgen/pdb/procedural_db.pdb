@@ -165,7 +165,7 @@ HELP
 	{ name => 'date', type => 'string',
 	  desc => 'Copyright date' },
         { name => 'proc_type', type => 'enum GimpPDBProcType',
-	  desc => 'The procedure type: %%desc%%' },
+	  desc => 'The procedure type' },
         { name => 'num_args', type => 'int32',
 	  desc => 'The number of input arguments' },
         { name => 'num_values', type => 'int32',
@@ -215,7 +215,7 @@ HELP
 
     @outargs = (
 	{ name => 'arg_type', type => 'enum GimpPDBArgType (no GIMP_PDB_END)',
-	  desc => "The type of argument: %%desc%%", void_ret => 1 },
+	  desc => "The type of argument", void_ret => 1 },
 	{ name => 'arg_name', type => 'string',
 	  desc => 'The name of the argument' },
 	{ name => 'arg_desc', type => 'string',
@@ -250,7 +250,7 @@ HELP
 
       arg_type = gimp_pdb_compat_arg_type_from_gtype (G_PARAM_SPEC_VALUE_TYPE (pspec));
       arg_name = g_strdup (g_param_spec_get_name (pspec));
-      arg_desc = g_strdup (g_param_spec_get_blurb (pspec));
+      arg_desc = gimp_param_spec_get_desc (pspec);
     }
   else
     success = FALSE;
@@ -282,7 +282,7 @@ HELP
 
     @outargs = (
 	{ name => 'val_type', type => 'enum GimpPDBArgType (no GIMP_PDB_END)',
-	  desc => "The type of return value: %%desc%%", void_ret => 1 },
+	  desc => "The type of return value", void_ret => 1 },
 	{ name => 'val_name', type => 'string',
 	  desc => 'The name of the return value' },
 	{ name => 'val_desc', type => 'string',
@@ -317,7 +317,7 @@ HELP
 
       val_type = gimp_pdb_compat_arg_type_from_gtype (G_PARAM_SPEC_VALUE_TYPE (pspec));
       val_name = g_strdup (g_param_spec_get_name (pspec));
-      val_desc = g_strdup (g_param_spec_get_blurb (pspec));
+      val_desc = gimp_param_spec_get_desc (pspec);
     }
   else
     success = FALSE;
@@ -443,7 +443,7 @@ CODE
 
 
 @headers = qw("libgimpbase/gimpbase.h"
-              "core/gimp.h"
+              "core/gimp.h" "core/gimpparamspecs-desc.h"
               "gimppdb-query.h"
               "gimp-pdb-compat.h"
               "plug-in/gimppluginmanager-data.h");

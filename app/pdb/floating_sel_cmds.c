@@ -298,7 +298,7 @@ register_floating_sel_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("undo",
                                                      "undo",
-                                                     "(TRUE or FALSE)",
+                                                     "",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -326,7 +326,7 @@ register_floating_sel_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("undo",
                                                      "undo",
-                                                     "(TRUE or FALSE)",
+                                                     "",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

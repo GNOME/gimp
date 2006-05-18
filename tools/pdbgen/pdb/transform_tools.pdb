@@ -25,7 +25,7 @@ sub flip {
 	  desc => 'The affected drawable' },
 	{ name => 'flip_type',
 	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
-	  desc => 'Type of flip: %%desc%%' }
+	  desc => 'Type of flip' }
     );
 
     @outargs = (
@@ -269,7 +269,7 @@ sub shear {
 	  desc => 'Whether to use interpolation' },
 	{ name => 'shear_type',
 	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
-	  desc => 'Type of shear: %%desc%%' },
+	  desc => 'Type of shear' },
 	{ name => 'magnitude', type => 'float',
 	  desc => 'The magnitude of the shear' }
     );

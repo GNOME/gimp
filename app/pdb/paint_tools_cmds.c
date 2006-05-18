@@ -716,7 +716,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("pressure",
                                                     "pressure",
-                                                    "The pressure of the airbrush strokes (0 <= pressure <= 100)",
+                                                    "The pressure of the airbrush strokes",
                                                     0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -794,7 +794,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("clone-type",
                                                   "clone type",
-                                                  "The type of clone: { GIMP_IMAGE_CLONE (0), GIMP_PATTERN_CLONE (1) }",
+                                                  "The type of clone",
                                                   GIMP_TYPE_CLONE_TYPE,
                                                   GIMP_IMAGE_CLONE,
                                                   GIMP_PARAM_READWRITE));
@@ -879,13 +879,13 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("pressure",
                                                     "pressure",
-                                                    "The pressure (0 <= pressure <= 100)",
+                                                    "The pressure",
                                                     0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("convolve-type",
                                                   "convolve type",
-                                                  "Convolve type: { GIMP_BLUR_CONVOLVE (0), GIMP_SHARPEN_CONVOLVE (1) }",
+                                                  "Convolve type",
                                                   GIMP_TYPE_CONVOLVE_TYPE,
                                                   GIMP_BLUR_CONVOLVE,
                                                   GIMP_PARAM_READWRITE));
@@ -958,20 +958,20 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("exposure",
                                                     "exposure",
-                                                    "The exposure of the strokes (0 <= exposure <= 100)",
+                                                    "The exposure of the strokes",
                                                     0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("dodgeburn-type",
                                                   "dodgeburn type",
-                                                  "The type either dodge or burn: { GIMP_DODGE (0), GIMP_BURN (1) }",
+                                                  "The type either dodge or burn",
                                                   GIMP_TYPE_DODGE_BURN_TYPE,
                                                   GIMP_DODGE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("dodgeburn-mode",
                                                   "dodgeburn mode",
-                                                  "The mode: { GIMP_SHADOWS (0), GIMP_MIDTONES (1), GIMP_HIGHLIGHTS (2) }",
+                                                  "The mode",
                                                   GIMP_TYPE_TRANSFER_MODE,
                                                   GIMP_SHADOWS,
                                                   GIMP_PARAM_READWRITE));
@@ -1055,14 +1055,14 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("hardness",
                                                   "hardness",
-                                                  "{ GIMP_BRUSH_HARD (0), GIMP_BRUSH_SOFT (1) }",
+                                                  "How to apply the brush",
                                                   GIMP_TYPE_BRUSH_APPLICATION_MODE,
                                                   GIMP_BRUSH_HARD,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("method",
                                                   "method",
-                                                  "{ GIMP_PAINT_CONSTANT (0), GIMP_PAINT_INCREMENTAL (1) }",
+                                                  "The paint method to use",
                                                   GIMP_TYPE_PAINT_APPLICATION_MODE,
                                                   GIMP_PAINT_CONSTANT,
                                                   GIMP_PARAM_READWRITE));
@@ -1124,7 +1124,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("fade-out",
                                                     "fade out",
-                                                    "Fade out parameter (0 <= fade_out)",
+                                                    "Fade out parameter",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1141,14 +1141,14 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("method",
                                                   "method",
-                                                  "{ GIMP_PAINT_CONSTANT (0), GIMP_PAINT_INCREMENTAL (1) }",
+                                                  "The paint method to use",
                                                   GIMP_TYPE_PAINT_APPLICATION_MODE,
                                                   GIMP_PAINT_CONSTANT,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("gradient-length",
                                                     "gradient length",
-                                                    "Length of gradient to draw (0 <= gradient_length)",
+                                                    "Length of gradient to draw",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1242,7 +1242,7 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("pressure",
                                                     "pressure",
-                                                    "The pressure of the smudge strokes (0 <= pressure <= 100)",
+                                                    "The pressure of the smudge strokes",
                                                     0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

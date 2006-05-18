@@ -31,6 +31,7 @@
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
+#include "core/gimpparamspecs-desc.h"
 #include "gimp-pdb-compat.h"
 #include "gimppdb-query.h"
 #include "plug-in/gimppluginmanager-data.h"
@@ -221,7 +222,7 @@ procedural_db_proc_arg_invoker (GimpProcedure     *procedure,
 
           arg_type = gimp_pdb_compat_arg_type_from_gtype (G_PARAM_SPEC_VALUE_TYPE (pspec));
           arg_name = g_strdup (g_param_spec_get_name (pspec));
-          arg_desc = g_strdup (g_param_spec_get_blurb (pspec));
+          arg_desc = gimp_param_spec_get_desc (pspec);
         }
       else
         success = FALSE;
@@ -284,7 +285,7 @@ procedural_db_proc_val_invoker (GimpProcedure     *procedure,
 
           val_type = gimp_pdb_compat_arg_type_from_gtype (G_PARAM_SPEC_VALUE_TYPE (pspec));
           val_name = g_strdup (g_param_spec_get_name (pspec));
-          val_desc = g_strdup (g_param_spec_get_blurb (pspec));
+          val_desc = gimp_param_spec_get_desc (pspec);
         }
       else
         success = FALSE;
@@ -591,7 +592,7 @@ register_procedural_db_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("proc-type",
                                                       "proc type",
-                                                      "The procedure type: { GIMP_INTERNAL (0), GIMP_PLUGIN (1), GIMP_EXTENSION (2), GIMP_TEMPORARY (3) }",
+                                                      "The procedure type",
                                                       GIMP_TYPE_PDB_PROC_TYPE,
                                                       GIMP_INTERNAL,
                                                       GIMP_PARAM_READWRITE));
@@ -639,7 +640,7 @@ register_procedural_db_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_enum ("arg-type",
                                                          "arg type",
-                                                         "The type of argument: { GIMP_PDB_INT32 (0), GIMP_PDB_INT16 (1), GIMP_PDB_INT8 (2), GIMP_PDB_FLOAT (3), GIMP_PDB_STRING (4), GIMP_PDB_INT32ARRAY (5), GIMP_PDB_INT16ARRAY (6), GIMP_PDB_INT8ARRAY (7), GIMP_PDB_FLOATARRAY (8), GIMP_PDB_STRINGARRAY (9), GIMP_PDB_COLOR (10), GIMP_PDB_REGION (11), GIMP_PDB_DISPLAY (12), GIMP_PDB_IMAGE (13), GIMP_PDB_LAYER (14), GIMP_PDB_CHANNEL (15), GIMP_PDB_DRAWABLE (16), GIMP_PDB_SELECTION (17), GIMP_PDB_BOUNDARY (18), GIMP_PDB_VECTORS (19), GIMP_PDB_PARASITE (20), GIMP_PDB_STATUS (21), GIMP_PDB_PATH (GIMP_PDB_VECTORS) }",
+                                                         "The type of argument",
                                                          GIMP_TYPE_PDB_ARG_TYPE,
                                                          GIMP_PDB_INT32,
                                                          GIMP_PARAM_READWRITE));
@@ -691,7 +692,7 @@ register_procedural_db_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_enum ("val-type",
                                                          "val type",
-                                                         "The type of return value: { GIMP_PDB_INT32 (0), GIMP_PDB_INT16 (1), GIMP_PDB_INT8 (2), GIMP_PDB_FLOAT (3), GIMP_PDB_STRING (4), GIMP_PDB_INT32ARRAY (5), GIMP_PDB_INT16ARRAY (6), GIMP_PDB_INT8ARRAY (7), GIMP_PDB_FLOATARRAY (8), GIMP_PDB_STRINGARRAY (9), GIMP_PDB_COLOR (10), GIMP_PDB_REGION (11), GIMP_PDB_DISPLAY (12), GIMP_PDB_IMAGE (13), GIMP_PDB_LAYER (14), GIMP_PDB_CHANNEL (15), GIMP_PDB_DRAWABLE (16), GIMP_PDB_SELECTION (17), GIMP_PDB_BOUNDARY (18), GIMP_PDB_VECTORS (19), GIMP_PDB_PARASITE (20), GIMP_PDB_STATUS (21), GIMP_PDB_PATH (GIMP_PDB_VECTORS) }",
+                                                         "The type of return value",
                                                          GIMP_TYPE_PDB_ARG_TYPE,
                                                          GIMP_PDB_INT32,
                                                          GIMP_PARAM_READWRITE));

@@ -858,13 +858,13 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("brightness",
                                                       "brightness",
-                                                      "Brightness adjustment (-127 <= brightness <= 127)",
+                                                      "Brightness adjustment",
                                                       -127, 127, -127,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("contrast",
                                                       "contrast",
-                                                      "Contrast adjustment (-127 <= contrast <= 127)",
+                                                      "Contrast adjustment",
                                                       -127, 127, -127,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -892,38 +892,38 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("channel",
                                                   "channel",
-                                                  "The channel to modify: { GIMP_HISTOGRAM_VALUE (0), GIMP_HISTOGRAM_RED (1), GIMP_HISTOGRAM_GREEN (2), GIMP_HISTOGRAM_BLUE (3), GIMP_HISTOGRAM_ALPHA (4) }",
+                                                  "The channel to modify",
                                                   GIMP_TYPE_HISTOGRAM_CHANNEL,
                                                   GIMP_HISTOGRAM_VALUE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("low-input",
                                                       "low input",
-                                                      "Intensity of lowest input (0 <= low_input <= 255)",
+                                                      "Intensity of lowest input",
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("high-input",
                                                       "high input",
-                                                      "Intensity of highest input (0 <= high_input <= 255)",
+                                                      "Intensity of highest input",
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("gamma",
                                                     "gamma",
-                                                    "Gamma correction factor (0.1 <= gamma <= 10)",
+                                                    "Gamma correction factor",
                                                     0.1, 10, 0.1,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("low-output",
                                                       "low output",
-                                                      "Intensity of lowest output (0 <= low_output <= 255)",
+                                                      "Intensity of lowest output",
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("high-output",
                                                       "high output",
-                                                      "Intensity of highest output (0 <= high_output <= 255)",
+                                                      "Intensity of highest output",
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -995,7 +995,7 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("levels",
                                                       "levels",
-                                                      "Levels of posterization (2 <= levels <= 255)",
+                                                      "Levels of posterization",
                                                       2, 255, 2,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1124,14 +1124,14 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("channel",
                                                   "channel",
-                                                  "The channel to modify: { GIMP_HISTOGRAM_VALUE (0), GIMP_HISTOGRAM_RED (1), GIMP_HISTOGRAM_GREEN (2), GIMP_HISTOGRAM_BLUE (3), GIMP_HISTOGRAM_ALPHA (4) }",
+                                                  "The channel to modify",
                                                   GIMP_TYPE_HISTOGRAM_CHANNEL,
                                                   GIMP_HISTOGRAM_VALUE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-points",
                                                       "num points",
-                                                      "The number of values in the control point array (4 <= num_points <= 34)",
+                                                      "The number of values in the control point array",
                                                       4, 34, 4,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1164,7 +1164,7 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("channel",
                                                   "channel",
-                                                  "The channel to modify: { GIMP_HISTOGRAM_VALUE (0), GIMP_HISTOGRAM_RED (1), GIMP_HISTOGRAM_GREEN (2), GIMP_HISTOGRAM_BLUE (3), GIMP_HISTOGRAM_ALPHA (4) }",
+                                                  "The channel to modify",
                                                   GIMP_TYPE_HISTOGRAM_CHANNEL,
                                                   GIMP_HISTOGRAM_VALUE,
                                                   GIMP_PARAM_READWRITE));
@@ -1204,7 +1204,7 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("transfer-mode",
                                                   "transfer mode",
-                                                  "Transfer mode: { GIMP_SHADOWS (0), GIMP_MIDTONES (1), GIMP_HIGHLIGHTS (2) }",
+                                                  "Transfer mode",
                                                   GIMP_TYPE_TRANSFER_MODE,
                                                   GIMP_SHADOWS,
                                                   GIMP_PARAM_READWRITE));
@@ -1217,19 +1217,19 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("cyan-red",
                                                     "cyan red",
-                                                    "Cyan-Red color balance (-100 <= cyan_red <= 100)",
+                                                    "Cyan-Red color balance",
                                                     -100, 100, -100,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("magenta-green",
                                                     "magenta green",
-                                                    "Magenta-Green color balance (-100 <= magenta_green <= 100)",
+                                                    "Magenta-Green color balance",
                                                     -100, 100, -100,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("yellow-blue",
                                                     "yellow blue",
-                                                    "Yellow-Blue color balance (-100 <= yellow_blue <= 100)",
+                                                    "Yellow-Blue color balance",
                                                     -100, 100, -100,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1257,19 +1257,19 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("hue",
                                                     "hue",
-                                                    "Hue in degrees (0 <= hue <= 360)",
+                                                    "Hue in degrees",
                                                     0, 360, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("saturation",
                                                     "saturation",
-                                                    "Saturation in percent (0 <= saturation <= 100)",
+                                                    "Saturation in percent",
                                                     0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("lightness",
                                                     "lightness",
-                                                    "Lightness in percent (-100 <= lightness <= 100)",
+                                                    "Lightness in percent",
                                                     -100, 100, -100,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1297,7 +1297,7 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("channel",
                                                   "channel",
-                                                  "The channel to modify: { GIMP_HISTOGRAM_VALUE (0), GIMP_HISTOGRAM_RED (1), GIMP_HISTOGRAM_GREEN (2), GIMP_HISTOGRAM_BLUE (3), GIMP_HISTOGRAM_ALPHA (4) }",
+                                                  "The channel to modify",
                                                   GIMP_TYPE_HISTOGRAM_CHANNEL,
                                                   GIMP_HISTOGRAM_VALUE,
                                                   GIMP_PARAM_READWRITE));
@@ -1374,26 +1374,26 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("hue-range",
                                                   "hue range",
-                                                  "Range of affected hues: { GIMP_ALL_HUES (0), GIMP_RED_HUES (1), GIMP_YELLOW_HUES (2), GIMP_GREEN_HUES (3), GIMP_CYAN_HUES (4), GIMP_BLUE_HUES (5), GIMP_MAGENTA_HUES (6) }",
+                                                  "Range of affected hues",
                                                   GIMP_TYPE_HUE_RANGE,
                                                   GIMP_ALL_HUES,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("hue-offset",
                                                     "hue offset",
-                                                    "Hue offset in degrees (-180 <= hue_offset <= 180)",
+                                                    "Hue offset in degrees",
                                                     -180, 180, -180,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("lightness",
                                                     "lightness",
-                                                    "Lightness modification (-100 <= lightness <= 100)",
+                                                    "Lightness modification",
                                                     -100, 100, -100,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("saturation",
                                                     "saturation",
-                                                    "Saturation modification (-100 <= saturation <= 100)",
+                                                    "Saturation modification",
                                                     -100, 100, -100,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1421,13 +1421,13 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("low-threshold",
                                                       "low threshold",
-                                                      "The low threshold value (0 <= low_threshold <= 255)",
+                                                      "The low threshold value",
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("high-threshold",
                                                       "high threshold",
-                                                      "The high threshold value (0 <= high_threshold <= 255)",
+                                                      "The high threshold value",
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

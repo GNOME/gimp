@@ -147,8 +147,7 @@ sub floating_sel_rigor {
     @inargs = (
 	{ name => 'floating_sel', type => 'layer',
 	  desc => 'The floating selection' },
-	{ name => 'undo', type => 'boolean',
-	  desc => '%%desc%%' }
+	{ name => 'undo', type => 'boolean' }
     );
 
     %invoke = (
@@ -172,8 +171,7 @@ sub floating_sel_relax {
     @inargs = (
 	{ name => 'floating_sel', type => 'layer',
 	  desc => 'The floating selection' },
-	{ name => 'undo', type => 'boolean',
-	  desc => '%%desc%%' }
+	{ name => 'undo', type => 'boolean' }
     );
 
     %invoke = (

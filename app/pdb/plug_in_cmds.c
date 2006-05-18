@@ -494,14 +494,14 @@ register_plug_in_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("icon-type",
                                                   "icon type",
-                                                  "The type of the icon: { GIMP_ICON_TYPE_STOCK_ID (0), GIMP_ICON_TYPE_INLINE_PIXBUF (1), GIMP_ICON_TYPE_IMAGE_FILE (2) }",
+                                                  "The type of the icon",
                                                   GIMP_TYPE_ICON_TYPE,
                                                   GIMP_ICON_TYPE_STOCK_ID,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("icon-data-length",
                                                       "icon data length",
-                                                      "The length of 'icon-data' (1 <= icon_data_length)",
+                                                      "The length of 'icon-data'",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

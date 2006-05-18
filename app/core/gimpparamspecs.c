@@ -25,7 +25,6 @@
 #include "core-types.h"
 
 #include "gimp.h"
-#include "gimp.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"

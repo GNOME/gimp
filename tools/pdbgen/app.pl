@@ -98,31 +98,6 @@ sub declare_args {
     $result;
 }
 
-sub make_desc {
-    my $arg = shift;
-    my ($type, $name, @remove) = &arg_parse($arg->{type});
-    my $desc = $arg->{desc};
-    my $info = $arg->{type};
-
-    for ($type) {
-	/array/     && do { 				     last };
-	/boolean/   && do { $info = '(TRUE or FALSE)';	     last };
-	/int|float/ && do { $info =~ s/$type/$arg->{name}/e;
-			    $info = '('. $info . ')';        last };
-	/enum/      && do { my $enum = $enums{$name};
-			    $info = '{ ' . $enum->{info};
-			    foreach (@remove) {
-				$info =~ s/$_ \(.*?\)(, )?//
-			    }				 
-			    $info =~ s/, $//;
-			    $info .= ' }';                   last };
-    }
-
-    $desc =~ s/%%desc%%/$info/eg;
-
-    $desc;
-}
-
 sub marshal_inargs {
     my ($proc, $argc) = @_;
 
@@ -212,7 +187,7 @@ sub generate_pspec {
     my ($pdbtype, @typeinfo) = &arg_parse($arg->{type});
     my $name = $arg->{canonical_name};
     my $nick = $arg->{canonical_name};
-    my $blurb = &make_desc($arg);
+    my $blurb = exists $arg->{desc} ? $arg->{desc} : "";
     my $min;
     my $max;
     my $default;

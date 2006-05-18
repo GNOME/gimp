@@ -33,9 +33,9 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'brightness', type => '-127 <= int32 <= 127',
-	  desc => 'Brightness adjustment %%desc%%' },
+	  desc => 'Brightness adjustment' },
 	{ name => 'contrast', type => '-127 <= int32 <= 127',
-	  desc => 'Contrast adjustment %%desc%%' }
+	  desc => 'Contrast adjustment' }
     );
 
     %invoke = (
@@ -102,17 +102,17 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
-	  desc => 'The channel to modify: %%desc%%' },
+	  desc => 'The channel to modify' },
 	{ name => 'low_input', type => '0 <= int32 <= 255',
-	  desc => "Intensity of lowest input %%desc%%" },
+	  desc => "Intensity of lowest input" },
 	{ name => 'high_input', type => '0 <= int32 <= 255',
-	  desc => "Intensity of highest input %%desc%%" },
+	  desc => "Intensity of highest input" },
 	{ name => 'gamma', type => '0.1 <= float <= 10',
-	  desc => 'Gamma correction factor %%desc%%' },
+	  desc => 'Gamma correction factor' },
 	{ name => 'low_output', type => '0 <= int32 <= 255',
-	  desc => "Intensity of lowest output %%desc%%" },
+	  desc => "Intensity of lowest output" },
 	{ name => 'high_output', type => '0 <= int32 <= 255',
-	  desc => "Intensity of highest output %%desc%%" }
+	  desc => "Intensity of highest output" }
     );
 
     %invoke = (
@@ -217,7 +217,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'levels', type => '2 <= int32 <= 255',
-	  desc => 'Levels of posterization %%desc%%' }
+	  desc => 'Levels of posterization' }
     );
 
     %invoke = (
@@ -412,13 +412,13 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
-	  desc => 'The channel to modify: %%desc%%' },
+	  desc => 'The channel to modify' },
 	{ name => 'control_pts', type => 'int8array',
 	  desc => 'The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y,
 		   ... }',
 	  array => { name => 'num_points', type => '4 <= int32 <= 34',
-		     desc => 'The number of values in the control point array
-			      %%desc%%' } }
+		     desc => 'The number of values in the control point array' }
+       }
     );
 
     %invoke = (
@@ -509,7 +509,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
-	  desc => 'The channel to modify: %%desc%%' },
+	  desc => 'The channel to modify' },
 	{ name => 'curve', type => 'int8array',
 	  desc => 'The explicit curve',
 	  array => { name => 'num_bytes',
@@ -598,15 +598,15 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'transfer_mode', type => 'enum GimpTransferMode',
-	  desc => 'Transfer mode: %%desc%%' },
+	  desc => 'Transfer mode' },
 	{ name => 'preserve_lum', type => 'boolean',
 	  desc => 'Preserve luminosity values at each pixel' },
 	{ name => 'cyan_red', type => '-100 <= float <= 100',
-	  desc => 'Cyan-Red color balance %%desc%%' },
+	  desc => 'Cyan-Red color balance' },
 	{ name => 'magenta_green', type => '-100 <= float <= 100',
-	  desc => 'Magenta-Green color balance %%desc%%' },
+	  desc => 'Magenta-Green color balance' },
 	{ name => 'yellow_blue', type => '-100 <= float <= 100',
-	  desc => 'Yellow-Blue color balance %%desc%%' }
+	  desc => 'Yellow-Blue color balance' }
     );
 
     %invoke = (
@@ -669,11 +669,11 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'hue', type => '0 <= float <= 360',
-	  desc => 'Hue in degrees %%desc%%' },
+	  desc => 'Hue in degrees' },
 	{ name => 'saturation', type => '0 <= float <= 100',
-	  desc => 'Saturation in percent %%desc%%' },
+	  desc => 'Saturation in percent' },
 	{ name => 'lightness', type => '-100 <= float <= 100',
-	  desc => 'Lightness in percent %%desc%%' }
+	  desc => 'Lightness in percent' }
     );
 
     %invoke = (
@@ -744,7 +744,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
-	  desc => 'The channel to modify: %%desc%%' },
+	  desc => 'The channel to modify' },
 	{ name => 'start_range', type => '0 <= int32 < 256',
 	  desc => 'Start of the intensity measurement range' },
 	{ name => 'end_range', type => '0 <= int32 < 256',
@@ -820,13 +820,13 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'hue_range', type => 'enum GimpHueRange',
-	  desc => 'Range of affected hues: %%desc%%' },
+	  desc => 'Range of affected hues' },
 	{ name => 'hue_offset', type => '-180 <= float <= 180',
-	  desc => 'Hue offset in degrees %%desc%%' },
+	  desc => 'Hue offset in degrees' },
 	{ name => 'lightness', type => '-100 <= float <= 100',
-	  desc => 'Lightness modification %%desc%%' },
+	  desc => 'Lightness modification' },
 	{ name => 'saturation', type => '-100 <= float <= 100',
-	  desc => 'Saturation modification %%desc%%' }
+	  desc => 'Saturation modification' }
     );
 
     %invoke = (
@@ -889,9 +889,9 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'low_threshold', type => '0 <= int32 <= 255',
-	  desc => 'The low threshold value %%desc%%' },
+	  desc => 'The low threshold value' },
 	{ name => 'high_threshold', type => '0 <= int32 <= 255',
-	  desc => 'The high threshold value %%desc%%' }
+	  desc => 'The high threshold value' }
     );
 
     %invoke = (

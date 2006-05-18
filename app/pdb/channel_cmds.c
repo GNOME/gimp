@@ -353,13 +353,13 @@ register_channel_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("width",
                                                       "width",
-                                                      "The channel width (1 <= width)",
+                                                      "The channel width",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("height",
                                                       "height",
-                                                      "The channel height (1 <= height)",
+                                                      "The channel height",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -372,7 +372,7 @@ register_channel_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("opacity",
                                                     "opacity",
-                                                    "The channel opacity (0 <= opacity <= 100)",
+                                                    "The channel opacity",
                                                     0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -413,7 +413,7 @@ register_channel_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("component",
                                                   "component",
-                                                  "The image component: { GIMP_RED_CHANNEL (0), GIMP_GREEN_CHANNEL (1), GIMP_BLUE_CHANNEL (2), GIMP_GRAY_CHANNEL (3), GIMP_INDEXED_CHANNEL (4), GIMP_ALPHA_CHANNEL (5) }",
+                                                  "The image component",
                                                   GIMP_TYPE_CHANNEL_TYPE,
                                                   GIMP_RED_CHANNEL,
                                                   GIMP_PARAM_READWRITE));
@@ -489,7 +489,7 @@ register_channel_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
-                                                  "The selection operation: { GIMP_CHANNEL_OP_ADD (0), GIMP_CHANNEL_OP_SUBTRACT (1), GIMP_CHANNEL_OP_REPLACE (2), GIMP_CHANNEL_OP_INTERSECT (3) }",
+                                                  "The selection operation",
                                                   GIMP_TYPE_CHANNEL_OPS,
                                                   GIMP_CHANNEL_OP_ADD,
                                                   GIMP_PARAM_READWRITE));
@@ -614,7 +614,7 @@ register_channel_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("opacity",
                                                     "opacity",
-                                                    "The new channel opacity (0 <= opacity <= 100)",
+                                                    "The new channel opacity",
                                                     0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

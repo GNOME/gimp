@@ -473,7 +473,7 @@ register_buffer_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("image-type",
                                                       "image type",
-                                                      "The buffer image type: { GIMP_RGB (0), GIMP_GRAY (1), GIMP_INDEXED (2) }",
+                                                      "The buffer image type",
                                                       GIMP_TYPE_IMAGE_BASE_TYPE,
                                                       GIMP_RGB,
                                                       GIMP_PARAM_READWRITE));

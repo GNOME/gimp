@@ -38,7 +38,7 @@ sub brushes_popup {
 	  desc => 'The initial spacing of the brush (if < 0 then use brush
                    default spacing)' },
 	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects',
-	  desc => 'The initial paint mode: %%desc%%' }
+	  desc => 'The initial paint mode' }
     );
 
     %invoke = (
@@ -99,7 +99,7 @@ sub brushes_set_popup {
 	  desc => 'The initial spacing of the brush (if < 0 then use brush
                    default spacing)' },
 	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects',
-	  desc => 'The initial paint mode: %%desc%%' }
+	  desc => 'The initial paint mode' }
     );
 
     %invoke = (

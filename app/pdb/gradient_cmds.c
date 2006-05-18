@@ -1512,7 +1512,7 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("reverse",
                                                      "reverse",
-                                                     "Use the reverse gradient (TRUE or FALSE)",
+                                                     "Use the reverse gradient",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1563,7 +1563,7 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("reverse",
                                                      "reverse",
-                                                     "Use the reverse gradient (TRUE or FALSE)",
+                                                     "Use the reverse gradient",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -2005,7 +2005,7 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("blend-func",
                                                       "blend func",
-                                                      "The blending function of the segment: { GIMP_GRADIENT_SEGMENT_LINEAR (0), GIMP_GRADIENT_SEGMENT_CURVED (1), GIMP_GRADIENT_SEGMENT_SINE (2), GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING (3), GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING (4) }",
+                                                      "The blending function of the segment",
                                                       GIMP_TYPE_GRADIENT_SEGMENT_TYPE,
                                                       GIMP_GRADIENT_SEGMENT_LINEAR,
                                                       GIMP_PARAM_READWRITE));
@@ -2041,7 +2041,7 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("coloring-type",
                                                       "coloring type",
-                                                      "The coloring type of the segment: { GIMP_GRADIENT_SEGMENT_RGB (0), GIMP_GRADIENT_SEGMENT_HSV_CCW (1), GIMP_GRADIENT_SEGMENT_HSV_CW (2) }",
+                                                      "The coloring type of the segment",
                                                       GIMP_TYPE_GRADIENT_SEGMENT_COLOR,
                                                       GIMP_GRADIENT_SEGMENT_RGB,
                                                       GIMP_PARAM_READWRITE));
@@ -2083,7 +2083,7 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("blending-function",
                                                   "blending function",
-                                                  "The Blending Function: { GIMP_GRADIENT_SEGMENT_LINEAR (0), GIMP_GRADIENT_SEGMENT_CURVED (1), GIMP_GRADIENT_SEGMENT_SINE (2), GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING (3), GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING (4) }",
+                                                  "The blending function",
                                                   GIMP_TYPE_GRADIENT_SEGMENT_TYPE,
                                                   GIMP_GRADIENT_SEGMENT_LINEAR,
                                                   GIMP_PARAM_READWRITE));
@@ -2125,7 +2125,7 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("coloring-type",
                                                   "coloring type",
-                                                  "The Coloring Type: { GIMP_GRADIENT_SEGMENT_RGB (0), GIMP_GRADIENT_SEGMENT_HSV_CCW (1), GIMP_GRADIENT_SEGMENT_HSV_CW (2) }",
+                                                  "The coloring type",
                                                   GIMP_TYPE_GRADIENT_SEGMENT_COLOR,
                                                   GIMP_GRADIENT_SEGMENT_RGB,
                                                   GIMP_PARAM_READWRITE));

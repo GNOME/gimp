@@ -142,7 +142,7 @@ register_message_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("handler",
                                                       "handler",
-                                                      "The current handler type: { GIMP_MESSAGE_BOX (0), GIMP_CONSOLE (1), GIMP_ERROR_CONSOLE (2) }",
+                                                      "The current handler type",
                                                       GIMP_TYPE_MESSAGE_HANDLER_TYPE,
                                                       GIMP_MESSAGE_BOX,
                                                       GIMP_PARAM_READWRITE));
@@ -165,7 +165,7 @@ register_message_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("handler",
                                                   "handler",
-                                                  "The new handler type: { GIMP_MESSAGE_BOX (0), GIMP_CONSOLE (1), GIMP_ERROR_CONSOLE (2) }",
+                                                  "The new handler type",
                                                   GIMP_TYPE_MESSAGE_HANDLER_TYPE,
                                                   GIMP_MESSAGE_BOX,
                                                   GIMP_PARAM_READWRITE));

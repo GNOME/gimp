@@ -98,9 +98,9 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'dither_type', type => 'enum GimpConvertDitherType',
-	  desc => 'The dither type to use: %%desc%%' },
+	  desc => 'The dither type to use' },
 	{ name => 'palette_type', type => 'enum GimpConvertPaletteType',
-	  desc => 'The type of palette to use: %%desc%%' },
+	  desc => 'The type of palette to use' },
 	{ name => 'num_cols', type => 'int32',
 	  desc => 'The number of colors to quantize to, ignored unless
 		   (palette_type == GIMP_MAKE_PALETTE)' },

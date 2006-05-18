@@ -292,7 +292,7 @@ HELP
 
     @outargs = (
         { name => 'opacity', type => '0 <= float <= 100',
-          desc => 'The opacity %%desc%%' }
+          desc => 'The opacity' }
     );
 
     %invoke = (
@@ -316,7 +316,7 @@ HELP
 
     @inargs = (
         { name => 'opacity', type => '0 <= float <= 100',
-          desc => 'The opacity %%desc%%' }
+          desc => 'The opacity' }
     );
 
     %invoke = (
@@ -341,7 +341,7 @@ HELP
 
     @outargs = (
         { name => 'paint_mode', type => 'enum GimpLayerModeEffects',
-          desc => 'The paint mode: %%desc%%' }
+          desc => 'The paint mode' }
     );
 
     %invoke = (
@@ -364,7 +364,7 @@ HELP
 
     @inargs = (
         { name => 'paint_mode', type => 'enum GimpLayerModeEffects',
-          desc => 'The paint mode: %%desc%%' }
+          desc => 'The paint mode' }
     );
 
     %invoke = (

@@ -374,8 +374,8 @@ gimp_dodgeburn_default (gint32         drawable_ID,
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
- * @hardness: %%desc%%.
- * @method: %%desc%%.
+ * @hardness: How to apply the brush.
+ * @method: The paint method to use.
  *
  * Erase using the current brush.
  *
@@ -459,7 +459,7 @@ gimp_eraser_default (gint32         drawable_ID,
  * @fade_out: Fade out parameter.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
- * @method: %%desc%%.
+ * @method: The paint method to use.
  * @gradient_length: Length of gradient to draw.
  *
  * Paint in the current brush with optional fade out parameter and pull

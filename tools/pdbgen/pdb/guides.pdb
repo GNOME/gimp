@@ -184,7 +184,7 @@ HELP
     @outargs = (
 	{ name => 'orientation',
 	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
-	  desc => "The guide's orientation: %%desc%%",
+	  desc => "The guide's orientation",
 	  libdef => 'GIMP_ORIENTATION_UNKNOWN' }
     );
 

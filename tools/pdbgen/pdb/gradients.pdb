@@ -77,7 +77,7 @@ sub gradients_sample_uniform {
 	{ name => 'num_samples', type => '2 <= int32',
 	  desc => 'The number of samples to take' },
 	{ name => 'reverse', type => 'boolean',
-	  desc => 'Use the reverse gradient %%desc%%' }
+	  desc => 'Use the reverse gradient' }
     );
 
     @outargs = (
@@ -131,7 +131,7 @@ sub gradients_sample_custom {
 	  array => { name => 'num_samples', type => 'int32',
 		     desc => 'The number of samples to take' } },
 	{ name => 'reverse', type => 'boolean',
-	  desc => 'Use the reverse gradient %%desc%%' }
+	  desc => 'Use the reverse gradient' }
     );
 
     @outargs = (
@@ -181,11 +181,10 @@ sub gradients_get_gradient_data {
 	  desc => 'The gradient name ("" means current active gradient)',
           null_ok => '1' },
 	{ name => 'sample_size', type => '1 <= int32 <= 10000',
-	  desc => 'Size of the sample to return when the gradient is changed:
-	           %%desc%%',
+	  desc => 'Size of the sample to return when the gradient is changed',
 	  no_success => 1 },
 	{ name => 'reverse', type => 'boolean',
-	  desc => 'Use the reverse gradient %%desc%%' }
+	  desc => 'Use the reverse gradient' }
     );
 
     @outargs = (

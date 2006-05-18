@@ -1183,7 +1183,7 @@ register_brush_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("spacing",
                                                           "spacing",
-                                                          "The brush spacing (0 <= spacing <= 1000)",
+                                                          "The brush spacing",
                                                           0, 1000, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1212,7 +1212,7 @@ register_brush_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("spacing",
                                                       "spacing",
-                                                      "The brush spacing (0 <= spacing <= 1000)",
+                                                      "The brush spacing",
                                                       0, 1000, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1241,7 +1241,7 @@ register_brush_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("shape",
                                                       "shape",
-                                                      "The brush shape: { GIMP_BRUSH_GENERATED_CIRCLE (0), GIMP_BRUSH_GENERATED_SQUARE (1), GIMP_BRUSH_GENERATED_DIAMOND (2) }",
+                                                      "The brush shape",
                                                       GIMP_TYPE_BRUSH_GENERATED_SHAPE,
                                                       GIMP_BRUSH_GENERATED_CIRCLE,
                                                       GIMP_PARAM_READWRITE));
@@ -1416,14 +1416,14 @@ register_brush_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("shape-in",
                                                   "shape in",
-                                                  "The brush shape: { GIMP_BRUSH_GENERATED_CIRCLE (0), GIMP_BRUSH_GENERATED_SQUARE (1), GIMP_BRUSH_GENERATED_DIAMOND (2) }",
+                                                  "The brush shape",
                                                   GIMP_TYPE_BRUSH_GENERATED_SHAPE,
                                                   GIMP_BRUSH_GENERATED_CIRCLE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("shape-out",
                                                       "shape out",
-                                                      "The brush shape actually assigned: { GIMP_BRUSH_GENERATED_CIRCLE (0), GIMP_BRUSH_GENERATED_SQUARE (1), GIMP_BRUSH_GENERATED_DIAMOND (2) }",
+                                                      "The brush shape actually assigned",
                                                       GIMP_TYPE_BRUSH_GENERATED_SHAPE,
                                                       GIMP_BRUSH_GENERATED_CIRCLE,
                                                       GIMP_PARAM_READWRITE));

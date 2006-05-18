@@ -161,7 +161,7 @@ register_gradient_select_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("sample-size",
                                                       "sample size",
-                                                      "Size of the sample to return when the gradient is changed: (1 <= sample_size <= 10000)",
+                                                      "Size of the sample to return when the gradient is changed",
                                                       1, 10000, 1,
                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);

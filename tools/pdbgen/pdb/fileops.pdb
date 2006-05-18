@@ -35,7 +35,7 @@ HELP
     @inargs = (
 	{ name => 'run_mode',
 	  type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
-	  desc => 'The run mode: %%desc%%' },
+	  desc => 'The run mode' },
 	{ name => 'filename', type => 'string', no_validate => 1,
 	  desc => 'The name of the file to load' },
 	{ name => 'raw_filename', type => 'string', no_validate => 1,
@@ -109,7 +109,7 @@ HELP
     @inargs = (
 	{ name => 'run_mode',
 	  type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
-	  desc => 'The run mode: %%desc%%' },
+	  desc => 'The run mode' },
 	{ name => 'image', type => 'image',
 	  desc => 'Destination image' },
 	{ name => 'filename', type => 'string', no_validate => 1,
@@ -161,7 +161,7 @@ HELP
 
     @inargs = (
 	{ name => 'run_mode', type => 'enum GimpRunMode',
-	  desc => 'The run mode: %%desc%%' },
+	  desc => 'The run mode' },
 	{ name => 'image', type => 'image',
 	  desc => 'Input image' },
 	{ name => 'drawable', type => 'drawable',

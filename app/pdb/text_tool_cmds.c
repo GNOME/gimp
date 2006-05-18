@@ -324,13 +324,13 @@ register_text_tool_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("border",
                                                       "border",
-                                                      "The size of the border (-1 <= border)",
+                                                      "The size of the border",
                                                       -1, G_MAXINT32, -1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("antialias",
                                                      "antialias",
-                                                     "Antialiasing (TRUE or FALSE)",
+                                                     "Antialiasing",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -342,7 +342,7 @@ register_text_tool_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("size-type",
                                                   "size type",
-                                                  "The units of specified size: { GIMP_PIXELS (0), GIMP_POINTS (1) }",
+                                                  "The units of specified size",
                                                   GIMP_TYPE_SIZE_TYPE,
                                                   GIMP_PIXELS,
                                                   GIMP_PARAM_READWRITE));
@@ -391,7 +391,7 @@ register_text_tool_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("size-type",
                                                   "size type",
-                                                  "The units of specified size: { GIMP_PIXELS (0), GIMP_POINTS (1) }",
+                                                  "The units of specified size",
                                                   GIMP_TYPE_SIZE_TYPE,
                                                   GIMP_PIXELS,
                                                   GIMP_PARAM_READWRITE));
@@ -476,13 +476,13 @@ register_text_tool_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("border",
                                                       "border",
-                                                      "The size of the border (-1 <= border)",
+                                                      "The size of the border",
                                                       -1, G_MAXINT32, -1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("antialias",
                                                      "antialias",
-                                                     "Antialiasing (TRUE or FALSE)",
+                                                     "Antialiasing",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -494,7 +494,7 @@ register_text_tool_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("size-type",
                                                   "size type",
-                                                  "The units of specified size: { GIMP_PIXELS (0), GIMP_POINTS (1) }",
+                                                  "The units of specified size",
                                                   GIMP_TYPE_SIZE_TYPE,
                                                   GIMP_PIXELS,
                                                   GIMP_PARAM_READWRITE));
@@ -592,7 +592,7 @@ register_text_tool_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("size-type",
                                                   "size type",
-                                                  "The units of specified size: { GIMP_PIXELS (0), GIMP_POINTS (1) }",
+                                                  "The units of specified size",
                                                   GIMP_TYPE_SIZE_TYPE,
                                                   GIMP_PIXELS,
                                                   GIMP_PARAM_READWRITE));

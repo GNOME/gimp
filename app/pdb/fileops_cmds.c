@@ -449,7 +449,7 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("run-mode",
                                                      "run mode",
-                                                     "The run mode: { GIMP_RUN_INTERACTIVE (0), GIMP_RUN_NONINTERACTIVE (1) }",
+                                                     "The run mode",
                                                      GIMP_TYPE_RUN_MODE,
                                                      GIMP_RUN_INTERACTIVE,
                                                      GIMP_PARAM_READWRITE));
@@ -494,7 +494,7 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("run-mode",
                                                      "run mode",
-                                                     "The run mode: { GIMP_RUN_INTERACTIVE (0), GIMP_RUN_NONINTERACTIVE (1) }",
+                                                     "The run mode",
                                                      GIMP_TYPE_RUN_MODE,
                                                      GIMP_RUN_INTERACTIVE,
                                                      GIMP_PARAM_READWRITE));
@@ -538,7 +538,7 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
-                                                  "The run mode: { GIMP_RUN_INTERACTIVE (0), GIMP_RUN_NONINTERACTIVE (1), GIMP_RUN_WITH_LAST_VALS (2) }",
+                                                  "The run mode",
                                                   GIMP_TYPE_RUN_MODE,
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
