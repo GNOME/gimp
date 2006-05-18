@@ -13,11 +13,11 @@
 # define STANDALONE 1
 #endif
 
-#ifndef _MSC_VER 
+#ifndef _MSC_VER
 # define SCHEME_EXPORT
-#else 
-# define USE_STRCASECMP 0 
-# define USE_STRLWR 0 
+#else
+# define USE_STRCASECMP 0
+# define USE_STRLWR 0
 # ifdef _SCHEME_SOURCE
 #  define SCHEME_EXPORT __declspec(dllexport)
 # else
@@ -151,6 +151,7 @@ struct scheme_interface {
   void (*scheme_define)(scheme *sc, pointer env, pointer symbol, pointer value);
   pointer (*cons)(scheme *sc, pointer a, pointer b);
   pointer (*immutable_cons)(scheme *sc, pointer a, pointer b);
+  pointer (*reserve_cells)(scheme *sc, int n);
   pointer (*mk_integer)(scheme *sc, long num);
   pointer (*mk_real)(scheme *sc, double num);
   pointer (*mk_symbol)(scheme *sc, const char *name);
@@ -164,7 +165,7 @@ struct scheme_interface {
   pointer (*mk_closure)(scheme *sc, pointer c, pointer e);
   void (*putstr)(scheme *sc, const char *s);
   void (*putcharacter)(scheme *sc, gunichar c);
-  
+
   int (*is_string)(pointer p);
   int (*string_length)(pointer p);
   char *(*string_value)(pointer p);
