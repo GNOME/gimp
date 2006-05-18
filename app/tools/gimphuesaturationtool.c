@@ -220,6 +220,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   const struct
   {
     const gchar *label;
+    const gchar *tooltip;
     gint         label_col;
     gint         label_row;
     gint         frame_col;
@@ -227,13 +228,13 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   }
   hue_partition_table[] =
   {
-    { N_("M_aster"), 2, 3, 0, 0 },
-    { N_("_R"),      2, 1, 2, 0 },
-    { N_("_Y"),      1, 2, 0, 2 },
-    { N_("_G"),      1, 4, 0, 4 },
-    { N_("_C"),      2, 5, 2, 6 },
-    { N_("_B"),      3, 4, 4, 4 },
-    { N_("_M"),      3, 2, 4, 2 }
+    { N_("M_aster"), N_("Adjust all colors"), 2, 3, 0, 0 },
+    { N_("_R"),      N_("Red"),               2, 1, 2, 0 },
+    { N_("_Y"),      N_("Yellow"),            1, 2, 0, 2 },
+    { N_("_G"),      N_("Green"),             1, 4, 0, 4 },
+    { N_("_C"),      N_("Cyan"),              2, 5, 2, 6 },
+    { N_("_B"),      N_("Blue"),              3, 4, 4, 4 },
+    { N_("_M"),      N_("Magenta"),           3, 2, 4, 2 }
   };
 
   frame = gimp_frame_new (_("Select Primary Color to Adjust"));
@@ -258,7 +259,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_container_add (GTK_CONTAINER (abox), table);
 
   /*  the radio buttons for hue partitions  */
-  for (i = 0; i < 7; i++)
+  for (i = 0; i < G_N_ELEMENTS (hue_partition_table); i++)
     {
       button = gtk_radio_button_new_with_mnemonic (group,
                                                    gettext (hue_partition_table[i].label));
@@ -266,11 +267,12 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
       g_object_set_data (G_OBJECT (button), "hue_partition",
                          GINT_TO_POINTER (i));
 
+      gimp_help_set_help_data (button,
+                               gettext (hue_partition_table[i].tooltip),
+                               NULL);
+
       if (i == 0)
-        {
-          gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
-          gimp_help_set_help_data (button, _("Adjust all colors"), NULL);
-        }
+        gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
 
       gtk_table_attach (GTK_TABLE (table), button,
                         hue_partition_table[i].label_col,

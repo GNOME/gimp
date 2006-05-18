@@ -178,7 +178,9 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
 static void
 gimp_text_options_init (GimpTextOptions *options)
 {
-  options->size_entry = NULL;
+  options->size_entry           = NULL;
+  options->to_vectors_button    = NULL;
+  options->along_vectors_button = NULL;
 }
 
 static void
@@ -404,21 +406,19 @@ gimp_text_options_connect_text (GimpTextOptions *options,
 GtkWidget *
 gimp_text_options_gui (GimpToolOptions *tool_options)
 {
-  GObject           *config  = G_OBJECT (tool_options);
-  GimpTextOptions   *options = GIMP_TEXT_OPTIONS (tool_options);
-  GtkWidget         *vbox;
-  GtkWidget         *table;
-  GtkWidget         *hbox;
-  GtkWidget         *button;
-  GtkWidget         *auto_button;
-  GtkWidget         *entry;
-  GtkWidget         *box;
-  GtkWidget         *spinbutton;
-  gint               row = 0;
+  GObject         *config  = G_OBJECT (tool_options);
+  GimpTextOptions *options = GIMP_TEXT_OPTIONS (tool_options);
+  GtkWidget       *vbox;
+  GtkWidget       *table;
+  GtkWidget       *hbox;
+  GtkWidget       *button;
+  GtkWidget       *auto_button;
+  GtkWidget       *entry;
+  GtkWidget       *box;
+  GtkWidget       *spinbutton;
+  gint             row = 0;
 
   vbox = gimp_tool_options_gui (tool_options);
-
-  g_object_set_data (G_OBJECT (tool_options), "tool-options-vbox", vbox);
 
   table = gtk_table_new (10, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
@@ -439,7 +439,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                              _("Size:"), 0.0, 0.5,
                              entry, 2, FALSE);
 
-  options->size_entry = GIMP_SIZE_ENTRY (entry);
+  options->size_entry = entry;
 
   button = gimp_prop_check_button_new (config, "hinting", _("Hinting"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 3, row, row + 1,
@@ -497,16 +497,14 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_widget_set_sensitive (button, FALSE);
   gtk_widget_show (button);
 
-  g_object_set_data (G_OBJECT (tool_options),
-                     "gimp-text-to-vectors", button);
+  options->to_vectors_button = button;
 
   button = gtk_button_new_with_label (_("Text along Path"));
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
   gtk_widget_show (button);
 
-  g_object_set_data (G_OBJECT (tool_options),
-                     "gimp-text-to-vectors-warped", button);
+  options->along_vectors_button = button;
 
   return vbox;
 }

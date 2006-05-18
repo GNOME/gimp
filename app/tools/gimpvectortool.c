@@ -1480,8 +1480,6 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
   GimpDrawTool      *draw_tool;
   GimpTool          *tool;
   GimpItem          *item = NULL;
-  GtkWidget         *stroke_button;
-  GtkWidget         *sel_button;
   GimpVectorOptions *options;
 
   g_return_if_fail (GIMP_IS_VECTOR_TOOL (vector_tool));
@@ -1504,11 +1502,6 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
     {
       gimp_draw_tool_stop (draw_tool);
     }
-
-  stroke_button = g_object_get_data (G_OBJECT (options),
-                                     "gimp-stroke-vectors");
-  sel_button = g_object_get_data (G_OBJECT (options),
-                                  "gimp-vectors-to-selection");
 
   if (vector_tool->vectors)
     {
@@ -1533,21 +1526,21 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                                             vector_tool);
       g_object_unref (vector_tool->vectors);
 
-      if (sel_button)
+      if (options->to_selection_button)
         {
-          gtk_widget_set_sensitive (sel_button, FALSE);
-          g_signal_handlers_disconnect_by_func (sel_button,
+          gtk_widget_set_sensitive (options->to_selection_button, FALSE);
+          g_signal_handlers_disconnect_by_func (options->to_selection_button,
                                                 gimp_vector_tool_to_selection,
                                                 tool);
-          g_signal_handlers_disconnect_by_func (sel_button,
+          g_signal_handlers_disconnect_by_func (options->to_selection_button,
                                                 gimp_vector_tool_to_selection_extended,
                                                 tool);
         }
 
-      if (stroke_button)
+      if (options->stroke_button)
         {
-          gtk_widget_set_sensitive (stroke_button, FALSE);
-          g_signal_handlers_disconnect_by_func (stroke_button,
+          gtk_widget_set_sensitive (options->stroke_button, FALSE);
+          g_signal_handlers_disconnect_by_func (options->stroke_button,
                                                 gimp_vector_tool_stroke_vectors,
                                                 tool);
         }
@@ -1587,23 +1580,23 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                            G_CALLBACK (gimp_vector_tool_vectors_thaw),
                            vector_tool, 0);
 
-  if (sel_button)
+  if (options->to_selection_button)
     {
-      g_signal_connect_swapped (sel_button, "clicked",
+      g_signal_connect_swapped (options->to_selection_button, "clicked",
                                 G_CALLBACK (gimp_vector_tool_to_selection),
                                 tool);
-      g_signal_connect_swapped (sel_button, "extended-clicked",
+      g_signal_connect_swapped (options->to_selection_button, "extended-clicked",
                                 G_CALLBACK (gimp_vector_tool_to_selection_extended),
                                 tool);
-      gtk_widget_set_sensitive (sel_button, TRUE);
+      gtk_widget_set_sensitive (options->to_selection_button, TRUE);
     }
 
-  if (stroke_button)
+  if (options->stroke_button)
     {
-      g_signal_connect_swapped (stroke_button, "clicked",
+      g_signal_connect_swapped (options->stroke_button, "clicked",
                                 G_CALLBACK (gimp_vector_tool_stroke_vectors),
                                 tool);
-      gtk_widget_set_sensitive (stroke_button, TRUE);
+      gtk_widget_set_sensitive (options->stroke_button, TRUE);
     }
 
   if (! gimp_draw_tool_is_active (draw_tool))

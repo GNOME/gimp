@@ -1,3 +1,17 @@
+2006-05-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimphuesaturationtool.c: add tooltips to all hue
+	partition radio buttons.
+
+	* app/tools/gimptextoptions.[ch]
+	* app/tools/gimpvectoroptions.[ch]: add the widgets that are
+	needed by the tools as members to the options structs instead of
+	attaching them with g_object_set_data().
+
+	* app/tools/gimptexttool.c
+	* app/tools/gimpvectortool.c: access the struct members instead of
+	using g_object_get_data().
+
 2006-05-17  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* configure.in: Added quotes in two AM_CONDITIONAL lines to avoid

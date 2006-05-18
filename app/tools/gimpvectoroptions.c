@@ -135,11 +135,12 @@ gimp_vector_options_get_property (GObject    *object,
 GtkWidget *
 gimp_vector_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *button;
-  gchar     *str;
+  GObject           *config  = G_OBJECT (tool_options);
+  GimpVectorOptions *options = GIMP_VECTOR_OPTIONS (tool_options);
+  GtkWidget         *vbox;
+  GtkWidget         *frame;
+  GtkWidget         *button;
+  gchar             *str;
 
   vbox = gimp_tool_options_gui (tool_options);
 
@@ -172,8 +173,7 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
 
   g_free (str);
 
-  g_object_set_data (G_OBJECT (tool_options),
-                     "gimp-vectors-to-selection", button);
+  options->to_selection_button = button;
 
   button = gtk_button_new_with_label (_("Stroke Path"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -181,8 +181,7 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
   gimp_help_set_help_data (button, NULL, GIMP_HELP_PATH_STROKE);
   gtk_widget_show (button);
 
-  g_object_set_data (G_OBJECT (tool_options),
-                     "gimp-stroke-vectors", button);
+  options->stroke_button = button;
 
   return vbox;
 }

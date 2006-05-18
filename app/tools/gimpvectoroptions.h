@@ -40,6 +40,10 @@ struct _GimpVectorOptions
 
   GimpVectorMode   edit_mode;
   gboolean         polygonal;
+
+  /*  options gui  */
+  GtkWidget       *to_selection_button;
+  GtkWidget       *stroke_button;
 };
 
 

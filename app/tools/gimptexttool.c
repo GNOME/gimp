@@ -328,12 +328,8 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
   if (text_tool->text != text)
     {
       GimpTextOptions *options;
-      GtkWidget       *button;
-      GtkWidget       *button2;
 
       options = GIMP_TEXT_OPTIONS (tool->tool_info->tool_options);
-      button  = g_object_get_data (G_OBJECT (options), "gimp-text-to-vectors");
-      button2 = g_object_get_data (G_OBJECT (options), "gimp-text-to-vectors-warped");
 
       if (text_tool->text)
         {
@@ -344,18 +340,19 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
           if (text_tool->pending)
             gimp_text_tool_apply (text_tool);
 
-          if (button)
+          if (options->to_vectors_button)
             {
-              gtk_widget_set_sensitive (button, FALSE);
-              g_signal_handlers_disconnect_by_func (button,
+              gtk_widget_set_sensitive (options->to_vectors_button, FALSE);
+              g_signal_handlers_disconnect_by_func (options->to_vectors_button,
                                                     gimp_text_tool_create_vectors,
                                                     text_tool);
             }
 
-          if (button2)
+          if (options->along_vectors_button)
             {
-              gtk_widget_set_sensitive (button2, FALSE);
-              g_signal_handlers_disconnect_by_func (button2,
+              gtk_widget_set_sensitive (options->along_vectors_button,
+                                        FALSE);
+              g_signal_handlers_disconnect_by_func (options->along_vectors_button,
                                                     gimp_text_tool_create_vectors_warped,
                                                     text_tool);
             }
@@ -380,20 +377,20 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
                             G_CALLBACK (gimp_text_tool_text_notify),
                             text_tool);
 
-          if (button)
+          if (options->to_vectors_button)
             {
-              g_signal_connect_swapped (button, "clicked",
+              g_signal_connect_swapped (options->to_vectors_button, "clicked",
                                         G_CALLBACK (gimp_text_tool_create_vectors),
                                         text_tool);
-              gtk_widget_set_sensitive (button, TRUE);
+              gtk_widget_set_sensitive (options->to_vectors_button, TRUE);
             }
 
-          if (button2)
+          if (options->along_vectors_button)
             {
-              g_signal_connect_swapped (button2, "clicked",
+              g_signal_connect_swapped (options->along_vectors_button, "clicked",
                                         G_CALLBACK (gimp_text_tool_create_vectors_warped),
                                         text_tool);
-              gtk_widget_set_sensitive (button2, TRUE);
+              gtk_widget_set_sensitive (options->along_vectors_button, TRUE);
             }
 
           if (text_tool->editor)
@@ -957,7 +954,7 @@ gimp_text_tool_set_image (GimpTextTool *text_tool,
                                text_tool, 0);
 
       options = GIMP_TOOL (text_tool)->tool_info->tool_options;
-      gimp_size_entry_set_resolution (GIMP_TEXT_OPTIONS (options)->size_entry,
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (GIMP_TEXT_OPTIONS (options)->size_entry),
                                       0, image->yresolution, FALSE);
     }
 }
