@@ -1,4 +1,4 @@
-/* T I N Y S C H E M E    1 . 3 5
+/* T I N Y S C H E M E    1 . 3 7
  *   Dimitrios Souflis (dsouflis@acm.org)
  *   Based on MiniScheme (original credits follow)
  * (MINISCM)               coded by Atsushi Moriwaki (11/5/1989)
@@ -64,7 +64,7 @@
  *  Basic memory allocation units
  */
 
-#define banner "TinyScheme 1.35 (with UTF-8 support)"
+#define banner "TinyScheme 1.37 (with UTF-8 support)"
 
 #include <string.h>
 #include <stdlib.h>
@@ -314,6 +314,7 @@ static int alloc_cellseg(scheme *sc, int n);
 static long binary_decode(const char *s);
 static INLINE pointer get_cell(scheme *sc, pointer a, pointer b);
 static pointer _get_cell(scheme *sc, pointer a, pointer b);
+static pointer reserve_cells(scheme *sc, int n);
 static pointer get_consecutive_cells(scheme *sc, int n);
 static pointer find_consecutive_cells(scheme *sc, int n);
 static void finalize_cell(scheme *sc, pointer a);
@@ -567,7 +568,7 @@ static int alloc_cellseg(scheme *sc, int n) {
           sc->alloc_seg[i] = cp;
           /* adjust in TYPE_BITS-bit boundary */
           if(((unsigned)cp)%adj!=0) {
-            cp=(char*)(adj*((long)cp/adj+1));
+            cp=(char*)(adj*((unsigned long)cp/adj+1));
           }
         /* insert new segment in address order */
           newp=(pointer)cp;
@@ -633,6 +634,32 @@ static pointer _get_cell(scheme *sc, pointer a, pointer b) {
   sc->free_cell = cdr(x);
   --sc->fcells;
   return (x);
+}
+
+/* make sure that there is a given number of cells free */
+static pointer reserve_cells(scheme *sc, int n) {
+       if(sc->no_memory) {
+               return sc->NIL;
+       }
+
+       /* Are there enough cells available? */
+       if (sc->fcells < n) {
+               /* If not, try gc'ing some */
+               gc(sc, sc->NIL, sc->NIL);
+               if (sc->fcells < n) {
+                       /* If there still aren't, try getting more heap */
+                       if (!alloc_cellseg(sc,1)) {
+                               sc->no_memory=1;
+                               return sc->NIL;
+                       }
+               }
+               if (sc->fcells < n) {
+                       /* If all fail, report failure */
+                       sc->no_memory=1;
+                       return sc->NIL;
+               }
+       }
+       return (sc->T);
 }
 
 static pointer get_consecutive_cells(scheme *sc, int n) {
@@ -1813,7 +1840,9 @@ static int token(scheme *sc) {
      case '\'':
           return (TOK_QUOTE);
      case ';':
-          return (TOK_COMMENT);
+          while ((c=inchar(sc)) != '\n' && c!=EOF)
+            ;
+          return (token(sc));
      case '"':
           return (TOK_DQUOTE);
      case '_':
@@ -1835,7 +1864,9 @@ static int token(scheme *sc) {
           if (c == '(') {
                return (TOK_VEC);
           } else if(c == '!') {
-               return TOK_COMMENT;
+               while ((c=inchar(sc)) != '\n' && c!=EOF)
+                   ;
+               return (token(sc));
           } else {
                backchar(sc,c);
                if(is_one_of(" tfodxb\\",c)) {
@@ -3974,6 +4005,9 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
                } else {
                     s_return(sc,sc->EOF_OBJ);
                }
+/*
+ * Commented out because we now skip comments in the scanner
+ *
           case TOK_COMMENT: {
                gunichar c;
                while ((c=inchar(sc)) != '\n' && c!=EOF)
@@ -3981,6 +4015,7 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
                sc->tok = token(sc);
                s_goto(sc,OP_RDSEXPR);
           }
+*/
           case TOK_VEC:
                s_save(sc,OP_RDVEC,sc->NIL,sc->NIL);
                /* fall through */
@@ -4050,12 +4085,14 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
      case OP_RDLIST: {
           sc->args = cons(sc, sc->value, sc->args);
           sc->tok = token(sc);
+/* We now skip comments in the scanner
           while (sc->tok == TOK_COMMENT) {
                gunichar c;
                while ((c=inchar(sc)) != '\n' && c!=EOF)
                     ;
                sc->tok = token(sc);
           }
+*/
           if (sc->tok == TOK_RPAREN) {
                gunichar c = inchar(sc);
                if (c != '\n') backchar(sc,c);
@@ -4473,6 +4510,7 @@ static struct scheme_interface vtbl ={
   scheme_define,
   s_cons,
   s_immutable_cons,
+  reserve_cells,
   mk_integer,
   mk_real,
   mk_symbol,
@@ -4791,7 +4829,7 @@ void scheme_call(scheme *sc, pointer func, pointer args) {
 
 #if STANDALONE
 
-#ifdef macintosh
+#if defined(macintosh) && !defined (OSX)
 int main()
 {
      extern MacTS_main(int argc, char **argv);

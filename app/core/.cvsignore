@@ -1,8 +1,0 @@
-Makefile
-Makefile.in
-.deps
-.libs
-*.lo
-libappcore.la
-gimpmarshal.c
-gimpmarshal.h

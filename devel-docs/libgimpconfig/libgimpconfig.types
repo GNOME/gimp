@@ -1,4 +1,0 @@
-#include <glib-object.h>
-#include <libgimpconfig/gimpconfig.h>
-
-gimp_color_config_get_type

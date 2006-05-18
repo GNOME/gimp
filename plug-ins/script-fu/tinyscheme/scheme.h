@@ -151,6 +151,7 @@ struct scheme_interface {
   void (*scheme_define)(scheme *sc, pointer env, pointer symbol, pointer value);
   pointer (*cons)(scheme *sc, pointer a, pointer b);
   pointer (*immutable_cons)(scheme *sc, pointer a, pointer b);
+  pointer (*reserve_cells)(scheme *sc, int n);
   pointer (*mk_integer)(scheme *sc, long num);
   pointer (*mk_real)(scheme *sc, double num);
   pointer (*mk_symbol)(scheme *sc, const char *name);

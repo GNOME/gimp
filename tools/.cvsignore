@@ -1,7 +1,0 @@
-Makefile
-Makefile.in
-.deps
-.libs
-kernelgen
-gimp-remote-2.3
-test-clipboard

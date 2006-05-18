@@ -1,7 +1,0 @@
-Makefile
-Makefile.in
-makefile.mingw
-.deps
-.libs
-gimp-2.3
-gimp-console-2.3
