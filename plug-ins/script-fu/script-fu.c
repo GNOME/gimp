@@ -188,6 +188,9 @@ script_fu_run (const gchar      *name,
       siod_init (FALSE);
     }
 
+  /*  Load all of the available scripts  */
+  script_fu_find_scripts ();
+
   if (strcmp (name, "extension-script-fu") == 0)
     {
       /*
@@ -195,9 +198,6 @@ script_fu_run (const gchar      *name,
        */
 
       static GimpParam  values[1];
-
-      /*  Load all of the available scripts  */
-      script_fu_find_scripts ();
 
       /*  Acknowledge that the extension is properly initialized  */
       gimp_extension_ack ();
