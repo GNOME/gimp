@@ -110,7 +110,7 @@ gimp_align_tool_register (GimpToolRegisterCallback  callback,
                 _("Align or arrange layers and other items"),
                 N_("_Align"), "Q",
                 NULL, GIMP_HELP_TOOL_MOVE,
-                GIMP_STOCK_CENTER,
+                GIMP_STOCK_TOOL_ALIGN,
                 data);
 }
 

@@ -1,3 +1,8 @@
+2006-05-19  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpaligntool.c (gimp_align_tool_register): actually
+	use the new tool icon.
+
 2006-05-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/dialogs/file-save-dialog.c: make sure to disconnect
