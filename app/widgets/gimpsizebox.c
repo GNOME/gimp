@@ -69,19 +69,21 @@ static GObject * gimp_size_box_constructor   (GType                  type,
                                               guint                  n_params,
                                               GObjectConstructParam *params);
 
-static void      gimp_size_box_set_property   (GObject         *object,
-                                               guint            property_id,
-                                               const GValue    *value,
-                                               GParamSpec      *pspec);
-static void      gimp_size_box_get_property   (GObject         *object,
-                                               guint            property_id,
-                                               GValue          *value,
-                                               GParamSpec      *pspec);
+static void      gimp_size_box_set_property      (GObject         *object,
+                                                  guint            property_id,
+                                                  const GValue    *value,
+                                                  GParamSpec      *pspec);
+static void      gimp_size_box_get_property      (GObject         *object,
+                                                  guint            property_id,
+                                                  GValue          *value,
+                                                  GParamSpec      *pspec);
 
-static void      gimp_size_box_destroy        (GtkObject       *object);
+static void      gimp_size_box_destroy           (GtkObject       *object);
 
-static void      gimp_size_box_update_size       (GimpSizeBox *box);
-static void      gimp_size_box_update_resolution (GimpSizeBox *box);
+static void      gimp_size_box_update_size       (GimpSizeBox     *box);
+static void      gimp_size_box_update_resolution (GimpSizeBox     *box);
+static void      gimp_size_box_chain_toggled     (GimpChainButton *button,
+                                                  GimpSizeBox     *box);
 
 
 G_DEFINE_TYPE (GimpSizeBox, gimp_size_box, GTK_TYPE_VBOX)
@@ -220,6 +222,10 @@ gimp_size_box_constructor (GType                  type,
                                  entry, NULL,
                                  box->xresolution,
                                  box->yresolution);
+
+  g_signal_connect (priv->size_chain, "toggled",
+                    G_CALLBACK (gimp_size_box_chain_toggled),
+                    box);
 
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
@@ -461,4 +467,13 @@ gimp_size_box_update_resolution (GimpSizeBox *box)
       gtk_label_set_text (GTK_LABEL (priv->res_label), text);
       g_free (text);
     }
+}
+
+static void
+gimp_size_box_chain_toggled (GimpChainButton *button,
+                             GimpSizeBox     *box)
+{
+  g_object_set (box,
+                "keep-aspect", gimp_chain_button_get_active (button),
+                NULL);
 }

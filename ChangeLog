@@ -1,5 +1,10 @@
 2006-05-19  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpsizebox.c: connect to the chain-button and
+	update the "keep-aspect" property when it is toggled.
+
+2006-05-19  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpaligntool.c (gimp_align_tool_register): actually
 	use the new tool icon.
 
