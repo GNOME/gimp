@@ -130,8 +130,8 @@ gimp_scale_tool_dialog_update (GimpTransformTool *tr_tool)
 {
   GimpTransformOptions *options;
 
-  gint width  = (gint) tr_tool->trans_info[X1] - (gint) tr_tool->trans_info[X0];
-  gint height = (gint) tr_tool->trans_info[Y1] - (gint) tr_tool->trans_info[Y0];
+  gint width  = ROUND (tr_tool->trans_info[X1] - tr_tool->trans_info[X0]);
+  gint height = ROUND (tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0]);
 
   options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
 
@@ -316,8 +316,8 @@ gimp_scale_tool_size_notify (GtkWidget         *box,
                     NULL);
     }
 
-  if ((width  != (tr_tool->trans_info[X1] - tr_tool->trans_info[X0])) ||
-      (height != (tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0])))
+ if ((width  != ROUND (tr_tool->trans_info[X1] - tr_tool->trans_info[X0])) ||
+      (height != ROUND (tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0])))
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
 

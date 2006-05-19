@@ -1,12 +1,18 @@
+2006-05-19  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpscaletool.c (gimp_scale_tool_dialog_update,
+	gimp_scale_tool_size_notify): use the same rounding to determine
+	width and height from the TransInfo struct.
+
 2006-05-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* plug-ins/common/vpropagate.c: swap meanings of "dilate"
-	and "erode"; fixes bug #156545.
+	* plug-ins/common/vpropagate.c: swap meanings of "dilate" and
+	"erode"; fixes bug #156545.
 
 2006-05-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* plug-ins/common/tga.c: gracefully handle incorrect alpha
-	info in header; fixes bug #306675.
+	* plug-ins/common/tga.c: gracefully handle incorrect alpha info in
+	header; fixes bug #306675.
 
 2006-05-19  Michael Natterer  <mitch@gimp.org>
 
