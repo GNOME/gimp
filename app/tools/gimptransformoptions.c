@@ -53,8 +53,7 @@ enum
   PROP_PREVIEW_TYPE,
   PROP_GRID_TYPE,
   PROP_GRID_SIZE,
-  PROP_CONSTRAIN_1,
-  PROP_CONSTRAIN_2
+  PROP_CONSTRAIN
 };
 
 
@@ -72,11 +71,6 @@ static void   gimp_transform_options_reset          (GimpToolOptions *tool_optio
 static void   gimp_transform_options_preview_notify (GimpTransformOptions *options,
                                                      GParamSpec           *pspec,
                                                      GtkWidget            *density_box);
-static void   gimp_scale_options_constrain_callback (GtkWidget            *widget,
-                                                     GObject              *config);
-static void   gimp_scale_options_constrain_notify   (GimpTransformOptions *options,
-                                                     GParamSpec           *pspec,
-                                                     GtkWidget            *vbox);
 
 
 G_DEFINE_TYPE (GimpTransformOptions, gimp_transform_options,
@@ -148,12 +142,8 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                 "grid-size", NULL,
                                 1, 128, 15,
                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_1,
-                                    "constrain-1", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_2,
-                                    "constrain-2", NULL,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN,
+                                    "constrain", NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 }
@@ -200,11 +190,8 @@ gimp_transform_options_set_property (GObject      *object,
     case PROP_GRID_SIZE:
       options->grid_size = g_value_get_int (value);
       break;
-    case PROP_CONSTRAIN_1:
-      options->constrain_1 = g_value_get_boolean (value);
-      break;
-    case PROP_CONSTRAIN_2:
-      options->constrain_2 = g_value_get_boolean (value);
+    case PROP_CONSTRAIN:
+      options->constrain = g_value_get_boolean (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -249,11 +236,8 @@ gimp_transform_options_get_property (GObject    *object,
     case PROP_GRID_SIZE:
       g_value_set_int (value, options->grid_size);
       break;
-    case PROP_CONSTRAIN_1:
-      g_value_set_boolean (value, options->constrain_1);
-      break;
-    case PROP_CONSTRAIN_2:
-      g_value_set_boolean (value, options->constrain_2);
+    case PROP_CONSTRAIN:
+      g_value_set_boolean (value, options->constrain);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -288,6 +272,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   GtkWidget            *table;
   GtkWidget            *combo;
   GtkWidget            *button;
+  const gchar          *constrain = NULL;
 
   vbox = gimp_tool_options_gui (tool_options);
 
@@ -378,78 +363,25 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
                              1.0, 8.0, 0,
                              FALSE, 0.0, 0.0);
 
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL ||
-      tool_options->tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL)
     {
-      GtkWidget *vbox2;
-      GtkWidget *vbox3;
+      constrain = (_("15 degrees  (%s)"));
+    }
+  else if (tool_options->tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
+    {
+      constrain = (_("Keep aspect  (%s)"));
+    }
 
-      /*  the constraints frame  */
-      frame = gimp_frame_new (_("Constraints"));
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
+  if (constrain)
+    {
+      gchar *label = g_strdup_printf (constrain,
+                                      gimp_get_mod_string (GDK_CONTROL_MASK));
 
-      vbox2 = gtk_vbox_new (FALSE, 2);
-      gtk_container_add (GTK_CONTAINER (frame), vbox2);
-      gtk_widget_show (vbox2);
+      button = gimp_prop_check_button_new (config, "constrain", label);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
 
-      if (tool_options->tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL)
-        {
-          gchar *str;
-
-          str = g_strdup_printf (_("15 degrees  (%s)"),
-                                 gimp_get_mod_string (GDK_CONTROL_MASK));
-
-          button = gimp_prop_check_button_new (config, "constrain-1", str);
-          gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-          gtk_widget_show (button);
-
-          g_free (str);
-        }
-      else if (tool_options->tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
-        {
-          GtkWidget *button;
-          gchar     *str1;
-          gchar     *str2;
-          gchar     *str3;
-          gint       initial;
-
-          initial = ((options->constrain_1 ? 1 : 0) +
-                     (options->constrain_2 ? 2 : 0));
-
-          str1 = g_strdup_printf (_("Keep height  (%s)"),
-                                  gimp_get_mod_string (GDK_CONTROL_MASK));
-          str2 = g_strdup_printf (_("Keep width  (%s)"),
-                                  gimp_get_mod_string (GDK_MOD1_MASK));
-          str3 = g_strdup_printf (_("Keep aspect  (%s)"),
-                                  gimp_get_mod_string (GDK_CONTROL_MASK |
-                                                       GDK_MOD1_MASK));
-
-          vbox3 = gimp_int_radio_group_new (FALSE, NULL,
-                                            G_CALLBACK (gimp_scale_options_constrain_callback),
-                                            config, initial,
-
-                                            _("None"), 0, &button,
-                                            str1,      1, NULL,
-                                            str2,      2, NULL,
-                                            str3,      3, NULL,
-
-                                            NULL);
-
-          gtk_box_pack_start (GTK_BOX (vbox2), vbox3, FALSE, FALSE, 0);
-          gtk_widget_show (vbox3);
-
-          g_signal_connect_object (config, "notify::constrain-1",
-                                   G_CALLBACK (gimp_scale_options_constrain_notify),
-                                   G_OBJECT (button), 0);
-          g_signal_connect_object (config, "notify::constrain-2",
-                                   G_CALLBACK (gimp_scale_options_constrain_notify),
-                                   G_OBJECT (button), 0);
-
-          g_free (str1);
-          g_free (str2);
-          g_free (str3);
-        }
+      g_free (label);
     }
 
   return vbox;
@@ -468,44 +400,4 @@ gimp_transform_options_preview_notify (GimpTransformOptions *options,
                             GIMP_TRANSFORM_PREVIEW_TYPE_GRID ||
                             options->preview_type ==
                             GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID);
-}
-
-static void
-gimp_scale_options_constrain_callback (GtkWidget *widget,
-                                       GObject   *config)
-{
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-    {
-      gint      value;
-      gboolean  c0;
-      gboolean  c1;
-
-      value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                                  "gimp-item-data"));
-
-      c0 = c1 = FALSE;
-
-      if (value == 1 || value == 3)
-        c0 = TRUE;
-      if (value == 2 || value == 3)
-        c1 = TRUE;
-
-      g_object_set (config,
-                    "constrain-1", c0,
-                    "constrain-2", c1,
-                    NULL);
-    }
-}
-
-static void
-gimp_scale_options_constrain_notify (GimpTransformOptions *options,
-                                     GParamSpec           *pspec,
-                                     GtkWidget            *button)
-{
-  gint value;
-
-  value = ((options->constrain_1 ? 1 : 0) +
-           (options->constrain_2 ? 2 : 0));
-
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
 }

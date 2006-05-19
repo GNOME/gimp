@@ -128,12 +128,17 @@ gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
 static void
 gimp_scale_tool_dialog_update (GimpTransformTool *tr_tool)
 {
+  GimpTransformOptions *options;
+
   gint width  = (gint) tr_tool->trans_info[X1] - (gint) tr_tool->trans_info[X0];
   gint height = (gint) tr_tool->trans_info[Y1] - (gint) tr_tool->trans_info[Y0];
 
+  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
+
   g_object_set (GIMP_SCALE_TOOL (tr_tool)->box,
-                "width",  width,
-                "height", height,
+                "width",       width,
+                "height",      height,
+                "keep-aspect", options->constrain,
                 NULL);
 
   gtk_widget_show (tr_tool->dialog);
@@ -151,8 +156,6 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
   tr_tool->trans_info[Y1] = (gdouble) tr_tool->y2;
 
   g_object_set (scale->box,
-                "width",       tr_tool->x2 - tr_tool->x1,
-                "height",      tr_tool->y2 - tr_tool->y1,
                 "unit",        GIMP_DISPLAY_SHELL (display->shell)->unit,
                 "xresolution", display->image->xresolution,
                 "yresolution", display->image->yresolution,
@@ -230,18 +233,8 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
       return;
     }
 
-  /*  if just the mod1 key is down, affect only the height  */
-  if (options->constrain_2 && ! options->constrain_1)
-    {
-      diff_x = 0;
-    }
-  /*  if just the control key is down, affect only the width  */
-  else if (options->constrain_1 && ! options->constrain_2)
-    {
-      diff_y = 0;
-    }
-  /*  if control and mod1 are both down, constrain the aspect ratio  */
-  else if (options->constrain_1 && options->constrain_2)
+  /*  if control is being held, constrain the aspect ratio  */
+  if (options->constrain)
     {
       mag = hypot ((gdouble) (tr_tool->x2 - tr_tool->x1),
                    (gdouble) (tr_tool->y2 - tr_tool->y1));
@@ -303,13 +296,25 @@ gimp_scale_tool_size_notify (GtkWidget         *box,
                              GParamSpec        *pspec,
                              GimpTransformTool *tr_tool)
 {
-  gint width;
-  gint height;
+  GimpTransformOptions *options;
+  gint                  width;
+  gint                  height;
+  gboolean              constrain;
+
+  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
 
   g_object_get (box,
-                "width",  &width,
-                "height", &height,
+                "width",       &width,
+                "height",      &height,
+                "keep-aspect", &constrain,
                 NULL);
+
+  if (constrain != options->constrain)
+    {
+      g_object_set (options,
+                    "constrain", constrain,
+                    NULL);
+    }
 
   if ((width  != (tr_tool->trans_info[X1] - tr_tool->trans_info[X0])) ||
       (height != (tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0])))

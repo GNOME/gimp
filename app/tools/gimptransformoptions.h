@@ -47,8 +47,7 @@ struct _GimpTransformOptions
   GimpTransformPreviewType  preview_type;
   GimpTransformGridType     grid_type;
   gint                      grid_size;
-  gboolean                  constrain_1;
-  gboolean                  constrain_2;
+  gboolean                  constrain;
 };
 
 

@@ -1,5 +1,16 @@
 2006-05-19  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptransformoptions.[ch]: removed one of the two
+	constrain properties.
+
+	* app/tools/gimprotatetool.c
+	* app/tools/gimptransformtool.c: changed accordingly.
+
+	* app/tools/gimpscaletool.c: sync "constrain" with the size-box's
+	"keep-aspect" property.
+
+2006-05-19  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpsizebox.c: connect to the chain-button and
 	update the "keep-aspect" property when it is toggled.
 

@@ -115,6 +115,8 @@ static void     gimp_transform_tool_cursor_update  (GimpTool          *tool,
 
 static void     gimp_transform_tool_draw           (GimpDrawTool      *draw_tool);
 
+static void     gimp_transform_tool_dialog_update  (GimpTransformTool *tr_tool);
+
 static TileManager *
                 gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                                     GimpItem          *item,
@@ -253,6 +255,7 @@ gimp_transform_tool_constructor (GType                  type,
                                "notify::type",
                                G_CALLBACK (gimp_transform_tool_notify_preview),
                                tr_tool, 0);
+
       g_signal_connect_object (tool->tool_info->tool_options,
                                "notify::direction",
                                G_CALLBACK (gimp_transform_tool_notify_type),
@@ -261,6 +264,7 @@ gimp_transform_tool_constructor (GType                  type,
                                "notify::direction",
                                G_CALLBACK (gimp_transform_tool_notify_preview),
                                tr_tool, 0);
+
       g_signal_connect_object (tool->tool_info->tool_options,
                                "notify::preview-type",
                                G_CALLBACK (gimp_transform_tool_notify_preview),
@@ -274,6 +278,11 @@ gimp_transform_tool_constructor (GType                  type,
                                G_CALLBACK (gimp_transform_tool_notify_preview),
                                tr_tool, 0);
     }
+
+  g_signal_connect_object (tool->tool_info->tool_options,
+                           "notify::constrain",
+                           G_CALLBACK (gimp_transform_tool_dialog_update),
+                           tr_tool, G_CONNECT_SWAPPED);
 
   return object;
 }
@@ -528,17 +537,9 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
   options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
 
   if (key == GDK_CONTROL_MASK)
-    {
-      g_object_set (options,
-                    "constrain-1", ! options->constrain_1,
-                    NULL);
-    }
-  else if (key == GDK_MOD1_MASK)
-    {
-      g_object_set (options,
-                    "constrain-2", ! options->constrain_2,
-                    NULL);
-    }
+    g_object_set (options,
+                  "constrain", ! options->constrain,
+                  NULL);
 }
 
 static void
@@ -812,6 +813,13 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
             }
         }
     }
+}
+
+static void
+gimp_transform_tool_dialog_update (GimpTransformTool *tr_tool)
+{
+  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update)
+    GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update (tr_tool);
 }
 
 static TileManager *
@@ -1457,8 +1465,7 @@ gimp_transform_tool_recalc (GimpTransformTool *tr_tool,
 
   gimp_transform_tool_transform_bounding_box (tr_tool);
 
-  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update)
-    GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update (tr_tool);
+  gimp_transform_tool_dialog_update (tr_tool);
 }
 
 static void
