@@ -32,8 +32,8 @@
  * Convert specified image to RGB color
  *
  * This procedure converts the specified image to RGB color. This
- * process requires an image of type GIMP_GRAY or GIMP_INDEXED. No
- * image content is lost in this process aside from the colormap for an
+ * process requires an image in RGB or Indexed color mode. No image
+ * content is lost in this process aside from the colormap for an
  * indexed image.
  *
  * Returns: TRUE on success.
@@ -64,8 +64,8 @@ gimp_image_convert_rgb (gint32 image_ID)
  * Convert specified image to grayscale (256 intensity levels)
  *
  * This procedure converts the specified image to grayscale with 8 bits
- * per pixel (256 intensity levels). This process requires an image of
- * type GIMP_RGB or GIMP_INDEXED.
+ * per pixel (256 intensity levels). This process requires an image in
+ * RGB or Indexed color mode.
  *
  * Returns: TRUE on success.
  */
@@ -101,7 +101,7 @@ gimp_image_convert_grayscale (gint32 image_ID)
  * Convert specified image to and Indexed image
  *
  * This procedure converts the specified image to 'indexed' color. This
- * process requires an image of type GIMP_GRAY or GIMP_RGB. The
+ * process requires an image in RGB or Grayscale mode. The
  * 'palette_type' specifies what kind of palette to use, A type of '0'
  * means to use an optimal palette of 'num_cols' generated from the
  * colors in the image. A type of '1' means to re-use the previous

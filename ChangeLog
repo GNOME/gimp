@@ -1,3 +1,14 @@
+2006-05-19  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/convert.pdb
+	* tools/pdbgen/pdb/image.pdb: do not use enum values in C syntax
+	to describe the image mode.
+
+	* app/pdb/convert_cmds.c
+	* app/pdb/image_cmds.c
+	* libgimp/gimpconvert_pdb.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
 2006-05-19  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/app.pl: turn c_style_procedure_names() in
