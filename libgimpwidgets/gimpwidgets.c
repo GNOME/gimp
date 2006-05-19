@@ -1077,7 +1077,7 @@ gimp_coordinates_callback (GtkWidget           *widget,
         {
           if ((gcd->orig_x != 0) && (gcd->orig_y != 0))
             {
-              if (new_x != gcd->last_x)
+              if (ROUND (new_x) != ROUND (gcd->last_x))
                 {
                   gcd->last_x = new_x;
                   new_y = (new_x * gcd->orig_y) / gcd->orig_x;
@@ -1088,7 +1088,7 @@ gimp_coordinates_callback (GtkWidget           *widget,
                   gcd->last_y
                     = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
                 }
-              else if (new_y != gcd->last_y)
+              else if (ROUND (new_y) != ROUND (gcd->last_y))
                 {
                   gcd->last_y = new_y;
                   new_x = (new_y * gcd->orig_x) / gcd->orig_y;

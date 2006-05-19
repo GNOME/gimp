@@ -1,3 +1,9 @@
+2006-05-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* libgimpwidgets/gimpwidgets.c (gimp_coordinates_callback): 
+	use ROUND() to prevent incorrect chainbutton logic.  Fixes
+	bug #336259.
+	
 2006-05-19  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpscaletool.c (gimp_scale_tool_dialog_update,
