@@ -1,5 +1,10 @@
 2006-05-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/common/vpropagate.c: swap meanings of "dilate"
+	and "erode"; fixes bug #156545.
+
+2006-05-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* plug-ins/common/tga.c: gracefully handle incorrect alpha
 	info in header; fixes bug #306675.
 
