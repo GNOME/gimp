@@ -1,3 +1,17 @@
+2006-05-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpitem-linked.h: remove enum GimpItemLinkedMask...
+
+	* app/core/core-enums.[ch]: ...and add it here as GimpItemTypeMask.
+	Renamed enum GimpImageResizeLayers to GimpItemSet.
+
+	* app/core/gimpitem-linked.[ch]
+	* app/core/gimpimage-resize.[ch]
+	* app/dialogs/resize-dialog.[ch]
+	* app/actions/image-commands.c
+	* app/actions/layers-commands.c
+	* app/tools/gimpeditselectiontool.c: changed accordingly.
+
 2006-05-19  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/convert.pdb

@@ -20,26 +20,26 @@
 #define __RESIZE_DIALOG_H__
 
 
-typedef void (* GimpResizeCallback) (GtkWidget             *dialog,
-                                     GimpViewable          *viewable,
-                                     gint                   width,
-                                     gint                   height,
-                                     GimpUnit               unit,
-                                     gint                   offset_x,
-                                     gint                   offset_y,
-                                     GimpImageResizeLayers  resize_layers,
-                                     gpointer               user_data);
+typedef void (* GimpResizeCallback) (GtkWidget    *dialog,
+                                     GimpViewable *viewable,
+                                     gint          width,
+                                     gint          height,
+                                     GimpUnit      unit,
+                                     gint          offset_x,
+                                     gint          offset_y,
+                                     GimpItemSet   layer_set,
+                                     gpointer      user_data);
 
 
-GtkWidget * resize_dialog_new (GimpViewable          *viewable,
-                               const gchar           *title,
-                               const gchar           *role,
-                               GtkWidget             *parent,
-                               GimpHelpFunc           help_func,
-                               const gchar           *help_id,
-                               GimpUnit               unit,
-                               GimpResizeCallback     callback,
-                               gpointer               user_data);
+GtkWidget * resize_dialog_new (GimpViewable       *viewable,
+                               const gchar        *title,
+                               const gchar        *role,
+                               GtkWidget          *parent,
+                               GimpHelpFunc        help_func,
+                               const gchar        *help_id,
+                               GimpUnit            unit,
+                               GimpResizeCallback  callback,
+                               gpointer            user_data);
 
 
 #endif  /*  __RESIZE_DIALOG_H__  */

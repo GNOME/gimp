@@ -439,25 +439,25 @@ gimp_orientation_type_get_type (void)
 }
 
 GType
-gimp_image_resize_layers_get_type (void)
+gimp_item_set_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_IMAGE_RESIZE_LAYERS_NONE, "GIMP_IMAGE_RESIZE_LAYERS_NONE", "none" },
-    { GIMP_IMAGE_RESIZE_LAYERS_MATCHING, "GIMP_IMAGE_RESIZE_LAYERS_MATCHING", "matching" },
-    { GIMP_IMAGE_RESIZE_LAYERS_VISIBLE, "GIMP_IMAGE_RESIZE_LAYERS_VISIBLE", "visible" },
-    { GIMP_IMAGE_RESIZE_LAYERS_LINKED, "GIMP_IMAGE_RESIZE_LAYERS_LINKED", "linked" },
-    { GIMP_IMAGE_RESIZE_LAYERS_ALL, "GIMP_IMAGE_RESIZE_LAYERS_ALL", "all" },
+    { GIMP_ITEM_SET_NONE, "GIMP_ITEM_SET_NONE", "none" },
+    { GIMP_ITEM_SET_ALL, "GIMP_ITEM_SET_ALL", "all" },
+    { GIMP_ITEM_SET_IMAGE_SIZED, "GIMP_ITEM_SET_IMAGE_SIZED", "image-sized" },
+    { GIMP_ITEM_SET_VISIBLE, "GIMP_ITEM_SET_VISIBLE", "visible" },
+    { GIMP_ITEM_SET_LINKED, "GIMP_ITEM_SET_LINKED", "linked" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_IMAGE_RESIZE_LAYERS_NONE, N_("None"), NULL },
-    { GIMP_IMAGE_RESIZE_LAYERS_MATCHING, N_("Image-sized layers"), NULL },
-    { GIMP_IMAGE_RESIZE_LAYERS_VISIBLE, N_("All visible layers"), NULL },
-    { GIMP_IMAGE_RESIZE_LAYERS_LINKED, N_("All linked layers"), NULL },
-    { GIMP_IMAGE_RESIZE_LAYERS_ALL, N_("All layers"), NULL },
+    { GIMP_ITEM_SET_NONE, N_("None"), NULL },
+    { GIMP_ITEM_SET_ALL, N_("All layers"), NULL },
+    { GIMP_ITEM_SET_IMAGE_SIZED, N_("Image-sized layers"), NULL },
+    { GIMP_ITEM_SET_VISIBLE, N_("All visible layers"), NULL },
+    { GIMP_ITEM_SET_LINKED, N_("All linked layers"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -465,7 +465,7 @@ gimp_image_resize_layers_get_type (void)
 
   if (! type)
     {
-      type = g_enum_register_static ("GimpImageResizeLayers", values);
+      type = g_enum_register_static ("GimpItemSet", values);
       gimp_enum_set_value_descriptions (type, descs);
     }
 

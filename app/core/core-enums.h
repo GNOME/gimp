@@ -215,18 +215,18 @@ typedef enum
 } GimpOrientationType;
 
 
-#define GIMP_TYPE_IMAGE_RESIZE_LAYERS (gimp_image_resize_layers_get_type ())
+#define GIMP_TYPE_ITEM_SET (gimp_item_set_get_type ())
 
-GType gimp_image_resize_layers_get_type (void) G_GNUC_CONST;
+GType gimp_item_set_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_IMAGE_RESIZE_LAYERS_NONE,     /*< desc="None"               >*/
-  GIMP_IMAGE_RESIZE_LAYERS_MATCHING, /*< desc="Image-sized layers" >*/
-  GIMP_IMAGE_RESIZE_LAYERS_VISIBLE,  /*< desc="All visible layers" >*/
-  GIMP_IMAGE_RESIZE_LAYERS_LINKED,   /*< desc="All linked layers"  >*/
-  GIMP_IMAGE_RESIZE_LAYERS_ALL       /*< desc="All layers"         >*/
-} GimpImageResizeLayers;
+  GIMP_ITEM_SET_NONE,        /*< desc="None"               >*/
+  GIMP_ITEM_SET_ALL,         /*< desc="All layers"         >*/
+  GIMP_ITEM_SET_IMAGE_SIZED, /*< desc="Image-sized layers" >*/
+  GIMP_ITEM_SET_VISIBLE,     /*< desc="All visible layers" >*/
+  GIMP_ITEM_SET_LINKED       /*< desc="All linked layers"  >*/
+} GimpItemSet;
 
 
 #define GIMP_TYPE_ROTATION_TYPE (gimp_rotation_type_get_type ())
@@ -514,6 +514,7 @@ typedef enum
  * non-registered enums; register them if needed
  */
 
+
 typedef enum  /*< pdb-skip, skip >*/
 {
   GIMP_CONTEXT_FIRST_PROP      =  2,
@@ -537,6 +538,7 @@ typedef enum  /*< pdb-skip, skip >*/
 
   GIMP_CONTEXT_LAST_PROP       = GIMP_CONTEXT_PROP_TEMPLATE
 } GimpContextPropType;
+
 
 typedef enum  /*< pdb-skip, skip >*/
 {
@@ -577,12 +579,25 @@ typedef enum  /*< pdb-skip, skip >*/
                                    GIMP_CONTEXT_PAINT_PROPS_MASK)
 } GimpContextPropMask;
 
+
 typedef enum  /*< pdb-skip, skip >*/
 {
   GIMP_IMAGE_SCALE_OK,
   GIMP_IMAGE_SCALE_TOO_SMALL,
   GIMP_IMAGE_SCALE_TOO_BIG
 } GimpImageScaleCheckType;
+
+
+typedef enum  /*< pdb-skip, skip >*/
+{
+  GIMP_ITEM_TYPE_LAYERS   = 1 << 0,
+  GIMP_ITEM_TYPE_CHANNELS = 1 << 1,
+  GIMP_ITEM_TYPE_VECTORS  = 1 << 2,
+
+  GIMP_ITEM_TYPE_ALL      = (GIMP_ITEM_TYPE_LAYERS   |
+                             GIMP_ITEM_TYPE_CHANNELS |
+                             GIMP_ITEM_TYPE_VECTORS)
+} GimpItemTypeMask;
 
 
 #endif /* __CORE_ENUMS_H__ */

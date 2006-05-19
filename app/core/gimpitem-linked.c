@@ -45,7 +45,7 @@ gimp_item_linked_translate (GimpItem *item,
   g_return_if_fail (gimp_item_get_linked (item) == TRUE);
   g_return_if_fail (gimp_item_is_attached (item));
 
-  linked_list = gimp_item_linked_get_list (item, GIMP_ITEM_LINKED_ALL);
+  linked_list = gimp_item_linked_get_list (item, GIMP_ITEM_TYPE_ALL);
 
   for (list = linked_list; list; list = g_list_next (list))
     gimp_item_translate (GIMP_ITEM (list->data),
@@ -69,7 +69,7 @@ gimp_item_linked_flip (GimpItem            *item,
   g_return_if_fail (gimp_item_get_linked (item) == TRUE);
   g_return_if_fail (gimp_item_is_attached (item));
 
-  linked_list = gimp_item_linked_get_list (item, GIMP_ITEM_LINKED_ALL);
+  linked_list = gimp_item_linked_get_list (item, GIMP_ITEM_TYPE_ALL);
 
   for (list = linked_list; list; list = g_list_next (list))
     gimp_item_flip (GIMP_ITEM (list->data), context,
@@ -95,8 +95,8 @@ gimp_item_linked_rotate (GimpItem         *item,
   g_return_if_fail (gimp_item_is_attached (item));
 
   linked_list = gimp_item_linked_get_list (item,
-                                           GIMP_ITEM_LINKED_LAYERS |
-                                           GIMP_ITEM_LINKED_VECTORS);
+                                           GIMP_ITEM_TYPE_LAYERS |
+                                           GIMP_ITEM_TYPE_VECTORS);
 
   for (list = linked_list; list; list = g_list_next (list))
     gimp_item_rotate (GIMP_ITEM (list->data), context,
@@ -104,7 +104,7 @@ gimp_item_linked_rotate (GimpItem         *item,
 
   g_list_free (linked_list);
 
-  linked_list = gimp_item_linked_get_list (item, GIMP_ITEM_LINKED_CHANNELS);
+  linked_list = gimp_item_linked_get_list (item, GIMP_ITEM_TYPE_CHANNELS);
 
   for (list = linked_list; list; list = g_list_next (list))
     gimp_item_rotate (GIMP_ITEM (list->data), context,
@@ -133,7 +133,7 @@ gimp_item_linked_transform (GimpItem               *item,
   g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  linked_list = gimp_item_linked_get_list (item, GIMP_ITEM_LINKED_ALL);
+  linked_list = gimp_item_linked_get_list (item, GIMP_ITEM_TYPE_ALL);
 
   for (list = linked_list; list; list = g_list_next (list))
     gimp_item_transform (GIMP_ITEM (list->data), context,
@@ -157,8 +157,8 @@ gimp_item_linked_transform (GimpItem               *item,
  * Return value: The list of linked items, excluding the passed @item.
  **/
 GList *
-gimp_item_linked_get_list (GimpItem           *item,
-                           GimpItemLinkedMask  which)
+gimp_item_linked_get_list (GimpItem         *item,
+                           GimpItemTypeMask  which)
 {
   GimpImage *image;
   GimpItem  *linked_item;
@@ -171,7 +171,7 @@ gimp_item_linked_get_list (GimpItem           *item,
 
   image = gimp_item_get_image (item);
 
-  if (which & GIMP_ITEM_LINKED_LAYERS)
+  if (which & GIMP_ITEM_TYPE_LAYERS)
     {
       for (list = GIMP_LIST (image->layers)->list;
            list;
@@ -184,7 +184,7 @@ gimp_item_linked_get_list (GimpItem           *item,
         }
     }
 
-  if (which & GIMP_ITEM_LINKED_CHANNELS)
+  if (which & GIMP_ITEM_TYPE_CHANNELS)
     {
       for (list = GIMP_LIST (image->channels)->list;
            list;
@@ -197,7 +197,7 @@ gimp_item_linked_get_list (GimpItem           *item,
         }
     }
 
-  if (which & GIMP_ITEM_LINKED_VECTORS)
+  if (which & GIMP_ITEM_TYPE_VECTORS)
     {
       for (list = GIMP_LIST (image->vectors)->list;
            list;

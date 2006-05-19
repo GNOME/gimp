@@ -129,7 +129,7 @@ static void   layers_resize_layer_callback (GtkWidget             *dialog,
                                             GimpUnit               unit,
                                             gint                   offset_x,
                                             gint                   offset_y,
-                                            GimpImageResizeLayers  unused,
+                                            GimpItemSet            unused,
                                             gpointer               data);
 
 static gint   layers_mode_index            (GimpLayerModeEffects   layer_mode);
@@ -1070,15 +1070,15 @@ layers_scale_layer_callback (GtkWidget             *dialog,
 }
 
 static void
-layers_resize_layer_callback (GtkWidget             *dialog,
-                              GimpViewable          *viewable,
-                              gint                   width,
-                              gint                   height,
-                              GimpUnit               unit,
-                              gint                   offset_x,
-                              gint                   offset_y,
-                              GimpImageResizeLayers  unused,
-                              gpointer               data)
+layers_resize_layer_callback (GtkWidget    *dialog,
+                              GimpViewable *viewable,
+                              gint          width,
+                              gint          height,
+                              GimpUnit      unit,
+                              gint          offset_x,
+                              gint          offset_y,
+                              GimpItemSet   unused,
+                              gpointer      data)
 {
   GimpContext *context = GIMP_CONTEXT (data);
 

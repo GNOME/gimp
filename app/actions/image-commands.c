@@ -81,7 +81,7 @@ static void   image_resize_callback        (GtkWidget              *dialog,
                                             GimpUnit                unit,
                                             gint                    offset_x,
                                             gint                    offset_y,
-                                            GimpImageResizeLayers   resize_layers,
+                                            GimpItemSet             layer_set,
                                             gpointer                data);
 static void   image_print_size_callback    (GtkWidget              *dialog,
                                             GimpImage              *image,
@@ -457,15 +457,15 @@ image_properties_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
-image_resize_callback (GtkWidget             *dialog,
-                       GimpViewable          *viewable,
-                       gint                   width,
-                       gint                   height,
-                       GimpUnit               unit,
-                       gint                   offset_x,
-                       gint                   offset_y,
-                       GimpImageResizeLayers  resize_layers,
-                       gpointer               data)
+image_resize_callback (GtkWidget    *dialog,
+                       GimpViewable *viewable,
+                       gint          width,
+                       gint          height,
+                       GimpUnit      unit,
+                       gint          offset_x,
+                       gint          offset_y,
+                       GimpItemSet   layer_set,
+                       gpointer      data)
 {
   ImageResizeOptions *options = data;
 
@@ -491,7 +491,7 @@ image_resize_callback (GtkWidget             *dialog,
       gimp_image_resize_with_layers (image,
                                      context,
                                      width, height, offset_x, offset_y,
-                                     resize_layers,
+                                     layer_set,
                                      progress);
 
       if (progress)

@@ -48,19 +48,19 @@ gimp_image_resize (GimpImage    *image,
 {
   gimp_image_resize_with_layers (image, context,
                                  new_width, new_height, offset_x, offset_y,
-                                 GIMP_IMAGE_RESIZE_LAYERS_NONE,
+                                 GIMP_ITEM_SET_NONE,
                                  progress);
 }
 
 void
-gimp_image_resize_with_layers (GimpImage             *image,
-                               GimpContext           *context,
-                               gint                   new_width,
-                               gint                   new_height,
-                               gint                   offset_x,
-                               gint                   offset_y,
-                               GimpImageResizeLayers  resize_layers,
-                               GimpProgress          *progress)
+gimp_image_resize_with_layers (GimpImage    *image,
+                               GimpContext  *context,
+                               gint          new_width,
+                               gint          new_height,
+                               gint          offset_x,
+                               gint          offset_y,
+                               GimpItemSet   layer_set,
+                               GimpProgress *progress)
 {
   GList   *list;
   gdouble  progress_max;
@@ -145,25 +145,25 @@ gimp_image_resize_with_layers (GimpImage             *image,
 
       gimp_item_translate (item, offset_x, offset_y, TRUE);
 
-      switch (resize_layers)
+      switch (layer_set)
         {
-        case GIMP_IMAGE_RESIZE_LAYERS_MATCHING:
+        case GIMP_ITEM_SET_ALL:
+          resize = TRUE;
+          break;
+
+        case GIMP_ITEM_SET_IMAGE_SIZED:
           resize = (old_offset_x            == 0          &&
                     old_offset_y            == 0          &&
                     gimp_item_width (item)  == old_width  &&
                     gimp_item_height (item) == old_height);
           break;
 
-        case GIMP_IMAGE_RESIZE_LAYERS_VISIBLE:
+        case GIMP_ITEM_SET_VISIBLE:
           resize = gimp_item_get_visible (item);
           break;
 
-        case GIMP_IMAGE_RESIZE_LAYERS_LINKED:
+        case GIMP_ITEM_SET_LINKED:
           resize = gimp_item_get_linked (item);
-          break;
-
-        case GIMP_IMAGE_RESIZE_LAYERS_ALL:
-          resize = TRUE;
           break;
 
         default:

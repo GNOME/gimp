@@ -341,7 +341,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
             GList *list;
 
             linked = gimp_item_linked_get_list (active_item,
-                                                GIMP_ITEM_LINKED_LAYERS);
+                                                GIMP_ITEM_TYPE_LAYERS);
 
             /*  Expand the rectangle to include all linked layers as well  */
             for (list = linked; list; list = g_list_next (list))
@@ -384,7 +384,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
               GList *list;
 
               linked = gimp_item_linked_get_list (active_item,
-                                                  GIMP_ITEM_LINKED_VECTORS);
+                                                  GIMP_ITEM_TYPE_VECTORS);
 
               for (list = linked; list; list = g_list_next (list))
                 {
@@ -511,7 +511,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
               GList *list;
 
               linked = gimp_item_linked_get_list (active_item,
-                                                  GIMP_ITEM_LINKED_CHANNELS);
+                                                  GIMP_ITEM_TYPE_CHANNELS);
 
               for (list = linked; list; list = g_list_next (list))
                 gimp_item_translate (GIMP_ITEM (list->data),
@@ -638,8 +638,8 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
                 GList *list;
 
                 linked = gimp_item_linked_get_list (active_item,
-                                                    GIMP_ITEM_LINKED_LAYERS |
-                                                    GIMP_ITEM_LINKED_VECTORS);
+                                                    GIMP_ITEM_TYPE_LAYERS |
+                                                    GIMP_ITEM_TYPE_VECTORS);
 
                 for (list = linked; list; list = g_list_next (list))
                   gimp_item_translate (GIMP_ITEM (list->data),
@@ -800,7 +800,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             GList *list;
 
             linked = gimp_item_linked_get_list (active_item,
-                                                GIMP_ITEM_LINKED_LAYERS);
+                                                GIMP_ITEM_TYPE_LAYERS);
 
             for (list = linked; list; list = g_list_next (list))
               {
@@ -851,7 +851,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             GList *list;
 
             linked = gimp_item_linked_get_list (active_item,
-                                                GIMP_ITEM_LINKED_VECTORS);
+                                                GIMP_ITEM_TYPE_VECTORS);
 
             for (list = linked; list; list = g_list_next (list))
               {
