@@ -505,6 +505,10 @@ load_image (const gchar *filename)
   info.flipHoriz = (header[17] & 0x10) ? 1 : 0;
   info.flipVert  = (header[17] & 0x20) ? 0 : 1;
 
+  /* hack to handle some existing files with incorrect headers, see bug #306675 */
+  if (info.alphaBits == info.bpp)
+    info.alphaBits = 0;
+
   switch (info.imageType)
     {
       case TGA_TYPE_MAPPED:

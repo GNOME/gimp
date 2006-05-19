@@ -1,3 +1,8 @@
+2006-05-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/tga.c: gracefully handle incorrect alpha
+	info in header; fixes bug #306675.
+
 2006-05-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem-linked.h: remove enum GimpItemLinkedMask...
