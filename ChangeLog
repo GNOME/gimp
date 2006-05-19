@@ -1,3 +1,11 @@
+2006-5-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Merge from Head:
+	
+	* app/dialogs/file-save-dialog.c: make sure dialog has
+	not been destroyed when setting sensitive; fixes 
+	bug #322978.
+
 2006-04-23  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/png.c: don't use long deprecated libpng API.

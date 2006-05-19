@@ -139,7 +139,12 @@ file_save_dialog_response (GtkWidget *save_dialog,
         }
       else
         {
+          gulong handler_id;
+
           gimp_file_dialog_set_sensitive (dialog, FALSE);
+          handler_id = g_signal_connect (dialog, "destroy",
+                                         G_CALLBACK (gtk_widget_destroyed),
+                                         &dialog);
 
           if (file_save_dialog_save_image (save_dialog,
                                            dialog->gimage,
@@ -148,10 +153,15 @@ file_save_dialog_response (GtkWidget *save_dialog,
                                            dialog->file_proc,
                                            dialog->save_a_copy))
             {
-              gtk_widget_hide (save_dialog);
+              if (dialog)
+                gtk_widget_hide (save_dialog);
             }
 
-          gimp_file_dialog_set_sensitive (dialog, TRUE);
+          if (dialog)
+            {
+              gimp_file_dialog_set_sensitive (dialog, TRUE);
+              g_signal_handler_disconnect (dialog, handler_id);
+            }
         }
 
       g_free (filename);
