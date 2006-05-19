@@ -936,12 +936,12 @@ register_color_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-levels-auto");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-levels-auto",
-                                     "This procedure is deprecated! Use 'gimp_levels_stretch' instead.",
-                                     "This procedure is deprecated! Use 'gimp_levels_stretch' instead.",
+                                     "This procedure is deprecated! Use 'gimp-levels-stretch' instead.",
+                                     "This procedure is deprecated! Use 'gimp-levels-stretch' instead.",
                                      "",
                                      "",
                                      "",
-                                     "gimp_levels_stretch");
+                                     "gimp-levels-stretch");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",

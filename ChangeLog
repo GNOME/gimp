@@ -1,3 +1,18 @@
+2006-05-19  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/app.pl: turn c_style_procedure_names() in
+	$proc->{help} into 'canonical-procedure-names'.
+
+	* tools/pdbgen/pdb/color.pdb: std_pdb_deprecated() expects
+	canonical procedure names.
+
+	* app/pdb/color_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/drawable_transform_cmds.c
+	* app/pdb/edit_cmds.c
+	* app/pdb/paths_cmds.c
+	* app/pdb/progress_cmds.c: regenerated.
+
 2006-05-19  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptransformoptions.[ch]: removed one of the two

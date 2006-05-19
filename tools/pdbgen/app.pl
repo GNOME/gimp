@@ -491,6 +491,10 @@ CODE
     return ($pspec, $postproc);
 }
 
+sub canonicalize {
+    $_ = shift; s/_/-/g; return $_;
+}
+
 sub generate {
     my @procs = @{(shift)};
     my %out;
@@ -503,8 +507,12 @@ sub generate {
 
 	my @inargs = @{$proc->{inargs}} if exists $proc->{inargs};
 	my @outargs = @{$proc->{outargs}} if exists $proc->{outargs};
-	
+
+	my $help = $proc->{help};
+
 	local $success = 0;
+
+	$help =~ s/gimp(\w+)\(\s*\)/"'gimp".canonicalize($1)."'"/ge;
 
 	$out->{pcount}++; $total++;
 
@@ -518,7 +526,7 @@ sub generate {
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-$proc->{canonical_name}",
                                      @{[ &quotewrap($proc->{blurb}, 2) ]},
-                                     @{[ &quotewrap($proc->{help},  2) ]},
+                                     @{[ &quotewrap($help,  2) ]},
                                      "$proc->{author}",
                                      "$proc->{copyright}",
                                      "$proc->{date}",

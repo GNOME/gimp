@@ -177,7 +177,7 @@ CODE
 }
 
 sub levels_auto {
-    &std_pdb_deprecated ('gimp_levels_stretch');
+    &std_pdb_deprecated ('gimp-levels-stretch');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
