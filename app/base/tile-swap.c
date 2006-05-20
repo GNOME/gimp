@@ -393,7 +393,7 @@ tile_swap_test (void)
   /* make sure this duplicates the open() call from tile_swap_open() */
   swap_file->fd = g_open (swap_file->filename,
                           O_CREAT | O_RDWR | _O_BINARY | _O_TEMPORARY,
-                          S_IREAD | S_IWRITE);
+                          S_IRUSR | S_IWUSR);
 
   if (swap_file->fd != -1)
     {

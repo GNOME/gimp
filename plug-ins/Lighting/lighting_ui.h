@@ -7,6 +7,13 @@
 extern GdkGC     *gc;
 extern GtkWidget *previewarea;
 
+extern GtkWidget *spin_pos_x;
+extern GtkWidget *spin_pos_y;
+extern GtkWidget *spin_pos_z;
+extern GtkWidget *spin_dir_x;
+extern GtkWidget *spin_dir_y;
+extern GtkWidget *spin_dir_z;
+
 /* Externally visible functions */
 /* ============================ */
 

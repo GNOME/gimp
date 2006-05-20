@@ -1291,7 +1291,7 @@ dialog(GimpDrawable *drawable)
    gtk_widget_show(hbox);
 
    tools = make_tools(dlg);
-   // selection_set_edit_command(tools, factory_edit);
+   /* selection_set_edit_command(tools, factory_edit); */
    gtk_box_pack_start(GTK_BOX(hbox), tools, FALSE, FALSE, 0);
 
    _preview = make_preview(drawable);

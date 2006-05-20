@@ -44,6 +44,13 @@ static GtkNotebook *options_note_book = NULL;
 GdkGC     *gc                         = NULL;
 GtkWidget *previewarea                = NULL;
 
+GtkWidget *spin_pos_x                 = NULL;
+GtkWidget *spin_pos_y                 = NULL;
+GtkWidget *spin_pos_z                 = NULL;
+GtkWidget *spin_dir_x                 = NULL;
+GtkWidget *spin_dir_y                 = NULL;
+GtkWidget *spin_dir_z                 = NULL;
+
 static GtkWidget *colorbutton;
 static GtkWidget *light_type_combo;
 static GtkWidget *lightselect_combo;

@@ -1,3 +1,24 @@
+2006-05-20  Manish Singh  <yosh@gimp.org>
+
+	Fixes to address -ansi -pedantic compilation (bug #342390).
+	Thanks goes to Daniel Richard G. for noticing and suggesting
+	fixes.
+
+	* libgimpbase/gimpsignal.c: #include "config.h" and define
+	__POSIX_SOURCE for sigaction stuff.
+
+	* app/base/tile-swap.c (tile_swap_test): use more portable
+	S_IRUSR and S_IWUSR, instead of S_IREAD and S_IWRITE.
+
+	* plug-ins/common/ripple.c
+	* plug-ins/imagemap/imap_main.c: use C89 comments.
+
+	* plug-ins/Lighting/lighting_preview.h: don't define spin widget
+	variables here...
+
+	* plug-ins/Lighting/lighting_ui.[ch]: ... and instead take care
+	of them here.
+
 2006-05-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* libgimpwidgets/gimpwidgets.c (gimp_coordinates_callback): 

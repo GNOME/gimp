@@ -650,7 +650,7 @@ average_two_pixels (guchar   *dest,
 {
   gint b;
 
-  //  x = x - floor(x);
+  /* x = x - floor(x); */
 
   if (has_alpha)
     {

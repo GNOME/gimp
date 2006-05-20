@@ -19,6 +19,10 @@
  * $Revision$
  */
 
+#include "config.h"
+
+#define __POSIX_SOURCE          /* all the sigaction stuff is POSIX */
+
 #include <glib.h>
 
 #include "gimpsignal.h"
@@ -89,7 +93,7 @@ gimp_signal_private (gint                   signum,
 
   return (GimpSignalHandlerFunc) osa.sa_handler;
 #else
-  return NULL;                        /* Or g_error()? Should all calls to
+  return NULL;                  /* Or g_error()? Should all calls to
                                  * this function really be inside
                                  * #ifdef G_OS_UNIX?
                                  */
