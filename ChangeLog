@@ -1,3 +1,9 @@
+2006-05-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpclonetool.c:  apply patch from Michael
+	Schumacher to show clone source even while not
+	painting; fixes bug #324224.
+
 2006-05-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/tools-enums.h (enum GimpToolAction): prefix with
