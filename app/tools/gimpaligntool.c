@@ -47,11 +47,13 @@
 static GObject * gimp_align_tool_constructor (GType              type,
                                               guint              n_params,
                                               GObjectConstructParam *params);
-static void   gimp_align_tool_dispose        (GObject           *object);
 static gboolean gimp_align_tool_initialize   (GimpTool          *tool,
                                               GimpDisplay       *display);
 static void   gimp_align_tool_finalize       (GObject           *object);
 
+static void   gimp_align_tool_control        (GimpTool          *tool,
+                                              GimpToolAction     action,
+                                              GimpDisplay       *display);
 static void   gimp_align_tool_button_press   (GimpTool          *tool,
                                               GimpCoords        *coords,
                                               guint32            time,
@@ -121,9 +123,9 @@ gimp_align_tool_class_init (GimpAlignToolClass *klass)
 
   object_class->finalize     = gimp_align_tool_finalize;
   object_class->constructor  = gimp_align_tool_constructor;
-  object_class->dispose      = gimp_align_tool_dispose;
 
   tool_class->initialize     = gimp_align_tool_initialize;
+  tool_class->control        = gimp_align_tool_control;
   tool_class->button_press   = gimp_align_tool_button_press;
   tool_class->button_release = gimp_align_tool_button_release;
   tool_class->motion         = gimp_align_tool_motion;
@@ -182,16 +184,6 @@ gimp_align_tool_constructor (GType                  type,
 }
 
 static void
-gimp_align_tool_dispose (GObject *object)
-{
-  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (object);
-
-  clear_selected_items (align_tool);
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static void
 gimp_align_tool_finalize (GObject *object)
 {
   GimpTool      *tool       = GIMP_TOOL (object);
@@ -221,6 +213,33 @@ gimp_align_tool_initialize (GimpTool    *tool,
     }
 
   return TRUE;
+}
+
+static void
+gimp_align_tool_control (GimpTool       *tool,
+                         GimpToolAction  action,
+                         GimpDisplay    *display)
+{
+  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (tool);
+
+  switch (action)
+    {
+    case PAUSE:
+      break;
+
+    case RESUME:
+      break;
+
+    case HALT:
+      clear_selected_items (align_tool);
+      gimp_tool_pop_status (tool, display);
+      break;
+
+    default:
+      break;
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
@@ -770,6 +789,11 @@ clear_selected (GimpItem       *item,
 static void
 clear_selected_items (GimpAlignTool *align_tool)
 {
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (align_tool);
+
+  if (gimp_draw_tool_is_active (draw_tool))
+    gimp_draw_tool_pause (draw_tool);
+
   while (align_tool->selected_items)
     {
       GimpItem *item = g_list_first (align_tool->selected_items)->data;
@@ -781,6 +805,9 @@ clear_selected_items (GimpAlignTool *align_tool)
       align_tool->selected_items = g_list_remove (align_tool->selected_items,
                                                   item);
     }
+
+  if (gimp_draw_tool_is_active (draw_tool))
+    gimp_draw_tool_resume (draw_tool);
 }
 
 static GimpLayer *
