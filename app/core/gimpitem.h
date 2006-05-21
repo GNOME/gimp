@@ -252,5 +252,8 @@ void            gimp_item_set_linked       (GimpItem           *item,
                                             gboolean            push_undo);
 gboolean        gimp_item_get_linked       (const GimpItem     *item);
 
+gboolean        gimp_item_is_in_set        (GimpItem           *item,
+                                            GimpItemSet         set);
+
 
 #endif /* __GIMP_ITEM_H__ */

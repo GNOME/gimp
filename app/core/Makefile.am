@@ -142,6 +142,8 @@ libappcore_a_sources = \
 	gimpimage-grid.c                \
 	gimpimage-guides.c		\
 	gimpimage-guides.h		\
+	gimpimage-item-list.c		\
+	gimpimage-item-list.h		\
 	gimpimage-merge.c		\
 	gimpimage-merge.h		\
 	gimpimage-new.c			\

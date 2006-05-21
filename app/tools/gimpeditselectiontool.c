@@ -35,6 +35,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-item-list.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
@@ -340,8 +341,10 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
             GList *linked;
             GList *list;
 
-            linked = gimp_item_linked_get_list (active_item,
-                                                GIMP_ITEM_TYPE_LAYERS);
+            linked = gimp_image_item_list_get_list (display->image,
+                                                    active_item,
+                                                    GIMP_ITEM_TYPE_LAYERS,
+                                                    GIMP_ITEM_SET_LINKED);
 
             /*  Expand the rectangle to include all linked layers as well  */
             for (list = linked; list; list = g_list_next (list))
@@ -383,8 +386,10 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
               GList *linked;
               GList *list;
 
-              linked = gimp_item_linked_get_list (active_item,
-                                                  GIMP_ITEM_TYPE_VECTORS);
+              linked = gimp_image_item_list_get_list (display->image,
+                                                      active_item,
+                                                      GIMP_ITEM_TYPE_VECTORS,
+                                                      GIMP_ITEM_SET_LINKED);
 
               for (list = linked; list; list = g_list_next (list))
                 {
@@ -508,16 +513,17 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
               /*  translate all linked channels as well  */
 
               GList *linked;
-              GList *list;
 
-              linked = gimp_item_linked_get_list (active_item,
-                                                  GIMP_ITEM_TYPE_CHANNELS);
+              linked = gimp_image_item_list_get_list (display->image,
+                                                      active_item,
+                                                      GIMP_ITEM_TYPE_CHANNELS,
+                                                      GIMP_ITEM_SET_LINKED);
 
-              for (list = linked; list; list = g_list_next (list))
-                gimp_item_translate (GIMP_ITEM (list->data),
-                                     edit_select->cumlx,
-                                     edit_select->cumly,
-                                     TRUE);
+              gimp_image_item_list_translate (display->image,
+                                              linked,
+                                              edit_select->cumlx,
+                                              edit_select->cumly,
+                                              TRUE);
 
               g_list_free (linked);
             }
@@ -635,16 +641,17 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
                 /*  translate all linked layers & vectors as well  */
 
                 GList *linked;
-                GList *list;
 
-                linked = gimp_item_linked_get_list (active_item,
-                                                    GIMP_ITEM_TYPE_LAYERS |
-                                                    GIMP_ITEM_TYPE_VECTORS);
+                linked = gimp_image_item_list_get_list (display->image,
+                                                        active_item,
+                                                        GIMP_ITEM_TYPE_LAYERS |
+                                                        GIMP_ITEM_TYPE_VECTORS,
+                                                        GIMP_ITEM_SET_LINKED);
 
-                for (list = linked; list; list = g_list_next (list))
-                  gimp_item_translate (GIMP_ITEM (list->data),
-                                       xoffset, yoffset,
-                                       edit_select->first_move);
+                gimp_image_item_list_translate (display->image,
+                                                linked,
+                                                xoffset, yoffset,
+                                                edit_select->first_move);
 
                 g_list_free (linked);
               }
@@ -799,8 +806,10 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             GList *linked;
             GList *list;
 
-            linked = gimp_item_linked_get_list (active_item,
-                                                GIMP_ITEM_TYPE_LAYERS);
+            linked = gimp_image_item_list_get_list (display->image,
+                                                    active_item,
+                                                    GIMP_ITEM_TYPE_LAYERS,
+                                                    GIMP_ITEM_SET_LINKED);
 
             for (list = linked; list; list = g_list_next (list))
               {
@@ -850,8 +859,10 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             GList *linked;
             GList *list;
 
-            linked = gimp_item_linked_get_list (active_item,
-                                                GIMP_ITEM_TYPE_VECTORS);
+            linked = gimp_image_item_list_get_list (display->image,
+                                                    active_item,
+                                                    GIMP_ITEM_TYPE_VECTORS,
+                                                    GIMP_ITEM_SET_LINKED);
 
             for (list = linked; list; list = g_list_next (list))
               {

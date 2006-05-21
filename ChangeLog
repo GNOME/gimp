@@ -1,3 +1,26 @@
+2006-05-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/gimpimage-item-list.[ch]: new files with functions to
+	translate, flip, rotate, transform and align a list of items
+	inside an undo group.
+
+	(gimp_image_item_list_get_list): returns a list of items matching
+	any combination of GimpItemTypeMask and GimpItemSet.
+
+	* app/core/gimpitem.[ch]: added new function gimp_item_is_in_set().
+
+	* app/core/gimpitem-linked.[ch]: use the new functions. Removed
+	gimp_item_linked_get_list().
+
+	* app/tools/gimpeditselectiontool.c: use
+	gimp_image_item_list_get_list() instead of
+	gimp_item_linked_get_list().
+
+	* app/core/gimpimage-resize.c
+	* app/tools/gimpaligntool.c: use the new functions instead of
+	creating and iterating the lists manually.
+
 2006-05-20  Manish Singh  <yosh@gimp.org>
 
 	Fixes to address -ansi -pedantic compilation (bug #342390).

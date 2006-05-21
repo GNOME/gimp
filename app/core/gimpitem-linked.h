@@ -45,8 +45,5 @@ void   gimp_item_linked_transform (GimpItem               *item,
                                    gboolean                clip_result,
                                    GimpProgress           *progress);
 
-GList * gimp_item_linked_get_list (GimpItem               *item,
-                                   GimpItemTypeMask        which);
-
 
 #endif /* __GIMP_ITEM_LINKED_H__ */

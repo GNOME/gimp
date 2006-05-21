@@ -26,17 +26,15 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-undo.h"
+#include "core/gimpimage-item-list.h"
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
-#include "core/gimpitem-align.h"
 #include "core/gimplist.h"
-
-#include "display/gimpdisplay.h"
 
 #include "widgets/gimphelp-ids.h"
 
-#include "gimpdrawtool.h"
+#include "display/gimpdisplay.h"
+
 #include "gimpalignoptions.h"
 #include "gimpaligntool.h"
 #include "gimptoolcontrol.h"
@@ -621,41 +619,29 @@ static void
 do_horizontal_alignment (GtkWidget *widget,
                          gpointer   data)
 {
-  GimpAlignTool *align_tool = data;
+  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (data);
   GimpImage     *image;
-  GimpItem      *item0;
-  GList         *list;
+  GimpItem      *reference;
 
   /* make sure there is something to align */
   if (! g_list_nth (align_tool->selected_items, 1))
     return;
 
   image = GIMP_TOOL (align_tool)->display->image;
-  item0 = g_list_first (align_tool->selected_items)->data;
+
+  reference = align_tool->selected_items->data;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                               _("Align items"));
-
-  for (list = g_list_next (align_tool->selected_items); list;
-       list = g_list_next (list))
-    {
-      GimpItem *item = list->data;
-
-      gimp_item_align (item,
-                       align_tool->horz_align_type,
-                       item0,
-                       align_tool->horz_align_type,
-                       align_tool->horz_offset);
-    }
-
-  gimp_image_undo_group_end (image);
-
-  if (GIMP_TOOL (align_tool)->display)
-    gimp_image_flush (image);
+  gimp_image_item_list_align (image, g_list_next (align_tool->selected_items),
+                              align_tool->horz_align_type,
+                              reference,
+                              align_tool->horz_align_type,
+                              align_tool->horz_offset);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
+
+  gimp_image_flush (image);
 }
 
 
@@ -663,41 +649,29 @@ static void
 do_vertical_alignment (GtkWidget *widget,
                        gpointer   data)
 {
-  GimpAlignTool *align_tool = data;
+  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (data);
   GimpImage     *image;
-  GimpItem      *item0;
-  GList         *list;
+  GimpItem      *reference;
 
   /* make sure there is something to align */
-  if (! g_list_nth (align_tool->selected_items, 1))
+  if (g_list_nth (align_tool->selected_items, 1))
     return;
 
   image = GIMP_TOOL (align_tool)->display->image;
-  item0 = g_list_first (align_tool->selected_items)->data;
+
+  reference = align_tool->selected_items->data;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                               _("Align items"));
-
-  for (list = g_list_next (align_tool->selected_items); list;
-       list = g_list_next (list))
-    {
-      GimpItem *item = list->data;
-
-      gimp_item_align (item,
-                       align_tool->vert_align_type,
-                       item0,
-                       align_tool->vert_align_type,
-                       align_tool->vert_offset);
-    }
-
-  gimp_image_undo_group_end (image);
-
-  if (GIMP_TOOL (align_tool)->display)
-      gimp_image_flush (GIMP_TOOL (align_tool)->display->image);
+  gimp_image_item_list_align (image, g_list_next (align_tool->selected_items),
+                              align_tool->vert_align_type,
+                              reference,
+                              align_tool->vert_align_type,
+                              align_tool->vert_offset);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
+
+  gimp_image_flush (image);
 }
 
 

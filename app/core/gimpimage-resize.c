@@ -26,6 +26,7 @@
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-guides.h"
+#include "gimpimage-item-list.h"
 #include "gimpimage-resize.h"
 #include "gimpimage-sample-points.h"
 #include "gimpimage-undo.h"
@@ -63,6 +64,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
                                GimpProgress *progress)
 {
   GList   *list;
+  GList   *resize_layers;
   gdouble  progress_max;
   gdouble  progress_current = 1.0;
   gint     old_width, old_height;
@@ -83,6 +85,10 @@ gimp_image_resize_with_layers (GimpImage    *image,
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_RESIZE,
                                _("Resize Image"));
+
+  resize_layers = gimp_image_item_list_get_list (image, NULL,
+                                                 GIMP_ITEM_TYPE_LAYERS,
+                                                 layer_set);
 
   old_width  = image->width;
   old_height = image->height;
@@ -145,33 +151,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
 
       gimp_item_translate (item, offset_x, offset_y, TRUE);
 
-      switch (layer_set)
-        {
-        case GIMP_ITEM_SET_ALL:
-          resize = TRUE;
-          break;
-
-        case GIMP_ITEM_SET_IMAGE_SIZED:
-          resize = (old_offset_x            == 0          &&
-                    old_offset_y            == 0          &&
-                    gimp_item_width (item)  == old_width  &&
-                    gimp_item_height (item) == old_height);
-          break;
-
-        case GIMP_ITEM_SET_VISIBLE:
-          resize = gimp_item_get_visible (item);
-          break;
-
-        case GIMP_ITEM_SET_LINKED:
-          resize = gimp_item_get_linked (item);
-          break;
-
-        default:
-          resize = FALSE;
-          break;
-        }
-
-      if (resize)
+      if (g_list_find (resize_layers, item))
         gimp_item_resize (item, context,
                           new_width, new_height,
                           offset_x + old_offset_x, offset_y + old_offset_y);
@@ -179,6 +159,8 @@ gimp_image_resize_with_layers (GimpImage    *image,
       if (progress)
         gimp_progress_set_value (progress, progress_current++ / progress_max);
     }
+
+  g_list_free (resize_layers);
 
   /*  Reposition or remove all guides  */
   list = image->guides;

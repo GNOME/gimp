@@ -1329,3 +1329,31 @@ gimp_item_get_linked (const GimpItem *item)
 
   return item->linked;
 }
+
+gboolean
+gimp_item_is_in_set (GimpItem    *item,
+                     GimpItemSet  set)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  switch (set)
+    {
+    case GIMP_ITEM_SET_NONE:
+      return FALSE;
+
+    case GIMP_ITEM_SET_ALL:
+      return TRUE;
+
+    case GIMP_ITEM_SET_IMAGE_SIZED:
+      return (item->width  == item->image->width &&
+              item->height == item->image->height);
+
+    case GIMP_ITEM_SET_VISIBLE:
+      return gimp_item_get_visible (item);
+
+    case GIMP_ITEM_SET_LINKED:
+      return gimp_item_get_linked (item);
+    }
+
+  return FALSE;
+}
