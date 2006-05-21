@@ -1,3 +1,13 @@
+2006-05-21  Michael Natterer  <mitch@gimp.org>
+
+	Merge from HEAD:
+
+	* app/tools/tool_manager.c (tool_manager_image_clean_dirty): don't
+	try to reset the active tool by destroying and re-creating it
+	because this doesn't work while gimp->busy is TRUE. Call
+	tool_manager_control_active(HALT) instead, which is the right way
+	to do it anyway. Fixes bug #330083.
+
 2006-5-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merge from Head:

@@ -558,6 +558,6 @@ tool_manager_image_clean_dirty (GimpImage       *gimage,
           gdisp = GIMP_DRAW_TOOL (active_tool)->gdisp;
 
       if (gdisp && gdisp->gimage == gimage)
-        gimp_context_tool_changed (gimp_get_user_context (gimage->gimp));
+        tool_manager_control_active (gimage->gimp, HALT, gdisp);
     }
 }
