@@ -149,14 +149,13 @@ tool_manager_select_tool (Gimp     *gimp,
 
   if (tool_manager->active_tool)
     {
-      GimpDisplay *display = tool_manager->active_tool->display;
+      GimpTool    *active_tool = tool_manager->active_tool;
+      GimpDisplay *display     = active_tool->display;
 
-      if (! display && GIMP_IS_DRAW_TOOL (tool_manager->active_tool))
-        display = GIMP_DRAW_TOOL (tool_manager->active_tool)->display;
+      if (! display && GIMP_IS_DRAW_TOOL (active_tool))
+        display = GIMP_DRAW_TOOL (active_tool)->display;
 
-      if (display)
-        tool_manager_control_active (gimp, HALT, display);
-
+      tool_manager_control_active (gimp, HALT, display);
       tool_manager_focus_display_active (gimp, NULL);
 
       g_object_unref (tool_manager->active_tool);
@@ -198,13 +197,14 @@ tool_manager_pop_tool (Gimp *gimp)
 
   if (tool_manager->tool_stack)
     {
-      tool_manager_select_tool (gimp,
-                                GIMP_TOOL (tool_manager->tool_stack->data));
-
-      g_object_unref (tool_manager->tool_stack->data);
+      GimpTool *tool = tool_manager->tool_stack->data;
 
       tool_manager->tool_stack = g_slist_remove (tool_manager->tool_stack,
-                                                 tool_manager->active_tool);
+                                                 tool);
+
+      tool_manager_select_tool (gimp, tool);
+
+      g_object_unref (tool);
     }
 }
 
@@ -213,7 +213,6 @@ tool_manager_initialize_active (Gimp        *gimp,
                                 GimpDisplay *display)
 {
   GimpToolManager *tool_manager;
-  GimpTool        *tool;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
@@ -222,7 +221,7 @@ tool_manager_initialize_active (Gimp        *gimp,
 
   if (tool_manager->active_tool)
     {
-      tool = tool_manager->active_tool;
+      GimpTool *tool = tool_manager->active_tool;
 
       if (gimp_tool_initialize (tool, display))
         {
@@ -246,19 +245,21 @@ tool_manager_control_active (Gimp           *gimp,
 
   tool_manager = tool_manager_get (gimp);
 
-  if (! tool_manager->active_tool)
-    return;
+  if (tool_manager->active_tool)
+    {
+      GimpTool *tool = tool_manager->active_tool;
 
-  if (display && (tool_manager->active_tool->display == display ||
-                  (GIMP_IS_DRAW_TOOL (tool_manager->active_tool) &&
-                   GIMP_DRAW_TOOL (tool_manager->active_tool)->display == display)))
-    {
-      gimp_tool_control (tool_manager->active_tool, action, display);
-    }
-  else if (action == HALT)
-    {
-      if (gimp_tool_control_is_active (tool_manager->active_tool->control))
-        gimp_tool_control_halt (tool_manager->active_tool->control);
+      if (display && (tool->display == display ||
+                      (GIMP_IS_DRAW_TOOL (tool) &&
+                       GIMP_DRAW_TOOL (tool)->display == display)))
+        {
+          gimp_tool_control (tool, action, display);
+        }
+      else if (action == HALT)
+        {
+          if (gimp_tool_control_is_active (tool->control))
+            gimp_tool_control_halt (tool->control);
+        }
     }
 }
 
@@ -546,19 +547,19 @@ tool_manager_image_clean_dirty (GimpImage       *image,
                                 GimpDirtyMask    dirty_mask,
                                 GimpToolManager *tool_manager)
 {
-  GimpTool *active_tool = tool_manager->active_tool;
+  GimpTool *tool = tool_manager->active_tool;
 
-  if (active_tool &&
-      ! gimp_tool_control_get_preserve (active_tool->control) &&
-      (gimp_tool_control_get_dirty_mask (active_tool->control) & dirty_mask))
+  if (tool &&
+      ! gimp_tool_control_get_preserve (tool->control) &&
+      (gimp_tool_control_get_dirty_mask (tool->control) & dirty_mask))
     {
-      GimpDisplay *display = active_tool->display;
+      GimpDisplay *display = tool->display;
 
       if (! display || display->image != image)
-        if (GIMP_IS_DRAW_TOOL (active_tool))
-          display = GIMP_DRAW_TOOL (active_tool)->display;
+        if (GIMP_IS_DRAW_TOOL (tool))
+          display = GIMP_DRAW_TOOL (tool)->display;
 
       if (display && display->image == image)
-        gimp_context_tool_changed (gimp_get_user_context (image->gimp));
+        tool_manager_control_active (image->gimp, HALT, display);
     }
 }

@@ -1,3 +1,14 @@
+2006-05-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/tool_manager.c (tool_manager_image_clean_dirty): don't
+	try to reset the active tool by destroying and re-creating it
+	because this doesn't work while gimp->busy is TRUE. Call
+	tool_manager_control_active(HALT) instead, which is the right way
+	to do it anyway. Fixes bug #330083.
+
+	Sprinkled some local variables all over the place to get rid of a
+	gazillion tool_manager->active_tool.
+
 2006-05-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpaligntool.c: get rid of "dispose" method, use
