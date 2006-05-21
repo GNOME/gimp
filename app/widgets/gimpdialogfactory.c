@@ -125,6 +125,7 @@ gimp_dialog_factory_dispose (GObject *object)
 {
   GimpDialogFactory *factory = GIMP_DIALOG_FACTORY (object);
   GList             *list;
+  gpointer           key;
 
   /*  start iterating from the beginning each time we destroyed a
    *  toplevel because destroying a dock may cause lots of items
@@ -152,6 +153,28 @@ gimp_dialog_factory_dispose (GObject *object)
         }
     }
 
+  if (factory->open_dialogs)
+    {
+      g_list_free (factory->open_dialogs);
+      factory->open_dialogs = NULL;
+    }
+
+  if (factory->session_infos)
+    {
+      g_list_foreach (factory->session_infos, (GFunc) gimp_session_info_free,
+                      NULL);
+      g_list_free (factory->session_infos);
+      factory->session_infos = NULL;
+    }
+
+  if (strcmp (GIMP_OBJECT (factory)->name, "toolbox") == 0)
+    key = "";
+  else
+    key = GIMP_OBJECT (factory)->name;
+
+  g_hash_table_remove (GIMP_DIALOG_FACTORY_GET_CLASS (object)->factories,
+                       key);
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -160,9 +183,6 @@ gimp_dialog_factory_finalize (GObject *object)
 {
   GimpDialogFactory *factory = GIMP_DIALOG_FACTORY (object);
   GList             *list;
-
-  g_hash_table_remove (GIMP_DIALOG_FACTORY_GET_CLASS (object)->factories,
-                       GIMP_OBJECT (factory)->name);
 
   for (list = factory->registered_dialogs; list; list = g_list_next (list))
     {
@@ -180,11 +200,6 @@ gimp_dialog_factory_finalize (GObject *object)
     {
       g_list_free (factory->registered_dialogs);
       factory->registered_dialogs = NULL;
-    }
-  if (factory->open_dialogs)
-    {
-      g_list_free (factory->open_dialogs);
-      factory->open_dialogs = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -1072,9 +1087,10 @@ gimp_dialog_factories_set_busy (void)
 
   factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
 
-  g_hash_table_foreach (factory_class->factories,
-                        (GHFunc) gimp_dialog_factories_set_busy_foreach,
-                        NULL);
+  if (factory_class)
+    g_hash_table_foreach (factory_class->factories,
+                          (GHFunc) gimp_dialog_factories_set_busy_foreach,
+                          NULL);
 }
 
 void
@@ -1084,9 +1100,10 @@ gimp_dialog_factories_unset_busy (void)
 
   factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
 
-  g_hash_table_foreach (factory_class->factories,
-                        (GHFunc) gimp_dialog_factories_unset_busy_foreach,
-                        NULL);
+  if (factory_class)
+    g_hash_table_foreach (factory_class->factories,
+                          (GHFunc) gimp_dialog_factories_unset_busy_foreach,
+                          NULL);
 }
 
 
