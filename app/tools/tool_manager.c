@@ -155,7 +155,7 @@ tool_manager_select_tool (Gimp     *gimp,
       if (! display && GIMP_IS_DRAW_TOOL (active_tool))
         display = GIMP_DRAW_TOOL (active_tool)->display;
 
-      tool_manager_control_active (gimp, HALT, display);
+      tool_manager_control_active (gimp, GIMP_TOOL_ACTION_HALT, display);
       tool_manager_focus_display_active (gimp, NULL);
 
       g_object_unref (tool_manager->active_tool);
@@ -255,7 +255,7 @@ tool_manager_control_active (Gimp           *gimp,
         {
           gimp_tool_control (tool, action, display);
         }
-      else if (action == HALT)
+      else if (action == GIMP_TOOL_ACTION_HALT)
         {
           if (gimp_tool_control_is_active (tool->control))
             gimp_tool_control_halt (tool->control);
@@ -560,6 +560,7 @@ tool_manager_image_clean_dirty (GimpImage       *image,
           display = GIMP_DRAW_TOOL (tool)->display;
 
       if (display && display->image == image)
-        tool_manager_control_active (image->gimp, HALT, display);
+        tool_manager_control_active (image->gimp, GIMP_TOOL_ACTION_HALT,
+                                     display);
     }
 }

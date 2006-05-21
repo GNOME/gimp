@@ -241,7 +241,11 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
 
   switch (action)
     {
-    case HALT:
+    case GIMP_TOOL_ACTION_PAUSE:
+    case GIMP_TOOL_ACTION_RESUME:
+      break;
+
+    case GIMP_TOOL_ACTION_HALT:
       {
         GList *list;
 
@@ -264,9 +268,6 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
             fg_select->state = NULL;
           }
       }
-      break;
-
-    default:
       break;
     }
 
@@ -402,7 +403,7 @@ gimp_foreground_select_tool_key_press (GimpTool    *tool,
       return TRUE;
 
     case GDK_Escape:
-      gimp_tool_control (tool, HALT, display);
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
       return TRUE;
 
     default:
@@ -756,7 +757,7 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
                                options->feather_radius,
                                options->feather_radius);
 
-  gimp_tool_control (tool, HALT, display);
+  gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
   gimp_image_flush (display->image);
 }

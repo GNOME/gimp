@@ -155,11 +155,12 @@ gimp_free_select_tool_control (GimpTool       *tool,
 {
   switch (action)
     {
-    case HALT:
-      GIMP_FREE_SELECT_TOOL (tool)->num_points = 0;
+    case GIMP_TOOL_ACTION_PAUSE:
+    case GIMP_TOOL_ACTION_RESUME:
       break;
 
-    default:
+    case GIMP_TOOL_ACTION_HALT:
+      GIMP_FREE_SELECT_TOOL (tool)->num_points = 0;
       break;
     }
 

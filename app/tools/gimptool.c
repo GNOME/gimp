@@ -221,7 +221,7 @@ gimp_tool_real_button_press (GimpTool        *tool,
                              GdkModifierType  state,
                              GimpDisplay     *display)
 {
-  tool->display    = display;
+  tool->display  = display;
   tool->drawable = gimp_image_active_drawable (display->image);
 
   gimp_tool_control_activate (tool->control);
@@ -306,14 +306,14 @@ gimp_tool_control (GimpTool       *tool,
 
   switch (action)
     {
-    case PAUSE:
+    case GIMP_TOOL_ACTION_PAUSE:
       if (! gimp_tool_control_is_paused (tool->control))
         GIMP_TOOL_GET_CLASS (tool)->control (tool, action, display);
 
       gimp_tool_control_pause (tool->control);
       break;
 
-    case RESUME:
+    case GIMP_TOOL_ACTION_RESUME:
       if (gimp_tool_control_is_paused (tool->control))
         {
           gimp_tool_control_resume (tool->control);
@@ -328,7 +328,7 @@ gimp_tool_control (GimpTool       *tool,
         }
       break;
 
-    case HALT:
+    case GIMP_TOOL_ACTION_HALT:
       GIMP_TOOL_GET_CLASS (tool)->control (tool, action, display);
 
       if (gimp_tool_control_is_active (tool->control))

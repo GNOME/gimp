@@ -276,7 +276,11 @@ gimp_paint_tool_control (GimpTool       *tool,
 
   switch (action)
     {
-    case HALT:
+    case GIMP_TOOL_ACTION_PAUSE:
+    case GIMP_TOOL_ACTION_RESUME:
+      break;
+
+    case GIMP_TOOL_ACTION_HALT:
       gimp_paint_core_paint (paint_tool->core,
                              drawable,
                              GIMP_PAINT_OPTIONS (tool->tool_info->tool_options),
@@ -305,9 +309,6 @@ gimp_paint_tool_control (GimpTool       *tool,
           }
       }
 #endif
-      break;
-
-    default:
       break;
     }
 

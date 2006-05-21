@@ -1400,7 +1400,8 @@ gimp_display_shell_pause (GimpDisplayShell *shell)
   if (shell->paused_count == 1)
     {
       /*  pause the currently active tool  */
-      tool_manager_control_active (shell->display->image->gimp, PAUSE,
+      tool_manager_control_active (shell->display->image->gimp,
+                                   GIMP_TOOL_ACTION_PAUSE,
                                    shell->display);
 
       gimp_display_shell_draw_vectors (shell);
@@ -1429,7 +1430,8 @@ gimp_display_shell_resume (GimpDisplayShell *shell)
       gimp_display_shell_draw_vectors (shell);
 
       /* start the currently active tool */
-      tool_manager_control_active (shell->display->image->gimp, RESUME,
+      tool_manager_control_active (shell->display->image->gimp,
+                                   GIMP_TOOL_ACTION_RESUME,
                                    shell->display);
     }
 }

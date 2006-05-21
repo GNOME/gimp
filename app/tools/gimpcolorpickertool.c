@@ -174,13 +174,14 @@ gimp_color_picker_tool_control (GimpTool       *tool,
 
   switch (action)
     {
-    case HALT:
+    case GIMP_TOOL_ACTION_PAUSE:
+    case GIMP_TOOL_ACTION_RESUME:
+      break;
+
+    case GIMP_TOOL_ACTION_HALT:
       if (picker_tool->dialog)
         gimp_color_picker_tool_info_response (NULL, GTK_RESPONSE_CLOSE,
                                               picker_tool);
-      break;
-
-    default:
       break;
     }
 

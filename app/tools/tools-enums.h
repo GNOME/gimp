@@ -137,9 +137,9 @@ typedef enum /*< skip >*/
 /*  Tool control actions  */
 typedef enum /*< skip >*/
 {
-  PAUSE,
-  RESUME,
-  HALT
+  GIMP_TOOL_ACTION_PAUSE,
+  GIMP_TOOL_ACTION_RESUME,
+  GIMP_TOOL_ACTION_HALT
 } GimpToolAction;
 
 /*  Modes of GimpEditSelectionTool  */

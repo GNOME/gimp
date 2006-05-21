@@ -222,18 +222,13 @@ gimp_vector_tool_control (GimpTool       *tool,
 
   switch (action)
     {
-    case PAUSE:
+    case GIMP_TOOL_ACTION_PAUSE:
+    case GIMP_TOOL_ACTION_RESUME:
       break;
 
-    case RESUME:
-      break;
-
-    case HALT:
+    case GIMP_TOOL_ACTION_HALT:
       gimp_vector_tool_set_vectors (vector_tool, NULL);
       gimp_tool_pop_status (tool, display);
-      break;
-
-    default:
       break;
     }
 
@@ -247,14 +242,12 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *display)
 {
-  GimpDrawTool      *draw_tool;
-  GimpVectorTool    *vector_tool;
+  GimpDrawTool      *draw_tool   = GIMP_DRAW_TOOL (tool);
+  GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
   GimpVectorOptions *options;
   GimpVectors       *vectors;
 
-  draw_tool   = GIMP_DRAW_TOOL (tool);
-  vector_tool = GIMP_VECTOR_TOOL (tool);
-  options     = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
   /* do nothing if we are an FINISHED state */
   if (vector_tool->function == VECTORS_FINISHED)
@@ -643,12 +636,11 @@ gimp_vector_tool_motion (GimpTool        *tool,
                          GdkModifierType  state,
                          GimpDisplay     *display)
 {
-  GimpVectorTool    *vector_tool;
+  GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
   GimpVectorOptions *options;
   GimpAnchor        *anchor;
 
-  vector_tool = GIMP_VECTOR_TOOL (tool);
-  options     = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
   if (vector_tool->function == VECTORS_FINISHED)
     return;
@@ -752,7 +744,6 @@ gimp_vector_tool_key_press (GimpTool     *tool,
   GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
   GimpDrawTool      *draw_tool   = GIMP_DRAW_TOOL (tool);
   GimpVectorOptions *options;
-
   GimpDisplayShell  *shell;
   gdouble            xdist, ydist;
   gdouble            pixels = 1.0;

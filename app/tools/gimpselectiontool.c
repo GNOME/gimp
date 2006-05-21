@@ -89,8 +89,16 @@ gimp_selection_tool_control (GimpTool       *tool,
                              GimpToolAction  action,
                              GimpDisplay    *display)
 {
-  if (action == HALT)
-    gimp_tool_pop_status (tool, display);
+  switch (action)
+    {
+    case GIMP_TOOL_ACTION_PAUSE:
+    case GIMP_TOOL_ACTION_RESUME:
+      break;
+
+    case GIMP_TOOL_ACTION_HALT:
+      gimp_tool_pop_status (tool, display);
+      break;
+    }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }

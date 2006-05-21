@@ -127,19 +127,16 @@ gimp_draw_tool_control (GimpTool       *tool,
 
   switch (action)
     {
-    case PAUSE:
+    case GIMP_TOOL_ACTION_PAUSE:
       gimp_draw_tool_pause (draw_tool);
       break;
 
-    case RESUME:
+    case GIMP_TOOL_ACTION_RESUME:
       gimp_draw_tool_resume (draw_tool);
       break;
 
-    case HALT:
+    case GIMP_TOOL_ACTION_HALT:
       gimp_draw_tool_stop (draw_tool);
-      break;
-
-    default:
       break;
     }
 

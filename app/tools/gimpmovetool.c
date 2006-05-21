@@ -172,24 +172,21 @@ gimp_move_tool_control (GimpTool       *tool,
 
   switch (action)
     {
-    case PAUSE:
+    case GIMP_TOOL_ACTION_PAUSE:
       break;
 
-    case RESUME:
+    case GIMP_TOOL_ACTION_RESUME:
       if (move->guide &&
           gimp_display_shell_get_show_guides (GIMP_DISPLAY_SHELL (shell)))
         gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (shell),
                                        move->guide, TRUE);
       break;
 
-    case HALT:
+    case GIMP_TOOL_ACTION_HALT:
       if (move->guide &&
           gimp_display_shell_get_show_guides (GIMP_DISPLAY_SHELL (shell)))
         gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (shell),
                                        move->guide, FALSE);
-      break;
-
-    default:
       break;
     }
 

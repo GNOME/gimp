@@ -370,20 +370,17 @@ gimp_transform_tool_control (GimpTool       *tool,
 
   switch (action)
     {
-    case PAUSE:
+    case GIMP_TOOL_ACTION_PAUSE:
       break;
 
-    case RESUME:
+    case GIMP_TOOL_ACTION_RESUME:
       gimp_transform_tool_bounds (tr_tool, display);
       gimp_transform_tool_recalc (tr_tool, display);
       break;
 
-    case HALT:
+    case GIMP_TOOL_ACTION_HALT:
       gimp_transform_tool_halt (tr_tool);
       return; /* don't upchain */
-      break;
-
-    default:
       break;
     }
 

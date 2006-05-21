@@ -155,15 +155,12 @@ gimp_measure_tool_control (GimpTool       *tool,
 {
   switch (action)
     {
-    case PAUSE:
-    case RESUME:
+    case GIMP_TOOL_ACTION_PAUSE:
+    case GIMP_TOOL_ACTION_RESUME:
       break;
 
-    case HALT:
+    case GIMP_TOOL_ACTION_HALT:
       gimp_measure_tool_halt (GIMP_MEASURE_TOOL (tool));
-      break;
-
-    default:
       break;
     }
 

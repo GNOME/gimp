@@ -171,19 +171,16 @@ gimp_crop_tool_control (GimpTool       *tool,
 
   switch (action)
     {
-    case PAUSE:
+    case GIMP_TOOL_ACTION_PAUSE:
       break;
 
-    case RESUME:
+    case GIMP_TOOL_ACTION_RESUME:
       gimp_rectangle_tool_configure (rectangle);
       break;
 
-    case HALT:
+    case GIMP_TOOL_ACTION_HALT:
       gimp_rectangle_tool_response (NULL, GTK_RESPONSE_CANCEL,
                                     rectangle);
-      break;
-
-    default:
       break;
     }
 

@@ -382,7 +382,8 @@ gimp_display_delete (GimpDisplay *display)
                          GIMP_OBJECT (display));
 
   /*  stop any active tool  */
-  tool_manager_control_active (display->image->gimp, HALT, display);
+  tool_manager_control_active (display->image->gimp, GIMP_TOOL_ACTION_HALT,
+                               display);
 
   active_tool = tool_manager_get_active (display->image->gimp);
 
@@ -459,7 +460,8 @@ gimp_display_reconnect (GimpDisplay *display,
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   /*  stop any active tool  */
-  tool_manager_control_active (display->image->gimp, HALT, display);
+  tool_manager_control_active (display->image->gimp, GIMP_TOOL_ACTION_HALT,
+                               display);
 
   gimp_display_shell_disconnect (GIMP_DISPLAY_SHELL (display->shell));
 

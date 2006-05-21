@@ -224,18 +224,13 @@ gimp_align_tool_control (GimpTool       *tool,
 
   switch (action)
     {
-    case PAUSE:
+    case GIMP_TOOL_ACTION_PAUSE:
+    case GIMP_TOOL_ACTION_RESUME:
       break;
 
-    case RESUME:
-      break;
-
-    case HALT:
+    case GIMP_TOOL_ACTION_HALT:
       clear_selected_items (align_tool);
       gimp_tool_pop_status (tool, display);
-      break;
-
-    default:
       break;
     }
 
