@@ -1,3 +1,9 @@
+2006-05-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpclonetool.c: revert previous change. Tools must
+	not do anything essential in cursor_update(), and poking in the
+	GimpClone struct is a bad hack. Will look into this.
+
 2006-05-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpclonetool.c:  apply patch from Michael
