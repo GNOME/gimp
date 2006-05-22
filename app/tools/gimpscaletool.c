@@ -112,9 +112,7 @@ gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
 {
   GimpScaleTool *scale = GIMP_SCALE_TOOL (tr_tool);
 
-  scale->box = g_object_new (GIMP_TYPE_SIZE_BOX,
-                             "keep-aspect", FALSE,
-                             NULL);
+  scale->box = g_object_new (GIMP_TYPE_SIZE_BOX, NULL);
   gtk_container_set_border_width (GTK_CONTAINER (scale->box), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (tr_tool->dialog)->vbox), scale->box,
                       FALSE, FALSE, 0);
@@ -148,7 +146,10 @@ static void
 gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
                          GimpDisplay       *display)
 {
-  GimpScaleTool *scale = GIMP_SCALE_TOOL (tr_tool);
+  GimpScaleTool        *scale = GIMP_SCALE_TOOL (tr_tool);
+  GimpTransformOptions *options;
+
+  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (scale)->tool_info->tool_options);
 
   tr_tool->trans_info[X0] = (gdouble) tr_tool->x1;
   tr_tool->trans_info[Y0] = (gdouble) tr_tool->y1;
@@ -159,6 +160,9 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
                 "unit",        GIMP_DISPLAY_SHELL (display->shell)->unit,
                 "xresolution", display->image->xresolution,
                 "yresolution", display->image->yresolution,
+                "width",       ROUND (tr_tool->x2 - tr_tool->x1),
+                "height",      ROUND (tr_tool->y2 - tr_tool->y1),
+                "keep-aspect", options->constrain,
                 NULL);
 }
 

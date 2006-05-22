@@ -1,3 +1,8 @@
+2006-05-22  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpscaletool.c (gimp_scale_tool_prepare): initialize
+	width, height and keep-aspect properties of the size box.
+
 2006-05-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpclonetool.c: revert previous change. Tools must
