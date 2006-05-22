@@ -1,3 +1,8 @@
+2006-05-212 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/png.c: fix remapping of colors when
+	saving IndexedA images; fixes bug #303864.
+	
 2006-05-22  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/plug-in-commands.c (plug_in_collect_image_args):

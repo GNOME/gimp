@@ -1480,13 +1480,18 @@ save_image (const gchar *filename,
            * transparency set, write out the remapped palette */
           if (info->valid & PNG_INFO_tRNS)
             {
+              guchar inverse_remap[256];
+
+              for (i = 0; i < 256; i++)
+                inverse_remap[ remap[i] ] = i;
+
               for (i = 0; i < num; ++i)
                 {
                   fixed = pixels[i];
                   for (k = 0; k < drawable->width; ++k)
                     {
                       fixed[k] = (fixed[k*2+1] > 127) ?
-                                 remap[fixed[k*2]] :
+                                 inverse_remap[ fixed[k*2] ] :
                                  0;
                     }
                 }
@@ -1613,7 +1618,8 @@ respin_cmap (png_structp   pp,
            * due to png_set_tRNS() */
 
           remap[0] = transparent;
-          remap[transparent] = 0;
+          for (i = 1; i <= transparent; i++)
+            remap[i] = i - 1;
 
           /* Copy from index 0 to index transparent - 1 to index 1 to
            * transparent of after, then from transparent+1 to colors-1
