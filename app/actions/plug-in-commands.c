@@ -265,8 +265,6 @@ plug_in_collect_image_args (GtkAction   *action,
                             GValueArray *args,
                             gint         n_args)
 {
-  g_printerr ("%s\n", G_STRFUNC);
-
   if (args->n_values > n_args &&
       GIMP_VALUE_HOLDS_IMAGE_ID (&args->values[n_args]))
     {

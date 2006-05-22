@@ -110,17 +110,6 @@ gimp_scale_tool_init (GimpScaleTool *scale_tool)
 static void
 gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
 {
-  GimpScaleTool *scale = GIMP_SCALE_TOOL (tr_tool);
-
-  scale->box = g_object_new (GIMP_TYPE_SIZE_BOX, NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (scale->box), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (tr_tool->dialog)->vbox), scale->box,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (scale->box);
-
-  g_signal_connect (scale->box, "notify",
-                    G_CALLBACK (gimp_scale_tool_size_notify),
-                    tr_tool);
 }
 
 static void
@@ -131,7 +120,8 @@ gimp_scale_tool_dialog_update (GimpTransformTool *tr_tool)
   gint width  = ROUND (tr_tool->trans_info[X1] - tr_tool->trans_info[X0]);
   gint height = ROUND (tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0]);
 
-  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
+  options =
+    GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
 
   g_object_set (GIMP_SCALE_TOOL (tr_tool)->box,
                 "width",       width,
@@ -156,14 +146,30 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
   tr_tool->trans_info[X1] = (gdouble) tr_tool->x2;
   tr_tool->trans_info[Y1] = (gdouble) tr_tool->y2;
 
-  g_object_set (scale->box,
-                "unit",        GIMP_DISPLAY_SHELL (display->shell)->unit,
-                "xresolution", display->image->xresolution,
-                "yresolution", display->image->yresolution,
-                "width",       ROUND (tr_tool->x2 - tr_tool->x1),
-                "height",      ROUND (tr_tool->y2 - tr_tool->y1),
-                "keep-aspect", options->constrain,
-                NULL);
+  if (scale->box)
+    gtk_widget_destroy (scale->box);
+
+  /*  Need to create a new GimpSizeBox widget because the initial
+   *  width and height is what counts as 100%.
+   */
+  scale->box =
+    g_object_new (GIMP_TYPE_SIZE_BOX,
+                  "width",       tr_tool->x2 - tr_tool->x1,
+                  "height",      tr_tool->y2 - tr_tool->y1,
+                  "keep-aspect", options->constrain,
+                  "unit",        GIMP_DISPLAY_SHELL (display->shell)->unit,
+                  "xresolution", display->image->xresolution,
+                  "yresolution", display->image->yresolution,
+                  NULL);
+
+  gtk_container_set_border_width (GTK_CONTAINER (scale->box), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (tr_tool->dialog)->vbox), scale->box,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (scale->box);
+
+  g_signal_connect (scale->box, "notify",
+                    G_CALLBACK (gimp_scale_tool_size_notify),
+                    tr_tool);
 }
 
 static void

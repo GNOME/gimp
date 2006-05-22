@@ -1,5 +1,13 @@
 2006-05-22  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/plug-in-commands.c (plug_in_collect_image_args):
+	removed debugging output.
+
+	* app/tools/gimpscaletool.c: create the GimpSizeBox in the
+	prepare() method to make entering relative sizes work.
+
+2006-05-22  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpscaletool.c (gimp_scale_tool_prepare): initialize
 	width, height and keep-aspect properties of the size box.
 
