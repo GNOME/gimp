@@ -1,4 +1,10 @@
-2006-05-212 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+2006-05-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpclonetool.[ch]: re-apply heavily modified patch
+	from Michael Schumacher which shows the clone source even while
+	not painting. Fixes bug #324224. Did some additional cleanup.
+
+2006-05-22 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/png.c: fix remapping of colors when
 	saving IndexedA images; fixes bug #303864.
