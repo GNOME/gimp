@@ -286,29 +286,6 @@ gimp_paint_tool_control (GimpTool       *tool,
                              GIMP_PAINT_OPTIONS (tool->tool_info->tool_options),
                              GIMP_PAINT_STATE_FINISH, 0);
       gimp_paint_core_cleanup (paint_tool->core);
-
-#if 0
-      /*  evil hack i'm thinking about...  --mitch  */
-      {
-        /*  HALT means the current display is going to go away (TM),
-         *  so try to find another display of the same image to make
-         *  straight line drawing continue to work...
-         */
-
-        GSList *list;
-
-        for (list = display_list; list; list = g_slist_next (list))
-          {
-            GimpDisplay *tmp_disp = list->data;
-
-            if (tmp_disp != display && tmp_disp->image == display->image)
-              {
-                tool->display = tmp_disp;
-                break;
-              }
-          }
-      }
-#endif
       break;
     }
 

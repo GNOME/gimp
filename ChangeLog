@@ -1,5 +1,10 @@
 2006-05-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimppainttool.c (gimp_paint_tool_control): remove
+	some #if 0'ed cruft.
+
+2006-05-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpclonetool.[ch]: re-apply heavily modified patch
 	from Michael Schumacher which shows the clone source even while
 	not painting. Fixes bug #324224. Did some additional cleanup.
