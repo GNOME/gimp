@@ -1,3 +1,11 @@
+2006-5-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Merge from Head:
+	
+	* libgimpwidgets/gimpwidgets.c (gimp_coordinates_callback): 
+	use ROUND() to prevent incorrect chainbutton logic.  Fixes
+	bug #336259.
+	
 2006-05-21  Michael Natterer  <mitch@gimp.org>
 
 	Merge from HEAD:
