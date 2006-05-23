@@ -162,8 +162,6 @@ gimp_shear_tool_dialog_update (GimpTransformTool *tr_tool)
                             tr_tool->trans_info[XSHEAR]);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (shear->y_adj),
                             tr_tool->trans_info[YSHEAR]);
-
-  gtk_widget_show (tr_tool->dialog);
 }
 
 static void

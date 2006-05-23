@@ -1,3 +1,15 @@
+2006-05-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptransformtool.c (gimp_transform_tool_dialog_update):
+	don't call the virtual function if there is no dialog.
+
+	(gimp_transform_tool_recalc): show the dialog here after updating it.
+
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c (dialog_update): don't show it here.
+
 2006-05-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimppainttool.c (gimp_paint_tool_control): remove

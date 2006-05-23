@@ -815,7 +815,8 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 static void
 gimp_transform_tool_dialog_update (GimpTransformTool *tr_tool)
 {
-  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update)
+  if (tr_tool->dialog &&
+      GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update)
     GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update (tr_tool);
 }
 
@@ -1463,6 +1464,9 @@ gimp_transform_tool_recalc (GimpTransformTool *tr_tool,
   gimp_transform_tool_transform_bounding_box (tr_tool);
 
   gimp_transform_tool_dialog_update (tr_tool);
+
+  if (tr_tool->dialog)
+    gtk_widget_show (tr_tool->dialog);
 }
 
 static void

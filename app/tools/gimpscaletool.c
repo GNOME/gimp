@@ -128,8 +128,6 @@ gimp_scale_tool_dialog_update (GimpTransformTool *tr_tool)
                 "height",      height,
                 "keep-aspect", options->constrain,
                 NULL);
-
-  gtk_widget_show (tr_tool->dialog);
 }
 
 static void

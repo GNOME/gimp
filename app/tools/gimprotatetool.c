@@ -189,8 +189,6 @@ gimp_rotate_tool_dialog_update (GimpTransformTool *tr_tool)
   g_signal_handlers_unblock_by_func (rotate->sizeentry,
                                      rotate_center_changed,
                                      tr_tool);
-
-  gtk_widget_show (tr_tool->dialog);
 }
 
 static void

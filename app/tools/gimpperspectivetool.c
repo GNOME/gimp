@@ -150,8 +150,6 @@ gimp_perspective_tool_dialog_update (GimpTransformTool *tr_tool)
 
         gtk_label_set_text (GTK_LABEL (perspective->label[y][x]), buf);
       }
-
-  gtk_widget_show (tr_tool->dialog);
 }
 
 static void
