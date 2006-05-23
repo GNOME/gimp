@@ -543,6 +543,8 @@ gimp_tools_register (GType                   tool_type,
 
   if (g_type_is_a (tool_type, GIMP_TYPE_IMAGE_MAP_TOOL))
     g_object_set (tool_info, "visible", FALSE, NULL);
+  if (g_type_is_a (tool_type, GIMP_TYPE_RECT_SELECT_TOOL))
+    g_object_set (tool_info, "visible", FALSE, NULL);
 
   g_object_set_data (G_OBJECT (tool_info), "gimp-tool-options-gui-func",
                      options_gui_func);

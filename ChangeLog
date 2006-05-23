@@ -1,5 +1,15 @@
 2006-05-23  Karine Delvare  <edhel@gimp.org>
 
+	* app/core/gimpcontext.c
+	* app/tools/gimp-tools.c
+	* app/tools/gimpnewrectselecttool.c
+	* app/tools/gimprectselecttool.c
+	* app/widgets/gimptoolbox.c
+	* menus/image-menu.xml.in: replace old rect select by new in the
+	toolbox.
+
+2006-05-23  Karine Delvare  <edhel@gimp.org>
+
 	* app/tools/gimpcroptool.c
 	* app/tools/gimpnewrectselecttool.c
 	* app/tools/gimprectangletool.[ch]: eek, I broke the build.

@@ -477,7 +477,7 @@
 
     <menu action="tools-menu" name="Tools">
       <menu action="tools-select-menu" name="Selection Tools">
-	<menuitem action="tools-rect-select" />
+	<menuitem action="tools-new-rect-select" />
 	<menuitem action="tools-ellipse-select" />
 	<menuitem action="tools-free-select" />
 	<menuitem action="tools-foreground-select" />
