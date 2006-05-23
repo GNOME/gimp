@@ -239,6 +239,12 @@ drawable_transform_flip_invoker (Gimp         *gimp,
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
           GimpMatrix3 matrix;
+          gint        off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           gimp_transform_matrix_flip_free (x, y, width, height,
@@ -391,6 +397,12 @@ drawable_transform_flip_default_invoker (Gimp         *gimp,
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                  off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           gimp_transform_matrix_flip_free (x, y, width, height,
@@ -550,6 +562,12 @@ drawable_transform_perspective_invoker (Gimp         *gimp,
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
           GimpMatrix3 matrix;
+          gint        off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           gimp_transform_matrix_perspective (x, y, width, height,
@@ -730,6 +748,12 @@ drawable_transform_perspective_default_invoker (Gimp         *gimp,
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                  off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           gimp_transform_matrix_perspective (x, y, width, height,
@@ -1022,6 +1046,12 @@ drawable_transform_rotate_invoker (Gimp         *gimp,
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
           GimpMatrix3 matrix;
+          gint        off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           if (auto_center)
@@ -1177,6 +1207,12 @@ drawable_transform_rotate_default_invoker (Gimp         *gimp,
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                  off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           if (auto_center)
@@ -1333,6 +1369,12 @@ drawable_transform_scale_invoker (Gimp         *gimp,
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
           GimpMatrix3 matrix;
+          gint        off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           gimp_transform_matrix_scale (x, y, width, height,
@@ -1487,6 +1529,12 @@ drawable_transform_scale_default_invoker (Gimp         *gimp,
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                  off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           gimp_transform_matrix_scale (x, y, width, height,
@@ -1640,6 +1688,12 @@ drawable_transform_shear_invoker (Gimp         *gimp,
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
           GimpMatrix3 matrix;
+          gint        off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           gimp_transform_matrix_shear (x, y, width, height,
@@ -1778,6 +1832,12 @@ drawable_transform_shear_default_invoker (Gimp         *gimp,
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                  off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           gimp_transform_matrix_shear (x, y, width, height,
@@ -1931,6 +1991,12 @@ drawable_transform_2d_invoker (Gimp         *gimp,
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
           GimpMatrix3 matrix;
+          gint        off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           gimp_matrix3_identity  (&matrix);
@@ -2109,6 +2175,12 @@ drawable_transform_2d_default_invoker (Gimp         *gimp,
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                  off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           gimp_matrix3_identity  (&matrix);
@@ -2295,6 +2367,12 @@ drawable_transform_matrix_invoker (Gimp         *gimp,
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
           GimpMatrix3 matrix;
+          gint        off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           matrix.coeff[0][0] = coeff_0_0;
@@ -2493,6 +2571,12 @@ drawable_transform_matrix_default_invoker (Gimp         *gimp,
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                  off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           matrix.coeff[0][0] = coeff_0_0;

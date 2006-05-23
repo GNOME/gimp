@@ -181,6 +181,12 @@ perspective_invoker (Gimp         *gimp,
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                  off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           gimp_transform_matrix_perspective (x, y, width, height,
@@ -327,6 +333,12 @@ rotate_invoker (Gimp         *gimp,
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                  off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           gimp_transform_matrix_rotate (x, y, width, height,
@@ -442,6 +454,12 @@ scale_invoker (Gimp         *gimp,
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                  off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           gimp_transform_matrix_scale (x, y, width, height,
@@ -573,6 +591,12 @@ shear_invoker (Gimp         *gimp,
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                  off_x, off_y;
+
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x += off_x;
+          y += off_y;
 
           /* Assemble the transformation matrix */
           gimp_transform_matrix_shear (x, y, width, height,

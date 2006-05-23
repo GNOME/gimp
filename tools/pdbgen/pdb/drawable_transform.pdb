@@ -83,6 +83,12 @@ sub transform_invoke {
       gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     {
       GimpMatrix3 matrix;
+      gint        off_x, off_y;
+
+      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+      x += off_x;
+      y += off_y;
 
       /* Assemble the transformation matrix */
 $assemble_matrix
@@ -126,6 +132,12 @@ sub transform_default_invoke {
     {
       GimpMatrix3           matrix;
       GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
+      gint                  off_x, off_y;
+
+      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+      x += off_x;
+      y += off_y;
 
       /* Assemble the transformation matrix */
 $assemble_matrix
