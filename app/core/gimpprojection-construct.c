@@ -70,7 +70,8 @@ static void   project_intensity_alpha            (GimpProjection *proj,
 static void   project_indexed                    (GimpProjection *proj,
                                                   GimpLayer      *layer,
                                                   PixelRegion    *src,
-                                                  PixelRegion    *dest);
+                                                  PixelRegion    *dest,
+                                                  PixelRegion    *mask);
 static void   project_indexed_alpha              (GimpProjection *proj,
                                                   GimpLayer      *layer,
                                                   PixelRegion    *src,
@@ -249,7 +250,6 @@ gimp_projection_construct_layers (GimpProjection *proj,
             {
             case GIMP_RGB_IMAGE:
             case GIMP_GRAY_IMAGE:
-              /* no mask possible */
               project_intensity (proj, layer, &src2PR, &src1PR, mask);
               break;
 
@@ -259,8 +259,7 @@ gimp_projection_construct_layers (GimpProjection *proj,
               break;
 
             case GIMP_INDEXED_IMAGE:
-              /* no mask possible */
-              project_indexed (proj, layer, &src2PR, &src1PR);
+              project_indexed (proj, layer, &src2PR, &src1PR, mask);
               break;
 
             case GIMP_INDEXEDA_IMAGE:
@@ -418,18 +417,23 @@ static void
 project_indexed (GimpProjection *proj,
                  GimpLayer      *layer,
                  PixelRegion    *src,
-                 PixelRegion    *dest)
+                 PixelRegion    *dest,
+                 PixelRegion    *mask)
 {
   g_return_if_fail (proj->image->cmap != NULL);
 
   if (! proj->construct_flag)
-    initial_region (src, dest, NULL, proj->image->cmap,
+    initial_region (src, dest, mask, proj->image->cmap,
                     layer->opacity * 255.999,
                     layer->mode,
                     proj->image->visible,
                     INITIAL_INDEXED);
   else
-    g_warning ("%s: unable to project indexed image.", G_STRFUNC);
+    combine_regions (dest, src, dest, mask, proj->image->cmap,
+                     layer->opacity * 255.999,
+                     layer->mode,
+                     proj->image->visible,
+                     COMBINE_INTEN_A_INDEXED);
 }
 
 static void

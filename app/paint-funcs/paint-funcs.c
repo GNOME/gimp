@@ -616,6 +616,72 @@ combine_indexed_a_and_indexed_a_pixels (const guchar   *src1,
 
 
 void
+combine_inten_a_and_indexed_pixels (const guchar *src1,
+                                    const guchar *src2,
+                                    guchar       *dest,
+                                    const guchar *mask,
+                                    const guchar *cmap,
+                                    guint         opacity,
+                                    guint         length,
+                                    guint         bytes)
+{
+  gint   b;
+  guchar new_alpha;
+  gint   src2_bytes;
+  gint   index;
+  glong  tmp;
+  const guchar *m;
+
+  src2_bytes = 1;
+
+  if (mask)
+    {
+      m = mask;
+
+      while (length --)
+        {
+          new_alpha = INT_MULT3(255, *m, opacity, tmp);
+
+          index = src2[0] * 3;
+
+          for (b = 0; b < bytes-1; b++)
+            dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
+
+          dest[b] = (new_alpha > 127) ? OPAQUE_OPACITY : src1[b];
+          /*  alpha channel is opaque  */
+
+          m++;
+
+          src1 += bytes;
+          src2 += src2_bytes;
+          dest += bytes;
+        }
+    }
+  else
+    {
+      while (length --)
+        {
+          new_alpha = INT_MULT(255, opacity, tmp);
+
+          index = src2[0] * 3;
+
+          for (b = 0; b < bytes-1; b++)
+            dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
+
+          dest[b] = (new_alpha > 127) ? OPAQUE_OPACITY : src1[b];
+          /*  alpha channel is opaque  */
+
+          /* m++; /Per */
+
+          src1 += bytes;
+          src2 += src2_bytes;
+          dest += bytes;
+        }
+    }
+}
+
+
+void
 combine_inten_a_and_indexed_a_pixels (const guchar *src1,
                                       const guchar *src2,
                                       guchar       *dest,
@@ -4409,6 +4475,7 @@ combine_sub_region (struct combine_regions_struct *st,
       /*  apply the paint mode based on the combination type & mode  */
       switch (type)
         {
+        case COMBINE_INTEN_A_INDEXED:
         case COMBINE_INTEN_A_INDEXED_A:
         case COMBINE_INTEN_A_CHANNEL_MASK:
         case COMBINE_INTEN_A_CHANNEL_SELECTION:
@@ -4523,6 +4590,14 @@ combine_sub_region (struct combine_regions_struct *st,
           combine_indexed_a_and_indexed_a_pixels (s1, s2, d, m, opacity,
                                                   affect, src1->w,
                                                   src1->bytes);
+          break;
+
+        case COMBINE_INTEN_A_INDEXED:
+          /*  assume the data passed to this procedure is the
+           *  indexed layer's colormap
+           */
+          combine_inten_a_and_indexed_pixels (s1, s2, d, m, data, opacity,
+                                              src1->w, dest->bytes);
           break;
 
         case COMBINE_INTEN_A_INDEXED_A:
@@ -4678,6 +4753,7 @@ combine_regions (PixelRegion          *src1,
       has_alpha1 = has_alpha2 = FALSE;
       break;
     case COMBINE_INTEN_A_INTEN:
+    case COMBINE_INTEN_A_INDEXED:
       has_alpha1 = TRUE;
       has_alpha2 = FALSE;
       break;

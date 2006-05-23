@@ -1,3 +1,25 @@
+2006-05-23  Michael Natterer  <mitch@gimp.org>
+
+	Fix for bug #333156:
+
+	* app/paint-funcs/paint-funcs-types.h (enum CombinationMode):
+	added value COMBINE_INTEN_A_INDEXED.
+
+	* app/paint-funcs/paint-funcs.c
+	(combine_inten_a_and_indexed_pixels): new function which
+	implements the new CombinationMode.
+
+	(combine_sub_region)
+	(combine_regions): added the needed bits to call the new function.
+
+	* app/core/gimpprojection-construct.c (project_indexed): added
+	mask PixelRegion parameter since that's supported by paint-funcs
+	now, replaced g_warning() about unimplemented combine type
+	by call to combine_regions(..., COMBINE_INTEN_A_INDEXED).
+
+	(gimp_projection_construct_layers): pass the mask to
+	project_indexed() and removed comments about not supporting it.
+
 2006-05-23  Karine Delvare  <edhel@gimp.org>
 
 	* app/core/gimpcontext.c
