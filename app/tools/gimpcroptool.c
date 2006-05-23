@@ -167,22 +167,7 @@ gimp_crop_tool_control (GimpTool       *tool,
                         GimpToolAction  action,
                         GimpDisplay    *display)
 {
-  GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
-
-  switch (action)
-    {
-    case GIMP_TOOL_ACTION_PAUSE:
-      break;
-
-    case GIMP_TOOL_ACTION_RESUME:
-      gimp_rectangle_tool_configure (rectangle);
-      break;
-
-    case GIMP_TOOL_ACTION_HALT:
-      gimp_rectangle_tool_response (NULL, GTK_RESPONSE_CANCEL,
-                                    rectangle);
-      break;
-    }
+  gimp_rectangle_tool_control (tool, action, gdisp);
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }

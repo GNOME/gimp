@@ -1,5 +1,11 @@
 2006-05-23  Karine Delvare  <edhel@gimp.org>
 
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpnewrectselecttool.c: revert rect select execution on
+	leaving, revert auto-conversion to selection.
+
+2006-05-23  Karine Delvare  <edhel@gimp.org>
+
 	* app/tools/gimpnewrectselecttool.c: don't execute
 	gimp_rectangle_tool_response() twice. Fixes bug #342506.
 

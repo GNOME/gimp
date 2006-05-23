@@ -191,22 +191,7 @@ gimp_new_rect_select_tool_control (GimpTool       *tool,
                                    GimpToolAction  action,
                                    GimpDisplay    *display)
 {
-  GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
-
-  switch (action)
-    {
-    case GIMP_TOOL_ACTION_PAUSE:
-      break;
-
-    case GIMP_TOOL_ACTION_RESUME:
-      gimp_rectangle_tool_configure (rectangle);
-      break;
-
-    case GIMP_TOOL_ACTION_HALT:
-      gimp_rectangle_tool_response (NULL, GIMP_RECTANGLE_MODE_EXECUTE,
-                                    rectangle);
-      break;
-    }
+  gimp_rectangle_tool_control (tool, action, gdisp);
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
@@ -243,10 +228,7 @@ gimp_new_rect_select_tool_button_release (GimpTool        *tool,
   gimp_tool_push_status (tool, display,
                          _("Click or press enter to create the selection."));
 
-  if (function >= RECT_RESIZING_UPPER_LEFT && function <= RECT_RESIZING_BOTTOM)
-    gimp_rectangle_tool_response (NULL, GIMP_RECTANGLE_MODE_EXECUTE, rectangle);
-  else
-    gimp_rectangle_tool_button_release (tool, coords, time, state, display);
+  gimp_rectangle_tool_button_release (tool, coords, time, state, display);
 }
 
 static void
