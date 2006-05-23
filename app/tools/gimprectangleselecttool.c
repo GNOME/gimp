@@ -243,9 +243,10 @@ gimp_new_rect_select_tool_button_release (GimpTool        *tool,
   gimp_tool_push_status (tool, display,
                          _("Click or press enter to create the selection."));
 
-  gimp_rectangle_tool_button_release (tool, coords, time, state, display);
   if (function >= RECT_RESIZING_UPPER_LEFT && function <= RECT_RESIZING_BOTTOM)
     gimp_rectangle_tool_response (NULL, GIMP_RECTANGLE_MODE_EXECUTE, rectangle);
+  else
+    gimp_rectangle_tool_button_release (tool, coords, time, state, display);
 }
 
 static void

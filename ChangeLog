@@ -1,3 +1,8 @@
+2006-05-23  Karine Delvare  <edhel@gimp.org>
+
+	* app/tools/gimpnewrectselecttool.c: don't execute
+	gimp_rectangle_tool_response() twice. Fixes bug #342506.
+
 2006-05-23  Sven Neumann  <sven@gimp.org>
 
 	It makes more sense to have GimpData::dirty indicate a name change
