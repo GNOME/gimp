@@ -1,3 +1,20 @@
+2006-05-23  Sven Neumann  <sven@gimp.org>
+
+	It makes more sense to have GimpData::dirty indicate a name change
+	than to invalidate the previews whenever the name changes.
+
+	* app/core/gimpdata.c: call gimp_object_name_changed() from
+	gimp_data_real_dirty() instead of implementing
+	GimpObject::name-changed and calling gimp_data_dirty() from there.
+
+	* app/core/gimpbrushclipboard.c
+	* app/core/gimppalette.c
+	* app/core/gimppatternclipboard.c: call gimp_data_dirty() in place
+	of gimp_object_name_changed().
+
+	* app/core/gimpbrushgenerated.c (gimp_brush_generated_dirty):
+	chain up unconditionally.
+
 2006-05-23  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/drawable_transform.pdb

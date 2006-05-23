@@ -224,6 +224,5 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
       pattern->mask = temp_buf_new (16, 16, 3, 0, 0, color);
     }
 
-  /* emit "name-changed" so the description is updated (emits "dirty" too) */
-  gimp_object_name_changed (GIMP_OBJECT (pattern));
+  gimp_data_dirty (GIMP_DATA (pattern));
 }

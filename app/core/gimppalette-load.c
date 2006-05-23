@@ -611,8 +611,7 @@ gimp_palette_add_entry (GimpPalette   *palette,
 
   palette->n_colors += 1;
 
-  /*  will make the palette dirty too  */
-  gimp_object_name_changed (GIMP_OBJECT (palette));
+  gimp_data_dirty (GIMP_DATA (palette));
 
   return entry;
 }
@@ -645,8 +644,7 @@ gimp_palette_delete_entry (GimpPalette      *palette,
           entry->position = pos++;
         }
 
-      /*  will make the palette dirty too  */
-      gimp_object_name_changed (GIMP_OBJECT (palette));
+      gimp_data_dirty (GIMP_DATA (palette));
     }
 }
 

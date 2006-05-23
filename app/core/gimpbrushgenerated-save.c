@@ -497,8 +497,7 @@ gimp_brush_generated_dirty (GimpData *data)
 
   g_free (lookup);
 
-  if (GIMP_DATA_CLASS (parent_class)->dirty)
-    GIMP_DATA_CLASS (parent_class)->dirty (data);
+  GIMP_DATA_CLASS (parent_class)->dirty (data);
 }
 
 GimpData *

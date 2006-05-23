@@ -79,7 +79,6 @@ static void      gimp_data_get_property (GObject       *object,
                                          GValue        *value,
                                          GParamSpec    *pspec);
 
-static void      gimp_data_name_changed (GimpObject    *object);
 static gint64    gimp_data_get_memsize  (GimpObject    *object,
                                          gint64        *gui_size);
 
@@ -141,7 +140,6 @@ gimp_data_class_init (GimpDataClass *klass)
   object_class->set_property      = gimp_data_set_property;
   object_class->get_property      = gimp_data_get_property;
 
-  gimp_object_class->name_changed = gimp_data_name_changed;
   gimp_object_class->get_memsize  = gimp_data_get_memsize;
 
   klass->dirty                    = gimp_data_real_dirty;
@@ -292,15 +290,6 @@ gimp_data_constructor (GType                  type,
   return object;
 }
 
-static void
-gimp_data_name_changed (GimpObject *object)
-{
-  if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
-    GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
-
-  gimp_data_dirty (GIMP_DATA (object));
-}
-
 static gint64
 gimp_data_get_memsize (GimpObject *object,
                        gint64     *gui_size)
@@ -321,6 +310,8 @@ gimp_data_real_dirty (GimpData *data)
   data->dirty = TRUE;
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (data));
+
+  gimp_object_name_changed (GIMP_OBJECT (data));
 }
 
 /**
