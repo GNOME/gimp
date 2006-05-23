@@ -1385,7 +1385,7 @@ if test "x$with_alsa" != xno; then
   have_alsa=yes
   AM_PATH_ALSA(alsa_required_version,
                AC_DEFINE(HAVE_ALSA, 1, [Define to 1 if alsa is available]),
-               have_alsa="no (alsa not found or unusable)")
+               have_alsa="no (libasound not found or unusable)")
 fi
 
 
@@ -1891,38 +1891,38 @@ Building GIMP with prefix=$prefix
 Desktop files install into $DESKTOP_DATADIR
 
 Extra Binaries:
-  gimp-console:     $enable_gimp_console
-  gimp-remote:      $enable_gimp_remote
+  gimp-console:      $enable_gimp_console
+  gimp-remote:       $enable_gimp_remote
 
 Optional Plug-Ins:
-  Ascii Art:        $have_libaa
-  Help Browser:     $have_gtkhtml2
-  Gimp-Print:       $have_gimp_print
-  GNOME Print:      $have_gnomeprint
-  JPEG:             $jpeg_ok
-  MNG:              $have_libmng
-  PDF:              $have_poppler
-  PNG:              $have_libpng
-  PSP:              $have_zlib
-  SVG:              $have_librsvg
-  TIFF:             $have_libtiff
-  MacOS X TWAIN:    $mac_twain_ok
-  URI:              $uri_plugin
-  Win Print:        $os_win32
-  Win Snap:         $os_win32
-  WMF:              $have_libwmf
-  XJT:              $have_xjt
-  XPM:              $have_libxpm
+  Ascii Art:         $have_libaa
+  Help Browser:      $have_gtkhtml2
+  Gimp-Print:        $have_gimp_print
+  GNOME Print:       $have_gnomeprint
+  JPEG:              $jpeg_ok
+  MNG:               $have_libmng
+  PDF:               $have_poppler
+  PNG:               $have_libpng
+  PSP:               $have_zlib
+  SVG:               $have_librsvg
+  TIFF:              $have_libtiff
+  MacOS X TWAIN:     $mac_twain_ok
+  URI:               $uri_plugin
+  Win Print:         $os_win32
+  Win Snap:          $os_win32
+  WMF:               $have_libwmf
+  XJT:               $have_xjt
+  XPM:               $have_libxpm
 
 Plug-In Features:
-  EXIF support:     $have_libexif
-  GNOME UI:         $have_gnomeui
-  GNOME keyring:    $have_gnome_keyring
+  EXIF support:      $have_libexif
+  GNOME UI:          $have_gnomeui
+  GNOME keyring:     $have_gnome_keyring
 
 Optional Modules:
-  ALSA (MIDI):      $have_alsa
-  Linux Input:      $have_linux_input
-  Color Correction: $have_lcms
-  Soft Proof:       $have_lcms
+  ALSA (MIDI Input): $have_alsa
+  Linux Input:       $have_linux_input
+  Color Correction:  $have_lcms
+  Soft Proof:        $have_lcms
 ]);
 

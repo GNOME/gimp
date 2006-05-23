@@ -1,3 +1,7 @@
+2006-05-23  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: improved output for missing libasound.
+
 2006-05-23  Michael Natterer  <mitch@gimp.org>
 
 	Fix for bug #333156:
