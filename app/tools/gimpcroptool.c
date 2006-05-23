@@ -167,7 +167,7 @@ gimp_crop_tool_control (GimpTool       *tool,
                         GimpToolAction  action,
                         GimpDisplay    *display)
 {
-  gimp_rectangle_tool_control (tool, action, gdisp);
+  gimp_rectangle_tool_control (tool, action, display);
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }

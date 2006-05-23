@@ -82,6 +82,9 @@ void        gimp_rectangle_tool_constructor         (GObject           *object);
 void        gimp_rectangle_tool_dispose             (GObject           *object);
 gboolean    gimp_rectangle_tool_initialize          (GimpTool          *tool,
                                                      GimpDisplay       *display);
+void        gimp_rectangle_tool_control             (GimpTool          *tool,
+                                                     GimpToolAction     action,
+                                                     GimpDisplay       *display);
 void        gimp_rectangle_tool_button_press        (GimpTool          *tool,
                                                      GimpCoords        *coords,
                                                      guint32            time,

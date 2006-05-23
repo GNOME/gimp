@@ -653,6 +653,31 @@ gimp_rectangle_tool_initialize (GimpTool    *tool,
 }
 
 void
+gimp_rectangle_tool_control (GimpTool       *tool,
+                             GimpToolAction  action,
+                             GimpDisplay    *display)
+{
+  GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
+
+  switch (action)
+    {
+    case GIMP_TOOL_ACTION_PAUSE:
+      break;
+
+    case GIMP_TOOL_ACTION_RESUME:
+      gimp_rectangle_tool_configure (rectangle);
+      break;
+
+    case GIMP_TOOL_ACTION_HALT:
+      gimp_rectangle_tool_response (NULL, GTK_RESPONSE_CANCEL, rectangle);
+      break;
+
+    default:
+      break;
+    }
+}
+
+void
 gimp_rectangle_tool_button_press (GimpTool        *tool,
                                   GimpCoords      *coords,
                                   guint32          time,

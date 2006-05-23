@@ -1,6 +1,12 @@
 2006-05-23  Karine Delvare  <edhel@gimp.org>
 
 	* app/tools/gimpcroptool.c
+	* app/tools/gimpnewrectselecttool.c
+	* app/tools/gimprectangletool.[ch]: eek, I broke the build.
+
+2006-05-23  Karine Delvare  <edhel@gimp.org>
+
+	* app/tools/gimpcroptool.c
 	* app/tools/gimpnewrectselecttool.c: revert rect select execution on
 	leaving, revert auto-conversion to selection.
 
