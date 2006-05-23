@@ -1,5 +1,16 @@
 2006-05-23  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/drawable_transform.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb: add the drawable's offset
+	to the x and y returned by gimp_drawable_mask_intersect() because
+	all transform functions expect image coordinates.
+	Fixes bug #342548.
+
+	* app/pdb/drawable_transform_cmds.c
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
+2006-05-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptransformtool.c (gimp_transform_tool_dialog_update):
 	don't call the virtual function if there is no dialog.
 
