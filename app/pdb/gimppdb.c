@@ -174,8 +174,8 @@ gimp_pdb_real_register_procedure (GimpPDB       *pdb,
 
   list = g_hash_table_lookup (pdb->procedures, name);
 
-  g_hash_table_insert (pdb->procedures, (gpointer) name,
-                       g_list_prepend (list, g_object_ref (procedure)));
+  g_hash_table_replace (pdb->procedures, (gpointer) name,
+                        g_list_prepend (list, g_object_ref (procedure)));
 }
 
 static void
@@ -194,9 +194,14 @@ gimp_pdb_real_unregister_procedure (GimpPDB       *pdb,
       list = g_list_remove (list, procedure);
 
       if (list)
-        g_hash_table_insert (pdb->procedures, (gpointer) name, list);
+        {
+          name = gimp_object_get_name (GIMP_OBJECT (list->data));
+          g_hash_table_replace (pdb->procedures, (gpointer) name, list);
+        }
       else
-        g_hash_table_remove (pdb->procedures, name);
+        {
+          g_hash_table_remove (pdb->procedures, name);
+        }
 
       g_object_unref (procedure);
     }
