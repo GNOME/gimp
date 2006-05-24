@@ -70,7 +70,7 @@ struct _ImportDialog
 
   GtkWidget      *gradient_combo;
   GtkWidget      *image_combo;
-  GtkWidget      *filename_entry;
+  GtkWidget      *file_chooser;
 
   GtkWidget      *entry;
 
@@ -86,38 +86,38 @@ struct _ImportDialog
 };
 
 
-static ImportDialog * palette_import_dialog_new   (Gimp          *gimp);
-static void   palette_import_response             (GtkWidget     *widget,
-                                                   gint           response_id,
-                                                   ImportDialog  *dialog);
-static void   palette_import_gradient_changed     (GimpContext   *context,
-                                                   GimpGradient  *gradient,
-                                                   ImportDialog  *dialog);
-static void   palette_import_image_changed        (GimpContext   *context,
-                                                   GimpImage     *image,
-                                                   ImportDialog  *dialog);
-static void   palette_import_filename_changed     (GimpFileEntry *file_entry,
-                                                   ImportDialog  *dialog);
-static void   import_dialog_drop_callback         (GtkWidget     *widget,
-                                                   gint           x,
-                                                   gint           y,
-                                                   GimpViewable  *viewable,
-                                                   gpointer       data);
-static void   palette_import_grad_callback        (GtkWidget     *widget,
-                                                   ImportDialog  *dialog);
-static void   palette_import_image_callback       (GtkWidget     *widget,
-                                                   ImportDialog  *dialog);
-static void   palette_import_file_callback        (GtkWidget     *widget,
-                                                   ImportDialog  *dialog);
-static void   palette_import_columns_changed      (GtkAdjustment *adjustment,
-                                                   ImportDialog  *dialog);
-static void   palette_import_image_add            (GimpContainer *container,
-                                                   GimpImage     *image,
-                                                   ImportDialog  *dialog);
-static void   palette_import_image_remove         (GimpContainer *container,
-                                                   GimpImage     *image,
-                                                   ImportDialog  *dialog);
-static void   palette_import_make_palette         (ImportDialog  *dialog);
+static ImportDialog * palette_import_dialog_new   (Gimp           *gimp);
+static void   palette_import_response             (GtkWidget      *widget,
+                                                   gint            response_id,
+                                                   ImportDialog   *dialog);
+static void   palette_import_gradient_changed     (GimpContext    *context,
+                                                   GimpGradient   *gradient,
+                                                   ImportDialog   *dialog);
+static void   palette_import_image_changed        (GimpContext    *context,
+                                                   GimpImage      *image,
+                                                   ImportDialog   *dialog);
+static void   palette_import_filename_changed     (GtkFileChooser *button,
+                                                   ImportDialog   *dialog);
+static void   import_dialog_drop_callback         (GtkWidget      *widget,
+                                                   gint            x,
+                                                   gint            y,
+                                                   GimpViewable   *viewable,
+                                                   gpointer        data);
+static void   palette_import_grad_callback        (GtkWidget      *widget,
+                                                   ImportDialog   *dialog);
+static void   palette_import_image_callback       (GtkWidget      *widget,
+                                                   ImportDialog   *dialog);
+static void   palette_import_file_callback        (GtkWidget      *widget,
+                                                   ImportDialog   *dialog);
+static void   palette_import_columns_changed      (GtkAdjustment  *adjustment,
+                                                   ImportDialog   *dialog);
+static void   palette_import_image_add            (GimpContainer  *container,
+                                                   GimpImage      *image,
+                                                   ImportDialog   *dialog);
+static void   palette_import_image_remove         (GimpContainer  *container,
+                                                   GimpImage      *image,
+                                                   ImportDialog   *dialog);
+static void   palette_import_make_palette         (ImportDialog   *dialog);
 
 
 static ImportDialog *the_import_dialog = NULL;
@@ -217,7 +217,7 @@ palette_import_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 2, FALSE);
+  table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
@@ -275,12 +275,11 @@ palette_import_dialog_new (Gimp *gimp)
                              NULL, 0.0, 0.5, dialog->image_combo, 1, FALSE);
 
   /*  Palette file name entry  */
-  dialog->filename_entry =
-    gimp_file_entry_new (_("Select Palette File"), NULL, FALSE, FALSE);
+  dialog->file_chooser = gtk_file_chooser_button_new (_("Select Palette File"),
+                                                      GTK_FILE_CHOOSER_ACTION_OPEN);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             NULL, 0.0, 0.5, dialog->filename_entry, 1, FALSE);
-
-  gtk_widget_show (dialog->filename_entry);
+                             NULL, 0.0, 0.5, dialog->file_chooser, 1, FALSE);
+  gtk_widget_show (dialog->file_chooser);
 
   {
     gint focus_line_width;
@@ -395,7 +394,7 @@ palette_import_dialog_new (Gimp *gimp)
   g_signal_connect (dialog->context, "image-changed",
                     G_CALLBACK (palette_import_image_changed),
                     dialog);
-  g_signal_connect (dialog->filename_entry, "filename-changed",
+  g_signal_connect (dialog->file_chooser, "selection-changed",
                     G_CALLBACK (palette_import_filename_changed),
                     dialog);
 
@@ -486,17 +485,17 @@ palette_import_image_changed (GimpContext  *context,
 }
 
 static void
-palette_import_filename_changed (GimpFileEntry *file_entry,
-                                 ImportDialog  *dialog)
+palette_import_filename_changed (GtkFileChooser *button,
+                                 ImportDialog   *dialog)
 {
   gchar *filename;
 
   if (dialog->import_type != FILE_IMPORT)
     return;
 
-  filename = gimp_file_entry_get_filename (file_entry);
+  filename = gtk_file_chooser_get_filename (button);
 
-  if (filename && *filename)
+  if (filename)
     {
       gchar *basename = g_filename_display_basename (filename);
 
@@ -560,7 +559,7 @@ palette_import_grad_callback (GtkWidget    *widget,
 
   gtk_widget_set_sensitive (dialog->gradient_combo, TRUE);
   gtk_widget_set_sensitive (dialog->image_combo,    FALSE);
-  gtk_widget_set_sensitive (dialog->filename_entry, FALSE);
+  gtk_widget_set_sensitive (dialog->file_chooser,   FALSE);
 
   gtk_entry_set_text (GTK_ENTRY (dialog->entry),
                       GIMP_OBJECT (gradient)->name);
@@ -587,12 +586,11 @@ palette_import_image_callback (GtkWidget    *widget,
 
   if (! image)
     image = (GimpImage *)
-      gimp_container_get_child_by_index (dialog->context->gimp->images,
-                                         0);
+      gimp_container_get_child_by_index (dialog->context->gimp->images, 0);
 
   gtk_widget_set_sensitive (dialog->gradient_combo, FALSE);
   gtk_widget_set_sensitive (dialog->image_combo,    TRUE);
-  gtk_widget_set_sensitive (dialog->filename_entry, FALSE);
+  gtk_widget_set_sensitive (dialog->file_chooser,   FALSE);
 
   palette_import_image_changed (dialog->context, image, dialog);
 
@@ -614,11 +612,12 @@ palette_import_file_callback (GtkWidget    *widget,
 
   gtk_widget_set_sensitive (dialog->gradient_combo, FALSE);
   gtk_widget_set_sensitive (dialog->image_combo,    FALSE);
-  gtk_widget_set_sensitive (dialog->filename_entry, TRUE);
+  gtk_widget_set_sensitive (dialog->file_chooser,   TRUE);
 
-  filename = gimp_file_entry_get_filename (GIMP_FILE_ENTRY (dialog->filename_entry));
+  filename =
+    gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog->file_chooser));
 
-  if (filename && *filename)
+  if (filename)
     {
       gchar *basename = g_filename_display_basename (filename);
 
@@ -729,22 +728,21 @@ palette_import_make_palette (ImportDialog *dialog)
 
     case FILE_IMPORT:
       {
-        GtkWidget *entry = dialog->filename_entry;
-        gchar     *filename;
-        GError    *error = NULL;
+        gchar  *filename;
+        GError *error = NULL;
 
-        filename = gimp_file_entry_get_filename (GIMP_FILE_ENTRY (entry));
+        filename =
+          gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog->file_chooser));
 
         palette = gimp_palette_import_from_file (filename,
                                                  palette_name, &error);
+        g_free (filename);
 
         if (! palette)
           {
             g_message (error->message);
             g_error_free (error);
           }
-
-        g_free (filename);
       }
       break;
     }

@@ -1,5 +1,12 @@
 2006-05-24  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/palette-import-dialog.c: use a GtkFileChooserButton
+	instead of a GimpFileEntry widget.
+
+	* data/palettes/Tango.gpl (Name): removed "Palette" from name.
+
+2006-05-24  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppatheditor.[ch]: renamed a parameter, updated
 	gtk-doc comment.
 
