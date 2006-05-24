@@ -236,9 +236,8 @@ gimp_path_editor_init (GimpPathEditor *editor)
 
 /**
  * gimp_path_editor_new:
- * @filesel_title: The title of the #GtkFileSelection dialog which can be
- *                 popped up by the attached #GimpFileSelection.
- * @path:          The initial search path.
+ * @title: The title of the #GtkFileChooser dialog which can be popped up.
+ * @path:  The initial search path.
  *
  * Creates a new #GimpPathEditor widget.
  *
@@ -248,16 +247,16 @@ gimp_path_editor_init (GimpPathEditor *editor)
  * Returns: A pointer to the new #GimpPathEditor widget.
  **/
 GtkWidget *
-gimp_path_editor_new (const gchar *filesel_title,
+gimp_path_editor_new (const gchar *title,
                       const gchar *path)
 {
   GimpPathEditor *editor;
 
-  g_return_val_if_fail (filesel_title != NULL, NULL);
+  g_return_val_if_fail (title != NULL, NULL);
 
   editor = g_object_new (GIMP_TYPE_PATH_EDITOR, NULL);
 
-  editor->file_entry = gimp_file_entry_new (filesel_title, "", TRUE, TRUE);
+  editor->file_entry = gimp_file_entry_new (title, "", TRUE, TRUE);
   gtk_widget_set_sensitive (editor->file_entry, FALSE);
   gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->file_entry,
                       TRUE, TRUE, 0);

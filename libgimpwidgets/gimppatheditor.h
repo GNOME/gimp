@@ -80,7 +80,7 @@ struct _GimpPathEditorClass
 
 GType       gimp_path_editor_get_type          (void) G_GNUC_CONST;
 
-GtkWidget * gimp_path_editor_new               (const gchar    *filesel_title,
+GtkWidget * gimp_path_editor_new               (const gchar    *title,
                                                 const gchar    *path);
 
 gchar     * gimp_path_editor_get_path          (GimpPathEditor *editor);
