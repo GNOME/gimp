@@ -29,6 +29,7 @@
 #include "gimpwidgetstypes.h"
 
 #include "gimpfileentry.h"
+#include "gimphelpui.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -86,6 +87,8 @@ gimp_file_entry_class_init (GimpFileEntryClass *klass)
 static void
 gimp_file_entry_init (GimpFileEntry *entry)
 {
+  GtkWidget *image;
+
   entry->title       = NULL;
   entry->file_dialog = NULL;
   entry->check_valid = FALSE;
@@ -94,9 +97,13 @@ gimp_file_entry_init (GimpFileEntry *entry)
   gtk_box_set_spacing (GTK_BOX (entry), 4);
   gtk_box_set_homogeneous (GTK_BOX (entry), FALSE);
 
-  entry->browse_button = gtk_button_new_with_label (" ... ");
+  entry->browse_button = gtk_button_new ();
   gtk_box_pack_end (GTK_BOX (entry), entry->browse_button, FALSE, FALSE, 0);
   gtk_widget_show (entry->browse_button);
+
+  image = gtk_image_new_from_stock (GTK_STOCK_OPEN, GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (entry->browse_button), image);
+  gtk_widget_show (image);
 
   g_signal_connect (entry->browse_button, "clicked",
                     G_CALLBACK (gimp_file_entry_browse_clicked),
@@ -159,6 +166,12 @@ gimp_file_entry_new (const gchar *title,
   entry->title       = g_strdup (title);
   entry->dir_only    = dir_only;
   entry->check_valid = check_valid;
+
+  gimp_help_set_help_data (entry->browse_button,
+                           dir_only ?
+                           _("Open a file selector to browse your folders") :
+                           _("Open a file selector to browse your files"),
+                           NULL);
 
   if (check_valid)
     {

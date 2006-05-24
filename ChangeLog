@@ -1,3 +1,9 @@
+2006-05-24  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpfileentry.c: use GTK_STOCK_OPEN instead of
+	"..."  to label the "Browse" button. This makes the widget more
+	similar to the GtkFileChooserButton and addresses bug #342749.
+
 2006-05-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/gimppdb.c (gimp_pdb_real_register_procedure)
