@@ -71,9 +71,6 @@
 
 #define DEFAULT_GAMMA          2.20
 
-#define RESPONSE_LOAD_DEFAULTS 1
-#define RESPONSE_SAVE_DEFAULTS 2
-
 #define PNG_DEFAULTS_PARASITE  "png-save-defaults"
 
 /*
@@ -1660,22 +1657,20 @@ save_dialog (gint32    image_ID,
   GtkWidget    *table;
   GtkWidget    *toggle;
   GtkObject    *scale;
+  GtkWidget    *hbox;
+  GtkWidget    *button;
   GimpParasite *parasite;
 
   dialog = gimp_dialog_new (_("Save as PNG"), PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, SAVE_PROC,
 
-                            _("_Load defaults"), RESPONSE_LOAD_DEFAULTS,
-                            _("_Save defaults"), RESPONSE_SAVE_DEFAULTS,
-                            GTK_STOCK_CANCEL,    GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_SAVE,      GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           RESPONSE_LOAD_DEFAULTS,
-                                           RESPONSE_SAVE_DEFAULTS,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -1689,7 +1684,7 @@ save_dialog (gint32    image_ID,
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  table = gtk_table_new (9, 3, FALSE);
+  table = gtk_table_new (10, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
@@ -1722,7 +1717,8 @@ save_dialog (gint32    image_ID,
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update), &pngvals.gama);
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &pngvals.gama);
 
   pg.offs = toggle =
     gtk_check_button_new_with_mnemonic (_("Save layer o_ffset"));
@@ -1740,7 +1736,8 @@ save_dialog (gint32    image_ID,
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update), &pngvals.phys);
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &pngvals.phys);
 
   pg.time = toggle =
     gtk_check_button_new_with_mnemonic (_("Save creation _time"));
@@ -1749,7 +1746,8 @@ save_dialog (gint32    image_ID,
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update), &pngvals.time);
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &pngvals.time);
 
   pg.comment = toggle = gtk_check_button_new_with_mnemonic (_("Save comme_nt"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 6, 7, GTK_FILL, 0, 0, 0);
@@ -1763,10 +1761,12 @@ save_dialog (gint32    image_ID,
   gimp_parasite_free (parasite);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update), &pngvals.comment);
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &pngvals.comment);
 
   pg.save_transp_pixels = toggle =
-    gtk_check_button_new_with_mnemonic (_("Save color _values from transparent pixels"));
+    gtk_check_button_new_with_mnemonic (_("Save color _values from "
+                                          "transparent pixels"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 7, 8, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 alpha && pngvals.save_transp_pixels);
@@ -1790,6 +1790,29 @@ save_dialog (gint32    image_ID,
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pngvals.compression_level);
 
+  hbox = gtk_hbutton_box_new ();
+  gtk_box_set_spacing (GTK_BOX (hbox), 6);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (hbox), GTK_BUTTONBOX_START);
+  gtk_table_attach (GTK_TABLE (table), hbox, 0, 3, 9, 10,
+                    GTK_FILL | GTK_EXPAND, 0, 0, 0);
+  gtk_widget_show (hbox);
+
+  button = gtk_button_new_with_mnemonic (_("_Load Defaults"));
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (load_gui_defaults),
+                            &pg);
+
+  button = gtk_button_new_with_mnemonic (_("S_ave Defaults"));
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (save_defaults),
+                            &pg);
+
   gtk_widget_show (dialog);
 
   pg.run = FALSE;
@@ -1808,14 +1831,6 @@ save_dialog_response (GtkWidget *widget,
 
   switch (response_id)
     {
-    case RESPONSE_LOAD_DEFAULTS:
-      load_gui_defaults (pg);
-      break;
-
-    case RESPONSE_SAVE_DEFAULTS:
-      save_defaults ();
-      break;
-
     case GTK_RESPONSE_OK:
       pg->run = TRUE;
 

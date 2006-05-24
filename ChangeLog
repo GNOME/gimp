@@ -1,3 +1,8 @@
+2006-05-24  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/png.c: moved "Load defaults" and "Save defaults"
+	buttons to a separate line. Fixes bug #310291.
+
 2006-05-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/jpeg/gimpexif.c
