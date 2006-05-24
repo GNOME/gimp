@@ -235,12 +235,15 @@ tools_reset_cmd_callback (GtkAction *action,
 
       if (object)
         {
+          gboolean visible;
+
           gimp_container_reorder (container, object, i);
 
-          g_object_set (object, "visible",
-                        ! g_type_is_a (GIMP_TOOL_INFO (object)->tool_type,
-                                       GIMP_TYPE_IMAGE_MAP_TOOL),
-                        NULL);
+          visible =
+            GPOINTER_TO_INT (g_object_get_data (G_OBJECT (object),
+                                                "gimp-tool-default-visible"));
+
+          g_object_set (object, "visible", visible, NULL);
 
           i++;
         }

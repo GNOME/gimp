@@ -477,6 +477,7 @@ gimp_tools_register (GType                   tool_type,
   Gimp         *gimp = (Gimp *) data;
   GimpToolInfo *tool_info;
   const gchar  *paint_core_name;
+  gboolean      visible;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (g_type_is_a (tool_type, GIMP_TYPE_TOOL));
@@ -541,10 +542,12 @@ gimp_tools_register (GType                   tool_type,
                                   paint_core_name,
                                   stock_id);
 
-  if (g_type_is_a (tool_type, GIMP_TYPE_IMAGE_MAP_TOOL))
-    g_object_set (tool_info, "visible", FALSE, NULL);
-  if (g_type_is_a (tool_type, GIMP_TYPE_RECT_SELECT_TOOL))
-    g_object_set (tool_info, "visible", FALSE, NULL);
+  visible = (! g_type_is_a (tool_type, GIMP_TYPE_IMAGE_MAP_TOOL) &&
+             ! g_type_is_a (tool_type, GIMP_TYPE_RECT_SELECT_TOOL));
+
+  g_object_set (tool_info, "visible", visible, NULL);
+  g_object_set_data (G_OBJECT (tool_info), "gimp-tool-default-visible",
+                     GINT_TO_POINTER (visible));
 
   g_object_set_data (G_OBJECT (tool_info), "gimp-tool-options-gui-func",
                      options_gui_func);

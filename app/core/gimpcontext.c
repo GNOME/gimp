@@ -1854,7 +1854,7 @@ gimp_context_tool_list_thaw (GimpContainer *container,
   GimpToolInfo *tool_info;
 
   if (! context->tool_name)
-    context->tool_name = g_strdup ("gimp-new-rect-select-tool");
+    context->tool_name = g_strdup ("gimp-paintbrush-tool");
 
   tool_info = gimp_context_find_object (context, container,
                                         context->tool_name,
