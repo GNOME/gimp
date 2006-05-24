@@ -76,7 +76,7 @@ static void   script_fu_ok                  (SFScript             *script);
 static void   script_fu_reset               (SFScript             *script);
 static void   script_fu_about               (SFScript             *script);
 
-static void   script_fu_file_entry_callback (GtkWidget            *widget,
+static void   script_fu_file_callback       (GtkWidget            *widget,
                                              SFFilename           *file);
 static void   script_fu_combo_callback      (GtkWidget            *widget,
                                              SFOption             *option);
@@ -428,20 +428,17 @@ script_fu_interface (SFScript *script)
 	case SF_FILENAME:
 	case SF_DIRNAME:
           if (script->arg_types[i] == SF_FILENAME)
-            widget = gimp_file_entry_new (_("Script-Fu File Selection"),
-                                          script->arg_values[i].sfa_file.filename,
-                                          FALSE, TRUE);
+            widget = gtk_file_chooser_button_new (_("Script-Fu File Selection"),
+                                                  GTK_FILE_CHOOSER_ACTION_OPEN);
           else
-            widget = gimp_file_entry_new (_("Script-Fu Folder Selection"),
-                                          script->arg_values[i].sfa_file.filename,
-                                          TRUE, TRUE);
+            widget = gtk_file_chooser_button_new (_("Script-Fu Folder Selection"),
+                                                  GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER);
+          if (script->arg_values[i].sfa_file.filename)
+            gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (widget),
+                                           script->arg_values[i].sfa_file.filename);
 
-          gtk_entry_set_activates_default (GTK_ENTRY (GIMP_FILE_ENTRY (widget)->entry), TRUE);
-
-	  script->arg_values[i].sfa_file.file_entry = widget;
-
-	  g_signal_connect (widget, "filename-changed",
-                            G_CALLBACK (script_fu_file_entry_callback),
+	  g_signal_connect (widget, "selection-changed",
+                            G_CALLBACK (script_fu_file_callback),
                             &script->arg_values[i].sfa_file);
 	  break;
 
@@ -626,14 +623,13 @@ script_fu_interface_quit (SFScript *script)
 }
 
 static void
-script_fu_file_entry_callback (GtkWidget  *widget,
-                               SFFilename *file)
+script_fu_file_callback (GtkWidget  *widget,
+                         SFFilename *file)
 {
   if (file->filename)
     g_free (file->filename);
 
-  file->filename =
-    gimp_file_entry_get_filename (GIMP_FILE_ENTRY(file->file_entry));
+  file->filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (widget));
 }
 
 static void
@@ -945,9 +941,8 @@ script_fu_reset (SFScript *script)
 
         case SF_FILENAME:
         case SF_DIRNAME:
-          gimp_file_entry_set_filename
-            (GIMP_FILE_ENTRY (script->arg_values[i].sfa_file.file_entry),
-             script->arg_defaults[i].sfa_file.filename);
+          gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (widget),
+                                         script->arg_defaults[i].sfa_file.filename);
           break;
 
         case SF_FONT:

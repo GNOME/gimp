@@ -1,5 +1,15 @@
 2006-05-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/raw.c (load_dialog): use a GtkFileChooserButton
+	instead of a GimpFileEntry widget. 
+
+	* plug-ins/script-fu/script-fu-interface.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-types.h: use GtkFileChooserButton
+	for SF_FILENAME and SF_DIRNAME parameters.
+
+2006-05-24  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/palette-import-dialog.c: use a GtkFileChooserButton
 	instead of a GimpFileEntry widget.
 

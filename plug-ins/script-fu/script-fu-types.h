@@ -37,8 +37,7 @@ typedef struct
 
 typedef struct
 {
-  GtkWidget *file_entry;
-  gchar     *filename;
+  gchar  *filename;
 } SFFilename;
 
 typedef struct

@@ -420,7 +420,6 @@ script_fu_add_script (LISP a)
 #endif
 		  script->arg_values[i].sfa_file.filename =
 		    g_strdup (script->arg_defaults[i].sfa_file.filename);
-		  script->arg_values[i].sfa_file.file_entry = NULL;
 
 		  args[i + 1].type        = GIMP_PDB_STRING;
 		  args[i + 1].name        = (script->arg_types[i] == SF_FILENAME ?
