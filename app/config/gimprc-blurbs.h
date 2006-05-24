@@ -338,8 +338,8 @@ N_("Sets the swap file location. GIMP uses a tile based memory allocation " \
    "disk and back in. Be aware that the swap file can easily get very large " \
    "if GIMP is used with large images. " \
    "Also, things can get horribly slow if the swap file is created on " \
-   "a directory that is mounted over NFS.  For these reasons, it may " \
-   "be desirable to put your swap file in \"/tmp\".")
+   "a folder that is mounted over NFS.  For these reasons, it may be " \
+   "desirable to put your swap file in \"/tmp\".")
 
 #define TEAROFF_MENUS_BLURB \
 N_("When enabled, menus can be torn off.")
@@ -361,10 +361,10 @@ N_("Save changed keyboard shortcuts when the GIMP exits.")
 N_("Restore saved keyboard shortcuts on each GIMP startup.")
 
 #define TEMP_PATH_BLURB \
-N_("Sets the temporary storage directory. Files will appear here " \
+N_("Sets the folder for temporary storage. Files will appear here " \
    "during the course of running the GIMP.  Most files will disappear " \
    "when the GIMP exits, but some files are likely to remain, so it is " \
-   "best if this directory not be one that is shared by other users.")
+   "best if this folder not be one that is shared by other users.")
 
 #define THEME_BLURB \
 "The name of the theme to use."

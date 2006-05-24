@@ -1,3 +1,15 @@
+2006-05-24  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimprc-blurbs.h (SWAP_PATH_BLURB, TEMP_PATH_BLURB):
+	use "folder" in place of "directory".
+
+	* app/dialogs/preferences-dialog.c: use GtkFileChooserButtons for
+	the "swap-path" and "temp-path" preferences and a simple GtkEntry
+	for the "web-browser" preference.
+
+	* modules/cdisplay_proof.c: use a GtkFileChooserButton instead of
+	a GimpFileEntry widget.
+
 2006-05-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpcontext.c (gimp_context_tool_list_thaw): the

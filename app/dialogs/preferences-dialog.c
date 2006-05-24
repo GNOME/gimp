@@ -1647,11 +1647,8 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Web Browser"), GTK_CONTAINER (vbox), FALSE);
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
-  entry = gimp_prop_file_entry_new (object, "web-browser",
-                                    _("Select Web Browser"),
-                                    FALSE, FALSE);
-
-  prefs_widget_add_aligned (entry, _("_Web browser to use:"),
+  prefs_widget_add_aligned (gimp_prop_entry_new (object, "web-browser", 0),
+                            _("_Web browser to use:"),
                             GTK_TABLE (table), 0, FALSE, size_group);
 #endif
 
@@ -2239,18 +2236,11 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (i = 0, row = 3; i < G_N_ELEMENTS (profiles); i++, row++)
       {
-#if 0
-        button = gimp_prop_file_entry_new (color_config,
-                                           profiles[i].property_name,
-                                           gettext (profiles[i].fs_label),
-                                           FALSE, TRUE);
-#else
         button =
           gimp_prop_file_chooser_button_new (color_config,
                                              profiles[i].property_name,
                                              gettext (profiles[i].fs_label),
                                              GTK_FILE_CHOOSER_ACTION_OPEN);
-#endif
 
         gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
                                    gettext (profiles[i].label), 0.0, 0.5,
@@ -2424,26 +2414,35 @@ prefs_dialog_new (Gimp       *gimp,
   {
     static const struct
     {
+      const gchar *property_name;
       const gchar *label;
       const gchar *fs_label;
-      const gchar *property_name;
     }
     dirs[] =
     {
-      { N_("Temp folder:"), N_("Select Temp Folder"), "temp-path" },
-      { N_("Swap folder:"), N_("Select Swap Folder"), "swap-path" },
+      {
+        "temp-path",
+        N_("Temporary folder:"),
+        N_("Select Folder for Temporary Files")
+      },
+      {
+        "swap-path",
+        N_("Swap folder:"),
+        N_("Select Swap Folder")
+      }
     };
 
     table = prefs_table_new (G_N_ELEMENTS (dirs) + 1, GTK_CONTAINER (vbox));
 
     for (i = 0; i < G_N_ELEMENTS (dirs); i++)
       {
-        entry = gimp_prop_file_entry_new (object, dirs[i].property_name,
-                                          gettext (dirs[i].fs_label),
-                                          TRUE, TRUE);
+        button = gimp_prop_file_chooser_button_new (object,
+                                                    dirs[i].property_name,
+                                                    gettext (dirs[i].fs_label),
+                                                    GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER);
         gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
                                    gettext (dirs[i].label), 0.0, 0.5,
-                                   entry, 1, FALSE);
+                                   button, 1, FALSE);
       }
   }
 

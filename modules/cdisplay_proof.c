@@ -346,9 +346,9 @@ cdisplay_proof_configure (GimpColorDisplay *display)
                              _("_Intent:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
-  entry = gimp_prop_file_entry_new (G_OBJECT (proof), "profile",
-                                    _("Choose an ICC Color Profile"),
-                                    FALSE, FALSE);
+  entry = gimp_prop_file_chooser_button_new (G_OBJECT (proof), "profile",
+                                             _("Choose an ICC Color Profile"),
+                                             GTK_FILE_CHOOSER_ACTION_OPEN);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Profile:"), 0.0, 0.5,
                              entry, 1, FALSE);
