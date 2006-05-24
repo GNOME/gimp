@@ -1,3 +1,12 @@
+2006-05-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/jpeg/gimpexif.c
+	* plug-ins/jpeg/jpeg-load.c
+	* plug-ins/jpeg/jpeg-save.h
+	* plug-ins/jpeg/jpeg.c
+	* plug-ins/jpeg/jpeg.h: fix multiply-defined linker symbols;
+	fixes bug #342456.
+
 2006-05-24  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/scripts/copy-visible.scm: use canonical

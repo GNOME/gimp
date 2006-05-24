@@ -34,6 +34,8 @@
 
 #include "gimpexif.h"
 
+ExifData *exif_data;
+
 /*
  * gimp_metadata_store_exif:
  * @image_ID:    the GIMP image to work on.

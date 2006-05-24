@@ -48,10 +48,10 @@ typedef struct
   gboolean save_xmp;
 } JpegSaveVals;
 
-JpegSaveVals     jsvals;
+extern JpegSaveVals     jsvals;
 
-gint32           orig_image_ID_global;
-gint32           drawable_ID_global;
+extern gint32           orig_image_ID_global;
+extern gint32           drawable_ID_global;
 
 gboolean  save_image          (const gchar      *filename,
                                gint32            image_ID,

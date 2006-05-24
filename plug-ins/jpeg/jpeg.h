@@ -41,13 +41,13 @@ typedef struct my_error_mgr
 } *my_error_ptr;
 
 
-gint32 volatile  image_ID_global;
-gint32           layer_ID_global;
-GimpDrawable    *drawable_global;
-gboolean         undo_touched;
-gboolean         load_interactive;
-gint32           display_ID;
-gchar           *image_comment;
+extern gint32 volatile  image_ID_global;
+extern gint32           layer_ID_global;
+extern GimpDrawable    *drawable_global;
+extern gboolean         undo_touched;
+extern gboolean         load_interactive;
+extern gint32           display_ID;
+extern gchar           *image_comment;
 
 gint32    load_image                    (const gchar   *filename,
                                          GimpRunMode    runmode,
@@ -62,7 +62,7 @@ void      my_output_message             (j_common_ptr   cinfo);
 
 #ifdef HAVE_EXIF
 
-ExifData *exif_data;
+extern ExifData *exif_data;
 
 gint32    load_thumbnail_image          (const gchar   *filename,
                                          gint          *width,

@@ -40,6 +40,9 @@
 #include "jpeg-icc.h"
 #include "jpeg-load.h"
 
+gint32 volatile  image_ID_global;
+GimpDrawable    *drawable_global;
+gint32           layer_ID_global;
 
 gint32
 load_image (const gchar *filename,

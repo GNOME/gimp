@@ -50,6 +50,13 @@ static void  run   (const gchar      *name,
                     gint             *nreturn_vals,
                     GimpParam       **return_vals);
 
+gboolean      undo_touched;
+gboolean      load_interactive;
+gchar        *image_comment;
+gint32        display_ID;
+JpegSaveVals  jsvals;
+gint32        orig_image_ID_global;
+gint32        drawable_ID_global;
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
