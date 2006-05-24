@@ -1,3 +1,8 @@
+2006-05-24  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/scripts/copy-visible.scm: use canonical
+	procedure names in the help string.
+
 2006-05-24  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimprc-blurbs.h (SWAP_PATH_BLURB, TEMP_PATH_BLURB):
