@@ -75,6 +75,7 @@ scripts = \
 	predator.scm			\
 	pupi-button.scm			\
 	rendermap.scm			\
+	reverse-layers.scm		\
 	ripply-anim.scm			\
 	round-corners.scm		\
 	script-fu-util.scm		\

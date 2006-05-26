@@ -1,3 +1,8 @@
+2006-05-26  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/scripts/reverse-layers.scm: new script from
+	Akkana Peck which reverses the layers in an image.
+
 2006-05-26  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/dicom.c: applied patch from Dov Grobgeld 
