@@ -1,3 +1,8 @@
+2006-05-26  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/dicom.c: applied patch from Dov Grobgeld 
+	with several fixes for dicom loading, fixes bug #163256.
+
 2006-05-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/palette-import-dialog.c: set the "Number of colors"
