@@ -466,21 +466,37 @@ palette_import_image_changed (GimpContext  *context,
                               GimpImage    *image,
                               ImportDialog *dialog)
 {
-  if (image && dialog->import_type == IMAGE_IMPORT)
+  if (dialog->import_type == IMAGE_IMPORT)
     {
-      gchar *basename;
-      gchar *label;
+      gboolean sensitive;
 
-      basename =
-        file_utils_uri_display_basename (gimp_image_get_uri (image));
-      label = g_strdup_printf ("%s-%d", basename, gimp_image_get_ID (image));
-      g_free (basename);
+      if (image)
+        {
+          gchar *basename;
+          gchar *label;
 
-      gtk_entry_set_text (GTK_ENTRY (dialog->entry), label);
+          basename =
+            file_utils_uri_display_basename (gimp_image_get_uri (image));
+          label = g_strdup_printf ("%s-%d", basename, gimp_image_get_ID (image));
+          g_free (basename);
 
-      g_free (label);
+          gtk_entry_set_text (GTK_ENTRY (dialog->entry), label);
 
-      palette_import_make_palette (dialog);
+          g_free (label);
+
+          palette_import_make_palette (dialog);
+
+          sensitive = (gimp_image_base_type (image) != GIMP_INDEXED);
+        }
+      else
+        {
+          sensitive = FALSE;
+        }
+
+      gimp_scale_entry_set_sensitive (GTK_OBJECT (dialog->threshold),
+                                      sensitive);
+      gimp_scale_entry_set_sensitive (GTK_OBJECT (dialog->num_colors),
+                                      sensitive);
     }
 }
 
@@ -592,11 +608,11 @@ palette_import_image_callback (GtkWidget    *widget,
   gtk_widget_set_sensitive (dialog->image_combo,    TRUE);
   gtk_widget_set_sensitive (dialog->file_chooser,   FALSE);
 
-  palette_import_image_changed (dialog->context, image, dialog);
-
   gimp_scale_entry_set_sensitive (GTK_OBJECT (dialog->threshold),  TRUE);
   gimp_scale_entry_set_sensitive (GTK_OBJECT (dialog->num_colors), TRUE);
   gimp_scale_entry_set_sensitive (GTK_OBJECT (dialog->columns),    TRUE);
+
+  palette_import_image_changed (dialog->context, image, dialog);
 }
 
 static void

@@ -1,3 +1,9 @@
+2006-05-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/palette-import-dialog.c: set the "Number of colors"
+	and "Interval" widgets insensitive for indexed images.
+	Fixes bug #342970.
+
 2006-05-24  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/png.c: moved "Load defaults" and "Save defaults"
