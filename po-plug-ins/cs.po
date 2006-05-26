@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-05-08 12:28+0200\n"
-"PO-Revision-Date: 2006-04-19 12:47+0200\n"
+"PO-Revision-Date: 2006-05-26 13:35+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -10713,15 +10713,15 @@ msgstr ""
 
 #: ../plug-ins/pagecurl/pagecurl.c:224
 msgid "_Pagecurl..."
-msgstr "_Rozčeření stránky..."
+msgstr "_Zkroucení stránky..."
 
 #: ../plug-ins/pagecurl/pagecurl.c:443
 msgid "Pagecurl Effect"
-msgstr "Efekt rozčeření stránky"
+msgstr "Efekt zkroucení stránky"
 
 #: ../plug-ins/pagecurl/pagecurl.c:458
 msgid "Curl Location"
-msgstr "Místo rozčeření"
+msgstr "Místo zkroucení"
 
 #: ../plug-ins/pagecurl/pagecurl.c:477
 msgid "Lower right"
@@ -10741,11 +10741,11 @@ msgstr "Zprava shora"
 
 #: ../plug-ins/pagecurl/pagecurl.c:520
 msgid "Curl Orientation"
-msgstr "Orientace rozčeření"
+msgstr "Orientace zkroucení"
 
 #: ../plug-ins/pagecurl/pagecurl.c:564
 msgid "_Shade under curl"
-msgstr "Z_tmavit pod rozčeřením"
+msgstr "_Stín pod zkroucením"
 
 #: ../plug-ins/pagecurl/pagecurl.c:577
 msgid "Current gradient (reversed)"
@@ -10765,11 +10765,11 @@ msgstr "_Krytí:"
 
 #: ../plug-ins/pagecurl/pagecurl.c:730
 msgid "Curl Layer"
-msgstr "Rozčeření vrstvy"
+msgstr "Zkroucení vrstvy"
 
 #: ../plug-ins/pagecurl/pagecurl.c:1018
 msgid "Page Curl..."
-msgstr "Rozčeření stránky..."
+msgstr "Zkroucení stránky..."
 
 #: ../plug-ins/print/gimp_color_window.c:208
 msgid "Print Color Adjust"

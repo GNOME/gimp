@@ -1,3 +1,7 @@
+2006-05-26  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Fixed bad Czech strings.
+
 2006-04-24  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
 	* es.po: Updated Spanish translation.
