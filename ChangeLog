@@ -1,3 +1,7 @@
+2006-05-26  Manish Singh  <yosh@gimp.org>
+
+	* gimp.pc.in: define datarootdir, so we work with newer autoconf.
+
 2006-05-26  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/scripts/reverse-layers.scm: new script from
