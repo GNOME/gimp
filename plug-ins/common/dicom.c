@@ -320,7 +320,7 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  while (TRUE)
+  while (!feof (DICOM))
     {
       guint16  group_word;
       guint16  element_word;
@@ -329,6 +329,9 @@ load_image (const gchar *filename)
       guint32  ctx_ul;
       guint16  ctx_us;
       guint8  *value;
+      guint32  tag;
+      gboolean do_toggle_endian= FALSE;
+      gboolean implicit_encoding = FALSE;
 
       if (fread (&group_word, 1, 2, DICOM) == 0)
 	break;
@@ -337,14 +340,25 @@ load_image (const gchar *filename)
       fread (&element_word, 1, 2, DICOM);
       element_word = g_ntohs (GUINT16_SWAP_LE_BE (element_word));
 
-      fread (value_rep, 1, 2, DICOM);
+      tag = (group_word << 16) | element_word;
+      fread(value_rep, 2, 1, DICOM);
       value_rep[2] = 0;
 
-      /* Implicit encoding */
-      if (value_rep[0] < 'A' ||
-          value_rep[0] > 'Z' ||
-          value_rep[1] < 'A' ||
-          value_rep[1] > 'Z')
+      /* Check if the value rep looks valid. There probably is a
+         better way of checking this...
+       */
+      if ((/* Always need lookup for implicit encoding */
+	   tag > 0x0002ffff && implicit_encoding)
+	  /* This heuristics isn't used if we are doing implicit
+	     encoding according to the value representation... */
+	  || ((value_rep[0] < 'A' || value_rep[0] > 'Z'
+	  || value_rep[1] < 'A' || value_rep[1] > 'Z')
+
+	  /* I found this in one of Ednas images. It seems like a
+	     bug...
+	  */
+	      && !(value_rep[0] == ' ' && value_rep[1]))
+          )
         {
           /* Look up type from the dictionary. At the time we dont
 	     support this option... */
@@ -375,6 +389,7 @@ load_image (const gchar *filename)
 	  fread (&element_length, 1, 4, DICOM);
 	  element_length = g_ntohl (GUINT32_SWAP_LE_BE (element_length));
 	}
+      /* Short length */
       else
 	{
 	  guint16 el16;
@@ -382,6 +397,14 @@ load_image (const gchar *filename)
 	  fread (&el16, 1, 2, DICOM);
 	  element_length = g_ntohs (GUINT16_SWAP_LE_BE (el16));
 	}
+
+      /* Sequence of items - just ignore the delimiters... */
+      if (element_length == 0xffffffff)
+	continue;
+
+      /* Sequence of items item tag... Ignore as well */
+      if (tag == 0xFFFEE000)
+	continue;
 
       /* Read contents. Allocate a bit more to make room for casts to int
        below. */
@@ -393,7 +416,24 @@ load_image (const gchar *filename)
       ctx_us = *(guint16 *) value;
 
       /* Recognize some critical tags */
-      if (group_word == 0x0028)
+      if (group_word == 0x0002)
+        {
+          switch (element_word)
+            {
+            case 0x0010:   /* transfer syntax id */
+              if (strcmp("1.2.840.10008.1.2", (char*)value) == 0)
+                {
+                  do_toggle_endian = FALSE;
+                  implicit_encoding = TRUE;
+                }
+              else if (strcmp("1.2.840.10008.1.2.1", (char*)value) == 0)
+                do_toggle_endian = FALSE;
+              else if (strcmp("1.2.840.10008.1.2.2", (char*)value) == 0)
+                do_toggle_endian = TRUE;
+              break;
+            }
+        }
+      else if (group_word == 0x0028)
 	{
 	  switch (element_word)
 	    {

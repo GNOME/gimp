@@ -1,3 +1,10 @@
+2006-05-26  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Merge from HEAD:
+
+	* plug-ins/common/dicom.c: applied patch from Dov Grobgeld 
+	with several fixes for dicom loading, fixes bug #163256.
+
 2006-05-23  Michael Natterer  <mitch@gimp.org>
 
 	Merge from HEAD:
