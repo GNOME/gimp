@@ -1,5 +1,10 @@
 2006-05-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-crop.c (gimp_image_crop_guess_bgcolor):
+	remove code duplication, cleanup.
+
+2006-05-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.h: fix spacing broken by tab removal.
 
 2006-05-27  Michael Natterer  <mitch@gimp.org>

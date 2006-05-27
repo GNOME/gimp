@@ -425,11 +425,12 @@ gimp_image_crop_guess_bgcolor (GimpPickable *pickable,
                                gint          y1,
                                gint          y2)
 {
-  guchar *tl = NULL;
-  guchar *tr = NULL;
-  guchar *bl = NULL;
-  guchar *br = NULL;
-  gint    i, alpha;
+  AutoCropType  retval = AUTO_CROP_NOTHING;
+  guchar       *tl     = NULL;
+  guchar       *tr     = NULL;
+  guchar       *bl     = NULL;
+  guchar       *br     = NULL;
+  gint          i;
 
   for (i = 0; i < bytes; i++)
     color[i] = 0;
@@ -438,28 +439,23 @@ gimp_image_crop_guess_bgcolor (GimpPickable *pickable,
    * background-color to see if at least 2 corners are equal.
    */
 
-  if (!(tl = gimp_pickable_get_color_at (pickable, x1, y1)))
-    goto ERROR;
-  if (!(tr = gimp_pickable_get_color_at (pickable, x1, y2)))
-    goto ERROR;
-  if (!(bl = gimp_pickable_get_color_at (pickable, x2, y1)))
-    goto ERROR;
-  if (!(br = gimp_pickable_get_color_at (pickable, x2, y2)))
-    goto ERROR;
+  if (! (tl = gimp_pickable_get_color_at (pickable, x1, y1)) ||
+      ! (tr = gimp_pickable_get_color_at (pickable, x1, y2)) ||
+      ! (bl = gimp_pickable_get_color_at (pickable, x2, y1)) ||
+      ! (br = gimp_pickable_get_color_at (pickable, x2, y2)))
+    goto done;
 
   if (has_alpha)
     {
-      alpha = bytes - 1;
+      gint alpha = bytes - 1;
+
       if ((tl[alpha] == 0 && tr[alpha] == 0) ||
           (tl[alpha] == 0 && bl[alpha] == 0) ||
           (tr[alpha] == 0 && br[alpha] == 0) ||
           (bl[alpha] == 0 && br[alpha] == 0))
         {
-          g_free (tl);
-          g_free (tr);
-          g_free (bl);
-          g_free (br);
-          return AUTO_CROP_ALPHA;
+          retval = AUTO_CROP_ALPHA;
+          goto done;
         }
     }
 
@@ -467,29 +463,22 @@ gimp_image_crop_guess_bgcolor (GimpPickable *pickable,
       gimp_image_crop_colors_equal (tl, bl, bytes))
     {
       memcpy (color, tl, bytes);
+      retval = AUTO_CROP_COLOR;
     }
   else if (gimp_image_crop_colors_equal (br, bl, bytes) ||
            gimp_image_crop_colors_equal (br, tr, bytes))
     {
       memcpy (color, br, bytes);
-    }
-  else
-    {
-      goto ERROR;
+      retval = AUTO_CROP_COLOR;
     }
 
+done:
   g_free (tl);
   g_free (tr);
   g_free (bl);
   g_free (br);
-  return AUTO_CROP_COLOR;
 
- ERROR:
-  g_free (tl);
-  g_free (tr);
-  g_free (bl);
-  g_free (br);
-  return AUTO_CROP_NOTHING;
+  return retval;
 }
 
 static int
