@@ -1,5 +1,9 @@
 2006-05-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.h: fix spacing broken by tab removal.
+
+2006-05-27  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/enumcode.pl: cast the return value of
 	gimp_enums_get_type_names() to (const gchar **) to fix compiler
 	warning.
