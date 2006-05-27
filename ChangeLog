@@ -1,3 +1,11 @@
+2006-05-27  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/enumcode.pl: cast the return value of
+	gimp_enums_get_type_names() to (const gchar **) to fix compiler
+	warning.
+
+	* libgimp/gimpenums.c.tail: regenerated.
+
 2006-05-26  Manish Singh  <yosh@gimp.org>
 
 	* gimp.pc.in: define datarootdir, so we work with newer autoconf.

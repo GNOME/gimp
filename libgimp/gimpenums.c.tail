@@ -148,5 +148,5 @@ gimp_enums_get_type_names (gint *n_type_names)
 
   *n_type_names = G_N_ELEMENTS (type_names);
 
-  return type_names;
+  return (const gchar **) type_names;
 }
