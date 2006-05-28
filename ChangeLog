@@ -1,5 +1,11 @@
 2006-05-28  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/pnm.c: applied patch from Martin Collins which
+	adds PBM (bitmap) support. Fixes bug #167578. Did some additional
+	cleanups and sprinkled some gimp_progress_update(1.0).
+
+2006-05-28  Michael Natterer  <mitch@gimp.org>
+
 	Applied patch from David Gowers which adds actions to select
 	palette and colormap colors with actions. Modified the patch quite
 	a bit. Fixes bug #130123.
