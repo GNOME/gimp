@@ -1,3 +1,7 @@
+2006-05-28  Manish Singh  <yosh@gimp.org>
+
+	* gimp.pc.in: define datarootdir, so we work with newer autoconf.
+
 2006-05-26  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merge from HEAD:
