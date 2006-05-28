@@ -1,5 +1,14 @@
 2006-05-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimppalette-import.[ch]: added support for extracting
+	colors from the selected pixels only.
+
+	* app/dialogs/palette-import-dialog.c: added "Sample merged" and
+	"Selected Pixels only" toggles. Fixes bug #316212. Cleaned up the
+	code quite a bit.
+
+2006-05-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpcolorpickertool.c (gimp_color_picker_tool_picked):
 	removed all code except info dialog updating and chain up instead.
 
