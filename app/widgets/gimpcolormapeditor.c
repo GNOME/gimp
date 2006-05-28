@@ -63,6 +63,7 @@ enum
   LAST_SIGNAL
 };
 
+#define EPSILON 1e-10
 
 #define HAVE_COLORMAP(image) \
         (image != NULL && \
@@ -86,8 +87,6 @@ static void   gimp_colormap_editor_draw_cell       (GimpColormapEditor *editor,
 static void   gimp_colormap_editor_clear           (GimpColormapEditor *editor,
                                                     gint                start_row);
 static void   gimp_colormap_editor_update_entries  (GimpColormapEditor *editor);
-static void   gimp_colormap_editor_set_index       (GimpColormapEditor *editor,
-                                                    gint                i);
 
 static void   gimp_colormap_preview_size_allocate  (GtkWidget          *widget,
                                                     GtkAllocation      *allocation,
@@ -344,21 +343,98 @@ gimp_colormap_editor_new (GimpMenuFactory *menu_factory)
                        NULL);
 }
 
-void
-gimp_colormap_editor_selected (GimpColormapEditor *editor,
-                               GdkModifierType     state)
+gint
+gimp_colormap_editor_get_index (GimpColormapEditor *editor,
+                                const GimpRGB      *search)
 {
-  g_return_if_fail (GIMP_IS_COLORMAP_EDITOR (editor));
+  GimpImage *image;
+  gint       index;
 
-  g_signal_emit (editor, editor_signals[SELECTED], 0, state);
+  g_return_val_if_fail (GIMP_IS_COLORMAP_EDITOR (editor), 01);
+
+  image = GIMP_IMAGE_EDITOR (editor)->image;
+
+  if (! HAVE_COLORMAP (image))
+    return -1;
+
+  index = editor->col_index;
+
+  if (search)
+    {
+      GimpRGB temp;
+
+      gimp_image_get_colormap_entry (image, index, &temp);
+
+      if (gimp_rgb_distance (&temp, search) > EPSILON)
+        {
+          gint n_colors = gimp_image_get_colormap_size (image);
+          gint i;
+
+          for (i = 0; i < n_colors; i++)
+            {
+              gimp_image_get_colormap_entry (image, i, &temp);
+
+              if (gimp_rgb_distance (&temp, search) < EPSILON)
+                {
+                  index = i;
+                  break;
+                }
+            }
+        }
+    }
+
+  return index;
+}
+
+gboolean
+gimp_colormap_editor_set_index (GimpColormapEditor *editor,
+                                gint                index,
+                                GimpRGB            *color)
+{
+  GimpImage *image;
+
+  g_return_val_if_fail (GIMP_IS_COLORMAP_EDITOR (editor), FALSE);
+
+  image = GIMP_IMAGE_EDITOR (editor)->image;
+
+  if (! HAVE_COLORMAP (image))
+    return FALSE;
+
+  index = CLAMP (index, 0, gimp_image_get_colormap_size (image) - 1);
+
+  if (index != editor->col_index)
+    {
+      gint old = editor->col_index;
+
+      editor->col_index     = index;
+      editor->dnd_col_index = index;
+
+      gimp_colormap_editor_draw_cell (editor, old);
+      gimp_colormap_editor_draw_cell (editor, index);
+
+      gimp_colormap_editor_update_entries (editor);
+    }
+
+  if (color)
+    gimp_image_get_colormap_entry (GIMP_IMAGE_EDITOR (editor)->image,
+                                   index, color);
+
+  return TRUE;
 }
 
 gint
-gimp_colormap_editor_col_index (GimpColormapEditor *editor)
+gimp_colormap_editor_max_index (GimpColormapEditor *editor)
 {
-  g_return_val_if_fail (GIMP_IS_COLORMAP_EDITOR (editor), 0);
+  GimpImage *image;
 
-  return editor->col_index;
+  g_return_val_if_fail (GIMP_IS_COLORMAP_EDITOR (editor), -1);
+
+  image = GIMP_IMAGE_EDITOR (editor)->image;
+
+  if (! HAVE_COLORMAP (image))
+    return -1;
+
+  return MAX (0, gimp_image_get_colormap_size (image) - 1);
 }
 
 
@@ -598,24 +674,6 @@ gimp_colormap_editor_update_entries (GimpColormapEditor *editor)
 }
 
 static void
-gimp_colormap_editor_set_index (GimpColormapEditor *editor,
-                                gint                i)
-{
-  if (i != editor->col_index)
-    {
-      gint old = editor->col_index;
-
-      editor->col_index     = i;
-      editor->dnd_col_index = i;
-
-      gimp_colormap_editor_draw_cell (editor, old);
-      gimp_colormap_editor_draw_cell (editor, i);
-
-      gimp_colormap_editor_update_entries (editor);
-    }
-}
-
-static void
 gimp_colormap_preview_size_allocate (GtkWidget          *widget,
                                      GtkAllocation      *alloc,
                                      GimpColormapEditor *editor)
@@ -653,8 +711,8 @@ gimp_colormap_preview_button_press (GtkWidget          *widget,
   switch (bevent->button)
     {
     case 1:
-      gimp_colormap_editor_set_index (editor, col);
-      gimp_colormap_editor_selected (editor, bevent->state);
+      gimp_colormap_editor_set_index (editor, col, NULL);
+      g_signal_emit (editor, editor_signals[SELECTED], 0, bevent->state);
 
       if (bevent->type == GDK_2BUTTON_PRESS)
         {
@@ -674,7 +732,7 @@ gimp_colormap_preview_button_press (GtkWidget          *widget,
       break;
 
     case 3:
-      gimp_colormap_editor_set_index (editor, col);
+      gimp_colormap_editor_set_index (editor, col, NULL);
       gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
       return TRUE;
 
@@ -721,7 +779,7 @@ gimp_colormap_adjustment_changed (GtkAdjustment      *adjustment,
 
   if (HAVE_COLORMAP (image))
     {
-      gimp_colormap_editor_set_index (editor, adjustment->value + 0.5);
+      gimp_colormap_editor_set_index (editor, adjustment->value + 0.5, NULL);
 
       gimp_colormap_editor_update_entries (editor);
     }

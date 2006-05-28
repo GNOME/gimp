@@ -70,5 +70,13 @@ void        gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
 void        gimp_palette_editor_zoom       (GimpPaletteEditor  *editor,
                                             GimpZoomType        zoom_type);
 
+gint        gimp_palette_editor_get_index  (GimpPaletteEditor *editor,
+                                            const GimpRGB     *search);
+gboolean    gimp_palette_editor_set_index  (GimpPaletteEditor *editor,
+                                            gint               index,
+                                            GimpRGB           *color);
+
+gint        gimp_palette_editor_max_index  (GimpPaletteEditor *editor);
+
 
 #endif /* __GIMP_PALETTE_EDITOR_H__ */

@@ -67,9 +67,13 @@ GType       gimp_colormap_editor_get_type  (void) G_GNUC_CONST;
 
 GtkWidget * gimp_colormap_editor_new       (GimpMenuFactory    *menu_factory);
 
-void        gimp_colormap_editor_selected  (GimpColormapEditor *editor,
-                                            GdkModifierType     state);
-gint        gimp_colormap_editor_col_index (GimpColormapEditor *editor);
+gint        gimp_colormap_editor_get_index (GimpColormapEditor *editor,
+                                            const GimpRGB      *search);
+gboolean    gimp_colormap_editor_set_index (GimpColormapEditor *editor,
+                                            gint                index,
+                                            GimpRGB            *color);
+
+gint        gimp_colormap_editor_max_index (GimpColormapEditor *editor);
 
 
 #endif /* __GIMP_COLORMAP_EDITOR_H__ */

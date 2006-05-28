@@ -1,3 +1,22 @@
+2006-05-28  Michael Natterer  <mitch@gimp.org>
+
+	Applied patch from David Gowers which adds actions to select
+	palette and colormap colors with actions. Modified the patch quite
+	a bit. Fixes bug #130123.
+
+	* app/widgets/gimpcolormapeditor.[ch]
+	* app/widgets/gimppaletteeditor.[ch]: add functions get_index()
+	which gets the currently selected color's index (optionally the
+	index of a passed color), set_index() which sets the selected
+	color by index, and max_index() which returns the maximum possible
+	color index.
+
+	* app/dialogs/dialogs-constructors.c: changed accordingly.
+
+	* app/actions/context-actions.c
+	* app/actions/context-commands.[ch]: actions and callbacks which
+	use the new functions.
+
 2006-05-28  Akkana Peck  <akkana@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/reverse-layers.scm: revert

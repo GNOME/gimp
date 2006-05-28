@@ -710,7 +710,7 @@ dialogs_indexed_palette_selected (GimpColormapEditor *editor,
       GimpRGB color;
       gint    index;
 
-      index = gimp_colormap_editor_col_index (editor);
+      index = gimp_colormap_editor_get_index (editor, NULL);
 
       gimp_image_get_colormap_entry (image_editor->image, index, &color);
 

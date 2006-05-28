@@ -74,6 +74,198 @@ static const GimpActionEntry context_actions[] =
     GIMP_HELP_TOOLBOX_SWAP_COLORS }
 };
 
+static GimpEnumActionEntry context_palette_foreground_actions[] =
+{
+  { "context-palette-foreground-set", GIMP_STOCK_PALETTE,
+    "Foreground Palette color Set", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, FALSE,
+    NULL },
+  { "context-palette-foreground-first", GIMP_STOCK_PALETTE,
+    "Foreground Palette color First", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "context-palette-foreground-last", GIMP_STOCK_PALETTE,
+    "Foreground Palette color Last", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "context-palette-foreground-previous", GIMP_STOCK_PALETTE,
+    "Foreground Palette color Previous", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "context-palette-foreground-next", GIMP_STOCK_PALETTE,
+    "Foreground Palette color Next", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "context-palette-foreground-previous-skip", GIMP_STOCK_PALETTE,
+    "Foreground Palette color Skip Back", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "context-palette-foreground-next-skip", GIMP_STOCK_PALETTE,
+    "Foreground Palette color Skip Forward", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL }
+};
+
+static GimpEnumActionEntry context_palette_background_actions[] =
+{
+  { "context-palette-background-set", GIMP_STOCK_PALETTE,
+    "Background Palette color Set", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, FALSE,
+    NULL },
+  { "context-palette-background-first", GIMP_STOCK_PALETTE,
+    "Background Palette color First", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "context-palette-background-last", GIMP_STOCK_PALETTE,
+    "Background Palette color Last", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "context-palette-background-previous", GIMP_STOCK_PALETTE,
+    "Background Palette color Previous", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "context-palette-background-next", GIMP_STOCK_PALETTE,
+    "Background Palette color Next", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "context-palette-background-previous-skip", GIMP_STOCK_PALETTE,
+    "Background Palette color Skip Back", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "context-palette-background-next-skip", GIMP_STOCK_PALETTE,
+    "Background Palette color Skip ahead", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL }
+};
+
+static GimpEnumActionEntry context_colormap_foreground_actions[] =
+{
+  { "context-colormap-foreground-set", GIMP_STOCK_INDEXED_PALETTE,
+    "Foreground Colormap color Set", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, FALSE,
+    NULL },
+  { "context-colormap-foreground-first", GIMP_STOCK_INDEXED_PALETTE,
+    "Foreground Colormap color First", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "context-colormap-foreground-last", GIMP_STOCK_INDEXED_PALETTE,
+    "Foreground Colormap color Last", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "context-colormap-foreground-previous", GIMP_STOCK_INDEXED_PALETTE,
+    "Foreground Colormap color Previous", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "context-colormap-foreground-next", GIMP_STOCK_INDEXED_PALETTE,
+    "Foreground Colormap color Next", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "context-colormap-foreground-previous-skip", GIMP_STOCK_INDEXED_PALETTE,
+    "Foreground Colormap color Skip Back", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "context-colormap-foreground-next-skip", GIMP_STOCK_INDEXED_PALETTE,
+    "Foreground Colormap color Skip Forward", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL }
+};
+
+static GimpEnumActionEntry context_colormap_background_actions[] =
+{
+  { "context-colormap-background-set", GIMP_STOCK_INDEXED_PALETTE,
+    "Background Colormap color Set", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, FALSE,
+    NULL },
+  { "context-colormap-background-first", GIMP_STOCK_INDEXED_PALETTE,
+    "Background Colormap color First", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "context-colormap-background-last", GIMP_STOCK_INDEXED_PALETTE,
+    "Background Colormap color Last", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "context-colormap-background-previous", GIMP_STOCK_INDEXED_PALETTE,
+    "Background Colormap color Previous", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "context-colormap-background-next", GIMP_STOCK_INDEXED_PALETTE,
+    "Background Colormap color Next", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "context-colormap-background-previous-skip", GIMP_STOCK_INDEXED_PALETTE,
+    "Background Colormap color Skip Back", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "context-colormap-background-next-skip", GIMP_STOCK_INDEXED_PALETTE,
+    "Background Colormap color Skip ahead", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL }
+};
+
+static GimpEnumActionEntry context_swatch_foreground_actions[] =
+{
+  { "context-swatch-foreground-set", GIMP_STOCK_PALETTE,
+    "Foreground Swatch color Set", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, FALSE,
+    NULL },
+  { "context-swatch-foreground-first", GIMP_STOCK_PALETTE,
+    "Foreground Swatch color First", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "context-swatch-foreground-last", GIMP_STOCK_PALETTE,
+    "Foreground Swatch color Last", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "context-swatch-foreground-previous", GIMP_STOCK_PALETTE,
+    "Foreground Swatch color Previous", "9", NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "context-swatch-foreground-next", GIMP_STOCK_PALETTE,
+    "Foreground Swatch color Next", "0", NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "context-swatch-foreground-previous-skip", GIMP_STOCK_PALETTE,
+    "Foreground Swatch color Skip Back", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "context-swatch-foreground-next-skip", GIMP_STOCK_PALETTE,
+    "Foreground Swatch color Skip Forward", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL }
+};
+
+static GimpEnumActionEntry context_swatch_background_actions[] =
+{
+  { "context-swatch-background-set", GIMP_STOCK_PALETTE,
+    "Background Swatch color Set", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, FALSE,
+    NULL },
+  { "context-swatch-background-first", GIMP_STOCK_PALETTE,
+    "Background Swatch color First", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "context-swatch-background-last", GIMP_STOCK_PALETTE,
+    "Background Swatch color Last", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "context-swatch-background-previous", GIMP_STOCK_PALETTE,
+    "Background Swatch color Previous", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "context-swatch-background-next", GIMP_STOCK_PALETTE,
+    "Background Swatch color Next", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "context-swatch-background-previous-skip", GIMP_STOCK_PALETTE,
+    "Background Swatch color Skip Back", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "context-swatch-background-next-skip", GIMP_STOCK_PALETTE,
+    "Background Swatch color Skip ahead", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL }
+};
+
 static const GimpEnumActionEntry context_foreground_red_actions[] =
 {
   { "context-foreground-red-set", GIMP_STOCK_CHANNEL_RED,
@@ -837,6 +1029,34 @@ context_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  context_actions,
                                  G_N_ELEMENTS (context_actions));
+
+  gimp_action_group_add_enum_actions (group,
+                                      context_palette_foreground_actions,
+                                      G_N_ELEMENTS (context_palette_foreground_actions),
+                                      G_CALLBACK (context_palette_foreground_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_palette_background_actions,
+                                      G_N_ELEMENTS (context_palette_background_actions),
+                                      G_CALLBACK (context_palette_background_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
+                                      context_colormap_foreground_actions,
+                                      G_N_ELEMENTS (context_colormap_foreground_actions),
+                                      G_CALLBACK (context_colormap_foreground_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_colormap_background_actions,
+                                      G_N_ELEMENTS (context_colormap_background_actions),
+                                      G_CALLBACK (context_colormap_background_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
+                                      context_swatch_foreground_actions,
+                                      G_N_ELEMENTS (context_swatch_foreground_actions),
+                                      G_CALLBACK (context_swatch_foreground_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_swatch_background_actions,
+                                      G_N_ELEMENTS (context_swatch_background_actions),
+                                      G_CALLBACK (context_swatch_background_cmd_callback));
+
 
   gimp_action_group_add_enum_actions (group,
                                       context_foreground_red_actions,
