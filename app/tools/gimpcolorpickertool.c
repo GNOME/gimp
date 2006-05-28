@@ -32,12 +32,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpcolorframe.h"
-#include "widgets/gimpcolormapeditor.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdockable.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimppaletteeditor.h"
-#include "widgets/gimpsessioninfo.h"
 #include "widgets/gimptooldialog.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -206,7 +201,7 @@ gimp_color_picker_tool_modifier_key (GimpTool        *tool,
     }
   else if (key == GDK_CONTROL_MASK)
     {
-       switch (options->pick_mode)
+      switch (options->pick_mode)
         {
         case GIMP_COLOR_PICK_MODE_FOREGROUND:
           g_object_set (options, "pick-mode", GIMP_COLOR_PICK_MODE_BACKGROUND,
@@ -249,10 +244,8 @@ gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
                                GimpRGB            *color,
                                gint                color_index)
 {
-  GimpTool               *tool        = GIMP_TOOL (color_tool);
   GimpColorPickerTool    *picker_tool = GIMP_COLOR_PICKER_TOOL (color_tool);
   GimpColorPickerOptions *options;
-  GimpContext            *user_context;
 
   options = GIMP_COLOR_PICKER_OPTIONS (color_tool->options);
 
@@ -263,83 +256,9 @@ gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
     gimp_color_picker_tool_info_update (picker_tool, sample_type,
                                         color, color_index);
 
-  user_context = gimp_get_user_context (tool->display->image->gimp);
-
-  if ((options->pick_mode == GIMP_COLOR_PICK_MODE_FOREGROUND ||
-       options->pick_mode == GIMP_COLOR_PICK_MODE_BACKGROUND) &&
-      GIMP_IMAGE_TYPE_IS_INDEXED (sample_type))
-    {
-      GimpDialogFactory *dialog_factory;
-      GimpSessionInfo   *info;
-
-      dialog_factory = gimp_dialog_factory_from_name ("dock");
-      info = gimp_dialog_factory_find_session_info (dialog_factory,
-                                                    "gimp-indexed-palette");
-
-      if (info && info->widget)
-        {
-          GtkWidget *colormap_editor;
-
-          colormap_editor = gtk_bin_get_child (GTK_BIN (info->widget));
-
-          gtk_adjustment_set_value
-            (GIMP_COLORMAP_EDITOR (colormap_editor)->index_adjustment,
-             color_index);
-        }
-    }
-
-  switch (options->pick_mode)
-    {
-    case GIMP_COLOR_PICK_MODE_NONE:
-      break;
-
-    case GIMP_COLOR_PICK_MODE_FOREGROUND:
-      gimp_context_set_foreground (user_context, color);
-      break;
-
-    case GIMP_COLOR_PICK_MODE_BACKGROUND:
-      gimp_context_set_background (user_context, color);
-      break;
-
-    case GIMP_COLOR_PICK_MODE_PALETTE:
-      {
-        GimpDialogFactory *dialog_factory;
-        GdkScreen         *screen;
-        GtkWidget         *dockable;
-
-        dialog_factory = gimp_dialog_factory_from_name ("dock");
-        screen = gtk_widget_get_screen (tool->display->shell);
-        dockable = gimp_dialog_factory_dialog_raise (dialog_factory, screen,
-                                                     "gimp-palette-editor",
-                                                     -1);
-
-        if (dockable)
-          {
-            GtkWidget *palette_editor;
-            GimpData  *data;
-
-            /* don't blink like mad when updating */
-            if (pick_state == GIMP_COLOR_PICK_STATE_UPDATE)
-              gimp_dockable_blink_cancel (GIMP_DOCKABLE (dockable));
-
-            palette_editor = gtk_bin_get_child (GTK_BIN (dockable));
-
-            data = gimp_data_editor_get_data (GIMP_DATA_EDITOR (palette_editor));
-
-            if (! data)
-              {
-                data = GIMP_DATA (gimp_context_get_palette (user_context));
-
-                gimp_data_editor_set_data (GIMP_DATA_EDITOR (palette_editor),
-                                           data);
-              }
-
-            gimp_palette_editor_pick_color (GIMP_PALETTE_EDITOR (palette_editor),
-                                            color, pick_state);
-          }
-      }
-      break;
-    }
+  GIMP_COLOR_TOOL_CLASS (parent_class)->picked (color_tool, pick_state,
+                                                sample_type, color,
+                                                color_index);
 }
 
 static void

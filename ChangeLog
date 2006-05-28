@@ -1,3 +1,16 @@
+2006-05-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpcolorpickertool.c (gimp_color_picker_tool_picked):
+	removed all code except info dialog updating and chain up instead.
+
+	* app/tools/gimpcolortool.c (gimp_color_tool_real_picked): newly
+	added default implementation. Also updates the colormap dialog and
+	picks into a palette.
+
+	* app/tools/gimppainttool.c (gimp_paint_tool_color_picked):
+	removed. The default impl. does this and much more now. Hopefully
+	fixes bug #320660.
+
 2006-05-27  Akkana Peck  <akkana@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/reverse-layers.scm: if any layers

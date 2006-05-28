@@ -101,12 +101,6 @@ static void   gimp_paint_tool_cursor_update  (GimpTool            *tool,
 
 static void   gimp_paint_tool_draw           (GimpDrawTool        *draw_tool);
 
-static void   gimp_paint_tool_color_picked   (GimpColorTool       *color_tool,
-                                              GimpColorPickState   pick_state,
-                                              GimpImageType        sample_type,
-                                              GimpRGB             *color,
-                                              gint                 color_index);
-
 static void   gimp_paint_tool_brush_changed  (GimpContext         *context,
                                               GimpBrush           *brush,
                                               GimpPaintTool       *paint_tool);
@@ -129,10 +123,9 @@ G_DEFINE_TYPE (GimpPaintTool, gimp_paint_tool, GIMP_TYPE_COLOR_TOOL)
 static void
 gimp_paint_tool_class_init (GimpPaintToolClass *klass)
 {
-  GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
-  GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
-  GimpDrawToolClass  *draw_tool_class  = GIMP_DRAW_TOOL_CLASS (klass);
-  GimpColorToolClass *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
+  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
+  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
+  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   object_class->constructor  = gimp_paint_tool_constructor;
   object_class->finalize     = gimp_paint_tool_finalize;
@@ -146,8 +139,6 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
   tool_class->cursor_update  = gimp_paint_tool_cursor_update;
 
   draw_tool_class->draw      = gimp_paint_tool_draw;
-
-  color_tool_class->picked   = gimp_paint_tool_color_picked;
 }
 
 static void
@@ -824,35 +815,6 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
-}
-
-static void
-gimp_paint_tool_color_picked (GimpColorTool      *color_tool,
-                              GimpColorPickState  pick_state,
-                              GimpImageType       sample_type,
-                              GimpRGB            *color,
-                              gint                color_index)
-{
-  GimpTool *tool = GIMP_TOOL (color_tool);
-
-  if (tool->display)
-    {
-      GimpContext *context = gimp_get_user_context (tool->display->image->gimp);
-
-      switch (color_tool->pick_mode)
-        {
-        case GIMP_COLOR_PICK_MODE_FOREGROUND:
-          gimp_context_set_foreground (context, color);
-          break;
-
-        case GIMP_COLOR_PICK_MODE_BACKGROUND:
-          gimp_context_set_background (context, color);
-          break;
-
-        default:
-          break;
-        }
-    }
 }
 
 static void
