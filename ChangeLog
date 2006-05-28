@@ -1,3 +1,8 @@
+2006-05-28  Akkana Peck  <akkana@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/reverse-layers.scm: revert
+	previous change: allow layers without alpha to be moved up.
+
 2006-05-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimppalette-import.[ch]: added support for extracting

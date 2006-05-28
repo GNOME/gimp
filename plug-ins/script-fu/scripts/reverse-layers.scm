@@ -15,11 +15,7 @@
     (while (>= i 0)
            (let ((layer (aref layer-array i)))
              (if (= (car (gimp-layer-is-floating-sel layer)) FALSE)
-                 (prog1
-                  (if (= (car (gimp-drawable-has-alpha layer)) FALSE)
-                      (gimp-layer-add-alpha layer))
-                  (gimp-image-lower-layer-to-bottom img layer))))
-
+                 (gimp-image-lower-layer-to-bottom img layer)))
            (set! i (- i 1)))
 
     (gimp-image-undo-group-end img)
