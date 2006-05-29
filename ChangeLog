@@ -1,7 +1,13 @@
+2006-05-29  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpbrushgenerated.c (gimp_brush_generated_load): don't
+	choke on brush files with empty names (bug #343140).
+	(gimp_brush_generated_save): warn about brushes with empty names.
+
 2006-05-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdock.c (gimp_dock_key_press_event): make sure
-	text widgets get all key events first. Fixes bug #301006.
+	that text widgets get all key events first. Fixes bug #301006.
 
 2006-05-29  Sven Neumann  <sven@gimp.org>
 
