@@ -451,13 +451,13 @@ PKG_CHECK_MODULES(PANGOFT2, pangoft2 >= pangoft2_required_version, :,
 *** We require Pango with the optional support for FreeType2 compiled in.
 *** See the file 'INSTALL' for more help.]))
 
-AC_MSG_CHECKING([if Pango is version 1.11.0 or newer])
-if $PKG_CONFIG --atleast-version=1.11.0 pango; then
-  have_pango_1_11=yes
+AC_MSG_CHECKING([if Pango is version 1.13.0 or newer])
+if $PKG_CONFIG --atleast-version=1.13.0 pango; then
+  have_pango_1_13=yes
 else
-  have_pango_1_11=no
+  have_pango_1_13=no
 fi
-AC_MSG_RESULT($have_pango_1_11)
+AC_MSG_RESULT($have_pango_1_13)
 
 gimp_save_CFLAGS=$CFLAGS
 CFLAGS="$PANGOFT2_CFLAGS $CFLAGS"
@@ -1657,7 +1657,7 @@ if test "x$have_gtk_2_9" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
 fi
 
-if test "x$have_pango_1_11" != "xyes"; then
+if test "x$have_pango_1_13" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DPANGO_DISABLE_DEPRECATED"
 fi
 

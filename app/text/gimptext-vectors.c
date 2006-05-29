@@ -120,10 +120,10 @@ gimp_text_vector_coords (RenderContext   *context,
 }
 
 static gint
-moveto (FT_Vector *to,
-        gpointer   data)
+moveto (const FT_Vector *to,
+        gpointer         data)
 {
-  RenderContext *context = (RenderContext *) data;
+  RenderContext *context = data;
   GimpCoords     start;
 
 #if GIMP_TEXT_DEBUG
@@ -144,10 +144,10 @@ moveto (FT_Vector *to,
 }
 
 static gint
-lineto (FT_Vector *to,
-        gpointer   data)
+lineto (const FT_Vector *to,
+        gpointer         data)
 {
-  RenderContext *context = (RenderContext *) data;
+  RenderContext *context = data;
   GimpCoords     end;
 
 #if GIMP_TEXT_DEBUG
@@ -165,11 +165,11 @@ lineto (FT_Vector *to,
 }
 
 static gint
-conicto (FT_Vector *ftcontrol,
-         FT_Vector *to,
-         gpointer   data)
+conicto (const FT_Vector *ftcontrol,
+         const FT_Vector *to,
+         gpointer         data)
 {
-  RenderContext *context = (RenderContext *) data;
+  RenderContext *context = data;
   GimpCoords     control;
   GimpCoords     end;
 
@@ -189,12 +189,12 @@ conicto (FT_Vector *ftcontrol,
 }
 
 static gint
-cubicto (FT_Vector *ftcontrol1,
-         FT_Vector *ftcontrol2,
-         FT_Vector *to,
-         gpointer   data)
+cubicto (const FT_Vector *ftcontrol1,
+         const FT_Vector *ftcontrol2,
+         const FT_Vector *to,
+         gpointer         data)
 {
-  RenderContext *context = (RenderContext *) data;
+  RenderContext *context = data;
   GimpCoords     control1;
   GimpCoords     control2;
   GimpCoords     end;
