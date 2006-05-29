@@ -1,3 +1,7 @@
+2006-05-30  Tor Lillqvist  <tml@novell.com>
+
+	* libgimpwidgets/gimpwidgets.def: Sync.
+
 2006-05-29  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: use PANGO_DISABLE_DEPRECATED for pango < 0.13.0.
