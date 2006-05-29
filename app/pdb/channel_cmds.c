@@ -33,6 +33,7 @@
 #include "core/gimpchannel-combine.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
+#include "gimp-intl.h"
 
 
 static GValueArray *
@@ -169,6 +170,7 @@ channel_combine_masks_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
+      gimp_channel_push_undo (channel1, _("Combine Masks"));
       gimp_channel_combine_mask (channel1, channel2, operation, offx, offy);
     }
 

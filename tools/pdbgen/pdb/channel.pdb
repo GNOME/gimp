@@ -125,9 +125,10 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpchannel-combine.h") ],
+        headers => [ qw("core/gimpchannel-combine.h" "gimp-intl.h") ],
         code => <<'CODE'
 {
+  gimp_channel_push_undo (channel1, _("Combine Masks"));
   gimp_channel_combine_mask (channel1, channel2, operation, offx, offy);
 }
 CODE

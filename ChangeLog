@@ -1,5 +1,12 @@
 2006-05-29  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/channel.pdb (channel_combine_masks): push a
+	channel undo. Fixes bug #343026.
+
+	* app/pdb/channel_cmds.c: regenerated.
+
+2006-05-29  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gimpressionist/presets.c: check for NULL before using a
 	string pointer. Fixes bug #343121.
 
