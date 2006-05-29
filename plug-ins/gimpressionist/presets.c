@@ -33,14 +33,14 @@
 
 #define PRESETMAGIC "Preset"
 
-static GtkWidget    *presetnameentry = NULL;
-static GtkWidget    *presetlist      = NULL;
-static GtkWidget    *presetdesclabel = NULL;
+static GtkWidget    *presetnameentry  = NULL;
+static GtkWidget    *presetlist       = NULL;
+static GtkWidget    *presetdesclabel  = NULL;
 static GtkWidget    *presetsavebutton = NULL;
-static GtkWidget    *delete_button = NULL;
-static GtkListStore *store;
+static GtkWidget    *delete_button    = NULL;
+static GtkListStore *store            = NULL;
 static gchar        *selected_preset_orig_name = NULL;
-static gchar        *selected_preset_filename = NULL;
+static gchar        *selected_preset_filename  = NULL;
 
 static gboolean
 can_delete_preset (const gchar *abs)
@@ -695,11 +695,13 @@ save_preset (void)
 
   /* Create the ~/.gimp-$VER/gimpressionist/Presets directory if
    * it doesn't already exists.
-   * */
-  presets_dir_path = g_build_filename ((const char *) thispath->data, "Presets",
+   *
+   */
+  presets_dir_path = g_build_filename ((const gchar *) thispath->data,
+                                       "Presets",
                                        NULL);
 
-  if (!g_file_test (presets_dir_path, G_FILE_TEST_IS_DIR))
+  if (! g_file_test (presets_dir_path, G_FILE_TEST_IS_DIR))
     {
       if (g_mkdir (presets_dir_path,
                    S_IRUSR | S_IWUSR | S_IXUSR |
@@ -713,10 +715,11 @@ save_preset (void)
         }
     }
 
-  /* Check if the user-friendly name has changed. If so, then save it under
-   * a new file. If not - use the same file name.
-   * */
-  if (!strcmp (preset_name, selected_preset_orig_name))
+  /* Check if the user-friendly name has changed. If so, then save it
+   * under a new file. If not - use the same file name.
+   */
+  if (selected_preset_orig_name &&
+      strcmp (preset_name, selected_preset_orig_name) == 0)
     {
       fname = g_build_filename (presets_dir_path,
                                 selected_preset_filename,
@@ -726,6 +729,7 @@ save_preset (void)
     {
       fname = preset_create_filename (preset_name, presets_dir_path);
     }
+
   g_free (presets_dir_path);
 
   if (!fname)

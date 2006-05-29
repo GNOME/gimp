@@ -1,3 +1,8 @@
+2006-05-29  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gimpressionist/presets.c: check for NULL before using a
+	string pointer. Fixes bug #343121.
+
 2006-05-28  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/pnm.c: applied patch from Martin Collins which
