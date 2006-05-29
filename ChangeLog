@@ -1,5 +1,12 @@
 2006-05-29  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-server.c: suppress progress popups
+	by installing progress handlers that do nothing (bug #317498).
+
+	* plug-ins/script-fu/script-fu-interface.c: formatting.
+
+2006-05-29  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/channel.pdb (channel_combine_masks): push a
 	channel undo. Fixes bug #343026.
 

@@ -136,7 +136,8 @@ script_fu_interface_report_cc (gchar *command)
 
       new_command = g_strdup_printf ("%s <%d>",
 				     command, sf_interface->command_count);
-      gtk_label_set_text (GTK_LABEL (sf_interface->progress_label), new_command);
+      gtk_label_set_text (GTK_LABEL (sf_interface->progress_label),
+                          new_command);
       g_free (new_command);
     }
   else

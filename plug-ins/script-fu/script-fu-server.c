@@ -335,9 +335,62 @@ script_fu_server_listen (gint timeout)
 }
 
 static void
+server_progress_start (const gchar *message,
+                       gboolean     cancelable,
+                       gpointer     user_data)
+{
+  /* do nothing */
+}
+
+static void
+server_progress_end (gpointer user_data)
+{
+  /* do nothing */
+}
+
+static void
+server_progress_set_text (const gchar *message,
+                          gpointer     user_data)
+{
+  /* do nothing */
+}
+
+static void
+server_progress_set_value (gdouble   percentage,
+                           gpointer  user_data)
+{
+  /* do nothing */
+}
+
+
+/*
+ * Suppress progress popups by installing progress handlers that do nothing.
+ */
+static const gchar *
+server_progress_install (void)
+{
+  GimpProgressVtable vtable = { 0, };
+
+  vtable.start     = server_progress_start;
+  vtable.end       = server_progress_end;
+  vtable.set_text  = server_progress_set_text;
+  vtable.set_value = server_progress_set_value;
+
+  return gimp_progress_install_vtable (&vtable, NULL);
+}
+
+static void
+server_progress_uninstall (const gchar *progress)
+{
+  gimp_progress_uninstall (progress);
+}
+
+static void
 server_start (gint         port,
 	      const gchar *logfile)
 {
+  const gchar *progress;
+
   /* First of all, create the socket and set it up to accept connections. */
   /* This may fail if there's a server running on this port already.      */
   server_sock = make_socket (port);
@@ -360,6 +413,8 @@ server_start (gint         port,
   /*  Set up the clientname hash table  */
   clients = g_hash_table_new_full (g_direct_hash, NULL,
                                    NULL, (GDestroyNotify) g_free);
+
+  progress = server_progress_install ();
 
   server_log ("Script-fu server initialized and listening...\n");
 
@@ -384,6 +439,8 @@ server_start (gint         port,
 	  g_free (cmd);
 	}
     }
+
+  server_progress_uninstall (progress);
 
   server_quit ();
 }
