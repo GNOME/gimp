@@ -494,45 +494,41 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
         gimp_dialog_factory_add_dialog (factory, dialog);
     }
 
-  /*  finally, if we found an existing dialog or created a new one,
-   *  raise it
+  /*  Finally, if we found an existing dialog or created a new one, raise it.
    */
-  if (dialog)
+  if (! dialog)
+    return NULL;
+
+  if (GTK_WIDGET_TOPLEVEL (dialog))
     {
-      if (GTK_WIDGET_TOPLEVEL (dialog))
+      gtk_window_set_screen (GTK_WINDOW (dialog), screen);
+
+      if (present)
+        gtk_window_present (GTK_WINDOW (dialog));
+    }
+  else if (GIMP_IS_DOCKABLE (dialog))
+    {
+      GimpDockable *dockable = GIMP_DOCKABLE (dialog);
+
+      if (dockable->dockbook && dockable->dockbook->dock)
         {
-          gtk_window_set_screen (GTK_WINDOW (dialog), screen);
+          GtkNotebook *notebook = GTK_NOTEBOOK (dockable->dockbook);
+          gint         num      = gtk_notebook_page_num (notebook, dialog);
 
-          if (present)
-            gtk_window_present (GTK_WINDOW (dialog));
-        }
-      else if (GIMP_IS_DOCKABLE (dialog))
-        {
-          GimpDockable *dockable;
-          gint          page_num;
-
-          dockable = GIMP_DOCKABLE (dialog);
-
-          if (dockable->dockbook && dockable->dockbook->dock)
+          if (num != -1)
             {
-              page_num =
-                gtk_notebook_page_num (GTK_NOTEBOOK (dockable->dockbook),
-                                       dialog);
+              gtk_notebook_set_current_page (notebook, num);
 
-              if (page_num != -1)
-                {
-                  GtkWidget *toplevel;
-
-                  gtk_notebook_set_current_page (GTK_NOTEBOOK (dockable->dockbook),
-                                                 page_num);
-
-                  toplevel = gtk_widget_get_toplevel (dialog);
-
-                  gtk_window_present (GTK_WINDOW (toplevel));
-
-                  gimp_dockable_blink (GIMP_DOCKABLE (dialog));
-                }
+              gimp_dockable_blink (dockable);
             }
+        }
+
+      if (present)
+        {
+          GtkWidget *toplevel = gtk_widget_get_toplevel (dialog);
+
+          if (GTK_IS_WINDOW (toplevel))
+            gtk_window_present (GTK_WINDOW (toplevel));
         }
     }
 

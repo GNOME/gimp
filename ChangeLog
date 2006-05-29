@@ -1,5 +1,11 @@
 2006-05-29  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdialogfactory.c
+	(gimp_dialog_factory_dialog_new_internal): code cleanup; only call
+	gtk_window_present() if called with present == TRUE.
+
+2006-05-29  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpbrushgenerated.c (gimp_brush_generated_load): don't
 	choke on brush files with empty names (bug #343140).
 	(gimp_brush_generated_save): warn about brushes with empty names.
