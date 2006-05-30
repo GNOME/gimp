@@ -214,7 +214,9 @@ def _query():
         params.insert(0, (PDB_INT32, "run_mode",
                                      "Interactive, Non-Interactive"))
         if plugin_type == PLUGIN:
-            if menupath[:7] == '<Load>/':
+            if menupath is None:
+                pass
+            elif menupath[:7] == '<Load>/':
                 params[1:1] = file_params
             elif menupath[:10] != '<Toolbox>/':
                 params.insert(1, (PDB_IMAGE, "image",

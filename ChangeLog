@@ -1,5 +1,9 @@
 2006-05-30  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/gimpfu.py: Allow menu paths to be None.
+
+2006-05-30  Manish Singh  <yosh@gimp.org>
+
 	* app/file/gimprecentlist.c: #define _GNU_SOURCE instead of
 	_SVID_SOURCE, so we get all the declarations we need. Fixes
 	bug #342390.
