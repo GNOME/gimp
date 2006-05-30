@@ -1569,7 +1569,21 @@ gimp_image_set_component_active (GimpImage       *image,
 
   if (index != -1 && active != image->active[index])
     {
+      GimpLayer *floating_sel = gimp_image_floating_sel (image);
+
+      if (floating_sel)
+        floating_sel_relax (floating_sel, FALSE);
+
       image->active[index] = active ? TRUE : FALSE;
+
+      if (floating_sel)
+        {
+          floating_sel_rigor (floating_sel, FALSE);
+          gimp_drawable_update (GIMP_DRAWABLE (floating_sel),
+                                0, 0,
+                                GIMP_ITEM (floating_sel)->width,
+                                GIMP_ITEM (floating_sel)->height);
+        }
 
       /*  If there is an active channel and we mess with the components,
        *  the active channel gets unset...

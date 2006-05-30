@@ -1,5 +1,17 @@
 2006-05-30  Michael Natterer  <mitch@gimp.org>
 
+	Honor active components when pasting. Fixes bug #150845:
+
+	* app/core/gimplayer-floating-sel.c (floating_sel_composite):
+	don't temporarily set all image components to active while
+	compositing.
+
+	* app/core/gimpimage.c (gimp_image_set_component_active):
+	relax()/rigor() the floating selection around setting the "active"
+	flag. Also make sure the projection is updated correctly.
+
+2006-05-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdataeditor.c (gimp_data_editor_name_activate)
 	* app/widgets/gimpdatafactoryview.c
 	(gimp_data_factory_view_tree_name_edited): strip the newly

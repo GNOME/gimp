@@ -408,14 +408,7 @@ floating_sel_composite (GimpLayer *layer,
                         gint       h,
                         gboolean   push_undo)
 {
-  PixelRegion  fsPR;
-  GimpImage   *image;
-  GimpLayer   *d_layer = NULL;
-  gint         lock_alpha;
-  gint         active[MAX_CHANNELS];
-  gint         offx, offy;
-  gint         x1, y1, x2, y2;
-  gint         i;
+  GimpImage *image;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (gimp_layer_is_floating_sel (layer));
@@ -441,6 +434,9 @@ floating_sel_composite (GimpLayer *layer,
    */
   if (gimp_item_get_visible (GIMP_ITEM (layer)))
     {
+      gint offx, offy;
+      gint x1, y1, x2, y2;
+
       /*  Find the minimum area we need to composite -- in image space  */
       gimp_item_offsets (GIMP_ITEM (layer->fs.drawable), &offx, &offy);
 
@@ -460,6 +456,10 @@ floating_sel_composite (GimpLayer *layer,
 
       if ((x2 - x1) > 0 && (y2 - y1) > 0)
         {
+          PixelRegion  fsPR;
+          GimpLayer   *d_layer = NULL;
+          gboolean     lock_alpha;
+
           /*  composite the area from the layer to the drawable  */
           pixel_region_init (&fsPR, GIMP_DRAWABLE (layer)->tiles,
                              (x1 - GIMP_ITEM (layer)->offset_x),
@@ -479,17 +479,6 @@ floating_sel_composite (GimpLayer *layer,
           else
             lock_alpha = FALSE;
 
-          /*  We need to set all image channels to active to make sure that
-           *  nothing strange happens while applying the floating selection.
-           *  It wouldn't make sense for the floating selection to be affected
-           *  by the active image channels.
-           */
-          for (i = 0; i < MAX_CHANNELS; i++)
-            {
-              active[i] = image->active[i];
-              image->active[i] = 1;
-            }
-
           /*  apply the fs with the undo specified by the value
            *  passed to this function
            */
@@ -503,10 +492,6 @@ floating_sel_composite (GimpLayer *layer,
           /*  restore lock alpha  */
           if (lock_alpha)
             gimp_layer_set_lock_alpha (d_layer, TRUE, FALSE);
-
-          /*  restore image active channels  */
-          for (i = 0; i < MAX_CHANNELS; i++)
-            image->active[i] = active[i];
         }
     }
 }
