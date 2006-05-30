@@ -1,5 +1,10 @@
 2006-05-29  Manish Singh  <yosh@gimp.org>
 
+	* libgimpwidgets/gimpchainbutton.c
+	* libgimpwidgets/gimppixmap.c: #include "config.h"
+
+2006-05-29  Manish Singh  <yosh@gimp.org>
+
 	* app/errors.c
 	* app/main.c
 	* app/file/gimprecentlist.c
