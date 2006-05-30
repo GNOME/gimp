@@ -29,7 +29,10 @@
 
 #include "config.h"
 
+#define _POSIX_SOURCE  /* need PATH_MAX */
+
 #include <string.h>
+#include <limits.h>
 
 #include <glib/gstdio.h>
 
@@ -38,8 +41,8 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#ifndef PATH_MAX
-#define PATH_MAX _MAX_PATH
+#if ! defined PATH_MAX && defined _MAX_PATH
+#  define PATH_MAX _MAX_PATH
 #endif
 
 /** qbist renderer ***********************************************************/

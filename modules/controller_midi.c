@@ -22,6 +22,8 @@
 
 #include "config.h"
 
+#define _BSD_SOURCE  /* the ALSA headers need this */
+
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>

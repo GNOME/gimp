@@ -103,7 +103,7 @@ typedef struct
 #define XMP_PREFIX_IPTC_CORE   "Iptc4xmpCore"
 
 /* List of known XMP schemas and their properties */
-XMPSchema * const xmp_schemas;
+extern XMPSchema * const xmp_schemas;
 
 G_END_DECLS
 

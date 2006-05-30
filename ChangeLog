@@ -1,3 +1,18 @@
+2006-05-29  Manish Singh  <yosh@gimp.org>
+
+	* app/errors.c
+	* app/main.c
+	* app/file/gimprecentlist.c
+	* libgimp/gimp.c
+	* libgimpbase/gimpsignal.c
+	* modules/cdisplay_lcms.c
+	* modules/cdisplay_proof.c
+	* modules/controller_midi.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/metadata/xmp-schemas.h: miscellaneous fixes for building
+	with -ansi -pedantic. Mostly #define _FOO_SOURCE stuff. Thanks to
+	Daniel Richard G. for the patch. Fixes bug #342390.
+
 2006-05-30  Tor Lillqvist  <tml@novell.com>
 
 	* libgimpwidgets/gimpwidgets.def: Sync.

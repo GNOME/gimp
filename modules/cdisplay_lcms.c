@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <glib.h>  /* lcms.h uses the "inline" keyword */
+
 #ifdef HAVE_LCMS_LCMS_H
 #include <lcms/lcms.h>
 #else

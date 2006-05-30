@@ -21,6 +21,9 @@
 
 #include "config.h"
 
+#define _POSIX_SOURCE  /* all the sigaction stuff is POSIX */
+#define _SVID_SOURCE   /* except for SA_RESTART, it seems  */
+
 #include <errno.h>
 #include <stdarg.h>
 #include <stdio.h>
