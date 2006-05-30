@@ -447,7 +447,7 @@ def _interact(func_name, start_params):
     if on_run:
         on_run()
 
-    need_progress = menupath[:8] != '<Image>/'
+    need_progress = menupath and menupath[:8] != '<Image>/'
 
     tooltips = gtk.Tooltips()
 
@@ -601,7 +601,7 @@ def _run(func_name, params):
     menupath = _registered_plugins_[func_name][5]
     func = _registered_plugins_[func_name][10]
 
-    if plugin_type == PLUGIN and menupath[:10] != '<Toolbox>/':
+    if plugin_type == PLUGIN and menupath and menupath[:10] != '<Toolbox>/':
         if menupath[:7] == '<Save>/':
             end = 5
         else:

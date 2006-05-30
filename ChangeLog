@@ -1,5 +1,10 @@
 2006-05-30  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/gimpfu.py: Other code places should allow
+	menu paths to be None too.
+
+2006-05-30  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/gimpfu.py: Allow menu paths to be None.
 
 2006-05-30  Manish Singh  <yosh@gimp.org>
