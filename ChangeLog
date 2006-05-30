@@ -1,3 +1,10 @@
+2006-05-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdataeditor.c (gimp_data_editor_name_activate)
+	* app/widgets/gimpdatafactoryview.c
+	(gimp_data_factory_view_tree_name_edited): strip the newly
+	entered name from whitespace and reject empty names.
+
 2006-05-30  Manish Singh  <yosh@gimp.org>
 
 	* app/batch.c (batch_run): GIMP_BATCH_INTERPRETER can be set in

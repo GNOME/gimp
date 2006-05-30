@@ -488,8 +488,23 @@ gimp_data_editor_name_activate (GtkWidget      *widget,
                                 GimpDataEditor *editor)
 {
   if (editor->data)
-    gimp_object_set_name (GIMP_OBJECT (editor->data),
-                          gtk_entry_get_text (GTK_ENTRY (widget)));
+    {
+      gchar *new_name;
+
+      new_name = g_strdup (gtk_entry_get_text (GTK_ENTRY (widget)));
+      new_name = g_strstrip (new_name);
+
+      if (strlen (new_name))
+        {
+          gimp_object_take_name (GIMP_OBJECT (editor->data), new_name);
+        }
+      else
+        {
+          gtk_entry_set_text (GTK_ENTRY (widget),
+                              gimp_object_get_name (GIMP_OBJECT (editor->data)));
+          g_free (new_name);
+        }
+    }
 }
 
 static gboolean
