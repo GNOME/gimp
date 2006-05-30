@@ -5,6 +5,7 @@ scripts = \
 	clothify.py		\
 	foggify.py		\
 	gimpcons.py		\
+	happy-valley-relief.py	\
 	palette-offset.py	\
 	palette-sort.py		\
 	palette-to-gradient.py	\

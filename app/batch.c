@@ -65,10 +65,15 @@ batch_run (Gimp         *gimp,
 
   if (! batch_interpreter)
     {
-      batch_interpreter = BATCH_DEFAULT_EVAL_PROC;
+      batch_interpreter = g_getenv ("GIMP_BATCH_INTERPRETER");
 
-      g_printerr ("No batch interpreter specified, using the default '%s'.\n",
-                  batch_interpreter);
+      if (! batch_interpreter)
+        {
+          batch_interpreter = BATCH_DEFAULT_EVAL_PROC;
+
+          g_printerr (_("No batch interpreter specified, using the default "
+                        "'%s'.\n"), batch_interpreter);
+        }
     }
 
   /*  script-fu text console, hardcoded for backward compatibility  */

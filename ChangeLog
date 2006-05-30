@@ -1,5 +1,15 @@
 2006-05-30  Manish Singh  <yosh@gimp.org>
 
+	* app/batch.c (batch_run): GIMP_BATCH_INTERPRETER can be set in
+	the environment to override the default batch interpreter procedure.
+
+	* plug-ins/pygimp/plug-ins/happy-valley-relief.py: basic python
+	code evaluator function.
+
+	* plug-ins/pygimp/plug-ins/Makefile.am: add above file.
+
+2006-05-30  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/gimpfu.py: Other code places should allow
 	menu paths to be None too.
 
