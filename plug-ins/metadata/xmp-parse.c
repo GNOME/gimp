@@ -449,6 +449,7 @@ add_property_value (XMPParseContext *context,
     g_return_if_fail (context->prop_cur_value < 0);
   if (context->property_type != type)
     {
+      /* make sure that we are not mixing different types in this property */
       g_return_if_fail (context->property_type == XMP_PTYPE_UNKNOWN);
       context->property_type = type;
     }
@@ -733,6 +734,14 @@ start_element_handler  (GMarkupParseContext  *markup_context,
                                    attribute_names[attr],
                                    attribute_values[attr]);
 	    }
+          /* rdf:Alt is not an ordered list, but some broken XMP files use */
+          /* it instead of rdf:Seq.  Workaround: if we did not find some */
+          /* attributes for the valid cases ALT_LANG or ALT_LI_RSC, then */
+          /* we pretend that we are parsing a real list (bug #343315). */
+          if ((context->property_type != XMP_PTYPE_ALT_LANG)
+              && (context->state != STATE_INSIDE_ALT_LI_RSC))
+            add_property_value (context, XMP_PTYPE_ORDERED_LIST,
+                                NULL, NULL);
 	}
       else
 	parse_error_element (context, error, "rdf:li",
@@ -836,10 +845,6 @@ end_element_handler    (GMarkupParseContext  *markup_context,
   XMPParseContext *context = user_data;
 
 #ifdef DEBUG_XMP_PARSER
-  /*
-  g_print ("[%02d/%02d] %d </%s>\n", context->state, context->saved_state,
-           context->depth, element_name);
-  */
   g_print ("[%25s/%17s] %d </%s>\n",
            state_names[context->state],
            (context->saved_state == STATE_ERROR
@@ -886,13 +891,15 @@ end_element_handler    (GMarkupParseContext  *markup_context,
 
     case STATE_INSIDE_STRUCT_ELEMENT:
       context->state = STATE_INSIDE_STRUCT;
-      if (context->prop_value[context->prop_cur_value] == NULL)
+      if ((context->prop_cur_value >= 0)
+          && (context->prop_value[context->prop_cur_value] == NULL))
         update_property_value (context, g_strdup (""));
       break;
 
     case STATE_INSIDE_ALT_LI:
       context->state = STATE_INSIDE_ALT;
-      if (context->prop_value[context->prop_cur_value] == NULL)
+      if ((context->prop_cur_value >= 0)
+          && (context->prop_value[context->prop_cur_value] == NULL))
         update_property_value (context, g_strdup (""));
       break;
 

@@ -1,3 +1,14 @@
+2006-05-30  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/metadata/xmp-parse.c: protect against broken XMP blocks
+	using rdf:Alt instead of rdf:Seq.  Fixes bug #343315.
+
+	* plug-ins/metadata/xmpdump.c (main): call g_set_prgname() to get
+	better messages from glib.
+
+	* data/images/gimp-splash.png: new splash screen, waiting for the
+	old animation feature to be restored.
+
 2006-05-30  Michael Natterer  <mitch@gimp.org>
 
 	Honor active components when pasting. Fixes bug #150845:
