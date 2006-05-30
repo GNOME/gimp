@@ -26,7 +26,7 @@
 
 #include "config.h"
 
-#define _SVID_SOURCE  /* need lockf() and F_TLOCK/F_ULOCK */
+#define _GNU_SOURCE  /* need lockf() and F_TLOCK/F_ULOCK */
 
 #include <stdlib.h>
 #include <string.h>
