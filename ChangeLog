@@ -1,3 +1,9 @@
+2006-05-31  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcolorscale.c: removed #define SHADOW 1, it's
+	not a constant value. Use the GtkRange::trough-border style
+	property instead.
+
 2006-05-30  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/metadata/xmp-parse.c: protect against broken XMP blocks

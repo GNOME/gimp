@@ -34,8 +34,6 @@
 
 #include "gimpcolorscale.h"
 
-#define SHADOW  1
-
 
 static void     gimp_color_scale_destroy        (GtkObject       *object);
 static void     gimp_color_scale_size_allocate  (GtkWidget       *widget,
@@ -111,8 +109,13 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
   GimpColorScale *scale = GIMP_COLOR_SCALE (widget);
   GtkRange       *range = GTK_RANGE (widget);
   gint            focus = 0;
+  gint            trough_border;
   gint            scale_width;
   gint            scale_height;
+
+  gtk_widget_style_get (widget,
+                        "trough-border", &trough_border,
+                        NULL);
 
   if (GTK_WIDGET_CAN_FOCUS (widget))
     {
@@ -131,8 +134,8 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
   if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
     GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  scale_width  = range->range_rect.width  - 2 * (focus + SHADOW);
-  scale_height = range->range_rect.height - 2 * (focus + SHADOW);
+  scale_width  = range->range_rect.width  - 2 * (focus + trough_border);
+  scale_height = range->range_rect.height - 2 * (focus + trough_border);
 
   switch (range->orientation)
     {
@@ -184,6 +187,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
   GdkRectangle    expose_area;        /* Relative to widget->allocation */
   GdkRectangle    area;
   gint            focus = 0;
+  gint            trough_border;
   gint            slider_size;
   gint            x, y;
   gint            w, h;
@@ -204,6 +208,10 @@ gimp_color_scale_expose (GtkWidget      *widget,
                                                       &widget->allocation);
       GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
     }
+
+  gtk_widget_style_get (widget,
+                        "trough-border", &trough_border,
+                        NULL);
 
   if (GTK_WIDGET_CAN_FOCUS (widget))
     {
@@ -257,8 +265,8 @@ gimp_color_scale_expose (GtkWidget      *widget,
         case GTK_ORIENTATION_HORIZONTAL:
           gdk_draw_rgb_image_dithalign (widget->window,
                                         widget->style->black_gc,
-                                        x + SHADOW + slider_size,
-                                        y + SHADOW + 1,
+                                        x + trough_border + slider_size,
+                                        y + trough_border + 1,
                                         scale->width,
                                         scale->height,
                                         GDK_RGB_DITHER_MAX,
@@ -270,8 +278,8 @@ gimp_color_scale_expose (GtkWidget      *widget,
         case GTK_ORIENTATION_VERTICAL:
           gdk_draw_rgb_image_dithalign (widget->window,
                                         widget->style->black_gc,
-                                        x + SHADOW + 1,
-                                        y + SHADOW + slider_size,
+                                        x + trough_border + 1,
+                                        y + trough_border + slider_size,
                                         scale->width,
                                         scale->height,
                                         GDK_RGB_DITHER_MAX,
@@ -296,15 +304,15 @@ gimp_color_scale_expose (GtkWidget      *widget,
     {
     case GTK_ORIENTATION_HORIZONTAL:
       area.x      = widget->allocation.x + range->slider_start;
-      area.y      = y + SHADOW;
+      area.y      = y + trough_border;
       area.width  = 2 * slider_size + 1;
-      area.height = h - 2 * SHADOW;
+      area.height = h - 2 * trough_border;
       break;
 
     case GTK_ORIENTATION_VERTICAL:
-      area.x      = x + SHADOW;
+      area.x      = x + trough_border;
       area.y      = widget->allocation.y + range->slider_start;
-      area.width  = w - 2 * SHADOW;
+      area.width  = w - 2 * trough_border;
       area.height = 2 * slider_size + 1;
       break;
     }
