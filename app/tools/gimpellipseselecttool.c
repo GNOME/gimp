@@ -35,6 +35,7 @@
 
 #include "display/gimpdisplay.h"
 
+#include "gimprectangletool.h"
 #include "gimpellipseselecttool.h"
 #include "gimpnewrectselectoptions.h"
 #include "gimptoolcontrol.h"
@@ -96,10 +97,12 @@ gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass)
 static void
 gimp_ellipse_select_tool_init (GimpEllipseSelectTool *ellipse_select)
 {
-  GimpTool *tool = GIMP_TOOL (ellipse_select);
+  GimpTool          *tool      = GIMP_TOOL (ellipse_select);
+  GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (ellipse_select);
 
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_ELLIPSE_SELECT);
+  gimp_rectangle_tool_set_constrain (rect_tool, FALSE);
 }
 
 static void

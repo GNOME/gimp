@@ -34,6 +34,7 @@ typedef enum
   GIMP_RECTANGLE_TOOL_PROP_X2,
   GIMP_RECTANGLE_TOOL_PROP_Y2,
   GIMP_RECTANGLE_TOOL_PROP_FUNCTION,
+  GIMP_RECTANGLE_TOOL_PROP_CONSTRAIN,
   GIMP_RECTANGLE_TOOL_PROP_LAST = GIMP_RECTANGLE_TOOL_PROP_FUNCTION
 } GimpRectangleToolProp;
 
@@ -127,7 +128,8 @@ void        gimp_rectangle_tool_response            (GtkWidget         *widget,
                                                      gint               response_id,
                                                      GimpRectangleTool *rectangle);
 void        gimp_rectangle_tool_configure           (GimpRectangleTool *rectangle);
-
+void        gimp_rectangle_tool_set_constrain       (GimpRectangleTool *rectangle,
+                                                     gboolean           constrain);
 
 /*  convenience functions  */
 

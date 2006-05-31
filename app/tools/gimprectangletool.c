@@ -62,6 +62,8 @@ struct _GimpRectangleToolPrivate
   gint       x2, y2;     /*  lower right hand coords     */
 
   guint      function;   /*  moving or resizing          */
+
+  gboolean   constrain;  /* constrain to image bounds    */
 };
 
 
@@ -93,6 +95,7 @@ gint        gimp_rectangle_tool_get_y2              (GimpRectangleTool *tool);
 void        gimp_rectangle_tool_set_function        (GimpRectangleTool *tool,
                                                      guint              function);
 guint       gimp_rectangle_tool_get_function        (GimpRectangleTool *tool);
+gboolean    gimp_rectangle_tool_get_constrain       (GimpRectangleTool *tool);
 
 /*  Rectangle helper functions  */
 static void     rectangle_tool_start                (GimpRectangleTool     *rectangle);
@@ -134,7 +137,6 @@ static gint dx1, dy1;   /*  display coords              */
 static gint dx2, dy2;   /*                              */
 
 static gint dcw, dch;   /*  width and height of edges   */
-
 
 GType
 gimp_rectangle_tool_interface_get_type (void)
@@ -222,6 +224,12 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface)
                                                               0,
                                                               GIMP_PARAM_READWRITE));
 
+      g_object_interface_install_property (iface,
+                                           g_param_spec_boolean ("constrain",
+                                                                 NULL, NULL,
+                                                                 FALSE,
+                                                                 GIMP_PARAM_READWRITE));
+
       initialized = TRUE;
     }
 }
@@ -292,6 +300,9 @@ gimp_rectangle_tool_install_properties (GObjectClass *klass)
   g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_TOOL_PROP_FUNCTION,
                                     "function");
+  g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_TOOL_PROP_CONSTRAIN,
+                                    "constrain");
 }
 
 void
@@ -477,6 +488,32 @@ gimp_rectangle_tool_get_function (GimpRectangleTool *tool)
 }
 
 void
+gimp_rectangle_tool_set_constrain (GimpRectangleTool *tool,
+                                   gboolean           constrain)
+{
+  GimpRectangleToolPrivate *private;
+
+  g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+
+  private->constrain = constrain? TRUE : FALSE;
+  g_object_notify (G_OBJECT (tool), "constrain");
+}
+
+gboolean
+gimp_rectangle_tool_get_constrain (GimpRectangleTool *tool)
+{
+  GimpRectangleToolPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (tool), 0);
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+
+  return private->constrain;
+}
+
+void
 gimp_rectangle_tool_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
@@ -506,6 +543,9 @@ gimp_rectangle_tool_set_property (GObject      *object,
       break;
     case GIMP_RECTANGLE_TOOL_PROP_FUNCTION:
       gimp_rectangle_tool_set_function (tool, g_value_get_uint (value));
+      break;
+    case GIMP_RECTANGLE_TOOL_PROP_CONSTRAIN:
+      gimp_rectangle_tool_set_constrain (tool, g_value_get_boolean (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -543,6 +583,9 @@ gimp_rectangle_tool_get_property (GObject      *object,
       break;
     case GIMP_RECTANGLE_TOOL_PROP_FUNCTION:
       g_value_set_uint (value, gimp_rectangle_tool_get_function (tool));
+      break;
+    case GIMP_RECTANGLE_TOOL_PROP_CONSTRAIN:
+      g_value_set_boolean (value, gimp_rectangle_tool_get_constrain (tool));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1201,14 +1244,27 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   if (function != RECT_MOVING     &&
       function != RECT_EXECUTING)
     {
+      gboolean constrain = gimp_rectangle_tool_get_constrain (rectangle);
+
       gimp_tool_pop_status (tool, display);
-      gimp_tool_push_status_coords (tool, display,
-                                    _("Rectangle: "),
-                                    (rx2 > max_x ? max_x : rx2) -
-                                    (rx1 < min_x ? min_x : rx1),
-                                    " × ",
-                                    (ry2 > max_y ? max_y : ry2) -
-                                    (ry1 < min_y ? min_y : ry1));
+      if (constrain)
+        {
+         gimp_tool_push_status_coords (tool, display,
+                                        _("Rectangle: "),
+                                        (rx2 > max_x ? max_x : rx2) -
+                                        (rx1 < min_x ? min_x : rx1),
+                                        " × ",
+                                        (ry2 > max_y ? max_y : ry2) -
+                                        (ry1 < min_y ? min_y : ry1));
+        }
+      else
+        {
+          gimp_tool_push_status_coords (tool, display,
+                                        _("Rectangle: "),
+                                        rx2 - rx1,
+                                        " × ",
+                                        ry2 - ry1);
+        }
     }
 
   if (function == RECT_CREATING)

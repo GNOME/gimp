@@ -156,8 +156,10 @@ static void
 gimp_new_rect_select_tool_init (GimpNewRectSelectTool *new_rect_select_tool)
 {
   GimpTool          *tool      = GIMP_TOOL (new_rect_select_tool);
+  GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (new_rect_select_tool);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_RECT_SELECT);
+  gimp_rectangle_tool_set_constrain (rect_tool, TRUE);
 }
 
 static void

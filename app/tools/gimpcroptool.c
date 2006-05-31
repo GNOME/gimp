@@ -132,8 +132,10 @@ static void
 gimp_crop_tool_init (GimpCropTool *crop_tool)
 {
   GimpTool           *tool      = GIMP_TOOL (crop_tool);
+  GimpRectangleTool  *rect_tool = GIMP_RECTANGLE_TOOL (crop_tool);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_CROP);
+  gimp_rectangle_tool_set_constrain (rect_tool, TRUE);
 }
 
 static void
