@@ -652,17 +652,17 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                          ! gimp_tool_control_get_handle_empty_image (active_tool->control))
                   {
                     gimp_display_shell_set_cursor (shell,
-                                                   GIMP_CURSOR_BAD,
+                                                   GIMP_CURSOR_MOUSE,
                                                    gimp_tool_control_get_tool_cursor (active_tool->control),
-                                                   GIMP_CURSOR_MODIFIER_NONE);
+                                                   GIMP_CURSOR_MODIFIER_BAD);
                   }
               }
             else
               {
                 gimp_display_shell_set_cursor (shell,
-                                               GIMP_CURSOR_BAD,
+                                               GIMP_CURSOR_MOUSE,
                                                GIMP_TOOL_CURSOR_NONE,
-                                               GIMP_CURSOR_MODIFIER_NONE);
+                                               GIMP_CURSOR_MODIFIER_BAD);
               }
 
             shell->button_press_before_focus = TRUE;
@@ -1342,17 +1342,17 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                    ! gimp_tool_control_get_handle_empty_image (active_tool->control))
             {
               gimp_display_shell_set_cursor (shell,
-                                             GIMP_CURSOR_BAD,
+                                             GIMP_CURSOR_MOUSE,
                                              gimp_tool_control_get_tool_cursor (active_tool->control),
-                                             GIMP_CURSOR_MODIFIER_NONE);
+                                             GIMP_CURSOR_MODIFIER_BAD);
             }
         }
       else
         {
           gimp_display_shell_set_cursor (shell,
-                                         GIMP_CURSOR_BAD,
+                                         GIMP_CURSOR_MOUSE,
                                          GIMP_TOOL_CURSOR_NONE,
-                                         GIMP_CURSOR_MODIFIER_NONE);
+                                         GIMP_CURSOR_MODIFIER_BAD);
         }
     }
 

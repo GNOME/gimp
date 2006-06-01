@@ -1,3 +1,33 @@
+2006-06-01  Michael Natterer  <mitch@gimp.org>
+
+	* cursors/Makefile.am
+	* cursors/modifier-bad.png
+	* cursors/xbm/modifier-bad-mask.xbm
+	* cursors/xbm/modifier-bad.xbm: new "bad" cursor
+	modifier. Replaces the "bad" cursor.
+
+	* cursors/gimp-tool-cursors.xcf: added it here too.
+
+	* app/widgets/widgets-enums.h: added GIMP_CURSOR_MODIFIER_BAD.
+
+	* app/widgets/gimpcursor.c: add the bad modifier. Leave the bad
+	cursor there for now.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/tools/gimpaligntool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolortool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.c: use the modifier instead of the
+	cursor. Fixes hotspot jumping when switching between normal and
+	bad cursors. The changed cursor_update() functions even make more
+	sense IMHO. Fixes bug #158407.
+
 2006-06-01  Sven Neumann  <sven@gimp.org>
 
 	Added basic framework for plug-ins to access the use_cpu_accel

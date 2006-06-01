@@ -102,6 +102,8 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
   GimpTransformTool *transform_tool = GIMP_TRANSFORM_TOOL (flip_tool);
 
   gimp_tool_control_set_snap_to            (tool->control, FALSE);
+  gimp_tool_control_set_cursor             (tool->control, GIMP_CURSOR_MOUSE);
+  gimp_tool_control_set_toggle_cursor      (tool->control, GIMP_CURSOR_MOUSE);
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_FLIP_HORIZONTAL);
   gimp_tool_control_set_toggle_tool_cursor (tool->control,
@@ -147,8 +149,8 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *display)
 {
-  GimpFlipOptions *options;
-  gboolean         bad_cursor = TRUE;
+  GimpFlipOptions    *options;
+  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_BAD;
 
   options = GIMP_FLIP_OPTIONS (tool->tool_info->tool_options);
 
@@ -161,23 +163,16 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
           gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
                                         coords->x, coords->y))
         {
-          bad_cursor = FALSE;
+          modifier = GIMP_CURSOR_MODIFIER_NONE;
         }
     }
 
-  if (bad_cursor)
-    {
-      gimp_tool_control_set_cursor        (tool->control, GIMP_CURSOR_BAD);
-      gimp_tool_control_set_toggle_cursor (tool->control, GIMP_CURSOR_BAD);
-    }
-  else
-    {
-      gimp_tool_control_set_cursor        (tool->control, GIMP_CURSOR_MOUSE);
-      gimp_tool_control_set_toggle_cursor (tool->control, GIMP_CURSOR_MOUSE);
-    }
+  gimp_tool_control_set_cursor_modifier        (tool->control, modifier);
+  gimp_tool_control_set_toggle_cursor_modifier (tool->control, modifier);
 
   gimp_tool_control_set_toggled (tool->control,
-                                 options->flip_type == GIMP_ORIENTATION_VERTICAL);
+                                 options->flip_type ==
+                                 GIMP_ORIENTATION_VERTICAL);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }

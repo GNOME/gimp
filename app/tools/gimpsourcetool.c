@@ -209,8 +209,9 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *display)
 {
-  GimpCloneOptions *options;
-  GimpCursorType    ctype = GIMP_CURSOR_MOUSE;
+  GimpCloneOptions   *options;
+  GimpCursorType      cursor   = GIMP_CURSOR_MOUSE;
+  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   options = GIMP_CLONE_OPTIONS (tool->tool_info->tool_options);
 
@@ -224,18 +225,25 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
       if (gimp_channel_is_empty (selection) ||
           gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
                                         coords->x, coords->y))
-        ctype = GIMP_CURSOR_MOUSE;
+        {
+          cursor = GIMP_CURSOR_MOUSE;
+        }
     }
 
   if (options->clone_type == GIMP_IMAGE_CLONE)
     {
       if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
-        ctype = GIMP_CURSOR_CROSSHAIR_SMALL;
+        {
+          cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
+        }
       else if (! GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable)
-        ctype = GIMP_CURSOR_BAD;
+        {
+          modifier = GIMP_CURSOR_MODIFIER_BAD;
+        }
     }
 
-  gimp_tool_control_set_cursor (tool->control, ctype);
+  gimp_tool_control_set_cursor          (tool->control, cursor);
+  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }

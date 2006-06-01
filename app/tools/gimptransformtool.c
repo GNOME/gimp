@@ -643,16 +643,15 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
           break;
 
         case GIMP_TRANSFORM_TYPE_PATH:
-          if (gimp_image_get_active_vectors (display->image))
-            cursor = GIMP_CURSOR_MOUSE;
-          else
-            cursor = GIMP_CURSOR_BAD;
+          if (! gimp_image_get_active_vectors (display->image))
+            modifier = GIMP_CURSOR_MODIFIER_BAD;
           break;
         }
 
       if (tr_tool->use_center && tr_tool->function == TRANSFORM_HANDLE_CENTER)
         {
-          modifier = GIMP_CURSOR_MODIFIER_MOVE;
+          if (modifier != GIMP_CURSOR_MODIFIER_BAD)
+            modifier = GIMP_CURSOR_MODIFIER_MOVE;
         }
 
       gimp_tool_control_set_cursor          (tool->control, cursor);

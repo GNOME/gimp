@@ -979,29 +979,35 @@ gimp_iscissors_tool_cursor_update (GimpTool        *tool,
                                    GimpDisplay     *display)
 {
   GimpIscissorsTool  *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GimpCursorType      cursor    = GIMP_CURSOR_MOUSE;
   GimpCursorModifier  modifier  = GIMP_CURSOR_MODIFIER_NONE;
 
   switch (iscissors->op)
     {
     case ISCISSORS_OP_SELECT:
-      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords,
+                                                     state, display);
       return;
+
     case ISCISSORS_OP_MOVE_POINT:
       modifier = GIMP_CURSOR_MODIFIER_MOVE;
       break;
+
     case ISCISSORS_OP_ADD_POINT:
       modifier = GIMP_CURSOR_MODIFIER_PLUS;
       break;
+
     case ISCISSORS_OP_IMPOSSIBLE:
-      cursor = GIMP_CURSOR_BAD;
+      modifier = GIMP_CURSOR_MODIFIER_BAD;
       break;
+
     default:
       break;
     }
 
   gimp_tool_set_cursor (tool, display,
-                        cursor, GIMP_TOOL_CURSOR_ISCISSORS, modifier);
+                        GIMP_CURSOR_MOUSE,
+                        GIMP_TOOL_CURSOR_ISCISSORS,
+                        modifier);
 }
 
 

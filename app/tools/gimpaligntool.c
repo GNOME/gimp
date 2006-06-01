@@ -392,50 +392,51 @@ gimp_align_tool_cursor_update (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *display)
 {
-  GimpAlignOptions  *options = GIMP_ALIGN_OPTIONS (tool->tool_info->tool_options);
-
-  GimpCursorType     cursor      = GIMP_CURSOR_BAD;
+  GimpAlignOptions  *options;
+  GimpCursorType     cursor      = GIMP_CURSOR_MOUSE;
   GimpToolCursorType tool_cursor = GIMP_TOOL_CURSOR_MOVE;
   GimpCursorModifier modifier    = GIMP_CURSOR_MODIFIER_NONE;
+
+  options = GIMP_ALIGN_OPTIONS (tool->tool_info->tool_options);
 
   if (options->align_type == GIMP_TRANSFORM_TYPE_PATH)
     {
       tool_cursor = GIMP_TOOL_CURSOR_PATHS;
-      modifier    = GIMP_CURSOR_MODIFIER_MOVE;
 
       if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
                                      coords, 7, 7,
                                      NULL, NULL, NULL, NULL, NULL, NULL))
         {
-          cursor      = GIMP_CURSOR_MOUSE;
           tool_cursor = GIMP_TOOL_CURSOR_HAND;
+          modifier    = GIMP_CURSOR_MODIFIER_MOVE;
+        }
+      else
+        {
+          modifier = GIMP_CURSOR_MODIFIER_BAD;
         }
     }
   else
     {
-      GimpLayer *layer;
+      GimpLayer *layer = gimp_image_pick_correlate_layer (display->image,
+                                                          coords->x, coords->y);
 
-      if ((layer = gimp_image_pick_correlate_layer (display->image,
-                                                    coords->x, coords->y)))
+      if (layer)
         {
           /*  if there is a floating selection, and this aint it...  */
           if (gimp_image_floating_sel (display->image) &&
               ! gimp_layer_is_floating_sel (layer))
             {
-              cursor      = GIMP_CURSOR_MOUSE;
-              tool_cursor = GIMP_TOOL_CURSOR_MOVE;
-              modifier    = GIMP_CURSOR_MODIFIER_ANCHOR;
+              modifier = GIMP_CURSOR_MODIFIER_ANCHOR;
             }
-          else if (layer == gimp_image_get_active_layer (display->image))
+          else if (layer != gimp_image_get_active_layer (display->image))
             {
-              cursor = GIMP_CURSOR_MOUSE;
-            }
-          else
-            {
-              cursor      = GIMP_CURSOR_MOUSE;
               tool_cursor = GIMP_TOOL_CURSOR_HAND;
               modifier    = GIMP_CURSOR_MODIFIER_MOVE;
             }
+        }
+      else
+        {
+          modifier = GIMP_CURSOR_MODIFIER_BAD;
         }
     }
 

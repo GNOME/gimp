@@ -504,8 +504,7 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
         }
       else
         {
-          GimpCursorType     cursor   = GIMP_CURSOR_BAD;
-          GimpCursorModifier modifier = GIMP_CURSOR_MODIFIER_NONE;
+          GimpCursorModifier modifier = GIMP_CURSOR_MODIFIER_BAD;
 
           if (coords->x > 0 && coords->x < display->image->width  &&
               coords->y > 0 && coords->y < display->image->height &&
@@ -513,27 +512,26 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
               (color_tool->options->sample_merged ||
                gimp_image_coords_in_active_drawable (display->image, coords)))
             {
-              cursor = GIMP_CURSOR_MOUSE;
-            }
-
-          switch (color_tool->pick_mode)
-            {
-            case GIMP_COLOR_PICK_MODE_NONE:
-              modifier = GIMP_CURSOR_MODIFIER_NONE;
-              break;
-            case GIMP_COLOR_PICK_MODE_FOREGROUND:
-              modifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
-              break;
-            case GIMP_COLOR_PICK_MODE_BACKGROUND:
-              modifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
-              break;
-            case GIMP_COLOR_PICK_MODE_PALETTE:
-              modifier = GIMP_CURSOR_MODIFIER_PLUS;
-              break;
+              switch (color_tool->pick_mode)
+                {
+                case GIMP_COLOR_PICK_MODE_NONE:
+                  modifier = GIMP_CURSOR_MODIFIER_NONE;
+                  break;
+                case GIMP_COLOR_PICK_MODE_FOREGROUND:
+                  modifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
+                  break;
+                case GIMP_COLOR_PICK_MODE_BACKGROUND:
+                  modifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
+                  break;
+                case GIMP_COLOR_PICK_MODE_PALETTE:
+                  modifier = GIMP_CURSOR_MODIFIER_PLUS;
+                  break;
+                }
             }
 
           gimp_tool_set_cursor (tool, display,
-                                cursor, GIMP_TOOL_CURSOR_COLOR_PICKER,
+                                GIMP_CURSOR_COLOR_PICKER,
+                                GIMP_TOOL_CURSOR_COLOR_PICKER,
                                 modifier);
         }
 

@@ -121,6 +121,8 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
   GimpTool *tool = GIMP_TOOL (blend_tool);
 
   gimp_tool_control_set_scroll_lock     (tool->control, TRUE);
+  gimp_tool_control_set_cursor          (tool->control,
+                                         GIMP_CURSOR_MOUSE);
   gimp_tool_control_set_tool_cursor     (tool->control,
                                          GIMP_TOOL_CURSOR_BLEND);
   gimp_tool_control_set_action_value_1  (tool->control,
@@ -276,10 +278,12 @@ gimp_blend_tool_cursor_update (GimpTool        *tool,
     {
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
-      gimp_tool_control_set_cursor (tool->control, GIMP_CURSOR_BAD);
+      gimp_tool_control_set_cursor_modifier (tool->control,
+                                             GIMP_CURSOR_MODIFIER_BAD);
       break;
     default:
-      gimp_tool_control_set_cursor (tool->control, GIMP_CURSOR_MOUSE);
+      gimp_tool_control_set_cursor_modifier (tool->control,
+                                             GIMP_CURSOR_MODIFIER_NONE);
       break;
     }
 

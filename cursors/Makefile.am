@@ -10,6 +10,7 @@ CURSOR_IMAGES = \
 	cursor-zoom.png			\
 	\
 	modifier-anchor.png		\
+	modifier-bad.png		\
 	modifier-background.png		\
 	modifier-control.png		\
 	modifier-foreground.png		\
@@ -76,6 +77,8 @@ EXTRA_DIST = \
 	xbm/cursor-color-picker.xbm		\
 	xbm/cursor-color-picker-mask.xbm	\
 	\
+	xbm/modifier-bad.xbm			\
+	xbm/modifier-bad-mask.xbm		\
 	xbm/modifier-plus.xbm			\
 	xbm/modifier-plus-mask.xbm		\
 	xbm/modifier-minus.xbm			\

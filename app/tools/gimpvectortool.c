@@ -187,6 +187,7 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
   gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
   gimp_tool_control_set_motion_mode        (tool->control,
                                             GIMP_MOTION_MODE_COMPRESS);
+  gimp_tool_control_set_cursor             (tool->control, GIMP_CURSOR_MOUSE);
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_PATHS);
 
@@ -1211,13 +1212,8 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
                                 GimpDisplay     *display)
 {
   GimpVectorTool     *vector_tool = GIMP_VECTOR_TOOL (tool);
-  GimpCursorType      cursor;
-  GimpToolCursorType  tool_cursor;
-  GimpCursorModifier  cmodifier;
-
-  cursor      = GIMP_CURSOR_MOUSE;
-  tool_cursor = GIMP_TOOL_CURSOR_PATHS;
-  cmodifier   = GIMP_CURSOR_MODIFIER_NONE;
+  GimpToolCursorType  tool_cursor = GIMP_TOOL_CURSOR_PATHS;
+  GimpCursorModifier  modifier    = GIMP_CURSOR_MODIFIER_NONE;
 
   switch (vector_tool->function)
     {
@@ -1227,68 +1223,67 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
 
     case VECTORS_CREATE_VECTOR:
     case VECTORS_CREATE_STROKE:
-      cmodifier = GIMP_CURSOR_MODIFIER_CONTROL;
+      modifier = GIMP_CURSOR_MODIFIER_CONTROL;
       break;
 
     case VECTORS_ADD_ANCHOR:
     case VECTORS_INSERT_ANCHOR:
       tool_cursor = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
-      cmodifier   = GIMP_CURSOR_MODIFIER_PLUS;
+      modifier    = GIMP_CURSOR_MODIFIER_PLUS;
       break;
 
     case VECTORS_DELETE_ANCHOR:
       tool_cursor = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
-      cmodifier   = GIMP_CURSOR_MODIFIER_MINUS;
+      modifier    = GIMP_CURSOR_MODIFIER_MINUS;
       break;
 
     case VECTORS_DELETE_SEGMENT:
       tool_cursor = GIMP_TOOL_CURSOR_PATHS_SEGMENT;
-      cmodifier   = GIMP_CURSOR_MODIFIER_MINUS;
+      modifier    = GIMP_CURSOR_MODIFIER_MINUS;
       break;
 
     case VECTORS_MOVE_HANDLE:
       tool_cursor = GIMP_TOOL_CURSOR_PATHS_CONTROL;
-      cmodifier   = GIMP_CURSOR_MODIFIER_MOVE;
+      modifier    = GIMP_CURSOR_MODIFIER_MOVE;
       break;
 
     case VECTORS_CONVERT_EDGE:
       tool_cursor = GIMP_TOOL_CURSOR_PATHS_CONTROL;
-      cmodifier   = GIMP_CURSOR_MODIFIER_MINUS;
+      modifier    = GIMP_CURSOR_MODIFIER_MINUS;
       break;
 
     case VECTORS_MOVE_ANCHOR:
       tool_cursor = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
-      cmodifier   = GIMP_CURSOR_MODIFIER_MOVE;
+      modifier    = GIMP_CURSOR_MODIFIER_MOVE;
       break;
 
     case VECTORS_MOVE_CURVE:
       tool_cursor = GIMP_TOOL_CURSOR_PATHS_SEGMENT;
-      cmodifier   = GIMP_CURSOR_MODIFIER_MOVE;
+      modifier    = GIMP_CURSOR_MODIFIER_MOVE;
       break;
 
     case VECTORS_MOVE_STROKE:
     case VECTORS_MOVE_VECTORS:
-      cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
+      modifier = GIMP_CURSOR_MODIFIER_MOVE;
       break;
 
     case VECTORS_MOVE_ANCHORSET:
       tool_cursor = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
-      cmodifier   = GIMP_CURSOR_MODIFIER_MOVE;
+      modifier    = GIMP_CURSOR_MODIFIER_MOVE;
       break;
 
     case VECTORS_CONNECT_STROKES:
       tool_cursor = GIMP_TOOL_CURSOR_PATHS_SEGMENT;
-      cmodifier   = GIMP_CURSOR_MODIFIER_JOIN;
+      modifier    = GIMP_CURSOR_MODIFIER_JOIN;
       break;
 
     default:
-      cursor = GIMP_CURSOR_BAD;
+      modifier = GIMP_CURSOR_MODIFIER_BAD;
       break;
     }
 
-  gimp_tool_control_set_cursor          (tool->control, cursor);
   gimp_tool_control_set_tool_cursor     (tool->control, tool_cursor);
-  gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
+  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }

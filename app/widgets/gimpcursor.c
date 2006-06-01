@@ -112,6 +112,8 @@
 #include "cursors/xbm/tool-hand-mask.xbm"
 
 /*  cursor modifiers  */
+#include "cursors/xbm/modifier-bad.xbm"
+#include "cursors/xbm/modifier-bad-mask.xbm"
 #include "cursors/xbm/modifier-plus.xbm"
 #include "cursors/xbm/modifier-plus-mask.xbm"
 #include "cursors/xbm/modifier-minus.xbm"
@@ -425,6 +427,12 @@ static GimpCursor gimp_cursor_modifiers[] =
     0, 0,
     0, 0,
     NULL, NULL, NULL, NULL
+  },
+  {
+    modifier_bad_bits, modifier_bad_mask_bits,
+    modifier_bad_width, modifier_bad_height,
+    0, 0,
+    modifier_bad, NULL, NULL, NULL
   },
   {
     modifier_plus_bits, modifier_plus_mask_bits,
