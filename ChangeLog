@@ -1,8 +1,13 @@
+2006-06-01  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/sel_gauss.c: applied patch from Loren Merritt
+	that replaces the floating-point implementation of selective
+	gaussian blur with a fixed-point version (bug #342860).
+
 2006-05-31  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* app/tools/gimprectangletool.[ch]: add "constrain" property
-	to specify whether to clip at image bounds when computing
-	dimensions.
+	* app/tools/gimprectangletool.[ch]: add "constrain" property to
+	specify whether to clip at image bounds when computing dimensions.
 	
 	* app/tools/gimpcroptool.c
 	* app/tools/gimpnewrectselecttool.c: set "constrain" to TRUE.
