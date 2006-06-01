@@ -158,6 +158,7 @@ extern struct GimpCompositeOptions gimp_composite_options;
 
 void          gimp_composite_init               (gboolean  be_verbose,
                                                  gboolean  use_cpu_accel);
+gboolean      gimp_composite_use_cpu_accel      (void);
 
 void          gimp_composite_dispatch           (GimpCompositeContext   *ctx);
 

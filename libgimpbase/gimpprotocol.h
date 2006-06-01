@@ -69,7 +69,7 @@ struct _GPConfig
   gint8    check_size;
   gint8    check_type;
   gint8    show_help_button;
-  gint8    gimp_reserved_4;
+  gint8    use_cpu_accel;
   gint8    gimp_reserved_5;
   gint8    gimp_reserved_6;
   gint8    gimp_reserved_7;

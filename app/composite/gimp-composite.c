@@ -384,3 +384,9 @@ gimp_composite_init (gboolean  be_verbose,
                     can_use_vis     ? '+' : '-');
     }
 }
+
+gboolean
+gimp_composite_use_cpu_accel (void)
+{
+  return ((gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_USE) != 0);
+}

@@ -1,5 +1,24 @@
 2006-06-01  Sven Neumann  <sven@gimp.org>
 
+	Added basic framework for plug-ins to access the use_cpu_accel
+	configuration (bug #342860):
+
+	* app/composite/gimp-composite.[ch]: added new function
+	gimp_composite_use_cpu_accel().
+
+	* libgimpbase/gimpprotocol.[ch]: added use_cpu_accel to the config
+	message.
+
+	* app/plug-in/gimppluginmanager-call.c: pass the return value of
+	gimp_composite_use_cpu_accel() for config.use_cpu_accel.
+
+	* libgimp/gimp.[ch]: make the config value accessible by means of
+	a new function gimp_use_cpu_accel().
+
+	* libgimp/gimp.def: updated.
+
+2006-06-01  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/sel_gauss.c: applied patch from Loren Merritt
 	that replaces the floating-point implementation of selective
 	gaussian blur with a fixed-point version (bug #342860).

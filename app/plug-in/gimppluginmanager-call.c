@@ -32,6 +32,8 @@
 
 #include "base/tile.h"
 
+#include "composite/gimp-composite.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpprogress.h"
@@ -182,7 +184,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.check_type       = display_config->transparency_type;
       config.show_help_button = (gui_config->use_help &&
                                  gui_config->show_help_button);
-      config.gimp_reserved_4  = 0;
+      config.use_cpu_accel    = gimp_composite_use_cpu_accel ();
       config.gimp_reserved_5  = 0;
       config.gimp_reserved_6  = 0;
       config.gimp_reserved_7  = 0;

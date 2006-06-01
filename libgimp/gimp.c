@@ -180,6 +180,7 @@ static gdouble        _gamma_val         = 1.0;
 static gboolean       _install_cmap      = FALSE;
 static gboolean       _show_tool_tips    = TRUE;
 static gboolean       _show_help_button  = TRUE;
+static gboolean       _use_cpu_accel     = TRUE;
 static GimpCheckSize  _check_size        = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
 static GimpCheckType  _check_type        = GIMP_CHECK_TYPE_GRAY_CHECKS;
 static gint           _min_colors        = 144;
@@ -1241,6 +1242,23 @@ gimp_monitor_number (void)
 }
 
 /**
+ * gimp_use_cpu_accel:
+ *
+ * Returns whether or not GIMP and its plug-ins should use
+ * CPU-specific accelerated routines (MMX, SSE, Altivec...) if
+ * available.
+ *
+ * Return value: the use_cpu_accel boolean
+ *
+ * Since: GIMP 2.4
+ **/
+gboolean
+gimp_use_cpu_accel (void)
+{
+  return _use_cpu_accel;
+}
+
+/**
  * gimp_get_progname:
  *
  * Returns the Plug-In's executable name.
@@ -1693,9 +1711,10 @@ gimp_config (GPConfig *config)
   _shm_ID           = config->shm_ID;
   _check_size       = config->check_size;
   _check_type       = config->check_type;
-  _install_cmap     = config->install_cmap;
-  _show_tool_tips   = config->show_tooltips;
-  _show_help_button = config->show_help_button;
+  _install_cmap     = config->install_cmap     ? TRUE : FALSE;
+  _show_tool_tips   = config->show_tooltips    ? TRUE : FALSE;
+  _show_help_button = config->show_help_button ? TRUE : FALSE;
+  _use_cpu_accel    = config->use_cpu_accel    ? TRUE : FALSE;
   _min_colors       = config->min_colors;
   _gdisp_ID         = config->gdisp_ID;
   _wm_class         = g_strdup (config->wm_class);
