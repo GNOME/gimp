@@ -124,16 +124,16 @@ foreach (sort keys %plugins) {
     if (exists $plugins{$_}->{optional} || exists $plugins{$_}->{extralibs} ) {
 	my $name = exists $plugins{$_}->{libopt} ? $plugins{$_}->{libopt} : $_;
 	$optlib = "\n\t\$(LIB\U$name\E)\t\t\\";
+    }
 
-	if (exists $plugins{$_}->{cflags}) {
-	    my $cflags = $plugins{$_}->{cflags};
-	    my $optflags = $cflags =~ /FLAGS/ ? $cflags : "\U$_\E_CFLAGS";
+    if (exists $plugins{$_}->{cflags}) {
+	my $cflags = $plugins{$_}->{cflags};
+	my $optflags = $cflags =~ /FLAGS/ ? $cflags : "\U$_\E_CFLAGS";
 
-	    print MK <<EOT;
+	print MK <<EOT;
 
 ${makename}_CFLAGS = \$($optflags)
 EOT
-        }
     }
 
     my $deplib = "\$(RT_LIBS)\t\t\\\n\t\$(INTLLIBS)";

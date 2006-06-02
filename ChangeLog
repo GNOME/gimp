@@ -1,5 +1,14 @@
 2006-06-02  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/mkgen.pl: always look at $plugins{$_}->{cflags}.
+
+	* plug-ins/common/plugin-defs.pl: use MMX_EXTRA_CFLAGS for the
+	selective gaussian blur plug-in.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
+2006-06-02  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpparasite.[ch]: hide the GimpParamSpecParasite
 	struct like we do with other custom param specs.
 

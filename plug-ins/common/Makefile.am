@@ -1772,6 +1772,8 @@ screenshot_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
+sel_gauss_CFLAGS = $(MMX_EXTRA_CFLAGS)
+
 sel_gauss_SOURCES = \
 	sel_gauss.c
 
