@@ -219,9 +219,9 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface)
       g_object_interface_install_property (iface,
                                            g_param_spec_uint ("function",
                                                               NULL, NULL,
-                                                              RECT_CREATING,
+                                                              RECT_INACTIVE,
                                                               RECT_EXECUTING,
-                                                              0,
+                                                              RECT_INACTIVE,
                                                               GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (iface,
@@ -733,18 +733,20 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
+  g_object_get (rectangle, "function", &function, NULL);
+
   if (display != tool->display)
     {
       if (gimp_draw_tool_is_active (draw_tool))
         gimp_draw_tool_stop (draw_tool);
 
-      g_object_set (rectangle, "function", RECT_CREATING, NULL);
+      function = RECT_CREATING;
+      g_object_set (rectangle, "function", function, NULL);
       gimp_tool_control_set_snap_offsets (tool->control, 0, 0, 0, 0);
 
       tool->display = display;
     }
 
-  g_object_get (rectangle, "function", &function, NULL);
   if (function == RECT_CREATING)
     {
       g_object_set (rectangle,
@@ -877,6 +879,10 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
 
   switch (function)
     {
+    case RECT_INACTIVE:
+      g_printerr ("function is RECT_INACTIVE while mouse is moving; should not happen\n");
+      break;
+
     case RECT_CREATING:
       break;
 
@@ -1714,7 +1720,7 @@ gimp_rectangle_tool_response (GtkWidget         *widget,
       tool->display  = NULL;
       tool->drawable = NULL;
 
-      g_object_set (rectangle, "function", RECT_CREATING, NULL);
+      g_object_set (rectangle, "function", RECT_INACTIVE, NULL);
     }
 }
 
@@ -1824,6 +1830,7 @@ gimp_rectangle_tool_execute (GimpRectangleTool *rectangle,
 
   g_return_val_if_fail (iface->execute, FALSE);
 
+  /* FIXME: why are we doing this instead of using x, y, w, h? */
   g_object_get (rectangle,
                 "x1", &rx1,
                 "y1", &ry1,

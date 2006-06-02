@@ -1,5 +1,11 @@
 2006-06-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimprectangletool.[ch]: add new function RECT_INACTIVE
+	for cases where no rectangle exists.  This may take some
+	tweaking to get right.
+
+2006-06-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_button_press):
 	if function is RECT_CREATING, start a new rectangle.
 	
