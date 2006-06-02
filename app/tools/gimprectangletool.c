@@ -729,6 +729,7 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
 {
   GimpRectangleTool    *rectangle = GIMP_RECTANGLE_TOOL (tool);
   GimpDrawTool         *draw_tool = GIMP_DRAW_TOOL (tool);
+  guint                 function;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
@@ -741,7 +742,11 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
       gimp_tool_control_set_snap_offsets (tool->control, 0, 0, 0, 0);
 
       tool->display = display;
+    }
 
+  g_object_get (rectangle, "function", &function, NULL);
+  if (function == RECT_CREATING)
+    {
       g_object_set (rectangle,
                     "x1", ROUND (coords->x),
                     "y1", ROUND (coords->y),

@@ -1,3 +1,11 @@
+2006-06-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_button_press):
+	if function is RECT_CREATING, start a new rectangle.
+	
+	* app/tools/gimpnewrectselecttool.c: remove g_printerr statement that
+	mitch added for debugging.
+
 2006-06-02  Michael Natterer  <mitch@gimp.org>
 
 	* cursors/Makefile.am

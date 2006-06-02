@@ -280,8 +280,6 @@ gimp_new_rect_select_tool_oper_update (GimpTool        *tool,
 
   g_object_get (tool, "function", &function, NULL);
 
-  g_printerr ("%s: function = %d\n", G_STRFUNC, function);
-
   if (function == RECT_CREATING || function == RECT_EXECUTING)
     GIMP_SELECTION_TOOL (tool)->allow_move = TRUE;
   else
