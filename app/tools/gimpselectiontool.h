@@ -40,6 +40,8 @@ struct _GimpSelectionTool
 
   SelectOps     op;       /*  selection operation (SELECTION_ADD etc.)  */
   SelectOps     saved_op; /*  saved tool options state                  */
+
+  gboolean      allow_move;
 };
 
 struct _GimpSelectionToolClass

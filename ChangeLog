@@ -1,3 +1,79 @@
+2006-06-02  Michael Natterer  <mitch@gimp.org>
+
+	* cursors/Makefile.am
+	* cursors/cursor-corner-bottom-left.png
+	* cursors/cursor-corner-bottom-right.png
+	* cursors/cursor-corner-top-left.png
+	* cursors/cursor-corner-top-right.png
+	* cursors/cursor-side-bottom.png
+	* cursors/cursor-side-left.png
+	* cursors/cursor-side-right.png
+	* cursors/cursor-side-top.png
+	* cursors/xbm/cursor-corner-bottom-left-mask.xbm
+	* cursors/xbm/cursor-corner-bottom-left.xbm
+	* cursors/xbm/cursor-corner-bottom-right-mask.xbm
+	* cursors/xbm/cursor-corner-bottom-right.xbm
+	* cursors/xbm/cursor-corner-top-left-mask.xbm
+	* cursors/xbm/cursor-corner-top-left.xbm
+	* cursors/xbm/cursor-corner-top-right-mask.xbm
+	* cursors/xbm/cursor-corner-top-right.xbm
+	* cursors/xbm/cursor-side-bottom-mask.xbm
+	* cursors/xbm/cursor-side-bottom.xbm
+	* cursors/xbm/cursor-side-left-mask.xbm
+	* cursors/xbm/cursor-side-left.xbm
+	* cursors/xbm/cursor-side-right-mask.xbm
+	* cursors/xbm/cursor-side-right.xbm
+	* cursors/xbm/cursor-side-top-mask.xbm
+	* cursors/xbm/cursor-side-top.xbm: new cursors for edge and corner
+	resizing. They perfectly align with the small crosshair and can be
+	used together with tool cursors and cursor modifiers.
+
+	* cursors/gimp-tool-cursors.xcf: add them here too.
+
+	* app/widgets/widgets-enums.h: add them to the GimpCursorType enum.
+
+	* app/widgets/gimpcursor.c: add them here too.
+
+	* app/display/gimpdisplayshell-cursor.c: treat them like the small
+	crosshair (don't replace them by the small crosshair but use them
+	as-is). Also allow the bad modifier with the large crosshair.
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_cursor_update): use the new cursors. Don't
+	call gimp_tool_set_cursor() here.
+
+	(gimp_rectangle_tool_response): reset "function" to RECT_CREATING
+	when resetting the tool.
+
+	* app/tools/gimpselectiontool.[ch] (struct GimpSelectionTool):
+	added boolean member "allow_move" which defalts to TRUE.
+
+	(gimp_selection_tool_oper_update): don't move masks, floating
+	selections or anything when "allow_move" is FALSE. Changed
+	behavior of click inside a selection to simply create a new
+	selection, need to press alt+shift now to drag-float the
+	selection. Please test this, it's apretty fundamental change!
+
+	(gimp_selection_tool_cursor_update): use the tool's configured
+	cursor instead of always GIMP_CURSOR_MOUSE, so this function can
+	be called after gimp_rectangle_tool_cursor_update() to add the
+	plus, minus etc. modifiers.
+
+	* app/tools/gimpnewrectselecttool.c: implement
+	GimpTool::cursor_update() and call
+	gimp_rectangle_tool_cursor_update() from there. Chain up to get
+	the plus, minus etc. modifiers added.
+
+	Re-enble selection moving:
+
+	(gimp_new_rect_select_tool_oper_update): set GimpSelectionTool's
+	"allow_move" to FALSE unless the rectangle tool is in an idle
+	state.
+
+	(gimp_new_rect_select_tool_button_press): allow a selection moving
+	to be started if the rectangle tool is idle. Fall back to starting
+	a rect select if gimp_selection_tool_start_edit() returned FALSE.
+
 2006-06-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/mkgen.pl: always look at $plugins{$_}->{cflags}.

@@ -85,6 +85,10 @@ static void     gimp_new_rect_select_tool_oper_update    (GimpTool        *tool,
                                                           GdkModifierType  state,
                                                           gboolean         proximity,
                                                           GimpDisplay     *display);
+static void     gimp_new_rect_select_tool_cursor_update  (GimpTool        *tool,
+                                                          GimpCoords      *coords,
+                                                          GdkModifierType  state,
+                                                          GimpDisplay     *display);
 static gboolean gimp_new_rect_select_tool_execute        (GimpRectangleTool *rect_tool,
                                                           gint             x,
                                                           gint             y,
@@ -145,7 +149,7 @@ gimp_new_rect_select_tool_class_init (GimpNewRectSelectToolClass *klass)
   tool_class->key_press      = gimp_rectangle_tool_key_press;
   tool_class->modifier_key   = gimp_new_rect_select_tool_modifier_key;
   tool_class->oper_update    = gimp_new_rect_select_tool_oper_update;
-  tool_class->cursor_update  = gimp_rectangle_tool_cursor_update;
+  tool_class->cursor_update  = gimp_new_rect_select_tool_cursor_update;
 
   draw_tool_class->draw      = gimp_rectangle_tool_draw;
 
@@ -205,9 +209,33 @@ gimp_new_rect_select_tool_button_press (GimpTool        *tool,
                                         GdkModifierType  state,
                                         GimpDisplay     *display)
 {
+  guint function;
+
   if (tool->display && display != tool->display)
-    gimp_rectangle_tool_response (NULL, GIMP_RECTANGLE_MODE_EXECUTE,
+    gimp_rectangle_tool_response (NULL, GTK_RESPONSE_CANCEL,
                                   GIMP_RECTANGLE_TOOL (tool));
+
+  g_object_get (tool, "function", &function, NULL);
+
+  if (function == RECT_CREATING || function == RECT_EXECUTING)
+    {
+      GimpDisplay *old_display;
+      gboolean     edit_started;
+
+      old_display = tool->display;
+      tool->display = display;
+      gimp_tool_control_activate (tool->control);
+
+      edit_started = gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (tool),
+                                                     coords);
+
+      if (gimp_tool_control_is_active (tool->control))
+        gimp_tool_control_halt (tool->control);
+      tool->display = old_display;
+
+      if (edit_started)
+        return;
+    }
 
   gimp_rectangle_tool_button_press (tool, coords, time, state, display);
 }
@@ -219,13 +247,6 @@ gimp_new_rect_select_tool_button_release (GimpTool        *tool,
                                           GdkModifierType  state,
                                           GimpDisplay     *display)
 {
-  GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
-  guint              function;
-
-  g_object_get (rectangle,
-                "function", &function,
-                NULL);
-
   gimp_tool_pop_status (tool, display);
   gimp_tool_push_status (tool, display,
                          _("Click or press enter to create the selection."));
@@ -253,11 +274,34 @@ gimp_new_rect_select_tool_oper_update (GimpTool        *tool,
                                        gboolean         proximity,
                                        GimpDisplay     *display)
 {
+  guint function;
+
   gimp_rectangle_tool_oper_update (tool, coords, state, proximity, display);
+
+  g_object_get (tool, "function", &function, NULL);
+
+  g_printerr ("%s: function = %d\n", G_STRFUNC, function);
+
+  if (function == RECT_CREATING || function == RECT_EXECUTING)
+    GIMP_SELECTION_TOOL (tool)->allow_move = TRUE;
+  else
+    GIMP_SELECTION_TOOL (tool)->allow_move = FALSE;
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
 }
+
+static void
+gimp_new_rect_select_tool_cursor_update (GimpTool        *tool,
+                                         GimpCoords      *coords,
+                                         GdkModifierType  state,
+                                         GimpDisplay     *display)
+{
+  gimp_rectangle_tool_cursor_update (tool, coords, state, display);
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+}
+
 
 /*
  * This function is called if the user clicks and releases the left

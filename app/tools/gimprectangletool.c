@@ -1514,51 +1514,52 @@ gimp_rectangle_tool_cursor_update (GimpTool        *tool,
                                    GdkModifierType  state,
                                    GimpDisplay     *display)
 {
-  GimpRectangleTool    *rectangle   = GIMP_RECTANGLE_TOOL (tool);
-  GimpCursorType        cursor      = GDK_CROSSHAIR;
-  GimpCursorModifier    modifier    = GIMP_CURSOR_MODIFIER_NONE;
-  GimpToolCursorType    tool_cursor;
-  guint                 function;
+  GimpRectangleTool *rectangle;
+  GimpCursorType     cursor   = GIMP_CURSOR_CROSSHAIR_SMALL;
+  GimpCursorModifier modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
-  tool_cursor = gimp_tool_control_get_tool_cursor (tool->control);
+  rectangle = GIMP_RECTANGLE_TOOL (tool);
 
   if (tool->display == display && ! (state & GDK_BUTTON1_MASK))
     {
+      guint function;
+
       g_object_get (rectangle, "function", &function, NULL);
 
       switch (function)
         {
         case RECT_CREATING:
-          cursor = GDK_CROSSHAIR;
+          cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
           break;
         case RECT_MOVING:
-          cursor = GDK_FLEUR;
+          cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
+          modifier = GIMP_CURSOR_MODIFIER_MOVE;
           break;
         case RECT_RESIZING_UPPER_LEFT:
-          cursor = GDK_TOP_LEFT_CORNER;
+          cursor = GIMP_CURSOR_CORNER_TOP_LEFT;
           break;
         case RECT_RESIZING_UPPER_RIGHT:
-          cursor = GDK_TOP_RIGHT_CORNER;
+          cursor = GIMP_CURSOR_CORNER_TOP_RIGHT;
           break;
         case RECT_RESIZING_LOWER_LEFT:
-          cursor = GDK_BOTTOM_LEFT_CORNER;
+          cursor = GIMP_CURSOR_CORNER_BOTTOM_LEFT;
           break;
         case RECT_RESIZING_LOWER_RIGHT:
-          cursor = GDK_BOTTOM_RIGHT_CORNER;
+          cursor = GIMP_CURSOR_CORNER_BOTTOM_RIGHT;
           break;
         case RECT_RESIZING_LEFT:
-          cursor = GDK_LEFT_SIDE;
+          cursor = GIMP_CURSOR_SIDE_LEFT;
           break;
         case RECT_RESIZING_RIGHT:
-          cursor = GDK_RIGHT_SIDE;
+          cursor = GIMP_CURSOR_SIDE_RIGHT;
           break;
         case RECT_RESIZING_TOP:
-          cursor = GDK_TOP_SIDE;
+          cursor = GIMP_CURSOR_SIDE_TOP;
           break;
         case RECT_RESIZING_BOTTOM:
-          cursor = GDK_BOTTOM_SIDE;
+          cursor = GIMP_CURSOR_SIDE_BOTTOM;
           break;
 
         default:
@@ -1567,13 +1568,7 @@ gimp_rectangle_tool_cursor_update (GimpTool        *tool,
     }
 
   gimp_tool_control_set_cursor (tool->control, cursor);
-  gimp_tool_control_set_tool_cursor (tool->control, tool_cursor);
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
-
-  gimp_tool_set_cursor (tool, display,
-                        gimp_tool_control_get_cursor (tool->control),
-                        gimp_tool_control_get_tool_cursor (tool->control),
-                        gimp_tool_control_get_cursor_modifier (tool->control));
 }
 
 void
@@ -1714,6 +1709,7 @@ gimp_rectangle_tool_response (GtkWidget         *widget,
       tool->display  = NULL;
       tool->drawable = NULL;
 
+      g_object_set (rectangle, "function", RECT_CREATING, NULL);
     }
 }
 

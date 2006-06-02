@@ -3,10 +3,18 @@
 CURSOR_IMAGES = \
 	cursor-bad.png			\
 	cursor-color-picker.png		\
+	cursor-corner-top-left.png	\
+	cursor-corner-top-right.png	\
+	cursor-corner-bottom-left.png	\
+	cursor-corner-bottom-right.png	\
 	cursor-crosshair.png		\
 	cursor-crosshair-small.png	\
 	cursor-mouse.png		\
 	cursor-none.png			\
+	cursor-side-top.png		\
+	cursor-side-left.png		\
+	cursor-side-right.png		\
+	cursor-side-bottom.png		\
 	cursor-zoom.png			\
 	\
 	modifier-anchor.png		\
@@ -61,7 +69,7 @@ EXTRA_DIST = \
 	$(CURSOR_IMAGES)			\
 	gimp-tool-cursors.xcf			\
 	\
-	makefile.msc			\
+	makefile.msc				\
 	\
 	xbm/cursor-none.xbm			\
 	xbm/cursor-mouse.xbm			\
@@ -76,6 +84,22 @@ EXTRA_DIST = \
 	xbm/cursor-zoom-mask.xbm		\
 	xbm/cursor-color-picker.xbm		\
 	xbm/cursor-color-picker-mask.xbm	\
+	xbm/cursor-corner-top-left.xbm		\
+	xbm/cursor-corner-top-left-mask.xbm	\
+	xbm/cursor-corner-top-right.xbm		\
+	xbm/cursor-corner-top-right-mask.xbm	\
+	xbm/cursor-corner-bottom-left.xbm	\
+	xbm/cursor-corner-bottom-left-mask.xbm	\
+	xbm/cursor-corner-bottom-right.xbm	\
+	xbm/cursor-corner-bottom-right-mask.xbm	\
+	xbm/cursor-side-top.xbm			\
+	xbm/cursor-side-top-mask.xbm		\
+	xbm/cursor-side-left.xbm		\
+	xbm/cursor-side-left-mask.xbm		\
+	xbm/cursor-side-right.xbm		\
+	xbm/cursor-side-right-mask.xbm		\
+	xbm/cursor-side-bottom.xbm		\
+	xbm/cursor-side-bottom-mask.xbm		\
 	\
 	xbm/modifier-bad.xbm			\
 	xbm/modifier-bad-mask.xbm		\

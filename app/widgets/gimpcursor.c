@@ -40,6 +40,22 @@
 #include "cursors/xbm/cursor-zoom-mask.xbm"
 #include "cursors/xbm/cursor-color-picker.xbm"
 #include "cursors/xbm/cursor-color-picker-mask.xbm"
+#include "cursors/xbm/cursor-corner-top-left.xbm"
+#include "cursors/xbm/cursor-corner-top-left-mask.xbm"
+#include "cursors/xbm/cursor-corner-top-right.xbm"
+#include "cursors/xbm/cursor-corner-top-right-mask.xbm"
+#include "cursors/xbm/cursor-corner-bottom-left.xbm"
+#include "cursors/xbm/cursor-corner-bottom-left-mask.xbm"
+#include "cursors/xbm/cursor-corner-bottom-right.xbm"
+#include "cursors/xbm/cursor-corner-bottom-right-mask.xbm"
+#include "cursors/xbm/cursor-side-top.xbm"
+#include "cursors/xbm/cursor-side-top-mask.xbm"
+#include "cursors/xbm/cursor-side-left.xbm"
+#include "cursors/xbm/cursor-side-left-mask.xbm"
+#include "cursors/xbm/cursor-side-right.xbm"
+#include "cursors/xbm/cursor-side-right-mask.xbm"
+#include "cursors/xbm/cursor-side-bottom.xbm"
+#include "cursors/xbm/cursor-side-bottom-mask.xbm"
 
 /*  tool cursors  */
 #include "cursors/xbm/tool-rect-select.xbm"
@@ -199,6 +215,54 @@ static GimpCursor gimp_cursors[] =
     cursor_color_picker_width, cursor_color_picker_height,
     cursor_color_picker_x_hot, cursor_color_picker_y_hot,
     cursor_color_picker, NULL, NULL, NULL
+  },
+  {
+    cursor_corner_top_left_bits, cursor_corner_top_left_mask_bits,
+    cursor_corner_top_left_width, cursor_corner_top_left_height,
+    cursor_corner_top_left_x_hot, cursor_corner_top_left_y_hot,
+    cursor_corner_top_left, NULL, NULL, NULL
+  },
+  {
+    cursor_corner_top_right_bits, cursor_corner_top_right_mask_bits,
+    cursor_corner_top_right_width, cursor_corner_top_right_height,
+    cursor_corner_top_right_x_hot, cursor_corner_top_right_y_hot,
+    cursor_corner_top_right, NULL, NULL, NULL
+  },
+  {
+    cursor_corner_bottom_left_bits, cursor_corner_bottom_left_mask_bits,
+    cursor_corner_bottom_left_width, cursor_corner_bottom_left_height,
+    cursor_corner_bottom_left_x_hot, cursor_corner_bottom_left_y_hot,
+    cursor_corner_bottom_left, NULL, NULL, NULL
+  },
+  {
+    cursor_corner_bottom_right_bits, cursor_corner_bottom_right_mask_bits,
+    cursor_corner_bottom_right_width, cursor_corner_bottom_right_height,
+    cursor_corner_bottom_right_x_hot, cursor_corner_bottom_right_y_hot,
+    cursor_corner_bottom_right, NULL, NULL, NULL
+  },
+  {
+    cursor_side_top_bits, cursor_side_top_mask_bits,
+    cursor_side_top_width, cursor_side_top_height,
+    cursor_side_top_x_hot, cursor_side_top_y_hot,
+    cursor_side_top, NULL, NULL, NULL
+  },
+  {
+    cursor_side_left_bits, cursor_side_left_mask_bits,
+    cursor_side_left_width, cursor_side_left_height,
+    cursor_side_left_x_hot, cursor_side_left_y_hot,
+    cursor_side_left, NULL, NULL, NULL
+  },
+  {
+    cursor_side_right_bits, cursor_side_right_mask_bits,
+    cursor_side_right_width, cursor_side_right_height,
+    cursor_side_right_x_hot, cursor_side_right_y_hot,
+    cursor_side_right, NULL, NULL, NULL
+  },
+  {
+    cursor_side_bottom_bits, cursor_side_bottom_mask_bits,
+    cursor_side_bottom_width, cursor_side_bottom_height,
+    cursor_side_bottom_x_hot, cursor_side_bottom_y_hot,
+    cursor_side_bottom, NULL, NULL, NULL
   }
 };
 
@@ -561,12 +625,13 @@ gimp_cursor_new (GdkDisplay         *display,
 
   g_return_val_if_fail (cursor_type >= GIMP_CURSOR_NONE, NULL);
 
-  /*  allow the small tool cursor only with the standard mouse,
-   *  the small crosshair and the bad cursor
+  /*  disallow the small tool cursor with some cursors
    */
-  if (cursor_type != GIMP_CURSOR_MOUSE           &&
-      cursor_type != GIMP_CURSOR_CROSSHAIR_SMALL &&
-      cursor_type != GIMP_CURSOR_BAD)
+  if (cursor_type <= GIMP_CURSOR_NONE         ||
+      cursor_type == GIMP_CURSOR_CROSSHAIR    ||
+      cursor_type == GIMP_CURSOR_ZOOM         ||
+      cursor_type == GIMP_CURSOR_COLOR_PICKER ||
+      cursor_type >= GIMP_CURSOR_LAST)
     {
       tool_cursor = GIMP_TOOL_CURSOR_NONE;
     }

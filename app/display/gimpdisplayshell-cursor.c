@@ -213,13 +213,25 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
           break;
 
         case GIMP_CURSOR_MODE_TOOL_CROSSHAIR:
-          cursor_type = GIMP_CURSOR_CROSSHAIR_SMALL;
+          if (cursor_type < GIMP_CURSOR_CORNER_TOP_LEFT ||
+              cursor_type > GIMP_CURSOR_SIDE_BOTTOM)
+            {
+              /* the corner and side cursors count as crosshair, so leave
+               * them and override everything else
+               */
+              cursor_type = GIMP_CURSOR_CROSSHAIR_SMALL;
+            }
           break;
 
         case GIMP_CURSOR_MODE_CROSSHAIR:
           cursor_type = GIMP_CURSOR_CROSSHAIR;
           tool_cursor = GIMP_TOOL_CURSOR_NONE;
-          modifier    = GIMP_CURSOR_MODIFIER_NONE;
+
+          if (modifier != GIMP_CURSOR_MODIFIER_BAD)
+            {
+              /* the bad modifier is always shown */
+              modifier = GIMP_CURSOR_MODIFIER_NONE;
+            }
           break;
         }
     }
