@@ -143,7 +143,6 @@
 (define pow expt)
 (define string-lessp string<?)
 (define symbol-bound? defined?)
-(define trunc truncate)
 
 (define *pi*
   (* 4 (atan 1.0))
@@ -219,4 +218,8 @@
     (msrg-rand)
     (apply random modulus)
   )
+)
+
+(define (trunc n)
+  (inexact->exact (truncate n))
 )
