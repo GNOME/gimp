@@ -1,5 +1,10 @@
 2006-06-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimprectangletool.c: move statically declared
+	variables into "private" struct.
+	
+2006-06-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* libgimpbase/Makefile.am: include gimpcpuaccel.h in
 	libgimpbaseinclude_HEADERS; missed in Sven's changes.
 	
