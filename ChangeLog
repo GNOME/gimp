@@ -9,7 +9,7 @@
 	* app/composite/gimp-composite.c (gimp_composite_use_cpu_accel):
 	need to test for GIMP_COMPOSITE_OPTION_NOEXTENSIONS.
 
-	* libgimp/gimp.c (gimp_config): call gimp_set_use_cpu_accel() from
+	* libgimp/gimp.c (gimp_config): call gimp_cpu_accel_set_use() from
 	here, not in gimp_main().
 
 	* plug-ins/common/sel_gauss.c: applied patch from Loren Merritt
