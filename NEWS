@@ -22,6 +22,16 @@ Changes in GIMP 2.3.9
 - added menu items for "Text to Path", "Text along Path" and "Text to
   Selection"
 - allow to initialize a new layer mask with any of the image's channels
+- added clipboard brush and clipboard pattern
+- added scripts to sort color palettes
+- swap meanings of "dilate" and	"erode" which have been wrong for a long time
+- show Clone tool source location while painting
+- use GtkFileChooserButton in place of GimpFileEntry
+- added script to reverse the order of layers
+- added "Sample merged" and "Selected Pixels only" options to Palette import
+- added actions to select palette and colormap colors
+- new environment variable to control which batch interpreter to use
+- speed up Selective Gaussian Blur plug-in
 - bug fixes and code cleanup
 
 
