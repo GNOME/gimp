@@ -1,5 +1,10 @@
 2006-06-02  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpparasite.[ch]: hide the GimpParamSpecParasite
+	struct like we do with other custom param specs.
+
+2006-06-02  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimp.[ch]
 	* libgimp/gimp.def: removed gimp_use_cpu_accel() again. libgimp
 	handles this transparently by calling gimp_cpu_accel_set_use().

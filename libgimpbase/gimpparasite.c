@@ -61,6 +61,15 @@ gimp_parasite_get_type (void)
  * GIMP_TYPE_PARAM_PARASITE
  */
 
+#define GIMP_PARAM_SPEC_PARASITE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_PARASITE, GimpParamSpecParasite))
+
+typedef struct _GimpParamSpecParasite GimpParamSpecParasite;
+
+struct _GimpParamSpecParasite
+{
+  GParamSpecBoxed parent_instance;
+};
+
 static void       gimp_param_parasite_class_init  (GParamSpecClass *class);
 static void       gimp_param_parasite_init        (GParamSpec      *pspec);
 static gboolean   gimp_param_parasite_validate    (GParamSpec      *pspec,
