@@ -112,6 +112,13 @@ gimp_checks_get_shades
 </SECTION>
 
 <SECTION>
+<FILE>gimpcpuaccel</FILE>
+GimpCpuAccelFlags
+gimp_cpu_accel_get_support
+gimp_cpu_accel_set_use
+</SECTION>
+
+<SECTION>
 <FILE>gimpenv</FILE>
 gimp_env_init
 gimp_directory

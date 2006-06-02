@@ -58,7 +58,7 @@ the search path, the "path_changed" signal will be emitted.
 
 </para>
 
-@filesel_title: 
+@title: 
 @path: 
 @Returns: 
 

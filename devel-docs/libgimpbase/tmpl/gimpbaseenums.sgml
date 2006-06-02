@@ -28,6 +28,7 @@ Basic GIMP enumeration data types.
 @GIMP_ADD_ALPHA_TRANSFER_MASK: 
 @GIMP_ADD_SELECTION_MASK: 
 @GIMP_ADD_COPY_MASK: 
+@GIMP_ADD_CHANNEL_MASK: 
 
 <!-- ##### ENUM GimpBlendMode ##### -->
 <para>
