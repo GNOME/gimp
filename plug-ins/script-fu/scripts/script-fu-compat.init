@@ -160,7 +160,7 @@
 )
 
 (define (fmod a b)
-  (modulo (inexact->exact (truncate a)) (inexact->exact (truncate b)))
+  (- a (* (truncate (/ a b)) b))
 )
 
 (define (fread arg1 file)
