@@ -1,5 +1,16 @@
 2006-06-02  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/gimp-composite.c (gimp_composite_use_cpu_accel):
+	need to test for GIMP_COMPOSITE_OPTION_NOEXTENSIONS.
+
+	* libgimp/gimp.c (gimp_config): call gimp_set_use_cpu_accel() from
+	here, not in gimp_main().
+
+	* plug-ins/common/sel_gauss.c: applied patch from Loren Merritt
+	that adds MMX code to boost the plug-in speed (bug #342860).
+
+2006-06-02  Sven Neumann  <sven@gimp.org>
+
 	Moved the CPU detection code to libgimpbase (see bug #342860):
 
 	* app/base/Makefile.am

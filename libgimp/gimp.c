@@ -391,9 +391,6 @@ gimp_main (const GimpPlugInInfo *info,
     gimp_base_init (&vtable);
   }
 
-  gimp_cpu_accel_set_use (gimp_use_cpu_accel ());
-
-
   /* initialize i18n support */
 
   setlocale (LC_ALL, "");
@@ -1725,6 +1722,8 @@ gimp_config (GPConfig *config)
 
   if (config->app_name)
     g_set_application_name (config->app_name);
+
+  gimp_cpu_accel_set_use (gimp_use_cpu_accel ());
 
   if (_shm_ID != -1)
     {

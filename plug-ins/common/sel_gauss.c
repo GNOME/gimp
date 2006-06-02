@@ -317,6 +317,271 @@ init_matrix (gdouble  radius,
     mat[dx] = c1 * exp ((dx * dx)/ c2);
 }
 
+
+#if defined(ARCH_X86) && defined(USE_MMX) && defined(__GNUC__)
+#define HAVE_ACCEL 1
+
+static ALWAYS_INLINE void
+matrixmult_mmx (const guchar  *src,
+                guchar        *dest,
+                gint           width,
+                gint           height,
+                const gdouble *mat,
+                gint           numrad,
+                gint           bytes,
+                gboolean       has_alpha,
+                gint           maxdelta,
+                gboolean       preview_mode)
+{
+  const gint       rowstride = width * bytes;
+  const long long  maxdelta4 = maxdelta * 0x0001000100010001ULL;
+  gushort         *imat;
+  gdouble          fsum, fscale;
+  gint             i, j, x, y, d;
+
+  g_assert (has_alpha ? (bytes == 4) : (bytes == 3 || bytes == 1));
+
+  imat = g_new (gushort, 2 * numrad + 3);
+
+  fsum = 0.0;
+  for (y = 1 - numrad; y < numrad; y++)
+    fsum += mat[ABS(y)];
+
+  /* Ensure that one pixel's product fits in 16bits,
+   * and that the sum fits in 32bits.
+   */
+  fscale = MIN (0x100 / mat[0], 0x1000 / fsum);
+  for (y = 0; y < numrad; y++)
+    imat[numrad - y] = imat[numrad + y] = mat[y] * fscale;
+
+  for (y = numrad; y < numrad + 3; y++)
+    imat[numrad + y] = 0;
+
+  for (y = 0; y < height; y++)
+    {
+      asm volatile (
+        "pxor  %%mm7, %%mm7 \n\t":
+      );
+
+      for (x = 0; x < width; x++)
+        {
+          guint r, g, b, fr, fg, fb;
+          gint  offset;
+          gint  dix;
+
+          r = g = b = fr = fg = fb = 0;
+
+          dix = bytes * (width * y + x);
+
+          if (has_alpha)
+            {
+              *(guint*) &dest[dix] = *(guint*) &src[dix];
+
+              if (!src[dix + 3])
+                continue;
+            }
+
+          asm volatile (
+            "movd         %0, %%mm6 \n\t"
+            "punpcklbw %%mm7, %%mm6 \n\t" /* center pixel */
+            :: "m"(src[dix])
+          );
+
+          offset = rowstride * (y - numrad) + bytes * (x - numrad);
+
+          if (bytes == 1)
+            {
+              asm volatile (
+                "pshufw $0, %%mm6, %%mm6 \n\t": /* center pixel x4 */
+              );
+              for (j = 1 - numrad; j < numrad; j++)
+                {
+                  const guchar *src_b;
+                  guint         rowsum  = 0;
+                  guint         rowfact = 0;
+
+                  offset += rowstride;
+
+                  if (y + j < 0 || y + j >= height)
+                    continue;
+
+                  src_b = src + offset - 3;
+
+                  asm volatile (
+                    "pxor  %%mm5, %%mm5 \n\t" /* row fact */
+                    "pxor  %%mm4, %%mm4 \n\t" /* row sum  */
+                    :
+                  );
+
+                  for (i = 1 - numrad; i < numrad; i += 4)
+                    {
+                      src_b += 4;
+                      if (x + i < 0 || x + i >= width)
+                        continue;
+
+                      asm volatile (
+                        "movd         %0, %%mm0 \n\t"
+                        "movq      %%mm6, %%mm1 \n\t"
+                        "punpcklbw %%mm7, %%mm0 \n\t" /* one pixel      */
+                        "psubusw   %%mm0, %%mm1 \n\t" /* diff           */
+                        "movq      %%mm0, %%mm2 \n\t"
+                        "psubusw   %%mm6, %%mm2 \n\t"
+                        "por       %%mm2, %%mm1 \n\t" /* abs diff       */
+                        "pcmpgtw      %1, %%mm1 \n\t" /* threshold      */
+                        "pandn        %2, %%mm1 \n\t" /* weight         */
+                        "pmullw    %%mm1, %%mm0 \n\t" /* pixel * weight */
+                        "paddusw   %%mm1, %%mm5 \n\t" /* fact           */
+                        "movq      %%mm0, %%mm2 \n\t"
+                        "punpcklwd %%mm7, %%mm0 \n\t"
+                        "punpckhwd %%mm7, %%mm2 \n\t"
+                        "paddd     %%mm0, %%mm4 \n\t"
+                        "paddd     %%mm2, %%mm4 \n\t" /* sum            */
+                        :: "m"(*src_b), "m"(maxdelta4), "m"(imat[numrad + i])
+                      );
+                    }
+
+                  asm volatile (
+                    "pshufw $0xb1, %%mm5, %%mm3 \n\t"
+                    "paddusw       %%mm3, %%mm5 \n\t"
+                    "pshufw $0x0e, %%mm4, %%mm2 \n\t"
+                    "pshufw $0x0e, %%mm5, %%mm3 \n\t"
+                    "paddd         %%mm2, %%mm4 \n\t"
+                    "paddusw       %%mm3, %%mm5 \n\t"
+                    "movd          %%mm4, %0    \n\t"
+                    "movd          %%mm5, %1    \n\t"
+                    :"=g"(rowsum), "=g"(rowfact)
+                  );
+                  d = imat[numrad + j];
+                  r += d * rowsum;
+                  fr += d * (gushort) rowfact;
+                }
+
+              dest[dix] = r / fr;
+            }
+          else
+            {
+              for (j = 1 - numrad; j < numrad; j++)
+                {
+                  const guchar *src_b;
+                  gushort       rf[4];
+                  guint         rr, rg, rb;
+
+                  offset += rowstride;
+                  if (y + j < 0 || y + j >= height)
+                    continue;
+
+                  src_b = src + offset;
+
+                  asm volatile (
+                    "pxor  %%mm5, %%mm5 \n\t" /* row fact   */
+                    "pxor  %%mm4, %%mm4 \n\t" /* row sum RG */
+                    "pxor  %%mm3, %%mm3 \n\t" /* row sum B  */
+                    :
+                  );
+
+                  for (i = 1 - numrad; i < numrad; i++)
+                    {
+                      src_b += bytes;
+                      if (x + i < 0 || x + i >= width)
+                        continue;
+
+                      if (has_alpha)
+                        asm volatile (
+                          "movd         %0, %%mm0 \n\t"
+                          "movq      %%mm6, %%mm1 \n\t"
+                          "punpcklbw %%mm7, %%mm0 \n\t" /* one pixel       */
+                          "psubusw   %%mm0, %%mm1 \n\t" /* diff            */
+                          "movq      %%mm0, %%mm2 \n\t"
+                          "psubusw   %%mm6, %%mm2 \n\t"
+                          "por       %%mm2, %%mm1 \n\t" /* abs diff        */
+                          "pcmpgtw      %1, %%mm1 \n\t" /* threshold       */
+                          "pshufw   $0, %2, %%mm2 \n\t" /* weight          */
+                          "pandn     %%mm2, %%mm1 \n\t"
+                          "pshufw $0xff, %%mm0, %%mm2 \n\t" /* alpha       */
+                          "psllw        $8, %%mm2 \n\t"
+                          "pmulhuw   %%mm2, %%mm1 \n\t" /* weight *= alpha */
+                          "pmullw    %%mm1, %%mm0 \n\t" /* pixel * weight  */
+                          "paddusw   %%mm1, %%mm5 \n\t" /* fact            */
+                          "movq      %%mm0, %%mm2 \n\t"
+                          "punpcklwd %%mm7, %%mm0 \n\t" /* RG              */
+                          "punpckhwd %%mm7, %%mm2 \n\t" /* B               */
+                          "paddd     %%mm0, %%mm4 \n\t"
+                          "paddd     %%mm2, %%mm3 \n\t"
+                          :: "m"(*src_b), "m"(maxdelta4), "m"(imat[numrad + i])
+                        );
+                      else
+                        asm volatile (
+                          "movd         %0, %%mm0 \n\t"
+                          "movq      %%mm6, %%mm1 \n\t"
+                          "punpcklbw %%mm7, %%mm0 \n\t" /* one pixel       */
+                          "psubusw   %%mm0, %%mm1 \n\t" /* diff            */
+                          "movq      %%mm0, %%mm2 \n\t"
+                          "psubusw   %%mm6, %%mm2 \n\t"
+                          "por       %%mm2, %%mm1 \n\t" /* abs diff        */
+                          "pcmpgtw      %1, %%mm1 \n\t" /* threshold       */
+                          "pshufw   $0, %2, %%mm2 \n\t" /* weight          */
+                          "pandn     %%mm2, %%mm1 \n\t"
+                          "pmullw    %%mm1, %%mm0 \n\t" /* pixel * weight  */
+                          "paddusw   %%mm1, %%mm5 \n\t" /* fact            */
+                          "movq      %%mm0, %%mm2 \n\t"
+                          "punpcklwd %%mm7, %%mm0 \n\t" /* RG              */
+                          "punpckhwd %%mm7, %%mm2 \n\t" /* B               */
+                          "paddd     %%mm0, %%mm4 \n\t"
+                          "paddd     %%mm2, %%mm3 \n\t"
+                          :: "m"(*src_b), "m"(maxdelta4), "m"(imat[numrad + i])
+                        );
+                    }
+
+                  asm volatile (
+                    "movd    %%mm4, %0 \n\t"
+                    "movd    %%mm3, %2 \n\t"
+                    "psrlq  $32, %%mm4 \n\t"
+                    "movq    %%mm5, %3 \n\t"
+                    "movd    %%mm4, %1 \n\t"
+                    :"=g"(rr), "=g"(rg), "=g"(rb), "=m"(*rf)
+                    ::"memory"
+                  );
+                  d = imat[numrad + j];
+                  r += d * rr;
+                  g += d * rg;
+                  b += d * rb;
+                  fr += d * rf[0];
+                  fg += d * rf[1];
+                  fb += d * rf[2];
+                }
+
+              if (has_alpha)
+                {
+                  if (fr)
+                    dest[dix+0] = r / fr;
+                  if (fg)
+                    dest[dix+1] = g / fg;
+                  if (fb)
+                    dest[dix+2] = b / fb;
+                }
+              else
+                {
+                  dest[dix+0] = r / fr;
+                  dest[dix+1] = g / fg;
+                  dest[dix+2] = b / fb;
+                }
+            }
+        }
+
+      if (!(y % 10) && !preview_mode)
+        {
+          asm volatile ("emms");
+          gimp_progress_update ((double)y / (double)height);
+        }
+    }
+
+  asm volatile ("emms");
+
+  g_free (imat);
+}
+#endif /* ARCH_X86 && USE_MMX && __GNUC__ */
+
+
 static ALWAYS_INLINE void
 matrixmult_int (const guchar  *src,
                 guchar        *dest,
@@ -331,10 +596,20 @@ matrixmult_int (const guchar  *src,
 {
   const gint  nb        = bytes - (has_alpha ? 1 : 0);
   const gint  rowstride = width * bytes;
-  gushort    *imat      = g_new (gushort, 2 * numrad);
+  gushort    *imat;
+  gdouble     fsum, fscale;
+  gint        i, j, b, x, y, d;
 
-  gdouble  fsum, fscale;
-  gint     i, j, b, x, y, d;
+#ifdef HAVE_ACCEL
+  GimpCpuAccelFlags cpu = gimp_cpu_accel_get_support ();
+
+  if ((has_alpha ? (bytes == 4) : (bytes == 3 || bytes == 1))
+      && (cpu & (GIMP_CPU_ACCEL_X86_MMXEXT | GIMP_CPU_ACCEL_X86_SSE)))
+    return matrixmult_mmx (src, dest, width, height, mat, numrad,
+                           bytes, has_alpha, maxdelta, preview_mode);
+#endif
+
+  imat = g_new (gushort, 2 * numrad);
 
   fsum = 0.0;
   for (y = 1 - numrad; y < numrad; y++)
