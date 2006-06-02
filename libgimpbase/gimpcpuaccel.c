@@ -39,7 +39,7 @@
 #include "gimpcpuaccel.h"
 
 
-static GimpCpuAccelFlags  cpu_accel (void); G_GNUC_CONST
+static GimpCpuAccelFlags  cpu_accel (void) G_GNUC_CONST;
 
 
 static gboolean  use_cpu_accel = TRUE;
