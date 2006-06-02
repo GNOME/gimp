@@ -20,6 +20,8 @@
 
 	* libgimp/gimp.c (gimp_main): call gimp_set_use_cpu_accel().
 
+	* libgimpbase/gimpbase.def: updated.
+
 2006-06-01  Michael Natterer  <mitch@gimp.org>
 
 	* cursors/Makefile.am
