@@ -1,10 +1,32 @@
+2006-06-02  Sven Neumann  <sven@gimp.org>
+
+	Moved the CPU detection code to libgimpbase (see bug #342860):
+
+	* app/base/Makefile.am
+	* app/base/cpu-accel.[ch]
+	* app/base/test-cpu-accel.c: removed here...
+
+	* libgimpbase/Makefile.am
+	* libgimpbase/gimpbase.h
+	* libgimpbase/gimpcpuaccel.[ch]
+
+	* libgimpbase/test-cpu-accel.c: ... and added here again with
+	some API changes.
+
+	* app/composite/Makefile.am
+	* app/composite/make-installer.py: changed accordingly.
+
+	* app/composite/gimp-composite-*-installer.c: regenerated.
+
+	* libgimp/gimp.c (gimp_main): call gimp_set_use_cpu_accel().
+
 2006-06-01  Michael Natterer  <mitch@gimp.org>
 
 	* cursors/Makefile.am
 	* cursors/modifier-bad.png
 	* cursors/xbm/modifier-bad-mask.xbm
-	* cursors/xbm/modifier-bad.xbm: new "bad" cursor
-	modifier. Replaces the "bad" cursor.
+	* cursors/xbm/modifier-bad.xbm: new "bad" cursor modifier.
+	Replaces the "bad" cursor.
 
 	* cursors/gimp-tool-cursors.xcf: added it here too.
 

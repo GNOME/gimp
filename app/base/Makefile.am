@@ -20,8 +20,6 @@ libappbase_a_SOURCES = \
 	cpercep.h		\
 	curves.c		\
 	curves.h		\
-	cpu-accel.c		\
-	cpu-accel.h		\
 	gimphistogram.c		\
 	gimphistogram.h		\
 	gimplut.c		\
@@ -61,12 +59,6 @@ AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Base\"	\
 	@GTHREAD_CFLAGS@
 
-AM_CCASFLAGS = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
-	-I$(top_srcdir)/app
-
 INCLUDES = \
 	-I$(top_builddir)	\
 	-I$(top_srcdir)		\
@@ -75,24 +67,16 @@ INCLUDES = \
 	$(GLIB_CFLAGS)		\
 	-I$(includedir)
 
-TESTS = test-cpu-accel
-
-test_cpu_accel_SOURCES = test-cpu-accel.c
-
-test_cpu_accel_LDADD = \
-	libappbase.a	\
-	$(GLIB_LIBS)
 
 EXTRA_DIST = makefile.msc
 
-EXTRA_PROGRAMS = test-cpu-accel
 
 #
 # rules to generate built sources
 #
 # setup autogeneration dependencies
 gen_sources = xgen-bec
-CLEANFILES = $(EXTRA_PROGRAMS) $(gen_sources)
+CLEANFILES = $(gen_sources)
 
 $(srcdir)/base-enums.c: $(srcdir)/base-enums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \

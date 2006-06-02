@@ -1,19 +1,20 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 
 /*
@@ -35,11 +36,49 @@
 
 #include <glib.h>
 
-#include "cpu-accel.h"
+#include "gimpcpuaccel.h"
+
+
+static GimpCpuAccelFlags  cpu_accel (void); G_GNUC_CONST
+
+
+static gboolean  use_cpu_accel = TRUE;
+
+
+/**
+ * gimp_cpu_accel_get_support:
+ *
+ * Query for CPU acceleration support.
+ *
+ * Return value: #GimpCpuAccelFlags as supported by the CPU.
+ *
+ * Since: GIMP 2.4
+ */
+GimpCpuAccelFlags
+gimp_cpu_accel_get_support (void)
+{
+  return use_cpu_accel ? cpu_accel () : GIMP_CPU_ACCEL_NONE;
+}
+
+/**
+ * gimp_cpu_accel_set_use:
+ * @use:  whether to use CPU acceleration features or not
+ *
+ * This function is for internal use only.
+ *
+ * Since: GIMP 2.4
+ */
+void
+gimp_cpu_accel_set_use (gboolean use)
+{
+  use_cpu_accel = use ? TRUE : FALSE;
+}
+
 
 #if defined(ARCH_X86) && defined(USE_MMX) && defined(__GNUC__)
 
 #define HAVE_ACCEL 1
+
 
 typedef enum
 {
@@ -184,17 +223,17 @@ arch_accel_intel (void)
     if ((edx & ARCH_X86_INTEL_FEATURE_MMX) == 0)
       return 0;
 
-    caps = CPU_ACCEL_X86_MMX;
+    caps = GIMP_CPU_ACCEL_X86_MMX;
 
 #ifdef USE_SSE
     if (edx & ARCH_X86_INTEL_FEATURE_XMM)
-      caps |= CPU_ACCEL_X86_SSE | CPU_ACCEL_X86_MMXEXT;
+      caps |= GIMP_CPU_ACCEL_X86_SSE | GIMP_CPU_ACCEL_X86_MMXEXT;
 
     if (edx & ARCH_X86_INTEL_FEATURE_XMM2)
-      caps |= CPU_ACCEL_X86_SSE2;
+      caps |= GIMP_CPU_ACCEL_X86_SSE2;
 
     if (ecx & ARCH_X86_INTEL_FEATURE_PNI)
-      caps |= CPU_ACCEL_X86_SSE3;
+      caps |= GIMP_CPU_ACCEL_X86_SSE3;
 #endif /* USE_SSE */
   }
 #endif /* USE_MMX */
@@ -222,10 +261,10 @@ arch_accel_amd (void)
     cpuid (0x80000001, eax, ebx, ecx, edx);
 
     if (edx & ARCH_X86_AMD_FEATURE_3DNOW)
-      caps |= CPU_ACCEL_X86_3DNOW;
+      caps |= GIMP_CPU_ACCEL_X86_3DNOW;
 
     if (edx & ARCH_X86_AMD_FEATURE_MMXEXT)
-      caps |= CPU_ACCEL_X86_MMXEXT;
+      caps |= GIMP_CPU_ACCEL_X86_MMXEXT;
 #endif /* USE_SSE */
   }
 #endif /* USE_MMX */
@@ -252,14 +291,14 @@ arch_accel_centaur (void)
     cpuid (0x80000001, eax, ebx, ecx, edx);
 
     if (edx & ARCH_X86_CENTAUR_FEATURE_MMX)
-      caps |= CPU_ACCEL_X86_MMX;
+      caps |= GIMP_CPU_ACCEL_X86_MMX;
 
 #ifdef USE_SSE
     if (edx & ARCH_X86_CENTAUR_FEATURE_3DNOW)
-      caps |= CPU_ACCEL_X86_3DNOW;
+      caps |= GIMP_CPU_ACCEL_X86_3DNOW;
 
     if (edx & ARCH_X86_CENTAUR_FEATURE_MMXEXT)
-      caps |= CPU_ACCEL_X86_MMXEXT;
+      caps |= GIMP_CPU_ACCEL_X86_MMXEXT;
 #endif /* USE_SSE */
   }
 #endif /* USE_MMX */
@@ -286,11 +325,11 @@ arch_accel_cyrix (void)
     cpuid (0x80000001, eax, ebx, ecx, edx);
 
     if (edx & ARCH_X86_CYRIX_FEATURE_MMX)
-      caps |= CPU_ACCEL_X86_MMX;
+      caps |= GIMP_CPU_ACCEL_X86_MMX;
 
 #ifdef USE_SSE
     if (edx & ARCH_X86_CYRIX_FEATURE_MMXEXT)
-      caps |= CPU_ACCEL_X86_MMXEXT;
+      caps |= GIMP_CPU_ACCEL_X86_MMXEXT;
 #endif /* USE_SSE */
   }
 #endif /* USE_MMX */
@@ -359,8 +398,8 @@ arch_accel (void)
     }
 
 #ifdef USE_SSE
-  if ((caps & CPU_ACCEL_X86_SSE) && !arch_accel_sse_os_support ())
-    caps &= ~(CPU_ACCEL_X86_SSE | CPU_ACCEL_X86_SSE2);
+  if ((caps & GIMP_CPU_ACCEL_X86_SSE) && !arch_accel_sse_os_support ())
+    caps &= ~(GIMP_CPU_ACCEL_X86_SSE | GIMP_CPU_ACCEL_X86_SSE2);
 #endif
 
   return caps;
@@ -388,7 +427,7 @@ arch_accel (void)
   err = sysctl (sels, 2, &has_vu, &length, NULL, 0);
 
   if (err == 0 && has_vu)
-    return CPU_ACCEL_PPC_ALTIVEC;
+    return GIMP_CPU_ACCEL_PPC_ALTIVEC;
 
   return 0;
 }
@@ -433,14 +472,14 @@ arch_accel (void)
 
   signal (SIGILL, SIG_DFL);
 
-  return CPU_ACCEL_PPC_ALTIVEC;
+  return GIMP_CPU_ACCEL_PPC_ALTIVEC;
 }
 #endif /* __GNUC__ */
 
 #endif /* ARCH_PPC && USE_ALTIVEC */
 
 
-guint32
+static GimpCpuAccelFlags
 cpu_accel (void)
 {
 #ifdef HAVE_ACCEL
@@ -451,35 +490,9 @@ cpu_accel (void)
 
   accel = arch_accel ();
 
-  return accel;
+  return (GimpCpuAccelFlags) accel;
 
 #else /* !HAVE_ACCEL */
-  return 0;
+  return GIMP_CPU_ACCEL_NONE;
 #endif
-}
-
-void
-cpu_accel_print_results (void)
-{
-  g_printerr ("Testing CPU features...\n");
-
-#ifdef ARCH_X86
-  g_printerr ("  mmx     : %s\n",
-              (cpu_accel() & CPU_ACCEL_X86_MMX)     ? "yes" : "no");
-  g_printerr ("  3dnow   : %s\n",
-              (cpu_accel() & CPU_ACCEL_X86_3DNOW)   ? "yes" : "no");
-  g_printerr ("  mmxext  : %s\n",
-              (cpu_accel() & CPU_ACCEL_X86_MMXEXT)  ? "yes" : "no");
-  g_printerr ("  sse     : %s\n",
-              (cpu_accel() & CPU_ACCEL_X86_SSE)     ? "yes" : "no");
-  g_printerr ("  sse2    : %s\n",
-              (cpu_accel() & CPU_ACCEL_X86_SSE2)    ? "yes" : "no");
-  g_printerr ("  sse3    : %s\n",
-              (cpu_accel() & CPU_ACCEL_X86_SSE3)    ? "yes" : "no");
-#endif
-#ifdef ARCH_PPC
-  g_printerr ("  altivec : %s\n",
-              (cpu_accel() & CPU_ACCEL_PPC_ALTIVEC) ? "yes" : "no");
-#endif
-  g_printerr ("\n");
 }

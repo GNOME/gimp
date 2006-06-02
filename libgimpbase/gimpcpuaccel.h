@@ -1,48 +1,52 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 
-/*
- * CPU acceleration detection was taken from DirectFB but seems to be
- * originating from mpeg2dec with the following copyright:
- *
- * Copyright (C) 1999-2001 Aaron Holtzman <aholtzma@ess.engr.uvic.ca>
- */
+#ifndef __GIMP_CPU_ACCEL_H__
+#define __GIMP_CPU_ACCEL_H__
 
-#ifndef __CPU_ACCEL_H__
-#define __CPU_ACCEL_H__
+G_BEGIN_DECLS
 
 
-/* x86 accelerations */
-#define CPU_ACCEL_X86_MMX        0x80000000
-#define CPU_ACCEL_X86_3DNOW      0x40000000
-#define CPU_ACCEL_X86_MMXEXT     0x20000000
-#define CPU_ACCEL_X86_SSE        0x10000000
-#define CPU_ACCEL_X86_SSE2       0x08000000
-#define CPU_ACCEL_X86_SSE3       0x02000000
+typedef enum
+{
+  GIMP_CPU_ACCEL_NONE        = 0x0,
 
-/* powerpc accelerations */
-#define CPU_ACCEL_PPC_ALTIVEC    0x04000000
+  /* x86 accelerations */
+  GIMP_CPU_ACCEL_X86_MMX     = 0x80000000,
+  GIMP_CPU_ACCEL_X86_3DNOW   = 0x40000000,
+  GIMP_CPU_ACCEL_X86_MMXEXT  = 0x20000000,
+  GIMP_CPU_ACCEL_X86_SSE     = 0x10000000,
+  GIMP_CPU_ACCEL_X86_SSE2    = 0x08000000,
+  GIMP_CPU_ACCEL_X86_SSE3    = 0x02000000,
+
+  /* powerpc accelerations */
+  GIMP_CPU_ACCEL_PPC_ALTIVEC = 0x04000000
+} GimpCpuAccelFlags;
 
 
-guint32  cpu_accel               (void) G_GNUC_CONST;
-
-void     cpu_accel_print_results (void);
+GimpCpuAccelFlags  gimp_cpu_accel_get_support (void);
 
 
-#endif  /* __CPU_ACCEL_H__ */
+/* for internal use only */
+void               gimp_cpu_accel_set_use     (gboolean use);
 
+
+G_END_DECLS
+
+#endif  /* __GIMP_CPU_ACCEL_H__ */

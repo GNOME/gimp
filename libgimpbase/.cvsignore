@@ -9,3 +9,4 @@ _libs
 gimpversion.h
 *.lib
 *.exp
+test-cpu-accel

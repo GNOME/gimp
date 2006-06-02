@@ -1,5 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 
 AM_CPPFLAGS = \
@@ -133,8 +134,8 @@ gimp_composite_test_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 gimp_composite_test_LDADD = \
 	libappcomposite.a	\
-	../base/libappbase.a	\
 	$(libgimpcolor)		\
+	$(libgimpbase)		\
 	$(GLIB_LIBS)
 
 
@@ -147,8 +148,8 @@ gimp_composite_mmx_test_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 gimp_composite_mmx_test_LDADD = \
 	libappcomposite.a	\
-	../base/libappbase.a	\
 	$(libgimpcolor)		\
+	$(libgimpbase)		\
 	$(GLIB_LIBS)
 
 gimp_composite_sse_test_SOURCES = \
@@ -160,8 +161,8 @@ gimp_composite_sse_test_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 gimp_composite_sse_test_LDADD = \
 	libappcomposite.a	\
-	../base/libappbase.a	\
 	$(libgimpcolor)		\
+	$(libgimpbase)		\
 	$(GLIB_LIBS)
 
 gimp_composite_sse2_test_SOURCES = \
@@ -173,8 +174,8 @@ gimp_composite_sse2_test_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 gimp_composite_sse2_test_LDADD = \
 	libappcomposite.a	\
-	../base/libappbase.a	\
 	$(libgimpcolor)		\
+	$(libgimpbase)		\
 	$(GLIB_LIBS)
 
 
@@ -187,8 +188,8 @@ gimp_composite_3dnow_test_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 gimp_composite_3dnow_test_LDADD = \
 	libappcomposite.a	\
-	../base/libappbase.a	\
 	$(libgimpcolor)		\
+	$(libgimpbase)		\
 	$(GLIB_LIBS)
 
 
@@ -201,8 +202,8 @@ gimp_composite_altivec_test_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 gimp_composite_altivec_test_LDADD = \
 	libappcomposite.a	\
-	../base/libappbase.a	\
 	$(libgimpcolor)		\
+	$(libgimpbase)		\
 	$(GLIB_LIBS)
 
 gimp_composite_vis_test_SOURCES = \
@@ -214,6 +215,6 @@ gimp_composite_vis_test_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 gimp_composite_vis_test_LDADD = \
 	libappcomposite.a	\
-	../base/libappbase.a	\
 	$(libgimpcolor)		\
+	$(libgimpbase)		\
 	$(GLIB_LIBS)

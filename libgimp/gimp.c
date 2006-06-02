@@ -391,6 +391,8 @@ gimp_main (const GimpPlugInInfo *info,
     gimp_base_init (&vtable);
   }
 
+  gimp_cpu_accel_set_use (gimp_use_cpu_accel ());
+
 
   /* initialize i18n support */
 

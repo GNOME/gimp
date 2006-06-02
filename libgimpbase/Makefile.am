@@ -54,6 +54,10 @@ AM_CPPFLAGS = \
 	@BINRELOC_CFLAGS@			\
 	@GTHREAD_CFLAGS@
 
+AM_CCASFLAGS = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir)
+
 INCLUDES = \
 	-I$(top_srcdir)	\
 	$(GLIB_CFLAGS)	\
@@ -84,6 +88,8 @@ libgimpbase_sources = \
 	gimpbase-private.h	\
 	gimpchecks.c           	\
 	gimpchecks.h           	\
+	gimpcpuaccel.c		\
+	gimpcpuaccel.h		\
 	gimpdatafiles.c		\
 	gimpdatafiles.h		\
 	gimpenv.c		\
@@ -147,13 +153,31 @@ install-data-local: install-ms-lib install-libtool-import-lib
 
 uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
 
+#
+# test programs, not to be built by default and never installed
+#
+
+TESTS = test-cpu-accel
+
+test_cpu_accel_SOURCES = test-cpu-accel.c
+
+test_cpu_accel_DEPENDENCIES = \
+	$(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+
+test_cpu_accel_LDADD = \
+	$(GLIB_LIBS)	\
+	$(test_cpu_accel_DEPENDENCIES)
+
+
+EXTRA_PROGRAMS = test-cpu-accel
+
 
 #
 # rules to generate built sources
 #
 
 gen_sources = xgen-bec
-CLEANFILES = $(gen_sources)
+CLEANFILES = $(EXTRA_PROGRAMS) $(gen_sources)
 
 $(srcdir)/gimpbaseenums.c: $(srcdir)/gimpbaseenums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
