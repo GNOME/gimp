@@ -1,5 +1,12 @@
 2006-06-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimpnewrectselecttool.[ch]: use RECT_INACTIVE state,
+	(but doesn't seem to do anything).  More importantly, change
+	logic so that button_release executes the tool, and button
+	release undo's if appropriate.
+
+2006-06-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimprectangletool.[ch]: add new function RECT_INACTIVE
 	for cases where no rectangle exists.  This may take some
 	tweaking to get right.

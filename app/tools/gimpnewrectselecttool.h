@@ -36,6 +36,8 @@ typedef struct _GimpNewRectSelectToolClass GimpNewRectSelectToolClass;
 struct _GimpNewRectSelectTool
 {
   GimpSelectionTool  parent_instance;
+
+  GimpUndo          *undo;
 };
 
 struct _GimpNewRectSelectToolClass

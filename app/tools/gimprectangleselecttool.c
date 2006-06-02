@@ -30,9 +30,12 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimppickable.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimp-utils.h"
+#include "core/gimpundo.h"
+#include "core/gimpundostack.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
@@ -211,6 +214,23 @@ gimp_new_rect_select_tool_button_press (GimpTool        *tool,
 {
   guint function;
 
+  /* if we have an existing rectangle in the current display, then
+     we have already "executed", and need to undo at this point, unless
+     the user has done something in the meantime */
+  if (tool->display && display == tool->display)
+    {
+      GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (tool);
+      GimpImage             *image       = display->image;
+      GimpUndo              *undo;
+
+      undo = gimp_undo_stack_peek (image->undo_stack);
+      if (undo && rect_select->undo == undo)
+        {
+          gimp_image_undo (image);
+          rect_select->undo = NULL;
+        }
+    }
+
   if (tool->display && display != tool->display)
     gimp_rectangle_tool_response (NULL, GTK_RESPONSE_CANCEL,
                                   GIMP_RECTANGLE_TOOL (tool));
@@ -252,6 +272,28 @@ gimp_new_rect_select_tool_button_release (GimpTool        *tool,
                          _("Click or press enter to create the selection."));
 
   gimp_rectangle_tool_button_release (tool, coords, time, state, display);
+
+  /* if a rectangle still exists, "execute" the tool now */
+  if (tool->display)
+    {
+      gint                   x1, y1, x2, y2;
+      GimpNewRectSelectTool *rect_select     = GIMP_NEW_RECT_SELECT_TOOL (tool);
+
+      g_object_get (GIMP_RECTANGLE_TOOL (tool),
+                    "x1", &x1,
+                    "y1", &y1,
+                    "x2", &x2,
+                    "y2", &y2,
+                    NULL);
+
+      gimp_rectangle_tool_execute (GIMP_RECTANGLE_TOOL (tool),
+                                   x1, y1,
+                                   x2 - x1,
+                                   y2 - y1);
+
+      /* save the undo that we got when executing */
+      rect_select->undo = gimp_undo_stack_peek (display->image->undo_stack);
+    }
 }
 
 static void
@@ -280,7 +322,7 @@ gimp_new_rect_select_tool_oper_update (GimpTool        *tool,
 
   g_object_get (tool, "function", &function, NULL);
 
-  if (function == RECT_CREATING || function == RECT_EXECUTING)
+  if (function == RECT_INACTIVE)
     GIMP_SELECTION_TOOL (tool)->allow_move = TRUE;
   else
     GIMP_SELECTION_TOOL (tool)->allow_move = FALSE;
