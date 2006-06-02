@@ -43,7 +43,6 @@ gimp_default_display
 gimp_wm_class
 gimp_display_name
 gimp_monitor_number
-gimp_use_cpu_accel
 gimp_get_progname
 gimp_extension_enable
 gimp_extension_ack

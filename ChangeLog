@@ -1,5 +1,11 @@
 2006-06-02  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimp.[ch]
+	* libgimp/gimp.def: removed gimp_use_cpu_accel() again. libgimp
+	handles this transparently by calling gimp_cpu_accel_set_use().
+
+2006-06-02  Sven Neumann  <sven@gimp.org>
+
 	* app/composite/gimp-composite.c (gimp_composite_use_cpu_accel):
 	need to test for GIMP_COMPOSITE_OPTION_NOEXTENSIONS.
 

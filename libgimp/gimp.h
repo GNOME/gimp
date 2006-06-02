@@ -319,7 +319,6 @@ gboolean      gimp_install_cmap        (void) G_GNUC_CONST;
 gint          gimp_min_colors          (void) G_GNUC_CONST;
 gboolean      gimp_show_tool_tips      (void) G_GNUC_CONST;
 gboolean      gimp_show_help_button    (void) G_GNUC_CONST;
-gboolean      gimp_use_cpu_accel       (void) G_GNUC_CONST;
 GimpCheckSize gimp_check_size          (void) G_GNUC_CONST;
 GimpCheckType gimp_check_type          (void) G_GNUC_CONST;
 gint32        gimp_default_display     (void) G_GNUC_CONST;
