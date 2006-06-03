@@ -199,12 +199,12 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
   if (selection_tool->allow_move &&
       (state & GDK_MOD1_MASK) && (state & GDK_CONTROL_MASK) && move_layer)
     {
-      selection_tool->op = SELECTION_MOVE_COPY; /* move a copy of the selection */
+      selection_tool->op = SELECTION_MOVE;      /* move the selection */
     }
   else if (selection_tool->allow_move &&
            (state & GDK_MOD1_MASK) && (state & GDK_SHIFT_MASK) && move_layer)
     {
-      selection_tool->op = SELECTION_MOVE;      /* move the selection */
+      selection_tool->op = SELECTION_MOVE_COPY; /* move a copy of the selection */
     }
   else if (selection_tool->allow_move &&
            (state & GDK_MOD1_MASK) && ! gimp_channel_is_empty (selection))

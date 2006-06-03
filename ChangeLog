@@ -1,3 +1,14 @@
+2006-06-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpnewrectselecttool.c
+	(gimp_new_rect_select_tool_button_press): check for function ==
+	INACTIVE, not CREATING || EXECUTING when checking whether to start
+	moving.
+
+	* app/tools/gimpselectiontool.c (gimp_selection_tool_oper_update):
+	changed modifiers so alt+ctrl does cut+float+move and alt+shift
+	does copy+float+move.
+
 2006-06-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimprectangletool.c: move statically declared
@@ -83,7 +94,7 @@
 	selections or anything when "allow_move" is FALSE. Changed
 	behavior of click inside a selection to simply create a new
 	selection, need to press alt+shift now to drag-float the
-	selection. Please test this, it's apretty fundamental change!
+	selection. Please test this, it's a pretty fundamental change!
 
 	(gimp_selection_tool_cursor_update): use the tool's configured
 	cursor instead of always GIMP_CURSOR_MOUSE, so this function can

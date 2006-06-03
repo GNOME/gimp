@@ -237,7 +237,7 @@ gimp_new_rect_select_tool_button_press (GimpTool        *tool,
 
   g_object_get (tool, "function", &function, NULL);
 
-  if (function == RECT_CREATING || function == RECT_EXECUTING)
+  if (function == RECT_INACTIVE)
     {
       GimpDisplay *old_display;
       gboolean     edit_started;
