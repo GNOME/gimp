@@ -1,5 +1,28 @@
 2006-06-03  Michael Natterer  <mitch@gimp.org>
 
+	Make better use of the available 32x32 pixels so the cursors look
+	less crowded:
+
+	* cursors/cursor-corner-*.png
+	* cursors/cursor-side-*.png
+	* cursors/xbm/cursor-corner-*.xbm
+	* cursors/xbm/cursor-side-*.xbm: made the crosshair lines one
+	pixel longer.
+
+	* cursors/modifier-join.png
+	* cursors/modifier-pattern.png
+	* cursors/xbm/modifier-join-mask.xbm
+	* cursors/xbm/modifier-join.xbm
+	* cursors/xbm/modifier-pattern-mask.xbm
+	* cursors/xbm/modifier-pattern.xbm: moved one pixel to the right.
+
+	* cursors/tool-*.png
+	* cursors/xbm/tool-*.png: moved closer to the bottom right corner.
+
+	* cursors/gimp-tool-cursors.xcf: ditto.
+
+2006-06-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpnewrectselecttool.c
 	(gimp_new_rect_select_tool_button_press): check for function ==
 	INACTIVE, not CREATING || EXECUTING when checking whether to start

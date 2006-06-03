@@ -1,4 +1,3 @@
-/* Created with The GIMP */
 #define tool_iscissors_width 32
 #define tool_iscissors_height 32
 static unsigned char tool_iscissors_bits[] = {
