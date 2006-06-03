@@ -154,17 +154,10 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 
   options = GIMP_FLIP_OPTIONS (tool->tool_info->tool_options);
 
-  if (gimp_image_coords_in_active_drawable (display->image, coords))
+  if (gimp_image_coords_in_active_pickable (display->image, coords,
+                                            FALSE, TRUE))
     {
-      GimpChannel *selection = gimp_image_get_mask (display->image);
-
-      /*  Is there a selected region? If so, is cursor inside? */
-      if (gimp_channel_is_empty (selection) ||
-          gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
-                                        coords->x, coords->y))
-        {
-          modifier = GIMP_CURSOR_MODIFIER_NONE;
-        }
+      modifier = GIMP_CURSOR_MODIFIER_NONE;
     }
 
   gimp_tool_control_set_cursor_modifier        (tool->control, modifier);

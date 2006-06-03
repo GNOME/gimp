@@ -215,19 +215,10 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 
   options = GIMP_CLONE_OPTIONS (tool->tool_info->tool_options);
 
-  if (gimp_image_coords_in_active_drawable (display->image, coords))
+  if (gimp_image_coords_in_active_pickable (display->image, coords,
+                                            FALSE, TRUE))
     {
-      GimpChannel *selection = gimp_image_get_mask (display->image);
-
-      /*  One more test--is there a selected region?
-       *  if so, is cursor inside?
-       */
-      if (gimp_channel_is_empty (selection) ||
-          gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
-                                        coords->x, coords->y))
-        {
-          cursor = GIMP_CURSOR_MOUSE;
-        }
+      cursor = GIMP_CURSOR_MOUSE;
     }
 
   if (options->clone_type == GIMP_IMAGE_CLONE)

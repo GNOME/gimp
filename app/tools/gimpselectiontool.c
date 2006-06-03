@@ -313,6 +313,16 @@ gimp_selection_tool_cursor_update (GimpTool        *tool,
       break;
     }
 
+  /*  we don't set the bad modifier ourselves, so a subclass has set
+   *  it, always leave it there since it's more important than what we
+   *  have to say.
+   */
+  if (gimp_tool_control_get_cursor_modifier (tool->control) ==
+      GIMP_CURSOR_MODIFIER_BAD)
+    {
+      modifier = GIMP_CURSOR_MODIFIER_BAD;
+    }
+
   gimp_tool_set_cursor (tool, display,
                         gimp_tool_control_get_cursor (tool->control),
                         tool_cursor,

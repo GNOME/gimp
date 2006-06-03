@@ -102,7 +102,8 @@ gimp_by_color_select_tool_init (GimpByColorSelectTool *by_color_select)
 {
   GimpTool *tool = GIMP_TOOL (by_color_select);
 
-  gimp_tool_control_set_cursor (tool->control, GIMP_CURSOR_MOUSE);
+  gimp_tool_control_set_cursor (tool->control,      GIMP_CURSOR_MOUSE);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_HAND);
 
   by_color_select->x = 0;
   by_color_select->y = 0;
@@ -243,23 +244,15 @@ gimp_by_color_select_tool_cursor_update (GimpTool        *tool,
                                          GimpDisplay     *display)
 {
   GimpSelectionOptions *options;
-  GimpLayer            *layer;
+  GimpCursorModifier    modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  layer = gimp_image_pick_correlate_layer (display->image, coords->x, coords->y);
+  if (! gimp_image_coords_in_active_pickable (display->image, coords,
+                                              options->sample_merged, FALSE))
+    modifier = GIMP_CURSOR_MODIFIER_BAD;
 
-  if (! options->sample_merged &&
-      layer && layer != display->image->active_layer)
-    {
-      gimp_tool_control_set_cursor_modifier (tool->control,
-                                             GIMP_CURSOR_MODIFIER_BAD);
-    }
-  else
-    {
-      gimp_tool_control_set_cursor_modifier (tool->control,
-                                             GIMP_CURSOR_MODIFIER_NONE);
-    }
+  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }

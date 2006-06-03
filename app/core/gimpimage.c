@@ -3563,35 +3563,59 @@ gimp_image_pick_correlate_layer (const GimpImage *image,
 }
 
 gboolean
-gimp_image_coords_in_active_drawable (GimpImage        *image,
-                                      const GimpCoords *coords)
+gimp_image_coords_in_active_pickable (GimpImage        *image,
+                                      const GimpCoords *coords,
+                                      gboolean          sample_merged,
+                                      gboolean          selected_only)
 {
-  GimpDrawable *drawable;
+  gint     x, y;
+  gboolean in_pickable = FALSE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  drawable = gimp_image_active_drawable (image);
+  x = floor (coords->x);
+  y = floor (coords->y);
 
-  if (drawable)
+  if (sample_merged)
     {
-      GimpItem *item = GIMP_ITEM (drawable);
-      gint      x, y;
+      if (x >= 0 && x < image->width &&
+          y >= 0 && y < image->height)
+        in_pickable = TRUE;
+    }
+  else
+    {
+      GimpDrawable *drawable = gimp_image_active_drawable (image);
 
-      gimp_item_offsets (item, &x, &y);
+      if (drawable)
+        {
+          GimpItem *item = GIMP_ITEM (drawable);
+          gint      off_x, off_y;
+          gint      d_x, d_y;
 
-      x = ROUND (coords->x) - x;
-      y = ROUND (coords->y) - y;
+          gimp_item_offsets (item, &off_x, &off_y);
 
-      if (x < 0 || x > gimp_item_width (item))
-        return FALSE;
+          d_x = x - off_x;
+          d_y = y - off_y;
 
-      if (y < 0 || y > gimp_item_height (item))
-        return FALSE;
-
-      return TRUE;
+          if (d_x >= 0 && d_x < gimp_item_width (item) &&
+              d_y >= 0 && d_y < gimp_item_height (item))
+            in_pickable = TRUE;
+        }
     }
 
-  return FALSE;
+  if (in_pickable && selected_only)
+    {
+      GimpChannel *selection = gimp_image_get_mask (image);
+
+      if (! gimp_channel_is_empty (selection) &&
+          ! gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
+                                          x, y))
+        {
+          in_pickable = FALSE;
+        }
+    }
+
+  return in_pickable;
 }
 
 void

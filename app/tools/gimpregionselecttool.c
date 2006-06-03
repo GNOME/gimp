@@ -70,6 +70,10 @@ static void   gimp_fuzzy_select_tool_motion         (GimpTool        *tool,
                                                      guint32          time,
                                                      GdkModifierType  state,
                                                      GimpDisplay     *display);
+static void   gimp_fuzzy_select_tool_cursor_update  (GimpTool        *tool,
+                                                     GimpCoords      *coords,
+                                                     GdkModifierType  state,
+                                                     GimpDisplay     *display);
 
 static void   gimp_fuzzy_select_tool_draw           (GimpDrawTool    *draw_tool);
 
@@ -114,6 +118,7 @@ gimp_fuzzy_select_tool_class_init (GimpFuzzySelectToolClass *klass)
   tool_class->button_press   = gimp_fuzzy_select_tool_button_press;
   tool_class->button_release = gimp_fuzzy_select_tool_button_release;
   tool_class->motion         = gimp_fuzzy_select_tool_motion;
+  tool_class->cursor_update  = gimp_fuzzy_select_tool_cursor_update;
 
   draw_tool_class->draw      = gimp_fuzzy_select_tool_draw;
 }
@@ -317,6 +322,26 @@ gimp_fuzzy_select_tool_motion (GimpTool        *tool,
   fuzzy_sel->num_segs = num_new_segs;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+}
+
+static void
+gimp_fuzzy_select_tool_cursor_update (GimpTool        *tool,
+                                      GimpCoords      *coords,
+                                      GdkModifierType  state,
+                                      GimpDisplay     *display)
+{
+  GimpSelectionOptions *options;
+  GimpCursorModifier    modifier = GIMP_CURSOR_MODIFIER_NONE;
+
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+
+  if (! gimp_image_coords_in_active_pickable (display->image, coords,
+                                              options->sample_merged, TRUE))
+    modifier = GIMP_CURSOR_MODIFIER_BAD;
+
+  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 static void

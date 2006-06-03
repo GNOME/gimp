@@ -622,14 +622,10 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
       switch (options->type)
         {
         case GIMP_TRANSFORM_TYPE_LAYER:
-          if (gimp_image_coords_in_active_drawable (display->image, coords))
+          if (gimp_image_coords_in_active_pickable (display->image, coords,
+                                                    FALSE, TRUE))
             {
-              if (gimp_channel_is_empty (selection) ||
-                  gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
-                                                coords->x, coords->y))
-                {
-                  cursor = GIMP_CURSOR_MOUSE;
-                }
+              cursor = GIMP_CURSOR_MOUSE;
             }
           break;
 

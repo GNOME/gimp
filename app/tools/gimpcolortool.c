@@ -506,11 +506,9 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
         {
           GimpCursorModifier modifier = GIMP_CURSOR_MODIFIER_BAD;
 
-          if (coords->x > 0 && coords->x < display->image->width  &&
-              coords->y > 0 && coords->y < display->image->height &&
-
-              (color_tool->options->sample_merged ||
-               gimp_image_coords_in_active_drawable (display->image, coords)))
+          if (gimp_image_coords_in_active_pickable (display->image, coords,
+                                                    color_tool->options->sample_merged,
+                                                    FALSE))
             {
               switch (color_tool->pick_mode)
                 {

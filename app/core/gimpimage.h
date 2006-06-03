@@ -504,8 +504,10 @@ gboolean        gimp_image_layer_boundary        (const GimpImage    *image,
 GimpLayer     * gimp_image_pick_correlate_layer  (const GimpImage    *image,
                                                   gint                x,
                                                   gint                y);
-gboolean    gimp_image_coords_in_active_drawable (GimpImage          *image,
-                                                  const GimpCoords   *coords);
+gboolean    gimp_image_coords_in_active_pickable (GimpImage          *image,
+                                                  const GimpCoords   *coords,
+                                                  gboolean            sample_merged,
+                                                  gboolean            selected_only);
 
 void        gimp_image_invalidate_layer_previews (GimpImage          *image);
 void      gimp_image_invalidate_channel_previews (GimpImage          *image);
