@@ -340,7 +340,7 @@ gimp_color_frame_set_color (GimpColorFrame *frame,
   if (frame->sample_valid               &&
       frame->sample_type == sample_type &&
       frame->color_index == color_index &&
-      gimp_rgb_distance (&frame->color, color) < 0.0001)
+      gimp_rgba_distance (&frame->color, color) < 0.0001)
     {
       frame->color = *color;
       return;

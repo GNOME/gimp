@@ -1,3 +1,9 @@
+2006-06-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcolorframe.c (gimp_color_frame_set_color): use
+	gimp_rgba_distance() instead of gimp_rgb_distance(), so alpha
+	changes update the color frame too.
+
 2006-06-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.[ch]: renamed
