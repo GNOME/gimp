@@ -31,7 +31,7 @@
 #include "core/gimpimage-crop.h"
 #include "core/gimppickable.h"
 #include "core/gimptoolinfo.h"
-
+#include "core/gimpmarshal.h"
 #include "display/gimpcanvas.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -43,6 +43,12 @@
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
+
+enum
+{
+  RECTANGLE_CHANGED,
+  LAST_SIGNAL
+};
 
 
 /*  speed of key movement  */
@@ -161,6 +167,8 @@ gimp_rectangle_tool_interface_get_type (void)
   return rectangle_tool_iface_type;
 }
 
+static guint gimp_rectangle_tool_signals[LAST_SIGNAL] = { 0 };
+
 static void
 gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface)
 {
@@ -168,6 +176,15 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface)
 
   if (! initialized)
     {
+      gimp_rectangle_tool_signals[RECTANGLE_CHANGED] =
+        g_signal_new ("rectangle-changed",
+                      G_TYPE_FROM_INTERFACE (iface),
+                      G_SIGNAL_RUN_FIRST,
+                      G_STRUCT_OFFSET (GimpRectangleToolInterface, rectangle_changed),
+                      NULL, NULL,
+                      gimp_marshal_VOID__VOID,
+                      G_TYPE_NONE, 0);
+
       g_object_interface_install_property (iface,
                                            g_param_spec_int ("pressx",
                                                              NULL, NULL,
@@ -229,6 +246,8 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface)
                                                                  NULL, NULL,
                                                                  FALSE,
                                                                  GIMP_PARAM_READWRITE));
+
+      iface->rectangle_changed = NULL;
 
       initialized = TRUE;
     }
@@ -807,6 +826,8 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
           gimp_rectangle_tool_response (NULL, GIMP_RECTANGLE_MODE_EXECUTE,
                                         rectangle);
         }
+
+      g_signal_emit_by_name (rectangle, "rectangle-changed", NULL);
     }
 }
 
@@ -2007,6 +2028,8 @@ gimp_rectangle_tool_notify_width (GimpRectangleOptions *options,
 
   gimp_rectangle_tool_motion (GIMP_TOOL (rectangle), &coords, 0, 0,
                               GIMP_TOOL (rectangle)->display);
+
+  g_signal_emit_by_name (rectangle, "rectangle-changed", NULL);
 }
 
 /*
@@ -2048,6 +2071,8 @@ gimp_rectangle_tool_notify_height (GimpRectangleOptions *options,
 
   gimp_rectangle_tool_motion (GIMP_TOOL (rectangle), &coords, 0, 0,
                               GIMP_TOOL (rectangle)->display);
+
+  g_signal_emit_by_name (rectangle, "rectangle-changed", NULL);
 }
 
 /*
@@ -2089,6 +2114,8 @@ gimp_rectangle_tool_notify_aspect (GimpRectangleOptions *options,
 
   gimp_rectangle_tool_motion (GIMP_TOOL (rectangle), &coords, 0, 0,
                               GIMP_TOOL (rectangle)->display);
+
+  g_signal_emit_by_name (rectangle, "rectangle-changed", NULL);
 }
 
 static void
@@ -2208,4 +2235,6 @@ gimp_rectangle_tool_notify_dimensions (GimpRectangleOptions *options,
      a bunch of code */
   gimp_rectangle_tool_motion (GIMP_TOOL (rectangle), &coords, 0, 0,
                               GIMP_TOOL (rectangle)->display);
+
+  g_signal_emit_by_name (rectangle, "rectangle-changed", NULL);
 }

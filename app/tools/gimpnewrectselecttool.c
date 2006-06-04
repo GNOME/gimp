@@ -61,47 +61,48 @@
 static void     gimp_new_rect_select_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface);
 
 static GObject *
-                gimp_new_rect_select_tool_constructor    (GType            type,
-                                                          guint            n_params,
-                                                          GObjectConstructParam *params);
-static void     gimp_new_rect_select_tool_finalize       (GObject         *object);
-static void     gimp_new_rect_select_tool_control        (GimpTool        *tool,
-                                                          GimpToolAction   action,
-                                                          GimpDisplay     *display);
-static void     gimp_new_rect_select_tool_button_press   (GimpTool        *tool,
-                                                          GimpCoords      *coords,
-                                                          guint32          time,
-                                                          GdkModifierType  state,
-                                                          GimpDisplay     *display);
-static void     gimp_new_rect_select_tool_button_release (GimpTool        *tool,
-                                                          GimpCoords      *coords,
-                                                          guint32          time,
-                                                          GdkModifierType  state,
-                                                          GimpDisplay     *display);
-static void     gimp_new_rect_select_tool_modifier_key   (GimpTool        *tool,
-                                                          GdkModifierType  key,
-                                                          gboolean         press,
-                                                          GdkModifierType  state,
-                                                          GimpDisplay     *display);
-static void     gimp_new_rect_select_tool_oper_update    (GimpTool        *tool,
-                                                          GimpCoords      *coords,
-                                                          GdkModifierType  state,
-                                                          gboolean         proximity,
-                                                          GimpDisplay     *display);
-static void     gimp_new_rect_select_tool_cursor_update  (GimpTool        *tool,
-                                                          GimpCoords      *coords,
-                                                          GdkModifierType  state,
-                                                          GimpDisplay     *display);
-static gboolean gimp_new_rect_select_tool_execute        (GimpRectangleTool *rect_tool,
-                                                          gint             x,
-                                                          gint             y,
-                                                          gint             w,
-                                                          gint             h);
-static void     gimp_new_rect_select_tool_real_rect_select (GimpNewRectSelectTool *rect_select,
-                                                            gint                   x,
-                                                            gint                   y,
-                                                            gint                   w,
-                                                            gint                   h);
+                gimp_new_rect_select_tool_constructor       (GType              type,
+                                                             guint              n_params,
+                                                             GObjectConstructParam *params);
+static void     gimp_new_rect_select_tool_finalize          (GObject           *object);
+static void     gimp_new_rect_select_tool_control           (GimpTool          *tool,
+                                                             GimpToolAction     action,
+                                                             GimpDisplay       *display);
+static void     gimp_new_rect_select_tool_button_press      (GimpTool          *tool,
+                                                             GimpCoords        *coords,
+                                                             guint32            time,
+                                                             GdkModifierType    state,
+                                                             GimpDisplay       *display);
+static void     gimp_new_rect_select_tool_button_release    (GimpTool          *tool,
+                                                             GimpCoords        *coords,
+                                                             guint32            time,
+                                                             GdkModifierType    state,
+                                                             GimpDisplay       *display);
+static void     gimp_new_rect_select_tool_modifier_key      (GimpTool          *tool,
+                                                             GdkModifierType    key,
+                                                             gboolean           press,
+                                                             GdkModifierType    state,
+                                                             GimpDisplay       *display);
+static void     gimp_new_rect_select_tool_oper_update       (GimpTool          *tool,
+                                                             GimpCoords        *coords,
+                                                             GdkModifierType    state,
+                                                             gboolean           proximity,
+                                                             GimpDisplay       *display);
+static void     gimp_new_rect_select_tool_cursor_update     (GimpTool          *tool,
+                                                             GimpCoords        *coords,
+                                                             GdkModifierType    state,
+                                                             GimpDisplay       *display);
+static gboolean gimp_new_rect_select_tool_execute           (GimpRectangleTool *rect_tool,
+                                                             gint               x,
+                                                             gint               y,
+                                                             gint               w,
+                                                             gint               h);
+static gboolean gimp_new_rect_select_tool_rectangle_changed (GimpRectangleTool *rect_tool);
+static void     gimp_new_rect_select_tool_real_rect_select  (GimpNewRectSelectTool *rect_select,
+                                                             gint                   x,
+                                                             gint                   y,
+                                                             gint                   w,
+                                                             gint                   h);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpNewRectSelectTool, gimp_new_rect_select_tool,
@@ -173,6 +174,7 @@ static void
 gimp_new_rect_select_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface)
 {
   iface->execute = gimp_new_rect_select_tool_execute;
+  iface->rectangle_changed = gimp_new_rect_select_tool_rectangle_changed;
 }
 
 static GObject *
@@ -273,27 +275,27 @@ gimp_new_rect_select_tool_button_release (GimpTool        *tool,
 
   gimp_rectangle_tool_button_release (tool, coords, time, state, display);
 
-  /* if a rectangle still exists, "execute" the tool now */
-  if (tool->display)
-    {
-      gint                   x1, y1, x2, y2;
-      GimpNewRectSelectTool *rect_select     = GIMP_NEW_RECT_SELECT_TOOL (tool);
+/*   /\* if a rectangle still exists, "execute" the tool now *\/ */
+/*   if (tool->display) */
+/*     { */
+/*       gint                   x1, y1, x2, y2; */
+/*       GimpNewRectSelectTool *rect_select     = GIMP_NEW_RECT_SELECT_TOOL (tool); */
 
-      g_object_get (GIMP_RECTANGLE_TOOL (tool),
-                    "x1", &x1,
-                    "y1", &y1,
-                    "x2", &x2,
-                    "y2", &y2,
-                    NULL);
+/*       g_object_get (GIMP_RECTANGLE_TOOL (tool), */
+/*                     "x1", &x1, */
+/*                     "y1", &y1, */
+/*                     "x2", &x2, */
+/*                     "y2", &y2, */
+/*                     NULL); */
 
-      gimp_rectangle_tool_execute (GIMP_RECTANGLE_TOOL (tool),
-                                   x1, y1,
-                                   x2 - x1,
-                                   y2 - y1);
+/*       gimp_rectangle_tool_execute (GIMP_RECTANGLE_TOOL (tool), */
+/*                                    x1, y1, */
+/*                                    x2 - x1, */
+/*                                    y2 - y1); */
 
-      /* save the undo that we got when executing */
-      rect_select->undo = gimp_undo_stack_peek (display->image->undo_stack);
-    }
+/*       /\* save the undo that we got when executing *\/ */
+/*       rect_select->undo = gimp_undo_stack_peek (display->image->undo_stack); */
+/*     } */
 }
 
 static void
@@ -518,4 +520,45 @@ gimp_new_rect_select_tool_real_rect_select (GimpNewRectSelectTool *rect_select,
                                  options->feather,
                                  options->feather_radius,
                                  options->feather_radius);
+}
+
+static gboolean
+gimp_new_rect_select_tool_rectangle_changed (GimpRectangleTool  *rectangle)
+{
+  GimpTool              *tool        = GIMP_TOOL (rectangle);
+
+  if (tool->display)
+    {
+      gint                   x1, y1, x2, y2;
+      GimpNewRectSelectTool *rect_select     = GIMP_NEW_RECT_SELECT_TOOL (tool);
+      GimpImage             *image           = tool->display->image;
+      GimpUndo              *undo;
+
+      /* if we have an existing rectangle in the current display, then
+         we have already "executed", and need to undo at this point, unless
+         the user has done something in the meantime */
+      undo = gimp_undo_stack_peek (image->undo_stack);
+      if (undo && rect_select->undo == undo)
+        {
+          gimp_image_undo (image);
+          rect_select->undo = NULL;
+        }
+
+      g_object_get (rectangle,
+                    "x1", &x1,
+                    "y1", &y1,
+                    "x2", &x2,
+                    "y2", &y2,
+                    NULL);
+
+      gimp_rectangle_tool_execute (rectangle,
+                                   x1, y1,
+                                   x2 - x1,
+                                   y2 - y1);
+
+      /* save the undo that we got when executing */
+      rect_select->undo = gimp_undo_stack_peek (image->undo_stack);
+    }
+
+  return TRUE;
 }

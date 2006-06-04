@@ -1,3 +1,14 @@
+2006-06-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimprectangletool.[ch]: add new signal
+	"rectangle-changed" and method rectangle_changed.
+	Emit them on button release and when dimensions are
+	changed in controls.  
+
+	* app/tools/gimpnewrectselecttool.c: use rectangle_changed
+	method to change selection, undoing previous change if
+	necessary.
+
 2006-06-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpthumbbox.c (gimp_thumb_box_new): changed

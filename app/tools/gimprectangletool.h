@@ -69,11 +69,13 @@ struct _GimpRectangleToolInterface
 {
   GTypeInterface base_iface;
 
-  gboolean (* execute)     (GimpRectangleTool *rect_tool,
-                            gint               x,
-                            gint               y,
-                            gint               w,
-                            gint               h);
+  gboolean (* execute)           (GimpRectangleTool *rect_tool,
+                                  gint               x,
+                                  gint               y,
+                                  gint               w,
+                                  gint               h);
+
+  gboolean (* rectangle_changed) (GimpRectangleTool *rect_tool);
 };
 
 
