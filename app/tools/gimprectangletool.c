@@ -82,6 +82,11 @@ struct _GimpRectangleToolPrivate
   gint       dx2, dy2;   /*                              */
 
   gint       dcw, dch;   /*  width and height of edges   */
+
+  gint       saved_x1;   /*  for saving in case action is canceled */
+  gint       saved_y1;
+  gint       saved_x2;
+  gint       saved_y2;
 };
 
 
@@ -753,22 +758,41 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
-  g_object_get (rectangle, "function", &function, NULL);
-
   if (display != tool->display)
     {
       if (gimp_draw_tool_is_active (draw_tool))
         gimp_draw_tool_stop (draw_tool);
 
       function = RECT_CREATING;
-      g_object_set (rectangle, "function", function, NULL);
+      g_object_set (rectangle, "function", function,
+                    "x1", ROUND (coords->x),
+                    "y1", ROUND (coords->y),
+                    "x2", ROUND (coords->x),
+                    "y2", ROUND (coords->y),
+                    NULL);
       gimp_tool_control_set_snap_offsets (tool->control, 0, 0, 0, 0);
 
       tool->display = display;
+      rectangle_tool_start (rectangle);
     }
+
+  /* save existing shape in case of cancellation */
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+  g_object_get (rectangle,
+                "x1", &private->saved_x1,
+                "y1", &private->saved_y1,
+                "x2", &private->saved_x2,
+                "y2", &private->saved_y2,
+                NULL);
+
+  g_object_get (rectangle,
+                "function", &function,
+                NULL);
 
   if (function == RECT_CREATING)
     {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
       g_object_set (rectangle,
                     "x1", ROUND (coords->x),
                     "y1", ROUND (coords->y),
@@ -776,7 +800,7 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
                     "y2", ROUND (coords->y),
                     NULL);
 
-      rectangle_tool_start (rectangle);
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
 
   g_object_set (rectangle,
@@ -784,7 +808,6 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
                 "pressy", ROUND (coords->y),
                 NULL);
 
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
   private->startx = ROUND (coords->x);
   private->starty = ROUND (coords->y);
   private->lastx = ROUND (coords->x);
@@ -828,6 +851,19 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
         }
 
       g_signal_emit_by_name (rectangle, "rectangle-changed", NULL);
+    }
+  else
+    {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+      g_object_set (rectangle,
+                "x1", private->saved_x1,
+                "y1", private->saved_y1,
+                "x2", private->saved_x2,
+                "y2", private->saved_y2,
+                NULL);
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
 }
 
@@ -1620,8 +1656,6 @@ void
 gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpTool                 *tool      = GIMP_TOOL (draw_tool);
-  GimpDisplayShell         *shell     = GIMP_DISPLAY_SHELL (tool->display->shell);
-  GimpCanvas               *canvas    = GIMP_CANVAS (shell->canvas);
   GimpRectangleToolPrivate *private;
   gint                      x1, x2, y1, y2;
   guint                     function;

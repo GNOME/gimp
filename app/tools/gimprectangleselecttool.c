@@ -216,22 +216,22 @@ gimp_new_rect_select_tool_button_press (GimpTool        *tool,
 {
   guint function;
 
-  /* if we have an existing rectangle in the current display, then
-     we have already "executed", and need to undo at this point, unless
-     the user has done something in the meantime */
-  if (tool->display && display == tool->display)
-    {
-      GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (tool);
-      GimpImage             *image       = display->image;
-      GimpUndo              *undo;
+/*   /\* if we have an existing rectangle in the current display, then */
+/*      we have already "executed", and need to undo at this point, unless */
+/*      the user has done something in the meantime *\/ */
+/*   if (tool->display && display == tool->display) */
+/*     { */
+/*       GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (tool); */
+/*       GimpImage             *image       = display->image; */
+/*       GimpUndo              *undo; */
 
-      undo = gimp_undo_stack_peek (image->undo_stack);
-      if (undo && rect_select->undo == undo)
-        {
-          gimp_image_undo (image);
-          rect_select->undo = NULL;
-        }
-    }
+/*       undo = gimp_undo_stack_peek (image->undo_stack); */
+/*       if (undo && rect_select->undo == undo) */
+/*         { */
+/*           gimp_image_undo (image); */
+/*           rect_select->undo = NULL; */
+/*         } */
+/*     } */
 
   if (tool->display && display != tool->display)
     gimp_rectangle_tool_response (NULL, GTK_RESPONSE_CANCEL,
