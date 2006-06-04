@@ -78,5 +78,7 @@ gimp_new_rect_select_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), vbox_rectangle, FALSE, FALSE, 0);
   gtk_widget_show (vbox_rectangle);
 
+  gimp_rectangle_options_set_highlight (GIMP_RECTANGLE_OPTIONS (tool_options),
+                                        FALSE);
   return vbox;
 }
