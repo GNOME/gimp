@@ -1,3 +1,11 @@
+2006-06-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_draw):
+	draw anchors in corners; clean up code a bit.
+
+	* app/tools/gimpnewrectselecttool.c: actually remove some code
+	previously commented out.
+	
 2006-06-04  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimppropwidgets.c

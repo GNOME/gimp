@@ -1614,34 +1614,44 @@ gimp_rectangle_tool_cursor_update (GimpTool        *tool,
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 }
 
+#define ANCHOR_SIZE 6
+
 void
-gimp_rectangle_tool_draw (GimpDrawTool *draw)
+gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpTool                 *tool      = GIMP_TOOL (draw);
+  GimpTool                 *tool      = GIMP_TOOL (draw_tool);
   GimpDisplayShell         *shell     = GIMP_DISPLAY_SHELL (tool->display->shell);
   GimpCanvas               *canvas    = GIMP_CANVAS (shell->canvas);
   GimpRectangleToolPrivate *private;
-  gint                      dx1, dx2, dy1, dy2;
+  gint                      x1, x2, y1, y2;
+  guint                     function;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-  dx1 = private->dx1;
-  dx2 = private->dx2;
-  dy1 = private->dy1;
-  dy2 = private->dy2;
 
-  gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                         dx1, dy1,
-                         dx2, dy1);
-  gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                         dx1, dy2 - 1,
-                         dx2, dy2 - 1);
-  gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                         dx1, dy1 + 1,
-                         dx1, dy2 - 1);
-  gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                         dx2 - 1, dy1 + 1,
-                         dx2 - 1, dy2 - 1);
+  g_object_get (GIMP_RECTANGLE_TOOL (tool), "function", &function, NULL);
+  if (function == RECT_INACTIVE)
+    return;
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+  x1 = private->x1;
+  x2 = private->x2;
+  y1 = private->y1;
+  y2 = private->y2;
+
+  gimp_draw_tool_draw_rectangle (draw_tool, FALSE,
+                                 x1, y1, x2 - x1, y2 - y1, FALSE);
+  gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                              x1, y1, ANCHOR_SIZE, ANCHOR_SIZE,
+                              GTK_ANCHOR_NORTH_WEST, FALSE);
+  gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                              x2, y1, ANCHOR_SIZE, ANCHOR_SIZE,
+                              GTK_ANCHOR_NORTH_EAST, FALSE);
+  gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                              x1, y2, ANCHOR_SIZE, ANCHOR_SIZE,
+                              GTK_ANCHOR_SOUTH_WEST, FALSE);
+  gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                              x2, y2, ANCHOR_SIZE, ANCHOR_SIZE,
+                              GTK_ANCHOR_SOUTH_EAST, FALSE);
 }
 
 void
