@@ -1,3 +1,12 @@
+2006-06-04  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimppropwidgets.c
+	(gimp_prop_file_chooser_button_callback): fix typo so the "notify"
+	signal doesn't stay blocked.
+
+	* app/dialogs/preferences-dialog.c: added "Reset" button which
+	resets all prefs values to their defaults. Fixes bug #342112.
+
 2006-06-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimprectangletool.[ch]: add new signal

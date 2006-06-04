@@ -2168,9 +2168,9 @@ gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
                     param_spec->name, utf8,
                     NULL);
 
-      g_signal_handlers_block_by_func (config,
-                                       gimp_prop_file_chooser_button_notify,
-                                       button);
+      g_signal_handlers_unblock_by_func (config,
+                                         gimp_prop_file_chooser_button_notify,
+                                         button);
     }
 
   g_free (value);

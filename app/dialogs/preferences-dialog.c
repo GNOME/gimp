@@ -62,6 +62,9 @@
 #include "gimp-intl.h"
 
 
+#define RESPONSE_RESET 1
+
+
 /*  preferences local functions  */
 
 static GtkWidget * prefs_dialog_new               (Gimp       *gimp,
@@ -244,113 +247,158 @@ prefs_response (GtkWidget *widget,
 {
   Gimp *gimp = g_object_get_data (G_OBJECT (dialog), "gimp");
 
-  if (response_id == GTK_RESPONSE_OK)
+  switch (response_id)
     {
-      GObject *config_copy;
-      GList   *restart_diff;
-      GList   *confirm_diff;
-      GList   *list;
+    case RESPONSE_RESET:
+      {
+        GtkWidget *confirm;
 
-      config_copy = g_object_get_data (G_OBJECT (dialog), "config-copy");
+        confirm = gimp_message_dialog_new (_("Reset All Preferences"),
+                                           GIMP_STOCK_QUESTION,
+                                           dialog,
+                                           GTK_DIALOG_MODAL |
+                                           GTK_DIALOG_DESTROY_WITH_PARENT,
+                                           gimp_standard_help_func, NULL,
 
-      /*  destroy config_orig  */
-      g_object_set_data (G_OBJECT (dialog), "config-orig", NULL);
+                                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                           GIMP_STOCK_RESET, GTK_RESPONSE_OK,
 
-      gtk_widget_set_sensitive (GTK_WIDGET (dialog), FALSE);
+                                           NULL);
 
-      confirm_diff = gimp_config_diff (G_OBJECT (gimp->edit_config),
-                                       config_copy,
-                                       GIMP_CONFIG_PARAM_CONFIRM);
+        gtk_dialog_set_alternative_button_order (GTK_DIALOG (confirm),
+                                                 GTK_RESPONSE_OK,
+                                                 GTK_RESPONSE_CANCEL,
+                                                 -1);
 
-      g_object_freeze_notify (G_OBJECT (gimp->edit_config));
+        gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (confirm)->box,
+                                           _("Do you really want to reset all "
+                                             "preferences to default values?"));
 
-      for (list = confirm_diff; list; list = g_list_next (list))
-        {
-          GParamSpec *param_spec = list->data;
-          GValue      value      = { 0, };
+        if (gimp_dialog_run (GIMP_DIALOG (confirm)) == GTK_RESPONSE_OK)
+          {
+            GimpConfig *config_copy;
 
-          g_value_init (&value, param_spec->value_type);
+            config_copy = g_object_get_data (G_OBJECT (dialog), "config-copy");
 
-          g_object_get_property (config_copy,
-                                 param_spec->name, &value);
-          g_object_set_property (G_OBJECT (gimp->edit_config),
-                                 param_spec->name, &value);
+            gimp_config_reset (config_copy);
+          }
 
-          g_value_unset (&value);
-        }
+        gtk_widget_destroy (confirm);
 
-      g_object_thaw_notify (G_OBJECT (gimp->edit_config));
+        return;
+      }
+      break;
 
-      g_list_free (confirm_diff);
+    case GTK_RESPONSE_OK:
+      {
+        GObject *config_copy;
+        GList   *restart_diff;
+        GList   *confirm_diff;
+        GList   *list;
 
-      gimp_rc_save (GIMP_RC (gimp->edit_config));
+        config_copy = g_object_get_data (G_OBJECT (dialog), "config-copy");
 
-      /*  spit out a solely informational warning about changed values
-       *  which need restart
-       */
-      restart_diff = gimp_config_diff (G_OBJECT (gimp->edit_config),
-                                       G_OBJECT (gimp->config),
-                                       GIMP_CONFIG_PARAM_RESTART);
+        /*  destroy config_orig  */
+        g_object_set_data (G_OBJECT (dialog), "config-orig", NULL);
 
-      if (restart_diff)
-        {
-          GString *string;
+        gtk_widget_set_sensitive (GTK_WIDGET (dialog), FALSE);
 
-          string = g_string_new (_("You will have to restart GIMP for "
-                                   "the following changes to take effect:"));
-          g_string_append (string, "\n\n");
+        confirm_diff = gimp_config_diff (G_OBJECT (gimp->edit_config),
+                                         config_copy,
+                                         GIMP_CONFIG_PARAM_CONFIRM);
 
-          for (list = restart_diff; list; list = g_list_next (list))
-            {
-              GParamSpec *param_spec = list->data;
+        g_object_freeze_notify (G_OBJECT (gimp->edit_config));
 
-              g_string_append_printf (string, "%s\n", param_spec->name);
-            }
+        for (list = confirm_diff; list; list = g_list_next (list))
+          {
+            GParamSpec *param_spec = list->data;
+            GValue      value      = { 0, };
 
-          g_message (string->str);
+            g_value_init (&value, param_spec->value_type);
 
-          g_string_free (string, TRUE);
-        }
+            g_object_get_property (config_copy,
+                                   param_spec->name, &value);
+            g_object_set_property (G_OBJECT (gimp->edit_config),
+                                   param_spec->name, &value);
 
-      g_list_free (restart_diff);
-    }
-  else  /* cancel */
-    {
-      GObject *config_orig;
-      GList   *diff;
-      GList   *list;
+            g_value_unset (&value);
+          }
 
-      config_orig = g_object_get_data (G_OBJECT (dialog), "config-orig");
+        g_object_thaw_notify (G_OBJECT (gimp->edit_config));
 
-      /*  destroy config_copy  */
-      g_object_set_data (G_OBJECT (dialog), "config-copy", NULL);
+        g_list_free (confirm_diff);
 
-      gtk_widget_set_sensitive (GTK_WIDGET (dialog), FALSE);
+        gimp_rc_save (GIMP_RC (gimp->edit_config));
 
-      diff = gimp_config_diff (G_OBJECT (gimp->edit_config),
-                               config_orig,
-                               GIMP_CONFIG_PARAM_SERIALIZE);
+        /*  spit out a solely informational warning about changed values
+         *  which need restart
+         */
+        restart_diff = gimp_config_diff (G_OBJECT (gimp->edit_config),
+                                         G_OBJECT (gimp->config),
+                                         GIMP_CONFIG_PARAM_RESTART);
 
-      g_object_freeze_notify (G_OBJECT (gimp->edit_config));
+        if (restart_diff)
+          {
+            GString *string;
 
-      for (list = diff; list; list = g_list_next (list))
-        {
-          GParamSpec *param_spec = list->data;
-          GValue      value      = { 0, };
+            string = g_string_new (_("You will have to restart GIMP for "
+                                     "the following changes to take effect:"));
+            g_string_append (string, "\n\n");
 
-          g_value_init (&value, param_spec->value_type);
+            for (list = restart_diff; list; list = g_list_next (list))
+              {
+                GParamSpec *param_spec = list->data;
 
-          g_object_get_property (config_orig,
-                                 param_spec->name, &value);
-          g_object_set_property (G_OBJECT (gimp->edit_config),
-                                 param_spec->name, &value);
+                g_string_append_printf (string, "%s\n", param_spec->name);
+              }
 
-          g_value_unset (&value);
-        }
+            g_message (string->str);
 
-      g_object_thaw_notify (G_OBJECT (gimp->edit_config));
+            g_string_free (string, TRUE);
+          }
 
-      g_list_free (diff);
+        g_list_free (restart_diff);
+      }
+      break;
+
+    default:
+      {
+        GObject *config_orig;
+        GList   *diff;
+        GList   *list;
+
+        config_orig = g_object_get_data (G_OBJECT (dialog), "config-orig");
+
+        /*  destroy config_copy  */
+        g_object_set_data (G_OBJECT (dialog), "config-copy", NULL);
+
+        gtk_widget_set_sensitive (GTK_WIDGET (dialog), FALSE);
+
+        diff = gimp_config_diff (G_OBJECT (gimp->edit_config),
+                                 config_orig,
+                                 GIMP_CONFIG_PARAM_SERIALIZE);
+
+        g_object_freeze_notify (G_OBJECT (gimp->edit_config));
+
+        for (list = diff; list; list = g_list_next (list))
+          {
+            GParamSpec *param_spec = list->data;
+            GValue      value      = { 0, };
+
+            g_value_init (&value, param_spec->value_type);
+
+            g_object_get_property (config_orig,
+                                   param_spec->name, &value);
+            g_object_set_property (G_OBJECT (gimp->edit_config),
+                                   param_spec->name, &value);
+
+            g_value_unset (&value);
+          }
+
+        g_object_thaw_notify (G_OBJECT (gimp->edit_config));
+
+        g_list_free (diff);
+      }
     }
 
   /*  enable autosaving again  */
@@ -1243,19 +1291,21 @@ prefs_dialog_new (Gimp       *gimp,
                             prefs_help_func,
                             GIMP_HELP_PREFS_DIALOG,
 
+                            GIMP_STOCK_RESET, RESPONSE_RESET,
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                             NULL);
 
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (prefs_response),
-                    dialog);
-
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (prefs_response),
+                    dialog);
 
   /* The main hbox */
   hbox = gtk_hbox_new (FALSE, 12);
