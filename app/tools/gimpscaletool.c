@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -145,7 +147,12 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
   tr_tool->trans_info[Y1] = (gdouble) tr_tool->y2;
 
   if (scale->box)
-    gtk_widget_destroy (scale->box);
+    {
+      g_signal_handlers_disconnect_by_func (scale->box,
+                                            gimp_scale_tool_size_notify,
+                                            tr_tool);
+      gtk_widget_destroy (scale->box);
+    }
 
   /*  Need to create a new GimpSizeBox widget because the initial
    *  width and height is what counts as 100%.
@@ -305,37 +312,53 @@ gimp_scale_tool_size_notify (GtkWidget         *box,
                              GimpTransformTool *tr_tool)
 {
   GimpTransformOptions *options;
-  gint                  width;
-  gint                  height;
-  gboolean              constrain;
 
-  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
+  options =
+    GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
 
-  g_object_get (box,
-                "width",       &width,
-                "height",      &height,
-                "keep-aspect", &constrain,
-                NULL);
-
-  if (constrain != options->constrain)
+  if (! strcmp (pspec->name, "width") ||
+      ! strcmp (pspec->name, "height"))
     {
-      g_object_set (options,
-                    "constrain", constrain,
+      gint width;
+      gint height;
+      gint old_width;
+      gint old_height;
+
+      g_object_get (box,
+                    "width",  &width,
+                    "height", &height,
                     NULL);
+
+      old_width  = ROUND (tr_tool->trans_info[X1] - tr_tool->trans_info[X0]);
+      old_height = ROUND (tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0]);
+
+      if ((width != old_width) || (height != old_height))
+        {
+          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
+
+          tr_tool->trans_info[X1] = tr_tool->trans_info[X0] + width;
+          tr_tool->trans_info[Y1] = tr_tool->trans_info[Y0] + height;
+
+          gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
+
+          gimp_transform_tool_expose_preview (tr_tool);
+
+          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
+        }
     }
-
- if ((width  != ROUND (tr_tool->trans_info[X1] - tr_tool->trans_info[X0])) ||
-      (height != ROUND (tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0])))
+  else if (! strcmp (pspec->name, "keep-aspect"))
     {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
+      gboolean constrain;
 
-      tr_tool->trans_info[X1] = tr_tool->trans_info[X0] + width;
-      tr_tool->trans_info[Y1] = tr_tool->trans_info[Y0] + height;
+      g_object_get (box,
+                    "keep-aspect", &constrain,
+                    NULL);
 
-      gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
-
-      gimp_transform_tool_expose_preview (tr_tool);
-
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
+      if (constrain != options->constrain)
+        {
+          g_object_set (options,
+                        "constrain", constrain,
+                        NULL);
+        }
     }
 }

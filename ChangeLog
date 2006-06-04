@@ -1,3 +1,14 @@
+2006-06-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpscaletool.c (gimp_scale_tool_size_notify):
+	strcmp() the property name, so we don't change the size on random
+	property changes. Fixes the tool reverting to the previous
+	width/height on each new transform (destroying the previous size
+	box causes it to emit stuff like "notify::visible").
+
+	(gimp_scale_tool_prepare): additionally, disconnect from the size
+	box before destroying it (paranoia).
+
 2006-06-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpnewrectselectoptions.c: turn highlighting
