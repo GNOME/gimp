@@ -328,7 +328,7 @@ gimp_thumb_box_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  label = gtk_label_new_with_mnemonic (_("_Preview"));
+  label = gtk_label_new_with_mnemonic (_("Pr_eview"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_container_add (GTK_CONTAINER (button), label);
   gtk_widget_show (label);

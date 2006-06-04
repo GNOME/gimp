@@ -1,5 +1,13 @@
 2006-06-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpthumbbox.c (gimp_thumb_box_new): changed
+	mnemonic from "_Preview" to "Pr_eview" because the GTK+ HEAD
+	file chooser has a "_Places" mnemonic now.
+
+	* app/widgets/gimpcomponenteditor.c: minor cleanup.
+
+2006-06-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcolorframe.c (gimp_color_frame_set_color): use
 	gimp_rgba_distance() instead of gimp_rgb_distance(), so alpha
 	changes update the color frame too.

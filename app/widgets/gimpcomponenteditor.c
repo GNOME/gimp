@@ -201,9 +201,7 @@ static void
 gimp_component_editor_set_image (GimpImageEditor *editor,
                                  GimpImage       *image)
 {
-  GimpComponentEditor *component_editor;
-
-  component_editor = GIMP_COMPONENT_EDITOR (editor);
+  GimpComponentEditor *component_editor = GIMP_COMPONENT_EDITOR (editor);
 
   if (editor->image)
     {
@@ -314,13 +312,11 @@ gimp_component_editor_set_view_size (GimpComponentEditor *editor,
 static void
 gimp_component_editor_create_components (GimpComponentEditor *editor)
 {
-  GimpImage       *image;
+  GimpImage       *image        = GIMP_IMAGE_EDITOR (editor)->image;
   gint             n_components = 0;
   GimpChannelType  components[MAX_CHANNELS];
   GEnumClass      *enum_class;
   gint             i;
-
-  image = GIMP_IMAGE_EDITOR (editor)->image;
 
   switch (gimp_image_base_type (image))
     {
@@ -438,12 +434,10 @@ gimp_component_editor_select (GtkTreeSelection *selection,
                               gboolean          path_currently_selected,
                               gpointer          data)
 {
-  GimpComponentEditor *editor;
+  GimpComponentEditor *editor = GIMP_COMPONENT_EDITOR (data);
   GtkTreeIter          iter;
   GimpChannelType      channel;
   gboolean             active;
-
-  editor = GIMP_COMPONENT_EDITOR (data);
 
   gtk_tree_model_get_iter (editor->model, &iter, path);
   gtk_tree_model_get (editor->model, &iter,
@@ -572,9 +566,7 @@ gimp_component_editor_visibility_changed (GimpImage           *image,
 
   if (gimp_component_editor_get_iter (editor, channel, &iter))
     {
-      gboolean visible;
-
-      visible = gimp_image_get_component_visible (image, channel);
+      gboolean visible = gimp_image_get_component_visible (image, channel);
 
       gtk_list_store_set (GTK_LIST_STORE (editor->model), &iter,
                           COLUMN_VISIBLE, visible,
@@ -591,9 +583,7 @@ gimp_component_editor_active_changed (GimpImage           *image,
 
   if (gimp_component_editor_get_iter (editor, channel, &iter))
     {
-      gboolean active;
-
-      active = gimp_image_get_component_active (image, channel);
+      gboolean active = gimp_image_get_component_active (image, channel);
 
       if (gtk_tree_selection_iter_is_selected (editor->selection, &iter) !=
           active)
