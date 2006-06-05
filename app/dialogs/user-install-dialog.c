@@ -124,7 +124,7 @@ user_install_dialog_new (GimpUserInstall *install)
 
   g_object_unref (buffer);
 
-  gimp_user_install_set_log_handler (install, user_install_dialog_log, view);
+  gimp_user_install_set_log_handler (install, user_install_dialog_log, buffer);
 
   return dialog;
 }
@@ -134,8 +134,7 @@ user_install_dialog_log (const gchar *message,
                          gboolean     error,
                          gpointer     data)
 {
-  GtkWidget     *view   = GTK_WIDGET (data);
-  GtkTextBuffer *buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (data);
   GtkTextIter    cursor;
 
   gtk_text_buffer_get_end_iter (buffer, &cursor);
