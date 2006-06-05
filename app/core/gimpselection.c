@@ -108,7 +108,7 @@ static void       gimp_selection_invert        (GimpChannel     *channel,
 static void       gimp_selection_border        (GimpChannel     *channel,
                                                 gint             radius_x,
                                                 gint             radius_y,
-                                                gboolean         feather_border,
+                                                gboolean         feather,
                                                 gboolean         push_undo);
 static void       gimp_selection_grow          (GimpChannel     *channel,
                                                 gint             radius_x,
@@ -460,11 +460,12 @@ static void
 gimp_selection_border (GimpChannel *channel,
                        gint         radius_x,
                        gint         radius_y,
-                       gboolean     feather_border,
+                       gboolean     feather,
                        gboolean     push_undo)
 {
-  GIMP_CHANNEL_CLASS (parent_class)->border (channel, radius_x, radius_y,
-                                             feather_border, push_undo);
+  GIMP_CHANNEL_CLASS (parent_class)->border (channel,
+					     radius_x, radius_y, feather,
+					     push_undo);
 }
 
 static void
@@ -473,7 +474,8 @@ gimp_selection_grow (GimpChannel *channel,
                      gint         radius_y,
                      gboolean     push_undo)
 {
-  GIMP_CHANNEL_CLASS (parent_class)->grow (channel, radius_x, radius_y,
+  GIMP_CHANNEL_CLASS (parent_class)->grow (channel,
+					   radius_x, radius_y,
                                            push_undo);
 }
 
@@ -484,8 +486,9 @@ gimp_selection_shrink (GimpChannel *channel,
                        gboolean     edge_lock,
                        gboolean     push_undo)
 {
-  GIMP_CHANNEL_CLASS (parent_class)->shrink (channel, radius_x, radius_y,
-                                             edge_lock, push_undo);
+  GIMP_CHANNEL_CLASS (parent_class)->shrink (channel,
+					     radius_x, radius_y, edge_lock,
+					     push_undo);
 }
 
 static void

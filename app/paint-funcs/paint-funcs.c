@@ -3670,7 +3670,7 @@ void
 border_region (PixelRegion *src,
                gint16       xradius,
                gint16       yradius,
-               gboolean     feather_border)
+               gboolean     feather)
 {
   /*
      This function has no bugs, but if you imagine some you can
@@ -3799,7 +3799,7 @@ border_region (PixelRegion *src,
 
           if (dist < 1.0)
             {
-              if (feather_border)
+              if (feather)
                 a = 255 * (1.0 - sqrt (dist));
               else
                 a = 255;

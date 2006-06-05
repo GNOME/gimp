@@ -193,7 +193,7 @@ static void       gimp_channel_real_invert   (GimpChannel      *channel,
 static void       gimp_channel_real_border   (GimpChannel      *channel,
                                               gint              radius_x,
                                               gint              radius_y,
-                                              gboolean          feather_border,
+                                              gboolean          feather,
                                               gboolean          push_undo);
 static void       gimp_channel_real_grow     (GimpChannel      *channel,
                                               gint              radius_x,
@@ -1285,7 +1285,7 @@ static void
 gimp_channel_real_border (GimpChannel *channel,
                           gint         radius_x,
                           gint         radius_y,
-                          gboolean     feather_border,
+                          gboolean     feather,
                           gboolean     push_undo)
 {
   PixelRegion bPR;
@@ -1329,7 +1329,7 @@ gimp_channel_real_border (GimpChannel *channel,
   pixel_region_init (&bPR, GIMP_DRAWABLE (channel)->tiles,
                      x1, y1, x2 - x1, y2 - y1, TRUE);
 
-  border_region (&bPR, radius_x, radius_y, feather_border);
+  border_region (&bPR, radius_x, radius_y, feather);
 
   channel->bounds_known = FALSE;
 
@@ -1824,7 +1824,7 @@ void
 gimp_channel_border (GimpChannel *channel,
                      gint         radius_x,
                      gint         radius_y,
-                     gboolean     feather_border,
+                     gboolean     feather,
                      gboolean     push_undo)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
@@ -1832,8 +1832,9 @@ gimp_channel_border (GimpChannel *channel,
   if (! gimp_item_is_attached (GIMP_ITEM (channel)))
     push_undo = FALSE;
 
-  GIMP_CHANNEL_GET_CLASS (channel)->border (channel, radius_x, radius_y,
-                                            feather_border, push_undo);
+  GIMP_CHANNEL_GET_CLASS (channel)->border (channel,
+					    radius_x, radius_y, feather,
+					    push_undo);
 }
 
 void
