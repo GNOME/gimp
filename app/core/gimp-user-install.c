@@ -105,6 +105,7 @@ gimp_user_install_items[] =
 static void      user_install_log           (GimpUserInstall  *install,
                                              const gchar      *format,
                                              ...) G_GNUC_PRINTF (2, 3);
+static void      user_install_log_newline   (GimpUserInstall  *install);
 static void      user_install_log_error     (GimpUserInstall  *install,
                                              GError          **error);
 
@@ -179,15 +180,34 @@ gimp_user_install_new (gboolean verbose)
 }
 
 gboolean
-gimp_user_install_run (GimpUserInstall *install,
-                       gboolean         migrate)
+gimp_user_install_run (GimpUserInstall *install)
 {
+  gchar *dirname;
+
   g_return_val_if_fail (install != NULL, FALSE);
+
+  dirname = g_filename_display_name (gimp_directory ());
+
+  if (install->migrate)
+    user_install_log (install,
+		      _("It seems you have used GIMP %s before.  "
+			"GIMP will now migrate your user settings to '%s'."),
+		      install->migrate, dirname);
+  else
+    user_install_log (install,
+		      _("It appears that you are using GIMP for the "
+			"first time.  GIMP will now create a folder "
+			"named '%s' and copy some files to it."),
+			dirname);
+
+  g_free (dirname);
+
+  user_install_log_newline (install);
 
   if (! user_install_mkdir (install, gimp_directory ()))
     return FALSE;
 
-  if (migrate && install->migrate)
+  if (install->migrate)
     return user_install_migrate_files (install);
   else
     return user_install_create_files (install);
@@ -200,23 +220,6 @@ gimp_user_install_free (GimpUserInstall *install)
 
   g_free (install->old_dir);
   g_free (install);
-}
-
-gboolean
-gimp_user_install_is_migration (GimpUserInstall  *install,
-                                gchar           **version)
-{
-  g_return_val_if_fail (install != NULL, FALSE);
-
-  if (install->migrate)
-    {
-      if (version)
-        *version = g_strdup (install->migrate);
-
-      return TRUE;
-    }
-
-  return FALSE;
 }
 
 void
@@ -232,7 +235,6 @@ gimp_user_install_set_log_handler (GimpUserInstall        *install,
 
 
 /*  Local functions  */
-
 
 static void
 user_install_log (GimpUserInstall *install,
@@ -260,6 +262,16 @@ user_install_log (GimpUserInstall *install,
 }
 
 static void
+user_install_log_newline (GimpUserInstall *install)
+{
+  if (install->verbose)
+    g_print ("\n");
+
+  if (install->log)
+    install->log (NULL, FALSE, install->log_data);
+}
+
+static void
 user_install_log_error (GimpUserInstall  *install,
                         GError          **error)
 {
@@ -278,9 +290,9 @@ user_install_log_error (GimpUserInstall  *install,
 }
 
 static gboolean
-user_install_file_copy (GimpUserInstall  *install,
-                        const gchar  *source,
-                        const gchar  *dest)
+user_install_file_copy (GimpUserInstall *install,
+                        const gchar     *source,
+                        const gchar     *dest)
 {
   GError   *error = NULL;
   gboolean  success;
@@ -337,6 +349,7 @@ user_install_dir_copy (GimpUserInstall *install,
 
   {
     gchar *basename = g_path_get_basename (source);
+
     dirname = g_build_filename (base, basename, NULL);
     g_free (basename);
   }

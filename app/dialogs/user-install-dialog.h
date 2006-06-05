@@ -20,7 +20,7 @@
 #define __USER_INSTALL_DIALOG_H__
 
 
-void  user_install_dialog_run (GimpUserInstall *install);
+gboolean  user_install_dialog_run (GimpUserInstall *install);
 
 
 #endif /* __USER_INSTALL_DIALOG_H__ */

@@ -33,6 +33,7 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core/core-types.h"
 
@@ -163,6 +164,7 @@ app_run (const gchar         *full_prog_name,
 {
   GimpInitStatusFunc  update_status_func = NULL;
   Gimp               *gimp;
+  GimpBaseConfig     *config;
   GMainLoop          *loop;
   gboolean            swap_is_ok;
   gint                i;
@@ -223,17 +225,12 @@ app_run (const gchar         *full_prog_name,
       GimpUserInstall *install = gimp_user_install_new (be_verbose);
 
 #ifdef GIMP_CONSOLE_COMPILATION
-      gimp_user_install_run (install, FALSE);
+      gimp_user_install_run (install);
 #else
-      if (no_interface)
-        {
-          if (! gimp_user_install_run (install, FALSE))
-            exit (EXIT_FAILURE);
-        }
-      else
-        {
-          user_install_dialog_run (install);
-        }
+      if (! (no_interface ?
+	     gimp_user_install_run (install) :
+	     user_install_dialog_run (install)))
+	exit (EXIT_FAILURE);
 #endif
 
       gimp_user_install_free (install);
@@ -251,9 +248,10 @@ app_run (const gchar         *full_prog_name,
 
   gimp_load_config (gimp, alternate_system_gimprc, alternate_gimprc);
 
+  config = GIMP_BASE_CONFIG (gimp->config);
+
   /*  initialize lowlevel stuff  */
-  swap_is_ok = base_init (GIMP_BASE_CONFIG (gimp->config),
-                          be_verbose, use_cpu_accel);
+  swap_is_ok = base_init (config, be_verbose, use_cpu_accel);
 
 #ifndef GIMP_CONSOLE_COMPILATION
   if (! no_interface)
@@ -274,11 +272,16 @@ app_run (const gchar         *full_prog_name,
 
   /* display a warning when no test swap file could be generated */
   if (! swap_is_ok)
-    g_message (_("Unable to open a test swap file.\n\n"
-                 "To avoid data loss, please check the location "
-                 "and permissions of the swap directory defined in "
-                 "your Preferences (currently \"%s\")."),
-               GIMP_BASE_CONFIG (gimp->config)->swap_path);
+    {
+      gchar *path = gimp_config_path_expand (config->swap_path, FALSE, NULL);
+
+      g_message (_("Unable to open a test swap file.\n\n"
+		   "To avoid data loss, please check the location "
+		   "and permissions of the swap directory defined in "
+		   "your Preferences (currently \"%s\")."), path);
+
+      g_free (path);
+    }
 
   /*  enable autosave late so we don't autosave when the
    *  monitor resolution is set in gui_init()

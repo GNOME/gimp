@@ -1,5 +1,14 @@
 2006-06-05  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp-user-install.[ch]
+	* app/app_procs.c: always migrate old user settings during user
+	installation.
+
+	* app/dialogs/user-install-dialog.[ch]: don't ask questions and
+	only show the dialog in case of an error.
+
+2006-06-05  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.c: formatting.
 
 2006-06-04  Seth Burgess <sjburges@gimp.org>

@@ -28,12 +28,8 @@ typedef void  (* GimpUserInstallLogFunc) (const gchar *message,
 
 
 GimpUserInstall * gimp_user_install_new  (gboolean          verbose);
-gboolean          gimp_user_install_run  (GimpUserInstall  *install,
-                                          gboolean          migrate);
+gboolean          gimp_user_install_run  (GimpUserInstall  *install);
 void              gimp_user_install_free (GimpUserInstall  *install);
-
-gboolean  gimp_user_install_is_migration (GimpUserInstall  *install,
-                                          gchar           **version);
 
 void   gimp_user_install_set_log_handler (GimpUserInstall        *install,
                                           GimpUserInstallLogFunc  log,
