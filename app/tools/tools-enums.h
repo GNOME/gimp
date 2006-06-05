@@ -47,17 +47,6 @@ typedef enum
 } GimpCropMode;
 
 
-#define GIMP_TYPE_RECTANGLE_MODE (gimp_rectangle_mode_get_type ())
-
-GType gimp_rectangle_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_RECTANGLE_MODE_EXECUTE,   /*< desc="Execute"   >*/
-  GIMP_RECTANGLE_MODE_RESIZE     /*< desc="Resize" >*/
-} GimpRectangleMode;
-
-
 #define GIMP_TYPE_RECT_SELECT_MODE (gimp_rect_select_mode_get_type ())
 
 GType gimp_rect_select_mode_get_type (void) G_GNUC_CONST;

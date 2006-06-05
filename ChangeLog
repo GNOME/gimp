@@ -1,3 +1,24 @@
+2006-06-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/tools-enums.[ch]: removed enum GimpRectangleMode.
+
+	* app/tools/gimprectangletool.[ch]: added virtual function
+	GimpRectangleTool::cancel(). Added public wrapper for it. Removed
+	coordinates paramaters from gimp_rectangle_tool_execute(). Removed
+	gimp_rectangle_tool_response(), need to call either execute() or
+	cancel() now. Added gimp_rectangle_tool_halt() which disconnects
+	the tool from the display without canceling it.
+
+	* app/tools/gimpcroptool.c: changed accordingly.
+
+	* app/tools/gimpnewrectselecttool.c: moved the rectangle creating
+	code from the execute() implementation to the new function
+	gimp_new_rect_select_tool_rect_select(). Added cancel()
+	implementation which pops the remembered undo step if
+	appropriate. Call the new rect_select() wrapper from
+	rectangle_changed() so we don't create the rectangle on both
+	button_release *and* execute(), breaking modifiers and stuff.
+
 2006-06-05  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/splash.c (splash_create): connect to "expose-event" with

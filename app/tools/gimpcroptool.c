@@ -182,8 +182,7 @@ gimp_crop_tool_button_press (GimpTool        *tool,
                              GimpDisplay     *display)
 {
   if (tool->display && display != tool->display)
-    gimp_rectangle_tool_response (NULL, GTK_RESPONSE_CANCEL,
-                                  GIMP_RECTANGLE_TOOL (tool));
+    gimp_rectangle_tool_cancel (GIMP_RECTANGLE_TOOL (tool));
 
   gimp_rectangle_tool_button_press (tool, coords, time, state, display);
 }

@@ -70,34 +70,6 @@ gimp_crop_mode_get_type (void)
 }
 
 GType
-gimp_rectangle_mode_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_RECTANGLE_MODE_EXECUTE, "GIMP_RECTANGLE_MODE_EXECUTE", "execute" },
-    { GIMP_RECTANGLE_MODE_RESIZE, "GIMP_RECTANGLE_MODE_RESIZE", "resize" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_RECTANGLE_MODE_EXECUTE, N_("Execute"), NULL },
-    { GIMP_RECTANGLE_MODE_RESIZE, N_("Resize"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpRectangleMode", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_rect_select_mode_get_type (void)
 {
   static const GEnumValue values[] =
