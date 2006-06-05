@@ -1665,10 +1665,14 @@ gimp_rectangle_tool_cursor_update (GimpTool        *tool,
 void
 gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpTool                 *tool = GIMP_TOOL (draw_tool);
+  GimpTool                 *tool      = GIMP_TOOL (draw_tool);
+  GimpDisplayShell         *shell     = GIMP_DISPLAY_SHELL (tool->display->shell);
+  GimpCanvas               *canvas    = GIMP_CANVAS (shell->canvas);
   GimpRectangleToolPrivate *private;
+  GimpRectangleOptions     *options;
   gint                      x1, x2, y1, y2;
   guint                     function;
+  GimpRectangleGuide        guide;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
@@ -1697,6 +1701,51 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
   gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
                               x2, y2, ANCHOR_SIZE, ANCHOR_SIZE,
                               GTK_ANCHOR_SOUTH_EAST, FALSE);
+
+  options = GIMP_RECTANGLE_OPTIONS (tool->tool_info->tool_options);
+
+  g_object_get (options, "guide", &guide, NULL);
+  switch (guide)
+    {
+    case GIMP_RECTANGLE_GUIDE_NONE:
+      break;
+    case GIMP_RECTANGLE_GUIDE_CENTER_LINES:
+      gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                             x1 + 1, (y1 + y2) / 2,
+                             x2 - 1, (y1 + y2) / 2);
+      gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                             (x1 + x2) / 2, y1 + 1,
+                             (x1 + x2) / 2, y2 - 1);
+      break;
+    case GIMP_RECTANGLE_GUIDE_THIRDS:
+      gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                             x1 + 1, (2 * y1 + y2) / 3,
+                             x2 - 1, (2 * y1 + y2) / 3);
+      gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                             x1 + 1, (y1 + 2 * y2) / 3,
+                             x2 - 1, (y1 + 2 * y2) / 3);
+      gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                             (2 * x1 + x2) / 3, y1 + 1,
+                             (2 * x1 + x2) / 3, y2 - 1);
+      gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                             (x1 + 2 * x2) / 3, y1 + 1,
+                             (x1 + 2 * x2) / 3, y2 - 1);
+      break;
+    case GIMP_RECTANGLE_GUIDE_GOLDEN:
+      gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                             x1 + 1, (2 * y1 + (1 + sqrt(5)) * y2) / (3 + sqrt(5)),
+                             x2 - 1, (2 * y1 + (1 + sqrt(5)) * y2) / (3 + sqrt(5)));
+      gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                             x1 + 1, ((1 + sqrt(5)) * y1 + 2 * y2) / (3 + sqrt(5)),
+                             x2 - 1, ((1 + sqrt(5)) * y1 + 2 * y2) / (3 + sqrt(5)));
+      gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                             (2 * x1 + (1 + sqrt(5)) * x2) / (3 + sqrt(5)), y1 + 1,
+                             (2 * x1 + (1 + sqrt(5)) * x2) / (3 + sqrt(5)), y2 - 1);
+      gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                             ((1 + sqrt(5)) * x1 + 2 * x2) / (3 + sqrt(5)), y1 + 1,
+                             ((1 + sqrt(5)) * x1 + 2 * x2) / (3 + sqrt(5)), y2 - 1);
+      break;
+    }
 }
 
 void

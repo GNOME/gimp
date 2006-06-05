@@ -39,6 +39,7 @@ typedef struct _GimpRectangleOptionsPrivate GimpRectangleOptionsPrivate;
 struct _GimpRectangleOptionsPrivate
 {
   gboolean highlight;
+  GimpRectangleGuide guide;
 
   gboolean fixed_width;
   gdouble  width;
@@ -66,6 +67,10 @@ static GimpRectangleOptionsPrivate *
 void        gimp_rectangle_options_set_highlight       (GimpRectangleOptions *options,
                                                         gboolean              highlight);
 gboolean    gimp_rectangle_options_get_highlight       (GimpRectangleOptions *options);
+void        gimp_rectangle_options_set_guide           (GimpRectangleOptions *options,
+                                                        GimpRectangleGuide    guide);
+GimpRectangleGuide
+            gimp_rectangle_options_get_guide           (GimpRectangleOptions *options);
 
 void        gimp_rectangle_options_set_fixed_width     (GimpRectangleOptions *options,
                                                         gboolean              fixed_width);
@@ -145,6 +150,12 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *options_i
                                                                  NULL, NULL,
                                                                  TRUE,
                                                                  GIMP_PARAM_READWRITE));
+      g_object_interface_install_property (options_iface,
+                                           g_param_spec_enum ("guide",
+                                                              NULL, NULL,
+                                                              GIMP_TYPE_RECTANGLE_GUIDE,
+                                                              GIMP_RECTANGLE_GUIDE_NONE,
+                                                              GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (options_iface,
                                            g_param_spec_boolean ("new-fixed-width",
@@ -286,6 +297,9 @@ gimp_rectangle_options_install_properties (GObjectClass *klass)
                                     GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
                                     "highlight");
   g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_GUIDE,
+                                    "guide");
+  g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_FIXED_WIDTH,
                                     "new-fixed-width");
   g_object_class_override_property (klass,
@@ -344,6 +358,32 @@ gimp_rectangle_options_get_highlight (GimpRectangleOptions *options)
   private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
   return private->highlight;
+}
+
+void
+gimp_rectangle_options_set_guide (GimpRectangleOptions *options,
+                                  GimpRectangleGuide    guide)
+{
+  GimpRectangleOptionsPrivate *private;
+
+  g_return_if_fail (GIMP_IS_RECTANGLE_OPTIONS (options));
+
+  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+
+  private->guide = guide;
+  g_object_notify (G_OBJECT (options), "guide");
+}
+
+GimpRectangleGuide
+gimp_rectangle_options_get_guide (GimpRectangleOptions *options)
+{
+  GimpRectangleOptionsPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_RECTANGLE_OPTIONS (options), FALSE);
+
+  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+
+  return private->guide;
 }
 
 void
@@ -645,6 +685,9 @@ gimp_rectangle_options_set_property (GObject      *object,
     case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
       gimp_rectangle_options_set_highlight (options, g_value_get_boolean (value));
       break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_GUIDE:
+      gimp_rectangle_options_set_guide (options, g_value_get_enum (value));
+      break;
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_WIDTH:
       gimp_rectangle_options_set_fixed_width (options, g_value_get_boolean (value));
       break;
@@ -697,6 +740,9 @@ gimp_rectangle_options_get_property (GObject      *object,
     case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
       g_value_set_boolean (value, gimp_rectangle_options_get_highlight (options));
       break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_GUIDE:
+      g_value_set_enum (value, gimp_rectangle_options_get_guide (options));
+      break;
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_WIDTH:
       g_value_set_boolean (value, gimp_rectangle_options_get_fixed_width (options));
       break;
@@ -742,6 +788,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   GObject     *config  = G_OBJECT (tool_options);
   GtkWidget   *vbox;
   GtkWidget   *button;
+  GtkWidget   *combo;
   GtkWidget   *table;
   GtkWidget   *entry;
   GtkWidget   *hbox;
@@ -755,6 +802,10 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                        _("Highlight"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  combo = gimp_prop_enum_combo_box_new (config, "guide", 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);

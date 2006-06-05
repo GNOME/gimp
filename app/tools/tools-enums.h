@@ -36,6 +36,19 @@ typedef enum
 } GimpColorPickMode;
 
 
+#define GIMP_TYPE_RECTANGLE_GUIDE (gimp_rectangle_guide_get_type ())
+
+GType gimp_rectangle_guide_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_RECTANGLE_GUIDE_NONE,          /*< desc="No guides"       >*/
+  GIMP_RECTANGLE_GUIDE_CENTER_LINES,  /*< desc="Center lines"    >*/
+  GIMP_RECTANGLE_GUIDE_THIRDS,        /*< desc="Rule of thirds"  >*/
+  GIMP_RECTANGLE_GUIDE_GOLDEN         /*< desc="Golden sections" >*/
+} GimpRectangleGuide;
+
+
 #define GIMP_TYPE_CROP_MODE (gimp_crop_mode_get_type ())
 
 GType gimp_crop_mode_get_type (void) G_GNUC_CONST;

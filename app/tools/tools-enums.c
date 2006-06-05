@@ -42,6 +42,38 @@ gimp_color_pick_mode_get_type (void)
 }
 
 GType
+gimp_rectangle_guide_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_RECTANGLE_GUIDE_NONE, "GIMP_RECTANGLE_GUIDE_NONE", "none" },
+    { GIMP_RECTANGLE_GUIDE_CENTER_LINES, "GIMP_RECTANGLE_GUIDE_CENTER_LINES", "center-lines" },
+    { GIMP_RECTANGLE_GUIDE_THIRDS, "GIMP_RECTANGLE_GUIDE_THIRDS", "thirds" },
+    { GIMP_RECTANGLE_GUIDE_GOLDEN, "GIMP_RECTANGLE_GUIDE_GOLDEN", "golden" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_RECTANGLE_GUIDE_NONE, N_("No guides"), NULL },
+    { GIMP_RECTANGLE_GUIDE_CENTER_LINES, N_("Center lines"), NULL },
+    { GIMP_RECTANGLE_GUIDE_THIRDS, N_("Rule of thirds"), NULL },
+    { GIMP_RECTANGLE_GUIDE_GOLDEN, N_("Golden sections"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpRectangleGuide", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_crop_mode_get_type (void)
 {
   static const GEnumValue values[] =

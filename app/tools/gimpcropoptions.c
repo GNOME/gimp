@@ -102,6 +102,7 @@ gimp_crop_options_set_property (GObject      *object,
   switch (property_id)
     {
     case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
+    case GIMP_RECTANGLE_OPTIONS_PROP_GUIDE:
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_WIDTH:
     case GIMP_RECTANGLE_OPTIONS_PROP_WIDTH:
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_HEIGHT:
@@ -138,6 +139,7 @@ gimp_crop_options_get_property (GObject    *object,
   switch (property_id)
     {
     case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
+    case GIMP_RECTANGLE_OPTIONS_PROP_GUIDE:
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_WIDTH:
     case GIMP_RECTANGLE_OPTIONS_PROP_WIDTH:
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_HEIGHT:

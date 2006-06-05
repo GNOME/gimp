@@ -1,3 +1,12 @@
+2006-06-05  Karine Delvare  <edhel@gimp.org>
+
+	* app/tools/tools-enums.[ch]: added GimpRectangleGuide enum.
+
+	* app/tools/gimpcropoptions.c
+	* app/tools/gimprectangleoptions.[ch]
+	* app/tools/gimprectangletool.c: added GimpRectangleGuide option to
+	draw guides inside the rectangle. Fixes bug #323669.
+
 2006-06-05  Michael Natterer  <mitch@gimp.org>
 
 	Applied slightly modified patch from saulgoode which allows to
