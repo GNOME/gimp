@@ -1,5 +1,12 @@
 2006-06-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpdrawtool.c
+	(gimp_draw_tool_draw_rectangle_by_anchor)
+	(gimp_draw_tool_draw_arc_by_anchor): subtract 1 from outlined
+	width/height instead of adding 1 to filled.
+
+2006-06-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_draw): use
 	GimpDrawTool API, not GimpCanvas one. Some cleanup.
 

@@ -545,10 +545,10 @@ gimp_draw_tool_draw_rectangle_by_anchor (GimpDrawTool   *draw_tool,
                                       anchor,
                                       &tx, &ty);
 
-  if (filled)
+  if (! filled)
     {
-      width++;
-      height++;
+      width  -= 1;
+      height -= 1;
     }
 
   gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
@@ -591,10 +591,10 @@ gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
                                       anchor,
                                       &tx, &ty);
 
-  if (filled)
+  if (! filled)
     {
-      radius_x += 1;
-      radius_y += 1;
+      radius_x -= 1;
+      radius_y -= 1;
     }
 
   gimp_canvas_draw_arc (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
