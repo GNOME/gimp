@@ -1,3 +1,7 @@
+2006-06-05  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c: formatting.
+
 2006-06-04  Seth Burgess <sjburges@gimp.org>
 	
 	* plug-ins/common/png.c: fixed file_png_set_defaults; wrong # of
@@ -10,7 +14,7 @@
 	* app/tools/gimprectangletool.c:
 	* app/tools/gimpnewrectselecttool.c: enable canceling of 
 	current action by holding down mouse button 3.
-	
+
 2006-06-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpscaletool.c (gimp_scale_tool_size_notify):
@@ -24,8 +28,8 @@
 
 2006-06-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* app/tools/gimpnewrectselectoptions.c: turn highlighting
-	off by default.
+	* app/tools/gimpnewrectselectoptions.c: turn highlighting off by
+	default.
 	
 2006-06-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
