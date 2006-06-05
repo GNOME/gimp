@@ -1,3 +1,10 @@
+2006-06-04  Seth Burgess <sjburges@gimp.org>
+	
+	* plug-ins/common/png.c: fixed file_png_set_defaults; wrong # of
+	  return values, missing "set" if/else set, wrong set param count,
+	  and off by one error in the parameter indexes.  Thanks to Kevin
+	  on helping track these down.
+
 2006-06-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimprectangletool.c:

@@ -545,7 +545,7 @@ run (const gchar      *name,
     {
       load_defaults ();
 
-      *nreturn_vals = 9;
+      *nreturn_vals = 10;
 
 #define SET_VALUE(index, field)        G_STMT_START { \
  values[(index)].type = GIMP_PDB_INT32;        \
@@ -564,19 +564,19 @@ run (const gchar      *name,
 
 #undef SET_VALUE
     }
-  else if (strcmp (name, GET_DEFAULTS_PROC) == 0)
+  else if (strcmp (name, SET_DEFAULTS_PROC) == 0)
     {
-      if (nparams == 10)
+      if (nparams == 9)
         {
-          pngvals.interlaced          = param[1].data.d_int32;
-          pngvals.compression_level   = param[2].data.d_int32;
-          pngvals.bkgd                = param[3].data.d_int32;
-          pngvals.gama                = param[4].data.d_int32;
-          pngvals.offs                = param[5].data.d_int32;
-          pngvals.phys                = param[6].data.d_int32;
-          pngvals.time                = param[7].data.d_int32;
-          pngvals.comment             = param[8].data.d_int32;
-          pngvals.save_transp_pixels  = param[9].data.d_int32;
+          pngvals.interlaced          = param[0].data.d_int32;
+          pngvals.compression_level   = param[1].data.d_int32;
+          pngvals.bkgd                = param[2].data.d_int32;
+          pngvals.gama                = param[3].data.d_int32;
+          pngvals.offs                = param[4].data.d_int32;
+          pngvals.phys                = param[5].data.d_int32;
+          pngvals.time                = param[6].data.d_int32;
+          pngvals.comment             = param[7].data.d_int32;
+          pngvals.save_transp_pixels  = param[8].data.d_int32;
 
           save_defaults ();
         }
