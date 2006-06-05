@@ -1,3 +1,8 @@
+2006-06-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_draw): use
+	GimpDrawTool API, not GimpCanvas one. Some cleanup.
+
 2006-06-05  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/selection.pdb: fixed documentation of
