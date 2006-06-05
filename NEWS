@@ -12,7 +12,7 @@ Changes in GIMP 2.3.9
 
 - better interpolation for "smooth" curves in the Curve tool
 - added an Auto button to the Threshold tool that picks a suitable value
-- simplified user installation
+- simplified user installation, only display a dialog in case of an error
 - added Red Eye Removal plug-in
 - added thumbnail loader to GIF load plug-in
 - declared even more data as const
@@ -31,7 +31,12 @@ Changes in GIMP 2.3.9
 - added "Sample merged" and "Selected Pixels only" options to Palette import
 - added actions to select palette and colormap colors
 - new environment variable to control which batch interpreter to use
+- give plug-ins access to the CPU detection so that they can use MMX code
 - speed up Selective Gaussian Blur plug-in
+- improved tool cursors, added edge resizing cursors
+- improved behaviour of new selection tools
+- allow to reset all gimprc values from the Preferences dialog
+- optionally show guides in the Crop tool
 - bug fixes and code cleanup
 
 
