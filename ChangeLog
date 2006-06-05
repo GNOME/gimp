@@ -1,3 +1,12 @@
+2006-06-04  Kevin Cozens <kcozens@cvs.gnome.org>
+
+	Merge from HEAD:
+
+	* plug-ins/common/png.c: Fixed file_png_get_defaults; wrong # of
+	return values. Fixed file_png_set_defaults; wrong set param count,
+	and off by one error in the parameter indexes. Thanks to Seth for
+	helping track these down.
+
 2006-05-29  Michael Natterer  <mitch@gimp.org>
 
 	Merge from HEAD:
