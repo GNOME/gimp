@@ -108,6 +108,7 @@ static void       gimp_selection_invert        (GimpChannel     *channel,
 static void       gimp_selection_border        (GimpChannel     *channel,
                                                 gint             radius_x,
                                                 gint             radius_y,
+                                                gboolean         feather_border,
                                                 gboolean         push_undo);
 static void       gimp_selection_grow          (GimpChannel     *channel,
                                                 gint             radius_x,
@@ -459,10 +460,11 @@ static void
 gimp_selection_border (GimpChannel *channel,
                        gint         radius_x,
                        gint         radius_y,
+                       gboolean     feather_border,
                        gboolean     push_undo)
 {
   GIMP_CHANNEL_CLASS (parent_class)->border (channel, radius_x, radius_y,
-                                             push_undo);
+                                             feather_border, push_undo);
 }
 
 static void

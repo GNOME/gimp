@@ -1,5 +1,24 @@
 2006-06-05  Michael Natterer  <mitch@gimp.org>
 
+	Applied slightly modified patch from saulgoode which allows to
+	border a selection without feathering. Fixes bug #88633.
+
+	* app/paint-funcs/paint-funcs.[ch] (border_region): added boolean
+	"feather_border" parameter.
+
+	* app/core/gimpchannel.[ch]: GimpChannel::border(): ditto.
+
+	* app/core/gimpselection.c: changed accordingly.
+
+	* app/actions/select-commands.c: added a toggle to the border
+	dialog and pass it to gimp_channel_border().
+
+	* tools/pdbgen/pdb/selection.pdb: pass TRUE here.
+
+	* app/pdb/selection_cmds.c: regenerated.
+
+2006-06-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/tools-enums.[ch]: removed enum GimpRectangleMode.
 
 	* app/tools/gimprectangletool.[ch]: added virtual function

@@ -381,7 +381,8 @@ void  gaussian_blur_region                (PixelRegion *srcR,
 
 void  border_region                       (PixelRegion *src,
                                            gint16       xradius,
-                                           gint16       yradius);
+                                           gint16       yradius,
+                                           gboolean     feather_border);
 
 void  subsample_region                    (PixelRegion *srcPR,
                                            PixelRegion *destPR,

@@ -3669,7 +3669,8 @@ compute_transition (guchar  *transition,
 void
 border_region (PixelRegion *src,
                gint16       xradius,
-               gint16       yradius)
+               gint16       yradius,
+               gboolean     feather_border)
 {
   /*
      This function has no bugs, but if you imagine some you can
@@ -3797,9 +3798,16 @@ border_region (PixelRegion *src,
                   (tmpx * tmpx) / (xradius * xradius));
 
           if (dist < 1.0)
-            a = 255 * (1.0 - sqrt (dist));
+            {
+              if (feather_border)
+                a = 255 * (1.0 - sqrt (dist));
+              else
+                a = 255;
+            }
           else
-            a = 0;
+            {
+              a = 0;
+            }
 
           density[ x][ y] = a;
           density[ x][-y] = a;

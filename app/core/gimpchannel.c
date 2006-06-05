@@ -193,6 +193,7 @@ static void       gimp_channel_real_invert   (GimpChannel      *channel,
 static void       gimp_channel_real_border   (GimpChannel      *channel,
                                               gint              radius_x,
                                               gint              radius_y,
+                                              gboolean          feather_border,
                                               gboolean          push_undo);
 static void       gimp_channel_real_grow     (GimpChannel      *channel,
                                               gint              radius_x,
@@ -1284,6 +1285,7 @@ static void
 gimp_channel_real_border (GimpChannel *channel,
                           gint         radius_x,
                           gint         radius_y,
+                          gboolean     feather_border,
                           gboolean     push_undo)
 {
   PixelRegion bPR;
@@ -1327,7 +1329,7 @@ gimp_channel_real_border (GimpChannel *channel,
   pixel_region_init (&bPR, GIMP_DRAWABLE (channel)->tiles,
                      x1, y1, x2 - x1, y2 - y1, TRUE);
 
-  border_region (&bPR, radius_x, radius_y);
+  border_region (&bPR, radius_x, radius_y, feather_border);
 
   channel->bounds_known = FALSE;
 
@@ -1822,6 +1824,7 @@ void
 gimp_channel_border (GimpChannel *channel,
                      gint         radius_x,
                      gint         radius_y,
+                     gboolean     feather_border,
                      gboolean     push_undo)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
@@ -1830,7 +1833,7 @@ gimp_channel_border (GimpChannel *channel,
     push_undo = FALSE;
 
   GIMP_CHANNEL_GET_CLASS (channel)->border (channel, radius_x, radius_y,
-                                            push_undo);
+                                            feather_border, push_undo);
 }
 
 void
