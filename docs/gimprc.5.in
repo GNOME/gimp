@@ -38,10 +38,10 @@ Valid properties and their default values are:
 .TP
 (temp-path "${gimp_dir}/tmp")
 
-Sets the temporary storage directory. Files will appear here during the course
-of running the GIMP.  Most files will disappear when the GIMP exits, but some
-files are likely to remain, so it is best if this directory not be one that is
-shared by other users.  This is a single folder.
+Sets the folder for temporary storage. Files will appear here during the
+course of running the GIMP.  Most files will disappear when the GIMP exits,
+but some files are likely to remain, so it is best if this folder not be one
+that is shared by other users.  This is a single folder.
 
 .TP
 (swap-path "${gimp_dir}")
@@ -50,8 +50,8 @@ Sets the swap file location. GIMP uses a tile based memory allocation scheme.
 The swap file is used to quickly and easily swap tiles out to disk and back
 in. Be aware that the swap file can easily get very large if GIMP is used with
 large images. Also, things can get horribly slow if the swap file is created
-on a directory that is mounted over NFS.  For these reasons, it may be
-desirable to put your swap file in "/tmp".  This is a single folder.
+on a folder that is mounted over NFS.  For these reasons, it may be desirable
+to put your swap file in "/tmp".  This is a single folder.
 
 .TP
 (num-processors 2)
@@ -149,7 +149,8 @@ search.
 .TP
 (font-path "${gimp_dir}/fonts:${gimp_data_dir}/fonts")
 
-Where to look for fonts.  This is a colon-separated list of folders to search.
+Where to look for fonts in addition to the system-wide installed fonts.  This
+is a colon-separated list of folders to search.
 
 .TP
 (default-brush "Circle (11)")
@@ -160,26 +161,22 @@ path.  This is a string value.
 .TP
 (default-pattern "Pine")
 
-Specify a default pattern. The pattern is searched for in the specified
-pattern path.  This is a string value.
+Specify a default pattern.  This is a string value.
 
 .TP
 (default-palette "Default")
 
-Specify a default palette.  The palette is searched for in the specified
-palette path.  This is a string value.
+Specify a default palette.  This is a string value.
 
 .TP
 (default-gradient "FG to BG (RGB)")
 
-Specify a default gradient.  The gradient is searched for in the specified
-gradient path.  This is a string value.
+Specify a default gradient.  This is a string value.
 
 .TP
 (default-font "Sans")
 
-Specify a default font.  The font is searched for in the fontconfig font path.
- This is a string value.
+Specify a default font.  This is a string value.
 
 .TP
 (global-brush yes)
@@ -578,7 +575,7 @@ large, extra-large, huge, enormous and gigantic.
     (show-grid no)
     (show-sample-points yes)
     (padding-mode default)
-    (padding-color (color-rgba 1.000000 1.000000 1.000000 1.000000)))
+    (padding-color (color-rgb 1.000000 1.000000 1.000000)))
 
 Sets the default settings for the image view.  This is a parameter list.
 
@@ -594,7 +591,7 @@ Sets the default settings for the image view.  This is a parameter list.
     (show-grid no)
     (show-sample-points yes)
     (padding-mode default)
-    (padding-color (color-rgba 1.000000 1.000000 1.000000 1.000000)))
+    (padding-color (color-rgb 1.000000 1.000000 1.000000)))
 
 Sets the default settings used when an image is viewed in fullscreen mode. 
 This is a parameter list.
