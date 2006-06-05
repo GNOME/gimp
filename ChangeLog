@@ -1,5 +1,12 @@
 2006-06-05  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/selection.pdb: fixed documentation of
+	gimp-selection-sharpen (bug #343911).
+
+	* libgimp/gimpselection_pdb.c: regenerated.
+
+2006-06-05  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/paint-funcs.[ch]
 	* app/core/gimpchannel.[ch]
 	* app/core/gimpselection.c:
