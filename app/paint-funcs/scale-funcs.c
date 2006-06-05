@@ -1068,8 +1068,8 @@ scale_region_lanczos (PixelRegion *srcPR,
              {
                const gint alpha = bytes - 1;
                gint       byte;
-               gint       aval;
-               gint       arecip;
+               gdouble    aval;
+               gdouble    arecip;
                gint       row;
 
                for (aval = 0, row = 0; row < LANCZOS_WIDTH2; row++)
