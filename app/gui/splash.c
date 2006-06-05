@@ -70,8 +70,8 @@ static gboolean    splash_average_bottom      (GtkWidget      *widget,
                                                GdkPixbuf      *pixbuf,
                                                GdkColor       *color);
 
-static GdkPixbuf * splash_image_load          (void);
-static GdkPixbuf * splash_image_pick_from_dir (const gchar    *dirname);
+static GdkPixbufAnimation * splash_image_load          (void);
+static GdkPixbufAnimation * splash_image_pick_from_dir (const gchar *dirname);
 
 #ifdef STARTUP_TIMER
 static void        splash_timer_elapsed       (const gchar    *text1,
@@ -85,14 +85,13 @@ static void        splash_timer_elapsed       (const gchar    *text1,
 void
 splash_create (void)
 {
-  GtkWidget      *frame;
-  GtkWidget      *vbox;
-  GdkPixbuf      *pixbuf;
-  GdkScreen      *screen;
-  GdkPixmap      *pixmap;
-  PangoAttrList  *attrs;
-  PangoAttribute *attr;
-  GdkGCValues     values;
+  GtkWidget          *frame;
+  GtkWidget          *vbox;
+  GdkPixbufAnimation *pixbuf;
+  GdkScreen          *screen;
+  PangoAttrList      *attrs;
+  PangoAttribute     *attr;
+  GdkGCValues         values;
 
   g_return_if_fail (splash == NULL);
 
@@ -125,9 +124,9 @@ splash_create (void)
 
   screen = gtk_widget_get_screen (splash->window);
 
-  splash->width  = MIN (gdk_pixbuf_get_width (pixbuf),
+  splash->width  = MIN (gdk_pixbuf_animation_get_width (pixbuf),
                         gdk_screen_get_width (screen));
-  splash->height = MIN (gdk_pixbuf_get_height (pixbuf),
+  splash->height = MIN (gdk_pixbuf_animation_get_height (pixbuf),
                         gdk_screen_get_height (screen));
 
   frame = gtk_frame_new (NULL);
@@ -139,8 +138,18 @@ splash_create (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  /*  prepare the drawing area  */
-  splash->area = gtk_drawing_area_new ();
+  /*  If the splash image is static, we use a drawing area and set the
+   *  image as back pixmap, otherwise a GtkImage is being used.
+   */
+  if (gdk_pixbuf_animation_is_static_image (pixbuf))
+    {
+      splash->area = gtk_drawing_area_new ();
+    }
+  else
+    {
+      splash->area = gtk_image_new_from_animation (pixbuf);
+    }
+
   gtk_box_pack_start_defaults (GTK_BOX (vbox), splash->area);
   gtk_widget_show (splash->area);
 
@@ -148,19 +157,26 @@ splash_create (void)
 
   gtk_widget_realize (splash->area);
 
-  splash_average_bottom (splash->area, pixbuf, &values.foreground);
+  splash_average_bottom (splash->area,
+			 gdk_pixbuf_animation_get_static_image (pixbuf),
+			 &values.foreground);
   splash->gc = gdk_gc_new_with_values (splash->area->window, &values,
                                        GDK_GC_FOREGROUND);
 
-  pixmap = gdk_pixmap_new (splash->area->window,
-                           splash->width, splash->height, -1);
-  gdk_draw_pixbuf (pixmap, splash->gc,
-                   pixbuf, 0, 0, 0, 0, splash->width, splash->height,
-                   GDK_RGB_DITHER_NORMAL, 0, 0);
-  g_object_unref (pixbuf);
+  if (gdk_pixbuf_animation_is_static_image (pixbuf))
+    {
+      GdkPixmap *pixmap = gdk_pixmap_new (splash->area->window,
+					  splash->width, splash->height, -1);
 
-  gdk_window_set_back_pixmap (splash->area->window, pixmap, FALSE);
-  g_object_unref (pixmap);
+      gdk_draw_pixbuf (pixmap, splash->gc,
+		       gdk_pixbuf_animation_get_static_image (pixbuf),
+		       0, 0, 0, 0, splash->width, splash->height,
+		       GDK_RGB_DITHER_NORMAL, 0, 0);
+      gdk_window_set_back_pixmap (splash->area->window, pixmap, FALSE);
+      g_object_unref (pixmap);
+    }
+
+  g_object_unref (pixbuf);
 
   g_signal_connect (splash->area, "expose-event",
                     G_CALLBACK (splash_area_expose),
@@ -382,14 +398,14 @@ splash_average_bottom (GtkWidget *widget,
                                    color, FALSE, TRUE);
 }
 
-static GdkPixbuf *
+static GdkPixbufAnimation *
 splash_image_load (void)
 {
-  GdkPixbuf *pixbuf;
-  gchar     *filename;
+  GdkPixbufAnimation *pixbuf;
+  gchar              *filename;
 
   filename = gimp_personal_rc_file ("gimp-splash.png");
-  pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+  pixbuf = gdk_pixbuf_animation_new_from_file (filename, NULL);
   g_free (filename);
 
   if (pixbuf)
@@ -404,7 +420,7 @@ splash_image_load (void)
 
   filename = g_build_filename (gimp_data_directory (),
                                "images", "gimp-splash.png", NULL);
-  pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+  pixbuf = gdk_pixbuf_animation_new_from_file (filename, NULL);
   g_free (filename);
 
   if (pixbuf)
@@ -417,11 +433,11 @@ splash_image_load (void)
   return pixbuf;
 }
 
-static GdkPixbuf *
+static GdkPixbufAnimation *
 splash_image_pick_from_dir (const gchar *dirname)
 {
-  GdkPixbuf *pixbuf = NULL;
-  GDir      *dir    = g_dir_open (dirname, 0, NULL);
+  GdkPixbufAnimation *pixbuf = NULL;
+  GDir               *dir    = g_dir_open (dirname, 0, NULL);
 
   if (dir)
     {
@@ -440,7 +456,7 @@ splash_image_pick_from_dir (const gchar *dirname)
                                                g_list_nth_data (splashes, i),
                                                NULL);
 
-          pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+          pixbuf = gdk_pixbuf_animation_new_from_file (filename, NULL);
           g_free (filename);
 
           g_list_foreach (splashes, (GFunc) g_free, NULL);

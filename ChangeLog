@@ -1,5 +1,10 @@
 2006-06-05  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/splash.c: added back support for animated splashes but
+	continue to use the optimized code for static splash images.
+
+2006-06-05  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-user-install.[ch]
 	* app/app_procs.c: always migrate old user settings during user
 	installation.
