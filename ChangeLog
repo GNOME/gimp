@@ -1,3 +1,7 @@
+2006-06-06  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version to 2.3.10.
+
 2006-06-05  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.3.9 development release.
@@ -2529,7 +2533,7 @@
 
 2006-04-12  Sven Neumann  <sven@gimp.org>
 
-	* configure.in:  bumped version to 2.3.9.
+	* configure.in: bumped version to 2.3.9.
 
 2006-04-12  Sven Neumann  <sven@gimp.org>
 
