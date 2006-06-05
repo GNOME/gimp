@@ -178,9 +178,9 @@ splash_create (void)
 
   g_object_unref (pixbuf);
 
-  g_signal_connect (splash->area, "expose-event",
-                    G_CALLBACK (splash_area_expose),
-                    splash);
+  g_signal_connect_after (splash->area, "expose-event",
+			  G_CALLBACK (splash_area_expose),
+			  splash);
 
   /*  create the pango layouts  */
   splash->upper = gtk_widget_create_pango_layout (splash->area, "");

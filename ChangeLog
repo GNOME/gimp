@@ -1,5 +1,10 @@
 2006-06-05  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/splash.c (splash_create): connect to "expose-event" with
+	G_SIGNAL_CONNECT_AFTER so that the text is rendered on the image.
+
+2006-06-05  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/splash.c: added back support for animated splashes but
 	continue to use the optimized code for static splash images.
 
