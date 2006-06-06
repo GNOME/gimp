@@ -124,6 +124,7 @@ gboolean    gimp_rectangle_tool_get_constrain       (GimpRectangleTool *tool);
 
 /*  Rectangle helper functions  */
 static void     rectangle_tool_start                (GimpRectangleTool     *rectangle);
+static void     gimp_rectangle_tool_draw_guides     (GimpDrawTool          *draw_tool);
 
 /*  Rectangle dialog functions  */
 static void     rectangle_selection_callback        (GtkWidget             *widget,
@@ -169,10 +170,10 @@ gimp_rectangle_tool_interface_get_type (void)
       };
 
       rectangle_tool_iface_type =
-	g_type_register_static (G_TYPE_INTERFACE,
-				"GimpRectangleToolInterface",
-				&rectangle_tool_iface_info,
-				0);
+        g_type_register_static (G_TYPE_INTERFACE,
+                                "GimpRectangleToolInterface",
+                                &rectangle_tool_iface_info,
+                                0);
     }
 
   return rectangle_tool_iface_type;
@@ -285,8 +286,8 @@ gimp_rectangle_tool_get_private (GimpRectangleTool *tool)
       private = g_new0 (GimpRectangleToolPrivate, 1);
 
       g_object_set_qdata_full (G_OBJECT (tool), private_key, private,
-			       (GDestroyNotify)
-			       gimp_rectangle_tool_private_finalize);
+                               (GDestroyNotify)
+                               gimp_rectangle_tool_private_finalize);
     }
 
   return private;
@@ -1667,16 +1668,13 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpTool                 *tool;
   GimpRectangleToolPrivate *private;
-  GimpRectangleOptions     *options;
   gint                      x1, x2, y1, y2;
   guint                     function;
-  GimpRectangleGuide        guide;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (draw_tool));
 
   tool    = GIMP_TOOL (draw_tool);
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (draw_tool);
-  options = GIMP_RECTANGLE_OPTIONS (tool->tool_info->tool_options);
 
   g_object_get (GIMP_RECTANGLE_TOOL (tool), "function", &function, NULL);
 
@@ -1704,6 +1702,26 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
                               x2, y2, ANCHOR_SIZE, ANCHOR_SIZE,
                               GTK_ANCHOR_SOUTH_EAST, FALSE);
 
+  gimp_rectangle_tool_draw_guides (draw_tool);
+}
+
+static void
+gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
+{
+  GimpTool                 *tool;
+  GimpRectangleToolPrivate *private;
+  GimpRectangleOptions     *options;
+  gint                      x1, x2, y1, y2;
+  GimpRectangleGuide        guide;
+
+  tool    = GIMP_TOOL (draw_tool);
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (draw_tool);
+  options = GIMP_RECTANGLE_OPTIONS (tool->tool_info->tool_options);
+
+  x1 = private->x1;
+  x2 = private->x2;
+  y1 = private->y1;
+  y2 = private->y2;
   g_object_get (options, "guide", &guide, NULL);
 
   switch (guide)
@@ -2237,11 +2255,11 @@ gimp_rectangle_tool_notify_highlight (GimpRectangleOptions *options,
       gint         x2, y2;
 
       g_object_get (rectangle,
-		    "x1", &x1,
-		    "y1", &y1,
-		    "x2", &x2,
-		    "y2", &y2,
-		    NULL);
+                    "x1", &x1,
+                    "y1", &y1,
+                    "x2", &x2,
+                    "y2", &y2,
+                    NULL);
 
       rect.x      = x1;
       rect.y      = y1;
