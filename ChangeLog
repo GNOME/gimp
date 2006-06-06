@@ -1,5 +1,10 @@
 2006-06-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c: minor cleanup, plugged a
+	tiny memleak in script_fu_find_scripts().
+
+2006-06-06  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.c
 	(gimp_rectangle_tool_notify_highlight): minor cleanup.
 
