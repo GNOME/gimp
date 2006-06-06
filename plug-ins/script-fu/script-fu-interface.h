@@ -20,8 +20,9 @@
 #define __SCRIPT_FU_INTERFACE_H__
 
 
-void  script_fu_interface           (SFScript *script);
-void  script_fu_interface_report_cc (gchar    *command);
+void       script_fu_interface           (SFScript    *script);
+void       script_fu_interface_report_cc (const gchar *command);
+gboolean   script_fu_interface_is_active (void);
 
 
 #endif /*  __SCRIPT_FU_INTERFACE_H__  */

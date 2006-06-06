@@ -121,8 +121,14 @@ static SFInterface *sf_interface = NULL;  /*  there can only be at most one
  *  Function definitions
  */
 
+gboolean
+script_fu_interface_is_active (void)
+{
+  return (sf_interface != NULL);
+}
+
 void
-script_fu_interface_report_cc (gchar *command)
+script_fu_interface_report_cc (const gchar *command)
 {
   if (sf_interface == NULL)
     return;
@@ -137,13 +143,14 @@ script_fu_interface_report_cc (gchar *command)
       new_command = g_strdup_printf ("%s <%d>",
 				     command, sf_interface->command_count);
       gtk_label_set_text (GTK_LABEL (sf_interface->progress_label),
-                          new_command);
+			  new_command);
       g_free (new_command);
     }
   else
     {
       sf_interface->command_count = 1;
       gtk_label_set_text (GTK_LABEL (sf_interface->progress_label), command);
+
       g_free (sf_interface->last_command);
       sf_interface->last_command = g_strdup (command);
     }

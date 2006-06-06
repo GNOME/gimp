@@ -21,14 +21,19 @@
 #include <string.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "siod/siod.h"
 
-#include "siod-wrapper.h"
+#include "script-fu-types.h"
+
 #include "script-fu-console.h"
+#include "script-fu-interface.h"
 #include "script-fu-scripts.h"
 #include "script-fu-server.h"
 #include "script-fu-text-console.h"
+
+#include "siod-wrapper.h"
 
 #include "script-fu-intl.h"
 
@@ -317,10 +322,23 @@ script_fu_refresh_proc (const gchar      *name,
 			GimpParam       **return_vals)
 {
   static GimpParam  values[1];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpPDBStatusType status;
 
-  /*  Reload all of the available scripts  */
-  script_fu_find_scripts ();
+  if (script_fu_interface_is_active ())
+    {
+      g_message (_("You can not use \"Refresh Scripts\" while a "
+		   "Script-Fu dialog box is open.  Please close "
+		   "all Script-Fu windows and try again."));
+
+      status = GIMP_PDB_EXECUTION_ERROR;
+    }
+  else
+    {
+      /*  Reload all of the available scripts  */
+      script_fu_find_scripts ();
+
+      status = GIMP_PDB_SUCCESS;
+    }
 
   *nreturn_vals = 1;
   *return_vals  = values;
