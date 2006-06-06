@@ -1,3 +1,7 @@
+2006-06-06  Karine Delvare  <edhel@gimp.org>
+
+	* app/tools/gimprectangle.c: added guide notification.
+
 2006-06-06  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_draw): removed
