@@ -1,3 +1,10 @@
+2006-06-07  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_initialize):
+	initialize guide with the option's guide value.
+	(gimp_rectangle_tool_notify_guide): always sync with the option's
+	guide value, even when tool->display is NULL.
+
 2006-06-06  Karine Delvare  <edhel@gimp.org>
 
 	* app/tools/gimprectangle.c: added guide notification.

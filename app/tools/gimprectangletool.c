@@ -697,14 +697,14 @@ gboolean
 gimp_rectangle_tool_initialize (GimpTool    *tool,
                                 GimpDisplay *display)
 {
-  GimpRectangleToolPrivate *private;
-  GObject                  *options;
+  GimpRectangleToolPrivate *private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+  GObject                  *options = G_OBJECT (tool->tool_info->tool_options);
   GimpSizeEntry            *entry;
 
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-  options = G_OBJECT (tool->tool_info->tool_options);
-
-  g_object_get (options, "dimensions-entry", &entry, NULL);
+  g_object_get (options,
+                "dimensions-entry", &entry,
+                "guide",            &private->guide,
+                NULL);
 
   if (display != tool->display)
     {
@@ -734,8 +734,6 @@ gimp_rectangle_tool_initialize (GimpTool    *tool,
       unit = gimp_display_shell_get_unit (GIMP_DISPLAY_SHELL (display->shell));
       gimp_size_entry_set_unit (entry, unit);
     }
-
-  private->guide = GIMP_RECTANGLE_GUIDE_NONE;
 
   return TRUE;
 }
@@ -2296,18 +2294,18 @@ gimp_rectangle_tool_notify_guide (GimpRectangleOptions *options,
 {
   GimpTool                 *tool = GIMP_TOOL (rectangle);
   GimpRectangleToolPrivate *private;
-  GimpRectangleGuide        guide;
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
 
-  if (! tool->display)
-    return;
+  if (tool->display)
+    gimp_draw_tool_pause (GIMP_DRAW_TOOL (rectangle));
 
-  g_object_get (options, "guide", &guide, NULL);
+  g_object_get (options,
+                "guide", &private->guide,
+                NULL);
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (rectangle));
-  private->guide = guide;
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (rectangle));
+  if (tool->display)
+    gimp_draw_tool_resume (GIMP_DRAW_TOOL (rectangle));
 }
 
 static void
