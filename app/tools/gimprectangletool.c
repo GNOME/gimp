@@ -2222,8 +2222,6 @@ gimp_rectangle_tool_notify_highlight (GimpRectangleOptions *options,
   GimpTool             *tool = GIMP_TOOL (rectangle);
   GimpDisplayShell     *shell;
   gboolean              highlight;
-  gint                  x1, y1;
-  gint                  x2, y2;
 
   if (! tool->display)
     return;
@@ -2232,16 +2230,18 @@ gimp_rectangle_tool_notify_highlight (GimpRectangleOptions *options,
 
   g_object_get (options, "highlight", &highlight, NULL);
 
-  g_object_get (rectangle,
-                "x1", &x1,
-                "y1", &y1,
-                "x2", &x2,
-                "y2", &y2,
-                NULL);
-
   if (highlight)
     {
       GdkRectangle rect;
+      gint         x1, y1;
+      gint         x2, y2;
+
+      g_object_get (rectangle,
+		    "x1", &x1,
+		    "y1", &y1,
+		    "x2", &x2,
+		    "y2", &y2,
+		    NULL);
 
       rect.x      = x1;
       rect.y      = y1;
@@ -2251,7 +2251,9 @@ gimp_rectangle_tool_notify_highlight (GimpRectangleOptions *options,
       gimp_display_shell_set_highlight (shell, &rect);
     }
   else
-    gimp_display_shell_set_highlight (shell, NULL);
+    {
+      gimp_display_shell_set_highlight (shell, NULL);
+    }
 }
 
 static void
