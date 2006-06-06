@@ -938,12 +938,11 @@ gimp_cmyk_to_rgb_int (gint *cyan,
  * @saturation: Pointer to saturation channel (0..1)
  * @value:      Pointer to value channel (0..1)
  **/
-
 void
-gimp_rgb_to_hsv4 (guchar  *rgb,
-                  gdouble *hue,
-                  gdouble *saturation,
-                  gdouble *value)
+gimp_rgb_to_hsv4 (const guchar *rgb,
+                  gdouble      *hue,
+                  gdouble      *saturation,
+                  gdouble      *value)
 {
   gdouble red, green, blue;
   gdouble h, s, v;
@@ -1011,7 +1010,6 @@ gimp_rgb_to_hsv4 (guchar  *rgb,
  * @saturation: Saturation channel (0..1)
  * @value:      Value channel (0..1)
  **/
-
 void
 gimp_hsv_to_rgb4 (guchar  *rgb,
                   gdouble  hue,

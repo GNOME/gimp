@@ -86,14 +86,14 @@ void    gimp_hsl_to_rgb_int        (gint    *hue         /* returns red        *
 
 /*  gdouble functions  */
 
-void    gimp_rgb_to_hsv4        (guchar  *rgb,
-                                 gdouble *hue,
-                                 gdouble *saturation,
-                                 gdouble *value);
-void    gimp_hsv_to_rgb4        (guchar  *rgb,
-                                 gdouble  hue,
-                                 gdouble  saturation,
-                                 gdouble  value);
+void    gimp_rgb_to_hsv4        (const guchar *rgb,
+                                 gdouble      *hue,
+                                 gdouble      *saturation,
+                                 gdouble      *value);
+void    gimp_hsv_to_rgb4        (guchar       *rgb,
+                                 gdouble       hue,
+                                 gdouble       saturation,
+                                 gdouble       value);
 
 
 G_END_DECLS
