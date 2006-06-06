@@ -20,24 +20,12 @@
 #define __GIMP_IMAGE_GUIDES_H__
 
 
-struct _GimpGuide
-{
-  gint                 ref_count;
-  gint                 position;
-  GimpOrientationType  orientation;
-  guint32              guide_ID;
-};
-
-
 GimpGuide * gimp_image_add_hguide     (GimpImage *image,
                                        gint       position,
                                        gboolean   push_undo);
 GimpGuide * gimp_image_add_vguide     (GimpImage *image,
                                        gint       position,
                                        gboolean   push_undo);
-
-GimpGuide * gimp_image_guide_ref      (GimpGuide *guide);
-void        gimp_image_guide_unref    (GimpGuide *guide);
 
 void        gimp_image_add_guide      (GimpImage *image,
                                        GimpGuide *guide,

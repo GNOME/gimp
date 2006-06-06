@@ -25,6 +25,7 @@
 #include "base/tile-manager.h"
 
 #include "gimp.h"
+#include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-guides.h"
 #include "gimpimage-sample-points.h"

@@ -35,6 +35,7 @@
 #include "gimp-parasites.h"
 #include "gimp.h"
 #include "gimpgrid.h"
+#include "gimpguide.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-grid.h"
 #include "gimpimage-guides.h"
@@ -347,7 +348,7 @@ gimp_image_undo_push_image_guide (GimpImage   *image,
     {
       GuideUndo *gu = new->data;
 
-      gu->guide       = gimp_image_guide_ref (guide);
+      gu->guide       = g_object_ref (guide);
       gu->position    = guide->position;
       gu->orientation = guide->orientation;
 
@@ -379,7 +380,7 @@ undo_pop_image_guide (GimpUndo            *undo,
     {
       undo->image->guides = g_list_prepend (undo->image->guides, gu->guide);
       gu->guide->position = gu->position;
-      gimp_image_guide_ref (gu->guide);
+      g_object_ref (gu->guide);
       gimp_image_update_guide (undo->image, gu->guide);
     }
   else if (gu->position == -1)
@@ -407,7 +408,7 @@ undo_free_image_guide (GimpUndo     *undo,
 {
   GuideUndo *gu = undo->data;
 
-  gimp_image_guide_unref (gu->guide);
+  g_object_unref (gu->guide);
   g_free (gu);
 }
 

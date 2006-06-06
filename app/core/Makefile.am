@@ -120,6 +120,8 @@ libappcore_a_sources = \
 	gimpgradient-save.h		\
 	gimpgrid.c                      \
 	gimpgrid.h                      \
+	gimpguide.c                     \
+	gimpguide.h                     \
 	gimpimage.c			\
 	gimpimage.h			\
 	gimpimage-colorhash.c		\

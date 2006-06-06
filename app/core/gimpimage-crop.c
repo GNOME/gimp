@@ -28,6 +28,7 @@
 
 #include "gimp.h"
 #include "gimpcontext.h"
+#include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-crop.h"
 #include "gimpimage-guides.h"

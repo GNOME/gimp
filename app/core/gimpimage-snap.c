@@ -23,6 +23,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-grid.h"
 #include "gimpimage-guides.h"

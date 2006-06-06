@@ -28,6 +28,7 @@
 
 #include "gimp.h"
 #include "gimpchannel.h"
+#include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-duplicate.h"

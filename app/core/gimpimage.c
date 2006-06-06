@@ -40,6 +40,7 @@
 #include "gimp-utils.h"
 #include "gimpcontext.h"
 #include "gimpgrid.h"
+#include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
 #include "gimpimage-colormap.h"
@@ -868,7 +869,7 @@ gimp_image_finalize (GObject *object)
 
   if (image->guides)
     {
-      g_list_foreach (image->guides, (GFunc) gimp_image_guide_unref, NULL);
+      g_list_foreach (image->guides, (GFunc) g_object_unref, NULL);
       g_list_free (image->guides);
       image->guides = NULL;
     }

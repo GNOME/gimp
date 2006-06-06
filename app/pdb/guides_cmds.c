@@ -28,6 +28,7 @@
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
+#include "core/gimpguide.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"

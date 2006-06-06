@@ -1,3 +1,31 @@
+2006-06-07  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpguide.c
+	* app/core/gimpguide.h: new files, implementing GuideGimp as a GimpObject
+
+	* app/core/Makefile.am: add new files as sources
+
+	* app/core/gimpimage-guides.h
+	* app/core/gimpimage-guides.c: use the new object instead of defining
+	GimpGuide here as a struct.
+	
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-flip.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-snap.c
+	* app/core/gimpimage-undo-push.c
+	* app/core/gimpimage.c
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell.c
+	* app/pdb/guides_cmds.c
+	* app/tools/gimpmovetool.c
+	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/guides.pdb: include "core/gimpguide.h", and use
+	g_object_ref/unref instead of gimp_image_guide_ref/unref.
+
 2006-06-07  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_initialize):

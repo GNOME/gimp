@@ -24,6 +24,7 @@
 
 #include "gimp.h"
 #include "gimpcontext.h"
+#include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-rotate.h"
 #include "gimpimage-guides.h"
