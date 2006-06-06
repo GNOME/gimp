@@ -166,7 +166,7 @@ select_shrink_cmd_callback (GtkAction *action,
 {
   GimpDisplay *display;
   GtkWidget   *dialog;
-  GtkWidget   *edge_lock;
+  GtkWidget   *button;
   return_if_no_display (display, data);
 
   dialog = gimp_query_size_box (_("Shrink Selection"),
@@ -182,15 +182,15 @@ select_shrink_cmd_callback (GtkAction *action,
                                 G_OBJECT (display->image), "disconnect",
                                 select_shrink_callback, display->image);
 
-  edge_lock = gtk_check_button_new_with_mnemonic (_("_Shrink from image border"));
+  button = gtk_check_button_new_with_mnemonic (_("_Shrink from image border"));
 
-  gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), edge_lock,
+  gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), button,
                       FALSE, FALSE, 0);
 
-  g_object_set_data (G_OBJECT (dialog), "edge_lock_toggle", edge_lock);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (edge_lock),
+  g_object_set_data (G_OBJECT (dialog), "edge-lock-toggle", button);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 ! select_shrink_edge_lock);
-  gtk_widget_show (edge_lock);
+  gtk_widget_show (button);
 
   gtk_widget_show (dialog);
 }
@@ -435,15 +435,15 @@ select_shrink_callback (GtkWidget *widget,
                         GimpUnit   unit,
                         gpointer   data)
 {
-  GimpImage *image = GIMP_IMAGE (data);
+  GimpImage *image  = GIMP_IMAGE (data);
+  GtkWidget *button = g_object_get_data (G_OBJECT (widget), "edge-lock-toggle");
   gint       radius_x;
   gint       radius_y;
 
   radius_x = radius_y = select_shrink_pixels = ROUND (size);
 
   select_shrink_edge_lock =
-    ! GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT (widget),
-                                            "edge_lock_toggle"))->active;
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
 
   if (unit != GIMP_UNIT_PIXEL)
     {

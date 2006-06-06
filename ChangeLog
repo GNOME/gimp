@@ -1,3 +1,7 @@
+2006-06-06  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/select-commands.c: minor cleanup.
+
 2006-06-05  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/paint-funcs/scale-funcs.c (scale_region_lanczos):
