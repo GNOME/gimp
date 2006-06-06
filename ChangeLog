@@ -1,5 +1,11 @@
 2006-06-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/decompose.c: applied a modified patch from
+	Clarence Risher that adds support for a registration color
+	(bug #338049).
+
+2006-06-06  Sven Neumann  <sven@gimp.org>
+
 	* libgimpcolor/gimpcolorspace.[ch] (gimp_rgb_to_hsv4): added a
 	const qualifier.
 
