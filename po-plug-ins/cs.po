@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-26 20:12+0200\n"
-"PO-Revision-Date: 2006-05-26 20:11+0200\n"
+"POT-Creation-Date: 2006-06-06 15:17+0200\n"
+"PO-Revision-Date: 2006-06-06 15:28+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -259,7 +259,7 @@ msgstr "Barevná funkce"
 
 #. Redmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:978
-#: ../plug-ins/common/channel_mixer.c:529 ../plug-ins/common/decompose.c:139
+#: ../plug-ins/common/channel_mixer.c:529 ../plug-ins/common/decompose.c:166
 msgid "Red"
 msgstr "Červená"
 
@@ -320,18 +320,17 @@ msgstr "Inverze"
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr ""
-"Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
+msgstr "Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
 
 #. Greenmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1019
-#: ../plug-ins/common/channel_mixer.c:534 ../plug-ins/common/decompose.c:140
+#: ../plug-ins/common/channel_mixer.c:534 ../plug-ins/common/decompose.c:167
 msgid "Green"
 msgstr "Zelená"
 
 #. Bluemode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1060
-#: ../plug-ins/common/channel_mixer.c:539 ../plug-ins/common/decompose.c:141
+#: ../plug-ins/common/channel_mixer.c:539 ../plug-ins/common/decompose.c:168
 msgid "Blue"
 msgstr "Modrá"
 
@@ -378,7 +377,7 @@ msgstr "_Fraktály"
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
 #: ../plug-ins/common/mng.c:953 ../plug-ins/common/pat.c:451
 #: ../plug-ins/common/pcx.c:588 ../plug-ins/common/pix.c:508
-#: ../plug-ins/common/png.c:1221 ../plug-ins/common/pnm.c:819
+#: ../plug-ins/common/png.c:1221 ../plug-ins/common/pnm.c:929
 #: ../plug-ins/common/postscript.c:1185 ../plug-ins/common/psd_save.c:1443
 #: ../plug-ins/common/raw.c:530 ../plug-ins/common/raw.c:557
 #: ../plug-ins/common/spheredesigner.c:2119 ../plug-ins/common/sunras.c:507
@@ -418,7 +417,7 @@ msgstr "Zapsat parametry fraktálu"
 #: ../plug-ins/common/gifload.c:309 ../plug-ins/common/gih.c:649
 #: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:321
 #: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
-#: ../plug-ins/common/png.c:705 ../plug-ins/common/pnm.c:442
+#: ../plug-ins/common/png.c:705 ../plug-ins/common/pnm.c:480
 #: ../plug-ins/common/poppler.c:368 ../plug-ins/common/postscript.c:1012
 #: ../plug-ins/common/postscript.c:2977 ../plug-ins/common/psd.c:1880
 #: ../plug-ins/common/psp.c:1463 ../plug-ins/common/raw.c:242
@@ -525,8 +524,7 @@ msgstr "P_růhledné pozadí"
 
 #: ../plug-ins/Lighting/lighting_ui.c:302
 msgid "Make destination image transparent where bump height is zero"
-msgstr ""
-"Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
+msgstr "Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
 
 #: ../plug-ins/Lighting/lighting_ui.c:305
 msgid "Cre_ate new image"
@@ -1180,7 +1178,7 @@ msgstr "Špatná barevná mapa"
 #: ../plug-ins/common/gifload.c:314 ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:326 ../plug-ins/common/pcx.c:314
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:712
-#: ../plug-ins/common/pnm.c:447 ../plug-ins/common/poppler.c:465
+#: ../plug-ins/common/pnm.c:485 ../plug-ins/common/poppler.c:465
 #: ../plug-ins/common/postscript.c:1018 ../plug-ins/common/psd.c:1885
 #: ../plug-ins/common/raw.c:652 ../plug-ins/common/sunras.c:433
 #: ../plug-ins/common/tga.c:419 ../plug-ins/common/tiff.c:535
@@ -1222,11 +1220,11 @@ msgstr "Nepodporovaná nebo neplatná bitová hloubka"
 #.
 #: ../plug-ins/bmp/bmpread.c:487 ../plug-ins/common/CEL.c:349
 #: ../plug-ins/common/CEL.c:352 ../plug-ins/common/blinds.c:277
-#: ../plug-ins/common/compose.c:904 ../plug-ins/common/decompose.c:632
+#: ../plug-ins/common/compose.c:904 ../plug-ins/common/decompose.c:686
 #: ../plug-ins/common/dicom.c:485 ../plug-ins/common/film.c:944
 #: ../plug-ins/common/gifload.c:879 ../plug-ins/common/pcx.c:339
 #: ../plug-ins/common/pcx.c:345 ../plug-ins/common/pix.c:368
-#: ../plug-ins/common/png.c:833 ../plug-ins/common/pnm.c:526
+#: ../plug-ins/common/png.c:833 ../plug-ins/common/pnm.c:564
 #: ../plug-ins/common/psd.c:2310 ../plug-ins/common/raw.c:687
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:917
 #: ../plug-ins/common/tga.c:931 ../plug-ins/common/tiff.c:886
@@ -1259,7 +1257,7 @@ msgstr "Nemohu pracovat na indexovaných obrázcích s alfa kanálem."
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
 #: ../plug-ins/common/pat.c:456 ../plug-ins/common/pcx.c:550
 #: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1228
-#: ../plug-ins/common/pnm.c:824 ../plug-ins/common/postscript.c:1190
+#: ../plug-ins/common/pnm.c:934 ../plug-ins/common/postscript.c:1190
 #: ../plug-ins/common/psd_save.c:1448 ../plug-ins/common/sunras.c:512
 #: ../plug-ins/common/tga.c:1035 ../plug-ins/common/tiff.c:1925
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
@@ -1598,19 +1596,19 @@ msgid "Randoms from seed (shared)"
 msgstr "Náhodná čísla z hnízda (sdílená)"
 
 #: ../plug-ins/common/CML_explorer.c:300 ../plug-ins/common/CML_explorer.c:308
-#: ../plug-ins/common/decompose.c:153
+#: ../plug-ins/common/decompose.c:180
 #: ../plug-ins/gimpressionist/orientation.c:162
 #: ../plug-ins/gimpressionist/size.c:165
 msgid "Hue"
 msgstr "Odstín"
 
 #: ../plug-ins/common/CML_explorer.c:301 ../plug-ins/common/CML_explorer.c:309
-#: ../plug-ins/common/decompose.c:154
+#: ../plug-ins/common/decompose.c:181
 msgid "Saturation"
 msgstr "Sytost"
 
 #: ../plug-ins/common/CML_explorer.c:302 ../plug-ins/common/CML_explorer.c:310
-#: ../plug-ins/common/decompose.c:155
+#: ../plug-ins/common/decompose.c:182
 #: ../plug-ins/gimpressionist/orientation.c:138
 #: ../plug-ins/gimpressionist/size.c:141 ../plug-ins/metadata/interface.c:142
 msgid "Value"
@@ -1855,8 +1853,7 @@ msgstr "Varování: '%s' je soubor ve starém formátu."
 #: ../plug-ins/common/CML_explorer.c:2265
 #, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
-msgstr ""
-"Varování: '%s' je soubor parametrů pro novější CML_badatel, než jsem já."
+msgstr "Varování: '%s' je soubor parametrů pro novější CML_badatel, než jsem já."
 
 #: ../plug-ins/common/CML_explorer.c:2328
 msgid "Error: failed to load parameters"
@@ -2276,8 +2273,7 @@ msgstr "Posun _X:"
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
-msgstr ""
-"Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
+msgstr "Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
 
 #: ../plug-ins/common/bumpmap.c:1011 ../plug-ins/common/postscript.c:3328
 msgid "_Y offset:"
@@ -2317,7 +2313,7 @@ msgstr "_Komiks..."
 
 #: ../plug-ins/common/cartoon.c:231 ../plug-ins/common/dog.c:249
 #: ../plug-ins/common/gauss.c:445 ../plug-ins/common/neon.c:225
-#: ../plug-ins/common/photocopy.c:243 ../plug-ins/common/sel_gauss.c:204
+#: ../plug-ins/common/photocopy.c:243 ../plug-ins/common/sel_gauss.c:213
 #: ../plug-ins/common/softglow.c:221 ../plug-ins/gflare/gflare.c:969
 #: ../plug-ins/sgi/sgi.c:520 ../plug-ins/xjt/xjt.c:1685
 msgid "Cannot operate on indexed color images."
@@ -2544,12 +2540,12 @@ msgstr "Barevná pipeta barvy do alfy"
 msgid "to alpha"
 msgstr "do alfy"
 
-#: ../plug-ins/common/compose.c:184 ../plug-ins/common/decompose.c:135
+#: ../plug-ins/common/compose.c:184 ../plug-ins/common/decompose.c:162
 #: ../plug-ins/common/raw.c:968
 msgid "RGB"
 msgstr "RGB"
 
-#: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:143
+#: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:170
 #: ../plug-ins/common/raw.c:969
 msgid "RGBA"
 msgstr "RGBA"
@@ -2559,7 +2555,7 @@ msgstr "RGBA"
 msgid "_Alpha:"
 msgstr "_Alfa:"
 
-#: ../plug-ins/common/compose.c:206 ../plug-ins/common/decompose.c:149
+#: ../plug-ins/common/compose.c:206 ../plug-ins/common/decompose.c:176
 msgid "HSV"
 msgstr "HSV"
 
@@ -2575,7 +2571,7 @@ msgstr "_Sytost:"
 msgid "_Value:"
 msgstr "_Jas:"
 
-#: ../plug-ins/common/compose.c:214 ../plug-ins/common/decompose.c:158
+#: ../plug-ins/common/compose.c:214 ../plug-ins/common/decompose.c:185
 msgid "CMY"
 msgstr "CMY"
 
@@ -2591,7 +2587,7 @@ msgstr "_Purpurová:"
 msgid "_Yellow:"
 msgstr "Ž_lutá:"
 
-#: ../plug-ins/common/compose.c:222 ../plug-ins/common/decompose.c:167
+#: ../plug-ins/common/compose.c:222 ../plug-ins/common/decompose.c:194
 msgid "CMYK"
 msgstr "CMYK"
 
@@ -2599,7 +2595,7 @@ msgstr "CMYK"
 msgid "_Black:"
 msgstr "Če_rná:"
 
-#: ../plug-ins/common/compose.c:230 ../plug-ins/common/decompose.c:180
+#: ../plug-ins/common/compose.c:230 ../plug-ins/common/decompose.c:207
 msgid "LAB"
 msgstr "LAB"
 
@@ -2679,8 +2675,7 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:486
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr ""
-"Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
+msgstr "Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
 
 #: ../plug-ins/common/compose.c:517
 #, c-format
@@ -2730,7 +2725,7 @@ msgstr "Kompozice"
 msgid "Compose Channels"
 msgstr "Kompozice kanálů"
 
-#: ../plug-ins/common/compose.c:1456 ../plug-ins/common/decompose.c:1289
+#: ../plug-ins/common/compose.c:1456 ../plug-ins/common/decompose.c:1378
 msgid "Color _model:"
 msgstr "Barevný _model:"
 
@@ -2757,8 +2752,7 @@ msgstr "Žádná rozumná přípona, ukládám jako gzipovaný XCF."
 
 #: ../plug-ins/common/compressor.c:514
 msgid "No sensible extension, attempting to load with file magic."
-msgstr ""
-"Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel."
+msgstr "Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel."
 
 #: ../plug-ins/common/convmatrix.c:77
 msgid "Gr_ey"
@@ -2981,7 +2975,7 @@ msgid "Smoo_thing"
 msgstr "_Vyhlazování"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve_bend.c:1342 ../plug-ins/common/gqbist.c:836
+#: ../plug-ins/common/curve_bend.c:1342 ../plug-ins/common/gqbist.c:839
 #: ../plug-ins/common/mosaic.c:730 ../plug-ins/common/ripple.c:507
 msgid "_Antialiasing"
 msgstr "_Vyhlazování"
@@ -3067,164 +3061,176 @@ msgstr "Načíst body křivky ze souboru"
 msgid "Save Curve Points to File"
 msgstr "Uložit body křivky do souboru"
 
-#: ../plug-ins/common/decompose.c:135 ../plug-ins/common/decompose.c:139
-#: ../plug-ins/common/decompose.c:143
+#: ../plug-ins/common/decompose.c:162 ../plug-ins/common/decompose.c:166
+#: ../plug-ins/common/decompose.c:170
 msgid "red"
 msgstr "červená"
 
-#: ../plug-ins/common/decompose.c:136 ../plug-ins/common/decompose.c:140
-#: ../plug-ins/common/decompose.c:144
+#: ../plug-ins/common/decompose.c:163 ../plug-ins/common/decompose.c:167
+#: ../plug-ins/common/decompose.c:171
 msgid "green"
 msgstr "zelená"
 
-#: ../plug-ins/common/decompose.c:137 ../plug-ins/common/decompose.c:141
-#: ../plug-ins/common/decompose.c:145
+#: ../plug-ins/common/decompose.c:164 ../plug-ins/common/decompose.c:168
+#: ../plug-ins/common/decompose.c:172
 msgid "blue"
 msgstr "modrá"
 
-#: ../plug-ins/common/decompose.c:146 ../plug-ins/common/decompose.c:177
+#: ../plug-ins/common/decompose.c:173 ../plug-ins/common/decompose.c:204
 msgid "alpha"
 msgstr "alfa"
 
-#: ../plug-ins/common/decompose.c:149 ../plug-ins/common/decompose.c:153
+#: ../plug-ins/common/decompose.c:176 ../plug-ins/common/decompose.c:180
 msgid "hue"
 msgstr "odstín"
 
-#: ../plug-ins/common/decompose.c:150 ../plug-ins/common/decompose.c:154
+#: ../plug-ins/common/decompose.c:177 ../plug-ins/common/decompose.c:181
 msgid "saturation"
 msgstr "sytost"
 
-#: ../plug-ins/common/decompose.c:151 ../plug-ins/common/decompose.c:155
+#: ../plug-ins/common/decompose.c:178 ../plug-ins/common/decompose.c:182
 msgid "value"
 msgstr "jas"
 
-#: ../plug-ins/common/decompose.c:158 ../plug-ins/common/decompose.c:162
+#: ../plug-ins/common/decompose.c:185 ../plug-ins/common/decompose.c:189
 msgid "cyan"
 msgstr "azurová"
 
-#: ../plug-ins/common/decompose.c:159 ../plug-ins/common/decompose.c:163
+#: ../plug-ins/common/decompose.c:186 ../plug-ins/common/decompose.c:190
 msgid "magenta"
 msgstr "purpurová"
 
-#: ../plug-ins/common/decompose.c:160 ../plug-ins/common/decompose.c:164
+#: ../plug-ins/common/decompose.c:187 ../plug-ins/common/decompose.c:191
 msgid "yellow"
 msgstr "žlutá"
 
-#: ../plug-ins/common/decompose.c:162
+#: ../plug-ins/common/decompose.c:189
 msgid "Cyan"
 msgstr "Azurová"
 
-#: ../plug-ins/common/decompose.c:163
+#: ../plug-ins/common/decompose.c:190
 msgid "Magenta"
 msgstr "Purpurová"
 
-#: ../plug-ins/common/decompose.c:164
+#: ../plug-ins/common/decompose.c:191
 msgid "Yellow"
 msgstr "Žlutá"
 
-#: ../plug-ins/common/decompose.c:167 ../plug-ins/common/decompose.c:172
+#: ../plug-ins/common/decompose.c:194 ../plug-ins/common/decompose.c:199
 msgid "cyan-k"
 msgstr "azurová-k"
 
-#: ../plug-ins/common/decompose.c:168 ../plug-ins/common/decompose.c:173
+#: ../plug-ins/common/decompose.c:195 ../plug-ins/common/decompose.c:200
 msgid "magenta-k"
 msgstr "purpurová-k"
 
-#: ../plug-ins/common/decompose.c:169 ../plug-ins/common/decompose.c:174
+#: ../plug-ins/common/decompose.c:196 ../plug-ins/common/decompose.c:201
 msgid "yellow-k"
 msgstr "žlutá-k"
 
-#: ../plug-ins/common/decompose.c:170
+#: ../plug-ins/common/decompose.c:197
 msgid "black"
 msgstr "černá"
 
-#: ../plug-ins/common/decompose.c:172
+#: ../plug-ins/common/decompose.c:199
 msgid "Cyan_K"
 msgstr "Azurová_K"
 
-#: ../plug-ins/common/decompose.c:173
+#: ../plug-ins/common/decompose.c:200
 msgid "Magenta_K"
 msgstr "Purpurová_K"
 
-#: ../plug-ins/common/decompose.c:174
+#: ../plug-ins/common/decompose.c:201
 msgid "Yellow_K"
 msgstr "Žlutá_K"
 
-#: ../plug-ins/common/decompose.c:177
+#: ../plug-ins/common/decompose.c:204
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../plug-ins/common/decompose.c:185
+#: ../plug-ins/common/decompose.c:212
 msgid "luma-y470"
 msgstr "luma-y470"
 
-#: ../plug-ins/common/decompose.c:186
+#: ../plug-ins/common/decompose.c:213
 msgid "blueness-cb470"
 msgstr "modrost-cb470"
 
-#: ../plug-ins/common/decompose.c:187
+#: ../plug-ins/common/decompose.c:214
 msgid "redness-cr470"
 msgstr "červenost-cr470"
 
-#: ../plug-ins/common/decompose.c:189
+#: ../plug-ins/common/decompose.c:216
 msgid "luma-y709"
 msgstr "luma-y709"
 
-#: ../plug-ins/common/decompose.c:190
+#: ../plug-ins/common/decompose.c:217
 msgid "blueness-cb709"
 msgstr "modrost-cb709"
 
-#: ../plug-ins/common/decompose.c:191
+#: ../plug-ins/common/decompose.c:218
 msgid "redness-cr709"
 msgstr "červenost-cr709"
 
-#: ../plug-ins/common/decompose.c:193
+#: ../plug-ins/common/decompose.c:220
 msgid "luma-y470f"
 msgstr "luma-y470f"
 
-#: ../plug-ins/common/decompose.c:194
+#: ../plug-ins/common/decompose.c:221
 msgid "blueness-cb470f"
 msgstr "modrost-cb470f"
 
-#: ../plug-ins/common/decompose.c:195
+#: ../plug-ins/common/decompose.c:222
 msgid "redness-cr470f"
 msgstr "červenost-cr470f"
 
-#: ../plug-ins/common/decompose.c:197
+#: ../plug-ins/common/decompose.c:224
 msgid "luma-y709f"
 msgstr "luma-y709f"
 
-#: ../plug-ins/common/decompose.c:198
+#: ../plug-ins/common/decompose.c:225
 msgid "blueness-cb709f"
 msgstr "modrost-cb709f"
 
-#: ../plug-ins/common/decompose.c:199
+#: ../plug-ins/common/decompose.c:226
 msgid "redness-cr709f"
 msgstr "červenost-cr709f"
 
-#: ../plug-ins/common/decompose.c:248
+#: ../plug-ins/common/decompose.c:277 ../plug-ins/common/decompose.c:291
 msgid "Decompose an image into separate colorspace components"
 msgstr "Rozložit obrázek do oddělených barevných komponent"
 
-#: ../plug-ins/common/decompose.c:254
+#: ../plug-ins/common/decompose.c:283 ../plug-ins/common/decompose.c:301
 msgid "_Decompose..."
 msgstr "_Dekomponovat..."
 
-#: ../plug-ins/common/decompose.c:343
+#: ../plug-ins/common/decompose.c:392
 msgid "Decomposing"
 msgstr "Dekomponuji"
 
-#: ../plug-ins/common/decompose.c:1254
+#: ../plug-ins/common/decompose.c:1343
 msgid "Decompose"
 msgstr "Dekompozice"
 
-#: ../plug-ins/common/decompose.c:1277
+#: ../plug-ins/common/decompose.c:1366
 msgid "Extract Channels"
 msgstr "Extrahovat kanály"
 
-#: ../plug-ins/common/decompose.c:1323
-msgid "Decompose to _layers"
+#: ../plug-ins/common/decompose.c:1413
+#, fuzzy
+msgid "_Decompose to layers"
 msgstr "Dekomponovat do _vrstev"
+
+#: ../plug-ins/common/decompose.c:1424
+#, fuzzy
+msgid "_Foreground as registration color"
+msgstr "Barvy Popředí / pozadí"
+
+#: ../plug-ins/common/decompose.c:1425
+msgid ""
+"Pixels in the foreground color will appear black in all output images.  This "
+"can be used for things like crop marks that have to show up on all channels."
+msgstr ""
 
 #: ../plug-ins/common/deinterlace.c:93
 msgid "Fix images where every other row is missing"
@@ -3369,6 +3375,7 @@ msgid "'%s' is not a DICOM file."
 msgstr "'%s' není soubor DICOM."
 
 #: ../plug-ins/common/dicom.c:660 ../plug-ins/common/pcx.c:582
+#: ../plug-ins/common/pnm.c:920
 msgid "Cannot save images with alpha channel."
 msgstr "Nemohu uložit obrázky s alfa kanálem."
 
@@ -4162,8 +4169,7 @@ msgstr ""
 "nebyl uložen."
 
 #: ../plug-ins/common/gif.c:965
-msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nemohu ukládat barevné obrázky RGB. Nejdříve jej převeďte na indexovaný nebo "
 "do šedí."
@@ -4405,27 +4411,27 @@ msgstr "Tisk"
 msgid "Print Preview"
 msgstr "Tisk náhledu"
 
-#: ../plug-ins/common/gqbist.c:399
+#: ../plug-ins/common/gqbist.c:402
 msgid "Generate a huge variety of abstract patterns"
 msgstr "Generovat mnoho různých abstraktních vzorků"
 
-#: ../plug-ins/common/gqbist.c:407
+#: ../plug-ins/common/gqbist.c:410
 msgid "_Qbist..."
 msgstr "_Qbist..."
 
-#: ../plug-ins/common/gqbist.c:508
+#: ../plug-ins/common/gqbist.c:511
 msgid "Qbist"
 msgstr "Qbist"
 
-#: ../plug-ins/common/gqbist.c:691
+#: ../plug-ins/common/gqbist.c:694
 msgid "Load QBE File"
 msgstr "Načíst soubor QBE"
 
-#: ../plug-ins/common/gqbist.c:734
+#: ../plug-ins/common/gqbist.c:737
 msgid "Save (middle transform) as QBE File"
 msgstr "Uložit (střední převod) jako soubor QBE"
 
-#: ../plug-ins/common/gqbist.c:787
+#: ../plug-ins/common/gqbist.c:790
 msgid "G-Qbist"
 msgstr "G-Qbist"
 
@@ -4708,22 +4714,20 @@ msgstr "Režim _2"
 
 #: ../plug-ins/common/iwarp.c:264
 msgid "Use mouse control to warp image areas"
-msgstr ""
+msgstr "Oblasti obrázku deformujte pomocí myši"
 
 #: ../plug-ins/common/iwarp.c:269
-#, fuzzy
 msgid "_IWarp..."
-msgstr "Ohýbám..."
+msgstr "_iDeformace..."
 
 #: ../plug-ins/common/iwarp.c:704
-#, fuzzy
 msgid "Warping"
-msgstr "Varování"
+msgstr "Deformování"
 
 #: ../plug-ins/common/iwarp.c:809
-#, fuzzy, c-format
+#, c-format
 msgid "Warping Frame %d"
-msgstr "Ohýbám se políčko č. %d..."
+msgstr "Deformování políčka %d"
 
 #: ../plug-ins/common/iwarp.c:821
 msgid "Ping pong"
@@ -4808,14 +4812,15 @@ msgstr "Na_stavení"
 
 #: ../plug-ins/common/iwarp.c:1271
 msgid "IWarp"
-msgstr "Interaktivní ohýbání"
+msgstr "Interaktivní deformace"
 
 #: ../plug-ins/common/iwarp.c:1308
-#, fuzzy
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
-msgstr "Klikněte do obrázku a táhněte myší"
+msgstr ""
+"Kliknutím a táhnutím myši v náhledů definujte požadovanou "
+"deformaci obrázku."
 
 #: ../plug-ins/common/jigsaw.c:356
 msgid "Add a jigsaw-puzzle pattern to the image"
@@ -5163,8 +5168,7 @@ msgstr "Ú_hel:"
 #. * transparency & just use the full palette
 #: ../plug-ins/common/mng.c:498 ../plug-ins/common/png.c:1638
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr ""
-"Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
+msgstr "Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
 
 #: ../plug-ins/common/mng.c:1322
 msgid "Save as MNG"
@@ -5949,70 +5953,77 @@ msgstr "_Uložit implicitní nastavení"
 msgid "Could not load PNG defaults"
 msgstr "Nemohu načíst implicitní nastavení PNG"
 
-#: ../plug-ins/common/pnm.c:239
+#: ../plug-ins/common/pnm.c:247
 msgid "PNM Image"
 msgstr "Obrázek PNM"
 
-#: ../plug-ins/common/pnm.c:259
+#: ../plug-ins/common/pnm.c:267
 msgid "PNM image"
 msgstr "Obrázek PNM"
 
-#: ../plug-ins/common/pnm.c:271
+#: ../plug-ins/common/pnm.c:279
+#, fuzzy
+msgid "PBM image"
+msgstr "Obrázek PPM"
+
+#: ../plug-ins/common/pnm.c:291
 msgid "PGM image"
 msgstr "Obrázek PGM"
 
-#: ../plug-ins/common/pnm.c:283
+#: ../plug-ins/common/pnm.c:303
 msgid "PPM image"
 msgstr "Obrázek PPM"
 
-#: ../plug-ins/common/pnm.c:473 ../plug-ins/common/pnm.c:495
-#: ../plug-ins/common/pnm.c:502 ../plug-ins/common/pnm.c:511
-#: ../plug-ins/common/pnm.c:586 ../plug-ins/common/pnm.c:644
-msgid "PNM: Premature end of file."
+#: ../plug-ins/common/pnm.c:511 ../plug-ins/common/pnm.c:533
+#: ../plug-ins/common/pnm.c:540 ../plug-ins/common/pnm.c:549
+#: ../plug-ins/common/pnm.c:624 ../plug-ins/common/pnm.c:685
+#, fuzzy
+msgid "Premature end of file."
 msgstr "PNM: Předčasný konec souboru."
 
-#: ../plug-ins/common/pnm.c:475
-msgid "PNM: Invalid file."
+#: ../plug-ins/common/pnm.c:513
+#, fuzzy
+msgid "Invalid file."
 msgstr "PNM: Neplatný soubor."
 
-#: ../plug-ins/common/pnm.c:489
+#: ../plug-ins/common/pnm.c:527
 msgid "File not in a supported format."
 msgstr "Soubor není v podporovaném formátu."
 
-#: ../plug-ins/common/pnm.c:498
-msgid "PNM: Invalid X resolution."
+#: ../plug-ins/common/pnm.c:536
+#, fuzzy
+msgid "Invalid X resolution."
 msgstr "PNM: Neplatné X rozlišení."
 
-#: ../plug-ins/common/pnm.c:505
-msgid "PNM: Invalid Y resolution."
+#: ../plug-ins/common/pnm.c:543
+#, fuzzy
+msgid "Invalid Y resolution."
 msgstr "PNM: Neplatné Y rozlišení."
 
-#: ../plug-ins/common/pnm.c:517
-msgid "PNM: Invalid maximum value."
+#: ../plug-ins/common/pnm.c:555
+#, fuzzy
+msgid "Invalid maximum value."
 msgstr "PNM: Neplatná nejvyšší hodnota."
 
-#: ../plug-ins/common/pnm.c:695
-msgid "PNM: Error reading file."
-msgstr "PNM: Chyba při čtení souboru."
+#: ../plug-ins/common/pnm.c:738
+#, fuzzy
+msgid "Error reading file."
+msgstr "Chyba při čtení souboru"
 
-#: ../plug-ins/common/pnm.c:810
-msgid "PNM save cannot handle images with alpha channels."
-msgstr "PNM zápis neumí zpracovat obrázky s alfa kanály."
-
-#: ../plug-ins/common/pnm.c:963
+#: ../plug-ins/common/pnm.c:1103
 msgid "Save as PNM"
 msgstr "Zapsat jako PNM"
 
 #. file save type
-#: ../plug-ins/common/pnm.c:980
+#: ../plug-ins/common/pnm.c:1120
 msgid "Data formatting"
 msgstr "Formátování dat"
 
-#: ../plug-ins/common/pnm.c:984
+#: ../plug-ins/common/pnm.c:1124
 msgid "Raw"
 msgstr "Binární"
 
-#: ../plug-ins/common/pnm.c:985
+#: ../plug-ins/common/pnm.c:1125
 msgid "Ascii"
 msgstr "ASCII"
 
@@ -6830,23 +6841,23 @@ msgstr ""
 "Počet sekund, které čekat mezi výběru okna nebo regionu a skutečným "
 "zachycením snímku obrazovky."
 
-#: ../plug-ins/common/sel_gauss.c:97
+#: ../plug-ins/common/sel_gauss.c:106
 msgid "Blur neighboring pixels, but only in low-contrast areas"
 msgstr "Rozostřit sousední pixely, ale pouze v oblastech nízkého kontrastu"
 
-#: ../plug-ins/common/sel_gauss.c:108
+#: ../plug-ins/common/sel_gauss.c:117
 msgid "_Selective Gaussian Blur..."
 msgstr "_Selektivní Gaussovo rozostření..."
 
-#: ../plug-ins/common/sel_gauss.c:188 ../plug-ins/common/sel_gauss.c:225
+#: ../plug-ins/common/sel_gauss.c:197 ../plug-ins/common/sel_gauss.c:234
 msgid "Selective Gaussian Blur"
 msgstr "Selektivní Gaussovo rozostření"
 
-#: ../plug-ins/common/sel_gauss.c:264
+#: ../plug-ins/common/sel_gauss.c:273
 msgid "_Blur radius:"
 msgstr "Poloměr ro_zostření:"
 
-#: ../plug-ins/common/sel_gauss.c:274
+#: ../plug-ins/common/sel_gauss.c:283
 msgid "_Max. delta:"
 msgstr "_Max. delta:"
 
@@ -7620,8 +7631,7 @@ msgid "Import _paths"
 msgstr "Importovat _cesty"
 
 #: ../plug-ins/common/svg.c:941
-msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importovat elementy cesty z SVG, aby mohly být použity s nástrojem GIMPu pro "
 "cesty"
@@ -7858,8 +7868,7 @@ msgid "ID"
 msgstr "ID"
 
 #: ../plug-ins/common/uniteditor.c:96
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Tento řetězec bude použit pouze k identifikaci jednotky v konfiguračním "
 "souboru GIMPu."
@@ -8037,8 +8046,7 @@ msgstr "_Body"
 
 #: ../plug-ins/common/video.c:1806
 msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-msgstr ""
-"Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
+msgstr "Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
 
 #: ../plug-ins/common/video.c:1813
 msgid "Vi_deo..."
@@ -9115,8 +9123,7 @@ msgstr "Kopírovat"
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
-msgstr ""
-"Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
+msgstr "Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
 
 #: ../plug-ins/gfig/gfig-dialog.c:1308
 msgid "Background:"
@@ -9242,8 +9249,7 @@ msgid "_Gfig..."
 msgstr "_Gfig..."
 
 #: ../plug-ins/gfig/gfig.c:724
-msgid ""
-"Error trying to save figure as a parasite: can't attach parasite to drawable."
+msgid "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Chyba při pokusu uložit obrázek jako parazita: nemohu připojit parazita k "
 "drawable."
@@ -9694,8 +9700,7 @@ msgid "Shadow depth:"
 msgstr "Hloubka stínu:"
 
 #: ../plug-ins/gimpressionist/general.c:243
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Hloubka vrženého stínu, tj. jak daleko od objektu budou"
 
 #: ../plug-ins/gimpressionist/general.c:248
@@ -10004,31 +10009,31 @@ msgstr "Nemohu uložit soubor PPM '%s': %s"
 msgid "Save Current"
 msgstr "Uložit aktuální"
 
-#: ../plug-ins/gimpressionist/presets.c:870
+#: ../plug-ins/gimpressionist/presets.c:874
 msgid "Gimpressionist Defaults"
 msgstr "Implicitní nastavení GIMPresionisty"
 
-#: ../plug-ins/gimpressionist/presets.c:991
+#: ../plug-ins/gimpressionist/presets.c:995
 msgid "_Presets"
 msgstr "_Předvolby"
 
-#: ../plug-ins/gimpressionist/presets.c:1006
+#: ../plug-ins/gimpressionist/presets.c:1010
 msgid "Save Current..."
 msgstr "Uložit aktuální..."
 
-#: ../plug-ins/gimpressionist/presets.c:1014
+#: ../plug-ins/gimpressionist/presets.c:1018
 msgid "Save the current settings to the specified file"
 msgstr "Zapíše aktuální nastavení do určeného souboru"
 
-#: ../plug-ins/gimpressionist/presets.c:1042
+#: ../plug-ins/gimpressionist/presets.c:1046
 msgid "Reads the selected Preset into memory"
 msgstr "Čte zvolenou předvolbu do paměti"
 
-#: ../plug-ins/gimpressionist/presets.c:1048
+#: ../plug-ins/gimpressionist/presets.c:1052
 msgid "Deletes the selected Preset"
 msgstr "Smaže zvolenou předvolbu"
 
-#: ../plug-ins/gimpressionist/presets.c:1054
+#: ../plug-ins/gimpressionist/presets.c:1058
 msgid "Reread the folder of Presets"
 msgstr "Znovu načte adresář předvoleb"
 
@@ -10073,13 +10078,11 @@ msgid "Size:"
 msgstr "Velikost:"
 
 #: ../plug-ins/gimpressionist/size.c:142
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Nechť hodnota (jas) oblasti určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:146
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
+msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "Vzdálenost od středu obrázku určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:150
@@ -11312,35 +11315,35 @@ msgstr "Neznámý element <%s>"
 msgid "Unknown attribute \"%s\"=\"%s\" in element <%s>"
 msgstr "Neznámý atribut \"%s\"=\"%s\" v elementu <%s>"
 
-#: ../plug-ins/metadata/xmp-parse.c:606
+#: ../plug-ins/metadata/xmp-parse.c:607
 #, c-format
 msgid "Required attribute rdf:about missing in <%s>"
 msgstr "Vyžadovaný atribut rdf:about v <%s> chybí"
 
-#: ../plug-ins/metadata/xmp-parse.c:823
+#: ../plug-ins/metadata/xmp-parse.c:832
 #, c-format
 msgid "Nested elements (<%s>) are not allowed in this context"
 msgstr "Vnořené elementy (<%s>) v tomto kontextu nejsou povoleny"
 
-#: ../plug-ins/metadata/xmp-parse.c:945
+#: ../plug-ins/metadata/xmp-parse.c:952
 #, c-format
 msgid "End of element <%s> not expected in this context"
 msgstr "Konec elementu <%s> neočekáván v tomto kontextu"
 
-#: ../plug-ins/metadata/xmp-parse.c:1047
+#: ../plug-ins/metadata/xmp-parse.c:1054
 #, c-format
 msgid "The current element (<%s>) cannot contain text"
 msgstr "Aktuální element (<%s>) nemůže obsahovat text"
 
-#: ../plug-ins/metadata/xmp-parse.c:1072
+#: ../plug-ins/metadata/xmp-parse.c:1079
 msgid "XMP packets must start with <?xpacket begin=...?>"
 msgstr "Pakety XMP musí začínat <?xpacket begin=...?>"
 
-#: ../plug-ins/metadata/xmp-parse.c:1086
+#: ../plug-ins/metadata/xmp-parse.c:1093
 msgid "XMP packets must end with <?xpacket end=...?>"
 msgstr "Pakety XMP musí končit <?xpacket end=...?>"
 
-#: ../plug-ins/metadata/xmp-parse.c:1099
+#: ../plug-ins/metadata/xmp-parse.c:1106
 msgid "XMP cannot contain XML comments or processing instructions"
 msgstr "XMP nemůže obsahovat poznámky XML nebo instrukce pro zpracovávání"
 
@@ -12009,10 +12012,8 @@ msgid "Adjust Output..."
 msgstr "Upravit výstup..."
 
 #: ../plug-ins/print/gimp_main_window.c:1466
-msgid ""
-"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
-msgstr ""
-"Úprava barevného vyvážení, jasu, kontrastu, sytosti a algoritmu rozptylu"
+msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgstr "Úprava barevného vyvážení, jasu, kontrastu, sytosti a algoritmu rozptylu"
 
 #: ../plug-ins/print/gimp_main_window.c:1500
 msgid "Print to File"
@@ -12399,3 +12400,4 @@ msgstr "Chyba: Nemohu načíst soubor XJT vlastností '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Chyba: Soubor XJT vlastností '%s' je prázdný."
+
