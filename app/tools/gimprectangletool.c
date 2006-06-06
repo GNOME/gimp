@@ -1845,8 +1845,6 @@ gimp_rectangle_tool_halt (GimpRectangleTool *rectangle)
   if (gimp_tool_control_is_active (tool->control))
     gimp_tool_control_halt (tool->control);
 
-  gimp_image_flush (tool->display->image);
-
   tool->display  = NULL;
   tool->drawable = NULL;
 

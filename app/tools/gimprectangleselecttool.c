@@ -495,13 +495,13 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool *rectangle,
 static void
 gimp_new_rect_select_tool_cancel (GimpRectangleTool *rectangle)
 {
-  GimpTool *tool = GIMP_TOOL (rectangle);
+  GimpTool              *tool        = GIMP_TOOL (rectangle);
+  GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (rectangle);
 
   if (tool->display)
     {
-      GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (tool);
-      GimpImage             *image       = tool->display->image;
-      GimpUndo              *undo;
+      GimpImage *image = tool->display->image;
+      GimpUndo  *undo;
 
       /* if we have an existing rectangle in the current display, then
        * we have already "executed", and need to undo at this point,
@@ -512,9 +512,11 @@ gimp_new_rect_select_tool_cancel (GimpRectangleTool *rectangle)
       if (undo && rect_select->undo == undo)
         {
           gimp_image_undo (image);
-          rect_select->undo = NULL;
+          gimp_image_flush (image);
         }
     }
+
+  rect_select->undo = NULL;
 }
 
 static gboolean
@@ -555,6 +557,8 @@ gimp_new_rect_select_tool_rectangle_changed (GimpRectangleTool  *rectangle)
 
       /* save the undo that we got when executing */
       rect_select->undo = gimp_undo_stack_peek (image->undo_stack);
+
+      gimp_image_flush (image);
     }
 
   return TRUE;
