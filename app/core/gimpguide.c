@@ -55,7 +55,7 @@ static void   gimp_guide_set_property (GObject      *object,
                                       GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpGuide, gimp_guide, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE (GimpGuide, gimp_guide, G_TYPE_OBJECT)
 
 
 static void
@@ -76,13 +76,15 @@ gimp_guide_class_init (GimpGuideClass *klass)
                                  "orientation",
                                  N_("Orientation of the guide."),
                                  GIMP_TYPE_ORIENTATION_TYPE,
-                                 GIMP_ORIENTATION_VERTICAL,
+                                 GIMP_ORIENTATION_UNKNOWN,
+                                 G_PARAM_CONSTRUCT_ONLY |
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_ID,
-                                "guide-id",
+                                "id",
                                 N_("Identifying number for the guide."),
                                 0,
                                 G_MAXINT, 0,
+                                G_PARAM_CONSTRUCT_ONLY |
                                 GIMP_PARAM_STATIC_STRINGS);
 }
 
@@ -141,10 +143,20 @@ gimp_guide_set_property (GObject      *object,
     }
 }
 
+GimpGuide *
+gimp_guide_new (GimpOrientationType  orientation,
+                guint32              guide_ID)
+{
+  return g_object_new (GIMP_TYPE_GUIDE,
+                       "orientation", orientation,
+                       "id",          guide_ID,
+                       NULL);
+}
+
 gint
 gimp_guide_get_position (GimpGuide *guide)
 {
-  g_return_val_if_fail (GIMP_IS_GUIDE (guide), 0);
+  g_return_val_if_fail (GIMP_IS_GUIDE (guide), -1);
 
   return guide->position;
 }
@@ -156,12 +168,14 @@ gimp_guide_set_position (GimpGuide *guide,
   g_return_if_fail (GIMP_IS_GUIDE (guide));
 
   guide->position = position;
+
+  g_object_notify (G_OBJECT (guide), "position");
 }
 
 GimpOrientationType
 gimp_guide_get_orientation (GimpGuide *guide)
 {
-  g_return_val_if_fail (GIMP_IS_GUIDE (guide), 0);
+  g_return_val_if_fail (GIMP_IS_GUIDE (guide), GIMP_ORIENTATION_UNKNOWN);
 
   return guide->orientation;
 }

@@ -944,6 +944,7 @@ gimp_image_get_memsize (GimpObject *object,
                                         gui_size);
 
   memsize += gimp_g_list_get_memsize (image->guides, sizeof (GimpGuide));
+
   if (image->grid)
     memsize += gimp_object_get_memsize (GIMP_OBJECT (image->grid), gui_size);
 

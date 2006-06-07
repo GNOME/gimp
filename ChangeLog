@@ -1,3 +1,15 @@
+2006-06-07  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpguide.[ch]: derive from GObject, we don't need any
+	GimpObject functionality here.  Declare "orientation" and "id"
+	properties CONSTRUCT_ONLY, added a gimp_guide_new() function and
+	emit notify on position changes.
+
+	* app/core/gimpimage-guides.c: use gimp_guide_new() to instantiate
+	guides.
+
+	* app/core/gimpimage.c (gimp_image_get_memsize): formatting.
+
 2006-06-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/context-commands.c: cosmetic cleanup.

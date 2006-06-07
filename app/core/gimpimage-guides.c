@@ -43,15 +43,11 @@ gimp_image_add_hguide (GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (position >= 0 && position <= image->height, NULL);
 
-  guide = g_object_new (GIMP_TYPE_GUIDE, NULL);
-
-  guide->position    = -1;
-  guide->orientation = GIMP_ORIENTATION_HORIZONTAL;
-  guide->guide_ID    = image->gimp->next_guide_ID++;
+  guide = gimp_guide_new (GIMP_ORIENTATION_HORIZONTAL,
+                          image->gimp->next_guide_ID++);
 
   if (push_undo)
-    gimp_image_undo_push_image_guide (image, _("Add Horizontal Guide"),
-                                      guide);
+    gimp_image_undo_push_image_guide (image, _("Add Horizontal Guide"), guide);
 
   gimp_image_add_guide (image, guide, position);
   g_object_unref (G_OBJECT (guide));
@@ -69,15 +65,11 @@ gimp_image_add_vguide (GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (position >= 0 && position <= image->width, NULL);
 
-  guide = g_object_new (GIMP_TYPE_GUIDE, NULL);
-
-  guide->position    = -1;
-  guide->orientation = GIMP_ORIENTATION_VERTICAL;
-  guide->guide_ID    = image->gimp->next_guide_ID++;
+  guide = gimp_guide_new (GIMP_ORIENTATION_VERTICAL,
+                          image->gimp->next_guide_ID++);
 
   if (push_undo)
-    gimp_image_undo_push_image_guide (image, _("Add Vertical Guide"),
-                                      guide);
+    gimp_image_undo_push_image_guide (image, _("Add Vertical Guide"), guide);
 
   gimp_image_add_guide (image, guide, position);
   g_object_unref (G_OBJECT (guide));
