@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-07 10:09+0200\n"
-"PO-Revision-Date: 2006-06-07 14:28+0200\n"
+"PO-Revision-Date: 2006-06-07 14:43+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4711,7 +4711,7 @@ msgstr "Oblasti obrázku deformujte pomocí myši"
 
 #: ../plug-ins/common/iwarp.c:269
 msgid "_IWarp..."
-msgstr "_iDeformace..."
+msgstr "_Interaktivní deformace..."
 
 #: ../plug-ins/common/iwarp.c:704
 msgid "Warping"
