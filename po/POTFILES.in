@@ -87,12 +87,13 @@ app/core/gimp-modules.c
 app/core/gimp-units.c
 app/core/gimp-user-install.c
 app/core/gimp.c
-app/core/gimpbrush.c
 app/core/gimpbrush-load.c
+app/core/gimpbrush.c
+app/core/gimpbrushclipboard.c
 app/core/gimpbrushgenerated.c
 app/core/gimpbrushpipe.c
-app/core/gimpchannel.c
 app/core/gimpchannel-select.c
+app/core/gimpchannel.c
 app/core/gimpcontext.c
 app/core/gimpdata.c
 app/core/gimpdatafactory.c
@@ -115,6 +116,7 @@ app/core/gimpimage-convert.c
 app/core/gimpimage-crop.c
 app/core/gimpimage-grid.c
 app/core/gimpimage-guides.c
+app/core/gimpimage-item-list.c
 app/core/gimpimage-merge.c
 app/core/gimpimage-new.c
 app/core/gimpimage-quick-mask.c
@@ -131,6 +133,7 @@ app/core/gimplayermask.c
 app/core/gimppalette-import.c
 app/core/gimppalette.c
 app/core/gimppattern.c
+app/core/gimppatternclipboard.c
 app/core/gimppdbprogress.c
 app/core/gimpprogress.c
 app/core/gimpselection.c
@@ -211,6 +214,7 @@ app/paint/gimppencil.c
 app/paint/gimpsmudge.c
 app/paint/paint-enums.c
 
+app/pdb/channel_cmds.c
 app/pdb/color_cmds.c
 app/pdb/drawable_cmds.c
 app/pdb/drawable_transform_cmds.c
