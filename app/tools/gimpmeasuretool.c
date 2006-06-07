@@ -507,15 +507,15 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
               if (state & GDK_CONTROL_MASK)
                 {
                   if (state & GDK_MOD1_MASK)
-                    cursor = GDK_BOTTOM_RIGHT_CORNER;
+                    cursor = GIMP_CURSOR_CORNER_BOTTOM_RIGHT;
                   else
-                    cursor = GDK_BOTTOM_SIDE;
+                    cursor = GIMP_CURSOR_SIDE_BOTTOM;
                   break;
                 }
 
               if (state & GDK_MOD1_MASK)
                 {
-                  cursor = GDK_RIGHT_SIDE;
+                  cursor = GIMP_CURSOR_SIDE_RIGHT;
                   break;
                 }
 

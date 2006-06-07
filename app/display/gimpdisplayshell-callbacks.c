@@ -458,7 +458,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   GdkModifierType      state;
   guint32              time;
   gboolean             return_val        = FALSE;
-  gboolean             update_cursor     = FALSE;
+  gboolean             update_sw_cursor  = FALSE;
 
   static GimpToolInfo *space_shaded_tool = NULL;
 
@@ -511,7 +511,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                           &image_coords,
                                           x, y, width, height))
         {
-          update_cursor = TRUE;
+          update_sw_cursor = TRUE;
         }
     }
 
@@ -524,7 +524,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         if (cevent->mode != GDK_CROSSING_NORMAL)
           return TRUE;
 
-        update_cursor = TRUE;
+        update_sw_cursor = TRUE;
 
         tool_manager_oper_update_active (gimp,
                                          &image_coords, state,
@@ -954,7 +954,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                 &image_coords,
                                                 x, y, width, height))
               {
-                update_cursor = TRUE;
+                update_sw_cursor = TRUE;
               }
           }
 
@@ -1024,7 +1024,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                   &display_coords);
           }
 
-        update_cursor = TRUE;
+        update_sw_cursor = TRUE;
 
         if (! shell->proximity)
           {
@@ -1356,7 +1356,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         }
     }
 
-  if (update_cursor)
+  if (update_sw_cursor)
     gimp_display_shell_update_cursor (shell,
                                       (gint) display_coords.x,
                                       (gint) display_coords.y,

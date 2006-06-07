@@ -124,14 +124,13 @@ context_##name##_##fgbg##ground_cmd_callback (GtkAction *action, \
                                               gint       value, \
                                               gpointer   data) \
 { \
-  GimpRGB      color; \
   GimpContext *context; \
+  GimpRGB      color; \
   return_if_no_context (context, data); \
 \
   gimp_context_get_##fgbg##ground (context, &color); \
   context_select_color ((GimpActionSelectType) value, &color, usec, usep); \
   gimp_context_set_##fgbg##ground (context, &color); \
-\
 }
 
 SELECT_COLOR_CMD_CALLBACK (palette,  fore, FALSE, TRUE)
@@ -508,7 +507,6 @@ context_brush_radius_cmd_callback (GtkAction *action,
       gdouble             radius;
 
       radius = gimp_brush_generated_get_radius (generated);
-
       radius = action_select_value ((GimpActionSelectType) value,
                                     radius,
                                     1.0, 256.0,
@@ -534,7 +532,6 @@ context_brush_spikes_cmd_callback (GtkAction *action,
       gint                spikes;
 
       spikes = gimp_brush_generated_get_spikes (generated);
-
       spikes = action_select_value ((GimpActionSelectType) value,
                                     spikes,
                                     2.0, 20.0,
@@ -560,7 +557,6 @@ context_brush_hardness_cmd_callback (GtkAction *action,
       gdouble             hardness;
 
       hardness = gimp_brush_generated_get_hardness (generated);
-
       hardness = action_select_value ((GimpActionSelectType) value,
                                       hardness,
                                       0.0, 1.0,
@@ -586,7 +582,6 @@ context_brush_aspect_cmd_callback (GtkAction *action,
       gdouble             aspect;
 
       aspect = gimp_brush_generated_get_aspect_ratio (generated);
-
       aspect = action_select_value ((GimpActionSelectType) value,
                                     aspect,
                                     1.0, 20.0,
@@ -668,7 +663,8 @@ context_select_color (GimpActionSelectType  select_type,
   index = context_get_color_index (use_colormap, use_palette, color);
   max   = context_max_color_index (use_colormap, use_palette);
 
-  index = action_select_value (select_type, index,
+  index = action_select_value (select_type,
+                               index,
                                0, max,
                                1, 4, FALSE);
 

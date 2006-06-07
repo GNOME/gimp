@@ -1,3 +1,20 @@
+2006-06-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/context-commands.c: cosmetic cleanup.
+
+	* app/core/core-types.h: move the GimpGuide typedef to the
+	"misc objects" section.
+
+	* app/tools/gimpforegroundselecttool.c: cosmetic cleanup.
+
+	* app/tools/gimpmeasuretool.c (gimp_measure_tool_cursor_update):
+	use the new corner and side cursors instead of using X cursors.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): renamed local variable
+	"update_cursor" to "update_sw_cursor", it has confused me too
+	often...
+
 2006-06-07  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpguide.[ch]: new files, implementing GimpGuide as a

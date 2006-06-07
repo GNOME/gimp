@@ -182,11 +182,11 @@ gimp_foreground_select_tool_init (GimpForegroundSelectTool *fg_select)
   GimpTool *tool = GIMP_TOOL (fg_select);
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_preserve (tool->control, FALSE);
+  gimp_tool_control_set_preserve    (tool->control, FALSE);
   gimp_tool_control_set_dirty_mask  (tool->control, GIMP_DIRTY_IMAGE_SIZE);
-
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_FREE_SELECT);
+
   fg_select->idle_id = 0;
   fg_select->stroke  = NULL;
   fg_select->strokes = NULL;

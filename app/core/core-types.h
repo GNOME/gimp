@@ -119,6 +119,7 @@ typedef struct _GimpUndoAccumulator GimpUndoAccumulator;
 typedef struct _GimpBuffer          GimpBuffer;
 typedef struct _GimpEnvironTable    GimpEnvironTable;
 /* typedef struct _GimpGrid         GimpGrid; in config-types.h */
+typedef struct _GimpGuide           GimpGuide;
 typedef struct _GimpImagefile       GimpImagefile;
 typedef struct _GimpImageMap        GimpImageMap;
 typedef struct _GimpInterpreterDB   GimpInterpreterDB;
@@ -140,7 +141,6 @@ typedef struct _GimpProgress        GimpProgress; /* dummy typedef */
 typedef struct _GimpArea            GimpArea;
 typedef struct _GimpCoords          GimpCoords;
 typedef struct _GimpGradientSegment GimpGradientSegment;
-typedef struct _GimpGuide           GimpGuide;
 typedef struct _GimpSamplePoint     GimpSamplePoint;
 typedef         guint32             GimpTattoo;
 typedef struct _GimpPaletteEntry    GimpPaletteEntry;
