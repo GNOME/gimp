@@ -42,7 +42,7 @@ struct _GimpAlignTool
   GtkWidget           *controls;
   GtkWidget           *button[ALIGN_TOOL_NUM_BUTTONS];
 
-  GList               *selected_items;
+  GList               *selected_objects;
 
   GimpAlignmentType    horz_align_type;
   GimpAlignmentType    vert_align_type;

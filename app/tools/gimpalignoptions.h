@@ -37,8 +37,6 @@ typedef struct _GimpToolOptionsClass GimpAlignOptionsClass;
 struct _GimpAlignOptions
 {
   GimpToolOptions    parent_instence;
-
-  GimpTransformType  align_type;
 };
 
 

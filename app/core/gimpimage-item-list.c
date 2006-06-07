@@ -27,7 +27,6 @@
 #include "gimpimage-item-list.h"
 #include "gimpimage-undo.h"
 #include "gimpitem.h"
-#include "gimpitem-align.h"
 #include "gimplist.h"
 #include "gimpprogress.h"
 
@@ -144,32 +143,6 @@ gimp_image_item_list_transform (GimpImage              *image,
                              interpolation_type,
                              supersample, recursion_level,
                              clip_result, progress);
-
-      gimp_image_undo_group_end (image);
-    }
-}
-
-void
-gimp_image_item_list_align (GimpImage         *image,
-                            GList             *list,
-                            GimpAlignmentType  alignment,
-                            GimpItem          *reference,
-                            GimpAlignmentType  reference_alignment,
-                            gint               offset)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_ITEM (reference));
-
-  if (list)
-    {
-      GList *l;
-
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                   _("Align Items"));
-
-      for (l = list; l; l = g_list_next (l))
-        gimp_item_align (GIMP_ITEM (l->data), alignment,
-                         reference, reference_alignment, offset);
 
       gimp_image_undo_group_end (image);
     }

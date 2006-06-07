@@ -1,5 +1,26 @@
 2006-06-07  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/core/gimpimage-arrange.[ch]: added, utility function for
+	aligning and arranging things in an image.
+
+	* app/core/gimpitem-align.[ch}: removed, no longer needed.
+
+	* app/core/gimpimage-item-list.[ch] (gimp_image_item_list_align):
+	removed this function, no longer used.
+	
+	* app/core/Makefile.am: changes described above.
+	
+	* app/core/gimpguide.c: remove bit of cruft left accidentally.
+	
+	* app/tools/gimpalignoptions.[ch]: remove "alignment type"
+	option, not needed at this point.
+	
+	* app/tools/gimpaligntool.[ch]: numerous changes, most
+	importantly ability to align guides, and use them for
+	alignment.  More work coming on this tool.
+
+2006-06-07  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/core/gimpguide.[ch]: add "removed" signal and associated
 	paraphernalia.
 

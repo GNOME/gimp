@@ -38,7 +38,6 @@
 enum
 {
   PROP_0,
-  PROP_ALIGN_TYPE
 };
 
 
@@ -62,12 +61,6 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
 
   object_class->set_property = gimp_align_options_set_property;
   object_class->get_property = gimp_align_options_get_property;
-
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ALIGN_TYPE,
-                                 "align-type", NULL,
-                                 GIMP_TYPE_TRANSFORM_TYPE,
-                                 GIMP_TRANSFORM_TYPE_LAYER,
-                                 GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -81,13 +74,8 @@ gimp_align_options_set_property (GObject      *object,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpAlignOptions *options = GIMP_ALIGN_OPTIONS (object);
-
   switch (property_id)
     {
-    case PROP_ALIGN_TYPE:
-      options->align_type = g_value_get_enum (value);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -100,13 +88,8 @@ gimp_align_options_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpAlignOptions *options = GIMP_ALIGN_OPTIONS (object);
-
   switch (property_id)
     {
-    case PROP_ALIGN_TYPE:
-      g_value_set_enum (value, options->align_type);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -119,24 +102,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox;
   GtkWidget *controls_container;
 
-#if 0
-  GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *hbox;
-  GtkWidget *label;
-#endif
-
   vbox = gimp_tool_options_gui (tool_options);
-
-#if 0
-  hbox = gimp_prop_enum_stock_box_new (config, "align-type", "gimp", 0, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (_("Affect:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (hbox), label, 0);
-  gtk_widget_show (label);
-#endif
 
   controls_container = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), controls_container, FALSE, FALSE, 0);

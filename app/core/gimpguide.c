@@ -34,7 +34,6 @@
 enum
 {
   REMOVED,
-  MOVED,
   LAST_SIGNAL
 };
 

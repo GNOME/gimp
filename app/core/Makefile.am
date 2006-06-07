@@ -124,6 +124,8 @@ libappcore_a_sources = \
 	gimpguide.h                     \
 	gimpimage.c			\
 	gimpimage.h			\
+	gimpimage-arrange.c		\
+	gimpimage-arrange.h		\
 	gimpimage-colorhash.c		\
 	gimpimage-colorhash.h		\
 	gimpimage-colormap.c		\
@@ -176,8 +178,6 @@ libappcore_a_sources = \
 	gimpimagemap.h			\
 	gimpitem.c			\
 	gimpitem.h			\
-	gimpitem-align.c		\
-	gimpitem-align.h		\
 	gimpitem-linked.c		\
 	gimpitem-linked.h		\
 	gimpitem-preview.c		\

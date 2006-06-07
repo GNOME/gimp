@@ -48,12 +48,6 @@ void    gimp_image_item_list_transform (GimpImage              *image,
                                         gint                    recursion_level,
                                         gboolean                clip_result,
                                         GimpProgress           *progress);
-void    gimp_image_item_list_align     (GimpImage              *image,
-                                        GList                  *list,
-                                        GimpAlignmentType       alignment,
-                                        GimpItem               *reference,
-                                        GimpAlignmentType       reference_alignment,
-                                        gint                    offset);
 
 GList * gimp_image_item_list_get_list  (GimpImage              *image,
                                         GimpItem               *exclude,
