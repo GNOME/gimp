@@ -4,6 +4,7 @@
 <ui>
   <popup action="error-console-popup">
     <menuitem action="error-console-clear" />
+    <menuitem action="error-console-select-all" />
     <separator />
     <menuitem action="error-console-save-all" />
     <menuitem action="error-console-save-selection" />

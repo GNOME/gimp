@@ -1,5 +1,13 @@
 2006-06-07  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/error-console-actions.c: 
+	* app/actions/error-console-commands.[ch]
+	* app/widgets/gimphelp-ids.h
+	* menus/error-console-menu.xml: added "select-all" action as
+	suggested in bug #328838.
+
+2006-06-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpguide.[ch]: added a setter for "orientation".
 
 	* app/core/gimpimage-resize.c (gimp_image_resize_with_layers):

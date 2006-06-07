@@ -390,6 +390,7 @@
 #define GIMP_HELP_ERRORS_DIALOG                   "gimp-errors-dialog"
 #define GIMP_HELP_ERRORS_CLEAR                    "gimp-errors-clear"
 #define GIMP_HELP_ERRORS_SAVE                     "gimp-errors-save"
+#define GIMP_HELP_ERRORS_SELECT_ALL               "gimp-errors-select-all"
 
 #define GIMP_HELP_PREFS_DIALOG                    "gimp-prefs-dialog"
 #define GIMP_HELP_PREFS_NEW_IMAGE                 "gimp-prefs-new-image"

@@ -41,22 +41,28 @@ static const GimpActionEntry error_console_actions[] =
     GIMP_HELP_ERRORS_DIALOG },
 
   { "error-console-clear", GTK_STOCK_CLEAR,
-    N_("_Clear Errors"), "",
-    N_("Clear errors"),
+    N_("_Clear"), "",
+    N_("Clear error console"),
     G_CALLBACK (error_console_clear_cmd_callback),
-    GIMP_HELP_ERRORS_CLEAR }
+    GIMP_HELP_ERRORS_CLEAR },
+
+  { "error-console-select-all", NULL,
+    N_("Select _All"), "",
+    N_("Select all errors"),
+    G_CALLBACK (error_console_select_all_cmd_callback),
+    GIMP_HELP_ERRORS_SELECT_ALL }
 };
 
 static const GimpEnumActionEntry error_console_save_actions[] =
 {
   { "error-console-save-all", GTK_STOCK_SAVE_AS,
-    N_("Save _All Errors to File..."), "",
-    N_("Save all errors"),
+    N_("_Save Error Log to File..."), "",
+    N_("Save error log"),
     FALSE, FALSE,
     GIMP_HELP_ERRORS_SAVE },
 
   { "error-console-save-selection", GTK_STOCK_SAVE_AS,
-    N_("Save _Selection to File..."), "",
+    N_("Save S_election to File..."), "",
     N_("Save selection"),
     TRUE, FALSE,
     GIMP_HELP_ERRORS_SAVE }
@@ -90,6 +96,7 @@ error_console_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
   SET_SENSITIVE ("error-console-clear",          TRUE);
+  SET_SENSITIVE ("error-console-select-all",     TRUE);
   SET_SENSITIVE ("error-console-save-all",       TRUE);
   SET_SENSITIVE ("error-console-save-selection", selection);
 

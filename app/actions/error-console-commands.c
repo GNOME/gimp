@@ -56,6 +56,18 @@ error_console_clear_cmd_callback (GtkAction *action,
 }
 
 void
+error_console_select_all_cmd_callback (GtkAction *action,
+                                       gpointer   data)
+{
+  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
+  GtkTextIter       start_iter;
+  GtkTextIter       end_iter;
+
+  gtk_text_buffer_get_bounds (console->text_buffer, &start_iter, &end_iter);
+  gtk_text_buffer_select_range (console->text_buffer, &start_iter, &end_iter);
+}
+
+void
 error_console_save_cmd_callback (GtkAction *action,
                                  gint       value,
                                  gpointer   data)
