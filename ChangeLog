@@ -1,3 +1,8 @@
+2006-06-07  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_expose_guide):
+	fix typo, s/get_position/get_orientation/.
+
 2006-06-07  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpguide.c: removed unused includes and property blurbs;

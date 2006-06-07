@@ -1299,7 +1299,7 @@ gimp_display_shell_expose_guide (GimpDisplayShell *shell,
                                    &x, &y,
                                    FALSE);
 
-  switch (gimp_guide_get_position (guide))
+  switch (gimp_guide_get_orientation (guide))
     {
     case GIMP_ORIENTATION_HORIZONTAL:
       gimp_display_shell_expose_area (shell, 0, y, shell->disp_width, 1);
