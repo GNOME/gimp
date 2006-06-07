@@ -113,6 +113,7 @@ gimp_image_remove_guide (GimpImage *image,
     gimp_image_undo_push_image_guide (image, _("Remove Guide"), guide);
 
   image->guides = g_list_remove (image->guides, guide);
+  gimp_guide_removed (guide);
 
   gimp_guide_set_position (guide, -1);
   g_object_unref (G_OBJECT (guide));

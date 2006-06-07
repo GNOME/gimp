@@ -48,6 +48,9 @@ struct _GimpGuide
 struct _GimpGuideClass
 {
   GObjectClass         parent_class;
+
+  /*  signals  */
+  void (* removed)    (GimpGuide  *guide);
 };
 
 
@@ -65,6 +68,6 @@ void                gimp_guide_set_orientation (GimpGuide           *guide,
 gint                gimp_guide_get_position    (GimpGuide           *guide);
 void                gimp_guide_set_position    (GimpGuide           *guide,
                                                 gint                 position);
-
+void                gimp_guide_removed         (GimpGuide           *guide);
 
 #endif /* __GIMP_GUIDE_H__ */

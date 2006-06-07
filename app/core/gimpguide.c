@@ -29,7 +29,14 @@
 #include "core-types.h"
 
 #include "gimpguide.h"
+#include "gimpmarshal.h"
 
+enum
+{
+  REMOVED,
+  MOVED,
+  LAST_SIGNAL
+};
 
 enum
 {
@@ -52,14 +59,28 @@ static void   gimp_guide_set_property (GObject      *object,
 
 G_DEFINE_TYPE (GimpGuide, gimp_guide, G_TYPE_OBJECT)
 
+static guint gimp_guide_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 gimp_guide_class_init (GimpGuideClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  gimp_guide_signals[REMOVED] =
+    g_signal_new ("removed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpGuideClass, removed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+
   object_class->get_property = gimp_guide_get_property;
   object_class->set_property = gimp_guide_set_property;
+
+  klass->removed             = NULL;
 
   g_object_class_install_property (object_class, PROP_ID,
                                    g_param_spec_uint ("id", NULL, NULL,
@@ -187,4 +208,12 @@ gimp_guide_set_position (GimpGuide *guide,
   guide->position = position;
 
   g_object_notify (G_OBJECT (guide), "position");
+}
+
+void
+gimp_guide_removed (GimpGuide *guide)
+{
+  g_return_if_fail (GIMP_IS_GUIDE (guide));
+
+  g_signal_emit (guide, gimp_guide_signals[REMOVED], 0);
 }
