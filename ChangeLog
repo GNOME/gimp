@@ -1,6 +1,8 @@
 2006-06-07  Sven Neumann  <sven@gimp.org>
 
-	* app/core/gimpguide.c: removed unused includes and property blurbs.
+	* app/core/gimpguide.c: removed unused includes and property blurbs;
+	fixed registration of the "id" property, it is not a GIMP_CONFIG
+	property.
 
 2006-06-07  Michael Natterer  <mitch@gimp.org>
 

@@ -61,24 +61,21 @@ gimp_guide_class_init (GimpGuideClass *klass)
   object_class->get_property = gimp_guide_get_property;
   object_class->set_property = gimp_guide_set_property;
 
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_ID,
-                                "id", NULL,
-                                0,
-                                G_MAXINT, 0,
-                                G_PARAM_CONSTRUCT_ONLY |
-                                GIMP_PARAM_STATIC_STRINGS);
+  g_object_class_install_property (object_class, PROP_ID,
+                                   g_param_spec_uint ("id", NULL, NULL,
+                                                      0, G_MAXUINT32, 0,
+                                                      G_PARAM_CONSTRUCT_ONLY |
+                                                      GIMP_PARAM_READWRITE));
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ORIENTATION,
                                  "orientation", NULL,
                                  GIMP_TYPE_ORIENTATION_TYPE,
                                  GIMP_ORIENTATION_UNKNOWN,
-                                 GIMP_PARAM_STATIC_STRINGS);
-
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_POSITION,
                                 "position", NULL,
-                                -1,
-                                GIMP_MAX_IMAGE_SIZE, -1,
-                                GIMP_PARAM_STATIC_STRINGS);
+                                -1, GIMP_MAX_IMAGE_SIZE, -1,
+                                0);
 }
 
 static void
@@ -97,7 +94,7 @@ gimp_guide_get_property (GObject      *object,
   switch (property_id)
     {
     case PROP_ID:
-      g_value_set_int (value, guide->guide_ID);
+      g_value_set_uint (value, guide->guide_ID);
       break;
     case PROP_ORIENTATION:
       g_value_set_enum (value, guide->orientation);
@@ -122,7 +119,7 @@ gimp_guide_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_ID:
-      guide->guide_ID = g_value_get_int (value);
+      guide->guide_ID = g_value_get_uint (value);
       break;
     case PROP_ORIENTATION:
       guide->orientation = g_value_get_enum (value);
