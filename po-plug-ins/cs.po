@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-06 19:19+0200\n"
-"PO-Revision-Date: 2006-06-06 19:17+0200\n"
+"POT-Creation-Date: 2006-06-07 10:09+0200\n"
+"PO-Revision-Date: 2006-06-07 14:28+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -320,8 +320,7 @@ msgstr "Inverze"
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr ""
-"Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
+msgstr "Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
 
 #. Greenmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1019
@@ -525,8 +524,7 @@ msgstr "P_růhledné pozadí"
 
 #: ../plug-ins/Lighting/lighting_ui.c:302
 msgid "Make destination image transparent where bump height is zero"
-msgstr ""
-"Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
+msgstr "Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
 
 #: ../plug-ins/Lighting/lighting_ui.c:305
 msgid "Cre_ate new image"
@@ -1690,7 +1688,6 @@ msgid "Seed:"
 msgstr "Hnízdo:"
 
 #: ../plug-ins/common/CML_explorer.c:1392
-#, fuzzy
 msgid "Switch to \"From seed\" With the Last Seed"
 msgstr "Přepnout do režimu \"z hnízda\" s posledním hnízdem"
 
@@ -1855,8 +1852,7 @@ msgstr "Varování: '%s' je soubor ve starém formátu."
 #: ../plug-ins/common/CML_explorer.c:2265
 #, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
-msgstr ""
-"Varování: '%s' je soubor parametrů pro novější CML_badatel, než jsem já."
+msgstr "Varování: '%s' je soubor parametrů pro novější CML_badatel, než jsem já."
 
 #: ../plug-ins/common/CML_explorer.c:2328
 msgid "Error: failed to load parameters"
@@ -2222,16 +2218,15 @@ msgstr "Velikost vě_dra:"
 
 #: ../plug-ins/common/bumpmap.c:330
 msgid "Create an embossing effect using a bump map"
-msgstr ""
+msgstr "Vytvořit efekt reliéfu pomocí mapy nerovností"
 
 #: ../plug-ins/common/bumpmap.c:340
 msgid "_Bump Map..."
 msgstr "Ma_pa vyvýšení..."
 
 #: ../plug-ins/common/bumpmap.c:489
-#, fuzzy
 msgid "Bump-mapping"
-msgstr "Mapuji vyvýšení..."
+msgstr "Mapuji nerovnosti"
 
 #: ../plug-ins/common/bumpmap.c:833
 msgid "Bump Map"
@@ -2276,8 +2271,7 @@ msgstr "Posun _X:"
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
-msgstr ""
-"Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
+msgstr "Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
 
 #: ../plug-ins/common/bumpmap.c:1011 ../plug-ins/common/postscript.c:3328
 msgid "_Y offset:"
@@ -2679,8 +2673,7 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:486
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr ""
-"Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
+msgstr "Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
 
 #: ../plug-ins/common/compose.c:517
 #, c-format
@@ -2757,8 +2750,7 @@ msgstr "Žádná rozumná přípona, ukládám jako gzipovaný XCF."
 
 #: ../plug-ins/common/compressor.c:514
 msgid "No sensible extension, attempting to load with file magic."
-msgstr ""
-"Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel."
+msgstr "Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel."
 
 #: ../plug-ins/common/convmatrix.c:77
 msgid "Gr_ey"
@@ -2787,7 +2779,7 @@ msgstr "Rozšíři_t"
 #: ../plug-ins/common/convmatrix.c:87 ../plug-ins/common/displace.c:475
 #: ../plug-ins/common/edge.c:700 ../plug-ins/common/ripple.c:557
 msgid "_Wrap"
-msgstr "O_hýbání"
+msgstr "_Přes"
 
 #: ../plug-ins/common/convmatrix.c:88
 msgid "Cro_p"
@@ -3223,7 +3215,6 @@ msgid "Extract Channels"
 msgstr "Extrahovat kanály"
 
 #: ../plug-ins/common/decompose.c:1413
-#, fuzzy
 msgid "_Decompose to layers"
 msgstr "Dekomponovat do _vrstev"
 
@@ -3261,16 +3252,15 @@ msgstr "Zachovat _sudá pole"
 
 #: ../plug-ins/common/depthmerge.c:184
 msgid "Combine two images using depth maps (z-buffers)"
-msgstr ""
+msgstr "Kombinovat dva obrázky pomocí map hloubky (z-bufferů)"
 
 #: ../plug-ins/common/depthmerge.c:193
 msgid "_Depth Merge..."
 msgstr "_Sloučit hloubku..."
 
 #: ../plug-ins/common/depthmerge.c:387
-#, fuzzy
 msgid "Depth-merging"
-msgstr "Slučuji hloubku..."
+msgstr "Slučuji hloubku"
 
 #: ../plug-ins/common/depthmerge.c:644
 msgid "Depth Merge"
@@ -3301,9 +3291,8 @@ msgid "Sca_le 2:"
 msgstr "_Velikost 2:"
 
 #: ../plug-ins/common/despeckle.c:146
-#, fuzzy
 msgid "Remove speckle noise from the image"
-msgstr "Nastavení škálování (velikosti) obrázku"
+msgstr "Odstranit šum z obrázku"
 
 #: ../plug-ins/common/despeckle.c:152
 msgid "Des_peckle..."
@@ -3342,7 +3331,7 @@ msgstr "Úroveň _bílé:"
 
 #: ../plug-ins/common/destripe.c:102
 msgid "Remove vertical stripe artifacts from the image"
-msgstr ""
+msgstr "Odstranit artefakty v podobě svislých pruhů"
 
 #: ../plug-ins/common/destripe.c:108
 msgid "Des_tripe..."
@@ -3442,18 +3431,16 @@ msgid "_X displacement"
 msgstr "Posunutí _X"
 
 #: ../plug-ins/common/displace.c:145
-#, fuzzy
 msgid "_Pinch"
-msgstr "_Palec"
+msgstr "_Zaškrcení"
 
 #: ../plug-ins/common/displace.c:146
 msgid "_Y displacement"
 msgstr "Posunutí _Y"
 
 #: ../plug-ins/common/displace.c:146
-#, fuzzy
 msgid "_Whirl"
-msgstr "_Bílá"
+msgstr "_Vír"
 
 #: ../plug-ins/common/displace.c:172
 msgid "Displace pixels as indicated by displacment maps"
@@ -3500,7 +3487,7 @@ msgstr "Chování hran"
 #: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:713
 #: ../plug-ins/common/ripple.c:558 ../plug-ins/common/waves.c:277
 msgid "_Smear"
-msgstr "Š_mouha"
+msgstr "_Rozmazat"
 
 #: ../plug-ins/common/displace.c:479 ../plug-ins/common/edge.c:726
 #: ../plug-ins/common/fractaltrace.c:736 ../plug-ins/common/newsprint.c:400
@@ -4176,8 +4163,7 @@ msgstr ""
 "nebyl uložen."
 
 #: ../plug-ins/common/gif.c:965
-msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nemohu ukládat barevné obrázky RGB. Nejdříve jej převeďte na indexovaný nebo "
 "do šedí."
@@ -4242,9 +4228,8 @@ msgid "milliseconds"
 msgstr "milisekundy"
 
 #: ../plug-ins/common/gif.c:1396
-#, fuzzy
 msgid "_Frame disposal where unspecified:"
-msgstr "Dispozice políčka, nejsou-li specifikovány: "
+msgstr "_Dispozice políčka, nejsou-li specifikovány: "
 
 #: ../plug-ins/common/gif.c:1400
 msgid "I don't care"
@@ -4265,7 +4250,7 @@ msgstr "Po_uží zpoždění zadané výše pro všechna políčka"
 
 #: ../plug-ins/common/gif.c:1430
 msgid "U_se disposal entered above for all frames"
-msgstr ""
+msgstr "_Použít dispozici zadanou výše pro všechna políčka"
 
 #: ../plug-ins/common/gif.c:2599
 msgid "Error writing output file."
@@ -4826,8 +4811,7 @@ msgstr "Interaktivní deformace"
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
-msgstr ""
-"Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
+msgstr "Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
 
 #: ../plug-ins/common/jigsaw.c:356
 msgid "Add a jigsaw-puzzle pattern to the image"
@@ -5054,7 +5038,7 @@ msgstr "Druhá cílová barva"
 
 #: ../plug-ins/common/mapcolor.c:143
 msgid "Map colors sending foreground to black, background to white"
-msgstr ""
+msgstr "Přemapuje barvy, popředí na černou, pozadí na bílou"
 
 #: ../plug-ins/common/mapcolor.c:151
 msgid "Adjust _Foreground & Background"
@@ -5175,8 +5159,7 @@ msgstr "Ú_hel:"
 #. * transparency & just use the full palette
 #: ../plug-ins/common/mng.c:498 ../plug-ins/common/png.c:1638
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr ""
-"Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
+msgstr "Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
 
 #: ../plug-ins/common/mng.c:1322
 msgid "Save as MNG"
@@ -5426,7 +5409,7 @@ msgstr "Svítivost"
 
 #: ../plug-ins/common/newsprint.c:519
 msgid "Halftone the image to give newspaper-like effect"
-msgstr ""
+msgstr "Simulovat efekt novinového tisku"
 
 #: ../plug-ins/common/newsprint.c:528
 msgid "Newsprin_t..."
@@ -5665,9 +5648,8 @@ msgid "_Max (%):"
 msgstr "_Max (%):"
 
 #: ../plug-ins/common/papertile.c:349
-#, fuzzy
 msgid "_Wrap around"
-msgstr "O_balit okolí"
+msgstr "Přes _okraj"
 
 #: ../plug-ins/common/papertile.c:359
 msgid "Background Type"
@@ -6480,9 +6462,8 @@ msgid "Off_set:"
 msgstr "_Posun:"
 
 #: ../plug-ins/common/raw.c:1065
-#, fuzzy
 msgid "Select Palette File"
-msgstr "Zvolte soubor palety, který načíst"
+msgstr "Vyberte soubor palety"
 
 #: ../plug-ins/common/raw.c:1071
 msgid "Pal_ette File:"
@@ -6582,16 +6563,15 @@ msgstr "Filtrování retinex"
 
 #: ../plug-ins/common/ripple.c:129
 msgid "Displace pixels in a ripple pattern"
-msgstr ""
+msgstr "Přesunout pixely dle vlnitého vzoru"
 
 #: ../plug-ins/common/ripple.c:136
 msgid "_Ripple..."
 msgstr "_Rozvlnit..."
 
 #: ../plug-ins/common/ripple.c:220
-#, fuzzy
 msgid "Rippling"
-msgstr "Rozvlňuji..."
+msgstr "Rozvlňuji"
 
 #: ../plug-ins/common/ripple.c:462
 msgid "Ripple"
@@ -6607,9 +6587,8 @@ msgid "Edges"
 msgstr "Hrany"
 
 #: ../plug-ins/common/ripple.c:559
-#, fuzzy
 msgid "_Blank"
-msgstr "Č_erná"
+msgstr "_Čistý"
 
 #. Wave toggle box
 #: ../plug-ins/common/ripple.c:581
@@ -6723,14 +6702,12 @@ msgid "Smooth samples"
 msgstr "Plynulé vzorky"
 
 #: ../plug-ins/common/sample_colorize.c:2653
-#, fuzzy
 msgid "Sample analyze"
-msgstr "Analýza vzorků..."
+msgstr "Analýza vzorků"
 
 #: ../plug-ins/common/sample_colorize.c:3031
-#, fuzzy
 msgid "Remap colorized"
-msgstr "Přemapování vybarvení..."
+msgstr "Přemapování vybarvení"
 
 #: ../plug-ins/common/scatter_hsv.c:105
 msgid "Randomize hue/saturation/value independently"
@@ -6805,9 +6782,8 @@ msgid "Take a screenshot of the entire _screen"
 msgstr "Získat snímek celé _obrazovky"
 
 #: ../plug-ins/common/screenshot.c:873
-#, fuzzy
 msgid "Select a _region to grab"
-msgstr "Vybrat oblast"
+msgstr "Vyberte oblast k sejmutí"
 
 #: ../plug-ins/common/screenshot.c:880
 msgid ""
@@ -6941,12 +6917,10 @@ msgid "Drawing Settings"
 msgstr "Volby kresby"
 
 #: ../plug-ins/common/sinus.c:700
-#, fuzzy
 msgid "_X scale:"
 msgstr "Zvětšení _X:"
 
 #: ../plug-ins/common/sinus.c:709
-#, fuzzy
 msgid "_Y scale:"
 msgstr "Zvětšení _Y:"
 
@@ -7129,25 +7103,23 @@ msgstr "Sobelova detekce hran"
 
 #: ../plug-ins/common/softglow.c:134
 msgid "Simulate glow by making highlights intense and fuzzy"
-msgstr ""
+msgstr "Simulovat záři zintenzivněním a rozmlžením světel"
 
 #: ../plug-ins/common/softglow.c:139
-#, fuzzy
 msgid "_Softglow..."
-msgstr "Posunuji..."
+msgstr "_Jemná záře..."
 
 #: ../plug-ins/common/softglow.c:630
 msgid "Softglow"
-msgstr ""
+msgstr "Jemná záře"
 
 #: ../plug-ins/common/softglow.c:667
-#, fuzzy
 msgid "_Glow radius:"
-msgstr "Poloměr ro_zostření:"
+msgstr "Poloměr _záře:"
 
 #: ../plug-ins/common/sparkle.c:181
 msgid "Turn bright spots into starry sparkles"
-msgstr ""
+msgstr "Vytvořit ze světlých bodů třpytící se jiskry"
 
 #: ../plug-ins/common/sparkle.c:189
 msgid "_Sparkle..."
@@ -7158,21 +7130,18 @@ msgid "Region selected for filter is empty"
 msgstr "Oblast vybraná pro filtr je prázdná"
 
 #: ../plug-ins/common/sparkle.c:302
-#, fuzzy
 msgid "Sparkling"
-msgstr "Jiskřím..."
+msgstr "Jiskřím"
 
 #: ../plug-ins/common/sparkle.c:340
 msgid "Sparkle"
 msgstr "Jiskření"
 
 #: ../plug-ins/common/sparkle.c:376
-#, fuzzy
 msgid "Luminosity _threshold:"
 msgstr "Prá_h jasu:"
 
 #: ../plug-ins/common/sparkle.c:379
-#, fuzzy
 msgid "Adjust the luminosity threshold"
 msgstr "Úprava prahu jasu"
 
@@ -7181,7 +7150,6 @@ msgid "F_lare intensity:"
 msgstr "_Intenzita záře:"
 
 #: ../plug-ins/common/sparkle.c:392
-#, fuzzy
 msgid "Adjust the flare intensity"
 msgstr "Nastavení intenzity záře"
 
@@ -7190,7 +7158,6 @@ msgid "_Spike length:"
 msgstr "Délka h_rotů:"
 
 #: ../plug-ins/common/sparkle.c:405
-#, fuzzy
 msgid "Adjust the spike length"
 msgstr "Nastavení délky hrotů"
 
@@ -7199,7 +7166,6 @@ msgid "Sp_ike points:"
 msgstr "_Počet hrotů:"
 
 #: ../plug-ins/common/sparkle.c:418
-#, fuzzy
 msgid "Adjust the number of spikes"
 msgstr "Nastavení počtu hrotů"
 
@@ -7208,7 +7174,6 @@ msgid "Spi_ke angle (-1: random):"
 msgstr "Úhe_l hrotu (-1: náhodný):"
 
 #: ../plug-ins/common/sparkle.c:431
-#, fuzzy
 msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
 msgstr "Nastavení úhlu hrotu (-1 znamená, že bude zvolen náhodný úhel)"
 
@@ -7217,7 +7182,6 @@ msgid "Spik_e density:"
 msgstr "Hustot_a hrotů:"
 
 #: ../plug-ins/common/sparkle.c:445
-#, fuzzy
 msgid "Adjust the spike density"
 msgstr "Nastavení hustoty hrotů"
 
@@ -7226,7 +7190,6 @@ msgid "Tr_ansparency:"
 msgstr "_Průhlednost:"
 
 #: ../plug-ins/common/sparkle.c:458
-#, fuzzy
 msgid "Adjust the opacity of the spikes"
 msgstr "Nastavení krytí hrotů"
 
@@ -7235,18 +7198,16 @@ msgid "_Random hue:"
 msgstr "Náh_odný odstín:"
 
 #: ../plug-ins/common/sparkle.c:471
-#, fuzzy
 msgid "Adjust how much the hue should be changed randomly"
-msgstr "Úprava hodnoty, o kterou se může odstín náhodně měnit"
+msgstr "Nastavení míry náhodné změny odstínu"
 
 #: ../plug-ins/common/sparkle.c:481
 msgid "Rando_m saturation:"
 msgstr "Náhodná _sytost:"
 
 #: ../plug-ins/common/sparkle.c:484
-#, fuzzy
 msgid "Adjust how much the saturation should be changed randomly"
-msgstr "Úprava hodnoty, o kterou se může sytost náhodně měnit"
+msgstr "Nastavení míry náhodné změny sytosti"
 
 #: ../plug-ins/common/sparkle.c:501
 msgid "_Preserve luminosity"
@@ -7269,7 +7230,6 @@ msgid "A_dd border"
 msgstr "Při_dat obvod"
 
 #: ../plug-ins/common/sparkle.c:538
-#, fuzzy
 msgid "Draw a border of spikes around the image"
 msgstr "Kreslit okolo obrázku hranici hrotů"
 
@@ -7446,9 +7406,8 @@ msgid "Rendering sphere"
 msgstr "Vykresluje se koule"
 
 #: ../plug-ins/common/spheredesigner.c:2991
-#, fuzzy
 msgid "Create an image of a textured sphere"
-msgstr "Vystředit obrázek na papír"
+msgstr "Vytvořit obrázek koule s texturou"
 
 #: ../plug-ins/common/spheredesigner.c:2998
 msgid "Sphere _Designer..."
@@ -7460,16 +7419,15 @@ msgstr "Oblast vybraná pro zásuvný modul je prázdná"
 
 #: ../plug-ins/common/spread.c:91
 msgid "Move pixels around randomly"
-msgstr ""
+msgstr "Přesunout náhodně pixely"
 
 #: ../plug-ins/common/spread.c:100
 msgid "Sp_read..."
 msgstr "_Rozprostřít..."
 
 #: ../plug-ins/common/spread.c:183
-#, fuzzy
 msgid "Spreading"
-msgstr "Rozprostírám..."
+msgstr "Rozprostírám"
 
 #: ../plug-ins/common/spread.c:346
 msgid "Spread"
@@ -7629,8 +7587,7 @@ msgid "Import _paths"
 msgstr "Importovat _cesty"
 
 #: ../plug-ins/common/svg.c:941
-msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importovat elementy cesty z SVG, aby mohly být použity s nástrojem GIMPu pro "
 "cesty"
@@ -7787,7 +7744,7 @@ msgstr "Vytvořit _nový obrázek"
 
 #: ../plug-ins/common/tileit.c:216
 msgid "Tile image into smaller versions of the orginal"
-msgstr ""
+msgstr "Poskládat obrázek ze zmenšených kopií sama sebe"
 
 #: ../plug-ins/common/tileit.c:221
 msgid "_Small Tiles..."
@@ -7846,7 +7803,6 @@ msgid "_Make Seamless"
 msgstr "_Odstranit přechody"
 
 #: ../plug-ins/common/tiler.c:338
-#, fuzzy
 msgid "Tiler"
 msgstr "Dlaždice"
 
@@ -7867,8 +7823,7 @@ msgid "ID"
 msgstr "ID"
 
 #: ../plug-ins/common/uniteditor.c:96
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Tento řetězec bude použit pouze k identifikaci jednotky v konfiguračním "
 "souboru GIMPu."
@@ -7993,16 +7948,15 @@ msgstr "Editor jednotek"
 
 #: ../plug-ins/common/unsharp.c:131
 msgid "The most widely useful method for sharpening an image"
-msgstr ""
+msgstr "Obvykle nejvhodnější způsob zaostření obrázku"
 
 #: ../plug-ins/common/unsharp.c:141
 msgid "_Unsharp Mask..."
 msgstr "_Rozostřit masku..."
 
 #: ../plug-ins/common/unsharp.c:477
-#, fuzzy
 msgid "Merging"
-msgstr "Spojuji..."
+msgstr "Slučuji"
 
 #: ../plug-ins/common/unsharp.c:644
 msgid "Unsharp Mask"
@@ -8046,8 +8000,7 @@ msgstr "_Body"
 
 #: ../plug-ins/common/video.c:1806
 msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-msgstr ""
-"Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
+msgstr "Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
 
 #: ../plug-ins/common/video.c:1813
 msgid "Vi_deo..."
@@ -8116,34 +8069,31 @@ msgstr "Prů_hlednější"
 
 #: ../plug-ins/common/vpropagate.c:236
 msgid "Propagate certain colors to neighboring pixels"
-msgstr ""
+msgstr "Rozšířit určité barvy na sousední pixely"
 
 #: ../plug-ins/common/vpropagate.c:241
 msgid "_Value Propagate..."
 msgstr "_Rozšířit hodnotu..."
 
 #: ../plug-ins/common/vpropagate.c:248
-#, fuzzy
 msgid "Shrink darker areas of the image"
-msgstr "První řada obrázku"
+msgstr "Zmenšit tmavé oblasti obrázku"
 
 #: ../plug-ins/common/vpropagate.c:253
 msgid "E_rode"
 msgstr "_Erodovat"
 
 #: ../plug-ins/common/vpropagate.c:260
-#, fuzzy
 msgid "Grow darker areas of the image"
-msgstr "Použít barvu obrázku"
+msgstr "Zvětšit tmavé oblasti obrázku"
 
 #: ../plug-ins/common/vpropagate.c:265
 msgid "_Dilate"
 msgstr "_Dilatovat"
 
 #: ../plug-ins/common/vpropagate.c:475
-#, fuzzy
 msgid "Value Propagating"
-msgstr "Rozšiřuji hodnotu..."
+msgstr "Rozšiřuji hodnotu"
 
 #: ../plug-ins/common/vpropagate.c:1057
 msgid "Value Propagate"
@@ -8183,18 +8133,16 @@ msgid "To _bottom"
 msgstr "_Dolů"
 
 #: ../plug-ins/common/vpropagate.c:1188
-#, fuzzy
 msgid "Propagating _alpha channel"
 msgstr "Rozšíření v _alfa kanálu"
 
 #: ../plug-ins/common/vpropagate.c:1199
-#, fuzzy
 msgid "Propagating value channel"
 msgstr "Rozšíření v kanálu hodnot"
 
 #: ../plug-ins/common/warp.c:235
 msgid "Twist or smear image in many different ways"
-msgstr ""
+msgstr "Zkroutit či rozmazat obrázek různými způsoby"
 
 #: ../plug-ins/common/warp.c:243
 msgid "_Warp..."
@@ -8300,14 +8248,12 @@ msgstr "Menu mapy pevného směrového vektoru"
 
 #. make sure layer is visible
 #: ../plug-ins/common/warp.c:1193
-#, fuzzy
 msgid "Smoothing X gradient"
-msgstr "Vyhlazuje se X přechod..."
+msgstr "Vyhlazuje se X přechod"
 
 #: ../plug-ins/common/warp.c:1196
-#, fuzzy
 msgid "Smoothing Y gradient"
-msgstr "Vyhlazuje se Y přechod..."
+msgstr "Vyhlazuje se Y přechod"
 
 #. calculate new X,Y Displacement image maps
 #: ../plug-ins/common/warp.c:1249
@@ -8315,9 +8261,9 @@ msgid "Finding XY gradient"
 msgstr "Hledá se XY přechod"
 
 #: ../plug-ins/common/warp.c:1275
-#, fuzzy, c-format
+#, c-format
 msgid "Flow step %d"
-msgstr "Krok toku %d..."
+msgstr "Krok toku %d"
 
 #: ../plug-ins/common/waves.c:118
 msgid "Distort the image with waves"
@@ -8379,7 +8325,7 @@ msgstr ""
 
 #: ../plug-ins/common/whirlpinch.c:139
 msgid "Distort an image by whirling and pinching"
-msgstr ""
+msgstr "Zkreslit obrázek vířením a zaškrcováním"
 
 #: ../plug-ins/common/whirlpinch.c:150
 msgid "W_hirl and Pinch..."
@@ -8390,9 +8336,8 @@ msgid "Region affected by plug-in is empty"
 msgstr "Oblast ovlivněná zásuvným modulem je prázdná"
 
 #: ../plug-ins/common/whirlpinch.c:341
-#, fuzzy
 msgid "Whirling and pinching"
-msgstr "Vířím a zaškrcuji..."
+msgstr "Vířím a zaškrcuji"
 
 #: ../plug-ins/common/whirlpinch.c:528
 msgid "Whirl and Pinch"
@@ -8408,21 +8353,19 @@ msgstr "_Míra zaškrcení:"
 
 #: ../plug-ins/common/wind.c:177
 msgid "Smear image to give windblown effect"
-msgstr ""
+msgstr "Rozmazat obrázek pro vytvoření efektu větru"
 
 #: ../plug-ins/common/wind.c:182
 msgid "Wi_nd..."
 msgstr "_Vítr..."
 
 #: ../plug-ins/common/wind.c:317
-#, fuzzy
 msgid "Rendering blast"
-msgstr "Počítám výbuch..."
+msgstr "Vykresluje se výbuch"
 
 #: ../plug-ins/common/wind.c:444
-#, fuzzy
 msgid "Rendering wind"
-msgstr "Počítám vítr..."
+msgstr "Vykresluje se vítr"
 
 #: ../plug-ins/common/wind.c:881
 msgid "Wind"
@@ -8789,7 +8732,7 @@ msgstr "Kompozice obrázku"
 
 #: ../plug-ins/flame/flame.c:128
 msgid "Create cosmic recursive fractal flames"
-msgstr ""
+msgstr "Vytvořit rekurzivní fraktální plameny"
 
 #: ../plug-ins/flame/flame.c:133
 msgid "_Flame..."
@@ -8957,9 +8900,8 @@ msgid "Pattern fill"
 msgstr "Vyplnění vzorkem"
 
 #: ../plug-ins/gfig/gfig-dialog.c:426
-#, fuzzy
 msgid "Shape gradient"
-msgstr "Přechod"
+msgstr "Přechod tvaru"
 
 #: ../plug-ins/gfig/gfig-dialog.c:427
 msgid "Vertical gradient"
@@ -9124,8 +9066,7 @@ msgstr "Kopírovat"
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
-msgstr ""
-"Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
+msgstr "Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
 
 #: ../plug-ins/gfig/gfig-dialog.c:1308
 msgid "Background:"
@@ -9145,11 +9086,11 @@ msgstr "Rozestup mřížky:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1409
 msgid "Polar grid sectors desired:"
-msgstr ""
+msgstr "Požadované sektory polární mřížky:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1431
 msgid "Polar grid radius interval:"
-msgstr ""
+msgstr "Interval poloměru polární mřížky:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1447
 msgid "Rectangle"
@@ -9251,8 +9192,7 @@ msgid "_Gfig..."
 msgstr "_Gfig..."
 
 #: ../plug-ins/gfig/gfig.c:724
-msgid ""
-"Error trying to save figure as a parasite: can't attach parasite to drawable."
+msgid "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Chyba při pokusu uložit obrázek jako parazita: nemohu připojit parazita k "
 "drawable."
@@ -9282,7 +9222,6 @@ msgstr "_Záře z přechodu..."
 #. *    Dialog Shell
 #.
 #: ../plug-ins/gflare/gflare.c:957 ../plug-ins/gflare/gflare.c:2291
-#, fuzzy
 msgid "Gradient Flare"
 msgstr "Záře z přechodu..."
 
@@ -9374,9 +9313,8 @@ msgid "S_elector"
 msgstr "S_elektor"
 
 #: ../plug-ins/gflare/gflare.c:2989
-#, fuzzy
 msgid "New Gradient Flare"
-msgstr "Záře z přechodu..."
+msgstr "Nová záře z přechodu"
 
 #: ../plug-ins/gflare/gflare.c:2992
 msgid "Enter a name for the new GFlare"
@@ -9388,9 +9326,8 @@ msgid "The name '%s' is used already!"
 msgstr "Jméno '%s' je již použito!"
 
 #: ../plug-ins/gflare/gflare.c:3068
-#, fuzzy
 msgid "Copy Gradient Flare"
-msgstr "Záře z přechodu..."
+msgstr "Kopírovat záři z přechodu"
 
 #: ../plug-ins/gflare/gflare.c:3071
 msgid "Enter a name for the copied GFlare"
@@ -9406,9 +9343,8 @@ msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Nemohu odstranit!! Musí zde být alespoň jedna P-záře."
 
 #: ../plug-ins/gflare/gflare.c:3134
-#, fuzzy
 msgid "Delete Gradient Flare"
-msgstr "Odstranit P-záři"
+msgstr "Odstranit záři z přechodu"
 
 #: ../plug-ins/gflare/gflare.c:3206
 #, c-format
@@ -9416,9 +9352,8 @@ msgid "not found %s in gflares_list"
 msgstr "%s nebylo nalezeno v seznamu P-září"
 
 #: ../plug-ins/gflare/gflare.c:3247
-#, fuzzy
 msgid "Gradient Flare Editor"
-msgstr "Editor P-září"
+msgstr "Editor záře z přechodu"
 
 #: ../plug-ins/gflare/gflare.c:3251
 msgid "Rescan Gradients"
@@ -9463,17 +9398,14 @@ msgstr "Přechody"
 
 #: ../plug-ins/gflare/gflare.c:3496 ../plug-ins/gflare/gflare.c:3601
 #: ../plug-ins/gflare/gflare.c:3738
-#, fuzzy
 msgid "Radial gradient:"
 msgstr "Paprskovitý přechod:"
 
 #: ../plug-ins/gflare/gflare.c:3500 ../plug-ins/gflare/gflare.c:3605
-#, fuzzy
 msgid "Angular gradient:"
 msgstr "Úhlový přechod:"
 
 #: ../plug-ins/gflare/gflare.c:3504 ../plug-ins/gflare/gflare.c:3609
-#, fuzzy
 msgid "Angular size gradient:"
 msgstr "Přechod úhlové velikosti:"
 
@@ -9501,7 +9433,6 @@ msgid "# of Spikes:"
 msgstr "Počet hrotů:"
 
 #: ../plug-ins/gflare/gflare.c:3678
-#, fuzzy
 msgid "Spike thickness:"
 msgstr "Tloušťka hrotů:"
 
@@ -9510,7 +9441,6 @@ msgid "_Rays"
 msgstr "_Paprsky"
 
 #: ../plug-ins/gflare/gflare.c:3742
-#, fuzzy
 msgid "Size factor gradient:"
 msgstr "Přechod faktoru velikosti:"
 
@@ -9703,8 +9633,7 @@ msgid "Shadow depth:"
 msgstr "Hloubka stínu:"
 
 #: ../plug-ins/gimpressionist/general.c:243
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Hloubka vrženého stínu, tj. jak daleko od objektu budou"
 
 #: ../plug-ins/gimpressionist/general.c:248
@@ -10082,13 +10011,11 @@ msgid "Size:"
 msgstr "Velikost:"
 
 #: ../plug-ins/gimpressionist/size.c:142
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Nechť hodnota (jas) oblasti určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:146
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
+msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "Vzdálenost od středu obrázku určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:150
@@ -10263,12 +10190,10 @@ msgid "IFS Fractal: Target"
 msgstr "IFS Fractal: Cíl"
 
 #: ../plug-ins/ifscompose/ifscompose.c:657
-#, fuzzy
 msgid "Scale hue by:"
 msgstr "Škála odstínů:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:672
-#, fuzzy
 msgid "Scale value by:"
 msgstr "Škála jasu:"
 
@@ -10356,7 +10281,6 @@ msgid "Subdivide:"
 msgstr "Poddělení:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1239
-#, fuzzy
 msgid "Spot radius:"
 msgstr "Poloměr tečky:"
 
@@ -10982,7 +10906,6 @@ msgid "_Description:"
 msgstr "_Popis:"
 
 #: ../plug-ins/imagemap/imap_settings.c:130
-#, fuzzy
 msgid "Map File Format"
 msgstr "Formát souboru mapy"
 
@@ -12018,10 +11941,8 @@ msgid "Adjust Output..."
 msgstr "Upravit výstup..."
 
 #: ../plug-ins/print/gimp_main_window.c:1466
-msgid ""
-"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
-msgstr ""
-"Úprava barevného vyvážení, jasu, kontrastu, sytosti a algoritmu rozptylu"
+msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgstr "Úprava barevného vyvážení, jasu, kontrastu, sytosti a algoritmu rozptylu"
 
 #: ../plug-ins/print/gimp_main_window.c:1500
 msgid "Print to File"
@@ -12408,3 +12329,4 @@ msgstr "Chyba: Nemohu načíst soubor XJT vlastností '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Chyba: Soubor XJT vlastností '%s' je prázdný."
+
