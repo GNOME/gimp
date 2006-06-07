@@ -56,10 +56,12 @@ GType               gimp_guide_get_type        (void) G_GNUC_CONST;
 
 GimpGuide *         gimp_guide_new             (GimpOrientationType  orientation,
                                                 guint32              guide_ID);
+GimpOrientationType gimp_guide_get_orientation (GimpGuide           *guide);
+void                gimp_guide_set_orientation (GimpGuide           *guide,
+                                                GimpOrientationType  orientation);
 gint                gimp_guide_get_position    (GimpGuide           *guide);
 void                gimp_guide_set_position    (GimpGuide           *guide,
                                                 gint                 position);
-GimpOrientationType gimp_guide_get_orientation (GimpGuide           *guide);
 
 
 #endif /* __GIMP_GUIDE_H__ */

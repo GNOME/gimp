@@ -1,5 +1,13 @@
 2006-06-07  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpguide.[ch]: added a setter for "orientation".
+
+	* app/core/gimpimage-resize.c (gimp_image_resize_with_layers):
+	removed unused variable; use for() loops to iterate over guides
+	and sample points.
+
+2006-06-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpguide.[ch]: derive from GObject, we don't need any
 	GimpObject functionality here.  Declare "orientation" and "id"
 	properties CONSTRUCT_ONLY, added a gimp_guide_new() function and
