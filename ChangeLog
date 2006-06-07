@@ -1,3 +1,7 @@
+2006-06-07  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpguide.c: removed unused includes and property blurbs.
+
 2006-06-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpguide.[ch]: added gimp_guide_get_ID().

@@ -21,19 +21,14 @@
 
 #include "config.h"
 
-#include <string.h> /* strcmp */
-
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpbase/gimplimits.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
 #include "gimpguide.h"
-
-#include "gimp-intl.h"
 
 
 enum
@@ -67,23 +62,20 @@ gimp_guide_class_init (GimpGuideClass *klass)
   object_class->set_property = gimp_guide_set_property;
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_ID,
-                                "id",
-                                N_("Identifying number for the guide."),
+                                "id", NULL,
                                 0,
                                 G_MAXINT, 0,
                                 G_PARAM_CONSTRUCT_ONLY |
                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ORIENTATION,
-                                 "orientation",
-                                 N_("Orientation of the guide."),
+                                 "orientation", NULL,
                                  GIMP_TYPE_ORIENTATION_TYPE,
                                  GIMP_ORIENTATION_UNKNOWN,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_POSITION,
-                                "position",
-                                N_("Offset of the guide."),
+                                "position", NULL,
                                 -1,
                                 GIMP_MAX_IMAGE_SIZE, -1,
                                 GIMP_PARAM_STATIC_STRINGS);
