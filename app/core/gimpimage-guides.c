@@ -86,14 +86,14 @@ gimp_image_add_guide (GimpImage *image,
   g_return_if_fail (GIMP_IS_GUIDE (guide));
   g_return_if_fail (position >= 0);
 
-  if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
+  if (gimp_guide_get_orientation (guide) == GIMP_ORIENTATION_HORIZONTAL)
     g_return_if_fail (position <= image->height);
   else
     g_return_if_fail (position <= image->width);
 
   image->guides = g_list_prepend (image->guides, guide);
 
-  guide->position = position;
+  gimp_guide_set_position (guide, position);
   g_object_ref (G_OBJECT (guide));
 
   gimp_image_update_guide (image, guide);
@@ -114,7 +114,7 @@ gimp_image_remove_guide (GimpImage *image,
 
   image->guides = g_list_remove (image->guides, guide);
 
-  guide->position = -1;
+  gimp_guide_set_position (guide, -1);
   g_object_unref (G_OBJECT (guide));
 }
 
@@ -128,7 +128,7 @@ gimp_image_move_guide (GimpImage *image,
   g_return_if_fail (GIMP_IS_GUIDE (guide));
   g_return_if_fail (position >= 0);
 
-  if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
+  if (gimp_guide_get_orientation (guide) == GIMP_ORIENTATION_HORIZONTAL)
     g_return_if_fail (position <= image->height);
   else
     g_return_if_fail (position <= image->width);
@@ -137,7 +137,7 @@ gimp_image_move_guide (GimpImage *image,
     gimp_image_undo_push_image_guide (image, _("Move Guide"), guide);
 
   gimp_image_update_guide (image, guide);
-  guide->position = position;
+  gimp_guide_set_position (guide, position);
   gimp_image_update_guide (image, guide);
 }
 
@@ -153,7 +153,8 @@ gimp_image_get_guide (GimpImage *image,
     {
       GimpGuide *guide = guides->data;
 
-      if (guide->guide_ID == id && guide->position >= 0)
+      if (gimp_guide_get_ID (guide) == id &&
+          gimp_guide_get_position (guide) >= 0)
         return guide;
     }
 
@@ -179,13 +180,13 @@ gimp_image_get_next_guide (GimpImage *image,
     {
       GimpGuide *guide = guides->data;
 
-      if (guide->position < 0)
+      if (gimp_guide_get_position (guide) < 0)
         continue;
 
       if (*guide_found) /* this is the first guide after the found one */
         return guide;
 
-      if (guide->guide_ID == id) /* found it, next one will be returned */
+      if (gimp_guide_get_ID (guide) == id) /* found it, next one will be returned */
         *guide_found = TRUE;
     }
 
@@ -216,15 +217,18 @@ gimp_image_find_guide (GimpImage *image,
 
   for (list = image->guides; list; list = g_list_next (list))
     {
-      guide = list->data;
+      gint position;
 
-      if (guide->position < 0)
+      guide = list->data;
+      position = gimp_guide_get_position (guide);
+
+      if (position < 0)
         continue;
 
-      switch (guide->orientation)
+      switch (gimp_guide_get_orientation (guide))
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-          dist = ABS (guide->position - y);
+          dist = ABS (position - y);
           if (dist < MIN (epsilon_y, mindist))
             {
               mindist = dist;
@@ -234,7 +238,7 @@ gimp_image_find_guide (GimpImage *image,
 
         /* mindist always is in vertical resolution to make it comparable */
         case GIMP_ORIENTATION_VERTICAL:
-          dist = ABS (guide->position - x);
+          dist = ABS (position - x);
           if (dist < MIN (epsilon_x, mindist / epsilon_y * epsilon_x))
             {
               mindist = dist * epsilon_y / epsilon_x;

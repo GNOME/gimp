@@ -167,9 +167,9 @@ gimp_image_resize_with_layers (GimpImage    *image,
     {
       GimpGuide *guide        = list->data;
       gboolean   remove_guide = FALSE;
-      gint       new_position = guide->position;
+      gint       new_position = gimp_guide_get_position (guide);
 
-      switch (guide->orientation)
+      switch (gimp_guide_get_orientation (guide))
         {
         case GIMP_ORIENTATION_HORIZONTAL:
           new_position += offset_y;
@@ -189,7 +189,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
 
       if (remove_guide)
         gimp_image_remove_guide (image, guide, TRUE);
-      else if (new_position != guide->position)
+      else if (new_position != gimp_guide_get_position (guide))
         gimp_image_move_guide (image, guide, new_position, TRUE);
     }
 

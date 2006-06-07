@@ -252,8 +252,8 @@ gimp_move_tool_button_press (GimpTool        *tool,
             {
               move->guide             = guide;
               move->moving_guide      = TRUE;
-              move->guide_position    = guide->position;
-              move->guide_orientation = guide->orientation;
+              move->guide_position    = gimp_guide_get_position (guide);
+              move->guide_orientation = gimp_guide_get_orientation (guide);
 
               gimp_tool_control_set_scroll_lock (tool->control, TRUE);
               gimp_tool_control_activate (tool->control);

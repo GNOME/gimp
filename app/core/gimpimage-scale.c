@@ -164,18 +164,19 @@ gimp_image_scale (GimpImage             *image,
   /*  Scale all Guides  */
   for (list = image->guides; list; list = g_list_next (list))
     {
-      GimpGuide *guide = list->data;
+      GimpGuide *guide    = list->data;
+      gint       position = gimp_guide_get_position (guide);
 
-      switch (guide->orientation)
+      switch (gimp_guide_get_orientation (guide))
         {
         case GIMP_ORIENTATION_HORIZONTAL:
           gimp_image_undo_push_image_guide (image, NULL, guide);
-          guide->position = (guide->position * new_height) / old_height;
+          gimp_guide_set_position (guide, (position * new_height) / old_height);
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
           gimp_image_undo_push_image_guide (image, NULL, guide);
-          guide->position = (guide->position * new_width) / old_width;
+          gimp_guide_set_position (guide, (position * new_width) / old_width);
           break;
 
         default:

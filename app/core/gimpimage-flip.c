@@ -125,20 +125,21 @@ gimp_image_flip (GimpImage           *image,
   /*  Flip all Guides  */
   for (list = image->guides; list; list = g_list_next (list))
     {
-      GimpGuide *guide = list->data;
+      GimpGuide *guide    = list->data;
+      gint       position = gimp_guide_get_position (guide);
 
-      switch (guide->orientation)
+      switch (gimp_guide_get_orientation (guide))
         {
         case GIMP_ORIENTATION_HORIZONTAL:
           if (flip_type == GIMP_ORIENTATION_VERTICAL)
             gimp_image_move_guide (image, guide,
-                                   image->height - guide->position, TRUE);
+                                   image->height - position, TRUE);
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
           if (flip_type == GIMP_ORIENTATION_HORIZONTAL)
             gimp_image_move_guide (image, guide,
-                                   image->width - guide->position, TRUE);
+                                   image->width - position, TRUE);
           break;
 
         default:

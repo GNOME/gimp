@@ -1,8 +1,7 @@
 2006-06-07  Michael Natterer  <mitch@gimp.org>
 
-	* app/core/gimpguide.[ch]
+	* app/core/gimpguide.[ch]: added gimp_guide_get_ID().
 
-	* app/core/gimpimage-convert.c
 	* app/core/gimpimage-crop.c
 	* app/core/gimpimage-duplicate.c
 	* app/core/gimpimage-flip.c
@@ -12,18 +11,14 @@
 	* app/core/gimpimage-scale.c
 	* app/core/gimpimage-snap.c
 	* app/core/gimpimage-undo-push.c
-
 	* app/display/gimpdisplayshell-draw.c
 	* app/display/gimpdisplayshell.c
-
 	* app/tools/gimpmovetool.c
-
-	* app/widgets/gimpeditor.c
 	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/guides.pdb: use accessors instead of accessing
+	GimpGuide's struct members directly.
 
-	* tools/pdbgen/pdb/guides.pdb
-
-	* app/pdb/guides_cmds.c
+	* app/pdb/guides_cmds.c: regenerated.
 
 2006-06-07  Sven Neumann  <sven@gimp.org>
 

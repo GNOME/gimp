@@ -222,16 +222,17 @@ gimp_image_duplicate (GimpImage *image)
   /*  Copy any guides  */
   for (list = image->guides; list; list = g_list_next (list))
     {
-      GimpGuide *guide = list->data;
+      GimpGuide *guide    = list->data;
+      gint       position = gimp_guide_get_position (guide);
 
-      switch (guide->orientation)
+      switch (gimp_guide_get_orientation (guide))
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-          gimp_image_add_hguide (new_image, guide->position, FALSE);
+          gimp_image_add_hguide (new_image, position, FALSE);
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
-          gimp_image_add_vguide (new_image, guide->position, FALSE);
+          gimp_image_add_vguide (new_image, position, FALSE);
           break;
 
         default:

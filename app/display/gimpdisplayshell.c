@@ -1283,22 +1283,23 @@ void
 gimp_display_shell_expose_guide (GimpDisplayShell *shell,
                                  GimpGuide        *guide)
 {
-  gint x;
-  gint y;
+  gint position;
+  gint x, y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (guide != NULL);
+  g_return_if_fail (GIMP_IS_GUIDE (guide));
 
-  if (guide->position < 0)
+  position = gimp_guide_get_position (guide);
+
+  if (position < 0)
     return;
 
   gimp_display_shell_transform_xy (shell,
-                                   guide->position,
-                                   guide->position,
+                                   position, position,
                                    &x, &y,
                                    FALSE);
 
-  switch (guide->orientation)
+  switch (gimp_guide_get_position (guide))
     {
     case GIMP_ORIENTATION_HORIZONTAL:
       gimp_display_shell_expose_area (shell, 0, y, shell->disp_width, 1);

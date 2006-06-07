@@ -46,13 +46,13 @@ enum
 
 
 static void   gimp_guide_get_property (GObject      *object,
-                                      guint         property_id,
-                                      GValue       *value,
-                                      GParamSpec   *pspec);
+                                       guint         property_id,
+                                       GValue       *value,
+                                       GParamSpec   *pspec);
 static void   gimp_guide_set_property (GObject      *object,
-                                      guint         property_id,
-                                      const GValue *value,
-                                      GParamSpec   *pspec);
+                                       guint         property_id,
+                                       const GValue *value,
+                                       GParamSpec   *pspec);
 
 
 G_DEFINE_TYPE (GimpGuide, gimp_guide, G_TYPE_OBJECT)
@@ -73,12 +73,14 @@ gimp_guide_class_init (GimpGuideClass *klass)
                                 G_MAXINT, 0,
                                 G_PARAM_CONSTRUCT_ONLY |
                                 GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ORIENTATION,
                                  "orientation",
                                  N_("Orientation of the guide."),
                                  GIMP_TYPE_ORIENTATION_TYPE,
                                  GIMP_ORIENTATION_UNKNOWN,
                                  GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_POSITION,
                                 "position",
                                 N_("Offset of the guide."),
@@ -150,6 +152,14 @@ gimp_guide_new (GimpOrientationType  orientation,
                        "id",          guide_ID,
                        "orientation", orientation,
                        NULL);
+}
+
+guint32
+gimp_guide_get_ID (GimpGuide *guide)
+{
+  g_return_val_if_fail (GIMP_IS_GUIDE (guide), 0);
+
+  return guide->guide_ID;
 }
 
 GimpOrientationType

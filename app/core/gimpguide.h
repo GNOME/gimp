@@ -34,17 +34,16 @@
 #define GIMP_GUIDE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GUIDE, GimpGuideClass))
 
 
-typedef struct _GimpGuideClass  GimpGuideClass;
+typedef struct _GimpGuideClass GimpGuideClass;
 
 struct _GimpGuide
 {
   GObject              parent_instance;
 
-  gint                 position;
-  GimpOrientationType  orientation;
   guint32              guide_ID;
+  GimpOrientationType  orientation;
+  gint                 position;
 };
-
 
 struct _GimpGuideClass
 {
@@ -56,9 +55,13 @@ GType               gimp_guide_get_type        (void) G_GNUC_CONST;
 
 GimpGuide *         gimp_guide_new             (GimpOrientationType  orientation,
                                                 guint32              guide_ID);
+
+guint32             gimp_guide_get_ID          (GimpGuide           *guide);
+
 GimpOrientationType gimp_guide_get_orientation (GimpGuide           *guide);
 void                gimp_guide_set_orientation (GimpGuide           *guide,
                                                 GimpOrientationType  orientation);
+
 gint                gimp_guide_get_position    (GimpGuide           *guide);
 void                gimp_guide_set_position    (GimpGuide           *guide,
                                                 gint                 position);

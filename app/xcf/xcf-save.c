@@ -828,27 +828,24 @@ xcf_save_prop (XcfInfo   *info,
 
     case PROP_GUIDES:
       {
-        GList     *guides;
-        GimpGuide *guide;
-        gint32     position;
-        gint8      orientation;
-        gint       nguides;
+        GList *guides;
+        gint   n_guides;
 
         guides = va_arg (args, GList *);
-        nguides = g_list_length (guides);
+        n_guides = g_list_length (guides);
 
-        size = nguides * (4 + 1);
+        size = n_guides * (4 + 1);
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
 
         for (; guides; guides = g_list_next (guides))
           {
-            guide = (GimpGuide *) guides->data;
+            GimpGuide *guide    = guides->data;
+            gint32     position = gimp_guide_get_position (guide);
+            gint8      orientation;
 
-            position = guide->position;
-
-            switch (guide->orientation)
+            switch (gimp_guide_get_orientation (guide))
               {
               case GIMP_ORIENTATION_HORIZONTAL:
                 orientation = XCF_ORIENTATION_HORIZONTAL;

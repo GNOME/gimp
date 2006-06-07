@@ -71,19 +71,20 @@ gimp_image_snap_x (GimpImage *image,
 
       for (list = image->guides; list; list = g_list_next (list))
         {
-          GimpGuide *guide = list->data;
+          GimpGuide *guide    = list->data;
+          gint       position = gimp_guide_get_position (guide);
 
-          if (guide->position < 0)
+          if (position < 0)
             continue;
 
-          if (guide->orientation == GIMP_ORIENTATION_VERTICAL)
+          if (gimp_guide_get_orientation (guide) == GIMP_ORIENTATION_VERTICAL)
             {
-              dist = ABS (guide->position - x);
+              dist = ABS (position - x);
 
               if (dist < MIN (epsilon_x, mindist))
                 {
                   mindist = dist;
-                  *tx = guide->position;
+                  *tx = position;
                   snapped = TRUE;
                 }
             }
@@ -175,19 +176,20 @@ gimp_image_snap_y (GimpImage *image,
 
       for (list = image->guides; list; list = g_list_next (list))
         {
-          GimpGuide *guide = list->data;
+          GimpGuide *guide    = list->data;
+          gint       position = gimp_guide_get_position (guide);
 
-          if (guide->position < 0)
+          if (position < 0)
             continue;
 
-          if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
+          if (gimp_guide_get_orientation (guide) == GIMP_ORIENTATION_HORIZONTAL)
             {
-              dist = ABS (guide->position - y);
+              dist = ABS (position - y);
 
               if (dist < MIN (epsilon_y, mindist))
                 {
                   mindist = dist;
-                  *ty = guide->position;
+                  *ty = position;
                   snapped = TRUE;
                 }
             }
@@ -290,31 +292,32 @@ gimp_image_snap_point (GimpImage *image,
 
       for (list = image->guides; list; list = g_list_next (list))
         {
-          GimpGuide *guide = list->data;
+          GimpGuide *guide    = list->data;
+          gint       position = gimp_guide_get_position (guide);
 
-          if (guide->position < 0)
+          if (position < 0)
             continue;
 
-          switch (guide->orientation)
+          switch (gimp_guide_get_orientation (guide))
             {
             case GIMP_ORIENTATION_HORIZONTAL:
-              dist = ABS (guide->position - y);
+              dist = ABS (position - y);
 
               if (dist < MIN (epsilon_y, mindist_y))
                 {
                   mindist_y = dist;
-                  *ty = guide->position;
+                  *ty = position;
                   snapped = TRUE;
                 }
               break;
 
             case GIMP_ORIENTATION_VERTICAL:
-              dist = ABS (guide->position - x);
+              dist = ABS (position - x);
 
               if (dist < MIN (epsilon_x, mindist_x))
                 {
                   mindist_x = dist;
-                  *tx = guide->position;
+                  *tx = position;
                   snapped = TRUE;
                 }
               break;

@@ -57,7 +57,7 @@ image_add_hguide_invoker (GimpProcedure     *procedure,
           GimpGuide *g;
 
           g = gimp_image_add_hguide (image, yposition, TRUE);
-          guide = g->guide_ID;
+          guide = gimp_guide_get_ID (g);
         }
       else
         success = FALSE;
@@ -94,7 +94,7 @@ image_add_vguide_invoker (GimpProcedure     *procedure,
           GimpGuide *g;
 
           g = gimp_image_add_vguide (image, xposition, TRUE);
-          guide = g->guide_ID;
+          guide = gimp_guide_get_ID (g);
         }
       else
         success = FALSE;
@@ -156,7 +156,7 @@ image_find_next_guide_invoker (GimpProcedure     *procedure,
       GimpGuide *g = gimp_image_get_next_guide (image, guide, &success);
 
       if (g)
-        next_guide = g->guide_ID;
+        next_guide = gimp_guide_get_ID (g);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -188,7 +188,7 @@ image_get_guide_orientation_invoker (GimpProcedure     *procedure,
       GimpGuide *g = gimp_image_get_guide (image, guide);
 
       if (g)
-        orientation = g->orientation;
+        orientation = gimp_guide_get_orientation (g);
       else
         success = FALSE;
     }
@@ -222,7 +222,7 @@ image_get_guide_position_invoker (GimpProcedure     *procedure,
       GimpGuide *g = gimp_image_get_guide (image, guide);
 
       if (g)
-        position = g->position;
+        position = gimp_guide_get_position (g);
       else
         success = FALSE;
     }
