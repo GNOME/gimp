@@ -416,8 +416,9 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool *rectangle,
   if (w == 0 && h == 0)
     {
       GimpImage   *image     = GIMP_TOOL (rectangle)->display->image;
-      GimpChannel *selection = gimp_image_get_mask (image);;
-      gint         pressx, pressy;
+      GimpChannel *selection = gimp_image_get_mask (image);
+      gint         pressx;
+      gint         pressy;
 
       g_object_get (rectangle,
                     "pressx", &pressx,
