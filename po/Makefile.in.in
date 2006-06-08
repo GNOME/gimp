@@ -11,6 +11,11 @@
 #
 # - Modified by jacob berkman <jacob@ximian.com> to install
 #   Makefile.in.in and po2tbl.sed.in for use with glib-gettextize
+#
+# - Modified by Rodney Dawes <dobey@novell.com> for use with intltool
+#
+# We have the following line for use by intltoolize:
+# INTLTOOL_MAKEFILE
 
 GETTEXT_PACKAGE = @GETTEXT_PACKAGE@
 PACKAGE = @PACKAGE@
@@ -27,20 +32,21 @@ VPATH = @srcdir@
 prefix = @prefix@
 exec_prefix = @exec_prefix@
 datadir = @datadir@
+datarootdir = @datarootdir@
 libdir = @libdir@
 localedir = $(libdir)/locale
 gnulocaledir = $(datadir)/locale
 gettextsrcdir = $(datadir)/glib-2.0/gettext/po
 subdir = po
 install_sh = @install_sh@
-mkdir_p = @mkdir_p@
-mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+# Automake >= 1.8 provides @mkdir_p@.
+# Until it can be supposed, use the safe fallback:
+mkdir_p = $(install_sh) -d
 
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 
 CC = @CC@
-GENCAT = @GENCAT@
 GMSGFMT = @GMSGFMT@
 MSGFMT = @MSGFMT@
 XGETTEXT = @XGETTEXT@
@@ -61,13 +67,13 @@ SOURCES =
 POFILES = @POFILES@
 GMOFILES = @GMOFILES@
 DISTFILES = ChangeLog Makefile.in.in POTFILES.in \
-$(POFILES) $(GMOFILES) $(SOURCES)
+$(POFILES) $(SOURCES)
+EXTRA_DISTFILES = POTFILES.skip Makevars LINGUAS
 
 POTFILES = \
 
 CATALOGS = @CATALOGS@
 CATOBJEXT = @CATOBJEXT@
-INSTOBJEXT = @INSTOBJEXT@
 
 .SUFFIXES:
 .SUFFIXES: .c .o .po .pox .gmo .mo .msg .cat
@@ -77,7 +83,7 @@ INSTOBJEXT = @INSTOBJEXT@
 
 .po.pox:
 	$(MAKE) $(GETTEXT_PACKAGE).pot
-	$(MSGMERGE) $< $(top_builddir)/po/$(GETTEXT_PACKAGE).pot -o $*pox
+	$(MSGMERGE) $< $(GETTEXT_PACKAGE).pot -o $*.pox
 
 .po.mo:
 	$(MSGFMT) -o $@ $<
@@ -88,7 +94,7 @@ INSTOBJEXT = @INSTOBJEXT@
 
 .po.cat:
 	sed -f ../intl/po2msg.sed < $< > $*.msg \
-	  && rm -f $@ && $(GENCAT) $@ $*.msg
+	  && rm -f $@ && gencat $@ $*.msg
 
 
 all: all-@USE_NLS@
@@ -104,11 +110,7 @@ install-exec:
 install-data: install-data-@USE_NLS@
 install-data-no: all
 install-data-yes: all
-	if test -n "$(MKINSTALLDIRS)"; then \
-	  $(MKINSTALLDIRS) $(DESTDIR)$(datadir); \
-	else \
-	  $(SHELL) $(top_srcdir)/mkinstalldirs $(DESTDIR)$(datadir); \
-	fi
+	$(mkdir_p) $(DESTDIR)$(datadir)
 	@catalogs='$(CATALOGS)'; \
 	for cat in $$catalogs; do \
 	  cat=`basename $$cat`; \
@@ -118,39 +120,31 @@ install-data-yes: all
 	  esac; \
 	  lang=`echo $$cat | sed 's/\$(CATOBJEXT)$$//'`; \
 	  dir=$(DESTDIR)$$destdir/$$lang/LC_MESSAGES; \
-	  if test -n "$(MKINSTALLDIRS)"; then \
-	    $(MKINSTALLDIRS) $$dir; \
-	  else \
-	    $(SHELL) $(top_srcdir)/mkinstalldirs $$dir; \
-	  fi; \
+	  $(mkdir_p) $$dir; \
 	  if test -r $$cat; then \
-	    $(INSTALL_DATA) $$cat $$dir/$(GETTEXT_PACKAGE)$(INSTOBJEXT); \
-	    echo "installing $$cat as $$dir/$(GETTEXT_PACKAGE)$(INSTOBJEXT)"; \
+	    $(INSTALL_DATA) $$cat $$dir/$(GETTEXT_PACKAGE).mo; \
+	    echo "installing $$cat as $$dir/$(GETTEXT_PACKAGE).mo"; \
 	  else \
-	    $(INSTALL_DATA) $(srcdir)/$$cat $$dir/$(GETTEXT_PACKAGE)$(INSTOBJEXT); \
+	    $(INSTALL_DATA) $(srcdir)/$$cat $$dir/$(GETTEXT_PACKAGE).mo; \
 	    echo "installing $(srcdir)/$$cat as" \
-		 "$$dir/$(GETTEXT_PACKAGE)$(INSTOBJEXT)"; \
+		 "$$dir/$(GETTEXT_PACKAGE).mo"; \
 	  fi; \
 	  if test -r $$cat.m; then \
-	    $(INSTALL_DATA) $$cat.m $$dir/$(GETTEXT_PACKAGE)$(INSTOBJEXT).m; \
-	    echo "installing $$cat.m as $$dir/$(GETTEXT_PACKAGE)$(INSTOBJEXT).m"; \
+	    $(INSTALL_DATA) $$cat.m $$dir/$(GETTEXT_PACKAGE).mo.m; \
+	    echo "installing $$cat.m as $$dir/$(GETTEXT_PACKAGE).mo.m"; \
 	  else \
 	    if test -r $(srcdir)/$$cat.m ; then \
 	      $(INSTALL_DATA) $(srcdir)/$$cat.m \
-		$$dir/$(GETTEXT_PACKAGE)$(INSTOBJEXT).m; \
+		$$dir/$(GETTEXT_PACKAGE).mo.m; \
 	      echo "installing $(srcdir)/$$cat as" \
-		   "$$dir/$(GETTEXT_PACKAGE)$(INSTOBJEXT).m"; \
+		   "$$dir/$(GETTEXT_PACKAGE).mo.m"; \
 	    else \
 	      true; \
 	    fi; \
 	  fi; \
 	done
 	if test "$(PACKAGE)" = "glib"; then \
-	  if test -n "$(MKINSTALLDIRS)"; then \
-	    $(MKINSTALLDIRS) $(DESTDIR)$(gettextsrcdir); \
-	  else \
-	    $(SHELL) $(top_srcdir)/mkinstalldirs $(DESTDIR)$(gettextsrcdir); \
-	  fi; \
+	  $(mkdir_p) $(DESTDIR)$(gettextsrcdir); \
 	  $(INSTALL_DATA) $(srcdir)/Makefile.in.in \
 			  $(DESTDIR)$(gettextsrcdir)/Makefile.in.in; \
 	else \
@@ -165,16 +159,16 @@ uninstall:
 	for cat in $$catalogs; do \
 	  cat=`basename $$cat`; \
 	  lang=`echo $$cat | sed 's/\$(CATOBJEXT)$$//'`; \
-	  rm -f $(DESTDIR)$(localedir)/$$lang/LC_MESSAGES/$(GETTEXT_PACKAGE)$(INSTOBJEXT); \
-	  rm -f $(DESTDIR)$(localedir)/$$lang/LC_MESSAGES/$(GETTEXT_PACKAGE)$(INSTOBJEXT).m; \
-	  rm -f $(DESTDIR)$(gnulocaledir)/$$lang/LC_MESSAGES/$(GETTEXT_PACKAGE)$(INSTOBJEXT); \
-	  rm -f $(DESTDIR)$(gnulocaledir)/$$lang/LC_MESSAGES/$(GETTEXT_PACKAGE)$(INSTOBJEXT).m; \
+	  rm -f $(DESTDIR)$(localedir)/$$lang/LC_MESSAGES/$(GETTEXT_PACKAGE).mo; \
+	  rm -f $(DESTDIR)$(localedir)/$$lang/LC_MESSAGES/$(GETTEXT_PACKAGE).mo.m; \
+	  rm -f $(DESTDIR)$(gnulocaledir)/$$lang/LC_MESSAGES/$(GETTEXT_PACKAGE).mo; \
+	  rm -f $(DESTDIR)$(gnulocaledir)/$$lang/LC_MESSAGES/$(GETTEXT_PACKAGE).mo.m; \
 	done
 	if test "$(PACKAGE)" = "glib"; then \
 	  rm -f $(DESTDIR)$(gettextsrcdir)/Makefile.in.in; \
 	fi
 
-check: all
+check: all $(GETTEXT_PACKAGE).pot
 
 dvi info tags TAGS ID:
 
@@ -186,19 +180,25 @@ mostlyclean:
 clean: mostlyclean
 
 distclean: clean
-	rm -f Makefile Makefile.in POTFILES *.mo *.msg *.cat *.cat.m
+	rm -f Makefile Makefile.in POTFILES stamp-it
+	rm -f *.mo *.msg *.cat *.cat.m *.gmo
 
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use;"
 	@echo "it deletes files that may require special tools to rebuild."
-	rm -f $(GMOFILES)
+	rm -f Makefile.in.in
 
 distdir = ../$(GETTEXT_PACKAGE)-$(VERSION)/$(subdir)
-dist distdir: $(DISTFILES) $(GETTEXT_PACKAGE).pot
+dist distdir: $(DISTFILES)
 	dists="$(DISTFILES)"; \
+	extra_dists="$(EXTRA_DISTFILES)"; \
+	for file in $$extra_dists; do \
+	  test -f $(srcdir)/$$file && dists="$$dists $(srcdir)/$$file"; \
+	done; \
 	for file in $$dists; do \
-	  ln $(srcdir)/$$file $(distdir) 2> /dev/null \
-	    || cp -p $(srcdir)/$$file $(distdir); \
+	  test -f $$file || file="$(srcdir)/$$file"; \
+	  ln $$file $(distdir) 2> /dev/null \
+	    || cp -p $$file $(distdir); \
 	done
 
 update-po: Makefile
@@ -228,27 +228,15 @@ update-po: Makefile
 	  fi; \
 	done
 
-# POTFILES is created from POTFILES.in by stripping comments, empty lines
-# and Intltool tags (enclosed in square brackets), and appending a full
-# relative path to them
-POTFILES: POTFILES.in
-	( if test 'x$(srcdir)' != 'x.'; then \
-	    posrcprefix='$(top_srcdir)/'; \
-	  else \
-	    posrcprefix="../"; \
-	  fi; \
-	  rm -f $@-t $@ \
-	    && (sed -e '/^#/d' 						\
-		    -e "s/^\[.*\] +//" 					\
-		    -e '/^[ 	]*$$/d' 				\
-		    -e "s@.*@	$$posrcprefix& \\\\@" < $(srcdir)/$@.in	\
-		| sed -e '$$s/\\$$//') > $@-t \
-	    && chmod a-w $@-t \
-	    && mv $@-t $@ )
+Makefile POTFILES: stamp-it
+	@if test ! -f $@; then \
+	  rm -f stamp-it; \
+	  $(MAKE) stamp-it; \
+	fi
 
-Makefile: Makefile.in.in ../config.status POTFILES
+stamp-it: Makefile.in.in ../config.status POTFILES.in
 	cd .. \
-	  && CONFIG_FILES=$(subdir)/$@.in CONFIG_HEADERS= \
+	  && CONFIG_FILES=$(subdir)/Makefile.in CONFIG_HEADERS= CONFIG_LINKS= \
 	       $(SHELL) ./config.status
 
 # Tell versions [3.59,3.63) of GNU make not to export all variables.

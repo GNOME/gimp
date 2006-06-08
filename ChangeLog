@@ -1,5 +1,11 @@
 2006-06-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/common/png.c
+	* po/Makefile.in.in: revert changes inintentionally included
+	in previous commit.
+	
+2006-06-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/core/core-enums.[ch]: add GIMP_ARRANGE_FOO values
 	to GimpAlignmentType, and change CENTER to HCENTER,
 	MIDDLE to VCENTER.
