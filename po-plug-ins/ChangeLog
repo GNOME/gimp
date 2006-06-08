@@ -1,3 +1,7 @@
+2006-06-08  Jakub Friedl <jfriedl@suse.cz>
+
+	* cs.po: Czech terminology fix (unsharp mask).
+
 2006-06-07  Jakub Friedl <jfriedl@centrum.cz>
 
 	* cs.po: Fixed a bad string.

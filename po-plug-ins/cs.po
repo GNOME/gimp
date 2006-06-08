@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-07 10:09+0200\n"
-"PO-Revision-Date: 2006-06-07 14:43+0200\n"
+"POT-Creation-Date: 2006-06-08 13:23+0200\n"
+"PO-Revision-Date: 2006-06-08 13:31+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -7952,7 +7952,7 @@ msgstr "Obvykle nejvhodnější způsob zaostření obrázku"
 
 #: ../plug-ins/common/unsharp.c:141
 msgid "_Unsharp Mask..."
-msgstr "_Rozostřit masku..."
+msgstr "_Maska rozostření..."
 
 #: ../plug-ins/common/unsharp.c:477
 msgid "Merging"
@@ -7960,7 +7960,7 @@ msgstr "Slučuji"
 
 #: ../plug-ins/common/unsharp.c:644
 msgid "Unsharp Mask"
-msgstr "Rozostřit masku"
+msgstr "Maska rozostření"
 
 #: ../plug-ins/common/video.c:41
 msgid "_Staggered"
