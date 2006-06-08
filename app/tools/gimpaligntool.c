@@ -86,11 +86,7 @@ static void   gimp_align_tool_draw           (GimpDrawTool      *draw_tool);
 static GtkWidget *button_with_stock          (GimpAlignmentType  action,
                                               GimpAlignTool     *align_tool);
 static GtkWidget *gimp_align_tool_controls   (GimpAlignTool     *align_tool);
-static void   set_action                     (GtkWidget         *widget,
-                                              gpointer           data);
-static void   do_horizontal_alignment        (GtkWidget         *widget,
-                                              gpointer           data);
-static void   do_vertical_alignment          (GtkWidget         *widget,
+static void   do_alignment                   (GtkWidget         *widget,
                                               gpointer           data);
 static void   clear_selected_object          (GObject           *object,
                                               GimpAlignTool     *align_tool);
@@ -119,7 +115,7 @@ gimp_align_tool_register (GimpToolRegisterCallback  callback,
                 gimp_align_options_gui,
                 0,
                 "gimp-align-tool",
-                _("Align"),
+                _("Alignment Tool"),
                 _("Align or arrange layers and other items"),
                 N_("_Align"), "Q",
                 NULL, GIMP_HELP_TOOL_MOVE,
@@ -156,8 +152,7 @@ gimp_align_tool_init (GimpAlignTool *align_tool)
 
   align_tool->selected_objects = NULL;
 
-  align_tool->horz_align_type = GIMP_ALIGN_LEFT;
-  align_tool->vert_align_type = GIMP_ALIGN_TOP;
+  align_tool->align_type = GIMP_ALIGN_LEFT;
 
   align_tool->horz_offset = 0;
   align_tool->vert_offset = 0;
@@ -285,6 +280,13 @@ gimp_align_tool_button_press (GimpTool        *tool,
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
+/*
+ * some rather complex logic here.  If the user clicks without modifiers,
+ * then we start a new list, and use the first object in it as reference.
+ * If the user clicks using Shift, or draws a rubber-band box, then
+ * we add objects to the list, but do not specify which one should
+ * be used as reference.
+ */
 static void
 gimp_align_tool_button_release (GimpTool        *tool,
                                 GimpCoords      *coords,
@@ -300,8 +302,20 @@ gimp_align_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  if (! (state & GDK_SHIFT_MASK))
-    clear_all_selected_objects (align_tool);
+  if (state & GDK_BUTTON3_MASK) /* cancel this action */
+    {
+      align_tool->x1 = align_tool->x0;
+      align_tool->y1 = align_tool->y0;
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+      return;
+    }
+
+  if (! (state & GDK_SHIFT_MASK)) /* start a new list */
+    {
+      clear_all_selected_objects (align_tool);
+      align_tool->set_reference = FALSE;
+    }
 
 #define EPSILON 3
 
@@ -350,6 +364,12 @@ gimp_align_tool_button_release (GimpTool        *tool,
               g_signal_connect (object, "removed",
                                 G_CALLBACK (clear_selected_object),
                                 (gpointer) align_tool);
+
+              /* if an object has been selected using unmodified click,
+               * it should be used as the reference
+               */
+              if (! (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)))
+                align_tool->set_reference = TRUE;
             }
         }
     }
@@ -552,6 +572,7 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   GtkWidget *table;
   GtkWidget *label;
   GtkWidget *button;
+  GtkWidget *spinbutton;
   gint       row, col, n;
 
   hbox = gtk_hbox_new (FALSE, 0);
@@ -574,13 +595,13 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   hbox2 = gtk_hbox_new (FALSE, 0);
   gtk_table_attach_defaults (GTK_TABLE (table), hbox2, 0, 8, row, row + 1);
   gtk_widget_show (hbox2);
-  label = gtk_label_new (_("Horizontal"));
+  label = gtk_label_new (_("Align"));
   gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   row++;
 
-  /* second row */
+  /* horizontal align row */
 
   col = 1;
   n = 0;
@@ -592,7 +613,7 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   ++col;
   ++col;
 
-  button = button_with_stock (GIMP_ALIGN_CENTER, align_tool);
+  button = button_with_stock (GIMP_ALIGN_HCENTER, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
   gimp_help_set_help_data (button, _("Align center of target"), NULL);
   align_tool->button[n++] = button;
@@ -608,34 +629,7 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
 
   row++;
 
-  /* next row */
-/*   label = gtk_label_new (_("Offset:")); */
-/*   gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, row, row + 1); */
-/*   gtk_widget_show (label); */
-
-/*   spinbutton = gimp_spin_button_new (&align_tool->horz_offset_adjustment, */
-/*                                      0, */
-/*                                      -100000., */
-/*                                      100000., */
-/*                                      1., 20., 20., 1., 0); */
-/*   gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 3, 7, row, row + 1); */
-/*   g_signal_connect (align_tool->horz_offset_adjustment, "value-changed", */
-/*                     G_CALLBACK (gimp_double_adjustment_update), */
-/*                     &align_tool->horz_offset); */
-/*   gtk_widget_show (spinbutton); */
-
-/*   row++; */
-
-  hbox2 = gtk_hbox_new (FALSE, 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox2, 0, 8, row, row + 1);
-  gtk_widget_show (hbox2);
-  label = gtk_label_new (_("Vertical"));
-  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  row++;
-
-  /* second row */
+  /* vertical align row */
 
   col = 1;
 
@@ -646,7 +640,7 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   ++col;
   ++col;
 
-  button = button_with_stock (GIMP_ALIGN_MIDDLE, align_tool);
+  button = button_with_stock (GIMP_ALIGN_VCENTER, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
   gimp_help_set_help_data (button, _("Align middle of target"), NULL);
   align_tool->button[n++] = button;
@@ -662,21 +656,85 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
 
   row++;
 
-  /* next row */
-/*   label = gtk_label_new (_("Offset:")); */
-/*   gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, row, row + 1); */
-/*   gtk_widget_show (label); */
+  /* label row */
+  hbox2 = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), hbox2, 0, 8, row, row + 1);
+  gtk_widget_show (hbox2);
+  label = gtk_label_new (_("Arrange"));
+  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-/*   spinbutton = gimp_spin_button_new (&align_tool->vert_offset_adjustment, */
-/*                                      0, */
-/*                                      -100000., */
-/*                                      100000., */
-/*                                      1., 20., 20., 1., 0); */
-/*   gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 3, 7, row, row + 1); */
-/*   g_signal_connect (align_tool->vert_offset_adjustment, "value-changed", */
-/*                     G_CALLBACK (gimp_double_adjustment_update), */
-/*                     &align_tool->vert_offset); */
-/*   gtk_widget_show (spinbutton); */
+  row++;
+
+  /* horizontal arrange row */
+
+  col = 1;
+
+  button = button_with_stock (GIMP_ARRANGE_LEFT, align_tool);
+  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
+  gimp_help_set_help_data (button, _("Arrange left edges of targets"), NULL);
+  align_tool->button[n++] = button;
+  ++col;
+  ++col;
+
+  button = button_with_stock (GIMP_ARRANGE_HCENTER, align_tool);
+  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
+  gimp_help_set_help_data (button, _("Arrange horiz centers of targets"), NULL);
+  align_tool->button[n++] = button;
+  ++col;
+  ++col;
+
+  button = button_with_stock (GIMP_ARRANGE_RIGHT, align_tool);
+  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
+  gimp_help_set_help_data (button, _("Arrange right edges of targets"), NULL);
+  align_tool->button[n++] = button;
+  ++col;
+  ++col;
+
+  row++;
+
+  /* vertical arrange row */
+
+  col = 1;
+
+  button = button_with_stock (GIMP_ARRANGE_TOP, align_tool);
+  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
+  gimp_help_set_help_data (button, _("Arrange top edges of targets"), NULL);
+  align_tool->button[n++] = button;
+  ++col;
+  ++col;
+
+  button = button_with_stock (GIMP_ARRANGE_VCENTER, align_tool);
+  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
+  gimp_help_set_help_data (button, _("Arrange vertical centers of targets"), NULL);
+  align_tool->button[n++] = button;
+  ++col;
+  ++col;
+
+  button = button_with_stock (GIMP_ARRANGE_BOTTOM, align_tool);
+  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
+  gimp_help_set_help_data (button, _("Arrange bottoms of targets"), NULL);
+  align_tool->button[n++] = button;
+  ++col;
+  ++col;
+
+  row++;
+
+  /* offset row */
+  label = gtk_label_new (_("Offset:"));
+  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, row, row + 1);
+  gtk_widget_show (label);
+
+  spinbutton = gimp_spin_button_new (&align_tool->horz_offset_adjustment,
+                                     0,
+                                     -100000.,
+                                     100000.,
+                                     1., 20., 20., 1., 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 3, 7, row, row + 1);
+  g_signal_connect (align_tool->horz_offset_adjustment, "value-changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &align_tool->horz_offset);
+  gtk_widget_show (spinbutton);
 
   gtk_widget_show (hbox);
   return hbox;
@@ -684,73 +742,79 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
 
 
 static void
-do_horizontal_alignment (GtkWidget *widget,
-                         gpointer   data)
+do_alignment (GtkWidget *widget,
+              gpointer   data)
 {
-  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (data);
-  GimpImage     *image;
-  GObject       *reference_object;
+  GimpAlignTool     *align_tool = GIMP_ALIGN_TOOL (data);
+  GimpAlignmentType  action;
+  GimpImage         *image;
+  GObject           *reference_object;
+  GList             *list;
+  gint               offset;
 
   image = GIMP_TOOL (align_tool)->display->image;
+  action = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "action"));
+  offset = align_tool->horz_offset;
+
+  switch (action)
+    {
+    case GIMP_ALIGN_LEFT:
+    case GIMP_ALIGN_HCENTER:
+    case GIMP_ALIGN_RIGHT:
+    case GIMP_ALIGN_TOP:
+    case GIMP_ALIGN_VCENTER:
+    case GIMP_ALIGN_BOTTOM:
+      offset = 0;
+      break;
+    case GIMP_ARRANGE_LEFT:
+    case GIMP_ARRANGE_HCENTER:
+    case GIMP_ARRANGE_RIGHT:
+    case GIMP_ARRANGE_TOP:
+    case GIMP_ARRANGE_VCENTER:
+    case GIMP_ARRANGE_BOTTOM:
+      offset = align_tool->horz_offset;
+      break;
+    }
 
   /* if nothing is selected, just return
    * if only one object is selected, use the image as reference
-   * if multiple objects are selected, use the first one as reference
+   * if multiple objects are selected, use the first one as reference if
+   * "set_reference" is TRUE, otherwise use NULL.
    */
   if (g_list_length (align_tool->selected_objects) == 0)
     return;
   else if (g_list_length (align_tool->selected_objects) == 1)
-    reference_object = G_OBJECT (image);
+    {
+      reference_object = G_OBJECT (image);
+      list = align_tool->selected_objects;
+    }
   else
-    reference_object = G_OBJECT (align_tool->selected_objects->data);
+    {
+      if (align_tool->set_reference)
+        {
+          reference_object = G_OBJECT (align_tool->selected_objects->data);
+          list = g_list_next (align_tool->selected_objects);
+        }
+      else
+        {
+          reference_object = NULL;
+          list = align_tool->selected_objects;
+        }
+    }
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));
 
-  gimp_image_arrange_objects (image, align_tool->selected_objects,
-                              align_tool->horz_align_type,
+  gimp_image_arrange_objects (image, list,
+                              action,
                               reference_object,
-                              align_tool->horz_align_type,
-                              align_tool->horz_offset);
+                              action,
+                              offset);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
 
   gimp_image_flush (image);
 }
 
-
-static void
-do_vertical_alignment (GtkWidget *widget,
-                       gpointer   data)
-{
-  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (data);
-  GimpImage     *image;
-  GObject       *reference_object;
-
-  image = GIMP_TOOL (align_tool)->display->image;
-
-  /* if nothing is selected, just return
-   * if only one object is selected, use the image as reference
-   * if multiple objects are selected, use the first one as reference
-   */
-  if (g_list_length (align_tool->selected_objects) == 0)
-    return;
-  else if (g_list_length (align_tool->selected_objects) == 1)
-    reference_object = G_OBJECT (image);
-  else
-    reference_object = G_OBJECT (align_tool->selected_objects->data);
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));
-
-  gimp_image_arrange_objects (image, align_tool->selected_objects,
-                              align_tool->vert_align_type,
-                              reference_object,
-                              align_tool->vert_align_type,
-                              align_tool->vert_offset);
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
-
-  gimp_image_flush (image);
-}
 
 
 
@@ -766,7 +830,7 @@ button_with_stock (GimpAlignmentType  action,
     case GIMP_ALIGN_LEFT:
       stock_id = GIMP_STOCK_GRAVITY_WEST;
       break;
-    case GIMP_ALIGN_CENTER:
+    case GIMP_ALIGN_HCENTER:
       stock_id = GIMP_STOCK_HCENTER;
       break;
     case GIMP_ALIGN_RIGHT:
@@ -775,10 +839,28 @@ button_with_stock (GimpAlignmentType  action,
     case GIMP_ALIGN_TOP:
       stock_id = GIMP_STOCK_GRAVITY_NORTH;
       break;
-    case GIMP_ALIGN_MIDDLE:
+    case GIMP_ALIGN_VCENTER:
       stock_id = GIMP_STOCK_VCENTER;
       break;
     case GIMP_ALIGN_BOTTOM:
+      stock_id = GIMP_STOCK_GRAVITY_SOUTH;
+      break;
+    case GIMP_ARRANGE_LEFT:
+      stock_id = GIMP_STOCK_GRAVITY_WEST;
+      break;
+    case GIMP_ARRANGE_HCENTER:
+      stock_id = GIMP_STOCK_HCENTER;
+      break;
+    case GIMP_ARRANGE_RIGHT:
+      stock_id = GIMP_STOCK_GRAVITY_EAST;
+      break;
+    case GIMP_ARRANGE_TOP:
+      stock_id = GIMP_STOCK_GRAVITY_NORTH;
+      break;
+    case GIMP_ARRANGE_VCENTER:
+      stock_id = GIMP_STOCK_VCENTER;
+      break;
+    case GIMP_ARRANGE_BOTTOM:
       stock_id = GIMP_STOCK_GRAVITY_SOUTH;
       break;
     default:
@@ -791,41 +873,13 @@ button_with_stock (GimpAlignmentType  action,
   g_object_set_data (G_OBJECT (button), "action", GINT_TO_POINTER (action));
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (set_action),
+                    G_CALLBACK (do_alignment),
                     align_tool);
 
   gtk_widget_set_sensitive (button, FALSE);
   gtk_widget_show (button);
 
   return button;
-}
-
-static void
-set_action (GtkWidget *widget,
-            gpointer   data)
-{
-  GimpAlignTool      *align_tool    = data;
-  GimpAlignmentType   action;
-
-  action = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "action"));
-
-  switch (action)
-    {
-    case GIMP_ALIGN_LEFT:
-    case GIMP_ALIGN_CENTER:
-    case GIMP_ALIGN_RIGHT:
-      align_tool->horz_align_type = action;
-      do_horizontal_alignment (widget, data);
-      break;
-    case GIMP_ALIGN_TOP:
-    case GIMP_ALIGN_MIDDLE:
-    case GIMP_ALIGN_BOTTOM:
-      align_tool->vert_align_type = action;
-      do_vertical_alignment (widget, data);
-      break;
-    default:
-      break;
-    }
 }
 
 static void

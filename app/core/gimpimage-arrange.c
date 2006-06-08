@@ -31,12 +31,21 @@
 
 #include "gimp-intl.h"
 
+static GList * sort_by_offset  (GList             *list);
+static void    compute_offsets (GList             *list,
+                                GimpAlignmentType  alignment);
+static void    compute_offset  (GObject           *object,
+                                GimpAlignmentType  alignment);
+static gint    offset_compare  (gconstpointer      a,
+                                gconstpointer      b);
+
+
 /**
  * gimp_image_arrange_objects:
  * @image:                The #GimpImage to which the objects belong.
  * @list:                 A #GList of objects to be aligned.
  * @alignment:            The point on each target object to bring into alignment.
- * @reference:            The #GObject to align the targets with.
+ * @reference:            The #GObject to align the targets with, or #NULL.
  * @reference_alignment:  The point on the reference object to align the target item with..
  * @offset:               How much to shift the target from perfect alignment..
  *
@@ -45,6 +54,11 @@
  * reference object, which can be an item, guide, or image.  If the requested
  * alignment does not make sense (i.e., trying to align a vertical guide vertically),
  * nothing happens and no error message is generated.
+ *
+ * The objects in the list are sorted into increasing order before
+ * being arranged, where the order is defined by the type of alignment
+ * being requested.  If the @reference argument is #NULL, then the first
+ * object in the sorted list is used as reference.
  *
  * When there are multiple target objects, they are arranged so that the spacing
  * between consecutive ones is given by the argument @offset.
@@ -59,107 +73,61 @@ gimp_image_arrange_objects (GimpImage         *image,
 {
   gboolean do_x               = FALSE;
   gboolean do_y               = FALSE;
-  gint     reference_offset_x = 0;
-  gint     reference_offset_y = 0;
-  gint     reference_height   = 0;
-  gint     reference_width    = 0;
-  gint     x0                 = 0;
-  gint     y0                 = 0;
+  gint     z0                 = 0;
+  GList   *object_list;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (G_IS_OBJECT (reference));
+  g_return_if_fail (G_IS_OBJECT (reference) || reference == NULL);
 
-  /* figure out whether we are aligning horizontally or vertically */
-  switch (reference_alignment)
+  /* get offsets used for sorting */
+  switch (alignment)
     {
+      /* order vertically for horizontal alignment */
     case GIMP_ALIGN_LEFT:
-    case GIMP_ALIGN_CENTER:
+    case GIMP_ALIGN_HCENTER:
     case GIMP_ALIGN_RIGHT:
       do_x = TRUE;
+      compute_offsets (list, GIMP_ALIGN_TOP);
       break;
+      /* order horizontally for horizontal arrangement */
+    case GIMP_ARRANGE_LEFT:
+    case GIMP_ARRANGE_HCENTER:
+    case GIMP_ARRANGE_RIGHT:
+      do_x = TRUE;
+      compute_offsets (list, alignment);
+      break;
+      /* order horizontally for vertical alignment */
     case GIMP_ALIGN_TOP:
-    case GIMP_ALIGN_MIDDLE:
+    case GIMP_ALIGN_VCENTER:
     case GIMP_ALIGN_BOTTOM:
       do_y = TRUE;
+      compute_offsets (list, GIMP_ALIGN_LEFT);
       break;
-    default:
-      g_assert_not_reached ();
+      /* order vertically for vertical arrangement */
+    case GIMP_ARRANGE_TOP:
+    case GIMP_ARRANGE_VCENTER:
+    case GIMP_ARRANGE_BOTTOM:
+      do_y = TRUE;
+      compute_offsets (list, alignment);
+      break;
     }
 
-  /* get dimensions of the reference object */
-  if (GIMP_IS_IMAGE (reference))
+  object_list = sort_by_offset (list);
+
+  /* now get offsets used for aligning */
+  compute_offsets (list, alignment);
+
+  if (reference == NULL)
     {
-      reference_offset_x = 0;
-      reference_offset_y = 0;
-      reference_width = gimp_image_get_width (image);
-      reference_height = gimp_image_get_height (image);
-    }
-  else if (GIMP_IS_ITEM (reference))
-    {
-      GimpItem *item = GIMP_ITEM (reference);
-
-      reference_offset_x = item->offset_x;
-      reference_offset_y = item->offset_y;
-      reference_height   = item->height;
-      reference_width    = item->width;
-    }
-  else if (GIMP_IS_GUIDE (reference))
-    {
-      GimpGuide *guide = GIMP_GUIDE (reference);
-
-      switch (gimp_guide_get_orientation (guide))
-        {
-        case GIMP_ORIENTATION_VERTICAL:
-          if (do_y)
-            return;
-          reference_offset_x = gimp_guide_get_position (guide);
-          reference_width = 0;
-          break;
-
-        case GIMP_ORIENTATION_HORIZONTAL:
-          if (do_x)
-            return;
-          reference_offset_y = gimp_guide_get_position (guide);
-          reference_height = 0;
-          break;
-
-        default:
-          break;
-        }
+      reference = G_OBJECT (object_list->data);
+      object_list = g_list_next (object_list);
     }
   else
-    {
-      g_printerr ("Reference object is not an image, item, or guide.\n");
-      return;
-    }
+    compute_offset (reference, reference_alignment);
 
-  /* compute alignment pos for reference object */
-  switch (reference_alignment)
-    {
-    case GIMP_ALIGN_LEFT:
-      x0 = reference_offset_x;
-      break;
-    case GIMP_ALIGN_CENTER:
-      x0 = reference_offset_x + reference_width/2;
-      break;
-    case GIMP_ALIGN_RIGHT:
-      x0 = reference_offset_x + reference_width;
-      break;
-    case GIMP_ALIGN_TOP:
-      y0 = reference_offset_y;
-      break;
-    case GIMP_ALIGN_MIDDLE:
-      y0 = reference_offset_y + reference_height/2;
-      break;
-    case GIMP_ALIGN_BOTTOM:
-      y0 = reference_offset_y + reference_height;
-      break;
-    default:
-      g_assert_not_reached ();
-    }
+  z0 = GPOINTER_TO_INT (g_object_get_data (reference, "align-offset"));
 
-
-  if (list)
+  if (object_list)
     {
       GList *l;
       gint   n;
@@ -168,96 +136,21 @@ gimp_image_arrange_objects (GimpImage         *image,
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                    _("Arrange Objects"));
 
-      for (l = list, n = 1; l; l = g_list_next (l), n++)
+      for (l = object_list, n = 1; l; l = g_list_next (l), n++)
         {
           GObject *target          = G_OBJECT (l->data);
           gint     xtranslate      = 0;
           gint     ytranslate      = 0;
-          gint     target_offset_x = 0;
-          gint     target_offset_y = 0;
-          gint     target_height   = 0;
-          gint     target_width    = 0;
-          gint     x1              = 0;
-          gint     y1              = 0;
+          gint     z1;
 
-          /* compute dimensions of target object */
-          if (GIMP_IS_ITEM (target))
-            {
-              GimpItem *item = GIMP_ITEM (target);
-
-              target_offset_x = item->offset_x;
-              target_offset_y = item->offset_y;
-              target_height   = item->height;
-              target_width    = item->width;
-            }
-          else if (GIMP_IS_GUIDE (target))
-            {
-              GimpGuide *guide = GIMP_GUIDE (target);
-
-              switch (gimp_guide_get_orientation (guide))
-                {
-                case GIMP_ORIENTATION_VERTICAL:
-                  if (do_y)
-                    return;
-                  target_offset_x = gimp_guide_get_position (guide);
-                  target_width = 0;
-                  break;
-
-                case GIMP_ORIENTATION_HORIZONTAL:
-                  if (do_x)
-                    return;
-                  target_offset_y = gimp_guide_get_position (guide);
-                  target_height = 0;
-                  break;
-
-                default:
-                  break;
-                }
-            }
-          else
-            {
-              g_printerr ("Alignment target is not an item or guide.\n");
-            }
+          z1 = GPOINTER_TO_INT (g_object_get_data (target,
+                                                    "align-offset"));
 
           if (do_x)
-            {
-              switch (alignment)
-                {
-                case GIMP_ALIGN_LEFT:
-                  x1 = target_offset_x;
-                  break;
-                case GIMP_ALIGN_CENTER:
-                  x1 = target_offset_x + target_width/2;
-                  break;
-                case GIMP_ALIGN_RIGHT:
-                  x1 = target_offset_x + target_width;
-                  break;
-                default:
-                  g_assert_not_reached ();
-                }
-
-              xtranslate = x0 - x1 + n * offset;
-            }
+            xtranslate = z0 - z1 + n * offset;
 
           if (do_y)
-            {
-              switch (alignment)
-                {
-                case GIMP_ALIGN_TOP:
-                  y1 = target_offset_y;
-                  break;
-                case GIMP_ALIGN_MIDDLE:
-                  y1 = target_offset_y + target_height/2;
-                  break;
-                case GIMP_ALIGN_BOTTOM:
-                  y1 = target_offset_y + target_height;
-                  break;
-                default:
-                  g_assert_not_reached ();
-                }
-
-              ytranslate = y0 - y1 + n * offset;
-            }
+            ytranslate = z0 - z1 + n * offset;
 
           /* now actually align the target object */
           if (GIMP_IS_ITEM (target))
@@ -272,12 +165,12 @@ gimp_image_arrange_objects (GimpImage         *image,
               switch (gimp_guide_get_orientation (guide))
                 {
                 case GIMP_ORIENTATION_VERTICAL:
-                  gimp_image_move_guide (image, guide, x1 + xtranslate, TRUE);
+                  gimp_image_move_guide (image, guide, z1 + xtranslate, TRUE);
                   gimp_image_update_guide (image, guide);
                   break;
 
                 case GIMP_ORIENTATION_HORIZONTAL:
-                  gimp_image_move_guide (image, guide, y1 + ytranslate, TRUE);
+                  gimp_image_move_guide (image, guide, z1 + ytranslate, TRUE);
                   gimp_image_update_guide (image, guide);
                   break;
 
@@ -288,7 +181,130 @@ gimp_image_arrange_objects (GimpImage         *image,
         }
 
       gimp_image_undo_group_end (image);
-
-      gimp_image_flush (image);
     }
+
+  g_list_free (object_list);
+}
+
+
+static GList *
+sort_by_offset (GList *list)
+{
+  return g_list_sort (g_list_copy (list),
+                      offset_compare);
+
+}
+
+static gint
+offset_compare (gconstpointer a,
+                gconstpointer b)
+{
+  gint offset1 = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (a),
+                                                     "align-offset"));
+  gint offset2 = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (b),
+                                                     "align-offset"));
+
+  return offset1 - offset2;
+}
+
+/*
+ * this function computes the position of the alignment point
+ * for each object in the list, and attaches it to the
+ * object as object data.
+ */
+static void
+compute_offsets (GList             *list,
+                 GimpAlignmentType  alignment)
+{
+  GList *l;
+
+  for (l = list; l; l = g_list_next (l))
+    compute_offset (G_OBJECT (l->data), alignment);
+}
+
+static void
+compute_offset (GObject *object,
+                GimpAlignmentType  alignment)
+{
+  gint object_offset_x = 0;
+  gint object_offset_y = 0;
+  gint object_height   = 0;
+  gint object_width    = 0;
+  gint offset          = 0;
+
+  if (GIMP_IS_IMAGE (object))
+    {
+      GimpImage *image = GIMP_IMAGE (object);
+
+      object_offset_x = 0;
+      object_offset_y = 0;
+      object_height   = gimp_image_get_height (image);
+      object_width    = gimp_image_get_width (image);
+    }
+  else if (GIMP_IS_ITEM (object))
+    {
+      GimpItem *item = GIMP_ITEM (object);
+
+      object_offset_x = item->offset_x;
+      object_offset_y = item->offset_y;
+      object_height   = item->height;
+      object_width    = item->width;
+    }
+  else if (GIMP_IS_GUIDE (object))
+    {
+      GimpGuide *guide = GIMP_GUIDE (object);
+
+      switch (gimp_guide_get_orientation (guide))
+        {
+        case GIMP_ORIENTATION_VERTICAL:
+          object_offset_x = gimp_guide_get_position (guide);
+          object_width = 0;
+          break;
+
+        case GIMP_ORIENTATION_HORIZONTAL:
+          object_offset_y = gimp_guide_get_position (guide);
+          object_height = 0;
+          break;
+
+        default:
+          break;
+        }
+    }
+  else
+    {
+      g_printerr ("Alignment object is not an image, item or guide.\n");
+    }
+
+  switch (alignment)
+    {
+    case GIMP_ALIGN_LEFT:
+    case GIMP_ARRANGE_LEFT:
+      offset = object_offset_x;
+      break;
+    case GIMP_ALIGN_HCENTER:
+    case GIMP_ARRANGE_HCENTER:
+      offset = object_offset_x + object_width/2;
+      break;
+    case GIMP_ALIGN_RIGHT:
+    case GIMP_ARRANGE_RIGHT:
+      offset = object_offset_x + object_width;
+      break;
+    case GIMP_ALIGN_TOP:
+    case GIMP_ARRANGE_TOP:
+      offset = object_offset_y;
+      break;
+    case GIMP_ALIGN_VCENTER:
+    case GIMP_ARRANGE_VCENTER:
+      offset = object_offset_y + object_height/2;
+      break;
+    case GIMP_ALIGN_BOTTOM:
+    case GIMP_ARRANGE_BOTTOM:
+      offset = object_offset_y + object_height;
+      break;
+    default:
+      g_assert_not_reached ();
+    }
+
+  g_object_set_data (object, "align-offset",
+                     GINT_TO_POINTER (offset));
 }

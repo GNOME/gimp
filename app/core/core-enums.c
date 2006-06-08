@@ -149,23 +149,35 @@ gimp_alignment_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_ALIGN_LEFT, "GIMP_ALIGN_LEFT", "left" },
-    { GIMP_ALIGN_CENTER, "GIMP_ALIGN_CENTER", "center" },
-    { GIMP_ALIGN_RIGHT, "GIMP_ALIGN_RIGHT", "right" },
-    { GIMP_ALIGN_TOP, "GIMP_ALIGN_TOP", "top" },
-    { GIMP_ALIGN_MIDDLE, "GIMP_ALIGN_MIDDLE", "middle" },
-    { GIMP_ALIGN_BOTTOM, "GIMP_ALIGN_BOTTOM", "bottom" },
+    { GIMP_ALIGN_LEFT, "GIMP_ALIGN_LEFT", "align-left" },
+    { GIMP_ALIGN_HCENTER, "GIMP_ALIGN_HCENTER", "align-hcenter" },
+    { GIMP_ALIGN_RIGHT, "GIMP_ALIGN_RIGHT", "align-right" },
+    { GIMP_ALIGN_TOP, "GIMP_ALIGN_TOP", "align-top" },
+    { GIMP_ALIGN_VCENTER, "GIMP_ALIGN_VCENTER", "align-vcenter" },
+    { GIMP_ALIGN_BOTTOM, "GIMP_ALIGN_BOTTOM", "align-bottom" },
+    { GIMP_ARRANGE_LEFT, "GIMP_ARRANGE_LEFT", "arrange-left" },
+    { GIMP_ARRANGE_HCENTER, "GIMP_ARRANGE_HCENTER", "arrange-hcenter" },
+    { GIMP_ARRANGE_RIGHT, "GIMP_ARRANGE_RIGHT", "arrange-right" },
+    { GIMP_ARRANGE_TOP, "GIMP_ARRANGE_TOP", "arrange-top" },
+    { GIMP_ARRANGE_VCENTER, "GIMP_ARRANGE_VCENTER", "arrange-vcenter" },
+    { GIMP_ARRANGE_BOTTOM, "GIMP_ARRANGE_BOTTOM", "arrange-bottom" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
     { GIMP_ALIGN_LEFT, "GIMP_ALIGN_LEFT", NULL },
-    { GIMP_ALIGN_CENTER, "GIMP_ALIGN_CENTER", NULL },
+    { GIMP_ALIGN_HCENTER, "GIMP_ALIGN_HCENTER", NULL },
     { GIMP_ALIGN_RIGHT, "GIMP_ALIGN_RIGHT", NULL },
     { GIMP_ALIGN_TOP, "GIMP_ALIGN_TOP", NULL },
-    { GIMP_ALIGN_MIDDLE, "GIMP_ALIGN_MIDDLE", NULL },
+    { GIMP_ALIGN_VCENTER, "GIMP_ALIGN_VCENTER", NULL },
     { GIMP_ALIGN_BOTTOM, "GIMP_ALIGN_BOTTOM", NULL },
+    { GIMP_ARRANGE_LEFT, "GIMP_ARRANGE_LEFT", NULL },
+    { GIMP_ARRANGE_HCENTER, "GIMP_ARRANGE_HCENTER", NULL },
+    { GIMP_ARRANGE_RIGHT, "GIMP_ARRANGE_RIGHT", NULL },
+    { GIMP_ARRANGE_TOP, "GIMP_ARRANGE_TOP", NULL },
+    { GIMP_ARRANGE_VCENTER, "GIMP_ARRANGE_VCENTER", NULL },
+    { GIMP_ARRANGE_BOTTOM, "GIMP_ARRANGE_BOTTOM", NULL },
     { 0, NULL, NULL }
   };
 

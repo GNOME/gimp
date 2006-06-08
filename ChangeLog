@@ -1,3 +1,18 @@
+2006-06-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/core-enums.[ch]: add GIMP_ARRANGE_FOO values
+	to GimpAlignmentType, and change CENTER to HCENTER,
+	MIDDLE to VCENTER.
+	
+	* app/core/gimpimage-arrange.c: extensively rewritten
+	to handle arrangement of objects, and to do the
+	required sorting of lists by offset.
+	
+	* app/tools/gimpaligntool.[ch]: added ability to arrange
+	groups of layers etc with constant spacing.  Also try
+	to change things so that the tool aligns with the
+	object that users expect intuitively.
+
 2006-06-08  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/sel_gauss.c: fix the EXPAND macro to make

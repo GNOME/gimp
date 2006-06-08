@@ -149,6 +149,11 @@ static gint      find_unused_ia_color      (const guchar     *pixels,
 static gboolean  load_defaults             (void);
 static void      save_defaults             (void);
 static void      load_gui_defaults         (PngSaveGui       *pg);
+static guchar   *fill_bit2byte             (void);
+static void      byte2bit                  (const guchar     *byteline,
+                                            gint              width,
+                                            guchar           *bitline,
+                                            gboolean          invert);
 
 /*
  * Globals...
@@ -672,8 +677,16 @@ load_image (const gchar *filename,
   GimpPixelRgn pixel_rgn;       /* Pixel region for layer */
   png_structp pp;               /* PNG read pointer */
   png_infop info;               /* PNG info pointers */
-  guchar **pixels,              /* Pixel rows */
-   *pixel;                      /* Pixel data */
+  gboolean is_bw = FALSE;
+  guchar **pixels = NULL;       /* Pixel rows */
+  guchar *pixel = NULL;         /* Pixel data */
+
+  /* b&w needs this for bits*/
+  guchar   *bits = NULL;        /* rows of bits */
+  guchar  **bit_line = NULL;    /* pointers to BOR */
+  gint      bit_line_len = 0;   /* number of bytes to keep the bits */
+  guchar   *bit2byte = NULL;
+
   guchar alpha[256],            /* Index -> Alpha */
    *alpha_ptr;                  /* Temporary pointer */
 
@@ -685,6 +698,20 @@ load_image (const gchar *filename,
 
   if (setjmp (pp->jmpbuf))
     {
+       /* this is a (maybe useless) attempt to recover cleanly from errors. */
+#if PNG_LIBPNG_VER > 88
+      png_destroy_read_struct(&pp, &info,  (png_infopp) NULL);
+#endif
+      g_free (pixel);
+      g_free (pixels);
+
+      if (is_bw)
+        {
+          g_free (bit2byte);
+          g_free (bits);
+          g_free (bit_line);
+        };
+
       g_message (_("Error while reading '%s'. File corrupted?"),
                  gimp_filename_to_utf8 (filename));
       return image;
@@ -744,8 +771,19 @@ load_image (const gchar *filename,
   if (info->color_type != PNG_COLOR_TYPE_PALETTE &&
       (info->valid & PNG_INFO_tRNS))
     {
-      png_set_expand (pp);
-    }
+      if (info->bit_depth == 1)
+         {
+           /* b&w, load this as an indexed image */
+           is_bw = TRUE;
+           bits = NULL;
+           bit_line = NULL;
+           bit2byte = NULL;
+         }
+       else
+         {
+           png_set_expand (pp);
+         }
+     }
 
   /*
    * Turn on interlace handling... libpng returns just 1 (ie single pass)
@@ -781,6 +819,7 @@ load_image (const gchar *filename,
 
   png_read_update_info (pp, info);
 
+  /* mmc: this means, that png_set_expand & png_set_packing may change info->color_type? */
   switch (info->color_type)
     {
     case PNG_COLOR_TYPE_RGB:           /* RGB */
@@ -796,9 +835,22 @@ load_image (const gchar *filename,
       break;
 
     case PNG_COLOR_TYPE_GRAY:          /* Grayscale */
-      bpp = 1;
-      image_type = GIMP_GRAY;
-      layer_type = GIMP_GRAY_IMAGE;
+       /* g_print("opening a grayscale png. bit depth: %d\n", info->bit_depth); */
+       if (is_bw)
+         {
+           /* Have to construct the white&black  palette, see below. */
+           image_type = GIMP_INDEXED;
+           layer_type = GIMP_INDEXED_IMAGE;
+           bpp = 1; /* This is fake, we disable the expansion (by libpng)!
+                     * But, after our conversion the rows will indeed be 1 byte-per-pixel. */
+           bit2byte = fill_bit2byte ();
+         }
+       else
+         {
+           bpp = 1;
+           image_type = GIMP_GRAY;
+           layer_type = GIMP_GRAY_IMAGE;
+         }
       break;
 
     case PNG_COLOR_TYPE_GRAY_ALPHA:    /* Grayscale + alpha */
@@ -938,6 +990,12 @@ load_image (const gchar *filename,
                                    info->num_palette);
         }
     }
+  else if (is_bw)
+    {
+      /* we are converting grayscale image to a b&w palette: this is the palette then: */
+      guchar         bw_map[] = { 0, 0, 0, 255, 255, 255 };
+      gimp_image_set_colormap (image, bw_map,2);
+    }
 
   /*
    * Get the drawable and set the pixel region for our load...
@@ -955,6 +1013,21 @@ load_image (const gchar *filename,
   tile_height = gimp_tile_height ();
   pixel = g_new (guchar, tile_height * info->width * bpp);
   pixels = g_new (guchar *, tile_height);
+
+  if (is_bw)
+    {
+      bit_line_len =  ((info->width +7 ) / 8);
+
+      /* >> 3 */
+      /* bits_per_byte! */
+      bits = g_new (guchar, tile_height * bit_line_len);
+      bit_line = g_new (guchar *, tile_height);
+
+      for (i = 0; i < tile_height; i++)
+        bit_line[i] = bits + bit_line_len * i;
+
+      /* g_print("bit_line_len =%d\n", bit_line_len); */
+    }
 
   for (i = 0; i < tile_height; i++)
     pixels[i] = pixel + info->width * info->channels * i;
@@ -977,7 +1050,49 @@ load_image (const gchar *filename,
             gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, begin,
                                      drawable->width, num);
 
-          png_read_rows (pp, pixels, NULL, num);
+          /* mmc: interlacing not handled now? */
+          /* if we used the libpng builtin expansion, we would have to
+           * convert values 255 (black) into 1 (palette index)
+           * I think this approach is faster:
+           */
+
+          if (is_bw)
+            {
+              int i, j;
+              guchar *source, *dest;
+
+              png_read_rows (pp, bit_line, NULL, num);
+              /* FIXME: we must not memcpy after the boundary!
+               * So, if the line is not a multiple of 8 (bits per byte),
+               * we should do it out of the cycle!*/
+
+#define BITS_PER_BYTE 8
+              for (j=0; j< tile_height; j++)
+                {
+                  dest = pixels[j];
+                  source = bit_line[j];
+
+                  for (i=0; i <  (info->width / BITS_PER_BYTE) ; i++)
+                    {
+                      memcpy (dest,
+                              bit2byte + *source * BITS_PER_BYTE,
+                              BITS_PER_BYTE);
+                      dest += BITS_PER_BYTE;
+                      source++;
+                    }
+
+                  if (info->width / BITS_PER_BYTE < bit_line_len)
+                    {
+                      memcpy (dest,
+                              bit2byte + *source * BITS_PER_BYTE,
+                              info->width % BITS_PER_BYTE);
+                    }
+                }
+            }
+          else
+            {
+              png_read_rows (pp, pixels, NULL, num);
+            }
 
           gimp_pixel_rgn_set_rect (&pixel_rgn, pixel, 0, begin,
                                    drawable->width, num);
@@ -1119,7 +1234,23 @@ load_image (const gchar *filename,
 }
 
 
-/*
+static guchar *
+fill_bit2byte (void)
+{
+  guchar *bit2byte = g_new (guchar, 256 * 8);
+  guchar *dest;
+  gint    i, j;
+
+  dest = bit2byte;
+
+  for (j = 0; j < 256; j++)
+    for (i = 7; i >= 0; i--)
+      *(dest++) = ((j & (1 << i)) != 0);
+
+  return bit2byte;
+}
+
+ /*
  * 'save_image ()' - Save the specified image to a PNG file.
  */
 
@@ -1138,16 +1269,16 @@ save_image (const gchar *filename,
     begin,                      /* Beginning tile row */
     end,                        /* Ending tile row */
     num;                        /* Number of rows to load */
-  FILE *fp;                     /* File pointer */
+  FILE *fp = NULL;              /* File pointer */
   GimpDrawable *drawable;       /* Drawable for layer */
   GimpPixelRgn pixel_rgn;       /* Pixel region for layer */
   png_structp pp;               /* PNG read pointer */
   png_infop info;               /* PNG info pointer */
   gint num_colors;              /* Number of colors in colormap */
   gint offx, offy;              /* Drawable offsets from origin */
-  guchar **pixels,              /* Pixel rows */
-   *fixed,                      /* Fixed-up pixel data */
-   *pixel;                      /* Pixel data */
+  guchar **pixels = NULL;       /* Pixel rows */
+  guchar *fixed   = NULL;       /* Fixed-up pixel data */
+  guchar *pixel   = NULL;       /* Pixel data */
   gdouble xres, yres;           /* GIMP resolution (dpi) */
   png_color_16 background;      /* Background color */
   png_time mod_time;            /* Modification time (ie NOW) */
@@ -1157,7 +1288,10 @@ save_image (const gchar *filename,
 
   guchar remap[256];            /* Re-mapping for the palette */
 
-  png_textp  text = NULL;
+  /* indexed b/w -> save as 1bit grayscale to save space! */
+  gboolean       is_bw = FALSE, invert = FALSE;
+
+   png_textp  text = NULL;
 
   if (pngvals.comment)
     {
@@ -1203,7 +1337,18 @@ save_image (const gchar *filename,
 
   if (setjmp (pp->jmpbuf))
     {
-      g_message (_("Error while saving '%s'. Could not save image."),
+       /* mmc: fixme: neo says, on failure a saving process exits, so this might be done implicitely
+        * I do it explicitely for case someone reuses the code. */
+#if PNG_LIBPNG_VER > 88
+      png_destroy_write_struct(&pp, &info);
+#endif
+      if (fp)
+        fclose (fp);
+
+      g_free (pixels);
+      g_free (pixel);
+
+       g_message (_("Error while saving '%s'. Could not save image."),
                  gimp_filename_to_utf8 (filename));
       return FALSE;
     }
@@ -1279,12 +1424,42 @@ save_image (const gchar *filename,
       break;
 
     case GIMP_INDEXED_IMAGE:
-      bpp = 1;
-      info->color_type = PNG_COLOR_TYPE_PALETTE;
-      info->valid |= PNG_INFO_PLTE;
-      info->palette =
-        (png_colorp) gimp_image_get_colormap (image_ID, &num_colors);
-      info->num_palette = num_colors;
+      {
+        /* copied from tiff.c ! */
+        guchar *cmap = gimp_image_get_colormap (image_ID, &num_colors);
+
+        if (num_colors == 2)
+          {
+            const guchar  bw_map[] = { 0, 0, 0, 255, 255, 255 };
+            const guchar  wb_map[] = { 255, 255, 255, 0, 0, 0 };
+
+            is_bw = (memcmp (cmap, bw_map, 6) == 0);
+
+            if (!is_bw)
+              {
+                is_bw = (memcmp (cmap, wb_map, 6) == 0);
+
+                if (is_bw)
+                  invert = TRUE;
+              }
+          }
+
+        if (is_bw)
+          {
+            bpp = 1;
+            info->color_type = PNG_COLOR_TYPE_GRAY;
+            info->bit_depth = 1;
+            g_free (cmap);
+          }
+        else
+          {
+            bpp = 1;
+            info->color_type = PNG_COLOR_TYPE_PALETTE;
+            info->valid |= PNG_INFO_PLTE;
+            info->palette = (png_colorp) cmap;
+            info->num_palette = num_colors;
+          }
+      }
       break;
 
     case GIMP_INDEXEDA_IMAGE:
@@ -1506,6 +1681,17 @@ save_image (const gchar *filename,
                     }
                 }
             }
+          else if (is_bw)
+             {
+               /* indexed b/w -> 1-grayscale: at this stage, */
+               /* we have to convert the 0/1 indexes(bytes) into 0/1 bits */
+               /* pixel   is the array of several lines of the image: indexes
+                * pixels  is an array of pointers at the beginnings of the lines */
+                for (i = 0; i < num; ++i)
+                   {
+                      byte2bit (pixels[i], info->width, pixels[i], invert);
+                   }
+             }
 
           png_write_rows (pp, pixels, num);
 
@@ -1537,6 +1723,53 @@ save_image (const gchar *filename,
   fclose (fp);
 
   return TRUE;
+}
+
+/* Convert n bytes of 0/1 to a line of bits */
+static void
+byte2bit (const guchar *byteline,
+          gint          width,
+          guchar       *bitline,
+          gboolean      invert)
+{
+  guchar bitval;
+  guchar rest[8];
+
+  while (width >= 8)
+    {
+      bitval = 0;
+
+      if (*(byteline++)) bitval |= 0x80;
+      if (*(byteline++)) bitval |= 0x40;
+      if (*(byteline++)) bitval |= 0x20;
+      if (*(byteline++)) bitval |= 0x10;
+      if (*(byteline++)) bitval |= 0x08;
+      if (*(byteline++)) bitval |= 0x04;
+      if (*(byteline++)) bitval |= 0x02;
+      if (*(byteline++)) bitval |= 0x01;
+
+      *(bitline++) = invert ? ~bitval : bitval;
+
+      width -= 8;
+    }
+
+  if (width > 0)
+    {
+      memset (rest, 0, 8);
+      memcpy (rest, byteline, width);
+      bitval = 0;
+      byteline = rest;
+
+      if (*(byteline++)) bitval |= 0x80;
+      if (*(byteline++)) bitval |= 0x40;
+      if (*(byteline++)) bitval |= 0x20;
+      if (*(byteline++)) bitval |= 0x10;
+      if (*(byteline++)) bitval |= 0x08;
+      if (*(byteline++)) bitval |= 0x04;
+      if (*(byteline++)) bitval |= 0x02;
+
+      *bitline = invert ? ~bitval & (0xff << (8 - width)) : bitval;
+    }
 }
 
 static gboolean
