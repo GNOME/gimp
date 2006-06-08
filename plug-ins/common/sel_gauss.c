@@ -714,8 +714,12 @@ matrixmult (const guchar  *src,
 
 #define EXPAND(BYTES, ALPHA)\
   if (bytes == BYTES && has_alpha == ALPHA)\
-    return matrixmult_int (src, dest, width, height, mat, numrad,\
-                           BYTES, ALPHA, maxdelta, preview_mode);
+    {\
+      matrixmult_int (src, dest, width, height, mat, numrad,\
+                      BYTES, ALPHA, maxdelta, preview_mode);\
+      return;\
+    }
+
   EXPAND (1, 0)
   EXPAND (2, 1)
   EXPAND (3, 0)
