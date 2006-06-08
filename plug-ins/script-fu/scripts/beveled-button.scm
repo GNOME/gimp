@@ -147,7 +147,7 @@
 		    SF-FONT       _"Font"               "Sans"
 		    SF-COLOR      _"Upper-left color"   '(0 255 127)
 		    SF-COLOR      _"Lower-right color"  '(0 127 255)
-		    SF-COLOR      _"Text color"         '(0 0 0)
+		    SF-COLOR      _"Text color"         "black"
 		    SF-ADJUSTMENT _"Padding"            '(2 1 100 1 10 0 1)
 		    SF-ADJUSTMENT _"Bevel width"        '(4 1 100 1 10 0 1)
 		    SF-TOGGLE     _"Pressed"            FALSE)

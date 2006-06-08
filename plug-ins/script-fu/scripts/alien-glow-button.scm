@@ -146,9 +146,9 @@
 		    SF-STRING     _"Text"               "Hello world!"
 		    SF-FONT       _"Font"               "Sans Bold"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(22 2 100 1 1 0 1)
-		    SF-COLOR      _"Text color"         '(0 0 0)
+		    SF-COLOR      _"Text color"         "black"
 		    SF-COLOR      _"Glow color"         '(63 252 0)
-		    SF-COLOR      _"Background color"   '(0 0 0)
+		    SF-COLOR      _"Background color"   "black"
 		    SF-ADJUSTMENT _"Padding"            '(6 1 100 1 10 0 1)
 		    SF-ADJUSTMENT _"Glow radius"        '(10 1 200 1 10 0 1)
 		    SF-TOGGLE     _"Flatten image"      TRUE)

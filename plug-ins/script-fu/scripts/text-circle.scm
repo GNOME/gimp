@@ -165,7 +165,7 @@
 		    "Shuji Narazaki"
 		    "1997-1998"
 		    ""
-		    SF-STRING     _"Text"               "The GNU Image Manipulation Program Version 2.2 "
+		    SF-STRING     _"Text"               "The GNU Image Manipulation Program "
 		    SF-ADJUSTMENT _"Radius"             '(80 1 8000 1 1 0 1)
 		    SF-ADJUSTMENT _"Start angle"        '(0 -180 180 1 1 0 1)
 		    SF-ADJUSTMENT _"Fill angle"         '(360 -360 360 1 1 0 1)

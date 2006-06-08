@@ -124,7 +124,7 @@
                     SF-IMAGE      "Image"             0
                     SF-DRAWABLE   "Drawable"          0
 		    SF-ADJUSTMENT _"Offset (pixels)"  '(15 1 100 1 10 0 1)
-		    SF-COLOR      _"Background color" '(255 255 255)
+		    SF-COLOR      _"Background color" "white"
 		    SF-OPTION     _"Blend mode"       '(_"FG-BG-RGB"
 							_"FG-BG-HSV"
 							_"FG-Transparent"
@@ -174,11 +174,11 @@
 		    "Spencer Kimball"
 		    "1996"
 		    ""
-		    SF-STRING     _"Text"               "The GIMP"
+		    SF-STRING     _"Text"               "GIMP"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
 		    SF-FONT       _"Font"               "Crillee"
 		    SF-COLOR      _"Text color"         '(124 174 255)
-		    SF-COLOR      _"Background color"   '(255 255 255)
+		    SF-COLOR      _"Background color"   "white"
 		    SF-OPTION     _"Blend mode"         '(_"FG-BG-RGB"
 							  _"FG-BG-HSV"
 							  _"FG-Transparent"

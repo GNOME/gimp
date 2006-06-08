@@ -160,7 +160,7 @@
 		    "Raphael Quinet"
 		    "1999-2000"
 		    ""
-		    SF-STRING     _"Text"               "The GIMP"
+		    SF-STRING     _"Text"               "GIMP"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
 		    SF-FONT       _"Font"               "Blippo"
 		    SF-COLOR      _"Glow color"         '(0 255 0)

@@ -74,8 +74,8 @@
 		    SF-ADJUSTMENT _"Radius (pixels)"    '(100 5 500 1 10 0 1)
 		    SF-ADJUSTMENT _"Lighting (degrees)" '(45 0 360 1 10 0 0)
 		    SF-TOGGLE     _"Shadow"             TRUE
-		    SF-COLOR      _"Background color"   '(255 255 255)
-		    SF-COLOR      _"Sphere color"       '(255 0 0))
+		    SF-COLOR      _"Background color"   "white"
+		    SF-COLOR      _"Sphere color"       "red")
 
 (script-fu-menu-register "script-fu-sphere"
 			 "<Toolbox>/Xtns/Misc")

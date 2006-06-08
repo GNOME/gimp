@@ -93,7 +93,7 @@
                     SF-DRAWABLE    "Drawable"         0
 		    SF-ADJUSTMENT _"Spots density X"  '(16 1 16 1 10 0 1)
 		    SF-ADJUSTMENT _"Spots density Y"  '(4 1 16 1 10 0 1)
-		    SF-COLOR      _"Background color" '(255 255 255))
+		    SF-COLOR      _"Background color" "white")
 
 (script-fu-menu-register "script-fu-bovinated-logo-alpha"
 			 "<Image>/Filters/Alpha to Logo")
@@ -125,7 +125,7 @@
 		    SF-FONT       _"Font"               "RoostHeavy"
 		    SF-ADJUSTMENT _"Spots density X"    '(16 1 16 1 10 0 1)
 		    SF-ADJUSTMENT _"Spots density Y"    '(4 1 16 1 10 0 1)
-		    SF-COLOR      _"Background color"   '(255 255 255))
+		    SF-COLOR      _"Background color"   "white")
 
 (script-fu-menu-register "script-fu-bovinated-logo"
 			 "<Toolbox>/Xtns/Logos")

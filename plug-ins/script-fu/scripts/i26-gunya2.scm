@@ -90,8 +90,8 @@
 		    "Shuji Narazaki"
 		    "1997"
 		    ""
-		    SF-STRING     _"Text"               "The GIMP"
-		    SF-COLOR      _"Text color"         '(255 0 0)
+		    SF-STRING     _"Text"               "GIMP"
+		    SF-COLOR      _"Text color"         "red"
 		    SF-COLOR      _"Frame color"        '(0 34 255)
 		    SF-FONT       _"Font"               "Becker"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)

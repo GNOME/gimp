@@ -103,7 +103,7 @@
                     SF-IMAGE      "Image"                 0
                     SF-DRAWABLE   "Drawable"              0
 		    SF-ADJUSTMENT _"Effect size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-COLOR      _"Background color"     '(255 255 255))
+		    SF-COLOR      _"Background color"     "white")
 
 (script-fu-menu-register "script-fu-frosty-logo-alpha"
 			 "<Image>/Filters/Alpha to Logo")
@@ -127,10 +127,10 @@
 		    "Spencer Kimball & Ed Mackey"
 		    "1997"
 		    ""
-		    SF-STRING     _"Text"               "The GIMP"
+		    SF-STRING     _"Text"               "GIMP"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
 		    SF-FONT       _"Font"               "Becker"
-		    SF-COLOR      _"Background color"   '(255 255 255))
+		    SF-COLOR      _"Background color"   "white")
 
 (script-fu-menu-register "script-fu-frosty-logo"
 			 "<Toolbox>/Xtns/Logos")

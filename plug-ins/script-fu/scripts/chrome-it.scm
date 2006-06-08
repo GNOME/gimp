@@ -195,7 +195,7 @@
 						 gimp-data-directory
 						 "/scripts/images/beavis.jpg")
 		    SF-COLOR      _"Highlight balance"  '(211 95 0)
-		    SF-COLOR      _"Chrome balance"     '(0 0 0)
+		    SF-COLOR      _"Chrome balance"     "black"
 		    SF-TOGGLE     _"Chrome white areas" TRUE)
 
 (script-fu-menu-register "script-fu-sota-chrome-it"

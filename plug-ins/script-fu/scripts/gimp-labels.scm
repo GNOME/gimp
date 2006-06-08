@@ -160,8 +160,8 @@
 		    SF-FONT       _"Font"               "Sans"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(18 2 1000 1 10 0 1)
  		    SF-COLOR      _"Text color"         '(130 165 235)
-	 	    SF-COLOR      _"Shadow color"       '(0 0 0)
-		    SF-COLOR      _"Background color"   '(255 255 255)
+	 	    SF-COLOR      _"Shadow color"       "black"
+		    SF-COLOR      _"Background color"   "white"
 		    SF-TOGGLE     _"Remove background"  TRUE
 		    SF-TOGGLE     _"Index image"        TRUE
 		    SF-ADJUSTMENT _"Number of colors"   '(15 2 255 1 10 0 1)

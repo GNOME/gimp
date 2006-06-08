@@ -294,18 +294,30 @@ script_fu_add_script (LISP a)
 		  break;
 
 		case SF_COLOR:
-		  if (!TYPEP (car (a), tc_cons))
-		    return my_err ("script-fu-register: color defaults must be a list of 3 integers", NIL);
+                  if (TYPEP (car (a), tc_string))
+                    {
+                      if (! gimp_rgb_parse_css (&script->arg_defaults[i].sfa_color,
+                                                get_c_string (car (a)), -1))
+                        return my_err ("script-fu-register: invalid default color name", NIL);
+                      gimp_rgb_set_alpha (&script->arg_defaults[i].sfa_color,
+                                          1.0);
+                    }
+		  else if (TYPEP (car (a), tc_cons))
+                    {
+                      color_list = car (a);
+                      r = CLAMP (get_c_long (car (color_list)), 0, 255);
+                      color_list = cdr (color_list);
+                      g = CLAMP (get_c_long (car (color_list)), 0, 255);
+                      color_list = cdr (color_list);
+                      b = CLAMP (get_c_long (car (color_list)), 0, 255);
 
-		  color_list = car (a);
-		  r = CLAMP (get_c_long (car (color_list)), 0, 255);
-		  color_list = cdr (color_list);
-		  g = CLAMP (get_c_long (car (color_list)), 0, 255);
-		  color_list = cdr (color_list);
-		  b = CLAMP (get_c_long (car (color_list)), 0, 255);
-
-		  gimp_rgb_set_uchar (&script->arg_defaults[i].sfa_color,
-				      r, g, b);
+                      gimp_rgb_set_uchar (&script->arg_defaults[i].sfa_color,
+                                          r, g, b);
+                    }
+                  else
+                    {
+                      return my_err ("script-fu-register: color defaults must be a list of 3 integers or a color name", NIL);
+                    }
 
 		  script->arg_values[i].sfa_color =
 		    script->arg_defaults[i].sfa_color;

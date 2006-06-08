@@ -111,8 +111,8 @@
                     SF-STRING     _"Text"               "CHALK"
                     SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
                     SF-FONT       _"Font"               "Cooper"
-                    SF-COLOR      _"Background color"   '(0 0 0)
-                    SF-COLOR      _"Chalk color"        '(255 255 255))
+                    SF-COLOR      _"Background color"   "black"
+                    SF-COLOR      _"Chalk color"        "white")
 
 (script-fu-menu-register "script-fu-chalk-logo"
 			 "<Toolbox>/Xtns/Logos")

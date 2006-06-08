@@ -191,7 +191,7 @@
 		    "RGBA GRAYA INDEXEDA"
 		    SF-IMAGE     "The image"            0
 		    SF-DRAWABLE  "Layer to animate"     0
-		    SF-COLOR    _"Glow color"           '(255 255 255)
+		    SF-COLOR    _"Glow color"           "white"
 		    SF-TOGGLE   _"Fadeout"              FALSE
 		    SF-VALUE    _"Fadeout width"        "100"
 		    SF-VALUE    _"Corona width"         "7"

@@ -101,7 +101,7 @@
 		    ""
 		    SF-ADJUSTMENT _"Radius"           '(16 1 100 1 10 0 1)
 		    SF-COLOR      _"Glow color"       '(63 252 0)
-		    SF-COLOR      _"Background color" '(0 0 0)
+		    SF-COLOR      _"Background color" "black"
 		    SF-TOGGLE     _"Flatten image"    TRUE)
 
 (script-fu-menu-register "script-fu-alien-glow-bullet"

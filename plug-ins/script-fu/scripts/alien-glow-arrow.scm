@@ -156,7 +156,7 @@
                                                        _"Up" 
                                                        _"Down")
                     SF-COLOR      _"Glow color"       '(63 252 0)
-                    SF-COLOR      _"Background color" '(0 0 0)
+                    SF-COLOR      _"Background color" "black"
                     SF-TOGGLE     _"Flatten image"    TRUE)
 
 (script-fu-menu-register "script-fu-alien-glow-right-arrow"

@@ -237,10 +237,10 @@
 		    "RGB GRAY"
 		    SF-IMAGE    "Image"         0
 		    SF-DRAWABLE "Drawable"      0
-		    SF-STRING   _"Text"         "The GIMP"
+		    SF-STRING   _"Text"         "GIMP"
 		    SF-STRING   _"Number"       "32"
 		    SF-FONT     _"Font"         "Serif"
-		    SF-COLOR    _"Font color"   '(255 180 0)
+		    SF-COLOR    _"Font color"   "darkorange"
 		    SF-TOGGLE   _"Work on copy" TRUE)
 
 (script-fu-menu-register "script-fu-slide"

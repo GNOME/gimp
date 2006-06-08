@@ -357,7 +357,7 @@
                     SF-OPTION     _"Color method"  '(_"Solid Color" 
                                                      _"Gradient: loop sawtooth" 
                                                      _"Gradient: loop triangle")
-                    SF-COLOR      _"Color"         '(0 0 0)
+                    SF-COLOR      _"Color"          "black"
                     SF-GRADIENT   _"Gradient"       "Deep Sea")
 
 (script-fu-menu-register "script-fu-spyrogimp"

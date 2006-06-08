@@ -1,5 +1,17 @@
 2006-06-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/siod-wrapper.c: allow CSS color keywords to
+	be used in place of the '(r g b) color notation.
+
+	* plug-ins/script-fu/scripts/test-sphere.scm: documented this new
+	feature.
+
+	* plug-ins/script-fu/scripts/*.scm: replaced some colors with
+	color names.
+
+2006-06-08  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/animationplay.c (menu_popup): do not use
 	gtk_menu_attach_to_widget() but gtk_menu_set_screen(). Menus don't
 	like to be attached multiple times.

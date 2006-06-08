@@ -754,14 +754,21 @@ marshall_proc_db_call (LISP a)
           break;
 
         case GIMP_PDB_COLOR:
-          if (!TYPEP (car (a), tc_cons))
-            success = FALSE;
-          if (success)
+          if (TYPEP (car (a), tc_string))
+            {
+              if (! gimp_rgb_parse_css (&args[i].data.d_color,
+                                        get_c_string (car (a)), -1))
+                success = FALSE;
+
+              gimp_rgb_set_alpha (&args[i].data.d_color, 1.0);
+            }
+          else if (TYPEP (car (a), tc_cons))
             {
               LISP   color_list;
               guchar r, g, b;
 
               args[i].type = GIMP_PDB_COLOR;
+
               color_list = car (a);
               r = CLAMP (get_c_long (car (color_list)), 0, 255);
               color_list = cdr (color_list);
@@ -770,6 +777,10 @@ marshall_proc_db_call (LISP a)
               b = CLAMP (get_c_long (car (color_list)), 0, 255);
 
               gimp_rgba_set_uchar (&args[i].data.d_color, r, g, b, 255);
+            }
+          else
+            {
+              success = FALSE;
             }
           break;
 

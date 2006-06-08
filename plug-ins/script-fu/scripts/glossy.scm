@@ -186,7 +186,7 @@
                     SF-GRADIENT   _"Blend gradient (outline)" "Shadows 2"
 		    SF-TOGGLE     _"Outline gradient reverse" FALSE
                     SF-ADJUSTMENT _"Outline size"             '(5 0 250 1 10 0 1)
-		    SF-COLOR      _"Background color"         '(255 255 255)
+		    SF-COLOR      _"Background color"         "white"
 		    SF-TOGGLE     _"Use pattern for text instead of gradient" FALSE
 		    SF-PATTERN    _"Pattern (text)"           "Electric Blue"
 		    SF-TOGGLE     _"Use pattern for outline instead of gradient" FALSE
@@ -253,7 +253,7 @@
                     SF-GRADIENT   _"Blend gradient (outline)" "Shadows 2"
 		    SF-TOGGLE     _"Outline gradient reverse" FALSE
                     SF-ADJUSTMENT _"Outline size"             '(5 0 250 1 10 0 1)
-		    SF-COLOR      _"Background color"         '(255 255 255)
+		    SF-COLOR      _"Background color"         "white"
 		    SF-TOGGLE     _"Use pattern for text instead of gradient" FALSE
 		    SF-PATTERN    _"Pattern (text)"           "Electric Blue"
 		    SF-TOGGLE     _"Use pattern for outline instead of gradient" FALSE
