@@ -1,3 +1,9 @@
+2006-06-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/animationplay.c (menu_popup): do not use
+	gtk_menu_attach_to_widget() but gtk_menu_set_screen(). Menus don't
+	like to be attached multiple times.
+
 2006-06-07  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpimage-arrange.[ch]: added, utility function for

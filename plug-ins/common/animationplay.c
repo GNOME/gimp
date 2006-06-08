@@ -236,7 +236,7 @@ menu_popup (GtkWidget      *widget,
       GtkWidget *menu = gtk_ui_manager_get_widget (ui_manager,
                                                    "/anim-play-popup");
 
-      gtk_menu_attach_to_widget (GTK_MENU (menu), widget, NULL);
+      gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
       gtk_menu_popup (GTK_MENU (menu),
                       NULL, NULL, NULL, NULL,
                       event->button, event->time);
