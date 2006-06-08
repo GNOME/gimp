@@ -94,10 +94,10 @@ siod_print_welcome (void)
 gint
 siod_interpret_string (const gchar *expr)
 {
-  return repl_c_string ((char *)expr, 0, 0, 1);
+  return repl_c_string ((char *) expr, 0, 0, 1);
 }
 
-const char *
+const gchar *
 siod_get_error_msg (void)
 {
   return siod_err_msg;

@@ -465,7 +465,7 @@ script_fu_cc_key_function (GtkWidget        *widget,
 
       gtk_entry_set_text (GTK_ENTRY (console->cc), "");
 
-      siod_interpret_string ((char *) list->data);
+      siod_interpret_string ((const gchar *) list->data);
       gimp_displays_flush ();
 
       console->history = g_list_append (console->history, NULL);
@@ -567,7 +567,7 @@ script_fu_eval_run (const gchar      *name,
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunMode   run_mode;
+  GimpRunMode       run_mode;
 
   run_mode = params[0].data.d_int32;
 
@@ -575,14 +575,21 @@ script_fu_eval_run (const gchar      *name,
     {
     case GIMP_RUN_NONINTERACTIVE:
       if (siod_interpret_string (params[1].data.d_string) != 0)
-	status = GIMP_PDB_EXECUTION_ERROR;
+        {
+          const gchar *msg = siod_get_error_msg ();
+
+          if (msg)
+            g_printerr (msg);
+
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
       break;
 
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
       status = GIMP_PDB_CALLING_ERROR;
-      g_message (_("Script-Fu evaluate mode allows only "
-                   "noninteractive invocation"));
+      g_message (_("Script-Fu evaluation mode only allows "
+                   "non-interactive invocation"));
       break;
 
     default:

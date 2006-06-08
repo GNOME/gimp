@@ -1,5 +1,12 @@
 2006-06-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-console.c (script_fu_eval_run):
+	in case of an error, output the SIOD error message to stderr.
+
+	* plug-ins/script-fu/siod-wrapper.c: minor cleanup.
+
+2006-06-08  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-scripts.c
 	* plug-ins/script-fu/siod-wrapper.c: allow CSS color keywords to
 	be used in place of the '(r g b) color notation.
