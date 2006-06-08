@@ -579,65 +579,58 @@ marshall_proc_db_call (LISP a)
   else
     args = NULL;
 
-  a = cdr (a);
-  for (i = 0; i < nparams; i++)
+  for (i = 0, a = cdr (a); i < nparams && success; i++, a = cdr (a))
     {
+      args[i].type = params[i].type;
+
       switch (params[i].type)
         {
         case GIMP_PDB_INT32:
+        case GIMP_PDB_DISPLAY:
+        case GIMP_PDB_IMAGE:
+        case GIMP_PDB_LAYER:
+        case GIMP_PDB_CHANNEL:
+        case GIMP_PDB_DRAWABLE:
+        case GIMP_PDB_SELECTION:
+        case GIMP_PDB_VECTORS:
           if (!TYPEP (car (a), tc_flonum))
             success = FALSE;
-          if (success)
-            {
-              args[i].type         = GIMP_PDB_INT32;
-              args[i].data.d_int32 = get_c_long (car (a));
-            }
+          else
+            args[i].data.d_int32 = get_c_long (car (a));
           break;
 
         case GIMP_PDB_INT16:
           if (!TYPEP (car (a), tc_flonum))
             success = FALSE;
-          if (success)
-            {
-              args[i].type         = GIMP_PDB_INT16;
-              args[i].data.d_int16 = (gint16) get_c_long (car (a));
-            }
+          else
+            args[i].data.d_int16 = (gint16) get_c_long (car (a));
           break;
 
         case GIMP_PDB_INT8:
           if (!TYPEP (car (a), tc_flonum))
             success = FALSE;
-          if (success)
-            {
-              args[i].type        = GIMP_PDB_INT8;
-              args[i].data.d_int8 = (gint8) get_c_long (car (a));
-            }
+          else
+            args[i].data.d_int8 = (gint8) get_c_long (car (a));
           break;
 
         case GIMP_PDB_FLOAT:
           if (!TYPEP (car (a), tc_flonum))
             success = FALSE;
-          if (success)
-            {
-              args[i].type         = GIMP_PDB_FLOAT;
-              args[i].data.d_float = get_c_double (car (a));
-            }
+          else
+            args[i].data.d_float = get_c_double (car (a));
           break;
 
         case GIMP_PDB_STRING:
           if (!TYPEP (car (a), tc_string))
             success = FALSE;
-          if (success)
-            {
-              args[i].type          = GIMP_PDB_STRING;
-              args[i].data.d_string = get_c_string (car (a));
-            }
+          else
+            args[i].data.d_string = get_c_string (car (a));
           break;
 
         case GIMP_PDB_INT32ARRAY:
           if (!TYPEP (car (a), tc_long_array))
             success = FALSE;
-          if (success)
+          else
             {
               gint n_elements = args[i - 1].data.d_int32;
               LISP list       = car (a);
@@ -651,16 +644,15 @@ marshall_proc_db_call (LISP a)
                   return my_err (error_str, NIL);
                 }
 
-              args[i].type              = GIMP_PDB_INT32ARRAY;
-              args[i].data.d_int32array = (gint32 *)
-                list->storage_as.long_array.data;
+              args[i].data.d_int32array =
+                (gint32 *) list->storage_as.long_array.data;
             }
           break;
 
         case GIMP_PDB_INT16ARRAY:
           if (!TYPEP (car (a), tc_long_array))
             success = FALSE;
-          if (success)
+          else
             {
               gint n_elements = args[i - 1].data.d_int32;
               LISP list       = car (a);
@@ -674,16 +666,15 @@ marshall_proc_db_call (LISP a)
                   return my_err (error_str, NIL);
                 }
 
-              args[i].type              = GIMP_PDB_INT16ARRAY;
-              args[i].data.d_int16array = (gint16 *)
-                list->storage_as.long_array.data;
+              args[i].data.d_int16array =
+                (gint16 *) list->storage_as.long_array.data;
             }
           break;
 
         case GIMP_PDB_INT8ARRAY:
           if (!TYPEP (car (a), tc_byte_array))
             success = FALSE;
-          if (success)
+          else
             {
               gint n_elements = args[i - 1].data.d_int32;
               LISP list       = car (a);
@@ -697,15 +688,15 @@ marshall_proc_db_call (LISP a)
                   return my_err (error_str, NIL);
                 }
 
-              args[i].type             = GIMP_PDB_INT8ARRAY;
-              args[i].data.d_int8array = (gint8 *) list->storage_as.string.data;
+              args[i].data.d_int8array =
+                (gint8 *) list->storage_as.string.data;
             }
           break;
 
         case GIMP_PDB_FLOATARRAY:
           if (!TYPEP (car (a), tc_double_array))
             success = FALSE;
-          if (success)
+          else
             {
               gint n_elements = args[i - 1].data.d_int32;
               LISP list       = car (a);
@@ -719,7 +710,6 @@ marshall_proc_db_call (LISP a)
                   return my_err (error_str, NIL);
                 }
 
-              args[i].type              = GIMP_PDB_FLOATARRAY;
               args[i].data.d_floatarray = list->storage_as.double_array.data;
             }
           break;
@@ -727,7 +717,7 @@ marshall_proc_db_call (LISP a)
         case GIMP_PDB_STRINGARRAY:
           if (!TYPEP (car (a), tc_cons))
             success = FALSE;
-          if (success)
+          else
             {
               gint n_elements = args[i - 1].data.d_int32;
               LISP list       = car (a);
@@ -742,7 +732,6 @@ marshall_proc_db_call (LISP a)
                   return my_err (error_str, NIL);
                 }
 
-              args[i].type               = GIMP_PDB_STRINGARRAY;
               args[i].data.d_stringarray = g_new0 (gchar *, n_elements);
 
               for (j = 0; j < n_elements; j++)
@@ -767,8 +756,6 @@ marshall_proc_db_call (LISP a)
               LISP   color_list;
               guchar r, g, b;
 
-              args[i].type = GIMP_PDB_COLOR;
-
               color_list = car (a);
               r = CLAMP (get_c_long (car (color_list)), 0, 255);
               color_list = cdr (color_list);
@@ -789,88 +776,16 @@ marshall_proc_db_call (LISP a)
                          car (a));
           break;
 
-        case GIMP_PDB_DISPLAY:
-          if (!TYPEP (car (a), tc_flonum))
-            success = FALSE;
-          if (success)
-            {
-              args[i].type = GIMP_PDB_DISPLAY;
-              args[i].data.d_int32 = get_c_long (car (a));
-            }
-          break;
-
-        case GIMP_PDB_IMAGE:
-          if (!TYPEP (car (a), tc_flonum))
-            success = FALSE;
-          if (success)
-            {
-              args[i].type = GIMP_PDB_IMAGE;
-              args[i].data.d_int32 = get_c_long (car (a));
-            }
-          break;
-
-        case GIMP_PDB_LAYER:
-          if (!TYPEP (car (a), tc_flonum))
-            success = FALSE;
-          if (success)
-            {
-              args[i].type = GIMP_PDB_LAYER;
-              args[i].data.d_int32 = get_c_long (car (a));
-            }
-          break;
-
-        case GIMP_PDB_CHANNEL:
-          if (!TYPEP (car (a), tc_flonum))
-            success = FALSE;
-          if (success)
-            {
-              args[i].type = GIMP_PDB_CHANNEL;
-              args[i].data.d_int32 = get_c_long (car (a));
-            }
-          break;
-
-        case GIMP_PDB_DRAWABLE:
-          if (!TYPEP (car (a), tc_flonum))
-            success = FALSE;
-          if (success)
-            {
-              args[i].type = GIMP_PDB_DRAWABLE;
-              args[i].data.d_int32 = get_c_long (car (a));
-            }
-          break;
-
-        case GIMP_PDB_SELECTION:
-          if (!TYPEP (car (a), tc_flonum))
-            success = FALSE;
-          if (success)
-            {
-              args[i].type = GIMP_PDB_SELECTION;
-              args[i].data.d_int32 = get_c_long (car (a));
-            }
-          break;
-
         case GIMP_PDB_BOUNDARY:
           return my_err ("Boundaries are currently unsupported as arguments",
                          car (a));
           break;
 
-        case GIMP_PDB_VECTORS:
-          if (!TYPEP (car (a), tc_flonum))
-            success = FALSE;
-          if (success)
-            {
-              args[i].type = GIMP_PDB_VECTORS;
-              args[i].data.d_int32 = get_c_long (car (a));
-            }
-          break;
-
         case GIMP_PDB_PARASITE:
           if (!TYPEP (car (a), tc_cons))
             success = FALSE;
-          if (success)
+          else
             {
-              args[i].type = GIMP_PDB_PARASITE;
-
               /* parasite->name */
               intermediate_val = car (a);
 
@@ -924,11 +839,6 @@ marshall_proc_db_call (LISP a)
                       i + 1, proc_name);
           return my_err (error_str, NIL);
         }
-
-      if (!success)
-        break;
-
-      a = cdr (a);
     }
 
   if (success)

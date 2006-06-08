@@ -1,5 +1,11 @@
 2006-06-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):
+	simplified quite a bit by using the same code for all INT32 PDB
+	types.
+
+2006-06-08  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-console.c (script_fu_eval_run):
 	in case of an error, output the SIOD error message to stderr.
 
