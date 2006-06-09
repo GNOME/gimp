@@ -573,6 +573,8 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   GtkWidget *label;
   GtkWidget *button;
   GtkWidget *spinbutton;
+  GtkWidget *combo;
+  GtkWidget *separator;
   gint       row, col, n;
 
   hbox = gtk_hbox_new (FALSE, 0);
@@ -582,7 +584,7 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
   gtk_widget_show (main_vbox);
 
-  table = gtk_table_new (7, 9, FALSE);
+  table = gtk_table_new (8, 9, FALSE);
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 5);
   gtk_widget_show (table);
 
@@ -601,7 +603,25 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
 
   row++;
 
-  /* horizontal align row */
+  /* align reference row */
+  hbox2 = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), hbox2, 1, 8, row, row + 1);
+  gtk_widget_show (hbox2);
+  label = gtk_label_new (_("Relative to"));
+  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+  combo = gimp_enum_combo_box_new (GIMP_TYPE_ALIGN_REFERENCE);
+  gtk_box_pack_start (GTK_BOX (hbox2), combo, FALSE, FALSE, 0);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                              GIMP_ALIGN_REFERENCE_FIRST,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &align_tool->align_reference_type);
+  gtk_widget_show (combo);
+
+  gtk_table_set_row_spacing (GTK_TABLE (table), row, 10);
+  row++;
+
+ /* horizontal align row */
 
   col = 1;
   n = 0;
@@ -654,66 +674,75 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   ++col;
   ++col;
 
+  gtk_table_set_row_spacing (GTK_TABLE (table), row, 10);
+  row++;
+
+  /* separator */
+
+  separator = gtk_hseparator_new ();
+  gtk_table_attach_defaults (GTK_TABLE (table), separator, 0, 8, row, row + 1);
+  gtk_widget_show (separator);
+
   row++;
 
   /* label row */
   hbox2 = gtk_hbox_new (FALSE, 0);
   gtk_table_attach_defaults (GTK_TABLE (table), hbox2, 0, 8, row, row + 1);
   gtk_widget_show (hbox2);
-  label = gtk_label_new (_("Arrange"));
+  label = gtk_label_new (_("Distribute"));
   gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   row++;
 
-  /* horizontal arrange row */
+  /* horizontal distribute row */
 
   col = 1;
 
   button = button_with_stock (GIMP_ARRANGE_LEFT, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Arrange left edges of targets"), NULL);
+  gimp_help_set_help_data (button, _("Distribute left edges of targets"), NULL);
   align_tool->button[n++] = button;
   ++col;
   ++col;
 
   button = button_with_stock (GIMP_ARRANGE_HCENTER, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Arrange horiz centers of targets"), NULL);
+  gimp_help_set_help_data (button, _("Distribute horiz centers of targets"), NULL);
   align_tool->button[n++] = button;
   ++col;
   ++col;
 
   button = button_with_stock (GIMP_ARRANGE_RIGHT, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Arrange right edges of targets"), NULL);
+  gimp_help_set_help_data (button, _("Distribute right edges of targets"), NULL);
   align_tool->button[n++] = button;
   ++col;
   ++col;
 
   row++;
 
-  /* vertical arrange row */
+  /* vertical distribute row */
 
   col = 1;
 
   button = button_with_stock (GIMP_ARRANGE_TOP, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Arrange top edges of targets"), NULL);
+  gimp_help_set_help_data (button, _("Distribute top edges of targets"), NULL);
   align_tool->button[n++] = button;
   ++col;
   ++col;
 
   button = button_with_stock (GIMP_ARRANGE_VCENTER, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Arrange vertical centers of targets"), NULL);
+  gimp_help_set_help_data (button, _("Distribute vertical centers of targets"), NULL);
   align_tool->button[n++] = button;
   ++col;
   ++col;
 
   button = button_with_stock (GIMP_ARRANGE_BOTTOM, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Arrange bottoms of targets"), NULL);
+  gimp_help_set_help_data (button, _("Distribute bottoms of targets"), NULL);
   align_tool->button[n++] = button;
   ++col;
   ++col;
@@ -745,10 +774,10 @@ static void
 do_alignment (GtkWidget *widget,
               gpointer   data)
 {
-  GimpAlignTool     *align_tool = GIMP_ALIGN_TOOL (data);
+  GimpAlignTool     *align_tool       = GIMP_ALIGN_TOOL (data);
   GimpAlignmentType  action;
   GimpImage         *image;
-  GObject           *reference_object;
+  GObject           *reference_object = NULL;
   GList             *list;
   gint               offset;
 
@@ -776,30 +805,69 @@ do_alignment (GtkWidget *widget,
       break;
     }
 
-  /* if nothing is selected, just return
-   * if only one object is selected, use the image as reference
+  /* if nothing is selected, just return */
+  if (g_list_length (align_tool->selected_objects) == 0)
+    return;
+
+  /* if only one object is selected, use the image as reference
    * if multiple objects are selected, use the first one as reference if
    * "set_reference" is TRUE, otherwise use NULL.
    */
-  if (g_list_length (align_tool->selected_objects) == 0)
-    return;
-  else if (g_list_length (align_tool->selected_objects) == 1)
+
+  list = align_tool->selected_objects;
+
+  switch (align_tool->align_reference_type)
     {
+    case GIMP_ALIGN_REFERENCE_IMAGE:
       reference_object = G_OBJECT (image);
-      list = align_tool->selected_objects;
-    }
-  else
-    {
-      if (align_tool->set_reference)
+      break;
+
+    case GIMP_ALIGN_REFERENCE_FIRST:
+      if (g_list_length (align_tool->selected_objects) == 1)
         {
-          reference_object = G_OBJECT (align_tool->selected_objects->data);
-          list = g_list_next (align_tool->selected_objects);
+          reference_object = G_OBJECT (image);
         }
       else
         {
-          reference_object = NULL;
-          list = align_tool->selected_objects;
+          if (align_tool->set_reference)
+            {
+              reference_object = G_OBJECT (align_tool->selected_objects->data);
+              list = g_list_next (align_tool->selected_objects);
+            }
+          else
+            {
+              reference_object = NULL;
+            }
         }
+      break;
+
+    case GIMP_ALIGN_REFERENCE_SELECTION:
+      if (image->selection_mask)
+        {
+          reference_object = G_OBJECT (image->selection_mask);
+        }
+      else
+        return;
+      break;
+
+    case GIMP_ALIGN_REFERENCE_ACTIVE_LAYER:
+      if (image->active_layer)
+        reference_object = G_OBJECT (image->active_layer);
+      else
+        return;
+      break;
+
+    case GIMP_ALIGN_REFERENCE_ACTIVE_CHANNEL:
+      if (image->active_channel)
+        reference_object = G_OBJECT (image->active_channel);
+      else
+        return;
+      break;
+
+    case GIMP_ALIGN_REFERENCE_ACTIVE_PATH:
+      g_print ("reference = active path not yet handled.\n");
+      return;
+      break;
     }
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));

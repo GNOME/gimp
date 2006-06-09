@@ -1,3 +1,15 @@
+2006-06-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/core-enums.[ch]: add GimpAlignReferenceType enum
+
+	* app/core/gimpimage-arrange.c: support using a channel as 
+	reference for alignment.
+	
+	* app/tools/gimpaligntool.[ch]: support aligning with a list item,
+	image, selection, active layer, active channel, or active path.
+	Now similar in form and function to Inkscape Align/Distribute
+	dialog.
+
 2006-06-09  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpfileentry.[ch]: deprecate the GimpFileEntry

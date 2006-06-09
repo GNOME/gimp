@@ -37,24 +37,24 @@ typedef struct _GimpAlignToolClass GimpAlignToolClass;
 
 struct _GimpAlignTool
 {
-  GimpDrawTool         parent_instance;
+  GimpDrawTool           parent_instance;
 
-  GtkWidget           *controls;
-  GtkWidget           *button[ALIGN_TOOL_NUM_BUTTONS];
+  GtkWidget             *controls;
+  GtkWidget             *button[ALIGN_TOOL_NUM_BUTTONS];
 
-  GList               *selected_objects;
+  GList                 *selected_objects;
 
-  GimpAlignmentType    align_type;
+  GimpAlignmentType      align_type;
+  GimpAlignReferenceType align_reference_type;
+  gdouble                horz_offset;
+  gdouble                vert_offset;
 
-  gdouble              horz_offset;
-  gdouble              vert_offset;
+  GtkObject             *horz_offset_adjustment;
+  GtkObject             *vert_offset_adjustment;
 
-  GtkObject           *horz_offset_adjustment;
-  GtkObject           *vert_offset_adjustment;
+  gint                   x0, y0, x1, y1;   /* rubber-band rectangle */
 
-  gint                 x0, y0, x1, y1;   /* rubber-band rectangle */
-
-  gboolean             set_reference;
+  gboolean               set_reference;
 };
 
 struct _GimpAlignToolClass

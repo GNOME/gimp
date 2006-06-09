@@ -116,6 +116,21 @@ typedef enum  /*< pdb-skip >*/
 } GimpAlignmentType;
 
 
+#define GIMP_TYPE_ALIGN_REFERENCE (gimp_align_reference_type_get_type ())
+
+GType gimp_align_reference_type_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_ALIGN_REFERENCE_FIRST,          /*< desc="First item"     >*/
+  GIMP_ALIGN_REFERENCE_IMAGE,          /*< desc="Image"          >*/
+  GIMP_ALIGN_REFERENCE_SELECTION,      /*< desc="Selection"      >*/
+  GIMP_ALIGN_REFERENCE_ACTIVE_LAYER,   /*< desc="Active layer"   >*/
+  GIMP_ALIGN_REFERENCE_ACTIVE_CHANNEL, /*< desc="Active channel" >*/
+  GIMP_ALIGN_REFERENCE_ACTIVE_PATH     /*< desc="Active path"    >*/
+} GimpAlignReferenceType;
+
+
 #define GIMP_TYPE_FILL_TYPE (gimp_fill_type_get_type ())
 
 GType gimp_fill_type_get_type (void) G_GNUC_CONST;

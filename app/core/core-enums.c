@@ -193,6 +193,42 @@ gimp_alignment_type_get_type (void)
 }
 
 GType
+gimp_align_reference_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_ALIGN_REFERENCE_FIRST, "GIMP_ALIGN_REFERENCE_FIRST", "first" },
+    { GIMP_ALIGN_REFERENCE_IMAGE, "GIMP_ALIGN_REFERENCE_IMAGE", "image" },
+    { GIMP_ALIGN_REFERENCE_SELECTION, "GIMP_ALIGN_REFERENCE_SELECTION", "selection" },
+    { GIMP_ALIGN_REFERENCE_ACTIVE_LAYER, "GIMP_ALIGN_REFERENCE_ACTIVE_LAYER", "active-layer" },
+    { GIMP_ALIGN_REFERENCE_ACTIVE_CHANNEL, "GIMP_ALIGN_REFERENCE_ACTIVE_CHANNEL", "active-channel" },
+    { GIMP_ALIGN_REFERENCE_ACTIVE_PATH, "GIMP_ALIGN_REFERENCE_ACTIVE_PATH", "active-path" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_ALIGN_REFERENCE_FIRST, N_("First item"), NULL },
+    { GIMP_ALIGN_REFERENCE_IMAGE, N_("Image"), NULL },
+    { GIMP_ALIGN_REFERENCE_SELECTION, N_("Selection"), NULL },
+    { GIMP_ALIGN_REFERENCE_ACTIVE_LAYER, N_("Active layer"), NULL },
+    { GIMP_ALIGN_REFERENCE_ACTIVE_CHANNEL, N_("Active channel"), NULL },
+    { GIMP_ALIGN_REFERENCE_ACTIVE_PATH, N_("Active path"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpAlignReferenceType", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_fill_type_get_type (void)
 {
   static const GEnumValue values[] =

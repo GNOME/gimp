@@ -27,6 +27,8 @@
 #include "gimpimage-guides.h"
 #include "gimpimage-undo.h"
 #include "gimpitem.h"
+#include "gimpchannel.h"
+#include "gimpdrawable.h"
 #include "gimpguide.h"
 
 #include "gimp-intl.h"
@@ -241,14 +243,40 @@ compute_offset (GObject *object,
       object_height   = gimp_image_get_height (image);
       object_width    = gimp_image_get_width (image);
     }
+  else if (GIMP_IS_CHANNEL (object))
+    {
+      /* for channels, we use the bounds of the visible area, not
+         the layer bounds.  This includes the selection channel */
+
+      GimpChannel *channel = GIMP_CHANNEL (object);
+
+      if (gimp_channel_is_empty (channel))
+        {
+          /* fall back on using the offsets instead */
+          GimpItem *item = GIMP_ITEM (object);
+
+          gimp_item_offsets (item, &object_offset_x, &object_offset_y);
+          object_height   = gimp_item_height (item);
+          object_width    = gimp_item_width (item);
+        }
+      else
+        {
+          gint x1, x2, y1, y2;
+
+          gimp_channel_bounds (channel, &x1, &y1, &x2, &y2);
+          object_offset_x = x1;
+          object_offset_y = y1;
+          object_height   = y2 - y1;
+          object_width    = x2 - x1;
+        }
+    }
   else if (GIMP_IS_ITEM (object))
     {
       GimpItem *item = GIMP_ITEM (object);
 
-      object_offset_x = item->offset_x;
-      object_offset_y = item->offset_y;
-      object_height   = item->height;
-      object_width    = item->width;
+      gimp_item_offsets (item, &object_offset_x, &object_offset_y);
+      object_height   = gimp_item_height (item);
+      object_width    = gimp_item_width (item);
     }
   else if (GIMP_IS_GUIDE (object))
     {
