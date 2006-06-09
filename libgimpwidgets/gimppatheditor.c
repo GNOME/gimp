@@ -30,8 +30,10 @@
 
 #include "gimpwidgetstypes.h"
 
-#include "gimppatheditor.h"
+#undef GIMP_DISABLE_DEPRECATED
 #include "gimpfileentry.h"
+
+#include "gimppatheditor.h"
 
 #include "libgimp/libgimp-intl.h"
 

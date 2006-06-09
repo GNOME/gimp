@@ -140,20 +140,14 @@ GtkTextBuffer * gimp_prop_text_buffer_new         (GObject       *config,
 
 /*  GimpParamPath  */
 
-GtkWidget     * gimp_prop_file_entry_new          (GObject       *config,
-                                                   const gchar   *property_name,
-                                                   const gchar   *filesel_title,
-                                                   gboolean       dir_only,
-                                                   gboolean       check_valid);
-GtkWidget     * gimp_prop_path_editor_new         (GObject       *config,
-                                                   const gchar   *path_property_name,
-                                                   const gchar   *writable_property_name,
-                                                   const gchar   *filesel_title);
-
 GtkWidget     * gimp_prop_file_chooser_button_new (GObject              *config,
                                                    const gchar          *property_name,
                                                    const gchar          *title,
                                                    GtkFileChooserAction  action);
+GtkWidget     * gimp_prop_path_editor_new         (GObject       *config,
+                                                   const gchar   *path_property_name,
+                                                   const gchar   *writable_property_name,
+                                                   const gchar   *filesel_title);
 
 
 /*  GParamInt, GParamUInt, GParamDouble   unit: GimpParamUnit  */

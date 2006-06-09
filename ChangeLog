@@ -1,5 +1,17 @@
 2006-06-09  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpfileentry.[ch]: deprecate the GimpFileEntry
+	widget, use GtkFileChooserButton instead.
+
+	* libgimpwidgets/gimppatheditor.c: undef GIMP_DISABLE_DEPRECATED
+	as long as we are still using GimpFileEntry here.
+
+	* libgimpwidgets/gimppropwidgets.[ch]: removed
+	gimp_prop_file_entry_new(); use gimp_prop_file_chooser_button_new()
+	instead.
+
+2006-06-09  Sven Neumann  <sven@gimp.org>
+
 	* app/batch.c (batch_run_cmd): formatting.
 
 2006-06-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>

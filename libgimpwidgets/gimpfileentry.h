@@ -20,6 +20,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#ifndef GIMP_DISABLE_DEPRECATED
+
 #ifndef __GIMP_FILE_ENTRY_H__
 #define __GIMP_FILE_ENTRY_H__
 
@@ -82,3 +84,5 @@ void        gimp_file_entry_set_filename (GimpFileEntry *entry,
 G_END_DECLS
 
 #endif /* __GIMP_FILE_ENTRY_H__ */
+
+#endif /* GIMP_DISABLE_DEPRECATED */

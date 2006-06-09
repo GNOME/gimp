@@ -28,7 +28,9 @@
 
 #include "gimpwidgetstypes.h"
 
+#undef GIMP_DISABLE_DEPRECATED
 #include "gimpfileentry.h"
+
 #include "gimphelpui.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -149,7 +151,7 @@ gimp_file_entry_destroy (GtkObject *object)
  * @check_valid: %TRUE if the widget should check if the entered file
  *               really exists.
  *
- * Creates a new #GimpFileEntry widget.
+ * You should use #GtkFileChooserButton instead.
  *
  * Returns: A pointer to the new #GimpFileEntry widget.
  **/
