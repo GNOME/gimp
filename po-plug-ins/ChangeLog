@@ -1,3 +1,7 @@
+2006-06-09  Marco Ciampa <ciampix@libero.it>
+
+	* it.po: updated italian translation.
+
 2006-06-08  Jakub Friedl <jfriedl@suse.cz>
 
 	* cs.po: Czech terminology fix (unsharp mask).
@@ -37,7 +41,7 @@
 2006-05-04  Marco Ciampa <ciampix@libero.it>
 
 	* it.po: updated italian translation.
-	
+
 2006-05-03  Funda Wang  <fundawang@linux.net.cn>
 
 	* zh_CN.po: Updated Simplified Chinese translation.
