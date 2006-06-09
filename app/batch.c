@@ -147,10 +147,11 @@ batch_run_cmd (Gimp          *gimp,
   if (procedure->num_args > 1)
     g_value_set_static_string (&args->values[1], cmd);
 
-  return_vals = gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
-                                                         gimp_get_user_context (gimp),
-                                                         NULL,
-                                                         proc_name, args);
+  return_vals =
+    gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
+                                             gimp_get_user_context (gimp),
+                                             NULL,
+                                             proc_name, args);
 
   switch (g_value_get_enum (&return_vals->values[0]))
     {

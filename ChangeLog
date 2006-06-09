@@ -1,3 +1,7 @@
+2006-06-09  Sven Neumann  <sven@gimp.org>
+
+	* app/batch.c (batch_run_cmd): formatting.
+
 2006-06-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/png.c
