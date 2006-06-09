@@ -1,3 +1,7 @@
+2005-06-09  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
 2006-04-24  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
 	* es.po: Updated Spanish translation.
@@ -8,8 +12,8 @@
 
 2005-10-30  Takeshi AIHANA <aihana@gnome.gr.jp>
 
-        * ja.po: Updated Japanese translation by
-                OKANO Takayoshi <kano@na.rim.or.jp>.
+	* ja.po: Updated Japanese translation by
+	        OKANO Takayoshi <kano@na.rim.or.jp>.
 
 2005-09-17  Takeshi AIHANA <aihana@gnome.gr.jp>
 
