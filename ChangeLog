@@ -1,3 +1,11 @@
+2006-06-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpeditor.c (gimp_editor_add_action_button): simply
+	use gimp_button_new() instead of g_object_new(). Don't set the
+	"use-stock" property and reordered some code. Keeps GtkButton from
+	thinking that is has constructed the button's child itself and
+	thus makes the function more rubust against changes in GtkButton.
+
 2006-06-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpcroptool.c

@@ -615,21 +615,13 @@ gimp_editor_add_action_button (GimpEditor  *editor,
     }
   else
     {
-      button = g_object_new (GIMP_TYPE_BUTTON,
-                             "use-stock", TRUE,
-                             NULL);
+      button = gimp_button_new ();
     }
-
-  gtk_action_connect_proxy (action, button);
-  gtk_box_pack_start (GTK_BOX (editor->button_box), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
 
   g_object_get (action,
                 "stock-id", &stock_id,
                 "tooltip",  &tooltip,
                 NULL);
-
-  help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
 
   old_child = gtk_bin_get_child (GTK_BIN (button));
 
@@ -641,6 +633,10 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   gtk_widget_show (image);
 
   g_free (stock_id);
+
+  gtk_action_connect_proxy (action, button);
+  gtk_box_pack_start (GTK_BOX (editor->button_box), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
   va_start (args, action_name);
 
@@ -697,6 +693,8 @@ gimp_editor_add_action_button (GimpEditor  *editor,
                         G_CALLBACK (gimp_editor_button_extended_clicked),
                         NULL);
     }
+
+  help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
 
   if (tooltip || help_id)
     gimp_help_set_help_data (button, tooltip, help_id);
