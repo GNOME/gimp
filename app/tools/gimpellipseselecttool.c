@@ -37,7 +37,7 @@
 
 #include "gimprectangletool.h"
 #include "gimpellipseselecttool.h"
-#include "gimpnewrectselectoptions.h"
+#include "gimprectangleselectoptions.h"
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"

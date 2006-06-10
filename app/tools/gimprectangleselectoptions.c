@@ -29,7 +29,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimprectangleoptions.h"
-#include "gimpnewrectselectoptions.h"
+#include "gimprectangleselectoptions.h"
 #include "gimptooloptions-gui.h"
 
 #include "gimp-intl.h"

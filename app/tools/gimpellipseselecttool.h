@@ -20,7 +20,7 @@
 #define __GIMP_ELLIPSE_SELECT_TOOL_H__
 
 
-#include "gimpnewrectselecttool.h"
+#include "gimprectangleselecttool.h"
 
 
 #define GIMP_TYPE_ELLIPSE_SELECT_TOOL            (gimp_ellipse_select_tool_get_type ())

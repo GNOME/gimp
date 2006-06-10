@@ -36,7 +36,7 @@
 #include "gimpbycolorselecttool.h"
 #include "gimpellipseselecttool.h"
 #include "gimpforegroundselecttool.h"
-#include "gimpnewrectselecttool.h"
+#include "gimprectangleselecttool.h"
 #include "gimpfuzzyselecttool.h"
 #include "gimpiscissorstool.h"
 #include "gimpselectionoptions.h"

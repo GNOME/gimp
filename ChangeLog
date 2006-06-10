@@ -1,5 +1,25 @@
 2006-06-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	Following up on previous commit, with assist from yosh.
+	
+	* app/tools/gimpnewrectselectoptions.[ch]
+	* app/tools/gimpnewrectselecttool.[ch]: removed
+
+	* app/tools/gimprectangleselectoptions.[ch]: magic-moved
+	from gimpnewrectselectoptions.[ch]
+
+	* app/tools/gimprectangleselecttool.[ch]: magic-moved
+	from gimpnewrectselecttool.[ch]
+
+	* app/tools/Makefile.am
+	* app/tools/gimp-tools.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimpellipseselecttool.h
+	* app/tools/gimpselectionoptions.c: change file names to
+	refer to moved files.
+
+2006-06-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	Here is the big change-over, finally.
 
 	* app/tools/gimprectselecttool.[ch]: removed.

@@ -51,8 +51,8 @@
 #include "gimpselectionoptions.h"
 #include "gimprectangletool.h"
 #include "gimprectangleoptions.h"
-#include "gimpnewrectselecttool.h"
-#include "gimpnewrectselectoptions.h"
+#include "gimprectangleselecttool.h"
+#include "gimprectangleselectoptions.h"
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
