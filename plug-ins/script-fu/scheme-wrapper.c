@@ -579,8 +579,9 @@ marshall_proc_db_call (LISP a)
   else
     args = NULL;
 
-  for (i = 0, a = cdr (a); i < nparams && success; i++, a = cdr (a))
+  for (i = 0; i < nparams && success; i++)
     {
+      a = cdr (a);
       args[i].type = params[i].type;
 
       switch (params[i].type)
@@ -839,6 +840,9 @@ marshall_proc_db_call (LISP a)
                       i + 1, proc_name);
           return my_err (error_str, NIL);
         }
+
+      if (! success)
+        break;
     }
 
   if (success)
@@ -886,17 +890,24 @@ marshall_proc_db_call (LISP a)
           switch (return_vals[i].type)
             {
             case GIMP_PDB_INT32:
+            case GIMP_PDB_DISPLAY:
+            case GIMP_PDB_IMAGE:
+            case GIMP_PDB_LAYER:
+            case GIMP_PDB_CHANNEL:
+            case GIMP_PDB_DRAWABLE:
+            case GIMP_PDB_SELECTION:
+            case GIMP_PDB_VECTORS:
               return_val = cons (flocons (values[i + 1].data.d_int32),
                                  return_val);
               break;
 
             case GIMP_PDB_INT16:
-              return_val = cons (flocons (values[i + 1].data.d_int32),
+              return_val = cons (flocons (values[i + 1].data.d_int16),
                                  return_val);
               break;
 
             case GIMP_PDB_INT8:
-              return_val = cons (flocons (values[i + 1].data.d_int32),
+              return_val = cons (flocons (values[i + 1].data.d_int8),
                                  return_val);
               break;
 
@@ -1015,43 +1026,8 @@ marshall_proc_db_call (LISP a)
               return my_err ("Regions are currently unsupported as return values", NIL);
               break;
 
-            case GIMP_PDB_DISPLAY:
-              return_val = cons (flocons (values[i + 1].data.d_int32),
-                                 return_val);
-              break;
-
-            case GIMP_PDB_IMAGE:
-              return_val = cons (flocons (values[i + 1].data.d_int32),
-                                 return_val);
-              break;
-
-            case GIMP_PDB_LAYER:
-              return_val = cons (flocons (values[i + 1].data.d_int32),
-                                 return_val);
-              break;
-
-            case GIMP_PDB_CHANNEL:
-              return_val = cons (flocons (values[i + 1].data.d_int32),
-                                 return_val);
-              break;
-
-            case GIMP_PDB_DRAWABLE:
-              return_val = cons (flocons (values[i + 1].data.d_int32),
-                                 return_val);
-              break;
-
-            case GIMP_PDB_SELECTION:
-              return_val = cons (flocons (values[i + 1].data.d_int32),
-                                 return_val);
-              break;
-
             case GIMP_PDB_BOUNDARY:
               return my_err ("Boundaries are currently unsupported as return values", NIL);
-              break;
-
-            case GIMP_PDB_VECTORS:
-              return_val = cons (flocons (values[i + 1].data.d_int32),
-                                 return_val);
               break;
 
             case GIMP_PDB_PARASITE:

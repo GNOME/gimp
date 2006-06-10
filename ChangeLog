@@ -1,3 +1,11 @@
+2006-06-10  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):
+	Additional simplifications for return values by using the same
+	code for all INT32 PDB types. Wrong member name was being used
+	for INT16 and INT8 return types. Added back if statement that
+	was removed but is needed.
+
 2006-06-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpcropoptions.c: clean up code.
