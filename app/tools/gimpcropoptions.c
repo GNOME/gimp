@@ -99,23 +99,10 @@ gimp_crop_options_set_property (GObject      *object,
 {
   GimpCropOptions *options = GIMP_CROP_OPTIONS (object);
 
-  switch (property_id)
+  if (property_id <= GIMP_RECTANGLE_OPTIONS_PROP_LAST)
+    gimp_rectangle_options_set_property (object, property_id, value, pspec);
+  else switch (property_id)
     {
-    case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
-    case GIMP_RECTANGLE_OPTIONS_PROP_GUIDE:
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_WIDTH:
-    case GIMP_RECTANGLE_OPTIONS_PROP_WIDTH:
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_HEIGHT:
-    case GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT:
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_ASPECT:
-    case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT:
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
-    case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X:
-    case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y:
-    case GIMP_RECTANGLE_OPTIONS_PROP_UNIT:
-    case GIMP_RECTANGLE_OPTIONS_PROP_DIMENSIONS_ENTRY:
-      gimp_rectangle_options_set_property (object, property_id, value, pspec);
-      break;
     case PROP_LAYER_ONLY:
       options->layer_only = g_value_get_boolean (value);
       break;
@@ -136,23 +123,10 @@ gimp_crop_options_get_property (GObject    *object,
 {
   GimpCropOptions *options = GIMP_CROP_OPTIONS (object);
 
-  switch (property_id)
+  if (property_id <= GIMP_RECTANGLE_OPTIONS_PROP_LAST)
+    gimp_rectangle_options_get_property (object, property_id, value, pspec);
+  else switch (property_id)
     {
-    case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
-    case GIMP_RECTANGLE_OPTIONS_PROP_GUIDE:
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_WIDTH:
-    case GIMP_RECTANGLE_OPTIONS_PROP_WIDTH:
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_HEIGHT:
-    case GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT:
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_ASPECT:
-    case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT:
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
-    case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X:
-    case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y:
-    case GIMP_RECTANGLE_OPTIONS_PROP_UNIT:
-    case GIMP_RECTANGLE_OPTIONS_PROP_DIMENSIONS_ENTRY:
-      gimp_rectangle_options_get_property (object, property_id, value, pspec);
-      break;
     case PROP_LAYER_ONLY:
       g_value_set_boolean (value, options->layer_only);
       break;

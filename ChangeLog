@@ -1,4 +1,17 @@
-2006-06-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+2006-06-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpcropoptions.c: clean up code.
+	
+	* app/tools/gimpnewrectselecttool.c: really remove some
+	commented-out code.
+	
+	* app/tools/gimprectangleoptions.[ch]: add "aspect-square"
+	and "controls-expanded" properties.  Show "Make square" and
+	"Expand from center" in options so that we don't need modifier
+	keys to do this.  Place numerical entries inside an expander
+	and hide them by default.
+
+2006-06-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/core-enums.[ch]: add GimpAlignReferenceType enum
 
