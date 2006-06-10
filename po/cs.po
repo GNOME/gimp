@@ -1,3 +1,4 @@
+# translation of cs.po to Czech
 # translation of cs.po to
 # Czech translation of GIMP.
 # Copyright (C) 2001,2003, 2006 Free Software Foundation, Inc.
@@ -10,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-09 11:03+0200\n"
-"PO-Revision-Date: 2006-06-09 11:08+0200\n"
+"POT-Creation-Date: 2006-06-10 19:06+0200\n"
+"PO-Revision-Date: 2006-06-10 19:09+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team:  <cs@li.org>\n"
+"Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -315,7 +316,8 @@ msgstr "Přechody"
 msgid "Help"
 msgstr "Nápověda"
 
-#: ../app/actions/actions.c:158 ../app/tools/tools-enums.c:210
+#: ../app/actions/actions.c:158 ../app/core/core-enums.c:212
+#: ../app/tools/tools-enums.c:210
 msgid "Image"
 msgstr "Obrázek"
 
@@ -353,7 +355,7 @@ msgstr "Vzorky"
 msgid "Plug-Ins"
 msgstr "Zásuvné moduly"
 
-#: ../app/actions/actions.c:179 ../app/core/core-enums.c:821
+#: ../app/actions/actions.c:179 ../app/core/core-enums.c:857
 #: ../app/core/gimpchannel.c:361
 msgid "Quick Mask"
 msgstr "Rychlá maska"
@@ -3537,7 +3539,7 @@ msgstr "Duplikovat cestu"
 msgid "_Delete Path"
 msgstr "_Odstranit cestu"
 
-#: ../app/actions/vectors-actions.c:78 ../app/core/core-enums.c:880
+#: ../app/actions/vectors-actions.c:78 ../app/core/core-enums.c:916
 msgid "Delete path"
 msgstr "Odstranit cestu"
 
@@ -4621,8 +4623,8 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "hodnota pro prvek %s není platný řetězec v kódování UTF-8"
 
 #. no undo (or redo) steps available
-#: ../app/core/core-enums.c:53 ../app/core/core-enums.c:216
-#: ../app/core/core-enums.c:468 ../app/paint/paint-enums.c:53
+#: ../app/core/core-enums.c:53 ../app/core/core-enums.c:252
+#: ../app/core/core-enums.c:504 ../app/paint/paint-enums.c:53
 #: ../app/widgets/gimpimagepropview.c:297
 msgid "None"
 msgstr "Nic"
@@ -4656,453 +4658,473 @@ msgid "Use custom palette"
 msgstr "Použít vlastní paletu"
 
 #: ../app/core/core-enums.c:211
+msgid "First item"
+msgstr "První položka"
+
+#: ../app/core/core-enums.c:213 ../app/dialogs/dialogs.c:187
+msgid "Selection"
+msgstr "Výběr"
+
+#: ../app/core/core-enums.c:214
+msgid "Active layer"
+msgstr "Aktivní vrstva"
+
+#: ../app/core/core-enums.c:215
+msgid "Active channel"
+msgstr "Aktivní kanál"
+
+#: ../app/core/core-enums.c:216
+msgid "Active path"
+msgstr "Aktivní cesta"
+
+#: ../app/core/core-enums.c:247
 msgid "Foreground color"
 msgstr "Barva popředí"
 
-#: ../app/core/core-enums.c:212
+#: ../app/core/core-enums.c:248
 msgid "Background color"
 msgstr "Barva pozadí"
 
-#: ../app/core/core-enums.c:213
+#: ../app/core/core-enums.c:249
 msgid "White"
 msgstr "Bílá"
 
 #. Transparency
-#: ../app/core/core-enums.c:214 ../app/dialogs/preferences-dialog.c:2132
+#: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2132
 msgid "Transparency"
 msgstr "Průhlednost"
 
-#: ../app/core/core-enums.c:215 ../app/core/core-enums.c:272
+#: ../app/core/core-enums.c:251 ../app/core/core-enums.c:308
 msgid "Pattern"
 msgstr "Vzorek"
 
-#: ../app/core/core-enums.c:243
+#: ../app/core/core-enums.c:279
 msgid "Stroke line"
 msgstr "Vykreslit úsečku"
 
-#: ../app/core/core-enums.c:244
+#: ../app/core/core-enums.c:280
 msgid "Stroke with a paint tool"
 msgstr "Vykreslit pomocí kreslicího nástroje"
 
-#: ../app/core/core-enums.c:271
+#: ../app/core/core-enums.c:307
 msgid "Solid"
 msgstr "Pevná"
 
-#: ../app/core/core-enums.c:300
+#: ../app/core/core-enums.c:336
 msgid "Miter"
 msgstr "Ostrá"
 
-#: ../app/core/core-enums.c:301 ../app/core/core-enums.c:331
+#: ../app/core/core-enums.c:337 ../app/core/core-enums.c:367
 msgid "Round"
 msgstr "Kulatá"
 
-#: ../app/core/core-enums.c:302
+#: ../app/core/core-enums.c:338
 msgid "Bevel"
 msgstr "Kosá"
 
-#: ../app/core/core-enums.c:330
+#: ../app/core/core-enums.c:366
 msgid "Butt"
 msgstr "Useknutá"
 
-#: ../app/core/core-enums.c:332 ../app/core/core-enums.c:407
+#: ../app/core/core-enums.c:368 ../app/core/core-enums.c:443
 msgid "Square"
 msgstr "Čtvercový"
 
-#: ../app/core/core-enums.c:368
+#: ../app/core/core-enums.c:404
 msgid "Custom"
 msgstr "Vlastní"
 
-#: ../app/core/core-enums.c:369
+#: ../app/core/core-enums.c:405
 msgid "Line"
 msgstr "Čára"
 
-#: ../app/core/core-enums.c:370
+#: ../app/core/core-enums.c:406
 msgid "Long dashes"
 msgstr "Dlouhé čárky"
 
-#: ../app/core/core-enums.c:371
+#: ../app/core/core-enums.c:407
 msgid "Medium dashes"
 msgstr "Střední čárky"
 
-#: ../app/core/core-enums.c:372
+#: ../app/core/core-enums.c:408
 msgid "Short dashes"
 msgstr "Krátké čárky"
 
-#: ../app/core/core-enums.c:373
+#: ../app/core/core-enums.c:409
 msgid "Sparse dots"
 msgstr "Řídké tečky"
 
-#: ../app/core/core-enums.c:374
+#: ../app/core/core-enums.c:410
 msgid "Normal dots"
 msgstr "Normální tečky"
 
-#: ../app/core/core-enums.c:375
+#: ../app/core/core-enums.c:411
 msgid "Dense dots"
 msgstr "Husté tečky"
 
-#: ../app/core/core-enums.c:376
+#: ../app/core/core-enums.c:412
 msgid "Stipples"
 msgstr "Tečkování"
 
-#: ../app/core/core-enums.c:377
+#: ../app/core/core-enums.c:413
 msgid "Dash, dot"
 msgstr "Čárka tečka"
 
-#: ../app/core/core-enums.c:378
+#: ../app/core/core-enums.c:414
 msgid "Dash, dot, dot"
 msgstr "Čárka tečka tečka"
 
-#: ../app/core/core-enums.c:406
+#: ../app/core/core-enums.c:442
 msgid "Circle"
 msgstr "Kruh"
 
-#: ../app/core/core-enums.c:408
+#: ../app/core/core-enums.c:444
 msgid "Diamond"
 msgstr "Kosočtverec"
 
-#: ../app/core/core-enums.c:436 ../app/dialogs/preferences-dialog.c:2164
+#: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2164
 msgid "Horizontal"
 msgstr "Vodorovně"
 
-#: ../app/core/core-enums.c:437 ../app/dialogs/preferences-dialog.c:2166
+#: ../app/core/core-enums.c:473 ../app/dialogs/preferences-dialog.c:2166
 msgid "Vertical"
 msgstr "Svisle"
 
-#: ../app/core/core-enums.c:438
+#: ../app/core/core-enums.c:474
 msgid "Unknown"
 msgstr "Neznámý"
 
-#: ../app/core/core-enums.c:469
+#: ../app/core/core-enums.c:505
 msgid "All layers"
 msgstr "Všechny vrstvy"
 
-#: ../app/core/core-enums.c:470
+#: ../app/core/core-enums.c:506
 msgid "Image-sized layers"
 msgstr "Vrstvy s velikostí obrázku"
 
-#: ../app/core/core-enums.c:471
+#: ../app/core/core-enums.c:507
 msgid "All visible layers"
 msgstr "Všechny viditelné vrstvy"
 
-#: ../app/core/core-enums.c:472
+#: ../app/core/core-enums.c:508
 msgid "All linked layers"
 msgstr "Všechny spojené vrstvy"
 
-#: ../app/core/core-enums.c:536
+#: ../app/core/core-enums.c:572
 msgid "Tiny"
 msgstr "Drobné"
 
-#: ../app/core/core-enums.c:537
+#: ../app/core/core-enums.c:573
 msgid "Very small"
 msgstr "Velmi malé"
 
-#: ../app/core/core-enums.c:538
+#: ../app/core/core-enums.c:574
 msgid "Small"
 msgstr "Malá"
 
-#: ../app/core/core-enums.c:539
+#: ../app/core/core-enums.c:575
 msgid "Medium"
 msgstr "Střední"
 
-#: ../app/core/core-enums.c:540
+#: ../app/core/core-enums.c:576
 msgid "Large"
 msgstr "Velká"
 
-#: ../app/core/core-enums.c:541
+#: ../app/core/core-enums.c:577
 msgid "Very large"
 msgstr "Velmi velké"
 
-#: ../app/core/core-enums.c:542
+#: ../app/core/core-enums.c:578
 msgid "Huge"
 msgstr "Obrovské"
 
-#: ../app/core/core-enums.c:543
+#: ../app/core/core-enums.c:579
 msgid "Enormous"
 msgstr "Enormní"
 
-#: ../app/core/core-enums.c:544
+#: ../app/core/core-enums.c:580
 msgid "Gigantic"
 msgstr "Gigantické"
 
-#: ../app/core/core-enums.c:571
+#: ../app/core/core-enums.c:607
 msgid "View as list"
 msgstr "Zobrazit jako seznam"
 
-#: ../app/core/core-enums.c:572
+#: ../app/core/core-enums.c:608
 msgid "View as grid"
 msgstr "Zobrazit jako mřížku"
 
-#: ../app/core/core-enums.c:634
+#: ../app/core/core-enums.c:670
 msgid "No thumbnails"
 msgstr "Žádné miniatury"
 
-#: ../app/core/core-enums.c:635
+#: ../app/core/core-enums.c:671
 msgid "Normal (128x128)"
 msgstr "Běžné (128x128)"
 
-#: ../app/core/core-enums.c:636
+#: ../app/core/core-enums.c:672
 msgid "Large (256x256)"
 msgstr "Velké (256x256)"
 
-#: ../app/core/core-enums.c:811
+#: ../app/core/core-enums.c:847
 msgid "<<invalid>>"
 msgstr "<<neplatné>>"
 
-#: ../app/core/core-enums.c:812
+#: ../app/core/core-enums.c:848
 msgid "Scale image"
 msgstr "Velikost obrázku"
 
-#: ../app/core/core-enums.c:813
+#: ../app/core/core-enums.c:849
 msgid "Resize image"
 msgstr "Změnit velikost obrázku"
 
-#: ../app/core/core-enums.c:814
+#: ../app/core/core-enums.c:850
 msgid "Flip image"
 msgstr "Překlopit obrázek"
 
-#: ../app/core/core-enums.c:815
+#: ../app/core/core-enums.c:851
 msgid "Rotate image"
 msgstr "Rotovat obrázek"
 
-#: ../app/core/core-enums.c:816
+#: ../app/core/core-enums.c:852
 msgid "Crop image"
 msgstr "Ořezat obrázek"
 
-#: ../app/core/core-enums.c:817
+#: ../app/core/core-enums.c:853
 msgid "Convert image"
 msgstr "Převést obrázek"
 
-#: ../app/core/core-enums.c:818
+#: ../app/core/core-enums.c:854
 msgid "Remove item"
 msgstr "Odstranit položku"
 
-#: ../app/core/core-enums.c:819
+#: ../app/core/core-enums.c:855
 msgid "Merge layers"
 msgstr "Sloučit vrstvy"
 
-#: ../app/core/core-enums.c:820
+#: ../app/core/core-enums.c:856
 msgid "Merge paths"
 msgstr "Sloučit cesty"
 
-#: ../app/core/core-enums.c:822 ../app/core/core-enums.c:852
+#: ../app/core/core-enums.c:858 ../app/core/core-enums.c:888
 msgid "Guide"
 msgstr "Vodítko"
 
-#: ../app/core/core-enums.c:823 ../app/core/core-enums.c:853
+#: ../app/core/core-enums.c:859 ../app/core/core-enums.c:889
 #: ../app/core/gimpimage-grid.c:58 ../app/dialogs/grid-dialog.c:149
 #: ../app/tools/tools-enums.c:209
 msgid "Grid"
 msgstr "Mřížka"
 
-#: ../app/core/core-enums.c:824 ../app/core/core-enums.c:854
+#: ../app/core/core-enums.c:860 ../app/core/core-enums.c:890
 msgid "Sample Point"
 msgstr "Vzorkovací bod"
 
-#: ../app/core/core-enums.c:825 ../app/core/core-enums.c:856
+#: ../app/core/core-enums.c:861 ../app/core/core-enums.c:892
 msgid "Layer/Channel"
 msgstr "Vrstva/Kanál"
 
-#: ../app/core/core-enums.c:826 ../app/core/core-enums.c:857
+#: ../app/core/core-enums.c:862 ../app/core/core-enums.c:893
 msgid "Layer/Channel modification"
 msgstr "Úprava vrstvy/kanálu"
 
-#: ../app/core/core-enums.c:827 ../app/core/core-enums.c:858
+#: ../app/core/core-enums.c:863 ../app/core/core-enums.c:894
 msgid "Selection mask"
 msgstr "Maska výběru"
 
-#: ../app/core/core-enums.c:828 ../app/core/core-enums.c:861
+#: ../app/core/core-enums.c:864 ../app/core/core-enums.c:897
 msgid "Item visibility"
 msgstr "Viditelnost položky"
 
-#: ../app/core/core-enums.c:829 ../app/core/core-enums.c:862
+#: ../app/core/core-enums.c:865 ../app/core/core-enums.c:898
 msgid "Link/Unlink item"
 msgstr "Připojit/odpojit položku"
 
-#: ../app/core/core-enums.c:830
+#: ../app/core/core-enums.c:866
 msgid "Item properties"
 msgstr "Vlastnosti položky"
 
-#: ../app/core/core-enums.c:831 ../app/core/core-enums.c:860
+#: ../app/core/core-enums.c:867 ../app/core/core-enums.c:896
 msgid "Move item"
 msgstr "Přesunout položku"
 
-#: ../app/core/core-enums.c:832
+#: ../app/core/core-enums.c:868
 msgid "Scale item"
 msgstr "Velikost položky"
 
-#: ../app/core/core-enums.c:833
+#: ../app/core/core-enums.c:869
 msgid "Resize item"
 msgstr "Změnit velikost položky"
 
-#: ../app/core/core-enums.c:834 ../app/core/core-enums.c:871
+#: ../app/core/core-enums.c:870 ../app/core/core-enums.c:907
 msgid "Add layer mask"
 msgstr "Přidat masku vrstvy"
 
-#: ../app/core/core-enums.c:835 ../app/core/core-enums.c:873
+#: ../app/core/core-enums.c:871 ../app/core/core-enums.c:909
 msgid "Apply layer mask"
 msgstr "Použít masku vrstvy"
 
-#: ../app/core/core-enums.c:836 ../app/core/core-enums.c:883
+#: ../app/core/core-enums.c:872 ../app/core/core-enums.c:919
 msgid "Floating selection to layer"
 msgstr "Plovoucí výběr do vrstvy"
 
-#: ../app/core/core-enums.c:837
+#: ../app/core/core-enums.c:873
 msgid "Float selection"
 msgstr "Plovoucí výběr"
 
-#: ../app/core/core-enums.c:838
+#: ../app/core/core-enums.c:874
 msgid "Anchor floating selection"
 msgstr "Ukotvit plovoucí výběr"
 
-#: ../app/core/core-enums.c:839
+#: ../app/core/core-enums.c:875
 msgid "Remove floating selection"
 msgstr "Odstranit plovoucí výběr"
 
-#: ../app/core/core-enums.c:840 ../app/core/gimp-edit.c:253
+#: ../app/core/core-enums.c:876 ../app/core/gimp-edit.c:253
 msgid "Paste"
 msgstr "Vložit"
 
-#: ../app/core/core-enums.c:841 ../app/core/gimp-edit.c:493
+#: ../app/core/core-enums.c:877 ../app/core/gimp-edit.c:493
 msgid "Cut"
 msgstr "Vyjmout"
 
-#: ../app/core/core-enums.c:842 ../app/tools/gimptexttool.c:143
+#: ../app/core/core-enums.c:878 ../app/tools/gimptexttool.c:143
 #: ../app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Text"
 
-#: ../app/core/core-enums.c:843 ../app/core/core-enums.c:886
+#: ../app/core/core-enums.c:879 ../app/core/core-enums.c:922
 #: ../app/core/gimpdrawable-transform.c:911
 msgid "Transform"
 msgstr "Transformace"
 
-#: ../app/core/core-enums.c:844 ../app/core/core-enums.c:887
+#: ../app/core/core-enums.c:880 ../app/core/core-enums.c:923
 #: ../app/paint/gimppaintcore.c:335
 msgid "Paint"
 msgstr "Kreslení"
 
-#: ../app/core/core-enums.c:845 ../app/core/core-enums.c:890
+#: ../app/core/core-enums.c:881 ../app/core/core-enums.c:926
 msgid "Attach parasite"
 msgstr "Připojit parazita"
 
-#: ../app/core/core-enums.c:846 ../app/core/core-enums.c:891
+#: ../app/core/core-enums.c:882 ../app/core/core-enums.c:927
 msgid "Remove parasite"
 msgstr "Odstranit parazita"
 
-#: ../app/core/core-enums.c:847
+#: ../app/core/core-enums.c:883
 msgid "Import paths"
 msgstr "Importovat cesty"
 
-#: ../app/core/core-enums.c:848 ../app/pdb/drawable_cmds.c:770
+#: ../app/core/core-enums.c:884 ../app/pdb/drawable_cmds.c:770
 msgid "Plug-In"
 msgstr "Zásuvný modul"
 
-#: ../app/core/core-enums.c:849
+#: ../app/core/core-enums.c:885
 msgid "Image type"
 msgstr "Typ obrázku"
 
-#: ../app/core/core-enums.c:850
+#: ../app/core/core-enums.c:886
 msgid "Image size"
 msgstr "Velikost obrázku"
 
-#: ../app/core/core-enums.c:851
+#: ../app/core/core-enums.c:887
 msgid "Image resolution change"
 msgstr "Změna rozlišeníobrázku"
 
-#: ../app/core/core-enums.c:855
+#: ../app/core/core-enums.c:891
 msgid "Change indexed palette"
 msgstr "Změnit indexovanou paletu"
 
-#: ../app/core/core-enums.c:859
+#: ../app/core/core-enums.c:895
 msgid "Rename item"
 msgstr "Přejmenovat položku"
 
-#: ../app/core/core-enums.c:863
+#: ../app/core/core-enums.c:899
 msgid "New layer"
 msgstr "Nová vrstva"
 
-#: ../app/core/core-enums.c:864
+#: ../app/core/core-enums.c:900
 msgid "Delete layer"
 msgstr "Odstranit vrstvu"
 
-#: ../app/core/core-enums.c:865
+#: ../app/core/core-enums.c:901
 msgid "Reposition layer"
 msgstr "Změnit umístění vrstvy"
 
-#: ../app/core/core-enums.c:866
+#: ../app/core/core-enums.c:902
 msgid "Set layer mode"
 msgstr "Nastavit režim vrstvy"
 
-#: ../app/core/core-enums.c:867
+#: ../app/core/core-enums.c:903
 msgid "Set layer opacity"
 msgstr "Nastavit krytí vrstvy"
 
-#: ../app/core/core-enums.c:868
+#: ../app/core/core-enums.c:904
 msgid "Lock/Unlock alpha channel"
 msgstr "Zamknout/odemknout alfa kanál"
 
-#: ../app/core/core-enums.c:869
+#: ../app/core/core-enums.c:905
 msgid "Text layer"
 msgstr "Textová vrstva"
 
-#: ../app/core/core-enums.c:870
+#: ../app/core/core-enums.c:906
 msgid "Text layer modification"
 msgstr "Změna textové vrstvy"
 
-#: ../app/core/core-enums.c:872
+#: ../app/core/core-enums.c:908
 msgid "Delete layer mask"
 msgstr "Odstranit masku vrstvy"
 
-#: ../app/core/core-enums.c:874
+#: ../app/core/core-enums.c:910
 msgid "Show layer mask"
 msgstr "Zobrazit masku vrstvy"
 
-#: ../app/core/core-enums.c:875
+#: ../app/core/core-enums.c:911
 msgid "New channel"
 msgstr "Nový kanál"
 
-#: ../app/core/core-enums.c:876
+#: ../app/core/core-enums.c:912
 msgid "Delete channel"
 msgstr "Odstranit kanál"
 
-#: ../app/core/core-enums.c:877
+#: ../app/core/core-enums.c:913
 msgid "Reposition channel"
 msgstr "Změnit umístění kanálu"
 
-#: ../app/core/core-enums.c:878
+#: ../app/core/core-enums.c:914
 msgid "Channel color"
 msgstr "Barva kanálu"
 
-#: ../app/core/core-enums.c:879
+#: ../app/core/core-enums.c:915
 msgid "New path"
 msgstr "Nová cesta"
 
-#: ../app/core/core-enums.c:881
+#: ../app/core/core-enums.c:917
 msgid "Path modification"
 msgstr "Změna cesty"
 
-#: ../app/core/core-enums.c:882
+#: ../app/core/core-enums.c:918
 msgid "Reposition path"
 msgstr "Cesta přemístění"
 
-#: ../app/core/core-enums.c:884
+#: ../app/core/core-enums.c:920
 msgid "FS rigor"
 msgstr "Upevnění plovoucího výběru"
 
-#: ../app/core/core-enums.c:885
+#: ../app/core/core-enums.c:921
 msgid "FS relax"
 msgstr "Uvolnění plovoucího výběru"
 
-#: ../app/core/core-enums.c:888 ../app/paint/gimpink.c:103
+#: ../app/core/core-enums.c:924 ../app/paint/gimpink.c:103
 #: ../app/tools/gimpinktool.c:61
 msgid "Ink"
 msgstr "Inkoust"
 
-#: ../app/core/core-enums.c:889
+#: ../app/core/core-enums.c:925
 msgid "Select foreground"
 msgstr "Nastavit barvu popředí"
 
-#: ../app/core/core-enums.c:892
+#: ../app/core/core-enums.c:928
 msgid "EEK: can't undo"
 msgstr "EEK: nemohu vrátit zpět"
 
@@ -5330,7 +5352,7 @@ msgid "Rectangle Select"
 msgstr "Výběr obdélníku"
 
 #: ../app/core/gimpchannel-select.c:104
-#: ../app/tools/gimpellipseselecttool.c:72
+#: ../app/tools/gimpellipseselecttool.c:73
 msgid "Ellipse Select"
 msgstr "Výběr elipsy"
 
@@ -5599,7 +5621,7 @@ msgstr "Vodorovný posun první čáry mřížky; může to být záporné čís
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "Svislý posun první čáry mřížky; může to být záporné číslo."
 
-#: ../app/core/gimpimage-arrange.c:137
+#: ../app/core/gimpimage-arrange.c:139
 msgid "Arrange Objects"
 msgstr "Uspořádat objekty"
 
@@ -6337,10 +6359,6 @@ msgstr "Chyby"
 #: ../app/dialogs/dialogs.c:160
 msgid "History"
 msgstr "Historie"
-
-#: ../app/dialogs/dialogs.c:187
-msgid "Selection"
-msgstr "Výběr"
 
 #: ../app/dialogs/dialogs.c:191
 msgid "Undo"
@@ -8651,13 +8669,13 @@ msgid "Convolve Type  (%s)"
 msgstr "Druh změny ostrosti  (%s)"
 
 #. tool toggle
-#: ../app/tools/gimpcropoptions.c:181 ../app/tools/gimpmagnifyoptions.c:182
+#: ../app/tools/gimpcropoptions.c:155 ../app/tools/gimpmagnifyoptions.c:182
 #: ../app/tools/gimpmoveoptions.c:188
 #, c-format
 msgid "Tool Toggle  (%s)"
 msgstr "Přepínač nástrojů  (%s)"
 
-#: ../app/tools/gimpcropoptions.c:193
+#: ../app/tools/gimpcropoptions.c:167
 msgid "Current layer only"
 msgstr "Pouze aktuální vrstva"
 
@@ -8673,11 +8691,11 @@ msgstr "Ořez obrázku nebo nastavení rozměrů plátna"
 msgid "_Crop & Resize"
 msgstr "_Ořezání a rozměry"
 
-#: ../app/tools/gimpcroptool.c:201
+#: ../app/tools/gimpcroptool.c:200
 msgid "Click or press enter to crop."
 msgstr "Klikněte nebo stiskněte Enter pro změnu oříznutí."
 
-#: ../app/tools/gimpcroptool.c:204
+#: ../app/tools/gimpcroptool.c:203
 msgid "Click or press enter to resize."
 msgstr "Klikněte nebo stiskněte Enter pro změnu velikosti."
 
@@ -8771,11 +8789,11 @@ msgstr "Odstranit plovoucí výběr"
 msgid "Move: "
 msgstr "Přesun: "
 
-#: ../app/tools/gimpellipseselecttool.c:73
+#: ../app/tools/gimpellipseselecttool.c:74
 msgid "Select elliptical regions"
 msgstr "Výběr eliptických oblastí"
 
-#: ../app/tools/gimpellipseselecttool.c:74
+#: ../app/tools/gimpellipseselecttool.c:75
 msgid "_Ellipse Select"
 msgstr "Výběr _elipsy"
 
@@ -9324,48 +9342,60 @@ msgstr "Posterizace nefunguje na indexovaných vrstvách."
 msgid "Posterize _levels:"
 msgstr "Ú_rovně posterizace:"
 
-#: ../app/tools/gimprectangleoptions.c:802
+#: ../app/tools/gimprectangleoptions.c:896
+msgid "Expand from center"
+msgstr "Rozšiřovat ze středu"
+
+#: ../app/tools/gimprectangleoptions.c:901
+msgid "Make square"
+msgstr "Vytvořit čtverec"
+
+#: ../app/tools/gimprectangleoptions.c:906
 msgid "Highlight"
 msgstr "Zvýraznění"
 
-#: ../app/tools/gimprectangleoptions.c:818
+#: ../app/tools/gimprectangleoptions.c:915
+msgid "Rectangle Controls"
+msgstr "Nastavení obdélníku"
+
+#: ../app/tools/gimprectangleoptions.c:931
 msgid "Fix"
 msgstr "Pevné"
 
-#: ../app/tools/gimprectangleoptions.c:823 ../app/widgets/gimpgrideditor.c:239
+#: ../app/tools/gimprectangleoptions.c:936 ../app/widgets/gimpgrideditor.c:239
 #: ../app/widgets/gimpgrideditor.c:271
 msgid "Width"
 msgstr "Šířka"
 
-#: ../app/tools/gimprectangleoptions.c:833 ../app/widgets/gimpgrideditor.c:241
+#: ../app/tools/gimprectangleoptions.c:946 ../app/widgets/gimpgrideditor.c:241
 #: ../app/widgets/gimpgrideditor.c:273
 msgid "Height"
 msgstr "Výška"
 
-#: ../app/tools/gimprectangleoptions.c:843
+#: ../app/tools/gimprectangleoptions.c:956
 msgid "Aspect"
 msgstr "Poměr stran"
 
-#: ../app/tools/gimprectangleoptions.c:874
+#: ../app/tools/gimprectangleoptions.c:987
 msgid "1 "
 msgstr "1 "
 
-#: ../app/tools/gimprectangleoptions.c:875
+#: ../app/tools/gimprectangleoptions.c:988
 msgid "2 "
 msgstr "2 "
 
-#: ../app/tools/gimprectangleoptions.c:876 ../app/widgets/gimpcursorview.c:136
+#: ../app/tools/gimprectangleoptions.c:989 ../app/widgets/gimpcursorview.c:136
 #: ../app/widgets/gimpcursorview.c:158
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangleoptions.c:877 ../app/widgets/gimpcursorview.c:142
+#: ../app/tools/gimprectangleoptions.c:990 ../app/widgets/gimpcursorview.c:142
 #: ../app/widgets/gimpcursorview.c:164
 msgid "Y"
 msgstr "Y"
 
-#: ../app/tools/gimprectangletool.c:1350 ../app/tools/gimprectangletool.c:1360
-#: ../app/tools/gimprectangletool.c:1864
+#: ../app/tools/gimprectangletool.c:1337 ../app/tools/gimprectangletool.c:1347
+#: ../app/tools/gimprectangletool.c:1842
 msgid "Rectangle: "
 msgstr "Obdélník: "
 
