@@ -1,3 +1,14 @@
+2006-06-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimprectangletool.[ch]: code cleanups
+
+	* app/tools/gimpnewrectselecttool.[ch]: try to do what
+	the user intuitively expects when deciding which selection
+	operation to perform.  When modifying an existing rectangle,
+	always use the operation with which it was created.
+
 2006-06-10  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):

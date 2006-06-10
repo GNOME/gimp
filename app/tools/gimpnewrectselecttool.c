@@ -92,7 +92,7 @@ static void     gimp_new_rect_select_tool_cursor_update     (GimpTool          *
                                                              GimpCoords        *coords,
                                                              GdkModifierType    state,
                                                              GimpDisplay       *display);
-static void     gimp_new_rect_select_tool_rect_select       (GimpRectangleTool *rect_tool,
+static void     gimp_new_rect_select_tool_select            (GimpRectangleTool *rect_tool,
                                                              gint               x,
                                                              gint               y,
                                                              gint               w,
@@ -104,7 +104,8 @@ static gboolean gimp_new_rect_select_tool_execute           (GimpRectangleTool *
                                                              gint               h);
 static void     gimp_new_rect_select_tool_cancel            (GimpRectangleTool *rect_tool);
 static gboolean gimp_new_rect_select_tool_rectangle_changed (GimpRectangleTool *rect_tool);
-static void     gimp_new_rect_select_tool_real_rect_select  (GimpNewRectSelectTool *rect_select,
+static void     gimp_new_rect_select_tool_real_select       (GimpNewRectSelectTool *rect_select,
+                                                             SelectOps              operation,
                                                              gint                   x,
                                                              gint                   y,
                                                              gint                   w,
@@ -163,17 +164,20 @@ gimp_new_rect_select_tool_class_init (GimpNewRectSelectToolClass *klass)
 
   draw_tool_class->draw      = gimp_rectangle_tool_draw;
 
-  klass->rect_select         = gimp_new_rect_select_tool_real_rect_select;
+  klass->select         = gimp_new_rect_select_tool_real_select;
 }
 
 static void
-gimp_new_rect_select_tool_init (GimpNewRectSelectTool *new_rect_select_tool)
+gimp_new_rect_select_tool_init (GimpNewRectSelectTool *rect_select)
 {
-  GimpTool          *tool      = GIMP_TOOL (new_rect_select_tool);
-  GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (new_rect_select_tool);
+  GimpTool          *tool      = GIMP_TOOL (rect_select);
+  GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (rect_select);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_RECT_SELECT);
   gimp_rectangle_tool_set_constrain (rect_tool, TRUE);
+
+  rect_select->undo = NULL;
+  rect_select->redo = NULL;
 }
 
 static void
@@ -221,7 +225,8 @@ gimp_new_rect_select_tool_button_press (GimpTool        *tool,
                                         GdkModifierType  state,
                                         GimpDisplay     *display)
 {
-  guint function;
+  GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (tool);
+  guint                  function;
 
   if (tool->display && display != tool->display)
     gimp_rectangle_tool_cancel (GIMP_RECTANGLE_TOOL (tool));
@@ -249,6 +254,34 @@ gimp_new_rect_select_tool_button_press (GimpTool        *tool,
     }
 
   gimp_rectangle_tool_button_press (tool, coords, time, state, display);
+
+  /* if we have an existing rectangle in the current display, then
+   * we have already "executed", and need to undo at this point,
+   * unless the user has done something in the meantime
+   */
+  g_object_get (tool, "function", &function, NULL);
+
+  if (function == RECT_CREATING)
+    {
+      rect_select->use_saved_op = FALSE;
+    }
+  else
+    {
+      GimpImage             *image       = tool->display->image;
+      GimpUndo              *undo;
+
+      undo = gimp_undo_stack_peek (image->undo_stack);
+
+      if (undo && rect_select->undo == undo)
+        {
+          gimp_image_undo (image);
+
+          /* we will need to redo if the user cancels */
+          rect_select->redo = gimp_undo_stack_peek (image->redo_stack);
+        }
+    }
+
+  rect_select->undo = NULL;
 }
 
 static void
@@ -258,11 +291,23 @@ gimp_new_rect_select_tool_button_release (GimpTool        *tool,
                                           GdkModifierType  state,
                                           GimpDisplay     *display)
 {
+  GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (tool);
+
   gimp_tool_pop_status (tool, display);
-  gimp_tool_push_status (tool, display,
-                         _("Click or press enter to create the selection."));
 
   gimp_rectangle_tool_button_release (tool, coords, time, state, display);
+
+  if ((state & GDK_BUTTON3_MASK))
+    {
+      if (rect_select->redo)
+        {
+          gimp_image_redo (tool->display->image);
+        }
+
+      rect_select->use_saved_op = TRUE;  /* is this correct? */
+    }
+
+  rect_select->redo = NULL;
 }
 
 static void
@@ -272,8 +317,6 @@ gimp_new_rect_select_tool_modifier_key (GimpTool        *tool,
                                         GdkModifierType  state,
                                         GimpDisplay     *display)
 {
-  gimp_rectangle_tool_modifier_key (tool, key, press, state, display);
-
   GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
                                                 display);
 }
@@ -326,11 +369,11 @@ gimp_new_rect_select_tool_cursor_update (GimpTool        *tool,
  *    we clear the selection.
  */
 static void
-gimp_new_rect_select_tool_rect_select (GimpRectangleTool *rectangle,
-                                       gint               x,
-                                       gint               y,
-                                       gint               w,
-                                       gint               h)
+gimp_new_rect_select_tool_select (GimpRectangleTool *rectangle,
+                                  gint               x,
+                                  gint               y,
+                                  gint               w,
+                                  gint               h)
 {
   GimpTool              *tool        = GIMP_TOOL (rectangle);
   GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (rectangle);
@@ -338,6 +381,7 @@ gimp_new_rect_select_tool_rect_select (GimpRectangleTool *rectangle,
   GimpImage             *image;
   gboolean               rectangle_exists;
   gboolean               auto_shrink;
+  SelectOps              operation;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
@@ -358,18 +402,27 @@ gimp_new_rect_select_tool_rect_select (GimpRectangleTool *rectangle,
       /* FIXME */
     }
 
+  if (rect_select->use_saved_op)
+    operation = rect_select->operation;
+  else
+    g_object_get (options,
+                  "operation", &operation,
+                  NULL);
+
   /* if rectangle exists, turn it into a selection */
   if (rectangle_exists)
-    GIMP_NEW_RECT_SELECT_TOOL_GET_CLASS (rect_select)->rect_select (rect_select,
-                                                                    x, y, w, h);
+    GIMP_NEW_RECT_SELECT_TOOL_GET_CLASS (rect_select)->select (rect_select,
+                                                               operation,
+                                                               x, y, w, h);
 }
 
 static void
-gimp_new_rect_select_tool_real_rect_select (GimpNewRectSelectTool *rect_select,
-                                            gint                   x,
-                                            gint                   y,
-                                            gint                   w,
-                                            gint                   h)
+gimp_new_rect_select_tool_real_select (GimpNewRectSelectTool *rect_select,
+                                       SelectOps              operation,
+                                       gint                   x,
+                                       gint                   y,
+                                       gint                   w,
+                                       gint                   h)
 {
   GimpTool             *tool = GIMP_TOOL (rect_select);
   GimpSelectionOptions *options;
@@ -378,7 +431,7 @@ gimp_new_rect_select_tool_real_rect_select (GimpNewRectSelectTool *rect_select,
 
   gimp_channel_select_rectangle (gimp_image_get_mask (tool->display->image),
                                  x, y, w, h,
-                                 options->operation,
+                                 operation,
                                  options->feather,
                                  options->feather_radius,
                                  options->feather_radius);
@@ -501,6 +554,7 @@ gimp_new_rect_select_tool_cancel (GimpRectangleTool *rectangle)
     }
 
   rect_select->undo = NULL;
+  rect_select->redo = NULL;
 }
 
 static gboolean
@@ -511,13 +565,14 @@ gimp_new_rect_select_tool_rectangle_changed (GimpRectangleTool  *rectangle)
   if (tool->display)
     {
       GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (tool);
+      GimpSelectionOptions  *options;
       GimpImage             *image       = tool->display->image;
       GimpUndo              *undo;
       gint                   x1, y1, x2, y2;
 
-      /* if we have an existing rectangle in the current display, then
-       * we have already "executed", and need to undo at this point,
-       * unless the user has done something in the meantime
+      /* if we got here via button release, we have already undone the
+       * previous operation.  But if we got here by some other means,
+       * we need to undo it now.
        */
       undo = gimp_undo_stack_peek (image->undo_stack);
 
@@ -534,13 +589,21 @@ gimp_new_rect_select_tool_rectangle_changed (GimpRectangleTool  *rectangle)
                     "y2", &y2,
                     NULL);
 
-      gimp_new_rect_select_tool_rect_select (rectangle,
-                                             x1, y1,
-                                             x2 - x1,
-                                             y2 - y1);
+      gimp_new_rect_select_tool_select (rectangle, x1, y1, x2 - x1, y2 - y1);
 
       /* save the undo that we got when executing */
       rect_select->undo = gimp_undo_stack_peek (image->undo_stack);
+      rect_select->redo = NULL;
+
+      if (! rect_select->use_saved_op)
+        {
+          /* remember the operation now in case we modify the rectangle */
+          options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+          g_object_get (options,
+                        "operation", &rect_select->operation,
+                        NULL);
+          rect_select->use_saved_op = TRUE;
+        }
 
       gimp_image_flush (image);
     }

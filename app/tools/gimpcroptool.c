@@ -121,7 +121,6 @@ gimp_crop_tool_class_init (GimpCropToolClass *klass)
   tool_class->button_release = gimp_crop_tool_button_release;
   tool_class->motion         = gimp_rectangle_tool_motion;
   tool_class->key_press      = gimp_rectangle_tool_key_press;
-  tool_class->modifier_key   = gimp_rectangle_tool_modifier_key;
   tool_class->oper_update    = gimp_rectangle_tool_oper_update;
   tool_class->cursor_update  = gimp_crop_tool_cursor_update;
 

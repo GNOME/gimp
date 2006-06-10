@@ -37,18 +37,22 @@ struct _GimpNewRectSelectTool
 {
   GimpSelectionTool  parent_instance;
 
+  SelectOps          operation;    /* remember for use when modifying   */
+  gboolean           use_saved_op; /* use operation or get from options */
   GimpUndo          *undo;
+  GimpUndo          *redo;
 };
 
 struct _GimpNewRectSelectToolClass
 {
   GimpSelectionToolClass parent_class;
 
-  void (* rect_select) (GimpNewRectSelectTool *rect_select,
-                        gint                   x,
-                        gint                   y,
-                        gint                   w,
-                        gint                   h);
+  void (* select) (GimpNewRectSelectTool *rect_select,
+                   SelectOps              operation,
+                   gint                   x,
+                   gint                   y,
+                   gint                   w,
+                   gint                   h);
 };
 
 
