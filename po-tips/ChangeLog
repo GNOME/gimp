@@ -1,3 +1,7 @@
+2006-06-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* mk.po: change erroneous "&qt"s to "&gt".
+
 2006-04-05  Nickolay V. Shmyrev <nshmyrev@yandex.ru>
 
 	* ru.po: Updated Russian translation.
