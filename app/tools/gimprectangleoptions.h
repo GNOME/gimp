@@ -73,6 +73,7 @@ void      gimp_rectangle_options_get_property       (GObject      *object,
                                                      guint         property_id,
                                                      GValue       *value,
                                                      GParamSpec   *pspec);
-
+void        gimp_rectangle_options_set_highlight    (GimpRectangleOptions *options,
+                                                     gboolean              highlight);
 
 #endif  /* __GIMP_RECTANGLE_OPTIONS_H__ */

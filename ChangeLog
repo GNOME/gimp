@@ -1,3 +1,27 @@
+2006-06-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Here is the big change-over, finally.
+
+	* app/tools/gimprectselecttool.[ch]: removed.
+	
+	* app/tools/Makefile.am
+	* app/tools/gimp-tools.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimpellipseselecttool.h
+	* app/tools/gimpnewrectselectoptions.c
+	* app/tools/gimpnewrectselectoptions.h
+	* app/tools/gimpnewrectselecttool.c
+	* app/tools/gimpnewrectselecttool.h
+	* app/tools/gimpselectionoptions.c
+	* app/widgets/gimptoolbox.c
+	* menus/image-menu.xml.in: get rid of the "new" in everything
+	referring to the new rect select tool, except filenames.  This
+	will wait for yosh to perform cvs-magic-foo.
+
+	* app/tools/gimprectangleoptions.[ch]
+	* app/tools/gimprectangletool.[ch]: fix a couple of minor
+	problems that popped up during testing.
+
 2006-06-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpeditor.c (gimp_editor_add_action_button): simply

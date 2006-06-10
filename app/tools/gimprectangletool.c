@@ -883,7 +883,7 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
                     "pressx", &pressx,
                     "pressy", &pressy,
                     NULL);
-      if (private->lastx == pressx && private->lasty == pressy)
+      if (gimp_rectangle_tool_no_movement (rectangle))
         {
           if (gimp_rectangle_tool_execute (rectangle))
             gimp_rectangle_tool_halt (rectangle);
@@ -2369,4 +2369,20 @@ gimp_rectangle_tool_notify_dimensions (GimpRectangleOptions *options,
                               GIMP_TOOL (rectangle)->display);
 
   g_signal_emit_by_name (rectangle, "rectangle-changed", NULL);
+}
+
+gboolean
+gimp_rectangle_tool_no_movement (GimpRectangleTool *rectangle)
+{
+  gint                      pressx, pressy;
+  GimpRectangleToolPrivate *private;
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
+
+  g_object_get (rectangle,
+                "pressx", &pressx,
+                "pressy", &pressy,
+                NULL);
+
+  return (private->lastx == pressx && private->lasty == pressy);
 }

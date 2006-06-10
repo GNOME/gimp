@@ -16,33 +16,33 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_NEW_RECT_SELECT_OPTIONS_H__
-#define __GIMP_NEW_RECT_SELECT_OPTIONS_H__
+#ifndef __GIMP_RECT_SELECT_OPTIONS_H__
+#define __GIMP_RECT_SELECT_OPTIONS_H__
 
 
 #include "gimpselectionoptions.h"
 
 
-#define GIMP_TYPE_NEW_RECT_SELECT_OPTIONS            (gimp_new_rect_select_options_get_type ())
-#define GIMP_NEW_RECT_SELECT_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_NEW_RECT_SELECT_OPTIONS, GimpNewRectSelectOptions))
-#define GIMP_NEW_RECT_SELECT_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_NEW_RECT_SELECT_OPTIONS, GimpNewRectSelectOptionsClass))
-#define GIMP_IS_NEW_RECT_SELECT_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_NEW_RECT_SELECT_OPTIONS))
-#define GIMP_IS_NEW_RECT_SELECT_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_NEW_RECT_SELECT_OPTIONS))
-#define GIMP_NEW_RECT_SELECT_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_NEW_RECT_SELECT_OPTIONS, GimpNewRectSelectOptionsClass))
+#define GIMP_TYPE_RECT_SELECT_OPTIONS            (gimp_rect_select_options_get_type ())
+#define GIMP_RECT_SELECT_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RECT_SELECT_OPTIONS, GimpRectSelectOptions))
+#define GIMP_RECT_SELECT_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_RECT_SELECT_OPTIONS, GimpRectSelectOptionsClass))
+#define GIMP_IS_RECT_SELECT_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_RECT_SELECT_OPTIONS))
+#define GIMP_IS_RECT_SELECT_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_RECT_SELECT_OPTIONS))
+#define GIMP_RECT_SELECT_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_RECT_SELECT_OPTIONS, GimpRectSelectOptionsClass))
 
 
-typedef struct _GimpNewRectSelectOptions GimpNewRectSelectOptions;
-typedef struct _GimpToolOptionsClass     GimpNewRectSelectOptionsClass;
+typedef struct _GimpRectSelectOptions GimpRectSelectOptions;
+typedef struct _GimpToolOptionsClass  GimpRectSelectOptionsClass;
 
-struct _GimpNewRectSelectOptions
+struct _GimpRectSelectOptions
 {
   GimpSelectionOptions  parent_instence;
 };
 
 
-GType       gimp_new_rect_select_options_get_type (void) G_GNUC_CONST;
+GType       gimp_rect_select_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_new_rect_select_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * gimp_rect_select_options_gui      (GimpToolOptions *tool_options);
 
 
-#endif /* __GIMP_NEW_RECT_SELECT_OPTIONS_H__ */
+#endif /* __GIMP_RECT_SELECT_OPTIONS_H__ */

@@ -125,6 +125,7 @@ void        gimp_rectangle_tool_halt                (GimpRectangleTool *rectangl
 void        gimp_rectangle_tool_configure           (GimpRectangleTool *rectangle);
 void        gimp_rectangle_tool_set_constrain       (GimpRectangleTool *rectangle,
                                                      gboolean           constrain);
+gboolean    gimp_rectangle_tool_no_movement         (GimpRectangleTool *rectangle);
 
 /*  convenience functions  */
 

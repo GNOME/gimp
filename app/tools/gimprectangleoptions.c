@@ -67,8 +67,6 @@ static void gimp_rectangle_options_iface_base_init     (GimpRectangleOptionsInte
 static GimpRectangleOptionsPrivate *
             gimp_rectangle_options_get_private         (GimpRectangleOptions *options);
 
-void        gimp_rectangle_options_set_highlight       (GimpRectangleOptions *options,
-                                                        gboolean              highlight);
 gboolean    gimp_rectangle_options_get_highlight       (GimpRectangleOptions *options);
 void        gimp_rectangle_options_set_guide           (GimpRectangleOptions *options,
                                                         GimpRectangleGuide    guide);

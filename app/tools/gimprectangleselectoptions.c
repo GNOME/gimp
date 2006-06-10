@@ -35,17 +35,17 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_new_rect_select_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *iface);
+static void   gimp_rect_select_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *iface);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpNewRectSelectOptions, gimp_new_rect_select_options,
+G_DEFINE_TYPE_WITH_CODE (GimpRectSelectOptions, gimp_rect_select_options,
                          GIMP_TYPE_SELECTION_OPTIONS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_OPTIONS,
-                                                gimp_new_rect_select_options_rectangle_options_iface_init))
+                                                gimp_rect_select_options_rectangle_options_iface_init))
 
 
 static void
-gimp_new_rect_select_options_class_init (GimpNewRectSelectOptionsClass *klass)
+gimp_rect_select_options_class_init (GimpRectSelectOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -56,17 +56,17 @@ gimp_new_rect_select_options_class_init (GimpNewRectSelectOptionsClass *klass)
 }
 
 static void
-gimp_new_rect_select_options_init (GimpNewRectSelectOptions *options)
+gimp_rect_select_options_init (GimpRectSelectOptions *options)
 {
 }
 
 static void
-gimp_new_rect_select_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *iface)
+gimp_rect_select_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *iface)
 {
 }
 
 GtkWidget *
-gimp_new_rect_select_options_gui (GimpToolOptions *tool_options)
+gimp_rect_select_options_gui (GimpToolOptions *tool_options)
 {
   GtkWidget *vbox;
   GtkWidget *vbox_rectangle;
