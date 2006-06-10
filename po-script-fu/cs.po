@@ -1,3 +1,4 @@
+# translation of cs.po to Czech
 # translation of cs.po to
 # Czech translation of GIMP script-fu
 # Copyright (C) 2001,2003, 2006 Free Software Foundation, Inc.
@@ -11,10 +12,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-07 11:42+0200\n"
-"PO-Revision-Date: 2006-06-07 11:43+0200\n"
+"POT-Creation-Date: 2006-06-10 19:13+0200\n"
+"PO-Revision-Date: 2006-06-10 19:14+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team:  <cs@li.org>\n"
+"Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,9 +34,9 @@ msgstr "_Procházet..."
 msgid "Script-Fu Procedure Browser"
 msgstr "Prohlížeč procedur script-fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:584
-msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "Pouze neinteraktivní spuštění umožňuje režim provádění Skript-fu"
+#: ../plug-ins/script-fu/script-fu-console.c:591
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "Evaluační režim Script-fu umožňuje pouze neinteraktivní spuštění"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:182
 msgid "Script-Fu cannot process two scripts at the same time."
@@ -117,7 +118,7 @@ msgstr "Datum:"
 msgid "Image Types:"
 msgstr "Typy obrázku:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:643
+#: ../plug-ins/script-fu/script-fu-scripts.c:655
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -231,8 +232,8 @@ msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
 msgstr ""
-"Nelze obnovit skripty, pokud je otevřen dialog Script-Fu. "
-"Zavřete prosím všechny okna Script-Fu a zkuste to znovu."
+"Nelze obnovit skripty, pokud je otevřen dialog Script-Fu. Zavřete prosím "
+"všechny okna Script-Fu a zkuste to znovu."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
