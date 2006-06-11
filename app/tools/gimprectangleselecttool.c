@@ -441,7 +441,6 @@ gimp_rect_select_tool_select (GimpRectangleTool *rectangle,
   GimpSelectionOptions *options;
   GimpImage            *image;
   gboolean              rectangle_exists;
-  gboolean              auto_shrink;
   SelectOps             operation;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);

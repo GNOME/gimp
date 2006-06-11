@@ -154,7 +154,9 @@ static void     gimp_rectangle_tool_notify_guide      (GimpRectangleOptions  *op
 static void     gimp_rectangle_tool_notify_dimensions (GimpRectangleOptions  *options,
                                                        GParamSpec            *pspec,
                                                        GimpRectangleTool     *rectangle);
-
+static void     gimp_rectangle_tool_check_function    (GimpRectangleTool     *rectangle,
+                                                       gint                   curx,
+                                                       gint                   cury);
 
 static guint gimp_rectangle_tool_signals[LAST_SIGNAL] = { 0 };
 
@@ -944,6 +946,9 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   curx = ROUND (coords->x);
   cury = ROUND (coords->y);
 
+  /* fix function, startx, starty if user has "flipped" the rectangle */
+  gimp_rectangle_tool_check_function (rectangle, curx, cury);
+
   inc_x = curx - private->startx;
   inc_y = cury - private->starty;
 
@@ -1360,6 +1365,152 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+}
+
+/*
+ * gimp_rectangle_tool_check_function() is needed to deal with
+ * situations where the user drags a corner or edge across one of the
+ * existing edges, thereby changing its function.  Ugh.
+ */
+static void
+gimp_rectangle_tool_check_function (GimpRectangleTool *rectangle,
+                                    gint               curx,
+                                    gint               cury)
+{
+  GimpRectangleToolPrivate *private;
+  guint                     function;
+  guint                     new_function;
+  gint                      x1, y1, x2, y2;
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
+
+  g_object_get (rectangle,
+                "function", &function,
+                "x1",       &x1,
+                "y1",       &y1,
+                "x2",       &x2,
+                "y2",       &y2,
+                NULL);
+
+  new_function = function;
+
+  switch (function)
+    {
+    case RECT_RESIZING_LEFT:
+      if (curx > x2)
+        {
+          new_function = RECT_RESIZING_RIGHT;
+          private->startx = x2;
+        }
+      break;
+
+    case RECT_RESIZING_RIGHT:
+      if (curx < x1)
+        {
+          new_function = RECT_RESIZING_LEFT;
+          private->startx = x1;
+        }
+      break;
+
+    case RECT_RESIZING_TOP:
+      if (cury > y2)
+        {
+          new_function = RECT_RESIZING_BOTTOM;
+          private->starty = y2;
+        }
+      break;
+
+    case RECT_RESIZING_BOTTOM:
+      if (cury < y1)
+        {
+          new_function = RECT_RESIZING_TOP;
+          private->starty = y1;
+        }
+      break;
+
+    case RECT_RESIZING_UPPER_LEFT:
+      if (curx > x2 && cury > y2)
+        {
+          new_function = RECT_RESIZING_LOWER_RIGHT;
+          private->startx = x2;
+          private->starty = y2;
+        }
+      else if (curx > x2)
+        {
+          new_function = RECT_RESIZING_UPPER_RIGHT;
+          private->startx = x2;
+        }
+      else if (cury > y2)
+        {
+          new_function = RECT_RESIZING_LOWER_LEFT;
+          private->starty = y2;
+        }
+      break;
+
+    case RECT_RESIZING_UPPER_RIGHT:
+      if (curx < x1 && cury > y2)
+        {
+          new_function = RECT_RESIZING_LOWER_LEFT;
+          private->startx = x1;
+          private->starty = y2;
+        }
+      else if (curx < x1)
+        {
+          new_function = RECT_RESIZING_UPPER_LEFT;
+          private->startx = x1;
+        }
+      else if (cury > y2)
+        {
+          new_function = RECT_RESIZING_LOWER_RIGHT;
+          private->starty = y2;
+        }
+      break;
+
+    case RECT_RESIZING_LOWER_LEFT:
+      if (curx > x2 && cury < y1)
+        {
+          new_function = RECT_RESIZING_UPPER_RIGHT;
+          private->startx = x2;
+          private->starty = y1;
+        }
+      else if (curx > x2)
+        {
+          new_function = RECT_RESIZING_LOWER_RIGHT;
+          private->startx = x2;
+        }
+      else if (cury < y1)
+        {
+          new_function = RECT_RESIZING_UPPER_LEFT;
+          private->starty = y1;
+        }
+      break;
+
+    case RECT_RESIZING_LOWER_RIGHT:
+      if (curx < x1 && cury < y1)
+        {
+          new_function = RECT_RESIZING_UPPER_LEFT;
+          private->startx = x1;
+          private->starty = y1;
+        }
+      else if (curx < x1)
+        {
+          new_function = RECT_RESIZING_LOWER_LEFT;
+          private->startx = x1;
+        }
+      else if (cury < y1)
+        {
+          new_function = RECT_RESIZING_UPPER_RIGHT;
+          private->starty = y1;
+        }
+      break;
+
+    default:
+      break;
+    }
+
+  if (new_function != function)
+    g_object_set (rectangle, "function", new_function, NULL);
+
 }
 
 gboolean
