@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-10 19:06+0200\n"
-"PO-Revision-Date: 2006-06-10 19:09+0200\n"
+"POT-Creation-Date: 2006-06-11 11:59+0200\n"
+"PO-Revision-Date: 2006-06-11 12:01+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5129,7 +5129,7 @@ msgid "EEK: can't undo"
 msgstr "EEK: nemohu vrátit zpět"
 
 #: ../app/core/gimp-contexts.c:141 ../app/gui/session.c:252
-#: ../app/menus/menus.c:418 ../app/tools/gimp-tools.c:432
+#: ../app/menus/menus.c:418 ../app/tools/gimp-tools.c:430
 #: ../app/widgets/gimpdevices.c:258
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -5347,7 +5347,7 @@ msgstr "Soubor je zkrácen"
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Fatální chyba zpracování souboru stopy '%s': Soubor je poškozen."
 
-#: ../app/core/gimpchannel-select.c:55 ../app/tools/gimprectselecttool.c:94
+#: ../app/core/gimpchannel-select.c:55
 msgid "Rectangle Select"
 msgstr "Výběr obdélníku"
 
@@ -6537,12 +6537,12 @@ msgstr "_Název vrstvy:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:127
-#: ../app/tools/gimpmeasuretool.c:948 ../app/tools/gimpselectionoptions.c:567
+#: ../app/tools/gimpmeasuretool.c:948
 msgid "Width:"
 msgstr "Šířka:"
 
 #: ../app/dialogs/layer-options-dialog.c:133
-#: ../app/tools/gimpmeasuretool.c:974 ../app/tools/gimpselectionoptions.c:575
+#: ../app/tools/gimpmeasuretool.c:974
 msgid "Height:"
 msgstr "Výška:"
 
@@ -8349,7 +8349,7 @@ msgstr "Počet řádků mřížky"
 msgid "Grid line spacing"
 msgstr "Prostor mezi řádky mřížky"
 
-#: ../app/tools/gimp-tools.c:315
+#: ../app/tools/gimp-tools.c:313
 msgid "This tool has no options."
 msgstr "Tento nástroj nemá volby."
 
@@ -8392,7 +8392,7 @@ msgstr "Max. hloubka:"
 
 #: ../app/tools/gimpblendoptions.c:274
 #: ../app/tools/gimpbucketfilloptions.c:274
-#: ../app/tools/gimpselectionoptions.c:501
+#: ../app/tools/gimpselectionoptions.c:495
 msgid "Threshold:"
 msgstr "Práh:"
 
@@ -8446,7 +8446,7 @@ msgid "Base filled area on all visible layers"
 msgstr "Založit oblast k vyplnění na všech viditelných vrstvách"
 
 #: ../app/tools/gimpbucketfilloptions.c:111
-#: ../app/tools/gimpselectionoptions.c:134
+#: ../app/tools/gimpselectionoptions.c:129
 msgid "Maximum color difference"
 msgstr "Maximální odlišnost barev"
 
@@ -8471,7 +8471,7 @@ msgid "Fill similar colors"
 msgstr "Vyplnit podobné barvy"
 
 #: ../app/tools/gimpbucketfilloptions.c:240
-#: ../app/tools/gimpselectionoptions.c:473
+#: ../app/tools/gimpselectionoptions.c:467
 msgid "Finding Similar Colors"
 msgstr "Hledání podobných barev"
 
@@ -8481,8 +8481,8 @@ msgstr "Vyplnit průhledné oblasti"
 
 #: ../app/tools/gimpbucketfilloptions.c:262 ../app/tools/gimpclonetool.c:350
 #: ../app/tools/gimpcolorpickeroptions.c:162
-#: ../app/tools/gimpselectionoptions.c:489
-#: ../app/tools/gimpselectionoptions.c:538
+#: ../app/tools/gimpselectionoptions.c:483
+#: ../app/tools/gimpselectionoptions.c:526
 msgid "Sample merged"
 msgstr "Ukázka sloučení"
 
@@ -8608,7 +8608,7 @@ msgstr "Svět_lost:"
 msgid "Sample average"
 msgstr "Průměrný vzorek"
 
-#: ../app/tools/gimpcoloroptions.c:171 ../app/tools/gimpselectionoptions.c:451
+#: ../app/tools/gimpcoloroptions.c:171 ../app/tools/gimpselectionoptions.c:445
 #: ../app/widgets/gimpbrusheditor.c:131
 msgid "Radius:"
 msgstr "Poloměr:"
@@ -9225,7 +9225,7 @@ msgid "_Paintbrush"
 msgstr "_Štětec"
 
 #: ../app/tools/gimppaintoptions-gui.c:104
-#: ../app/tools/gimpselectionoptions.c:405
+#: ../app/tools/gimpselectionoptions.c:400
 #: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:258
 msgid "Mode:"
 msgstr "Režim:"
@@ -9342,54 +9342,54 @@ msgstr "Posterizace nefunguje na indexovaných vrstvách."
 msgid "Posterize _levels:"
 msgstr "Ú_rovně posterizace:"
 
-#: ../app/tools/gimprectangleoptions.c:896
+#: ../app/tools/gimprectangleoptions.c:894
 msgid "Expand from center"
 msgstr "Rozšiřovat ze středu"
 
-#: ../app/tools/gimprectangleoptions.c:901
+#: ../app/tools/gimprectangleoptions.c:899
 msgid "Make square"
 msgstr "Vytvořit čtverec"
 
-#: ../app/tools/gimprectangleoptions.c:906
+#: ../app/tools/gimprectangleoptions.c:904
 msgid "Highlight"
 msgstr "Zvýraznění"
 
-#: ../app/tools/gimprectangleoptions.c:915
+#: ../app/tools/gimprectangleoptions.c:913
 msgid "Rectangle Controls"
 msgstr "Nastavení obdélníku"
 
-#: ../app/tools/gimprectangleoptions.c:931
+#: ../app/tools/gimprectangleoptions.c:929
 msgid "Fix"
 msgstr "Pevné"
 
-#: ../app/tools/gimprectangleoptions.c:936 ../app/widgets/gimpgrideditor.c:239
+#: ../app/tools/gimprectangleoptions.c:934 ../app/widgets/gimpgrideditor.c:239
 #: ../app/widgets/gimpgrideditor.c:271
 msgid "Width"
 msgstr "Šířka"
 
-#: ../app/tools/gimprectangleoptions.c:946 ../app/widgets/gimpgrideditor.c:241
+#: ../app/tools/gimprectangleoptions.c:944 ../app/widgets/gimpgrideditor.c:241
 #: ../app/widgets/gimpgrideditor.c:273
 msgid "Height"
 msgstr "Výška"
 
-#: ../app/tools/gimprectangleoptions.c:956
+#: ../app/tools/gimprectangleoptions.c:954
 msgid "Aspect"
 msgstr "Poměr stran"
 
-#: ../app/tools/gimprectangleoptions.c:987
+#: ../app/tools/gimprectangleoptions.c:985
 msgid "1 "
 msgstr "1 "
 
-#: ../app/tools/gimprectangleoptions.c:988
+#: ../app/tools/gimprectangleoptions.c:986
 msgid "2 "
 msgstr "2 "
 
-#: ../app/tools/gimprectangleoptions.c:989 ../app/widgets/gimpcursorview.c:136
+#: ../app/tools/gimprectangleoptions.c:987 ../app/widgets/gimpcursorview.c:136
 #: ../app/widgets/gimpcursorview.c:158
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangleoptions.c:990 ../app/widgets/gimpcursorview.c:142
+#: ../app/tools/gimprectangleoptions.c:988 ../app/widgets/gimpcursorview.c:142
 #: ../app/widgets/gimpcursorview.c:164
 msgid "Y"
 msgstr "Y"
@@ -9399,17 +9399,17 @@ msgstr "Y"
 msgid "Rectangle: "
 msgstr "Obdélník: "
 
-#: ../app/tools/gimprectselecttool.c:95
-msgid "Select rectangular regions"
-msgstr "Výběr obdélníkovité oblasti"
+#: ../app/tools/gimprectangleselecttool.c:131
+msgid "Rect Select"
+msgstr "Výběr obdélníku"
 
-#: ../app/tools/gimprectselecttool.c:96
-msgid "_Rectangle Select"
+#: ../app/tools/gimprectangleselecttool.c:132
+msgid "Select a Rectangular part of an image"
+msgstr "Výběr obdélníkové oblasti obrázku"
+
+#: ../app/tools/gimprectangleselecttool.c:133
+msgid "_Rect Select"
 msgstr "Výběr _obdélníku"
-
-#: ../app/tools/gimprectselecttool.c:360
-msgid "Selection: "
-msgstr "Výběr: "
 
 #: ../app/tools/gimprotatetool.c:88
 msgid "Rotate the layer or selection"
@@ -9447,39 +9447,39 @@ msgstr "_Škála"
 msgid "Scaling Information"
 msgstr "Informace o škálování"
 
-#: ../app/tools/gimpselectionoptions.c:109
+#: ../app/tools/gimpselectionoptions.c:104
 msgid "Smooth edges"
 msgstr "Vyhlazování hran"
 
-#: ../app/tools/gimpselectionoptions.c:123
+#: ../app/tools/gimpselectionoptions.c:118
 msgid "Allow completely transparent regions to be selected"
 msgstr "Umožní vybrat zcela průhledné oblasti"
 
-#: ../app/tools/gimpselectionoptions.c:129
+#: ../app/tools/gimpselectionoptions.c:124
 msgid "Base selection on all visible layers"
 msgstr "Založit výběr na všech viditelných vrstvách"
 
-#: ../app/tools/gimpselectionoptions.c:144
+#: ../app/tools/gimpselectionoptions.c:139
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Při zmenšení výběru použít všechny viditelné vrstvy"
 
-#: ../app/tools/gimpselectionoptions.c:413 ../app/tools/gimptextoptions.c:460
+#: ../app/tools/gimpselectionoptions.c:408 ../app/tools/gimptextoptions.c:460
 msgid "Antialiasing"
 msgstr "Vyhlazování"
 
-#: ../app/tools/gimpselectionoptions.c:434
+#: ../app/tools/gimpselectionoptions.c:428
 msgid "Feather edges"
 msgstr "Prolnout okraje"
 
-#: ../app/tools/gimpselectionoptions.c:460
+#: ../app/tools/gimpselectionoptions.c:454
 msgid "Show interactive boundary"
 msgstr "Zobrazit interaktivní hranici"
 
-#: ../app/tools/gimpselectionoptions.c:483
+#: ../app/tools/gimpselectionoptions.c:477
 msgid "Select transparent areas"
 msgstr "Zvolit průhledné oblasti"
 
-#: ../app/tools/gimpselectionoptions.c:524
+#: ../app/tools/gimpselectionoptions.c:512
 msgid "Auto shrink selection"
 msgstr "Automaticky zmenšit výběr"
 
@@ -9950,7 +9950,7 @@ msgid "Percentage of width of brush"
 msgstr "Procenta šířky stopy"
 
 #: ../app/widgets/gimpbufferview.c:135 ../app/widgets/gimpbufferview.c:216
-#: ../app/widgets/gimpeditor.c:725
+#: ../app/widgets/gimpeditor.c:723
 msgid "(None)"
 msgstr "(Nic)"
 
