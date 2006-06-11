@@ -28,7 +28,6 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-crop.h"
 #include "core/gimppickable.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpmarshal.h"
@@ -132,8 +131,6 @@ static void     gimp_rectangle_tool_draw_guides     (GimpDrawTool          *draw
 
 /*  Rectangle dialog functions  */
 static void     rectangle_selection_callback        (GtkWidget             *widget,
-                                                     GimpRectangleTool     *rectangle);
-static void     rectangle_automatic_callback        (GtkWidget             *widget,
                                                      GimpRectangleTool     *rectangle);
 
 static void     gimp_rectangle_tool_update_options  (GimpRectangleTool     *rectangle,
@@ -862,7 +859,6 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
   GimpRectangleTool        *rectangle = GIMP_RECTANGLE_TOOL (tool);
   GimpRectangleToolPrivate *private;
   guint                     function;
-  gint                      pressx, pressy;
   GimpRectangleOptions     *options;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
@@ -879,17 +875,15 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
 
   if (! (state & GDK_BUTTON3_MASK))
     {
-      g_object_get (rectangle,
-                    "pressx", &pressx,
-                    "pressy", &pressy,
-                    NULL);
       if (gimp_rectangle_tool_no_movement (rectangle))
         {
           if (gimp_rectangle_tool_execute (rectangle))
             gimp_rectangle_tool_halt (rectangle);
         }
-
-      g_signal_emit_by_name (rectangle, "rectangle-changed", NULL);
+      else
+        {
+          g_signal_emit_by_name (rectangle, "rectangle-changed", NULL);
+        }
     }
   else
     {
@@ -1899,59 +1893,6 @@ rectangle_selection_callback (GtkWidget         *widget,
   gimp_rectangle_tool_configure (rectangle);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (rectangle));
-}
-
-static void
-rectangle_automatic_callback (GtkWidget         *widget,
-                              GimpRectangleTool *rectangle)
-{
-  GimpDisplay *display  = GIMP_TOOL (rectangle)->display;
-  gint         width    = display->image->width;
-  gint         height   = display->image->height;
-  gint         offset_x = 0;
-  gint         offset_y = 0;
-  gint         rx1, ry1;
-  gint         rx2, ry2;
-  gint         x1, y1;
-  gint         x2, y2;
-  gint         shrunk_x1;
-  gint         shrunk_y1;
-  gint         shrunk_x2;
-  gint         shrunk_y2;
-
-  g_object_get (rectangle,
-                "x1", &rx1,
-                "y1", &ry1,
-                "x2", &rx2,
-                "y2", &ry2,
-                NULL);
-
-  x1 = rx1 - offset_x  > 0      ? rx1 - offset_x : 0;
-  x2 = rx2 - offset_x  < width  ? rx2 - offset_x : width;
-  y1 = ry1 - offset_y  > 0      ? ry1 - offset_y : 0;
-  y2 = ry2 - offset_y  < height ? ry2 - offset_y : height;
-
-  if (gimp_image_crop_auto_shrink (display->image,
-                                   x1, y1, x2, y2,
-                                   FALSE,
-                                   &shrunk_x1,
-                                   &shrunk_y1,
-                                   &shrunk_x2,
-                                   &shrunk_y2))
-    {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (rectangle));
-
-      g_object_set (rectangle,
-                    "x1", offset_x + shrunk_x1,
-                    "y1", offset_y + shrunk_y1,
-                    "x2", offset_x + shrunk_x2,
-                    "y2", offset_y + shrunk_y2,
-                    NULL);
-
-      gimp_rectangle_tool_configure (rectangle);
-
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (rectangle));
-    }
 }
 
 gboolean
