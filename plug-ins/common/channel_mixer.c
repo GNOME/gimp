@@ -37,10 +37,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_PROC        "plug-in-colors-channel-mixer"
-#define PLUG_IN_BINARY      "channel_mixer"
-#define PROGRESS_UPDATE_NUM 20
-#define CM_LINE_SIZE        1024
+#define PLUG_IN_PROC    "plug-in-colors-channel-mixer"
+#define PLUG_IN_BINARY  "channel_mixer"
+#define CM_LINE_SIZE    1024
 
 typedef enum
 {
@@ -91,8 +90,10 @@ static void     run   (const gchar      *name,
 
 static void     cm_set_defaults                 (CmParamsType     *mix);
 
-static void     channel_mixer                   (GimpDrawable     *drawable);
-static gboolean cm_dialog                       (GimpDrawable     *drawable);
+static void     channel_mixer                   (CmParamsType     *mix,
+                                                 GimpDrawable     *drawable);
+static gboolean cm_dialog                       (CmParamsType     *mix,
+                                                 GimpDrawable     *drawable);
 
 static void     cm_red_scale_callback           (GtkAdjustment    *adjustment,
                                                  CmParamsType     *mix);
@@ -148,7 +149,6 @@ const GimpPlugInInfo PLUG_IN_INFO =
   run    /* run_proc   */
 };
 
-static CmParamsType  mix;
 static GtkWidget    *preview;
 
 
@@ -199,6 +199,7 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;
+  CmParamsType       mix;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
@@ -223,7 +224,7 @@ run (const gchar      *name,
         case GIMP_RUN_INTERACTIVE:
           gimp_get_data (PLUG_IN_PROC, &mix);
 
-          if (! cm_dialog (drawable))
+          if (! cm_dialog (&mix, drawable))
             {
               gimp_drawable_detach (drawable);
               return;
@@ -245,9 +246,11 @@ run (const gchar      *name,
               mix.red.red_gain     = param[4].data.d_float;
               mix.red.green_gain   = param[5].data.d_float;
               mix.red.blue_gain    = param[6].data.d_float;
+
               mix.green.red_gain   = param[7].data.d_float;
               mix.green.green_gain = param[8].data.d_float;
               mix.green.blue_gain  = param[9].data.d_float;
+
               mix.blue.red_gain    = param[10].data.d_float;
               mix.blue.green_gain  = param[11].data.d_float;
               mix.blue.blue_gain   = param[12].data.d_float;
@@ -270,7 +273,7 @@ run (const gchar      *name,
 
           gimp_progress_init (_("Channel Mixer"));
 
-          channel_mixer (drawable);
+          channel_mixer (&mix, drawable);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
@@ -292,7 +295,7 @@ run (const gchar      *name,
 static void
 cm_set_defaults (CmParamsType *mix)
 {
-  static CmParamsType defaults =
+  const CmParamsType defaults =
   {
     { 1.0, 0.0, 0.0 },
     { 0.0, 1.0, 0.0 },
@@ -310,9 +313,7 @@ static gdouble
 cm_calculate_norm (CmParamsType  *mix,
                    CmChannelType *ch)
 {
-  gdouble sum;
-
-  sum = ch->red_gain + ch->green_gain + ch->blue_gain;
+  gdouble sum = ch->red_gain + ch->green_gain + ch->blue_gain;
 
   if (sum == 0.0 || ! mix->preserve_luminosity)
     return 1.0;
@@ -334,102 +335,110 @@ cm_mix_pixel (CmChannelType *ch,
   return (guchar) CLAMP0255 (c);
 }
 
+static inline void
+cm_process_pixel (CmParamsType  *mix,
+                  const guchar  *s,
+                  guchar        *d,
+                  const gdouble  red_norm,
+                  const gdouble  green_norm,
+                  const gdouble  blue_norm,
+                  const gdouble  black_norm)
+{
+  if (mix->monochrome)
+    {
+      d[0] = d[1] = d[2] =
+        cm_mix_pixel (&mix->black, s[0], s[1], s[2], black_norm);
+    }
+  else
+    {
+      d[0] = cm_mix_pixel (&mix->red,   s[0], s[1], s[2], red_norm);
+      d[1] = cm_mix_pixel (&mix->green, s[0], s[1], s[2], green_norm);
+      d[2] = cm_mix_pixel (&mix->blue,  s[0], s[1], s[2], blue_norm);
+    }
+}
+
 static void
-channel_mixer (GimpDrawable *drawable)
+channel_mixer (CmParamsType *mix,
+               GimpDrawable *drawable)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
-  const guchar *src;
-  guchar       *dest;
   gpointer      pr;
   gint          x, y;
-  gint          total, processed = 0;
+  gint          i, total, processed = 0;
   gboolean      has_alpha;
   gdouble       red_norm, green_norm, blue_norm, black_norm;
   gint          x1, y1, x2, y2;
-  gint          width, height;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x1, &y1, &x2, &y2))
+    return;
 
-  width  = x2 - x1;
-  height = y2 - y1;
+  red_norm   = cm_calculate_norm (mix, &mix->red);
+  green_norm = cm_calculate_norm (mix, &mix->green);
+  blue_norm  = cm_calculate_norm (mix, &mix->blue);
+  black_norm = cm_calculate_norm (mix, &mix->black);
 
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
-  total = width * height;
-
-  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
-
   gimp_pixel_rgn_init (&src_rgn, drawable,
-                       x1, y1, width, height, FALSE, FALSE);
+                       x1, y1, x2 - x1, y2 - y1, FALSE, FALSE);
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       x1, y1, width, height, TRUE, TRUE);
+                       x1, y1, x2 - x1, y2 - y1, TRUE, TRUE);
 
-  red_norm   = cm_calculate_norm (&mix, &mix.red);
-  green_norm = cm_calculate_norm (&mix, &mix.green);
-  blue_norm  = cm_calculate_norm (&mix, &mix.blue);
-  black_norm = cm_calculate_norm (&mix, &mix.black);
+  total = src_rgn.w * src_rgn.h;
 
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-       pr != NULL; pr = gimp_pixel_rgns_process (pr))
+  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn), i = 0;
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr), i++)
     {
-      gint offset;
+      const guchar *src  = src_rgn.data;
+      guchar       *dest = dest_rgn.data;
 
       for (y = 0; y < src_rgn.h; y++)
         {
-          src  = src_rgn.data  + y * src_rgn.rowstride;
-          dest = dest_rgn.data + y * dest_rgn.rowstride;
+          const guchar *s = src;
+          guchar       *d = dest;
 
-          offset = 0;
-
-          for (x = 0; x < src_rgn.w; x++)
+          if (has_alpha)
             {
-              guchar r, g, b;
-
-              r = src[offset + 0];
-              g = src[offset + 1];
-              b = src[offset + 2];
-
-              if (mix.monochrome)
+              for (x = 0; x < src_rgn.w; x++, s += 4, d += 4)
                 {
-                  dest[offset + 0] =
-                  dest[offset + 1] =
-                  dest[offset + 2] =
-                    cm_mix_pixel (&mix.black, r, g, b, black_norm);
+                  cm_process_pixel (mix, s, d,
+                                    red_norm, green_norm, blue_norm,
+                                    black_norm);
+                  d[3] = s[3];
                 }
-              else
-                {
-                  dest[offset + 0] =
-                    cm_mix_pixel (&mix.red, r, g, b, red_norm);
-                  dest[offset + 1] =
-                    cm_mix_pixel (&mix.green, r, g, b, green_norm);
-                  dest[offset + 2] =
-                    cm_mix_pixel (&mix.blue, r, g, b, blue_norm);
-                }
-
-              offset += 3;
-
-              if (has_alpha)
-                {
-                  dest[offset] = src[offset];
-                  offset++;
-                }
-
-              /* update progress */
-              if ((++processed % (total / PROGRESS_UPDATE_NUM + 1)) == 0)
-                gimp_progress_update ((gdouble) processed / (gdouble) total);
             }
+          else
+            {
+              for (x = 0; x < src_rgn.w; x++, s += 3, d += 3)
+                {
+                  cm_process_pixel (mix, s, d,
+                                    red_norm, green_norm, blue_norm,
+                                    black_norm);
+                }
+            }
+
+          src += src_rgn.rowstride;
+          dest += dest_rgn.rowstride;
         }
+
+      processed += src_rgn.w * src_rgn.h;
+
+      if (i % 16 == 0)
+        gimp_progress_update ((gdouble) processed / (gdouble) total);
     }
 
   gimp_progress_update (1.0);
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
 }
 
 static gboolean
-cm_dialog (GimpDrawable *drawable)
+cm_dialog (CmParamsType *mix,
+           GimpDrawable *drawable)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
@@ -445,32 +454,32 @@ cm_dialog (GimpDrawable *drawable)
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   /* get values */
-  if (mix.monochrome)
+  if (mix->monochrome)
     {
-      red_value   = mix.black.red_gain   * 100;
-      green_value = mix.black.green_gain * 100;
-      blue_value  = mix.black.blue_gain  * 100;
+      red_value   = mix->black.red_gain   * 100;
+      green_value = mix->black.green_gain * 100;
+      blue_value  = mix->black.blue_gain  * 100;
     }
   else
     {
-      switch (mix.output_channel)
+      switch (mix->output_channel)
         {
         case CM_RED_CHANNEL:
-          red_value   = mix.red.red_gain   * 100;
-          green_value = mix.red.green_gain * 100;
-          blue_value  = mix.red.blue_gain  * 100;
+          red_value   = mix->red.red_gain   * 100;
+          green_value = mix->red.green_gain * 100;
+          blue_value  = mix->red.blue_gain  * 100;
           break;
 
         case CM_GREEN_CHANNEL:
-          red_value   = mix.green.red_gain   * 100;
-          green_value = mix.green.green_gain * 100;
-          blue_value  = mix.green.blue_gain  * 100;
+          red_value   = mix->green.red_gain   * 100;
+          green_value = mix->green.green_gain * 100;
+          blue_value  = mix->green.blue_gain  * 100;
           break;
 
         case CM_BLUE_CHANNEL:
-          red_value   = mix.blue.red_gain   * 100;
-          green_value = mix.blue.green_gain * 100;
-          blue_value  = mix.blue.blue_gain  * 100;
+          red_value   = mix->blue.red_gain   * 100;
+          green_value = mix->blue.green_gain * 100;
+          blue_value  = mix->blue.blue_gain  * 100;
           break;
 
         default:
@@ -507,7 +516,7 @@ cm_dialog (GimpDrawable *drawable)
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (cm_preview),
-                            &mix);
+                            mix);
 
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -522,38 +531,38 @@ cm_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  mix.combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+  mix->combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
 
-  gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (mix.combo),
+  gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (mix->combo),
                              GIMP_INT_STORE_VALUE,    CM_RED_CHANNEL,
                              GIMP_INT_STORE_LABEL,    _("Red"),
                              GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_CHANNEL_RED,
                              -1);
-  gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (mix.combo),
+  gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (mix->combo),
                              GIMP_INT_STORE_VALUE,    CM_GREEN_CHANNEL,
                              GIMP_INT_STORE_LABEL,    _("Green"),
                              GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_CHANNEL_GREEN,
                              -1);
-  gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (mix.combo),
+  gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (mix->combo),
                              GIMP_INT_STORE_VALUE,    CM_BLUE_CHANNEL,
                              GIMP_INT_STORE_LABEL,    _("Blue"),
                              GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_CHANNEL_BLUE,
                              -1);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (mix.combo),
-                                 mix.output_channel);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (mix->combo),
+                                 mix->output_channel);
 
-  g_signal_connect (mix.combo, "changed",
+  g_signal_connect (mix->combo, "changed",
                     G_CALLBACK (cm_combo_callback),
-                    &mix);
+                    mix);
 
-  gtk_box_pack_start (GTK_BOX (hbox), mix.combo, TRUE, TRUE, 0);
-  gtk_widget_show (mix.combo);
+  gtk_box_pack_start (GTK_BOX (hbox), mix->combo, TRUE, TRUE, 0);
+  gtk_widget_show (mix->combo);
 
-  if (mix.monochrome)
-    gtk_widget_set_sensitive (mix.combo, FALSE);
+  if (mix->monochrome)
+    gtk_widget_set_sensitive (mix->combo, FALSE);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), mix.combo);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), mix->combo);
 
   /*........................................................... */
 
@@ -569,7 +578,7 @@ cm_dialog (GimpDrawable *drawable)
                     0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (image);
 
-  mix.red_data =
+  mix->red_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 1, 0,
                                           _("_Red:"), 150, -1,
                                           red_value, -200.0, 200.0,
@@ -577,9 +586,9 @@ cm_dialog (GimpDrawable *drawable)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (mix.red_data, "value-changed",
+  g_signal_connect (mix->red_data, "value-changed",
                     G_CALLBACK (cm_red_scale_callback),
-                    &mix);
+                    mix);
 
   image = gtk_image_new_from_stock (GIMP_STOCK_CHANNEL_GREEN,
                                     GTK_ICON_SIZE_BUTTON);
@@ -587,7 +596,7 @@ cm_dialog (GimpDrawable *drawable)
                     0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (image);
 
-  mix.green_data =
+  mix->green_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 1, 1,
                                           _("_Green:"), 150, -1,
                                           green_value, -200.0, 200.0,
@@ -595,9 +604,9 @@ cm_dialog (GimpDrawable *drawable)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (mix.green_data, "value-changed",
+  g_signal_connect (mix->green_data, "value-changed",
                     G_CALLBACK (cm_green_scale_callback),
-                    &mix);
+                    mix);
 
 
   image = gtk_image_new_from_stock (GIMP_STOCK_CHANNEL_BLUE,
@@ -606,7 +615,7 @@ cm_dialog (GimpDrawable *drawable)
                     0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (image);
 
-  mix.blue_data =
+  mix->blue_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 1, 2,
                                           _("_Blue:"), 150, -1,
                                           blue_value, -200.0, 200.0,
@@ -614,35 +623,36 @@ cm_dialog (GimpDrawable *drawable)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (mix.blue_data, "value-changed",
+  g_signal_connect (mix->blue_data, "value-changed",
                     G_CALLBACK (cm_blue_scale_callback),
-                    &mix);
+                    mix);
 
   /*  The monochrome toggle  */
-  mix.monochrome_toggle = gtk_check_button_new_with_mnemonic (_("_Monochrome"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mix.monochrome_toggle),
-                                mix.monochrome);
-  gtk_box_pack_start (GTK_BOX (main_vbox), mix.monochrome_toggle,
+  mix->monochrome_toggle =
+    gtk_check_button_new_with_mnemonic (_("_Monochrome"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mix->monochrome_toggle),
+                                mix->monochrome);
+  gtk_box_pack_start (GTK_BOX (main_vbox), mix->monochrome_toggle,
                       FALSE, FALSE, 0);
-  gtk_widget_show (mix.monochrome_toggle);
+  gtk_widget_show (mix->monochrome_toggle);
 
-  g_signal_connect (mix.monochrome_toggle, "toggled",
+  g_signal_connect (mix->monochrome_toggle, "toggled",
                     G_CALLBACK (cm_monochrome_callback),
-                    &mix);
+                    mix);
 
   /*  The preserve luminosity toggle  */
-  mix.preserve_luminosity_toggle =
+  mix->preserve_luminosity_toggle =
     gtk_check_button_new_with_mnemonic (_("Preserve _luminosity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
-                                (mix.preserve_luminosity_toggle),
-                                mix.preserve_luminosity);
-  gtk_box_pack_start (GTK_BOX (main_vbox), mix.preserve_luminosity_toggle,
+                                (mix->preserve_luminosity_toggle),
+                                mix->preserve_luminosity);
+  gtk_box_pack_start (GTK_BOX (main_vbox), mix->preserve_luminosity_toggle,
                       FALSE, FALSE, 0);
-  gtk_widget_show (mix.preserve_luminosity_toggle);
+  gtk_widget_show (mix->preserve_luminosity_toggle);
 
-  g_signal_connect (mix.preserve_luminosity_toggle, "toggled",
+  g_signal_connect (mix->preserve_luminosity_toggle, "toggled",
                     G_CALLBACK (cm_preserve_luminosity_callback),
-                    &mix);
+                    mix);
 
   /*........................................................... */
   /*  Horizontal box for file i/o  */
@@ -656,7 +666,7 @@ cm_dialog (GimpDrawable *drawable)
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (cm_load_file_callback),
-                    &mix);
+                    mix);
 
   button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
   gtk_container_add (GTK_CONTAINER (hbox), button);
@@ -664,7 +674,7 @@ cm_dialog (GimpDrawable *drawable)
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (cm_save_file_callback),
-                    &mix);
+                    mix);
 
   button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
   gtk_container_add (GTK_CONTAINER (hbox), button);
@@ -672,7 +682,7 @@ cm_dialog (GimpDrawable *drawable)
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (cm_reset_callback),
-                    &mix);
+                    mix);
 
   gtk_widget_show (dialog);
 
@@ -768,61 +778,41 @@ static void
 cm_preview (CmParamsType *mix,
             GimpPreview  *preview)
 {
-  guchar       *dst, *src;
+  guchar       *src, *s;
+  guchar       *dst, *d;
   gint          x, y;
-  gint          offset, rowsize;
   gdouble       red_norm, green_norm, blue_norm, black_norm;
   gint          width, height, bpp;
   GimpDrawable *drawable;
-
-  drawable = gimp_zoom_preview_get_drawable (GIMP_ZOOM_PREVIEW (preview));
 
   red_norm   = cm_calculate_norm (mix, &mix->red);
   green_norm = cm_calculate_norm (mix, &mix->green);
   blue_norm  = cm_calculate_norm (mix, &mix->blue);
   black_norm = cm_calculate_norm (mix, &mix->black);
 
-  src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
-                                      &width, &height, &bpp);
+  drawable = gimp_zoom_preview_get_drawable (GIMP_ZOOM_PREVIEW (preview));
 
-  rowsize = width * bpp;
-  dst = g_new (guchar, rowsize * height);
+  src = s = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                          &width, &height, &bpp);
 
-  offset = 0;
+  dst = d = g_new (guchar, width * height * bpp);
+
   for (y = 0; y < height; y++)
     {
-      for (x = 0; x < width; x++)
+      for (x = 0; x < width; x++, s += bpp, d += bpp)
         {
-          guchar r, g, b;
+          cm_process_pixel (mix, s, d,
+                            red_norm, green_norm, blue_norm,
+                            black_norm);
 
-          r = src[offset + 0];
-          g = src[offset + 1];
-          b = src[offset + 2];
-
-          if (mix->monochrome)
-            {
-              dst[offset + 0] =
-              dst[offset + 1] =
-              dst[offset + 2] =
-                cm_mix_pixel (&mix->black, r, g, b, black_norm);
-            }
-          else
-            {
-              dst[offset + 0] =
-                cm_mix_pixel (&mix->red, r, g, b, red_norm);
-              dst[offset + 1] =
-                cm_mix_pixel (&mix->green, r, g, b, green_norm);
-              dst[offset + 2] =
-                cm_mix_pixel (&mix->blue, r, g, b, blue_norm);
-            }
           if (bpp == 4)
-            dst[offset + 3] = src[offset + 3];
-
-          offset += bpp;
+            d[3] = s[3];
         }
     }
+
   gimp_preview_draw_buffer (GIMP_PREVIEW (preview), dst, bpp * width);
 
+  g_free (src);
   g_free (dst);
 }
 

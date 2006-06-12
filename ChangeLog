@@ -1,5 +1,13 @@
 2006-06-12  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpzoompreview.c (gimp_zoom_preview_get_source):
+	documentation.
+
+	* plug-ins/common/channel_mixer.c: minor cleanup and loop unrolling.
+	Introduced an inline function to avoid code duplication.
+
+2006-06-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):
 	removed check for success again; it is being checked in the for()
 	loop already.

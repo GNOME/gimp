@@ -626,15 +626,15 @@ gimp_zoom_preview_get_factor (GimpZoomPreview *preview)
  *         will be put.
  * @height: a pointer to an int where the current width of the zoom widget
  *          will be put.
- * @bpp: a pointer to an int where the bpp of the current drawable the zoom
- *       widget is using will be put.
+ * @bpp: return location for the number of bytes per pixel
  *
  * Returns the scaled image data of the part of the drawable the
  * #GimpZoomPreview is currently showing, as a newly allocated array of guchar.
  * This function also allow to get the current width, height and bpp of the
  * #GimpZoomPreview.
  *
- * Return Value:
+ * Return Value: newly allocated data that should be released using g_free()
+ *               when it is not any longer needed
  *
  * Since: GIMP 2.4
  */
