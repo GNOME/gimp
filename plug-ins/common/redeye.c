@@ -271,8 +271,6 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS &&
       gimp_drawable_is_rgb (drawable->drawable_id))
     {
-      gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
-
       remove_redeye (drawable);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -312,43 +310,43 @@ remove_redeye (GimpDrawable *drawable)
   GimpPixelRgn  dest_rgn;
   gint          progress, max_progress;
   gboolean      has_alpha;
-  gint          x1, y1, x2, y2;
+  gint          x, y;
   gint          width, height;
+  gint          i;
   gpointer      pr;
 
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x, &y, &width, &height))
+    return;
+
   gimp_progress_init (_("Removing red eye"));
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  width = x2 - x1;
-  height = y2 - y1;
 
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
-  /* Initialize progress */
   progress = 0;
-  max_progress = (x2 - x1) * (y2 - y1);
+  max_progress = width * height;
 
-  /* substitute pixel vales */
   gimp_pixel_rgn_init (&src_rgn, drawable,
-                       x1, y1, width, height, FALSE, FALSE);
+                       x, y, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       x1, y1, width, height, TRUE, TRUE);
+                       x, y, width, height, TRUE, TRUE);
 
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
+  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn), i = 0;
        pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
+       pr = gimp_pixel_rgns_process (pr), i++)
     {
       redeye_inner_loop (src_rgn.data, dest_rgn.data, src_rgn.w, src_rgn.h,
                          src_rgn.bpp, has_alpha, src_rgn.rowstride);
 
-      /* Update progress */
       progress += src_rgn.w * src_rgn.h;
-      gimp_progress_update ((double) progress / (double) max_progress);
+
+      if (i % 16 == 0)
+        gimp_progress_update ((double) progress / (double) max_progress);
     }
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id,
-                        x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable->drawable_id, x, y, width, height);
 }
 
 static void
