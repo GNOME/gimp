@@ -146,7 +146,7 @@ static gboolean register_scripts = FALSE;
 void
 siod_init (gboolean local_register_scripts)
 {
-  char *siod_argv[] =
+  gchar * siod_argv[] =
   {
     "siod",
     "-h100000:10",
@@ -162,6 +162,7 @@ siod_init (gboolean local_register_scripts)
 
   /* init the interpreter */
   process_cla (G_N_ELEMENTS (siod_argv), siod_argv, 1);
+
   init_storage ();
   init_subrs ();
   init_trace ();
@@ -582,6 +583,7 @@ marshall_proc_db_call (LISP a)
   for (i = 0; i < nparams && success; i++)
     {
       a = cdr (a);
+
       args[i].type = params[i].type;
 
       switch (params[i].type)
@@ -832,7 +834,6 @@ marshall_proc_db_call (LISP a)
 
         case GIMP_PDB_STATUS:
           return my_err ("Status is for return types, not arguments", car (a));
-          break;
 
         default:
           g_snprintf (error_str, sizeof (error_str),
@@ -840,9 +841,6 @@ marshall_proc_db_call (LISP a)
                       i + 1, proc_name);
           return my_err (error_str, NIL);
         }
-
-      if (! success)
-        break;
     }
 
   if (success)

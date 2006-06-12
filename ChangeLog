@@ -1,3 +1,9 @@
+2006-06-12  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):
+	removed check for success again; it is being checked in the for()
+	loop already.
+
 2006-06-11  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpellipseselecttool.c (gimp_ellipse_select_tool_draw):
