@@ -363,14 +363,14 @@ channel_mixer (CmParamsType *mix,
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   gpointer      pr;
-  gint          x, y;
-  gint          i, total, processed = 0;
   gboolean      has_alpha;
   gdouble       red_norm, green_norm, blue_norm, black_norm;
-  gint          x1, y1, x2, y2;
+  gint          i, total, processed = 0;
+  gint          x1, y1;
+  gint          width, height;
 
   if (! gimp_drawable_mask_intersect (drawable->drawable_id,
-                                      &x1, &y1, &x2, &y2))
+                                      &x1, &y1, &width, &height))
     return;
 
   red_norm   = cm_calculate_norm (mix, &mix->red);
@@ -381,11 +381,11 @@ channel_mixer (CmParamsType *mix,
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
-                       x1, y1, x2 - x1, y2 - y1, FALSE, FALSE);
+                       x1, y1, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       x1, y1, x2 - x1, y2 - y1, TRUE, TRUE);
+                       x1, y1, width, height, TRUE, TRUE);
 
-  total = src_rgn.w * src_rgn.h;
+  total = width * height;
 
   for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn), i = 0;
        pr != NULL;
@@ -393,6 +393,7 @@ channel_mixer (CmParamsType *mix,
     {
       const guchar *src  = src_rgn.data;
       guchar       *dest = dest_rgn.data;
+      gint          x, y;
 
       for (y = 0; y < src_rgn.h; y++)
         {
@@ -433,7 +434,7 @@ channel_mixer (CmParamsType *mix,
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
 }
 
 static gboolean
