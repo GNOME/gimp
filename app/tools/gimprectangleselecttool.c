@@ -688,8 +688,8 @@ gimp_rect_select_tool_auto_shrink (GimpRectSelectTool *rect_select)
   GimpRectangleTool    *rectangle = GIMP_RECTANGLE_TOOL (rect_select);
   GimpTool             *tool      = GIMP_TOOL (rect_select);
   GimpDisplay          *display   = GIMP_TOOL (rect_select)->display;
-  gint                  width     = display->image->width;
-  gint                  height    = display->image->height;
+  gint                  width;
+  gint                  height;
   gint                  offset_x  = 0;
   gint                  offset_y  = 0;
   gint                  rx1, ry1;
@@ -701,6 +701,12 @@ gimp_rect_select_tool_auto_shrink (GimpRectSelectTool *rect_select)
   gint                  shrunk_x2;
   gint                  shrunk_y2;
   gboolean              shrink_merged;
+
+  if (! display)
+    return;
+
+  width = display->image->width;
+  height = display->image->height;
 
   g_object_get (GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options),
                 "shrink-merged", &shrink_merged,
