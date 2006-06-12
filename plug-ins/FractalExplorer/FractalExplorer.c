@@ -95,11 +95,12 @@ gdouble             *gg;
 gint                 line_no;
 gchar               *filename;
 clrmap               colormap;
+vlumap               valuemap;
 gchar               *fractalexplorer_path = NULL;
 
 static gfloat        cx = -0.75;
 static gfloat        cy = -0.2;
-static GimpDrawable *drawable;
+GimpDrawable        *drawable;
 static GList        *fractalexplorer_list = NULL;
 
 explorer_interface_t wint =
@@ -247,7 +248,7 @@ query (void)
                           "Daniel Cotting (cotting@multimania.com, www.multimania.com/cotting)",
                           "December, 1998",
                           N_("_Fractal Explorer..."),
-                          "RGB*",
+                          "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
@@ -374,8 +375,8 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      /*  Make sure that the drawable is indexed or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->drawable_id))
+      /*  Make sure that the drawable is not indexed */
+      if (! gimp_drawable_is_indexed (drawable->drawable_id))
         {
           gimp_progress_init (_("Rendering fractal"));
 
@@ -413,7 +414,7 @@ explorer (GimpDrawable * drawable)
   GimpPixelRgn  destPR;
   gint          width;
   gint          height;
-  gint          bytes;
+  gint          bpp;
   gint          row;
   gint          x1;
   gint          y1;
@@ -435,11 +436,11 @@ explorer (GimpDrawable * drawable)
    */
   width  = drawable->width;
   height = drawable->height;
-  bytes  = drawable->bpp;
+  bpp  = drawable->bpp;
 
   /*  allocate row buffers  */
-  src_row  = g_new (guchar, bytes * (x2 - x1));
-  dest_row = g_new (guchar, bytes * (x2 - x1));
+  src_row  = g_new (guchar, bpp * (x2 - x1));
+  dest_row = g_new (guchar, bpp * (x2 - x1));
 
   /*  initialize the pixel regions  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
@@ -450,6 +451,16 @@ explorer (GimpDrawable * drawable)
   xdiff = (xmax - xmin) / xbild;
   ydiff = (ymax - ymin) / ybild;
 
+  /* for grayscale drawables */
+  if (bpp < 3)
+    {
+      gint     i;
+      for (i = 0; i < MAXNCOLORS; i++)
+          valuemap[i] = GIMP_RGB_LUMINANCE (colormap[i].r,
+                                            colormap[i].g,
+                                            colormap[i].b);
+    }
+
   for (row = y1; row < y2; row++)
     {
       gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, (x2 - x1));
@@ -458,7 +469,7 @@ explorer (GimpDrawable * drawable)
                            dest_row,
                            row,
                            (x2 - x1),
-                           bytes);
+                           bpp);
 
       /*  store the dest  */
       gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, (x2 - x1));
@@ -485,10 +496,9 @@ explorer_render_row (const guchar *src_row,
                      guchar       *dest_row,
                      gint          row,
                      gint          row_width,
-                     gint          bytes)
+                     gint          bpp)
 {
   gint    col;
-  gint    bytenum;
   gdouble a;
   gdouble b;
   gdouble x;
@@ -507,7 +517,7 @@ explorer_render_row (const guchar *src_row,
   gdouble adjust;
   gdouble cx;
   gdouble cy;
-  gint    zaehler;
+  gint    counter;
   gint    color;
   gint    iteration;
   gint    useloglog;
@@ -531,9 +541,9 @@ explorer_render_row (const guchar *src_row,
           x = 0;
           y = 0;
         }
-      for (zaehler = 0;
-           (zaehler < iteration) && ((x * x + y * y) < 4);
-           zaehler++)
+      for (counter = 0;
+           (counter < iteration) && ((x * x + y * y) < 4);
+           counter++)
         {
           oldx=x;
           oldy=y;
@@ -656,16 +666,19 @@ explorer_render_row (const guchar *src_row,
           adjust = 0.0;
         }
 
-      color = (int) (((zaehler - adjust) * (wvals.ncolors - 1)) / iteration);
-      dest_row[col * bytes + 0] = colormap[color][0];
-      dest_row[col * bytes + 1] = colormap[color][1];
-      dest_row[col * bytes + 2] = colormap[color][2];
+      color = (int) (((counter - adjust) * (wvals.ncolors - 1)) / iteration);
+      if (bpp >= 3)
+        {
+          dest_row[col * bpp + 0] = colormap[color].r;
+          dest_row[col * bpp + 1] = colormap[color].g;
+          dest_row[col * bpp + 2] = colormap[color].b;
+        }
+      else
+          dest_row[col * bpp + 0] = valuemap[color];
 
-      if (bytes > 3)
-        for (bytenum = 3; bytenum < bytes; bytenum++)
-          {
-            dest_row[col * bytes + bytenum] = src_row[col * bytes + bytenum];
-          }
+      if (! ( bpp % 2))
+        dest_row [col * bpp + bpp - 1] = 255;
+
     }
 }
 

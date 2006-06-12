@@ -78,9 +78,15 @@ typedef struct
   gint       run;
 } explorer_interface_t;
 
-typedef gint       colorvalue[3];
+/* typedef gint       colorvalue[3]; */
+typedef struct
+  {
+    guchar r, g, b;
+  } gucharRGB;
 
-typedef colorvalue clrmap[MAXNCOLORS];
+typedef gucharRGB  clrmap[MAXNCOLORS];
+
+typedef guchar     vlumap[MAXNCOLORS];
 
 typedef struct
 {
@@ -189,8 +195,9 @@ extern gchar       *filename;
 extern clrmap       colormap;
 extern gchar       *fractalexplorer_path;
 
+
 extern explorer_interface_t wint;
 
 extern explorer_vals_t wvals;
-
+extern GimpDrawable        *drawable;
 #endif

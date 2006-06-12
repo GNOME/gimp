@@ -1414,9 +1414,9 @@ dialog_update_preview (void)
                 }
               color = (int) (((zaehler - adjust) *
                               (wvals.ncolors - 1)) / iteration);
-              p_ul[0] = colormap[color][0];
-              p_ul[1] = colormap[color][1];
-              p_ul[2] = colormap[color][2];
+              p_ul[0] = colormap[color].r;
+              p_ul[1] = colormap[color].g;
+              p_ul[2] = colormap[color].b;
               p_ul += 3;
               px += 1;
             } /* for */
@@ -1457,8 +1457,9 @@ cmap_preview_size_allocate (GtkWidget     *widget,
             }
           else
             {
-              for (j = 0; j < 3; j++)
-                b[(y*allocation->width + x) * 3 + j] = colormap[i][j];
+              b[(y*allocation->width + x) * 3]     = colormap[i].r;
+              b[(y*allocation->width + x) * 3 + 1] = colormap[i].g;
+              b[(y*allocation->width + x) * 3 + 2] = colormap[i].b;
             }
         }
     }
@@ -1502,7 +1503,6 @@ void
 make_color_map (void)
 {
   gint     i;
-  gint     j;
   gint     r;
   gint     gr;
   gint     bl;
@@ -1534,8 +1534,9 @@ make_color_map (void)
   for (i = 0; i < wvals.ncolors; i++)
     if (wvals.colormode == 1)
       {
-        for (j = 0; j < 3; j++)
-          colormap[i][j] = (int) (gradient_samples[i * 4 + j] * 255.0);
+        colormap[i].r = (guchar)(gradient_samples[i * 4] * 255.9);
+        colormap[i].g = (guchar)(gradient_samples[i * 4 + 1] * 255.9);
+        colormap[i].b = (guchar)(gradient_samples[i * 4 + 2] * 255.9);
       }
     else
       {
@@ -1600,9 +1601,9 @@ make_color_map (void)
         if (wvals.blueinvert)
           bl = 255 - bl;
 
-        colormap[i][0] = r;
-        colormap[i][1] = gr;
-        colormap[i][2] = bl;
+        colormap[i].r = r;
+        colormap[i].g = gr;
+        colormap[i].b = bl;
       }
 }
 
