@@ -46,10 +46,6 @@ struct _GimpEnvironValue
 };
 
 
-/* FIXME: check how portable this is */
-extern char **environ;
-
-
 static void     gimp_environ_table_finalize       (GObject               *object);
 
 static void     gimp_environ_table_load_env_file  (const GimpDatafileData *file_data,
@@ -301,26 +297,20 @@ gimp_environ_table_legal_name (gchar *name)
 static void
 gimp_environ_table_populate (GimpEnvironTable *environ_table)
 {
-  gchar     **var = environ;
-  gchar      *name, *p;
+  gchar     **var = g_listenv ();
   GPtrArray  *env_array;
 
   env_array = g_ptr_array_new ();
 
   while (*var)
     {
-      p = strchr (*var, '=');
+      /* g_listenv() only returns the names of environment variables
+       * that are correctly specified (name=value) in the environ
+       * array (Unix) or the process environment string table (Win32).
+       */
 
-      /* shouldn't happen... but just to be safe... */
-      if (p)
-        {
-          name = g_strndup (*var, p - *var);
-
-          if (gimp_environ_table_pass_through (environ_table, name))
-            g_ptr_array_add (env_array, g_strdup (*var));
-
-          g_free (name);
-        }
+      if (gimp_environ_table_pass_through (environ_table, *var))
+	g_ptr_array_add (env_array, g_strconcat (*var, "=", g_getenv (*var), NULL));
 
       var++;
     }
@@ -356,11 +346,12 @@ gimp_environ_table_populate_one (const gchar      *name,
                                  GimpEnvironValue *val,
                                  GPtrArray        *env_array)
 {
-  gchar *old, *var = NULL;
+  const gchar *old;
+  gchar *var = NULL;
 
   if (val->separator)
     {
-      old = getenv (name);
+      old = g_getenv (name);
 
       if (old)
         var = g_strconcat (name, "=", val->value, val->separator, old, NULL);

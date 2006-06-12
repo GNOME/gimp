@@ -1,3 +1,11 @@
+2006-06-12  Tor Lillqvist  <tml@novell.com>
+
+	* app/plug-in/gimpenvirontable.c (gimp_environ_table_populate):
+	Use g_listenv() and g_getenv() instead of looking at environ
+	directly. Fixes breakage on Win32 when any (!) environment
+	variable has a non-ASCII value, as environ is in system codepage,
+	while we want UTF-8.
+
 2006-06-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/redeye.c (remove_redeye): cleanup, use
