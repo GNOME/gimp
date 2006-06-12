@@ -1,5 +1,10 @@
 2006-06-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/snoise.c (solid_noise): cleanup, use
+	gimp_drawable_mask_intersect(), reduced number of progress updates.
+
+2006-06-12  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpzoompreview.c (gimp_zoom_preview_get_source):
 	documentation.
 

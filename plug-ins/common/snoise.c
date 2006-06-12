@@ -215,23 +215,18 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  /*  See how we will run  */
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      /*  Possibly retrieve data  */
       gimp_get_data (PLUG_IN_PROC, &snvals);
 
-      /*  Get information from the dialog  */
       if (!solid_noise_dialog (drawable))
         return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      /*  Test number of arguments  */
       if (nparams != 9)
         {
           status = GIMP_PDB_CALLING_ERROR;
@@ -262,23 +257,15 @@ run (const gchar      *name,
       break;
     }
 
-  /*  Create texture  */
   if ((status == GIMP_PDB_SUCCESS) &&
       (gimp_drawable_is_rgb (drawable->drawable_id) ||
        gimp_drawable_is_gray (drawable->drawable_id)))
     {
-      /*  Set the tile cache size  */
-      gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width () - 1) /
-                              gimp_tile_width ());
-
-      /*  Run!  */
       solid_noise (drawable, NULL);
 
-      /*  If run mode is interactive, flush displays  */
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
 
-      /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE ||
           run_mode == GIMP_RUN_WITH_LAST_VALS)
         {
@@ -287,7 +274,6 @@ run (const gchar      *name,
     }
   else
     {
-      /* gimp_message ("solid noise: cannot operate on indexed color images"); */
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
@@ -303,27 +289,26 @@ solid_noise (GimpDrawable *drawable,
 {
   GimpPixelRgn  dest_rgn;
   gint          bytes;
-  gint          x1, y1, x2, y2;
+  gint          x, y;
   gint          width, height;
   gint          progress, max_progress;
   gpointer      pr;
   gboolean      has_alpha;
   gint          rowstride;
+  gint          i;
 
   /*  Get selection area  */
   if (preview)
     {
-      x1 = y1 = 0;
+      x = 0;
+      y = 0;
       gimp_preview_get_size (preview, &width, &height);
-      x2 = width;
-      y2 = height;
     }
   else
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id,
-                                 &x1, &y1, &x2, &y2);
-      width  = x2 - x1;
-      height = y2 - y1;
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x, &y, &width, &height))
+        return;
     }
 
   /*  Initialization  */
@@ -351,30 +336,30 @@ solid_noise (GimpDrawable *drawable,
   else
     {
       gimp_pixel_rgn_init (&dest_rgn, drawable,
-                           x1, y1, width, height, TRUE, TRUE);
+                           x, y, width, height, TRUE, TRUE);
     }
 
   if (has_alpha)
     bytes--;
 
-  /*  One, two, three, go!  */
   if (preview)
     {
       solid_noise_draw_one_tile (&dest_rgn, width, height,
-                                 x1, y1, bytes, has_alpha);
+                                 x, y, bytes, has_alpha);
     }
   else
     {
-      for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
-          pr != NULL;
-          pr = gimp_pixel_rgns_process (pr))
+      for (pr = gimp_pixel_rgns_register (1, &dest_rgn), i = 0;
+           pr != NULL;
+           pr = gimp_pixel_rgns_process (pr), i++)
         {
           solid_noise_draw_one_tile (&dest_rgn, width, height,
-                                     x1, y1, bytes, has_alpha);
+                                     x, y, bytes, has_alpha);
 
-          /*  Update progress  */
           progress += dest_rgn.w * dest_rgn.h;
-          gimp_progress_update ((double) progress / (double) max_progress);
+
+          if (i % 16 == 0)
+            gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
         }
     }
 
@@ -388,8 +373,7 @@ solid_noise (GimpDrawable *drawable,
     {
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id,
-                            x1, y1, width, height);
+      gimp_drawable_update (drawable->drawable_id, x, y, width, height);
     }
 }
 
