@@ -126,6 +126,8 @@ gimp_ellipse_select_tool_draw (GimpDrawTool *draw_tool)
                            x2 - x1, y2 - y1,
                            0, 23040,
                            FALSE);
+
+  gimp_rectangle_tool_draw (draw_tool);
 }
 
 static void
