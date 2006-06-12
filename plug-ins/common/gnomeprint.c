@@ -267,6 +267,7 @@ print_drawable (GnomePrintContext *context,
   gdouble       scale_y;
   gdouble       trans_x;
   gdouble       trans_y;
+  gdouble       r1, r2;
 
   width     = drawable->width;
   height    = drawable->height;
@@ -286,9 +287,23 @@ print_drawable (GnomePrintContext *context,
   print_fit_size (config, width, height,
                   &scale_x, &scale_y, &trans_x, &trans_y);
 
+  r1 = scale_x / width;
+  r2 = scale_y / height;
+
+  if (r2 > r1)
+    {
+      trans_y += scale_y * (1 - r1 / r2) / 2;
+      scale_y *= r1 / r2;
+    }
+  else
+    {
+      trans_x += scale_x * (1 - r2 / r1) / 2;
+      scale_x *= r2 / r1;
+    }
+
   gnome_print_gsave (context);
-  gnome_print_scale (context, scale_x, scale_y);
   gnome_print_translate (context, trans_x, trans_y);
+  gnome_print_scale (context, scale_x, scale_y);
 
   gnome_print_moveto (context, 0, 0);
   gnome_print_lineto (context, 1, 0);
