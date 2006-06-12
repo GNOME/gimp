@@ -1592,6 +1592,8 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
+  g_signal_emit_by_name (rectangle, "rectangle-changed", NULL);
+
   return TRUE;
 }
 
@@ -1608,6 +1610,8 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
   gint                      x1, y1, x2, y2;
   gboolean                  inside_x;
   gboolean                  inside_y;
+  gdouble                   handle_w, handle_h;
+  GimpDisplayShell         *shell;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
@@ -1616,12 +1620,17 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
   if (tool->display != display)
     return;
 
+  shell = GIMP_DISPLAY_SHELL (tool->display->shell);
+
   g_object_get (rectangle,
                 "x1", &x1,
                 "y1", &y1,
                 "x2", &x2,
                 "y2", &y2,
                 NULL);
+
+  handle_w = private->dcw / SCALEFACTOR_X (shell);
+  handle_h = private->dch / SCALEFACTOR_Y (shell);
 
   inside_x = coords->x > x1 && coords->x < x2;
   inside_y = coords->y > y1 && coords->y < y2;
@@ -1630,7 +1639,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                 coords->x, coords->y,
                                 GIMP_HANDLE_SQUARE,
                                 x1, y1,
-                                private->dcw, private->dch,
+                                handle_w, handle_h,
                                 GTK_ANCHOR_NORTH_WEST,
                                 FALSE))
     {
@@ -1645,7 +1654,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                      coords->x, coords->y,
                                      GIMP_HANDLE_SQUARE,
                                      x2, y2,
-                                     private->dcw, private->dch,
+                                     handle_w, handle_h,
                                      GTK_ANCHOR_SOUTH_EAST,
                                      FALSE))
     {
@@ -1660,7 +1669,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                       coords->x, coords->y,
                                       GIMP_HANDLE_SQUARE,
                                       x2, y1,
-                                      private->dcw, private->dch,
+                                      handle_w, handle_h,
                                       GTK_ANCHOR_NORTH_EAST,
                                       FALSE))
     {
@@ -1675,7 +1684,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                      coords->x, coords->y,
                                      GIMP_HANDLE_SQUARE,
                                      x1, y2,
-                                     private->dcw, private->dch,
+                                     handle_w, handle_h,
                                      GTK_ANCHOR_SOUTH_WEST,
                                      FALSE))
     {
@@ -1686,7 +1695,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                           y2 - coords->y,
                                           0, 0);
     }
-  else if ( (fabs (coords->x - x1) < private->dcw) && inside_y)
+  else if ( (fabs (coords->x - x1) < handle_w) && inside_y)
     {
       g_object_set (rectangle, "function", RECT_RESIZING_LEFT, NULL);
 
@@ -1694,7 +1703,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                           x1 - coords->x, 0, 0, 0);
 
     }
-  else if ( (fabs (coords->x - x2) < private->dcw) && inside_y)
+  else if ( (fabs (coords->x - x2) < handle_w) && inside_y)
     {
       g_object_set (rectangle, "function", RECT_RESIZING_RIGHT, NULL);
 
@@ -1702,7 +1711,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                           x2 - coords->x, 0, 0, 0);
 
     }
-  else if ( (fabs (coords->y - y1) < private->dch) && inside_x)
+  else if ( (fabs (coords->y - y1) < handle_h) && inside_x)
     {
       g_object_set (rectangle, "function", RECT_RESIZING_TOP, NULL);
 
@@ -1710,7 +1719,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                           0, y1 - coords->y, 0, 0);
 
     }
-  else if ( (fabs (coords->y - y2) < private->dch) && inside_x)
+  else if ( (fabs (coords->y - y2) < handle_h) && inside_x)
     {
       g_object_set (rectangle, "function", RECT_RESIZING_BOTTOM, NULL);
 

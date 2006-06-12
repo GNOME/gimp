@@ -1,3 +1,12 @@
+2006-06-11  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimprectangleselecttool.c
+	* app/tools/gimprectangletool.c: fix three issues identified by
+	jimmac: (1) when shift or ctrl are pressed, should start a new
+	rect regardless of pointer loc; (2) zoom was incorrectly affecting
+	width of sensitive areas; (3) must emit "rectangle-changed" after
+	keyboard-driven rectangle movement.
+	
 2006-06-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/FractalExplorer/Dialogs.c

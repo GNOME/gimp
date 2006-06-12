@@ -284,6 +284,11 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
         return;
     }
 
+  /* if the shift or ctrl keys are down, we don't want to adjust, we
+   * want to create a new rectangle, regardless of pointer loc */
+  if (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK))
+    g_object_set (tool, "function", RECT_CREATING, NULL);
+
   gimp_rectangle_tool_button_press (tool, coords, time, state, display);
 
   /* if we have an existing rectangle in the current display, then
