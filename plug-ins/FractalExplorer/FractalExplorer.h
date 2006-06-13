@@ -6,7 +6,7 @@
  Magic numbers
  *********************************************************************/
 
-#define PREVIEW_SIZE 128
+#define PREVIEW_SIZE 256
 #define SCALE_WIDTH  200
 #define ENTRY_WIDTH  60
 #define MAX_LOAD_LINE 256

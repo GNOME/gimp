@@ -494,7 +494,7 @@ explorer_dialog (void)
   GtkWidget *left_vbox;
   GtkWidget *abox;
   GtkWidget *vbox;
-  GtkWidget *hbbox;
+  GtkWidget *bbox;
   GtkWidget *frame;
   GtkWidget *toggle;
   GtkWidget *toggle_vbox;
@@ -622,30 +622,34 @@ explorer_dialog (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (explorer_toggle_update),
                     &wvals.alwayspreview);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.alwayspreview);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                wvals.alwayspreview);
   gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle, _("If you enable this option the preview "
-                                     "will be redrawn automatically"), NULL);
+  gimp_help_set_help_data (toggle, _("If enabled the preview will "
+                                     "be redrawn automatically"), NULL);
 
-  button = gtk_button_new_with_label (_("Redraw"));
+  button = gtk_button_new_with_mnemonic (_("R_edraw preview"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_redraw_callback),
                     dialog);
   gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Redraw preview"), NULL);
 
   /*  Zoom Options  */
   frame = gimp_frame_new (_("Zoom"));
   gtk_box_pack_start (GTK_BOX (left_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
+  bbox = gtk_hbox_new (TRUE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
+  gtk_widget_show (bbox);
+
   button = gtk_button_new_from_stock (GTK_STOCK_ZOOM_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
@@ -653,28 +657,32 @@ explorer_dialog (void)
                     dialog);
 
   button = gtk_button_new_from_stock (GTK_STOCK_ZOOM_OUT);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_step_out_callback),
                     dialog);
 
+  bbox = gtk_hbox_new (TRUE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
+  gtk_widget_show (bbox);
+
   button = gtk_button_new_from_stock (GTK_STOCK_UNDO);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  gimp_help_set_help_data (button, _("Undo last zoom"), NULL);
+  gimp_help_set_help_data (button, _("Undo last zoom change"), NULL);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_undo_zoom_callback),
                     dialog);
 
   button = gtk_button_new_from_stock (GTK_STOCK_REDO);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  gimp_help_set_help_data (button, _("Redo last zoom"), NULL);
+  gimp_help_set_help_data (button, _("Redo last zoom change"), NULL);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_redo_zoom_callback),
@@ -783,12 +791,12 @@ explorer_dialog (void)
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.cy);
 
-  hbbox = gtk_hbox_new (FALSE, 6);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbbox, 0, 3, 7, 8);
-  gtk_widget_show (hbbox);
+  bbox = gtk_hbox_new (TRUE, 6);
+  gtk_table_attach_defaults (GTK_TABLE (table), bbox, 0, 3, 7, 8);
+  gtk_widget_show (bbox);
 
   button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (create_load_file_chooser),
                     dialog);
@@ -796,7 +804,7 @@ explorer_dialog (void)
   gimp_help_set_help_data (button, _("Load a fractal from file"), NULL);
 
   button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_reset_callback),
                     dialog);
@@ -805,7 +813,7 @@ explorer_dialog (void)
                            NULL);
 
   button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (create_save_file_chooser),
                     dialog);

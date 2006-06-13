@@ -1,3 +1,9 @@
+2006-06-13  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/FractalExplorer.h: doubled the size of
+	the preview and adapted the dialog layout to the larger preview.
+
 2006-06-12  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Finally implemented the suggestion in bug #144854, of
