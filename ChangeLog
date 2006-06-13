@@ -1,3 +1,11 @@
+2006-06-13  Tor Lillqvist  <tml@novell.com>
+
+	* app/plug-in/gimpenvirontable.c (gimp_environ_table_populate):
+	Free the string vector returned by g_listenv().
+
+	* libgimpwidgets/gimpwidgets.def: Remove deprecated
+	gimp_prop_file_entry_new.
+
 2006-06-12  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* menus/image-menu.xml.in: remove strong/weak undo from menu;

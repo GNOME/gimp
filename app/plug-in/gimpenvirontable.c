@@ -297,9 +297,11 @@ gimp_environ_table_legal_name (gchar *name)
 static void
 gimp_environ_table_populate (GimpEnvironTable *environ_table)
 {
-  gchar     **var = g_listenv ();
+  gchar     **env = g_listenv ();
+  gchar     **var;
   GPtrArray  *env_array;
 
+  var = env;
   env_array = g_ptr_array_new ();
 
   while (*var)
@@ -314,6 +316,8 @@ gimp_environ_table_populate (GimpEnvironTable *environ_table)
 
       var++;
     }
+
+  g_strfreev (env);
 
   if (environ_table->vars)
     g_hash_table_foreach (environ_table->vars,
