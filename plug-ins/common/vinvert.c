@@ -1,7 +1,3 @@
-/*
- * Value-Invert plug-in v1.1 by Adam D. Moss, adam@foxbox.org.  1999/02/27
- */
-
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
@@ -18,6 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+/* Value-Invert plug-in v1.1 by Adam D. Moss, adam@foxbox.org.  1999/02/27
+ *
+ * RGB<->HSV math optimizations by Mukund Sivaraman <muks@mukund.org>
+ * makes the plug-in 2-3 times faster. Using gimp_pixel_rgns_process()
+ * also makes memory management nicer. June 12, 2006.
+ *
+ * The plug-in only does v = 255 - v; for each pixel in the image, or
+ * each entry in the colormap depending upon the type of image, where 'v'
+ * is the value in HSV color model.
+ *
+ * The plug-in code is optimized towards this, in that it is not a full
+ * RGB->HSV->RGB transform, but shortcuts many of the calculations to
+ * effectively only do v = 255 - v. In fact, hue (0-360) is never
+ * calculated. The shortcuts can be derived from running a set of r, g, b
+ * values through the RGB->HSV transform and then from HSV->RGB and solving
+ * out the redundant portions.
+ *
+ * The plug-in also uses integer code exclusively for the main transform.
  */
 
 #include "config.h"
@@ -40,10 +56,10 @@ static void   run                (const gchar      *name,
                                   GimpParam       **return_vals);
 
 static void   vinvert            (GimpDrawable     *drawable);
-static void   indexed_vinvert    (gint32            image_ID);
+static void   vinvert_indexed    (gint32            image_ID);
 static void   vinvert_render_row (const guchar     *src,
                                   guchar           *dest,
-                                  gint              row_width,
+                                  gint              width,
                                   gint              bpp);
 
 
@@ -69,22 +85,25 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Invert the brightness of each pixel"),
-			  "This function takes an indexed/RGB image and "
-			  "inverts its 'value' in HSV space.  The upshot of "
-			  "this is that the color and saturation at any given "
-			  "point remains the same, but its brightness is "
-			  "effectively inverted.  Quite strange.  Sometimes "
-			  "produces unpleasant color artifacts on images from "
-			  "lossy sources (ie. JPEG).",
-			  "Adam D. Moss (adam@foxbox.org)",
-			  "Adam D. Moss (adam@foxbox.org)",
-			  "27th March 1997",
-			  N_("_Value Invert"),
-			  "RGB*, INDEXED*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          N_("Invert the brightness of each pixel"),
+                          "This function takes an indexed/RGB image and "
+                          "inverts its 'value' in HSV space.  The upshot of "
+                          "this is that the color and saturation at any given "
+                          "point remains the same, but its brightness is "
+                          "effectively inverted.  Quite strange.  Sometimes "
+                          "produces unpleasant color artifacts on images from "
+                          "lossy sources (ie. JPEG).",
+                          "Adam D. Moss (adam@foxbox.org), "
+                          "Mukund Sivaraman <muks@mukund.org>",
+                          "Adam D. Moss (adam@foxbox.org), "
+                          "Mukund Sivaraman <muks@mukund.org>",
+                          "27th March 1997, "
+                          "12th June 2006",
+                          N_("_Value Invert"),
+                          "RGB*, INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors/Invert");
 }
@@ -118,28 +137,29 @@ run (const gchar      *name,
     {
       /*  Make sure that the drawable is indexed or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id))
-	{
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    {
-	      INIT_I18N();
-	      gimp_progress_init (_("Value Invert"));
-	    }
-
-	  vinvert (drawable);
+        {
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
-	}
+            {
+              INIT_I18N();
+              gimp_progress_init (_("Value Invert"));
+            }
+
+          vinvert (drawable);
+
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
+        }
+      else if (gimp_drawable_is_indexed (drawable->drawable_id))
+        {
+          vinvert_indexed (image_ID);
+
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
+        }
       else
-	if (gimp_drawable_is_indexed (drawable->drawable_id))
-	  {
-	    indexed_vinvert (image_ID);
-            if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	      gimp_displays_flush ();
-	  }
-	else
-	  {
-	    status = GIMP_PDB_EXECUTION_ERROR;
-	  }
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   values[0].data.d_status = status;
@@ -148,7 +168,63 @@ run (const gchar      *name,
 }
 
 static void
-indexed_vinvert (gint32 image_ID)
+vinvert (GimpDrawable *drawable)
+{
+  gint          x, y, width, height;
+  gdouble       total, processed;
+  gint          update;
+  gint          channels;
+  GimpPixelRgn  src_rgn, dest_rgn;
+  guchar        *src_row, *dest_row;
+  gint          i;
+  gpointer      pr;
+
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x, &y, &width, &height))
+    return;
+
+  gimp_progress_init (_("Value Invert"));
+
+  channels = gimp_drawable_bpp (drawable->drawable_id);
+
+  gimp_pixel_rgn_init (&src_rgn,  drawable, x, y, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable, x, y, width, height, TRUE, TRUE);
+
+  total = width * height;
+  processed = 0.0;
+
+  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn), update = 0;
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr), update++)
+    {
+      src_row  = src_rgn.data;
+      dest_row = dest_rgn.data;
+
+      for (i = 0; i < src_rgn.h; i++)
+        {
+          vinvert_render_row (src_row, dest_row, src_rgn.w, channels);
+
+          src_row  += src_rgn.rowstride;
+          dest_row += dest_rgn.rowstride;
+        }
+
+      processed += src_rgn.w * src_rgn.h;
+      update %= 16;
+
+      if (update == 0)
+        gimp_progress_update (processed / total);
+    }
+
+  gimp_progress_update (1.0);
+
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x, y, width, height);
+
+}
+
+static void
+vinvert_indexed (gint32 image_ID)
 {
   guchar *cmap;
   gint    ncols;
@@ -165,45 +241,69 @@ indexed_vinvert (gint32 image_ID)
 }
 
 static void
-vinvert_func (const guchar *src,
-	      guchar       *dest,
-	      gint          bpp,
-	      gpointer      data)
-{
-  gint v1, v2, v3;
-
-  v1 = src[0];
-  v2 = src[1];
-  v3 = src[2];
-
-  gimp_rgb_to_hsv_int (&v1, &v2, &v3);
-  v3 = 255 - v3;
-  gimp_hsv_to_rgb_int (&v1, &v2, &v3);
-
-  dest[0] = v1;
-  dest[1] = v2;
-  dest[2] = v3;
-
-  if (bpp == 4)
-    dest[3] = src[3];
-}
-
-static void
 vinvert_render_row (const guchar *src,
-		    guchar       *dest,
-		    gint          row_width, /* in pixels */
-		    gint          bpp)
+                    guchar       *dest,
+                    gint          width, /* in pixels */
+                    gint          bpp)
 {
-  while (row_width--)
-    {
-      vinvert_func (src, dest, bpp, NULL);
-      src += bpp;
-      dest += bpp;
-    }
-}
+  gint j;
+  gint r, g, b;
+  gint value, value2, min;
+  gint delta;
 
-static void
-vinvert (GimpDrawable *drawable)
-{
-  gimp_rgn_iterate2 (drawable, 0 /* unused */, vinvert_func, NULL);
+  for (j = 0; j < width; j++)
+    {
+      r = *src++;
+      g = *src++;
+      b = *src++;
+
+      if (r > g)
+        {
+          value = MAX (r, b);
+          min = MIN (g, b);
+        }
+      else
+        {
+          value = MAX (g, b);
+          min = MIN (r, b);
+        }
+
+      delta = value - min;
+      if ((value == 0) || (delta == 0))
+        {
+          r = 255 - value;
+          g = 255 - value;
+          b = 255 - value;
+        }
+      else
+        {
+          value2 = value / 2;
+
+          if (r == value)
+            {
+              r = 255 - r;
+              b = ((r * b) + value2) / value;
+              g = ((r * g) + value2) / value;
+            }
+          else if (g == value)
+            {
+              g = 255 - g;
+              r = ((g * r) + value2) / value;
+              b = ((g * b) + value2) / value;
+            }
+          else
+            {
+              b = 255 - b;
+              g = ((b * g) + value2) / value;
+              r = ((b * r) + value2) / value;
+            }
+        }
+
+      *dest++ = r;
+      *dest++ = g;
+      *dest++ = b;
+
+      if (bpp == 4)
+        *dest++ = *src++;
+    }
 }
