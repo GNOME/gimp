@@ -149,8 +149,6 @@
       <placeholder name="Undo">
         <menuitem action="edit-undo" />
         <menuitem action="edit-redo" />
-        <menuitem action="edit-strong-undo" />
-        <menuitem action="edit-strong-redo" />
         <menuitem action="dialogs-undo-history" />
       </placeholder>
       <separator />

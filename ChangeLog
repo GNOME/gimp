@@ -1,3 +1,8 @@
+2006-06-12  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* menus/image-menu.xml.in: remove strong/weak undo from menu;
+	still available using Shift-Ctrl-[ZY].  See bug #144584.
+
 2006-06-13  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/vinvert.c: applied patch from Mukund Sivaraman
