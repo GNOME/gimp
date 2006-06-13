@@ -1,5 +1,30 @@
 2006-06-12  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	Finally implemented the suggestion in bug #144854, of
+	"strong" undo/redo commands that continue undoing so long
+	as they only encounter visibility changes.
+	
+	* app/actions/edit-actions.c
+	* app/actions/edit-commands.c
+	* app/actions/edit-commands.h: added "strong undo"
+	and "strong redo" commands/actions.
+	
+	* app/core/gimpimage-undo.[ch]: added functions
+	gimp_image_strong_undo() and gimp_image_strong_redo().
+	
+	* app/core/gimpundo.[ch]: added utility function
+	gimp_undo_is_weak().
+
+	* app/widgets/gimphelp-ids.h:added id's.
+	
+	* menus/image-menu.xml.in: added to edit menu,
+	bound to C-S-z and C-S-y.
+
+	This will no doubt need tweaking, but I will consider it
+	to fix bug #144854.
+	
+2006-06-12  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* plug-ins/common/gnomeprint.c: try not to distort
 	image when printing.  Fixes bug #344547 but this
 	plug-in needs a lot more work to be useful.

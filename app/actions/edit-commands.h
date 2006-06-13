@@ -24,6 +24,10 @@ void   edit_undo_cmd_callback               (GtkAction *action,
                                              gpointer   data);
 void   edit_redo_cmd_callback               (GtkAction *action,
                                              gpointer   data);
+void   edit_strong_undo_cmd_callback        (GtkAction *action,
+                                             gpointer   data);
+void   edit_strong_redo_cmd_callback        (GtkAction *action,
+                                             gpointer   data);
 void   edit_undo_clear_cmd_callback         (GtkAction *action,
                                              gpointer   data);
 void   edit_cut_cmd_callback                (GtkAction *action,

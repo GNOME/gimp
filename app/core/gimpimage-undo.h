@@ -23,6 +23,9 @@
 gboolean   gimp_image_undo              (GimpImage        *image);
 gboolean   gimp_image_redo              (GimpImage        *image);
 
+gboolean   gimp_image_strong_undo       (GimpImage        *image);
+gboolean   gimp_image_strong_redo       (GimpImage        *image);
+
 void       gimp_image_undo_free         (GimpImage        *image);
 
 gboolean   gimp_image_undo_group_start  (GimpImage        *image,

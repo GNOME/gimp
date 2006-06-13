@@ -530,3 +530,33 @@ gimp_undo_type_to_name (GimpUndoType type)
   else
     return "";
 }
+
+gboolean
+gimp_undo_is_weak (GimpUndo *undo)
+{
+  GimpUndoType type;
+
+  if (! undo)
+    return FALSE;
+
+  type = undo->undo_type;
+
+  switch (undo->undo_type)
+    {
+    case GIMP_UNDO_GROUP_ITEM_VISIBILITY:
+    case GIMP_UNDO_GROUP_ITEM_PROPERTIES:
+    case GIMP_UNDO_GROUP_LAYER_APPLY_MASK:
+    case GIMP_UNDO_ITEM_VISIBILITY:
+    case GIMP_UNDO_LAYER_MODE:
+    case GIMP_UNDO_LAYER_OPACITY:
+    case GIMP_UNDO_LAYER_MASK_APPLY:
+    case GIMP_UNDO_LAYER_MASK_SHOW:
+      return TRUE;
+      break;
+
+    default:
+      break;
+    }
+
+  return FALSE;
+}

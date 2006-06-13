@@ -78,6 +78,18 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_redo_cmd_callback),
     GIMP_HELP_EDIT_REDO },
 
+  { "edit-strong-undo", GTK_STOCK_UNDO,
+    N_("Strong Undo"), "<control><shift>Z",
+    N_("Undo the last operation, skipping over some types"),
+    G_CALLBACK (edit_strong_undo_cmd_callback),
+    GIMP_HELP_EDIT_STRONG_UNDO },
+
+  { "edit-strong-redo", GTK_STOCK_REDO,
+    N_("Strong Redo"), "<control><shift>Y",
+    N_("Redo the last operation that was undone, skipping over some types"),
+    G_CALLBACK (edit_strong_redo_cmd_callback),
+    GIMP_HELP_EDIT_STRONG_REDO },
+
   { "edit-undo-clear", GTK_STOCK_CLEAR,
     N_("_Clear Undo History"), "",
     N_("Remove all operations from the undo history"),
@@ -261,9 +273,11 @@ edit_actions_update (GimpActionGroup *group,
   SET_LABEL ("edit-undo", undo_name ? undo_name : _("_Undo"));
   SET_LABEL ("edit-redo", redo_name ? redo_name : _("_Redo"));
 
-  SET_SENSITIVE ("edit-undo",       undo_enabled && undo_name);
-  SET_SENSITIVE ("edit-redo",       undo_enabled && redo_name);
-  SET_SENSITIVE ("edit-undo-clear", undo_enabled && (undo_name || redo_name));
+  SET_SENSITIVE ("edit-undo",        undo_enabled && undo_name);
+  SET_SENSITIVE ("edit-redo",        undo_enabled && redo_name);
+  SET_SENSITIVE ("edit-strong-undo", undo_enabled && undo_name);
+  SET_SENSITIVE ("edit-strong-redo", undo_enabled && redo_name);
+  SET_SENSITIVE ("edit-undo-clear",  undo_enabled && (undo_name || redo_name));
 
   g_free (undo_name);
   g_free (redo_name);

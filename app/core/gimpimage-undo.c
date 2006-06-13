@@ -32,6 +32,7 @@
 #include "gimpitemundo.h"
 #include "gimplist.h"
 #include "gimpundostack.h"
+#include "gimpundo.h"
 
 
 /*  local function prototypes  */
@@ -63,6 +64,33 @@ gimp_image_undo (GimpImage *image)
   return TRUE;
 }
 
+/*
+ * this function continues to undo as long as it only sees certain
+ * undo types, in particular visibility changes.
+ */
+gboolean
+gimp_image_strong_undo (GimpImage *image)
+{
+  GimpUndo *undo;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (image->pushing_undo_group == GIMP_UNDO_GROUP_NONE,
+                        FALSE);
+
+  undo = gimp_undo_stack_peek (image->undo_stack);
+
+  gimp_image_undo (image);
+
+  while (gimp_undo_is_weak (undo))
+    {
+      undo = gimp_undo_stack_peek (image->undo_stack);
+      if (gimp_undo_is_weak (undo))
+        gimp_image_undo (image);
+    }
+
+  return TRUE;
+}
+
 gboolean
 gimp_image_redo (GimpImage *image)
 {
@@ -74,6 +102,35 @@ gimp_image_redo (GimpImage *image)
                              image->redo_stack,
                              image->undo_stack,
                              GIMP_UNDO_MODE_REDO);
+
+  return TRUE;
+}
+
+/*
+ * this function continues to redo as long as it only sees certain
+ * undo types, in particular visibility changes.  Note that the
+ * order of events is set up to make it exactly reverse
+ * gimp_image_strong_undo().
+ */
+gboolean
+gimp_image_strong_redo (GimpImage *image)
+{
+  GimpUndo *undo;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (image->pushing_undo_group == GIMP_UNDO_GROUP_NONE,
+                        FALSE);
+
+  undo = gimp_undo_stack_peek (image->redo_stack);
+
+  gimp_image_redo (image);
+
+  while (gimp_undo_is_weak (undo))
+    {
+      undo = gimp_undo_stack_peek (image->redo_stack);
+      if (gimp_undo_is_weak (undo))
+        gimp_image_redo (image);
+    }
 
   return TRUE;
 }

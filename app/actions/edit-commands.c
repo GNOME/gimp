@@ -95,6 +95,28 @@ edit_redo_cmd_callback (GtkAction *action,
 }
 
 void
+edit_strong_undo_cmd_callback (GtkAction *action,
+                               gpointer   data)
+{
+  GimpImage *image;
+  return_if_no_image (image, data);
+
+  if (gimp_image_strong_undo (image))
+    gimp_image_flush (image);
+}
+
+void
+edit_strong_redo_cmd_callback (GtkAction *action,
+                               gpointer   data)
+{
+  GimpImage *image;
+  return_if_no_image (image, data);
+
+  if (gimp_image_strong_redo (image))
+    gimp_image_flush (image);
+}
+
+void
 edit_undo_clear_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
