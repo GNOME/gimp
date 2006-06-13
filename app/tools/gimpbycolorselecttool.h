@@ -36,9 +36,12 @@ typedef struct _GimpByColorSelectToolClass GimpByColorSelectToolClass;
 
 struct _GimpByColorSelectTool
 {
-  GimpSelectionTool parent_instance;
+  GimpSelectionTool  parent_instance;
 
-  gint              x, y;  /*  Point from which to execute seed fill  */
+  gint               x, y;  /*  Point from which to execute seed fill  */
+
+  GimpUndo          *undo;
+  SelectOps          op;
 };
 
 struct _GimpByColorSelectToolClass

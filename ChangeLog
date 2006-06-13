@@ -1,3 +1,9 @@
+2006-06-13  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpbycolorselect.[ch]: allow modifying threshold
+	without having to re-click on image each time.  Fixes
+	bug #126748.
+	
 2006-06-13  Tor Lillqvist  <tml@novell.com>
 
 	* app/plug-in/gimpenvirontable.c (gimp_environ_table_populate):
@@ -6,7 +12,7 @@
 	* libgimpwidgets/gimpwidgets.def: Remove deprecated
 	gimp_prop_file_entry_new.
 
-2006-06-12  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+2006-06-13  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* menus/image-menu.xml.in: remove strong/weak undo from menu;
 	still available using Shift-Ctrl-[ZY].  See bug #144854.

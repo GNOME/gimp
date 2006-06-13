@@ -28,8 +28,10 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimppickable.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimpundostack.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -42,6 +44,11 @@
 #include "gimp-intl.h"
 
 
+static GObject * gimp_by_color_select_tool_constructor (GType                  type,
+                                                        guint                  n_params,
+                                                        GObjectConstructParam *params);
+
+static void   gimp_by_color_select_tool_dispose        (GObject         *object);
 static void   gimp_by_color_select_tool_button_press   (GimpTool        *tool,
                                                         GimpCoords      *coords,
                                                         guint32          time,
@@ -61,7 +68,10 @@ static void   gimp_by_color_select_tool_cursor_update  (GimpTool        *tool,
                                                         GimpCoords      *coords,
                                                         GdkModifierType  state,
                                                         GimpDisplay     *display);
-
+static void   gimp_by_color_select_tool_select           (GimpByColorSelectTool *by_color_sel);
+static void   gimp_by_color_select_tool_threshold_notify (GimpSelectionOptions  *options,
+                                                          GParamSpec            *pspec,
+                                                          GimpByColorSelectTool *by_color_sel);
 
 G_DEFINE_TYPE (GimpByColorSelectTool, gimp_by_color_select_tool,
                GIMP_TYPE_SELECTION_TOOL)
@@ -89,7 +99,11 @@ gimp_by_color_select_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_by_color_select_tool_class_init (GimpByColorSelectToolClass *klass)
 {
-  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
+  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
+  GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
+
+  object_class->constructor  = gimp_by_color_select_tool_constructor;
+  object_class->dispose      = gimp_by_color_select_tool_dispose;
 
   tool_class->button_press   = gimp_by_color_select_tool_button_press;
   tool_class->button_release = gimp_by_color_select_tool_button_release;
@@ -105,8 +119,45 @@ gimp_by_color_select_tool_init (GimpByColorSelectTool *by_color_select)
   gimp_tool_control_set_cursor (tool->control,      GIMP_CURSOR_MOUSE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_HAND);
 
-  by_color_select->x = 0;
-  by_color_select->y = 0;
+  by_color_select->x    = 0;
+  by_color_select->y    = 0;
+
+  by_color_select->undo = NULL;
+}
+
+static GObject *
+gimp_by_color_select_tool_constructor (GType                  type,
+                                       guint                  n_params,
+                                       GObjectConstructParam *params)
+{
+  GObject  *object;
+  GObject  *options;
+  GimpTool *tool;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  tool = GIMP_TOOL (object);
+
+  options = G_OBJECT (tool->tool_info->tool_options);
+  g_signal_connect_object (options, "notify::threshold",
+                           G_CALLBACK (gimp_by_color_select_tool_threshold_notify),
+                           GIMP_BY_COLOR_SELECT_TOOL (tool), 0);
+
+  return object;
+}
+
+static void
+gimp_by_color_select_tool_dispose (GObject *object)
+{
+  GimpTool          *tool      = GIMP_TOOL (object);
+  GObject           *options;
+
+  options = G_OBJECT (tool->tool_info->tool_options);
+
+  g_signal_handlers_disconnect_by_func
+    (options,
+     G_CALLBACK (gimp_by_color_select_tool_threshold_notify),
+     GIMP_BY_COLOR_SELECT_TOOL (object));
 }
 
 static void
@@ -139,6 +190,8 @@ gimp_by_color_select_tool_button_press (GimpTool        *tool,
       by_color_sel->x -= off_x;
       by_color_sel->y -= off_y;
     }
+
+  by_color_sel->undo = NULL;
 }
 
 static void
@@ -149,7 +202,7 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
                                           GimpDisplay     *display)
 {
   GimpByColorSelectTool *by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
-  GimpSelectionTool     *sel_tool     = GIMP_SELECTION_TOOL (tool);
+  GimpSelectionTool    *sel_tool = GIMP_SELECTION_TOOL (tool);
   GimpSelectionOptions  *options;
   GimpDrawable          *drawable;
 
@@ -162,46 +215,9 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
   if (state & GDK_BUTTON3_MASK)
     return;
 
-  if (by_color_sel->x >= 0 &&
-      by_color_sel->y >= 0 &&
-      by_color_sel->x < gimp_item_width  (GIMP_ITEM (drawable)) &&
-      by_color_sel->y < gimp_item_height (GIMP_ITEM (drawable)))
-    {
-      GimpPickable *pickable;
-      guchar       *col;
+  by_color_sel->op = sel_tool->op;
 
-      if (options->sample_merged)
-        pickable = GIMP_PICKABLE (display->image->projection);
-      else
-        pickable = GIMP_PICKABLE (drawable);
-
-      gimp_pickable_flush (pickable);
-
-      col = gimp_pickable_get_color_at (pickable,
-                                        by_color_sel->x,
-                                        by_color_sel->y);
-
-      if (col)
-        {
-          GimpRGB color;
-
-          gimp_rgba_set_uchar (&color, col[0], col[1], col[2], col[3]);
-          g_free (col);
-
-          gimp_channel_select_by_color (gimp_image_get_mask (display->image),
-                                        drawable,
-                                        options->sample_merged,
-                                        &color,
-                                        options->threshold,
-                                        options->select_transparent,
-                                        sel_tool->op,
-                                        options->antialias,
-                                        options->feather,
-                                        options->feather_radius,
-                                        options->feather_radius);
-          gimp_image_flush (display->image);
-        }
-    }
+  gimp_by_color_select_tool_select (by_color_sel);
 }
 
 static void
@@ -255,4 +271,94 @@ gimp_by_color_select_tool_cursor_update (GimpTool        *tool,
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+}
+
+
+static void
+gimp_by_color_select_tool_threshold_notify (GimpSelectionOptions  *options,
+                                            GParamSpec            *pspec,
+                                            GimpByColorSelectTool *by_color_sel)
+{
+  GimpTool    *tool     = GIMP_TOOL (by_color_sel);
+  GimpDisplay *display;
+  GimpImage   *image;
+  GimpUndo    *undo     = by_color_sel->undo;
+
+  display = tool->display;
+  image = display->image;
+
+  if (!display)
+    return;
+
+  /* don't do anything unless we have already done something */
+  if (!undo)
+    return;
+
+  if (undo && undo == gimp_undo_stack_peek (image->undo_stack))
+    {
+      gimp_image_undo (image);
+      by_color_sel->undo = NULL;
+    }
+
+  gimp_by_color_select_tool_select (by_color_sel);
+}
+
+static void
+gimp_by_color_select_tool_select (GimpByColorSelectTool *by_color_sel)
+{
+  GimpTool              *tool      = GIMP_TOOL (by_color_sel);
+  GimpDisplay           *display;
+  GimpDrawable          *drawable;
+  GimpSelectionOptions  *options;
+  GimpImage             *image;
+
+  display = tool->display;
+  image = display->image;
+  drawable = gimp_image_active_drawable (image);
+  options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+
+  if (by_color_sel->x >= 0 &&
+      by_color_sel->y >= 0 &&
+      by_color_sel->x < gimp_item_width  (GIMP_ITEM (drawable)) &&
+      by_color_sel->y < gimp_item_height (GIMP_ITEM (drawable)))
+    {
+      GimpPickable *pickable;
+      guchar       *col;
+
+      if (options->sample_merged)
+        pickable = GIMP_PICKABLE (image->projection);
+      else
+        pickable = GIMP_PICKABLE (drawable);
+
+      gimp_pickable_flush (pickable);
+
+      col = gimp_pickable_get_color_at (pickable,
+                                        by_color_sel->x,
+                                        by_color_sel->y);
+
+      if (col)
+        {
+          GimpRGB color;
+
+          gimp_rgba_set_uchar (&color, col[0], col[1], col[2], col[3]);
+          g_free (col);
+
+          gimp_channel_select_by_color (gimp_image_get_mask (image),
+                                        drawable,
+                                        options->sample_merged,
+                                        &color,
+                                        options->threshold,
+                                        options->select_transparent,
+                                        by_color_sel->op,
+                                        options->antialias,
+                                        options->feather,
+                                        options->feather_radius,
+                                        options->feather_radius);
+
+
+          by_color_sel->undo = gimp_undo_stack_peek (image->undo_stack);
+
+          gimp_image_flush (image);
+        }
+    }
 }
