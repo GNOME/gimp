@@ -1,3 +1,8 @@
+2006-06-14  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/vinvert.c: another patch from Mukund that cleans
+	up i18n initialization.
+
 2006-06-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpbycolorselect.c: fix crash when changing

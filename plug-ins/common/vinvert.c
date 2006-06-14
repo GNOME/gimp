@@ -121,6 +121,8 @@ run (const gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
 
+  INIT_I18N();
+
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
@@ -138,12 +140,6 @@ run (const gchar      *name,
       /*  Make sure that the drawable is indexed or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id))
         {
-          if (run_mode != GIMP_RUN_NONINTERACTIVE)
-            {
-              INIT_I18N();
-              gimp_progress_init (_("Value Invert"));
-            }
-
           vinvert (drawable);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
