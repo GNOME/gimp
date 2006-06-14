@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-11 11:59+0200\n"
-"PO-Revision-Date: 2006-06-11 12:01+0200\n"
+"POT-Creation-Date: 2006-06-14 13:32+0200\n"
+"PO-Revision-Date: 2006-06-14 13:32+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1340,7 +1340,7 @@ msgstr "_Buffer"
 msgid "Undo History Menu"
 msgstr "Nabídka historie změn"
 
-#: ../app/actions/edit-actions.c:70 ../app/actions/edit-actions.c:261
+#: ../app/actions/edit-actions.c:70 ../app/actions/edit-actions.c:273
 msgid "_Undo"
 msgstr "Vr_átit"
 
@@ -1348,7 +1348,7 @@ msgstr "Vr_átit"
 msgid "Undo the last operation"
 msgstr "Vrátit poslední operaci"
 
-#: ../app/actions/edit-actions.c:76 ../app/actions/edit-actions.c:262
+#: ../app/actions/edit-actions.c:76 ../app/actions/edit-actions.c:274
 msgid "_Redo"
 msgstr "Zn_ovu"
 
@@ -1357,165 +1357,182 @@ msgid "Redo the last operation that was undone"
 msgstr "Znovu provést poslední vrácenou operaci"
 
 #: ../app/actions/edit-actions.c:82
+msgid "Strong Undo"
+msgstr "Silné zpět"
+
+#: ../app/actions/edit-actions.c:83
+msgid "Undo the last operation, skipping over some types"
+msgstr "Vrátit zpět poslední operaci, přeskočit některé typy operací"
+
+#: ../app/actions/edit-actions.c:88
+msgid "Strong Redo"
+msgstr "Silné znovu"
+
+#: ../app/actions/edit-actions.c:89
+msgid "Redo the last operation that was undone, skipping over some types"
+msgstr ""
+"Znovu provést poslední operaci vrácenou zpět, přeskočit některé typy operací"
+
+#: ../app/actions/edit-actions.c:94
 msgid "_Clear Undo History"
 msgstr "Vy_mazat historii změn"
 
-#: ../app/actions/edit-actions.c:83
+#: ../app/actions/edit-actions.c:95
 msgid "Remove all operations from the undo history"
 msgstr "Odstranit všechny operace z historie změn"
 
-#: ../app/actions/edit-actions.c:88
+#: ../app/actions/edit-actions.c:100
 msgid "Cu_t"
 msgstr "_Vyjmout"
 
-#: ../app/actions/edit-actions.c:89
+#: ../app/actions/edit-actions.c:101
 msgid "Move the selected pixels to the clipboard"
 msgstr "Přesunout vybrané pixely do schránky"
 
-#: ../app/actions/edit-actions.c:94
+#: ../app/actions/edit-actions.c:106
 msgid "_Copy"
 msgstr "_Kopírovat"
 
-#: ../app/actions/edit-actions.c:95
+#: ../app/actions/edit-actions.c:107
 msgid "Copy the selected pixels to the clipboard"
 msgstr "Kopírovat vybrané pixely do schránky"
 
 #. GIMP_STOCK_COPY_VISIBLE,
-#: ../app/actions/edit-actions.c:100
+#: ../app/actions/edit-actions.c:112
 msgid "Copy _Visible"
 msgstr "Kopírovat _viditelné"
 
-#: ../app/actions/edit-actions.c:101
+#: ../app/actions/edit-actions.c:113
 msgid "Copy the selected region to the clipboard"
 msgstr "Kopírovat vybranou oblast do schránky"
 
-#: ../app/actions/edit-actions.c:106
+#: ../app/actions/edit-actions.c:118
 msgid "_Paste"
 msgstr "V_ložit"
 
-#: ../app/actions/edit-actions.c:107
+#: ../app/actions/edit-actions.c:119
 msgid "Paste the content of the clipboard"
 msgstr "Vložit obsah schránky"
 
-#: ../app/actions/edit-actions.c:112
+#: ../app/actions/edit-actions.c:124
 msgid "Paste _Into"
 msgstr "Vložit _do"
 
-#: ../app/actions/edit-actions.c:113
+#: ../app/actions/edit-actions.c:125
 msgid "Paste the content of the clipboard into the current selection"
 msgstr "Vložit obsah schránky do aktuálního výběru"
 
-#: ../app/actions/edit-actions.c:118
+#: ../app/actions/edit-actions.c:130
 msgid "Paste as New"
 msgstr "Vložit jako nové"
 
-#: ../app/actions/edit-actions.c:119 ../app/actions/edit-actions.c:125
+#: ../app/actions/edit-actions.c:131 ../app/actions/edit-actions.c:137
 msgid "Create a new image from the content of the clipboard"
 msgstr "Vytvořit nový obrázek z obsahu schránky"
 
-#: ../app/actions/edit-actions.c:124
+#: ../app/actions/edit-actions.c:136
 msgid "_New Image"
 msgstr "_Nový obrázek"
 
-#: ../app/actions/edit-actions.c:130
+#: ../app/actions/edit-actions.c:142
 msgid "Cu_t Named..."
 msgstr "Vyjmout po_jmenované..."
 
-#: ../app/actions/edit-actions.c:135
+#: ../app/actions/edit-actions.c:147
 msgid "_Copy Named..."
 msgstr "Ko_pírovat pojmenované..."
 
 #. GIMP_STOCK_COPY_VISIBLE,
-#: ../app/actions/edit-actions.c:140
+#: ../app/actions/edit-actions.c:152
 msgid "Copy _Visible Named..."
 msgstr "Kopírovat _viditelné jménem..."
 
-#: ../app/actions/edit-actions.c:145
+#: ../app/actions/edit-actions.c:157
 msgid "_Paste Named..."
 msgstr "Vlo_žit pojmenované..."
 
-#: ../app/actions/edit-actions.c:150
+#: ../app/actions/edit-actions.c:162
 msgid "Cl_ear"
 msgstr "_Vymazat"
 
-#: ../app/actions/edit-actions.c:151
+#: ../app/actions/edit-actions.c:163
 msgid "Clear the selected pixels"
 msgstr "Smazat vybrané pixely"
 
-#: ../app/actions/edit-actions.c:159
+#: ../app/actions/edit-actions.c:171
 msgid "Fill with _FG Color"
 msgstr "Vyplnit barvou po_předí"
 
-#: ../app/actions/edit-actions.c:160
+#: ../app/actions/edit-actions.c:172
 msgid "Fill the selection using the foreground color"
 msgstr "Vyplnit výběr barvou popředí"
 
-#: ../app/actions/edit-actions.c:165
+#: ../app/actions/edit-actions.c:177
 msgid "Fill with B_G Color"
 msgstr "Vyplnit barvou po_zadí"
 
-#: ../app/actions/edit-actions.c:166
+#: ../app/actions/edit-actions.c:178
 msgid "Fill the selection using the background color"
 msgstr "Vyplnit výběr barvou pozadí"
 
-#: ../app/actions/edit-actions.c:171
+#: ../app/actions/edit-actions.c:183
 msgid "Fill with P_attern"
 msgstr "Vyplnit _vzorkem"
 
-#: ../app/actions/edit-actions.c:172
+#: ../app/actions/edit-actions.c:184
 msgid "Fill the selection using the active pattern"
 msgstr "Vyplnit výběr aktivním vzorkem"
 
-#: ../app/actions/edit-actions.c:245
+#: ../app/actions/edit-actions.c:257
 #, c-format
 msgid "_Undo %s"
 msgstr "_Zpět %s"
 
-#: ../app/actions/edit-actions.c:250
+#: ../app/actions/edit-actions.c:262
 #, c-format
 msgid "_Redo %s"
 msgstr "Zn_ovu %s"
 
-#: ../app/actions/edit-commands.c:110
+#: ../app/actions/edit-commands.c:132
 msgid "Clear Undo History"
 msgstr "Vymazat historii změn"
 
-#: ../app/actions/edit-commands.c:136
+#: ../app/actions/edit-commands.c:158
 msgid "Really clear image's undo history?"
 msgstr "Opravdu vymazat historii změn obrázku?"
 
-#: ../app/actions/edit-commands.c:148
+#: ../app/actions/edit-commands.c:170
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Vymazání historie změn tohoto obrázku ušetří %s paměti."
 
-#: ../app/actions/edit-commands.c:256
+#: ../app/actions/edit-commands.c:278
 msgid "Cut Named"
 msgstr "Vyříznout pojmenované"
 
-#: ../app/actions/edit-commands.c:259 ../app/actions/edit-commands.c:279
-#: ../app/actions/edit-commands.c:299
+#: ../app/actions/edit-commands.c:281 ../app/actions/edit-commands.c:301
+#: ../app/actions/edit-commands.c:321
 msgid "Enter a name for this buffer"
 msgstr "Zadejte jméno tohoto bufferu"
 
-#: ../app/actions/edit-commands.c:276
+#: ../app/actions/edit-commands.c:298
 msgid "Copy Named"
 msgstr "Kopírovat pojmenované"
 
-#: ../app/actions/edit-commands.c:296
+#: ../app/actions/edit-commands.c:318
 msgid "Copy Visible Named "
 msgstr "Kopírovat _viditelné jménem"
 
-#: ../app/actions/edit-commands.c:408
+#: ../app/actions/edit-commands.c:430
 msgid "There is no active layer or channel to cut from."
 msgstr "Není žádná aktivní vrstva nebo kanál, odkud vyjmout."
 
-#: ../app/actions/edit-commands.c:413 ../app/actions/edit-commands.c:439
-#: ../app/actions/edit-commands.c:456
+#: ../app/actions/edit-commands.c:435 ../app/actions/edit-commands.c:461
+#: ../app/actions/edit-commands.c:478
 msgid "(Unnamed Buffer)"
 msgstr "(Nepojmenovaný buffer)"
 
-#: ../app/actions/edit-commands.c:434
+#: ../app/actions/edit-commands.c:456
 msgid "There is no active layer or channel to copy from."
 msgstr "Není žádná aktivní vrstva nebo kanál, odkud kopírovat."
 
@@ -3300,7 +3317,8 @@ msgstr "Odstranit šablonu"
 
 #: ../app/actions/templates-commands.c:247
 #, c-format
-msgid "Are you sure you want to delete template '%s' from the list and from disk?"
+msgid ""
+"Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "Jste si jisti, že chcete odstranit šablonu '%s' ze seznamu a z disku?"
 
 #: ../app/actions/text-editor-actions.c:44
@@ -3417,7 +3435,8 @@ msgstr "Přenastavit volby nástrojů"
 
 #: ../app/actions/tool-options-commands.c:209
 msgid "Do you really want to reset all tool options to default values?"
-msgstr "Chcete opravdu přenastavit všechny volby nástrojů na implicitní hodnoty?"
+msgstr ""
+"Chcete opravdu přenastavit všechny volby nástrojů na implicitní hodnoty?"
 
 #: ../app/actions/tools-actions.c:47
 msgid "Tools Menu"
@@ -4201,13 +4220,15 @@ msgstr ""
 "jinak bude zobrazen s měřítkem 1:1."
 
 #: ../app/config/gimprc-blurbs.h:161
-msgid "Install a private colormap; might be useful on 8-bit (256 colors) displays."
+msgid ""
+"Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
 "Nainstalovat soukromou barevnou mapu; může být užitečné na osmibitových (256 "
 "barev) displejích."
 
 #: ../app/config/gimprc-blurbs.h:164
-msgid "Sets the level of interpolation used for scaling and other transformations."
+msgid ""
+"Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Nastavuje úroveň interpolace používanou pro změnu velikosti a jiné "
 "transformace."
@@ -4315,7 +4336,8 @@ msgstr ""
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
-msgstr "Nastavuje velikost náhledu pro vrstvy a kanály v nově vytvářených dialozích."
+msgstr ""
+"Nastavuje velikost náhledu pro vrstvy a kanály v nově vytvářených dialozích."
 
 #: ../app/config/gimprc-blurbs.h:254
 msgid ""
@@ -4340,12 +4362,15 @@ msgstr ""
 "spuštění."
 
 #: ../app/config/gimprc-blurbs.h:265
-msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
-msgstr "Zapamatovat si aktuální nástroj, vzorek, barvu a stopu mezi sezeními GIMP."
+msgid ""
+"Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgstr ""
+"Zapamatovat si aktuální nástroj, vzorek, barvu a stopu mezi sezeními GIMP."
 
 #: ../app/config/gimprc-blurbs.h:269
 msgid "Add all opened and saved files to the document history on disk."
-msgstr "Přidat všechny otevřené a uložené soubory do historie dokumentů na disku."
+msgstr ""
+"Přidat všechny otevřené a uložené soubory do historie dokumentů na disku."
 
 #: ../app/config/gimprc-blurbs.h:272
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
@@ -5302,7 +5327,8 @@ msgstr ""
 
 #: ../app/core/gimpbrush-load.c:408
 #, c-format
-msgid "Fatal parse error in brush file '%s': unable to decode abr format version %d."
+msgid ""
+"Fatal parse error in brush file '%s': unable to decode abr format version %d."
 msgstr ""
 "Fatální chyba zpracování souboru stopy '%s': nemohu dekédovat verzi %d "
 "formátu abr."
@@ -5320,12 +5346,14 @@ msgstr "Schránka"
 #: ../app/core/gimpbrushgenerated.c:575
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr "Fatální chyba zpracování souboru stopy '%s': Není to soubor stopy GIMPu."
+msgstr ""
+"Fatální chyba zpracování souboru stopy '%s': Není to soubor stopy GIMPu."
 
 #: ../app/core/gimpbrushgenerated.c:591
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
-msgstr "Fatální chyba zpracování souboru stopy '%s': Neznámá verze stopy GIMPu."
+msgstr ""
+"Fatální chyba zpracování souboru stopy '%s': Neznámá verze stopy GIMPu."
 
 #: ../app/core/gimpbrushgenerated.c:635
 #, c-format
@@ -5370,7 +5398,7 @@ msgid "Fuzzy Select"
 msgstr "Přibližný výběr"
 
 #: ../app/core/gimpchannel-select.c:493
-#: ../app/tools/gimpbycolorselecttool.c:81
+#: ../app/tools/gimpbycolorselecttool.c:91
 msgid "Select by Color"
 msgstr "Výběr dle barvy"
 
@@ -5602,7 +5630,8 @@ msgid "The foreground color of the grid."
 msgstr "Barva popředí mřížky."
 
 #: ../app/core/gimpgrid.c:96
-msgid "The background color of the grid; only used in double dashed line style."
+msgid ""
+"The background color of the grid; only used in double dashed line style."
 msgstr "Barva pozadí mřížky; používá se jen u dvojitě čárkovaného stylu čáry."
 
 #: ../app/core/gimpgrid.c:102
@@ -5614,7 +5643,8 @@ msgid "Vertical spacing of grid lines."
 msgstr "Svislé rozestupy čar mřížky."
 
 #: ../app/core/gimpgrid.c:116
-msgid "Horizontal offset of the first grid line; this may be a negative number."
+msgid ""
+"Horizontal offset of the first grid line; this may be a negative number."
 msgstr "Vodorovný posun první čáry mřížky; může to být záporné číslo."
 
 #: ../app/core/gimpgrid.c:123
@@ -6075,13 +6105,15 @@ msgstr ""
 #: ../app/core/gimppalette.c:343
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
-msgstr "Fatální chyba zpracovávání souboru palety '%s': Chybí kouzelná hlavička."
+msgstr ""
+"Fatální chyba zpracovávání souboru palety '%s': Chybí kouzelná hlavička."
 
 #: ../app/core/gimppalette.c:359 ../app/core/gimppalette.c:382
 #: ../app/core/gimppalette.c:412 ../app/core/gimppalette.c:490
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
-msgstr "Fatální chyba zpracovávání souboru palety '%s': Chyba čtení na řádku %d."
+msgstr ""
+"Fatální chyba zpracovávání souboru palety '%s': Chyba čtení na řádku %d."
 
 #: ../app/core/gimppalette.c:374
 #, c-format
@@ -6122,11 +6154,13 @@ msgstr "Čtu soubor palety '%s': Hodnota GRB mimo rozsah na řádku %d."
 #: ../app/core/gimppattern.c:349
 #, c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
-msgstr "Fatální chyba zpracování souboru vzorku '%s': Soubor je zřejmě useknut."
+msgstr ""
+"Fatální chyba zpracování souboru vzorku '%s': Soubor je zřejmě useknut."
 
 #: ../app/core/gimppattern.c:291
 #, c-format
-msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+msgid ""
+"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 "Fatální chyba zpracování v souboru vzorku '%s': Neznámá verze formátu vzorku "
 "%d."
@@ -6495,7 +6529,8 @@ msgstr ""
 "Nastavení (momentálně %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:229
-msgid "Scaling the image to the chosen size will shrink some layers completely away."
+msgid ""
+"Scaling the image to the chosen size will shrink some layers completely away."
 msgstr "Zvolená velikost obrázku zmenší některé vrstvy natolik, že zmizí."
 
 #: ../app/dialogs/image-scale-dialog.c:233
@@ -7612,7 +7647,8 @@ msgstr "<b>Váš soubor s tipy GIMPu zřejmě chybí!</b>"
 #: ../app/dialogs/tips-dialog.c:91
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
-msgstr "Měl existovat soubor s názvem '%s'. Zkontrolujte prosím svou instalaci."
+msgstr ""
+"Měl existovat soubor s názvem '%s'. Zkontrolujte prosím svou instalaci."
 
 #: ../app/dialogs/tips-dialog.c:97
 msgid "<b>The GIMP tips file could not be parsed!</b>"
@@ -7745,7 +7781,8 @@ msgstr "Uložit před zavřením změny v obrázku '%s'?"
 # FIXME: doesn't work with Slavic languages
 #: ../app/display/gimpdisplayshell-close.c:231
 #, c-format
-msgid "If you don't save the image, changes from the last %s and %s will be lost."
+msgid ""
+"If you don't save the image, changes from the last %s and %s will be lost."
 msgstr "Pokud obrázek neuložíte, změny za poslední %s a%s budou ztraceny."
 
 # FIXME: doesn't work with Slavic languages
@@ -8059,19 +8096,21 @@ msgstr ""
 "Argument '%s' (#%d, typ %s) mimo rozsah (validace změnila '%s' na '%s')"
 
 #: ../app/pdb/image_cmds.c:1945
-msgid "Image resolution is out of bounds, using the default resolution instead."
-msgstr "Rozlišení obrázku je mimo rozsah, používám místo něj implicitní rozlišení."
+msgid ""
+"Image resolution is out of bounds, using the default resolution instead."
+msgstr ""
+"Rozlišení obrázku je mimo rozsah, používám místo něj implicitní rozlišení."
 
 #: ../app/pdb/selection_tools_cmds.c:154 ../app/tools/gimpfreeselecttool.c:96
 msgid "Free Select"
 msgstr "Volný výběr"
 
-#: ../app/plug-in/gimpenvirontable.c:249
+#: ../app/plug-in/gimpenvirontable.c:245
 #, c-format
 msgid "Empty variable name in environment file %s"
 msgstr "Prázdný název proměnné v souboru prostředí %s"
 
-#: ../app/plug-in/gimpenvirontable.c:267
+#: ../app/plug-in/gimpenvirontable.c:263
 #, c-format
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Neplatný název proměnné v souboru prostředí %s: %s"
@@ -8494,11 +8533,11 @@ msgstr "Vyplňování barvou nebo vzorkem"
 msgid "_Bucket Fill"
 msgstr "_Plechovka"
 
-#: ../app/tools/gimpbycolorselecttool.c:82
+#: ../app/tools/gimpbycolorselecttool.c:92
 msgid "Select regions by color"
 msgstr "Výběr oblastí podle barvy"
 
-#: ../app/tools/gimpbycolorselecttool.c:83
+#: ../app/tools/gimpbycolorselecttool.c:93
 msgid "_By Color Select"
 msgstr "_Podle barvy výběru"
 
@@ -9394,20 +9433,20 @@ msgstr "X"
 msgid "Y"
 msgstr "Y"
 
-#: ../app/tools/gimprectangletool.c:1337 ../app/tools/gimprectangletool.c:1347
-#: ../app/tools/gimprectangletool.c:1842
+#: ../app/tools/gimprectangletool.c:1336 ../app/tools/gimprectangletool.c:1346
+#: ../app/tools/gimprectangletool.c:1996
 msgid "Rectangle: "
 msgstr "Obdélník: "
 
-#: ../app/tools/gimprectangleselecttool.c:131
+#: ../app/tools/gimprectangleselecttool.c:138
 msgid "Rect Select"
 msgstr "Výběr obdélníku"
 
-#: ../app/tools/gimprectangleselecttool.c:132
+#: ../app/tools/gimprectangleselecttool.c:139
 msgid "Select a Rectangular part of an image"
 msgstr "Výběr obdélníkové oblasti obrázku"
 
-#: ../app/tools/gimprectangleselecttool.c:133
+#: ../app/tools/gimprectangleselecttool.c:140
 msgid "_Rect Select"
 msgstr "Výběr _obdélníku"
 
@@ -9532,8 +9571,10 @@ msgid "_Smudge"
 msgstr "_Šmouha"
 
 #: ../app/tools/gimptextoptions.c:116
-msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
-msgstr "Hinting mění obrys fontu pro vytvoření ostré bitmapy v malých velikostech"
+msgid ""
+"Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgstr ""
+"Hinting mění obrys fontu pro vytvoření ostré bitmapy v malých velikostech"
 
 #: ../app/tools/gimptextoptions.c:123
 msgid ""
@@ -9957,7 +9998,8 @@ msgstr "(Nic)"
 #: ../app/widgets/gimpcellrendereraccel.c:196
 #: ../app/widgets/gimpcellrendereraccel.c:421
 msgid "Type a new accelerator, or press Backspace to clear"
-msgstr "Stiskněte novou klávesovou zkratku nebo ji vymažte stisknutím Backspace"
+msgstr ""
+"Stiskněte novou klávesovou zkratku nebo ji vymažte stisknutím Backspace"
 
 #: ../app/widgets/gimpcellrendereraccel.c:424
 msgid "Type a new accelerator"
@@ -10577,8 +10619,10 @@ msgid "Could not find GIMP help browser."
 msgstr "Nemohu najít prohlížeč nápovědy GIMPu"
 
 #: ../app/widgets/gimphelp.c:192
-msgid "The GIMP help browser plug-in appears to be missing from your installation."
-msgstr "Zásuvný modul prohlížeče nápovědy GIMPu zřejmě ve vaší instalaci chybí."
+msgid ""
+"The GIMP help browser plug-in appears to be missing from your installation."
+msgstr ""
+"Zásuvný modul prohlížeče nápovědy GIMPu zřejmě ve vaší instalaci chybí."
 
 #: ../app/widgets/gimphelp.c:218
 msgid "Help browser doesn't start"
@@ -10707,8 +10751,10 @@ msgid "Auto"
 msgstr "Automaticky"
 
 #: ../app/widgets/gimpmenudock.c:171
-msgid "When enabled the dialog automatically follows the image you are working on."
-msgstr "Když je povoleno, dialog automaticky sleduje obrázek, na kterém pracujete."
+msgid ""
+"When enabled the dialog automatically follows the image you are working on."
+msgstr ""
+"Když je povoleno, dialog automaticky sleduje obrázek, na kterém pracujete."
 
 #: ../app/widgets/gimpmessagebox.c:437
 #, c-format
@@ -11139,4 +11185,3 @@ msgstr "Přesvědčte se, že nástroj jsou viditelné!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Nemohu spustit '%s': %s"
-
