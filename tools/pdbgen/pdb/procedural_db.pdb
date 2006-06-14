@@ -137,12 +137,12 @@ Queries the procedural database for information on the specified procedure.
 BLURB
 
     $help = <<'HELP';
-This procedure returns information on the specified procedure. A short blurb,
-detailed help, author(s), copyright information, procedure type, number of
-input, and number of return values are returned. For specific information on
-each input argument and return value, use the
-'gimp_procedural_db_proc_arg' and
-'gimp_procedural_db_proc_val' procedures.
+This procedure returns information on the specified procedure. A short
+blurb, detailed help, author(s), copyright information, procedure
+type, number of input, and number of return values are returned. For
+specific information on each input argument and return value, use the
+gimp_procedural_db_proc_arg() and gimp_procedural_db_proc_val()
+procedures.
 HELP
 
     &std_pdb_misc;
@@ -443,7 +443,8 @@ CODE
 
 
 @headers = qw("libgimpbase/gimpbase.h"
-              "core/gimp.h" "core/gimpparamspecs-desc.h"
+              "core/gimp.h"
+              "core/gimpparamspecs-desc.h"
               "gimppdb-query.h"
               "gimp-pdb-compat.h"
               "plug-in/gimppluginmanager-data.h");

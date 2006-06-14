@@ -365,7 +365,7 @@ gimp_invert (gint32 drawable_ID)
  * channel can be either an intensity component, or the value. The
  * 'control_pts' parameter is an array of integers which define a set
  * of control points which describe a Catmull Rom spline which yields
- * the final intensity curve. Use the 'gimp_curves_explicit' function
+ * the final intensity curve. Use the gimp_curves_explicit() function
  * to explicitly modify intensity levels.
  *
  * Returns: TRUE on success.
@@ -409,7 +409,7 @@ gimp_curves_spline (gint32                drawable_ID,
  * channel can be either an intensity component, or the value. The
  * 'curve' parameter is an array of bytes which explicitly defines how
  * each pixel value in the drawable will be modified. Use the
- * 'gimp_curves_spline' function to modify intensity levels with
+ * gimp_curves_spline() function to modify intensity levels with
  * Catmull Rom splines.
  *
  * Returns: TRUE on success.
@@ -554,7 +554,7 @@ gimp_colorize (gint32  drawable_ID,
  * specified. This can be either value, red, green, or blue, depending
  * on whether the drawable is of type color or grayscale. The drawable
  * may not be indexed. Second, a range of intensities are specified.
- * The gimp_histogram function returns statistics based on the pixels
+ * The gimp_histogram() function returns statistics based on the pixels
  * in the drawable that fall under this range of values. Mean, standard
  * deviation, median, number of pixels, and percentile are all
  * returned. Additionally, the total count of pixels in the image is

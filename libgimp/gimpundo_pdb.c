@@ -33,7 +33,7 @@
  *
  * This function is used to start a group undo--necessary for logically
  * combining two or more undo operations into a single operation. This
- * call must be used in conjunction with a 'gimp-image-undo-group-end'
+ * call must be used in conjunction with a gimp_image_undo_group_end()
  * call.
  *
  * Returns: TRUE on success.
@@ -64,7 +64,7 @@ gimp_image_undo_group_start (gint32 image_ID)
  * Finish a group undo.
  *
  * This function must be called once for each
- * 'gimp-image-undo-group-start' call that is made.
+ * gimp_image_undo_group_start() call that is made.
  *
  * Returns: TRUE on success.
  */
@@ -96,7 +96,7 @@ gimp_image_undo_group_end (gint32 image_ID)
  * This procedure checks if the image's undo stack is currently enabled
  * or disabled. This is useful when several plugins or scripts call
  * each other and want to check if their caller has already used
- * 'gimp_image_undo_disable' or 'gimp_image_undo_freeze'.
+ * gimp_image_undo_disable() or gimp_image_undo_freeze().
  *
  * Returns: TRUE if undo is enabled for this image.
  */
@@ -128,7 +128,7 @@ gimp_image_undo_is_enabled (gint32 image_ID)
  *
  * This procedure disables the image's undo stack, allowing subsequent
  * operations to ignore their undo steps. This is generally called in
- * conjunction with 'gimp_image_undo_enable' to temporarily disable an
+ * conjunction with gimp_image_undo_enable() to temporarily disable an
  * image undo stack. This is advantageous because saving undo steps can
  * be time and memory intensive.
  *
@@ -162,7 +162,7 @@ gimp_image_undo_disable (gint32 image_ID)
  *
  * This procedure enables the image's undo stack, allowing subsequent
  * operations to store their undo steps. This is generally called in
- * conjunction with 'gimp_image_undo_disable' to temporarily disable an
+ * conjunction with gimp_image_undo_disable() to temporarily disable an
  * image undo stack.
  *
  * Returns: TRUE if the image undo has been enabled.
@@ -195,14 +195,15 @@ gimp_image_undo_enable (gint32 image_ID)
  *
  * This procedure freezes the image's undo stack, allowing subsequent
  * operations to ignore their undo steps. This is generally called in
- * conjunction with 'gimp_image_undo_thaw' to temporarily disable an
+ * conjunction with gimp_image_undo_thaw() to temporarily disable an
  * image undo stack. This is advantageous because saving undo steps can
- * be time and memory intensive. 'gimp_image_undo_{freeze,thaw}' and
- * 'gimp_image_undo_{disable,enable}' differ in that the former does
- * not free up all undo steps when undo is thawed, so is more suited to
- * interactive in-situ previews. It is important in this case that the
- * image is back to the same state it was frozen in before thawing,
- * else 'undo' behaviour is undefined.
+ * be time and memory intensive. gimp_image_undo_freeze() /
+ * gimp_image_undo_thaw() and gimp_image_undo_disable() /
+ * gimp_image_undo_enable() differ in that the former does not free up
+ * all undo steps when undo is thawed, so is more suited to interactive
+ * in-situ previews. It is important in this case that the image is
+ * back to the same state it was frozen in before thawing, else 'undo'
+ * behaviour is undefined.
  *
  * Returns: TRUE if the image undo has been frozen.
  */
@@ -234,9 +235,9 @@ gimp_image_undo_freeze (gint32 image_ID)
  *
  * This procedure thaws the image's undo stack, allowing subsequent
  * operations to store their undo steps. This is generally called in
- * conjunction with 'gimp_image_undo_freeze' to temporarily freeze an
- * image undo stack. 'gimp_image_undo_thaw' does NOT free the undo
- * stack as 'gimp_image_undo_enable' does, so is suited for situations
+ * conjunction with gimp_image_undo_freeze() to temporarily freeze an
+ * image undo stack. gimp_image_undo_thaw() does NOT free the undo
+ * stack as gimp_image_undo_enable() does, so is suited for situations
  * where one wishes to leave the undo stack in the same state in which
  * one found it despite non-destructively playing with the image in the
  * meantime. An example would be in-situ plugin previews. Balancing

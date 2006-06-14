@@ -230,7 +230,7 @@ This procedure tries to load a thumbnail that belongs to the file with
 the given filename. This name is a full pathname. The returned data is 
 an array of colordepth 3 (RGB), regardless of the image type. Width and 
 height of the thumbnail are also returned. Don't use this function if 
-you need a thumbnail of an already opened image, use gimp_image_thumbnail 
+you need a thumbnail of an already opened image, use gimp_image_thumbnail()
 instead.
 HELP
 
@@ -513,9 +513,12 @@ CODE
 }
 
 
-@headers = qw("libgimpbase/gimpbase.h" "libgimpconfig/gimpconfig.h"
-              "core/gimp.h" "plug-in/gimppluginmanager.h"
-              "plug-in/gimppluginmanager-file.h" "file/file-utils.h");
+@headers = qw("libgimpbase/gimpbase.h"
+              "libgimpconfig/gimpconfig.h"
+              "core/gimp.h"
+              "plug-in/gimppluginmanager.h"
+              "plug-in/gimppluginmanager-file.h"
+              "file/file-utils.h");
 
 @procs = qw(file_load file_load_layer file_save
             file_load_thumbnail file_save_thumbnail

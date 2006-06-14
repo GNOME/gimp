@@ -96,7 +96,7 @@ _gimp_unit_get_number_of_built_in_units (void)
  *
  * This procedure creates a new unit and returns it's integer ID. Note
  * that the new unit will have it's deletion flag set to TRUE, so you
- * will have to set it to FALSE with gimp_unit_set_deletion_flag to
+ * will have to set it to FALSE with gimp_unit_set_deletion_flag() to
  * make it persistent.
  *
  * Returns: The new unit's ID.

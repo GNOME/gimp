@@ -840,7 +840,7 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-new",
                                      "Creates a new empty vectors object.",
-                                     "Creates a new empty vectors object. Needs to be added to an image using gimp_image_add_vectors.",
+                                     "Creates a new empty vectors object. Needs to be added to an image using 'gimp-image-add-vectors'.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",

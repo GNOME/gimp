@@ -402,7 +402,7 @@ Modifies the intensity mapping for one channel in the specified drawable. The
 drawable must be either grayscale or RGB, and the channel can be either an
 intensity component, or the value. The 'control_pts' parameter is an array of
 integers which define a set of control points which describe a Catmull Rom
-spline which yields the final intensity curve. Use the 'gimp_curves_explicit'
+spline which yields the final intensity curve. Use the gimp_curves_explicit()
 function to explicitly modify intensity levels.
 HELP
 
@@ -499,7 +499,7 @@ Modifies the intensity mapping for one channel in the specified drawable. The
 drawable must be either grayscale or RGB, and the channel can be either an
 intensity component, or the value. The 'curve' parameter is an array of bytes
 which explicitly defines how each pixel value in the drawable will be modified.
-Use the 'gimp_curves_spline' function to modify intensity levels with Catmull
+Use the gimp_curves_spline() function to modify intensity levels with Catmull
 Rom splines.
 HELP
 
@@ -729,7 +729,7 @@ This tool makes it possible to gather information about the intensity histogram
 of a drawable. A channel to examine is first specified. This can be either
 value, red, green, or blue, depending on whether the drawable is of type color
 or grayscale. The drawable may not be indexed. Second, a range of intensities
-are specified. The gimp_histogram function returns statistics based on the
+are specified. The gimp_histogram() function returns statistics based on the
 pixels in the drawable that fall under this range of values. Mean, standard
 deviation, median, number of pixels, and percentile are all returned.
 Additionally, the total count of pixels in the image is returned. Counts of
@@ -936,9 +936,12 @@ CODE
 
 
 @headers = qw("base/gimphistogram.h"
-              "base/gimplut.h" "base/lut-funcs.h"
-	      "base/pixel-region.h" "base/pixel-processor.h"
-              "core/gimpdrawable.h" "core/gimpimage.h"
+              "base/gimplut.h"
+              "base/lut-funcs.h"
+	      "base/pixel-region.h"
+              "base/pixel-processor.h"
+              "core/gimpdrawable.h"
+              "core/gimpimage.h"
               "gimp-intl.h");
 
 @procs = qw(brightness_contrast levels levels_auto levels_stretch posterize

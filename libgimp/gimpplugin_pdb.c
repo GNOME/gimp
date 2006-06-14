@@ -72,7 +72,7 @@ gimp_plugin_domain_register (const gchar *domain_name,
  * Register a help path for a plug-in.
  *
  * This procedure changes the help rootdir for the plug-in which calls
- * it. All subsequent calls of gimp_help from this plug-in will be
+ * it. All subsequent calls of gimp_help() from this plug-in will be
  * interpreted relative to this rootdir.
  *
  * Returns: TRUE on success.

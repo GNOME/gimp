@@ -20,7 +20,7 @@ sub vectors_new {
 
     $help = <<'HELP';
 Creates a new empty vectors object. Needs to be added to an image
-using gimp_image_add_vectors.
+using gimp_image_add_vectors().
 HELP
 
     &simon_pdb_misc('2005', '2.4');

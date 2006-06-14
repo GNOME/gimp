@@ -42,7 +42,7 @@ sub brushes_get_list {
     $help = <<'HELP';
 This procedure returns a complete listing of available GIMP
 brushes. Each name returned can be used as input to the
-'gimp-context-set-brush' procedure.
+gimp_context_set_brush() procedure.
 HELP
 
     &std_pdb_misc;
@@ -204,9 +204,13 @@ CODE
 }
 
 
-@headers = qw(<string.h> "base/temp-buf.h"
-              "core/gimp.h" "core/gimplist.h" "core/gimpbrush.h"
-              "core/gimpcontext.h" "core/gimpdatafactory.h");
+@headers = qw(<string.h>
+              "base/temp-buf.h"
+              "core/gimp.h"
+              "core/gimplist.h"
+              "core/gimpbrush.h"
+              "core/gimpcontext.h"
+              "core/gimpdatafactory.h");
 
 @procs = qw(brushes_refresh brushes_get_list
             brushes_get_brush

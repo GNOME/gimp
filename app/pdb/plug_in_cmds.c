@@ -389,7 +389,7 @@ register_plug_in_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-plugin-help-register",
                                      "Register a help path for a plug-in.",
-                                     "This procedure changes the help rootdir for the plug-in which calls it. All subsequent calls of gimp_help from this plug-in will be interpreted relative to this rootdir.",
+                                     "This procedure changes the help rootdir for the plug-in which calls it. All subsequent calls of 'gimp-help' from this plug-in will be interpreted relative to this rootdir.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2000",

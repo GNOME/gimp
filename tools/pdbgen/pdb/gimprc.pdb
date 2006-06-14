@@ -71,7 +71,7 @@ sub gimprc_set {
 This procedure is used to add or change additional information in the gimprc
 file that is considered extraneous to the operation of the GIMP. Plug-ins that
 need configuration information can use this function to store it, and
-gimp_gimprc_query to retrieve it.  This will accept _only_ string values in
+gimp_gimprc_query() to retrieve it.  This will accept _only_ string values in
 UTF-8 encoding.
 HELP
 
@@ -212,7 +212,9 @@ CODE
 }
 
 
-@headers = qw(<string.h> "core/gimp.h" "config/gimprc.h");
+@headers = qw(<string.h>
+              "config/gimprc.h"
+              "core/gimp.h");
 
 @procs = qw(gimprc_query gimprc_set 
 	    get_default_comment get_monitor_resolution get_theme_dir

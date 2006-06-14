@@ -41,7 +41,7 @@ sub gradients_get_list {
 
     $help = <<'HELP';
 This procedure returns a list of the gradients that are currently loaded.
-You can later use the 'gimp-context-set-gradient' function to
+You can later use the gimp_context_set_gradient() function to
 set the active gradient.
 HELP
 
@@ -251,8 +251,12 @@ CODE
 }
 
 
-@headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h" "core/gimplist.h"
-              "core/gimpdatafactory.h" "core/gimpgradient.h");
+@headers = qw(<string.h>
+              "core/gimp.h"
+              "core/gimpcontext.h"
+              "core/gimpdatafactory.h"
+              "core/gimpgradient.h"
+              "core/gimplist.h");
 
 @procs = qw(gradients_refresh gradients_get_list
 	    gradients_sample_uniform gradients_sample_custom

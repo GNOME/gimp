@@ -64,7 +64,7 @@ gimp_patterns_refresh (void)
  *
  * This procedure returns a complete listing of available GIMP
  * patterns. Each name returned can be used as input to the
- * 'gimp-context-set-pattern'.
+ * gimp_context_set_pattern().
  *
  * Returns: The list of pattern names.
  */

@@ -24,7 +24,7 @@ sub edit_cut {
 If there is a selection in the image, then the area specified by the
 selection is cut from the specified drawable and placed in an internal
 GIMP edit buffer.  It can subsequently be retrieved using the
-'gimp-edit-paste' command. If there is no selection, then the
+gimp_edit_paste() command. If there is no selection, then the
 specified drawable will be removed and its contents stored in the
 internal GIMP edit buffer.
 HELP
@@ -65,7 +65,7 @@ sub edit_copy {
 If there is a selection in the image, then the area specified by the
 selection is copied from the specified drawable and placed in an
 internal GIMP edit buffer. It can subsequently be retrieved using the
-'gimp-edit-paste' command.  If there is no selection, then the
+gimp_edit_paste() command.  If there is no selection, then the
 specified drawable's contents will be stored in the internal GIMP edit
 buffer.
 HELP
@@ -106,7 +106,7 @@ sub edit_copy_visible {
 If there is a selection in the image, then the area specified by the
 selection is copied from the projection and placed in an internal GIMP
 edit buffer. It can subsequently be retrieved using the
-'gimp-edit-paste' command.  If there is no selection, then the
+gimp_edit_paste() command. If there is no selection, then the
 projection's contents will be stored in the internal GIMP edit buffer.
 HELP
 
@@ -138,7 +138,7 @@ sub edit_paste {
     $help = <<'HELP';
 This procedure pastes a copy of the internal GIMP edit buffer to the
 specified drawable. The GIMP edit buffer will be empty unless a call
-was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. The
+was previously made to either gimp_edit_cut() or gimp_edit_copy(). The
 "paste_into" option specifies whether to clear the current image
 selection, or to paste the buffer "behind" the selection. This allows
 the selection to act as a mask for the pasted buffer. Anywhere that
@@ -191,7 +191,7 @@ sub edit_paste_as_new {
     $help = <<'HELP';
 This procedure pastes a copy of the internal GIMP edit buffer to a new
 image.  The GIMP edit buffer will be empty unless a call was
-previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. This
+previously made to either gimp_edit_cut() or gimp_edit_copy(). This
 procedure returns the new image.
 HELP
 
@@ -222,7 +222,7 @@ sub edit_named_cut {
     $blurb = 'Cut into a named buffer.';
 
     $help = <<'HELP';
-This procedure works like gimp-edit-cut, but additionally stores the
+This procedure works like gimp_edit_cut(), but additionally stores the
 cut buffer into a named buffer that will stay available for later
 pasting, regardless of any intermediate copy or cut operations.
 HELP
@@ -267,7 +267,7 @@ sub edit_named_copy {
     $blurb = 'Copy into a named buffer.';
 
     $help = <<'HELP';
-This procedure works like gimp-edit-copy, but additionally stores the
+This procedure works like gimp_edit_copy(), but additionally stores the
 copied buffer into a named buffer that will stay available for later
 pasting, regardless of any intermediate copy or cut operations.
 HELP
@@ -312,7 +312,7 @@ sub edit_named_copy_visible {
     $blurb = 'Copy from the projection into a named buffer.';
 
     $help = <<'HELP';
-This procedure works like gimp-edit-copy-visible, but additionally
+This procedure works like gimp_edit_copy_visible(), but additionally
 stores the copied buffer into a named buffer that will stay available
 for later pasting, regardless of any intermediate copy or cut
 operations.
@@ -356,7 +356,7 @@ sub edit_named_paste {
     $blurb = 'Paste named buffer to the specified drawable.';
 
     $help = <<'HELP';
-This procedure works like gimp-edit-paste but pastes a named buffer
+This procedure works like gimp_edit_paste() but pastes a named buffer
 instead of the global buffer.
 HELP
 
@@ -401,7 +401,7 @@ sub edit_named_paste_as_new {
     $blurb = 'Paste named buffer to a new image.';
 
     $help = <<'HELP';
-This procedure works like gimp-edit-paste-as-new but pastes a named buffer
+This procedure works like gimp_edit_paste_as_new() but pastes a named buffer
 instead of the global buffer.
 HELP
 
@@ -717,8 +717,12 @@ CODE
 }
 
 
-@headers = qw(<string.h> "core/gimp.h" "core/gimp-edit.h"
-              "core/gimpcontainer.h" "core/gimpimage.h" "core/gimpprogress.h"
+@headers = qw(<string.h>
+              "core/gimp.h"
+              "core/gimp-edit.h"
+              "core/gimpcontainer.h"
+              "core/gimpimage.h"
+              "core/gimpprogress.h"
               "gimp-intl.h");
 
 @procs = qw(edit_cut edit_copy edit_copy_visible

@@ -24,7 +24,7 @@ sub layer_new {
 This procedure creates a new layer with the specified width, height, and type.
 Name, opacity, and mode are also supplied parameters. The new layer still needs
 to be added to the image, as this is not automatic. Add the new layer with the
-'gimp_image_add_layer' command. Other attributes such as layer mask modes, and
+gimp_image_add_layer() command. Other attributes such as layer mask modes, and
 offsets should be set with explicit procedure calls.
 HELP
 
@@ -115,7 +115,7 @@ layer complete transparency, the layer's already existing alpha channel
 (which will leave the layer fully visible, but which may be more useful than
 a white mask), the current selection or a grayscale copy of the layer. The
 layer mask still needs to be added to the layer. This can be done with a call
-to 'gimp_layer_add_mask'.
+to gimp_layer_add_mask().
 HELP
 
     &std_pdb_misc;
@@ -531,7 +531,7 @@ sub layer_new_from_drawable {
     $help = <<'HELP';
 This procedure creates a new layer as a copy of the specified drawable.  The
 new layer still needs to be added to the image, as this is not automatic.  Add
-the new layer with the 'gimp_image_add_layer' command. Other attributes such
+the new layer with the gimp_image_add_layer() command. Other attributes such
 as layer mask modes, and offsets should be set with explicit procedure calls.
 HELP
 
@@ -915,8 +915,11 @@ CODE
 }
 
 
-@headers = qw("config/gimpcoreconfig.h" "core/gimp.h" "core/gimpimage-undo.h"
-              "core/gimpitem-linked.h" "gimp-intl.h");
+@headers = qw("config/gimpcoreconfig.h"
+              "core/gimp.h"
+              "core/gimpimage-undo.h"
+              "core/gimpitem-linked.h"
+              "gimp-intl.h");
 
 @procs = qw(layer_new layer_new_from_drawable layer_copy
             layer_add_alpha

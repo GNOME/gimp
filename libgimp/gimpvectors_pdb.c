@@ -35,7 +35,7 @@
  * Creates a new empty vectors object.
  *
  * Creates a new empty vectors object. Needs to be added to an image
- * using gimp_image_add_vectors.
+ * using gimp_image_add_vectors().
  *
  * Returns: the current vector object, 0 if no vector exists in the image.
  *

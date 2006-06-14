@@ -77,9 +77,9 @@ gimp_airbrush (gint32         drawable_ID,
  * is time-dependent.
  *
  * This tool simulates the use of an airbrush. It is similar to
- * gimp_airbrush except that the pressure is derived from the airbrush
- * tools options box. It the option has not been set the default for
- * the option will be used.
+ * gimp_airbrush() except that the pressure is derived from the
+ * airbrush tools options box. It the option has not been set the
+ * default for the option will be used.
  *
  * Returns: TRUE on success.
  */
@@ -174,10 +174,10 @@ gimp_clone (gint32         drawable_ID,
  *
  * This tool clones (copies) from the source drawable starting at the
  * specified source coordinates to the dest drawable. This function
- * performs exactly the same as the gimp_clone function except that the
- * tools arguments are obtained from the clones option dialog. It this
- * dialog has not been activated then the dialogs default values will
- * be used.
+ * performs exactly the same as the gimp_clone() function except that
+ * the tools arguments are obtained from the clones option dialog. It
+ * this dialog has not been activated then the dialogs default values
+ * will be used.
  *
  * Returns: TRUE on success.
  */
@@ -258,9 +258,9 @@ gimp_convolve (gint32            drawable_ID,
  *
  * This tool convolves the specified drawable with either a sharpening
  * or blurring kernel. This function performs exactly the same as the
- * gimp_convolve function except that the tools arguments are obtained
- * from the convolve option dialog. It this dialog has not been
- * activated then the dialogs default values will be used.
+ * gimp_convolve() function except that the tools arguments are
+ * obtained from the convolve option dialog. It this dialog has not
+ * been activated then the dialogs default values will be used.
  *
  * Returns: TRUE on success.
  */
@@ -338,8 +338,8 @@ gimp_dodgeburn (gint32             drawable_ID,
  * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Dodgeburn image with varying exposure. This is the same as the
- * gimp_dodgeburn function except that the exposure, type and mode are
- * taken from the tools option dialog. If the dialog has not been
+ * gimp_dodgeburn() function except that the exposure, type and mode
+ * are taken from the tools option dialog. If the dialog has not been
  * activated then the defaults as used by the dialog will be used.
  *
  * Dodgeburn. More details here later.
@@ -423,7 +423,7 @@ gimp_eraser (gint32                    drawable_ID,
  * Erase using the current brush.
  *
  * This tool erases using the current brush mask. This function
- * performs exactly the same as the gimp_eraser function except that
+ * performs exactly the same as the gimp_eraser() function except that
  * the tools arguments are obtained from the eraser option dialog. It
  * this dialog has not been activated then the dialogs default values
  * will be used.
@@ -644,7 +644,7 @@ gimp_smudge (gint32         drawable_ID,
  * Smudge image with varying pressure.
  *
  * This tool simulates a smudge using the current brush. It behaves
- * exactly the same as gimp_smudge except that the pressure value is
+ * exactly the same as gimp_smudge() except that the pressure value is
  * taken from the smudge tool options or the options default if the
  * tools option dialog has not been activated.
  *

@@ -60,9 +60,9 @@ sub image_new {
     $help = <<'HELP';
 Creates a new image, undisplayed with the specified extents and type. A layer
 should be created and added before this image is displayed, or subsequent calls
-to 'gimp_display_new' with this image as an argument will fail. Layers can be
-created using the 'gimp_layer_new' commands. They can be added to an image
-using the 'gimp_image_add_layer' command.
+to gimp_display_new() with this image as an argument will fail. Layers can be
+created using the gimp_layer_new() commands. They can be added to an image
+using the gimp_image_add_layer() command.
 HELP
 
     &std_pdb_misc;
@@ -361,7 +361,7 @@ sub image_free_shadow {
     $help = <<'HELP';
 This procedure is intended as a memory saving device. If any shadow memory has
 been allocated, it will be freed automatically on a call to
-'gimp_image_delete'.
+gimp_image_delete().
 HELP
 
     &std_pdb_misc;
@@ -1426,7 +1426,7 @@ sub image_is_dirty {
     $help = <<'HELP';
 This procedure checks the specified image's dirty count to see if it
 needs to be saved. Note that saving the image does not automatically
-set the dirty count to 0, you need to call gimp-image-clean-all after
+set the dirty count to 0, you need to call gimp_image_clean_all() after
 calling a save procedure to make the image clean.
 HELP
 
@@ -2113,7 +2113,7 @@ sub image_get_unit {
 
     $help = <<'HELP';
 This procedure returns the specified image's unit. This value is
-independent of any of the layers in this image. See the gimp_unit_*
+independent of any of the layers in this image. See the gimp_unit_*()
 procedure definitions for the valid range of unit IDs and a
 description of the unit system.
 HELP
@@ -2145,7 +2145,7 @@ sub image_set_unit {
     $help = <<'HELP';
 This procedure sets the specified image's unit. No scaling or resizing
 is performed. This value is independent of any of the layers in this
-image. See the gimp_unit_* procedure definitions for the valid range
+image. See the gimp_unit_*() procedure definitions for the valid range
 of unit IDs and a description of the unit system.
 HELP
 
@@ -2413,9 +2413,13 @@ $extra{app}->{code} = <<'CODE';
 #endif
 CODE
 
-@headers = qw("core/gimp.h" "core/gimplist.h" "core/gimpunit.h"
-              "base/temp-buf.h" "libgimpmath/gimpmath.h"
-              "libgimpbase/gimpbase.h" "gimp-intl.h");
+@headers = qw("libgimpmath/gimpmath.h"
+              "libgimpbase/gimpbase.h"
+              "base/temp-buf.h"
+              "core/gimp.h"
+              "core/gimplist.h"
+              "core/gimpunit.h"
+              "gimp-intl.h");
 
 @procs = qw(image_list image_new image_duplicate image_delete
             image_base_type

@@ -40,7 +40,7 @@
  * This procedure creates a new layer with the specified width, height,
  * and type. Name, opacity, and mode are also supplied parameters. The
  * new layer still needs to be added to the image, as this is not
- * automatic. Add the new layer with the 'gimp_image_add_layer'
+ * automatic. Add the new layer with the gimp_image_add_layer()
  * command. Other attributes such as layer mask modes, and offsets
  * should be set with explicit procedure calls.
  *
@@ -88,7 +88,7 @@ _gimp_layer_new (gint32                image_ID,
  * This procedure creates a new layer as a copy of the specified
  * drawable. The new layer still needs to be added to the image, as
  * this is not automatic. Add the new layer with the
- * 'gimp_image_add_layer' command. Other attributes such as layer mask
+ * gimp_image_add_layer() command. Other attributes such as layer mask
  * modes, and offsets should be set with explicit procedure calls.
  *
  * Returns: The newly copied layer.
@@ -396,7 +396,7 @@ gimp_layer_set_offsets (gint32 layer_ID,
  * fully visible, but which may be more useful than a white mask), the
  * current selection or a grayscale copy of the layer. The layer mask
  * still needs to be added to the layer. This can be done with a call
- * to 'gimp_layer_add_mask'.
+ * to gimp_layer_add_mask().
  *
  * Returns: The newly created mask.
  */

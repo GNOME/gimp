@@ -30,7 +30,7 @@ sub context_push {
     $help = <<'HELP';
 This procedure creates a new context by copying the current context. This
 copy becomes the new current context for the calling plug-in until it is
-popped again using gimp-context-pop.
+popped again using gimp_context_pop().
 HELP
 
     &pdb_misc;
@@ -53,9 +53,9 @@ sub context_pop {
     $blurb = 'Pops the topmost context from the plug-in\'s context stack.';
 
     $help = <<'HELP';
-This procedure removes the topmost context from the plug-in's context stack.
-The context that was active before the corresponding call to gimp-context-push
-becomes the new current context of the plug-in.
+This procedure removes the topmost context from the plug-in's context
+stack.  The context that was active before the corresponding call to
+gimp_context_push() becomes the new current context of the plug-in.
 HELP
 
     &pdb_misc;

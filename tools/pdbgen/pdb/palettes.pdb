@@ -41,7 +41,7 @@ sub palettes_get_list {
 
     $help = <<'HELP';
 This procedure returns a complete listing of available palettes. Each name
-returned can be used as input to the command 'gimp-context-set-palette'.
+returned can be used as input to the command gimp_context_set_palette().
 HELP
 
     &rock_pdb_misc('2001');
@@ -152,8 +152,12 @@ CODE
 }
 
 
-@headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h" "core/gimplist.h"
-              "core/gimpdatafactory.h" "core/gimppalette.h");
+@headers = qw(<string.h>
+              "core/gimp.h"
+              "core/gimpcontext.h"
+              "core/gimpdatafactory.h"
+              "core/gimplist.h"
+              "core/gimppalette.h");
 
 @procs = qw(palettes_refresh  palettes_get_list
             palettes_get_palette palettes_get_palette_entry);

@@ -32,7 +32,7 @@
  *
  * This procedure creates a new context by copying the current context.
  * This copy becomes the new current context for the calling plug-in
- * until it is popped again using gimp-context-pop.
+ * until it is popped again using gimp_context_pop().
  *
  * Returns: TRUE on success.
  *
@@ -63,7 +63,7 @@ gimp_context_push (void)
  *
  * This procedure removes the topmost context from the plug-in's
  * context stack. The context that was active before the corresponding
- * call to gimp-context-push becomes the new current context of the
+ * call to gimp_context_push() becomes the new current context of the
  * plug-in.
  *
  * Returns: TRUE on success.

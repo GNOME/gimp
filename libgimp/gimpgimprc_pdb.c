@@ -73,7 +73,7 @@ gimp_gimprc_query (const gchar *token)
  * This procedure is used to add or change additional information in
  * the gimprc file that is considered extraneous to the operation of
  * the GIMP. Plug-ins that need configuration information can use this
- * function to store it, and gimp_gimprc_query to retrieve it. This
+ * function to store it, and gimp_gimprc_query() to retrieve it. This
  * will accept _only_ string values in UTF-8 encoding.
  *
  * Returns: TRUE on success.

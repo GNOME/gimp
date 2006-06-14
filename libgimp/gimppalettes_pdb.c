@@ -62,7 +62,7 @@ gimp_palettes_refresh (void)
  *
  * This procedure returns a complete listing of available palettes.
  * Each name returned can be used as input to the command
- * 'gimp-context-set-palette'.
+ * gimp_context_set_palette().
  *
  * Returns: The list of palette names.
  */

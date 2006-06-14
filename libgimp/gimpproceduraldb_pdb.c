@@ -184,8 +184,8 @@ gimp_procedural_db_query (const gchar   *name,
  * short blurb, detailed help, author(s), copyright information,
  * procedure type, number of input, and number of return values are
  * returned. For specific information on each input argument and return
- * value, use the 'gimp_procedural_db_proc_arg' and
- * 'gimp_procedural_db_proc_val' procedures.
+ * value, use the gimp_procedural_db_proc_arg() and
+ * gimp_procedural_db_proc_val() procedures.
  *
  * Returns: TRUE on success.
  */

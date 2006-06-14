@@ -64,7 +64,7 @@ gimp_brushes_refresh (void)
  *
  * This procedure returns a complete listing of available GIMP brushes.
  * Each name returned can be used as input to the
- * 'gimp-context-set-brush' procedure.
+ * gimp_context_set_brush() procedure.
  *
  * Returns: The list of brush names.
  */

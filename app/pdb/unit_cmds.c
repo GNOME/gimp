@@ -404,7 +404,7 @@ register_unit_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-new",
                                      "Creates a new unit and returns it's integer ID.",
-                                     "This procedure creates a new unit and returns it's integer ID. Note that the new unit will have it's deletion flag set to TRUE, so you will have to set it to FALSE with gimp_unit_set_deletion_flag to make it persistent.",
+                                     "This procedure creates a new unit and returns it's integer ID. Note that the new unit will have it's deletion flag set to TRUE, so you will have to set it to FALSE with 'gimp-unit-set-deletion-flag' to make it persistent.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "1999",

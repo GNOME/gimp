@@ -1,3 +1,13 @@
+2006-06-14  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/[many].pdb: in help texts, refer to other
+	procedures using_c_syntax(). This way gtk-doc can cross-reference
+	them correctly in libgimp, and app.pl will transform them
+	'to-canonical-names' for PDB registering.
+
+	* app/pdb/[many]_cmds.c
+	* libgimp/[many]_pdb.c: regenerated.
+
 2006-06-13  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpbycolorselect.[ch]: allow modifying threshold

@@ -77,7 +77,7 @@ register_help_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-help",
                                      "Load a help page.",
-                                     "This procedure loads the specified help page into the helpbrowser or what ever is configured as help viewer. The help page is identified by its domain and ID: if help_domain is NULL, we use the help_domain which was registered using the gimp-plugin-help-register procedure. If help_domain is NULL and no help domain was registered, the help domain of the main GIMP installation is used.",
+                                     "This procedure loads the specified help page into the helpbrowser or what ever is configured as help viewer. The help page is identified by its domain and ID: if help_domain is NULL, we use the help_domain which was registered using the 'gimp-plugin-help-register' procedure. If help_domain is NULL and no help domain was registered, the help domain of the main GIMP installation is used.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2000",
