@@ -138,6 +138,8 @@ gimp_by_color_select_tool_constructor (GType                  type,
 
   tool = GIMP_TOOL (object);
 
+  tool->display = NULL;
+
   options = G_OBJECT (tool->tool_info->tool_options);
   g_signal_connect_object (options, "notify::threshold",
                            G_CALLBACK (gimp_by_color_select_tool_threshold_notify),
@@ -153,6 +155,8 @@ gimp_by_color_select_tool_dispose (GObject *object)
   GObject           *options;
 
   options = G_OBJECT (tool->tool_info->tool_options);
+
+  tool->display = NULL;
 
   g_signal_handlers_disconnect_by_func
     (options,
@@ -285,10 +289,11 @@ gimp_by_color_select_tool_threshold_notify (GimpSelectionOptions  *options,
   GimpUndo    *undo     = by_color_sel->undo;
 
   display = tool->display;
-  image = display->image;
 
   if (!display)
     return;
+
+  image = display->image;
 
   /* don't do anything unless we have already done something */
   if (!undo)

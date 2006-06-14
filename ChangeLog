@@ -1,3 +1,8 @@
+2006-06-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpbycolorselect.c: fix crash when changing
+	threshold with no display active.
+	
 2006-06-14  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/image-actions.c: use radio items for the Image mode
