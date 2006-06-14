@@ -1,5 +1,10 @@
 2006-06-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimprectangleselecttool.c: Fix sporadic crash
+	resulting from previous change.
+	
+2006-06-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimprectangleselecttool.c: As suggested by Joao,
 	halt tool on changes to selection or image size.
 	

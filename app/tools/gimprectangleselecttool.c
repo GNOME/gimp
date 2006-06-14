@@ -180,7 +180,6 @@ gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
   GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (rect_select);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_RECT_SELECT);
-/*   gimp_tool_control_set_preserve    (tool->control, FALSE); */
   gimp_tool_control_set_dirty_mask  (tool->control,
                                      GIMP_DIRTY_IMAGE_SIZE |
                                      GIMP_DIRTY_SELECTION);
@@ -592,8 +591,15 @@ gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
         }
       else
         {
+          GimpTool *tool = GIMP_TOOL (rectangle);
+
+          /* prevent this change from halting the tool */
+          gimp_tool_control_set_preserve (tool->control, TRUE);
+
           /* otherwise clear the selection */
           gimp_channel_clear (selection, NULL, TRUE);
+
+          gimp_tool_control_set_preserve (tool->control, FALSE);
         }
     }
 
@@ -619,8 +625,13 @@ gimp_rect_select_tool_cancel (GimpRectangleTool *rectangle)
 
       if (undo && rect_select->undo == undo)
         {
+          /* prevent this change from halting the tool */
+          gimp_tool_control_set_preserve (tool->control, TRUE);
+
           gimp_image_undo (image);
           gimp_image_flush (image);
+
+          gimp_tool_control_set_preserve (tool->control, FALSE);
         }
     }
 
