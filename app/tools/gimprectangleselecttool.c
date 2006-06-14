@@ -180,6 +180,11 @@ gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
   GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (rect_select);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_RECT_SELECT);
+/*   gimp_tool_control_set_preserve    (tool->control, FALSE); */
+  gimp_tool_control_set_dirty_mask  (tool->control,
+                                     GIMP_DIRTY_IMAGE_SIZE |
+                                     GIMP_DIRTY_SELECTION);
+
   gimp_rectangle_tool_set_constrain (rect_tool, TRUE);
 
   rect_select->undo = NULL;
@@ -310,7 +315,12 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
 
       if (undo && rect_select->undo == undo)
         {
+          /* prevent this change from halting the tool */
+          gimp_tool_control_set_preserve (tool->control, TRUE);
+
           gimp_image_undo (image);
+
+          gimp_tool_control_set_preserve (tool->control, FALSE);
 
           /* we will need to redo if the user cancels or executes */
           rect_select->redo = gimp_undo_stack_peek (image->redo_stack);
@@ -349,8 +359,13 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
 
       if (redo && rect_select->redo == redo)
         {
+          /* prevent this from halting the tool */
+          gimp_tool_control_set_preserve (tool->control, TRUE);
+
           gimp_image_redo (image);
           rect_select->redo = NULL;
+
+          gimp_tool_control_set_preserve (tool->control, FALSE);
         }
     }
 
@@ -367,7 +382,12 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
     {
       if (rect_select->redo)
         {
+          /* prevent this from halting the tool */
+          gimp_tool_control_set_preserve (tool->control, TRUE);
+
           gimp_image_redo (tool->display->image);
+
+          gimp_tool_control_set_preserve (tool->control, FALSE);
         }
 
       rect_select->use_saved_op = TRUE;  /* is this correct? */
@@ -613,6 +633,9 @@ gimp_rect_select_tool_rectangle_changed (GimpRectangleTool  *rectangle)
 {
   GimpTool *tool = GIMP_TOOL (rectangle);
 
+  /* prevent change in selection from halting the tool */
+  gimp_tool_control_set_preserve (tool->control, TRUE);
+
   if (tool->display)
     {
       GimpRectSelectTool   *rect_select = GIMP_RECT_SELECT_TOOL (tool);
@@ -658,6 +681,8 @@ gimp_rect_select_tool_rectangle_changed (GimpRectangleTool  *rectangle)
 
       gimp_image_flush (image);
     }
+
+  gimp_tool_control_set_preserve (tool->control, FALSE);
 
   return TRUE;
 }
