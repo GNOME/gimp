@@ -1,3 +1,11 @@
+2006-06-14  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/image-actions.c: use radio items for the Image mode
+	as suggested in bug #344871.
+
+	* app/actions/image-commands.[ch] (image_convert_cmd_callback):
+	changed accordingly.
+
 2006-06-14  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/[many].pdb: in help texts, refer to other

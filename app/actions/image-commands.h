@@ -26,7 +26,7 @@ void   image_new_from_image_cmd_callback   (GtkAction *action,
                                             gpointer   data);
 
 void   image_convert_cmd_callback          (GtkAction *action,
-                                            gint       value,
+                                            GtkAction *current,
                                             gpointer   data);
 
 void   image_resize_cmd_callback           (GtkAction *action,

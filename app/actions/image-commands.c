@@ -148,22 +148,27 @@ image_new_from_image_cmd_callback (GtkAction *action,
 
 void
 image_convert_cmd_callback (GtkAction *action,
-                            gint       value,
+                            GtkAction *current,
                             gpointer   data)
 {
-  GimpImage   *image;
-  GtkWidget   *widget;
-  GimpDisplay *display;
+  GimpImage         *image;
+  GtkWidget         *widget;
+  GimpDisplay       *display;
+  GimpImageBaseType  value;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
   return_if_no_display (display, data);
 
-  switch ((GimpImageBaseType) value)
+  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+
+  if (value == gimp_image_base_type (image))
+    return;
+
+  switch (value)
     {
     case GIMP_RGB:
     case GIMP_GRAY:
-      gimp_image_convert (image, (GimpImageBaseType) value,
-                          0, 0, FALSE, FALSE, 0, NULL, NULL);
+      gimp_image_convert (image, value, 0, 0, FALSE, FALSE, 0, NULL, NULL);
       gimp_image_flush (image);
       break;
 
