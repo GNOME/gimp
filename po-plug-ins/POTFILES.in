@@ -35,6 +35,7 @@ plug-ins/common/channel_mixer.c
 plug-ins/common/checkerboard.c
 plug-ins/common/color_enhance.c
 plug-ins/common/colorify.c
+plug-ins/common/colormap-remap.c
 plug-ins/common/colortoalpha.c
 plug-ins/common/compose.c
 plug-ins/common/compressor.c
@@ -237,10 +238,10 @@ plug-ins/imagemap/imap_selection.c
 plug-ins/imagemap/imap_settings.c
 plug-ins/imagemap/imap_source.c
 plug-ins/imagemap/imap_stock.c
-plug-ins/jpeg/jpeg.c
 plug-ins/jpeg/jpeg-exif.c
 plug-ins/jpeg/jpeg-load.c
 plug-ins/jpeg/jpeg-save.c
+plug-ins/jpeg/jpeg.c
 plug-ins/maze/algorithms.c
 plug-ins/maze/maze.c
 plug-ins/maze/maze.h
@@ -260,9 +261,9 @@ plug-ins/sel2path/pxl-outline.c
 plug-ins/sel2path/sel2path.c
 plug-ins/sgi/sgi.c
 plug-ins/twain/twain.c
-plug-ins/uri/uri.c
 plug-ins/uri/uri-backend-gnomevfs.c
 plug-ins/uri/uri-backend-wget.c
+plug-ins/uri/uri.c
 plug-ins/winicon/icodialog.c
 plug-ins/winicon/icoload.c
 plug-ins/winicon/icosave.c

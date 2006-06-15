@@ -23,6 +23,7 @@ channel_mixer
 checkerboard
 color_enhance
 colorify
+colormap-remap
 colortoalpha
 compose
 compressor

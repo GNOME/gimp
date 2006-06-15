@@ -55,6 +55,7 @@ libexec_PROGRAMS = \
 	checkerboard \
 	color_enhance \
 	colorify \
+	colormap-remap \
 	colortoalpha \
 	compose \
 	compressor \
@@ -494,6 +495,21 @@ colorify_SOURCES = \
 	colorify.c
 
 colorify_LDADD = \
+	$(libgimpui)		\
+	$(libgimpconfig)	\
+	$(libgimpwidgets)	\
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpmath)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+colormap_remap_SOURCES = \
+	colormap-remap.c
+
+colormap_remap_LDADD = \
 	$(libgimpui)		\
 	$(libgimpconfig)	\
 	$(libgimpwidgets)	\
