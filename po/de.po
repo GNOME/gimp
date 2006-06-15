@@ -8,7 +8,7 @@
 # Hendrik Brandt <heb@gnome-de.org>, 2004-2005.
 # Sven Neumann <sven@gimp.org>, 2004.
 # Roman Joost <romanofski@gimp.org>, 2005.
-# Hendrik Richter <hendi@gnome-de.org>, 2005.
+# Hendrik Richter <hendrikr@gnome.org>, 2005.
 # Jens Seidel <jseidel@cvs.gnome.org>, 2005.
 # 
 msgid ""
@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-12 16:55+0100\n"
-"PO-Revision-Date: 2006-03-12 17:29+0100\n"
-"Last-Translator: Róman Joost <romanofski@gimp.org>\n"
+"PO-Revision-Date: 2006-06-15 16:27+0200\n"
+"Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -477,11 +477,11 @@ msgstr "Pinsel neu laden"
 
 #: ../app/actions/brushes-actions.c:86
 msgid "_Edit Brush..."
-msgstr "Pinsel _bearbeiten..."
+msgstr "Pinsel _bearbeiten …"
 
 #: ../app/actions/brushes-actions.c:87
 msgid "Edit brush"
-msgstr "Pinsel bearbeiten..."
+msgstr "Pinsel bearbeiten …"
 
 #: ../app/actions/buffers-actions.c:42
 msgid "Buffers Menu"
@@ -525,7 +525,7 @@ msgstr "Kanalmenü"
 
 #: ../app/actions/channels-actions.c:48
 msgid "_Edit Channel Attributes..."
-msgstr "Kanalei_genschaften..."
+msgstr "Kanalei_genschaften …"
 
 #: ../app/actions/channels-actions.c:49
 msgid "Edit channel attributes"
@@ -533,11 +533,11 @@ msgstr "Kanaleigenschaften bearbeiten"
 
 #: ../app/actions/channels-actions.c:54
 msgid "_New Channel..."
-msgstr "_Neuer Kanal..."
+msgstr "_Neuer Kanal …"
 
 #: ../app/actions/channels-actions.c:55
 msgid "New channel..."
-msgstr "Neuer Kanal..."
+msgstr "Neuer Kanal …"
 
 #: ../app/actions/channels-actions.c:60
 msgid "_New Channel"
@@ -685,7 +685,7 @@ msgstr "Farbtabellenmenü"
 #: ../app/actions/colormap-editor-actions.c:47
 #: ../app/actions/palette-editor-actions.c:48
 msgid "_Edit Color..."
-msgstr "Farbe _bearbeiten..."
+msgstr "Farbe _bearbeiten …"
 
 #: ../app/actions/colormap-editor-actions.c:48
 #: ../app/actions/palette-editor-actions.c:49
@@ -1024,7 +1024,7 @@ msgstr "Dock schließen"
 
 #: ../app/actions/dock-actions.c:52 ../app/actions/view-actions.c:111
 msgid "_Open Display..."
-msgstr "_Display öffnen..."
+msgstr "_Display öffnen …"
 
 #: ../app/actions/dock-actions.c:60
 msgid "_Show Image Selection"
@@ -1220,7 +1220,7 @@ msgstr ""
 
 #: ../app/actions/drawable-actions.c:45
 msgid "_Desaturate..."
-msgstr "_Farbe entfernen..."
+msgstr "_Farbe entfernen …"
 
 #: ../app/actions/drawable-actions.c:46
 msgid "Turn colors into shades of gray"
@@ -1410,11 +1410,11 @@ msgstr "In Ablage _kopieren"
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:133
 msgid "Copy _Visible Named..."
-msgstr "_Sichtbares in Ablage kopieren..."
+msgstr "_Sichtbares in Ablage kopieren …"
 
 #: ../app/actions/edit-actions.c:138
 msgid "_Paste Named..."
-msgstr "Aus Ablage e_infügen..."
+msgstr "Aus Ablage e_infügen …"
 
 #: ../app/actions/edit-actions.c:143
 msgid "Cl_ear"
@@ -1505,7 +1505,7 @@ msgstr "Fehler löschen"
 
 #: ../app/actions/error-console-actions.c:53
 msgid "Save _All Errors to File..."
-msgstr "Alle Fehler in Datei _speichern..."
+msgstr "Alle Fehler in Datei _speichern …"
 
 #: ../app/actions/error-console-actions.c:54
 msgid "Save all errors"
@@ -1513,7 +1513,7 @@ msgstr "Alle Fehler speichern"
 
 #: ../app/actions/error-console-actions.c:59
 msgid "Save _Selection to File..."
-msgstr "Aus_wahl in Datei speichern..."
+msgstr "Aus_wahl in Datei speichern …"
 
 #: ../app/actions/error-console-actions.c:60
 msgid "Save selection"
@@ -1550,15 +1550,15 @@ msgstr "_Holen"
 
 #: ../app/actions/file-actions.c:69 ../app/actions/file-actions.c:74
 msgid "_Open..."
-msgstr "Ö_ffnen..."
+msgstr "Ö_ffnen …"
 
 #: ../app/actions/file-actions.c:79
 msgid "Op_en as Layer..."
-msgstr "Als _Ebene öffnen..."
+msgstr "Als _Ebene öffnen …"
 
 #: ../app/actions/file-actions.c:84
 msgid "Open _Location..."
-msgstr "_Von Ort öffnen..."
+msgstr "_Von Ort öffnen …"
 
 #: ../app/actions/file-actions.c:89
 msgid "_Save"
@@ -1566,15 +1566,15 @@ msgstr "_Speichern"
 
 #: ../app/actions/file-actions.c:94
 msgid "Save _As..."
-msgstr "Speichern _Unter..."
+msgstr "Speichern _Unter …"
 
 #: ../app/actions/file-actions.c:99
 msgid "Save a Cop_y..."
-msgstr "_Kopie speichern..."
+msgstr "_Kopie speichern …"
 
 #: ../app/actions/file-actions.c:104
 msgid "Save as _Template..."
-msgstr "Als _Vorlage speichern..."
+msgstr "Als _Vorlage speichern …"
 
 #: ../app/actions/file-actions.c:109
 msgid "Re_vert"
@@ -1696,11 +1696,11 @@ msgstr "Rechte Farbe s_peichern in"
 
 #: ../app/actions/gradient-editor-actions.c:63
 msgid "L_eft Endpoint's Color..."
-msgstr "Farbe des li_nken Endpunktes..."
+msgstr "Farbe des li_nken Endpunktes …"
 
 #: ../app/actions/gradient-editor-actions.c:68
 msgid "R_ight Endpoint's Color..."
-msgstr "Farbe des _rechten Endpunktes..."
+msgstr "Farbe des _rechten Endpunktes …"
 
 #: ../app/actions/gradient-editor-actions.c:108
 msgid "Ble_nd Endpoints' Colors"
@@ -1823,7 +1823,7 @@ msgstr "Segment sp_iegeln"
 
 #: ../app/actions/gradient-editor-actions.c:614
 msgid "_Replicate Segment..."
-msgstr "Segment duplizieren..."
+msgstr "Segment duplizieren …"
 
 #: ../app/actions/gradient-editor-actions.c:616
 msgid "Split Segment at _Midpoint"
@@ -1831,7 +1831,7 @@ msgstr "Segment _mittig teilen"
 
 #: ../app/actions/gradient-editor-actions.c:618
 msgid "Split Segment _Uniformly..."
-msgstr "Segment _gleichmäßig aufteilen..."
+msgstr "Segment _gleichmäßig aufteilen …"
 
 #: ../app/actions/gradient-editor-actions.c:620
 msgid "_Delete Segment"
@@ -1859,7 +1859,7 @@ msgstr "Auswahl sp_iegeln"
 
 #: ../app/actions/gradient-editor-actions.c:636
 msgid "_Replicate Selection..."
-msgstr "Auswahl _duplizieren..."
+msgstr "Auswahl _duplizieren …"
 
 #: ../app/actions/gradient-editor-actions.c:638
 msgid "Split Segments at _Midpoints"
@@ -1867,7 +1867,7 @@ msgstr "Segment an _Mittelpunkten aufteilen"
 
 #: ../app/actions/gradient-editor-actions.c:640
 msgid "Split Segments _Uniformly..."
-msgstr "Segmente _gleichmäßig aufteilen..."
+msgstr "Segmente _gleichmäßig aufteilen …"
 
 #: ../app/actions/gradient-editor-actions.c:642
 msgid "_Delete Selection"
@@ -1999,7 +1999,7 @@ msgstr "Ort des Gradienten in Zwischenablage kopieren"
 
 #: ../app/actions/gradients-actions.c:66
 msgid "Save as _POV-Ray..."
-msgstr "Als _POV-Ray-Datei speichern..."
+msgstr "Als _POV-Ray-Datei speichern …"
 
 #: ../app/actions/gradients-actions.c:67
 msgid "Save gradient as POV-Ray"
@@ -2011,7 +2011,7 @@ msgstr "Farbverlauf _löschen"
 
 #: ../app/actions/gradients-actions.c:73
 msgid "Delete gradient"
-msgstr "Farbverlauf löschen..."
+msgstr "Farbverlauf löschen …"
 
 #: ../app/actions/gradients-actions.c:78
 msgid "_Refresh Gradients"
@@ -2023,11 +2023,11 @@ msgstr "Farbverläufe n_eu laden"
 
 #: ../app/actions/gradients-actions.c:87
 msgid "_Edit Gradient..."
-msgstr "Farbverlauf _bearbeiten..."
+msgstr "Farbverlauf _bearbeiten …"
 
 #: ../app/actions/gradients-actions.c:88
 msgid "Edit gradient"
-msgstr "Farbverlauf bearbeiten..."
+msgstr "Farbverlauf bearbeiten …"
 
 #: ../app/actions/gradients-commands.c:65
 #, c-format
@@ -2088,7 +2088,7 @@ msgstr "_Komponenten"
 
 #: ../app/actions/image-actions.c:72 ../app/actions/image-actions.c:78
 msgid "_New..."
-msgstr "_Neu..."
+msgstr "_Neu …"
 
 #: ../app/actions/image-actions.c:73 ../app/actions/image-actions.c:79
 msgid "Create a new image"
@@ -2112,7 +2112,7 @@ msgstr "Bildgröße so verändern, dass das Bild alle Ebenen enthält"
 
 #: ../app/actions/image-actions.c:96
 msgid "_Print Size..."
-msgstr "_Druckgröße..."
+msgstr "_Druckgröße …"
 
 #: ../app/actions/image-actions.c:97
 msgid "Adjust the print resolution"
@@ -2144,7 +2144,7 @@ msgstr "Ein Duplikat dieses Bildes erzeugen"
 
 #: ../app/actions/image-actions.c:120
 msgid "Merge Visible _Layers..."
-msgstr "Sichtbare _Ebenen vereinen..."
+msgstr "Sichtbare _Ebenen vereinen …"
 
 #: ../app/actions/image-actions.c:121 ../app/actions/layers-actions.c:134
 msgid "Merge all visible layers into one layer"
@@ -2190,7 +2190,7 @@ msgstr "Bild in Graustufen umwandeln"
 
 #: ../app/actions/image-actions.c:159
 msgid "_Indexed..."
-msgstr "I_ndiziert..."
+msgstr "I_ndiziert …"
 
 #: ../app/actions/image-actions.c:160
 msgid "Convert the image to indexed colors"
@@ -2331,7 +2331,7 @@ msgstr "Das Textwerkzeug für diese Textebene aktivieren"
 
 #: ../app/actions/layers-actions.c:67
 msgid "_Edit Layer Attributes..."
-msgstr "Ebenenei_genschaften..."
+msgstr "Ebenenei_genschaften …"
 
 #: ../app/actions/layers-actions.c:68
 msgid "Edit attributes of this layer"
@@ -2339,7 +2339,7 @@ msgstr "Eigenschaften dieser Ebene ändern"
 
 #: ../app/actions/layers-actions.c:73
 msgid "_New Layer..."
-msgstr "_Neue Ebene..."
+msgstr "_Neue Ebene …"
 
 #: ../app/actions/layers-actions.c:74
 msgid "Create a new layer"
@@ -2419,7 +2419,7 @@ msgstr "Diese Ebene mit der darunterliegenden vereinen"
 
 #: ../app/actions/layers-actions.c:133
 msgid "Merge _Visible Layers..."
-msgstr "Sichtbare _Ebenen vereinen..."
+msgstr "Sichtbare _Ebenen vereinen …"
 
 #: ../app/actions/layers-actions.c:145
 msgid "_Discard Text Information"
@@ -2435,7 +2435,7 @@ msgstr "Ebene auf _Bildgröße"
 
 #: ../app/actions/layers-actions.c:160
 msgid "_Scale Layer..."
-msgstr "Ebene _skalieren..."
+msgstr "Ebene _skalieren …"
 
 #: ../app/actions/layers-actions.c:165
 msgid "Cr_op Layer"
@@ -2443,7 +2443,7 @@ msgstr "Ebene zuschneiden"
 
 #: ../app/actions/layers-actions.c:170
 msgid "Add La_yer Mask..."
-msgstr "Ebenenmaske _hinzufügen..."
+msgstr "Ebenenmaske _hinzufügen …"
 
 #: ../app/actions/layers-actions.c:175
 msgid "Add Alpha C_hannel"
@@ -2471,7 +2471,7 @@ msgstr "Ebenenmaske _deaktivieren"
 
 #: ../app/actions/layers-actions.c:215
 msgid "Apply Layer _Mask"
-msgstr "Ebenenmaske an_wenden..."
+msgstr "Ebenenmaske an_wenden …"
 
 #: ../app/actions/layers-actions.c:220
 msgid "Delete Layer Mas_k"
@@ -2621,7 +2621,7 @@ msgstr "_Neue Farbpalette"
 
 #: ../app/actions/palettes-actions.c:54
 msgid "_Import Palette..."
-msgstr "Farbpalette _importieren..."
+msgstr "Farbpalette _importieren …"
 
 #: ../app/actions/palettes-actions.c:55
 msgid "Import palette"
@@ -2637,7 +2637,7 @@ msgstr "Farbpalette _duplizieren"
 
 #: ../app/actions/palettes-actions.c:66
 msgid "_Merge Palettes..."
-msgstr "Farbpaletten _vereinen..."
+msgstr "Farbpaletten _vereinen …"
 
 #: ../app/actions/palettes-actions.c:67
 msgid "Merge palettes"
@@ -2669,11 +2669,11 @@ msgstr "Farbpaletten n_eu laden"
 
 #: ../app/actions/palettes-actions.c:93
 msgid "_Edit Palette..."
-msgstr "Farbpalette _bearbeiten..."
+msgstr "Farbpalette _bearbeiten …"
 
 #: ../app/actions/palettes-actions.c:94
 msgid "Edit palette"
-msgstr "Farbpalette _bearbeiten..."
+msgstr "Farbpalette _bearbeiten …"
 
 #: ../app/actions/palettes-commands.c:72
 msgid "Merge Palette"
@@ -2725,7 +2725,7 @@ msgstr "Muster _löschen"
 
 #: ../app/actions/patterns-actions.c:72
 msgid "Delete pattern"
-msgstr "Muster _löschen..."
+msgstr "Muster _löschen …"
 
 #: ../app/actions/patterns-actions.c:77
 msgid "_Refresh Patterns"
@@ -2737,11 +2737,11 @@ msgstr "Muster n_eu laden"
 
 #: ../app/actions/patterns-actions.c:86
 msgid "_Edit Pattern..."
-msgstr "Muster _bearbeiten..."
+msgstr "Muster _bearbeiten …"
 
 #: ../app/actions/patterns-actions.c:87
 msgid "Edit pattern"
-msgstr "Muster _bearbeiten..."
+msgstr "Muster _bearbeiten …"
 
 #: ../app/actions/plug-in-actions.c:64
 msgid "Filte_rs"
@@ -2857,7 +2857,7 @@ msgstr "Schnelle Maske Menü"
 
 #: ../app/actions/quick-mask-actions.c:46
 msgid "_Configure Color and Opacity..."
-msgstr "Farbe und Deckkraft _festlegen..."
+msgstr "Farbe und Deckkraft _festlegen …"
 
 #: ../app/actions/quick-mask-actions.c:54
 msgid "Toggle _Quick Mask"
@@ -2934,7 +2934,7 @@ msgstr "_Schwebend"
 
 #: ../app/actions/select-actions.c:73
 msgid "Fea_ther..."
-msgstr "A_usblenden..."
+msgstr "A_usblenden …"
 
 #: ../app/actions/select-actions.c:78
 msgid "_Sharpen"
@@ -2942,15 +2942,15 @@ msgstr "Sch_ärfen"
 
 #: ../app/actions/select-actions.c:83
 msgid "S_hrink..."
-msgstr "Ver_kleinern..."
+msgstr "Ver_kleinern …"
 
 #: ../app/actions/select-actions.c:88
 msgid "_Grow..."
-msgstr "Ver_größern..."
+msgstr "Ver_größern …"
 
 #: ../app/actions/select-actions.c:93
 msgid "Bo_rder..."
-msgstr "_Rand..."
+msgstr "_Rand …"
 
 #: ../app/actions/select-actions.c:98
 msgid "Save to _Channel"
@@ -2966,7 +2966,7 @@ msgstr "Auswahl nach_ziehen"
 
 #: ../app/actions/select-actions.c:105
 msgid "Stroke selection..."
-msgstr "Auswahl nachziehen..."
+msgstr "Auswahl nachziehen …"
 
 #: ../app/actions/select-actions.c:110
 msgid "_Stroke Selection"
@@ -3030,7 +3030,7 @@ msgstr "Vorlagenmenü"
 
 #: ../app/actions/templates-actions.c:46
 msgid "_Create Image from Template..."
-msgstr "B_ild aus Vorlage erstellen..."
+msgstr "B_ild aus Vorlage erstellen …"
 
 #: ../app/actions/templates-actions.c:47
 msgid "Create a new image from the selected template"
@@ -3038,7 +3038,7 @@ msgstr "Ein neues Bild von dieser Vorlage erzeugen"
 
 #: ../app/actions/templates-actions.c:52
 msgid "_New Template..."
-msgstr "_Neue Vorlage..."
+msgstr "_Neue Vorlage …"
 
 #: ../app/actions/templates-actions.c:53
 msgid "Create a new template"
@@ -3046,7 +3046,7 @@ msgstr "Eine neue Vorlage erstellen"
 
 #: ../app/actions/templates-actions.c:58
 msgid "D_uplicate Template..."
-msgstr "Vorlage _duplizieren..."
+msgstr "Vorlage _duplizieren …"
 
 #: ../app/actions/templates-actions.c:59
 msgid "Duplicate the selected template"
@@ -3054,7 +3054,7 @@ msgstr "Die gewählten Vorlage duplizieren"
 
 #: ../app/actions/templates-actions.c:64
 msgid "_Edit Template..."
-msgstr "Vorlage _bearbeiten..."
+msgstr "Vorlage _bearbeiten …"
 
 #: ../app/actions/templates-actions.c:65
 msgid "Edit the selected template"
@@ -3160,7 +3160,7 @@ msgstr "Gespeicherte Einstellungen _löschen"
 # XXX
 #: ../app/actions/tool-options-actions.c:76
 msgid "_New Entry..."
-msgstr "_Neuer Eintrag..."
+msgstr "_Neuer Eintrag …"
 
 #: ../app/actions/tool-options-actions.c:81
 msgid "R_eset Tool Options"
@@ -3283,7 +3283,7 @@ msgstr "Nach _Farbe"
 
 #: ../app/actions/tools-actions.c:104
 msgid "_Arbitrary Rotation..."
-msgstr "_Beliebig drehen..."
+msgstr "_Beliebig drehen …"
 
 #: ../app/actions/vectors-actions.c:44
 msgid "Paths Menu"
@@ -3295,7 +3295,7 @@ msgstr "Pfadwe_rkzeug"
 
 #: ../app/actions/vectors-actions.c:53
 msgid "_Edit Path Attributes..."
-msgstr "Pfadei_genschaften..."
+msgstr "Pfadei_genschaften …"
 
 #: ../app/actions/vectors-actions.c:54
 msgid "Edit path attributes"
@@ -3303,11 +3303,11 @@ msgstr "Pfadeigenschaften ändern"
 
 #: ../app/actions/vectors-actions.c:59
 msgid "_New Path..."
-msgstr "_Neuer Pfad..."
+msgstr "_Neuer Pfad …"
 
 #: ../app/actions/vectors-actions.c:60
 msgid "New path..."
-msgstr "Neuer Pfad..."
+msgstr "Neuer Pfad …"
 
 #: ../app/actions/vectors-actions.c:65
 msgid "_New Path"
@@ -3371,11 +3371,11 @@ msgstr "Pfad nach ganz unten absenken"
 
 #: ../app/actions/vectors-actions.c:112
 msgid "Stro_ke Path..."
-msgstr "_Pfad nachziehen..."
+msgstr "_Pfad nachziehen …"
 
 #: ../app/actions/vectors-actions.c:113
 msgid "Stroke path..."
-msgstr "Pfad nachziehen..."
+msgstr "Pfad nachziehen …"
 
 #: ../app/actions/vectors-actions.c:118
 msgid "Stro_ke Path"
@@ -3395,11 +3395,11 @@ msgstr "Pfad e_infügen"
 
 #: ../app/actions/vectors-actions.c:134
 msgid "E_xport Path..."
-msgstr "Pfad e_xportieren..."
+msgstr "Pfad e_xportieren …"
 
 #: ../app/actions/vectors-actions.c:139
 msgid "I_mport Path..."
-msgstr "Pfad i_mportieren..."
+msgstr "Pfad i_mportieren …"
 
 #: ../app/actions/vectors-actions.c:162
 msgid "Path to Sele_ction"
@@ -3504,7 +3504,7 @@ msgstr "Navi_gationsfenster"
 
 #: ../app/actions/view-actions.c:100
 msgid "Display _Filters..."
-msgstr "Ansichts_filter..."
+msgstr "Ansichts_filter …"
 
 #: ../app/actions/view-actions.c:105
 msgid "Shrink _Wrap"
@@ -3616,7 +3616,7 @@ msgstr "1:1_6  (6.25%)"
 
 #: ../app/actions/view-actions.c:310
 msgid "Othe_r..."
-msgstr "A_nders..."
+msgstr "A_nders …"
 
 #: ../app/actions/view-actions.c:318
 msgid "From _Theme"
@@ -3632,7 +3632,7 @@ msgstr "_Dunkle Schachbrett-Farbe"
 
 #: ../app/actions/view-actions.c:333
 msgid "Select _Custom Color..."
-msgstr "_Benutzerdefinierte Farbe wählen..."
+msgstr "_Benutzerdefinierte Farbe wählen …"
 
 #: ../app/actions/view-actions.c:338
 msgid "As in _Preferences"
@@ -3641,7 +3641,7 @@ msgstr "Den _Einstellungen entsprechend"
 #: ../app/actions/view-actions.c:638
 #, c-format
 msgid "Othe_r (%s)..."
-msgstr "A_ndere (%s)..."
+msgstr "A_ndere (%s) …"
 
 #: ../app/actions/view-actions.c:647
 #, c-format
@@ -5678,7 +5678,7 @@ msgstr "Anklicken um Vorschau zu erstellen"
 
 #: ../app/core/gimpimagefile.c:588
 msgid "Loading preview..."
-msgstr "Vorschau wird geladen..."
+msgstr "Vorschau wird geladen …"
 
 #: ../app/core/gimpimagefile.c:592
 msgid "Preview is out of date"
@@ -7742,7 +7742,7 @@ msgstr "Benutzerinstallation Logbuch"
 
 #: ../app/dialogs/user-install-dialog.c:1006
 msgid "Please wait while your personal GIMP folder is being created..."
-msgstr "Bitte warten. Ihr persönlicher GIMP-Ordner wird angelegt..."
+msgstr "Bitte warten. Ihr persönlicher GIMP-Ordner wird angelegt …"
 
 #: ../app/dialogs/user-install-dialog.c:1013
 msgid "GIMP Performance Tuning"
@@ -7763,12 +7763,12 @@ msgstr ""
 #: ../app/dialogs/user-install-dialog.c:1079
 #, c-format
 msgid "Copying file '%s' from '%s'..."
-msgstr "Datei »%s« wird von »%s« kopiert..."
+msgstr "Datei »%s« wird von »%s« kopiert …"
 
 #: ../app/dialogs/user-install-dialog.c:1098
 #, c-format
 msgid "Creating folder '%s'..."
-msgstr "Ordner »%s« wird angelegt..."
+msgstr "Ordner »%s« wird angelegt …"
 
 #: ../app/dialogs/user-install-dialog.c:1112
 #, c-format
@@ -8002,7 +8002,7 @@ msgstr "Abbrechen"
 
 #: ../app/display/gimpstatusbar.c:413
 msgid "Other..."
-msgstr "Anders..."
+msgstr "Anders …"
 
 #: ../app/file/file-open.c:108
 msgid "Unknown file type"
@@ -10973,7 +10973,7 @@ msgstr "Vorschau %d von %d"
 
 #: ../app/widgets/gimpthumbbox.c:722 ../app/widgets/gimpthumbbox.c:732
 msgid "Creating preview..."
-msgstr "Vorschau wird erzeugt..."
+msgstr "Vorschau wird erzeugt …"
 
 #: ../app/widgets/gimptoolbox-color-area.c:135
 msgid "Change Foreground Color"
@@ -11033,15 +11033,15 @@ msgstr ""
 
 #: ../app/widgets/gimptooloptionseditor.c:151
 msgid "Save options to..."
-msgstr "Einstellungen speichern als..."
+msgstr "Einstellungen speichern als …"
 
 #: ../app/widgets/gimptooloptionseditor.c:159
 msgid "Restore options from..."
-msgstr "Einstellungen laden von..."
+msgstr "Einstellungen laden von …"
 
 #: ../app/widgets/gimptooloptionseditor.c:167
 msgid "Delete saved options..."
-msgstr "Einstellungen löschen..."
+msgstr "Einstellungen löschen …"
 
 #: ../app/widgets/gimpuimanager.c:696
 msgid "Your GIMP installation is incomplete:"
@@ -11261,4 +11261,7 @@ msgstr "Bitte stellen Sie sicher, dass das Werkzeugefenster sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
+
+
+
 
