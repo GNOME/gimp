@@ -1,3 +1,12 @@
+2006-06-15  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/image-actions.c (image_actions_update): improved
+	code to set the image mode radio actions; set their sensitivity
+	also.
+
+	* app/actions/image-commands.c (image_configure_grid_cmd_callback):
+	fixed cast to silence compiler warning.
+
 2006-06-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdockbook.c (gimp_dockbook_get_tab_widget): set

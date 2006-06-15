@@ -230,24 +230,32 @@ void
 image_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpImage *image     = action_data_get_image (data);
-  gboolean   is_rgb     = FALSE;
-  gboolean   is_gray    = FALSE;
-  gboolean   is_indexed = FALSE;
-  gboolean   fs         = FALSE;
-  gboolean   aux        = FALSE;
-  gboolean   lp         = FALSE;
-  gboolean   sel        = FALSE;
+  GimpImage *image = action_data_get_image (data);
+  gboolean   fs    = FALSE;
+  gboolean   aux   = FALSE;
+  gboolean   lp    = FALSE;
+  gboolean   sel   = FALSE;
 
   if (image)
     {
-      GimpImageBaseType base_type;
+      const gchar *action = NULL;
 
-      base_type = gimp_image_base_type (image);
+      switch (gimp_image_base_type (image))
+        {
+        case GIMP_RGB:
+          action = "image-convert-rgb";
+          break;
 
-      is_rgb     = (base_type == GIMP_RGB);
-      is_gray    = (base_type == GIMP_GRAY);
-      is_indexed = (base_type == GIMP_INDEXED);
+        case GIMP_GRAY:
+          action = "image-convert-grayscale";
+          break;
+
+        case GIMP_INDEXED:
+          action = "image-convert-indexed";
+          break;
+        }
+
+      gimp_action_group_set_action_active (group, action, TRUE);
 
       fs  = (gimp_image_floating_sel (image) != NULL);
       aux = (gimp_image_get_active_channel (image) != NULL);
@@ -255,14 +263,12 @@ image_actions_update (GimpActionGroup *group,
       sel = ! gimp_channel_is_empty (gimp_image_get_mask (image));
     }
 
-#define SET_ACTIVE(action,condition) \
-        gimp_action_group_set_action_active (group, action, (condition) != 0)
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_ACTIVE ("image-convert-rgb",       image && is_rgb);
-  SET_ACTIVE ("image-convert-grayscale", image && is_gray);
-  SET_ACTIVE ("image-convert-indexed",   image && is_indexed);
+  SET_SENSITIVE ("image-convert-rgb",       image);
+  SET_SENSITIVE ("image-convert-grayscale", image);
+  SET_SENSITIVE ("image-convert-indexed",   image);
 
   SET_SENSITIVE ("image-flip-horizontal", image);
   SET_SENSITIVE ("image-flip-vertical",   image);

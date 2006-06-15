@@ -429,7 +429,7 @@ image_configure_grid_cmd_callback (GtkAction *action,
                                           TRUE);
 
       g_object_add_weak_pointer (G_OBJECT (shell->grid_dialog),
-                                 (gpointer *) &shell->grid_dialog);
+                                 (gpointer) &shell->grid_dialog);
     }
 
   gtk_window_present (GTK_WINDOW (shell->grid_dialog));
