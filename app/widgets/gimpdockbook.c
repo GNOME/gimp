@@ -398,6 +398,7 @@ gimp_dockbook_get_tab_widget (GimpDockbook *dockbook,
       GtkWidget *event_box;
 
       event_box = gtk_event_box_new ();
+      gtk_event_box_set_visible_window (GTK_EVENT_BOX (event_box), FALSE);
       gtk_container_add (GTK_CONTAINER (event_box), tab_widget);
       gtk_widget_show (tab_widget);
 

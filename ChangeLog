@@ -1,3 +1,9 @@
+2006-06-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdockbook.c (gimp_dockbook_get_tab_widget): set
+	the event box' window invisible so we get the right background
+	with all themes.
+
 2006-06-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimprectangleselecttool.c: Fix sporadic crash
