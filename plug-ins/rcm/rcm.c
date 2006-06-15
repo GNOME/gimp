@@ -100,7 +100,7 @@ query (void)
 			  "Sven Anders (anderss@fmi.uni-passau.de) and Pavel Grinfeld (pavel@ml.com)",
 			  "Sven Anders (anderss@fmi.uni-passau.de)",
 			  "04th April 1999",
-			  N_("Colormap _Rotation..."),
+			  N_("_Rotate Colors..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
@@ -110,7 +110,7 @@ query (void)
 }
 
 
-/* Rotate colormap of a single row */
+/* Rotate colors of a single row */
 
 void
 rcm_row (const guchar *src_row,
@@ -181,7 +181,7 @@ rcm_row (const guchar *src_row,
 }
 
 
-/* Rotate colormap row by row ... */
+/* Rotate colors row by row ... */
 
 void
 rcm (GimpDrawable *drawable)
@@ -260,10 +260,10 @@ run (const gchar      *name,
     }
   else
     {
-      /* call dialog and rotate the colormap */
+      /* call dialog and rotate the colors */
       if (gimp_drawable_is_rgb (Current.drawable->drawable_id) && rcm_dialog ())
         {
-          gimp_progress_init (_("Rotating the colormap"));
+          gimp_progress_init (_("Rotating the colors"));
 
           gimp_tile_cache_ntiles (2 * (Current.drawable->width /
                                        gimp_tile_width () + 1));

@@ -649,7 +649,7 @@ rcm_dialog (void)
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
   rcm_stock_init ();
 
-  dialog = gimp_dialog_new (_("Colormap Rotation"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Rotate Colors"), PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
