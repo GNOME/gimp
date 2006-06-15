@@ -1,3 +1,4 @@
+# translation of cs.po to Czech
 # translation of cs.po to
 # Czech translation of GIMP plugins
 # Copyright (C) 2001,2003, 2006 Free Software Foundation, Inc.
@@ -11,10 +12,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-08 13:23+0200\n"
-"PO-Revision-Date: 2006-06-08 13:31+0200\n"
+"POT-Creation-Date: 2006-06-15 09:09+0200\n"
+"PO-Revision-Date: 2006-06-15 09:12+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team:  <cs@li.org>\n"
+"Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -40,76 +41,72 @@ msgstr ""
 msgid "Realtime preview"
 msgstr "Náhled v reálném čase"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:627
-msgid "If you enable this option the preview will be redrawn automatically"
-msgstr "Povolením této volby se náhled překresluje automaticky"
+#: ../plug-ins/FractalExplorer/Dialogs.c:628
+msgid "If enabled the preview will be redrawn automatically"
+msgstr "Je-li povoleno, překresluje se náhled automaticky"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:630
-msgid "Redraw"
-msgstr "Překreslit"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:636
-msgid "Redraw preview"
-msgstr "Překreslit náhled"
+#: ../plug-ins/FractalExplorer/Dialogs.c:631
+msgid "R_edraw preview"
+msgstr "Př_ekreslovat náhled"
 
 #. Zoom Options
 #: ../plug-ins/FractalExplorer/Dialogs.c:639
 msgid "Zoom"
 msgstr "Přiblížení"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:667
-msgid "Undo last zoom"
-msgstr "Zrušit poslední přiblížení"
+#: ../plug-ins/FractalExplorer/Dialogs.c:675
+msgid "Undo last zoom change"
+msgstr "Zpět poslední změnu přiblížení"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:677
-msgid "Redo last zoom"
-msgstr "Vrátit poslední přiblížení"
+#: ../plug-ins/FractalExplorer/Dialogs.c:685
+msgid "Redo last zoom change"
+msgstr "Znovu poslední změnu přiblížení"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:692
+#: ../plug-ins/FractalExplorer/Dialogs.c:700
 msgid "_Parameters"
 msgstr "_Parametry"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:695
+#: ../plug-ins/FractalExplorer/Dialogs.c:703
 msgid "Fractal Parameters"
 msgstr "Parametry fraktálu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:708
+#: ../plug-ins/FractalExplorer/Dialogs.c:716
 msgid "XMIN:"
 msgstr "XMIN:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:711
+#: ../plug-ins/FractalExplorer/Dialogs.c:719
 msgid "Change the first (minimal) x-coordinate delimitation"
 msgstr "Změna omezení první (nejmenší) x souřadnice"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:719
+#: ../plug-ins/FractalExplorer/Dialogs.c:727
 msgid "XMAX:"
 msgstr "XMAX:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:722
+#: ../plug-ins/FractalExplorer/Dialogs.c:730
 msgid "Change the second (maximal) x-coordinate delimitation"
 msgstr "Změna omezení druhé (největší) x souřadnice"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:730
+#: ../plug-ins/FractalExplorer/Dialogs.c:738
 msgid "YMIN:"
 msgstr "YMIN:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:733
+#: ../plug-ins/FractalExplorer/Dialogs.c:741
 msgid "Change the first (minimal) y-coordinate delimitation"
 msgstr "Změna omezení první (nejmenší) y souřadnice"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:741
+#: ../plug-ins/FractalExplorer/Dialogs.c:749
 msgid "YMAX:"
 msgstr "YMAX:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:744
+#: ../plug-ins/FractalExplorer/Dialogs.c:752
 msgid "Change the second (maximal) y-coordinate delimitation"
 msgstr "Změna omezení druhé (největší) y souřadnice"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:752
+#: ../plug-ins/FractalExplorer/Dialogs.c:760
 msgid "ITER:"
 msgstr "ITER:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:755
+#: ../plug-ins/FractalExplorer/Dialogs.c:763
 msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
@@ -117,11 +114,11 @@ msgstr ""
 "Změna iterační hodnoty. Vyšší znamená výpočet větších detailů za cenu "
 "delšího času"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:764
+#: ../plug-ins/FractalExplorer/Dialogs.c:772
 msgid "CX:"
 msgstr "CX:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:767
+#: ../plug-ins/FractalExplorer/Dialogs.c:775
 msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
@@ -129,11 +126,11 @@ msgstr ""
 "Změna hodnoty CX (mění poměry fraktálu, aktivní se všemi fraktály kromě "
 "Mandelbrotova a Sierpinského)"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:776
+#: ../plug-ins/FractalExplorer/Dialogs.c:784
 msgid "CY:"
 msgstr "CY:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:779
+#: ../plug-ins/FractalExplorer/Dialogs.c:787
 msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
@@ -141,143 +138,143 @@ msgstr ""
 "Změna hodnoty CY (mění poměry fraktálu, aktivní se všemi fraktály kromě "
 "Mandelbrotova a Sierpinského)"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:796
+#: ../plug-ins/FractalExplorer/Dialogs.c:804
 msgid "Load a fractal from file"
 msgstr "Načíst fraktál ze souboru"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:804
+#: ../plug-ins/FractalExplorer/Dialogs.c:812
 msgid "Reset parameters to default values"
 msgstr "Nastaví parametry na implicitní hodnoty"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:813
+#: ../plug-ins/FractalExplorer/Dialogs.c:821
 msgid "Save active fractal to file"
 msgstr "Zapsat aktivní fraktál do souboru"
 
 #. Fractal type toggle box
-#: ../plug-ins/FractalExplorer/Dialogs.c:816
+#: ../plug-ins/FractalExplorer/Dialogs.c:824
 msgid "Fractal Type"
 msgstr "Typ fraktálu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:829
+#: ../plug-ins/FractalExplorer/Dialogs.c:837
 msgid "Mandelbrot"
 msgstr "Mandelbrot"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:831
+#: ../plug-ins/FractalExplorer/Dialogs.c:839
 msgid "Julia"
 msgstr "Julia"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:833
+#: ../plug-ins/FractalExplorer/Dialogs.c:841
 msgid "Barnsley 1"
 msgstr "Barnsley 1"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:835
+#: ../plug-ins/FractalExplorer/Dialogs.c:843
 msgid "Barnsley 2"
 msgstr "Barnsley 2"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:837
+#: ../plug-ins/FractalExplorer/Dialogs.c:845
 msgid "Barnsley 3"
 msgstr "Barnsley 3"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:839
+#: ../plug-ins/FractalExplorer/Dialogs.c:847
 msgid "Spider"
 msgstr "Spider"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:841
+#: ../plug-ins/FractalExplorer/Dialogs.c:849
 msgid "Man'o'war"
 msgstr "Man'o'war"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:843
+#: ../plug-ins/FractalExplorer/Dialogs.c:851
 msgid "Lambda"
 msgstr "Lambda"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:845
+#: ../plug-ins/FractalExplorer/Dialogs.c:853
 msgid "Sierpinski"
 msgstr "Sierpinski"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:891 ../plug-ins/common/sinus.c:886
+#: ../plug-ins/FractalExplorer/Dialogs.c:899 ../plug-ins/common/sinus.c:886
 msgid "Co_lors"
 msgstr "_Barvy"
 
 #. Number of Colors frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:895
+#: ../plug-ins/FractalExplorer/Dialogs.c:903
 #: ../plug-ins/common/borderaverage.c:415
 msgid "Number of Colors"
 msgstr "Počet barev"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:907
+#: ../plug-ins/FractalExplorer/Dialogs.c:915
 msgid "Number of colors:"
 msgstr "Počet barev:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:910
+#: ../plug-ins/FractalExplorer/Dialogs.c:918
 msgid "Change the number of colors in the mapping"
 msgstr "Změna počtu barev v mapování"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:917
+#: ../plug-ins/FractalExplorer/Dialogs.c:925
 msgid "Use loglog smoothing"
 msgstr "Použít spojité vyhlazení"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:924
+#: ../plug-ins/FractalExplorer/Dialogs.c:932
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr "Užití spojitého vyhlazení zabrání \"pruhování\" výsledku"
 
 #. Color Density frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:928
+#: ../plug-ins/FractalExplorer/Dialogs.c:936
 msgid "Color Density"
 msgstr "Hustota barvy"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: ../plug-ins/FractalExplorer/Dialogs.c:940 ../plug-ins/common/fp.c:227
+#: ../plug-ins/FractalExplorer/Dialogs.c:948 ../plug-ins/common/fp.c:227
 msgid "Red:"
 msgstr "Červená:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:943
+#: ../plug-ins/FractalExplorer/Dialogs.c:951
 msgid "Change the intensity of the red channel"
 msgstr "Změna intenzity červeného kanálu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:950 ../plug-ins/common/fp.c:228
+#: ../plug-ins/FractalExplorer/Dialogs.c:958 ../plug-ins/common/fp.c:228
 msgid "Green:"
 msgstr "Zelená:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:953
+#: ../plug-ins/FractalExplorer/Dialogs.c:961
 msgid "Change the intensity of the green channel"
 msgstr "Změna intenzity zeleného kanálu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:960 ../plug-ins/common/fp.c:229
+#: ../plug-ins/FractalExplorer/Dialogs.c:968 ../plug-ins/common/fp.c:229
 msgid "Blue:"
 msgstr "Modrá:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:963
+#: ../plug-ins/FractalExplorer/Dialogs.c:971
 msgid "Change the intensity of the blue channel"
 msgstr "Změna intenzity modrého kanálu"
 
 #. Color Function frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:969
+#: ../plug-ins/FractalExplorer/Dialogs.c:977
 msgid "Color Function"
 msgstr "Barevná funkce"
 
 #. Redmode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:978
-#: ../plug-ins/common/channel_mixer.c:529 ../plug-ins/common/decompose.c:166
+#: ../plug-ins/FractalExplorer/Dialogs.c:986
+#: ../plug-ins/common/channel_mixer.c:539 ../plug-ins/common/decompose.c:166
 msgid "Red"
 msgstr "Červená"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:982
-#: ../plug-ins/FractalExplorer/Dialogs.c:1023
-#: ../plug-ins/FractalExplorer/Dialogs.c:1064
+#: ../plug-ins/FractalExplorer/Dialogs.c:990
+#: ../plug-ins/FractalExplorer/Dialogs.c:1031
+#: ../plug-ins/FractalExplorer/Dialogs.c:1072
 msgid "Sine"
 msgstr "Sinus"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:984
-#: ../plug-ins/FractalExplorer/Dialogs.c:1025
-#: ../plug-ins/FractalExplorer/Dialogs.c:1066
+#: ../plug-ins/FractalExplorer/Dialogs.c:992
+#: ../plug-ins/FractalExplorer/Dialogs.c:1033
+#: ../plug-ins/FractalExplorer/Dialogs.c:1074
 msgid "Cosine"
 msgstr "Kosinus"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:986
-#: ../plug-ins/FractalExplorer/Dialogs.c:1027
-#: ../plug-ins/FractalExplorer/Dialogs.c:1068
+#: ../plug-ins/FractalExplorer/Dialogs.c:994
+#: ../plug-ins/FractalExplorer/Dialogs.c:1035
+#: ../plug-ins/FractalExplorer/Dialogs.c:1076
 #: ../plug-ins/Lighting/lighting_ui.c:406
 #: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:421
 #: ../plug-ins/common/align_layers.c:452 ../plug-ins/common/postscript.c:3168
@@ -286,21 +283,21 @@ msgstr "Kosinus"
 msgid "None"
 msgstr "Nic"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:991
-#: ../plug-ins/FractalExplorer/Dialogs.c:1032
-#: ../plug-ins/FractalExplorer/Dialogs.c:1073
+#: ../plug-ins/FractalExplorer/Dialogs.c:999
+#: ../plug-ins/FractalExplorer/Dialogs.c:1040
+#: ../plug-ins/FractalExplorer/Dialogs.c:1081
 msgid "Use sine-function for this color component"
 msgstr "Použití funkce sinus pro tuto barevnou komponentu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:994
-#: ../plug-ins/FractalExplorer/Dialogs.c:1035
-#: ../plug-ins/FractalExplorer/Dialogs.c:1076
+#: ../plug-ins/FractalExplorer/Dialogs.c:1002
+#: ../plug-ins/FractalExplorer/Dialogs.c:1043
+#: ../plug-ins/FractalExplorer/Dialogs.c:1084
 msgid "Use cosine-function for this color component"
 msgstr "Použití funkce kosinus pro tuto barevnou komponentu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:997
-#: ../plug-ins/FractalExplorer/Dialogs.c:1038
-#: ../plug-ins/FractalExplorer/Dialogs.c:1079
+#: ../plug-ins/FractalExplorer/Dialogs.c:1005
+#: ../plug-ins/FractalExplorer/Dialogs.c:1046
+#: ../plug-ins/FractalExplorer/Dialogs.c:1087
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
@@ -308,42 +305,42 @@ msgstr ""
 "Použití lineárního mapování namísto trigonometrické funkce pro tento barevný "
 "kanál"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1006
-#: ../plug-ins/FractalExplorer/Dialogs.c:1047
-#: ../plug-ins/FractalExplorer/Dialogs.c:1088
-msgid "Inversion"
-msgstr "Inverze"
-
 #: ../plug-ins/FractalExplorer/Dialogs.c:1014
 #: ../plug-ins/FractalExplorer/Dialogs.c:1055
 #: ../plug-ins/FractalExplorer/Dialogs.c:1096
+msgid "Inversion"
+msgstr "Inverze"
+
+#: ../plug-ins/FractalExplorer/Dialogs.c:1022
+#: ../plug-ins/FractalExplorer/Dialogs.c:1063
+#: ../plug-ins/FractalExplorer/Dialogs.c:1104
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr "Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
 
 #. Greenmode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:1019
-#: ../plug-ins/common/channel_mixer.c:534 ../plug-ins/common/decompose.c:167
+#: ../plug-ins/FractalExplorer/Dialogs.c:1027
+#: ../plug-ins/common/channel_mixer.c:544 ../plug-ins/common/decompose.c:167
 msgid "Green"
 msgstr "Zelená"
 
 #. Bluemode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:1060
-#: ../plug-ins/common/channel_mixer.c:539 ../plug-ins/common/decompose.c:168
+#: ../plug-ins/FractalExplorer/Dialogs.c:1068
+#: ../plug-ins/common/channel_mixer.c:549 ../plug-ins/common/decompose.c:168
 msgid "Blue"
 msgstr "Modrá"
 
 #. Colormode toggle box
-#: ../plug-ins/FractalExplorer/Dialogs.c:1101
+#: ../plug-ins/FractalExplorer/Dialogs.c:1109
 msgid "Color Mode"
 msgstr "Barevný režim"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1110
+#: ../plug-ins/FractalExplorer/Dialogs.c:1118
 msgid "As specified above"
 msgstr "Jak určeno výše"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1122
+#: ../plug-ins/FractalExplorer/Dialogs.c:1130
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
@@ -351,26 +348,26 @@ msgstr ""
 "Vytváří barevnou mapu s volbami určenými výše (funkce barva/hustota). "
 "Výsledek je viditelný v náhledovém obrázku"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1132
+#: ../plug-ins/FractalExplorer/Dialogs.c:1140
 msgid "Apply active gradient to final image"
 msgstr "Použít aktivní přechod na konečný obrázek"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1144
+#: ../plug-ins/FractalExplorer/Dialogs.c:1152
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr "Vytvoří barevnou mapu s použitím přechodu z editoru přechodů"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1155
+#: ../plug-ins/FractalExplorer/Dialogs.c:1163
 msgid "FractalExplorer Gradient"
 msgstr "Přechod badatele fraktálů"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1185
+#: ../plug-ins/FractalExplorer/Dialogs.c:1193
 msgid "_Fractals"
 msgstr "_Fraktály"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1696
+#: ../plug-ins/FractalExplorer/Dialogs.c:1705
 #: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:200
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2013
-#: ../plug-ins/common/channel_mixer.c:1071 ../plug-ins/common/compressor.c:410
+#: ../plug-ins/common/channel_mixer.c:1062 ../plug-ins/common/compressor.c:410
 #: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:838
 #: ../plug-ins/common/dicom.c:690 ../plug-ins/common/gbr.c:616
 #: ../plug-ins/common/gif.c:993 ../plug-ins/common/gih.c:1258
@@ -393,26 +390,26 @@ msgstr "_Fraktály"
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nemohu otevřít '%s' pro zápis: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1710
+#: ../plug-ins/FractalExplorer/Dialogs.c:1719
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Nemohu zapsat '%s': %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1763
+#: ../plug-ins/FractalExplorer/Dialogs.c:1772
 msgid "Load Fractal Parameters"
 msgstr "Načíst parametry fraktálu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1799
+#: ../plug-ins/FractalExplorer/Dialogs.c:1808
 msgid "Save Fractal Parameters"
 msgstr "Zapsat parametry fraktálu"
 
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
-#: ../plug-ins/FractalExplorer/Dialogs.c:2005
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:917
+#: ../plug-ins/FractalExplorer/Dialogs.c:2014
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:930
 #: ../plug-ins/Lighting/lighting_ui.c:1312 ../plug-ins/bmp/bmpread.c:152
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2233
-#: ../plug-ins/common/channel_mixer.c:988 ../plug-ins/common/curve_bend.c:890
+#: ../plug-ins/common/channel_mixer.c:979 ../plug-ins/common/curve_bend.c:890
 #: ../plug-ins/common/dicom.c:295 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:309 ../plug-ins/common/gih.c:649
 #: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:321
@@ -437,40 +434,40 @@ msgstr "Zapsat parametry fraktálu"
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nemohu otevřít '%s' pro čtení: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2013
+#: ../plug-ins/FractalExplorer/Dialogs.c:2022
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "'%s' není soubor badatele fraktálů"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2019
+#: ../plug-ins/FractalExplorer/Dialogs.c:2028
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "'%s' je poškozen. Řádek %d Nesprávná sekce voleb"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:249
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:250
 msgid "_Fractal Explorer..."
 msgstr "Badatel _fraktálů..."
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:380
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:381
 msgid "Rendering fractal"
 msgstr "Počítá se fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:743
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:756
 #: ../plug-ins/gflare/gflare.c:3130
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Opravdu chcete odstranit \"%s\" ze seznamu a z disku?"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:747
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:760
 msgid "Delete Fractal"
 msgstr "Odstranit fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:938
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:951
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Soubor '%s' není souborem pro badatele fraktálů"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:947
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:960
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -479,27 +476,27 @@ msgstr ""
 "Soubor '%s' je poškozený.\n"
 "Řádek %d Nesprávná sekce voleb"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:991
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1004
 msgid "My first fractal"
 msgstr "Můj první fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1055
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1068
 msgid "Select folder and rescan collection"
 msgstr "Výběr adresáře a aktualizace souhrnu"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1067
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1080
 msgid "Apply currently selected fractal"
 msgstr "Použít právě zvolený fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1079
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1092
 msgid "Delete currently selected fractal"
 msgstr "Odstranit právě zvolený fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1102
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1115
 msgid "Rescan for Fractals"
 msgstr "Zaktualizovat fraktály"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1121
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1134
 msgid "Add FractalExplorer Path"
 msgstr "Přidat cestu pro badatele fraktálů"
 
@@ -1813,7 +1810,7 @@ msgid "Save Parameters To"
 msgstr "Uložit parametry do"
 
 #: ../plug-ins/common/CML_explorer.c:2068
-#: ../plug-ins/common/channel_mixer.c:1079
+#: ../plug-ins/common/channel_mixer.c:1070
 #, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "Parametry byly uloženy do '%s'"
@@ -1823,7 +1820,7 @@ msgid "CML Explorer: Overwrite File?"
 msgstr "CML badatel: Přepsat soubor?"
 
 #: ../plug-ins/common/CML_explorer.c:2103
-#: ../plug-ins/common/channel_mixer.c:1110
+#: ../plug-ins/common/channel_mixer.c:1101
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -2392,16 +2389,16 @@ msgstr "_Mixér kanálů..."
 #. printf("Channel Mixer:: Mode:%d  r %f  g %f  b %f\n ",
 #. param[3].data.d_int32, mix.black.red_gain,
 #. mix.black.green_gain, mix.black.blue_gain);
-#: ../plug-ins/common/channel_mixer.c:271
-#: ../plug-ins/common/channel_mixer.c:484
+#: ../plug-ins/common/channel_mixer.c:274
+#: ../plug-ins/common/channel_mixer.c:494
 msgid "Channel Mixer"
 msgstr "Mixér kanálů"
 
-#: ../plug-ins/common/channel_mixer.c:520
+#: ../plug-ins/common/channel_mixer.c:530
 msgid "O_utput channel:"
 msgstr "_Výstupní kanál:"
 
-#: ../plug-ins/common/channel_mixer.c:574 ../plug-ins/common/compose.c:185
+#: ../plug-ins/common/channel_mixer.c:584 ../plug-ins/common/compose.c:185
 #: ../plug-ins/common/compose.c:196 ../plug-ins/common/diffraction.c:501
 #: ../plug-ins/common/diffraction.c:539 ../plug-ins/common/diffraction.c:577
 #: ../plug-ins/common/exchange.c:399 ../plug-ins/common/noisify.c:530
@@ -2409,7 +2406,7 @@ msgstr "_Výstupní kanál:"
 msgid "_Red:"
 msgstr "Če_rvená:"
 
-#: ../plug-ins/common/channel_mixer.c:592 ../plug-ins/common/compose.c:186
+#: ../plug-ins/common/channel_mixer.c:602 ../plug-ins/common/compose.c:186
 #: ../plug-ins/common/compose.c:197 ../plug-ins/common/diffraction.c:510
 #: ../plug-ins/common/diffraction.c:548 ../plug-ins/common/diffraction.c:586
 #: ../plug-ins/common/exchange.c:459 ../plug-ins/common/noisify.c:531
@@ -2417,7 +2414,7 @@ msgstr "Če_rvená:"
 msgid "_Green:"
 msgstr "_Zelená:"
 
-#: ../plug-ins/common/channel_mixer.c:611 ../plug-ins/common/compose.c:187
+#: ../plug-ins/common/channel_mixer.c:621 ../plug-ins/common/compose.c:187
 #: ../plug-ins/common/compose.c:198 ../plug-ins/common/diffraction.c:519
 #: ../plug-ins/common/diffraction.c:557 ../plug-ins/common/diffraction.c:595
 #: ../plug-ins/common/exchange.c:520 ../plug-ins/common/noisify.c:532
@@ -2425,24 +2422,23 @@ msgstr "_Zelená:"
 msgid "_Blue:"
 msgstr "_Modrá:"
 
-#. The monochrome toggle
-#: ../plug-ins/common/channel_mixer.c:622
+#: ../plug-ins/common/channel_mixer.c:633
 msgid "_Monochrome"
 msgstr "_Monochromatické"
 
-#: ../plug-ins/common/channel_mixer.c:635
+#: ../plug-ins/common/channel_mixer.c:646
 msgid "Preserve _luminosity"
 msgstr "Zachovat _jas"
 
-#: ../plug-ins/common/channel_mixer.c:884
+#: ../plug-ins/common/channel_mixer.c:875
 msgid "Load Channel Mixer Settings"
 msgstr "Načíst nastavení mixéru kanálů"
 
-#: ../plug-ins/common/channel_mixer.c:1011
+#: ../plug-ins/common/channel_mixer.c:1002
 msgid "Save Channel Mixer Settings"
 msgstr "Uložit nastavení mixéru kanálů"
 
-#: ../plug-ins/common/channel_mixer.c:1095
+#: ../plug-ins/common/channel_mixer.c:1086
 msgid "Channel Mixer File Operation Warning"
 msgstr "Varování operace souboru mixéru kanálů"
 
@@ -6397,7 +6393,7 @@ msgstr "_Vybrat..."
 msgid "_Slur..."
 msgstr "_Roztřepení..."
 
-#: ../plug-ins/common/randomize.c:744 ../plug-ins/common/snoise.c:617
+#: ../plug-ins/common/randomize.c:744 ../plug-ins/common/snoise.c:601
 msgid "_Random seed:"
 msgstr "_Hnízdo náhodných čísel:"
 
@@ -6509,7 +6505,7 @@ msgstr "Práh pro odstranění červeného oka."
 msgid "Manually selecting the eyes may improve the results."
 msgstr "Ruční výběr očí může vylepšit výsledky."
 
-#: ../plug-ins/common/redeye.c:319
+#: ../plug-ins/common/redeye.c:322
 msgid "Removing red eye"
 msgstr "Odstraňují se červené oči"
 
@@ -7047,29 +7043,29 @@ msgid "_Solid Noise..."
 msgstr "_Pevný šum..."
 
 #. Dialog initialization
-#: ../plug-ins/common/snoise.c:332 ../plug-ins/common/snoise.c:579
+#: ../plug-ins/common/snoise.c:317 ../plug-ins/common/snoise.c:563
 msgid "Solid Noise"
 msgstr "Pevný šum"
 
-#: ../plug-ins/common/snoise.c:630
+#: ../plug-ins/common/snoise.c:614
 msgid "_Detail:"
 msgstr "_Detail:"
 
 #. Turbulent
-#: ../plug-ins/common/snoise.c:640
+#: ../plug-ins/common/snoise.c:624
 msgid "T_urbulent"
 msgstr "_Turbulentní"
 
 #. Tilable
-#: ../plug-ins/common/snoise.c:654
+#: ../plug-ins/common/snoise.c:638
 msgid "T_ilable"
 msgstr "Dlažd_icovatelný"
 
-#: ../plug-ins/common/snoise.c:669
+#: ../plug-ins/common/snoise.c:653
 msgid "_X size:"
 msgstr "Velikost _X:"
 
-#: ../plug-ins/common/snoise.c:682
+#: ../plug-ins/common/snoise.c:666
 msgid "_Y size:"
 msgstr "Velikost _Y:"
 
@@ -8023,15 +8019,15 @@ msgstr "_Aditivní"
 msgid "_Rotated"
 msgstr "_Rotovaný"
 
-#: ../plug-ins/common/vinvert.c:72
+#: ../plug-ins/common/vinvert.c:88
 msgid "Invert the brightness of each pixel"
 msgstr "Invertovat jas každého pixelu"
 
-#: ../plug-ins/common/vinvert.c:83
+#: ../plug-ins/common/vinvert.c:102
 msgid "_Value Invert"
 msgstr "_Inverze hodnoty"
 
-#: ../plug-ins/common/vinvert.c:125
+#: ../plug-ins/common/vinvert.c:182
 msgid "Value Invert"
 msgstr "Inverze hodnoty"
 
