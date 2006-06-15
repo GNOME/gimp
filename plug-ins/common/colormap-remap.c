@@ -100,18 +100,20 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC_REMAP,
-                          N_("Remap the colormap"),
+                          N_("Rearrange the colormap"),
                           "This procedure takes an indexed image and lets you "
                           "alter the positions of colors in the colormap "
                           "without visually changing the image.",
                           "Mukund Sivaraman <muks@mukund.org>",
                           "Mukund Sivaraman <muks@mukund.org>",
                           "14th June 2006",
-                          N_("_Remap colormap"),
+                          N_("_Rearrange Colormap..."),
                           "INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (remap_args), 0,
                           remap_args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_PROC_REMAP, "<Image>/Colors/Map");
 
   gimp_install_procedure (PLUG_IN_PROC_SWAP,
                           N_("Swap two colors in the colormap"),
@@ -121,13 +123,11 @@ query (void)
                           "Mukund Sivaraman <muks@mukund.org>",
                           "Mukund Sivaraman <muks@mukund.org>",
                           "14th June 2006",
-                          N_("_Swap colormap"),
+                          N_("_Swap Colors"),
                           "INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (swap_args), 0,
                           swap_args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC_REMAP, "<Image>/Colors/Map");
 }
 
 static void
@@ -338,7 +338,7 @@ remap (gint32    image_ID,
   g_free (cmap);
   g_free (new_cmap);
 
-  gimp_progress_init (_("Remap colormap"));
+  gimp_progress_init (_("Rearranging the colormap"));
 
   layers = gimp_image_get_layers (image_ID, &num_layers);
 
@@ -470,7 +470,7 @@ remap_dialog (gint32  image_ID,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Remap colormap"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Rearrange Colormap"), PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC_REMAP,
 
@@ -490,8 +490,7 @@ remap_dialog (gint32  image_ID,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
 
-  label = gtk_label_new(_("Drag and drop colors below to rearrange the "
-                          "colormap.\n"
+  label = gtk_label_new(_("Drag and drop colors to rearrange the colormap.\n"
                           "The numbers shown are the original indices."));
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
   gimp_label_set_attributes (GTK_LABEL (label),

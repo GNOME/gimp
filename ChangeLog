@@ -1,5 +1,9 @@
 2006-06-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/colormap-remap.c: renamed to "Rearrange Colormap".
+
+2006-06-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/rcm/rcm.c
 	* plug-ins/rcm/rcm_dialog.c: renamed to "Rotate Colors"; it
 	doesn't actually work on indexed images at all.
