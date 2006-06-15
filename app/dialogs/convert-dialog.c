@@ -160,16 +160,18 @@ convert_dialog_new (GimpImage    *image,
 
   /*  palette  */
 
-  frame = gimp_enum_radio_frame_new_with_range (GIMP_TYPE_CONVERT_PALETTE_TYPE,
-                                                GIMP_MAKE_PALETTE,
-                                                palette_box ?
-                                                GIMP_CUSTOM_PALETTE : GIMP_MONO_PALETTE,
-                                                gtk_label_new (_("Colormap")),
-                                                G_CALLBACK (gimp_radio_button_update),
-                                                &dialog->palette_type,
-                                                &toggle);
+  frame =
+    gimp_enum_radio_frame_new_with_range (GIMP_TYPE_CONVERT_PALETTE_TYPE,
+                                          GIMP_MAKE_PALETTE,
+                                          (palette_box ?
+                                           GIMP_CUSTOM_PALETTE :
+                                           GIMP_MONO_PALETTE),
+                                          gtk_label_new (_("Colormap")),
+                                          G_CALLBACK (gimp_radio_button_update),
+                                          &dialog->palette_type,
+                                          &button);
 
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (toggle),
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
                                    dialog->palette_type);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -199,25 +201,26 @@ convert_dialog_new (GimpImage    *image,
   /*  custom palette  */
   if (palette_box)
     {
-      vbox = gtk_vbox_new (FALSE, 2);
-      gimp_enum_radio_frame_add (GTK_FRAME (frame), vbox, GIMP_CUSTOM_PALETTE);
-      gtk_widget_show (vbox);
-
-      gtk_box_pack_start (GTK_BOX (vbox), palette_box, FALSE, FALSE, 0);
+      gimp_enum_radio_frame_add (GTK_FRAME (frame),
+                                 palette_box, GIMP_CUSTOM_PALETTE);
       gtk_widget_show (palette_box);
-
-      toggle = gtk_check_button_new_with_mnemonic (_("_Remove unused colors "
-                                                     "from final palette"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                    dialog->remove_dups);
-      gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-      gtk_widget_show (toggle);
-
-      g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &dialog->remove_dups);
     }
 
+  vbox = gtk_bin_get_child (GTK_BIN (frame));
+
+  toggle = gtk_check_button_new_with_mnemonic (_("_Remove unused colors "
+                                                 "from colormap"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                dialog->remove_dups);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 3);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &dialog->remove_dups);
+
+  g_object_set_data (G_OBJECT (button), "inverse_sensitive", toggle);
+  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (button));
 
   /*  dithering  */
 
@@ -274,7 +277,7 @@ convert_dialog_response (GtkWidget     *widget,
       GimpProgress *progress;
 
       progress = gimp_progress_start (dialog->progress,
-                                      _("Converting to indexed"), FALSE);
+                                      _("Converting to indexed colors"), FALSE);
 
       /*  Convert the image to indexed color  */
       gimp_image_convert (dialog->image,

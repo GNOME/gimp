@@ -1018,8 +1018,7 @@ gimp_image_convert (GimpImage              *image,
 
       image->cmap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
 
-      if (remove_dups && ((palette_type == GIMP_WEB_PALETTE) ||
-                          (palette_type == GIMP_CUSTOM_PALETTE)))
+      if (remove_dups && (palette_type != GIMP_MAKE_PALETTE))
         {
           gint   i, j;
           guchar old_palette[256 * 3];

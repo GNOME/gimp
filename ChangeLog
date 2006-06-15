@@ -1,5 +1,15 @@
 2006-06-15  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-convert.c (gimp_image_convert): remove
+	duplicate colors for all palette types (except for MAKE_PALETTE
+	since there shouldn't be any unused colors then).  That's what
+	the PDB documentation claims the function would be doing.
+
+	* app/dialogs/convert-dialog.c: allow use of the "Remove unused
+	colors" toggle for all but the optimized palette.
+
+2006-06-15  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/image-actions.c (image_actions_update): improved
 	code to set the image mode radio actions; set their sensitivity
 	also.
