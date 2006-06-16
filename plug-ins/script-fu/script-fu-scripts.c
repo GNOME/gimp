@@ -71,7 +71,7 @@ static void       script_fu_script_proc    (const gchar            *name,
                                             gint                   *nreturn_vals,
                                             GimpParam             **return_vals);
 
-static SFScript * script_fu_find_script    (const gchar            *script_name);
+static SFScript * script_fu_find_script    (const gchar            *name);
 static void       script_fu_free_script    (SFScript               *script);
 
 static gint       script_fu_menu_compare   (gconstpointer           a,
@@ -170,7 +170,7 @@ script_fu_add_script (LISP a)
 
   /*  Find the script name  */
   val = get_c_string (car (a));
-  script->script_name = g_strdup (val);
+  script->name = g_strdup (val);
   a = cdr (a);
 
   /*  Find the script menu_path  */
@@ -178,9 +178,9 @@ script_fu_add_script (LISP a)
   script->menu_path = g_strdup (val);
   a = cdr (a);
 
-  /*  Find the script help  */
+  /*  Find the script blurb  */
   val = get_c_string (car (a));
-  script->help = g_strdup (val);
+  script->blurb = g_strdup (val);
   a = cdr (a);
 
   /*  Find the script author  */
@@ -706,8 +706,8 @@ script_fu_install_script (gpointer  foo G_GNUC_UNUSED,
       if (strncmp (script->menu_path, "<None>", 6) != 0)
         menu_path = script->menu_path;
 
-      gimp_install_temp_proc (script->script_name,
-                              script->help,
+      gimp_install_temp_proc (script->name,
+                              script->blurb,
                               "",
                               script->author,
                               script->copyright,
@@ -729,7 +729,7 @@ script_fu_install_script (gpointer  foo G_GNUC_UNUSED,
 static void
 script_fu_install_menu (SFMenu *menu)
 {
-  gimp_plugin_menu_register (menu->script->script_name, menu->menu_path);
+  gimp_plugin_menu_register (menu->script->name, menu->menu_path);
 
   g_free (menu->menu_path);
   g_free (menu);
@@ -822,7 +822,7 @@ script_fu_script_proc (const gchar      *name,
               gint     i;
 
               s = g_string_new ("(");
-              g_string_append (s, script->script_name);
+              g_string_append (s, script->name);
 
               for (i = 0; i < script->num_args; i++)
                 {
@@ -931,7 +931,7 @@ script_fu_lookup_script (gpointer      *foo G_GNUC_UNUSED,
     {
       SFScript *script = list->data;
 
-      if (strcmp (script->script_name, *name) == 0)
+      if (strcmp (script->name, *name) == 0)
         {
           /* store the script in the name pointer and stop the traversal */
           *name = script;
@@ -943,15 +943,15 @@ script_fu_lookup_script (gpointer      *foo G_GNUC_UNUSED,
 }
 
 static SFScript *
-script_fu_find_script (const gchar *script_name)
+script_fu_find_script (const gchar *name)
 {
-  gconstpointer script = script_name;
+  gconstpointer script = name;
 
   g_tree_foreach (script_tree,
                   (GTraverseFunc) script_fu_lookup_script,
                   &script);
 
-  if (script == script_name)
+  if (script == name)
     return NULL;
 
   return (SFScript *) script;
@@ -965,11 +965,11 @@ script_fu_free_script (SFScript *script)
   g_return_if_fail (script != NULL);
 
   /*  Uninstall the temporary procedure for this script  */
-  gimp_uninstall_temp_proc (script->script_name);
+  gimp_uninstall_temp_proc (script->name);
 
-  g_free (script->script_name);
+  g_free (script->name);
+  g_free (script->blurb);
   g_free (script->menu_path);
-  g_free (script->help);
   g_free (script->author);
   g_free (script->copyright);
   g_free (script->date);

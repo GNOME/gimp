@@ -1,5 +1,14 @@
 2006-06-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-types.h (struct SFScript): renamed
+	member "help" to "blurb" since that's what it is being used for
+	when the script procedure is registered.
+
+	* plug-ins/script-fu/script-fu-interface.c
+	* plug-ins/script-fu/script-fu-scripts.c: changed accordingly.
+
+2006-06-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_add_script):
 	use a canonical name for the automatically added run-mode parameter.
 	Untabbified.
