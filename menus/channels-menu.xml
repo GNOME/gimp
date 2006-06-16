@@ -15,5 +15,6 @@
     <menuitem action="channels-selection-add" />
     <menuitem action="channels-selection-subtract" />
     <menuitem action="channels-selection-intersect" />
+    <separator />
   </popup>
 </ui>

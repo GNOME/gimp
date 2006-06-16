@@ -304,6 +304,26 @@ plug_in_menus_menu_path_added (GimpPlugInProcedure *plug_in_proc,
           plug_in_menus_add_proc (manager, "/toolbox-menubar",
                                   plug_in_proc, menu_path);
         }
+      else if (! strcmp (manager->name, "<Layers>"))
+        {
+          plug_in_menus_add_proc (manager, "/layers-popup",
+                                  plug_in_proc, menu_path);
+        }
+      else if (! strcmp (manager->name, "<Channels>"))
+        {
+          plug_in_menus_add_proc (manager, "/channels-popup",
+                                  plug_in_proc, menu_path);
+        }
+      else if (! strcmp (manager->name, "<Vectors>"))
+        {
+          plug_in_menus_add_proc (manager, "/vectors-popup",
+                                  plug_in_proc, menu_path);
+        }
+      else if (! strcmp (manager->name, "<ColormapEditor>"))
+        {
+          plug_in_menus_add_proc (manager, "/colormap-editor-popup",
+                                  plug_in_proc, menu_path);
+        }
       else if (! strcmp (manager->name, "<Brushes>"))
         {
           plug_in_menus_add_proc (manager, "/brushes-popup",

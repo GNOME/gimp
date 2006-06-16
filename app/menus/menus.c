@@ -157,23 +157,26 @@ menus_init (Gimp              *gimp,
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Layers>",
                                       "layers",
+                                      "plug-in",
                                       NULL,
                                       "/layers-popup",
-                                      "layers-menu.xml", NULL,
+                                      "layers-menu.xml", plug_in_menus_setup,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Channels>",
                                       "channels",
+                                      "plug-in",
                                       NULL,
                                       "/channels-popup",
-                                      "channels-menu.xml", NULL,
+                                      "channels-menu.xml", plug_in_menus_setup,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Vectors>",
                                       "vectors",
+                                      "plug-in",
                                       NULL,
                                       "/vectors-popup",
-                                      "vectors-menu.xml", NULL,
+                                      "vectors-menu.xml", plug_in_menus_setup,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Dockable>",
@@ -283,9 +286,10 @@ menus_init (Gimp              *gimp,
 
   gimp_menu_factory_manager_register (global_menu_factory, "<ColormapEditor>",
                                       "colormap-editor",
+                                      "plug-in",
                                       NULL,
                                       "/colormap-editor-popup",
-                                      "colormap-editor-menu.xml", NULL,
+                                      "colormap-editor-menu.xml", plug_in_menus_setup,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<SelectionEditor>",

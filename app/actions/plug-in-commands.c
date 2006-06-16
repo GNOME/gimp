@@ -46,6 +46,8 @@
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpfontview.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpimageeditor.h"
+#include "widgets/gimpitemtreeview.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
 
@@ -59,17 +61,26 @@
 
 /*  local function prototypes  */
 
-static gint  plug_in_collect_data_args  (GtkAction   *action,
-                                         GimpObject  *object,
-                                         GValueArray *args,
-                                         gint         n_args);
-static gint  plug_in_collect_image_args (GtkAction   *action,
-                                         GimpDisplay *display,
-                                         GValueArray *args,
-                                         gint         n_args);
-static void  plug_in_reset_all_response (GtkWidget   *dialog,
-                                         gint         response_id,
-                                         Gimp        *gimp);
+static gint  plug_in_collect_data_args     (GtkAction   *action,
+                                            GimpObject  *object,
+                                            GValueArray *args,
+                                            gint         n_args);
+static gint  plug_in_collect_image_args    (GtkAction   *action,
+                                            GimpImage   *image,
+                                            GValueArray *args,
+                                            gint         n_args);
+static gint  plug_in_collect_item_args     (GtkAction   *action,
+                                            GimpImage   *image,
+                                            GimpItem    *item,
+                                            GValueArray *args,
+                                            gint         n_args);
+static gint  plug_in_collect_drawable_args (GtkAction   *action,
+                                            GimpImage   *image,
+                                            GValueArray *args,
+                                            gint         n_args);
+static void  plug_in_reset_all_response    (GtkWidget   *dialog,
+                                            gint         response_id,
+                                            Gimp        *gimp);
 
 
 /*  public functions  */
@@ -117,12 +128,45 @@ plug_in_run_cmd_callback (GtkAction           *action,
           n_args = plug_in_collect_data_args (action, object,
                                               args, n_args);
         }
+      else if (GIMP_IS_IMAGE_EDITOR (data))
+        {
+          GimpImageEditor *editor = GIMP_IMAGE_EDITOR (data);
+          GimpImage       *image;
+
+          image = gimp_image_editor_get_image (editor);
+
+          n_args = plug_in_collect_image_args (action, image,
+                                               args, n_args);
+        }
+      else if (GIMP_IS_ITEM_TREE_VIEW (data))
+        {
+          GimpItemTreeView *view = GIMP_ITEM_TREE_VIEW (data);
+          GimpImage        *image;
+          GimpItem         *item;
+
+          image = gimp_item_tree_view_get_image (view);
+
+          if (image)
+            item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
+          else
+            item = NULL;
+
+          n_args = plug_in_collect_item_args (action, image, item,
+                                              args, n_args);
+        }
       else
         {
+          GimpImage *image;
+
           display = action_data_get_display (data);
 
-          n_args = plug_in_collect_image_args (action, display,
-                                               args, n_args);
+          if (display)
+            image = display->image;
+          else
+            image = NULL;
+
+          n_args = plug_in_collect_drawable_args (action, image,
+                                                  args, n_args);
         }
       break;
 
@@ -261,24 +305,81 @@ plug_in_collect_data_args (GtkAction   *action,
 
 static gint
 plug_in_collect_image_args (GtkAction   *action,
-                            GimpDisplay *display,
+                            GimpImage   *image,
                             GValueArray *args,
                             gint         n_args)
 {
   if (args->n_values > n_args &&
       GIMP_VALUE_HOLDS_IMAGE_ID (&args->values[n_args]))
     {
-      if (display)
+      if (image)
         {
-          gimp_value_set_image (&args->values[n_args], display->image);
+          gimp_value_set_image (&args->values[n_args], image);
+          n_args++;
+        }
+      else
+        {
+          g_warning ("Uh-oh, no active image for the plug-in!");
+          return -1;
+        }
+    }
+
+  return n_args;
+}
+
+static gint
+plug_in_collect_item_args (GtkAction   *action,
+                           GimpImage   *image,
+                           GimpItem    *item,
+                           GValueArray *args,
+                           gint         n_args)
+{
+  if (args->n_values > n_args &&
+      GIMP_VALUE_HOLDS_IMAGE_ID (&args->values[n_args]))
+    {
+      if (image)
+        {
+          gimp_value_set_image (&args->values[n_args], image);
+          n_args++;
+
+          if (args->n_values > n_args &&
+              GIMP_VALUE_HOLDS_ITEM_ID (&args->values[n_args]))
+            {
+              if (item)
+                {
+                  gimp_value_set_item (&args->values[n_args], item);
+                  n_args++;
+                }
+              else
+                {
+                  g_warning ("Uh-oh, no active item for the plug-in!");
+                  return -1;
+                }
+            }
+        }
+    }
+
+  return n_args;
+}
+
+static gint
+plug_in_collect_drawable_args (GtkAction   *action,
+                               GimpImage   *image,
+                               GValueArray *args,
+                               gint         n_args)
+{
+  if (args->n_values > n_args &&
+      GIMP_VALUE_HOLDS_IMAGE_ID (&args->values[n_args]))
+    {
+      if (image)
+        {
+          gimp_value_set_image (&args->values[n_args], image);
           n_args++;
 
           if (args->n_values > n_args &&
               GIMP_VALUE_HOLDS_DRAWABLE_ID (&args->values[n_args]))
             {
-              GimpDrawable *drawable;
-
-              drawable = gimp_image_active_drawable (display->image);
+              GimpDrawable *drawable = gimp_image_active_drawable (image);
 
               if (drawable)
                 {

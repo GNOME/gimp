@@ -148,6 +148,14 @@ gimp_image_editor_set_image (GimpImageEditor *editor,
     }
 }
 
+GimpImage *
+gimp_image_editor_get_image (GimpImageEditor *editor)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE_EDITOR (editor), NULL);
+
+  return editor->image;
+}
+
 
 /*  private functions  */
 

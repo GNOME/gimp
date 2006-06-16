@@ -24,5 +24,6 @@
     <menuitem action="vectors-paste" />
     <menuitem action="vectors-export" />
     <menuitem action="vectors-import" />
+    <separator />
   </popup>
 </ui>

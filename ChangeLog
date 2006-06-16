@@ -1,3 +1,49 @@
+2006-06-16  Michael Natterer  <mitch@gimp.org>
+
+	Allow plug-ins to register in <Layers>, <Channels>, <Vectors> and
+	<ColormapEditor>:
+
+	* app/pdb/gimppluginprocedure.c
+	(gimp_plug_in_procedure_add_menu_path): added the argument type
+	checks for the new locations. Factored out duplicated code.
+
+	* app/menus/menus.c (menus_init): add the "plug-in" action
+	group to the resp. UI managers.
+
+	* app/menus/plug-in-menus.c (plug_in_menus_menu_path_added):
+	support them here too.
+
+	* app/widgets/gimpimageeditor.[ch]
+	* app/widgets/gimpitemtreeview.[ch]: added get_image() functions.
+
+	* app/actions/plug-in-commands.c: added new utility functions
+	which collect plug-in arguments from GimpImageEditor and
+	GimpItemTreeView widgets.
+
+	* menus/channels-menu.xml
+	* menus/colormap-editor-menu.xml
+	* menus/layers-menu.xml
+	* menus/vectors-menu.xml: added separators.
+
+	* menus/image-menu.xml.in: added a "Colormap" placeholder in
+	Colors/Map
+
+	* plug-ins/common/colormap-remap.c (query): register a menu
+	entry in <ColormapEditor> and moved the existing one to the
+	"Colormap" placeholder. Also register an icon to make this
+	menu item clearly distinct from the others in that menu.
+
+	Unrelated:
+
+	* plug-ins/common/colormap-remap.c (run): cleaned up quite a
+	bit. Fixed last-vals code and simplified map handling.
+
+	(remap_swap): removed, folded into run().
+
+	(remap_dialog): use the passed map to initialize the dialog so it
+	starts with the last-vals. Tweaked layout to have 16 columns
+	and simplified cell renderer creation.
+
 2006-06-16  Manish Singh  <yosh@gimp.org>
 
 	* app/errors.c

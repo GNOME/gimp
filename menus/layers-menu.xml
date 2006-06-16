@@ -42,5 +42,6 @@
     <separator />
     <menuitem action="layers-merge-layers" />
     <menuitem action="layers-flatten-image" />
+    <separator />
   </popup>
 </ui>

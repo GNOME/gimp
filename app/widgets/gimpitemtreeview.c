@@ -477,6 +477,14 @@ gimp_item_tree_view_set_image (GimpItemTreeView *view,
   gimp_ui_manager_update (GIMP_EDITOR (view)->ui_manager, view);
 }
 
+GimpImage *
+gimp_item_tree_view_get_image (GimpItemTreeView *view)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM_TREE_VIEW (view), NULL);
+
+  return view->image;
+}
+
 static void
 gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
                                     GimpImage        *image)

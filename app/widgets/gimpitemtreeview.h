@@ -115,18 +115,19 @@ struct _GimpItemTreeViewClass
 };
 
 
-GType       gimp_item_tree_view_get_type (void) G_GNUC_CONST;
+GType       gimp_item_tree_view_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_item_tree_view_new      (GType            view_type,
-                                          gint             view_size,
-                                          gint             view_border_width,
-                                          GimpImage       *image,
-                                          GimpMenuFactory *menu_facotry,
-                                          const gchar     *menu_identifier,
-                                          const gchar     *ui_identifier);
+GtkWidget * gimp_item_tree_view_new       (GType             view_type,
+                                           gint              view_size,
+                                           gint              view_border_width,
+                                           GimpImage        *image,
+                                           GimpMenuFactory  *menu_facotry,
+                                           const gchar      *menu_identifier,
+                                           const gchar      *ui_identifier);
 
-void       gimp_item_tree_view_set_image (GimpItemTreeView *view,
-                                          GimpImage        *image);
+void        gimp_item_tree_view_set_image (GimpItemTreeView *view,
+                                           GimpImage        *image);
+GimpImage * gimp_item_tree_view_get_image (GimpItemTreeView *view);
 
 
 #endif  /*  __GIMP_ITEM_TREE_VIEW_H__  */

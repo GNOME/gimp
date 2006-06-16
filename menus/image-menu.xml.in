@@ -467,7 +467,10 @@
         <menuitem action="drawable-levels-stretch" />
       </menu>
       <menu action="colors-components-menu" name="Components" />
-      <menu action="colors-map-menu" name="Map" />
+      <menu action="colors-map-menu" name="Map">
+        <placeholder name="Colormap" />
+        <separator />
+      </menu>
       <menu action="colors-info-menu" name="Info">
         <menuitem action="dialogs-histogram" />
       </menu>
