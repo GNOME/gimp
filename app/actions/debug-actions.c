@@ -37,7 +37,7 @@ static const GimpActionEntry debug_actions[] =
   { "debug-menu", NULL, "D_ebug" },
 
   { "debug-mem-profile", NULL,
-    "_Mem Profile", NULL, NULL,
+    "_Memory Profile", NULL, NULL,
     G_CALLBACK (debug_mem_profile_cmd_callback),
     NULL },
 

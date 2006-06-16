@@ -1,5 +1,9 @@
 2006-06-16  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/debug-actions.c: no need to be extra concise here.
+
+2006-06-16  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/image-commands.c (image_convert_cmd_callback):
 	always call gimp_image_flush() so that the image mode radio
 	buttons reflect the image state.  Attach the indexed conversion
