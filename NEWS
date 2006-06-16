@@ -7,6 +7,21 @@ This is the development branch of GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.3.10
+======================
+
+- added plug-in for colormap manipulation
+- use radio items for the image mode menu
+- added string undo/redo functions bound to Shift-Ctrl-[ZY]
+- speed up Value Invert plug-in
+- let Fractal Explorer work on grayscale and give it a larger preview
+- more work on the new selection tools
+- allow use CSS color notation in Script-Fu
+- the Align tool now also aligns to guides
+- added support for a registration color in the Decompose plug-in
+- bug fixes and code cleanup
+
+
 Changes in GIMP 2.3.9
 =====================
 
