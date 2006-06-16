@@ -1,5 +1,13 @@
 2006-06-16  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/xbm.c: increased the max length for the
+	identifier prefix from 24 to 64 chars. I have no idea if this
+	violates any spec or produces identifiers too long for stone age C
+	standards, but 24 did truncate the identifiers in the newly added
+	edge and corner cursors.
+
+2006-06-16  Michael Natterer  <mitch@gimp.org>
+
 	Allow plug-ins to register in <Layers>, <Channels>, <Vectors> and
 	<ColormapEditor>:
 

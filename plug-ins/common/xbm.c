@@ -61,7 +61,7 @@
 
 /* C identifier prefix. */
 #define DEFAULT_PREFIX "bitmap"
-#define MAX_PREFIX     24
+#define MAX_PREFIX     64
 
 /* Whether or not to save as X10 bitmap. */
 #define DEFAULT_X10_FORMAT FALSE
