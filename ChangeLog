@@ -1,5 +1,22 @@
 2006-06-16  Sven Neumann  <neumann@jpk.com>
 
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-colormap-*.png
+	* themes/Default/images/stock-indexed-palette-*.png: renamed
+	stock-indexed-palette to stock-colormap.
+
+	* libgimpwidgets/gimpstock.[ch]: deprecated
+	GIMP_STOCK_INDEXED_PALETTE in favor of GIMP_STOCK_COLORMAP.
+
+	* app/actions/actions.c
+	* app/actions/colormap-editor-actions.c
+	* app/actions/colormap-editor-commands.c
+	* app/actions/context-actions.c
+	* app/actions/dialogs-actions.c
+	* app/dialogs/dialogs.c: use the new stock-id.
+
+2006-06-16  Sven Neumann  <neumann@jpk.com>
+
 	* app/pdb/gimppluginprocedure.c (gimp_plug_in_procedure_get_label): 
 	* plug-ins/script-fu/script-fu-interface.c (script_fu_interface):
 	when cutting away ellipsis, also look for U+2026 HORIZONTAL ELLIPSIS.

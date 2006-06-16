@@ -39,7 +39,7 @@
 
 static const GimpActionEntry colormap_editor_actions[] =
 {
-  { "colormap-editor-popup", GIMP_STOCK_INDEXED_PALETTE,
+  { "colormap-editor-popup", GIMP_STOCK_COLORMAP,
     N_("Colormap Menu"), NULL, NULL, NULL,
     GIMP_HELP_INDEXED_PALETTE_DIALOG },
 

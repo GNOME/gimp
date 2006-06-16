@@ -107,7 +107,7 @@ static GimpActionFactoryEntry action_groups[] =
   { "channels", N_("Channels"), GIMP_STOCK_CHANNEL,
     channels_actions_setup,
     channels_actions_update },
-  { "colormap-editor", N_("Colormap Editor"), GIMP_STOCK_INDEXED_PALETTE,
+  { "colormap-editor", N_("Colormap Editor"), GIMP_STOCK_COLORMAP,
     colormap_editor_actions_setup,
     colormap_editor_actions_update },
   { "context", N_("Context"), NULL,

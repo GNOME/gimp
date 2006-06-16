@@ -74,7 +74,7 @@ colormap_editor_edit_color_cmd_callback (GtkAction *action,
       editor->color_dialog =
         gimp_color_dialog_new (GIMP_VIEWABLE (image),
                                _("Edit Colormap Entry"),
-                               GIMP_STOCK_INDEXED_PALETTE,
+                               GIMP_STOCK_COLORMAP,
                                desc,
                                GTK_WIDGET (editor),
                                gimp_dialog_factory_from_name ("toplevel"),

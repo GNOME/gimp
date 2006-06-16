@@ -176,7 +176,7 @@ static const GimpDialogFactoryEntry dock_entries[] =
             GIMP_HELP_PATH_DIALOG,
             dialogs_vectors_list_view_new, 0, FALSE),
   DOCKABLE ("gimp-indexed-palette",
-            N_("Colormap"), NULL, GIMP_STOCK_INDEXED_PALETTE,
+            N_("Colormap"), NULL, GIMP_STOCK_COLORMAP,
             GIMP_HELP_INDEXED_PALETTE_DIALOG,
             dialogs_colormap_editor_new, 0, FALSE),
   DOCKABLE ("gimp-histogram-editor",

@@ -30,6 +30,7 @@ STOCK_MENU_IMAGES = \
 	stock-channel-red-16.png			\
 	stock-channels-16.png				\
 	stock-close-12.png				\
+	stock-colormap-16.png				\
 	stock-convert-grayscale-16.png			\
 	stock-convert-indexed-16.png			\
 	stock-convert-rgb-16.png			\
@@ -59,7 +60,6 @@ STOCK_MENU_IMAGES = \
 	stock-image-16.png				\
 	stock-images-16.png				\
 	stock-info-16.png				\
-	stock-indexed-palette-16.png			\
 	stock-invert-16.png				\
 	stock-join-bevel-16.png				\
 	stock-join-miter-16.png				\
@@ -129,6 +129,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-color-picker-white-18.png		\
 	stock-color-pick-from-screen-16.png	\
 	stock-color-triangle-16.png		\
+	stock-colormap-24.png			\
 	stock-cursor-24.png			\
 	stock-curve-free-16.png			\
 	stock-curve-smooth-16.png		\
@@ -152,7 +153,6 @@ STOCK_BUTTON_IMAGES = \
 	stock-histogram-22.png			\
 	stock-image-24.png			\
 	stock-images-24.png			\
-	stock-indexed-palette-24.png		\
 	stock-info-24.png			\
 	stock-layer-24.png			\
 	stock-layer-mask-24.png			\
