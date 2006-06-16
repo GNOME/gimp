@@ -11,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-14 13:32+0200\n"
-"PO-Revision-Date: 2006-06-14 13:32+0200\n"
+"POT-Creation-Date: 2006-06-16 13:32+0200\n"
+"PO-Revision-Date: 2006-06-16 13:31+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team: Czech <cs@li.org>\n"
+"Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -887,7 +887,7 @@ msgstr "_Cesty"
 msgid "Color_map"
 msgstr "_Mapa barev"
 
-#: ../app/actions/dialogs-actions.c:90 ../app/dialogs/convert-dialog.c:167
+#: ../app/actions/dialogs-actions.c:90 ../app/dialogs/convert-dialog.c:169
 #: ../app/dialogs/dialogs.c:179
 msgid "Colormap"
 msgstr "Mapa barev"
@@ -1268,7 +1268,7 @@ msgstr "_Viditelné"
 msgid "Toggle visibility"
 msgstr "Přepnout viditelnost"
 
-#: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:168
+#: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:165
 msgid "Flip _Horizontally"
 msgstr "Překlopit _vodorovně"
 
@@ -1276,7 +1276,7 @@ msgstr "Překlopit _vodorovně"
 msgid "Flip horizontally"
 msgstr "Překlopit vodorovně"
 
-#: ../app/actions/drawable-actions.c:101 ../app/actions/image-actions.c:174
+#: ../app/actions/drawable-actions.c:101 ../app/actions/image-actions.c:171
 msgid "Flip _Vertically"
 msgstr "Překlopit _svisle"
 
@@ -1284,7 +1284,7 @@ msgstr "Překlopit _svisle"
 msgid "Flip vertically"
 msgstr "Překlopit svisle"
 
-#: ../app/actions/drawable-actions.c:110 ../app/actions/image-actions.c:183
+#: ../app/actions/drawable-actions.c:110 ../app/actions/image-actions.c:180
 msgid "Rotate 90° _clockwise"
 msgstr "Rotovat o 90° _doprava"
 
@@ -1292,7 +1292,7 @@ msgstr "Rotovat o 90° _doprava"
 msgid "Rotate 90 degrees to the right"
 msgstr "Rotovat o 90 stupňů doprava"
 
-#: ../app/actions/drawable-actions.c:116 ../app/actions/image-actions.c:189
+#: ../app/actions/drawable-actions.c:116 ../app/actions/image-actions.c:186
 msgid "Rotate _180°"
 msgstr "Rotovat o _180 stupňů"
 
@@ -1300,7 +1300,7 @@ msgstr "Rotovat o _180 stupňů"
 msgid "Turn upside-down"
 msgstr "Otočit vzhůru nohama"
 
-#: ../app/actions/drawable-actions.c:122 ../app/actions/image-actions.c:195
+#: ../app/actions/drawable-actions.c:122 ../app/actions/image-actions.c:192
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Rotovat o 90° do_leva"
 
@@ -2248,82 +2248,82 @@ msgstr "Zobrazit informace o tomto obrázku"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Převést obrázek do barevného prostoru RGB"
 
-#: ../app/actions/image-actions.c:153
+#: ../app/actions/image-actions.c:152
 msgid "_Grayscale"
 msgstr "_Odstíny šedi"
 
-#: ../app/actions/image-actions.c:154
+#: ../app/actions/image-actions.c:153
 msgid "Convert the image to grayscale"
 msgstr "Převést obrázek do odstínů šedi"
 
-#: ../app/actions/image-actions.c:159
+#: ../app/actions/image-actions.c:157
 msgid "_Indexed..."
 msgstr "_Indexovaná..."
 
-#: ../app/actions/image-actions.c:160
+#: ../app/actions/image-actions.c:158
 msgid "Convert the image to indexed colors"
 msgstr "Převést obrázek do indexovaných barev"
 
-#: ../app/actions/image-actions.c:169
+#: ../app/actions/image-actions.c:166
 msgid "Flip image horizontally"
 msgstr "Překlopit obrázek vodorovně"
 
-#: ../app/actions/image-actions.c:175
+#: ../app/actions/image-actions.c:172
 msgid "Flip image vertically"
 msgstr "Překlopit obrázek svisle"
 
-#: ../app/actions/image-actions.c:184
+#: ../app/actions/image-actions.c:181
 msgid "Rotate the image 90 degrees to the right"
 msgstr "Rotovat obrázek o 90 stupňů doprava"
 
-#: ../app/actions/image-actions.c:190
+#: ../app/actions/image-actions.c:187
 msgid "Turn the image upside-down"
 msgstr "Převrátit obrázek vzhůru nohama"
 
-#: ../app/actions/image-actions.c:196
+#: ../app/actions/image-actions.c:193
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Rotovat obrázek 90 stupňů doleva"
 
-#: ../app/actions/image-commands.c:202
+#: ../app/actions/image-commands.c:232
 msgid "Set Image Canvas Size"
 msgstr "Nastavení velikosti plátna obrázku"
 
-#: ../app/actions/image-commands.c:228 ../app/actions/image-commands.c:489
+#: ../app/actions/image-commands.c:258 ../app/actions/image-commands.c:519
 msgid "Resizing"
 msgstr "Měním velikost..."
 
-#: ../app/actions/image-commands.c:251
+#: ../app/actions/image-commands.c:281
 msgid "Set Image Print Resolution"
 msgstr "Nastavit rozlišení tisku obrázku"
 
-#: ../app/actions/image-commands.c:298
+#: ../app/actions/image-commands.c:328
 #: ../app/pdb/drawable_transform_cmds.c:143
 #: ../app/pdb/drawable_transform_cmds.c:218
 msgid "Flipping"
 msgstr "Překlápím..."
 
-#: ../app/actions/image-commands.c:319
+#: ../app/actions/image-commands.c:349
 #: ../app/pdb/drawable_transform_cmds.c:515
 #: ../app/pdb/drawable_transform_cmds.c:593
 #: ../app/pdb/transform_tools_cmds.c:207 ../app/tools/gimprotatetool.c:116
 msgid "Rotating"
 msgstr "Rotuji..."
 
-#: ../app/actions/image-commands.c:341 ../app/actions/layers-commands.c:601
+#: ../app/actions/image-commands.c:371 ../app/actions/layers-commands.c:601
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nelze oříznout, protože zvolená oblast je prázdná."
 
-#: ../app/actions/image-commands.c:525
+#: ../app/actions/image-commands.c:555
 msgid "Change Print Size"
 msgstr "Změnit velikost tisku"
 
-#: ../app/actions/image-commands.c:549 ../app/core/gimpimage-scale.c:73
+#: ../app/actions/image-commands.c:579 ../app/core/gimpimage-scale.c:73
 #: ../app/dialogs/image-scale-dialog.c:97
 msgid "Scale Image"
 msgstr "Velikost obrázku"
 
 #. Scaling
-#: ../app/actions/image-commands.c:562 ../app/actions/layers-commands.c:1052
+#: ../app/actions/image-commands.c:592 ../app/actions/layers-commands.c:1052
 #: ../app/dialogs/preferences-dialog.c:1759
 #: ../app/pdb/drawable_transform_cmds.c:670
 #: ../app/pdb/drawable_transform_cmds.c:745
@@ -6337,32 +6337,32 @@ msgstr "Převést obrázek na indexované barvy"
 msgid "C_onvert"
 msgstr "K_onvertovat"
 
-#: ../app/dialogs/convert-dialog.c:182
+#: ../app/dialogs/convert-dialog.c:184
 msgid "_Maximum number of colors:"
 msgstr "Ma_ximální počet barev:"
 
-#: ../app/dialogs/convert-dialog.c:209
-msgid "_Remove unused colors from final palette"
-msgstr "_Odstranit z konečné palety nepoužité barvy"
+#: ../app/dialogs/convert-dialog.c:211
+msgid "_Remove unused colors from colormap"
+msgstr "_Odstranit nepoužívané barvy z barevné mapy"
 
 #. dithering
-#: ../app/dialogs/convert-dialog.c:224 ../app/tools/gimpblendoptions.c:239
+#: ../app/dialogs/convert-dialog.c:227 ../app/tools/gimpblendoptions.c:239
 msgid "Dithering"
 msgstr "Rozptyl"
 
-#: ../app/dialogs/convert-dialog.c:236
+#: ../app/dialogs/convert-dialog.c:239
 msgid "Color _dithering:"
 msgstr "_Rozptyl barev:"
 
-#: ../app/dialogs/convert-dialog.c:251
+#: ../app/dialogs/convert-dialog.c:254
 msgid "Enable dithering of _transparency"
 msgstr "_Povolit rozptyl průhlednosti"
 
-#: ../app/dialogs/convert-dialog.c:277
-msgid "Converting to indexed"
-msgstr "Převádím na indexovaný"
+#: ../app/dialogs/convert-dialog.c:280
+msgid "Converting to indexed colors"
+msgstr "Převádím do indexovaných barev"
 
-#: ../app/dialogs/convert-dialog.c:392
+#: ../app/dialogs/convert-dialog.c:395
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Nemohu převést do palety s více než 256 barvami."
 
