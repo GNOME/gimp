@@ -1,5 +1,11 @@
 2006-06-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_add_script):
+	use a canonical name for the automatically added run-mode parameter.
+	Untabbified.
+
+2006-06-16  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimplist.c (gimp_list_new, gimp_list_new_weak): for
 	debugging purposes, set the children type as the name of the list.
 
