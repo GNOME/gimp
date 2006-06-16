@@ -1,5 +1,12 @@
 2006-06-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-interface.c: removed the About
+	dialog.  That information is available from the Procedure Browser
+	and scripts should look and feel as much like plug-ins as
+	possible.
+
+2006-06-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-types.h (struct SFScript): renamed
 	member "help" to "blurb" since that's what it is being used for
 	when the script procedure is registered.

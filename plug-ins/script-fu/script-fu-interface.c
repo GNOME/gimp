@@ -52,11 +52,7 @@ typedef struct
   GtkWidget     *progress_label;
   GtkWidget     *progress_bar;
 
-  GtkWidget     *about_dialog;
-
-  gchar         *short_title;
   gchar         *title;
-  gchar         *help_id;
   gchar         *last_command;
   gint           command_count;
   gint           consec_command_count;
@@ -74,7 +70,6 @@ static void   script_fu_response            (GtkWidget            *widget,
                                              SFScript             *script);
 static void   script_fu_ok                  (SFScript             *script);
 static void   script_fu_reset               (SFScript             *script);
-static void   script_fu_about               (SFScript             *script);
 
 static void   script_fu_file_callback       (GtkWidget            *widget,
                                              SFFilename           *file);
@@ -161,13 +156,14 @@ script_fu_interface_report_cc (const gchar *command)
 void
 script_fu_interface (SFScript *script)
 {
-  GtkWidget    *dlg;
+  GtkWidget    *dialog;
   GtkWidget    *menu;
   GtkWidget    *vbox;
   GtkWidget    *vbox2;
   GtkSizeGroup *group;
   GSList       *list;
   gchar        *tmp;
+  gchar        *title;
   gint          i;
 
   static gboolean gtk_initted = FALSE;
@@ -183,7 +179,7 @@ script_fu_interface (SFScript *script)
                            "at the same time."),
                          _("You are already running the \"%s\" script."));
 
-      g_message (message, sf_interface->short_title);
+      g_message (message, sf_interface->title);
       g_free (message);
 
       return;
@@ -206,56 +202,53 @@ script_fu_interface (SFScript *script)
   /* strip the first part of the menupath if it contains _("/Script-Fu/") */
   tmp = strstr (gettext (script->menu_path), _("/Script-Fu/"));
   if (tmp)
-    sf_interface->short_title = g_strdup (tmp + strlen (_("/Script-Fu/")));
+    sf_interface->title = g_strdup (tmp + strlen (_("/Script-Fu/")));
   else
-    sf_interface->short_title = g_strdup (gettext (script->menu_path));
+    sf_interface->title = g_strdup (gettext (script->menu_path));
 
   /* strip mnemonics from the menupath */
-  tmp = gimp_strip_uline (sf_interface->short_title);
-  g_free (sf_interface->short_title);
-  sf_interface->short_title = tmp;
+  tmp = gimp_strip_uline (sf_interface->title);
+  g_free (sf_interface->title);
+  sf_interface->title = tmp;
 
-  tmp = strstr (sf_interface->short_title, "...");
+  tmp = strstr (sf_interface->title, "...");
   if (tmp)
     *tmp = '\0';
 
-  sf_interface->title = g_strdup_printf (_("Script-Fu: %s"),
-                                         sf_interface->short_title);
+  title = g_strdup_printf (_("Script-Fu: %s"), sf_interface->title);
 
-  sf_interface->help_id = g_strdup (script->name);
-
-  sf_interface->dialog = dlg =
-    gimp_dialog_new (sf_interface->title, "script-fu",
+  sf_interface->dialog = dialog =
+    gimp_dialog_new (title, "script-fu",
                      NULL, 0,
-                     gimp_standard_help_func, sf_interface->help_id,
+                     gimp_standard_help_func, script->name,
 
-                     GTK_STOCK_ABOUT,  GTK_RESPONSE_HELP,
                      GIMP_STOCK_RESET, RESPONSE_RESET,
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                      GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                      NULL);
+  g_free (title);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (sf_interface->dialog),
-                                           GTK_RESPONSE_HELP,
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  g_signal_connect (dlg, "response",
+  g_signal_connect (dialog, "response",
                     G_CALLBACK (script_fu_response),
                     script);
 
-  g_signal_connect_swapped (dlg, "destroy",
+  g_signal_connect_swapped (dialog, "destroy",
                             G_CALLBACK (script_fu_interface_quit),
                             script);
 
-  gtk_window_set_resizable (GTK_WINDOW (dlg), TRUE);
+  gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+                      vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
   /*  The argument table  */
@@ -567,7 +560,7 @@ script_fu_interface (SFScript *script)
                       FALSE, FALSE, 0);
   gtk_widget_show (sf_interface->progress_label);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
   gtk_main ();
 }
@@ -580,12 +573,7 @@ script_fu_interface_quit (SFScript *script)
   g_return_if_fail (script != NULL);
   g_return_if_fail (sf_interface != NULL);
 
-  g_free (sf_interface->short_title);
   g_free (sf_interface->title);
-  g_free (sf_interface->help_id);
-
-  if (sf_interface->about_dialog)
-    gtk_widget_destroy (sf_interface->about_dialog);
 
   for (i = 0; i < script->num_args; i++)
     switch (script->arg_types[i])
@@ -726,10 +714,6 @@ script_fu_response (GtkWidget *widget,
 
   switch (response_id)
     {
-    case GTK_RESPONSE_HELP:
-      script_fu_about (script);
-      break;
-
     case RESPONSE_RESET:
       script_fu_reset (script);
       break;
@@ -993,116 +977,4 @@ script_fu_reset (SFScript *script)
           break;
         }
     }
-}
-
-static void
-script_fu_about (SFScript *script)
-{
-  GtkWidget     *dialog = sf_interface->about_dialog;
-  GtkWidget     *vbox;
-  GtkWidget     *label;
-  GtkWidget     *scrolled_window;
-  GtkWidget     *table;
-  GtkWidget     *text_view;
-  GtkTextBuffer *text_buffer;
-
-  if (! dialog)
-    {
-      gchar *title = g_strdup_printf (_("About %s"), sf_interface->title);
-
-      sf_interface->about_dialog = dialog =
-        gimp_dialog_new (title, "script-fu-about",
-                         sf_interface->dialog, 0,
-                         gimp_standard_help_func, sf_interface->help_id,
-
-                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-
-                         NULL);
-      g_free (title);
-
-      g_signal_connect (dialog, "response",
-                        G_CALLBACK (gtk_widget_destroy),
-                        NULL);
-
-      g_signal_connect (dialog, "destroy",
-			G_CALLBACK (gtk_widget_destroyed),
-			&sf_interface->about_dialog);
-
-      vbox = gtk_vbox_new (FALSE, 12);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
-			  TRUE, TRUE, 0);
-      gtk_widget_show (vbox);
-
-      /* the name */
-      label = gtk_label_new (script->name);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      /* the help display */
-      scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-      gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-				      GTK_POLICY_AUTOMATIC,
-				      GTK_POLICY_AUTOMATIC);
-      gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
-      gtk_widget_show (scrolled_window);
-
-      text_buffer = gtk_text_buffer_new (NULL);
-      text_view = gtk_text_view_new_with_buffer (text_buffer);
-      g_object_unref (text_buffer);
-
-      gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
-      gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
-      gtk_text_view_set_left_margin (GTK_TEXT_VIEW (text_view), 3);
-      gtk_text_view_set_right_margin (GTK_TEXT_VIEW (text_view), 3);
-      gtk_widget_set_size_request (text_view, 240, 120);
-      gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
-      gtk_widget_show (text_view);
-
-      gtk_text_buffer_set_text (text_buffer, script->blurb, -1);
-
-      /* author, copyright, etc. */
-      table = gtk_table_new (2, 4, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-      gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-      gtk_widget_show (table);
-
-      label = gtk_label_new (script->author);
-      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				 _("Author:"), 0.0, 0.0,
-				 label, 1, FALSE);
-
-      label = gtk_label_new (script->copyright);
-      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-				 _("Copyright:"), 0.0, 0.0,
-				 label, 1, FALSE);
-
-      label = gtk_label_new (script->date);
-      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-				 _("Date:"), 0.0, 0.0,
-				 label, 1, FALSE);
-
-      if (strlen (script->img_types) > 0)
-	{
-	  label = gtk_label_new (script->img_types);
-          gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-	  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-				     _("Image Types:"), 0.0, 0.0,
-				     label, 1, FALSE);
-	}
-    }
-
-  gtk_window_present (GTK_WINDOW (dialog));
-
-  /*  move focus from the text view to the Close button  */
-  gtk_widget_child_focus (dialog, GTK_DIR_TAB_FORWARD);
 }
