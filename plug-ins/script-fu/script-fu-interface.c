@@ -211,8 +211,13 @@ script_fu_interface (SFScript *script)
   g_free (sf_interface->title);
   sf_interface->title = tmp;
 
-  tmp = strstr (sf_interface->title, "...");
-  if (tmp)
+  /* cut off ellipsis */
+  tmp = (strstr (sf_interface->title, "..."));
+  if (! tmp)
+    /* U+2026 HORIZONTAL ELLIPSIS */
+    tmp = strstr (sf_interface->title, "\342\200\246");
+
+  if (tmp && tmp == (sf_interface->title + strlen (sf_interface->title) - 3))
     *tmp = '\0';
 
   title = g_strdup_printf (_("Script-Fu: %s"), sf_interface->title);

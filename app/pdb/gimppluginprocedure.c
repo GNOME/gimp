@@ -466,11 +466,11 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
 
 gchar *
 gimp_plug_in_procedure_get_label (const GimpPlugInProcedure *proc,
-                                  const gchar         *locale_domain)
+                                  const gchar               *locale_domain)
 {
   const gchar *path;
   gchar       *stripped;
-  gchar       *ellipses;
+  gchar       *ellipsis;
   gchar       *label;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
@@ -491,19 +491,22 @@ gimp_plug_in_procedure_get_label (const GimpPlugInProcedure *proc,
 
   g_free (stripped);
 
-  ellipses = strstr (label, "...");
+  ellipsis = strstr (label, "...");
 
-  if (ellipses && ellipses == (label + strlen (label) - 3))
-    *ellipses = '\0';
+  if (! ellipsis)
+    ellipsis = strstr (label, "\342\200\246" /* U+2026 HORIZONTAL ELLIPSIS */);
+
+  if (ellipsis && ellipsis == (label + strlen (label) - 3))
+    *ellipsis = '\0';
 
   return label;
 }
 
 void
 gimp_plug_in_procedure_set_icon (GimpPlugInProcedure *proc,
-                                 GimpIconType   icon_type,
-                                 const guint8  *icon_data,
-                                 gint           icon_data_length)
+                                 GimpIconType         icon_type,
+                                 const guint8        *icon_data,
+                                 gint                 icon_data_length)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
   g_return_if_fail (icon_type == -1 || icon_data != NULL);
