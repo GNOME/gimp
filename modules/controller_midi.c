@@ -22,7 +22,7 @@
 
 #include "config.h"
 
-#define _BSD_SOURCE  /* the ALSA headers need this */
+#define _GNU_SOURCE  /* the ALSA headers need this */
 
 #include <errno.h>
 #include <fcntl.h>

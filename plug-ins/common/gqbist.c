@@ -29,7 +29,7 @@
 
 #include "config.h"
 
-#define _POSIX_SOURCE  /* need PATH_MAX */
+#define _GNU_SOURCE  /* need PATH_MAX */
 
 #include <string.h>
 #include <limits.h>

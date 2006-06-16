@@ -1,3 +1,16 @@
+2006-06-16  Manish Singh  <yosh@gimp.org>
+
+	* app/errors.c
+	* app/main.c
+	* app/file/gimprecentlist.c
+	* libgimpbase/gimpsignal.c
+	* libgimp/gimp.c
+	* modules/controller_midi.c
+	* plug-ins/common/gqbist.c: use _GNU_SOURCE instead of the other
+	_FOO_SOURCE variables to support -ansi -pedantic on glibc systems,
+	since anything else breaks compilation of otherwise working code.
+	Fixes bug #344203.
+
 2006-06-16  Sven Neumann  <neumann@jpk.com>
 
 	* themes/Default/images/Makefile.am

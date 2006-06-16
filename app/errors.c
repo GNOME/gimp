@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#define _POSIX_SOURCE  /* need the POSIX signal API */
+#define _GNU_SOURCE  /* need the POSIX signal API */
 
 #include <signal.h>
 #include <stdarg.h>

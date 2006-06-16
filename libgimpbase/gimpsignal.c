@@ -21,7 +21,7 @@
 
 #include "config.h"
 
-#define _POSIX_C_SOURCE 199309L  /* all the sigaction stuff is POSIX */
+#define _GNU_SOURCE  /* for the sigaction stuff */
 
 #include <glib.h>
 
