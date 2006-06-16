@@ -340,6 +340,9 @@ gimp_list_new (GType    children_type,
                        "unique-names",  unique_names ? TRUE : FALSE,
                        NULL);
 
+  /* for debugging purposes only */
+  gimp_object_set_static_name (GIMP_OBJECT (list), g_type_name (children_type));
+
   return GIMP_CONTAINER (list);
 }
 
@@ -370,6 +373,9 @@ gimp_list_new_weak (GType    children_type,
                        "policy",        GIMP_CONTAINER_POLICY_WEAK,
                        "unique-names",  unique_names ? TRUE : FALSE,
                        NULL);
+
+  /* for debugging purposes only */
+  gimp_object_set_static_name (GIMP_OBJECT (list), g_type_name (children_type));
 
   return GIMP_CONTAINER (list);
 }
