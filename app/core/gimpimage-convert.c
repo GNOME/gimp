@@ -773,11 +773,8 @@ gimp_image_convert (GimpImage              *image,
                     GimpProgress           *progress)
 {
   QuantizeObj       *quantobj = NULL;
-  GimpLayer         *layer;
   GimpImageBaseType  old_type;
   GList             *list;
-  GimpImageType      new_layer_type;
-  TileManager       *new_tiles;
   const gchar       *undo_desc = NULL;
   gint               nth_layer, n_layers;
 
@@ -880,7 +877,7 @@ gimp_image_convert (GimpImage              *image,
                list;
                list = g_list_next (list), nth_layer++)
             {
-              layer = list->data;
+              GimpLayer *layer = list->data;
 
               if (old_type == GIMP_GRAY)
                 generate_histogram_gray (quantobj->histogram,
@@ -965,7 +962,9 @@ gimp_image_convert (GimpImage              *image,
        list;
        list = g_list_next (list), nth_layer++)
     {
-      layer = list->data;
+      GimpLayer     *layer = list->data;
+      GimpImageType  new_layer_type;
+      TileManager   *new_tiles;
 
       new_layer_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_type);
 
