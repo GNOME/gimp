@@ -12,10 +12,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-15 09:09+0200\n"
-"PO-Revision-Date: 2006-06-15 09:12+0200\n"
+"POT-Creation-Date: 2006-06-16 13:04+0200\n"
+"PO-Revision-Date: 2006-06-16 13:23+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team: Czech <cs@li.org>\n"
+"Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2502,6 +2502,44 @@ msgstr "Vlastní barva:"
 #: ../plug-ins/common/colorify.c:294
 msgid "Colorify Custom Color"
 msgstr "Vlastní barva kolorování"
+
+#: ../plug-ins/common/colormap-remap.c:103
+msgid "Rearrange the colormap"
+msgstr "Přerovnat barevnou mapu"
+
+#: ../plug-ins/common/colormap-remap.c:110
+msgid "_Rearrange Colormap..."
+msgstr "_Přerovnat barevnou mapu..."
+
+#: ../plug-ins/common/colormap-remap.c:119
+msgid "Swap two colors in the colormap"
+msgstr "Přehodit dvě barvy v barevné mapě"
+
+#: ../plug-ins/common/colormap-remap.c:126
+msgid "_Swap Colors"
+msgstr "_Přehodit barvy"
+
+#: ../plug-ins/common/colormap-remap.c:295
+#: ../plug-ins/common/colormap-remap.c:306
+#: ../plug-ins/common/colormap-remap.c:317
+msgid "Invalid remap array was passed to remap function"
+msgstr "Funkci remap bylo předáno neplatné remap pole"
+
+#: ../plug-ins/common/colormap-remap.c:341
+msgid "Rearranging the colormap"
+msgstr "Přerovnává se barevná mapa"
+
+#: ../plug-ins/common/colormap-remap.c:473
+msgid "Rearrange Colormap"
+msgstr "Přerovnat barevnou mapu."
+
+#: ../plug-ins/common/colormap-remap.c:493
+msgid ""
+"Drag and drop colors to rearrange the colormap.\n"
+"The numbers shown are the original indices."
+msgstr ""
+"Barevnou mapu můžete přerovnat přetahováním barev myší.\n"
+"Zobrazovaná čísla jsou původní indexy."
 
 #: ../plug-ins/common/colortoalpha.c:96
 msgid "Convert a specified color to transparency"
@@ -5039,6 +5077,10 @@ msgstr "Přemapuje barvy, popředí na černou, pozadí na bílou"
 #: ../plug-ins/common/mapcolor.c:151
 msgid "Adjust _Foreground & Background"
 msgstr "Upravit _popředí a pozadí"
+
+#: ../plug-ins/common/mapcolor.c:160
+msgid "Map color range specified by two colors to another range"
+msgstr "Mapovar barevný rozsah určený dvěma barvami na jiný rozsah"
 
 #: ../plug-ins/common/mapcolor.c:168
 msgid "Color Range _Mapping..."
@@ -10913,18 +10955,6 @@ msgstr "Zobrazit zdroj"
 msgid "Edit Map Info..."
 msgstr "Úpravy informace o mapování..."
 
-#: ../plug-ins/jpeg/jpeg.c:127 ../plug-ins/jpeg/jpeg.c:165
-msgid "JPEG image"
-msgstr "Obrázek JPEG"
-
-#: ../plug-ins/jpeg/jpeg.c:287
-msgid "Export Preview"
-msgstr "Náhled exportu"
-
-#: ../plug-ins/jpeg/jpeg.c:574
-msgid "EXIF data will be ignored."
-msgstr "Data EXIF budou ignorována."
-
 #: ../plug-ins/jpeg/jpeg-exif.c:115
 msgid "According to the EXIF data, this image is rotated."
 msgstr "Podle dat EXIF je tento obrázek rotován."
@@ -11045,6 +11075,18 @@ msgstr "V plovoucí řádové čárce"
 #: ../plug-ins/jpeg/jpeg-save.c:995
 msgid "Comment"
 msgstr "Komentář"
+
+#: ../plug-ins/jpeg/jpeg.c:127 ../plug-ins/jpeg/jpeg.c:165
+msgid "JPEG image"
+msgstr "Obrázek JPEG"
+
+#: ../plug-ins/jpeg/jpeg.c:287
+msgid "Export Preview"
+msgstr "Náhled exportu"
+
+#: ../plug-ins/jpeg/jpeg.c:574
+msgid "EXIF data will be ignored."
+msgstr "Data EXIF budou ignorována."
 
 #: ../plug-ins/maze/algorithms.c:287
 msgid "Constructing maze using Prim's Algorithm"
@@ -11958,12 +12000,12 @@ msgid "Replace a range of colors with another"
 msgstr "Nahradit rozsah barev jiným rozsahem"
 
 #: ../plug-ins/rcm/rcm.c:103
-msgid "Colormap _Rotation..."
-msgstr "_Rotace barevná mapy..."
+msgid "_Rotate Colors..."
+msgstr "_Rotovat barvy..."
 
 #: ../plug-ins/rcm/rcm.c:266
-msgid "Rotating the colormap"
-msgstr "Rotuje se barevná mapa"
+msgid "Rotating the colors"
+msgstr "Rotují se barvy"
 
 #: ../plug-ins/rcm/rcm_dialog.c:119
 msgid "Original"
@@ -12032,8 +12074,8 @@ msgid "Degrees"
 msgstr "Stupně"
 
 #: ../plug-ins/rcm/rcm_dialog.c:652
-msgid "Colormap Rotation"
-msgstr "Rotace barevná mapy"
+msgid "Rotate Colors"
+msgstr "Rotovat barvy"
 
 #: ../plug-ins/rcm/rcm_dialog.c:692
 msgid "Main Options"
@@ -12110,10 +12152,6 @@ msgstr "_Skener/Fotoaparát..."
 msgid "Transferring data from scanner/camera"
 msgstr "Přenos dat ze skeneru/fotoaparátu"
 
-#: ../plug-ins/uri/uri.c:117 ../plug-ins/uri/uri.c:138
-msgid "URI"
-msgstr "URI"
-
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:148
 #, c-format
 msgid "Downloading %s of image data..."
@@ -12187,6 +12225,10 @@ msgstr "Stahuje se %s obrazových dat"
 #: ../plug-ins/uri/uri-backend-wget.c:293
 msgid "Downloading unknown amount of image data"
 msgstr "Stahuje se neznámý objem obrazových dat"
+
+#: ../plug-ins/uri/uri.c:117 ../plug-ins/uri/uri.c:138
+msgid "URI"
+msgstr "URI"
 
 #: ../plug-ins/winicon/icodialog.c:99
 msgid "1 bpp, 1-bit alpha, 2-slot palette"

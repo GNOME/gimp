@@ -1,3 +1,7 @@
+2006-06-16  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: cs update
+
 2006-06-15  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added colormap-remap.c
