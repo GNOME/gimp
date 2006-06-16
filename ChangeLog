@@ -1,5 +1,12 @@
 2006-06-16  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/image-commands.c (image_convert_cmd_callback):
+	always call gimp_image_flush() so that the image mode radio
+	buttons reflect the image state.  Attach the indexed conversion
+	dialog to the shell to avoid multiple instances.
+
+2006-06-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mapcolor.c (query): marked blurb for translation.
 
 2006-06-16  Sven Neumann  <sven@gimp.org>
