@@ -311,18 +311,23 @@ psd_lmode_layer (gint32 idLayer, gchar *psdMode)
     case GIMP_OVERLAY_MODE:                /* ? */
       strcpy (psdMode, "over");
       break;
-    case GIMP_ADDITION_MODE:
-    case GIMP_SUBTRACT_MODE:
-      g_message (_("Unable to save layer with mode '%c'. The psd file format does not support that, using normal mode instead."),
-                 gimp_layer_get_mode (idLayer));
-      IFDBG printf ("PSD: Warning - unsupported layer-blend mode: %c, using 'norm' mode\n",
-                    gimp_layer_get_mode (idLayer));
-      strcpy (psdMode, "norm");
-      break;
     default:
-      g_message (_("Unable to save layer with UNKNOWN mode. Using normal mode as fallback."));
-      IFDBG printf ("PSD: Warning - UNKNOWN layer-blend mode, reverting to 'norm'\n");
-      strcpy (psdMode, "norm");
+      {
+        const gchar *nick = "?";
+
+        gimp_enum_get_value (GIMP_TYPE_LAYER_MODE_EFFECTS,
+                             gimp_layer_get_mode (idLayer),
+                             NULL, &nick, NULL, NULL);
+
+        g_message (_("Unable to save layer with mode '%s'.  Either the PSD "
+                     "file format or the save plug-in does not support that, "
+                     "using normal mode instead."), nick);
+
+        IFDBG printf ("PSD: Warning - unsupported layer-blend mode: %s, "
+                      "using normal mode\n", nick);
+
+        strcpy (psdMode, "norm");
+      }
       break;
     }
 }

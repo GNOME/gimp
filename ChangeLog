@@ -1,5 +1,9 @@
 2006-06-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/psd_save.c: improved error message.
+
+2006-06-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/convert-script: removed; it's barely useful
 	nowadays.
 
