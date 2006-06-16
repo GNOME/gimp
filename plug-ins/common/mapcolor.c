@@ -157,10 +157,10 @@ query (void)
   gimp_plugin_menu_register (COLOR_ADJUST_PROC, "<Image>/Colors/Map");
 
   gimp_install_procedure (COLOR_MAP_PROC,
+                          N_("Map color range specified by two colors "
+                             "to another range"),
                           "Map color range specified by two colors"
-                          "to color range specified by two other color.",
-                          "Map color range specified by two colors"
-                          "to color range specified by two other color."
+                          "to color range specified by two other color. "
                           "Intermediate colors are interpolated.",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
