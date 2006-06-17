@@ -1,3 +1,11 @@
+2006-06-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_image):
+	always call gtk_file_chooser_set_current_folder_uri() and
+	gtk_file_chooser_set_current_name() instead of
+	gtk_file_chooser_set_uri(), since the latter only works if the
+	file exists and its return value is bogus. Fixes bug #343284.
+
 2006-06-17  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpview.c: fixed casts to silence compiler warnings.

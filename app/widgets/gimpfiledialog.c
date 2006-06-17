@@ -373,8 +373,9 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
                             GimpImage      *image,
                             gboolean        save_a_copy)
 {
-  const gchar *uri     = NULL;
-  gboolean     uri_set = FALSE;
+  const gchar *uri = NULL;
+  gchar       *dirname;
+  gchar       *basename;
 
   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -386,25 +387,21 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
     uri = g_object_get_data (G_OBJECT (image), "gimp-image-save-a-copy");
 
   if (! uri)
-    uri = gimp_object_get_name (GIMP_OBJECT (image));
-
-  if (uri)
-    uri_set = gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);
+    uri = gimp_image_get_uri (image);
 
   gimp_file_dialog_set_file_proc (dialog, NULL);
 
-  if (! uri_set)
-    {
-      const gchar *name = gimp_image_get_uri (image);
-      gchar       *current;
+  dirname  = g_path_get_dirname (uri);
+  basename = g_path_get_basename (uri);
 
-      if (! name)
-        name = "";
+  if (dirname && strlen (dirname))
+    gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog),
+                                             dirname);
 
-      current = g_path_get_basename (name);
-      gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), current);
-      g_free (current);
-    }
+  gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
+
+  g_free (dirname);
+  g_free (basename);
 }
 
 
