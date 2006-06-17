@@ -97,8 +97,8 @@ query (void)
                           print_args, NULL);
 
   gimp_plugin_menu_register (PROC_NAME, "<Image>/File/Send");
-  gimp_plugin_icon_register (PROC_NAME,
-                             GIMP_ICON_TYPE_STOCK_ID, GTK_STOCK_PRINT);
+  gimp_plugin_icon_register (PROC_NAME, GIMP_ICON_TYPE_STOCK_ID,
+                             (const guint8 *) GTK_STOCK_PRINT);
 }
 
 static void

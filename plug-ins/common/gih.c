@@ -211,8 +211,8 @@ query (void)
                           G_N_ELEMENTS (gih_load_return_vals),
                           gih_load_args, gih_load_return_vals);
 
-  gimp_plugin_icon_register (LOAD_PROC,
-                             GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_BRUSH);
+  gimp_plugin_icon_register (LOAD_PROC, GIMP_ICON_TYPE_STOCK_ID,
+                             (const guint8 *) GIMP_STOCK_BRUSH);
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-gimp-gih");
   gimp_register_magic_load_handler (LOAD_PROC,
 				    "gih",
@@ -231,8 +231,8 @@ query (void)
                           G_N_ELEMENTS (gih_save_args), 0,
 			  gih_save_args, NULL);
 
-  gimp_plugin_icon_register (SAVE_PROC,
-                             GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_BRUSH);
+  gimp_plugin_icon_register (SAVE_PROC, GIMP_ICON_TYPE_STOCK_ID,
+                             (const guint8 *) GIMP_STOCK_BRUSH);
   gimp_register_file_handler_mime ("file_gih_save", "image/x-gimp-gih");
   gimp_register_save_handler (SAVE_PROC,
 			      "gih",

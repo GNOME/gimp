@@ -156,8 +156,8 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_plugin_icon_register (LOAD_PROC,
-                             GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_BRUSH);
+  gimp_plugin_icon_register (LOAD_PROC, GIMP_ICON_TYPE_STOCK_ID,
+                             (const guint8 *) GIMP_STOCK_BRUSH);
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-gimp-gbr");
   gimp_register_magic_load_handler (LOAD_PROC,
 				    "gbr, gpb",
@@ -176,8 +176,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_plugin_icon_register (SAVE_PROC,
-                             GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_BRUSH);
+  gimp_plugin_icon_register (SAVE_PROC, GIMP_ICON_TYPE_STOCK_ID,
+                             (const guint8 *) GIMP_STOCK_BRUSH);
   gimp_register_file_handler_mime (SAVE_PROC, "image/x-gimp-gbr");
   gimp_register_save_handler (SAVE_PROC, "gbr", "");
 }

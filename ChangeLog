@@ -1,5 +1,23 @@
 2006-06-17  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/colormap-remap.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/gnomeprint.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/plugin-browser.c
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/uniteditor.c
+	* plug-ins/metadata/metadata.c
+	* plug-ins/print/print.c
+	* plug-ins/uri/uri.c: cast stock-ids passed to
+	gimp_plugin_icon_register() to (const guint8 *).
+
+2006-06-17  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/vinvert.c (run): more cleanup by Mukund, cleaned
 	up again by myself.
 

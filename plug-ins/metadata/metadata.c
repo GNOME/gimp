@@ -196,8 +196,8 @@ query (void)
                           editor_args, NULL);
 
   gimp_plugin_menu_register (EDITOR_PROC, "<Image>/File/Info");
-  gimp_plugin_icon_register (EDITOR_PROC,
-                             GIMP_ICON_TYPE_STOCK_ID, GTK_STOCK_PROPERTIES);
+  gimp_plugin_icon_register (EDITOR_PROC, GIMP_ICON_TYPE_STOCK_ID,
+                             (const guint8 *) GTK_STOCK_PROPERTIES);
   /* FIXME: The GNOME HIG recommends using the accel Alt+Return for this */
 
   gimp_install_procedure (DECODE_XMP_PROC,

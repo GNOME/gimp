@@ -109,9 +109,8 @@ query (void)
 
   gimp_plugin_menu_register (PLUG_IN_PROC_REMAP, "<Image>/Colors/Map/Colormap");
   gimp_plugin_menu_register (PLUG_IN_PROC_REMAP, "<ColormapEditor>");
-  gimp_plugin_icon_register (PLUG_IN_PROC_REMAP,
-                             GIMP_ICON_TYPE_STOCK_ID,
-                             (const guchar *) GIMP_STOCK_COLORMAP);
+  gimp_plugin_icon_register (PLUG_IN_PROC_REMAP, GIMP_ICON_TYPE_STOCK_ID,
+                             (const guint8 *) GIMP_STOCK_COLORMAP);
 
   gimp_install_procedure (PLUG_IN_PROC_SWAP,
                           N_("Swap two colors in the colormap"),
