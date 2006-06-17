@@ -38,6 +38,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <libgimp/gimp.h>
 
 #include "libgimp/stdplugins-intl.h"
@@ -115,11 +117,9 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam   values[1];
-  GimpDrawable      *drawable;
-  gint32             image_ID;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRunMode        run_mode;
+  static GimpParam  values[1];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpRunMode       run_mode;
 
   INIT_I18N();
 
@@ -131,13 +131,18 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  /*  Get the specified drawable  */
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
-  image_ID = param[1].data.d_image;
-
-  if (status == GIMP_PDB_SUCCESS)
+  if (strcmp (name, PLUG_IN_PROC) == 0)
     {
+      GimpDrawable *drawable;
+      gint32        image_ID;
+
+      /*  Get the specified drawable  */
+
+      drawable = gimp_drawable_get (param[2].data.d_drawable);
+      image_ID = param[1].data.d_image;
+
       /*  Make sure that the drawable is indexed or RGB color  */
+
       if (gimp_drawable_is_rgb (drawable->drawable_id))
         {
           vinvert (drawable);
@@ -156,11 +161,15 @@ run (const gchar      *name,
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
+
+      gimp_drawable_detach (drawable);
+    }
+  else
+    {
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
-
-  gimp_drawable_detach (drawable);
 }
 
 static void

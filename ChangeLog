@@ -1,12 +1,17 @@
 2006-06-17  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/vinvert.c (run): more cleanup by Mukund, cleaned
+	up again by myself.
+
+2006-06-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdockbook.c (gimp_dockbook_get_tab_widget): put
 	the event box' event window above its children because now that it
 	is input-only, it won't receive events that are not in its
 	childrens' event mask if the event window is below.
 	Fixes bug #345137.
 
-2006-06-16  Michael Natterer  <mitch@gimp.org>
+2006-06-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_image):
 	always call gtk_file_chooser_set_current_folder_uri() and
