@@ -1,3 +1,13 @@
+2006-06-17  Michael Natterer  <mitch@gimp.org>
+
+	Merge from HEAD:
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_image):
+	always call gtk_file_chooser_set_current_folder_uri() and
+	gtk_file_chooser_set_current_name() instead of
+	gtk_file_chooser_set_uri(), since the latter only works if the
+	file exists and its return value is bogus. Fixes bug #343284.
+
 2006-06-04  Kevin Cozens <kcozens@cvs.gnome.org>
 
 	Merge from HEAD:
