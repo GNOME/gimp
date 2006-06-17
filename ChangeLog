@@ -1,3 +1,7 @@
+2006-06-17  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpview.c: fixed casts to silence compiler warnings.
+
 2006-06-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-convert.c (gimp_image_convert): moved
