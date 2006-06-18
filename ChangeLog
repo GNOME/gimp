@@ -1,3 +1,28 @@
+2006-06-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptool.[ch]: added virtual functions
+	GimpTool::has_display(), which returns whether any tool subclass
+	keeps a pointer to the passed display; and GimpTool::has_image()
+	which returns a display based on a passed image, or NULL if no
+	display matches. Added default implementation of
+	GimpTool::control() which sets tool->display to NULL on HALT.
+
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpdrawtool.c: implement both functions.
+
+	* app/tools/gimpclonetool.c: removed weak pointer hacks that are
+	no longer needed now (and were incomplete anyway).
+
+	* app/tools/tool_manager.c (tool_manager_select_tool)
+	(tool_manager_control_active)
+	(tool_manager_image_clean_dirty): use the new functions instead of
+	peeking around in tool subclasses (and forgetting tools that may
+	have display pointers, like the clone tool)
+
+	* app/display/gimpdisplay.c (gimp_display_delete): removed
+	fiddling with tool internals here too, control(HALT) on the tool
+	is now sufficient to remove any reference to the closed display.
+
 2006-06-18  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/tools-enums.h: renamed TransformAction enum values to

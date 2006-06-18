@@ -49,30 +49,36 @@
 #define TARGET_HEIGHT 15
 
 
-static void   gimp_clone_tool_button_press  (GimpTool        *tool,
-                                             GimpCoords      *coords,
-                                             guint32          time,
-                                             GdkModifierType  state,
-                                             GimpDisplay     *display);
-static void   gimp_clone_tool_motion        (GimpTool        *tool,
-                                             GimpCoords      *coords,
-                                             guint32          time,
-                                             GdkModifierType  state,
-                                             GimpDisplay     *display);
+static gboolean      gimp_clone_tool_has_display   (GimpTool        *tool,
+                                                    GimpDisplay     *display);
+static GimpDisplay * gimp_clone_tool_has_image     (GimpTool        *tool,
+                                                    GimpImage       *image);
+static void          gimp_clone_tool_control       (GimpTool        *tool,
+                                                    GimpToolAction   action,
+                                                    GimpDisplay     *display);
+static void          gimp_clone_tool_button_press  (GimpTool        *tool,
+                                                    GimpCoords      *coords,
+                                                    guint32          time,
+                                                    GdkModifierType  state,
+                                                    GimpDisplay     *display);
+static void          gimp_clone_tool_motion        (GimpTool        *tool,
+                                                    GimpCoords      *coords,
+                                                    guint32          time,
+                                                    GdkModifierType  state,
+                                                    GimpDisplay     *display);
+static void          gimp_clone_tool_cursor_update (GimpTool        *tool,
+                                                    GimpCoords      *coords,
+                                                    GdkModifierType  state,
+                                                    GimpDisplay     *display);
+static void          gimp_clone_tool_oper_update   (GimpTool        *tool,
+                                                    GimpCoords      *coords,
+                                                    GdkModifierType  state,
+                                                    gboolean         proximity,
+                                                    GimpDisplay     *display);
 
-static void   gimp_clone_tool_cursor_update (GimpTool        *tool,
-                                             GimpCoords      *coords,
-                                             GdkModifierType  state,
-                                             GimpDisplay     *display);
-static void   gimp_clone_tool_oper_update   (GimpTool        *tool,
-                                             GimpCoords      *coords,
-                                             GdkModifierType  state,
-                                             gboolean         proximity,
-                                             GimpDisplay     *display);
+static void          gimp_clone_tool_draw          (GimpDrawTool    *draw_tool);
 
-static void   gimp_clone_tool_draw          (GimpDrawTool    *draw_tool);
-
-static GtkWidget * gimp_clone_options_gui   (GimpToolOptions *tool_options);
+static GtkWidget   * gimp_clone_options_gui        (GimpToolOptions *tool_options);
 
 
 G_DEFINE_TYPE (GimpCloneTool, gimp_clone_tool, GIMP_TYPE_PAINT_TOOL)
@@ -104,6 +110,9 @@ gimp_clone_tool_class_init (GimpCloneToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
+  tool_class->has_display   = gimp_clone_tool_has_display;
+  tool_class->has_image     = gimp_clone_tool_has_image;
+  tool_class->control       = gimp_clone_tool_control;
   tool_class->button_press  = gimp_clone_tool_button_press;
   tool_class->motion        = gimp_clone_tool_motion;
   tool_class->cursor_update = gimp_clone_tool_cursor_update;
@@ -121,6 +130,62 @@ gimp_clone_tool_init (GimpCloneTool *clone)
                                          GIMP_TOOL_CURSOR_CLONE);
   gimp_tool_control_set_action_object_2 (tool->control,
                                          "context/context-pattern-select-set");
+}
+
+static gboolean
+gimp_clone_tool_has_display (GimpTool    *tool,
+                             GimpDisplay *display)
+{
+  GimpCloneTool *clone_tool = GIMP_CLONE_TOOL (tool);
+
+  return (display == clone_tool->src_display ||
+          GIMP_TOOL_CLASS (parent_class)->has_display (tool, display));
+}
+
+static GimpDisplay *
+gimp_clone_tool_has_image (GimpTool  *tool,
+                           GimpImage *image)
+{
+  GimpCloneTool *clone_tool = GIMP_CLONE_TOOL (tool);
+  GimpDisplay   *display;
+
+  display = GIMP_TOOL_CLASS (parent_class)->has_image (tool, image);
+
+  if (! display && clone_tool->src_display)
+    {
+      if (image && clone_tool->src_display->image == image)
+        display = clone_tool->src_display;
+
+      /*  NULL image means any display  */
+      if (! image)
+        display = clone_tool->src_display;
+    }
+
+  return display;
+}
+
+static void
+gimp_clone_tool_control (GimpTool       *tool,
+                         GimpToolAction  action,
+                         GimpDisplay    *display)
+{
+  GimpCloneTool *clone_tool = GIMP_CLONE_TOOL (tool);
+
+  switch (action)
+    {
+    case GIMP_TOOL_ACTION_PAUSE:
+    case GIMP_TOOL_ACTION_RESUME:
+      break;
+
+    case GIMP_TOOL_ACTION_HALT:
+      clone_tool->src_display = NULL;
+      g_object_set (GIMP_PAINT_TOOL (tool)->core,
+                    "src-drawable", NULL,
+                    NULL);
+      break;
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
@@ -145,16 +210,7 @@ gimp_clone_tool_button_press (GimpTool        *tool,
     {
       clone->set_source = TRUE;
 
-      if (display != clone_tool->src_display)
-        {
-          if (clone_tool->src_display)
-            g_object_remove_weak_pointer (G_OBJECT (clone_tool->src_display),
-                                          (gpointer *) &clone_tool->src_display);
-
-          clone_tool->src_display = display;
-          g_object_add_weak_pointer (G_OBJECT (display),
-                                     (gpointer *) &clone_tool->src_display);
-        }
+      clone_tool->src_display = display;
     }
   else
     {

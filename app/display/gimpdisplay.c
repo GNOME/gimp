@@ -387,18 +387,8 @@ gimp_display_delete (GimpDisplay *display)
 
   active_tool = tool_manager_get_active (display->image->gimp);
 
-  if (active_tool)
-    {
-      if (active_tool->focus_display == display)
-        tool_manager_focus_display_active (display->image->gimp, NULL);
-
-      /*  clear out the pointer to this display from the active tool  */
-      if (active_tool->display == display)
-        {
-          active_tool->drawable = NULL;
-          active_tool->display  = NULL;
-        }
-    }
+  if (active_tool && active_tool->focus_display == display)
+    tool_manager_focus_display_active (display->image->gimp, NULL);
 
   /*  free the update area lists  */
   display->update_areas = gimp_area_list_free (display->update_areas);

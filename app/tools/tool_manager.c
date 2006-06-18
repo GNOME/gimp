@@ -35,7 +35,7 @@
 
 #include "display/gimpdisplay.h"
 
-#include "gimpdrawtool.h"
+#include "gimptool.h"
 #include "gimptoolcontrol.h"
 #include "tool_manager.h"
 
@@ -150,10 +150,10 @@ tool_manager_select_tool (Gimp     *gimp,
   if (tool_manager->active_tool)
     {
       GimpTool    *active_tool = tool_manager->active_tool;
-      GimpDisplay *display     = active_tool->display;
+      GimpDisplay *display;
 
-      if (! display && GIMP_IS_DRAW_TOOL (active_tool))
-        display = GIMP_DRAW_TOOL (active_tool)->display;
+      /*  NULL image returns any display (if there is any)  */
+      display = gimp_tool_has_image (active_tool, NULL);
 
       tool_manager_control_active (gimp, GIMP_TOOL_ACTION_HALT, display);
       tool_manager_focus_display_active (gimp, NULL);
@@ -249,9 +249,7 @@ tool_manager_control_active (Gimp           *gimp,
     {
       GimpTool *tool = tool_manager->active_tool;
 
-      if (display && (tool->display == display ||
-                      (GIMP_IS_DRAW_TOOL (tool) &&
-                       GIMP_DRAW_TOOL (tool)->display == display)))
+      if (display && gimp_tool_has_display (tool, display))
         {
           gimp_tool_control (tool, action, display);
         }
@@ -553,13 +551,11 @@ tool_manager_image_clean_dirty (GimpImage       *image,
       ! gimp_tool_control_get_preserve (tool->control) &&
       (gimp_tool_control_get_dirty_mask (tool->control) & dirty_mask))
     {
-      GimpDisplay *display = tool->display;
+      GimpDisplay *display;
 
-      if (! display || display->image != image)
-        if (GIMP_IS_DRAW_TOOL (tool))
-          display = GIMP_DRAW_TOOL (tool)->display;
+      display = gimp_tool_has_image (tool, image);
 
-      if (display && display->image == image)
+      if (display)
         tool_manager_control_active (image->gimp, GIMP_TOOL_ACTION_HALT,
                                      display);
     }

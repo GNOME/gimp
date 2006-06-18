@@ -41,31 +41,35 @@
 #include "gimpdrawtool.h"
 
 
-static void          gimp_draw_tool_finalize   (GObject        *object);
+static void          gimp_draw_tool_finalize    (GObject        *object);
 
-static void          gimp_draw_tool_control    (GimpTool       *tool,
-                                                GimpToolAction  action,
-                                                GimpDisplay    *display);
+static gboolean      gimp_draw_tool_has_display (GimpTool       *tool,
+                                                 GimpDisplay    *display);
+static GimpDisplay * gimp_draw_tool_has_image   (GimpTool       *tool,
+                                                 GimpImage      *image);
+static void          gimp_draw_tool_control     (GimpTool       *tool,
+                                                 GimpToolAction  action,
+                                                 GimpDisplay    *display);
 
-static void          gimp_draw_tool_draw       (GimpDrawTool   *draw_tool);
-static void          gimp_draw_tool_real_draw  (GimpDrawTool   *draw_tool);
+static void          gimp_draw_tool_draw        (GimpDrawTool   *draw_tool);
+static void          gimp_draw_tool_real_draw   (GimpDrawTool   *draw_tool);
 
 static inline void   gimp_draw_tool_shift_to_north_west
-                                               (gdouble         x,
-                                                gdouble         y,
-                                                gint            handle_width,
-                                                gint            handle_height,
-                                                GtkAnchorType   anchor,
-                                                gdouble        *shifted_x,
-                                                gdouble        *shifted_y);
+                                                (gdouble         x,
+                                                 gdouble         y,
+                                                 gint            handle_width,
+                                                 gint            handle_height,
+                                                 GtkAnchorType   anchor,
+                                                 gdouble        *shifted_x,
+                                                 gdouble        *shifted_y);
 static inline void   gimp_draw_tool_shift_to_center
-                                               (gdouble         x,
-                                                gdouble         y,
-                                                gint            handle_width,
-                                                gint            handle_height,
-                                                GtkAnchorType   anchor,
-                                                gdouble        *shifted_x,
-                                                gdouble        *shifted_y);
+                                                (gdouble         x,
+                                                 gdouble         y,
+                                                 gint            handle_width,
+                                                 gint            handle_height,
+                                                 GtkAnchorType   anchor,
+                                                 gdouble        *shifted_x,
+                                                 gdouble        *shifted_y);
 
 
 G_DEFINE_TYPE (GimpDrawTool, gimp_draw_tool, GIMP_TYPE_TOOL)
@@ -79,11 +83,13 @@ gimp_draw_tool_class_init (GimpDrawToolClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
 
-  object_class->finalize = gimp_draw_tool_finalize;
+  object_class->finalize  = gimp_draw_tool_finalize;
 
-  tool_class->control    = gimp_draw_tool_control;
+  tool_class->has_display = gimp_draw_tool_has_display;
+  tool_class->has_image   = gimp_draw_tool_has_image;
+  tool_class->control     = gimp_draw_tool_control;
 
-  klass->draw            = gimp_draw_tool_real_draw;
+  klass->draw             = gimp_draw_tool_real_draw;
 }
 
 static void
@@ -116,6 +122,38 @@ gimp_draw_tool_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gboolean
+gimp_draw_tool_has_display (GimpTool    *tool,
+                            GimpDisplay *display)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
+  return (display == draw_tool->display ||
+          GIMP_TOOL_CLASS (parent_class)->has_display (tool, display));
+}
+
+static GimpDisplay *
+gimp_draw_tool_has_image (GimpTool  *tool,
+                          GimpImage *image)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpDisplay  *display;
+
+  display = GIMP_TOOL_CLASS (parent_class)->has_image (tool, image);
+
+  if (! display && draw_tool->display)
+    {
+      if (image && draw_tool->display->image == image)
+        display = draw_tool->display;
+
+      /*  NULL image means any display  */
+      if (! image)
+        display = draw_tool->display;
+    }
+
+  return display;
 }
 
 static void
