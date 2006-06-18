@@ -283,7 +283,7 @@ run (const gchar      *name,
 
      /* Get information from the dialog */
       if (! shoot_dialog (&screen))
-	status = GIMP_PDB_EXECUTION_ERROR;
+	status = GIMP_PDB_CANCEL;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -330,9 +330,21 @@ run (const gchar      *name,
       if (shootvals.select_delay > 0)
 	shoot_delay (shootvals.select_delay);
 
+      if (shootvals.shoot_type != SHOOT_ROOT && ! shootvals.window_id)
+        {
+          shootvals.window_id = select_window (screen);
+
+          if (! shootvals.window_id)
+            status = GIMP_PDB_CANCEL;
+        }
+    }
+
+  if (status == GIMP_PDB_SUCCESS)
+    {
       image_ID = shoot (screen);
 
-      status = (image_ID != -1) ? GIMP_PDB_SUCCESS : GIMP_PDB_EXECUTION_ERROR;
+      if (image_ID == -1)
+        status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   if (status == GIMP_PDB_SUCCESS)
@@ -347,7 +359,8 @@ run (const gchar      *name,
 
       /* set return values */
       *nreturn_vals = 2;
-      values[1].type = GIMP_PDB_IMAGE;
+
+      values[1].type         = GIMP_PDB_IMAGE;
       values[1].data.d_image = image_ID;
     }
 
@@ -945,14 +958,6 @@ shoot_dialog (GdkScreen **screen)
        */
       g_timeout_add (100, shoot_quit_timeout, NULL);
       gtk_main ();
-
-      if (shootvals.shoot_type != SHOOT_ROOT && ! shootvals.window_id)
-        {
-          shootvals.window_id = select_window (*screen);
-
-          if (! shootvals.window_id)
-            return FALSE;
-        }
     }
 
   return run;
@@ -960,6 +965,7 @@ shoot_dialog (GdkScreen **screen)
 
 
 /*  delay functions  */
+
 void
 shoot_delay (gint delay)
 {

@@ -1,3 +1,9 @@
+2006-06-18  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/screenshot.c: apply the delay before selecting,
+	not before grabbing, so the user has time to rearrange things.
+	Fixes bug #345214.
+
 2006-06-17  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/animationplay.c
