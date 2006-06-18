@@ -560,7 +560,7 @@ gimp_transform_tool_oper_update (GimpTool        *tool,
       closest_dist = gimp_draw_tool_calc_distance (draw_tool, display,
                                                    coords->x, coords->y,
                                                    tr_tool->tx1, tr_tool->ty1);
-      tr_tool->function = TRANSFORM_HANDLE_1;
+      tr_tool->function = TRANSFORM_HANDLE_NW;
 
       dist = gimp_draw_tool_calc_distance (draw_tool, display,
                                            coords->x, coords->y,
@@ -568,7 +568,7 @@ gimp_transform_tool_oper_update (GimpTool        *tool,
       if (dist < closest_dist)
         {
           closest_dist = dist;
-          tr_tool->function = TRANSFORM_HANDLE_2;
+          tr_tool->function = TRANSFORM_HANDLE_NE;
         }
 
       dist = gimp_draw_tool_calc_distance (draw_tool, display,
@@ -577,7 +577,7 @@ gimp_transform_tool_oper_update (GimpTool        *tool,
       if (dist < closest_dist)
         {
           closest_dist = dist;
-          tr_tool->function = TRANSFORM_HANDLE_3;
+          tr_tool->function = TRANSFORM_HANDLE_SW;
         }
 
       dist = gimp_draw_tool_calc_distance (draw_tool, display,
@@ -586,7 +586,7 @@ gimp_transform_tool_oper_update (GimpTool        *tool,
       if (dist < closest_dist)
         {
           closest_dist = dist;
-          tr_tool->function = TRANSFORM_HANDLE_4;
+          tr_tool->function = TRANSFORM_HANDLE_SE;
         }
 
       if (gimp_draw_tool_on_handle (draw_tool, display,

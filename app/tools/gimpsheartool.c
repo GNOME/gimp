@@ -217,28 +217,28 @@ gimp_shear_tool_motion (GimpTransformTool *tr_tool,
 
       switch (tr_tool->function)
         {
-        case TRANSFORM_HANDLE_1:
+        case TRANSFORM_HANDLE_NW:
           if (dir == GIMP_ORIENTATION_HORIZONTAL)
             tr_tool->trans_info[XSHEAR] -= diffx;
           else
             tr_tool->trans_info[YSHEAR] -= diffy;
           break;
 
-        case TRANSFORM_HANDLE_2:
+        case TRANSFORM_HANDLE_NE:
           if (dir == GIMP_ORIENTATION_HORIZONTAL)
             tr_tool->trans_info[XSHEAR] -= diffx;
           else
             tr_tool->trans_info[YSHEAR] += diffy;
           break;
 
-        case TRANSFORM_HANDLE_3:
+        case TRANSFORM_HANDLE_SW:
           if (dir == GIMP_ORIENTATION_HORIZONTAL)
             tr_tool->trans_info[XSHEAR] += diffx;
           else
             tr_tool->trans_info[YSHEAR] -= diffy;
           break;
 
-        case TRANSFORM_HANDLE_4:
+        case TRANSFORM_HANDLE_SE:
           if (dir == GIMP_ORIENTATION_HORIZONTAL)
             tr_tool->trans_info[XSHEAR] += diffx;
           else

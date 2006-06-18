@@ -1,3 +1,13 @@
+2006-06-18  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/tools-enums.h: renamed TransformAction enum values to
+	something more descriptive.
+
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimptransformtool.c: changed accordingly.
+
 2006-06-18  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/screenshot.c: apply the delay before selecting,
