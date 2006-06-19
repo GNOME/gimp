@@ -1,5 +1,16 @@
 2006-06-19  Sven Neumann  <sven@gimp.org>
 
+	* data/images/gimp-logo.png: replaced with the application logo
+	(bug #343948).
+
+	* data/images/gimp2_2_logo.png: the old logo, as a reference.
+
+	* app/dialogs/about-dialog.c: let GtkAboutDialog deal with the logo.
+	Moved the text animation below the copyright notice and draw it on
+	the window background.
+
+2006-06-19  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptransformtool.c (gimp_transform_tool_cursor_update):
 	simplified, removed checks that didn't change the cursor anyway.
 
