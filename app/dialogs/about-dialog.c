@@ -545,7 +545,7 @@ about_dialog_timer (gpointer data)
 
   if (dialog->animstep < 16)
     {
-      decorate_text (dialog, 3, ((gfloat) dialog->animstep) / 15.0);
+      decorate_text (dialog, 2, ((gfloat) dialog->animstep) / 15.0);
     }
   else if (dialog->animstep == 16)
     {
