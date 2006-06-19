@@ -1,5 +1,10 @@
 2006-06-19  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpguiconfig.c (DEFAULT_WEB_BROWSER): changed to
+	"firefox", most distributions seem to have renamed the binary.
+
+2006-06-19  Sven Neumann  <sven@gimp.org>
+
 	* data/images/gimp-logo.png: replaced with the application logo
 	(bug #343948).
 
