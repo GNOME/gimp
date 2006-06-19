@@ -186,16 +186,10 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
   gdouble              *y1;
   gdouble              *x2;
   gdouble              *y2;
-  gint                  dir_x, dir_y;
-  gdouble               diff_x, diff_y;
-
-  options =
-    GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
-
-  diff_x = tr_tool->curx - tr_tool->lastx;
-  diff_y = tr_tool->cury - tr_tool->lasty;
-
-  g_printerr ("%d\n", tr_tool->function);
+  gint                  dir_x;
+  gint                  dir_y;
+  gdouble               diff_x = tr_tool->curx - tr_tool->lastx;
+  gdouble               diff_y = tr_tool->cury - tr_tool->lasty;
 
   switch (tr_tool->function)
     {
@@ -249,6 +243,9 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
     }
 
   /*  if control is being held, constrain the aspect ratio  */
+  options =
+    GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
+
   if (options->constrain)
     {
       gdouble mag;

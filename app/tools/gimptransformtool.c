@@ -608,34 +608,19 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
                                    GdkModifierType  state,
                                    GimpDisplay     *display)
 {
-  GimpTransformTool    *tr_tool = GIMP_TRANSFORM_TOOL (tool);
-  GimpTransformOptions *options;
-
-  options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
   if (tr_tool->use_grid)
     {
-      GimpChannel        *selection = gimp_image_get_mask (display->image);
-      GimpCursorType      cursor    = GIMP_CURSOR_MOUSE;
-      GimpCursorModifier  modifier  = GIMP_CURSOR_MODIFIER_NONE;
+      GimpTransformOptions *options;
+      GimpCursorModifier    modifier = GIMP_CURSOR_MODIFIER_NONE;
+
+      options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
 
       switch (options->type)
         {
         case GIMP_TRANSFORM_TYPE_LAYER:
-          if (gimp_image_coords_in_active_pickable (display->image, coords,
-                                                    FALSE, TRUE))
-            {
-              cursor = GIMP_CURSOR_MOUSE;
-            }
-          break;
-
         case GIMP_TRANSFORM_TYPE_SELECTION:
-          if (gimp_channel_is_empty (selection) ||
-              gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
-                                            coords->x, coords->y))
-            {
-              cursor = GIMP_CURSOR_MOUSE;
-            }
           break;
 
         case GIMP_TRANSFORM_TYPE_PATH:
@@ -650,7 +635,6 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
             modifier = GIMP_CURSOR_MODIFIER_MOVE;
         }
 
-      gimp_tool_control_set_cursor          (tool->control, cursor);
       gimp_tool_control_set_cursor_modifier (tool->control, modifier);
     }
 
