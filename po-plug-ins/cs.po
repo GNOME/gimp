@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-16 13:04+0200\n"
-"PO-Revision-Date: 2006-06-16 13:23+0200\n"
+"POT-Creation-Date: 2006-06-19 12:38+0200\n"
+"PO-Revision-Date: 2006-06-19 12:40+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -372,10 +372,10 @@ msgstr "_Fraktály"
 #: ../plug-ins/common/dicom.c:690 ../plug-ins/common/gbr.c:616
 #: ../plug-ins/common/gif.c:993 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
-#: ../plug-ins/common/mng.c:953 ../plug-ins/common/pat.c:451
+#: ../plug-ins/common/mng.c:953 ../plug-ins/common/pat.c:449
 #: ../plug-ins/common/pcx.c:588 ../plug-ins/common/pix.c:508
 #: ../plug-ins/common/png.c:1221 ../plug-ins/common/pnm.c:929
-#: ../plug-ins/common/postscript.c:1185 ../plug-ins/common/psd_save.c:1443
+#: ../plug-ins/common/postscript.c:1185 ../plug-ins/common/psd_save.c:1448
 #: ../plug-ins/common/raw.c:530 ../plug-ins/common/raw.c:557
 #: ../plug-ins/common/spheredesigner.c:2119 ../plug-ins/common/sunras.c:507
 #: ../plug-ins/common/tga.c:1030 ../plug-ins/common/tiff.c:1920
@@ -412,7 +412,7 @@ msgstr "Zapsat parametry fraktálu"
 #: ../plug-ins/common/channel_mixer.c:979 ../plug-ins/common/curve_bend.c:890
 #: ../plug-ins/common/dicom.c:295 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:309 ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:321
+#: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:319
 #: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:705 ../plug-ins/common/pnm.c:480
 #: ../plug-ins/common/poppler.c:368 ../plug-ins/common/postscript.c:1012
@@ -1173,7 +1173,7 @@ msgstr "Špatná barevná mapa"
 #: ../plug-ins/bmp/bmpread.c:157 ../plug-ins/common/CEL.c:304
 #: ../plug-ins/common/dicom.c:300 ../plug-ins/common/gbr.c:353
 #: ../plug-ins/common/gifload.c:314 ../plug-ins/common/gih.c:654
-#: ../plug-ins/common/pat.c:326 ../plug-ins/common/pcx.c:314
+#: ../plug-ins/common/pat.c:324 ../plug-ins/common/pcx.c:314
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:712
 #: ../plug-ins/common/pnm.c:485 ../plug-ins/common/poppler.c:465
 #: ../plug-ins/common/postscript.c:1018 ../plug-ins/common/psd.c:1885
@@ -1252,10 +1252,10 @@ msgstr "Nemohu pracovat na indexovaných obrázcích s alfa kanálem."
 #: ../plug-ins/bmp/bmpwrite.c:211 ../plug-ins/common/CEL.c:573
 #: ../plug-ins/common/gbr.c:621 ../plug-ins/common/gif.c:1000
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
-#: ../plug-ins/common/pat.c:456 ../plug-ins/common/pcx.c:550
+#: ../plug-ins/common/pat.c:454 ../plug-ins/common/pcx.c:550
 #: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1228
 #: ../plug-ins/common/pnm.c:934 ../plug-ins/common/postscript.c:1190
-#: ../plug-ins/common/psd_save.c:1448 ../plug-ins/common/sunras.c:512
+#: ../plug-ins/common/psd_save.c:1453 ../plug-ins/common/sunras.c:512
 #: ../plug-ins/common/tga.c:1035 ../plug-ins/common/tiff.c:1925
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
@@ -2503,37 +2503,37 @@ msgstr "Vlastní barva:"
 msgid "Colorify Custom Color"
 msgstr "Vlastní barva kolorování"
 
-#: ../plug-ins/common/colormap-remap.c:103
+#: ../plug-ins/common/colormap-remap.c:97
 msgid "Rearrange the colormap"
 msgstr "Přerovnat barevnou mapu"
 
-#: ../plug-ins/common/colormap-remap.c:110
-msgid "_Rearrange Colormap..."
+#: ../plug-ins/common/colormap-remap.c:104
+msgid "R_earrange Colormap..."
 msgstr "_Přerovnat barevnou mapu..."
 
-#: ../plug-ins/common/colormap-remap.c:119
+#: ../plug-ins/common/colormap-remap.c:116
 msgid "Swap two colors in the colormap"
 msgstr "Přehodit dvě barvy v barevné mapě"
 
-#: ../plug-ins/common/colormap-remap.c:126
+#: ../plug-ins/common/colormap-remap.c:123
 msgid "_Swap Colors"
 msgstr "_Přehodit barvy"
 
-#: ../plug-ins/common/colormap-remap.c:295
-#: ../plug-ins/common/colormap-remap.c:306
-#: ../plug-ins/common/colormap-remap.c:317
+#: ../plug-ins/common/colormap-remap.c:287
+#: ../plug-ins/common/colormap-remap.c:298
+#: ../plug-ins/common/colormap-remap.c:309
 msgid "Invalid remap array was passed to remap function"
 msgstr "Funkci remap bylo předáno neplatné remap pole"
 
-#: ../plug-ins/common/colormap-remap.c:341
+#: ../plug-ins/common/colormap-remap.c:333
 msgid "Rearranging the colormap"
 msgstr "Přerovnává se barevná mapa"
 
-#: ../plug-ins/common/colormap-remap.c:473
+#: ../plug-ins/common/colormap-remap.c:437
 msgid "Rearrange Colormap"
 msgstr "Přerovnat barevnou mapu."
 
-#: ../plug-ins/common/colormap-remap.c:493
+#: ../plug-ins/common/colormap-remap.c:457
 msgid ""
 "Drag and drop colors to rearrange the colormap.\n"
 "The numbers shown are the original indices."
@@ -4150,7 +4150,7 @@ msgid "Spacing:"
 msgstr "Rozestup:"
 
 #: ../plug-ins/common/gbr.c:742 ../plug-ins/common/gih.c:910
-#: ../plug-ins/common/pat.c:544 ../plug-ins/gimpressionist/presets.c:646
+#: ../plug-ins/common/pat.c:542 ../plug-ins/gimpressionist/presets.c:646
 msgid "Description:"
 msgstr "Popis:"
 
@@ -5729,16 +5729,16 @@ msgstr "31. září 1999"
 msgid "_Paper Tile..."
 msgstr "_Papírová dlaždice..."
 
-#: ../plug-ins/common/pat.c:123 ../plug-ins/common/pat.c:146
+#: ../plug-ins/common/pat.c:123 ../plug-ins/common/pat.c:145
 msgid "GIMP pattern"
 msgstr "Vzorek GIMPu"
 
-#: ../plug-ins/common/pat.c:362
+#: ../plug-ins/common/pat.c:360
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Neplatný řetězec UTF-8 v souboru vzorku '%s'."
 
-#: ../plug-ins/common/pat.c:517
+#: ../plug-ins/common/pat.c:515
 msgid "Save as Pattern"
 msgstr "Zapsat jako vzorek"
 
@@ -6343,24 +6343,20 @@ msgstr "Neplatný řetězec UTF-8 v souboru PSD"
 msgid "Photoshop image"
 msgstr "Obrázek Photoshopu"
 
-#: ../plug-ins/common/psd_save.c:316
+#: ../plug-ins/common/psd_save.c:322
 #, c-format
 msgid ""
-"Unable to save layer with mode '%c'. The psd file format does not support "
-"that, using normal mode instead."
+"Unable to save layer with mode '%s'.  Either the PSD file format or the save "
+"plug-in does not support that, using normal mode instead."
 msgstr ""
-"Nemohu uložit vrstvu v režimu '%c'. Formát souborů PSD ho nepodporuje, "
-"používám tedy normální režim."
+"Nelze uložit vrstvu v režimu '%s'. Formát souborů PSD nebo zásuvný modul "
+"pro ukládání režim nepodporuje, používám tedy normální režim."
 
-#: ../plug-ins/common/psd_save.c:323
-msgid "Unable to save layer with UNKNOWN mode. Using normal mode as fallback."
-msgstr "Nelze uložit vrstvu v NEZNÁMÉM režimu. Používám normální režim."
-
-#: ../plug-ins/common/psd_save.c:518
+#: ../plug-ins/common/psd_save.c:523
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Chyba: nelze převést základní obrazový typ GIMPu do PSD režimu"
 
-#: ../plug-ins/common/psd_save.c:1419
+#: ../plug-ins/common/psd_save.c:1424
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
@@ -6369,7 +6365,7 @@ msgstr ""
 "Nemohu uložit '%s'. Formát souborů psd nepodporuje obrázky, které jsou širší "
 "nebo vyšší než 30000 pixelů."
 
-#: ../plug-ins/common/psd_save.c:1431
+#: ../plug-ins/common/psd_save.c:1436
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
@@ -6779,73 +6775,73 @@ msgstr "Vytvořit obrázek z oblasti obrazovky"
 msgid "_Screenshot..."
 msgstr "_Snímek obrazovky..."
 
-#: ../plug-ins/common/screenshot.c:424
+#: ../plug-ins/common/screenshot.c:436
 msgid "Error grabbing the pointer"
 msgstr "Chyba při zachytávání ukazatele"
 
-#: ../plug-ins/common/screenshot.c:603
+#: ../plug-ins/common/screenshot.c:615
 msgid "Importing screenshot"
 msgstr "Načítá se snímek obrazovky"
 
-#: ../plug-ins/common/screenshot.c:610 ../plug-ins/common/screenshot.c:777
+#: ../plug-ins/common/screenshot.c:622 ../plug-ins/common/screenshot.c:789
 msgid "Screenshot"
 msgstr "Snímek obrazovky"
 
-#: ../plug-ins/common/screenshot.c:718
+#: ../plug-ins/common/screenshot.c:730
 msgid "Specified window not found"
 msgstr "Určené okno nenalezeno"
 
-#: ../plug-ins/common/screenshot.c:745
+#: ../plug-ins/common/screenshot.c:757
 msgid "There was an error taking the screenshot."
 msgstr "Pří získávání snímku obrazovky došlo k chybě."
 
-#: ../plug-ins/common/screenshot.c:786
+#: ../plug-ins/common/screenshot.c:798
 msgid "_Grab"
 msgstr "_Zachytit"
 
-#: ../plug-ins/common/screenshot.c:807
+#: ../plug-ins/common/screenshot.c:819
 msgid "Area"
 msgstr "Oblast"
 
-#: ../plug-ins/common/screenshot.c:818
+#: ../plug-ins/common/screenshot.c:830
 msgid "Take a screenshot of a single _window"
 msgstr "Získat snímek jednoho _okna"
 
-#: ../plug-ins/common/screenshot.c:839
+#: ../plug-ins/common/screenshot.c:851
 msgid "Include window _decoration"
 msgstr "Včetně _dekorace okna"
 
-#: ../plug-ins/common/screenshot.c:855
+#: ../plug-ins/common/screenshot.c:867
 msgid "Take a screenshot of the entire _screen"
 msgstr "Získat snímek celé _obrazovky"
 
-#: ../plug-ins/common/screenshot.c:873
+#: ../plug-ins/common/screenshot.c:885
 msgid "Select a _region to grab"
 msgstr "Vyberte oblast k sejmutí"
 
-#: ../plug-ins/common/screenshot.c:880
+#: ../plug-ins/common/screenshot.c:892
 msgid ""
 "If enabled, you can use the mouse to select a rectangular region of the "
 "screen."
 msgstr "Je-li povoleno, můžete myší vybrat obdélnikovou oblast obrazovky"
 
 #. grab delay
-#: ../plug-ins/common/screenshot.c:893
+#: ../plug-ins/common/screenshot.c:905
 msgid "Delay"
 msgstr "Zpoždění"
 
 #. this string is part of "Wait [spinbutton] seconds before grabbing"
-#: ../plug-ins/common/screenshot.c:906
+#: ../plug-ins/common/screenshot.c:918
 msgid "W_ait"
 msgstr "_Čekat"
 
 #. this string is part of "Wait [spinbutton] seconds before grabbing"
-#: ../plug-ins/common/screenshot.c:922
+#: ../plug-ins/common/screenshot.c:934
 msgid "seconds before grabbing"
 msgstr "sekund před zachycením"
 
 # FIXME: s/after/between/
-#: ../plug-ins/common/screenshot.c:926
+#: ../plug-ins/common/screenshot.c:938
 msgid ""
 "The number of seconds to wait after selecting the window or region and "
 "actually taking the screenshot."
@@ -7940,47 +7936,47 @@ msgstr "Vytvořit nebo upravit jednotky používané GIMPem"
 msgid "_Unit Editor"
 msgstr "Editor _jednotek"
 
-#: ../plug-ins/common/uniteditor.c:209
+#: ../plug-ins/common/uniteditor.c:208
 msgid "Add a New Unit"
 msgstr "Přidat novou jednotku"
 
-#: ../plug-ins/common/uniteditor.c:238
+#: ../plug-ins/common/uniteditor.c:237
 msgid "_ID:"
 msgstr "_ID:"
 
-#: ../plug-ins/common/uniteditor.c:249
+#: ../plug-ins/common/uniteditor.c:248
 msgid "_Factor:"
 msgstr "_Faktor:"
 
-#: ../plug-ins/common/uniteditor.c:259
+#: ../plug-ins/common/uniteditor.c:258
 msgid "_Digits:"
 msgstr "Čísli_ce:"
 
-#: ../plug-ins/common/uniteditor.c:271
+#: ../plug-ins/common/uniteditor.c:270
 msgid "_Symbol:"
 msgstr "_Symbol:"
 
-#: ../plug-ins/common/uniteditor.c:283
+#: ../plug-ins/common/uniteditor.c:282
 msgid "_Abbreviation:"
 msgstr "Zkr_atka:"
 
-#: ../plug-ins/common/uniteditor.c:295
+#: ../plug-ins/common/uniteditor.c:294
 msgid "Si_ngular:"
 msgstr "Jed_notné číslo:"
 
-#: ../plug-ins/common/uniteditor.c:307
+#: ../plug-ins/common/uniteditor.c:306
 msgid "_Plural:"
 msgstr "_Množné číslo:"
 
-#: ../plug-ins/common/uniteditor.c:350
+#: ../plug-ins/common/uniteditor.c:349
 msgid "Incomplete input"
 msgstr "Neúplný vstup"
 
-#: ../plug-ins/common/uniteditor.c:353
+#: ../plug-ins/common/uniteditor.c:352
 msgid "Please fill in all text fields."
 msgstr "Prosím vyplňte všechna textová pole."
 
-#: ../plug-ins/common/uniteditor.c:410
+#: ../plug-ins/common/uniteditor.c:409
 msgid "Unit Editor"
 msgstr "Editor jednotek"
 
@@ -8061,15 +8057,15 @@ msgstr "_Aditivní"
 msgid "_Rotated"
 msgstr "_Rotovaný"
 
-#: ../plug-ins/common/vinvert.c:88
+#: ../plug-ins/common/vinvert.c:90
 msgid "Invert the brightness of each pixel"
 msgstr "Invertovat jas každého pixelu"
 
-#: ../plug-ins/common/vinvert.c:102
+#: ../plug-ins/common/vinvert.c:104
 msgid "_Value Invert"
 msgstr "_Inverze hodnoty"
 
-#: ../plug-ins/common/vinvert.c:182
+#: ../plug-ins/common/vinvert.c:191
 msgid "Value Invert"
 msgstr "Inverze hodnoty"
 
