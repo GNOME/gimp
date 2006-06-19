@@ -405,7 +405,7 @@ gimp_cell_renderer_accel_start_editing (GtkCellRenderer      *cell,
   eventbox = g_object_new (pointless_eventbox_subclass_get_type (), NULL);
   accel->edit_widget = eventbox;
   g_object_add_weak_pointer (G_OBJECT (accel->edit_widget),
-                             (void **) &accel->edit_widget);
+                             (gpointer) &accel->edit_widget);
 
   label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);

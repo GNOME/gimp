@@ -664,7 +664,7 @@ gimp_display_shell_get_pen_gc (GimpDisplayShell *shell,
   gdk_gc_set_rgb_fg_color (shell->pen_gc, &color);
 
   g_object_add_weak_pointer (G_OBJECT (shell->pen_gc),
-                             (gpointer *) &shell->pen_gc);
+                             (gpointer) &shell->pen_gc);
 
   g_signal_connect_object (context, "notify",
                            G_CALLBACK (g_object_unref),

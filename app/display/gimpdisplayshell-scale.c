@@ -496,7 +496,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                      (GWeakNotify) g_object_unref, data->model);
 
   g_object_add_weak_pointer (G_OBJECT (shell->scale_dialog),
-                             (gpointer *) &shell->scale_dialog);
+                             (gpointer) &shell->scale_dialog);
 
   gtk_window_set_transient_for (GTK_WINDOW (shell->scale_dialog),
                                 GTK_WINDOW (shell));

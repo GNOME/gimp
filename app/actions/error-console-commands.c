@@ -105,7 +105,7 @@ error_console_save_cmd_callback (GtkAction *action,
   console->save_selection = value;
 
   g_object_add_weak_pointer (G_OBJECT (console->file_dialog),
-                             (gpointer *) &console->file_dialog);
+                             (gpointer) &console->file_dialog);
 
   chooser = GTK_FILE_CHOOSER (console->file_dialog);
 

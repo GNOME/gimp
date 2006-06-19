@@ -324,7 +324,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
     {
       mtool->dialog = gimp_measure_tool_dialog_new (mtool);
       g_object_add_weak_pointer (G_OBJECT (mtool->dialog),
-                                 (gpointer *) &mtool->dialog);
+                                 (gpointer) &mtool->dialog);
     }
 
   if (mtool->dialog)

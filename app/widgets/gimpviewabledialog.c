@@ -304,7 +304,7 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
       gtk_widget_show (dialog->view);
 
       g_object_add_weak_pointer (G_OBJECT (dialog->view),
-                                 (gpointer *) &dialog->view);
+                                 (gpointer) &dialog->view);
 
       gimp_viewable_dialog_name_changed (GIMP_OBJECT (viewable), dialog);
 

@@ -755,7 +755,7 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
                                                     _("GIMP Text Editor"));
 
   g_object_add_weak_pointer (G_OBJECT (text_tool->editor),
-                             (gpointer *) &text_tool->editor);
+                             (gpointer) &text_tool->editor);
 
   gimp_dialog_factory_add_foreign (dialog_factory,
                                    "gimp-text-tool-dialog",
@@ -937,7 +937,7 @@ gimp_text_tool_set_image (GimpTextTool *text_tool,
                                             text_tool);
 
       g_object_remove_weak_pointer (G_OBJECT (text_tool->image),
-                                    (gpointer *) &text_tool->image);
+                                    (gpointer) &text_tool->image);
       text_tool->image = NULL;
     }
 
@@ -947,7 +947,7 @@ gimp_text_tool_set_image (GimpTextTool *text_tool,
 
       text_tool->image = image;
       g_object_add_weak_pointer (G_OBJECT (text_tool->image),
-                                 (gpointer *) &text_tool->image);
+                                 (gpointer) &text_tool->image);
 
       g_signal_connect_object (text_tool->image, "active-layer-changed",
                                G_CALLBACK (gimp_text_tool_layer_changed),

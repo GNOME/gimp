@@ -280,7 +280,7 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
   if (renderer->viewable)
     {
       g_object_remove_weak_pointer (G_OBJECT (renderer->viewable),
-                                    (gpointer *) &renderer->viewable);
+                                    (gpointer) &renderer->viewable);
 
       g_signal_handlers_disconnect_by_func (renderer->viewable,
                                             G_CALLBACK (gimp_view_renderer_invalidate),
@@ -296,7 +296,7 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
   if (renderer->viewable)
     {
       g_object_add_weak_pointer (G_OBJECT (renderer->viewable),
-                                 (gpointer *) &renderer->viewable);
+                                 (gpointer) &renderer->viewable);
 
       g_signal_connect_swapped (renderer->viewable,
                                 "invalidate-preview",

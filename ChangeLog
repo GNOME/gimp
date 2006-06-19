@@ -1,5 +1,17 @@
 2006-06-19  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/error-console-commands.c
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimptexttool.c
+	* app/widgets/gimpcellrendereraccel.c
+	* app/widgets/gimpviewabledialog.c
+	* app/widgets/gimpviewrenderer.c: changed casts in calls to
+	g_object_add_weak_pointer() to silence compiler warnings.
+
+2006-06-19  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpguiconfig.c (DEFAULT_WEB_BROWSER): changed to
 	"firefox", most distributions seem to have renamed the binary.
 
