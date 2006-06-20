@@ -1,5 +1,10 @@
 2006-06-20  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/about-dialog.c (about_dialog_create): only unref the
+	logo pixmap if it is not NULL; loading it may fail.
+
+2006-06-20  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/tools-enums.h: added TRANSFORM_HANDLE_NONE (will get
 	rid of TRANSFORM_CREATING later).
 

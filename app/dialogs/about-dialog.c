@@ -19,7 +19,6 @@
 #include "config.h"
 
 #include <string.h>
-#include <time.h>
 
 #include <gtk/gtk.h>
 
@@ -126,7 +125,8 @@ about_dialog_create (GimpContext *context)
                              "translator-credits", _("translator-credits"),
                              NULL);
 
-      g_object_unref (pixbuf);
+      if (pixbuf)
+        g_object_unref (pixbuf);
 
       dialog->dialog = widget;
 
