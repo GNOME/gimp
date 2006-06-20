@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-19 12:38+0200\n"
-"PO-Revision-Date: 2006-06-19 12:40+0200\n"
+"POT-Creation-Date: 2006-06-20 15:41+0200\n"
+"PO-Revision-Date: 2006-06-20 15:44+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3324,6 +3324,15 @@ msgstr "_Velikost 1:"
 msgid "Sca_le 2:"
 msgstr "_Velikost 2:"
 
+#: ../plug-ins/common/desktop-link.c:82
+msgid "Desktop Link"
+msgstr "Desktop odkaz"
+
+#: ../plug-ins/common/desktop-link.c:163
+#, c-format
+msgid "Error loading desktop file '%s': %s"
+msgstr "Chyba načítání desktop souboru '%s': %s"
+
 #: ../plug-ins/common/despeckle.c:146
 msgid "Remove speckle noise from the image"
 msgstr "Odstranit šum z obrázku"
@@ -6349,8 +6358,8 @@ msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
 "plug-in does not support that, using normal mode instead."
 msgstr ""
-"Nelze uložit vrstvu v režimu '%s'. Formát souborů PSD nebo zásuvný modul "
-"pro ukládání režim nepodporuje, používám tedy normální režim."
+"Nelze uložit vrstvu v režimu '%s'. Formát souborů PSD nebo zásuvný modul pro "
+"ukládání režim nepodporuje, používám tedy normální režim."
 
 #: ../plug-ins/common/psd_save.c:523
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
