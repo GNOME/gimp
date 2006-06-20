@@ -209,8 +209,9 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 
   gimp_matrix3_identity (&tr_tool->transform);
 
-  tr_tool->use_grid         = TRUE;
-  tr_tool->use_center       = TRUE;
+  tr_tool->use_grid         = FALSE;
+  tr_tool->use_handles      = FALSE;
+  tr_tool->use_center       = FALSE;
   tr_tool->ngx              = 0;
   tr_tool->ngy              = 0;
   tr_tool->grid_coords      = NULL;
@@ -244,6 +245,7 @@ gimp_transform_tool_constructor (GType                  type,
     {
       tr_tool->type =
         GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options)->type;
+
       tr_tool->direction =
         GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options)->direction;
 
@@ -396,7 +398,7 @@ gimp_transform_tool_button_press (GimpTool        *tool,
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
-  if (tr_tool->function == TRANSFORM_CREATING && tr_tool->use_grid)
+  if (tr_tool->function == TRANSFORM_CREATING)
     gimp_transform_tool_oper_update (tool, coords, state, TRUE, display);
 
   tr_tool->lastx = tr_tool->startx = coords->x;
@@ -549,10 +551,12 @@ gimp_transform_tool_oper_update (GimpTool        *tool,
   GimpTransformTool *tr_tool   = GIMP_TRANSFORM_TOOL (tool);
   GimpDrawTool      *draw_tool = GIMP_DRAW_TOOL (tool);
 
-  if (! tr_tool->use_grid)
+  tr_tool->function = TRANSFORM_HANDLE_NONE;
+
+  if (display != tool->display)
     return;
 
-  if (display == tool->display)
+  if (tr_tool->use_handles)
     {
       gdouble closest_dist;
       gdouble dist;
@@ -588,17 +592,18 @@ gimp_transform_tool_oper_update (GimpTool        *tool,
           closest_dist = dist;
           tr_tool->function = TRANSFORM_HANDLE_SE;
         }
+    }
 
-      if (gimp_draw_tool_on_handle (draw_tool, display,
-                                    coords->x, coords->y,
-                                    GIMP_HANDLE_CIRCLE,
-                                    tr_tool->tcx, tr_tool->tcy,
-                                    HANDLE_SIZE, HANDLE_SIZE,
-                                    GTK_ANCHOR_CENTER,
-                                    FALSE))
-        {
-          tr_tool->function = TRANSFORM_HANDLE_CENTER;
-        }
+  if (tr_tool->use_center &&
+      gimp_draw_tool_on_handle (draw_tool, display,
+                                coords->x, coords->y,
+                                GIMP_HANDLE_CIRCLE,
+                                tr_tool->tcx, tr_tool->tcy,
+                                HANDLE_SIZE, HANDLE_SIZE,
+                                GTK_ANCHOR_CENTER,
+                                FALSE))
+    {
+      tr_tool->function = TRANSFORM_HANDLE_CENTER;
     }
 }
 
@@ -608,35 +613,59 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
                                    GdkModifierType  state,
                                    GimpDisplay     *display)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+  GimpTransformTool    *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+  GimpTransformOptions *options;
+  GimpCursorModifier    modifier = GIMP_CURSOR_MODIFIER_NONE;
 
-  if (tr_tool->use_grid)
+  options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
+
+  if (tr_tool->use_handles)
     {
-      GimpTransformOptions *options;
-      GimpCursorModifier    modifier = GIMP_CURSOR_MODIFIER_NONE;
-
-      options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
-
-      switch (options->type)
+      switch (tr_tool->function)
         {
-        case GIMP_TRANSFORM_TYPE_LAYER:
-        case GIMP_TRANSFORM_TYPE_SELECTION:
+        case TRANSFORM_HANDLE_NW:
+          gimp_tool_control_set_cursor (tool->control,
+                                        GIMP_CURSOR_CORNER_TOP_LEFT);
           break;
 
-        case GIMP_TRANSFORM_TYPE_PATH:
-          if (! gimp_image_get_active_vectors (display->image))
-            modifier = GIMP_CURSOR_MODIFIER_BAD;
+        case TRANSFORM_HANDLE_NE:
+          gimp_tool_control_set_cursor (tool->control,
+                                        GIMP_CURSOR_CORNER_TOP_RIGHT);
           break;
-        }
 
-      if (tr_tool->use_center && tr_tool->function == TRANSFORM_HANDLE_CENTER)
-        {
-          if (modifier != GIMP_CURSOR_MODIFIER_BAD)
-            modifier = GIMP_CURSOR_MODIFIER_MOVE;
-        }
+        case TRANSFORM_HANDLE_SW:
+          gimp_tool_control_set_cursor (tool->control,
+                                        GIMP_CURSOR_CORNER_BOTTOM_LEFT);
+          break;
 
-      gimp_tool_control_set_cursor_modifier (tool->control, modifier);
+        case TRANSFORM_HANDLE_SE:
+          gimp_tool_control_set_cursor (tool->control,
+                                        GIMP_CURSOR_CORNER_BOTTOM_RIGHT);
+          break;
+
+        default:
+          gimp_tool_control_set_cursor (tool->control, GIMP_CURSOR_MOUSE);
+        }
     }
+
+  if (tr_tool->use_center && tr_tool->function == TRANSFORM_HANDLE_CENTER)
+    {
+      modifier = GIMP_CURSOR_MODIFIER_MOVE;
+    }
+
+  switch (options->type)
+    {
+    case GIMP_TRANSFORM_TYPE_LAYER:
+    case GIMP_TRANSFORM_TYPE_SELECTION:
+      break;
+
+    case GIMP_TRANSFORM_TYPE_PATH:
+      if (! gimp_image_get_active_vectors (display->image))
+        modifier = GIMP_CURSOR_MODIFIER_BAD;
+      break;
+    }
+
+  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
@@ -649,90 +678,93 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   GimpTransformOptions *options;
   gdouble               z1, z2, z3, z4;
 
-  if (! tr_tool->use_grid)
-    return;
-
-  options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
-
-  /*  draw the bounding box  */
-  gimp_draw_tool_draw_line (draw_tool,
-                            tr_tool->tx1, tr_tool->ty1,
-                            tr_tool->tx2, tr_tool->ty2,
-                            FALSE);
-  gimp_draw_tool_draw_line (draw_tool,
-                            tr_tool->tx2, tr_tool->ty2,
-                            tr_tool->tx4, tr_tool->ty4,
-                            FALSE);
-  gimp_draw_tool_draw_line (draw_tool,
-                            tr_tool->tx3, tr_tool->ty3,
-                            tr_tool->tx4, tr_tool->ty4,
-                            FALSE);
-  gimp_draw_tool_draw_line (draw_tool,
-                            tr_tool->tx3, tr_tool->ty3,
-                            tr_tool->tx1, tr_tool->ty1,
-                            FALSE);
-
-  /* We test if the transformed polygon is convex.
-   * if z1 and z2 have the same sign as well as z3 and z4
-   * the polygon is convex.
-   */
-  z1 = ((tr_tool->tx2 - tr_tool->tx1) * (tr_tool->ty4 - tr_tool->ty1) -
-        (tr_tool->tx4 - tr_tool->tx1) * (tr_tool->ty2 - tr_tool->ty1));
-  z2 = ((tr_tool->tx4 - tr_tool->tx1) * (tr_tool->ty3 - tr_tool->ty1) -
-        (tr_tool->tx3 - tr_tool->tx1) * (tr_tool->ty4 - tr_tool->ty1));
-  z3 = ((tr_tool->tx4 - tr_tool->tx2) * (tr_tool->ty3 - tr_tool->ty2) -
-        (tr_tool->tx3 - tr_tool->tx2) * (tr_tool->ty4 - tr_tool->ty2));
-  z4 = ((tr_tool->tx3 - tr_tool->tx2) * (tr_tool->ty1 - tr_tool->ty2) -
-        (tr_tool->tx1 - tr_tool->tx2) * (tr_tool->ty3 - tr_tool->ty2));
-
-  /*  Draw the grid (not for path transform since it looks ugly)  */
-
-  if (tr_tool->type != GIMP_TRANSFORM_TYPE_PATH &&
-      tr_tool->grid_coords                      &&
-      tr_tool->tgrid_coords                     &&
-      z1 * z2 > 0                               &&
-      z3 * z4 > 0)
+  if (tr_tool->use_grid)
     {
-      gint gci, i, k;
+      options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
 
-      k = tr_tool->ngx + tr_tool->ngy;
+      /*  draw the bounding box  */
+      gimp_draw_tool_draw_line (draw_tool,
+                                tr_tool->tx1, tr_tool->ty1,
+                                tr_tool->tx2, tr_tool->ty2,
+                                FALSE);
+      gimp_draw_tool_draw_line (draw_tool,
+                                tr_tool->tx2, tr_tool->ty2,
+                                tr_tool->tx4, tr_tool->ty4,
+                                FALSE);
+      gimp_draw_tool_draw_line (draw_tool,
+                                tr_tool->tx3, tr_tool->ty3,
+                                tr_tool->tx4, tr_tool->ty4,
+                                FALSE);
+      gimp_draw_tool_draw_line (draw_tool,
+                                tr_tool->tx3, tr_tool->ty3,
+                                tr_tool->tx1, tr_tool->ty1,
+                                FALSE);
 
-      for (i = 0, gci = 0; i < k; i++, gci += 4)
+      /* We test if the transformed polygon is convex.
+       * if z1 and z2 have the same sign as well as z3 and z4
+       * the polygon is convex.
+       */
+      z1 = ((tr_tool->tx2 - tr_tool->tx1) * (tr_tool->ty4 - tr_tool->ty1) -
+            (tr_tool->tx4 - tr_tool->tx1) * (tr_tool->ty2 - tr_tool->ty1));
+      z2 = ((tr_tool->tx4 - tr_tool->tx1) * (tr_tool->ty3 - tr_tool->ty1) -
+            (tr_tool->tx3 - tr_tool->tx1) * (tr_tool->ty4 - tr_tool->ty1));
+      z3 = ((tr_tool->tx4 - tr_tool->tx2) * (tr_tool->ty3 - tr_tool->ty2) -
+            (tr_tool->tx3 - tr_tool->tx2) * (tr_tool->ty4 - tr_tool->ty2));
+      z4 = ((tr_tool->tx3 - tr_tool->tx2) * (tr_tool->ty1 - tr_tool->ty2) -
+            (tr_tool->tx1 - tr_tool->tx2) * (tr_tool->ty3 - tr_tool->ty2));
+
+      /*  Draw the grid (not for path transform since it looks ugly)  */
+
+      if (tr_tool->type != GIMP_TRANSFORM_TYPE_PATH &&
+          tr_tool->grid_coords                      &&
+          tr_tool->tgrid_coords                     &&
+          z1 * z2 > 0                               &&
+          z3 * z4 > 0)
         {
-          gimp_draw_tool_draw_line (draw_tool,
-                                    tr_tool->tgrid_coords[gci],
-                                    tr_tool->tgrid_coords[gci + 1],
-                                    tr_tool->tgrid_coords[gci + 2],
-                                    tr_tool->tgrid_coords[gci + 3],
-                                    FALSE);
+          gint gci, i, k;
+
+          k = tr_tool->ngx + tr_tool->ngy;
+
+          for (i = 0, gci = 0; i < k; i++, gci += 4)
+            {
+              gimp_draw_tool_draw_line (draw_tool,
+                                        tr_tool->tgrid_coords[gci],
+                                        tr_tool->tgrid_coords[gci + 1],
+                                        tr_tool->tgrid_coords[gci + 2],
+                                        tr_tool->tgrid_coords[gci + 3],
+                                        FALSE);
+            }
         }
     }
 
-  /*  draw the tool handles  */
-  gimp_draw_tool_draw_handle (draw_tool,
-                              GIMP_HANDLE_SQUARE,
-                              tr_tool->tx1, tr_tool->ty1,
-                              HANDLE_SIZE, HANDLE_SIZE,
-                              GTK_ANCHOR_CENTER,
-                              FALSE);
-  gimp_draw_tool_draw_handle (draw_tool,
-                              GIMP_HANDLE_SQUARE,
-                              tr_tool->tx2, tr_tool->ty2,
-                              HANDLE_SIZE, HANDLE_SIZE,
-                              GTK_ANCHOR_CENTER,
-                              FALSE);
-  gimp_draw_tool_draw_handle (draw_tool,
-                              GIMP_HANDLE_SQUARE,
-                              tr_tool->tx3, tr_tool->ty3,
-                              HANDLE_SIZE, HANDLE_SIZE,
-                              GTK_ANCHOR_CENTER,
-                              FALSE);
-  gimp_draw_tool_draw_handle (draw_tool,
-                              GIMP_HANDLE_SQUARE,
-                              tr_tool->tx4, tr_tool->ty4,
-                              HANDLE_SIZE, HANDLE_SIZE,
-                              GTK_ANCHOR_CENTER,
-                              FALSE);
+  if (tr_tool->use_handles)
+    {
+      /*  draw the tool handles  */
+      gimp_draw_tool_draw_handle (draw_tool,
+                                  GIMP_HANDLE_SQUARE,
+                                  tr_tool->tx1, tr_tool->ty1,
+                                  HANDLE_SIZE, HANDLE_SIZE,
+                                  GTK_ANCHOR_CENTER,
+                                  FALSE);
+      gimp_draw_tool_draw_handle (draw_tool,
+                                  GIMP_HANDLE_SQUARE,
+                                  tr_tool->tx2, tr_tool->ty2,
+                                  HANDLE_SIZE, HANDLE_SIZE,
+                                  GTK_ANCHOR_CENTER,
+                                  FALSE);
+      gimp_draw_tool_draw_handle (draw_tool,
+                                  GIMP_HANDLE_SQUARE,
+                                  tr_tool->tx3, tr_tool->ty3,
+                                  HANDLE_SIZE, HANDLE_SIZE,
+                                  GTK_ANCHOR_CENTER,
+                                  FALSE);
+      gimp_draw_tool_draw_handle (draw_tool,
+                                  GIMP_HANDLE_SQUARE,
+                                  tr_tool->tx4, tr_tool->ty4,
+                                  HANDLE_SIZE, HANDLE_SIZE,
+                                  GTK_ANCHOR_CENTER,
+                                  FALSE);
+    }
 
   /*  draw the center  */
   if (tr_tool->use_center)
@@ -796,7 +828,9 @@ gimp_transform_tool_dialog_update (GimpTransformTool *tr_tool)
 {
   if (tr_tool->dialog &&
       GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update)
-    GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update (tr_tool);
+    {
+      GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update (tr_tool);
+    }
 }
 
 static TileManager *

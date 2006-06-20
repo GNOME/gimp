@@ -1,3 +1,19 @@
+2006-06-20  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/tools-enums.h: added TRANSFORM_HANDLE_NONE (will get
+	rid of TRANSFORM_CREATING later).
+
+	* app/tools/gimptransformtool.[ch]: added member "use_handles" and
+	default to FALSE for all "use_foo" variables.  Only deal with the
+	handles the specific transform tool asks for.  Set cursors
+	according to the active handle.
+
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c: changed accordingly.
+
 2006-06-19  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/error-console-commands.c

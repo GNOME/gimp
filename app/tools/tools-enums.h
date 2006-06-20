@@ -169,6 +169,7 @@ typedef enum /*< skip >*/
 typedef enum /*< skip >*/
 {
   TRANSFORM_CREATING,
+  TRANSFORM_HANDLE_NONE,
   TRANSFORM_HANDLE_NW, /* north west */
   TRANSFORM_HANDLE_NE, /* north east */
   TRANSFORM_HANDLE_SW, /* south west */

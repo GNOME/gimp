@@ -97,6 +97,10 @@ gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
 
   tr_tool->shell_desc    = _("Perspective Transform Information");
   tr_tool->progress_text = _("Perspective");
+
+  tr_tool->use_grid      = TRUE;
+  tr_tool->use_handles   = TRUE;
+  tr_tool->use_center    = TRUE;
 }
 
 static void

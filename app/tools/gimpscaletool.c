@@ -107,6 +107,10 @@ gimp_scale_tool_init (GimpScaleTool *scale_tool)
 
   tr_tool->shell_desc    = _("Scaling Information");
   tr_tool->progress_text = _("Scaling");
+
+  tr_tool->use_grid      = TRUE;
+  tr_tool->use_handles   = TRUE;
+  tr_tool->use_center    = TRUE;
 }
 
 static void

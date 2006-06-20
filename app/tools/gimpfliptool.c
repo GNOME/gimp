@@ -98,8 +98,7 @@ gimp_flip_tool_class_init (GimpFlipToolClass *klass)
 static void
 gimp_flip_tool_init (GimpFlipTool *flip_tool)
 {
-  GimpTool          *tool           = GIMP_TOOL (flip_tool);
-  GimpTransformTool *transform_tool = GIMP_TRANSFORM_TOOL (flip_tool);
+  GimpTool *tool = GIMP_TOOL (flip_tool);
 
   gimp_tool_control_set_snap_to            (tool->control, FALSE);
   gimp_tool_control_set_cursor             (tool->control, GIMP_CURSOR_MOUSE);
@@ -108,8 +107,6 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
                                             GIMP_TOOL_CURSOR_FLIP_HORIZONTAL);
   gimp_tool_control_set_toggle_tool_cursor (tool->control,
                                             GIMP_TOOL_CURSOR_FLIP_VERTICAL);
-
-  transform_tool->use_grid = FALSE;
 }
 
 static void

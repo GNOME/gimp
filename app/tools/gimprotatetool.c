@@ -114,6 +114,9 @@ gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
 
   tr_tool->shell_desc    = _("Rotation Information");
   tr_tool->progress_text = _("Rotating");
+
+  tr_tool->use_grid      = TRUE;
+  tr_tool->use_center    = TRUE;
 }
 
 static void
