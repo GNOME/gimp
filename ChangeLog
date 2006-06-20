@@ -1,3 +1,8 @@
+2006-06-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_image): don't
+	try to set "." as current_folder_uri.
+
 2006-06-20  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/tips-dialog.c: use GIMP_STOCK_INFO for the tips dialog.
