@@ -66,6 +66,7 @@ libexec_PROGRAMS = \
 	decompose \
 	deinterlace \
 	depthmerge \
+	desktop-link \
 	despeckle \
 	destripe \
 	dicom \
@@ -665,6 +666,18 @@ depthmerge_LDADD = \
 	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+desktop_link_SOURCES = \
+	desktop-link.c
+
+desktop_link_LDADD = \
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpmath)		\
+	$(libgimpbase)		\
+	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 

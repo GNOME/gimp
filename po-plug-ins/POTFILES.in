@@ -46,6 +46,7 @@ plug-ins/common/curve_bend.c
 plug-ins/common/decompose.c
 plug-ins/common/deinterlace.c
 plug-ins/common/depthmerge.c
+plug-ins/common/desktop-link.c
 plug-ins/common/despeckle.c
 plug-ins/common/destripe.c
 plug-ins/common/dicom.c

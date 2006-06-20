@@ -31,6 +31,7 @@
     'decompose' => { libdep => 'gtk', ui => 1 },
     'deinterlace' => { libdep => 'gtk', ui => 1 },
     'depthmerge' => { libdep => 'gtk', ui => 1 },
+    'desktop-link' => { libdep => 'glib' },
     'despeckle' => { libdep => 'gtk', ui => 1 },
     'destripe' => { libdep => 'gtk', ui => 1 },
     'dicom' => { libdep => 'gtk', ui => 1 },

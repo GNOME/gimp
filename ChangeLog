@@ -1,5 +1,14 @@
 2006-06-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+
+	* plug-ins/common/desktop-link.c: new load plug-in that parses a
+	.desktop file and if it is a link, asks GIMP to open the file the
+	link points to (bug #326956).
+
+2006-06-20  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/about-dialog.c (about_dialog_create): only unref the
 	logo pixmap if it is not NULL; loading it may fail.
 
