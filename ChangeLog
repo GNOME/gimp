@@ -1,3 +1,7 @@
+2006-06-20  Jakub Steiner <jimmac@ximian.com>
+
+	* authors.xml: add Andreas, Lapo and Bill as artists.
+
 2006-06-20  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/preferences/Makefile.am: install icons at
