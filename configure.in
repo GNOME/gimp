@@ -1176,6 +1176,22 @@ AC_SUBST(SVG)
 AC_SUBST(LIBSVG)
 
 
+####################################
+# Check for gtk+ 2.10 (for GtkPrint)
+####################################
+
+enable_print=no
+AC_ARG_WITH(print,[  --without-print          build without print support])
+
+if test "x$with_print" != xno; then
+  PKG_CHECK_MODULES(PRINT, gtk+-2.0 >= 2.10.0,
+    enable_print="yes", enable_print="no (gtk+ >= 2.10.0 not available)")
+else
+    enable_print="no (print support disabled)"
+fi
+AM_CONDITIONAL(BUILD_PRINT, test "x$enable_print" == xyes)
+
+
 ######################
 # Check for libpoppler
 ######################
@@ -1276,6 +1292,7 @@ else
 fi
 AC_SUBST(LIBWMF)
 AC_SUBST(WMF_CFLAGS)
+AC_SUBST(WMF)
 
 
 ################
@@ -1830,6 +1847,7 @@ Optional Plug-Ins:
   MNG:               $have_libmng
   PDF:               $have_poppler
   PNG:               $have_libpng
+  Print:             $enable_print
   PSP:               $have_zlib
   SVG:               $have_librsvg
   TIFF:              $have_libtiff
