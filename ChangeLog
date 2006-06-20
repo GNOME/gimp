@@ -1,5 +1,9 @@
 2006-06-20  Jakub Steiner <jimmac@ximian.com>
 
+	* themes/Default/images/tools/*xcf: forgot the source xcfs
+
+2006-06-20  Jakub Steiner <jimmac@ximian.com>
+
 	* themes/Default/*: apply Tango style on the default iconset.
 		A teamwork of Andreas Nilsson, Lapo Calamandrei, William
 		Szilvester and myself.
