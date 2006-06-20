@@ -146,12 +146,10 @@ load_image (const gchar *uri,
     return -1;
 
   file = g_key_file_new ();
-
   if (! g_key_file_load_from_file (file, filename, G_KEY_FILE_NONE, &error))
     goto out;
 
   group = g_key_file_get_start_group (file);
-
   if (! group || strcmp (group, "Desktop Entry") != 0)
     goto out;
 
