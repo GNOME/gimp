@@ -17,6 +17,8 @@
 2006-06-20  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/stock-wilber-*: tweak shape a bit
+	* data/images/wilber-icon.png, gimp-logo.png: reflect the changes
+	  here as well.
 
 2006-06-20  Jakub Steiner <jimmac@ximian.com>
 
