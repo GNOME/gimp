@@ -26,6 +26,7 @@ static const gchar * const authors[] =
   "Brent Burton",
   "Francisco Bustamante",
   "Albert Cahalan",
+  "Lapo Calamandrei",
   "George J. Carrette",
   "Sean Cier",
   "Winston Chang",
@@ -121,6 +122,7 @@ static const gchar * const authors[] =
   "David Neary",
   "David Necas",
   "Sven Neumann",
+  "Andreas Nilsson",
   "Stephen Robert Norris",
   "Tim Newsome",
   "Erik Nygren",
@@ -160,6 +162,7 @@ static const gchar * const authors[] =
   "Jakub Steiner",
   "Nathan Summers",
   "Mike Sweet",
+  "William Szilveszter",
   "Eiichi Takamori",
   "Tristan Tarrant",
   "Michael Taylor",
@@ -182,11 +185,14 @@ static const gchar * const authors[] =
 
 static const gchar * const artists[] =
 {
+  "Lapo Calamandrei",
   "Tuomas Kuosmanen",
   "Karl La Rocca",
+  "Andreas Nilsson",
   "Mike Schaeffer",
   "Carol Spears",
   "Jakub Steiner",
+  "William Szilveszter",
   NULL
 };
 

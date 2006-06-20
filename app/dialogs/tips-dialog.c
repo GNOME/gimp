@@ -65,8 +65,7 @@ tips_dialog_create (Gimp *gimp)
   GtkWidget     *hbox;
   GtkWidget     *bbox;
   GtkWidget     *button;
-  GdkPixbuf     *wilber;
-  gchar         *filename;
+  GtkWidget     *image;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -166,24 +165,12 @@ tips_dialog_create (Gimp *gimp)
   gtk_widget_show (thetip_label);
 
   vbox2 = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_end (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
   gtk_widget_show (vbox2);
 
-  filename = g_build_filename (gimp_data_directory (),
-                               "images", "wilber-tips.png", NULL);
-  wilber = gdk_pixbuf_new_from_file (filename, NULL);
-  g_free (filename);
-
-  if (wilber)
-    {
-      GtkWidget *image;
-
-      image = gtk_image_new_from_pixbuf (wilber);
-      g_object_unref (wilber);
-
-      gtk_box_pack_start (GTK_BOX (vbox2), image, TRUE, FALSE, 0);
-      gtk_widget_show (image);
-    }
+  image = gtk_image_new_from_stock (GIMP_STOCK_INFO, GTK_ICON_SIZE_DIALOG);
+  gtk_box_pack_start (GTK_BOX (vbox2), image, TRUE, FALSE, 0);
+  gtk_widget_show (image);
 
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);

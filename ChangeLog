@@ -1,3 +1,9 @@
+2006-06-20  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/tips-dialog.c: use GIMP_STOCK_INFO for the tips dialog.
+
+	* data/images/Makefile.am: do not install unused wilber icons.
+
 2006-06-20  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/stock-wilber-*: tweak shape a bit
