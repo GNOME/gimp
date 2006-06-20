@@ -1,5 +1,13 @@
 2006-06-20  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/images/preferences/Makefile.am: install icons at
+	22x22 pixel size.
+
+	* app/dialogs/preferences-dialog.c (prefs_notebook_append_page):
+	try to load icons at 22x22 instead of scaling down the large one.
+
+2006-06-20  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/Makefile.am
 	* themes/Default/imagerc: removed imagerc, it was outdated anyway.
 
