@@ -251,10 +251,6 @@ plug-ins/metadata/interface.c
 plug-ins/metadata/metadata.c
 plug-ins/metadata/xmp-parse.c
 plug-ins/pagecurl/pagecurl.c
-plug-ins/print/gimp_color_window.c
-plug-ins/print/gimp_main_window.c
-plug-ins/print/print-image-gimp.c
-plug-ins/print/print.c
 plug-ins/rcm/rcm.c
 plug-ins/rcm/rcm_dialog.c
 plug-ins/rcm/rcm_stock.c

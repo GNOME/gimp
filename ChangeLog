@@ -1,5 +1,14 @@
 2006-06-20  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL
+	* configure.in
+	* plug-ins/Makefile.am
+	* plug-ins/print: removed the gimp-print plug-in. gutenprint comes
+	with a GIMP plug-in, so there is no point in supporting this any
+	longer.
+
+2006-06-20  Sven Neumann  <sven@gimp.org>
+
 	* authors.xml: only use the "artist" role for the newly added
 	contributors.
 

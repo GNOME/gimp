@@ -8,10 +8,6 @@ if BUILD_HELPBROWSER
 helpbrowser = helpbrowser
 endif
 
-if BUILD_PRINT
-print = print
-endif
-
 if BUILD_PYTHON
 pygimp = pygimp
 endif
@@ -53,7 +49,6 @@ SUBDIRS = \
 	maze			\
 	metadata		\
 	pagecurl		\
-	$(print)		\
 	$(pygimp)		\
 	rcm			\
 	sgi			\

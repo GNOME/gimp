@@ -1,3 +1,7 @@
+2006-06-20  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added desktop-link.c, removed print plug-in.
+
 2006-06-20  Jakub Friedl  <jfriedl@suse.cz>
 
 	* cs.po: cs update

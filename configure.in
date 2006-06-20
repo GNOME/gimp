@@ -47,9 +47,6 @@ m4_define([pangoft2_required_version], [1.10.0])
 m4_define([fontconfig_required_version], [2.2.0])
 m4_define([gtkdoc_required_version], [1.0])
 m4_define([gtkhtml2_required_version], [2.0.0])
-m4_define([gimpprint_required_version], [4.2.0])
-m4_define([gimpprint_suggested_version], [4.2.6])
-m4_define([gimpprint_toonew_version], [4.3.0])
 m4_define([alsa_required_version], [1.0.0])
 m4_define([rsvg_required_version], [2.8.0])
 m4_define([wmf_required_version], [0.2.8])
@@ -133,8 +130,6 @@ PANGOFT2_REQUIRED_VERSION=pangoft2_required_version
 FONTCONFIG_REQUIRED_VERSION=fontconfig_required_version
 GTKDOC_REQUIRED_VERSION=gtkdoc_required_version
 GTKHTML2_REQUIRED_VERSION=gtkhtml2_required_version
-GIMPPRINT_REQUIRED_VERSION=gimpprint_required_version
-GIMPPRINT_TOONEW_VERSION=gimpprint_toonew_version
 RSVG_REQUIRED_VERSION=rsvg_required_version
 WMF_REQUIRED_VERSION=wmf_required_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
@@ -144,8 +139,6 @@ AC_SUBST(PANGOFT2_REQUIRED_VERSION)
 AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
 AC_SUBST(GTKDOC_REQUIRED_VERSION)
 AC_SUBST(GTKHTML2_REQUIRED_VERSION)
-AC_SUBST(GIMPPRINT_REQUIRED_VERSION)
-AC_SUBST(GIMPPRINT_TOONEW_VERSION)
 AC_SUBST(RSVG_REQUIRED_VERSION)
 AC_SUBST(WMF_REQUIRED_VERSION)
 
@@ -1286,39 +1279,6 @@ AC_SUBST(GNOMEPRINT)
 AC_SUBST(LIBGNOMEPRINT)
 
 
-######################
-# Check for gimp-print
-######################
-
-have_gimp_print=no
-AC_ARG_WITH(gimpprint, [  --without-gimpprint     disable build of gimpprint plug-in])
-
-if test "x$with_gimpprint" != xno; then
-  AM_PATH_GIMPPRINT(gimpprint_required_version,
-    [print_version=`$GIMPPRINT_CONFIG --version`
-      if expr $print_version \>= gimpprint_toonew_version >/dev/null; then
-        have_gimp_print="no (you have a version that's too new!)"
-        AC_MSG_WARN([
-*** libgimpprint version $print_version is too new.
-*** It is likely an unstable development version.
-*** You need a version before gimpprint_toonew_version.])
-      else
-        have_gimp_print=yes
-dnl sanity check to avoid bug #125283
-        if expr $print_version \< gimpprint_suggested_version >/dev/null; then
-          AC_MSG_WARN([
-*** libgimpprint version $print_version causes problems under certain locales.
-*** We strongly suggest you upgrade to version gimpprint_suggested_version.])
-        fi
-      fi
-    ])
-fi
-
-AC_SUBST(PRINT_LIBS)
-AC_SUBST(PRINT_CFLAGS)
-AM_CONDITIONAL(BUILD_PRINT, test x$have_gimp_print = xyes)
-
-
 ###################
 # Check for libwmf2
 ###################
@@ -1798,7 +1758,6 @@ plug-ins/jpeg/Makefile
 plug-ins/maze/Makefile
 plug-ins/metadata/Makefile
 plug-ins/pagecurl/Makefile
-plug-ins/print/Makefile
 plug-ins/pygimp/Makefile
 plug-ins/pygimp/plug-ins/Makefile
 plug-ins/rcm/Makefile
@@ -1897,7 +1856,6 @@ Extra Binaries:
 Optional Plug-Ins:
   Ascii Art:         $have_libaa
   Help Browser:      $have_gtkhtml2
-  Gimp-Print:        $have_gimp_print
   GNOME Print:       $have_gnomeprint
   JPEG:              $jpeg_ok
   MNG:               $have_libmng
