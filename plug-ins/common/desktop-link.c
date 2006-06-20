@@ -43,7 +43,7 @@ static void    run        (const gchar      *name,
                            gint             *nreturn_vals,
                            GimpParam       **return_vals);
 
-static gint32  load_image (const gchar      *uri,
+static gint32  load_image (const gchar      *filename,
                            GimpRunMode       run_mode);
 
 
@@ -111,7 +111,7 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[2].data.d_string, run_mode);
+      image_ID = load_image (param[1].data.d_string, run_mode);
 
       if (image_ID != -1)
         {
@@ -131,21 +131,15 @@ run (const gchar      *name,
 }
 
 static gint32
-load_image (const gchar *uri,
+load_image (const gchar *filename,
             GimpRunMode  run_mode)
 {
-  GKeyFile *file;
-  gchar    *filename;
+  GKeyFile *file     = g_key_file_new ();
   gchar    *group    = NULL;
   gchar    *value    = NULL;
   gint32    image_ID = -1;
   GError   *error    = NULL;
 
-  filename = g_filename_from_uri (uri, NULL, NULL);
-  if (! filename)
-    return -1;
-
-  file = g_key_file_new ();
   if (! g_key_file_load_from_file (file, filename, G_KEY_FILE_NONE, &error))
     goto out;
 
@@ -173,7 +167,6 @@ load_image (const gchar *uri,
 
   g_free (value);
   g_free (group);
-  g_free (filename);
   g_key_file_free (file);
 
   return image_ID;
