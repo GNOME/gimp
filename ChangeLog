@@ -2,6 +2,16 @@
 
 	* INSTALL
 	* configure.in
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/gnomeprint.c
+	* plug-ins/common/winprint.c: removed gnomeprint and winprint
+	plug-ins. We will have a plug-in based on GtkPrint for GIMP 2.4.
+
+2006-06-20  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* configure.in
 	* plug-ins/Makefile.am
 	* plug-ins/print: removed the gimp-print plug-in. gutenprint comes
 	with a GIMP plug-in, so there is no point in supporting this any

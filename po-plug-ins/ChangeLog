@@ -1,6 +1,7 @@
 2006-06-20  Sven Neumann  <sven@gimp.org>
 
-	* POTFILES.in: added desktop-link.c, removed print plug-in.
+	* POTFILES.in: added desktop-link plug-in, removed print, gnomeprint
+	and winprint plug-ins.
 
 2006-06-20  Jakub Friedl  <jfriedl@suse.cz>
 

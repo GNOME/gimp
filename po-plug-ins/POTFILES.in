@@ -70,7 +70,6 @@ plug-ins/common/gifload.c
 plug-ins/common/gih.c
 plug-ins/common/gih.c
 plug-ins/common/glasstile.c
-plug-ins/common/gnomeprint.c
 plug-ins/common/gqbist.c
 plug-ins/common/gradmap.c
 plug-ins/common/grid.c
@@ -153,7 +152,6 @@ plug-ins/common/waves.c
 plug-ins/common/webbrowser.c
 plug-ins/common/whirlpinch.c
 plug-ins/common/wind.c
-plug-ins/common/winprint.c
 plug-ins/common/wmf.c
 plug-ins/common/xbm.c
 plug-ins/common/xpm.c

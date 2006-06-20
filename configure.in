@@ -55,7 +55,6 @@ m4_define([poppler_required_version], [0.3.1])
 m4_define([gnome_vfs_required_version], [2.10.0])
 m4_define([gnomeui_required_version], [2.10.0])
 m4_define([gnome_keyring_required_version], [0.4.5])
-m4_define([gnome_print_required_version], [2.10.0])
 
 
 AC_INIT([GIMP], [gimp_version],
@@ -1254,31 +1253,6 @@ if test "x$have_gnome_keyring" = xyes; then
 fi
 
 
-#######################
-# Check for gnome-print
-#######################
-
-AC_ARG_WITH(gnomeprint,[  --without-gnomeprint    disable build of gnomeprint plug-in])
-
-if test "x$with_gnomeprint" != xno; then
-  PKG_CHECK_MODULES(GNOMEPRINT,
-    libgnomeprintui-2.2 >= gnome_print_required_version,
-    have_gnomeprint=yes,
-    have_gnomeprint="no (libgnomeprintui not found!)")
-fi
-
-AM_CONDITIONAL(HAVE_GNOMEPRINT, test "x$have_gnomeprint" = xyes)
-
-if test "x$have_gnomeprint" = xyes; then
-  GNOMEPRINT='gnomeprint$(EXEEXT)'
-  LIBGNOMEPRINT=$GNOMEPRINT_LIBS
-  AC_DEFINE(HAVE_GNOME_PRINT, 1, [Define to 1 if libgnomeprintui is available])
-fi
-
-AC_SUBST(GNOMEPRINT)
-AC_SUBST(LIBGNOMEPRINT)
-
-
 ###################
 # Check for libwmf2
 ###################
@@ -1479,15 +1453,11 @@ AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
 # Some plug-ins don't build on Win32, others are Win32-only
 ###########################################################
 
-if test x"$os_win32" = xyes; then
-  WINPRINT='winprint$(EXEEXT)'
-else
+if test x"$os_win32" = xno; then
   MAIL='mail$(EXEEXT)'
 fi
 
 AC_SUBST(MAIL)
-AC_SUBST(WINPRINT)
-AC_SUBST(WMF)
 
 
 ############################################################
@@ -1856,7 +1826,6 @@ Extra Binaries:
 Optional Plug-Ins:
   Ascii Art:         $have_libaa
   Help Browser:      $have_gtkhtml2
-  GNOME Print:       $have_gnomeprint
   JPEG:              $jpeg_ok
   MNG:               $have_libmng
   PDF:               $have_poppler
@@ -1866,7 +1835,6 @@ Optional Plug-Ins:
   TIFF:              $have_libtiff
   MacOS X TWAIN:     $mac_twain_ok
   URI:               $uri_plugin
-  Win Print:         $os_win32
   Win Snap:          $os_win32
   WMF:               $have_libwmf
   XJT:               $have_xjt
