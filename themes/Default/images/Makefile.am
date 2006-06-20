@@ -316,11 +316,18 @@ STOCK_IMAGES = \
 	$(STOCK_DIALOG_IMAGES)	\
 	$(STOCK_TOOL_IMAGES)
 
-themedata_DATA = $(STOCK_IMAGES)
+
+themedata_DATA = \
+	stock-error-64.png	\
+	stock-info-64.png	\
+	stock-question-64.png	\
+	stock-warning-64.png
+
 
 EXTRA_DIST = \
 	$(themedata_DATA)	\
 	$(CORE_IMAGES)		\
+	$(STOCK_IMAGES)		\
 	$(WILBER_IMAGES)	\
 	gimp-dialog-icons.xcf.gz\
 	makefile.msc

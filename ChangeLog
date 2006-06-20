@@ -1,3 +1,11 @@
+2006-06-20  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/Makefile.am
+	* themes/Default/imagerc: removed imagerc, it was outdated anyway.
+
+	* themes/Default/images/Makefile.am: don't install the icons that
+	are compiled in.
+
 2006-06-20  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/tools/*xcf: forgot the source xcfs
@@ -5,8 +13,8 @@
 2006-06-20  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/*: apply Tango style on the default iconset.
-		A teamwork of Andreas Nilsson, Lapo Calamandrei, William
-		Szilvester and myself.
+	A teamwork of Andreas Nilsson, Lapo Calamandrei, William
+	Szilvester and myself.
 
 2006-06-20  Sven Neumann  <sven@gimp.org>
 
