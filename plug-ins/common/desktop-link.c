@@ -117,10 +117,10 @@ run (const gchar      *name,
         {
           status = GIMP_PDB_SUCCESS;
 
-	  *nreturn_vals = 2;
-	  values[1].type         = GIMP_PDB_IMAGE;
-	  values[1].data.d_image = image_ID;
-	}
+          *nreturn_vals = 2;
+          values[1].type         = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image_ID;
+        }
     }
   else
     {
@@ -147,13 +147,13 @@ load_image (const gchar *filename,
   if (! group || strcmp (group, "Desktop Entry") != 0)
     goto out;
 
-  value = g_key_file_get_value (file, group, "Type",  &error);
+  value = g_key_file_get_value (file, group, "Type", &error);
   if (! value || strcmp (value, "Link") != 0)
     goto out;
 
   g_free (value);
 
-  value = g_key_file_get_value (file, group, "URL",  &error);
+  value = g_key_file_get_value (file, group, "URL", &error);
   if (value)
     image_ID = gimp_file_load (run_mode, value, value);
 
