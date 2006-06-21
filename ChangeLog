@@ -1,3 +1,8 @@
+2006-06-21  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimp-tools.c (gimp_tools_restore): don't attempt to
+	reorder to a position >= container->num_children.
+
 2006-06-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimprectangleselecttool.c: Always use crosshair cursor

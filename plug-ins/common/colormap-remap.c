@@ -28,10 +28,10 @@
  *
  */
 
-
 #include "config.h"
 
 #include <string.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -119,7 +119,7 @@ query (void)
                           "without visually changing the image.",
                           "Mukund Sivaraman <muks@mukund.org>",
                           "Mukund Sivaraman <muks@mukund.org>",
-                          "14th June 2006",
+                          "June 2006",
                           N_("_Swap Colors"),
                           "INDEXED*",
                           GIMP_PLUGIN,
@@ -266,13 +266,14 @@ remap (gint32  image_ID,
        gint    num_colors,
        guchar *map)
 {
-  guchar   *cmap, *new_cmap;
+  guchar   *cmap;
+  guchar   *new_cmap;
   guchar   *new_cmap_i;
   gint      ncols;
   gint      num_layers;
   gint32   *layers;
   gint      i, j, k;
-  glong     pixels = 0;
+  glong     pixels    = 0;
   glong     processed = 0;
   guchar    pixel_map[256];
   gboolean  valid[256];

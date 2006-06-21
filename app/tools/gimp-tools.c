@@ -241,6 +241,7 @@ gimp_tools_restore (Gimp *gimp)
   if (gimp_config_deserialize_file (GIMP_CONFIG (gimp_list), filename,
                                     NULL, NULL))
     {
+      gint n = gimp_container_num_children (gimp->tool_info_list);
       gint i;
 
       gimp_list_reverse (GIMP_LIST (gimp_list));
@@ -263,7 +264,8 @@ gimp_tools_restore (Gimp *gimp)
                             "visible", GIMP_TOOL_INFO (list->data)->visible,
                             NULL);
 
-              gimp_container_reorder (gimp->tool_info_list, object, i);
+              gimp_container_reorder (gimp->tool_info_list,
+                                      object, MIN (i, n - 1));
             }
         }
     }
