@@ -1,5 +1,9 @@
 2006-06-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/colormap-remap.c: moved hints to the bottom.
+
+2006-06-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/colormap-remap.c: applied patch from Mukund
 	Sivaraman that adds a "Reverse Order" option in favor of having
 	ascending and descending sort functions.
