@@ -1063,7 +1063,7 @@ gimp_shm_ID (void)
  *
  * Return value: the shared memory address
  **/
-guchar *
+const guchar *
 gimp_shm_addr (void)
 {
   return _shm_addr;
@@ -1420,7 +1420,7 @@ gimp_close (void)
 #if defined(USE_SYSV_SHM)
 
   if ((_shm_ID != -1) && _shm_addr)
-    shmdt ((char*) _shm_addr);
+    shmdt ((char *) _shm_addr);
 
 #elif defined(USE_WIN32_SHM)
 
@@ -1454,7 +1454,7 @@ gimp_message_func (const gchar    *log_domain,
                    const gchar    *message,
                    gpointer        data)
 {
-  gimp_message ((gchar *) message);
+  gimp_message (message);
 }
 
 #ifndef G_OS_WIN32

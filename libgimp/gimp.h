@@ -217,121 +217,121 @@ struct _GimpParam
 /* The main procedure that must be called with the PLUG_IN_INFO structure
  * and the 'argc' and 'argv' that are passed to "main".
  */
-gint          gimp_main                (const GimpPlugInInfo *info,
-                                        gint                  argc,
-                                        gchar                *argv[]);
+gint           gimp_main                (const GimpPlugInInfo *info,
+                                         gint                  argc,
+                                         gchar                *argv[]);
 
 /* Forcefully causes the gimp library to exit and
  *  close down its connection to main gimp application.
  */
-void          gimp_quit                (void) G_GNUC_NORETURN;
+void           gimp_quit                (void) G_GNUC_NORETURN;
 
 
 /* Install a procedure in the procedure database.
  */
-void          gimp_install_procedure   (const gchar        *name,
-                                        const gchar        *blurb,
-                                        const gchar        *help,
-                                        const gchar        *author,
-                                        const gchar        *copyright,
-                                        const gchar        *date,
-                                        const gchar        *menu_label,
-                                        const gchar        *image_types,
-                                        GimpPDBProcType     type,
-                                        gint                n_params,
-                                        gint                n_return_vals,
-                                        const GimpParamDef *params,
-                                        const GimpParamDef *return_vals);
+void           gimp_install_procedure   (const gchar        *name,
+                                         const gchar        *blurb,
+                                         const gchar        *help,
+                                         const gchar        *author,
+                                         const gchar        *copyright,
+                                         const gchar        *date,
+                                         const gchar        *menu_label,
+                                         const gchar        *image_types,
+                                         GimpPDBProcType     type,
+                                         gint                n_params,
+                                         gint                n_return_vals,
+                                         const GimpParamDef *params,
+                                         const GimpParamDef *return_vals);
 
 /* Install a temporary procedure in the procedure database.
  */
-void          gimp_install_temp_proc   (const gchar        *name,
-                                        const gchar        *blurb,
-                                        const gchar        *help,
-                                        const gchar        *author,
-                                        const gchar        *copyright,
-                                        const gchar        *date,
-                                        const gchar        *menu_label,
-                                        const gchar        *image_types,
-                                        GimpPDBProcType     type,
-                                        gint                n_params,
-                                        gint                n_return_vals,
-                                        const GimpParamDef *params,
-                                        const GimpParamDef *return_vals,
-                                        GimpRunProc         run_proc);
+void           gimp_install_temp_proc   (const gchar        *name,
+                                         const gchar        *blurb,
+                                         const gchar        *help,
+                                         const gchar        *author,
+                                         const gchar        *copyright,
+                                         const gchar        *date,
+                                         const gchar        *menu_label,
+                                         const gchar        *image_types,
+                                         GimpPDBProcType     type,
+                                         gint                n_params,
+                                         gint                n_return_vals,
+                                         const GimpParamDef *params,
+                                         const GimpParamDef *return_vals,
+                                         GimpRunProc         run_proc);
 
 /* Uninstall a temporary procedure
  */
-void          gimp_uninstall_temp_proc (const gchar     *name);
+void           gimp_uninstall_temp_proc (const gchar        *name);
 
 /* Notify the main GIMP application that the extension is ready to run
  */
-void          gimp_extension_ack       (void);
+void           gimp_extension_ack       (void);
 
 /* Enable asynchronous processing of temp_procs
  */
-void          gimp_extension_enable    (void);
+void           gimp_extension_enable    (void);
 
 /* Process one temp_proc and return
  */
-void          gimp_extension_process   (guint            timeout);
+void           gimp_extension_process   (guint            timeout);
 
 /* Run a procedure in the procedure database. The parameters are
  *  specified via the variable length argument list. The return
  *  values are returned in the 'GimpParam*' array.
  */
-GimpParam   * gimp_run_procedure       (const gchar     *name,
-                                        gint            *n_return_vals,
-                                        ...);
+GimpParam    * gimp_run_procedure       (const gchar     *name,
+                                         gint            *n_return_vals,
+                                         ...);
 
 /* Run a procedure in the procedure database. The parameters are
  *  specified as an array of GimpParam.  The return
  *  values are returned in the 'GimpParam*' array.
  */
-GimpParam   * gimp_run_procedure2      (const gchar     *name,
-                                        gint            *n_return_vals,
-                                        gint             n_params,
-                                        const GimpParam *params);
+GimpParam    * gimp_run_procedure2      (const gchar     *name,
+                                         gint            *n_return_vals,
+                                         gint             n_params,
+                                         const GimpParam *params);
 
 /* Destroy the an array of parameters. This is useful for
  *  destroying the return values returned by a call to
  *  'gimp_run_procedure'.
  */
-void          gimp_destroy_params      (GimpParam       *params,
-                                        gint             n_params);
+void           gimp_destroy_params      (GimpParam       *params,
+                                         gint             n_params);
 
 /* Destroy the an array of GimpParamDef's. This is useful for
  *  destroying the return values returned by a call to
  *  'gimp_query_procedure'.
  */
-void          gimp_destroy_paramdefs   (GimpParamDef    *paramdefs,
-                                        gint             n_params);
+void           gimp_destroy_paramdefs   (GimpParamDef    *paramdefs,
+                                         gint             n_params);
 
 
 /* Return various constants given by the GIMP core at plug-in config time.
  */
-guint         gimp_tile_width          (void) G_GNUC_CONST;
-guint         gimp_tile_height         (void) G_GNUC_CONST;
-gint          gimp_shm_ID              (void) G_GNUC_CONST;
-guchar      * gimp_shm_addr            (void) G_GNUC_CONST;
-gdouble       gimp_gamma               (void) G_GNUC_CONST;
-gboolean      gimp_install_cmap        (void) G_GNUC_CONST;
-gint          gimp_min_colors          (void) G_GNUC_CONST;
-gboolean      gimp_show_tool_tips      (void) G_GNUC_CONST;
-gboolean      gimp_show_help_button    (void) G_GNUC_CONST;
-GimpCheckSize gimp_check_size          (void) G_GNUC_CONST;
-GimpCheckType gimp_check_type          (void) G_GNUC_CONST;
-gint32        gimp_default_display     (void) G_GNUC_CONST;
-const gchar * gimp_wm_class            (void) G_GNUC_CONST;
-const gchar * gimp_display_name        (void) G_GNUC_CONST;
-gint          gimp_monitor_number      (void) G_GNUC_CONST;
+guint          gimp_tile_width          (void) G_GNUC_CONST;
+guint          gimp_tile_height         (void) G_GNUC_CONST;
+gint           gimp_shm_ID              (void) G_GNUC_CONST;
+const guchar * gimp_shm_addr            (void) G_GNUC_CONST;
+gdouble        gimp_gamma               (void) G_GNUC_CONST;
+gboolean       gimp_install_cmap        (void) G_GNUC_CONST;
+gint           gimp_min_colors          (void) G_GNUC_CONST;
+gboolean       gimp_show_tool_tips      (void) G_GNUC_CONST;
+gboolean       gimp_show_help_button    (void) G_GNUC_CONST;
+GimpCheckSize  gimp_check_size          (void) G_GNUC_CONST;
+GimpCheckType  gimp_check_type          (void) G_GNUC_CONST;
+gint32         gimp_default_display     (void) G_GNUC_CONST;
+const gchar  * gimp_wm_class            (void) G_GNUC_CONST;
+const gchar  * gimp_display_name        (void) G_GNUC_CONST;
+gint           gimp_monitor_number      (void) G_GNUC_CONST;
 
-const gchar * gimp_get_progname        (void) G_GNUC_CONST;
+const gchar  * gimp_get_progname        (void) G_GNUC_CONST;
 
-gboolean      gimp_attach_new_parasite (const gchar    *name,
-                                        gint            flags,
-                                        gint            size,
-                                        gconstpointer   data);
+gboolean       gimp_attach_new_parasite (const gchar    *name,
+                                         gint            flags,
+                                         gint            size,
+                                         gconstpointer   data);
 
 
 G_END_DECLS

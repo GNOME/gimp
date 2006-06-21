@@ -1,5 +1,10 @@
 2006-06-21  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimp.[ch] (gimp_shm_addr): return a const pointer.
+	(gimp_message_func): removed wrong cast.
+
+2006-06-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/warp.c: minor code cleanup.
 
 2006-06-21  Roman Joost  <romanofski@gimp.org>
