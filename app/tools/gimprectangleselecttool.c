@@ -436,6 +436,10 @@ gimp_rect_select_tool_cursor_update (GimpTool        *tool,
 {
   gimp_rectangle_tool_cursor_update (tool, coords, state, display);
 
+  /* override the previous if shift or ctrl are down */
+  if (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK))
+    gimp_tool_control_set_cursor (tool->control, GIMP_CURSOR_CROSSHAIR_SMALL);
+
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
