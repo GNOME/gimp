@@ -33,6 +33,7 @@
   <contributor role="author">Albert Cahalan</contributor>
   <contributor role="artist">Lapo Calamandrei</contributor>
   <contributor role="author">George J. Carrette</contributor>
+  <contributor role="documenter">Marco Ciampa</contributor>
   <contributor role="author">Sean Cier</contributor>
   <contributor role="author">Winston Chang</contributor>
   <contributor role="author">Zbigniew Chyla</contributor>
@@ -48,6 +49,7 @@
   <contributor role="author">Austin Donnelly</contributor>
   <contributor role="author">Scott Draves</contributor>
   <contributor role="author">Daniel Dunbar</contributor>
+  <contributor role="documenter">Dust</contributor>
   <contributor role="author">Misha Dynin</contributor>
   <contributor role="author">Daniel Egger</contributor>
   <contributor role="author">Morton Eriksen</contributor>
@@ -56,6 +58,7 @@
   <contributor role="author">Shlomi Fish</contributor>
   <contributor role="author">David Forsyth</contributor>
   <contributor role="author">Raphael Francois</contributor>
+  <contributor role="documenter">Jakub Friedl</contributor>
   <contributor role="author">Jochen Friedrich</contributor>
   <contributor role="author">Jordi Gay</contributor>
   <contributor role="author">Jim Geuther</contributor>
@@ -69,6 +72,7 @@
   <contributor role="author">Pavel Grinfeld</contributor>
   <contributor role="author">Dov Grobgeld</contributor>
   <contributor role="author documenter">Michael Hammel</contributor>
+  <contributor role="documenter">Julien Hardelin</contributor>
   <contributor role="author">James Henstridge</contributor>
   <contributor role="author">Eric Hernes</contributor>
   <contributor role="author">David Hodson</contributor>
@@ -80,6 +84,7 @@
   <contributor role="documenter">Simon Janes</contributor>
   <contributor role="author">Tim Janik</contributor>
   <contributor role="author documenter">Róman Joost</contributor>
+  <contributor role="documenter">Hans de Jonge</contributor>
   <contributor role="author">Geert Jordaens</contributor>
   <contributor role="author">Andrew Kieschnick</contributor>
   <contributor role="author">Peter Kirchgessner</contributor>
@@ -88,6 +93,7 @@
   <contributor role="author">Daniel Kobras</contributor>
   <contributor role="author">Øyvind Kolås</contributor>
   <contributor role="author">Robert L Krawitz</contributor>
+  <contributor role="documenter">Semka Kuloviæ-Debals</contributor>
   <contributor role="artist author">Tuomas Kuosmanen</contributor>
   <contributor role="documenter">Karin Kylander</contributor>
   <contributor role="author documenter">Olof S Kylander</contributor>
@@ -146,6 +152,7 @@
   <contributor role="author">Mike Phillips</contributor>
   <contributor role="author">Ari Pollak</contributor>
   <contributor role="author">Raphaël Quinet</contributor>
+  <contributor role="documenter">Manuel Quiñones</contributor>
   <contributor role="author">Tom Rathborne</contributor>
   <contributor role="author">Jens Restemeier</contributor>
   <contributor role="author">Maurits Rijk</contributor>
@@ -184,17 +191,10 @@
   <contributor role="author">Martin Weber</contributor>
   <contributor role="author">James Wang</contributor>
   <contributor role="author">Kris Wehner</contributor>
+  <contributor role="documenter">Axel Wernicke</contributor>
   <contributor role="author">Nigel Wetten</contributor>
   <contributor role="author">Calvin Williamson</contributor>
   <contributor role="author">Matthew Wilson</contributor>
   <contributor role="author">Shirasaki Yasuhiro</contributor>
-  <contributor role="documenter">Axel Wernicke</contributor>
-  <contributor role="documenter">Julien Hardelin</contributor>
-  <contributor role="documenter">Jakub Friedl</contributor>
-  <contributor role="documenter">Hans de Jonge</contributor>
-  <contributor role="documenter">Marco Ciampa</contributor>
-  <contributor role="documenter">Semka Kuloviæ-Debals</contributor>
-  <contributor role="documenter">Manuel Quiñones</contributor>
-  <contributor role="documenter">Dust</contributor>
 
 </gimp-authors>
