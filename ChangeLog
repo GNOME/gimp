@@ -1,5 +1,10 @@
 2006-06-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/colormap-remap.c: added a right-click menu that
+	allows to sort the colormap by hue, saturation or value.
+
+2006-06-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/colormap-remap.c: added a Reset button and
 	prepared for colormap sorting.
 

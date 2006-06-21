@@ -435,6 +435,113 @@ remap_sort (GtkTreeSortable *store,
 }
 
 static void
+remap_sort_callback (GtkAction       *action,
+                     GtkTreeSortable *store)
+{
+  const gchar *name   = gtk_action_get_name (action);
+  gint         column = GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID;
+
+  g_return_if_fail (g_str_has_prefix (name, "sort-"));
+
+  if (strncmp (name + 5, "hue", 3) == 0)
+    column = COLOR_H;
+
+  if (strncmp (name + 5, "sat", 3) == 0)
+    column = COLOR_S;
+
+  if (strncmp (name + 5, "val", 3) == 0)
+    column = COLOR_V;
+
+  remap_sort (store, column,
+              g_str_has_suffix (name, "asc") ?
+              GTK_SORT_ASCENDING : GTK_SORT_DESCENDING);
+}
+
+static GtkUIManager *
+remap_ui_manager_new (GtkWidget       *window,
+                      GtkTreeSortable *store)
+{
+  static const GtkActionEntry actions[] =
+  {
+    {
+      "sort-hue-asc", NULL, N_("Sort by Hue (ascending)"), NULL, NULL,
+      G_CALLBACK (remap_sort_callback)
+    },
+    {
+      "sort-sat-asc", NULL, N_("Sort by Saturation (ascending)"), NULL, NULL,
+      G_CALLBACK (remap_sort_callback)
+    },
+    {
+      "sort-val-asc", NULL, N_("Sort by Value (ascending)"), NULL, NULL,
+      G_CALLBACK (remap_sort_callback)
+    },
+    {
+      "sort-hue-des", NULL, N_("Sort by Hue (descending)"), NULL, NULL,
+      G_CALLBACK (remap_sort_callback)
+    },
+    {
+      "sort-sat-des", NULL, N_("Sort by Saturation (descending)"), NULL, NULL,
+      G_CALLBACK (remap_sort_callback)
+    },
+    {
+      "sort-val-des", NULL, N_("Sort by Value (descending)"), NULL, NULL,
+      G_CALLBACK (remap_sort_callback)
+    },
+  };
+
+  GtkUIManager   *ui_manager = gtk_ui_manager_new ();
+  GtkActionGroup *group      = gtk_action_group_new ("Actions");
+  GError         *error      = NULL;
+
+  gtk_action_group_set_translation_domain (group, NULL);
+  gtk_action_group_add_actions (group, actions, G_N_ELEMENTS (actions), store);
+
+  gtk_ui_manager_insert_action_group (ui_manager, group, -1);
+  g_object_unref (group);
+
+  gtk_ui_manager_add_ui_from_string (ui_manager,
+                                     "<ui>"
+                                     "  <popup name=\"remap-popup\">"
+                                     "    <menuitem action=\"sort-hue-asc\" />"
+                                     "    <menuitem action=\"sort-sat-asc\" />"
+                                     "    <menuitem action=\"sort-val-asc\" />"
+                                     "    <separator />"
+                                     "    <menuitem action=\"sort-hue-des\" />"
+                                     "    <menuitem action=\"sort-sat-des\" />"
+                                     "    <menuitem action=\"sort-val-des\" />"
+                                     "  </popup>"
+                                     "</ui>",
+                                     -1, &error);
+  if (error)
+    {
+      g_warning ("error parsing ui: %s", error->message);
+      g_clear_error (&error);
+    }
+
+  return ui_manager;
+}
+
+static gboolean
+remap_button_press (GtkWidget      *widget,
+                    GdkEventButton *event,
+                    GtkUIManager   *ui)
+{
+  gtk_widget_grab_focus (widget);
+
+  if (event->button == 3 && event->type == GDK_BUTTON_PRESS)
+    {
+      GtkWidget *menu = gtk_ui_manager_get_widget (ui, "/remap-popup");
+
+      gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
+      gtk_menu_popup (GTK_MENU (menu),
+                      NULL, NULL, NULL, NULL,
+                      event->button, event->time);
+    }
+
+  return FALSE;
+}
+
+static void
 remap_response (GtkWidget       *dialog,
                 gint             response_id,
                 GtkTreeSortable *store)
@@ -569,6 +676,10 @@ remap_dialog (gint32  image_ID,
                 "xalign",      0.5,
                 "ypad",        0,
                 NULL);
+
+  g_signal_connect (iconview, "button-press-event",
+                    G_CALLBACK (remap_button_press),
+                    remap_ui_manager_new (dialog, GTK_TREE_SORTABLE (store)));
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (remap_response),
