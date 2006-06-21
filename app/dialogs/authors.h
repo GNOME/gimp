@@ -195,12 +195,21 @@ static const gchar * const artists[] =
 static const gchar * const documenters[] =
 {
   "Carey Bunks",
+  "Marco Ciampa",
+  "Dust",
+  "Jakub Friedl",
   "Michael Hammel",
+  "Julien Hardelin",
   "Simon Janes",
+  "Róman Joost",
+  "Hans de Jonge",
+  "Semka Kuloviæ-Debals",
   "Karin Kylander",
   "Olof S Kylander",
   "Ed Mackey",
   "Ian Main",
+  "Manuel Quiñones",
   "James Robinson",
+  "Axel Wernicke",
   NULL
 };
