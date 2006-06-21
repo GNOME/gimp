@@ -1,3 +1,7 @@
+2006-06-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/warp.c: minor code cleanup.
+
 2006-06-21  Roman Joost  <romanofski@gimp.org>
 
 	* AUTHORS

@@ -135,12 +135,10 @@ static void      warp_one         (GimpDrawable *draw,
 				   GimpDrawable *map_x,
 				   GimpDrawable *map_y,
 				   GimpDrawable *mag_draw,
-				   gint          first_time,
+				   gboolean      first_time,
 				   gint          step);
 
-static void      warp        (GimpDrawable  *drawable,
-			      GimpDrawable **map_x_p,
-			      GimpDrawable **map_y_p);
+static void      warp        (GimpDrawable *drawable);
 
 static gboolean  warp_dialog (GimpDrawable *drawable);
 static GimpTile *warp_pixel  (GimpDrawable *drawable,
@@ -257,14 +255,9 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam  values[1];
-  GimpDrawable     *drawable;
-  GimpDrawable     *map_x = NULL;   /* satisfy compiler complaints */
-  GimpDrawable     *map_y = NULL;
-  gint32            image_ID;       /* image id of drawable */
-  GimpRGB           color;
-
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint              pcnt;           /* parameter counter for scanning input params. */
+  GimpDrawable     *drawable;
+  GimpRGB           color;
 
   run_mode = param[0].data.d_int32;
 
@@ -310,10 +303,12 @@ run (const gchar      *name,
 	}
       else
 	{
-	  pcnt = MIN_ARGS;                          /* parameter counter */
+          gint  pcnt = MIN_ARGS;
+
 	  dvals.amount   = param[3].data.d_float;
 	  dvals.warp_map = param[4].data.d_int32;
 	  dvals.iter     = param[5].data.d_int32;
+
 	  if (nparams > pcnt++) dvals.dither       = param[6].data.d_float;
 	  if (nparams > pcnt++) dvals.angle        = param[7].data.d_float;
 	  if (nparams > pcnt++) dvals.wrap_type    = param[8].data.d_int32;
@@ -343,27 +338,19 @@ run (const gchar      *name,
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
       /*  run the warp effect  */
-      warp (drawable, &map_x, &map_y);
+      warp (drawable);
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data (PLUG_IN_PROC, &dvals, sizeof (WarpVals));
     }
 
-  values[0].data.d_status = status;
-
-  if (map_x)
-    {
-      image_ID = gimp_drawable_get_image (map_x->drawable_id);
-
-      gimp_drawable_detach (map_x);
-      gimp_drawable_detach (map_y);
-
-      gimp_image_delete (image_ID);
-    }
-
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
+
+  gimp_drawable_detach (drawable);
+
+  values[0].data.d_status = status;
 }
 
 static gboolean
@@ -875,55 +862,55 @@ diff (GimpDrawable *drawable,
       gint32       *xl_id,
       gint32       *yl_id)
 {
-  GimpDrawable *draw_xd, *draw_yd;  /* vector disp. drawables */
+  GimpDrawable *draw_xd, *draw_yd; /* vector disp. drawables */
   GimpDrawable *mdraw, *vdraw, *gdraw;
-  gint32 image_id;           /* image holding X and Y diff. arrays */
-  gint32 new_image_id;       /* image holding X and Y diff. layers */
-  gint32 layer_active;       /* currently active layer */
-  gint32 xlayer_id, ylayer_id;   /* individual X and Y layer ID numbers */
+  gint32 image_id;                 /* image holding X and Y diff. arrays */
+  gint32 new_image_id;             /* image holding X and Y diff. layers */
+  gint32 layer_active;             /* currently active layer */
+  gint32 xlayer_id, ylayer_id;     /* individual X and Y layer ID numbers */
   GimpPixelRgn srcPR, destxPR, destyPR;
   GimpPixelRgn vecPR, magPR, gradPR;
   gint width, height;
   gint src_bytes;
-  gint mbytes=0;
-  gint vbytes=0;
-  gint gbytes=0;   /* bytes-per-pixel of various source drawables */
+  gint mbytes = 0;
+  gint vbytes = 0;
+  gint gbytes = 0;   /* bytes-per-pixel of various source drawables */
   gint dest_bytes;
   gint dest_bytes_inc;
   gint do_gradmap = FALSE;          /* whether to add in gradient of gradmap to final diff. map */
-  gint do_vecmap = FALSE;          /* whether to add in a fixed vector scaled by the vector map */
-  gint do_magmap = FALSE;          /* whether to multiply result by the magnitude map */
+  gint do_vecmap = FALSE;           /* whether to add in a fixed vector scaled by the vector map */
+  gint do_magmap = FALSE;           /* whether to multiply result by the magnitude map */
 
   guchar *destx, *dx, *desty, *dy;  /* pointers to rows of X and Y diff. data */
   guchar *tmp;
   guchar *prev_row, *pr;
   guchar *cur_row, *cr;
   guchar *next_row, *nr;
-  guchar *prev_row_g, *prg=NULL;          /* pointers to gradient map data */
-  guchar *cur_row_g, *crg=NULL;
-  guchar *next_row_g, *nrg=NULL;
-  guchar *cur_row_v, *crv=NULL;      /* pointers to vector map data */
-  guchar *cur_row_m, *crm=NULL;      /* pointers to magnitude map data */
-  gint row, col, offb, off, bytes;   /* relating to indexing into pixel row arrays */
+  guchar *prev_row_g, *prg = NULL;  /* pointers to gradient map data */
+  guchar *cur_row_g, *crg = NULL;
+  guchar *next_row_g, *nrg = NULL;
+  guchar *cur_row_v, *crv = NULL;   /* pointers to vector map data */
+  guchar *cur_row_m, *crm = NULL;   /* pointers to magnitude map data */
+  gint row, col, offb, off, bytes;  /* relating to indexing into pixel row arrays */
   gint x1, y1, x2, y2;
-  gint dvalx, dvaly;                  /* differential value at particular pixel */
-  gdouble tx, ty;                     /* temporary x,y differential value increments from gradmap, etc. */
-  gdouble rdx, rdy;                     /* x,y differential values: real #s */
-  gdouble rscalefac;                  /* scaling factor for x,y differential of 'curl' map */
-  gdouble gscalefac;                  /* scaling factor for x,y differential of 'gradient' map */
-  gdouble r, theta, dtheta;           /* rectangular<-> spherical coordinate transform for vector rotation */
-  gdouble scale_vec_x, scale_vec_y;   /* fixed vector X,Y component scaling factors */
+  gint dvalx, dvaly;                /* differential value at particular pixel */
+  gdouble tx, ty;                   /* temporary x,y differential value increments from gradmap, etc. */
+  gdouble rdx, rdy;                 /* x,y differential values: real #s */
+  gdouble rscalefac;                /* scaling factor for x,y differential of 'curl' map */
+  gdouble gscalefac;                /* scaling factor for x,y differential of 'gradient' map */
+  gdouble r, theta, dtheta;         /* rectangular<-> spherical coordinate transform for vector rotation */
+  gdouble scale_vec_x, scale_vec_y; /* fixed vector X,Y component scaling factors */
   gint has_alpha, ind;
 
   /* ----------------------------------------------------------------------- */
 
   if (dvals.grad_scale != 0.0)
-    do_gradmap = TRUE;    /* add in gradient of gradmap if scale != 0.000 */
+    do_gradmap = TRUE;              /* add in gradient of gradmap if scale != 0.000 */
 
-  if (dvals.vector_scale != 0.0)   /* add in gradient of vectormap if scale != 0.000 */
+  if (dvals.vector_scale != 0.0)    /* add in gradient of vectormap if scale != 0.000 */
     do_vecmap = TRUE;
 
-  do_magmap = (dvals.mag_use == TRUE);   /* multiply by magnitude map if so requested */
+  do_magmap = (dvals.mag_use == TRUE); /* multiply by magnitude map if so requested */
 
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). Only
@@ -951,7 +938,8 @@ diff (GimpDrawable *drawable,
   image_id = gimp_drawable_get_image (drawable->drawable_id);
   layer_active = gimp_image_get_active_layer (image_id);
 
-  new_image_id = gimp_image_new (width, height, GIMP_RGB); /* create new image for X,Y diff */
+  /* create new image for X,Y diff */
+  new_image_id = gimp_image_new (width, height, GIMP_RGB);
 
   xlayer_id = gimp_layer_new (new_image_id, "Warp_X_Vectors",
                               width, height,
@@ -1218,28 +1206,25 @@ diff (GimpDrawable *drawable,
 /* -------------------------------------------------------------------------- */
 
 static void
-warp (GimpDrawable  *orig_draw,
-      GimpDrawable **map_x,
-      GimpDrawable **map_y)
+warp (GimpDrawable *orig_draw)
 {
   GimpDrawable *disp_map;    /* Displacement map, ie, control array */
   GimpDrawable *mag_draw;    /* Magnitude multiplier factor map */
+  GimpDrawable *map_x;
+  GimpDrawable *map_y;
+  gboolean      first_time = TRUE;
+  gint          width;
+  gint          height;
+  gint          bytes;
+  gint          orig_image_id;
+  gint          image_type;
+  gint          x1, y1, x2, y2;
+  gint32        xdlayer = -1;
+  gint32        ydlayer = -1;
+  gint32        image_ID;
 
-  gint    first_time = TRUE;
-  gint    width;
-  gint    height;
-  gint    bytes;
-  gint orig_image_id;
-  gint image_type;
-
-
-  gint    x1, y1, x2, y2;
-
-  gint32 xdlayer = -1;
-  gint32 ydlayer = -1;
-
-  gint warp_iter;      /* index var. over all "warp" Displacement iterations */
-
+  /* index var. over all "warp" Displacement iterations */
+  gint          warp_iter;
 
   disp_map = gimp_drawable_get (dvals.warp_map);
   mag_draw = gimp_drawable_get (dvals.mag_map);
@@ -1247,9 +1232,6 @@ warp (GimpDrawable  *orig_draw,
   /* calculate new X,Y Displacement image maps */
 
   gimp_progress_init (_("Finding XY gradient"));
-
-  /* generate x,y differential images (arrays) */
-  diff (disp_map, &xdlayer, &ydlayer);
 
   /* Get selection area */
   if (! gimp_drawable_mask_intersect (orig_draw->drawable_id,
@@ -1261,14 +1243,13 @@ warp (GimpDrawable  *orig_draw,
   bytes  = orig_draw->bpp;
   image_type = gimp_drawable_type (orig_draw->drawable_id);
 
-  *map_x = gimp_drawable_get (xdlayer);
-  *map_y = gimp_drawable_get (ydlayer);
+  /* generate x,y differential images (arrays) */
+  diff (disp_map, &xdlayer, &ydlayer);
+
+  map_x = gimp_drawable_get (xdlayer);
+  map_y = gimp_drawable_get (ydlayer);
 
   orig_image_id = gimp_drawable_get_image (orig_draw->drawable_id);
-
-  /*   gimp_image_lower_layer(orig_image_id, new_layer_id); */ /* hide it! */
-
-  /*   gimp_layer_set_opacity(new_layer_id, 0.0); */
 
   for (warp_iter = 0; warp_iter < dvals.iter; warp_iter++)
     {
@@ -1276,7 +1257,7 @@ warp (GimpDrawable  *orig_draw,
       progress = 0;
 
       warp_one (orig_draw, orig_draw,
-                *map_x, *map_y, mag_draw, first_time, warp_iter);
+                map_x, map_y, mag_draw, first_time, warp_iter);
 
       gimp_drawable_update (orig_draw->drawable_id,
                             x1, y1, (x2 - x1), (y2 - y1));
@@ -1287,9 +1268,13 @@ warp (GimpDrawable  *orig_draw,
       first_time = FALSE;
     }
 
-   /* gimp_image_add_layer (orig_image_id, new_layer_id, 1); */  /* make layer visible in 'layers' dialog */
+  image_ID = gimp_drawable_get_image (map_x->drawable_id);
 
-} /* Warp */
+  gimp_drawable_detach (map_x);
+  gimp_drawable_detach (map_y);
+
+  gimp_image_delete (image_ID);
+}
 
 /* -------------------------------------------------------------------------- */
 
@@ -1299,8 +1284,8 @@ warp_one (GimpDrawable *draw,
 	  GimpDrawable *map_x,
 	  GimpDrawable *map_y,
 	  GimpDrawable *mag_draw,
-	  gint       first_time,
-	  gint       step)
+	  gboolean      first_time,
+	  gint          step)
 {
   GimpPixelRgn src_rgn;
   GimpPixelRgn dest_rgn;
@@ -1597,7 +1582,7 @@ warp_one (GimpDrawable *draw,
      /*  update the region  */
    gimp_drawable_flush (new);
 
-   gimp_drawable_merge_shadow(draw->drawable_id, (first_time == TRUE));
+   gimp_drawable_merge_shadow (draw->drawable_id, first_time);
 
    g_rand_free (gr);
 
