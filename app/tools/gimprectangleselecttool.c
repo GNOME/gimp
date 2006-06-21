@@ -440,19 +440,6 @@ gimp_rect_select_tool_cursor_update (GimpTool        *tool,
 }
 
 
-/*
- * This function is called if the user clicks and releases the left
- * button without moving it.  There are four things we might want
- * to do here:
- * 1) If there is an existing rectangle and we are inside it, we
- *    convert it into a selection.
- * 2) If there is an existing rectangle and we are outside it, we
- *    clear it.
- * 3) If there is no rectangle and we are inside the selection, we
- *    create a rectangle from the selection bounds.
- * 4) If there is no rectangle and we are outside the selection,
- *    we clear the selection.
- */
 static void
 gimp_rect_select_tool_select (GimpRectangleTool *rectangle,
                               gint               x,
@@ -512,6 +499,21 @@ gimp_rect_select_tool_real_select (GimpRectSelectTool *rect_select,
                                  options->feather_radius);
 }
 
+/*
+ * This function is called if the user clicks and releases the left
+ * button without moving it.  There are the things we might want
+ * to do here:
+ * 1) If there is an existing rectangle and we are inside it, we
+ *    convert it into a selection.
+ * 2) If there is an existing rectangle and we are outside it, we
+ *    clear it.
+ * 3) If there is no rectangle and there is a floating selection,
+ *    we anchor it.
+ * 4) If there is no rectangle and we are inside the selection, we
+ *    create a rectangle from the selection bounds.
+ * 5) If there is no rectangle and we are outside the selection,
+ *    we clear the selection.
+ */
 static gboolean
 gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
                                gint               x,
@@ -525,6 +527,12 @@ gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
       GimpChannel *selection = gimp_image_get_mask (image);
       gint         pressx;
       gint         pressy;
+
+      if (gimp_image_floating_sel (image))
+        {
+          floating_sel_anchor (gimp_image_floating_sel (image));
+          return TRUE;
+        }
 
       g_object_get (rectangle,
                     "pressx", &pressx,

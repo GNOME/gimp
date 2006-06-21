@@ -1639,7 +1639,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                 coords->x, coords->y,
                                 GIMP_HANDLE_SQUARE,
                                 x1, y1,
-                                handle_w, handle_h,
+                                private->dcw, private->dch,
                                 GTK_ANCHOR_NORTH_WEST,
                                 FALSE))
     {
@@ -1654,7 +1654,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                      coords->x, coords->y,
                                      GIMP_HANDLE_SQUARE,
                                      x2, y2,
-                                     handle_w, handle_h,
+                                     private->dcw, private->dch,
                                      GTK_ANCHOR_SOUTH_EAST,
                                      FALSE))
     {
@@ -1669,7 +1669,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                       coords->x, coords->y,
                                       GIMP_HANDLE_SQUARE,
                                       x2, y1,
-                                      handle_w, handle_h,
+                                      private->dcw, private->dch,
                                       GTK_ANCHOR_NORTH_EAST,
                                       FALSE))
     {
@@ -1684,7 +1684,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                      coords->x, coords->y,
                                      GIMP_HANDLE_SQUARE,
                                      x1, y2,
-                                     handle_w, handle_h,
+                                     private->dcw, private->dch,
                                      GTK_ANCHOR_SOUTH_WEST,
                                      FALSE))
     {
