@@ -79,7 +79,7 @@
   <contributor role="author">Ben Jackson</contributor>
   <contributor role="documenter">Simon Janes</contributor>
   <contributor role="author">Tim Janik</contributor>
-  <contributor role="author">Róman Joost</contributor>
+  <contributor role="author documenter">Róman Joost</contributor>
   <contributor role="author">Geert Jordaens</contributor>
   <contributor role="author">Andrew Kieschnick</contributor>
   <contributor role="author">Peter Kirchgessner</contributor>
@@ -188,5 +188,13 @@
   <contributor role="author">Calvin Williamson</contributor>
   <contributor role="author">Matthew Wilson</contributor>
   <contributor role="author">Shirasaki Yasuhiro</contributor>
+  <contributor role="documenter">Axel Wernicke</contributor>
+  <contributor role="documenter">Julien Hardelin</contributor>
+  <contributor role="documenter">Jakub Friedl</contributor>
+  <contributor role="documenter">Hans de Jonge</contributor>
+  <contributor role="documenter">Marco Ciampa</contributor>
+  <contributor role="documenter">Semka Kuloviæ-Debals</contributor>
+  <contributor role="documenter">Manuel Quiñones</contributor>
+  <contributor role="documenter">Dust</contributor>
 
 </gimp-authors>
