@@ -423,6 +423,8 @@ enum
 };
 
 static  gboolean  remap_run = FALSE;
+static  gint      reverse_order[256];
+
 
 static void
 remap_sort (GtkTreeSortable *store,
@@ -445,16 +447,26 @@ remap_sort_callback (GtkAction       *action,
 
   if (strncmp (name + 5, "hue", 3) == 0)
     column = COLOR_H;
-
-  if (strncmp (name + 5, "sat", 3) == 0)
+  else if (strncmp (name + 5, "sat", 3) == 0)
     column = COLOR_S;
-
-  if (strncmp (name + 5, "val", 3) == 0)
+  else if (strncmp (name + 5, "val", 3) == 0)
     column = COLOR_V;
 
-  remap_sort (store, column,
-              g_str_has_suffix (name, "asc") ?
-              GTK_SORT_ASCENDING : GTK_SORT_DESCENDING);
+  remap_sort (store, column, GTK_SORT_ASCENDING);
+}
+
+static void
+remap_reset_callback (GtkAction       *action,
+                      GtkTreeSortable *store)
+{
+  remap_sort (store, COLOR_INDEX, GTK_SORT_ASCENDING);
+}
+
+static void
+remap_reverse_callback (GtkAction    *action,
+                        GtkListStore *store)
+{
+  gtk_list_store_reorder (store, reverse_order);
 }
 
 static GtkUIManager *
@@ -464,28 +476,24 @@ remap_ui_manager_new (GtkWidget       *window,
   static const GtkActionEntry actions[] =
   {
     {
-      "sort-hue-asc", NULL, N_("Sort by Hue (ascending)"), NULL, NULL,
+      "sort-hue", NULL, N_("Sort on Hue"), NULL, NULL,
       G_CALLBACK (remap_sort_callback)
     },
     {
-      "sort-sat-asc", NULL, N_("Sort by Saturation (ascending)"), NULL, NULL,
+      "sort-sat", NULL, N_("Sort on Saturation"), NULL, NULL,
       G_CALLBACK (remap_sort_callback)
     },
     {
-      "sort-val-asc", NULL, N_("Sort by Value (ascending)"), NULL, NULL,
+      "sort-val", NULL, N_("Sort on Value"), NULL, NULL,
       G_CALLBACK (remap_sort_callback)
     },
     {
-      "sort-hue-des", NULL, N_("Sort by Hue (descending)"), NULL, NULL,
-      G_CALLBACK (remap_sort_callback)
+      "reverse", NULL, N_("Reverse Order"), NULL, NULL,
+      G_CALLBACK (remap_reverse_callback)
     },
     {
-      "sort-sat-des", NULL, N_("Sort by Saturation (descending)"), NULL, NULL,
-      G_CALLBACK (remap_sort_callback)
-    },
-    {
-      "sort-val-des", NULL, N_("Sort by Value (descending)"), NULL, NULL,
-      G_CALLBACK (remap_sort_callback)
+      "reset", NULL, N_("Reset Order"), NULL, NULL,
+      G_CALLBACK (remap_reset_callback)
     },
   };
 
@@ -502,13 +510,12 @@ remap_ui_manager_new (GtkWidget       *window,
   gtk_ui_manager_add_ui_from_string (ui_manager,
                                      "<ui>"
                                      "  <popup name=\"remap-popup\">"
-                                     "    <menuitem action=\"sort-hue-asc\" />"
-                                     "    <menuitem action=\"sort-sat-asc\" />"
-                                     "    <menuitem action=\"sort-val-asc\" />"
+                                     "    <menuitem action=\"sort-hue\" />"
+                                     "    <menuitem action=\"sort-sat\" />"
+                                     "    <menuitem action=\"sort-val\" />"
                                      "    <separator />"
-                                     "    <menuitem action=\"sort-hue-des\" />"
-                                     "    <menuitem action=\"sort-sat-des\" />"
-                                     "    <menuitem action=\"sort-val-des\" />"
+                                     "    <menuitem action=\"reverse\" />"
+                                     "    <menuitem action=\"reset\" />"
                                      "  </popup>"
                                      "</ui>",
                                      -1, &error);
@@ -602,18 +609,21 @@ remap_dialog (gint32  image_ID,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
 
   label = gtk_label_new(_("Drag and drop colors to rearrange the colormap.\n"
-                          "The numbers shown are the original indices."));
+                          "The numbers shown are the original indices.\n"
+                          "Right-click for a menu with sort options."));
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
+  cmap = gimp_image_get_colormap (image_ID, &ncols);
+
+  g_return_val_if_fail ((ncols > 0) && (ncols <= 256), FALSE);
+
   store = gtk_list_store_new (NUM_COLS,
                               G_TYPE_INT, G_TYPE_STRING, GIMP_TYPE_RGB,
                               G_TYPE_DOUBLE, G_TYPE_DOUBLE, G_TYPE_DOUBLE);
-
-  cmap = gimp_image_get_colormap (image_ID, &ncols);
 
   for (i = 0; i < ncols; i++)
     {
@@ -628,6 +638,8 @@ remap_dialog (gint32  image_ID,
                           cmap[index * 3 + 2]);
       gimp_rgb_to_hsv (&rgb, &hsv);
 
+      reverse_order[i] = ncols - i - 1;
+
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter,
                           COLOR_INDEX,      index,
@@ -637,7 +649,6 @@ remap_dialog (gint32  image_ID,
                           COLOR_S,          hsv.s,
                           COLOR_V,          hsv.v,
                           -1);
-
       g_free (text);
     }
 
