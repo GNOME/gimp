@@ -1,3 +1,8 @@
+2006-06-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/colormap-remap.c: added a Reset button and
+	prepared for colormap sorting.
+
 2006-06-21  Roman Joost  <romanofski@gimp.org>
 
 	* AUTHORS

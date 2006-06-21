@@ -408,13 +408,52 @@ remap (gint32  image_ID,
 
 }
 
+
+#define RESPONSE_RESET 1
+
 enum
 {
   COLOR_INDEX,
   COLOR_INDEX_TEXT,
   COLOR_RGB,
+  COLOR_H,
+  COLOR_S,
+  COLOR_V,
   NUM_COLS
 };
+
+static  gboolean  remap_run = FALSE;
+
+static void
+remap_sort (GtkTreeSortable *store,
+            gint             column,
+            GtkSortType      order)
+{
+  gtk_tree_sortable_set_sort_column_id (store, column, order);
+  gtk_tree_sortable_set_sort_column_id (store,
+                                        GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID, 0);
+}
+
+static void
+remap_response (GtkWidget       *dialog,
+                gint             response_id,
+                GtkTreeSortable *store)
+{
+  switch (response_id)
+    {
+    case RESPONSE_RESET:
+      remap_sort (store, COLOR_INDEX, GTK_SORT_ASCENDING);
+      break;
+
+    case GTK_RESPONSE_OK:
+      remap_run = TRUE;
+      /* fallthrough */
+
+    default:
+      gtk_main_quit ();
+      break;
+    }
+}
 
 static gboolean
 remap_dialog (gint32  image_ID,
@@ -430,7 +469,6 @@ remap_dialog (gint32  image_ID,
   guchar          *cmap;
   gint             ncols, i;
   gboolean         valid;
-  gboolean         run;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -438,12 +476,14 @@ remap_dialog (gint32  image_ID,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC_REMAP,
 
+                            GIMP_STOCK_RESET, RESPONSE_RESET,
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                             NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -463,26 +503,32 @@ remap_dialog (gint32  image_ID,
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
   store = gtk_list_store_new (NUM_COLS,
-                              G_TYPE_INT, G_TYPE_STRING, GIMP_TYPE_RGB);
+                              G_TYPE_INT, G_TYPE_STRING, GIMP_TYPE_RGB,
+                              G_TYPE_DOUBLE, G_TYPE_DOUBLE, G_TYPE_DOUBLE);
 
   cmap = gimp_image_get_colormap (image_ID, &ncols);
 
   for (i = 0; i < ncols; i++)
     {
-      GimpRGB  color;
+      GimpRGB  rgb;
+      GimpHSV  hsv;
       gint     index = map[i];
       gchar   *text  = g_strdup_printf ("%d", index);
 
-      gimp_rgb_set_uchar (&color,
+      gimp_rgb_set_uchar (&rgb,
                           cmap[index * 3],
                           cmap[index * 3 + 1],
                           cmap[index * 3 + 2]);
+      gimp_rgb_to_hsv (&rgb, &hsv);
 
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter,
                           COLOR_INDEX,      index,
                           COLOR_INDEX_TEXT, text,
-                          COLOR_RGB,        &color,
+                          COLOR_RGB,        &rgb,
+                          COLOR_H,          hsv.h,
+                          COLOR_S,          hsv.s,
+                          COLOR_V,          hsv.v,
                           -1);
 
       g_free (text);
@@ -509,7 +555,6 @@ remap_dialog (gint32  image_ID,
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (iconview), renderer,
                                   "color", COLOR_RGB,
                                   NULL);
-
   g_object_set (renderer,
                 "width", 24,
                 NULL);
@@ -519,16 +564,19 @@ remap_dialog (gint32  image_ID,
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (iconview), renderer,
                                   "text", COLOR_INDEX_TEXT,
                                   NULL);
-
   g_object_set (renderer,
                 "size-points", 6.0,
                 "xalign",      0.5,
                 "ypad",        0,
                 NULL);
 
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (remap_response),
+                    store);
+
   gtk_widget_show_all (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  gtk_main ();
 
   i = 0;
 
@@ -546,5 +594,5 @@ remap_dialog (gint32  image_ID,
 
   gtk_widget_destroy (dialog);
 
-  return run;
+  return remap_run;
 }
