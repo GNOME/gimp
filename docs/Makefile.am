@@ -1,7 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
 EXTRA_DIST = \
-	Wilber.svg			\
 	Wilber.xcf.gz			\
 	Wilber.xcf.gz.README		\
 	Wilber_Construction_Kit.xcf.gz

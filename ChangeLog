@@ -1,8 +1,14 @@
+2006-06-21  Sven Neumann  <sven@gimp.org>
+
+	* docs/Makefile.am (EXTRA_DIST): stop distributing Wilber.svg.
+
+	* libgimpcolor/gimpcolorspace.h: formatting.
+
 2006-06-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* app/tools/gimprectangleselecttool.c: if there is a floating selection
-	and mouse is clicked outside it without movement, anchor it.
-	
+	* app/tools/gimprectangleselecttool.c: if there is a floating
+	selection and mouse is clicked outside it without movement, anchor it.
+
 	* app/tools/gimprectangletool.c: corner handle area was scaling
 	improperly when image was zoomed.
 
