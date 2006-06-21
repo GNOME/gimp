@@ -1,23 +1,26 @@
+# translation of de.po to Deutsch
 # This is the German catalog for GIMP Script-Fu.
-# Copyright (C) 1999 Free Software Foundation, Inc.
+# Copyright (C) 1999, 2006 Free Software Foundation, Inc.
 # Sven Neumann <sven@gimp.org>
 # Felix Natter <fnatter@gmx.net>
-# Roman Joost <romanofski@gimp.org>, 2004-2005
-# Hendrik Brandt <eru@gmx.li>, 2004-2005.
-# Sven Neumann <sven@gimp.org>, 2004.
 # Jens Seidel <jseidel@cvs.gnome.org>
-# 
+#
+# Roman Joost <romanofski@gimp.org>, 2004-2005.
+# Sven Neumann <sven@gimp.org>, 2004.
+# Hendrik Brandt <heb@gnome-de.org>, 2004-2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.3\n"
+"Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-08 15:57+0100\n"
-"PO-Revision-Date: 2006-06-15 16:30+0200\n"
-"Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
-"Language-Team: German <gnome-de@gnome.org>\n"
+"POT-Creation-Date: 2006-06-22 00:08+0200\n"
+"PO-Revision-Date: 2006-06-22 00:07+0200\n"
+"Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
+"Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
@@ -31,91 +34,71 @@ msgstr "_Durchsuchen …"
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu-Prozeduren-Browser"
 
-#: ../plug-ins/script-fu/script-fu-console.c:584
-msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "Der Skript-Fu-Auswertemodus ermöglicht nur nicht-interaktive Aufrufe"
+#: ../plug-ins/script-fu/script-fu-console.c:591
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr ""
+"Der Skript-Fu-Auswertungsmodus ermöglicht nur nicht-interaktive Aufrufe"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:174
+#: ../plug-ins/script-fu/script-fu-interface.c:178
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kann nicht zwei Skripte gleichzeitig abarbeiten."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:176
+#: ../plug-ins/script-fu/script-fu-interface.c:180
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Sie haben das Skript »%s« bereits gestartet."
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:199
-#: ../plug-ins/script-fu/script-fu-interface.c:201
+#: ../plug-ins/script-fu/script-fu-interface.c:203
+#: ../plug-ins/script-fu/script-fu-interface.c:205
 msgid "/Script-Fu/"
 msgstr "/Skript-Fu/"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:214
+#: ../plug-ins/script-fu/script-fu-interface.c:223
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Skript-Fu: %s"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:281
+#: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:324
+#: ../plug-ins/script-fu/script-fu-interface.c:330
 msgid "Script-Fu Color Selection"
 msgstr "Skript-Fu-Farbauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:431
+#: ../plug-ins/script-fu/script-fu-interface.c:437
 msgid "Script-Fu File Selection"
 msgstr "Skript-Fu-Dateiauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:435
+#: ../plug-ins/script-fu/script-fu-interface.c:440
 msgid "Script-Fu Folder Selection"
 msgstr "Skript-Fu-Verzeichnisauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:449
+#: ../plug-ins/script-fu/script-fu-interface.c:452
 msgid "Script-Fu Font Selection"
 msgstr "Skript-Fu-Schriftartauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:457
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu Palette Selection"
 msgstr "Skript-Fu-Palettenauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:465
+#: ../plug-ins/script-fu/script-fu-interface.c:468
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-Fu-Musterauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:472
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-Fu-Farbverlaufsauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:480
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu-Pinselauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1008
-#, c-format
-msgid "About %s"
-msgstr "Info über %s"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1073
-msgid "Author:"
-msgstr "Autor:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1080
-msgid "Copyright:"
-msgstr "Copyright:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1087
-msgid "Date:"
-msgstr "Datum:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1096
-msgid "Image Types:"
-msgstr "Bildtypen:"
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:644
+#: ../plug-ins/script-fu/script-fu-scripts.c:656
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -126,103 +109,112 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:653
+#: ../plug-ins/script-fu/script-fu-server.c:710
 msgid "Script-Fu Server Options"
 msgstr "Skript-Fu-Server-Einstellungen"
 
-#: ../plug-ins/script-fu/script-fu-server.c:658
+#: ../plug-ins/script-fu/script-fu-server.c:715
 msgid "_Start Server"
 msgstr "_Server starten"
 
-#: ../plug-ins/script-fu/script-fu-server.c:686
+#: ../plug-ins/script-fu/script-fu-server.c:743
 msgid "Server port:"
 msgstr "Server-Port:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:692
+#: ../plug-ins/script-fu/script-fu-server.c:749
 msgid "Server logfile:"
 msgstr "Server-Protokoll:"
 
-#: ../plug-ins/script-fu/script-fu.c:116
+#: ../plug-ins/script-fu/script-fu.c:115
 msgid "Script-Fu _Console"
 msgstr "Skript-Fu-_Konsole"
 
-#: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:316
+#: ../plug-ins/script-fu/script-fu.c:122 ../plug-ins/script-fu/script-fu.c:151
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "<Toolbox>/Xtns/Languages/Script-Fu"
 msgstr "<Toolbox>/Xtns/Sprachen/Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:145
+#: ../plug-ins/script-fu/script-fu.c:144
 msgid "_Start Server..."
 msgstr "_Server starten …"
 
-#: ../plug-ins/script-fu/script-fu.c:269
+#: ../plug-ins/script-fu/script-fu.c:267
 msgid "_GIMP Online"
 msgstr "_GIMP im Netz"
 
-#: ../plug-ins/script-fu/script-fu.c:270
+#: ../plug-ins/script-fu/script-fu.c:268
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
 msgid "_User Manual"
 msgstr "_Benutzerhandbuch"
 
-#: ../plug-ins/script-fu/script-fu.c:273
+#: ../plug-ins/script-fu/script-fu.c:271
 msgid "_Script-Fu"
 msgstr "_Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:275
+#: ../plug-ins/script-fu/script-fu.c:273
 msgid "_Buttons"
 msgstr "_Schaltflächen"
 
-#: ../plug-ins/script-fu/script-fu.c:277
+#: ../plug-ins/script-fu/script-fu.c:275
 msgid "_Logos"
 msgstr "_Logos"
 
-#: ../plug-ins/script-fu/script-fu.c:279
+#: ../plug-ins/script-fu/script-fu.c:277
 msgid "_Misc"
 msgstr "_Verschiedenes"
 
-#: ../plug-ins/script-fu/script-fu.c:281
+#: ../plug-ins/script-fu/script-fu.c:279
 msgid "_Patterns"
 msgstr "_Muster"
 
-#: ../plug-ins/script-fu/script-fu.c:283
+#: ../plug-ins/script-fu/script-fu.c:281
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:285
+#: ../plug-ins/script-fu/script-fu.c:283
 msgid "_Utils"
 msgstr "_Hilfsmittel"
 
-#: ../plug-ins/script-fu/script-fu.c:287
+#: ../plug-ins/script-fu/script-fu.c:285
 msgid "_Web Page Themes"
 msgstr "_Web-Seiten"
 
-#: ../plug-ins/script-fu/script-fu.c:289
+#: ../plug-ins/script-fu/script-fu.c:287
 msgid "_Alien Glow"
 msgstr "_Alien Glow"
 
-#: ../plug-ins/script-fu/script-fu.c:291
+#: ../plug-ins/script-fu/script-fu.c:289
 msgid "_Beveled Pattern"
 msgstr "A_bgeschrägt, gemustert"
 
-#: ../plug-ins/script-fu/script-fu.c:293
+#: ../plug-ins/script-fu/script-fu.c:291
 msgid "_Classic.Gimp.Org"
 msgstr "_classic.gimp.org"
 
-#: ../plug-ins/script-fu/script-fu.c:296
+#: ../plug-ins/script-fu/script-fu.c:294
 msgid "Alpha to _Logo"
 msgstr "Alpha als _Logo"
 
-#: ../plug-ins/script-fu/script-fu.c:298
+#: ../plug-ins/script-fu/script-fu.c:296
 msgid "_Decor"
 msgstr "_Dekoration"
 
-#: ../plug-ins/script-fu/script-fu.c:300
+#: ../plug-ins/script-fu/script-fu.c:298
 msgid "_Render"
 msgstr "_Rendern"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Refresh Scripts"
 msgstr "Skripte _auffrischen"
+
+#: ../plug-ins/script-fu/script-fu.c:329
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr ""
+"Sie können »Skripte auffrischen« nicht anwenden, solange ein Skript-Fu-"
+"Dialogfenster geöffnet ist. Bitte schließen Sie zunächst alle Skript-Fu-"
+"Fenster und versuchen Sie es anschließend erneut."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -2289,6 +2281,3 @@ msgstr "Glanzlicht Deckkraft"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effekt …"
-
-
-
