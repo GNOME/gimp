@@ -1,3 +1,14 @@
+2006-06-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptransformtool.c: (gimp_transform_tool_control):
+	always upchain.
+
+	(gimp_transform_tool_cursor_update): use the small crosshair
+	instead of GIMP_CURSOR_MOUSE as default cursor to avoid hotspot
+	jumping.
+
+	(gimp_transform_tool_doit): call prepare() after bounds().
+
 2006-06-22  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/animationplay.c

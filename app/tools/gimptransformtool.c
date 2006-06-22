@@ -332,7 +332,7 @@ gimp_transform_tool_initialize (GimpTool    *tool,
       gint i;
 
       /*  Set the pointer to the active display  */
-      tool->display    = display;
+      tool->display  = display;
       tool->drawable = gimp_image_active_drawable (display->image);
 
       /*  Initialize the transform tool dialog */
@@ -382,7 +382,6 @@ gimp_transform_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_HALT:
       gimp_transform_tool_halt (tr_tool);
-      return; /* don't upchain */
       break;
     }
 
@@ -615,36 +614,36 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
 {
   GimpTransformTool    *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GimpTransformOptions *options;
+  GimpCursorType        cursor;
   GimpCursorModifier    modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
+
+  cursor = gimp_tool_control_get_cursor (tool->control);
 
   if (tr_tool->use_handles)
     {
       switch (tr_tool->function)
         {
         case TRANSFORM_HANDLE_NW:
-          gimp_tool_control_set_cursor (tool->control,
-                                        GIMP_CURSOR_CORNER_TOP_LEFT);
+          cursor = GIMP_CURSOR_CORNER_TOP_LEFT;
           break;
 
         case TRANSFORM_HANDLE_NE:
-          gimp_tool_control_set_cursor (tool->control,
-                                        GIMP_CURSOR_CORNER_TOP_RIGHT);
+          cursor = GIMP_CURSOR_CORNER_TOP_RIGHT;
           break;
 
         case TRANSFORM_HANDLE_SW:
-          gimp_tool_control_set_cursor (tool->control,
-                                        GIMP_CURSOR_CORNER_BOTTOM_LEFT);
+          cursor = GIMP_CURSOR_CORNER_BOTTOM_LEFT;
           break;
 
         case TRANSFORM_HANDLE_SE:
-          gimp_tool_control_set_cursor (tool->control,
-                                        GIMP_CURSOR_CORNER_BOTTOM_RIGHT);
+          cursor = GIMP_CURSOR_CORNER_BOTTOM_RIGHT;
           break;
 
         default:
-          gimp_tool_control_set_cursor (tool->control, GIMP_CURSOR_MOUSE);
+          cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
+          break;
         }
     }
 
@@ -665,6 +664,7 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
       break;
     }
 
+  gimp_tool_control_set_cursor          (tool->control, cursor);
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
@@ -1021,8 +1021,8 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
                                                                   mask_empty,
                                                                   display);
 
-  gimp_transform_tool_prepare (tr_tool, display);
   gimp_transform_tool_bounds (tr_tool, display);
+  gimp_transform_tool_prepare (tr_tool, display);
   gimp_transform_tool_recalc (tr_tool, display);
 
   switch (options->type)
