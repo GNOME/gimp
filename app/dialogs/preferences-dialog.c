@@ -1381,7 +1381,7 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_widget_show (label);
 
   image = gtk_image_new ();
-  gtk_box_pack_end (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), image, FALSE, FALSE, 6);
   gtk_widget_show (image);
 
   /* The main preferences notebook */
