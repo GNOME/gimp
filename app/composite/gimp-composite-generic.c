@@ -69,6 +69,7 @@
 
 static guchar add_lut[511];
 static gint32 random_table[RANDOM_TABLE_SIZE];
+static guchar burn_lut[256][256];
 
 /*
  *
@@ -873,18 +874,10 @@ gimp_composite_burn_any_any_any_generic (GimpCompositeContext * ctx)
   const guint alpha = (has_alpha1 || has_alpha2) ? MAX(bytes1, bytes2) - 1 : bytes1;
   guint b;
 
-  /* FIXME: Is the burn effect supposed to be dependant on the sign of this
-   * temporary variable? */
-  gint tmp;
-
   while (length--)
     {
       for (b = 0; b < alpha; b++)
-        {
-          tmp = (255 - src1[b]) << 8;
-          tmp /= src2[b] + 1;
-          dest[b] = (guchar) CLAMP(255 - tmp, 0, 255);
-        }
+        dest[b] = burn_lut[src1[b]][src2[b]];
       if (has_alpha1 && has_alpha2)
         dest[alpha] = MIN(src1[alpha], src2[alpha]);
       else if (has_alpha2)
@@ -1444,6 +1437,7 @@ gimp_composite_generic_init (void)
 {
   GRand *gr;
   guint  i;
+  gint   a, b;
 
 #define RANDOM_SEED 314159265
 
@@ -1455,11 +1449,28 @@ gimp_composite_generic_init (void)
 
   g_rand_free (gr);
 
+  /*  generate a table for burn compositing */
+  for (a = 0; a < 256; a++)
+    for (b = 0; b < 256; b++)
+      {
+        /* FIXME: Is the burn effect supposed to be dependant on the sign
+         * of this temporary variable?
+         */
+        gint tmp;
+
+        tmp = (255 - a) << 8;
+        tmp /= b + 1;
+        tmp = (255 - tmp);
+
+        burn_lut[a][b] = CLAMP (tmp, 0, 255);
+      }
+
+  /*  generate a table for saturate add */
   for (i = 0; i < 256; i++)
     add_lut[i] = i;
 
   for (i = 256; i <= 510; i++)
     add_lut[i] = 255;
 
-  return (TRUE);
+  return TRUE;
 }

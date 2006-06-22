@@ -1,3 +1,15 @@
+2006-06-22  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/gimp-composite-generic.c
+	* app/composite/gimp-composite-mmx-installer.c
+	* app/composite/gimp-composite-mmx-test.c
+	* app/composite/gimp-composite-mmx.[ch]
+	* app/composite/gimp-composite-sse-installer.c
+	* app/composite/gimp-composite-sse-test.c
+	* app/composite/gimp-composite-sse.[ch]: backported changes to burn
+	compositing function from the HEAD branch because the MMX/SSE code
+	broke compilation on GCC 4.1 (bug #345473).
+
 2006-06-17  Michael Natterer  <mitch@gimp.org>
 
 	Merge from HEAD:

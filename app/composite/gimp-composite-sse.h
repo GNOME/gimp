@@ -26,7 +26,6 @@ extern gboolean gimp_composite_sse_install (void);
  *
  */
 extern void gimp_composite_addition_rgba8_rgba8_rgba8_sse (GimpCompositeContext *ctx);
-extern void gimp_composite_burn_rgba8_rgba8_rgba8_sse (GimpCompositeContext *ctx);
 extern void gimp_composite_coloronly_rgba8_rgba8_rgba8_sse (GimpCompositeContext *ctx);
 extern void gimp_composite_darken_rgba8_rgba8_rgba8_sse (GimpCompositeContext *ctx);
 extern void gimp_composite_difference_rgba8_rgba8_rgba8_sse (GimpCompositeContext *ctx);
