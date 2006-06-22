@@ -565,18 +565,19 @@ remap_hints_new (void)
   return hbox;
 }
 
-static void
+static gboolean
 remap_popup_menu (GtkWidget      *widget,
                   GdkEventButton *event)
 {
   GtkWidget *menu = gtk_ui_manager_get_widget (remap_ui, "/remap-popup");
 
   gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
-
   gtk_menu_popup (GTK_MENU (menu),
                   NULL, NULL, NULL, NULL,
                   event ? event->button : 0,
                   event ? event->time   : gtk_get_current_event_time ());
+
+  return TRUE;
 }
 
 static gboolean
@@ -584,7 +585,7 @@ remap_button_press (GtkWidget      *widget,
                     GdkEventButton *event)
 {
   if (event->button == 3 && event->type == GDK_BUTTON_PRESS)
-    remap_popup_menu (widget, event);
+    return remap_popup_menu (widget, event);
 
   return FALSE;
 }

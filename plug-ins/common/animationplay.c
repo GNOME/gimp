@@ -228,21 +228,26 @@ reshape_from_bitmap (const gchar *bitmap)
 }
 
 static gboolean
-menu_popup (GtkWidget      *widget,
+popup_menu (GtkWidget      *widget,
             GdkEventButton *event)
 {
+  GtkWidget *menu = gtk_ui_manager_get_widget (ui_manager, "/anim-play-popup");
+
+  gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
+  gtk_menu_popup (GTK_MENU (menu),
+                  NULL, NULL, NULL, NULL,
+                  event ? event->button : 0,
+                  event ? event->time   : gtk_get_current_event_time ());
+
+  return TRUE;
+}
+
+static gboolean
+button_press (GtkWidget      *widget,
+              GdkEventButton *event)
+{
   if (event->button == 3 && event->type == GDK_BUTTON_PRESS)
-    {
-      GtkWidget *menu = gtk_ui_manager_get_widget (ui_manager,
-                                                   "/anim-play-popup");
-
-      gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
-      gtk_menu_popup (GTK_MENU (menu),
-                      NULL, NULL, NULL, NULL,
-                      event->button, event->time);
-
-      return TRUE;
-    }
+    return popup_menu (widget, event);
 
   return FALSE;
 }
@@ -251,7 +256,7 @@ static gboolean
 shape_pressed (GtkWidget      *widget,
                GdkEventButton *event)
 {
-  if (menu_popup (widget, event))
+  if (button_press (widget, event))
     return TRUE;
 
   /* ignore double and triple click */
@@ -551,6 +556,9 @@ build_dialog (GimpImageBaseType  basetype,
   g_signal_connect (window, "destroy",
                     G_CALLBACK (window_destroy),
                     NULL);
+  g_signal_connect (window, "popup-menu",
+                    G_CALLBACK (popup_menu),
+                    NULL);
 
   gimp_help_connect (window, gimp_standard_help_func, PLUG_IN_PROC, NULL);
 
@@ -586,7 +594,7 @@ build_dialog (GimpImageBaseType  basetype,
   gtk_widget_show (drawing_area);
 
   g_signal_connect (drawing_area, "button-press-event",
-                    G_CALLBACK (menu_popup),
+                    G_CALLBACK (button_press),
                     NULL);
 
   progress = gtk_progress_bar_new ();

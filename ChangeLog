@@ -1,6 +1,8 @@
 2006-06-22  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/common/colormap-remap.c: popup the menu on Shift-F10.
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/colormap-remap.c
+	* plug-ins/helpbrowser/dialog.c: popup the menu on Shift-F10.
 
 2006-06-22  Michael Natterer  <mitch@gimp.org>
 

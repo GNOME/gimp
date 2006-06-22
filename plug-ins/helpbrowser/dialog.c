@@ -105,6 +105,8 @@ static void       drag_data_get      (GtkWidget        *widget,
                                       gpointer          data);
 static void       view_realize       (GtkWidget        *widget);
 static void       view_unrealize     (GtkWidget        *widget);
+static gboolean   view_popup_menu    (GtkWidget        *widget,
+                                      GdkEventButton   *event);
 static gboolean   view_button_press  (GtkWidget        *widget,
                                       GdkEventButton   *event);
 
@@ -315,6 +317,9 @@ browser_dialog_open (void)
                     G_CALLBACK (view_unrealize),
                     NULL);
 
+  g_signal_connect (html, "popup-menu",
+                    G_CALLBACK (view_popup_menu),
+                    NULL);
   g_signal_connect (html, "button-press-event",
                     G_CALLBACK (view_button_press),
                     NULL);
@@ -802,21 +807,27 @@ view_unrealize (GtkWidget *widget)
 }
 
 static gboolean
+view_popup_menu (GtkWidget      *widget,
+                 GdkEventButton *event)
+{
+  GtkWidget *menu = gtk_ui_manager_get_widget (ui_manager,
+                                               "/help-browser-popup");
+
+  gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
+  gtk_menu_popup (GTK_MENU (menu),
+                  NULL, NULL, NULL, NULL,
+                  event ? event->button : 0,
+                  event ? event->time   : gtk_get_current_event_time ());
+
+  return TRUE;
+}
+
+static gboolean
 view_button_press (GtkWidget      *widget,
                    GdkEventButton *event)
 {
-  gtk_widget_grab_focus (widget);
-
   if (event->button == 3 && event->type == GDK_BUTTON_PRESS)
-    {
-      GtkWidget *menu = gtk_ui_manager_get_widget (ui_manager,
-                                                   "/help-browser-popup");
-
-      gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
-      gtk_menu_popup (GTK_MENU (menu),
-                      NULL, NULL, NULL, NULL,
-                      event->button, event->time);
-    }
+    return view_popup_menu (widget, event);
 
   return FALSE;
 }
