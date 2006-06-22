@@ -1,3 +1,7 @@
+2006-06-22  Sven Neumann  <sven@gimp.org>
+
+	* menus/toolbox-menu.xml.in: moved separator.
+
 2006-06-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptransformtool.c: (gimp_transform_tool_control):
