@@ -1,3 +1,13 @@
+2006-06-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* configure.in: adjust requirements for building gtk-print
+	plug-in -- requires gtk+ 2.9.3 and --enable-print.
+	
+	* plug-ins/print/Makefile.am
+	* plug-ins/print/print.c: new plug-in using GtkPrintOperation.
+	Mainly infrastructure at this point -- output is wildly
+	incorrect.
+
 2006-06-22  Sven Neumann  <sven@gimp.org>
 
 	* menus/toolbox-menu.xml.in: moved separator.

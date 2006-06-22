@@ -1184,8 +1184,8 @@ enable_print=no
 AC_ARG_WITH(print,[  --without-print          build without print support])
 
 if test "x$with_print" != xno; then
-  PKG_CHECK_MODULES(PRINT, gtk+-2.0 >= 2.10.0,
-    enable_print="yes", enable_print="no (gtk+ >= 2.10.0 not available)")
+  PKG_CHECK_MODULES(PRINT, gtk+-2.0 >= 2.9.3,
+    enable_print="yes", enable_print="no (gtk+ >= 2.9.3 not available)")
 else
     enable_print="no (print support disabled)"
 fi
@@ -1745,6 +1745,7 @@ plug-ins/jpeg/Makefile
 plug-ins/maze/Makefile
 plug-ins/metadata/Makefile
 plug-ins/pagecurl/Makefile
+plug-ins/print/Makefile
 plug-ins/pygimp/Makefile
 plug-ins/pygimp/plug-ins/Makefile
 plug-ins/rcm/Makefile

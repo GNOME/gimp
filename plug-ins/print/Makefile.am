@@ -15,8 +15,8 @@ endif
 AM_LDFLAGS = $(mwindows)
 
 INCLUDES = \
-	-I$(top_srcdir)	\
-	$(PRINT_CFLAGS)	\
+	-I$(top_srcdir)			\
+	$(PRINT_CFLAGS)			\
 	-I$(includedir)
 
 LDADD = \
@@ -33,4 +33,9 @@ LDADD = \
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS =
+libexec_PROGRAMS = print
+
+EXTRA_PROGRAMS = print
+
+print_SOURCES = \
+	print.c
