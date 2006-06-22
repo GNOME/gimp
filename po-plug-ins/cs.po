@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-20 15:41+0200\n"
-"PO-Revision-Date: 2006-06-20 15:44+0200\n"
+"POT-Creation-Date: 2006-06-22 10:57+0200\n"
+"PO-Revision-Date: 2006-06-22 11:01+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -617,7 +617,6 @@ msgstr "Intenzita světla"
 #: ../plug-ins/Lighting/lighting_ui.c:454
 #: ../plug-ins/MapObject/mapobject_ui.c:671
 #: ../plug-ins/MapObject/mapobject_ui.c:998
-#: ../plug-ins/print/gimp_main_window.c:475
 msgid "Position"
 msgstr "Poloha"
 
@@ -1064,22 +1063,18 @@ msgid "Back:"
 msgstr "Vzadu:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1110
-#: ../plug-ins/print/gimp_main_window.c:534
 msgid "Top:"
 msgstr "Nahoře:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1110
-#: ../plug-ins/print/gimp_main_window.c:575
 msgid "Bottom:"
 msgstr "Dole:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1111
-#: ../plug-ins/print/gimp_main_window.c:521
 msgid "Left:"
 msgstr "Nalevo:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1111
-#: ../plug-ins/print/gimp_main_window.c:547
 msgid "Right:"
 msgstr "Napravo:"
 
@@ -1117,7 +1112,6 @@ msgid "Images for the Cap Faces"
 msgstr "Obrázky pro uzavírací plošky"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1239
-#: ../plug-ins/print/gimp_main_window.c:1119
 msgid "Size"
 msgstr "Velikost"
 
@@ -1512,7 +1506,6 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0.5 < x)"
 
 #: ../plug-ins/common/CML_explorer.c:200 ../plug-ins/common/sunras.c:1593
-#: ../plug-ins/print/gimp_main_window.c:1668
 msgid "Standard"
 msgstr "Standardní"
 
@@ -2519,27 +2512,48 @@ msgstr "Přehodit dvě barvy v barevné mapě"
 msgid "_Swap Colors"
 msgstr "_Přehodit barvy"
 
-#: ../plug-ins/common/colormap-remap.c:287
-#: ../plug-ins/common/colormap-remap.c:298
-#: ../plug-ins/common/colormap-remap.c:309
+#: ../plug-ins/common/colormap-remap.c:288
+#: ../plug-ins/common/colormap-remap.c:299
+#: ../plug-ins/common/colormap-remap.c:310
 msgid "Invalid remap array was passed to remap function"
 msgstr "Funkci remap bylo předáno neplatné remap pole"
 
-#: ../plug-ins/common/colormap-remap.c:333
+#: ../plug-ins/common/colormap-remap.c:334
 msgid "Rearranging the colormap"
 msgstr "Přerovnává se barevná mapa"
 
-#: ../plug-ins/common/colormap-remap.c:437
+#: ../plug-ins/common/colormap-remap.c:480
+msgid "Sort on Hue"
+msgstr "Třídit podle odstínu"
+
+#: ../plug-ins/common/colormap-remap.c:484
+msgid "Sort on Saturation"
+msgstr "Třidit podle sytosti"
+
+#: ../plug-ins/common/colormap-remap.c:488
+msgid "Sort on Value"
+msgstr "Třídit podle hodnoty"
+
+#: ../plug-ins/common/colormap-remap.c:492
+msgid "Reverse Order"
+msgstr "Obrátit pořadí"
+
+#: ../plug-ins/common/colormap-remap.c:496
+msgid "Reset Order"
+msgstr "Obnovit pořadí"
+
+#: ../plug-ins/common/colormap-remap.c:547
+msgid ""
+"Drag and drop colors to rearrange the colormap.  The numbers shown are the "
+"original indices.  Right-click for a menu with sort options."
+msgstr ""
+"Barevnou mapu můžete přerovnat přetahováním barev myší. Zobrazovaná "
+"čísla jsou původní indexy. Kliknutím pravým tlačítkem myši se otevře nabídka "
+"s volbami třídění."
+
+#: ../plug-ins/common/colormap-remap.c:623
 msgid "Rearrange Colormap"
 msgstr "Přerovnat barevnou mapu."
-
-#: ../plug-ins/common/colormap-remap.c:457
-msgid ""
-"Drag and drop colors to rearrange the colormap.\n"
-"The numbers shown are the original indices."
-msgstr ""
-"Barevnou mapu můžete přerovnat přetahováním barev myší.\n"
-"Zobrazovaná čísla jsou původní indexy."
 
 #: ../plug-ins/common/colortoalpha.c:96
 msgid "Convert a specified color to transparency"
@@ -3869,15 +3883,15 @@ msgstr "Střed odlesku objektivu"
 msgid "Show _position"
 msgstr "Zobrazit _polohu"
 
-#: ../plug-ins/common/fp.c:230 ../plug-ins/print/gimp_color_window.c:307
+#: ../plug-ins/common/fp.c:230
 msgid "Cyan:"
 msgstr "Azurová:"
 
-#: ../plug-ins/common/fp.c:231 ../plug-ins/print/gimp_color_window.c:345
+#: ../plug-ins/common/fp.c:231
 msgid "Yellow:"
 msgstr "Žlutá:"
 
-#: ../plug-ins/common/fp.c:232 ../plug-ins/print/gimp_color_window.c:326
+#: ../plug-ins/common/fp.c:232
 msgid "Magenta:"
 msgstr "Purpurová:"
 
@@ -4431,22 +4445,6 @@ msgstr "Šíř_ka dlaždice:"
 msgid "Tile _height:"
 msgstr "_Výška dlaždice:"
 
-#: ../plug-ins/common/gnomeprint.c:88
-msgid "Print the image using the GNOME Print system"
-msgstr "Vytisknout obrázek pomocí tiskového systému GNOME"
-
-#: ../plug-ins/common/gnomeprint.c:93
-msgid "_GNOME Print..."
-msgstr "Tisk _GNOME..."
-
-#: ../plug-ins/common/gnomeprint.c:161
-msgid "Print"
-msgstr "Tisk"
-
-#: ../plug-ins/common/gnomeprint.c:182
-msgid "Print Preview"
-msgstr "Tisk náhledu"
-
 #: ../plug-ins/common/gqbist.c:402
 msgid "Generate a huge variety of abstract patterns"
 msgstr "Generovat mnoho různých abstraktních vzorků"
@@ -4526,8 +4524,7 @@ msgstr "Průnik"
 
 #. Width and Height
 #: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:788
-#: ../plug-ins/common/wmf.c:549 ../plug-ins/print/gimp_main_window.c:1009
-#: ../plug-ins/print/gimp_main_window.c:1216
+#: ../plug-ins/common/wmf.c:549
 msgid "Width:"
 msgstr "Šířka:"
 
@@ -6208,7 +6205,7 @@ msgstr "Vyobrazení"
 
 #. Resolution
 #: ../plug-ins/common/postscript.c:3084 ../plug-ins/common/svg.c:909
-#: ../plug-ins/common/wmf.c:670 ../plug-ins/print/gimp_main_window.c:1104
+#: ../plug-ins/common/wmf.c:670
 msgid "Resolution:"
 msgstr "Rozlišení:"
 
@@ -6253,7 +6250,6 @@ msgstr "Šedá"
 #: ../plug-ins/common/postscript.c:3153 ../plug-ins/common/xpm.c:468
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:151
-#: ../plug-ins/print/gimp_main_window.c:1416
 msgid "Color"
 msgstr "Barva"
 
@@ -7602,8 +7598,6 @@ msgid "Render Scalable Vector Graphics"
 msgstr "Vykreslit Scalable Vector Graphics"
 
 #: ../plug-ins/common/svg.c:794 ../plug-ins/common/wmf.c:555
-#: ../plug-ins/print/gimp_main_window.c:1026
-#: ../plug-ins/print/gimp_main_window.c:1229
 msgid "Height:"
 msgstr "Výška:"
 
@@ -8183,127 +8177,127 @@ msgstr "Rozšíření v _alfa kanálu"
 msgid "Propagating value channel"
 msgstr "Rozšíření v kanálu hodnot"
 
-#: ../plug-ins/common/warp.c:235
+#: ../plug-ins/common/warp.c:233
 msgid "Twist or smear image in many different ways"
 msgstr "Zkroutit či rozmazat obrázek různými způsoby"
 
-#: ../plug-ins/common/warp.c:243
+#: ../plug-ins/common/warp.c:241
 msgid "_Warp..."
 msgstr "_Ohnout..."
 
-#: ../plug-ins/common/warp.c:390
+#: ../plug-ins/common/warp.c:377
 msgid "Warp"
 msgstr "Ohnutí"
 
-#: ../plug-ins/common/warp.c:411
+#: ../plug-ins/common/warp.c:398
 msgid "Basic Options"
 msgstr "Základní možnosti"
 
-#: ../plug-ins/common/warp.c:433
+#: ../plug-ins/common/warp.c:420
 msgid "Step size:"
 msgstr "Velikost kroku:"
 
-#: ../plug-ins/common/warp.c:447 ../plug-ins/ifscompose/ifscompose.c:1212
+#: ../plug-ins/common/warp.c:434 ../plug-ins/ifscompose/ifscompose.c:1212
 msgid "Iterations:"
 msgstr "Iterace:"
 
 #. Displacement map menu
-#: ../plug-ins/common/warp.c:456
+#: ../plug-ins/common/warp.c:443
 msgid "Displacement map:"
 msgstr "Mapa vytlačování:"
 
 #. =======================================================================
 #. Displacement Type
-#: ../plug-ins/common/warp.c:474
+#: ../plug-ins/common/warp.c:461
 msgid "On edges:"
 msgstr "Na hranách:"
 
-#: ../plug-ins/common/warp.c:485
+#: ../plug-ins/common/warp.c:472
 msgid "Wrap"
 msgstr "Ohýbání"
 
-#: ../plug-ins/common/warp.c:500
+#: ../plug-ins/common/warp.c:487
 msgid "Smear"
 msgstr "Šmouha"
 
-#: ../plug-ins/common/warp.c:515 ../plug-ins/fits/fits.c:995
+#: ../plug-ins/common/warp.c:502 ../plug-ins/fits/fits.c:995
 #: ../plug-ins/flame/flame.c:1147 ../plug-ins/gfig/gfig-dialog.c:1466
 msgid "Black"
 msgstr "Černá"
 
-#: ../plug-ins/common/warp.c:530
+#: ../plug-ins/common/warp.c:517
 msgid "Foreground color"
 msgstr "Barva popředí"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
-#: ../plug-ins/common/warp.c:550
+#: ../plug-ins/common/warp.c:537
 msgid "Advanced Options"
 msgstr "Pokročilé možnosti"
 
-#: ../plug-ins/common/warp.c:566
+#: ../plug-ins/common/warp.c:553
 msgid "Dither size:"
 msgstr "Velikost rozptylu:"
 
-#: ../plug-ins/common/warp.c:579
+#: ../plug-ins/common/warp.c:566
 msgid "Rotation angle:"
 msgstr "Úhel rotace:"
 
-#: ../plug-ins/common/warp.c:592
+#: ../plug-ins/common/warp.c:579
 msgid "Substeps:"
 msgstr "Podkroky:"
 
 #. Magnitude map menu
-#: ../plug-ins/common/warp.c:601
+#: ../plug-ins/common/warp.c:588
 msgid "Magnitude map:"
 msgstr "Mapa zvětšení:"
 
-#: ../plug-ins/common/warp.c:623
+#: ../plug-ins/common/warp.c:610
 msgid "Use magnitude map"
 msgstr "Použít mapu zvětšení"
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" table         --------------------------
-#: ../plug-ins/common/warp.c:636
+#: ../plug-ins/common/warp.c:623
 msgid "More Advanced Options"
 msgstr "Další pokročilé možnosti"
 
-#: ../plug-ins/common/warp.c:653
+#: ../plug-ins/common/warp.c:640
 msgid "Gradient scale:"
 msgstr "Měřítko přechodu:"
 
-#: ../plug-ins/common/warp.c:676
+#: ../plug-ins/common/warp.c:663
 msgid "Gradient map selection menu"
 msgstr "Menu výběru mapy přechodu"
 
-#: ../plug-ins/common/warp.c:686
+#: ../plug-ins/common/warp.c:673
 msgid "Vector mag:"
 msgstr "Vektor zvětšení:"
 
 #. Angle
-#: ../plug-ins/common/warp.c:701 ../plug-ins/ifscompose/ifscompose.c:569
+#: ../plug-ins/common/warp.c:688 ../plug-ins/ifscompose/ifscompose.c:569
 msgid "Angle:"
 msgstr "Úhel:"
 
-#: ../plug-ins/common/warp.c:724
+#: ../plug-ins/common/warp.c:711
 msgid "Fixed-direction-vector map selection menu"
 msgstr "Menu mapy pevného směrového vektoru"
 
 #. make sure layer is visible
-#: ../plug-ins/common/warp.c:1193
+#: ../plug-ins/common/warp.c:1181
 msgid "Smoothing X gradient"
 msgstr "Vyhlazuje se X přechod"
 
-#: ../plug-ins/common/warp.c:1196
+#: ../plug-ins/common/warp.c:1184
 msgid "Smoothing Y gradient"
 msgstr "Vyhlazuje se Y přechod"
 
 #. calculate new X,Y Displacement image maps
-#: ../plug-ins/common/warp.c:1249
+#: ../plug-ins/common/warp.c:1234
 msgid "Finding XY gradient"
 msgstr "Hledá se XY přechod"
 
-#: ../plug-ins/common/warp.c:1275
+#: ../plug-ins/common/warp.c:1256
 #, c-format
 msgid "Flow step %d"
 msgstr "Krok toku %d"
@@ -8467,65 +8461,6 @@ msgstr "Pevno_st:"
 #: ../plug-ins/common/wind.c:1031
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Vyšší hodnota znamená zesiluje efekt"
-
-#: ../plug-ins/common/winprint.c:219
-msgid "Print the image"
-msgstr "Tisknout obrázek"
-
-#: ../plug-ins/common/winprint.c:224 ../plug-ins/print/print.c:171
-msgid "_Print..."
-msgstr "Vy_tisknout..."
-
-#: ../plug-ins/common/winprint.c:231
-msgid "Set up page layout for printing"
-msgstr "Nastavit rozvržení stránky pro tisk"
-
-#: ../plug-ins/common/winprint.c:236
-msgid "Page Setup"
-msgstr "Nastavení stránky"
-
-#: ../plug-ins/common/winprint.c:341
-#, c-format
-msgid "PrintDlg failed: %d"
-msgstr "PrintDlg selhalo: %d"
-
-#: ../plug-ins/common/winprint.c:377
-msgid "Printer doesn't support bitmaps"
-msgstr "Tiskárna nepodporuje bitové mapy"
-
-#: ../plug-ins/common/winprint.c:418
-msgid "StartPage failed"
-msgstr "StartPage selhalo"
-
-#: ../plug-ins/common/winprint.c:427 ../plug-ins/print/print-image-gimp.c:320
-msgid "Printing"
-msgstr "Probíhá tisk"
-
-#: ../plug-ins/common/winprint.c:459
-msgid "CreateDIBSection failed"
-msgstr "CreateDIBSection selhalo"
-
-#: ../plug-ins/common/winprint.c:495
-msgid "SetStretchBltMode failed (warning only)"
-msgstr "SetStretchBltMode selhalo (pouze varování)"
-
-#: ../plug-ins/common/winprint.c:558
-#, c-format
-msgid ""
-"StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
-"error = %d, y = %d"
-msgstr ""
-"StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) selhalo, "
-"chyba = %d, y = %d"
-
-#: ../plug-ins/common/winprint.c:587
-msgid "EndPage failed"
-msgstr "EndPage selhalo"
-
-#: ../plug-ins/common/winprint.c:634
-#, c-format
-msgid "PageSetupDlg failed: %d"
-msgstr "PageSetupDlg selhalo: %d"
 
 #: ../plug-ins/common/wmf.c:126
 msgid "Microsoft WMF file"
@@ -9185,7 +9120,6 @@ msgstr "Doleva"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1724
 #: ../plug-ins/gimpressionist/orientation.c:130
-#: ../plug-ins/print/gimp_main_window.c:511
 msgid "Orientation:"
 msgstr "Orientace:"
 
@@ -9548,7 +9482,6 @@ msgid "_Brush"
 msgstr "_Stopa"
 
 #: ../plug-ins/gimpressionist/brush.c:525
-#: ../plug-ins/print/gimp_color_window.c:407
 msgid "Gamma:"
 msgstr "Gama:"
 
@@ -11383,623 +11316,6 @@ msgstr "Zkroucení vrstvy"
 msgid "Page Curl"
 msgstr "Zkroucení stránky"
 
-#: ../plug-ins/print/gimp_color_window.c:208
-msgid "Print Color Adjust"
-msgstr "Nastavení tiskových barev"
-
-#: ../plug-ins/print/gimp_color_window.c:268
-msgid "Brightness:"
-msgstr "Jas:"
-
-#: ../plug-ins/print/gimp_color_window.c:276
-msgid ""
-"Set the brightness of the print.\n"
-"0 is solid black, 2 is solid white"
-msgstr ""
-"Nastavení jasu výtisku.\n"
-"0 znamená zcela černou, 2 znamená zcela bílou"
-
-#: ../plug-ins/print/gimp_color_window.c:288
-msgid "Contrast:"
-msgstr "Kontrast:"
-
-#: ../plug-ins/print/gimp_color_window.c:296
-msgid "Set the contrast of the print"
-msgstr "Nastavení kontrastu výtisku"
-
-#: ../plug-ins/print/gimp_color_window.c:315
-msgid "Adjust the cyan balance of the print"
-msgstr "Nastavení azurového vyvážení tisku"
-
-#: ../plug-ins/print/gimp_color_window.c:334
-msgid "Adjust the magenta balance of the print"
-msgstr "Nastavení purpurového vyvážení tisku"
-
-#: ../plug-ins/print/gimp_color_window.c:353
-msgid "Adjust the yellow balance of the print"
-msgstr "Nastavení žlutého vyvážení tisku"
-
-#. Gray: Circle: Spinbutton 2
-#: ../plug-ins/print/gimp_color_window.c:364 ../plug-ins/rcm/rcm_dialog.c:494
-#: ../plug-ins/rcm/rcm_dialog.c:556
-msgid "Saturation:"
-msgstr "Sytost:"
-
-#: ../plug-ins/print/gimp_color_window.c:372
-msgid ""
-"Adjust the saturation (color balance) of the print\n"
-"Use zero saturation to produce grayscale output using color and black inks"
-msgstr ""
-"Nastavení sytosti (barevného vyvážení) tisku.\n"
-"Použijte sytost 0, chcete-li produkovat na výstupu stupnice šedi použitím "
-"barevných a černých inkoustů."
-
-#: ../plug-ins/print/gimp_color_window.c:385
-msgid "Density:"
-msgstr "Hustota:"
-
-#: ../plug-ins/print/gimp_color_window.c:393
-msgid ""
-"Adjust the density (amount of ink) of the print. Reduce the density if the "
-"ink bleeds through the paper or smears; increase the density if black "
-"regions are not solid."
-msgstr ""
-"Nastavení hustoty (množství inkoustu) na výtisku. Snižte hustotu, pokud "
-"inkoust prosakuje papírem nebo se rozmazává; zvyšte hustotu, pokud nejsou "
-"černé oblasti zcela vyplněné."
-
-#: ../plug-ins/print/gimp_color_window.c:415
-msgid ""
-"Adjust the gamma of the print. Larger values will produce a generally "
-"brighter print, while smaller values will produce a generally darker print. "
-"Black and white will remain the same, unlike with the brightness adjustment."
-msgstr ""
-"Nastavení hodnoty gama výtisku. Vyšší hodnoty budou mít obecně za následek "
-"jasnější výtisk, nižší hodnoty budou produkovat tmavší výtisk. Černá a bílá "
-"barva zůstane stejná, na rozdíl od nastavení jasu."
-
-#: ../plug-ins/print/gimp_color_window.c:432
-msgid "Dither algorithm:"
-msgstr "Algoritmus rozptylu:"
-
-#: ../plug-ins/print/gimp_color_window.c:440
-msgid ""
-"Choose the dither algorithm to be used.\n"
-"Adaptive Hybrid usually produces the best all-around quality.\n"
-"Ordered is faster and produces almost as good quality on photographs.\n"
-"Fast and Very Fast are considerably faster, and work well for text and line "
-"art.\n"
-"Hybrid Floyd-Steinberg generally produces inferior output."
-msgstr ""
-"Vyberte algoritmus rozptylu, který chcete použít.\n"
-"Adaptivní hybridní algoritmus produkuje celkově nejlepší kvalitu.\n"
-"Tříděný algoritmus je rychlejší a na fotografiích produkuje téměř stejnou "
-"kvalitu.\n"
-"Rychlý a Velmi rychlý jsou algoritmy značně rychlejší, a dají se dobře "
-"použít na text a jednoduché kresby.\n"
-"Hybridní Floyd-Steinbergův algoritmus produkuje nejslabší výstup."
-
-#.
-#. * Create the main dialog
-#.
-#: ../plug-ins/print/gimp_main_window.c:360
-#, c-format
-msgid "%s -- Print v%s"
-msgstr "%s -- Tisk v%s"
-
-#: ../plug-ins/print/gimp_main_window.c:369
-msgid ""
-"Save\n"
-"Settings"
-msgstr ""
-"Uložit\n"
-"nastavení"
-
-#: ../plug-ins/print/gimp_main_window.c:370
-msgid ""
-"Print and\n"
-"Save Settings"
-msgstr ""
-"Vytisknout\n"
-"a uložit nastavení"
-
-#: ../plug-ins/print/gimp_main_window.c:449
-msgid ""
-"Position the image on the page.\n"
-"Click and drag with the primary button to position the image.\n"
-"Click and drag with the second button to move the image with finer "
-"precision; each unit of motion moves the image one point (1/72\")\n"
-"Click and drag with the third (middle) button to move the image in units of "
-"the image size.\n"
-"Holding down the shift key while clicking and dragging constrains the image "
-"to only horizontal or vertical motion.\n"
-"If you click another button while dragging the mouse, the image will return "
-"to its original position."
-msgstr ""
-"Umístěte obrázek na stránku.\n"
-"Kliknutím a táhnutím primárním tlačítkem umístíte obrázek.\n"
-"Kliknutím a táhnutím druhým tlačítkem umístíte obrázek s větší přesností; "
-"každá jednotka pohybu přesune obrázek o jeden bod (1/72\")\n"
-"Kliknutím a táhnutím třetím (prostředním) tlačítkem budete přesunovat "
-"obrázek v jednotkách rozměru obrázku.\n"
-"Pokud podržíte klávesu přeřaďovače (Shift), omezíte pohyb obrázku pouze na "
-"horizontální nebo vertikální osu.\n"
-"Pokud při tažení myší kliknete na jiné tlačítko, vrátí se obrázek do své "
-"původní polohy."
-
-#: ../plug-ins/print/gimp_main_window.c:492
-msgid "Auto"
-msgstr "Automaticky"
-
-#: ../plug-ins/print/gimp_main_window.c:493
-msgid "Portrait"
-msgstr "Na výšku"
-
-#: ../plug-ins/print/gimp_main_window.c:494
-msgid "Landscape"
-msgstr "Na šířku"
-
-#: ../plug-ins/print/gimp_main_window.c:495
-msgid "Upside down"
-msgstr "Vzhůru nohama"
-
-#: ../plug-ins/print/gimp_main_window.c:496
-msgid "Seascape"
-msgstr "Obráceně naležato"
-
-#: ../plug-ins/print/gimp_main_window.c:506
-msgid ""
-"Select the orientation: portrait, landscape, upside down, or seascape "
-"(upside down landscape)"
-msgstr ""
-"Vyberte orientaci: na výšku, na šířku, vzhůru nohama nebo obráceně naležato "
-"(vzhůru nohama na šířku)"
-
-#: ../plug-ins/print/gimp_main_window.c:525
-msgid "Distance from the left of the paper to the image"
-msgstr "Vzdálenost obrázku od levého okraje papíru"
-
-#: ../plug-ins/print/gimp_main_window.c:538
-msgid "Distance from the top of the paper to the image"
-msgstr "Vzdálenost obrázku od horního okraje papíru"
-
-#: ../plug-ins/print/gimp_main_window.c:551
-msgid "Distance from the left of the paper to the right of the image"
-msgstr "Vzdálenost pravého okraje obrázku od levého okraje papíru"
-
-#: ../plug-ins/print/gimp_main_window.c:561
-msgid "Right border:"
-msgstr "Pravý okraj:"
-
-#: ../plug-ins/print/gimp_main_window.c:565
-msgid "Distance from the right of the paper to the image"
-msgstr "Vzdálenost obrázku od pravého okraje papíru"
-
-#: ../plug-ins/print/gimp_main_window.c:579
-msgid "Distance from the top of the paper to the bottom of the image"
-msgstr "Vzdálenost spodního okraje obrázku od horního okraje papíru"
-
-#: ../plug-ins/print/gimp_main_window.c:589
-msgid "Bottom border:"
-msgstr "Spodní okraj:"
-
-#: ../plug-ins/print/gimp_main_window.c:593
-msgid "Distance from the bottom of the paper to the image"
-msgstr "Vzdálenost obrázku od spodního okraje papíru"
-
-#: ../plug-ins/print/gimp_main_window.c:606
-msgid "Center:"
-msgstr "Střed:"
-
-#: ../plug-ins/print/gimp_main_window.c:610
-msgid "Vertically"
-msgstr "Svisle"
-
-#: ../plug-ins/print/gimp_main_window.c:615
-msgid "Center the image vertically on the paper"
-msgstr "Vystředit obrázek na papír vertikálně"
-
-#: ../plug-ins/print/gimp_main_window.c:621
-msgid "Both"
-msgstr "Obojí"
-
-#: ../plug-ins/print/gimp_main_window.c:626
-msgid "Center the image on the paper"
-msgstr "Vystředit obrázek na papír"
-
-#: ../plug-ins/print/gimp_main_window.c:633
-msgid "Horizontally"
-msgstr "Vodorovně"
-
-#: ../plug-ins/print/gimp_main_window.c:638
-msgid "Center the image horizontally on the paper"
-msgstr "Vystředit obrázek na papír horizontálně"
-
-#: ../plug-ins/print/gimp_main_window.c:654
-msgid "Setup Printer"
-msgstr "Nastavení tiskárny"
-
-#.
-#. * Printer driver option menu.
-#.
-#: ../plug-ins/print/gimp_main_window.c:683
-msgid "Printer Model:"
-msgstr "Model tiskárny:"
-
-#: ../plug-ins/print/gimp_main_window.c:695
-msgid "Select your printer model"
-msgstr "Vyberte model vaší tiskárny"
-
-#.
-#. * PPD file.
-#.
-#: ../plug-ins/print/gimp_main_window.c:734
-msgid "PPD File:"
-msgstr "PPD soubor:"
-
-#: ../plug-ins/print/gimp_main_window.c:750
-msgid "Enter the PPD filename for your printer"
-msgstr "Zadejte název souboru PPD pro vaši tiskárnu"
-
-#: ../plug-ins/print/gimp_main_window.c:753
-msgid "Browse"
-msgstr "Procházet"
-
-#: ../plug-ins/print/gimp_main_window.c:759
-msgid "Choose the PPD file for your printer"
-msgstr "Zvolte soubor PPD pro vaši tiskárnu"
-
-#.
-#. * Print command.
-#.
-#: ../plug-ins/print/gimp_main_window.c:769
-msgid "Command:"
-msgstr "Příkaz:"
-
-#: ../plug-ins/print/gimp_main_window.c:782
-msgid ""
-"Enter the command to print to your printer. Note: Please do not remove the `-"
-"l' or `-oraw' from the command string, or printing will probably fail!"
-msgstr ""
-"Zadejte příkaz pro tisk na vaši tiskárnu. Poznámka: Neodstraňujte prosím z "
-"příkazu parametry `-l' nebo `-oraw', jinak tisk pravděpodobně selže!"
-
-#: ../plug-ins/print/gimp_main_window.c:792
-msgid "Choose PPD File"
-msgstr "Zvolte soubor PPD"
-
-#: ../plug-ins/print/gimp_main_window.c:819
-msgid "Define New Printer"
-msgstr "Definovat novou tiskárnu"
-
-#: ../plug-ins/print/gimp_main_window.c:842
-#: ../plug-ins/print/gimp_main_window.c:937
-msgid "Printer name:"
-msgstr "Název tiskárny:"
-
-#: ../plug-ins/print/gimp_main_window.c:846
-msgid "Enter the name you wish to give this logical printer"
-msgstr "Zadejte název, kterým chcete pojmenovat tuto logickou tiskárnu"
-
-#: ../plug-ins/print/gimp_main_window.c:859
-msgid "About Gimp-Print "
-msgstr "O Tisku GIMP"
-
-#: ../plug-ins/print/gimp_main_window.c:872
-msgid "Gimp-Print Version "
-msgstr "Tisk GIMP verze "
-
-#: ../plug-ins/print/gimp_main_window.c:872
-msgid ""
-"\n"
-"\n"
-"Copyright (C) 1997-2001 Michael Sweet, Robert Krawitz,\n"
-"and the rest of the Gimp-Print Development Team.\n"
-"\n"
-"Please visit our web site at http://gimp-print.sourceforge.net.\n"
-"\n"
-"This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
-msgstr ""
-"\n"
-"\n"
-"Copyright © 1997-2001 Michael Sweet, Robert Krawitz,\n"
-"a zbytek vývojového týmu programu Tisk GIMP.\n"
-"\n"
-"Tento program je volně šiřitelný software; můžete jej šířit anebo upravovat\n"
-"za podmínek licence GNU General Public License, jak je publikována nadací\n"
-"Free Software Foundation; buď ve verzi 2 licence, nebo (dle vaší volby)\n"
-"jakékoli pozdější verzi.\n"
-"\n"
-"Tento program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLI\n"
-"ZÁRUKY; včetně implikovaných záruk OBCHODOVATELNOSTI nebo VHODNOSTI PRO "
-"URČITÉ POUŽITÍ. Více informací lze nalézt v licenci GNU General Public "
-"License.\n"
-"\n"
-"Kopie výše uvedené licence by měla být přiložena k tomuto programu; pokud "
-"není, napište nadaci na adresu Free Software\n"
-"Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
-
-#: ../plug-ins/print/gimp_main_window.c:920
-msgid "Printer Settings"
-msgstr "Nastavení tiskárny"
-
-#: ../plug-ins/print/gimp_main_window.c:933
-msgid ""
-"Select the name of the printer (not the type, or model, of printer) that you "
-"wish to print to"
-msgstr ""
-"Vyberte název tiskárny (ne typ, nebo model tiskárny), na kterou chcete "
-"tisknout"
-
-#: ../plug-ins/print/gimp_main_window.c:943
-msgid "Printer model:"
-msgstr "Model tiskárny:"
-
-#.
-#. * Setup printer button
-#.
-#: ../plug-ins/print/gimp_main_window.c:954
-msgid "Setup Printer..."
-msgstr "Nastavit tiskárnu..."
-
-#: ../plug-ins/print/gimp_main_window.c:956
-msgid ""
-"Choose the printer model, PPD file, and command that is used to print to "
-"this printer"
-msgstr ""
-"Vyberte model tiskárny, soubor PPD, a příkaz, který je třeba použít pro tisk "
-"na tuto tiskárnu"
-
-#.
-#. * New printer button
-#.
-#: ../plug-ins/print/gimp_main_window.c:971
-msgid "New Printer..."
-msgstr "Nová tiskárna..."
-
-#: ../plug-ins/print/gimp_main_window.c:973
-msgid ""
-"Define a new logical printer. This can be used to name a collection of "
-"settings that you wish to remember for future use."
-msgstr ""
-"Definice nové logické tiskárny. To lze použít k pojmenování určité množiny "
-"nastavení, kterou si můžete přát zapamatovat pro pozdější použití."
-
-#: ../plug-ins/print/gimp_main_window.c:994
-msgid "Size of paper that you wish to print to"
-msgstr "Velikost papíru, na který chcete tisknout"
-
-#: ../plug-ins/print/gimp_main_window.c:997
-msgid "Media size:"
-msgstr "Velikost média:"
-
-#: ../plug-ins/print/gimp_main_window.c:1006
-msgid "Dimensions:"
-msgstr "Rozměry:"
-
-#: ../plug-ins/print/gimp_main_window.c:1020
-msgid "Width of the paper that you wish to print to"
-msgstr "Šířka papíru, na který chcete tisknout"
-
-#: ../plug-ins/print/gimp_main_window.c:1037
-msgid "Height of the paper that you wish to print to"
-msgstr "Výška papíru, na který chcete tisknout"
-
-#: ../plug-ins/print/gimp_main_window.c:1053
-msgid "Type of media you're printing to"
-msgstr "Typ média, na který tisknete"
-
-#: ../plug-ins/print/gimp_main_window.c:1056
-msgid "Media type:"
-msgstr "Typ média:"
-
-#: ../plug-ins/print/gimp_main_window.c:1069
-msgid "Source (input slot) of media you're printing to"
-msgstr "Zdroj (podavač) médií, na které tisknete"
-
-#: ../plug-ins/print/gimp_main_window.c:1072
-msgid "Media source:"
-msgstr "Zdroj média:"
-
-#: ../plug-ins/print/gimp_main_window.c:1085
-msgid "Type of ink in the printer"
-msgstr "Typ inkoustu v tiskárně"
-
-#: ../plug-ins/print/gimp_main_window.c:1088
-msgid "Ink type:"
-msgstr "Typ inkoustu:"
-
-#: ../plug-ins/print/gimp_main_window.c:1101
-msgid "Resolution and quality of the print"
-msgstr "Rozlišení a kvalita tisku"
-
-#: ../plug-ins/print/gimp_main_window.c:1138
-msgid "Scaling:"
-msgstr "Škálování:"
-
-#: ../plug-ins/print/gimp_main_window.c:1144
-msgid "Set the scale (size) of the image"
-msgstr "Nastavení škálování (velikosti) obrázku"
-
-#: ../plug-ins/print/gimp_main_window.c:1169
-msgid "Scale by:"
-msgstr "Zvětšit o:"
-
-#: ../plug-ins/print/gimp_main_window.c:1174
-msgid ""
-"Select whether scaling is measured as percent of available page size or "
-"number of output dots per inch"
-msgstr ""
-"Výběr, zdali je škálování měřeno v procentech dostupné velikosti stránky "
-"nebo v počtu výstupních bodů na palec"
-
-#: ../plug-ins/print/gimp_main_window.c:1179
-msgid "Percent"
-msgstr "Procenta"
-
-#: ../plug-ins/print/gimp_main_window.c:1186
-msgid "Scale the print to the size of the page"
-msgstr "Škálovat výtisk podle velikosti stránky"
-
-#: ../plug-ins/print/gimp_main_window.c:1192
-msgid "PPI"
-msgstr "PPI"
-
-#: ../plug-ins/print/gimp_main_window.c:1198
-msgid "Scale the print to the number of dots per inch"
-msgstr "Škálovat výtisk podle počtu bodů na palec"
-
-#: ../plug-ins/print/gimp_main_window.c:1220
-msgid "Set the width of the print"
-msgstr "Nastavení šířky výtisku"
-
-#: ../plug-ins/print/gimp_main_window.c:1233
-msgid "Set the height of the print"
-msgstr "Nastavení výšky výtisku"
-
-#: ../plug-ins/print/gimp_main_window.c:1254
-msgid "Units:"
-msgstr "Jednotky:"
-
-#: ../plug-ins/print/gimp_main_window.c:1259
-msgid "Select the base unit of measurement for printing"
-msgstr "Výběr základních měrných jednotek pro výtisk"
-
-#: ../plug-ins/print/gimp_main_window.c:1262
-msgid "Inch"
-msgstr "Palec"
-
-#: ../plug-ins/print/gimp_main_window.c:1269
-msgid "Set the base unit of measurement to inches"
-msgstr "Nastavení základní měrné jednotky na palce"
-
-#: ../plug-ins/print/gimp_main_window.c:1275
-msgid "cm"
-msgstr "cm"
-
-#: ../plug-ins/print/gimp_main_window.c:1281
-msgid "Set the base unit of measurement to centimetres"
-msgstr "Nastavení základní měrné jednotky na centimetry"
-
-#.
-#. * The "image size" button
-#.
-#: ../plug-ins/print/gimp_main_window.c:1291
-msgid ""
-"Use Original\n"
-"Image Size"
-msgstr ""
-"Použít původní\n"
-"velikost obrázku"
-
-#: ../plug-ins/print/gimp_main_window.c:1297
-msgid "Set the print size to the size of the image"
-msgstr "Nastaví velikost výtisku na velikost obrázku"
-
-#: ../plug-ins/print/gimp_main_window.c:1320
-msgid "Image / Output Settings"
-msgstr "Nastavení obrázku / výstupu"
-
-#: ../plug-ins/print/gimp_main_window.c:1334
-msgid "Image type:"
-msgstr "Typ obrázku:"
-
-#: ../plug-ins/print/gimp_main_window.c:1342
-msgid "Optimize the output for the type of image being printed"
-msgstr "Optimalizace výstupu pro typ tištěného obrázku"
-
-#: ../plug-ins/print/gimp_main_window.c:1346
-msgid "Line art"
-msgstr "Čárová grafika"
-
-#: ../plug-ins/print/gimp_main_window.c:1353
-msgid "Fastest and brightest color for text and line art"
-msgstr "Nejrychlejší a nejjasnější barvy pro text a čárovou grafiku"
-
-#: ../plug-ins/print/gimp_main_window.c:1360
-msgid "Solid colors"
-msgstr "Barevné plochy"
-
-#: ../plug-ins/print/gimp_main_window.c:1367
-msgid "Best for images dominated by regions of solid color"
-msgstr "Nejlepší pro obrázky s převládajícími oblastmi barevných ploch"
-
-#: ../plug-ins/print/gimp_main_window.c:1375
-msgid "Photograph"
-msgstr "Fotografie"
-
-#: ../plug-ins/print/gimp_main_window.c:1383
-msgid ""
-"Slowest, but most accurate and smoothest color for continuous tone images "
-"and photographs"
-msgstr ""
-"Nejpomalejší, ale nejpřesnější a nejhladší barvy pro obrázky s plynulými "
-"přechody barevných tónů a fotografie"
-
-#: ../plug-ins/print/gimp_main_window.c:1406
-msgid "Output type:"
-msgstr "Typ výstupu:"
-
-#: ../plug-ins/print/gimp_main_window.c:1413
-msgid "Select the desired output type"
-msgstr "Vyberte požadovaný typ výstupu"
-
-#: ../plug-ins/print/gimp_main_window.c:1422
-msgid "Color output"
-msgstr "Barevný výstup"
-
-#: ../plug-ins/print/gimp_main_window.c:1427
-msgid "Grayscale"
-msgstr "Odstíny šedi"
-
-#: ../plug-ins/print/gimp_main_window.c:1434
-msgid "Print in shades of gray using black ink"
-msgstr "Tisk v odstínech šedi pomocí černého inkoustu"
-
-#: ../plug-ins/print/gimp_main_window.c:1441
-msgid "Black and white"
-msgstr "Černá a bílá"
-
-#: ../plug-ins/print/gimp_main_window.c:1448
-msgid "Print in black and white (no color, and no shades of gray)"
-msgstr "Černobílý tisk (bez barev, a bez odstínů šedi)"
-
-#.
-#. *  Color adjust button
-#.
-#: ../plug-ins/print/gimp_main_window.c:1459
-msgid "Adjust Output..."
-msgstr "Upravit výstup..."
-
-#: ../plug-ins/print/gimp_main_window.c:1466
-msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
-msgstr "Úprava barevného vyvážení, jasu, kontrastu, sytosti a algoritmu rozptylu"
-
-#: ../plug-ins/print/gimp_main_window.c:1500
-msgid "Print to File"
-msgstr "Tisknout do souboru"
-
-#: ../plug-ins/print/print.c:168
-msgid "Print the image using the gimp-print drivers"
-msgstr "Vytisknout obrázek pomocí ovladačů gimp-print"
-
-#: ../plug-ins/print/print.c:701 ../plug-ins/print/print.c:702
-#: ../plug-ins/print/print.c:792 ../plug-ins/print/print.c:1131
-msgid "File"
-msgstr "Soubor"
-
 #: ../plug-ins/rcm/rcm.c:96
 msgid "Replace a range of colors with another"
 msgstr "Nahradit rozsah barev jiným rozsahem"
@@ -12040,6 +11356,11 @@ msgstr "Kontext"
 #: ../plug-ins/rcm/rcm_dialog.c:467
 msgid "Hue:"
 msgstr "Odstín:"
+
+#. Gray: Circle: Spinbutton 2
+#: ../plug-ins/rcm/rcm_dialog.c:494 ../plug-ins/rcm/rcm_dialog.c:556
+msgid "Saturation:"
+msgstr "Sytost:"
 
 #. * Gray: Operation-Mode *
 #: ../plug-ins/rcm/rcm_dialog.c:514
