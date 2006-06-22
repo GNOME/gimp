@@ -100,7 +100,7 @@ query (void)
                           "without visually changing the image.",
                           "Mukund Sivaraman <muks@mukund.org>",
                           "Mukund Sivaraman <muks@mukund.org>",
-                          "14th June 2006",
+                          "June 2006",
                           N_("R_earrange Colormap..."),
                           "INDEXED*",
                           GIMP_PLUGIN,
@@ -410,6 +410,8 @@ remap (gint32  image_ID,
 }
 
 
+/* dialog */
+
 #define RESPONSE_RESET 1
 
 enum
@@ -423,8 +425,9 @@ enum
   NUM_COLS
 };
 
-static  gboolean  remap_run = FALSE;
-static  gint      reverse_order[256];
+static  GtkUIManager *remap_ui  = NULL;
+static  gboolean      remap_run = FALSE;
+static  gint          reverse_order[256];
 
 
 static void
@@ -471,8 +474,8 @@ remap_reverse_callback (GtkAction    *action,
 }
 
 static GtkUIManager *
-remap_ui_manager_new (GtkWidget       *window,
-                      GtkTreeSortable *store)
+remap_ui_manager_new (GtkWidget    *window,
+                      GtkListStore *store)
 {
   static const GtkActionEntry actions[] =
   {
@@ -493,7 +496,7 @@ remap_ui_manager_new (GtkWidget       *window,
       G_CALLBACK (remap_reverse_callback)
     },
     {
-      "reset", NULL, N_("Reset Order"), NULL, NULL,
+      "reset", GIMP_STOCK_RESET, N_("Reset Order"), NULL, NULL,
       G_CALLBACK (remap_reset_callback)
     },
   };
@@ -562,22 +565,26 @@ remap_hints_new (void)
   return hbox;
 }
 
+static void
+remap_popup_menu (GtkWidget      *widget,
+                  GdkEventButton *event)
+{
+  GtkWidget *menu = gtk_ui_manager_get_widget (remap_ui, "/remap-popup");
+
+  gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
+
+  gtk_menu_popup (GTK_MENU (menu),
+                  NULL, NULL, NULL, NULL,
+                  event ? event->button : 0,
+                  event ? event->time   : gtk_get_current_event_time ());
+}
+
 static gboolean
 remap_button_press (GtkWidget      *widget,
-                    GdkEventButton *event,
-                    GtkUIManager   *ui)
+                    GdkEventButton *event)
 {
-  gtk_widget_grab_focus (widget);
-
   if (event->button == 3 && event->type == GDK_BUTTON_PRESS)
-    {
-      GtkWidget *menu = gtk_ui_manager_get_widget (ui, "/remap-popup");
-
-      gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
-      gtk_menu_popup (GTK_MENU (menu),
-                      NULL, NULL, NULL, NULL,
-                      event->button, event->time);
-    }
+    remap_popup_menu (widget, event);
 
   return FALSE;
 }
@@ -590,7 +597,7 @@ remap_response (GtkWidget       *dialog,
   switch (response_id)
     {
     case RESPONSE_RESET:
-      remap_sort (store, COLOR_INDEX, GTK_SORT_ASCENDING);
+      remap_reset_callback (NULL, store);
       break;
 
     case GTK_RESPONSE_OK:
@@ -679,6 +686,8 @@ remap_dialog (gint32  image_ID,
 
   g_free (cmap);
 
+  remap_ui = remap_ui_manager_new (dialog, store);
+
   iconview = gtk_icon_view_new_with_model (GTK_TREE_MODEL (store));
   g_object_unref (store);
 
@@ -713,9 +722,13 @@ remap_dialog (gint32  image_ID,
                 "ypad",        0,
                 NULL);
 
+  g_signal_connect (iconview, "popup-menu",
+                    G_CALLBACK (remap_popup_menu),
+                    NULL);
+
   g_signal_connect (iconview, "button-press-event",
                     G_CALLBACK (remap_button_press),
-                    remap_ui_manager_new (dialog, GTK_TREE_SORTABLE (store)));
+                    NULL);
 
   hbox = remap_hints_new ();
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
