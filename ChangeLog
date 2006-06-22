@@ -1,3 +1,10 @@
+2006-06-22  Michael Natterer  <mitch@gimp.org>
+
+	Merge from HEAD:
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_image): don't
+	try to set "." as current_folder_uri.
+
 2006-06-22  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite-generic.c
