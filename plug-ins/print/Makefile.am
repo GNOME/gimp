@@ -15,8 +15,8 @@ endif
 AM_LDFLAGS = $(mwindows)
 
 INCLUDES = \
-	-I$(top_srcdir)			\
-	$(PRINT_CFLAGS)			\
+	-I$(top_srcdir)		\
+	$(PRINT_CFLAGS)		\
 	-I$(includedir)
 
 LDADD = \

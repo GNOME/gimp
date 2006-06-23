@@ -27,7 +27,8 @@
 
 
 #define PROC_NAME        "file-print-gtk"
-#define PLUG_IN_BINARY   "gtkprint"
+#define PLUG_IN_BINARY   "print"
+
 
 static void      query          (void);
 static void      run            (const gchar       *name,
@@ -81,13 +82,13 @@ query (void)
   static const GimpParamDef print_args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to print" }
+    { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to print"            }
   };
 
   gimp_install_procedure (PROC_NAME,
-                          N_("Print the image using the Gtk Print system"),
-                          "FIXME: write help",
+                          N_("Print the image"),
+                          "Print the image using the GTK+ Print API.",
                           "Bill Skaggs  <weskaggs@primate.ucdavis.edu>",
                           "Bill Skaggs  <weskaggs@primate.ucdavis.edu>",
                           "2006",

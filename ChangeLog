@@ -1,7 +1,11 @@
 2006-06-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print.c: the name of the binary is "print".
+
+2006-06-23  Sven Neumann  <sven@gimp.org>
+
 	* tools/gimp-remote.c: applied patch from Eric Lamarque that adds
-	a new function to checks for a valid URI. Fixes bug #332835.
+	a new function to check for a valid URI. Fixes bug #332835.
 
 2006-06-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
