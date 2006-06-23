@@ -331,6 +331,40 @@ init_i18n (void)
   textdomain (GETTEXT_PACKAGE);
 }
 
+/* Check name for a valid URI scheme as described in RFC 2396.
+ * URI scheme:suffix with scheme = [alpha][alphanum|digit|+|-|.]*
+ * Note that a null suffix will be considered as an invalid URI.
+ * return 1 if valid scheme found, else 0
+ */
+static gboolean
+is_valid_uri (const gchar *name)
+{
+  const gchar *c = name;
+
+  g_return_val_if_fail (name != NULL, FALSE);
+
+  /* first character must be alpha */
+  if (! g_ascii_isalpha (*c))
+    return FALSE;
+
+  c++;
+  while (*c != '\0' && *c != ':')
+    {
+      if (! g_ascii_isalnum (*c) && *c != '+' && *c != '-' && *c != '.')
+	return FALSE;
+      c++;
+    }
+
+  if (*c == ':')
+    {
+      c++;
+      if (*c != '\0')
+	return TRUE;
+    }
+
+  return FALSE;
+}
+
 gint
 main (gint    argc,
       gchar **argv)
@@ -379,10 +413,7 @@ main (gint    argc,
           gchar       *uri;
 
           /* If not already a valid URI */
-          if (g_ascii_strncasecmp ("file:",  name, 5) &&
-              g_ascii_strncasecmp ("ftp:",   name, 4) &&
-              g_ascii_strncasecmp ("http:",  name, 5) &&
-              g_ascii_strncasecmp ("https:", name, 6))
+          if (! is_valid_uri (name))
             {
               if (g_path_is_absolute (name))
                 {

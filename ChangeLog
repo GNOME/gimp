@@ -1,3 +1,8 @@
+2006-06-23  Sven Neumann  <sven@gimp.org>
+
+	* tools/gimp-remote.c: applied patch from Eric Lamarque that adds
+	a new function to checks for a valid URI. Fixes bug #332835.
+
 2006-06-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* configure.in: adjust requirements for building gtk-print
