@@ -558,7 +558,8 @@ script_fu_interface (SFScript *script)
 
   sf_interface->progress_label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (sf_interface->progress_label), 0.0, 0.5);
-  gtk_label_set_ellipsize (GTK_LABEL (sf_interface->progress_label), TRUE);
+  gtk_label_set_ellipsize (GTK_LABEL (sf_interface->progress_label),
+                           PANGO_ELLIPSIZE_MIDDLE);
   gimp_label_set_attributes (GTK_LABEL (sf_interface->progress_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
