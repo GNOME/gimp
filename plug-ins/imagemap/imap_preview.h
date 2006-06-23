@@ -29,7 +29,6 @@
 typedef struct {
    GimpDrawable *drawable;
    GtkWidget	*window;
-   GtkWidget 	*frame;
    GtkWidget	*preview;
    GtkWidget	*hruler;
    GtkWidget	*vruler;

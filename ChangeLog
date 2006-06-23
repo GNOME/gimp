@@ -1,5 +1,14 @@
 2006-06-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/imagemap/imap_preview.[ch]: moved rulers out of the
+	scrolled window and update them when the scroll adjustments
+	change. Fixes bug #341149.
+
+	* plug-ins/imagemap/imap_about.c
+	* plug-ins/imagemap/imap_menu.c: unrelated cleanups.
+
+2006-06-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print.c: the name of the binary is "print".
 
 2006-06-23  Sven Neumann  <sven@gimp.org>

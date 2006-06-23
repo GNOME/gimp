@@ -42,7 +42,7 @@ do_about_dialog(void)
                                   "Image Map Plug-In");
        gtk_about_dialog_set_version (GTK_ABOUT_DIALOG (dialog), "2.3");
        gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG (dialog),
-                                       _("Copyright(c) 1999-2005 by Maurits Rijk"));
+                                       _("Copyright © 1999-2005 by Maurits Rijk"));
        gtk_about_dialog_set_authors (GTK_ABOUT_DIALOG (dialog), authors);
        gtk_about_dialog_set_license (GTK_ABOUT_DIALOG (dialog),
                                      _("Released under the GNU General Public License"));

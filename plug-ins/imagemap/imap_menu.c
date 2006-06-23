@@ -222,7 +222,7 @@ static GtkActionEntry entries[] = {
 
   { "HelpMenu", NULL, "_Help" },
   { "Contents", GTK_STOCK_HELP, "_Contents", NULL, NULL, imap_help},
-  { "About", GTK_STOCK_ABOUT, "_About Image Map...", NULL, NULL,
+  { "About", GTK_STOCK_ABOUT, NULL, NULL, NULL,
     do_about_dialog},
 
   { "ZoomMenu", NULL, "_Zoom" },
