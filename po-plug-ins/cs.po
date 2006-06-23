@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-22 10:57+0200\n"
-"PO-Revision-Date: 2006-06-22 11:01+0200\n"
+"POT-Creation-Date: 2006-06-23 19:00+0200\n"
+"PO-Revision-Date: 2006-06-23 19:00+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1960,45 +1960,45 @@ msgstr "Náhled GIMP animace založené na vrstvách"
 msgid "_Playback..."
 msgstr "_Přehrávání..."
 
-#: ../plug-ins/common/animationplay.c:429
+#: ../plug-ins/common/animationplay.c:434
 msgid "_Step"
 msgstr "_Krok"
 
-#: ../plug-ins/common/animationplay.c:429
+#: ../plug-ins/common/animationplay.c:434
 msgid "Step to next frame"
 msgstr "Přejít na další políčko"
 
-#: ../plug-ins/common/animationplay.c:433
+#: ../plug-ins/common/animationplay.c:438
 msgid "Rewind the animation"
 msgstr "Přetočit animaci"
 
-#: ../plug-ins/common/animationplay.c:454
-#: ../plug-ins/common/animationplay.c:1362
+#: ../plug-ins/common/animationplay.c:459
+#: ../plug-ins/common/animationplay.c:1370
 msgid "Start playback"
 msgstr "Spustit přehrávání"
 
-#: ../plug-ins/common/animationplay.c:458
+#: ../plug-ins/common/animationplay.c:463
 msgid "Detach"
 msgstr "Odpojit"
 
-#: ../plug-ins/common/animationplay.c:459
+#: ../plug-ins/common/animationplay.c:464
 msgid "Detach the animation from the dialog window"
 msgstr "Oddělit animaci od dialogového okna"
 
-#: ../plug-ins/common/animationplay.c:543
+#: ../plug-ins/common/animationplay.c:548
 msgid "Animation Playback:"
 msgstr "Přehrání animace:"
 
-#: ../plug-ins/common/animationplay.c:726
+#: ../plug-ins/common/animationplay.c:734
 msgid "Tried to display an invalid layer."
 msgstr "Pokus o zobrazení neplatné vrstvy."
 
-#: ../plug-ins/common/animationplay.c:1246
+#: ../plug-ins/common/animationplay.c:1254
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Políčko %d z %d"
 
-#: ../plug-ins/common/animationplay.c:1362
+#: ../plug-ins/common/animationplay.c:1370
 msgid "Stop playback"
 msgstr "Zastavit přehrávání"
 
@@ -2522,36 +2522,36 @@ msgstr "Funkci remap bylo předáno neplatné remap pole"
 msgid "Rearranging the colormap"
 msgstr "Přerovnává se barevná mapa"
 
-#: ../plug-ins/common/colormap-remap.c:480
+#: ../plug-ins/common/colormap-remap.c:483
 msgid "Sort on Hue"
 msgstr "Třídit podle odstínu"
 
-#: ../plug-ins/common/colormap-remap.c:484
+#: ../plug-ins/common/colormap-remap.c:487
 msgid "Sort on Saturation"
 msgstr "Třidit podle sytosti"
 
-#: ../plug-ins/common/colormap-remap.c:488
+#: ../plug-ins/common/colormap-remap.c:491
 msgid "Sort on Value"
 msgstr "Třídit podle hodnoty"
 
-#: ../plug-ins/common/colormap-remap.c:492
+#: ../plug-ins/common/colormap-remap.c:495
 msgid "Reverse Order"
 msgstr "Obrátit pořadí"
 
-#: ../plug-ins/common/colormap-remap.c:496
+#: ../plug-ins/common/colormap-remap.c:499
 msgid "Reset Order"
 msgstr "Obnovit pořadí"
 
-#: ../plug-ins/common/colormap-remap.c:547
+#: ../plug-ins/common/colormap-remap.c:550
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
 msgstr ""
-"Barevnou mapu můžete přerovnat přetahováním barev myší. Zobrazovaná "
-"čísla jsou původní indexy. Kliknutím pravým tlačítkem myši se otevře nabídka "
-"s volbami třídění."
+"Barevnou mapu můžete přerovnat přetahováním barev myší. Zobrazovaná čísla "
+"jsou původní indexy. Kliknutím pravým tlačítkem myši se otevře nabídka s "
+"volbami třídění."
 
-#: ../plug-ins/common/colormap-remap.c:623
+#: ../plug-ins/common/colormap-remap.c:631
 msgid "Rearrange Colormap"
 msgstr "Přerovnat barevnou mapu."
 
@@ -3749,7 +3749,7 @@ msgid "Composing images"
 msgstr "Spojuji obrázky"
 
 #: ../plug-ins/common/film.c:436 ../plug-ins/common/guillotine.c:185
-#: ../plug-ins/helpbrowser/dialog.c:852
+#: ../plug-ins/helpbrowser/dialog.c:863
 msgid "Untitled"
 msgstr "Bez názvu"
 
@@ -10106,35 +10106,35 @@ msgstr ""
 "Chyba při zpracovávání '%s':\n"
 "%s"
 
-#: ../plug-ins/helpbrowser/dialog.c:190
+#: ../plug-ins/helpbrowser/dialog.c:192
 msgid "GIMP Help Browser"
 msgstr "Prohlížeč nápovědy GIMPu"
 
-#: ../plug-ins/helpbrowser/dialog.c:254
+#: ../plug-ins/helpbrowser/dialog.c:256
 msgid "Drag and drop this icon to a web browser"
 msgstr "Přetáhněte tuto ikonu do prohlížeče WWW"
 
-#: ../plug-ins/helpbrowser/dialog.c:467
+#: ../plug-ins/helpbrowser/dialog.c:472
 msgid "Go back one page"
 msgstr "Jít o jednu stranu zpět"
 
-#: ../plug-ins/helpbrowser/dialog.c:472
+#: ../plug-ins/helpbrowser/dialog.c:477
 msgid "Go forward one page"
 msgstr "Jít o jednu stranu vpřed"
 
-#: ../plug-ins/helpbrowser/dialog.c:477
+#: ../plug-ins/helpbrowser/dialog.c:482
 msgid "Go to the index page"
 msgstr "Jít na stranu rejstříku"
 
-#: ../plug-ins/helpbrowser/dialog.c:512
+#: ../plug-ins/helpbrowser/dialog.c:517
 msgid "Visit the GIMP documentation website"
 msgstr "Navštívit WWW server dokumentace GIMPu"
 
-#: ../plug-ins/helpbrowser/dialog.c:588
+#: ../plug-ins/helpbrowser/dialog.c:593
 msgid "Document not found"
 msgstr "Dokument nenalezen"
 
-#: ../plug-ins/helpbrowser/dialog.c:590
+#: ../plug-ins/helpbrowser/dialog.c:595
 msgid "The requested URL could not be loaded:"
 msgstr "Požadované URL nelze načíst:"
 
@@ -10296,7 +10296,7 @@ msgid "Open IFS Fractal file"
 msgstr "Otevřít soubor IFS Fraktal"
 
 #: ../plug-ins/imagemap/imap_about.c:45
-msgid "Copyright(c) 1999-2005 by Maurits Rijk"
+msgid "Copyright © 1999-2005 by Maurits Rijk"
 msgstr "Copyright © 1999-2005 Maurits Rijk"
 
 #: ../plug-ins/imagemap/imap_about.c:48
