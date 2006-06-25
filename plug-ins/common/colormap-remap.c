@@ -189,7 +189,7 @@ run (const gchar      *name,
                   if (status == GIMP_PDB_SUCCESS)
                     {
                       for (i = 0; i < n_cols; i++)
-                        map[i] = (guchar) param[4].data.d_int8array[i];
+                        map[i] = param[4].data.d_int8array[i];
                     }
                 }
               break;

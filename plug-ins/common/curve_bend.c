@@ -296,7 +296,7 @@ static void            p_delta_gint32                 (gint32 *val, gint32 val_f
 static void            p_copy_points                  (BenderDialog *cd, int outline, int xy,
                                                        int argc, gdouble *floatarray);
 static void            p_copy_yval                    (BenderDialog *cd, int outline,
-                                                       int argc, gint8 *int8array);
+                                                       int argc, guint8 *int8array);
 static int             p_save_pointfile               (BenderDialog *cd, const gchar *filename);
 
 
@@ -1093,7 +1093,7 @@ void
 p_copy_yval (BenderDialog *cd,
              int           outline,
              int           argc,
-             gint8        *int8array)
+             guint8       *int8array)
 {
    int j;
    guchar fill;

@@ -144,11 +144,11 @@ plug_in_params_to_args (GParamSpec **pspecs,
           count = g_value_get_int (&args->values[i - 1]);
           if (full_copy)
             gimp_value_set_int8array (&value,
-                                      (guint8 *) params[i].data.d_int8array,
+                                      params[i].data.d_int8array,
                                       count);
           else
             gimp_value_set_static_int8array (&value,
-                                             (guint8 *) params[i].data.d_int8array,
+                                             params[i].data.d_int8array,
                                              count);
           break;
 
@@ -310,9 +310,9 @@ plug_in_args_to_params (GValueArray *args,
 
         case GIMP_PDB_INT8ARRAY:
           if (full_copy)
-            params[i].data.d_int8array = (gint8 *) gimp_value_dup_int8array (value);
+            params[i].data.d_int8array = gimp_value_dup_int8array (value);
           else
-            params[i].data.d_int8array = (gint8 *) gimp_value_get_int8array (value);
+            params[i].data.d_int8array = (guint8 *) gimp_value_get_int8array (value);
           break;
 
         case GIMP_PDB_FLOATARRAY:

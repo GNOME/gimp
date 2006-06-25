@@ -74,7 +74,7 @@ pygimp_param_print(int nparams, GimpParam *params)
 		    params[i].data.d_int16);
 	    break;
 	case GIMP_PDB_INT8:
-	    fprintf(stderr, "%i. int %i\n", i,
+	    fprintf(stderr, "%i. int %u\n", i,
 		    params[i].data.d_int8);
 	    break;
 	case GIMP_PDB_FLOAT:
@@ -308,7 +308,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
     PyObject *tuple, *item, *r, *g, *b, *x, *y, *w, *h;
     GimpParam *ret;
     int i, j, len;
-    gint32 *i32a; gint16 *i16a; gint8 *i8a; gdouble *fa; gchar **sa;
+    gint32 *i32a; gint16 *i16a; guint8 *i8a; gdouble *fa; gchar **sa;
 
     if (nparams == 0)
 	tuple = PyTuple_New(0);
@@ -349,17 +349,17 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	switch (ptype[i-1].type) {
 	case GIMP_PDB_INT32:
 	    check((x = PyNumber_Int(item)) == NULL);
-	    ret[i].data.d_int32 = PyInt_AsLong(x);
+	    ret[i].data.d_int32 = (gint32)PyInt_AsLong(x);
 	    Py_DECREF(x);
 	    break;
 	case GIMP_PDB_INT16:
 	    check((x = PyNumber_Int(item)) == NULL);
-	    ret[i].data.d_int16 = PyInt_AsLong(x);
+	    ret[i].data.d_int16 = (gint16)PyInt_AsLong(x);
 	    Py_DECREF(x);
 	    break;
 	case GIMP_PDB_INT8:
 	    check((x = PyNumber_Int(item)) == NULL);
-	    ret[i].data.d_int8 = PyInt_AsLong(x);
+	    ret[i].data.d_int8 = (guint8)PyInt_AsLong(x);
 	    Py_DECREF(x);
 	    break;
 	case GIMP_PDB_FLOAT:

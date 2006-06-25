@@ -1303,7 +1303,7 @@ _gp_params_read (GIOChannel  *channel,
 
         case GIMP_PDB_INT8:
           if (! _gimp_wire_read_int8 (channel,
-                                      (guint8 *) &(*params)[i].data.d_int8, 1,
+                                      &(*params)[i].data.d_int8, 1,
                                       user_data))
             goto cleanup;
           break;
@@ -1353,10 +1353,10 @@ _gp_params_read (GIOChannel  *channel,
 
         case GIMP_PDB_INT8ARRAY:
           (*params)[i-1].data.d_int32 = MAX (0, (*params)[i-1].data.d_int32);
-          (*params)[i].data.d_int8array = g_new (gint8,
+          (*params)[i].data.d_int8array = g_new (guint8,
                                                  (*params)[i-1].data.d_int32);
           if (! _gimp_wire_read_int8 (channel,
-                                      (guint8 *) (*params)[i].data.d_int8array,
+                                      (*params)[i].data.d_int8array,
                                       (*params)[i-1].data.d_int32,
                                       user_data))
             {

@@ -1,3 +1,16 @@
+2006-06-25  Manish Singh  <yosh@gimp.org>
+
+	* app/plug-in/plug-in-params.c
+	* libgimp/gimp.[ch]
+	* libgimpbase/gimpprotocol.[ch]
+	* plug-ins/common/colormap-remap.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/grid.c
+	* plug-ins/pygimp/pygimp-pdb.c
+	* plug-ins/script-fu/siod-wrapper.c
+	* tools/pdbgen/pdb.pl: turn d_int8 and d_int8array into guint8.
+	Fixes bug #344431.
+
 2006-06-25  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/tga.c: untabified.

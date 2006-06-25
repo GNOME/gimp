@@ -189,7 +189,7 @@ run (const gchar      *name,
           grid_cfg.hcolor  = param[6].data.d_color;
 
           gimp_rgb_set_alpha (&(grid_cfg.hcolor),
-                              ((double) (guint) param[7].data.d_int8) / 255.0);
+                              ((double) param[7].data.d_int8) / 255.0);
 
 
           grid_cfg.vwidth  = MAX (0, param[8].data.d_int32);
@@ -198,7 +198,7 @@ run (const gchar      *name,
           grid_cfg.vcolor  = param[11].data.d_color;
 
           gimp_rgb_set_alpha (&(grid_cfg.vcolor),
-                              ((double) (guint)  param[12].data.d_int8) / 255.0);
+                              ((double) param[12].data.d_int8) / 255.0);
 
 
 

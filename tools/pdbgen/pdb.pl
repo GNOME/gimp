@@ -34,8 +34,8 @@ package Gimp::CodeGen::pdb;
 		type           => 'guint8 ',
 		const_type     => 'guint8 ',
 		init_value     => '0',
-		get_value_func => '$var = g_value_get_int ($value)',
-		set_value_func => 'g_value_set_int ($value, $var)' },
+		get_value_func => '$var = g_value_get_uint ($value)',
+		set_value_func => 'g_value_set_uint ($value, $var)' },
 
     float  => { name           => 'FLOAT',
 		type           => 'gdouble ',

@@ -613,7 +613,7 @@ marshall_proc_db_call (LISP a)
           if (!TYPEP (car (a), tc_flonum))
             success = FALSE;
           else
-            args[i].data.d_int8 = (gint8) get_c_long (car (a));
+            args[i].data.d_int8 = (guint8) get_c_long (car (a));
           break;
 
         case GIMP_PDB_FLOAT:
@@ -692,7 +692,7 @@ marshall_proc_db_call (LISP a)
                 }
 
               args[i].data.d_int8array =
-                (gint8 *) list->storage_as.string.data;
+                (guint8 *) list->storage_as.string.data;
             }
           break;
 

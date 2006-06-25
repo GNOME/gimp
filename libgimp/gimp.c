@@ -798,7 +798,7 @@ gimp_run_procedure (const gchar *name,
           params[i].data.d_int16 = (gint16) va_arg (args, gint);
           break;
         case GIMP_PDB_INT8:
-          params[i].data.d_int8 = (gint8) va_arg (args, gint);
+          params[i].data.d_int8 = (guint8) va_arg (args, gint);
           break;
         case GIMP_PDB_FLOAT:
           params[i].data.d_float = (gdouble) va_arg (args, gdouble);
@@ -813,7 +813,7 @@ gimp_run_procedure (const gchar *name,
           params[i].data.d_int16array = va_arg (args, gint16 *);
           break;
         case GIMP_PDB_INT8ARRAY:
-          params[i].data.d_int8array = va_arg (args, gint8 *);
+          params[i].data.d_int8array = va_arg (args, guint8 *);
           break;
         case GIMP_PDB_FLOATARRAY:
           params[i].data.d_floatarray = va_arg (args, gdouble *);

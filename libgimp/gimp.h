@@ -131,12 +131,12 @@ union _GimpParamData
 {
   gint32            d_int32;
   gint16            d_int16;
-  gint8             d_int8;
+  guint8            d_int8;
   gdouble           d_float;
   gchar            *d_string;
   gint32           *d_int32array;
   gint16           *d_int16array;
-  gint8            *d_int8array;
+  guint8           *d_int8array;
   gdouble          *d_floatarray;
   gchar           **d_stringarray;
   GimpRGB           d_color;
