@@ -101,7 +101,7 @@ typedef struct _TgaSaveVals
 static TgaSaveVals tsvals =
 {
   1,    /* rle = ON */
-  1, 	/* origin = bottom left */
+  1,    /* origin = bottom left */
 };
 
 
@@ -155,12 +155,12 @@ typedef struct tga_info_struct
 /* Not all the structures described in the standard are transcribed here
    only those which seem applicable to Gimp */
 
-  gchar authorName[41];
-  gchar comment[324];
-  guint month, day, year, hour, minute, second;
-  gchar jobName[41];
-  gchar softwareID[41];
-  guint pixelWidth, pixelHeight;  /* write dpi? */
+  gchar   authorName[41];
+  gchar   comment[324];
+  guint   month, day, year, hour, minute, second;
+  gchar   jobName[41];
+  gchar   softwareID[41];
+  guint   pixelWidth, pixelHeight;  /* write dpi? */
   gdouble gamma;
 } tga_info;
 
@@ -242,11 +242,11 @@ query (void)
   gimp_install_procedure (SAVE_PROC,
                           "saves files in the Targa file format",
                           "FIXME: write help for tga_save",
-			  "Raphael FRANCOIS, Gordon Matzigkeit",
+                          "Raphael FRANCOIS, Gordon Matzigkeit",
                           "Raphael FRANCOIS, Gordon Matzigkeit",
                           "1997",
                           N_("TarGA image"),
-			  "RGB*, GRAY*, INDEXED*",
+                          "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -311,75 +311,75 @@ run (const gchar      *name,
 
       /*  eventually export the image */
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  export = gimp_export_image (&image_ID, &drawable_ID, "TGA",
-				      (GIMP_EXPORT_CAN_HANDLE_RGB |
-				       GIMP_EXPORT_CAN_HANDLE_GRAY |
-				       GIMP_EXPORT_CAN_HANDLE_INDEXED |
-				       GIMP_EXPORT_CAN_HANDLE_ALPHA ));
-	  if (export == GIMP_EXPORT_CANCEL)
-	    {
-	      values[0].data.d_status = GIMP_PDB_CANCEL;
-	      return;
-	    }
-	  break;
-	default:
-	  break;
-	}
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          export = gimp_export_image (&image_ID, &drawable_ID, "TGA",
+                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                       GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                       GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                       GIMP_EXPORT_CAN_HANDLE_ALPHA ));
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
+            }
+          break;
+        default:
+          break;
+        }
 
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	  /*  Possibly retrieve data  */
-	  gimp_get_data (SAVE_PROC, &tsvals);
+        {
+        case GIMP_RUN_INTERACTIVE:
+          /*  Possibly retrieve data  */
+          gimp_get_data (SAVE_PROC, &tsvals);
 
-	  /*  First acquire information with a dialog  */
-	  if (! save_dialog ())
-	    status = GIMP_PDB_CANCEL;
-	  break;
+          /*  First acquire information with a dialog  */
+          if (! save_dialog ())
+            status = GIMP_PDB_CANCEL;
+          break;
 
-	case GIMP_RUN_NONINTERACTIVE:
-	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 7)
-	    {
-	      status = GIMP_PDB_CALLING_ERROR;
-	    }
-	  else
-	    {
-	      tsvals.rle = (param[5].data.d_int32) ? TRUE : FALSE;
-	    }
-	  break;
+        case GIMP_RUN_NONINTERACTIVE:
+          /*  Make sure all the arguments are there!  */
+          if (nparams != 7)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else
+            {
+              tsvals.rle = (param[5].data.d_int32) ? TRUE : FALSE;
+            }
+          break;
 
-	case GIMP_RUN_WITH_LAST_VALS:
-	  /*  Possibly retrieve data  */
-	  gimp_get_data (SAVE_PROC, &tsvals);
-	  break;
+        case GIMP_RUN_WITH_LAST_VALS:
+          /*  Possibly retrieve data  */
+          gimp_get_data (SAVE_PROC, &tsvals);
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
 
 #ifdef PROFILE
       times (&tbuf1);
 #endif
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
-	    {
-	      /*  Store psvals data  */
-	      gimp_set_data (SAVE_PROC, &tsvals, sizeof (tsvals));
-	    }
-	  else
-	    {
-	      status = GIMP_PDB_EXECUTION_ERROR;
-	    }
-	}
+        {
+          if (save_image (param[3].data.d_string, image_ID, drawable_ID))
+            {
+              /*  Store psvals data  */
+              gimp_set_data (SAVE_PROC, &tsvals, sizeof (tsvals));
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
     }
   else
     {
@@ -391,8 +391,8 @@ run (const gchar      *name,
 #ifdef PROFILE
   times (&tbuf2);
   printf ("TGA: %s profile: %ld user %ld system\n", name,
-	  (long) tbuf2.tms_utime - tbuf1.tms_utime,
-	  (long) tbuf2.tms_stime - tbuf2.tms_stime);
+          (long) tbuf2.tms_utime - tbuf1.tms_utime,
+          (long) tbuf2.tms_stime - tbuf2.tms_stime);
 #endif
 }
 
@@ -579,66 +579,66 @@ load_image (const gchar *filename)
 
 static void
 rle_write (FILE   *fp,
-	   guchar *buffer,
-	   guint   width,
-	   guint   bytes)
+           guchar *buffer,
+           guint   width,
+           guint   bytes)
 {
   gint    repeat = 0;
   gint    direct = 0;
   guchar *from   = buffer;
-  gint    x;
+  guint   x;
 
   for (x = 1; x < width; ++x)
     {
       if (memcmp (buffer, buffer + bytes, bytes))
-	{
-	  /* next pixel is different */
-	  if (repeat)
-	    {
-	      putc (128 + repeat, fp);
-	      fwrite (from, bytes, 1, fp);
-	      from = buffer+ bytes; /* point to first different pixel */
-	      repeat = 0;
-	      direct = 0;
-	    }
-	  else
-	    {
-	      direct += 1;
-	    }
-	}
+        {
+          /* next pixel is different */
+          if (repeat)
+            {
+              putc (128 + repeat, fp);
+              fwrite (from, bytes, 1, fp);
+              from = buffer+ bytes; /* point to first different pixel */
+              repeat = 0;
+              direct = 0;
+            }
+          else
+            {
+              direct += 1;
+            }
+        }
       else
-	{
-	  /* next pixel is the same */
-	  if (direct)
-	    {
-	      putc (direct - 1, fp);
-	      fwrite (from, bytes, direct, fp);
-	      from = buffer; /* point to first identical pixel */
-	      direct = 0;
-	      repeat = 1;
-	    }
-	  else
-	    {
-	      repeat += 1;
-	    }
-	}
+        {
+          /* next pixel is the same */
+          if (direct)
+            {
+              putc (direct - 1, fp);
+              fwrite (from, bytes, direct, fp);
+              from = buffer; /* point to first identical pixel */
+              direct = 0;
+              repeat = 1;
+            }
+          else
+            {
+              repeat += 1;
+            }
+        }
 
       if (repeat == 128)
-	{
-	  putc (255, fp);
-	  fwrite (from, bytes, 1, fp);
-	  from = buffer+ bytes;
-	  direct = 0;
-	  repeat = 0;
-	}
+        {
+          putc (255, fp);
+          fwrite (from, bytes, 1, fp);
+          from = buffer+ bytes;
+          direct = 0;
+          repeat = 0;
+        }
       else if (direct == 128)
-	{
-	  putc (127, fp);
-	  fwrite (from, bytes, direct, fp);
-	  from = buffer+ bytes;
-	  direct = 0;
-	  repeat = 0;
-	}
+        {
+          putc (127, fp);
+          fwrite (from, bytes, direct, fp);
+          from = buffer+ bytes;
+          direct = 0;
+          repeat = 0;
+        }
 
       buffer += bytes;
     }
@@ -657,8 +657,8 @@ rle_write (FILE   *fp,
 
 static gint
 rle_read (FILE     *fp,
-	  guchar   *buffer,
-	  tga_info *info)
+          guchar   *buffer,
+          tga_info *info)
 {
   static gint   repeat = 0;
   static gint   direct = 0;
@@ -669,42 +669,42 @@ rle_read (FILE     *fp,
   for (x = 0; x < info->width; x++)
     {
       if (repeat == 0 && direct == 0)
-	{
-	  head = getc (fp);
+        {
+          head = getc (fp);
 
-	  if (head == EOF)
-	    {
-	      return EOF;
-	    }
-	  else if (head >= 128)
-	    {
-	      repeat = head - 127;
+          if (head == EOF)
+            {
+              return EOF;
+            }
+          else if (head >= 128)
+            {
+              repeat = head - 127;
 
-	      if (fread (sample, info->bytes, 1, fp) < 1)
-		return EOF;
-	    }
-	  else
-	    {
-	      direct = head + 1;
-	    }
-	}
+              if (fread (sample, info->bytes, 1, fp) < 1)
+                return EOF;
+            }
+          else
+            {
+              direct = head + 1;
+            }
+        }
 
       if (repeat > 0)
-	{
-	  for (k = 0; k < info->bytes; ++k)
-	    {
-	      buffer[k] = sample[k];
-	    }
+        {
+          for (k = 0; k < info->bytes; ++k)
+            {
+              buffer[k] = sample[k];
+            }
 
-	  repeat--;
-	}
+          repeat--;
+        }
       else /* direct > 0 */
-	{
-	  if (fread (buffer, info->bytes, 1, fp) < 1)
-	    return EOF;
+        {
+          if (fread (buffer, info->bytes, 1, fp) < 1)
+            return EOF;
 
-	  direct--;
-	}
+          direct--;
+        }
 
       buffer += info->bytes;
     }
@@ -714,7 +714,7 @@ rle_read (FILE     *fp,
 
 static void
 flip_line (guchar   *buffer,
-	   tga_info *info)
+           tga_info *info)
 {
   guchar  temp;
   guchar *alt;
@@ -725,11 +725,11 @@ flip_line (guchar   *buffer,
   for (x = 0; x * 2 <= info->width; x++)
     {
       for (s = 0; s < info->bytes; ++s)
-	{
-	  temp = buffer[s];
-	  buffer[s] = alt[s];
-	  alt[s] = temp;
-	}
+        {
+          temp = buffer[s];
+          buffer[s] = alt[s];
+          alt[s] = temp;
+        }
 
       buffer += info->bytes;
       alt -= info->bytes;
@@ -742,12 +742,12 @@ flip_line (guchar   *buffer,
 
 static void
 upsample (guchar *dest,
-	  guchar *src,
-	  guint   width,
-	  guint   bytes,
-	  guint8  alphaBits)
+          guchar *src,
+          guint   width,
+          guint   bytes,
+          guint8  alphaBits)
 {
-  gint x;
+  guint x;
 
   for (x = 0; x < width; x++)
     {
@@ -763,11 +763,11 @@ upsample (guchar *dest,
       switch (alphaBits)
         {
         case 1:
-	  dest[3] = (src[1] & 0x80)? 0: 255;
-	  dest += 4;
+          dest[3] = (src[1] & 0x80)? 0: 255;
+          dest += 4;
           break;
         default:
-	  dest += 3;
+          dest += 3;
         }
 
       src += bytes;
@@ -776,44 +776,44 @@ upsample (guchar *dest,
 
 static void
 bgr2rgb (guchar *dest,
-	 guchar *src,
-	 guint   width,
-	 guint   bytes,
-	 guint   alpha)
+         guchar *src,
+         guint   width,
+         guint   bytes,
+         guint   alpha)
 {
   guint x;
 
   if (alpha)
     {
       for (x = 0; x < width; x++)
-	{
-	  *(dest++) = src[2];
-	  *(dest++) = src[1];
-	  *(dest++) = src[0];
-	  *(dest++) = src[3];
+        {
+          *(dest++) = src[2];
+          *(dest++) = src[1];
+          *(dest++) = src[0];
+          *(dest++) = src[3];
 
-	  src += bytes;
-	}
+          src += bytes;
+        }
     }
   else
     {
       for (x = 0; x < width; x++)
-	{
-	  *(dest++) = src[2];
-	  *(dest++) = src[1];
-	  *(dest++) = src[0];
+        {
+          *(dest++) = src[2];
+          *(dest++) = src[1];
+          *(dest++) = src[0];
 
-	  src += bytes;
-	}
+          src += bytes;
+        }
     }
 }
 
 static void
 read_line (FILE         *fp,
-	   guchar       *row,
-	   guchar       *buffer,
-	   tga_info     *info,
-	   GimpDrawable *drawable)
+           guchar       *row,
+           guchar       *buffer,
+           tga_info     *info,
+           GimpDrawable *drawable)
 {
   if (info->imageCompression == TGA_COMP_RLE)
     {
@@ -832,13 +832,13 @@ read_line (FILE         *fp,
   if (info->imageType == TGA_TYPE_COLOR)
     {
       if (info->bpp == 16 || info->bpp == 15)
-	{
-	  upsample (row, buffer, info->width, info->bytes, info->alphaBits);
-	}
+        {
+          upsample (row, buffer, info->width, info->bytes, info->alphaBits);
+        }
       else
-	{
-	  bgr2rgb (row, buffer,info->width,info->bytes,info->alphaBits);
-	}
+        {
+          bgr2rgb (row, buffer,info->width, info->bytes,info->alphaBits);
+        }
     }
   else
     {
@@ -848,8 +848,8 @@ read_line (FILE         *fp,
 
 static gint32
 ReadImage (FILE        *fp,
-	   tga_info    *info,
-	   const gchar *filename)
+           tga_info    *info,
+           const gchar *filename)
 {
   static gint32 image_ID;
   gint32        layer_ID;
@@ -872,27 +872,27 @@ ReadImage (FILE        *fp,
       itype = GIMP_INDEXED;
 
       if (info->alphaBits)
-	dtype = GIMP_INDEXEDA_IMAGE;
+        dtype = GIMP_INDEXEDA_IMAGE;
       else
-	dtype = GIMP_INDEXED_IMAGE;
+        dtype = GIMP_INDEXED_IMAGE;
       break;
 
     case TGA_TYPE_GRAY:
       itype = GIMP_GRAY;
 
       if (info->alphaBits)
-	dtype = GIMP_GRAYA_IMAGE;
+        dtype = GIMP_GRAYA_IMAGE;
       else
-	dtype = GIMP_GRAY_IMAGE;
+        dtype = GIMP_GRAY_IMAGE;
       break;
 
     case TGA_TYPE_COLOR:
       itype = GIMP_RGB;
 
       if (info->alphaBits)
-	dtype = GIMP_RGBA_IMAGE;
+        dtype = GIMP_RGBA_IMAGE;
       else
-	dtype = GIMP_RGB_IMAGE;
+        dtype = GIMP_RGB_IMAGE;
       break;
     }
 
@@ -928,10 +928,10 @@ ReadImage (FILE        *fp,
     gimp_image_set_colormap(image_ID, gimp_cmap, info->colorMapLength);
 
   layer_ID = gimp_layer_new (image_ID,
-			     _("Background"),
-			     info->width, info->height,
-			     dtype, 100,
-			     GIMP_NORMAL_MODE);
+                             _("Background"),
+                             info->width, info->height,
+                             dtype, 100,
+                             GIMP_NORMAL_MODE);
 
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
@@ -997,8 +997,8 @@ ReadImage (FILE        *fp,
 
 static gint
 save_image (const gchar *filename,
-	    gint32       image_ID,
-	    gint32       drawable_ID)
+            gint32       image_ID,
+            gint32       drawable_ID)
 {
   GimpPixelRgn   pixel_rgn;
   GimpDrawable  *drawable;
@@ -1053,13 +1053,13 @@ save_image (const gchar *filename,
       header[1]= 0;
 
       if (dtype == GIMP_RGB_IMAGE || dtype == GIMP_RGBA_IMAGE)
-	{
-	  header[2]= (tsvals.rle) ? 10 : 2;
-	}
+        {
+          header[2]= (tsvals.rle) ? 10 : 2;
+        }
       else
-	{
-	  header[2]= (tsvals.rle) ? 11 : 3;
-	}
+        {
+          header[2]= (tsvals.rle) ? 11 : 3;
+        }
 
       header[3] = header[4] = header[5] = header[6] = header[7] = 0;
     }
@@ -1109,11 +1109,11 @@ save_image (const gchar *filename,
     {
       /* write out palette */
       for (i= 0; i < num_colors; ++i)
-	{
-	  fputc (gimp_cmap[(i * 3) + 2], fp);
-	  fputc (gimp_cmap[(i * 3) + 1], fp);
-	  fputc (gimp_cmap[(i * 3) + 0], fp);
-	}
+        {
+          fputc (gimp_cmap[(i * 3) + 2], fp);
+          fputc (gimp_cmap[(i * 3) + 1], fp);
+          fputc (gimp_cmap[(i * 3) + 0], fp);
+        }
     }
 
   gimp_tile_cache_ntiles ((width / gimp_tile_width ()) + 1);
@@ -1135,31 +1135,31 @@ save_image (const gchar *filename,
         }
 
       if (dtype == GIMP_RGB_IMAGE)
-	{
-	  bgr2rgb (data, pixels, width, drawable->bpp, 0);
-	}
+        {
+          bgr2rgb (data, pixels, width, drawable->bpp, 0);
+        }
       else if (dtype == GIMP_RGBA_IMAGE)
-	{
-	  bgr2rgb (data, pixels, width, drawable->bpp, 1);
-	}
+        {
+          bgr2rgb (data, pixels, width, drawable->bpp, 1);
+        }
       else if (dtype == GIMP_INDEXEDA_IMAGE)
-	{
-	  for (i = 0; i < width; ++i)
+        {
+          for (i = 0; i < width; ++i)
             data[i]= pixels[i*2];
-	}
+        }
       else
-	{
-	  memcpy (data, pixels, width * drawable->bpp);
-	}
+        {
+          memcpy (data, pixels, width * drawable->bpp);
+        }
 
       if (tsvals.rle)
-	{
-	  rle_write (fp, data, width, out_bpp);
-	}
+        {
+          rle_write (fp, data, width, out_bpp);
+        }
       else
-	{
-	  fwrite (data, width * out_bpp, 1, fp);
-	}
+        {
+          fwrite (data, width * out_bpp, 1, fp);
+        }
 
       gimp_progress_update ((gdouble) row / (gdouble) height);
     }
