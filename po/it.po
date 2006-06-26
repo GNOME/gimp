@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-19 00:56+0200\n"
-"PO-Revision-Date: 2006-06-19 00:59+0200\n"
+"PO-Revision-Date: 2006-06-26 20:57+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -3531,7 +3531,7 @@ msgstr "Mostra negli _strumenti"
 
 #: ../app/actions/tools-actions.c:99
 msgid "_By Color"
-msgstr "per _colore"
+msgstr "Per _colore"
 
 #: ../app/actions/tools-actions.c:104
 msgid "_Arbitrary Rotation..."
@@ -5460,7 +5460,7 @@ msgstr "Selezione Fuzzy"
 #: ../app/core/gimpchannel-select.c:493
 #: ../app/tools/gimpbycolorselecttool.c:91
 msgid "Select by Color"
-msgstr "selezione per colore"
+msgstr "Selezione per colore"
 
 #: ../app/core/gimpchannel.c:256
 msgid "Channel"
