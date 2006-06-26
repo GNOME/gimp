@@ -55,7 +55,7 @@ gimp_brushes_set_opacity (gdouble opacity)
 /**
  * gimp_brushes_get_paint_mode:
  *
- * This procedure isdeprecated! Use gimp_context_get_paint_mode() instead.
+ * This procedure is deprecated! Use gimp_context_get_paint_mode() instead.
  *
  * Returns: The paint mode.
  */

@@ -1,5 +1,10 @@
 2006-06-25  Manish Singh  <yosh@gimp.org>
 
+	* libgimp/gimpbrushes.c
+	* modules/cdisplay_colorblind.c: fix some ytpos.
+
+2006-06-25  Manish Singh  <yosh@gimp.org>
+
 	* app/plug-in/plug-in-params.c
 	* libgimp/gimp.[ch]
 	* libgimpbase/gimpprotocol.[ch]

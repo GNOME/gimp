@@ -64,7 +64,7 @@ static const GEnumValue enum_values[] =
 static const GimpEnumDesc enum_descs[] =
   {
     { COLORBLIND_DEFICIENCY_PROTANOPIA,
-      N_("Protanopia (insensitivity to red"), NULL },
+      N_("Protanopia (insensitivity to red)"), NULL },
     { COLORBLIND_DEFICIENCY_DEUTERANOPIA,
       N_("Deuteranopia (insensitivity to green)"), NULL },
     { COLORBLIND_DEFICIENCY_TRITANOPIA,
