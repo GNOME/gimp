@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-24 10:57+0200\n"
-"PO-Revision-Date: 2006-05-24 11:00+0200\n"
+"POT-Creation-Date: 2006-06-26 10:52+0200\n"
+"PO-Revision-Date: 2006-06-26 10:53+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,14 +20,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.10.2\n"
 "Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-
-#: ../libgimp/gimpbrushmenu.c:140
-msgid "Brush Selection"
-msgstr "Výběr stopy"
-
-#: ../libgimp/gimpbrushmenu.c:180 ../libgimp/gimppatternmenu.c:165
-msgid "_Browse..."
-msgstr "_Procházet..."
 
 #: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
 #, c-format
@@ -196,29 +188,17 @@ msgstr ""
 "Chcete zapsat kanál (uložený výběr) jako %s.\n"
 "To nezapíše viditelné vrstvy."
 
-#: ../libgimp/gimpfontselectbutton.c:125 ../libgimp/gimpfontselectbutton.c:176
+#: ../libgimp/gimpfontselectbutton.c:130
 msgid "Font Selection"
 msgstr "Výběr písma"
 
-#: ../libgimp/gimpfontselectbutton.c:138 ../libgimp/gimpfontselectbutton.c:177
+#: ../libgimp/gimpfontselectbutton.c:145
 msgid "Sans"
 msgstr "Sans"
-
-#: ../libgimp/gimpgradientmenu.c:115
-msgid "Gradient Selection"
-msgstr "Výběr přechodu"
 
 #: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
 msgid "(Empty)"
 msgstr "(Prázdné)"
-
-#: ../libgimp/gimppalettemenu.c:102
-msgid "Palette Selection"
-msgstr "Výběr palety"
-
-#: ../libgimp/gimppatternmenu.c:125
-msgid "Pattern Selection"
-msgstr "Výběr vzorku"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
@@ -617,7 +597,7 @@ msgstr "Pevný"
 msgid "Incremental"
 msgstr "Postupný"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:254
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:256
 msgid "None"
 msgstr "Nic"
 
@@ -739,7 +719,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
-#: ../modules/cdisplay_lcms.c:246
+#: ../modules/cdisplay_lcms.c:248
 msgid "(invalid UTF-8 string)"
 msgstr "(neplatný řetězec v UTF-8)"
 
@@ -794,20 +774,20 @@ msgstr "Displej se správou barev"
 msgid "Print simulation"
 msgstr "Simulace tisku"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:56 ../modules/cdisplay_proof.c:55
+#: ../libgimpconfig/gimpcolorconfig-enums.c:56 ../modules/cdisplay_proof.c:57
 msgid "Perceptual"
 msgstr "Perceptuální"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:56
+#: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:58
 msgid "Relative colorimetric"
 msgstr "Relativní kolorimetrický"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#: ../libgimpwidgets/gimpwidgetsenums.c:93 ../modules/cdisplay_proof.c:57
+#: ../libgimpwidgets/gimpwidgetsenums.c:93 ../modules/cdisplay_proof.c:59
 msgid "Saturation"
 msgstr "Sytost"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59 ../modules/cdisplay_proof.c:58
+#: ../libgimpconfig/gimpcolorconfig-enums.c:59 ../modules/cdisplay_proof.c:60
 msgid "Absolute colorimetric"
 msgstr "Absolutní kolorimetrický"
 
@@ -991,19 +971,19 @@ msgstr "Šestnáctková notace barev jako v HTML a CSS"
 msgid "HTML _notation:"
 msgstr "_Notace HTML:"
 
-#: ../libgimpwidgets/gimpfileentry.c:172
+#: ../libgimpwidgets/gimpfileentry.c:174
 msgid "Open a file selector to browse your folders"
 msgstr "Procházet složky v dialogu výběru souborů"
 
-#: ../libgimpwidgets/gimpfileentry.c:173
+#: ../libgimpwidgets/gimpfileentry.c:175
 msgid "Open a file selector to browse your files"
 msgstr "Procházet soubory v dialogu výběru souborů"
 
-#: ../libgimpwidgets/gimpfileentry.c:333
+#: ../libgimpwidgets/gimpfileentry.c:335
 msgid "Select Folder"
 msgstr "Výběr adresáře"
 
-#: ../libgimpwidgets/gimpfileentry.c:335
+#: ../libgimpwidgets/gimpfileentry.c:337
 msgid "Select File"
 msgstr "Výběr souboru"
 
@@ -1061,11 +1041,11 @@ msgstr "Všech %d stran vybráno"
 msgid "%d pages selected"
 msgstr "%d stran vybráno"
 
-#: ../libgimpwidgets/gimppatheditor.c:212
+#: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
 msgstr "Zapisovatelný"
 
-#: ../libgimpwidgets/gimppatheditor.c:221
+#: ../libgimpwidgets/gimppatheditor.c:223
 msgid "Folder"
 msgstr "Adresář"
 
@@ -1155,23 +1135,23 @@ msgstr "Řá_dkování"
 msgid "_Resize"
 msgstr "Změnit _velikost"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:301
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:302
 msgid "_Scale"
 msgstr "Š_kálovat"
 
-#: ../libgimpwidgets/gimpstock.c:279
+#: ../libgimpwidgets/gimpstock.c:280
 msgid "Crop"
 msgstr "Ořezat"
 
-#: ../libgimpwidgets/gimpstock.c:297
+#: ../libgimpwidgets/gimpstock.c:298
 msgid "_Transform"
 msgstr "_Transformace"
 
-#: ../libgimpwidgets/gimpstock.c:300
+#: ../libgimpwidgets/gimpstock.c:301
 msgid "_Rotate"
 msgstr "_Rotovat"
 
-#: ../libgimpwidgets/gimpstock.c:302
+#: ../libgimpwidgets/gimpstock.c:303
 msgid "_Shear"
 msgstr "Na_klonění"
 
@@ -1264,8 +1244,8 @@ msgid "Zoom out"
 msgstr "Oddálit"
 
 #: ../modules/cdisplay_colorblind.c:67
-msgid "Protanopia (insensitivity to red"
-msgstr "Protanopie (necitlivost na červenou"
+msgid "Protanopia (insensitivity to red)"
+msgstr "Protanopie (necitlivost na červenou)"
 
 #: ../modules/cdisplay_colorblind.c:69
 msgid "Deuteranopia (insensitivity to green)"
@@ -1311,57 +1291,57 @@ msgstr "Kontrast"
 msgid "Contrast c_ycles:"
 msgstr "_Cykly kontrastu:"
 
-#: ../modules/cdisplay_lcms.c:105
+#: ../modules/cdisplay_lcms.c:107
 msgid "Color management display filter using ICC color profiles"
 msgstr "Displej se správou barev používající profily barev ICC"
 
-#: ../modules/cdisplay_lcms.c:173
+#: ../modules/cdisplay_lcms.c:175
 msgid "Color Management"
 msgstr "Správa barev"
 
-#: ../modules/cdisplay_lcms.c:288
+#: ../modules/cdisplay_lcms.c:290
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr "Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
 
-#: ../modules/cdisplay_lcms.c:311
+#: ../modules/cdisplay_lcms.c:313
 msgid "Mode of operation:"
 msgstr "Režim práce:"
 
-#: ../modules/cdisplay_lcms.c:322
+#: ../modules/cdisplay_lcms.c:324
 msgid "RGB workspace profile:"
 msgstr "Profil pracovního prostředí RGB:"
 
-#: ../modules/cdisplay_lcms.c:332
+#: ../modules/cdisplay_lcms.c:334
 msgid "Monitor profile:"
 msgstr "Profil monitoru:"
 
-#: ../modules/cdisplay_lcms.c:342
+#: ../modules/cdisplay_lcms.c:344
 msgid "Print simulation profile:"
 msgstr "Profil simulace tisku:"
 
-#: ../modules/cdisplay_proof.c:127
+#: ../modules/cdisplay_proof.c:129
 msgid "Color proof filter using ICC color profile"
 msgstr "Filtr barevného náhledu používající barevný profil ICC"
 
-#: ../modules/cdisplay_proof.c:221
+#: ../modules/cdisplay_proof.c:223
 msgid "Color Proof"
 msgstr "Barevný náhled"
 
-#: ../modules/cdisplay_proof.c:346
+#: ../modules/cdisplay_proof.c:348
 msgid "_Intent:"
 msgstr "_Cíl:"
 
-#: ../modules/cdisplay_proof.c:350
+#: ../modules/cdisplay_proof.c:352
 msgid "Choose an ICC Color Profile"
 msgstr "Zvolte profil barev ICC"
 
-#: ../modules/cdisplay_proof.c:353
+#: ../modules/cdisplay_proof.c:355
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/cdisplay_proof.c:358
+#: ../modules/cdisplay_proof.c:360
 msgid "_Black Point Compensation"
 msgstr "_Kompenzace černého bodu"
 
@@ -1538,7 +1518,7 @@ msgstr "Číselník vpravo"
 msgid "Linux input event controller"
 msgstr "Ovladač událostí linuxového vstupu"
 
-#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:244
+#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:246
 msgid "Device:"
 msgstr "Zařízení:"
 
@@ -1554,44 +1534,44 @@ msgstr "Linuxový vstup"
 msgid "Linux Input Events"
 msgstr "Události linuxového vstupu"
 
-#: ../modules/controller_linux_input.c:372 ../modules/controller_midi.c:480
-#: ../modules/controller_midi.c:506
+#: ../modules/controller_linux_input.c:372 ../modules/controller_midi.c:482
+#: ../modules/controller_midi.c:508
 #, c-format
 msgid "Reading from %s"
 msgstr "Čtení z %s"
 
 #: ../modules/controller_linux_input.c:388
-#: ../modules/controller_linux_input.c:431 ../modules/controller_midi.c:462
-#: ../modules/controller_midi.c:523 ../modules/controller_midi.c:594
+#: ../modules/controller_linux_input.c:431 ../modules/controller_midi.c:464
+#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
 #, c-format
 msgid "Device not available: %s"
 msgstr "Zařízení není dostupné: %s"
 
-#: ../modules/controller_linux_input.c:396 ../modules/controller_midi.c:531
+#: ../modules/controller_linux_input.c:396 ../modules/controller_midi.c:533
 msgid "No device configured"
 msgstr "Není konfigurováno žádné zařízení"
 
-#: ../modules/controller_linux_input.c:440 ../modules/controller_midi.c:603
+#: ../modules/controller_linux_input.c:440 ../modules/controller_midi.c:605
 msgid "End of file"
 msgstr "Konec souboru"
 
-#: ../modules/controller_midi.c:166
+#: ../modules/controller_midi.c:168
 msgid "MIDI event controller"
 msgstr "Ovladač událostí MIDI"
 
-#: ../modules/controller_midi.c:235
+#: ../modules/controller_midi.c:237
 msgid "The name of the device to read MIDI events from."
 msgstr "Jméno zařízení pro načítání událostí MIDI."
 
-#: ../modules/controller_midi.c:238
+#: ../modules/controller_midi.c:240
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Pro použití ALSA sekvencéru zadejte 'alsa'."
 
-#: ../modules/controller_midi.c:253
+#: ../modules/controller_midi.c:255
 msgid "Channel:"
 msgstr "Kanál:"
 
-#: ../modules/controller_midi.c:254
+#: ../modules/controller_midi.c:256
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
@@ -1599,11 +1579,11 @@ msgstr ""
 "Kanál MIDI pro načítání událostí. Chcete-li číst ze všech kanálů MIDI, "
 "nastavte na -1."
 
-#: ../modules/controller_midi.c:258
+#: ../modules/controller_midi.c:260
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:434
+#: ../modules/controller_midi.c:436
 msgid "MIDI Events"
 msgstr "Události MIDI"
 
