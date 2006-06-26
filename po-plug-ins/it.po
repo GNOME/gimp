@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-19 01:08+0200\n"
-"PO-Revision-Date: 2006-06-19 01:20+0200\n"
+"POT-Creation-Date: 2006-06-26 18:00+0200\n"
+"PO-Revision-Date: 2006-06-26 18:13+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:529
+#: ../plug-ins/FractalExplorer/Dialogs.c:530
 #: ../plug-ins/gfig/gfig-dialog.c:282 ../plug-ins/gflare/gflare.c:887
 #: ../plug-ins/gimpressionist/utils.c:124
 #, c-format
@@ -30,76 +30,76 @@ msgstr ""
 "(%s \"%s\")\n"
 "al tuo file %s."
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:620
+#: ../plug-ins/FractalExplorer/Dialogs.c:621
 msgid "Realtime preview"
 msgstr "Anteprima in tempo reale"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:628
+#: ../plug-ins/FractalExplorer/Dialogs.c:629
 msgid "If enabled the preview will be redrawn automatically"
 msgstr "Se abilitata l'anteprima si aggiornerà automaticamente"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:631
+#: ../plug-ins/FractalExplorer/Dialogs.c:632
 msgid "R_edraw preview"
 msgstr "Ridis_egna l'anteprima"
 
 #. Zoom Options
-#: ../plug-ins/FractalExplorer/Dialogs.c:639
+#: ../plug-ins/FractalExplorer/Dialogs.c:640
 msgid "Zoom"
 msgstr "Zoom"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:675
+#: ../plug-ins/FractalExplorer/Dialogs.c:676
 msgid "Undo last zoom change"
 msgstr "Annulla l'ultimo cambiamento di zoom"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:685
+#: ../plug-ins/FractalExplorer/Dialogs.c:686
 msgid "Redo last zoom change"
 msgstr "Ripeti l'ultimo cambiamento di zoom"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:700
+#: ../plug-ins/FractalExplorer/Dialogs.c:701
 msgid "_Parameters"
 msgstr "_Parametri"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:703
+#: ../plug-ins/FractalExplorer/Dialogs.c:704
 msgid "Fractal Parameters"
 msgstr "Parametri frattali"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:716
+#: ../plug-ins/FractalExplorer/Dialogs.c:717
 msgid "XMIN:"
 msgstr "XMIN:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:719
+#: ../plug-ins/FractalExplorer/Dialogs.c:720
 msgid "Change the first (minimal) x-coordinate delimitation"
 msgstr "Cambia il primo (minimo) delimitatore della coordinata x"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:727
+#: ../plug-ins/FractalExplorer/Dialogs.c:728
 msgid "XMAX:"
 msgstr "XMAX:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:730
+#: ../plug-ins/FractalExplorer/Dialogs.c:731
 msgid "Change the second (maximal) x-coordinate delimitation"
 msgstr "Cambia il secondo (massimo) delimitatore della coordinata x"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:738
+#: ../plug-ins/FractalExplorer/Dialogs.c:739
 msgid "YMIN:"
 msgstr "YMIN:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:741
+#: ../plug-ins/FractalExplorer/Dialogs.c:742
 msgid "Change the first (minimal) y-coordinate delimitation"
 msgstr "Cambia il primo (minimo) delimitatore della coordinata y"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:749
+#: ../plug-ins/FractalExplorer/Dialogs.c:750
 msgid "YMAX:"
 msgstr "YMAX:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:752
+#: ../plug-ins/FractalExplorer/Dialogs.c:753
 msgid "Change the second (maximal) y-coordinate delimitation"
 msgstr "Cambia il secondo (massimo) delimitatore della coordinata y"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:760
+#: ../plug-ins/FractalExplorer/Dialogs.c:761
 msgid "ITER:"
 msgstr "ITER:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:763
+#: ../plug-ins/FractalExplorer/Dialogs.c:764
 msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
@@ -107,11 +107,11 @@ msgstr ""
 "Cambia il valore di iterazione. Maggiore è quest'ultimo e migliore sarà il "
 "livello di dettaglio calcolato, con tempi maggiori"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:772
+#: ../plug-ins/FractalExplorer/Dialogs.c:773
 msgid "CX:"
 msgstr "CX:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:775
+#: ../plug-ins/FractalExplorer/Dialogs.c:776
 msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
@@ -119,11 +119,11 @@ msgstr ""
 "Cambia il valore CX (cambiamento aspetto del frattale, attivato con ogni "
 "frattale esclusi Mandelbrot e Sierpinski)"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:784
+#: ../plug-ins/FractalExplorer/Dialogs.c:785
 msgid "CY:"
 msgstr "CY:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:787
+#: ../plug-ins/FractalExplorer/Dialogs.c:788
 msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
@@ -131,143 +131,143 @@ msgstr ""
 "Cambia il valore CY (cambiamento aspetto del frattale, attivato con ogni "
 "frattale esclusi Mandelbrot e Sierpinski)"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:804
+#: ../plug-ins/FractalExplorer/Dialogs.c:805
 msgid "Load a fractal from file"
 msgstr "Carica un frattale da file"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:812
+#: ../plug-ins/FractalExplorer/Dialogs.c:813
 msgid "Reset parameters to default values"
 msgstr "Reimposta i parametri su valori predefiniti"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:821
+#: ../plug-ins/FractalExplorer/Dialogs.c:822
 msgid "Save active fractal to file"
 msgstr "Salva frattale attivo in file"
 
 #. Fractal type toggle box
-#: ../plug-ins/FractalExplorer/Dialogs.c:824
+#: ../plug-ins/FractalExplorer/Dialogs.c:825
 msgid "Fractal Type"
 msgstr "Tipo frattale"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:837
+#: ../plug-ins/FractalExplorer/Dialogs.c:838
 msgid "Mandelbrot"
 msgstr "Mandelbrot"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:839
+#: ../plug-ins/FractalExplorer/Dialogs.c:840
 msgid "Julia"
 msgstr "Julia"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:841
+#: ../plug-ins/FractalExplorer/Dialogs.c:842
 msgid "Barnsley 1"
 msgstr "Barnsley 1"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:843
+#: ../plug-ins/FractalExplorer/Dialogs.c:844
 msgid "Barnsley 2"
 msgstr "Barnsley 2"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:845
+#: ../plug-ins/FractalExplorer/Dialogs.c:846
 msgid "Barnsley 3"
 msgstr "Barnsley 3"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:847
+#: ../plug-ins/FractalExplorer/Dialogs.c:848
 msgid "Spider"
 msgstr "Spider"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:849
+#: ../plug-ins/FractalExplorer/Dialogs.c:850
 msgid "Man'o'war"
 msgstr "Man'o'war"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:851
+#: ../plug-ins/FractalExplorer/Dialogs.c:852
 msgid "Lambda"
 msgstr "Lambda"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:853
+#: ../plug-ins/FractalExplorer/Dialogs.c:854
 msgid "Sierpinski"
 msgstr "Sierpinski"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:899 ../plug-ins/common/sinus.c:886
+#: ../plug-ins/FractalExplorer/Dialogs.c:900 ../plug-ins/common/sinus.c:886
 msgid "Co_lors"
 msgstr "Co_lori"
 
 #. Number of Colors frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:903
+#: ../plug-ins/FractalExplorer/Dialogs.c:904
 #: ../plug-ins/common/borderaverage.c:415
 msgid "Number of Colors"
 msgstr "Numero di colori"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:915
+#: ../plug-ins/FractalExplorer/Dialogs.c:916
 msgid "Number of colors:"
 msgstr "Numero di colori:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:918
+#: ../plug-ins/FractalExplorer/Dialogs.c:919
 msgid "Change the number of colors in the mapping"
 msgstr "Cambia il numero di colori nella mappatura"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:925
+#: ../plug-ins/FractalExplorer/Dialogs.c:926
 msgid "Use loglog smoothing"
 msgstr "Usa smussamento loglog"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:932
+#: ../plug-ins/FractalExplorer/Dialogs.c:933
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr "Usa smussamento log log per eliminare \"le bande\" nel risultato"
 
 #. Color Density frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:936
+#: ../plug-ins/FractalExplorer/Dialogs.c:937
 msgid "Color Density"
 msgstr "Densità colore"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: ../plug-ins/FractalExplorer/Dialogs.c:948 ../plug-ins/common/fp.c:227
+#: ../plug-ins/FractalExplorer/Dialogs.c:949 ../plug-ins/common/fp.c:227
 msgid "Red:"
 msgstr "Rosso:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:951
+#: ../plug-ins/FractalExplorer/Dialogs.c:952
 msgid "Change the intensity of the red channel"
 msgstr "Cambia l'intensità del canale rosso"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:958 ../plug-ins/common/fp.c:228
+#: ../plug-ins/FractalExplorer/Dialogs.c:959 ../plug-ins/common/fp.c:228
 msgid "Green:"
 msgstr "Verde:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:961
+#: ../plug-ins/FractalExplorer/Dialogs.c:962
 msgid "Change the intensity of the green channel"
 msgstr "Cambia l'intensità del canale verde"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:968 ../plug-ins/common/fp.c:229
+#: ../plug-ins/FractalExplorer/Dialogs.c:969 ../plug-ins/common/fp.c:229
 msgid "Blue:"
 msgstr "Blu:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:971
+#: ../plug-ins/FractalExplorer/Dialogs.c:972
 msgid "Change the intensity of the blue channel"
 msgstr "Cambia l'intensità del canale blu"
 
 #. Color Function frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:977
+#: ../plug-ins/FractalExplorer/Dialogs.c:978
 msgid "Color Function"
 msgstr "Funzione colore"
 
 #. Redmode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:986
+#: ../plug-ins/FractalExplorer/Dialogs.c:987
 #: ../plug-ins/common/channel_mixer.c:539 ../plug-ins/common/decompose.c:166
 msgid "Red"
 msgstr "Rosso"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:990
-#: ../plug-ins/FractalExplorer/Dialogs.c:1031
-#: ../plug-ins/FractalExplorer/Dialogs.c:1072
+#: ../plug-ins/FractalExplorer/Dialogs.c:991
+#: ../plug-ins/FractalExplorer/Dialogs.c:1032
+#: ../plug-ins/FractalExplorer/Dialogs.c:1073
 msgid "Sine"
 msgstr "Seno"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:992
-#: ../plug-ins/FractalExplorer/Dialogs.c:1033
-#: ../plug-ins/FractalExplorer/Dialogs.c:1074
+#: ../plug-ins/FractalExplorer/Dialogs.c:993
+#: ../plug-ins/FractalExplorer/Dialogs.c:1034
+#: ../plug-ins/FractalExplorer/Dialogs.c:1075
 msgid "Cosine"
 msgstr "Coseno"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:994
-#: ../plug-ins/FractalExplorer/Dialogs.c:1035
-#: ../plug-ins/FractalExplorer/Dialogs.c:1076
+#: ../plug-ins/FractalExplorer/Dialogs.c:995
+#: ../plug-ins/FractalExplorer/Dialogs.c:1036
+#: ../plug-ins/FractalExplorer/Dialogs.c:1077
 #: ../plug-ins/Lighting/lighting_ui.c:406
 #: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:421
 #: ../plug-ins/common/align_layers.c:452 ../plug-ins/common/postscript.c:3168
@@ -276,21 +276,21 @@ msgstr "Coseno"
 msgid "None"
 msgstr "Nessuna"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:999
-#: ../plug-ins/FractalExplorer/Dialogs.c:1040
-#: ../plug-ins/FractalExplorer/Dialogs.c:1081
+#: ../plug-ins/FractalExplorer/Dialogs.c:1000
+#: ../plug-ins/FractalExplorer/Dialogs.c:1041
+#: ../plug-ins/FractalExplorer/Dialogs.c:1082
 msgid "Use sine-function for this color component"
 msgstr "Usa funzione seno per il componente colore"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1002
-#: ../plug-ins/FractalExplorer/Dialogs.c:1043
-#: ../plug-ins/FractalExplorer/Dialogs.c:1084
+#: ../plug-ins/FractalExplorer/Dialogs.c:1003
+#: ../plug-ins/FractalExplorer/Dialogs.c:1044
+#: ../plug-ins/FractalExplorer/Dialogs.c:1085
 msgid "Use cosine-function for this color component"
 msgstr "Usa funzione coseno per il componente colore"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1005
-#: ../plug-ins/FractalExplorer/Dialogs.c:1046
-#: ../plug-ins/FractalExplorer/Dialogs.c:1087
+#: ../plug-ins/FractalExplorer/Dialogs.c:1006
+#: ../plug-ins/FractalExplorer/Dialogs.c:1047
+#: ../plug-ins/FractalExplorer/Dialogs.c:1088
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
@@ -298,15 +298,15 @@ msgstr ""
 "Per questo canale colore usa mappatura lineare al posto di ogni altra "
 "funzione trigonometrica"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1014
-#: ../plug-ins/FractalExplorer/Dialogs.c:1055
-#: ../plug-ins/FractalExplorer/Dialogs.c:1096
+#: ../plug-ins/FractalExplorer/Dialogs.c:1015
+#: ../plug-ins/FractalExplorer/Dialogs.c:1056
+#: ../plug-ins/FractalExplorer/Dialogs.c:1097
 msgid "Inversion"
 msgstr "Inversione"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1022
-#: ../plug-ins/FractalExplorer/Dialogs.c:1063
-#: ../plug-ins/FractalExplorer/Dialogs.c:1104
+#: ../plug-ins/FractalExplorer/Dialogs.c:1023
+#: ../plug-ins/FractalExplorer/Dialogs.c:1064
+#: ../plug-ins/FractalExplorer/Dialogs.c:1105
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
@@ -315,27 +315,27 @@ msgstr ""
 "più bassi e viceversa"
 
 #. Greenmode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:1027
+#: ../plug-ins/FractalExplorer/Dialogs.c:1028
 #: ../plug-ins/common/channel_mixer.c:544 ../plug-ins/common/decompose.c:167
 msgid "Green"
 msgstr "Verde"
 
 #. Bluemode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:1068
+#: ../plug-ins/FractalExplorer/Dialogs.c:1069
 #: ../plug-ins/common/channel_mixer.c:549 ../plug-ins/common/decompose.c:168
 msgid "Blue"
 msgstr "Blu"
 
 #. Colormode toggle box
-#: ../plug-ins/FractalExplorer/Dialogs.c:1109
+#: ../plug-ins/FractalExplorer/Dialogs.c:1110
 msgid "Color Mode"
 msgstr "Modalità colore"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1118
+#: ../plug-ins/FractalExplorer/Dialogs.c:1119
 msgid "As specified above"
 msgstr "Come specificato sopra"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1130
+#: ../plug-ins/FractalExplorer/Dialogs.c:1131
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
@@ -343,23 +343,23 @@ msgstr ""
 "Crea una mappa colore con l'opzione specificata sopra (funzione densità/"
 "colore). Il risultato è visibile nell'anteprima"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1140
+#: ../plug-ins/FractalExplorer/Dialogs.c:1141
 msgid "Apply active gradient to final image"
 msgstr "Applica gradienti attivi sull'immagine finale"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1152
+#: ../plug-ins/FractalExplorer/Dialogs.c:1153
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr "Crea una mappa colore usando un gradiente dall'editor dei gradienti"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1163
+#: ../plug-ins/FractalExplorer/Dialogs.c:1164
 msgid "FractalExplorer Gradient"
 msgstr "Gradiente FractalExplorer"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1193
+#: ../plug-ins/FractalExplorer/Dialogs.c:1194
 msgid "_Fractals"
 msgstr "_Frattali"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1705
+#: ../plug-ins/FractalExplorer/Dialogs.c:1706
 #: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:200
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2013
 #: ../plug-ins/common/channel_mixer.c:1062 ../plug-ins/common/compressor.c:410
@@ -385,22 +385,22 @@ msgstr "_Frattali"
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossibile aprire '%s' in scrittura: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1719
+#: ../plug-ins/FractalExplorer/Dialogs.c:1720
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Errore di scrittura '%s': %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1772
+#: ../plug-ins/FractalExplorer/Dialogs.c:1773
 msgid "Load Fractal Parameters"
 msgstr "Carica parametri frattali"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1808
+#: ../plug-ins/FractalExplorer/Dialogs.c:1809
 msgid "Save Fractal Parameters"
 msgstr "Salva parametri frattali"
 
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
-#: ../plug-ins/FractalExplorer/Dialogs.c:2014
+#: ../plug-ins/FractalExplorer/Dialogs.c:2015
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:930
 #: ../plug-ins/Lighting/lighting_ui.c:1312 ../plug-ins/bmp/bmpread.c:152
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2233
@@ -429,12 +429,12 @@ msgstr "Salva parametri frattali"
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossibile aprire '%s' in lettura: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2022
+#: ../plug-ins/FractalExplorer/Dialogs.c:2023
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "'%s' non è un file FractalExplorer"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2028
+#: ../plug-ins/FractalExplorer/Dialogs.c:2029
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "Il file '%s' è corrotto. Sezione opzione non corretta alla linea %d"
@@ -613,7 +613,6 @@ msgstr "Intensità della luce"
 #: ../plug-ins/Lighting/lighting_ui.c:454
 #: ../plug-ins/MapObject/mapobject_ui.c:671
 #: ../plug-ins/MapObject/mapobject_ui.c:998
-#: ../plug-ins/print/gimp_main_window.c:475
 msgid "Position"
 msgstr "Posizione"
 
@@ -1064,22 +1063,18 @@ msgid "Back:"
 msgstr "Retro:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1110
-#: ../plug-ins/print/gimp_main_window.c:534
 msgid "Top:"
 msgstr "Alto:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1110
-#: ../plug-ins/print/gimp_main_window.c:575
 msgid "Bottom:"
 msgstr "Basso:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1111
-#: ../plug-ins/print/gimp_main_window.c:521
 msgid "Left:"
 msgstr "Sinistra:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1111
-#: ../plug-ins/print/gimp_main_window.c:547
 msgid "Right:"
 msgstr "Destra:"
 
@@ -1117,7 +1112,6 @@ msgid "Images for the Cap Faces"
 msgstr "Immagini per le facciate Cap"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1239
-#: ../plug-ins/print/gimp_main_window.c:1119
 msgid "Size"
 msgstr "Dimensione"
 
@@ -1512,7 +1506,6 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0.5 < x)"
 
 #: ../plug-ins/common/CML_explorer.c:200 ../plug-ins/common/sunras.c:1593
-#: ../plug-ins/print/gimp_main_window.c:1668
 msgid "Standard"
 msgstr "Standard"
 
@@ -1970,45 +1963,45 @@ msgstr "Anteprima di un'animazione basata sui livelli di GIMP"
 msgid "_Playback..."
 msgstr "_Esecuzione..."
 
-#: ../plug-ins/common/animationplay.c:429
+#: ../plug-ins/common/animationplay.c:434
 msgid "_Step"
 msgstr "Pa_sso"
 
-#: ../plug-ins/common/animationplay.c:429
+#: ../plug-ins/common/animationplay.c:434
 msgid "Step to next frame"
 msgstr "Esegui passo di un frame"
 
-#: ../plug-ins/common/animationplay.c:433
+#: ../plug-ins/common/animationplay.c:438
 msgid "Rewind the animation"
 msgstr "Riavvolgi l'animazione"
 
-#: ../plug-ins/common/animationplay.c:454
-#: ../plug-ins/common/animationplay.c:1362
+#: ../plug-ins/common/animationplay.c:459
+#: ../plug-ins/common/animationplay.c:1370
 msgid "Start playback"
 msgstr "Inizia l'esecuzione"
 
-#: ../plug-ins/common/animationplay.c:458
+#: ../plug-ins/common/animationplay.c:463
 msgid "Detach"
 msgstr "Stacca"
 
-#: ../plug-ins/common/animationplay.c:459
+#: ../plug-ins/common/animationplay.c:464
 msgid "Detach the animation from the dialog window"
 msgstr "Stacca l'animazione dalla finestra di dialogo"
 
-#: ../plug-ins/common/animationplay.c:543
+#: ../plug-ins/common/animationplay.c:548
 msgid "Animation Playback:"
 msgstr "Esecuzione animazione:"
 
-#: ../plug-ins/common/animationplay.c:726
+#: ../plug-ins/common/animationplay.c:734
 msgid "Tried to display an invalid layer."
 msgstr "Tentativo di visualizzazione di un livello non valido."
 
-#: ../plug-ins/common/animationplay.c:1246
+#: ../plug-ins/common/animationplay.c:1254
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Fotogramma %d di %d"
 
-#: ../plug-ins/common/animationplay.c:1362
+#: ../plug-ins/common/animationplay.c:1370
 msgid "Stop playback"
 msgstr "Blocca l'esecuzione"
 
@@ -2527,27 +2520,47 @@ msgstr "Scambia due colori nella mappa colori"
 msgid "_Swap Colors"
 msgstr "_Scambia colori"
 
-#: ../plug-ins/common/colormap-remap.c:287
-#: ../plug-ins/common/colormap-remap.c:298
-#: ../plug-ins/common/colormap-remap.c:309
+#: ../plug-ins/common/colormap-remap.c:288
+#: ../plug-ins/common/colormap-remap.c:299
+#: ../plug-ins/common/colormap-remap.c:310
 msgid "Invalid remap array was passed to remap function"
 msgstr "Array di remap errato passato alla funzione di remap"
 
-#: ../plug-ins/common/colormap-remap.c:333
+#: ../plug-ins/common/colormap-remap.c:334
 msgid "Rearranging the colormap"
 msgstr "Reimpostazione mappa colori"
 
-#: ../plug-ins/common/colormap-remap.c:437
+#: ../plug-ins/common/colormap-remap.c:483
+msgid "Sort on Hue"
+msgstr "Ordina per tonalità"
+
+#: ../plug-ins/common/colormap-remap.c:487
+msgid "Sort on Saturation"
+msgstr "Ordina per saturazione"
+
+#: ../plug-ins/common/colormap-remap.c:491
+msgid "Sort on Value"
+msgstr "Ordina per valore"
+
+#: ../plug-ins/common/colormap-remap.c:495
+msgid "Reverse Order"
+msgstr "Inverti l'ordine"
+
+#: ../plug-ins/common/colormap-remap.c:499
+msgid "Reset Order"
+msgstr "Annulla l'ordinamento"
+
+#: ../plug-ins/common/colormap-remap.c:550
+msgid ""
+"Drag and drop colors to rearrange the colormap.  The numbers shown are the "
+"original indices.  Right-click for a menu with sort options."
+msgstr ""
+"Trascina i colori per reimpostare la mappa colore.\n"
+"I numeri mostrati sono gli indici originali. Fare clic a destra per ottenere il menu con le opzioni di ordinamento."
+
+#: ../plug-ins/common/colormap-remap.c:631
 msgid "Rearrange Colormap"
 msgstr "Reimposta la mappa colori"
-
-#: ../plug-ins/common/colormap-remap.c:457
-msgid ""
-"Drag and drop colors to rearrange the colormap.\n"
-"The numbers shown are the original indices."
-msgstr ""
-"Colori di trascinamento per reimpostare la mappa colore.\n"
-"I numeri mostrati sono gli indici originali."
 
 #: ../plug-ins/common/colortoalpha.c:96
 msgid "Convert a specified color to transparency"
@@ -3336,6 +3349,15 @@ msgstr "Sc_ala 1:"
 msgid "Sca_le 2:"
 msgstr "Sca_la 2:"
 
+#: ../plug-ins/common/desktop-link.c:82
+msgid "Desktop Link"
+msgstr "Collegamento al desktop"
+
+#: ../plug-ins/common/desktop-link.c:163
+#, c-format
+msgid "Error loading desktop file '%s': %s"
+msgstr "Errore di caricamento file desktop \"%s\": %s"
+
 #: ../plug-ins/common/despeckle.c:146
 msgid "Remove speckle noise from the image"
 msgstr "Rimuovi i picchi di rumore dall'immagine"
@@ -3739,7 +3761,7 @@ msgid "Composing images"
 msgstr "Composizione immagini"
 
 #: ../plug-ins/common/film.c:436 ../plug-ins/common/guillotine.c:185
-#: ../plug-ins/helpbrowser/dialog.c:852
+#: ../plug-ins/helpbrowser/dialog.c:863
 msgid "Untitled"
 msgstr "Senza nome"
 
@@ -3873,15 +3895,15 @@ msgstr "Centro dell'effetto chiarore"
 msgid "Show _position"
 msgstr "Mostra _posizione"
 
-#: ../plug-ins/common/fp.c:230 ../plug-ins/print/gimp_color_window.c:307
+#: ../plug-ins/common/fp.c:230
 msgid "Cyan:"
 msgstr "Ciano:"
 
-#: ../plug-ins/common/fp.c:231 ../plug-ins/print/gimp_color_window.c:345
+#: ../plug-ins/common/fp.c:231
 msgid "Yellow:"
 msgstr "Giallo:"
 
-#: ../plug-ins/common/fp.c:232 ../plug-ins/print/gimp_color_window.c:326
+#: ../plug-ins/common/fp.c:232
 msgid "Magenta:"
 msgstr "Magenta:"
 
@@ -4438,22 +4460,6 @@ msgstr "_Larghezza mattonella:"
 msgid "Tile _height:"
 msgstr "_Altezza mattonella:"
 
-#: ../plug-ins/common/gnomeprint.c:88
-msgid "Print the image using the GNOME Print system"
-msgstr "Stampa l'immagine usando il sistema di stampa di GNOME"
-
-#: ../plug-ins/common/gnomeprint.c:93
-msgid "_GNOME Print..."
-msgstr "Stampa di _GNOME..."
-
-#: ../plug-ins/common/gnomeprint.c:161
-msgid "Print"
-msgstr "Stampa"
-
-#: ../plug-ins/common/gnomeprint.c:182
-msgid "Print Preview"
-msgstr "Anteprima di stampa"
-
 #: ../plug-ins/common/gqbist.c:402
 msgid "Generate a huge variety of abstract patterns"
 msgstr "Genera una grande varietà di motivi astratti"
@@ -4533,8 +4539,7 @@ msgstr "Intersezione"
 
 #. Width and Height
 #: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:788
-#: ../plug-ins/common/wmf.c:549 ../plug-ins/print/gimp_main_window.c:1009
-#: ../plug-ins/print/gimp_main_window.c:1216
+#: ../plug-ins/common/wmf.c:549
 msgid "Width:"
 msgstr "Larghezza:"
 
@@ -6219,7 +6224,7 @@ msgstr "Rendering"
 
 #. Resolution
 #: ../plug-ins/common/postscript.c:3084 ../plug-ins/common/svg.c:909
-#: ../plug-ins/common/wmf.c:670 ../plug-ins/print/gimp_main_window.c:1104
+#: ../plug-ins/common/wmf.c:670
 msgid "Resolution:"
 msgstr "Risoluzione:"
 
@@ -6264,7 +6269,6 @@ msgstr "Grigio"
 #: ../plug-ins/common/postscript.c:3153 ../plug-ins/common/xpm.c:468
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:151
-#: ../plug-ins/print/gimp_main_window.c:1416
 msgid "Color"
 msgstr "Colore"
 
@@ -6368,7 +6372,10 @@ msgstr "Immagine Photoshop"
 msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
 "plug-in does not support that, using normal mode instead."
-msgstr "Impossibile salvare il livello con modalità \"%s\". Il formato del file psd o il plug-in di salvataggio non lo supportano; in alternativa si fa uso della modalità normale."
+msgstr ""
+"Impossibile salvare il livello con modalità \"%s\". Il formato del file psd "
+"o il plug-in di salvataggio non lo supportano; in alternativa si fa uso "
+"della modalità normale."
 
 #: ../plug-ins/common/psd_save.c:523
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
@@ -7615,8 +7622,6 @@ msgid "Render Scalable Vector Graphics"
 msgstr "Renderizza Grafica Vettoriale Scalabile (SVG)"
 
 #: ../plug-ins/common/svg.c:794 ../plug-ins/common/wmf.c:555
-#: ../plug-ins/print/gimp_main_window.c:1026
-#: ../plug-ins/print/gimp_main_window.c:1229
 msgid "Height:"
 msgstr "Altezza:"
 
@@ -8202,127 +8207,127 @@ msgstr "Propagazione canale _alfa"
 msgid "Propagating value channel"
 msgstr "Propagazione valore canale"
 
-#: ../plug-ins/common/warp.c:235
+#: ../plug-ins/common/warp.c:233
 msgid "Twist or smear image in many different ways"
 msgstr "Torce o sbava l'immagine in molti modi differenti"
 
-#: ../plug-ins/common/warp.c:243
+#: ../plug-ins/common/warp.c:241
 msgid "_Warp..."
 msgstr "_Warp..."
 
-#: ../plug-ins/common/warp.c:390
+#: ../plug-ins/common/warp.c:377
 msgid "Warp"
 msgstr "Warp"
 
-#: ../plug-ins/common/warp.c:411
+#: ../plug-ins/common/warp.c:398
 msgid "Basic Options"
 msgstr "Opzioni di base"
 
-#: ../plug-ins/common/warp.c:433
+#: ../plug-ins/common/warp.c:420
 msgid "Step size:"
 msgstr "Ampiezza passo:"
 
-#: ../plug-ins/common/warp.c:447 ../plug-ins/ifscompose/ifscompose.c:1212
+#: ../plug-ins/common/warp.c:434 ../plug-ins/ifscompose/ifscompose.c:1212
 msgid "Iterations:"
 msgstr "Iterazioni:"
 
 #. Displacement map menu
-#: ../plug-ins/common/warp.c:456
+#: ../plug-ins/common/warp.c:443
 msgid "Displacement map:"
 msgstr "Mappatura disallineata:"
 
 #. =======================================================================
 #. Displacement Type
-#: ../plug-ins/common/warp.c:474
+#: ../plug-ins/common/warp.c:461
 msgid "On edges:"
 msgstr "Sui bordi:"
 
-#: ../plug-ins/common/warp.c:485
+#: ../plug-ins/common/warp.c:472
 msgid "Wrap"
 msgstr "Wrap"
 
-#: ../plug-ins/common/warp.c:500
+#: ../plug-ins/common/warp.c:487
 msgid "Smear"
 msgstr "Macchia"
 
-#: ../plug-ins/common/warp.c:515 ../plug-ins/fits/fits.c:995
+#: ../plug-ins/common/warp.c:502 ../plug-ins/fits/fits.c:995
 #: ../plug-ins/flame/flame.c:1147 ../plug-ins/gfig/gfig-dialog.c:1466
 msgid "Black"
 msgstr "Nero"
 
-#: ../plug-ins/common/warp.c:530
+#: ../plug-ins/common/warp.c:517
 msgid "Foreground color"
 msgstr "Colore di primo piano"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
-#: ../plug-ins/common/warp.c:550
+#: ../plug-ins/common/warp.c:537
 msgid "Advanced Options"
 msgstr "Opzioni avanzate"
 
-#: ../plug-ins/common/warp.c:566
+#: ../plug-ins/common/warp.c:553
 msgid "Dither size:"
 msgstr "Dimensione area:"
 
-#: ../plug-ins/common/warp.c:579
+#: ../plug-ins/common/warp.c:566
 msgid "Rotation angle:"
 msgstr "Angolo rotazione:"
 
-#: ../plug-ins/common/warp.c:592
+#: ../plug-ins/common/warp.c:579
 msgid "Substeps:"
 msgstr "Sottopassi:"
 
 #. Magnitude map menu
-#: ../plug-ins/common/warp.c:601
+#: ../plug-ins/common/warp.c:588
 msgid "Magnitude map:"
 msgstr "Mappa magnitudine:"
 
-#: ../plug-ins/common/warp.c:623
+#: ../plug-ins/common/warp.c:610
 msgid "Use magnitude map"
 msgstr "Usa mappa magnitudine"
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" table         --------------------------
-#: ../plug-ins/common/warp.c:636
+#: ../plug-ins/common/warp.c:623
 msgid "More Advanced Options"
 msgstr "Opzioni più avanzate"
 
-#: ../plug-ins/common/warp.c:653
+#: ../plug-ins/common/warp.c:640
 msgid "Gradient scale:"
 msgstr "Scala gradiente:"
 
-#: ../plug-ins/common/warp.c:676
+#: ../plug-ins/common/warp.c:663
 msgid "Gradient map selection menu"
 msgstr "Menù di selezione mappa gradiente"
 
-#: ../plug-ins/common/warp.c:686
+#: ../plug-ins/common/warp.c:673
 msgid "Vector mag:"
 msgstr "Intensità vettore:"
 
 #. Angle
-#: ../plug-ins/common/warp.c:701 ../plug-ins/ifscompose/ifscompose.c:569
+#: ../plug-ins/common/warp.c:688 ../plug-ins/ifscompose/ifscompose.c:569
 msgid "Angle:"
 msgstr "Angolo:"
 
-#: ../plug-ins/common/warp.c:724
+#: ../plug-ins/common/warp.c:711
 msgid "Fixed-direction-vector map selection menu"
 msgstr "Menu di selezione mappa vettori a direzione fissa"
 
 #. make sure layer is visible
-#: ../plug-ins/common/warp.c:1193
+#: ../plug-ins/common/warp.c:1181
 msgid "Smoothing X gradient"
 msgstr "Sfumatura gradiente X"
 
-#: ../plug-ins/common/warp.c:1196
+#: ../plug-ins/common/warp.c:1184
 msgid "Smoothing Y gradient"
 msgstr "Sfumatura gradiente Y"
 
 #. calculate new X,Y Displacement image maps
-#: ../plug-ins/common/warp.c:1249
+#: ../plug-ins/common/warp.c:1234
 msgid "Finding XY gradient"
 msgstr "Ricerca gradienti XY"
 
-#: ../plug-ins/common/warp.c:1275
+#: ../plug-ins/common/warp.c:1256
 #, c-format
 msgid "Flow step %d"
 msgstr "Passo di flusso %d"
@@ -8488,65 +8493,6 @@ msgstr "_Forza:"
 #: ../plug-ins/common/wind.c:1031
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Valori alti possono incrementarne l'effetto"
-
-#: ../plug-ins/common/winprint.c:219
-msgid "Print the image"
-msgstr "Stampa l'immagine"
-
-#: ../plug-ins/common/winprint.c:224 ../plug-ins/print/print.c:171
-msgid "_Print..."
-msgstr "Stam_pa..."
-
-#: ../plug-ins/common/winprint.c:231
-msgid "Set up page layout for printing"
-msgstr "Imposta la pagina per la stampa"
-
-#: ../plug-ins/common/winprint.c:236
-msgid "Page Setup"
-msgstr "Impostazione pagina"
-
-#: ../plug-ins/common/winprint.c:341
-#, c-format
-msgid "PrintDlg failed: %d"
-msgstr "PrintDlg è fallita: %d"
-
-#: ../plug-ins/common/winprint.c:377
-msgid "Printer doesn't support bitmaps"
-msgstr "La stampante non supporta la modalità grafica"
-
-#: ../plug-ins/common/winprint.c:418
-msgid "StartPage failed"
-msgstr "Inizio pagina fallito"
-
-#: ../plug-ins/common/winprint.c:427 ../plug-ins/print/print-image-gimp.c:320
-msgid "Printing"
-msgstr "Stampa"
-
-#: ../plug-ins/common/winprint.c:459
-msgid "CreateDIBSection failed"
-msgstr "CreateDIBSection è fallita"
-
-#: ../plug-ins/common/winprint.c:495
-msgid "SetStretchBltMode failed (warning only)"
-msgstr "SetStretchBltMode è fallita (è solo un'avviso)"
-
-#: ../plug-ins/common/winprint.c:558
-#, c-format
-msgid ""
-"StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
-"error = %d, y = %d"
-msgstr ""
-"StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) è fallita, "
-"errore = %d, y = %d"
-
-#: ../plug-ins/common/winprint.c:587
-msgid "EndPage failed"
-msgstr "Fallito fine pagina"
-
-#: ../plug-ins/common/winprint.c:634
-#, c-format
-msgid "PageSetupDlg failed: %d"
-msgstr "PageSetupDlg è fallita: %d\""
 
 #: ../plug-ins/common/wmf.c:126
 msgid "Microsoft WMF file"
@@ -9209,7 +9155,6 @@ msgstr "Sinistra"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1724
 #: ../plug-ins/gimpressionist/orientation.c:130
-#: ../plug-ins/print/gimp_main_window.c:511
 msgid "Orientation:"
 msgstr "Orientazione:"
 
@@ -9577,7 +9522,6 @@ msgid "_Brush"
 msgstr "_Pennello"
 
 #: ../plug-ins/gimpressionist/brush.c:525
-#: ../plug-ins/print/gimp_color_window.c:407
 msgid "Gamma:"
 msgstr "Gamma:"
 
@@ -10221,35 +10165,35 @@ msgstr ""
 "Errore di analisi in '%s':\n"
 "%s"
 
-#: ../plug-ins/helpbrowser/dialog.c:190
+#: ../plug-ins/helpbrowser/dialog.c:192
 msgid "GIMP Help Browser"
 msgstr "Navigatore della guida di Gimp"
 
-#: ../plug-ins/helpbrowser/dialog.c:254
+#: ../plug-ins/helpbrowser/dialog.c:256
 msgid "Drag and drop this icon to a web browser"
 msgstr "Trascina questa icona su di un navigatore internet"
 
-#: ../plug-ins/helpbrowser/dialog.c:467
+#: ../plug-ins/helpbrowser/dialog.c:472
 msgid "Go back one page"
 msgstr "Indietro di una pagina"
 
-#: ../plug-ins/helpbrowser/dialog.c:472
+#: ../plug-ins/helpbrowser/dialog.c:477
 msgid "Go forward one page"
 msgstr "Avanti di una pagina"
 
-#: ../plug-ins/helpbrowser/dialog.c:477
+#: ../plug-ins/helpbrowser/dialog.c:482
 msgid "Go to the index page"
 msgstr "Vai all'indice"
 
-#: ../plug-ins/helpbrowser/dialog.c:512
+#: ../plug-ins/helpbrowser/dialog.c:517
 msgid "Visit the GIMP documentation website"
 msgstr "Visita il sito di documentazione di GIMP"
 
-#: ../plug-ins/helpbrowser/dialog.c:588
+#: ../plug-ins/helpbrowser/dialog.c:593
 msgid "Document not found"
 msgstr "Documento non trovato"
 
-#: ../plug-ins/helpbrowser/dialog.c:590
+#: ../plug-ins/helpbrowser/dialog.c:595
 msgid "The requested URL could not be loaded:"
 msgstr "L'URL richiesto non può essere caricato:"
 
@@ -10411,8 +10355,8 @@ msgid "Open IFS Fractal file"
 msgstr "Apri file IFS frattale"
 
 #: ../plug-ins/imagemap/imap_about.c:45
-msgid "Copyright(c) 1999-2005 by Maurits Rijk"
-msgstr "Copyright(c) 1999-2005 by Maurits Rijk"
+msgid "Copyright © 1999-2005 by Maurits Rijk"
+msgstr "Copyright © 1999-2005 by Maurits Rijk"
 
 #: ../plug-ins/imagemap/imap_about.c:48
 msgid "Released under the GNU General Public License"
@@ -11432,631 +11376,6 @@ msgstr "Livello ricciolo"
 msgid "Page Curl"
 msgstr "Pagine arricciate"
 
-#: ../plug-ins/print/gimp_color_window.c:208
-msgid "Print Color Adjust"
-msgstr "Imposta colore di stampa"
-
-#: ../plug-ins/print/gimp_color_window.c:268
-msgid "Brightness:"
-msgstr "Brillantezza:"
-
-#: ../plug-ins/print/gimp_color_window.c:276
-msgid ""
-"Set the brightness of the print.\n"
-"0 is solid black, 2 is solid white"
-msgstr ""
-"Imposta la luminosità della stampa.\n"
-"0 è nero pieno, 2 è bianco pieno"
-
-#: ../plug-ins/print/gimp_color_window.c:288
-msgid "Contrast:"
-msgstr "Contrasto:"
-
-#: ../plug-ins/print/gimp_color_window.c:296
-msgid "Set the contrast of the print"
-msgstr "Imposta il contrasto della stampa"
-
-#: ../plug-ins/print/gimp_color_window.c:315
-msgid "Adjust the cyan balance of the print"
-msgstr "Imposta il bilanciamento del ciano della stampa"
-
-#: ../plug-ins/print/gimp_color_window.c:334
-msgid "Adjust the magenta balance of the print"
-msgstr "Imposta il bilanciamento del magenta della stampa"
-
-#: ../plug-ins/print/gimp_color_window.c:353
-msgid "Adjust the yellow balance of the print"
-msgstr "Imposta il bilanciamento del giallo della stampa"
-
-#. Gray: Circle: Spinbutton 2
-#: ../plug-ins/print/gimp_color_window.c:364 ../plug-ins/rcm/rcm_dialog.c:494
-#: ../plug-ins/rcm/rcm_dialog.c:556
-msgid "Saturation:"
-msgstr "Saturazione:"
-
-#: ../plug-ins/print/gimp_color_window.c:372
-msgid ""
-"Adjust the saturation (color balance) of the print\n"
-"Use zero saturation to produce grayscale output using color and black inks"
-msgstr ""
-"Imposta la saturazione (bilanciamento del colore) della stampa\n"
-"Usa la saturazione zero per produrre un risultato in scala di grigi usando "
-"gli inchiostri del nero e dei colori"
-
-#: ../plug-ins/print/gimp_color_window.c:385
-msgid "Density:"
-msgstr "Densità:"
-
-#: ../plug-ins/print/gimp_color_window.c:393
-msgid ""
-"Adjust the density (amount of ink) of the print. Reduce the density if the "
-"ink bleeds through the paper or smears; increase the density if black "
-"regions are not solid."
-msgstr ""
-"Imposta la densità (ammontare dell'inchiostro) della stampa. Ridurre la "
-"densità se l'inchiostro spande sulla carta o se gocciola; incrementare la "
-"densità se le zone nere non sono piene."
-
-#: ../plug-ins/print/gimp_color_window.c:415
-msgid ""
-"Adjust the gamma of the print. Larger values will produce a generally "
-"brighter print, while smaller values will produce a generally darker print. "
-"Black and white will remain the same, unlike with the brightness adjustment."
-msgstr ""
-"Imposta la gamma della stampa. Valori alti producono generalmente una stampe "
-"più luminose, mentre valori inferiori producono stampe più scure. Il bianco "
-"e nero rimane uguale a meno che non si agisca sui controlli di luminosità."
-
-#: ../plug-ins/print/gimp_color_window.c:432
-msgid "Dither algorithm:"
-msgstr "Algoritmo di riempimento:"
-
-#: ../plug-ins/print/gimp_color_window.c:440
-msgid ""
-"Choose the dither algorithm to be used.\n"
-"Adaptive Hybrid usually produces the best all-around quality.\n"
-"Ordered is faster and produces almost as good quality on photographs.\n"
-"Fast and Very Fast are considerably faster, and work well for text and line "
-"art.\n"
-"Hybrid Floyd-Steinberg generally produces inferior output."
-msgstr ""
-"Scegliere l'algoritmo di riempimento da usare.\n"
-"Ibrido adattivo normalmente produce i migliori risultati di qualità.\n"
-"Ordinato è il più veloce e produce una buona qualità nelle foto.\n"
-"Veloce e molto veloce sono considerevolmente più veloci e lavorano bene per "
-"il testo e le linee.\n"
-"Floid-Steinberg ibrido produce generalmente il risultato peggiore."
-
-#.
-#. * Create the main dialog
-#.
-#: ../plug-ins/print/gimp_main_window.c:360
-#, c-format
-msgid "%s -- Print v%s"
-msgstr "%s -- Stampa v%s"
-
-#: ../plug-ins/print/gimp_main_window.c:369
-msgid ""
-"Save\n"
-"Settings"
-msgstr ""
-"Salva\n"
-"le impostazioni"
-
-#: ../plug-ins/print/gimp_main_window.c:370
-msgid ""
-"Print and\n"
-"Save Settings"
-msgstr ""
-"Stampa e\n"
-"salva le impostazioni"
-
-#: ../plug-ins/print/gimp_main_window.c:449
-msgid ""
-"Position the image on the page.\n"
-"Click and drag with the primary button to position the image.\n"
-"Click and drag with the second button to move the image with finer "
-"precision; each unit of motion moves the image one point (1/72\")\n"
-"Click and drag with the third (middle) button to move the image in units of "
-"the image size.\n"
-"Holding down the shift key while clicking and dragging constrains the image "
-"to only horizontal or vertical motion.\n"
-"If you click another button while dragging the mouse, the image will return "
-"to its original position."
-msgstr ""
-"Posizione dell'immagine nella pagina.\n"
-"Fare clic e trascinare con il primo tasto per posizionare l'immagine.\n"
-"Fare clic e trascinare con il secondo tasto per spostare l'immagine con una "
-"precisione migliore; ogni unità di moto sposta l'immagine di un punto "
-"(1/72).\n"
-"Fare clic e trascinare con il terzo tasto (al centro) per spostare "
-"l'immagine in unità dell'ampiezza dell'immagine.\n"
-"Mantenendo premuto il tasto MAIUSC mentre si fa clic e si trascina blocca "
-"l'immagine nel movimento verticale o orizzontale.\n"
-"Se si preme un qualsiasi altro tasto durante lo spostamento del mouse "
-"l'immagine tornerà alla sua posizione originale."
-
-#: ../plug-ins/print/gimp_main_window.c:492
-msgid "Auto"
-msgstr "Auto"
-
-#: ../plug-ins/print/gimp_main_window.c:493
-msgid "Portrait"
-msgstr "Verticale"
-
-#: ../plug-ins/print/gimp_main_window.c:494
-msgid "Landscape"
-msgstr "Orizzontale"
-
-#: ../plug-ins/print/gimp_main_window.c:495
-msgid "Upside down"
-msgstr "Capovolta verticale"
-
-#: ../plug-ins/print/gimp_main_window.c:496
-msgid "Seascape"
-msgstr "Capovolta orizzontale"
-
-#: ../plug-ins/print/gimp_main_window.c:506
-msgid ""
-"Select the orientation: portrait, landscape, upside down, or seascape "
-"(upside down landscape)"
-msgstr ""
-"Seleziona l'orientamento: verticale, orizzontale, capovolta verticale o "
-"capovolta orizzontale"
-
-#: ../plug-ins/print/gimp_main_window.c:525
-msgid "Distance from the left of the paper to the image"
-msgstr "Distanza dalla sinistra del foglio all'immagine"
-
-#: ../plug-ins/print/gimp_main_window.c:538
-msgid "Distance from the top of the paper to the image"
-msgstr "Distanza dalla cima del foglio all'immagine"
-
-#: ../plug-ins/print/gimp_main_window.c:551
-msgid "Distance from the left of the paper to the right of the image"
-msgstr "Distanza dalla sinistra del foglio alla destra dell'immagine"
-
-#: ../plug-ins/print/gimp_main_window.c:561
-msgid "Right border:"
-msgstr "Bordo destro:"
-
-#: ../plug-ins/print/gimp_main_window.c:565
-msgid "Distance from the right of the paper to the image"
-msgstr "Distanza dalla destra del foglio all'immagine"
-
-#: ../plug-ins/print/gimp_main_window.c:579
-msgid "Distance from the top of the paper to the bottom of the image"
-msgstr "Distanza dalla cima del foglio al fondo dell'immagine"
-
-#: ../plug-ins/print/gimp_main_window.c:589
-msgid "Bottom border:"
-msgstr "Bordo inferiore:"
-
-#: ../plug-ins/print/gimp_main_window.c:593
-msgid "Distance from the bottom of the paper to the image"
-msgstr "Distanza dal fondo del foglio all'immagine"
-
-#: ../plug-ins/print/gimp_main_window.c:606
-msgid "Center:"
-msgstr "Centro:"
-
-#: ../plug-ins/print/gimp_main_window.c:610
-msgid "Vertically"
-msgstr "Verticalmente"
-
-#: ../plug-ins/print/gimp_main_window.c:615
-msgid "Center the image vertically on the paper"
-msgstr "Centra l'immagine verticalmente sulla carta"
-
-#: ../plug-ins/print/gimp_main_window.c:621
-msgid "Both"
-msgstr "Entrambi"
-
-#: ../plug-ins/print/gimp_main_window.c:626
-msgid "Center the image on the paper"
-msgstr "Centra l'immagine sulla carta"
-
-#: ../plug-ins/print/gimp_main_window.c:633
-msgid "Horizontally"
-msgstr "Orizzontalmente"
-
-#: ../plug-ins/print/gimp_main_window.c:638
-msgid "Center the image horizontally on the paper"
-msgstr "Centra l'immagine orizzontalmente sulla carta"
-
-#: ../plug-ins/print/gimp_main_window.c:654
-msgid "Setup Printer"
-msgstr "Imposta stampante"
-
-#.
-#. * Printer driver option menu.
-#.
-#: ../plug-ins/print/gimp_main_window.c:683
-msgid "Printer Model:"
-msgstr "Modello stampante:"
-
-#: ../plug-ins/print/gimp_main_window.c:695
-msgid "Select your printer model"
-msgstr "Seleziona il tuo modello di stampante"
-
-#.
-#. * PPD file.
-#.
-#: ../plug-ins/print/gimp_main_window.c:734
-msgid "PPD File:"
-msgstr "File PPD:"
-
-#: ../plug-ins/print/gimp_main_window.c:750
-msgid "Enter the PPD filename for your printer"
-msgstr "Iserisci il nome del file PPD per la tua stampante"
-
-#: ../plug-ins/print/gimp_main_window.c:753
-msgid "Browse"
-msgstr "Naviga"
-
-#: ../plug-ins/print/gimp_main_window.c:759
-msgid "Choose the PPD file for your printer"
-msgstr "Scegli il file PPD per la tua stampante"
-
-#.
-#. * Print command.
-#.
-#: ../plug-ins/print/gimp_main_window.c:769
-msgid "Command:"
-msgstr "Comando:"
-
-#: ../plug-ins/print/gimp_main_window.c:782
-msgid ""
-"Enter the command to print to your printer. Note: Please do not remove the `-"
-"l' or `-oraw' from the command string, or printing will probably fail!"
-msgstr ""
-"Inserisci il comando necessario per stampare. Nota: non rimuovere le opzioni "
-"-l o -oraw dal comando o la stampa probabilmente fallirà!"
-
-#: ../plug-ins/print/gimp_main_window.c:792
-msgid "Choose PPD File"
-msgstr "Scegli il file PPD"
-
-#: ../plug-ins/print/gimp_main_window.c:819
-msgid "Define New Printer"
-msgstr "Imposta una nuova stampante"
-
-#: ../plug-ins/print/gimp_main_window.c:842
-#: ../plug-ins/print/gimp_main_window.c:937
-msgid "Printer name:"
-msgstr "Nome stampante:"
-
-#: ../plug-ins/print/gimp_main_window.c:846
-msgid "Enter the name you wish to give this logical printer"
-msgstr "Immettere il nome che si vuole dare a questa stampante logica"
-
-#: ../plug-ins/print/gimp_main_window.c:859
-msgid "About Gimp-Print "
-msgstr "Informazioni su Gimp-Print"
-
-#: ../plug-ins/print/gimp_main_window.c:872
-msgid "Gimp-Print Version "
-msgstr "Versione di Gimp-Print"
-
-#: ../plug-ins/print/gimp_main_window.c:872
-msgid ""
-"\n"
-"\n"
-"Copyright (C) 1997-2001 Michael Sweet, Robert Krawitz,\n"
-"and the rest of the Gimp-Print Development Team.\n"
-"\n"
-"Please visit our web site at http://gimp-print.sourceforge.net.\n"
-"\n"
-"This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
-msgstr ""
-"\n"
-"\n"
-"Tutti i diritti riservati (C) Michael Sweet, Robert Krawitz,\n"
-"e tutto il resto del gruppo di sviluppo di Gimp-Print.\n"
-"\n"
-"Visitate il nostro sito web su http://gimp-print.sourceforge.net.\n"
-"\n"
-"Questo programma è software libero; è possibile ridistribuirlo e/o "
-"modificarlo\n"
-"nei termini della licenza GNU General Public License come pubblicato dalla\n"
-"Free Software Foundation; versione 2 della licenza o (a vostro piacimento)\n"
-"qualsiasi versione successiva.\n"
-"\n"
-"Questo programma è distribuito nella speranza che sia utile,\n"
-"ma SENZA ALCUNA GARANZIA; senza neanche la garanzia implicita di\n"
-"VENDIBILITà o che sia ADATTO AD UNO SCOPO PARTICOLARE. Vedere la\n"
-"licenza GNU General Public License per i dettagli in merito.\n"
-"\n"
-"Si dovrebbe aver ricevuto una copia della licenza GNU General Public "
-"License\n"
-"con questo programma; se così non è, scrivete alla Free Software "
-"Foundation,\n"
-"Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
-
-#: ../plug-ins/print/gimp_main_window.c:920
-msgid "Printer Settings"
-msgstr "Configurazione stampante"
-
-#: ../plug-ins/print/gimp_main_window.c:933
-msgid ""
-"Select the name of the printer (not the type, or model, of printer) that you "
-"wish to print to"
-msgstr ""
-"Seleziona il nome della stampante (non il tipo o il modello della stampante) "
-"sulla quale vuoi stampare"
-
-#: ../plug-ins/print/gimp_main_window.c:943
-msgid "Printer model:"
-msgstr "Modello stampante:"
-
-#.
-#. * Setup printer button
-#.
-#: ../plug-ins/print/gimp_main_window.c:954
-msgid "Setup Printer..."
-msgstr "Imposta stampante..."
-
-#: ../plug-ins/print/gimp_main_window.c:956
-msgid ""
-"Choose the printer model, PPD file, and command that is used to print to "
-"this printer"
-msgstr ""
-"Scegli il modello della stampante, il file PPD ed il comando usato per "
-"stampare"
-
-#.
-#. * New printer button
-#.
-#: ../plug-ins/print/gimp_main_window.c:971
-msgid "New Printer..."
-msgstr "Nuova stampante..."
-
-#: ../plug-ins/print/gimp_main_window.c:973
-msgid ""
-"Define a new logical printer. This can be used to name a collection of "
-"settings that you wish to remember for future use."
-msgstr ""
-"Definisci una nuova stampante logica. Può servire per dare un nome ad una "
-"serie di impostazioni che si vuole ricordare per un uso futuro."
-
-#: ../plug-ins/print/gimp_main_window.c:994
-msgid "Size of paper that you wish to print to"
-msgstr "Dimensione della carta su cui si vuole stampare"
-
-#: ../plug-ins/print/gimp_main_window.c:997
-msgid "Media size:"
-msgstr "Dimensione:"
-
-#: ../plug-ins/print/gimp_main_window.c:1006
-msgid "Dimensions:"
-msgstr "Dimensioni:"
-
-#: ../plug-ins/print/gimp_main_window.c:1020
-msgid "Width of the paper that you wish to print to"
-msgstr "Larghezza della carta su cui si vuole stampare"
-
-#: ../plug-ins/print/gimp_main_window.c:1037
-msgid "Height of the paper that you wish to print to"
-msgstr "Altezza della carta su cui si vuole stampare"
-
-#: ../plug-ins/print/gimp_main_window.c:1053
-msgid "Type of media you're printing to"
-msgstr "Tipo di supporto su cui si sta stampando"
-
-#: ../plug-ins/print/gimp_main_window.c:1056
-msgid "Media type:"
-msgstr "Tipo di supporto:"
-
-#: ../plug-ins/print/gimp_main_window.c:1069
-msgid "Source (input slot) of media you're printing to"
-msgstr "Sorgente (cassetto di ingresso) di supporti da cui si sta stampando"
-
-#: ../plug-ins/print/gimp_main_window.c:1072
-msgid "Media source:"
-msgstr "Sorgente supporto:"
-
-#: ../plug-ins/print/gimp_main_window.c:1085
-msgid "Type of ink in the printer"
-msgstr "Tipo di inchiostro della stampante"
-
-#: ../plug-ins/print/gimp_main_window.c:1088
-msgid "Ink type:"
-msgstr "Tipo di inchiostro:"
-
-#: ../plug-ins/print/gimp_main_window.c:1101
-msgid "Resolution and quality of the print"
-msgstr "Risoluzione e qualità della stampa"
-
-#: ../plug-ins/print/gimp_main_window.c:1138
-msgid "Scaling:"
-msgstr "Scalatura:"
-
-#: ../plug-ins/print/gimp_main_window.c:1144
-msgid "Set the scale (size) of the image"
-msgstr "Imposta la scala (grandezza) dell'immagine"
-
-#: ../plug-ins/print/gimp_main_window.c:1169
-msgid "Scale by:"
-msgstr "Scala per:"
-
-#: ../plug-ins/print/gimp_main_window.c:1174
-msgid ""
-"Select whether scaling is measured as percent of available page size or "
-"number of output dots per inch"
-msgstr ""
-"Imposta se la scala deve essere misurata come percentuale della dimensione "
-"della carta o come numero di punti per pollice"
-
-#: ../plug-ins/print/gimp_main_window.c:1179
-msgid "Percent"
-msgstr "Percentuale"
-
-#: ../plug-ins/print/gimp_main_window.c:1186
-msgid "Scale the print to the size of the page"
-msgstr "Imposta la scala alla grandezza della pagina"
-
-#: ../plug-ins/print/gimp_main_window.c:1192
-msgid "PPI"
-msgstr "PPI"
-
-#: ../plug-ins/print/gimp_main_window.c:1198
-msgid "Scale the print to the number of dots per inch"
-msgstr "Scala la stampa al numero di punti per pollice"
-
-#: ../plug-ins/print/gimp_main_window.c:1220
-msgid "Set the width of the print"
-msgstr "Imposta la larghezza della stampa"
-
-#: ../plug-ins/print/gimp_main_window.c:1233
-msgid "Set the height of the print"
-msgstr "Imposta l'altezza della stampa"
-
-#: ../plug-ins/print/gimp_main_window.c:1254
-msgid "Units:"
-msgstr "Unità:"
-
-#: ../plug-ins/print/gimp_main_window.c:1259
-msgid "Select the base unit of measurement for printing"
-msgstr "Seleziona l'unità di base per la misura della stampa"
-
-#: ../plug-ins/print/gimp_main_window.c:1262
-msgid "Inch"
-msgstr "Pollici"
-
-#: ../plug-ins/print/gimp_main_window.c:1269
-msgid "Set the base unit of measurement to inches"
-msgstr "Imposta l'unità di base della stampa in pollici"
-
-#: ../plug-ins/print/gimp_main_window.c:1275
-msgid "cm"
-msgstr "cm"
-
-#: ../plug-ins/print/gimp_main_window.c:1281
-msgid "Set the base unit of measurement to centimetres"
-msgstr "Imposta l'unità di base per la stampa in centimetri"
-
-#.
-#. * The "image size" button
-#.
-#: ../plug-ins/print/gimp_main_window.c:1291
-msgid ""
-"Use Original\n"
-"Image Size"
-msgstr ""
-"Usa la dimensione\n"
-"immagine originale"
-
-#: ../plug-ins/print/gimp_main_window.c:1297
-msgid "Set the print size to the size of the image"
-msgstr "Imposta l'ampiezza della stampa all'ampiezza dell'immagine"
-
-#: ../plug-ins/print/gimp_main_window.c:1320
-msgid "Image / Output Settings"
-msgstr "Immagine / Impostazione uscita"
-
-#: ../plug-ins/print/gimp_main_window.c:1334
-msgid "Image type:"
-msgstr "Tipo immagine:"
-
-#: ../plug-ins/print/gimp_main_window.c:1342
-msgid "Optimize the output for the type of image being printed"
-msgstr "Ottimizza il risultato in base al tipo di immagine da stampare"
-
-#: ../plug-ins/print/gimp_main_window.c:1346
-msgid "Line art"
-msgstr "Disegni a tratto"
-
-#: ../plug-ins/print/gimp_main_window.c:1353
-msgid "Fastest and brightest color for text and line art"
-msgstr "La più veloce e con colori più luminosi per testo e disegni a tratto"
-
-#: ../plug-ins/print/gimp_main_window.c:1360
-msgid "Solid colors"
-msgstr "Colori pieni"
-
-#: ../plug-ins/print/gimp_main_window.c:1367
-msgid "Best for images dominated by regions of solid color"
-msgstr "Migliore per immagini prevalentemente a colori pieni"
-
-#: ../plug-ins/print/gimp_main_window.c:1375
-msgid "Photograph"
-msgstr "Fotografie"
-
-#: ../plug-ins/print/gimp_main_window.c:1383
-msgid ""
-"Slowest, but most accurate and smoothest color for continuous tone images "
-"and photographs"
-msgstr ""
-"La più lenta ma molto accurata e con colori sfumati per immagini con toni "
-"continui e fotografie"
-
-#: ../plug-ins/print/gimp_main_window.c:1406
-msgid "Output type:"
-msgstr "Tipologia di risultato:"
-
-#: ../plug-ins/print/gimp_main_window.c:1413
-msgid "Select the desired output type"
-msgstr "Seleziona il tipo di risultato desiderato"
-
-#: ../plug-ins/print/gimp_main_window.c:1422
-msgid "Color output"
-msgstr "A colori"
-
-#: ../plug-ins/print/gimp_main_window.c:1427
-msgid "Grayscale"
-msgstr "Scala di grigi"
-
-#: ../plug-ins/print/gimp_main_window.c:1434
-msgid "Print in shades of gray using black ink"
-msgstr "Stampa in toni di grigio usando l'inchiostro nero"
-
-#: ../plug-ins/print/gimp_main_window.c:1441
-msgid "Black and white"
-msgstr "Bianco e nero"
-
-#: ../plug-ins/print/gimp_main_window.c:1448
-msgid "Print in black and white (no color, and no shades of gray)"
-msgstr "Stampa in bianco e nero (no colori e nessuna sfumatura di grigio)"
-
-#.
-#. *  Color adjust button
-#.
-#: ../plug-ins/print/gimp_main_window.c:1459
-msgid "Adjust Output..."
-msgstr "Impostazione del risultato..."
-
-#: ../plug-ins/print/gimp_main_window.c:1466
-msgid ""
-"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
-msgstr ""
-"Impostazione del bilanciamento del colore, luminosità, contrasto, "
-"saturazione e algoritmo di dithering"
-
-#: ../plug-ins/print/gimp_main_window.c:1500
-msgid "Print to File"
-msgstr "Stampa su file"
-
-#: ../plug-ins/print/print.c:168
-msgid "Print the image using the gimp-print drivers"
-msgstr "Stampa l'immagine usando i driver gimp-print"
-
-#: ../plug-ins/print/print.c:701 ../plug-ins/print/print.c:702
-#: ../plug-ins/print/print.c:792 ../plug-ins/print/print.c:1131
-msgid "File"
-msgstr "File"
-
 #: ../plug-ins/rcm/rcm.c:96
 msgid "Replace a range of colors with another"
 msgstr "Scambia un insieme di colori con un altro"
@@ -12097,6 +11416,11 @@ msgstr "Contesto"
 #: ../plug-ins/rcm/rcm_dialog.c:467
 msgid "Hue:"
 msgstr "Tonalità:"
+
+#. Gray: Circle: Spinbutton 2
+#: ../plug-ins/rcm/rcm_dialog.c:494 ../plug-ins/rcm/rcm_dialog.c:556
+msgid "Saturation:"
+msgstr "Saturazione:"
 
 #. * Gray: Operation-Mode *
 #: ../plug-ins/rcm/rcm_dialog.c:514
