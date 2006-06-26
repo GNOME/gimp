@@ -479,15 +479,16 @@ set_paint_type_callback (GtkToggleButton *toggle,
  * gfig_context->enable_repaint is FALSE).
  */
 void
-gfig_brush_changed_callback (const gchar          *brush_name,
-                             gdouble               opacity,
-                             gint                  spacing,
-                             GimpLayerModeEffects  paint_mode,
-                             gint                  width,
-                             gint                  height,
-                             const guchar         *mask_data,
-                             gboolean              dialog_closing,
-                             gpointer              user_data)
+gfig_brush_changed_callback (GimpBrushSelectButton *button,
+                             const gchar           *brush_name,
+                             gdouble                opacity,
+                             gint                   spacing,
+                             GimpLayerModeEffects   paint_mode,
+                             gint                   width,
+                             gint                   height,
+                             const guchar          *mask_data,
+                             gboolean               dialog_closing,
+                             gpointer               user_data)
 {
   Style *current_style;
 
@@ -504,13 +505,14 @@ gfig_brush_changed_callback (const gchar          *brush_name,
 }
 
 void
-gfig_pattern_changed_callback (const gchar  *pattern_name,
-                               gint          width,
-                               gint          height,
-                               gint          bpp,
-                               const guchar *mask_data,
-                               gboolean      dialog_closing,
-                               gpointer      user_data)
+gfig_pattern_changed_callback (GimpPatternSelectButton *button,
+                               const gchar             *pattern_name,
+                               gint                     width,
+                               gint                     height,
+                               gint                     bpp,
+                               const guchar            *mask_data,
+                               gboolean                 dialog_closing,
+                               gpointer                 user_data)
 {
   Style *current_style;
 
@@ -521,11 +523,12 @@ gfig_pattern_changed_callback (const gchar  *pattern_name,
 }
 
 void
-gfig_gradient_changed_callback (const gchar   *gradient_name,
-                                gint           width,
-                                const gdouble *grad_data,
-                                gboolean       dialog_closing,
-                                gpointer       user_data)
+gfig_gradient_changed_callback (GimpGradientSelectButton *button,
+                                const gchar              *gradient_name,
+                                gint                      width,
+                                const gdouble            *grad_data,
+                                gboolean                  dialog_closing,
+                                gpointer                  user_data)
 {
   Style *current_style;
 
@@ -663,15 +666,17 @@ gfig_style_set_context_from_style (Style *style)
     g_message ("Style from context: Failed to set brush to '%s'",
                style->brush_name);
 
-  gimp_brush_select_widget_set (gfig_context->brush_select,
-                                style->brush_name,
-                                -1., -1, -1);  /* FIXME */
+  gimp_brush_select_button_set_brush
+    (GIMP_BRUSH_SELECT_BUTTON (gfig_context->brush_select),
+     style->brush_name, -1.0, -1, -1);  /* FIXME */
 
-  gimp_pattern_select_widget_set (gfig_context->pattern_select,
-                                  style->pattern);
+  gimp_pattern_select_button_set_pattern_name
+    (GIMP_PATTERN_SELECT_BUTTON (gfig_context->pattern_select),
+     style->pattern);
 
-  gimp_gradient_select_widget_set (gfig_context->gradient_select,
-                                  style->gradient);
+  gimp_gradient_select_button_set_gradient_name
+    (GIMP_GRADIENT_SELECT_BUTTON (gfig_context->gradient_select),
+     style->gradient);
 
   gfig_context->bdesc.name = style->brush_name;
   if (gfig_context->debug_styles)

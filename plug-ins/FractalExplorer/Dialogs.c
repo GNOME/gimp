@@ -284,11 +284,12 @@ explorer_number_of_colors_callback (GtkAdjustment *adjustment,
 }
 
 static void
-explorer_gradient_select_callback (const gchar   *name,
-                                   gint           width,
-                                   const gdouble *gradient_data,
-                                   gboolean       dialog_closing,
-                                   gpointer       data)
+explorer_gradient_select_callback (GimpGradientSelectButton *gradient_button,
+                                   const gchar              *name,
+                                   gint                      width,
+                                   const gdouble            *gradient_data,
+                                   gboolean                  dialog_closing,
+                                   gpointer                  data)
 {
   g_free (gradient_name);
   g_free (gradient_samples);
@@ -1160,10 +1161,10 @@ explorer_dialog (void)
                                      &n_gradient_samples,
                                      &gradient_samples);
 
-  gradient = gimp_gradient_select_widget_new (_("FractalExplorer Gradient"),
-                                              gradient_name,
-                                              explorer_gradient_select_callback,
-                                              NULL);
+  gradient = gimp_gradient_select_button_new (_("FractalExplorer Gradient"),
+                                              gradient_name);
+  g_signal_connect (gradient, "gradient-set",
+                    G_CALLBACK (explorer_gradient_select_callback), NULL);
   g_free (gradient_name);
   gtk_box_pack_start (GTK_BOX (hbox), gradient, FALSE, FALSE, 0);
   gtk_widget_show (gradient);

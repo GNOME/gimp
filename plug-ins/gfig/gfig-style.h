@@ -76,7 +76,8 @@ void     set_background_callback           (GimpColorButton      *button,
 void     set_paint_type_callback           (GtkToggleButton      *toggle,
                                             gpointer              data);
 
-void     gfig_brush_changed_callback       (const gchar          *brush_name,
+void     gfig_brush_changed_callback       (GimpBrushSelectButton *button,
+                                            const gchar          *brush_name,
                                             gdouble               opacity,
                                             gint                  spacing,
                                             GimpLayerModeEffects  paint_mode,
@@ -86,7 +87,8 @@ void     gfig_brush_changed_callback       (const gchar          *brush_name,
                                             gboolean              dialog_closing,
                                             gpointer              user_data);
 
-void     gfig_pattern_changed_callback     (const gchar          *pattern_name,
+void     gfig_pattern_changed_callback     (GimpPatternSelectButton *button,
+                                            const gchar          *pattern_name,
                                             gint                  width,
                                             gint                  height,
                                             gint                  bpp,
@@ -94,7 +96,8 @@ void     gfig_pattern_changed_callback     (const gchar          *pattern_name,
                                             gboolean              dialog_closing,
                                             gpointer              user_data);
 
-void     gfig_gradient_changed_callback    (const gchar          *gradient_name,
+void     gfig_gradient_changed_callback    (GimpGradientSelectButton *button,
+                                            const gchar          *gradient_name,
                                             gint                  width,
                                             const gdouble        *grad_data,
                                             gboolean              dialog_closing,

@@ -1,5 +1,39 @@
 2006-06-25  Manish Singh  <yosh@gimp.org>
 
+	* libgimp/gimpuitypes.h
+	* libgimp/gimpselectbutton.[ch]: abstract class for resource selection
+	buttons.
+
+	* libgimp/gimpfontselectbutton.[ch]: derive from GimpSelectButton.
+
+	* libgimp/gimpbrushselectbutton.[ch]
+	* libgimp/gimpgradientselectbutton.[ch]
+	* libgimp/gimppaletteselectbutton.[ch]
+	* libgimp/gimppatternselectbutton.[ch]: replacements for
+	gimp_foo_select widgets, akin to GimpFontSelectButton.
+
+	* libgimp/gimpbrushmenu.[ch]
+	* libgimp/gimpgradientmenu.[ch]
+	* libgimp/gimppalettemenu.[ch]
+	* libgimp/gimppatternmenu.[ch]: deprecate old API, and reimplement
+	in terms of GimpFooSelectButton.
+
+	* libgimp/gimpfontmenu.[ch]: change to use the GimpSelectButton API.
+
+	* libgimp/gimpuimarshal.list: new marshallers for the above new
+	widgets.
+
+	* libgimp/gimpui.h: add new headers.
+
+	* libgimp/Makefile.am: add new files.
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-style.[ch]
+	* plug-ins/script-fu/script-fu-interface.c: use new API.
+
+2006-06-25  Manish Singh  <yosh@gimp.org>
+
 	* libgimp/gimpbrushes.c
 	* modules/cdisplay_colorblind.c: fix some ytpos.
 

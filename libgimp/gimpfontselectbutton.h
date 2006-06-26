@@ -22,6 +22,8 @@
 #ifndef __GIMP_FONT_SELECT_BUTTON_H__
 #define __GIMP_FONT_SELECT_BUTTON_H__
 
+#include <libgimp/gimpselectbutton.h>
+
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
@@ -39,15 +41,12 @@ typedef struct _GimpFontSelectButtonClass  GimpFontSelectButtonClass;
 
 struct _GimpFontSelectButton
 {
-  GtkButton   parent_instance;
-
-  /*< private >*/
-  gpointer    priv;
+  GimpSelectButton  parent_instance;
 };
 
 struct _GimpFontSelectButtonClass
 {
-  GtkButtonClass  parent_class;
+  GimpSelectButtonClass  parent_class;
 
   /* font_set signal is emitted when font is chosen */
   void (* font_set) (GimpFontSelectButton *font_button,
@@ -64,14 +63,14 @@ struct _GimpFontSelectButtonClass
 
 GType       gimp_font_select_button_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_font_select_button_new      (const gchar          *title,
+GtkWidget * gimp_font_select_button_new      (const gchar *title,
+                                              const gchar *font_name);
+
+G_CONST_RETURN gchar * gimp_font_select_button_get_font_name
+                                             (GimpFontSelectButton *button);
+void                   gimp_font_select_button_set_font_name
+                                             (GimpFontSelectButton *button,
                                               const gchar          *font_name);
-
-void        gimp_font_select_button_close_popup (GimpFontSelectButton *button);
-
-G_CONST_RETURN gchar * gimp_font_select_button_get_font_name (GimpFontSelectButton *button);
-void                   gimp_font_select_button_set_font_name (GimpFontSelectButton *button,
-                                                              const gchar          *font_name);
 
 
 G_END_DECLS

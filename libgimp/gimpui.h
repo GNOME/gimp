@@ -29,8 +29,8 @@
 #include <libgimp/gimpexport.h>
 #include <libgimp/gimpmenu.h>
 #include <libgimp/gimpaspectpreview.h>
-#include <libgimp/gimpbrushmenu.h>
 #include <libgimp/gimpdrawablepreview.h>
+#include <libgimp/gimpbrushmenu.h>
 #include <libgimp/gimpfontmenu.h>
 #include <libgimp/gimpgradientmenu.h>
 #include <libgimp/gimppalettemenu.h>
@@ -41,7 +41,12 @@
 #include <libgimp/gimpprogressbar.h>
 #include <libgimp/gimpdrawablecombobox.h>
 #include <libgimp/gimpimagecombobox.h>
+#include <libgimp/gimpselectbutton.h>
+#include <libgimp/gimpbrushselectbutton.h>
 #include <libgimp/gimpfontselectbutton.h>
+#include <libgimp/gimpgradientselectbutton.h>
+#include <libgimp/gimppaletteselectbutton.h>
+#include <libgimp/gimppatternselectbutton.h>
 #include <libgimp/gimpzoompreview.h>
 
 G_BEGIN_DECLS

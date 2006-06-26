@@ -75,33 +75,33 @@ static void   script_fu_file_callback       (GtkWidget            *widget,
                                              SFFilename           *file);
 static void   script_fu_combo_callback      (GtkWidget            *widget,
                                              SFOption             *option);
-static void   script_fu_pattern_callback    (const gchar          *name,
+static void   script_fu_pattern_callback    (gpointer              data,
+                                             const gchar          *name,
                                              gint                  width,
                                              gint                  height,
                                              gint                  bytes,
                                              const guchar         *mask_data,
-                                             gboolean              closing,
-                                             gpointer              data);
-static void   script_fu_gradient_callback   (const gchar          *name,
+                                             gboolean              closing);
+static void   script_fu_gradient_callback   (gpointer              data,
+                                             const gchar          *name,
                                              gint                  width,
                                              const gdouble        *mask_data,
-                                             gboolean              closing,
-                                             gpointer              data);
+                                             gboolean              closing);
 static void   script_fu_font_callback       (gpointer              data,
                                              const gchar          *name,
                                              gboolean              closing);
-static void   script_fu_palette_callback    (const gchar          *name,
-                                             gboolean              closing,
-                                             gpointer              data);
-static void   script_fu_brush_callback      (const gchar          *name,
+static void   script_fu_palette_callback    (gpointer              data,
+                                             const gchar          *name,
+                                             gboolean              closing);
+static void   script_fu_brush_callback      (gpointer              data,
+                                             const gchar          *name,
                                              gdouble               opacity,
                                              gint                  spacing,
                                              GimpLayerModeEffects  paint_mode,
                                              gint                  width,
                                              gint                  height,
                                              const guchar         *mask_data,
-                                             gboolean              closing,
-                                             gpointer              data);
+                                             gboolean              closing);
 
 
 /*
@@ -449,44 +449,49 @@ script_fu_interface (SFScript *script)
 	  break;
 
 	case SF_FONT:
-	  widget = gimp_font_select_button_new (_("Script-Fu Font Selection"),
+          widget = gimp_font_select_button_new (_("Script-Fu Font Selection"),
                                                 script->arg_values[i].sfa_font);
           g_signal_connect_swapped (widget, "font-set",
                                     G_CALLBACK (script_fu_font_callback),
                                     &script->arg_values[i].sfa_font);
-	  break;
+          break;
 
 	case SF_PALETTE:
-	  widget = gimp_palette_select_widget_new (_("Script-Fu Palette Selection"),
-                                                   script->arg_values[i].sfa_palette,
-                                                   script_fu_palette_callback,
-                                                   &script->arg_values[i].sfa_palette);
-	  break;
+          widget = gimp_palette_select_button_new (_("Script-Fu Palette Selection"),
+                                                   script->arg_values[i].sfa_palette);
+          g_signal_connect_swapped (widget, "palette-set",
+                                    G_CALLBACK (script_fu_palette_callback),
+                                    &script->arg_values[i].sfa_palette);
+          break;
 
 	case SF_PATTERN:
           left_align = TRUE;
-	  widget = gimp_pattern_select_widget_new (_("Script-fu Pattern Selection"),
-                                                   script->arg_values[i].sfa_pattern,
-                                                   script_fu_pattern_callback,
-                                                   &script->arg_values[i].sfa_pattern);
-	  break;
+          widget = gimp_pattern_select_button_new (_("Script-fu Pattern Selection"),
+                                                   script->arg_values[i].sfa_pattern);
+          g_signal_connect_swapped (widget, "pattern-set",
+                                    G_CALLBACK (script_fu_pattern_callback),
+                                    &script->arg_values[i].sfa_pattern);
+          break;
+
 	case SF_GRADIENT:
           left_align = TRUE;
-	  widget = gimp_gradient_select_widget_new (_("Script-Fu Gradient Selection"),
-                                                    script->arg_values[i].sfa_gradient,
-                                                    script_fu_gradient_callback,
-                                                    &script->arg_values[i].sfa_gradient);
-	  break;
+          widget = gimp_gradient_select_button_new (_("Script-Fu Gradient Selection"),
+                                                    script->arg_values[i].sfa_gradient);
+          g_signal_connect_swapped (widget, "gradient-set",
+                                    G_CALLBACK (script_fu_gradient_callback),
+                                    &script->arg_values[i].sfa_gradient);
+          break;
 
 	case SF_BRUSH:
           left_align = TRUE;
-	  widget = gimp_brush_select_widget_new (_("Script-Fu Brush Selection"),
+          widget = gimp_brush_select_button_new (_("Script-Fu Brush Selection"),
                                                  script->arg_values[i].sfa_brush.name,
                                                  script->arg_values[i].sfa_brush.opacity,
                                                  script->arg_values[i].sfa_brush.spacing,
-                                                 script->arg_values[i].sfa_brush.paint_mode,
-                                                 script_fu_brush_callback,
-                                                 &script->arg_values[i].sfa_brush);
+                                                 script->arg_values[i].sfa_brush.paint_mode);
+          g_signal_connect_swapped (widget, "brush-set",
+                                    G_CALLBACK (script_fu_brush_callback),
+                                    &script->arg_values[i].sfa_brush);
 	  break;
 
 	case SF_OPTION:
@@ -586,24 +591,12 @@ script_fu_interface_quit (SFScript *script)
     switch (script->arg_types[i])
       {
       case SF_FONT:
-  	gimp_font_select_button_close_popup
-          (GIMP_FONT_SELECT_BUTTON (sf_interface->widgets[i]));
-	break;
-
       case SF_PALETTE:
-  	gimp_palette_select_widget_close (sf_interface->widgets[i]);
-	break;
-
       case SF_PATTERN:
-  	gimp_pattern_select_widget_close (sf_interface->widgets[i]);
-	break;
-
       case SF_GRADIENT:
-  	gimp_gradient_select_widget_close (sf_interface->widgets[i]);
-	break;
-
       case SF_BRUSH:
-  	gimp_brush_select_widget_close (sf_interface->widgets[i]);
+  	gimp_select_button_close_popup
+          (GIMP_SELECT_BUTTON (sf_interface->widgets[i]));
 	break;
 
       default:
@@ -653,23 +646,23 @@ script_fu_string_update (gchar       **dest,
 }
 
 static void
-script_fu_pattern_callback (const gchar  *name,
+script_fu_pattern_callback (gpointer      data,
+                            const gchar  *name,
                             gint          width,
                             gint          height,
                             gint          bytes,
                             const guchar *mask_data,
-                            gboolean      closing,
-                            gpointer      data)
+                            gboolean      closing)
 {
   script_fu_string_update (data, name);
 }
 
 static void
-script_fu_gradient_callback (const gchar   *name,
+script_fu_gradient_callback (gpointer       data,
+                             const gchar   *name,
                              gint           width,
                              const gdouble *mask_data,
-                             gboolean       closing,
-                             gpointer       data)
+                             gboolean       closing)
 {
   script_fu_string_update (data, name);
 }
@@ -683,23 +676,23 @@ script_fu_font_callback (gpointer     data,
 }
 
 static void
-script_fu_palette_callback (const gchar *name,
-                            gboolean     closing,
-                            gpointer     data)
+script_fu_palette_callback (gpointer     data,
+                            const gchar *name,
+                            gboolean     closing)
 {
   script_fu_string_update (data, name);
 }
 
 static void
-script_fu_brush_callback (const gchar          *name,
+script_fu_brush_callback (gpointer              data,
+                          const gchar          *name,
                           gdouble               opacity,
                           gint                  spacing,
                           GimpLayerModeEffects  paint_mode,
                           gint                  width,
                           gint                  height,
                           const guchar         *mask_data,
-                          gboolean              closing,
-                          gpointer              data)
+                          gboolean              closing)
 {
   SFBrush *brush = data;
 
@@ -951,26 +944,30 @@ script_fu_reset (SFScript *script)
           break;
 
         case SF_PALETTE:
-          gimp_palette_select_widget_set (widget,
-                                          script->arg_defaults[i].sfa_palette);
+          gimp_palette_select_button_set_palette_name
+            (GIMP_PALETTE_SELECT_BUTTON (widget),
+             script->arg_defaults[i].sfa_palette);
           break;
 
         case SF_PATTERN:
-          gimp_pattern_select_widget_set (widget,
-                                          script->arg_defaults[i].sfa_pattern);
+	  gimp_pattern_select_button_set_pattern_name
+            (GIMP_PATTERN_SELECT_BUTTON (widget),
+             script->arg_defaults[i].sfa_pattern);
           break;
 
         case SF_GRADIENT:
-          gimp_gradient_select_widget_set (widget,
-                                           script->arg_defaults[i].sfa_gradient);
+          gimp_gradient_select_button_set_gradient_name
+	    (GIMP_GRADIENT_SELECT_BUTTON (widget),
+             script->arg_defaults[i].sfa_gradient);
           break;
 
         case SF_BRUSH:
-          gimp_brush_select_widget_set (widget,
-                                        script->arg_defaults[i].sfa_brush.name,
-                                        script->arg_defaults[i].sfa_brush.opacity,
-                                        script->arg_defaults[i].sfa_brush.spacing,
-                                        script->arg_defaults[i].sfa_brush.paint_mode);
+          gimp_brush_select_button_set_brush
+            (GIMP_BRUSH_SELECT_BUTTON (widget),
+             script->arg_defaults[i].sfa_brush.name,
+             script->arg_defaults[i].sfa_brush.opacity,
+             script->arg_defaults[i].sfa_brush.spacing,
+             script->arg_defaults[i].sfa_brush.paint_mode);
           break;
 
         case SF_OPTION:

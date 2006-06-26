@@ -22,6 +22,12 @@
 #ifndef __GIMP_PATTERN_MENU_H__
 #define __GIMP_PATTERN_MENU_H__
 
+/*  These functions are deprecated and should not be used in newly
+ *  written code.
+ */
+
+#ifndef GIMP_DISABLE_DEPRECATED
+
 G_BEGIN_DECLS
 
 
@@ -36,5 +42,7 @@ void        gimp_pattern_select_widget_set   (GtkWidget        *widget,
 
 
 G_END_DECLS
+
+#endif /*  GIMP_DISABLE_DEPRECATED  */
 
 #endif /* __GIMP_PATTERN_MENU_H__ */
