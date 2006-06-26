@@ -23,11 +23,15 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "print.h"
+#include "print-settings.h"
+#include "print-page-layout.h"
+#include "print-draw-page.h"
+
 #include "libgimp/stdplugins-intl.h"
 
-
-#define PROC_NAME        "file-print-gtk"
-#define PLUG_IN_BINARY   "print"
+#define PRINT_PROC_NAME        "file-print-gtk"
+#define PLUG_IN_BINARY         "print"
 
 
 static void      query          (void);
@@ -37,34 +41,29 @@ static void      run            (const gchar       *name,
                                  gint              *nreturn_vals,
                                  GimpParam        **return_vals);
 
-static gboolean  print_image    (gint32             image_ID,
-                                 gint32             drawable_ID,
-                                 gboolean           interactive);
+static gboolean    print_image          (gint32             image_ID,
+                                         gint32             drawable_ID,
+                                         gboolean           interactive);
 
-static void      begin_print    (GtkPrintOperation *print,
-                                 GtkPrintContext   *context,
-                                 gpointer           user_data);
+static void        begin_print          (GtkPrintOperation *operation,
+                                         GtkPrintContext   *context,
+                                         gpointer           user_data);
 
-static void      end_print      (GtkPrintOperation *operation,
-                                 GtkPrintContext   *context,
-                                 gpointer           user_data);
+static void        end_print            (GtkPrintOperation *operation,
+                                         GtkPrintContext   *context,
+                                         gpointer           user_data);
 
-static void      draw_page      (GtkPrintOperation *print,
-                                 GtkPrintContext   *context,
-                                 int                page_nr,
-                                 gpointer           user_data);
+static void        draw_page            (GtkPrintOperation *print,
+                                         GtkPrintContext   *context,
+                                         int                page_nr,
+                                         gpointer           user_data);
 
-static void      write_print_settings_to_file  (GtkPrintSettings  *settings);
-static void      add_setting_to_key_file       (const gchar       *key,
-                                                const gchar       *value,
-                                                gpointer           data);
-static gboolean  load_print_settings_from_file (GtkPrintSettings *settings);
+static GtkWidget * create_custom_widget (GtkPrintOperation *operation,
+                                         gpointer           user_data);
 
-typedef struct
-{
-  gint     num_pages;
-  gint32   drawable_id;
-} PrintData;
+static void        custom_widget_apply  (GtkPrintOperation *operation,
+                                         GtkWidget         *widget,
+                                         gpointer           user_data);
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -86,7 +85,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to print"            }
   };
 
-  gimp_install_procedure (PROC_NAME,
+  gimp_install_procedure (PRINT_PROC_NAME,
                           N_("Print the image"),
                           "Print the image using the GTK+ Print API.",
                           "Bill Skaggs  <weskaggs@primate.ucdavis.edu>",
@@ -98,9 +97,10 @@ query (void)
                           G_N_ELEMENTS (print_args), 0,
                           print_args, NULL);
 
-  gimp_plugin_menu_register (PROC_NAME, "<Image>/File/Send");
-  gimp_plugin_icon_register (PROC_NAME, GIMP_ICON_TYPE_STOCK_ID,
+  gimp_plugin_menu_register (PRINT_PROC_NAME, "<Image>/File/Send");
+  gimp_plugin_icon_register (PRINT_PROC_NAME, GIMP_ICON_TYPE_STOCK_ID,
                              (const guint8 *) GTK_STOCK_PRINT);
+
 }
 
 static void
@@ -128,7 +128,7 @@ run (const gchar      *name,
   image_ID    = param[1].data.d_int32;
   drawable_ID = param[2].data.d_int32;
 
-  if (strcmp (name, PROC_NAME) == 0)
+  if (strcmp (name, PRINT_PROC_NAME) == 0)
     {
       if (run_mode == GIMP_RUN_INTERACTIVE)
         gimp_ui_init (PLUG_IN_BINARY, FALSE);
@@ -152,19 +152,19 @@ print_image (gint32    image_ID,
              gint32    drawable_ID,
              gboolean  interactive)
 {
-  GtkPrintOperation       *operation = gtk_print_operation_new ();
-  GtkPrintSettings        *settings  = gtk_print_settings_new ();
-  GError                  *error = NULL;
+  GtkPrintOperation       *operation  = gtk_print_operation_new ();
+  GError                  *error      = NULL;
   PrintData               *data;
 
-  if (load_print_settings_from_file (settings))
-    gtk_print_operation_set_print_settings (operation, settings);
-
-  /* begin junk */
   data = g_new0 (PrintData, 1);
-  data->num_pages = 1;
+  data->num_pages   = 1;
+  data->image_id    = image_ID;
   data->drawable_id = drawable_ID;
-  /* end junk */
+  data->operation   = operation;
+  data->print_size_changed = FALSE;
+  gimp_image_get_resolution (data->image_id, &data->xres, &data->yres);
+
+  load_print_settings (data);
 
   g_signal_connect (operation, "begin-print", G_CALLBACK (begin_print), data);
   g_signal_connect (operation, "draw-page",   G_CALLBACK (draw_page),   data);
@@ -174,16 +174,20 @@ print_image (gint32    image_ID,
     {
       GtkPrintOperationResult  res;
 
+      g_signal_connect (operation, "create-custom-widget",
+                        G_CALLBACK (create_custom_widget),   data);
+      g_signal_connect (operation, "custom-widget-apply",
+                        G_CALLBACK (custom_widget_apply),   data);
+
+      gtk_print_operation_set_custom_tab_label (operation, _("Layout"));
+
       res = gtk_print_operation_run (operation,
                                      GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
                                      NULL, &error);
 
       if (res == GTK_PRINT_OPERATION_RESULT_APPLY)
         {
-          settings = gtk_print_operation_get_print_settings (operation);
-
-          if (settings)
-            write_print_settings_to_file (settings);
+          save_print_settings (data);
         }
     }
   else
@@ -204,7 +208,7 @@ begin_print (GtkPrintOperation *operation,
 	     GtkPrintContext   *context,
 	     gpointer           user_data)
 {
-  PrintData        *data = (PrintData *)user_data;
+  PrintData        *data = (PrintData *) user_data;
 
   data->num_pages = 1;
   gtk_print_operation_set_n_pages (operation, data->num_pages);
@@ -228,157 +232,49 @@ draw_page (GtkPrintOperation *operation,
 	   int                page_nr,
 	   gpointer           user_data)
 {
-  PrintData *data = (PrintData *)user_data;
-  cairo_t         *cr;
-  gdouble          cr_width;
-  gdouble          cr_height;
-  GimpDrawable    *drawable;
-  GimpPixelRgn     region;
-  gint             width;
-  gint             height;
-  gint             rowstride;
-  guchar          *pixels;
-  cairo_format_t   format;
-  cairo_surface_t *surface;
+  PrintData        *data      = user_data;
 
-  cr = gtk_print_context_get_cairo_context (context);
-  cr_width  = gtk_print_context_get_width (context);
-  cr_height = gtk_print_context_get_height (context);
-
-  drawable = gimp_drawable_get (data->drawable_id);
-
-  width     = drawable->width;
-  height    = drawable->height;
-  rowstride = width * drawable->bpp;
-  pixels    = g_new (guchar, height * rowstride);
-
-  gimp_pixel_rgn_init (&region, drawable, 0, 0, width, height, FALSE, FALSE);
-
-  gimp_pixel_rgn_get_rect (&region, pixels, 0, 0, width, height);
-
-  gimp_drawable_detach (drawable);
-
-  switch (gimp_drawable_type (data->drawable_id))
-    {
-    case GIMP_RGB_IMAGE:
-      format = CAIRO_FORMAT_RGB24;
-      break;
-
-    case GIMP_RGBA_IMAGE:
-      format = CAIRO_FORMAT_ARGB32;
-      break;
-
-    case GIMP_GRAY_IMAGE:
-      format = CAIRO_FORMAT_A8;
-      break;
-
-    default:
-      g_warning ("drawable type not implemented");
-      g_free (pixels);
-      return;
-      break;
-    }
-
-  surface = cairo_image_surface_create_for_data (pixels, format,
-                                                 width, height, rowstride);
-  cairo_set_source_surface (cr, surface, 0, 0);
-
-  cairo_new_path (cr);
-  cairo_rectangle (cr, 0, 0, width, height);
-  cairo_clip (cr);
-
-  cairo_mask_surface (cr, surface, 0, 0);
-
-  g_free (pixels);
+  draw_page_cairo (context, data);
 }
 
+/*
+ * This callback creates a "custom" widget that gets inserted into the
+ * print operation dialog.
+ */
+static GtkWidget *
+create_custom_widget (GtkPrintOperation *operation,
+                      gpointer           user_data)
+{
+  GtkWidget *vbox;
+  PrintData *data  = user_data;
+
+  vbox = print_page_layout_gui (data);
+
+  return vbox;
+}
+
+/*
+ * This function is called once before printing begins, and should be
+ * used to apply any changes that have been made to the contents of the
+ * custom widget, since it is not guaranteed to be around later.  This
+ * function is guaranteed to be called at least once, even if printing
+ * is cancelled.
+ */
 static void
-write_print_settings_to_file (GtkPrintSettings *settings)
+custom_widget_apply (GtkPrintOperation *operation,
+                     GtkWidget         *widget,
+                     gpointer           user_data)
 {
-  gchar     *fname;
-  FILE      *settings_file;
-  GKeyFile  *key_file       = g_key_file_new ();
-  gchar     *contents;
-  gsize      length;
-  GError    *error          = NULL;
+  PrintData *data  = user_data;
 
-  g_key_file_set_list_separator (key_file, '=');
-
-  gtk_print_settings_foreach (settings, add_setting_to_key_file, key_file);
-
-  contents = g_key_file_to_data (key_file, &length, &error);
-  if (error)
+  if (data->print_size_changed)
     {
-      g_message ("Unable to get contents of settings key file.\n");
-      return;
+      gimp_image_undo_group_start (data->image_id);
+
+      gimp_image_set_resolution (data->image_id,
+                                 data->xres, data->yres);
+      gimp_image_set_unit (data->image_id, data->unit);
+
+      gimp_image_undo_group_end (data->image_id);
     }
-
-  fname = g_strconcat (gimp_directory (), G_DIR_SEPARATOR_S, "print-settings", NULL);
-  settings_file = fopen (fname, "w");
-  if (! settings_file)
-    {
-      g_message ("Unable to create save file for print settings.\n");
-      return;
-    }
-
-  fwrite (contents, sizeof (gchar), length, settings_file);
-
-  fclose (settings_file);
-  g_key_file_free (key_file);
-  g_free (contents);
-  g_free (fname);
-}
-
-static void
-add_setting_to_key_file (const gchar *key,
-                         const gchar *value,
-                         gpointer     data)
-{
-  GKeyFile *key_file = data;
-
-  g_key_file_set_value (key_file, "settings", key, value);
-}
-
-static gboolean
-load_print_settings_from_file (GtkPrintSettings *settings)
-{
-  GKeyFile  *key_file = g_key_file_new ();
-  gchar     *fname;
-  gchar    **keys;
-  gsize      n_keys;
-  GError    *error    = NULL;
-  gint       i;
-
-  g_key_file_set_list_separator (key_file, '=');
-
-  fname = g_strconcat (gimp_directory (),
-                       G_DIR_SEPARATOR_S,
-                       "print-settings",
-                       NULL);
-
-  if (! g_key_file_load_from_file (key_file, fname, G_KEY_FILE_NONE, &error))
-    return FALSE;
-
-  keys = g_key_file_get_keys (key_file, "settings", &n_keys, &error);
-  if (! keys)
-    {
-      g_message ("Error reading print settings keys: %s\n", error->message);
-      return FALSE;
-    }
-
-  for (i = 0; i < n_keys; i++)
-    {
-      gchar *value = g_key_file_get_value (key_file, "settings",
-                                           keys[i], &error);
-
-      gtk_print_settings_set (settings, keys[i], value);
-
-      g_free (value);
-    }
-
-  g_key_file_free (key_file);
-  g_free (fname);
-  g_strfreev (keys);
-
-  return TRUE;
 }

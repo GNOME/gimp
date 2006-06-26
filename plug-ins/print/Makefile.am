@@ -38,4 +38,11 @@ libexec_PROGRAMS = print
 EXTRA_PROGRAMS = print
 
 print_SOURCES = \
-	print.c
+	print.c			\
+	print.h			\
+	print-draw-page.c	\
+	print-draw-page.h	\
+	print-page-layout.c	\
+	print-page-layout.h	\
+	print-settings.c	\
+	print-settings.h

@@ -22,6 +22,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "gimp.h"
@@ -645,6 +647,7 @@ gimp_export_image (gint32                 *image_ID,
   gboolean           background_has_alpha = TRUE;
   ExportAction      *action;
   GimpExportReturn   retval = GIMP_EXPORT_CANCEL;
+  gboolean           silent = (0 == strcmp (format_name, "silent"));
 
   g_return_val_if_fail (*image_ID > -1 && *drawable_ID > -1, FALSE);
 
@@ -864,7 +867,10 @@ gimp_export_image (gint32                 *image_ID,
   if (actions)
     {
       actions = g_slist_reverse (actions);
-      retval = export_dialog (actions, format_name);
+      if (silent)
+        retval = GIMP_EXPORT_EXPORT;
+      else
+        retval = export_dialog (actions, format_name);
     }
   else
     {

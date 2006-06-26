@@ -1,3 +1,22 @@
+2006-06-26  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* libgimp/gimpexport.c: if format arg is "silent", export
+	without popping a dialog -- saves duplicating code.
+
+	* plug-ins/print/print-draw-page.c
+	* plug-ins/print/print-draw-page.h
+	* plug-ins/print/print-page-layout.c
+	* plug-ins/print/print-page-layout.h
+	* plug-ins/print/print-settings.c
+	* plug-ins/print/print-settings.h
+	* plug-ins/print/print.h:         new files	
+
+	* plug-ins/print/Makefile.am
+	* plug-ins/print/print.c:  modified
+
+	Progress toward GtkPrintOperation plug-in.  Should already
+	be usable, but very ugly.
+
 2006-06-26  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/gui-vtable.c (gui_pdb_dialog_new): hide the button-bar.
