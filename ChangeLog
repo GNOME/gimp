@@ -1,5 +1,9 @@
 2006-06-26  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/gui-vtable.c (gui_pdb_dialog_new): hide the button-bar.
+
+2006-06-26  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/quit-dialog.c: use STOCK_WARNING instead of
 	STOCK_WILBER_EEK for the quit dialog.
 

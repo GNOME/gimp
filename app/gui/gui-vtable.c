@@ -44,6 +44,7 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpbrushselect.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdocked.h"
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimperrordialog.h"
 #include "widgets/gimpfontselect.h"
@@ -437,6 +438,7 @@ gui_pdb_dialog_new (Gimp          *gimp,
           GParameter *params   = NULL;
           gint        n_params = 0;
           GtkWidget  *dialog;
+          GtkWidget  *view;
 
           params = gimp_parameters_append (dialog_type, params, &n_params,
                                            "title",          title,
@@ -458,6 +460,10 @@ gui_pdb_dialog_new (Gimp          *gimp,
           dialog = g_object_newv (dialog_type, n_params, params);
 
           gimp_parameters_free (params, n_params);
+
+          view = GIMP_PDB_DIALOG (dialog)->view;
+          if (view)
+            gimp_docked_set_show_button_bar (GIMP_DOCKED (view), FALSE);
 
           gtk_widget_show (dialog);
 
