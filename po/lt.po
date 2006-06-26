@@ -14,15 +14,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-05 21:15+0300\n"
-"PO-Revision-Date: 2006-05-03 21:43+0300\n"
+"POT-Creation-Date: 2006-06-26 15:03+0300\n"
+"PO-Revision-Date: 2006-06-26 15:29+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
-"100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../app/about.h:24
 msgid "GIMP"
@@ -69,11 +68,11 @@ msgstr ""
 "jeigu negavote, rašykite Free Software Foundation, 59 Temple Place - Suite "
 "330, Boston, MA 02111-1307, USA."
 
-#: ../app/app_procs.c:137
+#: ../app/app_procs.c:138
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Šit konsolės langas bus užvertas po dešimties sekundžių)\n"
 
-#: ../app/app_procs.c:277
+#: ../app/app_procs.c:278
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -86,100 +85,105 @@ msgstr ""
 "Norėdami išvengti duomenų praradimo, patikrinkite Nustatymuose nurodyto "
 "mainų aplanko vietą ir leidimus (šiuo metu yra „%s“)."
 
-#: ../app/app_procs.c:332 ../app/core/gimppalette-import.c:492
+#: ../app/app_procs.c:336 ../app/core/gimppalette-import.c:559
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Nepavyko atverti „%s“: %s"
 
-#: ../app/batch.c:87 ../app/batch.c:105
+#: ../app/batch.c:74
+#, c-format
+msgid "No batch interpreter specified, using the default '%s'.\n"
+msgstr ""
+
+#: ../app/batch.c:92 ../app/batch.c:110
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "Komandų interpretatorius „%s“ neprieinamas. Komandų režimas išjungtas."
 
-#: ../app/main.c:123 ../tools/gimp-remote.c:78
+#: ../app/main.c:125 ../tools/gimp-remote.c:78
 msgid "Show version information and exit"
 msgstr "Parodyti versijos informaciją ir išeiti"
 
-#: ../app/main.c:128
+#: ../app/main.c:130
 msgid "Show license information and exit"
 msgstr "Parodyti licencijos informaciją ir išeiti"
 
-#: ../app/main.c:133
+#: ../app/main.c:135
 msgid "Be more verbose"
 msgstr "Rodyti išsamesnius pranešimus"
 
-#: ../app/main.c:138
+#: ../app/main.c:140
 msgid "Run without a user interface"
 msgstr "Paleisti be naudotojo sąsajos"
 
-#: ../app/main.c:143
+#: ../app/main.c:145
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Neįkelti teptukų, perėjimų, raštų..."
 
-#: ../app/main.c:148
+#: ../app/main.c:150
 msgid "Do not load any fonts"
 msgstr "Nepavyko įkelti jokių šriftų"
 
-#: ../app/main.c:153
+#: ../app/main.c:155
 msgid "Do not show a startup window"
 msgstr "Nerodyti paleidimo lango"
 
-#: ../app/main.c:158
+#: ../app/main.c:160
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "Nenaudoti bendrosios atminties tarp GIMP ir įskiepų"
 
-#: ../app/main.c:163
+#: ../app/main.c:165
 msgid "Do not use special CPU acceleration functions"
 msgstr "Nenaudoti specialių procesoriaus akseleracijos funkcijų"
 
-#: ../app/main.c:168
+#: ../app/main.c:170
 msgid "Use an alternate sessionrc file"
 msgstr "Naudoti alternatyvią sessionrc rinkmeną"
 
-#: ../app/main.c:173
+#: ../app/main.c:175
 msgid "Use an alternate user gimprc file"
 msgstr "Naudoti alternatyvią naudotojo gimprc rinkmeną"
 
-#: ../app/main.c:178
+#: ../app/main.c:180
 msgid "Use an alternate system gimprc file"
 msgstr "Naudoti alternatyvią sisteminę gimprc rinkmeną"
 
-#: ../app/main.c:183
+#: ../app/main.c:185
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Vykdytina paketinė komanda (gali būti panaudota keletą kartų)"
 
-#: ../app/main.c:188
+#: ../app/main.c:190
 msgid "The procedure to process batch commands with"
 msgstr "Procedūra su kuria apdoroti paketines komandas"
 
-#: ../app/main.c:193
+#: ../app/main.c:195
 msgid "Send messages to console instead of using a dialog"
 msgstr "Pranešimus rodyti konsolėje, o ne naudojant dialogus"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:199
+#: ../app/main.c:201
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB suderinamumo režimas (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:205
+#: ../app/main.c:207
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Nulūžus įjungti derinimą (never|query|visada)"
 
 # Nežinau, kaip teisingiau išversti non-fatal.
-#: ../app/main.c:210
+#: ../app/main.c:212
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Įjungti ne lemtingų derinimo signalų valdymą"
 
-#: ../app/main.c:215
+#: ../app/main.c:217
 msgid "Make all warnings fatal"
 msgstr "Padaryti visus perspėjimus lemtingais"
 
-#: ../app/main.c:220
+#: ../app/main.c:222
 msgid "Output a gimprc file with default settings"
 msgstr "Išvesti gimprc rinkmeną su numatytaisiais nustatymais"
 
-#: ../app/main.c:300
+#: ../app/main.c:302
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -187,7 +191,7 @@ msgstr ""
 "GIMP nepavyko inicializuoti grafinės naudotojo sąsajos.\n"
 "Įsitikinkite, ar teisingai sukonfigūruota Jūsų ekrano aplinka."
 
-#: ../app/main.c:451 ../tools/gimp-remote.c:315
+#: ../app/main.c:453 ../tools/gimp-remote.c:315
 #, c-format
 msgid "%s version %s"
 msgstr "%s versija %s"
@@ -221,14 +225,14 @@ msgstr ""
 "G_FILENAME_ENCODING reikšmę."
 
 #: ../app/actions/actions.c:98 ../app/dialogs/dialogs.c:213
-#: ../app/widgets/gimpbrusheditor.c:71
+#: ../app/widgets/gimpbrusheditor.c:79
 msgid "Brush Editor"
 msgstr "Teptukų redaktorius"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:101 ../app/actions/dialogs-actions.c:130
-#: ../app/core/gimp.c:790 ../app/dialogs/dialogs.c:146
-#: ../app/dialogs/preferences-dialog.c:2417
+#: ../app/core/gimp.c:807 ../app/dialogs/dialogs.c:146
+#: ../app/dialogs/preferences-dialog.c:2525
 msgid "Brushes"
 msgstr "Teptukai"
 
@@ -273,7 +277,7 @@ msgstr ""
 
 #. Document History
 #: ../app/actions/actions.c:131 ../app/actions/dialogs-actions.c:165
-#: ../app/dialogs/dialogs.c:160 ../app/dialogs/preferences-dialog.c:1378
+#: ../app/dialogs/dialogs.c:160 ../app/dialogs/preferences-dialog.c:1480
 msgid "Document History"
 msgstr "Dokumentų istorija"
 
@@ -281,7 +285,7 @@ msgstr "Dokumentų istorija"
 msgid "Drawable"
 msgstr "Piešiama"
 
-#: ../app/actions/actions.c:137 ../app/tools/tools-enums.c:174
+#: ../app/actions/actions.c:137 ../app/tools/tools-enums.c:178
 msgid "Edit"
 msgstr "Keisti"
 
@@ -296,8 +300,8 @@ msgstr "Rinkmena"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:146 ../app/actions/dialogs-actions.c:150
-#: ../app/core/gimp.c:806 ../app/dialogs/dialogs.c:154
-#: ../app/dialogs/preferences-dialog.c:2433
+#: ../app/core/gimp.c:823 ../app/dialogs/dialogs.c:154
+#: ../app/dialogs/preferences-dialog.c:2541
 msgid "Fonts"
 msgstr "Šriftai"
 
@@ -308,8 +312,8 @@ msgstr "Perėjimų savybių nustatymas"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:152 ../app/actions/dialogs-actions.c:140
-#: ../app/core/gimp.c:802 ../app/dialogs/dialogs.c:150
-#: ../app/dialogs/preferences-dialog.c:2429
+#: ../app/core/gimp.c:819 ../app/dialogs/dialogs.c:150
+#: ../app/dialogs/preferences-dialog.c:2537
 msgid "Gradients"
 msgstr "Perėjimai"
 
@@ -317,7 +321,8 @@ msgstr "Perėjimai"
 msgid "Help"
 msgstr "Žinynas"
 
-#: ../app/actions/actions.c:158 ../app/tools/tools-enums.c:206
+#: ../app/actions/actions.c:158 ../app/core/core-enums.c:212
+#: ../app/tools/tools-enums.c:210
 msgid "Image"
 msgstr "Paveikslėlis"
 
@@ -333,30 +338,30 @@ msgid "Layers"
 msgstr "Sluoksniai"
 
 #: ../app/actions/actions.c:167 ../app/dialogs/dialogs.c:221
-#: ../app/widgets/gimppaletteeditor.c:153
+#: ../app/widgets/gimppaletteeditor.c:154
 msgid "Palette Editor"
 msgstr "Paletės savybių nustatymas"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:170 ../app/actions/dialogs-actions.c:145
-#: ../app/core/gimp.c:798 ../app/dialogs/dialogs.c:152
-#: ../app/dialogs/preferences-dialog.c:2425
+#: ../app/core/gimp.c:815 ../app/dialogs/dialogs.c:152
+#: ../app/dialogs/preferences-dialog.c:2533
 msgid "Palettes"
 msgstr "Paletės"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:173 ../app/actions/dialogs-actions.c:135
-#: ../app/core/gimp.c:794 ../app/dialogs/dialogs.c:148
-#: ../app/dialogs/preferences-dialog.c:2421
+#: ../app/core/gimp.c:811 ../app/dialogs/dialogs.c:148
+#: ../app/dialogs/preferences-dialog.c:2529
 msgid "Patterns"
 msgstr "Raštai"
 
-#: ../app/actions/actions.c:176 ../app/dialogs/preferences-dialog.c:2437
+#: ../app/actions/actions.c:176 ../app/dialogs/preferences-dialog.c:2545
 msgid "Plug-Ins"
 msgstr "Įskiepiai"
 
-#: ../app/actions/actions.c:179 ../app/core/core-enums.c:809
-#: ../app/core/gimpchannel.c:360
+#: ../app/actions/actions.c:179 ../app/core/core-enums.c:857
+#: ../app/core/gimpchannel.c:361
 msgid "Quick Mask"
 msgstr "Greita kaukė"
 
@@ -370,7 +375,7 @@ msgid "Select"
 msgstr "Pažymėti"
 
 #. initialize the template list
-#: ../app/actions/actions.c:188 ../app/core/gimp.c:815
+#: ../app/actions/actions.c:188 ../app/core/gimp.c:832
 #: ../app/dialogs/dialogs.c:162
 msgid "Templates"
 msgstr "Šablonai"
@@ -380,7 +385,7 @@ msgid "Text Editor"
 msgstr "GIMP teksto redaktorius"
 
 #: ../app/actions/actions.c:194 ../app/actions/dialogs-actions.c:65
-#: ../app/dialogs/dialogs.c:127 ../app/dialogs/preferences-dialog.c:1617
+#: ../app/dialogs/dialogs.c:127 ../app/dialogs/preferences-dialog.c:1723
 #: ../app/gui/gui.c:424
 msgid "Tool Options"
 msgstr "Įrankių savybės"
@@ -587,7 +592,7 @@ msgstr "Pakeisti kanalą pažy_mėjimu"
 msgid "Replace the selection with this channel"
 msgstr "Pakeisti pasirinkitą sritį šiuo kanalu"
 
-#: ../app/actions/channels-actions.c:111 ../app/actions/layers-actions.c:247
+#: ../app/actions/channels-actions.c:111 ../app/actions/layers-actions.c:260
 #: ../app/actions/vectors-actions.c:173
 msgid "_Add to Selection"
 msgstr "_Pridėti prie pažymėjimo"
@@ -596,8 +601,9 @@ msgstr "_Pridėti prie pažymėjimo"
 msgid "Add this channel to the current selection"
 msgstr "Pridėti šį kanalą prie esamos pažymėtos srities"
 
-#: ../app/actions/channels-actions.c:117 ../app/actions/layers-actions.c:253
-#: ../app/actions/layers-actions.c:280 ../app/actions/vectors-actions.c:179
+#: ../app/actions/channels-actions.c:117 ../app/actions/layers-actions.c:266
+#: ../app/actions/layers-actions.c:293 ../app/actions/layers-actions.c:320
+#: ../app/actions/vectors-actions.c:179
 msgid "_Subtract from Selection"
 msgstr "_Atimti iš pažymėjimo"
 
@@ -605,8 +611,9 @@ msgstr "_Atimti iš pažymėjimo"
 msgid "Subtract this channel from the current selection"
 msgstr "Atimti kanalą iš esamos pasirinktos srities"
 
-#: ../app/actions/channels-actions.c:123 ../app/actions/layers-actions.c:259
-#: ../app/actions/layers-actions.c:286 ../app/actions/vectors-actions.c:185
+#: ../app/actions/channels-actions.c:123 ../app/actions/layers-actions.c:272
+#: ../app/actions/layers-actions.c:299 ../app/actions/layers-actions.c:326
+#: ../app/actions/vectors-actions.c:185
 msgid "_Intersect with Selection"
 msgstr "_Sankirta su pažymėjimu"
 
@@ -656,8 +663,8 @@ msgstr "Nauja kanalo spalva"
 msgid "%s Channel Copy"
 msgstr "%s Kanalo kopija"
 
-#: ../app/actions/channels-commands.c:310 ../app/core/gimpselection.c:549
-#: ../app/pdb/selection_cmds.c:420 ../app/pdb/selection_cmds.c:483
+#: ../app/actions/channels-commands.c:310 ../app/core/gimpselection.c:554
+#: ../app/pdb/selection_cmds.c:421 ../app/pdb/selection_cmds.c:484
 msgid "Channel to Selection"
 msgstr "Pakeisti kanalą pažymėjimu"
 
@@ -708,7 +715,7 @@ msgstr "_Kontekstas"
 msgid "_Colors"
 msgstr "Spal_vos"
 
-#: ../app/actions/context-actions.c:48 ../app/actions/layers-actions.c:57
+#: ../app/actions/context-actions.c:48 ../app/actions/layers-actions.c:58
 msgid "_Opacity"
 msgstr "_Nepermatomumas"
 
@@ -721,12 +728,12 @@ msgid "_Tool"
 msgstr "Įra_nkis"
 
 #: ../app/actions/context-actions.c:51
-#: ../app/dialogs/preferences-dialog.c:1677
+#: ../app/dialogs/preferences-dialog.c:1783
 msgid "_Brush"
 msgstr "_Teptukas"
 
 #: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:100
-#: ../app/dialogs/preferences-dialog.c:1680
+#: ../app/dialogs/preferences-dialog.c:1786
 msgid "_Pattern"
 msgstr "_Raštas"
 
@@ -735,8 +742,8 @@ msgid "_Palette"
 msgstr "_Paletė"
 
 #: ../app/actions/context-actions.c:54
-#: ../app/dialogs/palette-import-dialog.c:227
-#: ../app/dialogs/preferences-dialog.c:1683
+#: ../app/dialogs/palette-import-dialog.c:240
+#: ../app/dialogs/preferences-dialog.c:1789
 msgid "_Gradient"
 msgstr "_Perėjimas"
 
@@ -801,12 +808,12 @@ msgid "Sample Merged"
 msgstr "Sujungtas mėginys"
 
 #: ../app/actions/data-commands.c:102 ../app/actions/documents-commands.c:320
-#: ../app/actions/file-commands.c:176 ../app/dialogs/file-open-dialog.c:208
-#: ../app/dialogs/file-open-dialog.c:259
+#: ../app/actions/file-commands.c:176 ../app/dialogs/file-open-dialog.c:203
+#: ../app/dialogs/file-open-dialog.c:254
 #: ../app/dialogs/file-open-location-dialog.c:204
 #: ../app/display/gimpdisplayshell-dnd.c:448
 #: ../app/widgets/gimplayertreeview.c:727 ../app/widgets/gimptoolbox-dnd.c:157
-#: ../app/widgets/gimptoolbox.c:918
+#: ../app/widgets/gimptoolbox.c:917
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -817,10 +824,11 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:128 ../app/core/gimpimage.c:1318
-#: ../app/core/gimppalette-import.c:218 ../app/core/gimppalette.c:477
-#: ../app/core/gimppalette.c:587 ../app/dialogs/palette-import-dialog.c:690
-#: ../app/pdb/image_cmds.c:1880 ../app/widgets/gimpdnd-xds.c:97
+#: ../app/actions/data-commands.c:128 ../app/core/gimpbrushgenerated.c:611
+#: ../app/core/gimpimage.c:1330 ../app/core/gimppalette-import.c:218
+#: ../app/core/gimppalette.c:477 ../app/core/gimppalette.c:587
+#: ../app/dialogs/palette-import-dialog.c:782 ../app/pdb/image_cmds.c:1880
+#: ../app/widgets/gimpdnd-xds.c:97
 msgid "Untitled"
 msgstr "Bevardis"
 
@@ -886,7 +894,7 @@ msgstr "_Kontūrai"
 msgid "Color_map"
 msgstr "Ga_ma"
 
-#: ../app/actions/dialogs-actions.c:90 ../app/dialogs/convert-dialog.c:167
+#: ../app/actions/dialogs-actions.c:90 ../app/dialogs/convert-dialog.c:169
 #: ../app/dialogs/dialogs.c:179
 msgid "Colormap"
 msgstr "Gama"
@@ -1268,7 +1276,7 @@ msgstr "_Matomas"
 msgid "Toggle visibility"
 msgstr "Perjungti matomumą"
 
-#: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:168
+#: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:165
 msgid "Flip _Horizontally"
 msgstr "Apversti _horizontaliai"
 
@@ -1276,7 +1284,7 @@ msgstr "Apversti _horizontaliai"
 msgid "Flip horizontally"
 msgstr "Apversti horizontaliai"
 
-#: ../app/actions/drawable-actions.c:101 ../app/actions/image-actions.c:174
+#: ../app/actions/drawable-actions.c:101 ../app/actions/image-actions.c:171
 msgid "Flip _Vertically"
 msgstr "Apversti _vertikaliai"
 
@@ -1284,7 +1292,7 @@ msgstr "Apversti _vertikaliai"
 msgid "Flip vertically"
 msgstr "Apversti vertikaliai"
 
-#: ../app/actions/drawable-actions.c:110 ../app/actions/image-actions.c:183
+#: ../app/actions/drawable-actions.c:110 ../app/actions/image-actions.c:180
 msgid "Rotate 90° _clockwise"
 msgstr "Pasukti 90° _pagal laikrodžio rodyklę"
 
@@ -1292,7 +1300,7 @@ msgstr "Pasukti 90° _pagal laikrodžio rodyklę"
 msgid "Rotate 90 degrees to the right"
 msgstr "Pasukti 90 laipsnių į dešinę"
 
-#: ../app/actions/drawable-actions.c:116 ../app/actions/image-actions.c:189
+#: ../app/actions/drawable-actions.c:116 ../app/actions/image-actions.c:186
 msgid "Rotate _180°"
 msgstr "Pasukti _180°"
 
@@ -1300,7 +1308,7 @@ msgstr "Pasukti _180°"
 msgid "Turn upside-down"
 msgstr "Apversti aukštyn kojomis"
 
-#: ../app/actions/drawable-actions.c:122 ../app/actions/image-actions.c:195
+#: ../app/actions/drawable-actions.c:122 ../app/actions/image-actions.c:192
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Pasukti 90° p_rieš laikrodžio rodyklę)"
 
@@ -1340,7 +1348,7 @@ msgstr "_Buferis"
 msgid "Undo History Menu"
 msgstr "Atšaukimų istorijos meniu"
 
-#: ../app/actions/edit-actions.c:70 ../app/actions/edit-actions.c:261
+#: ../app/actions/edit-actions.c:70 ../app/actions/edit-actions.c:273
 msgid "_Undo"
 msgstr "_Atšaukti"
 
@@ -1348,7 +1356,7 @@ msgstr "_Atšaukti"
 msgid "Undo the last operation"
 msgstr "Atšaukti paskutiniąją operaciją"
 
-#: ../app/actions/edit-actions.c:76 ../app/actions/edit-actions.c:262
+#: ../app/actions/edit-actions.c:76 ../app/actions/edit-actions.c:274
 msgid "_Redo"
 msgstr "_Grąžinti"
 
@@ -1357,166 +1365,182 @@ msgid "Redo the last operation that was undone"
 msgstr "Pakartoti paskutinę atšauktą operaciją"
 
 #: ../app/actions/edit-actions.c:82
+msgid "Strong Undo"
+msgstr "Stiprus atšaukimas"
+
+#: ../app/actions/edit-actions.c:83
+msgid "Undo the last operation, skipping over some types"
+msgstr "Atšaukti paskutinę operaciją, praleidžiant kai kuriuos tipus"
+
+#: ../app/actions/edit-actions.c:88
+msgid "Strong Redo"
+msgstr "Stiprus grąžinimas"
+
+#: ../app/actions/edit-actions.c:89
+msgid "Redo the last operation that was undone, skipping over some types"
+msgstr "Pakartoti paskutinę atšauktą operaciją, praleidžiant kai kuriuos tipus"
+
+#: ../app/actions/edit-actions.c:94
 msgid "_Clear Undo History"
 msgstr "_Išvalyti atšaukimų istoriją"
 
-#: ../app/actions/edit-actions.c:83
+#: ../app/actions/edit-actions.c:95
 msgid "Remove all operations from the undo history"
 msgstr "Pašalinti visas operacijas iš atšaukimų istorijos"
 
-#: ../app/actions/edit-actions.c:88
+#: ../app/actions/edit-actions.c:100
 msgid "Cu_t"
 msgstr "_Iškirpti"
 
-#: ../app/actions/edit-actions.c:89
+#: ../app/actions/edit-actions.c:101
 msgid "Move the selected pixels to the clipboard"
 msgstr "Perkelti pažymėtus taškus į podėlį"
 
-#: ../app/actions/edit-actions.c:94
+#: ../app/actions/edit-actions.c:106
 msgid "_Copy"
 msgstr "_Kopijuoti"
 
-#: ../app/actions/edit-actions.c:95
+#: ../app/actions/edit-actions.c:107
 msgid "Copy the selected pixels to the clipboard"
 msgstr "Kopijuoti pasirinktus taškus į podėlį"
 
 #. GIMP_STOCK_COPY_VISIBLE,
-#: ../app/actions/edit-actions.c:100
+#: ../app/actions/edit-actions.c:112
 msgid "Copy _Visible"
 msgstr "Kopijuoti _matomą"
 
-#: ../app/actions/edit-actions.c:101
+#: ../app/actions/edit-actions.c:113
 msgid "Copy the selected region to the clipboard"
 msgstr "Kopijuoti pasirinktą regioną į podėlį"
 
-#: ../app/actions/edit-actions.c:106
+#: ../app/actions/edit-actions.c:118
 msgid "_Paste"
 msgstr "Į_dėti"
 
-#: ../app/actions/edit-actions.c:107
+#: ../app/actions/edit-actions.c:119
 msgid "Paste the content of the clipboard"
 msgstr "Įdėti podėlio turinį"
 
-#: ../app/actions/edit-actions.c:112
+#: ../app/actions/edit-actions.c:124
 msgid "Paste _Into"
 msgstr "Įdėt_i į vidų"
 
-#: ../app/actions/edit-actions.c:113
+#: ../app/actions/edit-actions.c:125
 msgid "Paste the content of the clipboard into the current selection"
 msgstr "Įdėti podėlio turinį į šiuo metu pasirinktą sritį"
 
-#: ../app/actions/edit-actions.c:118
+#: ../app/actions/edit-actions.c:130
 msgid "Paste as New"
 msgstr "Įdėti kaip naują"
 
-#: ../app/actions/edit-actions.c:119 ../app/actions/edit-actions.c:125
+#: ../app/actions/edit-actions.c:131 ../app/actions/edit-actions.c:137
 msgid "Create a new image from the content of the clipboard"
 msgstr "Sukurti naują paveikslėlį iš podėlio turinio"
 
-#: ../app/actions/edit-actions.c:124
+#: ../app/actions/edit-actions.c:136
 msgid "_New Image"
 msgstr "_Naujas paveikslėlis"
 
-#: ../app/actions/edit-actions.c:130
+#: ../app/actions/edit-actions.c:142
 msgid "Cu_t Named..."
 msgstr "_Iškirpti pavadintą..."
 
-#: ../app/actions/edit-actions.c:135
+#: ../app/actions/edit-actions.c:147
 msgid "_Copy Named..."
 msgstr "_Kopijuoti pavadintą..."
 
 #. GIMP_STOCK_COPY_VISIBLE,
-#: ../app/actions/edit-actions.c:140
+#: ../app/actions/edit-actions.c:152
 msgid "Copy _Visible Named..."
 msgstr "Kopijuoti _matomą pavadintą..."
 
-#: ../app/actions/edit-actions.c:145
+#: ../app/actions/edit-actions.c:157
 msgid "_Paste Named..."
 msgstr "Į_dėti pavadintą..."
 
-#: ../app/actions/edit-actions.c:150
+#: ../app/actions/edit-actions.c:162
 msgid "Cl_ear"
 msgstr "Iš_valyti"
 
-#: ../app/actions/edit-actions.c:151
+#: ../app/actions/edit-actions.c:163
 msgid "Clear the selected pixels"
 msgstr "Išvalyti pasirinktus taškelius"
 
-#: ../app/actions/edit-actions.c:159
+#: ../app/actions/edit-actions.c:171
 msgid "Fill with _FG Color"
 msgstr "Užpildyti _priekinio plano spalva"
 
-#: ../app/actions/edit-actions.c:160
+#: ../app/actions/edit-actions.c:172
 msgid "Fill the selection using the foreground color"
 msgstr "Užpildyti pasirinktą sritį priekinio plano spalva"
 
-#: ../app/actions/edit-actions.c:165
+#: ../app/actions/edit-actions.c:177
 msgid "Fill with B_G Color"
 msgstr "Užpildyti _fono spalva"
 
-#: ../app/actions/edit-actions.c:166
+#: ../app/actions/edit-actions.c:178
 msgid "Fill the selection using the background color"
 msgstr "Užpildyti pasirinktą sritį naudojant fono spalvą"
 
-#: ../app/actions/edit-actions.c:171
+#: ../app/actions/edit-actions.c:183
 msgid "Fill with P_attern"
 msgstr "Užpildyti _raštu"
 
-#: ../app/actions/edit-actions.c:172
+#: ../app/actions/edit-actions.c:184
 msgid "Fill the selection using the active pattern"
 msgstr "Užpildyti pasirinktą sritį naudojant aktyvų raštą"
 
-#: ../app/actions/edit-actions.c:245
+#: ../app/actions/edit-actions.c:257
 #, c-format
 msgid "_Undo %s"
 msgstr "_Atšaukti %s"
 
-#: ../app/actions/edit-actions.c:250
+#: ../app/actions/edit-actions.c:262
 #, c-format
 msgid "_Redo %s"
 msgstr "_Grąžinti %s"
 
-#: ../app/actions/edit-commands.c:110
+#: ../app/actions/edit-commands.c:132
 msgid "Clear Undo History"
 msgstr "Išvalyti atšaukimų istoriją"
 
-#: ../app/actions/edit-commands.c:136
+#: ../app/actions/edit-commands.c:158
 msgid "Really clear image's undo history?"
 msgstr "Tikrai išvalyti paveikslėlio atšaukimų istoriją?"
 
-#: ../app/actions/edit-commands.c:148
+#: ../app/actions/edit-commands.c:170
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr ""
 "Išvalius šio paveikslėlio atšaukimų istoriją bus atlaisvinta %s atminties"
 
-#: ../app/actions/edit-commands.c:256
+#: ../app/actions/edit-commands.c:278
 msgid "Cut Named"
 msgstr "Iškirpti pavadintą"
 
-#: ../app/actions/edit-commands.c:259 ../app/actions/edit-commands.c:279
-#: ../app/actions/edit-commands.c:299
+#: ../app/actions/edit-commands.c:281 ../app/actions/edit-commands.c:301
+#: ../app/actions/edit-commands.c:321
 msgid "Enter a name for this buffer"
 msgstr "Įveskite šio buferio pavadinimą"
 
-#: ../app/actions/edit-commands.c:276
+#: ../app/actions/edit-commands.c:298
 msgid "Copy Named"
 msgstr "Kopijuoti pavadintą"
 
-#: ../app/actions/edit-commands.c:296
+#: ../app/actions/edit-commands.c:318
 msgid "Copy Visible Named "
 msgstr "Kopijuoti matomą pavadintą"
 
-#: ../app/actions/edit-commands.c:408
+#: ../app/actions/edit-commands.c:430
 msgid "There is no active layer or channel to cut from."
 msgstr "Nėra aktyvaus sluoksnio ar kanalo iš kurio galima iškirpti."
 
-#: ../app/actions/edit-commands.c:413 ../app/actions/edit-commands.c:439
-#: ../app/actions/edit-commands.c:456
+#: ../app/actions/edit-commands.c:435 ../app/actions/edit-commands.c:461
+#: ../app/actions/edit-commands.c:478
 msgid "(Unnamed Buffer)"
 msgstr "(Nepavadintas buferis)"
 
-#: ../app/actions/edit-commands.c:434
+#: ../app/actions/edit-commands.c:456
 msgid "There is no active layer or channel to copy from."
 msgstr "Nėra aktyvaus sluoksnio ar kanalo iš kurio galima kopijuoti."
 
@@ -1525,38 +1549,46 @@ msgid "Error Console Menu"
 msgstr "Klaidų konsolės meniu"
 
 #: ../app/actions/error-console-actions.c:44
-msgid "_Clear Errors"
-msgstr "_Išvalyti klaidas"
+msgid "_Clear"
+msgstr "_Išvalyti"
 
 #: ../app/actions/error-console-actions.c:45
-msgid "Clear errors"
-msgstr "Išvalyti klaidas"
+msgid "Clear error console"
+msgstr "Išvalyti klaidų konsolę"
 
-#: ../app/actions/error-console-actions.c:53
-msgid "Save _All Errors to File..."
-msgstr "Išsaugoti _visas klaidas į rinkmeną..."
+#: ../app/actions/error-console-actions.c:50
+msgid "Select _All"
+msgstr "Pažymėti _viską"
 
-#: ../app/actions/error-console-actions.c:54
-msgid "Save all errors"
-msgstr "Išsaugoti visas klaidas"
+#: ../app/actions/error-console-actions.c:51
+msgid "Select all errors"
+msgstr "Pažymėti visas klaidas"
 
 #: ../app/actions/error-console-actions.c:59
-msgid "Save _Selection to File..."
-msgstr "Įšsaugoti _pažymėjimą į rinkmeną..."
+msgid "_Save Error Log to File..."
+msgstr "Iš_saugoti klaidų žurnalą į rinkmeną..."
 
 #: ../app/actions/error-console-actions.c:60
+msgid "Save error log"
+msgstr "Išsaugoti klaidų žurnalą"
+
+#: ../app/actions/error-console-actions.c:65
+msgid "Save S_election to File..."
+msgstr "Įšsaugoti _pažymėjimą į rinkmeną..."
+
+#: ../app/actions/error-console-actions.c:66
 msgid "Save selection"
 msgstr "Išsaugoti pažymėjimą"
 
-#: ../app/actions/error-console-commands.c:69
+#: ../app/actions/error-console-commands.c:81
 msgid "Cannot save. Nothing is selected."
 msgstr "Negalima išsaugoti, nes niekas nepažymėta."
 
-#: ../app/actions/error-console-commands.c:80
+#: ../app/actions/error-console-commands.c:92
 msgid "Save Error Log to File"
 msgstr "Išsaugoti klaidų žurnalą į rinkmeną"
 
-#: ../app/actions/error-console-commands.c:137
+#: ../app/actions/error-console-commands.c:149
 #, c-format
 msgid ""
 "Error writing file '%s':\n"
@@ -1633,7 +1665,7 @@ msgstr "_Baigti darbą"
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "Užverti GNU paveikslėlių manipuliavimo programą"
 
-#: ../app/actions/file-commands.c:240 ../app/dialogs/file-save-dialog.c:471
+#: ../app/actions/file-commands.c:240 ../app/dialogs/file-save-dialog.c:476
 #: ../app/widgets/gimpdnd-xds.c:172
 #, c-format
 msgid ""
@@ -2111,7 +2143,7 @@ msgstr "_Paveikslėlis"
 msgid "_Mode"
 msgstr "_Režimas"
 
-#: ../app/actions/image-actions.c:62 ../app/actions/layers-actions.c:55
+#: ../app/actions/image-actions.c:62 ../app/actions/layers-actions.c:56
 msgid "_Transform"
 msgstr "_Transformuoti"
 
@@ -2196,15 +2228,15 @@ msgstr "Sukurti šio paveikslėlio kopiją"
 msgid "Merge Visible _Layers..."
 msgstr "Sujungti _matomus sluoksnius..."
 
-#: ../app/actions/image-actions.c:121 ../app/actions/layers-actions.c:134
+#: ../app/actions/image-actions.c:121 ../app/actions/layers-actions.c:135
 msgid "Merge all visible layers into one layer"
 msgstr "Sujungti visus matomus sluoksnius į vieną sluoksnį"
 
-#: ../app/actions/image-actions.c:126 ../app/actions/layers-actions.c:139
+#: ../app/actions/image-actions.c:126 ../app/actions/layers-actions.c:140
 msgid "_Flatten Image"
 msgstr "_Suploti paveikslėlį"
 
-#: ../app/actions/image-actions.c:127 ../app/actions/layers-actions.c:140
+#: ../app/actions/image-actions.c:127 ../app/actions/layers-actions.c:141
 msgid "Merge all layers into one and remove transparency"
 msgstr "Sujungti visus sluoksnius į vieną ir pašalinti permatomumą"
 
@@ -2230,86 +2262,86 @@ msgstr "Parodyti šio paveikslėlio informaciją"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Konvertuoti paveikslėlį į RGB spalvų gamą"
 
-#: ../app/actions/image-actions.c:153
+#: ../app/actions/image-actions.c:152
 msgid "_Grayscale"
 msgstr "_Pilki atspalviai"
 
-#: ../app/actions/image-actions.c:154
+#: ../app/actions/image-actions.c:153
 msgid "Convert the image to grayscale"
 msgstr "Konvertuoti paveikslėlį į pilkus atspalvius"
 
-#: ../app/actions/image-actions.c:159
+#: ../app/actions/image-actions.c:157
 msgid "_Indexed..."
 msgstr "_Indeksuota..."
 
-#: ../app/actions/image-actions.c:160
+#: ../app/actions/image-actions.c:158
 msgid "Convert the image to indexed colors"
 msgstr "Konvertuoti paveikslėlį į indeksuotas spalvas"
 
-#: ../app/actions/image-actions.c:169
+#: ../app/actions/image-actions.c:166
 msgid "Flip image horizontally"
 msgstr "Apversti paveikslėlį horizontaliai"
 
-#: ../app/actions/image-actions.c:175
+#: ../app/actions/image-actions.c:172
 msgid "Flip image vertically"
 msgstr "Apversti paveikslėlį vertikaliai"
 
-#: ../app/actions/image-actions.c:184
+#: ../app/actions/image-actions.c:181
 msgid "Rotate the image 90 degrees to the right"
 msgstr "Apversti paveikslėlį 90 laipsnių į dešinę"
 
-#: ../app/actions/image-actions.c:190
+#: ../app/actions/image-actions.c:187
 msgid "Turn the image upside-down"
 msgstr "Apversti paveikslėlį aukštyn kojomis"
 
-#: ../app/actions/image-actions.c:196
+#: ../app/actions/image-actions.c:193
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Pasukti paveikslėlį 90 laipsnių į kairę"
 
-#: ../app/actions/image-commands.c:202
+#: ../app/actions/image-commands.c:232
 msgid "Set Image Canvas Size"
 msgstr "Nustatyti piešimo erdvės dydį"
 
-#: ../app/actions/image-commands.c:228 ../app/actions/image-commands.c:489
+#: ../app/actions/image-commands.c:258 ../app/actions/image-commands.c:519
 msgid "Resizing"
 msgstr "Keičiamas dydis"
 
-#: ../app/actions/image-commands.c:251
+#: ../app/actions/image-commands.c:281
 msgid "Set Image Print Resolution"
 msgstr "Nurodyti paveikslėlio spausdinimo raišką"
 
-#: ../app/actions/image-commands.c:298
-#: ../app/pdb/drawable_transform_cmds.c:136
-#: ../app/pdb/drawable_transform_cmds.c:204
+#: ../app/actions/image-commands.c:328
+#: ../app/pdb/drawable_transform_cmds.c:143
+#: ../app/pdb/drawable_transform_cmds.c:218
 msgid "Flipping"
 msgstr "Apsukama"
 
-#: ../app/actions/image-commands.c:319
-#: ../app/pdb/drawable_transform_cmds.c:486
-#: ../app/pdb/drawable_transform_cmds.c:557
-#: ../app/pdb/transform_tools_cmds.c:196 ../app/tools/gimprotatetool.c:116
+#: ../app/actions/image-commands.c:349
+#: ../app/pdb/drawable_transform_cmds.c:515
+#: ../app/pdb/drawable_transform_cmds.c:593
+#: ../app/pdb/transform_tools_cmds.c:207 ../app/tools/gimprotatetool.c:116
 msgid "Rotating"
 msgstr "Sukama"
 
-#: ../app/actions/image-commands.c:341 ../app/actions/layers-commands.c:545
+#: ../app/actions/image-commands.c:371 ../app/actions/layers-commands.c:601
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nepavyko iškirpti, nes pasirinktas regionas tuščias."
 
-#: ../app/actions/image-commands.c:525
+#: ../app/actions/image-commands.c:555
 msgid "Change Print Size"
 msgstr "Keisti spausdinimo dydį"
 
-#: ../app/actions/image-commands.c:549 ../app/core/gimpimage-scale.c:72
+#: ../app/actions/image-commands.c:579 ../app/core/gimpimage-scale.c:73
 #: ../app/dialogs/image-scale-dialog.c:97
 msgid "Scale Image"
 msgstr "Keisti paveikslėlio dydį"
 
 #. Scaling
-#: ../app/actions/image-commands.c:562 ../app/actions/layers-commands.c:988
-#: ../app/dialogs/preferences-dialog.c:1662
-#: ../app/pdb/drawable_transform_cmds.c:630
-#: ../app/pdb/drawable_transform_cmds.c:701
-#: ../app/pdb/transform_tools_cmds.c:266 ../app/tools/gimpscaletool.c:107
+#: ../app/actions/image-commands.c:592 ../app/actions/layers-commands.c:1052
+#: ../app/dialogs/preferences-dialog.c:1768
+#: ../app/pdb/drawable_transform_cmds.c:670
+#: ../app/pdb/drawable_transform_cmds.c:745
+#: ../app/pdb/transform_tools_cmds.c:281 ../app/tools/gimpscaletool.c:109
 msgid "Scaling"
 msgstr "Didinimas"
 
@@ -2354,334 +2386,379 @@ msgid "Stac_k"
 msgstr "Dė_klas"
 
 #: ../app/actions/layers-actions.c:53
+msgid "Te_xt to Selection"
+msgstr "Te_kstą į pažymėjimą"
+
+#: ../app/actions/layers-actions.c:54
 msgid "_Mask"
 msgstr "_Kaukė"
 
-#: ../app/actions/layers-actions.c:54
+#: ../app/actions/layers-actions.c:55
 msgid "Tr_ansparency"
 msgstr "Perm_atomumas"
 
-#: ../app/actions/layers-actions.c:56
+#: ../app/actions/layers-actions.c:57
 msgid "_Properties"
 msgstr "_Savybės"
 
-#: ../app/actions/layers-actions.c:58
+#: ../app/actions/layers-actions.c:59
 msgid "Layer _Mode"
 msgstr "Sluoksnio _režimas"
 
-#: ../app/actions/layers-actions.c:61
+#: ../app/actions/layers-actions.c:62
 msgid "Te_xt Tool"
 msgstr "Te_ksto įrankiai"
 
-#: ../app/actions/layers-actions.c:62
+#: ../app/actions/layers-actions.c:63
 msgid "Activate the text tool on this text layer"
 msgstr "Aktyvuoti teksto įrankį šiame teksto sluoksnyje"
 
-#: ../app/actions/layers-actions.c:67
+#: ../app/actions/layers-actions.c:68
 msgid "_Edit Layer Attributes..."
 msgstr "_Keisti sluoksnio savybes..."
 
-#: ../app/actions/layers-actions.c:68
+#: ../app/actions/layers-actions.c:69
 msgid "Edit the layer's name"
 msgstr "Keisti sluoksnio pavadinimą"
 
-#: ../app/actions/layers-actions.c:73
+#: ../app/actions/layers-actions.c:74
 msgid "_New Layer..."
 msgstr "_Naujas sluoksnis..."
 
-#: ../app/actions/layers-actions.c:74
+#: ../app/actions/layers-actions.c:75
 msgid "Create a new layer and add it to the image"
 msgstr "Sukurti naują sluoksnį ir įdėti jį į paveikslėlį"
 
-#: ../app/actions/layers-actions.c:79
+#: ../app/actions/layers-actions.c:80
 msgid "_New Layer"
 msgstr "_Naujas sluoksnis"
 
-#: ../app/actions/layers-actions.c:80
+#: ../app/actions/layers-actions.c:81
 msgid "Create a new layer with last used values"
 msgstr "Sukurti naują sluoksnį su paskutiniosiomis naudotomis reikšmėmis"
 
-#: ../app/actions/layers-actions.c:85
+#: ../app/actions/layers-actions.c:86
 msgid "D_uplicate Layer"
 msgstr "D_ublikuoti sluoksnį"
 
-#: ../app/actions/layers-actions.c:86
+#: ../app/actions/layers-actions.c:87
 msgid "Create a duplicate of the layer and add it to the image"
 msgstr "Sukurti sluoksnio kopiją ir įdėti jį į paveikslėlį"
 
-#: ../app/actions/layers-actions.c:91
+#: ../app/actions/layers-actions.c:92
 msgid "_Delete Layer"
 msgstr "_Ištrinti sluoksnį"
 
-#: ../app/actions/layers-actions.c:92
+#: ../app/actions/layers-actions.c:93
 msgid "Delete this layer"
 msgstr "Ištrinti šį sluoksnį"
 
-#: ../app/actions/layers-actions.c:97
+#: ../app/actions/layers-actions.c:98
 msgid "_Raise Layer"
 msgstr "_Pakelti sluoksnį"
 
-#: ../app/actions/layers-actions.c:98
+#: ../app/actions/layers-actions.c:99
 msgid "Raise this layer one step in the layer stack"
 msgstr "Pakelti šį sluoksnį vienu lygiu sluoksnių krūvoje"
 
-#: ../app/actions/layers-actions.c:103
+#: ../app/actions/layers-actions.c:104
 msgid "Layer to _Top"
 msgstr "Sluoksnį į _viršų"
 
-#: ../app/actions/layers-actions.c:104
+#: ../app/actions/layers-actions.c:105
 msgid "Move this layer to the top of the layer stack"
 msgstr "Pakelti šį sluoksnį į sluoksnių krūvos viršų"
 
-#: ../app/actions/layers-actions.c:109
+#: ../app/actions/layers-actions.c:110
 msgid "_Lower Layer"
 msgstr "_Nuleisti sluoksnį"
 
-#: ../app/actions/layers-actions.c:110
+#: ../app/actions/layers-actions.c:111
 msgid "Lower this layer one step in the layer stack"
 msgstr "Nuleisti šį sluoksnį vienu lygiu sluoksnių krūvoje"
 
-#: ../app/actions/layers-actions.c:115
+#: ../app/actions/layers-actions.c:116
 msgid "Layer to _Bottom"
 msgstr "Sluoksnį į _apačią"
 
-#: ../app/actions/layers-actions.c:116
+#: ../app/actions/layers-actions.c:117
 msgid "Move this layer to the bottom of the layer stack"
 msgstr "Nuleisti šį sluoksnį į sluoksnių krūvos apačią"
 
-#: ../app/actions/layers-actions.c:121
+#: ../app/actions/layers-actions.c:122
 msgid "_Anchor Layer"
 msgstr "_Pritvirtinti sluoksnį"
 
-#: ../app/actions/layers-actions.c:122
+#: ../app/actions/layers-actions.c:123
 msgid "Anchor the floating layer"
 msgstr "Pritvirtinti plaukiojantį sluoksnį"
 
-#: ../app/actions/layers-actions.c:127
+#: ../app/actions/layers-actions.c:128
 msgid "Merge Do_wn"
 msgstr "Sujungti su že_mesniu"
 
-#: ../app/actions/layers-actions.c:128
+#: ../app/actions/layers-actions.c:129
 msgid "Merge this layer with the one below it"
 msgstr "Sujungti šį sluoksnį su esančiu žemiau"
 
-#: ../app/actions/layers-actions.c:133
+#: ../app/actions/layers-actions.c:134
 msgid "Merge _Visible Layers..."
 msgstr "Sujungti _matomus sluoksnius..."
 
-#: ../app/actions/layers-actions.c:145
+#: ../app/actions/layers-actions.c:146
 msgid "_Discard Text Information"
 msgstr "_Atsisakyti tekstinės informacijos"
 
-#: ../app/actions/layers-actions.c:146
+#: ../app/actions/layers-actions.c:147
 msgid "Turn this text layer into a normal layer"
 msgstr "Paversti šį tekstinį sluoksnį į normalų sluoksnį"
 
-#: ../app/actions/layers-actions.c:151
+#: ../app/actions/layers-actions.c:152
+msgid "Text to _Path"
+msgstr "Tekstą į _kontūrą"
+
+#: ../app/actions/layers-actions.c:153
+msgid "Create a path from this text layer"
+msgstr "Sukurti naują kontūrą iš šio teksto sluoksnio"
+
+#: ../app/actions/layers-actions.c:158
+msgid "Text alon_g Path"
+msgstr "Tekstas ša_lia kontūro"
+
+#: ../app/actions/layers-actions.c:159
+#, fuzzy
+msgid "Warp this layer's text along the current path"
+msgstr "Pridėti sluoksnio kaukę prie dabar pažymėtos srities"
+
+#: ../app/actions/layers-actions.c:164
 msgid "Layer B_oundary Size..."
 msgstr "Sluoksnio _ribų dydis..."
 
-#: ../app/actions/layers-actions.c:152
+#: ../app/actions/layers-actions.c:165
 msgid "Adjust the layer dimensions"
 msgstr "Koreguoti sluoksnio matmenis"
 
-#: ../app/actions/layers-actions.c:157
+#: ../app/actions/layers-actions.c:170
 msgid "Layer to _Image Size"
 msgstr "Prilyginti sluoksnio dydį _paveikslėliui"
 
-#: ../app/actions/layers-actions.c:158
+#: ../app/actions/layers-actions.c:171
 msgid "Resize the layer to the size of the image"
 msgstr "Pakeisti sluoksnio dydį į paveikslėlio dydį"
 
-#: ../app/actions/layers-actions.c:163
+#: ../app/actions/layers-actions.c:176
 msgid "_Scale Layer..."
 msgstr "_Keisti sluoksnio dydį..."
 
-#: ../app/actions/layers-actions.c:164
+#: ../app/actions/layers-actions.c:177
 msgid "Change the size of the layer content"
 msgstr "Keisti sluoksnio turinio dydį"
 
-#: ../app/actions/layers-actions.c:169
+#: ../app/actions/layers-actions.c:182
 msgid "Cr_op Layer"
 msgstr "Apkirpti slu_oksnį"
 
-#: ../app/actions/layers-actions.c:170
+#: ../app/actions/layers-actions.c:183
 msgid "Crop the layer to the extents of the selection"
 msgstr "Apkirpti sluoksnį iki pasirinktos srities ribų"
 
-#: ../app/actions/layers-actions.c:175
+#: ../app/actions/layers-actions.c:188
 msgid "Add La_yer Mask..."
 msgstr "Pridėti s_luoksnio kaukę..."
 
-#: ../app/actions/layers-actions.c:176
+#: ../app/actions/layers-actions.c:189
 msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr "Pridėti kaukę, kuri įgalina nedestruktyvų permatomumo redagavimą"
 
-#: ../app/actions/layers-actions.c:181
+#: ../app/actions/layers-actions.c:194
 msgid "Add Alpha C_hannel"
 msgstr "Pridėti alfa _kanalą"
 
-#: ../app/actions/layers-actions.c:182
+#: ../app/actions/layers-actions.c:195
 msgid "Add transparency information to the layer"
 msgstr "Pridėti sluoksniui permatomumo informaciją"
 
-#: ../app/actions/layers-actions.c:187
+#: ../app/actions/layers-actions.c:200
 msgid "_Remove Alpha Channel"
 msgstr "_Pašalinti alfa kanalą"
 
-#: ../app/actions/layers-actions.c:188
+#: ../app/actions/layers-actions.c:201
 msgid "Remove transparency information from the layer"
 msgstr "Pašalinti permatomumo informaciją iš sluoksnio"
 
-#: ../app/actions/layers-actions.c:196
+#: ../app/actions/layers-actions.c:209
 msgid "Lock Alph_a Channel"
 msgstr "Užrakinti alf_a kanalą"
 
-#: ../app/actions/layers-actions.c:197
+#: ../app/actions/layers-actions.c:210
 msgid "Keep transparency information on this layer from being modified"
 msgstr "Neleisti šiame sluoksnyje pakeisti permatomumo informacijos"
 
-#: ../app/actions/layers-actions.c:203
+#: ../app/actions/layers-actions.c:216
 msgid "_Edit Layer Mask"
 msgstr "K_eisti sluoksnio kaukę"
 
-#: ../app/actions/layers-actions.c:204
+#: ../app/actions/layers-actions.c:217
 msgid "Work on the layer mask"
 msgstr "Dirbti sluoksnio kaukėje"
 
-#: ../app/actions/layers-actions.c:210
+#: ../app/actions/layers-actions.c:223
 msgid "S_how Layer Mask"
 msgstr "_Rodyti sluoksnio kaukę"
 
-#: ../app/actions/layers-actions.c:216
+#: ../app/actions/layers-actions.c:229
 msgid "_Disable Layer Mask"
 msgstr "_Išjungti sluoksnio kaukę"
 
-#: ../app/actions/layers-actions.c:217
+#: ../app/actions/layers-actions.c:230
 msgid "Dismiss the effect of the layer mask"
 msgstr "Pašalinti sluoksnio kaukės efektą"
 
-#: ../app/actions/layers-actions.c:226
+#: ../app/actions/layers-actions.c:239
 msgid "Apply Layer _Mask"
 msgstr "Pritaikyti sluoksnio _kaukę"
 
-#: ../app/actions/layers-actions.c:227
+#: ../app/actions/layers-actions.c:240
 msgid "Apply the effect of the layer mask and remove it"
 msgstr "Pritaikyti sluoksnio kaukės efektą ir ją pašalinti"
 
-#: ../app/actions/layers-actions.c:232
+#: ../app/actions/layers-actions.c:245
 msgid "Delete Layer Mas_k"
 msgstr "Ištrinti sl_uoksnio kaukę"
 
-#: ../app/actions/layers-actions.c:233
+#: ../app/actions/layers-actions.c:246
 msgid "Remove the layer mask and its effect"
 msgstr "Pašalinti sluoksnio kaukę ir jos efektą"
 
-#: ../app/actions/layers-actions.c:241
+#: ../app/actions/layers-actions.c:254
 msgid "_Mask to Selection"
 msgstr "_Pritaikyti kaukę pažymėjimui"
 
-#: ../app/actions/layers-actions.c:242
+#: ../app/actions/layers-actions.c:255
 msgid "Replace the selection with the layer mask"
 msgstr "Pakeisti pažymėtą sritį sluoksnio kauke"
 
-#: ../app/actions/layers-actions.c:248
+#: ../app/actions/layers-actions.c:261
 msgid "Add the layer mask to the current selection"
 msgstr "Pridėti sluoksnio kaukę prie dabar pažymėtos srities"
 
-#: ../app/actions/layers-actions.c:254
+#: ../app/actions/layers-actions.c:267
 msgid "Subtract the layer mask from the current selection"
 msgstr "Atimti sluoksnio kaukę iš dabar pažymėtos srities"
 
-#: ../app/actions/layers-actions.c:260
+#: ../app/actions/layers-actions.c:273
 msgid "Intersect the layer mask with the current selection"
 msgstr "Sukirsti sluoksnio kaukę su dabar pažymėta sritimi"
 
-#: ../app/actions/layers-actions.c:268
+#: ../app/actions/layers-actions.c:281
 msgid "Al_pha to Selection"
 msgstr "Alfa į _pažymėjimą"
 
-#: ../app/actions/layers-actions.c:269
+#: ../app/actions/layers-actions.c:282
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "Pakeisti pažymėjimą sluoksnio alfa kanalu"
 
-#: ../app/actions/layers-actions.c:274
+#: ../app/actions/layers-actions.c:287 ../app/actions/layers-actions.c:314
 msgid "A_dd to Selection"
 msgstr "Pri_dėti prie pažymėjimo"
 
-#: ../app/actions/layers-actions.c:275
+#: ../app/actions/layers-actions.c:288
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "Pridėti sluoksnio alfa kanalą prie esamo pažymėjimo"
 
-#: ../app/actions/layers-actions.c:281
+#: ../app/actions/layers-actions.c:294
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Atimti sluoksnio alfa kanalą iš esamo pažymėjimo"
 
-#: ../app/actions/layers-actions.c:287
+#: ../app/actions/layers-actions.c:300
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "Sukirsti sluoksnio alfa kanalą su esamu pažymėjimu"
 
-#: ../app/actions/layers-actions.c:295
+#: ../app/actions/layers-actions.c:308
+msgid "_Text to Selection"
+msgstr "_Tekstas į pažymėjimą"
+
+#: ../app/actions/layers-actions.c:309
+msgid "Replace the selection with the text layer's outline"
+msgstr "Pakeisti pažymėjimą teksto sluoksnio kontūru"
+
+#: ../app/actions/layers-actions.c:315
+msgid "Add the text layer's outline to the current selection"
+msgstr "Pridėti teksto sluoksnio kontūrą prie esamo pažymėjimo"
+
+#: ../app/actions/layers-actions.c:321
+msgid "Subtract the text layer's outline from the current selection"
+msgstr "Atimti teksto sluoksnio kontūrą iš esamo pažymėjimo"
+
+#: ../app/actions/layers-actions.c:327
+msgid "Intersect the text layer's outline with the current selection"
+msgstr "Sukirsti teksto sluoksnio kontūrą su esamu pažymėjimu"
+
+#: ../app/actions/layers-actions.c:335
 msgid "Select _Top Layer"
 msgstr "Pažymėti viršu_tinį sluoksnį"
 
-#: ../app/actions/layers-actions.c:300
+#: ../app/actions/layers-actions.c:340
 msgid "Select _Bottom Layer"
 msgstr "Pažymėti _apatinį sluoksnį"
 
-#: ../app/actions/layers-actions.c:305
+#: ../app/actions/layers-actions.c:345
 msgid "Select _Previous Layer"
 msgstr "Pažymėti _ankstesnį sluoksnį"
 
-#: ../app/actions/layers-actions.c:310
+#: ../app/actions/layers-actions.c:350
 msgid "Select _Next Layer"
 msgstr "Pažymėti _kitą sluoksnį"
 
-#: ../app/actions/layers-actions.c:318
+#: ../app/actions/layers-actions.c:358
 msgid "Set Opacity"
 msgstr "Nustatyti sluoksnio nepermatomumą"
 
-#: ../app/actions/layers-commands.c:199
+#: ../app/actions/layers-commands.c:202
 msgid "Layer Attributes"
 msgstr "Sluoksnio parametrai"
 
-#: ../app/actions/layers-commands.c:202
+#: ../app/actions/layers-commands.c:205
 msgid "Edit Layer Attributes"
 msgstr "Keisti sluoksnio parametrus"
 
-#: ../app/actions/layers-commands.c:235 ../app/actions/layers-commands.c:237
-#: ../app/actions/layers-commands.c:294 ../app/actions/layers-commands.c:298
+#: ../app/actions/layers-commands.c:238 ../app/actions/layers-commands.c:240
+#: ../app/actions/layers-commands.c:297 ../app/actions/layers-commands.c:301
 #: ../app/widgets/gimpdrawabletreeview.c:324
 #: ../app/widgets/gimplayertreeview.c:832
 msgid "New Layer"
 msgstr "Naujas sluoksnis"
 
-#: ../app/actions/layers-commands.c:240
+#: ../app/actions/layers-commands.c:243
 msgid "Create a New Layer"
 msgstr "Sukurti naują sluoksnį"
 
-#: ../app/actions/layers-commands.c:479
+#: ../app/actions/layers-commands.c:535
 msgid "Set Layer Boundary Size"
 msgstr "Nustatyti sluoksnio ribų dydį"
 
-#: ../app/actions/layers-commands.c:522 ../app/core/gimplayer.c:248
+#: ../app/actions/layers-commands.c:578 ../app/core/gimplayer.c:248
 msgid "Scale Layer"
 msgstr "Keisti sluoksnio dydį"
 
-#: ../app/actions/layers-commands.c:555
+#: ../app/actions/layers-commands.c:611
 msgid "Crop Layer"
 msgstr "Apkarpyti sluoksnį"
 
-#: ../app/actions/layers-commands.c:693
+#: ../app/actions/layers-commands.c:749
 msgid "Layer Mask to Selection"
 msgstr "Kaukę paversti pažymėjimu"
 
-#: ../app/actions/layers-commands.c:929 ../app/core/gimplayer.c:1248
-#: ../app/dialogs/layer-add-mask-dialog.c:61
+#: ../app/actions/layers-commands.c:984
+msgid "Please select a channel first"
+msgstr "Pirma pasirinkite kanalą"
+
+#: ../app/actions/layers-commands.c:992 ../app/core/gimplayer.c:1255
+#: ../app/dialogs/layer-add-mask-dialog.c:77
 msgid "Add Layer Mask"
 msgstr "Pridėti sluoksnio kaukę"
 
-#: ../app/actions/layers-commands.c:1004 ../app/actions/layers-commands.c:1042
+#: ../app/actions/layers-commands.c:1068 ../app/actions/layers-commands.c:1106
 msgid "Invalid width or height. Both must be positive."
 msgstr "Neteisingas plotis arba aukštis. Abu turi būti teigiami skaičiai."
 
@@ -2986,11 +3063,11 @@ msgstr "Pakartoti paskutinį"
 msgid "Re-Show Last"
 msgstr "Vėl parodyti paskutinį"
 
-#: ../app/actions/plug-in-commands.c:197
+#: ../app/actions/plug-in-commands.c:253
 msgid "Reset all Filters"
 msgstr "Atšaukti visus filtrus"
 
-#: ../app/actions/plug-in-commands.c:216
+#: ../app/actions/plug-in-commands.c:272
 msgid "Do you really want to reset all filters to default values?"
 msgstr "Ar tikrai norite atstatyti visus filtrus į numatytasias reikšmes?"
 
@@ -3007,7 +3084,7 @@ msgid "Toggle _Quick Mask"
 msgstr "Perjungti _greitą kaukę"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:972
+#: ../app/display/gimpdisplayshell.c:973
 msgid "Toggle Quick Mask"
 msgstr "Perjungti greitą kaukę"
 
@@ -3144,49 +3221,53 @@ msgstr "_Apvesti pažymėtas vietas"
 msgid "Stroke the selection with last used values"
 msgstr "Apvesti pažymėtas sritis naudojant paskutiniąsias naudotas reikšmes"
 
-#: ../app/actions/select-commands.c:136 ../app/core/gimpselection.c:165
+#: ../app/actions/select-commands.c:137 ../app/core/gimpselection.c:166
 msgid "Feather Selection"
 msgstr "Išlieti pažymėtas vietas"
 
-#: ../app/actions/select-commands.c:140
+#: ../app/actions/select-commands.c:141
 msgid "Feather selection by"
 msgstr "Kiek išlieti pažymėjimo ribas"
 
-#: ../app/actions/select-commands.c:171 ../app/core/gimpselection.c:172
+#: ../app/actions/select-commands.c:172 ../app/core/gimpselection.c:173
 msgid "Shrink Selection"
 msgstr "Sumažinti pažymėtas vietas"
 
-#: ../app/actions/select-commands.c:175
+#: ../app/actions/select-commands.c:176
 msgid "Shrink selection by"
 msgstr "Kiek sumažinti pažymėtas vietas"
 
-#: ../app/actions/select-commands.c:184
-msgid "Shrink from image border"
-msgstr "Sumažinti nuo paveikslėlio rėmelio"
+#: ../app/actions/select-commands.c:185
+msgid "_Shrink from image border"
+msgstr "_Sumažinti nuo paveikslėlio rėmelio"
 
-#: ../app/actions/select-commands.c:205 ../app/core/gimpselection.c:171
+#: ../app/actions/select-commands.c:206 ../app/core/gimpselection.c:172
 msgid "Grow Selection"
 msgstr "Padidinti pažymėtas vietas"
 
-#: ../app/actions/select-commands.c:209
+#: ../app/actions/select-commands.c:210
 msgid "Grow selection by"
 msgstr "Kiek padidinti pažymėtas vietas"
 
-#: ../app/actions/select-commands.c:228 ../app/core/gimpselection.c:170
+#: ../app/actions/select-commands.c:230 ../app/core/gimpselection.c:171
 msgid "Border Selection"
 msgstr "Įrėminti pažymėtas vietas"
 
-#: ../app/actions/select-commands.c:232
+#: ../app/actions/select-commands.c:234
 msgid "Border selection by"
 msgstr "Pažymėtų vietų rėmelio storis"
 
-#: ../app/actions/select-commands.c:275 ../app/actions/select-commands.c:301
+#: ../app/actions/select-commands.c:243
+msgid "_Feather border"
+msgstr "_Išlieti kraštus"
+
+#: ../app/actions/select-commands.c:289 ../app/actions/select-commands.c:315
 #: ../app/actions/vectors-commands.c:363 ../app/actions/vectors-commands.c:390
 #: ../app/dialogs/stroke-dialog.c:278
 msgid "There is no active layer or channel to stroke to."
 msgstr "Nėra apvestino aktyvaus sluoksnio ar kanalo."
 
-#: ../app/actions/select-commands.c:280 ../app/core/gimpselection.c:149
+#: ../app/actions/select-commands.c:294 ../app/core/gimpselection.c:150
 msgid "Stroke Selection"
 msgstr "Apvesti pažymėtas vietas"
 
@@ -3295,10 +3376,10 @@ msgstr "Atverti tekstinę rinkmeną (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:137
 #: ../app/config/gimpconfig-file.c:57 ../app/core/gimpbrush-load.c:115
-#: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated.c:560
+#: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated.c:562
 #: ../app/core/gimpbrushpipe.c:314 ../app/core/gimpgradient-load.c:62
 #: ../app/core/gimppalette.c:322 ../app/core/gimppattern.c:263
-#: ../app/tools/gimpimagemaptool.c:580 ../app/xcf/xcf.c:348
+#: ../app/tools/gimpimagemaptool.c:581 ../app/xcf/xcf.c:348
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Atverti „%s“ skaitymui nepavyko: %s"
@@ -3493,7 +3574,7 @@ msgstr "Padaryti kontūro kopiją"
 msgid "_Delete Path"
 msgstr "_Ištrinti kontūrą"
 
-#: ../app/actions/vectors-actions.c:78 ../app/core/core-enums.c:868
+#: ../app/actions/vectors-actions.c:78 ../app/core/core-enums.c:916
 msgid "Delete path"
 msgstr "Ištrinti kontūrą"
 
@@ -3569,7 +3650,7 @@ msgstr "I_mportuoti kontūrą..."
 msgid "Path to Sele_ction"
 msgstr "Paversti kontūrą į _pažymėtą sritį"
 
-#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1864
+#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1842
 msgid "Path to selection"
 msgstr "Paversti kontūrą į pažymėtą sritį"
 
@@ -3631,7 +3712,7 @@ msgid "Path to Selection"
 msgstr "Paversti kontūrą į pažymėtą sritį"
 
 #: ../app/actions/vectors-commands.c:368 ../app/tools/gimpvectoroptions.c:178
-#: ../app/tools/gimpvectortool.c:1894 ../app/vectors/gimpvectors.c:199
+#: ../app/tools/gimpvectortool.c:1872 ../app/vectors/gimpvectors.c:199
 msgid "Stroke Path"
 msgstr "Apvesti kontūrą"
 
@@ -3883,14 +3964,17 @@ msgid "Value"
 msgstr "Reikšmė"
 
 #: ../app/base/base-enums.c:56 ../app/tools/gimpcolorbalancetool.c:262
+#: ../app/tools/gimphuesaturationtool.c:232
 msgid "Red"
 msgstr "Raudona"
 
 #: ../app/base/base-enums.c:57 ../app/tools/gimpcolorbalancetool.c:269
+#: ../app/tools/gimphuesaturationtool.c:234
 msgid "Green"
 msgstr "Žalia"
 
 #: ../app/base/base-enums.c:58 ../app/tools/gimpcolorbalancetool.c:276
+#: ../app/tools/gimphuesaturationtool.c:236
 msgid "Blue"
 msgstr "Mėlyna"
 
@@ -4000,10 +4084,10 @@ msgstr ""
 "vardus, perleiskite Gimp ir patikrinkite Nustatymuose nurodytą mainų aplanko "
 "vietą."
 
-#: ../app/config/gimpconfig-file.c:66 ../app/core/gimpbrushgenerated.c:223
+#: ../app/config/gimpconfig-file.c:66 ../app/core/gimpbrushgenerated.c:226
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:142
 #: ../app/core/gimppalette.c:521 ../app/gui/themes.c:238
-#: ../app/tools/gimpimagemaptool.c:579 ../app/vectors/gimpvectors-export.c:83
+#: ../app/tools/gimpimagemaptool.c:580 ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:405
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -4419,8 +4503,8 @@ msgid ""
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
 "and back in. Be aware that the swap file can easily get very large if GIMP "
 "is used with large images. Also, things can get horribly slow if the swap "
-"file is created on a directory that is mounted over NFS.  For these reasons, "
-"it may be desirable to put your swap file in \"/tmp\"."
+"file is created on a folder that is mounted over NFS.  For these reasons, it "
+"may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
 "Nurodo mainų rinkmenos vietą. GIMP naudoja tekstūromis paremtą atminties "
 "paskirstymo schemą. Mainų rinkmena naudojama greitai ir paprastai įkelti "
@@ -4459,10 +4543,10 @@ msgstr "Atstatyti išsaugotus klavišų susiejimus kiekvieno GIMP paleidimo metu
 
 #: ../app/config/gimprc-blurbs.h:364
 msgid ""
-"Sets the temporary storage directory. Files will appear here during the "
+"Sets the folder for temporary storage. Files will appear here during the "
 "course of running the GIMP.  Most files will disappear when the GIMP exits, "
-"but some files are likely to remain, so it is best if this directory not be "
-"one that is shared by other users."
+"but some files are likely to remain, so it is best if this folder not be one "
+"that is shared by other users."
 msgstr ""
 "Nurodo laikinąjį saugojimo aplanką. Ten bus saugomos rinkmenos naudojimosi "
 "GIMP metu. Po GIMP uždarymo dauguma rinkmenų pranyks, tačiau kai kurios gali "
@@ -4573,9 +4657,8 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "žymės %s reikšmė nėra UTF-8 eilutė"
 
 #. no undo (or redo) steps available
-#: ../app/core/core-enums.c:53 ../app/core/core-enums.c:204
-#: ../app/core/core-enums.c:456 ../app/paint/paint-enums.c:53
-#: ../app/tools/gimptransformoptions.c:432
+#: ../app/core/core-enums.c:53 ../app/core/core-enums.c:252
+#: ../app/core/core-enums.c:504 ../app/paint/paint-enums.c:53
 #: ../app/widgets/gimpimagepropview.c:297
 msgid "None"
 msgstr "Nieko"
@@ -4608,461 +4691,481 @@ msgstr "Naudoti juodą ir baltą (1 bito) paletę"
 msgid "Use custom palette"
 msgstr "Naudoti papildomą paletę"
 
-#: ../app/core/core-enums.c:199
+#: ../app/core/core-enums.c:211
+msgid "First item"
+msgstr "Pirmas elementas"
+
+#: ../app/core/core-enums.c:213 ../app/dialogs/dialogs.c:187
+msgid "Selection"
+msgstr "Pažymėjimas"
+
+#: ../app/core/core-enums.c:214
+msgid "Active layer"
+msgstr "Aktyvus sluoksnis"
+
+#: ../app/core/core-enums.c:215
+msgid "Active channel"
+msgstr "Aktyvus kanalas"
+
+#: ../app/core/core-enums.c:216
+msgid "Active path"
+msgstr "Aktyvus kontūras"
+
+#: ../app/core/core-enums.c:247
 msgid "Foreground color"
 msgstr "Priekinio plano spalva"
 
-#: ../app/core/core-enums.c:200
+#: ../app/core/core-enums.c:248
 msgid "Background color"
 msgstr "Fono spalva"
 
-#: ../app/core/core-enums.c:201
+#: ../app/core/core-enums.c:249
 msgid "White"
 msgstr "Baltas"
 
 #  Transparency
 #. Transparency
-#: ../app/core/core-enums.c:202 ../app/dialogs/preferences-dialog.c:2035
+#: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2141
 msgid "Transparency"
 msgstr "Skaidrus"
 
-#: ../app/core/core-enums.c:203 ../app/core/core-enums.c:260
+#: ../app/core/core-enums.c:251 ../app/core/core-enums.c:308
 msgid "Pattern"
 msgstr "Raštai"
 
-#: ../app/core/core-enums.c:231
+#: ../app/core/core-enums.c:279
 msgid "Stroke line"
 msgstr "Apvesti linija"
 
-#: ../app/core/core-enums.c:232
+#: ../app/core/core-enums.c:280
 msgid "Stroke with a paint tool"
 msgstr "Apvesti su piešimo įrankiu"
 
-#: ../app/core/core-enums.c:259
+#: ../app/core/core-enums.c:307
 msgid "Solid"
 msgstr "Vientisas"
 
 # Miter apibrėžimas (http://dictionary.cambridge.org/define.asp?key=51203&dict=CALD): 
-#: ../app/core/core-enums.c:288
+#: ../app/core/core-enums.c:336
 msgid "Miter"
 msgstr "Kampinis"
 
-#: ../app/core/core-enums.c:289 ../app/core/core-enums.c:319
+#: ../app/core/core-enums.c:337 ../app/core/core-enums.c:367
 msgid "Round"
 msgstr "Apvalus"
 
-#: ../app/core/core-enums.c:290
+#: ../app/core/core-enums.c:338
 msgid "Bevel"
 msgstr "Nuožulnus"
 
-#: ../app/core/core-enums.c:318
+#: ../app/core/core-enums.c:366
 msgid "Butt"
 msgstr "Nukirstas"
 
-#: ../app/core/core-enums.c:320 ../app/core/core-enums.c:395
+#: ../app/core/core-enums.c:368 ../app/core/core-enums.c:443
 msgid "Square"
 msgstr "Kvadratinis"
 
-#: ../app/core/core-enums.c:356
+#: ../app/core/core-enums.c:404
 msgid "Custom"
 msgstr "Pasirinkta"
 
-#: ../app/core/core-enums.c:357
+#: ../app/core/core-enums.c:405
 msgid "Line"
 msgstr "Linija"
 
-#: ../app/core/core-enums.c:358
+#: ../app/core/core-enums.c:406
 msgid "Long dashes"
 msgstr "Ilgi brūkšneliai"
 
-#: ../app/core/core-enums.c:359
+#: ../app/core/core-enums.c:407
 msgid "Medium dashes"
 msgstr "Viduiniai brūkšneliai"
 
-#: ../app/core/core-enums.c:360
+#: ../app/core/core-enums.c:408
 msgid "Short dashes"
 msgstr "Trumpi brūkšneliai"
 
-#: ../app/core/core-enums.c:361
+#: ../app/core/core-enums.c:409
 msgid "Sparse dots"
 msgstr "Reti taškeliai"
 
-#: ../app/core/core-enums.c:362
+#: ../app/core/core-enums.c:410
 msgid "Normal dots"
 msgstr "Normalūs taškeliai"
 
-#: ../app/core/core-enums.c:363
+#: ../app/core/core-enums.c:411
 msgid "Dense dots"
 msgstr "Tankūs taškeliai"
 
-#: ../app/core/core-enums.c:364
+#: ../app/core/core-enums.c:412
 msgid "Stipples"
 msgstr "Mažyčiai taškeliai"
 
-#: ../app/core/core-enums.c:365
+#: ../app/core/core-enums.c:413
 msgid "Dash, dot"
 msgstr "Brūkšnelis, taškelis"
 
-#: ../app/core/core-enums.c:366
+#: ../app/core/core-enums.c:414
 msgid "Dash, dot, dot"
 msgstr "Brūkšnelis, taškelis, taškelis"
 
-#: ../app/core/core-enums.c:394
+#: ../app/core/core-enums.c:442
 msgid "Circle"
 msgstr "Apskritimas"
 
-#: ../app/core/core-enums.c:396
+#: ../app/core/core-enums.c:444
 msgid "Diamond"
 msgstr "Deimantas"
 
-#: ../app/core/core-enums.c:424 ../app/dialogs/preferences-dialog.c:2067
+#: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2173
 msgid "Horizontal"
 msgstr "Horizontaliai"
 
-#: ../app/core/core-enums.c:425 ../app/dialogs/preferences-dialog.c:2069
+#: ../app/core/core-enums.c:473 ../app/dialogs/preferences-dialog.c:2175
 msgid "Vertical"
 msgstr "Vertikaliai"
 
-#: ../app/core/core-enums.c:426
+#: ../app/core/core-enums.c:474
 msgid "Unknown"
 msgstr "Nežinomas"
 
-#: ../app/core/core-enums.c:457
-msgid "Image-sized layers"
-msgstr "Paveikslėlio dydžio sluoksniai"
-
-#: ../app/core/core-enums.c:458
-msgid "All visible layers"
-msgstr "Visi matomi sluoksniai"
-
-#: ../app/core/core-enums.c:459
-msgid "All linked layers"
-msgstr "Visi susieti sluoksniai"
-
-#: ../app/core/core-enums.c:460
+#: ../app/core/core-enums.c:505
 msgid "All layers"
 msgstr "Visi sluoksniai"
 
-#: ../app/core/core-enums.c:524
+#: ../app/core/core-enums.c:506
+msgid "Image-sized layers"
+msgstr "Paveikslėlio dydžio sluoksniai"
+
+#: ../app/core/core-enums.c:507
+msgid "All visible layers"
+msgstr "Visi matomi sluoksniai"
+
+#: ../app/core/core-enums.c:508
+msgid "All linked layers"
+msgstr "Visi susieti sluoksniai"
+
+#: ../app/core/core-enums.c:572
 msgid "Tiny"
 msgstr "Mažytis"
 
-#: ../app/core/core-enums.c:525
+#: ../app/core/core-enums.c:573
 msgid "Very small"
 msgstr "Labai mažas"
 
-#: ../app/core/core-enums.c:526
+#: ../app/core/core-enums.c:574
 msgid "Small"
 msgstr "Mažas"
 
-#: ../app/core/core-enums.c:527
+#: ../app/core/core-enums.c:575
 msgid "Medium"
 msgstr "Vidutinis"
 
-#: ../app/core/core-enums.c:528
+#: ../app/core/core-enums.c:576
 msgid "Large"
 msgstr "Didelis"
 
-#: ../app/core/core-enums.c:529
+#: ../app/core/core-enums.c:577
 msgid "Very large"
 msgstr "Labai didelis"
 
-#: ../app/core/core-enums.c:530
+#: ../app/core/core-enums.c:578
 msgid "Huge"
 msgstr "Didžiulis"
 
-#: ../app/core/core-enums.c:531
+#: ../app/core/core-enums.c:579
 msgid "Enormous"
 msgstr "Milžiniškas"
 
-#: ../app/core/core-enums.c:532
+#: ../app/core/core-enums.c:580
 msgid "Gigantic"
 msgstr "Gigantiškas"
 
-#: ../app/core/core-enums.c:559
+#: ../app/core/core-enums.c:607
 msgid "View as list"
 msgstr "Rodyti kaip sąrašą"
 
-#: ../app/core/core-enums.c:560
+#: ../app/core/core-enums.c:608
 msgid "View as grid"
 msgstr "Rodyti kaip groteles"
 
-#: ../app/core/core-enums.c:622
+#: ../app/core/core-enums.c:670
 msgid "No thumbnails"
 msgstr "Nėra miniatiūrų"
 
-#: ../app/core/core-enums.c:623
+#: ../app/core/core-enums.c:671
 msgid "Normal (128x128)"
 msgstr "Normalus (128x128)"
 
-#: ../app/core/core-enums.c:624
+#: ../app/core/core-enums.c:672
 msgid "Large (256x256)"
 msgstr "Didelis (256x256)"
 
-#: ../app/core/core-enums.c:799
+#: ../app/core/core-enums.c:847
 msgid "<<invalid>>"
 msgstr "<<neteisingas>>"
 
-#: ../app/core/core-enums.c:800
+#: ../app/core/core-enums.c:848
 msgid "Scale image"
 msgstr "Ištempti paveikslėlį"
 
-#: ../app/core/core-enums.c:801
+#: ../app/core/core-enums.c:849
 msgid "Resize image"
 msgstr "Keisti paveikslėlio dydį"
 
-#: ../app/core/core-enums.c:802
+#: ../app/core/core-enums.c:850
 msgid "Flip image"
 msgstr "Apsukti paveikslėlį"
 
-#: ../app/core/core-enums.c:803
+#: ../app/core/core-enums.c:851
 msgid "Rotate image"
 msgstr "Pasukti paveikslėlį"
 
-#: ../app/core/core-enums.c:804
+#: ../app/core/core-enums.c:852
 msgid "Crop image"
 msgstr "Apkirpti paveikslėlį"
 
-#: ../app/core/core-enums.c:805
+#: ../app/core/core-enums.c:853
 msgid "Convert image"
 msgstr "Konvertuoti paveikslėlį"
 
-#: ../app/core/core-enums.c:806
+#: ../app/core/core-enums.c:854
 msgid "Remove item"
 msgstr "Pašalinti elementą"
 
-#: ../app/core/core-enums.c:807
+#: ../app/core/core-enums.c:855
 msgid "Merge layers"
 msgstr "Sujungti sluoksnius"
 
-#: ../app/core/core-enums.c:808
+#: ../app/core/core-enums.c:856
 msgid "Merge paths"
 msgstr "Sujungti kontūrus"
 
-#: ../app/core/core-enums.c:810 ../app/core/core-enums.c:840
+#: ../app/core/core-enums.c:858 ../app/core/core-enums.c:888
 msgid "Guide"
 msgstr "Gairė"
 
-#: ../app/core/core-enums.c:811 ../app/core/core-enums.c:841
+#: ../app/core/core-enums.c:859 ../app/core/core-enums.c:889
 #: ../app/core/gimpimage-grid.c:58 ../app/dialogs/grid-dialog.c:149
-#: ../app/tools/tools-enums.c:205
+#: ../app/tools/tools-enums.c:209
 msgid "Grid"
 msgstr "Tinklelis"
 
-#: ../app/core/core-enums.c:812 ../app/core/core-enums.c:842
+#: ../app/core/core-enums.c:860 ../app/core/core-enums.c:890
 msgid "Sample Point"
 msgstr "Mėginio taškas"
 
-#: ../app/core/core-enums.c:813 ../app/core/core-enums.c:844
+#: ../app/core/core-enums.c:861 ../app/core/core-enums.c:892
 msgid "Layer/Channel"
 msgstr "Sluoksnis/kanalas"
 
-#: ../app/core/core-enums.c:814 ../app/core/core-enums.c:845
+#: ../app/core/core-enums.c:862 ../app/core/core-enums.c:893
 msgid "Layer/Channel modification"
 msgstr "Sluoksnio/kanalo keitimas"
 
-#: ../app/core/core-enums.c:815 ../app/core/core-enums.c:846
+#: ../app/core/core-enums.c:863 ../app/core/core-enums.c:894
 msgid "Selection mask"
 msgstr "Pažymėjimo kaukė"
 
-#: ../app/core/core-enums.c:816 ../app/core/core-enums.c:849
+#: ../app/core/core-enums.c:864 ../app/core/core-enums.c:897
 msgid "Item visibility"
 msgstr "Elemento matomumas"
 
-#: ../app/core/core-enums.c:817 ../app/core/core-enums.c:850
+#: ../app/core/core-enums.c:865 ../app/core/core-enums.c:898
 msgid "Link/Unlink item"
 msgstr "Susieti/atsieti elementą"
 
-#: ../app/core/core-enums.c:818
+#: ../app/core/core-enums.c:866
 msgid "Item properties"
 msgstr "Elemento savybės"
 
-#: ../app/core/core-enums.c:819 ../app/core/core-enums.c:848
+#: ../app/core/core-enums.c:867 ../app/core/core-enums.c:896
 msgid "Move item"
 msgstr "Perkelti elementą"
 
-#: ../app/core/core-enums.c:820
+#: ../app/core/core-enums.c:868
 msgid "Scale item"
 msgstr "Ištempti elementą"
 
-#: ../app/core/core-enums.c:821
+#: ../app/core/core-enums.c:869
 msgid "Resize item"
 msgstr "Keisti elemento dydį"
 
-#: ../app/core/core-enums.c:822 ../app/core/core-enums.c:859
+#: ../app/core/core-enums.c:870 ../app/core/core-enums.c:907
 msgid "Add layer mask"
 msgstr "Pridėti sluoksnio kaukę"
 
-#: ../app/core/core-enums.c:823 ../app/core/core-enums.c:861
+#: ../app/core/core-enums.c:871 ../app/core/core-enums.c:909
 msgid "Apply layer mask"
 msgstr "Pritaikyti sluoksnio kaukę"
 
-#: ../app/core/core-enums.c:824 ../app/core/core-enums.c:871
+#: ../app/core/core-enums.c:872 ../app/core/core-enums.c:919
 msgid "Floating selection to layer"
 msgstr "Plaukiojantis pažymėjimas į sluoksnį"
 
-#: ../app/core/core-enums.c:825
+#: ../app/core/core-enums.c:873
 msgid "Float selection"
 msgstr "Plaukiojantis pažymėjimas"
 
-#: ../app/core/core-enums.c:826
+#: ../app/core/core-enums.c:874
 msgid "Anchor floating selection"
 msgstr "Prikabinti plaukiojantį pažymėjimą"
 
-#: ../app/core/core-enums.c:827
+#: ../app/core/core-enums.c:875
 msgid "Remove floating selection"
 msgstr "Pašalinti plaukiojantį pažymėjimą"
 
-#: ../app/core/core-enums.c:828 ../app/core/gimp-edit.c:253
+#: ../app/core/core-enums.c:876 ../app/core/gimp-edit.c:253
 msgid "Paste"
 msgstr "Įdėti"
 
-#: ../app/core/core-enums.c:829 ../app/core/gimp-edit.c:493
+#: ../app/core/core-enums.c:877 ../app/core/gimp-edit.c:493
 msgid "Cut"
 msgstr "Iškirpti"
 
-#: ../app/core/core-enums.c:830 ../app/tools/gimptexttool.c:142
+#: ../app/core/core-enums.c:878 ../app/tools/gimptexttool.c:143
 #: ../app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Tekstas"
 
-#: ../app/core/core-enums.c:831 ../app/core/core-enums.c:874
+#: ../app/core/core-enums.c:879 ../app/core/core-enums.c:922
 #: ../app/core/gimpdrawable-transform.c:911
 msgid "Transform"
 msgstr "Transformuoti"
 
-#: ../app/core/core-enums.c:832 ../app/core/core-enums.c:875
+#: ../app/core/core-enums.c:880 ../app/core/core-enums.c:923
 #: ../app/paint/gimppaintcore.c:335
 msgid "Paint"
 msgstr "Piešti"
 
-#: ../app/core/core-enums.c:833 ../app/core/core-enums.c:878
+#: ../app/core/core-enums.c:881 ../app/core/core-enums.c:926
 msgid "Attach parasite"
 msgstr "Prisegti parazitą"
 
-#: ../app/core/core-enums.c:834 ../app/core/core-enums.c:879
+#: ../app/core/core-enums.c:882 ../app/core/core-enums.c:927
 msgid "Remove parasite"
 msgstr "Pašalinti parazitą"
 
-#: ../app/core/core-enums.c:835
+#: ../app/core/core-enums.c:883
 msgid "Import paths"
 msgstr "Importuoti kelius"
 
-#: ../app/core/core-enums.c:836 ../app/pdb/drawable_cmds.c:770
+#: ../app/core/core-enums.c:884 ../app/pdb/drawable_cmds.c:770
 msgid "Plug-In"
 msgstr "Įskiepis"
 
-#: ../app/core/core-enums.c:837
+#: ../app/core/core-enums.c:885
 msgid "Image type"
 msgstr "Paveikslėlio tipas"
 
-#: ../app/core/core-enums.c:838
+#: ../app/core/core-enums.c:886
 msgid "Image size"
 msgstr "Paveikslėlio dydis"
 
-#: ../app/core/core-enums.c:839
+#: ../app/core/core-enums.c:887
 msgid "Image resolution change"
 msgstr "Paveikslėlio raiškos keitimas"
 
-#: ../app/core/core-enums.c:843
+#: ../app/core/core-enums.c:891
 msgid "Change indexed palette"
 msgstr "Pakeisti indeksuotą paletę"
 
-#: ../app/core/core-enums.c:847
+#: ../app/core/core-enums.c:895
 msgid "Rename item"
 msgstr "Pervadinti elementą"
 
-#: ../app/core/core-enums.c:851
+#: ../app/core/core-enums.c:899
 msgid "New layer"
 msgstr "Naujas sluoksnis"
 
-#: ../app/core/core-enums.c:852
+#: ../app/core/core-enums.c:900
 msgid "Delete layer"
 msgstr "Ištrinti sluoksnį"
 
-#: ../app/core/core-enums.c:853
+#: ../app/core/core-enums.c:901
 msgid "Reposition layer"
 msgstr "Perkelti sluoksnį"
 
-#: ../app/core/core-enums.c:854
+#: ../app/core/core-enums.c:902
 msgid "Set layer mode"
 msgstr "Nustatyti sluoksnio režimą"
 
-#: ../app/core/core-enums.c:855
+#: ../app/core/core-enums.c:903
 msgid "Set layer opacity"
 msgstr "Nustatyti sluoksnio nepermatomumą"
 
-#: ../app/core/core-enums.c:856
+#: ../app/core/core-enums.c:904
 msgid "Lock/Unlock alpha channel"
 msgstr "Užrakinti/atrakinti alfa kanalą"
 
-#: ../app/core/core-enums.c:857
+#: ../app/core/core-enums.c:905
 msgid "Text layer"
 msgstr "Teksto sluoksnis"
 
-#: ../app/core/core-enums.c:858
+#: ../app/core/core-enums.c:906
 msgid "Text layer modification"
 msgstr "Teksto sluoksnio keitimas"
 
-#: ../app/core/core-enums.c:860
+#: ../app/core/core-enums.c:908
 msgid "Delete layer mask"
 msgstr "Ištrinti sluoksnio kaukę"
 
-#: ../app/core/core-enums.c:862
+#: ../app/core/core-enums.c:910
 msgid "Show layer mask"
 msgstr "Rodyti sluoksnio kaukę"
 
-#: ../app/core/core-enums.c:863
+#: ../app/core/core-enums.c:911
 msgid "New channel"
 msgstr "Naujas kanalas"
 
-#: ../app/core/core-enums.c:864
+#: ../app/core/core-enums.c:912
 msgid "Delete channel"
 msgstr "Ištrinti kanalą"
 
-#: ../app/core/core-enums.c:865
+#: ../app/core/core-enums.c:913
 msgid "Reposition channel"
 msgstr "Perkelti kanalą"
 
-#: ../app/core/core-enums.c:866
+#: ../app/core/core-enums.c:914
 msgid "Channel color"
 msgstr "Kanalo spalva"
 
-#: ../app/core/core-enums.c:867
+#: ../app/core/core-enums.c:915
 msgid "New path"
 msgstr "Naujas kontūras"
 
-#: ../app/core/core-enums.c:869
+#: ../app/core/core-enums.c:917
 msgid "Path modification"
 msgstr "Kelio keitimas"
 
-#: ../app/core/core-enums.c:870
+#: ../app/core/core-enums.c:918
 msgid "Reposition path"
 msgstr "Perkelti kontūrą"
 
-#: ../app/core/core-enums.c:872
+#: ../app/core/core-enums.c:920
 msgid "FS rigor"
 msgstr ""
 
-#: ../app/core/core-enums.c:873
+#: ../app/core/core-enums.c:921
 msgid "FS relax"
 msgstr ""
 
-#: ../app/core/core-enums.c:876 ../app/paint/gimpink.c:103
+#: ../app/core/core-enums.c:924 ../app/paint/gimpink.c:103
 #: ../app/tools/gimpinktool.c:61
 msgid "Ink"
 msgstr "Plunksna"
 
-#: ../app/core/core-enums.c:877
+#: ../app/core/core-enums.c:925
 msgid "Select foreground"
 msgstr "Pasirinkite priekinį planą"
 
-#: ../app/core/core-enums.c:880
+#: ../app/core/core-enums.c:928
 msgid "EEK: can't undo"
 msgstr "EEK: atšaukimas negalimas"
 
 #: ../app/core/gimp-contexts.c:141 ../app/gui/session.c:252
-#: ../app/menus/menus.c:413 ../app/tools/gimp-tools.c:432
+#: ../app/menus/menus.c:422 ../app/tools/gimp-tools.c:432
 #: ../app/widgets/gimpdevices.c:258
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -5092,7 +5195,7 @@ msgstr "Užpildyti skaidrumu"
 msgid "Fill with Pattern"
 msgstr "Užpildyti raštu"
 
-#: ../app/core/gimp-edit.c:519 ../app/core/gimpselection.c:622
+#: ../app/core/gimp-edit.c:519 ../app/core/gimpselection.c:627
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Neįmanoma iškirpti/kopijuoti, nes pasirinktas regionas yra tuščias."
 
@@ -5116,47 +5219,65 @@ msgstr "Iš priekinio plano į fono (HSV atspalvis pagal laikrodžio rodyklę)"
 msgid "FG to Transparent"
 msgstr "Iš priekinio plano į skaidrią"
 
-#: ../app/core/gimp-user-install.c:288
+#: ../app/core/gimp-user-install.c:193
+#, c-format
+msgid ""
+"It seems you have used GIMP %s before.  GIMP will now migrate your user "
+"settings to '%s'."
+msgstr ""
+"Panašu, kad anksčiau naudojote GIMP %s. GIMP dabar migruos naudotojo "
+"nustatymus į „%s“."
+
+#: ../app/core/gimp-user-install.c:198
+#, c-format
+msgid ""
+"It appears that you are using GIMP for the first time.  GIMP will now create "
+"a folder named '%s' and copy some files to it."
+msgstr ""
+"Panašu, kad naudojate GIMP pirmą kartą. GIMP dabar sukurs aplanką „%s“ ir į jį "
+"nukopijuos keletą rinkmenų."
+
+#: ../app/core/gimp-user-install.c:300
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Kopijuojama rinkmena „%s“ iš „%s“..."
 
-#: ../app/core/gimp-user-install.c:303
+#: ../app/core/gimp-user-install.c:315
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Kuriamas aplankas „%s“..."
 
-#: ../app/core/gimp-user-install.c:314
+#: ../app/core/gimp-user-install.c:326
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Negalima sukurti aplanko „%s“: %s"
 
-#: ../app/core/gimp.c:507
+#: ../app/core/gimp.c:512
 msgid "Initialization"
 msgstr "Inicializacija"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:568
+#: ../app/core/gimp.c:587
 msgid "Internal Procedures"
 msgstr "Vidinės procedūros"
 
 #  initialize  the global parasite table
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:786
+#: ../app/core/gimp.c:803
 msgid "Looking for data files"
 msgstr "Ieškomos duomenų rinkmenos"
 
-#: ../app/core/gimp.c:786
+#: ../app/core/gimp.c:803
 msgid "Parasites"
 msgstr "Parazitai"
 
 #. initialize the document history
-#: ../app/core/gimp.c:811
+#: ../app/core/gimp.c:828
 msgid "Documents"
 msgstr "Dokumentai"
 
 #. initialize the module list
-#: ../app/core/gimp.c:819 ../app/dialogs/preferences-dialog.c:2445
+#: ../app/core/gimp.c:836 ../app/dialogs/preferences-dialog.c:2553
 msgid "Modules"
 msgstr "Moduliai"
 
@@ -5197,15 +5318,15 @@ msgstr ""
 "Kritinė skaitymo klaida teptuko rinkmenoje „%s“: panašu, kad rinkmena "
 "nepilna."
 
-#: ../app/core/gimpbrush-load.c:251 ../app/core/gimpbrushgenerated.c:607
+#: ../app/core/gimpbrush-load.c:251 ../app/core/gimpbrushgenerated.c:614
 #: ../app/core/gimpbrushpipe.c:330
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Nekorektiška UTF-8 eilutė teptukų rinkmenoje „%s“."
 
-#: ../app/core/gimpbrush-load.c:258 ../app/core/gimpitem.c:530
+#: ../app/core/gimpbrush-load.c:258 ../app/core/gimpitem.c:538
 #: ../app/core/gimppattern.c:333 ../app/dialogs/template-options-dialog.c:81
-#: ../app/tools/gimpvectortool.c:300
+#: ../app/tools/gimpvectortool.c:294
 msgid "Unnamed"
 msgstr "Bevardis"
 
@@ -5232,32 +5353,37 @@ msgstr ""
 msgid "Fatal parse error in brush file '%s'"
 msgstr "Kritinė skaitymo klaida teptuko rinkmenoje „%s“"
 
-#: ../app/core/gimpbrushgenerated.c:573
+#: ../app/core/gimpbrushclipboard.c:181 ../app/core/gimppatternclipboard.c:181
+#: ../app/widgets/gimpclipboard.c:296
+msgid "Clipboard"
+msgstr "Iškarpinė"
+
+#: ../app/core/gimpbrushgenerated.c:575
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
 msgstr ""
 "Kritinė skaitymo klaida teptuko rinkmenoje „%s“: tai ne GIMP teptukų "
 "rinkmena."
 
-#: ../app/core/gimpbrushgenerated.c:589
+#: ../app/core/gimpbrushgenerated.c:591
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
 msgstr ""
 "Kritinė skaitymo klaida teptukų rinkmenoje „%s“: nežinoma GIMP teptukų "
 "versija."
 
-#: ../app/core/gimpbrushgenerated.c:628
+#: ../app/core/gimpbrushgenerated.c:635
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
 msgstr ""
 "Kritinė skaitymo klaida teptukų rinkmenoje „%s“: nežinoma GIMP teptuko forma."
 
-#: ../app/core/gimpbrushgenerated.c:695
+#: ../app/core/gimpbrushgenerated.c:702
 #, c-format
 msgid "Error while reading brush file '%s': %s"
 msgstr "Klaida skaitant teptuko rinkmeną „%s“: %s"
 
-#: ../app/core/gimpbrushgenerated.c:697
+#: ../app/core/gimpbrushgenerated.c:704
 msgid "File is truncated"
 msgstr "Rinkmena yra nepilna"
 
@@ -5267,96 +5393,12 @@ msgstr "Rinkmena yra nepilna"
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Kritinė skaitymo klaida teptuko rinkmenoje „%s“: rinkmena sugadinta."
 
-#: ../app/core/gimpchannel.c:255
-msgid "Channel"
-msgstr "Kanalas"
-
-#: ../app/core/gimpchannel.c:256
-msgid "Rename Channel"
-msgstr "Pervadinti kanalą"
-
-#: ../app/core/gimpchannel.c:257
-msgid "Move Channel"
-msgstr "Perkelti kanalą"
-
-#: ../app/core/gimpchannel.c:258
-msgid "Scale Channel"
-msgstr "Keisti kanalo dydį"
-
-#: ../app/core/gimpchannel.c:259
-msgid "Resize Channel"
-msgstr "Keisti kanalo dydį"
-
-#: ../app/core/gimpchannel.c:260
-msgid "Flip Channel"
-msgstr "Apsukti kanalą"
-
-#: ../app/core/gimpchannel.c:261
-msgid "Rotate Channel"
-msgstr "Pasukti kanalą"
-
-#: ../app/core/gimpchannel.c:262 ../app/core/gimpdrawable-transform.c:1178
-msgid "Transform Channel"
-msgstr "Transformuoti kanalą"
-
-#: ../app/core/gimpchannel.c:263
-msgid "Stroke Channel"
-msgstr "Apvesti kanalą"
-
-#: ../app/core/gimpchannel.c:284
-msgid "Feather Channel"
-msgstr "Išlieti kanalą"
-
-#: ../app/core/gimpchannel.c:285
-msgid "Sharpen Channel"
-msgstr "Paaštrinti kanalą"
-
-#: ../app/core/gimpchannel.c:286
-msgid "Clear Channel"
-msgstr "Išvalyti kanalą"
-
-#: ../app/core/gimpchannel.c:287
-msgid "Fill Channel"
-msgstr "Užpildyti kanalą"
-
-#: ../app/core/gimpchannel.c:288
-msgid "Invert Channel"
-msgstr "Invertuoti kanalą"
-
-#: ../app/core/gimpchannel.c:289
-msgid "Border Channel"
-msgstr "Įrėminti kanalą"
-
-#: ../app/core/gimpchannel.c:290
-msgid "Grow Channel"
-msgstr "Padidinti kanalą"
-
-#: ../app/core/gimpchannel.c:291
-msgid "Shrink Channel"
-msgstr "Sumažinti kanalą"
-
-#: ../app/core/gimpchannel.c:686
-msgid "Cannot stroke empty channel."
-msgstr "Negalima apvesti tuščio kanalo."
-
-#: ../app/core/gimpchannel.c:1585
-msgid "Set Channel Color"
-msgstr "Nustatyti kanalo spalvą"
-
-#: ../app/core/gimpchannel.c:1633
-msgid "Set Channel Opacity"
-msgstr "Nustatyti kanalo nepermatomumą"
-
-#: ../app/core/gimpchannel.c:1701 ../app/core/gimpselection.c:517
-msgid "Selection Mask"
-msgstr "Pažymėjimo kaukė"
-
-#: ../app/core/gimpchannel-select.c:55 ../app/tools/gimprectselecttool.c:94
+#: ../app/core/gimpchannel-select.c:55
 msgid "Rectangle Select"
 msgstr "Keturkampis pažymėjimas"
 
 #: ../app/core/gimpchannel-select.c:104
-#: ../app/tools/gimpellipseselecttool.c:71
+#: ../app/tools/gimpellipseselecttool.c:73
 msgid "Ellipse Select"
 msgstr "Elipsinis pažymėjimas"
 
@@ -5369,16 +5411,100 @@ msgstr "Pakeisti alfa kanalą pažymėjimu"
 msgid "%s Channel to Selection"
 msgstr "Pakeisti %s kanalą pažymėjimu"
 
-#: ../app/core/gimpchannel-select.c:448 ../app/tools/gimpfuzzyselecttool.c:97
+#: ../app/core/gimpchannel-select.c:448 ../app/tools/gimpfuzzyselecttool.c:101
 msgid "Fuzzy Select"
 msgstr "Neaiškus pažymėjimas"
 
 #: ../app/core/gimpchannel-select.c:493
-#: ../app/tools/gimpbycolorselecttool.c:81
+#: ../app/tools/gimpbycolorselecttool.c:91
 msgid "Select by Color"
 msgstr "Pažymėti pagal spalvą"
 
-#: ../app/core/gimpdata.c:455
+#: ../app/core/gimpchannel.c:256
+msgid "Channel"
+msgstr "Kanalas"
+
+#: ../app/core/gimpchannel.c:257
+msgid "Rename Channel"
+msgstr "Pervadinti kanalą"
+
+#: ../app/core/gimpchannel.c:258
+msgid "Move Channel"
+msgstr "Perkelti kanalą"
+
+#: ../app/core/gimpchannel.c:259
+msgid "Scale Channel"
+msgstr "Keisti kanalo dydį"
+
+#: ../app/core/gimpchannel.c:260
+msgid "Resize Channel"
+msgstr "Keisti kanalo dydį"
+
+#: ../app/core/gimpchannel.c:261
+msgid "Flip Channel"
+msgstr "Apsukti kanalą"
+
+#: ../app/core/gimpchannel.c:262
+msgid "Rotate Channel"
+msgstr "Pasukti kanalą"
+
+#: ../app/core/gimpchannel.c:263 ../app/core/gimpdrawable-transform.c:1178
+msgid "Transform Channel"
+msgstr "Transformuoti kanalą"
+
+#: ../app/core/gimpchannel.c:264
+msgid "Stroke Channel"
+msgstr "Apvesti kanalą"
+
+#: ../app/core/gimpchannel.c:285
+msgid "Feather Channel"
+msgstr "Išlieti kanalą"
+
+#: ../app/core/gimpchannel.c:286
+msgid "Sharpen Channel"
+msgstr "Paaštrinti kanalą"
+
+#: ../app/core/gimpchannel.c:287
+msgid "Clear Channel"
+msgstr "Išvalyti kanalą"
+
+#: ../app/core/gimpchannel.c:288
+msgid "Fill Channel"
+msgstr "Užpildyti kanalą"
+
+#: ../app/core/gimpchannel.c:289
+msgid "Invert Channel"
+msgstr "Invertuoti kanalą"
+
+#: ../app/core/gimpchannel.c:290
+msgid "Border Channel"
+msgstr "Įrėminti kanalą"
+
+#: ../app/core/gimpchannel.c:291
+msgid "Grow Channel"
+msgstr "Padidinti kanalą"
+
+#: ../app/core/gimpchannel.c:292
+msgid "Shrink Channel"
+msgstr "Sumažinti kanalą"
+
+#: ../app/core/gimpchannel.c:687
+msgid "Cannot stroke empty channel."
+msgstr "Negalima apvesti tuščio kanalo."
+
+#: ../app/core/gimpchannel.c:1587
+msgid "Set Channel Color"
+msgstr "Nustatyti kanalo spalvą"
+
+#: ../app/core/gimpchannel.c:1635
+msgid "Set Channel Opacity"
+msgstr "Nustatyti kanalo nepermatomumą"
+
+#: ../app/core/gimpchannel.c:1703 ../app/core/gimpselection.c:522
+msgid "Selection Mask"
+msgstr "Pažymėjimo kaukė"
+
+#: ../app/core/gimpdata.c:446
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "Nepavyko ištrinti „%s“: %s"
@@ -5545,6 +5671,10 @@ msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr ""
 "Vertikalus pirmos tinklelio linijos poslinkis. Jis gali būti ir neigiamas."
 
+#: ../app/core/gimpimage-arrange.c:139
+msgid "Arrange Objects"
+msgstr ""
+
 #: ../app/core/gimpimage-colormap.c:63
 msgid "Set Colormap"
 msgstr "Nustatyti spalvų gamą"
@@ -5557,53 +5687,69 @@ msgstr "Keisti spalvų gamos įrašą"
 msgid "Add Color to Colormap"
 msgstr "Pridėti spalvą į spalvų gamą"
 
-#: ../app/core/gimpimage-convert.c:798
+#: ../app/core/gimpimage-convert.c:795
 msgid "Cannot convert image: palette is empty."
 msgstr "Nepavyko konvertuoti paveikslėlio: paletė yra tuščia."
 
-#: ../app/core/gimpimage-convert.c:812
+#: ../app/core/gimpimage-convert.c:809
 msgid "Convert Image to RGB"
 msgstr "Konvertuoti paveikslėlį į RGB"
 
-#: ../app/core/gimpimage-convert.c:816
+#: ../app/core/gimpimage-convert.c:813
 msgid "Convert Image to Grayscale"
 msgstr "Konvertuoti paveikslėlį į pilkų atspalvių"
 
-#: ../app/core/gimpimage-convert.c:820
+#: ../app/core/gimpimage-convert.c:817
 msgid "Convert Image to Indexed"
 msgstr "Konvertuoti paveiklėlį į indeksuotą"
 
-#: ../app/core/gimpimage-convert.c:902
+#: ../app/core/gimpimage-convert.c:899
 msgid "Converting to indexed (stage 2)"
 msgstr "Konvertuojama į indeksuotą (2 žingsnis)"
 
-#: ../app/core/gimpimage-convert.c:947
+#: ../app/core/gimpimage-convert.c:944
 msgid "Converting to indexed (stage 3)"
 msgstr "Konvertuojama į indeksuotą (3 žingsnis)"
 
-#: ../app/core/gimpimage-crop.c:124
+#: ../app/core/gimpimage-crop.c:125
 msgid "Crop Image"
 msgstr "Apkirpti paveikslėlį"
 
-#: ../app/core/gimpimage-crop.c:127 ../app/core/gimpimage-resize.c:85
+#: ../app/core/gimpimage-crop.c:128 ../app/core/gimpimage-resize.c:88
 msgid "Resize Image"
 msgstr "Keisti paveikslėlio dydį"
 
-#: ../app/core/gimpimage-guides.c:53
+#: ../app/core/gimpimage-guides.c:50
 msgid "Add Horizontal Guide"
 msgstr "Pridėti horizontalią gairę"
 
-#: ../app/core/gimpimage-guides.c:80
+#: ../app/core/gimpimage-guides.c:72
 msgid "Add Vertical Guide"
 msgstr "Pridėti vertikalią gairę"
 
-#: ../app/core/gimpimage-guides.c:143 ../app/tools/gimpmovetool.c:541
+#: ../app/core/gimpimage-guides.c:113 ../app/tools/gimpmovetool.c:539
 msgid "Remove Guide"
 msgstr "Pašalinti gaires"
 
-#: ../app/core/gimpimage-guides.c:167
+#: ../app/core/gimpimage-guides.c:138
 msgid "Move Guide"
 msgstr "Perkelti gairę"
+
+#: ../app/core/gimpimage-item-list.c:53
+msgid "Translate Items"
+msgstr "Išversti elementus"
+
+#: ../app/core/gimpimage-item-list.c:80
+msgid "Flip Items"
+msgstr "Apsukti elementus"
+
+#: ../app/core/gimpimage-item-list.c:107
+msgid "Rotate Items"
+msgstr "Pasukti elementus"
+
+#: ../app/core/gimpimage-item-list.c:138
+msgid "Transform Items"
+msgstr "Transformuoti elementus"
 
 #: ../app/core/gimpimage-merge.c:96 ../app/core/gimpimage-merge.c:108
 msgid "Merge Visible Layers"
@@ -5637,7 +5783,7 @@ msgstr "Išjungti greitą kaukę"
 msgid "Add Sample_Point"
 msgstr "Pridėti mėginio _tašką"
 
-#: ../app/core/gimpimage-sample-points.c:121 ../app/tools/gimpcolortool.c:410
+#: ../app/core/gimpimage-sample-points.c:121 ../app/tools/gimpcolortool.c:419
 msgid "Remove Sample Point"
 msgstr "Pašalinti mėginio tašką"
 
@@ -5645,140 +5791,140 @@ msgstr "Pašalinti mėginio tašką"
 msgid "Move Sample Point"
 msgstr "Perkelti mėginio tašką"
 
-#: ../app/core/gimpimage-undo-push.c:3297
+#: ../app/core/gimpimage-undo-push.c:3298
 #, c-format
 msgid "Can't undo %s"
 msgstr "Negalima atšaukti %s"
 
-#: ../app/core/gimpimage.c:1392
+#: ../app/core/gimpimage.c:1404
 msgid "Change Image Resolution"
 msgstr "Keisti paveikslėlio raišką"
 
-#: ../app/core/gimpimage.c:1432
+#: ../app/core/gimpimage.c:1444
 msgid "Change Image Unit"
 msgstr "Keisti paveikslėlio vienetus"
 
-#: ../app/core/gimpimage.c:2253
+#: ../app/core/gimpimage.c:2279
 msgid "Attach Parasite to Image"
 msgstr "Prie paveikslėlio prisegti parazitą"
 
-#: ../app/core/gimpimage.c:2288
+#: ../app/core/gimpimage.c:2314
 msgid "Remove Parasite from Image"
 msgstr "Pašalinti nuo paveikslėlio parazitą"
 
-#: ../app/core/gimpimage.c:2756
+#: ../app/core/gimpimage.c:2782
 msgid "Add Layer"
 msgstr "Pridėti sluoksnį"
 
-#: ../app/core/gimpimage.c:2820 ../app/core/gimpimage.c:2833
+#: ../app/core/gimpimage.c:2846 ../app/core/gimpimage.c:2859
 msgid "Remove Layer"
 msgstr "Pašalinti sluoksnį"
 
-#: ../app/core/gimpimage.c:2907
+#: ../app/core/gimpimage.c:2933
 msgid "Layer cannot be raised higher."
 msgstr "Sluoksnio aukščiau pakelti negalima."
 
-#: ../app/core/gimpimage.c:2912
+#: ../app/core/gimpimage.c:2938
 msgid "Raise Layer"
 msgstr "Pakelti sluoksnį"
 
-#: ../app/core/gimpimage.c:2929
+#: ../app/core/gimpimage.c:2955
 msgid "Layer cannot be lowered more."
 msgstr "Sluoksnio žemiau nuleisti negalima."
 
-#: ../app/core/gimpimage.c:2934
+#: ../app/core/gimpimage.c:2960
 msgid "Lower Layer"
 msgstr "Nuleisti sluoksnį"
 
-#: ../app/core/gimpimage.c:2945
+#: ../app/core/gimpimage.c:2971
 msgid "Raise Layer to Top"
 msgstr "Pakelti sluoksnį iki viršaus"
 
-#: ../app/core/gimpimage.c:2960
+#: ../app/core/gimpimage.c:2986
 msgid "Lower Layer to Bottom"
 msgstr "Nuleisti sluoksnį iki apačios"
 
-#: ../app/core/gimpimage.c:3033
+#: ../app/core/gimpimage.c:3059
 msgid "Add Channel"
 msgstr "Pridėti kanalą"
 
-#: ../app/core/gimpimage.c:3077 ../app/core/gimpimage.c:3088
+#: ../app/core/gimpimage.c:3103 ../app/core/gimpimage.c:3114
 msgid "Remove Channel"
 msgstr "Pašalinti kanalą"
 
-#: ../app/core/gimpimage.c:3135
+#: ../app/core/gimpimage.c:3161
 msgid "Channel cannot be raised higher."
 msgstr "Kanalo aukščiau pakelti negalima."
 
-#: ../app/core/gimpimage.c:3140
+#: ../app/core/gimpimage.c:3166
 msgid "Raise Channel"
 msgstr "Pakelti kanalą"
 
-#: ../app/core/gimpimage.c:3157
+#: ../app/core/gimpimage.c:3183
 msgid "Channel is already on top."
 msgstr "Sluoksnis jau viršuje."
 
-#: ../app/core/gimpimage.c:3162
+#: ../app/core/gimpimage.c:3188
 msgid "Raise Channel to Top"
 msgstr "Pakelti kanalą į viršų"
 
-#: ../app/core/gimpimage.c:3179
+#: ../app/core/gimpimage.c:3205
 msgid "Channel cannot be lowered more."
 msgstr "Kanalo žemiau nuleisti negalima."
 
-#: ../app/core/gimpimage.c:3184
+#: ../app/core/gimpimage.c:3210
 msgid "Lower Channel"
 msgstr "Nuleisti kanalą"
 
-#: ../app/core/gimpimage.c:3204
+#: ../app/core/gimpimage.c:3230
 msgid "Channel is already on the bottom."
 msgstr "Sluoksnis jau yra apačioje"
 
-#: ../app/core/gimpimage.c:3209
+#: ../app/core/gimpimage.c:3235
 msgid "Lower Channel to Bottom"
 msgstr "Nuleisti kanalą į apačią"
 
-#: ../app/core/gimpimage.c:3284
+#: ../app/core/gimpimage.c:3310
 msgid "Add Path"
 msgstr "Pridėti kontūrą"
 
-#: ../app/core/gimpimage.c:3329
+#: ../app/core/gimpimage.c:3355
 msgid "Remove Path"
 msgstr "Pašalinti kontūrą"
 
-#: ../app/core/gimpimage.c:3373
+#: ../app/core/gimpimage.c:3399
 msgid "Path cannot be raised higher."
 msgstr "Kelio aukščiau pakelti negalima."
 
-#: ../app/core/gimpimage.c:3378
+#: ../app/core/gimpimage.c:3404
 msgid "Raise Path"
 msgstr "Pakelti kontūrą"
 
-#: ../app/core/gimpimage.c:3395
+#: ../app/core/gimpimage.c:3421
 msgid "Path is already on top."
 msgstr "Kelias jau yra viršuje."
 
-#: ../app/core/gimpimage.c:3400
+#: ../app/core/gimpimage.c:3426
 msgid "Raise Path to Top"
 msgstr "Pakelti kontūrą iki viršaus"
 
-#: ../app/core/gimpimage.c:3417
+#: ../app/core/gimpimage.c:3443
 msgid "Path cannot be lowered more."
 msgstr "Kelio žemiau nuleisti negalima."
 
-#: ../app/core/gimpimage.c:3422
+#: ../app/core/gimpimage.c:3448
 msgid "Lower Path"
 msgstr "Nuleisti kontūrą"
 
-#: ../app/core/gimpimage.c:3442
+#: ../app/core/gimpimage.c:3468
 msgid "Path is already on the bottom."
 msgstr "Kelias jau yra apačioje."
 
-#: ../app/core/gimpimage.c:3447
+#: ../app/core/gimpimage.c:3473
 msgid "Lower Path to Bottom"
 msgstr "Nuleisti kontūrą iki apačios"
 
-#: ../app/core/gimpimagefile.c:546 ../app/dialogs/preferences-dialog.c:1504
+#: ../app/core/gimpimagefile.c:546 ../app/dialogs/preferences-dialog.c:1613
 msgid "Folder"
 msgstr "Aplankas"
 
@@ -5812,7 +5958,7 @@ msgstr "(Peržiūra gali būti pasenusi)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:610 ../app/widgets/gimpimagepropview.c:323
-#: ../app/widgets/gimpsizebox.c:431 ../app/widgets/gimptemplateeditor.c:564
+#: ../app/widgets/gimpsizebox.c:437 ../app/widgets/gimptemplateeditor.c:564
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
@@ -5833,15 +5979,15 @@ msgstr[2] "%d sluoksnių"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nepavyko atverti miniatiūros „%s“: %s"
 
-#: ../app/core/gimpitem.c:1159
+#: ../app/core/gimpitem.c:1167
 msgid "Attach Parasite"
 msgstr "Prisegti parazitą"
 
-#: ../app/core/gimpitem.c:1169
+#: ../app/core/gimpitem.c:1177
 msgid "Attach Parasite to Item"
 msgstr "Prisegti prie paveikslėlio parazitą"
 
-#: ../app/core/gimpitem.c:1212 ../app/core/gimpitem.c:1219
+#: ../app/core/gimpitem.c:1220 ../app/core/gimpitem.c:1227
 msgid "Remove Parasite from Item"
 msgstr "Pašalinti iš paveikslėlio parazitą"
 
@@ -5895,7 +6041,7 @@ msgstr "Apsukti sluoksnį"
 msgid "Rotate Layer"
 msgstr "Pasukti sluoksnį"
 
-#: ../app/core/gimplayer.c:401 ../app/core/gimplayer.c:1292
+#: ../app/core/gimplayer.c:401 ../app/core/gimplayer.c:1302
 #: ../app/core/gimplayermask.c:204
 #, c-format
 msgid "%s mask"
@@ -5910,47 +6056,47 @@ msgstr ""
 "Plaukiojantis pažymėjimas\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1218
+#: ../app/core/gimplayer.c:1225
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "Negalima pridėti sluoksnio kaukės sluoksniui, kuris nėra paveikslėlio dalis."
 
-#: ../app/core/gimplayer.c:1225
+#: ../app/core/gimplayer.c:1232
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Negalima pridėti sluoksnio kaukės, kadangi sluoksnis jau vieną turi."
 
-#: ../app/core/gimplayer.c:1232
+#: ../app/core/gimplayer.c:1239
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr ""
 "Negalima pridėti sluoksnio kaukės prie sluoksnio, neturinčio alfa kanalo"
 
-#: ../app/core/gimplayer.c:1242
+#: ../app/core/gimplayer.c:1249
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Negalima pridėti sluoksnio kaukės, turinčios kitokius, nei pasirinkto "
 "sluoksnio, matmenis."
 
-#: ../app/core/gimplayer.c:1346
+#: ../app/core/gimplayer.c:1356
 msgid "Transfer Alpha to Mask"
 msgstr "Perkelti alfą į kaukę"
 
-#: ../app/core/gimplayer.c:1506 ../app/core/gimplayermask.c:231
+#: ../app/core/gimplayer.c:1521 ../app/core/gimplayermask.c:231
 msgid "Apply Layer Mask"
 msgstr "Pritaikyti sluoksnio kaukę"
 
-#: ../app/core/gimplayer.c:1507
+#: ../app/core/gimplayer.c:1522
 msgid "Delete Layer Mask"
 msgstr "Ištrinti sluoksnio kaukę"
 
-#: ../app/core/gimplayer.c:1608
+#: ../app/core/gimplayer.c:1623
 msgid "Add Alpha Channel"
 msgstr "Pridėti alfa kanalą"
 
-#: ../app/core/gimplayer.c:1659
+#: ../app/core/gimplayer.c:1674
 msgid "Remove Alpha Channel"
 msgstr "Pašalinti alfa kanalą"
 
-#: ../app/core/gimplayer.c:1681
+#: ../app/core/gimplayer.c:1696
 msgid "Layer to Image Size"
 msgstr "Sluoksnio dydį prilyginti paveikslėlio dydžiui"
 
@@ -5962,12 +6108,12 @@ msgstr "Perkelti sluoksnio kaukę"
 msgid "Show Layer Mask"
 msgstr "Rodyti sluoksnio kaukę"
 
-#: ../app/core/gimppalette-import.c:374
+#: ../app/core/gimppalette-import.c:426
 #, c-format
 msgid "Index %d"
 msgstr "Rodyklė %d"
 
-#: ../app/core/gimppalette-import.c:604
+#: ../app/core/gimppalette-import.c:671
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Nežinomas paletės rinkmenos tipas: %s"
@@ -6068,40 +6214,40 @@ msgstr ""
 msgid "Please wait"
 msgstr "Palaukite"
 
-#: ../app/core/gimpselection.c:148 ../app/tools/gimpeditselectiontool.c:231
+#: ../app/core/gimpselection.c:149 ../app/tools/gimpeditselectiontool.c:232
 msgid "Move Selection"
 msgstr "Perkelti pažymėjimą"
 
-#: ../app/core/gimpselection.c:166
+#: ../app/core/gimpselection.c:167
 msgid "Sharpen Selection"
 msgstr "Paaštrinti pažymėjimą"
 
-#: ../app/core/gimpselection.c:167
+#: ../app/core/gimpselection.c:168
 msgid "Select None"
 msgstr "Nepažymėti nieko"
 
-#: ../app/core/gimpselection.c:168
+#: ../app/core/gimpselection.c:169
 msgid "Select All"
 msgstr "Pažymėti viską"
 
-#: ../app/core/gimpselection.c:169
+#: ../app/core/gimpselection.c:170
 msgid "Invert Selection"
 msgstr "Invertuoti pažymėjimą"
 
-#: ../app/core/gimpselection.c:270
+#: ../app/core/gimpselection.c:271
 msgid "No selection to stroke."
 msgstr "Niekas nepažymėta apvedimui."
 
-#: ../app/core/gimpselection.c:775
+#: ../app/core/gimpselection.c:780
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 "Plaukiojantis pažymėjimas neįmanomas, nes pasirinktas regionas yra tuščias."
 
-#: ../app/core/gimpselection.c:782
+#: ../app/core/gimpselection.c:787
 msgid "Float Selection"
 msgstr "Plaukiojantis pažymėjimas"
 
-#: ../app/core/gimpselection.c:799
+#: ../app/core/gimpselection.c:804
 msgid "Floated Layer"
 msgstr "Plaukiojantis sluoksnis"
 
@@ -6133,9 +6279,9 @@ msgstr "Fonas"
 msgid "pixel"
 msgstr "taškelis"
 
-#: ../app/core/gimpunit.c:55 ../app/tools/gimpmeasuretool.c:769
-#: ../app/tools/gimpmeasuretool.c:909 ../app/tools/gimpmeasuretool.c:961
-#: ../app/tools/gimpmeasuretool.c:987 ../app/tools/gimppainttool.c:659
+#: ../app/core/gimpunit.c:55 ../app/tools/gimpmeasuretool.c:766
+#: ../app/tools/gimpmeasuretool.c:906 ../app/tools/gimpmeasuretool.c:958
+#: ../app/tools/gimpmeasuretool.c:984 ../app/tools/gimppainttool.c:635
 msgid "pixels"
 msgstr "taškeliai"
 
@@ -6177,24 +6323,24 @@ msgstr ""
 msgid "percent"
 msgstr "procentas"
 
-#: ../app/dialogs/about-dialog.c:126
+#: ../app/dialogs/about-dialog.c:118
 msgid "Visit the GIMP website"
 msgstr "Aplankykite GIMP svetainę"
 
 #. Translators: insert your names here,
 #. * separated by newline
 #.
-#: ../app/dialogs/about-dialog.c:133
+#: ../app/dialogs/about-dialog.c:125
 msgid "translator-credits"
 msgstr ""
-"Giedrius Naudžiūnas <gimpng@gmail.com>\n"
 "Žygimantas Beručka <zygis@gnome.org>\n"
+"Giedrius Naudžiūnas <gimpng@gmail.com>\n"
 "Linas Vasiliauskas <linasv@centras.lt>\n"
 "Mantas Kriaučiūnas <mantas@akl.lt>\n"
 "Eglė Kriaučiūnienė <egle@akl.lt>\n"
 "Karina Gribanova <buratina@delfi.lt>"
 
-#: ../app/dialogs/about-dialog.c:668
+#: ../app/dialogs/about-dialog.c:521
 msgid "GIMP is brought to you by"
 msgstr "GIMP Jums sukūrė"
 
@@ -6218,32 +6364,32 @@ msgstr "Konvertuoti paveikslėlį į indeksuotas spalvas"
 msgid "C_onvert"
 msgstr "K_onvertuoti"
 
-#: ../app/dialogs/convert-dialog.c:182
+#: ../app/dialogs/convert-dialog.c:184
 msgid "_Maximum number of colors:"
 msgstr "_Maksimalus spalvų skaičius:"
 
-#: ../app/dialogs/convert-dialog.c:209
-msgid "_Remove unused colors from final palette"
-msgstr "_Pašalinti nenaudojamas spalvas iš galutinės paletės"
+#: ../app/dialogs/convert-dialog.c:211
+msgid "_Remove unused colors from colormap"
+msgstr "_Pašalinti nenaudojamas spalvas iš spalvų paletės"
 
 #. dithering
-#: ../app/dialogs/convert-dialog.c:224 ../app/tools/gimpblendoptions.c:239
+#: ../app/dialogs/convert-dialog.c:227 ../app/tools/gimpblendoptions.c:239
 msgid "Dithering"
 msgstr "Smulkinimas"
 
-#: ../app/dialogs/convert-dialog.c:236
+#: ../app/dialogs/convert-dialog.c:239
 msgid "Color _dithering:"
 msgstr "Spalvų _smulkinimas:"
 
-#: ../app/dialogs/convert-dialog.c:251
+#: ../app/dialogs/convert-dialog.c:254
 msgid "Enable dithering of _transparency"
 msgstr "Įjungti _permatomumo smulkinimą"
 
-#: ../app/dialogs/convert-dialog.c:277
-msgid "Converting to indexed"
-msgstr "Konvertuojama į indeksuotą"
+#: ../app/dialogs/convert-dialog.c:280
+msgid "Converting to indexed colors"
+msgstr "Konvertuojama į indeksuotas spalvas"
 
-#: ../app/dialogs/convert-dialog.c:392
+#: ../app/dialogs/convert-dialog.c:395
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Negalima konvertuoti į paletę turinčią daugiau nei 256 spalvas."
 
@@ -6276,10 +6422,6 @@ msgstr "Kaidos"
 msgid "History"
 msgstr "Istorija"
 
-#: ../app/dialogs/dialogs.c:187
-msgid "Selection"
-msgstr "Pažymėjimas"
-
 #: ../app/dialogs/dialogs.c:191
 msgid "Undo"
 msgstr "Atšaukti"
@@ -6300,7 +6442,7 @@ msgstr "Atverti vietą"
 msgid "Enter location (URI):"
 msgstr "Įveskite vietą (URI):"
 
-#: ../app/dialogs/file-save-dialog.c:266 ../app/dialogs/file-save-dialog.c:302
+#: ../app/dialogs/file-save-dialog.c:271 ../app/dialogs/file-save-dialog.c:307
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -6309,7 +6451,7 @@ msgstr ""
 "plėtinį arba rinkmenų formatų sąraše pasirinkite rinkmenos formatą."
 
 #. remote URI
-#: ../app/dialogs/file-save-dialog.c:335
+#: ../app/dialogs/file-save-dialog.c:340
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -6319,15 +6461,15 @@ msgstr ""
 "rinkmenos plėtinį. Įveskite rinkmenos plėtinį, kuris atitinka pasirinktos "
 "rinkmenos formatą arba iš viso neįveskite rinkmenos plėtinio."
 
-#: ../app/dialogs/file-save-dialog.c:395
+#: ../app/dialogs/file-save-dialog.c:400
 msgid "Extension Mismatch"
 msgstr "Plėtinių neatitikimas"
 
-#: ../app/dialogs/file-save-dialog.c:411
+#: ../app/dialogs/file-save-dialog.c:416
 msgid "The given file extension does not match the chosen file type."
 msgstr "Nurodytas rinkmenos plėtinys neatitinka pasirinktos rinkmenos tipo."
 
-#: ../app/dialogs/file-save-dialog.c:415
+#: ../app/dialogs/file-save-dialog.c:420
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Ar norite išsaugoti paveikslėlį vistiek naudodami šį pavadinimą?"
 
@@ -6376,7 +6518,7 @@ msgid "Create a New Image"
 msgstr "Sukurti naują paveikslėlį"
 
 #: ../app/dialogs/image-new-dialog.c:141
-#: ../app/dialogs/preferences-dialog.c:1756
+#: ../app/dialogs/preferences-dialog.c:1862
 msgid "_Template:"
 msgstr "Ša_blonas:"
 
@@ -6438,19 +6580,19 @@ msgstr ""
 "paspauskite naują akseleratorių, o norėdami išvalyti, spauskite backspace."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:109
-#: ../app/dialogs/preferences-dialog.c:1434
+#: ../app/dialogs/preferences-dialog.c:1536
 msgid "_Save keyboard shortcuts on exit"
 msgstr "_Išeinant išsaugoti klavišų kombinacijas"
 
-#: ../app/dialogs/layer-add-mask-dialog.c:63
+#: ../app/dialogs/layer-add-mask-dialog.c:79
 msgid "Add a Mask to the Layer"
 msgstr "Uždėti kaukę sluoksniui"
 
-#: ../app/dialogs/layer-add-mask-dialog.c:90
+#: ../app/dialogs/layer-add-mask-dialog.c:106
 msgid "Initialize Layer Mask to:"
 msgstr "Inicializuoti sluoksnio kaukę:"
 
-#: ../app/dialogs/layer-add-mask-dialog.c:100
+#: ../app/dialogs/layer-add-mask-dialog.c:136
 msgid "In_vert mask"
 msgstr "In_vertuoti kaukę"
 
@@ -6460,12 +6602,12 @@ msgstr "Sluoksnio _pavadinimas:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:127
-#: ../app/tools/gimpmeasuretool.c:951 ../app/tools/gimpselectionoptions.c:567
+#: ../app/tools/gimpmeasuretool.c:948
 msgid "Width:"
 msgstr "Plotis:"
 
 #: ../app/dialogs/layer-options-dialog.c:133
-#: ../app/tools/gimpmeasuretool.c:977 ../app/tools/gimpselectionoptions.c:575
+#: ../app/tools/gimpmeasuretool.c:974
 msgid "Height:"
 msgstr "Aukštis:"
 
@@ -6606,70 +6748,91 @@ msgstr "Užpildyti _fono spalva"
 msgid "Make _transparent"
 msgstr "Padaryti _skaidriu"
 
-#: ../app/dialogs/palette-import-dialog.c:172
+#: ../app/dialogs/palette-import-dialog.c:183
 msgid "Import a New Palette"
 msgstr "Importuoti naują paletę"
 
-#: ../app/dialogs/palette-import-dialog.c:182
+#: ../app/dialogs/palette-import-dialog.c:193
 msgid "_Import"
 msgstr "_Importuoti"
 
 #. The "Source" frame
-#: ../app/dialogs/palette-import-dialog.c:216
+#: ../app/dialogs/palette-import-dialog.c:229
 msgid "Select Source"
 msgstr "Pasirinkite šaltinį"
 
-#: ../app/dialogs/palette-import-dialog.c:240
+#: ../app/dialogs/palette-import-dialog.c:251
 msgid "I_mage"
 msgstr "Paveiks_lėlis"
 
-#: ../app/dialogs/palette-import-dialog.c:255
+#: ../app/dialogs/palette-import-dialog.c:265
+msgid "Sample _Merged"
+msgstr "Sujungtas _mėginys"
+
+#: ../app/dialogs/palette-import-dialog.c:277
+msgid "_Selected Pixels only"
+msgstr "_Tik pasirinkti taškeliai"
+
+#: ../app/dialogs/palette-import-dialog.c:289
 msgid "Palette _file"
 msgstr "Paletės _rinkmena"
 
-#: ../app/dialogs/palette-import-dialog.c:279
+#. Palette file name entry
+#: ../app/dialogs/palette-import-dialog.c:317
 msgid "Select Palette File"
 msgstr "Pasirinkite paletės rinkmeną"
 
 #. The "Import" frame
-#: ../app/dialogs/palette-import-dialog.c:309
+#: ../app/dialogs/palette-import-dialog.c:328
 msgid "Import Options"
 msgstr "Importavimo nustatymai"
 
-#: ../app/dialogs/palette-import-dialog.c:323
+#: ../app/dialogs/palette-import-dialog.c:342
 msgid "New import"
 msgstr "Naujas importavimas"
 
-#: ../app/dialogs/palette-import-dialog.c:325
+#: ../app/dialogs/palette-import-dialog.c:344
 msgid "Palette _name:"
 msgstr "Paletės pavadi_nimas:"
 
-#: ../app/dialogs/palette-import-dialog.c:331
+#: ../app/dialogs/palette-import-dialog.c:350
 msgid "N_umber of colors:"
 msgstr "Spal_vų skaičius:"
 
-#: ../app/dialogs/palette-import-dialog.c:344
+#: ../app/dialogs/palette-import-dialog.c:363
 msgid "C_olumns:"
 msgstr "_Stulpeliai"
 
-#: ../app/dialogs/palette-import-dialog.c:356
+#: ../app/dialogs/palette-import-dialog.c:375
 msgid "I_nterval:"
 msgstr "I_ntervalas:"
 
 #. The "Preview" frame
-#: ../app/dialogs/palette-import-dialog.c:368
+#: ../app/dialogs/palette-import-dialog.c:386
 msgid "Preview"
 msgstr "Peržiūra"
 
-#: ../app/dialogs/preferences-dialog.c:295
+#: ../app/dialogs/palette-import-dialog.c:406
+msgid "The selected source contains no colors."
+msgstr "Pasirinktame šaltinyje nėra spalvų."
+
+#: ../app/dialogs/preferences-dialog.c:256
+msgid "Reset All Preferences"
+msgstr "Atstatyti visus nustatymus"
+
+#: ../app/dialogs/preferences-dialog.c:274
+msgid "Do you really want to reset all preferences to default values?"
+msgstr "Ar tikrai norite atstatyti visus nustatymus į numatytasias reikšmes?"
+
+#: ../app/dialogs/preferences-dialog.c:344
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "Kad įsigaliotų sekantys pakeitimai, turėsite paleisti GIMP iš naujo:"
 
-#: ../app/dialogs/preferences-dialog.c:431
+#: ../app/dialogs/preferences-dialog.c:483
 msgid "Configure Input Devices"
 msgstr "Konfigūruoti įvedimo įrengininius"
 
-#: ../app/dialogs/preferences-dialog.c:507
+#: ../app/dialogs/preferences-dialog.c:559
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
@@ -6677,7 +6840,15 @@ msgstr ""
 "Jūsų klavišų kombinacijos bus atstatytos į numatytasias reikšmes, kai kitą "
 "kartą paleisite GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:541
+#: ../app/dialogs/preferences-dialog.c:570
+msgid "Remove all Keyboard Shortcuts"
+msgstr "Pašalinti visas klavišų kombinacijas"
+
+#: ../app/dialogs/preferences-dialog.c:592
+msgid "Do you really want to remove all keyboard shortcuts from all menus?"
+msgstr "Ar tikrai norite pašalinti visas klavišų kombinacijas iš visų meniu?"
+
+#: ../app/dialogs/preferences-dialog.c:632
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
@@ -6685,7 +6856,7 @@ msgstr ""
 "Jūsų langų nustatymai bus atstatyti į numatytasias reikšmes, kai kitą kartą "
 "paleisite GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:575
+#: ../app/dialogs/preferences-dialog.c:666
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
@@ -6693,7 +6864,7 @@ msgstr ""
 "Jūsų įvedimo įrenginių nustatymai bus atstatyti į numatytasias reikšmes, kai "
 "kitą kartą paleisite GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:609
+#: ../app/dialogs/preferences-dialog.c:700
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
@@ -6701,685 +6872,685 @@ msgstr ""
 "Jūsų įrankių nustatymai bus atstatyti į numatytasias reikšmes, kai kitą "
 "kartą paleisite GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:1091
+#: ../app/dialogs/preferences-dialog.c:1191
 msgid "Show _menubar"
 msgstr "Rodyti _meniu juostą"
 
-#: ../app/dialogs/preferences-dialog.c:1094
+#: ../app/dialogs/preferences-dialog.c:1194
 msgid "Show _rulers"
 msgstr "Rodyti _liniuotes"
 
-#: ../app/dialogs/preferences-dialog.c:1097
+#: ../app/dialogs/preferences-dialog.c:1197
 msgid "Show scroll_bars"
 msgstr "Rodyti slin_kties juostas"
 
-#: ../app/dialogs/preferences-dialog.c:1100
+#: ../app/dialogs/preferences-dialog.c:1200
 msgid "Show s_tatusbar"
 msgstr "Rodyti bū_senos juostą"
 
-#: ../app/dialogs/preferences-dialog.c:1108
+#: ../app/dialogs/preferences-dialog.c:1208
 msgid "Show s_election"
 msgstr "Rodyti p_ažymėjimą"
 
-#: ../app/dialogs/preferences-dialog.c:1111
+#: ../app/dialogs/preferences-dialog.c:1211
 msgid "Show _layer boundary"
 msgstr "Rodyti sl_uoksnių ribas"
 
-#: ../app/dialogs/preferences-dialog.c:1114
+#: ../app/dialogs/preferences-dialog.c:1214
 msgid "Show _guides"
 msgstr "Rodyti pa_galbines linijas"
 
-#: ../app/dialogs/preferences-dialog.c:1117
+#: ../app/dialogs/preferences-dialog.c:1217
 msgid "Show gri_d"
 msgstr "Rodyti _tinklelį"
 
-#: ../app/dialogs/preferences-dialog.c:1123
+#: ../app/dialogs/preferences-dialog.c:1223
 msgid "Canvas _padding mode:"
 msgstr "Piešimo erdvės užpildo režimas:"
 
-#: ../app/dialogs/preferences-dialog.c:1128
+#: ../app/dialogs/preferences-dialog.c:1228
 msgid "Custom p_adding color:"
 msgstr "Kita _užpildo spalva:"
 
-#: ../app/dialogs/preferences-dialog.c:1129
+#: ../app/dialogs/preferences-dialog.c:1229
 msgid "Select Custom Canvas Padding Color"
 msgstr "Pasirinkti kitą piešimo erdvės užpildo spalvą"
 
-#: ../app/dialogs/preferences-dialog.c:1198
+#: ../app/dialogs/preferences-dialog.c:1298
 msgid "Preferences"
 msgstr "Nustatymai"
 
-#: ../app/dialogs/preferences-dialog.c:1312
-#: ../app/dialogs/preferences-dialog.c:2453
+#: ../app/dialogs/preferences-dialog.c:1414
+#: ../app/dialogs/preferences-dialog.c:2561
 msgid "Environment"
 msgstr "Aplinka"
 
-#: ../app/dialogs/preferences-dialog.c:1326
+#: ../app/dialogs/preferences-dialog.c:1428
 msgid "Resource Consumption"
 msgstr "Resursų naudojimas"
 
-#: ../app/dialogs/preferences-dialog.c:1336
+#: ../app/dialogs/preferences-dialog.c:1438
 msgid "Minimal number of _undo levels:"
 msgstr "Minimalus atša_ukimų skaičius:"
 
-#: ../app/dialogs/preferences-dialog.c:1339
+#: ../app/dialogs/preferences-dialog.c:1441
 msgid "Maximum undo _memory:"
 msgstr "Maksimali atšaukimų at_mintis:"
 
-#: ../app/dialogs/preferences-dialog.c:1342
+#: ../app/dialogs/preferences-dialog.c:1444
 msgid "Tile cache _size:"
 msgstr "Tekstūrų podėlio _dydis:"
 
-#: ../app/dialogs/preferences-dialog.c:1345
+#: ../app/dialogs/preferences-dialog.c:1447
 msgid "Maximum _new image size:"
 msgstr "Didžiausias _naujo paveikslėlio dydis:"
 
-#: ../app/dialogs/preferences-dialog.c:1350
+#: ../app/dialogs/preferences-dialog.c:1452
 msgid "Number of _processors to use:"
 msgstr "Naudotinų _procesorių skaičius:"
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1355
+#: ../app/dialogs/preferences-dialog.c:1457
 msgid "Image Thumbnails"
 msgstr "Paveikslėlių miniatiūros"
 
-#: ../app/dialogs/preferences-dialog.c:1360
+#: ../app/dialogs/preferences-dialog.c:1462
 msgid "Size of _thumbnails:"
 msgstr "Minia_tiūrų dydis:"
 
-#: ../app/dialogs/preferences-dialog.c:1364
+#: ../app/dialogs/preferences-dialog.c:1466
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Didžiausias miniatiūrų _rinkmenų dydis:"
 
 #  File Saving
 #. File Saving
-#: ../app/dialogs/preferences-dialog.c:1368
+#: ../app/dialogs/preferences-dialog.c:1470
 msgid "Saving Images"
 msgstr "Saugomi paveikslėliai"
 
-#: ../app/dialogs/preferences-dialog.c:1371
+#: ../app/dialogs/preferences-dialog.c:1473
 msgid "Confirm closing of unsa_ved images"
 msgstr "Patvirtinti neišsau_gotų paveikslėlių uždarymą"
 
-#: ../app/dialogs/preferences-dialog.c:1381
+#: ../app/dialogs/preferences-dialog.c:1483
 msgid "Save document _history on exit"
 msgstr "Išeinant išsaugoti dokumentų _istoriją"
 
-#: ../app/dialogs/preferences-dialog.c:1390
+#: ../app/dialogs/preferences-dialog.c:1492
 msgid "User Interface"
 msgstr "Naudotojo sąsaja"
 
-#: ../app/dialogs/preferences-dialog.c:1393
+#: ../app/dialogs/preferences-dialog.c:1495
 msgid "Interface"
 msgstr "Sąsaja"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1400
+#: ../app/dialogs/preferences-dialog.c:1502
 msgid "Previews"
 msgstr "Peržiūros"
 
-#: ../app/dialogs/preferences-dialog.c:1403
+#: ../app/dialogs/preferences-dialog.c:1505
 msgid "_Enable layer & channel previews"
 msgstr "Į_jungti sluoksnių ir kanalų peržiūras"
 
-#: ../app/dialogs/preferences-dialog.c:1409
+#: ../app/dialogs/preferences-dialog.c:1511
 msgid "Default _layer & channel preview size:"
 msgstr "Numatytasis s_luoksnių ir kanalų peržiūros dydis:"
 
-#: ../app/dialogs/preferences-dialog.c:1412
+#: ../app/dialogs/preferences-dialog.c:1514
 msgid "Na_vigation preview size:"
 msgstr "_Navigatoriaus peržiūros dydis:"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1416
+#: ../app/dialogs/preferences-dialog.c:1518
 msgid "Keyboard Shortcuts"
 msgstr "Klavišų kombinacijos"
 
-#: ../app/dialogs/preferences-dialog.c:1420
+#: ../app/dialogs/preferences-dialog.c:1522
 msgid "Show menu _mnemonics (access keys)"
 msgstr "Rodyti meniu _mnemoniką (pasiekimo klavišus)"
 
-#: ../app/dialogs/preferences-dialog.c:1423
+#: ../app/dialogs/preferences-dialog.c:1525
 msgid "Use _dynamic keyboard shortcuts"
 msgstr "Naudoti _dinamines klavišų kombinacijas"
 
-#: ../app/dialogs/preferences-dialog.c:1427
+#: ../app/dialogs/preferences-dialog.c:1529
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Konfigūruoti _klavišų kombinacijas..."
 
-#: ../app/dialogs/preferences-dialog.c:1438
+#: ../app/dialogs/preferences-dialog.c:1540
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Išsaugoti klavišų kombinacijas _dabar"
 
-#: ../app/dialogs/preferences-dialog.c:1445
+#: ../app/dialogs/preferences-dialog.c:1547
 msgid "_Reset Saved Keyboard Shortcuts to Default Values"
 msgstr "_Atstatyti numatytasias klavišų kombinacijų reikšmes"
 
-#: ../app/dialogs/preferences-dialog.c:1460
-#: ../app/dialogs/preferences-dialog.c:1499
+#: ../app/dialogs/preferences-dialog.c:1557
+msgid "Remove _All Keyboard Shortcuts"
+msgstr "Pašalinti _visas klavišų kombinacijas"
+
+#: ../app/dialogs/preferences-dialog.c:1569
+#: ../app/dialogs/preferences-dialog.c:1608
 msgid "Theme"
 msgstr "Tema"
 
-#: ../app/dialogs/preferences-dialog.c:1469
+#: ../app/dialogs/preferences-dialog.c:1578
 msgid "Select Theme"
 msgstr "Pasirinkite temą"
 
-#: ../app/dialogs/preferences-dialog.c:1551
+#: ../app/dialogs/preferences-dialog.c:1660
 msgid "Reload C_urrent Theme"
 msgstr "Perkra_uti esamą temą"
 
-#: ../app/dialogs/preferences-dialog.c:1563
+#: ../app/dialogs/preferences-dialog.c:1672
 msgid "Help System"
 msgstr "Žinyno sistema"
 
 #. General
-#: ../app/dialogs/preferences-dialog.c:1575
-#: ../app/dialogs/preferences-dialog.c:1629
-#: ../app/dialogs/preferences-dialog.c:1813
+#: ../app/dialogs/preferences-dialog.c:1684
+#: ../app/dialogs/preferences-dialog.c:1735
+#: ../app/dialogs/preferences-dialog.c:1919
 #: ../app/widgets/gimpcontrollereditor.c:174
 msgid "General"
 msgstr "Bendras"
 
-#: ../app/dialogs/preferences-dialog.c:1578
+#: ../app/dialogs/preferences-dialog.c:1687
 msgid "Show _tooltips"
 msgstr "Rodyti p_aaiškinimus"
 
-#: ../app/dialogs/preferences-dialog.c:1581
+#: ../app/dialogs/preferences-dialog.c:1690
 msgid "Show help _buttons"
 msgstr "Rodyti žinyno _mygtukus"
 
-#: ../app/dialogs/preferences-dialog.c:1584
+#: ../app/dialogs/preferences-dialog.c:1693
 msgid "Show tips on _startup"
 msgstr "Paleidimo metu rodyti patarimu_s"
 
 #. Help Browser
-#: ../app/dialogs/preferences-dialog.c:1588
+#: ../app/dialogs/preferences-dialog.c:1697
 msgid "Help Browser"
 msgstr "Žinyno naršyklė"
 
-#: ../app/dialogs/preferences-dialog.c:1592
+#: ../app/dialogs/preferences-dialog.c:1701
 msgid "H_elp browser to use:"
 msgstr "Naudotina žin_yno naršyklė:"
 
-#: ../app/dialogs/preferences-dialog.c:1597
+#: ../app/dialogs/preferences-dialog.c:1706
 msgid "Web Browser"
 msgstr "Interneto naršyklė"
 
-#: ../app/dialogs/preferences-dialog.c:1601
-msgid "Select Web Browser"
-msgstr "Pasirinkite interneto naršyklę"
-
-#: ../app/dialogs/preferences-dialog.c:1604
+#: ../app/dialogs/preferences-dialog.c:1710
 msgid "_Web browser to use:"
 msgstr "_Naudotina interneto naršyklė:"
 
-#: ../app/dialogs/preferences-dialog.c:1632
+#: ../app/dialogs/preferences-dialog.c:1738
 msgid "_Save tool options on exit"
 msgstr "_Išeinant išsaugoti įrankių nustatymus"
 
-#: ../app/dialogs/preferences-dialog.c:1636
+#: ../app/dialogs/preferences-dialog.c:1742
 msgid "Save Tool Options _Now"
 msgstr "Išsaugoti įrankių nustatymus _dabar"
 
-#: ../app/dialogs/preferences-dialog.c:1643
+#: ../app/dialogs/preferences-dialog.c:1749
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "_Atstatyti numatytasias įrankių nustatymų reikšmes"
 
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1653
+#: ../app/dialogs/preferences-dialog.c:1759
 msgid "Guide & Grid Snapping"
 msgstr "Gairių bei tinklelio kibumas"
 
-#: ../app/dialogs/preferences-dialog.c:1658
+#: ../app/dialogs/preferences-dialog.c:1764
 msgid "_Snap distance:"
 msgstr "_Kibumo nuotolis:"
 
-#: ../app/dialogs/preferences-dialog.c:1666
+#: ../app/dialogs/preferences-dialog.c:1772
 msgid "Default _interpolation:"
 msgstr "Numatytoji _interpoliacija:"
 
 #  Global Brush, Pattern, ...
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1673
+#: ../app/dialogs/preferences-dialog.c:1779
 msgid "Paint Options Shared Between Tools"
 msgstr "Bendri įrankių piešimo nustatymai"
 
-#: ../app/dialogs/preferences-dialog.c:1686
+#: ../app/dialogs/preferences-dialog.c:1792
 msgid "Move Tool"
 msgstr "Perkėlimo įrankis"
 
-#: ../app/dialogs/preferences-dialog.c:1690
+#: ../app/dialogs/preferences-dialog.c:1796
 msgid "Change current layer or path"
 msgstr "Keisti esamą sluoksnį ar kontūrą"
 
-#: ../app/dialogs/preferences-dialog.c:1703
+#: ../app/dialogs/preferences-dialog.c:1809
 msgid "Toolbox"
 msgstr "Įrankių dėžė"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1715
-#: ../app/dialogs/preferences-dialog.c:1876
+#: ../app/dialogs/preferences-dialog.c:1821
+#: ../app/dialogs/preferences-dialog.c:1982
 #: ../app/widgets/gimpgrideditor.c:182
 msgid "Appearance"
 msgstr "Išvaizda"
 
-#: ../app/dialogs/preferences-dialog.c:1719
+#: ../app/dialogs/preferences-dialog.c:1825
 msgid "Show _foreground & background color"
 msgstr "Rodyti _priekinio plano ir fono spalvas"
 
-#: ../app/dialogs/preferences-dialog.c:1723
+#: ../app/dialogs/preferences-dialog.c:1829
 msgid "Show active _brush, pattern & gradient"
 msgstr "Rodyti aktyvų _teptuką, raštą ir perėjimą"
 
-#: ../app/dialogs/preferences-dialog.c:1727
+#: ../app/dialogs/preferences-dialog.c:1833
 msgid "Show active _image"
 msgstr "Rodyti aktyvų _paveikslėlį"
 
-#: ../app/dialogs/preferences-dialog.c:1740
+#: ../app/dialogs/preferences-dialog.c:1846
 msgid "Default New Image"
 msgstr "Numatytasis naujas paveikslėlis"
 
-#: ../app/dialogs/preferences-dialog.c:1743
+#: ../app/dialogs/preferences-dialog.c:1849
 msgid "Default Image"
 msgstr "Numatytasis paveikslėlis"
 
-#: ../app/dialogs/preferences-dialog.c:1778
+#: ../app/dialogs/preferences-dialog.c:1884
 msgid "Default Image Grid"
 msgstr "Numatytasis paveikslėlio tinklelis"
 
-#: ../app/dialogs/preferences-dialog.c:1781
+#: ../app/dialogs/preferences-dialog.c:1887
 msgid "Default Grid"
 msgstr "Numatytasis tinklelis"
 
-#: ../app/dialogs/preferences-dialog.c:1801
+#: ../app/dialogs/preferences-dialog.c:1907
 msgid "Image Windows"
 msgstr "Paveikslėlių langai"
 
-#: ../app/dialogs/preferences-dialog.c:1816
+#: ../app/dialogs/preferences-dialog.c:1922
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Numatytasis „Taškas į tašką“ naudojimas"
 
-#: ../app/dialogs/preferences-dialog.c:1822
+#: ../app/dialogs/preferences-dialog.c:1928
 msgid "Marching _ants speed:"
 msgstr "Judančių _brūkšnelių greitis:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:1826
+#: ../app/dialogs/preferences-dialog.c:1932
 msgid "Zoom & Resize Behavior"
 msgstr "Mastelio ir dydžio keitimo elgsena"
 
-#: ../app/dialogs/preferences-dialog.c:1830
+#: ../app/dialogs/preferences-dialog.c:1936
 msgid "Resize window on _zoom"
 msgstr "_Pakeitus mastelį keisti ir lango dydį"
 
-#: ../app/dialogs/preferences-dialog.c:1833
+#: ../app/dialogs/preferences-dialog.c:1939
 msgid "Resize window on image _size change"
 msgstr "Pakeitus paveikslėlio _dydį keisti ir lango dydį"
 
-#: ../app/dialogs/preferences-dialog.c:1839
+#: ../app/dialogs/preferences-dialog.c:1945
 msgid "Fit to window"
 msgstr "Sutalpinti į langą"
 
-#: ../app/dialogs/preferences-dialog.c:1841
+#: ../app/dialogs/preferences-dialog.c:1947
 msgid "Initial zoom _ratio:"
 msgstr "Pradinis _mastelis:"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:1845
+#: ../app/dialogs/preferences-dialog.c:1951
 msgid "Mouse Pointers"
 msgstr "Pelės žymekliai"
 
-#: ../app/dialogs/preferences-dialog.c:1849
+#: ../app/dialogs/preferences-dialog.c:1955
 msgid "Show _brush outline"
 msgstr "Rodyti _teptuko kontūrus"
 
-#: ../app/dialogs/preferences-dialog.c:1852
+#: ../app/dialogs/preferences-dialog.c:1958
 msgid "Show pointer for paint _tools"
 msgstr "Rodyti žymeklį piešimo įran_kiams"
 
-#: ../app/dialogs/preferences-dialog.c:1858
+#: ../app/dialogs/preferences-dialog.c:1964
 msgid "Pointer _mode:"
 msgstr "Žymeklio _režimas:"
 
-#: ../app/dialogs/preferences-dialog.c:1861
+#: ../app/dialogs/preferences-dialog.c:1967
 msgid "Pointer re_ndering:"
 msgstr "Žymeklių vai_zdavimas:"
 
-#: ../app/dialogs/preferences-dialog.c:1873
+#: ../app/dialogs/preferences-dialog.c:1979
 msgid "Image Window Appearance"
 msgstr "Paveikslėlio lango išvaizda"
 
-#: ../app/dialogs/preferences-dialog.c:1884
+#: ../app/dialogs/preferences-dialog.c:1990
 msgid "Default Appearance in Normal Mode"
 msgstr "Numatytoji išvaizda normaliame režime"
 
-#: ../app/dialogs/preferences-dialog.c:1889
+#: ../app/dialogs/preferences-dialog.c:1995
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Numatytoji išvaizda viso ekrano režime"
 
-#: ../app/dialogs/preferences-dialog.c:1898
+#: ../app/dialogs/preferences-dialog.c:2004
 msgid "Image Title & Statusbar Format"
 msgstr "Paveikslėlio pavadinimo ir būsenos juostos formatas"
 
-#: ../app/dialogs/preferences-dialog.c:1901
+#: ../app/dialogs/preferences-dialog.c:2007
 msgid "Title & Status"
 msgstr "Pavadinimas ir būsena"
 
-#: ../app/dialogs/preferences-dialog.c:1919
+#: ../app/dialogs/preferences-dialog.c:2025
 msgid "Current format"
 msgstr "Esamas formatas"
 
-#: ../app/dialogs/preferences-dialog.c:1920
+#: ../app/dialogs/preferences-dialog.c:2026
 msgid "Default format"
 msgstr "Numatytasis formatas"
 
-#: ../app/dialogs/preferences-dialog.c:1921
+#: ../app/dialogs/preferences-dialog.c:2027
 msgid "Show zoom percentage"
 msgstr "Rodyti mastelį procentais"
 
-#: ../app/dialogs/preferences-dialog.c:1922
+#: ../app/dialogs/preferences-dialog.c:2028
 msgid "Show zoom ratio"
 msgstr "Rodyti mastelį"
 
-#: ../app/dialogs/preferences-dialog.c:1923
+#: ../app/dialogs/preferences-dialog.c:2029
 msgid "Show image size"
 msgstr "Rodyti paveikslėlio dydį"
 
-#: ../app/dialogs/preferences-dialog.c:1936
+#: ../app/dialogs/preferences-dialog.c:2042
 msgid "Image Title Format"
 msgstr "Paveikslėlio pavadinimo formatas"
 
-#: ../app/dialogs/preferences-dialog.c:1938
+#: ../app/dialogs/preferences-dialog.c:2044
 msgid "Image Statusbar Format"
 msgstr "Paveikslėlio būsenos juostos formatas"
 
-#: ../app/dialogs/preferences-dialog.c:2023
+#: ../app/dialogs/preferences-dialog.c:2129
 msgid "Display"
 msgstr "Vaizdavimas"
 
-#: ../app/dialogs/preferences-dialog.c:2039
+#: ../app/dialogs/preferences-dialog.c:2145
 msgid "_Check style:"
 msgstr "_Kvadratėlių stilius:"
 
-#: ../app/dialogs/preferences-dialog.c:2042
+#: ../app/dialogs/preferences-dialog.c:2148
 msgid "Check _size:"
 msgstr "Kvadratėlių _dydis:"
 
-#: ../app/dialogs/preferences-dialog.c:2045
+#: ../app/dialogs/preferences-dialog.c:2151
 msgid "Get Monitor Resolution"
 msgstr "Gauti monitoriaus raišką"
 
-#: ../app/dialogs/preferences-dialog.c:2049
+#: ../app/dialogs/preferences-dialog.c:2155
 #: ../app/widgets/gimpcursorview.c:123 ../app/widgets/gimpgrideditor.c:243
 #: ../app/widgets/gimpgrideditor.c:275
 msgid "Pixels"
 msgstr "Taškų"
 
-#: ../app/dialogs/preferences-dialog.c:2071
+#: ../app/dialogs/preferences-dialog.c:2177
 #: ../app/widgets/gimpimagepropview.c:351
 msgid "ppi"
 msgstr "taškų colyje"
 
-#: ../app/dialogs/preferences-dialog.c:2087
+#: ../app/dialogs/preferences-dialog.c:2193
 #, c-format
 msgid "From _windowing system (currently %d × %d ppi)"
 msgstr "Iš _langų sistemos (šiuo metu %d × %d taškų colyje)"
 
-#: ../app/dialogs/preferences-dialog.c:2108
+#: ../app/dialogs/preferences-dialog.c:2214
 msgid "_Manually"
 msgstr "Ra_nkiniu būdu"
 
-#: ../app/dialogs/preferences-dialog.c:2123
+#: ../app/dialogs/preferences-dialog.c:2229
 msgid "C_alibrate..."
 msgstr "K_alibruoti..."
 
-#: ../app/dialogs/preferences-dialog.c:2145
+#: ../app/dialogs/preferences-dialog.c:2251
 msgid "Color Management"
 msgstr "Spalvų valdymas"
 
-#: ../app/dialogs/preferences-dialog.c:2165
+#: ../app/dialogs/preferences-dialog.c:2271
 msgid "_RGB profile:"
 msgstr "_RGB profilis:"
 
-#: ../app/dialogs/preferences-dialog.c:2166
+#: ../app/dialogs/preferences-dialog.c:2272
 msgid "Select RGB Color Profile"
 msgstr "Pasirinkite RGB spalvų profilį"
 
-#: ../app/dialogs/preferences-dialog.c:2167
+#: ../app/dialogs/preferences-dialog.c:2273
 msgid "_CMYK profile:"
 msgstr "_CMYK profilis:"
 
-#: ../app/dialogs/preferences-dialog.c:2168
+#: ../app/dialogs/preferences-dialog.c:2274
 msgid "Select CMYK Color Profile"
 msgstr "Pasirinkite CMYK spalvų profilį"
 
-#: ../app/dialogs/preferences-dialog.c:2169
+#: ../app/dialogs/preferences-dialog.c:2275
 msgid "_Monitor profile:"
 msgstr "_Monitoriaus profilis:"
 
-#: ../app/dialogs/preferences-dialog.c:2170
+#: ../app/dialogs/preferences-dialog.c:2276
 msgid "Select Monitor Color Profile"
 msgstr "Pasirinkite monitoriaus spalvų profilį"
 
-#: ../app/dialogs/preferences-dialog.c:2171
+#: ../app/dialogs/preferences-dialog.c:2277
 msgid "_Print simulation profile:"
 msgstr "_Spausdinimo simuliacijos profilis:"
 
-#: ../app/dialogs/preferences-dialog.c:2172
+#: ../app/dialogs/preferences-dialog.c:2278
 msgid "Select Printer Color Profile"
 msgstr "Pasirinkite spausdinimo spalvų profilį"
 
-#: ../app/dialogs/preferences-dialog.c:2181
+#: ../app/dialogs/preferences-dialog.c:2287
 msgid "_Mode of operation:"
 msgstr "_Operacijos režimas:"
 
-#: ../app/dialogs/preferences-dialog.c:2184
+#: ../app/dialogs/preferences-dialog.c:2290
 msgid "_Display rendering intent:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2187
+#: ../app/dialogs/preferences-dialog.c:2293
 msgid "_Softproof rendering intent:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2216
+#: ../app/dialogs/preferences-dialog.c:2315
 msgid "_Try to obtain the monitor profile from the X server"
 msgstr "_Pabandyti gauti monitoriaus profilį iš X serverio"
 
-#: ../app/dialogs/preferences-dialog.c:2235
+#: ../app/dialogs/preferences-dialog.c:2334
 msgid "Input Devices"
 msgstr "Įvesties įrenginiai"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2245
+#: ../app/dialogs/preferences-dialog.c:2344
 msgid "Extended Input Devices"
 msgstr "Papildomi įvesties įrenginiai"
 
-#: ../app/dialogs/preferences-dialog.c:2249
+#: ../app/dialogs/preferences-dialog.c:2348
 msgid "Configure E_xtended Input Devices..."
 msgstr "Konfigūruoti iš_plėstus įvedimo įrengininius..."
 
-#: ../app/dialogs/preferences-dialog.c:2256
+#: ../app/dialogs/preferences-dialog.c:2355
 msgid "_Save input device settings on exit"
 msgstr "Iš_einant išsaugoti įvesties įrenginių nustatymus"
 
-#: ../app/dialogs/preferences-dialog.c:2260
+#: ../app/dialogs/preferences-dialog.c:2359
 msgid "Save Input Device Settings _Now"
 msgstr "Išsaugoti įvesties įrenginių nustatymus _dabar"
 
-#: ../app/dialogs/preferences-dialog.c:2267
+#: ../app/dialogs/preferences-dialog.c:2366
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Atstatyti numatytasias įvesties įrenginių nustatymų reikšmes"
 
-#: ../app/dialogs/preferences-dialog.c:2282
+#: ../app/dialogs/preferences-dialog.c:2381
 msgid "Additional Input Controllers"
 msgstr "Papildomi įvesties kontroleriai"
 
-#: ../app/dialogs/preferences-dialog.c:2285
+#: ../app/dialogs/preferences-dialog.c:2384
 msgid "Input Controllers"
 msgstr "Įvesties kontroleriai"
 
-#: ../app/dialogs/preferences-dialog.c:2301
+#: ../app/dialogs/preferences-dialog.c:2400
 msgid "Window Management"
 msgstr "Langų valdymas"
 
-#: ../app/dialogs/preferences-dialog.c:2310
+#: ../app/dialogs/preferences-dialog.c:2409
 msgid "Window Manager Hints"
 msgstr "Langų valdyklės užuominos"
 
-#: ../app/dialogs/preferences-dialog.c:2316
+#: ../app/dialogs/preferences-dialog.c:2415
 msgid "Hint for the _toolbox:"
 msgstr "Užuomina įrankių _dėžei:"
 
-#: ../app/dialogs/preferences-dialog.c:2320
+#: ../app/dialogs/preferences-dialog.c:2419
 msgid "Hint for other _docks:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2324
+#: ../app/dialogs/preferences-dialog.c:2423
 msgid "Toolbox and other docks are transient to the active display"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2328
+#: ../app/dialogs/preferences-dialog.c:2427
 msgid "Focus"
 msgstr "Fokusas"
 
-#: ../app/dialogs/preferences-dialog.c:2332
+#: ../app/dialogs/preferences-dialog.c:2431
 msgid "Activate the _focused image"
 msgstr "Aktyvuoti _fokusuotą paveikslėlį"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2336
+#: ../app/dialogs/preferences-dialog.c:2435
 msgid "Window Positions"
 msgstr "Langų pozicijos"
 
-#: ../app/dialogs/preferences-dialog.c:2339
+#: ../app/dialogs/preferences-dialog.c:2438
 msgid "_Save window positions on exit"
 msgstr "Išeinant iš_saugoti langų pozicijas"
 
-#: ../app/dialogs/preferences-dialog.c:2343
+#: ../app/dialogs/preferences-dialog.c:2442
 msgid "Save Window Positions _Now"
 msgstr "Išsaugoti langų pozicijas _dabar"
 
-#: ../app/dialogs/preferences-dialog.c:2350
+#: ../app/dialogs/preferences-dialog.c:2449
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Atstatyti numatytasias langų pozicijų reikšmes"
 
-#: ../app/dialogs/preferences-dialog.c:2365
+#: ../app/dialogs/preferences-dialog.c:2464
 msgid "Folders"
 msgstr "Aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2383
-msgid "Temp folder:"
+#: ../app/dialogs/preferences-dialog.c:2484
+msgid "Temporary folder:"
 msgstr "Laikinas aplankas:"
 
-#: ../app/dialogs/preferences-dialog.c:2383
-msgid "Select Temp Folder"
-msgstr "Nurodykite laikiną aplanką"
+#: ../app/dialogs/preferences-dialog.c:2485
+msgid "Select Folder for Temporary Files"
+msgstr "Pasirinkite laikinųjų rinkmenų aplanką"
 
-#: ../app/dialogs/preferences-dialog.c:2384
+#: ../app/dialogs/preferences-dialog.c:2489
 msgid "Swap folder:"
 msgstr "Mainų aplankas:"
 
-#: ../app/dialogs/preferences-dialog.c:2384
+#: ../app/dialogs/preferences-dialog.c:2490
 msgid "Select Swap Folder"
 msgstr "Nurodykite mainų aplanką"
 
-#: ../app/dialogs/preferences-dialog.c:2417
+#: ../app/dialogs/preferences-dialog.c:2525
 msgid "Brush Folders"
 msgstr "Teptukų aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2419
+#: ../app/dialogs/preferences-dialog.c:2527
 msgid "Select Brush Folders"
 msgstr "Nurodykite teptukų aplanką"
 
-#: ../app/dialogs/preferences-dialog.c:2421
+#: ../app/dialogs/preferences-dialog.c:2529
 msgid "Pattern Folders"
 msgstr "Raštų aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2423
+#: ../app/dialogs/preferences-dialog.c:2531
 msgid "Select Pattern Folders"
 msgstr "Nurodykite raštų aplanką"
 
-#: ../app/dialogs/preferences-dialog.c:2425
+#: ../app/dialogs/preferences-dialog.c:2533
 msgid "Palette Folders"
 msgstr "Palečių aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2427
+#: ../app/dialogs/preferences-dialog.c:2535
 msgid "Select Palette Folders"
 msgstr "Nurodykite palečių aplankus"
 
-#: ../app/dialogs/preferences-dialog.c:2429
+#: ../app/dialogs/preferences-dialog.c:2537
 msgid "Gradient Folders"
 msgstr "Perėjimų aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2431
+#: ../app/dialogs/preferences-dialog.c:2539
 msgid "Select Gradient Folders"
 msgstr "Nurodykite perėjimų aplankus"
 
-#: ../app/dialogs/preferences-dialog.c:2433
+#: ../app/dialogs/preferences-dialog.c:2541
 msgid "Font Folders"
 msgstr "Šriftų aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2435
+#: ../app/dialogs/preferences-dialog.c:2543
 msgid "Select Font Folders"
 msgstr "Nurodykite šriftų aplankus"
 
-#: ../app/dialogs/preferences-dialog.c:2437
+#: ../app/dialogs/preferences-dialog.c:2545
 msgid "Plug-In Folders"
 msgstr "Įskiepių aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2439
+#: ../app/dialogs/preferences-dialog.c:2547
 msgid "Select Plug-In Folders"
 msgstr "Nurodykite įskiepių aplankus"
 
-#: ../app/dialogs/preferences-dialog.c:2441
+#: ../app/dialogs/preferences-dialog.c:2549
 msgid "Scripts"
 msgstr "Skriptai"
 
-#: ../app/dialogs/preferences-dialog.c:2441
+#: ../app/dialogs/preferences-dialog.c:2549
 msgid "Script-Fu Folders"
 msgstr "Script-Fu aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2443
+#: ../app/dialogs/preferences-dialog.c:2551
 msgid "Select Script-Fu Folders"
 msgstr "Pasirinkite Script-Fu aplankus"
 
-#: ../app/dialogs/preferences-dialog.c:2445
+#: ../app/dialogs/preferences-dialog.c:2553
 msgid "Module Folders"
 msgstr "Modulių aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2447
+#: ../app/dialogs/preferences-dialog.c:2555
 msgid "Select Module Folders"
 msgstr "Nurodykite modulių katalogus"
 
-#: ../app/dialogs/preferences-dialog.c:2449
+#: ../app/dialogs/preferences-dialog.c:2557
 msgid "Interpreters"
 msgstr "Interpretatoriai"
 
-#: ../app/dialogs/preferences-dialog.c:2449
+#: ../app/dialogs/preferences-dialog.c:2557
 msgid "Interpreter Folders"
 msgstr "Interpretatorių aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2451
+#: ../app/dialogs/preferences-dialog.c:2559
 msgid "Select Interpreter Folders"
 msgstr "Nurodykite interpretatorių aplankus"
 
-#: ../app/dialogs/preferences-dialog.c:2453
+#: ../app/dialogs/preferences-dialog.c:2561
 msgid "Environment Folders"
 msgstr "Aplinkos aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2455
+#: ../app/dialogs/preferences-dialog.c:2563
 msgid "Select Environment Folders"
 msgstr "Nurodykite aplinkos aplankus"
 
-#: ../app/dialogs/preferences-dialog.c:2457
+#: ../app/dialogs/preferences-dialog.c:2565
 msgid "Themes"
 msgstr "Temos"
 
-#: ../app/dialogs/preferences-dialog.c:2457
+#: ../app/dialogs/preferences-dialog.c:2565
 msgid "Theme Folders"
 msgstr "Temų aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2459
+#: ../app/dialogs/preferences-dialog.c:2567
 msgid "Select Theme Folders"
 msgstr "Nurodykite temų aplanką"
 
@@ -7389,28 +7560,28 @@ msgstr "Spausdinimo dydis"
 
 #  the image size labels
 #. the image size labels
-#: ../app/dialogs/print-size-dialog.c:162 ../app/widgets/gimpsizebox.c:198
+#: ../app/dialogs/print-size-dialog.c:162 ../app/widgets/gimpsizebox.c:200
 #: ../app/widgets/gimptemplateeditor.c:161
 msgid "_Width:"
 msgstr "_Plotis:"
 
-#: ../app/dialogs/print-size-dialog.c:169 ../app/widgets/gimpsizebox.c:202
+#: ../app/dialogs/print-size-dialog.c:169 ../app/widgets/gimpsizebox.c:204
 #: ../app/widgets/gimptemplateeditor.c:168
 msgid "H_eight:"
 msgstr "A_ukštis:"
 
 #. the resolution labels
-#: ../app/dialogs/print-size-dialog.c:217 ../app/widgets/gimpsizebox.c:257
+#: ../app/dialogs/print-size-dialog.c:217 ../app/widgets/gimpsizebox.c:263
 #: ../app/widgets/gimptemplateeditor.c:288
 msgid "_X resolution:"
 msgstr "_X raiška:"
 
-#: ../app/dialogs/print-size-dialog.c:224 ../app/widgets/gimpsizebox.c:260
+#: ../app/dialogs/print-size-dialog.c:224 ../app/widgets/gimpsizebox.c:266
 #: ../app/widgets/gimptemplateeditor.c:295
 msgid "_Y resolution:"
 msgstr "_Y raiška:"
 
-#: ../app/dialogs/print-size-dialog.c:235 ../app/widgets/gimpsizebox.c:253
+#: ../app/dialogs/print-size-dialog.c:235 ../app/widgets/gimpsizebox.c:259
 #: ../app/widgets/gimptemplateeditor.c:308
 #, c-format
 msgid "pixels/%a"
@@ -7501,34 +7672,34 @@ msgstr "Pasirinkite apvedimo stilių"
 msgid "Paint tool:"
 msgstr "Piešimo įrankis:"
 
-#: ../app/dialogs/tips-dialog.c:89
+#: ../app/dialogs/tips-dialog.c:88
 msgid "<b>Your GIMP tips file appears to be missing!</b>"
 msgstr "<b>Panašu, kad nėra GIMP patarimų rinkmenos!</b>"
 
-#: ../app/dialogs/tips-dialog.c:91
+#: ../app/dialogs/tips-dialog.c:90
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
 msgstr ""
 "Turėtų būti rinkmena pavadinimu „%s“. Patikrinkite, ar teisingai įdiegėte "
 "GIMP."
 
-#: ../app/dialogs/tips-dialog.c:97
+#: ../app/dialogs/tips-dialog.c:96
 msgid "<b>The GIMP tips file could not be parsed!</b>"
 msgstr "<b>Nepavyko perskaityti GIMP patarimų rinkmenos!</b>"
 
-#: ../app/dialogs/tips-dialog.c:130
+#: ../app/dialogs/tips-dialog.c:129
 msgid "GIMP Tip of the Day"
 msgstr "GIMP dienos patarimas"
 
-#: ../app/dialogs/tips-dialog.c:194
+#: ../app/dialogs/tips-dialog.c:181
 msgid "Show tip next time GIMP starts"
 msgstr "Rodyti patarimą kitą kart paleidžiant GIMP"
 
-#: ../app/dialogs/tips-dialog.c:218
+#: ../app/dialogs/tips-dialog.c:205
 msgid "_Previous Tip"
 msgstr "_Buvęs patarimas"
 
-#: ../app/dialogs/tips-dialog.c:227
+#: ../app/dialogs/tips-dialog.c:214
 msgid "_Next Tip"
 msgstr "_Kitas patarimas"
 
@@ -7541,60 +7712,21 @@ msgstr "_Kitas patarimas"
 msgid "tips-locale:C"
 msgstr "tips-locale:lt"
 
-#: ../app/dialogs/user-install-dialog.c:105
-#, fuzzy
-msgid "Installation successful!"
-msgstr "Įdiegta sėkmingai."
-
-#: ../app/dialogs/user-install-dialog.c:113
-msgid "Installation failed!"
-msgstr "Įdiegti nepavyko!"
-
-#: ../app/dialogs/user-install-dialog.c:187
-msgid "Welcome to the GNU Image Manipulation Program"
-msgstr "Sveiki paleidę GNU paveikslėlių manipuliavimo programą"
-
-#: ../app/dialogs/user-install-dialog.c:194
-#, c-format
-msgid "It seems you have used GIMP %s before."
-msgstr "Panašu, kad Jūs anksčiau jau naudojote GIMP %s."
-
-#: ../app/dialogs/user-install-dialog.c:204
-msgid "_Use my old settings"
-msgstr ""
-
-#: ../app/dialogs/user-install-dialog.c:207
-#, fuzzy
-msgid "_Do a fresh installation"
-msgstr "_Atlikti naują naudotojo diegimą"
-
-#: ../app/dialogs/user-install-dialog.c:217
-#, c-format
-msgid ""
-"It appears that you are using GIMP for the first time.  GIMP will now create "
-"a folder named '<b>%s</b>' and copy some files to it."
-msgstr ""
-"Panašu, kad paleidote GIMP pirmą kartą. GIMP dabar sukurs aplanką „<b>%s</"
-"b>“ ir į jį nukopijuos keletą rinkmenų."
-
-#: ../app/dialogs/user-install-dialog.c:244
-#, fuzzy
-msgid "Installing..."
-msgstr "Naudotojo įdiegimas"
-
-#: ../app/dialogs/user-install-dialog.c:246
-#, fuzzy
-msgid "Installation Log"
-msgstr "Naudotojo įdiegimas"
-
-#: ../app/dialogs/user-install-dialog.c:317
+#: ../app/dialogs/user-install-dialog.c:85
 msgid "GIMP User Installation"
 msgstr "GIMP naudotojo diegimas"
 
-#: ../app/dialogs/user-install-dialog.c:323
-#, fuzzy
-msgid "C_ontinue"
-msgstr "Tęsti"
+#: ../app/dialogs/user-install-dialog.c:94
+msgid "User installation failed!"
+msgstr "Naudotojo įdiegimas nesėkmingas!"
+
+#: ../app/dialogs/user-install-dialog.c:96
+msgid "The GIMP user installation failed; see the log for details."
+msgstr "GIMP naudotojo įdiegimas nepavyko; išsamesnė informacija žurnale."
+
+#: ../app/dialogs/user-install-dialog.c:99
+msgid "Installation Log"
+msgstr "Įdiegimo žurnalas"
 
 #: ../app/dialogs/vectors-export-dialog.c:53
 msgid "Export Path to SVG"
@@ -7660,7 +7792,7 @@ msgstr "Tamsių kvadratėlių spalva"
 msgid "Custom color"
 msgstr "Kita spalva"
 
-#: ../app/display/gimpdisplayshell.c:945
+#: ../app/display/gimpdisplayshell.c:946
 msgid "Zoom image when window size changes"
 msgstr "Keičiantis lango dydžiui keisti paveikslėlio mastelį"
 
@@ -7737,19 +7869,19 @@ msgstr "Konfigūruoti spalvų rodymo filtrus"
 msgid "Layer Select"
 msgstr "Pažymėti sluoksnį"
 
-#: ../app/display/gimpdisplayshell-scale.c:472
+#: ../app/display/gimpdisplayshell-scale.c:476
 msgid "Zoom Ratio"
 msgstr "Mastelio koeficientas"
 
-#: ../app/display/gimpdisplayshell-scale.c:474
+#: ../app/display/gimpdisplayshell-scale.c:478
 msgid "Select Zoom Ratio"
 msgstr "Pasirinkite mastelio koeficientą"
 
-#: ../app/display/gimpdisplayshell-scale.c:517
+#: ../app/display/gimpdisplayshell-scale.c:521
 msgid "Zoom ratio:"
 msgstr "Mastelio koeficientas:"
 
-#: ../app/display/gimpdisplayshell-scale.c:542
+#: ../app/display/gimpdisplayshell-scale.c:546
 msgid "Zoom:"
 msgstr "Mastelis:"
 
@@ -7831,7 +7963,7 @@ msgstr "Įskiepis negali išsaugoti paveikslėlio"
 msgid "Invalid character sequence in URI"
 msgstr "URI yra netinkama simbolių seka"
 
-#: ../app/gui/splash.c:110
+#: ../app/gui/splash.c:109
 msgid "GIMP Startup"
 msgstr "GIMP paleidimas"
 
@@ -7853,7 +7985,7 @@ msgstr "Dažų purkštuvas"
 msgid "No brushes available for use with this tool."
 msgstr "Šiam įrankiui nėra naudotinų teptukų."
 
-#: ../app/paint/gimpclone.c:108 ../app/tools/gimpclonetool.c:93
+#: ../app/paint/gimpclone.c:108 ../app/tools/gimpclonetool.c:99
 msgid "Clone"
 msgstr "Klonavimas"
 
@@ -7901,6 +8033,10 @@ msgstr "Sulieti"
 msgid "Sharpen"
 msgstr "Paaštrinti"
 
+#: ../app/pdb/channel_cmds.c:173
+msgid "Combine Masks"
+msgstr "Kombinuoti kaukes"
+
 #: ../app/pdb/color_cmds.c:100 ../app/tools/gimpbrightnesscontrasttool.c:99
 msgid "Brightness-Contrast"
 msgstr "Šviesumas-kontrastas"
@@ -7930,35 +8066,35 @@ msgstr "Atspalvis-Sodrumas"
 msgid "Threshold"
 msgstr "Slenkstis"
 
-#: ../app/pdb/drawable_transform_cmds.c:286
-#: ../app/pdb/drawable_transform_cmds.c:366
-#: ../app/pdb/transform_tools_cmds.c:136 ../app/tools/gimpperspectivetool.c:69
+#: ../app/pdb/drawable_transform_cmds.c:304
+#: ../app/pdb/drawable_transform_cmds.c:388
+#: ../app/pdb/transform_tools_cmds.c:140 ../app/tools/gimpperspectivetool.c:69
 #: ../app/tools/gimpperspectivetool.c:99
 msgid "Perspective"
 msgstr "Perspektyvos"
 
-#: ../app/pdb/drawable_transform_cmds.c:768
-#: ../app/pdb/drawable_transform_cmds.c:833
-#: ../app/pdb/transform_tools_cmds.c:329 ../app/tools/gimpsheartool.c:117
+#: ../app/pdb/drawable_transform_cmds.c:818
+#: ../app/pdb/drawable_transform_cmds.c:889
+#: ../app/pdb/transform_tools_cmds.c:350 ../app/tools/gimpsheartool.c:116
 msgid "Shearing"
 msgstr "Šlytis"
 
-#: ../app/pdb/drawable_transform_cmds.c:911
-#: ../app/pdb/transform_tools_cmds.c:403
+#: ../app/pdb/drawable_transform_cmds.c:973
+#: ../app/pdb/transform_tools_cmds.c:424
 msgid "2D Transform"
 msgstr "2D transformavimas."
 
-#: ../app/pdb/drawable_transform_cmds.c:987
-#: ../app/pdb/drawable_transform_cmds.c:1073
-#: ../app/pdb/drawable_transform_cmds.c:1157
+#: ../app/pdb/drawable_transform_cmds.c:1055
+#: ../app/pdb/drawable_transform_cmds.c:1147
+#: ../app/pdb/drawable_transform_cmds.c:1237
 msgid "2D Transforming"
 msgstr "2D transformavimas"
 
-#: ../app/pdb/edit_cmds.c:577 ../app/tools/gimpblendtool.c:205
+#: ../app/pdb/edit_cmds.c:577 ../app/tools/gimpblendtool.c:207
 msgid "Blending"
 msgstr "Perėjimas"
 
-#: ../app/pdb/gimppdb.c:306 ../app/pdb/gimppdb.c:370
+#: ../app/pdb/gimppdb.c:311 ../app/pdb/gimppdb.c:375
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7967,7 +8103,7 @@ msgstr ""
 "PDB iškvietimo klaida:\n"
 "Procedūra „%s“ nerasta"
 
-#: ../app/pdb/gimppdb.c:403
+#: ../app/pdb/gimppdb.c:408
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -8004,12 +8140,12 @@ msgstr ""
 msgid "Free Select"
 msgstr "Laisvas pažymėjimas"
 
-#: ../app/plug-in/gimpenvirontable.c:249
+#: ../app/plug-in/gimpenvirontable.c:245
 #, c-format
 msgid "Empty variable name in environment file %s"
 msgstr "Aplinkos rinkmenoje %s yra tuščias kintamojo pavadinimas"
 
-#: ../app/plug-in/gimpenvirontable.c:267
+#: ../app/plug-in/gimpenvirontable.c:263
 #, c-format
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Aplinkos rinkmenoje %s yra neteisingas kintamojo pavadinimas: %s"
@@ -8072,12 +8208,12 @@ msgstr "Paleidžiami išplėtimai"
 msgid "Starting extension: '%s'\n"
 msgstr "Paleidžiamas išplėtimas: „%s“\n"
 
-#: ../app/plug-in/gimpplugin.c:432 ../app/plug-in/gimpplugin.c:465
+#: ../app/plug-in/gimpplugin.c:428 ../app/plug-in/gimpplugin.c:461
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
 msgstr "Nutraukiamas įskiepis: „%s“\n"
 
-#: ../app/plug-in/gimpplugin.c:600
+#: ../app/plug-in/gimpplugin.c:596
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -8133,7 +8269,7 @@ msgstr ""
 "ĄąBbCcČčDdEeĘęĖėFfGgHhIiYyJjKk\n"
 "LlMmNnOoPpRrSsŠšTtUuŲųŪūVvZzŽž"
 
-#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:712
+#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:710
 msgid "Add Text Layer"
 msgstr "Pridėti teksto sluoksnį"
 
@@ -8216,63 +8352,76 @@ msgstr "Nustatyti fono splavą"
 msgid "Add to palette"
 msgstr "Įdėti į paletę"
 
-#: ../app/tools/tools-enums.c:56
+#: ../app/tools/tools-enums.c:58
+msgid "No guides"
+msgstr "Nėra gairių"
+
+#: ../app/tools/tools-enums.c:59
+msgid "Center lines"
+msgstr "Centruotos linijos"
+
+#: ../app/tools/tools-enums.c:60
+#, fuzzy
+msgid "Rule of thirds"
+msgstr "Kelių skaičius:"
+
+#: ../app/tools/tools-enums.c:61
+msgid "Golden sections"
+msgstr "Auksiniai skyriai"
+
+#: ../app/tools/tools-enums.c:88
 msgid "Crop"
 msgstr "Apkarpyti"
 
-#: ../app/tools/tools-enums.c:57 ../app/tools/tools-enums.c:85
+#: ../app/tools/tools-enums.c:89
 msgid "Resize"
 msgstr "Pakeisti dydį"
 
-#: ../app/tools/tools-enums.c:84
-msgid "Execute"
-msgstr "Vykdyti"
-
-#: ../app/tools/tools-enums.c:113
+#: ../app/tools/tools-enums.c:117
 msgid "Free select"
 msgstr "Laisvas pažymėjimas"
 
-#: ../app/tools/tools-enums.c:114
+#: ../app/tools/tools-enums.c:118
 msgid "Fixed size"
 msgstr "Fiksuotas dydis"
 
-#: ../app/tools/tools-enums.c:115
+#: ../app/tools/tools-enums.c:119
 msgid "Fixed aspect ratio"
 msgstr "Fiksuota perspektyva"
 
-#: ../app/tools/tools-enums.c:143
+#: ../app/tools/tools-enums.c:147
 msgid "Transform layer"
 msgstr "Transformuoti sluoksnį"
 
-#: ../app/tools/tools-enums.c:144
+#: ../app/tools/tools-enums.c:148
 msgid "Transform selection"
 msgstr "Transformuoti pažymėjimą"
 
-#: ../app/tools/tools-enums.c:145
+#: ../app/tools/tools-enums.c:149
 msgid "Transform path"
 msgstr "Transformuoti kontūrą"
 
-#: ../app/tools/tools-enums.c:173
+#: ../app/tools/tools-enums.c:177
 msgid "Design"
 msgstr "Sukurti"
 
-#: ../app/tools/tools-enums.c:175 ../app/tools/gimpmovetool.c:116
+#: ../app/tools/tools-enums.c:179 ../app/tools/gimpmovetool.c:117
 msgid "Move"
 msgstr "Perkelti"
 
-#: ../app/tools/tools-enums.c:204
+#: ../app/tools/tools-enums.c:208
 msgid "Outline"
 msgstr "Kontūras"
 
-#: ../app/tools/tools-enums.c:207
+#: ../app/tools/tools-enums.c:211
 msgid "Image + Grid"
 msgstr "Paveikslėlis + tinklelis"
 
-#: ../app/tools/tools-enums.c:234
+#: ../app/tools/tools-enums.c:238
 msgid "Number of grid lines"
 msgstr "Tinklelio linijų skaičius"
 
-#: ../app/tools/tools-enums.c:235
+#: ../app/tools/tools-enums.c:239
 msgid "Grid line spacing"
 msgstr "Tarpai tarp tinklelio linijų"
 
@@ -8301,7 +8450,7 @@ msgstr "Slėgis:"
 msgid "Offset:"
 msgstr "Poslinkis:"
 
-#: ../app/tools/gimpblendoptions.c:225 ../app/widgets/gimpbrusheditor.c:115
+#: ../app/tools/gimpblendoptions.c:225 ../app/widgets/gimpbrusheditor.c:123
 msgid "Shape:"
 msgstr "Forma:"
 
@@ -8319,7 +8468,7 @@ msgstr "Maksimalus gylis:"
 
 #: ../app/tools/gimpblendoptions.c:274
 #: ../app/tools/gimpbucketfilloptions.c:274
-#: ../app/tools/gimpselectionoptions.c:501
+#: ../app/tools/gimpselectionoptions.c:495
 msgid "Threshold:"
 msgstr "Slenkstis:"
 
@@ -8331,12 +8480,12 @@ msgstr "Užpildyti spalvotu perėjimu"
 msgid "Blen_d"
 msgstr "Perėji_mas"
 
-#: ../app/tools/gimpblendtool.c:148
+#: ../app/tools/gimpblendtool.c:150
 msgid "Blend: Invalid for indexed images."
 msgstr "Perėjimas: Negalimas indeksuotiems paveikslėliams."
 
 #. initialize the statusbar display
-#: ../app/tools/gimpblendtool.c:166 ../app/tools/gimpblendtool.c:261
+#: ../app/tools/gimpblendtool.c:168 ../app/tools/gimpblendtool.c:263
 msgid "Blend: "
 msgstr "Perėjimas:"
 
@@ -8373,7 +8522,7 @@ msgid "Base filled area on all visible layers"
 msgstr "Padėti užpildytą plotą visuose sluoksniuose"
 
 #: ../app/tools/gimpbucketfilloptions.c:111
-#: ../app/tools/gimpselectionoptions.c:134
+#: ../app/tools/gimpselectionoptions.c:129
 msgid "Maximum color difference"
 msgstr "Maksimalus spalvų skirtumas"
 
@@ -8398,7 +8547,7 @@ msgid "Fill similar colors"
 msgstr "Užpildyti panašias spalvas"
 
 #: ../app/tools/gimpbucketfilloptions.c:240
-#: ../app/tools/gimpselectionoptions.c:473
+#: ../app/tools/gimpselectionoptions.c:467
 msgid "Finding Similar Colors"
 msgstr "Panašių spalvų ieškojimas"
 
@@ -8406,10 +8555,10 @@ msgstr "Panašių spalvų ieškojimas"
 msgid "Fill transparent areas"
 msgstr "Užpildyti skaidrias sritis"
 
-#: ../app/tools/gimpbucketfilloptions.c:262 ../app/tools/gimpclonetool.c:309
+#: ../app/tools/gimpbucketfilloptions.c:262 ../app/tools/gimpclonetool.c:406
 #: ../app/tools/gimpcolorpickeroptions.c:162
-#: ../app/tools/gimpselectionoptions.c:489
-#: ../app/tools/gimpselectionoptions.c:538
+#: ../app/tools/gimpselectionoptions.c:483
+#: ../app/tools/gimpselectionoptions.c:526
 msgid "Sample merged"
 msgstr ""
 
@@ -8421,31 +8570,31 @@ msgstr "Užpildyti spalva arba raštu"
 msgid "_Bucket Fill"
 msgstr "_Užpildymas"
 
-#: ../app/tools/gimpbycolorselecttool.c:82
+#: ../app/tools/gimpbycolorselecttool.c:92
 msgid "Select regions by color"
 msgstr "Pažymėti sritis pagal spalvą"
 
-#: ../app/tools/gimpbycolorselecttool.c:83
+#: ../app/tools/gimpbycolorselecttool.c:93
 msgid "_By Color Select"
 msgstr "_Žymėjimas pagal spalvą"
 
-#: ../app/tools/gimpclonetool.c:94
+#: ../app/tools/gimpclonetool.c:100
 msgid "Paint using Patterns or Image Regions"
 msgstr "Piešti naudojant raštus arba paveikslėlio sritis"
 
-#: ../app/tools/gimpclonetool.c:95
+#: ../app/tools/gimpclonetool.c:101
 msgid "_Clone"
 msgstr "_Klonavimas"
 
-#: ../app/tools/gimpclonetool.c:243
+#: ../app/tools/gimpclonetool.c:320
 msgid "Ctrl-Click to set a clone source."
 msgstr "Norėdami pasirinkti klonavimo šaltinį spragtelėkite su Ctrl."
 
-#: ../app/tools/gimpclonetool.c:304
+#: ../app/tools/gimpclonetool.c:401
 msgid "Source"
 msgstr "Šaltinis"
 
-#: ../app/tools/gimpclonetool.c:323
+#: ../app/tools/gimpclonetool.c:420
 msgid "Alignment:"
 msgstr "Lygiavimas:"
 
@@ -8474,14 +8623,17 @@ msgid "Adjust Color Levels"
 msgstr "Keisti spalvų lygius"
 
 #: ../app/tools/gimpcolorbalancetool.c:262
+#: ../app/tools/gimphuesaturationtool.c:235
 msgid "Cyan"
 msgstr "Žydras"
 
 #: ../app/tools/gimpcolorbalancetool.c:269
+#: ../app/tools/gimphuesaturationtool.c:237
 msgid "Magenta"
 msgstr "Rožinis"
 
 #: ../app/tools/gimpcolorbalancetool.c:276
+#: ../app/tools/gimphuesaturationtool.c:233
 msgid "Yellow"
 msgstr "Geltonas"
 
@@ -8514,17 +8666,17 @@ msgid "Select Color"
 msgstr "Pasirinkite spalvą"
 
 #: ../app/tools/gimpcolorizetool.c:211
-#: ../app/tools/gimphuesaturationtool.c:362
+#: ../app/tools/gimphuesaturationtool.c:364
 msgid "_Hue:"
 msgstr "_Atspalvis:"
 
 #: ../app/tools/gimpcolorizetool.c:225
-#: ../app/tools/gimphuesaturationtool.c:398
+#: ../app/tools/gimphuesaturationtool.c:400
 msgid "_Saturation:"
 msgstr "_Sodrumas:"
 
 #: ../app/tools/gimpcolorizetool.c:239
-#: ../app/tools/gimphuesaturationtool.c:380
+#: ../app/tools/gimphuesaturationtool.c:382
 msgid "_Lightness:"
 msgstr "Š_viesumas:"
 
@@ -8532,8 +8684,8 @@ msgstr "Š_viesumas:"
 msgid "Sample average"
 msgstr "Mėginio vidurkis"
 
-#: ../app/tools/gimpcoloroptions.c:171 ../app/tools/gimpselectionoptions.c:451
-#: ../app/widgets/gimpbrusheditor.c:123
+#: ../app/tools/gimpcoloroptions.c:171 ../app/tools/gimpselectionoptions.c:445
+#: ../app/widgets/gimpbrusheditor.c:131
 msgid "Radius:"
 msgstr "Skersmuo:"
 
@@ -8549,32 +8701,32 @@ msgstr "Parinkimo režimas (%s)"
 msgid "Use info window  (%s)"
 msgstr "Naudoti informacinį langą (%s)"
 
-#: ../app/tools/gimpcolorpickertool.c:105
+#: ../app/tools/gimpcolorpickertool.c:100
 msgid "Color Picker"
 msgstr "Spalvų pipetė"
 
-#: ../app/tools/gimpcolorpickertool.c:106
+#: ../app/tools/gimpcolorpickertool.c:101
 msgid "Pick colors from the image"
 msgstr "Pasirinkti spalvas iš paveikslėlio"
 
-#: ../app/tools/gimpcolorpickertool.c:107
+#: ../app/tools/gimpcolorpickertool.c:102
 msgid "C_olor Picker"
 msgstr "S_palvų pipetė"
 
 #. tool->display->shell
-#: ../app/tools/gimpcolorpickertool.c:356
+#: ../app/tools/gimpcolorpickertool.c:276
 msgid "Color Picker Information"
 msgstr "Spalvų pipetės informacija"
 
-#: ../app/tools/gimpcolortool.c:243 ../app/tools/gimpcolortool.c:417
+#: ../app/tools/gimpcolortool.c:252 ../app/tools/gimpcolortool.c:426
 msgid "Move Sample Point: "
 msgstr "Perkelti mėginio tašką: "
 
-#: ../app/tools/gimpcolortool.c:411
+#: ../app/tools/gimpcolortool.c:420
 msgid "Cancel Sample Point"
 msgstr "Atšaukti mėginio tašką"
 
-#: ../app/tools/gimpcolortool.c:418
+#: ../app/tools/gimpcolortool.c:427
 msgid "Add Sample Point: "
 msgstr "Pridėti mėginio tašką: "
 
@@ -8593,13 +8745,13 @@ msgid "Convolve Type  (%s)"
 msgstr ""
 
 #. tool toggle
-#: ../app/tools/gimpcropoptions.c:179 ../app/tools/gimpmagnifyoptions.c:182
+#: ../app/tools/gimpcropoptions.c:155 ../app/tools/gimpmagnifyoptions.c:182
 #: ../app/tools/gimpmoveoptions.c:188
 #, c-format
 msgid "Tool Toggle  (%s)"
 msgstr "Įrankio perjungimas (%s)"
 
-#: ../app/tools/gimpcropoptions.c:191
+#: ../app/tools/gimpcropoptions.c:167
 msgid "Current layer only"
 msgstr "Tik esamame sluoksnyje"
 
@@ -8615,11 +8767,11 @@ msgstr "Iškirpti paveikslėlio fragmentą arba pakeisti dydį"
 msgid "_Crop & Resize"
 msgstr "_Apkarpymas ir dydžio keitimas"
 
-#: ../app/tools/gimpcroptool.c:218
+#: ../app/tools/gimpcroptool.c:200
 msgid "Click or press enter to crop."
 msgstr "Norėdami kirpti spragtelėkite arba paspauskite Enter."
 
-#: ../app/tools/gimpcroptool.c:221
+#: ../app/tools/gimpcroptool.c:203
 msgid "Click or press enter to resize."
 msgstr "Norėdami keisti dydį spragelėkite arba paspauskite Enter."
 
@@ -8705,21 +8857,21 @@ msgstr "Režimas"
 msgid "Exposure:"
 msgstr "Išlaikymas:"
 
-#: ../app/tools/gimpeditselectiontool.c:235
-#: ../app/tools/gimpeditselectiontool.c:1172
+#: ../app/tools/gimpeditselectiontool.c:236
+#: ../app/tools/gimpeditselectiontool.c:1183
 msgid "Move Floating Selection"
 msgstr "Perkelti plaukiojantį pažymėjimą"
 
-#: ../app/tools/gimpeditselectiontool.c:433
-#: ../app/tools/gimpeditselectiontool.c:700
+#: ../app/tools/gimpeditselectiontool.c:438
+#: ../app/tools/gimpeditselectiontool.c:707
 msgid "Move: "
 msgstr "Perkelti:"
 
-#: ../app/tools/gimpellipseselecttool.c:72
+#: ../app/tools/gimpellipseselecttool.c:74
 msgid "Select elliptical regions"
 msgstr "Pažymėti elipsinius plotus"
 
-#: ../app/tools/gimpellipseselecttool.c:73
+#: ../app/tools/gimpellipseselecttool.c:75
 msgid "_Ellipse Select"
 msgstr "_Elipsinis pažymėjimas"
 
@@ -8738,7 +8890,7 @@ msgid "Anti erase  (%s)"
 msgstr "Antitrintukas (%s)"
 
 #: ../app/tools/gimpflipoptions.c:133 ../app/tools/gimpmoveoptions.c:182
-#: ../app/tools/gimptransformoptions.c:298
+#: ../app/tools/gimptransformoptions.c:283
 msgid "Affect:"
 msgstr "Veikti:"
 
@@ -8844,28 +8996,28 @@ msgstr "Iškirpti priekinio plano objektus"
 msgid "F_oreground Select"
 msgstr "_Priekinio plano žymėjimas"
 
-#: ../app/tools/gimpforegroundselecttool.c:305
+#: ../app/tools/gimpforegroundselecttool.c:306
 msgid "Add more strokes or press Enter to accept the selection"
 msgstr ""
 "Pridėkite daugiau linijų arba paspauskite Enter norėdami užbaigti pasirinkimą"
 
-#: ../app/tools/gimpforegroundselecttool.c:307
+#: ../app/tools/gimpforegroundselecttool.c:308
 msgid "Mark foreground by painting on the object to extract"
 msgstr "Pažymėkite priekinį planą apipiešdami iškirptiną objektą"
 
-#: ../app/tools/gimpforegroundselecttool.c:321
+#: ../app/tools/gimpforegroundselecttool.c:322
 msgid "Draw a rough circle around the object to extract"
 msgstr "Norėdami iškirpti objektą, apveskite aplink jį grubų apskritimą"
 
-#: ../app/tools/gimpfuzzyselecttool.c:98
+#: ../app/tools/gimpfuzzyselecttool.c:102
 msgid "Select contiguous regions"
 msgstr "Artimos spalvos pažymėjimas (pagal pasirinktą slenkstį)"
 
-#: ../app/tools/gimpfuzzyselecttool.c:99
+#: ../app/tools/gimpfuzzyselecttool.c:103
 msgid "Fu_zzy Select"
 msgstr "Ne_aiškus pažymėjimas"
 
-#: ../app/tools/gimpfuzzyselecttool.c:186
+#: ../app/tools/gimpfuzzyselecttool.c:191
 msgid "Move the mouse to change threshold."
 msgstr "Pajudinkite pelę norėdami pakeisti slenkstį."
 
@@ -8890,55 +9042,55 @@ msgstr "Reguliuoti atspalvį / šviesumą / sodrumą"
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Spalva - sodrumas veikia tik su RGB spalvų sluoksniais."
 
-#: ../app/tools/gimphuesaturationtool.c:230
+#: ../app/tools/gimphuesaturationtool.c:231
 msgid "M_aster"
 msgstr "_Pagrindinis"
 
 #: ../app/tools/gimphuesaturationtool.c:231
-msgid "_R"
-msgstr "_R"
-
-#: ../app/tools/gimphuesaturationtool.c:232
-msgid "_Y"
-msgstr "_Y"
-
-#: ../app/tools/gimphuesaturationtool.c:233
-msgid "_G"
-msgstr "_G"
-
-#: ../app/tools/gimphuesaturationtool.c:234
-msgid "_C"
-msgstr "_C"
-
-#: ../app/tools/gimphuesaturationtool.c:235
-msgid "_B"
-msgstr "_B"
-
-#: ../app/tools/gimphuesaturationtool.c:236
-msgid "_M"
-msgstr "_M"
-
-#: ../app/tools/gimphuesaturationtool.c:239
-msgid "Select Primary Color to Adjust"
-msgstr "Pasirinkite pirminę koreguotiną spalvą"
-
-#: ../app/tools/gimphuesaturationtool.c:272
 msgid "Adjust all colors"
 msgstr "Koreguoti visas spalvas"
 
-#: ../app/tools/gimphuesaturationtool.c:326
+#: ../app/tools/gimphuesaturationtool.c:232
+msgid "_R"
+msgstr "_R"
+
+#: ../app/tools/gimphuesaturationtool.c:233
+msgid "_Y"
+msgstr "_Y"
+
+#: ../app/tools/gimphuesaturationtool.c:234
+msgid "_G"
+msgstr "_G"
+
+#: ../app/tools/gimphuesaturationtool.c:235
+msgid "_C"
+msgstr "_C"
+
+#: ../app/tools/gimphuesaturationtool.c:236
+msgid "_B"
+msgstr "_B"
+
+#: ../app/tools/gimphuesaturationtool.c:237
+msgid "_M"
+msgstr "_M"
+
+#: ../app/tools/gimphuesaturationtool.c:240
+msgid "Select Primary Color to Adjust"
+msgstr "Pasirinkite pirminę koreguotiną spalvą"
+
+#: ../app/tools/gimphuesaturationtool.c:328
 msgid "_Overlap:"
 msgstr "_Perdengti:"
 
-#: ../app/tools/gimphuesaturationtool.c:344
+#: ../app/tools/gimphuesaturationtool.c:346
 msgid "Adjust Selected Color"
 msgstr "Koreguoti pasirinktą spalvą"
 
-#: ../app/tools/gimphuesaturationtool.c:418
+#: ../app/tools/gimphuesaturationtool.c:420
 msgid "R_eset Color"
 msgstr "_Atstatyti spalvą"
 
-#: ../app/tools/gimpimagemaptool.c:233 ../app/widgets/gimpthumbbox.c:331
+#: ../app/tools/gimpimagemaptool.c:233
 msgid "_Preview"
 msgstr "_Peržiūra"
 
@@ -8960,8 +9112,8 @@ msgstr "Derinimas"
 msgid "Size:"
 msgstr "Dydis:"
 
-#: ../app/tools/gimpinkoptions-gui.c:78 ../app/tools/gimpmeasuretool.c:925
-#: ../app/tools/gimprotatetool.c:141 ../app/widgets/gimpbrusheditor.c:177
+#: ../app/tools/gimpinkoptions-gui.c:78 ../app/tools/gimpmeasuretool.c:922
+#: ../app/tools/gimprotatetool.c:144 ../app/widgets/gimpbrusheditor.c:185
 msgid "Angle:"
 msgstr "Kampas:"
 
@@ -9094,16 +9246,16 @@ msgstr "Matuoti atstumus ir kampus"
 msgid "_Measure"
 msgstr "_Matuoti"
 
-#: ../app/tools/gimpmeasuretool.c:235
+#: ../app/tools/gimpmeasuretool.c:232
 msgid "Add Guides"
 msgstr "Pridėti gaires"
 
 #. tool->display->shell
-#: ../app/tools/gimpmeasuretool.c:879
+#: ../app/tools/gimpmeasuretool.c:876
 msgid "Measure Distances and Angles"
 msgstr "Matuoti atstumus ir kampus"
 
-#: ../app/tools/gimpmeasuretool.c:899
+#: ../app/tools/gimpmeasuretool.c:896
 msgid "Distance:"
 msgstr "Atstumas:"
 
@@ -9127,23 +9279,23 @@ msgstr "Pasirinkite kontūrą"
 msgid "Move the current path"
 msgstr "Perkelti esamą kontūrą"
 
-#: ../app/tools/gimpmovetool.c:117
+#: ../app/tools/gimpmovetool.c:118
 msgid "Move layers & selections"
 msgstr "Perkelti sluoksnius/pažymėjimus"
 
-#: ../app/tools/gimpmovetool.c:118
+#: ../app/tools/gimpmovetool.c:119
 msgid "_Move"
 msgstr "_Perkelti"
 
-#: ../app/tools/gimpmovetool.c:269 ../app/tools/gimpmovetool.c:547
+#: ../app/tools/gimpmovetool.c:267 ../app/tools/gimpmovetool.c:545
 msgid "Move Guide: "
 msgstr "Perkelti gairę:"
 
-#: ../app/tools/gimpmovetool.c:541
+#: ../app/tools/gimpmovetool.c:539
 msgid "Cancel Guide"
 msgstr "Atšaukti gairę"
 
-#: ../app/tools/gimpmovetool.c:547
+#: ../app/tools/gimpmovetool.c:545
 msgid "Add Guide: "
 msgstr "Pridėti gairę:"
 
@@ -9156,7 +9308,7 @@ msgid "_Paintbrush"
 msgstr "_Teptukas"
 
 #: ../app/tools/gimppaintoptions-gui.c:104
-#: ../app/tools/gimpselectionoptions.c:405
+#: ../app/tools/gimpselectionoptions.c:400
 #: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:258
 msgid "Mode:"
 msgstr "Režimas:"
@@ -9225,7 +9377,7 @@ msgstr "Kiekis:"
 msgid "Use color from gradient"
 msgstr "Naudoti perėjimo spalvą"
 
-#: ../app/tools/gimppainttool.c:685
+#: ../app/tools/gimppainttool.c:661
 msgid "Press Shift to draw a straight line."
 msgstr "Norėdami nupiešti tiesią liniją, spauskite Shift."
 
@@ -9249,7 +9401,7 @@ msgstr "_Perspektyva"
 msgid "Perspective Transform Information"
 msgstr "Perspektyvos transformacijos informacija"
 
-#: ../app/tools/gimpperspectivetool.c:110
+#: ../app/tools/gimpperspectivetool.c:114
 msgid "Transformation Matrix"
 msgstr "Transformavimo matrica"
 
@@ -9273,61 +9425,74 @@ msgstr "Spalvų kiekio sumažinimas neveikia indeksuotiems paveikslėliams."
 msgid "Posterize _levels:"
 msgstr "Spalvų kiekio sumažinimo _lygiai:"
 
-#: ../app/tools/gimprectangleoptions.c:755
+#: ../app/tools/gimprectangleoptions.c:894
+msgid "Expand from center"
+msgstr "Išplėsti nuo centro"
+
+#: ../app/tools/gimprectangleoptions.c:899
+msgid "Make square"
+msgstr ""
+
+#: ../app/tools/gimprectangleoptions.c:904
 msgid "Highlight"
 msgstr "Paryškinti"
 
-#: ../app/tools/gimprectangleoptions.c:767
+#: ../app/tools/gimprectangleoptions.c:913
+msgid "Rectangle Controls"
+msgstr "Stačiakampio valdymas"
+
+#: ../app/tools/gimprectangleoptions.c:929
 msgid "Fix"
 msgstr ""
 
-#: ../app/tools/gimprectangleoptions.c:772 ../app/widgets/gimpgrideditor.c:239
+#: ../app/tools/gimprectangleoptions.c:934 ../app/widgets/gimpgrideditor.c:239
 #: ../app/widgets/gimpgrideditor.c:271
 msgid "Width"
 msgstr "Plotis"
 
-#: ../app/tools/gimprectangleoptions.c:782 ../app/widgets/gimpgrideditor.c:241
+#: ../app/tools/gimprectangleoptions.c:944 ../app/widgets/gimpgrideditor.c:241
 #: ../app/widgets/gimpgrideditor.c:273
 msgid "Height"
 msgstr "Aukštis"
 
-#: ../app/tools/gimprectangleoptions.c:792
+#: ../app/tools/gimprectangleoptions.c:954
 msgid "Aspect"
 msgstr "Perspektyva"
 
-#: ../app/tools/gimprectangleoptions.c:823
+#: ../app/tools/gimprectangleoptions.c:985
 msgid "1 "
 msgstr "1 "
 
-#: ../app/tools/gimprectangleoptions.c:824
+#: ../app/tools/gimprectangleoptions.c:986
 msgid "2 "
 msgstr "2 "
 
-#: ../app/tools/gimprectangleoptions.c:825 ../app/widgets/gimpcursorview.c:136
+#: ../app/tools/gimprectangleoptions.c:987 ../app/widgets/gimpcursorview.c:136
 #: ../app/widgets/gimpcursorview.c:158
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangleoptions.c:826 ../app/widgets/gimpcursorview.c:142
+#: ../app/tools/gimprectangleoptions.c:988 ../app/widgets/gimpcursorview.c:142
 #: ../app/widgets/gimpcursorview.c:164
 msgid "Y"
 msgstr "Y"
 
-#: ../app/tools/gimprectangletool.c:1181 ../app/tools/gimprectangletool.c:1585
+#: ../app/tools/gimprectangletool.c:1336 ../app/tools/gimprectangletool.c:1346
+#: ../app/tools/gimprectangletool.c:1996
 msgid "Rectangle: "
 msgstr "Stačiakampis: "
 
-#: ../app/tools/gimprectselecttool.c:95
-msgid "Select rectangular regions"
-msgstr "Pažymėti stačiakampius plotus"
+#: ../app/tools/gimprectangleselecttool.c:138
+msgid "Rect Select"
+msgstr "Stačiakampis pažymėjimas"
 
-#: ../app/tools/gimprectselecttool.c:96
-msgid "_Rectangle Select"
+#: ../app/tools/gimprectangleselecttool.c:139
+msgid "Select a Rectangular part of an image"
+msgstr "Pažymėti stačiakampį paveikslėlio plotą"
+
+#: ../app/tools/gimprectangleselecttool.c:140
+msgid "_Rect Select"
 msgstr "_Stačiakampis pažymėjimas"
-
-#: ../app/tools/gimprectselecttool.c:360
-msgid "Selection: "
-msgstr "Pažymėjimas:"
 
 #: ../app/tools/gimprotatetool.c:88
 msgid "Rotate the layer or selection"
@@ -9341,79 +9506,79 @@ msgstr "_Pasukti"
 msgid "Rotation Information"
 msgstr "Sukimo informacija"
 
-#: ../app/tools/gimprotatetool.c:156
+#: ../app/tools/gimprotatetool.c:159
 msgid "Center X:"
 msgstr "Centro X:"
 
-#: ../app/tools/gimprotatetool.c:164
+#: ../app/tools/gimprotatetool.c:167
 msgid "Center Y:"
 msgstr "Centro Y:"
 
-#: ../app/tools/gimpscaletool.c:78
+#: ../app/tools/gimpscaletool.c:80
 msgid "Scale"
 msgstr "Mastelis"
 
-#: ../app/tools/gimpscaletool.c:79
+#: ../app/tools/gimpscaletool.c:81
 msgid "Scale the layer or selection"
 msgstr "Sluoksnio arba pažymėjimo mastelis"
 
-#: ../app/tools/gimpscaletool.c:80
+#: ../app/tools/gimpscaletool.c:82
 msgid "_Scale"
 msgstr "_Mastelis"
 
-#: ../app/tools/gimpscaletool.c:106
+#: ../app/tools/gimpscaletool.c:108
 msgid "Scaling Information"
 msgstr "Ištempimo informacija"
 
-#: ../app/tools/gimpselectionoptions.c:109
+#: ../app/tools/gimpselectionoptions.c:104
 msgid "Smooth edges"
 msgstr "Lygūs kraštai"
 
-#: ../app/tools/gimpselectionoptions.c:123
+#: ../app/tools/gimpselectionoptions.c:118
 msgid "Allow completely transparent regions to be selected"
 msgstr "Leisti pasirinkti visiškai permatomus regionus"
 
-#: ../app/tools/gimpselectionoptions.c:129
+#: ../app/tools/gimpselectionoptions.c:124
 msgid "Base selection on all visible layers"
 msgstr "Pasirinkti visuose matomuose sluoksniuose"
 
-#: ../app/tools/gimpselectionoptions.c:144
+#: ../app/tools/gimpselectionoptions.c:139
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Mažinant pažymėjimą naudoti visus matomus sluoksnius"
 
-#: ../app/tools/gimpselectionoptions.c:413 ../app/tools/gimptextoptions.c:460
+#: ../app/tools/gimpselectionoptions.c:408 ../app/tools/gimptextoptions.c:460
 msgid "Antialiasing"
 msgstr "Glotninimas"
 
-#: ../app/tools/gimpselectionoptions.c:434
+#: ../app/tools/gimpselectionoptions.c:428
 msgid "Feather edges"
 msgstr "Išlieti kraštus"
 
-#: ../app/tools/gimpselectionoptions.c:460
+#: ../app/tools/gimpselectionoptions.c:454
 msgid "Show interactive boundary"
 msgstr "Rodyti interaktyvias ribas"
 
-#: ../app/tools/gimpselectionoptions.c:483
+#: ../app/tools/gimpselectionoptions.c:477
 msgid "Select transparent areas"
 msgstr "Pažymėti permatomas sritis"
 
-#: ../app/tools/gimpselectionoptions.c:524
+#: ../app/tools/gimpselectionoptions.c:512
 msgid "Auto shrink selection"
 msgstr "Automatiškai sumažinti pažymėjimą"
 
-#: ../app/tools/gimpselectiontool.c:235
+#: ../app/tools/gimpselectiontool.c:253
 msgid "Move the selection mask"
 msgstr "Perkelti pažymėjimo kaukę"
 
-#: ../app/tools/gimpselectiontool.c:239
+#: ../app/tools/gimpselectiontool.c:257
 msgid "Move the selected pixels"
 msgstr "Perkelti pažymėtus taškus"
 
-#: ../app/tools/gimpselectiontool.c:243
+#: ../app/tools/gimpselectiontool.c:261
 msgid "Move a copy of the selected pixels"
 msgstr "Perkelti pažymėtų taškų kopiją"
 
-#: ../app/tools/gimpselectiontool.c:247
+#: ../app/tools/gimpselectiontool.c:265
 msgid "Anchor the floating selection"
 msgstr "Prikabinti plaukiojantį pažymėjimą"
 
@@ -9429,15 +9594,15 @@ msgstr "Sluoksnio arba pažymėjimo šlyties deformacija"
 msgid "S_hear"
 msgstr "Šl_ytis"
 
-#: ../app/tools/gimpsheartool.c:116
+#: ../app/tools/gimpsheartool.c:115
 msgid "Shearing Information"
 msgstr "Šlyties informacija"
 
-#: ../app/tools/gimpsheartool.c:138
+#: ../app/tools/gimpsheartool.c:139
 msgid "Shear magnitude X:"
 msgstr "Šlyties X dydis:"
 
-#: ../app/tools/gimpsheartool.c:148
+#: ../app/tools/gimpsheartool.c:149
 msgid "Shear magnitude Y:"
 msgstr "Šlyties Y dydis:"
 
@@ -9504,27 +9669,27 @@ msgstr "Lygiavimas:"
 msgid "Create Path from Text"
 msgstr "Iš teksto sukurti kontūrą"
 
-#: ../app/tools/gimptextoptions.c:503
+#: ../app/tools/gimptextoptions.c:502
 msgid "Text along Path"
 msgstr "Tekstas šalia kontūro"
 
-#: ../app/tools/gimptexttool.c:143
+#: ../app/tools/gimptexttool.c:144
 msgid "Add text to the image"
 msgstr "Rašyti tekstą paveikslėlyje"
 
-#: ../app/tools/gimptexttool.c:144
+#: ../app/tools/gimptexttool.c:145
 msgid "Te_xt"
 msgstr "Te_kstas"
 
-#: ../app/tools/gimptexttool.c:757
+#: ../app/tools/gimptexttool.c:755
 msgid "GIMP Text Editor"
 msgstr "GIMP teksto redaktorius"
 
-#: ../app/tools/gimptexttool.c:867 ../app/tools/gimptexttool.c:870
+#: ../app/tools/gimptexttool.c:865 ../app/tools/gimptexttool.c:868
 msgid "Confirm Text Editing"
 msgstr "Patvirtinkite teksto redagavimą"
 
-#: ../app/tools/gimptexttool.c:899
+#: ../app/tools/gimptexttool.c:897
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9559,53 +9724,38 @@ msgstr "Slenkstis neveikia indeksuotiems sluoksniams."
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Automatiškai pritaikyti optimalų binarizacijos slenkstį"
 
-#: ../app/tools/gimptransformoptions.c:304
+#: ../app/tools/gimptransformoptions.c:289
 msgid "Transform Direction"
 msgstr "Transformavimo kryptis"
 
-#: ../app/tools/gimptransformoptions.c:313
+#: ../app/tools/gimptransformoptions.c:298
 msgid "Interpolation:"
 msgstr "Interpoliacija:"
 
-#: ../app/tools/gimptransformoptions.c:323
+#: ../app/tools/gimptransformoptions.c:308
 msgid "Supersampling"
 msgstr ""
 
 #. the clip resulting image toggle button
-#: ../app/tools/gimptransformoptions.c:328
+#: ../app/tools/gimptransformoptions.c:313
 msgid "Clip result"
 msgstr ""
 
-#: ../app/tools/gimptransformoptions.c:342
+#: ../app/tools/gimptransformoptions.c:327
 msgid "Preview:"
 msgstr "Peržiūra:"
 
-#. the constraints frame
-#: ../app/tools/gimptransformoptions.c:388
-msgid "Constraints"
-msgstr "Apribojimai"
-
-#: ../app/tools/gimptransformoptions.c:400
+#: ../app/tools/gimptransformoptions.c:368
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 laipsnių  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:420
-#, c-format
-msgid "Keep height  (%s)"
-msgstr "Nekeisti aukščio  (%s)"
-
-#: ../app/tools/gimptransformoptions.c:422
-#, c-format
-msgid "Keep width  (%s)"
-msgstr "Nekeisti pločio  (%s)"
-
-#: ../app/tools/gimptransformoptions.c:424
+#: ../app/tools/gimptransformoptions.c:372
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Išlaikyti perspektyvą  (%s)"
 
-#: ../app/tools/gimptransformtool.c:221
+#: ../app/tools/gimptransformtool.c:224
 msgid "Transforming"
 msgstr "Transformuojama"
 
@@ -9613,15 +9763,15 @@ msgstr "Transformuojama"
 msgid "Restrict editing to polygons"
 msgstr "Apriboti redagavimą iki poligonų"
 
-#: ../app/tools/gimpvectoroptions.c:148
+#: ../app/tools/gimpvectoroptions.c:149
 msgid "Edit Mode"
 msgstr "Keitimo režimas"
 
-#: ../app/tools/gimpvectoroptions.c:153
+#: ../app/tools/gimpvectoroptions.c:154
 msgid "Polygonal"
 msgstr "Poligoninis"
 
-#: ../app/tools/gimpvectoroptions.c:157
+#: ../app/tools/gimpvectoroptions.c:158
 #, c-format
 msgid ""
 "Path to Selection\n"
@@ -9634,7 +9784,7 @@ msgstr ""
 "%s  Atimti\n"
 "%s  Susikirsti"
 
-#: ../app/tools/gimpvectoroptions.c:167
+#: ../app/tools/gimpvectoroptions.c:168
 msgid "Create Selection from Path"
 msgstr "Sukurti pažymėjimą iš kontūro"
 
@@ -9642,126 +9792,126 @@ msgstr "Sukurti pažymėjimą iš kontūro"
 msgid "Create and edit paths"
 msgstr "Sukurti ir keisti kelius"
 
-#: ../app/tools/gimpvectortool.c:324
+#: ../app/tools/gimpvectortool.c:318
 msgid "Add Stroke"
 msgstr "Pridėti brūkšnį"
 
-#: ../app/tools/gimpvectortool.c:342
+#: ../app/tools/gimpvectortool.c:336
 msgid "Add Anchor"
 msgstr "Pridėti inkarą"
 
-#: ../app/tools/gimpvectortool.c:365
+#: ../app/tools/gimpvectortool.c:359
 msgid "Insert Anchor"
 msgstr "Įterpti inkarą"
 
-#: ../app/tools/gimpvectortool.c:394
+#: ../app/tools/gimpvectortool.c:388
 msgid "Drag Handle"
 msgstr "Tempti rankeną"
 
-#: ../app/tools/gimpvectortool.c:423
+#: ../app/tools/gimpvectortool.c:417
 msgid "Drag Anchor"
 msgstr "Tempti inkarą"
 
-#: ../app/tools/gimpvectortool.c:440
+#: ../app/tools/gimpvectortool.c:434
 msgid "Drag Anchors"
 msgstr "Tempti inkarus"
 
-#: ../app/tools/gimpvectortool.c:460
+#: ../app/tools/gimpvectortool.c:454
 msgid "Drag Curve"
 msgstr "Tempti kreivę"
 
-#: ../app/tools/gimpvectortool.c:488
+#: ../app/tools/gimpvectortool.c:482
 msgid "Connect Strokes"
 msgstr "Sujungti brūkšnius"
 
-#: ../app/tools/gimpvectortool.c:518
+#: ../app/tools/gimpvectortool.c:512
 msgid "Drag Path"
 msgstr "Tempti kontūrą"
 
-#: ../app/tools/gimpvectortool.c:528
+#: ../app/tools/gimpvectortool.c:522
 msgid "Convert Edge"
 msgstr "Konvertuoti kraštą"
 
-#: ../app/tools/gimpvectortool.c:558
+#: ../app/tools/gimpvectortool.c:552
 msgid "Delete Anchor"
 msgstr "Ištrinti inkarą"
 
-#: ../app/tools/gimpvectortool.c:580
+#: ../app/tools/gimpvectortool.c:574
 msgid "Delete Segment"
 msgstr "Ištrinti segmentą"
 
-#: ../app/tools/gimpvectortool.c:793
+#: ../app/tools/gimpvectortool.c:785
 msgid "Move Anchors"
 msgstr "Perkelti inkarus"
 
-#: ../app/tools/gimpvectortool.c:1156
+#: ../app/tools/gimpvectortool.c:1148
 msgid "Click to pick path to edit."
 msgstr "Spragtelkite norėdami pasirinkti kontūrą redagavimui."
 
-#: ../app/tools/gimpvectortool.c:1159
+#: ../app/tools/gimpvectortool.c:1151
 msgid "Click to create a new path."
 msgstr "Spragtelėkite norėdami sukurti naują kontūrą."
 
-#: ../app/tools/gimpvectortool.c:1162
+#: ../app/tools/gimpvectortool.c:1154
 msgid "Click to create a new component of the path."
 msgstr "Spragtelėkite norėdami sukurti naują kontūro komponentą."
 
-#: ../app/tools/gimpvectortool.c:1165
+#: ../app/tools/gimpvectortool.c:1157
 msgid "Click to create a new anchor. (try SHIFT)"
 msgstr "Spragtelėkite norėdami sukurti naują inkarą. (pabandykite SHIFT)"
 
-#: ../app/tools/gimpvectortool.c:1168
+#: ../app/tools/gimpvectortool.c:1160
 msgid "Click-Drag to move the anchor around."
 msgstr "Spragtelėję ir tempdami galite perkelti inkarą."
 
-#: ../app/tools/gimpvectortool.c:1171 ../app/tools/gimpvectortool.c:1178
+#: ../app/tools/gimpvectortool.c:1163 ../app/tools/gimpvectortool.c:1170
 msgid "Click-Drag to move the anchors around."
 msgstr "Spragtelėję ir tempdami galite perkelti inkarus."
 
-#: ../app/tools/gimpvectortool.c:1174
+#: ../app/tools/gimpvectortool.c:1166
 msgid "Click-Drag to move the handle around. (try SHIFT)"
 msgstr "Spragtelėje ir tempdami galite perkelti rankeną. (pabandykite SHIFT)"
 
-#: ../app/tools/gimpvectortool.c:1180
+#: ../app/tools/gimpvectortool.c:1172
 msgid "Click-Drag to change the shape of the curve. (SHIFT: symmetrical)"
 msgstr ""
 "Spragtelėje ir tempdami galite pakeisti kreivės formą. (SHIFT: simetriška)"
 
-#: ../app/tools/gimpvectortool.c:1184
+#: ../app/tools/gimpvectortool.c:1176
 msgid "Click-Drag to move the component around. (try SHIFT)"
 msgstr ""
 "Spragtelėje ir tempdami galite perkelti komponentą. (pabandykite SHIFT)"
 
-#: ../app/tools/gimpvectortool.c:1188
+#: ../app/tools/gimpvectortool.c:1180
 msgid "Click-Drag to move the path around."
 msgstr "Spragtelėje ir tempdami galite perkelti kontūrą."
 
-#: ../app/tools/gimpvectortool.c:1191
+#: ../app/tools/gimpvectortool.c:1183
 msgid "Click to insert an anchor on the path. (try SHIFT)"
 msgstr "Spragtelėkite norėdami kelyje sukurti inkarą. (pabandykite SHIFT)"
 
-#: ../app/tools/gimpvectortool.c:1194
+#: ../app/tools/gimpvectortool.c:1186
 msgid "Click to delete this anchor."
 msgstr "Spragtelėkite norėdami ištrinti šį inkarą."
 
-#: ../app/tools/gimpvectortool.c:1197
+#: ../app/tools/gimpvectortool.c:1189
 msgid "Click to connect this anchor with the selected endpoint."
 msgstr ""
 "Spragtelėkite norėdami sujungti šį inkarą su pasirinktu pabaigos tašku."
 
-#: ../app/tools/gimpvectortool.c:1201
+#: ../app/tools/gimpvectortool.c:1193
 msgid "Click to open up the path."
 msgstr "Spragtelkite norėdami atverti kontūrą."
 
-#: ../app/tools/gimpvectortool.c:1204
+#: ../app/tools/gimpvectortool.c:1196
 msgid "Click to make this node angular."
 msgstr "Spragtelėkite norėdami padaryti šį mazgą kampuotu."
 
-#: ../app/tools/gimpvectortool.c:1721
+#: ../app/tools/gimpvectortool.c:1699
 msgid "Delete Anchors"
 msgstr "Ištrinti inkarus"
 
-#: ../app/tools/gimpvectortool.c:1889
+#: ../app/tools/gimpvectortool.c:1867
 msgid "There is no active layer or channel to stroke to"
 msgstr "Nėra apvestino aktyvaus sluoksnio ar kanalo"
 
@@ -9867,30 +10017,30 @@ msgstr "Nepavyko pašalinti kombinacijos."
 msgid "Invalid shortcut."
 msgstr "Netinkama konbinacija."
 
-#: ../app/widgets/gimpbrusheditor.c:138
+#: ../app/widgets/gimpbrusheditor.c:146
 msgid "Spikes:"
 msgstr "Spygliai:"
 
-#: ../app/widgets/gimpbrusheditor.c:151
+#: ../app/widgets/gimpbrusheditor.c:159
 msgid "Hardness:"
 msgstr "Kietumas:"
 
-#: ../app/widgets/gimpbrusheditor.c:164
+#: ../app/widgets/gimpbrusheditor.c:172
 msgid "Aspect ratio:"
 msgstr "Proporcija:"
 
-#: ../app/widgets/gimpbrusheditor.c:190
+#: ../app/widgets/gimpbrusheditor.c:198
 #: ../app/widgets/gimpbrushfactoryview.c:82
 msgid "Spacing:"
 msgstr "Intervalas:"
 
-#: ../app/widgets/gimpbrusheditor.c:193
+#: ../app/widgets/gimpbrusheditor.c:201
 #: ../app/widgets/gimpbrushfactoryview.c:85
 msgid "Percentage of width of brush"
 msgstr "Teptuko storis procentais"
 
 #: ../app/widgets/gimpbufferview.c:135 ../app/widgets/gimpbufferview.c:216
-#: ../app/widgets/gimpeditor.c:725
+#: ../app/widgets/gimpeditor.c:723
 msgid "(None)"
 msgstr "(Nieko)"
 
@@ -9912,45 +10062,41 @@ msgstr "Perkelti kanalą"
 msgid "Empty Channel"
 msgstr "Tuščias kanalas"
 
-#: ../app/widgets/gimpclipboard.c:296
-msgid "Clipboard"
-msgstr "Iškarpinė"
-
 #: ../app/widgets/gimpcolordialog.c:145
 msgid "Add the current color to the color history"
 msgstr "Pridėti esamą spalvą prie spalvų istorijos"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:150
+#: ../app/widgets/gimpcolordisplayeditor.c:149
 msgid "Available Filters"
 msgstr "Prieinami filtrai"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:200
+#: ../app/widgets/gimpcolordisplayeditor.c:199
 msgid "Move the selected filter up"
 msgstr "Perkelti pažymėtą filtrą aukštyn"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:209
+#: ../app/widgets/gimpcolordisplayeditor.c:208
 msgid "Move the selected filter down"
 msgstr "Perkelti pažymėtą filtrą žemyn"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:254
+#: ../app/widgets/gimpcolordisplayeditor.c:253
 msgid "Active Filters"
 msgstr "Aktyvūs filtrai"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:295
+#: ../app/widgets/gimpcolordisplayeditor.c:294
 msgid "Reset the selected filter to default values"
 msgstr "Atstatyti pasirinkto filtro nustatymus į įprastas vertes"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:467
+#: ../app/widgets/gimpcolordisplayeditor.c:466
 #, c-format
 msgid "Add '%s' to the list of active filters"
 msgstr "Įdėti „%s“ į į aktyvių filtrų sąrašą"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:504
+#: ../app/widgets/gimpcolordisplayeditor.c:503
 #, c-format
 msgid "Remove '%s' from the list of active filters"
 msgstr "Pašalinti „%s“ iš aktyvių filtrų sąrašo"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:535
+#: ../app/widgets/gimpcolordisplayeditor.c:534
 msgid "No filter selected"
 msgstr "Nepasirinktas joks filtras"
 
@@ -10018,11 +10164,11 @@ msgstr "Alfa:"
 msgid "n/a"
 msgstr "nėra"
 
-#: ../app/widgets/gimpcolormapeditor.c:206
+#: ../app/widgets/gimpcolormapeditor.c:205
 msgid "Color index:"
 msgstr "Spalvos indeksas:"
 
-#: ../app/widgets/gimpcolormapeditor.c:216
+#: ../app/widgets/gimpcolormapeditor.c:215
 msgid "HTML notation:"
 msgstr "HTML notacija:"
 
@@ -10376,15 +10522,15 @@ msgstr "Automatiškai aptiktas"
 msgid "By Extension"
 msgstr "pagal plėtinį"
 
-#: ../app/widgets/gimpfiledialog.c:445
+#: ../app/widgets/gimpfiledialog.c:446
 msgid "All files"
 msgstr "Visos rinkmenos"
 
-#: ../app/widgets/gimpfiledialog.c:450
+#: ../app/widgets/gimpfiledialog.c:451
 msgid "All images"
 msgstr "Visi paveikslėliai"
 
-#: ../app/widgets/gimpfiledialog.c:591
+#: ../app/widgets/gimpfiledialog.c:592
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Pasirinkite rinkmenos _tipą (%s)"
@@ -10624,11 +10770,11 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "spalvos"
 
-#: ../app/widgets/gimpitemtreeview.c:968
+#: ../app/widgets/gimpitemtreeview.c:976
 msgid "Set Item Exclusive Visible"
 msgstr ""
 
-#: ../app/widgets/gimpitemtreeview.c:976
+#: ../app/widgets/gimpitemtreeview.c:984
 msgid "Set Item Exclusive Linked"
 msgstr ""
 
@@ -10667,12 +10813,12 @@ msgstr "Pranešimas pakartotas %d kartų."
 msgid "Message repeated once."
 msgstr "Pranešimas pakartotas 1 kartą."
 
-#: ../app/widgets/gimppaletteeditor.c:238
-#: ../app/widgets/gimppaletteeditor.c:659
+#: ../app/widgets/gimppaletteeditor.c:239
+#: ../app/widgets/gimppaletteeditor.c:743
 msgid "Undefined"
 msgstr "Neapibrėžtas"
 
-#: ../app/widgets/gimppaletteeditor.c:246
+#: ../app/widgets/gimppaletteeditor.c:247
 msgid "Columns:"
 msgstr "Stulpeliai:"
 
@@ -10695,12 +10841,12 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Nekorektiškas UTF-8"
 
-#: ../app/widgets/gimpsizebox.c:457
+#: ../app/widgets/gimpsizebox.c:463
 #, c-format
 msgid "%d × %d ppi"
 msgstr "%d × %d taškų colyje"
 
-#: ../app/widgets/gimpsizebox.c:459
+#: ../app/widgets/gimpsizebox.c:465
 #, c-format
 msgid "%d ppi"
 msgstr "%d taškų colyje"
@@ -10790,6 +10936,10 @@ msgstr ""
 "%s%sSpragtelkite norėdami priverstinai atnaujinti, net jei peržiūra ir "
 "nepasenusi"
 
+#: ../app/widgets/gimpthumbbox.c:331
+msgid "Pr_eview"
+msgstr "P_eržiūra"
+
 #: ../app/widgets/gimpthumbbox.c:384 ../app/widgets/gimpthumbbox.c:459
 msgid "No selection"
 msgstr "Nieko nepažymėta"
@@ -10850,7 +11000,7 @@ msgstr ""
 "Aktyvus perėjimas.\n"
 "Spragtelėkite norėdami atverti perėjimų dialogą."
 
-#: ../app/widgets/gimptoolbox.c:702
+#: ../app/widgets/gimptoolbox.c:701
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Click to open the color selection dialog."
@@ -11027,9 +11177,9 @@ msgstr ""
 msgid "Invalid UTF-8 string in XCF file"
 msgstr "Nekorektiška UTF-8 eilutė XCF rinkmenoje"
 
-#: ../app/xcf/xcf-save.c:157 ../app/xcf/xcf-save.c:167
-#: ../app/xcf/xcf-save.c:177 ../app/xcf/xcf-save.c:187
-#: ../app/xcf/xcf-save.c:211 ../app/xcf/xcf.c:399
+#: ../app/xcf/xcf-save.c:158 ../app/xcf/xcf-save.c:168
+#: ../app/xcf/xcf-save.c:178 ../app/xcf/xcf-save.c:188
+#: ../app/xcf/xcf-save.c:212 ../app/xcf/xcf.c:399
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Klaida saugant XCF rinkmeną: %s"
@@ -11087,6 +11237,55 @@ msgstr "Įsitikinkite, kad Įrankų dėžė matoma!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Nepavyko paleisti „%s“: %s"
+
+#~ msgid "_Clear Errors"
+#~ msgstr "_Išvalyti klaidas"
+
+#~ msgid "Save _All Errors to File..."
+#~ msgstr "Išsaugoti _visas klaidas į rinkmeną..."
+
+#~ msgid "Select Web Browser"
+#~ msgstr "Pasirinkite interneto naršyklę"
+
+#~ msgid "Select Temp Folder"
+#~ msgstr "Nurodykite laikiną aplanką"
+
+#, fuzzy
+#~ msgid "Installation successful!"
+#~ msgstr "Įdiegta sėkmingai."
+
+#~ msgid "Welcome to the GNU Image Manipulation Program"
+#~ msgstr "Sveiki paleidę GNU paveikslėlių manipuliavimo programą"
+
+#~ msgid "It seems you have used GIMP %s before."
+#~ msgstr "Panašu, kad Jūs anksčiau jau naudojote GIMP %s."
+
+#, fuzzy
+#~ msgid "_Do a fresh installation"
+#~ msgstr "_Atlikti naują naudotojo diegimą"
+
+#, fuzzy
+#~ msgid "Installing..."
+#~ msgstr "Naudotojo įdiegimas"
+
+#, fuzzy
+#~ msgid "C_ontinue"
+#~ msgstr "Tęsti"
+
+#~ msgid "Execute"
+#~ msgstr "Vykdyti"
+
+#~ msgid "Selection: "
+#~ msgstr "Pažymėjimas:"
+
+#~ msgid "Constraints"
+#~ msgstr "Apribojimai"
+
+#~ msgid "Keep height  (%s)"
+#~ msgstr "Nekeisti aukščio  (%s)"
+
+#~ msgid "Keep width  (%s)"
+#~ msgstr "Nekeisti pločio  (%s)"
 
 #~ msgid ""
 #~ "GIMP is not properly installed for the current user.\n"
@@ -11282,9 +11481,6 @@ msgstr "Nepavyko paleisti „%s“: %s"
 #~ msgid "This folder is searched for user-installed themes."
 #~ msgstr "Šiame aplanke ieškoma naudotojo įdiegtų temų."
 
-#~ msgid "This folder is used for temporary files."
-#~ msgstr "Šis aplankas naudojamas laikinosioms rinkmenoms."
-
 #~ msgid "This folder is used to store tool options."
 #~ msgstr "Šiame aplanke saugomi įrankių nustatymai."
 
@@ -11378,9 +11574,6 @@ msgstr "Nepavyko paleisti „%s“: %s"
 
 #~ msgid "Duplicate channel"
 #~ msgstr "Padaryti kanalo kopiją"
-
-#~ msgid "Raise channel"
-#~ msgstr "Pakelti kanalą"
 
 #~ msgid "Raise channel to top"
 #~ msgstr "Pakelti kanalą į viršų"
