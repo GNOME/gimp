@@ -452,8 +452,8 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    b = PySequence_GetItem(item, 2);
 	    check(!PyInt_Check(r) || !PyInt_Check(g) ||
 		  !PyInt_Check(b));
-	    gimp_rgb_set_uchar(&ret[i].data.d_color, PyInt_AsLong(r),
-			       PyInt_AsLong(g), PyInt_AsLong(b));
+	    gimp_rgba_set_uchar(&ret[i].data.d_color, PyInt_AsLong(r),
+				PyInt_AsLong(g), PyInt_AsLong(b), 255);
 	    break;
 	case GIMP_PDB_REGION:
 	    check(!PySequence_Check(item) ||

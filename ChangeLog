@@ -1,5 +1,10 @@
 2006-06-25  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/pygimp-pdb.c: quick fix so colors in the PDB work
+	again.
+
+2006-06-25  Manish Singh  <yosh@gimp.org>
+
 	* libgimp/gimpuitypes.h
 	* libgimp/gimpselectbutton.[ch]: abstract class for resource selection
 	buttons.
