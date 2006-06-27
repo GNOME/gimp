@@ -73,6 +73,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC  "plug-in-fractalexplorer"
+
 /**********************************************************************
   Global variables
  *********************************************************************/
@@ -208,7 +210,7 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32, "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE, "image", "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_INT8, "fractaltype", "0: Mandelbrot; "
@@ -241,8 +243,8 @@ query (void)
     { GIMP_PDB_INT32, "ncolors", "Number of Colors for mapping (2<=ncolors<=8192)" }
   };
 
-  gimp_install_procedure ("plug_in_fractalexplorer",
-                          "Chaos Fractal Explorer Plug-In",
+  gimp_install_procedure (PLUG_IN_PROC,
+                          N_("Render fractal art"),
                           "No help yet.",
                           "Daniel Cotting (cotting@multimania.com, www.multimania.com/cotting)",
                           "Daniel Cotting (cotting@multimania.com, www.multimania.com/cotting)",
@@ -798,12 +800,11 @@ fractalexplorer_list_pos (fractalexplorerOBJ *fractalexplorer)
 static gint
 fractalexplorer_list_insert (fractalexplorerOBJ *fractalexplorer)
 {
-  gint n;
+  gint n = fractalexplorer_list_pos (fractalexplorer);
 
   /*
    *    Insert fractalexplorers in alphabetical order
    */
-  n = fractalexplorer_list_pos (fractalexplorer);
 
   fractalexplorer_list = g_list_insert (fractalexplorer_list,
                                         fractalexplorer, n);

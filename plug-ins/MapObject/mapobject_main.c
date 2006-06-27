@@ -36,6 +36,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC "plug-in-map-object"
+
+
 /* Global variables */
 /* ================ */
 
@@ -138,33 +141,33 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",              "Interactive (0), non-interactive (1)" },
+    { GIMP_PDB_INT32,    "run-mode",              "Interactive (0), non-interactive (1)" },
     { GIMP_PDB_IMAGE,    "image",                 "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",              "Input drawable" },
     { GIMP_PDB_INT32,    "maptype",               "Type of mapping (0=plane,1=sphere,2=box,3=cylinder)" },
-    { GIMP_PDB_FLOAT,    "viewpoint_x",           "Position of viewpoint (x,y,z)" },
-    { GIMP_PDB_FLOAT,    "viewpoint_y",           "Position of viewpoint (x,y,z)" },
-    { GIMP_PDB_FLOAT,    "viewpoint_z",           "Position of viewpoint (x,y,z)" },
-    { GIMP_PDB_FLOAT,    "position_x",            "Object position (x,y,z)" },
-    { GIMP_PDB_FLOAT,    "position_y",            "Object position (x,y,z)" },
-    { GIMP_PDB_FLOAT,    "position_z",            "Object position (x,y,z)" },
-    { GIMP_PDB_FLOAT,    "firstaxis_x",           "First axis of object [x,y,z]" },
-    { GIMP_PDB_FLOAT,    "firstaxis_y",           "First axis of object [x,y,z]" },
-    { GIMP_PDB_FLOAT,    "firstaxis_z",           "First axis of object [x,y,z]" },
-    { GIMP_PDB_FLOAT,    "secondaxis_x",          "Second axis of object [x,y,z]" },
-    { GIMP_PDB_FLOAT,    "secondaxis_y",          "Second axis of object [x,y,z]" },
-    { GIMP_PDB_FLOAT,    "secondaxis_z",          "Second axis of object [x,y,z]" },
-    { GIMP_PDB_FLOAT,    "rotationangle_x",       "Rotation about X axis in degrees" },
-    { GIMP_PDB_FLOAT,    "rotationangle_y",       "Rotation about Y axis in degrees" },
-    { GIMP_PDB_FLOAT,    "rotationangle_z",       "Rotation about Z axis in degrees" },
+    { GIMP_PDB_FLOAT,    "viewpoint-x",           "Position of viewpoint (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "viewpoint-y",           "Position of viewpoint (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "viewpoint-z",           "Position of viewpoint (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "position-x",            "Object position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "position-y",            "Object position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "position-z",            "Object position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "firstaxis-x",           "First axis of object [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "firstaxis-y",           "First axis of object [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "firstaxis-z",           "First axis of object [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "secondaxis-x",          "Second axis of object [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "secondaxis-y",          "Second axis of object [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "secondaxis-z",          "Second axis of object [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "rotationangle-x",       "Rotation about X axis in degrees" },
+    { GIMP_PDB_FLOAT,    "rotationangle-y",       "Rotation about Y axis in degrees" },
+    { GIMP_PDB_FLOAT,    "rotationangle-z",       "Rotation about Z axis in degrees" },
     { GIMP_PDB_INT32,    "lighttype",             "Type of lightsource (0=point,1=directional,3=none)" },
     { GIMP_PDB_COLOR,    "lightcolor",            "Lightsource color (r,g,b)" },
-    { GIMP_PDB_FLOAT,    "lightposition_x",       "Lightsource position (x,y,z)" },
-    { GIMP_PDB_FLOAT,    "lightposition_y",       "Lightsource position (x,y,z)" },
-    { GIMP_PDB_FLOAT,    "lightposition_z",       "Lightsource position (x,y,z)" },
-    { GIMP_PDB_FLOAT,    "lightdirection_x",      "Lightsource direction [x,y,z]" },
-    { GIMP_PDB_FLOAT,    "lightdirection_y",      "Lightsource direction [x,y,z]" },
-    { GIMP_PDB_FLOAT,    "lightdirection_z",      "Lightsource direction [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "lightposition-x",       "Lightsource position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "lightposition-y",       "Lightsource position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "lightposition-z",       "Lightsource position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "lightdirection-x",      "Lightsource direction [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "lightdirection-y",      "Lightsource direction [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "lightdirection-z",      "Lightsource direction [x,y,z]" },
     { GIMP_PDB_FLOAT,    "ambient_intensity",     "Material ambient intensity (0..1)" },
     { GIMP_PDB_FLOAT,    "diffuse_intensity",     "Material diffuse intensity (0..1)" },
     { GIMP_PDB_FLOAT,    "diffuse_reflectivity",  "Material diffuse reflectivity (0..1)" },
@@ -175,22 +178,22 @@ query (void)
     { GIMP_PDB_INT32,    "newimage",              "Create a new image (TRUE/FALSE)" },
     { GIMP_PDB_INT32,    "transparentbackground", "Make background transparent (TRUE/FALSE)" },
     { GIMP_PDB_FLOAT,    "radius",                "Sphere/cylinder radius (only used when maptype=1 or 3)" },
-    { GIMP_PDB_FLOAT,    "x_scale",               "Box x size (0..->)" },
-    { GIMP_PDB_FLOAT,    "y_scale",               "Box y size (0..->)" },
-    { GIMP_PDB_FLOAT,    "z_scale",               "Box z size (0..->)"},
-    { GIMP_PDB_FLOAT,    "cylinder_length",       "Cylinder length (0..->)"},
-    { GIMP_PDB_DRAWABLE, "box_front_drawable",    "Box front face (set these to -1 if not used)" },
-    { GIMP_PDB_DRAWABLE, "box_back_drawable",     "Box back face" },
-    { GIMP_PDB_DRAWABLE, "box_top_drawable",      "Box top face" },
-    { GIMP_PDB_DRAWABLE, "box_bottom_drawable",   "Box bottom face" },
-    { GIMP_PDB_DRAWABLE, "box_left_drawable",     "Box left face" },
-    { GIMP_PDB_DRAWABLE, "box_right_drawable",    "Box right face" },
-    { GIMP_PDB_DRAWABLE, "cyl_top_drawable",      "Cylinder top face (set these to -1 if not used)" },
-    { GIMP_PDB_DRAWABLE, "cyl_bottom_drawable",   "Cylinder bottom face" }
+    { GIMP_PDB_FLOAT,    "x-scale",               "Box x size (0..->)" },
+    { GIMP_PDB_FLOAT,    "y-scale",               "Box y size (0..->)" },
+    { GIMP_PDB_FLOAT,    "z-scale",               "Box z size (0..->)"},
+    { GIMP_PDB_FLOAT,    "cylinder-length",       "Cylinder length (0..->)"},
+    { GIMP_PDB_DRAWABLE, "box-front-drawable",    "Box front face (set these to -1 if not used)" },
+    { GIMP_PDB_DRAWABLE, "box-back-drawable",     "Box back face" },
+    { GIMP_PDB_DRAWABLE, "box-top-drawable",      "Box top face" },
+    { GIMP_PDB_DRAWABLE, "box-bottom-drawable",   "Box bottom face" },
+    { GIMP_PDB_DRAWABLE, "box-left-drawable",     "Box left face" },
+    { GIMP_PDB_DRAWABLE, "box-right-drawable",    "Box right face" },
+    { GIMP_PDB_DRAWABLE, "cyl-top-drawable",      "Cylinder top face (set these to -1 if not used)" },
+    { GIMP_PDB_DRAWABLE, "cyl-bottom-drawable",   "Cylinder bottom face" }
   };
 
-  gimp_install_procedure ("plug_in_map_object",
-			  "Maps a picture to a object (plane, sphere, box or cylinder)",
+  gimp_install_procedure (PLUG_IN_PROC,
+			  N_("Map the image to an object (plane, sphere, box or cylinder)"),
 			  "No help yet",
 			  "Tom Bech & Federico Mena Quintero",
 			  "Tom Bech & Federico Mena Quintero",
@@ -201,7 +204,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_map_object", "<Image>/Filters/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
 }
 
 static void
@@ -250,13 +253,12 @@ run (const gchar      *name,
 	  {
 	    compute_image ();
 
-	    gimp_set_data ("plug_in_map_object",
-			   &mapvals, sizeof (MapObjectValues));
+	    gimp_set_data (PLUG_IN_PROC, &mapvals, sizeof (MapObjectValues));
 	  }
         break;
 
       case GIMP_RUN_WITH_LAST_VALS:
-        gimp_get_data ("plug_in_map_object", &mapvals);
+        gimp_get_data (PLUG_IN_PROC, &mapvals);
         check_drawables (drawable);
         image_setup (drawable, FALSE);
         compute_image ();

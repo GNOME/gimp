@@ -36,6 +36,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC "plug-in-lighting"
+
+
 LightingValues mapvals;
 
 /******************/
@@ -162,7 +165,7 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",              "Interactive (0), non-interactive (1)" },
+    { GIMP_PDB_INT32,    "run-mode",              "Interactive (0), non-interactive (1)" },
     { GIMP_PDB_IMAGE,    "image",                 "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",              "Input drawable" },
     { GIMP_PDB_DRAWABLE, "bumpdrawable",          "Bumpmap drawable (set to 0 if disabled)" },
@@ -172,24 +175,24 @@ query (void)
     { GIMP_PDB_INT32,    "bumpmaptype",           "Type of mapping (0=linear,1=log, 2=sinusoidal, 3=spherical)" },
     { GIMP_PDB_INT32,    "lighttype",             "Type of lightsource (0=point,1=directional,3=spot,4=none)" },
     { GIMP_PDB_COLOR,    "lightcolor",            "Lightsource color (r,g,b)" },
-    { GIMP_PDB_FLOAT,    "lightposition_x",       "Lightsource position (x,y,z)" },
-    { GIMP_PDB_FLOAT,    "lightposition_y",       "Lightsource position (x,y,z)" },
-    { GIMP_PDB_FLOAT,    "lightposition_z",       "Lightsource position (x,y,z)" },
-    { GIMP_PDB_FLOAT,    "lightdirection_x",      "Lightsource direction [x,y,z]" },
-    { GIMP_PDB_FLOAT,    "lightdirection_y",      "Lightsource direction [x,y,z]" },
-    { GIMP_PDB_FLOAT,    "lightdirection_z",      "Lightsource direction [x,y,z]" },
-    { GIMP_PDB_FLOAT,    "ambient_intensity",     "Material ambient intensity (0..1)" },
-    { GIMP_PDB_FLOAT,    "diffuse_intensity",     "Material diffuse intensity (0..1)" },
-    { GIMP_PDB_FLOAT,    "diffuse_reflectivity",  "Material diffuse reflectivity (0..1)" },
-    { GIMP_PDB_FLOAT,    "specular_reflectivity", "Material specular reflectivity (0..1)" },
+    { GIMP_PDB_FLOAT,    "lightposition-x",       "Lightsource position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "lightposition-y",       "Lightsource position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "lightposition-z",       "Lightsource position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "lightdirection-x",      "Lightsource direction [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "lightdirection-y",      "Lightsource direction [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "lightdirection-z",      "Lightsource direction [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "ambient-intensity",     "Material ambient intensity (0..1)" },
+    { GIMP_PDB_FLOAT,    "diffuse-intensity",     "Material diffuse intensity (0..1)" },
+    { GIMP_PDB_FLOAT,    "diffuse-reflectivity",  "Material diffuse reflectivity (0..1)" },
+    { GIMP_PDB_FLOAT,    "specular-reflectivity", "Material specular reflectivity (0..1)" },
     { GIMP_PDB_FLOAT,    "highlight",             "Material highlight (0..->), note: it's expotential" },
     { GIMP_PDB_INT32,    "antialiasing",          "Apply antialiasing (TRUE/FALSE)" },
     { GIMP_PDB_INT32,    "newimage",              "Create a new image (TRUE/FALSE)" },
     { GIMP_PDB_INT32,    "transparentbackground", "Make background transparent (TRUE/FALSE)" }
   };
 
-  gimp_install_procedure ("plug_in_lighting",
-                          "Apply various lighting effects to an image",
+  gimp_install_procedure (PLUG_IN_PROC,
+                          N_("Apply various lighting effects to an image"),
                           "No help yet",
                           "Tom Bech & Federico Mena Quintero",
                           "Tom Bech & Federico Mena Quintero",
@@ -200,7 +203,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_lighting",
+  gimp_plugin_menu_register (PLUG_IN_PROC,
                              "<Image>/Filters/Light and Shadow/Light");
 }
 
@@ -234,7 +237,7 @@ run (const gchar      *name,
   /* Possibly retrieve data */
   /* ====================== */
 
-  gimp_get_data ("plug_in_lighting", &mapvals);
+  gimp_get_data (PLUG_IN_PROC, &mapvals);
 
   /* Get the specified drawable */
   /* ========================== */
@@ -264,7 +267,7 @@ run (const gchar      *name,
                   {
                     compute_image ();
 
-                    gimp_set_data ("plug_in_lighting",
+                    gimp_set_data (PLUG_IN_PROC,
                                    &mapvals, sizeof (LightingValues));
                     gimp_displays_flush ();
                   }

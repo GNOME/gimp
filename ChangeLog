@@ -1,3 +1,13 @@
+2006-06-27  Sven Neumann  <neumann@jpk.com>
+
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/Lighting/lighting_main.c
+	* plug-ins/MapObject/mapobject_main.c: use canonical procedure and
+	parameter names. Marked procedure blurbs for translation.
+
+	* plug-ins/winicon/main.c: use canonical procedure and parameter
+	names.
+
 2006-06-27  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpalignoptions.c: removed unused includes and stubs.

@@ -34,6 +34,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#define LOAD_PROC        "file-ico-load"
+#define LOAD_THUMB_PROC  "file-ico-load-thumb"
+#define SAVE_PROC        "file-ico-save"
+
 
 static void   query (void);
 static void   run   (const gchar      *name,
@@ -60,9 +64,9 @@ query (void)
 {
   static const GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name entered"             }
+    { GIMP_PDB_STRING,   "raw-filename", "The name entered"             }
   };
   static const GimpParamDef load_return_vals[] =
   {
@@ -72,25 +76,25 @@ query (void)
   static const GimpParamDef thumb_args[] =
   {
     { GIMP_PDB_STRING, "filename",     "The name of the file to load"  },
-    { GIMP_PDB_INT32,  "thumb_size",   "Preferred thumbnail size"      }
+    { GIMP_PDB_INT32,  "thumb-size",   "Preferred thumbnail size"      }
   };
   static const GimpParamDef thumb_return_vals[] =
   {
     { GIMP_PDB_IMAGE,  "image",        "Thumbnail image"               },
-    { GIMP_PDB_INT32,  "image_width",  "Width of full-sized image"     },
-    { GIMP_PDB_INT32,  "image_height", "Height of full-sized image"    }
+    { GIMP_PDB_INT32,  "image-width",  "Width of full-sized image"     },
+    { GIMP_PDB_INT32,  "image-height", "Height of full-sized image"    }
   };
 
   static const GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name entered" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name entered" },
   };
 
-  gimp_install_procedure ("file_ico_load",
+  gimp_install_procedure (LOAD_PROC,
                           "Loads files of Windows ICO file format",
                           "Loads files of Windows ICO file format",
                           "Christian Kreibich <christian@whoop.org>",
@@ -103,13 +107,13 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime ("file_ico_load", "image/x-ico");
-  gimp_register_magic_load_handler ("file_ico_load",
+  gimp_register_file_handler_mime (LOAD_PROC, "image/x-ico");
+  gimp_register_magic_load_handler (LOAD_PROC,
                                     "ico",
                                     "",
                                     "0,string,\\000\\001\\000\\000,0,string,\\000\\002\\000\\000");
 
-  gimp_install_procedure ("file_ico_load_thumb",
+  gimp_install_procedure (LOAD_THUMB_PROC,
                           "Loads a preview from an Windows ICO file",
                           "",
                           "Dom Lachowicz, Sven Neumann",
@@ -122,9 +126,9 @@ query (void)
                           G_N_ELEMENTS (thumb_return_vals),
                           thumb_args, thumb_return_vals);
 
-  gimp_register_thumbnail_loader ("file_ico_load", "file_ico_load_thumb");
+  gimp_register_thumbnail_loader (LOAD_PROC, LOAD_THUMB_PROC);
 
-  gimp_install_procedure ("file_ico_save",
+  gimp_install_procedure (SAVE_PROC,
                           "Saves files in Windows ICO file format",
                           "Saves files in Windows ICO file format",
                           "Christian Kreibich <christian@whoop.org>",
@@ -136,8 +140,8 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_ico_save", "image/x-ico");
-  gimp_register_save_handler ("file_ico_save", "ico", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/x-ico");
+  gimp_register_save_handler (SAVE_PROC, "ico", "");
 }
 
 static void
@@ -163,7 +167,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_ico_load") == 0)
+  if (strcmp (name, LOAD_PROC) == 0)
     {
       switch (run_mode)
         {
@@ -195,7 +199,7 @@ run (const gchar      *name,
             }
         }
     }
-  else if (strcmp (name, "file_ico_load_thumb") == 0)
+  else if (strcmp (name, LOAD_THUMB_PROC) == 0)
     {
       if (nparams < 2)
         {
@@ -227,7 +231,7 @@ run (const gchar      *name,
             }
         }
     }
-  else if (strcmp (name, "file_ico_save") == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       gchar *file_name;
 
