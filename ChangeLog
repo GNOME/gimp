@@ -1,3 +1,7 @@
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/imap_preview.c: improved dialog layout.
+
 2006-06-27  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/print/print-draw-page.c: s/uft8/utf8/ makes it compile.

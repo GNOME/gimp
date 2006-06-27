@@ -419,11 +419,14 @@ Preview_t*
 make_preview(GimpDrawable *drawable)
 {
    Preview_t *data = g_new(Preview_t, 1);
+   GtkAdjustment *hadj;
+   GtkAdjustment *vadj;
    GtkWidget *preview;
    GtkWidget *window;
    GtkWidget *button, *arrow;
    GtkWidget *ruler;
    GtkWidget *table;
+   GtkWidget *scrollbar;
    gint width, height;
 
    data->drawable = drawable;
@@ -450,7 +453,7 @@ make_preview(GimpDrawable *drawable)
                                 data->widget_height);
 
    /* The main table */
-   data->window = table = gtk_table_new(2, 2, FALSE);
+   data->window = table = gtk_table_new(3, 3, FALSE);
    gtk_table_set_col_spacing (GTK_TABLE (table), 0, 1);
    gtk_table_set_row_spacing (GTK_TABLE (table), 0, 1);
 
@@ -488,35 +491,45 @@ make_preview(GimpDrawable *drawable)
                     GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
    gtk_widget_show(ruler);
 
-   window = gtk_scrolled_window_new(NULL, NULL);
+   window = gtk_scrolled_window_new (NULL, NULL);
    width = (data->width > 600) ? 600 : data->width;
    height = (data->height > 400) ? 400 : data->height;
    gtk_widget_set_size_request(window, width, height);
    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(window),
-				  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+				  GTK_POLICY_NEVER, GTK_POLICY_NEVER);
    gtk_table_attach(GTK_TABLE(table), window, 1, 2, 1, 2, GTK_FILL, GTK_FILL,
 		    0, 0);
    gtk_widget_show(window);
 
-   g_signal_connect (gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (window)),
-                     "changed",
+   hadj = gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (window));
+
+   g_signal_connect (hadj, "changed",
                      G_CALLBACK (scroll_adj_changed),
                      data->hruler);
-   g_signal_connect (gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (window)),
-                     "value-changed",
+   g_signal_connect (hadj, "value-changed",
                      G_CALLBACK (scroll_adj_changed),
                      data->hruler);
 
-   g_signal_connect (gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (window)),
-                     "changed",
+   vadj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (window));
+
+   g_signal_connect (vadj, "changed",
                      G_CALLBACK (scroll_adj_changed),
                      data->vruler);
-   g_signal_connect (gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (window)),
-                     "value-changed",
+   g_signal_connect (vadj, "value-changed",
                      G_CALLBACK (scroll_adj_changed),
                      data->vruler);
 
-   gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(window), preview);
+   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW(window), preview);
+
+   scrollbar = gtk_hscrollbar_new (hadj);
+   gtk_table_attach(GTK_TABLE(table), scrollbar, 1, 2, 2, 3,
+                    GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
+   gtk_widget_show (scrollbar);
+
+   scrollbar = gtk_vscrollbar_new (vadj);
+   gtk_table_attach(GTK_TABLE(table), scrollbar,  2, 3, 1, 2,
+                    GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
+   gtk_widget_show (scrollbar);
 
    gtk_widget_show (preview);
 
