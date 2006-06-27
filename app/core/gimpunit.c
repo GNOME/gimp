@@ -67,7 +67,7 @@ static const GimpUnitDef gimp_unit_defs[GIMP_UNIT_END] =
  */
 static const GimpUnitDef gimp_unit_percent =
 {
-  FALSE,    0.0, 0, "percent",     "%",  "%",  N_("percent"),    N_("percent")
+  FALSE,    0.0, 0, "percent",     "%",  "%",  N_("percent"),    N_("plural|percent")
 };
 
 
@@ -231,13 +231,15 @@ _gimp_unit_get_singular (Gimp     *gimp,
 {
   g_return_val_if_fail ((unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
                         (unit == GIMP_UNIT_PERCENT),
-                        gettext (gimp_unit_defs[GIMP_UNIT_INCH].singular));
+                        gimp_unit_defs[GIMP_UNIT_INCH].singular);
 
   if (unit < GIMP_UNIT_END)
-    return gettext (gimp_unit_defs[unit].singular);
+    return g_strip_context (gimp_unit_defs[unit].singular,
+                            gettext (gimp_unit_defs[unit].singular));
 
   if (unit == GIMP_UNIT_PERCENT)
-    return gettext (gimp_unit_percent.singular);
+    return g_strip_context (gimp_unit_percent.singular,
+                            gettext (gimp_unit_percent.singular));
 
   return _gimp_unit_get_user_unit (gimp, unit)->singular;
 }
@@ -248,13 +250,15 @@ _gimp_unit_get_plural (Gimp     *gimp,
 {
   g_return_val_if_fail ((unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
                         (unit == GIMP_UNIT_PERCENT),
-                        gettext (gimp_unit_defs[GIMP_UNIT_INCH].plural));
+                        gimp_unit_defs[GIMP_UNIT_INCH].plural);
 
   if (unit < GIMP_UNIT_END)
-    return gettext (gimp_unit_defs[unit].plural);
+    return g_strip_context (gimp_unit_defs[unit].plural,
+                            gettext (gimp_unit_defs[unit].plural));
 
   if (unit == GIMP_UNIT_PERCENT)
-    return gettext (gimp_unit_percent.plural);
+    return g_strip_context (gimp_unit_percent.plural,
+                            gettext (gimp_unit_percent.plural));
 
   return _gimp_unit_get_user_unit (gimp, unit)->plural;
 }

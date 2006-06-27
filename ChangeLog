@@ -1,5 +1,10 @@
 2006-06-27  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpunit.c: applied patch from Zbigniew Chyla that adds
+	translation context to some problematic strings (bug #345982).
+
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpchannel-select.c
 	* app/core/gimpdrawable-bucket-fill.c
 	* app/core/gimpdrawable-transform.c
