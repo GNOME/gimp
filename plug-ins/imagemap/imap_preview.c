@@ -442,7 +442,7 @@ make_preview(GimpDrawable *drawable)
    /* Handle drop of links in preview widget */
    gtk_drag_dest_set(preview, GTK_DEST_DEFAULT_ALL, target_table,
 		     2, GDK_ACTION_COPY);
-   g_signal_connect(preview, "drag_data_received",
+   g_signal_connect(preview, "drag-data-received",
 		    G_CALLBACK(handle_drop), NULL);
 
    data->widget_width = data->width =
@@ -454,8 +454,8 @@ make_preview(GimpDrawable *drawable)
 
    /* The main table */
    data->window = table = gtk_table_new(3, 3, FALSE);
-   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 1);
-   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 1);
+   gtk_table_set_col_spacings (GTK_TABLE (table), 1);
+   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
 
    /* Create button with arrow */
    button = gtk_button_new();
@@ -492,11 +492,11 @@ make_preview(GimpDrawable *drawable)
    gtk_widget_show(ruler);
 
    window = gtk_scrolled_window_new (NULL, NULL);
+   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(window),
+				  GTK_POLICY_NEVER, GTK_POLICY_NEVER);
    width = (data->width > 600) ? 600 : data->width;
    height = (data->height > 400) ? 400 : data->height;
    gtk_widget_set_size_request(window, width, height);
-   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(window),
-				  GTK_POLICY_NEVER, GTK_POLICY_NEVER);
    gtk_table_attach(GTK_TABLE(table), window, 1, 2, 1, 2, GTK_FILL, GTK_FILL,
 		    0, 0);
    gtk_widget_show(window);
