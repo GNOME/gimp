@@ -85,6 +85,10 @@
 #define OBJ_SELECT_LT 2
 #define OBJ_SELECT_EQ 4
 
+/* Globals */
+gint   undo_level;  /* Last slot filled in -1 = no undo */
+GList *undo_table[MAX_UNDO];
+
 /* Values when first invoked */
 SelectItVals selvals =
 {

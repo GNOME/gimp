@@ -1,5 +1,12 @@
 2006-06-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gfig/gfig-dialog.[ch]
+	* plug-ins/gfig/gfig-dobject.h
+	* plug-ins/gfig/gfig.[ch]: put extern variables where they belong.
+	Patch from Daniel Richard G. (bug #342455).
+
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
 	Based on a patch from Zbigniew Chyla:
 
 	* app/core/gimpunit.c (_gimp_unit_get_singular, _gimp_unit_get_plural):

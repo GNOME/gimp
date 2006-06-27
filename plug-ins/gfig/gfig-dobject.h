@@ -50,7 +50,7 @@ typedef struct
   void         (*update) (GdkPoint   *pnt);
 } GfigObjectClass;
 
-GfigObjectClass dobj_class[10];
+extern GfigObjectClass dobj_class[10];
 
 /* The object itself */
 struct _GfigObject

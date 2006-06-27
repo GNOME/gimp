@@ -152,7 +152,7 @@ typedef struct
   gboolean     using_new_layer;
 } GFigContext;
 
-GFigContext *gfig_context;
+extern GFigContext *gfig_context;
 
 extern selection_option selopt;
 extern SelectItVals selvals;
@@ -231,9 +231,9 @@ void       paint_layer_fill        (gdouble x1,
 
 
 
-GtkWidget    *top_level_dlg;
-GimpDrawable *gfig_drawable;
-GList        *gfig_list;
-gdouble       org_scale_x_factor, org_scale_y_factor;
+extern GtkWidget    *top_level_dlg;
+extern GimpDrawable *gfig_drawable;
+extern GList        *gfig_list;
+extern gdouble       org_scale_x_factor, org_scale_y_factor;
 
 #endif /* __GFIG_H__ */

@@ -91,7 +91,14 @@ static gint       load_options            (GFigObj *gfig,
                                            FILE    *fp);
 /* globals */
 
-GdkGC  *gfig_gc;
+GdkGC        *gfig_gc;
+GfigObjectClass dobj_class[10];
+GFigContext  *gfig_context;
+GtkWidget    *top_level_dlg;
+GimpDrawable *gfig_drawable;
+GList        *gfig_list;
+gdouble       org_scale_x_factor, org_scale_y_factor;
+
 
 /* Stuff for the preview bit */
 static gint  sel_x1, sel_y1, sel_x2, sel_y2;
