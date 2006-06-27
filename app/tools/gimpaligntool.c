@@ -170,7 +170,7 @@ gimp_align_tool_constructor (GType                  type,
   GObject       *object;
   GimpTool      *tool;
   GimpAlignTool *align_tool;
-  GtkContainer  *controls_container;
+  GtkContainer  *container;
   GObject       *options;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
@@ -182,11 +182,11 @@ gimp_align_tool_constructor (GType                  type,
 
   options = G_OBJECT (tool->tool_info->tool_options);
 
-  controls_container = GTK_CONTAINER (g_object_get_data (options,
-                                                         "controls-container"));
+  container = GTK_CONTAINER (g_object_get_data (options,
+                                                "controls-container"));
 
   align_tool->controls = gimp_align_tool_controls (align_tool);
-  gtk_container_add (controls_container, align_tool->controls);
+  gtk_container_add (container, align_tool->controls);
 
   return object;
 }

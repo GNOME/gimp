@@ -20,35 +20,10 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
-
 #include "tools-types.h"
-
-#include "core/gimptoolinfo.h"
-
-#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpalignoptions.h"
 #include "gimptooloptions-gui.h"
-
-#include "gimp-intl.h"
-
-
-enum
-{
-  PROP_0,
-};
-
-
-static void   gimp_align_options_set_property (GObject      *object,
-                                               guint         property_id,
-                                               const GValue *value,
-                                               GParamSpec   *pspec);
-static void   gimp_align_options_get_property (GObject      *object,
-                                               guint         property_id,
-                                               GValue       *value,
-                                               GParamSpec   *pspec);
 
 
 G_DEFINE_TYPE (GimpAlignOptions, gimp_align_options, GIMP_TYPE_TOOL_OPTIONS)
@@ -57,10 +32,6 @@ G_DEFINE_TYPE (GimpAlignOptions, gimp_align_options, GIMP_TYPE_TOOL_OPTIONS)
 static void
 gimp_align_options_class_init (GimpAlignOptionsClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  object_class->set_property = gimp_align_options_set_property;
-  object_class->get_property = gimp_align_options_get_property;
 }
 
 static void
@@ -68,47 +39,19 @@ gimp_align_options_init (GimpAlignOptions *options)
 {
 }
 
-static void
-gimp_align_options_set_property (GObject      *object,
-                                 guint         property_id,
-                                 const GValue *value,
-                                 GParamSpec   *pspec)
-{
-  switch (property_id)
-    {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_align_options_get_property (GObject    *object,
-                                 guint       property_id,
-                                 GValue     *value,
-                                 GParamSpec *pspec)
-{
-  switch (property_id)
-    {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
 GtkWidget *
 gimp_align_options_gui (GimpToolOptions *tool_options)
 {
   GtkWidget *vbox;
-  GtkWidget *controls_container;
+  GtkWidget *container;
 
   vbox = gimp_tool_options_gui (tool_options);
 
-  controls_container = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), controls_container, FALSE, FALSE, 0);
-  gtk_widget_show (controls_container);
-  g_object_set_data (G_OBJECT (tool_options),
-                     "controls-container", controls_container);
+  container = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), container, FALSE, FALSE, 0);
+  gtk_widget_show (container);
+
+  g_object_set_data (G_OBJECT (tool_options), "controls-container", container);
 
   return vbox;
 }
