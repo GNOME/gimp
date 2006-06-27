@@ -282,7 +282,7 @@ draw_info_header (GtkPrintContext *context,
   if (filename)
     {
       pango_layout_set_text (layout,
-                             gimp_filename_to_uft8 (filename), -1);
+                             gimp_filename_to_utf8 (filename), -1);
       g_free (filename);
 
       pango_layout_get_size (layout, &layout_width, &layout_height);
