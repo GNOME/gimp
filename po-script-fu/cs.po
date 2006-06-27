@@ -12,10 +12,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-10 19:13+0200\n"
-"PO-Revision-Date: 2006-06-10 19:14+0200\n"
+"POT-Creation-Date: 2006-06-27 13:15+0200\n"
+"PO-Revision-Date: 2006-06-27 13:16+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team: Czech <cs@li.org>\n"
+"Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -38,87 +38,66 @@ msgstr "Prohlížeč procedur script-fu"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Evaluační režim Script-fu umožňuje pouze neinteraktivní spuštění"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:182
+#: ../plug-ins/script-fu/script-fu-interface.c:178
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Skript-fu nemůže zároveň zpracovávat dva skripty."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:184
+#: ../plug-ins/script-fu/script-fu-interface.c:180
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Již spouštíte skript \"%s\"."
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:207
-#: ../plug-ins/script-fu/script-fu-interface.c:209
+#: ../plug-ins/script-fu/script-fu-interface.c:203
+#: ../plug-ins/script-fu/script-fu-interface.c:205
 msgid "/Script-Fu/"
 msgstr "/Skript-fu/"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:222
+#: ../plug-ins/script-fu/script-fu-interface.c:223
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Skript-fu: %s"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:289
+#: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:332
+#: ../plug-ins/script-fu/script-fu-interface.c:330
 msgid "Script-Fu Color Selection"
 msgstr "Skript-fu výběr barvy"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:439
+#: ../plug-ins/script-fu/script-fu-interface.c:437
 msgid "Script-Fu File Selection"
 msgstr "Skript-fu výběr souboru"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:442
+#: ../plug-ins/script-fu/script-fu-interface.c:440
 msgid "Script-Fu Folder Selection"
 msgstr "Skript-fu výběr adresáře"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:454
+#: ../plug-ins/script-fu/script-fu-interface.c:452
 msgid "Script-Fu Font Selection"
 msgstr "Skript-fu výběr písma"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu Palette Selection"
 msgstr "Skript-fu výběr palety"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:470
+#: ../plug-ins/script-fu/script-fu-interface.c:469
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-fu výběr vzorku"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:477
+#: ../plug-ins/script-fu/script-fu-interface.c:478
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-fu výběr přechodu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:485
+#: ../plug-ins/script-fu/script-fu-interface.c:487
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-fu výběr stopy"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1011
-#, c-format
-msgid "About %s"
-msgstr "O %s"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1076
-msgid "Author:"
-msgstr "Autor:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1083
-msgid "Copyright:"
-msgstr "Copyright:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1090
-msgid "Date:"
-msgstr "Datum:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1099
-msgid "Image Types:"
-msgstr "Typy obrázku:"
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:655
+#: ../plug-ins/script-fu/script-fu-scripts.c:656
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -1469,13 +1448,17 @@ msgid "Position (in %)"
 msgstr "Poloha (v %)"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
 msgid "Vertical"
 msgstr "Svislý"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:3
 msgid "New _Guide..."
 msgstr "Nové _vodítko..."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+msgid "Position"
+msgstr "Poloha"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "_Remove all Guides"
