@@ -167,7 +167,7 @@ paste_buffer_removed(Object_t *obj, gpointer data)
 }
 
 /* Normal items */
-static GtkActionEntry entries[] = {
+static const GtkActionEntry entries[] = {
   { "FileMenu", NULL, "_File" },
   { "Open", GTK_STOCK_OPEN, "_Open...", NULL, "Open", do_file_open_dialog},
   { "OpenRecentMenu", NULL, "Open Recent" },
@@ -229,17 +229,17 @@ static GtkActionEntry entries[] = {
 };
 
 /* Toggle items */
-static GtkToggleActionEntry toggle_entries[] = {
+static const GtkToggleActionEntry toggle_entries[] = {
   { "AreaList", NULL, "Area List", NULL, NULL, NULL, TRUE },
   { "Grid", GIMP_STOCK_GRID, "_Grid", NULL, "Grid", toggle_grid, FALSE }
 };
 
-static GtkRadioActionEntry color_entries[] = {
+static const GtkRadioActionEntry color_entries[] = {
   { "Color", NULL, "Color", NULL, NULL, 0},
   { "Gray", NULL, "Gray", NULL, NULL, 1},
 };
 
-static GtkRadioActionEntry mapping_entries[] = {
+static const GtkRadioActionEntry mapping_entries[] = {
   { "Arrow", GIMP_STOCK_CURSOR, "Arrow", NULL, "Select existing area", 0},
   { "Rectangle", IMAP_STOCK_RECTANGLE, "Rectangle", NULL,
     "Define Rectangle area", 1},
@@ -247,7 +247,7 @@ static GtkRadioActionEntry mapping_entries[] = {
   { "Polygon", IMAP_STOCK_POLYGON, "Polygon", NULL, "Define Polygon area", 3},
 };
 
-static GtkRadioActionEntry zoom_entries[] = {
+static const GtkRadioActionEntry zoom_entries[] = {
   { "Zoom1:1", NULL, "1:1", NULL, NULL, 0},
   { "Zoom1:2", NULL, "1:2", NULL, NULL, 1},
   { "Zoom1:3", NULL, "1:3", NULL, NULL, 2},
@@ -291,6 +291,7 @@ static const char *ui_description =
 "      <separator/>"
 "      <menuitem action='ZoomIn'/>"
 "      <menuitem action='ZoomOut'/>"
+#if 0
 "      <menu action='ZoomToMenu'>"
 "        <menuitem action='Zoom1:1'/>"
 "        <menuitem action='Zoom1:2'/>"
@@ -301,6 +302,7 @@ static const char *ui_description =
 "        <menuitem action='Zoom1:7'/>"
 "        <menuitem action='Zoom1:8'/>"
 "      </menu>"
+#endif
 "    </menu>"
 "    <menu action='MappingMenu'>"
 "      <menuitem action='Arrow'/>"

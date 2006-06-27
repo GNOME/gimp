@@ -1,5 +1,10 @@
 2006-06-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/imagemap/imap_menu.c: commented out the non-functional
+	Zoom menu.
+
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/imagemap/imap_preview.c: improved dialog layout.
 
 2006-06-27  Michael Natterer  <mitch@gimp.org>
