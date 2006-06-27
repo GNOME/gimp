@@ -35,33 +35,6 @@
 
 #include "libgimp/libgimp-intl.h"
 
-
-#define CDISPLAY_TYPE_PROOF_INTENT (cdisplay_proof_intent_type)
-static GType  cdisplay_proof_intent_get_type (GTypeModule *module);
-
-static const GEnumValue enum_values[] =
-{
-  { INTENT_PERCEPTUAL,
-    "INTENT_PERCEPTUAL",            "perceptual"            },
-  { INTENT_RELATIVE_COLORIMETRIC,
-    "INTENT_RELATIVE_COLORIMETRIC", "relative-colorimetric" },
-  { INTENT_SATURATION,
-    "INTENT_SATURATION",            "saturation"            },
-  { INTENT_ABSOLUTE_COLORIMETRIC,
-    "INTENT_ABSOLUTE_COLORIMETRIC"  "absolute-colorimetric" },
-  { 0, NULL, NULL }
-};
-
-static const GimpEnumDesc enum_descs[] =
-{
-  { INTENT_PERCEPTUAL,             N_("Perceptual"),            NULL },
-  { INTENT_RELATIVE_COLORIMETRIC,  N_("Relative colorimetric"), NULL },
-  { INTENT_SATURATION,             N_("Saturation"),            NULL },
-  { INTENT_ABSOLUTE_COLORIMETRIC,  N_("Absolute colorimetric"), NULL },
-  { 0, NULL, NULL }
-};
-
-
 #define CDISPLAY_TYPE_PROOF            (cdisplay_proof_type)
 #define CDISPLAY_PROOF(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CDISPLAY_TYPE_PROOF, CdisplayProof))
 #define CDISPLAY_PROOF_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CDISPLAY_TYPE_PROOF, CdisplayProofClass))
@@ -133,9 +106,8 @@ static const GimpModuleInfo cdisplay_proof_info =
   "November 14, 2003"
 };
 
-static GType                  cdisplay_proof_type        = 0;
-static GType                  cdisplay_proof_intent_type = 0;
-static GimpColorDisplayClass *parent_class               = NULL;
+static GType                  cdisplay_proof_type = 0;
+static GimpColorDisplayClass *parent_class        = NULL;
 
 
 G_MODULE_EXPORT const GimpModuleInfo *
@@ -148,7 +120,6 @@ G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
   cdisplay_proof_get_type (module);
-  cdisplay_proof_intent_get_type (module);
 
   return TRUE;
 }
@@ -179,22 +150,6 @@ cdisplay_proof_get_type (GTypeModule *module)
   return cdisplay_proof_type;
 }
 
-static GType
-cdisplay_proof_intent_get_type (GTypeModule *module)
-{
-  if (! cdisplay_proof_intent_type)
-    {
-      cdisplay_proof_intent_type =
-        g_type_module_register_enum (module, "CDisplayProofIntent",
-                                     enum_values);
-
-      gimp_enum_set_value_descriptions (cdisplay_proof_intent_type,
-                                        enum_descs);
-    }
-
-  return cdisplay_proof_intent_type;
-}
-
 static void
 cdisplay_proof_class_init (CdisplayProofClass *klass)
 {
@@ -209,7 +164,8 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTENT,
                                  "intent", NULL,
-                                 CDISPLAY_TYPE_PROOF_INTENT, INTENT_PERCEPTUAL,
+                                 GIMP_TYPE_COLOR_RENDERING_INTENT,
+                                 GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BPC,
                                     "black-point-compensation", NULL,

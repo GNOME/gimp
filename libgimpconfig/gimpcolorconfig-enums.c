@@ -55,7 +55,7 @@ gimp_color_rendering_intent_get_type (void)
   {
     { GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL, N_("Perceptual"), NULL },
     { GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC, N_("Relative colorimetric"), NULL },
-    { GIMP_COLOR_RENDERING_INTENT_SATURATION, N_("Saturation"), NULL },
+    { GIMP_COLOR_RENDERING_INTENT_SATURATION, N_("intent|Saturation"), NULL },
     { GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC, N_("Absolute colorimetric"), NULL },
     { 0, NULL, NULL }
   };

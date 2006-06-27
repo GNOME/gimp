@@ -45,7 +45,7 @@ typedef enum
 {
   GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,            /*< desc="Perceptual"            >*/
   GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC, /*< desc="Relative colorimetric" >*/
-  GIMP_COLOR_RENDERING_INTENT_SATURATION,            /*< desc="Saturation"            >*/
+  GIMP_COLOR_RENDERING_INTENT_SATURATION,            /*< desc="intent|Saturation"            >*/
   GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC  /*< desc="Absolute colorimetric" >*/
 } GimpColorRenderingIntent;
 

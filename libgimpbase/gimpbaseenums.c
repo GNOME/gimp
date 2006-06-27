@@ -385,7 +385,7 @@ gimp_gradient_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_GRADIENT_LINEAR, N_("Linear"), NULL },
+    { GIMP_GRADIENT_LINEAR, N_("gradient|Linear"), NULL },
     { GIMP_GRADIENT_BILINEAR, N_("Bi-linear"), NULL },
     { GIMP_GRADIENT_RADIAL, N_("Radial"), NULL },
     { GIMP_GRADIENT_SQUARE, N_("Square"), NULL },
@@ -560,7 +560,7 @@ gimp_interpolation_type_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_INTERPOLATION_NONE, N_("None (Fastest)"), NULL },
-    { GIMP_INTERPOLATION_LINEAR, N_("Linear"), NULL },
+    { GIMP_INTERPOLATION_LINEAR, N_("interpolation|Linear"), NULL },
     { GIMP_INTERPOLATION_CUBIC, N_("Cubic"), NULL },
     { GIMP_INTERPOLATION_LANCZOS, N_("Lanczos (Best)"), NULL },
     { 0, NULL, NULL }

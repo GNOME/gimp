@@ -23,6 +23,7 @@
 #include "config.h"
 
 #include <string.h>
+#include <stdio.h>
 
 #include <glib-object.h>
 
@@ -458,11 +459,13 @@ gimp_enum_get_value (GType         enum_type,
 
           enum_desc = gimp_enum_get_desc (enum_class, value);
 
-          if (value_desc)
+          if (value_desc) {
             *value_desc = ((enum_desc && enum_desc->value_desc) ?
-                           dgettext (gimp_type_get_translation_domain (enum_type),
-                                     enum_desc->value_desc) :
+                           g_strip_context (enum_desc->value_desc,
+                                            dgettext (gimp_type_get_translation_domain (enum_type),
+                                                      enum_desc->value_desc)) :
                            NULL);
+          }
 
           if (value_help)
             *value_help = ((enum_desc && enum_desc->value_desc) ?
@@ -500,8 +503,9 @@ gimp_enum_value_get_desc (GEnumClass *enum_class,
   enum_desc = gimp_enum_get_desc (enum_class, enum_value->value);
 
   if (enum_desc && enum_desc->value_desc)
-    return dgettext (gimp_type_get_translation_domain (type),
-                     enum_desc->value_desc);
+    return g_strip_context (enum_desc->value_desc,
+                            dgettext (gimp_type_get_translation_domain (type),
+                                      enum_desc->value_desc));
 
   return enum_value->value_name;
 }

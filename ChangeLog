@@ -1,5 +1,24 @@
 2006-06-27  Sven Neumann  <sven@gimp.org>
 
+	* modules/cdisplay_proof.c: use the GimpColorRenderingIntent enum
+	from libgimpconfig instead of duplicating it.
+
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
+	Changes based on a patch from Zbigniew Chyla (bug #345982):
+	
+	* libgimpbase/gimputils.c: strip translation context from enum
+	descriptions.
+
+	* libgimpbase/gimpbaseenums.h
+	* libgimpconfig/gimpcolorconfig-enums.h: added translation context
+	to some enums.
+
+	* libgimpbase/gimpbaseenums.c
+	* libgimpconfig/gimpcolorconfig-enums.c: regenerated.
+
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpunit.c: applied patch from Zbigniew Chyla that adds
 	translation context to some problematic strings (bug #345982).
 
