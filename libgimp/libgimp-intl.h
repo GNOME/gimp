@@ -34,6 +34,9 @@
 #undef gettext
 #define gettext(String) dgettext (GETTEXT_PACKAGE "-libgimp", String)
 
+#undef ngettext
+#define ngettext(String1, String2, number) dngettext (GETTEXT_PACKAGE "-libgimp", String1, String2, number)
+
 #ifdef gettext_noop
 #    define N_(String) gettext_noop (String)
 #else

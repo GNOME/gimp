@@ -1,5 +1,16 @@
 2006-06-27  Sven Neumann  <sven@gimp.org>
 
+	Applied patch from Zbigniew Chyla:
+
+	* app/gimp-intl.h
+	* libgimp/stdplugins-intl.h: removed most content and include
+	<glib/gi18n.h> instead.
+
+	* libgimp/libgimp-intl.h: define ngettext() macro as wrapper around
+	dngettext().
+
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
 	I18n improvements based on a patch from Zbigniew Chyla:
 
 	* app/main.c:
