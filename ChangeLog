@@ -2,6 +2,15 @@
 
 	Applied patch from Zbigniew Chyla (bug 345982):
 
+	* app/widgets/gimpactiongroup.c (gimp_action_group_add_string_actions)
+	strip translation context from translated entries[i].label.
+
+	* app/tools/gimpmagnifytool.c: added translation context.
+
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
+	Applied patch from Zbigniew Chyla (bug 345982):
+
 	* app/tools/gimptransformtool.[ch]: added undo_desc field for
 	storing undo string and use that, not tool_info->blurb.
 
