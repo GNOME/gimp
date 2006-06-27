@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-27 13:12+0200\n"
-"PO-Revision-Date: 2006-06-27 13:13+0200\n"
+"POT-Creation-Date: 2006-06-27 15:48+0200\n"
+"PO-Revision-Date: 2006-06-27 15:47+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -317,7 +317,8 @@ msgstr "Inverze"
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr "Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
+msgstr ""
+"Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
 
 #. Greenmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1028
@@ -381,7 +382,7 @@ msgstr "_Fraktály"
 #: ../plug-ins/common/tga.c:1030 ../plug-ins/common/tiff.c:1920
 #: ../plug-ins/common/xbm.c:1002 ../plug-ins/common/xwd.c:565
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
-#: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:714
+#: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:715
 #: ../plug-ins/ifscompose/ifscompose.c:2379 ../plug-ins/jpeg/jpeg-save.c:268
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:268
 #: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1277
@@ -424,8 +425,8 @@ msgstr "Zapsat parametry fraktálu"
 #: ../plug-ins/common/tiff.c:530 ../plug-ins/common/xbm.c:720
 #: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
 #: ../plug-ins/fits/fits.c:342 ../plug-ins/flame/flame.c:411
-#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:428
-#: ../plug-ins/gfli/gfli.c:463 ../plug-ins/help/domain.c:426
+#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:429
+#: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/domain.c:426
 #: ../plug-ins/jpeg/jpeg-load.c:88 ../plug-ins/jpeg/jpeg-load.c:874
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:257
 #: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2535
@@ -444,21 +445,25 @@ msgstr "'%s' není soubor badatele fraktálů"
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "'%s' je poškozen. Řádek %d Nesprávná sekce voleb"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:250
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:247
+msgid "Render fractal art"
+msgstr "Vykreslit fraktální obrazec"
+
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:252
 msgid "_Fractal Explorer..."
 msgstr "Badatel _fraktálů..."
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:381
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:382
 msgid "Rendering fractal"
 msgstr "Počítá se fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:756
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:757
 #: ../plug-ins/gflare/gflare.c:3130
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Opravdu chcete odstranit \"%s\" ze seznamu a z disku?"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:760
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:761
 msgid "Delete Fractal"
 msgstr "Odstranit fraktál"
 
@@ -505,7 +510,11 @@ msgstr "Přidat cestu pro badatele fraktálů"
 msgid "Lighting Effects"
 msgstr "Světelné efekty"
 
-#: ../plug-ins/Lighting/lighting_main.c:197
+#: ../plug-ins/Lighting/lighting_main.c:195
+msgid "Apply various lighting effects to an image"
+msgstr "Aplikovat různé světelné efekty"
+
+#: ../plug-ins/Lighting/lighting_main.c:200
 msgid "_Lighting Effects..."
 msgstr "_Světelné efekty..."
 
@@ -521,7 +530,8 @@ msgstr "P_růhledné pozadí"
 
 #: ../plug-ins/Lighting/lighting_ui.c:302
 msgid "Make destination image transparent where bump height is zero"
-msgstr "Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
+msgstr ""
+"Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
 
 #: ../plug-ins/Lighting/lighting_ui.c:305
 msgid "Cre_ate new image"
@@ -885,7 +895,11 @@ msgstr "Mapovat na kvádr"
 msgid "Map to cylinder"
 msgstr "Mapovat na válec"
 
-#: ../plug-ins/MapObject/mapobject_main.c:198
+#: ../plug-ins/MapObject/mapobject_main.c:196
+msgid "Map the image to an object (plane, sphere, box or cylinder)"
+msgstr "Mapovat obrázek na objekt (plochu, kouli, kvádr nebo válec)"
+
+#: ../plug-ins/MapObject/mapobject_main.c:201
 msgid "Map _Object..."
 msgstr "Mapovat _objekt..."
 
@@ -1175,7 +1189,7 @@ msgstr "Špatná barevná mapa"
 #: ../plug-ins/common/tga.c:419 ../plug-ins/common/tiff.c:535
 #: ../plug-ins/common/wmf.c:952 ../plug-ins/common/xbm.c:725
 #: ../plug-ins/common/xpm.c:343 ../plug-ins/common/xwd.c:473
-#: ../plug-ins/faxg3/faxg3.c:204 ../plug-ins/gfli/gfli.c:468
+#: ../plug-ins/faxg3/faxg3.c:204 ../plug-ins/gfli/gfli.c:469
 #: ../plug-ins/jpeg/jpeg-load.c:94 ../plug-ins/sgi/sgi.c:318
 #: ../plug-ins/winicon/icoload.c:460 ../plug-ins/xjt/xjt.c:3319
 #, c-format
@@ -1253,7 +1267,7 @@ msgstr "Nemohu pracovat na indexovaných obrázcích s alfa kanálem."
 #: ../plug-ins/common/tga.c:1035 ../plug-ins/common/tiff.c:1925
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
-#: ../plug-ins/gfli/gfli.c:683 ../plug-ins/jpeg/jpeg-save.c:226
+#: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:226
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:977
 #: ../plug-ins/xjt/xjt.c:1694
 #, c-format
@@ -1842,7 +1856,8 @@ msgstr "Varování: '%s' je soubor ve starém formátu."
 #: ../plug-ins/common/CML_explorer.c:2265
 #, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
-msgstr "Varování: '%s' je soubor parametrů pro novější CML_badatel, než jsem já."
+msgstr ""
+"Varování: '%s' je soubor parametrů pro novější CML_badatel, než jsem já."
 
 #: ../plug-ins/common/CML_explorer.c:2328
 msgid "Error: failed to load parameters"
@@ -2261,7 +2276,8 @@ msgstr "Posun _X:"
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
-msgstr "Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
+msgstr ""
+"Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
 
 #: ../plug-ins/common/bumpmap.c:1011 ../plug-ins/common/postscript.c:3328
 msgid "_Y offset:"
@@ -2573,7 +2589,7 @@ msgstr "Barva do alfy"
 
 #. spinbutton 1
 #: ../plug-ins/common/colortoalpha.c:411 ../plug-ins/common/mapcolor.c:424
-#: ../plug-ins/gfli/gfli.c:839 ../plug-ins/gfli/gfli.c:909
+#: ../plug-ins/gfli/gfli.c:840 ../plug-ins/gfli/gfli.c:910
 #: ../plug-ins/rcm/rcm_dialog.c:299 ../plug-ins/rcm/rcm_dialog.c:377
 msgid "From:"
 msgstr "Z:"
@@ -2721,7 +2737,8 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:486
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr "Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
+msgstr ""
+"Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
 
 #: ../plug-ins/common/compose.c:517
 #, c-format
@@ -2798,7 +2815,8 @@ msgstr "Žádná rozumná přípona, ukládám jako gzipovaný XCF."
 
 #: ../plug-ins/common/compressor.c:514
 msgid "No sensible extension, attempting to load with file magic."
-msgstr "Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel."
+msgstr ""
+"Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel."
 
 #: ../plug-ins/common/convmatrix.c:77
 msgid "Gr_ey"
@@ -2861,7 +2879,7 @@ msgstr "Matice"
 msgid "D_ivisor:"
 msgstr "Děl_itel:"
 
-#: ../plug-ins/common/convmatrix.c:971 ../plug-ins/common/depthmerge.c:768
+#: ../plug-ins/common/convmatrix.c:971 ../plug-ins/common/depthmerge.c:767
 #: ../plug-ins/common/raw.c:987
 msgid "O_ffset:"
 msgstr "_Posun:"
@@ -3298,43 +3316,43 @@ msgstr "Zachovat _lichá pole"
 msgid "Keep _even fields"
 msgstr "Zachovat _sudá pole"
 
-#: ../plug-ins/common/depthmerge.c:184
+#: ../plug-ins/common/depthmerge.c:183
 msgid "Combine two images using depth maps (z-buffers)"
 msgstr "Kombinovat dva obrázky pomocí map hloubky (z-bufferů)"
 
-#: ../plug-ins/common/depthmerge.c:193
+#: ../plug-ins/common/depthmerge.c:192
 msgid "_Depth Merge..."
 msgstr "_Sloučit hloubku..."
 
-#: ../plug-ins/common/depthmerge.c:387
+#: ../plug-ins/common/depthmerge.c:386
 msgid "Depth-merging"
 msgstr "Slučuji hloubku"
 
-#: ../plug-ins/common/depthmerge.c:644
+#: ../plug-ins/common/depthmerge.c:643
 msgid "Depth Merge"
 msgstr "Sloučení hloubky"
 
-#: ../plug-ins/common/depthmerge.c:696
+#: ../plug-ins/common/depthmerge.c:695
 msgid "Source 1:"
 msgstr "Zdroj 1:"
 
-#: ../plug-ins/common/depthmerge.c:711 ../plug-ins/common/depthmerge.c:741
+#: ../plug-ins/common/depthmerge.c:710 ../plug-ins/common/depthmerge.c:740
 msgid "Depth map:"
 msgstr "Mapa hloubky:"
 
-#: ../plug-ins/common/depthmerge.c:726
+#: ../plug-ins/common/depthmerge.c:725
 msgid "Source 2:"
 msgstr "Zdroj 2:"
 
-#: ../plug-ins/common/depthmerge.c:758
+#: ../plug-ins/common/depthmerge.c:757
 msgid "O_verlap:"
 msgstr "_Přesah:"
 
-#: ../plug-ins/common/depthmerge.c:778
+#: ../plug-ins/common/depthmerge.c:777
 msgid "Sc_ale 1:"
 msgstr "_Velikost 1:"
 
-#: ../plug-ins/common/depthmerge.c:788
+#: ../plug-ins/common/depthmerge.c:787
 msgid "Sca_le 2:"
 msgstr "_Velikost 2:"
 
@@ -4220,7 +4238,8 @@ msgstr ""
 "nebyl uložen."
 
 #: ../plug-ins/common/gif.c:965
-msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid ""
+"Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nemohu ukládat barevné obrázky RGB. Nejdříve jej převeďte na indexovaný nebo "
 "do šedí."
@@ -4851,7 +4870,8 @@ msgstr "Interaktivní deformace"
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
-msgstr "Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
+msgstr ""
+"Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
 
 #: ../plug-ins/common/jigsaw.c:356
 msgid "Add a jigsaw-puzzle pattern to the image"
@@ -5117,8 +5137,8 @@ msgid "Destination Color Range"
 msgstr "Cílový rozsah barev"
 
 #. spinbutton 2
-#: ../plug-ins/common/mapcolor.c:424 ../plug-ins/gfli/gfli.c:848
-#: ../plug-ins/gfli/gfli.c:918 ../plug-ins/rcm/rcm_dialog.c:325
+#: ../plug-ins/common/mapcolor.c:424 ../plug-ins/gfli/gfli.c:849
+#: ../plug-ins/gfli/gfli.c:919 ../plug-ins/rcm/rcm_dialog.c:325
 #: ../plug-ins/rcm/rcm_dialog.c:378
 msgid "To:"
 msgstr "Do:"
@@ -5203,7 +5223,8 @@ msgstr "Ú_hel:"
 #. * transparency & just use the full palette
 #: ../plug-ins/common/mng.c:498 ../plug-ins/common/png.c:1638
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr "Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
+msgstr ""
+"Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
 
 #: ../plug-ins/common/mng.c:1322
 msgid "Save as MNG"
@@ -7627,7 +7648,8 @@ msgid "Import _paths"
 msgstr "Importovat _cesty"
 
 #: ../plug-ins/common/svg.c:941
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid ""
+"Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importovat elementy cesty z SVG, aby mohly být použity s nástrojem GIMPu pro "
 "cesty"
@@ -7863,7 +7885,8 @@ msgid "ID"
 msgstr "ID"
 
 #: ../plug-ins/common/uniteditor.c:96
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Tento řetězec bude použit pouze k identifikaci jednotky v konfiguračním "
 "souboru GIMPu."
@@ -8040,7 +8063,8 @@ msgstr "_Body"
 
 #: ../plug-ins/common/video.c:1806
 msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-msgstr "Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
+msgstr ""
+"Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
 
 #: ../plug-ins/common/video.c:1813
 msgid "Vi_deo..."
@@ -9047,7 +9071,8 @@ msgstr "Kopírovat"
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
-msgstr "Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
+msgstr ""
+"Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
 
 #: ../plug-ins/gfig/gfig-dialog.c:1312
 msgid "Background:"
@@ -9172,7 +9197,8 @@ msgid "_Gfig..."
 msgstr "_Gfig..."
 
 #: ../plug-ins/gfig/gfig.c:731
-msgid "Error trying to save figure as a parasite: can't attach parasite to drawable."
+msgid ""
+"Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Chyba při pokusu uložit obrázek jako parazita: nemohu připojit parazita k "
 "drawable."
@@ -9451,24 +9477,24 @@ msgstr "Hnízdo náhodných čísel:"
 msgid "_Second Flares"
 msgstr "_Druhá záře"
 
-#: ../plug-ins/gfli/gfli.c:162 ../plug-ins/gfli/gfli.c:182
+#: ../plug-ins/gfli/gfli.c:163 ../plug-ins/gfli/gfli.c:183
 msgid "AutoDesk FLIC animation"
 msgstr "Animace AutoDesk FLIC"
 
-#: ../plug-ins/gfli/gfli.c:528
+#: ../plug-ins/gfli/gfli.c:529
 #, c-format
 msgid "Frame (%i)"
 msgstr "Políčko (%i)"
 
-#: ../plug-ins/gfli/gfli.c:679
+#: ../plug-ins/gfli/gfli.c:680
 msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr "Bohužel, umím pracovat pouze s obrázky INDEXOVANÝMI a v ŠEDÍCH."
 
-#: ../plug-ins/gfli/gfli.c:810
+#: ../plug-ins/gfli/gfli.c:811
 msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.3 - Čtení zásobníku políček"
 
-#: ../plug-ins/gfli/gfli.c:878
+#: ../plug-ins/gfli/gfli.c:879
 msgid "GFLI 1.3 - Save framestack"
 msgstr "GFLI 1.3 - Zápis zásobníku políček"
 
@@ -9612,7 +9638,8 @@ msgid "Shadow depth:"
 msgstr "Hloubka stínu:"
 
 #: ../plug-ins/gimpressionist/general.c:243
-msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Hloubka vrženého stínu, tj. jak daleko od objektu budou"
 
 #: ../plug-ins/gimpressionist/general.c:248
@@ -9990,11 +10017,13 @@ msgid "Size:"
 msgstr "Velikost:"
 
 #: ../plug-ins/gimpressionist/size.c:142
-msgid "Let the value (brightness) of the region determine the size of the stroke"
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Nechť hodnota (jas) oblasti určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:146
-msgid "The distance from the center of the image determines the size of the stroke"
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
 msgstr "Vzdálenost od středu obrázku určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:150
@@ -10670,49 +10699,49 @@ msgstr "pixely _odshora"
 msgid "_Preview"
 msgstr "_Náhled"
 
-#: ../plug-ins/imagemap/imap_main.c:119
+#: ../plug-ins/imagemap/imap_main.c:122
 msgid "Create a clickable imagemap"
 msgstr "Vytvořit klikatelnou obrazovou mapu"
 
-#: ../plug-ins/imagemap/imap_main.c:124
+#: ../plug-ins/imagemap/imap_main.c:127
 msgid "_Image Map..."
 msgstr "_Obrázková mapa..."
 
-#: ../plug-ins/imagemap/imap_main.c:514
+#: ../plug-ins/imagemap/imap_main.c:517
 #: ../plug-ins/imagemap/imap_settings.c:171
 msgid "<Untitled>"
 msgstr "<Beze jména>"
 
-#: ../plug-ins/imagemap/imap_main.c:658
+#: ../plug-ins/imagemap/imap_main.c:661
 msgid "Some data has been changed!"
 msgstr "Některá data byla změněna!"
 
-#: ../plug-ins/imagemap/imap_main.c:659
+#: ../plug-ins/imagemap/imap_main.c:662
 msgid "Do you really want to discard your changes?"
 msgstr "Opravdu chcete přijít o tyto změny?"
 
-#: ../plug-ins/imagemap/imap_main.c:871
+#: ../plug-ins/imagemap/imap_main.c:874
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Soubor \"%s\" zapsán."
 
-#: ../plug-ins/imagemap/imap_main.c:875
+#: ../plug-ins/imagemap/imap_main.c:878
 msgid "Couldn't save file:"
 msgstr "Nelze zapsat soubor:"
 
-#: ../plug-ins/imagemap/imap_main.c:888
+#: ../plug-ins/imagemap/imap_main.c:891
 msgid "Image size has changed."
 msgstr "Velikost obrázku byla změněna."
 
-#: ../plug-ins/imagemap/imap_main.c:889
+#: ../plug-ins/imagemap/imap_main.c:892
 msgid "Resize area's?"
 msgstr "Změnit rozměry plátna?"
 
-#: ../plug-ins/imagemap/imap_main.c:923
+#: ../plug-ins/imagemap/imap_main.c:926
 msgid "Couldn't read file:"
 msgstr "Nelze číst soubor:"
 
-#: ../plug-ins/imagemap/imap_main.c:972
+#: ../plug-ins/imagemap/imap_main.c:975
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -11592,7 +11621,7 @@ msgstr "Ikona č. %i"
 msgid "Windows icons cannot be higher or wider than 255 pixels."
 msgstr "Ikony Windows nemohou být vyšší ani širší než 255 pixelů."
 
-#: ../plug-ins/winicon/main.c:99 ../plug-ins/winicon/main.c:133
+#: ../plug-ins/winicon/main.c:103 ../plug-ins/winicon/main.c:137
 msgid "Microsoft Windows icon"
 msgstr "Ikona Microsoft Windows"
 
@@ -11696,4 +11725,3 @@ msgstr "Chyba: Nemohu načíst soubor XJT vlastností '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Chyba: Soubor XJT vlastností '%s' je prázdný."
-
