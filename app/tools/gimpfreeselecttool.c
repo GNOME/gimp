@@ -316,7 +316,7 @@ gimp_free_select_tool_real_select (GimpFreeSelectTool *free_sel,
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   gimp_channel_select_polygon (gimp_image_get_mask (display->image),
-                               tool->tool_info->blurb,
+                               Q_("command|Free Select"),
                                free_sel->num_points,
                                free_sel->points,
                                GIMP_SELECTION_TOOL (tool)->op,

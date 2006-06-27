@@ -969,7 +969,7 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /* Start a transform undo group */
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM, _("Flip"));
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM, Q_("command|Flip"));
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, context, &new_layer);
@@ -1053,7 +1053,7 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /* Start a transform undo group */
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM, _("Rotate"));
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM, Q_("command|Rotate"));
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, context, &new_layer);

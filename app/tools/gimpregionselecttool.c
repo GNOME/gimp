@@ -247,7 +247,7 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
         }
 
       gimp_channel_select_channel (gimp_image_get_mask (display->image),
-                                   tool->tool_info->blurb,
+                                   Q_("command|Fuzzy Select"),
                                    fuzzy_sel->fuzzy_mask,
                                    off_x,
                                    off_y,

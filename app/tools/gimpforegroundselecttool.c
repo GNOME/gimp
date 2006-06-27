@@ -750,7 +750,7 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   gimp_channel_select_channel (gimp_image_get_mask (display->image),
-                               tool->tool_info->blurb,
+                               Q_("command|Foreground Select"),
                                fg_select->mask, 0, 0,
                                op,
                                options->feather,
