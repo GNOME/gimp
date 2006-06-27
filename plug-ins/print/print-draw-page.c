@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <string.h>
+#include <time.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -26,17 +27,19 @@
 #include "print.h"
 #include "print-draw-page.h"
 
+
 /* In points */
 #define HEADER_HEIGHT (20*72/25.4)
 
-static guchar *    get_image_pixels     (PrintData         *data,
-                                         gint              *width_ptr,
-                                         gint              *height_ptr,
-                                         gint              *rowstride_ptr);
+static guchar * get_image_pixels     (PrintData       *data,
+                                      gint            *width_ptr,
+                                      gint            *height_ptr,
+                                      gint            *rowstride_ptr);
 
-static void        draw_info_header     (GtkPrintContext   *context,
-                                         cairo_t           *cr,
-                                         PrintData         *data);
+static void     draw_info_header     (GtkPrintContext *context,
+                                      cairo_t         *cr,
+                                      PrintData       *data);
+
 
 void
 draw_page_cairo (GtkPrintContext *context,
@@ -75,7 +78,7 @@ draw_page_cairo (GtkPrintContext *context,
 
   if (scale_x * image_width > cr_width)
     {
-      g_message ("Image width (%lg in) is larger than printable width (%lg in).",
+      g_message ("Image width (%g in) is larger than printable width (%g in).",
                  image_width / image_xres, cr_width / cr_dpi_x);
       gtk_print_operation_cancel (data->operation);
       return;
@@ -83,7 +86,7 @@ draw_page_cairo (GtkPrintContext *context,
 
   if (scale_y * image_height > cr_height)
     {
-      g_message ("Image height (%lg in) is larger than printable height (%lg in).",
+      g_message ("Image height (%g in) is larger than printable height (%g in).",
                  image_height / image_yres, cr_height / cr_dpi_y);
       gtk_print_operation_cancel (data->operation);
       return;
@@ -134,7 +137,7 @@ get_image_pixels (PrintData *data,
   gint              i;
 
   /* export the image */
-  gimp_export_image (&image_id, &drawable_id, "silent",
+  gimp_export_image (&image_id, &drawable_id, NULL,
                      GIMP_EXPORT_CAN_HANDLE_RGB   |
                      GIMP_EXPORT_CAN_HANDLE_ALPHA |
                      GIMP_EXPORT_NEEDS_ALPHA);
@@ -155,14 +158,17 @@ get_image_pixels (PrintData *data,
   if (image_id != data->image_id)
     gimp_image_delete (image_id);
 
-  /* knock pixels into the shape cairo wants:
-   *  CAIRO_FORMAT_ARGB32: each pixel is a 32-bit quantity, with alpha in the upper 8 bits,
-   * then red, then green, then blue. The 32-bit quantities are stored native-endian.
-   * Pre-multiplied alpha is used.
+  /* knock pixels into the shape requested by cairo:
+   *
+   *  CAIRO_FORMAT_ARGB32:
+   *  each pixel is a 32-bit quantity, with alpha in the upper 8 bits,
+   *  then red, then green, then blue. The 32-bit quantities are
+   *  stored native-endian.  Pre-multiplied alpha is used.
    *
    */
   cairo_data = (guint32 *) pixels;
   len = width * height;
+
   for (i = 0, p = pixels; i < len; i++)
     {
       guint32 r = *p++;
@@ -202,12 +208,12 @@ draw_info_header (GtkPrintContext *context,
   gdouble               fname_text_width;
   gint                  layout_height;
   gint                  layout_width;
-  GTimeVal              time_val;
   gchar                 date_buffer[100];
   GDate                *date;
   const gchar          *name_str;
   GimpParasite         *parasite;
   const gchar          *end_ptr;
+  gchar                *filename;
   gdouble               cr_width;
 
   cairo_save (cr);
@@ -234,7 +240,7 @@ draw_info_header (GtkPrintContext *context,
   pango_layout_set_text (layout, gimp_image_get_name (data->image_id), -1);
 
   pango_layout_get_size (layout, &layout_width, &layout_height);
-  text_height = (gdouble)layout_height / PANGO_SCALE;
+  text_height = (gdouble) layout_height / PANGO_SCALE;
 
   cairo_move_to (cr, 0.02 * cr_width,  (HEADER_HEIGHT - text_height) / 5);
   pango_cairo_show_layout (cr, layout);
@@ -246,7 +252,7 @@ draw_info_header (GtkPrintContext *context,
       pango_layout_set_text (layout, name_str, -1);
 
       pango_layout_get_size (layout, &layout_width, &layout_height);
-      text_height = (gdouble)layout_height / PANGO_SCALE;
+      text_height = (gdouble) layout_height / PANGO_SCALE;
       text_width = (gdouble) layout_width / PANGO_SCALE;
 
       cairo_move_to (cr, 0.5 * cr_width - 0.5 * text_width,
@@ -255,9 +261,8 @@ draw_info_header (GtkPrintContext *context,
     }
 
   /* date */
-  g_get_current_time (&time_val);
   date = g_date_new ();
-  g_date_set_time_t (date, time_val.tv_sec);
+  g_date_set_time_t (date, time (NULL));
   g_date_strftime (date_buffer, 100, "%x", date);
   g_date_free (date);
   pango_layout_set_text (layout, date_buffer, -1);
@@ -266,33 +271,43 @@ draw_info_header (GtkPrintContext *context,
   text_height = (gdouble) layout_height / PANGO_SCALE;
   text_width = (gdouble) layout_width / PANGO_SCALE;
 
-  cairo_move_to (cr, 0.98 * cr_width - text_width, (HEADER_HEIGHT - text_height) / 5);
+  cairo_move_to (cr,
+                 0.98 * cr_width - text_width,
+                 (HEADER_HEIGHT - text_height) / 5);
   pango_cairo_show_layout (cr, layout);
 
   /* file name if any */
-  if (gimp_image_get_filename (data->image_id))
+  filename = gimp_image_get_filename (data->image_id);
+
+  if (filename)
     {
-      pango_layout_set_text (layout, gimp_image_get_filename (data->image_id), -1);
+      pango_layout_set_text (layout,
+                             gimp_filename_to_uft8 (filename), -1);
+      g_free (filename);
 
       pango_layout_get_size (layout, &layout_width, &layout_height);
-      text_height = (gdouble)layout_height / PANGO_SCALE;
-      fname_text_width = (gdouble)layout_width / PANGO_SCALE;
+      text_height = (gdouble) layout_height / PANGO_SCALE;
+      fname_text_width = (gdouble) layout_width / PANGO_SCALE;
 
-      cairo_move_to (cr, 0.02 * cr_width,  4 * (HEADER_HEIGHT - text_height) / 5);
+      cairo_move_to (cr,
+                     0.02 * cr_width,  4 * (HEADER_HEIGHT - text_height) / 5);
       pango_cairo_show_layout (cr, layout);
     }
   else
-    fname_text_width = 0;
+    {
+      fname_text_width = 0;
+    }
 
   /* image comment if it is short */
   parasite = gimp_image_parasite_find (data->image_id, "gimp-comment");
+
   if (parasite)
     {
       pango_layout_set_text (layout, gimp_parasite_data (parasite), -1);
 
       pango_layout_get_size (layout, &layout_width, &layout_height);
-      text_height = (gdouble)layout_height / PANGO_SCALE;
-      text_width = (gdouble)layout_width / PANGO_SCALE;
+      text_height = (gdouble) layout_height / PANGO_SCALE;
+      text_width = (gdouble) layout_width / PANGO_SCALE;
 
       if (fname_text_width + text_width < 0.8 * cr_width &&
           text_height < 0.5 * HEADER_HEIGHT)
@@ -301,6 +316,7 @@ draw_info_header (GtkPrintContext *context,
                          4 * (HEADER_HEIGHT - text_height) / 5);
           pango_cairo_show_layout (cr, layout);
         }
+
       gimp_parasite_free (parasite);
     }
 
@@ -308,6 +324,3 @@ draw_info_header (GtkPrintContext *context,
 
   cairo_restore (cr);
 }
-
-
-

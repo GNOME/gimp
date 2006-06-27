@@ -645,9 +645,7 @@ gimp_export_image (gint32                 *image_ID,
   gboolean           added_flatten        = FALSE;
   gboolean           has_layer_masks      = FALSE;
   gboolean           background_has_alpha = TRUE;
-  ExportAction      *action;
-  GimpExportReturn   retval = GIMP_EXPORT_CANCEL;
-  gboolean           silent = (0 == strcmp (format_name, "silent"));
+  GimpExportReturn   retval               = GIMP_EXPORT_CANCEL;
 
   g_return_val_if_fail (*image_ID > -1 && *drawable_ID > -1, FALSE);
 
@@ -665,7 +663,8 @@ gimp_export_image (gint32                 *image_ID,
     capabilities |= GIMP_EXPORT_CAN_HANDLE_ALPHA;
 
   /* ask for confirmation if the user is not saving a layer (see bug #51114) */
-  if (! gimp_drawable_is_layer (*drawable_ID) &&
+  if (format_name &&
+      ! gimp_drawable_is_layer (*drawable_ID) &&
       ! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
     {
       if (gimp_drawable_is_layer_mask (*drawable_ID))
@@ -867,10 +866,11 @@ gimp_export_image (gint32                 *image_ID,
   if (actions)
     {
       actions = g_slist_reverse (actions);
-      if (silent)
-        retval = GIMP_EXPORT_EXPORT;
-      else
+
+      if (format_name)
         retval = export_dialog (actions, format_name);
+      else
+        retval = GIMP_EXPORT_EXPORT;
     }
   else
     {
@@ -886,7 +886,7 @@ gimp_export_image (gint32                 *image_ID,
 
       for (list = actions; list; list = list->next)
         {
-          action = (ExportAction *) list->data;
+          ExportAction *action = list->data;
 
           if (action->choice == 0 && action->default_action)
             action->default_action (*image_ID, drawable_ID);

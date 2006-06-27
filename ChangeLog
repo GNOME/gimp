@@ -1,3 +1,11 @@
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpexport.c (gimp_export_image): use NULL as the
+	special value, not "silent".
+
+	* plug-ins/print/print-draw-page.c: changed accordingly.  Also
+	fixed handling of filename encoding.
+
 2006-06-26  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* libgimp/gimpexport.c: if format arg is "silent", export
