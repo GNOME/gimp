@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-23 19:00+0200\n"
-"PO-Revision-Date: 2006-06-23 19:00+0200\n"
+"POT-Creation-Date: 2006-06-27 13:12+0200\n"
+"PO-Revision-Date: 2006-06-27 13:13+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,8 +22,8 @@ msgstr ""
 "X-Generator: KBabel 1.10.2\n"
 "Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:529
-#: ../plug-ins/gfig/gfig-dialog.c:282 ../plug-ins/gflare/gflare.c:887
+#: ../plug-ins/FractalExplorer/Dialogs.c:530
+#: ../plug-ins/gfig/gfig-dialog.c:286 ../plug-ins/gflare/gflare.c:887
 #: ../plug-ins/gimpressionist/utils.c:124
 #, c-format
 msgid ""
@@ -37,76 +37,76 @@ msgstr ""
 "přidat položku tvaru\n"
 "(%2$s \"%3$s\")"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:620
+#: ../plug-ins/FractalExplorer/Dialogs.c:621
 msgid "Realtime preview"
 msgstr "Náhled v reálném čase"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:628
+#: ../plug-ins/FractalExplorer/Dialogs.c:629
 msgid "If enabled the preview will be redrawn automatically"
 msgstr "Je-li povoleno, překresluje se náhled automaticky"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:631
+#: ../plug-ins/FractalExplorer/Dialogs.c:632
 msgid "R_edraw preview"
 msgstr "Př_ekreslovat náhled"
 
 #. Zoom Options
-#: ../plug-ins/FractalExplorer/Dialogs.c:639
+#: ../plug-ins/FractalExplorer/Dialogs.c:640
 msgid "Zoom"
 msgstr "Přiblížení"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:675
+#: ../plug-ins/FractalExplorer/Dialogs.c:676
 msgid "Undo last zoom change"
 msgstr "Zpět poslední změnu přiblížení"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:685
+#: ../plug-ins/FractalExplorer/Dialogs.c:686
 msgid "Redo last zoom change"
 msgstr "Znovu poslední změnu přiblížení"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:700
+#: ../plug-ins/FractalExplorer/Dialogs.c:701
 msgid "_Parameters"
 msgstr "_Parametry"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:703
+#: ../plug-ins/FractalExplorer/Dialogs.c:704
 msgid "Fractal Parameters"
 msgstr "Parametry fraktálu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:716
+#: ../plug-ins/FractalExplorer/Dialogs.c:717
 msgid "XMIN:"
 msgstr "XMIN:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:719
+#: ../plug-ins/FractalExplorer/Dialogs.c:720
 msgid "Change the first (minimal) x-coordinate delimitation"
 msgstr "Změna omezení první (nejmenší) x souřadnice"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:727
+#: ../plug-ins/FractalExplorer/Dialogs.c:728
 msgid "XMAX:"
 msgstr "XMAX:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:730
+#: ../plug-ins/FractalExplorer/Dialogs.c:731
 msgid "Change the second (maximal) x-coordinate delimitation"
 msgstr "Změna omezení druhé (největší) x souřadnice"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:738
+#: ../plug-ins/FractalExplorer/Dialogs.c:739
 msgid "YMIN:"
 msgstr "YMIN:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:741
+#: ../plug-ins/FractalExplorer/Dialogs.c:742
 msgid "Change the first (minimal) y-coordinate delimitation"
 msgstr "Změna omezení první (nejmenší) y souřadnice"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:749
+#: ../plug-ins/FractalExplorer/Dialogs.c:750
 msgid "YMAX:"
 msgstr "YMAX:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:752
+#: ../plug-ins/FractalExplorer/Dialogs.c:753
 msgid "Change the second (maximal) y-coordinate delimitation"
 msgstr "Změna omezení druhé (největší) y souřadnice"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:760
+#: ../plug-ins/FractalExplorer/Dialogs.c:761
 msgid "ITER:"
 msgstr "ITER:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:763
+#: ../plug-ins/FractalExplorer/Dialogs.c:764
 msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
@@ -114,11 +114,11 @@ msgstr ""
 "Změna iterační hodnoty. Vyšší znamená výpočet větších detailů za cenu "
 "delšího času"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:772
+#: ../plug-ins/FractalExplorer/Dialogs.c:773
 msgid "CX:"
 msgstr "CX:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:775
+#: ../plug-ins/FractalExplorer/Dialogs.c:776
 msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
@@ -126,11 +126,11 @@ msgstr ""
 "Změna hodnoty CX (mění poměry fraktálu, aktivní se všemi fraktály kromě "
 "Mandelbrotova a Sierpinského)"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:784
+#: ../plug-ins/FractalExplorer/Dialogs.c:785
 msgid "CY:"
 msgstr "CY:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:787
+#: ../plug-ins/FractalExplorer/Dialogs.c:788
 msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
@@ -138,143 +138,143 @@ msgstr ""
 "Změna hodnoty CY (mění poměry fraktálu, aktivní se všemi fraktály kromě "
 "Mandelbrotova a Sierpinského)"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:804
+#: ../plug-ins/FractalExplorer/Dialogs.c:805
 msgid "Load a fractal from file"
 msgstr "Načíst fraktál ze souboru"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:812
+#: ../plug-ins/FractalExplorer/Dialogs.c:813
 msgid "Reset parameters to default values"
 msgstr "Nastaví parametry na implicitní hodnoty"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:821
+#: ../plug-ins/FractalExplorer/Dialogs.c:822
 msgid "Save active fractal to file"
 msgstr "Zapsat aktivní fraktál do souboru"
 
 #. Fractal type toggle box
-#: ../plug-ins/FractalExplorer/Dialogs.c:824
+#: ../plug-ins/FractalExplorer/Dialogs.c:825
 msgid "Fractal Type"
 msgstr "Typ fraktálu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:837
+#: ../plug-ins/FractalExplorer/Dialogs.c:838
 msgid "Mandelbrot"
 msgstr "Mandelbrot"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:839
+#: ../plug-ins/FractalExplorer/Dialogs.c:840
 msgid "Julia"
 msgstr "Julia"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:841
+#: ../plug-ins/FractalExplorer/Dialogs.c:842
 msgid "Barnsley 1"
 msgstr "Barnsley 1"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:843
+#: ../plug-ins/FractalExplorer/Dialogs.c:844
 msgid "Barnsley 2"
 msgstr "Barnsley 2"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:845
+#: ../plug-ins/FractalExplorer/Dialogs.c:846
 msgid "Barnsley 3"
 msgstr "Barnsley 3"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:847
+#: ../plug-ins/FractalExplorer/Dialogs.c:848
 msgid "Spider"
 msgstr "Spider"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:849
+#: ../plug-ins/FractalExplorer/Dialogs.c:850
 msgid "Man'o'war"
 msgstr "Man'o'war"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:851
+#: ../plug-ins/FractalExplorer/Dialogs.c:852
 msgid "Lambda"
 msgstr "Lambda"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:853
+#: ../plug-ins/FractalExplorer/Dialogs.c:854
 msgid "Sierpinski"
 msgstr "Sierpinski"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:899 ../plug-ins/common/sinus.c:886
+#: ../plug-ins/FractalExplorer/Dialogs.c:900 ../plug-ins/common/sinus.c:886
 msgid "Co_lors"
 msgstr "_Barvy"
 
 #. Number of Colors frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:903
+#: ../plug-ins/FractalExplorer/Dialogs.c:904
 #: ../plug-ins/common/borderaverage.c:415
 msgid "Number of Colors"
 msgstr "Počet barev"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:915
+#: ../plug-ins/FractalExplorer/Dialogs.c:916
 msgid "Number of colors:"
 msgstr "Počet barev:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:918
+#: ../plug-ins/FractalExplorer/Dialogs.c:919
 msgid "Change the number of colors in the mapping"
 msgstr "Změna počtu barev v mapování"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:925
+#: ../plug-ins/FractalExplorer/Dialogs.c:926
 msgid "Use loglog smoothing"
 msgstr "Použít spojité vyhlazení"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:932
+#: ../plug-ins/FractalExplorer/Dialogs.c:933
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr "Užití spojitého vyhlazení zabrání \"pruhování\" výsledku"
 
 #. Color Density frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:936
+#: ../plug-ins/FractalExplorer/Dialogs.c:937
 msgid "Color Density"
 msgstr "Hustota barvy"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: ../plug-ins/FractalExplorer/Dialogs.c:948 ../plug-ins/common/fp.c:227
+#: ../plug-ins/FractalExplorer/Dialogs.c:949 ../plug-ins/common/fp.c:227
 msgid "Red:"
 msgstr "Červená:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:951
+#: ../plug-ins/FractalExplorer/Dialogs.c:952
 msgid "Change the intensity of the red channel"
 msgstr "Změna intenzity červeného kanálu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:958 ../plug-ins/common/fp.c:228
+#: ../plug-ins/FractalExplorer/Dialogs.c:959 ../plug-ins/common/fp.c:228
 msgid "Green:"
 msgstr "Zelená:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:961
+#: ../plug-ins/FractalExplorer/Dialogs.c:962
 msgid "Change the intensity of the green channel"
 msgstr "Změna intenzity zeleného kanálu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:968 ../plug-ins/common/fp.c:229
+#: ../plug-ins/FractalExplorer/Dialogs.c:969 ../plug-ins/common/fp.c:229
 msgid "Blue:"
 msgstr "Modrá:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:971
+#: ../plug-ins/FractalExplorer/Dialogs.c:972
 msgid "Change the intensity of the blue channel"
 msgstr "Změna intenzity modrého kanálu"
 
 #. Color Function frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:977
+#: ../plug-ins/FractalExplorer/Dialogs.c:978
 msgid "Color Function"
 msgstr "Barevná funkce"
 
 #. Redmode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:986
+#: ../plug-ins/FractalExplorer/Dialogs.c:987
 #: ../plug-ins/common/channel_mixer.c:539 ../plug-ins/common/decompose.c:166
 msgid "Red"
 msgstr "Červená"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:990
-#: ../plug-ins/FractalExplorer/Dialogs.c:1031
-#: ../plug-ins/FractalExplorer/Dialogs.c:1072
+#: ../plug-ins/FractalExplorer/Dialogs.c:991
+#: ../plug-ins/FractalExplorer/Dialogs.c:1032
+#: ../plug-ins/FractalExplorer/Dialogs.c:1073
 msgid "Sine"
 msgstr "Sinus"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:992
-#: ../plug-ins/FractalExplorer/Dialogs.c:1033
-#: ../plug-ins/FractalExplorer/Dialogs.c:1074
+#: ../plug-ins/FractalExplorer/Dialogs.c:993
+#: ../plug-ins/FractalExplorer/Dialogs.c:1034
+#: ../plug-ins/FractalExplorer/Dialogs.c:1075
 msgid "Cosine"
 msgstr "Kosinus"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:994
-#: ../plug-ins/FractalExplorer/Dialogs.c:1035
-#: ../plug-ins/FractalExplorer/Dialogs.c:1076
+#: ../plug-ins/FractalExplorer/Dialogs.c:995
+#: ../plug-ins/FractalExplorer/Dialogs.c:1036
+#: ../plug-ins/FractalExplorer/Dialogs.c:1077
 #: ../plug-ins/Lighting/lighting_ui.c:406
 #: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:421
 #: ../plug-ins/common/align_layers.c:452 ../plug-ins/common/postscript.c:3168
@@ -283,21 +283,21 @@ msgstr "Kosinus"
 msgid "None"
 msgstr "Nic"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:999
-#: ../plug-ins/FractalExplorer/Dialogs.c:1040
-#: ../plug-ins/FractalExplorer/Dialogs.c:1081
+#: ../plug-ins/FractalExplorer/Dialogs.c:1000
+#: ../plug-ins/FractalExplorer/Dialogs.c:1041
+#: ../plug-ins/FractalExplorer/Dialogs.c:1082
 msgid "Use sine-function for this color component"
 msgstr "Použití funkce sinus pro tuto barevnou komponentu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1002
-#: ../plug-ins/FractalExplorer/Dialogs.c:1043
-#: ../plug-ins/FractalExplorer/Dialogs.c:1084
+#: ../plug-ins/FractalExplorer/Dialogs.c:1003
+#: ../plug-ins/FractalExplorer/Dialogs.c:1044
+#: ../plug-ins/FractalExplorer/Dialogs.c:1085
 msgid "Use cosine-function for this color component"
 msgstr "Použití funkce kosinus pro tuto barevnou komponentu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1005
-#: ../plug-ins/FractalExplorer/Dialogs.c:1046
-#: ../plug-ins/FractalExplorer/Dialogs.c:1087
+#: ../plug-ins/FractalExplorer/Dialogs.c:1006
+#: ../plug-ins/FractalExplorer/Dialogs.c:1047
+#: ../plug-ins/FractalExplorer/Dialogs.c:1088
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
@@ -305,42 +305,42 @@ msgstr ""
 "Použití lineárního mapování namísto trigonometrické funkce pro tento barevný "
 "kanál"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1014
-#: ../plug-ins/FractalExplorer/Dialogs.c:1055
-#: ../plug-ins/FractalExplorer/Dialogs.c:1096
+#: ../plug-ins/FractalExplorer/Dialogs.c:1015
+#: ../plug-ins/FractalExplorer/Dialogs.c:1056
+#: ../plug-ins/FractalExplorer/Dialogs.c:1097
 msgid "Inversion"
 msgstr "Inverze"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1022
-#: ../plug-ins/FractalExplorer/Dialogs.c:1063
-#: ../plug-ins/FractalExplorer/Dialogs.c:1104
+#: ../plug-ins/FractalExplorer/Dialogs.c:1023
+#: ../plug-ins/FractalExplorer/Dialogs.c:1064
+#: ../plug-ins/FractalExplorer/Dialogs.c:1105
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr "Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
 
 #. Greenmode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:1027
+#: ../plug-ins/FractalExplorer/Dialogs.c:1028
 #: ../plug-ins/common/channel_mixer.c:544 ../plug-ins/common/decompose.c:167
 msgid "Green"
 msgstr "Zelená"
 
 #. Bluemode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:1068
+#: ../plug-ins/FractalExplorer/Dialogs.c:1069
 #: ../plug-ins/common/channel_mixer.c:549 ../plug-ins/common/decompose.c:168
 msgid "Blue"
 msgstr "Modrá"
 
 #. Colormode toggle box
-#: ../plug-ins/FractalExplorer/Dialogs.c:1109
+#: ../plug-ins/FractalExplorer/Dialogs.c:1110
 msgid "Color Mode"
 msgstr "Barevný režim"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1118
+#: ../plug-ins/FractalExplorer/Dialogs.c:1119
 msgid "As specified above"
 msgstr "Jak určeno výše"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1130
+#: ../plug-ins/FractalExplorer/Dialogs.c:1131
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
@@ -348,23 +348,23 @@ msgstr ""
 "Vytváří barevnou mapu s volbami určenými výše (funkce barva/hustota). "
 "Výsledek je viditelný v náhledovém obrázku"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1140
+#: ../plug-ins/FractalExplorer/Dialogs.c:1141
 msgid "Apply active gradient to final image"
 msgstr "Použít aktivní přechod na konečný obrázek"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1152
+#: ../plug-ins/FractalExplorer/Dialogs.c:1153
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr "Vytvoří barevnou mapu s použitím přechodu z editoru přechodů"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1163
+#: ../plug-ins/FractalExplorer/Dialogs.c:1164
 msgid "FractalExplorer Gradient"
 msgstr "Přechod badatele fraktálů"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1193
+#: ../plug-ins/FractalExplorer/Dialogs.c:1194
 msgid "_Fractals"
 msgstr "_Fraktály"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1705
+#: ../plug-ins/FractalExplorer/Dialogs.c:1706
 #: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:200
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2013
 #: ../plug-ins/common/channel_mixer.c:1062 ../plug-ins/common/compressor.c:410
@@ -381,7 +381,7 @@ msgstr "_Fraktály"
 #: ../plug-ins/common/tga.c:1030 ../plug-ins/common/tiff.c:1920
 #: ../plug-ins/common/xbm.c:1002 ../plug-ins/common/xwd.c:565
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
-#: ../plug-ins/gfig/gfig.c:787 ../plug-ins/gfli/gfli.c:714
+#: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:714
 #: ../plug-ins/ifscompose/ifscompose.c:2379 ../plug-ins/jpeg/jpeg-save.c:268
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:268
 #: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1277
@@ -390,22 +390,22 @@ msgstr "_Fraktály"
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nemohu otevřít '%s' pro zápis: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1719
+#: ../plug-ins/FractalExplorer/Dialogs.c:1720
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Nemohu zapsat '%s': %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1772
+#: ../plug-ins/FractalExplorer/Dialogs.c:1773
 msgid "Load Fractal Parameters"
 msgstr "Načíst parametry fraktálu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1808
+#: ../plug-ins/FractalExplorer/Dialogs.c:1809
 msgid "Save Fractal Parameters"
 msgstr "Zapsat parametry fraktálu"
 
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
-#: ../plug-ins/FractalExplorer/Dialogs.c:2014
+#: ../plug-ins/FractalExplorer/Dialogs.c:2015
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:930
 #: ../plug-ins/Lighting/lighting_ui.c:1312 ../plug-ins/bmp/bmpread.c:152
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2233
@@ -424,7 +424,7 @@ msgstr "Zapsat parametry fraktálu"
 #: ../plug-ins/common/tiff.c:530 ../plug-ins/common/xbm.c:720
 #: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
 #: ../plug-ins/fits/fits.c:342 ../plug-ins/flame/flame.c:411
-#: ../plug-ins/gfig/gfig.c:427 ../plug-ins/gfli/gfli.c:428
+#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:428
 #: ../plug-ins/gfli/gfli.c:463 ../plug-ins/help/domain.c:426
 #: ../plug-ins/jpeg/jpeg-load.c:88 ../plug-ins/jpeg/jpeg-load.c:874
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:257
@@ -434,12 +434,12 @@ msgstr "Zapsat parametry fraktálu"
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nemohu otevřít '%s' pro čtení: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2022
+#: ../plug-ins/FractalExplorer/Dialogs.c:2023
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "'%s' není soubor badatele fraktálů"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2028
+#: ../plug-ins/FractalExplorer/Dialogs.c:2029
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "'%s' je poškozen. Řádek %d Nesprávná sekce voleb"
@@ -1221,7 +1221,7 @@ msgstr "Nepodporovaná nebo neplatná bitová hloubka"
 #: ../plug-ins/common/tga.c:931 ../plug-ins/common/tiff.c:886
 #: ../plug-ins/common/tile.c:265 ../plug-ins/common/xbm.c:866
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:508
-#: ../plug-ins/gfig/gfig-dialog.c:1290
+#: ../plug-ins/gfig/gfig-dialog.c:1294
 #: ../plug-ins/gimpressionist/general.c:121 ../plug-ins/jpeg/jpeg-load.c:239
 #: ../plug-ins/jpeg/jpeg-load.c:741 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:574 ../plug-ins/winsnap/winsnap.c:1155
@@ -1891,7 +1891,7 @@ msgstr "Vyplnit (zprava doleva)"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: ../plug-ins/common/align_layers.c:425 ../plug-ins/common/align_layers.c:456
-#: ../plug-ins/gfig/gfig-dialog.c:501
+#: ../plug-ins/gfig/gfig-dialog.c:505
 msgid "Snap to grid"
 msgstr "Chytat k mřížce"
 
@@ -3006,7 +3006,7 @@ msgstr "_Automatický náhled"
 #. Options area, bottom of column
 #. Options section
 #: ../plug-ins/common/curve_bend.c:1300 ../plug-ins/common/ripple.c:498
-#: ../plug-ins/gfig/gfig-dialog.c:1213
+#: ../plug-ins/gfig/gfig-dialog.c:1217
 msgid "Options"
 msgstr "Volby"
 
@@ -4505,7 +4505,7 @@ msgstr "_Mřížka..."
 msgid "Drawing grid"
 msgstr "Kreslí se mřížka"
 
-#: ../plug-ins/common/grid.c:635 ../plug-ins/gfig/gfig-dialog.c:1361
+#: ../plug-ins/common/grid.c:635 ../plug-ins/gfig/gfig-dialog.c:1365
 msgid "Grid"
 msgstr "Mřížka"
 
@@ -5518,7 +5518,7 @@ msgid "_Factory Defaults"
 msgstr "_Tovární nastavení"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1443 ../plug-ins/gfig/gfig-dialog.c:1262
+#: ../plug-ins/common/newsprint.c:1443 ../plug-ins/gfig/gfig-dialog.c:1266
 msgid "Antialiasing"
 msgstr "Vyhlazování"
 
@@ -5853,14 +5853,17 @@ msgstr "Hledání podle názvu"
 
 #: ../plug-ins/common/plugin-browser.c:386
 #, c-format
-msgid "%d plug-ins"
-msgstr "%d zásuvných modulů"
+msgid "%d plug-in"
+msgid_plural "%d plug-ins"
+msgstr[0] "%d zásuvný modul"
+msgstr[1] "%d zásuvné moduly"
+msgstr[2] "%d zásuvných modulů"
 
-#: ../plug-ins/common/plugin-browser.c:393
+#: ../plug-ins/common/plugin-browser.c:395
 msgid "No matches for your query"
 msgstr "Žádný výsledek vašeho dotazu"
 
-#: ../plug-ins/common/plugin-browser.c:396
+#: ../plug-ins/common/plugin-browser.c:398
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
@@ -5868,38 +5871,38 @@ msgstr[0] "%d zásuvný modul odpovídá vašemu dotazu"
 msgstr[1] "%d zásuvné moduly odpovídají vašemu dotazu"
 msgstr[2] "%d zásuvných modulů odpovídá vašemu dotazu"
 
-#: ../plug-ins/common/plugin-browser.c:527
+#: ../plug-ins/common/plugin-browser.c:529
 msgid "No matches"
 msgstr "Nic nenalezeno"
 
-#: ../plug-ins/common/plugin-browser.c:552
+#: ../plug-ins/common/plugin-browser.c:554
 msgid "Plug-In Browser"
 msgstr "Prohlížeč zásuvných modulů"
 
-#: ../plug-ins/common/plugin-browser.c:595
+#: ../plug-ins/common/plugin-browser.c:597
 msgid "Name"
 msgstr "Jméno"
 
-#: ../plug-ins/common/plugin-browser.c:603
-#: ../plug-ins/common/plugin-browser.c:666
+#: ../plug-ins/common/plugin-browser.c:605
+#: ../plug-ins/common/plugin-browser.c:668
 msgid "Menu Path"
 msgstr "Cesta k menu"
 
-#: ../plug-ins/common/plugin-browser.c:611
-#: ../plug-ins/common/plugin-browser.c:675
+#: ../plug-ins/common/plugin-browser.c:613
+#: ../plug-ins/common/plugin-browser.c:677
 msgid "Image Types"
 msgstr "Typy obrázku"
 
-#: ../plug-ins/common/plugin-browser.c:621
-#: ../plug-ins/common/plugin-browser.c:684
+#: ../plug-ins/common/plugin-browser.c:623
+#: ../plug-ins/common/plugin-browser.c:686
 msgid "Installation Date"
 msgstr "Datum instalace"
 
-#: ../plug-ins/common/plugin-browser.c:645
+#: ../plug-ins/common/plugin-browser.c:647
 msgid "List View"
 msgstr "Vypsat seznam"
 
-#: ../plug-ins/common/plugin-browser.c:707
+#: ../plug-ins/common/plugin-browser.c:709
 msgid "Tree View"
 msgstr "Stromový pohled"
 
@@ -8221,7 +8224,7 @@ msgid "Smear"
 msgstr "Šmouha"
 
 #: ../plug-ins/common/warp.c:502 ../plug-ins/fits/fits.c:995
-#: ../plug-ins/flame/flame.c:1147 ../plug-ins/gfig/gfig-dialog.c:1466
+#: ../plug-ins/flame/flame.c:1147 ../plug-ins/gfig/gfig-dialog.c:1470
 msgid "Black"
 msgstr "Černá"
 
@@ -8691,8 +8694,8 @@ msgstr "Čtení FITS souboru"
 msgid "Replacement for undefined pixels"
 msgstr "Náhrada nedefinovaných pixelů"
 
-#: ../plug-ins/fits/fits.c:996 ../plug-ins/gfig/gfig-dialog.c:1292
-#: ../plug-ins/gfig/gfig-dialog.c:1467
+#: ../plug-ins/fits/fits.c:996 ../plug-ins/gfig/gfig-dialog.c:1296
+#: ../plug-ins/gfig/gfig-dialog.c:1471
 msgid "White"
 msgstr "Bílá"
 
@@ -8766,7 +8769,7 @@ msgstr "Vír"
 msgid "Horseshoe"
 msgstr "Koňská kopyta"
 
-#: ../plug-ins/flame/flame.c:747 ../plug-ins/gfig/gfig-dialog.c:1448
+#: ../plug-ins/flame/flame.c:747 ../plug-ins/gfig/gfig-dialog.c:1452
 msgid "Polar"
 msgstr "Polární záře"
 
@@ -8847,278 +8850,278 @@ msgid "Draws lines between the control points. Only during curve creation"
 msgstr "Kreslí čáry mezi řídicími body. Pouze během vytváření křivky"
 
 #. Start building the dialog up
-#: ../plug-ins/gfig/gfig-dialog.c:294
+#: ../plug-ins/gfig/gfig-dialog.c:298
 msgid "Gfig"
 msgstr "Gfig"
 
 #. Tool options notebook
-#: ../plug-ins/gfig/gfig-dialog.c:345
+#: ../plug-ins/gfig/gfig-dialog.c:349
 msgid "Tool Options"
 msgstr "Volby nástroje"
 
-#: ../plug-ins/gfig/gfig-dialog.c:362
+#: ../plug-ins/gfig/gfig-dialog.c:366
 msgid "_Stroke"
 msgstr "_Vykreslit"
 
 #. Fill frame on right side
-#: ../plug-ins/gfig/gfig-dialog.c:409
+#: ../plug-ins/gfig/gfig-dialog.c:413
 msgid "Fill"
 msgstr "Vyplnit"
 
-#: ../plug-ins/gfig/gfig-dialog.c:423
+#: ../plug-ins/gfig/gfig-dialog.c:427
 msgid "No fill"
 msgstr "Žádné vyplňování"
 
-#: ../plug-ins/gfig/gfig-dialog.c:424
+#: ../plug-ins/gfig/gfig-dialog.c:428
 msgid "Color fill"
 msgstr "Vyplnění barvou"
 
-#: ../plug-ins/gfig/gfig-dialog.c:425
+#: ../plug-ins/gfig/gfig-dialog.c:429
 msgid "Pattern fill"
 msgstr "Vyplnění vzorkem"
 
-#: ../plug-ins/gfig/gfig-dialog.c:426
+#: ../plug-ins/gfig/gfig-dialog.c:430
 msgid "Shape gradient"
 msgstr "Přechod tvaru"
 
-#: ../plug-ins/gfig/gfig-dialog.c:427
+#: ../plug-ins/gfig/gfig-dialog.c:431
 msgid "Vertical gradient"
 msgstr "Svislý přechod"
 
-#: ../plug-ins/gfig/gfig-dialog.c:428
+#: ../plug-ins/gfig/gfig-dialog.c:432
 msgid "Horizontal gradient"
 msgstr "Vodorovný přechod"
 
 #. "show image" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:488
+#: ../plug-ins/gfig/gfig-dialog.c:492
 msgid "Show image"
 msgstr "Zobrazit obrázek"
 
 #. "show grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:510
+#: ../plug-ins/gfig/gfig-dialog.c:514
 msgid "Show grid"
 msgstr "Zobrazovat mřížku"
 
-#: ../plug-ins/gfig/gfig-dialog.c:645
+#: ../plug-ins/gfig/gfig-dialog.c:649
 msgid "Load Gfig Object Collection"
 msgstr "Načíst kolekci objektů Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:694
+#: ../plug-ins/gfig/gfig-dialog.c:698
 msgid "Save Gfig Drawing"
 msgstr "Uložit kresbu Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:837
+#: ../plug-ins/gfig/gfig-dialog.c:841
 msgid "First Gfig"
 msgstr "První Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:876
+#: ../plug-ins/gfig/gfig-dialog.c:880
 msgid "_Undo"
 msgstr "_Zpět"
 
-#: ../plug-ins/gfig/gfig-dialog.c:880
+#: ../plug-ins/gfig/gfig-dialog.c:884
 msgid "_Clear"
 msgstr "Vy_mazat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:884
+#: ../plug-ins/gfig/gfig-dialog.c:888
 msgid "_Grid"
 msgstr "_Mřížka"
 
-#: ../plug-ins/gfig/gfig-dialog.c:892
+#: ../plug-ins/gfig/gfig-dialog.c:896
 msgid "Raise selected object"
 msgstr "Zvýšit zvolený objekt"
 
-#: ../plug-ins/gfig/gfig-dialog.c:896
+#: ../plug-ins/gfig/gfig-dialog.c:900
 msgid "Lower selected object"
 msgstr "Snížit zvolený objekt"
 
-#: ../plug-ins/gfig/gfig-dialog.c:900
+#: ../plug-ins/gfig/gfig-dialog.c:904
 msgid "Raise selected object to top"
 msgstr "Zvýšit zvolený objekt nahoru"
 
-#: ../plug-ins/gfig/gfig-dialog.c:904
+#: ../plug-ins/gfig/gfig-dialog.c:908
 msgid "Lower selected object to bottom"
 msgstr "Snížit zvolený objekt dospod"
 
-#: ../plug-ins/gfig/gfig-dialog.c:908
+#: ../plug-ins/gfig/gfig-dialog.c:912
 msgid "Show previous object"
 msgstr "Zobrazit předchozí objekt"
 
-#: ../plug-ins/gfig/gfig-dialog.c:912
+#: ../plug-ins/gfig/gfig-dialog.c:916
 msgid "Show next object"
 msgstr "Zobrazit další objekt"
 
-#: ../plug-ins/gfig/gfig-dialog.c:916 ../plug-ins/gfig/gfig-stock.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:920 ../plug-ins/gfig/gfig-stock.c:53
 msgid "Show all objects"
 msgstr "Zobrazit všechny objekty"
 
-#: ../plug-ins/gfig/gfig-dialog.c:922 ../plug-ins/gfig/gfig-stock.c:47
+#: ../plug-ins/gfig/gfig-dialog.c:926 ../plug-ins/gfig/gfig-stock.c:47
 msgid "Create line"
 msgstr "Vytvořit čáru"
 
-#: ../plug-ins/gfig/gfig-dialog.c:925 ../plug-ins/gfig/gfig-stock.c:51
+#: ../plug-ins/gfig/gfig-dialog.c:929 ../plug-ins/gfig/gfig-stock.c:51
 msgid "Create rectangle"
 msgstr "Vytvořit obdélník"
 
-#: ../plug-ins/gfig/gfig-dialog.c:928 ../plug-ins/gfig/gfig-stock.c:42
+#: ../plug-ins/gfig/gfig-dialog.c:932 ../plug-ins/gfig/gfig-stock.c:42
 msgid "Create circle"
 msgstr "Vytvořit kružnici"
 
-#: ../plug-ins/gfig/gfig-dialog.c:931 ../plug-ins/gfig/gfig-stock.c:46
+#: ../plug-ins/gfig/gfig-dialog.c:935 ../plug-ins/gfig/gfig-stock.c:46
 msgid "Create ellipse"
 msgstr "Vytvořit elipsu"
 
-#: ../plug-ins/gfig/gfig-dialog.c:934 ../plug-ins/gfig/gfig-stock.c:44
+#: ../plug-ins/gfig/gfig-dialog.c:938 ../plug-ins/gfig/gfig-stock.c:44
 msgid "Create arc"
 msgstr "Vytvořit výseč"
 
-#: ../plug-ins/gfig/gfig-dialog.c:937 ../plug-ins/gfig/gfig-stock.c:50
+#: ../plug-ins/gfig/gfig-dialog.c:941 ../plug-ins/gfig/gfig-stock.c:50
 msgid "Create reg polygon"
 msgstr "Vytvořit pravidelný mnohoúhelník"
 
-#: ../plug-ins/gfig/gfig-dialog.c:940 ../plug-ins/gfig/gfig-stock.c:55
+#: ../plug-ins/gfig/gfig-dialog.c:944 ../plug-ins/gfig/gfig-stock.c:55
 msgid "Create star"
 msgstr "Vytvořit hvězdu"
 
-#: ../plug-ins/gfig/gfig-dialog.c:943 ../plug-ins/gfig/gfig-stock.c:54
+#: ../plug-ins/gfig/gfig-dialog.c:947 ../plug-ins/gfig/gfig-stock.c:54
 msgid "Create spiral"
 msgstr "Vytvořit spirálu"
 
-#: ../plug-ins/gfig/gfig-dialog.c:946
+#: ../plug-ins/gfig/gfig-dialog.c:950
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr ""
 "Vytváří Beziérovu křivku. Přeřaďovač + tlačítko myši ukončuje vytváření "
 "objektu."
 
-#: ../plug-ins/gfig/gfig-dialog.c:950 ../plug-ins/gfig/gfig-stock.c:48
+#: ../plug-ins/gfig/gfig-dialog.c:954 ../plug-ins/gfig/gfig-stock.c:48
 msgid "Move an object"
 msgstr "Přesunout objekt"
 
-#: ../plug-ins/gfig/gfig-dialog.c:953 ../plug-ins/gfig/gfig-stock.c:49
+#: ../plug-ins/gfig/gfig-dialog.c:957 ../plug-ins/gfig/gfig-stock.c:49
 msgid "Move a single point"
 msgstr "Přesunout jeden bod"
 
-#: ../plug-ins/gfig/gfig-dialog.c:956 ../plug-ins/gfig/gfig-stock.c:43
+#: ../plug-ins/gfig/gfig-dialog.c:960 ../plug-ins/gfig/gfig-stock.c:43
 msgid "Copy an object"
 msgstr "Kopírovat objekt"
 
-#: ../plug-ins/gfig/gfig-dialog.c:959 ../plug-ins/gfig/gfig-stock.c:45
+#: ../plug-ins/gfig/gfig-dialog.c:963 ../plug-ins/gfig/gfig-stock.c:45
 msgid "Delete an object"
 msgstr "Odstranit objekt"
 
-#: ../plug-ins/gfig/gfig-dialog.c:962 ../plug-ins/gfig/gfig-stock.c:52
+#: ../plug-ins/gfig/gfig-dialog.c:966 ../plug-ins/gfig/gfig-stock.c:52
 msgid "Select an object"
 msgstr "Zvolte objekt"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1044
+#: ../plug-ins/gfig/gfig-dialog.c:1048
 msgid "This tool has no options"
 msgstr "Tento nástroj nemá možnosti"
 
 #. Put buttons in
-#: ../plug-ins/gfig/gfig-dialog.c:1234
+#: ../plug-ins/gfig/gfig-dialog.c:1238
 msgid "Show position"
 msgstr "Zobrazit polohu"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1246
+#: ../plug-ins/gfig/gfig-dialog.c:1250
 msgid "Show control points"
 msgstr "Zobrazit řídicí body"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1280
+#: ../plug-ins/gfig/gfig-dialog.c:1284
 msgid "Max undo:"
 msgstr "Nejvíce vracení:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1289
+#: ../plug-ins/gfig/gfig-dialog.c:1293
 #: ../plug-ins/gimpressionist/general.c:166
 msgid "Transparent"
 msgstr "Průhledné"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1291
+#: ../plug-ins/gfig/gfig-dialog.c:1295
 msgid "Foreground"
 msgstr "Popředí"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1293 ../plug-ins/imagemap/imap_cmd_copy.c:54
+#: ../plug-ins/gfig/gfig-dialog.c:1297 ../plug-ins/imagemap/imap_cmd_copy.c:54
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:55
 msgid "Copy"
 msgstr "Kopírovat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1302
+#: ../plug-ins/gfig/gfig-dialog.c:1306
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
 msgstr "Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
 
-#: ../plug-ins/gfig/gfig-dialog.c:1308
+#: ../plug-ins/gfig/gfig-dialog.c:1312
 msgid "Background:"
 msgstr "Pozadí:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1311
+#: ../plug-ins/gfig/gfig-dialog.c:1315
 msgid "Feather"
 msgstr "Zaoblení"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1335
+#: ../plug-ins/gfig/gfig-dialog.c:1339
 msgid "Radius:"
 msgstr "Poloměr:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1392
+#: ../plug-ins/gfig/gfig-dialog.c:1396
 msgid "Grid spacing:"
 msgstr "Rozestup mřížky:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1409
+#: ../plug-ins/gfig/gfig-dialog.c:1413
 msgid "Polar grid sectors desired:"
 msgstr "Požadované sektory polární mřížky:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1431
+#: ../plug-ins/gfig/gfig-dialog.c:1435
 msgid "Polar grid radius interval:"
 msgstr "Interval poloměru polární mřížky:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1447
+#: ../plug-ins/gfig/gfig-dialog.c:1451
 msgid "Rectangle"
 msgstr "Obdélník"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1449
+#: ../plug-ins/gfig/gfig-dialog.c:1453
 msgid "Isometric"
 msgstr "Isometrická"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1458
+#: ../plug-ins/gfig/gfig-dialog.c:1462
 msgid "Grid type:"
 msgstr "Typ mřížky:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1465 ../plug-ins/gflare/gflare.c:556
+#: ../plug-ins/gfig/gfig-dialog.c:1469 ../plug-ins/gflare/gflare.c:556
 msgid "Normal"
 msgstr "Normální"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1468
+#: ../plug-ins/gfig/gfig-dialog.c:1472
 msgid "Grey"
 msgstr "Šedá"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1469
+#: ../plug-ins/gfig/gfig-dialog.c:1473
 msgid "Darker"
 msgstr "Tmavší"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1470
+#: ../plug-ins/gfig/gfig-dialog.c:1474
 msgid "Lighter"
 msgstr "Světlejší"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1471
+#: ../plug-ins/gfig/gfig-dialog.c:1475
 msgid "Very dark"
 msgstr "Velmi tmavá"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1480
+#: ../plug-ins/gfig/gfig-dialog.c:1484
 msgid "Grid color:"
 msgstr "Barva mřížky:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1703
+#: ../plug-ins/gfig/gfig-dialog.c:1707
 msgid "Sides:"
 msgstr "Strany:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1713
+#: ../plug-ins/gfig/gfig-dialog.c:1717
 msgid "Right"
 msgstr "Doprava"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1714
+#: ../plug-ins/gfig/gfig-dialog.c:1718
 msgid "Left"
 msgstr "Doleva"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1724
+#: ../plug-ins/gfig/gfig-dialog.c:1728
 #: ../plug-ins/gimpressionist/orientation.c:130
 msgid "Orientation:"
 msgstr "Orientace:"
@@ -9160,21 +9163,21 @@ msgstr "Počet bodů hvězdy"
 msgid "Create bezier curve"
 msgstr "Vytvořit Beziérovu křivku"
 
-#: ../plug-ins/gfig/gfig.c:117
+#: ../plug-ins/gfig/gfig.c:124
 msgid "Create geometric shapes"
 msgstr "Vytvořit geometrické tvary"
 
-#: ../plug-ins/gfig/gfig.c:128
+#: ../plug-ins/gfig/gfig.c:135
 msgid "_Gfig..."
 msgstr "_Gfig..."
 
-#: ../plug-ins/gfig/gfig.c:724
+#: ../plug-ins/gfig/gfig.c:731
 msgid "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Chyba při pokusu uložit obrázek jako parazita: nemohu připojit parazita k "
 "drawable."
 
-#: ../plug-ins/gfig/gfig.c:751
+#: ../plug-ins/gfig/gfig.c:758
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr "Chyba při pokusu otevřít dočasný soubor '%s' pro načtení parazita: %s"
