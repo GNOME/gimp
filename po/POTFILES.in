@@ -253,9 +253,9 @@ app/text/gimptextlayer.c
 app/text/gimptextlayer-transform.c
 app/text/gimptextlayer-xcf.c
 
-app/tools/tools-enums.c
 app/tools/gimp-tools.c
 app/tools/gimpairbrushtool.c
+app/tools/gimpaligntool.c
 app/tools/gimpblendoptions.c
 app/tools/gimpblendtool.c
 app/tools/gimpbrightnesscontrasttool.c
@@ -279,9 +279,9 @@ app/tools/gimpellipseselecttool.c
 app/tools/gimperasertool.c
 app/tools/gimpflipoptions.c
 app/tools/gimpfliptool.c
-app/tools/gimpfreeselecttool.c
 app/tools/gimpforegroundselectoptions.c
 app/tools/gimpforegroundselecttool.c
+app/tools/gimpfreeselecttool.c
 app/tools/gimpfuzzyselecttool.c
 app/tools/gimphistogramoptions.c
 app/tools/gimphuesaturationtool.c
@@ -303,9 +303,9 @@ app/tools/gimppenciltool.c
 app/tools/gimpperspectivetool.c
 app/tools/gimpposterizetool.c
 app/tools/gimprectangleoptions.c
-app/tools/gimprectangletool.c
 app/tools/gimprectangleselectoptions.c
 app/tools/gimprectangleselecttool.c
+app/tools/gimprectangletool.c
 app/tools/gimprotatetool.c
 app/tools/gimpscaletool.c
 app/tools/gimpselectionoptions.c
@@ -321,6 +321,7 @@ app/tools/gimptransformtool.c
 app/tools/gimpvectoroptions.c
 app/tools/gimpvectortool.c
 app/tools/tool_manager.c
+app/tools/tools-enums.c
 
 app/vectors/gimpvectors.c
 app/vectors/gimpvectors-export.c

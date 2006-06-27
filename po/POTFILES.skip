@@ -1,5 +1,2 @@
-app/tools/gimpalignoptions.c
-app/tools/gimpaligntool.c
-app/tools/gimpnewrectselecttool.c
-
 data/tips/gimp-tips.xml.in
+desktop/gimp.desktop.in
