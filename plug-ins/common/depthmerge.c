@@ -39,9 +39,8 @@
 #define MUL255(i) ((i)*256 - (i))
 #define DIV255(i) (((i) + (i)/256 + 1) / 256)
 
-#define PLUG_IN_NAME    "plug_in_depth_merge"
-#define PLUG_IN_VERSION "1.0.0; 14 August 1998"
-#define HELP_ID         "plug-in-depth-merge"
+#define PLUG_IN_PROC    "plug-in-depth-merge"
+#define PLUG_IN_VERSION "August 1998"
 
 #define PREVIEW_SIZE    256
 
@@ -180,7 +179,7 @@ query (void)
     { GIMP_PDB_FLOAT,    "scale2",    "Depth relative scale 2" }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           N_("Combine two images using depth maps (z-buffers)"),
                           "Taking as input two full-color, full-alpha "
                             "images and two corresponding grayscale depth "
@@ -196,7 +195,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Combine");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Combine");
 }
 
 static void
@@ -223,7 +222,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       DepthMerge_initParams (&dm);
-      gimp_get_data (PLUG_IN_NAME, &(dm.params));
+      gimp_get_data (PLUG_IN_PROC, &(dm.params));
       dm.params.result = param[2].data.d_drawable;
       DepthMerge_construct (&dm);
       if (!DepthMerge_dialog (&dm))
@@ -255,7 +254,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       DepthMerge_initParams (&dm);
-      gimp_get_data (PLUG_IN_NAME, &(dm.params));
+      gimp_get_data (PLUG_IN_PROC, &(dm.params));
       DepthMerge_construct (&dm);
       break;
 
@@ -275,7 +274,7 @@ run (const gchar      *name,
           if (runMode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
           if (runMode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data (PLUG_IN_NAME,
+            gimp_set_data (PLUG_IN_PROC,
                            &(dm.params), sizeof (DepthMergeParams));
         }
     }
@@ -643,7 +642,7 @@ DepthMerge_dialog (DepthMerge *dm)
   dm->interface->dialog =
     dialog = gimp_dialog_new (_("Depth Merge"), "depthmerge",
                               NULL, 0,
-                              gimp_standard_help_func, HELP_ID,
+                              gimp_standard_help_func, PLUG_IN_PROC,
 
                               GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                               GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -34,7 +34,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_PROC    "plug_in_illusion"
+#define PLUG_IN_PROC    "plug-in-illusion"
 #define PLUG_IN_BINARY  "illusion"
 #define PLUG_IN_VERSION "v0.8 (May 14 2000)"
 

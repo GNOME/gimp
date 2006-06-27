@@ -310,7 +310,7 @@ script_fu_extension_init (void)
 			  args, NULL,
 			  script_fu_refresh_proc);
 
-  gimp_plugin_menu_register ("script_fu_refresh",
+  gimp_plugin_menu_register ("script-fu-refresh",
                              N_("<Toolbox>/Xtns/Languages/Script-Fu"));
 }
 

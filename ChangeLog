@@ -1,5 +1,14 @@
 2006-06-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/depthmerge.c
+	* plug-ins/common/illusion.c
+	* plug-ins/script-fu/script-fu.c some more canonical procedure
+	names that we missed earlier.
+
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/CML_explorer.c
 	* plug-ins/common/curve_bend.c
 	* plug-ins/common/depthmerge.c
