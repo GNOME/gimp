@@ -367,29 +367,15 @@ class FontSelector(gtk.HBox):
 
     def get_value(self):
         return self.selected
-                
+
 class FileSelector(gtk.HBox):
     def __init__(self, default=""):
         gtk.HBox.__init__(self, False, 5)
-        self.entry = gtk.Entry()
-        self.pack_start(self.entry)
-        self.entry.show()
-        self.button = gtk.Button("...")
-        self.button.connect("clicked", self.show_dialog)
-        self.pack_start(self.button, expand=False)
+        self.button = gtk.FileChooserButton("Pick a file")
+        self.pack_start(self.button, False, False, 6)
+        self.button.set_filename (default)
         self.button.show()
 
-        self.dialog = gtk.FileSelection("Files")
-        self.dialog.set_default_size(400, 300)
-        def delete_event(win, event):
-            win.hide()
-            return True
-        self.dialog.connect("delete_event", delete_event)
-
-        self.dialog.set_filename(default)
-        self.selected = self.dialog.get_filename()
-        self.entry.set_text(self.selected)
-                
     def show_dialog(self, button):
         self.dialog.show()
         response = self.dialog.run()
@@ -400,4 +386,4 @@ class FileSelector(gtk.HBox):
             self.entry.set_text(self.selected)
 
     def get_value(self):
-        return self.selected
+        return self.button.get_filename ()
