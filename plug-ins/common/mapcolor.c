@@ -122,21 +122,21 @@ query (void)
 {
   static const GimpParamDef adjust_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image (not used)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable to adjust" }
   };
 
   static const GimpParamDef map_args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",   "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",      "Input image (not used)" },
     { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable where colors are to map" },
-    { GIMP_PDB_COLOR,    "srccolor_1", "First source color" },
-    { GIMP_PDB_COLOR,    "srccolor_2", "Second source color" },
-    { GIMP_PDB_COLOR,    "dstcolor_1", "First destination color" },
-    { GIMP_PDB_COLOR,    "dstcolor_2", "Second destination color" },
-    { GIMP_PDB_INT32,    "map_mode",   "Mapping mode (0: linear, others reserved)" }
+    { GIMP_PDB_COLOR,    "srccolor-1", "First source color" },
+    { GIMP_PDB_COLOR,    "srccolor-2", "Second source color" },
+    { GIMP_PDB_COLOR,    "dstcolor-1", "First destination color" },
+    { GIMP_PDB_COLOR,    "dstcolor-2", "Second destination color" },
+    { GIMP_PDB_INT32,    "map-mode",   "Mapping mode (0: linear, others reserved)" }
   };
 
   gimp_install_procedure (COLOR_ADJUST_PROC,

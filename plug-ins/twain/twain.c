@@ -281,11 +281,11 @@ initializeTwain(void)
  * Plug-in Parameter definitions
  */
 #define NUMBER_IN_ARGS 1
-#define IN_ARGS { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" }
+#define IN_ARGS { GIMP_PDB_INT32, "run-mode", "Interactive, non-interactive" }
 #define NUMBER_OUT_ARGS 2
 #define OUT_ARGS \
-	{ GIMP_PDB_INT32, "image_count", "Number of acquired images" }, \
-	{ GIMP_PDB_INT32ARRAY, "image_ids", "Array of acquired image identifiers" }
+	{ GIMP_PDB_INT32, "image-count", "Number of acquired images" }, \
+	{ GIMP_PDB_INT32ARRAY, "image-ids", "Array of acquired image identifiers" }
 
 
 /*

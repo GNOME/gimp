@@ -75,7 +75,7 @@ query (void)
 {
   static const GimpParamDef args [] =
   {
-    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",     "Input image (not used)"       },
     { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"               },
     { GIMP_PDB_INT32,    "threshold", "Threshold"                    }

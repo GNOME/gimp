@@ -35,7 +35,7 @@
 
 #define PLUG_IN_PROC     "plug-in-despeckle"
 #define PLUG_IN_BINARY   "despeckle"
-#define PLUG_IN_VERSION  "1.3.2 - 17 May 1998"
+#define PLUG_IN_VERSION  "May 1998"
 #define SCALE_WIDTH      100
 #define ENTRY_WIDTH        3
 #define MAX_RADIUS        20
@@ -133,7 +133,7 @@ query (void)
 {
   static const GimpParamDef   args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_INT32,    "radius",   "Filter box radius (default = 3)" },

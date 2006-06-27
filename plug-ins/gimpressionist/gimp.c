@@ -64,7 +64,7 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",  "Interactive"    },
+    { GIMP_PDB_INT32,    "run-mode",  "Interactive"    },
     { GIMP_PDB_IMAGE,    "image",     "Input image"    },
     { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
     { GIMP_PDB_STRING,   "preset",    "Preset Name"    },

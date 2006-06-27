@@ -62,6 +62,9 @@
 #define ZOOMED(x) (_zoom_factor * (x))
 #define GET_REAL_COORD(x) ((x) / _zoom_factor)
 
+#define PLUG_IN_PROC "plug-in-imagemap"
+
+
 /* Global variables */
 static MapInfo_t   _map_info;
 static PreferencesData_t _preferences = {CSIM, TRUE, FALSE, TRUE, TRUE, FALSE,
@@ -108,14 +111,14 @@ MAIN ()
 static void query(void)
 {
    static const GimpParamDef args[] = {
-      {GIMP_PDB_INT32, "run_mode", "Interactive"},
-      {GIMP_PDB_IMAGE, "image", "Input image (unused)"},
+      {GIMP_PDB_INT32,    "run-mode", "Interactive"},
+      {GIMP_PDB_IMAGE,    "image",    "Input image (unused)"},
       {GIMP_PDB_DRAWABLE, "drawable", "Input drawable"},
    };
    static const GimpParamDef *return_vals = NULL;
    static int nreturn_vals = 0;
 
-   gimp_install_procedure("plug_in_imagemap",
+   gimp_install_procedure(PLUG_IN_PROC,
                           N_("Create a clickable imagemap"),
                           "",
                           "Maurits Rijk",
@@ -127,7 +130,7 @@ static void query(void)
                           G_N_ELEMENTS (args), nreturn_vals,
                           args, return_vals);
 
-   gimp_plugin_menu_register ("plug_in_imagemap", "<Image>/Filters/Web");
+   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Web");
 }
 
 static void

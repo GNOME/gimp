@@ -1,4 +1,28 @@
-2006-06-27  Sven Neumann  <neumann@jpk.com>
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/depthmerge.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/fractaltrace.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/mblur.c
+	* plug-ins/common/png.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/tga.c
+	* plug-ins/common/threshold_alpha.c
+	* plug-ins/common/tiler.c
+	* plug-ins/common/unsharp.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/gimpressionist/gimp.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/twain/twain.c
+	* plug-ins/winsnap/winsnap.c: use canonical parameter names.
+
+2006-06-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/FractalExplorer/FractalExplorer.c
 	* plug-ins/Lighting/lighting_main.c

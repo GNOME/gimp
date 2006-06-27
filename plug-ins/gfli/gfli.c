@@ -106,37 +106,38 @@ const GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-GimpParamDef load_args[] =
+static const GimpParamDef load_args[] =
 {
-  { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-  { GIMP_PDB_STRING, "filename", "The name of the file to load" },
-  { GIMP_PDB_STRING, "raw_filename", "The name entered" },
-  { GIMP_PDB_INT32, "from_frame", "Load beginning from this frame" },
-  { GIMP_PDB_INT32, "to_frame", "End loading with this frame" },
+  { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive"   },
+  { GIMP_PDB_STRING, "filename",     "The name of the file to load"   },
+  { GIMP_PDB_STRING, "raw-filename", "The name entered"               },
+  { GIMP_PDB_INT32,  "from-frame",   "Load beginning from this frame" },
+  { GIMP_PDB_INT32,  "to-frame",     "End loading with this frame"    }
 };
-GimpParamDef load_return_vals[] =
+
+static const GimpParamDef load_return_vals[] =
 {
   { GIMP_PDB_IMAGE, "image", "Output image" },
 };
 
-GimpParamDef save_args[] =
+static const GimpParamDef save_args[] =
 {
-  { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-  { GIMP_PDB_IMAGE, "image", "Input image" },
-  { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)" },
-  { GIMP_PDB_STRING, "filename", "The name of the file to save" },
-  { GIMP_PDB_STRING, "raw_filename", "The name entered" },
-  { GIMP_PDB_INT32, "from_frame", "Save beginning from this frame" },
-  { GIMP_PDB_INT32, "to_frame", "End saving with this frame" },
+  { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
+  { GIMP_PDB_IMAGE,    "image",        "Input image" },
+  { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable (unused)" },
+  { GIMP_PDB_STRING,   "filename",     "The name of the file to save" },
+  { GIMP_PDB_STRING,   "raw-filename", "The name entered" },
+  { GIMP_PDB_INT32,    "from-frame",   "Save beginning from this frame" },
+  { GIMP_PDB_INT32,    "to-frame",     "End saving with this frame" },
 };
 
-GimpParamDef info_args[] =
+static const GimpParamDef info_args[] =
 {
   { GIMP_PDB_STRING, "filename", "The name of the file to get info" },
 };
-GimpParamDef info_return_vals[] =
+static const GimpParamDef info_return_vals[] =
 {
-  { GIMP_PDB_INT32, "width", "Width of one frame" },
+  { GIMP_PDB_INT32, "width",  "Width of one frame" },
   { GIMP_PDB_INT32, "height", "Height of one frame" },
   { GIMP_PDB_INT32, "frames", "Number of Frames" },
 };
@@ -194,7 +195,7 @@ query (void)
    * Utility functions:
    */
   gimp_install_procedure (INFO_PROC,
-			  "Get info about a Fli movie",
+			  "Get information about a Fli movie",
 			  "This is a experimantal plug-in to handle FLI movies",
 			  "Jens Ch. Restemeier",
 			  "Jens Ch. Restemeier",

@@ -152,15 +152,15 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",     "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
-    { GIMP_PDB_INT32,     "type",      "Type of motion blur (0 - linear, 1 - radial, 2 - zoom)" },
+    { GIMP_PDB_INT32,    "type",      "Type of motion blur (0 - linear, 1 - radial, 2 - zoom)" },
     { GIMP_PDB_INT32,     "length",    "Length" },
     { GIMP_PDB_INT32,     "angle",     "Angle" },
-    { GIMP_PDB_FLOAT,     "center_x",     "Center X (optional)" },
-    { GIMP_PDB_FLOAT,     "center_y",     "Center Y (optional)" },
-    { GIMP_PDB_INT32,     "blur_outward", "For radial, 1 for outward, 0 for inward (optional)" },
+    { GIMP_PDB_FLOAT,     "center-x",     "Center X (optional)" },
+    { GIMP_PDB_FLOAT,     "center-y",     "Center Y (optional)" },
+    { GIMP_PDB_INT32,     "blur-outward", "For radial, 1 for outward, 0 for inward (optional)" },
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

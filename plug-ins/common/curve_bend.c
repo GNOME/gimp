@@ -483,39 +483,39 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,      "run_mode", "Interactive, non-interactive"},
+    { GIMP_PDB_INT32,      "run-mode", "Interactive, non-interactive"},
     { GIMP_PDB_IMAGE,      "image", "Input image" },
     { GIMP_PDB_DRAWABLE,   "drawable", "Input drawable (must be a layer without layermask)"},
     { GIMP_PDB_FLOAT,      "rotation", "Direction {angle 0 to 360 degree } of the bend effect"},
     { GIMP_PDB_INT32,      "smoothing", "Smoothing { TRUE, FALSE }"},
     { GIMP_PDB_INT32,      "antialias", "Antialias { TRUE, FALSE }"},
-    { GIMP_PDB_INT32,      "work_on_copy", "{ TRUE, FALSE } TRUE: copy the drawable and bend the copy"},
-    { GIMP_PDB_INT32,      "curve_type", " { 0, 1 } 0 == smooth (use 17 points), 1 == freehand (use 256 val_y) "},
-    { GIMP_PDB_INT32,      "argc_upper_point_x", "{2 <= argc <= 17} "},
-    { GIMP_PDB_FLOATARRAY, "upper_point_x", "array of 17 x point_koords { 0.0 <= x <= 1.0 or -1 for unused point }"},
-    { GIMP_PDB_INT32,      "argc_upper_point_y", "{2 <= argc <= 17} "},
-    { GIMP_PDB_FLOATARRAY, "upper_point_y", "array of 17 y point_koords { 0.0 <= y <= 1.0 or -1 for unused point }"},
-    { GIMP_PDB_INT32,      "argc_lower_point_x", "{2 <= argc <= 17} "},
-    { GIMP_PDB_FLOATARRAY, "lower_point_x", "array of 17 x point_koords { 0.0 <= x <= 1.0 or -1 for unused point }"},
-    { GIMP_PDB_INT32,      "argc_lower_point_y", "{2 <= argc <= 17} "},
+    { GIMP_PDB_INT32,      "work-on-copy", "{ TRUE, FALSE } TRUE: copy the drawable and bend the copy"},
+    { GIMP_PDB_INT32,      "curve-type", " { 0, 1 } 0 == smooth (use 17 points), 1 == freehand (use 256 val_y) "},
+    { GIMP_PDB_INT32,      "argc-upper-point-x", "{2 <= argc <= 17} "},
+    { GIMP_PDB_FLOATARRAY, "upper-point-x", "array of 17 x point_koords { 0.0 <= x <= 1.0 or -1 for unused point }"},
+    { GIMP_PDB_INT32,      "argc-upper-point-y", "{2 <= argc <= 17} "},
+    { GIMP_PDB_FLOATARRAY, "upper-point-y", "array of 17 y point_koords { 0.0 <= y <= 1.0 or -1 for unused point }"},
+    { GIMP_PDB_INT32,      "argc-lower_point-x", "{2 <= argc <= 17} "},
+    { GIMP_PDB_FLOATARRAY, "lower-point-x", "array of 17 x point_koords { 0.0 <= x <= 1.0 or -1 for unused point }"},
+    { GIMP_PDB_INT32,      "argc-lower-point-y", "{2 <= argc <= 17} "},
     { GIMP_PDB_FLOATARRAY, "lower_point_y", "array of 17 y point_koords { 0.0 <= y <= 1.0 or -1 for unused point }"},
-    { GIMP_PDB_INT32,      "argc_upper_val_y", "{ 256 } "},
-    { GIMP_PDB_INT8ARRAY,  "upper_val_y",   "array of 256 y freehand koord { 0 <= y <= 255 }"},
-    { GIMP_PDB_INT32,      "argc_lower_val_y", "{ 256 } "},
-    { GIMP_PDB_INT8ARRAY,  "lower_val_y",   "array of 256 y freehand koord { 0 <= y <= 255 }"}
+    { GIMP_PDB_INT32,      "argc-upper-val-y", "{ 256 } "},
+    { GIMP_PDB_INT8ARRAY,  "upper-val-y",   "array of 256 y freehand koord { 0 <= y <= 255 }"},
+    { GIMP_PDB_INT32,      "argc-lower-val-y", "{ 256 } "},
+    { GIMP_PDB_INT8ARRAY,  "lower-val-y",   "array of 256 y freehand koord { 0 <= y <= 255 }"}
   };
 
   static const GimpParamDef return_vals[] =
   {
-    { GIMP_PDB_LAYER, "bent_layer", "the handled layer" }
+    { GIMP_PDB_LAYER, "bent-layer", "the handled layer" }
   };
 
   static const GimpParamDef args_iter[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "non-interactive" },
-    { GIMP_PDB_INT32, "total_steps", "total number of steps (# of layers-1 to apply the related plug-in)" },
-    { GIMP_PDB_FLOAT, "current_step", "current (for linear iterations this is the layerstack position, otherwise some value inbetween)" },
-    { GIMP_PDB_INT32, "len_struct", "length of stored data structure with id is equal to the plug_in  proc_name" },
+    { GIMP_PDB_INT32, "run-mode", "non-interactive" },
+    { GIMP_PDB_INT32, "total-steps", "total number of steps (# of layers-1 to apply the related plug-in)" },
+    { GIMP_PDB_FLOAT, "current-step", "current (for linear iterations this is the layerstack position, otherwise some value inbetween)" },
+    { GIMP_PDB_INT32, "len-struct", "length of stored data structure with id is equal to the plug_in  proc_name" },
   };
 
   /* the actual installation of the bend plugin */

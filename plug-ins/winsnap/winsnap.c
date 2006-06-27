@@ -962,7 +962,7 @@ snap_dialog (void)
  * Plug-in Parameter definitions
  */
 #define NUMBER_IN_ARGS 3
-#define IN_ARGS { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },\
+#define IN_ARGS { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive" },\
                 { GIMP_PDB_INT32,    "root",      "Root window { TRUE, FALSE }" },\
                 { GIMP_PDB_INT32,    "decorations", \
 									"Include Window Decorations { TRUE, FALSE }" }

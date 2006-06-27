@@ -119,7 +119,7 @@ query (void)
 {
   static const GimpParamDef args[] =
     {
-      { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+      { GIMP_PDB_INT32,    "run-mode",  "Interactive, non-interactive" },
       { GIMP_PDB_IMAGE,    "image",     "(unused)" },
       { GIMP_PDB_DRAWABLE, "drawable",  "Drawable to draw on" },
       { GIMP_PDB_FLOAT,    "radius",    "Radius of gaussian blur (in pixels > 1.0)" },

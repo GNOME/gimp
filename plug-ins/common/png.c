@@ -201,11 +201,11 @@ query (void)
   };
 
 #define COMMON_SAVE_ARGS \
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" }, \
+    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" }, \
     { GIMP_PDB_IMAGE,    "image",        "Input image"                  }, \
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             }, \
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in"}, \
-    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in"}
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in"}
 
 #define OLD_CONFIG_ARGS \
     { GIMP_PDB_INT32, "interlace",   "Use Adam7 interlacing?"            }, \

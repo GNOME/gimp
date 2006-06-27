@@ -71,23 +71,23 @@ script_fu_query (void)
 {
   static const GimpParamDef console_args[] =
   {
-    { GIMP_PDB_INT32,  "run_mode", "Interactive, [non-interactive]" }
+    { GIMP_PDB_INT32,  "run-mode", "Interactive, [non-interactive]" }
   };
 
   static const GimpParamDef textconsole_args[] =
   {
-    { GIMP_PDB_INT32,  "run_mode", "Interactive, [non-interactive]" }
+    { GIMP_PDB_INT32,  "run-mode", "Interactive, [non-interactive]" }
   };
 
   static const GimpParamDef eval_args[] =
   {
-    { GIMP_PDB_INT32,  "run_mode", "[Interactive], non-interactive" },
+    { GIMP_PDB_INT32,  "run-mode", "[Interactive], non-interactive" },
     { GIMP_PDB_STRING, "code",     "The code to evaluate" }
   };
 
   static const GimpParamDef server_args[] =
   {
-    { GIMP_PDB_INT32,  "run_mode", "[Interactive], non-interactive" },
+    { GIMP_PDB_INT32,  "run-mode", "[Interactive], non-interactive" },
     { GIMP_PDB_INT32,  "port",     "The port on which to listen for requests" },
     { GIMP_PDB_STRING, "logfile",  "The file to log server activity to" }
   };
@@ -106,7 +106,7 @@ script_fu_query (void)
 			  0, 0, NULL, NULL);
 
   gimp_install_procedure ("plug-in-script-fu-console",
-			  "Provides a console mode for script-fu development",
+			  N_("Interactive console for Script-Fu development"),
 			  "Provides an interface which allows interactive "
                           "scheme development.",
 			  "Spencer Kimball & Peter Mattis",
@@ -136,7 +136,7 @@ script_fu_query (void)
                           textconsole_args, NULL);
 
   gimp_install_procedure ("plug-in-script-fu-server",
-			  "Provides a server for remote script-fu operation",
+			  N_("Server for remote Script-Fu operation"),
 			  "Provides a server for remote script-fu operation",
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
@@ -261,7 +261,7 @@ script_fu_extension_init (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "[Interactive], non-interactive" }
+    { GIMP_PDB_INT32, "run-mode", "[Interactive], non-interactive" }
   };
 
   gimp_plugin_menu_branch_register ("<Toolbox>/Help", N_("_GIMP Online"));
@@ -298,7 +298,7 @@ script_fu_extension_init (void)
                                     N_("_Render"));
 
   gimp_install_temp_proc ("script-fu-refresh",
-			  "Re-read all available scripts",
+			  N_("Re-read all available Script-Fu scripts"),
 			  "Re-read all available scripts",
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
