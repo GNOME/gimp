@@ -1,5 +1,12 @@
 2006-06-27  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptransformtool.c (gimp_transform_tool_notify_type):
+	do not call bounds() and recalc() with a NULL display.  Added
+	sanity checks for the display parameter to both functions.
+	Fixes bug #345791.
+
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/imagemap/imap_menu.c: commented out the non-functional
 	Zoom menu.
 
