@@ -301,9 +301,14 @@ gimp_dock_delete_event (GtkWidget   *widget,
 
       gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                          _("Close all tabs?"));
+
       gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                 _("This window has %d tabs open. Closing the "
-                                   "window will also close all its tabs."), n);
+                                 ngettext ("This window has %d tab open. "
+                                           "Closing the window will also close "
+                                           "all its tabs.",
+                                           "This window has %d tabs open. "
+                                           "Closing the window will also close "
+                                           "all its tabs.", n), n);
 
       retval = (gimp_dialog_run (GIMP_DIALOG (dialog)) != GTK_RESPONSE_OK);
 

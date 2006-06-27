@@ -1180,9 +1180,14 @@ gimp_page_selector_selection_changed (GtkIconView      *icon_view,
       gchar *text;
 
       if (n_selected == priv->n_pages)
-        text = g_strdup_printf (_("All %d pages selected"), n_selected);
+        text = g_strdup_printf (ngettext ("All %d page selected",
+                                          "All %d pages selected", n_selected),
+                                n_selected);
       else
-        text = g_strdup_printf (_("%d pages selected"), n_selected);
+        text = g_strdup_printf (ngettext ("%d page selected",
+                                          "%d pages selected",
+                                          n_selected),
+                                n_selected);
 
       gtk_label_set_text (GTK_LABEL (priv->count_label), text);
       g_free (text);

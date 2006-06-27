@@ -383,7 +383,9 @@ browser_search (GimpBrowser   *gimp_browser,
 
   if (! search_text || strlen (search_text) == 0)
     {
-      str = g_strdup_printf (_("%d plug-ins"), num_plugins);
+      str = g_strdup_printf (ngettext ("%d plug-in", "%d plug-ins",
+                                       num_plugins),
+                             num_plugins);
     }
   else
     {

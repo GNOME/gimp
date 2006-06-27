@@ -380,13 +380,13 @@ midi_get_event_blurb (GimpController *controller,
       if (! midi_events[event_id].blurb)
         {
           if (event_id <= 127)
-            midi_events[event_id].blurb = g_strdup_printf ("Note %02x on",
+            midi_events[event_id].blurb = g_strdup_printf (_("Note %02x on"),
                                                            event_id);
           else if (event_id <= 255)
-            midi_events[event_id].blurb = g_strdup_printf ("Note %02x off",
+            midi_events[event_id].blurb = g_strdup_printf (_("Note %02x off"),
                                                            event_id - 128);
           else if (event_id <= 383)
-            midi_events[event_id].blurb = g_strdup_printf ("Controller %03d",
+            midi_events[event_id].blurb = g_strdup_printf (_("Controller %03d"),
                                                            event_id - 256);
         }
 

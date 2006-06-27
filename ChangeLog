@@ -1,5 +1,18 @@
 2006-06-27  Sven Neumann  <sven@gimp.org>
 
+	I18n improvements based on a patch from Zbigniew Chyla:
+
+	* app/main.c:
+	* modules/controller_midi.c
+	* plug-ins/script-fu/scripts/guides-new.scm: marked strings for
+	translation.
+
+	* app/widgets/gimpdock.c
+	* libgimpwidgets/gimppageselector.c
+	* plug-ins/common/plugin-browser.c: use ngettext() for plural forms.
+
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpexport.c (gimp_export_image): use NULL as the
 	special value, not "silent".
 

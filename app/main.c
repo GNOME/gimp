@@ -284,7 +284,7 @@ main (int    argc,
   no_interface = TRUE;
 #endif
 
-  context = g_option_context_new ("[FILE|URI...]");
+  context = g_option_context_new (_("[FILE|URI...]"));
   g_option_context_add_main_entries (context, main_entries, GETTEXT_PACKAGE);
 
   app_libs_init (context, no_interface);

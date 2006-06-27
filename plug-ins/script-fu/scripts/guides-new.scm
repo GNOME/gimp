@@ -29,7 +29,7 @@
 		    SF-DRAWABLE   "Drawable"   0
 		    SF-OPTION     _"Direction" '(_"Horizontal" 
 						 _"Vertical")
-		    SF-ADJUSTMENT "Position"   '(0 0 262144 1 10 0 1))
+		    SF-ADJUSTMENT _"Position"  '(0 0 262144 1 10 0 1))
     
 (script-fu-menu-register "script-fu-guide-new" 
 			 "<Image>/Image/Guides")
