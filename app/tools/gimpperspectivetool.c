@@ -95,6 +95,7 @@ gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_PERSPECTIVE);
 
+  tr_tool->undo_desc     = Q_("command|Perspective");
   tr_tool->shell_desc    = _("Perspective Transform Information");
   tr_tool->progress_text = _("Perspective");
 

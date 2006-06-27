@@ -220,6 +220,8 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
   tr_tool->type             = GIMP_TRANSFORM_TYPE_LAYER;
   tr_tool->direction        = GIMP_TRANSFORM_FORWARD;
 
+  tr_tool->undo_desc        = NULL;
+
   tr_tool->shell_desc       = NULL;
   tr_tool->progress_text    = _("Transforming");
   tr_tool->dialog           = NULL;
@@ -983,7 +985,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
 
   /*  Start a transform undo group  */
   gimp_image_undo_group_start (display->image, GIMP_UNDO_GROUP_TRANSFORM,
-                               tool->tool_info->blurb);
+                               tr_tool->undo_desc);
 
   /* With the old UI, if original is NULL, then this is the
    * first transformation. In the new UI, it is always so, right?

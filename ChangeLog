@@ -1,5 +1,18 @@
 2006-06-27  Sven Neumann  <sven@gimp.org>
 
+	Applied patch from Zbigniew Chyla (bug 345982):
+
+	* app/tools/gimptransformtool.[ch]: added undo_desc field for
+	storing undo string and use that, not tool_info->blurb.
+
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c: set undo_desc.
+
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_proof.c: use the GimpColorRenderingIntent enum
 	from libgimpconfig instead of duplicating it.
 
@@ -133,7 +146,7 @@
 
 2006-06-27  Sven Neumann  <sven@gimp.org>
 
-	Applied patch from Zbigniew Chyla:
+	Applied patch from Zbigniew Chyla (bug 345982):
 
 	* app/gimp-intl.h
 	* libgimp/stdplugins-intl.h: removed most content and include

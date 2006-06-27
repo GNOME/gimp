@@ -91,6 +91,8 @@ struct _GimpTransformTool
   GimpTransformType       type;
   GimpTransformDirection  direction;
 
+  const gchar    *undo_desc;
+
   const gchar    *shell_desc;
   const gchar    *progress_text;
 
