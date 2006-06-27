@@ -1,5 +1,12 @@
 2006-06-27  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimprc-blurbs.h (NUM_PROCESSORS_BLURB): simplified.
+
+	* app/config/gimpguiconfig.c: changed default window hints back to
+	"normal". Fixes bug #344242.
+
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gfig/gfig-dialog.[ch]
 	* plug-ins/gfig/gfig-dobject.h
 	* plug-ins/gfig/gfig.[ch]: put extern variables where they belong.
