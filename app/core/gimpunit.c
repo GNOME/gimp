@@ -239,7 +239,7 @@ _gimp_unit_get_singular (Gimp     *gimp,
   if (unit == GIMP_UNIT_PERCENT)
     return gettext (gimp_unit_percent.singular);
 
-  return gettext (_gimp_unit_get_user_unit (gimp, unit)->singular);
+  return _gimp_unit_get_user_unit (gimp, unit)->singular;
 }
 
 const gchar *
@@ -256,7 +256,7 @@ _gimp_unit_get_plural (Gimp     *gimp,
   if (unit == GIMP_UNIT_PERCENT)
     return gettext (gimp_unit_percent.plural);
 
-  return gettext (_gimp_unit_get_user_unit (gimp, unit)->plural);
+  return _gimp_unit_get_user_unit (gimp, unit)->plural;
 }
 
 

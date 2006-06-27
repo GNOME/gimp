@@ -1,5 +1,12 @@
 2006-06-27  Sven Neumann  <sven@gimp.org>
 
+	Based on a patch from Zbigniew Chyla:
+
+	* app/core/gimpunit.c (_gimp_unit_get_singular, _gimp_unit_get_plural):
+	don't call gettext() on strings returned by _gimp_unit_get_user_unit().
+
+2006-06-27  Sven Neumann  <sven@gimp.org>
+
 	Applied patch from Zbigniew Chyla:
 
 	* app/gimp-intl.h
