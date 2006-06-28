@@ -1,5 +1,9 @@
 2006-06-28  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimprc-blurbs.h: fixed typo spotted by Jakub Friedl.
+
+2006-06-28  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mail.c
 	* plug-ins/common/screenshot.c: updated inlined icons from Tango
 	Icon library.

@@ -212,7 +212,7 @@ N_("Sets the size of the navigation preview available in the lower right " \
    "corner of the image window.")
 
 #define NUM_PROCESSORS_BLURB \
-N_("Sets how how many processors GIMP should try to use simultaneously.")
+N_("Sets how many processors GIMP should try to use simultaneously.")
 
 #define PALETTE_PATH_BLURB \
 "Sets the palette search path."
