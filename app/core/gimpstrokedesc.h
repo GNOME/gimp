@@ -60,9 +60,6 @@ GType            gimp_stroke_desc_get_type  (void) G_GNUC_CONST;
 
 GimpStrokeDesc * gimp_stroke_desc_new       (Gimp           *gimp,
                                              GimpContext    *context);
-
-GimpStrokeDesc * gimp_stroke_desc_duplicate (GimpStrokeDesc *desc);
-
 void             gimp_stroke_desc_prepare   (GimpStrokeDesc *desc,
                                              GimpContext    *context,
                                              gboolean        use_default_values);
