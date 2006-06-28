@@ -31,7 +31,10 @@ text by specifying the upper left corner of the text bounding box. If the
 specified drawable parameter is valid, the text will be created as a floating
 selection attached to the drawable. If the drawable parameter is not valid
 (-1), the text will appear as a new layer. Finally, a border can be specified
-around the final rendered text. The border is measured in pixels.
+around the final rendered text. The border is measured in pixels. Parameter
+size-type is not used and is currently ignored. If you need to display a font
+in points, divide the size in points by 72.0 and multiply it by the image's
+vertical resolution.
 HELP
 
     &std_pdb_misc;
@@ -39,36 +42,36 @@ HELP
     $date = '1998- 2001';
 
     @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The affected drawable: (-1 for a new text layer)',
-	  none_ok => 1 },
-	{ name => 'x', type => 'float',
-	  desc => 'The x coordinate for the left of the text bounding box' },
-	{ name => 'y', type => 'float',
-	  desc => 'The y coordinate for the top of the text bounding box' },
-	{ name => 'text', type => 'string',
-	  desc => 'The text to generate (in UTF-8 encoding)' },
-	{ name => 'border', type => '-1 <= int32',
-	  desc => 'The size of the border' },
-	{ name => 'antialias', type => 'boolean',
-	  desc => 'Antialiasing' },
-	{ name => 'size', type => '0 < float',
-	  desc => 'The size of text in either pixels or points' },
-	{ name => 'size_type', type => 'enum GimpSizeType',
-	  desc => 'The units of specified size' },
-	{ name => 'fontname', type => 'string',
-	  desc => 'The name of the font' }
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'The affected drawable: (-1 for a new text layer)',
+          none_ok => 1 },
+        { name => 'x', type => 'float',
+          desc => 'The x coordinate for the left of the text bounding box' },
+        { name => 'y', type => 'float',
+          desc => 'The y coordinate for the top of the text bounding box' },
+        { name => 'text', type => 'string',
+          desc => 'The text to generate (in UTF-8 encoding)' },
+        { name => 'border', type => '-1 <= int32',
+          desc => 'The size of the border' },
+        { name => 'antialias', type => 'boolean',
+          desc => 'Antialiasing' },
+        { name => 'size', type => '0 < float',
+          desc => 'The size of text in either pixels or points' },
+        { name => 'size_type', type => 'enum GimpSizeType',
+          desc => 'The units of specified size' },
+        { name => 'fontname', type => 'string',
+          desc => 'The name of the font' }
     );
 
     @outargs = (
-	{ name => 'text_layer', type => 'layer',
-	  desc => 'The new text layer or -1 if no layer was created.' }
+        { name => 'text_layer', type => 'layer',
+          desc => 'The new text layer or -1 if no layer was created.' }
     );
 
     %invoke = (
-	code => <<'CODE'
+        code => <<'CODE'
 {
   if (drawable && ! gimp_item_is_attached (GIMP_ITEM (drawable)))
     success = FALSE;
@@ -94,43 +97,46 @@ sub text_get_extents_fontname {
     $help = <<'HELP';
 This tool returns the width and height of a bounding box for the specified text
 string with the specified font information. Ascent and descent for the
-specified font are returned as well.
+specified font are returned as well. Parameter size-type is not used and is
+currently ignored. If you need to display a font in points, divide the
+size in points by 72.0 and multiply it by the vertical resolution of the
+image you are taking into account.
 HELP
 
     &std_pdb_misc;
     $author = 'Martin Edlman & Sven Neumann';
     $date = '1998- 2001';
- 
+
     @inargs = (
-	{ name => 'text', type => 'string',
-	  desc => 'The text to generate (in UTF-8 encoding)' },
-	{ name => 'size', type => '0 < float',
-	  desc => 'The size of text in either pixels or points' },
-	{ name => 'size_type', type => 'enum GimpSizeType',
-	  desc => 'The units of specified size' },
-	{ name => 'fontname', type => 'string',
-	  desc => 'The name of the font' }
+        { name => 'text', type => 'string',
+          desc => 'The text to generate (in UTF-8 encoding)' },
+        { name => 'size', type => '0 < float',
+          desc => 'The size of text in either pixels or points' },
+        { name => 'size_type', type => 'enum GimpSizeType',
+          desc => 'The units of specified size' },
+        { name => 'fontname', type => 'string',
+          desc => 'The name of the font' }
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', void_ret => 1,
-	  desc => 'The width of the specified font' },
-	{ name => 'height', type => 'int32',
-	  desc => 'The height of the specified font' },
-	{ name => 'ascent', type => 'int32',
-	  desc => 'The ascent of the specified font' },
-	{ name => 'descent', type => 'int32',
-	  desc => 'The descent of the specified font' }
+        { name => 'width', type => 'int32', void_ret => 1,
+          desc => 'The width of the specified font' },
+        { name => 'height', type => 'int32',
+          desc => 'The height of the specified font' },
+        { name => 'ascent', type => 'int32',
+          desc => 'The ascent of the specified font' },
+        { name => 'descent', type => 'int32',
+          desc => 'The descent of the specified font' }
     );
 
     %invoke = (
-	code => <<'CODE'
+        code => <<'CODE'
 {
   gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
 
   success = text_get_extents (real_fontname, text,
-			      &width, &height,
-			      &ascent, &descent);
+                              &width, &height,
+                              &ascent, &descent);
 
   g_free (real_fontname);
 }
@@ -142,50 +148,50 @@ sub text {
     &std_pdb_deprecated ('gimp-text-fontname');
 
     @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The affected drawable: (-1 for a new text layer)',
-	  none_ok => 1 },
-	{ name => 'x', type => 'float',
-	  desc => 'The x coordinate for the left of the text bounding box' },
-	{ name => 'y', type => 'float',
-	  desc => 'The y coordinate for the top of the text bounding box' },
-	{ name => 'text', type => 'string',
-	  desc => 'The text to generate (in UTF-8 encoding)' },
-	{ name => 'border', type => '-1 <= int32',
-	  desc => 'The size of the border' },
-	{ name => 'antialias', type => 'boolean',
-	  desc => 'Antialiasing' },
-	{ name => 'size', type => '0 < float',
-	  desc => 'The size of text in either pixels or points' },
-	{ name => 'size_type', type => 'enum GimpSizeType',
-	  desc => 'The units of specified size' },
-	{ name => 'foundry', type => 'string', no_validate => 1,
-	  desc => 'The font foundry' },
-	{ name => 'family', type => 'string', no_validate => 1,
-	  desc => 'The font family' },
-	{ name => 'weight', type => 'string', no_validate => 1,
-	  desc => 'The font weight' },
-	{ name => 'slant', type => 'string', no_validate => 1,
-	  desc => 'The font slant' },
-	{ name => 'set_width', type => 'string', no_validate => 1,
-	  desc => 'The font set-width' },
-	{ name => 'spacing', type => 'string', no_validate => 1,
-	  desc => 'The font spacing' },
-	{ name => 'registry', type => 'string', no_validate => 1,
-	  desc => 'The font registry' },
-	{ name => 'encoding', type => 'string', no_validate => 1,
-	  desc => 'The font encoding' }
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'The affected drawable: (-1 for a new text layer)',
+          none_ok => 1 },
+        { name => 'x', type => 'float',
+          desc => 'The x coordinate for the left of the text bounding box' },
+        { name => 'y', type => 'float',
+          desc => 'The y coordinate for the top of the text bounding box' },
+        { name => 'text', type => 'string',
+          desc => 'The text to generate (in UTF-8 encoding)' },
+        { name => 'border', type => '-1 <= int32',
+          desc => 'The size of the border' },
+        { name => 'antialias', type => 'boolean',
+          desc => 'Antialiasing' },
+        { name => 'size', type => '0 < float',
+          desc => 'The size of text in either pixels or points' },
+        { name => 'size_type', type => 'enum GimpSizeType',
+          desc => 'The units of specified size' },
+        { name => 'foundry', type => 'string', no_validate => 1,
+          desc => 'The font foundry' },
+        { name => 'family', type => 'string', no_validate => 1,
+          desc => 'The font family' },
+        { name => 'weight', type => 'string', no_validate => 1,
+          desc => 'The font weight' },
+        { name => 'slant', type => 'string', no_validate => 1,
+          desc => 'The font slant' },
+        { name => 'set_width', type => 'string', no_validate => 1,
+          desc => 'The font set-width' },
+        { name => 'spacing', type => 'string', no_validate => 1,
+          desc => 'The font spacing' },
+        { name => 'registry', type => 'string', no_validate => 1,
+          desc => 'The font registry' },
+        { name => 'encoding', type => 'string', no_validate => 1,
+          desc => 'The font encoding' }
     );
 
     @outargs = (
-	{ name => 'text_layer', type => 'layer',
-	  desc => 'The new text layer or -1 if no layer was created.' }
+        { name => 'text_layer', type => 'layer',
+          desc => 'The new text layer or -1 if no layer was created.' }
     );
 
     %invoke = (
-	code => <<'CODE'
+        code => <<'CODE'
 {
   if (drawable && ! gimp_item_is_attached (GIMP_ITEM (drawable)))
     success = FALSE;
@@ -209,49 +215,49 @@ sub text_get_extents {
     &std_pdb_deprecated ('gimp-text-get-extents-fontname');
 
     @inargs = (
-	{ name => 'text', type => 'string',
-	  desc => 'The text to generate (in UTF-8 encoding)' },
-	{ name => 'size', type => '0 < float',
-	  desc => 'The size of text in either pixels or points' },
-	{ name => 'size_type', type => 'enum GimpSizeType',
-	  desc => 'The units of specified size' },
-	{ name => 'foundry', type => 'string', no_validate => 1,
-	  desc => 'The font foundry' },
-	{ name => 'family', type => 'string', no_validate => 1,
-	  desc => 'The font family' },
-	{ name => 'weight', type => 'string', no_validate => 1,
-	  desc => 'The font weight' },
-	{ name => 'slant', type => 'string', no_validate => 1,
-	  desc => 'The font slant' },
-	{ name => 'set_width', type => 'string', no_validate => 1,
-	  desc => 'The font set-width' },
-	{ name => 'spacing', type => 'string', no_validate => 1,
-	  desc => 'The font spacing' },
-	{ name => 'registry', type => 'string', no_validate => 1,
-	  desc => 'The font registry' },
-	{ name => 'encoding', type => 'string', no_validate => 1,
-	  desc => 'The font encoding' }
+        { name => 'text', type => 'string',
+          desc => 'The text to generate (in UTF-8 encoding)' },
+        { name => 'size', type => '0 < float',
+          desc => 'The size of text in either pixels or points' },
+        { name => 'size_type', type => 'enum GimpSizeType',
+          desc => 'The units of specified size' },
+        { name => 'foundry', type => 'string', no_validate => 1,
+          desc => 'The font foundry' },
+        { name => 'family', type => 'string', no_validate => 1,
+          desc => 'The font family' },
+        { name => 'weight', type => 'string', no_validate => 1,
+          desc => 'The font weight' },
+        { name => 'slant', type => 'string', no_validate => 1,
+          desc => 'The font slant' },
+        { name => 'set_width', type => 'string', no_validate => 1,
+          desc => 'The font set-width' },
+        { name => 'spacing', type => 'string', no_validate => 1,
+          desc => 'The font spacing' },
+        { name => 'registry', type => 'string', no_validate => 1,
+          desc => 'The font registry' },
+        { name => 'encoding', type => 'string', no_validate => 1,
+          desc => 'The font encoding' }
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', void_ret => 1,
-	  desc => 'The width of the specified font' },
-	{ name => 'height', type => 'int32',
-	  desc => 'The height of the specified font' },
-	{ name => 'ascent', type => 'int32',
-	  desc => 'The ascent of the specified font' },
-	{ name => 'descent', type => 'int32',
-	  desc => 'The descent of the specified font' }
+        { name => 'width', type => 'int32', void_ret => 1,
+          desc => 'The width of the specified font' },
+        { name => 'height', type => 'int32',
+          desc => 'The height of the specified font' },
+        { name => 'ascent', type => 'int32',
+          desc => 'The ascent of the specified font' },
+        { name => 'descent', type => 'int32',
+          desc => 'The descent of the specified font' }
     );
 
     %invoke = (
-	code => <<'CODE'
+        code => <<'CODE'
 {
   gchar *real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
 
   success = text_get_extents (real_fontname, text,
-			      &width, &height,
-			      &ascent, &descent);
+                              &width, &height,
+                              &ascent, &descent);
 
   g_free (real_fontname);
 }

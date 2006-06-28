@@ -50,7 +50,10 @@
  * floating selection attached to the drawable. If the drawable
  * parameter is not valid (-1), the text will appear as a new layer.
  * Finally, a border can be specified around the final rendered text.
- * The border is measured in pixels.
+ * The border is measured in pixels. Parameter size-type is not used
+ * and is currently ignored. If you need to display a font in points,
+ * divide the size in points by 72.0 and multiply it by the image's
+ * vertical resolution.
  *
  * Returns: The new text layer or -1 if no layer was created.
  */
@@ -107,7 +110,11 @@ gimp_text_fontname (gint32        image_ID,
  *
  * This tool returns the width and height of a bounding box for the
  * specified text string with the specified font information. Ascent
- * and descent for the specified font are returned as well.
+ * and descent for the specified font are returned as well. Parameter
+ * size-type is not used and is currently ignored. If you need to
+ * display a font in points, divide the size in points by 72.0 and
+ * multiply it by the vertical resolution of the image you are taking
+ * into account.
  *
  * Returns: TRUE on success.
  */
