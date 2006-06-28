@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-27 13:15+0200\n"
-"PO-Revision-Date: 2006-06-27 13:16+0200\n"
+"POT-Creation-Date: 2006-06-28 10:47+0200\n"
+"PO-Revision-Date: 2006-06-28 10:48+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -124,6 +124,10 @@ msgstr "Port serveru:"
 msgid "Server logfile:"
 msgstr "Žurnálový soubor serveru:"
 
+#: ../plug-ins/script-fu/script-fu.c:109
+msgid "Interactive console for Script-Fu development"
+msgstr "Interaktivní konzole pro vývoj Script-Fu"
+
 #: ../plug-ins/script-fu/script-fu.c:115
 msgid "Script-Fu _Console"
 msgstr "_Konzola skript-fu"
@@ -132,6 +136,10 @@ msgstr "_Konzola skript-fu"
 #: ../plug-ins/script-fu/script-fu.c:314
 msgid "<Toolbox>/Xtns/Languages/Script-Fu"
 msgstr "<Toolbox>/Rozš./Jazyky/Skript-fu"
+
+#: ../plug-ins/script-fu/script-fu.c:139
+msgid "Server for remote Script-Fu operation"
+msgstr "Server pro vzdálené vykonávání Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:144
 msgid "_Start Server..."
@@ -201,6 +209,10 @@ msgstr "_Dekorace"
 #: ../plug-ins/script-fu/script-fu.c:298
 msgid "_Render"
 msgstr "_Vykreslit"
+
+#: ../plug-ins/script-fu/script-fu.c:301
+msgid "Re-read all available Script-Fu scripts"
+msgstr "Načíst znovu všechny dostupné skripty Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Refresh Scripts"
