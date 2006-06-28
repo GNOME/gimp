@@ -1,5 +1,11 @@
 2006-06-28  Sven Neumann  <sven@gimp.org>
 
+	* app/menus/plug-in-menus.c (plug_in_menus_setup): generate unique
+	keys so that two procedures can be installed to the same menu entry.
+	Addresses bug #346001.
+
+2006-06-28  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimprc-blurbs.h: fixed typo spotted by Jakub Friedl.
 
 2006-06-28  Sven Neumann  <sven@gimp.org>
