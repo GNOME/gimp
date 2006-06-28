@@ -1,5 +1,13 @@
 2006-06-28  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/text_tool.pdb: applied a (slightly modified)
+	patch from Joao that improves PDB documentation (bug #345926).
+
+	* app/pdb/text_tool_cmds.c
+	* libgimp/gimptexttool_pdb.c: regenerated.
+
+2006-06-28  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpstrokedesc.[ch]: removed broken implementation of
 	gimp_stroke_desc_duplicate() and reimplement it by overriding the
 	duplicate() method of the GimpConfig interface.
