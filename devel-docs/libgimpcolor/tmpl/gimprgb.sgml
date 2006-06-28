@@ -431,3 +431,21 @@ coefficients taken from the NTSC analog television standard.
 @value: 
 
 
+<!-- ##### FUNCTION gimp_value_get_rgb ##### -->
+<para>
+
+</para>
+
+@value: 
+@rgb: 
+
+
+<!-- ##### FUNCTION gimp_value_set_rgb ##### -->
+<para>
+
+</para>
+
+@value: 
+@rgb: 
+
+

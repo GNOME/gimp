@@ -9,10 +9,12 @@ GimpFontSelectButton
 
 </para>
 
+
 <!-- ##### SECTION See_Also ##### -->
 <para>
 
 </para>
+
 
 <!-- ##### SECTION Stability_Level ##### -->
 
@@ -32,15 +34,18 @@ GimpFontSelectButton
 @arg1: 
 @arg2: 
 
-<!-- ##### ARG GimpFontSelectButton:font-name ##### -->
-<para>
-
-</para>
 
 <!-- ##### ARG GimpFontSelectButton:title ##### -->
 <para>
 
 </para>
+
+
+<!-- ##### ARG GimpFontSelectButton:font-name ##### -->
+<para>
+
+</para>
+
 
 <!-- ##### FUNCTION gimp_font_select_button_new ##### -->
 <para>
@@ -52,7 +57,7 @@ GimpFontSelectButton
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_font_select_button_get_font_name ##### -->
+<!-- ##### FUNCTION gimp_font_select_button_get_font ##### -->
 <para>
 
 </para>
@@ -61,20 +66,12 @@ GimpFontSelectButton
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_font_select_button_set_font_name ##### -->
+<!-- ##### FUNCTION gimp_font_select_button_set_font ##### -->
 <para>
 
 </para>
 
 @button: 
 @font_name: 
-
-
-<!-- ##### FUNCTION gimp_font_select_button_close_popup ##### -->
-<para>
-
-</para>
-
-@button: 
 
 

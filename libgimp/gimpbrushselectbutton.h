@@ -49,7 +49,7 @@ struct _GimpBrushSelectButtonClass
   GimpSelectButtonClass  parent_class;
 
   /* brush_set signal is emitted when brush is chosen */
-  void (* brush_set) (GimpBrushSelectButton *brush_button,
+  void (* brush_set) (GimpBrushSelectButton *button,
                       const gchar           *brush_name,
                       gdouble                opacity,
                       gint                   spacing,

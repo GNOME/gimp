@@ -938,36 +938,31 @@ script_fu_reset (SFScript *script)
           break;
 
         case SF_FONT:
-          gimp_font_select_button_set_font_name
-            (GIMP_FONT_SELECT_BUTTON (widget),
-             script->arg_defaults[i].sfa_font);
+          gimp_font_select_button_set_font (GIMP_FONT_SELECT_BUTTON (widget),
+                                            script->arg_defaults[i].sfa_font);
           break;
 
         case SF_PALETTE:
-          gimp_palette_select_button_set_palette_name
-            (GIMP_PALETTE_SELECT_BUTTON (widget),
-             script->arg_defaults[i].sfa_palette);
+          gimp_palette_select_button_set_palette (GIMP_PALETTE_SELECT_BUTTON (widget),
+                                                  script->arg_defaults[i].sfa_palette);
           break;
 
         case SF_PATTERN:
-	  gimp_pattern_select_button_set_pattern_name
-            (GIMP_PATTERN_SELECT_BUTTON (widget),
-             script->arg_defaults[i].sfa_pattern);
+	  gimp_pattern_select_button_set_pattern (GIMP_PATTERN_SELECT_BUTTON (widget),
+                                                  script->arg_defaults[i].sfa_pattern);
           break;
 
         case SF_GRADIENT:
-          gimp_gradient_select_button_set_gradient_name
-	    (GIMP_GRADIENT_SELECT_BUTTON (widget),
-             script->arg_defaults[i].sfa_gradient);
+          gimp_gradient_select_button_set_gradient (GIMP_GRADIENT_SELECT_BUTTON (widget),
+                                                    script->arg_defaults[i].sfa_gradient);
           break;
 
         case SF_BRUSH:
-          gimp_brush_select_button_set_brush
-            (GIMP_BRUSH_SELECT_BUTTON (widget),
-             script->arg_defaults[i].sfa_brush.name,
-             script->arg_defaults[i].sfa_brush.opacity,
-             script->arg_defaults[i].sfa_brush.spacing,
-             script->arg_defaults[i].sfa_brush.paint_mode);
+          gimp_brush_select_button_set_brush (GIMP_BRUSH_SELECT_BUTTON (widget),
+                                              script->arg_defaults[i].sfa_brush.name,
+                                              script->arg_defaults[i].sfa_brush.opacity,
+                                              script->arg_defaults[i].sfa_brush.spacing,
+                                              script->arg_defaults[i].sfa_brush.paint_mode);
           break;
 
         case SF_OPTION:

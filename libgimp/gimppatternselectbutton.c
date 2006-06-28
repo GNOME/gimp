@@ -84,7 +84,7 @@ static void   gimp_pattern_select_button_get_property (GObject      *object,
                                                        GValue       *value,
                                                        GParamSpec   *pspec);
 
-static void   gimp_pattern_select_button_clicked  (GimpPatternSelectButton *pattern_button);
+static void   gimp_pattern_select_button_clicked  (GimpPatternSelectButton *button);
 
 static void   gimp_pattern_select_button_callback (const gchar  *pattern_name,
                                                    gint          width,
@@ -94,22 +94,22 @@ static void   gimp_pattern_select_button_callback (const gchar  *pattern_name,
                                                    gboolean      dialog_closing,
                                                    gpointer      user_data);
 
-static void     gimp_pattern_select_preview_resize  (GimpPatternSelectButton *pattern_button);
+static void     gimp_pattern_select_preview_resize  (GimpPatternSelectButton *button);
 static gboolean gimp_pattern_select_preview_events  (GtkWidget               *widget,
                                                      GdkEvent                *event,
-                                                     GimpPatternSelectButton *pattern_button);
+                                                     GimpPatternSelectButton *button);
 static void     gimp_pattern_select_preview_update  (GtkWidget               *preview,
                                                      gint                     width,
                                                      gint                     height,
                                                      gint                     bytes,
                                                      const guchar            *mask_data);
 
-static void     gimp_pattern_select_button_open_popup  (GimpPatternSelectButton *pattern_button,
+static void     gimp_pattern_select_button_open_popup  (GimpPatternSelectButton *button,
                                                         gint                     x,
                                                         gint                     y);
-static void     gimp_pattern_select_button_close_popup (GimpPatternSelectButton *pattern_button);
+static void     gimp_pattern_select_button_close_popup (GimpPatternSelectButton *button);
 
-static void   gimp_pattern_select_drag_data_received (GimpPatternSelectButton *pattern_button,
+static void   gimp_pattern_select_drag_data_received (GimpPatternSelectButton *button,
                                                       GdkDragContext          *context,
                                                       gint                     x,
                                                       gint                     y,
@@ -117,7 +117,7 @@ static void   gimp_pattern_select_drag_data_received (GimpPatternSelectButton *p
                                                       guint                    info,
                                                       guint                    time);
 
-static GtkWidget * gimp_pattern_select_button_create_inside (GimpPatternSelectButton *pattern_button);
+static GtkWidget * gimp_pattern_select_button_create_inside (GimpPatternSelectButton *button);
 
 
 static const GtkTargetEntry target = { "application/x-gimp-pattern-name", 0 };
@@ -205,12 +205,12 @@ gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
 }
 
 static void
-gimp_pattern_select_button_init (GimpPatternSelectButton *pattern_button)
+gimp_pattern_select_button_init (GimpPatternSelectButton *button)
 {
   GimpPatternSelectButtonPrivate *priv;
   gint                            mask_data_size;
-  
-  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (pattern_button);
+
+  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (button);
 
   priv->pattern_name = gimp_context_get_pattern ();
   gimp_pattern_get_pixels (priv->pattern_name,
@@ -220,8 +220,8 @@ gimp_pattern_select_button_init (GimpPatternSelectButton *pattern_button)
                            &mask_data_size,
                            &priv->mask_data);
 
-  priv->inside = gimp_pattern_select_button_create_inside (pattern_button);
-  gtk_container_add (GTK_CONTAINER (pattern_button), priv->inside);
+  priv->inside = gimp_pattern_select_button_create_inside (button);
+  gtk_container_add (GTK_CONTAINER (button), priv->inside);
 
   priv->popup = NULL;
 }
@@ -243,23 +243,23 @@ GtkWidget *
 gimp_pattern_select_button_new (const gchar *title,
                                 const gchar *pattern_name)
 {
-  GtkWidget *pattern_button;
+  GtkWidget *button;
 
   if (title)
-    pattern_button = g_object_new (GIMP_TYPE_PATTERN_SELECT_BUTTON,
-                                   "title",        title,
-                                   "pattern-name", pattern_name,
-                                   NULL);
+    button = g_object_new (GIMP_TYPE_PATTERN_SELECT_BUTTON,
+                           "title",        title,
+                           "pattern-name", pattern_name,
+                           NULL);
   else
-    pattern_button = g_object_new (GIMP_TYPE_PATTERN_SELECT_BUTTON,
-                                   "pattern-name", pattern_name,
-                                   NULL);
+    button = g_object_new (GIMP_TYPE_PATTERN_SELECT_BUTTON,
+                           "pattern-name", pattern_name,
+                           NULL);
 
-  return pattern_button;
+  return button;
 }
 
 /**
- * gimp_pattern_select_button_get_pattern_name:
+ * gimp_pattern_select_button_get_pattern:
  * @button: A #GimpPatternSelectButton
  *
  * Retrieves the name of currently selected pattern.
@@ -269,19 +269,19 @@ gimp_pattern_select_button_new (const gchar *title,
  * Since: GIMP 2.4
  */
 G_CONST_RETURN gchar *
-gimp_pattern_select_button_get_pattern_name (GimpPatternSelectButton *pattern_button)
+gimp_pattern_select_button_get_pattern (GimpPatternSelectButton *button)
 {
   GimpPatternSelectButtonPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_PATTERN_SELECT_BUTTON (pattern_button), NULL);
+  g_return_val_if_fail (GIMP_IS_PATTERN_SELECT_BUTTON (button), NULL);
 
-  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (pattern_button);
+  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (button);
   return priv->pattern_name;
 }
 
 /**
  * gimp_pattern_select_button_set_pattern_name:
- * @pattern_button: A #GimpPatternSelectButton
+ * @button: A #GimpPatternSelectButton
  * @pattern_name: Pattern name to set; %NULL means no change.
  *
  * Sets the current pattern for the pattern select button.
@@ -289,14 +289,14 @@ gimp_pattern_select_button_get_pattern_name (GimpPatternSelectButton *pattern_bu
  * Since: GIMP 2.4
  */
 void
-gimp_pattern_select_button_set_pattern_name (GimpPatternSelectButton *pattern_button,
-                                             const gchar             *pattern_name)
+gimp_pattern_select_button_set_pattern (GimpPatternSelectButton *button,
+                                        const gchar             *pattern_name)
 {
   GimpSelectButton *select_button;
 
-  g_return_if_fail (GIMP_IS_PATTERN_SELECT_BUTTON (pattern_button));
+  g_return_if_fail (GIMP_IS_PATTERN_SELECT_BUTTON (button));
 
-  select_button = GIMP_SELECT_BUTTON (pattern_button);
+  select_button = GIMP_SELECT_BUTTON (button);
 
   if (select_button->temp_callback)
     {
@@ -325,7 +325,7 @@ gimp_pattern_select_button_set_pattern_name (GimpPatternSelectButton *pattern_bu
         {
           gimp_pattern_select_button_callback (name,
                                                width, height, bytes, mask_data,
-                                               FALSE, pattern_button);
+                                               FALSE, button);
 
           g_free (mask_data);
         }
@@ -362,11 +362,11 @@ gimp_pattern_select_button_set_property (GObject      *object,
                                          const GValue *value,
                                          GParamSpec   *pspec)
 {
-  GimpPatternSelectButton        *pattern_button;
+  GimpPatternSelectButton        *button;
   GimpPatternSelectButtonPrivate *priv;
 
-  pattern_button = GIMP_PATTERN_SELECT_BUTTON (object);
-  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (pattern_button);
+  button = GIMP_PATTERN_SELECT_BUTTON (object);
+  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (button);
 
   switch (property_id)
     {
@@ -374,8 +374,8 @@ gimp_pattern_select_button_set_property (GObject      *object,
       priv->title = g_value_dup_string (value);
       break;
     case PROP_PATTERN_NAME:
-      gimp_pattern_select_button_set_pattern_name (pattern_button,
-                                                   g_value_get_string (value));
+      gimp_pattern_select_button_set_pattern (button,
+                                              g_value_get_string (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -389,11 +389,11 @@ gimp_pattern_select_button_get_property (GObject    *object,
                                          GValue     *value,
                                          GParamSpec *pspec)
 {
-  GimpPatternSelectButton        *pattern_button;
+  GimpPatternSelectButton        *button;
   GimpPatternSelectButtonPrivate *priv;
 
-  pattern_button = GIMP_PATTERN_SELECT_BUTTON (object);
-  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (pattern_button);
+  button = GIMP_PATTERN_SELECT_BUTTON (object);
+  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (button);
 
   switch (property_id)
     {
@@ -418,14 +418,14 @@ gimp_pattern_select_button_callback (const gchar  *pattern_name,
                                      gboolean      dialog_closing,
                                      gpointer      user_data)
 {
-  GimpPatternSelectButton        *pattern_button;
+  GimpPatternSelectButton        *button;
   GimpPatternSelectButtonPrivate *priv;
   GimpSelectButton               *select_button;
 
-  pattern_button = GIMP_PATTERN_SELECT_BUTTON (user_data);
+  button = GIMP_PATTERN_SELECT_BUTTON (user_data);
 
-  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (pattern_button);
-  select_button = GIMP_SELECT_BUTTON (pattern_button);
+  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (button);
+  select_button = GIMP_SELECT_BUTTON (button);
 
   g_free (priv->pattern_name);
   g_free (priv->mask_data);
@@ -442,19 +442,19 @@ gimp_pattern_select_button_callback (const gchar  *pattern_name,
   if (dialog_closing)
     select_button->temp_callback = NULL;
 
-  g_signal_emit (pattern_button, pattern_button_signals[PATTERN_SET], 0,
+  g_signal_emit (button, pattern_button_signals[PATTERN_SET], 0,
                  pattern_name, width, height, bytes, dialog_closing);
-  g_object_notify (G_OBJECT (pattern_button), "pattern-name");
+  g_object_notify (G_OBJECT (button), "pattern-name");
 }
 
 static void
-gimp_pattern_select_button_clicked (GimpPatternSelectButton *pattern_button)
+gimp_pattern_select_button_clicked (GimpPatternSelectButton *button)
 {
   GimpPatternSelectButtonPrivate *priv;
   GimpSelectButton               *select_button;
-  
-  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (pattern_button);
-  select_button = GIMP_SELECT_BUTTON (pattern_button);
+
+  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (button);
+  select_button = GIMP_SELECT_BUTTON (button);
 
   if (select_button->temp_callback)
     {
@@ -467,16 +467,16 @@ gimp_pattern_select_button_clicked (GimpPatternSelectButton *pattern_button)
       select_button->temp_callback =
         gimp_pattern_select_new (priv->title, priv->pattern_name,
                                  gimp_pattern_select_button_callback,
-                                 pattern_button);
+                                 button);
     }
 }
 
 static void
-gimp_pattern_select_preview_resize (GimpPatternSelectButton *pattern_button)
+gimp_pattern_select_preview_resize (GimpPatternSelectButton *button)
 {
   GimpPatternSelectButtonPrivate *priv;
 
-  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (pattern_button);
+  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (button);
 
   if (priv->width > 0 && priv->height > 0)
     gimp_pattern_select_preview_update (priv->preview,
@@ -489,12 +489,12 @@ gimp_pattern_select_preview_resize (GimpPatternSelectButton *pattern_button)
 static gboolean
 gimp_pattern_select_preview_events (GtkWidget               *widget,
                                     GdkEvent                *event,
-                                    GimpPatternSelectButton *pattern_button)
+                                    GimpPatternSelectButton *button)
 {
   GimpPatternSelectButtonPrivate *priv;
   GdkEventButton                 *bevent;
 
-  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (pattern_button);
+  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (button);
 
   if (priv->mask_data)
     {
@@ -506,7 +506,7 @@ gimp_pattern_select_preview_events (GtkWidget               *widget,
           if (bevent->button == 1)
             {
               gtk_grab_add (widget);
-              gimp_pattern_select_button_open_popup (pattern_button,
+              gimp_pattern_select_button_open_popup (button,
                                                      bevent->x, bevent->y);
             }
           break;
@@ -517,7 +517,7 @@ gimp_pattern_select_preview_events (GtkWidget               *widget,
           if (bevent->button == 1)
             {
               gtk_grab_remove (widget);
-              gimp_pattern_select_button_close_popup (pattern_button);
+              gimp_pattern_select_button_close_popup (button);
             }
           break;
 
@@ -556,7 +556,7 @@ gimp_pattern_select_preview_update (GtkWidget    *preview,
 }
 
 static void
-gimp_pattern_select_button_open_popup (GimpPatternSelectButton *pattern_button,
+gimp_pattern_select_button_open_popup (GimpPatternSelectButton *button,
                                        gint                     x,
                                        gint                     y)
 {
@@ -569,10 +569,10 @@ gimp_pattern_select_button_open_popup (GimpPatternSelectButton *pattern_button,
   gint                            scr_w;
   gint                            scr_h;
 
-  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (pattern_button);
+  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (button);
 
   if (priv->popup)
-    gimp_pattern_select_button_close_popup (pattern_button);
+    gimp_pattern_select_button_close_popup (button);
 
   if (priv->width <= CELL_SIZE && priv->height <= CELL_SIZE)
     return;
@@ -617,11 +617,11 @@ gimp_pattern_select_button_open_popup (GimpPatternSelectButton *pattern_button,
 }
 
 static void
-gimp_pattern_select_button_close_popup (GimpPatternSelectButton *pattern_button)
+gimp_pattern_select_button_close_popup (GimpPatternSelectButton *button)
 {
   GimpPatternSelectButtonPrivate *priv;
 
-  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (pattern_button);
+  priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (button);
 
   if (priv->popup)
     {
@@ -631,7 +631,7 @@ gimp_pattern_select_button_close_popup (GimpPatternSelectButton *pattern_button)
 }
 
 static void
-gimp_pattern_select_drag_data_received (GimpPatternSelectButton *pattern_button,
+gimp_pattern_select_drag_data_received (GimpPatternSelectButton *button,
                                         GdkDragContext          *context,
                                         gint                     x,
                                         gint                     y,
@@ -660,7 +660,7 @@ gimp_pattern_select_drag_data_received (GimpPatternSelectButton *pattern_button,
         {
           gchar *name = str + name_offset;
 
-          gimp_pattern_select_button_set_pattern_name (pattern_button, name);
+          gimp_pattern_select_button_set_pattern (button, name);
         }
     }
 

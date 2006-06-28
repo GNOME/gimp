@@ -130,9 +130,8 @@ gimp_brush_select_widget_set (GtkWidget            *widget,
 {
   g_return_if_fail (widget != NULL);
 
-  gimp_brush_select_button_set_brush
-    (GIMP_BRUSH_SELECT_BUTTON (widget), brush_name,
-     opacity, spacing, paint_mode);
+  gimp_brush_select_button_set_brush (GIMP_BRUSH_SELECT_BUTTON (widget),
+                                      brush_name, opacity, spacing, paint_mode);
 }
 
 

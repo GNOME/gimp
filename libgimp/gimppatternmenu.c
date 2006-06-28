@@ -114,8 +114,8 @@ gimp_pattern_select_widget_set (GtkWidget   *widget,
 {
   g_return_if_fail (widget != NULL);
 
-  gimp_pattern_select_button_set_pattern_name
-    (GIMP_PATTERN_SELECT_BUTTON (widget), pattern_name);
+  gimp_pattern_select_button_set_pattern (GIMP_PATTERN_SELECT_BUTTON (widget),
+                                          pattern_name);
 }
 
 static void

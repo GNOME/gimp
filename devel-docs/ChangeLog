@@ -1,3 +1,26 @@
+2006-06-28  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/tmpl/gimpbrushselectbutton.sgml
+	* libgimp/tmpl/gimpgradientselectbutton.sgml
+	* libgimp/tmpl/gimppaletteselectbutton.sgml
+	* libgimp/tmpl/gimppatternselectbutton.sgml
+	* libgimp/tmpl/gimpselectbutton.sgml: new files.
+
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/libgimp.types: added docs for GimpSelectButton widgets.
+
+	* libgimp/tmpl/gimpfontselectbutton.sgml: regenerated.
+
+	* libgimpcolor/libgimpcolor-sections.txt: added docs for GValue API.	
+
+	* libgimpcolor/tmpl/gimprgb.sgml: regenerated.
+
+	* libgimpwidgets/libgimpwidgets-sections.txt: updated.
+
+	* libgimpwidgets/tmpl/gimppropwidgets.sgml
+	* libgimpwidgets/tmpl/gimpstock.sgml: regenerated.
+
 2006-06-02  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/libgimpbase-docs.sgml

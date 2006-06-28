@@ -112,8 +112,8 @@ gimp_font_select_widget_set (GtkWidget   *widget,
 {
   g_return_if_fail (widget != NULL);
 
-  gimp_font_select_button_set_font_name (GIMP_FONT_SELECT_BUTTON (widget),
-                                         font_name);
+  gimp_font_select_button_set_font (GIMP_FONT_SELECT_BUTTON (widget),
+                                    font_name);
 }
 
 static void

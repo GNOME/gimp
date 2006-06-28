@@ -76,13 +76,13 @@ static void   gimp_palette_select_button_get_property (GObject      *object,
                                                        GValue       *value,
                                                        GParamSpec   *pspec);
 
-static void   gimp_palette_select_button_clicked  (GimpPaletteSelectButton *palette_button);
+static void   gimp_palette_select_button_clicked  (GimpPaletteSelectButton *button);
 
 static void   gimp_palette_select_button_callback (const gchar *palette_name,
                                                    gboolean     dialog_closing,
                                                    gpointer     user_data);
 
-static void   gimp_palette_select_drag_data_received (GimpPaletteSelectButton *palette_button,
+static void   gimp_palette_select_drag_data_received (GimpPaletteSelectButton *button,
                                                       GdkDragContext          *context,
                                                       gint                     x,
                                                       gint                     y,
@@ -171,16 +171,16 @@ gimp_palette_select_button_class_init (GimpPaletteSelectButtonClass *klass)
 }
 
 static void
-gimp_palette_select_button_init (GimpPaletteSelectButton *palette_button)
+gimp_palette_select_button_init (GimpPaletteSelectButton *button)
 {
   GimpPaletteSelectButtonPrivate *priv;
-  
-  priv = GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE (palette_button);
+
+  priv = GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE (button);
 
   priv->palette_name = NULL;
 
-  priv->inside = gimp_palette_select_button_create_inside (palette_button);
-  gtk_container_add (GTK_CONTAINER (palette_button), priv->inside);
+  priv->inside = gimp_palette_select_button_create_inside (button);
+  gtk_container_add (GTK_CONTAINER (button), priv->inside);
 }
 
 /**
@@ -200,24 +200,24 @@ GtkWidget *
 gimp_palette_select_button_new (const gchar *title,
                                 const gchar *palette_name)
 {
-  GtkWidget *palette_button;
+  GtkWidget *button;
 
   if (title)
-    palette_button = g_object_new (GIMP_TYPE_PALETTE_SELECT_BUTTON,
+    button = g_object_new (GIMP_TYPE_PALETTE_SELECT_BUTTON,
                                    "title",        title,
                                    "palette-name", palette_name,
                                    NULL);
   else
-    palette_button = g_object_new (GIMP_TYPE_PALETTE_SELECT_BUTTON,
+    button = g_object_new (GIMP_TYPE_PALETTE_SELECT_BUTTON,
                                    "palette-name", palette_name,
                                    NULL);
 
-  return palette_button;
+  return button;
 }
 
 /**
- * gimp_palette_select_button_get_palette_name:
- * @palette_button: A #GimpPaletteSelectButton
+ * gimp_palette_select_button_get_palette:
+ * @button: A #GimpPaletteSelectButton
  *
  * Retrieves the name of currently selected palette.
  *
@@ -226,19 +226,19 @@ gimp_palette_select_button_new (const gchar *title,
  * Since: GIMP 2.4
  */
 G_CONST_RETURN gchar *
-gimp_palette_select_button_get_palette_name (GimpPaletteSelectButton *palette_button)
+gimp_palette_select_button_get_palette (GimpPaletteSelectButton *button)
 {
   GimpPaletteSelectButtonPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_PALETTE_SELECT_BUTTON (palette_button), NULL);
+  g_return_val_if_fail (GIMP_IS_PALETTE_SELECT_BUTTON (button), NULL);
 
-  priv = GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE (palette_button);
+  priv = GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE (button);
   return priv->palette_name;
 }
 
 /**
- * gimp_palette_select_button_set_palette_name:
- * @palette_button: A #GimpPaletteSelectButton
+ * gimp_palette_select_button_set_palette:
+ * @button: A #GimpPaletteSelectButton
  * @palette_name: Palette name to set; %NULL means no change.
  *
  * Sets the current palette for the palette select button.
@@ -246,19 +246,19 @@ gimp_palette_select_button_get_palette_name (GimpPaletteSelectButton *palette_bu
  * Since: GIMP 2.4
  */
 void
-gimp_palette_select_button_set_palette_name (GimpPaletteSelectButton *palette_button,
-                                             const gchar             *palette_name)
+gimp_palette_select_button_set_palette (GimpPaletteSelectButton *button,
+                                        const gchar             *palette_name)
 {
   GimpSelectButton *select_button;
 
-  g_return_if_fail (GIMP_IS_PALETTE_SELECT_BUTTON (palette_button));
+  g_return_if_fail (GIMP_IS_PALETTE_SELECT_BUTTON (button));
 
-  select_button = GIMP_SELECT_BUTTON (palette_button);
+  select_button = GIMP_SELECT_BUTTON (button);
 
   if (select_button->temp_callback)
     gimp_palettes_set_popup (select_button->temp_callback, palette_name);
   else
-    gimp_palette_select_button_callback (palette_name, FALSE, palette_button);
+    gimp_palette_select_button_callback (palette_name, FALSE, button);
 }
 
 
@@ -286,11 +286,11 @@ gimp_palette_select_button_set_property (GObject      *object,
                                          const GValue *value,
                                          GParamSpec   *pspec)
 {
-  GimpPaletteSelectButton        *palette_button;
+  GimpPaletteSelectButton        *button;
   GimpPaletteSelectButtonPrivate *priv;
 
-  palette_button = GIMP_PALETTE_SELECT_BUTTON (object);
-  priv = GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE (palette_button);
+  button = GIMP_PALETTE_SELECT_BUTTON (object);
+  priv = GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE (button);
 
   switch (property_id)
     {
@@ -298,8 +298,8 @@ gimp_palette_select_button_set_property (GObject      *object,
       priv->title = g_value_dup_string (value);
       break;
     case PROP_PALETTE_NAME:
-      gimp_palette_select_button_set_palette_name (palette_button,
-                                                   g_value_get_string (value));
+      gimp_palette_select_button_set_palette (button,
+                                              g_value_get_string (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -313,11 +313,11 @@ gimp_palette_select_button_get_property (GObject    *object,
                                          GValue     *value,
                                          GParamSpec *pspec)
 {
-  GimpPaletteSelectButton        *palette_button;
+  GimpPaletteSelectButton        *button;
   GimpPaletteSelectButtonPrivate *priv;
 
-  palette_button = GIMP_PALETTE_SELECT_BUTTON (object);
-  priv = GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE (palette_button);
+  button = GIMP_PALETTE_SELECT_BUTTON (object);
+  priv = GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE (button);
 
   switch (property_id)
     {
@@ -338,14 +338,14 @@ gimp_palette_select_button_callback (const gchar *palette_name,
                                      gboolean     dialog_closing,
                                      gpointer     user_data)
 {
-  GimpPaletteSelectButton        *palette_button;
+  GimpPaletteSelectButton        *button;
   GimpPaletteSelectButtonPrivate *priv;
   GimpSelectButton               *select_button;
 
-  palette_button = GIMP_PALETTE_SELECT_BUTTON (user_data);
+  button = GIMP_PALETTE_SELECT_BUTTON (user_data);
 
-  priv = GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE (palette_button);
-  select_button = GIMP_SELECT_BUTTON (palette_button);
+  priv = GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE (button);
+  select_button = GIMP_SELECT_BUTTON (button);
 
   g_free (priv->palette_name);
   priv->palette_name = g_strdup (palette_name);
@@ -355,19 +355,19 @@ gimp_palette_select_button_callback (const gchar *palette_name,
   if (dialog_closing)
     select_button->temp_callback = NULL;
 
-  g_signal_emit (palette_button, palette_button_signals[PALETTE_SET], 0,
+  g_signal_emit (button, palette_button_signals[PALETTE_SET], 0,
                  palette_name, dialog_closing);
-  g_object_notify (G_OBJECT (palette_button), "palette-name");
+  g_object_notify (G_OBJECT (button), "palette-name");
 }
 
 static void
-gimp_palette_select_button_clicked (GimpPaletteSelectButton *palette_button)
+gimp_palette_select_button_clicked (GimpPaletteSelectButton *button)
 {
   GimpPaletteSelectButtonPrivate *priv;
   GimpSelectButton               *select_button;
-  
-  priv = GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE (palette_button);
-  select_button = GIMP_SELECT_BUTTON (palette_button);
+
+  priv = GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE (button);
+  select_button = GIMP_SELECT_BUTTON (button);
 
   if (select_button->temp_callback)
     {
@@ -380,12 +380,12 @@ gimp_palette_select_button_clicked (GimpPaletteSelectButton *palette_button)
       select_button->temp_callback =
         gimp_palette_select_new (priv->title, priv->palette_name,
                                  gimp_palette_select_button_callback,
-                                 palette_button);
+                                 button);
     }
 }
 
 static void
-gimp_palette_select_drag_data_received (GimpPaletteSelectButton *palette_button,
+gimp_palette_select_drag_data_received (GimpPaletteSelectButton *button,
                                         GdkDragContext          *context,
                                         gint                     x,
                                         gint                     y,
@@ -414,7 +414,7 @@ gimp_palette_select_drag_data_received (GimpPaletteSelectButton *palette_button,
         {
           gchar *name = str + name_offset;
 
-          gimp_palette_select_button_set_palette_name (palette_button, name);
+          gimp_palette_select_button_set_palette (button, name);
         }
     }
 

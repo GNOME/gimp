@@ -49,7 +49,7 @@ struct _GimpPatternSelectButtonClass
   GimpSelectButtonClass  parent_class;
 
   /* pattern_set signal is emitted when pattern is chosen */
-  void (* pattern_set) (GimpPatternSelectButton *pattern_button,
+  void (* pattern_set) (GimpPatternSelectButton *button,
                         const gchar             *pattern_name,
                         gint                     width,
                         gint                     height,
@@ -70,9 +70,9 @@ GType       gimp_pattern_select_button_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_pattern_select_button_new      (const gchar *title,
                                                  const gchar *pattern_name);
 
-G_CONST_RETURN gchar * gimp_pattern_select_button_get_pattern_name (GimpPatternSelectButton *button);
-void                   gimp_pattern_select_button_set_pattern_name (GimpPatternSelectButton *button,
-                                                                    const gchar             *pattern_name);
+G_CONST_RETURN gchar * gimp_pattern_select_button_get_pattern (GimpPatternSelectButton *button);
+void                   gimp_pattern_select_button_set_pattern (GimpPatternSelectButton *button,
+                                                               const gchar             *pattern_name);
 
 
 G_END_DECLS

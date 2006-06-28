@@ -666,17 +666,14 @@ gfig_style_set_context_from_style (Style *style)
     g_message ("Style from context: Failed to set brush to '%s'",
                style->brush_name);
 
-  gimp_brush_select_button_set_brush
-    (GIMP_BRUSH_SELECT_BUTTON (gfig_context->brush_select),
-     style->brush_name, -1.0, -1, -1);  /* FIXME */
+  gimp_brush_select_button_set_brush (GIMP_BRUSH_SELECT_BUTTON (gfig_context->brush_select),
+                                      style->brush_name, -1.0, -1, -1);  /* FIXME */
 
-  gimp_pattern_select_button_set_pattern_name
-    (GIMP_PATTERN_SELECT_BUTTON (gfig_context->pattern_select),
-     style->pattern);
+  gimp_pattern_select_button_set_pattern (GIMP_PATTERN_SELECT_BUTTON (gfig_context->pattern_select),
+                                          style->pattern);
 
-  gimp_gradient_select_button_set_gradient_name
-    (GIMP_GRADIENT_SELECT_BUTTON (gfig_context->gradient_select),
-     style->gradient);
+  gimp_gradient_select_button_set_gradient (GIMP_GRADIENT_SELECT_BUTTON (gfig_context->gradient_select),
+                                            style->gradient);
 
   gfig_context->bdesc.name = style->brush_name;
   if (gfig_context->debug_styles)

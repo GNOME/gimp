@@ -1,0 +1,54 @@
+<!-- ##### SECTION Title ##### -->
+GimpPatternSelectButton
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GimpPatternSelectButton ##### -->
+<para>
+
+</para>
+
+@parent_instance: 
+
+<!-- ##### FUNCTION gimp_pattern_select_button_new ##### -->
+<para>
+
+</para>
+
+@title: 
+@pattern_name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_pattern_select_button_get_pattern ##### -->
+<para>
+
+</para>
+
+@button: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_pattern_select_button_set_pattern ##### -->
+<para>
+
+</para>
+
+@button: 
+@pattern_name: 
+
+

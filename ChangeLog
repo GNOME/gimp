@@ -1,5 +1,25 @@
 2006-06-28  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpfontselectbutton.[ch]
+	* libgimp/gimpgradientselectbutton.[ch]
+	* libgimp/gimppaletteselectbutton.[ch]
+	* libgimp/gimppatternselectbutton.[ch]: for consistency with
+	GimpBrushSelectButton dropped the _name suffix from the getter
+	and setter API.
+
+	* libgimp/gimpfontmenu.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimppalettemenu.c
+	* libgimp/gimppatternmenu.c
+	* plug-ins/gfig/gfig-style.c
+	* plug-ins/script-fu/script-fu-interface.c: changed accordingly.
+
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpbrushselectbutton.[ch]
+	* libgimp/gimpselectbutton.c: cleanup for consistency.
+
+2006-06-28  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/text_tool.pdb: applied a (slightly modified)
 	patch from Joao that improves PDB documentation (bug #345926).
 

@@ -29,7 +29,7 @@
 
 /*  local function prototypes  */
 
-static void   gimp_select_button_destroy      (GtkObject    *object);
+static void   gimp_select_button_destroy (GtkObject *object);
 
 
 G_DEFINE_TYPE (GimpSelectButton, gimp_select_button, GTK_TYPE_HBOX)
@@ -50,22 +50,22 @@ gimp_select_button_init (GimpSelectButton *select_button)
 
 /**
  * gimp_select_button_close_popup:
- * @select_button: A #GimpSelectButton
+ * @button: A #GimpSelectButton
  *
- * Closes the popup window associated with @select_button.
+ * Closes the popup window associated with @button.
  *
  * Since: GIMP 2.4
  */
 void
-gimp_select_button_close_popup (GimpSelectButton *select_button)
+gimp_select_button_close_popup (GimpSelectButton *button)
 {
-  g_return_if_fail (GIMP_IS_SELECT_BUTTON (select_button));
- 
-  if (select_button->temp_callback)
+  g_return_if_fail (GIMP_IS_SELECT_BUTTON (button));
+
+  if (button->temp_callback)
     {
-      GIMP_SELECT_BUTTON_GET_CLASS (select_button)->select_destroy
-        (select_button->temp_callback);
-      select_button->temp_callback = NULL;
+      GIMP_SELECT_BUTTON_GET_CLASS (button)->select_destroy (button->temp_callback);
+
+      button->temp_callback = NULL;
     }
 }
 
@@ -75,9 +75,7 @@ gimp_select_button_close_popup (GimpSelectButton *select_button)
 static void
 gimp_select_button_destroy (GtkObject *object)
 {
-  GimpSelectButton *select_button = GIMP_SELECT_BUTTON (object);
-
-  gimp_select_button_close_popup (select_button);
+  gimp_select_button_close_popup (GIMP_SELECT_BUTTON (object));
 
   GTK_OBJECT_CLASS (gimp_select_button_parent_class)->destroy (object);
 }

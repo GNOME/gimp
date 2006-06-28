@@ -262,19 +262,6 @@ GimpPropWidgets
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_prop_file_entry_new ##### -->
-<para>
-
-</para>
-
-@config: 
-@property_name: 
-@filesel_title: 
-@dir_only: 
-@check_valid: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_prop_path_editor_new ##### -->
 <para>
 

@@ -49,7 +49,7 @@ struct _GimpPaletteSelectButtonClass
   GimpSelectButtonClass  parent_class;
 
   /* palette_set signal is emitted when palette is chosen */
-  void (* palette_set) (GimpPaletteSelectButton *palette_button,
+  void (* palette_set) (GimpPaletteSelectButton *button,
                         const gchar             *palette_name,
                         gboolean                 dialog_closing);
 
@@ -66,9 +66,9 @@ GType       gimp_palette_select_button_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_palette_select_button_new      (const gchar *title,
                                                  const gchar *palette_name);
 
-G_CONST_RETURN gchar * gimp_palette_select_button_get_palette_name (GimpPaletteSelectButton *button);
-void                   gimp_palette_select_button_set_palette_name (GimpPaletteSelectButton *button,
-                                                                    const gchar             *palette_name);
+G_CONST_RETURN gchar * gimp_palette_select_button_get_palette (GimpPaletteSelectButton *button);
+void                   gimp_palette_select_button_set_palette (GimpPaletteSelectButton *button,
+                                                               const gchar             *palette_name);
 
 
 G_END_DECLS

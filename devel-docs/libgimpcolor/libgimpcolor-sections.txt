@@ -89,6 +89,8 @@ GIMP_TYPE_PARAM_RGB
 gimp_param_spec_rgb
 gimp_param_spec_rgb_has_alpha
 GIMP_VALUE_HOLDS_RGB
+gimp_value_get_rgb
+gimp_value_set_rgb
 <SUBSECTION Standard>
 GIMP_IS_PARAM_SPEC_RGB
 gimp_param_rgb_get_type

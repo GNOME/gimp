@@ -49,7 +49,7 @@ struct _GimpGradientSelectButtonClass
   GimpSelectButtonClass  parent_class;
 
   /* gradient_set signal is emitted when gradient is chosen */
-  void (* gradient_set) (GimpGradientSelectButton *gradient_button,
+  void (* gradient_set) (GimpGradientSelectButton *button,
                          const gchar              *gradient_name,
                          gint                      width,
                          const gdouble            *gradient_data,
@@ -68,9 +68,9 @@ GType       gimp_gradient_select_button_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_gradient_select_button_new      (const gchar *title,
                                                   const gchar *gradient_name);
 
-G_CONST_RETURN gchar * gimp_gradient_select_button_get_gradient_name (GimpGradientSelectButton *button);
-void                   gimp_gradient_select_button_set_gradient_name (GimpGradientSelectButton *button,
-                                                                    const gchar                *gradient_name);
+G_CONST_RETURN gchar * gimp_gradient_select_button_get_gradient (GimpGradientSelectButton *button);
+void                   gimp_gradient_select_button_set_gradient (GimpGradientSelectButton *button,
+                                                                 const gchar              *gradient_name);
 
 
 G_END_DECLS

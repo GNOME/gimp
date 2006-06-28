@@ -118,8 +118,8 @@ gimp_palette_select_widget_set (GtkWidget   *widget,
 {
   g_return_if_fail (widget != NULL);
 
-  gimp_palette_select_button_set_palette_name
-    (GIMP_PALETTE_SELECT_BUTTON (widget), palette_name);
+  gimp_palette_select_button_set_palette (GIMP_PALETTE_SELECT_BUTTON (widget),
+                                          palette_name);
 }
 
 static void

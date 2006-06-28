@@ -116,8 +116,8 @@ gimp_gradient_select_widget_set (GtkWidget   *widget,
 {
   g_return_if_fail (widget != NULL);
 
-  gimp_gradient_select_button_set_gradient_name
-    (GIMP_GRADIENT_SELECT_BUTTON (widget), gradient_name);
+  gimp_gradient_select_button_set_gradient (GIMP_GRADIENT_SELECT_BUTTON (widget),
+                                            gradient_name);
 }
 
 static void
