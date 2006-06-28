@@ -1,5 +1,10 @@
 2006-06-28  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/splash.c: improved calculation of text color based on
+	the splash image (bug #165760).
+
+2006-06-28  Sven Neumann  <sven@gimp.org>
+
 	* app/menus/plug-in-menus.c (plug_in_menus_setup): generate unique
 	keys so that two procedures can be installed to the same menu entry.
 	Addresses bug #346001.

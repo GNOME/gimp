@@ -59,6 +59,10 @@ static GimpSplash *splash = NULL;
 
 
 static void        splash_map                 (void);
+static void        splash_position_layouts    (GimpSplash     *splash,
+                                               const gchar    *text1,
+                                               const gchar    *text2,
+                                               GdkRectangle   *area);
 static gboolean    splash_area_expose         (GtkWidget      *widget,
                                                GdkEventExpose *event,
                                                GimpSplash     *splash);
@@ -66,7 +70,7 @@ static void        splash_rectangle_union     (GdkRectangle   *dest,
                                                PangoRectangle *pango_rect,
                                                gint            offset_x,
                                                gint            offset_y);
-static gboolean    splash_average_bottom      (GtkWidget      *widget,
+static gboolean    splash_average_text_area   (GimpSplash     *splash,
                                                GdkPixbuf      *pixbuf,
                                                GdkColor       *color);
 
@@ -155,11 +159,27 @@ splash_create (void)
 
   gtk_widget_set_size_request (splash->area, splash->width, splash->height);
 
-  gtk_widget_realize (splash->area);
+  /*  create the pango layouts  */
+  splash->upper = gtk_widget_create_pango_layout (splash->area, "");
+  splash->lower = gtk_widget_create_pango_layout (splash->area, "");
 
-  splash_average_bottom (splash->area,
-			 gdk_pixbuf_animation_get_static_image (pixbuf),
-			 &values.foreground);
+  attrs = pango_attr_list_new ();
+  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+
+  pango_layout_set_attributes (splash->upper, attrs);
+  pango_attr_list_unref (attrs);
+
+  /*  this sets the initial layout positions  */
+  splash_position_layouts (splash, "", "", NULL);
+
+  splash_average_text_area (splash,
+                            gdk_pixbuf_animation_get_static_image (pixbuf),
+                            &values.foreground);
+
+  gtk_widget_realize (splash->area);
   splash->gc = gdk_gc_new_with_values (splash->area->window, &values,
                                        GDK_GC_FOREGROUND);
 
@@ -181,19 +201,6 @@ splash_create (void)
   g_signal_connect_after (splash->area, "expose-event",
 			  G_CALLBACK (splash_area_expose),
 			  splash);
-
-  /*  create the pango layouts  */
-  splash->upper = gtk_widget_create_pango_layout (splash->area, "");
-  splash->lower = gtk_widget_create_pango_layout (splash->area, "");
-
-  attrs = pango_attr_list_new ();
-  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
-  attr->start_index = 0;
-  attr->end_index   = -1;
-  pango_attr_list_insert (attrs, attr);
-
-  pango_layout_set_attributes (splash->upper, attrs);
-  pango_attr_list_unref (attrs);
 
   /*  add a progress bar  */
   splash->progress = gtk_progress_bar_new ();
@@ -234,11 +241,7 @@ splash_update (const gchar *text1,
                const gchar *text2,
                gdouble      percentage)
 {
-  GdkRectangle    expose = { 0, 0, 0, 0 };
-  PangoRectangle  ink;
-  PangoRectangle  logical;
-  gint            width;
-  gint            height;
+  GdkRectangle expose = { 0, 0, 0, 0 };
 
   g_return_if_fail (percentage >= 0.0 && percentage <= 1.0);
 
@@ -249,36 +252,7 @@ splash_update (const gchar *text1,
   splash_timer_elapsed (text1, text2, percentage);
 #endif
 
-  width  = splash->area->allocation.width;
-  height = splash->area->allocation.height;
-
-  if (text1)
-    {
-      pango_layout_get_pixel_extents (splash->upper, &ink, NULL);
-      splash_rectangle_union (&expose, &ink, splash->upper_x, splash->upper_y);
-
-      pango_layout_set_text (splash->upper, text1, -1);
-      pango_layout_get_pixel_extents (splash->upper, &ink, &logical);
-
-      splash->upper_x = (width - logical.width) / 2;
-      splash->upper_y = height - 2 * (logical.height + 6);
-
-      splash_rectangle_union (&expose, &ink, splash->upper_x, splash->upper_y);
-    }
-
-  if (text2)
-    {
-      pango_layout_get_pixel_extents (splash->lower, &ink, NULL);
-      splash_rectangle_union (&expose, &ink, splash->lower_x, splash->lower_y);
-
-      pango_layout_set_text (splash->lower, text2, -1);
-      pango_layout_get_pixel_extents (splash->lower, &ink, &logical);
-
-      splash->lower_x = (width - logical.width) / 2;
-      splash->lower_y = height - (logical.height + 6);
-
-      splash_rectangle_union (&expose, &ink, splash->lower_x, splash->lower_y);
-    }
+  splash_position_layouts (splash, text1, text2, &expose);
 
   if (expose.width > 0 && expose.height > 0)
     gtk_widget_queue_draw_area (splash->area,
@@ -320,6 +294,51 @@ splash_map (void)
    gtk_window_set_auto_startup_notification (TRUE);
 }
 
+/* area returns the union of the previous and new ink rectangles */
+static void
+splash_position_layouts (GimpSplash   *splash,
+                         const gchar  *text1,
+                         const gchar  *text2,
+                         GdkRectangle *area)
+{
+  PangoRectangle  ink;
+  PangoRectangle  logical;
+
+  if (text1)
+    {
+      pango_layout_get_pixel_extents (splash->upper, &ink, NULL);
+
+      if (area)
+        splash_rectangle_union (area, &ink, splash->upper_x, splash->upper_y);
+
+      pango_layout_set_text (splash->upper, text1, -1);
+      pango_layout_get_pixel_extents (splash->upper, &ink, &logical);
+
+      splash->upper_x = (splash->width - logical.width) / 2;
+      splash->upper_y = splash->height - 2 * (logical.height + 6);
+
+      if (area)
+        splash_rectangle_union (area, &ink, splash->upper_x, splash->upper_y);
+    }
+
+  if (text2)
+    {
+      pango_layout_get_pixel_extents (splash->lower, &ink, NULL);
+
+      if (area)
+        splash_rectangle_union (area, &ink, splash->lower_x, splash->lower_y);
+
+      pango_layout_set_text (splash->lower, text2, -1);
+      pango_layout_get_pixel_extents (splash->lower, &ink, &logical);
+
+      splash->lower_x = (splash->width - logical.width) / 2;
+      splash->lower_y = splash->height - (logical.height + 6);
+
+      if (area)
+        splash_rectangle_union (area, &ink, splash->lower_x, splash->lower_y);
+    }
+}
+
 static void
 splash_rectangle_union (GdkRectangle   *dest,
                         PangoRectangle *pango_rect,
@@ -340,61 +359,68 @@ splash_rectangle_union (GdkRectangle   *dest,
 }
 
 /* This function chooses a gray value for the text color, based on
- * the average intensity of the lower 60 rows of the splash image.
+ * the average luminance of the text area of the splash image.
  */
 static gboolean
-splash_average_bottom (GtkWidget *widget,
-                       GdkPixbuf *pixbuf,
-                       GdkColor  *color)
+splash_average_text_area (GimpSplash *splash,
+                          GdkPixbuf  *pixbuf,
+                          GdkColor   *color)
 {
   const guchar *pixels;
-  gint          x, y;
-  gint          width, height;
   gint          rowstride;
   gint          channels;
-  gint          luminance;
-  gint          count;
-  guint         sum[3] = { 0, 0, 0 };
+  gint          luminance = 0;
+  guint         sum[3]    = { 0, 0, 0 };
+  GdkRectangle  image     = { 0, 0, 0, 0 };
+  GdkRectangle  area      = { 0, 0, 0, 0 };
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), FALSE);
   g_return_val_if_fail (gdk_pixbuf_get_bits_per_sample (pixbuf) == 8, FALSE);
 
-  width     = gdk_pixbuf_get_width (pixbuf);
-  height    = gdk_pixbuf_get_height (pixbuf);
-  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
-  channels  = gdk_pixbuf_get_n_channels (pixbuf);
-  pixels    = gdk_pixbuf_get_pixels (pixbuf);
+  image.width  = gdk_pixbuf_get_width (pixbuf);
+  image.height = gdk_pixbuf_get_height (pixbuf);
+  rowstride    = gdk_pixbuf_get_rowstride (pixbuf);
+  channels     = gdk_pixbuf_get_n_channels (pixbuf);
+  pixels       = gdk_pixbuf_get_pixels (pixbuf);
 
-  y = MAX (0, height - 60);
-  count = width * (height - y);
+  splash_position_layouts (splash, "Short text", "Somewhat longer text", &area);
 
-  pixels += y * rowstride;
-
-  for (; y < height; y++)
+  if (gdk_rectangle_intersect (&image, &area, &area))
     {
-      const guchar *src = pixels;
+      const gint count = area.width * area.height;
+      gint       x, y;
 
-      for (x = 0; x < width; x++)
+      pixels += area.x * channels;
+      pixels += area.y * rowstride;
+
+      for (y = 0; y < area.height; y++)
         {
-          sum[0] += src[0];
-          sum[1] += src[1];
-          sum[2] += src[2];
+          const guchar *src = pixels;
 
-          src += channels;
+          for (x = 0; x < area.width; x++)
+            {
+              sum[0] += src[0];
+              sum[1] += src[1];
+              sum[2] += src[2];
+
+              src += channels;
+            }
+
+          pixels += rowstride;
         }
 
-      pixels += rowstride;
+      luminance = GIMP_RGB_LUMINANCE (sum[0] / count,
+                                      sum[1] / count,
+                                      sum[2] / count);
+
+      luminance = CLAMP0255 (luminance > 127 ?
+                             luminance - 223 : luminance + 223);
+
     }
-
-  luminance = GIMP_RGB_LUMINANCE (sum[0] / count,
-                                  sum[1] / count,
-                                  sum[2] / count);
-
-  luminance = CLAMP0255 (luminance > 127 ? luminance - 223 : luminance + 223);
 
   color->red = color->green = color->blue = (luminance << 8 | luminance);
 
-  return gdk_colormap_alloc_color (gtk_widget_get_colormap (widget),
+  return gdk_colormap_alloc_color (gtk_widget_get_colormap (splash->area),
                                    color, FALSE, TRUE);
 }
 
