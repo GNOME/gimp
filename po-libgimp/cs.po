@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-27 13:07+0200\n"
-"PO-Revision-Date: 2006-06-27 13:06+0200\n"
+"POT-Creation-Date: 2006-06-28 11:49+0200\n"
+"PO-Revision-Date: 2006-06-28 11:49+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -473,8 +473,8 @@ msgstr "Zesvětlování"
 msgid "Burn"
 msgstr "Tmavnutí"
 
-#: ../libgimpbase/gimpbaseenums.c:388 ../libgimpbase/gimpbaseenums.c:563
-msgid "Linear"
+#: ../libgimpbase/gimpbaseenums.c:388
+msgid "gradient|Linear"
 msgstr "Lineární"
 
 #: ../libgimpbase/gimpbaseenums.c:389
@@ -580,6 +580,10 @@ msgstr "Indexovaná-alfa"
 #: ../libgimpbase/gimpbaseenums.c:562
 msgid "None (Fastest)"
 msgstr "Žádná (nejrychlejší)"
+
+#: ../libgimpbase/gimpbaseenums.c:563
+msgid "interpolation|Linear"
+msgstr "Lineární"
 
 #: ../libgimpbase/gimpbaseenums.c:564
 msgid "Cubic"
@@ -718,7 +722,7 @@ msgstr "%.1f GB"
 msgid "%d GB"
 msgstr "%d GB"
 
-#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
+#: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/cdisplay_lcms.c:248
 msgid "(invalid UTF-8 string)"
 msgstr "(neplatný řetězec v UTF-8)"
@@ -757,8 +761,7 @@ msgid "Sets how colors are mapped for your display."
 msgstr "Nastaví, jak se barvy mapují na vašem displeji."
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
-msgid ""
-"Sets how colors are converted from workspace to the print simulation device."
+msgid "Sets how colors are converted from workspace to the print simulation device."
 msgstr ""
 "Nastaví, jak se barvy převádí z pracovního prostředí na zařízení simulace "
 "tisku."
@@ -775,20 +778,19 @@ msgstr "Displej se správou barev"
 msgid "Print simulation"
 msgstr "Simulace tisku"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:56 ../modules/cdisplay_proof.c:57
+#: ../libgimpconfig/gimpcolorconfig-enums.c:56
 msgid "Perceptual"
 msgstr "Perceptuální"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:58
+#: ../libgimpconfig/gimpcolorconfig-enums.c:57
 msgid "Relative colorimetric"
 msgstr "Relativní kolorimetrický"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#: ../libgimpwidgets/gimpwidgetsenums.c:93 ../modules/cdisplay_proof.c:59
-msgid "Saturation"
+msgid "intent|Saturation"
 msgstr "Sytost"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59 ../modules/cdisplay_proof.c:60
+#: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
 msgstr "Absolutní kolorimetrický"
 
@@ -1210,6 +1212,10 @@ msgstr "Odstín"
 msgid "_S"
 msgstr "_S"
 
+#: ../libgimpwidgets/gimpwidgetsenums.c:93
+msgid "Saturation"
+msgstr "Sytost"
+
 #: ../libgimpwidgets/gimpwidgetsenums.c:94
 msgid "_V"
 msgstr "_H"
@@ -1310,8 +1316,7 @@ msgstr "Správa barev"
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr ""
-"Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
+msgstr "Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
 
 #: ../modules/cdisplay_lcms.c:313
 msgid "Mode of operation:"
@@ -1329,27 +1334,27 @@ msgstr "Profil monitoru:"
 msgid "Print simulation profile:"
 msgstr "Profil simulace tisku:"
 
-#: ../modules/cdisplay_proof.c:129
+#: ../modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
 msgstr "Filtr barevného náhledu používající barevný profil ICC"
 
-#: ../modules/cdisplay_proof.c:223
+#: ../modules/cdisplay_proof.c:179
 msgid "Color Proof"
 msgstr "Barevný náhled"
 
-#: ../modules/cdisplay_proof.c:348
+#: ../modules/cdisplay_proof.c:304
 msgid "_Intent:"
 msgstr "_Cíl:"
 
-#: ../modules/cdisplay_proof.c:352
+#: ../modules/cdisplay_proof.c:308
 msgid "Choose an ICC Color Profile"
 msgstr "Zvolte profil barev ICC"
 
-#: ../modules/cdisplay_proof.c:355
+#: ../modules/cdisplay_proof.c:311
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/cdisplay_proof.c:360
+#: ../modules/cdisplay_proof.c:316
 msgid "_Black Point Compensation"
 msgstr "_Kompenzace černého bodu"
 
@@ -1609,3 +1614,4 @@ msgstr "Řadič %03d"
 #: ../modules/controller_midi.c:436
 msgid "MIDI Events"
 msgstr "Události MIDI"
+
