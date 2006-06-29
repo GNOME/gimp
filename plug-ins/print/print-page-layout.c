@@ -156,6 +156,9 @@ run_page_setup_dialog (GtkWidget *widget,
                                                 page_setup, settings);
 
   gtk_print_operation_set_default_page_setup (operation, page_setup);
+
+  /* needed for previewing */
+  data->orientation = gtk_page_setup_get_orientation (page_setup);
 }
 
 #define SB_WIDTH 8

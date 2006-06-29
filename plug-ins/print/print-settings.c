@@ -307,8 +307,6 @@ load_print_settings_from_key_file (PrintData         *data,
     }
   g_strfreev (keys);
 
-  gtk_print_operation_set_print_settings (operation, settings);
-
 
   /* page setup parameters */
   page_setup = gtk_print_operation_get_default_page_setup (operation);
@@ -322,6 +320,8 @@ load_print_settings_from_key_file (PrintData         *data,
       orientation = g_key_file_get_integer (key_file, "page-setup",
                                             "orientation", &error);
       gtk_page_setup_set_orientation (page_setup, orientation);
+      gtk_print_settings_set_orientation (settings, orientation);
+      data->orientation = orientation;
     }
 
   gtk_print_operation_set_default_page_setup (operation, page_setup);
@@ -342,6 +342,8 @@ load_print_settings_from_key_file (PrintData         *data,
     }
   else
     data->unit = GIMP_UNIT_INCH;
+
+  gtk_print_operation_set_print_settings (operation, settings);
 
   return TRUE;
 }

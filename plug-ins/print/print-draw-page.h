@@ -16,5 +16,5 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-void draw_page_cairo (GtkPrintContext *context,
-                      PrintData       *data);
+gboolean draw_page_cairo (GtkPrintContext *context,
+                          PrintData       *data);

@@ -1,3 +1,11 @@
+2006-06-29  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/print/print.[ch]
+	* plug-ins/print/print-draw-page.[ch]
+	* plug-ins/print/print-page-layout.c
+	* plug-ins/print/print-settings.c: implement preview internally,
+	assorted other small changes.
+
 2006-06-29  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/screenshot.c: use macros in an attempt to make

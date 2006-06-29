@@ -30,5 +30,6 @@ typedef struct
   gdouble            xres;
   gdouble            yres;
   gboolean           print_size_changed;
+  GtkPageOrientation orientation;
 } PrintData;
 

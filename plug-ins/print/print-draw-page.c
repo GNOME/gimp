@@ -27,9 +27,12 @@
 #include "print.h"
 #include "print-draw-page.h"
 
+#include "libgimp/stdplugins-intl.h"
+
 
 /* In points */
 #define HEADER_HEIGHT (20*72/25.4)
+#define EPSILON  0.0001
 
 static guchar * get_image_pixels     (PrintData       *data,
                                       gint            *width_ptr,
@@ -41,7 +44,7 @@ static void     draw_info_header     (GtkPrintContext *context,
                                       PrintData       *data);
 
 
-void
+gboolean
 draw_page_cairo (GtkPrintContext *context,
                  PrintData       *data)
 {
@@ -76,20 +79,20 @@ draw_page_cairo (GtkPrintContext *context,
   scale_x = cr_dpi_x / image_xres;
   scale_y = cr_dpi_y / image_yres;
 
-  if (scale_x * image_width > cr_width)
+  if (scale_x * image_width > cr_width + EPSILON)
     {
-      g_message ("Image width (%g in) is larger than printable width (%g in).",
+      g_message (_("Image width (%lg in) is larger than printable width (%lg in)."),
                  image_width / image_xres, cr_width / cr_dpi_x);
       gtk_print_operation_cancel (data->operation);
-      return;
+      return FALSE;
     }
 
-  if (scale_y * image_height > cr_height)
+  if (scale_y * image_height > cr_height + EPSILON)
     {
-      g_message ("Image height (%g in) is larger than printable height (%g in).",
+      g_message (_("Image height (%lg in) is larger than printable height (%lg in)."),
                  image_height / image_yres, cr_height / cr_dpi_y);
       gtk_print_operation_cancel (data->operation);
-      return;
+      return FALSE;
     }
 
   /* print header if it is requested */
@@ -115,6 +118,7 @@ draw_page_cairo (GtkPrintContext *context,
 
   g_free (pixels);
 
+  return TRUE;
 }
 
 static guchar *
