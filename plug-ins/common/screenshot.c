@@ -1,12 +1,3 @@
-/*
- *  Screenshot plug-in
- *  Copyright 1998-2000 Sven Neumann <sven@gimp.org>
- *  Copyright 2003      Henrik Brix Andersen <brix@gimp.org>
- *
- *  Any suggestions, bug-reports or patches are very welcome.
- *
- */
-
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
@@ -23,6 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+/*
+ *  Screenshot plug-in
+ *  Copyright 1998-2000 Sven Neumann <sven@gimp.org>
+ *  Copyright 2003      Henrik Brix Andersen <brix@gimp.org>
+ *
+ *  Any suggestions, bug-reports or patches are very welcome.
+ *
  */
 
 #include "config.h"
@@ -390,6 +390,7 @@ select_window_x11 (GdkScreen *screen)
   gint          mask        = ButtonPressMask | ButtonReleaseMask;
   gint          x, y, w, h;
   gint          num_keys;
+  gint          i;
   gboolean      cancel      = FALSE;
 
   x_dpy = GDK_SCREEN_XDISPLAY (screen);
@@ -441,29 +442,25 @@ select_window_x11 (GdkScreen *screen)
   if (gdk_keymap_get_entries_for_keyval (NULL, GDK_Escape, &keys, &num_keys))
     {
       gdk_error_trap_push ();
-      XGrabKey (x_dpy, keys[0].keycode, 0, x_root, False,
-                GrabModeAsync, GrabModeAsync);
-      /* CapsLock */
-      XGrabKey (x_dpy, keys[0].keycode, LockMask, x_root, False,
-                GrabModeAsync, GrabModeAsync);
-      /* NumLock */
-      XGrabKey (x_dpy, keys[0].keycode, Mod2Mask, x_root, False,
-                GrabModeAsync, GrabModeAsync);
-      /* ScrollLock */
-      XGrabKey (x_dpy, keys[0].keycode, Mod5Mask, x_root, False,
-                GrabModeAsync, GrabModeAsync);
-      /* CapsLock + NumLock */
-      XGrabKey (x_dpy, keys[0].keycode, LockMask | Mod2Mask, x_root, False,
-                GrabModeAsync, GrabModeAsync);
-      /* CapsLock + ScrollLock */
-      XGrabKey (x_dpy, keys[0].keycode, LockMask | Mod5Mask, x_root, False,
-                GrabModeAsync, GrabModeAsync);
-      /* NumLock + ScrollLock */
-      XGrabKey (x_dpy, keys[0].keycode, Mod2Mask | Mod5Mask, x_root, False,
-                GrabModeAsync, GrabModeAsync);
-      /* CapsLock + NumLock + ScrollLock */
-      XGrabKey (x_dpy, keys[0].keycode, LockMask | Mod2Mask | Mod5Mask, x_root,
-                False, GrabModeAsync, GrabModeAsync);
+
+#define X_GRAB_KEY(index, modifiers) \
+      XGrabKey (x_dpy, keys[index].keycode, modifiers, x_root, False, \
+                GrabModeAsync, GrabModeAsync)
+
+      for (i = 0; i < num_keys; i++)
+        {
+          X_GRAB_KEY (i, 0);
+          X_GRAB_KEY (i, LockMask);            /* CapsLock              */
+          X_GRAB_KEY (i, Mod2Mask);            /* NumLock               */
+          X_GRAB_KEY (i, Mod5Mask);            /* ScrollLock            */
+          X_GRAB_KEY (i, LockMask | Mod2Mask); /* CapsLock + NumLock    */
+          X_GRAB_KEY (i, LockMask | Mod5Mask); /* CapsLock + ScrollLock */
+          X_GRAB_KEY (i, Mod2Mask | Mod5Mask); /* NumLock  + ScrollLock */
+          X_GRAB_KEY (i, LockMask | Mod2Mask | Mod5Mask); /* all        */
+        }
+
+#undef X_GRAB_KEY
+
       gdk_flush ();
       gdk_error_trap_pop ();
     }
@@ -562,15 +559,22 @@ select_window_x11 (GdkScreen *screen)
 
   if (keys)
     {
-      XUngrabKey (x_dpy, keys[0].keycode, 0, x_root);
-      XUngrabKey (x_dpy, keys[0].keycode, LockMask, x_root);
-      XUngrabKey (x_dpy, keys[0].keycode, Mod2Mask, x_root);
-      XUngrabKey (x_dpy, keys[0].keycode, Mod5Mask, x_root);
-      XUngrabKey (x_dpy, keys[0].keycode, LockMask | Mod2Mask, x_root);
-      XUngrabKey (x_dpy, keys[0].keycode, LockMask | Mod5Mask, x_root);
-      XUngrabKey (x_dpy, keys[0].keycode, Mod2Mask | Mod5Mask, x_root);
-      XUngrabKey (x_dpy, keys[0].keycode, LockMask | Mod2Mask | Mod5Mask,
-                  x_root);
+#define X_UNGRAB_KEY(index, modifiers) \
+      XUngrabKey (x_dpy, keys[index].keycode, modifiers, x_root)
+
+      for (i = 0; i < num_keys; i++)
+        {
+          X_UNGRAB_KEY (i, 0);
+          X_UNGRAB_KEY (i, LockMask);            /* CapsLock              */
+          X_UNGRAB_KEY (i, Mod2Mask);            /* NumLock               */
+          X_UNGRAB_KEY (i, Mod5Mask);            /* ScrollLock            */
+          X_UNGRAB_KEY (i, LockMask | Mod2Mask); /* CapsLock + NumLock    */
+          X_UNGRAB_KEY (i, LockMask | Mod5Mask); /* CapsLock + ScrollLock */
+          X_UNGRAB_KEY (i, Mod2Mask | Mod5Mask); /* NumLock  + ScrollLock */
+          X_UNGRAB_KEY (i, LockMask | Mod2Mask | Mod5Mask); /* all        */
+        }
+#undef X_UNGRAB_KEY
+
       g_free (keys);
     }
 

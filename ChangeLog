@@ -1,5 +1,10 @@
 2006-06-29  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/screenshot.c: use macros in an attempt to make
+	the key grabbing code more readable.
+
+2006-06-29  Sven Neumann  <sven@gimp.org>
+
 	* app/display/Makefile.am
 	* app/display/gimpdisplayshell-progress.[ch]: new files,
 	implementing the GimpProgress interface by delegation to
