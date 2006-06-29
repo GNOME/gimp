@@ -443,6 +443,27 @@ select_window_x11 (GdkScreen *screen)
       gdk_error_trap_push ();
       XGrabKey (x_dpy, keys[0].keycode, 0, x_root, False,
                 GrabModeAsync, GrabModeAsync);
+      /* CapsLock */
+      XGrabKey (x_dpy, keys[0].keycode, LockMask, x_root, False,
+                GrabModeAsync, GrabModeAsync);
+      /* NumLock */
+      XGrabKey (x_dpy, keys[0].keycode, Mod2Mask, x_root, False,
+                GrabModeAsync, GrabModeAsync);
+      /* ScrollLock */
+      XGrabKey (x_dpy, keys[0].keycode, Mod5Mask, x_root, False,
+                GrabModeAsync, GrabModeAsync);
+      /* CapsLock + NumLock */
+      XGrabKey (x_dpy, keys[0].keycode, LockMask | Mod2Mask, x_root, False,
+                GrabModeAsync, GrabModeAsync);
+      /* CapsLock + ScrollLock */
+      XGrabKey (x_dpy, keys[0].keycode, LockMask | Mod5Mask, x_root, False,
+                GrabModeAsync, GrabModeAsync);
+      /* NumLock + ScrollLock */
+      XGrabKey (x_dpy, keys[0].keycode, Mod2Mask | Mod5Mask, x_root, False,
+                GrabModeAsync, GrabModeAsync);
+      /* CapsLock + NumLock + ScrollLock */
+      XGrabKey (x_dpy, keys[0].keycode, LockMask | Mod2Mask | Mod5Mask, x_root,
+                False, GrabModeAsync, GrabModeAsync);
       gdk_flush ();
       gdk_error_trap_pop ();
     }
@@ -541,7 +562,15 @@ select_window_x11 (GdkScreen *screen)
 
   if (keys)
     {
-      XUngrabKey (x_dpy, keys[0].keycode, AnyModifier, x_root);
+      XUngrabKey (x_dpy, keys[0].keycode, 0, x_root);
+      XUngrabKey (x_dpy, keys[0].keycode, LockMask, x_root);
+      XUngrabKey (x_dpy, keys[0].keycode, Mod2Mask, x_root);
+      XUngrabKey (x_dpy, keys[0].keycode, Mod5Mask, x_root);
+      XUngrabKey (x_dpy, keys[0].keycode, LockMask | Mod2Mask, x_root);
+      XUngrabKey (x_dpy, keys[0].keycode, LockMask | Mod5Mask, x_root);
+      XUngrabKey (x_dpy, keys[0].keycode, Mod2Mask | Mod5Mask, x_root);
+      XUngrabKey (x_dpy, keys[0].keycode, LockMask | Mod2Mask | Mod5Mask,
+                  x_root);
       g_free (keys);
     }
 
