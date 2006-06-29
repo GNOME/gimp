@@ -1,3 +1,9 @@
+2006-06-29  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/common/screenshot.c (select_window_x11): use 0 instead
+	of AnyModifer in the call to XGrabKey.  This prevented the
+	cancellation of the screenshot with Escape in some environments.
+
 2006-06-29  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/screenshot.c: added an else that we lost somehow.

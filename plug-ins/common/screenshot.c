@@ -441,7 +441,7 @@ select_window_x11 (GdkScreen *screen)
   if (gdk_keymap_get_entries_for_keyval (NULL, GDK_Escape, &keys, &num_keys))
     {
       gdk_error_trap_push ();
-      XGrabKey (x_dpy, keys[0].keycode, AnyModifier, x_root, False,
+      XGrabKey (x_dpy, keys[0].keycode, 0, x_root, False,
                 GrabModeAsync, GrabModeAsync);
       gdk_flush ();
       gdk_error_trap_pop ();
