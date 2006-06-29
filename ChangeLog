@@ -1,3 +1,16 @@
+2006-06-29  Sven Neumann  <sven@gimp.org>
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplayshell-progress.[ch]: new files,
+	implementing the GimpProgress interface by delegation to
+	GimpStatusbar.
+
+	* app/display/gimpdisplayshell.c (G_DEFINE_TYPE): call
+	gimp_display_shell_progress_iface_init().
+
+	* app/display/gimpdisplay.c: delegate progress calls to
+	GimpDisplayShell instead of shell->statusbar.
+	
 2006-06-29  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/common/screenshot.c (select_window_x11): allow the

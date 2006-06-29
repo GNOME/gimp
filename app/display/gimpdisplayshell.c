@@ -63,6 +63,7 @@
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-handlers.h"
+#include "gimpdisplayshell-progress.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
@@ -121,7 +122,9 @@ static void      gimp_display_shell_hide_tooltip   (GimpUIManager    *manager,
                                                     GimpDisplayShell *shell);
 
 
-G_DEFINE_TYPE (GimpDisplayShell, gimp_display_shell, GTK_TYPE_WINDOW)
+G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell, GTK_TYPE_WINDOW,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
+                                                gimp_display_shell_progress_iface_init))
 
 #define parent_class gimp_display_shell_parent_class
 

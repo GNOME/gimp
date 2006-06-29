@@ -43,6 +43,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-layer-select.h		\
 	gimpdisplayshell-preview.c		\
 	gimpdisplayshell-preview.h		\
+	gimpdisplayshell-progress.c		\
+	gimpdisplayshell-progress.h		\
 	gimpdisplayshell-render.c		\
 	gimpdisplayshell-render.h		\
 	gimpdisplayshell-scale.c		\

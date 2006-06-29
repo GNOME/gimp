@@ -29,8 +29,6 @@
 #include "core/gimplist.h"
 #include "core/gimpprogress.h"
 
-#include "widgets/gimpwidgets-utils.h"
-
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
@@ -204,102 +202,73 @@ gimp_display_progress_start (GimpProgress *progress,
                              const gchar  *message,
                              gboolean      cancelable)
 {
-  GimpDisplay      *display = GIMP_DISPLAY (progress);
-  GimpDisplayShell *shell;
+  GimpDisplay *display = GIMP_DISPLAY (progress);
 
   if (! display->shell)
     return NULL;
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
-
-  return gimp_progress_start (GIMP_PROGRESS (shell->statusbar),
+  return gimp_progress_start (GIMP_PROGRESS (display->shell),
                               message, cancelable);
 }
 
 static void
 gimp_display_progress_end (GimpProgress *progress)
 {
-  GimpDisplay      *display = GIMP_DISPLAY (progress);
-  GimpDisplayShell *shell;
+  GimpDisplay *display = GIMP_DISPLAY (progress);
 
-  if (! display->shell)
-    return;
-
-  shell = GIMP_DISPLAY_SHELL (display->shell);
-
-  gimp_progress_end (GIMP_PROGRESS (shell->statusbar));
+  if (display->shell)
+    gimp_progress_end (GIMP_PROGRESS (display->shell));
 }
 
 static gboolean
 gimp_display_progress_is_active (GimpProgress *progress)
 {
-  GimpDisplay      *display = GIMP_DISPLAY (progress);
-  GimpDisplayShell *shell;
+  GimpDisplay *display = GIMP_DISPLAY (progress);
 
   if (! display->shell)
     return FALSE;
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
-
-  return gimp_progress_is_active (GIMP_PROGRESS (shell->statusbar));
+  return gimp_progress_is_active (GIMP_PROGRESS (display->shell));
 }
 
 static void
 gimp_display_progress_set_text (GimpProgress *progress,
                                 const gchar  *message)
 {
-  GimpDisplay      *display = GIMP_DISPLAY (progress);
-  GimpDisplayShell *shell;
+  GimpDisplay *display = GIMP_DISPLAY (progress);
 
-  if (! display->shell)
-    return;
-
-  shell = GIMP_DISPLAY_SHELL (display->shell);
-
-  gimp_progress_set_text (GIMP_PROGRESS (shell->statusbar), message);
+  if (display->shell)
+    gimp_progress_set_text (GIMP_PROGRESS (display->shell), message);
 }
 
 static void
 gimp_display_progress_set_value (GimpProgress *progress,
                                  gdouble       percentage)
 {
-  GimpDisplay      *display = GIMP_DISPLAY (progress);
-  GimpDisplayShell *shell;
+  GimpDisplay *display = GIMP_DISPLAY (progress);
 
-  if (! display->shell)
-    return;
-
-  shell = GIMP_DISPLAY_SHELL (display->shell);
-
-  gimp_progress_set_value (GIMP_PROGRESS (shell->statusbar), percentage);
+  if (display->shell)
+    gimp_progress_set_value (GIMP_PROGRESS (display->shell), percentage);
 }
 
 static gdouble
 gimp_display_progress_get_value (GimpProgress *progress)
 {
-  GimpDisplay      *display = GIMP_DISPLAY (progress);
-  GimpDisplayShell *shell;
+  GimpDisplay *display = GIMP_DISPLAY (progress);
 
   if (! display->shell)
     return 0.0;
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
-
-  return gimp_progress_get_value (GIMP_PROGRESS (shell->statusbar));
+  return gimp_progress_get_value (GIMP_PROGRESS (display->shell));
 }
 
 static void
 gimp_display_progress_pulse (GimpProgress *progress)
 {
-  GimpDisplay      *display = GIMP_DISPLAY (progress);
-  GimpDisplayShell *shell;
+  GimpDisplay *display = GIMP_DISPLAY (progress);
 
-  if (! display->shell)
-    return;
-
-  shell = GIMP_DISPLAY_SHELL (display->shell);
-
-  gimp_progress_pulse (GIMP_PROGRESS (shell->statusbar));
+  if (display->shell)
+    gimp_progress_pulse (GIMP_PROGRESS (display->shell));
 }
 
 static guint32
@@ -310,7 +279,7 @@ gimp_display_progress_get_window (GimpProgress *progress)
   if (! display->shell)
     return 0;
 
-  return (guint32) gimp_window_get_native (GTK_WINDOW (display->shell));
+  return gimp_progress_get_window (GIMP_PROGRESS (display->shell));
 }
 
 static void
