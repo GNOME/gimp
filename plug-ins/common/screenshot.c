@@ -308,7 +308,7 @@ run (const gchar      *name,
           shootvals.x2           = param[5].data.d_int32;
           shootvals.y2           = param[6].data.d_int32;
 	}
-
+      else
         {
           status = GIMP_PDB_CALLING_ERROR;
         }
@@ -458,13 +458,12 @@ select_window_x11 (GdkScreen *screen)
           if (x_win == None)
             {
               x_win = x_event.xbutton.subwindow;
+
               if (x_win == None)
                 x_win = x_root;
 #ifdef HAVE_X11_XMU_WINUTIL_H
               else if (! shootvals.decorate)
-                {
-                  x_win = XmuClientWindow (x_dpy, x_win);
-                }
+                x_win = XmuClientWindow (x_dpy, x_win);
 #endif
 
               shootvals.x2 = shootvals.x1 = x_event.xbutton.x_root;
@@ -476,6 +475,7 @@ select_window_x11 (GdkScreen *screen)
         case ButtonRelease:
           if (buttons > 0)
             buttons--;
+
           if (! buttons && shootvals.shoot_type == SHOOT_REGION)
             {
               x = MIN (shootvals.x1, shootvals.x2);
