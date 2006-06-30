@@ -24,6 +24,8 @@ Changes in GIMP 2.3.10
 - added load plug-in to open desktop links
 - removed print plug-ins and started work on a replacement using the 
   new GTK+ Print API
+- added replacements for gimp_foo_select widgets, akin to GimpFontSelectButton
+- introduced translation context to a number of colliding strings
 - bug fixes and code cleanup
 
 
