@@ -376,58 +376,21 @@ run (const gchar      *name,
 static GdkNativeWindow
 select_window_x11 (GdkScreen *screen)
 {
-  Display      *x_dpy;
-  Cursor        x_cursor;
-  XEvent        x_event;
-  Window        x_win;
-  Window        x_root;
-  XGCValues     gc_values;
-  GC            gc          = NULL;
+  Display      *x_dpy       = GDK_SCREEN_XDISPLAY (screen);
+  gint          x_scr       = GDK_SCREEN_XNUMBER (screen);
+  Window        x_root      = RootWindow (x_dpy, x_scr);
+  Window        x_win       = None;
+  GC            x_gc          = None;
+  Cursor        x_cursor    = XCreateFontCursor (x_dpy, GDK_CROSSHAIR);
   GdkKeymapKey *keys        = NULL;
-  gint          x_scr;
   gint          status;
-  gint          buttons;
+  gint          i, num_keys;
+  gint          buttons     = 0;
   gint          mask        = ButtonPressMask | ButtonReleaseMask;
-  gint          x, y, w, h;
-  gint          num_keys;
-  gint          i;
   gboolean      cancel      = FALSE;
 
-  x_dpy = GDK_SCREEN_XDISPLAY (screen);
-  x_scr = GDK_SCREEN_XNUMBER (screen);
-
-  x_win    = None;
-  x_root   = RootWindow (x_dpy, x_scr);
-  x_cursor = XCreateFontCursor (x_dpy, GDK_CROSSHAIR);
-  buttons  = 0;
-
   if (shootvals.shoot_type == SHOOT_REGION)
-    {
-      mask |= PointerMotionMask;
-
-      gc_values.function   = GXxor;
-      gc_values.plane_mask = AllPlanes;
-      gc_values.foreground = WhitePixel (x_dpy, x_scr);
-      gc_values.background = BlackPixel (x_dpy, x_scr);
-      gc_values.line_width = 0;
-      gc_values.line_style = LineSolid;
-      gc_values.fill_style = FillSolid;
-      gc_values.cap_style  = CapButt;
-      gc_values.join_style = JoinMiter;
-      gc_values.graphics_exposures = FALSE;
-      gc_values.clip_x_origin = 0;
-      gc_values.clip_y_origin = 0;
-      gc_values.clip_mask  = None;
-      gc_values.subwindow_mode = IncludeInferiors;
-
-      gc = XCreateGC (x_dpy, x_root,
-                      GCFunction | GCPlaneMask | GCForeground | GCLineWidth |
-                      GCLineStyle | GCCapStyle | GCJoinStyle |
-                      GCGraphicsExposures | GCBackground | GCFillStyle |
-                      GCClipXOrigin | GCClipYOrigin | GCClipMask |
-                      GCSubwindowMode,
-                      &gc_values);
-    }
+    mask |= PointerMotionMask;
 
   status = XGrabPointer (x_dpy, x_root, False,
                          mask, GrabModeSync, GrabModeAsync,
@@ -436,7 +399,37 @@ select_window_x11 (GdkScreen *screen)
   if (status != GrabSuccess)
     {
       g_message (_("Error grabbing the pointer"));
+
+      XFreeCursor (x_dpy, x_cursor);
       return 0;
+    }
+
+  if (shootvals.shoot_type == SHOOT_REGION)
+    {
+      XGCValues gc_values;
+
+      gc_values.function           = GXxor;
+      gc_values.plane_mask         = AllPlanes;
+      gc_values.foreground         = WhitePixel (x_dpy, x_scr);
+      gc_values.background         = BlackPixel (x_dpy, x_scr);
+      gc_values.line_width         = 0;
+      gc_values.line_style         = LineSolid;
+      gc_values.fill_style         = FillSolid;
+      gc_values.cap_style          = CapButt;
+      gc_values.join_style         = JoinMiter;
+      gc_values.graphics_exposures = FALSE;
+      gc_values.clip_x_origin      = 0;
+      gc_values.clip_y_origin      = 0;
+      gc_values.clip_mask          = None;
+      gc_values.subwindow_mode     = IncludeInferiors;
+
+      x_gc = XCreateGC (x_dpy, x_root,
+                        GCFunction | GCPlaneMask | GCForeground | GCLineWidth |
+                        GCLineStyle | GCCapStyle | GCJoinStyle |
+                        GCGraphicsExposures | GCBackground | GCFillStyle |
+                        GCClipXOrigin | GCClipYOrigin | GCClipMask |
+                        GCSubwindowMode,
+                        &gc_values);
     }
 
   if (gdk_keymap_get_entries_for_keyval (NULL, GDK_Escape, &keys, &num_keys))
@@ -467,6 +460,9 @@ select_window_x11 (GdkScreen *screen)
 
   while (! cancel && ((x_win == None) || (buttons != 0)))
     {
+      XEvent x_event;
+      gint   x, y, w, h;
+
       XAllowEvents (x_dpy, SyncPointer, CurrentTime);
       XWindowEvent (x_dpy, x_root, mask | KeyPressMask, &x_event);
 
@@ -502,7 +498,7 @@ select_window_x11 (GdkScreen *screen)
               h = ABS (shootvals.y2 - shootvals.y1);
 
               if (w > 0 && h > 0)
-                XDrawRectangle (x_dpy, x_root, gc, x, y, w, h);
+                XDrawRectangle (x_dpy, x_root, x_gc, x, y, w, h);
 
               shootvals.x2 = x_event.xbutton.x_root;
               shootvals.y2 = x_event.xbutton.y_root;
@@ -518,7 +514,7 @@ select_window_x11 (GdkScreen *screen)
               h = ABS (shootvals.y2 - shootvals.y1);
 
               if (w > 0 && h > 0)
-                XDrawRectangle (x_dpy, x_root, gc, x, y, w, h);
+                XDrawRectangle (x_dpy, x_root, x_gc, x, y, w, h);
 
               shootvals.x2 = x_event.xmotion.x_root;
               shootvals.y2 = x_event.xmotion.y_root;
@@ -529,7 +525,7 @@ select_window_x11 (GdkScreen *screen)
               h = ABS (shootvals.y2 - shootvals.y1);
 
               if (w > 0 && h > 0)
-                XDrawRectangle (x_dpy, x_root, gc, x, y, w, h);
+                XDrawRectangle (x_dpy, x_root, x_gc, x, y, w, h);
             }
           break;
 
@@ -579,7 +575,10 @@ select_window_x11 (GdkScreen *screen)
     }
 
   XUngrabPointer (x_dpy, CurrentTime);
+
   XFreeCursor (x_dpy, x_cursor);
+  if (x_gc != None)
+    XFreeGC (x_dpy, x_gc);
 
   return x_win;
 }

@@ -1,3 +1,8 @@
+2006-06-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/screenshot.c (select_window_x11): don't leak X
+	resources.
+
 2006-06-30  Simon Budig  <simon@gimp.org>
 
 	* app/widgets/gimpstrokeeditor.c: unref the old StrokeOptions
