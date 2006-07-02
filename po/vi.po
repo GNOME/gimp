@@ -122,7 +122,7 @@ msgstr "Không hiển thị cửa sổ khởi chạy"
 
 #: ../app/main.c:158
 msgid "Do not use shared memory between GIMP and plugins"
-msgstr "Không dùng bộ nhớ chia sẻ giữa GIMP và bộ cầm phít"
+msgstr "Không dùng bộ nhớ chia sẻ giữa GIMP và Phần mở rộng"
 
 #: ../app/main.c:163
 msgid "Do not use special CPU acceleration functions"
@@ -378,7 +378,7 @@ msgstr "Mẫu"
 #: ../app/actions/actions.c:176
 #: ../app/dialogs/preferences-dialog.c:2486
 msgid "Plug-Ins"
-msgstr "Bộ cầm phít"
+msgstr "Phần mở rộng"
 
 #: ../app/actions/actions.c:179
 #: ../app/core/core-enums.c:809
@@ -3079,7 +3079,7 @@ msgstr "Đặt lại mọi bộ _lọc"
 
 #: ../app/actions/plug-in-actions.c:106
 msgid "Set all plug-in to their default settings"
-msgstr "Đặt mọi bộ cầm phít thành thiết lập mặc định"
+msgstr "Đặt thiết lập mặc định cho mọi Phần mở rộng"
 
 #: ../app/actions/plug-in-actions.c:114
 msgid "Re_peat Last"
@@ -3087,7 +3087,7 @@ msgstr "Lập _lại điều trước"
 
 #: ../app/actions/plug-in-actions.c:115
 msgid "Rerun the last used plug-in using the same settings"
-msgstr "Chạy lại bộ cầm phít mới dùng, với cùng thiết lập"
+msgstr "Chạy lại Phần mở rộng vừa dùng, với cùng thiết lập"
 
 #: ../app/actions/plug-in-actions.c:120
 msgid "R_e-Show Last"
@@ -3095,7 +3095,7 @@ msgstr "_Hiện lại điều trước"
 
 #: ../app/actions/plug-in-actions.c:121
 msgid "Show the last used plug-in dialog again"
-msgstr "Hiện lại hộp thoại bộ cầm phít mới dùng"
+msgstr "Hiện lại hộp thoại Phần mở rộng vừa dùng"
 
 #: ../app/actions/plug-in-actions.c:531
 #, c-format
@@ -5100,7 +5100,7 @@ msgstr "Nhập đường dẫn"
 #: ../app/core/core-enums.c:836
 #: ../app/pdb/drawable_cmds.c:770
 msgid "Plug-In"
-msgstr "Bộ cầm phít"
+msgstr "Phần mở rộng"
 
 #: ../app/core/core-enums.c:837
 msgid "Image type"
@@ -6234,7 +6234,7 @@ msgstr "Gặp chuỗi UTF-8 không hợp lệ trong tập tin mẫu « %s »."
 #: ../app/widgets/gimppdbdialog.c:341
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
-msgstr "Không thể chạy việc gọi lại %s. Bộ cầm phít tương ứng có lẽ đã đổ vỡ."
+msgstr "Không thể chạy Callback %s. Phần mở rộng tương ứng có lẽ đã đổ vỡ."
 
 # Type: text
 # Description
@@ -7510,11 +7510,11 @@ msgstr "Chọn thư mục phông chữ"
 
 #: ../app/dialogs/preferences-dialog.c:2486
 msgid "Plug-In Folders"
-msgstr "Thư mục bộ cầm phít"
+msgstr "Thư mục Phần mở rộng"
 
 #: ../app/dialogs/preferences-dialog.c:2488
 msgid "Select Plug-In Folders"
-msgstr "Chọn thư mục bộ cầm phít"
+msgstr "Chọn thư mục Phần mở rộng"
 
 #: ../app/dialogs/preferences-dialog.c:2490
 msgid "Scripts"
@@ -7991,11 +7991,11 @@ msgstr "Không phải là một tập tin chuẩn."
 
 #: ../app/file/file-open.c:166
 msgid "Plug-In returned SUCCESS but did not return an image"
-msgstr "Bộ cầm phít trả lời THÀNH CÔNG nhưng chưa trả gởi ảnh."
+msgstr "Phần mở rộng trả lời THÀNH CÔNG nhưng chưa trả ảnh."
 
 #: ../app/file/file-open.c:174
 msgid "Plug-In could not open image"
-msgstr "Bộ cầm phít không thể mở ảnh"
+msgstr "Phần mở rộng không thể mở ảnh"
 
 #: ../app/file/file-open.c:413
 msgid "Image doesn't contain any visible layers"
@@ -8003,7 +8003,7 @@ msgstr "Ảnh không chứa lớp hiển thị nào"
 
 #: ../app/file/file-save.c:188
 msgid "Plug-In could not save image"
-msgstr "Bộ cầm phít không thể lưu ảnh"
+msgstr "Phần mở rộng không thể lưu ảnh"
 
 #: ../app/file/file-utils.c:109
 msgid "Invalid character sequence in URI"
@@ -8222,15 +8222,15 @@ msgstr "Gặp chuỗi định dạng nhị phân sai trong tập tin thông dị
 
 #: ../app/plug-in/gimppluginmanager.c:285
 msgid "Plug-In Interpreters"
-msgstr "Bộ thông dịch cầm phít"
+msgstr "Bộ thông dịch Phần mở rộng"
 
 #: ../app/plug-in/gimppluginmanager.c:292
 msgid "Plug-In Environment"
-msgstr "Môi trường cầm phít"
+msgstr "Môi trường Phần mở rộng"
 
 #: ../app/plug-in/gimppluginmanager.c:332
 msgid "Searching Plug-Ins"
-msgstr "Đang tìm kiếm qua các bộ cầm phít"
+msgstr "Đang tìm các Phần mở rộng"
 
 #: ../app/plug-in/gimppluginmanager.c:363
 msgid "Resource configuration"
@@ -8241,22 +8241,22 @@ msgstr "Cấu hình tài nguyên"
 #.
 #: ../app/plug-in/gimppluginmanager.c:389
 msgid "Querying new Plug-ins"
-msgstr "Đang truy vấn bộ cầm phít mới"
+msgstr "Đang truy vấn Phần mở rộng mới"
 
 #: ../app/plug-in/gimppluginmanager.c:417
 #, c-format
 msgid "Querying plug-in: '%s'\n"
-msgstr "Đang truy vấn bộ cầm phít: « %s »\n"
+msgstr "Đang truy vấn Phần mở rộng: « %s »\n"
 
 #.initialize the plug-ins
 #: ../app/plug-in/gimppluginmanager.c:426
 msgid "Initializing Plug-ins"
-msgstr "Đang khởi tạo bộ cầm phít"
+msgstr "Đang khởi tạo Phần mở rộng"
 
 #: ../app/plug-in/gimppluginmanager.c:452
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
-msgstr "Đang khởi tạo bộ cầm phít: « %s »\n"
+msgstr "Đang khởi tạo Phần mở rộng: « %s »\n"
 
 #: ../app/plug-in/gimppluginmanager.c:576
 msgid "Starting Extensions"
@@ -8271,7 +8271,7 @@ msgstr "Đang khởi chạy phần mở rộng: « %s »\n"
 #: ../app/plug-in/gimpplugin.c:461
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
-msgstr "Đăng kết thức bộ cầm phít: « %s ».\n"
+msgstr "Đăng kết thúc Phần mở rộng: « %s ».\n"
 
 #: ../app/plug-in/gimpplugin.c:596
 #, c-format
@@ -8281,10 +8281,10 @@ msgid ""
 "\n"
 "The dying plug-in may have messed up GIMP's internal state. You may want to "
 "save your images and restart GIMP to be on the safe side."
-msgstr "Bộ cầm phít đã sụp đổ : « %s »\n"
+msgstr "Phần mở rộng đã sụp đổ : « %s »\n"
 "(%s)\n"
 "\n"
-"Bộ cầm phít đang kết thức có thể đã tạo lỗi trong tính trạng nội bộ của "
+"Phần mở rộng đang kết thúc có thể đã tạo lỗi trong tính trạng nội bộ của "
 "GIMP. Như thế thì đề nghị bạn lưu các ảnh và khởi chạy lại GIMP."
 
 #: ../app/plug-in/plug-in-rc.c:206
@@ -10737,7 +10737,7 @@ msgstr "Không thể tìm bộ duyệt trợ giúp GIMP."
 #: ../app/widgets/gimphelp.c:192
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation."
-msgstr "Hình như thiếu bộ cầm phít duyệt trợ giúp GIMP ra bản cài đặt của bạn."
+msgstr "Hình như thiếu Phần mở rộng Duyệt trợ giúp GIMP trong bản cài đặt của bạn."
 
 #: ../app/widgets/gimphelp.c:218
 msgid "Help browser doesn't start"
@@ -10745,7 +10745,7 @@ msgstr "Bộ duyệt trợ giúp không khởi chạy được."
 
 #: ../app/widgets/gimphelp.c:219
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "Không thể khởi chạy bộ cầm phít duyệt trợ giúp GIMP."
+msgstr "Không thể khởi chạy Phần mở rộng Duyệt trợ giúp GIMP."
 
 #: ../app/widgets/gimphelp.c:245
 msgid "Use _web browser instead"
