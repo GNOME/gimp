@@ -6068,11 +6068,11 @@ msgstr "Độ hỗn l_oạn:"
 
 #: ../plug-ins/common/plugin-browser.c:134
 msgid "Display information about plug-ins"
-msgstr "Hiển thị thông tin về bộ cầm phít"
+msgstr "Hiển thị thông tin về Phần bổ sung"
 
 #: ../plug-ins/common/plugin-browser.c:144
 msgid "_Plug-In Browser"
-msgstr "Bộ duyệt bộ cầm _phít"
+msgstr "Bộ duyệt _Phần bổ sung"
 
 #: ../plug-ins/common/plugin-browser.c:372
 msgid "Searching by name"
@@ -6081,7 +6081,7 @@ msgstr "Đang tìm kiếm theo tên"
 #: ../plug-ins/common/plugin-browser.c:386
 #, c-format
 msgid "%d plug-ins"
-msgstr "%d bộ cầm phít"
+msgstr "%d Phần bổ sung"
 
 #: ../plug-ins/common/plugin-browser.c:393
 msgid "No matches for your query"
@@ -6091,7 +6091,7 @@ msgstr "Không có gì khớp truy vấn của bạn"
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
-msgstr[0] "%d bộ cầm phít khớp với truy vấn của bạn"
+msgstr[0] "%d Phần bổ sung khớp với truy vấn của bạn"
 
 #: ../plug-ins/common/plugin-browser.c:527
 msgid "No matches"
@@ -6099,7 +6099,7 @@ msgstr "Không tìm thấy"
 
 #: ../plug-ins/common/plugin-browser.c:552
 msgid "Plug-In Browser"
-msgstr "Bộ duyệt bộ cầm phít"
+msgstr "Bộ duyệt Phần bổ sung"
 
 #: ../plug-ins/common/plugin-browser.c:595
 msgid "Name"
@@ -7705,7 +7705,7 @@ msgstr "Bộ thiết _kế hình cầu..."
 
 #: ../plug-ins/common/spheredesigner.c:3052
 msgid "Region selected for plug-in is empty"
-msgstr "Vùng chọn cho bộ cầm phít là rỗng"
+msgstr "Vùng chọn cho Phần bổ sung là rỗng"
 
 #: ../plug-ins/common/spread.c:91
 msgid "Move pixels around randomly"
@@ -8638,7 +8638,7 @@ msgstr "_Xoáy và Nhúm..."
 
 #: ../plug-ins/common/whirlpinch.c:193
 msgid "Region affected by plug-in is empty"
-msgstr "Bộ cầm phít có tác động vùng rỗng"
+msgstr "Vùng chịu tác động của Phần bổ sung là vùng rỗng"
 
 #: ../plug-ins/common/whirlpinch.c:341
 msgid "Whirling and pinching"

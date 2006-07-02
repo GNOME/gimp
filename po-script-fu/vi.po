@@ -2220,7 +2220,7 @@ msgstr "Cách sử dụng _Hộp thoại"
 
 #:../plug-ins/script-fu/scripts/web-browser.scm.h:5
 msgid "Plug-in _Registry"
-msgstr "_Sổ đăng ký bộ cầm phít"
+msgstr "_Sổ đăng ký Phần bổ sung"
 
 #:../plug-ins/script-fu/scripts/web-browser.scm.h:6
 msgid "Using _Paths"

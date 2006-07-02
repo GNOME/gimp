@@ -683,7 +683,7 @@ msgstr "Thủ tục GIMP nội bộ"
 
 #: ../libgimpbase/gimpbaseenums.c:849
 msgid "GIMP Plug-In"
-msgstr "Bộ cầm phít GIMP"
+msgstr "Phần bổ sung GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:850
 msgid "GIMP Extension"

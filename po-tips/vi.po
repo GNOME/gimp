@@ -134,7 +134,7 @@ msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
 "plug-in to work on the whole image."
-msgstr "Phần lớn bộ cầm phít hoạt động trên lớp hiện thời của ảnh hiện có. Trong một số trường hợp, bạn sẽ cần phải trộn mọi lớp (Ảnh → Làm phẳng ảnh) nếu bạn muốn bộ cầm phít hoặt động trên toàn ảnh."
+msgstr "Phần lớn Phần bổ sung hoạt động trên lớp hiện thời của ảnh hiện có. Trong một số trường hợp, bạn sẽ cần phải trộn mọi lớp (Ảnh → Làm phẳng ảnh) nếu bạn muốn Phần bổ sung hoạt động trên toàn ảnh."
 
 #: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
