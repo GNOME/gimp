@@ -64,4 +64,4 @@
 )
 
 (tiny-fu-menu-register "tiny-fu-helloworld"
-                       "<Toolbox>/Xtns/Tiny-Fu/Test")
+                       "<Toolbox>/Xtns/Test")

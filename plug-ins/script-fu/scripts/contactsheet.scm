@@ -291,4 +291,4 @@
 )
 
 (tiny-fu-menu-register "tiny-fu-contactsheet"
-                       "<Toolbox>/Xtns/Tiny-Fu/Utils")
+                       "<Toolbox>/Xtns/Utils")
