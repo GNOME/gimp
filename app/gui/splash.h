@@ -20,7 +20,7 @@
 #define __SPLASH_H__
 
 
-void   splash_create    (void);
+void   splash_create    (gboolean     be_verbose);
 void   splash_destroy   (void);
 
 void   splash_update    (const gchar *label1,

@@ -74,8 +74,9 @@ static gboolean    splash_average_text_area   (GimpSplash     *splash,
                                                GdkPixbuf      *pixbuf,
                                                GdkColor       *color);
 
-static GdkPixbufAnimation * splash_image_load          (void);
-static GdkPixbufAnimation * splash_image_pick_from_dir (const gchar *dirname);
+static GdkPixbufAnimation * splash_image_load          (gboolean     be_verbose);
+static GdkPixbufAnimation * splash_image_pick_from_dir (const gchar *dirname,
+                                                        gboolean     be_verbose);
 
 #ifdef STARTUP_TIMER
 static void        splash_timer_elapsed       (const gchar    *text1,
@@ -87,7 +88,7 @@ static void        splash_timer_elapsed       (const gchar    *text1,
 /*  public functions  */
 
 void
-splash_create (void)
+splash_create (gboolean be_verbose)
 {
   GtkWidget          *frame;
   GtkWidget          *vbox;
@@ -99,7 +100,7 @@ splash_create (void)
 
   g_return_if_fail (splash == NULL);
 
-  pixbuf = splash_image_load ();
+  pixbuf = splash_image_load (be_verbose);
 
   if (! pixbuf)
     return;
@@ -425,20 +426,27 @@ splash_average_text_area (GimpSplash *splash,
 }
 
 static GdkPixbufAnimation *
-splash_image_load (void)
+splash_image_load (gboolean be_verbose)
 {
   GdkPixbufAnimation *pixbuf;
   gchar              *filename;
 
   filename = gimp_personal_rc_file ("gimp-splash.png");
+
+  if (be_verbose)
+    g_printerr ("Trying splash '%s' ... ", filename);
+
   pixbuf = gdk_pixbuf_animation_new_from_file (filename, NULL);
   g_free (filename);
+
+  if (be_verbose)
+    g_printerr (pixbuf ? "OK\n" : "failed\n");
 
   if (pixbuf)
     return pixbuf;
 
   filename = gimp_personal_rc_file ("splashes");
-  pixbuf = splash_image_pick_from_dir (filename);
+  pixbuf = splash_image_pick_from_dir (filename, be_verbose);
   g_free (filename);
 
   if (pixbuf)
@@ -446,21 +454,29 @@ splash_image_load (void)
 
   filename = g_build_filename (gimp_data_directory (),
                                "images", "gimp-splash.png", NULL);
+
+  if (be_verbose)
+    g_printerr ("Trying splash '%s' ... ", filename);
+
   pixbuf = gdk_pixbuf_animation_new_from_file (filename, NULL);
   g_free (filename);
+
+  if (be_verbose)
+    g_printerr (pixbuf ? "OK\n" : "failed\n");
 
   if (pixbuf)
     return pixbuf;
 
   filename = g_build_filename (gimp_data_directory (), "splashes", NULL);
-  pixbuf = splash_image_pick_from_dir (filename);
+  pixbuf = splash_image_pick_from_dir (filename, be_verbose);
   g_free (filename);
 
   return pixbuf;
 }
 
 static GdkPixbufAnimation *
-splash_image_pick_from_dir (const gchar *dirname)
+splash_image_pick_from_dir (const gchar *dirname,
+                            gboolean     be_verbose)
 {
   GdkPixbufAnimation *pixbuf = NULL;
   GDir               *dir    = g_dir_open (dirname, 0, NULL);
@@ -482,8 +498,14 @@ splash_image_pick_from_dir (const gchar *dirname)
                                                g_list_nth_data (splashes, i),
                                                NULL);
 
+          if (be_verbose)
+            g_printerr ("Trying splash '%s' ... ", filename);
+
           pixbuf = gdk_pixbuf_animation_new_from_file (filename, NULL);
           g_free (filename);
+
+          if (be_verbose)
+            g_printerr (pixbuf ? "OK\n" : "failed\n");
 
           g_list_foreach (splashes, (GFunc) g_free, NULL);
           g_list_free (splashes);

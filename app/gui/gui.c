@@ -210,7 +210,7 @@ gui_init (Gimp     *gimp,
 
   if (! no_splash)
     {
-      splash_create ();
+      splash_create (gimp->be_verbose);
       status_callback = splash_update;
     }
 
