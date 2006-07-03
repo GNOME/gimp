@@ -1340,7 +1340,7 @@ msgstr "Nền"
 #: ../plug-ins/bmp/bmpread.c:657
 #: ../plug-ins/bmp/bmpread.c:706
 msgid "The bitmap ends unexpectedly."
-msgstr "Bitmap kết thức bất ngờ."
+msgstr "Bitmap kết thúc bất ngờ."
 
 #: ../plug-ins/bmp/bmpwrite.c:157
 msgid "Cannot operate on grayscale images with alpha channel."
@@ -6232,7 +6232,7 @@ msgstr "Ảnh PPM"
 #: ../plug-ins/common/pnm.c:586
 #: ../plug-ins/common/pnm.c:644
 msgid "PNM: Premature end of file."
-msgstr "PNM: gặp kết thức tập tin quá sớm."
+msgstr "PNM: gặp kết thúc tập tin quá sớm."
 
 #: ../plug-ins/common/pnm.c:475
 msgid "PNM: Invalid file."
@@ -7805,7 +7805,7 @@ msgstr "Không thể hoạt động trên kiểu ảnh lạ"
 #: ../plug-ins/common/xwd.c:2015
 #: ../plug-ins/fits/fits.c:675
 msgid "EOF encountered on reading"
-msgstr "Gặp kết thức tập tin khi đọc"
+msgstr "Gặp kết thúc tập tin khi đọc"
 
 #: ../plug-ins/common/sunras.c:1571
 msgid "Save as SUNRAS"
@@ -9324,7 +9324,7 @@ msgstr "Tạo xoắn ốc"
 
 #: ../plug-ins/gfig/gfig-dialog.c:946
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr "Tạo đường cong Bezier. Phím Shift + Nút kết thức việc tạo."
+msgstr "Tạo đường cong Bezier. Phím Shift + Nút kết thúc việc tạo."
 
 #: ../plug-ins/gfig/gfig-dialog.c:950
 #: ../plug-ins/gfig/gfig-stock.c:48
@@ -11604,7 +11604,7 @@ msgstr "Không cho phép yếu tố lồng nhau (<%s>) trong ngữ cảnh này"
 #: ../plug-ins/metadata/xmp-parse.c:945
 #, c-format
 msgid "End of element <%s> not expected in this context"
-msgstr "Kết thức yếu tố <%s> bất ngờ trong ngữ cảnh này"
+msgstr "Kết thúc yếu tố <%s> bất ngờ trong ngữ cảnh này"
 
 #: ../plug-ins/metadata/xmp-parse.c:1047
 #, c-format
@@ -11617,7 +11617,7 @@ msgstr "Gói tin XMP phải bắt đầu với <?xpacket begin=...?>"
 
 #: ../plug-ins/metadata/xmp-parse.c:1086
 msgid "XMP packets must end with <?xpacket end=...?>"
-msgstr "Gói tin XMP phải kết thức với <?xpacket end=...?>"
+msgstr "Gói tin XMP phải kết thúc với <?xpacket end=...?>"
 
 #: ../plug-ins/metadata/xmp-parse.c:1099
 msgid "XMP cannot contain XML comments or processing instructions"
