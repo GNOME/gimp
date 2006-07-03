@@ -9961,7 +9961,7 @@ msgstr "Xóa bỏ các neo"
 
 #: ../app/tools/gimpvectortool.c:1872
 msgid "There is no active layer or channel to stroke to"
-msgstr "Không có lớp hay kênh hoặt động tới đó cần vẽ nét."
+msgstr "Không có lớp hay kênh hoạt động tới đó cần vẽ nét."
 
 #: ../app/vectors/gimpvectors.c:191
 msgid "Path"
