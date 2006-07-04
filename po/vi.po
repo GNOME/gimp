@@ -8392,7 +8392,7 @@ msgstr "Gặp lỗi khi phân tách bộ bám chữ cho lớp « %s »:\n"
 "%s\n"
 "\n"
 "Một số thuộc tính chữ có lẽ không đúng. Lỗi này quan trọng chỉ nếu bạn muốn "
-"sửa lổi lớp chữ thôi."
+"sửa lỗi lớp chữ thôi."
 
 #: ../app/tools/tools-enums.c:26
 msgid "Pick only"
