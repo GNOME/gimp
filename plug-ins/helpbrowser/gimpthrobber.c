@@ -339,10 +339,7 @@ gimp_throbber_set_image (GimpThrobber *button,
 	}
 
       if (image)
-	{
-	  g_object_ref (image);
-	  gtk_object_sink (GTK_OBJECT (image));
-	}
+        g_object_ref_sink (image);
 
       button->priv->image = image;
 

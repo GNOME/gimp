@@ -141,7 +141,8 @@ stroke_dialog_new (GimpItem    *item,
   paint_radio = g_object_ref (group->data);
   gtk_container_remove (GTK_CONTAINER (radio_box), paint_radio);
 
-  gtk_object_sink (GTK_OBJECT (radio_box));
+  g_object_ref_sink (radio_box);
+  g_object_unref (radio_box);
 
   {
     PangoFontDescription *font_desc;

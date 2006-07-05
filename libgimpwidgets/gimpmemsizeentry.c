@@ -189,8 +189,7 @@ gimp_memsize_entry_new (guint64  value,
 
 #undef CAST
 
-  g_object_ref (entry->adjustment);
-  gtk_object_sink (GTK_OBJECT (entry->adjustment));
+  g_object_ref_sink (entry->adjustment);
 
   gtk_entry_set_width_chars (GTK_ENTRY (entry->spinbutton), 10);
   gtk_box_pack_start (GTK_BOX (entry), entry->spinbutton, FALSE, FALSE, 0);

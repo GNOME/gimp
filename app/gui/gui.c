@@ -256,7 +256,7 @@ gui_sanity_check (void)
 
 #define GTK_REQUIRED_MAJOR 2
 #define GTK_REQUIRED_MINOR 8
-#define GTK_REQUIRED_MICRO 8
+#define GTK_REQUIRED_MICRO 18
 
   mismatch = gtk_check_version (GTK_REQUIRED_MAJOR,
                                 GTK_REQUIRED_MINOR,

@@ -725,7 +725,10 @@ gimp_ui_manager_entry_ensure (GimpUIManager *manager,
 
           /*  take ownership of popup menus  */
           if (GTK_IS_MENU (entry->widget))
-            gtk_object_sink (GTK_OBJECT (entry->widget));
+            {
+              g_object_ref_sink (entry->widget);
+              g_object_unref (entry->widget);
+            }
 
           if (entry->setup_func)
             entry->setup_func (manager, entry->ui_path);

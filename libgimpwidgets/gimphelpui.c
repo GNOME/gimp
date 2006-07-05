@@ -86,8 +86,7 @@ _gimp_help_init (void)
   tool_tips = gtk_tooltips_new ();
 
   /* take ownership of the tooltips */
-  g_object_ref (tool_tips);
-  gtk_object_sink (GTK_OBJECT (tool_tips));
+  g_object_ref_sink (tool_tips);
 }
 
 /**

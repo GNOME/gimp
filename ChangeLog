@@ -1,3 +1,20 @@
+2006-07-05  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: depend on glib >= 2.10.2, gtk+ >= 2.8.18
+	and pango >= 1.12.3. Define FOO_DISABLE_DEPRECATED also for
+	glib 2.12 and gtk+ 2.10.
+
+	* app/sanity.c
+	* app/gui/gui.c: adjusted sanity checks accordingly.
+
+	* app/dialogs/stroke-dialog.c
+	* app/widgets/gimpeditor.c
+	* app/widgets/gimpuimanager.c
+	* libgimpwidgets/gimphelpui.c
+	* libgimpwidgets/gimpmemsizeentry.c
+	* plug-ins/helpbrowser/gimpthrobber.c: replace gtk_object_sink()
+	by combinations of g_object_ref_sink() and g_object_unref().
+
 2006-07-05  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.3.11.
