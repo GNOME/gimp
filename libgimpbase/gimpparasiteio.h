@@ -63,7 +63,7 @@ void    gimp_pixpipe_params_parse (const gchar       *parameters,
                                    GimpPixPipeParams *params);
 
 /* Build a string representation of GimpPixPipeParams */
-gchar * gimp_pixpipe_params_build (GimpPixPipeParams *params);
+gchar * gimp_pixpipe_params_build (GimpPixPipeParams *params) G_GNUC_MALLOC;
 
 
 G_END_DECLS

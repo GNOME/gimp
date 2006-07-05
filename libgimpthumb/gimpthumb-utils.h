@@ -33,7 +33,7 @@ gboolean            gimp_thumb_init                   (const gchar    *creator,
                                                        const gchar    *thumb_basedir);
 
 gchar             * gimp_thumb_find_thumb             (const gchar    *uri,
-                                                       GimpThumbSize  *size);
+                                                       GimpThumbSize  *size) G_GNUC_MALLOC;
 
 GimpThumbFileType   gimp_thumb_file_test              (const gchar    *filename,
                                                        gint64         *mtime,
@@ -41,16 +41,16 @@ GimpThumbFileType   gimp_thumb_file_test              (const gchar    *filename,
                                                        gint           *err_no);
 
 gchar             * gimp_thumb_name_from_uri          (const gchar    *uri,
-                                                       GimpThumbSize   size);
+                                                       GimpThumbSize   size) G_GNUC_MALLOC;
 const gchar       * gimp_thumb_get_thumb_dir          (GimpThumbSize   size);
 gboolean            gimp_thumb_ensure_thumb_dir       (GimpThumbSize   size,
                                                        GError        **error);
 void                gimp_thumbs_delete_for_uri        (const gchar    *uri);
 
 gchar             * gimp_thumb_name_from_uri_local    (const gchar    *uri,
-                                                       GimpThumbSize   size);
+                                                       GimpThumbSize   size) G_GNUC_MALLOC;
 gchar             * gimp_thumb_get_thumb_dir_local    (const gchar    *dirname,
-                                                       GimpThumbSize   size);
+                                                       GimpThumbSize   size) G_GNUC_MALLOC;
 gboolean            gimp_thumb_ensure_thumb_dir_local (const gchar    *dirname,
                                                        GimpThumbSize   size,
                                                        GError        **error);

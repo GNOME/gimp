@@ -1,3 +1,16 @@
+2006-07-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimpenv.h
+	* libgimpbase/gimpmemsize.h
+	* libgimpbase/gimpparasiteio.[ch]
+	* libgimpbase/gimputils.h
+	* libgimpconfig/gimpconfig-path.[ch]
+	* libgimpthumb/gimpthumb-utils.[ch]: marked some function with
+	G_GNUC_MALLOC.
+
+	* plug-ins/common/dicom.c: use g_date_set_time_t() instead of the
+	deprecated g_date_set_time().
+
 2006-07-05  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: depend on glib >= 2.10.2, gtk+ >= 2.8.18

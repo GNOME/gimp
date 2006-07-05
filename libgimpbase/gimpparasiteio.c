@@ -160,15 +160,14 @@ gimp_pixpipe_params_parse (const gchar       *string,
 gchar *
 gimp_pixpipe_params_build (GimpPixPipeParams *params)
 {
-  GString *s;
-  gchar   *str;
+  GString *str;
   gint     i;
 
   g_return_val_if_fail (params != NULL, NULL);
 
-  s = g_string_new (NULL);
+  str = g_string_new (NULL);
 
-  g_string_printf (s, "ncells:%d cellwidth:%d cellheight:%d "
+  g_string_printf (str, "ncells:%d cellwidth:%d cellheight:%d "
                    "step:%d dim:%d cols:%d rows:%d placement:%s",
                    params->ncells, params->cellwidth, params->cellheight,
                    params->step, params->dim,
@@ -177,12 +176,9 @@ gimp_pixpipe_params_build (GimpPixPipeParams *params)
 
   for (i = 0; i < params->dim; i++)
     {
-      g_string_append_printf (s, " rank%d:%d", i, params->rank[i]);
-      g_string_append_printf (s, " sel%d:%s", i, params->selection[i]);
+      g_string_append_printf (str, " rank%d:%d", i, params->rank[i]);
+      g_string_append_printf (str, " sel%d:%s", i, params->selection[i]);
     }
 
-  str = s->str;
-  g_string_free (s, FALSE);
-
-  return str;
+  return g_string_free (str, FALSE);
 }

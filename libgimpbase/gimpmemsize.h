@@ -32,11 +32,11 @@ G_BEGIN_DECLS
 
 GType      gimp_memsize_get_type         (void) G_GNUC_CONST;
 
-gchar    * gimp_memsize_serialize        (guint64      memsize);
+gchar    * gimp_memsize_serialize        (guint64      memsize) G_GNUC_MALLOC;
 gboolean   gimp_memsize_deserialize      (const gchar *string,
                                           guint64     *memsize);
 
-gchar    * gimp_memsize_to_string        (guint64      memsize);
+gchar    * gimp_memsize_to_string        (guint64      memsize) G_GNUC_MALLOC;
 
 
 /*

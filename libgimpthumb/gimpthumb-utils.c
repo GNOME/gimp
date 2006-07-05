@@ -52,7 +52,7 @@
 static gint           gimp_thumb_size       (GimpThumbSize  size);
 static gchar        * gimp_thumb_png_lookup (const gchar   *name,
                                              const gchar   *basedir,
-                                             GimpThumbSize *size);
+                                             GimpThumbSize *size) G_GNUC_MALLOC;
 static const gchar  * gimp_thumb_png_name   (const gchar   *uri);
 static void           gimp_thumb_exit       (void);
 

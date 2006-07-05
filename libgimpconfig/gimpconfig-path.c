@@ -178,7 +178,7 @@ gimp_param_spec_config_path_type (GParamSpec *pspec)
  */
 
 static gchar        * gimp_config_path_expand_only   (const gchar  *path,
-                                                      GError      **error);
+                                                      GError      **error) G_GNUC_MALLOC;
 static inline gchar * gimp_config_path_extract_token (const gchar **str);
 
 

@@ -24,17 +24,17 @@ G_BEGIN_DECLS
 
 
 gchar         * gimp_utf8_strtrim            (const gchar  *str,
-                                              gint          max_chars);
+                                              gint          max_chars) G_GNUC_MALLOC;
 gchar         * gimp_any_to_utf8             (const gchar  *str,
                                               gssize        len,
                                               const gchar  *warning_format,
-                                              ...) G_GNUC_PRINTF (3, 4);
+                                              ...) G_GNUC_PRINTF (3, 4) G_GNUC_MALLOC;
 const gchar   * gimp_filename_to_utf8        (const gchar  *filename);
 
-gchar         * gimp_strip_uline             (const gchar  *str);
-gchar         * gimp_escape_uline            (const gchar  *str);
+gchar         * gimp_strip_uline             (const gchar  *str) G_GNUC_MALLOC;
+gchar         * gimp_escape_uline            (const gchar  *str) G_GNUC_MALLOC;
 
-gchar         * gimp_canonicalize_identifier (const gchar  *identifier);
+gchar         * gimp_canonicalize_identifier (const gchar  *identifier) G_GNUC_MALLOC;
 
 GimpEnumDesc  * gimp_enum_get_desc           (GEnumClass   *enum_class,
                                               gint          value);

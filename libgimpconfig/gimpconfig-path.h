@@ -74,11 +74,11 @@ GimpConfigPathType  gimp_param_spec_config_path_type (GParamSpec   *pspec);
 
 gchar             * gimp_config_path_expand          (const gchar  *path,
                                                       gboolean      recode,
-                                                      GError      **error);
+                                                      GError      **error) G_GNUC_MALLOC;
 
-gchar             * gimp_config_build_data_path      (const gchar  *name);
-gchar             * gimp_config_build_writable_path  (const gchar  *name);
-gchar             * gimp_config_build_plug_in_path   (const gchar  *name);
+gchar             * gimp_config_build_data_path      (const gchar  *name) G_GNUC_MALLOC;
+gchar             * gimp_config_build_writable_path  (const gchar  *name) G_GNUC_MALLOC;
+gchar             * gimp_config_build_plug_in_path   (const gchar  *name) G_GNUC_MALLOC;
 
 
 G_END_DECLS

@@ -35,16 +35,16 @@ const gchar * gimp_locale_directory              (void) G_GNUC_CONST;
 const gchar * gimp_sysconf_directory              (void) G_GNUC_CONST;
 const gchar * gimp_plug_in_directory          (void) G_GNUC_CONST;
 const gchar * gimp_gtkrc                      (void) G_GNUC_CONST;
-gchar       * gimp_personal_rc_file           (const gchar  *basename);
+gchar       * gimp_personal_rc_file           (const gchar  *basename) G_GNUC_MALLOC;
 
 GList       * gimp_path_parse                 (const gchar  *path,
                                                gint          max_paths,
                                                gboolean      check,
                                                GList       **check_failed);
-gchar       * gimp_path_to_str                (GList        *path);
+gchar       * gimp_path_to_str                (GList        *path) G_GNUC_MALLOC;
 void          gimp_path_free                  (GList        *path);
 
-gchar       * gimp_path_get_user_writable_dir (GList        *path);
+gchar       * gimp_path_get_user_writable_dir (GList        *path) G_GNUC_MALLOC;
 
 
 /*  should be considered private, don't use!  */

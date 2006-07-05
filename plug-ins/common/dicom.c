@@ -677,7 +677,7 @@ save_image (const gchar  *filename,
     }
 
   date = g_date_new ();
-  g_date_set_time (date, time (NULL));
+  g_date_set_time_t (date, time (NULL));
   g_snprintf (today_string, sizeof (today_string),
               "%04d%02d%02d", date->year, date->month, date->day);
   g_date_free (date);
