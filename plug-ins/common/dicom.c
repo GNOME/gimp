@@ -26,6 +26,7 @@
 
 #include <errno.h>
 #include <string.h>
+#include <time.h>
 
 #include <glib/gstdio.h>
 
