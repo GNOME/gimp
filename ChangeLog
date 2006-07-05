@@ -1,5 +1,10 @@
 2006-07-05  Sven Neumann  <sven@gimp.org>
 
+	* data/images/gimp-splash.png: new splash image contributed by
+	Philip Lafleur (bug #346096).
+
+2006-07-05  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpthumbbox.c: ellipsize the filename label.
 
 2006-07-03  Michael Natterer  <mitch@gimp.org>
