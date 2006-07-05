@@ -382,7 +382,7 @@ gimp_thumb_box_new (Gimp *gimp)
                     box);
 
   box->filename = gtk_label_new (_("No selection"));
-  gtk_label_set_line_wrap (GTK_LABEL (box->filename), TRUE);
+  gtk_label_set_ellipsize (GTK_LABEL (box->filename), PANGO_ELLIPSIZE_MIDDLE);
   gtk_label_set_justify (GTK_LABEL (box->filename), GTK_JUSTIFY_CENTER);
   gimp_label_set_attributes (GTK_LABEL (box->filename),
                              PANGO_ATTR_STYLE, PANGO_STYLE_OBLIQUE,
