@@ -385,6 +385,7 @@ splash_average_text_area (GimpSplash *splash,
   pixels       = gdk_pixbuf_get_pixels (pixbuf);
 
   splash_position_layouts (splash, "Short text", "Somewhat longer text", &area);
+  splash_position_layouts (splash, "", "", NULL);
 
   if (gdk_rectangle_intersect (&image, &area, &area))
     {
