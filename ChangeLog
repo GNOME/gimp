@@ -1,5 +1,9 @@
 2006-07-05  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL: updated dependencies.
+
+2006-07-05  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimp*selectbutton.[ch]: use const for G_CONST_RETURN.
 
 2006-07-05  Sven Neumann  <sven@gimp.org>
