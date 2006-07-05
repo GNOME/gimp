@@ -352,7 +352,7 @@ gimp_brush_select_button_new (const gchar          *title,
  *
  * Since: GIMP 2.4
  */
-G_CONST_RETURN gchar *
+const gchar *
 gimp_brush_select_button_get_brush (GimpBrushSelectButton *button,
                                     gdouble               *opacity,
                                     gint                  *spacing,

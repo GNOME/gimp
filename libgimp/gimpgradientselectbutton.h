@@ -63,14 +63,14 @@ struct _GimpGradientSelectButtonClass
 };
 
 
-GType       gimp_gradient_select_button_get_type (void) G_GNUC_CONST;
+GType         gimp_gradient_select_button_get_type     (void) G_GNUC_CONST;
 
-GtkWidget * gimp_gradient_select_button_new      (const gchar *title,
-                                                  const gchar *gradient_name);
+GtkWidget   * gimp_gradient_select_button_new          (const gchar *title,
+                                                        const gchar *gradient_name);
 
-G_CONST_RETURN gchar * gimp_gradient_select_button_get_gradient (GimpGradientSelectButton *button);
-void                   gimp_gradient_select_button_set_gradient (GimpGradientSelectButton *button,
-                                                                 const gchar              *gradient_name);
+const gchar * gimp_gradient_select_button_get_gradient (GimpGradientSelectButton *button);
+void          gimp_gradient_select_button_set_gradient (GimpGradientSelectButton *button,
+                                                        const gchar              *gradient_name);
 
 
 G_END_DECLS

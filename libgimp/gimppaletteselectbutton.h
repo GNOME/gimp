@@ -61,14 +61,14 @@ struct _GimpPaletteSelectButtonClass
 };
 
 
-GType       gimp_palette_select_button_get_type (void) G_GNUC_CONST;
+GType         gimp_palette_select_button_get_type    (void) G_GNUC_CONST;
 
-GtkWidget * gimp_palette_select_button_new      (const gchar *title,
-                                                 const gchar *palette_name);
+GtkWidget   * gimp_palette_select_button_new         (const gchar *title,
+                                                      const gchar *palette_name);
 
-G_CONST_RETURN gchar * gimp_palette_select_button_get_palette (GimpPaletteSelectButton *button);
-void                   gimp_palette_select_button_set_palette (GimpPaletteSelectButton *button,
-                                                               const gchar             *palette_name);
+const gchar * gimp_palette_select_button_get_palette (GimpPaletteSelectButton *button);
+void          gimp_palette_select_button_set_palette (GimpPaletteSelectButton *button,
+                                                      const gchar             *palette_name);
 
 
 G_END_DECLS

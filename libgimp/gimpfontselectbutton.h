@@ -61,14 +61,14 @@ struct _GimpFontSelectButtonClass
 };
 
 
-GType       gimp_font_select_button_get_type (void) G_GNUC_CONST;
+GType         gimp_font_select_button_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_font_select_button_new      (const gchar *title,
-                                              const gchar *font_name);
+GtkWidget   * gimp_font_select_button_new      (const gchar          *title,
+                                                const gchar          *font_name);
 
-G_CONST_RETURN gchar * gimp_font_select_button_get_font (GimpFontSelectButton *button);
-void                   gimp_font_select_button_set_font (GimpFontSelectButton *button,
-                                                         const gchar          *font_name);
+const gchar * gimp_font_select_button_get_font (GimpFontSelectButton *button);
+void          gimp_font_select_button_set_font (GimpFontSelectButton *button,
+                                                const gchar          *font_name);
 
 
 G_END_DECLS

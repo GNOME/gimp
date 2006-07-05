@@ -249,7 +249,7 @@ gimp_gradient_select_button_new (const gchar *title,
  *
  * Since: GIMP 2.4
  */
-G_CONST_RETURN gchar *
+const gchar *
 gimp_gradient_select_button_get_gradient (GimpGradientSelectButton *button)
 {
   GimpGradientSelectButtonPrivate *priv;
