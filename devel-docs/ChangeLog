@@ -1,5 +1,12 @@
 2006-06-28  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/libgimp.types: added missing type.
+
+	* libgimp/tmpl/gimpfontselectbutton.sgml
+	* libgimp/tmpl/gimppatternselectbutton.sgml: regenerated.
+
+2006-06-28  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/tmpl/gimpbrushselectbutton.sgml
 	* libgimp/tmpl/gimpgradientselectbutton.sgml
 	* libgimp/tmpl/gimppaletteselectbutton.sgml

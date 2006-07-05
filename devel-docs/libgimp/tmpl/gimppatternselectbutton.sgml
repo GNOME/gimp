@@ -22,7 +22,29 @@ GimpPatternSelectButton
 
 </para>
 
-@parent_instance: 
+
+<!-- ##### SIGNAL GimpPatternSelectButton::pattern-set ##### -->
+<para>
+
+</para>
+
+@gimppatternselectbutton: the object which received the signal.
+@arg1: 
+@arg2: 
+@arg3: 
+@arg4: 
+@arg5: 
+@arg6: 
+
+<!-- ##### ARG GimpPatternSelectButton:pattern-name ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpPatternSelectButton:title ##### -->
+<para>
+
+</para>
 
 <!-- ##### FUNCTION gimp_pattern_select_button_new ##### -->
 <para>

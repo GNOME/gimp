@@ -9,12 +9,10 @@ GimpFontSelectButton
 
 </para>
 
-
 <!-- ##### SECTION See_Also ##### -->
 <para>
 
 </para>
-
 
 <!-- ##### SECTION Stability_Level ##### -->
 
@@ -34,18 +32,15 @@ GimpFontSelectButton
 @arg1: 
 @arg2: 
 
-
-<!-- ##### ARG GimpFontSelectButton:title ##### -->
-<para>
-
-</para>
-
-
 <!-- ##### ARG GimpFontSelectButton:font-name ##### -->
 <para>
 
 </para>
 
+<!-- ##### ARG GimpFontSelectButton:title ##### -->
+<para>
+
+</para>
 
 <!-- ##### FUNCTION gimp_font_select_button_new ##### -->
 <para>
