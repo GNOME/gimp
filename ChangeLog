@@ -1,5 +1,9 @@
 2006-07-05  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.3.10 development release.
+
+2006-07-05  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimp.def
 	* libgimp/gimpui.def: updated lists of exported symbols.
 

@@ -56,9 +56,8 @@ to put your swap file in "/tmp".  This is a single folder.
 .TP
 (num-processors 2)
 
-On multiprocessor machines, if GIMP has been compiled with --enable-mp this
-sets how many processors GIMP should use simultaneously.  This is an integer
-value.
+Sets how many processors GIMP should try to use simultaneously.  This is an
+integer value.
 
 .TP
 (tile-cache-size 256M)
@@ -762,7 +761,7 @@ Sets the browser used by the help system.  Possible values are gimp and
 web-browser.
 
 .TP
-(web-browser "mozilla-firefox %s")
+(web-browser "firefox %s")
 
 Sets the external web browser to be used.  This can be an absolute path or the
 name of an executable to search for in the user's PATH. If the command
@@ -770,14 +769,14 @@ contains '%s' it will be replaced with the URL, else the URL will be appended
 to the command with a space separating the two.  This is a single filename.
 
 .TP
-(toolbox-window-hint utility)
+(toolbox-window-hint normal)
 
 The window type hint that is set on the toolbox. This may affect how your
 window manager decorates and handles the toolbox window.  Possible values are
 normal, utility and keep-above.
 
 .TP
-(dock-window-hint utility)
+(dock-window-hint normal)
 
 The window type hint that is set on dock windows. This may affect the way your
 window manager decorates and handles dock windows.  Possible values are

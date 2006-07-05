@@ -29,8 +29,7 @@
 # 
 # (swap-path "${gimp_dir}")
 
-# On multiprocessor machines, if GIMP has been compiled with --enable-mp this
-# sets how many processors GIMP should use simultaneously.  This is an
+# Sets how many processors GIMP should try to use simultaneously.  This is an
 # integer value.
 # 
 # (num-processors 2)
@@ -603,19 +602,19 @@
 # appended to the command with a space separating the two.  This is a single
 # filename.
 # 
-# (web-browser "mozilla-firefox %s")
+# (web-browser "firefox %s")
 
 # The window type hint that is set on the toolbox. This may affect how your
 # window manager decorates and handles the toolbox window.  Possible values
 # are normal, utility and keep-above.
 # 
-# (toolbox-window-hint utility)
+# (toolbox-window-hint normal)
 
 # The window type hint that is set on dock windows. This may affect the way
 # your window manager decorates and handles dock windows.  Possible values
 # are normal, utility and keep-above.
 # 
-# (dock-window-hint utility)
+# (dock-window-hint normal)
 
 # When enabled, dock windows (the toolbox and palettes) are set to be
 # transient to the active image window. Most window managers will keep the
