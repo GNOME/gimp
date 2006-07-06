@@ -12309,7 +12309,7 @@ msgstr "Cách _xoay ánh xạ màu..."
 
 #: ../plug-ins/rcm/rcm.c:266
 msgid "Rotating the colormap"
-msgstr "Đang xoay ánh xạ mảu"
+msgstr "Đang xoay ánh xạ màu"
 
 #: ../plug-ins/rcm/rcm_dialog.c:119
 msgid "Original"
