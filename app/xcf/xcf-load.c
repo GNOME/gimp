@@ -1593,8 +1593,8 @@ xcf_load_vector (XcfInfo   *info,
   info->cp += xcf_read_int32  (info->fp, &num_strokes,   1);
 
 #ifdef GIMP_XCF_PATH_DEBUG
-  g_printerr ("name: %s, tattoo: %d, visible: %d, linked: %d, num_parasites %d, "
-              "num_strokes %d\n",
+  g_printerr ("name: %s, tattoo: %d, visible: %d, linked: %d, "
+              "num_parasites %d, num_strokes %d\n",
               name, tattoo, visible, linked, num_parasites, num_strokes);
 #endif
 
@@ -1608,9 +1608,7 @@ xcf_load_vector (XcfInfo   *info,
 
   for (i = 0; i < num_parasites; i++)
     {
-      GimpParasite *parasite;
-
-      parasite = xcf_load_parasite (info);
+      GimpParasite *parasite = xcf_load_parasite (info);
 
       if (! parasite)
         return FALSE;
@@ -1659,6 +1657,12 @@ xcf_load_vector (XcfInfo   *info,
                         info->cp + 4 * num_axes * num_control_points,
                         NULL);
           continue;
+        }
+
+      if (num_axes < 2 || num_axes > 6)
+        {
+          g_printerr ("bad number of axes in stroke description\n");
+          return FALSE;
         }
 
       control_points = g_value_array_new (num_control_points);
