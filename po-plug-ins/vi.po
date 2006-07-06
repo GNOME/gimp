@@ -8571,7 +8571,7 @@ msgstr "Đang tìm độ dốc XY..."
 #: ../plug-ins/common/warp.c:1275
 #, c-format
 msgid "Flow step %d"
-msgstr "Bược luồng %d"
+msgstr "Bước luồng %d"
 
 #: ../plug-ins/common/waves.c:118
 msgid "Distort the image with waves"
