@@ -435,10 +435,6 @@ xcf_save_image_props (XcfInfo   *info,
   xcf_check_error (xcf_save_prop (info, gimage, PROP_TATTOO, error,
                                   gimage->tattoo_state));
 
-  if (gimp_parasite_list_length (gimage->parasites) > 0)
-    xcf_check_error (xcf_save_prop (info, gimage, PROP_PARASITES,
-                                    error, gimage->parasites));
-
   if (unit < _gimp_unit_get_number_of_built_in_units (gimage->gimp))
     xcf_check_error (xcf_save_prop (info, gimage, PROP_UNIT, error, unit));
 
