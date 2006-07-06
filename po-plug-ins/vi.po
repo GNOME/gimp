@@ -5923,7 +5923,7 @@ msgstr "Kiểu nền"
 
 #: ../plug-ins/common/papertile.c:366
 msgid "I_nverted image"
-msgstr "Ả_Ch đảoèn ảnh"
+msgstr "Ảnh đả_o ngược"
 
 #: ../plug-ins/common/papertile.c:368
 msgid "Im_age"
