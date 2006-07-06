@@ -430,20 +430,15 @@ find_empty_segs (PixelRegion  *maskPR,
                  gint          y2,
                  guchar        threshold)
 {
-  guchar *data;
-  gint    x;
-  gint    start, end;
-  gint    val, last;
-  gint    tilex;
-  Tile   *tile = NULL;
-  gint    endx;
-  gint    l_num_empty;
-  gint    dstep = 0;
-
-  data  = NULL;
-  start = 0;
-  end   = 0;
-  endx  = 0;
+  const guchar *data  = NULL;
+  Tile         *tile  = NULL;
+  gint          start = 0;
+  gint          end   = 0;
+  gint          endx  = 0;
+  gint          dstep = 0;
+  gint          val, last;
+  gint          x, tilex;
+  gint          l_num_empty;
 
   *num_empty = 0;
 
@@ -497,12 +492,13 @@ find_empty_segs (PixelRegion  *maskPR,
             {
               if (tile)
                 tile_release (tile, FALSE);
+
               tile = tile_manager_get_tile (maskPR->tiles,
                                             x, scanline, TRUE, FALSE);
               data =
-                (guchar *) tile_data_pointer (tile,
-                                              x % TILE_WIDTH,
-                                              scanline % TILE_HEIGHT) +
+                (const guchar *) tile_data_pointer (tile,
+                                                    x % TILE_WIDTH,
+                                                    scanline % TILE_HEIGHT) +
                 (tile_bpp(tile) - 1);
 
               tilex = x / TILE_WIDTH;
@@ -752,12 +748,14 @@ simplify_subdivide (const BoundSeg *segs,
           /* compare the sqared distances */
           dist = (SQR (segs[i].x1 - segs[start_idx].x1) +
                   SQR (segs[i].y1 - segs[start_idx].y1));
+
           if (dist > maxdist)
             {
               maxdist = dist;
               maxdist_idx = i;
             }
         }
+
       realdist = sqrt ((gdouble) maxdist);
     }
   else
@@ -780,20 +778,20 @@ simplify_subdivide (const BoundSeg *segs,
           if (dist < 0)
             dist *= -1;
 
-
           if (dist > maxdist)
             {
               maxdist = dist;
               maxdist_idx = i;
             }
         }
+
       realdist = ((gdouble) maxdist) / sqrt ((gdouble) (SQR (dx) + SQR (dy)));
     }
 
   /* g_printerr ("Index %d, x: %d, y: %d, distance: %.4f\n", maxdist_idx,
               segs[maxdist_idx].x1, segs[maxdist_idx].y1, realdist); */
-  /* threshold is chosen to catch 45 degree stairs */
 
+  /* threshold is chosen to catch 45 degree stairs */
   if (realdist <= 1.0)
     {
       *ret_points = g_array_append_val (*ret_points, start_idx);
