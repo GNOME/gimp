@@ -1039,7 +1039,7 @@ msgstr "Chọn _hết"
 
 #: ../libgimpwidgets/gimppageselector.c:307
 msgid "Select _range:"
-msgstr "Chọn _phạm vị:"
+msgstr "Chọn _phạm vi:"
 
 #: ../libgimpwidgets/gimppageselector.c:319
 msgid "Open _pages as"

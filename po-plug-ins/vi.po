@@ -1481,13 +1481,13 @@ msgstr "Ánh xạ lạ"
 #: ../plug-ins/common/AlienMap2.c:464
 #: ../plug-ins/common/AlienMap2.c:488
 msgid "Number of cycles covering full value range"
-msgstr "Số chu kỳ chiếm toàn phạm vị giá trị"
+msgstr "Số chu kỳ chiếm toàn phạm vi giá trị"
 
 #: ../plug-ins/common/AlienMap2.c:452
 #: ../plug-ins/common/AlienMap2.c:476
 #: ../plug-ins/common/AlienMap2.c:500
 msgid "Phase angle, range 0-360"
-msgstr "Góc thời kỳ, phạm vị 0-360"
+msgstr "Góc thời kỳ, phạm vi 0-360"
 
 #.Propagate Mode
 #: ../plug-ins/common/AlienMap2.c:514
@@ -1875,7 +1875,7 @@ msgstr "Sắp xếp lặt vặt:"
 
 #: ../plug-ins/common/CML_explorer.c:1598
 msgid "Use cyclic range"
-msgstr "Dùng phạm vị theo chu kỳ"
+msgstr "Dùng phạm vi theo chu kỳ"
 
 #: ../plug-ins/common/CML_explorer.c:1608
 msgid "Mod. rate:"
@@ -1891,7 +1891,7 @@ msgstr "Khoảng cách truyền bá:"
 
 #: ../plug-ins/common/CML_explorer.c:1635
 msgid "# of subranges:"
-msgstr "Số phạm vị phụ :"
+msgstr "Số phạm vi phụ :"
 
 #: ../plug-ins/common/CML_explorer.c:1644
 msgid "P(ower factor):"
@@ -1903,11 +1903,11 @@ msgstr "Tham số k:"
 
 #: ../plug-ins/common/CML_explorer.c:1662
 msgid "Range low:"
-msgstr "Phạm vị thấp:"
+msgstr "Phạm vi thấp:"
 
 #: ../plug-ins/common/CML_explorer.c:1671
 msgid "Range high:"
-msgstr "Phạm vị cao :"
+msgstr "Phạm vi cao :"
 
 #: ../plug-ins/common/CML_explorer.c:1683
 msgid "Plot a Graph of the Settings"
@@ -2250,7 +2250,7 @@ msgstr "Đang xén..."
 
 #: ../plug-ins/common/autostretch_hsv.c:69
 msgid "Stretch image contrast to cover the maximum possible range"
-msgstr "Kéo giãn độ tương phản của ảnh để chiếm phạm vị tối đa có thể"
+msgstr "Kéo giãn độ tương phản của ảnh để chiếm phạm vi tối đa có thể"
 
 #: ../plug-ins/common/autostretch_hsv.c:82
 msgid "Stretch _HSV"
@@ -2431,7 +2431,7 @@ msgstr "Ch_ung quanh:"
 
 #: ../plug-ins/common/c_astretch.c:69
 msgid "Stretch contrast to cover the maximum possible range"
-msgstr "Kéo giãn độ tương phản để chiếm phạm vị tối đa có thể"
+msgstr "Kéo giãn độ tương phản để chiếm phạm vi tối đa có thể"
 
 #: ../plug-ins/common/c_astretch.c:80
 msgid "_Stretch Contrast"
@@ -2637,7 +2637,7 @@ msgstr "_Cỡ :"
 
 #: ../plug-ins/common/color_enhance.c:70
 msgid "Stretch color saturation to cover maximum possible range"
-msgstr "Kéo giãn độ bão hoà để chiếm phạm vị tối đa có thể"
+msgstr "Kéo giãn độ bão hoà để chiếm phạm vi tối đa có thể"
 
 #: ../plug-ins/common/color_enhance.c:82
 msgid "_Color Enhance"
@@ -5299,7 +5299,7 @@ msgstr "Chỉnh cảnh _gần và nền"
 
 #: ../plug-ins/common/mapcolor.c:168
 msgid "Color Range _Mapping..."
-msgstr "Ảnh xạ phạm vị _màu..."
+msgstr "Ảnh xạ phạm vi _màu..."
 
 #: ../plug-ins/common/mapcolor.c:214
 #: ../plug-ins/common/mapcolor.c:507
@@ -5316,15 +5316,15 @@ msgstr "Đang ánh xạ màu..."
 
 #: ../plug-ins/common/mapcolor.c:352
 msgid "Map Color Range"
-msgstr "Ánh xạ phạm vị màu"
+msgstr "Ánh xạ phạm vi màu"
 
 #: ../plug-ins/common/mapcolor.c:383
 msgid "Source Color Range"
-msgstr "Phạm vị màu nguồn"
+msgstr "Phạm vi màu nguồn"
 
 #: ../plug-ins/common/mapcolor.c:384
 msgid "Destination Color Range"
-msgstr "Phạm vị màu đích"
+msgstr "Phạm vi màu đích"
 
 #.spinbutton 2
 #: ../plug-ins/common/mapcolor.c:424
@@ -5814,7 +5814,7 @@ msgstr "Kênh #%d:"
 
 #: ../plug-ins/common/normalize.c:77
 msgid "Stretch brightness values to cover the full range"
-msgstr "Kéo giãn giá trị độ sáng để chiếm toàn bộ phạm vị"
+msgstr "Kéo giãn giá trị độ sáng để chiếm toàn bộ phạm vi"
 
 #: ../plug-ins/common/normalize.c:123
 msgid "Normalizing"
@@ -12301,7 +12301,7 @@ msgstr "Tập tin"
 
 #: ../plug-ins/rcm/rcm.c:96
 msgid "Replace a range of colors with another"
-msgstr "Thay thế một phạm vị màu sắc bằng phạm vị khác"
+msgstr "Thay thế một phạm vi màu sắc bằng phạm vi khác"
 
 #: ../plug-ins/rcm/rcm.c:103
 msgid "Colormap _Rotation..."

@@ -5671,7 +5671,7 @@ msgstr "Gặp đoạn bị hỏng %d trong tập tin độ dốc « %s »."
 #: ../app/core/gimpgradient-load.c:187
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
-msgstr "Tập tin độ dốc « %s » bị hỏng. Các đoạn không qua phạm vị 0-1."
+msgstr "Tập tin độ dốc « %s » bị hỏng. Các đoạn không qua phạm vi 0-1."
 
 #: ../app/core/gimpgradient-load.c:270
 #, c-format
@@ -6199,7 +6199,7 @@ msgstr "Đang đọc tập tin bảng chọn « %s »: thiếu thành phần mà
 #: ../app/core/gimppalette.c:464
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr "Đang đọc tập tin bảng chọn « %s »: giá trị RGB nằm ngoài phạm vị trong dòng %d."
+msgstr "Đang đọc tập tin bảng chọn « %s »: giá trị RGB nằm ngoài phạm vi trong dòng %d."
 
 #: ../app/core/gimppattern.c:272
 #: ../app/core/gimppattern.c:318
@@ -8186,7 +8186,7 @@ msgid ""
 "PDB calling error for procedure '%s':\n"
 "Argument '%s' (#%d, type %s) out of bounds (validation changed '%s' to '%s')"
 msgstr "Gặp lỗi gọi PDB cho thủ tục « %s »:\n"
-"đối số « %s » (#%d, kiểu %s) ở ngoại phạm vị\n"
+"đối số « %s » (#%d, kiểu %s) ở ngoại phạm vi\n"
 "(việc hợp lệ hoá đã thay đổi « %s » thành « %s »)"
 
 #: ../app/pdb/image_cmds.c:1945
@@ -8668,7 +8668,7 @@ msgstr "Cân bằng màu hoạt động chỉ trên lớp màu RGB."
 
 #: ../app/tools/gimpcolorbalancetool.c:239
 msgid "Select Range to Adjust"
-msgstr "Chọn phạm vị cần chỉnh"
+msgstr "Chọn phạm vi cần chỉnh"
 
 #: ../app/tools/gimpcolorbalancetool.c:246
 #: ../app/tools/gimplevelstool.c:175

@@ -114,7 +114,7 @@ msgid ""
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
 "tool (Layer-&gt;Colors-&gt;Levels). If there are any color casts, you can "
 "correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
-msgstr "Nếu một số ảnh chụp đã quét của bạn không hình có đủ màu, bạn dễ dàng có thể tiến bộ phạm vị sắc màu với cái nút « Tự động » trong công cụ Cấp (Lớp → Màu → Cấp) Nếu có lỗi màu nào, có thể sửa nó dùng công cụ Cong (Lớp → Màu → Cong)."
+msgstr "Nếu một số ảnh chụp đã quét của bạn không hình có đủ màu, bạn dễ dàng có thể tiến bộ phạm vi sắc màu với cái nút « Tự động » trong công cụ Cấp (Lớp → Màu → Cấp) Nếu có lỗi màu nào, có thể sửa nó dùng công cụ Cong (Lớp → Màu → Cong)."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
@@ -187,7 +187,7 @@ msgstr "Bạn có thể điều chỉnh hoặc di chuyển một vùng chọn b�
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
-msgstr "Bạn có thể điều chỉnh phạm vị lựa chọn cho tính năng chọn mờ bằng cách nhắp và kéo phía trái và phía phải."
+msgstr "Bạn có thể điều chỉnh phạm vi lựa chọn cho tính năng chọn mờ bằng cách nhắp và kéo phía trái và phía phải."
 
 #: ../data/tips/gimp-tips.xml.in.h:25
 msgid ""
