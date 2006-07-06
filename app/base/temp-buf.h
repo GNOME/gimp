@@ -38,9 +38,9 @@ TempBuf * temp_buf_new         (gint           width,
                                 gint           bytes,
                                 gint           x,
                                 gint           y,
-                                guchar        *col);
+                                const guchar  *col);
 TempBuf * temp_buf_new_check   (gint           width,
-                                gint              height,
+                                gint           height,
                                 GimpCheckType  check_type,
                                 GimpCheckSize  check_size);
 TempBuf * temp_buf_copy        (TempBuf       *src,
@@ -53,7 +53,7 @@ TempBuf * temp_buf_resize      (TempBuf       *buf,
                                 gint           height);
 TempBuf * temp_buf_scale       (TempBuf       *buf,
                                 gint           width,
-                                gint           height);
+                                gint           height) G_GNUC_WARN_UNUSED_RESULT;
 TempBuf * temp_buf_copy_area   (TempBuf       *src,
                                 TempBuf       *dest,
                                 gint           x,

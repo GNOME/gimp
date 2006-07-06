@@ -27,131 +27,26 @@
 
 #include "base-types.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "pixel-region.h"
 #include "temp-buf.h"
 
-#include "paint-funcs/paint-funcs.h"
 
+static void  temp_buf_to_color (TempBuf *src_buf,
+                                TempBuf *dest_buf);
+static void  temp_buf_to_gray  (TempBuf *src_buf,
+                                TempBuf *dest_buf);
 
-static guchar * temp_buf_allocate (guint    size);
-static void     temp_buf_to_color (TempBuf *src_buf,
-                                   TempBuf *dest_buf);
-static void     temp_buf_to_gray  (TempBuf *src_buf,
-                                   TempBuf *dest_buf);
-
-
-/*  Memory management  */
-
-static guchar *
-temp_buf_allocate (guint size)
-{
-  return g_new (guchar, size);
-}
-
-
-/*  The conversion routines  */
-
-static void
-temp_buf_to_color (TempBuf *src_buf,
-                   TempBuf *dest_buf)
-{
-  guchar *src;
-  guchar *dest;
-  glong   num_pixels;
-
-  src  = temp_buf_data (src_buf);
-  dest = temp_buf_data (dest_buf);
-
-  num_pixels = src_buf->width * src_buf->height;
-
-  switch (dest_buf->bytes)
-    {
-    case 3:
-      g_return_if_fail (src_buf->bytes == 1);
-      while (num_pixels--)
-        {
-          guchar tmpch;
-          *dest++ = tmpch = *src++;
-          *dest++ = tmpch;
-          *dest++ = tmpch;
-        }
-      break;
-
-    case 4:
-      g_return_if_fail (src_buf->bytes == 2);
-      while (num_pixels--)
-        {
-          guchar tmpch;
-          *dest++ = tmpch = *src++;
-          *dest++ = tmpch;
-          *dest++ = tmpch;
-
-          *dest++ = *src++;  /* alpha channel */
-        }
-      break;
-
-    default:
-      g_return_if_reached ();
-      break;
-    }
-}
-
-static void
-temp_buf_to_gray (TempBuf *src_buf,
-                  TempBuf *dest_buf)
-{
-  guchar *src;
-  guchar *dest;
-  glong   num_pixels;
-  gfloat  pix;
-
-  src  = temp_buf_data (src_buf);
-  dest = temp_buf_data (dest_buf);
-
-  num_pixels = src_buf->width * src_buf->height;
-
-  switch (dest_buf->bytes)
-    {
-    case 1:
-      g_return_if_fail (src_buf->bytes == 3);
-      while (num_pixels--)
-        {
-          pix = GIMP_RGB_LUMINANCE (src[0], src[1], src[2]) + 0.5;
-          *dest++ = (guchar) pix;
-
-          src += 3;
-        }
-      break;
-
-    case 2:
-      g_return_if_fail (src_buf->bytes == 4);
-      while (num_pixels--)
-        {
-          pix = GIMP_RGB_LUMINANCE (src[0], src[1], src[2]) + 0.5;
-          *dest++ = (guchar) pix;
-
-          *dest++ = src[3];  /* alpha channel */
-
-          src += 4;
-        }
-      break;
-
-    default:
-      g_return_if_reached ();
-      break;
-    }
-}
 
 TempBuf *
-temp_buf_new (gint    width,
-              gint    height,
-              gint    bytes,
-              gint    x,
-              gint    y,
-              guchar *col)
+temp_buf_new (gint          width,
+              gint          height,
+              gint          bytes,
+              gint          x,
+              gint          y,
+              const guchar *col)
 {
-  glong    i;
-  guchar  *data;
   TempBuf *temp;
 
   g_return_val_if_fail (width > 0 && height > 0, NULL);
@@ -165,11 +60,13 @@ temp_buf_new (gint    width,
   temp->x      = x;
   temp->y      = y;
 
-  temp->data = data = temp_buf_allocate (width * height * bytes);
+  temp->data = g_new (guchar, width * height * bytes);
 
   /*  initialize the data  */
   if (col)
     {
+      glong i;
+
       /* First check if we can save a lot of work */
       for (i = 1; i < bytes; i++)
         {
@@ -179,20 +76,20 @@ temp_buf_new (gint    width,
 
       if (i == bytes)
         {
-          memset (data, *col, width * height * bytes);
+          memset (temp->data, *col, width * height * bytes);
         }
       else /* No, we cannot */
         {
-          guchar *dptr = data;
+          guchar *dptr = temp->data;
 
           /* Fill the first row */
           for (i = width - 1; i >= 0; --i)
             {
-              guchar *init = col;
-              gint    j    = bytes;
+              const guchar *c = col;
+              gint          j = bytes;
 
               while (j--)
-                *dptr++ = *init++;
+                *dptr++ = *c++;
             }
 
           /* Now copy from it (we set bytes to bytes-per-row now) */
@@ -200,7 +97,7 @@ temp_buf_new (gint    width,
 
           while (--height)
             {
-              memcpy (dptr, data, bytes);
+              memcpy (dptr, temp->data, bytes);
               dptr += bytes;
             }
         }
@@ -218,7 +115,7 @@ temp_buf_new_check (gint           width,
                     GimpCheckType  check_type,
                     GimpCheckSize  check_size)
 {
-  TempBuf *newbuf;
+  TempBuf *new;
   guchar  *data;
   guchar   check_shift = 0;
   guchar   check_mod   = 0;
@@ -246,13 +143,13 @@ temp_buf_new_check (gint           width,
 
   gimp_checks_get_shades (check_type, &check_light, &check_dark);
 
-  newbuf = temp_buf_new (width, height, 3, 0, 0, NULL);
-  data = temp_buf_data (newbuf);
+  new = temp_buf_new (width, height, 3, 0, 0, NULL);
+  data = temp_buf_data (new);
 
   for (y = 0; y < height; y++)
     {
-      guchar check_dark  = y >> check_shift;
-      guchar color = (check_dark & 0x1) ? check_light : check_dark;
+      guchar check_dark = y >> check_shift;
+      guchar color      = (check_dark & 0x1) ? check_light : check_dark;
 
       for (x = 0; x < width; x++)
         {
@@ -268,23 +165,19 @@ temp_buf_new_check (gint           width,
         }
     }
 
-  return newbuf;
+  return new;
 }
 
 TempBuf *
 temp_buf_copy (TempBuf *src,
                TempBuf *dest)
 {
-  glong length;
-
   g_return_val_if_fail (src != NULL, NULL);
   g_return_val_if_fail (! dest || (dest->width  == src->width &&
                                    dest->height == src->height), NULL);
 
   if (! dest)
-    {
-      dest = temp_buf_new (src->width, src->height, src->bytes, 0, 0, NULL);
-    }
+    dest = temp_buf_new (src->width, src->height, src->bytes, 0, 0, NULL);
 
   if (src->bytes != dest->bytes)
     {
@@ -301,9 +194,9 @@ temp_buf_copy (TempBuf *src,
     }
   else
     {
-      /* make the copy */
-      length = src->width * src->height * src->bytes;
-      memcpy (temp_buf_data (dest), temp_buf_data (src), length);
+      memcpy (temp_buf_data (dest),
+              temp_buf_data (src),
+              src->width * src->height * src->bytes);
     }
 
   return dest;
@@ -325,13 +218,11 @@ temp_buf_resize (TempBuf *buf,
     }
   else
     {
-      gint new_size;
+      gsize size = width * height * bytes;
 
-      new_size = width * height * bytes;
-
-      if (new_size != (buf->width * buf->height * buf->bytes))
+      if (size != (buf->width * buf->height * buf->bytes))
         {
-          buf->data = g_renew (guchar, buf->data, new_size);
+          buf->data = g_renew (guchar, buf->data, size);
         }
 
       buf->x      = x;
@@ -349,13 +240,13 @@ temp_buf_scale (TempBuf *src,
                 gint     new_width,
                 gint     new_height)
 {
-  gint     loop1;
-  gint     loop2;
-  gdouble  x_ratio;
-  gdouble  y_ratio;
+  TempBuf *dest;
   guchar  *src_data;
   guchar  *dest_data;
-  TempBuf *dest;
+  gdouble  x_ratio;
+  gdouble  y_ratio;
+  gint     loop1;
+  gint     loop2;
 
   g_return_val_if_fail (src != NULL, NULL);
   g_return_val_if_fail (new_width > 0 && new_height > 0, NULL);
@@ -375,9 +266,9 @@ temp_buf_scale (TempBuf *src,
     {
       for (loop2 = 0 ; loop2 < new_width ; loop2++)
         {
-          gint    i;
           guchar *src_pixel;
           guchar *dest_pixel;
+          gint    i;
 
           src_pixel = src_data +
             (gint) (loop2 * x_ratio) * src->bytes +
@@ -473,8 +364,6 @@ temp_buf_data (TempBuf *temp_buf)
 guchar *
 temp_buf_data_clear (TempBuf *temp_buf)
 {
-  g_return_val_if_fail (temp_buf != NULL, NULL);
-
   memset (temp_buf->data, 0,
           temp_buf->height * temp_buf->width * temp_buf->bytes);
 
@@ -492,6 +381,102 @@ temp_buf_get_memsize (TempBuf *temp_buf)
               + (gsize) temp_buf->bytes * temp_buf->width * temp_buf->height);
 
   return memsize;
+}
+
+
+/*  The conversion routines  */
+
+static void
+temp_buf_to_color (TempBuf *src_buf,
+                   TempBuf *dest_buf)
+{
+  guchar *src;
+  guchar *dest;
+  glong   num_pixels;
+
+  src  = temp_buf_data (src_buf);
+  dest = temp_buf_data (dest_buf);
+
+  num_pixels = src_buf->width * src_buf->height;
+
+  switch (dest_buf->bytes)
+    {
+    case 3:
+      g_return_if_fail (src_buf->bytes == 1);
+      while (num_pixels--)
+        {
+          guchar tmp;
+
+          *dest++ = tmp = *src++;
+          *dest++ = tmp;
+          *dest++ = tmp;
+        }
+      break;
+
+    case 4:
+      g_return_if_fail (src_buf->bytes == 2);
+      while (num_pixels--)
+        {
+          guchar tmp;
+
+          *dest++ = tmp = *src++;
+          *dest++ = tmp;
+          *dest++ = tmp;
+
+          *dest++ = *src++;  /* alpha channel */
+        }
+      break;
+
+    default:
+      g_return_if_reached ();
+      break;
+    }
+}
+
+static void
+temp_buf_to_gray (TempBuf *src_buf,
+                  TempBuf *dest_buf)
+{
+  const guchar *src;
+  guchar       *dest;
+  glong         num_pixels;
+
+  src  = temp_buf_data (src_buf);
+  dest = temp_buf_data (dest_buf);
+
+  num_pixels = src_buf->width * src_buf->height;
+
+  switch (dest_buf->bytes)
+    {
+    case 1:
+      g_return_if_fail (src_buf->bytes == 3);
+      while (num_pixels--)
+        {
+          gint lum = GIMP_RGB_LUMINANCE (src[0], src[1], src[2]) + 0.5;
+
+          *dest++ = (guchar) lum;
+
+          src += 3;
+        }
+      break;
+
+    case 2:
+      g_return_if_fail (src_buf->bytes == 4);
+      while (num_pixels--)
+        {
+          gint lum = GIMP_RGB_LUMINANCE (src[0], src[1], src[2]) + 0.5;
+
+          *dest++ = (guchar) lum;
+          *dest++ = src[3];  /* alpha channel */
+
+          src += 4;
+        }
+      break;
+
+    default:
+      g_return_if_reached ();
+      break;
+    }
 }
 
 

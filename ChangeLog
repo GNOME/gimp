@@ -1,3 +1,7 @@
+2006-07-06  Sven Neumann  <sven@gimp.org>
+
+	* app/base/temp-buf.[ch]: code cleanup.
+
 2006-07-05  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/splash.c (splash_average_text_area): unset the test
