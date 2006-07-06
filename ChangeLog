@@ -48,7 +48,7 @@
 
 	* configure.in: depend on glib >= 2.10.2, gtk+ >= 2.8.18
 	and pango >= 1.12.3. Define FOO_DISABLE_DEPRECATED also for
-	glib 2.12 and gtk+ 2.10.
+	glib 2.12, gtk+ 2.10 and pango 2.14
 
 	* app/sanity.c
 	* app/gui/gui.c: adjusted sanity checks accordingly.
