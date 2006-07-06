@@ -11624,7 +11624,7 @@ msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
 msgstr ""
-"Đinh nghĩa máy in logic mới. Việc này dùng để đặt tên cho tập hợp các thiết "
+"Định nghĩa máy in logic mới. Việc này dùng để đặt tên cho tập hợp các thiết "
 "lập mà bạn muốn lưu lại để sử dụng về sau này."
 
 #: ../plug-ins/print/gimp_main_window.c:977
