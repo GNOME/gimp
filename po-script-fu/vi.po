@@ -752,7 +752,7 @@ msgstr "Độ dốc ngược"
 
 #:../plug-ins/script-fu/scripts/blended-logo.scm.h:13
 msgid "Offset (pixels)"
-msgstr "HIệu số (điểm ảnh)"
+msgstr "Hiệu số (điểm ảnh)"
 
 #:../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 msgid "Bo_vination..."
@@ -1090,12 +1090,12 @@ msgstr "Màu"
 #:../plug-ins/script-fu/scripts/drop-shadow.scm.h:4
 #:../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
 msgid "Offset X"
-msgstr "HIệu số X"
+msgstr "Hiệu số X"
 
 #:../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
 #:../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
 msgid "Offset Y"
-msgstr "HIệu số Y"
+msgstr "Hiệu số Y"
 
 #:../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
 #:../plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
