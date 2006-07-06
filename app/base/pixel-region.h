@@ -101,7 +101,7 @@ void     pixel_region_set_row       (PixelRegion         *PR,
                                      gint                 x,
                                      gint                 y,
                                      gint                 w,
-                                     guchar              *data);
+                                     const guchar        *data);
 void     pixel_region_get_col       (PixelRegion         *PR,
                                      gint                 x,
                                      gint                 y,
@@ -112,11 +112,11 @@ void     pixel_region_set_col       (PixelRegion         *PR,
                                      gint                 x,
                                      gint                 y,
                                      gint                 h,
-                                     guchar              *data);
+                                     const guchar        *data);
 gboolean pixel_region_has_alpha     (PixelRegion         *PR);
 
-PixelRegionIterator * pixel_regions_register     (gint                 num_regions,
-                                                   ...);
+PixelRegionIterator * pixel_regions_register     (gint    num_regions,
+                                                  ...);
 PixelRegionIterator * pixel_regions_process      (PixelRegionIterator *PRI);
 void                  pixel_regions_process_stop (PixelRegionIterator *PRI);
 

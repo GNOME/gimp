@@ -23,9 +23,9 @@ struct _PixelDataHandle
 {
   guchar *data;
   gint    width;
-  gint          height;
+  gint    height;
   gint    stride;
-  gint          bpp;
+  gint    bpp;
 };
 
 /* Creates a new tile manager with the specified
@@ -137,9 +137,9 @@ void          tile_manager_map_over_tile        (TileManager *tm,
 
 PixelDataHandle * request_pixel_data (TileManager *tm,
                                       gint         x1,
-                                      gint           y1,
-                                      gint           x2,
-                                      gint           y2,
+                                      gint         y1,
+                                      gint         x2,
+                                      gint         y2,
                                       gboolean     wantread,
                                       gboolean     wantwrite);
 
@@ -164,12 +164,12 @@ void              write_pixel_data   (TileManager  *tm,
 /*   Fill buffer with the pixeldata for the pixel at coordinates x,y
  *   if x,y is outside the area of the tilemanger, nothing is done.
  */
-void                  read_pixel_data_1  (TileManager  *tm,
+void              read_pixel_data_1  (TileManager  *tm,
                                       gint            x,
                                       gint            y,
                                       guchar       *buffer);
 
-void                  write_pixel_data_1 (TileManager  *tm,
+void              write_pixel_data_1 (TileManager  *tm,
                                       gint            x,
                                       gint            y,
                                       const guchar *buffer);

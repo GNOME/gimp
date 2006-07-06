@@ -1,6 +1,8 @@
 2006-07-06  Sven Neumann  <sven@gimp.org>
 
-	* app/base/temp-buf.[ch]: code cleanup.
+	* app/base/pixel-region.[ch]
+	* app/base/temp-buf.[ch]
+	* app/base/tile-manager.h: code cleanup.
 
 2006-07-05  Sven Neumann  <sven@gimp.org>
 
