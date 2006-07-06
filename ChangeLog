@@ -1,5 +1,11 @@
 2006-07-06  Sven Neumann  <sven@gimp.org>
 
+	* app/xcf/xcf-load.c (xcf_load_vector): applied a patch from
+	Henning Makholm that introduces a sanity check on the number of
+	axes (bug #346742).
+
+2006-07-06  Sven Neumann  <sven@gimp.org>
+
 	* app/base/boundary.[ch]
 	* app/base/gimplut.c
 	* app/base/pixel-processor.c
