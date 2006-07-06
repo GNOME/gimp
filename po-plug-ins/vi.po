@@ -6301,7 +6301,7 @@ msgstr "Độ _sâu hình tròn theo phần trăm:"
 
 #: ../plug-ins/common/polar.c:631
 msgid "Offset _angle:"
-msgstr "_Góc hIệu số :"
+msgstr "_Góc hiệu số :"
 
 #: ../plug-ins/common/polar.c:646
 msgid "_Map backwards"
