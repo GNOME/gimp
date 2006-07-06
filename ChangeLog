@@ -65,8 +65,8 @@
 
 	Merge from HEAD:
 
-	* plug-ins/common/dicom.c: applied patch from Dov Grobgeld 
-	with several fixes for dicom loading, fixes bug #163256.
+	* plug-ins/common/dicom.c: applied patch from Dov Grobgeld with
+	several fixes for dicom loading, fixes bug #163256.
 
 2006-05-23  Michael Natterer  <mitch@gimp.org>
 
@@ -85,10 +85,9 @@
 
 	Merge from Head:
 	
-	* libgimpwidgets/gimpwidgets.c (gimp_coordinates_callback): 
-	use ROUND() to prevent incorrect chainbutton logic.  Fixes
-	bug #336259.
-	
+	* libgimpwidgets/gimpwidgets.c (gimp_coordinates_callback): use
+	ROUND() to prevent incorrect chainbutton logic.  Fixes bug #336259.
+
 2006-05-21  Michael Natterer  <mitch@gimp.org>
 
 	Merge from HEAD:
@@ -103,9 +102,8 @@
 
 	Merge from Head:
 	
-	* app/dialogs/file-save-dialog.c: make sure dialog has
-	not been destroyed when setting sensitive; fixes 
-	bug #322978.
+	* app/dialogs/file-save-dialog.c: make sure dialog has not been
+	destroyed when setting sensitive; fixes bug #322978.
 
 2006-04-23  Manish Singh  <yosh@gimp.org>
 

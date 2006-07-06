@@ -6,6 +6,27 @@ here. New features are being added in the HEAD branch that will be
 released as GIMP version 2.4.
 
 
+Bugs fixed in GIMP 2.2.12
+=========================
+
+- fixed display problem in the Animation Playback plug-in (bug #338378)
+- fixed misbehaviour of the user installation dialog (bug #324254)
+- make sure that session-managed windows are mapped completely inside a
+  monitor (bug #339099, bug #324254)
+- don't use long deprecated libpng API (bug #339402)
+- fixed possible segfault when closing image while saving it (bug #322978)
+- halt tools when the image mode changes (bug #330083)
+- fixed problem in Scale and Resize widgets (bug #336259)
+- fixed wrong offset in transform PDB functions (bug #342548)
+- fixed bugs in the Dicom load plug-in (bug #163256)
+- make sure text widgets get all key events first (bug #301006)
+- fixed problems with default values in the PNG save plug-in (bug #343284)
+- fixed Save As dialog not displaying the filename (bug #343284)
+- fixed compilation problem with gcc 4.1 (bug #345473)
+- plugged a possible buffer overrun in the XCF parser (bug #346742)
+- don't save image parasites twice in XCF files (bug #346754)
+
+
 Bugs fixed in GIMP 2.2.11
 =========================
 
