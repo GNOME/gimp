@@ -45,7 +45,7 @@ temp_buf_new (gint          width,
               gint          bytes,
               gint          x,
               gint          y,
-              const guchar *col)
+              const guchar *color)
 {
   TempBuf *temp;
 
@@ -63,20 +63,20 @@ temp_buf_new (gint          width,
   temp->data = g_new (guchar, width * height * bytes);
 
   /*  initialize the data  */
-  if (col)
+  if (color)
     {
       glong i;
 
       /* First check if we can save a lot of work */
       for (i = 1; i < bytes; i++)
         {
-          if (col[0] != col[i])
+          if (color[0] != color[i])
             break;
         }
 
       if (i == bytes)
         {
-          memset (temp->data, *col, width * height * bytes);
+          memset (temp->data, *color, width * height * bytes);
         }
       else /* No, we cannot */
         {
@@ -85,7 +85,7 @@ temp_buf_new (gint          width,
           /* Fill the first row */
           for (i = width - 1; i >= 0; --i)
             {
-              const guchar *c = col;
+              const guchar *c = color;
               gint          j = bytes;
 
               while (j--)

@@ -141,6 +141,7 @@ gimp_lut_process (GimpLut     *lut,
               dest++;
             }
           break;
+
         case 2:
           while (width--)
             {
@@ -150,6 +151,7 @@ gimp_lut_process (GimpLut     *lut,
               dest += 2;
             }
           break;
+
         case 3:
           while (width--)
             {
@@ -160,6 +162,7 @@ gimp_lut_process (GimpLut     *lut,
               dest += 3;
             }
           break;
+
         case 4:
           while (width--)
             {
@@ -171,8 +174,10 @@ gimp_lut_process (GimpLut     *lut,
               dest += 4;
             }
           break;
+
         default:
           g_warning ("gimplut: Error: nchannels = %d\n", lut->nchannels);
+          break;
         }
 
       width = srcPR->w;
@@ -220,6 +225,7 @@ gimp_lut_process_inline (GimpLut     *lut,
               src++;
             }
           break;
+
         case 2:
           while (width--)
             {
@@ -228,6 +234,7 @@ gimp_lut_process_inline (GimpLut     *lut,
               src  += 2;
             }
           break;
+
         case 3:
           while (width--)
             {
@@ -237,6 +244,7 @@ gimp_lut_process_inline (GimpLut     *lut,
               src  += 3;
             }
           break;
+
         case 4:
           while (width--)
             {
@@ -247,9 +255,12 @@ gimp_lut_process_inline (GimpLut     *lut,
               src  += 4;
             }
           break;
+
         default:
           g_warning ("gimplut: Error: nchannels = %d\n", lut->nchannels);
+          break;
         }
+
       width = srcPR->w;
       src  += src_r_i;
     }

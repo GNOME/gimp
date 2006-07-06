@@ -253,7 +253,7 @@ boundary_sort (const BoundSeg *segs,
               ((BoundSeg *) segs)[index].visited = TRUE;
             }
 
-          if (x != startx || y != starty)
+          if (G_UNLIKELY (x != startx || y != starty))
             g_warning ("sort_boundary(): Unconnected boundary group!");
 
           /*  Mark the end of a group  */

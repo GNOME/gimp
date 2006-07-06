@@ -230,6 +230,7 @@ do_parallel_regions_single (PixelProcessor             *processor,
         default:
           g_warning ("do_parallel_regions_single: Bad number of regions %d\n",
                      processor->num_regions);
+          break;
         }
 
       if (progress_func)
@@ -288,7 +289,7 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
         {
           g_thread_pool_push (pool, processor, &error);
 
-          if (error)
+          if (G_UNLIKELY (error))
             {
               g_warning ("thread creation failed: %s", error->message);
               g_clear_error (&error);
@@ -382,6 +383,7 @@ pixel_regions_process_parallel_valist (PixelProcessorFunc         func,
     default:
       g_warning ("pixel_regions_process_parallel: "
                  "bad number of regions (%d)", processor.num_regions);
+      break;
     }
 
   if (! processor.PRI)
@@ -444,7 +446,7 @@ pixel_processor_set_num_threads (gint num_threads)
           pool_cond  = g_cond_new ();
         }
 
-      if (error)
+      if (G_UNLIKELY (error))
         {
           g_warning ("changing the number of threads to %d failed: %s",
                      num_threads, error->message);

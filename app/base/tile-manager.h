@@ -28,18 +28,17 @@ struct _PixelDataHandle
   gint    bpp;
 };
 
-/* Creates a new tile manager with the specified
- *  width for the toplevel. The toplevel sizes is
- *  used to compute the number of levels and there
- *  size. Each level is 1/2 the width and height of
+/* Creates a new tile manager with the specified width for the
+ *  toplevel. The toplevel size is used to compute the number of
+ *  levels and their size. Each level is 1/2 the width and height of
  *  the level above it.
  *
- * The toplevel is level 0. The smallest level in the
- *  hierarchy is "nlevels - 1". That level will be smaller
- *  than TILE_WIDTH x TILE_HEIGHT
+ * The toplevel is level 0. The smallest level in the hierarchy
+ *  is "nlevels - 1". That level will be smaller than TILE_WIDTH x
+ *  TILE_HEIGHT
  */
-TileManager * tile_manager_new               (gint toplevel_width,
-                                              gint toplevel_height,
+TileManager * tile_manager_new               (gint width,
+                                              gint height,
                                               gint bpp);
 
 /* Ref/Unref a tile manager.
@@ -47,11 +46,10 @@ TileManager * tile_manager_new               (gint toplevel_width,
 TileManager * tile_manager_ref               (TileManager *tm);
 void          tile_manager_unref             (TileManager *tm);
 
-/* Set the validate procedure for the tile manager.
- *  The validate procedure is called when an invalid tile
- *  is referenced. If the procedure is NULL, then the tile
- *  is set to valid and its memory is allocated, but
- *  not initialized.
+/* Set the validate procedure for the tile manager.  The validate
+ *  procedure is called when an invalid tile is referenced. If the
+ *  procedure is NULL, then the tile is set to valid and its memory is
+ *  allocated, but not initialized.
  */
 void          tile_manager_set_validate_proc (TileManager      *tm,
                                               TileValidateProc  proc);
@@ -71,10 +69,9 @@ Tile        * tile_manager_get               (TileManager *tm,
                                               gint         wantread,
                                               gint         wantwrite);
 
-/* Request that (if possible) the tile at x,y be swapped
- * in.  This is only a hint to improve performance; no guarantees.
- * The tile may be swapped in or otherwise made more accessible
- * if it is convenient...
+/* Request that (if possible) the tile at x,y be swapped in.  This is
+ * only a hint to improve performance; no guarantees.  The tile may be
+ * swapped in or otherwise made more accessible if it is convenient...
  */
 void          tile_manager_get_async         (TileManager *tm,
                                               gint         xpixel,
@@ -165,13 +162,13 @@ void              write_pixel_data   (TileManager  *tm,
  *   if x,y is outside the area of the tilemanger, nothing is done.
  */
 void              read_pixel_data_1  (TileManager  *tm,
-                                      gint            x,
-                                      gint            y,
+                                      gint          x,
+                                      gint          y,
                                       guchar       *buffer);
 
 void              write_pixel_data_1 (TileManager  *tm,
-                                      gint            x,
-                                      gint            y,
+                                      gint          x,
+                                      gint          y,
                                       const guchar *buffer);
 
 #endif /* __TILE_MANAGER_H__ */

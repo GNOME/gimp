@@ -38,7 +38,7 @@ TempBuf * temp_buf_new         (gint           width,
                                 gint           bytes,
                                 gint           x,
                                 gint           y,
-                                const guchar  *col);
+                                const guchar  *color);
 TempBuf * temp_buf_new_check   (gint           width,
                                 gint           height,
                                 GimpCheckType  check_type,

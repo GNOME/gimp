@@ -1,9 +1,12 @@
 2006-07-06  Sven Neumann  <sven@gimp.org>
 
 	* app/base/boundary.[ch]
+	* app/base/gimplut.c
+	* app/base/pixel-processor.c
 	* app/base/pixel-region.[ch]
 	* app/base/temp-buf.[ch]
-	* app/base/tile-manager.h: code cleanup.
+	* app/base/tile-manager.[ch]
+	* app/base/tile.c: code cleanup.
 
 2006-07-05  Sven Neumann  <sven@gimp.org>
 

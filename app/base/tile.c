@@ -230,12 +230,12 @@ tile_alloc (Tile *tile)
 static void
 tile_destroy (Tile *tile)
 {
-  if (tile->ref_count)
+  if (G_UNLIKELY (tile->ref_count))
     {
       g_warning ("tried to destroy a ref'd tile");
       return;
     }
-  if (tile->share_count)
+  if (G_UNLIKELY (tile->share_count))
     {
       g_warning ("tried to destroy an attached tile");
       return;
@@ -369,7 +369,7 @@ tile_detach (Tile *tile,
         break;
     }
 
-  if (*link == NULL)
+  if (G_UNLIKELY (*link == NULL))
     {
       g_warning ("Tried to detach a nonattached tile -- TILE BUG!");
       return;
