@@ -2327,7 +2327,7 @@ gimp_image_get_new_tattoo (GimpImage *image)
 
   image->tattoo_state++;
 
-  if (image->tattoo_state <= 0)
+  if (G_UNLIKELY (image->tattoo_state == 0))
     g_warning ("%s: Tattoo state corrupted (integer overflow).", G_STRFUNC);
 
   return image->tattoo_state;
@@ -2351,7 +2351,7 @@ gimp_image_set_tattoo_state (GimpImage  *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  /* Check that the layer tatoos don't overlap with channel or vector ones */
+  /* Check that the layer tattoos don't overlap with channel or vector ones */
   for (list = GIMP_LIST (image->layers)->list;
        list;
        list = g_list_next (list))

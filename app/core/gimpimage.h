@@ -121,7 +121,7 @@ struct _GimpImage
   gint               instance_count;        /*  number of instances          */
   gint               disp_count;            /*  number of displays           */
 
-  GimpTattoo         tattoo_state;          /*  the next unique tattoo to use*/
+  GimpTattoo         tattoo_state;          /*  the last used tattoo         */
 
   TileManager       *shadow;                /*  shadow buffer tiles          */
 
@@ -425,11 +425,11 @@ gint            gimp_image_get_vectors_index     (const GimpImage    *image,
                                                   const GimpVectors  *vectors);
 
 GimpLayer     * gimp_image_get_layer_by_tattoo   (const GimpImage    *image,
-                                                  GimpTattoo          tatoo);
+                                                  GimpTattoo          tattoo);
 GimpChannel   * gimp_image_get_channel_by_tattoo (const GimpImage    *image,
-                                                  GimpTattoo          tatoo);
+                                                  GimpTattoo          tattoo);
 GimpVectors   * gimp_image_get_vectors_by_tattoo (const GimpImage    *image,
-                                                  GimpTattoo          tatoo);
+                                                  GimpTattoo          tattoo);
 
 GimpLayer     * gimp_image_get_layer_by_name     (const GimpImage    *image,
                                                   const gchar        *name);

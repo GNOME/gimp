@@ -1,5 +1,9 @@
 2006-07-06  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage.[ch]: corrected comment (bug #346755).
+
+2006-07-06  Sven Neumann  <sven@gimp.org>
+
 	* app/xcf/xcf-save.c (xcf_save_image_props): removed redundant
 	call to xcf_save_prop() for PROP_PARASITES. Spotted by Henning
 	Makholm (bug #346754).
