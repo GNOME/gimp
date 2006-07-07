@@ -542,7 +542,9 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
 
   if (tooltip)
     {
-      ebox = gtk_event_box_new ();
+      ebox = g_object_new (GTK_TYPE_EVENT_BOX,
+                           "visible-window", FALSE,
+                           NULL);
       gtk_table_attach (GTK_TABLE (table), ebox,
                         column, column + 1, row, row + 1,
                         GTK_FILL, GTK_FILL, 0, 0);

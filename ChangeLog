@@ -1,3 +1,12 @@
+2006-07-07  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcoloreditor.c
+	* libgimpwidgets/gimpcolorselection.c: in the tooltip for the hex
+	entry, mention that it also accepts CSS color names.
+
+	* libgimpwidgets/gimpwidgets.c (gimp_scale_entry_new_internal):
+	use an invisible event box for the tooltip.
+
 2006-07-06  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage.[ch]: corrected comment (bug #346755).
