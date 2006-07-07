@@ -142,7 +142,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_GRADIENT_DIALOG },
 
   { "dialogs-palettes", GIMP_STOCK_PALETTE,
-    N_("Pal_ettes"), "<control>P", N_("Palettes"),
+    N_("Pal_ettes"), NULL, N_("Palettes"),
     "gimp-palette-list|gimp-palette-grid",
     GIMP_HELP_PALETTE_DIALOG },
 

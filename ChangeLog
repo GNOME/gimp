@@ -1,5 +1,18 @@
 2006-07-07  Sven Neumann  <sven@gimp.org>
 
+	Use Ctrl-P as the default keyboard shortcut for Print (bug #302870):
+
+	* app/actions/dialogs-actions.c: removed Ctrl-P shortcut from
+	Palettes dialog.
+
+	* etc/Makefile.am
+	* etc/menurc: added a default menurc file that binds Ctrl-P to
+	file-print-gtk.
+
+	* app/core/gimp-user-install.c: install the default menurc.
+
+2006-07-07  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcoloreditor.c
 	* libgimpwidgets/gimpcolorselection.c: in the tooltip for the hex
 	entry, mention that it also accepts CSS color names.
