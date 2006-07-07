@@ -1,5 +1,12 @@
 2006-07-07  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL
+	* configure.in
+	* app/gui/gui.c: relaxed required version for gtk+ to 2.8.17 and
+	pango to 1.12.2 so that it compiles on Ubuntu (Dapper Drake).
+
+2006-07-07  Sven Neumann  <sven@gimp.org>
+
 	Use Ctrl-P as the default keyboard shortcut for Print (bug #302870):
 
 	* app/actions/dialogs-actions.c: removed Ctrl-P shortcut from
@@ -824,7 +831,7 @@ in <Layers>, <Channels>, <Vectors> and
 	since anything else breaks compilation of otherwise working code.
 	Fixes bug #344203.
 
-2006-06-16  Sven Neumann  <neumann@jpk.com>
+2006-06-16  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am
 	* themes/Default/images/stock-colormap-*.png
@@ -841,7 +848,7 @@ in <Layers>, <Channels>, <Vectors> and
 	* app/actions/dialogs-actions.c
 	* app/dialogs/dialogs.c: use the new stock-id.
 
-2006-06-16  Sven Neumann  <neumann@jpk.com>
+2006-06-16  Sven Neumann  <sven@gimp.org>
 
 	* app/pdb/gimppluginprocedure.c (gimp_plug_in_procedure_get_label):
 	* plug-ins/script-fu/script-fu-interface.c (script_fu_interface):
