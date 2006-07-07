@@ -2421,7 +2421,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   prefs_check_button_add (object, "transient-docks",
                           _("Toolbox and other docks are transient "
-                            "to the active display"),
+                            "to the active image window"),
                           GTK_BOX (vbox2));
 
   vbox2 = prefs_frame_new (_("Focus"),
