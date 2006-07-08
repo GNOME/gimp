@@ -2394,25 +2394,41 @@ getscales (GtkWidget *widget,
 
 
 static void
-color1_changed (GimpColorButton *button,
-                gpointer         data)
+color1_changed (GimpColorButton *button)
 {
   texture *t = currenttexture ();
+
   if (t)
     {
-      gimp_color_button_get_color (button, (GimpRGB *) &t->color1);
+      GimpRGB color;
+
+      gimp_color_button_get_color (button, &color);
+
+      t->color1.x = color.r;
+      t->color1.y = color.g;
+      t->color1.z = color.b;
+      t->color1.w = color.a;
+
       restartrender ();
     }
 }
 
 static void
-color2_changed (GimpColorButton *button,
-                gpointer         data)
+color2_changed (GimpColorButton *button)
 {
   texture *t = currenttexture ();
+
   if (t)
     {
-      gimp_color_button_get_color (button, (GimpRGB *) &t->color2);
+      GimpRGB color;
+
+      gimp_color_button_get_color (button, &color);
+
+      t->color2.x = color.r;
+      t->color2.y = color.g;
+      t->color2.z = color.b;
+      t->color2.w = color.a;
+
       restartrender ();
     }
 }
@@ -2422,19 +2438,23 @@ drawcolor1 (GtkWidget *w)
 {
   static GtkWidget *lastw = NULL;
 
+  GimpRGB  color;
   texture *t = currenttexture ();
 
   if (w)
     lastw = w;
   else
     w = lastw;
+
   if (!w)
     return;
   if (!t)
     return;
 
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (w),
-                               (const GimpRGB *) &t->color1);
+  gimp_rgba_set (&color,
+                 t->color1.x, t->color1.y, t->color1.z, t->color1.w);
+
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (w), &color);
 }
 
 static void
@@ -2442,19 +2462,23 @@ drawcolor2 (GtkWidget *w)
 {
   static GtkWidget *lastw = NULL;
 
+  GimpRGB  color;
   texture *t = currenttexture ();
 
   if (w)
     lastw = w;
   else
     w = lastw;
+
   if (!w)
     return;
   if (!t)
     return;
 
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (w),
-                               (const GimpRGB *) &t->color2);
+  gimp_rgba_set (&color,
+                 t->color2.x, t->color2.y, t->color2.z, t->color2.w);
+
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (w), &color);
 }
 
 static gboolean do_run = FALSE;

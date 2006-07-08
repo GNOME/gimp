@@ -1,3 +1,8 @@
+2006-07-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/spheredesigner.c: don't cast between GimpRGB and
+	GimpVector; it works but it's ugly and caused compiler warnings.
+
 2006-07-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/preferences-dialog.c (prefs_dialog_new): changed
