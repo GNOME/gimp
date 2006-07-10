@@ -1,3 +1,7 @@
+2006-07-10  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: fixed a bug in translation
+
 2006-05-06  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
 	* es.po: Updated Spanish translation.
@@ -33,13 +37,13 @@
 
 2005-11-12  Takeshi AIHANA <aihana@gnome.gr.jp>
 
-        * ja.po: Updated Japanese translation by
-                OKANO Takayoshi <kano@na.rim.or.jp>.
+	* ja.po: Updated Japanese translation by
+	OKANO Takayoshi <kano@na.rim.or.jp>.
 
 2005-10-30  Takeshi AIHANA <aihana@gnome.gr.jp>
 
-        * ja.po: Updated Japanese translation by
-                OKANO Takayoshi <kano@na.rim.or.jp>.
+	* ja.po: Updated Japanese translation by
+	OKANO Takayoshi <kano@na.rim.or.jp>.
 
 2005-09-20  Sven Neumann  <sven@gimp.org>
 
