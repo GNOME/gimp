@@ -1,3 +1,8 @@
+2006-07-10  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpdrawtool.c: documentation based on a patch from
+	Tom Lechner (bug #346959).
+
 2006-07-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/spheredesigner.c: don't cast between GimpRGB and
