@@ -1,5 +1,9 @@
 2006-07-10  Jakub Friedl  <jfriedl@suse.cz>
 
+	* cs.po: minor fix in Czech translation
+
+2006-07-10  Jakub Friedl  <jfriedl@suse.cz>
+
 	* cs.po: Updated Czech translation
 	and changed translation of "tab" to
 	the standard GNOME translation. No more
