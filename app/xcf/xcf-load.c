@@ -514,8 +514,9 @@ xcf_load_image_props (XcfInfo   *info,
               {
                 if (base + prop_size != info->cp)
                   {
-                    g_warning ("Mismatch in PROP_VECTORS size: skipping %d bytes.",
-                               base + prop_size - info->cp);
+                    g_printerr ("Mismatch in PROP_VECTORS size: "
+                                "skipping %d bytes.\n",
+                                base + prop_size - info->cp);
                     xcf_seek_pos (info, base + prop_size, NULL);
                   }
               }
@@ -531,18 +532,22 @@ xcf_load_image_props (XcfInfo   *info,
 
         default:
 #ifdef GIMP_UNSTABLE
-          g_printerr ("unexpected/unknown image property: %d (skipping)",
+          g_printerr ("unexpected/unknown image property: %d (skipping)\n",
                       prop_type);
 #endif
           {
+            gsize  size = prop_size;
             guint8 buf[16];
             guint  amount;
 
-            while (prop_size > 0)
+            while (size > 0)
               {
-                amount = MIN (16, prop_size);
+                if (feof (info->fp))
+                  return FALSE;
+
+                amount = MIN (16, size);
                 info->cp += xcf_read_int8 (info->fp, buf, amount);
-                prop_size -= MIN (16, amount);
+                size -= MIN (16, amount);
               }
           }
           break;
@@ -673,19 +678,23 @@ xcf_load_layer_props (XcfInfo   *info,
           break;
 
         default:
+#ifdef GIMP_UNSTABLE
+          g_printerr ("unexpected/unknown layer property: %d (skipping)\n",
+                      prop_type);
+#endif
           {
+            gsize  size = prop_size;
             guint8 buf[16];
             guint  amount;
 
-#ifdef GIMP_UNSTABLE
-            g_printerr ("unexpected/unknown layer property: %d (skipping)",
-                        prop_type);
-#endif
-            while (prop_size > 0)
+            while (size > 0)
               {
-                amount = MIN (16, prop_size);
+                if (feof (info->fp))
+                  return FALSE;
+
+                amount = MIN (16, size);
                 info->cp += xcf_read_int8 (info->fp, buf, amount);
-                prop_size -= MIN (16, amount);
+                size -= MIN (16, amount);
               }
           }
           break;
@@ -807,19 +816,22 @@ xcf_load_channel_props (XcfInfo      *info,
 
         default:
 #ifdef GIMP_UNSTABLE
-          g_printerr ("unexpected/unknown channel property: %d (skipping)",
+          g_printerr ("unexpected/unknown channel property: %d (skipping)\n",
                       prop_type);
 #endif
-
           {
+            gsize  size = prop_size;
             guint8 buf[16];
-            guint amount;
+            guint  amount;
 
-            while (prop_size > 0)
+            while (size > 0)
               {
-                amount = MIN (16, prop_size);
+                if (feof (info->fp))
+                  return FALSE;
+
+                amount = MIN (16, size);
                 info->cp += xcf_read_int8 (info->fp, buf, amount);
-                prop_size -= MIN (16, amount);
+                size -= MIN (16, amount);
               }
           }
           break;

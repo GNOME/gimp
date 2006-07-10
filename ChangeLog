@@ -1,3 +1,14 @@
+2006-07-10  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version to 2.2.13, interface_age 13.
+
+	Merged from HEAD branch:
+
+        * app/xcf/xcf-load.c: use a signed variable when attempting to
+        skip over unknown properties and check for EOF.  Fixes bug #345802.
+
+	* app/xcf/xcf-read.c: cleanup, nothing really changed
+
 2006-07-06  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.2.12 release.
