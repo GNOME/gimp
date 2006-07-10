@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-29 10:52+0200\n"
-"PO-Revision-Date: 2006-06-29 10:53+0200\n"
+"POT-Creation-Date: 2006-07-10 11:37+0200\n"
+"PO-Revision-Date: 2006-07-10 12:12+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1038,7 +1038,7 @@ msgstr "Menu Dialogy"
 
 #: ../app/actions/dockable-actions.c:53
 msgid "_Add Tab"
-msgstr "_Přidat odrážku"
+msgstr "_Přidat kartu"
 
 #: ../app/actions/dockable-actions.c:54
 msgid "_Preview Size"
@@ -1046,15 +1046,15 @@ msgstr "Velikost _náhledu"
 
 #: ../app/actions/dockable-actions.c:55
 msgid "_Tab Style"
-msgstr "Styl _odrážky"
+msgstr "Styl _karty"
 
 #: ../app/actions/dockable-actions.c:58
 msgid "_Close Tab"
-msgstr "_Zavřít odrážku"
+msgstr "_Zavřít kartu"
 
 #: ../app/actions/dockable-actions.c:63
 msgid "_Detach Tab"
-msgstr "_Odpojit odrážku"
+msgstr "_Odpojit kartu"
 
 #: ../app/actions/dockable-actions.c:81
 msgid "_Tiny"
@@ -3070,7 +3070,7 @@ msgid "Toggle _Quick Mask"
 msgstr "_Přepnout Rychlou masku"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:973
+#: ../app/display/gimpdisplayshell.c:976
 msgid "Toggle Quick Mask"
 msgstr "Přepnout Rychlou masku"
 
@@ -3248,7 +3248,7 @@ msgstr "_Prolnout okraje"
 
 #: ../app/actions/select-commands.c:289 ../app/actions/select-commands.c:315
 #: ../app/actions/vectors-commands.c:363 ../app/actions/vectors-commands.c:390
-#: ../app/dialogs/stroke-dialog.c:278
+#: ../app/dialogs/stroke-dialog.c:279
 msgid "There is no active layer or channel to stroke to."
 msgstr "Není žádná aktivní vrstva nebo kanál, kam vykreslovat."
 
@@ -5198,7 +5198,7 @@ msgstr "Popředí do pozadí (HSV odstín po směru hodinových ručiček)"
 msgid "FG to Transparent"
 msgstr "Popředí do průhlednosti"
 
-#: ../app/core/gimp-user-install.c:193
+#: ../app/core/gimp-user-install.c:194
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
@@ -5207,7 +5207,7 @@ msgstr ""
 "Zdá se, že jste dříve používali GIMP %s. GIMP nyní převede vaše uživatelská "
 "nastavení do '%s'."
 
-#: ../app/core/gimp-user-install.c:198
+#: ../app/core/gimp-user-install.c:199
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -5216,17 +5216,17 @@ msgstr ""
 "Zdá se, že používáte GIMP poprvé. GIMP nyní vytvoří adresář'%s' a zkopíruje "
 "do něj několik souborů."
 
-#: ../app/core/gimp-user-install.c:300
+#: ../app/core/gimp-user-install.c:301
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Kopíruji soubor '%s' z '%s'..."
 
-#: ../app/core/gimp-user-install.c:315
+#: ../app/core/gimp-user-install.c:316
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Vytvářím adresář '%s'..."
 
-#: ../app/core/gimp-user-install.c:326
+#: ../app/core/gimp-user-install.c:327
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Nelze vytvořit adresář '%s': %s"
@@ -7359,8 +7359,8 @@ msgid "Hint for other _docks:"
 msgstr "Nápověda pro ostatní _doky:"
 
 #: ../app/dialogs/preferences-dialog.c:2423
-msgid "Toolbox and other docks are transient to the active display"
-msgstr "Nástroje a ostatní doky jsou tranzientní k aktivnímu displeji"
+msgid "Toolbox and other docks are transient to the active image window"
+msgstr "Nástroje a ostatní doky jsou tranzientní k aktivnímu oknu obrázku"
 
 #: ../app/dialogs/preferences-dialog.c:2427
 msgid "Focus"
@@ -7621,7 +7621,7 @@ msgstr ""
 msgid "Choose Stroke Style"
 msgstr "Vyberte styl vykreslení"
 
-#: ../app/dialogs/stroke-dialog.c:212
+#: ../app/dialogs/stroke-dialog.c:213
 msgid "Paint tool:"
 msgstr "Kreslicí nástroj:"
 
@@ -7743,7 +7743,7 @@ msgstr "Barva tmavé šachovnice"
 msgid "Custom color"
 msgstr "Vlastní barva"
 
-#: ../app/display/gimpdisplayshell.c:946
+#: ../app/display/gimpdisplayshell.c:949
 msgid "Zoom image when window size changes"
 msgstr "Změnit přiblížení obrázku při změně velikosti okna"
 
@@ -7911,7 +7911,7 @@ msgstr "Zásuvný modul nemohl uložit obrázek"
 msgid "Invalid character sequence in URI"
 msgstr "Neplatná posloupnost znaků v URI"
 
-#: ../app/gui/splash.c:113
+#: ../app/gui/splash.c:114
 msgid "GIMP Startup"
 msgstr "Spouštím GIMP"
 
@@ -10095,7 +10095,7 @@ msgid "Percentage of width of brush"
 msgstr "Procenta šířky stopy"
 
 #: ../app/widgets/gimpbufferview.c:135 ../app/widgets/gimpbufferview.c:216
-#: ../app/widgets/gimpeditor.c:723
+#: ../app/widgets/gimpeditor.c:724
 msgid "(None)"
 msgstr "(Nic)"
 
@@ -10155,8 +10155,12 @@ msgid "No filter selected"
 msgstr "Není vybran žádný filtr"
 
 #: ../app/widgets/gimpcoloreditor.c:243
-msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Šestnáctkový zápis barvy, jak se používá v HTML a CSS"
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr ""
+"Šestnáctkový zápis barvy, jak se používá v HTML a CSS. Lze rovněž "
+"použít jména barev z CSS."
 
 #: ../app/widgets/gimpcolorframe.c:415
 msgid "Index:"
@@ -10528,15 +10532,15 @@ msgstr "Chcete jej nahradit obrázkem, který ukládáte?"
 
 #: ../app/widgets/gimpdock.c:287
 msgid "Close all Tabs?"
-msgstr "Zavřít všechny odrážky?"
+msgstr "Zavřít všechny karty?"
 
 #: ../app/widgets/gimpdock.c:293
 msgid "Close all Tabs"
-msgstr "Zavřít všechny odrážky"
+msgstr "Zavřít všechny karty"
 
 #: ../app/widgets/gimpdock.c:303
 msgid "Close all tabs?"
-msgstr "Zavřít všechny odrážky?"
+msgstr "Zavřít všechny karty?"
 
 #: ../app/widgets/gimpdock.c:306
 #, c-format
@@ -10544,13 +10548,13 @@ msgid "This window has %d tab open. Closing the window will also close all its t
 msgid_plural ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
-msgstr[0] "Toto okno má otevřeno %d odrážku. Zavření okna zavře všechny jeho odrážky."
-msgstr[1] "Toto okno má otevřeno %d odrážky. Zavření okna zavře všechny jeho odrážky."
-msgstr[2] "Toto okno má otevřeno %d odrážek. Zavření okna zavře všechny jeho odrážky."
+msgstr[0] "Toto okno má otevřeno %d kartu. Zavření okna zavře všechny jeho karty."
+msgstr[1] "Toto okno má otevřeno %d karty. Zavření okna zavře všechny jeho karty."
+msgstr[2] "Toto okno má otevřeno %d karet. Zavření okna zavře všechny jeho karty."
 
 #: ../app/widgets/gimpdockable.c:166
 msgid "Configure this tab"
-msgstr "Nastavit tuto odrážku"
+msgstr "Nastavit tuto kartu"
 
 #: ../app/widgets/gimpdockseparator.c:44
 msgid "You can drop dockable dialogs here."
@@ -10903,35 +10907,35 @@ msgstr "%d × %d ppi"
 msgid "%d ppi"
 msgstr "%d ppi"
 
-#: ../app/widgets/gimpstrokeeditor.c:178
+#: ../app/widgets/gimpstrokeeditor.c:180
 msgid "Line width:"
 msgstr "Šířka čáry:"
 
-#: ../app/widgets/gimpstrokeeditor.c:189
+#: ../app/widgets/gimpstrokeeditor.c:191
 msgid "_Line Style"
 msgstr "_Styl čáry"
 
-#: ../app/widgets/gimpstrokeeditor.c:208
+#: ../app/widgets/gimpstrokeeditor.c:210
 msgid "_Cap style:"
 msgstr "Styl za_končení:"
 
-#: ../app/widgets/gimpstrokeeditor.c:214
+#: ../app/widgets/gimpstrokeeditor.c:216
 msgid "_Join style:"
 msgstr "_Styl spojení:"
 
-#: ../app/widgets/gimpstrokeeditor.c:219
+#: ../app/widgets/gimpstrokeeditor.c:221
 msgid "_Miter limit:"
 msgstr "Limit _ostrosti:"
 
-#: ../app/widgets/gimpstrokeeditor.c:226
+#: ../app/widgets/gimpstrokeeditor.c:228
 msgid "Dash pattern:"
 msgstr "Vzorek čárkování:"
 
-#: ../app/widgets/gimpstrokeeditor.c:268
+#: ../app/widgets/gimpstrokeeditor.c:270
 msgid "Dash _preset:"
 msgstr "_Přednastavení čárkování:"
 
-#: ../app/widgets/gimpstrokeeditor.c:289
+#: ../app/widgets/gimpstrokeeditor.c:291
 msgid "_Antialiasing"
 msgstr "_Vyhlazování"
 
