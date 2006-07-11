@@ -45,6 +45,7 @@
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparasitelist.h"
+#include "core/gimpprogress.h"
 #include "core/gimpselection.h"
 #include "core/gimptemplate.h"
 #include "core/gimpunit.h"
@@ -64,6 +65,7 @@
 #include "xcf-seek.h"
 
 #include "gimp-intl.h"
+
 
 /* #define GIMP_XCF_PATH_DEBUG */
 
@@ -115,6 +117,13 @@ static gboolean        xcf_swap_func          (gint          fd,
 #endif
 
 
+#define xcf_progress_update(info) G_STMT_START  \
+  {                                             \
+    if (info->progress)                         \
+      gimp_progress_pulse (info->progress);     \
+  } G_STMT_END
+
+
 GimpImage *
 xcf_load_image (Gimp    *gimp,
                 XcfInfo *info)
@@ -135,12 +144,11 @@ xcf_load_image (Gimp    *gimp,
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &image_type, 1);
 
-  image = gimp_create_image (gimp,
-                              width, height,
-                              image_type,
-                              FALSE);
+  image = gimp_create_image (gimp, width, height, image_type, FALSE);
 
   gimp_image_undo_disable (image);
+
+  xcf_progress_update (info);
 
   /* read the image properties */
   if (! xcf_load_image_props (info, image))
@@ -161,6 +169,8 @@ xcf_load_image (Gimp    *gimp,
           gimp_image_set_grid (GIMP_IMAGE (image), grid, FALSE);
         }
     }
+
+  xcf_progress_update (info);
 
   while (TRUE)
     {
@@ -188,6 +198,8 @@ xcf_load_image (Gimp    *gimp,
         goto error;
 
       num_successful_elements++;
+
+      xcf_progress_update (info);
 
       /* add the layer to the image if its not the floating selection */
       if (layer != info->floating_sel)
@@ -227,6 +239,8 @@ xcf_load_image (Gimp    *gimp,
         goto error;
 
       num_successful_elements++;
+
+      xcf_progress_update (info);
 
       /* add the channel to the image if its not the selection */
       if (channel != image->selection_mask)
@@ -900,6 +914,8 @@ xcf_load_layer (XcfInfo   *info,
                               &text_layer_flags))
     goto error;
 
+  xcf_progress_update (info);
+
   /* call the evil text layer hack that might change our layer pointer */
   active   = (info->active_layer == layer);
   floating = (info->floating_sel == layer);
@@ -926,6 +942,8 @@ xcf_load_layer (XcfInfo   *info,
   if (! xcf_load_hierarchy (info, GIMP_DRAWABLE (layer)->tiles))
     goto error;
 
+  xcf_progress_update (info);
+
   /* read in the layer mask */
   if (layer_mask_offset != 0)
     {
@@ -935,6 +953,8 @@ xcf_load_layer (XcfInfo   *info,
       layer_mask = xcf_load_layer_mask (info, image);
       if (! layer_mask)
         goto error;
+
+      xcf_progress_update (info);
 
       layer_mask->apply_mask = apply_mask;
       layer_mask->edit_mask  = edit_mask;
@@ -986,6 +1006,8 @@ xcf_load_channel (XcfInfo   *info,
   if (!xcf_load_channel_props (info, image, &channel))
     goto error;
 
+  xcf_progress_update (info);
+
   /* read the hierarchy and layer mask offsets */
   info->cp += xcf_read_int32 (info->fp, &hierarchy_offset, 1);
 
@@ -995,6 +1017,8 @@ xcf_load_channel (XcfInfo   *info,
 
   if (!xcf_load_hierarchy (info, GIMP_DRAWABLE (channel)->tiles))
     goto error;
+
+  xcf_progress_update (info);
 
   if (is_fs_drawable)
     info->floating_sel_drawable = GIMP_DRAWABLE (channel);
@@ -1040,6 +1064,8 @@ xcf_load_layer_mask (XcfInfo   *info,
   if (!xcf_load_channel_props (info, image, &channel))
     goto error;
 
+  xcf_progress_update (info);
+
   /* read the hierarchy and layer mask offsets */
   info->cp += xcf_read_int32 (info->fp, &hierarchy_offset, 1);
 
@@ -1049,6 +1075,8 @@ xcf_load_layer_mask (XcfInfo   *info,
 
   if (!xcf_load_hierarchy (info, GIMP_DRAWABLE (layer_mask)->tiles))
     goto error;
+
+  xcf_progress_update (info);
 
   /* attach the floating selection... */
   if (is_fs_drawable)

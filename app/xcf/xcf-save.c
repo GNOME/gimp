@@ -44,6 +44,7 @@
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
 #include "core/gimpparasitelist.h"
+#include "core/gimpprogress.h"
 #include "core/gimpunit.h"
 
 #include "text/gimptextlayer.h"
@@ -215,6 +216,14 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
     }                                                         \
   } G_STMT_END
 
+#define xcf_progress_update(info) G_STMT_START  \
+  {                                             \
+    progress++;                                 \
+    if (info->progress)                         \
+      gimp_progress_set_value (info->progress,  \
+                               (gdouble) progress / (gdouble) max_progress); \
+  } G_STMT_END
+
 
 void
 xcf_save_choose_format (XcfInfo   *info,
@@ -263,10 +272,12 @@ xcf_save_image (XcfInfo   *info,
   guint32      offset;
   guint        nlayers;
   guint        nchannels;
+  guint        progress = 0;
+  guint        max_progress;
   GList       *list;
   gboolean     have_selection;
   gint         t1, t2, t3, t4;
-  gchar        version_tag[14];
+  gchar        version_tag[16];
   GError      *error = NULL;
 
   floating_layer = gimp_image_floating_sel (image);
@@ -282,6 +293,7 @@ xcf_save_image (XcfInfo   *info,
     {
       strcpy (version_tag, "gimp xcf file");
     }
+
   xcf_write_int8_print_error  (info, (guint8 *) version_tag, 14);
 
   /* write out the width, height and image type information for the image */
@@ -293,6 +305,8 @@ xcf_save_image (XcfInfo   *info,
   nlayers   = (guint) gimp_container_num_children (image->layers);
   nchannels = (guint) gimp_container_num_children (image->channels);
 
+  max_progress = 1 + nlayers + nchannels;
+
   /* check and see if we have to save out the selection */
   have_selection = gimp_channel_bounds (gimp_image_get_mask (image),
                                         &t1, &t2, &t3, &t4);
@@ -303,6 +317,8 @@ xcf_save_image (XcfInfo   *info,
    */
 
   xcf_print_error (xcf_save_image_props (info, image, &error));
+
+  xcf_progress_update (info);
 
   /* save the current file position as it is the start of where
    *  we place the layer offset information.
@@ -318,7 +334,7 @@ xcf_save_image (XcfInfo   *info,
        list;
        list = g_list_next (list))
     {
-      layer = (GimpLayer *) list->data;
+      layer = list->data;
 
       /* save the start offset of where we are writing
        *  out the next layer.
@@ -327,6 +343,8 @@ xcf_save_image (XcfInfo   *info,
 
       /* write out the layer. */
       xcf_print_error (xcf_save_layer (info, image, layer, &error));
+
+      xcf_progress_update (info);
 
       /* seek back to where we are to write out the next
        *  layer offset and write it out.
@@ -360,7 +378,7 @@ xcf_save_image (XcfInfo   *info,
     {
       if (list)
         {
-          channel = (GimpChannel *) list->data;
+          channel = list->data;
 
           list = g_list_next (list);
         }
@@ -377,6 +395,8 @@ xcf_save_image (XcfInfo   *info,
 
       /* write out the layer. */
       xcf_print_error (xcf_save_channel (info, image, channel, &error));
+
+      xcf_progress_update (info);
 
       /* seek back to where we are to write out the next
        *  channel offset and write it out.
@@ -628,7 +648,7 @@ xcf_save_prop (XcfInfo   *info,
         guchar  *colors;
 
         ncolors = va_arg (args, guint32);
-        colors = va_arg (args, guchar*);
+        colors = va_arg (args, guchar *);
         size = 4 + ncolors * 3;
 
         xcf_write_prop_type_check_error (info, prop_type);
@@ -1392,17 +1412,10 @@ xcf_save_tile_rle (XcfInfo  *info,
                    guchar   *rlebuf,
                    GError  **error)
 {
-  guchar *data, *t;
-  unsigned int last;
-  gint state;
-  gint length;
-  gint count;
-  gint size;
-  gint bpp;
-  gint i, j;
-  gint len = 0;
-
   GError *tmp_error = NULL;
+  gint    len       = 0;
+  gint    bpp;
+  gint    i, j;
 
   tile_lock (tile);
 
@@ -1410,13 +1423,13 @@ xcf_save_tile_rle (XcfInfo  *info,
 
   for (i = 0; i < bpp; i++)
     {
-      data = (guchar*) tile_data_pointer (tile, 0, 0) + i;
+      const guchar *data = tile_data_pointer (tile, 0, 0) + i;
 
-      state = 0;
-      length = 0;
-      count = 0;
-      size = tile_ewidth(tile) * tile_eheight(tile);
-      last = -1;
+      gint  state  = 0;
+      gint  length = 0;
+      gint  count  = 0;
+      gint  size   = tile_ewidth (tile) * tile_eheight (tile);
+      guint last   = -1;
 
       while (size > 0)
         {
@@ -1431,6 +1444,7 @@ xcf_save_tile_rle (XcfInfo  *info,
                   ((length > 1) && (last != *data)))
                 {
                   count += length;
+
                   if (length >= 128)
                     {
                       rlebuf[len++] = 127;
@@ -1443,11 +1457,14 @@ xcf_save_tile_rle (XcfInfo  *info,
                       rlebuf[len++] = length - 1;
                       rlebuf[len++] = last;
                     }
+
                   size -= length;
                   length = 0;
                 }
               else if ((length == 1) && (last != *data))
-                state = 1;
+                {
+                  state = 1;
+                }
               break;
 
             case 1:
@@ -1459,6 +1476,8 @@ xcf_save_tile_rle (XcfInfo  *info,
                   ((length > 0) && (last == *data) &&
                    ((size - length) == 1 || last == data[bpp])))
                 {
+                  const guchar *t;
+
                   count += length;
                   state = 0;
 
@@ -1474,6 +1493,7 @@ xcf_save_tile_rle (XcfInfo  *info,
                     }
 
                   t = data - length * bpp;
+
                   for (j = 0; j < length; j++)
                     {
                       rlebuf[len++] = *t;
@@ -1486,16 +1506,18 @@ xcf_save_tile_rle (XcfInfo  *info,
               break;
             }
 
-          if (size > 0) {
-            length += 1;
-            last = *data;
-            data += bpp;
-          }
+          if (size > 0)
+            {
+              length += 1;
+              last = *data;
+              data += bpp;
+            }
         }
 
       if (count != (tile_ewidth (tile) * tile_eheight (tile)))
         g_message ("xcf: uh oh! xcf rle tile saving error: %d", count);
     }
+
   xcf_write_int8_check_error (info, rlebuf, len);
   tile_release (tile, FALSE);
 

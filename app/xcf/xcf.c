@@ -32,6 +32,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimpprogress.h"
 
 #include "pdb/gimppluginprocedure.h"
 
@@ -254,6 +255,18 @@ xcf_load_invoker (GimpProcedure     *procedure,
       info.swap_num              = 0;
       info.ref_count             = NULL;
       info.compression           = COMPRESS_NONE;
+      info.progress              = progress;
+
+      if (progress)
+        {
+          gchar *name = g_filename_display_name (filename);
+          gchar *msg  = g_strdup_printf (_("Opening '%s'"), name);
+
+          gimp_progress_start (progress, msg, FALSE);
+
+          g_free (msg);
+          g_free (name);
+        }
 
       success = TRUE;
 
@@ -278,7 +291,8 @@ xcf_load_invoker (GimpProcedure     *procedure,
 
       if (success)
         {
-          if (info.file_version < G_N_ELEMENTS (xcf_loaders))
+          if (info.file_version >= 0 &&
+              info.file_version < G_N_ELEMENTS (xcf_loaders))
             {
               image = (*(xcf_loaders[info.file_version])) (gimp, &info);
 
@@ -294,6 +308,9 @@ xcf_load_invoker (GimpProcedure     *procedure,
         }
 
       fclose (info.fp);
+
+      if (progress)
+        gimp_progress_end (progress);
     }
   else
     {
@@ -343,6 +360,18 @@ xcf_save_invoker (GimpProcedure     *procedure,
       info.swap_num              = 0;
       info.ref_count             = NULL;
       info.compression           = COMPRESS_RLE;
+      info.progress              = progress;
+
+      if (progress)
+        {
+          gchar *name = g_filename_display_name (filename);
+          gchar *msg  = g_strdup_printf (_("Saving '%s'"), name);
+
+          gimp_progress_start (progress, msg, FALSE);
+
+          g_free (msg);
+          g_free (name);
+        }
 
       xcf_save_choose_format (&info, image);
 
@@ -354,6 +383,9 @@ xcf_save_invoker (GimpProcedure     *procedure,
 
           success = FALSE;
         }
+
+      if (progress)
+        gimp_progress_end (progress);
     }
   else
     {

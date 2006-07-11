@@ -88,6 +88,7 @@ struct _XcfInfo
   gint               *ref_count;
   XcfCompressionType  compression;
   gint                file_version;
+  GimpProgress       *progress;
 };
 
 

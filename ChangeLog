@@ -1,5 +1,12 @@
 2006-07-11  Sven Neumann  <sven@gimp.org>
 
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-private.h
+	* app/xcf/xcf-save.c
+	* app/xcf/xcf.c: do progress updates when loading/saving XCF files. 
+
+2006-07-11  Sven Neumann  <sven@gimp.org>
+
 	* app/xcf/xcf.c: minor cleanup.
 
 	* app/core/gimpimage-merge.[ch]: made gimp_image_merge_layers() a
