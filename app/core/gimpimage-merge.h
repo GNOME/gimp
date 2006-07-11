@@ -30,11 +30,6 @@ GimpLayer   * gimp_image_merge_down            (GimpImage     *image,
                                                 GimpMergeType  merge_type);
 GimpLayer   * gimp_image_flatten               (GimpImage     *image,
                                                 GimpContext   *context);
-GimpLayer   * gimp_image_merge_layers          (GimpImage     *image,
-                                                GSList        *merge_list,
-                                                GimpContext   *context,
-                                                GimpMergeType  merge_type,
-                                                const gchar   *undo_desc);
 GimpVectors * gimp_image_merge_visible_vectors (GimpImage     *image);
 
 

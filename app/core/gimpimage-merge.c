@@ -50,6 +50,12 @@
 
 #include "gimp-intl.h"
 
+static GimpLayer * gimp_image_merge_layers (GimpImage     *image,
+                                            GSList        *merge_list,
+                                            GimpContext   *context,
+                                            GimpMergeType  merge_type,
+                                            const gchar   *undo_desc);
+
 
 /*  public functions  */
 
@@ -213,7 +219,83 @@ gimp_image_merge_down (GimpImage     *image,
   return layer;
 }
 
-GimpLayer *
+/* merging vectors */
+
+GimpVectors *
+gimp_image_merge_visible_vectors (GimpImage *image)
+{
+  GList       *list           = NULL;
+  GSList      *merge_list     = NULL;
+  GSList      *cur_item       = NULL;
+  GimpVectors *vectors        = NULL;
+  GimpVectors *target_vectors = NULL;
+  gchar       *name           = NULL;
+  gint         pos            = 0;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  for (list = GIMP_LIST (image->vectors)->list;
+       list;
+       list = g_list_next (list))
+    {
+      vectors = list->data;
+
+      if (gimp_item_get_visible (GIMP_ITEM (vectors)))
+        merge_list = g_slist_append (merge_list, vectors);
+    }
+
+  if (merge_list && merge_list->next)
+    {
+      gimp_set_busy (image->gimp);
+
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE,
+                                   _("Merge Visible Paths"));
+
+      cur_item = merge_list;
+      vectors = GIMP_VECTORS (cur_item->data);
+
+      name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
+      target_vectors = GIMP_VECTORS (
+                            gimp_item_duplicate (GIMP_ITEM (vectors),
+                                                 GIMP_TYPE_VECTORS,
+                                                 FALSE));
+      pos = gimp_image_get_vectors_index (image, vectors);
+      gimp_image_remove_vectors (image, vectors);
+      cur_item = cur_item->next;
+
+      while (cur_item)
+        {
+          vectors = GIMP_VECTORS (cur_item->data);
+          gimp_vectors_add_strokes (vectors, target_vectors);
+          gimp_image_remove_vectors (image, vectors);
+
+          cur_item = g_slist_next (cur_item);
+        }
+
+      gimp_object_take_name (GIMP_OBJECT (target_vectors), name);
+
+      g_slist_free (merge_list);
+
+      gimp_image_add_vectors (image, target_vectors, pos);
+      gimp_unset_busy (image->gimp);
+
+      gimp_image_undo_group_end (image);
+
+      return target_vectors;
+    }
+  else
+    {
+      g_message (_("Not enough visible paths for a merge. "
+                   "There must be at least two."));
+
+      return NULL;
+    }
+}
+
+
+/*  private functions  */
+
+static GimpLayer *
 gimp_image_merge_layers (GimpImage     *image,
                          GSList        *merge_list,
                          GimpContext   *context,
@@ -447,10 +529,12 @@ gimp_image_merge_layers (GimpImage     *image,
 
       if (layer->mask && layer->mask->apply_mask)
         {
-          pixel_region_init (&maskPR,
-                             gimp_drawable_get_tiles (GIMP_DRAWABLE (layer->mask)),
-                             (x3 - off_x), (y3 - off_y),
-                             (x4 - x3), (y4 - y3),
+          TileManager *tiles;
+
+          tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (layer->mask));
+
+          pixel_region_init (&maskPR, tiles,
+                             (x3 - off_x), (y3 - off_y), (x4 - x3), (y4 - y3),
                              FALSE);
           mask = &maskPR;
         }
@@ -518,77 +602,3 @@ gimp_image_merge_layers (GimpImage     *image,
 
   return merge_layer;
 }
-
-/* merging vectors */
-
-GimpVectors *
-gimp_image_merge_visible_vectors (GimpImage *image)
-{
-  GList       *list           = NULL;
-  GSList      *merge_list     = NULL;
-  GSList      *cur_item       = NULL;
-  GimpVectors *vectors        = NULL;
-  GimpVectors *target_vectors = NULL;
-  gchar       *name           = NULL;
-  gint         pos            = 0;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  for (list = GIMP_LIST (image->vectors)->list;
-       list;
-       list = g_list_next (list))
-    {
-      vectors = list->data;
-
-      if (gimp_item_get_visible (GIMP_ITEM (vectors)))
-        merge_list = g_slist_append (merge_list, vectors);
-    }
-
-  if (merge_list && merge_list->next)
-    {
-      gimp_set_busy (image->gimp);
-
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE,
-                                   _("Merge Visible Paths"));
-
-      cur_item = merge_list;
-      vectors = GIMP_VECTORS (cur_item->data);
-
-      name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
-      target_vectors = GIMP_VECTORS (
-                            gimp_item_duplicate (GIMP_ITEM (vectors),
-                                                 GIMP_TYPE_VECTORS,
-                                                 FALSE));
-      pos = gimp_image_get_vectors_index (image, vectors);
-      gimp_image_remove_vectors (image, vectors);
-      cur_item = cur_item->next;
-
-      while (cur_item)
-        {
-          vectors = GIMP_VECTORS (cur_item->data);
-          gimp_vectors_add_strokes (vectors, target_vectors);
-          gimp_image_remove_vectors (image, vectors);
-
-          cur_item = g_slist_next (cur_item);
-        }
-
-      gimp_object_take_name (GIMP_OBJECT (target_vectors), name);
-
-      g_slist_free (merge_list);
-
-      gimp_image_add_vectors (image, target_vectors, pos);
-      gimp_unset_busy (image->gimp);
-
-      gimp_image_undo_group_end (image);
-
-      return target_vectors;
-    }
-  else
-    {
-      g_message (_("Not enough visible paths for a merge. "
-                   "There must be at least two."));
-
-      return NULL;
-    }
-}
-
