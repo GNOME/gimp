@@ -1,5 +1,9 @@
 2006-07-11  Sven Neumann  <sven@gimp.org>
 
+	* app/xcf/xcf-write.[ch]: added const qualifiers.
+
+2006-07-11  Sven Neumann  <sven@gimp.org>
+
 	* app/xcf/xcf-load.c
 	* app/xcf/xcf-private.h
 	* app/xcf/xcf-save.c

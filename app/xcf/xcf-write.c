@@ -30,21 +30,22 @@
 #include "gimp-intl.h"
 
 guint
-xcf_write_int32 (FILE     *fp,
-                 guint32  *data,
-                 gint      count,
-                 GError  **error)
+xcf_write_int32 (FILE           *fp,
+                 const guint32  *data,
+                 gint            count,
+                 GError        **error)
 {
   GError  *tmp_error = NULL;
-  guint32  tmp;
   gint     i;
 
   if (count > 0)
     {
       for (i = 0; i < count; i++)
         {
-          tmp = g_htonl (data[i]);
-          xcf_write_int8 (fp, (guint8*) &tmp, 4, &tmp_error);
+          guint32  tmp = g_htonl (data[i]);
+
+          xcf_write_int8 (fp, (const guint8 *) &tmp, 4, &tmp_error);
+
           if (tmp_error)
             {
               g_propagate_error (error, tmp_error);
@@ -58,27 +59,27 @@ xcf_write_int32 (FILE     *fp,
 }
 
 guint
-xcf_write_float (FILE     *fp,
-                 gfloat   *data,
-                 gint      count,
-                 GError  **error)
+xcf_write_float (FILE           *fp,
+                 const gfloat   *data,
+                 gint            count,
+                 GError        **error)
 {
-  return xcf_write_int32 (fp, (guint32 *)((void *)data), count, error);
+  return xcf_write_int32 (fp,
+                          (const guint32 *)((gconstpointer) data), count,
+                          error);
 }
 
 guint
-xcf_write_int8 (FILE     *fp,
-                guint8   *data,
-                gint      count,
-                GError  **error)
+xcf_write_int8 (FILE           *fp,
+                const guint8   *data,
+                gint            count,
+                GError        **error)
 {
-  guint total;
-  gint  bytes;
+  guint total = count;
 
-  total = count;
   while (count > 0)
     {
-      bytes = fwrite ((gchar*) data, sizeof (gchar), count, fp);
+      gint bytes = fwrite ((const gchar*) data, sizeof (gchar), count, fp);
 
       if (bytes == 0)
         {
@@ -102,19 +103,20 @@ xcf_write_string (FILE     *fp,
                   GError  **error)
 {
   GError  *tmp_error = NULL;
-  guint32  tmp;
-  guint    total;
+  guint    total     = 0;
   gint     i;
 
-  total = 0;
   for (i = 0; i < count; i++)
     {
+      guint32 tmp;
+
       if (data[i])
         tmp = strlen (data[i]) + 1;
       else
         tmp = 0;
 
       xcf_write_int32 (fp, &tmp, 1, &tmp_error);
+
       if (tmp_error)
         {
           g_propagate_error (error, tmp_error);
@@ -122,7 +124,8 @@ xcf_write_string (FILE     *fp,
         }
 
       if (tmp > 0)
-        xcf_write_int8 (fp, (guint8*) data[i], tmp, &tmp_error);
+        xcf_write_int8 (fp, (const guint8 *) data[i], tmp, &tmp_error);
+
       if (tmp_error)
         {
           g_propagate_error (error, tmp_error);

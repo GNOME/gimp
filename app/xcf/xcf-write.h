@@ -20,22 +20,22 @@
 #define __XCF_WRITE_H__
 
 
-guint   xcf_write_int32  (FILE     *fp,
-                          guint32  *data,
-                          gint      count,
-                          GError  **error);
-guint   xcf_write_float  (FILE     *fp,
-                          gfloat   *data,
-                          gint      count,
-                          GError  **error);
-guint   xcf_write_int8   (FILE     *fp,
-                          guint8   *data,
-                          gint      count,
-                          GError  **error);
-guint   xcf_write_string (FILE     *fp,
-                          gchar   **data,
-                          gint      count,
-                          GError  **error);
+guint   xcf_write_int32  (FILE           *fp,
+                          const guint32  *data,
+                          gint            count,
+                          GError        **error);
+guint   xcf_write_float  (FILE           *fp,
+                          const gfloat   *data,
+                          gint            count,
+                          GError        **error);
+guint   xcf_write_int8   (FILE           *fp,
+                          const guint8   *data,
+                          gint            count,
+                          GError        **error);
+guint   xcf_write_string (FILE           *fp,
+                          gchar         **data,
+                          gint            count,
+                          GError        **error);
 
 
 #endif  /* __XCF_WRITE_H__ */
