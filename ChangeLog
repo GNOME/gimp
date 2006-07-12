@@ -1,5 +1,13 @@
 2006-07-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/bmp/bmp.[ch]
+	* plug-ins/bmp/bmpread.c
+	* plug-ins/bmp/bmpwrite.c: applied a slightly modified patch from
+	Piotr Filiciak that adds support for 16/32 bit bitmaps and support
+	for alpha channel (bug #342355).
+
+2006-07-12  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/file-commands.c
 	* app/pdb/gimppluginprocedure.c: formatting.
 

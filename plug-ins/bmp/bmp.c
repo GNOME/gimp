@@ -1,5 +1,5 @@
 /* bmp.c                                          */
-/* Version 0.51	                                  */
+/* Version 0.52                                   */
 /* This is a File input and output filter for the */
 /* Gimp. It loads and saves images in windows(TM) */
 /* bitmap format.                                 */
@@ -12,7 +12,7 @@
 
 /* Changes:   28.11.1997 Noninteractive operation */
 /*            16.03.1998 Endian-independent!!     */
-/*	      21.03.1998 Little Bug-fix		  */
+/*            21.03.1998 Little Bug-fix           */
 /*            06.04.1998 Bugfix in Padding        */
 /*            11.04.1998 Arch. cleanup (-Wall)    */
 /*                       Parses gtkrc             */
@@ -27,6 +27,10 @@
 /*            06.05.2000 Overhaul for 16&24-bit   */
 /*                       plus better OS/2 code    */
 /*                       by njl195@zepler.org.uk  */
+/*            29.06.2006 Full support for 16/32   */
+/*                       bits bitmaps and support */
+/*                       for alpha channel        */
+/*                       by p.filiciak@zax.pl     */
 
 /*
  * The GIMP -- an image manipulation program
@@ -128,9 +132,9 @@ query (void)
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/bmp");
   gimp_register_magic_load_handler (LOAD_PROC,
-				    "bmp",
-				    "",
-				    "0,string,BM");
+                                    "bmp",
+                                    "",
+                                    "0,string,BM");
 
   gimp_install_procedure (SAVE_PROC,
                           "Saves files in Windows BMP file format",
@@ -176,13 +180,13 @@ run (const gchar      *name,
        switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
-	  interactive_bmp = TRUE;
+          interactive_bmp = TRUE;
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
           /*  Make sure all the arguments are there!  */
           interactive_bmp = FALSE;
-	  if (nparams != 3)
+          if (nparams != 3)
             status = GIMP_PDB_CALLING_ERROR;
           break;
 
@@ -191,20 +195,20 @@ run (const gchar      *name,
         }
 
        if (status == GIMP_PDB_SUCCESS)
-	 {
-	   image_ID = ReadBMP (param[1].data.d_string);
+         {
+           image_ID = ReadBMP (param[1].data.d_string);
 
-	   if (image_ID != -1)
-	     {
-	       *nreturn_vals = 2;
-	       values[1].type         = GIMP_PDB_IMAGE;
-	       values[1].data.d_image = image_ID;
-	     }
-	   else
-	     {
-	       status = GIMP_PDB_EXECUTION_ERROR;
-	     }
-	 }
+           if (image_ID != -1)
+             {
+               *nreturn_vals = 2;
+               values[1].type         = GIMP_PDB_IMAGE;
+               values[1].data.d_image = image_ID;
+             }
+           else
+             {
+               status = GIMP_PDB_EXECUTION_ERROR;
+             }
+         }
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
@@ -213,35 +217,35 @@ run (const gchar      *name,
 
       /*  eventually export the image */
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init ("bmp", FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "BMP",
-				      (GIMP_EXPORT_CAN_HANDLE_RGB |
-				       GIMP_EXPORT_CAN_HANDLE_ALPHA |
-				       GIMP_EXPORT_CAN_HANDLE_GRAY |
-				       GIMP_EXPORT_CAN_HANDLE_INDEXED));
-	  if (export == GIMP_EXPORT_CANCEL)
-	    {
-	      values[0].data.d_status = GIMP_PDB_CANCEL;
-	      return;
-	    }
-	  break;
-	default:
-	  break;
-	}
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init ("bmp", FALSE);
+          export = gimp_export_image (&image_ID, &drawable_ID, "BMP",
+                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                       GIMP_EXPORT_CAN_HANDLE_ALPHA |
+                                       GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                       GIMP_EXPORT_CAN_HANDLE_INDEXED));
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
+            }
+          break;
+        default:
+          break;
+        }
 
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
-	  interactive_bmp = TRUE;
+          interactive_bmp = TRUE;
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
           /*  Make sure all the arguments are there!  */
           interactive_bmp = FALSE;
-	  if (nparams != 5)
+          if (nparams != 5)
             status = GIMP_PDB_CALLING_ERROR;
           break;
 
@@ -254,12 +258,12 @@ run (const gchar      *name,
         }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  status = WriteBMP (param[3].data.d_string, image_ID, drawable_ID);
-	}
+        {
+          status = WriteBMP (param[3].data.d_string, image_ID, drawable_ID);
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
     }
   else
     {
