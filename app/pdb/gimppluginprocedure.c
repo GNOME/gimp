@@ -816,6 +816,7 @@ gimp_plug_in_procedure_set_mime_type (GimpPlugInProcedure *proc,
 
   if (proc->mime_type)
     g_free (proc->mime_type);
+
   proc->mime_type = g_strdup (mime_type);
 }
 
@@ -827,5 +828,6 @@ gimp_plug_in_procedure_set_thumb_loader (GimpPlugInProcedure *proc,
 
   if (proc->thumb_loader)
     g_free (proc->thumb_loader);
+
   proc->thumb_loader = g_strdup (thumb_loader);
 }

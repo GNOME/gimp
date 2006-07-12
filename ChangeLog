@@ -1,3 +1,8 @@
+2006-07-12  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/file-commands.c
+	* app/pdb/gimppluginprocedure.c: formatting.
+
 2006-07-11  Sven Neumann  <sven@gimp.org>
 
 	* app/xcf/xcf-write.[ch]: added const qualifiers.

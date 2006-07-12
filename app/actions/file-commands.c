@@ -164,9 +164,9 @@ file_last_opened_cmd_callback (GtkAction *action,
       GError            *error = NULL;
 
       image = file_open_with_display (gimp, action_data_get_context (data),
-                                       NULL,
-                                       GIMP_OBJECT (imagefile)->name,
-                                       &status, &error);
+                                      NULL,
+                                      GIMP_OBJECT (imagefile)->name,
+                                      &status, &error);
 
       if (! image && status != GIMP_PDB_CANCEL)
         {
@@ -543,10 +543,10 @@ file_revert_confirm_response (GtkWidget   *dialog,
       uri = gimp_object_get_name (GIMP_OBJECT (old_image));
 
       new_image = file_open_image (gimp, gimp_get_user_context (gimp),
-                                    GIMP_PROGRESS (display),
-                                    uri, uri, NULL,
-                                    GIMP_RUN_INTERACTIVE,
-                                    &status, NULL, &error);
+                                   GIMP_PROGRESS (display),
+                                   uri, uri, NULL,
+                                   GIMP_RUN_INTERACTIVE,
+                                   &status, NULL, &error);
 
       if (new_image)
         {
