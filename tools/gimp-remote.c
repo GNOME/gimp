@@ -482,10 +482,10 @@ main (gint    argc,
            *  terminated. If the Toolbox is simply unmapped (by the WM)
            *  DnD works. But in both cases gdk_window_is_visible() returns
            *  FALSE. To work around this we add a timeout and abort after
-           *  1.5 seconds.
+           *  5 seconds.
            */
 
-          timeout = g_timeout_add (1500, toolbox_hidden, NULL);
+          timeout = g_timeout_add (5000, toolbox_hidden, NULL);
 
           /*  set up an DND-source  */
           source = gtk_window_new (GTK_WINDOW_TOPLEVEL);
