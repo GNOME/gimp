@@ -69,11 +69,12 @@
 #define SAVE_PROC "file-bmp-save"
 
 
-const gchar *filename  = NULL;
-gboolean     interactive_bmp;
+const gchar *filename    = NULL;
+gboolean     interactive = FALSE;
 
 struct Bitmap_File_Head_Struct Bitmap_File_Head;
-struct Bitmap_Head_Struct Bitmap_Head;
+struct Bitmap_Head_Struct      Bitmap_Head;
+
 
 /* Declare some local functions.
  */
@@ -180,12 +181,11 @@ run (const gchar      *name,
        switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
-          interactive_bmp = TRUE;
+          interactive = TRUE;
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
           /*  Make sure all the arguments are there!  */
-          interactive_bmp = FALSE;
           if (nparams != 3)
             status = GIMP_PDB_CALLING_ERROR;
           break;
@@ -219,6 +219,9 @@ run (const gchar      *name,
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
+          interactive = TRUE;
+          /* fallthrough */
+
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init ("bmp", FALSE);
           export = gimp_export_image (&image_ID, &drawable_ID, "BMP",
@@ -226,31 +229,18 @@ run (const gchar      *name,
                                        GIMP_EXPORT_CAN_HANDLE_ALPHA |
                                        GIMP_EXPORT_CAN_HANDLE_GRAY |
                                        GIMP_EXPORT_CAN_HANDLE_INDEXED));
+
           if (export == GIMP_EXPORT_CANCEL)
             {
               values[0].data.d_status = GIMP_PDB_CANCEL;
               return;
             }
           break;
-        default:
-          break;
-        }
-
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-          interactive_bmp = TRUE;
-          break;
 
         case GIMP_RUN_NONINTERACTIVE:
           /*  Make sure all the arguments are there!  */
-          interactive_bmp = FALSE;
           if (nparams != 5)
             status = GIMP_PDB_CALLING_ERROR;
-          break;
-
-        case GIMP_RUN_WITH_LAST_VALS:
-          interactive_bmp = FALSE;
           break;
 
         default:
@@ -258,9 +248,7 @@ run (const gchar      *name,
         }
 
       if (status == GIMP_PDB_SUCCESS)
-        {
-          status = WriteBMP (param[3].data.d_string, image_ID, drawable_ID);
-        }
+        status = WriteBMP (param[3].data.d_string, image_ID, drawable_ID);
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);

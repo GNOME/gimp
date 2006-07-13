@@ -228,44 +228,43 @@ WriteBMP (const gchar *filename,
   encoded = 0;
   mask_info_size = 0;
 
-  if ((BitsPerPixel == 8 || BitsPerPixel == 4) && interactive_bmp)
+  if ((BitsPerPixel == 8 || BitsPerPixel == 4) && interactive)
     {
       if (! save_dialog ())
         return GIMP_PDB_CANCEL;
     }
   else if ((BitsPerPixel == 24 || BitsPerPixel == 32))
-       {
-          if (interactive_bmp && !save_dialog_rgb (channels))
-            return GIMP_PDB_CANCEL;
+    {
+      if (interactive && !save_dialog_rgb (channels))
+        return GIMP_PDB_CANCEL;
 
-          switch (rgb_format)
-          {
-          default:
-            g_message (_("Unknown format."));
-            return GIMP_PDB_EXECUTION_ERROR;
-          case RGB_888:
-            BitsPerPixel = 24;
-            break;
-          case RGBA_8888:
-            BitsPerPixel = 32;
-            break;
-          case RGBX_8888:
-            BitsPerPixel = 32;
-            mask_info_size = 16;
-            break;
-          case RGB_565:
-            BitsPerPixel = 16;
-            mask_info_size = 16;
-            break;
-          case RGBA_5551:
-            BitsPerPixel = 16;
-            mask_info_size = 16;
-            break;
-          case RGB_555:
-            BitsPerPixel = 16;
-            break;
-          }
-       }
+      switch (rgb_format)
+        {
+        case RGB_888:
+          BitsPerPixel = 24;
+          break;
+        case RGBA_8888:
+          BitsPerPixel = 32;
+          break;
+        case RGBX_8888:
+          BitsPerPixel = 32;
+          mask_info_size = 16;
+          break;
+        case RGB_565:
+          BitsPerPixel = 16;
+          mask_info_size = 16;
+          break;
+        case RGBA_5551:
+          BitsPerPixel = 16;
+          mask_info_size = 16;
+          break;
+        case RGB_555:
+          BitsPerPixel = 16;
+          break;
+        default:
+          g_return_val_if_reached (GIMP_PDB_EXECUTION_ERROR);
+        }
+    }
 
   /* Let's take some file */
   outfile = g_fopen (filename, "wb");

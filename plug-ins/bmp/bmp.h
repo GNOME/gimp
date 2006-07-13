@@ -30,7 +30,7 @@ GimpPDBStatusType  WriteBMP  (const gchar *filename,
                               gint32       image,
                               gint32       drawable_ID);
 
-extern       gboolean  interactive_bmp;
+extern       gboolean  interactive;
 extern const gchar    *filename;
 
 extern struct Bitmap_File_Head_Struct
