@@ -1,5 +1,11 @@
 2006-07-13  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpstatusbar.c (gimp_statusbar_set_cursor): set the
+	sensitivity of the cursor label before converting the coordinates
+	to the display unit (bug #347339).
+
+2006-07-13  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/bmp/bmp.[ch]
 	* plug-ins/bmp/bmpwrite.c: simplified run() method, renamed a
 	variable.

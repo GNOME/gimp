@@ -651,6 +651,18 @@ gimp_statusbar_set_cursor (GimpStatusbar *statusbar,
 
   shell = statusbar->shell;
 
+  if (x <  0 ||
+      y <  0 ||
+      x >= shell->display->image->width ||
+      y >= shell->display->image->height)
+    {
+      gtk_widget_set_sensitive (statusbar->cursor_label, FALSE);
+    }
+  else
+    {
+      gtk_widget_set_sensitive (statusbar->cursor_label, TRUE);
+    }
+
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->unit_combo));
   store = GIMP_UNIT_STORE (model);
 
@@ -672,18 +684,6 @@ gimp_statusbar_set_cursor (GimpStatusbar *statusbar,
     }
 
   gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), buffer);
-
-  if (x <  0 ||
-      y <  0 ||
-      x >= statusbar->shell->display->image->width ||
-      y >= statusbar->shell->display->image->height)
-    {
-      gtk_widget_set_sensitive (statusbar->cursor_label, FALSE);
-    }
-  else
-    {
-      gtk_widget_set_sensitive (statusbar->cursor_label, TRUE);
-    }
 }
 
 void
