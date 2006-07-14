@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-28 10:50+0200\n"
-"PO-Revision-Date: 2006-06-28 10:54+0200\n"
+"POT-Creation-Date: 2006-07-14 10:25+0200\n"
+"PO-Revision-Date: 2006-07-14 10:25+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -317,7 +317,8 @@ msgstr "Inverze"
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr "Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
+msgstr ""
+"Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
 
 #. Greenmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1028
@@ -365,11 +366,11 @@ msgid "_Fractals"
 msgstr "_Fraktály"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1706
-#: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:200
+#: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:273
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2013
 #: ../plug-ins/common/channel_mixer.c:1062 ../plug-ins/common/compressor.c:410
 #: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:838
-#: ../plug-ins/common/dicom.c:690 ../plug-ins/common/gbr.c:616
+#: ../plug-ins/common/dicom.c:691 ../plug-ins/common/gbr.c:616
 #: ../plug-ins/common/gif.c:993 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
 #: ../plug-ins/common/mng.c:953 ../plug-ins/common/pat.c:449
@@ -407,10 +408,10 @@ msgstr "Zapsat parametry fraktálu"
 #. stat error (file does not exist)
 #: ../plug-ins/FractalExplorer/Dialogs.c:2015
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:930
-#: ../plug-ins/Lighting/lighting_ui.c:1312 ../plug-ins/bmp/bmpread.c:152
+#: ../plug-ins/Lighting/lighting_ui.c:1312 ../plug-ins/bmp/bmpread.c:149
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2233
 #: ../plug-ins/common/channel_mixer.c:979 ../plug-ins/common/curve_bend.c:890
-#: ../plug-ins/common/dicom.c:295 ../plug-ins/common/gbr.c:348
+#: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:309 ../plug-ins/common/gih.c:649
 #: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:319
 #: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
@@ -529,7 +530,8 @@ msgstr "P_růhledné pozadí"
 
 #: ../plug-ins/Lighting/lighting_ui.c:302
 msgid "Make destination image transparent where bump height is zero"
-msgstr "Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
+msgstr ""
+"Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
 
 #: ../plug-ins/Lighting/lighting_ui.c:305
 msgid "Cre_ate new image"
@@ -583,7 +585,7 @@ msgstr "Světlo 6"
 
 #. row labels
 #: ../plug-ins/Lighting/lighting_ui.c:395
-#: ../plug-ins/common/spheredesigner.c:2677
+#: ../plug-ins/common/spheredesigner.c:2701
 msgid "Type:"
 msgstr "Typ:"
 
@@ -1095,7 +1097,7 @@ msgid "Map Images to Box Faces"
 msgstr "Mapovat obrázek do plošek hranolů"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1155
-#: ../plug-ins/common/spheredesigner.c:2771
+#: ../plug-ins/common/spheredesigner.c:2795
 msgid "Scale X:"
 msgstr "Zvětšení X:"
 
@@ -1164,7 +1166,7 @@ msgstr "_Náhled!"
 msgid "Show preview _wireframe"
 msgstr "_Zobrazit náhledový drátový model"
 
-#: ../plug-ins/bmp/bmp.c:122 ../plug-ins/bmp/bmp.c:141
+#: ../plug-ins/bmp/bmp.c:127 ../plug-ins/bmp/bmp.c:146
 msgid "Windows BMP image"
 msgstr "Obrázek Windows BMP"
 
@@ -1176,8 +1178,8 @@ msgstr "Špatná barevná mapa"
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/bmp/bmpread.c:157 ../plug-ins/common/CEL.c:304
-#: ../plug-ins/common/dicom.c:300 ../plug-ins/common/gbr.c:353
+#: ../plug-ins/bmp/bmpread.c:154 ../plug-ins/common/CEL.c:304
+#: ../plug-ins/common/dicom.c:301 ../plug-ins/common/gbr.c:353
 #: ../plug-ins/common/gifload.c:314 ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:324 ../plug-ins/common/pcx.c:314
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:712
@@ -1194,37 +1196,36 @@ msgstr "Špatná barevná mapa"
 msgid "Opening '%s'"
 msgstr "Otvírá se '%s'"
 
-#: ../plug-ins/bmp/bmpread.c:167 ../plug-ins/bmp/bmpread.c:176
-#: ../plug-ins/bmp/bmpread.c:182 ../plug-ins/bmp/bmpread.c:190
-#: ../plug-ins/bmp/bmpread.c:204 ../plug-ins/bmp/bmpread.c:304
-#: ../plug-ins/bmp/bmpread.c:345
+#: ../plug-ins/bmp/bmpread.c:164 ../plug-ins/bmp/bmpread.c:173
+#: ../plug-ins/bmp/bmpread.c:179 ../plug-ins/bmp/bmpread.c:187
+#: ../plug-ins/bmp/bmpread.c:201 ../plug-ins/bmp/bmpread.c:382
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "'%s' není platný soubor BMP"
 
-#: ../plug-ins/bmp/bmpread.c:217 ../plug-ins/bmp/bmpread.c:236
-#: ../plug-ins/bmp/bmpread.c:257 ../plug-ins/bmp/bmpread.c:276
-#: ../plug-ins/bmp/bmpread.c:297 ../plug-ins/bmp/bmpread.c:310
-#: ../plug-ins/bmp/bmpread.c:316
+#: ../plug-ins/bmp/bmpread.c:214 ../plug-ins/bmp/bmpread.c:240
+#: ../plug-ins/bmp/bmpread.c:266 ../plug-ins/bmp/bmpread.c:329
+#: ../plug-ins/bmp/bmpread.c:353 ../plug-ins/bmp/bmpread.c:375
+#: ../plug-ins/bmp/bmpread.c:388 ../plug-ins/bmp/bmpread.c:394
 #, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "Chyba při čtení hlavičky souboru BMP z '%s'"
 
-#: ../plug-ins/bmp/bmpread.c:447
+#: ../plug-ins/bmp/bmpread.c:499
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Neznámý nebo neplatný formát komprese BMP."
 
-#: ../plug-ins/bmp/bmpread.c:482
+#: ../plug-ins/bmp/bmpread.c:541
 msgid "Unsupported or invalid bitdepth."
 msgstr "Nepodporovaná nebo neplatná bitová hloubka"
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: ../plug-ins/bmp/bmpread.c:487 ../plug-ins/common/CEL.c:349
+#: ../plug-ins/bmp/bmpread.c:546 ../plug-ins/common/CEL.c:349
 #: ../plug-ins/common/CEL.c:352 ../plug-ins/common/blinds.c:277
 #: ../plug-ins/common/compose.c:904 ../plug-ins/common/decompose.c:686
-#: ../plug-ins/common/dicom.c:485 ../plug-ins/common/film.c:944
+#: ../plug-ins/common/dicom.c:486 ../plug-ins/common/film.c:944
 #: ../plug-ins/common/gifload.c:879 ../plug-ins/common/pcx.c:339
 #: ../plug-ins/common/pcx.c:345 ../plug-ins/common/pix.c:368
 #: ../plug-ins/common/png.c:833 ../plug-ins/common/pnm.c:564
@@ -1240,22 +1241,22 @@ msgstr "Nepodporovaná nebo neplatná bitová hloubka"
 msgid "Background"
 msgstr "Pozadí"
 
-#: ../plug-ins/bmp/bmpread.c:618 ../plug-ins/bmp/bmpread.c:657
-#: ../plug-ins/bmp/bmpread.c:706
+#: ../plug-ins/bmp/bmpread.c:681 ../plug-ins/bmp/bmpread.c:722
+#: ../plug-ins/bmp/bmpread.c:772
 msgid "The bitmap ends unexpectedly."
 msgstr "Bitmapa neočekávaně končí."
 
-#: ../plug-ins/bmp/bmpwrite.c:157
-msgid "Cannot operate on grayscale images with alpha channel."
-msgstr "Nemohu pracovat na obrázcích v odstínech šedi s alfa kanálem."
+#: ../plug-ins/bmp/bmpwrite.c:177 ../plug-ins/bmp/bmpwrite.c:197
+msgid "Cannot save indexed image with transparency in BMP file format."
+msgstr "Indexovaný obrázek s průhledností nelze uložit do formátu BMP."
 
-#: ../plug-ins/bmp/bmpwrite.c:181
-msgid "Cannot operate on indexed images with alpha channel."
-msgstr "Nemohu pracovat na indexovaných obrázcích s alfa kanálem."
+#: ../plug-ins/bmp/bmpwrite.c:179 ../plug-ins/bmp/bmpwrite.c:199
+msgid "Alpha channel will be ignored."
+msgstr "Alfa kanál bude ignorován."
 
 #. And let's begin the progress
 #. init the progress meter
-#: ../plug-ins/bmp/bmpwrite.c:211 ../plug-ins/common/CEL.c:573
+#: ../plug-ins/bmp/bmpwrite.c:284 ../plug-ins/common/CEL.c:573
 #: ../plug-ins/common/gbr.c:621 ../plug-ins/common/gif.c:1000
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
 #: ../plug-ins/common/pat.c:454 ../plug-ins/common/pcx.c:550
@@ -1272,13 +1273,25 @@ msgstr "Nemohu pracovat na indexovaných obrázcích s alfa kanálem."
 msgid "Saving '%s'"
 msgstr "Ukládá se '%s'"
 
-#: ../plug-ins/bmp/bmpwrite.c:585
+#: ../plug-ins/bmp/bmpwrite.c:768 ../plug-ins/bmp/bmpwrite.c:824
 msgid "Save as BMP"
 msgstr "Zapsat jako BMP"
 
-#: ../plug-ins/bmp/bmpwrite.c:604
+#: ../plug-ins/bmp/bmpwrite.c:789
 msgid "_Run-Length Encoded"
 msgstr "Kódované _RunLength"
+
+#: ../plug-ins/bmp/bmpwrite.c:847
+msgid "16 bits"
+msgstr "16 bitů"
+
+#: ../plug-ins/bmp/bmpwrite.c:881
+msgid "24 bits"
+msgstr "24 bitů"
+
+#: ../plug-ins/bmp/bmpwrite.c:894
+msgid "32 bits"
+msgstr "32 bitů"
 
 #: ../plug-ins/common/AlienMap2.c:140
 msgid "_Modify red channel"
@@ -1854,7 +1867,8 @@ msgstr "Varování: '%s' je soubor ve starém formátu."
 #: ../plug-ins/common/CML_explorer.c:2265
 #, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
-msgstr "Varování: '%s' je soubor parametrů pro novější CML_badatel, než jsem já."
+msgstr ""
+"Varování: '%s' je soubor parametrů pro novější CML_badatel, než jsem já."
 
 #: ../plug-ins/common/CML_explorer.c:2328
 msgid "Error: failed to load parameters"
@@ -2271,7 +2285,8 @@ msgstr "Posun _X:"
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
-msgstr "Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
+msgstr ""
+"Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
 
 #: ../plug-ins/common/bumpmap.c:1011 ../plug-ins/common/postscript.c:3328
 msgid "_Y offset:"
@@ -2731,7 +2746,8 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:486
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr "Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
+msgstr ""
+"Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
 
 #: ../plug-ins/common/compose.c:517
 #, c-format
@@ -2808,7 +2824,8 @@ msgstr "Žádná rozumná přípona, ukládám jako gzipovaný XCF."
 
 #: ../plug-ins/common/compressor.c:514
 msgid "No sensible extension, attempting to load with file magic."
-msgstr "Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel."
+msgstr ""
+"Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel."
 
 #: ../plug-ins/common/convmatrix.c:77
 msgid "Gr_ey"
@@ -3424,25 +3441,25 @@ msgstr "Šíř_ka:"
 msgid "Create _histogram"
 msgstr "Vytvořit _histogram"
 
-#: ../plug-ins/common/dicom.c:140
+#: ../plug-ins/common/dicom.c:141
 msgid "DICOM image"
 msgstr "Obrázek DICOM"
 
-#: ../plug-ins/common/dicom.c:165
+#: ../plug-ins/common/dicom.c:166
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Obrázek Digital Imaging and Communications in Medicine"
 
-#: ../plug-ins/common/dicom.c:321
+#: ../plug-ins/common/dicom.c:322
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "'%s' není soubor DICOM."
 
-#: ../plug-ins/common/dicom.c:660 ../plug-ins/common/pcx.c:582
+#: ../plug-ins/common/dicom.c:661 ../plug-ins/common/pcx.c:582
 #: ../plug-ins/common/pnm.c:920
 msgid "Cannot save images with alpha channel."
 msgstr "Nemohu uložit obrázky s alfa kanálem."
 
-#: ../plug-ins/common/dicom.c:675 ../plug-ins/common/postscript.c:1176
+#: ../plug-ins/common/dicom.c:676 ../plug-ins/common/postscript.c:1176
 #: ../plug-ins/common/xwd.c:556 ../plug-ins/fits/fits.c:445
 #: ../plug-ins/xjt/xjt.c:1689
 msgid "Cannot operate on unknown image types."
@@ -4230,7 +4247,8 @@ msgstr ""
 "nebyl uložen."
 
 #: ../plug-ins/common/gif.c:965
-msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid ""
+"Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nemohu ukládat barevné obrázky RGB. Nejdříve jej převeďte na indexovaný nebo "
 "do šedí."
@@ -4861,7 +4879,8 @@ msgstr "Interaktivní deformace"
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
-msgstr "Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
+msgstr ""
+"Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
 
 #: ../plug-ins/common/jigsaw.c:356
 msgid "Add a jigsaw-puzzle pattern to the image"
@@ -5012,60 +5031,60 @@ msgstr "Zvláštní efekty, které nikdo nechápe"
 msgid "_Van Gogh (LIC)..."
 msgstr "_Van Gogh (LIC)..."
 
-#: ../plug-ins/common/mail.c:253
+#: ../plug-ins/common/mail.c:264
 msgid "Email the image"
 msgstr "Odeslat obrázek poštou"
 
-#: ../plug-ins/common/mail.c:259
+#: ../plug-ins/common/mail.c:270
 msgid "_Mail Image..."
 msgstr "_Poslat obrázek..."
 
-#: ../plug-ins/common/mail.c:508
+#: ../plug-ins/common/mail.c:519
 msgid "Send as Mail"
 msgstr "Poslat jako poštu"
 
-#: ../plug-ins/common/mail.c:513
+#: ../plug-ins/common/mail.c:524
 msgid "_Send"
 msgstr "_Odeslat"
 
-#: ../plug-ins/common/mail.c:545
+#: ../plug-ins/common/mail.c:556
 msgid "_Filename:"
 msgstr "_Název souboru:"
 
 #. Encapsulation label
-#: ../plug-ins/common/mail.c:552
+#: ../plug-ins/common/mail.c:563
 msgid "Encapsulation:"
 msgstr "Zapouzdření dat:"
 
-#: ../plug-ins/common/mail.c:564
+#: ../plug-ins/common/mail.c:575
 msgid "_MIME"
 msgstr "_MIME"
 
-#: ../plug-ins/common/mail.c:565
+#: ../plug-ins/common/mail.c:576
 msgid "_Uuencode"
 msgstr "_UU-kódování"
 
-#: ../plug-ins/common/mail.c:579
+#: ../plug-ins/common/mail.c:590
 msgid "_Recipient:"
 msgstr "Pří_jemce:"
 
-#: ../plug-ins/common/mail.c:593
+#: ../plug-ins/common/mail.c:604
 msgid "_Sender:"
 msgstr "_Odesílatel:"
 
-#: ../plug-ins/common/mail.c:605
+#: ../plug-ins/common/mail.c:616
 msgid "S_ubject:"
 msgstr "_Předmět:"
 
-#: ../plug-ins/common/mail.c:617
+#: ../plug-ins/common/mail.c:628
 msgid "Comm_ent:"
 msgstr "_Komentář:"
 
-#: ../plug-ins/common/mail.c:725
+#: ../plug-ins/common/mail.c:736
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "nějaký druh chyby přípony souboru nebo její nepřítomnost"
 
-#: ../plug-ins/common/mail.c:952
+#: ../plug-ins/common/mail.c:963
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Nemohu spustit sendmail (%s)"
@@ -5213,7 +5232,8 @@ msgstr "Ú_hel:"
 #. * transparency & just use the full palette
 #: ../plug-ins/common/mng.c:498 ../plug-ins/common/png.c:1638
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr "Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
+msgstr ""
+"Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
 
 #: ../plug-ins/common/mng.c:1322
 msgid "Save as MNG"
@@ -6231,7 +6251,7 @@ msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Stránky, které načíst (např. 1-4 nebo 1,3,5-7)"
 
 #: ../plug-ins/common/postscript.c:3125
-#: ../plug-ins/common/spheredesigner.c:2621
+#: ../plug-ins/common/spheredesigner.c:2645
 msgid "Layers"
 msgstr "Vrstvy"
 
@@ -6785,81 +6805,81 @@ msgstr "_Zadržení:"
 msgid "H_ue:"
 msgstr "O_dstín:"
 
-#: ../plug-ins/common/screenshot.c:227
+#: ../plug-ins/common/screenshot.c:228
 msgid "Create an image from an area of the screen"
 msgstr "Vytvořit obrázek z oblasti obrazovky"
 
-#: ../plug-ins/common/screenshot.c:240
+#: ../plug-ins/common/screenshot.c:241
 msgid "_Screenshot..."
 msgstr "_Snímek obrazovky..."
 
-#: ../plug-ins/common/screenshot.c:436
+#: ../plug-ins/common/screenshot.c:401
 msgid "Error grabbing the pointer"
 msgstr "Chyba při zachytávání ukazatele"
 
-#: ../plug-ins/common/screenshot.c:615
+#: ../plug-ins/common/screenshot.c:648
 msgid "Importing screenshot"
 msgstr "Načítá se snímek obrazovky"
 
-#: ../plug-ins/common/screenshot.c:622 ../plug-ins/common/screenshot.c:789
+#: ../plug-ins/common/screenshot.c:655 ../plug-ins/common/screenshot.c:822
 msgid "Screenshot"
 msgstr "Snímek obrazovky"
 
-#: ../plug-ins/common/screenshot.c:730
+#: ../plug-ins/common/screenshot.c:763
 msgid "Specified window not found"
 msgstr "Určené okno nenalezeno"
 
-#: ../plug-ins/common/screenshot.c:757
+#: ../plug-ins/common/screenshot.c:790
 msgid "There was an error taking the screenshot."
 msgstr "Pří získávání snímku obrazovky došlo k chybě."
 
-#: ../plug-ins/common/screenshot.c:798
+#: ../plug-ins/common/screenshot.c:831
 msgid "_Grab"
 msgstr "_Zachytit"
 
-#: ../plug-ins/common/screenshot.c:819
+#: ../plug-ins/common/screenshot.c:852
 msgid "Area"
 msgstr "Oblast"
 
-#: ../plug-ins/common/screenshot.c:830
+#: ../plug-ins/common/screenshot.c:863
 msgid "Take a screenshot of a single _window"
 msgstr "Získat snímek jednoho _okna"
 
-#: ../plug-ins/common/screenshot.c:851
+#: ../plug-ins/common/screenshot.c:884
 msgid "Include window _decoration"
 msgstr "Včetně _dekorace okna"
 
-#: ../plug-ins/common/screenshot.c:867
+#: ../plug-ins/common/screenshot.c:900
 msgid "Take a screenshot of the entire _screen"
 msgstr "Získat snímek celé _obrazovky"
 
-#: ../plug-ins/common/screenshot.c:885
+#: ../plug-ins/common/screenshot.c:918
 msgid "Select a _region to grab"
 msgstr "Vyberte oblast k sejmutí"
 
-#: ../plug-ins/common/screenshot.c:892
+#: ../plug-ins/common/screenshot.c:925
 msgid ""
 "If enabled, you can use the mouse to select a rectangular region of the "
 "screen."
 msgstr "Je-li povoleno, můžete myší vybrat obdélnikovou oblast obrazovky"
 
 #. grab delay
-#: ../plug-ins/common/screenshot.c:905
+#: ../plug-ins/common/screenshot.c:938
 msgid "Delay"
 msgstr "Zpoždění"
 
 #. this string is part of "Wait [spinbutton] seconds before grabbing"
-#: ../plug-ins/common/screenshot.c:918
+#: ../plug-ins/common/screenshot.c:951
 msgid "W_ait"
 msgstr "_Čekat"
 
 #. this string is part of "Wait [spinbutton] seconds before grabbing"
-#: ../plug-ins/common/screenshot.c:934
+#: ../plug-ins/common/screenshot.c:967
 msgid "seconds before grabbing"
 msgstr "sekund před zachycením"
 
 # FIXME: s/after/between/
-#: ../plug-ins/common/screenshot.c:938
+#: ../plug-ins/common/screenshot.c:971
 msgid ""
 "The number of seconds to wait after selecting the window or region and "
 "actually taking the screenshot."
@@ -7347,7 +7367,7 @@ msgid "Spots"
 msgstr "Tečky"
 
 #: ../plug-ins/common/spheredesigner.c:1750
-#: ../plug-ins/common/spheredesigner.c:2668
+#: ../plug-ins/common/spheredesigner.c:2692
 msgid "Texture"
 msgstr "Textura"
 
@@ -7356,7 +7376,7 @@ msgid "Bumpmap"
 msgstr "Mapa vyvýšení"
 
 #: ../plug-ins/common/spheredesigner.c:1754
-#: ../plug-ins/common/spheredesigner.c:2670
+#: ../plug-ins/common/spheredesigner.c:2694
 msgid "Light"
 msgstr "Světlo"
 
@@ -7373,99 +7393,99 @@ msgstr "Otevřít soubor"
 msgid "Save File"
 msgstr "Zapsat soubor"
 
-#: ../plug-ins/common/spheredesigner.c:2522
+#: ../plug-ins/common/spheredesigner.c:2546
 msgid "Sphere Designer"
 msgstr "Návrhář koulí"
 
-#: ../plug-ins/common/spheredesigner.c:2653
+#: ../plug-ins/common/spheredesigner.c:2677
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: ../plug-ins/common/spheredesigner.c:2669
+#: ../plug-ins/common/spheredesigner.c:2693
 msgid "Bump"
 msgstr "Vyvýšení"
 
-#: ../plug-ins/common/spheredesigner.c:2696
+#: ../plug-ins/common/spheredesigner.c:2720
 msgid "Texture:"
 msgstr "Textura:"
 
-#: ../plug-ins/common/spheredesigner.c:2701
+#: ../plug-ins/common/spheredesigner.c:2725
 msgid "Colors:"
 msgstr "Barvy:"
 
-#: ../plug-ins/common/spheredesigner.c:2704
-#: ../plug-ins/common/spheredesigner.c:2715
+#: ../plug-ins/common/spheredesigner.c:2728
+#: ../plug-ins/common/spheredesigner.c:2739
 msgid "Color Selection Dialog"
 msgstr "Dialog výběru barvy"
 
 #. Scale
-#: ../plug-ins/common/spheredesigner.c:2726
+#: ../plug-ins/common/spheredesigner.c:2750
 #: ../plug-ins/gimpressionist/paper.c:176
 #: ../plug-ins/ifscompose/ifscompose.c:555
 msgid "Scale:"
 msgstr "Velikost:"
 
-#: ../plug-ins/common/spheredesigner.c:2734
+#: ../plug-ins/common/spheredesigner.c:2758
 msgid "Turbulence:"
 msgstr "Turbulence:"
 
-#: ../plug-ins/common/spheredesigner.c:2741
+#: ../plug-ins/common/spheredesigner.c:2765
 msgid "Amount:"
 msgstr "Míra:"
 
-#: ../plug-ins/common/spheredesigner.c:2748
+#: ../plug-ins/common/spheredesigner.c:2772
 msgid "Exp.:"
 msgstr "Exp.:"
 
-#: ../plug-ins/common/spheredesigner.c:2755
+#: ../plug-ins/common/spheredesigner.c:2779
 msgid "Transformations"
 msgstr "Transformace"
 
-#: ../plug-ins/common/spheredesigner.c:2778
+#: ../plug-ins/common/spheredesigner.c:2802
 msgid "Scale Y:"
 msgstr "Zvětšení Y:"
 
-#: ../plug-ins/common/spheredesigner.c:2784
+#: ../plug-ins/common/spheredesigner.c:2808
 msgid "Scale Z:"
 msgstr "Zvětšení Z:"
 
-#: ../plug-ins/common/spheredesigner.c:2791
+#: ../plug-ins/common/spheredesigner.c:2815
 msgid "Rotate X:"
 msgstr "Rotace X:"
 
-#: ../plug-ins/common/spheredesigner.c:2798
+#: ../plug-ins/common/spheredesigner.c:2822
 msgid "Rotate Y:"
 msgstr "Rotace Y:"
 
-#: ../plug-ins/common/spheredesigner.c:2805
+#: ../plug-ins/common/spheredesigner.c:2829
 msgid "Rotate Z:"
 msgstr "Rotace Z:"
 
-#: ../plug-ins/common/spheredesigner.c:2812
+#: ../plug-ins/common/spheredesigner.c:2836
 msgid "Position X:"
 msgstr "Poloha X:"
 
-#: ../plug-ins/common/spheredesigner.c:2819
+#: ../plug-ins/common/spheredesigner.c:2843
 msgid "Position Y:"
 msgstr "Poloha Y:"
 
-#: ../plug-ins/common/spheredesigner.c:2826
+#: ../plug-ins/common/spheredesigner.c:2850
 msgid "Position Z:"
 msgstr "Poloha Z:"
 
-#: ../plug-ins/common/spheredesigner.c:2941
+#: ../plug-ins/common/spheredesigner.c:2965
 msgid "Rendering sphere"
 msgstr "Vykresluje se koule"
 
-#: ../plug-ins/common/spheredesigner.c:2991
+#: ../plug-ins/common/spheredesigner.c:3015
 msgid "Create an image of a textured sphere"
 msgstr "Vytvořit obrázek koule s texturou"
 
-#: ../plug-ins/common/spheredesigner.c:2998
+#: ../plug-ins/common/spheredesigner.c:3022
 msgid "Sphere _Designer..."
 msgstr "_Návrhář koulí..."
 
-#: ../plug-ins/common/spheredesigner.c:3052
+#: ../plug-ins/common/spheredesigner.c:3076
 msgid "Region selected for plug-in is empty"
 msgstr "Oblast vybraná pro zásuvný modul je prázdná"
 
@@ -7637,7 +7657,8 @@ msgid "Import _paths"
 msgstr "Importovat _cesty"
 
 #: ../plug-ins/common/svg.c:941
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid ""
+"Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importovat elementy cesty z SVG, aby mohly být použity s nástrojem GIMPu pro "
 "cesty"
@@ -7873,7 +7894,8 @@ msgid "ID"
 msgstr "ID"
 
 #: ../plug-ins/common/uniteditor.c:96
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Tento řetězec bude použit pouze k identifikaci jednotky v konfiguračním "
 "souboru GIMPu."
@@ -8050,7 +8072,8 @@ msgstr "_Body"
 
 #: ../plug-ins/common/video.c:1806
 msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-msgstr "Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
+msgstr ""
+"Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
 
 #: ../plug-ins/common/video.c:1813
 msgid "Vi_deo..."
@@ -9062,7 +9085,8 @@ msgstr "Kopírovat"
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
-msgstr "Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
+msgstr ""
+"Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
 
 #: ../plug-ins/gfig/gfig-dialog.c:1312
 msgid "Background:"
@@ -9187,7 +9211,8 @@ msgid "_Gfig..."
 msgstr "_Gfig..."
 
 #: ../plug-ins/gfig/gfig.c:731
-msgid "Error trying to save figure as a parasite: can't attach parasite to drawable."
+msgid ""
+"Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Chyba při pokusu uložit obrázek jako parazita: nemohu připojit parazita k "
 "drawable."
@@ -9627,7 +9652,8 @@ msgid "Shadow depth:"
 msgstr "Hloubka stínu:"
 
 #: ../plug-ins/gimpressionist/general.c:243
-msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Hloubka vrženého stínu, tj. jak daleko od objektu budou"
 
 #: ../plug-ins/gimpressionist/general.c:248
@@ -10005,11 +10031,13 @@ msgid "Size:"
 msgstr "Velikost:"
 
 #: ../plug-ins/gimpressionist/size.c:142
-msgid "Let the value (brightness) of the region determine the size of the stroke"
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Nechť hodnota (jas) oblasti určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:146
-msgid "The distance from the center of the image determines the size of the stroke"
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
 msgstr "Vzdálenost od středu obrázku určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:150
@@ -11711,4 +11739,3 @@ msgstr "Chyba: Nemohu načíst soubor XJT vlastností '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Chyba: Soubor XJT vlastností '%s' je prázdný."
-
