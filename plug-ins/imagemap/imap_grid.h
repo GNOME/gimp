@@ -24,12 +24,12 @@
 #ifndef _IMAP_GRID_H
 #define _IMAP_GRID_H
 
-void do_grid_settings_dialog();
-void draw_grid(GtkWidget *preview);
-void toggle_grid();
-void round_to_grid(gint *x, gint *y);
+void do_grid_settings_dialog (void);
+void draw_grid (GtkWidget *preview);
+void toggle_grid (void);
+void round_to_grid (gint *x, gint *y);
 
-gboolean grid_near_x(gint x);
-gboolean grid_near_y(gint y);
+gboolean grid_near_x (gint x);
+gboolean grid_near_y (gint y);
 
 #endif /* _IMAP_GRID_H */

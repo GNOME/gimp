@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
+ * Copyright (C) 1998-2006 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,6 +64,9 @@ void do_use_gimp_guides_dialog();
 
 void imap_help();
 void set_func(int func);
+void set_preview_color();
+void set_zoom_factor();
+void toggle_area_list();
 
 static Menu_t _menu;
 static GtkUIManager *ui_manager;
@@ -101,6 +104,12 @@ menu_set_zoom_sensitivity(gint factor)
 {
   set_sensitive ("/MainMenu/ViewMenu/ZoomIn", factor < 8);
   set_sensitive ("/MainMenu/ViewMenu/ZoomOut", factor > 1);
+}
+
+void
+menu_set_zoom(gint factor)
+{
+  menu_set_zoom_sensitivity (factor);
 }
 
 void
@@ -291,7 +300,6 @@ static const char *ui_description =
 "      <separator/>"
 "      <menuitem action='ZoomIn'/>"
 "      <menuitem action='ZoomOut'/>"
-#if 0
 "      <menu action='ZoomToMenu'>"
 "        <menuitem action='Zoom1:1'/>"
 "        <menuitem action='Zoom1:2'/>"
@@ -302,7 +310,6 @@ static const char *ui_description =
 "        <menuitem action='Zoom1:7'/>"
 "        <menuitem action='Zoom1:8'/>"
 "      </menu>"
-#endif
 "    </menu>"
 "    <menu action='MappingMenu'>"
 "      <menuitem action='Arrow'/>"
@@ -417,12 +424,13 @@ make_menu(GtkWidget *main_vbox, GtkWidget *window)
 				window);
   gtk_action_group_add_toggle_actions (action_group, toggle_entries,
 				       G_N_ELEMENTS (toggle_entries), window);
-  gtk_action_group_add_radio_actions (action_group, color_entries,
-				      G_N_ELEMENTS (color_entries), 0,
-				      NULL, window);
-  gtk_action_group_add_radio_actions (action_group, zoom_entries,
-				      G_N_ELEMENTS (zoom_entries), 0,
-				      NULL, window);
+
+  gtk_action_group_add_radio_actions (action_group, color_entries, 
+				      G_N_ELEMENTS (color_entries), 0, 
+				      G_CALLBACK (set_preview_color), NULL);
+  gtk_action_group_add_radio_actions (action_group, zoom_entries, 
+				      G_N_ELEMENTS (zoom_entries), 0, 
+				      G_CALLBACK (set_zoom_factor), NULL);
   gtk_action_group_add_radio_actions (action_group, mapping_entries,
 				      G_N_ELEMENTS (mapping_entries), 0,
 				      G_CALLBACK (set_func), window);
@@ -451,6 +459,8 @@ make_menu(GtkWidget *main_vbox, GtkWidget *window)
 
   set_sensitive ("/MainMenu/EditMenu/Paste", FALSE);
   menu_shapes_selected (0);
+
+  menu_set_zoom_sensitivity (1);
 
   return &_menu;
 }
@@ -502,12 +512,6 @@ menu_check_grid(gboolean check)
   GtkAction *action = gtk_ui_manager_get_action (ui_manager,
 						 "/MainMenu/ToolsMenu/Grid");
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), check);
-}
-
-void
-menu_set_zoom(gint factor)
-{
-  menu_set_zoom_sensitivity (factor);
 }
 
 GtkWidget*

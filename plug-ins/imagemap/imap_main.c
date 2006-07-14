@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
+ * Copyright (C) 1998-2006 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ FALSE, TRUE, DEFAULT_UNDO_LEVELS, DEFAULT_MRU_SIZE};
 static MRU_t *_mru;
 
 static GimpDrawable *_drawable;
-static GdkCursorType _cursor;
+static GdkCursorType _cursor = GDK_TOP_LEFT_ARROW;
 static gboolean     _show_url = TRUE;
 static gchar       *_filename = NULL;
 static char        *_image_name;
@@ -382,21 +382,21 @@ redraw_preview(void)
       preview_redraw(_preview);
 }
 
-#ifdef _NOT_READY_YET
-static void
-set_preview_gray(void)
+void
+set_preview_color (GtkRadioAction *action, GtkRadioAction *current,
+		   gpointer user_data)
 {
-   _map_info.show_gray = TRUE;
+  _map_info.show_gray = (gtk_radio_action_get_current_value (current) == 1);
    set_zoom(_zoom_factor);
 }
 
-static void
-set_preview_color(void)
+void
+set_zoom_factor (GtkRadioAction *action, GtkRadioAction *current,
+		 gpointer user_data)
 {
-   _map_info.show_gray = FALSE;
-   set_zoom(_zoom_factor);
+  gint factor = gtk_radio_action_get_current_value (current);
+  set_zoom (factor + 1);
 }
-#endif
 
 const char*
 get_image_name(void)
@@ -652,13 +652,14 @@ clear_map_info(void)
 static void
 do_data_changed_dialog(void (*continue_cb)(gpointer), gpointer param)
 {
-   GtkWidget *dialog = gtk_message_dialog_new_with_markup
+   GtkWidget *dialog = gtk_message_dialog_new
      (NULL,
       GTK_DIALOG_DESTROY_WITH_PARENT,
       GTK_MESSAGE_QUESTION,
       GTK_BUTTONS_YES_NO,
-      "<span weight=\"bold\" size=\"larger\">%s</span>\n\n%s",
-      _("Some data has been changed!"),
+      _("Some data has been changed!"));
+   gtk_message_dialog_format_secondary_text 
+     (GTK_DIALOG (dialog),
       _("Do you really want to discard your changes?"));
 
    if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES)
@@ -945,13 +946,11 @@ load(const gchar *filename)
    check_if_changed(really_load, (gpointer) tmp_filename);
 }
 
-#ifdef _NOT_READY_YET_
-static void
+void
 toggle_area_list(void)
 {
    selection_toggle_visibility(_selection);
 }
-#endif
 
 static gboolean
 close_callback(GtkWidget *widget, gpointer data)
@@ -1210,29 +1209,6 @@ do_create_guides_dialog(void)
   command_execute (guides_command_new (_shapes));
 }
 
-#ifdef _NOT_READY_YET_
-
-static Command_t*
-factory_toggle_area_list(void)
-{
-   return command_new(toggle_area_list);
-}
-
-static Command_t*
-factory_preview_color(void)
-{
-   return command_new(set_preview_color);
-}
-
-static Command_t*
-factory_preview_gray(void)
-{
-   return command_new(set_preview_gray);
-}
-
-
-#endif
-
 static Command_t*
 factory_move_up(void)
 {
@@ -1255,6 +1231,8 @@ dialog(GimpDrawable *drawable)
    Menu_t       *menu;
 
    gimp_ui_init ("imagemap", TRUE);
+
+   set_arrow_func ();
 
    _shapes = make_object_list();
 
