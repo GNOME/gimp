@@ -21,6 +21,10 @@
 
 #include "config.h"
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -34,6 +38,8 @@
 #include "gimpbaseconfig.h"
 
 #include "gimp-intl.h"
+
+#define NUM_PROCESSORS_DEFAULT 1
 
 
 enum
@@ -69,6 +75,7 @@ static void
 gimp_base_config_class_init (GimpBaseConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  gint          num_processors;
 
   object_class->finalize     = gimp_base_config_finalize;
   object_class->set_property = gimp_base_config_set_property;
@@ -86,9 +93,20 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
                                  "${gimp_dir}",
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
+
+#if defined(HAVE_UNISTD_H) && defined(_SC_NPROCESSORS_ONLN)
+  num_processors = sysconf (_SC_NPROCESSORS_ONLN);
+#else
+  num_processors = NUM_PROCESSORS_DEFAULT;
+#endif
+
+#ifdef GIMP_UNSTABLE
+  num_processors = num_processors * 2;
+#endif
+
   GIMP_CONFIG_INSTALL_PROP_UINT (object_class, PROP_NUM_PROCESSORS,
                                  "num-processors", NUM_PROCESSORS_BLURB,
-                                 1, GIMP_MAX_NUM_THREADS, 2,
+                                 1, GIMP_MAX_NUM_THREADS, num_processors,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
                                     "tile-cache-size", TILE_CACHE_SIZE_BLURB,

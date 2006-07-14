@@ -1,3 +1,11 @@
+2006-07-14  Mukund Sivaraman  <muks@mukund.org>
+
+	* app/config/gimpbaseconfig.c: if possible, detect the number of
+	online CPUs in the system and use that instead of the default value
+	of 2 for the number of pixel processors. Also made the default value
+	1 where it's not possible to detect the number of CPUs. Uses twice
+	the number for development versions.
+
 2006-07-13  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpstatusbar.c (gimp_statusbar_set_cursor): set the
