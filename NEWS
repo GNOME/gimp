@@ -7,12 +7,23 @@ This is the development branch of GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.3.11
+======================
+
+- depend on newer versions of glib, gtk+ and pango and use some of the
+  new features in these libraries
+- made Ctrl-P the default shortcut for Print
+- show progress when loading/saving XCF files
+- added support for 16/32 bit bitmaps and alpha channel to the BMP plug-in
+- bug fixes and code cleanup
+
+
 Changes in GIMP 2.3.10
 ======================
 
 - added support for a registration color in the Decompose plug-in
 - the Align tool now also aligns to guides
-- allow use CSS color notation in Script-Fu
+- allow use of CSS color notation in Script-Fu
 - more work on the new selection tools
 - let Fractal Explorer work on grayscale and give it a larger preview
 - speed up Value Invert plug-in
