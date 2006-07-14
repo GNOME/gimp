@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-10 17:40+0200\n"
-"PO-Revision-Date: 2006-07-10 17:42+0200\n"
+"POT-Creation-Date: 2006-07-14 10:19+0200\n"
+"PO-Revision-Date: 2006-07-14 10:20+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3363,7 +3363,7 @@ msgstr "Otevřít textový soubor (UTF-8)"
 #: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated.c:562
 #: ../app/core/gimpbrushpipe.c:314 ../app/core/gimpgradient-load.c:62
 #: ../app/core/gimppalette.c:322 ../app/core/gimppattern.c:263
-#: ../app/tools/gimpimagemaptool.c:581 ../app/xcf/xcf.c:348
+#: ../app/tools/gimpimagemaptool.c:581 ../app/xcf/xcf.c:317
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nelze otevřít '%s' pro čtení: %s"
@@ -4071,7 +4071,7 @@ msgstr ""
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:142
 #: ../app/core/gimppalette.c:521 ../app/gui/themes.c:238
 #: ../app/tools/gimpimagemaptool.c:580 ../app/vectors/gimpvectors-export.c:83
-#: ../app/xcf/xcf.c:405
+#: ../app/xcf/xcf.c:392
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nelze otevřít '%s' pro zápis: %s"
@@ -5713,23 +5713,23 @@ msgstr "Rotovat položky"
 msgid "Transform Items"
 msgstr "Transformovat položky"
 
-#: ../app/core/gimpimage-merge.c:96 ../app/core/gimpimage-merge.c:108
+#: ../app/core/gimpimage-merge.c:102 ../app/core/gimpimage-merge.c:114
 msgid "Merge Visible Layers"
 msgstr "Sloučit viditelné vrstvy"
 
-#: ../app/core/gimpimage-merge.c:159
+#: ../app/core/gimpimage-merge.c:165
 msgid "Flatten Image"
 msgstr "Zploštit obrázek"
 
-#: ../app/core/gimpimage-merge.c:208
+#: ../app/core/gimpimage-merge.c:214
 msgid "Merge Down"
 msgstr "Sloučit dolů"
 
-#: ../app/core/gimpimage-merge.c:552
+#: ../app/core/gimpimage-merge.c:252
 msgid "Merge Visible Paths"
 msgstr "Sloučit viditelné cesty"
 
-#: ../app/core/gimpimage-merge.c:588
+#: ../app/core/gimpimage-merge.c:288
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr "Nedostatek viditelných cest pro sloučení. Musí být alespoň dvě."
 
@@ -10159,8 +10159,8 @@ msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
-"Šestnáctkový zápis barvy jako v HTML nebo CSS. Barvy lze zadat i jejich "
-"CSS jménem."
+"Šestnáctkový zápis barvy jako v HTML nebo CSS. Barvy lze zadat i jejich CSS "
+"jménem."
 
 #: ../app/widgets/gimpcolorframe.c:415
 msgid "Index:"
@@ -11215,7 +11215,7 @@ msgstr "Okno nástrojů"
 msgid "Keep above"
 msgstr "Udržovat nahoře"
 
-#: ../app/xcf/xcf-load.c:302
+#: ../app/xcf/xcf-load.c:316
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -11229,14 +11229,14 @@ msgstr ""
 msgid "Invalid UTF-8 string in XCF file"
 msgstr "Neplatný řetězec v UTF-8 v souboru XCF"
 
-#: ../app/xcf/xcf-save.c:158 ../app/xcf/xcf-save.c:168
-#: ../app/xcf/xcf-save.c:178 ../app/xcf/xcf-save.c:188
-#: ../app/xcf/xcf-save.c:212 ../app/xcf/xcf.c:399
+#: ../app/xcf/xcf-save.c:159 ../app/xcf/xcf-save.c:169
+#: ../app/xcf/xcf-save.c:179 ../app/xcf/xcf-save.c:189
+#: ../app/xcf/xcf-save.c:213 ../app/xcf/xcf.c:382
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Chyba při ukládání souboru XCF: %s"
 
-#: ../app/xcf/xcf-write.c:86
+#: ../app/xcf/xcf-write.c:87
 #, c-format
 msgid "Error writing XCF: %s"
 msgstr "Chyba při ukládání XCF: %s"
@@ -11246,15 +11246,24 @@ msgstr "Chyba při ukládání XCF: %s"
 msgid "Could not seek in XCF file: %s"
 msgstr "Nelze vyhledávat v souboru XCF: %s"
 
-#: ../app/xcf/xcf.c:69 ../app/xcf/xcf.c:92 ../app/xcf/xcf.c:145
-#: ../app/xcf/xcf.c:211
+#: ../app/xcf/xcf.c:97 ../app/xcf/xcf.c:163
 msgid "GIMP XCF image"
 msgstr "Obrázek GIMP XCF"
 
-#: ../app/xcf/xcf.c:339
+#: ../app/xcf/xcf.c:263
+#, c-format
+msgid "Opening '%s'"
+msgstr "Otevírám '%s'"
+
+#: ../app/xcf/xcf.c:304
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "chyba XCF: nalezena nepodporovaná verze %d XCF souboru"
+
+#: ../app/xcf/xcf.c:368
+#, c-format
+msgid "Saving '%s'"
+msgstr "Ukládám '%s'"
 
 #: ../desktop/gimp.desktop.in.in.h:1
 msgid "Create images and edit photographs"
