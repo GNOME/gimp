@@ -1,5 +1,10 @@
 2006-07-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/jpeg/jpeg-exif.c (jpeg_setup_exif_for_save): set Software
+	to "GIMP", not "The GIMP".
+
+2006-07-16  Sven Neumann  <sven@gimp.org>
+
 	* app/errors.h (gimp_fatal_error, gimp_terminate): use G_GNUC_PRINTF.
 
 2006-07-14  Maurits  <m.rijk@chello.nl>

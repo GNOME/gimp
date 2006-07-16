@@ -192,12 +192,14 @@ jpeg_setup_exif_for_save (ExifData      *exif_data,
       exif_set_short (entry->data, byte_order, (ExifShort) 2);
     }
 
-  /* set software to "The GIMP" */
+  /* set software to "GIMP" */
   if ((entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_0],
                                        EXIF_TAG_SOFTWARE)))
     {
-      entry->data = (guchar *) g_strdup ("The GIMP");
-      entry->size = strlen ("The GIMP") + 1;
+      const gchar *name = "GIMP";
+
+      entry->data = (guchar *) g_strdup (name);
+      entry->size = strlen (name) + 1;
       entry->components = entry->size;
     }
 
