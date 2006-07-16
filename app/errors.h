@@ -37,10 +37,10 @@ void   gimp_error_log_func   (const gchar        *domain,
                               const gchar        *message,
                               gpointer            data) G_GNUC_NORETURN;
 
-void   gimp_fatal_error      (const gchar        *message,
-                              ...) G_GNUC_NORETURN ;
-void   gimp_terminate        (const gchar        *message,
-                              ...) G_GNUC_NORETURN;
+void   gimp_fatal_error      (const gchar        *format,
+                              ...) G_GNUC_PRINTF (1, 2) G_GNUC_NORETURN;
+void   gimp_terminate        (const gchar        *format,
+                              ...) G_GNUC_PRINTF (1, 2) G_GNUC_NORETURN;
 
 
 #endif /* __ERRORS_H__ */
