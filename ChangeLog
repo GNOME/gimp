@@ -1,6 +1,6 @@
 2006-07-14  Maurits  <m.rijk@chello.nl>
 
-	* plug-ins/imagemap/imap_grid.c
+	* plug-ins/imagemap/imap_grid.h
 	* plug-ins/imagemap/imap_main.c
 	* plug-ins/imagemap/imap_menu.c: fixed problem with zoom menu
 
