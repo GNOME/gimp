@@ -1,3 +1,9 @@
+2006-07-16  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* configure.in
+	* plug-ins/Makefile.am: Added --disable-script-fu to allow building
+	of GIMP without the Script-Fu plug-in. See bug #347570.
+
 2006-07-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/jpeg/jpeg-exif.c (jpeg_setup_exif_for_save): set Software

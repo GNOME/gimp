@@ -16,6 +16,10 @@ if BUILD_PYTHON
 pygimp = pygimp
 endif
 
+if BUILD_SCRIPT_FU
+script_fu = script-fu
+endif
+
 if HAVE_MAC_TWAIN
 twain = twain
 endif
@@ -33,7 +37,7 @@ endif
 
 
 SUBDIRS = \
-	script-fu		\
+	$(script_fu)		\
 	FractalExplorer		\
 	Lighting		\
 	MapObject		\
