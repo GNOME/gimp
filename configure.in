@@ -50,7 +50,7 @@ m4_define([gtkhtml2_required_version], [2.0.0])
 m4_define([alsa_required_version], [1.0.0])
 m4_define([rsvg_required_version], [2.8.0])
 m4_define([wmf_required_version], [0.2.8])
-m4_define([pygtk_required_version], [1.99.15])
+m4_define([pygtk_required_version], [2.8.0])
 m4_define([poppler_required_version], [0.3.1])
 m4_define([gnome_vfs_required_version], [2.10.0])
 m4_define([gnomeui_required_version], [2.10.0])
@@ -1424,8 +1424,8 @@ m4_define([pycheck_error], [
 
 if test "x$enable_python" != xno; then
   dnl check for Python
-  AM_PATH_PYTHON(2.2.1,,
-    [AC_MSG_ERROR([pycheck_error([Python 2.2.1 or better], [it])])])
+  AM_PATH_PYTHON(2.3.5,,
+    [AC_MSG_ERROR([pycheck_error([Python 2.3.5 or better], [it])])])
   AM_CHECK_PYTHON_HEADERS(,
     [AC_MSG_ERROR([pycheck_error([Python headers], [them])])])
 
