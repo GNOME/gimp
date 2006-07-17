@@ -1,5 +1,10 @@
 2006-07-16  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/pygimp-rgb.c: gimpcolor.RGB is now a sequence,
+	so we can swap it in for PDB color types.
+
+2006-07-16  Manish Singh  <yosh@gimp.org>
+
         * configure.in: bump up python requirement to 2.3.5 and pygtk to
         2.8.0, in preparation for depending on features not in prior
         releases.

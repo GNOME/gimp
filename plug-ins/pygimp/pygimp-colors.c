@@ -1,6 +1,28 @@
+/* -*- Mode: C; c-basic-offset: 4 -*-
+    Gimp-Python - allows the writing of Gimp plugins in Python.
+    Copyright (C) 2005-2006  Manish Singh <yosh@gimp.org>
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+    02111-1307, USA.
+ */
+
 #define NO_IMPORT_PYGOBJECT
 
 #include "pygimpcolor.h"
+
+#include <libgimpmath/gimpmath.h>
 
 static PyObject *
 rgb_set(PyObject *self, PyObject *args, PyObject *kwargs)
@@ -374,6 +396,75 @@ static PyGetSetDef rgb_getsets[] = {
     { NULL, (getter)0, (setter)0 },
 };
 
+static int
+rgb_length(PyObject *self)
+{
+    return 4;
+}
+
+static PyObject *
+rgb_getitem(PyObject *self, int pos)
+{
+    GimpRGB *rgb;
+    double val;
+
+    if (pos < 0)
+        pos += 4;
+
+    if (pos < 0 || pos >= 4) {
+	PyErr_SetString(PyExc_IndexError, "index out of range");
+	return NULL;
+    }
+
+    rgb = pyg_boxed_get(self, GimpRGB); 
+
+    switch (pos) {
+    case 0: val = rgb->r; break;
+    case 1: val = rgb->g; break;
+    case 2: val = rgb->b; break;
+    case 3: val = rgb->a; break;
+    default:
+        g_assert_not_reached();
+        return NULL;
+    }
+
+    return PyInt_FromLong(ROUND(CLAMP(val, 0.0, 1.0) * 255.0));
+}
+
+static int
+rgb_setitem(PyObject *self, int pos, PyObject *value)
+{
+    if (pos < 0)
+        pos += 4;
+
+    if (pos < 0 || pos >= 4) {
+	PyErr_SetString(PyExc_IndexError, "index out of range");
+	return -1;
+    }
+
+    switch (pos) {
+    case 0: return rgb_set_r(self, value, NULL);
+    case 1: return rgb_set_g(self, value, NULL);
+    case 2: return rgb_set_b(self, value, NULL);
+    case 3: return rgb_set_a(self, value, NULL);
+    default:
+        g_assert_not_reached();
+        return -1;
+    }
+}
+
+static PySequenceMethods rgb_as_sequence = {
+    (inquiry)rgb_length,
+    (binaryfunc)0,
+    (intargfunc)0,
+    (intargfunc)rgb_getitem,
+    (intintargfunc)0,
+    (intobjargproc)rgb_setitem,
+    (intintobjargproc)0,
+    (objobjproc)0,
+};
+
+
 static PyObject *
 rgb_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
 {
@@ -431,7 +522,7 @@ PyTypeObject PyGimpRGB_Type = {
     (cmpfunc)0,				/* tp_compare */
     (reprfunc)0,			/* tp_repr */
     (PyNumberMethods*)0,		/* tp_as_number */
-    (PySequenceMethods*)0,		/* tp_as_sequence */
+    &rgb_as_sequence,			/* tp_as_sequence */
     (PyMappingMethods*)0,		/* tp_as_mapping */
     (hashfunc)0,			/* tp_hash */
     (ternaryfunc)0,			/* tp_call */
