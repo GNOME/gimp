@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-10 17:36+0200\n"
-"PO-Revision-Date: 2006-07-10 17:42+0200\n"
+"POT-Creation-Date: 2006-07-17 11:27+0200\n"
+"PO-Revision-Date: 2006-07-17 14:35+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -971,8 +971,8 @@ msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
-"Šestnáctkový zápis barvy jako v HTML nebo CSS. Barvy lze zadat i jejich "
-"CSS jménem."
+"Šestnáctkový zápis barvy jako v HTML nebo CSS. Barvy lze zadat i jejich CSS "
+"jménem."
 
 #: ../libgimpwidgets/gimpcolorselection.c:269
 msgid "HTML _notation:"
@@ -1138,11 +1138,11 @@ msgstr "_Vykreslit"
 
 #: ../libgimpwidgets/gimpstock.c:173
 msgid "L_etter Spacing"
-msgstr "Roz_estup písmen"
+msgstr "Pro_strkání"
 
 #: ../libgimpwidgets/gimpstock.c:174
 msgid "L_ine Spacing"
-msgstr "Řá_dkování"
+msgstr "Pro_klad"
 
 #: ../libgimpwidgets/gimpstock.c:190
 msgid "_Resize"

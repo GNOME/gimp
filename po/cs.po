@@ -11,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-14 10:19+0200\n"
-"PO-Revision-Date: 2006-07-14 10:20+0200\n"
+"POT-Creation-Date: 2006-07-17 11:27+0200\n"
+"PO-Revision-Date: 2006-07-17 14:41+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team:  <cs@li.org>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -9606,11 +9606,11 @@ msgstr "Odsazení prvního řádku"
 
 #: ../app/tools/gimptextoptions.c:154
 msgid "Adjust line spacing"
-msgstr "Upravit řádkování"
+msgstr "Upravit proklad"
 
 #: ../app/tools/gimptextoptions.c:160
 msgid "Adjust letter spacing"
-msgstr "Upravit prostor mezi písmeny"
+msgstr "Upravit prostrkání"
 
 #: ../app/tools/gimptextoptions.c:432
 msgid "Font:"
