@@ -1,4 +1,3 @@
-# translation of eu.po to Basque
 # translation of gimp-script-fu.HEAD.po to basque
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
@@ -9,15 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-02 14:24+0100\n"
-"PO-Revision-Date: 2006-03-02 14:35+0100\n"
-"Last-Translator: Iñaki Larrañaga <dooteo@euskalgnu.org>\n"
+"POT-Creation-Date: 2006-07-18 16:04+0000\n"
+"PO-Revision-Date: 2006-07-18 16:07+0000\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.10.2\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n\n"
+"Plural-Forms: Plural-Forms: Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
@@ -31,93 +31,72 @@ msgstr "_Arakatu..."
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu-ren prozedura-arakatzailea"
 
-#: ../plug-ins/script-fu/script-fu-console.c:584
-msgid "Script-Fu evaluate mode allows only noninteractive invocation"
+#: ../plug-ins/script-fu/script-fu-console.c:591
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Script-Fu-ren ebaluatze-moduak deitze ez-interaktiboak bakarrik baimentzen "
 "ditu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:174
+#: ../plug-ins/script-fu/script-fu-interface.c:178
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "'Script-Fu'-k ezin du bi script aldi berean landu."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:176
+#: ../plug-ins/script-fu/script-fu-interface.c:180
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "\"%s\" scripta jadanik exekutatzen ari zara."
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:199
-#: ../plug-ins/script-fu/script-fu-interface.c:201
+#: ../plug-ins/script-fu/script-fu-interface.c:203
+#: ../plug-ins/script-fu/script-fu-interface.c:205
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:214
+#: ../plug-ins/script-fu/script-fu-interface.c:223
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:281
+#: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:324
+#: ../plug-ins/script-fu/script-fu-interface.c:330
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-ren kolore-hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:431
+#: ../plug-ins/script-fu/script-fu-interface.c:437
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-ren fitxategi-hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:435
+#: ../plug-ins/script-fu/script-fu-interface.c:440
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-ren karpeta-hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:449
+#: ../plug-ins/script-fu/script-fu-interface.c:452
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu-ren letra-tipoaren hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:457
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu-ren paleta-hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:465
+#: ../plug-ins/script-fu/script-fu-interface.c:469
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu-ren eredu-hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:472
+#: ../plug-ins/script-fu/script-fu-interface.c:478
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-ren gradiente-hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:480
+#: ../plug-ins/script-fu/script-fu-interface.c:487
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-ren brotxa-hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1008
-#, c-format
-msgid "About %s"
-msgstr "%s(r)i buruz"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1073
-msgid "Author:"
-msgstr "Egilea:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1080
-msgid "Copyright:"
-msgstr "Copyright-a:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1087
-msgid "Date:"
-msgstr "Data:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1096
-msgid "Image Types:"
-msgstr "Irudi-motak:"
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:644
+#: ../plug-ins/script-fu/script-fu-scripts.c:656
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -128,103 +107,123 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:653
+#: ../plug-ins/script-fu/script-fu-server.c:710
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-ren zerbitzari-aukerak"
 
-#: ../plug-ins/script-fu/script-fu-server.c:658
+#: ../plug-ins/script-fu/script-fu-server.c:715
 msgid "_Start Server"
 msgstr "_Abiarazi zerbitzaria..."
 
-#: ../plug-ins/script-fu/script-fu-server.c:686
+#: ../plug-ins/script-fu/script-fu-server.c:743
 msgid "Server port:"
 msgstr "Zerbitzari-ataka:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:692
+#: ../plug-ins/script-fu/script-fu-server.c:749
 msgid "Server logfile:"
 msgstr "Zerbitzariaren egunkaria:"
 
-#: ../plug-ins/script-fu/script-fu.c:116
+#: ../plug-ins/script-fu/script-fu.c:109
+msgid "Interactive console for Script-Fu development"
+msgstr "Script-Fu garapeneko kontsola interaktiboa"
+
+#: ../plug-ins/script-fu/script-fu.c:115
 msgid "Script-Fu _Console"
 msgstr "Script-Fu _kontsola"
 
-#: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:316
+#: ../plug-ins/script-fu/script-fu.c:122 ../plug-ins/script-fu/script-fu.c:151
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "<Toolbox>/Xtns/Languages/Script-Fu"
 msgstr "<Toolbox>/Luzp/Hizkuntzak/Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:145
+#: ../plug-ins/script-fu/script-fu.c:139
+msgid "Server for remote Script-Fu operation"
+msgstr "Urruneko Script-Fu eragiketen zerbitzaria"
+
+#: ../plug-ins/script-fu/script-fu.c:144
 msgid "_Start Server..."
 msgstr "_Abiarazi zerbitzaria..."
 
-#: ../plug-ins/script-fu/script-fu.c:269
+#: ../plug-ins/script-fu/script-fu.c:267
 msgid "_GIMP Online"
 msgstr "Lineako _GIMP"
 
-#: ../plug-ins/script-fu/script-fu.c:270
+#: ../plug-ins/script-fu/script-fu.c:268
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
 msgid "_User Manual"
 msgstr "_Eskuliburua"
 
-#: ../plug-ins/script-fu/script-fu.c:273
+#: ../plug-ins/script-fu/script-fu.c:271
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:275
+#: ../plug-ins/script-fu/script-fu.c:273
 msgid "_Buttons"
 msgstr "B_otoiak"
 
-#: ../plug-ins/script-fu/script-fu.c:277
+#: ../plug-ins/script-fu/script-fu.c:275
 msgid "_Logos"
 msgstr "_Logotipoak"
 
-#: ../plug-ins/script-fu/script-fu.c:279
+#: ../plug-ins/script-fu/script-fu.c:277
 msgid "_Misc"
 msgstr "_Hainbat"
 
-#: ../plug-ins/script-fu/script-fu.c:281
+#: ../plug-ins/script-fu/script-fu.c:279
 msgid "_Patterns"
 msgstr "_Ereduak"
 
-#: ../plug-ins/script-fu/script-fu.c:283
+#: ../plug-ins/script-fu/script-fu.c:281
 msgid "_Test"
 msgstr "_Proba"
 
-#: ../plug-ins/script-fu/script-fu.c:285
+#: ../plug-ins/script-fu/script-fu.c:283
 msgid "_Utils"
 msgstr "_Utilitateak"
 
-#: ../plug-ins/script-fu/script-fu.c:287
+#: ../plug-ins/script-fu/script-fu.c:285
 msgid "_Web Page Themes"
 msgstr "_Web orriko gaiak"
 
-#: ../plug-ins/script-fu/script-fu.c:289
+#: ../plug-ins/script-fu/script-fu.c:287
 msgid "_Alien Glow"
 msgstr "Estralurtarren _dirdira"
 
-#: ../plug-ins/script-fu/script-fu.c:291
+#: ../plug-ins/script-fu/script-fu.c:289
 msgid "_Beveled Pattern"
 msgstr "Eredu _alakatua"
 
-#: ../plug-ins/script-fu/script-fu.c:293
+#: ../plug-ins/script-fu/script-fu.c:291
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:296
+#: ../plug-ins/script-fu/script-fu.c:294
 msgid "Alpha to _Logo"
 msgstr "Alfa _logora"
 
-#: ../plug-ins/script-fu/script-fu.c:298
+#: ../plug-ins/script-fu/script-fu.c:296
 msgid "_Decor"
 msgstr "_Dekorazioa"
 
-#: ../plug-ins/script-fu/script-fu.c:300
+#: ../plug-ins/script-fu/script-fu.c:298
 msgid "_Render"
 msgstr "_Errendatua"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:301
+msgid "Re-read all available Script-Fu scripts"
+msgstr "Irakurri berriro erabilgarri dauden Script-Fu script guztiak"
+
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Refresh Scripts"
 msgstr "_Freskatu script-ak"
+
+#: ../plug-ins/script-fu/script-fu.c:329
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr ""
+"Ezin duzu \"Freskatu script-ak\" erabili Script-Fu elkarrizketa-koadroa "
+"irekita dagoenean. Itxi Script-Fu leiho guztiak eta saiatu berriro."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -1460,13 +1459,17 @@ msgid "Position (in %)"
 msgstr "Posizioa (%)"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
 msgid "Vertical"
 msgstr "Bertikala"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:3
 msgid "New _Guide..."
 msgstr "Gida _berria..."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+msgid "Position"
+msgstr "Posizioa"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "_Remove all Guides"
