@@ -1,3 +1,9 @@
+2006-07-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_image): use
+	file_utils_uri_display_basename() instead of g_path_get_basename()
+	to get an uri's basename. Fixes bug #347544.
+
 2006-07-18  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimppaletteeditor.c (gimp_palette_editor_get_index,
