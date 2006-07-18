@@ -98,6 +98,11 @@ These are:
      on. The default is for debugging to be disabled. NOTE: This
      option is intended primarily as a convenience for developers.
 
+  --enable-profile and --disable-profile. This options causes the build
+     process to compile with execution profiling enabled. The default is
+     for profiling to be disabled. NOTE: This option is intended primarily
+     as a convenience for developers.
+
   --enable-ansi and --disable-ansi.  This option causes stricter
      ANSI C checking to be performed when compiling with GCC. The
      default is for strict checking to be disabled. NOTE: This option
@@ -189,6 +194,11 @@ These are:
      gimp-console binary to be built in addition to the standard binary.
      gimp-console is useful for command-line batch mode or as a server.
 
+  --disable-python.  If for some reason you don't want to build the
+     Python based pygimp plug-in, you can use --disable-python.
+
+  --disable-script-fu.  If for some reason you don't want to build the
+     Script-Fu plug-in, you can use --disable-script-fu.
 
 The `make' command builds several things:
  - A bunch of public libraries in the directories starting with 'libgimp'.
