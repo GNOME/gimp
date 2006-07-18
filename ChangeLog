@@ -1,3 +1,11 @@
+2006-07-18  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_image):  use
+	file_utils_uri_to_utf8_basename() instead of g_path_get_basename()
+	to get an uri's basename. Fixes bug #347544.
+
 2006-07-10  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.2.13, interface_age 13.

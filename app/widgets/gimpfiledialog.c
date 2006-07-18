@@ -412,7 +412,7 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
   gimp_file_dialog_set_file_proc (dialog, NULL);
 
   dirname  = g_path_get_dirname (uri);
-  basename = g_path_get_basename (uri);
+  basename = file_utils_uri_to_utf8_basename (uri);
 
   if (dirname && strlen (dirname) && strcmp (dirname, "."))
     gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog),
