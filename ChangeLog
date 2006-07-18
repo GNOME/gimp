@@ -1,5 +1,14 @@
 2006-07-18  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpbaseconfig.c: increased default tile cache size
+	to 1GB.
+
+	* app/config/gimpcoreconfig.c: doubled the default undo-size.
+
+	* app/config/gimprc-blurbs.h (TILE_CACHE_SIZE_BLURB): rephrased.
+
+2006-07-18  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/edit-actions.c: improved tooltips for strong
 	undo/redo actions (bug #347675).
 

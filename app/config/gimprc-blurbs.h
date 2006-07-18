@@ -380,11 +380,10 @@ N_("The thumbnail in the Open dialog will be automatically updated " \
    "if the file being previewed is smaller than the size set here.")
 
 #define TILE_CACHE_SIZE_BLURB \
-N_("The tile cache is used to make sure the GIMP doesn't thrash " \
-   "tiles between memory and disk. Setting this value higher will " \
-   "cause the GIMP to use less swap space, but will also cause " \
-   "the GIMP to use more memory. Conversely, a smaller cache size " \
-   "causes the GIMP to use more swap space and less memory.")
+N_("When the amount of pixel data exceeds this limit, GIMP will start to " \
+   "swap tiles to disk.  This is a lot slower but it makes it possible to " \
+   "work on images that wouldn't fit into memory otherwise.  If you have a " \
+   "lot of RAM, you may want to set this to a higher value.")
 
 #define TOOLBOX_COLOR_AREA_BLURB NULL
 #define TOOLBOX_FOO_AREA_BLURB NULL
