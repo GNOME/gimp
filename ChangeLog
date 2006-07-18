@@ -1,3 +1,11 @@
+2006-07-18  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: fixed docs for gimp-image-add-layer
+	as pointed out in bug #347861.
+
+	* app/pdb/image_cmds.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
 2006-07-16  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-rgb.c: gimpcolor.RGB is now a sequence,

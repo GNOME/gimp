@@ -897,9 +897,8 @@ gimp_image_pick_correlate_layer (gint32 image_ID,
  *
  * This procedure adds the specified layer to the image at the given
  * position. If the position is specified as -1, then the layer is
- * inserted at the top of the layer stack. If the layer to be added has
- * no alpha channel, it must be added at position 0. The layer type
- * must be compatible with the image base type.
+ * inserted above the active layer. The layer type must be compatible
+ * with the image base type.
  *
  * Returns: TRUE on success.
  */

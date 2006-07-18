@@ -2896,7 +2896,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-add-layer",
                                      "Add the specified layer to the image.",
-                                     "This procedure adds the specified layer to the image at the given position. If the position is specified as -1, then the layer is inserted at the top of the layer stack. If the layer to be added has no alpha channel, it must be added at position 0. The layer type must be compatible with the image base type.",
+                                     "This procedure adds the specified layer to the image at the given position. If the position is specified as -1, then the layer is inserted above the active layer. The layer type must be compatible with the image base type.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
