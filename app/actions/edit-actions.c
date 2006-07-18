@@ -80,13 +80,13 @@ static const GimpActionEntry edit_actions[] =
 
   { "edit-strong-undo", GTK_STOCK_UNDO,
     N_("Strong Undo"), "<control><shift>Z",
-    N_("Undo the last operation, skipping over some types"),
+    N_("Undo the last operation, skipping visibility changes"),
     G_CALLBACK (edit_strong_undo_cmd_callback),
     GIMP_HELP_EDIT_STRONG_UNDO },
 
   { "edit-strong-redo", GTK_STOCK_REDO,
     N_("Strong Redo"), "<control><shift>Y",
-    N_("Redo the last operation that was undone, skipping over some types"),
+    N_("Redo the last operation that was undone, skipping visibility changes"),
     G_CALLBACK (edit_strong_redo_cmd_callback),
     GIMP_HELP_EDIT_STRONG_REDO },
 
