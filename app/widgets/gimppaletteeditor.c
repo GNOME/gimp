@@ -556,7 +556,7 @@ gimp_palette_editor_get_index (GimpPaletteEditor *editor,
 
   palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
-  if (! palette)
+  if (! palette || palette->n_colors == 0)
     return -1;
 
   if (editor->color)
@@ -597,7 +597,7 @@ gimp_palette_editor_set_index (GimpPaletteEditor *editor,
 
   palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
-  if (! palette)
+  if (! palette || palette->n_colors == 0)
     return FALSE;
 
   index = CLAMP (index, 0, palette->n_colors - 1);
@@ -622,10 +622,10 @@ gimp_palette_editor_max_index (GimpPaletteEditor *editor)
 
   palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
-  if (! palette)
+  if (! palette || palette->n_colors == 0)
     return -1;
 
-  return MAX (0, palette->n_colors - 1);
+  return palette->n_colors - 1;
 }
 
 

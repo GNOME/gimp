@@ -1,5 +1,11 @@
 2006-07-18  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimppaletteeditor.c (gimp_palette_editor_get_index,
+	 gimp_palette_editor_set_index, gimp_palette_editor_max_index):
+	fixed potential crash based on a patch from David Gowers (bug #347593).
+
+2006-07-18  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/image.pdb: fixed docs for gimp-image-add-layer
 	as pointed out in bug #347861.
 
