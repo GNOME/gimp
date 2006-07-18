@@ -11,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-18 11:55+0200\n"
-"PO-Revision-Date: 2006-07-18 11:56+0200\n"
+"POT-Creation-Date: 2006-07-18 15:41+0200\n"
+"PO-Revision-Date: 2006-07-18 15:45+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team:  <cs@li.org>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1365,16 +1365,16 @@ msgid "Strong Undo"
 msgstr "Silné zpět"
 
 #: ../app/actions/edit-actions.c:83
-msgid "Undo the last operation, skipping over some types"
-msgstr "Vrátit zpět poslední operaci, přeskočit některé typy operací"
+msgid "Undo the last operation, skipping visibility changes"
+msgstr "Vrátit zpět poslední operaci, přeskočit změny viditelnosti"
 
 #: ../app/actions/edit-actions.c:88
 msgid "Strong Redo"
 msgstr "Silné znovu"
 
 #: ../app/actions/edit-actions.c:89
-msgid "Redo the last operation that was undone, skipping over some types"
-msgstr "Znovu provést poslední operaci vrácenou zpět, přeskočit některé typy operací"
+msgid "Redo the last operation that was undone, skipping visibility changes"
+msgstr "Znovu provést poslední operaci vrácenou zpět, přeskočit změny viditelnosti"
 
 #: ../app/actions/edit-actions.c:94
 msgid "_Clear Undo History"
@@ -4552,18 +4552,17 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:383
 msgid ""
-"The tile cache is used to make sure the GIMP doesn't thrash tiles between "
-"memory and disk. Setting this value higher will cause the GIMP to use less "
-"swap space, but will also cause the GIMP to use more memory. Conversely, a "
-"smaller cache size causes the GIMP to use more swap space and less memory."
+"When the amount of pixel data exceeds this limit, GIMP will start to swap "
+"tiles to disk.  This is a lot slower but it makes it possible to work on "
+"images that wouldn't fit into memory otherwise.  If you have a lot of RAM, "
+"you may want to set this to a higher value."
 msgstr ""
-"Vyrovnávací paměť dlaždic se používá pro zajištění toho, že GIMP nebude "
-"neustále přehazovat dlaždice mezi pamětí a diskem. Vyšší nastavení této "
-"hodnoty způsobí, že GIMP bude používat méně odkládacího prostoru, ale více "
-"paměti. Naopak menší velikost vyrovnávací paměti způsobí, že GIMP bude "
-"používat více odkládacího prostoru a méně paměti."
+"Pokud množství pixelových dat překročí tuto hranici, začne GIMP odkládat "
+"dlaždice na disk. Odkládání na disk je pomalé, ale umožňuje pracovat "
+"s obrázky, které by se jinak nevešly do paměti. Máte-li hodně RAM, můžete "
+"tuto hodnotu zvýšit."
 
-#: ../app/config/gimprc-blurbs.h:394
+#: ../app/config/gimprc-blurbs.h:393
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
@@ -4571,15 +4570,15 @@ msgstr ""
 "Nápověda typu okna, která je nastavena na nástrojích. Může to mít vliv na "
 "to, jak váš správce oken dekoruje okno nástrojů a jak s ním pracuje."
 
-#: ../app/config/gimprc-blurbs.h:398
+#: ../app/config/gimprc-blurbs.h:397
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Nastavuje způsob, kterým se v obrázcích zobrazuje průhlednost."
 
-#: ../app/config/gimprc-blurbs.h:401
+#: ../app/config/gimprc-blurbs.h:400
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "Nastavuje velikost šachovnice používané pro zobrazení průhlednosti."
 
-#: ../app/config/gimprc-blurbs.h:404
+#: ../app/config/gimprc-blurbs.h:403
 msgid ""
 "When enabled, the GIMP will not save an image if it has not been changed "
 "since it was opened."
@@ -4587,7 +4586,7 @@ msgstr ""
 "Je-li povoleno, nebude GIMP ukládat obrázek, pokud nebyl od svého otevření "
 "změněn."
 
-#: ../app/config/gimprc-blurbs.h:408
+#: ../app/config/gimprc-blurbs.h:407
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -4595,7 +4594,7 @@ msgstr ""
 "Nastavuje minimální počet operací, které lze vzít zpět. Více úrovní zpětných "
 "úprav se udržuje, dokud není překročen limit undo-size."
 
-#: ../app/config/gimprc-blurbs.h:412
+#: ../app/config/gimprc-blurbs.h:411
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -4605,15 +4604,15 @@ msgstr ""
 "zpětných úprav jednoho obrázku. Bez ohledu na toto nastavení je možné vrátit "
 "zpět alespoň tolik operací, kolik je nastaveno."
 
-#: ../app/config/gimprc-blurbs.h:417
+#: ../app/config/gimprc-blurbs.h:416
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Nastavuje velikost náhledů v historii změn."
 
-#: ../app/config/gimprc-blurbs.h:420
+#: ../app/config/gimprc-blurbs.h:419
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Je-li povoleno, stisknutí F1 otevře prohlížeč nápovědy."
 
-#: ../app/config/gimprc-blurbs.h:423
+#: ../app/config/gimprc-blurbs.h:422
 #, c-format
 msgid ""
 "Sets the external web browser to be used.  This can be an absolute path or "
