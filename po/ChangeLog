@@ -1,3 +1,7 @@
+2006-07-18  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Czech update
+
 2006-07-17  Jakub Friedl  <jfriedl@suse.cz>
 
 	* cs.po: fixed a bug in translation
@@ -201,7 +205,7 @@
 
 2006-03-29  Vladimer Sichinava  <vlsichinava@gmail.com>
 
-        * ka.po: Added Georgian translation by
+	* ka.po: Added Georgian translation by
 	  George Machitidze  <giomac@security.gov.ge>
 
 2006-03-20  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
