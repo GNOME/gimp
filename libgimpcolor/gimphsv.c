@@ -19,11 +19,38 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <glib-object.h>
 
 #include "gimpcolortypes.h"
 
 #include "gimphsv.h"
+
+
+/*
+ * GIMP_TYPE_HSV
+ */
+
+static GimpHSV * gimp_hsv_copy (const GimpHSV *hsv);
+
+
+GType
+gimp_hsv_get_type (void)
+{
+  static GType hsv_type = 0;
+
+  if (!hsv_type)
+    hsv_type = g_boxed_type_register_static ("GimpHSV",
+                                              (GBoxedCopyFunc) gimp_hsv_copy,
+                                              (GBoxedFreeFunc) g_free);
+
+  return hsv_type;
+}
+
+static GimpHSV *
+gimp_hsv_copy (const GimpHSV *hsv)
+{
+  return g_memdup (hsv, sizeof (GimpHSV));
+}
 
 
 /*  HSV functions  */

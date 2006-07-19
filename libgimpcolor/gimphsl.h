@@ -17,8 +17,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_HSV_H__
-#define __GIMP_HSV_H__
+#ifndef __GIMP_HSL_H__
+#define __GIMP_HSL_H__
 
 G_BEGIN_DECLS
 
@@ -26,26 +26,14 @@ G_BEGIN_DECLS
 
 
 /*
- * GIMP_TYPE_HSV
+ * GIMP_TYPE_HSL
  */
 
-#define GIMP_TYPE_HSV       (gimp_hsv_get_type ())
+#define GIMP_TYPE_HSL       (gimp_hsl_get_type ())
 
-GType   gimp_hsv_get_type   (void) G_GNUC_CONST;
-
-void    gimp_hsv_set        (GimpHSV       *hsv,
-                             gdouble        hue,
-                             gdouble        saturation,
-                             gdouble        value);
-void    gimp_hsv_clamp      (GimpHSV       *hsv);
-
-void    gimp_hsva_set       (GimpHSV       *hsva,
-                             gdouble        hue,
-                             gdouble        saturation,
-                             gdouble        value,
-                             gdouble        alpha);
+GType   gimp_hsl_get_type   (void) G_GNUC_CONST;
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_HSV_H__ */
+#endif  /* __GIMP_HSL_H__ */

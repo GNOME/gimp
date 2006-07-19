@@ -17,35 +17,37 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_HSV_H__
-#define __GIMP_HSV_H__
+#include "config.h"
 
-G_BEGIN_DECLS
+#include <glib-object.h>
 
-/* For information look into the C source or the html documentation */
+#include "gimpcolortypes.h"
+
+#include "gimphsl.h"
 
 
 /*
- * GIMP_TYPE_HSV
+ * GIMP_TYPE_HSL
  */
 
-#define GIMP_TYPE_HSV       (gimp_hsv_get_type ())
-
-GType   gimp_hsv_get_type   (void) G_GNUC_CONST;
-
-void    gimp_hsv_set        (GimpHSV       *hsv,
-                             gdouble        hue,
-                             gdouble        saturation,
-                             gdouble        value);
-void    gimp_hsv_clamp      (GimpHSV       *hsv);
-
-void    gimp_hsva_set       (GimpHSV       *hsva,
-                             gdouble        hue,
-                             gdouble        saturation,
-                             gdouble        value,
-                             gdouble        alpha);
+static GimpHSL * gimp_hsl_copy (const GimpHSL *hsl);
 
 
-G_END_DECLS
+GType
+gimp_hsl_get_type (void)
+{
+  static GType hsl_type = 0;
 
-#endif  /* __GIMP_HSV_H__ */
+  if (!hsl_type)
+    hsl_type = g_boxed_type_register_static ("GimpHSL",
+                                              (GBoxedCopyFunc) gimp_hsl_copy,
+                                              (GBoxedFreeFunc) g_free);
+
+  return hsl_type;
+}
+
+static GimpHSL *
+gimp_hsl_copy (const GimpHSL *hsl)
+{
+  return g_memdup (hsl, sizeof (GimpHSL));
+}

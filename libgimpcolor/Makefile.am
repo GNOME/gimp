@@ -72,6 +72,8 @@ libgimpcolor_2_0_la_SOURCES = \
 	gimpcmyk.h			\
 	gimpcolorspace.c		\
 	gimpcolorspace.h		\
+	gimphsl.c			\
+	gimphsl.h			\
 	gimphsv.c			\
 	gimphsv.h			\
 	gimprgb.c			\
@@ -85,6 +87,7 @@ libgimpcolorinclude_HEADERS = \
 	gimpbilinear.h			\
 	gimpcmyk.h			\
 	gimpcolorspace.h		\
+	gimphsl.h			\
 	gimphsv.h			\
 	gimprgb.h
 

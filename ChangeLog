@@ -1,3 +1,13 @@
+2006-07-19  Manish Singh  <yosh@gimp.org>
+
+	* libgimpcolor/gimpcmyk.[ch]
+	* libgimpcolor/gimphsl.[ch]
+	* libgimpcolor/gimphsv.[ch]: create boxed types for GimpCMYK,
+	GimpHSL, and GimpHSV.
+
+	* libgimpcolor/gimpcolor.h
+	* libgimpcolor/Makefile.am: include new gimphsl.[ch] files.
+
 2006-07-19  Sven Neumann  <sven@gimp.org>
 
 	Make message dialogs transient for the progress window. Addresses

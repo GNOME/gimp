@@ -26,40 +26,48 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-void      gimp_cmyk_set        (GimpCMYK       *cmyk,
-                                gdouble         cyan,
-                                gdouble         magenta,
-                                gdouble         yellow,
-                                gdouble         black);
-void      gimp_cmyk_set_uchar  (GimpCMYK       *cmyk,
-                                guchar          cyan,
-                                guchar          magenta,
-                                guchar          yellow,
-                                guchar          black);
-void      gimp_cmyk_get_uchar  (const GimpCMYK *cmyk,
-                                guchar         *cyan,
-                                guchar         *magenta,
-                                guchar         *yellow,
-                                guchar         *black);
+/*
+ * GIMP_TYPE_CMYK
+ */
 
-void      gimp_cmyka_set       (GimpCMYK       *cmyka,
-                                gdouble         cyan,
-                                gdouble         magenta,
-                                gdouble         yellow,
-                                gdouble         black,
-                                gdouble         alpha);
-void      gimp_cmyka_set_uchar (GimpCMYK       *cmyka,
-                                guchar          cyan,
-                                guchar          magenta,
-                                guchar          yellow,
-                                guchar          black,
-                                guchar          alpha);
-void      gimp_cmyka_get_uchar (const GimpCMYK *cmyka,
-                                guchar         *cyan,
-                                guchar         *magenta,
-                                guchar         *yellow,
-                                guchar         *black,
-                                guchar         *alpha);
+#define GIMP_TYPE_CMYK       (gimp_cmyk_get_type ())
+
+GType   gimp_cmyk_get_type   (void) G_GNUC_CONST;
+
+void    gimp_cmyk_set        (GimpCMYK       *cmyk,
+                              gdouble         cyan,
+                              gdouble         magenta,
+                              gdouble         yellow,
+                              gdouble         black);
+void    gimp_cmyk_set_uchar  (GimpCMYK       *cmyk,
+                              guchar          cyan,
+                              guchar          magenta,
+                              guchar          yellow,
+                              guchar          black);
+void    gimp_cmyk_get_uchar  (const GimpCMYK *cmyk,
+                              guchar         *cyan,
+                              guchar         *magenta,
+                              guchar         *yellow,
+                              guchar         *black);
+
+void    gimp_cmyka_set       (GimpCMYK       *cmyka,
+                              gdouble         cyan,
+                              gdouble         magenta,
+                              gdouble         yellow,
+                              gdouble         black,
+                              gdouble         alpha);
+void    gimp_cmyka_set_uchar (GimpCMYK       *cmyka,
+                              guchar          cyan,
+                              guchar          magenta,
+                              guchar          yellow,
+                              guchar          black,
+                              guchar          alpha);
+void    gimp_cmyka_get_uchar (const GimpCMYK *cmyka,
+                              guchar         *cyan,
+                              guchar         *magenta,
+                              guchar         *yellow,
+                              guchar         *black,
+                              guchar         *alpha);
 
 
 G_END_DECLS
