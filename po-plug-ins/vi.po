@@ -7465,7 +7465,7 @@ msgstr "_Góc gai (-1: ngẫu nhiên):"
 
 #: ../plug-ins/common/sparkle.c:431
 msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
-msgstr "Điều chỉnh góc gai (-1 có nghĩa là góc ngẫu bhiên đã chọn)"
+msgstr "Điều chỉnh góc gai (-1 có nghĩa là góc ngẫu nhiên đã chọn)"
 
 #: ../plug-ins/common/sparkle.c:442
 msgid "Spik_e density:"
