@@ -19,6 +19,8 @@ libappgui_a_SOURCES = \
 	color-history.h		\
 	gui.c			\
 	gui.h			\
+	gui-message.c		\
+	gui-message.h		\
 	gui-vtable.c		\
 	gui-vtable.h		\
 	gui-types.h		\

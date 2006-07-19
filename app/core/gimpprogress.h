@@ -78,7 +78,7 @@ void           gimp_progress_pulse              (GimpProgress *progress);
 
 guint32        gimp_progress_get_window         (GimpProgress *progress);
 
-void           gimp_progress_message            (GimpProgress *progress,
+gboolean       gimp_progress_message            (GimpProgress *progress,
                                                  Gimp         *gimp,
                                                  const gchar  *domain,
                                                  const gchar  *message);

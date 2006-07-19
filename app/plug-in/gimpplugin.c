@@ -921,8 +921,8 @@ gimp_plug_in_remove_temp_proc (GimpPlugIn             *plug_in,
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (GIMP_IS_TEMPORARY_PROCEDURE (proc));
 
-  plug_in->temp_procedures = g_slist_remove (plug_in->temp_procedures,
-                                             proc);
+  plug_in->temp_procedures = g_slist_remove (plug_in->temp_procedures, proc);
+
   gimp_plug_in_manager_remove_temp_proc (plug_in->manager, proc);
   g_object_unref (proc);
 }

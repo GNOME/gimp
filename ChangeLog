@@ -1,3 +1,33 @@
+2006-07-19  Sven Neumann  <sven@gimp.org>
+
+	Make message dialogs transient for the progress window. Addresses
+	bug #347214.
+
+	* app/core/gimp-gui.[ch]: added a progress parameter to
+	gimp_message().  Let gimp_message() deal with optionally
+	delegating the message to gimp_progress_message().
+
+	* app/errors.c: changed accordingly.
+
+	* app/core/gimpprogress.[ch] (gimp_progress_message): return a
+	boolean indicating whether the message was handled.
+
+	* app/gui/Makefile.am
+	* app/gui/gui-message.[ch]
+	* app/gui/gui-vtable.c: moved message handling to a new file. Only
+	use the global error dialog for messages without a progress.
+	Otherwise attach an error dialog to the progress and try to make
+	it transient to the progress window.
+
+	* tools/pdbgen/pdb/message.pdb:
+	* app/plug-in/gimpplugin-progress.[ch]: don't delegate messages to
+	the progress interface, this is handled by gimp_message() now.
+
+	* app/pdb/message_cmds.c: regenerated.
+
+	* app/plug-in/gimpplugin.c
+	* app/actions/documents-commands.c: formatting. 
+
 2006-07-18  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* INSTALL: Document --enable-profile, --disable-python, and

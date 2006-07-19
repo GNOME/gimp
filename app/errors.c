@@ -91,7 +91,7 @@ gimp_message_log_func (const gchar    *log_domain,
 
   if (gimp && GIMP_IS_GIMP (*gimp))
     {
-      gimp_message (*gimp, NULL, message);
+      gimp_message (*gimp, NULL, NULL, message);
       return;
     }
 

@@ -250,8 +250,10 @@ file_open_thumbnail (Gimp          *gimp,
 
               *mime_type = file_proc->mime_type;
 
+#ifdef GIMP_UNSTABLE
               g_printerr ("opened thumbnail at %d x %d\n",
                           image->width, image->height);
+#endif
             }
         }
 

@@ -310,15 +310,14 @@ documents_open_image (GimpContext   *context,
   uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
   image = file_open_with_display (context->gimp, context, NULL,
-                                   uri, &status, &error);
+                                  uri, &status, &error);
 
   if (! image && status != GIMP_PDB_CANCEL)
     {
       gchar *filename;
 
       filename = file_utils_uri_display_name (uri);
-      g_message (_("Opening '%s' failed:\n\n%s"),
-                 filename, error->message);
+      g_message (_("Opening '%s' failed:\n\n%s"), filename, error->message);
       g_clear_error (&error);
 
       g_free (filename);

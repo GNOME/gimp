@@ -31,7 +31,6 @@
 
 #include "core/gimp.h"
 #include "gimp-intl.h"
-#include "plug-in/gimpplugin-progress.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
 
@@ -50,11 +49,13 @@ message_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
+      gchar *domain = NULL;
+
       if (gimp->plug_in_manager->current_plug_in)
-        gimp_plug_in_progress_message (gimp->plug_in_manager->current_plug_in,
-                                       message);
-      else
-        gimp_message (gimp, NULL, message);
+        domain = gimp_plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
+      gimp_message (gimp, progress, domain, message);
+
+      g_free (domain);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

@@ -196,6 +196,7 @@ app/file/file-save.c
 app/file/file-utils.c
 
 app/gui/gui.c
+app/gui/gui-message.c
 app/gui/session.c
 app/gui/splash.c
 app/gui/themes.c

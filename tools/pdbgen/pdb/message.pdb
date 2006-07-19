@@ -35,11 +35,13 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
+  gchar *domain = NULL;
+
   if (gimp->plug_in_manager->current_plug_in)
-    gimp_plug_in_progress_message (gimp->plug_in_manager->current_plug_in,
-                                   message);
-  else
-    gimp_message (gimp, NULL, message);
+    domain = gimp_plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
+  gimp_message (gimp, progress, domain, message);
+    
+  g_free (domain);
 }
 CODE
     );
@@ -99,7 +101,6 @@ CODE
 @headers = qw(<string.h>
               "core/gimp.h"
               "plug-in/gimpplugin.h"
-              "plug-in/gimpplugin-progress.h"
               "plug-in/gimppluginmanager.h"
               "gimp-intl.h");
 

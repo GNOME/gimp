@@ -40,8 +40,5 @@ gboolean   gimp_plug_in_progress_uninstall  (GimpPlugIn  *plug_in,
 gboolean   gimp_plug_in_progress_cancel     (GimpPlugIn  *plug_in,
                                              const gchar *progress_callback);
 
-void      gimp_plug_in_progress_message     (GimpPlugIn  *plug_in,
-                                             const gchar *message);
-
 
 #endif /* __GIMP_PLUG_IN_PROGRESS_H__ */
