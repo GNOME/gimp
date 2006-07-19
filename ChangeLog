@@ -1,5 +1,10 @@
 2006-07-19  Manish Singh  <yosh@gimp.org>
 
+	* libgimpwidgets/gimpdialog.[ch]: add gimp_dialog_add_button[s] API,
+	primarily for language bindings.
+
+2006-07-19  Manish Singh  <yosh@gimp.org>
+
 	* libgimpcolor/gimpcmyk.[ch]
 	* libgimpcolor/gimphsl.[ch]
 	* libgimpcolor/gimphsv.[ch]: create boxed types for GimpCMYK,

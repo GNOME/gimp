@@ -75,6 +75,11 @@ GtkWidget * gimp_dialog_new_valist         (const gchar    *title,
                                             const gchar    *help_id,
                                             va_list         args);
 
+GtkWidget * gimp_dialog_add_button         (GimpDialog     *dialog,
+                                            const gchar    *button_text,
+                                            gint            response_id);
+void        gimp_dialog_add_buttons        (GimpDialog     *dialog,
+                                            ...) G_GNUC_NULL_TERMINATED;
 void        gimp_dialog_add_buttons_valist (GimpDialog     *dialog,
                                             va_list         args);
 

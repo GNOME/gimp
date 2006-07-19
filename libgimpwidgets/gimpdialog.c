@@ -411,11 +411,71 @@ gimp_dialog_new_valist (const gchar    *title,
 }
 
 /**
+ * gimp_dialog_add_button:
+ * @dialog: The @dialog to add a button to.
+ * @button_text: text of button, or stock ID.
+ * @response_id: response ID for the button.
+ *
+ * This function is essentially the same as gtk_dialog_add_button()
+ * except it ensures there is only one help button and automatically
+ * sets the RESPONSE_OK widget as the default response.
+ *
+ * Return value: the button widget that was added.
+ **/
+GtkWidget *
+gimp_dialog_add_button (GimpDialog  *dialog,
+                        const gchar *button_text,
+                        gint         response_id)
+{
+  GtkWidget *button;
+
+  /*  hide the automatically added help button if another one is added  */
+  if (response_id == GTK_RESPONSE_HELP)
+    {
+      GtkWidget *help_button = g_object_get_data (G_OBJECT (dialog),
+                                                  "gimp-dialog-help-button");
+      if (help_button)
+        gtk_widget_hide (help_button);
+    }
+
+  button = gtk_dialog_add_button (GTK_DIALOG (dialog), button_text,
+                                  response_id);
+
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+                                       GTK_RESPONSE_OK);
+    }
+
+  return button;
+}
+
+/**
+ * @dialog: The @dialog to add buttons to.
+ * @Varargs: button_text-response_id pairs.
+ *
+ * This function is essentially the same as gtk_dialog_add_buttons()
+ * except it calls gimp_dialog_add_button() instead of gtk_dialog_add_button()
+ **/
+void
+gimp_dialog_add_buttons (GimpDialog *dialog,
+                         ...)
+{
+  va_list args;
+
+  va_start (args, dialog);
+
+  gimp_dialog_add_buttons_valist (dialog, args);
+
+  va_end (args);
+}
+
+/**
  * gimp_dialog_add_buttons_valist:
  * @dialog: The @dialog to add buttons to.
  * @args:   The buttons as va_list.
  *
- * This function is essentially the same as gtk_dialog_add_buttons()
+ * This function is essentially the same as gimp_dialog_add_buttons()
  * except it takes a va_list instead of '...'
  **/
 void
@@ -431,22 +491,7 @@ gimp_dialog_add_buttons_valist (GimpDialog *dialog,
     {
       response_id = va_arg (args, gint);
 
-      /*  hide the automatically added help button if another one is added  */
-      if (response_id == GTK_RESPONSE_HELP)
-        {
-          GtkWidget *button = g_object_get_data (G_OBJECT (dialog),
-                                                 "gimp-dialog-help-button");
-          if (button)
-            gtk_widget_hide (button);
-        }
-
-      gtk_dialog_add_button (GTK_DIALOG (dialog), button_text, response_id);
-
-      if (response_id == GTK_RESPONSE_OK)
-        {
-          gtk_dialog_set_default_response (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK);
-        }
+      gimp_dialog_add_button (dialog, button_text, response_id);
     }
 }
 
