@@ -1,5 +1,10 @@
 2006-07-20  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/py-slice.py: use PF_DIRNAME for save_path.
+	Fixes bug #138714.
+
+2006-07-20  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/gimpui.py: make DrawableSelector work again.
 
 2006-07-20  Manish Singh  <yosh@gimp.org>

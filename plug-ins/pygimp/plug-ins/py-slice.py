@@ -427,7 +427,7 @@ layers are used as clicked, mouse over and normal views.""",
     "<Image>/Filters/Web/_Py-Slice...",
     "*",
     [
-        (PF_STRING, "save_path", "The path to export the HTML to", os.getcwd()),
+        (PF_DIRNAME, "save_path", "The path to export the HTML to", os.getcwd()),
         (PF_STRING, "html_filename", "Filename to export", "py-slice.html"),
         (PF_STRING, "image_basename", "What to call the images", "pyslice"),
         (PF_RADIO, "image_extension", "The format of the images: {gif, jpg, png}",
