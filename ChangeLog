@@ -1,5 +1,10 @@
 2006-07-20  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/gimpui.override: manually wrap the function
+	gimp_brush_select_button_get_brush().
+
+2006-07-20  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/plug-ins/py-slice.py: use PF_DIRNAME for save_path.
 	Fixes bug #138714.
 
