@@ -1,5 +1,11 @@
 2006-07-19  Manish Singh  <yosh@gimp.org>
 
+	* libgimp/gimpgradientselectbutton.c
+	* libgimp/gimppatternselectbutton.c: Make doc comments match
+	reality.
+
+2006-07-19  Manish Singh  <yosh@gimp.org>
+
 	* libgimpwidgets/gimpdialog.[ch]: add gimp_dialog_add_button[s] API,
 	primarily for language bindings.
 
