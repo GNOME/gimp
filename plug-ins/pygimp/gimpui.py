@@ -189,7 +189,7 @@ class FontSelector(FontSelectButton):
         if default:
             self.set_font(default)
     def get_value(self):
-        return self.get_font_name()
+        return self.get_font()
                 
 class FileSelector(gtk.FileChooserButton):
     def __init__(self, default=""):

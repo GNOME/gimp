@@ -1,5 +1,10 @@
 2006-07-19  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/gimpui.py: font select API is get_font, not
+	get_font_name.
+
+2006-07-19  Manish Singh  <yosh@gimp.org>
+
 	This is the start of wrapping much more of the GIMP API in Python.
 	It's not complete yet, some things are broken.
 
