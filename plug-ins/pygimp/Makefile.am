@@ -25,7 +25,8 @@ pygimpbase = python
 
 pygimpdir = $(gimpplugindir)/$(pygimpbase)
 
-pygimp_LTLIBRARIES = gimp.la _gimpenums.la gimpcolor.la gimpprocbrowser.la
+pygimp_LTLIBRARIES = gimp.la _gimpenums.la gimpcolor.la _gimpui.la \
+	gimpprocbrowser.la
 
 gimp_la_SOURCES = \
 	gimpmodule.c		\
@@ -66,16 +67,37 @@ _gimpenums_la_LIBADD = \
 
 gimpcolor_la_SOURCES = \
 	gimpcolormodule.c	\
-	pygimp-rgb.c		\
-	pygimpcolor.h
+	pygimp-colors.c		\
+	pygimpcolor.h		\
+	pygimpcolor-api.h
 
 gimpcolor_la_LDFLAGS = -module -avoid-version $(no_undefined) \
 	-export-symbols-regex initgimpcolor
 
 gimpcolor_la_LIBADD = \
-	$(libgimpcolor)	\
-	$(GLIB_LIBS)	\
+	$(libgimpcolor)		\
+	$(GLIB_LIBS)		\
 	$(PYLINK_LIBS)
+
+_gimpui_la_SOURCES = \
+	gimpuimodule.c		\
+	gimpui.c
+
+_gimpui_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+	-export-symbols-regex init_gimpui
+
+_gimpui_la_LIBADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpconfig)	\
+	$(libgimpmath)		\
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(PYLINK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
 
 gimpprocbrowser_la_SOURCES = \
 	procbrowser.c
@@ -97,13 +119,16 @@ gimpprocbrowser_la_LIBADD = \
 	$(INTLLIBS)
 
 pygimp_PYTHON = \
-	gimpplugin.py	\
 	gimpenums.py	\
+	gimpfu.py	\
+	gimpplugin.py	\
 	gimpshelf.py	\
-	gimpui.py	\
-	gimpfu.py
+	gimpui.py
 
 pygimp_DATA = pygimp-logo.png
+
+codegen_files = gimpcolor-types.defs gimpenums-types.defs \
+	gimpui.defs gimpui.override
 
 pyenvdir = $(gimpplugindir)/environ
 pyinterpdir = $(gimpplugindir)/interpreters
@@ -127,5 +152,22 @@ uninstall-local:
 	rm -f '$(DESTDIR)$(pyenvfile)' '$(DESTDIR)$(pyinterpfile)'
 
 EXTRA_DIST = \
-	$(pygimp_DATA)	\
+	$(pygimp_DATA)		\
+	$(codegen_files)	\
 	makefile.msc
+
+gimpui.c: gimpui.defs gimpui.override gimpcolor-types.defs gimpenums-types.defs
+
+CLEANFILES = gimpui.c
+
+.defs.c:
+	(cd $(srcdir) \
+	 && $(PYGTK_CODEGEN) \
+	    --override $*.override \
+	    --register $(PYGTK_DEFSDIR)/gdk-types.defs \
+	    --register $(PYGTK_DEFSDIR)/gtk-types.defs \
+	    --register $(srcdir)/gimpcolor-types.defs \
+	    --register $(srcdir)/gimpenums-types.defs \
+	    --prefix $* $*.defs) > gen-$*.c \
+	 && cp gen-$*.c $*.c \
+	 && rm -f gen-$*.c

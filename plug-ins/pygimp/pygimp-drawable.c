@@ -23,6 +23,13 @@
 
 #include "pygimp.h"
 
+#define NO_IMPORT_PYGIMPCOLOR
+#include "pygimpcolor-api.h"
+
+#include <glib-object.h>
+
+#include <pygobject.h>
+
 static void
 ensure_drawable(PyGimpDrawable *self)
 {
@@ -1844,41 +1851,42 @@ static PyMethodDef chn_methods[] = {
 static PyObject *
 chn_get_color(PyGimpChannel *self, void *closure)
 {
-    GimpRGB colour;
-    guchar r, g, b;
+    GimpRGB rgb;
 
-    if (!gimp_channel_get_color(self->ID, &colour)) {
+    if (!gimp_channel_get_color(self->ID, &rgb)) {
 	PyErr_Format(pygimp_error,
 		     "could not get compositing color of channel (ID %d)",
 		     self->ID);
 	return NULL;
     }
 
-    gimp_rgb_get_uchar(&colour, &r, &g, &b);
-
-    return Py_BuildValue("(iii)", (long)r, (long)g, (long)b);
+    return pygimp_rgb_new(&rgb);
 }
 
 static int
 chn_set_color(PyGimpChannel *self, PyObject *value, void *closure)
 {
     guchar r, g, b;
-    GimpRGB colour;
+    GimpRGB tmprgb, *rgb;
 
     if (value == NULL) {
         PyErr_SetString(PyExc_TypeError, "cannot delete color");
         return -1;
     }
 
-    if (!PyTuple_Check(value) || !PyArg_ParseTuple(value, "(BBB)", &r, &g, &b)) {
+    if (pygimp_rgb_check(value)) {
+	rgb = pyg_boxed_get(value, GimpRGB);
+    } else if (PyTuple_Check(value) &&
+	       PyArg_ParseTuple(value, "(BBB)", &r, &g, &b)) {
+	gimp_rgb_set_uchar(&tmprgb, r, g, b);
+	rgb = &tmprgb;
+    } else {
 	PyErr_Clear();
 	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
 
-    gimp_rgb_set_uchar(&colour, r, g, b);
-
-    if (!gimp_channel_set_color(self->ID, &colour)) {
+    if (!gimp_channel_set_color(self->ID, rgb)) {
 	PyErr_Format(pygimp_error,
 		     "could not set compositing color on channel (ID %d)",
 		     self->ID);
@@ -1971,20 +1979,30 @@ static int
 chn_init(PyGimpChannel *self, PyObject *args, PyObject *kwargs)
 {
     PyGimpImage *img;
+    PyObject *color;
     char *name;
     unsigned int width, height, r, g, b;
     double opacity;
-    GimpRGB colour;
+    GimpRGB tmprgb, *rgb;
 
-    if (!PyArg_ParseTuple(args, "O!siid(iii):gimp.Channel.__init__",
+    if (!PyArg_ParseTuple(args, "O!siidO:gimp.Channel.__init__",
 			  &PyGimpImage_Type, &img, &name, &width,
-			  &height, &opacity, &r, &g, &b))
+			  &height, &opacity, &color))
 	return -1;
 
-    gimp_rgb_set_uchar(&colour, r & 0xff, g & 0xff, b & 0xff);
+    if (pygimp_rgb_check(color)) {
+	rgb = pyg_boxed_get(color, GimpRGB);
+    } else if (PyTuple_Check(color) &&
+	       PyArg_ParseTuple(color, "(BBB)", &r, &g, &b)) {
+	gimp_rgb_set_uchar(&tmprgb, r, g, b);
+	rgb = &tmprgb;
+    } else {
+	PyErr_Clear();
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
+	return -1;
+    }
 
-    self->ID = gimp_channel_new(img->ID, name, width, height,
-				opacity, &colour);
+    self->ID = gimp_channel_new(img->ID, name, width, height, opacity, rgb);
 
     self->drawable = NULL;
 

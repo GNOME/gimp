@@ -21,7 +21,15 @@
 #  include <config.h>
 #endif
 #include "pygimp.h"
+
+#define NO_IMPORT_PYGIMPCOLOR
+#include "pygimpcolor-api.h"
+
 #include <structmember.h>
+
+#include <glib-object.h>
+
+#include <pygobject.h>
 
 #ifndef PG_DEBUG
 # define PG_DEBUG 0
@@ -250,11 +258,7 @@ pygimp_param_to_tuple(int nparams, const GimpParam *params)
 			PyString_FromString(""));
 	    break;
 	case GIMP_PDB_COLOR:
-	    {
-		guchar r, g, b;
-		gimp_rgb_get_uchar(&params[i].data.d_color, &r, &g, &b);
-		value = Py_BuildValue("(iii)", (int)r, (int)g, (int)b);
-	    }
+	    value = pygimp_rgb_new(&params[i].data.d_color);
 	    break;
 	case GIMP_PDB_REGION:
 	    value = Py_BuildValue("(iiii)",
@@ -405,7 +409,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	case GIMP_PDB_INT8ARRAY:
 	    check(!PySequence_Check(item));
 	    len = PySequence_Length(item);
-	    i8a = g_new(gint8, len);
+	    i8a = g_new(guint8, len);
 	    for (j = 0; j < len; j++) {
 		x = PySequence_GetItem(item, j);
 		arraycheck((y=PyNumber_Int(x))==NULL,
@@ -446,14 +450,25 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    ret[i].data.d_stringarray = sa;
 	    break;
 	case GIMP_PDB_COLOR:
-	    check(!PySequence_Check(item) || PySequence_Length(item) < 3);
-	    r = PySequence_GetItem(item, 0);
-	    g = PySequence_GetItem(item, 1);
-	    b = PySequence_GetItem(item, 2);
-	    check(!PyInt_Check(r) || !PyInt_Check(g) ||
-		  !PyInt_Check(b));
-	    gimp_rgba_set_uchar(&ret[i].data.d_color, PyInt_AsLong(r),
-				PyInt_AsLong(g), PyInt_AsLong(b), 255);
+	    {
+		GimpRGB *rgb, tmprgb;
+
+		if (!pygimp_rgb_check(item)) {
+		    check(!PySequence_Check(item) ||
+			  PySequence_Length(item) < 3);
+		    r = PySequence_GetItem(item, 0);
+		    g = PySequence_GetItem(item, 1);
+		    b = PySequence_GetItem(item, 2);
+		    check(!PyInt_Check(r) || !PyInt_Check(g) ||
+			  !PyInt_Check(b));
+		    gimp_rgba_set_uchar(&tmprgb, PyInt_AsLong(r),
+					PyInt_AsLong(g), PyInt_AsLong(b), 255);
+		    rgb = &tmprgb;
+		} else {
+		    rgb = pyg_boxed_get(item, GimpRGB);
+		}
+		ret[i].data.d_color = *rgb;
+	    }
 	    break;
 	case GIMP_PDB_REGION:
 	    check(!PySequence_Check(item) ||

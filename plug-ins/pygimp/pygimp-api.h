@@ -28,6 +28,7 @@
 struct _PyGimp_Functions {
     PyObject *(* image_new)(gint32 ID);
     PyObject *(* display_new)(gint32 ID);
+    PyObject *(* drawable_new)(GimpDrawable *drawable, gint32 ID);
     PyObject *(* layer_new)(gint32 ID);
     PyObject *(* channel_new)(gint32 ID);
 

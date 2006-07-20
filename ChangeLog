@@ -1,5 +1,43 @@
 2006-07-19  Manish Singh  <yosh@gimp.org>
 
+	This is the start of wrapping much more of the GIMP API in Python.
+	It's not complete yet, some things are broken.
+
+	* plug-ins/pygimp/gimpcolormodule.c
+	* plug-ins/pygimp/pygimpcolor.h
+	* plug-ins/pygimp/pygimpcolor-api.h
+	* plug-ins/pygimp/pygimp-colors.c: wrapped GimpHSV, GimpHSL, and
+	GimpCMYK. Fleshed out a bit more of GimpRGB as well. Made the API
+	exportable to other modules.
+
+	* plug-ins/pygimp/pygimp-rgb.c: removed, subsumed into
+	pygimp-colors.c.
+
+	* plug-ins/pygimp/gimpmodule.c
+	* plug-ins/pygimp/pygimp-drawable.c
+	* plug-ins/pygimp/pygimp-pdb.c: PDB calls receive and create
+	gimpcolor.RGB objects now.
+
+	* plug-ins/pygimp/gimpmodule.c
+	* plug-ins/pygimp/pygimp-api.h: export pygimp_drawable_new.
+
+	* plug-ins/pygimp/gimpcolor-types.defs
+	* plug-ins/pygimp/gimpenums-types.defs
+	* plug-ins/pygimp/gimpui.defs
+	* plug-ins/pygimp/gimpui.override
+	* plug-ins/pygimp/gimpuimodule.c: new module for GIMP UI widget
+	bindings.
+
+	* plug-ins/pygimp/gimpui.py
+	* plug-ins/pygimp/gimpfu.py: use some of the new widgets.
+
+	* plug-ins/pygimp/Makefile.am: hook all the above into the build
+	system.
+
+	* plug-ins/pygimp/plug-ins/palette-sort.py: use new color API.
+
+2006-07-19  Manish Singh  <yosh@gimp.org>
+
 	* libgimp/gimpgradientselectbutton.c
 	* libgimp/gimppatternselectbutton.c: Make doc comments match
 	reality.

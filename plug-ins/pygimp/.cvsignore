@@ -14,4 +14,4 @@ aclocal.m4
 INSTALL
 mkinstalldirs
 install-sh
-
+gimpui.c

@@ -23,16 +23,16 @@
 
 #include "pygimp.h"
 
+#include "pygimpcolor-api.h"
+
 #define _INSIDE_PYGIMP_
 #include "pygimp-api.h"
 
 #include <sysmodule.h>
 
-#if PY_VERSION_HEX >= 0x2030000
-#define ARG_UINT_FORMAT "I"
-#else
-#define ARG_UINT_FORMAT "i"
-#endif
+#include <glib-object.h>
+
+#include <pygobject.h>
 
 /* maximum bits per pixel ... */
 #define MAX_BPP 4
@@ -771,45 +771,56 @@ pygimp_personal_rc_file(PyObject *self, PyObject *args, PyObject *kwargs)
 static PyObject *
 pygimp_get_background(PyObject *self)
 {
-    GimpRGB colour;
-    guchar r, g, b;
+    GimpRGB rgb;
 
-    gimp_context_get_background(&colour);
-    gimp_rgb_get_uchar(&colour, &r, &g, &b);
-
-    return Py_BuildValue("(iii)", (int)r, (int)g, (int)b);
+    gimp_context_get_background(&rgb);
+    return pygimp_rgb_new(&rgb);
 }
 
 static PyObject *
 pygimp_get_foreground(PyObject *self)
 {
-    GimpRGB colour;
-    guchar r, g, b;
+    GimpRGB rgb;
 
-    gimp_context_get_foreground(&colour);
-    gimp_rgb_get_uchar(&colour, &r, &g, &b);
-
-    return Py_BuildValue("(iii)", (int)r, (int)g, (int)b);
+    gimp_context_get_foreground(&rgb);
+    return pygimp_rgb_new(&rgb);
 }
 
 static PyObject *
 pygimp_set_background(PyObject *self, PyObject *args)
 {
-    GimpRGB colour;
+    PyObject *color;
+    GimpRGB tmprgb, *rgb;
     int r, g, b;
+    gboolean compat = FALSE;
 
-    if (!PyArg_ParseTuple(args, "(iii):set_background", &r, &g, &b)) {
+    if (!PyArg_ParseTuple(args, "O!:set_background",
+			  PyGimpRGB_Type, &color)) {
 	PyErr_Clear();
-	if (!PyArg_ParseTuple(args, "iii:set_background", &r, &g, &b))
-	    return NULL;
+	compat = TRUE;
+	if (!PyArg_ParseTuple(args, "(iii):set_background", &r, &g, &b)) {
+	    PyErr_Clear();
+	    if (!PyArg_ParseTuple(args, "iii:set_background", &r, &g, &b)) {
+		PyErr_Clear();
+		PyArg_ParseTuple(args, "O!:set_background",
+				 PyGimpRGB_Type, &color);
+		return NULL;
+	    }
+	}
     }
 
-    r = CLAMP(r, 0, 255);
-    g = CLAMP(g, 0, 255);
-    b = CLAMP(b, 0, 255);
+    if (compat) {
+	r = CLAMP(r, 0, 255);
+	g = CLAMP(g, 0, 255);
+	b = CLAMP(b, 0, 255);
 
-    gimp_rgb_set_uchar(&colour, r, g, b);
-    gimp_context_set_background(&colour);
+	gimp_rgb_set_uchar(&tmprgb, r, g, b);
+	rgb = &tmprgb;
+    } else {
+	rgb = pyg_boxed_get(color, GimpRGB);
+    }
+
+    gimp_context_set_background(rgb);
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -818,21 +829,38 @@ pygimp_set_background(PyObject *self, PyObject *args)
 static PyObject *
 pygimp_set_foreground(PyObject *self, PyObject *args)
 {
-    GimpRGB colour;
+    PyObject *color;
+    GimpRGB tmprgb, *rgb;
     int r, g, b;
+    gboolean compat = FALSE;
 
-    if (!PyArg_ParseTuple(args, "(iii):set_foreground", &r, &g, &b)) {
+    if (!PyArg_ParseTuple(args, "O!:set_foreground",
+			  PyGimpRGB_Type, &color)) {
 	PyErr_Clear();
-	if (!PyArg_ParseTuple(args, "iii:set_foreground", &r, &g, &b))
-	    return NULL;
+	compat = TRUE;
+	if (!PyArg_ParseTuple(args, "(iii):set_foreground", &r, &g, &b)) {
+	    PyErr_Clear();
+	    if (!PyArg_ParseTuple(args, "iii:set_foreground", &r, &g, &b)) {
+		PyErr_Clear();
+		PyArg_ParseTuple(args, "O!:set_foreground",
+				 PyGimpRGB_Type, &color);
+		return NULL;
+	    }
+	}
     }
 
-    r = CLAMP(r, 0, 255);
-    g = CLAMP(g, 0, 255);
-    b = CLAMP(b, 0, 255);
+    if (compat) {
+	r = CLAMP(r, 0, 255);
+	g = CLAMP(g, 0, 255);
+	b = CLAMP(b, 0, 255);
 
-    gimp_rgb_set_uchar(&colour, r, g, b);
-    gimp_context_set_foreground(&colour);
+	gimp_rgb_set_uchar(&tmprgb, r, g, b);
+	rgb = &tmprgb;
+    } else {
+	rgb = pyg_boxed_get(color, GimpRGB);
+    }
+
+    gimp_context_set_foreground(rgb);
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -1170,7 +1198,7 @@ pygimp_extension_process(PyObject *self, PyObject *args)
 {
     guint timeout;
 
-    if (!PyArg_ParseTuple(args, ARG_UINT_FORMAT ":extension_process", &timeout))
+    if (!PyArg_ParseTuple(args, "I:extension_process", &timeout))
 	return NULL;
 
     gimp_extension_process(timeout);
@@ -1511,6 +1539,7 @@ static struct PyMethodDef gimp_methods[] = {
 static struct _PyGimp_Functions pygimp_api_functions = {
     pygimp_image_new,
     pygimp_display_new,
+    pygimp_drawable_new,
     pygimp_layer_new,
     pygimp_channel_new,
 
@@ -1585,6 +1614,9 @@ initgimp(void)
     PyGimpParasite_Type.tp_new = PyType_GenericNew;
     if (PyType_Ready(&PyGimpParasite_Type) < 0)
 	return;
+
+    init_pygobject();
+    init_pygimpcolor();
 
     /* set the default python encoding to utf-8 */
     PyUnicode_SetDefaultEncoding("utf-8");

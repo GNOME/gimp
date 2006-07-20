@@ -32,7 +32,19 @@ G_BEGIN_DECLS
 
 extern PyTypeObject PyGimpRGB_Type;
 #define pygimp_rgb_check(v) (pyg_boxed_check((v), GIMP_TYPE_RGB))
-PyObject *pygimp_rgb_new(GimpRGB *rgb);
+PyObject *pygimp_rgb_new(const GimpRGB *rgb);
+
+extern PyTypeObject PyGimpHSV_Type;
+#define pygimp_hsv_check(v) (pyg_boxed_check((v), GIMP_TYPE_HSV))
+PyObject *pygimp_hsv_new(const GimpHSV *hsv);
+
+extern PyTypeObject PyGimpHSL_Type;
+#define pygimp_hsl_check(v) (pyg_boxed_check((v), GIMP_TYPE_HSL))
+PyObject *pygimp_hsl_new(const GimpHSL *hsl);
+
+extern PyTypeObject PyGimpCMYK_Type;
+#define pygimp_cmyk_check(v) (pyg_boxed_check((v), GIMP_TYPE_CMYK))
+PyObject *pygimp_cmyk_new(const GimpCMYK *cmyk);
 
 G_END_DECLS
 

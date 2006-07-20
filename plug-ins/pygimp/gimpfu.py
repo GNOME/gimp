@@ -271,10 +271,8 @@ def _interact(func_name, start_params):
     import pygtk
     pygtk.require('2.0')
 
-    import gtk
     import gimpui
-
-    gtk.rc_parse(gimp.gtkrc())
+    import gtk
 
     defaults = _get_defaults(func_name)
 
@@ -423,7 +421,7 @@ def _interact(func_name, start_params):
             #PF_INT32ARRAY  : ArrayEntry,
             #PF_FLOATARRAY  : ArrayEntry,
             #PF_STRINGARRAY : ArrayEntry,
-            PF_COLOUR      : gimpui.ColourSelector,
+            PF_COLOUR      : gimpui.ColorSelector,
             PF_REGION      : IntEntry,  # should handle differently ...
             PF_IMAGE       : gimpui.ImageSelector,
             PF_LAYER       : gimpui.LayerSelector,
@@ -451,9 +449,11 @@ def _interact(func_name, start_params):
 
     tooltips = gtk.Tooltips()
 
-    dialog = gtk.Dialog(func_name, None, 0,
-                        (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-                        gtk.STOCK_OK, gtk.RESPONSE_OK))
+    dialog = gimpui.Dialog(func_name, 'python-fu', None, 0, None, func_name,
+                           (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                            gtk.STOCK_OK, gtk.RESPONSE_OK))
+
+    dialog.set_alternative_button_order((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))
 
     hbox = gtk.HBox(False, 5)
     hbox.set_border_width(5)
@@ -482,6 +482,10 @@ def _interact(func_name, start_params):
 
     def response(dlg, id):
         if id == gtk.RESPONSE_OK:
+            if need_progress:
+                dlg.set_response_sensitive(gtk.RESPONSE_OK, False)
+                dlg.set_response_sensitive(gtk.RESPONSE_CANCEL, False)
+
             params = []
 
             try:

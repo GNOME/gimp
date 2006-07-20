@@ -1,6 +1,6 @@
 /* -*- Mode: C; c-basic-offset: 4 -*-
     Gimp-Python - allows the writing of Gimp plugins in Python.
-    Copyright (C) 2005  Manish Singh <yosh@gimp.org>
+    Copyright (C) 2005-2006  Manish Singh <yosh@gimp.org>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,14 +24,10 @@
 
 #include "pygimpcolor.h"
 
+#define _INSIDE_PYGIMPCOLOR_
+#include "pygimpcolor-api.h"
+
 #include "pygimp-util.h"
-
-
-#if PY_VERSION_HEX >= 0x2030000
-#define ARG_UINTARRAY_FORMAT "(IIII)"
-#else
-#define ARG_UINTARRAY_FORMAT "(iiii)"
-#endif
 
 
 static PyObject *
@@ -206,7 +202,7 @@ pygimp_bilinear_32(PyObject *self, PyObject *args, PyObject *kwargs)
     static char *kwlist[] = { "x", "y", "values", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-				     "dd" ARG_UINTARRAY_FORMAT ":bilinear_32",
+				     "dd(IIII):bilinear_32",
 				     kwlist,
 				     &x, &y,
 				     &values[0], &values[1],
@@ -352,16 +348,29 @@ static struct PyMethodDef gimpcolor_methods[] = {
 };
 
 
+static struct _PyGimpColor_Functions pygimpcolor_api_functions = {
+    &PyGimpRGB_Type,
+    pygimp_rgb_new,
+    &PyGimpHSV_Type,
+    pygimp_hsv_new,
+    &PyGimpHSL_Type,
+    pygimp_hsl_new,
+    &PyGimpCMYK_Type,
+    pygimp_cmyk_new
+};
+
+
 /* Initialization function for the module (*must* be called initgimpcolor) */
 
 static char gimpcolor_doc[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 
-DL_EXPORT(void)
+PyMODINIT_FUNC
 initgimpcolor(void)
 {
     PyObject *m, *d;
+    PyObject *i;
 
     pygimp_init_pygobject();
 
@@ -369,7 +378,11 @@ initgimpcolor(void)
     m = Py_InitModule3("gimpcolor", gimpcolor_methods, gimpcolor_doc);
 
     d = PyModule_GetDict(m);
+
     pyg_register_boxed(d, "RGB", GIMP_TYPE_RGB, &PyGimpRGB_Type);
+    pyg_register_boxed(d, "HSV", GIMP_TYPE_HSV, &PyGimpHSV_Type);
+    pyg_register_boxed(d, "HSL", GIMP_TYPE_HSL, &PyGimpHSL_Type);
+    pyg_register_boxed(d, "CMYK", GIMP_TYPE_CMYK, &PyGimpCMYK_Type);
 
     PyModule_AddObject(m, "RGB_COMPOSITE_NONE",
 		       PyInt_FromLong(GIMP_RGB_COMPOSITE_NONE));
@@ -378,6 +391,17 @@ initgimpcolor(void)
     PyModule_AddObject(m, "RGB_COMPOSITE_BEHIND",
 		       PyInt_FromLong(GIMP_RGB_COMPOSITE_BEHIND));
 
+    PyModule_AddObject(m, "RGB_LUMINANCE_RED",
+		       PyFloat_FromDouble(GIMP_RGB_LUMINANCE_RED));
+    PyModule_AddObject(m, "RGB_LUMINANCE_GREEN",
+		       PyFloat_FromDouble(GIMP_RGB_LUMINANCE_GREEN));
+    PyModule_AddObject(m, "RGB_LUMINANCE_BLUE",
+		       PyFloat_FromDouble(GIMP_RGB_LUMINANCE_BLUE));
+
+    /* for other modules */
+    PyDict_SetItemString(d, "_PyGimpColor_API",
+			 i=PyCObject_FromVoidPtr(&pygimpcolor_api_functions, NULL));
+    Py_DECREF(i);
     /* Check for errors */
     if (PyErr_Occurred())
 	Py_FatalError("can't initialize module gimpcolor");
