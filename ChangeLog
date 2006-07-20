@@ -1,3 +1,12 @@
+2006-07-20  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpui.py: make the FileSelector class work
+	again.
+
+	* plug-ins/pygimp/gimpfu.py: add PF_FILENAME and PF_DIRNAME to
+	match script-fu. Also, if the default value for PF_FILE ends in '/',
+	it goes PF_DIRNAME mode.
+
 2006-07-19  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpui.py: font select API is get_font, not

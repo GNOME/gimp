@@ -109,6 +109,8 @@ PF_GRADIENT    = 1007
 PF_RADIO       = 1008
 PF_TEXT        = 1009
 PF_PALETTE     = 1010
+PF_FILENAME    = 1011
+PF_DIRNAME     = 1012
 
 _type_mapping = {
     PF_INT8        : PDB_INT8,
@@ -140,6 +142,8 @@ _type_mapping = {
     PF_RADIO       : PDB_STRING,
     PF_TEXT        : PDB_STRING,
     PF_PALETTE     : PDB_STRING,
+    PF_FILENAME    : PDB_STRING,
+    PF_DIRNAME     : PDB_STRING,
 }
 
 _registered_plugins_ = {}
@@ -164,7 +168,7 @@ def register(func_name, blurb, help, author, copyright, date, menupath,
     for ent in params:
         if len(ent) < 4:
             raise error, ("parameter definition must contain at least 4 "
-                        "elements (%s given: %s)" % (len(ent), ent))
+                          "elements (%s given: %s)" % (len(ent), ent))
 
         if type(ent[0]) != int:
             raise error, "parameter types must be integers"
@@ -175,7 +179,7 @@ def register(func_name, blurb, help, author, copyright, date, menupath,
     for ent in results:
         if len(ent) < 3:
             raise error, ("result definition must contain at least 3 elements "
-                        "(%s given: %s)" % (len(ent), ent))
+                          "(%s given: %s)" % (len(ent), ent))
 
         if type(ent[0]) != type(42):
             raise error, "result types must be integers"
@@ -410,6 +414,34 @@ def _interact(func_name, start_params):
         def get_value(self):
             return self.active_value
 
+    def FileSelector(default=''):
+       if default and default.endswith('/'):
+           selector = DirnameSelector
+           if default == '/': default = ''
+       else:
+           selector = FilenameSelector
+       return selector(default)
+
+    class FilenameSelector(gtk.FileChooserButton):
+        def __init__(self, default='', save_mode=False):
+            gtk.FileChooserButton.__init__(self, "Python-Fu File Selection")
+            self.set_action(gtk.FILE_CHOOSER_ACTION_OPEN)
+            if default:
+                self.set_filename(default)
+
+        def get_value(self):
+            return self.get_filename()
+
+    class DirnameSelector(gtk.FileChooserButton):
+        def __init__(self, default=''):
+            gtk.FileChooserButton.__init__(self, "Python-Fu Folder Selection")
+            self.set_action(gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
+            if default:
+                self.set_filename(default)
+
+        def get_value(self):
+            return self.get_filename()
+
     _edit_mapping = {
             PF_INT8        : IntEntry,
             PF_INT16       : IntEntry,
@@ -434,7 +466,9 @@ def _interact(func_name, start_params):
             PF_RADIO       : RadioEntry,
 
             PF_FONT        : gimpui.FontSelector,
-            PF_FILE        : gimpui.FileSelector,
+            PF_FILE        : FileSelector,
+            PF_FILENAME    : FilenameSelector,
+            PF_DIRNAME     : DirnameSelector,
             PF_BRUSH       : gimpui.BrushSelector,
             PF_PATTERN     : gimpui.PatternSelector,
             PF_GRADIENT    : gimpui.GradientSelector,
@@ -563,10 +597,10 @@ def _interact(func_name, start_params):
                 progress.set_text(" ")
 
             if fraction is not None:
-		if fraction < 0:
-		    progress.pulse()
-		else:
-		    progress.set_fraction(fraction)
+                if fraction < 0:
+                    progress.pulse()
+                else:
+                    progress.set_fraction(fraction)
 
             while gtk.events_pending():
                 gtk.main_iteration()
