@@ -1,3 +1,7 @@
+2006-07-20  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp-edit.c: formatting.
+
 2006-07-20  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpui.override: manually wrap the function

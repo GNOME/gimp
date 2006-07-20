@@ -297,10 +297,10 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 
   /*  create a new image  (always of type GIMP_RGB)  */
   image = gimp_create_image (gimp,
-                              gimp_buffer_get_width (paste),
-                              gimp_buffer_get_height (paste),
-                              GIMP_IMAGE_TYPE_BASE_TYPE (type),
-                              TRUE);
+                             gimp_buffer_get_width (paste),
+                             gimp_buffer_get_height (paste),
+                             GIMP_IMAGE_TYPE_BASE_TYPE (type),
+                             TRUE);
   gimp_image_undo_disable (image);
 
   if (invoke)
