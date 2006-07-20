@@ -1,5 +1,9 @@
 2006-07-20  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/gimpui.py: make DrawableSelector work again.
+
+2006-07-20  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/gimpui.py: make the FileSelector class work
 	again.
 

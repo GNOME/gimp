@@ -132,7 +132,7 @@ class ChannelSelector(ChannelComboBox):
     def get_value(self):
         return self.get_active()
 
-class DrawableSelector(gtk.OptionMenu):
+class DrawableSelector(DrawableComboBox):
     def __init__(self, default=None):
         DrawableComboBox.__init__(self)
         if default is not None:
