@@ -112,7 +112,8 @@ struct _GimpItemClass
                                GimpProgress           *progress);
   gboolean   (* stroke)       (GimpItem               *item,
                                GimpDrawable           *drawable,
-                               GimpStrokeDesc         *stroke_desc);
+                               GimpStrokeDesc         *stroke_desc,
+                               gboolean                push_undo);
 
   const gchar *default_name;
   const gchar *rename_desc;
@@ -219,7 +220,8 @@ gboolean        gimp_item_stroke           (GimpItem           *item,
                                             GimpDrawable       *drawable,
                                             GimpContext        *context,
                                             GimpStrokeDesc     *stroke_desc,
-                                            gboolean            use_default_values);
+                                            gboolean            use_default_values,
+                                            gboolean            push_undo);
 
 gint            gimp_item_get_ID           (GimpItem           *item);
 GimpItem      * gimp_item_get_by_ID        (Gimp               *gimp,

@@ -63,6 +63,12 @@ static const GimpActionEntry layers_actions[] =
     N_("Activate the text tool on this text layer"),
     G_CALLBACK (layers_text_tool_cmd_callback),
     GIMP_HELP_TOOL_TEXT },
+  
+  { "layers-fill-stroke", NULL,
+    N_("Fill / Stroke"), NULL,
+    N_("Edit the fill and stroke of this vector layer"),
+    G_CALLBACK (layers_fill_stroke_cmd_callback),
+    NULL },
 
   { "layers-edit-attributes", GTK_STOCK_EDIT,
     N_("_Edit Layer Attributes..."), NULL,
@@ -456,18 +462,19 @@ void
 layers_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpImage     *image     = action_data_get_image (data);
-  GimpLayer     *layer      = NULL;
-  GimpLayerMask *mask       = NULL;     /*  layer mask             */
-  gboolean       fs         = FALSE;    /*  floating sel           */
-  gboolean       ac         = FALSE;    /*  active channel         */
-  gboolean       sel        = FALSE;
-  gboolean       alpha      = FALSE;    /*  alpha channel present  */
-  gboolean       indexed    = FALSE;    /*  is indexed             */
-  gboolean       lock_alpha = FALSE;
-  gboolean       text_layer = FALSE;
-  GList         *next       = NULL;
-  GList         *prev       = NULL;
+  GimpImage     *image        = action_data_get_image (data);
+  GimpLayer     *layer        = NULL;
+  GimpLayerMask *mask         = NULL;     /*  layer mask             */
+  gboolean       fs           = FALSE;    /*  floating sel           */
+  gboolean       ac           = FALSE;    /*  active channel         */
+  gboolean       sel          = FALSE;
+  gboolean       alpha        = FALSE;    /*  alpha channel present  */
+  gboolean       indexed      = FALSE;    /*  is indexed             */
+  gboolean       lock_alpha   = FALSE;
+  gboolean       text_layer   = FALSE;
+  gboolean       vector_layer = FALSE;
+  GList         *next         = NULL;
+  GList         *prev         = NULL;
 
   if (image)
     {
@@ -495,7 +502,10 @@ layers_actions_update (GimpActionGroup *group,
             }
 
           if (layer)
+          {
             text_layer = gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer));
+            vector_layer = gimp_drawable_is_vector_layer (GIMP_DRAWABLE (layer));
+          }
         }
     }
 
@@ -507,6 +517,7 @@ layers_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_VISIBLE   ("layers-text-tool",       text_layer && !ac);
+  SET_VISIBLE   ("layers-fill-stroke",     vector_layer && !ac);
   SET_SENSITIVE ("layers-edit-attributes", layer && !fs && !ac);
 
   SET_SENSITIVE ("layers-new",             image);

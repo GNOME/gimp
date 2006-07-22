@@ -458,7 +458,7 @@ gimp_paint_tool_button_release (GimpTool        *tool,
   if (state & GDK_BUTTON3_MASK)
     gimp_paint_core_cancel (core, drawable);
   else
-    gimp_paint_core_finish (core, drawable);
+    gimp_paint_core_finish (core, drawable, TRUE);
 
   gimp_image_flush (display->image);
 

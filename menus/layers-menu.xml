@@ -4,6 +4,7 @@
 <ui>
   <popup action="layers-popup">
     <menuitem action="layers-text-tool" />
+    <menuitem action="layers-fill-stroke" />
     <menuitem action="layers-edit-attributes" />
     <separator />
     <menuitem action="layers-new" />

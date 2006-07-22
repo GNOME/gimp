@@ -67,7 +67,7 @@ static void   gimp_stroke_options_get_property  (GObject      *object,
                                                  GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpStrokeOptions, gimp_stroke_options, GIMP_TYPE_CONTEXT)
+G_DEFINE_TYPE (GimpStrokeOptions, gimp_stroke_options, GIMP_TYPE_FILL_OPTIONS)
 
 static guint stroke_options_signals[LAST_SIGNAL] = { 0 };
 
@@ -93,11 +93,6 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DASH_PRESET);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_STYLE,
-                                 "style", NULL,
-                                 GIMP_TYPE_STROKE_STYLE,
-                                 GIMP_STROKE_STYLE_SOLID,
-                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_WIDTH,
                                    "width", NULL,
                                    0.0, 2000.0, 6.0,
@@ -122,10 +117,6 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                                      "line-width from the actual join point."),
                                    0.0, 100.0, 10.0,
                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
-                                    "antialias", NULL,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DASH_OFFSET,
                                    "dash-offset", NULL,
                                    0.0, 2000.0, 0.0,
@@ -156,9 +147,6 @@ gimp_stroke_options_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_STYLE:
-      options->style = g_value_get_enum (value);
-      break;
     case PROP_WIDTH:
       options->width = g_value_get_double (value);
       break;
@@ -173,9 +161,6 @@ gimp_stroke_options_set_property (GObject      *object,
       break;
     case PROP_MITER_LIMIT:
       options->miter_limit = g_value_get_double (value);
-      break;
-    case PROP_ANTIALIAS:
-      options->antialias = g_value_get_boolean (value);
       break;
     case PROP_DASH_OFFSET:
       options->dash_offset = g_value_get_double (value);
@@ -202,9 +187,6 @@ gimp_stroke_options_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_STYLE:
-      g_value_set_enum (value, options->style);
-      break;
     case PROP_WIDTH:
       g_value_set_double (value, options->width);
       break;
@@ -219,9 +201,6 @@ gimp_stroke_options_get_property (GObject    *object,
       break;
     case PROP_MITER_LIMIT:
       g_value_set_double (value, options->miter_limit);
-      break;
-    case PROP_ANTIALIAS:
-      g_value_set_boolean (value, options->antialias);
       break;
     case PROP_DASH_OFFSET:
       g_value_set_double (value, options->dash_offset);

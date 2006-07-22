@@ -23,6 +23,8 @@ libappvectors_a_SOURCES = \
 	gimpbezierstroke.c	\
 	gimpstroke.h		\
 	gimpstroke.c		\
+        gimpvectorlayer.h       \
+        gimpvectorlayer.c       \
 	gimpvectors.c		\
 	gimpvectors.h		\
 	gimpvectors-compat.c	\

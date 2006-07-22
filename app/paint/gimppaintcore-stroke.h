@@ -24,18 +24,21 @@ gboolean   gimp_paint_core_stroke          (GimpPaintCore    *core,
                                             GimpDrawable     *drawable,
                                             GimpPaintOptions *paint_options,
                                             GimpCoords       *strokes,
-                                            gint              n_strokes);
+                                            gint              n_strokes,
+                                            gboolean          push_undo);
 gboolean   gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
                                             GimpDrawable     *drawable,
                                             GimpPaintOptions *paint_options,
                                             const BoundSeg   *bound_segs,
                                             gint              n_bound_segs,
                                             gint              offset_x,
-                                            gint              offset_y);
+                                            gint              offset_y,
+                                            gboolean          push_undo);
 gboolean   gimp_paint_core_stroke_vectors  (GimpPaintCore    *core,
                                             GimpDrawable     *drawable,
                                             GimpPaintOptions *paint_options,
-                                            GimpVectors      *vectors);
+                                            GimpVectors      *vectors,
+                                            gboolean          push_undo);
 
 
 #endif  /*  __GIMP_PAINT_CORE_STROKE_H__  */

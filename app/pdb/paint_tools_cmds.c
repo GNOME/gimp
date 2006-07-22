@@ -82,7 +82,7 @@ paint_tools_stroke (Gimp             *gimp,
     }
 
   retval = gimp_paint_core_stroke (core, drawable, options,
-                                   coords, n_strokes);
+                                   coords, n_strokes, TRUE);
 
   g_free (coords);
 

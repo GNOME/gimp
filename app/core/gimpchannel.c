@@ -120,7 +120,8 @@ static void       gimp_channel_transform     (GimpItem         *item,
                                               GimpProgress     *progress);
 static gboolean   gimp_channel_stroke        (GimpItem         *item,
                                               GimpDrawable     *drawable,
-                                              GimpStrokeDesc   *stroke_desc);
+                                              GimpStrokeDesc   *stroke_desc,
+                                              gboolean          push_undo);
 
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (const GimpDrawable *drawable,
@@ -669,8 +670,8 @@ gimp_channel_transform (GimpItem               *item,
 static gboolean
 gimp_channel_stroke (GimpItem       *item,
                      GimpDrawable   *drawable,
-                     GimpStrokeDesc *stroke_desc)
-
+                     GimpStrokeDesc *stroke_desc,
+                     gboolean        push_undo)
 {
   GimpChannel    *channel = GIMP_CHANNEL (item);
   const BoundSeg *segs_in;
@@ -696,7 +697,8 @@ gimp_channel_stroke (GimpItem       *item,
       gimp_drawable_stroke_boundary (drawable,
                                      stroke_desc->stroke_options,
                                      segs_in, n_segs_in,
-                                     offset_x, offset_y);
+                                     offset_x, offset_y,
+                                     push_undo);
       retval = TRUE;
       break;
 
@@ -709,7 +711,8 @@ gimp_channel_stroke (GimpItem       *item,
         retval = gimp_paint_core_stroke_boundary (core, drawable,
                                                   stroke_desc->paint_options,
                                                   segs_in, n_segs_in,
-                                                  offset_x, offset_y);
+                                                  offset_x, offset_y,
+                                                  push_undo);
 
         g_object_unref (core);
       }

@@ -23,7 +23,7 @@
 #define __GIMP_STROKE_OPTIONS_H__
 
 
-#include "gimpcontext.h"
+#include "gimpfilloptions.h"
 
 
 #define GIMP_TYPE_STROKE_OPTIONS            (gimp_stroke_options_get_type ())
@@ -38,9 +38,7 @@ typedef struct _GimpStrokeOptionsClass GimpStrokeOptionsClass;
 
 struct _GimpStrokeOptions
 {
-  GimpContext      parent_instance;
-
-  GimpStrokeStyle  style;
+  GimpFillOptions  parent_instance;
 
   gdouble          width;
   GimpUnit         unit;
@@ -50,15 +48,13 @@ struct _GimpStrokeOptions
 
   gdouble          miter_limit;
 
-  gboolean         antialias;
-
   gdouble          dash_offset;
   GArray          *dash_info;
 };
 
 struct _GimpStrokeOptionsClass
 {
-  GimpContextClass parent_class;
+  GimpFillOptionsClass parent_class;
 
   void (* dash_info_changed) (GimpStrokeOptions *stroke_options,
                               GimpDashPreset     preset);

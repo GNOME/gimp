@@ -36,6 +36,7 @@
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpitemundo.h"
+#include "core/gimplayer.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 #include "core/gimpstrokedesc.h"
@@ -47,6 +48,7 @@
 #include "vectors/gimpvectors.h"
 #include "vectors/gimpvectors-export.h"
 #include "vectors/gimpvectors-import.h"
+#include "vectors/gimpvectorlayer.h"
 
 #include "widgets/gimpaction.h"
 #include "widgets/gimpclipboard.h"
@@ -286,6 +288,23 @@ vectors_merge_visible_cmd_callback (GtkAction *action,
 }
 
 void
+vectors_to_vector_layer_cmd_callback (GtkAction *action,
+                                      gpointer   data)
+{
+  GimpImage       *image;
+  GimpVectors     *vectors;
+  GimpVectorLayer *layer;
+  return_if_no_vectors (image, vectors, data);
+
+  layer = gimp_vector_layer_new (image, vectors);
+  gimp_image_add_layer(image, GIMP_LAYER(layer), -1);
+  gimp_vector_layer_refresh (layer);
+  
+  
+  gimp_image_flush (image);
+}
+
+void
 vectors_to_selection_cmd_callback (GtkAction *action,
                                    gint       value,
                                    gpointer   data)
@@ -400,7 +419,7 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
   else
     desc = gimp_stroke_desc_new (image->gimp, context);
 
-  gimp_item_stroke (GIMP_ITEM (vectors), drawable, context, desc, FALSE);
+  gimp_item_stroke (GIMP_ITEM (vectors), drawable, context, desc, FALSE, TRUE);
 
   g_object_unref (desc);
 

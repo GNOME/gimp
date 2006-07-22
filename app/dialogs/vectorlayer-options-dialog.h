@@ -1,8 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * vectors-types.h
- * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
+ * Copyright (C) 2006 Henk Boom
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,40 +18,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __VECTORS_TYPES_H__
-#define __VECTORS_TYPES_H__
-
-#include "core/core-types.h"
+#ifndef __VECTORLAYER_OPTIONS_DIALOG_H__
+#define __VECTORLAYER_OPTIONS_DIALOG_H__
 
 
-typedef enum
-{
-  GIMP_ANCHOR_ANCHOR,
-  GIMP_ANCHOR_CONTROL
-} GimpAnchorType;
-
-typedef enum
-{
-  GIMP_ANCHOR_FEATURE_NONE,
-  GIMP_ANCHOR_FEATURE_EDGE,
-  GIMP_ANCHOR_FEATURE_ALIGNED,
-  GIMP_ANCHOR_FEATURE_SYMMETRIC
-} GimpAnchorFeatureType;
-
-typedef enum
-{
-  EXTEND_SIMPLE,
-  EXTEND_EDITABLE
-} GimpVectorExtendMode;
+GtkWidget * vectorlayer_options_dialog_new (GimpItem    *item,
+                                            const gchar *title,
+                                            const gchar *stock_id,
+                                            const gchar *help_id,
+                                            GtkWidget   *parent);
 
 
-typedef struct _GimpAnchor       GimpAnchor;
-
-typedef struct _GimpVectors      GimpVectors;
-typedef struct _GimpStroke       GimpStroke;
-typedef struct _GimpBezierStroke GimpBezierStroke;
-
-typedef struct _GimpVectorLayer  GimpVectorLayer;
-
-
-#endif /* __VECTORS_TYPES_H__ */
+#endif  /*  __VECTORLAYER_OPTIONS_DIALOG_H__  */

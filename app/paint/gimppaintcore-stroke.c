@@ -42,7 +42,8 @@ gimp_paint_core_stroke (GimpPaintCore    *core,
                         GimpDrawable     *drawable,
                         GimpPaintOptions *paint_options,
                         GimpCoords       *strokes,
-                        gint              n_strokes)
+                        gint              n_strokes,
+                        gboolean          push_undo)
 {
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -74,7 +75,7 @@ gimp_paint_core_stroke (GimpPaintCore    *core,
       gimp_paint_core_paint (core, drawable, paint_options,
                              GIMP_PAINT_STATE_FINISH, 0);
 
-      gimp_paint_core_finish (core, drawable);
+      gimp_paint_core_finish (core, drawable, push_undo);
 
       gimp_paint_core_cleanup (core);
 
@@ -91,7 +92,8 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
                                  const BoundSeg   *bound_segs,
                                  gint              n_bound_segs,
                                  gint              offset_x,
-                                 gint              offset_y)
+                                 gint              offset_y,
+                                 gboolean          push_undo)
 {
   GimpImage  *image;
   BoundSeg   *stroke_segs;
@@ -194,7 +196,7 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
 
   if (initialized)
     {
-      gimp_paint_core_finish (core, drawable);
+      gimp_paint_core_finish (core, drawable, push_undo);
 
       gimp_paint_core_cleanup (core);
     }
@@ -209,7 +211,8 @@ gboolean
 gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
                                 GimpDrawable     *drawable,
                                 GimpPaintOptions *paint_options,
-                                GimpVectors      *vectors)
+                                GimpVectors      *vectors,
+                                gboolean          push_undo)
 {
   GList      *stroke;
   GArray     *coords      = NULL;
@@ -278,7 +281,7 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
 
   if (initialized)
     {
-      gimp_paint_core_finish (core, drawable);
+      gimp_paint_core_finish (core, drawable, push_undo);
 
       gimp_paint_core_cleanup (core);
     }

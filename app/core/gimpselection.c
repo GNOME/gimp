@@ -73,7 +73,8 @@ static void       gimp_selection_rotate        (GimpItem        *item,
                                                 gboolean         clip_result);
 static gboolean   gimp_selection_stroke        (GimpItem        *item,
                                                 GimpDrawable    *drawable,
-                                                GimpStrokeDesc  *stroke_desc);
+                                                GimpStrokeDesc  *stroke_desc,
+                                                gboolean         push_undo);
 
 static void gimp_selection_invalidate_boundary (GimpDrawable    *drawable);
 
@@ -254,7 +255,8 @@ gimp_selection_rotate (GimpItem         *item,
 static gboolean
 gimp_selection_stroke (GimpItem       *item,
                        GimpDrawable   *drawable,
-                       GimpStrokeDesc *stroke_desc)
+                       GimpStrokeDesc *stroke_desc,
+                       gboolean        push_undo)
 {
   GimpSelection  *selection = GIMP_SELECTION (item);
   const BoundSeg *dummy_in;
@@ -274,7 +276,7 @@ gimp_selection_stroke (GimpItem       *item,
 
   selection->stroking = TRUE;
 
-  retval = GIMP_ITEM_CLASS (parent_class)->stroke (item, drawable, stroke_desc);
+  retval = GIMP_ITEM_CLASS (parent_class)->stroke (item, drawable, stroke_desc, push_undo);
 
   selection->stroking = FALSE;
 

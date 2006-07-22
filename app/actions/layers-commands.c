@@ -63,6 +63,7 @@
 #include "tools/gimptexttool.h"
 #include "tools/tool_manager.h"
 
+#include "dialogs/vectorlayer-options-dialog.h"
 #include "dialogs/layer-add-mask-dialog.h"
 #include "dialogs/layer-options-dialog.h"
 #include "dialogs/resize-dialog.h"
@@ -181,6 +182,25 @@ layers_text_tool_cmd_callback (GtkAction *action,
 
   if (GIMP_IS_TEXT_TOOL (active_tool))
     gimp_text_tool_set_layer (GIMP_TEXT_TOOL (active_tool), layer);
+}
+
+void
+layers_fill_stroke_cmd_callback (GtkAction *action,
+                                 gpointer   data)
+{
+  GimpImage    *image;
+  GimpLayer    *layer;
+  GtkWidget    *widget;
+  GtkWidget    *dialog;
+  return_if_no_layer (image, layer, data);
+  return_if_no_widget (widget, data);
+
+  dialog = vectorlayer_options_dialog_new (GIMP_ITEM (layer),
+                              _("Fill / Stroke"),
+                              GTK_STOCK_OK,
+                              NULL,
+                              widget);
+  gtk_widget_show (dialog);
 }
 
 void

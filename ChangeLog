@@ -1,3 +1,61 @@
+2006-07-22  Hendrik Boom  <hboom@cvs.gnome.org>
+
+	* app/vectors/Makefile.am
+	* app/vectors/vectors-types.h
+	* app/vectors/gimpvectorlayer.[ch]: new files implementing vector layers.
+
+	* app/dialogs/Makefile.am
+	* app/dialogs/vectorlayer-options-dialog.[ch]: new files implementing
+	the fill / stroke dialog for vector layers.
+
+	* menus/layers-menu.xml
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.[ch]: added "layers-fill-stroke" menu
+	item, action, and respective callback for opening the fill / stroke
+	dialog for vector layers.
+
+	* menus/vectors-menu.xml
+	* app/actions/vectors-actions.c
+	* app/actions/vectors-commands.[ch]: added "vectors-to-vector-layer"
+	menu item, action, and respective callback, which create a new vector
+	layer from the chosen vectors object.
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpfilloptions.[ch]: new files, implementing GimpFillOptions
+	as a parent of GimpStrokeOptions, factoring out generic functionality.
+
+	* app/core/gimpstrokeoptions.[ch]: changed accordingly.
+
+	* app/core/gimpdrawable-stroke.[ch]: added gimp_drawable_fill_vectors,
+	factoring common functionality into the new static function
+	gimp_drawable_stroke_scan_convert which can either do a stroke or
+	a fill, depending on its arguments.
+
+	* app/core/gimpitem.[ch]: added a push_undo boolean argument to the
+	end of gimp_item_stroke, as well as the item's stroke virtual
+	function. Changed implementations of stroke and the paint functions
+	used by gimp_item_stroke as necessary. Also changed calls to
+	gimp_item_stroke accordingly.
+
+	* app/actions/select-commands.c
+	* app/actions/vectors-commands.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-stroke.[ch]
+	* app/core/gimpselection.c
+	* app/dialogs/stroke-dialog.c
+	* app/paint/gimppaintcore-stroke.[ch]
+	* app/paint/gimppaintcore.[ch]
+	* app/tools/gimppainttool.c
+	* app/vectors/gimpvectors.c
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/paint_tools.pdb
+	* tools/pdbgen/pdb/paths.pdb: changed accordingly.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/paint_tools_cmds.c
+	* app/pdb/paths_cmds.c: regenerated.
+
 2006-07-20  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-edit.c: formatting.

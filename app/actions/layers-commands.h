@@ -22,6 +22,8 @@
 
 void   layers_text_tool_cmd_callback          (GtkAction   *action,
                                                gpointer     data);
+void   layers_fill_stroke_cmd_callback        (GtkAction   *action,
+                                               gpointer     data);
 void   layers_edit_attributes_cmd_callback    (GtkAction   *action,
                                                gpointer     data);
 void   layers_new_cmd_callback                (GtkAction   *action,

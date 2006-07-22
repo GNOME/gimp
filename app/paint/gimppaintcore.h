@@ -118,7 +118,8 @@ gboolean  gimp_paint_core_start                     (GimpPaintCore    *core,
                                                      GimpPaintOptions *paint_options,
                                                      GimpCoords       *coords);
 void      gimp_paint_core_finish                    (GimpPaintCore    *core,
-                                                     GimpDrawable     *drawable);
+                                                     GimpDrawable     *drawable,
+                                                     gboolean          push_undo);
 void      gimp_paint_core_cancel                    (GimpPaintCore    *core,
                                                      GimpDrawable     *drawable);
 void      gimp_paint_core_cleanup                   (GimpPaintCore    *core);

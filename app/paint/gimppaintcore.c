@@ -310,7 +310,8 @@ gimp_paint_core_start (GimpPaintCore    *core,
 
 void
 gimp_paint_core_finish (GimpPaintCore *core,
-                        GimpDrawable  *drawable)
+                        GimpDrawable  *drawable,
+                        gboolean       push_undo)
 {
   GimpPaintInfo *paint_info;
   GimpImage     *image;
@@ -330,22 +331,25 @@ gimp_paint_core_finish (GimpPaintCore *core,
   paint_info = (GimpPaintInfo *)
     gimp_container_get_child_by_name (image->gimp->paint_info_list,
                                       g_type_name (G_TYPE_FROM_INSTANCE (core)));
+  
+  if (push_undo)
+    {
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
+                                   paint_info ? paint_info->blurb : _("Paint"));
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
-                               paint_info ? paint_info->blurb : _("Paint"));
+      GIMP_PAINT_CORE_GET_CLASS (core)->push_undo (core, image, NULL);
 
-  GIMP_PAINT_CORE_GET_CLASS (core)->push_undo (core, image, NULL);
+      gimp_drawable_push_undo (drawable, NULL,
+                               core->x1, core->y1,
+                               core->x2, core->y2,
+                               core->undo_tiles,
+                               TRUE);
 
-  gimp_drawable_push_undo (drawable, NULL,
-                           core->x1, core->y1,
-                           core->x2, core->y2,
-                           core->undo_tiles,
-                           TRUE);
-
+      gimp_image_undo_group_end (image);
+    }
+  
   tile_manager_unref (core->undo_tiles);
   core->undo_tiles = NULL;
-
-  gimp_image_undo_group_end (image);
 
   if (core->saved_proj_tiles)
     {
