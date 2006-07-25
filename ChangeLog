@@ -1,3 +1,9 @@
+2006-07-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimplevelstool.c (levels_input_area_event): Applied
+	patch from Wim Lewis which fixes major uglyness (the code was
+	rounding using sprintf() and atof() -- puke). Fixes bug #348317.
+
 2006-07-20  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-edit.c: formatting.

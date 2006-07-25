@@ -1022,7 +1022,6 @@ levels_input_area_event (GtkWidget      *widget,
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
-  gchar           text[12];
   gint            x, distance;
   gint            i;
   gboolean        update = FALSE;
@@ -1105,8 +1104,8 @@ levels_input_area_event (GtkWidget      *widget,
           tool->levels->gamma[tool->channel] = 1.0 / pow (10, tmp);
 
           /*  round the gamma value to the nearest 1/100th  */
-          sprintf (text, "%2.2f", tool->levels->gamma[tool->channel]);
-          tool->levels->gamma[tool->channel] = atof (text);
+          tool->levels->gamma[tool->channel] =
+            floor (tool->levels->gamma[tool->channel] * 100 + 0.5) / 100.0;
           break;
 
         case 2:  /*  high input  */
