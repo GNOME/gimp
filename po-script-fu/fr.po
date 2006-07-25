@@ -1,29 +1,24 @@
-# translation of gimp-script-fu.HEAD.po to 
-# translation of gimp-script-fu.HEAD.po to
-# translation of gimp-script-fu.HEAD.po to
-# translation of gimp-script-fu.HEAD.po to
-# translation of gimp-script-fu.HEAD.po to
 # French translation of gimp-script-fu.
-# Copyright (C) 2000-2004 Free Software Foundation, Inc.
+# Copyright (C) 2000-2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
+#
 # David Monniaux <monniaux@arbouse.ens.fr>, 2000.
-# Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2004.
-# maintainer: Raymond Ostertag <r.ostertag@caramail.com>, 2002-2004.
+# Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2006.
+# maintainer: Raymond Ostertag <r.ostertag@caramail.com>, 2002-2006.
 # Jean-Louis Berliet <jl.berliet@free.fr>, 2004.
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu.HEAD\n"
+"Project-Id-Version: gimp-script-fu 2.2.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-09 21:56+0200\n"
-"PO-Revision-Date: 2004-11-26 21:20+0100\n"
-"Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
-"Language-Team:  <fr@li.org>\n"
+"POT-Creation-Date: 2006-07-25 23:16+0200\n"
+"PO-Revision-Date: 2006-07-25 23:14+0200\n"
+"Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
+"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0.2\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:129
 #: ../plug-ins/script-fu/script-fu-text-console.c:66
@@ -124,22 +119,22 @@ msgstr "Avancement du script"
 msgid "(none)"
 msgstr "(aucun)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1058
+#: ../plug-ins/script-fu/script-fu-interface.c:1061
 #: ../plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Auteur :"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1065
+#: ../plug-ins/script-fu/script-fu-interface.c:1068
 #: ../plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright :"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1072
+#: ../plug-ins/script-fu/script-fu-interface.c:1075
 #: ../plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Date :"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1081
+#: ../plug-ins/script-fu/script-fu-interface.c:1084
 msgid "Image Types:"
 msgstr "Types d'images :"
 
@@ -154,15 +149,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:642
+#: ../plug-ins/script-fu/script-fu-server.c:648
 msgid "Script-Fu Server Options"
 msgstr "Options du serveur du Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:670
+#: ../plug-ins/script-fu/script-fu-server.c:676
 msgid "Server Port:"
 msgstr "Port du serveur :"
 
-#: ../plug-ins/script-fu/script-fu-server.c:676
+#: ../plug-ins/script-fu/script-fu-server.c:682
 msgid "Server Logfile:"
 msgstr "Fichier de log du serveur :"
 
@@ -241,15 +236,15 @@ msgstr "Information supplémentaire"
 
 #: ../plug-ins/dbbrowser/gimpprocview.c:319
 msgid "Internal GIMP procedure"
-msgstr "Procédure interne à Gimp"
+msgstr "Procédure interne à GIMP"
 
 #: ../plug-ins/dbbrowser/gimpprocview.c:320
 msgid "GIMP Plug-In"
-msgstr "Greffon Gimp"
+msgstr "Greffon GIMP"
 
 #: ../plug-ins/dbbrowser/gimpprocview.c:321
 msgid "GIMP Extension"
-msgstr "Extension Gimp"
+msgstr "Extension GIMP"
 
 #: ../plug-ins/dbbrowser/gimpprocview.c:322
 msgid "Temporary Procedure"
@@ -309,7 +304,6 @@ msgstr "<Image>/Script-Fu/Alpha vers logo"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos"
@@ -358,7 +352,7 @@ msgstr "Réglages par défaut du bosselage"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:2
 msgid "Font"
@@ -397,7 +391,7 @@ msgstr "Police"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:3
 msgid "Font size (pixels)"
@@ -468,7 +462,7 @@ msgstr "Rayon de flou de l'ombre"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:5
 msgid "Text"
@@ -682,7 +676,7 @@ msgid "_Hrule..."
 msgstr "_Ligne horizontale..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:6
 msgid "Radius"
 msgstr "Rayon"
@@ -2245,7 +2239,7 @@ msgid "Square"
 msgstr "Carré"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
 msgid "Start angle"
 msgstr "Angle de départ"
 
@@ -2329,17 +2323,17 @@ msgstr "Taux de traces"
 msgid "_Particle Trace..."
 msgstr "_Particle Trace..."
 
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "Antialias"
 msgstr "Anti-crénelage"
 
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Fill angle"
 msgstr "Angle de remplissage"
 
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:9
-msgid "Text Circle..."
-msgstr "Texte circulaire..."
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
+msgid "Text C_ircle..."
+msgstr "Texte _circulaire..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Ending blend"
@@ -2520,362 +2514,3 @@ msgstr "Opacité d'éclairage"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Effet _Xach..."
-
-#~ msgid "Buffer amount (% height of text)"
-#~ msgstr "Quantité de mémoire tampon (% hauteur de texte)"
-
-#~ msgid "_ASCII to Layer..."
-#~ msgstr "_ASCII vers calque..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
-#~ msgstr "<Toolbox>/Exts/Script-Fu/_Rafraîchir les scripts"
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/3D _Outline..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/3D _Outline..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Motifs/3_D Truchet..."
-
-#~ msgid "<Image>/Script-Fu/Decor/Add B_evel..."
-#~ msgstr "<Image>/Script-Fu/Décor/Ajouter un bis_eau..."
-
-#~ msgid "<Image>/Script-Fu/Decor/Add _Border..."
-#~ msgstr "<Image>/Script-Fu/Décor/Ajouter une _bordure..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Alien Glow/_Flèche..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Alien Glow/_Puce..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Alien Glow/B_outon..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Glow..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/Alien _Glow..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Alien _Glow..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Neon..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/Alien _Neon..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Alien _Neon..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Utilitaires/_ASCII vers image..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Basic I..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/_Basic I..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Basic I..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/_Basic I..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/B_asic II..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/B_asic II..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/B_asic II..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/B_asic II..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-#~ msgstr ""
-#~ "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Motif à bordures biseautées/"
-#~ "_Puce..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
-#~ msgstr ""
-#~ "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Motif à bordures biseautées/"
-#~ "B_outon..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
-#~ msgstr ""
-#~ "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Motif à bordures biseautées/"
-#~ "_Titre..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
-#~ msgstr ""
-#~ "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Motif à bordures biseautées/"
-#~ "_Barre..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Blen_ded..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/Blen_ded..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Blen_ded..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Bo_vination..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/Bo_vination..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Bo_vination..."
-
-#~ msgid "<Image>/Script-Fu/Animators/B_urn-In..."
-#~ msgstr "<Image>/Script-Fu/Animateurs/_Enflammer..."
-
-#~ msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
-#~ msgstr ""
-#~ "Effet d'inscription par enflammement d'un calque texte d'avant-plan sur "
-#~ "un calque de fond; V2.1"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Motifs/_Camouflage..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Carved..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Chalk..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/_Craie..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/_Craie..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Chip Awa_y..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/Chip Awa_y..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Chip Awa_y..."
-
-#~ msgid "<Image>/Script-Fu/Stencil Ops/C_hrome-It..."
-#~ msgstr "<Image>/Script-Fu/Pochoir/C_hrome-le..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/C_hrome..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/C_hrome..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/C_hrome..."
-
-#~ msgid "<Image>/Script-Fu/Render/_Circuit..."
-#~ msgstr "<Image>/Script-Fu/Rendu/_Circuit..."
-
-#~ msgid "<Image>/Script-Fu/Alchemy/_Clothify..."
-#~ msgstr "<Image>/Script-Fu/Alchimie/_Tissu..."
-
-#~ msgid "<Image>/Script-Fu/Decor/_Coffee Stain..."
-#~ msgstr "<Image>/Script-Fu/Décor/Taches de _café..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Comic Boo_k..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/Comic Boo_k..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Comic Boo_k..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Cool _Metal..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/Cool _Metal..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Cool _Metal..."
-
-#~ msgid "<Image>/Edit/Copy/Copy _Visible"
-#~ msgstr "<Image>/Édition/Copier/Copier _visible"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Crystal..."
-
-#~ msgid "<Image>/Script-Fu/Selection/_Fade Outline..."
-#~ msgstr "<Image>/Script-Fu/Sélection/_Fondu du contour ..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Flatland..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Motifs/_Flatland..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Utilitaires/Liste de _polices..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Frosty..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/_Frosty..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Frosty..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/_Frosty..."
-
-#~ msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
-#~ msgstr "<Image>/Script-Fu/Décor/Bordure _floue..."
-
-#~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-#~ msgstr ""
-#~ "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Gimp.Org classique/_Petit "
-#~ "titre..."
-
-#~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-"
-#~ "Button Label..."
-#~ msgstr ""
-#~ "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Gimp.Org classique/Titre de "
-#~ "_sous-bouton « tube »..."
-
-#~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
-#~ "Button Label..."
-#~ msgstr ""
-#~ "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Gimp.Org classique/Titre de "
-#~ "s_ous-sous-bouton « tube »..."
-
-#~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
-#~ "Labels..."
-#~ msgstr ""
-#~ "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Gimp.Org classique/_Titre "
-#~ "général « tube »..."
-
-#~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
-#~ "Label..."
-#~ msgstr ""
-#~ "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Gimp.Org classique/Titre de "
-#~ "_bouton « tube »..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/Glo_ssy..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Glo_ssy..."
-
-#~ msgid "Use tattern for outline instead of gradient"
-#~ msgstr "Utiliser un motif pour le contour au lieu du dégradé"
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/Glo_wing Hot..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Glo_wing Hot..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Beve_l..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/Gradient Beve_l..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Gradient Beve_l..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Utilitaires/Dé_gradé personnalisé..."
-
-#~ msgid "<Image>/Script-Fu/Render/_Grid..."
-#~ msgstr "<Image>/Script-Fu/Rendu/_Grille..."
-
-#~ msgid "<Image>/Image/Guides/New _Guide..."
-#~ msgstr "<Image>/Image/Guides/Nouveau _guide..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Imigre-26..."
-
-#~ msgid "<Image>/Script-Fu/Render/Line _Nova..."
-#~ msgstr "<Image>/Script-Fu/Rendu/Lignes _Nova..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Créer brosse/Élli_ptique, plume..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Créer brosse/Re_ctangulaire, plume..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Créer brosse/_Rectangulaire..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/N_eon..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Newsprint Text..."
-
-#~ msgid "<Image>/Script-Fu/Decor/_Old Photo..."
-#~ msgstr "<Image>/Script-Fu/Décor/Vieille ph_oto..."
-
-#~ msgid "<Image>/Script-Fu/Shadow/_Perspective..."
-#~ msgstr "<Image>/Script-Fu/Ombre/_Perspective..."
-
-#~ msgid "<Image>/Script-Fu/Alchemy/_Predator..."
-#~ msgstr "<Image>/Script-Fu/Alchimie/_Prédateur..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Boutons/Bouton a_rrondi..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Render _Map..."
-
-#~ msgid "<Image>/Script-Fu/Animators/_Rippling..."
-#~ msgstr "<Image>/Script-Fu/Animateurs/_Onduler..."
-
-#~ msgid "<Image>/Script-Fu/Decor/_Round Corners..."
-#~ msgstr "<Image>/Script-Fu/Décor/Coins a_rrondis..."
-
-#~ msgid "<Image>/Script-Fu/Selection/To _Brush..."
-#~ msgstr "<Image>/Script-Fu/Sélection/Vers _brosse..."
-
-#~ msgid "<Image>/Script-Fu/Selection/To _Pattern..."
-#~ msgstr "<Image>/Script-Fu/Sélection/Vers _motif..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/SOTA Chrome..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Speed Text..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Divers/_Sphère..."
-
-#~ msgid "<Image>/Script-Fu/Animators/_Spinning Globe..."
-#~ msgstr "<Image>/Script-Fu/Animateurs/_Globe tournant..."
-
-#~ msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
-#~ msgstr "<Image>/Script-Fu/Rendu/_Spyrogimp..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/Starb_urst..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Starb_urst..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Sta_rscape..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/Sta_rscape..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Sta_rscape..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Swirl-_Tile..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Motifs/_Swirly..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Particle Trace..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/_Particle Trace..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/_Particle Trace..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Text Circle..."
-
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Textured..."
-#~ msgstr "<Image>/Script-Fu/Alpha vers Logo/_Textured..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/_Textured..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Logos/Web Title Header..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Motifs/T_ruchet..."
-
-#~ msgid "<Image>/Script-Fu/Alchemy/_Unsharp Mask..."
-#~ msgstr "<Image>/Script-Fu/Alchimie/_Masque flou..."
-
-#~ msgid "<Image>/Script-Fu/Animators/_Waves..."
-#~ msgstr "<Image>/Script-Fu/Animateurs/_Vagues..."
-
-#~ msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
-#~ msgstr "<Toolbox>/Aide/Le GIMP en ligne/Base de _greffons"
-
-#~ msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
-#~ msgstr "<Toolbox>/Aide/Le GIMP en ligne/Site web des _développeurs"
-
-#~ msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
-#~ msgstr "<Image>/Script-Fu/Ombre/Effet _Xach..."
-
-#~ msgid "_ASCII to Image..."
-#~ msgstr "_ASCII vers image..."
-
-#~ msgid "Copy _Visible"
-#~ msgstr "Copier _visible"
