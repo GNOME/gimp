@@ -1,5 +1,14 @@
 2006-07-25  Hendrik Boom  <hboom@cvs.gnome.org>
 
+	* app/dialogs/vectorlayer-options-dialog.c
+	* app/tools/gimpvectortool.c
+	* app/vectors/gimpvectorlayer.c: moved the gimp_image_flush call from
+	the vector layer code itself to where it is needed in the vector tool
+	and in the vector layer dialog, since it should only be called from
+	GUI code.
+
+2006-07-25  Hendrik Boom  <hboom@cvs.gnome.org>
+
 	* app/vectors/gimpvectorlayer.c: added a gimp_image_flush in the right
 	place so that vector layer updates are now shown properly.
 

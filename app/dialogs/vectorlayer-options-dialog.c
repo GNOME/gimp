@@ -193,6 +193,7 @@ vectorlayer_options_dialog_response            (GtkWidget         *widget,
                                                 gint               response_id,
                                                 GtkWidget         *dialog)
 {
+  GimpImage         *image;
   GimpColorButton   *fill_entry;
   GimpColorButton   *stroke_entry;
   GimpStrokeEditor  *stroke_editor;
@@ -202,6 +203,7 @@ vectorlayer_options_dialog_response            (GtkWidget         *widget,
   GimpStrokeOptions *stroke_options;
 
   item = g_object_get_data (G_OBJECT (dialog), "gimp-item");
+  image = gimp_item_get_image(item);
   
   fill_entry = g_object_get_data (G_OBJECT (dialog), "gimp-fill-entry");
   stroke_entry = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-entry");
@@ -250,6 +252,7 @@ vectorlayer_options_dialog_response            (GtkWidget         *widget,
         g_object_set (G_OBJECT (stroke_desc), "stroke-options", stroke_options, NULL);
         
         gimp_vector_layer_refresh (GIMP_VECTOR_LAYER (item));
+        gimp_image_flush(image);
         
         if (response_id == GTK_RESPONSE_APPLY)
           break;

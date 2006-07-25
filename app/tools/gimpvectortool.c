@@ -640,6 +640,7 @@ gimp_vector_tool_motion (GimpTool        *tool,
   GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
   GimpVectorOptions *options;
   GimpAnchor        *anchor;
+  GimpImage         *image;
 
   options = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
@@ -735,6 +736,9 @@ gimp_vector_tool_motion (GimpTool        *tool,
   vector_tool->last_y = coords->y;
 
   gimp_vectors_thaw (vector_tool->vectors);
+  
+  image = gimp_item_get_image (GIMP_ITEM (vector_tool->vectors));
+  gimp_image_flush (image);
 }
 
 static gboolean
