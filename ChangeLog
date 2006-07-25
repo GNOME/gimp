@@ -1,3 +1,8 @@
+2006-07-25  Hendrik Boom  <hboom@cvs.gnome.org>
+
+	* app/vectors/gimpvectorlayer.c: added a gimp_image_flush in the right
+	place so that vector layer updates are now shown properly.
+
 2006-07-22  Hendrik Boom  <hboom@cvs.gnome.org>
 
 	* app/vectors/Makefile.am

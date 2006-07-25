@@ -389,9 +389,7 @@ gimp_vector_layer_refresh (GimpVectorLayer  *layer)
   gimp_vector_layer_refresh_name (layer);
   gimp_vector_layer_render (layer);
   
-  gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, width, height); /* why does this do nothing? */
-  
-  /*gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));*/
+  gimp_image_flush (image);
 }
 
 gboolean
