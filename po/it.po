@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-26 12:31+0200\n"
-"PO-Revision-Date: 2006-07-26 11:37+0200\n"
+"PO-Revision-Date: 2006-07-26 13:21+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -9051,7 +9051,7 @@ msgstr "Estrai oggetti di primo piano"
 
 #: ../app/tools/gimpforegroundselecttool.c:146
 msgid "F_oreground Select"
-msgstr "Selezione prim_o piano"
+msgstr "Prim_o piano"
 
 #: ../app/tools/gimpforegroundselecttool.c:306
 msgid "Add more strokes or press Enter to accept the selection"
@@ -9573,7 +9573,7 @@ msgstr "Seleziona sezioni rettangolari di un'immagine"
 
 #: ../app/tools/gimprectangleselecttool.c:140
 msgid "_Rect Select"
-msgstr "Selezione _rettangolare"
+msgstr "_Rettangolare"
 
 #: ../app/tools/gimprectangletool.c:1336 ../app/tools/gimprectangletool.c:1346
 #: ../app/tools/gimprectangletool.c:1996

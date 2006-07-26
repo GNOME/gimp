@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-19 01:21+0200\n"
-"PO-Revision-Date: 2006-06-19 01:24+0200\n"
+"POT-Creation-Date: 2006-07-26 12:32+0200\n"
+"PO-Revision-Date: 2006-07-26 10:17+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,9 @@ msgstr "Navigatore delle procedure script-fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:591
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
-msgstr "La modalità di valutazione Script-Fu permette solo invocazioni non interattive"
+msgstr ""
+"La modalità di valutazione Script-Fu permette solo invocazioni non "
+"interattive"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:178
 msgid "Script-Fu cannot process two scripts at the same time."
@@ -77,15 +79,15 @@ msgstr "Selezione carattere Script-fu"
 msgid "Script-Fu Palette Selection"
 msgstr "Selezione tavolozza Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:468
+#: ../plug-ins/script-fu/script-fu-interface.c:469
 msgid "Script-fu Pattern Selection"
 msgstr "Selezione motivo Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:475
+#: ../plug-ins/script-fu/script-fu-interface.c:478
 msgid "Script-Fu Gradient Selection"
 msgstr "Selezione gradiente Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:483
+#: ../plug-ins/script-fu/script-fu-interface.c:487
 msgid "Script-Fu Brush Selection"
 msgstr "Selezione pennello Script-Fu"
 
@@ -116,6 +118,10 @@ msgstr "Porta del server:"
 msgid "Server logfile:"
 msgstr "File di log del server:"
 
+#: ../plug-ins/script-fu/script-fu.c:109
+msgid "Interactive console for Script-Fu development"
+msgstr "Console interattiva per sviluppo Script-Fu"
+
 #: ../plug-ins/script-fu/script-fu.c:115
 msgid "Script-Fu _Console"
 msgstr "_Console Script-Fu"
@@ -124,6 +130,10 @@ msgstr "_Console Script-Fu"
 #: ../plug-ins/script-fu/script-fu.c:314
 msgid "<Toolbox>/Xtns/Languages/Script-Fu"
 msgstr "<Toolbox>/Xtns/Linguaggi/Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:139
+msgid "Server for remote Script-Fu operation"
+msgstr "Server per le operazioni Script-Fu remote"
 
 #: ../plug-ins/script-fu/script-fu.c:144
 msgid "_Start Server..."
@@ -194,6 +204,10 @@ msgstr "_Decorazioni"
 msgid "_Render"
 msgstr "_Render"
 
+#: ../plug-ins/script-fu/script-fu.c:301
+msgid "Re-read all available Script-Fu scripts"
+msgstr "Rileggere tutti gli Script-Fu disponibili"
+
 #: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Refresh Scripts"
 msgstr "_Rinfresca gli scripts"
@@ -202,7 +216,9 @@ msgstr "_Rinfresca gli scripts"
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
-msgstr "Impossibile usare \"Ricarica scripts\" mentre una finestra di dialogo Script-fu è aperta. Chiudere tutte le finestre Script-fu e riprovare."
+msgstr ""
+"Impossibile usare \"Ricarica scripts\" mentre una finestra di dialogo Script-"
+"fu è aperta. Chiudere tutte le finestre Script-fu e riprovare."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -1440,13 +1456,17 @@ msgid "Position (in %)"
 msgstr "Posizione (in %)"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
 msgid "Vertical"
 msgstr "Verticale"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:3
 msgid "New _Guide..."
 msgstr "Nuova _guida..."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+msgid "Position"
+msgstr "Posizione"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "_Remove all Guides"

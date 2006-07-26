@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-26 18:00+0200\n"
-"PO-Revision-Date: 2006-06-26 18:13+0200\n"
+"POT-Creation-Date: 2006-07-26 12:31+0200\n"
+"PO-Revision-Date: 2006-07-26 10:15+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:530
-#: ../plug-ins/gfig/gfig-dialog.c:282 ../plug-ins/gflare/gflare.c:887
+#: ../plug-ins/gfig/gfig-dialog.c:286 ../plug-ins/gflare/gflare.c:887
 #: ../plug-ins/gimpressionist/utils.c:124
 #, c-format
 msgid ""
@@ -360,11 +360,11 @@ msgid "_Fractals"
 msgstr "_Frattali"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1706
-#: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:200
+#: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:273
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2013
 #: ../plug-ins/common/channel_mixer.c:1062 ../plug-ins/common/compressor.c:410
 #: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:838
-#: ../plug-ins/common/dicom.c:690 ../plug-ins/common/gbr.c:616
+#: ../plug-ins/common/dicom.c:691 ../plug-ins/common/gbr.c:616
 #: ../plug-ins/common/gif.c:993 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
 #: ../plug-ins/common/mng.c:953 ../plug-ins/common/pat.c:449
@@ -376,7 +376,7 @@ msgstr "_Frattali"
 #: ../plug-ins/common/tga.c:1030 ../plug-ins/common/tiff.c:1920
 #: ../plug-ins/common/xbm.c:1002 ../plug-ins/common/xwd.c:565
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
-#: ../plug-ins/gfig/gfig.c:787 ../plug-ins/gfli/gfli.c:714
+#: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:715
 #: ../plug-ins/ifscompose/ifscompose.c:2379 ../plug-ins/jpeg/jpeg-save.c:268
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:268
 #: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1277
@@ -402,10 +402,10 @@ msgstr "Salva parametri frattali"
 #. stat error (file does not exist)
 #: ../plug-ins/FractalExplorer/Dialogs.c:2015
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:930
-#: ../plug-ins/Lighting/lighting_ui.c:1312 ../plug-ins/bmp/bmpread.c:152
+#: ../plug-ins/Lighting/lighting_ui.c:1312 ../plug-ins/bmp/bmpread.c:149
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2233
 #: ../plug-ins/common/channel_mixer.c:979 ../plug-ins/common/curve_bend.c:890
-#: ../plug-ins/common/dicom.c:295 ../plug-ins/common/gbr.c:348
+#: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:309 ../plug-ins/common/gih.c:649
 #: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:319
 #: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
@@ -419,8 +419,8 @@ msgstr "Salva parametri frattali"
 #: ../plug-ins/common/tiff.c:530 ../plug-ins/common/xbm.c:720
 #: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
 #: ../plug-ins/fits/fits.c:342 ../plug-ins/flame/flame.c:411
-#: ../plug-ins/gfig/gfig.c:427 ../plug-ins/gfli/gfli.c:428
-#: ../plug-ins/gfli/gfli.c:463 ../plug-ins/help/domain.c:426
+#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:429
+#: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/domain.c:426
 #: ../plug-ins/jpeg/jpeg-load.c:88 ../plug-ins/jpeg/jpeg-load.c:874
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:257
 #: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2535
@@ -439,21 +439,25 @@ msgstr "'%s' non è un file FractalExplorer"
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "Il file '%s' è corrotto. Sezione opzione non corretta alla linea %d"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:250
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:247
+msgid "Render fractal art"
+msgstr "Render di arte frattale"
+
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:252
 msgid "_Fractal Explorer..."
 msgstr "Esploratore _frattali..."
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:381
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:382
 msgid "Rendering fractal"
 msgstr "Rendering frattale"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:756
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:757
 #: ../plug-ins/gflare/gflare.c:3130
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Siete sicuri di voler cancellare \"%s\" dalla lista e dal disco?"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:760
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:761
 msgid "Delete Fractal"
 msgstr "Elimina frattale"
 
@@ -500,7 +504,11 @@ msgstr "Aggiungi percorso di FractalExplorer"
 msgid "Lighting Effects"
 msgstr "Effetti luce"
 
-#: ../plug-ins/Lighting/lighting_main.c:197
+#: ../plug-ins/Lighting/lighting_main.c:195
+msgid "Apply various lighting effects to an image"
+msgstr "Applica vari effetti di luce su di un'immagine"
+
+#: ../plug-ins/Lighting/lighting_main.c:200
 msgid "_Lighting Effects..."
 msgstr "Effetti _luce..."
 
@@ -571,7 +579,7 @@ msgstr "Luce 6"
 
 #. row labels
 #: ../plug-ins/Lighting/lighting_ui.c:395
-#: ../plug-ins/common/spheredesigner.c:2677
+#: ../plug-ins/common/spheredesigner.c:2701
 msgid "Type:"
 msgstr "Tipo:"
 
@@ -883,7 +891,11 @@ msgstr "Mappa su cubo"
 msgid "Map to cylinder"
 msgstr "Mappa su cilindro"
 
-#: ../plug-ins/MapObject/mapobject_main.c:198
+#: ../plug-ins/MapObject/mapobject_main.c:196
+msgid "Map the image to an object (plane, sphere, box or cylinder)"
+msgstr "Mappa l'immagine su di un oggetto (piano, sfera, cubo o cilindro)"
+
+#: ../plug-ins/MapObject/mapobject_main.c:201
 msgid "Map _Object..."
 msgstr "_Oggetto mappa..."
 
@@ -1083,7 +1095,7 @@ msgid "Map Images to Box Faces"
 msgstr "Mappa Immagini sulle facciate di un cubo"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1155
-#: ../plug-ins/common/spheredesigner.c:2771
+#: ../plug-ins/common/spheredesigner.c:2795
 msgid "Scale X:"
 msgstr "Scala X:"
 
@@ -1152,7 +1164,7 @@ msgstr "_Anteprima!"
 msgid "Show preview _wireframe"
 msgstr "Mostra anteprima a scheletro"
 
-#: ../plug-ins/bmp/bmp.c:122 ../plug-ins/bmp/bmp.c:141
+#: ../plug-ins/bmp/bmp.c:127 ../plug-ins/bmp/bmp.c:146
 msgid "Windows BMP image"
 msgstr "Immagine BMP Windows"
 
@@ -1164,8 +1176,8 @@ msgstr "Mappa colore non valida"
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/bmp/bmpread.c:157 ../plug-ins/common/CEL.c:304
-#: ../plug-ins/common/dicom.c:300 ../plug-ins/common/gbr.c:353
+#: ../plug-ins/bmp/bmpread.c:154 ../plug-ins/common/CEL.c:304
+#: ../plug-ins/common/dicom.c:301 ../plug-ins/common/gbr.c:353
 #: ../plug-ins/common/gifload.c:314 ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:324 ../plug-ins/common/pcx.c:314
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:712
@@ -1175,44 +1187,43 @@ msgstr "Mappa colore non valida"
 #: ../plug-ins/common/tga.c:419 ../plug-ins/common/tiff.c:535
 #: ../plug-ins/common/wmf.c:952 ../plug-ins/common/xbm.c:725
 #: ../plug-ins/common/xpm.c:343 ../plug-ins/common/xwd.c:473
-#: ../plug-ins/faxg3/faxg3.c:204 ../plug-ins/gfli/gfli.c:468
+#: ../plug-ins/faxg3/faxg3.c:204 ../plug-ins/gfli/gfli.c:469
 #: ../plug-ins/jpeg/jpeg-load.c:94 ../plug-ins/sgi/sgi.c:318
 #: ../plug-ins/winicon/icoload.c:460 ../plug-ins/xjt/xjt.c:3319
 #, c-format
 msgid "Opening '%s'"
 msgstr "Apertura di '%s'"
 
-#: ../plug-ins/bmp/bmpread.c:167 ../plug-ins/bmp/bmpread.c:176
-#: ../plug-ins/bmp/bmpread.c:182 ../plug-ins/bmp/bmpread.c:190
-#: ../plug-ins/bmp/bmpread.c:204 ../plug-ins/bmp/bmpread.c:304
-#: ../plug-ins/bmp/bmpread.c:345
+#: ../plug-ins/bmp/bmpread.c:164 ../plug-ins/bmp/bmpread.c:173
+#: ../plug-ins/bmp/bmpread.c:179 ../plug-ins/bmp/bmpread.c:187
+#: ../plug-ins/bmp/bmpread.c:201 ../plug-ins/bmp/bmpread.c:382
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "'%s' non è un file BMP valido"
 
-#: ../plug-ins/bmp/bmpread.c:217 ../plug-ins/bmp/bmpread.c:236
-#: ../plug-ins/bmp/bmpread.c:257 ../plug-ins/bmp/bmpread.c:276
-#: ../plug-ins/bmp/bmpread.c:297 ../plug-ins/bmp/bmpread.c:310
-#: ../plug-ins/bmp/bmpread.c:316
+#: ../plug-ins/bmp/bmpread.c:214 ../plug-ins/bmp/bmpread.c:240
+#: ../plug-ins/bmp/bmpread.c:266 ../plug-ins/bmp/bmpread.c:329
+#: ../plug-ins/bmp/bmpread.c:353 ../plug-ins/bmp/bmpread.c:375
+#: ../plug-ins/bmp/bmpread.c:388 ../plug-ins/bmp/bmpread.c:394
 #, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "Errore lettura intestazione file BMP da '%s'"
 
-#: ../plug-ins/bmp/bmpread.c:447
+#: ../plug-ins/bmp/bmpread.c:499
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Formato di compressione BMP non riconosciuto o non valido."
 
-#: ../plug-ins/bmp/bmpread.c:482
+#: ../plug-ins/bmp/bmpread.c:541
 msgid "Unsupported or invalid bitdepth."
 msgstr "Profondità di colore (in bit) non supportata o non valida."
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: ../plug-ins/bmp/bmpread.c:487 ../plug-ins/common/CEL.c:349
+#: ../plug-ins/bmp/bmpread.c:546 ../plug-ins/common/CEL.c:349
 #: ../plug-ins/common/CEL.c:352 ../plug-ins/common/blinds.c:277
 #: ../plug-ins/common/compose.c:904 ../plug-ins/common/decompose.c:686
-#: ../plug-ins/common/dicom.c:485 ../plug-ins/common/film.c:944
+#: ../plug-ins/common/dicom.c:486 ../plug-ins/common/film.c:944
 #: ../plug-ins/common/gifload.c:879 ../plug-ins/common/pcx.c:339
 #: ../plug-ins/common/pcx.c:345 ../plug-ins/common/pix.c:368
 #: ../plug-ins/common/png.c:833 ../plug-ins/common/pnm.c:564
@@ -1221,29 +1232,31 @@ msgstr "Profondità di colore (in bit) non supportata o non valida."
 #: ../plug-ins/common/tga.c:931 ../plug-ins/common/tiff.c:886
 #: ../plug-ins/common/tile.c:265 ../plug-ins/common/xbm.c:866
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:508
-#: ../plug-ins/gfig/gfig-dialog.c:1290
+#: ../plug-ins/gfig/gfig-dialog.c:1294
 #: ../plug-ins/gimpressionist/general.c:121 ../plug-ins/jpeg/jpeg-load.c:239
 #: ../plug-ins/jpeg/jpeg-load.c:741 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:574 ../plug-ins/winsnap/winsnap.c:1155
 msgid "Background"
 msgstr "Sfondo"
 
-#: ../plug-ins/bmp/bmpread.c:618 ../plug-ins/bmp/bmpread.c:657
-#: ../plug-ins/bmp/bmpread.c:706
+#: ../plug-ins/bmp/bmpread.c:681 ../plug-ins/bmp/bmpread.c:722
+#: ../plug-ins/bmp/bmpread.c:772
 msgid "The bitmap ends unexpectedly."
 msgstr "La bitmap termina in maniera inaspettata."
 
-#: ../plug-ins/bmp/bmpwrite.c:157
-msgid "Cannot operate on grayscale images with alpha channel."
-msgstr "Impossibile operare su immagini in scala di grigi con canale alfa."
+#: ../plug-ins/bmp/bmpwrite.c:177 ../plug-ins/bmp/bmpwrite.c:197
+msgid "Cannot save indexed image with transparency in BMP file format."
+msgstr ""
+"Impossibile salvare immagini indicizzate con trasparenza su un file formato "
+"BMP."
 
-#: ../plug-ins/bmp/bmpwrite.c:181
-msgid "Cannot operate on indexed images with alpha channel."
-msgstr "Impossibile operare su immagini indicizzate con canale alfa."
+#: ../plug-ins/bmp/bmpwrite.c:179 ../plug-ins/bmp/bmpwrite.c:199
+msgid "Alpha channel will be ignored."
+msgstr "Il canale alfa verrà ignorato."
 
 #. And let's begin the progress
 #. init the progress meter
-#: ../plug-ins/bmp/bmpwrite.c:211 ../plug-ins/common/CEL.c:573
+#: ../plug-ins/bmp/bmpwrite.c:284 ../plug-ins/common/CEL.c:573
 #: ../plug-ins/common/gbr.c:621 ../plug-ins/common/gif.c:1000
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
 #: ../plug-ins/common/pat.c:454 ../plug-ins/common/pcx.c:550
@@ -1253,20 +1266,32 @@ msgstr "Impossibile operare su immagini indicizzate con canale alfa."
 #: ../plug-ins/common/tga.c:1035 ../plug-ins/common/tiff.c:1925
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
-#: ../plug-ins/gfli/gfli.c:683 ../plug-ins/jpeg/jpeg-save.c:226
+#: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:226
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:977
 #: ../plug-ins/xjt/xjt.c:1694
 #, c-format
 msgid "Saving '%s'"
 msgstr "Salvataggio di '%s'"
 
-#: ../plug-ins/bmp/bmpwrite.c:585
+#: ../plug-ins/bmp/bmpwrite.c:768 ../plug-ins/bmp/bmpwrite.c:824
 msgid "Save as BMP"
 msgstr "Salva come BMP"
 
-#: ../plug-ins/bmp/bmpwrite.c:604
+#: ../plug-ins/bmp/bmpwrite.c:789
 msgid "_Run-Length Encoded"
 msgstr "Codifica _RLE"
+
+#: ../plug-ins/bmp/bmpwrite.c:847
+msgid "16 bits"
+msgstr "16 bits"
+
+#: ../plug-ins/bmp/bmpwrite.c:881
+msgid "24 bits"
+msgstr "24 bits"
+
+#: ../plug-ins/bmp/bmpwrite.c:894
+msgid "32 bits"
+msgstr "32 bits"
 
 #: ../plug-ins/common/AlienMap2.c:140
 msgid "_Modify red channel"
@@ -1892,9 +1917,7 @@ msgstr "Riempi (sinistra destra)"
 msgid "Fill (right to left)"
 msgstr "Riempi (destra sinistra)"
 
-#. "snap to grid" checkbutton at bottom of style frame
 #: ../plug-ins/common/align_layers.c:425 ../plug-ins/common/align_layers.c:456
-#: ../plug-ins/gfig/gfig-dialog.c:501
 msgid "Snap to grid"
 msgstr "Griglia magnetica"
 
@@ -2556,7 +2579,8 @@ msgid ""
 "original indices.  Right-click for a menu with sort options."
 msgstr ""
 "Trascina i colori per reimpostare la mappa colore.\n"
-"I numeri mostrati sono gli indici originali. Fare clic a destra per ottenere il menu con le opzioni di ordinamento."
+"I numeri mostrati sono gli indici originali. Fare clic a destra per ottenere "
+"il menu con le opzioni di ordinamento."
 
 #: ../plug-ins/common/colormap-remap.c:631
 msgid "Rearrange Colormap"
@@ -2580,7 +2604,7 @@ msgstr "Colore ad alfa"
 
 #. spinbutton 1
 #: ../plug-ins/common/colortoalpha.c:411 ../plug-ins/common/mapcolor.c:424
-#: ../plug-ins/gfli/gfli.c:839 ../plug-ins/gfli/gfli.c:909
+#: ../plug-ins/gfli/gfli.c:840 ../plug-ins/gfli/gfli.c:910
 #: ../plug-ins/rcm/rcm_dialog.c:299 ../plug-ins/rcm/rcm_dialog.c:377
 msgid "From:"
 msgstr "Da:"
@@ -2869,7 +2893,7 @@ msgstr "Matrice"
 msgid "D_ivisor:"
 msgstr "D_ivisore:"
 
-#: ../plug-ins/common/convmatrix.c:971 ../plug-ins/common/depthmerge.c:768
+#: ../plug-ins/common/convmatrix.c:971 ../plug-ins/common/depthmerge.c:767
 #: ../plug-ins/common/raw.c:987
 msgid "O_ffset:"
 msgstr "O_ffset:"
@@ -3016,7 +3040,7 @@ msgstr "Anteprima a_utomatica"
 #. Options area, bottom of column
 #. Options section
 #: ../plug-ins/common/curve_bend.c:1300 ../plug-ins/common/ripple.c:498
-#: ../plug-ins/gfig/gfig-dialog.c:1213
+#: ../plug-ins/gfig/gfig-dialog.c:1217
 msgid "Options"
 msgstr "Opzioni"
 
@@ -3303,49 +3327,49 @@ msgstr "Deinterlaccia"
 
 #: ../plug-ins/common/deinterlace.c:359
 msgid "Keep o_dd fields"
-msgstr "Mantieni campi _dispari"
+msgstr "Mantieni linee _dispari"
 
 #: ../plug-ins/common/deinterlace.c:360
 msgid "Keep _even fields"
-msgstr "Mantieni campi _pari"
+msgstr "Mantieni linee _pari"
 
-#: ../plug-ins/common/depthmerge.c:184
+#: ../plug-ins/common/depthmerge.c:183
 msgid "Combine two images using depth maps (z-buffers)"
 msgstr "Combina due immagini usando le mappe di profondità (z-buffer)"
 
-#: ../plug-ins/common/depthmerge.c:193
+#: ../plug-ins/common/depthmerge.c:192
 msgid "_Depth Merge..."
 msgstr "Fusione di profon_dità..."
 
-#: ../plug-ins/common/depthmerge.c:387
+#: ../plug-ins/common/depthmerge.c:386
 msgid "Depth-merging"
 msgstr "Fusione di profondità"
 
-#: ../plug-ins/common/depthmerge.c:644
+#: ../plug-ins/common/depthmerge.c:643
 msgid "Depth Merge"
 msgstr "Fusione di profondità"
 
-#: ../plug-ins/common/depthmerge.c:696
+#: ../plug-ins/common/depthmerge.c:695
 msgid "Source 1:"
 msgstr "Sorgente 1:"
 
-#: ../plug-ins/common/depthmerge.c:711 ../plug-ins/common/depthmerge.c:741
+#: ../plug-ins/common/depthmerge.c:710 ../plug-ins/common/depthmerge.c:740
 msgid "Depth map:"
 msgstr "Mappa di profondità:"
 
-#: ../plug-ins/common/depthmerge.c:726
+#: ../plug-ins/common/depthmerge.c:725
 msgid "Source 2:"
 msgstr "Sorgente 2:"
 
-#: ../plug-ins/common/depthmerge.c:758
+#: ../plug-ins/common/depthmerge.c:757
 msgid "O_verlap:"
 msgstr "So_vrapponi:"
 
-#: ../plug-ins/common/depthmerge.c:778
+#: ../plug-ins/common/depthmerge.c:777
 msgid "Sc_ale 1:"
 msgstr "Sc_ala 1:"
 
-#: ../plug-ins/common/depthmerge.c:788
+#: ../plug-ins/common/depthmerge.c:787
 msgid "Sca_le 2:"
 msgstr "Sca_la 2:"
 
@@ -3425,25 +3449,25 @@ msgstr "_Larghezza:"
 msgid "Create _histogram"
 msgstr "Crea _istogramma"
 
-#: ../plug-ins/common/dicom.c:140
+#: ../plug-ins/common/dicom.c:141
 msgid "DICOM image"
 msgstr "Immagine DICOM"
 
-#: ../plug-ins/common/dicom.c:165
+#: ../plug-ins/common/dicom.c:166
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Immagini digitali e comunicazioni in immagini mediche"
 
-#: ../plug-ins/common/dicom.c:321
+#: ../plug-ins/common/dicom.c:322
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "'%s' non è un file DICOM"
 
-#: ../plug-ins/common/dicom.c:660 ../plug-ins/common/pcx.c:582
+#: ../plug-ins/common/dicom.c:661 ../plug-ins/common/pcx.c:582
 #: ../plug-ins/common/pnm.c:920
 msgid "Cannot save images with alpha channel."
 msgstr "Impossibile salvare immagini con canali alfa."
 
-#: ../plug-ins/common/dicom.c:675 ../plug-ins/common/postscript.c:1176
+#: ../plug-ins/common/dicom.c:676 ../plug-ins/common/postscript.c:1176
 #: ../plug-ins/common/xwd.c:556 ../plug-ins/fits/fits.c:445
 #: ../plug-ins/xjt/xjt.c:1689
 msgid "Cannot operate on unknown image types."
@@ -4520,7 +4544,7 @@ msgstr "_Griglia..."
 msgid "Drawing grid"
 msgstr "Disegno griglia"
 
-#: ../plug-ins/common/grid.c:635 ../plug-ins/gfig/gfig-dialog.c:1361
+#: ../plug-ins/common/grid.c:635 ../plug-ins/gfig/gfig-dialog.c:1365
 msgid "Grid"
 msgstr "Griglia"
 
@@ -5019,60 +5043,60 @@ msgstr "Effetti speciali che nessuno capisce"
 msgid "_Van Gogh (LIC)..."
 msgstr "_Van Gogh (LIC)..."
 
-#: ../plug-ins/common/mail.c:253
+#: ../plug-ins/common/mail.c:264
 msgid "Email the image"
 msgstr "Spedisci l'immagine"
 
-#: ../plug-ins/common/mail.c:259
+#: ../plug-ins/common/mail.c:270
 msgid "_Mail Image..."
 msgstr "Spedisci i_mmagine..."
 
-#: ../plug-ins/common/mail.c:508
+#: ../plug-ins/common/mail.c:519
 msgid "Send as Mail"
 msgstr "Invia come email"
 
-#: ../plug-ins/common/mail.c:513
+#: ../plug-ins/common/mail.c:524
 msgid "_Send"
 msgstr "_Spedisci"
 
-#: ../plug-ins/common/mail.c:545
+#: ../plug-ins/common/mail.c:556
 msgid "_Filename:"
 msgstr "_Nome file:"
 
 #. Encapsulation label
-#: ../plug-ins/common/mail.c:552
+#: ../plug-ins/common/mail.c:563
 msgid "Encapsulation:"
 msgstr "Incapsulamento:"
 
-#: ../plug-ins/common/mail.c:564
+#: ../plug-ins/common/mail.c:575
 msgid "_MIME"
 msgstr "_MIME"
 
-#: ../plug-ins/common/mail.c:565
+#: ../plug-ins/common/mail.c:576
 msgid "_Uuencode"
 msgstr "_Uuencode"
 
-#: ../plug-ins/common/mail.c:579
+#: ../plug-ins/common/mail.c:590
 msgid "_Recipient:"
 msgstr "_Destinatario:"
 
-#: ../plug-ins/common/mail.c:593
+#: ../plug-ins/common/mail.c:604
 msgid "_Sender:"
 msgstr "_Mittente:"
 
-#: ../plug-ins/common/mail.c:605
+#: ../plug-ins/common/mail.c:616
 msgid "S_ubject:"
 msgstr "_Oggetto:"
 
-#: ../plug-ins/common/mail.c:617
+#: ../plug-ins/common/mail.c:628
 msgid "Comm_ent:"
 msgstr "Comm_ento:"
 
-#: ../plug-ins/common/mail.c:725
+#: ../plug-ins/common/mail.c:736
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "estensione del file errata o mancante"
 
-#: ../plug-ins/common/mail.c:952
+#: ../plug-ins/common/mail.c:963
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Impossibile eseguire sendmail (%s)"
@@ -5134,8 +5158,8 @@ msgid "Destination Color Range"
 msgstr "Gamma di colore destinazione"
 
 #. spinbutton 2
-#: ../plug-ins/common/mapcolor.c:424 ../plug-ins/gfli/gfli.c:848
-#: ../plug-ins/gfli/gfli.c:918 ../plug-ins/rcm/rcm_dialog.c:325
+#: ../plug-ins/common/mapcolor.c:424 ../plug-ins/gfli/gfli.c:849
+#: ../plug-ins/gfli/gfli.c:919 ../plug-ins/rcm/rcm_dialog.c:325
 #: ../plug-ins/rcm/rcm_dialog.c:378
 msgid "To:"
 msgstr "A:"
@@ -5471,7 +5495,7 @@ msgstr "Luminanza"
 
 #: ../plug-ins/common/newsprint.c:519
 msgid "Halftone the image to give newspaper-like effect"
-msgstr "Immagine a mezzi toni per dare un'effetto giornale"
+msgstr "Immagine a mezzi toni per dare un effetto giornale"
 
 #: ../plug-ins/common/newsprint.c:528
 msgid "Newsprin_t..."
@@ -5536,7 +5560,7 @@ msgid "_Factory Defaults"
 msgstr "Valori prede_finiti"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1443 ../plug-ins/gfig/gfig-dialog.c:1262
+#: ../plug-ins/common/newsprint.c:1443 ../plug-ins/gfig/gfig-dialog.c:1266
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
@@ -5562,11 +5586,11 @@ msgstr "Filtro"
 
 #: ../plug-ins/common/nlfilt.c:1050
 msgid "_Alpha trimmed mean"
-msgstr "Media _alfa pesata"
+msgstr "Media limitata da _alfa"
 
 #: ../plug-ins/common/nlfilt.c:1052
 msgid "Op_timal estimation"
-msgstr "Stima ot_timale"
+msgstr "Sfocatura con stima ot_timale"
 
 #: ../plug-ins/common/nlfilt.c:1054
 msgid "_Edge enhancement"
@@ -5871,52 +5895,54 @@ msgstr "Ricerca per nome"
 
 #: ../plug-ins/common/plugin-browser.c:386
 #, c-format
-msgid "%d plug-ins"
-msgstr "%d plug-in"
+msgid "%d plug-in"
+msgid_plural "%d plug-ins"
+msgstr[0] "%d plug-in"
+msgstr[1] "%d plug-in"
 
-#: ../plug-ins/common/plugin-browser.c:393
+#: ../plug-ins/common/plugin-browser.c:395
 msgid "No matches for your query"
 msgstr "Nessun riscontro dalla ricerca"
 
-#: ../plug-ins/common/plugin-browser.c:396
+#: ../plug-ins/common/plugin-browser.c:398
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
 msgstr[0] "%d plug-in corrisponde nella ricerca"
 msgstr[1] "%d plug-in corrispondono nella ricerca"
 
-#: ../plug-ins/common/plugin-browser.c:527
+#: ../plug-ins/common/plugin-browser.c:529
 msgid "No matches"
 msgstr "Nessun riscontro"
 
-#: ../plug-ins/common/plugin-browser.c:552
+#: ../plug-ins/common/plugin-browser.c:554
 msgid "Plug-In Browser"
 msgstr "Navigatore plug-in"
 
-#: ../plug-ins/common/plugin-browser.c:595
+#: ../plug-ins/common/plugin-browser.c:597
 msgid "Name"
 msgstr "Nome"
 
-#: ../plug-ins/common/plugin-browser.c:603
-#: ../plug-ins/common/plugin-browser.c:666
+#: ../plug-ins/common/plugin-browser.c:605
+#: ../plug-ins/common/plugin-browser.c:668
 msgid "Menu Path"
 msgstr "Percorso menu"
 
-#: ../plug-ins/common/plugin-browser.c:611
-#: ../plug-ins/common/plugin-browser.c:675
+#: ../plug-ins/common/plugin-browser.c:613
+#: ../plug-ins/common/plugin-browser.c:677
 msgid "Image Types"
 msgstr "Tipi di immagine"
 
-#: ../plug-ins/common/plugin-browser.c:621
-#: ../plug-ins/common/plugin-browser.c:684
+#: ../plug-ins/common/plugin-browser.c:623
+#: ../plug-ins/common/plugin-browser.c:686
 msgid "Installation Date"
 msgstr "Data di installazione"
 
-#: ../plug-ins/common/plugin-browser.c:645
+#: ../plug-ins/common/plugin-browser.c:647
 msgid "List View"
 msgstr "Vista ad elenco"
 
-#: ../plug-ins/common/plugin-browser.c:707
+#: ../plug-ins/common/plugin-browser.c:709
 msgid "Tree View"
 msgstr "Vista ad albero"
 
@@ -6237,7 +6263,7 @@ msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Pagine da caricare (per es.: 1-4 o 1,3,5-7)"
 
 #: ../plug-ins/common/postscript.c:3125
-#: ../plug-ins/common/spheredesigner.c:2621
+#: ../plug-ins/common/spheredesigner.c:2645
 msgid "Layers"
 msgstr "Livelli"
 
@@ -6435,7 +6461,7 @@ msgstr "Macchia casuale"
 
 #: ../plug-ins/common/randomize.c:200
 msgid "Completely randomize a fraction of pixels"
-msgstr "Genera valori casuali su un'insieme di pixel"
+msgstr "Genera valori casuali su un insieme di pixel"
 
 #: ../plug-ins/common/randomize.c:202
 msgid "Randomly interchange some pixels with neighbors"
@@ -6795,59 +6821,59 @@ msgstr "_Tenuta:"
 msgid "H_ue:"
 msgstr "T_onalità:"
 
-#: ../plug-ins/common/screenshot.c:227
+#: ../plug-ins/common/screenshot.c:228
 msgid "Create an image from an area of the screen"
 msgstr "Crea un'immagine da un'area dello schermo"
 
-#: ../plug-ins/common/screenshot.c:240
+#: ../plug-ins/common/screenshot.c:241
 msgid "_Screenshot..."
 msgstr "_Schermata..."
 
-#: ../plug-ins/common/screenshot.c:436
+#: ../plug-ins/common/screenshot.c:401
 msgid "Error grabbing the pointer"
 msgstr "Errore di cattura del puntatore"
 
-#: ../plug-ins/common/screenshot.c:615
+#: ../plug-ins/common/screenshot.c:648
 msgid "Importing screenshot"
 msgstr "Importazione schermata"
 
-#: ../plug-ins/common/screenshot.c:622 ../plug-ins/common/screenshot.c:789
+#: ../plug-ins/common/screenshot.c:655 ../plug-ins/common/screenshot.c:822
 msgid "Screenshot"
 msgstr "Schermata"
 
-#: ../plug-ins/common/screenshot.c:730
+#: ../plug-ins/common/screenshot.c:763
 msgid "Specified window not found"
 msgstr "La finestra specificata non è stata trovata"
 
-#: ../plug-ins/common/screenshot.c:757
+#: ../plug-ins/common/screenshot.c:790
 msgid "There was an error taking the screenshot."
 msgstr "Si è verificato un errore durante la cattura della schermata."
 
-#: ../plug-ins/common/screenshot.c:798
+#: ../plug-ins/common/screenshot.c:831
 msgid "_Grab"
 msgstr "_Cattura"
 
-#: ../plug-ins/common/screenshot.c:819
+#: ../plug-ins/common/screenshot.c:852
 msgid "Area"
 msgstr "Area"
 
-#: ../plug-ins/common/screenshot.c:830
+#: ../plug-ins/common/screenshot.c:863
 msgid "Take a screenshot of a single _window"
 msgstr "Cattura una schermata di una _finestra singola"
 
-#: ../plug-ins/common/screenshot.c:851
+#: ../plug-ins/common/screenshot.c:884
 msgid "Include window _decoration"
 msgstr "Includi _decorazioni della finestra"
 
-#: ../plug-ins/common/screenshot.c:867
+#: ../plug-ins/common/screenshot.c:900
 msgid "Take a screenshot of the entire _screen"
 msgstr "Cattura l'immagine di tutto lo _schermo"
 
-#: ../plug-ins/common/screenshot.c:885
+#: ../plug-ins/common/screenshot.c:918
 msgid "Select a _region to grab"
 msgstr "Seleziona la _regione da catturare"
 
-#: ../plug-ins/common/screenshot.c:892
+#: ../plug-ins/common/screenshot.c:925
 msgid ""
 "If enabled, you can use the mouse to select a rectangular region of the "
 "screen."
@@ -6856,21 +6882,21 @@ msgstr ""
 "rettangolare dello schermo."
 
 #. grab delay
-#: ../plug-ins/common/screenshot.c:905
+#: ../plug-ins/common/screenshot.c:938
 msgid "Delay"
 msgstr "Ritardo"
 
 #. this string is part of "Wait [spinbutton] seconds before grabbing"
-#: ../plug-ins/common/screenshot.c:918
+#: ../plug-ins/common/screenshot.c:951
 msgid "W_ait"
 msgstr "_Attendi"
 
 #. this string is part of "Wait [spinbutton] seconds before grabbing"
-#: ../plug-ins/common/screenshot.c:934
+#: ../plug-ins/common/screenshot.c:967
 msgid "seconds before grabbing"
 msgstr "secondi prima della cattura"
 
-#: ../plug-ins/common/screenshot.c:938
+#: ../plug-ins/common/screenshot.c:971
 msgid ""
 "The number of seconds to wait after selecting the window or region and "
 "actually taking the screenshot."
@@ -6912,7 +6938,7 @@ msgstr "Semi-appiattimento"
 
 #: ../plug-ins/common/sharpen.c:115
 msgid "Make image sharper (less powerful than Unsharp Mask)"
-msgstr "Rende l'immagine più nitida (meno potente di maschera sfocata)"
+msgstr "Rende l'immagine più nitida (meno potente di maschera di contrasto)"
 
 #: ../plug-ins/common/sharpen.c:122
 msgid "_Sharpen..."
@@ -7358,7 +7384,7 @@ msgid "Spots"
 msgstr "Macchie"
 
 #: ../plug-ins/common/spheredesigner.c:1750
-#: ../plug-ins/common/spheredesigner.c:2668
+#: ../plug-ins/common/spheredesigner.c:2692
 msgid "Texture"
 msgstr "Trama"
 
@@ -7367,7 +7393,7 @@ msgid "Bumpmap"
 msgstr "Mappa a sbalzo"
 
 #: ../plug-ins/common/spheredesigner.c:1754
-#: ../plug-ins/common/spheredesigner.c:2670
+#: ../plug-ins/common/spheredesigner.c:2694
 msgid "Light"
 msgstr "Luce"
 
@@ -7384,99 +7410,99 @@ msgstr "Apri file"
 msgid "Save File"
 msgstr "Salva file"
 
-#: ../plug-ins/common/spheredesigner.c:2522
+#: ../plug-ins/common/spheredesigner.c:2546
 msgid "Sphere Designer"
 msgstr "Designer sfera"
 
-#: ../plug-ins/common/spheredesigner.c:2653
+#: ../plug-ins/common/spheredesigner.c:2677
 msgid "Properties"
 msgstr "Proprietà"
 
-#: ../plug-ins/common/spheredesigner.c:2669
+#: ../plug-ins/common/spheredesigner.c:2693
 msgid "Bump"
 msgstr "Sbalzo"
 
-#: ../plug-ins/common/spheredesigner.c:2696
+#: ../plug-ins/common/spheredesigner.c:2720
 msgid "Texture:"
 msgstr "Trama:"
 
-#: ../plug-ins/common/spheredesigner.c:2701
+#: ../plug-ins/common/spheredesigner.c:2725
 msgid "Colors:"
 msgstr "Colori:"
 
-#: ../plug-ins/common/spheredesigner.c:2704
-#: ../plug-ins/common/spheredesigner.c:2715
+#: ../plug-ins/common/spheredesigner.c:2728
+#: ../plug-ins/common/spheredesigner.c:2739
 msgid "Color Selection Dialog"
 msgstr "Finestra di selezione del colore"
 
 #. Scale
-#: ../plug-ins/common/spheredesigner.c:2726
+#: ../plug-ins/common/spheredesigner.c:2750
 #: ../plug-ins/gimpressionist/paper.c:176
 #: ../plug-ins/ifscompose/ifscompose.c:555
 msgid "Scale:"
 msgstr "Scala:"
 
-#: ../plug-ins/common/spheredesigner.c:2734
+#: ../plug-ins/common/spheredesigner.c:2758
 msgid "Turbulence:"
 msgstr "Turbolenza:"
 
-#: ../plug-ins/common/spheredesigner.c:2741
+#: ../plug-ins/common/spheredesigner.c:2765
 msgid "Amount:"
 msgstr "Ammontare:"
 
-#: ../plug-ins/common/spheredesigner.c:2748
+#: ../plug-ins/common/spheredesigner.c:2772
 msgid "Exp.:"
 msgstr "Esp.:"
 
-#: ../plug-ins/common/spheredesigner.c:2755
+#: ../plug-ins/common/spheredesigner.c:2779
 msgid "Transformations"
 msgstr "Trasformazioni"
 
-#: ../plug-ins/common/spheredesigner.c:2778
+#: ../plug-ins/common/spheredesigner.c:2802
 msgid "Scale Y:"
 msgstr "Scala Y:"
 
-#: ../plug-ins/common/spheredesigner.c:2784
+#: ../plug-ins/common/spheredesigner.c:2808
 msgid "Scale Z:"
 msgstr "Scala Z:"
 
-#: ../plug-ins/common/spheredesigner.c:2791
+#: ../plug-ins/common/spheredesigner.c:2815
 msgid "Rotate X:"
 msgstr "Rotazione X:"
 
-#: ../plug-ins/common/spheredesigner.c:2798
+#: ../plug-ins/common/spheredesigner.c:2822
 msgid "Rotate Y:"
 msgstr "Rotazione Y:"
 
-#: ../plug-ins/common/spheredesigner.c:2805
+#: ../plug-ins/common/spheredesigner.c:2829
 msgid "Rotate Z:"
 msgstr "Rotazione Z:"
 
-#: ../plug-ins/common/spheredesigner.c:2812
+#: ../plug-ins/common/spheredesigner.c:2836
 msgid "Position X:"
 msgstr "Posizione X:"
 
-#: ../plug-ins/common/spheredesigner.c:2819
+#: ../plug-ins/common/spheredesigner.c:2843
 msgid "Position Y:"
 msgstr "Posizione Y:"
 
-#: ../plug-ins/common/spheredesigner.c:2826
+#: ../plug-ins/common/spheredesigner.c:2850
 msgid "Position Z:"
 msgstr "Posizione Z:"
 
-#: ../plug-ins/common/spheredesigner.c:2941
+#: ../plug-ins/common/spheredesigner.c:2965
 msgid "Rendering sphere"
 msgstr "Rendering sfera"
 
-#: ../plug-ins/common/spheredesigner.c:2991
+#: ../plug-ins/common/spheredesigner.c:3015
 msgid "Create an image of a textured sphere"
 msgstr "Crea un'immagine di una sfera con texture"
 
-#: ../plug-ins/common/spheredesigner.c:2998
+#: ../plug-ins/common/spheredesigner.c:3022
 msgid "Sphere _Designer..."
 msgstr "_Designer sfera..."
 
-#: ../plug-ins/common/spheredesigner.c:3052
+#: ../plug-ins/common/spheredesigner.c:3076
 msgid "Region selected for plug-in is empty"
 msgstr "La regione selezionata per il plug-in è vuota"
 
@@ -7782,7 +7808,7 @@ msgstr "Commento:"
 
 #: ../plug-ins/common/tile.c:101
 msgid "Create an array of copies of the image"
-msgstr "Crea un'insieme di copie dell'immagine"
+msgstr "Crea un insieme di copie dell'immagine"
 
 #: ../plug-ins/common/tile.c:111
 msgid "_Tile..."
@@ -8018,7 +8044,7 @@ msgstr "Il più diffuso metodo per rendere più a fuoco un'immagine"
 
 #: ../plug-ins/common/unsharp.c:141
 msgid "_Unsharp Mask..."
-msgstr "Maschera sf_uocata..."
+msgstr "Maschera di co_ntrasto..."
 
 #: ../plug-ins/common/unsharp.c:477
 msgid "Merging"
@@ -8026,7 +8052,7 @@ msgstr "Fusione"
 
 #: ../plug-ins/common/unsharp.c:644
 msgid "Unsharp Mask"
-msgstr "Maschera sfuocata"
+msgstr "Maschera di contrasto"
 
 #: ../plug-ins/common/video.c:41
 msgid "_Staggered"
@@ -8251,7 +8277,7 @@ msgid "Smear"
 msgstr "Macchia"
 
 #: ../plug-ins/common/warp.c:502 ../plug-ins/fits/fits.c:995
-#: ../plug-ins/flame/flame.c:1147 ../plug-ins/gfig/gfig-dialog.c:1466
+#: ../plug-ins/flame/flame.c:1147 ../plug-ins/gfig/gfig-dialog.c:1470
 msgid "Black"
 msgstr "Nero"
 
@@ -8724,8 +8750,8 @@ msgstr "Apri file FITS"
 msgid "Replacement for undefined pixels"
 msgstr "Rimpiazzo per pixel non definiti"
 
-#: ../plug-ins/fits/fits.c:996 ../plug-ins/gfig/gfig-dialog.c:1292
-#: ../plug-ins/gfig/gfig-dialog.c:1467
+#: ../plug-ins/fits/fits.c:996 ../plug-ins/gfig/gfig-dialog.c:1296
+#: ../plug-ins/gfig/gfig-dialog.c:1471
 msgid "White"
 msgstr "Bianco"
 
@@ -8799,7 +8825,7 @@ msgstr "Vortice"
 msgid "Horseshoe"
 msgstr "Ferro di cavallo"
 
-#: ../plug-ins/flame/flame.c:747 ../plug-ins/gfig/gfig-dialog.c:1448
+#: ../plug-ins/flame/flame.c:747 ../plug-ins/gfig/gfig-dialog.c:1452
 msgid "Polar"
 msgstr "Polare"
 
@@ -8881,199 +8907,204 @@ msgstr ""
 "Disegna linee tra punti di controllo. Solo durante la creazione della curva"
 
 #. Start building the dialog up
-#: ../plug-ins/gfig/gfig-dialog.c:294
+#: ../plug-ins/gfig/gfig-dialog.c:298
 msgid "Gfig"
 msgstr "Gfig..."
 
 #. Tool options notebook
-#: ../plug-ins/gfig/gfig-dialog.c:345
+#: ../plug-ins/gfig/gfig-dialog.c:349
 msgid "Tool Options"
 msgstr "Opzioni strumenti"
 
-#: ../plug-ins/gfig/gfig-dialog.c:362
+#: ../plug-ins/gfig/gfig-dialog.c:366
 msgid "_Stroke"
 msgstr "_Delinea"
 
 #. Fill frame on right side
-#: ../plug-ins/gfig/gfig-dialog.c:409
+#: ../plug-ins/gfig/gfig-dialog.c:413
 msgid "Fill"
 msgstr "Riempimento"
 
-#: ../plug-ins/gfig/gfig-dialog.c:423
+#: ../plug-ins/gfig/gfig-dialog.c:427
 msgid "No fill"
 msgstr "Nessun riempimento"
 
-#: ../plug-ins/gfig/gfig-dialog.c:424
+#: ../plug-ins/gfig/gfig-dialog.c:428
 msgid "Color fill"
 msgstr "Riempimento colore"
 
-#: ../plug-ins/gfig/gfig-dialog.c:425
+#: ../plug-ins/gfig/gfig-dialog.c:429
 msgid "Pattern fill"
 msgstr "Riempimeto motivo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:426
+#: ../plug-ins/gfig/gfig-dialog.c:430
 msgid "Shape gradient"
 msgstr "Gradiente forma"
 
-#: ../plug-ins/gfig/gfig-dialog.c:427
+#: ../plug-ins/gfig/gfig-dialog.c:431
 msgid "Vertical gradient"
 msgstr "Gradiente verticale"
 
-#: ../plug-ins/gfig/gfig-dialog.c:428
+#: ../plug-ins/gfig/gfig-dialog.c:432
 msgid "Horizontal gradient"
 msgstr "Gradiente orizzontale"
 
 #. "show image" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:488
+#: ../plug-ins/gfig/gfig-dialog.c:492
 msgid "Show image"
 msgstr "Mostra immagine"
 
+#. "snap to grid" checkbutton at bottom of style frame
+#: ../plug-ins/gfig/gfig-dialog.c:505
+msgid "checkbutton|Snap to grid"
+msgstr "pulsantiera|Griglia magnetica"
+
 #. "show grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:510
+#: ../plug-ins/gfig/gfig-dialog.c:514
 msgid "Show grid"
 msgstr "Mostra griglia"
 
-#: ../plug-ins/gfig/gfig-dialog.c:645
+#: ../plug-ins/gfig/gfig-dialog.c:649
 msgid "Load Gfig Object Collection"
 msgstr "Carica collezione di oggetti Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:694
+#: ../plug-ins/gfig/gfig-dialog.c:698
 msgid "Save Gfig Drawing"
 msgstr "Salva disegno Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:837
+#: ../plug-ins/gfig/gfig-dialog.c:841
 msgid "First Gfig"
 msgstr "Primo Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:876
+#: ../plug-ins/gfig/gfig-dialog.c:880
 msgid "_Undo"
 msgstr "Ripristi_na"
 
-#: ../plug-ins/gfig/gfig-dialog.c:880
+#: ../plug-ins/gfig/gfig-dialog.c:884
 msgid "_Clear"
 msgstr "Pulis_ci"
 
-#: ../plug-ins/gfig/gfig-dialog.c:884
+#: ../plug-ins/gfig/gfig-dialog.c:888
 msgid "_Grid"
 msgstr "_Griglia"
 
-#: ../plug-ins/gfig/gfig-dialog.c:892
+#: ../plug-ins/gfig/gfig-dialog.c:896
 msgid "Raise selected object"
 msgstr "Innalza gli oggetti selezionati"
 
-#: ../plug-ins/gfig/gfig-dialog.c:896
+#: ../plug-ins/gfig/gfig-dialog.c:900
 msgid "Lower selected object"
 msgstr "Abbassa gli oggetti selezionati"
 
-#: ../plug-ins/gfig/gfig-dialog.c:900
+#: ../plug-ins/gfig/gfig-dialog.c:904
 msgid "Raise selected object to top"
 msgstr "Alza gli oggetti selezionati sino in cima"
 
-#: ../plug-ins/gfig/gfig-dialog.c:904
+#: ../plug-ins/gfig/gfig-dialog.c:908
 msgid "Lower selected object to bottom"
 msgstr "Abbassa gli oggetti selezionati sino in fondo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:908
+#: ../plug-ins/gfig/gfig-dialog.c:912
 msgid "Show previous object"
 msgstr "Mostra oggetti precedenti"
 
-#: ../plug-ins/gfig/gfig-dialog.c:912
+#: ../plug-ins/gfig/gfig-dialog.c:916
 msgid "Show next object"
 msgstr "Mostra oggetti successivi"
 
-#: ../plug-ins/gfig/gfig-dialog.c:916 ../plug-ins/gfig/gfig-stock.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:920 ../plug-ins/gfig/gfig-stock.c:53
 msgid "Show all objects"
 msgstr "Mostra tutti gli oggetti"
 
-#: ../plug-ins/gfig/gfig-dialog.c:922 ../plug-ins/gfig/gfig-stock.c:47
+#: ../plug-ins/gfig/gfig-dialog.c:926 ../plug-ins/gfig/gfig-stock.c:47
 msgid "Create line"
 msgstr "Crea linea"
 
-#: ../plug-ins/gfig/gfig-dialog.c:925 ../plug-ins/gfig/gfig-stock.c:51
+#: ../plug-ins/gfig/gfig-dialog.c:929 ../plug-ins/gfig/gfig-stock.c:51
 msgid "Create rectangle"
 msgstr "Crea rettangolo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:928 ../plug-ins/gfig/gfig-stock.c:42
+#: ../plug-ins/gfig/gfig-dialog.c:932 ../plug-ins/gfig/gfig-stock.c:42
 msgid "Create circle"
 msgstr "Crea cerchio"
 
-#: ../plug-ins/gfig/gfig-dialog.c:931 ../plug-ins/gfig/gfig-stock.c:46
+#: ../plug-ins/gfig/gfig-dialog.c:935 ../plug-ins/gfig/gfig-stock.c:46
 msgid "Create ellipse"
 msgstr "Crea ellisse"
 
-#: ../plug-ins/gfig/gfig-dialog.c:934 ../plug-ins/gfig/gfig-stock.c:44
+#: ../plug-ins/gfig/gfig-dialog.c:938 ../plug-ins/gfig/gfig-stock.c:44
 msgid "Create arc"
 msgstr "Crea arco"
 
-#: ../plug-ins/gfig/gfig-dialog.c:937 ../plug-ins/gfig/gfig-stock.c:50
+#: ../plug-ins/gfig/gfig-dialog.c:941 ../plug-ins/gfig/gfig-stock.c:50
 msgid "Create reg polygon"
 msgstr "Crea poligono regolare"
 
-#: ../plug-ins/gfig/gfig-dialog.c:940 ../plug-ins/gfig/gfig-stock.c:55
+#: ../plug-ins/gfig/gfig-dialog.c:944 ../plug-ins/gfig/gfig-stock.c:55
 msgid "Create star"
 msgstr "Crea stella"
 
-#: ../plug-ins/gfig/gfig-dialog.c:943 ../plug-ins/gfig/gfig-stock.c:54
+#: ../plug-ins/gfig/gfig-dialog.c:947 ../plug-ins/gfig/gfig-stock.c:54
 msgid "Create spiral"
 msgstr "Crea spirale"
 
-#: ../plug-ins/gfig/gfig-dialog.c:946
+#: ../plug-ins/gfig/gfig-dialog.c:950
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr ""
 "Crea curva di Bezier. Maiusc + tasto conclude la creazione dell'oggetto."
 
-#: ../plug-ins/gfig/gfig-dialog.c:950 ../plug-ins/gfig/gfig-stock.c:48
+#: ../plug-ins/gfig/gfig-dialog.c:954 ../plug-ins/gfig/gfig-stock.c:48
 msgid "Move an object"
 msgstr "Sposta un oggetto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:953 ../plug-ins/gfig/gfig-stock.c:49
+#: ../plug-ins/gfig/gfig-dialog.c:957 ../plug-ins/gfig/gfig-stock.c:49
 msgid "Move a single point"
 msgstr "Sposta un singolo punto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:956 ../plug-ins/gfig/gfig-stock.c:43
+#: ../plug-ins/gfig/gfig-dialog.c:960 ../plug-ins/gfig/gfig-stock.c:43
 msgid "Copy an object"
 msgstr "Copia un oggetto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:959 ../plug-ins/gfig/gfig-stock.c:45
+#: ../plug-ins/gfig/gfig-dialog.c:963 ../plug-ins/gfig/gfig-stock.c:45
 msgid "Delete an object"
 msgstr "Elimina un oggetto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:962 ../plug-ins/gfig/gfig-stock.c:52
+#: ../plug-ins/gfig/gfig-dialog.c:966 ../plug-ins/gfig/gfig-stock.c:52
 msgid "Select an object"
 msgstr "Seleziona un oggetto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1044
+#: ../plug-ins/gfig/gfig-dialog.c:1048
 msgid "This tool has no options"
 msgstr "Questo strumento non ha opzioni"
 
 #. Put buttons in
-#: ../plug-ins/gfig/gfig-dialog.c:1234
+#: ../plug-ins/gfig/gfig-dialog.c:1238
 msgid "Show position"
 msgstr "Mostra la posizione"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1246
+#: ../plug-ins/gfig/gfig-dialog.c:1250
 msgid "Show control points"
 msgstr "Mostra i punti di controllo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1280
+#: ../plug-ins/gfig/gfig-dialog.c:1284
 msgid "Max undo:"
 msgstr "Numero max di ripristini:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1289
+#: ../plug-ins/gfig/gfig-dialog.c:1293
 #: ../plug-ins/gimpressionist/general.c:166
 msgid "Transparent"
 msgstr "Trasparente"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1291
+#: ../plug-ins/gfig/gfig-dialog.c:1295
 msgid "Foreground"
 msgstr "Primo piano"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1293 ../plug-ins/imagemap/imap_cmd_copy.c:54
+#: ../plug-ins/gfig/gfig-dialog.c:1297 ../plug-ins/imagemap/imap_cmd_copy.c:54
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:55
 msgid "Copy"
 msgstr "Copia"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1302
+#: ../plug-ins/gfig/gfig-dialog.c:1306
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
@@ -9081,79 +9112,79 @@ msgstr ""
 "Tipo di livello di sfondo. La copia ha come effetto che il livello "
 "precedente viene copiato prima che venga effettuato il disegno."
 
-#: ../plug-ins/gfig/gfig-dialog.c:1308
+#: ../plug-ins/gfig/gfig-dialog.c:1312
 msgid "Background:"
 msgstr "Sfondo:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1311
+#: ../plug-ins/gfig/gfig-dialog.c:1315
 msgid "Feather"
 msgstr "Sfumata"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1335
+#: ../plug-ins/gfig/gfig-dialog.c:1339
 msgid "Radius:"
 msgstr "Raggio:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1392
+#: ../plug-ins/gfig/gfig-dialog.c:1396
 msgid "Grid spacing:"
 msgstr "Spaziatura griglia:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1409
+#: ../plug-ins/gfig/gfig-dialog.c:1413
 msgid "Polar grid sectors desired:"
 msgstr "Settori desiderati della griglia polare:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1431
+#: ../plug-ins/gfig/gfig-dialog.c:1435
 msgid "Polar grid radius interval:"
 msgstr "Intervallo raggio della griglia polare:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1447
+#: ../plug-ins/gfig/gfig-dialog.c:1451
 msgid "Rectangle"
 msgstr "Rettangolo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1449
+#: ../plug-ins/gfig/gfig-dialog.c:1453
 msgid "Isometric"
 msgstr "Isomatrica"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1458
+#: ../plug-ins/gfig/gfig-dialog.c:1462
 msgid "Grid type:"
 msgstr "Tipo di griglia:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1465 ../plug-ins/gflare/gflare.c:556
+#: ../plug-ins/gfig/gfig-dialog.c:1469 ../plug-ins/gflare/gflare.c:556
 msgid "Normal"
 msgstr "Normale"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1468
+#: ../plug-ins/gfig/gfig-dialog.c:1472
 msgid "Grey"
 msgstr "Grigio"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1469
+#: ../plug-ins/gfig/gfig-dialog.c:1473
 msgid "Darker"
 msgstr "Scuro"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1470
+#: ../plug-ins/gfig/gfig-dialog.c:1474
 msgid "Lighter"
 msgstr "Luminoso"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1471
+#: ../plug-ins/gfig/gfig-dialog.c:1475
 msgid "Very dark"
 msgstr "Molto scuro"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1480
+#: ../plug-ins/gfig/gfig-dialog.c:1484
 msgid "Grid color:"
 msgstr "Colore griglia:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1703
+#: ../plug-ins/gfig/gfig-dialog.c:1707
 msgid "Sides:"
 msgstr "Lati:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1713
+#: ../plug-ins/gfig/gfig-dialog.c:1717
 msgid "Right"
 msgstr "Destra"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1714
+#: ../plug-ins/gfig/gfig-dialog.c:1718
 msgid "Left"
 msgstr "Sinistra"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1724
+#: ../plug-ins/gfig/gfig-dialog.c:1728
 #: ../plug-ins/gimpressionist/orientation.c:130
 msgid "Orientation:"
 msgstr "Orientazione:"
@@ -9195,22 +9226,22 @@ msgstr "Numeri di punti stella"
 msgid "Create bezier curve"
 msgstr "Crea curva bezier"
 
-#: ../plug-ins/gfig/gfig.c:117
+#: ../plug-ins/gfig/gfig.c:124
 msgid "Create geometric shapes"
 msgstr "Crea forme geometriche"
 
-#: ../plug-ins/gfig/gfig.c:128
+#: ../plug-ins/gfig/gfig.c:135
 msgid "_Gfig..."
 msgstr "_Gfig..."
 
-#: ../plug-ins/gfig/gfig.c:724
+#: ../plug-ins/gfig/gfig.c:731
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Errore nel tentativo di salvare la figura come parassita: impossibile "
 "allegare il parassita al disegno."
 
-#: ../plug-ins/gfig/gfig.c:751
+#: ../plug-ins/gfig/gfig.c:758
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
@@ -9487,25 +9518,25 @@ msgstr "Seme casuale:"
 msgid "_Second Flares"
 msgstr "_Seconde fiammate"
 
-#: ../plug-ins/gfli/gfli.c:162 ../plug-ins/gfli/gfli.c:182
+#: ../plug-ins/gfli/gfli.c:163 ../plug-ins/gfli/gfli.c:183
 msgid "AutoDesk FLIC animation"
 msgstr "Animazione AutoDesk FLIC"
 
-#: ../plug-ins/gfli/gfli.c:528
+#: ../plug-ins/gfli/gfli.c:529
 #, c-format
 msgid "Frame (%i)"
 msgstr "Fotogramma (%i)"
 
-#: ../plug-ins/gfli/gfli.c:679
+#: ../plug-ins/gfli/gfli.c:680
 msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr ""
 "Spiacente, è possibile salvare solo immagine in scala di grigi o indicizzate."
 
-#: ../plug-ins/gfli/gfli.c:810
+#: ../plug-ins/gfli/gfli.c:811
 msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.3 - Caricamento fotogrammi"
 
-#: ../plug-ins/gfli/gfli.c:878
+#: ../plug-ins/gfli/gfli.c:879
 msgid "GFLI 1.3 - Save framestack"
 msgstr "GFLI 1.3 - Salvataggio fotogrammi"
 
@@ -10655,7 +10686,7 @@ msgstr "Impostazioni area"
 msgid "Area #%d Settings"
 msgstr "Impostazioni area #%d"
 
-#: ../plug-ins/imagemap/imap_file.c:48 ../plug-ins/imagemap/imap_menu.c:93
+#: ../plug-ins/imagemap/imap_file.c:48 ../plug-ins/imagemap/imap_menu.c:96
 msgid "Error opening file"
 msgstr "Errore di apertura file"
 
@@ -10727,59 +10758,59 @@ msgstr "punti dall'al_to"
 msgid "_Preview"
 msgstr "_Anteprima"
 
-#: ../plug-ins/imagemap/imap_main.c:119
+#: ../plug-ins/imagemap/imap_main.c:122
 msgid "Create a clickable imagemap"
 msgstr "Crea una mappa immagine clic-abile"
 
-#: ../plug-ins/imagemap/imap_main.c:124
+#: ../plug-ins/imagemap/imap_main.c:127
 msgid "_Image Map..."
 msgstr "Mappa _immagine..."
 
-#: ../plug-ins/imagemap/imap_main.c:514
+#: ../plug-ins/imagemap/imap_main.c:517
 #: ../plug-ins/imagemap/imap_settings.c:171
 msgid "<Untitled>"
 msgstr "<senzatitolo>"
 
-#: ../plug-ins/imagemap/imap_main.c:658
+#: ../plug-ins/imagemap/imap_main.c:660
 msgid "Some data has been changed!"
 msgstr "Alcuni dati sono cambiati!"
 
-#: ../plug-ins/imagemap/imap_main.c:659
+#: ../plug-ins/imagemap/imap_main.c:663
 msgid "Do you really want to discard your changes?"
 msgstr "Se sicuro di voler abbandonare i cambiamenti?"
 
-#: ../plug-ins/imagemap/imap_main.c:871
+#: ../plug-ins/imagemap/imap_main.c:875
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "File \"%s\" salvato."
 
-#: ../plug-ins/imagemap/imap_main.c:875
+#: ../plug-ins/imagemap/imap_main.c:879
 msgid "Couldn't save file:"
 msgstr "Impossibile salvare il file:"
 
-#: ../plug-ins/imagemap/imap_main.c:888
+#: ../plug-ins/imagemap/imap_main.c:892
 msgid "Image size has changed."
 msgstr "La dimensione immagine è cambiata"
 
-#: ../plug-ins/imagemap/imap_main.c:889
+#: ../plug-ins/imagemap/imap_main.c:893
 msgid "Resize area's?"
 msgstr "Ridimensionamento area?"
 
-#: ../plug-ins/imagemap/imap_main.c:923
+#: ../plug-ins/imagemap/imap_main.c:927
 msgid "Couldn't read file:"
 msgstr "Impossibile leggere il file:"
 
-#: ../plug-ins/imagemap/imap_main.c:972
+#: ../plug-ins/imagemap/imap_main.c:974
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: ../plug-ins/imagemap/imap_menu.c:127
+#: ../plug-ins/imagemap/imap_menu.c:136
 #, c-format
 msgid "_Undo %s"
 msgstr "_Ripristina %s"
 
-#: ../plug-ins/imagemap/imap_menu.c:143
+#: ../plug-ins/imagemap/imap_menu.c:152
 #, c-format
 msgid "_Redo %s"
 msgstr "Ri_esegui %s"
@@ -11649,7 +11680,7 @@ msgid "Windows icons cannot be higher or wider than 255 pixels."
 msgstr ""
 "Le icone di Windows non possono esser più alte o più larghe di 256 punti."
 
-#: ../plug-ins/winicon/main.c:99 ../plug-ins/winicon/main.c:133
+#: ../plug-ins/winicon/main.c:103 ../plug-ins/winicon/main.c:137
 msgid "Microsoft Windows icon"
 msgstr "Icona Microsoft Windows"
 
