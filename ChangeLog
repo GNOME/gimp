@@ -1,5 +1,11 @@
 2006-07-26  Michael Natterer  <mitch@gimp.org>
 
+	* desktop/gimp.desktop.in.in: added X-GNOME-Bugzilla-Component,
+	X-GNOME-Bugzilla-Version and X-GNOME-Bugzilla-OtherBinaries to
+	make new bug-buddy happy. Fixes bug #348859.
+
+2006-07-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/select-commands.c (select_shrink_callback): the
 	"shrink from border" toggle value needs to be negated for being
 	used as internal "edge lock" parameter. Fixes bug #348839.
