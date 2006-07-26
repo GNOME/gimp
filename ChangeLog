@@ -1,3 +1,11 @@
+2006-07-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_button_press): added runtime version
+	check and adjust the coords for RTL only for GTK+ < 2.7.0 because
+	gtk_tree_view_get_path_at_pos() does the right thing by itself
+	after this version. Fixes bug #348347.
+
 2006-07-18  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD branch:

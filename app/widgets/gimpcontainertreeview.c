@@ -866,7 +866,8 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
   /*  Actually gtk_tree_view_get_path_at_pos() should take care of the
    *  render direction, but unfortunately it doesn't seem to do that.
    */
-  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL &&
+      ! gtk_check_version (2, 7, 0))
     x = MAX (widget->requisition.width, widget->allocation.width) - bevent->x;
   else
     x = bevent->x;
