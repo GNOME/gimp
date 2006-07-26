@@ -1,3 +1,13 @@
+2006-07-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_button_press): removed code that was
+	special-casing RTL since gtk_tree_view_get_path_at_pos() takes
+	this correctly into account now. Fixes bug #348347.
+
+	* app/widgets/gimpdockable.c (gimp_dockable_size_allocate): fix
+	menu button positioning for RTL.
+
 2006-07-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimplevelstool.c (levels_input_area_event): Applied

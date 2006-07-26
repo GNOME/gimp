@@ -837,23 +837,14 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
   GimpContainerView *container_view = GIMP_CONTAINER_VIEW (tree_view);
   GtkTreeViewColumn *column;
   GtkTreePath       *path;
-  gint               x;
 
   tree_view->dnd_viewable = NULL;
 
   if (! GTK_WIDGET_HAS_FOCUS (widget))
     gtk_widget_grab_focus (widget);
 
-  /*  Actually gtk_tree_view_get_path_at_pos() should take care of the
-   *  render direction, but unfortunately it doesn't seem to do that.
-   */
-  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-    x = MAX (widget->requisition.width, widget->allocation.width) - bevent->x;
-  else
-    x = bevent->x;
-
   if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget),
-                                     x, bevent->y,
+                                     bevent->x, bevent->y,
                                      &path, &column, NULL, NULL))
     {
       GimpViewRenderer         *renderer;
