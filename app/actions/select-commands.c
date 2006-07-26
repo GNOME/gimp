@@ -443,7 +443,7 @@ select_shrink_callback (GtkWidget *widget,
   radius_x = radius_y = select_shrink_pixels = ROUND (size);
 
   select_shrink_edge_lock =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
+    ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
 
   if (unit != GIMP_UNIT_PIXEL)
     {

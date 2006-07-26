@@ -1,5 +1,11 @@
 2006-07-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/select-commands.c (select_shrink_callback): the
+	"shrink from border" toggle value needs to be negated for being
+	used as internal "edge lock" parameter. Fixes bug #348839.
+
+2006-07-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainertreeview.c
 	(gimp_container_tree_view_button_press): removed code that was
 	special-casing RTL since gtk_tree_view_get_path_at_pos() takes
