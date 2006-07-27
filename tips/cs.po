@@ -1,20 +1,24 @@
+# translation of cs.po to Czech
 # Czech translation of gimp-tips
 # Copyright (C) 2003, 2004 gimp'S COPYRIGHT HOLDER
 # Copyright (C) 2004 Miloslav Trmac <mitr@volny.cz>
 # This file is distributed under the same license as the gimp package.
 # Miloslav Trmac <mitr@volny.cz>, 2003, 2004.
+# Jakub Friedl <jfriedl@suse.cz>, 2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tips VERSION\n"
+"Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-12-18 00:46+0100\n"
-"PO-Revision-Date: 2004-11-01 21:58+0100\n"
-"Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
-"Language-Team: Czech <cs@li.org>\n"
+"PO-Revision-Date: 2006-07-27 21:09+0200\n"
+"Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.10.2\n"
+"Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GIMP!</big>"
@@ -48,8 +52,7 @@ msgstr ""
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
-msgstr ""
-"Tažení s <tt>Ctrl</tt> s nástrojem Rotovat omezí rotaci na násobky 15 stupňů."
+msgstr "Tažení s <tt>Ctrl</tt> s nástrojem Rotovat omezí rotaci na násobky 15 stupňů."
 
 #: tips/gimp-tips.xml.in.h:6
 msgid ""
@@ -159,10 +162,8 @@ msgstr ""
 "<tt>Ctrl</tt> před provedením výběru odebírá od aktuálního."
 
 #: tips/gimp-tips.xml.in.h:16
-msgid ""
-"The GIMP can undo most changes to the image, so feel free to experiment."
-msgstr ""
-"GIMP může vrátit zpět většinu změn obrázku, takže se nebojte experimentovat."
+msgid "The GIMP can undo most changes to the image, so feel free to experiment."
+msgstr "GIMP může vrátit zpět většinu změn obrázku, takže se nebojte experimentovat."
 
 #: tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -216,7 +217,7 @@ msgid ""
 "cursor position. If you also press <tt>Ctrl</tt>, the line will be "
 "constrained to 15 degree angles."
 msgstr ""
-"Při použití kreslicího nástroje (Štětec, Vzdušný štětec nebo Tužka), "
+"Při použití kreslicího nástroje (Štětec, Rozprašovač nebo Tužka), "
 "kliknutí se <tt>Shift</tt> nakreslí rovnou čáru z vašeho předchozího bodu "
 "kreslení na aktuální pozici kurzoru. Stisknete-li také <tt>Ctrl</tt>, bude "
 "čára omezena na násobky 15 stupňů."
@@ -352,3 +353,4 @@ msgstr ""
 "Rychlá maska&quot; ve spodním levém rohu okna obrázku. Změňte svůj výběr "
 "kreslením v obrázku a dalším kliknutím na toto tlačítko jej převeďte zpět na "
 "normální výběr."
+
