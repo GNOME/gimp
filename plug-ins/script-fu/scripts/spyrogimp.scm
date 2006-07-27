@@ -1,6 +1,6 @@
 ;; spyrogimp.scm -*-scheme-*-
 ;; Draws Spirographs, Epitrochoids and Lissajous Curves.
-;; More info at http://netword.com/*spyrogimp
+;; More info at http://www.wisdom.weizmann.ac.il/~elad/spyrogimp/
 ;; Version 1.2
 ;;
 ;; Copyright (C) 2003 by Elad Shahar <elad@wisdom.weizmann.ac.il>
@@ -322,7 +322,7 @@
 
 (script-fu-register "script-fu-spyrogimp"
                     _"_Spyrogimp..."
-                    _"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://netword.com/*spyrogimp"
+                    _"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://www.wisdom.weizmann.ac.il/~elad/spyrogimp/"
                     "Elad Shahar <elad@wisdom.weizmann.ac.il>"
                     "Elad Shahar"
                     "June 2003"

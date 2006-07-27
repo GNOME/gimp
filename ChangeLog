@@ -1,3 +1,7 @@
+2006-07-27  Jakub Friedl  <jfriedl@suse.cz>
+
+	* plug-ins/script-fu/scripts/spyrogimp.scm: updated web URL
+
 2006-07-26  Michael Natterer  <mitch@gimp.org>
 
 	* desktop/gimp.desktop.in.in: added X-GNOME-Bugzilla-Component,
