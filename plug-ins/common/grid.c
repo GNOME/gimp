@@ -766,15 +766,15 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (space), 2, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 0, 0.0, drawable->height);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 1, 0.0, drawable->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 0, 0.0, drawable->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 1, 0.0, drawable->height);
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 2, 0.0, drawable->width);
 
   /*  set upper and lower limits (in pixels)  */
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 0, 1.0,
-                                         drawable->height);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 1, 1.0,
                                          drawable->width);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 1, 1.0,
+                                         drawable->height);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 2, 0.0,
                                          MAX (drawable->width,
                                               drawable->height));
@@ -833,15 +833,15 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (offset), 2, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 0, 0.0, drawable->height);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 1, 0.0, drawable->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 0, 0.0, drawable->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 1, 0.0, drawable->height);
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 2, 0.0, drawable->width);
 
   /*  set upper and lower limits (in pixels)  */
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 0, 0.0,
-                                         drawable->height);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 1, 0.0,
                                          drawable->width);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 1, 0.0,
+                                         drawable->height);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 2, 0.0,
                                          MAX (drawable->width,
                                               drawable->height));
