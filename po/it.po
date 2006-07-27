@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-26 12:31+0200\n"
-"PO-Revision-Date: 2006-07-26 13:21+0200\n"
+"POT-Creation-Date: 2006-07-27 12:37+0200\n"
+"PO-Revision-Date: 2006-07-27 12:22+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -8619,7 +8619,7 @@ msgstr "Riempimento colore"
 
 #: ../app/tools/gimpbucketfilltool.c:90
 msgid "Fill with a color or pattern"
-msgstr "Riempi con colore o pattern"
+msgstr "Riempi con un colore o un motivo"
 
 #: ../app/tools/gimpbucketfilltool.c:91
 msgid "_Bucket Fill"
