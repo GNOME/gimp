@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-09 12:55+0200\n"
-"PO-Revision-Date: 2006-06-09 13:00+0200\n"
+"POT-Creation-Date: 2006-07-27 16:09+0200\n"
+"PO-Revision-Date: 2006-07-27 16:13+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2135,7 +2135,7 @@ msgstr "_Rotující glóbus..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
-msgstr "Vzdušný štětec"
+msgstr "Rozprašovač"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:3
 msgid "Brush"
