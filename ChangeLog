@@ -1,5 +1,9 @@
 2006-07-27  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/common/grid.c: fix my fix.
+	
+2006-07-27  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* plug-ins/common/grid.c: width and height were reversed when
 	setting refval boundaries in a couple of places; problem
 	pointed out by Maciej Katafiasz on irc.
