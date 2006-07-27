@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-18 15:41+0200\n"
-"PO-Revision-Date: 2006-07-18 15:45+0200\n"
+"PO-Revision-Date: 2006-07-27 19:58+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -7926,7 +7926,7 @@ msgstr "Přidávám téma '%s' (%s)\n"
 
 #: ../app/paint/gimpairbrush.c:69 ../app/tools/gimpairbrushtool.c:56
 msgid "Airbrush"
-msgstr "Vzdušný štětec"
+msgstr "Rozprašovač"
 
 #: ../app/paint/gimpbrushcore.c:338
 msgid "No brushes available for use with this tool."
@@ -8286,11 +8286,11 @@ msgstr "Tento nástroj nemá volby."
 
 #: ../app/tools/gimpairbrushtool.c:57
 msgid "Airbrush with variable pressure"
-msgstr "Vzdušný štětec s různým tlakem"
+msgstr "Rozprašovač s nastavitelným tlakem"
 
 #: ../app/tools/gimpairbrushtool.c:58
 msgid "_Airbrush"
-msgstr "_Vzdušný štětec"
+msgstr "Rozpr_ašovač"
 
 #: ../app/tools/gimpairbrushtool.c:101 ../app/tools/gimpconvolvetool.c:177
 #: ../app/tools/gimpsmudgetool.c:101
