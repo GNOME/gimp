@@ -1,3 +1,7 @@
+2006-07-27  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: exterminating "Vzdušný štětec".
+
 2006-06-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* mk.po: change erroneous "&qt"s to "&gt".
