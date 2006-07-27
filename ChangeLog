@@ -1,3 +1,7 @@
+2006-07-27  Raphaël Quinet  <raphael@gimp.org>
+
+	* HACKING: Clarify how patches can be submitted.
+
 2006-07-27  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/grid.c: fix my fix.
