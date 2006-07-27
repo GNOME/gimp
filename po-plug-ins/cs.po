@@ -13,9 +13,9 @@ msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-14 10:25+0200\n"
-"PO-Revision-Date: 2006-07-14 10:25+0200\n"
+"PO-Revision-Date: 2006-07-27 11:57+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team:  <cs@li.org>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -317,8 +317,7 @@ msgstr "Inverze"
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr ""
-"Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
+msgstr "Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
 
 #. Greenmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1028
@@ -530,8 +529,7 @@ msgstr "P_růhledné pozadí"
 
 #: ../plug-ins/Lighting/lighting_ui.c:302
 msgid "Make destination image transparent where bump height is zero"
-msgstr ""
-"Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
+msgstr "Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
 
 #: ../plug-ins/Lighting/lighting_ui.c:305
 msgid "Cre_ate new image"
@@ -789,7 +787,7 @@ msgstr "Lineární"
 
 #: ../plug-ins/Lighting/lighting_ui.c:797
 msgid "Logarithmic"
-msgstr "Logaritmický"
+msgstr "Logaritmická"
 
 #: ../plug-ins/Lighting/lighting_ui.c:798 ../plug-ins/common/bumpmap.c:904
 #: ../plug-ins/flame/flame.c:743
@@ -799,7 +797,7 @@ msgstr "Sinusoidní"
 #: ../plug-ins/Lighting/lighting_ui.c:799 ../plug-ins/common/bumpmap.c:903
 #: ../plug-ins/flame/flame.c:744
 msgid "Spherical"
-msgstr "Kulový"
+msgstr "Kulová"
 
 #: ../plug-ins/Lighting/lighting_ui.c:809
 msgid "Cu_rve:"
@@ -1867,8 +1865,7 @@ msgstr "Varování: '%s' je soubor ve starém formátu."
 #: ../plug-ins/common/CML_explorer.c:2265
 #, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
-msgstr ""
-"Varování: '%s' je soubor parametrů pro novější CML_badatel, než jsem já."
+msgstr "Varování: '%s' je soubor parametrů pro novější CML_badatel, než jsem já."
 
 #: ../plug-ins/common/CML_explorer.c:2328
 msgid "Error: failed to load parameters"
@@ -2285,8 +2282,7 @@ msgstr "Posun _X:"
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
-msgstr ""
-"Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
+msgstr "Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
 
 #: ../plug-ins/common/bumpmap.c:1011 ../plug-ins/common/postscript.c:3328
 msgid "_Y offset:"
@@ -2746,8 +2742,7 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:486
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr ""
-"Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
+msgstr "Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
 
 #: ../plug-ins/common/compose.c:517
 #, c-format
@@ -2824,8 +2819,7 @@ msgstr "Žádná rozumná přípona, ukládám jako gzipovaný XCF."
 
 #: ../plug-ins/common/compressor.c:514
 msgid "No sensible extension, attempting to load with file magic."
-msgstr ""
-"Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel."
+msgstr "Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel."
 
 #: ../plug-ins/common/convmatrix.c:77
 msgid "Gr_ey"
@@ -4247,8 +4241,7 @@ msgstr ""
 "nebyl uložen."
 
 #: ../plug-ins/common/gif.c:965
-msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nemohu ukládat barevné obrázky RGB. Nejdříve jej převeďte na indexovaný nebo "
 "do šedí."
@@ -4879,8 +4872,7 @@ msgstr "Interaktivní deformace"
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
-msgstr ""
-"Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
+msgstr "Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
 
 #: ../plug-ins/common/jigsaw.c:356
 msgid "Add a jigsaw-puzzle pattern to the image"
@@ -5232,8 +5224,7 @@ msgstr "Ú_hel:"
 #. * transparency & just use the full palette
 #: ../plug-ins/common/mng.c:498 ../plug-ins/common/png.c:1638
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr ""
-"Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
+msgstr "Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
 
 #: ../plug-ins/common/mng.c:1322
 msgid "Save as MNG"
@@ -7657,8 +7648,7 @@ msgid "Import _paths"
 msgstr "Importovat _cesty"
 
 #: ../plug-ins/common/svg.c:941
-msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importovat elementy cesty z SVG, aby mohly být použity s nástrojem GIMPu pro "
 "cesty"
@@ -7894,8 +7884,7 @@ msgid "ID"
 msgstr "ID"
 
 #: ../plug-ins/common/uniteditor.c:96
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Tento řetězec bude použit pouze k identifikaci jednotky v konfiguračním "
 "souboru GIMPu."
@@ -8072,8 +8061,7 @@ msgstr "_Body"
 
 #: ../plug-ins/common/video.c:1806
 msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-msgstr ""
-"Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
+msgstr "Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
 
 #: ../plug-ins/common/video.c:1813
 msgid "Vi_deo..."
@@ -9085,8 +9073,7 @@ msgstr "Kopírovat"
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
-msgstr ""
-"Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
+msgstr "Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
 
 #: ../plug-ins/gfig/gfig-dialog.c:1312
 msgid "Background:"
@@ -9211,8 +9198,7 @@ msgid "_Gfig..."
 msgstr "_Gfig..."
 
 #: ../plug-ins/gfig/gfig.c:731
-msgid ""
-"Error trying to save figure as a parasite: can't attach parasite to drawable."
+msgid "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Chyba při pokusu uložit obrázek jako parazita: nemohu připojit parazita k "
 "drawable."
@@ -9652,8 +9638,7 @@ msgid "Shadow depth:"
 msgstr "Hloubka stínu:"
 
 #: ../plug-ins/gimpressionist/general.c:243
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Hloubka vrženého stínu, tj. jak daleko od objektu budou"
 
 #: ../plug-ins/gimpressionist/general.c:248
@@ -10031,13 +10016,11 @@ msgid "Size:"
 msgstr "Velikost:"
 
 #: ../plug-ins/gimpressionist/size.c:142
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Nechť hodnota (jas) oblasti určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:146
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
+msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "Vzdálenost od středu obrázku určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:150
@@ -11739,3 +11722,4 @@ msgstr "Chyba: Nemohu načíst soubor XJT vlastností '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Chyba: Soubor XJT vlastností '%s' je prázdný."
+
