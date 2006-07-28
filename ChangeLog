@@ -1,3 +1,7 @@
+2006-07-28  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/bmp/bmpwrite.c: small cleanups.
+
 2006-07-28  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/sel2path/sel2path.c: ported to new vectors API,

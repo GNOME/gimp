@@ -43,7 +43,12 @@
 
 typedef enum
 {
-  RGB_565, RGBA_5551, RGB_555, RGB_888, RGBA_8888, RGBX_8888
+  RGB_565,
+  RGBA_5551,
+  RGB_555,
+  RGB_888,
+  RGBA_8888,
+  RGBX_8888
 } RGBMode;
 
 static RGBMode rgb_format   = RGB_888;
@@ -52,16 +57,16 @@ static gint    max_progress = 0;
 static gint    encoded      = 0;
 
 
-static  void      WriteImage  (FILE   *f,
-                               guchar *src,
-                               gint    width,
-                               gint    height,
-                               gint    encoded,
-                               gint    channels,
-                               gint    bpp,
-                               gint    spzeile,
-                               gint    MapSize,
-                               RGBMode rgb_format);
+static  void      write_image     (FILE   *f,
+                                   guchar *src,
+                                   gint    width,
+                                   gint    height,
+                                   gint    encoded,
+                                   gint    channels,
+                                   gint    bpp,
+                                   gint    spzeile,
+                                   gint    MapSize,
+                                   RGBMode rgb_format);
 static  gboolean  save_dialog     (void);
 static  gboolean  save_dialog_rgb (gint channels);
 
@@ -84,14 +89,14 @@ FromS (gint16  wert,
 }
 
 static void
-WriteColorMap (FILE *f,
-               gint  red[MAXCOLORS],
-               gint  green[MAXCOLORS],
-               gint  blue[MAXCOLORS],
-               gint  size)
+write_color_map (FILE *f,
+                 gint  red[MAXCOLORS],
+                 gint  green[MAXCOLORS],
+                 gint  blue[MAXCOLORS],
+                 gint  size)
 {
   gchar trgb[4];
-  gint i;
+  gint  i;
 
   size /= 4;
   trgb[3] = 0;
@@ -108,21 +113,21 @@ static gboolean
 warning_dialog (const gchar *primary,
                 const gchar *secondary)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   gboolean   ok;
 
-  dlg = gtk_message_dialog_new (NULL, 0,
-                                GTK_MESSAGE_WARNING, GTK_BUTTONS_OK_CANCEL,
-                                primary);
+  dialog = gtk_message_dialog_new (NULL, 0,
+                                   GTK_MESSAGE_WARNING, GTK_BUTTONS_OK_CANCEL,
+                                   primary);
 
-  gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dlg),
+  gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
                                             secondary);
 
-  gimp_window_set_transient (GTK_WINDOW (dlg));
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  ok = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  ok = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return ok;
 }
@@ -132,22 +137,22 @@ WriteBMP (const gchar *filename,
           gint32       image,
           gint32       drawable_ID)
 {
-  FILE         *outfile;
-  gint          Red[MAXCOLORS];
-  gint          Green[MAXCOLORS];
-  gint          Blue[MAXCOLORS];
-  guchar       *cmap;
-  gint          rows, cols, Spcols, channels, MapSize, SpZeile;
-  glong         BitsPerPixel;
-  gint          colors;
-  guchar       *pixels;
-  GimpPixelRgn  pixel_rgn;
-  GimpDrawable *drawable;
-  GimpImageType drawable_type;
-  guchar        puffer[50];
-  gint          i;
-  gint          mask_info_size;
-  guint32       Mask[4];
+  FILE          *outfile;
+  gint           Red[MAXCOLORS];
+  gint           Green[MAXCOLORS];
+  gint           Blue[MAXCOLORS];
+  guchar        *cmap;
+  gint           rows, cols, Spcols, channels, MapSize, SpZeile;
+  glong          BitsPerPixel;
+  gint           colors;
+  guchar        *pixels;
+  GimpPixelRgn   pixel_rgn;
+  GimpDrawable  *drawable;
+  GimpImageType  drawable_type;
+  guchar         puffer[50];
+  gint           i;
+  gint           mask_info_size;
+  guint32        Mask[4];
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
@@ -292,8 +297,7 @@ WriteBMP (const gchar *filename,
   rows = drawable->height;
 
   /* ... that we write to our headers. */
-  if ((BitsPerPixel <= 8) &&
-      (cols % (8/BitsPerPixel)))
+  if ((BitsPerPixel <= 8) && (cols % (8 / BitsPerPixel)))
     Spcols = (((cols / (8 / BitsPerPixel)) + 1) * (8 / BitsPerPixel));
   else
     Spcols = cols;
@@ -389,57 +393,57 @@ WriteBMP (const gchar *filename,
   FromL (Bitmap_Head.biClrImp, &puffer[0x20]);
 
   Write (outfile, puffer, 36);
-  WriteColorMap (outfile, Red, Green, Blue, MapSize);
+  write_color_map (outfile, Red, Green, Blue, MapSize);
 
   if (mask_info_size)
-  {
-    switch (rgb_format)
     {
-    default:
-    case RGB_888:
-    case RGBX_8888:
-        Mask[0] = 0xff000000;
-        Mask[1] = 0x00ff0000;
-        Mask[2] = 0x0000ff00;
-        Mask[3] = 0x00000000;
-        break;
-    case RGBA_8888:
-        Mask[0] = 0xff000000;
-        Mask[1] = 0x00ff0000;
-        Mask[2] = 0x0000ff00;
-        Mask[3] = 0x000000ff;
-        break;
-    case RGB_565:
-        Mask[0] = 0xf800;
-        Mask[1] = 0x7e0;
-        Mask[2] = 0x1f;
-        Mask[3] = 0x0;
-        break;
-    case RGBA_5551:
-        Mask[0] = 0x7c00;
-        Mask[1] = 0x3e0;
-        Mask[2] = 0x1f;
-        Mask[3] = 0x8000;
-        break;
-    case RGB_555:
-        Mask[0] = 0x7c00;
-        Mask[1] = 0x3e0;
-        Mask[2] = 0x1f;
-        Mask[3] = 0x0;
-        break;
+      switch (rgb_format)
+        {
+        default:
+        case RGB_888:
+        case RGBX_8888:
+          Mask[0] = 0xff000000;
+          Mask[1] = 0x00ff0000;
+          Mask[2] = 0x0000ff00;
+          Mask[3] = 0x00000000;
+          break;
+        case RGBA_8888:
+          Mask[0] = 0xff000000;
+          Mask[1] = 0x00ff0000;
+          Mask[2] = 0x0000ff00;
+          Mask[3] = 0x000000ff;
+          break;
+        case RGB_565:
+          Mask[0] = 0xf800;
+          Mask[1] = 0x7e0;
+          Mask[2] = 0x1f;
+          Mask[3] = 0x0;
+          break;
+        case RGBA_5551:
+          Mask[0] = 0x7c00;
+          Mask[1] = 0x3e0;
+          Mask[2] = 0x1f;
+          Mask[3] = 0x8000;
+          break;
+        case RGB_555:
+          Mask[0] = 0x7c00;
+          Mask[1] = 0x3e0;
+          Mask[2] = 0x1f;
+          Mask[3] = 0x0;
+          break;
+        }
+      FromL (Mask[0], &puffer[0x00]);
+      FromL (Mask[1], &puffer[0x04]);
+      FromL (Mask[2], &puffer[0x08]);
+      FromL (Mask[3], &puffer[0x0C]);
+      Write (outfile, puffer, mask_info_size);
     }
-    FromL (Mask[0], &puffer[0x00]);
-    FromL (Mask[1], &puffer[0x04]);
-    FromL (Mask[2], &puffer[0x08]);
-    FromL (Mask[3], &puffer[0x0C]);
-    Write (outfile, puffer, mask_info_size);
-  }
 
   /* After that is done, we write the image ... */
 
-  WriteImage (outfile,
-              pixels, cols, rows,
-              encoded, channels, BitsPerPixel, SpZeile, MapSize, rgb_format);
+  write_image (outfile,
+               pixels, cols, rows,
+               encoded, channels, BitsPerPixel, SpZeile, MapSize, rgb_format);
 
   /* ... and exit normally */
 
@@ -472,24 +476,24 @@ static inline void Make5551(guchar r, guchar g, guchar b, guchar a, guchar *buf)
 }
 
 static void
-WriteImage (FILE   *f,
-            guchar *src,
-            gint    width,
-            gint    height,
-            gint    encoded,
-            gint    channels,
-            gint    bpp,
-            gint    spzeile,
-            gint    MapSize,
-            RGBMode rgb_format)
+write_image (FILE   *f,
+             guchar *src,
+             gint    width,
+             gint    height,
+             gint    encoded,
+             gint    channels,
+             gint    bpp,
+             gint    spzeile,
+             gint    MapSize,
+             RGBMode rgb_format)
 {
-  guchar buf[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0};
-  guchar puffer[8];
+  guchar  buf[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0 };
+  guchar  puffer[8];
   guchar *temp, v;
-  guchar *Zeile, *ketten;
-  gint xpos, ypos, i, j, rowstride, laenge, thiswidth;
-  gint breite, k;
-  guchar n, r, g, b, a;
+  guchar *row, *ketten;
+  gint    xpos, ypos, i, j, rowstride, length, thiswidth;
+  gint    breite, k;
+  guchar  n, r, g, b, a;
 
   xpos = 0;
   rowstride = width * channels;
@@ -504,79 +508,65 @@ WriteImage (FILE   *f,
             {
               temp = src + (ypos * rowstride) + (xpos * channels);
               switch (rgb_format)
-              {
-              default:
-              case RGB_888:
-                buf[2] = (guchar) *temp;
-                temp++;
-                buf[1] = (guchar) *temp;
-                temp++;
-                buf[0] = (guchar) *temp;
-                temp++;
-                xpos++;
-                if (channels > 3 && (guchar)*temp == 0) { buf[0] = 0xff; buf[1] = 0xff; buf[2] = 0xff; }
-                Write (f, buf, 3);
-                break;
-              case RGBX_8888:
-                buf[0] = 0;
-                buf[3] = (guchar) *temp;
-                temp++;
-                buf[2] = (guchar) *temp;
-                temp++;
-                buf[1] = (guchar) *temp;
-                temp++;
-                xpos++;
-                if (channels > 3 && (guchar)*temp == 0) { buf[0] = 0xff; buf[1] = 0xff; buf[2] = 0xff; }
-                Write (f, buf, 4);
-                break;
-              case RGBA_8888:
-                buf[2] = (guchar) *temp;
-                temp++;
-                buf[1] = (guchar) *temp;
-                temp++;
-                buf[0] = (guchar) *temp;
-                temp++;
-                buf[3] = (guchar) *temp;
-                xpos++;
-                Write (f, buf, 4);
-                break;
-              case RGB_565:
-                r = (guchar) *temp;
-                temp++;
-                g = (guchar) *temp;
-                temp++;
-                b = (guchar) *temp;
-                temp++;
-                if (channels > 3 && (guchar)*temp == 0) { r = 0xff; g = 0xff; b = 0xff; }
-                Make565(r, g, b, buf);
-                xpos++;
-                Write (f, buf, 2);
-                break;
-              case RGB_555:
-                r = (guchar) *temp;
-                temp++;
-                g = (guchar) *temp;
-                temp++;
-                b = (guchar) *temp;
-                temp++;
-                if (channels > 3 && (guchar)*temp == 0) { r = 0xff; g = 0xff; b = 0xff; }
-                Make5551(r, g, b, 0x0, buf);
-                xpos++;
-                Write (f, buf, 2);
-                break;
-              case RGBA_5551:
-                r = (guchar) *temp;
-                temp++;
-                g = (guchar) *temp;
-                temp++;
-                b = (guchar) *temp;
-                temp++;
-                a = (guchar) *temp;
-                Make5551(r, g, b, a, buf);
-                xpos++;
-                Write (f, buf, 2);
-                break;
-              }
+                {
+                default:
+                case RGB_888:
+                  buf[2] = *temp++;
+                  buf[1] = *temp++;
+                  buf[0] = *temp++;
+                  xpos++;
+                  if (channels > 3 && *temp == 0)
+                    buf[0] = buf[1] = buf[2] = 0xff;
+                  Write (f, buf, 3);
+                  break;
+                case RGBX_8888:
+                  buf[0] = 0;
+                  buf[3] = *temp++;
+                  buf[2] = *temp++;
+                  buf[1] = *temp++;
+                  xpos++;
+                  if (channels > 3 && *temp == 0)
+                    buf[0] = buf[1] = buf[2] = 0xff;
+                  Write (f, buf, 4);
+                  break;
+                case RGBA_8888:
+                  buf[2] = *temp++;
+                  buf[1] = *temp++;
+                  buf[0] = *temp++;
+                  buf[3] = *temp;
+                  xpos++;
+                  Write (f, buf, 4);
+                  break;
+                case RGB_565:
+                  r = *temp++;
+                  g = *temp++;
+                  b = *temp++;
+                  if (channels > 3 && *temp == 0)
+                    r = g = b = 0xff;
+                  Make565 (r, g, b, buf);
+                  xpos++;
+                  Write (f, buf, 2);
+                  break;
+                case RGB_555:
+                  r = *temp++;
+                  g = *temp++;
+                  b = *temp++;
+                  if (channels > 3 && *temp == 0)
+                    r = g = b = 0xff;
+                  Make5551 (r, g, b, 0x0, buf);
+                  xpos++;
+                  Write (f, buf, 2);
+                  break;
+                case RGBA_5551:
+                  r = *temp++;
+                  g = *temp++;
+                  b = *temp++;
+                  a = *temp;
+                  Make5551 (r, g, b, a, buf);
+                  xpos++;
+                  Write (f, buf, 2);
+                  break;
+                }
             }
 
           Write (f, &buf[4], spzeile - (width * (bpp/8)));
@@ -626,13 +616,13 @@ WriteImage (FILE   *f,
           }
         default:
           {              /* Save RLE encoded file, quite difficult */
-            laenge = 0;
+            length = 0;
             buf[12] = 0;
             buf[13] = 1;
             buf[14] = 0;
             buf[15] = 0;
-            Zeile = (guchar *) g_malloc (width / (8 / bpp) + 10);
-            ketten = (guchar *) g_malloc (width / (8 / bpp) + 10);
+            row = g_new (guchar, width / (8 / bpp) + 10);
+            ketten = g_new (guchar, width / (8 / bpp) + 10);
             for (ypos = height - 1; ypos >= 0; ypos--)
               { /* each row separately */
                 j = 0;
@@ -650,22 +640,21 @@ WriteImage (FILE   *f,
                         if (channels > 1 && *(temp+1) == 0) *temp = 0x0;
                         v = v | ((guchar) * temp << (8 - (i * bpp)));
                       }
-                    Zeile[j++] = v;
+                    row[j++] = v;
                   }
                 breite = width / (8 / bpp);
                 if (width % (8 / bpp))
                   breite++;
                 /* then check for strings of equal bytes */
-                for (i = 0; i < breite;)
+                for (i = 0; i < breite; i += j)
                   {
                     j = 0;
                     while ((i + j < breite) &&
                            (j < (255 / (8 / bpp))) &&
-                           (Zeile[i + j] == Zeile[i]))
+                           (row[i + j] == row[i]))
                       j++;
 
                     ketten[i] = j;
-                    i += j;
                   }
 
                 /* then write the strings and the other pixels to the file */
@@ -693,13 +682,13 @@ WriteImage (FILE   *f,
                             if (n + i * (8 / bpp) > width)
                               n--;
                             Write (f, &n, 1);
-                            laenge += 2;
-                            Write (f, &Zeile[i], j);
-                            laenge += j;
+                            length += 2;
+                            Write (f, &row[i], j);
+                            length += j;
                             if ((j) % 2)
                               {
                                 Write (f, &buf[12], 1);
-                                laenge++;
+                                length++;
                               }
                           }
                         else
@@ -710,9 +699,9 @@ WriteImage (FILE   *f,
                                 if (n + i * (8 / bpp) > width)
                                   n--;
                                 Write (f, &n, 1);
-                                Write (f, &Zeile[k], 1);
+                                Write (f, &row[k], 1);
                                 /*printf("%i.#|",n); */
-                                laenge += 2;
+                                length += 2;
                               }
                           }
                         i += j;
@@ -724,13 +713,13 @@ WriteImage (FILE   *f,
                         if (n + i * (8 / bpp) > width)
                           n--;
                         Write (f, &n, 1);
-                        Write (f, &Zeile[i], 1);
+                        Write (f, &row[i], 1);
                         i += ketten[i];
-                        laenge += 2;
+                        length += 2;
                       }
                   }
                 Write (f, &buf[14], 2);          /* End of row */
-                laenge += 2;
+                length += 2;
 
                 cur_progress++;
                 if ((cur_progress % 5) == 0)
@@ -741,14 +730,14 @@ WriteImage (FILE   *f,
             Write (f, &buf[12], 2);      /* ... with End of file */
 
             fseek (f, 0x22, SEEK_SET);            /* Write length of image */
-            FromL (laenge, puffer);
+            FromL (length, puffer);
             Write (f, puffer, 4);
             fseek (f, 0x02, SEEK_SET);            /* Write length of file */
-            laenge += (0x36 + MapSize);
-            FromL (laenge, puffer);
+            length += (0x36 + MapSize);
+            FromL (length, puffer);
             Write (f, puffer, 4);
             g_free (ketten);
-            g_free (Zeile);
+            g_free (row);
             break;
           }
         }
@@ -760,30 +749,30 @@ WriteImage (FILE   *f,
 static gboolean
 save_dialog (void)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *toggle;
   GtkWidget *vbox;
   gboolean   run;
 
-  dlg = gimp_dialog_new (_("Save as BMP"), "bmp",
-                         NULL, 0,
-                         gimp_standard_help_func, "file-bmp-save",
+  dialog = gimp_dialog_new (_("Save as BMP"), "bmp",
+                            NULL, 0,
+                            gimp_standard_help_func, "file-bmp-save",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dlg));
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
   gtk_widget_show (vbox);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Run-Length Encoded"));
@@ -795,11 +784,11 @@ save_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &encoded);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
@@ -814,32 +803,33 @@ format_callback (GtkWidget *widget,
 static gboolean
 save_dialog_rgb (gint channels)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *toggle;
-  GtkWidget *vbox_main, *vbox;
+  GtkWidget *vbox_main;
+  GtkWidget *vbox;
   GtkWidget *frame;
   GSList    *group;
   gboolean   run;
 
-  dlg = gimp_dialog_new (_("Save as BMP"), "bmp",
-                         NULL, 0,
-                         gimp_standard_help_func, "file-bmp-save",
+  dialog = gimp_dialog_new (_("Save as BMP"), "bmp",
+                            NULL, 0,
+                            gimp_standard_help_func, "file-bmp-save",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dlg));
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   vbox_main = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox_main), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), vbox_main);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox_main);
   gtk_widget_show (vbox_main);
 
   group = NULL;
@@ -917,11 +907,11 @@ save_dialog_rgb (gint channels)
                     G_CALLBACK (format_callback),
                     GINT_TO_POINTER (RGBX_8888));
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
