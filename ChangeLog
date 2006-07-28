@@ -1,3 +1,12 @@
+2006-07-28  Simon Budig  <simon@gimp.org>
+
+	* libgimp/gimp.def: added the new symbol
+
+	* tools/pdbgen/pdb/vectors.pdb: cosmetics.
+
+	* app/pdb/vectors_cmds.c
+	* libgimp/gimpvectors_pdb.[ch]: regenerated.
+
 2006-07-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptoolcontrol.[ch]: minor code cleanup.
