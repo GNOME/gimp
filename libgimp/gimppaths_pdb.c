@@ -485,9 +485,8 @@ gimp_path_set_locked (gint32       image_ID,
  * @feather_radius_x: Feather radius x.
  * @feather_radius_y: Feather radius y.
  *
- * Transforms the active path into a selection
- *
- * This procedure renders the desired path into the current selection.
+ * This procedure is deprecated! Use gimp_vectors_to_selection()
+ * instead.
  *
  * Returns: TRUE on success.
  */

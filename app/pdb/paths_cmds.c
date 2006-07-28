@@ -1147,12 +1147,12 @@ register_paths_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-to-selection");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-to-selection",
-                                     "Transforms the active path into a selection",
-                                     "This procedure renders the desired path into the current selection.",
-                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
-                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
-                                     "2003",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-vectors-to-selection' instead.",
+                                     "This procedure is deprecated! Use 'gimp-vectors-to-selection' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-vectors-to-selection");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",

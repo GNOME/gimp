@@ -66,7 +66,6 @@ gboolean gimp_path_get_locked        (gint32           image_ID,
 gboolean gimp_path_set_locked        (gint32           image_ID,
                                       const gchar     *name,
                                       gboolean         locked);
-#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean gimp_path_to_selection      (gint32           image_ID,
                                       const gchar     *name,
                                       GimpChannelOps   op,
@@ -74,6 +73,7 @@ gboolean gimp_path_to_selection      (gint32           image_ID,
                                       gboolean         feather,
                                       gdouble          feather_radius_x,
                                       gdouble          feather_radius_y);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean gimp_path_import            (gint32           image_ID,
                                       const gchar     *filename,
                                       gboolean         merge,

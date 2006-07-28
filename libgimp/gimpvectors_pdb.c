@@ -920,3 +920,50 @@ gimp_vectors_bezier_stroke_new_ellipse (gint32  vectors_ID,
 
   return stroke_id;
 }
+
+/**
+ * gimp_vectors_to_selection:
+ * @vectors_ID: The vectors object to render to the selection.
+ * @op: The desired operation with current selection.
+ * @antialias: Antialias selection.
+ * @feather: Feather selection.
+ * @feather_radius_x: Feather radius x.
+ * @feather_radius_y: Feather radius y.
+ *
+ * Transforms the specified vectors object into a selection
+ *
+ * This procedure renders the desired vectors object into the current
+ * selection of the image the vectors object belongs to.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_to_selection (gint32         vectors_ID,
+                           GimpChannelOps op,
+                           gboolean       antialias,
+                           gboolean       feather,
+                           gdouble        feather_radius_x,
+                           gdouble        feather_radius_y)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-to-selection",
+                                    &nreturn_vals,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_INT32, op,
+                                    GIMP_PDB_INT32, antialias,
+                                    GIMP_PDB_INT32, feather,
+                                    GIMP_PDB_FLOAT, feather_radius_x,
+                                    GIMP_PDB_FLOAT, feather_radius_y,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}

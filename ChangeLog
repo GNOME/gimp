@@ -1,3 +1,14 @@
+2006-07-28  Simon Budig  <simon@gimp.org>
+
+	* tools/pdbgen/pdb/vectors.pdb: implemented gimp-vectors-to-selection.
+	* tools/pdbgen/pdb/paths.pdb: deprecated gimp-path-to-selection.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/paths_cmds.c
+	* app/pdb/vectors_cmds.c
+	* libgimp/gimppaths_pdb.[ch]
+	* libgimp/gimpvectors_pdb.[ch]: regenerated.
+
 2006-07-27  Raphaël Quinet  <raphael@gimp.org>
 
 	* HACKING: Clarify how patches can be submitted.

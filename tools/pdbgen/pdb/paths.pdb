@@ -535,13 +535,7 @@ CODE
 }
 
 sub path_to_selection {
-    $blurb = 'Transforms the active path into a selection';
-
-    $help = <<'HELP';
-This procedure renders the desired path into the current selection.
-HELP
-
-    &joao_pdb_misc('2003');
+    &std_pdb_deprecated('gimp-vectors-to-selection');
 
     @inargs = (
 	{ name => 'image', type => 'image',
