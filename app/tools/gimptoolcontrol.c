@@ -320,11 +320,11 @@ gimp_tool_control_set_tool_cursor (GimpToolControl    *control,
 
 void
 gimp_tool_control_set_cursor_modifier (GimpToolControl    *control,
-                                       GimpCursorModifier  cmodifier)
+                                       GimpCursorModifier  modifier)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
-  control->cursor_modifier = cmodifier;
+  control->cursor_modifier = modifier;
 }
 
 void
@@ -347,11 +347,11 @@ gimp_tool_control_set_toggle_tool_cursor (GimpToolControl    *control,
 
 void
 gimp_tool_control_set_toggle_cursor_modifier (GimpToolControl    *control,
-                                              GimpCursorModifier  cmodifier)
+                                              GimpCursorModifier  modifier)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
-  control->toggle_cursor_modifier = cmodifier;
+  control->toggle_cursor_modifier = modifier;
 }
 
 GimpCursorType

@@ -1,3 +1,7 @@
+2006-07-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptoolcontrol.[ch]: minor code cleanup.
+
 2006-07-28  Simon Budig  <simon@gimp.org>
 
 	* tools/pdbgen/pdb/vectors.pdb: implemented gimp-vectors-to-selection.
