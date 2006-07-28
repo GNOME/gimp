@@ -1,3 +1,9 @@
+2006-07-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpbycolorselecttool.c: removed GObject::dispose()
+	implementation (no need to disconnect from a signal connected with
+	g_signal_connect_object). Code cleanup in some functions.
+
 2006-07-28  Simon Budig  <simon@gimp.org>
 
 	* libgimp/gimp.def: added the new symbol

@@ -48,7 +48,6 @@ static GObject * gimp_by_color_select_tool_constructor (GType                  t
                                                         guint                  n_params,
                                                         GObjectConstructParam *params);
 
-static void   gimp_by_color_select_tool_dispose        (GObject         *object);
 static void   gimp_by_color_select_tool_button_press   (GimpTool        *tool,
                                                         GimpCoords      *coords,
                                                         guint32          time,
@@ -72,6 +71,7 @@ static void   gimp_by_color_select_tool_select           (GimpByColorSelectTool 
 static void   gimp_by_color_select_tool_threshold_notify (GimpSelectionOptions  *options,
                                                           GParamSpec            *pspec,
                                                           GimpByColorSelectTool *by_color_sel);
+
 
 G_DEFINE_TYPE (GimpByColorSelectTool, gimp_by_color_select_tool,
                GIMP_TYPE_SELECTION_TOOL)
@@ -103,7 +103,6 @@ gimp_by_color_select_tool_class_init (GimpByColorSelectToolClass *klass)
   GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
 
   object_class->constructor  = gimp_by_color_select_tool_constructor;
-  object_class->dispose      = gimp_by_color_select_tool_dispose;
 
   tool_class->button_press   = gimp_by_color_select_tool_button_press;
   tool_class->button_release = gimp_by_color_select_tool_button_release;
@@ -116,7 +115,7 @@ gimp_by_color_select_tool_init (GimpByColorSelectTool *by_color_select)
 {
   GimpTool *tool = GIMP_TOOL (by_color_select);
 
-  gimp_tool_control_set_cursor (tool->control,      GIMP_CURSOR_MOUSE);
+  gimp_tool_control_set_cursor      (tool->control, GIMP_CURSOR_MOUSE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_HAND);
 
   by_color_select->x    = 0;
@@ -131,37 +130,17 @@ gimp_by_color_select_tool_constructor (GType                  type,
                                        GObjectConstructParam *params)
 {
   GObject  *object;
-  GObject  *options;
   GimpTool *tool;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   tool = GIMP_TOOL (object);
 
-  tool->display = NULL;
-
-  options = G_OBJECT (tool->tool_info->tool_options);
-  g_signal_connect_object (options, "notify::threshold",
+  g_signal_connect_object (tool->tool_info->tool_options, "notify::threshold",
                            G_CALLBACK (gimp_by_color_select_tool_threshold_notify),
-                           GIMP_BY_COLOR_SELECT_TOOL (tool), 0);
+                           tool, 0);
 
   return object;
-}
-
-static void
-gimp_by_color_select_tool_dispose (GObject *object)
-{
-  GimpTool          *tool      = GIMP_TOOL (object);
-  GObject           *options;
-
-  options = G_OBJECT (tool->tool_info->tool_options);
-
-  tool->display = NULL;
-
-  g_signal_handlers_disconnect_by_func
-    (options,
-     G_CALLBACK (gimp_by_color_select_tool_threshold_notify),
-     GIMP_BY_COLOR_SELECT_TOOL (object));
 }
 
 static void
@@ -206,12 +185,7 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
                                           GimpDisplay     *display)
 {
   GimpByColorSelectTool *by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
-  GimpSelectionTool    *sel_tool = GIMP_SELECTION_TOOL (tool);
-  GimpSelectionOptions  *options;
-  GimpDrawable          *drawable;
-
-  options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
-  drawable = gimp_image_active_drawable (display->image);
+  GimpSelectionTool     *sel_tool     = GIMP_SELECTION_TOOL (tool);
 
   gimp_tool_control_halt (tool->control);
 
@@ -283,44 +257,34 @@ gimp_by_color_select_tool_threshold_notify (GimpSelectionOptions  *options,
                                             GParamSpec            *pspec,
                                             GimpByColorSelectTool *by_color_sel)
 {
-  GimpTool    *tool     = GIMP_TOOL (by_color_sel);
-  GimpDisplay *display;
-  GimpImage   *image;
-  GimpUndo    *undo     = by_color_sel->undo;
+  GimpTool *tool = GIMP_TOOL (by_color_sel);
 
-  display = tool->display;
-
-  if (!display)
-    return;
-
-  image = display->image;
-
-  /* don't do anything unless we have already done something */
-  if (!undo)
-    return;
-
-  if (undo && undo == gimp_undo_stack_peek (image->undo_stack))
+  if (tool->display && by_color_sel->undo)
     {
-      gimp_image_undo (image);
-      by_color_sel->undo = NULL;
-    }
+      GimpImage *image = tool->display->image;
 
-  gimp_by_color_select_tool_select (by_color_sel);
+      if (by_color_sel->undo == gimp_undo_stack_peek (image->undo_stack))
+        {
+          gimp_image_undo (image);
+          by_color_sel->undo = NULL;
+        }
+
+      gimp_by_color_select_tool_select (by_color_sel);
+    }
 }
 
 static void
 gimp_by_color_select_tool_select (GimpByColorSelectTool *by_color_sel)
 {
-  GimpTool              *tool      = GIMP_TOOL (by_color_sel);
-  GimpDisplay           *display;
-  GimpDrawable          *drawable;
+  GimpTool              *tool = GIMP_TOOL (by_color_sel);
   GimpSelectionOptions  *options;
+  GimpDrawable          *drawable;
   GimpImage             *image;
 
-  display = tool->display;
-  image = display->image;
-  drawable = gimp_image_active_drawable (image);
   options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+
+  image    = tool->display->image;
+  drawable = gimp_image_active_drawable (image);
 
   if (by_color_sel->x >= 0 &&
       by_color_sel->y >= 0 &&
