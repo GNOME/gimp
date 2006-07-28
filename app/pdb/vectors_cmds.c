@@ -837,14 +837,14 @@ vectors_to_selection_invoker (GimpProcedure     *procedure,
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gint32 op;
+  gint32 operation;
   gboolean antialias;
   gboolean feather;
   gdouble feather_radius_x;
   gdouble feather_radius_y;
 
   vectors = gimp_value_get_vectors (&args->values[0], gimp);
-  op = g_value_get_enum (&args->values[1]);
+  operation = g_value_get_enum (&args->values[1]);
   antialias = g_value_get_boolean (&args->values[2]);
   feather = g_value_get_boolean (&args->values[3]);
   feather_radius_x = g_value_get_double (&args->values[4]);
@@ -860,7 +860,7 @@ vectors_to_selection_invoker (GimpProcedure     *procedure,
         gimp_channel_select_vectors (gimp_image_get_mask (image),
                                      _("Path to Selection"),
                                      vectors,
-                                     op,
+                                     operation,
                                      antialias,
                                      feather,
                                      feather_radius_x,
@@ -1764,8 +1764,8 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("op",
-                                                  "op",
+                               g_param_spec_enum ("operation",
+                                                  "operation",
                                                   "The desired operation with current selection",
                                                   GIMP_TYPE_CHANNEL_OPS,
                                                   GIMP_CHANNEL_OP_ADD,

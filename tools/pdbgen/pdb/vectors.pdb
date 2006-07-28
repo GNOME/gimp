@@ -837,7 +837,7 @@ HELP
     @inargs = (
         { name => 'vectors', type => 'vectors',
           desc => 'The vectors object to render to the selection' },
-        { name => 'op', type => 'enum GimpChannelOps',
+        { name => 'operation', type => 'enum GimpChannelOps',
           desc => 'The desired operation with current selection' },
         { name => 'antialias', type => 'boolean',
           desc => 'Antialias selection.' },
@@ -860,7 +860,7 @@ HELP
     gimp_channel_select_vectors (gimp_image_get_mask (image),
                                  _("Path to Selection"),
                                  vectors,
-                                 op,
+                                 operation,
                                  antialias,
                                  feather,
                                  feather_radius_x,

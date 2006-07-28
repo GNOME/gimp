@@ -101,7 +101,7 @@ gint     gimp_vectors_bezier_stroke_new_ellipse (gint32           vectors_ID,
                                                  gdouble          radius_y,
                                                  gdouble          angle);
 gboolean gimp_vectors_to_selection              (gint32           vectors_ID,
-                                                 GimpChannelOps   op,
+                                                 GimpChannelOps   operation,
                                                  gboolean         antialias,
                                                  gboolean         feather,
                                                  gdouble          feather_radius_x,
