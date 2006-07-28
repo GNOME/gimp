@@ -1,3 +1,8 @@
+2006-07-28  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/sel2path/sel2path.c: ported to new vectors API,
+	removed some of the cruft (there is plenty here...).
+
 2006-07-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpbycolorselecttool.c: removed GObject::dispose()
