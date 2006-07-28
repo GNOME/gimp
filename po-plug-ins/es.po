@@ -1,7 +1,4 @@
-# translation of es.po to Spanish
 # translation of gimp-plug-ins.HEAD.po to Spanish
-# Copyright © 1998-2000,2003 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gimp package.
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>, 2000-2002.
 # Francisco Javier F. Serrador <serrador@arrakis.es>, 2003.
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
@@ -9,19 +6,21 @@
 # Pablo del Campo <pablodc@par001001-703>, 2004.
 # Alonso Lara <keko@khor-ha.net>, 2005.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2006.
+# Copyright © 1998-2000,2003, 2006 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gimp package.
 msgid ""
 msgstr ""
-"Project-Id-Version: es\n"
+"Project-Id-Version: gimp-plug-ins.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-21 10:58+0200\n"
-"PO-Revision-Date: 2006-07-21 11:03+0200\n"
+"POT-Creation-Date: 2006-07-25 12:06+0200\n"
+"PO-Revision-Date: 2006-07-28 11:45+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: KBabel 1.9.1\n"
+"X-Generator: KBabel 1.11.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:530
@@ -1258,7 +1257,9 @@ msgstr "El mapa de bits finaliza inesperadamente."
 
 #: ../plug-ins/bmp/bmpwrite.c:177 ../plug-ins/bmp/bmpwrite.c:197
 msgid "Cannot save indexed image with transparency in BMP file format."
-msgstr "No se puede guardar una imagen indexada con transparencia en formato de archivo BMP."
+msgstr ""
+"No se puede guardar una imagen indexada con transparencia en formato de "
+"archivo BMP."
 
 #: ../plug-ins/bmp/bmpwrite.c:179 ../plug-ins/bmp/bmpwrite.c:199
 msgid "Alpha channel will be ignored."
@@ -2150,7 +2151,7 @@ msgstr "Recortando"
 
 #: ../plug-ins/common/autostretch_hsv.c:69
 msgid "Stretch image contrast to cover the maximum possible range"
-msgstr ""
+msgstr "Ampliar el contraste de la imagen para que cubra el mayor rango posible"
 
 #: ../plug-ins/common/autostretch_hsv.c:82
 msgid "Stretch _HSV"
@@ -2210,7 +2211,7 @@ msgstr "_Nº de segmentos:"
 
 #: ../plug-ins/common/blur.c:130
 msgid "Simple blur, fast but not very strong"
-msgstr ""
+msgstr "Desenfoque sencillo, rápido pero no muy fuerte"
 
 #: ../plug-ins/common/blur.c:139
 msgid "_Blur"
@@ -2222,7 +2223,7 @@ msgstr "Desenfocando"
 
 #: ../plug-ins/common/borderaverage.c:99
 msgid "Set foreground to the average color of the image border"
-msgstr ""
+msgstr "Establecer el primer plano al color promedio del borde de la imagen"
 
 #: ../plug-ins/common/borderaverage.c:104
 msgid "_Border Average..."
@@ -2251,7 +2252,7 @@ msgstr "Tamaño del _bucket:"
 
 #: ../plug-ins/common/bumpmap.c:330
 msgid "Create an embossing effect using a bump map"
-msgstr ""
+msgstr "Crear un efecto de repujado mediante un mapa de relieve"
 
 #: ../plug-ins/common/bumpmap.c:340
 msgid "_Bump Map..."
@@ -2322,7 +2323,7 @@ msgstr "A_mbiental:"
 
 #: ../plug-ins/common/c_astretch.c:69
 msgid "Stretch contrast to cover the maximum possible range"
-msgstr ""
+msgstr "Ampliar el contraste para que cubra el mayor rango posible"
 
 #: ../plug-ins/common/c_astretch.c:80
 msgid "_Stretch Contrast"
@@ -2508,7 +2509,7 @@ msgstr "T_amaño:"
 
 #: ../plug-ins/common/color_enhance.c:70
 msgid "Stretch color saturation to cover maximum possible range"
-msgstr ""
+msgstr "Ampliar la saturación de color para que cubra el mayor rango posible"
 
 #: ../plug-ins/common/color_enhance.c:82
 msgid "_Color Enhance"
@@ -2543,69 +2544,63 @@ msgid "Colorify Custom Color"
 msgstr "Colorear con color personalizado"
 
 #: ../plug-ins/common/colormap-remap.c:97
-#, fuzzy
 msgid "Rearrange the colormap"
-msgstr "Rotando el mapa de color"
+msgstr "Reordenar el mapa de colores"
 
 #: ../plug-ins/common/colormap-remap.c:104
-#, fuzzy
 msgid "R_earrange Colormap..."
-msgstr "Rotando el mapa de color"
+msgstr "R_eordenar el mapa de colores..."
 
 #: ../plug-ins/common/colormap-remap.c:116
-#, fuzzy
 msgid "Swap two colors in the colormap"
-msgstr "Rotando el mapa de color"
+msgstr "Intercambiar dos colores en el mapa de colores"
 
 #: ../plug-ins/common/colormap-remap.c:123
-#, fuzzy
 msgid "_Swap Colors"
-msgstr "Obtener colores de _muestra"
+msgstr "Intercambiar colore_s"
 
 #: ../plug-ins/common/colormap-remap.c:288
 #: ../plug-ins/common/colormap-remap.c:299
 #: ../plug-ins/common/colormap-remap.c:310
 msgid "Invalid remap array was passed to remap function"
-msgstr ""
+msgstr "Se ha pasado una matriz de reasignación inválida a la función de reasignación"
 
 #: ../plug-ins/common/colormap-remap.c:334
-#, fuzzy
 msgid "Rearranging the colormap"
-msgstr "Rotando el mapa de color"
+msgstr "Reordenando el mapa de colores"
 
 #: ../plug-ins/common/colormap-remap.c:483
 msgid "Sort on Hue"
-msgstr ""
+msgstr "Ordenar según tonalidad"
 
 #: ../plug-ins/common/colormap-remap.c:487
-#, fuzzy
 msgid "Sort on Saturation"
-msgstr "Saturación"
+msgstr "Ordenar según la saturación"
 
 #: ../plug-ins/common/colormap-remap.c:491
 msgid "Sort on Value"
-msgstr ""
+msgstr "Ordenar según el valor"
 
 #: ../plug-ins/common/colormap-remap.c:495
-#, fuzzy
 msgid "Reverse Order"
-msgstr "Inv_erso"
+msgstr "Orden inverso"
 
 #: ../plug-ins/common/colormap-remap.c:499
-#, fuzzy
 msgid "Reset Order"
-msgstr "Borde _izquierdo"
+msgstr "Reiniciar el orden"
 
 #: ../plug-ins/common/colormap-remap.c:550
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
 msgstr ""
+"Arrastre y suelte los colores para reconfigurar la paleta.  Los números "
+"que se muestran son los índices originales.  Pulse el botón derecho para "
+"abrir un menú con opciones de ordenación."
 
 #: ../plug-ins/common/colormap-remap.c:631
-#, fuzzy
 msgid "Rearrange Colormap"
-msgstr "Rotando el mapa de color"
+msgstr "Reordenar el mapa de colores"
 
 #: ../plug-ins/common/colortoalpha.c:96
 msgid "Convert a specified color to transparency"
@@ -2986,7 +2981,7 @@ msgstr "Op_acidad:"
 
 #: ../plug-ins/common/cubism.c:150
 msgid "Convert the image into randomly rotated square blobs"
-msgstr ""
+msgstr "Convertir la imagen en gotas cuadradas giradas aleatoriamente"
 
 #: ../plug-ins/common/cubism.c:155
 msgid "_Cubism..."
@@ -3315,24 +3310,25 @@ msgid "Extract Channels"
 msgstr "Extraer canales"
 
 #: ../plug-ins/common/decompose.c:1413
-#, fuzzy
 msgid "_Decompose to layers"
-msgstr "Descomponer en _capas"
+msgstr "_Descomponer en capas"
 
 #: ../plug-ins/common/decompose.c:1424
-#, fuzzy
 msgid "_Foreground as registration color"
-msgstr "Colores de frente y fondo"
+msgstr "Color de _frente como color de registro"
 
 #: ../plug-ins/common/decompose.c:1425
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
 msgstr ""
+"Los píxeles en el color del primer plano aparecerán negros en todas las "
+"imágenes de salida.  Esto se puede usar para cosas como marcas de corte que "
+"tienen que mostrarse en todos los canales."
 
 #: ../plug-ins/common/deinterlace.c:93
 msgid "Fix images where every other row is missing"
-msgstr ""
+msgstr "Reparar imágenes en las que falta una de cada dos filas"
 
 #: ../plug-ins/common/deinterlace.c:102
 msgid "_Deinterlace..."
@@ -3391,15 +3387,15 @@ msgstr "_Escala 1:"
 msgid "Sca_le 2:"
 msgstr "E_scala 2:"
 
+# ¿Qué es esto? FVD
 #: ../plug-ins/common/desktop-link.c:82
-#, fuzzy
 msgid "Desktop Link"
-msgstr "Anti-bandas"
+msgstr "Enlace del escritorio"
 
 #: ../plug-ins/common/desktop-link.c:163
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading desktop file '%s': %s"
-msgstr "Ocurrió un error al abrir el archivo «%s»"
+msgstr "Ocurrió un error al abrir el archivo de escritorio «%s»: %s"
 
 #: ../plug-ins/common/despeckle.c:146
 msgid "Remove speckle noise from the image"
@@ -3607,7 +3603,7 @@ msgstr "_Negro"
 
 #: ../plug-ins/common/dog.c:135
 msgid "Edge detection with control of edge thickness"
-msgstr ""
+msgstr "Detección de bordes con control del grosor del borde"
 
 #: ../plug-ins/common/dog.c:143
 msgid "_Difference of Gaussians..."
@@ -3639,7 +3635,7 @@ msgstr "_Invertir"
 
 #: ../plug-ins/common/edge.c:154
 msgid "Several simple methods for detecting edges"
-msgstr ""
+msgstr "Varios métodos sencillos para detectar bordes"
 
 #: ../plug-ins/common/edge.c:159
 msgid "_Edge..."
@@ -3688,7 +3684,7 @@ msgstr "_Cantidad:"
 
 #: ../plug-ins/common/emboss.c:126
 msgid "Simulate an image created by embossing"
-msgstr ""
+msgstr "Simular una imagen hecha mediante repujado"
 
 #: ../plug-ins/common/emboss.c:132
 msgid "_Emboss..."
@@ -3745,7 +3741,7 @@ msgstr "_Limitar la anchura de línea"
 
 #: ../plug-ins/common/exchange.c:123
 msgid "Swap one color with another"
-msgstr ""
+msgstr "Intercambiar un color con otro"
 
 #: ../plug-ins/common/exchange.c:129
 msgid "_Color Exchange..."
@@ -3795,7 +3791,7 @@ msgstr "Bloquear _umbrales"
 
 #: ../plug-ins/common/film.c:233
 msgid "Combine several images on a film strip"
-msgstr ""
+msgstr "Combinar varias imágenes en una cinta de película"
 
 #: ../plug-ins/common/film.c:238
 msgid "_Filmstrip..."
@@ -3974,7 +3970,7 @@ msgstr "Actual:"
 
 #: ../plug-ins/common/fp.c:324
 msgid "Interactively modify the image colors"
-msgstr ""
+msgstr "Modificar los colores de la imagen de forma interactiva"
 
 #: ../plug-ins/common/fp.c:329
 msgid "_Filter Pack..."
@@ -4106,7 +4102,7 @@ msgstr "Tamaño de vista previa"
 
 #: ../plug-ins/common/fractaltrace.c:116
 msgid "Transform image with the Mandelbrot Fractal"
-msgstr ""
+msgstr "Transformar la imagen con el fractal de Mandelbrot"
 
 #: ../plug-ins/common/fractaltrace.c:121
 msgid "_Fractal Trace..."
@@ -4151,7 +4147,7 @@ msgstr "Y_2:"
 
 #: ../plug-ins/common/gauss.c:159
 msgid "Simplest, most commonly used way of blurring"
-msgstr ""
+msgstr "La forma de desenfoque más sencilla y más frecuentemente utilizada"
 
 #: ../plug-ins/common/gauss.c:172
 msgid "_Gaussian Blur..."
@@ -4237,7 +4233,7 @@ msgstr "Descripción:"
 
 #: ../plug-ins/common/gee.c:101 ../plug-ins/common/gee_zoom.c:121
 msgid "A big hello from the GIMP team!"
-msgstr ""
+msgstr "¡Un gran saludo del equipo del GIMP!"
 
 #: ../plug-ins/common/gee.c:106 ../plug-ins/common/gee.c:162
 msgid "Gee Slime"
@@ -4391,9 +4387,9 @@ msgid "Background (%d%s)"
 msgstr "Fondo (%d%s)"
 
 #: ../plug-ins/common/gifload.c:904
-#, fuzzy, c-format
+#, c-format
 msgid "Opening '%s' (frame %d)"
-msgstr "Abriendo «%s»"
+msgstr "Abriendo «%s» (fotograma %d)"
 
 #: ../plug-ins/common/gifload.c:933 ../plug-ins/common/iwarp.c:798
 #: ../plug-ins/common/iwarp.c:833
@@ -4486,7 +4482,7 @@ msgstr "Rangos:"
 
 #: ../plug-ins/common/glasstile.c:126
 msgid "Simulate distortion caused by square glass tiles"
-msgstr ""
+msgstr "Simular la distorsión producida por ladrillos de vidrio cuadrados"
 
 #: ../plug-ins/common/glasstile.c:132
 msgid "_Glass Tile..."
@@ -4506,7 +4502,7 @@ msgstr "A_ltura del mosaico:"
 
 #: ../plug-ins/common/gqbist.c:402
 msgid "Generate a huge variety of abstract patterns"
-msgstr ""
+msgstr "Generar una ingente variedad de dibujos abstractos"
 
 #: ../plug-ins/common/gqbist.c:410
 msgid "_Qbist..."
@@ -4530,7 +4526,7 @@ msgstr "G-Qbist"
 
 #: ../plug-ins/common/gradmap.c:84
 msgid "Recolor the image using colors from the active gradient"
-msgstr ""
+msgstr "Vover a colorear la imagen utilizando los colores del degradado activo"
 
 #: ../plug-ins/common/gradmap.c:97
 msgid "_Gradient Map"
@@ -4538,7 +4534,7 @@ msgstr "Mapa de _degradado"
 
 #: ../plug-ins/common/gradmap.c:106
 msgid "Recolor the image using colors from the active palette"
-msgstr ""
+msgstr "Volver a colorear la imagen utilizando los colores de la paleta activa"
 
 #: ../plug-ins/common/gradmap.c:119
 msgid "_Palette Map"
@@ -4735,7 +4731,7 @@ msgstr "La cantidad de espaciado de celdas."
 
 #: ../plug-ins/common/guillotine.c:69
 msgid "Slice the image into subimages using guides"
-msgstr ""
+msgstr "Dividir la imagen en sub-imágenes utilizando las guías"
 
 #: ../plug-ins/common/guillotine.c:74
 msgid "_Guillotine"
@@ -4751,7 +4747,7 @@ msgstr "Cabecera de código fuente en C"
 
 #: ../plug-ins/common/hot.c:207
 msgid "Find and fix pixels that may be unsafely bright"
-msgstr ""
+msgstr "Encontrar y eliminar los píxeles que pueden ser peligrosamente brillantes"
 
 #: ../plug-ins/common/hot.c:217
 msgid "_Hot..."
@@ -4807,7 +4803,7 @@ msgstr "Modo _2"
 
 #: ../plug-ins/common/iwarp.c:264
 msgid "Use mouse control to warp image areas"
-msgstr ""
+msgstr "Utilice el ratón para desplazar áreas de la imagen"
 
 #: ../plug-ins/common/iwarp.c:269
 msgid "_IWarp..."
@@ -4917,7 +4913,7 @@ msgstr ""
 
 #: ../plug-ins/common/jigsaw.c:356
 msgid "Add a jigsaw-puzzle pattern to the image"
-msgstr ""
+msgstr "Aplicar un dibujo de puzzle a la imagen"
 
 #: ../plug-ins/common/jigsaw.c:361
 msgid "_Jigsaw..."
@@ -5058,7 +5054,7 @@ msgstr "Valor m_áximo:"
 
 #: ../plug-ins/common/lic.c:809
 msgid "Special effects that nobody understands"
-msgstr ""
+msgstr "Efectos especiales que nadie comprende"
 
 #: ../plug-ins/common/lic.c:814
 msgid "_Van Gogh (LIC)..."
@@ -5140,7 +5136,7 @@ msgstr "Segundo color destino"
 
 #: ../plug-ins/common/mapcolor.c:143
 msgid "Map colors sending foreground to black, background to white"
-msgstr ""
+msgstr "Asignar colores llevando el primer plano a negro y el fondo a blanco"
 
 #: ../plug-ins/common/mapcolor.c:151
 msgid "Adjust _Foreground & Background"
@@ -5148,7 +5144,7 @@ msgstr "Ajustar _frente y fondo"
 
 #: ../plug-ins/common/mapcolor.c:160
 msgid "Map color range specified by two colors to another range"
-msgstr ""
+msgstr "Asignar el rango de colores especificado mediante dos colores a otro rango"
 
 #: ../plug-ins/common/mapcolor.c:168
 msgid "Color Range _Mapping..."
@@ -5187,7 +5183,7 @@ msgstr "A:"
 
 #: ../plug-ins/common/max_rgb.c:90
 msgid "Reduce image to pure red, green, and blue"
-msgstr ""
+msgstr "Reducir la imagen a colores rojo, verde y azul puros"
 
 #: ../plug-ins/common/max_rgb.c:95
 msgid "_Maximum RGB..."
@@ -5215,7 +5211,7 @@ msgstr "_Mantener los canales mínimos"
 
 #: ../plug-ins/common/mblur.c:167
 msgid "Simulate movement using directional blur"
-msgstr ""
+msgstr "Simular movimiento utilizando desenfoque direccional"
 
 #: ../plug-ins/common/mblur.c:174
 msgid "_Motion Blur..."
@@ -5371,7 +5367,7 @@ msgstr "Animación MNG"
 
 #: ../plug-ins/common/mosaic.c:361
 msgid "Convert the image into irregular tiles"
-msgstr ""
+msgstr "Convertir la imagen en losetas irregulares"
 
 #: ../plug-ins/common/mosaic.c:366
 msgid "_Mosaic..."
@@ -5453,7 +5449,7 @@ msgstr "No se puede añadir un punto adicional.\n"
 
 #: ../plug-ins/common/neon.c:134
 msgid "Simulate the glowing boundary of a neon light"
-msgstr ""
+msgstr "Simular el borde reluciente de un tubo de neón"
 
 #: ../plug-ins/common/neon.c:139
 msgid "_Neon..."
@@ -5517,7 +5513,7 @@ msgstr "Luminosidad"
 
 #: ../plug-ins/common/newsprint.c:519
 msgid "Halftone the image to give newspaper-like effect"
-msgstr ""
+msgstr "Aplicar semitonos a la imagen para darle un efecto semejante a un periódico"
 
 #: ../plug-ins/common/newsprint.c:528
 msgid "Newsprin_t..."
@@ -5590,9 +5586,11 @@ msgstr "Antialias"
 msgid "O_versample:"
 msgstr "So_bremuestreo:"
 
+# Las navajas del ejército suizo son navajas de mil usos. FVD
+# Otra posibilidad es «Filtro no lineal con tantos usos como una navaja suiza»
 #: ../plug-ins/common/nlfilt.c:120
 msgid "Nonlinear swiss army knife filter"
-msgstr ""
+msgstr "Filtro no lineal de mil usos"
 
 #: ../plug-ins/common/nlfilt.c:126
 msgid "_NL Filter..."
@@ -5625,7 +5623,7 @@ msgstr "A_lfa:"
 
 #: ../plug-ins/common/noisify.c:144
 msgid "Distort colors by random amounts"
-msgstr ""
+msgstr "Distorsionar los colores en cantidades aleatorias"
 
 #: ../plug-ins/common/noisify.c:154
 msgid "_RGB Noise..."
@@ -5658,7 +5656,7 @@ msgstr "Canal nº %d:"
 
 #: ../plug-ins/common/normalize.c:77
 msgid "Stretch brightness values to cover the full range"
-msgstr ""
+msgstr "Ampliar los valores de brillo para que cubran todo el rango"
 
 #: ../plug-ins/common/normalize.c:123
 msgid "Normalizing"
@@ -5666,7 +5664,7 @@ msgstr "Normalizando"
 
 #: ../plug-ins/common/nova.c:167
 msgid "Add a starburst to the image"
-msgstr ""
+msgstr "Añadir un fulgor estelar a la imagen"
 
 #: ../plug-ins/common/nova.c:176
 msgid "Su_pernova..."
@@ -5698,7 +5696,7 @@ msgstr "Centro de la nova"
 
 #: ../plug-ins/common/oilify.c:97
 msgid "Smear colors to simulate an oil painting"
-msgstr ""
+msgstr "Emborronar los colores para simular una pintura al óleo"
 
 #: ../plug-ins/common/oilify.c:104
 msgid "Oili_fy..."
@@ -5788,9 +5786,10 @@ msgstr "S_eleccionar aquí:"
 msgid "Background Color"
 msgstr "Color de fondo"
 
+# Tile: azulejos, losetas... rectángulos pues son de papel. FVD
 #: ../plug-ins/common/papertile.c:814
 msgid "Cut image into paper tiles, and slide them"
-msgstr ""
+msgstr "Cortar la imagen en rectángulos de papel, y deslizarlos"
 
 #: ../plug-ins/common/papertile.c:819
 msgid "September 31, 1999"
@@ -5833,7 +5832,7 @@ msgstr "Versión de PCX inusual, terminando"
 
 #: ../plug-ins/common/photocopy.c:155
 msgid "Simulate color distortion produced by a copy machine"
-msgstr ""
+msgstr "Simular la distorsión de color producida por una fotocopiadora"
 
 #: ../plug-ins/common/photocopy.c:160
 msgid "_Photocopy..."
@@ -5862,7 +5861,7 @@ msgstr "Imagen PIX de Alias|Wavefront"
 
 #: ../plug-ins/common/pixelize.c:164
 msgid "Simplify image into an array of solid-colored squares"
-msgstr ""
+msgstr "Simplificar la imagen en una matriz de cuadrados de color liso"
 
 #: ../plug-ins/common/pixelize.c:171
 msgid "_Pixelize..."
@@ -5886,7 +5885,7 @@ msgstr "A_ltura del píxel:"
 
 #: ../plug-ins/common/plasma.c:178
 msgid "Create a random plasma texture"
-msgstr ""
+msgstr "Crear una textura aleatoria de plasma"
 
 #: ../plug-ins/common/plasma.c:183
 msgid "_Plasma..."
@@ -5906,7 +5905,7 @@ msgstr "T_urbulencia:"
 
 #: ../plug-ins/common/plugin-browser.c:134
 msgid "Display information about plug-ins"
-msgstr ""
+msgstr "Mostrar información sobre los complementos"
 
 #: ../plug-ins/common/plugin-browser.c:144
 msgid "_Plug-In Browser"
@@ -5917,10 +5916,10 @@ msgid "Searching by name"
 msgstr "Buscando por nombre"
 
 #: ../plug-ins/common/plugin-browser.c:386
-#, fuzzy, c-format
+#, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
-msgstr[0] "%d complementos"
+msgstr[0] "%d complemento"
 msgstr[1] "%d complementos"
 
 #: ../plug-ins/common/plugin-browser.c:395
@@ -5931,8 +5930,8 @@ msgstr "No hay resultados respecto de su búsqueda"
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d complemento coincide con su consulta"
+msgstr[1] "%d complementos coinciden con su consulta"
 
 #: ../plug-ins/common/plugin-browser.c:529
 msgid "No matches"
@@ -6038,13 +6037,12 @@ msgstr "Guardar los valores de los _colores de los píxeles transparentes"
 msgid "Co_mpression level:"
 msgstr "Nivel de co_mpresión:"
 
+# ¿Ha de ser tan corto? FVD
 #: ../plug-ins/common/png.c:1800
-#, fuzzy
 msgid "_Load Defaults"
 msgstr "_Cargar predet."
 
 #: ../plug-ins/common/png.c:1808
-#, fuzzy
 msgid "S_ave Defaults"
 msgstr "_Guardar predet."
 
@@ -6061,9 +6059,8 @@ msgid "PNM image"
 msgstr "Imagen PNM"
 
 #: ../plug-ins/common/pnm.c:279
-#, fuzzy
 msgid "PBM image"
-msgstr "Imagen PPM"
+msgstr "Imagen PBM"
 
 #: ../plug-ins/common/pnm.c:291
 msgid "PGM image"
@@ -6076,38 +6073,32 @@ msgstr "Imagen PPM"
 #: ../plug-ins/common/pnm.c:511 ../plug-ins/common/pnm.c:533
 #: ../plug-ins/common/pnm.c:540 ../plug-ins/common/pnm.c:549
 #: ../plug-ins/common/pnm.c:624 ../plug-ins/common/pnm.c:685
-#, fuzzy
 msgid "Premature end of file."
-msgstr "PNM: Fin del archivo prematuro."
+msgstr "Final prematuro del archivo."
 
 #: ../plug-ins/common/pnm.c:513
-#, fuzzy
 msgid "Invalid file."
-msgstr "PNM: Archivo no válido."
+msgstr "Archivo no válido."
 
 #: ../plug-ins/common/pnm.c:527
 msgid "File not in a supported format."
 msgstr "El archivo no está en un formato soportado."
 
 #: ../plug-ins/common/pnm.c:536
-#, fuzzy
 msgid "Invalid X resolution."
-msgstr "PNM: Resolución X no válida."
+msgstr "Resolución X no válida."
 
 #: ../plug-ins/common/pnm.c:543
-#, fuzzy
 msgid "Invalid Y resolution."
-msgstr "PNM: Resolución Y no válida."
+msgstr "Resolución Y no válida."
 
 #: ../plug-ins/common/pnm.c:555
-#, fuzzy
 msgid "Invalid maximum value."
-msgstr "PNM: Valor máximo no válido."
+msgstr "Valor máximo no válido."
 
 #: ../plug-ins/common/pnm.c:738
-#, fuzzy
 msgid "Error reading file."
-msgstr "Error al leer el archivo"
+msgstr "Error al leer el archivo."
 
 #: ../plug-ins/common/pnm.c:1103
 msgid "Save as PNM"
@@ -6128,7 +6119,7 @@ msgstr "ASCII"
 
 #: ../plug-ins/common/polar.c:154
 msgid "Convert image to or from polar coordinates"
-msgstr ""
+msgstr "Convertir la imagen a o desde coordenadas polares"
 
 #: ../plug-ins/common/polar.c:161
 msgid "P_olar Coordinates..."
@@ -6254,6 +6245,10 @@ msgid ""
 "location.\n"
 "(%s)"
 msgstr ""
+"Error al iniciar Ghostscript. Asegúrese de que Ghostscript está instalado y "
+"(si es preciso) utilice la valriable de entorno GS_PROG para informar al "
+"GIMP de su ubicación.\n"
+"(%s)"
 
 #: ../plug-ins/common/postscript.c:1886 ../plug-ins/common/tiff.c:888
 #, c-format
@@ -6402,9 +6397,10 @@ msgstr "Vista p_revia"
 msgid "Preview _size:"
 msgstr "Tamaño de la vi_sta previa:"
 
+# ¿Qué es el PDB? FVD
 #: ../plug-ins/common/procedure-browser.c:83
 msgid "List available procedures in the PDB"
-msgstr ""
+msgstr "Relacionar los procedimientos disponibles en el PDB"
 
 #: ../plug-ins/common/procedure-browser.c:88
 msgid "Procedure _Browser"
@@ -6428,10 +6424,13 @@ msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
 "plug-in does not support that, using normal mode instead."
 msgstr ""
+"No se puede guardar la capa con el modo «%s». Bien el formato del archivo "
+"PSD o bien el complemento de guardado no lo soportan, se utilizará el modo "
+"normal en su lugar."
 
 #: ../plug-ins/common/psd_save.c:523
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr ""
+msgstr "Error: no se puede convertir el tipo de imagen básico del GIMP al modo PSD"
 
 #: ../plug-ins/common/psd_save.c:1424
 #, c-format
@@ -6473,19 +6472,17 @@ msgid "LZ77"
 msgstr "LZ77"
 
 #: ../plug-ins/common/randomize.c:102
-#, fuzzy
 msgid "Random Hurl"
-msgstr "Arrojar al azar 1.7"
+msgstr "Arrojar al azar"
 
 #: ../plug-ins/common/randomize.c:103
-#, fuzzy
 msgid "Random Pick"
-msgstr "Intercambiar al azar 1.7"
+msgstr "Intercambiar al azar"
 
+# Slur = ligadura musical. FVD
 #: ../plug-ins/common/randomize.c:104
-#, fuzzy
 msgid "Random Slur"
-msgstr "Derretir al azar 1.7"
+msgstr "Derretir al azar"
 
 #: ../plug-ins/common/randomize.c:200
 msgid "Completely randomize a fraction of pixels"
@@ -6497,7 +6494,7 @@ msgstr "Intercambiar aleatoriamente algunos píxeles por sus vecinos"
 
 #: ../plug-ins/common/randomize.c:204
 msgid "Randomly slide some pixels downward (similar to melting)"
-msgstr ""
+msgstr "Deslizar algunos píxeles de forma aleatoria hacia abajo (similar al derretimiento)"
 
 #: ../plug-ins/common/randomize.c:231
 msgid "_Hurl..."
@@ -6576,9 +6573,8 @@ msgid "Off_set:"
 msgstr "_Desfase:"
 
 #: ../plug-ins/common/raw.c:1065
-#, fuzzy
 msgid "Select Palette File"
-msgstr "Seleccione el archivo de paleta a cargar"
+msgstr "Seleccione el archivo de paleta"
 
 #: ../plug-ins/common/raw.c:1071
 msgid "Pal_ette File:"
@@ -6606,28 +6602,27 @@ msgstr "Tipo de paleta indexada"
 
 #: ../plug-ins/common/redeye.c:107
 msgid "Remove the red eye effect caused by camera flashes"
-msgstr ""
+msgstr "Eliminar el efecto de «ojos rojos» producido por el flas de las cámaras"
 
 #: ../plug-ins/common/redeye.c:118
 msgid "_Red Eye Removal..."
-msgstr ""
+msgstr "Quitar ojos _rojos..."
 
 #: ../plug-ins/common/redeye.c:146
 msgid "Red Eye Removal"
-msgstr ""
+msgstr "Quitar ojos rojos"
 
 #: ../plug-ins/common/redeye.c:180
 msgid "Threshold for the red eye color to remove."
-msgstr ""
+msgstr "Umbral para quitar el color de ojos rojos."
 
 #: ../plug-ins/common/redeye.c:183
 msgid "Manually selecting the eyes may improve the results."
-msgstr ""
+msgstr "La selección manual de los ojos puede mejorar el resultado."
 
 #: ../plug-ins/common/redeye.c:322
-#, fuzzy
 msgid "Removing red eye"
-msgstr "Quitando color"
+msgstr "Quitando ojos rojos"
 
 #: ../plug-ins/common/retinex.c:156
 msgid "Enhance contrast using the Retinex method"
@@ -6827,7 +6822,7 @@ msgstr "Volver a mapear el colorizado"
 
 #: ../plug-ins/common/scatter_hsv.c:105
 msgid "Randomize hue/saturation/value independently"
-msgstr ""
+msgstr "Aleatorizar el tono, saturación y valor independientemente"
 
 #: ../plug-ins/common/scatter_hsv.c:110
 msgid "HSV Noise..."
@@ -6934,7 +6929,7 @@ msgstr ""
 
 #: ../plug-ins/common/sel_gauss.c:106
 msgid "Blur neighboring pixels, but only in low-contrast areas"
-msgstr ""
+msgstr "Desenfocar los píxeles vecinos, pero sólo dentro de las zonas de bajo contraste"
 
 #: ../plug-ins/common/sel_gauss.c:117
 msgid "_Selective Gaussian Blur..."
@@ -6954,7 +6949,7 @@ msgstr "Delta _máx.:"
 
 #: ../plug-ins/common/semiflatten.c:68
 msgid "Replace partial transparency with the current background color"
-msgstr ""
+msgstr "Sustituir la transparencia parcial con el color de fondo actual"
 
 #: ../plug-ins/common/semiflatten.c:75
 msgid "_Semi-Flatten"
@@ -6966,7 +6961,7 @@ msgstr "Semi-Aplanar..."
 
 #: ../plug-ins/common/sharpen.c:115
 msgid "Make image sharper (less powerful than Unsharp Mask)"
-msgstr ""
+msgstr "Enfocar la imagen (no tan potente como la «máscara de desenfoque»)"
 
 #: ../plug-ins/common/sharpen.c:122
 msgid "_Sharpen..."
@@ -6985,7 +6980,7 @@ msgstr "Aguda"
 
 #: ../plug-ins/common/shift.c:103
 msgid "Shift each row of pixels by a random amount"
-msgstr ""
+msgstr "Desplazar cada fila de píxeles en una cantidad aleatoria"
 
 #: ../plug-ins/common/shift.c:110
 msgid "_Shift..."
@@ -7192,7 +7187,7 @@ msgstr "Tamaño _Y:"
 
 #: ../plug-ins/common/sobel.c:108
 msgid "Specialized direction-dependent edge detection"
-msgstr ""
+msgstr "Detección de bordes especializada dependiente de la dirección"
 
 #: ../plug-ins/common/sobel.c:121
 msgid "_Sobel..."
@@ -7222,7 +7217,7 @@ msgstr "Detección de bordes Sobel"
 
 #: ../plug-ins/common/softglow.c:134
 msgid "Simulate glow by making highlights intense and fuzzy"
-msgstr ""
+msgstr "Simular brillos haciendo las luces altas intensas y difusas"
 
 #: ../plug-ins/common/softglow.c:139
 msgid "_Softglow..."
@@ -7236,9 +7231,10 @@ msgstr "Softglow"
 msgid "_Glow radius:"
 msgstr "Radio del _fluido:"
 
+# sparkles: rayos, chispas... ¿? FVD
 #: ../plug-ins/common/sparkle.c:181
 msgid "Turn bright spots into starry sparkles"
-msgstr ""
+msgstr "Transformar los puntos brillantes en chispas o rayos de estrella"
 
 #: ../plug-ins/common/sparkle.c:189
 msgid "_Sparkle..."
@@ -7864,7 +7860,7 @@ msgstr "Crear imagen _nueva"
 
 #: ../plug-ins/common/tileit.c:216
 msgid "Tile image into smaller versions of the orginal"
-msgstr ""
+msgstr "Enlosar la imagen en versiones más pequeñas del original"
 
 #: ../plug-ins/common/tileit.c:221
 msgid "_Small Tiles..."
@@ -8124,7 +8120,7 @@ msgstr "P_untos"
 
 #: ../plug-ins/common/video.c:1806
 msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-msgstr ""
+msgstr "Simular la distorsión producida por un monitor borroso o de baja resolución"
 
 #: ../plug-ins/common/video.c:1813
 msgid "Vi_deo..."
@@ -8266,7 +8262,7 @@ msgstr "Propagando canal de valor"
 
 #: ../plug-ins/common/warp.c:233
 msgid "Twist or smear image in many different ways"
-msgstr ""
+msgstr "Girar o emborronar la imagen de muchas maneras diferentes"
 
 #: ../plug-ins/common/warp.c:241
 msgid "_Warp..."
@@ -8448,9 +8444,8 @@ msgstr ""
 "%s"
 
 #: ../plug-ins/common/whirlpinch.c:139
-#, fuzzy
 msgid "Distort an image by whirling and pinching"
-msgstr "Arremolinar y aspirar"
+msgstr "Distorsionar una imagen mediante arremolinado y pellizcado"
 
 #: ../plug-ins/common/whirlpinch.c:150
 msgid "W_hirl and Pinch..."
@@ -8478,7 +8473,7 @@ msgstr "Cantidad de _pellizcos:"
 
 #: ../plug-ins/common/wind.c:177
 msgid "Smear image to give windblown effect"
-msgstr ""
+msgstr "Emborronar la imagen para darle un efecto de viento"
 
 #: ../plug-ins/common/wind.c:182
 msgid "Wi_nd..."
@@ -8739,7 +8734,7 @@ msgstr "Error al escribir imagen rgb"
 
 #: ../plug-ins/common/zealouscrop.c:85
 msgid "Autocrop unused space from edges and middle"
-msgstr ""
+msgstr "Auto-recortar el espacio sin utilizar de los bordes y el medio"
 
 #: ../plug-ins/common/zealouscrop.c:90
 msgid "_Zealous Crop"
@@ -8798,9 +8793,10 @@ msgstr "Según el dato máximo/mínimo"
 msgid "Image Composing"
 msgstr "Composición de imagen"
 
+# Jopé. FVD
 #: ../plug-ins/flame/flame.c:128
 msgid "Create cosmic recursive fractal flames"
-msgstr ""
+msgstr "Crear llamas cósmicas fractales recursivas"
 
 #: ../plug-ins/flame/flame.c:133
 msgid "_Flame..."
@@ -8989,9 +8985,8 @@ msgstr "Mostrar imagen"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:505
-#, fuzzy
 msgid "checkbutton|Snap to grid"
-msgstr "Ajustar a la rejilla"
+msgstr "botón de selección|Ajustar a la rejilla"
 
 #. "show grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:514
@@ -9289,9 +9284,8 @@ msgid "Overlay"
 msgstr "Solapar"
 
 #: ../plug-ins/gflare/gflare.c:813
-#, fuzzy
 msgid "Produce a lense flare effect using gradients"
-msgstr "Centro del destello FX"
+msgstr "Producir un efecto de destellos de óptica utilizando degradados"
 
 #: ../plug-ins/gflare/gflare.c:818
 msgid "_Gradient Flare..."
@@ -10257,7 +10251,7 @@ msgstr "No se ha podido cargar la URL solicitada:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:335
 msgid "Create an Iterated Function System (IFS) fractal"
-msgstr ""
+msgstr "Crear un fractal del sistema de función iterada (IFS)"
 
 #: ../plug-ins/ifscompose/ifscompose.c:347
 msgid "_IFS Fractal..."
@@ -10413,7 +10407,6 @@ msgid "Open IFS Fractal file"
 msgstr "Abrir archivo de fractal IFS"
 
 #: ../plug-ins/imagemap/imap_about.c:45
-#, fuzzy
 msgid "Copyright © 1999-2005 by Maurits Rijk"
 msgstr "Copyright © 1999-2005 por Maurits Rijk"
 
@@ -11154,9 +11147,8 @@ msgid "Constructing tileable maze using Prim's Algorithm"
 msgstr "Construyendo un laberinto enlosable usando el Algoritmo de Prim"
 
 #: ../plug-ins/maze/maze.c:153
-#, fuzzy
 msgid "Draw a labyrinth"
-msgstr "Dibujar un borde de puntas alrededor de la imagen"
+msgstr "Dibujar un laberinto"
 
 #: ../plug-ins/maze/maze.c:160
 msgid "_Maze..."
@@ -11441,14 +11433,12 @@ msgid "Replace a range of colors with another"
 msgstr "Reemplazar un rango de colores por otro"
 
 #: ../plug-ins/rcm/rcm.c:103
-#, fuzzy
 msgid "_Rotate Colors..."
-msgstr "_Colorear desde muestra..."
+msgstr "_Rotar los colores..."
 
 #: ../plug-ins/rcm/rcm.c:266
-#, fuzzy
 msgid "Rotating the colors"
-msgstr "Rotando el mapa de color"
+msgstr "Rotando los colores"
 
 #: ../plug-ins/rcm/rcm_dialog.c:119
 msgid "Original"
@@ -11522,9 +11512,8 @@ msgid "Degrees"
 msgstr "Grados"
 
 #: ../plug-ins/rcm/rcm_dialog.c:652
-#, fuzzy
 msgid "Rotate Colors"
-msgstr "Color final"
+msgstr "Rotar los colores"
 
 #: ../plug-ins/rcm/rcm_dialog.c:692
 msgid "Main Options"
