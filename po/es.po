@@ -2118,7 +2118,7 @@ msgstr "Guardar «%s» como POV-Ray"
 
 #: ../app/actions/help-actions.c:38 ../app/actions/help-actions.c:41
 msgid "_Help"
-msgstr "A_yuda"
+msgstr "Ay_uda"
 
 #: ../app/actions/help-actions.c:46
 msgid "_Context Help"
