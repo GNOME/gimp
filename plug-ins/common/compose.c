@@ -504,6 +504,8 @@ run (const gchar      *name,
           /*  Possibly retrieve data  */
           gimp_get_data (name, &composevals);
 
+          compose_by_drawable = TRUE;
+
           /* The dialog is now drawable based. Get a drawable-ID of the image */
           if (strcmp (name, COMPOSE_PROC) == 0)
             {
@@ -525,8 +527,6 @@ run (const gchar      *name,
             {
               drawable_ID = param[2].data.d_int32;
             }
-
-          compose_by_drawable = TRUE;
 
           /*  First acquire information with a dialog  */
           if (! compose_dialog (composevals.compose_type, drawable_ID))
@@ -576,6 +576,8 @@ run (const gchar      *name,
         case GIMP_RUN_WITH_LAST_VALS:
           /*  Possibly retrieve data  */
           gimp_get_data (name, &composevals);
+
+          compose_by_drawable = TRUE;
           break;
 
         default:

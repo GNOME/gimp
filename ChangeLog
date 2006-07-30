@@ -1,3 +1,9 @@
+2006-07-31  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/compose.c (run): enable "compose_by_drawable"
+	for GIMP_RUN_WITH_LAST_VALS, since these values are drawable IDs,
+	not image IDs. Fixes bug #346859.
+
 2006-07-30  Raphaël Quinet  <raphael@gimp.org>
 
 	* app/tools/gimppainttool.c
