@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-27 12:37+0200\n"
-"PO-Revision-Date: 2006-07-30 21:50+0200\n"
+"PO-Revision-Date: 2006-07-30 21:56+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1123,7 +1123,7 @@ msgstr "_Testo"
 
 #: ../app/actions/dockable-actions.c:97
 msgid "I_con & Text"
-msgstr "I_cone e testo"
+msgstr "I_cona e testo"
 
 #: ../app/actions/dockable-actions.c:98
 msgid "St_atus & Text"
