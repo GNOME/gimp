@@ -58,7 +58,7 @@
 
 
 #define TARGET_SIZE    15
-#define STATUSBAR_SIZE 128
+#define STATUSBAR_SIZE 200
 
 
 static GObject * gimp_paint_tool_constructor (GType                type,
@@ -542,12 +542,18 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
 
               gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
                                       GIMP_COLOR_OPTIONS (info->tool_options));
+              gimp_tool_push_status (tool, display,
+                                     _("Click in any image to pick the "
+                                       "foreground color."));
             }
         }
       else
         {
           if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
-            gimp_color_tool_disable (GIMP_COLOR_TOOL (tool));
+            {
+              gimp_tool_pop_status (tool, display);
+              gimp_color_tool_disable (GIMP_COLOR_TOOL (tool));
+            }
         }
     }
 }
@@ -607,10 +613,11 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
            *  draw a line.
            */
 
-          gdouble   dx, dy, dist;
-          gchar     status_str[STATUSBAR_SIZE];
-          gint      off_x, off_y;
-          gboolean  hard;
+          gdouble      dx, dy, dist;
+          gchar        status_str[STATUSBAR_SIZE];
+          const gchar *status_help;
+          gint         off_x, off_y;
+          gboolean     hard;
 
           core->cur_coords = *coords;
 
@@ -626,20 +633,26 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
           dx = core->cur_coords.x - core->last_coords.x;
           dy = core->cur_coords.y - core->last_coords.y;
 
+          if ((state & GDK_CONTROL_MASK))
+            status_help = _("Click to draw the line.");
+          else
+            status_help = _("Click to draw the line."
+                            " (try Ctrl for constrained angles)");
+
           /*  show distance in statusbar  */
           if (shell->unit == GIMP_UNIT_PIXEL)
             {
               dist = sqrt (SQR (dx) + SQR (dy));
 
-              g_snprintf (status_str, sizeof (status_str), "%.1f %s",
-                          dist, _("pixels"));
+              g_snprintf (status_str, sizeof (status_str), "%.1f %s.  %s",
+                          dist, _("pixels"), status_help);
             }
           else
             {
               GimpImage *image = display->image;
               gchar      format_str[64];
 
-              g_snprintf (format_str, sizeof (format_str), "%%.%df %s",
+              g_snprintf (format_str, sizeof (format_str), "%%.%df %s.  %%s",
                           _gimp_unit_get_digits (image->gimp, shell->unit),
                           _gimp_unit_get_symbol (image->gimp, shell->unit));
 
@@ -647,7 +660,8 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
                       sqrt (SQR (dx / image->xresolution) +
                             SQR (dy / image->yresolution)));
 
-              g_snprintf (status_str, sizeof (status_str), format_str, dist);
+              g_snprintf (status_str, sizeof (status_str), format_str, dist,
+                          status_help);
             }
 
           gimp_tool_push_status (tool, display, status_str);
@@ -658,7 +672,13 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
         {
           if (display == tool->display)
             gimp_tool_push_status (tool, display,
-                                   _("Press Shift to draw a straight line."));
+                                   _("Click to paint. (try "
+                                     "Shift for a straight line, "
+                                     "Ctrl to pick a color)"));
+          else
+            gimp_tool_push_status (tool, display,
+                                   _("Click to paint. (try "
+                                     "Ctrl to pick a color)"));
 
           paint_tool->draw_line = FALSE;
         }

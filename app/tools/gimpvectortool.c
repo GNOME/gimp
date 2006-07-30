@@ -1154,7 +1154,7 @@ gimp_vector_tool_status_update (GimpTool    *tool,
           status = _("Click to create a new component of the path.");
           break;
         case VECTORS_ADD_ANCHOR:
-          status = _("Click to create a new anchor. (try SHIFT)");
+          status = _("Click to create a new anchor. (try Shift)");
           break;
         case VECTORS_MOVE_ANCHOR:
           status = _("Click-Drag to move the anchor around.");
@@ -1163,24 +1163,24 @@ gimp_vector_tool_status_update (GimpTool    *tool,
           status = _("Click-Drag to move the anchors around.");
           break;
         case VECTORS_MOVE_HANDLE:
-          status = _("Click-Drag to move the handle around. (try SHIFT)");
+          status = _("Click-Drag to move the handle around. (try Shift)");
           break;
         case VECTORS_MOVE_CURVE:
           if (GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options)->polygonal)
             status = _("Click-Drag to move the anchors around.");
           else
             status = _("Click-Drag to change the shape of the curve. "
-                       "(SHIFT: symmetrical)");
+                       "(Shift: symmetrical)");
           break;
         case VECTORS_MOVE_STROKE:
           status = _("Click-Drag to move the component around. "
-                     "(try SHIFT)");
+                     "(try Shift)");
           break;
         case VECTORS_MOVE_VECTORS:
           status = _("Click-Drag to move the path around.");
           break;
         case VECTORS_INSERT_ANCHOR:
-          status = _("Click to insert an anchor on the path. (try SHIFT)");
+          status = _("Click to insert an anchor on the path. (try Shift)");
           break;
         case VECTORS_DELETE_ANCHOR:
           status = _("Click to delete this anchor.");

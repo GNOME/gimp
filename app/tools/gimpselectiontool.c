@@ -244,30 +244,49 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
     {
       const gchar *status = NULL;
 
-      if (! gimp_enum_get_value (GIMP_TYPE_CHANNEL_OPS, selection_tool->op,
-                                 NULL, NULL, &status, NULL))
+      switch (selection_tool->op)
         {
-          switch (selection_tool->op)
-            {
-            case SELECTION_MOVE_MASK:
-              status = _("Move the selection mask");
-              break;
+        case SELECTION_REPLACE:
+          if (! gimp_channel_is_empty (selection))
+            status = N_("Click-Drag to replace the current selection. "
+                        "(try Shift, Ctrl, Alt)");
+          else
+            status = N_("Click-Drag to create a new selection.");
+          break;
 
-            case SELECTION_MOVE:
-              status = _("Move the selected pixels");
-              break;
+        case SELECTION_ADD:
+          status = N_("Click-Drag to add to the current selection. "
+                      "(try Ctrl)");
+          break;
 
-            case SELECTION_MOVE_COPY:
-              status = _("Move a copy of the selected pixels");
-              break;
+        case SELECTION_SUBTRACT:
+          status = N_("Click-Drag to subtract from the current selection. "
+                      "(try Shift)");
+          break;
 
-            case SELECTION_ANCHOR:
-              status = _("Anchor the floating selection");
-              break;
+        case SELECTION_INTERSECT:
+          status = N_("Click-Drag to intersect with the current selection.");
+          break;
 
-            default:
-              g_return_if_reached ();
-            }
+        case SELECTION_MOVE_MASK:
+          status = _("Click-Drag to move the selection mask. "
+                     "(try Shift or Ctrl)");
+          break;
+
+        case SELECTION_MOVE:
+          status = _("Click-Drag to move the selected pixels.");
+          break;
+
+        case SELECTION_MOVE_COPY:
+          status = _("Click-Drag to move a copy of the selected pixels.");
+          break;
+
+        case SELECTION_ANCHOR:
+          status = _("Click to anchor the floating selection.");
+          break;
+
+        default:
+          g_return_if_reached ();
         }
 
       if (status)

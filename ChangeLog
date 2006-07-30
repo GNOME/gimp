@@ -1,3 +1,10 @@
+2006-07-30  Raphaël Quinet  <raphael@gimp.org>
+
+	* app/tools/gimppainttool.c
+	* app/tools/gimpvectortool.c
+	* app/tools/gimpselectiontool.c: Update the status bar messages.
+	Work in progress, partial fix for bug #124040.
+
 2006-07-30  Karine Delvare  <edhel@gimp.org>
 
 	* app/tools/gimprectangletool.c: check zero division in the right
