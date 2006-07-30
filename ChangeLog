@@ -1,3 +1,8 @@
+2006-07-30  Karine Delvare  <edhel@gimp.org>
+
+	* app/tools/gimprectangletool.c: check zero division in the right
+	place. Fixes bug #348807.
+
 2006-07-28  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/bmp/bmpwrite.c: small cleanups.
