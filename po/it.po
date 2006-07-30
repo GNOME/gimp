@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-27 12:37+0200\n"
-"PO-Revision-Date: 2006-07-27 12:22+0200\n"
+"PO-Revision-Date: 2006-07-30 21:50+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -11335,11 +11335,11 @@ msgstr "Descrizione"
 
 #: ../app/widgets/widgets-enums.c:265
 msgid "Icon & text"
-msgstr "Icone e testo"
+msgstr "Icona e testo"
 
 #: ../app/widgets/widgets-enums.c:266
 msgid "Icon & desc"
-msgstr "Icone e desc"
+msgstr "Icona e desc"
 
 #: ../app/widgets/widgets-enums.c:267
 msgid "Status & text"
