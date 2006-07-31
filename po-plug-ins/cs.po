@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-27 12:03+0200\n"
-"PO-Revision-Date: 2006-07-27 12:04+0200\n"
+"PO-Revision-Date: 2006-07-31 15:22+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -923,7 +923,7 @@ msgstr "_Válec"
 #. General options
 #: ../plug-ins/MapObject/mapobject_ui.c:496
 msgid "General options"
-msgstr "Obecné možnosti"
+msgstr "Obecné volby"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:508
 msgid "Map to:"
@@ -3261,7 +3261,7 @@ msgstr "Po_larizace:"
 
 #: ../plug-ins/common/diffraction.c:638
 msgid "Other options"
-msgstr "Jiné možnosti"
+msgstr "Další volby"
 
 #: ../plug-ins/common/displace.c:154
 msgid "_Displace..."
@@ -5030,7 +5030,7 @@ msgstr "Faktor vyhlazování JPEG:"
 
 #: ../plug-ins/common/mng.c:1491
 msgid "Animated MNG options"
-msgstr "Možnosti animovaného MNG"
+msgstr "Volby animovaného MNG"
 
 #: ../plug-ins/common/mng.c:1497
 msgid "Loop"
@@ -7595,7 +7595,7 @@ msgstr "Ohnutí"
 
 #: ../plug-ins/common/warp.c:405
 msgid "Basic Options"
-msgstr "Základní možnosti"
+msgstr "Základní volby"
 
 #: ../plug-ins/common/warp.c:427
 msgid "Step size:"
@@ -7637,7 +7637,7 @@ msgstr "Barva popředí"
 #. ---------    The secondary table         --------------------------
 #: ../plug-ins/common/warp.c:544
 msgid "Advanced Options"
-msgstr "Pokročilé možnosti"
+msgstr "Pokročilé volby"
 
 #: ../plug-ins/common/warp.c:560
 msgid "Dither size:"
@@ -7664,7 +7664,7 @@ msgstr "Použít mapu zvětšení"
 #. ---------    The "other" table         --------------------------
 #: ../plug-ins/common/warp.c:630
 msgid "More Advanced Options"
-msgstr "Další pokročilé možnosti"
+msgstr "Další pokročilé volby"
 
 #: ../plug-ins/common/warp.c:647
 msgid "Gradient scale:"
@@ -8477,7 +8477,7 @@ msgstr "Gfig"
 #. Tool options notebook
 #: ../plug-ins/gfig/gfig-dialog.c:341
 msgid "Tool options"
-msgstr "Možnosti nástroje"
+msgstr "Volby nástroje"
 
 #: ../plug-ins/gfig/gfig-dialog.c:358
 msgid "_Stroke"
@@ -8622,7 +8622,7 @@ msgstr "Zvolte objekt"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1023
 msgid "This tool has no options"
-msgstr "Tento nástroj nemá možnosti"
+msgstr "Tento nástroj nemá volby"
 
 #. Put buttons in
 #: ../plug-ins/gfig/gfig-dialog.c:1230
@@ -9805,7 +9805,7 @@ msgstr "Přepočítat střed"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1071
 msgid "Render options"
-msgstr "Možnosti vykreslování"
+msgstr "Volby vykreslování"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1077
 #: ../plug-ins/imagemap/imap_cmd_move.c:86
@@ -9827,7 +9827,7 @@ msgstr "Roztažení"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1180
 msgid "IFS Fractal Render Options"
-msgstr "Možnosti vykreslování IFS Fractal"
+msgstr "Volby vykreslování fraktálu IFS"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1201
 msgid "Max. Memory:"
@@ -11473,7 +11473,7 @@ msgstr "Hlavní volby"
 
 #: ../plug-ins/rcm/rcm_dialog.c:691
 msgid "Gray Options"
-msgstr "Možnosti šedé"
+msgstr "Volby šedé"
 
 #: ../plug-ins/rcm/rcm_stock.c:35
 msgid "Switch to clockwise"
