@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-18 15:41+0200\n"
-"PO-Revision-Date: 2006-07-27 19:58+0200\n"
+"POT-Creation-Date: 2006-07-31 13:05+0200\n"
+"PO-Revision-Date: 2006-07-31 13:08+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3692,6 +3692,7 @@ msgid "New Path Options"
 msgstr "Volby nové cesty"
 
 #: ../app/actions/vectors-commands.c:301 ../app/pdb/paths_cmds.c:608
+#: ../app/pdb/vectors_cmds.c:861
 msgid "Path to Selection"
 msgstr "Cesta do výběru"
 
@@ -4558,9 +4559,9 @@ msgid ""
 "you may want to set this to a higher value."
 msgstr ""
 "Pokud množství pixelových dat překročí tuto hranici, začne GIMP odkládat "
-"dlaždice na disk. Odkládání na disk je pomalé, ale umožňuje pracovat "
-"s obrázky, které by se jinak nevešly do paměti. Máte-li hodně RAM, můžete "
-"tuto hodnotu zvýšit."
+"dlaždice na disk. Odkládání na disk je pomalé, ale umožňuje pracovat s "
+"obrázky, které by se jinak nevešly do paměti. Máte-li hodně RAM, můžete tuto "
+"hodnotu zvýšit."
 
 #: ../app/config/gimprc-blurbs.h:393
 msgid ""
@@ -6233,7 +6234,7 @@ msgstr "pixel"
 
 #: ../app/core/gimpunit.c:55 ../app/tools/gimpmeasuretool.c:766
 #: ../app/tools/gimpmeasuretool.c:906 ../app/tools/gimpmeasuretool.c:958
-#: ../app/tools/gimpmeasuretool.c:984 ../app/tools/gimppainttool.c:635
+#: ../app/tools/gimpmeasuretool.c:984 ../app/tools/gimppainttool.c:648
 msgid "pixels"
 msgstr "pixelů"
 
@@ -6360,6 +6361,7 @@ msgid "Choose shade of gray based on:"
 msgstr "Zvolit odstín šedi podle:"
 
 #: ../app/dialogs/dialogs-constructors.c:175 ../app/gui/gui.c:155
+#: ../app/gui/gui-message.c:124
 msgid "GIMP Message"
 msgstr "Zpráva GIMPu"
 
@@ -7898,7 +7900,7 @@ msgstr "Zásuvný modul navrátil stav ÚSPĚCH, ale nevrátil žádný obrázek
 msgid "Plug-In could not open image"
 msgstr "Zásuvný modul nemohl otevřít obrázek"
 
-#: ../app/file/file-open.c:413
+#: ../app/file/file-open.c:415
 msgid "Image doesn't contain any visible layers"
 msgstr "Obrázek neobsahuje viditelné vrstvy"
 
@@ -9334,9 +9336,25 @@ msgstr "Množství:"
 msgid "Use color from gradient"
 msgstr "Použít barvu z přechodu"
 
-#: ../app/tools/gimppainttool.c:661
-msgid "Press Shift to draw a straight line."
-msgstr "Kreslete rovnou úsečku stisknutím Shift."
+#: ../app/tools/gimppainttool.c:546
+msgid "Click in any image to pick the foreground color."
+msgstr "Pro výběr barvy popředí klikněte do libovolného obrázku."
+
+#: ../app/tools/gimppainttool.c:637
+msgid "Click to draw the line."
+msgstr "Klikněte pro nakreslení čáry."
+
+#: ../app/tools/gimppainttool.c:639
+msgid "Click to draw the line. (try Ctrl for constrained angles)"
+msgstr "Klikněte pro nakreslení čáry (pro omezení úhlu zkuste Ctrl)."
+
+#: ../app/tools/gimppainttool.c:675
+msgid "Click to paint. (try Shift for a straight line, Ctrl to pick a color)"
+msgstr ""
+
+#: ../app/tools/gimppainttool.c:680
+msgid "Click to paint. (try Ctrl to pick a color)"
+msgstr ""
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Paint hard edged pixels"
@@ -9535,21 +9553,49 @@ msgstr "Zvolit průhledné oblasti"
 msgid "Auto shrink selection"
 msgstr "Automaticky zmenšit výběr"
 
-#: ../app/tools/gimpselectiontool.c:253
-msgid "Move the selection mask"
-msgstr "Přesunout masku výběru"
+#: ../app/tools/gimpselectiontool.c:251
+#, fuzzy
+msgid "Click-Drag to replace the current selection. (try Shift, Ctrl, Alt)"
+msgstr "Tažením s kliknutím přesunete komponentu. (zkuste SHIFT)"
 
-#: ../app/tools/gimpselectiontool.c:257
-msgid "Move the selected pixels"
+#: ../app/tools/gimpselectiontool.c:254
+#, fuzzy
+msgid "Click-Drag to create a new selection."
+msgstr "Kliknutím vytvoříte novou cestu."
+
+#: ../app/tools/gimpselectiontool.c:258
+#, fuzzy
+msgid "Click-Drag to add to the current selection. (try Ctrl)"
+msgstr "Tažením s kliknutím přesunete komponentu. (zkuste SHIFT)"
+
+#: ../app/tools/gimpselectiontool.c:263
+#, fuzzy
+msgid "Click-Drag to subtract from the current selection. (try Shift)"
+msgstr "Tažením s kliknutím přesunete komponentu. (zkuste SHIFT)"
+
+#: ../app/tools/gimpselectiontool.c:268
+#, fuzzy
+msgid "Click-Drag to intersect with the current selection."
+msgstr "Vytvořit průnik tohoto kanálu s aktuálním výběrem"
+
+#: ../app/tools/gimpselectiontool.c:272
+#, fuzzy
+msgid "Click-Drag to move the selection mask. (try Shift or Ctrl)"
+msgstr "Tažením s kliknutím přesunete řídicí bod. (zkuste SHIFT)"
+
+#: ../app/tools/gimpselectiontool.c:277
+#, fuzzy
+msgid "Click-Drag to move the selected pixels."
 msgstr "Posunout vybrané pixely"
 
-#: ../app/tools/gimpselectiontool.c:261
-msgid "Move a copy of the selected pixels"
+#: ../app/tools/gimpselectiontool.c:281
+#, fuzzy
+msgid "Click-Drag to move a copy of the selected pixels."
 msgstr "Posunout kopii vybraných pixelů"
 
-#: ../app/tools/gimpselectiontool.c:265
-msgid "Anchor the floating selection"
-msgstr "Ukotvit plovoucí výběr"
+#: ../app/tools/gimpselectiontool.c:285
+msgid "Click to anchor the floating selection."
+msgstr "Klikněte pro ukotvení plovoucího výběru."
 
 #: ../app/tools/gimpsheartool.c:87
 msgid "Shear"
@@ -9826,7 +9872,8 @@ msgid "Click to create a new component of the path."
 msgstr "Kliknutím vytvoříte novou komponentu cesty."
 
 #: ../app/tools/gimpvectortool.c:1157
-msgid "Click to create a new anchor. (try SHIFT)"
+#, fuzzy
+msgid "Click to create a new anchor. (try Shift)"
 msgstr "Kliknutím vytvoříte nové ukotvení. (zkuste SHIFT)"
 
 #: ../app/tools/gimpvectortool.c:1160
@@ -9838,15 +9885,18 @@ msgid "Click-Drag to move the anchors around."
 msgstr "Tažením s kliknutím přesunete ukotvení."
 
 #: ../app/tools/gimpvectortool.c:1166
-msgid "Click-Drag to move the handle around. (try SHIFT)"
+#, fuzzy
+msgid "Click-Drag to move the handle around. (try Shift)"
 msgstr "Tažením s kliknutím přesunete řídicí bod. (zkuste SHIFT)"
 
 #: ../app/tools/gimpvectortool.c:1172
-msgid "Click-Drag to change the shape of the curve. (SHIFT: symmetrical)"
+#, fuzzy
+msgid "Click-Drag to change the shape of the curve. (Shift: symmetrical)"
 msgstr "Tažením s kliknutím změníte tvar křivky. (SHIFT: symetricky)"
 
 #: ../app/tools/gimpvectortool.c:1176
-msgid "Click-Drag to move the component around. (try SHIFT)"
+#, fuzzy
+msgid "Click-Drag to move the component around. (try Shift)"
 msgstr "Tažením s kliknutím přesunete komponentu. (zkuste SHIFT)"
 
 #: ../app/tools/gimpvectortool.c:1180
@@ -9854,7 +9904,8 @@ msgid "Click-Drag to move the path around."
 msgstr "Tažením s kliknutím přesunete cestu."
 
 #: ../app/tools/gimpvectortool.c:1183
-msgid "Click to insert an anchor on the path. (try SHIFT)"
+#, fuzzy
+msgid "Click to insert an anchor on the path. (try Shift)"
 msgstr "Kliknutím vložíte ukotvení na cestu. (zkuste SHIFT)"
 
 #: ../app/tools/gimpvectortool.c:1186
