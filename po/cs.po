@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-10 13:17+0200\n"
-"PO-Revision-Date: 2006-07-17 16:01+0200\n"
+"POT-Creation-Date: 2006-07-31 15:17+0200\n"
+"PO-Revision-Date: 2006-07-31 15:20+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2728,19 +2728,19 @@ msgstr "Menu Volby nástrojů"
 
 #: ../app/actions/tool-options-actions.c:60
 msgid "_Save Options to"
-msgstr "_Uložit možnosti do"
+msgstr "_Uložit volby do"
 
 #: ../app/actions/tool-options-actions.c:64
 msgid "_Restore Options from"
-msgstr "_Obnovit možnosti z"
+msgstr "_Obnovit volby z"
 
 #: ../app/actions/tool-options-actions.c:68
 msgid "Re_name Saved Options"
-msgstr "_Přejmenovat uložené možnosti"
+msgstr "_Přejmenovat uložené volby"
 
 #: ../app/actions/tool-options-actions.c:72
 msgid "_Delete Saved Options"
-msgstr "_Odstranit uložené možnosti"
+msgstr "_Smazat uložené volby"
 
 #: ../app/actions/tool-options-actions.c:76
 msgid "_New Entry..."
@@ -6396,7 +6396,7 @@ msgstr "Implicitní _interpolace:"
 #. Global Brush, Pattern, ...
 #: ../app/dialogs/preferences-dialog.c:1623
 msgid "Paint Options Shared Between Tools"
-msgstr "Možnosti kreslení sdílené mezi nástroji"
+msgstr "volby kreslení sdílené mezi nástroji"
 
 #: ../app/dialogs/preferences-dialog.c:1636
 msgid "Move Tool"
@@ -10079,9 +10079,7 @@ msgstr "Zavřít všechny karty"
 msgid ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
-msgstr ""
-"Toto okno má otevřeno %d karet. Zavření okna zavře všechny jeho "
-"karty."
+msgstr "Toto okno má otevřeno %d karet. Zavření okna zavře všechny jeho karty."
 
 #: ../app/widgets/gimpdock.c:479
 msgid "You can drop dockable dialogs here."
@@ -10416,7 +10414,7 @@ msgstr "%p"
 
 #: ../app/widgets/gimptemplateeditor.c:330
 msgid "_Advanced Options"
-msgstr "_Pokročilé možnosti"
+msgstr "_Pokročilé volby"
 
 #: ../app/widgets/gimptemplateeditor.c:437
 msgid "Color_space:"
