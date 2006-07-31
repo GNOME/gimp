@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-31 13:05+0200\n"
-"PO-Revision-Date: 2006-07-31 13:08+0200\n"
+"PO-Revision-Date: 2006-07-31 16:03+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3374,7 +3374,7 @@ msgstr "Menu Volby nástrojů"
 
 #: ../app/actions/tool-options-actions.c:60
 msgid "_Save Options To"
-msgstr "_Uložit možnosti do"
+msgstr "_Uložit volby do"
 
 #: ../app/actions/tool-options-actions.c:64
 msgid "_Restore Options From"
@@ -3382,11 +3382,11 @@ msgstr "_Obnovit volby z"
 
 #: ../app/actions/tool-options-actions.c:68
 msgid "Re_name Saved Options"
-msgstr "_Přejmenovat uložené možnosti"
+msgstr "_Přejmenovat uložené volby"
 
 #: ../app/actions/tool-options-actions.c:72
 msgid "_Delete Saved Options"
-msgstr "_Odstranit uložené možnosti"
+msgstr "_Smazat uložené volby"
 
 #: ../app/actions/tool-options-actions.c:76
 msgid "_New Entry..."
@@ -4369,7 +4369,7 @@ msgstr "Uložit pozice a velikosti hlavních dialogů při ukončení GIMP."
 
 #: ../app/config/gimprc-blurbs.h:274
 msgid "Save the tool options when the GIMP exits."
-msgstr "Uložit možnosti nástrojů při ukončení GIMPu."
+msgstr "Uložit volby nástrojů při ukončení GIMPu."
 
 #: ../app/config/gimprc-blurbs.h:280
 msgid ""
@@ -7041,7 +7041,7 @@ msgstr "Používaný _WWW prohlížeč:"
 
 #: ../app/dialogs/preferences-dialog.c:1738
 msgid "_Save tool options on exit"
-msgstr "_Ukládat možnosti nástrojů při skončení"
+msgstr "_Ukládat volby nástrojů při skončení"
 
 #: ../app/dialogs/preferences-dialog.c:1742
 msgid "Save Tool Options _Now"
@@ -7049,7 +7049,7 @@ msgstr "Uložit volby nástrojů _teď"
 
 #: ../app/dialogs/preferences-dialog.c:1749
 msgid "_Reset Saved Tool Options to Default Values"
-msgstr "_Obnovit uložené možnosti nástrojů na implicitní hodnoty"
+msgstr "_Obnovit uložené volby nástrojů na implicitní hodnoty"
 
 #. Snapping Distance
 #: ../app/dialogs/preferences-dialog.c:1759
@@ -7067,7 +7067,7 @@ msgstr "Implicitní _interpolace:"
 #. Global Brush, Pattern, ...
 #: ../app/dialogs/preferences-dialog.c:1779
 msgid "Paint Options Shared Between Tools"
-msgstr "Možnosti kreslení sdílené mezi nástroji"
+msgstr "Volby kreslení sdílené mezi nástroji"
 
 #: ../app/dialogs/preferences-dialog.c:1792
 msgid "Move Tool"
@@ -10996,7 +10996,7 @@ msgstr "%p"
 
 #: ../app/widgets/gimptemplateeditor.c:255
 msgid "_Advanced Options"
-msgstr "_Pokročilé možnosti"
+msgstr "_Pokročilé volby"
 
 #: ../app/widgets/gimptemplateeditor.c:362
 msgid "Color _space:"
