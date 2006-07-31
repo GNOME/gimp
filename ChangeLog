@@ -1,5 +1,17 @@
 2006-07-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/Makefile.am
+	* app/tools/gimpregionselecttool.[ch]: new abstract base class
+	which does about the same as GimpFuzyySelectTool did, apart from
+	creating the mask of the selected region.
+
+	* app/tools/gimpbycolorselecttool.[ch]
+	* app/tools/gimpfuzzyselecttool.[ch]: removed all code and only
+	implement GimpRegionSelectTool::get_mask(). Fuzzy and by-color
+	select behave exactly the same now. Fixes bug #126748.
+
+2006-07-31  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/compose.c (run): enable "compose_by_drawable"
 	for GIMP_RUN_WITH_LAST_VALS, since these values are drawable IDs,
 	not image IDs. Fixes bug #346859.

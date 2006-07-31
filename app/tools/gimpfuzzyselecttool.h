@@ -1,6 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpfuzzyselecttool.h
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -20,7 +22,7 @@
 #define __GIMP_FUZZY_SELECT_TOOL_H__
 
 
-#include "gimpselectiontool.h"
+#include "gimpregionselecttool.h"
 
 
 #define GIMP_TYPE_FUZZY_SELECT_TOOL            (gimp_fuzzy_select_tool_get_type ())
@@ -36,23 +38,12 @@ typedef struct _GimpFuzzySelectToolClass GimpFuzzySelectToolClass;
 
 struct _GimpFuzzySelectTool
 {
-  GimpSelectionTool  parent_instance;
-
-  gint         x, y;             /*  Point from which to execute seed fill   */
-  gint         first_x;          /*                                          */
-  gint         first_y;          /*  variables to keep track of sensitivity  */
-  gdouble      first_threshold;  /*  initial value of threshold slider       */
-
-  GimpChannel *fuzzy_mask;
-
-  /*  Segments which make up the fuzzy selection boundary  */
-  GdkSegment  *segs;
-  gint         num_segs;
+  GimpRegionSelectTool  parent_instance;
 };
 
 struct _GimpFuzzySelectToolClass
 {
-  GimpSelectionToolClass parent_class;
+  GimpRegionSelectToolClass  parent_class;
 };
 
 

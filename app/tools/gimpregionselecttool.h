@@ -1,6 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpregionselecttool.h
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,50 +18,48 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_FUZZY_SELECT_TOOL_H__
-#define __GIMP_FUZZY_SELECT_TOOL_H__
+#ifndef __GIMP_REGION_SELECT_TOOL_H__
+#define __GIMP_REGION_SELECT_TOOL_H__
 
 
 #include "gimpselectiontool.h"
 
 
-#define GIMP_TYPE_FUZZY_SELECT_TOOL            (gimp_fuzzy_select_tool_get_type ())
-#define GIMP_FUZZY_SELECT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FUZZY_SELECT_TOOL, GimpFuzzySelectTool))
-#define GIMP_FUZZY_SELECT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FUZZY_SELECT_TOOL, GimpFuzzySelectToolClass))
-#define GIMP_IS_FUZZY_SELECT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FUZZY_SELECT_TOOL))
-#define GIMP_IS_FUZZY_SELECT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FUZZY_SELECT_TOOL))
-#define GIMP_FUZZY_SELECT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FUZZY_SELECT_TOOL, GimpFuzzySelectToolClass))
+#define GIMP_TYPE_REGION_SELECT_TOOL            (gimp_region_select_tool_get_type ())
+#define GIMP_REGION_SELECT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_REGION_SELECT_TOOL, GimpRegionSelectTool))
+#define GIMP_REGION_SELECT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_REGION_SELECT_TOOL, GimpRegionSelectToolClass))
+#define GIMP_IS_REGION_SELECT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_REGION_SELECT_TOOL))
+#define GIMP_IS_REGION_SELECT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_REGION_SELECT_TOOL))
+#define GIMP_REGION_SELECT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_REGION_SELECT_TOOL, GimpRegionSelectToolClass))
 
 
-typedef struct _GimpFuzzySelectTool      GimpFuzzySelectTool;
-typedef struct _GimpFuzzySelectToolClass GimpFuzzySelectToolClass;
+typedef struct _GimpRegionSelectTool      GimpRegionSelectTool;
+typedef struct _GimpRegionSelectToolClass GimpRegionSelectToolClass;
 
-struct _GimpFuzzySelectTool
+struct _GimpRegionSelectTool
 {
   GimpSelectionTool  parent_instance;
 
-  gint         x, y;             /*  Point from which to execute seed fill   */
-  gint         first_x;          /*                                          */
-  gint         first_y;          /*  variables to keep track of sensitivity  */
-  gdouble      first_threshold;  /*  initial value of threshold slider       */
+  gint               x, y;
+  gdouble            saved_threshold;
 
-  GimpChannel *fuzzy_mask;
-
-  /*  Segments which make up the fuzzy selection boundary  */
-  GdkSegment  *segs;
-  gint         num_segs;
+  GimpChannel       *region_mask;
+  GdkSegment        *segs;
+  gint               num_segs;
 };
 
-struct _GimpFuzzySelectToolClass
+struct _GimpRegionSelectToolClass
 {
   GimpSelectionToolClass parent_class;
+
+  const gchar * undo_desc;
+
+  GimpChannel * (* get_mask) (GimpRegionSelectTool *region_tool,
+                              GimpDisplay          *display);
 };
 
 
-void    gimp_fuzzy_select_tool_register (GimpToolRegisterCallback  callback,
-                                         gpointer                  data);
-
-GType   gimp_fuzzy_select_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_region_select_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /* __GIMP_FUZZY_SELECT_TOOL_H__ */
+#endif  /* __GIMP_REGION_SELECT_TOOL_H__ */

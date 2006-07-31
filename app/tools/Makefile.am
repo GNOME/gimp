@@ -124,6 +124,8 @@ libapptools_a_sources = \
 	gimprectangletool.h		\
 	gimprectangleoptions.c		\
 	gimprectangleoptions.h		\
+	gimpregionselecttool.c		\
+	gimpregionselecttool.h		\
 	gimprotatetool.c		\
 	gimprotatetool.h		\
 	gimpscaletool.c			\
