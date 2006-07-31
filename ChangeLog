@@ -1,3 +1,9 @@
+2006-07-31  Hendrik Boom  <hboom@cvs.gnome.org>
+
+	* app/vectors/gimpvectorlayer.c: fixed a typo/memory leak related to
+	releasing stroke_desc during finalization. Removed some unused code in
+	gimp_vector_layer_refresh.
+
 2006-07-25  Hendrik Boom  <hboom@cvs.gnome.org>
 
 	* app/dialogs/vectorlayer-options-dialog.c

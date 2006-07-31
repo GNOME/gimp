@@ -45,10 +45,8 @@
 #include "gimpvectorlayer.h"
 
 #include "gimp-intl.h"
-/* no doubt more includes will go here */
 
 /* properties enum */
-
 enum
 {
   PROP_0,
@@ -145,7 +143,7 @@ gimp_vector_layer_finalize (GObject *object)
       layer->fill_options = NULL;
     }
     
-  if(layer->vectors)
+  if(layer->stroke_desc)
     {
       g_object_unref (layer->stroke_desc);
       layer->stroke_desc = NULL;
@@ -382,10 +380,6 @@ gimp_vector_layer_new (GimpImage     *image,
 void
 gimp_vector_layer_refresh (GimpVectorLayer  *layer)
 {
-  GimpImage      *image    = gimp_item_get_image (GIMP_ITEM (layer));
-  gint            width    = gimp_image_get_width (image);
-  gint            height   = gimp_image_get_height (image);
-  
   gimp_vector_layer_refresh_name (layer);
   gimp_vector_layer_render (layer);
 }
