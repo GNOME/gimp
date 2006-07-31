@@ -33,11 +33,9 @@
 
 #include "widgets/gimpwidgets-utils.h"
 
-#include "gimpbycolorselecttool.h"
-#include "gimpellipseselecttool.h"
 #include "gimpforegroundselecttool.h"
 #include "gimprectangleselecttool.h"
-#include "gimpfuzzyselecttool.h"
+#include "gimpregionselecttool.h"
 #include "gimpiscissorstool.h"
 #include "gimpselectionoptions.h"
 #include "gimptooloptions-gui.h"
@@ -457,8 +455,8 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     }
 
   /*  selection tools which operate on colors or contiguous regions  */
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL ||
-      tool_options->tool_info->tool_type == GIMP_TYPE_BY_COLOR_SELECT_TOOL)
+  if (g_type_is_a (tool_options->tool_info->tool_type,
+                   GIMP_TYPE_REGION_SELECT_TOOL))
     {
       GtkWidget *frame;
       GtkWidget *vbox2;
@@ -498,8 +496,8 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     }
 
   /*  widgets for fixed size select  */
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL ||
-      tool_options->tool_info->tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL)
+  if (g_type_is_a (tool_options->tool_info->tool_type,
+                   GIMP_TYPE_RECT_SELECT_TOOL))
     {
       GtkWidget *frame;
       GtkWidget *vbox2;

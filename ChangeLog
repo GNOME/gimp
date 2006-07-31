@@ -1,5 +1,11 @@
 2006-07-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpselectionoptions.c (gimp_selection_options_gui):
+	use g_type_is_a() where possible instead of checking individual
+	tool types separately.
+
+2006-07-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/Makefile.am
 	* app/tools/gimpregionselecttool.[ch]: new abstract base class
 	which does about the same as GimpFuzyySelectTool did, apart from
