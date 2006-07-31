@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-14 10:25+0200\n"
-"PO-Revision-Date: 2006-07-27 11:57+0200\n"
+"POT-Creation-Date: 2006-07-31 15:44+0200\n"
+"PO-Revision-Date: 2006-07-31 15:54+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -365,7 +365,7 @@ msgid "_Fractals"
 msgstr "_Fraktály"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1706
-#: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:273
+#: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:278
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2013
 #: ../plug-ins/common/channel_mixer.c:1062 ../plug-ins/common/compressor.c:410
 #: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:838
@@ -1222,7 +1222,7 @@ msgstr "Nepodporovaná nebo neplatná bitová hloubka"
 #.
 #: ../plug-ins/bmp/bmpread.c:546 ../plug-ins/common/CEL.c:349
 #: ../plug-ins/common/CEL.c:352 ../plug-ins/common/blinds.c:277
-#: ../plug-ins/common/compose.c:904 ../plug-ins/common/decompose.c:686
+#: ../plug-ins/common/compose.c:906 ../plug-ins/common/decompose.c:686
 #: ../plug-ins/common/dicom.c:486 ../plug-ins/common/film.c:944
 #: ../plug-ins/common/gifload.c:879 ../plug-ins/common/pcx.c:339
 #: ../plug-ins/common/pcx.c:345 ../plug-ins/common/pix.c:368
@@ -1244,17 +1244,17 @@ msgstr "Pozadí"
 msgid "The bitmap ends unexpectedly."
 msgstr "Bitmapa neočekávaně končí."
 
-#: ../plug-ins/bmp/bmpwrite.c:177 ../plug-ins/bmp/bmpwrite.c:197
+#: ../plug-ins/bmp/bmpwrite.c:182 ../plug-ins/bmp/bmpwrite.c:202
 msgid "Cannot save indexed image with transparency in BMP file format."
 msgstr "Indexovaný obrázek s průhledností nelze uložit do formátu BMP."
 
-#: ../plug-ins/bmp/bmpwrite.c:179 ../plug-ins/bmp/bmpwrite.c:199
+#: ../plug-ins/bmp/bmpwrite.c:184 ../plug-ins/bmp/bmpwrite.c:204
 msgid "Alpha channel will be ignored."
 msgstr "Alfa kanál bude ignorován."
 
 #. And let's begin the progress
 #. init the progress meter
-#: ../plug-ins/bmp/bmpwrite.c:284 ../plug-ins/common/CEL.c:573
+#: ../plug-ins/bmp/bmpwrite.c:289 ../plug-ins/common/CEL.c:573
 #: ../plug-ins/common/gbr.c:621 ../plug-ins/common/gif.c:1000
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
 #: ../plug-ins/common/pat.c:454 ../plug-ins/common/pcx.c:550
@@ -1271,23 +1271,23 @@ msgstr "Alfa kanál bude ignorován."
 msgid "Saving '%s'"
 msgstr "Ukládá se '%s'"
 
-#: ../plug-ins/bmp/bmpwrite.c:768 ../plug-ins/bmp/bmpwrite.c:824
+#: ../plug-ins/bmp/bmpwrite.c:757 ../plug-ins/bmp/bmpwrite.c:814
 msgid "Save as BMP"
 msgstr "Zapsat jako BMP"
 
-#: ../plug-ins/bmp/bmpwrite.c:789
+#: ../plug-ins/bmp/bmpwrite.c:778
 msgid "_Run-Length Encoded"
 msgstr "Kódované _RunLength"
 
-#: ../plug-ins/bmp/bmpwrite.c:847
+#: ../plug-ins/bmp/bmpwrite.c:837
 msgid "16 bits"
 msgstr "16 bitů"
 
-#: ../plug-ins/bmp/bmpwrite.c:881
+#: ../plug-ins/bmp/bmpwrite.c:871
 msgid "24 bits"
 msgstr "24 bitů"
 
-#: ../plug-ins/bmp/bmpwrite.c:894
+#: ../plug-ins/bmp/bmpwrite.c:884
 msgid "32 bits"
 msgstr "32 bitů"
 
@@ -2744,64 +2744,64 @@ msgstr ""
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr "Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
 
-#: ../plug-ins/common/compose.c:517
+#: ../plug-ins/common/compose.c:519
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "Nemohu získat vrstvy pro obrázek %d"
 
-#: ../plug-ins/common/compose.c:588
+#: ../plug-ins/common/compose.c:590
 msgid "Composing"
 msgstr "Komponuji"
 
-#: ../plug-ins/common/compose.c:670 ../plug-ins/common/compose.c:1666
+#: ../plug-ins/common/compose.c:672 ../plug-ins/common/compose.c:1668
 msgid "At least one image is needed to compose"
 msgstr "Ke komponování je třeba alespoň jeden obrázek"
 
-#: ../plug-ins/common/compose.c:681 ../plug-ins/common/compose.c:694
+#: ../plug-ins/common/compose.c:683 ../plug-ins/common/compose.c:696
 #, c-format
 msgid "Specified layer %d not found"
 msgstr "Zadaná vrstva %d nenalezena"
 
-#: ../plug-ins/common/compose.c:701
+#: ../plug-ins/common/compose.c:703
 msgid "Drawables have different size"
 msgstr "Obrazovky mají různé velikosti"
 
-#: ../plug-ins/common/compose.c:726
+#: ../plug-ins/common/compose.c:728
 msgid "Images have different size"
 msgstr "Obrázky mají různé velikosti"
 
-#: ../plug-ins/common/compose.c:743
+#: ../plug-ins/common/compose.c:745
 msgid "Error in getting layer IDs"
 msgstr "Chyba při získávání ID vrstev"
 
-#: ../plug-ins/common/compose.c:764
+#: ../plug-ins/common/compose.c:766
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "Obrázek není v šedích (bpp=%d)"
 
-#: ../plug-ins/common/compose.c:791
+#: ../plug-ins/common/compose.c:793
 msgid "Unable to recompose, source layer not found"
 msgstr "Nemohu rekomponovat, zdrojová vrstva nenalezena"
 
-#: ../plug-ins/common/compose.c:1419
+#: ../plug-ins/common/compose.c:1421
 msgid "Compose"
 msgstr "Kompozice"
 
 #. Compose type combo
-#: ../plug-ins/common/compose.c:1446
+#: ../plug-ins/common/compose.c:1448
 msgid "Compose Channels"
 msgstr "Kompozice kanálů"
 
-#: ../plug-ins/common/compose.c:1456 ../plug-ins/common/decompose.c:1378
+#: ../plug-ins/common/compose.c:1458 ../plug-ins/common/decompose.c:1378
 msgid "Color _model:"
 msgstr "Barevný _model:"
 
 #. Channel representation table
-#: ../plug-ins/common/compose.c:1488
+#: ../plug-ins/common/compose.c:1490
 msgid "Channel Representations"
 msgstr "Reprezentace kanálů"
 
-#: ../plug-ins/common/compose.c:1551
+#: ../plug-ins/common/compose.c:1553
 msgid "Mask value"
 msgstr "Hodnota masky"
 
@@ -3502,7 +3502,7 @@ msgstr "Po_larizace:"
 
 #: ../plug-ins/common/diffraction.c:641
 msgid "Other Options"
-msgstr "Jiné možnosti"
+msgstr "Další volby"
 
 #: ../plug-ins/common/displace.c:145
 msgid "_X displacement"
@@ -3789,7 +3789,7 @@ msgstr "Na filmu:"
 
 #. Create selection
 #: ../plug-ins/common/film.c:1164 ../plug-ins/imagemap/imap_selection.c:366
-#: ../plug-ins/rcm/rcm_dialog.c:173 ../plug-ins/sel2path/sel2path.c:523
+#: ../plug-ins/rcm/rcm_dialog.c:173 ../plug-ins/sel2path/sel2path.c:428
 msgid "Selection"
 msgstr "Výběr"
 
@@ -5312,7 +5312,7 @@ msgstr "Faktor vyhlazování JPEG:"
 
 #: ../plug-ins/common/mng.c:1506
 msgid "Animated MNG Options"
-msgstr "Možnosti animovaného MNG"
+msgstr "Volby animovaného MNG"
 
 #: ../plug-ins/common/mng.c:1512
 msgid "Loop"
@@ -8215,7 +8215,7 @@ msgstr "Ohnutí"
 
 #: ../plug-ins/common/warp.c:398
 msgid "Basic Options"
-msgstr "Základní možnosti"
+msgstr "Základní volby"
 
 #: ../plug-ins/common/warp.c:420
 msgid "Step size:"
@@ -8257,7 +8257,7 @@ msgstr "Barva popředí"
 #. ---------    The secondary table         --------------------------
 #: ../plug-ins/common/warp.c:537
 msgid "Advanced Options"
-msgstr "Pokročilé možnosti"
+msgstr "Pokročilé volby"
 
 #: ../plug-ins/common/warp.c:553
 msgid "Dither size:"
@@ -8284,7 +8284,7 @@ msgstr "Použít mapu zvětšení"
 #. ---------    The "other" table         --------------------------
 #: ../plug-ins/common/warp.c:623
 msgid "More Advanced Options"
-msgstr "Další pokročilé možnosti"
+msgstr "Další pokročilé volby"
 
 #: ../plug-ins/common/warp.c:640
 msgid "Gradient scale:"
@@ -9040,7 +9040,7 @@ msgstr "Zvolte objekt"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1048
 msgid "This tool has no options"
-msgstr "Tento nástroj nemá možnosti"
+msgstr "Tento nástroj nemá volby"
 
 #. Put buttons in
 #: ../plug-ins/gfig/gfig-dialog.c:1238
@@ -10173,7 +10173,7 @@ msgstr "Vytvořit IFS fraktál"
 
 #: ../plug-ins/ifscompose/ifscompose.c:347
 msgid "_IFS Fractal..."
-msgstr "_IFS Fractal..."
+msgstr "_IFS fraktál..."
 
 #. Asym
 #: ../plug-ins/ifscompose/ifscompose.c:583
@@ -10192,7 +10192,7 @@ msgstr "Jednoduchý"
 
 #: ../plug-ins/ifscompose/ifscompose.c:651
 msgid "IFS Fractal: Target"
-msgstr "IFS Fractal: Cíl"
+msgstr "IFS fraktál: Cíl"
 
 #: ../plug-ins/ifscompose/ifscompose.c:657
 msgid "Scale hue by:"
@@ -10209,23 +10209,23 @@ msgstr "Plný"
 
 #: ../plug-ins/ifscompose/ifscompose.c:697
 msgid "IFS Fractal: Red"
-msgstr "IFS Fractal: Červená"
+msgstr "IFS fraktál: Červená"
 
 #: ../plug-ins/ifscompose/ifscompose.c:705
 msgid "IFS Fractal: Green"
-msgstr "IFS Fractal: Zelená"
+msgstr "IFS fraktál: Zelená"
 
 #: ../plug-ins/ifscompose/ifscompose.c:713
 msgid "IFS Fractal: Blue"
-msgstr "IFS Fractal: Modrá"
+msgstr "IFS fraktál: Modrá"
 
 #: ../plug-ins/ifscompose/ifscompose.c:721
 msgid "IFS Fractal: Black"
-msgstr "IFS Fractal: Černá"
+msgstr "IFS fraktál: Černá"
 
 #: ../plug-ins/ifscompose/ifscompose.c:771
 msgid "IFS Fractal"
-msgstr "IFS Fractal"
+msgstr "IFS fraktál"
 
 #: ../plug-ins/ifscompose/ifscompose.c:869
 msgid "Spatial Transformation"
@@ -10253,7 +10253,7 @@ msgstr "Přepočítat střed"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1068
 msgid "Render Options"
-msgstr "Možnosti vykreslování"
+msgstr "Volby vykreslování"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1074
 #: ../plug-ins/imagemap/imap_cmd_move.c:86
@@ -10275,7 +10275,7 @@ msgstr "Roztažení"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1178
 msgid "IFS Fractal Render Options"
-msgstr "Možnosti vykreslování IFS Fractal"
+msgstr "Volby vykreslování IFS fraktálu"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1199
 msgid "Max. memory:"
@@ -10314,15 +10314,15 @@ msgstr "Otevření selhalo"
 #: ../plug-ins/ifscompose/ifscompose.c:2473
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
-msgstr "Soubor '%s' zřejmě není soubor IFS Fractal."
+msgstr "Soubor '%s' zřejmě není soubor IFS fraktálu."
 
 #: ../plug-ins/ifscompose/ifscompose.c:2513
 msgid "Save as IFS Fractal file"
-msgstr "Uložit jako soubor IFS Fraktal"
+msgstr "Uložit jako soubor IFS fraktálu"
 
 #: ../plug-ins/ifscompose/ifscompose.c:2548
 msgid "Open IFS Fractal file"
-msgstr "Otevřít soubor IFS Fraktal"
+msgstr "Otevřít soubor IFS fraktálu"
 
 #: ../plug-ins/imagemap/imap_about.c:45
 msgid "Copyright © 1999-2005 by Maurits Rijk"
@@ -10624,7 +10624,7 @@ msgstr "Nastavení oblasti"
 msgid "Area #%d Settings"
 msgstr "Nastavení oblasti č. %d"
 
-#: ../plug-ins/imagemap/imap_file.c:48 ../plug-ins/imagemap/imap_menu.c:93
+#: ../plug-ins/imagemap/imap_file.c:48 ../plug-ins/imagemap/imap_menu.c:96
 msgid "Error opening file"
 msgstr "Chyba při otevírání souboru"
 
@@ -10709,46 +10709,46 @@ msgstr "_Obrázková mapa..."
 msgid "<Untitled>"
 msgstr "<Beze jména>"
 
-#: ../plug-ins/imagemap/imap_main.c:661
+#: ../plug-ins/imagemap/imap_main.c:660
 msgid "Some data has been changed!"
 msgstr "Některá data byla změněna!"
 
-#: ../plug-ins/imagemap/imap_main.c:662
+#: ../plug-ins/imagemap/imap_main.c:663
 msgid "Do you really want to discard your changes?"
 msgstr "Opravdu chcete přijít o tyto změny?"
 
-#: ../plug-ins/imagemap/imap_main.c:874
+#: ../plug-ins/imagemap/imap_main.c:875
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Soubor \"%s\" zapsán."
 
-#: ../plug-ins/imagemap/imap_main.c:878
+#: ../plug-ins/imagemap/imap_main.c:879
 msgid "Couldn't save file:"
 msgstr "Nelze zapsat soubor:"
 
-#: ../plug-ins/imagemap/imap_main.c:891
+#: ../plug-ins/imagemap/imap_main.c:892
 msgid "Image size has changed."
 msgstr "Velikost obrázku byla změněna."
 
-#: ../plug-ins/imagemap/imap_main.c:892
+#: ../plug-ins/imagemap/imap_main.c:893
 msgid "Resize area's?"
 msgstr "Změnit rozměry plátna?"
 
-#: ../plug-ins/imagemap/imap_main.c:926
+#: ../plug-ins/imagemap/imap_main.c:927
 msgid "Couldn't read file:"
 msgstr "Nelze číst soubor:"
 
-#: ../plug-ins/imagemap/imap_main.c:975
+#: ../plug-ins/imagemap/imap_main.c:974
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: ../plug-ins/imagemap/imap_menu.c:127
+#: ../plug-ins/imagemap/imap_menu.c:136
 #, c-format
 msgid "_Undo %s"
 msgstr "_Vrátit %s"
 
-#: ../plug-ins/imagemap/imap_menu.c:143
+#: ../plug-ins/imagemap/imap_menu.c:152
 #, c-format
 msgid "_Redo %s"
 msgstr "Z_rušit vrácení %s"
@@ -11438,7 +11438,7 @@ msgstr "Hlavní volby"
 
 #: ../plug-ins/rcm/rcm_dialog.c:695
 msgid "Gray Options"
-msgstr "Možnosti šedé"
+msgstr "Volby šedé"
 
 #: ../plug-ins/rcm/rcm_stock.c:35
 msgid "Switch to Clockwise"
