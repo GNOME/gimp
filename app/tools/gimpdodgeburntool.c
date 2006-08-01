@@ -38,17 +38,24 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_dodge_burn_tool_modifier_key  (GimpTool        *tool,
-                                                  GdkModifierType  key,
-                                                  gboolean         press,
-                                                  GdkModifierType  state,
-                                                  GimpDisplay     *display);
-static void   gimp_dodge_burn_tool_cursor_update (GimpTool        *tool,
-                                                  GimpCoords      *coords,
-                                                  GdkModifierType  state,
-                                                  GimpDisplay     *display);
+static void   gimp_dodge_burn_tool_modifier_key  (GimpTool          *tool,
+                                                  GdkModifierType    key,
+                                                  gboolean           press,
+                                                  GdkModifierType    state,
+                                                  GimpDisplay       *display);
+static void   gimp_dodge_burn_tool_cursor_update (GimpTool          *tool,
+                                                  GimpCoords        *coords,
+                                                  GdkModifierType    state,
+                                                  GimpDisplay       *display);
+static void   gimp_dodge_burn_tool_oper_update   (GimpTool          *tool,
+                                                  GimpCoords        *coords,
+                                                  GdkModifierType    state,
+                                                  gboolean           proximity,
+                                                  GimpDisplay       *display);
+static void   gimp_dodge_burn_tool_status_update (GimpTool          *tool,
+                                                  GimpDodgeBurnType  type);
 
-static GtkWidget * gimp_dodge_burn_options_gui   (GimpToolOptions *tool_options);
+static GtkWidget * gimp_dodge_burn_options_gui   (GimpToolOptions   *tool_options);
 
 
 G_DEFINE_TYPE (GimpDodgeBurnTool, gimp_dodge_burn_tool, GIMP_TYPE_PAINT_TOOL)
@@ -80,6 +87,7 @@ gimp_dodge_burn_tool_class_init (GimpDodgeBurnToolClass *klass)
 
   tool_class->modifier_key  = gimp_dodge_burn_tool_modifier_key;
   tool_class->cursor_update = gimp_dodge_burn_tool_cursor_update;
+  tool_class->oper_update   = gimp_dodge_burn_tool_oper_update;
 }
 
 static void
@@ -91,6 +99,8 @@ gimp_dodge_burn_tool_init (GimpDodgeBurnTool *dodgeburn)
                                             GIMP_TOOL_CURSOR_DODGE);
   gimp_tool_control_set_toggle_tool_cursor (tool->control,
                                             GIMP_TOOL_CURSOR_BURN);
+
+  gimp_dodge_burn_tool_status_update (tool, GIMP_BURN);
 }
 
 static void
@@ -138,6 +148,47 @@ gimp_dodge_burn_tool_cursor_update (GimpTool        *tool,
   gimp_tool_control_set_toggled (tool->control, (options->type == GIMP_BURN));
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+}
+
+static void
+gimp_dodge_burn_tool_oper_update (GimpTool        *tool,
+                                GimpCoords      *coords,
+                                GdkModifierType  state,
+                                gboolean         proximity,
+                                GimpDisplay     *display)
+{
+  GimpDodgeBurnOptions *options;
+
+  options = GIMP_DODGE_BURN_OPTIONS (tool->tool_info->tool_options);
+  gimp_dodge_burn_tool_status_update (tool, options->type);
+
+  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+                                               display);
+}
+
+static void
+gimp_dodge_burn_tool_status_update (GimpTool          *tool,
+                                    GimpDodgeBurnType  type)
+{
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
+
+  switch (type)
+    {
+    case GIMP_DODGE:
+      paint_tool->status      = _("Click to dodge.");
+      paint_tool->status_line = _("Click to dodge the line.");
+      paint_tool->status_ctrl = _("%s to burn");
+      break;
+
+    case GIMP_BURN:
+      paint_tool->status      = _("Click to burn.");
+      paint_tool->status_line = _("Click to burn the line.");
+      paint_tool->status_ctrl = _("%s to dodge");
+      break;
+
+    default:
+      break;
+    }
 }
 
 

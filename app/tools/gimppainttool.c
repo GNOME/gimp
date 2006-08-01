@@ -44,6 +44,7 @@
 #include "paint/gimppaintoptions.h"
 
 #include "widgets/gimpdevices.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -161,6 +162,10 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
 
   paint_tool->pick_colors = FALSE;
   paint_tool->draw_line   = FALSE;
+
+  paint_tool->status      = _("Click to paint.");
+  paint_tool->status_line = _("Click to draw the line.");
+  paint_tool->status_ctrl = _("%s to pick a color");
 
   paint_tool->show_cursor = TRUE;
   paint_tool->draw_brush  = TRUE;
@@ -542,9 +547,23 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
 
               gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
                                       GIMP_COLOR_OPTIONS (info->tool_options));
-              gimp_tool_push_status (tool, display,
-                                     _("Click in any image to pick the "
-                                       "foreground color."));
+              switch (GIMP_COLOR_TOOL (tool)->pick_mode)
+                {
+                case GIMP_COLOR_PICK_MODE_FOREGROUND:
+                  gimp_tool_push_status (tool, display,
+                                         _("Click in any image to pick the "
+                                           "foreground color."));
+                  break;
+
+                case GIMP_COLOR_PICK_MODE_BACKGROUND:
+                  gimp_tool_push_status (tool, display,
+                                         _("Click in any image to pick the "
+                                           "background color."));
+                  break;
+
+                default:
+                  break;
+                }
             }
         }
       else
@@ -615,7 +634,7 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
 
           gdouble      dx, dy, dist;
           gchar        status_str[STATUSBAR_SIZE];
-          const gchar *status_help;
+          gchar       *status_help;
           gint         off_x, off_y;
           gboolean     hard;
 
@@ -633,11 +652,11 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
           dx = core->cur_coords.x - core->last_coords.x;
           dy = core->cur_coords.y - core->last_coords.y;
 
-          if ((state & GDK_CONTROL_MASK))
-            status_help = _("Click to draw the line.");
-          else
-            status_help = _("Click to draw the line."
-                            " (try Ctrl for constrained angles)");
+          status_help = gimp_suggest_modifiers (paint_tool->status_line,
+                                                GDK_CONTROL_MASK & ~state,
+                                                NULL,
+                                                _("%s for constrained angles"),
+                                                NULL);
 
           /*  show distance in statusbar  */
           if (shell->unit == GIMP_UNIT_PIXEL)
@@ -663,22 +682,30 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
               g_snprintf (status_str, sizeof (status_str), format_str, dist,
                           status_help);
             }
-
+          g_free (status_help);
           gimp_tool_push_status (tool, display, status_str);
 
           paint_tool->draw_line = TRUE;
         }
       else
         {
+          gchar *status;
+
           if (display == tool->display)
-            gimp_tool_push_status (tool, display,
-                                   _("Click to paint. (try "
-                                     "Shift for a straight line, "
-                                     "Ctrl to pick a color)"));
+            status = gimp_suggest_modifiers (paint_tool->status,
+                                             (GDK_SHIFT_MASK
+                                              | GDK_CONTROL_MASK) & ~state,
+                                             _("%s for a straight line"),
+                                             paint_tool->status_ctrl,
+                                             NULL);
           else
-            gimp_tool_push_status (tool, display,
-                                   _("Click to paint. (try "
-                                     "Ctrl to pick a color)"));
+            status = gimp_suggest_modifiers (paint_tool->status,
+                                             GDK_CONTROL_MASK & ~state,
+                                             NULL,
+                                             paint_tool->status_ctrl,
+                                             NULL);
+          gimp_tool_push_status (tool, display, status);
+          g_free (status);
 
           paint_tool->draw_line = FALSE;
         }

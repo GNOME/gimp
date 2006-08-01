@@ -38,17 +38,24 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_convolve_tool_modifier_key  (GimpTool        *tool,
-                                                GdkModifierType  key,
-                                                gboolean         press,
-                                                GdkModifierType  state,
-                                                GimpDisplay     *display);
-static void   gimp_convolve_tool_cursor_update (GimpTool        *tool,
-                                                GimpCoords      *coords,
-                                                GdkModifierType  state,
-                                                GimpDisplay     *display);
+static void   gimp_convolve_tool_modifier_key  (GimpTool         *tool,
+                                                GdkModifierType   key,
+                                                gboolean          press,
+                                                GdkModifierType   state,
+                                                GimpDisplay      *display);
+static void   gimp_convolve_tool_cursor_update (GimpTool         *tool,
+                                                GimpCoords       *coords,
+                                                GdkModifierType   state,
+                                                GimpDisplay      *display);
+static void   gimp_convolve_tool_oper_update   (GimpTool         *tool,
+                                                GimpCoords       *coords,
+                                                GdkModifierType   state,
+                                                gboolean          proximity,
+                                                GimpDisplay      *display);
+static void   gimp_convolve_tool_status_update (GimpTool         *tool,
+                                                GimpConvolveType  type);
 
-static GtkWidget * gimp_convolve_options_gui   (GimpToolOptions *options);
+static GtkWidget * gimp_convolve_options_gui   (GimpToolOptions  *options);
 
 
 G_DEFINE_TYPE (GimpConvolveTool, gimp_convolve_tool, GIMP_TYPE_PAINT_TOOL)
@@ -80,6 +87,7 @@ gimp_convolve_tool_class_init (GimpConvolveToolClass *klass)
 
   tool_class->modifier_key  = gimp_convolve_tool_modifier_key;
   tool_class->cursor_update = gimp_convolve_tool_cursor_update;
+  tool_class->oper_update   = gimp_convolve_tool_oper_update;
 }
 
 static void
@@ -91,6 +99,8 @@ gimp_convolve_tool_init (GimpConvolveTool *convolve)
                                                 GIMP_TOOL_CURSOR_BLUR);
   gimp_tool_control_set_toggle_cursor_modifier (tool->control,
                                                 GIMP_CURSOR_MODIFIER_MINUS);
+
+  gimp_convolve_tool_status_update (tool, GIMP_BLUR_CONVOLVE);
 }
 
 static void
@@ -139,6 +149,46 @@ gimp_convolve_tool_cursor_update (GimpTool        *tool,
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
+static void
+gimp_convolve_tool_oper_update (GimpTool        *tool,
+                                GimpCoords      *coords,
+                                GdkModifierType  state,
+                                gboolean         proximity,
+                                GimpDisplay     *display)
+{
+  GimpConvolveOptions *options;
+
+  options = GIMP_CONVOLVE_OPTIONS (tool->tool_info->tool_options);
+  gimp_convolve_tool_status_update (tool, options->type);
+
+  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+                                               display);
+}
+
+static void
+gimp_convolve_tool_status_update (GimpTool         *tool,
+                                  GimpConvolveType  type)
+{
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
+
+  switch (type)
+    {
+    case GIMP_BLUR_CONVOLVE:
+      paint_tool->status      = _("Click to blur.");
+      paint_tool->status_line = _("Click to blur the line.");
+      paint_tool->status_ctrl = _("%s to sharpen");
+      break;
+
+    case GIMP_SHARPEN_CONVOLVE:
+      paint_tool->status      = _("Click to sharpen.");
+      paint_tool->status_line = _("Click to sharpen the line.");
+      paint_tool->status_ctrl = _("%s to blur");
+      break;
+
+    default:
+      break;
+    }
+}
 
 /*  tool options stuff  */
 

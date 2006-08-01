@@ -85,15 +85,20 @@ gimp_eraser_tool_class_init (GimpEraserToolClass *klass)
 static void
 gimp_eraser_tool_init (GimpEraserTool *eraser)
 {
-  GimpTool *tool = GIMP_TOOL (eraser);
+  GimpTool      *tool       = GIMP_TOOL (eraser);
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (eraser);
 
   gimp_tool_control_set_tool_cursor            (tool->control,
                                                 GIMP_TOOL_CURSOR_ERASER);
   gimp_tool_control_set_toggle_cursor_modifier (tool->control,
                                                 GIMP_CURSOR_MODIFIER_MINUS);
 
-  gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (eraser),
+  gimp_paint_tool_enable_color_picker (paint_tool,
                                        GIMP_COLOR_PICK_MODE_BACKGROUND);
+
+  paint_tool->status      = _("Click to erase.");
+  paint_tool->status_line = _("Click to erase the line.");
+  paint_tool->status_ctrl = _("%s to pick a background color");
 }
 
 static void

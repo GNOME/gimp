@@ -1,3 +1,25 @@
+2006-08-02  Raphaël Quinet  <raphael@gimp.org>
+
+	* app/widgets/gimpwidgets-utils.h
+	* app/widgets/gimpwidgets-utils.c (gimp_suggest_modifiers): 
+	New utility function to build status bar messages while allowing
+	dynamic names for the modifiers.
+
+	* app/tools/gimppainttool.h
+	* app/tools/gimppainttool.c: Added new members to the class in
+	order to allow paint tools to set different status messages for
+	the normal case or when drawing a line.
+
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpsmudgetool.c: Use the new functions to set
+	appropriate messages in the status bar.  Still work in progress,
+	partial fix for bug #124040.
+	
+	* app/tools/gimpvectortool.c: Use gimp_suggest_modifiers().
+	
 2006-07-31  Karine Delvare  <edhel@gimp.org>
 
 	* app/tools/gimprectangletool.c: Applied patch from Karl Günter

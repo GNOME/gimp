@@ -29,6 +29,7 @@
 #include "paint/gimpsmudgeoptions.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpsmudgetool.h"
 #include "gimppaintoptions-gui.h"
@@ -68,12 +69,16 @@ gimp_smudge_tool_class_init (GimpSmudgeToolClass *klass)
 static void
 gimp_smudge_tool_init (GimpSmudgeTool *smudge)
 {
-  GimpTool *tool = GIMP_TOOL (smudge);
+  GimpTool      *tool       = GIMP_TOOL (smudge);
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (smudge);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_SMUDGE);
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (smudge),
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);
+
+  paint_tool->status      = _("Click to smudge.");
+  paint_tool->status_line = _("Click to smudge the line.");
 }
 
 

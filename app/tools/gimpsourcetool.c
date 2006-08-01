@@ -70,6 +70,11 @@ static void          gimp_clone_tool_cursor_update (GimpTool        *tool,
                                                     GimpCoords      *coords,
                                                     GdkModifierType  state,
                                                     GimpDisplay     *display);
+static void          gimp_clone_tool_modifier_key  (GimpTool        *tool,
+                                                    GdkModifierType  key,
+                                                    gboolean         press,
+                                                    GdkModifierType  state,
+                                                    GimpDisplay     *display);
 static void          gimp_clone_tool_oper_update   (GimpTool        *tool,
                                                     GimpCoords      *coords,
                                                     GdkModifierType  state,
@@ -115,8 +120,9 @@ gimp_clone_tool_class_init (GimpCloneToolClass *klass)
   tool_class->control       = gimp_clone_tool_control;
   tool_class->button_press  = gimp_clone_tool_button_press;
   tool_class->motion        = gimp_clone_tool_motion;
-  tool_class->cursor_update = gimp_clone_tool_cursor_update;
+  tool_class->modifier_key  = gimp_clone_tool_modifier_key;
   tool_class->oper_update   = gimp_clone_tool_oper_update;
+  tool_class->cursor_update = gimp_clone_tool_cursor_update;
 
   draw_tool_class->draw     = gimp_clone_tool_draw;
 }
@@ -124,12 +130,16 @@ gimp_clone_tool_class_init (GimpCloneToolClass *klass)
 static void
 gimp_clone_tool_init (GimpCloneTool *clone)
 {
-  GimpTool *tool = GIMP_TOOL (clone);
+  GimpTool      *tool       = GIMP_TOOL (clone);
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
 
   gimp_tool_control_set_tool_cursor     (tool->control,
                                          GIMP_TOOL_CURSOR_CLONE);
   gimp_tool_control_set_action_object_2 (tool->control,
                                          "context/context-pattern-select-set");
+
+  paint_tool->status      = _("Click to clone.");
+  paint_tool->status_ctrl = _("%s to set a new clone source");
 }
 
 static gboolean
@@ -260,6 +270,31 @@ gimp_clone_tool_motion (GimpTool        *tool,
 }
 
 static void
+gimp_clone_tool_modifier_key (GimpTool        *tool,
+                              GdkModifierType  key,
+                              gboolean         press,
+                              GdkModifierType  state,
+                              GimpDisplay     *display)
+{
+  GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpCloneOptions *options;
+
+  options = GIMP_CLONE_OPTIONS (tool->tool_info->tool_options);
+
+  if (options->clone_type == GIMP_IMAGE_CLONE && key == GDK_CONTROL_MASK)
+    {
+      if (press)
+        paint_tool->status = _("Click to set the clone source.");
+      else
+        paint_tool->status = _("Click to clone.");
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
+                                                display);
+
+}
+
+static void
 gimp_clone_tool_cursor_update (GimpTool        *tool,
                                GimpCoords      *coords,
                                GdkModifierType  state,
@@ -316,8 +351,18 @@ gimp_clone_tool_oper_update (GimpTool        *tool,
 
       if (clone->src_drawable == NULL)
         {
-          gimp_tool_replace_status (tool, display,
-                                    _("Ctrl-Click to set a clone source."));
+          if (state & GDK_CONTROL_MASK)
+            gimp_tool_replace_status (tool, display,
+                                      _("Click to set the clone source."));
+          else
+            {
+              gchar *status;
+              status = g_strdup_printf (_("%s%sClick to set a clone source."),
+                                        gimp_get_mod_name_control (),
+                                        gimp_get_mod_separator ());
+              gimp_tool_replace_status (tool, display, status);
+              g_free (status);
+            }
         }
       else
         {

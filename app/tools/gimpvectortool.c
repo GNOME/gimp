@@ -45,6 +45,7 @@
 #include "vectors/gimpbezierstroke.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -101,6 +102,7 @@ static void     gimp_vector_tool_oper_update     (GimpTool        *tool,
                                                   GimpDisplay     *display);
 static void     gimp_vector_tool_status_update   (GimpTool        *tool,
                                                   GimpDisplay     *display,
+                                                  GdkModifierType  state,
                                                   gboolean         proximity);
 static void     gimp_vector_tool_cursor_update   (GimpTool        *tool,
                                                   GimpCoords      *coords,
@@ -1125,14 +1127,15 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
       break;
     }
 
-  gimp_vector_tool_status_update (tool, display, proximity);
+  gimp_vector_tool_status_update (tool, display, state, proximity);
 }
 
 
 static void
-gimp_vector_tool_status_update (GimpTool    *tool,
-                                GimpDisplay *display,
-                                gboolean     proximity)
+gimp_vector_tool_status_update (GimpTool        *tool,
+                                GimpDisplay     *display,
+                                GdkModifierType  state,
+                                gboolean         proximity)
 {
   GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (tool);
 
@@ -1140,7 +1143,7 @@ gimp_vector_tool_status_update (GimpTool    *tool,
 
   if (proximity)
     {
-      const gchar *status = NULL;
+      gchar *status = NULL;
 
       switch (vector_tool->function)
         {
@@ -1154,7 +1157,9 @@ gimp_vector_tool_status_update (GimpTool    *tool,
           status = _("Click to create a new component of the path.");
           break;
         case VECTORS_ADD_ANCHOR:
-          status = _("Click to create a new anchor. (try Shift)");
+          status = gimp_suggest_modifiers (_("Click to create a new anchor."),
+                                           GDK_SHIFT_MASK & ~state,
+                                           NULL, NULL, NULL);
           break;
         case VECTORS_MOVE_ANCHOR:
           status = _("Click-Drag to move the anchor around.");
@@ -1163,24 +1168,37 @@ gimp_vector_tool_status_update (GimpTool    *tool,
           status = _("Click-Drag to move the anchors around.");
           break;
         case VECTORS_MOVE_HANDLE:
-          status = _("Click-Drag to move the handle around. (try Shift)");
+          status = gimp_suggest_modifiers (_("Click-Drag to move the handle "
+                                             "around."),
+                                           GDK_SHIFT_MASK & ~state,
+                                           NULL, NULL, NULL);
           break;
         case VECTORS_MOVE_CURVE:
           if (GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options)->polygonal)
-            status = _("Click-Drag to move the anchors around.");
+            status = gimp_suggest_modifiers (_("Click-Drag to move the "
+                                               "anchors around."),
+                                             GDK_SHIFT_MASK & ~state,
+                                             NULL, NULL, NULL);
           else
-            status = _("Click-Drag to change the shape of the curve. "
-                       "(Shift: symmetrical)");
+            status = gimp_suggest_modifiers (_("Click-Drag to change the "
+                                               "shape of the curve."),
+                                             GDK_SHIFT_MASK & ~state,
+                                             _("%s: symmetrical"), NULL, NULL);
           break;
         case VECTORS_MOVE_STROKE:
-          status = _("Click-Drag to move the component around. "
-                     "(try Shift)");
+          status = gimp_suggest_modifiers (_("Click-Drag to move the "
+                                             "component around."),
+                                           GDK_SHIFT_MASK & ~state,
+                                           NULL, NULL, NULL);
           break;
         case VECTORS_MOVE_VECTORS:
           status = _("Click-Drag to move the path around.");
           break;
         case VECTORS_INSERT_ANCHOR:
-          status = _("Click to insert an anchor on the path. (try Shift)");
+          status = gimp_suggest_modifiers (_("Click-Drag to insert an anchor "
+                                             "on the path."),
+                                           GDK_SHIFT_MASK & ~state,
+                                           NULL, NULL, NULL);
           break;
         case VECTORS_DELETE_ANCHOR:
           status = _("Click to delete this anchor.");
@@ -1202,6 +1220,20 @@ gimp_vector_tool_status_update (GimpTool    *tool,
 
       if (status)
         gimp_tool_push_status (tool, display, status);
+
+      /* not very elegant */
+      switch (vector_tool->function)
+        {
+        case VECTORS_ADD_ANCHOR:
+        case VECTORS_MOVE_HANDLE:
+        case VECTORS_MOVE_CURVE:
+        case VECTORS_MOVE_STROKE:
+        case VECTORS_INSERT_ANCHOR:
+          g_free (status);
+          break;
+        default:
+          break;
+        }
     }
 }
 

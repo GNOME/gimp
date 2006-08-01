@@ -45,6 +45,10 @@ struct _GimpPaintTool
   gdouble          brush_x;
   gdouble          brush_y;
 
+  const gchar     *status;       /* status message */
+  const gchar     *status_line;  /* status message when drawing a line */
+  const gchar     *status_ctrl;  /* additional message for the ctrl modifier */
+
   GimpPaintCore   *core;
 };
 
