@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-27 12:37+0200\n"
-"PO-Revision-Date: 2006-07-30 21:56+0200\n"
+"POT-Creation-Date: 2006-08-01 11:56+0200\n"
+"PO-Revision-Date: 2006-08-01 12:09+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1075,31 +1075,31 @@ msgstr "_Stacca scheda"
 
 #: ../app/actions/dockable-actions.c:81
 msgid "_Tiny"
-msgstr "Min_uscolo"
+msgstr "Pic_colissima"
 
 #: ../app/actions/dockable-actions.c:82
 msgid "E_xtra Small"
-msgstr "E_xtra piccolo"
+msgstr "Molto picc_ola"
 
 #: ../app/actions/dockable-actions.c:83
 msgid "_Small"
-msgstr "_Piccolo"
+msgstr "_Piccola"
 
 #: ../app/actions/dockable-actions.c:84
 msgid "_Medium"
-msgstr "_Medio"
+msgstr "_Media"
 
 #: ../app/actions/dockable-actions.c:85
 msgid "_Large"
-msgstr "_Grande"
+msgstr "Gran_de"
 
 #: ../app/actions/dockable-actions.c:86
 msgid "Ex_tra Large"
-msgstr "Ex_tra grande"
+msgstr "Molto gra_nde"
 
 #: ../app/actions/dockable-actions.c:87
 msgid "_Huge"
-msgstr "Grandis_simo"
+msgstr "Grand_issima"
 
 #: ../app/actions/dockable-actions.c:88
 msgid "_Enormous"
@@ -1107,7 +1107,7 @@ msgstr "_Enorme"
 
 #: ../app/actions/dockable-actions.c:89
 msgid "_Gigantic"
-msgstr "_Gigante"
+msgstr "_Gigantesca"
 
 #: ../app/actions/dockable-actions.c:94
 msgid "_Icon"
@@ -3720,6 +3720,7 @@ msgid "New Path Options"
 msgstr "Nuove opzioni tracciato"
 
 #: ../app/actions/vectors-commands.c:301 ../app/pdb/paths_cmds.c:608
+#: ../app/pdb/vectors_cmds.c:861
 msgid "Path to Selection"
 msgstr "Tracciato a selezione"
 
@@ -4890,11 +4891,11 @@ msgstr "Tutti i livelli collegati"
 
 #: ../app/core/core-enums.c:572
 msgid "Tiny"
-msgstr "Minuscolo"
+msgstr "Piccolissima"
 
 #: ../app/core/core-enums.c:573
 msgid "Very small"
-msgstr "Molto piccolo"
+msgstr "Molto piccola"
 
 #: ../app/core/core-enums.c:574
 msgid "Small"
@@ -4914,7 +4915,7 @@ msgstr "Molto grande"
 
 #: ../app/core/core-enums.c:578
 msgid "Huge"
-msgstr "Grandissimo"
+msgstr "Grandissima"
 
 #: ../app/core/core-enums.c:579
 msgid "Enormous"
@@ -4922,7 +4923,7 @@ msgstr "Enorme"
 
 #: ../app/core/core-enums.c:580
 msgid "Gigantic"
-msgstr "Gigante"
+msgstr "Gigantesca"
 
 #: ../app/core/core-enums.c:607
 msgid "View as list"
@@ -4942,7 +4943,7 @@ msgstr "Normale (128x128)"
 
 #: ../app/core/core-enums.c:672
 msgid "Large (256x256)"
-msgstr "Larga (256x256)"
+msgstr "Grande (256x256)"
 
 #: ../app/core/core-enums.c:847
 msgid "<<invalid>>"
@@ -5454,11 +5455,12 @@ msgstr "Alfa a selezione"
 msgid "%s Channel to Selection"
 msgstr "%s canale a selezione"
 
-#: ../app/core/gimpchannel-select.c:448 ../app/tools/gimpfuzzyselecttool.c:250
+#: ../app/core/gimpchannel-select.c:448 ../app/tools/gimpfuzzyselecttool.c:79
 msgid "command|Fuzzy Select"
 msgstr "comando|Selezione Fuzzy"
 
 #: ../app/core/gimpchannel-select.c:493
+#: ../app/tools/gimpbycolorselecttool.c:81
 msgid "command|Select by Color"
 msgstr "comando|Selezione per colore"
 
@@ -6338,7 +6340,7 @@ msgstr "pixel"
 
 #: ../app/core/gimpunit.c:55 ../app/tools/gimpmeasuretool.c:766
 #: ../app/tools/gimpmeasuretool.c:906 ../app/tools/gimpmeasuretool.c:958
-#: ../app/tools/gimpmeasuretool.c:984 ../app/tools/gimppainttool.c:635
+#: ../app/tools/gimpmeasuretool.c:984 ../app/tools/gimppainttool.c:648
 msgid "pixels"
 msgstr "pixel"
 
@@ -8519,7 +8521,7 @@ msgstr "Definizione max:"
 
 #: ../app/tools/gimpblendoptions.c:274
 #: ../app/tools/gimpbucketfilloptions.c:274
-#: ../app/tools/gimpselectionoptions.c:495
+#: ../app/tools/gimpselectionoptions.c:493
 msgid "Threshold:"
 msgstr "Soglia:"
 
@@ -8573,7 +8575,7 @@ msgid "Base filled area on all visible layers"
 msgstr "Area base riempita su tutti i livelli visibili"
 
 #: ../app/tools/gimpbucketfilloptions.c:111
-#: ../app/tools/gimpselectionoptions.c:129
+#: ../app/tools/gimpselectionoptions.c:127
 msgid "Maximum color difference"
 msgstr "Massima differenza di colore"
 
@@ -8598,7 +8600,7 @@ msgid "Fill similar colors"
 msgstr "Riempi i colori simili"
 
 #: ../app/tools/gimpbucketfilloptions.c:240
-#: ../app/tools/gimpselectionoptions.c:467
+#: ../app/tools/gimpselectionoptions.c:465
 msgid "Finding Similar Colors"
 msgstr "Trova colori simili"
 
@@ -8608,8 +8610,8 @@ msgstr "Riempi aree trasparenti"
 
 #: ../app/tools/gimpbucketfilloptions.c:262 ../app/tools/gimpclonetool.c:406
 #: ../app/tools/gimpcolorpickeroptions.c:162
-#: ../app/tools/gimpselectionoptions.c:483
-#: ../app/tools/gimpselectionoptions.c:526
+#: ../app/tools/gimpselectionoptions.c:481
+#: ../app/tools/gimpselectionoptions.c:524
 msgid "Sample merged"
 msgstr "Campionamento diffuso"
 
@@ -8625,15 +8627,15 @@ msgstr "Riempi con un colore o un motivo"
 msgid "_Bucket Fill"
 msgstr "_Riempimento colore"
 
-#: ../app/tools/gimpbycolorselecttool.c:91
+#: ../app/tools/gimpbycolorselecttool.c:66
 msgid "Select by Color"
 msgstr "Selezione per colore"
 
-#: ../app/tools/gimpbycolorselecttool.c:92
+#: ../app/tools/gimpbycolorselecttool.c:67
 msgid "Select regions by color"
 msgstr "Selezione regioni per colore"
 
-#: ../app/tools/gimpbycolorselecttool.c:93
+#: ../app/tools/gimpbycolorselecttool.c:68
 msgid "_By Color Select"
 msgstr "Per _colore"
 
@@ -8743,7 +8745,7 @@ msgstr "_Luminosità:"
 msgid "Sample average"
 msgstr "Media di campionamento"
 
-#: ../app/tools/gimpcoloroptions.c:171 ../app/tools/gimpselectionoptions.c:445
+#: ../app/tools/gimpcoloroptions.c:171 ../app/tools/gimpselectionoptions.c:443
 #: ../app/widgets/gimpbrusheditor.c:131
 msgid "Radius:"
 msgstr "Raggio:"
@@ -9081,21 +9083,17 @@ msgstr "_Libera"
 msgid "command|Free Select"
 msgstr "comando|Selezione libera"
 
-#: ../app/tools/gimpfuzzyselecttool.c:101
+#: ../app/tools/gimpfuzzyselecttool.c:64
 msgid "Fuzzy Select"
 msgstr "Selezione Fuzzy"
 
-#: ../app/tools/gimpfuzzyselecttool.c:102
+#: ../app/tools/gimpfuzzyselecttool.c:65
 msgid "Select contiguous regions"
 msgstr "Seleziona regioni contigue"
 
-#: ../app/tools/gimpfuzzyselecttool.c:103
+#: ../app/tools/gimpfuzzyselecttool.c:66
 msgid "Fu_zzy Select"
 msgstr "Fu_zzy"
-
-#: ../app/tools/gimpfuzzyselecttool.c:191
-msgid "Move the mouse to change threshold."
-msgstr "Sposta il mouse per modificare la soglia."
 
 #: ../app/tools/gimphistogramoptions.c:126
 msgid "Histogram Scale"
@@ -9390,7 +9388,7 @@ msgid "_Paintbrush"
 msgstr "_Pennello"
 
 #: ../app/tools/gimppaintoptions-gui.c:104
-#: ../app/tools/gimpselectionoptions.c:400
+#: ../app/tools/gimpselectionoptions.c:398
 #: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:258
 msgid "Mode:"
 msgstr "Modalità:"
@@ -9459,9 +9457,25 @@ msgstr "Ammontare:"
 msgid "Use color from gradient"
 msgstr "Usa colore del gradiente"
 
-#: ../app/tools/gimppainttool.c:661
-msgid "Press Shift to draw a straight line."
-msgstr "Premi Maiusc per disegnare una riga dritta."
+#: ../app/tools/gimppainttool.c:546
+msgid "Click in any image to pick the foreground color."
+msgstr "Fare clic su qualsiasi immagine per prelevare il colore di primo piano."
+
+#: ../app/tools/gimppainttool.c:637
+msgid "Click to draw the line."
+msgstr "Fare clic per creare disegnare la riga."
+
+#: ../app/tools/gimppainttool.c:639
+msgid "Click to draw the line. (try Ctrl for constrained angles)"
+msgstr "Fare clic per disegnare la riga (premere Ctrl per gli angoli bloccati)."
+
+#: ../app/tools/gimppainttool.c:675
+msgid "Click to paint. (try Shift for a straight line, Ctrl to pick a color)"
+msgstr "Fare clic per disegnare (premere Maiusc per una riga dritta o Ctrl per prelevare un colore)."
+
+#: ../app/tools/gimppainttool.c:680
+msgid "Click to paint. (try Ctrl to pick a color)"
+msgstr "Fare clic per disegnare (premere Ctrl per prelevare un colore)."
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Paint hard edged pixels"
@@ -9575,8 +9589,8 @@ msgstr "Seleziona sezioni rettangolari di un'immagine"
 msgid "_Rect Select"
 msgstr "_Rettangolare"
 
-#: ../app/tools/gimprectangletool.c:1336 ../app/tools/gimprectangletool.c:1346
-#: ../app/tools/gimprectangletool.c:1996
+#: ../app/tools/gimprectangletool.c:1365 ../app/tools/gimprectangletool.c:1375
+#: ../app/tools/gimprectangletool.c:2025
 msgid "Rectangle: "
 msgstr "Rettangolo: "
 
@@ -9624,57 +9638,77 @@ msgstr "comando|Scala"
 msgid "Scaling Information"
 msgstr "Informazioni sulla scalatura"
 
-#: ../app/tools/gimpselectionoptions.c:104
+#: ../app/tools/gimpselectionoptions.c:102
 msgid "Smooth edges"
 msgstr "Margini morbidi"
 
-#: ../app/tools/gimpselectionoptions.c:118
+#: ../app/tools/gimpselectionoptions.c:116
 msgid "Allow completely transparent regions to be selected"
 msgstr "Permetti la selezione di aree completamente trasparenti"
 
-#: ../app/tools/gimpselectionoptions.c:124
+#: ../app/tools/gimpselectionoptions.c:122
 msgid "Base selection on all visible layers"
 msgstr "Selezione di base su tutti i livelli visibili"
 
-#: ../app/tools/gimpselectionoptions.c:139
+#: ../app/tools/gimpselectionoptions.c:137
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Usa tutti i livelli visibili quando restringi la selezione"
 
-#: ../app/tools/gimpselectionoptions.c:408 ../app/tools/gimptextoptions.c:460
+#: ../app/tools/gimpselectionoptions.c:406 ../app/tools/gimptextoptions.c:460
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
-#: ../app/tools/gimpselectionoptions.c:428
+#: ../app/tools/gimpselectionoptions.c:426
 msgid "Feather edges"
 msgstr "Margini sfumati"
 
-#: ../app/tools/gimpselectionoptions.c:454
+#: ../app/tools/gimpselectionoptions.c:452
 msgid "Show interactive boundary"
 msgstr "Mostra contorno interattivo"
 
-#: ../app/tools/gimpselectionoptions.c:477
+#: ../app/tools/gimpselectionoptions.c:475
 msgid "Select transparent areas"
 msgstr "Seleziona aree trasparenti"
 
-#: ../app/tools/gimpselectionoptions.c:512
+#: ../app/tools/gimpselectionoptions.c:510
 msgid "Auto shrink selection"
 msgstr "Auto riduzione della selezione"
 
-#: ../app/tools/gimpselectiontool.c:253
-msgid "Move the selection mask"
-msgstr "Sposta la maschera di selezione"
+#: ../app/tools/gimpselectiontool.c:251
+msgid "Click-Drag to replace the current selection. (try Shift, Ctrl, Alt)"
+msgstr "Fare clic e trascinare per sostituire la selezione corrente (provare Maiusc, Ctrl e Alt)."
 
-#: ../app/tools/gimpselectiontool.c:257
-msgid "Move the selected pixels"
-msgstr "Sposta i pixel selezionati"
+#: ../app/tools/gimpselectiontool.c:254
+msgid "Click-Drag to create a new selection."
+msgstr "Fare clic e trascinare per creare una nuova selezione."
 
-#: ../app/tools/gimpselectiontool.c:261
-msgid "Move a copy of the selected pixels"
-msgstr "Sposta una copia dei pixel selezionati"
+#: ../app/tools/gimpselectiontool.c:258
+msgid "Click-Drag to add to the current selection. (try Ctrl)"
+msgstr "Fare clic e trascinare per aggiungere alla selezione corrente (prova Ctrl)."
 
-#: ../app/tools/gimpselectiontool.c:265
-msgid "Anchor the floating selection"
-msgstr "Àncora la selezione fluttuante"
+#: ../app/tools/gimpselectiontool.c:263
+msgid "Click-Drag to subtract from the current selection. (try Shift)"
+msgstr "Fare clic e trascinare per sottrarre dalla selezione corrente (provare Maiusc)."
+
+#: ../app/tools/gimpselectiontool.c:268
+msgid "Click-Drag to intersect with the current selection."
+msgstr "Fare clic e trascinare per intersecare con la selezione corrente."
+
+#: ../app/tools/gimpselectiontool.c:272
+msgid "Click-Drag to move the selection mask. (try Shift or Ctrl)"
+msgstr "Fare clic e trascinare per spostare la maschera di selezione (prova Maiusc o Ctrl)."
+
+#: ../app/tools/gimpselectiontool.c:277
+msgid "Click-Drag to move the selected pixels."
+msgstr "Fare clic e trascinare per spostare i pixel selezionati."
+
+#: ../app/tools/gimpselectiontool.c:281
+msgid "Click-Drag to move a copy of the selected pixels."
+msgstr "Fare clic e trascinare per spostare una copia dei pixel selezionati."
+
+#: ../app/tools/gimpselectiontool.c:285
+msgid "Click to anchor the floating selection."
+msgstr "Fare clic per àncorare la selezione fluttuante."
 
 #: ../app/tools/gimpsheartool.c:87
 msgid "Shear"
@@ -9955,8 +9989,8 @@ msgid "Click to create a new component of the path."
 msgstr "Fare clic per creare un nuovo componente del tracciato."
 
 #: ../app/tools/gimpvectortool.c:1157
-msgid "Click to create a new anchor. (try SHIFT)"
-msgstr "Fare clic per creare una nuova àncora. (provare con MAIUSC)"
+msgid "Click to create a new anchor. (try Shift)"
+msgstr "Fare clic per creare una nuova àncora (provare con Maiusc)."
 
 #: ../app/tools/gimpvectortool.c:1160
 msgid "Click-Drag to move the anchor around."
@@ -9967,26 +10001,24 @@ msgid "Click-Drag to move the anchors around."
 msgstr "Fare clic e trascinare per spostare le àncore."
 
 #: ../app/tools/gimpvectortool.c:1166
-msgid "Click-Drag to move the handle around. (try SHIFT)"
-msgstr "Fare clic e trascinare per spostare l'àncora. (prova MAIUSC)"
+msgid "Click-Drag to move the handle around. (try Shift)"
+msgstr "Fare clic e trascinare per spostare l'àncora (provare Maiusc)."
 
 #: ../app/tools/gimpvectortool.c:1172
-msgid "Click-Drag to change the shape of the curve. (SHIFT: symmetrical)"
-msgstr ""
-"Fare clic e trascinare per modificare la forma della curva. (MAIUSC: "
-"simmetricamente)"
+msgid "Click-Drag to change the shape of the curve. (Shift: symmetrical)"
+msgstr "Fare clic e trascinare per modificare la forma della curva (Maiusc: simmetricamente)."
 
 #: ../app/tools/gimpvectortool.c:1176
-msgid "Click-Drag to move the component around. (try SHIFT)"
-msgstr "Fare clic e trascinare per spostare l'àncora. (prova MAIUSC)"
+msgid "Click-Drag to move the component around. (try Shift)"
+msgstr "Fare clic e trascinare per spostare il componente (provare Maiusc)."
 
 #: ../app/tools/gimpvectortool.c:1180
 msgid "Click-Drag to move the path around."
 msgstr "Fare clic e trascinare per spostare il tracciato."
 
 #: ../app/tools/gimpvectortool.c:1183
-msgid "Click to insert an anchor on the path. (try SHIFT)"
-msgstr "Fare clic per inserire un'àncora nel tracciato. (provare MAIUSC)"
+msgid "Click to insert an anchor on the path. (try Shift)"
+msgstr "Fare clic per inserire un'àncora nel tracciato (provare Maiusc)."
 
 #: ../app/tools/gimpvectortool.c:1186
 msgid "Click to delete this anchor."
@@ -10365,11 +10397,11 @@ msgstr "Notazione HTML:"
 
 #: ../app/widgets/gimpcontainerpopup.c:535
 msgid "Smaller Previews"
-msgstr "Anteprima più piccola"
+msgstr "Anteprime più piccole"
 
 #: ../app/widgets/gimpcontainerpopup.c:540
 msgid "Larger Previews"
-msgstr "Anteprima più grande"
+msgstr "Anteprime più grandi"
 
 #: ../app/widgets/gimpcontrollereditor.c:187
 msgid "Dump events from this controller"
