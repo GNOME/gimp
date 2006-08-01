@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-31 13:05+0200\n"
-"PO-Revision-Date: 2006-07-31 16:03+0200\n"
+"PO-Revision-Date: 2006-08-01 12:45+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -217,10 +217,10 @@ msgid ""
 "you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
-"Název adresáře s uživatelským nastavením GIMPu nelze převést do UTF-8: %s\n"
+"Jméno adresáře s uživatelským nastavením GIMPu nelze převést do UTF-8: %s\n"
 "\n"
 "Váš systém souborů pravděpodobně ukládá soubory v kódování jiném než UTF-8 a "
-"neřekli jste o tom GLib. Nastavte prosím proměnnou prostředí "
+"GLib o tom nebyla informována. Nastavte prosím proměnnou prostředí "
 "G_FILENAME_ENCODING."
 
 #: ../app/actions/actions.c:98 ../app/dialogs/dialogs.c:213
@@ -1690,7 +1690,7 @@ msgstr "Zadejte jméno této šablony"
 
 #: ../app/actions/file-commands.c:324
 msgid "Revert failed. No file name associated with this image."
-msgstr "Navrácení selhalo. S tímto obrázkem není spojen žádný název souboru."
+msgstr "Navrácení selhalo. S tímto obrázkem není spojeno žádné jméno souboru."
 
 #: ../app/actions/file-commands.c:336
 msgid "Revert Image"
@@ -2159,7 +2159,7 @@ msgstr "_Složky"
 
 #: ../app/actions/image-actions.c:72 ../app/actions/image-actions.c:78
 msgid "_New..."
-msgstr "_Nové..."
+msgstr "_Nový..."
 
 #: ../app/actions/image-actions.c:73 ../app/actions/image-actions.c:79
 msgid "Create a new image"
@@ -3970,7 +3970,7 @@ msgstr "Alfa"
 #: ../app/base/base-enums.c:60 ../app/display/gimpdisplayshell-title.c:224
 #: ../app/widgets/widgets-enums.c:114
 msgid "RGB"
-msgstr "RGB barvy"
+msgstr "RGB"
 
 #: ../app/base/base-enums.c:108
 msgid "Normal"
@@ -3990,7 +3990,7 @@ msgstr "Násobení"
 
 #: ../app/base/base-enums.c:112
 msgid "Screen"
-msgstr "Obraz"
+msgstr "Závoj"
 
 #: ../app/base/base-enums.c:113
 msgid "Overlay"
@@ -4038,11 +4038,11 @@ msgstr "Tmavnutí"
 
 #: ../app/base/base-enums.c:126
 msgid "Hard light"
-msgstr "Ostré světlo"
+msgstr "Tvrdé světlo"
 
 #: ../app/base/base-enums.c:127
 msgid "Soft light"
-msgstr "Mírné světlo"
+msgstr "Měkké světlo"
 
 #: ../app/base/base-enums.c:128
 msgid "Grain extract"
@@ -6301,7 +6301,7 @@ msgstr "GIMP pro vás napsali"
 
 #: ../app/dialogs/channel-options-dialog.c:144
 msgid "Channel _name:"
-msgstr "_Název kanálu:"
+msgstr "Jmé_no kanálu:"
 
 #: ../app/dialogs/channel-options-dialog.c:173
 msgid "Initialize from _selection"
@@ -6402,7 +6402,7 @@ msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
 msgstr ""
-"Zadaný název souboru nemá známou příponu. Zadejte prosím známou příponu nebo "
+"Zadané jméno souboru nemá známou příponu. Zadejte prosím známou příponu nebo "
 "zvolte formát souboru ze seznamu formátů souborů."
 
 #. remote URI
@@ -6554,7 +6554,7 @@ msgstr "In_vertovat masku"
 
 #: ../app/dialogs/layer-options-dialog.c:118
 msgid "Layer _name:"
-msgstr "_Název vrstvy:"
+msgstr "Jmé_no vrstvy:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:127
@@ -6573,7 +6573,7 @@ msgstr "Typ vyplňování vrstvy"
 
 #: ../app/dialogs/layer-options-dialog.c:205
 msgid "Set name from _text"
-msgstr "Nastavit název z _textu"
+msgstr "Nastavit jméno z _textu"
 
 #: ../app/dialogs/module-dialog.c:120
 msgid "Manage Loadable Modules"
