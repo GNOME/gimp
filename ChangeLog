@@ -1,3 +1,9 @@
+2006-08-02  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/pat.c: enable "activates-default" on the name
+	entry. Fixes bug #349614. Removed the name entry's callback and
+	simply get the string after running the dialog.
+
 2006-08-02  Raphaël Quinet  <raphael@gimp.org>
 
 	* app/widgets/gimpwidgets-utils.h
