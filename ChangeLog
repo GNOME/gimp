@@ -1,3 +1,8 @@
+2006-08-01  Hendrik Boom  <hboom@cvs.gnome.org>
+
+	* app/vectors/gimpvectorlayer.c: clean-up,
+	merged gimp_vector_layer_init_stroke_fill into gimp_vector_layer_new.
+
 2006-07-31  Hendrik Boom  <hboom@cvs.gnome.org>
 
 	* app/vectors/gimpvectorlayer.c: fixed a typo/memory leak related to

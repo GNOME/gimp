@@ -70,7 +70,6 @@ static void      gimp_vector_layer_set_property     (GObject         *object,
                                                      guint            property_id,
                                                      const GValue    *value,
                                                      GParamSpec      *pspec);
-static void      gimp_vector_layer_init_stroke_fill (GimpVectorLayer *layer);
 
 /* class-related stuff */
 G_DEFINE_TYPE (GimpVectorLayer, gimp_vector_layer, GIMP_TYPE_LAYER)
@@ -196,9 +195,6 @@ static void
 gimp_vector_layer_render_vectors (GimpVectorLayer *layer,
                                   GimpVectors     *vectors)
 {
-  if (layer->fill_options == NULL || layer->stroke_desc == NULL)
-    gimp_vector_layer_init_stroke_fill (layer);
-  
   /* fill the vectors object onto the layer */
   gimp_drawable_fill_vectors (GIMP_DRAWABLE (layer),
                               GIMP_FILL_OPTIONS (layer->fill_options),
@@ -316,32 +312,6 @@ gimp_vector_layer_set_property (GObject      *object,
     }
 }
 
-static void
-gimp_vector_layer_init_stroke_fill (GimpVectorLayer *layer)
-{
-  GimpImage   *image        = gimp_item_get_image (GIMP_ITEM (layer));
-  GimpContext *user_context = gimp_get_user_context (image->gimp);
-  GimpPattern *pattern      = gimp_context_get_pattern (user_context);
-  GimpRGB      black;
-  GimpRGB      blue;
-  
-  gimp_rgba_set(&black, 0.0, 0.0, 0.0, 1.0);
-  gimp_rgba_set(&blue, 0.0, 0.0, 1.0, 1.0);
-  
-  layer->fill_options = g_object_new (GIMP_TYPE_FILL_OPTIONS,
-                                      "gimp", image->gimp,
-                                      "foreground",   &blue,
-                                      NULL);
-  gimp_context_set_pattern (GIMP_CONTEXT (layer->fill_options), pattern);
-  
-  layer->stroke_desc = gimp_stroke_desc_new (image->gimp, NULL);
-  g_object_set (layer->stroke_desc->stroke_options,
-                "foreground",   &black,
-                "width",        2.0,
-                NULL); 
-  gimp_context_set_pattern (GIMP_CONTEXT (layer->stroke_desc->stroke_options), pattern);
-}
-
 /* public method definitions */
 
 /**
@@ -358,6 +328,10 @@ gimp_vector_layer_new (GimpImage     *image,
                        GimpVectors   *vectors)
 {
   GimpVectorLayer *layer;
+  GimpContext     *user_context = gimp_get_user_context (image->gimp);
+  GimpPattern     *pattern      = gimp_context_get_pattern (user_context);
+  GimpRGB          black;
+  GimpRGB          blue;
   
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_VECTORS(vectors), NULL);
@@ -373,6 +347,22 @@ gimp_vector_layer_new (GimpImage     *image,
                            0, 0, 1, 1,          /* x and y offsets, x and y dimensions */
                            gimp_image_base_type_with_alpha (image),
                            NULL);
+  
+  gimp_rgba_set(&black, 0.0, 0.0, 0.0, 1.0);
+  gimp_rgba_set(&blue, 0.0, 0.0, 1.0, 1.0);
+  
+  layer->fill_options = g_object_new (GIMP_TYPE_FILL_OPTIONS,
+                                      "gimp", image->gimp,
+                                      "foreground",   &blue,
+                                      NULL);
+  gimp_context_set_pattern (GIMP_CONTEXT (layer->fill_options), pattern);
+  
+  layer->stroke_desc = gimp_stroke_desc_new (image->gimp, NULL);
+  g_object_set (layer->stroke_desc->stroke_options,
+                "foreground",   &black,
+                "width",        2.0,
+                NULL); 
+  gimp_context_set_pattern (GIMP_CONTEXT (layer->stroke_desc->stroke_options), pattern);
   
   return layer;
 }
