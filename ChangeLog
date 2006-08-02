@@ -1,3 +1,11 @@
+2006-08-02  Raphaël Quinet  <raphael@gimp.org>
+
+	* app/tools/gimppainttool.c (gimp_paint_tool_oper_update): Allow
+	some paint tools to not suggest using the Ctrl modifier.
+
+	* app/tools/gimpvectortool.c (gimp_vector_tool_status_update):
+	slightly more elegant way to free the status string.
+
 2006-08-02  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/pat.c: enable "activates-default" on the name

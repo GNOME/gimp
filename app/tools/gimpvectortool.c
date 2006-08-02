@@ -1143,7 +1143,8 @@ gimp_vector_tool_status_update (GimpTool        *tool,
 
   if (proximity)
     {
-      gchar *status = NULL;
+      gchar    *status = NULL;
+      gboolean  free_status = FALSE;
 
       switch (vector_tool->function)
         {
@@ -1160,6 +1161,7 @@ gimp_vector_tool_status_update (GimpTool        *tool,
           status = gimp_suggest_modifiers (_("Click to create a new anchor."),
                                            GDK_SHIFT_MASK & ~state,
                                            NULL, NULL, NULL);
+          free_status = TRUE;
           break;
         case VECTORS_MOVE_ANCHOR:
           status = _("Click-Drag to move the anchor around.");
@@ -1172,6 +1174,7 @@ gimp_vector_tool_status_update (GimpTool        *tool,
                                              "around."),
                                            GDK_SHIFT_MASK & ~state,
                                            NULL, NULL, NULL);
+          free_status = TRUE;
           break;
         case VECTORS_MOVE_CURVE:
           if (GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options)->polygonal)
@@ -1184,12 +1187,14 @@ gimp_vector_tool_status_update (GimpTool        *tool,
                                                "shape of the curve."),
                                              GDK_SHIFT_MASK & ~state,
                                              _("%s: symmetrical"), NULL, NULL);
+          free_status = TRUE;
           break;
         case VECTORS_MOVE_STROKE:
           status = gimp_suggest_modifiers (_("Click-Drag to move the "
                                              "component around."),
                                            GDK_SHIFT_MASK & ~state,
                                            NULL, NULL, NULL);
+          free_status = TRUE;
           break;
         case VECTORS_MOVE_VECTORS:
           status = _("Click-Drag to move the path around.");
@@ -1199,6 +1204,7 @@ gimp_vector_tool_status_update (GimpTool        *tool,
                                              "on the path."),
                                            GDK_SHIFT_MASK & ~state,
                                            NULL, NULL, NULL);
+          free_status = TRUE;
           break;
         case VECTORS_DELETE_ANCHOR:
           status = _("Click to delete this anchor.");
@@ -1221,19 +1227,8 @@ gimp_vector_tool_status_update (GimpTool        *tool,
       if (status)
         gimp_tool_push_status (tool, display, status);
 
-      /* not very elegant */
-      switch (vector_tool->function)
-        {
-        case VECTORS_ADD_ANCHOR:
-        case VECTORS_MOVE_HANDLE:
-        case VECTORS_MOVE_CURVE:
-        case VECTORS_MOVE_STROKE:
-        case VECTORS_INSERT_ANCHOR:
-          g_free (status);
-          break;
-        default:
-          break;
-        }
+      if (free_status)
+        g_free (status);
     }
 }
 

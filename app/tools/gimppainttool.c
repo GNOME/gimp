@@ -689,21 +689,24 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
         }
       else
         {
-          gchar *status;
+          gchar           *status;
+          GdkModifierType  modifiers = 0;
 
+          /* HACK: A paint tool may set status_ctrl to NULL to indicate that
+           * it ignores the Ctrl modifier (temporarily or permanently), so
+           * it should not be suggested.  This is different from how
+           * gimp_suggest_modifiers() would interpret this parameter. */
+          if (paint_tool->status_ctrl != NULL)
+            modifiers |= GDK_CONTROL_MASK;
+          /* suggest drawing lines only after the first point is set */
           if (display == tool->display)
-            status = gimp_suggest_modifiers (paint_tool->status,
-                                             (GDK_SHIFT_MASK
-                                              | GDK_CONTROL_MASK) & ~state,
-                                             _("%s for a straight line"),
-                                             paint_tool->status_ctrl,
-                                             NULL);
-          else
-            status = gimp_suggest_modifiers (paint_tool->status,
-                                             GDK_CONTROL_MASK & ~state,
-                                             NULL,
-                                             paint_tool->status_ctrl,
-                                             NULL);
+            modifiers |= GDK_SHIFT_MASK;
+
+          status = gimp_suggest_modifiers (paint_tool->status,
+                                           modifiers & ~state,
+                                           _("%s for a straight line"),
+                                           paint_tool->status_ctrl,
+                                           NULL);
           gimp_tool_push_status (tool, display, status);
           g_free (status);
 
