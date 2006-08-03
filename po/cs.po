@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-02 10:56+0200\n"
-"PO-Revision-Date: 2006-08-02 10:56+0200\n"
+"POT-Creation-Date: 2006-08-03 18:08+0200\n"
+"PO-Revision-Date: 2006-08-03 18:07+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3637,7 +3637,7 @@ msgstr "_Importovat cestu..."
 msgid "Path to Sele_ction"
 msgstr "Cesta do _výběru"
 
-#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1874
+#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1869
 msgid "Path to selection"
 msgstr "Cesta do výběru"
 
@@ -3700,7 +3700,7 @@ msgid "Path to Selection"
 msgstr "Cesta do výběru"
 
 #: ../app/actions/vectors-commands.c:368 ../app/tools/gimpvectoroptions.c:178
-#: ../app/tools/gimpvectortool.c:1904 ../app/vectors/gimpvectors.c:199
+#: ../app/tools/gimpvectortool.c:1899 ../app/vectors/gimpvectors.c:199
 msgid "Stroke Path"
 msgstr "Vykreslit cestu"
 
@@ -8319,7 +8319,7 @@ msgid "_Airbrush"
 msgstr "Rozpr_ašovač"
 
 #: ../app/tools/gimpairbrushtool.c:101 ../app/tools/gimpconvolvetool.c:227
-#: ../app/tools/gimpsmudgetool.c:106
+#: ../app/tools/gimpsmudgetool.c:107
 msgid "Rate:"
 msgstr "Přeběh:"
 
@@ -8509,7 +8509,7 @@ msgstr "Hledání podobných barev"
 msgid "Fill transparent areas"
 msgstr "Vyplnit průhledné oblasti"
 
-#: ../app/tools/gimpbucketfilloptions.c:262 ../app/tools/gimpclonetool.c:451
+#: ../app/tools/gimpbucketfilloptions.c:262 ../app/tools/gimpclonetool.c:461
 #: ../app/tools/gimpcolorpickeroptions.c:162
 #: ../app/tools/gimpselectionoptions.c:481
 #: ../app/tools/gimpselectionoptions.c:524
@@ -8549,30 +8549,28 @@ msgid "_Clone"
 msgstr "_Klonovat"
 
 #: ../app/tools/gimpclonetool.c:141 ../app/tools/gimpclonetool.c:289
-#, fuzzy
 msgid "Click to clone."
-msgstr "Klikněte pro nakreslení čáry."
+msgstr "Klikněte pro klonování."
 
-#: ../app/tools/gimpclonetool.c:142
-#, fuzzy, c-format
+#: ../app/tools/gimpclonetool.c:142 ../app/tools/gimpclonetool.c:350
+#, c-format
 msgid "%s to set a new clone source"
-msgstr "Vytvořte klon zdroje kliknutím s Ctrl."
+msgstr "%s pro nastavení klonovacího zdroje."
 
-#: ../app/tools/gimpclonetool.c:287 ../app/tools/gimpclonetool.c:356
-#, fuzzy
+#: ../app/tools/gimpclonetool.c:287 ../app/tools/gimpclonetool.c:366
 msgid "Click to set the clone source."
-msgstr "Vytvořte klon zdroje kliknutím s Ctrl."
+msgstr "Klikněte pro nastavení klonovacího zdroje."
 
-#: ../app/tools/gimpclonetool.c:360
-#, fuzzy, c-format
+#: ../app/tools/gimpclonetool.c:370
+#, c-format
 msgid "%s%sClick to set a clone source."
-msgstr "Vytvořte klon zdroje kliknutím s Ctrl."
+msgstr ""
 
-#: ../app/tools/gimpclonetool.c:446
+#: ../app/tools/gimpclonetool.c:456
 msgid "Source"
 msgstr "Zdroj"
 
-#: ../app/tools/gimpclonetool.c:465
+#: ../app/tools/gimpclonetool.c:475
 msgid "Alignment:"
 msgstr "Zarovnání"
 
@@ -8718,12 +8716,11 @@ msgstr "_Změna ostrosti"
 
 #: ../app/tools/gimpconvolvetool.c:177
 msgid "Click to blur."
-msgstr ""
+msgstr "Klikněte pro rozostření."
 
 #: ../app/tools/gimpconvolvetool.c:178
-#, fuzzy
 msgid "Click to blur the line."
-msgstr "Klikněte pro nakreslení čáry."
+msgstr "Klikněte pro rozostření čáry."
 
 #: ../app/tools/gimpconvolvetool.c:179
 #, c-format
@@ -9469,7 +9466,7 @@ msgstr "Pro výběr barvy popředí klikněte do libovolného obrázku."
 msgid "%s for constrained angles"
 msgstr "Měření vzdáleností a úhlů"
 
-#: ../app/tools/gimppainttool.c:698
+#: ../app/tools/gimppainttool.c:707
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s pro rovnou čáru"
@@ -9671,45 +9668,45 @@ msgstr "Zvolit průhledné oblasti"
 msgid "Auto shrink selection"
 msgstr "Automaticky zmenšit výběr"
 
-#: ../app/tools/gimpselectiontool.c:251
+#: ../app/tools/gimpselectiontool.c:258
 #, fuzzy
-msgid "Click-Drag to replace the current selection. (try Shift, Ctrl, Alt)"
-msgstr "Tažením s kliknutím přesunete komponentu. (zkuste SHIFT)"
+msgid "Click-Drag to replace the current selection."
+msgstr "Vytvořit průnik tohoto kanálu s aktuálním výběrem"
 
-#: ../app/tools/gimpselectiontool.c:254
+#: ../app/tools/gimpselectiontool.c:265
 msgid "Click-Drag to create a new selection."
 msgstr "Kliknutím a tažením vytvoříte nový výběr."
 
-#: ../app/tools/gimpselectiontool.c:258
+#: ../app/tools/gimpselectiontool.c:269
 #, fuzzy
-msgid "Click-Drag to add to the current selection. (try Ctrl)"
+msgid "Click-Drag to add to the current selection."
 msgstr "Tažením s kliknutím přesunete komponentu. (zkuste SHIFT)"
 
-#: ../app/tools/gimpselectiontool.c:263
+#: ../app/tools/gimpselectiontool.c:278
 #, fuzzy
-msgid "Click-Drag to subtract from the current selection. (try Shift)"
+msgid "Click-Drag to subtract from the current selection."
 msgstr "Tažením s kliknutím přesunete komponentu. (zkuste SHIFT)"
 
-#: ../app/tools/gimpselectiontool.c:268
+#: ../app/tools/gimpselectiontool.c:287
 #, fuzzy
 msgid "Click-Drag to intersect with the current selection."
 msgstr "Vytvořit průnik tohoto kanálu s aktuálním výběrem"
 
-#: ../app/tools/gimpselectiontool.c:272
+#: ../app/tools/gimpselectiontool.c:295
 #, fuzzy
-msgid "Click-Drag to move the selection mask. (try Shift or Ctrl)"
-msgstr "Tažením s kliknutím přesunete řídicí bod. (zkuste SHIFT)"
+msgid "Click-Drag to move the selection mask."
+msgstr "Klikněte a táhněte pro posun vybraných pixelů."
 
-#: ../app/tools/gimpselectiontool.c:277
+#: ../app/tools/gimpselectiontool.c:303
 msgid "Click-Drag to move the selected pixels."
 msgstr "Klikněte a táhněte pro posun vybraných pixelů."
 
-#: ../app/tools/gimpselectiontool.c:281
+#: ../app/tools/gimpselectiontool.c:307
 #, fuzzy
 msgid "Click-Drag to move a copy of the selected pixels."
 msgstr "Posunout kopii vybraných pixelů"
 
-#: ../app/tools/gimpselectiontool.c:285
+#: ../app/tools/gimpselectiontool.c:311
 msgid "Click to anchor the floating selection."
 msgstr "Klikněte pro ukotvení plovoucího výběru."
 
@@ -9987,81 +9984,81 @@ msgstr "Odstranit segment"
 msgid "Move Anchors"
 msgstr "Přesunout ukotvení"
 
-#: ../app/tools/gimpvectortool.c:1151
+#: ../app/tools/gimpvectortool.c:1152
 msgid "Click to pick path to edit."
 msgstr "Kliknutím vyberete cestu, kterou upravit."
 
-#: ../app/tools/gimpvectortool.c:1154
+#: ../app/tools/gimpvectortool.c:1155
 msgid "Click to create a new path."
 msgstr "Kliknutím vytvoříte novou cestu."
 
-#: ../app/tools/gimpvectortool.c:1157
+#: ../app/tools/gimpvectortool.c:1158
 msgid "Click to create a new component of the path."
 msgstr "Kliknutím vytvoříte novou komponentu cesty."
 
-#: ../app/tools/gimpvectortool.c:1160
+#: ../app/tools/gimpvectortool.c:1161
 #, fuzzy
 msgid "Click to create a new anchor."
 msgstr "Kliknutím vytvoříte novou cestu."
 
-#: ../app/tools/gimpvectortool.c:1165
+#: ../app/tools/gimpvectortool.c:1167
 msgid "Click-Drag to move the anchor around."
 msgstr "Tažením s kliknutím přesunete ukotvení."
 
-#: ../app/tools/gimpvectortool.c:1168 ../app/tools/gimpvectortool.c:1178
+#: ../app/tools/gimpvectortool.c:1170 ../app/tools/gimpvectortool.c:1181
 msgid "Click-Drag to move the anchors around."
 msgstr "Tažením s kliknutím přesunete ukotvení."
 
-#: ../app/tools/gimpvectortool.c:1171
+#: ../app/tools/gimpvectortool.c:1173
 #, fuzzy
 msgid "Click-Drag to move the handle around."
 msgstr "Tažením s kliknutím přesunete ukotvení."
 
-#: ../app/tools/gimpvectortool.c:1183
+#: ../app/tools/gimpvectortool.c:1186
 #, fuzzy
 msgid "Click-Drag to change the shape of the curve."
 msgstr "Tažením s kliknutím změníte tvar křivky. (SHIFT: symetricky)"
 
-#: ../app/tools/gimpvectortool.c:1186
+#: ../app/tools/gimpvectortool.c:1189
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: symetrický"
 
-#: ../app/tools/gimpvectortool.c:1189
+#: ../app/tools/gimpvectortool.c:1193
 #, fuzzy
 msgid "Click-Drag to move the component around."
 msgstr "Tažením s kliknutím přesunete cestu."
 
-#: ../app/tools/gimpvectortool.c:1195
+#: ../app/tools/gimpvectortool.c:1200
 msgid "Click-Drag to move the path around."
 msgstr "Tažením s kliknutím přesunete cestu."
 
-#: ../app/tools/gimpvectortool.c:1198
+#: ../app/tools/gimpvectortool.c:1203
 #, fuzzy
 msgid "Click-Drag to insert an anchor on the path."
 msgstr "Kliknutím vložíte ukotvení na cestu. (zkuste SHIFT)"
 
-#: ../app/tools/gimpvectortool.c:1204
+#: ../app/tools/gimpvectortool.c:1210
 msgid "Click to delete this anchor."
 msgstr "Kliknutím odstraníte toto ukotvení."
 
-#: ../app/tools/gimpvectortool.c:1207
+#: ../app/tools/gimpvectortool.c:1213
 msgid "Click to connect this anchor with the selected endpoint."
 msgstr "Kliknutím spojíte toto ukotvení s vybraným koncovým bodem."
 
-#: ../app/tools/gimpvectortool.c:1211
+#: ../app/tools/gimpvectortool.c:1217
 msgid "Click to open up the path."
 msgstr "Kliknutím otevřete cestu."
 
-#: ../app/tools/gimpvectortool.c:1214
+#: ../app/tools/gimpvectortool.c:1220
 msgid "Click to make this node angular."
 msgstr "Kliknutím změníte tento uzel na úhlový."
 
-#: ../app/tools/gimpvectortool.c:1731
+#: ../app/tools/gimpvectortool.c:1726
 msgid "Delete Anchors"
 msgstr "Odstranit ukotvení"
 
-#: ../app/tools/gimpvectortool.c:1899
+#: ../app/tools/gimpvectortool.c:1894
 msgid "There is no active layer or channel to stroke to"
 msgstr "Není žádná aktivní vrstva nebo kanál, kam vykreslovat"
 
