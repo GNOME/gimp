@@ -1,3 +1,14 @@
+2006-08-03  Raphaël Quinet  <raphael@gimp.org>
+
+	* app/tools/gimpselectiontool.c (gimp_selection_tool_oper_update):
+	use gimp_suggest_modifiers().
+
+	* app/tools/gimpclonetool.c (gimp_clone_tool_oper_update): suggest
+	ctrl only when cloning from the image, not from a pattern
+
+	* app/tools/gimpsmudgetool.c (gimp_smudge_tool_init): don't
+	suggest Ctrl for that tool, even if it can be used.
+
 2006-08-02  Raphaël Quinet  <raphael@gimp.org>
 
 	* app/tools/gimppainttool.c (gimp_paint_tool_oper_update): Allow

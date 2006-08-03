@@ -33,6 +33,8 @@
 
 #include "display/gimpdisplay.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "gimpeditselectiontool.h"
 #include "gimpselectiontool.h"
 #include "gimpselectionoptions.h"
@@ -242,35 +244,59 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
 
   if (proximity)
     {
-      const gchar *status = NULL;
+      gchar           *status = NULL;
+      gboolean         free_status = FALSE;
+      GdkModifierType  modifiers = (GDK_SHIFT_MASK | GDK_CONTROL_MASK);
 
+      if (! gimp_channel_is_empty (selection))
+        modifiers |= GDK_MOD1_MASK;
       switch (selection_tool->op)
         {
         case SELECTION_REPLACE:
           if (! gimp_channel_is_empty (selection))
-            status = N_("Click-Drag to replace the current selection. "
-                        "(try Shift, Ctrl, Alt)");
+            {
+              status = gimp_suggest_modifiers (_("Click-Drag to replace the "
+                                                 "current selection."),
+                                               modifiers & ~state,
+                                               NULL, NULL, NULL);
+              free_status = TRUE;
+            }
           else
             status = N_("Click-Drag to create a new selection.");
           break;
 
         case SELECTION_ADD:
-          status = N_("Click-Drag to add to the current selection. "
-                      "(try Ctrl)");
+          status = gimp_suggest_modifiers (_("Click-Drag to add to the "
+                                             "current selection."),
+                                           modifiers
+                                           & ~(state | GDK_SHIFT_MASK),
+                                           NULL, NULL, NULL);
+          free_status = TRUE;
           break;
 
         case SELECTION_SUBTRACT:
-          status = N_("Click-Drag to subtract from the current selection. "
-                      "(try Shift)");
+          status = gimp_suggest_modifiers (_("Click-Drag to subtract from the "
+                                             "current selection."),
+                                           modifiers
+                                           & ~(state | GDK_CONTROL_MASK),
+                                           NULL, NULL, NULL);
+          free_status = TRUE;
           break;
 
         case SELECTION_INTERSECT:
-          status = N_("Click-Drag to intersect with the current selection.");
+          status = gimp_suggest_modifiers (_("Click-Drag to intersect with "
+                                             "the current selection."),
+                                           modifiers & ~state,
+                                           NULL, NULL, NULL);
+          free_status = TRUE;
           break;
 
         case SELECTION_MOVE_MASK:
-          status = _("Click-Drag to move the selection mask. "
-                     "(try Shift or Ctrl)");
+          status = gimp_suggest_modifiers (_("Click-Drag to move the "
+                                             "selection mask."),
+                                           modifiers & ~state,
+                                           NULL, NULL, NULL);
+          free_status = TRUE;
           break;
 
         case SELECTION_MOVE:
@@ -291,6 +317,9 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
 
       if (status)
         gimp_tool_push_status (tool, display, status);
+
+      if (free_status)
+        g_free (status);
     }
 }
 

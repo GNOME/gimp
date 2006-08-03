@@ -342,6 +342,16 @@ gimp_clone_tool_oper_update (GimpTool        *tool,
 
   options = GIMP_CLONE_OPTIONS (tool->tool_info->tool_options);
 
+  if (proximity)
+    {
+      GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
+
+      if (options->clone_type == GIMP_IMAGE_CLONE)
+        paint_tool->status_ctrl = _("%s to set a new clone source");
+      else
+        paint_tool->status_ctrl = NULL;
+    }
+
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
 
