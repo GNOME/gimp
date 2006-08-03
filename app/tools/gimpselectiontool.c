@@ -172,31 +172,36 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
   GimpSelectionTool    *selection_tool = GIMP_SELECTION_TOOL (tool);
   GimpSelectionOptions *options;
   GimpChannel          *selection;
+  GimpDrawable         *drawable;
   GimpLayer            *layer;
   GimpLayer            *floating_sel;
   gboolean              move_layer        = FALSE;
   gboolean              move_floating_sel = FALSE;
+  gboolean              selection_empty;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   selection    = gimp_image_get_mask (display->image);
+  drawable     = gimp_image_active_drawable (display->image);
   layer        = gimp_image_pick_correlate_layer (display->image,
                                                   coords->x, coords->y);
   floating_sel = gimp_image_floating_sel (display->image);
 
-  if (layer)
+  if (drawable)
     {
       if (floating_sel)
         {
           if (layer == floating_sel)
             move_floating_sel = TRUE;
         }
-      else if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
-                                             coords->x, coords->y))
+      else if (gimp_drawable_mask_intersect (drawable,
+                                             NULL, NULL, NULL, NULL))
         {
           move_layer = TRUE;
         }
     }
+
+  selection_empty = gimp_channel_is_empty (selection);
 
   if (selection_tool->allow_move &&
       (state & GDK_MOD1_MASK) && (state & GDK_CONTROL_MASK) && move_layer)
@@ -209,7 +214,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
       selection_tool->op = SELECTION_MOVE_COPY; /* move a copy of the selection */
     }
   else if (selection_tool->allow_move &&
-           (state & GDK_MOD1_MASK) && ! gimp_channel_is_empty (selection))
+           (state & GDK_MOD1_MASK) && ! selection_empty)
     {
       selection_tool->op = SELECTION_MOVE_MASK; /* move the selection mask */
     }
@@ -244,16 +249,17 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
 
   if (proximity)
     {
-      gchar           *status = NULL;
+      gchar           *status      = NULL;
       gboolean         free_status = FALSE;
-      GdkModifierType  modifiers = (GDK_SHIFT_MASK | GDK_CONTROL_MASK);
+      GdkModifierType  modifiers   = (GDK_SHIFT_MASK | GDK_CONTROL_MASK);
 
-      if (! gimp_channel_is_empty (selection))
+      if (! selection_empty)
         modifiers |= GDK_MOD1_MASK;
+
       switch (selection_tool->op)
         {
         case SELECTION_REPLACE:
-          if (! gimp_channel_is_empty (selection))
+          if (! selection_empty)
             {
               status = gimp_suggest_modifiers (_("Click-Drag to replace the "
                                                  "current selection."),

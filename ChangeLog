@@ -1,3 +1,16 @@
+2006-08-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpchannel.c (gimp_channel_bounds)
+	* app/core/gimpdrawable.c (gimp_drawable_mask_bounds)
+	(gimp_drawable_mask_intersect): allow to pass in NULL return
+	locations for any of the boundary return values.
+
+	* app/tools/gimpselectiontool.c (gimp_selection_tool_oper_update):
+	don't require hovering the selection for moving the selected
+	pixels, since this can be distinguished by looking at the
+	modifiers now. Check for the presence of any selected pixels
+	instead. Fixes bug #349341.
+
 2006-08-03  Raphaël Quinet  <raphael@gimp.org>
 
 	* app/tools/gimpselectiontool.c (gimp_selection_tool_oper_update):

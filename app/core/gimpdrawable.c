@@ -1203,46 +1203,49 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
   GimpItem    *item;
   GimpImage   *image;
   GimpChannel *selection;
+  gint         tmp_x1, tmp_y1;
+  gint         tmp_x2, tmp_y2;
+  gboolean     retval;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (x1 != NULL, FALSE);
-  g_return_val_if_fail (y1 != NULL, FALSE);
-  g_return_val_if_fail (x2 != NULL, FALSE);
-  g_return_val_if_fail (y2 != NULL, FALSE);
 
   item = GIMP_ITEM (drawable);
 
-  *x1 = 0;
-  *y1 = 0;
-  *x2 = gimp_item_width  (item);
-  *y2 = gimp_item_height (item);
-
   g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
 
-  image    = gimp_item_get_image (item);
+  image     = gimp_item_get_image (item);
   selection = gimp_image_get_mask (image);
 
   if (GIMP_DRAWABLE (selection) != drawable &&
-      gimp_channel_bounds (selection, x1, y1, x2, y2))
+      gimp_channel_bounds (selection, &tmp_x1, &tmp_y1, &tmp_x2, &tmp_y2))
     {
       gint off_x, off_y;
 
       gimp_item_offsets (item, &off_x, &off_y);
 
-      *x1 = CLAMP (*x1 - off_x, 0, gimp_item_width  (item));
-      *y1 = CLAMP (*y1 - off_y, 0, gimp_item_height (item));
-      *x2 = CLAMP (*x2 - off_x, 0, gimp_item_width  (item));
-      *y2 = CLAMP (*y2 - off_y, 0, gimp_item_height (item));
+      tmp_x1 = CLAMP (tmp_x1 - off_x, 0, gimp_item_width  (item));
+      tmp_y1 = CLAMP (tmp_y1 - off_y, 0, gimp_item_height (item));
+      tmp_x2 = CLAMP (tmp_x2 - off_x, 0, gimp_item_width  (item));
+      tmp_y2 = CLAMP (tmp_y2 - off_y, 0, gimp_item_height (item));
 
-      return TRUE;
+      retval = TRUE;
+    }
+  else
+    {
+      tmp_x1 = 0;
+      tmp_y1 = 0;
+      tmp_x2 = gimp_item_width  (item);
+      tmp_y2 = gimp_item_height (item);
+
+      retval = FALSE;
     }
 
-  *x1 = 0;
-  *y1 = 0;
-  *x2 = gimp_item_width  (item);
-  *y2 = gimp_item_height (item);
+  if (x1) *x1 = tmp_x1;
+  if (y1) *y1 = tmp_y1;
+  if (x2) *x2 = tmp_x2;
+  if (y2) *y2 = tmp_y2;
 
-  return FALSE;
+  return retval;;
 }
 
 gboolean
@@ -1255,47 +1258,50 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
   GimpItem    *item;
   GimpImage   *image;
   GimpChannel *selection;
+  gint         tmp_x, tmp_y;
+  gint         tmp_width, tmp_height;
+  gboolean     retval;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (x != NULL, FALSE);
-  g_return_val_if_fail (y != NULL, FALSE);
-  g_return_val_if_fail (width  != NULL, FALSE);
-  g_return_val_if_fail (height != NULL, FALSE);
 
   item = GIMP_ITEM (drawable);
 
-  *x      = 0;
-  *y      = 0;
-  *width  = gimp_item_width  (item);
-  *height = gimp_item_height (item);
-
   g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
 
-  image    = gimp_item_get_image (item);
+  image     = gimp_item_get_image (item);
   selection = gimp_image_get_mask (image);
 
   if (GIMP_DRAWABLE (selection) != drawable &&
-      gimp_channel_bounds (selection, x, y, width, height))
+      gimp_channel_bounds (selection, &tmp_x, &tmp_y, &tmp_width, &tmp_height))
     {
       gint off_x, off_y;
 
       gimp_item_offsets (item, &off_x, &off_y);
 
-      return gimp_rectangle_intersect (*x - off_x, *y - off_y,
-                                       *width - *x, *height - *y,
-                                       0, 0,
-                                       gimp_item_width (item),
-                                       gimp_item_height (item),
-                                       x, y,
-                                       width, height);
+      retval = gimp_rectangle_intersect (tmp_x - off_x, tmp_y - off_y,
+                                         tmp_width - tmp_x, tmp_height - tmp_y,
+                                         0, 0,
+                                         gimp_item_width (item),
+                                         gimp_item_height (item),
+                                         &tmp_x, &tmp_y,
+                                         &tmp_width, &tmp_height);
+    }
+  else
+    {
+      tmp_x      = 0;
+      tmp_y      = 0;
+      tmp_width  = gimp_item_width  (item);
+      tmp_height = gimp_item_height (item);
+
+      retval = TRUE;
     }
 
-  *x      = 0;
-  *y      = 0;
-  *width  = gimp_item_width  (item);
-  *height = gimp_item_height (item);
+  if (x)      *x      = tmp_x;
+  if (y)      *y      = tmp_y;
+  if (width)  *width  = tmp_width;
+  if (height) *height = tmp_height;
 
-  return TRUE;
+  return retval;
 }
 
 gboolean
