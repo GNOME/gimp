@@ -2648,67 +2648,51 @@ gimp_image_get_vectors_index (const GimpImage   *image,
                                          GIMP_OBJECT (vectors));
 }
 
+static GimpItem *
+gimp_image_get_item_by_tattoo (GimpContainer *items,
+                               GimpTattoo     tattoo)
+{
+  GList *list;
+
+  for (list = GIMP_LIST (items)->list; list; list = g_list_next (list))
+    {
+      GimpItem *item = list->data;
+
+      if (gimp_item_get_tattoo (item) == tattoo)
+        return item;
+    }
+
+  return NULL;
+}
+
 GimpLayer *
 gimp_image_get_layer_by_tattoo (const GimpImage *image,
                                 GimpTattoo       tattoo)
 {
-  GList *list;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  for (list = GIMP_LIST (image->layers)->list;
-       list;
-       list = g_list_next (list))
-    {
-      GimpLayer *layer = list->data;
-
-      if (gimp_item_get_tattoo (GIMP_ITEM (layer)) == tattoo)
-        return layer;
-    }
-
-  return NULL;
+  return GIMP_LAYER (gimp_image_get_item_by_tattoo (image->layers,
+                                                    tattoo));
 }
 
 GimpChannel *
 gimp_image_get_channel_by_tattoo (const GimpImage *image,
                                   GimpTattoo       tattoo)
 {
-  GList *list;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  for (list = GIMP_LIST (image->channels)->list;
-       list;
-       list = g_list_next (list))
-    {
-      GimpChannel *channel = list->data;
-
-      if (gimp_item_get_tattoo (GIMP_ITEM (channel)) == tattoo)
-        return channel;
-    }
-
-  return NULL;
+  return GIMP_CHANNEL (gimp_image_get_item_by_tattoo (image->channels,
+                                                      tattoo));
 }
 
 GimpVectors *
 gimp_image_get_vectors_by_tattoo (const GimpImage *image,
                                   GimpTattoo       tattoo)
 {
-  GList *list;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  for (list = GIMP_LIST (image->vectors)->list;
-       list;
-       list = g_list_next (list))
-    {
-      GimpVectors *vectors = list->data;
-
-      if (gimp_item_get_tattoo (GIMP_ITEM (vectors)) == tattoo)
-        return vectors;
-    }
-
-  return NULL;
+  return GIMP_VECTORS (gimp_image_get_item_by_tattoo (image->vectors,
+                                                      tattoo));
 }
 
 GimpLayer *
@@ -2717,8 +2701,8 @@ gimp_image_get_layer_by_name (const GimpImage *image,
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return (GimpLayer *) gimp_container_get_child_by_name (image->layers,
-                                                         name);
+  return GIMP_LAYER (gimp_container_get_child_by_name (image->layers,
+                                                       name));
 }
 
 GimpChannel *
@@ -2727,8 +2711,8 @@ gimp_image_get_channel_by_name (const GimpImage *image,
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return (GimpChannel *) gimp_container_get_child_by_name (image->channels,
-                                                           name);
+  return GIMP_CHANNEL (gimp_container_get_child_by_name (image->channels,
+                                                         name));
 }
 
 GimpVectors *
@@ -2737,8 +2721,8 @@ gimp_image_get_vectors_by_name (const GimpImage *image,
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return (GimpVectors *) gimp_container_get_child_by_name (image->vectors,
-                                                           name);
+  return GIMP_VECTORS (gimp_container_get_child_by_name (image->vectors,
+                                                         name));
 }
 
 gboolean

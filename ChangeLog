@@ -1,3 +1,10 @@
+2006-08-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/image-actions.c: cosmetics.
+
+	* app/core/gimpimage.c: factor common code out to new utility
+	function gimp_image_get_item_by_tattoo(), minor cleanups.
+
 2006-08-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpchannel.c (gimp_channel_bounds)
