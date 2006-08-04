@@ -62,6 +62,10 @@ sub bill_pdb_misc {
     contrib_pdb_misc('Bill Skaggs', 'weskaggs@primate.ucdavis.edu', @_);
 }
 
+sub david_pdb_misc {
+    contrib_pdb_misc('David Gowers', '', @_);
+}
+
 sub federico_pdb_misc {
     contrib_pdb_misc('Federico Mena Quintero', '', @_);
 }
@@ -99,7 +103,7 @@ sub nick_pdb_misc {
 }
 
 sub raphael_pdb_misc {
-    contrib_pdb_misc('Raphael Quinet', '', @_);
+    contrib_pdb_misc('Rapha\xc3\xabl Quinet', 'raphael@gimp.org', @_);
 }
 
 sub rock_pdb_misc {

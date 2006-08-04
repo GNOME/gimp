@@ -160,7 +160,7 @@ This procedure sets the dither matrix used when converting images to INDEXED mod
 positional dithering. 
 HELP
 
-    &std_pdb_misc;
+    &david_pdb_misc('2006', '2.4');
 
     @inargs = (
 	{ name => 'width', type => 'int32',

@@ -160,6 +160,8 @@ gimp_image_convert_indexed (gint32                  image_ID,
  * INDEXED mode with positional dithering.
  *
  * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
  */
 gboolean
 gimp_image_convert_set_dither_matrix (gint          width,

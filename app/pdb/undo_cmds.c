@@ -277,8 +277,8 @@ register_undo_procs (GimpPDB *pdb)
                                      "gimp-image-undo-is-enabled",
                                      "Check if the image's undo stack is enabled.",
                                      "This procedure checks if the image's undo stack is currently enabled or disabled. This is useful when several plugins or scripts call each other and want to check if their caller has already used 'gimp-image-undo-disable' or 'gimp-image-undo-freeze'.",
-                                     "Raphael Quinet",
-                                     "Raphael Quinet",
+                                     "Rapha\xc3\xabl Quinet <raphael@gimp.org>",
+                                     "Rapha\xc3\xabl Quinet",
                                      "1999",
                                      NULL);
   gimp_procedure_add_argument (procedure,

@@ -1,5 +1,15 @@
 2006-08-04  Raphaël Quinet  <raphael@gimp.org>
 
+	* tools/pdbgen/stddefs.pdb
+	* tools/pdbgen/pdb/convert.pdb: Attributed custom dither code to
+	David Gowers and updated my e-mail address for the PDB.
+
+	* app/pdb/convert_cmds.c
+	* app/pdb/undo_cmds.c	
+	* libgimp/gimpconvert_pdb.c: Regenerated.
+
+2006-08-04  Raphaël Quinet  <raphael@gimp.org>
+
 	* app/core/gimpimage-convert-data.h
 	* app/core/gimpimage-convert.c
 	* app/core/gimpimage-convert.h

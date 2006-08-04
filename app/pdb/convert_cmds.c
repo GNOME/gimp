@@ -288,9 +288,9 @@ register_convert_procs (GimpPDB *pdb)
                                      "gimp-image-convert-set-dither-matrix",
                                      "Set dither matrix for conversion to indexed",
                                      "This procedure sets the dither matrix used when converting images to INDEXED mode with positional dithering.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
+                                     "David Gowers",
+                                     "David Gowers",
+                                     "2006",
                                      NULL);
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("width",
