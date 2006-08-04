@@ -1,5 +1,10 @@
 2006-08-05  Raphaël Quinet  <raphael@gimp.org>
 
+	* app/core/gimpgradient-load.c (gimp_gradient_load): Do not crash
+	when loading corrupt gradient files.  Ensure that error messages
+	are correctly reported with g_set_error() instead of g_message().
+	Fixes bug #349996.
+
 	* plug-ins/imagemap/imap_ncsa.l: Do not declare a symbol "link"
 	because this conflicts with the system call declared in
 	<unistd.h>.  Renamed that symbol "imap_link".  Fixes bug #349589.
