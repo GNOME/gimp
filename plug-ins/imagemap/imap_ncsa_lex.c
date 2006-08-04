@@ -460,7 +460,7 @@ char *yytext;
 #include <string.h>
 
 #include "imap_ncsa_parse.h"
-#define link 1
+#define imap_link 1
 
 #define comment 2
 
@@ -746,7 +746,7 @@ case 6:
 YY_RULE_SETUP
 #line 65 "imap_ncsa.l"
 {
-				   BEGIN(link);
+				   BEGIN(imap_link);
    				   return RECTANGLE;
 				}
 	YY_BREAK
@@ -754,7 +754,7 @@ case 7:
 YY_RULE_SETUP
 #line 70 "imap_ncsa.l"
 {
-				   BEGIN(link);
+				   BEGIN(imap_link);
 				   return CIRCLE;
 				}
 	YY_BREAK
@@ -762,7 +762,7 @@ case 8:
 YY_RULE_SETUP
 #line 75 "imap_ncsa.l"
 {
-				   BEGIN(link);
+				   BEGIN(imap_link);
 				   return POLYGON;
 				}
 	YY_BREAK
@@ -770,7 +770,7 @@ case 9:
 YY_RULE_SETUP
 #line 80 "imap_ncsa.l"
 {
-				   BEGIN(link);
+				   BEGIN(imap_link);
 				   return DEFAULT;
 				}
 	YY_BREAK
@@ -809,7 +809,7 @@ ECHO;
 	YY_BREAK
 #line 809 "imap_ncsa_lex.c"
 case YY_STATE_EOF(INITIAL):
-case YY_STATE_EOF(link):
+case YY_STATE_EOF(imap_link):
 case YY_STATE_EOF(comment):
 	yyterminate();
 

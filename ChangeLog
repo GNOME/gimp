@@ -1,3 +1,12 @@
+2006-08-05  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/imagemap/imap_ncsa.l: Do not declare a symbol "link"
+	because this conflicts with the system call declared in
+	<unistd.h>.  Renamed that symbol "imap_link".  Fixes bug #349589.
+
+	* plug-ins/imagemap/imap_ncsa_lex.c: Updated by hand in order to
+	avoid large changes introduced by more recent versions of flex.
+
 2006-08-04  Raphaël Quinet  <raphael@gimp.org>
 
 	* tools/pdbgen/stddefs.pdb
