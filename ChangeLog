@@ -1,5 +1,9 @@
 2006-08-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimppropwidgets.c: some doc fixes.
+
+2006-08-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/image-actions.c: cosmetics.
 
 	* app/core/gimpimage.c: factor common code out to new utility

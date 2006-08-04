@@ -78,9 +78,9 @@ static void   gimp_prop_paint_menu_notify   (GObject     *config,
 
 /**
  * gimp_prop_paint_mode_menu_new:
- * @config:            #GimpConfig object to which property is attached.
- * @property_name:     Name of Enum property controlled by combo box.
- * @with_behind_mode:  Whether to include "Behind" mode in the menu.
+ * @config:           #GimpConfig object to which property is attached.
+ * @property_name:    Name of Enum property.
+ * @with_behind_mode: Whether to include "Behind" mode in the menu.
  *
  * Creates a #GimpPaintModeMenu widget to display and set the specified
  * Enum property, for which the enum must be #GimpLayerModeEffects.
@@ -178,14 +178,14 @@ static void   gimp_prop_color_button_notify   (GObject    *config,
 
 /**
  * gimp_prop_color_button_new:
- * @config:             #GimpConfig object to which property is attached.
- * @property_name:      Name of RGB property.
- * @title:              title of the #GimpColorPanel that is to be created
- * @width:              Width of color button.
- * @height:             Height of color button.
- * @type:               How transparency is represented.
+ * @config:        #GimpConfig object to which property is attached.
+ * @property_name: Name of #GimpRGB property.
+ * @title:         Title of the #GimpColorPanel that is to be created
+ * @width:         Width of color button.
+ * @height:        Height of color button.
+ * @type:          How transparency is represented.
  *
- * Creates a #GimpColorPanel to set and display the value of an RGB
+ * Creates a #GimpColorPanel to set and display the value of a #GimpRGB
  * property.  Pressing the button brings up a color selector dialog.
  *
  * Return value:  A new #GimpColorPanel widget.
@@ -296,11 +296,11 @@ static void   gimp_prop_view_notify (GObject      *config,
 
 /**
  * gimp_prop_view_new:
- * @config:             #GimpConfig object to which property is attached.
- * @property_name:      Name of Unit property.
- * @size:               Width and height of preview display.
+ * @config:        #GimpConfig object to which property is attached.
+ * @property_name: Name of #GimpViewable property.
+ * @size:          Width and height of preview display.
  *
- * Creates a widget to display the value of a Preview property.
+ * Creates a widget to display the value of a #GimpViewable property.
  *
  * Return value:  A new #GimpView widget.
  *
