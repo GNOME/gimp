@@ -152,6 +152,36 @@ CODE
     );
 }
 
+sub image_convert_set_dither_matrix {
+    $blurb = 'Set dither matrix for conversion to indexed';
+
+    $help = <<'HELP';
+This procedure sets the dither matrix used when converting images to INDEXED mode with 
+positional dithering. 
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'width', type => 'int32',
+	  desc => 'Width of the matrix (0 to reset to default matrix)' },
+	{ name => 'height', type => 'int32',
+	  desc => 'Height of the matrix (0 to reset to default matrix)' },
+	{ name => 'matrix', type => 'int8array',
+	  desc => 'The matrix -- all values must be >= 1',
+	  array => { name => 'matrix_length', type => '1 <= int32 <= 1024',
+                     desc => "The length of 'matrix'" }
+	  },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+    gimp_image_convert_set_dither_matrix (width, height, (guchar *) matrix);
+}
+CODE
+    );
+}
 
 @headers = qw("core/gimp.h" "core/gimpcontainer.h" "core/gimpdatafactory.h"
               "core/gimpimage.h" "core/gimpimage-convert.h"
@@ -159,7 +189,8 @@ CODE
 
 @procs = qw(image_convert_rgb
             image_convert_grayscale
-            image_convert_indexed);
+            image_convert_indexed
+            image_convert_set_dither_matrix);
 
 %exports = (app => [@procs], lib => [@procs]);
 

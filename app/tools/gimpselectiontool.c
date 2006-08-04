@@ -268,7 +268,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
               free_status = TRUE;
             }
           else
-            status = N_("Click-Drag to create a new selection.");
+            status = _("Click-Drag to create a new selection.");
           break;
 
         case SELECTION_ADD:

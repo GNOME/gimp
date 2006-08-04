@@ -1,3 +1,18 @@
+2006-08-04  Raphaël Quinet  <raphael@gimp.org>
+
+	* app/core/gimpimage-convert-data.h
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-convert.h
+	* tools/pdbgen/pdb/convert.pdb: Applied slightly modified patch
+	from David Gowers allowing a custom dither matrix to be used when
+	converting images to indexed mode.  Fixes bug #136604.
+	
+	* app/pdb/convert_cmds.c
+	* libgimp/gimpconvert_pdb.h
+	* libgimp/gimpconvert_pdb.c: Regenerated.
+
+	* app/tools/gimpselectiontool.c: N_() should have been _().
+
 2006-08-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppropwidgets.c: some doc fixes.
