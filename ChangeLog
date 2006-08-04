@@ -8,6 +8,7 @@
 	converting images to indexed mode.  Fixes bug #136604.
 	
 	* app/pdb/convert_cmds.c
+	* app/pdb/internal_procs.c
 	* libgimp/gimpconvert_pdb.h
 	* libgimp/gimpconvert_pdb.c: Regenerated.
 
