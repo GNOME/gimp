@@ -40,7 +40,6 @@
 #include "gimpprocedure.h"
 
 #include "gimptemporaryprocedure.h" /* eek */
-#include "gimp-pdb-compat.h" /* eek */
 
 #include "gimp-intl.h"
 
@@ -51,7 +50,6 @@ gimp_pdb_eek (void)
   volatile GType eek;
 
   eek = gimp_temporary_procedure_get_type ();
-  gimp_pdb_compat_procs_register (NULL, 0);
 }
 
 
