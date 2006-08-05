@@ -321,7 +321,9 @@ gimp_display_shell_bucket_fill (GimpDisplayShell   *shell,
                                       fill_mode,
                                       GIMP_NORMAL_MODE, GIMP_OPACITY_OPAQUE,
                                       FALSE,             /* no seed fill */
-                                      FALSE, 0.0, FALSE, /* fill params  */
+                                      FALSE,             /* don't fill transp */
+                                      GIMP_SELECT_CRITERION_COMPOSITE,
+                                      0.0, FALSE,        /* fill params  */
                                       0.0, 0.0,          /* ignored      */
                                       color, pattern);
     }

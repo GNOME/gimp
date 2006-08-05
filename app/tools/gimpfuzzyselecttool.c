@@ -120,5 +120,6 @@ gimp_fuzzy_select_tool_get_mask (GimpRegionSelectTool *region_select,
                                                options->antialias,
                                                options->threshold,
                                                options->select_transparent,
+                                               options->select_criterion,
                                                x, y);
 }

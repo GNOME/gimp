@@ -410,18 +410,19 @@ gimp_channel_select_component (GimpChannel     *channel,
 }
 
 void
-gimp_channel_select_fuzzy (GimpChannel    *channel,
-                           GimpDrawable   *drawable,
-                           gboolean        sample_merged,
-                           gint            x,
-                           gint            y,
-                           gint            threshold,
-                           gboolean        select_transparent,
-                           GimpChannelOps  op,
-                           gboolean        antialias,
-                           gboolean        feather,
-                           gdouble         feather_radius_x,
-                           gdouble         feather_radius_y)
+gimp_channel_select_fuzzy (GimpChannel         *channel,
+                           GimpDrawable        *drawable,
+                           gboolean             sample_merged,
+                           gint                 x,
+                           gint                 y,
+                           gint                 threshold,
+                           gboolean             select_transparent,
+                           GimpSelectCriterion  select_criterion,
+                           GimpChannelOps       op,
+                           gboolean             antialias,
+                           gboolean             feather,
+                           gdouble              feather_radius_x,
+                           gdouble              feather_radius_y)
 {
   GimpItem    *item;
   GimpChannel *add_on;
@@ -440,6 +441,7 @@ gimp_channel_select_fuzzy (GimpChannel    *channel,
                                                  antialias,
                                                  threshold,
                                                  select_transparent,
+                                                 select_criterion,
                                                  x, y);
 
   if (! sample_merged)
@@ -455,17 +457,18 @@ gimp_channel_select_fuzzy (GimpChannel    *channel,
 }
 
 void
-gimp_channel_select_by_color (GimpChannel    *channel,
-                              GimpDrawable   *drawable,
-                              gboolean        sample_merged,
-                              const GimpRGB  *color,
-                              gint            threshold,
-                              gboolean        select_transparent,
-                              GimpChannelOps  op,
-                              gboolean        antialias,
-                              gboolean        feather,
-                              gdouble         feather_radius_x,
-                              gdouble         feather_radius_y)
+gimp_channel_select_by_color (GimpChannel         *channel,
+                              GimpDrawable        *drawable,
+                              gboolean             sample_merged,
+                              const GimpRGB       *color,
+                              gint                 threshold,
+                              gboolean             select_transparent,
+                              GimpSelectCriterion  select_criterion,
+                              GimpChannelOps       op,
+                              gboolean             antialias,
+                              gboolean             feather,
+                              gdouble              feather_radius_x,
+                              gdouble              feather_radius_y)
 {
   GimpItem    *item;
   GimpChannel *add_on;
@@ -485,6 +488,7 @@ gimp_channel_select_by_color (GimpChannel    *channel,
                                                   antialias,
                                                   threshold,
                                                   select_transparent,
+                                                  select_criterion,
                                                   color);
 
   if (! sample_merged)

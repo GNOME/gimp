@@ -531,6 +531,22 @@ typedef enum
 } GimpMergeType;
 
 
+#define GIMP_TYPE_SELECT_CRITERION (gimp_select_criterion_get_type ())
+
+GType gimp_select_criterion_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< pdb-skip >*/
+{
+  GIMP_SELECT_CRITERION_COMPOSITE,  /*< desc="Composite"  >*/
+  GIMP_SELECT_CRITERION_R,          /*< desc="Red"        >*/
+  GIMP_SELECT_CRITERION_G,          /*< desc="Green"      >*/
+  GIMP_SELECT_CRITERION_B,          /*< desc="Blue"       >*/
+  GIMP_SELECT_CRITERION_H,          /*< desc="Hue"        >*/
+  GIMP_SELECT_CRITERION_S,          /*< desc="Saturation" >*/
+  GIMP_SELECT_CRITERION_V           /*< desc="Value"      >*/
+} GimpSelectCriterion;
+
+
 /*
  * non-registered enums; register them if needed
  */

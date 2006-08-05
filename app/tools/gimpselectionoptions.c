@@ -53,6 +53,7 @@ enum
   PROP_SELECT_TRANSPARENT,
   PROP_SAMPLE_MERGED,
   PROP_THRESHOLD,
+  PROP_SELECT_CRITERION,
   PROP_AUTO_SHRINK,
   PROP_SHRINK_MERGED,
   PROP_FIXED_MODE,
@@ -127,6 +128,11 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
                                    N_("Maximum color difference"),
                                    0.0, 255.0, 15.0,
                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SELECT_CRITERION,
+                                 "select-criterion", NULL,
+                                 GIMP_TYPE_SELECT_CRITERION,
+                                 GIMP_SELECT_CRITERION_COMPOSITE,
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTO_SHRINK,
                                     "auto-shrink", NULL,
@@ -200,6 +206,9 @@ gimp_selection_options_set_property (GObject      *object,
     case PROP_THRESHOLD:
       options->threshold = g_value_get_double (value);
       break;
+    case PROP_SELECT_CRITERION:
+      options->select_criterion = g_value_get_enum (value);
+      break;
 
     case PROP_AUTO_SHRINK:
       options->auto_shrink = g_value_get_boolean (value);
@@ -262,6 +271,9 @@ gimp_selection_options_get_property (GObject    *object,
       break;
     case PROP_THRESHOLD:
       g_value_set_double (value, options->threshold);
+      break;
+    case PROP_SELECT_CRITERION:
+      g_value_set_enum (value, options->select_criterion);
       break;
 
     case PROP_AUTO_SHRINK:
@@ -461,6 +473,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       GtkWidget *frame;
       GtkWidget *vbox2;
       GtkWidget *table;
+      GtkWidget *combo;
 
       frame = gimp_frame_new (_("Finding Similar Colors"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -483,7 +496,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (button);
 
       /*  the threshold scale  */
-      table = gtk_table_new (1, 3, FALSE);
+      table = gtk_table_new (2, 3, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table), 2);
       gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
       gtk_widget_show (table);
@@ -493,6 +506,12 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
                                  _("Threshold:"),
                                  1.0, 16.0, 1,
                                  FALSE, 0.0, 0.0);
+
+      /*  the select criterion combo  */
+      combo = gimp_prop_enum_combo_box_new (config, "select-criterion", 0, 0);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                                 _("Select by:"), 0.0, 0.5,
+                                 combo, 2, FALSE);
     }
 
   /*  widgets for fixed size select  */

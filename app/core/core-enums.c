@@ -1138,6 +1138,44 @@ gimp_merge_type_get_type (void)
   return type;
 }
 
+GType
+gimp_select_criterion_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_SELECT_CRITERION_COMPOSITE, "GIMP_SELECT_CRITERION_COMPOSITE", "composite" },
+    { GIMP_SELECT_CRITERION_R, "GIMP_SELECT_CRITERION_R", "r" },
+    { GIMP_SELECT_CRITERION_G, "GIMP_SELECT_CRITERION_G", "g" },
+    { GIMP_SELECT_CRITERION_B, "GIMP_SELECT_CRITERION_B", "b" },
+    { GIMP_SELECT_CRITERION_H, "GIMP_SELECT_CRITERION_H", "h" },
+    { GIMP_SELECT_CRITERION_S, "GIMP_SELECT_CRITERION_S", "s" },
+    { GIMP_SELECT_CRITERION_V, "GIMP_SELECT_CRITERION_V", "v" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_SELECT_CRITERION_COMPOSITE, N_("Composite"), NULL },
+    { GIMP_SELECT_CRITERION_R, N_("Red"), NULL },
+    { GIMP_SELECT_CRITERION_G, N_("Green"), NULL },
+    { GIMP_SELECT_CRITERION_B, N_("Blue"), NULL },
+    { GIMP_SELECT_CRITERION_H, N_("Hue"), NULL },
+    { GIMP_SELECT_CRITERION_S, N_("Saturation"), NULL },
+    { GIMP_SELECT_CRITERION_V, N_("Value"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpSelectCriterion", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

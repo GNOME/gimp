@@ -48,6 +48,7 @@ struct _GimpSelectionOptions
   gboolean            select_transparent;
   gboolean            sample_merged;
   gdouble             threshold;
+  GimpSelectCriterion select_criterion;
 
   /*  used by rect., ellipse selection  */
   gboolean            auto_shrink;

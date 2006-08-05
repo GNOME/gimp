@@ -507,6 +507,7 @@ edit_bucket_fill_invoker (GimpProcedure     *procedure,
                                      paint_mode, opacity / 100.0,
                                      do_seed_fill,
                                      FALSE /* don't fill transparent */,
+                                     GIMP_SELECT_CRITERION_COMPOSITE,
                                      threshold, sample_merged, x, y);
         }
       else

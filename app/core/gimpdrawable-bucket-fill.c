@@ -46,17 +46,18 @@
 /*  public functions  */
 
 void
-gimp_drawable_bucket_fill (GimpDrawable       *drawable,
-                           GimpContext        *context,
-                           GimpBucketFillMode  fill_mode,
-                           gint                paint_mode,
-                           gdouble             opacity,
-                           gboolean            do_seed_fill,
-                           gboolean            fill_transparent,
-                           gdouble             threshold,
-                           gboolean            sample_merged,
-                           gdouble             x,
-                           gdouble             y)
+gimp_drawable_bucket_fill (GimpDrawable        *drawable,
+                           GimpContext         *context,
+                           GimpBucketFillMode   fill_mode,
+                           gint                 paint_mode,
+                           gdouble              opacity,
+                           gboolean             do_seed_fill,
+                           gboolean             fill_transparent,
+                           GimpSelectCriterion  fill_criterion,
+                           gdouble              threshold,
+                           gboolean             sample_merged,
+                           gdouble              x,
+                           gdouble              y)
 {
   GimpImage   *image;
   GimpRGB      color;
@@ -96,25 +97,26 @@ gimp_drawable_bucket_fill (GimpDrawable       *drawable,
                                   fill_mode,
                                   paint_mode, opacity,
                                   do_seed_fill,
-                                  fill_transparent,
+                                  fill_transparent, fill_criterion,
                                   threshold, sample_merged,
                                   x, y,
                                   &color, pattern);
 }
 
 void
-gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
-                                GimpBucketFillMode  fill_mode,
-                                gint                paint_mode,
-                                gdouble             opacity,
-                                gboolean            do_seed_fill,
-                                gboolean            fill_transparent,
-                                gdouble             threshold,
-                                gboolean            sample_merged,
-                                gdouble             x,
-                                gdouble             y,
-                                const GimpRGB      *color,
-                                GimpPattern        *pattern)
+gimp_drawable_bucket_fill_full (GimpDrawable        *drawable,
+                                GimpBucketFillMode   fill_mode,
+                                gint                 paint_mode,
+                                gdouble              opacity,
+                                gboolean             do_seed_fill,
+                                gboolean             fill_transparent,
+                                GimpSelectCriterion  fill_criterion,
+                                gdouble              threshold,
+                                gboolean             sample_merged,
+                                gdouble              x,
+                                gdouble              y,
+                                const GimpRGB       *color,
+                                GimpPattern         *pattern)
 {
   GimpImage   *image;
   TileManager *buf_tiles;
@@ -179,6 +181,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
                                                    TRUE,
                                                    (gint) threshold,
                                                    fill_transparent,
+                                                   fill_criterion,
                                                    (gint) x,
                                                    (gint) y);
 

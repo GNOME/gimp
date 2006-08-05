@@ -241,7 +241,9 @@ gimp_drawable_tree_view_drop_viewable (GimpContainerTreeView   *view,
                                       GIMP_PATTERN_BUCKET_FILL,
                                       GIMP_NORMAL_MODE, GIMP_OPACITY_OPAQUE,
                                       FALSE,             /* no seed fill */
-                                      FALSE, 0.0, FALSE, /* fill params  */
+                                      FALSE,             /* don't fill transp */
+                                      GIMP_SELECT_CRITERION_COMPOSITE,
+                                      0.0, FALSE,        /* fill params  */
                                       0.0, 0.0,          /* ignored      */
                                       NULL, GIMP_PATTERN (src_viewable));
       gimp_image_flush (GIMP_ITEM_TREE_VIEW (view)->image);
@@ -266,7 +268,9 @@ gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
                                       GIMP_FG_BUCKET_FILL,
                                       GIMP_NORMAL_MODE, GIMP_OPACITY_OPAQUE,
                                       FALSE,             /* no seed fill */
-                                      FALSE, 0.0, FALSE, /* fill params  */
+                                      FALSE,             /* don't fill transp */
+                                      GIMP_SELECT_CRITERION_COMPOSITE,
+                                      0.0, FALSE,        /* fill params  */
                                       0.0, 0.0,          /* ignored      */
                                       color, NULL);
       gimp_image_flush (GIMP_ITEM_TREE_VIEW (view)->image);
@@ -345,8 +349,10 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
                                       fill_mode,
                                       gimp_context_get_paint_mode (context),
                                       gimp_context_get_opacity (context),
-                                      FALSE /* no seed fill */,
-                                      FALSE, 0.0, FALSE, 0.0, 0.0 /* fill params */,
+                                      FALSE, /* no seed fill */
+                                      FALSE, /* don't fill transp */
+                                      GIMP_SELECT_CRITERION_COMPOSITE,
+                                      0.0, FALSE, 0.0, 0.0 /* fill params */,
                                       color, pattern);
     }
 

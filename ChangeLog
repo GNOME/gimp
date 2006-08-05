@@ -1,3 +1,39 @@
+2006-08-05  Michael Natterer  <mitch@gimp.org>
+
+	Applied (modified and enhanced) patch from Chris Moller which allows
+	tools to distinguish similar colors not only by composite, but also
+	by R, G, B, H, S and V. Fixes bug #348291.
+
+	* app/core/core-enums.[ch]: added new enum GimpSelectCriterion
+	which can be one of { COMPOSITE, R, G, B, H, S, V }.
+
+	* app/core/gimpimage-contiguous-region.[ch]: added
+	select_criterion params and create the region based on difference
+	by the selected criterion.
+
+	* app/core/gimpchannel-select.[ch]
+	* app/core/gimpdrawable-bucket-fill.[ch]: take criterion params and
+	pass them through to the contiguous region functions.
+
+	* app/tools/gimpbucketfilloptions.[ch]
+	* app/tools/gimpselectionoptions.[ch]: added criterion properties
+	and GUI to select it.
+
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpfuzzyselecttool.c: pass the selected criterion to
+	the resp. core functions.
+
+	* app/widgets/gimpdrawabletreeview.c
+	* app/widgets/gimpselectioneditor.c
+	* app/display/gimpdisplayshell-dnd.c
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/selection_tools.pdb: changed accordingly
+	(simply pass GIMP_SELECT_CRITERION_COMPOSITE in most cases).
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/selection_tools_cmds.c: regenerated.
+
 2006-08-05  Raphaël Quinet  <raphael@gimp.org>
 
 	* app/core/gimpgradient-load.c (gimp_gradient_load): Do not crash
