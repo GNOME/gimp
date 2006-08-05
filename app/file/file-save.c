@@ -55,7 +55,8 @@
 #include "core/gimpprogress.h"
 
 #include "pdb/gimppdb.h"
-#include "pdb/gimppluginprocedure.h"
+
+#include "plug-in/gimppluginprocedure.h"
 
 #include "file-save.h"
 #include "file-utils.h"

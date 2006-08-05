@@ -27,11 +27,10 @@
 #include "core/gimp.h"
 #include "core/gimpparamspecs.h"
 
-#include "pdb/gimppluginprocedure.h"
-
 #include "gimpplugin.h"
 #include "gimppluginmanager.h"
 #include "gimppluginmanager-file.h"
+#include "gimppluginprocedure.h"
 #include "plug-in-def.h"
 
 

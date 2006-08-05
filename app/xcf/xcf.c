@@ -34,9 +34,8 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimppluginprocedure.h"
-
 #include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginprocedure.h"
 
 #include "xcf.h"
 #include "xcf-private.h"

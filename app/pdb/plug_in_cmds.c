@@ -33,11 +33,11 @@
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
-#include "gimppluginprocedure.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager-menu-branch.h"
 #include "plug-in/gimppluginmanager-query.h"
 #include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginprocedure.h"
 #include "plug-in/plug-in-def.h"
 
 

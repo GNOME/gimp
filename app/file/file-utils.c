@@ -49,7 +49,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
 
-#include "pdb/gimppluginprocedure.h"
+#include "plug-in/gimppluginprocedure.h"
 
 #include "file-utils.h"
 

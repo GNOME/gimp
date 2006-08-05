@@ -30,11 +30,11 @@
 #include "core/gimpprogress.h"
 
 #include "pdb/gimppdb.h"
-#include "pdb/gimptemporaryprocedure.h"
 
 #include "gimpplugin.h"
 #include "gimpplugin-progress.h"
 #include "gimppluginmanager.h"
+#include "gimptemporaryprocedure.h"
 
 
 /*  local function prototypes  */

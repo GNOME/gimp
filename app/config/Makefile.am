@@ -65,19 +65,19 @@ TESTS = test-config
 
 test_config_DEPENDENCIES = $(gimpconfig_libs)
 
-test_config_LDFLAGS = -u internal_procs_init
+test_config_LDFLAGS = -u xcf_init -u internal_procs_init
 
 test_config_LDADD = \
 	../widgets/widgets-enums.o		\
 	../display/display-enums.o		\
 	../display/gimpdisplayoptions.o		\
 	../pdb/libappinternal-procs.a		\
+	../xcf/libappxcf.a			\
+	../plug-in/libappplug-in.a		\
 	../pdb/libapppdb.a			\
 	../vectors/libappvectors.a		\
-	../plug-in/libappplug-in.a		\
 	../core/libappcore.a			\
 	../paint/libapppaint.a			\
-	../xcf/libappxcf.a			\
 	../text/libapptext.a			\
 	../file/libappfile.a			\
 	libappconfig.a				\

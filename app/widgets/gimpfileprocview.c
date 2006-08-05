@@ -30,10 +30,9 @@
 #include "core/gimp.h"
 #include "core/gimpmarshal.h"
 
-#include "pdb/gimppluginprocedure.h"
-
 #include "plug-in/gimppluginmanager-help-domain.h"
 #include "plug-in/gimppluginmanager-locale-domain.h"
+#include "plug-in/gimppluginprocedure.h"
 
 #include "gimpfileprocview.h"
 

@@ -74,8 +74,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimptemporaryprocedure.h"
-
 #include "gimpenvirontable.h"
 #include "gimpinterpreterdb.h"
 #include "gimpplugin.h"
@@ -84,6 +82,7 @@
 #include "gimpplugindebug.h"
 #include "gimppluginmanager.h"
 #include "gimppluginmanager-locale-domain.h"
+#include "gimptemporaryprocedure.h"
 #include "plug-in-def.h"
 #include "plug-in-params.h"
 

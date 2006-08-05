@@ -29,10 +29,9 @@
 #include "core/gimpcontext.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimppluginprocedure.h"
-
 #include "gimpplugin.h"
 #include "gimpplugin-progress.h"
+#include "gimppluginprocedure.h"
 
 
 /*  publuc functions  */

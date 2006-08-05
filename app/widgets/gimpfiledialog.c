@@ -37,11 +37,11 @@
 
 #include "file/file-utils.h"
 
+#include "pdb/gimppdb.h"
+
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginmanager-locale-domain.h"
-
-#include "pdb/gimppdb.h"
-#include "pdb/gimppluginprocedure.h"
+#include "plug-in/gimppluginprocedure.h"
 
 #include "gimpfiledialog.h"
 #include "gimpfileprocview.h"

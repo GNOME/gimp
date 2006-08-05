@@ -37,7 +37,6 @@
 #include "core/gimpmarshal.h"
 
 #include "pdb/gimppdb.h"
-#include "pdb/gimptemporaryprocedure.h"
 
 #include "gimpenvirontable.h"
 #include "gimpinterpreterdb.h"
@@ -51,6 +50,7 @@
 #include "gimppluginmanager-locale-domain.h"
 #include "gimppluginmanager-menu-branch.h"
 #include "gimppluginshm.h"
+#include "gimptemporaryprocedure.h"
 #include "plug-in-def.h"
 #include "plug-in-rc.h"
 

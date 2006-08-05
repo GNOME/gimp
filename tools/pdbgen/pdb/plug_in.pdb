@@ -277,8 +277,8 @@ CODE
               "plug-in/gimppluginmanager.h"
               "plug-in/gimppluginmanager-menu-branch.h"
               "plug-in/gimppluginmanager-query.h"
-              "plug-in/plug-in-def.h"
-              "gimppluginprocedure.h");
+              "plug-in/gimppluginprocedure.h"
+              "plug-in/plug-in-def.h");
 
 @procs = qw(plugins_query
 	    plugin_domain_register plugin_help_register

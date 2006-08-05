@@ -1,5 +1,44 @@
 2006-08-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/Makefile.am
+	* app/pdb/gimppluginprocedure.[ch]
+	* app/pdb/gimptemporaryprocedure.[ch]: removed these files...
+
+	* app/plug-in/Makefile.am
+	* app/plug-in/gimppluginprocedure.[ch]
+	* app/plug-in/gimptemporaryprocedure.[ch]: ...and added them here.
+
+	* app/Makefile.am
+	* app/config/Makefile.am: reordered stuff to make it link again.
+
+	* app/pdb/gimppdb.c: removed gimp_pdb_eek() hack.
+
+	* app/actions/plug-in-actions.c
+	* app/dialogs/file-save-dialog.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/file/file-utils.c
+	* app/menus/plug-in-menus.c
+	* app/plug-in/gimpplugin-message.c
+	* app/plug-in/gimpplugin-progress.c
+	* app/plug-in/gimpplugin.c
+	* app/plug-in/gimppluginmanager-call.c
+	* app/plug-in/gimppluginmanager-file.c
+	* app/plug-in/gimppluginmanager-query.c
+	* app/plug-in/gimppluginmanager.c
+	* app/plug-in/gimppluginprocframe.c
+	* app/plug-in/plug-in-def.c
+	* app/plug-in/plug-in-rc.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpfileprocview.c
+	* app/widgets/gimppluginaction.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/plug_in.pdb: changed includes accordingly.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+2006-08-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/Makefile.am: make test-config build again.
 
 2006-08-05  Michael Natterer  <mitch@gimp.org>

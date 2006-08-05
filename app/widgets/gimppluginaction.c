@@ -27,7 +27,7 @@
 
 #include "core/gimpmarshal.h"
 
-#include "pdb/gimppluginprocedure.h"
+#include "plug-in/gimppluginprocedure.h"
 
 #include "gimppluginaction.h"
 

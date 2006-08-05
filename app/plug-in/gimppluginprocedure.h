@@ -25,7 +25,7 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "gimpprocedure.h"
+#include "pdb/gimpprocedure.h"
 
 
 #define GIMP_TYPE_PLUG_IN_PROCEDURE            (gimp_plug_in_procedure_get_type ())

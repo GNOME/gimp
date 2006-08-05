@@ -34,10 +34,9 @@
 
 #include "plug-in-types.h"
 
-#include "pdb/gimppluginprocedure.h"
-
 #include "gimppluginmanager.h"
 #include "gimppluginmanager-query.h"
+#include "gimppluginprocedure.h"
 
 
 static int

@@ -12,11 +12,7 @@ libapppdb_a_SOURCES = \
 	gimppdb-query.c			\
 	gimppdb-query.h			\
 	gimpprocedure.c			\
-	gimpprocedure.h			\
-	gimppluginprocedure.c		\
-	gimppluginprocedure.h		\
-	gimptemporaryprocedure.c	\
-	gimptemporaryprocedure.h
+	gimpprocedure.h
 
 libappinternal_procs_a_SOURCES = \
 	internal_procs.c		\

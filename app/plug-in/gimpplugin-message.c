@@ -38,12 +38,12 @@
 
 #include "pdb/gimppdb.h"
 #include "pdb/gimp-pdb-compat.h"
-#include "pdb/gimptemporaryprocedure.h"
 
 #include "gimpplugin.h"
 #include "gimpplugin-message.h"
 #include "gimppluginmanager.h"
 #include "gimppluginshm.h"
+#include "gimptemporaryprocedure.h"
 #include "plug-in-def.h"
 #include "plug-in-params.h"
 

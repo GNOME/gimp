@@ -49,10 +49,14 @@ libappplug_in_a_SOURCES = \
 	gimppluginmanager-menu-branch.h		\
 	gimppluginmanager-query.c		\
 	gimppluginmanager-query.h		\
+	gimppluginprocedure.c			\
+	gimppluginprocedure.h			\
 	gimppluginprocframe.c			\
 	gimppluginprocframe.h			\
 	gimppluginshm.c				\
 	gimppluginshm.h				\
+	gimptemporaryprocedure.c		\
+	gimptemporaryprocedure.h		\
 	\
 	plug-in-def.c				\
 	plug-in-def.h				\

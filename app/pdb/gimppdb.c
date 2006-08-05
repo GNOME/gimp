@@ -39,18 +39,7 @@
 #include "gimppdb.h"
 #include "gimpprocedure.h"
 
-#include "gimptemporaryprocedure.h" /* eek */
-
 #include "gimp-intl.h"
-
-
-void
-gimp_pdb_eek (void)
-{
-  volatile GType eek;
-
-  eek = gimp_temporary_procedure_get_type ();
-}
 
 
 enum
