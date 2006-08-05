@@ -5346,7 +5346,7 @@ msgstr "Đường dẫn để Chọn"
 
 #: app/core/gimpchannel-select.c:460 app/tools/gimpfuzzyselecttool.c:97
 msgid "Fuzzy Select"
-msgstr "Chọ tù mù"
+msgstr "Chọn tù mù"
 
 #: app/core/gimpchannel-select.c:505
 #, fuzzy
