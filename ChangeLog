@@ -1,5 +1,9 @@
 2006-08-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/Makefile.am: make test-config build again.
+
+2006-08-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/gimppdb.c: remove temporary cruft i forgot before.
 
 2006-08-05  Michael Natterer  <mitch@gimp.org>

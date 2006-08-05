@@ -65,12 +65,13 @@ TESTS = test-config
 
 test_config_DEPENDENCIES = $(gimpconfig_libs)
 
-test_config_LDFLAGS = -u gimp_pdb_get_type
+test_config_LDFLAGS = -u internal_procs_init
 
 test_config_LDADD = \
 	../widgets/widgets-enums.o		\
 	../display/display-enums.o		\
 	../display/gimpdisplayoptions.o		\
+	../pdb/libappinternal-procs.a		\
 	../pdb/libapppdb.a			\
 	../vectors/libappvectors.a		\
 	../plug-in/libappplug-in.a		\
