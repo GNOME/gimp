@@ -221,12 +221,9 @@ app/pdb/color_cmds.c
 app/pdb/drawable_cmds.c
 app/pdb/drawable_transform_cmds.c
 app/pdb/edit_cmds.c
-app/pdb/gimp-pdb.c
 app/pdb/gimppdb-query.c
 app/pdb/gimppdb.c
-app/pdb/gimppluginprocedure.c
 app/pdb/gimpprocedure.c
-app/pdb/gimptemporaryprocedure.c
 app/pdb/guides_cmds.c
 app/pdb/image_cmds.c
 app/pdb/layer_cmds.c
@@ -240,9 +237,11 @@ app/pdb/vectors_cmds.c
 
 app/plug-in/gimpenvirontable.c
 app/plug-in/gimpinterpreterdb.c
-app/plug-in/gimppluginmanager.c
-app/plug-in/gimppluginmanager-call.c
 app/plug-in/gimpplugin.c
+app/plug-in/gimppluginmanager-call.c
+app/plug-in/gimppluginmanager.c
+app/plug-in/gimppluginprocedure.c
+app/plug-in/gimptemporaryprocedure.c
 app/plug-in/plug-in-enums.c
 app/plug-in/plug-in-rc.c
 
