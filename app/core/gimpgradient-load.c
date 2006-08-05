@@ -169,8 +169,9 @@ gimp_gradient_load (const gchar  *filename,
         }
       else
         {
-	  g_message (_("Corrupt segment %d in gradient file '%s'."),
-		     i, gimp_filename_to_utf8 (filename));
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Corrupt segment %d in gradient file '%s'."),
+                       i, gimp_filename_to_utf8 (filename));
           g_object_unref (gradient);
           fclose (file);
           return NULL;

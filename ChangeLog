@@ -1,3 +1,12 @@
+2006-08-05  Raphaël Quinet  <raphael@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/core/gimpgradient-load.c (gimp_gradient_load): Do not crash
+	when loading corrupt gradient files.  Ensure that error messages
+	are correctly reported with g_set_error() instead of g_message().
+	Fixes bug #349996.
+
 2006-07-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainertreeview.c
