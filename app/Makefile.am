@@ -90,7 +90,7 @@ INCLUDES = \
 	$(PANGOFT2_CFLAGS)	\
 	-I$(includedir)
 
-gimp_2_3_LDFLAGS = $(mwindows) $(munix)
+gimp_2_3_LDFLAGS = $(mwindows) $(munix) -u internal_procs_init
 
 gimp_2_3_LDADD = \
 	gui/libappgui.a			\
@@ -100,6 +100,7 @@ gimp_2_3_LDADD = \
 	display/libappdisplay.a		\
 	tools/libapptools.a		\
 	widgets/libappwidgets.a		\
+	pdb/libappinternal-procs.a	\
 	pdb/libapppdb.a			\
 	vectors/libappvectors.a		\
 	plug-in/libappplug-in.a		\
@@ -139,10 +140,13 @@ gimp_console_2_3_CPPFLAGS = \
 	$(AM_CPPFLAGS)			\
 	-DGIMP_CONSOLE_COMPILATION
 
+gimp_console_2_3_LDFLAGS = $(mwindows) $(munix) -u internal_procs_init
+
 gimp_console_2_3_LDADD = \
 	widgets/widgets-enums.o		\
 	display/display-enums.o		\
 	display/gimpdisplayoptions.o	\
+	pdb/libappinternal-procs.a	\
 	pdb/libapppdb.a			\
 	vectors/libappvectors.a		\
 	plug-in/libappplug-in.a		\
