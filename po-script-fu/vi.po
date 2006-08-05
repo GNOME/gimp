@@ -729,7 +729,7 @@ msgstr "Gần-Nền-RGB"
 
 #:../plug-ins/script-fu/scripts/blended-logo.scm.h:8
 msgid "FG-Transparent"
-msgstr "Cảnhg gần trong suốt"
+msgstr "Cảnh-gần trong suốt"
 
 #:../plug-ins/script-fu/scripts/blended-logo.scm.h:11
 #:../plug-ins/script-fu/scripts/comic-logo.scm.h:5

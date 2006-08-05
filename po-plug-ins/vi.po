@@ -10191,7 +10191,7 @@ msgstr "_Hiệu số góc:"
 
 #: ../plug-ins/gimpressionist/orientmap.c:669
 msgid "Offset all vectors with a given angle"
-msgstr "Thêm hiệu số vào mọi véc-tơ bằng góc đã chọ"
+msgstr "Thêm hiệu số vào mọi véc-tơ bằng góc đã chọn"
 
 #: ../plug-ins/gimpressionist/orientmap.c:680
 msgid "Change the strength of the selected vector"
@@ -10775,7 +10775,7 @@ msgid ""
 "create the most common image map type - image collection of \"thumbnails\", "
 "suitable for navigation bars."
 msgstr "Nét dẫn là hình chữ nhật định sẵn mà trải ra ảnh. Bạn xác định nó bằng độ "
-"rộng, độ cao và khoảng cảch từ nét dẫn khác. Nó cho phép bạn tạo nhanh kiểu "
+"rộng, độ cao và khoảng cách từ nét dẫn khác. Nó cho phép bạn tạo nhanh kiểu "
 "ánh xạ ảnh thường nhất: tập hợp ảnh thu nhỏ, thích hợp với thanh duyệt."
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:172
