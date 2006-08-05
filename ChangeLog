@@ -1,5 +1,10 @@
 2006-08-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/gimppluginmanager-file.c: don't #include
+	"pdb/gimp-pdb-compat.h".
+
+2006-08-05  Michael Natterer  <mitch@gimp.org>
+
 	Applied (modified and enhanced) patch from Chris Moller which allows
 	tools to distinguish similar colors not only by composite, but also
 	by R, G, B, H, S and V. Fixes bug #348291.

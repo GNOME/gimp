@@ -27,7 +27,6 @@
 #include "core/gimp.h"
 #include "core/gimpparamspecs.h"
 
-#include "pdb/gimp-pdb.h"
 #include "pdb/gimppluginprocedure.h"
 
 #include "gimpplugin.h"
