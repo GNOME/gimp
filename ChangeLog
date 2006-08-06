@@ -1,3 +1,9 @@
+2006-08-06  Karine Delvare  <edhel@gimp.org>
+
+	* app/tools/gimprectangletool.c: Applied patch from Karl Günter
+	Wünsch which finishes improving rectangle tools behaviour when
+	resizing with fixed ratio. Fixes bug #349337.
+
 2006-08-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/Makefile.am

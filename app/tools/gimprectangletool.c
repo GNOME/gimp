@@ -43,8 +43,6 @@
 
 #include "gimp-intl.h"
 
-#include <stdlib.h>
-
 enum
 {
   RECTANGLE_CHANGED,
@@ -1203,11 +1201,22 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
         }
 
       switch (function)
-      {
+        {
         case RECT_RESIZING_UPPER_LEFT:
+          /*
+           * Ok the same basically happens for each corner, just with a different fixed
+           * corner. To keep within aspect ratio and at the same time keep the cursor on
+           * one edge if not the corner itself:
+           * - calculate the two positions of the corner in question on the base of the current
+           *   mouse cursor position and the fixed corner opposite the one selected.
+           * - decide on which egde we are inside the rectangle dimension
+           * - if we are on the inside of the vertical edge then we use the x position of the 
+           *   cursor, otherwise we are on the inside (or close enough) of the horizontal
+           *   edge and then we use the y position of the cursor for the base of our new corner.
+           */
           x1 = rx2 - (ry2 - cury) * aspect + .5;
           y1 = ry2 - (rx2 - curx) / aspect + .5;
-          if (abs (x1 - curx) > abs (y1 - cury))
+          if ((y1 < cury) && (cury < y2))
             x1 = curx;
           else
             y1 = cury;
@@ -1216,7 +1225,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
         case RECT_RESIZING_UPPER_RIGHT:
           x2 = rx1 + (ry2 - cury) * aspect + .5;
           y1 = ry2 - (curx - rx1) / aspect + .5;
-          if (abs (x2 - curx) > abs (y1 - cury))
+          if ((y1 < cury) && (cury < y2))
             x2 = curx;
           else
             y1 = cury;
@@ -1225,7 +1234,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
         case RECT_RESIZING_LOWER_LEFT:
           x1 = rx2 - (cury - ry1) * aspect + .5;
           y2 = ry1 + (rx2 - curx) / aspect + .5;
-          if (abs (x1 - curx) > abs (y2 - cury))
+          if ((y1 < cury) && (cury < y2))
             x1 = curx;
           else
             y2 = cury;
@@ -1234,7 +1243,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
         case RECT_RESIZING_LOWER_RIGHT:
           x2 = rx1 + (cury - ry1) * aspect + .5;
           y2 = ry1 + (curx - rx1) / aspect + .5;
-          if (abs (x2 - curx) > abs (y2 - cury))
+          if ((y1 < cury) && (cury < y2))
             x2 = curx;
           else
             y2 = cury;
