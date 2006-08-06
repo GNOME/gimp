@@ -1,3 +1,9 @@
+2006-08-06  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimputils.c (gimp_strip_uline): restore unescaping
+	of "__"-escaped underlines which was broken since the addition of
+	"(_X)"-stripping.
+
 2006-08-06  Karine Delvare  <edhel@gimp.org>
 
 	* app/tools/gimprectangletool.c: Applied patch from Karl Günter
