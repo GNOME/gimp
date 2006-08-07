@@ -1,5 +1,10 @@
 2006-08-07  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-interface.c (script_fu_interface):
+	added missing call to gimp_window_set_transient(). Fixes bug #348249.
+
+2006-08-07  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpactiongroup.c
 	(gimp_action_group_add_string_actions): added missing cast.
 
