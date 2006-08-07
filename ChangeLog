@@ -1,3 +1,8 @@
+2006-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpactiongroup.c
+	(gimp_action_group_add_string_actions): added missing cast.
+
 2006-08-06  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimputils.c (gimp_strip_uline): restore unescaping

@@ -549,7 +549,8 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
       gchar            *label;
       const gchar      *tooltip;
 
-      label   = g_strip_context (entries[i].label, gettext (entries[i].label));
+      label   = (gchar *) g_strip_context (entries[i].label,
+                                           gettext (entries[i].label));
       tooltip = gettext (entries[i].tooltip);
 
       if (! group->mnemonics)
