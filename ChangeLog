@@ -1,7 +1,7 @@
 2006-08-08  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/drawable.pdb: changed limits in
-	gimp_drawable_thumbnail()in gimp_drawable_sub_thumbnail to 1024
+	gimp_drawable_thumbnail() and gimp_drawable_sub_thumbnail() to 1024
 	(GIMP_VIEWABLE_MAX_PREVIEW_SIZE) and added an assertion like the
 	one we have in image.pdb.
 
