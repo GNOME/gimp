@@ -125,7 +125,7 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.threads_leave       = gui_threads_leave;
   gimp->gui.set_busy            = gui_set_busy;
   gimp->gui.unset_busy          = gui_unset_busy;
-  gimp->gui.message             = gui_message;
+  gimp->gui.show_message        = gui_message;
   gimp->gui.help                = gui_help;
   gimp->gui.get_program_class   = gui_get_program_class;
   gimp->gui.get_display_name    = gui_get_display_name;

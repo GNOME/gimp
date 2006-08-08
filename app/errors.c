@@ -91,11 +91,13 @@ gimp_message_log_func (const gchar    *log_domain,
 
   if (gimp && GIMP_IS_GIMP (*gimp))
     {
-      gimp_message (*gimp, NULL, NULL, message);
-      return;
+      gimp_show_message (*gimp, NULL, NULL, message);
     }
-
-  g_printerr ("%s: %s\n\n", gimp_filename_to_utf8 (full_prog_name), message);
+  else
+    {
+      g_printerr ("%s: %s\n\n",
+                  gimp_filename_to_utf8 (full_prog_name), message);
+    }
 }
 
 void

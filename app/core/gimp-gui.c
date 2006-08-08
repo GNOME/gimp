@@ -45,7 +45,7 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.threads_leave       = NULL;
   gimp->gui.set_busy            = NULL;
   gimp->gui.unset_busy          = NULL;
-  gimp->gui.message             = NULL;
+  gimp->gui.show_message        = NULL;
   gimp->gui.help                = NULL;
   gimp->gui.get_program_class   = NULL;
   gimp->gui.get_display_name    = NULL;
@@ -139,10 +139,10 @@ gimp_unset_busy (Gimp *gimp)
 }
 
 void
-gimp_message (Gimp         *gimp,
-              GimpProgress *progress,
-              const gchar  *domain,
-              const gchar  *message)
+gimp_show_message (Gimp         *gimp,
+                   GimpProgress *progress,
+                   const gchar  *domain,
+                   const gchar  *message)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
@@ -151,13 +151,14 @@ gimp_message (Gimp         *gimp,
   if (! domain)
     domain = GIMP_ACRONYM;
 
-  if (progress && gimp_progress_message (progress, gimp, domain, message))
+  if (progress &&
+      gimp_progress_message (progress, gimp, domain, message))
     {
       /* message has already been handled by GimpProgress */
     }
-  else if (gimp->gui.message && ! gimp->console_messages)
+  else if (gimp->gui.show_message && ! gimp->console_messages)
     {
-      gimp->gui.message (gimp, progress, domain, message);
+      gimp->gui.show_message (gimp, progress, domain, message);
     }
   else
     {

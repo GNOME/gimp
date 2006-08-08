@@ -30,7 +30,7 @@ struct _GimpGui
   void           (* set_busy)            (Gimp                *gimp);
   void           (* unset_busy)          (Gimp                *gimp);
 
-  void           (* message)             (Gimp                *gimp,
+  void           (* show_message)        (Gimp                *gimp,
                                           GimpProgress        *progress,
                                           const gchar         *domain,
                                           const gchar         *message);
@@ -104,7 +104,7 @@ void           gimp_set_busy             (Gimp                *gimp);
 void           gimp_set_busy_until_idle  (Gimp                *gimp);
 void           gimp_unset_busy           (Gimp                *gimp);
 
-void           gimp_message              (Gimp                *gimp,
+void           gimp_show_message         (Gimp                *gimp,
                                           GimpProgress        *progress,
                                           const gchar         *domain,
                                           const gchar         *message);
