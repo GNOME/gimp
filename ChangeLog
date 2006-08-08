@@ -1,5 +1,15 @@
 2006-08-08  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimprectangleoptions.c
+	(gimp_rectangle_options_interface_get_type): made GimpToolOptions a
+	prerequisite of the GimpRectangleOptions interface.
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_interface_get_type): made GimpDrawTool a
+	prerequisite of the GimpRectangleTool interface.
+
+2006-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/file-save-dialog.c
 	(file_save_dialog_new): removed workaround for a GtkFileChooser
 	bug that doesn't seem to be needed any longer.

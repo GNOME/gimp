@@ -31,6 +31,7 @@
 #include "core/gimppickable.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpmarshal.h"
+
 #include "display/gimpcanvas.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -164,25 +165,25 @@ static guint gimp_rectangle_tool_signals[LAST_SIGNAL] = { 0 };
 GType
 gimp_rectangle_tool_interface_get_type (void)
 {
-  static GType rectangle_tool_iface_type = 0;
+  static GType iface_type = 0;
 
-  if (!rectangle_tool_iface_type)
+  if (!iface_type)
     {
-      static const GTypeInfo rectangle_tool_iface_info =
+      static const GTypeInfo iface_info =
       {
         sizeof (GimpRectangleToolInterface),
         (GBaseInitFunc)     gimp_rectangle_tool_iface_base_init,
         (GBaseFinalizeFunc) NULL,
       };
 
-      rectangle_tool_iface_type =
-        g_type_register_static (G_TYPE_INTERFACE,
-                                "GimpRectangleToolInterface",
-                                &rectangle_tool_iface_info,
-                                0);
+      iface_type = g_type_register_static (G_TYPE_INTERFACE,
+                                           "GimpRectangleToolInterface",
+                                           &iface_info, 0);
+
+      g_type_interface_add_prerequisite (iface_type, GIMP_TYPE_DRAW_TOOL);
     }
 
-  return rectangle_tool_iface_type;
+  return iface_type;
 }
 
 static void
@@ -196,7 +197,8 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface)
         g_signal_new ("rectangle-changed",
                       G_TYPE_FROM_INTERFACE (iface),
                       G_SIGNAL_RUN_FIRST,
-                      G_STRUCT_OFFSET (GimpRectangleToolInterface, rectangle_changed),
+                      G_STRUCT_OFFSET (GimpRectangleToolInterface,
+                                       rectangle_changed),
                       NULL, NULL,
                       gimp_marshal_VOID__VOID,
                       G_TYPE_NONE, 0);
