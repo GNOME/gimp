@@ -973,7 +973,7 @@ sub drawable_thumbnail {
 
     $help = <<'HELP';
 This function gets data from which a thumbnail of a drawable preview
-can be created. Maximum x or y dimension is 512 pixels. The pixels are
+can be created. Maximum x or y dimension is 1024 pixels. The pixels are
 returned in RGB[A] or GRAY[A] format. The bpp return value gives the
 number of bytes in the image.
 HELP
@@ -983,9 +983,9 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'width', type => '1 <= int32 <= 512',
+	{ name => 'width', type => '1 <= int32 <= 1024',
 	  desc => 'The requested thumbnail width' },
-	{ name => 'height', type => '1 <= int32 <= 512',
+	{ name => 'height', type => '1 <= int32 <= 1024',
 	  desc => 'The requested thumbnail height' }
     );
 
@@ -1008,6 +1008,8 @@ HELP
   GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
   TempBuf   *buf;
   gint       dwidth, dheight;
+
+  g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
 
   /* Adjust the width/height ratio */
   dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
@@ -1050,7 +1052,7 @@ sub drawable_sub_thumbnail {
 
     $help = <<'HELP';
 This function gets data from which a thumbnail of a drawable preview
-can be created. Maximum x or y dimension is 512 pixels. The pixels are
+can be created. Maximum x or y dimension is 1024 pixels. The pixels are
 returned in RGB[A] or GRAY[A] format. The bpp return value gives the
 number of bytes in the image.
 HELP
@@ -1068,9 +1070,9 @@ HELP
           desc => 'The width of the area' },
         { name => 'src_height', type => '1 <= int32',
           desc => 'The height of the area' },
-	{ name => 'dest_width', type => '1 <= int32 <= 512',
+	{ name => 'dest_width', type => '1 <= int32 <= 1024',
 	  desc => 'The thumbnail width' },
-	{ name => 'dest_height', type => '1 <= int32 <= 512',
+	{ name => 'dest_height', type => '1 <= int32 <= 1024',
 	  desc => 'The thumbnail height' }
     );
 

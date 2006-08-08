@@ -999,6 +999,8 @@ drawable_thumbnail_invoker (GimpProcedure     *procedure,
       TempBuf   *buf;
       gint       dwidth, dheight;
 
+      g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
+
       /* Adjust the width/height ratio */
       dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
       dheight = gimp_item_height (GIMP_ITEM (drawable));
@@ -2193,7 +2195,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-thumbnail",
                                      "Get a thumbnail of a drawable.",
-                                     "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 512 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
+                                     "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 1024 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
                                      "Andy Thomas",
                                      "Andy Thomas",
                                      "1999",
@@ -2208,13 +2210,13 @@ register_drawable_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("width",
                                                       "width",
                                                       "The requested thumbnail width",
-                                                      1, 512, 1,
+                                                      1, 1024, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("height",
                                                       "height",
                                                       "The requested thumbnail height",
-                                                      1, 512, 1,
+                                                      1, 1024, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("actual-width",
@@ -2256,7 +2258,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-sub-thumbnail",
                                      "Get a thumbnail of a sub-area of a drawable drawable.",
-                                     "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 512 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
+                                     "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 1024 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2004",
@@ -2295,13 +2297,13 @@ register_drawable_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("dest-width",
                                                       "dest width",
                                                       "The thumbnail width",
-                                                      1, 512, 1,
+                                                      1, 1024, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("dest-height",
                                                       "dest height",
                                                       "The thumbnail height",
-                                                      1, 512, 1,
+                                                      1, 1024, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("width",

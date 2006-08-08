@@ -39,8 +39,8 @@ static GdkPixbuf * gimp_pixbuf_from_data (guchar                 *data,
 /**
  * gimp_image_get_thumbnail:
  * @image_ID: the image ID
- * @width:    the requested thumbnail width  (<= 512 pixels)
- * @height:   the requested thumbnail height (<= 512 pixels)
+ * @width:    the requested thumbnail width  (<= 1024 pixels)
+ * @height:   the requested thumbnail height (<= 1024 pixels)
  * @alpha:    how to handle an alpha channel
  *
  * Retrieves a thumbnail pixbuf for the image identified by @image_ID.
@@ -61,8 +61,8 @@ gimp_image_get_thumbnail (gint32                  image_ID,
   gint    thumb_bpp;
   guchar *data;
 
-  g_return_val_if_fail (width  > 0 && width  <= 512, NULL);
-  g_return_val_if_fail (height > 0 && height <= 512, NULL);
+  g_return_val_if_fail (width  > 0 && width  <= 1024, NULL);
+  g_return_val_if_fail (height > 0 && height <= 1024, NULL);
 
   data = gimp_image_get_thumbnail_data (image_ID,
                                         &thumb_width,
@@ -79,8 +79,8 @@ gimp_image_get_thumbnail (gint32                  image_ID,
 /**
  * gimp_drawable_get_thumbnail:
  * @drawable_ID: the drawable ID
- * @width:       the requested thumbnail width  (<= 512 pixels)
- * @height:      the requested thumbnail height (<= 512 pixels)
+ * @width:       the requested thumbnail width  (<= 1024 pixels)
+ * @height:      the requested thumbnail height (<= 1024 pixels)
  * @alpha:       how to handle an alpha channel
  *
  * Retrieves a thumbnail pixbuf for the drawable identified by
@@ -102,8 +102,8 @@ gimp_drawable_get_thumbnail (gint32                  drawable_ID,
   gint    thumb_bpp;
   guchar *data;
 
-  g_return_val_if_fail (width  > 0 && width  <= 512, NULL);
-  g_return_val_if_fail (height > 0 && height <= 512, NULL);
+  g_return_val_if_fail (width  > 0 && width  <= 1024, NULL);
+  g_return_val_if_fail (height > 0 && height <= 1024, NULL);
 
   data = gimp_drawable_get_thumbnail_data (drawable_ID,
                                            &thumb_width,
@@ -125,8 +125,8 @@ gimp_drawable_get_thumbnail (gint32                  drawable_ID,
  * @src_y:       the y coordinate of the area
  * @src_width:   the width of the area
  * @src_height:  the height of the area
- * @dest_width:  the requested thumbnail width  (<= 512 pixels)
- * @dest_height: the requested thumbnail height (<= 512 pixels)
+ * @dest_width:  the requested thumbnail width  (<= 1024 pixels)
+ * @dest_height: the requested thumbnail height (<= 1024 pixels)
  * @alpha:       how to handle an alpha channel
  *
  * Retrieves a thumbnail pixbuf for the drawable identified by
@@ -156,8 +156,8 @@ gimp_drawable_get_sub_thumbnail (gint32                  drawable_ID,
   g_return_val_if_fail (src_y >= 0, NULL);
   g_return_val_if_fail (src_width  > 0, NULL);
   g_return_val_if_fail (src_height > 0, NULL);
-  g_return_val_if_fail (dest_width  > 0 && dest_width  <= 512, NULL);
-  g_return_val_if_fail (dest_height > 0 && dest_height <= 512, NULL);
+  g_return_val_if_fail (dest_width  > 0 && dest_width  <= 1024, NULL);
+  g_return_val_if_fail (dest_height > 0 && dest_height <= 1024, NULL);
 
   data = gimp_drawable_get_sub_thumbnail_data (drawable_ID,
                                                src_x, src_y,

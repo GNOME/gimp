@@ -1,5 +1,17 @@
 2006-08-08  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/drawable.pdb: changed limits in
+	gimp_drawable_thumbnail()in gimp_drawable_sub_thumbnail to 1024
+	(GIMP_VIEWABLE_MAX_PREVIEW_SIZE) and added an assertion like the
+	one we have in image.pdb.
+
+	* app/pdb/drawable_cmds.c
+	* libgimp/gimpdrawable_pdb.c: regenerated.
+
+	* libgimp/gimppixbuf.c: increased the limit to 1024 here as well.
+
+2006-08-08  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpconfig-deserialize.c
 	(gimp_config_deserialize_property)
 	* libgimpconfig/gimpconfig-serialize.c
