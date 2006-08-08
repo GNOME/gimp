@@ -62,7 +62,7 @@ enum
   PLUG_IN_OPENED,
   PLUG_IN_CLOSED,
   MENU_BRANCH_ADDED,
-  LAST_PLUG_INS_CHANGED,
+  HISTORY_CHANGED,
   LAST_SIGNAL
 };
 
@@ -132,12 +132,12 @@ gimp_plug_in_manager_class_init (GimpPlugInManagerClass *klass)
                   G_TYPE_STRING,
                   G_TYPE_STRING);
 
-  manager_signals[LAST_PLUG_INS_CHANGED] =
-    g_signal_new ("last-plug-ins-changed",
+  manager_signals[HISTORY_CHANGED] =
+    g_signal_new ("history-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpPlugInManagerClass,
-                                   last_plug_ins_changed),
+                                   history_changed),
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -162,7 +162,7 @@ gimp_plug_in_manager_init (GimpPlugInManager *manager)
   manager->current_plug_in    = NULL;
   manager->open_plug_ins      = NULL;
   manager->plug_in_stack      = NULL;
-  manager->last_plug_ins      = NULL;
+  manager->history            = NULL;
 
   manager->shm                = NULL;
   manager->interpreter_db     = gimp_interpreter_db_new ();
@@ -196,10 +196,10 @@ gimp_plug_in_manager_finalize (GObject *object)
       manager->plug_in_procedures = NULL;
     }
 
-  if (manager->last_plug_ins)
+  if (manager->history)
     {
-      g_slist_free (manager->last_plug_ins);
-      manager->last_plug_ins = NULL;
+      g_slist_free (manager->history);
+      manager->history = NULL;
     }
 
   if (manager->shm)
@@ -684,14 +684,15 @@ gimp_plug_in_manager_remove_temp_proc (GimpPlugInManager      *manager,
   manager->plug_in_procedures = g_slist_remove (manager->plug_in_procedures,
                                                 procedure);
 
-  gimp_pdb_unregister_procedure (manager->gimp->pdb, GIMP_PROCEDURE (procedure));
+  gimp_pdb_unregister_procedure (manager->gimp->pdb,
+                                 GIMP_PROCEDURE (procedure));
 
   g_object_unref (procedure);
 }
 
 void
-gimp_plug_in_manager_set_last_plug_in (GimpPlugInManager   *manager,
-                                       GimpPlugInProcedure *procedure)
+gimp_plug_in_manager_set_last_proc (GimpPlugInManager   *manager,
+                                    GimpPlugInProcedure *procedure)
 {
   GSList *list;
   gint    history_size;
@@ -700,19 +701,18 @@ gimp_plug_in_manager_set_last_plug_in (GimpPlugInManager   *manager,
 
   history_size = MAX (1, manager->gimp->config->plug_in_history_size);
 
-  manager->last_plug_ins = g_slist_remove (manager->last_plug_ins, procedure);
-  manager->last_plug_ins = g_slist_prepend (manager->last_plug_ins, procedure);
+  manager->history = g_slist_remove (manager->history, procedure);
+  manager->history = g_slist_prepend (manager->history, procedure);
 
-  list = g_slist_nth (manager->last_plug_ins, history_size);
+  list = g_slist_nth (manager->history, history_size);
 
   if (list)
     {
-      manager->last_plug_ins = g_slist_remove_link (manager->last_plug_ins,
-                                                    list);
+      manager->history = g_slist_remove_link (manager->history, list);
       g_slist_free (list);
     }
 
-  g_signal_emit (manager, manager_signals[LAST_PLUG_INS_CHANGED], 0);
+  g_signal_emit (manager, manager_signals[HISTORY_CHANGED], 0);
 }
 
 void

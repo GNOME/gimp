@@ -68,7 +68,7 @@ static void     plug_in_actions_menu_path_added      (GimpPlugInProcedure *proc,
 static void     plug_in_actions_add_proc             (GimpActionGroup     *group,
                                                       GimpPlugInProcedure *proc);
 
-static void     plug_in_actions_last_changed         (GimpPlugInManager   *manager,
+static void     plug_in_actions_history_changed      (GimpPlugInManager   *manager,
                                                       GimpActionGroup     *group);
 static gboolean plug_in_actions_check_translation    (const gchar         *original,
                                                       const gchar         *translated);
@@ -220,12 +220,11 @@ plug_in_actions_setup (GimpActionGroup *group)
 
   g_free (entries);
 
-  g_signal_connect_object (group->gimp->plug_in_manager,
-                           "last-plug-ins-changed",
-                           G_CALLBACK (plug_in_actions_last_changed),
+  g_signal_connect_object (group->gimp->plug_in_manager, "history-changed",
+                           G_CALLBACK (plug_in_actions_history_changed),
                            group, 0);
 
-  plug_in_actions_last_changed (group->gimp->plug_in_manager, group);
+  plug_in_actions_history_changed (group->gimp->plug_in_manager, group);
 }
 
 void
@@ -234,7 +233,7 @@ plug_in_actions_update (GimpActionGroup *group,
 {
   GimpImage         *image = action_data_get_image (data);
   GimpPlugInManager *manager;
-  GimpImageType      type   = -1;
+  GimpImageType      type  = -1;
   GSList            *list;
   gint               i;
 
@@ -258,8 +257,7 @@ plug_in_actions_update (GimpActionGroup *group,
           ! proc->prefixes      &&
           ! proc->magics)
         {
-          gboolean sensitive = gimp_plug_in_procedure_get_sensitive (proc,
-                                                                     type);
+          gboolean sensitive = gimp_plug_in_procedure_get_sensitive (proc, type);
 
           gimp_action_group_set_action_sensitive (group,
                                                   GIMP_OBJECT (proc)->name,
@@ -267,9 +265,8 @@ plug_in_actions_update (GimpActionGroup *group,
         }
     }
 
-  if (manager->last_plug_ins &&
-      gimp_plug_in_procedure_get_sensitive (manager->last_plug_ins->data,
-                                            type))
+  if (manager->history &&
+      gimp_plug_in_procedure_get_sensitive (manager->history->data, type))
     {
       gimp_action_group_set_action_sensitive (group, "plug-in-repeat", TRUE);
       gimp_action_group_set_action_sensitive (group, "plug-in-reshow", TRUE);
@@ -280,7 +277,7 @@ plug_in_actions_update (GimpActionGroup *group,
       gimp_action_group_set_action_sensitive (group, "plug-in-reshow", FALSE);
     }
 
-  for (list = manager->last_plug_ins, i = 0; list; list = list->next, i++)
+  for (list = manager->history, i = 0; list; list = list->next, i++)
     {
       GimpPlugInProcedure *proc = list->data;
       gchar               *name = g_strdup_printf ("plug-in-recent-%02d",
@@ -506,17 +503,17 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
 }
 
 static void
-plug_in_actions_last_changed (GimpPlugInManager *manager,
-                              GimpActionGroup   *group)
+plug_in_actions_history_changed (GimpPlugInManager *manager,
+                                 GimpActionGroup   *group)
 {
   GSList      *list;
   const gchar *progname;
   const gchar *domain;
   gint         i;
 
-  if (manager->last_plug_ins)
+  if (manager->history)
     {
-      GimpPlugInProcedure *proc = manager->last_plug_ins->data;
+      GimpPlugInProcedure *proc = manager->history->data;
       gchar               *label;
       gchar               *repeat;
       gchar               *reshow;
@@ -546,7 +543,7 @@ plug_in_actions_last_changed (GimpPlugInManager *manager,
                                           _("Re-Show Last"));
     }
 
-  for (list = manager->last_plug_ins, i = 0; list; list = list->next, i++)
+  for (list = manager->history, i = 0; list; list = list->next, i++)
     {
       GtkAction           *action;
       GimpPlugInProcedure *proc = list->data;

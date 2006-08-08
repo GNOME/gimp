@@ -1,5 +1,17 @@
 2006-08-08  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/plug-in-commands.c (plug_in_run_cmd_callback): add
+	all procedures that take an image paramter to the history of
+	last-used procedures. Fixes bug #348243.
+	(plug_in_repeat_cmd_callback): use plug_in_collect_drawable_args()
+	to construct the procedure arguments.
+
+	* app/actions/plug-in-actions.c
+	* app/plug-in/gimppluginmanager.[ch]: renamed "last_plug_ins" to
+	"history"; it's actually a list of procedures.
+
+2006-08-08  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/drawable.pdb: changed limits in
 	gimp_drawable_thumbnail() and gimp_drawable_sub_thumbnail() to 1024
 	(GIMP_VIEWABLE_MAX_PREVIEW_SIZE) and added an assertion like the
