@@ -1,5 +1,9 @@
 2006-08-08  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpzoompreview.c: fixed gtk-doc comments.
+
+2006-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimppluginmanager-history.[ch]: added API to remove
 	a procedure from the history.
 

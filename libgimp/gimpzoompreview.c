@@ -584,11 +584,11 @@ gimp_zoom_preview_new (GimpDrawable *drawable)
 }
 
 /**
- * gimp_zoom_get_drawable:
+ * gimp_zoom_preview_get_drawable:
  * @preview: a #GimpZoomPreview widget
  *
  * Returns the #GimpDrawable the #GimpZoomPreview is attached to.
- * 
+ *
  * Return Value: the #GimpDrawable that was passed to gimp_zoom_preview_new().
  *
  * Since: GIMP 2.4
@@ -602,10 +602,10 @@ gimp_zoom_preview_get_drawable (GimpZoomPreview *preview)
 }
 
 /**
- * gimp_zoom_get_factor:
+ * gimp_zoom_preview_get_factor:
  * @preview: a #GimpZoomPreview widget
  *
- * Returns the zoom factor of the zoom model the preview is currently using.
+ * Returns the zoom factor the preview is currently using.
  *
  * Return Value: the current zoom factor
  *
