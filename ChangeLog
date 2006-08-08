@@ -1,5 +1,14 @@
 2006-08-08  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimppluginmanager-history.[ch]: added API to remove
+	a procedure from the history.
+
+	* app/plug-in/gimppluginmanager.c
+	(gimp_plug_in_manager_remove_temp_proc): remove the procedure from
+	the history.
+
+2006-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/Makefile.am
 	* app/plug-in/gimppluginmanager-history.[ch]: new files that deal
 	with the history of plug-in procedures.

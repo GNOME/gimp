@@ -506,10 +506,9 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
                                  GimpActionGroup   *group)
 {
   GimpPlugInProcedure *proc;
-  GSList      *list;
-  const gchar *progname;
-  const gchar *domain;
-  gint         i;
+  const gchar         *progname;
+  const gchar         *domain;
+  gint                 i;
 
   proc = gimp_plug_in_manager_history_nth (manager, 0);
 
