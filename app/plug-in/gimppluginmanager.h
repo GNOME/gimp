@@ -109,12 +109,11 @@ void   gimp_plug_in_manager_add_open_plug_in    (GimpPlugInManager   *manager,
 void   gimp_plug_in_manager_remove_open_plug_in (GimpPlugInManager   *manager,
                                                  GimpPlugIn          *plug_in);
 
-void   gimp_plug_in_manager_set_last_proc       (GimpPlugInManager   *manager,
-                                                 GimpPlugInProcedure *procedure);
-
 void   gimp_plug_in_manager_plug_in_push        (GimpPlugInManager   *manager,
                                                  GimpPlugIn          *plug_in);
 void   gimp_plug_in_manager_plug_in_pop         (GimpPlugInManager   *manager);
+
+void   gimp_plug_in_manager_history_changed     (GimpPlugInManager   *manager);
 
 
 #endif  /* __GIMP_PLUG_IN_MANAGER_H__ */

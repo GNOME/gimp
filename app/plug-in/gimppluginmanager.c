@@ -47,6 +47,7 @@
 #include "gimppluginmanager-call.h"
 #include "gimppluginmanager-data.h"
 #include "gimppluginmanager-help-domain.h"
+#include "gimppluginmanager-history.h"
 #include "gimppluginmanager-locale-domain.h"
 #include "gimppluginmanager-menu-branch.h"
 #include "gimppluginshm.h"
@@ -67,6 +68,7 @@ enum
 };
 
 
+static void     gimp_plug_in_manager_dispose     (GObject    *object);
 static void     gimp_plug_in_manager_finalize    (GObject    *object);
 
 static gint64   gimp_plug_in_manager_get_memsize (GimpObject *object,
@@ -142,6 +144,7 @@ gimp_plug_in_manager_class_init (GimpPlugInManagerClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  object_class->dispose          = gimp_plug_in_manager_dispose;
   object_class->finalize         = gimp_plug_in_manager_finalize;
 
   gimp_object_class->get_memsize = gimp_plug_in_manager_get_memsize;
@@ -172,6 +175,14 @@ gimp_plug_in_manager_init (GimpPlugInManager *manager)
 }
 
 static void
+gimp_plug_in_manager_dispose (GObject *object)
+{
+  GimpPlugInManager *manager = GIMP_PLUG_IN_MANAGER (object);
+
+  gimp_plug_in_manager_history_free (manager);
+}
+
+static void
 gimp_plug_in_manager_finalize (GObject *object)
 {
   GimpPlugInManager *manager = GIMP_PLUG_IN_MANAGER (object);
@@ -194,12 +205,6 @@ gimp_plug_in_manager_finalize (GObject *object)
                        (GFunc) g_object_unref, NULL);
       g_slist_free (manager->plug_in_procedures);
       manager->plug_in_procedures = NULL;
-    }
-
-  if (manager->history)
-    {
-      g_slist_free (manager->history);
-      manager->history = NULL;
     }
 
   if (manager->shm)
@@ -691,31 +696,6 @@ gimp_plug_in_manager_remove_temp_proc (GimpPlugInManager      *manager,
 }
 
 void
-gimp_plug_in_manager_set_last_proc (GimpPlugInManager   *manager,
-                                    GimpPlugInProcedure *procedure)
-{
-  GSList *list;
-  gint    history_size;
-
-  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-
-  history_size = MAX (1, manager->gimp->config->plug_in_history_size);
-
-  manager->history = g_slist_remove (manager->history, procedure);
-  manager->history = g_slist_prepend (manager->history, procedure);
-
-  list = g_slist_nth (manager->history, history_size);
-
-  if (list)
-    {
-      manager->history = g_slist_remove_link (manager->history, list);
-      g_slist_free (list);
-    }
-
-  g_signal_emit (manager, manager_signals[HISTORY_CHANGED], 0);
-}
-
-void
 gimp_plug_in_manager_add_open_plug_in (GimpPlugInManager *manager,
                                        GimpPlugIn        *plug_in)
 {
@@ -770,6 +750,14 @@ gimp_plug_in_manager_plug_in_pop (GimpPlugInManager *manager)
     manager->current_plug_in = manager->plug_in_stack->data;
   else
     manager->current_plug_in = NULL;
+}
+
+void
+gimp_plug_in_manager_history_changed (GimpPlugInManager *manager)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
+
+  g_signal_emit (manager, manager_signals[HISTORY_CHANGED], 0);
 }
 
 

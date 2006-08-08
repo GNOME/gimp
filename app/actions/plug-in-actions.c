@@ -27,14 +27,13 @@
 
 #include "actions-types.h"
 
-#include "config/gimpcoreconfig.h"
-
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginmanager-help-domain.h"
+#include "plug-in/gimppluginmanager-history.h"
 #include "plug-in/gimppluginmanager-locale-domain.h"
 #include "plug-in/gimppluginmanager-menu-branch.h"
 #include "plug-in/gimppluginprocedure.h"
@@ -192,7 +191,7 @@ plug_in_actions_setup (GimpActionGroup *group)
                            G_CALLBACK (plug_in_actions_unregister_procedure),
                            group, 0);
 
-  n_entries = group->gimp->config->plug_in_history_size;
+  n_entries = gimp_plug_in_manager_history_size (group->gimp->plug_in_manager);
 
   entries = g_new0 (GimpEnumActionEntry, n_entries);
 
@@ -506,17 +505,19 @@ static void
 plug_in_actions_history_changed (GimpPlugInManager *manager,
                                  GimpActionGroup   *group)
 {
+  GimpPlugInProcedure *proc;
   GSList      *list;
   const gchar *progname;
   const gchar *domain;
   gint         i;
 
-  if (manager->history)
+  proc = gimp_plug_in_manager_history_nth (manager, 0);
+
+  if (proc)
     {
-      GimpPlugInProcedure *proc = manager->history->data;
-      gchar               *label;
-      gchar               *repeat;
-      gchar               *reshow;
+      gchar *label;
+      gchar *repeat;
+      gchar *reshow;
 
       progname = gimp_plug_in_procedure_get_progname (proc);
       domain   = gimp_plug_in_manager_get_locale_domain (manager,
@@ -543,17 +544,16 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
                                           _("Re-Show Last"));
     }
 
-  for (list = manager->history, i = 0; list; list = list->next, i++)
+  for (i = 0; i < gimp_plug_in_manager_history_length (manager); i++)
     {
-      GtkAction           *action;
-      GimpPlugInProcedure *proc = list->data;
-      gchar               *name = g_strdup_printf ("plug-in-recent-%02d",
-                                                   i + 1);
-      gchar               *label;
+      GtkAction *action;
+      gchar     *name = g_strdup_printf ("plug-in-recent-%02d", i + 1);
+      gchar     *label;
 
       action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
       g_free (name);
 
+      proc     = gimp_plug_in_manager_history_nth (manager, i);
       progname = gimp_plug_in_procedure_get_progname (proc);
       domain   = gimp_plug_in_manager_get_locale_domain (manager,
                                                          progname, NULL);
@@ -569,7 +569,7 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
       g_free (label);
     }
 
-  for (; i < manager->gimp->config->plug_in_history_size; i++)
+  for (; i < gimp_plug_in_manager_history_size (manager); i++)
     {
       GtkAction *action;
       gchar     *name = g_strdup_printf ("plug-in-recent-%02d", i + 1);

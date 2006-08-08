@@ -1,5 +1,14 @@
 2006-08-08  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/Makefile.am
+	* app/plug-in/gimppluginmanager-history.[ch]: new files that deal
+	with the history of plug-in procedures.
+
+	* app/actions/plug-in-actions.[ch]
+	* app/plug-in/gimppluginmanager.[ch]: changed accordingly.
+
+2006-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/plug-in-commands.c (plug_in_run_cmd_callback): add
 	all procedures that take an image paramter to the history of
 	last-used procedures. Fixes bug #348243.

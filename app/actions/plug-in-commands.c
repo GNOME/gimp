@@ -38,6 +38,7 @@
 
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginmanager-data.h"
+#include "plug-in/gimppluginmanager-history.h"
 
 #include "pdb/gimpprocedure.h"
 
@@ -184,7 +185,7 @@ plug_in_run_cmd_callback (GtkAction           *action,
       if (procedure->num_args  >= 2  &&
           GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[1]))
         {
-          gimp_plug_in_manager_set_last_proc (gimp->plug_in_manager, proc);
+          gimp_plug_in_manager_history_add (gimp->plug_in_manager, proc);
         }
     }
 
@@ -206,7 +207,9 @@ plug_in_repeat_cmd_callback (GtkAction *action,
   if (strcmp (gtk_action_get_name (action), "plug-in-repeat") == 0)
     interactive = FALSE;
 
-  procedure = g_slist_nth_data (gimp->plug_in_manager->history, value);
+  procedure =
+    GIMP_PROCEDURE (gimp_plug_in_manager_history_nth (gimp->plug_in_manager,
+                                                      value));
 
   if (procedure)
     {
