@@ -11,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-05 17:10+0200\n"
-"PO-Revision-Date: 2006-08-05 17:17+0200\n"
+"POT-Creation-Date: 2006-08-08 11:40+0200\n"
+"PO-Revision-Date: 2006-08-08 11:48+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team: Czech <cs@li.org>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -230,7 +230,7 @@ msgstr "Editor stop"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:101 ../app/actions/dialogs-actions.c:130
-#: ../app/core/gimp.c:807 ../app/dialogs/dialogs.c:146
+#: ../app/core/gimp.c:814 ../app/dialogs/dialogs.c:146
 #: ../app/dialogs/preferences-dialog.c:2525
 msgid "Brushes"
 msgstr "Stopy"
@@ -299,7 +299,7 @@ msgstr "Soubor"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:146 ../app/actions/dialogs-actions.c:150
-#: ../app/core/gimp.c:823 ../app/dialogs/dialogs.c:154
+#: ../app/core/gimp.c:830 ../app/dialogs/dialogs.c:154
 #: ../app/dialogs/preferences-dialog.c:2541
 msgid "Fonts"
 msgstr "Písma"
@@ -311,7 +311,7 @@ msgstr "Editor přechodů"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:152 ../app/actions/dialogs-actions.c:140
-#: ../app/core/gimp.c:819 ../app/dialogs/dialogs.c:150
+#: ../app/core/gimp.c:826 ../app/dialogs/dialogs.c:150
 #: ../app/dialogs/preferences-dialog.c:2537
 msgid "Gradients"
 msgstr "Přechody"
@@ -343,14 +343,14 @@ msgstr "Editor palety"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:170 ../app/actions/dialogs-actions.c:145
-#: ../app/core/gimp.c:815 ../app/dialogs/dialogs.c:152
+#: ../app/core/gimp.c:822 ../app/dialogs/dialogs.c:152
 #: ../app/dialogs/preferences-dialog.c:2533
 msgid "Palettes"
 msgstr "Palety"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:173 ../app/actions/dialogs-actions.c:135
-#: ../app/core/gimp.c:811 ../app/dialogs/dialogs.c:148
+#: ../app/core/gimp.c:818 ../app/dialogs/dialogs.c:148
 #: ../app/dialogs/preferences-dialog.c:2529
 msgid "Patterns"
 msgstr "Vzorky"
@@ -374,7 +374,7 @@ msgid "Select"
 msgstr "Vybrat"
 
 #. initialize the template list
-#: ../app/actions/actions.c:188 ../app/core/gimp.c:832
+#: ../app/actions/actions.c:188 ../app/core/gimp.c:839
 #: ../app/dialogs/dialogs.c:162
 msgid "Templates"
 msgstr "Šablony"
@@ -731,7 +731,7 @@ msgstr "_Nástroj"
 msgid "_Brush"
 msgstr "_Stopa"
 
-#: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:100
+#: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:99
 #: ../app/dialogs/preferences-dialog.c:1786
 msgid "_Pattern"
 msgstr "_Vzorek"
@@ -1660,7 +1660,7 @@ msgstr "U_končit"
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "Ukončit GIMP"
 
-#: ../app/actions/file-commands.c:240 ../app/dialogs/file-save-dialog.c:476
+#: ../app/actions/file-commands.c:240 ../app/dialogs/file-save-dialog.c:488
 #: ../app/widgets/gimpdnd-xds.c:172
 #, c-format
 msgid ""
@@ -1672,7 +1672,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:271 ../app/dialogs/file-save-dialog.c:83
+#: ../app/actions/file-commands.c:271 ../app/dialogs/file-save-dialog.c:82
 msgid "Save Image"
 msgstr "Zapsat obrázek"
 
@@ -2939,113 +2939,113 @@ msgstr "_Upravit vzorek..."
 msgid "Edit pattern"
 msgstr "Upravit vzorek"
 
-#: ../app/actions/plug-in-actions.c:85
+#: ../app/actions/plug-in-actions.c:84
 msgid "Filte_rs"
 msgstr "_Filtry"
 
-#: ../app/actions/plug-in-actions.c:86
+#: ../app/actions/plug-in-actions.c:85
 msgid "Recently Used"
 msgstr "Nedávno použité"
 
-#: ../app/actions/plug-in-actions.c:87
+#: ../app/actions/plug-in-actions.c:86
 msgid "_Blur"
 msgstr "_Rozostření"
 
-#: ../app/actions/plug-in-actions.c:88
+#: ../app/actions/plug-in-actions.c:87
 msgid "_Noise"
 msgstr "_Šum"
 
-#: ../app/actions/plug-in-actions.c:89
+#: ../app/actions/plug-in-actions.c:88
 msgid "Edge-De_tect"
 msgstr "_Detekce hran"
 
-#: ../app/actions/plug-in-actions.c:90
+#: ../app/actions/plug-in-actions.c:89
 msgid "En_hance"
 msgstr "_Vylepšení"
 
-#: ../app/actions/plug-in-actions.c:91
+#: ../app/actions/plug-in-actions.c:90
 msgid "C_ombine"
 msgstr "_Kombinace"
 
-#: ../app/actions/plug-in-actions.c:92
+#: ../app/actions/plug-in-actions.c:91
 msgid "_Generic"
 msgstr "_Obecné"
 
-#: ../app/actions/plug-in-actions.c:93
+#: ../app/actions/plug-in-actions.c:92
 msgid "_Light and Shadow"
 msgstr "_Světlo a stín"
 
-#: ../app/actions/plug-in-actions.c:94
+#: ../app/actions/plug-in-actions.c:93
 msgid "_Distorts"
 msgstr "_Zkreslení"
 
-#: ../app/actions/plug-in-actions.c:95
+#: ../app/actions/plug-in-actions.c:94
 msgid "_Artistic"
 msgstr "_Umění"
 
-#: ../app/actions/plug-in-actions.c:96
+#: ../app/actions/plug-in-actions.c:95
 msgid "_Map"
 msgstr "_Mapa"
 
-#: ../app/actions/plug-in-actions.c:97
+#: ../app/actions/plug-in-actions.c:96
 msgid "_Render"
 msgstr "_Vykreslení"
 
-#: ../app/actions/plug-in-actions.c:98
+#: ../app/actions/plug-in-actions.c:97
 msgid "_Clouds"
 msgstr "_Mraky"
 
-#: ../app/actions/plug-in-actions.c:99
+#: ../app/actions/plug-in-actions.c:98
 msgid "_Nature"
 msgstr "_Příroda"
 
-#: ../app/actions/plug-in-actions.c:101
+#: ../app/actions/plug-in-actions.c:100
 msgid "_Web"
 msgstr "_WWW"
 
-#: ../app/actions/plug-in-actions.c:102
+#: ../app/actions/plug-in-actions.c:101
 msgid "An_imation"
 msgstr "_Animace"
 
-#: ../app/actions/plug-in-actions.c:105
+#: ../app/actions/plug-in-actions.c:104
 msgid "Reset all _Filters"
 msgstr "Přenastavit všechny _filtry"
 
-#: ../app/actions/plug-in-actions.c:106
+#: ../app/actions/plug-in-actions.c:105
 msgid "Set all plug-in to their default settings"
 msgstr "Nastavit všechny zásuvné moduly na výchozí hodnoty"
 
-#: ../app/actions/plug-in-actions.c:114
+#: ../app/actions/plug-in-actions.c:113
 msgid "Re_peat Last"
 msgstr "_Opakovat poslední"
 
-#: ../app/actions/plug-in-actions.c:115
+#: ../app/actions/plug-in-actions.c:114
 msgid "Rerun the last used plug-in using the same settings"
 msgstr "Spustit naposledy použitý zásuvný modul se stejnými nastaveními"
 
-#: ../app/actions/plug-in-actions.c:120
+#: ../app/actions/plug-in-actions.c:119
 msgid "R_e-Show Last"
 msgstr "Z_novu zobrazit poslední"
 
-#: ../app/actions/plug-in-actions.c:121
+#: ../app/actions/plug-in-actions.c:120
 msgid "Show the last used plug-in dialog again"
 msgstr "Zobrazit dialog naposledy použitého zásuvného modulu"
 
-#: ../app/actions/plug-in-actions.c:531
+#: ../app/actions/plug-in-actions.c:530
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Z_opakovat \"%s\""
 
-#: ../app/actions/plug-in-actions.c:532
+#: ../app/actions/plug-in-actions.c:531
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Znovu z_obrazit \"%s\""
 
-#: ../app/actions/plug-in-actions.c:545
+#: ../app/actions/plug-in-actions.c:544
 msgid "Repeat Last"
 msgstr "Opakovat poslední"
 
-#: ../app/actions/plug-in-actions.c:547
+#: ../app/actions/plug-in-actions.c:546
 msgid "Re-Show Last"
 msgstr "Znovu zobrazit poslední"
 
@@ -3363,7 +3363,7 @@ msgstr "Otevřít textový soubor (UTF-8)"
 #: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated.c:562
 #: ../app/core/gimpbrushpipe.c:314 ../app/core/gimpgradient-load.c:62
 #: ../app/core/gimppalette.c:322 ../app/core/gimppattern.c:263
-#: ../app/tools/gimpimagemaptool.c:581 ../app/xcf/xcf.c:317
+#: ../app/tools/gimpimagemaptool.c:581 ../app/xcf/xcf.c:316
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nelze otevřít '%s' pro čtení: %s"
@@ -4076,7 +4076,7 @@ msgstr ""
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:142
 #: ../app/core/gimppalette.c:521 ../app/gui/themes.c:238
 #: ../app/tools/gimpimagemaptool.c:580 ../app/vectors/gimpvectors-export.c:83
-#: ../app/xcf/xcf.c:392
+#: ../app/xcf/xcf.c:391
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nelze otevřít '%s' pro zápis: %s"
@@ -5239,31 +5239,31 @@ msgstr "Vytvářím adresář '%s'..."
 msgid "Cannot create folder '%s': %s"
 msgstr "Nelze vytvořit adresář '%s': %s"
 
-#: ../app/core/gimp.c:512
+#: ../app/core/gimp.c:518
 msgid "Initialization"
 msgstr "Inicializace"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:587
+#: ../app/core/gimp.c:593
 msgid "Internal Procedures"
 msgstr "Vnitřní procedury"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:803
+#: ../app/core/gimp.c:810
 msgid "Looking for data files"
 msgstr "Hledám datové soubory"
 
-#: ../app/core/gimp.c:803
+#: ../app/core/gimp.c:810
 msgid "Parasites"
 msgstr "Parazity"
 
 #. initialize the document history
-#: ../app/core/gimp.c:828
+#: ../app/core/gimp.c:835
 msgid "Documents"
 msgstr "Dokumenty"
 
 #. initialize the module list
-#: ../app/core/gimp.c:836 ../app/dialogs/preferences-dialog.c:2553
+#: ../app/core/gimp.c:843 ../app/dialogs/preferences-dialog.c:2553
 msgid "Modules"
 msgstr "Moduly"
 
@@ -6406,7 +6406,7 @@ msgstr "Otevřít umístění"
 msgid "Enter location (URI):"
 msgstr "Zadejte umístění (URI):"
 
-#: ../app/dialogs/file-save-dialog.c:271 ../app/dialogs/file-save-dialog.c:307
+#: ../app/dialogs/file-save-dialog.c:270 ../app/dialogs/file-save-dialog.c:312
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -6415,7 +6415,7 @@ msgstr ""
 "zvolte formát souboru ze seznamu formátů souborů."
 
 #. remote URI
-#: ../app/dialogs/file-save-dialog.c:340
+#: ../app/dialogs/file-save-dialog.c:353
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -6425,15 +6425,15 @@ msgstr ""
 "souboru. Zadejte prosím příponu souboru, která odpovídá zvolenému formátu "
 "soubor nebo nezadávejte vůbec žádnou příponu."
 
-#: ../app/dialogs/file-save-dialog.c:400
+#: ../app/dialogs/file-save-dialog.c:412
 msgid "Extension Mismatch"
 msgstr "Přípona neodpovídá"
 
-#: ../app/dialogs/file-save-dialog.c:416
+#: ../app/dialogs/file-save-dialog.c:428
 msgid "The given file extension does not match the chosen file type."
 msgstr "Zadaná přípona souboru neodpovída zvolenému typu souboru."
 
-#: ../app/dialogs/file-save-dialog.c:420
+#: ../app/dialogs/file-save-dialog.c:432
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Chcete přesto uložit obrázek s tímto názvem?"
 
@@ -7873,7 +7873,7 @@ msgstr "(čistý)"
 
 #: ../app/display/gimpdisplayshell-title.c:328
 #: ../app/display/gimpdisplayshell-title.c:340
-#: ../app/widgets/gimpactiongroup.c:777
+#: ../app/widgets/gimpactiongroup.c:778
 msgid "(none)"
 msgstr "(žádný)"
 
@@ -7897,7 +7897,7 @@ msgstr "_Jiné..."
 msgid "Unknown file type"
 msgstr "Neznámý typ souboru"
 
-#: ../app/file/file-open.c:121 ../app/file/file-save.c:111
+#: ../app/file/file-open.c:121 ../app/file/file-save.c:112
 msgid "Not a regular file"
 msgstr "Není běžný soubor"
 
@@ -7913,7 +7913,7 @@ msgstr "Zásuvný modul nemohl otevřít obrázek"
 msgid "Image doesn't contain any visible layers"
 msgstr "Obrázek neobsahuje viditelné vrstvy"
 
-#: ../app/file/file-save.c:188
+#: ../app/file/file-save.c:189
 msgid "Plug-In could not save image"
 msgstr "Zásuvný modul nemohl uložit obrázek"
 
@@ -8052,7 +8052,7 @@ msgstr "2D transformace"
 msgid "Blending"
 msgstr "Mísení"
 
-#: ../app/pdb/gimppdb.c:311 ../app/pdb/gimppdb.c:375
+#: ../app/pdb/gimppdb.c:298 ../app/pdb/gimppdb.c:362
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -8061,7 +8061,7 @@ msgstr ""
 "Chyba volání PDB:\n"
 "procedura '%s' nenalezena"
 
-#: ../app/pdb/gimppdb.c:408
+#: ../app/pdb/gimppdb.c:395
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -8116,6 +8116,26 @@ msgstr "V souboru interpretru %s se odkazuje na špatný interpretr: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Špatný řetězec binárního formátu v souboru interpretru %s"
 
+#: ../app/plug-in/gimpplugin.c:427 ../app/plug-in/gimpplugin.c:460
+#, c-format
+msgid "Terminating plug-in: '%s'\n"
+msgstr "Ukončuji zásuvný modul: '%s'\n"
+
+#: ../app/plug-in/gimpplugin.c:595
+#, c-format
+msgid ""
+"Plug-in crashed: \"%s\"\n"
+"(%s)\n"
+"\n"
+"The dying plug-in may have messed up GIMP's internal state. You may want to "
+"save your images and restart GIMP to be on the safe side."
+msgstr ""
+"Zásuvný modul spadl: \"%s\"\n"
+"(%s)\n"
+"\n"
+"Během svého ukončení mohl modul narušit vnitřní stav GIMPu. K opětovnému "
+"dosažení bezpečného stavu je vhodné uložit obrázky a restartovat GIMP."
+
 #: ../app/plug-in/gimppluginmanager.c:285
 msgid "Plug-In Interpreters"
 msgstr "Interpretry zásuvných modulů"
@@ -8162,26 +8182,6 @@ msgstr "Spouštím rozšíření"
 #, c-format
 msgid "Starting extension: '%s'\n"
 msgstr "Spouštím rozšíření: '%s'\n"
-
-#: ../app/plug-in/gimpplugin.c:428 ../app/plug-in/gimpplugin.c:461
-#, c-format
-msgid "Terminating plug-in: '%s'\n"
-msgstr "Ukončuji zásuvný modul: '%s'\n"
-
-#: ../app/plug-in/gimpplugin.c:596
-#, c-format
-msgid ""
-"Plug-in crashed: \"%s\"\n"
-"(%s)\n"
-"\n"
-"The dying plug-in may have messed up GIMP's internal state. You may want to "
-"save your images and restart GIMP to be on the safe side."
-msgstr ""
-"Zásuvný modul spadl: \"%s\"\n"
-"(%s)\n"
-"\n"
-"Během svého ukončení mohl modul narušit vnitřní stav GIMPu. K opětovnému "
-"dosažení bezpečného stavu je vhodné uložit obrázky a restartovat GIMP."
 
 #: ../app/plug-in/plug-in-rc.c:206
 #, c-format
@@ -9567,10 +9567,14 @@ msgstr "Výběr obdélníkové oblasti"
 msgid "_Rect Select"
 msgstr "Výběr _obdélníku"
 
-#: ../app/tools/gimprectangletool.c:1365 ../app/tools/gimprectangletool.c:1375
-#: ../app/tools/gimprectangletool.c:2025
+#: ../app/tools/gimprectangletool.c:1374 ../app/tools/gimprectangletool.c:1384
+#: ../app/tools/gimprectangletool.c:2034
 msgid "Rectangle: "
 msgstr "Obdélník: "
+
+#: ../app/tools/gimpregionselecttool.c:167
+msgid "Move the mouse to change threshold."
+msgstr "Pohybem myši změňte práh."
 
 #: ../app/tools/gimprotatetool.c:87
 msgid "Rotate"
@@ -10177,7 +10181,7 @@ msgstr "V bufferu nebyla nalezena žádná cesta"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Nemohu importovat cesty z '%s': %s"
 
-#: ../app/widgets/gimpactiongroup.c:774
+#: ../app/widgets/gimpactiongroup.c:775
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -10747,11 +10751,11 @@ msgstr "Všechny obrázky"
 msgid "Select File _Type (%s)"
 msgstr "Zvolte _typ souboru (%s)"
 
-#: ../app/widgets/gimpfileprocview.c:201
+#: ../app/widgets/gimpfileprocview.c:200
 msgid "File Type"
 msgstr "Typ souboru"
 
-#: ../app/widgets/gimpfileprocview.c:213
+#: ../app/widgets/gimpfileprocview.c:212
 msgid "Extensions"
 msgstr "Přípony"
 
@@ -11399,7 +11403,7 @@ msgstr "Neplatný řetězec v UTF-8 v souboru XCF"
 
 #: ../app/xcf/xcf-save.c:159 ../app/xcf/xcf-save.c:169
 #: ../app/xcf/xcf-save.c:179 ../app/xcf/xcf-save.c:189
-#: ../app/xcf/xcf-save.c:213 ../app/xcf/xcf.c:382
+#: ../app/xcf/xcf-save.c:213 ../app/xcf/xcf.c:381
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Chyba při ukládání souboru XCF: %s"
@@ -11414,21 +11418,21 @@ msgstr "Chyba při ukládání XCF: %s"
 msgid "Could not seek in XCF file: %s"
 msgstr "Nelze vyhledávat v souboru XCF: %s"
 
-#: ../app/xcf/xcf.c:97 ../app/xcf/xcf.c:163
+#: ../app/xcf/xcf.c:96 ../app/xcf/xcf.c:162
 msgid "GIMP XCF image"
 msgstr "Obrázek GIMP XCF"
 
-#: ../app/xcf/xcf.c:263
+#: ../app/xcf/xcf.c:262
 #, c-format
 msgid "Opening '%s'"
 msgstr "Otevírám '%s'"
 
-#: ../app/xcf/xcf.c:304
+#: ../app/xcf/xcf.c:303
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "chyba XCF: nalezena nepodporovaná verze %d XCF souboru"
 
-#: ../app/xcf/xcf.c:368
+#: ../app/xcf/xcf.c:367
 #, c-format
 msgid "Saving '%s'"
 msgstr "Ukládám '%s'"
