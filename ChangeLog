@@ -1,5 +1,10 @@
 2006-08-09  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpfreeselecttool.c (gimp_free_select_tool_draw):
+	implement using gimp_draw_tool_draw_lines().
+
+2006-08-09  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontainercombobox.[ch]: allow to configure the
 	ellipsize property of the text renderer.
 

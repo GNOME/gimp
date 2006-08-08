@@ -277,17 +277,11 @@ static void
 gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpFreeSelectTool *free_sel = GIMP_FREE_SELECT_TOOL (draw_tool);
-  gint                i;
 
-  for (i = 1; i < free_sel->num_points; i++)
-    {
-      gimp_draw_tool_draw_line (draw_tool,
-                                free_sel->points[i - 1].x,
-                                free_sel->points[i - 1].y,
-                                free_sel->points[i].x,
-                                free_sel->points[i].y,
-                                FALSE);
-    }
+  gimp_draw_tool_draw_lines (draw_tool,
+                             (const gdouble *) free_sel->points,
+                             free_sel->num_points,
+                             FALSE, FALSE);
 }
 
 
