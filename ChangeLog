@@ -1,3 +1,11 @@
+2006-08-09  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcontainercombobox.[ch]: allow to configure the
+	ellipsize property of the text renderer.
+
+	* app/dialogs/image-new-dialog.c: don't pack the template combo-box
+	expanding, unset the ellipsize property.
+
 2006-08-08  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp.[ch]: added new function gimp_message() as a

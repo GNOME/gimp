@@ -134,12 +134,13 @@ image_new_dialog_new (Gimp *gimp)
                                 "container",         gimp->templates,
                                 "view-size",         16,
                                 "view-border-width", 0,
+                                "ellipsize",         PANGO_ELLIPSIZE_NONE,
                                 "focus-on-click",    FALSE,
                                 NULL);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("_Template:"),  0.0, 0.5,
-                             dialog->combo, 1, FALSE);
+                             dialog->combo, 1, TRUE);
 
   g_signal_connect (dialog->combo, "select-item",
                     G_CALLBACK (image_new_template_select),

@@ -39,13 +39,27 @@
 
 enum
 {
+  PROP_0,
+  PROP_ELLIPSIZE = GIMP_CONTAINER_VIEW_PROP_LAST + 1
+};
+
+enum
+{
   COLUMN_RENDERER,
   COLUMN_NAME,
   NUM_COLUMNS
 };
 
-
 static void     gimp_container_combo_box_view_iface_init (GimpContainerViewInterface *iface);
+
+static void     gimp_container_combo_box_set_property (GObject                *object,
+                                                       guint                   property_id,
+                                                       const GValue           *value,
+                                                       GParamSpec             *pspec);
+static void     gimp_container_combo_box_get_property (GObject                *object,
+                                                       guint                   property_id,
+                                                       GValue                 *value,
+                                                       GParamSpec             *pspec);
 
 static void     gimp_container_combo_box_unrealize    (GtkWidget              *widget);
 
@@ -90,12 +104,20 @@ gimp_container_combo_box_class_init (GimpContainerComboBoxClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->set_property = gimp_container_view_set_property;
-  object_class->get_property = gimp_container_view_get_property;
+  object_class->set_property = gimp_container_combo_box_set_property;
+  object_class->get_property = gimp_container_combo_box_get_property;
 
   widget_class->unrealize    = gimp_container_combo_box_unrealize;
 
   gimp_container_view_install_properties (object_class);
+
+  g_object_class_install_property (object_class,
+                                   PROP_ELLIPSIZE,
+                                   g_param_spec_enum ("ellipsize", NULL, NULL,
+						      PANGO_TYPE_ELLIPSIZE_MODE,
+						      PANGO_ELLIPSIZE_MIDDLE,
+						      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -123,13 +145,13 @@ gimp_container_combo_box_init (GimpContainerComboBox *combo_box)
 
   combo_box->viewable_renderer = cell;
 
-  cell = g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
-                       "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
-                       NULL);
+  cell = gtk_cell_renderer_text_new ();
   gtk_cell_layout_pack_start (layout, cell, TRUE);
   gtk_cell_layout_set_attributes (layout, cell,
                                   "text", COLUMN_NAME,
                                   NULL);
+
+  combo_box->text_renderer = cell;
 
   g_signal_connect (combo_box, "changed",
                     G_CALLBACK (gimp_container_combo_box_changed),
@@ -154,6 +176,48 @@ gimp_container_combo_box_view_iface_init (GimpContainerViewInterface *iface)
   iface->set_view_size = gimp_container_combo_box_set_view_size;
 
   iface->insert_data_free = (GDestroyNotify) g_free;
+}
+
+static void
+gimp_container_combo_box_set_property (GObject      *object,
+                                       guint         property_id,
+                                       const GValue *value,
+                                       GParamSpec   *pspec)
+{
+  GimpContainerComboBox *combo = GIMP_CONTAINER_COMBO_BOX (object);
+
+  switch (property_id)
+    {
+    case PROP_ELLIPSIZE:
+      g_object_set_property (G_OBJECT (combo->text_renderer),
+                             pspec->name, value);
+      break;
+
+    default:
+      gimp_container_view_set_property (object, property_id, value, pspec);
+      break;
+    }
+}
+
+static void
+gimp_container_combo_box_get_property (GObject    *object,
+                                       guint       property_id,
+                                       GValue     *value,
+                                       GParamSpec *pspec)
+{
+  GimpContainerComboBox *combo = GIMP_CONTAINER_COMBO_BOX (object);
+
+  switch (property_id)
+    {
+    case PROP_ELLIPSIZE:
+      g_object_get_property (G_OBJECT (combo->text_renderer),
+                             pspec->name, value);
+      break;
+
+    default:
+      gimp_container_view_get_property (object, property_id, value, pspec);
+      break;
+    }
 }
 
 GtkWidget *
