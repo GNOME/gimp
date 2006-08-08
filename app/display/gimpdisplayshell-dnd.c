@@ -277,7 +277,8 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
                                     (const gchar *) svg_data, svg_data_len,
                                     TRUE, TRUE, -1, &error))
     {
-      g_message (error->message);
+      gimp_message (image->gimp, GIMP_PROGRESS (shell->display),
+                    error->message);
       g_clear_error (&error);
     }
   else
@@ -420,7 +421,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
       GError            *error = NULL;
 
       new_layer = file_open_layer (image->gimp, context,
-                                   GIMP_PROGRESS (shell->statusbar),
+                                   GIMP_PROGRESS (shell->display),
                                    image, uri, GIMP_RUN_INTERACTIVE, NULL,
                                    &status, &error);
 
@@ -447,8 +448,9 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
         {
           gchar *filename = file_utils_uri_display_name (uri);
 
-          g_message (_("Opening '%s' failed:\n\n%s"),
-                     filename, error->message);
+          gimp_message (image->gimp, GIMP_PROGRESS (shell->display),
+                        _("Opening '%s' failed:\n\n%s"),
+                        filename, error->message);
 
           g_clear_error (&error);
           g_free (filename);

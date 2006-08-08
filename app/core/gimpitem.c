@@ -797,14 +797,13 @@ gimp_item_scale (GimpItem              *item,
  * Scales item dimensions and offsets by uniform width and
  * height factors.
  *
- * Use gimp_item_scale_by_factors() in circumstances when the
- * same width and height scaling factors are to be uniformly
- * applied to a set of items. In this context, the item's
- * dimensions and offsets from the sides of the containing
- * image all change by these predetermined factors. By fiat,
- * the fixed point of the transform is the upper left hand
- * corner of the image. Returns gboolean #FALSE if a requested
- * scale factor is zero or if a scaling zero's out a item
+ * Use gimp_item_scale_by_factors() in circumstances when the same
+ * width and height scaling factors are to be uniformly applied to a
+ * set of items. In this context, the item's dimensions and offsets
+ * from the sides of the containing image all change by these
+ * predetermined factors. By fiat, the fixed point of the transform is
+ * the upper left hand corner of the image. Returns #FALSE if a
+ * requested scale factor is zero or if a scaling zero's out a item
  * dimension; returns #TRUE otherwise.
  *
  * Use gimp_item_scale() in circumstances where new item width
@@ -831,7 +830,7 @@ gimp_item_scale_by_factors (GimpItem              *item,
 
   if (w_factor == 0.0 || h_factor == 0.0)
     {
-      g_message ("gimp_item_scale_by_factors: Error. Requested width or height scale equals zero.");
+      g_warning ("%s: requested width or height scale equals zero", G_STRFUNC);
       return FALSE;
     }
 
@@ -895,7 +894,7 @@ gimp_item_scale_by_origin (GimpItem              *item,
 
   if (new_width == 0 || new_height == 0)
     {
-      g_message ("gimp_layer_scale: Error. Requested width or height equals zero.");
+      g_warning ("%s: requested width or height equals zero", G_STRFUNC);
       return;
     }
 

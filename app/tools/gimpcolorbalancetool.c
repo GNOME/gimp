@@ -31,6 +31,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
+#include "core/gimpprogress.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -153,7 +154,8 @@ gimp_color_balance_tool_initialize (GimpTool    *tool,
 
   if (! gimp_drawable_is_rgb (drawable))
     {
-      g_message (_("Color balance operates only on RGB color layers."));
+      gimp_message (display->image->gimp, GIMP_PROGRESS (display),
+                    _("Color balance operates only on RGB color layers."));
       return FALSE;
     }
 

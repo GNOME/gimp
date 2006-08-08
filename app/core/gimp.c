@@ -69,6 +69,7 @@
 #include "gimppattern.h"
 #include "gimppatternclipboard.h"
 #include "gimpparasitelist.h"
+#include "gimpprogress.h"
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
 
@@ -974,4 +975,23 @@ gimp_get_user_context (Gimp *gimp)
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   return gimp->user_context;
+}
+
+void
+gimp_message (Gimp         *gimp,
+              GimpProgress *progress,
+              const gchar  *format,
+              ...)
+{
+  va_list  args;
+  gchar   *message;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+
+  va_start (args, format);
+  message = g_strdup_vprintf (format, args);
+  va_end (args);
+
+  gimp_show_message (gimp, progress, NULL, message);
 }

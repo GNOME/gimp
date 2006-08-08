@@ -314,9 +314,8 @@ documents_open_image (GimpContext   *context,
 
   if (! image && status != GIMP_PDB_CANCEL)
     {
-      gchar *filename;
+      gchar *filename = file_utils_uri_display_name (uri);
 
-      filename = file_utils_uri_display_name (uri);
       g_message (_("Opening '%s' failed:\n\n%s"), filename, error->message);
       g_clear_error (&error);
 

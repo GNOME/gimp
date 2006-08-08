@@ -295,7 +295,8 @@ gimp_pdb_execute_procedure_by_name_args (GimpPDB      *pdb,
 
   if (list == NULL)
     {
-      g_message (_("PDB calling error:\n"
+      gimp_message (pdb->gimp, progress,
+                    _("PDB calling error:\n"
                    "Procedure '%s' not found"), name);
 
       return_vals = gimp_procedure_get_return_values (NULL, FALSE);
@@ -359,8 +360,9 @@ gimp_pdb_execute_procedure_by_name (GimpPDB      *pdb,
 
   if (procedure == NULL)
     {
-      g_message (_("PDB calling error:\n"
-                   "Procedure '%s' not found"), name);
+      gimp_message (pdb->gimp, progress,
+                    _("PDB calling error:\n"
+                      "Procedure '%s' not found"), name);
 
       return_vals = gimp_procedure_get_return_values (NULL, FALSE);
       g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
@@ -392,10 +394,11 @@ gimp_pdb_execute_procedure_by_name (GimpPDB      *pdb,
 
           g_value_array_free (args);
 
-          g_message (_("PDB calling error for procedure '%s':\n"
-                       "Argument #%d type mismatch (expected %s, got %s)"),
-                     gimp_object_get_name (GIMP_OBJECT (procedure)),
-                     i + 1, expected, got);
+          gimp_message (pdb->gimp, progress,
+                        _("PDB calling error for procedure '%s':\n"
+                          "Argument #%d type mismatch (expected %s, got %s)"),
+                        gimp_object_get_name (GIMP_OBJECT (procedure)),
+                        i + 1, expected, got);
 
           return_vals = gimp_procedure_get_return_values (procedure, FALSE);
           g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);

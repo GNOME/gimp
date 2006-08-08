@@ -928,8 +928,7 @@ layers_new_layer_response (GtkWidget          *widget,
         }
       else
         {
-          g_message ("new_layer_query_response: "
-                     "could not allocate new layer");
+          g_warning ("%s: could not allocate new layer", G_STRFUNC);
         }
     }
 

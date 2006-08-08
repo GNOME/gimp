@@ -75,7 +75,8 @@ data_open_as_image_cmd_callback (GtkAction *action,
   GimpContext         *context;
   GimpData            *data;
 
-  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+  context =
+    gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
@@ -96,9 +97,8 @@ data_open_as_image_cmd_callback (GtkAction *action,
 
           if (! image && status != GIMP_PDB_CANCEL)
             {
-              gchar *filename;
+              gchar *filename = file_utils_uri_display_name (uri);
 
-              filename = file_utils_uri_display_name (uri);
               g_message (_("Opening '%s' failed:\n\n%s"),
                          filename, error->message);
               g_clear_error (&error);

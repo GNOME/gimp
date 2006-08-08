@@ -237,8 +237,9 @@ file_save_cmd_callback (GtkAction *action,
             {
               gchar *filename = file_utils_uri_display_name (uri);
 
-              g_message (_("Saving '%s' failed:\n\n%s"),
-                         filename, error->message);
+              gimp_message (image->gimp, GIMP_PROGRESS (display),
+                            _("Saving '%s' failed:\n\n%s"),
+                            filename, error->message);
               g_clear_error (&error);
 
               g_free (filename);
@@ -311,17 +312,22 @@ file_revert_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
   GimpDisplay *display;
+  GimpImage   *image;
   GtkWidget   *dialog;
   const gchar *uri;
   return_if_no_display (display, data);
 
-  uri = gimp_object_get_name (GIMP_OBJECT (display->image));
+  image = display->image;
 
-  dialog = g_object_get_data (G_OBJECT (display->image), REVERT_DATA_KEY);
+  uri = gimp_object_get_name (GIMP_OBJECT (image));
+
+  dialog = g_object_get_data (G_OBJECT (image), REVERT_DATA_KEY);
 
   if (! uri)
     {
-      g_message (_("Revert failed. No file name associated with this image."));
+      gimp_message (image->gimp, GIMP_PROGRESS (display),
+                    _("Revert failed. "
+                      "No file name associated with this image."));
     }
   else if (dialog)
     {
@@ -369,7 +375,7 @@ file_revert_cmd_callback (GtkAction *action,
                                    "on disk, you will lose all changes, "
                                    "including all undo information."));
 
-      g_object_set_data (G_OBJECT (display->image), REVERT_DATA_KEY, dialog);
+      g_object_set_data (G_OBJECT (image), REVERT_DATA_KEY, dialog);
 
       gtk_widget_show (dialog);
     }
@@ -560,8 +566,9 @@ file_revert_confirm_response (GtkWidget   *dialog,
         {
           gchar *filename = file_utils_uri_display_name (uri);
 
-          g_message (_("Reverting to '%s' failed:\n\n%s"),
-                     filename, error->message);
+          gimp_message (gimp, GIMP_PROGRESS (display),
+                        _("Reverting to '%s' failed:\n\n%s"),
+                        filename, error->message);
           g_clear_error (&error);
 
           g_free (filename);

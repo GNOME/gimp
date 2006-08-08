@@ -1104,7 +1104,7 @@ gimp_layer_new_from_region (PixelRegion          *region,
 
   if (! new_layer)
     {
-      g_message ("gimp_layer_new_from_region: could not allocate new layer");
+      g_warning ("%s: could not allocate new layer", G_STRFUNC);
       return NULL;
     }
 

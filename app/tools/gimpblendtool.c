@@ -146,8 +146,10 @@ gimp_blend_tool_button_press (GimpTool        *tool,
 
   switch (gimp_drawable_type (drawable))
     {
-    case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
-      g_message (_("Blend: Invalid for indexed images."));
+    case GIMP_INDEXED_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
+      gimp_message (display->image->gimp, GIMP_PROGRESS (display),
+                    _("Blend: Invalid for indexed images."));
       return;
 
       break;

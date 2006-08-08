@@ -171,5 +171,10 @@ void          gimp_set_user_context     (Gimp                *gimp,
                                          GimpContext         *context);
 GimpContext * gimp_get_user_context     (Gimp                *gimp);
 
+void          gimp_message              (Gimp                *gimp,
+                                         GimpProgress        *progress,
+                                         const gchar         *format,
+                                         ...) G_GNUC_PRINTF(3,4);
+
 
 #endif  /* __GIMP_H__ */

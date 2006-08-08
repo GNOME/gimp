@@ -903,7 +903,7 @@ gimp_text_buffer_save (GtkTextBuffer  *buffer,
   GtkTextIter  start_iter;
   GtkTextIter  end_iter;
   gint         fd;
-  gchar              *text_contents;
+  gchar       *text_contents;
 
   g_return_val_if_fail (GTK_IS_TEXT_BUFFER (buffer), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);

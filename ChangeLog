@@ -1,5 +1,48 @@
 2006-08-08  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp.[ch]: added new function gimp_message() as a
+	replacement for g_message(). Part of the fix for bug #347214.
+
+	* app/actions/data-commands.c
+	* app/actions/documents-commands.c
+	* app/actions/file-commands.c
+	* app/actions/layers-commands.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimagefile.c
+	* app/core/gimpitem.c
+	* app/core/gimplayer.c
+	* app/dialogs/file-open-dialog.c
+	* app/dialogs/file-open-location-dialog.c
+	* app/dialogs/file-save-dialog.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/pdb/gimppdb.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c
+	* app/widgets/gimpwidgets-utils.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-private.h
+	* app/xcf/xcf-save.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/brush.pdb
+	* tools/pdbgen/pdb/gradient.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/palette.pdb: use gimp_message() instead of
+	gimp_message() whenever we have a GimpProgress.
+
+	* app/pdb/brush_cmds.c
+	* app/pdb/gradient_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/palette_cmds.c: regenerated.
+
+2006-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-gui.[ch]
 	* app/gui/gui-vtable.c: renamed gimp_message() to gimp_show_message()
 

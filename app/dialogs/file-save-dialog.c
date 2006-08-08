@@ -267,10 +267,11 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
                        G_STRFUNC);
 #endif
 
-              g_message (_("The given filename does not have any known "
-                           "file extension. Please enter a known file "
-                           "extension or select a file format from the "
-                           "file format list."));
+              gimp_message (gimp, GIMP_PROGRESS (save_dialog),
+                            _("The given filename does not have any known "
+                              "file extension. Please enter a known file "
+                              "extension or select a file format from the "
+                              "file format list."));
               g_free (uri);
               g_free (basename);
               return FALSE;
@@ -485,8 +486,8 @@ file_save_dialog_save_image (GtkWidget           *save_dialog,
     {
       gchar *filename = file_utils_uri_display_name (uri);
 
-      g_message (_("Saving '%s' failed:\n\n%s"),
-                 filename, error->message);
+      gimp_message (image->gimp, GIMP_PROGRESS (save_dialog),
+                    _("Saving '%s' failed:\n\n%s"), filename, error->message);
       g_clear_error (&error);
 
       g_free (filename);

@@ -39,6 +39,7 @@
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
+#include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpcolorbar.h"
@@ -236,7 +237,8 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 
   if (gimp_drawable_is_indexed (drawable))
     {
-      g_message (_("Levels for indexed layers cannot be adjusted."));
+      gimp_message (display->image->gimp, GIMP_PROGRESS (display),
+                    _("Levels for indexed layers cannot be adjusted."));
       return FALSE;
     }
 

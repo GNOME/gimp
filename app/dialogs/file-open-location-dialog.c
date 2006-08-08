@@ -201,8 +201,9 @@ file_open_location_response (GtkDialog *dialog,
         {
           gchar *filename = file_utils_uri_display_name (uri);
 
-          g_message (_("Opening '%s' failed:\n\n%s"),
-                     filename, error->message);
+          gimp_message (gimp, GIMP_PROGRESS (box),
+                        _("Opening '%s' failed:\n\n%s"),
+                        filename, error->message);
           g_clear_error (&error);
 
           g_free (filename);
