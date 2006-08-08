@@ -6,6 +6,15 @@ here. New features are being added in the HEAD branch that will be
 released as GIMP version 2.4.
 
 
+Bugs fixed in GIMP 2.2.13
+=========================
+
+- avoid endless looping when loading a corrupt XCF file (bug #345802)
+- fixed regression in file dialogs (bug #347544)
+- fixed right-to-left layout in layers dialog (bug #348347)
+- avoid a crash when loading a corrupt gradient file (bug #349996)
+
+
 Bugs fixed in GIMP 2.2.12
 =========================
 
