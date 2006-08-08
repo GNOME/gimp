@@ -1,3 +1,10 @@
+2006-08-08  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/file-save-dialog.c
+	(file_save_dialog_new): removed workaround for a GtkFileChooser
+	bug that doesn't seem to be needed any longer.
+	(file_save_dialog_check_uri): commented out debug spew.
+
 2006-08-07  Raphaël Quinet  <raphael@gimp.org>
 
 	* HACKING: Mention that the mailing list is a good place to

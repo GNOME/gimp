@@ -87,19 +87,7 @@ file_save_dialog_new (Gimp *gimp)
 
   if (uri)
     {
-      gchar *folder_uri = g_path_get_dirname (uri);
-
-#ifdef __GNUC__
-#warning: FIXME: should use set_uri() but idle stuff in the file chooser seems to override set_current_name() when called immediately after set_uri()
-#endif
-
-      if (folder_uri)
-        {
-          gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog),
-                                                   folder_uri);
-          g_free (folder_uri);
-        }
-
+      gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);
       gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), "");
     }
 
@@ -189,30 +177,36 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
   basename_proc = file_utils_find_proc (gimp->plug_in_manager->save_procs,
                                         basename);
 
+#ifdef DEBUG_SPEW
   g_print ("\n\n%s: URI = %s\n",
            G_STRFUNC, uri);
   g_print ("%s: basename = %s\n",
            G_STRFUNC, basename);
   g_print ("%s: selected save_proc: %s\n",
-           G_STRFUNC, save_proc && save_proc->menu_label ? save_proc->menu_label : "NULL");
+           G_STRFUNC, save_proc && save_proc->menu_label ?
+           save_proc->menu_label : "NULL");
   g_print ("%s: URI save_proc: %s\n",
            G_STRFUNC, uri_proc ? uri_proc->menu_label : "NULL");
   g_print ("%s: basename save_proc: %s\n\n",
-           G_STRFUNC, basename_proc && basename_proc->menu_label ? basename_proc->menu_label : "NULL");
-
+           G_STRFUNC, basename_proc && basename_proc->menu_label ?
+           basename_proc->menu_label : "NULL");
+#endif
 
   /*  first check if the user entered an extension at all  */
   if (! basename_proc)
     {
+#ifdef DEBUG_SPEW
       g_print ("%s: basename has no valid extension\n",
                G_STRFUNC);
-
+#endif
       if (! strchr (basename, '.'))
         {
           const gchar *ext = NULL;
 
+#ifdef DEBUG_SPEW
           g_print ("%s: basename has no '.', trying to add extension\n",
                    G_STRFUNC);
+#endif
 
           if (! save_proc)
             {
@@ -229,8 +223,10 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
               gchar *ext_basename = g_strconcat (basename, ".", ext, NULL);
               gchar *utf8;
 
+#ifdef DEBUG_SPEW
               g_print ("%s: appending .%s to basename\n",
                        G_STRFUNC, ext);
+#endif
 
               g_free (uri);
               g_free (basename);
@@ -250,8 +246,10 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
             }
           else
             {
+#ifdef DEBUG_SPEW
               g_print ("%s: save_proc has no extensions, continuing without\n",
                        G_STRFUNC);
+#endif
 
               /*  there may be file formats with no extension at all, use
                *  the selected proc in this case.
@@ -264,8 +262,10 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
 
           if (! basename_proc)
             {
+#ifdef DEBUG_SPEW
               g_print ("%s: unable to figure save_proc, bailing out\n",
                        G_STRFUNC);
+#endif
 
               g_message (_("The given filename does not have any known "
                            "file extension. Please enter a known file "
@@ -278,9 +278,11 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
         }
       else if (save_proc && ! save_proc->extensions_list)
         {
+#ifdef DEBUG_SPEW
           g_print ("%s: basename has '.', but save_proc has no extensions, "
                    "accepting random extension\n",
                    G_STRFUNC);
+#endif
 
           /*  accept any random extension if the file format has
            *  no extensions at all
@@ -295,13 +297,17 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
   /*  then check if the selected format matches the entered extension  */
   if (! save_proc)
     {
+#ifdef DEBUG_SPEW
       g_print ("%s: no save_proc was selected from the list\n",
                G_STRFUNC);
+#endif
 
       if (! basename_proc)
         {
+#ifdef DEBUG_SPEW
           g_print ("%s: basename had no useful extension, bailing out\n",
                    G_STRFUNC);
+#endif
 
           g_message (_("The given filename does not have any known "
                        "file extension. Please enter a known file "
@@ -312,27 +318,35 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
           return FALSE;
         }
 
+#ifdef DEBUG_SPEW
       g_print ("%s: use URI's proc '%s' so indirect saving works\n",
                G_STRFUNC, uri_proc->menu_label ? uri_proc->menu_label : "?");
+#endif
 
       /*  use the URI's proc if no save proc was selected  */
       save_proc = uri_proc;
     }
   else
     {
+#ifdef DEBUG_SPEW
       g_print ("%s: save_proc '%s' was selected from the list\n",
                G_STRFUNC, save_proc->menu_label);
+#endif
 
       if (save_proc != basename_proc)
         {
+#ifdef DEBUG_SPEW
           g_print ("%s: however the basename's proc is '%s'\n",
                    G_STRFUNC,
                    basename_proc ? basename_proc->menu_label : "NULL");
+#endif
 
           if (uri_proc != basename_proc)
             {
+#ifdef DEBUG_SPEW
               g_print ("%s: that's impossible for remote URIs, bailing out\n",
                        G_STRFUNC);
+#endif
 
               /*  remote URI  */
 
@@ -346,8 +360,10 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
             }
           else
             {
+#ifdef DEBUG_SPEW
               g_print ("%s: ask the user if she really wants that filename\n",
                        G_STRFUNC);
+#endif
 
               /*  local URI  */
 
@@ -361,8 +377,10 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
         }
       else if (save_proc != uri_proc)
         {
+#ifdef DEBUG_SPEW
           g_print ("%s: use URI's proc '%s' so indirect saving works\n",
                    G_STRFUNC, uri_proc->menu_label);
+#endif
 
           /*  need to use the URI's proc for saving because e.g.
            *  the GIF plug-in can't save a GIF to sftp://
@@ -373,12 +391,7 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
 
   if (! save_proc)
     {
-      g_print ("%s: EEEEEEK\n", G_STRFUNC);
-
-      g_message ("Yay! You found a bug. Please report this at "
-                 "http://bugzilla.gnome.org/ and paste the console "
-                 "output to the 'Additional Comments' field");
-
+      g_warning ("%s: EEEEEEK", G_STRFUNC);
       return FALSE;
     }
 
