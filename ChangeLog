@@ -1,5 +1,13 @@
 2006-08-08  Sven Neumann  <sven@gimp.org>
 
+	* libgimpconfig/gimpconfig-deserialize.c
+	(gimp_config_deserialize_property)
+	* libgimpconfig/gimpconfig-serialize.c
+	(gimp_config_serialize_property): check if the properties
+	owner_type is an object type before calling g_type_class_peek().
+
+2006-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangleoptions.c
 	(gimp_rectangle_options_interface_get_type): made GimpToolOptions a
 	prerequisite of the GimpRectangleOptions interface.

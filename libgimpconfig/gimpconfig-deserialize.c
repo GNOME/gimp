@@ -212,8 +212,7 @@ gimp_config_deserialize_property (GimpConfig *config,
                                   GScanner   *scanner,
                                   gint        nest_level)
 {
-  GTypeClass          *owner_class;
-  GimpConfigInterface *config_iface;
+  GimpConfigInterface *config_iface = NULL;
   GimpConfigInterface *parent_iface = NULL;
   GParamSpec          *prop_spec;
   GTokenType           token = G_TOKEN_RIGHT_PAREN;
@@ -226,28 +225,32 @@ gimp_config_deserialize_property (GimpConfig *config,
 
   g_value_init (&value, prop_spec->value_type);
 
-  owner_class = g_type_class_peek (prop_spec->owner_type);
-
-  config_iface = g_type_interface_peek (owner_class, GIMP_TYPE_CONFIG);
-
-  /*  We must call deserialize_property() *only* if the *exact* class
-   *  which implements it is param_spec->owner_type's class.
-   *
-   *  Therefore, we ask param_spec->owner_type's immediate parent class
-   *  for it's GimpConfigInterface and check if we get a different pointer.
-   *
-   *  (if the pointers are the same, param_spec->owner_type's
-   *   GimpConfigInterface is inherited from one of it's parent classes
-   *   and thus not able to handle param_spec->owner_type's properties).
-   */
-  if (config_iface)
+  if (G_TYPE_IS_OBJECT (prop_spec->owner_type))
     {
-      GTypeClass *owner_parent_class;
+      GTypeClass *owner_class = g_type_class_peek (prop_spec->owner_type);
 
-      owner_parent_class = g_type_class_peek_parent (owner_class),
+      config_iface = g_type_interface_peek (owner_class, GIMP_TYPE_CONFIG);
 
-      parent_iface = g_type_interface_peek (owner_parent_class,
-                                            GIMP_TYPE_CONFIG);
+      /*  We must call deserialize_property() *only* if the *exact* class
+       *  which implements it is param_spec->owner_type's class.
+       *
+       *  Therefore, we ask param_spec->owner_type's immediate parent class
+       *  for it's GimpConfigInterface and check if we get a different
+       *  pointer.
+       *
+       *  (if the pointers are the same, param_spec->owner_type's
+       *   GimpConfigInterface is inherited from one of it's parent classes
+       *   and thus not able to handle param_spec->owner_type's properties).
+       */
+      if (config_iface)
+        {
+          GTypeClass *owner_parent_class;
+
+          owner_parent_class = g_type_class_peek_parent (owner_class);
+
+          parent_iface = g_type_interface_peek (owner_parent_class,
+                                                GIMP_TYPE_CONFIG);
+        }
     }
 
   if (config_iface                       &&
