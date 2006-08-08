@@ -847,7 +847,7 @@ diff_prepare_row (GimpPixelRgn *pixel_rgn,
   /*  Fill in edge pixels  */
   for (b = 0; b < pixel_rgn->bpp; b++)
     {
-      data[-pixel_rgn->bpp + b] = data[b];
+      data[b - (gint) pixel_rgn->bpp] = data[b];
       data[w * pixel_rgn->bpp + b] = data[(w - 1) * pixel_rgn->bpp + b];
     }
 }

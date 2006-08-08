@@ -1,5 +1,10 @@
 2006-08-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/warp.c (diff_prepare_row): applied patch from
+	Robert Ögren to fix a segfault on 64bit architectures (bug #327479).
+
+2006-08-08  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpzoompreview.c: fixed gtk-doc comments.
 
 2006-08-08  Sven Neumann  <sven@gimp.org>
