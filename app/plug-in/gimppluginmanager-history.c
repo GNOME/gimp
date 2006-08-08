@@ -68,6 +68,7 @@ gimp_plug_in_manager_history_add (GimpPlugInManager   *manager,
   gint    history_size;
 
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure));
 
   history_size = gimp_plug_in_manager_history_size (manager);
 
@@ -86,12 +87,36 @@ gimp_plug_in_manager_history_add (GimpPlugInManager   *manager,
 }
 
 void
-gimp_plug_in_manager_history_free (GimpPlugInManager   *manager)
+gimp_plug_in_manager_history_remove (GimpPlugInManager   *manager,
+                                     GimpPlugInProcedure *procedure)
+{
+  GSList *link;
+
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure));
+
+  link = g_slist_find (manager->history, procedure);
+
+  if (link)
+    {
+      manager->history = g_slist_delete_link (manager->history, link);
+
+      gimp_plug_in_manager_history_changed (manager);
+    }
+}
+
+void
+gimp_plug_in_manager_history_clear (GimpPlugInManager   *manager)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
 
-  g_slist_free (manager->history);
-  manager->history = NULL;
+  if (manager->history)
+    {
+      g_slist_free (manager->history);
+      manager->history = NULL;
+
+      gimp_plug_in_manager_history_changed (manager);
+    }
 }
 
 

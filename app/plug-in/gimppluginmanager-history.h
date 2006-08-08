@@ -28,6 +28,9 @@ GimpPlugInProcedure * gimp_plug_in_manager_history_nth    (GimpPlugInManager   *
                                                            guint                n);
 void                  gimp_plug_in_manager_history_add    (GimpPlugInManager   *manager,
                                                            GimpPlugInProcedure *procedure);
+void                  gimp_plug_in_manager_history_remove (GimpPlugInManager   *manager,
+                                                           GimpPlugInProcedure *procedure);
+void                  gimp_plug_in_manager_history_clear  (GimpPlugInManager   *manager);
 
 
 #endif /* __GIMP_PLUG_IN_MANAGER_HISTORY_H__ */

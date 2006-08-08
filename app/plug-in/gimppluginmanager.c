@@ -179,7 +179,7 @@ gimp_plug_in_manager_dispose (GObject *object)
 {
   GimpPlugInManager *manager = GIMP_PLUG_IN_MANAGER (object);
 
-  gimp_plug_in_manager_history_free (manager);
+  gimp_plug_in_manager_history_clear (manager);
 }
 
 static void
@@ -656,6 +656,9 @@ gimp_plug_in_manager_add_procedure (GimpPlugInManager   *manager,
           manager->load_procs = g_slist_remove (manager->load_procs, tmp_proc);
           manager->save_procs = g_slist_remove (manager->save_procs, tmp_proc);
 
+          /* and from the history */
+          gimp_plug_in_manager_history_remove (manager, tmp_proc);
+
           g_object_unref (tmp_proc);
 
           return;
@@ -688,6 +691,9 @@ gimp_plug_in_manager_remove_temp_proc (GimpPlugInManager      *manager,
 
   manager->plug_in_procedures = g_slist_remove (manager->plug_in_procedures,
                                                 procedure);
+
+  gimp_plug_in_manager_history_remove (manager,
+                                       GIMP_PLUG_IN_PROCEDURE (procedure));
 
   gimp_pdb_unregister_procedure (manager->gimp->pdb,
                                  GIMP_PROCEDURE (procedure));
