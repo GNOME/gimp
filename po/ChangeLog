@@ -1,3 +1,7 @@
+2006-08-08  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added missing file.
+
 2006-08-06  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: updated after pdb -> plug-in file moving.

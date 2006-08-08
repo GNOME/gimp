@@ -306,6 +306,7 @@ app/tools/gimprectangleoptions.c
 app/tools/gimprectangleselectoptions.c
 app/tools/gimprectangleselecttool.c
 app/tools/gimprectangletool.c
+app/tools/gimpregionselecttool.c
 app/tools/gimprotatetool.c
 app/tools/gimpscaletool.c
 app/tools/gimpselectionoptions.c
