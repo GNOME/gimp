@@ -180,6 +180,8 @@ gimp_plug_in_manager_dispose (GObject *object)
   GimpPlugInManager *manager = GIMP_PLUG_IN_MANAGER (object);
 
   gimp_plug_in_manager_history_clear (manager);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
