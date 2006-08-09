@@ -1,5 +1,10 @@
 2006-08-09  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/gimprgb.c
+	* libgimpwidgets/gimpdialog.c: fixed gtk-doc comments.
+
+2006-08-09  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-transform.[ch]: added new function
 	gimp_display_shell_transform_segments().
 

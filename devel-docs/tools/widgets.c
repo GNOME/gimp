@@ -4,6 +4,8 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
+#undef GIMP_DISABLE_DEPRECATED
+
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"

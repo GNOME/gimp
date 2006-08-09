@@ -690,7 +690,7 @@ gimp_param_spec_rgb (const gchar   *name,
 }
 
 /**
- * gimp_param_spec_rgb:
+ * gimp_param_spec_rgb_has_alpha:
  * @pspec: a #GParamSpec to hold an #GimpRGB value.
  *
  * Returns: %TRUE if the alpha channel is relevant.

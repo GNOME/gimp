@@ -1,3 +1,11 @@
+2006-08-09  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimpcolor/libgimpcolor-sections.txt
+	* libgimpwidgets/libgimpwidgets-sections.txt: added new symbols.
+
+	* tools/widgets.c: undef GIMP_DISABLE_DEPRECATED.
+
 2006-06-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp.types: added missing type.

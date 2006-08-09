@@ -27,6 +27,16 @@ Definitions and Functions relating to HSV colors.
 @v: 
 @a: 
 
+<!-- ##### STRUCT GimpHSL ##### -->
+<para>
+
+</para>
+
+@h: 
+@s: 
+@l: 
+@a: 
+
 <!-- ##### FUNCTION gimp_hsv_set ##### -->
 <para>
 
@@ -56,5 +66,19 @@ Definitions and Functions relating to HSV colors.
 @saturation: 
 @value: 
 @alpha: 
+
+
+<!-- ##### MACRO GIMP_TYPE_HSV ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_TYPE_HSL ##### -->
+<para>
+
+</para>
+
 
 

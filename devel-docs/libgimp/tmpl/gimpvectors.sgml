@@ -122,6 +122,20 @@ gimpvectors
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_vectors_to_selection ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@operation: 
+@antialias: 
+@feather: 
+@feather_radius_x: 
+@feather_radius_y: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_vectors_parasite_attach ##### -->
 <para>
 

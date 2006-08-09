@@ -490,6 +490,7 @@ RTL variant
 </para>
 
 
+
 <!-- ##### MACRO GIMP_STOCK_CURSOR ##### -->
 <para xml:base="../gimpstock.xml">
 <inlinegraphic fileref="stock-cursor-24.png" format="png"></inlinegraphic>
@@ -1448,3 +1449,6 @@ RTL variant
 <para>
 
 </para>
+
+
+

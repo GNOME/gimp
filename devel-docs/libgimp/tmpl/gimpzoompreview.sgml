@@ -28,12 +28,27 @@ GimpZoomPreview
 
 </para>
 
+<!-- ##### ARG GimpZoomPreview:model ##### -->
+<para>
+
+</para>
+
 <!-- ##### FUNCTION gimp_zoom_preview_new ##### -->
 <para>
 
 </para>
 
 @drawable: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_zoom_preview_new_with_model ##### -->
+<para>
+
+</para>
+
+@drawable: 
+@model: 
 @Returns: 
 
 
@@ -59,6 +74,15 @@ GimpZoomPreview
 
 
 <!-- ##### FUNCTION gimp_zoom_preview_get_factor ##### -->
+<para>
+
+</para>
+
+@preview: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_zoom_preview_get_model ##### -->
 <para>
 
 </para>

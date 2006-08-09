@@ -20,16 +20,6 @@ different color spaces.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
-<!-- ##### STRUCT GimpHSL ##### -->
-<para>
-
-</para>
-
-@h: 
-@s: 
-@l: 
-@a: 
-
 <!-- ##### FUNCTION gimp_rgb_to_hsv ##### -->
 <para>
 

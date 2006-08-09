@@ -257,6 +257,7 @@ gimp_context_set_paint_method
 gimp_image_convert_rgb
 gimp_image_convert_grayscale
 gimp_image_convert_indexed
+gimp_image_convert_set_dither_matrix
 </SECTION>
 
 <SECTION>
@@ -884,6 +885,7 @@ gimp_vectors_set_name
 gimp_vectors_set_tattoo
 gimp_vectors_set_visible
 gimp_vectors_get_strokes
+gimp_vectors_to_selection
 gimp_vectors_parasite_attach
 gimp_vectors_parasite_detach
 gimp_vectors_parasite_find
@@ -949,9 +951,11 @@ GIMP_DRAWABLE_PREVIEW_GET_CLASS
 <TITLE>GimpZoomPreview</TITLE>
 GimpZoomPreview
 gimp_zoom_preview_new
+gimp_zoom_preview_new_with_model
 gimp_zoom_preview_get_source
 gimp_zoom_preview_get_drawable
 gimp_zoom_preview_get_factor
+gimp_zoom_preview_get_model
 <SUBSECTION Standard>
 GimpZoomPreviewClass
 GIMP_ZOOM_PREVIEW

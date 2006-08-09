@@ -1,7 +1,6 @@
 <SECTION>
 <FILE>gimpcolorspace</FILE>
 <TITLE>GimpColorSpace</TITLE>
-GimpHSL
 gimp_rgb_to_hsv
 gimp_rgb_to_hsl
 gimp_rgb_to_cmyk
@@ -31,15 +30,24 @@ gimp_cmyk_get_uchar
 gimp_cmyka_set
 gimp_cmyka_set_uchar
 gimp_cmyka_get_uchar
+GIMP_TYPE_CMYK
+<SUBSECTION Standard>
+gimp_cmyk_get_type
 </SECTION>
 
 <SECTION>
 <FILE>gimphsv</FILE>
 <TITLE>GimpHSV</TITLE>
 GimpHSV
+GimpHSL
 gimp_hsv_set
 gimp_hsv_clamp
 gimp_hsva_set
+GIMP_TYPE_HSV
+GIMP_TYPE_HSL
+<SUBSECTION Standard>
+gimp_hsv_get_type
+gimp_hsl_get_type
 </SECTION>
 
 <SECTION>

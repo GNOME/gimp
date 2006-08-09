@@ -502,6 +502,8 @@ GIMP_OFFSET_AREA_GET_CLASS
 GimpDialog
 gimp_dialog_new
 gimp_dialog_new_valist
+gimp_dialog_add_button
+gimp_dialog_add_buttons
 gimp_dialog_add_buttons_valist
 gimp_dialog_run
 gimp_dialogs_show_help_button
