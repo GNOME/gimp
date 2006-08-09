@@ -92,8 +92,6 @@
 #define  FIXED             5   /* additional fixed size to expand cost map */
 #define  MIN_GRADIENT      63  /* gradients < this are directionless */
 
-#define  MAX_POINTS        2048
-
 #define  COST_WIDTH         2  /* number of bytes for each pixel in cost map  */
 #define  BLOCK_WIDTH       64
 #define  BLOCK_HEIGHT      64
@@ -263,7 +261,7 @@ static gfloat    distance_weights[GRADIENT_SEARCH * GRADIENT_SEARCH];
 static gint      diagonal_weight[256];
 static gint      direction_value[256][4];
 static gboolean  initialized = FALSE;
-static Tile     *cur_tile = NULL;
+static Tile     *cur_tile    = NULL;
 
 
 void
@@ -884,43 +882,27 @@ static void
 iscissors_draw_curve (GimpDrawTool *draw_tool,
                       ICurve       *curve)
 {
+  gdouble  *points;
   gpointer *point;
-  guint     len;
-  gint      npts = 0;
-  guint32   coords;
-  guint32   coords_2;
+  gint      i, len;
 
-  /* Uh, this shouldn't happen, but it does.  So we ignore it.
-   * Quality code, baby.
-   */
   if (! curve->points)
     return;
 
-  point = curve->points->pdata + 1;
-  len   = curve->points->len - 1;
+  len = curve->points->len;
 
-  while (len--)
+  points = g_new (gdouble, 2 * len);
+
+  for (i = 0, point = curve->points->pdata; i < len; i++, point++)
     {
-      coords   = GPOINTER_TO_INT (*point);
-      coords_2 = GPOINTER_TO_INT (*(point - 1));
-      point++;
+      guint32 coords = GPOINTER_TO_INT (*point);
 
-      if (npts < MAX_POINTS)
-        {
-          gimp_draw_tool_draw_line (draw_tool,
-                                    (coords & 0x0000ffff),
-                                    (coords >> 16),
-                                    (coords_2 & 0x0000ffff),
-                                    (coords_2 >> 16),
-                                    FALSE);
-          npts++;
-        }
-      else
-        {
-          g_warning ("too many points in ICurve segment!");
-          return;
-        }
+      points[i * 2]     = (coords & 0x0000ffff);
+      points[i * 2 + 1] = (coords >> 16);
     }
+
+  gimp_draw_tool_draw_lines (draw_tool, points, len, FALSE, FALSE);
+  g_free (points);
 }
 
 static void

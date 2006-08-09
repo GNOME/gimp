@@ -1,5 +1,10 @@
 2006-08-09  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpiscissorstool.c (iscissors_draw_curve):
+	implement using gimp_draw_tool_draw_lines(). 
+
+2006-08-09  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimppluginmanager.c (gimp_plug_in_manager_dispose):
 	chain up.
 
