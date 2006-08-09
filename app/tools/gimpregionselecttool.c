@@ -355,11 +355,10 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
   GimpTool             *tool = GIMP_TOOL (region_sel);
   GimpSelectionOptions *options;
   GimpDisplayShell     *shell;
-  PixelRegion           maskPR;
+  GimpDrawable         *drawable;
   GdkSegment           *segs;
   BoundSeg             *bsegs;
-  GimpDrawable         *drawable;
-  gint                  i;
+  PixelRegion           maskPR;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
@@ -385,7 +384,7 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
     }
 
   /*  calculate and allocate a new segment array which represents the
-   *  boundary of the color-contiguous region
+   *  boundary of the contiguous region
    */
   pixel_region_init (&maskPR,
                      gimp_drawable_get_tiles (GIMP_DRAWABLE (region_sel->region_mask)),
@@ -403,25 +402,8 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
 
   segs = g_new (GdkSegment, *num_segs);
 
-  for (i = 0; i < *num_segs; i++)
-    {
-      gint x, y;
-
-      gimp_display_shell_transform_xy (shell,
-                                       bsegs[i].x1, bsegs[i].y1,
-                                       &x, &y,
-                                       ! options->sample_merged);
-      segs[i].x1 = x;
-      segs[i].y1 = y;
-
-      gimp_display_shell_transform_xy (shell,
-                                       bsegs[i].x2, bsegs[i].y2,
-                                       &x, &y,
-                                       ! options->sample_merged);
-      segs[i].x2 = x;
-      segs[i].y2 = y;
-    }
-
+  gimp_display_shell_transform_segments (shell, bsegs, segs, *num_segs,
+                                         ! options->sample_merged);
   g_free (bsegs);
 
   gimp_display_shell_unset_override_cursor (shell);

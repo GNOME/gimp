@@ -464,26 +464,19 @@ selection_transform_segs (Selection      *select,
   gint i;
   gint xclamp, yclamp;
 
+  gimp_display_shell_transform_segments (select->shell,
+                                         src_segs, dest_segs, num_segs, FALSE);
+
   xclamp = select->shell->disp_width + 1;
   yclamp = select->shell->disp_height + 1;
 
   for (i = 0; i < num_segs; i++)
     {
-      gimp_display_shell_transform_xy (select->shell,
-                                       src_segs[i].x1, src_segs[i].y1,
-                                       &x, &y,
-                                       FALSE);
+      dest_segs[i].x1 = CLAMP (dest_segs[i].x1, -1, xclamp);
+      dest_segs[i].y1 = CLAMP (dest_segs[i].y1, -1, yclamp);
 
-      dest_segs[i].x1 = CLAMP (x, -1, xclamp);
-      dest_segs[i].y1 = CLAMP (y, -1, yclamp);
-
-      gimp_display_shell_transform_xy (select->shell,
-                                       src_segs[i].x2, src_segs[i].y2,
-                                       &x, &y,
-                                       FALSE);
-
-      dest_segs[i].x2 = CLAMP (x, -1, xclamp);
-      dest_segs[i].y2 = CLAMP (y, -1, yclamp);
+      dest_segs[i].x2 = CLAMP (dest_segs[i].x2, -1, xclamp);
+      dest_segs[i].y2 = CLAMP (dest_segs[i].y2, -1, yclamp);
 
       /*  If this segment is a closing segment && the segments lie inside
        *  the region, OR if this is an opening segment and the segments

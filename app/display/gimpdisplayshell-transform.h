@@ -64,6 +64,11 @@ void  gimp_display_shell_transform_coords     (GimpDisplayShell *shell,
                                                GdkPoint         *disp_coords,
                                                gint              n_coords,
                                                gboolean          use_offsets);
+void  gimp_display_shell_transform_segments   (GimpDisplayShell *shell,
+                                               const BoundSeg   *src_segs,
+                                               GdkSegment       *dest_segs,
+                                               gint              n_segs,
+                                               gboolean          use_offsets);
 
 void  gimp_display_shell_untransform_viewport (GimpDisplayShell *shell,
                                                gint             *x,

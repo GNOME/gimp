@@ -22,6 +22,8 @@
 
 #include "display-types.h"
 
+#include "base/boundary.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
@@ -287,7 +289,7 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
  * @points:      array of x, y coordinate pairs
  * @coords:      returns the corresponding display coordinates
  * @n_points:    number of points
- * @use_offsets: if %TRUE, the @x and @y coordinates are in the coordinate
+ * @use_offsets: if %TRUE, the source coordinates are in the coordinate
  *               system of the active drawable instead of the image
  *
  * Transforms from image coordinates to display coordinates, so that
@@ -339,7 +341,7 @@ gimp_display_shell_transform_points (GimpDisplayShell *shell,
  * @image_coords: array of image coordinates
  * @disp_coords:  returns the corresponding display coordinates
  * @n_coords:     number of coordinates
- * @use_offsets:  if %TRUE, the @x and @y coordinates are in the coordinate
+ * @use_offsets:  if %TRUE, the source coordinates are in the coordinate
  *                system of the active drawable instead of the image
  *
  * Transforms from image coordinates to display coordinates, so that
@@ -382,6 +384,64 @@ gimp_display_shell_transform_coords (GimpDisplayShell *shell,
 
       disp_coords[i].x = PROJ_ROUND (x) + shell->disp_xoffset;
       disp_coords[i].y = PROJ_ROUND (y) + shell->disp_yoffset;
+    }
+}
+
+/**
+ * gimp_display_shell_transform_segments:
+ * @shell:        a #GimpDisplayShell
+ * @src_segs:     array of segments in image coordinates
+ * @dest_segs:    returns the corresponding segments in display coordinates
+ * @n_coords:     number of segments
+ * @use_offsets:  if %TRUE, the source coordinates are in the coordinate
+ *                system of the active drawable instead of the image
+ *
+ * Transforms from image coordinates to display coordinates, so that
+ * objects can be rendered at the correct points on the display.
+ **/
+void
+gimp_display_shell_transform_segments (GimpDisplayShell *shell,
+                                       const BoundSeg   *src_segs,
+                                       GdkSegment       *dest_segs,
+                                       gint              n_segs,
+                                       gboolean          use_offsets)
+{
+  gdouble scalex;
+  gdouble scaley;
+  gint    offset_x = 0;
+  gint    offset_y = 0;
+  gint    i;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  /*  transform from image coordinates to screen coordinates  */
+  scalex = SCALEFACTOR_X (shell);
+  scaley = SCALEFACTOR_Y (shell);
+
+  if (use_offsets)
+    gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->display->image)),
+                       &offset_x, &offset_y);
+
+  for (i = 0; i < n_segs ; i++)
+    {
+      gdouble x1 = scalex * (src_segs[i].x1 + offset_x) - shell->offset_x;
+      gdouble x2 = scalex * (src_segs[i].x2 + offset_x) - shell->offset_x;
+      gdouble y1 = scaley * (src_segs[i].y1 + offset_y) - shell->offset_y;
+      gdouble y2 = scaley * (src_segs[i].y2 + offset_y) - shell->offset_y;
+
+      /* The projected coordinates can easily overflow a gint in the
+         case of big images at high zoom levels, so we clamp them here
+         to avoid problems.
+       */
+      x1 = CLAMP (x1, G_MININT, G_MAXINT);
+      x2 = CLAMP (x2, G_MININT, G_MAXINT);
+      y1 = CLAMP (y1, G_MININT, G_MAXINT);
+      y2 = CLAMP (y2, G_MININT, G_MAXINT);
+
+      dest_segs[i].x1 = PROJ_ROUND (x1) + shell->disp_xoffset;
+      dest_segs[i].x2 = PROJ_ROUND (x2) + shell->disp_xoffset;
+      dest_segs[i].y1 = PROJ_ROUND (y1) + shell->disp_yoffset;
+      dest_segs[i].y2 = PROJ_ROUND (y2) + shell->disp_yoffset;
     }
 }
 
