@@ -1137,6 +1137,9 @@ gimp_draw_tool_draw_lines (GimpDrawTool  *draw_tool,
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
+  if (n_points == 0)
+    return;
+
   shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
 
   coords = g_new (GdkPoint, n_points);
@@ -1171,6 +1174,9 @@ gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
   GdkPoint         *coords;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
+  if (n_points == 0)
+    return;
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
 

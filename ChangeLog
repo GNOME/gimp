@@ -1,5 +1,13 @@
 2006-08-09  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-draw.c (gimp_display_shell_draw_pen)
+	(gimp_display_shell_draw_vector): use the new transform functions.
+
+	* app/tools/gimpdrawtool.c  (gimp_draw_tool_draw_lines)
+	(gimp_draw_tool_draw_strokes): bail out early if num_points == 0.
+
+2006-08-09  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-transform.[ch]: renamed
 	transform_coords() to transform_coordinate(); same for the
 	untransform variant. Added new functions transform_points() and
