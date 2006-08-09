@@ -460,15 +460,12 @@ selection_transform_segs (Selection      *select,
                           GdkSegment     *dest_segs,
                           gint            num_segs)
 {
-  gint x, y;
+  gint xclamp = select->shell->disp_width + 1;
+  gint yclamp = select->shell->disp_height + 1;
   gint i;
-  gint xclamp, yclamp;
 
   gimp_display_shell_transform_segments (select->shell,
                                          src_segs, dest_segs, num_segs, FALSE);
-
-  xclamp = select->shell->disp_width + 1;
-  yclamp = select->shell->disp_height + 1;
 
   for (i = 0; i < num_segs; i++)
     {

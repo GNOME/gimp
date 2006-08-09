@@ -309,7 +309,6 @@ gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
   GdkGC       *gc;
   GdkGCValues  values;
   GdkPoint    *coords;
-  gint         i;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
