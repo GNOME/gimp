@@ -31,7 +31,7 @@
 
 
 /**
- * gimp_display_shell_transform_coords:
+ * gimp_display_shell_transform_coordinate:
  * @shell:          a #GimpDisplayShell
  * @image_coords:   image coordinates
  * @display_coords: returns the corresponding display coordinates
@@ -40,9 +40,9 @@
  * objects can be rendered at the correct points on the display.
  **/
 void
-gimp_display_shell_transform_coords (GimpDisplayShell *shell,
-                                     GimpCoords       *image_coords,
-                                     GimpCoords       *display_coords)
+gimp_display_shell_transform_coordinate (GimpDisplayShell *shell,
+                                         GimpCoords       *image_coords,
+                                         GimpCoords       *display_coords)
 {
   gdouble scalex;
   gdouble scaley;
@@ -64,18 +64,18 @@ gimp_display_shell_transform_coords (GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_untransform_coords:
+ * gimp_display_shell_untransform_coordinate:
  * @shell:          a #GimpDisplayShell
  * @display_coords: display coordinates
- * @image_coords:   returns the corresonding image coordinates
+ * @image_coords:   returns the corresponding image coordinates
  *
  * Transforms from display coordinates to image coordinates, so that
  * points on the display can be mapped to points in the image.
  **/
 void
-gimp_display_shell_untransform_coords (GimpDisplayShell *shell,
-                                       GimpCoords       *display_coords,
-                                       GimpCoords       *image_coords)
+gimp_display_shell_untransform_coordinate (GimpDisplayShell *shell,
+                                           GimpCoords       *display_coords,
+                                           GimpCoords       *image_coords)
 {
   gdouble scalex;
   gdouble scaley;
@@ -96,19 +96,6 @@ gimp_display_shell_untransform_coords (GimpDisplayShell *shell,
   image_coords->y /= scaley;
 }
 
-/**
- * gimp_display_shell_transform_xy:
- * @shell:       a #GimpDisplayShell
- * @x:           x coordinate of point in image coordinates
- * @y:           y coordinate of point in image coordinate
- * @nx:          returns the transformed x coordinate
- * @ny:          returns the transformed y coordinate
- * @use_offsets: if %TRUE, the @x and @y coordinates are in the coordinate
- *               system of the active drawable instead of the image
- *
- * Transforms from image coordinates to display coordinates, so that objects
- * can be rendered at the correct points on the display.
- **/
 void
 gimp_display_shell_transform_xy (GimpDisplayShell *shell,
                                  gdouble           x,
@@ -292,6 +279,110 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
 
   *nx = (x + shell->offset_x) / scalex - offset_x;
   *ny = (y + shell->offset_y) / scaley - offset_y;
+}
+
+/**
+ * gimp_display_shell_transform_points:
+ * @shell:       a #GimpDisplayShell
+ * @points:      array of x, y coordinate pairs
+ * @coords:      returns the corresponding display coordinates
+ * @n_points:    number of points
+ * @use_offsets: if %TRUE, the @x and @y coordinates are in the coordinate
+ *               system of the active drawable instead of the image
+ *
+ * Transforms from image coordinates to display coordinates, so that
+ * objects can be rendered at the correct points on the display.
+ **/
+void
+gimp_display_shell_transform_points (GimpDisplayShell *shell,
+                                     const gdouble    *points,
+                                     GdkPoint         *coords,
+                                     gint              n_points,
+                                     gboolean          use_offsets)
+{
+  gdouble scalex;
+  gdouble scaley;
+  gint    offset_x = 0;
+  gint    offset_y = 0;
+  gint    i;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  /*  transform from image coordinates to screen coordinates  */
+  scalex = SCALEFACTOR_X (shell);
+  scaley = SCALEFACTOR_Y (shell);
+
+  if (use_offsets)
+    gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->display->image)),
+                       &offset_x, &offset_y);
+
+  for (i = 0; i < n_points ; i++)
+    {
+      gdouble x = scalex * (points[i * 2]     + offset_x) - shell->offset_x;
+      gdouble y = scaley * (points[i * 2 + 1] + offset_y) - shell->offset_y;
+
+      /* The projected coordinates can easily overflow a gint in the
+         case of big images at high zoom levels, so we clamp them here
+         to avoid problems.
+       */
+      x = CLAMP (x, G_MININT, G_MAXINT);
+      y = CLAMP (y, G_MININT, G_MAXINT);
+
+      coords[i].x = PROJ_ROUND (x) + shell->disp_xoffset;
+      coords[i].y = PROJ_ROUND (y) + shell->disp_yoffset;
+    }
+}
+
+/**
+ * gimp_display_shell_transform_coords:
+ * @shell:        a #GimpDisplayShell
+ * @image_coords: array of image coordinates
+ * @disp_coords:  returns the corresponding display coordinates
+ * @n_coords:     number of coordinates
+ * @use_offsets:  if %TRUE, the @x and @y coordinates are in the coordinate
+ *                system of the active drawable instead of the image
+ *
+ * Transforms from image coordinates to display coordinates, so that
+ * objects can be rendered at the correct points on the display.
+ **/
+void
+gimp_display_shell_transform_coords (GimpDisplayShell *shell,
+                                     const GimpCoords *image_coords,
+                                     GdkPoint         *disp_coords,
+                                     gint              n_coords,
+                                     gboolean          use_offsets)
+{
+  gdouble scalex;
+  gdouble scaley;
+  gint    offset_x = 0;
+  gint    offset_y = 0;
+  gint    i;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  /*  transform from image coordinates to screen coordinates  */
+  scalex = SCALEFACTOR_X (shell);
+  scaley = SCALEFACTOR_Y (shell);
+
+  if (use_offsets)
+    gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->display->image)),
+                       &offset_x, &offset_y);
+
+  for (i = 0; i < n_coords ; i++)
+    {
+      gdouble x = scalex * (image_coords[i].x + offset_x) - shell->offset_x;
+      gdouble y = scaley * (image_coords[i].y + offset_y) - shell->offset_y;
+
+      /* The projected coordinates can easily overflow a gint in the
+         case of big images at high zoom levels, so we clamp them here
+         to avoid problems.
+       */
+      x = CLAMP (x, G_MININT, G_MAXINT);
+      y = CLAMP (y, G_MININT, G_MAXINT);
+
+      disp_coords[i].x = PROJ_ROUND (x) + shell->disp_xoffset;
+      disp_coords[i].y = PROJ_ROUND (y) + shell->disp_yoffset;
+    }
 }
 
 /**

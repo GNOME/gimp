@@ -493,9 +493,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   time = gdk_event_get_time (event);
 
   /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
-  gimp_display_shell_untransform_coords (shell,
-                                         &display_coords,
-                                         &image_coords);
+  gimp_display_shell_untransform_coordinate (shell,
+                                             &display_coords,
+                                             &image_coords);
 
   active_tool = tool_manager_get_active (gimp);
 
@@ -935,9 +935,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           }
 
         /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
-        gimp_display_shell_untransform_coords (shell,
-                                               &display_coords,
-                                               &image_coords);
+        gimp_display_shell_untransform_coordinate (shell,
+                                                   &display_coords,
+                                                   &image_coords);
 
         active_tool = tool_manager_get_active (gimp);
 
@@ -995,9 +995,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             time = gdk_event_get_time (event);
 
             /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
-            gimp_display_shell_untransform_coords (shell,
-                                                   &display_coords,
-                                                   &image_coords);
+            gimp_display_shell_untransform_coordinate (shell,
+                                                       &display_coords,
+                                                       &image_coords);
 
             if (active_tool &&
                 gimp_tool_control_get_snap_to (active_tool->control))
@@ -1074,9 +1074,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                         /*  GimpCoords passed to tools are ALWAYS in
                          *  image coordinates
                          */
-                        gimp_display_shell_untransform_coords (shell,
-                                                               &display_coords,
-                                                               &image_coords);
+                        gimp_display_shell_untransform_coordinate (shell,
+                                                                   &display_coords,
+                                                                   &image_coords);
 
                         if (gimp_tool_control_get_snap_to (active_tool->control))
                           {

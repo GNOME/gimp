@@ -1,5 +1,18 @@
 2006-08-09  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-transform.[ch]: renamed
+	transform_coords() to transform_coordinate(); same for the
+	untransform variant. Added new functions transform_points() and
+	transform_coords() that work on arrays.
+
+	* app/display/gimpdisplayshell-autoscroll.c
+	* app/display/gimpdisplayshell-callbacks.c: changed accordingly.
+
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_draw_lines)
+	(gimp_draw_tool_draw_strokes): use the new transform functions.
+
+2006-08-09  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpiscissorstool.c (iscissors_draw_curve):
 	implement using gimp_draw_tool_draw_lines(). 
 

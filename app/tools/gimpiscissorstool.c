@@ -495,7 +495,6 @@ iscissors_convert (GimpIscissorsTool *iscissors,
   guint                 n_points;
   GSList               *list;
   ICurve               *icurve;
-  guint                 packed;
   gint                  i;
   gint                  index;
 
@@ -517,7 +516,9 @@ iscissors_convert (GimpIscissorsTool *iscissors,
 
       for (i = 0; i < n_points; i ++)
         {
-          packed = GPOINTER_TO_INT (g_ptr_array_index (icurve->points, i));
+          guint32  packed = GPOINTER_TO_INT (g_ptr_array_index (icurve->points,
+                                                                i));
+
           points[i].x = packed & 0x0000ffff;
           points[i].y = packed >> 16;
         }
@@ -1780,7 +1781,7 @@ gradmap_tile_validate (TileManager *tm,
           else
             gradmap[j*COST_WIDTH + 1] = 255; /* reserved for weak gradient */
 
-contin:
+        contin:
           datah += srcPR.bytes;
           datav += srcPR.bytes;
         }

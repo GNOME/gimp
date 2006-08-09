@@ -1134,7 +1134,6 @@ gimp_draw_tool_draw_lines (GimpDrawTool  *draw_tool,
 {
   GimpDisplayShell *shell;
   GdkPoint         *coords;
-  gint              i;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
@@ -1142,13 +1141,8 @@ gimp_draw_tool_draw_lines (GimpDrawTool  *draw_tool,
 
   coords = g_new (GdkPoint, n_points);
 
-  for (i = 0; i < n_points ; i++)
-    {
-      gimp_display_shell_transform_xy (shell,
-                                       points[i*2], points[i*2+1],
-                                       &coords[i].x, &coords[i].y,
-                                       use_offsets);
-    }
+  gimp_display_shell_transform_points (shell,
+                                       points, coords, n_points, use_offsets);
 
   if (filled)
     {
@@ -1175,7 +1169,6 @@ gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
 {
   GimpDisplayShell *shell;
   GdkPoint         *coords;
-  gint              i;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
@@ -1183,13 +1176,8 @@ gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
 
   coords = g_new (GdkPoint, n_points);
 
-  for (i = 0; i < n_points ; i++)
-    {
-      gimp_display_shell_transform_xy (shell,
-                                       points[i].x, points[i].y,
-                                       &coords[i].x, &coords[i].y,
-                                       use_offsets);
-    }
+  gimp_display_shell_transform_coords (shell,
+                                       points, coords, n_points, use_offsets);
 
   if (filled)
     {
