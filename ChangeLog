@@ -1,3 +1,10 @@
+2006-08-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-params.c (plug_in_params_to_args): it's a
+	bad idea to access an array before checking if it's long enough.
+	Fixes bug #350555. Also added some comments, the logic here is
+	really weird.
+
 2006-08-09  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimprgb.c
