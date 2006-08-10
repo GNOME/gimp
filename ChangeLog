@@ -1,5 +1,11 @@
 2006-08-10  Sven Neumann  <sven@gimp.org>
 
+	* app/file/file-utils.c: added a copy of g_unescape_uri_string()
+	from glib/gconvert.c and use it to improve the results of
+	file_utils_uri_display_name() and file_utils_uri_display_basename().
+
+2006-08-10  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/file-save-dialog.c: use gimp_message().
 
 	* app/dialogs/preferences-dialog.c: use a GtkMessageDialog and

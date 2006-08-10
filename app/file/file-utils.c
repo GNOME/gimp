@@ -67,6 +67,12 @@ static GimpPlugInProcedure * file_proc_find_by_extension (GSList       *procs,
 static GimpPlugInProcedure * file_proc_find_by_name      (GSList       *procs,
                                                           const gchar  *uri,
                                                           gboolean      skip_magic);
+
+static gchar *               file_utils_unescape_uri     (const gchar  *escaped,
+                                                          gint          len,
+                                                          const gchar  *illegal_escaped_characters,
+                                                          gboolean      ascii_must_not_be_escaped);
+
 static void                  file_convert_string         (const gchar  *instr,
                                                           gchar        *outmem,
                                                           gint          maxmem,
@@ -299,7 +305,7 @@ static gchar *
 file_utils_uri_to_utf8_basename (const gchar *uri)
 {
   gchar *filename;
-  gchar *basename;
+  gchar *basename = NULL;
 
   g_return_val_if_fail (uri != NULL, NULL);
 
@@ -308,19 +314,18 @@ file_utils_uri_to_utf8_basename (const gchar *uri)
   if (strstr (filename, G_DIR_SEPARATOR_S))
     {
       basename = g_path_get_basename (filename);
-
-      g_free (filename);
-
-      return basename;
     }
   else if (strstr (filename, "://"))
     {
       basename = strrchr (uri, '/');
 
-      basename = g_strdup (basename + 1);
+      if (basename)
+        basename = g_strdup (basename + 1);
+    }
 
+  if (basename)
+    {
       g_free (filename);
-
       return basename;
     }
 
@@ -330,6 +335,8 @@ file_utils_uri_to_utf8_basename (const gchar *uri)
 gchar *
 file_utils_uri_display_basename (const gchar *uri)
 {
+  gchar *basename = NULL;
+
   g_return_val_if_fail (uri != NULL, NULL);
 
   if (g_str_has_prefix (uri, "file:"))
@@ -338,20 +345,29 @@ file_utils_uri_display_basename (const gchar *uri)
 
       if (filename)
         {
-          gchar *basename = g_filename_display_basename (filename);
-
+          basename = g_filename_display_basename (filename);
           g_free (filename);
-
-          return basename;
         }
     }
+  else
+    {
+      gchar *name = file_utils_uri_display_name (uri);
 
-  return file_utils_uri_to_utf8_basename (uri);
+      basename = strrchr (name, '/');
+      if (basename)
+        basename = g_strdup (basename + 1);
+
+      g_free (name);
+    }
+
+  return basename ? basename : file_utils_uri_to_utf8_basename (uri);
 }
 
 gchar *
 file_utils_uri_display_name (const gchar *uri)
 {
+  gchar *name = NULL;
+
   g_return_val_if_fail (uri != NULL, NULL);
 
   if (g_str_has_prefix (uri, "file:"))
@@ -360,15 +376,16 @@ file_utils_uri_display_name (const gchar *uri)
 
       if (filename)
         {
-          gchar *name = g_filename_display_name (filename);
-
+          name = g_filename_display_name (filename);
           g_free (filename);
-
-          return name;
         }
     }
+  else
+    {
+      name = file_utils_unescape_uri (uri, -1, "/", FALSE);
+    }
 
-  return g_strdup (uri);
+  return name ? name : g_strdup (uri);
 }
 
 GdkPixbuf *
@@ -541,6 +558,87 @@ file_proc_find_by_name (GSList      *procs,
     proc = file_proc_find_by_extension (procs, uri, skip_magic);
 
   return proc;
+}
+
+
+/* the following two functions are copied from glib/gconvert.c */
+
+static gint
+unescape_character (const gchar *scanner)
+{
+  gint first_digit;
+  gint second_digit;
+
+  first_digit = g_ascii_xdigit_value (scanner[0]);
+  if (first_digit < 0)
+    return -1;
+
+  second_digit = g_ascii_xdigit_value (scanner[1]);
+  if (second_digit < 0)
+    return -1;
+
+  return (first_digit << 4) | second_digit;
+}
+
+static gchar *
+file_utils_unescape_uri (const gchar *escaped,
+                         gint         len,
+                         const gchar *illegal_escaped_characters,
+                         gboolean     ascii_must_not_be_escaped)
+{
+  const gchar *in, *in_end;
+  gchar *out, *result;
+  gint c;
+
+  if (escaped == NULL)
+    return NULL;
+
+  if (len < 0)
+    len = strlen (escaped);
+
+  result = g_malloc (len + 1);
+
+  out = result;
+  for (in = escaped, in_end = escaped + len; in < in_end; in++)
+    {
+      c = *in;
+
+      if (c == '%')
+	{
+	  /* catch partial escape sequences past the end of the substring */
+	  if (in + 3 > in_end)
+	    break;
+
+	  c = unescape_character (in + 1);
+
+	  /* catch bad escape sequences and NUL characters */
+	  if (c <= 0)
+	    break;
+
+	  /* catch escaped ASCII */
+	  if (ascii_must_not_be_escaped && c <= 0x7F)
+	    break;
+
+	  /* catch other illegal escaped characters */
+	  if (strchr (illegal_escaped_characters, c) != NULL)
+	    break;
+
+	  in += 2;
+	}
+
+      *out++ = c;
+    }
+
+  g_assert (out - result <= len);
+  *out = '\0';
+
+  if (in != in_end)
+    {
+      g_free (result);
+      return NULL;
+    }
+
+  return result;
 }
 
 static void
