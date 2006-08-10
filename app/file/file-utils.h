@@ -36,7 +36,8 @@ gchar               * file_utils_uri_display_basename   (const gchar   *uri);
 gchar               * file_utils_uri_display_name       (const gchar   *uri);
 
 GimpPlugInProcedure * file_utils_find_proc              (GSList        *procs,
-                                                         const gchar   *filename);
+                                                         const gchar   *filename,
+                                                         GError       **error);
 GimpPlugInProcedure * file_utils_find_proc_by_extension (GSList        *procs,
                                                          const gchar   *uri);
 

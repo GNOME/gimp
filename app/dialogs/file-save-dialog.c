@@ -173,9 +173,9 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
 
   save_proc     = dialog->file_proc;
   uri_proc      = file_utils_find_proc (gimp->plug_in_manager->save_procs,
-                                        uri);
+                                        uri, NULL);
   basename_proc = file_utils_find_proc (gimp->plug_in_manager->save_procs,
-                                        basename);
+                                        basename, NULL);
 
 #ifdef DEBUG_SPEW
   g_print ("\n\n%s: URI = %s\n",
@@ -234,10 +234,10 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
               uri      = ext_uri;
               basename = ext_basename;
 
-              uri_proc      = file_utils_find_proc (gimp->plug_in_manager->save_procs,
-                                                    uri);
+              uri_proc = file_utils_find_proc (gimp->plug_in_manager->save_procs,
+                                               uri, NULL);
               basename_proc = file_utils_find_proc (gimp->plug_in_manager->save_procs,
-                                                    basename);
+                                                    basename, NULL);
 
               utf8 = g_filename_to_utf8 (basename, -1, NULL, NULL, NULL);
               gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (save_dialog),

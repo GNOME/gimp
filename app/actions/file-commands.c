@@ -206,8 +206,9 @@ file_save_cmd_callback (GtkAction *action,
       save_proc = gimp_image_get_save_proc (image);
 
       if (uri && ! save_proc)
-        save_proc = file_utils_find_proc (image->gimp->plug_in_manager->save_procs,
-                                          uri);
+        save_proc =
+          file_utils_find_proc (image->gimp->plug_in_manager->save_procs,
+                                uri, NULL);
 
       if (! (uri && save_proc))
         {

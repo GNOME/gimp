@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -186,7 +187,8 @@ file_utils_filename_from_uri (const gchar *uri)
 
 GimpPlugInProcedure *
 file_utils_find_proc (GSList       *procs,
-                      const gchar  *uri)
+                      const gchar  *uri,
+                      GError      **error)
 {
   GimpPlugInProcedure *file_proc;
   GSList              *all_procs = procs;
@@ -194,6 +196,7 @@ file_utils_find_proc (GSList       *procs,
 
   g_return_val_if_fail (procs != NULL, NULL);
   g_return_val_if_fail (uri != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   /* First, check magicless prefixes/suffixes */
   file_proc = file_proc_find_by_name (all_procs, uri, TRUE);
@@ -223,8 +226,18 @@ file_utils_find_proc (GSList       *procs,
               if (head_size == -2)
                 {
                   head_size = 0;
+
                   if ((ifp = g_fopen (filename, "rb")) != NULL)
-                    head_size = fread ((gchar *) head, 1, sizeof (head), ifp);
+                    {
+                      head_size = fread ((gchar *) head, 1, sizeof (head), ifp);
+                    }
+                  else
+                    {
+                      g_set_error (error,
+                                   G_FILE_ERROR,
+                                   g_file_error_from_errno (errno),
+                                   g_strerror (errno));
+                    }
                 }
 
               if (head_size >= 4)
@@ -259,7 +272,13 @@ file_utils_find_proc (GSList       *procs,
     }
 
   /* As a last resort, try matching by name */
-  return file_proc_find_by_name (all_procs, uri, FALSE);
+  file_proc = file_proc_find_by_name (all_procs, uri, FALSE);
+
+  if (! file_proc && error && *error == NULL)
+    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                 _("Unknown file type"));
+
+  return file_proc;
 }
 
 GimpPlugInProcedure *

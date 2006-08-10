@@ -63,7 +63,8 @@ file_load_invoker (GimpProcedure     *procedure,
   if (! uri)
     return gimp_procedure_get_return_values (procedure, FALSE);
 
-  file_proc = file_utils_find_proc (gimp->plug_in_manager->load_procs, uri);
+  file_proc =
+    file_utils_find_proc (gimp->plug_in_manager->load_procs, uri, NULL);
 
   g_free (uri);
 
@@ -157,7 +158,8 @@ file_save_invoker (GimpProcedure     *procedure,
   if (! uri)
     return gimp_procedure_get_return_values (procedure, FALSE);
 
-  file_proc = file_utils_find_proc (gimp->plug_in_manager->save_procs, uri);
+  file_proc =
+    file_utils_find_proc (gimp->plug_in_manager->save_procs, uri, NULL);
 
   g_free (uri);
 
