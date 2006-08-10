@@ -36,6 +36,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplist.h"
+#include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundo.h"
 #include "core/gimpundostack.h"
@@ -1891,7 +1892,9 @@ gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
 
   if (! active_drawable)
     {
-      g_message (_("There is no active layer or channel to stroke to"));
+      gimp_message (image->gimp,
+                    GIMP_PROGRESS (GIMP_TOOL (vector_tool)->display),
+                    _("There is no active layer or channel to stroke to"));
       return;
     }
 

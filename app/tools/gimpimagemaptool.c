@@ -36,6 +36,7 @@
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimagemap.h"
 #include "core/gimppickable.h"
+#include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
 
@@ -96,7 +97,9 @@ static void     gimp_image_map_tool_save_ext_clicked (GtkWidget        *widget,
 static void     gimp_image_map_tool_settings_dialog  (GimpImageMapTool *im_tool,
                                                       const gchar      *title,
                                                       gboolean          save);
-
+static void     gimp_image_map_tool_error_dialog     (GimpImageMapTool *tool,
+                                                      const gchar      *format,
+                                                      ...) G_GNUC_PRINTF(2,3);
 static void     gimp_image_map_tool_notify_preview   (GObject          *config,
                                                       GParamSpec       *pspec,
                                                       GimpImageMapTool *im_tool);
@@ -580,11 +583,13 @@ gimp_image_map_tool_load_save (GimpImageMapTool *tool,
 
   if (! file)
     {
-      g_message (save ?
-                 _("Could not open '%s' for writing: %s") :
-                 _("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename),
-                 g_strerror (errno));
+      const gchar *format = save ?
+        _("Could not open '%s' for writing: %s") :
+        _("Could not open '%s' for reading: %s");
+
+      gimp_image_map_tool_error_dialog (tool, format,
+                                        gimp_filename_to_utf8 (filename),
+                                        g_strerror (errno));
       return;
     }
 
@@ -598,8 +603,10 @@ gimp_image_map_tool_load_save (GimpImageMapTool *tool,
     }
   else if (! gimp_image_map_tool_settings_load (tool, file, &error))
     {
-      g_message (_("Error reading '%s': %s"),
-                 gimp_filename_to_utf8 (filename), error->message);
+      gimp_image_map_tool_error_dialog (tool,
+                                        _("Error reading '%s': %s"),
+                                        gimp_filename_to_utf8 (filename),
+                                        error->message);
       g_error_free (error);
     }
 
@@ -775,4 +782,31 @@ gimp_image_map_tool_settings_dialog (GimpImageMapTool *tool,
                      GIMP_TOOL (tool)->tool_info->help_id, NULL);
 
   gtk_widget_show (tool->settings_dialog);
+}
+
+static void
+gimp_image_map_tool_error_dialog (GimpImageMapTool *tool,
+                                  const gchar      *format,
+                                  ...)
+{
+  GtkWidget *dialog;
+  gchar     *text;
+  va_list    args;
+
+  va_start (args, format);
+  text = g_strdup_vprintf (format, args);
+  va_end (args);
+
+  dialog = gtk_message_dialog_new (GTK_WINDOW (tool->shell),
+                                   GTK_DIALOG_DESTROY_WITH_PARENT,
+                                   GTK_MESSAGE_ERROR,
+                                   GTK_BUTTONS_OK,
+                                   text);
+  g_free (text);
+
+  g_signal_connect_swapped (dialog, "response",
+                            G_CALLBACK (gtk_widget_destroy),
+                            dialog);
+
+  gtk_widget_show (dialog);
 }

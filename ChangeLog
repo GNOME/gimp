@@ -1,4 +1,9 @@
-2006-08-10  Sven Neumann  <neumann@jpk.com>
+2006-08-10  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpimagemaptool.c: for load and save errors, use a
+	GtkMessageDialog and make it transient for the tool dialog.
+
+	* app/tools/gimpvectortool.c: use gimp_message().
 
 2006-08-10  Sven Neumann  <sven@gimp.org>
 
