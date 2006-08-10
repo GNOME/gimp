@@ -1,3 +1,10 @@
+2006-08-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimprectangleselecttool.[ch]: if the user is
+	modifying a rectangle and the mode is REPLACE, don't
+	show the marching ants for the previous selection, because
+	it confuses users.  Should fix bug #347945.
+	
 2006-08-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/autocrop.c: fixed the check for an empty image.

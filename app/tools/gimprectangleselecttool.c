@@ -47,6 +47,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
+#include "display/gimpdisplayshell-appearance.h"
 
 #include "gimpselectiontool.h"
 #include "gimpselectionoptions.h"
@@ -260,13 +261,16 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
                                         GdkModifierType  state,
                                         GimpDisplay     *display)
 {
-  GimpRectSelectTool *rect_select = GIMP_RECT_SELECT_TOOL (tool);
-  guint               function;
+  GimpRectSelectTool   *rect_select = GIMP_RECT_SELECT_TOOL (tool);
+  guint                 function;
 
   if (tool->display && display != tool->display)
     gimp_rectangle_tool_cancel (GIMP_RECTANGLE_TOOL (tool));
 
   g_object_get (tool, "function", &function, NULL);
+
+  rect_select->saved_show_selection
+    = gimp_display_shell_get_show_selection (GIMP_DISPLAY_SHELL (display->shell));
 
   if (function == RECT_INACTIVE)
     {
@@ -309,6 +313,16 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
     {
       GimpImage             *image       = tool->display->image;
       GimpUndo              *undo;
+      GimpSelectionOptions *options;
+      SelectOps             operation;
+
+      options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+      if (rect_select->use_saved_op)
+        operation = rect_select->operation;
+      else
+        g_object_get (options,
+                      "operation", &operation,
+                      NULL);
 
       undo = gimp_undo_stack_peek (image->undo_stack);
 
@@ -324,6 +338,12 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
           /* we will need to redo if the user cancels or executes */
           rect_select->redo = gimp_undo_stack_peek (image->redo_stack);
         }
+
+      /* if the operation is "Replace", turn off the marching ants,
+         because they are confusing */
+      if (operation == SELECTION_REPLACE)
+        gimp_display_shell_set_show_selection (GIMP_DISPLAY_SHELL (display->shell),
+                                               FALSE);
     }
 
   rect_select->undo = NULL;
@@ -342,6 +362,8 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
   GimpSelectionOptions *options;
 
   gimp_tool_pop_status (tool, display);
+  gimp_display_shell_set_show_selection (GIMP_DISPLAY_SHELL (display->shell),
+                                         rect_select->saved_show_selection);
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 

@@ -37,8 +37,9 @@ struct _GimpRectSelectTool
 {
   GimpSelectionTool  parent_instance;
 
-  SelectOps          operation;    /* remember for use when modifying   */
-  gboolean           use_saved_op; /* use operation or get from options */
+  SelectOps          operation;            /* remember for use when modifying   */
+  gboolean           use_saved_op;         /* use operation or get from options */
+  gboolean           saved_show_selection; /* used to remember existing value   */
   GimpUndo          *undo;
   GimpUndo          *redo;
 };
