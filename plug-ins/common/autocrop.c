@@ -211,11 +211,12 @@ autocrop (GimpDrawable *drawable,
   for (y1 = 0; y1 < height && !abort; y1++)
     {
       gimp_pixel_rgn_get_row (&srcPR, buffer, 0, y1, width);
+
       for (i = 0; i < width && !abort; i++)
         abort = !colors_equal (color, buffer + i * bytes, bytes);
     }
 
-  if (y1 == height - 1 && !abort)
+  if (y1 == height&& !abort)
     {
       /* whee - a plain color drawable. Do nothing. */
       g_free (buffer);
@@ -231,6 +232,7 @@ autocrop (GimpDrawable *drawable,
   for (y2 = height - 1; y2 >= 0 && !abort; y2--)
     {
       gimp_pixel_rgn_get_row (&srcPR, buffer, 0, y2, width);
+
       for (i = 0; i < width && !abort; i++)
         abort = !colors_equal (color, buffer + i * bytes, bytes);
     }
@@ -240,8 +242,11 @@ autocrop (GimpDrawable *drawable,
   /* The coordinates are now the first rows which DON'T match
    * the color. Crop instead to one row larger:
    */
-  if (y1 > 0) --y1;
-  if (y2 < height-1) ++y2;
+  if (y1 > 0)
+    y1--;
+
+  if (y2 < height - 1)
+    y2++;
 
   if (show_progress)
     gimp_progress_update (0.5);
@@ -250,7 +255,7 @@ autocrop (GimpDrawable *drawable,
   abort = FALSE;
   for (x1 = 0; x1 < width && !abort; x1++)
     {
-      gimp_pixel_rgn_get_col (&srcPR, buffer, x1, y1, y2-y1);
+      gimp_pixel_rgn_get_col (&srcPR, buffer, x1, y1, y2 - y1);
       for (i = 0; i < y2-y1 && !abort; i++)
         abort = !colors_equal (color, buffer + i * bytes, bytes);
     }
@@ -262,7 +267,7 @@ autocrop (GimpDrawable *drawable,
   abort = FALSE;
   for (x2 = width - 1; x2 >= 0 && !abort; x2--)
     {
-      gimp_pixel_rgn_get_col (&srcPR, buffer, x2, y1, y2-y1);
+      gimp_pixel_rgn_get_col (&srcPR, buffer, x2, y1, y2 - y1);
       for (i = 0; i < y2-y1 && !abort; i++)
         abort = !colors_equal (color, buffer + i * bytes, bytes);
     }
@@ -272,8 +277,11 @@ autocrop (GimpDrawable *drawable,
   /* The coordinates are now the first columns which DON'T match
    * the color. Crop instead to one column larger:
    */
-  if (x1 > 0) --x1;
-  if (x2 < width-1) ++x2;
+  if (x1 > 0)
+    x1--;
+
+  if (x2 < width - 1)
+    x2++;
 
   g_free (buffer);
 

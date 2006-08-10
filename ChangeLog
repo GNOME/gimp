@@ -1,3 +1,7 @@
+2006-08-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/autocrop.c: fixed the check for an empty image.
+
 2006-08-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/xcf/xcf-private.h
