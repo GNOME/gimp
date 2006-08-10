@@ -62,14 +62,15 @@ struct _GimpImageMapToolClass
   const gchar        *save_dialog_title;
 
   /* virtual functions */
-  void     (* map)           (GimpImageMapTool *image_map_tool);
-  void     (* dialog)        (GimpImageMapTool *image_map_tool);
-  void     (* reset)         (GimpImageMapTool *image_map_tool);
+  void     (* map)           (GimpImageMapTool  *image_map_tool);
+  void     (* dialog)        (GimpImageMapTool  *image_map_tool);
+  void     (* reset)         (GimpImageMapTool  *image_map_tool);
 
-  gboolean (* settings_load) (GimpImageMapTool *image_map_tool,
-                              gpointer          file);
-  gboolean (* settings_save) (GimpImageMapTool *image_map_tool,
-                              gpointer          file);
+  gboolean (* settings_load) (GimpImageMapTool  *image_map_tool,
+                              gpointer           file,
+                              GError           **error);
+  gboolean (* settings_save) (GimpImageMapTool  *image_map_tool,
+                              gpointer           file);
 };
 
 

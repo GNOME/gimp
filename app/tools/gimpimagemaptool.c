@@ -416,14 +416,15 @@ gimp_image_map_tool_reset (GimpImageMapTool *tool)
 }
 
 static gboolean
-gimp_image_map_tool_settings_load (GimpImageMapTool *tool,
-                                   gpointer          file)
+gimp_image_map_tool_settings_load (GimpImageMapTool  *tool,
+                                   gpointer           file,
+                                   GError           **error)
 {
   GimpImageMapToolClass *tool_class = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool);
 
   g_return_val_if_fail (tool_class->settings_load != NULL, FALSE);
 
-  if (tool_class->settings_load (tool, file))
+  if (tool_class->settings_load (tool, file, error))
     {
       gimp_image_map_tool_preview (tool);
       return TRUE;
@@ -572,7 +573,10 @@ gimp_image_map_tool_load_save (GimpImageMapTool *tool,
                                const gchar      *filename,
                                gboolean          save)
 {
-  FILE *file = g_fopen (filename, save ? "wt" : "rt");
+  FILE   *file;
+  GError *error = NULL;
+
+  file = g_fopen (filename, save ? "wt" : "rt");
 
   if (! file)
     {
@@ -592,10 +596,11 @@ gimp_image_map_tool_load_save (GimpImageMapTool *tool,
     {
       gimp_image_map_tool_settings_save (tool, file);
     }
-  else if (! gimp_image_map_tool_settings_load (tool, file))
+  else if (! gimp_image_map_tool_settings_load (tool, file, &error))
     {
-      g_message ("Error in reading file '%s'.",
-                 gimp_filename_to_utf8 (filename));
+      g_message (_("Error reading '%s': %s"),
+                 gimp_filename_to_utf8 (filename), error->message);
+      g_error_free (error);
     }
 
   fclose (file);

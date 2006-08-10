@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -78,24 +79,25 @@
 
 /*  local function prototypes  */
 
-static void     gimp_levels_tool_finalize       (GObject          *object);
+static void     gimp_levels_tool_finalize       (GObject           *object);
 
-static gboolean gimp_levels_tool_initialize     (GimpTool         *tool,
-                                                 GimpDisplay      *display);
+static gboolean gimp_levels_tool_initialize     (GimpTool          *tool,
+                                                 GimpDisplay       *display);
 
-static void     gimp_levels_tool_color_picked   (GimpColorTool    *color_tool,
+static void     gimp_levels_tool_color_picked   (GimpColorTool     *color_tool,
                                                  GimpColorPickState pick_state,
-                                                 GimpImageType     sample_type,
-                                                 GimpRGB          *color,
-                                                 gint              color_index);
+                                                 GimpImageType      sample_type,
+                                                 GimpRGB           *color,
+                                                 gint               color_index);
 
-static void     gimp_levels_tool_map            (GimpImageMapTool *image_map_tool);
-static void     gimp_levels_tool_dialog         (GimpImageMapTool *image_map_tool);
-static void     gimp_levels_tool_reset          (GimpImageMapTool *image_map_tool);
-static gboolean gimp_levels_tool_settings_load  (GimpImageMapTool *image_mao_tool,
-                                                 gpointer          fp);
-static gboolean gimp_levels_tool_settings_save  (GimpImageMapTool *image_map_tool,
-                                                 gpointer          fp);
+static void     gimp_levels_tool_map            (GimpImageMapTool  *image_map_tool);
+static void     gimp_levels_tool_dialog         (GimpImageMapTool  *image_map_tool);
+static void     gimp_levels_tool_reset          (GimpImageMapTool  *image_map_tool);
+static gboolean gimp_levels_tool_settings_load  (GimpImageMapTool  *image_mao_tool,
+                                                 gpointer           fp,
+                                                 GError           **error);
+static gboolean gimp_levels_tool_settings_save  (GimpImageMapTool  *image_map_tool,
+                                                 gpointer           fp);
 
 static void     levels_update                        (GimpLevelsTool *tool,
                                                       guint           update);
@@ -644,8 +646,9 @@ gimp_levels_tool_reset (GimpImageMapTool *image_map_tool)
 }
 
 static gboolean
-gimp_levels_tool_settings_load (GimpImageMapTool *image_map_tool,
-                                gpointer          fp)
+gimp_levels_tool_settings_load (GimpImageMapTool  *image_map_tool,
+                                gpointer           fp,
+                                GError           **error)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
   FILE           *file = fp;
@@ -658,11 +661,13 @@ gimp_levels_tool_settings_load (GimpImageMapTool *image_map_tool,
   gchar           buf[50];
   gchar          *nptr;
 
-  if (! fgets (buf, sizeof (buf), file))
-    return FALSE;
-
-  if (strcmp (buf, "# GIMP Levels File\n") != 0)
-    return FALSE;
+  if (! fgets (buf, sizeof (buf), file) ||
+      strcmp (buf, "# GIMP Levels File\n") != 0)
+    {
+      g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+                   _("not a GIMP Levels file"));
+      return FALSE;
+    }
 
   for (i = 0; i < 5; i++)
     {
@@ -673,15 +678,15 @@ gimp_levels_tool_settings_load (GimpImageMapTool *image_map_tool,
                        &high_output[i]);
 
       if (fields != 4)
-        return FALSE;
+        goto error;
 
       if (! fgets (buf, 50, file))
-        return FALSE;
+        goto error;
 
       gamma[i] = g_ascii_strtod (buf, &nptr);
 
       if (buf == nptr || errno == ERANGE)
-        return FALSE;
+        goto error;
     }
 
   for (i = 0; i < 5; i++)
@@ -696,6 +701,11 @@ gimp_levels_tool_settings_load (GimpImageMapTool *image_map_tool,
   levels_update (tool, ALL);
 
   return TRUE;
+
+ error:
+  g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+               _("parse error"));
+  return FALSE;
 }
 
 static gboolean

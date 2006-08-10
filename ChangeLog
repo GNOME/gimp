@@ -1,3 +1,16 @@
+2006-08-10  Sven Neumann  <neumann@jpk.com>
+
+2006-08-10  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpimagemaptool.[ch]
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c: improved error handling for
+	gimp_image_map_tool_settings_load().
+
+	* app/tools/gimpposterizetool.c: added missing include.
+
+	* app/config/gimpconfig-file.c: rephrased error messages.
+
 2006-08-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/metadata/interface.c (metadata_dialog): set a border
