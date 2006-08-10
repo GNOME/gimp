@@ -15,6 +15,15 @@ Changes in GIMP 2.3.11
 - made Ctrl-P the default shortcut for Print
 - show progress when loading/saving XCF files
 - added support for 16/32 bit bitmaps and alpha channel to the BMP plug-in
+- if possible, detect the number of CPUs
+- allow to disable the build of the script-fu extension
+- many improvements to the Python bindings and the pygimp user interface
+- made message dialogs transient for the progress window
+- added PDB API for creating a selection from vectors
+- further improved status bar messages for tools
+- derive ByColorSelect and FuzzySelect tools from a common base class
+- finer control over select-by-color functionality
+- minor optimizations in the drawing code
 - bug fixes and code cleanup
 
 

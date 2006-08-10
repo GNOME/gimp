@@ -20,7 +20,7 @@
 	* app/display/gimpdisplayshell-transform.[ch]: added new function
 	gimp_display_shell_transform_segments().
 
-	* app/display/gimpdisplayshell-selection.c (selection_transform_segs) 
+	* app/display/gimpdisplayshell-selection.c (selection_transform_segs)
 	* app/tools/gimpregionselecttool.c
 	(gimp_region_select_tool_calculate): use the new function instead
 	of looping over the segments.
@@ -49,7 +49,7 @@
 2006-08-09  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpiscissorstool.c (iscissors_draw_curve):
-	implement using gimp_draw_tool_draw_lines(). 
+	implement using gimp_draw_tool_draw_lines().
 
 2006-08-09  Sven Neumann  <sven@gimp.org>
 
@@ -354,7 +354,7 @@
 	David Gowers and updated my e-mail address for the PDB.
 
 	* app/pdb/convert_cmds.c
-	* app/pdb/undo_cmds.c	
+	* app/pdb/undo_cmds.c
 	* libgimp/gimpconvert_pdb.c: Regenerated.
 
 2006-08-04  Raphaël Quinet  <raphael@gimp.org>
@@ -365,7 +365,7 @@
 	* tools/pdbgen/pdb/convert.pdb: Applied slightly modified patch
 	from David Gowers allowing a custom dither matrix to be used when
 	converting images to indexed mode.  Fixes bug #136604.
-	
+
 	* app/pdb/convert_cmds.c
 	* app/pdb/internal_procs.c
 	* libgimp/gimpconvert_pdb.h
@@ -403,7 +403,7 @@
 	use gimp_suggest_modifiers().
 
 	* app/tools/gimpclonetool.c (gimp_clone_tool_oper_update): suggest
-	ctrl only when cloning from the image, not from a pattern
+	Ctrl only when cloning from the image, not from a pattern
 
 	* app/tools/gimpsmudgetool.c (gimp_smudge_tool_init): don't
 	suggest Ctrl for that tool, even if it can be used.
@@ -425,7 +425,7 @@
 2006-08-02  Raphaël Quinet  <raphael@gimp.org>
 
 	* app/widgets/gimpwidgets-utils.h
-	* app/widgets/gimpwidgets-utils.c (gimp_suggest_modifiers): 
+	* app/widgets/gimpwidgets-utils.c (gimp_suggest_modifiers):
 	New utility function to build status bar messages while allowing
 	dynamic names for the modifiers.
 
@@ -441,9 +441,9 @@
 	* app/tools/gimpsmudgetool.c: Use the new functions to set
 	appropriate messages in the status bar.  Still work in progress,
 	partial fix for bug #124040.
-	
+
 	* app/tools/gimpvectortool.c: Use gimp_suggest_modifiers().
-	
+
 2006-07-31  Karine Delvare  <edhel@gimp.org>
 
 	* app/tools/gimprectangletool.c: Applied patch from Karl Günter
@@ -532,7 +532,7 @@
 2006-07-27  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/grid.c: fix my fix.
-	
+
 2006-07-27  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/grid.c: width and height were reversed when
@@ -591,8 +591,7 @@
 
 2006-07-20  Manish Singh  <yosh@gimp.org>
 
-	* plug-ins/pygimp/gimpui.py: make the FileSelector class work
-	again.
+	* plug-ins/pygimp/gimpui.py: make the FileSelector class work again.
 
 	* plug-ins/pygimp/gimpfu.py: add PF_FILENAME and PF_DIRNAME to
 	match script-fu. Also, if the default value for PF_FILE ends in '/',
@@ -690,7 +689,7 @@
 	* app/pdb/message_cmds.c: regenerated.
 
 	* app/plug-in/gimpplugin.c
-	* app/actions/documents-commands.c: formatting. 
+	* app/actions/documents-commands.c: formatting.
 
 2006-07-18  Kevin Cozens  <kcozens@cvs.gnome.org>
 
@@ -809,7 +808,7 @@
 	* app/xcf/xcf-load.c
 	* app/xcf/xcf-private.h
 	* app/xcf/xcf-save.c
-	* app/xcf/xcf.c: do progress updates when loading/saving XCF files. 
+	* app/xcf/xcf.c: do progress updates when loading/saving XCF files.
 
 2006-07-11  Sven Neumann  <sven@gimp.org>
 
@@ -1007,7 +1006,7 @@
 
 	* app/display/gimpdisplay.c: delegate progress calls to
 	GimpDisplayShell instead of shell->statusbar.
-	
+
 2006-06-29  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/common/screenshot.c (select_window_x11): allow the
@@ -1108,7 +1107,7 @@
 2006-06-27  Sven Neumann  <sven@gimp.org>
 
 	Changes based on a patch from Zbigniew Chyla (bug #345982):
-	
+
 	* libgimpbase/gimputils.c: strip translation context from enum
 	descriptions.
 
@@ -1276,7 +1275,7 @@
 	* plug-ins/print/print-page-layout.h
 	* plug-ins/print/print-settings.c
 	* plug-ins/print/print-settings.h
-	* plug-ins/print/print.h:         new files	
+	* plug-ins/print/print.h:         new files
 
 	* plug-ins/print/Makefile.am
 	* plug-ins/print/print.c:  modified
