@@ -310,10 +310,11 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
                    G_STRFUNC);
 #endif
 
-          g_message (_("The given filename does not have any known "
-                       "file extension. Please enter a known file "
-                       "extension or select a file format from the "
-                       "file format list."));
+          gimp_message (gimp, GIMP_PROGRESS (save_dialog),
+                        _("The given filename does not have any known "
+                          "file extension. Please enter a known file "
+                          "extension or select a file format from the "
+                          "file format list."));
           g_free (uri);
           g_free (basename);
           return FALSE;
@@ -351,10 +352,12 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
 
               /*  remote URI  */
 
-              g_message (_("Saving remote files needs to determine the "
-                           "file format from the file extension. Please "
-                           "enter a file extension that matches the selected "
-                           "file format or enter no file extension at all."));
+              gimp_message (gimp, GIMP_PROGRESS (save_dialog),
+                            _("Saving remote files needs to determine the "
+                              "file format from the file extension. "
+                              "Please enter a file extension that matches "
+                              "the selected file format or enter no file "
+                              "extension at all."));
               g_free (uri);
               g_free (basename);
               return FALSE;

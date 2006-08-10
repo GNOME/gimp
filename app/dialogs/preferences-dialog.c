@@ -79,6 +79,10 @@ static void        prefs_response                 (GtkWidget  *widget,
                                                    gint        response_id,
                                                    GtkWidget  *dialog);
 
+static void        prefs_message                  (GtkMessageType  type,
+                                                   gboolean        destroy,
+                                                   const gchar    *message);
+
 static void   prefs_notebook_page_callback        (GtkNotebook      *notebook,
                                                    GtkNotebookPage  *page,
                                                    guint             page_num,
@@ -352,7 +356,7 @@ prefs_response (GtkWidget *widget,
                 g_string_append_printf (string, "%s\n", param_spec->name);
               }
 
-            g_message (string->str);
+            prefs_message (GTK_MESSAGE_INFO, FALSE, string->str);
 
             g_string_free (string, TRUE);
           }
@@ -549,15 +553,16 @@ prefs_menus_clear_callback (GtkWidget *widget,
 
   if (! menus_clear (gimp, &error))
     {
-      g_message (error->message);
+      prefs_message (GTK_MESSAGE_ERROR, TRUE, error->message);
       g_clear_error (&error);
     }
   else
     {
       gtk_widget_set_sensitive (widget, FALSE);
 
-      g_message (_("Your keyboard shortcuts will be reset to default values "
-                   "the next time you start GIMP."));
+      prefs_message (GTK_MESSAGE_INFO, TRUE,
+                     _("Your keyboard shortcuts will be reset to "
+                       "default values the next time you start GIMP."));
     }
 }
 
@@ -622,15 +627,16 @@ prefs_session_clear_callback (GtkWidget *widget,
 
   if (! session_clear (gimp, &error))
     {
-      g_message (error->message);
+      prefs_message (GTK_MESSAGE_ERROR, TRUE, error->message);
       g_clear_error (&error);
     }
   else
     {
       gtk_widget_set_sensitive (widget, FALSE);
 
-      g_message (_("Your window setup will be reset to default values "
-                   "the next time you start GIMP."));
+      prefs_message (GTK_MESSAGE_INFO, TRUE,
+                     _("Your window setup will be reset to "
+                       "default values the next time you start GIMP."));
     }
 }
 
@@ -656,15 +662,16 @@ prefs_devices_clear_callback (GtkWidget *widget,
 
   if (! gimp_devices_clear (gimp, &error))
     {
-      g_message (error->message);
+      prefs_message (GTK_MESSAGE_ERROR, TRUE, error->message);
       g_clear_error (&error);
     }
   else
     {
       gtk_widget_set_sensitive (widget, FALSE);
 
-      g_message (_("Your input device settings will be reset to "
-                   "default values the next time you start GIMP."));
+      prefs_message (GTK_MESSAGE_INFO, TRUE,
+                     _("Your input device settings will be reset to "
+                       "default values the next time you start GIMP."));
     }
 }
 
@@ -690,15 +697,16 @@ prefs_tool_options_clear_callback (GtkWidget *widget,
 
   if (! gimp_tools_clear (gimp, &error))
     {
-      g_message (error->message);
+      prefs_message (GTK_MESSAGE_ERROR, TRUE, error->message);
       g_clear_error (&error);
     }
   else
     {
       gtk_widget_set_sensitive (widget, FALSE);
 
-      g_message (_("Your tool options will be reset to "
-                   "default values the next time you start GIMP."));
+      prefs_message (GTK_MESSAGE_INFO, TRUE,
+                     _("Your tool options will be reset to "
+                       "default values the next time you start GIMP."));
     }
 }
 
@@ -1250,6 +1258,25 @@ prefs_help_func (const gchar *help_id,
 
   help_id = g_object_get_data (G_OBJECT (event_box), "gimp-help-id");
   gimp_standard_help_func (help_id, NULL);
+}
+
+static void
+prefs_message (GtkMessageType  type,
+               gboolean        destroy_with_parent,
+               const gchar    *message)
+{
+  GtkWidget *dialog;
+
+  dialog = gtk_message_dialog_new (GTK_WINDOW (prefs_dialog),
+                                   destroy_with_parent ?
+                                   GTK_DIALOG_DESTROY_WITH_PARENT : 0,
+                                   type, GTK_BUTTONS_OK,
+                                   message);
+
+  g_signal_connect_swapped (dialog, "response",
+                            G_CALLBACK (gtk_widget_destroy),
+                            dialog);
+  gtk_widget_show (dialog);
 }
 
 static GtkWidget *

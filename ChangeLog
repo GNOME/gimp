@@ -1,5 +1,16 @@
 2006-08-10  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/file-save-dialog.c: use gimp_message().
+
+	* app/dialogs/preferences-dialog.c: use a GtkMessageDialog and
+	make it transient for the preferences dialog.
+
+	* libgimpwidgets/gimppropwidgets.c
+	(gimp_prop_file_chooser_button_notify): use
+	gtk_file_chooser_unselect_all() to unset the filename.
+
+2006-08-10  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpimagemaptool.c: for load and save errors, use a
 	GtkMessageDialog and make it transient for the tool dialog.
 
