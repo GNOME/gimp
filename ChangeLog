@@ -1,3 +1,10 @@
+2006-08-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/xcf/xcf-private.h
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c: save sample points in xcf files,
+	and load them.  Fixes bug #342480.
+
 2006-08-10  Sven Neumann  <sven@gimp.org>
 
 	* app/file/file-utils.c: added a copy of g_unescape_uri_string()

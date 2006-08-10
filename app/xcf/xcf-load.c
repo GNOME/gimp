@@ -41,6 +41,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-sample-points.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
@@ -413,6 +414,22 @@ xcf_load_image_props (XcfInfo   *info,
              *  cannot be wrong  --Mitch
              */
             image->guides = g_list_reverse (image->guides);
+          }
+          break;
+
+        case PROP_SAMPLE_POINTS:
+          {
+            gint32 x, y;
+            gint   i, n_sample_points;
+
+            n_sample_points = prop_size / (4 + 4);
+            for (i = 0; i < n_sample_points; i++)
+              {
+                info->cp += xcf_read_int32 (info->fp, (guint32 *) &x, 1);
+                info->cp += xcf_read_int32 (info->fp, (guint32 *) &y, 1);
+
+                gimp_image_add_sample_point_at_pos (image, x, y, FALSE);
+              }
           }
           break;
 

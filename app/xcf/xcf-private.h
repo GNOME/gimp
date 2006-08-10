@@ -48,7 +48,8 @@ typedef enum
   PROP_PATHS              = 23,
   PROP_USER_UNIT          = 24,
   PROP_VECTORS            = 25,
-  PROP_TEXT_LAYER_FLAGS   = 26
+  PROP_TEXT_LAYER_FLAGS   = 26,
+  PROP_SAMPLE_POINTS      = 27
 } PropType;
 
 typedef enum

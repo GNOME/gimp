@@ -40,6 +40,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-sample-points.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
@@ -455,6 +456,10 @@ xcf_save_image_props (XcfInfo   *info,
   if (image->guides)
     xcf_check_error (xcf_save_prop (info, image, PROP_GUIDES,
                                     error, image->guides));
+
+  if (image->sample_points)
+    xcf_check_error (xcf_save_prop (info, image, PROP_SAMPLE_POINTS,
+                                    error, image->sample_points));
 
   xcf_check_error (xcf_save_prop (info, image, PROP_RESOLUTION, error,
                                   image->xresolution, image->yresolution));
@@ -885,6 +890,33 @@ xcf_save_prop (XcfInfo   *info,
 
             xcf_write_int32_check_error (info, (guint32 *) &position,    1);
             xcf_write_int8_check_error  (info, (guint8 *)  &orientation, 1);
+          }
+      }
+      break;
+
+    case PROP_SAMPLE_POINTS:
+      {
+        GList *sample_points;
+        gint   n_sample_points;
+
+        sample_points = va_arg (args, GList *);
+        n_sample_points = g_list_length (sample_points);
+
+        size = n_sample_points * (4 + 4);
+
+        xcf_write_prop_type_check_error (info, prop_type);
+        xcf_write_int32_check_error (info, &size, 1);
+
+        for (; sample_points; sample_points = g_list_next (sample_points))
+          {
+            GimpSamplePoint *sample_point = sample_points->data;
+            gint32           x, y;
+
+            x = sample_point->x;
+            y = sample_point->y;
+
+            xcf_write_int32_check_error (info, (guint32 *) &x,    1);
+            xcf_write_int32_check_error (info, (guint32 *) &y,    1);
           }
       }
       break;
