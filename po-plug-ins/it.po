@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-26 12:31+0200\n"
+"POT-Creation-Date: 2006-08-11 12:39+0200\n"
 "PO-Revision-Date: 2006-07-26 10:15+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
@@ -360,14 +360,14 @@ msgid "_Fractals"
 msgstr "_Frattali"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1706
-#: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:273
+#: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:278
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2013
 #: ../plug-ins/common/channel_mixer.c:1062 ../plug-ins/common/compressor.c:410
 #: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:838
 #: ../plug-ins/common/dicom.c:691 ../plug-ins/common/gbr.c:616
 #: ../plug-ins/common/gif.c:993 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
-#: ../plug-ins/common/mng.c:953 ../plug-ins/common/pat.c:449
+#: ../plug-ins/common/mng.c:953 ../plug-ins/common/pat.c:447
 #: ../plug-ins/common/pcx.c:588 ../plug-ins/common/pix.c:508
 #: ../plug-ins/common/png.c:1221 ../plug-ins/common/pnm.c:929
 #: ../plug-ins/common/postscript.c:1185 ../plug-ins/common/psd_save.c:1448
@@ -407,7 +407,7 @@ msgstr "Salva parametri frattali"
 #: ../plug-ins/common/channel_mixer.c:979 ../plug-ins/common/curve_bend.c:890
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:309 ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:319
+#: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:317
 #: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:705 ../plug-ins/common/pnm.c:480
 #: ../plug-ins/common/poppler.c:368 ../plug-ins/common/postscript.c:1012
@@ -1179,7 +1179,7 @@ msgstr "Mappa colore non valida"
 #: ../plug-ins/bmp/bmpread.c:154 ../plug-ins/common/CEL.c:304
 #: ../plug-ins/common/dicom.c:301 ../plug-ins/common/gbr.c:353
 #: ../plug-ins/common/gifload.c:314 ../plug-ins/common/gih.c:654
-#: ../plug-ins/common/pat.c:324 ../plug-ins/common/pcx.c:314
+#: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:314
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:712
 #: ../plug-ins/common/pnm.c:485 ../plug-ins/common/poppler.c:465
 #: ../plug-ins/common/postscript.c:1018 ../plug-ins/common/psd.c:1885
@@ -1222,7 +1222,7 @@ msgstr "Profondità di colore (in bit) non supportata o non valida."
 #.
 #: ../plug-ins/bmp/bmpread.c:546 ../plug-ins/common/CEL.c:349
 #: ../plug-ins/common/CEL.c:352 ../plug-ins/common/blinds.c:277
-#: ../plug-ins/common/compose.c:904 ../plug-ins/common/decompose.c:686
+#: ../plug-ins/common/compose.c:906 ../plug-ins/common/decompose.c:686
 #: ../plug-ins/common/dicom.c:486 ../plug-ins/common/film.c:944
 #: ../plug-ins/common/gifload.c:879 ../plug-ins/common/pcx.c:339
 #: ../plug-ins/common/pcx.c:345 ../plug-ins/common/pix.c:368
@@ -1244,22 +1244,22 @@ msgstr "Sfondo"
 msgid "The bitmap ends unexpectedly."
 msgstr "La bitmap termina in maniera inaspettata."
 
-#: ../plug-ins/bmp/bmpwrite.c:177 ../plug-ins/bmp/bmpwrite.c:197
+#: ../plug-ins/bmp/bmpwrite.c:182 ../plug-ins/bmp/bmpwrite.c:202
 msgid "Cannot save indexed image with transparency in BMP file format."
 msgstr ""
 "Impossibile salvare immagini indicizzate con trasparenza su un file formato "
 "BMP."
 
-#: ../plug-ins/bmp/bmpwrite.c:179 ../plug-ins/bmp/bmpwrite.c:199
+#: ../plug-ins/bmp/bmpwrite.c:184 ../plug-ins/bmp/bmpwrite.c:204
 msgid "Alpha channel will be ignored."
 msgstr "Il canale alfa verrà ignorato."
 
 #. And let's begin the progress
 #. init the progress meter
-#: ../plug-ins/bmp/bmpwrite.c:284 ../plug-ins/common/CEL.c:573
+#: ../plug-ins/bmp/bmpwrite.c:289 ../plug-ins/common/CEL.c:573
 #: ../plug-ins/common/gbr.c:621 ../plug-ins/common/gif.c:1000
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
-#: ../plug-ins/common/pat.c:454 ../plug-ins/common/pcx.c:550
+#: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:550
 #: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1228
 #: ../plug-ins/common/pnm.c:934 ../plug-ins/common/postscript.c:1190
 #: ../plug-ins/common/psd_save.c:1453 ../plug-ins/common/sunras.c:512
@@ -1273,23 +1273,23 @@ msgstr "Il canale alfa verrà ignorato."
 msgid "Saving '%s'"
 msgstr "Salvataggio di '%s'"
 
-#: ../plug-ins/bmp/bmpwrite.c:768 ../plug-ins/bmp/bmpwrite.c:824
+#: ../plug-ins/bmp/bmpwrite.c:757 ../plug-ins/bmp/bmpwrite.c:814
 msgid "Save as BMP"
 msgstr "Salva come BMP"
 
-#: ../plug-ins/bmp/bmpwrite.c:789
+#: ../plug-ins/bmp/bmpwrite.c:778
 msgid "_Run-Length Encoded"
 msgstr "Codifica _RLE"
 
-#: ../plug-ins/bmp/bmpwrite.c:847
+#: ../plug-ins/bmp/bmpwrite.c:837
 msgid "16 bits"
 msgstr "16 bits"
 
-#: ../plug-ins/bmp/bmpwrite.c:881
+#: ../plug-ins/bmp/bmpwrite.c:871
 msgid "24 bits"
 msgstr "24 bits"
 
-#: ../plug-ins/bmp/bmpwrite.c:894
+#: ../plug-ins/bmp/bmpwrite.c:884
 msgid "32 bits"
 msgstr "32 bits"
 
@@ -2754,64 +2754,64 @@ msgstr ""
 "Errore durante la scansione del parassita 'decompose-data': trovati troppo "
 "pochi livelli"
 
-#: ../plug-ins/common/compose.c:517
+#: ../plug-ins/common/compose.c:519
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "Impossibile usare i livelli per l'immagine %d"
 
-#: ../plug-ins/common/compose.c:588
+#: ../plug-ins/common/compose.c:590
 msgid "Composing"
 msgstr "Composizione"
 
-#: ../plug-ins/common/compose.c:670 ../plug-ins/common/compose.c:1666
+#: ../plug-ins/common/compose.c:672 ../plug-ins/common/compose.c:1668
 msgid "At least one image is needed to compose"
 msgstr "È necessaria almeno un'immagine per la composizione"
 
-#: ../plug-ins/common/compose.c:681 ../plug-ins/common/compose.c:694
+#: ../plug-ins/common/compose.c:683 ../plug-ins/common/compose.c:696
 #, c-format
 msgid "Specified layer %d not found"
 msgstr "Livello specificato %d non trovato"
 
-#: ../plug-ins/common/compose.c:701
+#: ../plug-ins/common/compose.c:703
 msgid "Drawables have different size"
 msgstr "Figure con dimensioni differenti"
 
-#: ../plug-ins/common/compose.c:726
+#: ../plug-ins/common/compose.c:728
 msgid "Images have different size"
 msgstr "Le immagini hanno dimensioni differenti"
 
-#: ../plug-ins/common/compose.c:743
+#: ../plug-ins/common/compose.c:745
 msgid "Error in getting layer IDs"
 msgstr "Errore nell'ottenere gli ID dei livelli"
 
-#: ../plug-ins/common/compose.c:764
+#: ../plug-ins/common/compose.c:766
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "L'immagine non è in scala di grigi (bpp=%d)"
 
-#: ../plug-ins/common/compose.c:791
+#: ../plug-ins/common/compose.c:793
 msgid "Unable to recompose, source layer not found"
 msgstr "Impossibile ricomporre, livello sorgente non trovato"
 
-#: ../plug-ins/common/compose.c:1419
+#: ../plug-ins/common/compose.c:1421
 msgid "Compose"
 msgstr "Composizione"
 
 #. Compose type combo
-#: ../plug-ins/common/compose.c:1446
+#: ../plug-ins/common/compose.c:1448
 msgid "Compose Channels"
 msgstr "Composizione canali"
 
-#: ../plug-ins/common/compose.c:1456 ../plug-ins/common/decompose.c:1378
+#: ../plug-ins/common/compose.c:1458 ../plug-ins/common/decompose.c:1378
 msgid "Color _model:"
 msgstr "_Modello di colore:"
 
 #. Channel representation table
-#: ../plug-ins/common/compose.c:1488
+#: ../plug-ins/common/compose.c:1490
 msgid "Channel Representations"
 msgstr "Rappresentazione canali"
 
-#: ../plug-ins/common/compose.c:1551
+#: ../plug-ins/common/compose.c:1553
 msgid "Mask value"
 msgstr "Maschera valore"
 
@@ -3804,7 +3804,7 @@ msgstr "Su pellicola:"
 
 #. Create selection
 #: ../plug-ins/common/film.c:1164 ../plug-ins/imagemap/imap_selection.c:366
-#: ../plug-ins/rcm/rcm_dialog.c:173 ../plug-ins/sel2path/sel2path.c:523
+#: ../plug-ins/rcm/rcm_dialog.c:173 ../plug-ins/sel2path/sel2path.c:428
 msgid "Selection"
 msgstr "Selezione"
 
@@ -4209,7 +4209,7 @@ msgid "Spacing:"
 msgstr "Spaziatura:"
 
 #: ../plug-ins/common/gbr.c:742 ../plug-ins/common/gih.c:910
-#: ../plug-ins/common/pat.c:542 ../plug-ins/gimpressionist/presets.c:646
+#: ../plug-ins/common/pat.c:541 ../plug-ins/gimpressionist/presets.c:646
 msgid "Description:"
 msgstr "Descrizione:"
 
@@ -5777,16 +5777,16 @@ msgstr "31 settembre 1999"
 msgid "_Paper Tile..."
 msgstr "_Effetto carta..."
 
-#: ../plug-ins/common/pat.c:123 ../plug-ins/common/pat.c:145
+#: ../plug-ins/common/pat.c:121 ../plug-ins/common/pat.c:143
 msgid "GIMP pattern"
 msgstr "Motivo Gimp"
 
-#: ../plug-ins/common/pat.c:360
+#: ../plug-ins/common/pat.c:358
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Stringa UTF-8 non valida nel file motivi '%s'."
 
-#: ../plug-ins/common/pat.c:515
+#: ../plug-ins/common/pat.c:513
 msgid "Save as Pattern"
 msgstr "Salva come motivo"
 
