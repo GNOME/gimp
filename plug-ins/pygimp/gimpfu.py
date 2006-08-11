@@ -277,6 +277,7 @@ def _interact(func_name, start_params):
 
     import gimpui
     import gtk
+    import pango
 
     defaults = _get_defaults(func_name)
 
@@ -390,7 +391,7 @@ def _interact(func_name, start_params):
         def __init__(self, default=0, items=(("Yes", 1), ("No", 0))):
             gtk.Frame.__init__(self)
 
-            box = gtk.VBox(False, 5)
+            box = gtk.VBox(False, 6)
             self.add(box)
             box.show()
 
@@ -479,8 +480,6 @@ def _interact(func_name, start_params):
     if on_run:
         on_run()
 
-    need_progress = menupath and menupath[:8] != '<Image>/'
-
     tooltips = gtk.Tooltips()
 
     dialog = gimpui.Dialog(func_name, 'python-fu', None, 0, None, func_name,
@@ -489,36 +488,32 @@ def _interact(func_name, start_params):
 
     dialog.set_alternative_button_order((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))
 
-    hbox = gtk.HBox(False, 5)
-    hbox.set_border_width(5)
-    dialog.vbox.pack_start(hbox, expand=False)
-    hbox.show()
-
-    table = gtk.Table(len(params), 2, False)
-    table.set_border_width(5)
-    table.set_row_spacings(4)
-    table.set_col_spacings(10)
-    hbox.pack_end(table, expand=False)
-    table.show()
-
-    vbox = gtk.VBox(False, 10)
-    hbox.pack_start(vbox, expand=False)
+    vbox = gtk.VBox(False, 12)
+    vbox.set_border_width(12)
+    dialog.vbox.pack_start(vbox)
     vbox.show()
 
     label = gtk.Label(blurb)
     label.set_line_wrap(True)
     label.set_justify(gtk.JUSTIFY_LEFT)
-    label.set_size_request(100, -1)
+
+    attrs = pango.AttrList()
+    attrs.insert(pango.AttrStyle(pango.STYLE_ITALIC, 0, -1))
+    label.set_attributes(attrs)
+
     vbox.pack_start(label, expand=False)
     label.show()
 
-    progress_callback = None
+    table = gtk.Table(len(params), 2, False)
+    table.set_row_spacings(6)
+    table.set_col_spacings(6)
+    vbox.pack_start(table, expand=False)
+    table.show()
 
     def response(dlg, id):
         if id == gtk.RESPONSE_OK:
-            if need_progress:
-                dlg.set_response_sensitive(gtk.RESPONSE_OK, False)
-                dlg.set_response_sensitive(gtk.RESPONSE_CANCEL, False)
+            dlg.set_response_sensitive(gtk.RESPONSE_OK, False)
+            dlg.set_response_sensitive(gtk.RESPONSE_CANCEL, False)
 
             params = []
 
@@ -530,9 +525,6 @@ def _interact(func_name, start_params):
             else:
                 _set_defaults(func_name, params)
                 dialog.res = run_script(params)
-
-        if progress_callback:
-            gimp.progress_uninstall(progress_callback)
 
         gtk.main_quit()
 
@@ -567,58 +559,24 @@ def _interact(func_name, start_params):
         wid.desc = desc
         edit_wids.append(wid)
 
-    if need_progress:
-        frame = gtk.Frame("Script Progress")
-        frame.set_border_width(5)
-        dialog.vbox.pack_start(frame)
-        frame.show()
+    progress_vbox = gtk.VBox(False, 6)
+    vbox.pack_end(progress_vbox, expand=False)
+    progress_vbox.show()
 
-        vbox = gtk.VBox(False, 5)
-        vbox.set_border_width(5)
-        frame.add(vbox)
-        vbox.show()
+    progress = gimpui.ProgressBar()
+    progress_vbox.pack_start(progress)
+    progress.show()
 
-        progress_label = gtk.Label("(none)")
-        progress_label.set_alignment(0.0, 0.5)
-        vbox.pack_start(progress_label)
-        progress_label.show()
+#    progress_label = gtk.Label()
+#    progress_label.set_alignment(0.0, 0.5)
+#    progress_label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
 
-        progress = gtk.ProgressBar()
-        progress.set_text(" ")
-        vbox.pack_start(progress)
-        progress.show()
+#    attrs = pango.AttrList()
+#    attrs.insert(pango.AttrStyle(pango.STYLE_ITALIC, 0, -1))
+#    progress_label.set_attributes(attrs)
 
-        def progress_update(message=-1, fraction=None):
-            if message == -1:
-                pass
-            elif message:
-                progress.set_text(message)
-            else:
-                progress.set_text(" ")
-
-            if fraction is not None:
-                if fraction < 0:
-                    progress.pulse()
-                else:
-                    progress.set_fraction(fraction)
-
-            while gtk.events_pending():
-                gtk.main_iteration()
-
-        def progress_start(message, cancelable):
-            progress_update(message, 0.0)
-
-        def progress_end():
-            progress_update(None, 0.0)
-
-        def progress_text(message):
-            progress_update(message)
-
-        def progress_value(percentage):
-            progress_update(fraction=percentage)
-
-        progress_callback = gimp.progress_install(progress_start, progress_end,
-                                                  progress_text, progress_value)
+#    progress_vbox.pack_start(progress_label)
+#    progress_label.show()
 
     tooltips.enable()
     dialog.show()
