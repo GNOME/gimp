@@ -1,5 +1,10 @@
 2006-08-11  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/error-console-commands.c
+	* app/actions/text-editor-commands.c: use gimp_show_message_dialog().
+
+2006-08-11  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpwidgets-utils.[ch]: introduced a simple message
 	dialog to use when there's no progress but a parent widget.
 

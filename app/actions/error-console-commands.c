@@ -78,7 +78,8 @@ error_console_save_cmd_callback (GtkAction *action,
   if (value && ! gtk_text_buffer_get_selection_bounds (console->text_buffer,
                                                        NULL, NULL))
     {
-      g_message (_("Cannot save. Nothing is selected."));
+      gimp_show_message_dialog (GTK_WIDGET (console), GTK_MESSAGE_WARNING,
+                                _("Cannot save. Nothing is selected."));
       return;
     }
 
@@ -146,8 +147,10 @@ error_console_save_response (GtkWidget        *dialog,
       if (! gimp_text_buffer_save (console->text_buffer, filename,
                                    console->save_selection, &error))
         {
-          g_message (_("Error writing file '%s':\n%s"),
-                     gimp_filename_to_utf8 (filename), error->message);
+          gimp_show_message_dialog (dialog, GTK_MESSAGE_ERROR,
+                                    _("Error writing file '%s':\n%s"),
+                                    gimp_filename_to_utf8 (filename),
+                                    error->message);
           g_clear_error (&error);
           g_free (filename);
           return;
