@@ -40,9 +40,9 @@
 #include "core/gimpfilloptions.h"
 #include "core/gimpparasitelist.h"
 
-#include "vectors/gimpvectors.h"
-
 #include "gimpvectorlayer.h"
+#include "gimpvectorlayeroptions.h"
+#include "gimpvectors.h"
 
 #include "gimp-intl.h"
 
@@ -50,9 +50,7 @@
 enum
 {
   PROP_0,
-  PROP_VECTORS,
-  PROP_FILL_OPTIONS,
-  PROP_STROKE_DESC
+  PROP_VECTOR_LAYER_OPTIONS
 };
 
 /* local function declarations */
@@ -60,8 +58,9 @@ static void      gimp_vector_layer_finalize       (GObject *object);
 
 static gboolean  gimp_vector_layer_render           (GimpVectorLayer *layer);
 static void      gimp_vector_layer_render_vectors   (GimpVectorLayer *layer,
-                                                     GimpVectors *vectors);
-static void      gimp_vector_layer_refresh_name     (GimpVectorLayer  *layer);
+                                                     GimpVectors     *vectors);
+static void      gimp_vector_layer_refresh_name     (GimpVectorLayer *layer);
+static void      gimp_vector_layer_changed_options  (GimpVectorLayer *layer);
 static void      gimp_vector_layer_get_property     (GObject         *object,
                                                      guint            property_id,
                                                      GValue          *value,
@@ -89,17 +88,9 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
   object_class->get_property           = gimp_vector_layer_get_property;
   object_class->finalize               = gimp_vector_layer_finalize;
   
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_VECTORS,
-                                   "vectors", NULL,
-                                   GIMP_TYPE_VECTORS,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_FILL_OPTIONS,
-                                   "fill-options", NULL,
-                                   GIMP_TYPE_FILL_OPTIONS,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_STROKE_DESC,
-                                   "stroke-desc", NULL,
-                                   GIMP_TYPE_STROKE_DESC,
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_VECTOR_LAYER_OPTIONS,
+                                   "vector-layer-options", NULL,
+                                   GIMP_TYPE_VECTOR_LAYER_OPTIONS,
                                    GIMP_PARAM_STATIC_STRINGS);
   
   viewable_class->default_stock_id = "gimp-vector-layer";
@@ -119,9 +110,7 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
 static void
 gimp_vector_layer_init (GimpVectorLayer *layer)
 {
-  layer->vectors = NULL;
-  layer->fill_options = NULL;
-  layer->stroke_desc = NULL;
+  layer->options = NULL;
   layer->parasite = NULL;
 }
 
@@ -130,25 +119,18 @@ gimp_vector_layer_finalize (GObject *object)
 {
   GimpVectorLayer *layer = GIMP_VECTOR_LAYER(object);
   
-  if(layer->vectors)
+  if (layer->options)
     {
-      g_object_unref (layer->vectors);
-      layer->vectors = NULL;
+      g_object_unref (layer->options);
+      layer->options = NULL;
     }
-    
-  if(layer->fill_options)
+  
+  if (layer->parasite)
     {
-      g_object_unref (layer->fill_options);
-      layer->fill_options = NULL;
+      gimp_parasite_list_remove (GIMP_ITEM (layer)->parasites,
+                                  layer->parasite);
+      layer->parasite = NULL;
     }
-    
-  if(layer->stroke_desc)
-    {
-      g_object_unref (layer->stroke_desc);
-      layer->stroke_desc = NULL;
-    }
-    
-    G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 /* local method definitions */
@@ -183,7 +165,7 @@ gimp_vector_layer_render (GimpVectorLayer *layer)
   gimp_drawable_fill (GIMP_DRAWABLE (layer), &blank, NULL);
   
   /* render vectors to the layer */
-  gimp_vector_layer_render_vectors (layer, layer->vectors);
+  gimp_vector_layer_render_vectors (layer, layer->options->vectors);
   
   g_object_thaw_notify (G_OBJECT (drawable));
   
@@ -197,7 +179,7 @@ gimp_vector_layer_render_vectors (GimpVectorLayer *layer,
 {
   /* fill the vectors object onto the layer */
   gimp_drawable_fill_vectors (GIMP_DRAWABLE (layer),
-                              GIMP_FILL_OPTIONS (layer->fill_options),
+                              GIMP_FILL_OPTIONS (layer->options->fill_options),
                               vectors,
                               FALSE);
   
@@ -205,7 +187,7 @@ gimp_vector_layer_render_vectors (GimpVectorLayer *layer,
   gimp_item_stroke (GIMP_ITEM (vectors),
                     GIMP_DRAWABLE (layer),
                     gimp_get_user_context (gimp_item_get_image (GIMP_ITEM (layer))->gimp),
-                    layer->stroke_desc,
+                    layer->options->stroke_desc,
                     FALSE,
                     FALSE);
   
@@ -217,7 +199,24 @@ static void
 gimp_vector_layer_refresh_name (GimpVectorLayer  *layer)
 {
   gimp_object_set_name_safe (GIMP_OBJECT (layer),
-                             gimp_object_get_name (GIMP_OBJECT(layer->vectors)));
+                             gimp_object_get_name (GIMP_OBJECT(layer->options->vectors)));
+}
+
+static void
+gimp_vector_layer_changed_options (GimpVectorLayer *layer)
+{
+  GimpItem *item = GIMP_ITEM (layer);
+  
+  if (layer->parasite)
+    {
+      /* parasite is out of date, discard it */
+      gimp_parasite_list_remove (GIMP_ITEM (layer)->parasites,
+                                 layer->parasite);
+      layer->parasite = NULL;
+    }
+  
+  if (gimp_item_is_attached (item))
+    gimp_vector_layer_refresh (layer);
 }
 
 static void
@@ -230,14 +229,8 @@ gimp_vector_layer_get_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_VECTORS:
-      g_value_set_object (value, vector_layer->vectors);
-      break;
-    case PROP_FILL_OPTIONS:
-      g_value_set_object (value, vector_layer->fill_options);
-      break;
-    case PROP_STROKE_DESC:
-      g_value_set_object (value, vector_layer->stroke_desc);
+    case PROP_VECTOR_LAYER_OPTIONS:
+      g_value_set_object (value, vector_layer->options);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -255,56 +248,15 @@ gimp_vector_layer_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_VECTORS:
-      if (vector_layer->vectors)
-        g_object_unref (vector_layer->vectors);
-      vector_layer->vectors = (GimpVectors *) g_value_dup_object (value);
+    case PROP_VECTOR_LAYER_OPTIONS:
+      if (vector_layer->options)
+        g_object_unref (vector_layer->options);
+      vector_layer->options = (GimpVectorLayerOptions *) g_value_dup_object (value);
+      gimp_vector_layer_changed_options (vector_layer);
       
-      g_signal_connect_object (vector_layer->vectors, "invalidate-preview",
-                           G_CALLBACK (gimp_vector_layer_refresh),
+      g_signal_connect_object (vector_layer->options, "notify",
+                           G_CALLBACK (gimp_vector_layer_changed_options),
                            vector_layer, G_CONNECT_SWAPPED);
-      g_signal_connect_object (vector_layer->vectors, "name-changed",
-                           G_CALLBACK (gimp_vector_layer_refresh_name),
-                           vector_layer, G_CONNECT_SWAPPED);
-      
-      /* The parasite is no longer up to date, so remove it */
-      if (vector_layer->parasite)
-        {
-          gimp_parasite_list_remove (GIMP_ITEM (vector_layer)->parasites,
-                                     vector_layer->parasite);
-          vector_layer->parasite = NULL;
-        }
-      break;
-    case PROP_FILL_OPTIONS: /*TODO: will wierd things happen if this is called before init_stroke_fill? */
-      if (g_value_get_object (value))
-        {
-          gimp_config_sync (g_value_get_object (value),
-                            G_OBJECT (vector_layer->fill_options), 0);
-          
-          if (vector_layer->parasite)
-            {
-              gimp_parasite_list_remove (GIMP_ITEM (vector_layer)->parasites,
-                                         vector_layer->parasite);
-              vector_layer->parasite = NULL;
-            }
-        }
-      break;
-    case PROP_STROKE_DESC:
-      if (g_value_get_object (value))
-        /*gimp_config_sync (g_value_get_object (value),
-                          G_OBJECT (vector_layer->stroke_desc), 0);*/
-        {
-          if (vector_layer->stroke_desc)
-            g_object_unref (vector_layer->stroke_desc);
-          vector_layer->stroke_desc = gimp_config_duplicate (g_value_get_object (value));
-          
-          if (vector_layer->parasite)
-            {
-              gimp_parasite_list_remove (GIMP_ITEM (vector_layer)->parasites,
-                                         vector_layer->parasite);
-              vector_layer->parasite = NULL;
-            }
-        }    
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -327,43 +279,23 @@ GimpVectorLayer *
 gimp_vector_layer_new (GimpImage     *image,
                        GimpVectors   *vectors)
 {
-  GimpVectorLayer *layer;
-  GimpContext     *user_context = gimp_get_user_context (image->gimp);
-  GimpPattern     *pattern      = gimp_context_get_pattern (user_context);
-  GimpRGB          black;
-  GimpRGB          blue;
+  GimpVectorLayer        *layer;
+  GimpVectorLayerOptions *options;
   
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_VECTORS(vectors), NULL);
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
   
-  layer = g_object_new (GIMP_TYPE_VECTOR_LAYER, NULL);
+  options = gimp_vector_layer_options_new (image, vectors);
   
-  g_object_set (G_OBJECT (layer),
-                "vectors", vectors,
-                NULL);
+  layer = g_object_new (GIMP_TYPE_VECTOR_LAYER,
+                        "vector-layer-options", options,
+                        NULL);
   
   gimp_drawable_configure (GIMP_DRAWABLE (layer),
                            image,
-                           0, 0, 1, 1,          /* x and y offsets, x and y dimensions */
+                           0, 0, 1, 1, /* x and y offsets, x and y dimensions */
                            gimp_image_base_type_with_alpha (image),
                            NULL);
-  
-  gimp_rgba_set(&black, 0.0, 0.0, 0.0, 1.0);
-  gimp_rgba_set(&blue, 0.0, 0.0, 1.0, 1.0);
-  
-  layer->fill_options = g_object_new (GIMP_TYPE_FILL_OPTIONS,
-                                      "gimp", image->gimp,
-                                      "foreground",   &blue,
-                                      NULL);
-  gimp_context_set_pattern (GIMP_CONTEXT (layer->fill_options), pattern);
-  
-  layer->stroke_desc = gimp_stroke_desc_new (image->gimp, NULL);
-  g_object_set (layer->stroke_desc->stroke_options,
-                "foreground",   &black,
-                "width",        2.0,
-                NULL); 
-  gimp_context_set_pattern (GIMP_CONTEXT (layer->stroke_desc->stroke_options), pattern);
-  
   return layer;
 }
 

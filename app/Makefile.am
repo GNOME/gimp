@@ -90,7 +90,7 @@ INCLUDES = \
 	$(PANGOFT2_CFLAGS)	\
 	-I$(includedir)
 
-gimp_2_3_LDFLAGS = $(mwindows) $(munix)
+gimp_2_3_LDFLAGS = $(mwindows) $(munix) -u gimp_vector_layer_xcf_load_hack -u gimp_vector_layer_xcf_save_prepare
 
 gimp_2_3_LDADD = \
 	gui/libappgui.a			\

@@ -38,11 +38,9 @@ typedef struct _GimpVectorLayerClass GimpVectorLayerClass;
 
 struct _GimpVectorLayer
 {
-  GimpLayer        layer;
-  GimpVectors     *vectors;
-  GimpFillOptions *fill_options;
-  GimpStrokeDesc  *stroke_desc;
-  const gchar     *parasite;
+  GimpLayer               layer;
+  GimpVectorLayerOptions *options;
+  const gchar            *parasite;
 };
 
 struct _GimpVectorLayerClass

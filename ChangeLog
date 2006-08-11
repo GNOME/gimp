@@ -1,3 +1,33 @@
+2006-08-11  Hendrik Boom  <hboom@cvs.gnome.org>
+
+	* NOTE: this version does not link properly! I am committing it to my
+	own branch so that others can help in figuring out how to fix the
+	problem. Note also that as I have not been able to build it
+	successfully, it is also untested. If you manage to build it, it may
+	not behave well at runtime.
+
+	* app/vectors/Makefile.am
+	* app/vectors/gimpvectorlayeroptions.[ch]
+	* app/vectors/gimpvectorlayeroptions-parasite.[ch]: added new files
+	implementing a container object for vector layer settings. This object
+	is serialized when saving to an XCF file.
+
+	* app/dialogs/vectorlayer-options-dialog.[ch]
+	* app/vectors/gimpvectorlayer.[ch]: changed accordingly.
+
+	* app/vectors/Makefile.am
+	* app/vectors/gimpvectorlayer-xcf.[ch]: added new files containing
+	functions related to saving and loading vector layers to/from XCF files.
+	
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c: added support for loading and saving vector
+	layers. NOTE: this is where the linking problems occur.
+
+	* app/Makefile.am: attempted to fix the linking problems by adding
+	"-u gimp_vector_layer_xcf_load_hack" and
+	"-u gimp_vector_layer_xcf_save_prepare" to gimp_2_3_LDFLAGS. These
+	functions are in app/vectors/gimpvectorlayer-xcf.[ch].
+
 2006-08-01  Hendrik Boom  <hboom@cvs.gnome.org>
 
 	* app/vectors/gimpvectorlayer.c: clean-up,

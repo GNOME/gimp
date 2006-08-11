@@ -66,13 +66,16 @@ vectorlayer_options_dialog_new (GimpItem    *item,
                                 const gchar *help_id,
                                 GtkWidget   *parent)
 {
-  GtkWidget         *dialog;
-  GtkWidget         *main_vbox;
+  GtkWidget              *dialog;
+  GtkWidget              *main_vbox;
+  GimpVectorLayerOptions *vector_layer_options;
   
   g_return_val_if_fail (GIMP_IS_VECTOR_LAYER (item), NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
   /*g_return_val_if_fail (help_id != NULL, NULL);*/
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
+  
+  g_object_get (item, "vector-layer-options", &vector_layer_options, NULL);
   
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item),
                                      title, "gimp-vectorlayer-options",
@@ -122,7 +125,7 @@ vectorlayer_options_dialog_new (GimpItem    *item,
     gtk_container_add (GTK_CONTAINER(main_vbox), GTK_WIDGET (fill_label));
     gtk_widget_show (GTK_WIDGET (fill_label));
     
-    g_object_get (G_OBJECT(item), "fill-options", &fill_options, NULL);
+    g_object_get (G_OBJECT(vector_layer_options), "fill-options", &fill_options, NULL);
     g_object_get (G_OBJECT(fill_options), "foreground", &fill_color, NULL);
     
     fill_entry = GIMP_COLOR_BUTTON (gimp_color_button_new ("Fill Color",
@@ -155,7 +158,7 @@ vectorlayer_options_dialog_new (GimpItem    *item,
     gtk_container_add (GTK_CONTAINER(main_vbox), GTK_WIDGET (stroke_label));
     gtk_widget_show (GTK_WIDGET (stroke_label));
     
-    g_object_get (G_OBJECT(item), "stroke-desc", &stroke_desc, NULL);
+    g_object_get (G_OBJECT(vector_layer_options), "stroke-desc", &stroke_desc, NULL);
     g_object_get (G_OBJECT(stroke_desc), "stroke-options", &stroke_options, NULL);
     g_object_get (G_OBJECT(stroke_options), "foreground", &stroke_color, NULL);
     
@@ -198,21 +201,23 @@ vectorlayer_options_dialog_response            (GtkWidget         *widget,
   GimpColorButton   *stroke_entry;
   GimpStrokeEditor  *stroke_editor;
   GimpItem          *item;
+  GimpVectorLayerOptions *vector_layer_options;
   GimpFillOptions   *fill_options;
   GimpStrokeDesc    *stroke_desc;
   GimpStrokeOptions *stroke_options;
 
   item = g_object_get_data (G_OBJECT (dialog), "gimp-item");
+  g_object_get (G_OBJECT (item), "vector-layer-options", &vector_layer_options, NULL);
   image = gimp_item_get_image(item);
   
   fill_entry = g_object_get_data (G_OBJECT (dialog), "gimp-fill-entry");
   stroke_entry = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-entry");
   stroke_editor = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-editor");
   
-  g_object_get (G_OBJECT(item), "fill-options", &fill_options, NULL);
+  g_object_get (G_OBJECT (vector_layer_options), "fill-options", &fill_options, NULL);
   
-  g_object_get (G_OBJECT(item), "stroke-desc", &stroke_desc, NULL);
-  g_object_get (G_OBJECT(stroke_desc), "stroke-options", &stroke_options, NULL);
+  g_object_get (G_OBJECT (vector_layer_options), "stroke-desc", &stroke_desc, NULL);
+  g_object_get (G_OBJECT (stroke_desc), "stroke-options", &stroke_options, NULL);
   
   switch (response_id)
     {

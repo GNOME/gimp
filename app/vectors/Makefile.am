@@ -23,8 +23,14 @@ libappvectors_a_SOURCES = \
 	gimpbezierstroke.c	\
 	gimpstroke.h		\
 	gimpstroke.c		\
-        gimpvectorlayer.h       \
-        gimpvectorlayer.c       \
+  gimpvectorlayer.h       \
+  gimpvectorlayer.c       \
+  gimpvectorlayer-xcf.h       \
+  gimpvectorlayer-xcf.c       \
+  gimpvectorlayeroptions.h       \
+  gimpvectorlayeroptions.c       \
+  gimpvectorlayeroptions-parasite.h       \
+  gimpvectorlayeroptions-parasite.c       \
 	gimpvectors.c		\
 	gimpvectors.h		\
 	gimpvectors-compat.c	\

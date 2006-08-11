@@ -58,6 +58,8 @@
 #include "vectors/gimpbezierstroke.h"
 #include "vectors/gimpvectors.h"
 #include "vectors/gimpvectors-compat.h"
+#include "vectors/gimpvectorlayer.h"
+#include "vectors/gimpvectorlayer-xcf.h"
 
 #include "xcf-private.h"
 #include "xcf-load.h"
@@ -916,7 +918,7 @@ xcf_load_layer (XcfInfo   *info,
 
   xcf_progress_update (info);
 
-  /* call the evil text layer hack that might change our layer pointer */
+  /* call the evil text and vector layer hacks that might change our layer pointer */
   active   = (info->active_layer == layer);
   floating = (info->floating_sel == layer);
 
@@ -925,6 +927,13 @@ xcf_load_layer (XcfInfo   *info,
       gimp_text_layer_set_xcf_flags (GIMP_TEXT_LAYER (layer),
                                      text_layer_flags);
 
+      if (active)
+        info->active_layer = layer;
+      if (floating)
+        info->floating_sel = layer;
+    }
+  else if (gimp_vector_layer_xcf_load_hack (&layer))
+    {
       if (active)
         info->active_layer = layer;
       if (floating)

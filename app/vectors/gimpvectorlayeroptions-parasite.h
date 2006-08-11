@@ -1,8 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * vectors-types.h
- * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
+ * GimpVectorLayerOptions-parasite
+ * Copyright (C) 2006  Hendrik Boom
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,41 +19,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __VECTORS_TYPES_H__
-#define __VECTORS_TYPES_H__
-
-#include "core/core-types.h"
+#ifndef __GIMP_VECTOR_LAYER_OPTIONS_PARASITE_H__
+#define __GIMP_VECTOR_LAYER_OPTIONS_PARASITE_H__
 
 
-typedef enum
-{
-  GIMP_ANCHOR_ANCHOR,
-  GIMP_ANCHOR_CONTROL
-} GimpAnchorType;
-
-typedef enum
-{
-  GIMP_ANCHOR_FEATURE_NONE,
-  GIMP_ANCHOR_FEATURE_EDGE,
-  GIMP_ANCHOR_FEATURE_ALIGNED,
-  GIMP_ANCHOR_FEATURE_SYMMETRIC
-} GimpAnchorFeatureType;
-
-typedef enum
-{
-  EXTEND_SIMPLE,
-  EXTEND_EDITABLE
-} GimpVectorExtendMode;
+const gchar  * gimp_vector_layer_options_parasite_name (void) G_GNUC_CONST;
+GimpParasite * gimp_vector_layer_options_to_parasite   (const GimpVectorLayerOptions *text);
+GimpVectorLayerOptions * gimp_vector_layer_options_from_parasite (const GimpParasite  *parasite,
+                                                        GError             **error);
 
 
-typedef struct _GimpAnchor       GimpAnchor;
-
-typedef struct _GimpVectors      GimpVectors;
-typedef struct _GimpStroke       GimpStroke;
-typedef struct _GimpBezierStroke GimpBezierStroke;
-
-typedef struct _GimpVectorLayer  GimpVectorLayer;
-typedef struct _GimpVectorLayerOptions  GimpVectorLayerOptions;
-
-
-#endif /* __VECTORS_TYPES_H__ */
+#endif /* __GIMP_VECTOR_LAYER_OPTIONS_PARASITE_H__ */
