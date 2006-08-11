@@ -37,6 +37,7 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimperrordialog.h"
+#include "widgets/gimpprogressdialog.h"
 
 #include "dialogs/dialogs.h"
 
@@ -165,7 +166,10 @@ gui_message_error_dialog (GimpProgress *progress,
 {
   GtkWidget *dialog;
 
-  dialog = progress ? progress_error_dialog (progress) : global_error_dialog ();
+  if (progress && ! GIMP_IS_PROGRESS_DIALOG (progress))
+    dialog = progress_error_dialog (progress);
+  else
+    dialog = global_error_dialog ();
 
   if (dialog)
     {
