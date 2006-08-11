@@ -3885,6 +3885,16 @@
 
 
 
+;; From ../../libgimp/gimpui.h
+
+(define-method set_transient
+  (of-object "GimpDialog")
+  (c-name "gimp_window_set_transient")
+  (return-type "none")
+)
+
+
+
 ;; From ../../libgimp/gimpzoompreview.h
 
 (define-function gimp_zoom_preview_get_type

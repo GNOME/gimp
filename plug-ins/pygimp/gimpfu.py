@@ -488,6 +488,8 @@ def _interact(func_name, start_params):
 
     dialog.set_alternative_button_order((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))
 
+    dialog.set_transient()
+
     vbox = gtk.VBox(False, 12)
     vbox.set_border_width(12)
     dialog.vbox.pack_start(vbox)
