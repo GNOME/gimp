@@ -1,3 +1,8 @@
+2006-08-11  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/preferences/*-22: added a few missing
+		preference icons at 22x22px.
+
 2006-08-11  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/error-console-commands.c
