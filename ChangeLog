@@ -1,5 +1,13 @@
 2006-08-11  Jakub Steiner <jimmac@ximian.com>
 
+	* themes/Default/images/preferences/controllers-22.png
+	* themes/Default/images/preferences/controllers-22.xcf
+	* themes/Default/images/preferences/session-22.png
+	* themes/Default/images/preferences/session-22.xcf:
+	  fixed a few problems wrt transparency.
+
+2006-08-11  Jakub Steiner <jimmac@ximian.com>
+
 	* themes/Default/images/preferences/*-22: added a few missing
 		preference icons at 22x22px.
 
