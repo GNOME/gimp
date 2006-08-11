@@ -1,5 +1,22 @@
 2006-08-11  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpwidgets-utils.[ch]: introduced a simple message
+	dialog to use when there's no progress but a parent widget.
+
+	* app/dialogs/convert-dialog.c
+	* app/dialogs/palette-import-dialog.c
+	* app/dialogs/preferences-dialog.c
+	* app/dialogs/stroke-dialog.c
+	* app/tools/gimpimagemaptool.c
+	* app/widgets/gimpactionview.c
+	* app/widgets/gimpcontrollerlist.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimppdbdialog.c
+	* app/widgets/gimpvectorstreeview.c: use the new utility function
+	instead of g_message().
+
+2006-08-11  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/gui-message.c (gui_message_error_dialog): use the global
 	error dialog if the progress is a GimpProgressDialog.
 

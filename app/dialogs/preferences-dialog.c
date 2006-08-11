@@ -1273,9 +1273,9 @@ prefs_message (GtkMessageType  type,
                                    type, GTK_BUTTONS_OK,
                                    message);
 
-  g_signal_connect_swapped (dialog, "response",
-                            G_CALLBACK (gtk_widget_destroy),
-                            dialog);
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (gtk_widget_destroy),
+                    NULL);
   gtk_widget_show (dialog);
 }
 

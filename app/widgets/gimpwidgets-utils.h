@@ -91,5 +91,10 @@ void          gimp_toggle_button_set_visible (GtkToggleButton *toggle,
 void              gimp_widget_set_accel_help (GtkWidget       *widget,
                                               GtkAction       *action);
 
+void              gimp_show_message_dialog   (GtkWidget       *parent,
+                                              GtkMessageType   type,
+                                              const gchar     *format,
+                                              ...) G_GNUC_PRINTF(3,4);
+
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

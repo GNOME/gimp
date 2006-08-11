@@ -42,6 +42,7 @@
 #include "widgets/gimpdnd.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpview.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "palette-import-dialog.h"
 
@@ -856,7 +857,8 @@ palette_import_make_palette (ImportDialog *dialog)
 
         if (! palette)
           {
-            g_message (error->message);
+            gimp_show_message_dialog (dialog->dialog, GTK_MESSAGE_ERROR,
+                                      error->message);
             g_error_free (error);
           }
       }

@@ -39,6 +39,7 @@
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpstrokeeditor.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "stroke-dialog.h"
 
@@ -276,7 +277,9 @@ stroke_dialog_response (GtkWidget  *widget,
 
         if (! drawable)
           {
-            g_message (_("There is no active layer or channel to stroke to."));
+            gimp_show_message_dialog (widget, GTK_MESSAGE_WARNING,
+                                      _("There is no active layer or channel "
+                                        "to stroke to."));
             return;
           }
 

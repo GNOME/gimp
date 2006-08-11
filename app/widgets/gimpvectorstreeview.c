@@ -235,7 +235,8 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
   if (! gimp_vectors_import_buffer (image, svg_data, svg_data_len,
                                     TRUE, TRUE, index, &error))
     {
-      g_message (error->message);
+      gimp_show_message_dialog (GTK_WIDGET (tree_view), GTK_MESSAGE_ERROR,
+                                error->message);
       g_clear_error (&error);
     }
   else

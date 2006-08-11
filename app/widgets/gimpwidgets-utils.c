@@ -1067,3 +1067,34 @@ gimp_widget_set_accel_help (GtkWidget *widget,
       g_free (tooltip);
     }
 }
+
+void
+gimp_show_message_dialog (GtkWidget       *parent,
+                          GtkMessageType   type,
+                          const gchar     *format,
+                          ...)
+{
+  GtkWidget *dialog;
+  gchar     *message;
+  va_list    args;
+
+  g_return_if_fail (GTK_IS_WIDGET (parent));
+  g_return_if_fail (format != NULL);
+
+  va_start (args, format);
+  message = g_strdup_vprintf (format, args);
+  va_end (args);
+
+  dialog =
+    gtk_message_dialog_new (GTK_WINDOW (gtk_widget_get_toplevel (parent)),
+                            GTK_DIALOG_DESTROY_WITH_PARENT,
+                            type, GTK_BUTTONS_OK,
+                            message);
+  g_free (message);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (gtk_widget_destroy),
+                    NULL);
+
+  gtk_widget_show (dialog);
+}
