@@ -1,3 +1,11 @@
+2006-08-12  Hendrik Boom  <hboom@cvs.gnome.org>
+
+	* NOTE: this version still does not link properly! Please see the
+	previous Changelog entry for details.
+	
+	* app/vectors/gimpvectorlayeroptions.[ch]: actually added these files
+	this time, I forgot to add them in the last commit.
+
 2006-08-11  Hendrik Boom  <hboom@cvs.gnome.org>
 
 	* NOTE: this version does not link properly! I am committing it to my
