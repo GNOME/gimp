@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-11 12:38+0200\n"
-"PO-Revision-Date: 2006-08-10 20:00+0200\n"
+"POT-Creation-Date: 2006-08-14 01:04+0200\n"
+"PO-Revision-Date: 2006-08-14 00:58+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -674,7 +674,7 @@ msgstr "Nuovo colore del canale"
 #: ../app/actions/channels-commands.c:245
 #: ../app/display/gimpdisplayshell-dnd.c:500
 #: ../app/widgets/gimpchanneltreeview.c:259
-#: ../app/widgets/gimplayertreeview.c:770 ../app/widgets/gimptoolbox-dnd.c:309
+#: ../app/widgets/gimplayertreeview.c:769 ../app/widgets/gimptoolbox-dnd.c:309
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s copia canale"
@@ -758,7 +758,7 @@ msgid "_Palette"
 msgstr "_Tavolozza"
 
 #: ../app/actions/context-actions.c:54
-#: ../app/dialogs/palette-import-dialog.c:240
+#: ../app/dialogs/palette-import-dialog.c:241
 #: ../app/dialogs/preferences-dialog.c:1816
 msgid "_Gradient"
 msgstr "_Gradiente"
@@ -842,7 +842,7 @@ msgstr ""
 #: ../app/actions/data-commands.c:128 ../app/core/gimpbrushgenerated.c:611
 #: ../app/core/gimpimage.c:1330 ../app/core/gimppalette-import.c:218
 #: ../app/core/gimppalette.c:477 ../app/core/gimppalette.c:587
-#: ../app/dialogs/palette-import-dialog.c:782 ../app/pdb/image_cmds.c:1880
+#: ../app/dialogs/palette-import-dialog.c:783 ../app/pdb/image_cmds.c:1880
 #: ../app/widgets/gimpdnd-xds.c:97
 msgid "Untitled"
 msgstr "Immagine"
@@ -1596,15 +1596,15 @@ msgstr "Salva la s_elezione in un file..."
 msgid "Save selection"
 msgstr "Salva la selezione"
 
-#: ../app/actions/error-console-commands.c:81
+#: ../app/actions/error-console-commands.c:82
 msgid "Cannot save. Nothing is selected."
 msgstr "Impossibile salvare, non è stato selezionato nulla."
 
-#: ../app/actions/error-console-commands.c:92
+#: ../app/actions/error-console-commands.c:93
 msgid "Save Error Log to File"
 msgstr "Salvare il log degli errori su file"
 
-#: ../app/actions/error-console-commands.c:149
+#: ../app/actions/error-console-commands.c:151
 #, c-format
 msgid ""
 "Error writing file '%s':\n"
@@ -2737,7 +2737,7 @@ msgstr "Modifica attributi livello"
 #: ../app/actions/layers-commands.c:238 ../app/actions/layers-commands.c:240
 #: ../app/actions/layers-commands.c:297 ../app/actions/layers-commands.c:301
 #: ../app/widgets/gimpdrawabletreeview.c:328
-#: ../app/widgets/gimplayertreeview.c:832
+#: ../app/widgets/gimplayertreeview.c:831
 msgid "New Layer"
 msgstr "Nuovo livello"
 
@@ -3273,7 +3273,7 @@ msgstr "Margini s_fumati"
 
 #: ../app/actions/select-commands.c:289 ../app/actions/select-commands.c:315
 #: ../app/actions/vectors-commands.c:363 ../app/actions/vectors-commands.c:390
-#: ../app/dialogs/stroke-dialog.c:279
+#: ../app/dialogs/stroke-dialog.c:281
 msgid "There is no active layer or channel to stroke to."
 msgstr "Non c'è un livello o un canale attivo su cui delineare."
 
@@ -3385,12 +3385,12 @@ msgstr "Da destra a sinistra"
 msgid "Open Text File (UTF-8)"
 msgstr "Apri file di testo (UTF-8)"
 
-#: ../app/actions/text-editor-commands.c:137
+#: ../app/actions/text-editor-commands.c:138
 #: ../app/config/gimpconfig-file.c:57 ../app/core/gimpbrush-load.c:115
 #: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated.c:562
 #: ../app/core/gimpbrushpipe.c:314 ../app/core/gimpgradient-load.c:62
 #: ../app/core/gimppalette.c:322 ../app/core/gimppattern.c:263
-#: ../app/tools/gimpimagemaptool.c:588 ../app/xcf/xcf.c:319
+#: ../app/tools/gimpimagemaptool.c:585 ../app/xcf/xcf.c:319
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossibile aprire \"%s\" in lettura: %s"
@@ -4105,7 +4105,7 @@ msgstr ""
 #: ../app/config/gimpconfig-file.c:66 ../app/core/gimpbrushgenerated.c:226
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:142
 #: ../app/core/gimppalette.c:521 ../app/gui/themes.c:238
-#: ../app/tools/gimpimagemaptool.c:587 ../app/vectors/gimpvectors-export.c:83
+#: ../app/tools/gimpimagemaptool.c:584 ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:397
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -4116,7 +4116,7 @@ msgstr "Non è possibile aprire \"%s\" in scrittura: %s"
 msgid "Error writing '%s': %s"
 msgstr "Errore durante la scrittura di \"%s\": %s"
 
-#: ../app/config/gimpconfig-file.c:88 ../app/tools/gimpimagemaptool.c:607
+#: ../app/config/gimpconfig-file.c:88 ../app/tools/gimpimagemaptool.c:605
 #, c-format
 msgid "Error reading '%s': %s"
 msgstr "Errore durante la lettura di \"%s\": %s"
@@ -6265,7 +6265,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Stringa UTF-8 non valida nel file motivo di GIMP '%s'."
 
-#: ../app/core/gimppdbprogress.c:286 ../app/widgets/gimppdbdialog.c:341
+#: ../app/core/gimppdbprogress.c:286 ../app/widgets/gimppdbdialog.c:343
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
@@ -6458,7 +6458,7 @@ msgstr "Abilita dithering della _trasparenza"
 msgid "Converting to indexed colors"
 msgstr "Conversione in colori indicizzati"
 
-#: ../app/dialogs/convert-dialog.c:395
+#: ../app/dialogs/convert-dialog.c:396
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Impossibile convertire in una tavolozza con più di 256 colori."
 
@@ -6475,7 +6475,7 @@ msgid "Choose shade of gray based on:"
 msgstr "Scegliere le sfumature i grigio basate su:"
 
 #: ../app/dialogs/dialogs-constructors.c:175 ../app/gui/gui.c:155
-#: ../app/gui/gui-message.c:124
+#: ../app/gui/gui-message.c:125
 msgid "GIMP Message"
 msgstr "Messaggio GIMP"
 
@@ -6822,71 +6822,71 @@ msgstr "Riempi con il colore dello _sfondo"
 msgid "Make _transparent"
 msgstr "Rendi _trasparente"
 
-#: ../app/dialogs/palette-import-dialog.c:183
+#: ../app/dialogs/palette-import-dialog.c:184
 msgid "Import a New Palette"
 msgstr "Importa una nuova tavolozza"
 
-#: ../app/dialogs/palette-import-dialog.c:193
+#: ../app/dialogs/palette-import-dialog.c:194
 msgid "_Import"
 msgstr "_Importa"
 
 #. The "Source" frame
-#: ../app/dialogs/palette-import-dialog.c:229
+#: ../app/dialogs/palette-import-dialog.c:230
 msgid "Select Source"
 msgstr "Seleziona sorgente"
 
-#: ../app/dialogs/palette-import-dialog.c:251
+#: ../app/dialogs/palette-import-dialog.c:252
 msgid "I_mage"
 msgstr "I_mmagine"
 
-#: ../app/dialogs/palette-import-dialog.c:265
+#: ../app/dialogs/palette-import-dialog.c:266
 msgid "Sample _Merged"
 msgstr "Campiona_mento diffuso"
 
-#: ../app/dialogs/palette-import-dialog.c:277
+#: ../app/dialogs/palette-import-dialog.c:278
 msgid "_Selected Pixels only"
 msgstr "_Solo i pixel selezionati"
 
-#: ../app/dialogs/palette-import-dialog.c:289
+#: ../app/dialogs/palette-import-dialog.c:290
 msgid "Palette _file"
 msgstr "_File della tavolozza"
 
 #. Palette file name entry
-#: ../app/dialogs/palette-import-dialog.c:317
+#: ../app/dialogs/palette-import-dialog.c:318
 msgid "Select Palette File"
 msgstr "Seleziona il file tavolozza"
 
 #. The "Import" frame
-#: ../app/dialogs/palette-import-dialog.c:328
+#: ../app/dialogs/palette-import-dialog.c:329
 msgid "Import Options"
 msgstr "Opzioni di importazione"
 
-#: ../app/dialogs/palette-import-dialog.c:342
+#: ../app/dialogs/palette-import-dialog.c:343
 msgid "New import"
 msgstr "Nuova importazione"
 
-#: ../app/dialogs/palette-import-dialog.c:344
+#: ../app/dialogs/palette-import-dialog.c:345
 msgid "Palette _name:"
 msgstr "_Nome tavolozza:"
 
-#: ../app/dialogs/palette-import-dialog.c:350
+#: ../app/dialogs/palette-import-dialog.c:351
 msgid "N_umber of colors:"
 msgstr "N_umero di colori:"
 
-#: ../app/dialogs/palette-import-dialog.c:363
+#: ../app/dialogs/palette-import-dialog.c:364
 msgid "C_olumns:"
 msgstr "C_olonne:"
 
-#: ../app/dialogs/palette-import-dialog.c:375
+#: ../app/dialogs/palette-import-dialog.c:376
 msgid "I_nterval:"
 msgstr "I_ntervallo:"
 
 #. The "Preview" frame
-#: ../app/dialogs/palette-import-dialog.c:386
+#: ../app/dialogs/palette-import-dialog.c:387
 msgid "Preview"
 msgstr "Anteprima"
 
-#: ../app/dialogs/palette-import-dialog.c:406
+#: ../app/dialogs/palette-import-dialog.c:407
 msgid "The selected source contains no colors."
 msgstr "La sorgente selezionata non contiene colori."
 
@@ -7194,7 +7194,7 @@ msgstr "Strumento sposta"
 
 #: ../app/dialogs/preferences-dialog.c:1823
 msgid "Change current layer or path"
-msgstr "Cambia livello corrente o tracciato"
+msgstr "Cambia livello o tracciato correnti"
 
 #: ../app/dialogs/preferences-dialog.c:1836
 msgid "Toolbox"
@@ -7738,11 +7738,11 @@ msgstr ""
 "I livelli di colore indicizzati sono sempre scalati senza interpolazione. Il "
 "tipo di interpolazione scelto riguarderà solamente canali e maschere."
 
-#: ../app/dialogs/stroke-dialog.c:101
+#: ../app/dialogs/stroke-dialog.c:102
 msgid "Choose Stroke Style"
 msgstr "Scegli lo stile del delineato"
 
-#: ../app/dialogs/stroke-dialog.c:213
+#: ../app/dialogs/stroke-dialog.c:214
 msgid "Paint tool:"
 msgstr "Strumento di disegno:"
 
@@ -7924,7 +7924,7 @@ msgid "Drop New Path"
 msgstr "Nuovo tracciato"
 
 #: ../app/display/gimpdisplayshell-dnd.c:544
-#: ../app/widgets/gimplayertreeview.c:798 ../app/widgets/gimptoolbox-dnd.c:357
+#: ../app/widgets/gimplayertreeview.c:797 ../app/widgets/gimptoolbox-dnd.c:357
 msgid "Dropped Buffer"
 msgstr "Buffer abbandonato"
 
@@ -9260,15 +9260,15 @@ msgstr "Regola colore selezionato"
 msgid "R_eset Color"
 msgstr "R_eimposta il colore"
 
-#: ../app/tools/gimpimagemaptool.c:236
+#: ../app/tools/gimpimagemaptool.c:233
 msgid "_Preview"
 msgstr "Ante_prima"
 
-#: ../app/tools/gimpimagemaptool.c:268
+#: ../app/tools/gimpimagemaptool.c:265
 msgid "Quick Load"
 msgstr "Caricamento veloce"
 
-#: ../app/tools/gimpimagemaptool.c:297
+#: ../app/tools/gimpimagemaptool.c:294
 msgid "Quick Save"
 msgstr "Salvataggio veloce"
 
@@ -9634,55 +9634,55 @@ msgstr "Posterizzazione non possibile su livelli indicizzati."
 msgid "Posterize _levels:"
 msgstr "_Livelli di posterizzazione:"
 
-#: ../app/tools/gimprectangleoptions.c:893
+#: ../app/tools/gimprectangleoptions.c:907
 msgid "Expand from center"
 msgstr "Espandi dal centro"
 
-#: ../app/tools/gimprectangleoptions.c:898
+#: ../app/tools/gimprectangleoptions.c:912
 msgid "Make square"
 msgstr "Rendi quadrato"
 
-#: ../app/tools/gimprectangleoptions.c:903
+#: ../app/tools/gimprectangleoptions.c:917
 msgid "Highlight"
 msgstr "Evidenzia"
 
-#: ../app/tools/gimprectangleoptions.c:912
+#: ../app/tools/gimprectangleoptions.c:926
 msgid "Rectangle Controls"
 msgstr "Controlli rettangolo"
 
-#: ../app/tools/gimprectangleoptions.c:928
+#: ../app/tools/gimprectangleoptions.c:942
 msgid "Fix"
 msgstr "Fissa"
 
-#: ../app/tools/gimprectangleoptions.c:933 ../app/widgets/gimpgrideditor.c:239
+#: ../app/tools/gimprectangleoptions.c:947 ../app/widgets/gimpgrideditor.c:239
 #: ../app/widgets/gimpgrideditor.c:271
 msgid "Width"
 msgstr "Larghezza"
 
-#: ../app/tools/gimprectangleoptions.c:943 ../app/widgets/gimpgrideditor.c:241
+#: ../app/tools/gimprectangleoptions.c:957 ../app/widgets/gimpgrideditor.c:241
 #: ../app/widgets/gimpgrideditor.c:273
 msgid "Height"
 msgstr "Altezza"
 
-#: ../app/tools/gimprectangleoptions.c:953
+#: ../app/tools/gimprectangleoptions.c:967
 msgid "Aspect"
 msgstr "Aspetto"
 
-#: ../app/tools/gimprectangleoptions.c:984
+#: ../app/tools/gimprectangleoptions.c:998
 msgid "1 "
 msgstr "1 "
 
-#: ../app/tools/gimprectangleoptions.c:985
+#: ../app/tools/gimprectangleoptions.c:999
 msgid "2 "
 msgstr "2 "
 
-#: ../app/tools/gimprectangleoptions.c:986 ../app/widgets/gimpcursorview.c:136
-#: ../app/widgets/gimpcursorview.c:158
+#: ../app/tools/gimprectangleoptions.c:1000
+#: ../app/widgets/gimpcursorview.c:136 ../app/widgets/gimpcursorview.c:158
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangleoptions.c:987 ../app/widgets/gimpcursorview.c:142
-#: ../app/widgets/gimpcursorview.c:164
+#: ../app/tools/gimprectangleoptions.c:1001
+#: ../app/widgets/gimpcursorview.c:142 ../app/widgets/gimpcursorview.c:164
 msgid "Y"
 msgstr "Y"
 
@@ -10339,34 +10339,34 @@ msgstr "Scorciatoia"
 msgid "Name"
 msgstr "Nome"
 
-#: ../app/widgets/gimpactionview.c:484 ../app/widgets/gimpactionview.c:666
+#: ../app/widgets/gimpactionview.c:485 ../app/widgets/gimpactionview.c:671
 msgid "Changing shortcut failed."
 msgstr "Fallito il cambiamento della scorciatoia."
 
-#: ../app/widgets/gimpactionview.c:524
+#: ../app/widgets/gimpactionview.c:525
 msgid "Conflicting Shortcuts"
 msgstr "Scorciatoie in conflitto"
 
-#: ../app/widgets/gimpactionview.c:530
+#: ../app/widgets/gimpactionview.c:531
 msgid "_Reassign shortcut"
 msgstr "_Riassegna scorciatoia"
 
-#: ../app/widgets/gimpactionview.c:541
+#: ../app/widgets/gimpactionview.c:542
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr ""
 "La scorciatoia \"%s\" è già stata assegnata a \"%s\" per il gruppo \"%s\"."
 
-#: ../app/widgets/gimpactionview.c:545
+#: ../app/widgets/gimpactionview.c:546
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "La riassegnazione della scorciatoia causerà la rimozione da \"%s\"."
 
-#: ../app/widgets/gimpactionview.c:602
+#: ../app/widgets/gimpactionview.c:604
 msgid "Removing shortcut failed."
 msgstr "Fallita la rimozione della scorciatoia"
 
-#: ../app/widgets/gimpactionview.c:607
+#: ../app/widgets/gimpactionview.c:610
 msgid "Invalid shortcut."
 msgstr "Scorciatoia non valida."
 
@@ -10668,7 +10668,7 @@ msgstr "Aggiungi \"%s\" all'elenco dei controllori attivi."
 msgid "Remove '%s' from the list of active controllers"
 msgstr "Togli \"%s\" dall'elenco dei controllori attivi."
 
-#: ../app/widgets/gimpcontrollerlist.c:508
+#: ../app/widgets/gimpcontrollerlist.c:509
 msgid ""
 "There can only be one active keyboard controller.\n"
 "\n"
@@ -10678,7 +10678,7 @@ msgstr ""
 "\n"
 "C'è già un controllore di tastiera nella lista dei controllori attivi."
 
-#: ../app/widgets/gimpcontrollerlist.c:516
+#: ../app/widgets/gimpcontrollerlist.c:519
 msgid ""
 "There can only be one active wheel controller.\n"
 "\n"
@@ -10688,24 +10688,24 @@ msgstr ""
 "\n"
 "C'è già un controllore di rotella nella lista dei controllori attivi.\""
 
-#: ../app/widgets/gimpcontrollerlist.c:542
+#: ../app/widgets/gimpcontrollerlist.c:546
 msgid "Remove Controller?"
 msgstr "Rimuovere il controllore?"
 
-#: ../app/widgets/gimpcontrollerlist.c:547
+#: ../app/widgets/gimpcontrollerlist.c:551
 msgid "Disable Controller"
 msgstr "Disabilita controllore"
 
-#: ../app/widgets/gimpcontrollerlist.c:549
+#: ../app/widgets/gimpcontrollerlist.c:553
 msgid "Remove Controller"
 msgstr "Rimuovi controllore"
 
-#: ../app/widgets/gimpcontrollerlist.c:560
+#: ../app/widgets/gimpcontrollerlist.c:564
 #, c-format
 msgid "Remove Controller '%s'?"
 msgstr "Rimuovere controllore '%s'?"
 
-#: ../app/widgets/gimpcontrollerlist.c:564
+#: ../app/widgets/gimpcontrollerlist.c:568
 msgid ""
 "Removing this controller from the list of active controllers will "
 "permanently delete all event mappings you have configured.\n"
@@ -10720,11 +10720,11 @@ msgstr ""
 "Selezionando \"Disabilita controllore\" si disabiliterà il controllore senza "
 "rimuoverlo."
 
-#: ../app/widgets/gimpcontrollerlist.c:625
+#: ../app/widgets/gimpcontrollerlist.c:629
 msgid "Configure Controller"
 msgstr "Configura controllore"
 
-#: ../app/widgets/gimpcontrollerlist.c:628
+#: ../app/widgets/gimpcontrollerlist.c:632
 msgid "Configure Input Controller"
 msgstr "Configura controllore di ingresso"
 
@@ -11156,7 +11156,7 @@ msgstr "Blocca canale alfa"
 msgid "Lock:"
 msgstr "Blocca:"
 
-#: ../app/widgets/gimplayertreeview.c:838
+#: ../app/widgets/gimplayertreeview.c:837
 msgid "Empty Layer"
 msgstr "Livello vuoto"
 
@@ -11407,7 +11407,7 @@ msgstr "[ immagine base ]"
 msgid "Reorder path"
 msgstr "Ordina tracciato"
 
-#: ../app/widgets/gimpvectorstreeview.c:252
+#: ../app/widgets/gimpvectorstreeview.c:253
 msgid "Empty Path"
 msgstr "Svuota tracciato"
 
