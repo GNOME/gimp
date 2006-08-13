@@ -101,7 +101,7 @@ gimp_vector_layer_xcf_save_prepare (GimpVectorLayer *layer)
   if (layer->parasite)
     return;
 
-  g_object_get (layer, "vectro-layer-options", &options, NULL);
+  g_object_get (layer, "vector-layer-options", &options, NULL);
   if (options)
     {
       GimpParasite *parasite = gimp_vector_layer_options_to_parasite (options);

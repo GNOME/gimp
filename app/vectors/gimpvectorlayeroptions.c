@@ -200,15 +200,18 @@ gimp_vector_layer_options_set_property (GObject      *object,
         g_object_unref (options->vectors);
       options->vectors = (GimpVectors *) g_value_dup_object (value);
       
-      g_signal_connect_object (options->vectors, "invalidate-preview",
-                           G_CALLBACK (gimp_vector_layer_options_emit_vectors_changed),
-                           options, G_CONNECT_SWAPPED);
-      g_signal_connect_object (options->vectors, "name-changed",
-                           G_CALLBACK (gimp_vector_layer_options_emit_vectors_changed),
-                           options, G_CONNECT_SWAPPED);
-      
-      /* update the tattoo */
-      options->vectors_tattoo = gimp_item_get_tattoo(GIMP_ITEM (options->vectors));
+      if (options->vectors)
+        {
+          g_signal_connect_object (options->vectors, "invalidate-preview",
+                              G_CALLBACK (gimp_vector_layer_options_emit_vectors_changed),
+                              options, G_CONNECT_SWAPPED);
+          g_signal_connect_object (options->vectors, "name-changed",
+                              G_CALLBACK (gimp_vector_layer_options_emit_vectors_changed),
+                              options, G_CONNECT_SWAPPED);
+          
+          /* update the tattoo */
+          options->vectors_tattoo = gimp_item_get_tattoo(GIMP_ITEM (options->vectors));
+        }
       break;
     case PROP_VECTORS_TATTOO:
       options->vectors_tattoo = g_value_get_uint (value);
@@ -277,9 +280,11 @@ gimp_vector_layer_options_new (GimpImage     *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
   
-  options = g_object_new (GIMP_TYPE_VECTOR_LAYER_OPTIONS,
-                          "vectors", vectors,
-                          NULL);
+  options = g_object_new (GIMP_TYPE_VECTOR_LAYER_OPTIONS, NULL);
+  
+  g_object_set (options,
+                "vectors", vectors,
+                NULL);
   
   gimp_rgba_set(&black, 0.0, 0.0, 0.0, 1.0);
   gimp_rgba_set(&blue, 0.0, 0.0, 1.0, 1.0);

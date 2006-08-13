@@ -1,5 +1,16 @@
 2006-08-12  Hendrik Boom  <hboom@cvs.gnome.org>
 
+	* app/vectors/gimpvectorlayer-xcf.c: fixed a typo in a property name.
+
+	* app/vectors/gimpvectorlayeroptions-parasite.c: it now prints some
+	output on loading which may help debugging.
+
+	*  /cvs/gnome/gimp/app/vectors/Attic/gimpvectorlayeroptions.c: fixed a
+	segfault which would occur if the vectors propery of a
+	gimpvectorlayeroptions was set to NULL (i.e. at construction).
+
+2006-08-12  Hendrik Boom  <hboom@cvs.gnome.org>
+
 	* app/Makefile.am: fixed the linking error by adding the proper symbols
 	to gimp_console_2_3_LDFLAGS.
 
