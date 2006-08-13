@@ -58,10 +58,12 @@ gimp_vector_layer_xcf_load_hack (GimpLayer **layer)
     {
       GError *error = NULL;
 
-      options = gimp_vector_layer_options_from_parasite (parasite, &error);
+      options = gimp_vector_layer_options_from_parasite (
+        parasite, &error, GIMP_ITEM(*layer)->image->gimp);
+      
       g_object_set (G_OBJECT (options),
                     "vectors", gimp_image_get_vectors_by_tattoo (
-                                 gimp_item_get_image (GIMP_ITEM (layer)),
+                                 gimp_item_get_image (GIMP_ITEM (*layer)),
                                  options->vectors_tattoo),
                     NULL);
       

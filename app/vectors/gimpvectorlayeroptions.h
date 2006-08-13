@@ -37,6 +37,7 @@ typedef struct _GimpVectorLayerOptionsClass GimpVectorLayerOptionsClass;
 struct _GimpVectorLayerOptions
 {
   GimpObject       parent_instance;
+  Gimp            *gimp;
   GimpTattoo       vectors_tattoo;
   GimpVectors     *vectors;
   GimpFillOptions *fill_options;

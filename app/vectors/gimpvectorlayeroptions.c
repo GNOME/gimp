@@ -44,6 +44,7 @@
 enum
 {
   PROP_0,
+  PROP_GIMP,
   PROP_VECTORS,
   PROP_VECTORS_TATTOO,
   PROP_FILL_OPTIONS,
@@ -53,7 +54,10 @@ enum
 /* local function declarations */
 static void     gimp_vector_layer_options_config_iface_init (gpointer    iface,
                                                         gpointer    iface_data);
-static void     gimp_vector_layer_options_finalize     (GObject *object);
+static GObject *gimp_vector_layer_options_constructor       (GType       type,
+                                                             guint       n_params,
+                                                  GObjectConstructParam *params);
+static void     gimp_vector_layer_options_finalize     (GObject         *object);
 
 static void     gimp_vector_layer_options_get_property (GObject         *object,
                                                         guint            property_id,
@@ -81,10 +85,17 @@ gimp_vector_layer_options_class_init (GimpVectorLayerOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   
+  object_class->constructor  = gimp_vector_layer_options_constructor;
   object_class->set_property = gimp_vector_layer_options_set_property;
   object_class->get_property = gimp_vector_layer_options_get_property;
   object_class->finalize     = gimp_vector_layer_options_finalize;
   
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_VECTORS,
                                    g_param_spec_object ("vectors",
                                                         NULL, NULL,
@@ -105,28 +116,66 @@ gimp_vector_layer_options_class_init (GimpVectorLayerOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_FILL_OPTIONS,
                                    "fill-options", NULL,
                                    GIMP_TYPE_FILL_OPTIONS,
-                                   GIMP_PARAM_STATIC_STRINGS);
+                                   GIMP_PARAM_STATIC_STRINGS |
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_STROKE_DESC,
                                    "stroke-desc", NULL,
                                    GIMP_TYPE_STROKE_DESC,
-                                   GIMP_PARAM_STATIC_STRINGS);
+                                   GIMP_PARAM_STATIC_STRINGS |
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
 }
 
 static void
 gimp_vector_layer_options_config_iface_init (gpointer  iface,
                                              gpointer  iface_data)
 {
-  /* Do Nothing */
+  /* nop */
 }
 
 /* instance initialization */
+static GObject*
+gimp_vector_layer_options_constructor (GType                  type,
+                                       guint                  n_params,
+                                       GObjectConstructParam *params)
+{
+  GObject                *object;
+  GimpVectorLayerOptions *options;
+  
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  
+  options = GIMP_VECTOR_LAYER_OPTIONS (object);
+  g_assert (GIMP_IS_GIMP (options->gimp));
+  
+  GimpContext   *user_context = gimp_get_user_context (options->gimp);
+  GimpPattern   *pattern      = gimp_context_get_pattern (user_context);
+  GimpRGB        black;
+  GimpRGB        blue;
+  
+  gimp_rgba_set(&black, 0.0, 0.0, 0.0, 1.0);
+  gimp_rgba_set(&blue, 0.0, 0.0, 1.0, 1.0);
+  
+  options->fill_options = g_object_new (GIMP_TYPE_FILL_OPTIONS,
+                                        "gimp", options->gimp,
+                                        "foreground",   &blue,
+                                        NULL);
+  gimp_context_set_pattern (GIMP_CONTEXT (options->fill_options), pattern);
+  
+  options->stroke_desc = gimp_stroke_desc_new (options->gimp, NULL);
+  g_object_set (options->stroke_desc->stroke_options,
+                "foreground",   &black,
+                "width",        2.0,
+                NULL); 
+  gimp_context_set_pattern (GIMP_CONTEXT (options->stroke_desc->stroke_options), pattern);
+  
+  return object;
+}
+
+
 static void
 gimp_vector_layer_options_init (GimpVectorLayerOptions *options)
 {
   options->vectors = NULL;
   options->vectors_tattoo = 0;
-  options->fill_options = NULL;
-  options->stroke_desc = NULL;
 }
 
 static void
@@ -167,6 +216,9 @@ gimp_vector_layer_options_get_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      g_value_set_object (value, options->gimp);
+      break;
     case PROP_VECTORS:
       g_value_set_object (value, options->vectors);
       break;
@@ -195,6 +247,9 @@ gimp_vector_layer_options_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      options->gimp = g_value_get_object (value);
+      break;
     case PROP_VECTORS:
       if (options->vectors)
         g_object_unref (options->vectors);
@@ -269,38 +324,20 @@ gimp_vector_layer_options_emit_vectors_changed (GimpVectorLayerOptions *options)
  **/
 GimpVectorLayerOptions *
 gimp_vector_layer_options_new (GimpImage     *image,
-                       				 GimpVectors   *vectors)
+                               GimpVectors   *vectors)
 {
   GimpVectorLayerOptions *options;
-  GimpContext            *user_context = gimp_get_user_context (image->gimp);
-  GimpPattern            *pattern      = gimp_context_get_pattern (user_context);
-  GimpRGB                 black;
-  GimpRGB                 blue;
   
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
   
-  options = g_object_new (GIMP_TYPE_VECTOR_LAYER_OPTIONS, NULL);
+  options = g_object_new (GIMP_TYPE_VECTOR_LAYER_OPTIONS,
+                          "gimp", image->gimp,
+                          NULL);
   
   g_object_set (options,
                 "vectors", vectors,
                 NULL);
-  
-  gimp_rgba_set(&black, 0.0, 0.0, 0.0, 1.0);
-  gimp_rgba_set(&blue, 0.0, 0.0, 1.0, 1.0);
-  
-  options->fill_options = g_object_new (GIMP_TYPE_FILL_OPTIONS,
-                                        "gimp", image->gimp,
-                                        "foreground",   &blue,
-                                        NULL);
-  gimp_context_set_pattern (GIMP_CONTEXT (options->fill_options), pattern);
-  
-  options->stroke_desc = gimp_stroke_desc_new (image->gimp, NULL);
-  g_object_set (options->stroke_desc->stroke_options,
-                "foreground",   &black,
-                "width",        2.0,
-                NULL); 
-  gimp_context_set_pattern (GIMP_CONTEXT (options->stroke_desc->stroke_options), pattern);
   
   return options;
 }

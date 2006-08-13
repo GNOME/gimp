@@ -26,7 +26,8 @@
 const gchar  * gimp_vector_layer_options_parasite_name (void) G_GNUC_CONST;
 GimpParasite * gimp_vector_layer_options_to_parasite   (const GimpVectorLayerOptions *text);
 GimpVectorLayerOptions * gimp_vector_layer_options_from_parasite (const GimpParasite  *parasite,
-                                                        GError             **error);
+                                                        GError             **error,
+                                                        Gimp                *gimp);
 
 
 #endif /* __GIMP_VECTOR_LAYER_OPTIONS_PARASITE_H__ */

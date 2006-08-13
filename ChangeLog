@@ -1,3 +1,18 @@
+2006-08-13  Hendrik Boom  <hboom@cvs.gnome.org>
+
+	Saving and loading of vector layers into the gimp's XCF file format is
+	now working:
+
+	* app/vectors/gimpvectorlayeroptions.[ch]: added a constructor and a
+	mandatory construct-only "gimp" property for use in the initialization
+	of the "fill-options" and "stroke_desc" properties, which now have the
+	GIMP_CONFIG_PARAM_AGGREGATE flags set for proper deserialization.
+
+	* app/vectors/gimpvectorlayer-xcf.c
+	* app/vectors/gimpvectorlayeroptions-parasite.[ch]: changed accordingly
+
+	* app/vectors/gimpvectorlayer-xcf.c: fixed a missing dereference symbol
+
 2006-08-12  Hendrik Boom  <hboom@cvs.gnome.org>
 
 	* app/vectors/gimpvectorlayer-xcf.c: fixed a typo in a property name.
