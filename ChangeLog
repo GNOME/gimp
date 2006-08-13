@@ -1,3 +1,8 @@
+2006-08-13  Karine Delvare  <edhel@gimp.org>
+
+	* app/tools/gimprectangleoptions.c: restore rectangle settings.
+	Fixes bug #346683.
+
 2006-08-11  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/preferences/controllers-22.png
