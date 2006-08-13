@@ -1,5 +1,10 @@
 2006-08-12  Hendrik Boom  <hboom@cvs.gnome.org>
 
+	* app/Makefile.am: fixed the linking error by adding the proper symbols
+	to gimp_console_2_3_LDFLAGS.
+
+2006-08-12  Hendrik Boom  <hboom@cvs.gnome.org>
+
 	* NOTE: this version still does not link properly! Please see the
 	previous Changelog entry for details.
 	
