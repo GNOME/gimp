@@ -130,7 +130,7 @@ ico_init (const gchar *filename,
 {
   memset (ico, 0, sizeof (MsIcon));
 
-  if (! (ico->fp = g_fopen (filename, "r")))
+  if (! (ico->fp = g_fopen (filename, "rb")))
     {
       g_message (_("Could not open '%s' for reading: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));

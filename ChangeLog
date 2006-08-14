@@ -1,5 +1,10 @@
 2006-08-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/winicon/icoload.c: open the file in binary mode.
+	Pointed out by Aurimas Juska; fixes bug #172503.
+
+2006-08-14  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_motion):
 	simplified code for statusbar display.
 
