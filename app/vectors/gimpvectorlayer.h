@@ -52,7 +52,8 @@ struct _GimpVectorLayerClass
 GType             gimp_vector_layer_get_type    (void) G_GNUC_CONST;
 
 GimpVectorLayer * gimp_vector_layer_new         (GimpImage        *image,
-                                                 GimpVectors      *vectors);
+                                                 GimpVectors      *vectors,
+                                                 GimpContext      *context);
 void              gimp_vector_layer_refresh     (GimpVectorLayer  *layer);
 
 gboolean          gimp_drawable_is_vector_layer (GimpDrawable  *drawable);

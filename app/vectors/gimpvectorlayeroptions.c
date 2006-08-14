@@ -146,26 +146,11 @@ gimp_vector_layer_options_constructor (GType                  type,
   options = GIMP_VECTOR_LAYER_OPTIONS (object);
   g_assert (GIMP_IS_GIMP (options->gimp));
   
-  GimpContext   *user_context = gimp_get_user_context (options->gimp);
-  GimpPattern   *pattern      = gimp_context_get_pattern (user_context);
-  GimpRGB        black;
-  GimpRGB        blue;
-  
-  gimp_rgba_set(&black, 0.0, 0.0, 0.0, 1.0);
-  gimp_rgba_set(&blue, 0.0, 0.0, 1.0, 1.0);
-  
   options->fill_options = g_object_new (GIMP_TYPE_FILL_OPTIONS,
                                         "gimp", options->gimp,
-                                        "foreground",   &blue,
                                         NULL);
-  gimp_context_set_pattern (GIMP_CONTEXT (options->fill_options), pattern);
   
   options->stroke_desc = gimp_stroke_desc_new (options->gimp, NULL);
-  g_object_set (options->stroke_desc->stroke_options,
-                "foreground",   &black,
-                "width",        2.0,
-                NULL); 
-  gimp_context_set_pattern (GIMP_CONTEXT (options->stroke_desc->stroke_options), pattern);
   
   return object;
 }
@@ -317,6 +302,7 @@ gimp_vector_layer_options_emit_vectors_changed (GimpVectorLayerOptions *options)
  * gimp_vector_layer_options_new:
  * @image: the #GimpImage the layer belongs to
  * @vectors: the #GimpVectors object for the layer to render
+ * @context: the #GimpContext from which to pull context properties
  *
  * Creates a new vector layer options.
  *
@@ -324,9 +310,13 @@ gimp_vector_layer_options_emit_vectors_changed (GimpVectorLayerOptions *options)
  **/
 GimpVectorLayerOptions *
 gimp_vector_layer_options_new (GimpImage     *image,
-                               GimpVectors   *vectors)
+                               GimpVectors   *vectors,
+                               GimpContext   *context)
 {
   GimpVectorLayerOptions *options;
+  GimpPattern            *pattern;
+  GimpRGB                 stroke_color;
+  GimpRGB                 fill_color;
   
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
@@ -334,6 +324,21 @@ gimp_vector_layer_options_new (GimpImage     *image,
   options = g_object_new (GIMP_TYPE_VECTOR_LAYER_OPTIONS,
                           "gimp", image->gimp,
                           NULL);
+  
+  gimp_context_get_foreground (context, &stroke_color);
+  gimp_context_get_background (context, &fill_color);
+  pattern = gimp_context_get_pattern (context);
+  
+  g_object_set (options->fill_options,
+                "foreground",   &fill_color,
+                NULL);
+  gimp_context_set_pattern (GIMP_CONTEXT (options->fill_options), pattern);
+  
+  g_object_set (options->stroke_desc->stroke_options,
+                "foreground",   &stroke_color,
+                "width",        3.0,
+                NULL); 
+  gimp_context_set_pattern (GIMP_CONTEXT (options->stroke_desc->stroke_options), pattern);
   
   g_object_set (options,
                 "vectors", vectors,

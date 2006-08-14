@@ -1,3 +1,13 @@
+2006-08-14  Hendrik Boom  <hboom@cvs.gnome.org>
+
+	* app/vectors/gimpvectorlayer.[ch]
+	* app/vectors/gimpvectorlayeroptions.[ch]: vector layer stroke and fill
+	colors are now initialized from a context which is newly passed in
+	through gimp_vector_layer_new, instead of being hardcoded to black and
+	blue.
+
+	* app/actions/vectors-commands.c: changed accordingly.
+
 2006-08-13  Hendrik Boom  <hboom@cvs.gnome.org>
 
 	Saving and loading of vector layers into the gimp's XCF file format is

@@ -296,7 +296,9 @@ vectors_to_vector_layer_cmd_callback (GtkAction *action,
   GimpVectorLayer *layer;
   return_if_no_vectors (image, vectors, data);
 
-  layer = gimp_vector_layer_new (image, vectors);
+  layer = gimp_vector_layer_new (image,
+                                 vectors,
+                                 gimp_get_user_context (image->gimp));
   gimp_image_add_layer(image, GIMP_LAYER(layer), -1);
   gimp_vector_layer_refresh (layer);
   

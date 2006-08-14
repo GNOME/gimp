@@ -270,6 +270,7 @@ gimp_vector_layer_set_property (GObject      *object,
  * gimp_vector_layer_new:
  * @image: the #GimpImage the layer should belong to
  * @vectors: the #GimpVectors object the layer should render
+ * @context: the #GimpContext from which to pull context properties
  *
  * Creates a new vector layer.
  *
@@ -277,7 +278,8 @@ gimp_vector_layer_set_property (GObject      *object,
  **/
 GimpVectorLayer *
 gimp_vector_layer_new (GimpImage     *image,
-                       GimpVectors   *vectors)
+                       GimpVectors   *vectors,
+                       GimpContext   *context)
 {
   GimpVectorLayer        *layer;
   GimpVectorLayerOptions *options;
@@ -285,7 +287,7 @@ gimp_vector_layer_new (GimpImage     *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
   
-  options = gimp_vector_layer_options_new (image, vectors);
+  options = gimp_vector_layer_options_new (image, vectors, context);
   
   layer = g_object_new (GIMP_TYPE_VECTOR_LAYER,
                         "vector-layer-options", options,
