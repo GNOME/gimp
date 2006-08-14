@@ -69,6 +69,7 @@ static void  show_version   (void) G_GNUC_NORETURN;
 static gboolean      existing  = FALSE;
 static gboolean      query     = FALSE;
 static gboolean      no_splash = FALSE;
+static gboolean      print_xid = FALSE;
 static const gchar **filenames = NULL;
 
 static const GOptionEntry main_entries[] =
@@ -86,6 +87,11 @@ static const GOptionEntry main_entries[] =
     "query", 'q', 0,
     G_OPTION_ARG_NONE, &query,
     N_("Only check if GIMP is running, then quit"), NULL
+  },
+  {
+    "print-xid", 'p', 0,
+    G_OPTION_ARG_NONE, &print_xid,
+    N_("Print X window ID of GIMP toolbox window, then quit"), NULL
   },
   {
     "no-splash", 's', 0,
@@ -449,14 +455,14 @@ main (gint    argc,
   screen  = gdk_screen_get_default ();
 
   /*  if called without any filenames, always start a new GIMP  */
-  if (file_list->len == 0 && !query && !existing)
+  if (file_list->len == 0 && !query && !print_xid && !existing)
     {
       start_new_gimp (screen, argv[0], desktop_startup_id, file_list);
     }
 
   gimp_window = gimp_remote_find_window (display, screen);
 
-  if (! query)
+  if (! query && ! print_xid)
     {
       if (gimp_window)
         {
@@ -522,6 +528,13 @@ main (gint    argc,
       else if (! existing)
         {
           start_new_gimp (screen, argv[0], desktop_startup_id, file_list);
+        }
+    }
+  else if (print_xid)
+    {
+      if (gimp_window)
+        {
+          g_print ("0x%lx\n", GDK_WINDOW_XID (gimp_window));
         }
     }
 

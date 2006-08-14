@@ -1,5 +1,11 @@
 2006-08-14  Sven Neumann  <sven@gimp.org>
 
+	* tools/gimp-remote.c
+	* docs/gimp-remote.1.in: applied patch from Michael Klein that adds
+	an option to print out the XID of the toolbox window (bug #351205).
+
+2006-08-14  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/winicon/icoload.c: open the file in binary mode.
 	Pointed out by Aurimas Juska; fixes bug #172503.
 

@@ -6,6 +6,7 @@ gimp\-remote - tells a running GIMP to open a (local or remote) image file.
 .B gimp-remote
 [\-h] [\-\-help] [-v] [\-\-version] [\-\-display \fIdisplay\fP]
 [\-e] [\-\-existing] [\-q] [\-\-query]  [\-s] [\-\-no\-splash]
+[\-p] [\-\-print\-xid]
 \fIfilename\fP ...
 
 
@@ -44,6 +45,10 @@ If no running GIMP instance is found, don't start a new one but exit.
 .B \-q, \-\-query
 Check if GIMP is running and exit. A status code of 0 indicates that
 a GIMP toolbox window has been found on this display.
+.TP 8
+.B \-p, \-\-print-xid
+Like \-q, but print the X Window ID of the toolbox window if GIMP is already
+running. If no such window exists nothing is printed.
 .TP 8
 .B \-s, \-\-no\-splash
 When starting GIMP, do not show the splash screen.
