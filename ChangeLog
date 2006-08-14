@@ -1,3 +1,10 @@
+2006-08-14  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_draw_area):
+	draw only within the intersection of the the passed coordinates
+	and the selection to avoid access to non-existant (out-of-image)
+	selction tiles. Fixes bug #350760.
+
 2006-08-14  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-edit.c (gimp_edit_make_buffer): do not autocrop
