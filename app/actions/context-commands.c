@@ -509,7 +509,7 @@ context_brush_radius_cmd_callback (GtkAction *action,
       radius = gimp_brush_generated_get_radius (generated);
       radius = action_select_value ((GimpActionSelectType) value,
                                     radius,
-                                    1.0, 256.0,
+                                    1.0, 4000.0,
                                     1.0, 10.0, FALSE);
       gimp_brush_generated_set_radius (generated, radius);
     }

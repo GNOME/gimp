@@ -1208,9 +1208,9 @@ context_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("brush-radius-decrease",      generated && radius > 1.0);
   SET_SENSITIVE ("brush-radius-decrease-skip", generated && radius > 1.0);
 
-  SET_SENSITIVE ("brush-radius-maximum",       generated && radius < 4096.0);
-  SET_SENSITIVE ("brush-radius-increase",      generated && radius < 4096.0);
-  SET_SENSITIVE ("brush-radius-increase-skip", generated && radius < 4096.0);
+  SET_SENSITIVE ("brush-radius-maximum",       generated && radius < 4000.0);
+  SET_SENSITIVE ("brush-radius-increase",      generated && radius < 4000.0);
+  SET_SENSITIVE ("brush-radius-increase-skip", generated && radius < 4000.0);
 
   SET_SENSITIVE ("brush-angle-minimum",       generated);
   SET_SENSITIVE ("brush-angle-decrease",      generated);

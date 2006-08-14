@@ -1,5 +1,12 @@
 2006-08-14  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/context-commands.c (context_brush_radius_cmd_callback)
+	(context_actions_update) 
+	* app/core/gimpbrushgenerated.c (gimp_brush_generated_class_init):
+	set upper brush size limit to 4000 pixels. Fixes bug #351175.
+
+2006-08-14  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpiscissorstool.c (gimp_iscissors_tool_oper_update):
 	do not select ISCISSORS_OP_MOVE_POINT for terminal points. Fixes
 	bug #132352.
