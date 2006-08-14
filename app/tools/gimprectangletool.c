@@ -1365,30 +1365,26 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
 
   gimp_rectangle_tool_update_options (rectangle, display);
 
-  if (function != RECT_MOVING     &&
-      function != RECT_EXECUTING)
+  if (function != RECT_MOVING && function != RECT_EXECUTING)
     {
-      gboolean constrain = gimp_rectangle_tool_get_constrain (rectangle);
+      gint w, h;
 
       gimp_tool_pop_status (tool, display);
-      if (constrain)
+
+      if (gimp_rectangle_tool_get_constrain (rectangle))
         {
-         gimp_tool_push_status_coords (tool, display,
-                                        _("Rectangle: "),
-                                        (rx2 > max_x ? max_x : rx2) -
-                                        (rx1 < min_x ? min_x : rx1),
-                                        " × ",
-                                        (ry2 > max_y ? max_y : ry2) -
-                                        (ry1 < min_y ? min_y : ry1));
+          w = MIN (rx2, max_x) - MAX (rx1, min_x);
+          h = MIN (ry2, max_y) - MAX (ry1, min_y);
         }
       else
         {
-          gimp_tool_push_status_coords (tool, display,
-                                        _("Rectangle: "),
-                                        rx2 - rx1,
-                                        " × ",
-                                        ry2 - ry1);
+          w = rx2 - rx1;
+          h = ry2 - ry1;
         }
+
+      if (w > 0 && h > 0)
+        gimp_tool_push_status_coords (tool, display,
+                                      _("Rectangle: "), w, " × ", h);
     }
 
   if (function == RECT_CREATING)

@@ -1,5 +1,10 @@
 2006-08-14  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_motion):
+	simplified code for statusbar display.
+
+2006-08-14  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.c: changed the limits for "pressx"
 	and "pressy". It's wrong to disallow negative values here.
 
