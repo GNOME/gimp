@@ -1,3 +1,8 @@
+2006-08-14  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp-edit.c (gimp_edit_make_buffer): do not autocrop
+	the buffer contents, always keep the selection size (bug #350897).
+
 2006-08-13  Karine Delvare  <edhel@gimp.org>
 
 	* app/tools/gimprectangleoptions.c: restore rectangle settings.

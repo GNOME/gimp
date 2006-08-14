@@ -58,8 +58,7 @@ static GimpBuffer * gimp_edit_extract         (GimpImage            *image,
 static GimpBuffer * gimp_edit_extract_visible (GimpImage            *image,
                                                GimpContext          *context);
 static GimpBuffer * gimp_edit_make_buffer     (Gimp                 *gimp,
-                                               TileManager          *tiles,
-                                               gboolean              mask_empty);
+                                               TileManager          *tiles);
 static gboolean     gimp_edit_fill_internal   (GimpImage            *image,
                                                GimpDrawable         *drawable,
                                                GimpContext          *context,
@@ -484,10 +483,6 @@ gimp_edit_extract (GimpImage    *image,
                    gboolean      cut_pixels)
 {
   TileManager *tiles;
-  gboolean     empty;
-
-  /*  See if the image mask is empty  */
-  empty = gimp_channel_is_empty (gimp_image_get_mask (image));
 
   if (cut_pixels)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT, _("Cut"));
@@ -499,7 +494,7 @@ gimp_edit_extract (GimpImage    *image,
   if (cut_pixels)
     gimp_image_undo_group_end (image);
 
-  return gimp_edit_make_buffer (image->gimp, tiles, empty);
+  return gimp_edit_make_buffer (image->gimp, tiles);
 }
 
 static GimpBuffer *
@@ -509,11 +504,10 @@ gimp_edit_extract_visible (GimpImage   *image,
   GimpPickable *pickable;
   TileManager  *tiles;
   PixelRegion   srcPR, destPR;
-  gboolean      non_empty;
   gint          x1, y1, x2, y2;
 
-  non_empty = gimp_channel_bounds (gimp_image_get_mask (image),
-                                   &x1, &y1, &x2, &y2);
+  gimp_channel_bounds (gimp_image_get_mask (image), &x1, &y1, &x2, &y2);
+
   if ((x1 == x2) || (y1 == y2))
     {
       g_message (_("Unable to cut or copy because the "
@@ -544,30 +538,14 @@ gimp_edit_extract_visible (GimpImage   *image,
    */
   copy_region_nocow (&srcPR, &destPR);
 
-  return gimp_edit_make_buffer (image->gimp, tiles, ! non_empty);
+  return gimp_edit_make_buffer (image->gimp, tiles);
 }
 
 static GimpBuffer *
 gimp_edit_make_buffer (Gimp        *gimp,
-                       TileManager *tiles,
-                       gboolean     mask_empty)
+                       TileManager *tiles)
 {
-  /*  Only crop if the image mask wasn't empty  */
-  if (tiles && ! mask_empty)
-    {
-      TileManager *crop = tile_manager_crop (tiles, 0);
-
-      if (crop != tiles)
-        {
-          tile_manager_unref (tiles);
-          tiles = crop;
-        }
-    }
-
-  if (tiles)
-    return gimp_buffer_new (tiles, _("Global Buffer"), FALSE);
-
-  return NULL;
+  return tiles ? gimp_buffer_new (tiles, _("Global Buffer"), FALSE) : NULL;
 }
 
 static gboolean
