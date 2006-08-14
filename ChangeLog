@@ -1,3 +1,23 @@
+2006-08-14  Michael Natterer  <mitch@gimp.org>
+
+	Fixed rounding and double vs. integer inconsistency when dealing
+	with mouse coordinates. Fixes bug #350694.
+
+	* app/tools/gimpiscissorstool.c
+	(clicked_on_vertex)
+	(clicked_on_curve): added double x and y parameters and use them
+	instead of the integer iscissors->x and ->y. Cleaned up the
+	functions a bit.
+
+	(gimp_iscissors_tool_button_press)
+	(gimp_iscissors_tool_motion): changed accordingly, also rint() the
+	passed mouse coords when assigning them to iscissors->x and ->y.
+
+	Unrelated cleanup:
+
+	(iscissors_free_buffers): removed, folded into reset()
+	(precalculate_arrays): removed, folded into class_init()
+
 2006-08-14  Sven Neumann  <sven@gimp.org>
 
 	* tools/gimp-remote.c
