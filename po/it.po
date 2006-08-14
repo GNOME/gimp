@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-14 01:04+0200\n"
-"PO-Revision-Date: 2006-08-14 00:58+0200\n"
+"PO-Revision-Date: 2006-08-14 18:03+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -7839,15 +7839,15 @@ msgstr "Nome tracciato:"
 
 #: ../app/display/display-enums.c:24
 msgid "Tool icon"
-msgstr "Icona strumenti"
+msgstr "Icona strumento"
 
 #: ../app/display/display-enums.c:25
 msgid "Tool icon with crosshair"
-msgstr "Icona strumenti con crosshair"
+msgstr "Icona strumento con crocino"
 
 #: ../app/display/display-enums.c:26
 msgid "Crosshair only"
-msgstr "Solo crosshair"
+msgstr "Solo crocino"
 
 #: ../app/display/display-enums.c:55
 msgid "From theme"
