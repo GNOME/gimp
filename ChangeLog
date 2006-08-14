@@ -1,3 +1,10 @@
+2006-08-14  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* plug-ins/winicon/icoload.c: open the file in binary mode.
+	Pointed out by Aurimas Juska; fixes bug #172503.
+
 2006-08-14  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD branch:
