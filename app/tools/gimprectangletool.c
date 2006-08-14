@@ -206,16 +206,14 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface)
       g_object_interface_install_property (iface,
                                            g_param_spec_int ("pressx",
                                                              NULL, NULL,
-                                                             0,
-                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             G_MININT, G_MAXINT,
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (iface,
                                            g_param_spec_int ("pressy",
                                                              NULL, NULL,
-                                                             0,
-                                                             GIMP_MAX_IMAGE_SIZE,
+                                                             G_MININT, G_MAXINT,
                                                              0,
                                                              GIMP_PARAM_READWRITE));
 
@@ -892,18 +890,18 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
   else
     {
       g_object_set (options,
-                "center-x", private->saved_center_x,
-                "center-y", private->saved_center_y,
-                NULL);
+                    "center-x", private->saved_center_x,
+                    "center-y", private->saved_center_y,
+                    NULL);
 
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
       g_object_set (rectangle,
-                "x1", private->saved_x1,
-                "y1", private->saved_y1,
-                "x2", private->saved_x2,
-                "y2", private->saved_y2,
-                NULL);
+                    "x1", private->saved_x1,
+                    "y1", private->saved_y1,
+                    "x2", private->saved_x2,
+                    "y2", private->saved_y2,
+                    NULL);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
@@ -1206,15 +1204,18 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
         {
         case RECT_RESIZING_UPPER_LEFT:
           /*
-           * Ok the same basically happens for each corner, just with a different fixed
-           * corner. To keep within aspect ratio and at the same time keep the cursor on
-           * one edge if not the corner itself:
-           * - calculate the two positions of the corner in question on the base of the current
-           *   mouse cursor position and the fixed corner opposite the one selected.
-           * - decide on which egde we are inside the rectangle dimension
-           * - if we are on the inside of the vertical edge then we use the x position of the 
-           *   cursor, otherwise we are on the inside (or close enough) of the horizontal
-           *   edge and then we use the y position of the cursor for the base of our new corner.
+           * The same basically happens for each corner, just with a
+           * different fixed corner. To keep within aspect ratio and
+           * at the same time keep the cursor on one edge if not the
+           * corner itself: - calculate the two positions of the
+           * corner in question on the base of the current mouse
+           * cursor position and the fixed corner opposite the one
+           * selected.  - decide on which egde we are inside the
+           * rectangle dimension - if we are on the inside of the
+           * vertical edge then we use the x position of the cursor,
+           * otherwise we are on the inside (or close enough) of the
+           * horizontal edge and then we use the y position of the
+           * cursor for the base of our new corner.
            */
           x1 = rx2 - (ry2 - cury) * aspect + .5;
           y1 = ry2 - (rx2 - curx) / aspect + .5;
@@ -1256,9 +1257,9 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
           break;
 
         case RECT_RESIZING_LEFT:
-          /* When resizing the left hand delimiter then the aspect dictates the 
-           * height of the result, any inc_y is redundant and not relevant to the
-           * result
+          /* When resizing the left hand delimiter then the aspect
+           * dictates the height of the result, any inc_y is redundant
+           * and not relevant to the result
            */
           y2 = ry1 + (rx2 - x1) / aspect + .5;
           break;
@@ -1268,9 +1269,9 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
           break;
 
         case RECT_RESIZING_RIGHT:
-          /* When resizing the right hand delimiter then the aspect dictates the 
-           * height of the result, any inc_y is redundant and not relevant to the
-           * result
+          /* When resizing the right hand delimiter then the aspect
+           * dictates the height of the result, any inc_y is redundant
+           * and not relevant to the result
            */
           y2 = ry1 + (x2 - rx1) / aspect + 0.5;
           break;

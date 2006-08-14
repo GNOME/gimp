@@ -1,5 +1,10 @@
 2006-08-14  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimprectangletool.c: changed the limits for "pressx"
+	and "pressy". It's wrong to disallow negative values here.
+
+2006-08-14  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/context-commands.c (context_brush_radius_cmd_callback)
 	(context_actions_update) 
 	* app/core/gimpbrushgenerated.c (gimp_brush_generated_class_init):
