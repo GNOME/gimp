@@ -918,7 +918,7 @@ gimp_iscissors_tool_oper_update (GimpTool        *tool,
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
 
-  if (mouse_over_vertex (iscissors, coords->x, coords->y))
+  if (mouse_over_vertex (iscissors, coords->x, coords->y) > 1)
     {
       iscissors->op = ISCISSORS_OP_MOVE_POINT;
     }

@@ -1,3 +1,9 @@
+2006-08-14  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpiscissorstool.c (gimp_iscissors_tool_oper_update):
+	do not select ISCISSORS_OP_MOVE_POINT for terminal points. Fixes
+	bug #132352.
+
 2006-08-14  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_draw_area):
