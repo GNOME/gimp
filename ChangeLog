@@ -1,5 +1,10 @@
 2006-08-15  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpviewable.h: increased GIMP_VIEWABLE_MAX_PREVIEW_SIZE
+	to 2048 to workaround bug #307314.
+
+2006-08-15  Sven Neumann  <sven@gimp.org>
+
 	* app/core/core-enums.h
 	* tools/pdbgen/pdb/edit.pdb
 	* tools/pdbgen/pdb/selection_tools.pdb: applied patch from David
