@@ -1,5 +1,7 @@
 2006-08-15  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimp.[ch] (gimp_shm_addr): the return value isn't const.
+
 	* app/tools/gimpcurvestool.c (curves_graph_events): fixed cursor
 	handling on button press and release events.
 

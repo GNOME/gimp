@@ -1063,7 +1063,7 @@ gimp_shm_ID (void)
  *
  * Return value: the shared memory address
  **/
-const guchar *
+guchar *
 gimp_shm_addr (void)
 {
   return _shm_addr;

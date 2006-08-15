@@ -313,7 +313,7 @@ void           gimp_destroy_paramdefs   (GimpParamDef    *paramdefs,
 guint          gimp_tile_width          (void) G_GNUC_CONST;
 guint          gimp_tile_height         (void) G_GNUC_CONST;
 gint           gimp_shm_ID              (void) G_GNUC_CONST;
-const guchar * gimp_shm_addr            (void) G_GNUC_CONST;
+guchar       * gimp_shm_addr            (void) G_GNUC_CONST;
 gdouble        gimp_gamma               (void) G_GNUC_CONST;
 gboolean       gimp_install_cmap        (void) G_GNUC_CONST;
 gint           gimp_min_colors          (void) G_GNUC_CONST;
