@@ -86,7 +86,7 @@ static void          gimp_clone_tool_draw          (GimpDrawTool    *draw_tool);
 static GtkWidget   * gimp_clone_options_gui        (GimpToolOptions *tool_options);
 
 
-G_DEFINE_TYPE (GimpCloneTool, gimp_clone_tool, GIMP_TYPE_PAINT_TOOL)
+G_DEFINE_TYPE (GimpCloneTool, gimp_clone_tool, GIMP_TYPE_BRUSH_TOOL)
 
 #define parent_class gimp_clone_tool_parent_class
 

@@ -58,7 +58,7 @@ static void   gimp_dodge_burn_tool_status_update (GimpTool          *tool,
 static GtkWidget * gimp_dodge_burn_options_gui   (GimpToolOptions   *tool_options);
 
 
-G_DEFINE_TYPE (GimpDodgeBurnTool, gimp_dodge_burn_tool, GIMP_TYPE_PAINT_TOOL)
+G_DEFINE_TYPE (GimpDodgeBurnTool, gimp_dodge_burn_tool, GIMP_TYPE_BRUSH_TOOL)
 
 #define parent_class gimp_dodge_burn_tool_parent_class
 
@@ -197,13 +197,11 @@ gimp_dodge_burn_tool_status_update (GimpTool          *tool,
 static GtkWidget *
 gimp_dodge_burn_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
+  GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *frame;
   gchar     *str;
-
-  config = G_OBJECT (tool_options);
 
   vbox = gimp_paint_options_gui (tool_options);
 

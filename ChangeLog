@@ -1,5 +1,24 @@
 2006-08-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/Makefile.am
+	* app/tools/tools-types.h
+	* app/tools/gimpbrushtool.[ch]: new GimpPaintTool subclass which
+	completely handles brush outline drawing.
+
+	* app/tools/gimppainttool.[ch]: removed all brush stuff here.
+
+	* app/tools/gimpclonetool.[ch]
+	* app/tools/gimpconvolvetool.[ch]
+	* app/tools/gimpdodgeburntool.[ch]
+	* app/tools/gimperasertool.[ch]
+	* app/tools/gimppaintbrushtool.[ch]
+	* app/tools/gimpsmudgetool.[ch]: derive from GimpBrushTool.
+
+	* app/tools/gimpinktool.c: removed now obsolete cursor_update()
+	implementation.
+
+2006-08-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpeditselectiontool.c (gimp_edit_selection_tool_start):
 	added check for GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER which was
 	forgotten when this mode was introduced.

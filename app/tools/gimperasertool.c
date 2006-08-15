@@ -51,7 +51,7 @@ static void   gimp_eraser_tool_cursor_update (GimpTool        *tool,
 static GtkWidget * gimp_eraser_options_gui   (GimpToolOptions *tool_options);
 
 
-G_DEFINE_TYPE (GimpEraserTool, gimp_eraser_tool, GIMP_TYPE_PAINT_TOOL)
+G_DEFINE_TYPE (GimpEraserTool, gimp_eraser_tool, GIMP_TYPE_BRUSH_TOOL)
 
 #define parent_class gimp_eraser_tool_parent_class
 
@@ -143,12 +143,10 @@ gimp_eraser_tool_cursor_update (GimpTool        *tool,
 static GtkWidget *
 gimp_eraser_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
+  GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *button;
   gchar     *str;
-
-  config = G_OBJECT (tool_options);
 
   vbox = gimp_paint_options_gui (tool_options);
 

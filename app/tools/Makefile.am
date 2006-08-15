@@ -24,6 +24,8 @@ libapptools_a_sources = \
 	gimpblendtool.h			\
 	gimpbrightnesscontrasttool.c	\
 	gimpbrightnesscontrasttool.h	\
+	gimpbrushtool.c			\
+	gimpbrushtool.h			\
 	gimpbucketfilloptions.c		\
 	gimpbucketfilloptions.h		\
 	gimpbucketfilltool.c		\

@@ -20,7 +20,7 @@
 #define __GIMP_ERASER_TOOL_H__
 
 
-#include "gimppainttool.h"
+#include "gimpbrushtool.h"
 
 
 #define GIMP_TYPE_ERASER_TOOL            (gimp_eraser_tool_get_type ())
@@ -36,12 +36,12 @@ typedef struct _GimpEraserToolClass GimpEraserToolClass;
 
 struct _GimpEraserTool
 {
-  GimpPaintTool parent_instance;
+  GimpBrushTool parent_instance;
 };
 
 struct _GimpEraserToolClass
 {
-  GimpPaintToolClass parent_class;
+  GimpBrushToolClass parent_class;
 };
 
 

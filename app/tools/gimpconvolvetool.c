@@ -58,7 +58,7 @@ static void   gimp_convolve_tool_status_update (GimpTool         *tool,
 static GtkWidget * gimp_convolve_options_gui   (GimpToolOptions  *options);
 
 
-G_DEFINE_TYPE (GimpConvolveTool, gimp_convolve_tool, GIMP_TYPE_PAINT_TOOL)
+G_DEFINE_TYPE (GimpConvolveTool, gimp_convolve_tool, GIMP_TYPE_BRUSH_TOOL)
 
 #define parent_class gimp_convolve_tool_parent_class
 
@@ -195,13 +195,11 @@ gimp_convolve_tool_status_update (GimpTool         *tool,
 static GtkWidget *
 gimp_convolve_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
+  GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *frame;
   gchar     *str;
-
-  config = G_OBJECT (tool_options);
 
   vbox = gimp_paint_options_gui (tool_options);
 

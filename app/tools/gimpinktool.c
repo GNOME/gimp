@@ -35,12 +35,6 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_ink_tool_cursor_update (GimpTool        *tool,
-                                           GimpCoords      *coords,
-                                           GdkModifierType  state,
-                                           GimpDisplay     *display);
-
-
 G_DEFINE_TYPE (GimpInkTool, gimp_ink_tool, GIMP_TYPE_PAINT_TOOL)
 
 #define parent_class gimp_ink_tool_parent_class
@@ -69,9 +63,6 @@ gimp_ink_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_ink_tool_class_init (GimpInkToolClass *klass)
 {
-  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
-
-  tool_class->cursor_update = gimp_ink_tool_cursor_update;
 }
 
 static void
@@ -89,17 +80,4 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (ink_tool),
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);
-}
-
-static void
-gimp_ink_tool_cursor_update (GimpTool         *tool,
-                             GimpCoords       *coords,
-                             GdkModifierType   state,
-                             GimpDisplay      *display)
-{
-  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
-
-  paint_tool->show_cursor = TRUE;
-
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }

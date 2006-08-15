@@ -20,7 +20,7 @@
 #define __GIMP_CONVOLVE_TOOL_H__
 
 
-#include "gimppainttool.h"
+#include "gimpbrushtool.h"
 
 
 #define GIMP_TYPE_CONVOLVE_TOOL            (gimp_convolve_tool_get_type ())
@@ -36,12 +36,12 @@ typedef struct _GimpConvolveToolClass GimpConvolveToolClass;
 
 struct _GimpConvolveTool
 {
-  GimpPaintTool parent_instance;
+  GimpBrushTool parent_instance;
 };
 
 struct _GimpConvolveToolClass
 {
-  GimpPaintToolClass parent_class;
+  GimpBrushToolClass parent_class;
 };
 
 

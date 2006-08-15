@@ -41,7 +41,7 @@
 static GtkWidget * gimp_smudge_options_gui (GimpToolOptions *tool_options);
 
 
-G_DEFINE_TYPE (GimpSmudgeTool, gimp_smudge_tool, GIMP_TYPE_PAINT_TOOL)
+G_DEFINE_TYPE (GimpSmudgeTool, gimp_smudge_tool, GIMP_TYPE_BRUSH_TOOL)
 
 
 void
@@ -88,11 +88,9 @@ gimp_smudge_tool_init (GimpSmudgeTool *smudge)
 static GtkWidget *
 gimp_smudge_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
+  GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *table;
-
-  config = G_OBJECT (tool_options);
 
   vbox = gimp_paint_options_gui (tool_options);
 

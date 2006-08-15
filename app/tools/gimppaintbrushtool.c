@@ -35,7 +35,7 @@
 #include "gimp-intl.h"
 
 
-G_DEFINE_TYPE (GimpPaintbrushTool, gimp_paintbrush_tool, GIMP_TYPE_PAINT_TOOL)
+G_DEFINE_TYPE (GimpPaintbrushTool, gimp_paintbrush_tool, GIMP_TYPE_BRUSH_TOOL)
 
 
 void

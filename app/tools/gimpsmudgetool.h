@@ -20,7 +20,7 @@
 #define __GIMP_SMUDGE_TOOL_H__
 
 
-#include "gimppainttool.h"
+#include "gimpbrushtool.h"
 
 
 #define GIMP_TYPE_SMUDGE_TOOL            (gimp_smudge_tool_get_type ())
@@ -36,12 +36,12 @@ typedef struct _GimpSmudgeToolClass GimpSmudgeToolClass;
 
 struct _GimpSmudgeTool
 {
-  GimpPaintTool parent_instance;
+  GimpBrushTool parent_instance;
 };
 
 struct _GimpSmudgeToolClass
 {
-  GimpPaintToolClass parent_class;
+  GimpBrushToolClass parent_class;
 };
 
 

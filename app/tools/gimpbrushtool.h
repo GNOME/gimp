@@ -16,52 +16,40 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_PAINT_TOOL_H__
-#define __GIMP_PAINT_TOOL_H__
+#ifndef __GIMP_BRUSH_TOOL_H__
+#define __GIMP_BRUSH_TOOL_H__
 
 
-#include "gimpcolortool.h"
+#include "gimppainttool.h"
 
 
-#define GIMP_TYPE_PAINT_TOOL            (gimp_paint_tool_get_type ())
-#define GIMP_PAINT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PAINT_TOOL, GimpPaintTool))
-#define GIMP_PAINT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PAINT_TOOL, GimpPaintToolClass))
-#define GIMP_IS_PAINT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PAINT_TOOL))
-#define GIMP_IS_PAINT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINT_TOOL))
-#define GIMP_PAINT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAINT_TOOL, GimpPaintToolClass))
+#define GIMP_TYPE_BRUSH_TOOL            (gimp_brush_tool_get_type ())
+#define GIMP_BRUSH_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH_TOOL, GimpBrushTool))
+#define GIMP_BRUSH_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_TOOL, GimpBrushToolClass))
+#define GIMP_IS_BRUSH_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRUSH_TOOL))
+#define GIMP_IS_BRUSH_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_TOOL))
+#define GIMP_BRUSH_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRUSH_TOOL, GimpBrushToolClass))
 
 
-typedef struct _GimpPaintToolClass GimpPaintToolClass;
+typedef struct _GimpBrushToolClass GimpBrushToolClass;
 
-struct _GimpPaintTool
+struct _GimpBrushTool
 {
-  GimpColorTool    parent_instance;
+  GimpPaintTool  parent_instance;
 
-  gboolean         pick_colors;  /*  pick color if ctrl is pressed   */
-  gboolean         draw_line;
-
-  gboolean         show_cursor;
-  gboolean         draw_brush;
-  gdouble          brush_x;
-  gdouble          brush_y;
-
-  const gchar     *status;       /* status message */
-  const gchar     *status_line;  /* status message when drawing a line */
-  const gchar     *status_ctrl;  /* additional message for the ctrl modifier */
-
-  GimpPaintCore   *core;
+  gboolean       show_cursor;
+  gboolean       draw_brush;
+  gdouble        brush_x;
+  gdouble        brush_y;
 };
 
-struct _GimpPaintToolClass
+struct _GimpBrushToolClass
 {
-  GimpColorToolClass  parent_class;
+  GimpPaintToolClass  parent_class;
 };
 
 
-GType   gimp_paint_tool_get_type            (void) G_GNUC_CONST;
-
-void    gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
-                                             GimpColorPickMode  mode);
+GType   gimp_brush_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_PAINT_TOOL_H__  */
+#endif  /*  __GIMP_BRUSH_TOOL_H__  */

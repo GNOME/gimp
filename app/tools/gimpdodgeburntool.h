@@ -20,7 +20,7 @@
 #define __GIMP_DODGE_BURN_TOOL_H__
 
 
-#include "gimppainttool.h"
+#include "gimpbrushtool.h"
 
 
 #define GIMP_TYPE_DODGE_BURN_TOOL            (gimp_dodge_burn_tool_get_type ())
@@ -35,12 +35,12 @@ typedef struct _GimpDodgeBurnToolClass GimpDodgeBurnToolClass;
 
 struct _GimpDodgeBurnTool
 {
-  GimpPaintTool parent_instance;
+  GimpBrushTool parent_instance;
 };
 
 struct _GimpDodgeBurnToolClass
 {
-  GimpPaintToolClass parent_class;
+  GimpBrushToolClass parent_class;
 };
 
 
