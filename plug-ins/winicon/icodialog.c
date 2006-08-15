@@ -240,8 +240,6 @@ ico_specs_dialog_update_icon_preview (GtkWidget *dialog,
   if (! preview)
     return;
 
-  g_printerr ("ico_specs_dialog_update_icon_preview: %d\n", bpp);
-
   if (bpp <= 8)
     {
       GimpDrawable *drawable;
