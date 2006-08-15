@@ -1,5 +1,11 @@
 2006-08-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/Makefile.am: moved whirlpinch.py to the
+	test_scripts category to prevent it from being installed in stable
+	releases (bug #46001).
+
+2006-08-15  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/compose.c: has only one return value if called
 	as recompose. Fixes the trigger for bug #350226.
 
