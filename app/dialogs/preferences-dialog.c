@@ -2446,10 +2446,12 @@ prefs_dialog_new (Gimp       *gimp,
                             _("Hint for other _docks:"),
                             GTK_TABLE (table), 1, size_group);
 
+#ifdef GIMP_UNSTABLE
   prefs_check_button_add (object, "transient-docks",
                           _("Toolbox and other docks are transient "
                             "to the active image window"),
                           GTK_BOX (vbox2));
+#endif
 
   vbox2 = prefs_frame_new (_("Focus"),
                            GTK_CONTAINER (vbox), FALSE);
