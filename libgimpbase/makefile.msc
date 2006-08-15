@@ -35,6 +35,7 @@ OBJECTS = \
 	gimpbase-private.obj \
 	gimpbasetypes.obj \
 	gimpchecks.obj \
+	gimpcpuaccel.obj \
 	gimpdatafiles.obj \
 	gimpenv.obj \
 	gimpmemsize.obj \

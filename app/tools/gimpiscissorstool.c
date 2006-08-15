@@ -405,8 +405,8 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  iscissors->x = rint (coords->x);
-  iscissors->y = rint (coords->y);
+  iscissors->x = RINT (coords->x);
+  iscissors->y = RINT (coords->y);
 
   /*  If the tool was being used in another image...reset it  */
 
@@ -705,8 +705,8 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  iscissors->x = rint (coords->x);
-  iscissors->y = rint (coords->y);
+  iscissors->x = RINT (coords->x);
+  iscissors->y = RINT (coords->y);
 
   switch (iscissors->state)
     {
@@ -949,8 +949,8 @@ gimp_iscissors_tool_oper_update (GimpTool        *tool,
   else if (iscissors->connected && iscissors->mask)
     {
       if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (iscissors->mask),
-                                        rint (coords->x),
-                                        rint (coords->y)))
+                                        RINT (coords->x),
+                                        RINT (coords->y)))
         {
           iscissors->op = ISCISSORS_OP_SELECT;
         }

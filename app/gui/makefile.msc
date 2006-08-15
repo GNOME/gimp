@@ -30,6 +30,7 @@ PKG_LINK = \
 OBJECTS = \
 	color-history.obj \
 	gui.obj \
+	gui-message.obj \
 	gui-vtable.obj \
 	session.obj \
 	splash.obj \

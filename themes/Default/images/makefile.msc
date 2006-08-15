@@ -45,6 +45,8 @@ STOCK_VARIABLES = \
 	stock_color_picker_gray_18		stock-color-picker-gray-18.png	\
 	stock_color_picker_white_18		stock-color-picker-white-18.png	\
 	stock_color_triangle_16		stock-color-triangle-16.png	\
+	stock_colormap_16	stock-colormap-16.png \
+	stock_colormap_24	stock-colormap-24.png \
 	stock_convert_grayscale_16		stock-convert-grayscale-16.png	\
 	stock_convert_indexed_16		stock-convert-indexed-16.png	\
 	stock_convert_rgb_16		stock-convert-rgb-16.png	\
@@ -102,8 +104,6 @@ STOCK_VARIABLES = \
 	stock_image_48		stock-image-48.png	\
 	stock_images_16		stock-images-16.png	\
 	stock_images_24		stock-images-24.png	\
-	stock_indexed_palette_16	stock-indexed-palette-16.png \
-	stock_indexed_palette_24	stock-indexed-palette-24.png \
 	stock_info_16		stock-info-16.png	\
 	stock_info_24		stock-info-24.png	\
 	stock_info_64		stock-info-64.png	\
@@ -213,6 +213,8 @@ STOCK_VARIABLES = \
 STOCK_TOOL_VARIABLES = \
 	stock_tool_airbrush_16		tools/stock-tool-airbrush-16.png	\
 	stock_tool_airbrush_22		tools/stock-tool-airbrush-22.png	\
+	stock_tool_align_16		tools/stock-tool-align-16.png \
+	stock_tool_align_22		tools/stock-tool-align-22.png \
 	stock_tool_blend_16		tools/stock-tool-blend-16.png	\
 	stock_tool_blend_22		tools/stock-tool-blend-22.png	\
 	stock_tool_blur_16		tools/stock-tool-blur-16.png	\
@@ -290,7 +292,6 @@ STOCK_TOOL_VARIABLES = \
 
 WILBER_VARIABLES = \
 	stock_wilber_16		stock-wilber-16.png	\
-	stock_wilber_32		stock-wilber-32.png	\
 	stock_wilber_48		stock-wilber-48.png	\
 	stock_wilber_64		stock-wilber-64.png	\
 

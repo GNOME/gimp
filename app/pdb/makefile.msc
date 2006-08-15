@@ -81,12 +81,9 @@ OBJECTS = \
 	\
 	gimppdb.obj \
 	\
-	gimp-pdb.obj \
 	gimp-pdb-compat.obj \
 	gimppdb-query.obj \
-	gimppluginprocedure.obj \
 	gimpprocedure.obj \
-	gimptemporaryprocedure.obj
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \

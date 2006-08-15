@@ -42,6 +42,7 @@ OBJECTS = \
 	gimpdisplayshell-handlers.obj \
 	gimpdisplayshell-layer-select.obj \
 	gimpdisplayshell-preview.obj \
+	gimpdisplayshell-progress.obj \
 	gimpdisplayshell-render.obj \
 	gimpdisplayshell-scale.obj \
 	gimpdisplayshell-scroll.obj \

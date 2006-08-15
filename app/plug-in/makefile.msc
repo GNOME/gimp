@@ -27,13 +27,16 @@ OBJECTS = \
 	gimppluginmanager-data.obj \
 	gimppluginmanager-file.obj \
 	gimppluginmanager-help-domain.obj \
+	gimppluginmanager-history.obj \
 	gimppluginmanager-locale-domain.obj \
 	gimppluginmanager-menu-branch.obj \
 	gimppluginmanager-query.obj \
 	gimpplugin-message.obj \
+	gimppluginprocedure.obj \
 	gimppluginprocframe.obj \
 	gimpplugin-progress.obj \
 	gimppluginshm.obj \
+	gimptemporaryprocedure.obj \
 	\
 	plug-in-def.obj \
 	plug-in-enums.obj \

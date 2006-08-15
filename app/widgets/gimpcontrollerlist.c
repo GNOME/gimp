@@ -50,6 +50,7 @@
 #include "gimppropwidgets.h"
 #include "gimpuimanager.h"
 #include "gimpviewabledialog.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 

@@ -28,6 +28,7 @@
 
 #include "base/color-balance.h"
 
+#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"

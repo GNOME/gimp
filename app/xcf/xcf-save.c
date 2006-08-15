@@ -1461,7 +1461,7 @@ xcf_save_tile_rle (XcfInfo  *info,
 
   for (i = 0; i < bpp; i++)
     {
-      const guchar *data = tile_data_pointer (tile, 0, 0) + i;
+      const guchar *data = (guchar *)tile_data_pointer (tile, 0, 0) + i;
 
       gint  state  = 0;
       gint  length = 0;

@@ -71,8 +71,6 @@ OBJECTS = \
 	gimpmeasuretool.obj \
 	gimpmoveoptions.obj \
 	gimpmovetool.obj \
-	gimpnewrectselectoptions.obj \
-	gimpnewrectselecttool.obj \
 	gimppaintbrushtool.obj \
 	gimppaintoptions-gui.obj \
 	gimppainttool.obj \
@@ -81,7 +79,9 @@ OBJECTS = \
 	gimpposterizetool.obj \
 	gimprectangleoptions.obj \
 	gimprectangletool.obj \
-	gimprectselecttool.obj \
+	gimprectangleselectoptions.obj \
+	gimprectangleselecttool.obj \
+	gimpregionselecttool.obj \
 	gimprotatetool.obj \
 	gimpscaletool.obj \
 	gimpselectionoptions.obj \

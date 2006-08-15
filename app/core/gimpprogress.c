@@ -226,7 +226,7 @@ gimp_progress_message (GimpProgress *progress,
 {
   GimpProgressInterface *progress_iface;
 
-  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+  g_return_val_if_fail (GIMP_IS_PROGRESS (progress), FALSE);
 
   progress_iface = GIMP_PROGRESS_GET_INTERFACE (progress);
 

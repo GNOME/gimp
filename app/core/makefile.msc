@@ -41,6 +41,7 @@ OBJECTS = \
 	gimparea.obj \
 	gimpbrush.obj \
 	gimpbrush-load.obj \
+	gimpbrushclipboard.obj \
 	gimpbrushgenerated.obj \
 	gimpbrushpipe.obj \
 	gimpbuffer.obj \
@@ -75,9 +76,11 @@ OBJECTS = \
 	gimpgradient-load.obj \
 	gimpgradient-save.obj \
 	gimpgrid.obj \
+	gimpguide.obj \
 	gimp-gradients.obj \
 	gimpimage.obj \
 	gimpimagemap.obj \
+	gimpimage-arrange.obj \
 	gimpimage-colorhash.obj \
 	gimpimage-colormap.obj \
 	gimpimage-contiguous-region.obj \
@@ -87,6 +90,7 @@ OBJECTS = \
 	gimpimage-flip.obj \
 	gimpimage-grid.obj \
 	gimpimage-guides.obj \
+	gimpimage-item-list.obj \
 	gimpimage-merge.obj \
 	gimpimage-new.obj \
 	gimpimage-pick-color.obj \
@@ -101,7 +105,6 @@ OBJECTS = \
 	gimpimage-undo-push.obj \
 	gimpimagefile.obj \
 	gimpitem.obj \
-	gimpitem-align.obj \
 	gimpitem-linked.obj \
 	gimpitem-preview.obj \
 	gimpitemundo.obj \
@@ -110,6 +113,7 @@ OBJECTS = \
 	gimplayermask.obj \
 	gimplist.obj \
 	gimpparamspecs.obj \
+	gimpparamspecs-desc.obj \
 	gimpprojection.obj \
 	gimpprojection-construct.obj \
 	gimpmarshal.obj \
@@ -121,6 +125,7 @@ OBJECTS = \
 	gimp-parasites.obj \
 	gimpparasitelist.obj \
 	gimppattern.obj \
+	gimppatternclipboard.obj \
 	gimppickable.obj \
 	gimppdbprogress.obj \
 	gimppreviewcache.obj \
