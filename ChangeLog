@@ -1,5 +1,10 @@
 2006-08-15  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcurvestool.c (curves_graph_events): fixed cursor
+	handling on button press and release events.
+
+2006-08-15  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/preferences-dialog.c: do not add a toggle for
 	"transient-docks" in stable releases (bug #322577).
 

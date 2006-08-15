@@ -1057,7 +1057,7 @@ curves_graph_events (GtkWidget      *widget,
 
       tool->grabbed = TRUE;
 
-      new_cursor = GDK_TCROSS;
+      curves_set_cursor (tool, GDK_TCROSS);
 
       switch (tool->curves->curve_type[tool->channel])
         {
@@ -1105,9 +1105,9 @@ curves_graph_events (GtkWidget      *widget,
       if (bevent->button != 1)
         return TRUE;
 
-      new_cursor = GDK_FLEUR;
       tool->grabbed = FALSE;
 
+      curves_set_cursor (tool, GDK_FLEUR);
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
 
       return TRUE;
