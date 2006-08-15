@@ -1344,6 +1344,8 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   gint           y;
   TempBuf       *pixmap_mask;
   TempBuf       *brush_mask;
+  gdouble        X           = paint_core->cur_coords.x;
+  gdouble        Y           = paint_core->cur_coords.y;
 
   g_return_if_fail (GIMP_IS_BRUSH (core->brush));
   g_return_if_fail (core->brush->pixmap != NULL);
@@ -1370,8 +1372,16 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   /*  Calculate upper left corner of brush as in
    *  gimp_paint_core_get_paint_area.  Ugly to have to do this here, too.
    */
-  ulx = (gint) floor (paint_core->cur_coords.x) - (pixmap_mask->width  >> 1);
-  uly = (gint) floor (paint_core->cur_coords.y) - (pixmap_mask->height >> 1);
+  ulx = (gint) floor (X) - (pixmap_mask->width  >> 1);
+  uly = (gint) floor (Y) - (pixmap_mask->height  >> 1);
+
+  /*  Not sure why this is necessary, but empirically the code does
+   *  not work without it for even-sided brushes.  See bug #166622.
+   */
+  if (pixmap_mask->width %2 == 0)
+    ulx += ROUND (X) - floor (X);
+  if (pixmap_mask->height %2 == 0)
+    uly += ROUND (Y) - floor (Y);
 
   offsetx = area->x - ulx;
   offsety = area->y - uly;
@@ -1466,3 +1476,4 @@ paint_line_pixmap_mask (GimpImage                *dest,
         }
     }
 }
+
