@@ -655,7 +655,7 @@ ReadImage (FILE     *fd,
                   }
                 if (xpos == width)
                   {
-                    ReadOK (fd, buffer, rowbytes - 1 - (width * bpp - 1) / 8);
+                    fread(buffer, rowbytes - 1 - (width * bpp - 1) / 8, 1, fd);
                     if (ypos == 0)
                       break;
                     ypos--;
@@ -746,7 +746,7 @@ ReadImage (FILE     *fd,
 
                     /* absolute mode runs are padded to 16-bit alignment */
                     if (total_bytes_read % 2)
-                      ReadOK (fd, &v, 1);
+                      fread(&v, 1, 1, fd);
                   }
                 if (((guchar) buffer[0] == 0) && ((guchar) buffer[1]==0))
                   /* Line end */

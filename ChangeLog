@@ -1,3 +1,10 @@
+2006-08-15  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/bmp/bmp.[ch]
+	* plug-ins/bmp/bmpread.c
+	* plug-ins/bmp/bmpwrite.c: applied patch from Piotr Filiciak that
+	merges the save dialogs and completes the changes in bug #342355.
+
 2006-08-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/paint/gimpbrushcore.c (gimp_brush_core_color_area_with_pixmap):

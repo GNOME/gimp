@@ -17,6 +17,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#define LOAD_PROC "file-bmp-load"
+#define SAVE_PROC "file-bmp-save"
+
 #define MAXCOLORS   256
 
 #define BitSet(byte, bit)        (((byte) & (bit)) == (bit))
@@ -31,6 +34,7 @@ GimpPDBStatusType  WriteBMP  (const gchar *filename,
                               gint32       drawable_ID);
 
 extern       gboolean  interactive;
+extern       gboolean  lastvals;
 extern const gchar    *filename;
 
 extern struct Bitmap_File_Head_Struct
