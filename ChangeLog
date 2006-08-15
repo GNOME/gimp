@@ -1,5 +1,25 @@
 2006-08-15  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-enums.h
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/selection_tools.pdb: applied patch from David
+	Gowers that adds extended PDB interface for gimp-edit-bucket-fill,
+	gimp-by-color-select and gimp-fuzzy-select. Fixes bugs #348291 and
+	#347499.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/selection_tools_cmds.c
+	* libgimp/gimpedit_pdb.[ch]
+	* libgimp/gimpenums.c.tail
+	* libgimp/gimpenums.h
+	* libgimp/gimpselectiontools_pdb.[ch]
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* libgimp/gimp.def: updated.
+
+2006-08-15  Sven Neumann  <sven@gimp.org>
+
 	* app/xcf/xcf-save.c (xcf_save_tile_rle): coding style.
 
 	* plug-ins/winicon/icodialog.c: removed leftover debug output.

@@ -587,6 +587,93 @@ CODE
     );
 }
 
+sub edit_bucket_fill_full {
+    $blurb = <<'BLURB';
+Fill the area specified either by the current selection if there is one, or by
+a seed fill starting at the specified coordinates.
+BLURB
+
+    $help = <<'HELP';
+This tool requires information on the paint application mode, and the
+fill mode, which can either be in the foreground color, or in the
+currently active pattern. If there is no selection, a seed fill is
+executed at the specified coordinates and extends outward in keeping
+with the threshold parameter. If there is a selection in the target
+image, the threshold, sample merged, x, and y arguments are unused. If
+the sample_merged parameter is TRUE, the data of the composite
+image will be used instead of that for the specified drawable.  This
+is equivalent to sampling for colors after merging all visible
+layers. In the case of merged sampling, the x and y coordinates are
+relative to the image's origin; otherwise, they are relative to the
+drawable's origin.
+HELP
+
+    &david_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
+	{ name => 'fill_mode', type => 'enum GimpBucketFillMode',
+	  desc => 'The type of fill' },
+	{ name => paint_mode, type => 'enum GimpLayerModeEffects',
+	  desc => 'The paint application mode' },
+	{ name => 'opacity', type => '0 <= float <= 100',
+	  desc => 'The opacity of the final bucket fill' },
+	{ name => 'threshold', type => '0 <= float <= 255',
+	  desc => "The threshold determines how extensive the seed fill will
+		   be. It's value is specified in terms of intensity levels.
+                   This parameter is only valid when there is no selection in
+		   the specified image." },
+	{ name => 'sample_merged', type => 'boolean',
+	  desc => 'Use the composite image, not the drawable' },
+	{ name => 'fill_transparent', type => 'boolean',
+	  desc => "Whether to consider transparent pixels for filling.
+	           If TRUE, transparency is considered as a unique fillable
+		   color." },
+	{ name => 'select_criterion', type => 'enum GimpSelectCriterion',
+	  desc => "The criterion used to determine color similarity.
+	           SELECT_CRITERION_COMPOSITE is the standard choice.
+		   " },
+	{ name => 'x', type => 'float',
+	  desc => "The x coordinate of this bucket fill's application.
+		   This parameter is only valid when there is no selection
+		   in the specified image." },
+	{ name => 'y', type => 'float',
+	  desc => "The y coordinate of this bucket fill's application.
+		   This parameter is only valid when there is no selection
+		   in the specified image." }
+    );
+
+    %invoke = (
+        headers => [ qw ("core/gimpdrawable-bucket-fill.h"
+	                 "core/gimpchannel.h") ],
+	code => <<'CODE'
+{
+  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      gboolean   do_seed_fill;
+
+      do_seed_fill = gimp_channel_is_empty (gimp_image_get_mask (image));
+
+      gimp_drawable_bucket_fill (drawable, context, fill_mode,
+                                 paint_mode, opacity / 100.0,
+                                 do_seed_fill,
+                                 fill_transparent,
+                                 select_criterion,
+	                         threshold, sample_merged, x, y);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+
+
+
 sub edit_blend {
     $blurb = <<'BLURB';
 Blend between the starting and ending coordinates with the specified
@@ -730,7 +817,8 @@ CODE
             edit_paste edit_paste_as_new
             edit_named_cut edit_named_copy edit_named_copy_visible
             edit_named_paste edit_named_paste_as_new
-            edit_clear edit_fill edit_bucket_fill edit_blend edit_stroke);
+            edit_clear edit_fill edit_bucket_fill edit_bucket_fill_full
+	    edit_blend edit_stroke);
 
 %exports = (app => [@procs], lib => [@procs]);
 

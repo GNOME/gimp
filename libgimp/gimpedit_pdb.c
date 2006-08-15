@@ -532,6 +532,76 @@ gimp_edit_bucket_fill (gint32               drawable_ID,
 }
 
 /**
+ * gimp_edit_bucket_fill_full:
+ * @drawable_ID: The affected drawable.
+ * @fill_mode: The type of fill.
+ * @paint_mode: The paint application mode.
+ * @opacity: The opacity of the final bucket fill.
+ * @threshold: The threshold determines how extensive the seed fill will be. It's value is specified in terms of intensity levels. This parameter is only valid when there is no selection in the specified image.
+ * @sample_merged: Use the composite image, not the drawable.
+ * @fill_transparent: Whether to consider transparent pixels for filling. If TRUE, transparency is considered as a unique fillable color.
+ * @select_criterion: The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.
+ * @x: The x coordinate of this bucket fill's application. This parameter is only valid when there is no selection in the specified image.
+ * @y: The y coordinate of this bucket fill's application. This parameter is only valid when there is no selection in the specified image.
+ *
+ * Fill the area specified either by the current selection if there is
+ * one, or by a seed fill starting at the specified coordinates.
+ *
+ * This tool requires information on the paint application mode, and
+ * the fill mode, which can either be in the foreground color, or in
+ * the currently active pattern. If there is no selection, a seed fill
+ * is executed at the specified coordinates and extends outward in
+ * keeping with the threshold parameter. If there is a selection in the
+ * target image, the threshold, sample merged, x, and y arguments are
+ * unused. If the sample_merged parameter is TRUE, the data of the
+ * composite image will be used instead of that for the specified
+ * drawable. This is equivalent to sampling for colors after merging
+ * all visible layers. In the case of merged sampling, the x and y
+ * coordinates are relative to the image's origin; otherwise, they are
+ * relative to the drawable's origin.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_edit_bucket_fill_full (gint32               drawable_ID,
+                            GimpBucketFillMode   fill_mode,
+                            GimpLayerModeEffects paint_mode,
+                            gdouble              opacity,
+                            gdouble              threshold,
+                            gboolean             sample_merged,
+                            gboolean             fill_transparent,
+                            GimpSelectCriterion  select_criterion,
+                            gdouble              x,
+                            gdouble              y)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-edit-bucket-fill-full",
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_INT32, fill_mode,
+                                    GIMP_PDB_INT32, paint_mode,
+                                    GIMP_PDB_FLOAT, opacity,
+                                    GIMP_PDB_FLOAT, threshold,
+                                    GIMP_PDB_INT32, sample_merged,
+                                    GIMP_PDB_INT32, fill_transparent,
+                                    GIMP_PDB_INT32, select_criterion,
+                                    GIMP_PDB_FLOAT, x,
+                                    GIMP_PDB_FLOAT, y,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_edit_blend:
  * @drawable_ID: The affected drawable.
  * @blend_mode: The type of blend.

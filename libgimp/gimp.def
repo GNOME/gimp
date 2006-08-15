@@ -51,6 +51,7 @@ EXPORTS
 	gimp_buffer_rename
 	gimp_buffers_get_list
 	gimp_by_color_select
+	gimp_by_color_select_full
 	gimp_channel_combine_masks
 	gimp_channel_copy
 	gimp_channel_get_color
@@ -176,6 +177,7 @@ EXPORTS
 	gimp_drawable_width
 	gimp_edit_blend
 	gimp_edit_bucket_fill
+	gimp_edit_bucket_fill_full
 	gimp_edit_clear
 	gimp_edit_copy
 	gimp_edit_copy_visible
@@ -218,6 +220,7 @@ EXPORTS
 	gimp_fonts_set_popup
 	gimp_free_select
 	gimp_fuzzy_select
+	gimp_fuzzy_select_full
 	gimp_gamma
 	gimp_get_color_configuration
 	gimp_get_default_comment
@@ -557,6 +560,7 @@ EXPORTS
 	gimp_run_procedure
 	gimp_run_procedure2
 	gimp_scale
+	gimp_select_criterion_get_type
 	gimp_selection_all
 	gimp_selection_border
 	gimp_selection_bounds

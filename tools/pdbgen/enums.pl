@@ -518,6 +518,21 @@ package Gimp::CodeGen::enums;
 		       GIMP_CLIP_TO_BOTTOM_LAYER => '2',
 		       GIMP_FLATTEN_IMAGE => '3' }
 	},
+    GimpSelectCriterion =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_SELECT_CRITERION_COMPOSITE
+			  GIMP_SELECT_CRITERION_R GIMP_SELECT_CRITERION_G
+			  GIMP_SELECT_CRITERION_B GIMP_SELECT_CRITERION_H
+			  GIMP_SELECT_CRITERION_S GIMP_SELECT_CRITERION_V) ],
+	  mapping => { GIMP_SELECT_CRITERION_COMPOSITE => '0',
+		       GIMP_SELECT_CRITERION_R => '1',
+		       GIMP_SELECT_CRITERION_G => '2',
+		       GIMP_SELECT_CRITERION_B => '3',
+		       GIMP_SELECT_CRITERION_H => '4',
+		       GIMP_SELECT_CRITERION_S => '5',
+		       GIMP_SELECT_CRITERION_V => '6' }
+	},
     GimpBrushApplicationMode =>
 	{ contig => 1,
 	  header => 'paint/paint-enums.h',

@@ -535,7 +535,7 @@ typedef enum
 
 GType gimp_select_criterion_get_type (void) G_GNUC_CONST;
 
-typedef enum /*< pdb-skip >*/
+typedef enum 
 {
   GIMP_SELECT_CRITERION_COMPOSITE,  /*< desc="Composite"  >*/
   GIMP_SELECT_CRITERION_R,          /*< desc="Red"        >*/
