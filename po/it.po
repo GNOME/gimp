@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-14 01:04+0200\n"
-"PO-Revision-Date: 2006-08-14 18:03+0200\n"
+"PO-Revision-Date: 2006-08-15 10:28+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -7343,11 +7343,11 @@ msgstr "Visualizzazione"
 
 #: ../app/dialogs/preferences-dialog.c:2172
 msgid "_Check style:"
-msgstr "_Controllo stile:"
+msgstr "Stile s_cacchi:"
 
 #: ../app/dialogs/preferences-dialog.c:2175
 msgid "Check _size:"
-msgstr "Controllo dimen_sione:"
+msgstr "Dimen_sione scacchi:"
 
 #: ../app/dialogs/preferences-dialog.c:2178
 msgid "Get Monitor Resolution"
