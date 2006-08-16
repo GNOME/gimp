@@ -1,3 +1,8 @@
+2006-08-16  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-cache.c: actually enable tile cache locking and
+	added a missing lock in tile_idle_preswap(). Should fix bug #346923.
+
 2006-08-15  Mukund Sivaraman  <muks@mukund.org>
 
 	* app/dialogs/about-dialog.c: Added a label about unstable status

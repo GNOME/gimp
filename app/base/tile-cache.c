@@ -29,7 +29,7 @@
 
 
 /*  This is the percentage of the maximum cache size that should be cleared
- *   from the cache when an eviction is necessary
+ *  from the cache when an eviction is necessary
  */
 #define FREE_QUANTUM          0.1
 
@@ -61,18 +61,27 @@ static gulong   cur_cache_dirty = 0;
 static TileList clean_list      = { NULL, NULL };
 static TileList dirty_list      = { NULL, NULL };
 
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-static GThread        *preswap_thread = NULL;
-static GMutex         *dirty_mutex    = NULL;
-static GCond          *dirty_signal   = NULL;
-static GStaticMutex    tile_mutex     = G_STATIC_MUTEX_INIT;
 
-#define CACHE_LOCK   g_static_mutex_lock (&tile_mutex)
-#define CACHE_UNLOCK g_static_mutex_unlock (&tile_mutex)
+#ifdef ENABLE_MP
+
+#ifdef ENABLE_THREADED_TILE_SWAPPER
+static GThread        *preswap_thread   = NULL;
+static GMutex         *dirty_mutex      = NULL;
+static GCond          *dirty_signal     = NULL;
 #else
-static guint           idle_swapper   = 0;
+static guint           idle_swapper     = 0;
+#endif
+
+static GStaticMutex    tile_cache_mutex = G_STATIC_MUTEX_INIT;
+
+#define CACHE_LOCK     g_static_mutex_lock (&tile_cache_mutex)
+#define CACHE_UNLOCK   g_static_mutex_unlock (&tile_cache_mutex)
+
+#else
+
 #define CACHE_LOCK   /* nothing */
 #define CACHE_UNLOCK /* nothing */
+
 #endif
 
 
@@ -255,7 +264,7 @@ tile_cache_set_size (gulong cache_size)
 
   while (cur_cache_size > max_cache_size)
     {
-      if (!tile_cache_zorch_next ())
+      if (! tile_cache_zorch_next ())
         break;
     }
 
@@ -275,9 +284,7 @@ tile_cache_zorch_next (void)
   else
     return FALSE;
 
-  CACHE_UNLOCK;
   TILE_MUTEX_LOCK (tile);
-  CACHE_LOCK;
 
   tile_cache_flush_internal (tile);
 
@@ -395,6 +402,8 @@ tile_idle_preswap (gpointer data)
   if (cur_cache_dirty * 2 < max_cache_size)
     return TRUE;
 
+  CACHE_LOCK;
+
   if ((tile = dirty_list.first))
     {
       tile_swap_out (tile);
@@ -418,6 +427,8 @@ tile_idle_preswap (gpointer data)
       clean_list.last = tile;
       cur_cache_dirty -= tile->size;
     }
+
+  CACHE_UNLOCK;
 
   return TRUE;
 }
