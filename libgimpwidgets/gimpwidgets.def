@@ -16,6 +16,7 @@ EXPORTS
 	gimp_chain_button_get_type
 	gimp_chain_button_new
 	gimp_chain_button_set_active
+	gimp_chain_position_get_type
 	gimp_color_area_get_color
 	gimp_color_area_get_type
 	gimp_color_area_has_alpha
@@ -94,6 +95,7 @@ EXPORTS
 	gimp_controller_get_type
 	gimp_controller_new
 	gimp_coordinates_new
+	gimp_dialog_add_button
 	gimp_dialog_add_buttons_valist
 	gimp_dialog_get_type
 	gimp_dialog_new
@@ -183,6 +185,7 @@ EXPORTS
 	gimp_page_selector_set_page_label
 	gimp_page_selector_set_page_thumbnail
 	gimp_page_selector_set_target
+	gimp_page_selector_target_get_type
 	gimp_page_selector_unselect_all
 	gimp_page_selector_unselect_page
 	gimp_path_editor_get_dir_writable
@@ -319,6 +322,7 @@ EXPORTS
 	gimp_size_entry_set_value
 	gimp_size_entry_set_value_boundaries
 	gimp_size_entry_show_unit_menu
+	gimp_size_entry_update_policy_get_type
 	gimp_spin_button_new
 	gimp_standard_help_func
 	gimp_stock_init

@@ -1,4 +1,9 @@
-2006-08-16 Michael Schumacher  <schumaml@cvs.gnome.org>
+2006-08-16  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* libgimpcolor/gimpcolor.def 
+	* libgimpwidgets/gimpwidgets.def: added some missing entries
+
+2006-08-16  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* app/Makefile.am: added $(SYMPREFIX) to the -u flags
 	
