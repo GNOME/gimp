@@ -1,5 +1,10 @@
 2006-08-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/autocrop.c (autocrop): fixed overzealousness
+	when cropping on a drawable border (bug #337888).
+
+2006-08-16  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-cache.c: actually enable tile cache locking and
 	added a missing lock in tile_idle_preswap(). Should fix bug #346923.
 
