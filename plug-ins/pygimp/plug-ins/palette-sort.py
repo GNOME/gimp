@@ -46,7 +46,7 @@ def palette_sort (palette, model, channel, ascending):
 
 
 def query_sort():
-    pdb.gimp_plugin_menu_register("python-fu-palette-sort", "<Palettes>")
+    gimp.menu_register("python-fu-palette-sort", "<Palettes>")
 
 register(
     "python-fu-palette-sort",

@@ -181,8 +181,8 @@ def misclassified_pixels (mask, truth):
 
 
 def query_benchmark ():
-    pdb.gimp_plugin_menu_register("python-fu-benchmark-foreground-extract",
-				  "<Toolbox>/Xtns/Benchmark")
+    gimp.menu_register("python-fu-benchmark-foreground-extract",
+		       "<Toolbox>/Xtns/Benchmark")
 
 register (
     "python-fu-benchmark-foreground-extract",

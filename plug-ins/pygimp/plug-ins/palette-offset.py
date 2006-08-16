@@ -43,7 +43,7 @@ def palette_offset(palette, amount, forward):
 
 
 def query_palette_offset():
-    pdb.gimp_plugin_menu_register("python-fu-palette-offset", "<Palettes>")
+    gimp.menu_register("python-fu-palette-offset", "<Palettes>")
 
 register(
     "python-fu-palette-offset",

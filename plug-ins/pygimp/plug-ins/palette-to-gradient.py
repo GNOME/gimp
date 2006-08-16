@@ -64,7 +64,7 @@ def palette_to_gradient(palette):
     make_gradient(palette, num_segments, num_colors)
 
 def query_palette_to_gradient():
-    pdb.gimp_plugin_menu_register("python-fu-palette-to-gradient", "<Palettes>")
+    gimp.menu_register("python-fu-palette-to-gradient", "<Palettes>")
 
 register(
     "python-fu-palette-to-gradient",

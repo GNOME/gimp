@@ -94,8 +94,8 @@ def console():
     gtk.main()
 
 def query_console():
-    pdb.gimp_plugin_menu_register("python-fu-console",
-				  "<Toolbox>/Xtns/Languages/Python-Fu")
+    gimp.menu_register("python-fu-console",
+		       "<Toolbox>/Xtns/Languages/Python-Fu")
 
 register(
     "python-fu-console",

@@ -90,8 +90,8 @@ def sphere(radius, light, shadow, bg_colour, sphere_colour):
     disp = gimp.Display(img)
 
 def query_sphere():
-    pdb.gimp_plugin_menu_register("python-fu-sphere",
-				  "<Toolbox>/Xtns/Languages/Python-Fu/Test")
+    gimp.menu_register("python-fu-sphere",
+		       "<Toolbox>/Xtns/Languages/Python-Fu/Test")
 
 register(
     "python-fu-sphere",

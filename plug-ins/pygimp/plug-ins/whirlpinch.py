@@ -197,8 +197,7 @@ def bilinear(x, y, values):
 
 
 def query_whirl_pinch():
-    pdb.gimp_plugin_menu_register("python-fu-whirl-pinch",
-				  "<Image>/Filters/Distorts")
+    gimp.menu_register("python-fu-whirl-pinch", "<Image>/Filters/Distorts")
 
 register(
         "python-fu-whirl-pinch",

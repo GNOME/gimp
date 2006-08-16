@@ -54,8 +54,8 @@ def shadow_bevel(img, drawable, blur, bevel, do_shadow, drop_x, drop_y):
     img.undo_group_end()
 
 def query_shadow_bevel():
-    pdb.gimp_plugin_menu_register("python-fu-shadow-bevel",
-				  "<Image>/Filters/Light and Shadow/Shadow")
+    gimp.menu_register("python-fu-shadow-bevel",
+		       "<Image>/Filters/Light and Shadow/Shadow")
 
 register(
     "python-fu-shadow-bevel",

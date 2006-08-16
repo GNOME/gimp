@@ -45,8 +45,7 @@ def foggify(img, layer, name, colour, turbulence, opacity):
     img.undo_group_end()
 
 def query_foggify():
-    pdb.gimp_plugin_menu_register("python-fu-foggify",
-				  "<Image>/Filters/Render/Clouds")
+    gimp.menu_register("python-fu-foggify", "<Image>/Filters/Render/Clouds")
 
 register(
     "python-fu-foggify",

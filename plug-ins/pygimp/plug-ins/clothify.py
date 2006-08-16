@@ -54,8 +54,7 @@ def clothify(timg, tdrawable, bx=9, by=9, azimuth=135, elevation=45, depth=3):
     gimp.delete(img)
 
 def query_clothify():
-    pdb.gimp_plugin_menu_register("python-fu-clothify",
-				  "<Image>/Filters/Artistic")
+    gimp.menu_register("python-fu-clothify", "<Image>/Filters/Artistic")
 
 register(
         "python-fu-clothify",

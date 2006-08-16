@@ -32,8 +32,8 @@ def pdb_browse():
     gtk.main()
 
 def query_pdb_browse():
-    pdb.gimp_plugin_menu_register("python-fu-pdb-browse",
-				  "<Toolbox>/Xtns/Languages/Python-Fu")
+    gimp.menu_register("python-fu-pdb-browse",
+		       "<Toolbox>/Xtns/Languages/Python-Fu")
 
 register(
     "python-fu-pdb-browse",

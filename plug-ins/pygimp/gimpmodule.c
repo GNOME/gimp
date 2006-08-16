@@ -725,6 +725,20 @@ pygimp_register_save_handler(PyObject *self, PyObject *args)
 }
 
 static PyObject *
+pygimp_menu_register(PyObject *self, PyObject *args)
+{
+    char *name, *path;
+
+    if (!PyArg_ParseTuple(args, "ss:menu_register", &name, &path))
+	return NULL;
+
+    gimp_plugin_menu_register(name, path);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
 pygimp_gamma(PyObject *self)
 {
     return PyFloat_FromDouble(gimp_gamma());
@@ -1484,6 +1498,7 @@ static struct PyMethodDef gimp_methods[] = {
     {"register_magic_load_handler",	(PyCFunction)pygimp_register_magic_load_handler,	METH_VARARGS},
     {"register_load_handler",	(PyCFunction)pygimp_register_load_handler,	METH_VARARGS},
     {"register_save_handler",	(PyCFunction)pygimp_register_save_handler,	METH_VARARGS},
+    {"menu_register",           (PyCFunction)pygimp_menu_register,	METH_VARARGS},
     {"gamma",	(PyCFunction)pygimp_gamma,	METH_NOARGS},
     {"install_cmap",	(PyCFunction)pygimp_install_cmap,	METH_NOARGS},
     {"min_colors",	(PyCFunction)pygimp_min_colors,	METH_NOARGS},
