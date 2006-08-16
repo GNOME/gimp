@@ -55,8 +55,8 @@ preamble = """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 postamble = """\n</pre>\n</html>\n"""
 
-def python_colorxhtml(img, drawable, filename, raw_filename,
-                      source_type, characters, size, separate):
+def colorxhtml(img, drawable, filename, raw_filename,
+	       source_type, characters, size, separate):
     width = drawable.width
     height = drawable.height
     bpp = drawable.bpp
@@ -149,7 +149,7 @@ def python_colorxhtml(img, drawable, filename, raw_filename,
         css.close()
 
 def register_save():
-    gimp.register_save_handler("file_colorxhtml_save", "colorxhtml", "")
+    gimp.register_save_handler("file-colorxhtml-save", "xhtml", "")
 
 class RowIterator:
     def __init__(self, row, bpp):
@@ -177,13 +177,13 @@ class RowIterator:
         return pixel
 
 register(
-    "file_colorxhtml_save",
-    "Saves the image as colored xhtml text",
-    "Saves the image as colored xhtml text (based on perl version by Marc Lehmann)",
+    "file-colorxhtml-save",
+    "Saves the image as colored XHTML text",
+    "Saves the image as colored XHTML text (based on perl version by Marc Lehmann)",
     "Manish Singh and Carol Spears",
     "Manish Singh and Carol Spears",
     "2003",
-    "Color XHTML",
+    "<Save>/Colored XHTML",
     "RGB",
     [
         (PF_RADIO, "source", "Where to take the characters from", 0,
@@ -192,11 +192,10 @@ register(
                     ("Entry box",   CHARS_PARAMETER))),
         (PF_FILE, "characters", "The filename to read or the characters to use",
                   ""),
-        (PF_INT, "font_size", "The font size in pixels", 10),
+        (PF_INT, "font-size", "The font size in pixels", 10),
         (PF_BOOL, "separate", "Separate CSS file", True)
     ],
     [],
-    python_colorxhtml,
-    on_query=register_save)
+    colorxhtml, on_query=register_save)
 
 main()

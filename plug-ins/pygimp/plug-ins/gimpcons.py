@@ -19,7 +19,7 @@
 
 from gimpfu import *
 
-def plug_in_python_fu_console():
+def console():
     import pygtk
     pygtk.require('2.0')
 
@@ -94,11 +94,11 @@ def plug_in_python_fu_console():
     gtk.main()
 
 def query_console():
-    pdb.gimp_plugin_menu_register("python_fu_console",
+    pdb.gimp_plugin_menu_register("python-fu-console",
 				  "<Toolbox>/Xtns/Languages/Python-Fu")
 
 register(
-    "python_fu_console",
+    "python-fu-console",
     "Python interactive interpreter with gimp extensions",
     "Type in commands and see results",
     "James Henstridge",
@@ -108,6 +108,6 @@ register(
     "",
     [],
     [],
-    plug_in_python_fu_console, on_query=query_console)
+    console, on_query=query_console)
 
 main()

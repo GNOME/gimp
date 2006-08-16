@@ -181,11 +181,11 @@ def misclassified_pixels (mask, truth):
 
 
 def query_benchmark ():
-    pdb.gimp_plugin_menu_register("python_fu_benchmark_foreground_extract",
+    pdb.gimp_plugin_menu_register("python-fu-benchmark-foreground-extract",
 				  "<Toolbox>/Xtns/Benchmark")
 
 register (
-    "python_fu_benchmark_foreground_extract",
+    "python-fu-benchmark-foreground-extract",
     "Benchmark and regression test for the SIOX algorithm",
     "",
     "Sven Neumann",
@@ -193,9 +193,9 @@ register (
     "2005",
     "Foreground Extraction",
     "",
-    [ (PF_FILE,   "image_folder", "Image folder",
+    [ (PF_FILE,   "image-folder", "Image folder",
                   "~/segmentation/msbench/imagedata"),
-      (PF_TOGGLE, "save_output",  "Save output images", False) ],
+      (PF_TOGGLE, "save-output",  "Save output images", False) ],
     [],
     benchmark, on_query=query_benchmark)
 

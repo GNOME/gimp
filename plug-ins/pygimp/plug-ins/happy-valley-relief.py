@@ -26,8 +26,8 @@ def code_eval(code):
     exec code
  
 register(
-        "python_fu_eval",
-        "Evaluate python code",
+        "python-fu-eval",
+        "Evaluate Python code",
         "Evaulate python code under the python interpreter (primarily for batch mode)",
         "Manish Singh",
         "Manish Singh",

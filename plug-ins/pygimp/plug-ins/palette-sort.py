@@ -49,7 +49,7 @@ def query_sort():
     pdb.gimp_plugin_menu_register("python-fu-palette-sort", "<Palettes>")
 
 register(
-    "python_fu_palette_sort",
+    "python-fu-palette-sort",
     "Sort the selected palette.",
     "palette_merge (palette, model, channel, ascending) -> new_palette",
     "Joao S. O. Bueno Calligaris, Carol Spears",

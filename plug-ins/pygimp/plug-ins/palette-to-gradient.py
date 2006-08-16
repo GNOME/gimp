@@ -67,7 +67,7 @@ def query_palette_to_gradient():
     pdb.gimp_plugin_menu_register("python-fu-palette-to-gradient", "<Palettes>")
 
 register(
-    "python_fu_palette_to_gradient",
+    "python-fu-palette-to-gradient",
     "Palette to gradient.",
     "Use the colors in the current GIMP palette and make a new gradient.",
     "Carol Spears, reproduced from previous work by Adrian Likins and Jeff Trefftz",
@@ -76,7 +76,7 @@ register(
     "Palette to _Gradient",
     "",
     [(PF_PALETTE,  "palette",      "Name of palette to convert", "")],
-    [(PF_GRADIENT, "new_gradient", "Name of the New Gradient:")],
+    [(PF_GRADIENT, "new-gradient", "Name of the New Gradient:")],
     palette_to_gradient,
     on_query=query_palette_to_gradient)
 

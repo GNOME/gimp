@@ -19,7 +19,7 @@
 
 from gimpfu import *
 
-def plug_in_pdb_browse():
+def pdb_browse():
     import pygtk
     pygtk.require('2.0')
 
@@ -32,11 +32,11 @@ def plug_in_pdb_browse():
     gtk.main()
 
 def query_pdb_browse():
-    pdb.gimp_plugin_menu_register("python_fu_pdb_browse",
+    pdb.gimp_plugin_menu_register("python-fu-pdb-browse",
 				  "<Toolbox>/Xtns/Languages/Python-Fu")
 
 register(
-    "python_fu_pdb_browse",
+    "python-fu-pdb-browse",
     "Browse the Procedural Database",
     "Pick a PDB proc, and read the information",
     "James Henstridge",
@@ -46,6 +46,6 @@ register(
     "",
     [],
     [],
-    plug_in_pdb_browse, on_query=query_pdb_browse)
+    pdb_browse, on_query=query_pdb_browse)
 
 main()

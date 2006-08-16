@@ -1,5 +1,13 @@
 2006-08-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/gimpfu.py: allow '-' in procedure and parameter
+	names.
+
+	* plug-ins/pygimp/plug-ins/*.py: use canonical procedure and
+	parameter names.
+
+2006-08-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/pygimp/plug-ins/*.py: use gimp_plugin_menu_register().
 
 2006-08-16  Sven Neumann  <sven@gimp.org>

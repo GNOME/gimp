@@ -62,7 +62,7 @@ class pixel_fetcher:
 class Dummy:
         pass
 
-def python_whirl_pinch(image, drawable, whirl, pinch, radius):
+def whirl_pinch(image, drawable, whirl, pinch, radius):
         self = Dummy()
         self.width = drawable.width
         self.height = drawable.height
@@ -197,11 +197,11 @@ def bilinear(x, y, values):
 
 
 def query_whirl_pinch():
-    pdb.gimp_plugin_menu_register("python_fu_whirl_pinch",
+    pdb.gimp_plugin_menu_register("python-fu-whirl-pinch",
 				  "<Image>/Filters/Distorts")
 
 register(
-        "python_fu_whirl_pinch",
+        "python-fu-whirl-pinch",
         "Distorts an image by whirling and pinching",
         "Distorts an image by whirling and pinching",
         "James Henstridge (translated from C plugin)",
@@ -215,6 +215,6 @@ register(
                 (PF_FLOAT, "radius", "radius", 1)
         ],
         [],
-        python_whirl_pinch, on_query=query_whirl_pinch)
+        whirl_pinch, on_query=query_whirl_pinch)
 
 main()

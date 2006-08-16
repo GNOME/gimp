@@ -54,10 +54,11 @@ def shadow_bevel(img, drawable, blur, bevel, do_shadow, drop_x, drop_y):
     img.undo_group_end()
 
 def query_shadow_bevel():
-    pdb.gimp_plugin_menu_register("python_fu_shadow_bevel",
+    pdb.gimp_plugin_menu_register("python-fu-shadow-bevel",
 				  "<Image>/Filters/Light and Shadow/Shadow")
+
 register(
-    "python_fu_shadow_bevel",
+    "python-fu-shadow-bevel",
     "Add a drop shadow to a layer, and optionally bevel it",
     "Add a drop shadow to a layer, and optionally bevel it",
     "James Henstridge",
@@ -69,8 +70,8 @@ register(
         (PF_SLIDER, "blur",   "Shadow blur", 6, (1, 30, 1)),
         (PF_BOOL,   "bevel",  "Bevel the image", True),
         (PF_BOOL,   "shadow", "Make a drop shadow", True),
-        (PF_INT,    "drop_x", "Drop shadow X displacement", 3),
-        (PF_INT,    "drop_y", "Drop shadow Y displacement", 6)
+        (PF_INT,    "drop-x", "Drop shadow X displacement", 3),
+        (PF_INT,    "drop-y", "Drop shadow Y displacement", 6)
     ],
     [],
     shadow_bevel, on_query=query_shadow_bevel)
