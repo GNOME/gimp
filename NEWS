@@ -13,6 +13,10 @@ Bugs fixed in GIMP 2.2.13
 - fixed regression in file dialogs (bug #347544)
 - fixed right-to-left layout in layers dialog (bug #348347)
 - avoid a crash when loading a corrupt gradient file (bug #349996)
+- fixed segfault in Warp plug-in on 64bit architectures (bug #327479)
+- fixed crash in GimpDrawablePreview (bug #350760)
+- fixed error in Winicon load plug-in (bug #172503)
+- fixed errors in Autocrop plug-in (bug #337888)
 
 
 Bugs fixed in GIMP 2.2.12
