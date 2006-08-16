@@ -91,7 +91,7 @@ INCLUDES = \
 	$(PANGOFT2_CFLAGS)	\
 	-I$(includedir)
 
-gimp_2_3_LDFLAGS = $(mwindows) $(munix) -u xcf_init -u internal_procs_init
+gimp_2_3_LDFLAGS = $(mwindows) $(munix) -u $(SYMPREFIX)xcf_init -u $(SYMPREFIX)internal_procs_init
 
 gimp_2_3_LDADD = \
 	gui/libappgui.a			\
@@ -141,7 +141,7 @@ gimp_console_2_3_CPPFLAGS = \
 	$(AM_CPPFLAGS)			\
 	-DGIMP_CONSOLE_COMPILATION
 
-gimp_console_2_3_LDFLAGS = $(mwindows) $(munix) -u xcf_init -u internal_procs_init
+gimp_console_2_3_LDFLAGS = $(mwindows) $(munix) -u $(SYMPREFIX)xcf_init -u $(SYMPREFIX)internal_procs_init
 
 gimp_console_2_3_LDADD = \
 	widgets/widgets-enums.o		\
