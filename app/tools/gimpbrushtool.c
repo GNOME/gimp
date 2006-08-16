@@ -41,8 +41,6 @@
 #include "gimpbrushtool.h"
 #include "gimptoolcontrol.h"
 
-#include "gimp-intl.h"
-
 
 static GObject * gimp_brush_tool_constructor (GType                type,
                                               guint                n_params,
