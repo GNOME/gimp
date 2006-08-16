@@ -31,6 +31,7 @@ struct _GimpPaletteData
   gchar                  *palette_callback;
   guint                   idle_id;
   gchar                  *palette_name;
+  gint                    num_colors;
   GimpRunPaletteCallback  callback;
   gboolean                closing;
   gpointer                data;
@@ -63,6 +64,7 @@ gimp_palette_select_new (const gchar            *title,
   static const GimpParamDef args[] =
   {
     { GIMP_PDB_STRING, "str",           "String" },
+    { GIMP_PDB_INT32,  "num colors",    "Number of colors" },
     { GIMP_PDB_INT32,  "dialog status", "If the dialog was closing "
                                         "[0 = No, 1 = Yes]" },
   };
@@ -164,7 +166,8 @@ gimp_temp_palette_run (const gchar      *name,
       g_free (palette_data->palette_name);
 
       palette_data->palette_name = g_strdup (param[0].data.d_string);
-      palette_data->closing   = param[1].data.d_int32;
+      palette_data->num_colors   = param[1].data.d_int32;
+      palette_data->closing      = param[2].data.d_int32;
 
       if (! palette_data->idle_id)
         palette_data->idle_id = g_idle_add ((GSourceFunc) gimp_temp_palette_run_idle,
