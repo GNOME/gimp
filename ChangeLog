@@ -1,3 +1,8 @@
+2006-08-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/autocrop.c: merged changes from HEAD branch.
+	Fixes bug #337888 and other problems.
+
 2006-08-14  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
