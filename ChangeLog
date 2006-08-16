@@ -1,5 +1,7 @@
 2006-08-16  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/about-dialog.c: cleanup.
+
 	* app/tools/gimpbrushtool.c: don't include gimp-intl.h.
 
 2006-08-16  Sven Neumann  <sven@gimp.org>

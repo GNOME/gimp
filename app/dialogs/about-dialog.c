@@ -78,10 +78,7 @@ static gboolean    about_dialog_anim_expose   (GtkWidget       *widget,
 static void        about_dialog_reshuffle     (GimpAboutDialog *dialog);
 static gboolean    about_dialog_timer         (gpointer         data);
 
-#ifdef GIMP_UNSTABLE
-static void        about_dialog_add_unstable_message (GtkWidget       *vbox,
-                                                      GimpAboutDialog *dialog);
-#endif
+static void        about_dialog_add_message   (GtkWidget       *vbox);
 
 
 GtkWidget *
@@ -155,9 +152,7 @@ about_dialog_create (GimpContext *context)
       if (GTK_IS_VBOX (children->data))
         {
           about_dialog_add_animation (children->data, dialog);
-#ifdef GIMP_UNSTABLE
-          about_dialog_add_unstable_message (children->data, dialog);
-#endif
+          about_dialog_add_message (children->data);
         }
       else
         g_warning ("%s: ooops, no vbox in this container?", G_STRLOC);
@@ -596,24 +591,19 @@ about_dialog_timer (gpointer data)
   return TRUE;
 }
 
-#ifdef GIMP_UNSTABLE
-
 static void
-about_dialog_add_unstable_message (GtkWidget       *vbox,
-                                   GimpAboutDialog *dialog)
+about_dialog_add_message (GtkWidget *vbox)
 {
-    gchar     *text;
-    GtkWidget *label;
-    
-    text = g_strdup_printf ("<span style=\"italic\">%s</span>",
-                            _("This is an unstable development release."));
-    label = gtk_label_new (NULL);
-    gtk_label_set_markup (GTK_LABEL (label), text);
-    gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-    gtk_box_reorder_child (GTK_BOX (vbox), label, 2);
-    gtk_widget_show (label);
-    g_free (text);
-}
+#ifdef GIMP_UNSTABLE
+  GtkWidget *label;
 
+  label = gtk_label_new (_("This is an unstable development release."));
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (vbox), label, 2);
+  gtk_widget_show (label);
 #endif
+}
 
