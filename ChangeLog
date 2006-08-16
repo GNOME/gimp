@@ -1,5 +1,9 @@
 2006-08-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/*.py: use gimp_plugin_menu_register().
+
+2006-08-16  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimpplugin.c: improved debugging output.
 
 	* libgimp/gimppaletteselect.c: the palette callback gets passed

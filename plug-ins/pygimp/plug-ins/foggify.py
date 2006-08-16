@@ -44,6 +44,9 @@ def python_foggify(img, layer, name, colour, turbulence, opacity):
 
     img.undo_group_end()
 
+def query_foggify():
+    pdb.gimp_plugin_menu_register("python_fu_foggify",
+				  "<Image>/Filters/Render/Clouds")
 register(
     "python_fu_foggify",
     "Add a layer of fog to the image",
@@ -51,7 +54,7 @@ register(
     "James Henstridge",
     "James Henstridge",
     "1999",
-    "<Image>/Filters/Render/Clouds/Add _Fog...",
+    "Add _Fog...",
     "RGB*, GRAY*",
     [
         (PF_STRING, "name", "The new layer name", "Clouds"),
@@ -60,6 +63,6 @@ register(
         (PF_SLIDER, "opacity", "The opacity", 100, (0, 100, 1)),
     ],
     [],
-    python_foggify)
+    python_foggify, on_query=query_foggify)
 
 main()

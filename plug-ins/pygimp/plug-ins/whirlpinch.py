@@ -196,6 +196,10 @@ def bilinear(x, y, values):
         return chr(int(m0 + y * (m1 - m0)))
 
 
+def query_whirl_pinch():
+    pdb.gimp_plugin_menu_register("python_fu_whirl_pinch",
+				  "<Image>/Filters/Distorts")
+
 register(
         "python_fu_whirl_pinch",
         "Distorts an image by whirling and pinching",
@@ -203,7 +207,7 @@ register(
         "James Henstridge (translated from C plugin)",
         "James Henstridge",
         "1997-1999",
-        "<Image>/Filters/Distorts/_Whirl and Pinch...",
+        "_Whirl and Pinch...",
         "RGB*, GRAY*",
         [
                 (PF_SLIDER, "whirl", "Whirl angle", 90, (-360, 360, 1)),
@@ -211,6 +215,6 @@ register(
                 (PF_FLOAT, "radius", "radius", 1)
         ],
         [],
-        python_whirl_pinch)
+        python_whirl_pinch, on_query=query_whirl_pinch)
 
 main()

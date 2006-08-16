@@ -93,6 +93,10 @@ def plug_in_python_fu_console():
     gobject.timeout_add(500, timeout)
     gtk.main()
 
+def query_console():
+    pdb.gimp_plugin_menu_register("python_fu_console",
+				  "<Toolbox>/Xtns/Languages/Python-Fu")
+
 register(
     "python_fu_console",
     "Python interactive interpreter with gimp extensions",
@@ -100,10 +104,10 @@ register(
     "James Henstridge",
     "James Henstridge",
     "1997-1999",
-    "<Toolbox>/Xtns/Languages/Python-Fu/_Console",
+    "_Console",
     "",
     [],
     [],
-    plug_in_python_fu_console)
+    plug_in_python_fu_console, on_query=query_console)
 
 main()

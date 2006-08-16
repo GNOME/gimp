@@ -54,6 +54,10 @@ def python_clothify(timg, tdrawable, bx=9, by=9,
 
     gimp.delete(img)
 
+def query_clothify():
+    pdb.gimp_plugin_menu_register("python_fu_clothify",
+				  "<Image>/Filters/Artistic")
+
 register(
         "python_fu_clothify",
         "Make the specified layer look like it is printed on cloth",
@@ -61,7 +65,7 @@ register(
         "James Henstridge",
         "James Henstridge",
         "1997-1999",
-        "<Image>/Filters/Artistic/_Clothify...",
+        "_Clothify...",
         "RGB*, GRAY*",
         [
                 (PF_INT, "x_blur", "X blur", 9),
@@ -71,6 +75,6 @@ register(
                 (PF_INT, "depth", "Depth", 3)
         ],
         [],
-        python_clothify)
+        python_clothify, on_query=query_clothify)
 
 main()

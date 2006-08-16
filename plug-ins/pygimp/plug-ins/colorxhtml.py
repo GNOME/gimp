@@ -183,7 +183,7 @@ register(
     "Manish Singh and Carol Spears",
     "Manish Singh and Carol Spears",
     "2003",
-    "<Save>/COLORXHTML",
+    "Color XHTML",
     "RGB",
     [
         (PF_RADIO, "source", "Where to take the characters from", 0,

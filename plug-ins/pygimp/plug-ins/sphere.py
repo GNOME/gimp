@@ -89,6 +89,10 @@ def python_sphere(radius, light, shadow, bg_colour, sphere_colour):
 
     disp = gimp.Display(img)
 
+def query_sphere():
+    pdb.gimp_plugin_menu_register("python_fu_sphere",
+				  "<Toolbox>/Xtns/Languages/Python-Fu/Test")
+
 register(
     "python_fu_sphere",
     "Simple spheres with drop shadows",
@@ -96,7 +100,7 @@ register(
     "James Henstridge",
     "James Henstridge",
     "1997-1999",
-    "<Toolbox>/Xtns/Languages/Python-Fu/Test/_Sphere",
+    "_Sphere",
     "",
     [
         (PF_INT, "radius", "Radius for sphere", 100),
@@ -106,6 +110,6 @@ register(
         (PF_COLOR, "sphere_colour", "Sphere", (255,0,0))
     ],
     [],
-    python_sphere)
+    python_sphere, on_query=query_sphere)
 
 main()

@@ -31,6 +31,10 @@ def plug_in_pdb_browse():
 
     gtk.main()
 
+def query_pdb_browse():
+    pdb.gimp_plugin_menu_register("python_fu_pdb_browse",
+				  "<Toolbox>/Xtns/Languages/Python-Fu")
+
 register(
     "python_fu_pdb_browse",
     "Browse the Procedural Database",
@@ -38,10 +42,10 @@ register(
     "James Henstridge",
     "James Henstridge",
     "1997-1999",
-    "<Toolbox>/Xtns/Languages/Python-Fu/_PDB Browser",
+    "_Procedure Browser",
     "",
     [],
     [],
-    plug_in_pdb_browse)
+    plug_in_pdb_browse, on_query=query_pdb_browse)
 
 main()
