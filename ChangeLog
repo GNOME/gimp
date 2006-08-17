@@ -1,5 +1,16 @@
 2006-08-17  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimppixbuf.[ch]: added a convenience function to create
+	a layer from a GdkPixbuf.
+
+	* plug-ins/common/poppler.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/svg.c: use gimp_layer_new_from_pixbuf().
+
+	* libgimp/gimpui.def: updated.
+
+2006-08-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/poppler.c
 	* plug-ins/common/screenshot.c
 	* plug-ins/common/svg.c: improved progress handling.

@@ -379,66 +379,16 @@ static gint32
 layer_from_pixbuf (gint32        image,
                    const gchar  *layer_name,
                    gint          position,
-                   GdkPixbuf    *buf,
+                   GdkPixbuf    *pixbuf,
                    gdouble       progress_start,
                    gdouble       progress_scale)
 {
-  gint32        layer;
-  GimpPixelRgn  rgn;
-  gpointer      pr;
-  GimpDrawable *drawable;
-  const guchar *pixels;
-  gint          width;
-  gint          height;
-  gint          rowstride;
-  gint          bpp;
-  gint          count = 0;
-  gint          done  = 0;
-
-  g_return_val_if_fail (buf != NULL, -1);
-
-  width  = gdk_pixbuf_get_width  (buf);
-  height = gdk_pixbuf_get_height (buf);
-
-  rowstride = gdk_pixbuf_get_rowstride  (buf);
-  bpp       = gdk_pixbuf_get_n_channels (buf);
-  pixels    = gdk_pixbuf_get_pixels     (buf);
-
-  layer = gimp_layer_new (image, layer_name,
-                          width, height,
-                          GIMP_RGB_IMAGE, 100.0, GIMP_NORMAL_MODE);
+  gint32 layer = gimp_layer_new_from_pixbuf (image, layer_name, pixbuf,
+                                             100.0, GIMP_NORMAL_MODE,
+                                             progress_start,
+                                             progress_start + progress_scale);
 
   gimp_image_add_layer (image, layer, position);
-
-  drawable = gimp_drawable_get (layer);
-
-  gimp_pixel_rgn_init (&rgn, drawable, 0, 0, width, height, TRUE, FALSE);
-
-  for (pr = gimp_pixel_rgns_register (1, &rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      const guchar *src  = pixels + rgn.y * rowstride + rgn.x * bpp;
-      guchar       *dest = rgn.data;
-      gint          y;
-
-      for (y = 0; y < rgn.h; y++)
-        {
-          memcpy (dest, src, rgn.w * rgn.bpp);
-
-          src  += rowstride;
-          dest += rgn.rowstride;
-        }
-
-      done += rgn.h * rgn.w;
-
-      if (count++ % 16 == 0)
-        gimp_progress_update (progress_start +
-                              progress_scale * ((gdouble) done /
-                                                (width * height)));
-    }
-
-  gimp_drawable_detach (drawable);
 
   return layer;
 }

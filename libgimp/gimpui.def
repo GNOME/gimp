@@ -42,6 +42,7 @@ EXPORTS
 	gimp_layer_combo_box_get_type
 	gimp_layer_combo_box_new
 	gimp_layer_menu_new
+	gimp_layer_new_from_pixbuf
 	gimp_palette_select_button_get_palette
 	gimp_palette_select_button_get_type
 	gimp_palette_select_button_new

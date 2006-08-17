@@ -295,17 +295,9 @@ load_image (const gchar *filename)
 {
   gint32        image;
   gint32	layer;
-  GimpDrawable *drawable;
-  GimpPixelRgn	rgn;
   GdkPixbuf    *pixbuf;
-  guchar       *pixels;
   gint          width;
   gint          height;
-  gint          rowstride;
-  gint          bpp;
-  gint          count = 0;
-  gint          done  = 0;
-  gpointer      pr;
   GError       *error = NULL;
 
   pixbuf = load_rsvg_pixbuf (filename, &load_vals, &error);
@@ -324,51 +316,17 @@ load_image (const gchar *filename)
   height = gdk_pixbuf_get_height (pixbuf);
 
   image = gimp_image_new (width, height, GIMP_RGB);
+  gimp_image_undo_disable (image);
+
   gimp_image_set_filename (image, filename);
   gimp_image_set_resolution (image,
                              load_vals.resolution, load_vals.resolution);
 
-  layer = gimp_layer_new (image, _("Rendered SVG"), width, height,
-                          GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
-
-  drawable = gimp_drawable_get (layer);
-
-  gimp_pixel_rgn_init (&rgn, drawable, 0, 0, width, height, TRUE, FALSE);
-
-  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
-  bpp       = gdk_pixbuf_get_n_channels (pixbuf);
-  pixels    = gdk_pixbuf_get_pixels (pixbuf);
-
-  g_assert (bpp == rgn.bpp);
-
-  for (pr = gimp_pixel_rgns_register (1, &rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      const guchar *src  = pixels + rgn.y * rowstride + rgn.x * bpp;
-      guchar       *dest = rgn.data;
-      gint          y;
-
-      for (y = 0; y < rgn.h; y++)
-        {
-          memcpy (dest, src, rgn.w * rgn.bpp);
-
-          src  += rowstride;
-          dest += rgn.rowstride;
-        }
-
-      done += rgn.h * rgn.w;
-
-      if (count++ % 16 == 0)
-        gimp_progress_update ((gdouble) done / (width * height));
-    }
-
-  gimp_drawable_detach (drawable);
-  g_object_unref (pixbuf);
-
-  gimp_progress_update (1.0);
-
+  layer = gimp_layer_new_from_pixbuf (image, _("Rendered SVG"), pixbuf,
+                                      100, GIMP_NORMAL_MODE, 0.0, 1.0);
   gimp_image_add_layer (image, layer, 0);
+
+  gimp_image_undo_enable (image);
 
   return image;
 }
