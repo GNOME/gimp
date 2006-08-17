@@ -1,5 +1,11 @@
 2006-08-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/poppler.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/svg.c: improved progress handling.
+
+2006-08-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/pygimp/gimpfu.py: added an optional menu parameter to
 	the register call to simplify menu registration. Also restored
 	menupath specific mangling of the procedure arguments.

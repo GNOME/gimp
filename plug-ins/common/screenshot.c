@@ -644,6 +644,8 @@ create_image (const GdkPixbuf *pixbuf)
   gboolean      status;
   guchar       *pixels;
   gpointer      pr;
+  gint          count  = 0;
+  gint          done   = 0;
 
   status = gimp_progress_init (_("Importing screenshot"));
 
@@ -672,12 +674,9 @@ create_image (const GdkPixbuf *pixbuf)
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
-      const guchar *src;
-      guchar       *dest;
+      const guchar *src  = pixels + rgn.y * rowstride + rgn.x * bpp;
+      guchar       *dest = rgn.data;
       gint          y;
-
-      src  = pixels + rgn.y * rowstride + rgn.x * bpp;
-      dest = rgn.data;
 
       for (y = 0; y < rgn.h; y++)
         {
@@ -686,6 +685,11 @@ create_image (const GdkPixbuf *pixbuf)
           src  += rowstride;
           dest += rgn.rowstride;
         }
+
+      done += rgn.h * rgn.w;
+
+      if (count++ % 16 == 0)
+        gimp_progress_update ((gdouble) done / (width * height));
     }
 
   gimp_drawable_detach (drawable);

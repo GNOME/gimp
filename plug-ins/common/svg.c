@@ -303,6 +303,8 @@ load_image (const gchar *filename)
   gint          height;
   gint          rowstride;
   gint          bpp;
+  gint          count = 0;
+  gint          done  = 0;
   gpointer      pr;
   GError       *error = NULL;
 
@@ -343,12 +345,9 @@ load_image (const gchar *filename)
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
-      const guchar *src;
-      guchar       *dest;
+      const guchar *src  = pixels + rgn.y * rowstride + rgn.x * bpp;
+      guchar       *dest = rgn.data;
       gint          y;
-
-      src  = pixels + rgn.y * rowstride + rgn.x * bpp;
-      dest = rgn.data;
 
       for (y = 0; y < rgn.h; y++)
         {
@@ -357,6 +356,11 @@ load_image (const gchar *filename)
           src  += rowstride;
           dest += rgn.rowstride;
         }
+
+      done += rgn.h * rgn.w;
+
+      if (count++ % 16 == 0)
+        gimp_progress_update ((gdouble) done / (width * height));
     }
 
   gimp_drawable_detach (drawable);

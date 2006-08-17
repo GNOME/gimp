@@ -383,18 +383,17 @@ layer_from_pixbuf (gint32        image,
                    gdouble       progress_start,
                    gdouble       progress_scale)
 {
-  gint32           layer;
-  GimpPixelRgn     rgn;
-  gpointer         pr;
-  GimpDrawable    *drawable;
-
-  gint             width;
-  gint             height;
-  gint             rowstride;
-  gint             bpp;
-  guchar          *pixels;
-
-  gdouble          progress = 0;
+  gint32        layer;
+  GimpPixelRgn  rgn;
+  gpointer      pr;
+  GimpDrawable *drawable;
+  const guchar *pixels;
+  gint          width;
+  gint          height;
+  gint          rowstride;
+  gint          bpp;
+  gint          count = 0;
+  gint          done  = 0;
 
   g_return_val_if_fail (buf != NULL, -1);
 
@@ -419,12 +418,9 @@ layer_from_pixbuf (gint32        image,
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
-      const guchar *src;
-      guchar       *dest;
+      const guchar *src  = pixels + rgn.y * rowstride + rgn.x * bpp;
+      guchar       *dest = rgn.data;
       gint          y;
-
-      src  = pixels + rgn.y * rowstride + rgn.x * bpp;
-      dest = rgn.data;
 
       for (y = 0; y < rgn.h; y++)
         {
@@ -434,9 +430,12 @@ layer_from_pixbuf (gint32        image,
           dest += rgn.rowstride;
         }
 
-      progress += (double) (rgn.h * rgn.w) / (height * width);
+      done += rgn.h * rgn.w;
 
-      gimp_progress_update (progress_start + progress * progress_scale);
+      if (count++ % 16 == 0)
+        gimp_progress_update (progress_start +
+                              progress_scale * ((gdouble) done /
+                                                (width * height)));
     }
 
   gimp_drawable_detach (drawable);
