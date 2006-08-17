@@ -320,7 +320,7 @@ aref1 (LISP a, LISP i)
     case tc_byte_array:
       if (k >= a->storage_as.string.dim)
         my_err ("index too large", i);
-      return (flocons ((double) a->storage_as.string.data[k]));
+      return (flocons ((guint8) a->storage_as.string.data[k]));
     case tc_double_array:
       if (k >= a->storage_as.double_array.dim)
         my_err ("index too large", i);

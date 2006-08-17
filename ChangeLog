@@ -1,3 +1,8 @@
+2006-08-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/siod/sliba.c (aref1): when accessing members
+	of tc_byte_array, cast them to guint8.
+
 2006-08-16  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* libgimpcolor/gimpcolor.def 
@@ -6,7 +11,7 @@
 2006-08-16  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* app/Makefile.am: added $(SYMPREFIX) to the -u flags
-	
+
 2006-08-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/gimpmodule.c: added menu_register method.
