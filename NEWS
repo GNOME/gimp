@@ -24,6 +24,9 @@ Changes in GIMP 2.3.11
 - derive ByColorSelect and FuzzySelect tools from a common base class
 - finer control over select-by-color functionality
 - minor optimizations in the drawing code
+- abstract brush outline drawing into the common base class GimpBrushTool
+- store sample points in XCF files
+- added extended PDB API for selection procedures
 - bug fixes and code cleanup
 
 
