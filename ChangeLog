@@ -1,5 +1,17 @@
 2006-08-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/gimpfu.py: added an optional menu parameter to
+	the register call to simplify menu registration. Also restored
+	menupath specific mangling of the procedure arguments.
+
+	* plug-ins/pygimp/plug-ins/*.py: use the menu parameter instead
+	of defining a function to call on query.
+
+	* plug-ins/pygimp/plug-ins/sphere.py: do it old-style here for
+	testing.
+
+2006-08-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/siod/sliba.c (aref1): when accessing members
 	of tc_byte_array, cast them to guint8.
 

@@ -53,9 +53,6 @@ def clothify(timg, tdrawable, bx=9, by=9, azimuth=135, elevation=45, depth=3):
 
     gimp.delete(img)
 
-def query_clothify():
-    gimp.menu_register("python-fu-clothify", "<Image>/Filters/Artistic")
-
 register(
         "python-fu-clothify",
         "Make the specified layer look like it is printed on cloth",
@@ -73,6 +70,6 @@ register(
                 (PF_INT, "depth", "Depth", 3)
         ],
         [],
-        clothify, on_query=query_clothify)
+        clothify, menu="<Image>/Filters/Artistic")
 
 main()

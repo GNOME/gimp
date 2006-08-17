@@ -148,8 +148,8 @@ _type_mapping = {
 
 _registered_plugins_ = {}
 
-def register(proc_name, blurb, help, author, copyright, date, menupath,
-                 imagetypes, params, results, function,
+def register(proc_name, blurb, help, author, copyright, date, label,
+                 imagetypes, params, results, function, menu=None,
                  on_query=None, on_run=None):
     '''This is called to register a new plugin.'''
 
@@ -200,9 +200,9 @@ def register(proc_name, blurb, help, author, copyright, date, menupath,
            proc_name = 'python-fu-' + proc_name
 
     _registered_plugins_[proc_name] = (blurb, help, author, copyright,
-                                       date, menupath, imagetypes,
+                                       date, label, imagetypes,
                                        plugin_type, params, results,
-                                       function, on_query, on_run)
+                                       function, menu, on_query, on_run)
 
 file_params = [(PDB_STRING, "filename", "The name of the file"),
                (PDB_STRING, "raw-filename", "The name of the file")]
@@ -210,8 +210,8 @@ file_params = [(PDB_STRING, "filename", "The name of the file"),
 def _query():
     for plugin in _registered_plugins_.keys():
         (blurb, help, author, copyright, date,
-         menupath, imagetypes, plugin_type,
-         params, results, function,
+         label, imagetypes, plugin_type,
+         params, results, function, menu,
          on_query, on_run) = _registered_plugins_[plugin]
 
         def make_params(params):
@@ -221,31 +221,39 @@ def _query():
         # add the run mode argument ...
         params.insert(0, (PDB_INT32, "run_mode",
                                      "Interactive, Non-Interactive"))
+
+        if menu is None and not label is None:
+            fields = _string.split(label, '/')
+            label = fields.pop()
+            menu = _string.join(fields, '/')
+
         if plugin_type == PLUGIN:
-            if menupath is None:
+            if menu is None:
                 pass
-            elif menupath[:7] == '<Load>/':
+            elif menu[:7] == '<Load>/':
                 params[1:1] = file_params
-            elif menupath[:10] != '<Toolbox>/':
+            elif menu[:10] != '<Toolbox>/':
                 params.insert(1, (PDB_IMAGE, "image",
                                   "The image to work on"))
                 params.insert(2, (PDB_DRAWABLE, "drawable",
                                   "The drawable to work on"))
-                if menupath[:7] == '<Save>/':
+                if menu[:7] == '<Save>/':
                     params[3:3] = file_params
 
         results = make_params(results)
         gimp.install_procedure(plugin, blurb, help, author, copyright,
-                               date, menupath, imagetypes, plugin_type,
+                               date, label, imagetypes, plugin_type,
                                params, results)
+        if menu:
+            gimp.menu_register(plugin, menu)
         if on_query:
             on_query()
 
 def _get_defaults(proc_name):
     import gimpshelf
     (blurb, help, author, copyright, date,
-     menupath, imagetypes, plugin_type,
-     params, results, function,
+     menu, imagetypes, plugin_type,
+     params, results, function, menu,
      on_query, on_run) = _registered_plugins_[proc_name]
 
     key = "python-fu-save--" + proc_name
@@ -264,8 +272,8 @@ def _set_defaults(proc_name, defaults):
 
 def _interact(proc_name, start_params):
     (blurb, help, author, copyright, date,
-     menupath, imagetypes, plugin_type,
-     params, results, function,
+     menu, imagetypes, plugin_type,
+     params, results, function, menu,
      on_query, on_run) = _registered_plugins_[proc_name]
 
     def run_script(run_params):
@@ -600,8 +608,8 @@ def _interact(proc_name, start_params):
 def _run(proc_name, params):
     run_mode = params[0]
     plugin_type = _registered_plugins_[proc_name][7]
-    menupath = _registered_plugins_[proc_name][5]
     func = _registered_plugins_[proc_name][10]
+    menupath = _registered_plugins_[proc_name][11]
 
     if plugin_type == PLUGIN and menupath and menupath[:10] != '<Toolbox>/':
         if menupath[:7] == '<Save>/':

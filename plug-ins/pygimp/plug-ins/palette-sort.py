@@ -45,9 +45,6 @@ def palette_sort (palette, model, channel, ascending):
     return palette
 
 
-def query_sort():
-    gimp.menu_register("python-fu-palette-sort", "<Palettes>")
-
 register(
     "python-fu-palette-sort",
     "Sort the selected palette.",
@@ -69,8 +66,7 @@ register(
         (PF_BOOL,   "ascending", "Sort in ascending order", True)
     ],     
     [],
-    palette_sort,
-    on_query=query_sort)
+    palette_sort, menu="<Palettes>")
 
 
 main ()

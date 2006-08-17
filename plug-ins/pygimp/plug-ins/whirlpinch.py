@@ -196,9 +196,6 @@ def bilinear(x, y, values):
         return chr(int(m0 + y * (m1 - m0)))
 
 
-def query_whirl_pinch():
-    gimp.menu_register("python-fu-whirl-pinch", "<Image>/Filters/Distorts")
-
 register(
         "python-fu-whirl-pinch",
         "Distorts an image by whirling and pinching",
@@ -214,6 +211,6 @@ register(
                 (PF_FLOAT, "radius", "radius", 1)
         ],
         [],
-        whirl_pinch, on_query=query_whirl_pinch)
+        whirl_pinch, menu="<Image>/Filters/Distorts")
 
 main()

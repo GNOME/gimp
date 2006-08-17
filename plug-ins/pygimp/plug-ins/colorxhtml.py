@@ -183,7 +183,7 @@ register(
     "Manish Singh and Carol Spears",
     "Manish Singh and Carol Spears",
     "2003",
-    "<Save>/Colored XHTML",
+    "Colored XHTML",
     "RGB",
     [
         (PF_RADIO, "source", "Where to take the characters from", 0,
@@ -196,6 +196,6 @@ register(
         (PF_BOOL, "separate", "Separate CSS file", True)
     ],
     [],
-    colorxhtml, on_query=register_save)
+    colorxhtml, menu="<Save>", on_query=register_save)
 
 main()

@@ -63,8 +63,6 @@ def palette_to_gradient(palette):
     num_segments = num_colors - 1
     make_gradient(palette, num_segments, num_colors)
 
-def query_palette_to_gradient():
-    gimp.menu_register("python-fu-palette-to-gradient", "<Palettes>")
 
 register(
     "python-fu-palette-to-gradient",
@@ -77,8 +75,7 @@ register(
     "",
     [(PF_PALETTE,  "palette",      "Name of palette to convert", "")],
     [(PF_GRADIENT, "new-gradient", "Name of the New Gradient:")],
-    palette_to_gradient,
-    on_query=query_palette_to_gradient)
+    palette_to_gradient, menu="<Palettes>")
 
 
 main ()

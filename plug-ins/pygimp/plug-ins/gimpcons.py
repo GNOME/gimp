@@ -93,10 +93,6 @@ def console():
     gobject.timeout_add(500, timeout)
     gtk.main()
 
-def query_console():
-    gimp.menu_register("python-fu-console",
-		       "<Toolbox>/Xtns/Languages/Python-Fu")
-
 register(
     "python-fu-console",
     "Python interactive interpreter with gimp extensions",
@@ -108,6 +104,6 @@ register(
     "",
     [],
     [],
-    console, on_query=query_console)
+    console, menu="<Toolbox>/Xtns/Languages/Python-Fu")
 
 main()

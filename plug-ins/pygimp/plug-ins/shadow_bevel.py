@@ -53,9 +53,6 @@ def shadow_bevel(img, drawable, blur, bevel, do_shadow, drop_x, drop_y):
     # enable undo again
     img.undo_group_end()
 
-def query_shadow_bevel():
-    gimp.menu_register("python-fu-shadow-bevel",
-		       "<Image>/Filters/Light and Shadow/Shadow")
 
 register(
     "python-fu-shadow-bevel",
@@ -74,6 +71,6 @@ register(
         (PF_INT,    "drop-y", "Drop shadow Y displacement", 6)
     ],
     [],
-    shadow_bevel, on_query=query_shadow_bevel)
+    shadow_bevel, menu="<Image>/Filters/Light and Shadow/Shadow")
 
 main()
