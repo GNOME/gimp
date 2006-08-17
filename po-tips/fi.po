@@ -1,54 +1,63 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Finnish messages for gimp-tips.
+# Suomennos: http://gnome.fi/
+# Ilkka Tuohela <hile@iki.fi>, 2006.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.3\n"
+"Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-10 18:11+0200\n"
-"PO-Revision-Date: 2005-06-10 18:21+0200\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2006-08-16 14:11+0300\n"
+"PO-Revision-Date: 2006-08-17 08:34+0300\n"
+"Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
+"Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr ""
+msgstr "<big>Tervetuloa käyttämään GIMPiä!</big>"
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "viewing the mask directly."
 msgstr ""
+"<tt>Alt</tt>-napsautus tasoikkunan tasomaskin esikatselussa piilottaa ja "
+"näyttää maskin."
 
 #: ../data/tips/gimp-tips.xml.in.h:3
 msgid ""
 "<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "the effect of the layer mask."
 msgstr ""
+"<tt>Ctrl</tt>-napsautus tasoikkunan tasomaskin esikatselussa piilottaa ja "
+"näyttää tasomaskin efektin."
 
 #: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color."
 msgstr ""
+"<tt>Ctrl</tt>-napsauta ämpäritäyttötyökalua, jos haluat täyttää taustavärillä "
+"edustavärin sijasta."
 
 #: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr ""
+"<tt>Ctrl</tt>-raahaus kiertotyökalulla rajaa kierron 15 asteen kulmiin."
 
 #: ../data/tips/gimp-tips.xml.in.h:6
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
 msgstr ""
+"<tt>Shift</tt>-napsautus silmänkuvaan tasoikkunassa piilottaa kaikki muut "
+"tasot paitsi napsautetun, ja <tt>Shift</tt>-napsautus uudestaan näyttää "
+"jälleen muutkin tasot."
 
 #: ../data/tips/gimp-tips.xml.in.h:7
 msgid ""
@@ -57,6 +66,10 @@ msgid ""
 "Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
 "use the menus to do the same."
 msgstr ""
+"Kelluva valinta täytyy ankkuroida joko uuteen tasoon tai viimeisimpään "
+"aktiiviseen tasoon ennen kuin muita toimintoja voidaan tehdä kuvalle "
+"Napsauta joko \"Uusi taso\"- tai \"Ankkuroi taso\"-painiketta tasoikkunassa "
+"tai tee sama toimenpide valikosta."
 
 #: ../data/tips/gimp-tips.xml.in.h:8
 msgid ""
@@ -79,6 +92,8 @@ msgid ""
 "GIMP allows you to undo most changes to the image, so feel free to "
 "experiment."
 msgstr ""
+"GIMP antaa mahdollisuuden perua suurimman osan kuviin tehdyistä "
+"muutoksista, joten kokeile vapaasti eri vaihtoehtoja."
 
 #: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
@@ -86,6 +101,9 @@ msgid ""
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
+"GIMP tukee gzip-pakkausta lennosta. Lisää joko <tt>.gz</tt> tai "
+"<tt>.bz2</tt> tiedostonimeen ja kuva tallennetaan pakattuna. Toki "
+"GIMP myös avaa pakatut kuvat yhtä helposti."
 
 #: ../data/tips/gimp-tips.xml.in.h:12
 msgid ""
@@ -93,6 +111,9 @@ msgid ""
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
+"GIMP käyttää tasoja joilla voit järjestellä kuvan sisällön. Voit ajatella "
+"tasoja pinona dioja tai suodattimia, joiden läpi katsottaessa näet niiden "
+"yhdessä tuottaman kuvan."
 
 #: ../data/tips/gimp-tips.xml.in.h:13
 msgid ""
@@ -121,6 +142,9 @@ msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
 "in an image window to hide or show the toolbox and other dialogs."
 msgstr ""
+"Jos näytöllä on liikaa ikkunoita, voit painaa <tt>Sarkainta</tt> useita "
+"kertoja kuvaikkunassa, jolloin työkalulaatikko ja muut ikkunat suljetaan "
+"tai näytetään."
 
 #: ../data/tips/gimp-tips.xml.in.h:17
 msgid ""
