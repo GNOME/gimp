@@ -323,14 +323,14 @@ gimp_layer_new_from_pixbuf (gint32                image_ID,
   GimpPixelRgn	rgn;
   const guchar *pixels;
   gpointer      pr;
-  gdouble       range = progress_end - progress_start;
   gint32        layer;
   gint          width;
   gint          height;
   gint          rowstride;
   gint          bpp;
-  gint          count = 0;
-  gint          done  = 0;
+  gdouble       range = progress_end - progress_start;
+  guint         count = 0;
+  guint         done  = 0;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), -1);
 
