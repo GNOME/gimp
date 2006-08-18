@@ -1,3 +1,11 @@
+2006-08-18  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/gimpfu.py (register): derive the menu from the
+	label before adding to _registered_plugins_.
+
+	* plug-ins/pygimp/Makefile.am: moved clothify.py to test-scripts,
+	it doubles the functionality of script-fu-clothify.
+
 2006-08-17  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimppixbuf.[ch]: added a convenience function to create

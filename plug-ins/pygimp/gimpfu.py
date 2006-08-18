@@ -199,6 +199,13 @@ def register(proc_name, blurb, help, author, copyright, date, label,
        not proc_name[:5] == 'file_':
            proc_name = 'python-fu-' + proc_name
 
+    # if menu is not given, derive it from label
+    if menu is None and label:
+        fields = _string.split(label, '/')
+        if fields:
+            label = fields.pop()
+            menu = _string.join(fields, '/')
+
     _registered_plugins_[proc_name] = (blurb, help, author, copyright,
                                        date, label, imagetypes,
                                        plugin_type, params, results,
@@ -219,25 +226,20 @@ def _query():
 
         params = make_params(params)
         # add the run mode argument ...
-        params.insert(0, (PDB_INT32, "run_mode",
+        params.insert(0, (PDB_INT32, "run-mode",
                                      "Interactive, Non-Interactive"))
-
-        if menu is None and not label is None:
-            fields = _string.split(label, '/')
-            label = fields.pop()
-            menu = _string.join(fields, '/')
 
         if plugin_type == PLUGIN:
             if menu is None:
                 pass
-            elif menu[:7] == '<Load>/':
+            elif menu[:6] == '<Load>':
                 params[1:1] = file_params
-            elif menu[:10] != '<Toolbox>/':
+            elif menu[:9] != '<Toolbox>':
                 params.insert(1, (PDB_IMAGE, "image",
                                   "The image to work on"))
                 params.insert(2, (PDB_DRAWABLE, "drawable",
                                   "The drawable to work on"))
-                if menu[:7] == '<Save>/':
+                if menu[:6] == '<Save>':
                     params[3:3] = file_params
 
         results = make_params(results)
@@ -609,10 +611,10 @@ def _run(proc_name, params):
     run_mode = params[0]
     plugin_type = _registered_plugins_[proc_name][7]
     func = _registered_plugins_[proc_name][10]
-    menupath = _registered_plugins_[proc_name][11]
+    menu = _registered_plugins_[proc_name][11]
 
-    if plugin_type == PLUGIN and menupath and menupath[:10] != '<Toolbox>/':
-        if menupath[:7] == '<Save>/':
+    if plugin_type == PLUGIN and menu and menu[:9] != '<Toolbox>':
+        if menu[:6] == '<Save>':
             end = 5
         else:
             end = 3
