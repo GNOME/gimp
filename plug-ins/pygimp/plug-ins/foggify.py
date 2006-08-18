@@ -44,9 +44,6 @@ def foggify(img, layer, name, colour, turbulence, opacity):
 
     img.undo_group_end()
 
-def query_foggify():
-    gimp.menu_register("python-fu-foggify", "<Image>/Filters/Render/Clouds")
-
 register(
     "python-fu-foggify",
     "Add a layer of fog to the image",
@@ -63,6 +60,6 @@ register(
         (PF_SLIDER, "opacity", "The opacity", 100, (0, 100, 1)),
     ],
     [],
-    foggify, on_query=query_foggify)
+    foggify, menu="<Image>/Filters/Render/Clouds")
 
 main()

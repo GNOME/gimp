@@ -180,10 +180,6 @@ def misclassified_pixels (mask, truth):
     return count
 
 
-def query_benchmark ():
-    gimp.menu_register("python-fu-benchmark-foreground-extract",
-		       "<Toolbox>/Xtns/Benchmark")
-
 register (
     "python-fu-benchmark-foreground-extract",
     "Benchmark and regression test for the SIOX algorithm",
@@ -197,6 +193,6 @@ register (
                   "~/segmentation/msbench/imagedata"),
       (PF_TOGGLE, "save-output",  "Save output images", False) ],
     [],
-    benchmark, on_query=query_benchmark)
+    benchmark, menu="<Toolbox>/Xtns/Benchmark")
 
 main ()
