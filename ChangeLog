@@ -1,5 +1,15 @@
 2006-08-18  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimppaletteselectbutton.c
+	(gimp_palette_select_button_set_palette): check that the palette
+	name actually refers to an existing palette and use the active
+	palette if name is NULL or empty (like the other select buttons).
+
+	* plug-ins/pygimp/plug-ins/palette-offset.py: use an integer value
+	for a PF_INT parameter.
+
+2006-08-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/pygimp/gimpfu.py: check if the menupath starts with
 	<Image> instead of checking that it does not start with <Toolbox>.
 	Makes the scripts in <Palettes> work to some extent.

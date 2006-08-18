@@ -204,13 +204,13 @@ gimp_palette_select_button_new (const gchar *title,
 
   if (title)
     button = g_object_new (GIMP_TYPE_PALETTE_SELECT_BUTTON,
-                                   "title",        title,
-                                   "palette-name", palette_name,
-                                   NULL);
+                           "title",        title,
+                           "palette-name", palette_name,
+                           NULL);
   else
     button = g_object_new (GIMP_TYPE_PALETTE_SELECT_BUTTON,
-                                   "palette-name", palette_name,
-                                   NULL);
+                           "palette-name", palette_name,
+                           NULL);
 
   return button;
 }
@@ -256,9 +256,24 @@ gimp_palette_select_button_set_palette (GimpPaletteSelectButton *button,
   select_button = GIMP_SELECT_BUTTON (button);
 
   if (select_button->temp_callback)
-    gimp_palettes_set_popup (select_button->temp_callback, palette_name);
+    {
+      gimp_palettes_set_popup (select_button->temp_callback, palette_name);
+    }
   else
-    gimp_palette_select_button_callback (palette_name, FALSE, button);
+    {
+      gchar *name;
+      gint   num_colors;
+
+      if (palette_name && *palette_name)
+        name = g_strdup (palette_name);
+      else
+        name = gimp_context_get_palette ();
+
+      if (gimp_palette_get_info (name, &num_colors))
+        gimp_palette_select_button_callback (name, FALSE, button);
+
+      g_free (name);
+    }
 }
 
 

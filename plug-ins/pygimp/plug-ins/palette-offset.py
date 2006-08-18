@@ -53,7 +53,7 @@ register(
     "",
     [
      (PF_PALETTE, "palette", "Name of palette to offset", ""),
-     (PF_INT,     "amount",  "Amount of colors to offset", ""),
+     (PF_INT,     "amount",  "Amount of colors to offset", 1),
      (PF_BOOL,    "forward", "Offset the palette forward?", True)
     ],
     [(PF_PALETTE, "new-palette", "Name of offset palette.")],
