@@ -13,14 +13,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD.mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-03 11:27+0200\n"
-"PO-Revision-Date: 2006-04-04 08:10+0200\n"
+"POT-Creation-Date: 2006-08-14 11:50+0200\n"
+"PO-Revision-Date: 2006-08-15 10:14+0200\n"
 "Last-Translator: Vladimir Stefanov <vladoboss@mt.net.mk>\n"
-"Language-Team: Macedonian <dev@mk.openoffice.org>\n"
+"Language-Team: Macedonian <dev@l10n.openoffice.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.1\n"
+"X-Generator: KBabel 1.11.2\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
@@ -34,27 +34,27 @@ msgstr "_Прелистај..."
 msgid "Script-Fu Procedure Browser"
 msgstr "Скрипт-Фу прелистувач на процедури"
 
-#: ../plug-ins/script-fu/script-fu-console.c:584
-msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "Скрипт-Фу проверката е дозволена само како не-интерактивен повик"
+#: ../plug-ins/script-fu/script-fu-console.c:591
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "Скрипт-Фу режимот за проверката е дозволува само не-интерактивен повик"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:174
+#: ../plug-ins/script-fu/script-fu-interface.c:177
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-fu не може да обработува две скрипти во исто време."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:176
+#: ../plug-ins/script-fu/script-fu-interface.c:179
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Веќе ја имате пуштено \"%s\" скриптата."
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:199
-#: ../plug-ins/script-fu/script-fu-interface.c:201
+#: ../plug-ins/script-fu/script-fu-interface.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:204
 msgid "/Script-Fu/"
 msgstr "/Скрипт-Фу/"
 
 #
-#: ../plug-ins/script-fu/script-fu-interface.c:214
+#: ../plug-ins/script-fu/script-fu-interface.c:222
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Скрипт-Фу: %s"
@@ -62,65 +62,44 @@ msgstr "Скрипт-Фу: %s"
 #
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:281
+#: ../plug-ins/script-fu/script-fu-interface.c:288
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:324
+#: ../plug-ins/script-fu/script-fu-interface.c:331
 msgid "Script-Fu Color Selection"
 msgstr "Скрипт-Фу Избор на боја"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:431
+#: ../plug-ins/script-fu/script-fu-interface.c:438
 msgid "Script-Fu File Selection"
 msgstr "Скрипт-Фу Избор на датотека"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:435
+#: ../plug-ins/script-fu/script-fu-interface.c:441
 msgid "Script-Fu Folder Selection"
 msgstr "Скрипт-Фу Избор на директориум"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:449
+#: ../plug-ins/script-fu/script-fu-interface.c:453
 msgid "Script-Fu Font Selection"
 msgstr "Скрипт-Фу Избор на фонт"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:457
+#: ../plug-ins/script-fu/script-fu-interface.c:461
 msgid "Script-Fu Palette Selection"
 msgstr "Скрипт-Фу Избор на палета"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:465
+#: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-fu Pattern Selection"
 msgstr "Скрипт-Фу Избор на шаблон"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:472
+#: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Gradient Selection"
 msgstr "Скрипт-Фу Избор на Градиент"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:480
+#: ../plug-ins/script-fu/script-fu-interface.c:488
 msgid "Script-Fu Brush Selection"
 msgstr "Скрипт-Фу Избор на четка"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1008
-#, c-format
-msgid "About %s"
-msgstr "За %s"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1073
-msgid "Author:"
-msgstr "Автор:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1080
-msgid "Copyright:"
-msgstr "Авторски права:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1087
-msgid "Date:"
-msgstr "Датум:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1096
-msgid "Image Types:"
-msgstr "Вид на слика:"
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:644
+#: ../plug-ins/script-fu/script-fu-scripts.c:656
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -131,103 +110,121 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:653
+#: ../plug-ins/script-fu/script-fu-server.c:710
 msgid "Script-Fu Server Options"
 msgstr "Скрипт-Фу Поставки на серверот"
 
-#: ../plug-ins/script-fu/script-fu-server.c:658
+#: ../plug-ins/script-fu/script-fu-server.c:715
 msgid "_Start Server"
 msgstr "_Подигни сервер"
 
-#: ../plug-ins/script-fu/script-fu-server.c:686
+#: ../plug-ins/script-fu/script-fu-server.c:743
 msgid "Server port:"
 msgstr "Серверска порта:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:692
+#: ../plug-ins/script-fu/script-fu-server.c:749
 msgid "Server logfile:"
 msgstr "Дневник на серверот:"
 
-#: ../plug-ins/script-fu/script-fu.c:116
+#: ../plug-ins/script-fu/script-fu.c:109
+msgid "Interactive console for Script-Fu development"
+msgstr "Интерактивна конзола за развој на Скрипт-Фу"
+
+#: ../plug-ins/script-fu/script-fu.c:115
 msgid "Script-Fu _Console"
 msgstr "Скрипт-Фу _Конзола"
 
-#: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:316
+#: ../plug-ins/script-fu/script-fu.c:122 ../plug-ins/script-fu/script-fu.c:151
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "<Toolbox>/Xtns/Languages/Script-Fu"
 msgstr "<Toolbox>/Проширувања/Јазици/Скрипт-Фу"
 
-#: ../plug-ins/script-fu/script-fu.c:145
+#: ../plug-ins/script-fu/script-fu.c:139
+msgid "Server for remote Script-Fu operation"
+msgstr "Сервер за далечно работење со Скрипт-Фу"
+
+#: ../plug-ins/script-fu/script-fu.c:144
 msgid "_Start Server..."
 msgstr "_Подигни сервер..."
 
-#: ../plug-ins/script-fu/script-fu.c:269
+#: ../plug-ins/script-fu/script-fu.c:267
 msgid "_GIMP Online"
 msgstr "_ГИМП на интернет"
 
-#: ../plug-ins/script-fu/script-fu.c:270
+#: ../plug-ins/script-fu/script-fu.c:268
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
 msgid "_User Manual"
 msgstr "_Упатство за корисникот"
 
-#: ../plug-ins/script-fu/script-fu.c:273
+#: ../plug-ins/script-fu/script-fu.c:271
 msgid "_Script-Fu"
 msgstr "_Скрипт-Фу"
 
-#: ../plug-ins/script-fu/script-fu.c:275
+#: ../plug-ins/script-fu/script-fu.c:273
 msgid "_Buttons"
 msgstr "Коп_чиња"
 
-#: ../plug-ins/script-fu/script-fu.c:277
+#: ../plug-ins/script-fu/script-fu.c:275
 msgid "_Logos"
 msgstr "_Логоа"
 
-#: ../plug-ins/script-fu/script-fu.c:279
+#: ../plug-ins/script-fu/script-fu.c:277
 msgid "_Misc"
 msgstr "_Разно"
 
-#: ../plug-ins/script-fu/script-fu.c:281
+#: ../plug-ins/script-fu/script-fu.c:279
 msgid "_Patterns"
 msgstr "_Шаблони"
 
-#: ../plug-ins/script-fu/script-fu.c:283
+#: ../plug-ins/script-fu/script-fu.c:281
 msgid "_Test"
 msgstr "_Тест"
 
-#: ../plug-ins/script-fu/script-fu.c:285
+#: ../plug-ins/script-fu/script-fu.c:283
 msgid "_Utils"
 msgstr "_Можности"
 
-#: ../plug-ins/script-fu/script-fu.c:287
+#: ../plug-ins/script-fu/script-fu.c:285
 msgid "_Web Page Themes"
 msgstr "Теми за _веб страни"
 
-#: ../plug-ins/script-fu/script-fu.c:289
+#: ../plug-ins/script-fu/script-fu.c:287
 msgid "_Alien Glow"
 msgstr "Вонземско _светло"
 
-#: ../plug-ins/script-fu/script-fu.c:291
+#: ../plug-ins/script-fu/script-fu.c:289
 msgid "_Beveled Pattern"
 msgstr "_Закосен шаблон"
 
-#: ../plug-ins/script-fu/script-fu.c:293
+#: ../plug-ins/script-fu/script-fu.c:291
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:296
+#: ../plug-ins/script-fu/script-fu.c:294
 msgid "Alpha to _Logo"
 msgstr "Алфа во _лого"
 
-#: ../plug-ins/script-fu/script-fu.c:298
+#: ../plug-ins/script-fu/script-fu.c:296
 msgid "_Decor"
 msgstr "_Декор"
 
-#: ../plug-ins/script-fu/script-fu.c:300
+#: ../plug-ins/script-fu/script-fu.c:298
 msgid "_Render"
 msgstr "_Исцртување"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:301
+msgid "Re-read all available Script-Fu scripts"
+msgstr "Повторно вчитај ги сите достапни Скрипт-Фу скрипти"
+
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Refresh Scripts"
 msgstr "_Освежи скрипти"
+
+#: ../plug-ins/script-fu/script-fu.c:329
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr "Не можете да користите \"Освежи скрипти\" додека е отворен дијалогот на Скрипт-Фу.  Ве молам затворете ги сите Скрипт_фу прозорци и пробајте повторно."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -1463,13 +1460,17 @@ msgid "Position (in %)"
 msgstr "Позиција (во %)"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
 msgid "Vertical"
 msgstr "Вертикално"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:3
 msgid "New _Guide..."
 msgstr "Нов _водич..."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+msgid "Position"
+msgstr "Позиција"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "_Remove all Guides"
@@ -1906,10 +1907,10 @@ msgstr "Метода на бојата"
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid ""
 "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
-"netword.com/*spyrogimp"
+"www.wisdom.weizmann.ac.il/~elad/spyrogimp/"
 msgstr ""
 "Исцртај спирографи, епитрохоиди и Лисажови криви. Повеќе податоци на http://"
-"netword.com/*spyrogimp"
+"www.wisdom.weizmann.ac.il/~elad/spyrogimp/"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid "Epitrochoid"
