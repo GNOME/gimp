@@ -234,7 +234,7 @@ def _query():
                 pass
             elif menu[:6] == '<Load>':
                 params[1:1] = file_params
-            elif menu[:9] != '<Toolbox>':
+            elif menu[:7] == '<Image>' or menu[:6] == '<Save>':
                 params.insert(1, (PDB_IMAGE, "image",
                                   "The image to work on"))
                 params.insert(2, (PDB_DRAWABLE, "drawable",
@@ -613,12 +613,12 @@ def _run(proc_name, params):
     func = _registered_plugins_[proc_name][10]
     menu = _registered_plugins_[proc_name][11]
 
-    if plugin_type == PLUGIN and menu and menu[:9] != '<Toolbox>':
-        if menu[:6] == '<Save>':
-            end = 5
-        else:
-            end = 3
-
+    if plugin_type == PLUGIN and menu[:7] == '<Image>':
+        end = 3
+        start_params = params[1:end]
+        extra_params = params[end:]
+    elif plugin_type == PLUGIN and menu[:6] == '<Save>':
+        end = 5
         start_params = params[1:end]
         extra_params = params[end:]
     else:

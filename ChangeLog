@@ -1,5 +1,11 @@
 2006-08-18  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/gimpfu.py: check if the menupath starts with
+	<Image> instead of checking that it does not start with <Toolbox>.
+	Makes the scripts in <Palettes> work to some extent.
+
+2006-08-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/pygimp/gimpfu.py (register): derive the menupath from
 	the label before adding to _registered_plugins_.
 
