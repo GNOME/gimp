@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-20 01:52+0200\n"
-"PO-Revision-Date: 2006-08-20 19:41+0200\n"
+"PO-Revision-Date: 2006-08-21 00:17+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -308,7 +308,7 @@ msgstr "Modifica"
 #: ../app/actions/actions.c:140 ../app/actions/dialogs-actions.c:180
 #: ../app/dialogs/dialogs.c:135
 msgid "Error Console"
-msgstr "Console di errore"
+msgstr "Console errori"
 
 #: ../app/actions/actions.c:143
 msgid "File"
@@ -1007,7 +1007,7 @@ msgstr "Str_umenti"
 
 #: ../app/actions/dialogs-actions.c:180
 msgid "Error Co_nsole"
-msgstr "Co_nsole di errore"
+msgstr "Co_nsole errori"
 
 #: ../app/actions/dialogs-actions.c:190
 msgid "_Preferences"
@@ -1562,7 +1562,7 @@ msgstr "Non c'è un livello o un canale attivo da cui copiare"
 
 #: ../app/actions/error-console-actions.c:40
 msgid "Error Console Menu"
-msgstr "Menu console di errore"
+msgstr "Menu console errori"
 
 #: ../app/actions/error-console-actions.c:44
 msgid "_Clear"
