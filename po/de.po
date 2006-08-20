@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-12 16:55+0100\n"
-"PO-Revision-Date: 2006-08-09 12:45+0200\n"
+"PO-Revision-Date: 2006-08-20 22:09+0200\n"
 "Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -6269,7 +6269,7 @@ msgstr "Auf Bild beschnitten"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:92
 msgid "Clipped to bottom layer"
-msgstr "Auf oberste Ebene beschnitten"
+msgstr "Auf unterste Ebene beschnitten"
 
 #: ../app/dialogs/image-new-dialog.c:95
 msgid "Create a New Image"
