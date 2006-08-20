@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-20 01:52+0200\n"
-"PO-Revision-Date: 2006-08-20 01:55+0200\n"
+"PO-Revision-Date: 2006-08-20 19:09+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -7270,7 +7270,7 @@ msgstr "Adatta alla finestra"
 
 #: ../app/dialogs/preferences-dialog.c:1974
 msgid "Initial zoom _ratio:"
-msgstr "_Rapporto di zoom iniziale:"
+msgstr "_Rapporto zoom iniziale:"
 
 #. Mouse Pointers
 #: ../app/dialogs/preferences-dialog.c:1978
@@ -7327,7 +7327,7 @@ msgstr "Mostra percentuale dello zoom"
 
 #: ../app/dialogs/preferences-dialog.c:2055
 msgid "Show zoom ratio"
-msgstr "Mostra dimensione zoom"
+msgstr "Mostra rapporto zoom"
 
 #: ../app/dialogs/preferences-dialog.c:2056
 msgid "Show image size"
@@ -7946,7 +7946,7 @@ msgstr "Selezione livello"
 
 #: ../app/display/gimpdisplayshell-scale.c:476
 msgid "Zoom Ratio"
-msgstr "Coefficiente di zoom"
+msgstr "Rapporto zoom"
 
 #: ../app/display/gimpdisplayshell-scale.c:478
 msgid "Select Zoom Ratio"
@@ -7954,7 +7954,7 @@ msgstr "Seleziona il coefficiente di zoom"
 
 #: ../app/display/gimpdisplayshell-scale.c:521
 msgid "Zoom ratio:"
-msgstr "Zoom:"
+msgstr "Rapporto zoom:"
 
 #: ../app/display/gimpdisplayshell-scale.c:546
 msgid "Zoom:"
@@ -10227,7 +10227,7 @@ msgstr "Ampiezza fissa"
 
 #: ../app/tools/tools-enums.c:119
 msgid "Fixed aspect ratio"
-msgstr "Rapporto di dimensioni fisso"
+msgstr "Rapporto dimensioni fisso"
 
 #: ../app/tools/tools-enums.c:147
 msgid "Transform layer"
@@ -10383,7 +10383,7 @@ msgstr "Durezza:"
 
 #: ../app/widgets/gimpbrusheditor.c:172
 msgid "Aspect ratio:"
-msgstr "Rapporto di dimensioni:"
+msgstr "Rapporto dimensioni:"
 
 #: ../app/widgets/gimpbrusheditor.c:198
 #: ../app/widgets/gimpbrushfactoryview.c:82
