@@ -63,6 +63,11 @@ static void     gimp_crop_tool_button_release (GimpTool       *tool,
                                                guint32         time,
                                                GdkModifierType state,
                                                GimpDisplay    *display);
+static void     gimp_crop_tool_modifier_key   (GimpTool       *tool,
+                                               GdkModifierType key,
+                                               gboolean        press,
+                                               GdkModifierType state,
+                                               GimpDisplay    *display);
 static void     gimp_crop_tool_cursor_update  (GimpTool       *tool,
                                                GimpCoords     *coords,
                                                GdkModifierType state,
@@ -121,6 +126,7 @@ gimp_crop_tool_class_init (GimpCropToolClass *klass)
   tool_class->button_release = gimp_crop_tool_button_release;
   tool_class->motion         = gimp_rectangle_tool_motion;
   tool_class->key_press      = gimp_rectangle_tool_key_press;
+  tool_class->modifier_key   = gimp_crop_tool_modifier_key;
   tool_class->oper_update    = gimp_rectangle_tool_oper_update;
   tool_class->cursor_update  = gimp_crop_tool_cursor_update;
 
@@ -203,6 +209,19 @@ gimp_crop_tool_button_release (GimpTool        *tool,
                            _("Click or press enter to resize."));
 
   gimp_rectangle_tool_button_release (tool, coords, time, state, display);
+}
+
+static void
+gimp_crop_tool_modifier_key (GimpTool        *tool,
+                             GdkModifierType  key,
+                             gboolean         press,
+                             GdkModifierType  state,
+                             GimpDisplay     *display)
+{
+  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
+                                                display);
+
+  gimp_rectangle_tool_modifier_key (tool, key, press, state, display);
 }
 
 static void

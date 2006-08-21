@@ -281,7 +281,9 @@ gimp_clone_tool_modifier_key (GimpTool        *tool,
 
   options = GIMP_CLONE_OPTIONS (tool->tool_info->tool_options);
 
-  if (options->clone_type == GIMP_IMAGE_CLONE && key == GDK_CONTROL_MASK)
+  if ( (! (state & GDK_BUTTON1_MASK)) &&
+       options->clone_type == GIMP_IMAGE_CLONE
+       && key == GDK_CONTROL_MASK)
     {
       if (press)
         paint_tool->status = _("Click to set the clone source.");

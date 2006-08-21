@@ -1,3 +1,23 @@
+2006-08-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/display/gimpdisplayshell-callbacks.c: allow modifier key events
+	for Shift and Control to be propagated even if button1 is down.
+	
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimpvectortool.c: change  modifier_key method
+	to prevent any bad consequences.
+
+	* app/tools/gimprectangletool.[ch]:  add modifier_key handler, and use it
+	to toggle "make-square" if Shift is pressed while button1 is down, and
+	"fixed-center" if Control is pressed while button1 is down.
+	
+	* app/tools/gimprectangleselecttool.c (gimp_rectangle_tool_modifier_key):
+	call rectangle tool modifer_key method after chaining up.
+
 2006-08-18  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimppaletteselectbutton.c

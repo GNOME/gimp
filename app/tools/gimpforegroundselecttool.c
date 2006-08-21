@@ -342,7 +342,8 @@ gimp_foreground_select_tool_modifier_key (GimpTool        *tool,
                                           GdkModifierType  state,
                                           GimpDisplay     *display)
 {
-  if (key == GDK_CONTROL_MASK)
+  if ((! (state & GDK_BUTTON1_MASK)) &&
+       key == GDK_CONTROL_MASK)
     {
       GimpForegroundSelectOptions *options;
 

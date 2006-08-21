@@ -131,9 +131,6 @@ static void     rectangle_tool_start                (GimpRectangleTool     *rect
 static void     gimp_rectangle_tool_draw_guides     (GimpDrawTool          *draw_tool);
 
 /*  Rectangle dialog functions  */
-static void     rectangle_selection_callback        (GtkWidget             *widget,
-                                                     GimpRectangleTool     *rectangle);
-
 static void     gimp_rectangle_tool_update_options  (GimpRectangleTool     *rectangle,
                                                      GimpDisplay           *display);
 
@@ -1404,6 +1401,60 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
+void
+gimp_rectangle_tool_modifier_key (GimpTool        *tool,
+                                  GdkModifierType  key,
+                                  gboolean         press,
+                                  GdkModifierType  state,
+                                  GimpDisplay     *display)
+{
+  GimpRectangleTool        *rectangle = GIMP_RECTANGLE_TOOL (tool);
+
+  if (press)
+    {
+      GimpRectangleOptions     *options;
+
+      options = GIMP_RECTANGLE_OPTIONS (tool->tool_info->tool_options);
+
+      if (key == GDK_SHIFT_MASK)
+        {
+          gboolean aspect_square;
+
+          g_object_get (options,
+                        "aspect-square", &aspect_square,
+                        NULL);
+
+          g_object_set (options,
+                        "aspect-square", ! aspect_square,
+                        NULL);
+        }
+
+      if (key == GDK_CONTROL_MASK)
+        {
+          gboolean fixed_center;
+
+          g_object_get (options,
+                        "fixed-center", &fixed_center,
+                        NULL);
+
+          g_object_set (options,
+                        "fixed-center", ! fixed_center,
+                        NULL);
+
+         if (! fixed_center)
+           {
+             gdouble center_x = gimp_rectangle_tool_get_pressx (rectangle);
+             gdouble center_y = gimp_rectangle_tool_get_pressy (rectangle);
+
+             g_object_set (options,
+                           "center-x", center_x,
+                           "center-y", center_y,
+                           NULL);
+           }
+        }
+    }
+}
+
 /*
  * gimp_rectangle_tool_check_function() is needed to deal with
  * situations where the user drags a corner or edge across one of the
@@ -2053,43 +2104,6 @@ gimp_rectangle_tool_halt (GimpRectangleTool *rectangle)
   tool->drawable = NULL;
 
   g_object_set (rectangle, "function", RECT_INACTIVE, NULL);
-}
-
-/* FIXME: ‘rectangle_selection_callback’defined but not used */
-static void
-rectangle_selection_callback (GtkWidget         *widget,
-                              GimpRectangleTool *rectangle)
-{
-  GimpDisplay *display = GIMP_TOOL (rectangle)->display;
-  gint         x1, y1;
-  gint         x2, y2;
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (rectangle));
-
-  if (gimp_channel_bounds (gimp_image_get_mask (display->image),
-                           &x1, &y1,
-                           &x2, &y2))
-    {
-      g_object_set (rectangle,
-                    "x1", x1,
-                    "y1", y1,
-                    "x2", x2,
-                    "y2", y2,
-                    NULL);
-    }
-  else
-    {
-      g_object_set (rectangle,
-                    "x1", 0,
-                    "y1", 0,
-                    "x2", display->image->width,
-                    "y2", display->image->height,
-                    NULL);
-    }
-
-  gimp_rectangle_tool_configure (rectangle);
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (rectangle));
 }
 
 gboolean

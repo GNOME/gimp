@@ -426,6 +426,8 @@ gimp_rect_select_tool_modifier_key (GimpTool        *tool,
 {
   GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
                                                 display);
+
+  gimp_rectangle_tool_modifier_key (tool, key, press, state, display);
 }
 
 static void

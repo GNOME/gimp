@@ -842,6 +842,9 @@ gimp_vector_tool_modifier_key (GimpTool        *tool,
   GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
   GimpVectorOptions *options;
 
+  if (state & GDK_BUTTON1_MASK)
+    return;
+
   options = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
   if (key == TOGGLE_MASK)
