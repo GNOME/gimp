@@ -227,25 +227,6 @@ layers_vector_tool_cmd_callback (GtkAction *action,
 }
 
 void
-layers_fill_stroke_cmd_callback (GtkAction *action,
-                                 gpointer   data)
-{
-  GimpImage    *image;
-  GimpLayer    *layer;
-  GtkWidget    *widget;
-  GtkWidget    *dialog;
-  return_if_no_layer (image, layer, data);
-  return_if_no_widget (widget, data);
-
-  dialog = vectorlayer_options_dialog_new (GIMP_ITEM (layer),
-                              _("Fill / Stroke"),
-                              GTK_STOCK_OK,
-                              NULL,
-                              widget);
-  gtk_widget_show (dialog);
-}
-
-void
 layers_edit_attributes_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
@@ -571,6 +552,37 @@ layers_text_along_vectors_cmd_callback (GtkAction *action,
 
       gimp_image_flush (image);
     }
+}
+
+void
+layers_vector_fill_stroke_cmd_callback (GtkAction *action,
+                                        gpointer   data)
+{
+  GimpImage    *image;
+  GimpLayer    *layer;
+  GtkWidget    *widget;
+  GtkWidget    *dialog;
+  return_if_no_layer (image, layer, data);
+  return_if_no_widget (widget, data);
+
+  dialog = vectorlayer_options_dialog_new (GIMP_ITEM (layer),
+                              _("Fill / Stroke"),
+                              GTK_STOCK_OK,
+                              NULL,
+                              widget);
+  gtk_widget_show (dialog);
+}
+
+void
+layers_vector_discard_cmd_callback (GtkAction   *action,
+                                    gpointer     data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  if (GIMP_IS_VECTOR_LAYER (layer))
+    gimp_vector_layer_discard (GIMP_VECTOR_LAYER (layer));
 }
 
 void

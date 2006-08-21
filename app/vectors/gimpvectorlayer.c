@@ -215,7 +215,9 @@ gimp_vector_layer_changed_options (GimpVectorLayer *layer)
       layer->parasite = NULL;
     }
   
-  if (gimp_item_is_attached (item))
+  if (layer->options && !layer->options->vectors)
+    gimp_vector_layer_discard (layer);
+  else if (gimp_item_is_attached (item))
     gimp_vector_layer_refresh (layer);
 }
 
@@ -251,17 +253,18 @@ gimp_vector_layer_set_property (GObject      *object,
     case PROP_VECTOR_LAYER_OPTIONS:
       if (vector_layer->options)
         {
-          g_object_disconnect (vector_layer->options, "notify",
-                               G_CALLBACK (gimp_vector_layer_changed_options),
-                               vector_layer, NULL);
+          g_signal_handlers_disconnect_by_func (vector_layer->options,
+                              G_CALLBACK  (gimp_vector_layer_changed_options),
+                              vector_layer);
           g_object_unref (vector_layer->options);
         }
       vector_layer->options = (GimpVectorLayerOptions *) g_value_dup_object (value);
       gimp_vector_layer_changed_options (vector_layer);
       
-      g_signal_connect_object (vector_layer->options, "notify",
-                           G_CALLBACK (gimp_vector_layer_changed_options),
-                           vector_layer, G_CONNECT_SWAPPED);
+      if (vector_layer->options)
+        g_signal_connect_object (vector_layer->options, "notify",
+                            G_CALLBACK  (gimp_vector_layer_changed_options),
+                            vector_layer, G_CONNECT_SWAPPED);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -334,8 +337,32 @@ gimp_vector_layer_new (GimpImage     *image,
 void
 gimp_vector_layer_refresh (GimpVectorLayer  *layer)
 {
-  gimp_vector_layer_refresh_name (layer);
-  gimp_vector_layer_render (layer);
+  if (layer->options)
+    {
+      gimp_vector_layer_refresh_name (layer);
+      gimp_vector_layer_render (layer);
+    }
+}
+
+/**
+ * gimp_vector_layer_discard:
+ * @layer: a #GimpVectorLayer
+ *
+ * Discards the vector information. This makes @layer behave like a
+ * normal layer.
+ */
+void
+gimp_vector_layer_discard (GimpVectorLayer *layer)
+{
+  g_return_if_fail (GIMP_IS_VECTOR_LAYER (layer));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
+  
+  if (! layer->options)
+    return;
+  
+  /* TODO: undo step here */
+  
+  g_object_set (layer, "vector-layer-options", NULL, NULL);
 }
 
 gboolean

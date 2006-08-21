@@ -24,7 +24,8 @@
     <menuitem action="layers-text-along-vectors" />
     <menuitem action="layers-text-selection-replace" />
     <separator />
-    <menuitem action="layers-fill-stroke" />
+    <menuitem action="layers-vector-fill-stroke" />
+    <menuitem action="layers-vector-discard" />
     <separator />
     <menuitem action="layers-resize" />
     <menuitem action="layers-resize-to-image" />

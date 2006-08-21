@@ -69,6 +69,8 @@ static void     gimp_vector_layer_options_set_property (GObject         *object,
                                                         GParamSpec      *pspec);
 static void     gimp_vector_layer_options_emit_vectors_changed  
                                                        (GimpVectorLayerOptions *options);
+static void     gimp_vector_layer_options_vectors_removed
+                                                       (GimpVectorLayerOptions *options);
 
 /* class-related stuff */
 G_DEFINE_TYPE_WITH_CODE (GimpVectorLayerOptions,
@@ -238,14 +240,12 @@ gimp_vector_layer_options_set_property (GObject      *object,
     case PROP_VECTORS:
       if (options->vectors)
         {
-          g_object_disconnect (options->vectors,
-                               "invalidate-preview",
-                               G_CALLBACK (gimp_vector_layer_options_emit_vectors_changed),
-                               options,
-                               "name-changed",
-                               G_CALLBACK (gimp_vector_layer_options_emit_vectors_changed),
-                               options,
-                               NULL);
+          g_signal_handlers_disconnect_by_func (options->vectors,
+                              G_CALLBACK (gimp_vector_layer_options_emit_vectors_changed),
+                              options);
+          g_signal_handlers_disconnect_by_func (options->vectors,
+                              G_CALLBACK (gimp_vector_layer_options_vectors_removed),
+                              options);
           g_object_unref (options->vectors);
         }
       options->vectors = (GimpVectors *) g_value_dup_object (value);
@@ -257,6 +257,9 @@ gimp_vector_layer_options_set_property (GObject      *object,
                               options, G_CONNECT_SWAPPED);
           g_signal_connect_object (options->vectors, "name-changed",
                               G_CALLBACK (gimp_vector_layer_options_emit_vectors_changed),
+                              options, G_CONNECT_SWAPPED);
+          g_signal_connect_object (options->vectors, "removed",
+                              G_CALLBACK (gimp_vector_layer_options_vectors_removed),
                               options, G_CONNECT_SWAPPED);
           
           /* update the tattoo */
@@ -302,6 +305,12 @@ static void
 gimp_vector_layer_options_emit_vectors_changed (GimpVectorLayerOptions *options)
 {
   g_object_notify (G_OBJECT (options), "vectors");
+}
+
+static void
+gimp_vector_layer_options_vectors_removed (GimpVectorLayerOptions *options)
+{
+  g_object_set (options, "vectors", NULL, NULL);
 }
 
 /* public functions */

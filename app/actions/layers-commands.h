@@ -24,8 +24,6 @@ void   layers_text_tool_cmd_callback          (GtkAction   *action,
                                                gpointer     data);
 void   layers_vector_tool_cmd_callback        (GtkAction   *action,
                                                gpointer     data);
-void   layers_fill_stroke_cmd_callback        (GtkAction   *action,
-                                               gpointer     data);
 void   layers_edit_attributes_cmd_callback    (GtkAction   *action,
                                                gpointer     data);
 void   layers_new_cmd_callback                (GtkAction   *action,
@@ -59,6 +57,11 @@ void   layers_text_discard_cmd_callback       (GtkAction   *action,
 void   layers_text_to_vectors_cmd_callback    (GtkAction   *action,
                                                gpointer     data);
 void   layers_text_along_vectors_cmd_callback (GtkAction   *action,
+                                               gpointer     data);
+
+void   layers_vector_fill_stroke_cmd_callback (GtkAction   *action,
+                                               gpointer     data);
+void   layers_vector_discard_cmd_callback     (GtkAction   *action,
                                                gpointer     data);
 
 void   layers_resize_cmd_callback             (GtkAction   *action,

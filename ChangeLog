@@ -1,4 +1,32 @@
 2006-08-20  Hendrik Boom  <hboom@cvs.gnome.org>
+	Note: an error message is shown when loading images with vector layers
+	produced by recent versions of this code. This is caused by improper
+	(de)serialization of the currently unused paint-info property of a
+	GimpVectorLayerOptions' stroke-desc. However, as this is the last thing
+	to be deserialized, it does not currently interfere with loading.
+
+	* app/vectors/gimpvectorlayer.c
+	* app/vectors/gimpvectorlayeroptions.c: fixed signal disconnections for
+	some properties.
+
+	* app/vectors/gimpvectorlayeroptions.c: the vector layer is now
+	notified when its vectors object is removed from the image.
+
+	* app/vectors/gimpvectorlayer.[ch]: added the gimp_vector_layer_discard
+	function. This function sets the vector-layer-options property to null,
+	which causes this layer to act like a regular layer. This is called
+	either from the GUI or when it is noticed that the associated path has
+	been removed from the image.
+
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.[ch]
+	* menus/image-menu.xml.in
+	* menus/layers-menu.xml: changed the name of the layers-fill-stroke to
+	layers-vector-fill-stroke, and changed the name of the callback
+	accordingly. Added the layers-vector-discard action and callback to
+	convert a vector layer into an ordinary layer.
+
+2006-08-20  Hendrik Boom  <hboom@cvs.gnome.org>
 
 	* app/actions/layers-actions.c
 	* app/actions/layers-commands.[ch]: rearranged a couple of actions, and

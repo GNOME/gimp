@@ -168,10 +168,16 @@ static const GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_text_along_vectors_cmd_callback),
     GIMP_HELP_LAYER_TEXT_ALONG_PATH },
 
-  { "layers-fill-stroke", NULL,
+  { "layers-vector-fill-stroke", NULL,
     N_("Fill / Stroke"), NULL,
     N_("Edit the fill and stroke of this vector layer"),
-    G_CALLBACK (layers_fill_stroke_cmd_callback),
+    G_CALLBACK (layers_vector_fill_stroke_cmd_callback),
+    NULL },
+
+  { "layers-vector-discard", NULL,
+    N_("Discard Vector Information"), NULL,
+    N_("Turn this vector layer into a normal layer"),
+    G_CALLBACK (layers_vector_discard_cmd_callback),
     NULL },
 
   { "layers-resize", GIMP_STOCK_RESIZE,
@@ -556,7 +562,8 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-text-selection-subtract",  text_layer && !ac);
   SET_VISIBLE   ("layers-text-selection-intersect", text_layer && !ac);
 
-  SET_VISIBLE   ("layers-fill-stroke", vector_layer && !ac);
+  SET_VISIBLE   ("layers-vector-fill-stroke", vector_layer && !ac);
+  SET_VISIBLE   ("layers-vector-discard",     vector_layer && !ac);
 
   SET_SENSITIVE ("layers-resize",          layer && !ac);
   SET_SENSITIVE ("layers-resize-to-image", layer && !ac);
