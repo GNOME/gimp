@@ -31,6 +31,8 @@
 
 #include "text/gimptextlayer.h"
 
+#include "vectors/gimpvectorlayer.h"
+
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpactiongroup.h"
 
@@ -64,11 +66,11 @@ static const GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_text_tool_cmd_callback),
     GIMP_HELP_TOOL_TEXT },
   
-  { "layers-fill-stroke", NULL,
-    N_("Fill / Stroke"), NULL,
-    N_("Edit the fill and stroke of this vector layer"),
-    G_CALLBACK (layers_fill_stroke_cmd_callback),
-    NULL },
+  { "layers-vector-tool", GIMP_STOCK_TOOL_PATH,
+    N_("Path Tool"), NULL,
+    N_("Activate the path tool on this vector layer's path"),
+    G_CALLBACK (layers_vector_tool_cmd_callback),
+    GIMP_HELP_TOOL_PATH },
 
   { "layers-edit-attributes", GTK_STOCK_EDIT,
     N_("_Edit Layer Attributes..."), NULL,
@@ -165,6 +167,12 @@ static const GimpActionEntry layers_actions[] =
     N_("Warp this layer's text along the current path"),
     G_CALLBACK (layers_text_along_vectors_cmd_callback),
     GIMP_HELP_LAYER_TEXT_ALONG_PATH },
+
+  { "layers-fill-stroke", NULL,
+    N_("Fill / Stroke"), NULL,
+    N_("Edit the fill and stroke of this vector layer"),
+    G_CALLBACK (layers_fill_stroke_cmd_callback),
+    NULL },
 
   { "layers-resize", GIMP_STOCK_RESIZE,
     N_("Layer B_oundary Size..."), NULL,
@@ -517,7 +525,7 @@ layers_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_VISIBLE   ("layers-text-tool",       text_layer && !ac);
-  SET_VISIBLE   ("layers-fill-stroke",     vector_layer && !ac);
+  SET_VISIBLE   ("layers-vector-tool",     vector_layer && !ac);
   SET_SENSITIVE ("layers-edit-attributes", layer && !fs && !ac);
 
   SET_SENSITIVE ("layers-new",             image);
@@ -547,6 +555,8 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-text-selection-add",       text_layer && !ac);
   SET_VISIBLE   ("layers-text-selection-subtract",  text_layer && !ac);
   SET_VISIBLE   ("layers-text-selection-intersect", text_layer && !ac);
+
+  SET_VISIBLE   ("layers-fill-stroke", vector_layer && !ac);
 
   SET_SENSITIVE ("layers-resize",          layer && !ac);
   SET_SENSITIVE ("layers-resize-to-image", layer && !ac);

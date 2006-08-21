@@ -1,3 +1,33 @@
+2006-08-20  Hendrik Boom  <hboom@cvs.gnome.org>
+
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.[ch]: rearranged a couple of actions, and
+	added the layers-vector-tool action / callback / menu entries. This new
+	action acts similarly to the existing one for text layers; It selects
+	the Path tool as well as the vector associated with the vector layer
+
+	* app/core/gimpstrokedesc.c: fixed a bug in gimp_stroke_desc_new which
+	would cause the paint_info property of a GimpStrokeDesc to be NULL
+	when no context was passed to it.
+
+	* app/actions/vectors-actions.c: corrected capitalization in the name
+	of the vectors-to-vector-layer action.
+
+	* app/vectors/gimpvectorlayer.c: the layer bounds are now re-set every
+	time the layer is rendered, to prevent the path from falling outside the
+	layer.
+
+	* app/vectors/gimpvectorlayer.c
+	* app/vectors/gimpvectorlayeroptions.c: added signal disconnects when
+	certain parameters are set.
+
+	* app/vectors/gimpvectorlayer.c: vector layers now duplicate properly
+	with the path being shared between the original and new layers.
+
+	* app/vectors/gimpvectorlayer.c: vector layers whose vector-layer-options
+	property is NULL are no longer considered to be vector layers by
+	gimp_drawable_is_vector_layer.
+
 2006-08-14  Hendrik Boom  <hboom@cvs.gnome.org>
 
 	* app/vectors/gimpvectorlayer.[ch]

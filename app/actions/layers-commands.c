@@ -50,6 +50,8 @@
 #include "text/gimptext-vectors.h"
 #include "text/gimptextlayer.h"
 
+#include "vectors/gimpvectorlayer.h"
+#include "vectors/gimpvectorlayeroptions.h"
 #include "vectors/gimpvectors-warp.h"
 
 #include "widgets/gimpaction.h"
@@ -61,6 +63,7 @@
 #include "display/gimpdisplayshell.h"
 
 #include "tools/gimptexttool.h"
+#include "tools/gimpvectortool.h"
 #include "tools/tool_manager.h"
 
 #include "dialogs/vectorlayer-options-dialog.h"
@@ -182,6 +185,45 @@ layers_text_tool_cmd_callback (GtkAction *action,
 
   if (GIMP_IS_TEXT_TOOL (active_tool))
     gimp_text_tool_set_layer (GIMP_TEXT_TOOL (active_tool), layer);
+}
+
+void
+layers_vector_tool_cmd_callback (GtkAction *action,
+                                 gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  GtkWidget *widget;
+  GimpTool  *active_tool;
+  return_if_no_layer (image, layer, data);
+  return_if_no_widget (widget, data);
+
+  if (! gimp_drawable_is_vector_layer (GIMP_DRAWABLE (layer)))
+    {
+      layers_edit_attributes_cmd_callback (action, data);
+      return;
+    }
+
+  active_tool = tool_manager_get_active (image->gimp);
+
+  if (! GIMP_IS_VECTOR_TOOL (active_tool))
+    {
+      GimpToolInfo *tool_info;
+
+      tool_info = (GimpToolInfo *)
+        gimp_container_get_child_by_name (image->gimp->tool_info_list,
+                                          "gimp-vector-tool");
+
+      if (GIMP_IS_TOOL_INFO (tool_info))
+        {
+          gimp_context_set_tool (action_data_get_context (data), tool_info);
+          active_tool = tool_manager_get_active (image->gimp);
+        }
+    }
+
+  if (GIMP_IS_VECTOR_TOOL (active_tool))
+    gimp_vector_tool_set_vectors (GIMP_VECTOR_TOOL (active_tool), 
+                                  GIMP_VECTOR_LAYER (layer)->options->vectors);
 }
 
 void

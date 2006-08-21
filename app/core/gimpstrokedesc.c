@@ -286,13 +286,11 @@ gimp_stroke_desc_new (Gimp        *gimp,
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
 
   if (context)
-    {
       paint_info = gimp_context_get_paint_info (context);
-
-      if (! paint_info)
-        paint_info = gimp_paint_info_get_standard (gimp);
-    }
-
+  
+  if (! paint_info)
+    paint_info = gimp_paint_info_get_standard (gimp);
+  
   desc = g_object_new (GIMP_TYPE_STROKE_DESC,
                        "gimp",       gimp,
                        "paint-info", paint_info,

@@ -140,9 +140,8 @@ static const GimpActionEntry vectors_actions[] =
     G_CALLBACK (vectors_import_cmd_callback),
     GIMP_HELP_PATH_IMPORT },
   
-    /* TODO: add help and icon */
   { "vectors-to-vector-layer", NULL,
-    N_("Path to vector layer"), "", NULL,
+    N_("Path to Vector Layer"), "", NULL,
     G_CALLBACK (vectors_to_vector_layer_cmd_callback),
     NULL }
 };

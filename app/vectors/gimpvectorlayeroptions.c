@@ -237,7 +237,17 @@ gimp_vector_layer_options_set_property (GObject      *object,
       break;
     case PROP_VECTORS:
       if (options->vectors)
-        g_object_unref (options->vectors);
+        {
+          g_object_disconnect (options->vectors,
+                               "invalidate-preview",
+                               G_CALLBACK (gimp_vector_layer_options_emit_vectors_changed),
+                               options,
+                               "name-changed",
+                               G_CALLBACK (gimp_vector_layer_options_emit_vectors_changed),
+                               options,
+                               NULL);
+          g_object_unref (options->vectors);
+        }
       options->vectors = (GimpVectors *) g_value_dup_object (value);
       
       if (options->vectors)
@@ -276,8 +286,6 @@ gimp_vector_layer_options_set_property (GObject      *object,
       break;
     case PROP_STROKE_DESC:
       if (g_value_get_object (value))
-        /*gimp_config_sync (g_value_get_object (value),
-                          G_OBJECT (vector_layer->stroke_desc), 0);*/
         {
           if (options->stroke_desc)
             g_object_unref (options->stroke_desc);
@@ -346,7 +354,3 @@ gimp_vector_layer_options_new (GimpImage     *image,
   
   return options;
 }
-
-
-
-

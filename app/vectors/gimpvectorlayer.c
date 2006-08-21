@@ -69,6 +69,9 @@ static void      gimp_vector_layer_set_property     (GObject         *object,
                                                      guint            property_id,
                                                      const GValue    *value,
                                                      GParamSpec      *pspec);
+static GimpItem *gimp_vector_layer_duplicate        (GimpItem           *item,
+                                                     GType               new_type,
+                                                     gboolean            add_alpha);
 
 /* class-related stuff */
 G_DEFINE_TYPE (GimpVectorLayer, gimp_vector_layer, GIMP_TYPE_LAYER)
@@ -94,7 +97,8 @@ gimp_vector_layer_class_init (GimpVectorLayerClass *klass)
                                    GIMP_PARAM_STATIC_STRINGS);
   
   viewable_class->default_stock_id = "gimp-vector-layer";
-
+  
+  item_class->duplicate            = gimp_vector_layer_duplicate;
   item_class->default_name         = _("Vector Layer");
   item_class->rename_desc          = _("Rename Vector Layer");
   item_class->translate_desc       = _("Move Vector Layer");
@@ -149,14 +153,11 @@ gimp_vector_layer_render (GimpVectorLayer *layer)
   
   g_object_freeze_notify (G_OBJECT (drawable));
   
-  TileManager *new_tiles = tile_manager_new (width, height,
-                                             drawable->bytes);
-  
-  gimp_drawable_set_tiles (drawable, FALSE, NULL, new_tiles);
-  
-  tile_manager_unref (new_tiles);
-  
-  new_tiles = NULL;
+  gimp_drawable_configure (GIMP_DRAWABLE (layer),
+                           image,
+                           0, 0, width, height, /* x and y offsets, x and y dimensions */
+                           gimp_image_base_type_with_alpha (image),
+                           NULL);
   
   /* make the layer background transparent */
   GimpRGB blank;
@@ -191,7 +192,6 @@ gimp_vector_layer_render_vectors (GimpVectorLayer *layer,
                     FALSE,
                     FALSE);
   
-  /*GIMP_ITEM_GET_CLASS (vectors)->stroke(GIMP_ITEM (vectors), GIMP_DRAWABLE (layer), layer->stroke_desc);*/
 }
 
 /* sets the layer's name to be the same as the vector's name */
@@ -250,7 +250,12 @@ gimp_vector_layer_set_property (GObject      *object,
     {
     case PROP_VECTOR_LAYER_OPTIONS:
       if (vector_layer->options)
-        g_object_unref (vector_layer->options);
+        {
+          g_object_disconnect (vector_layer->options, "notify",
+                               G_CALLBACK (gimp_vector_layer_changed_options),
+                               vector_layer, NULL);
+          g_object_unref (vector_layer->options);
+        }
       vector_layer->options = (GimpVectorLayerOptions *) g_value_dup_object (value);
       gimp_vector_layer_changed_options (vector_layer);
       
@@ -262,6 +267,31 @@ gimp_vector_layer_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static GimpItem *
+gimp_vector_layer_duplicate        (GimpItem *item,
+                                    GType     new_type,
+                                    gboolean  add_alpha)
+{
+  GimpItem *new_item;
+
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
+
+  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
+                                                        add_alpha);
+  
+  if (GIMP_IS_VECTOR_LAYER (new_item))
+    {
+      GimpVectorLayer *vector_layer     = GIMP_VECTOR_LAYER (item);
+      GimpVectorLayer *new_vector_layer = GIMP_VECTOR_LAYER (new_item);
+      
+      g_object_set (new_vector_layer,
+                    "vector-layer-options", gimp_config_duplicate (GIMP_CONFIG (vector_layer->options)),
+                    NULL);
+    }
+  
+  return new_item;
 }
 
 /* public method definitions */
@@ -311,43 +341,6 @@ gimp_vector_layer_refresh (GimpVectorLayer  *layer)
 gboolean
 gimp_drawable_is_vector_layer (GimpDrawable  *drawable)
 {
-  return GIMP_IS_VECTOR_LAYER (drawable);
+  return (GIMP_IS_VECTOR_LAYER (drawable) &&
+          GIMP_VECTOR_LAYER (drawable)->options);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -337,10 +337,13 @@
         <menuitem action="layers-text-along-vectors" />
         <menu action="layers-text-to-selection-menu">
           <menuitem action="layers-text-selection-replace" />
-	  <menuitem action="layers-text-selection-add" />
-	  <menuitem action="layers-text-selection-subtract" />
-	  <menuitem action="layers-text-selection-intersect" />
+          <menuitem action="layers-text-selection-add" />
+          <menuitem action="layers-text-selection-subtract" />
+          <menuitem action="layers-text-selection-intersect" />
         </menu>
+      </placeholder>
+      <placeholder name="Vector">
+        <menuitem action="layers-fill-stroke" />
       </placeholder>
       <separator />
       <menu action="layers-stack-menu" name="Stack">

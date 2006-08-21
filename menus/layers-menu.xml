@@ -4,7 +4,7 @@
 <ui>
   <popup action="layers-popup">
     <menuitem action="layers-text-tool" />
-    <menuitem action="layers-fill-stroke" />
+    <menuitem action="layers-vector-tool" />
     <menuitem action="layers-edit-attributes" />
     <separator />
     <menuitem action="layers-new" />
@@ -23,6 +23,8 @@
     <menuitem action="layers-text-to-vectors" />
     <menuitem action="layers-text-along-vectors" />
     <menuitem action="layers-text-selection-replace" />
+    <separator />
+    <menuitem action="layers-fill-stroke" />
     <separator />
     <menuitem action="layers-resize" />
     <menuitem action="layers-resize-to-image" />
