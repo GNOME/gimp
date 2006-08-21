@@ -342,16 +342,18 @@ gimp_foreground_select_tool_modifier_key (GimpTool        *tool,
                                           GdkModifierType  state,
                                           GimpDisplay     *display)
 {
-  if ((! (state & GDK_BUTTON1_MASK)) &&
-       key == GDK_CONTROL_MASK)
+  if (! (state & GDK_BUTTON1_MASK))
     {
-      GimpForegroundSelectOptions *options;
+      if (key == GDK_CONTROL_MASK)
+        {
+          GimpForegroundSelectOptions *options;
 
-      options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
+          options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
 
-      g_object_set (options,
-                    "background", ! options->background,
-                    NULL);
+          g_object_set (options,
+                        "background", ! options->background,
+                        NULL);
+        }
     }
 }
 

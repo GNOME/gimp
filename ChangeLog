@@ -1,5 +1,11 @@
 2006-08-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpforegroundselecttool.c: rewrite modifer_key
+	functions more readably; no functional changes.
+	
+2006-08-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/display/gimpdisplayshell-callbacks.c: allow modifier key events
 	for Shift and Control to be propagated even if button1 is down.
 	
