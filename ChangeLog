@@ -1,7 +1,17 @@
 2006-08-22  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpwire.h
+	* libgimpbase/gimpreloc.h
+	* libgimp/gimpdrawablepreview.h
+	* libgimp/gimptile.h
+	* libgimp/gimpunitcache.h
+	* libgimpthumb/gimpthumb-utils.h
+	* libgimpwidgets/gimpcolorarea.h
+	* libgimpwidgets/gimphelpui.h: moved G_GNUC_INTERNAL before the
+	return value (bug #352268).
+
 	* tools/pdbgen/lib.pl : changed code generation rules to place
-	G_GNUC_INTERNAL before the return value (bug #352268).
+	G_GNUC_INTERNAL before the return value.
 
 	* libgimp/*_pdb.h: regenerated.
 

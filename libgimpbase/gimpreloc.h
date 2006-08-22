@@ -20,7 +20,8 @@ G_BEGIN_DECLS
  * _gimp_reloc_init_lib().
  */
 
-typedef enum {
+typedef enum
+{
   /** Cannot allocate memory. */
   GIMP_RELOC_INIT_ERROR_NOMEM,
   /** Unable to open /proc/self/maps; see errno for details. */
@@ -34,19 +35,19 @@ typedef enum {
 } GimpBinrelocInitError;
 
 
-gboolean _gimp_reloc_init            (GError **error) G_GNUC_INTERNAL;
-gboolean _gimp_reloc_init_lib        (GError **error) G_GNUC_INTERNAL;
+G_GNUC_INTERNAL gboolean _gimp_reloc_init             (GError **error);
+G_GNUC_INTERNAL gboolean _gimp_reloc_init_lib         (GError **error);
 
-gchar * _gimp_reloc_find_exe         (const gchar *default_exe)         G_GNUC_INTERNAL;
-gchar * _gimp_reloc_find_exe_dir     (const gchar *default_dir)         G_GNUC_INTERNAL;
-gchar * _gimp_reloc_find_prefix      (const gchar *default_prefix)      G_GNUC_INTERNAL;
-gchar * _gimp_reloc_find_bin_dir     (const gchar *default_bin_dir)     G_GNUC_INTERNAL;
-gchar * _gimp_reloc_find_data_dir    (const gchar *default_data_dir)    G_GNUC_INTERNAL;
-gchar * _gimp_reloc_find_plugin_dir  (const gchar *default_plugin_dir)  G_GNUC_INTERNAL;
-gchar * _gimp_reloc_find_locale_dir  (const gchar *default_locale_dir)  G_GNUC_INTERNAL;
-gchar * _gimp_reloc_find_lib_dir     (const gchar *default_lib_dir)     G_GNUC_INTERNAL;
-gchar * _gimp_reloc_find_libexec_dir (const gchar *default_libexec_dir) G_GNUC_INTERNAL;
-gchar * _gimp_reloc_find_etc_dir     (const gchar *default_etc_dir)     G_GNUC_INTERNAL;
+G_GNUC_INTERNAL gchar  * _gimp_reloc_find_exe         (const gchar *default_exe);
+G_GNUC_INTERNAL gchar  * _gimp_reloc_find_exe_dir     (const gchar *default_dir);
+G_GNUC_INTERNAL gchar  * _gimp_reloc_find_prefix      (const gchar *default_prefix);
+G_GNUC_INTERNAL gchar  * _gimp_reloc_find_bin_dir     (const gchar *default_bin_dir);
+G_GNUC_INTERNAL gchar  * _gimp_reloc_find_data_dir    (const gchar *default_data_dir);
+G_GNUC_INTERNAL gchar  * _gimp_reloc_find_plugin_dir  (const gchar *default_plugin_dir);
+G_GNUC_INTERNAL gchar  * _gimp_reloc_find_locale_dir  (const gchar *default_locale_dir);
+G_GNUC_INTERNAL gchar  * _gimp_reloc_find_lib_dir     (const gchar *default_lib_dir);
+G_GNUC_INTERNAL gchar  * _gimp_reloc_find_libexec_dir (const gchar *default_libexec_dir);
+G_GNUC_INTERNAL gchar  * _gimp_reloc_find_etc_dir     (const gchar *default_etc_dir);
 
 
 G_END_DECLS

@@ -69,15 +69,15 @@ void           gimp_drawable_preview_draw_region  (GimpDrawablePreview *preview,
                                                    const GimpPixelRgn  *region);
 
 /*  for internal use only  */
-void          _gimp_drawable_preview_area_draw_thumb  (GimpPreviewArea *area,
-                                                       GimpDrawable    *drawable,
-                                                       gint             width,
-                                                       gint             height) G_GNUC_INTERNAL;
-gboolean      _gimp_drawable_preview_get_bounds       (GimpDrawable    *drawable,
-                                                       gint            *xmin,
-                                                       gint            *ymin,
-                                                       gint            *xmax,
-                                                       gint            *ymax) G_GNUC_INTERNAL;
+G_GNUC_INTERNAL void      _gimp_drawable_preview_area_draw_thumb (GimpPreviewArea *area,
+                                                                  GimpDrawable    *drawable,
+                                                                  gint             width,
+                                                                  gint             height);
+G_GNUC_INTERNAL gboolean  _gimp_drawable_preview_get_bounds      (GimpDrawable    *drawable,
+                                                                  gint            *xmin,
+                                                                  gint            *ymin,
+                                                                  gint            *xmax,
+                                                                  gint            *ymax);
 
 
 G_END_DECLS
