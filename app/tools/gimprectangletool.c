@@ -1001,38 +1001,11 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
     case RECT_RESIZING_LEFT:
       x1 = rx1 + inc_x;
       if (fixed_width)
-        {
-          x2 = x1 + width;
-          if (x1 < 0)
-            {
-              x1 = 0;
-              x2 = width;
-            }
-          if (x2 > max_x)
-            {
-              x2 = max_x;
-              x1 = max_x - width;
-            }
-        }
+        x2 = x1 + width;
       else if (fixed_center)
-        {
-          x2 = x1 + 2 * (center_x - x1);
-          if (x1 < 0)
-            {
-              x1 = 0;
-              x2 = 2 * center_x;
-            }
-          if (x2 > max_x)
-            {
-              x2 = max_x;
-              x1 = max_x - 2 * (max_x - center_x);
-            }
-        }
+        x2 = x1 + 2 * (center_x - x1);
       else
-        {
-          x2 = MAX (x1, rx2);
-        }
-      private->startx = curx;
+        x2 = MAX (x1, rx2);
       break;
 
     case RECT_RESIZING_UPPER_RIGHT:
@@ -1040,51 +1013,22 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
     case RECT_RESIZING_RIGHT:
       x2 = rx2 + inc_x;
       if (fixed_width)
-        {
-          x1 = x2 - width;
-          if (x2 > max_x)
-            {
-              x2 = max_x;
-              x1 = max_x - width;
-            }
-          if (x1 < 0)
-            {
-              x1 = 0;
-              x2 = width;
-            }
-        }
+        x1 = x2 - width;
       else if (fixed_center)
-        {
-          x1 = x2 - 2 * (x2 - center_x);
-          if (x2 > max_x)
-            {
-              x2 = max_x;
-              x1 = max_x - 2 * (max_x - center_x);
-            }
-          if (x1 < 0)
-            {
-              x1 = 0;
-              x2 = 2 * center_x;
-            }
-        }
+        x1 = x2 - 2 * (x2 - center_x);
       else
-        {
-          x1 = MIN (rx1, x2);
-        }
-      private->startx = curx;
+        x1 = MIN (rx1, x2);
       break;
 
     case RECT_RESIZING_BOTTOM:
     case RECT_RESIZING_TOP:
       x1 = rx1;
       x2 = rx2;
-      private->startx = curx;
       break;
 
     case RECT_MOVING:
       x1 = rx1 + inc_x;
       x2 = rx2 + inc_x;
-      private->startx = curx;
       break;
     }
 
@@ -1098,38 +1042,11 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
     case RECT_RESIZING_TOP:
       y1 = ry1 + inc_y;
       if (fixed_height)
-        {
-          y2 = y1 + height;
-          if (y1 < 0)
-            {
-              y1 = 0;
-              y2 = height;
-            }
-          if (y2 > max_y)
-            {
-              y2 = max_y;
-              y1 = max_y - height;
-            }
-        }
+        y2 = y1 + height;
       else if (fixed_center)
-        {
-          y2 = y1 + 2 * (center_y - y1);
-          if (y1 < 0)
-            {
-              y1 = 0;
-              y2 = 2 * center_y;
-            }
-          if (y2 > max_y)
-            {
-              y2 = max_y;
-              y1 = max_y - 2 * (max_y - center_y);
-            }
-        }
+        y2 = y1 + 2 * (center_y - y1);
       else
-        {
-          y2 = MAX (y1, ry2);
-        }
-      private->starty = cury;
+        y2 = MAX (y1, ry2);
       break;
 
     case RECT_RESIZING_LOWER_LEFT:
@@ -1137,51 +1054,22 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
     case RECT_RESIZING_BOTTOM:
       y2 = ry2 + inc_y;
       if (fixed_height)
-        {
-          y1 = y2 - height;
-          if (y2 > max_y)
-            {
-              y2 = max_y;
-              y1 = max_y - height;
-            }
-          if (y1 < 0)
-            {
-              y1 = 0;
-              y2 = height;
-            }
-        }
+        y1 = y2 - height;
       else if (fixed_center)
-        {
-          y1 = y2 - 2 * (y2 - center_y);
-          if (y2 > max_y)
-            {
-              y2 = max_y;
-              y1 = max_y - 2 * (max_y - center_y);
-            }
-          if (y1 < 0)
-            {
-              y1 = 0;
-              y2 = 2 * center_y;
-            }
-        }
+        y1 = y2 - 2 * (y2 - center_y);
       else
-        {
-          y1 = MIN (ry1, y2);
-        }
-      private->starty = cury;
+        y1 = MIN (ry1, y2);
       break;
 
     case RECT_RESIZING_RIGHT:
     case RECT_RESIZING_LEFT:
       y1 = ry1;
       y2 = ry2;
-      private->starty = cury;
       break;
 
     case RECT_MOVING:
       y1 = ry1 + inc_y;
       y2 = ry2 + inc_y;
-      private->starty = cury;
       break;
     }
 
@@ -1284,6 +1172,12 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
                 "x2", MAX (x1, x2),
                 "y2", MAX (y1, y2),
                 NULL);
+
+  if (function != RECT_CREATING)
+    {
+      private->startx = curx;
+      private->starty = cury;
+    }
 
   private->lastx = curx;
   private->lasty = cury;
