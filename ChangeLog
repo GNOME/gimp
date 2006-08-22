@@ -1,5 +1,12 @@
 2006-08-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* configure.in
+	* plug-ins/Makefile.am
+	* plug-ins/common/png.c: revert changes accidentally
+	committed in previous commit.
+	
+2006-08-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* libgimpbase/gimpbaseenums.c: Don't label Lanczos
 	as "best".  Addresses bug #343576.
 
