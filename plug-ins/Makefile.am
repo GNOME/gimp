@@ -35,6 +35,9 @@ if BUILD_XJT
 xjt = xjt
 endif
 
+if HAVE_EXIF
+exif_browser = exif-browser
+endif
 
 SUBDIRS = \
 	$(script_fu)		\
@@ -42,6 +45,7 @@ SUBDIRS = \
 	Lighting		\
 	MapObject		\
 	bmp			\
+	$(exif_browser)		\
 	faxg3			\
 	fits			\
 	flame			\

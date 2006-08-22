@@ -1086,6 +1086,7 @@ if test x$with_libexif != xno && test -z "$LIBEXIF" && test -n "$LIBJPEG"; then
               [Define to 1 if libexif is at least version 0.6.0])
   fi
 fi
+AM_CONDITIONAL(HAVE_EXIF, test "x$have_libexif" = "xyes")
 
 AC_SUBST(EXIF_CFLAGS)
 AC_SUBST(EXIF_LIBS)
@@ -1739,6 +1740,7 @@ plug-ins/Lighting/images/Makefile
 plug-ins/MapObject/Makefile
 plug-ins/bmp/Makefile
 plug-ins/common/Makefile
+plug-ins/exif-browser/Makefile
 plug-ins/faxg3/Makefile
 plug-ins/fits/Makefile
 plug-ins/flame/Makefile

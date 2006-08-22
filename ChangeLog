@@ -1,5 +1,10 @@
 2006-08-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* libgimpbase/gimpbaseenums.c: Don't label Lanczos
+	as "best".  Addresses bug #343576.
+
+2006-08-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_motion):
 	respect "fixed-center" constraint even if "fixed-aspect"
 	or "aspect-square" constraints are active.
