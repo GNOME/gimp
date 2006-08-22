@@ -1,5 +1,10 @@
 2006-08-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/gauss.c: reverted change from bug #331051 that
+	shouldn't have been backported to the stable branch.
+
+2006-08-22  Sven Neumann  <sven@gimp.org>
+
 	* app/composite/gimp-composite-regression.[ch]: use gulong instead
 	of u_long. Should fix bug #352221.
 
