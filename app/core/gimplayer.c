@@ -542,7 +542,7 @@ gimp_layer_convert (GimpItem  *item,
                                gimp_item_height (item),
                                TRUE);
 
-            gimp_layer_transform_color (gimp_item_get_image (item),
+            gimp_layer_transform_color (dest_image,
                                         &newPR, &layerPR,
                                         NULL,
                                         old_base_type);

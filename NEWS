@@ -19,6 +19,7 @@ Bugs fixed in GIMP 2.2.13
 - fixed errors in Autocrop plug-in (bug #337888)
 - fixed compile errors in regression tests on OS X (bug #352221)
 - fixed regression in Gaussian Blur plug-in (bug #343047)
+- fixed crash when opening an RGB image in an indexed image (bug #345051)
 
 
 Bugs fixed in GIMP 2.2.12
