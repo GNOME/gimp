@@ -81,7 +81,7 @@ sub generate {
 	my @inargs = @{$proc->{inargs}} if exists $proc->{inargs};
 	my @outargs = @{$proc->{outargs}} if exists $proc->{outargs};
 
-	my $funcname = "gimp_$name"; my $wrapped = ""; my $attribute = "";
+	my $funcname = "gimp_$name"; my $wrapped = "";
 	my %usednames;
 	my $retdesc = "";
 
@@ -133,7 +133,6 @@ sub generate {
 	    my $arg = $arg_types{$type};
 
 	    $wrapped = "_" if exists $_->{wrap};
-	    $attribute = " G_GNUC_INTERNAL" if exists $_->{wrap};
 
 	    $usednames{$_->{name}}++;
 
@@ -183,7 +182,6 @@ sub generate {
 		$return_marshal = "" unless $once++;
 
 		$wrapped = "_" if exists $_->{wrap};
-		$attribute = " G_GNUC_INTERNAL" if exists $_->{wrap};
 
 		$_->{libname} = exists $usednames{$_->{name}} ? "ret_$_->{name}"
 							      : $_->{name};
@@ -417,7 +415,7 @@ CODE
 	# Our function prototype for the headers
 	(my $hrettype = $rettype) =~ s/ //g;
 
-	my $proto = "$hrettype $wrapped$funcname ($arglist)$attribute;\n";
+	my $proto = "$hrettype $wrapped$funcname ($arglist);\n";
 	$proto =~ s/ +/ /g;
 
         push @{$out->{protos}}, $proto;
@@ -548,6 +546,10 @@ LGPL
 		my $len;
 
 		$arglist = [ split(' ', $_, 3) ];
+
+		if ($arglist->[1] =~ /^_/) {
+		    $arglist->[0] = "G_GNUC_INTERNAL ".$arglist->[0];
+		}
 
 		for (0..1) {
 		    $len = length($arglist->[$_]);

@@ -1,5 +1,12 @@
 2006-08-22  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/lib.pl : changed code generation rules to place
+	G_GNUC_INTERNAL before the return value (bug #352268).
+
+	* libgimp/*_pdb.h: regenerated.
+
+2006-08-22  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprotatetool.c (gimp_rotate_tool_motion): fixed code
 	that moves the angle between +/- pi (bug #352341).
 
