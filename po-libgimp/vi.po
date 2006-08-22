@@ -7,221 +7,198 @@ msgid ""
 ""
 msgstr "Project-Id-Version: Gimp-libgimp Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-25 03:06+0200\n"
-"PO-Revision-Date: 2006-05-25 20:48+0930\n"
+"POT-Creation-Date: 2006-08-22 11:40+0200\n"
+"PO-Revision-Date: 2006-08-22 22:37+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: LocFactoryEditor 1.6b36\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: LocFactoryEditor 1.6fc1\n"
 
-#: ../libgimp/gimpbrushmenu.c:140
-msgid "Brush Selection"
-msgstr "Chọn chổi"
-
-#: ../libgimp/gimpbrushmenu.c:180
-#: ../libgimp/gimppatternmenu.c:165
-msgid "_Browse..."
-msgstr "_Duyệt..."
-
-#: ../libgimp/gimpexport.c:215
-#: ../libgimp/gimpexport.c:251
+#: ../libgimp/gimpexport.c:217
+#: ../libgimp/gimpexport.c:253
 #, c-format
 msgid "%s can't handle layers"
-msgstr "%s không thể xử lý các lớp."
+msgstr "%s không thể xử lý lớp"
 
-#: ../libgimp/gimpexport.c:216
-#: ../libgimp/gimpexport.c:225
-#: ../libgimp/gimpexport.c:234
-#: ../libgimp/gimpexport.c:252
+#: ../libgimp/gimpexport.c:218
+#: ../libgimp/gimpexport.c:227
+#: ../libgimp/gimpexport.c:236
+#: ../libgimp/gimpexport.c:254
 msgid "Merge Visible Layers"
-msgstr "Hoà nhập các lớp nhìn thấy"
+msgstr "Trộn các lớp hiển thị"
 
-#: ../libgimp/gimpexport.c:224
+#: ../libgimp/gimpexport.c:226
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s không thể xử lý các độ dịch lớp, kích cỡ hay độ đục."
+msgstr "%s không thể xử lý các độ dịch, kích cỡ hay độ đục của lớp"
 
-#: ../libgimp/gimpexport.c:233
-#: ../libgimp/gimpexport.c:242
+#: ../libgimp/gimpexport.c:235
+#: ../libgimp/gimpexport.c:244
 #, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "%s xử lý được các lớp chỉ như các khung hoạt cảnh."
+msgstr "%s có thể xử lý các lớp chỉ như là các khung hoạt cảnh"
 
-#: ../libgimp/gimpexport.c:234
-#: ../libgimp/gimpexport.c:243
+#: ../libgimp/gimpexport.c:236
+#: ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
-msgstr "Lưu là Hoạt cảnh"
+msgstr "Lưu dạng hoạt cảnh"
 
-#: ../libgimp/gimpexport.c:243
-#: ../libgimp/gimpexport.c:252
-#: ../libgimp/gimpexport.c:261
+#: ../libgimp/gimpexport.c:245
+#: ../libgimp/gimpexport.c:254
+#: ../libgimp/gimpexport.c:263
 msgid "Flatten Image"
 msgstr "Làm phẳng ảnh"
 
-#: ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:262
 #, c-format
 msgid "%s can't handle transparency"
-msgstr "%s không thể xử lý độ trong suốt."
+msgstr "%s không thể xử lý độ trong suốt"
 
-#: ../libgimp/gimpexport.c:269
+#: ../libgimp/gimpexport.c:271
 #, c-format
 msgid "%s can't handle layer masks"
-msgstr "%s không thể xử lý các mặt nạ lớp."
+msgstr "%s không thể xử lý mặt nạ lớp"
 
-#: ../libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
 msgstr "Áp dụng mặt nạ lớp"
 
-#: ../libgimp/gimpexport.c:278
+#: ../libgimp/gimpexport.c:280
 #, c-format
 msgid "%s can only handle RGB images"
-msgstr "%s có thể xử lý chỉ các ảnh RGB thôi."
+msgstr "%s có thể xử lý chỉ các ảnh kiểu RGB"
 
-#: ../libgimp/gimpexport.c:279
-#: ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:281
+#: ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:328
 msgid "Convert to RGB"
 msgstr "Chuyển đổi sang RGB"
 
-#: ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:289
 #, c-format
 msgid "%s can only handle grayscale images"
-msgstr "%s có thể xử lý chỉ ảnh cân bằng xám thôi."
+msgstr "%s có thể xử lý chỉ ảnh kiểu mức xám"
 
-#: ../libgimp/gimpexport.c:288
-#: ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:338
+#: ../libgimp/gimpexport.c:290
+#: ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:340
 msgid "Convert to Grayscale"
-msgstr "Chuyển đổi sang Cân bằng Xám"
+msgstr "Chuyển đổi sang mức xám"
 
-#: ../libgimp/gimpexport.c:296
+#: ../libgimp/gimpexport.c:298
 #, c-format
 msgid "%s can only handle indexed images"
-msgstr "%s có thể xử lý chỉ ảnh phụ lục."
+msgstr "%s có thể xử lý chỉ ảnh phụ lục"
 
-#: ../libgimp/gimpexport.c:297
-#: ../libgimp/gimpexport.c:326
-#: ../libgimp/gimpexport.c:336
+#: ../libgimp/gimpexport.c:299
+#: ../libgimp/gimpexport.c:328
+#: ../libgimp/gimpexport.c:338
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
-msgstr "Chuyển đổi thành Phụ Lục dùng các thiết\n"
-"lập mặc định (chỉnh kết quả thủ công)."
+msgstr "Chuyển đổi thành Phụ Lục bằng các thiết\n"
+"lập mặc định (tự làm để chỉnh kết quả)"
 
-#: ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s xử lý được chỉ ảnh phụ lục bitmap (hai màu) thôi."
+msgstr "%s có thể xử lý chỉ ảnh phụ lục kiểu mảng ảnh (hai màu)"
 
-#: ../libgimp/gimpexport.c:307
+#: ../libgimp/gimpexport.c:309
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
-msgstr "Chuyển đổi thành Phụ Lục dùng các thiết\n"
-"lập bitmap mặc định (chỉnh kết quả thủ công)."
+msgstr "Chuyển đổi thành Phụ Lục bằng các thiết\n"
+"lập mảng ảnh mặc định (tự làm để chỉnh kết quả)"
 
-#: ../libgimp/gimpexport.c:316
+#: ../libgimp/gimpexport.c:318
 #, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "%s chỉ xử lý được các ảnh RGB hay cân bằng xám"
+msgstr "%s chỉ có thể xử lý ảnh kiểu RGB hay mức xám"
 
-#: ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:327
 #, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "%s xử lý được chỉ ảnh RGB hay phụ lục thôi."
+msgstr "%s có thể xử lý chỉ ảnh kiểu RGB hay phụ lục"
 
-#: ../libgimp/gimpexport.c:335
+#: ../libgimp/gimpexport.c:337
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "%s có thể xử lý chỉ ảnh phụ lục hay cân bằng xám thôi."
+msgstr "%s có thể xử lý chỉ ảnh phụ lục hay mức xám"
 
-#: ../libgimp/gimpexport.c:346
+#: ../libgimp/gimpexport.c:348
 #, c-format
 msgid "%s needs an alpha channel"
-msgstr "%s cần một kênh anfa."
+msgstr "%s cần một kênh anfa"
 
-#: ../libgimp/gimpexport.c:347
+#: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
-msgstr "Thêm kênh anfa."
+msgstr "Thêm kênh anfa"
 
-#: ../libgimp/gimpexport.c:381
+#: ../libgimp/gimpexport.c:383
 msgid "Confirm Save"
-msgstr "Khẳng định lưu"
+msgstr "Xác nhận Lưu"
 
-#: ../libgimp/gimpexport.c:387
+#: ../libgimp/gimpexport.c:389
 msgid "Confirm"
-msgstr "Khẳng định"
+msgstr "Xác nhận"
 
-#: ../libgimp/gimpexport.c:462
+#: ../libgimp/gimpexport.c:464
 msgid "Export File"
 msgstr "Xuất ra tập tin"
 
-#: ../libgimp/gimpexport.c:466
-msgid "_Ignore"
-msgstr "_Bỏ qua"
-
 #: ../libgimp/gimpexport.c:468
+msgid "_Ignore"
+msgstr "Bỏ _qua"
+
+#: ../libgimp/gimpexport.c:470
 msgid "_Export"
 msgstr "_Xuất"
 
 #.the headline
-#: ../libgimp/gimpexport.c:497
+#: ../libgimp/gimpexport.c:499
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr "Ảnh nên được xuất ra trước khi nó được lưu là %s, vì những lý do sau:"
+msgstr "Ảnh nên được xuất ra trước khi nó được lưu dạng %s, vì những lý do sau :"
 
 #.the footline
-#: ../libgimp/gimpexport.c:571
+#: ../libgimp/gimpexport.c:573
 msgid "The export conversion won't modify your original image."
-msgstr "Chuyển đổi khi xuất ra sẽ không sửa đổi ảnh gốc của bạn."
+msgstr "Việc chuyển đổi khi xuất ra sẽ không sửa đổi ảnh gốc của bạn."
 
-#: ../libgimp/gimpexport.c:671
+#: ../libgimp/gimpexport.c:673
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
-msgstr "Bạn sắp lưu một mặt nạ lớp là %s.\n"
-"Việc này sẽ không lưu các lớp nhìn được."
+msgstr "Bạn sắp lưu một mặt nạ lớp dạng %s.\n"
+"Việc này sẽ không lưu các lớp hiển thị."
 
-#: ../libgimp/gimpexport.c:677
+#: ../libgimp/gimpexport.c:679
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
-msgstr "Bạn sắp lưu một kênh (phần chọn được lưu) là %s.\n"
-"Việc này sẽ không lưu các lớp nhìn được."
+msgstr "Bạn sắp lưu một kênh (vùng chọn được lưu) dạng %s.\n"
+"Việc này sẽ không lưu các lớp hiển thị."
 
-#: ../libgimp/gimpfontselectbutton.c:125
-#: ../libgimp/gimpfontselectbutton.c:176
+#: ../libgimp/gimpfontselectbutton.c:130
 msgid "Font Selection"
-msgstr "Chọn phông chữ"
+msgstr "Chọn phông"
 
-#: ../libgimp/gimpfontselectbutton.c:138
-#: ../libgimp/gimpfontselectbutton.c:177
+#: ../libgimp/gimpfontselectbutton.c:145
 msgid "Sans"
 msgstr "Không chân"
-
-#: ../libgimp/gimpgradientmenu.c:115
-msgid "Gradient Selection"
-msgstr "Chọn dốc"
 
 #: ../libgimp/gimpmenu.c:450
 #: ../libgimpwidgets/gimpintstore.c:131
 msgid "(Empty)"
 msgstr "(Rỗng)"
-
-#: ../libgimp/gimppalettemenu.c:102
-msgid "Palette Selection"
-msgstr "Chọn bảng chọn"
-
-#: ../libgimp/gimppatternmenu.c:125
-msgid "Pattern Selection"
-msgstr "Chọn mẫu"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
@@ -241,7 +218,7 @@ msgstr "theo tác giả"
 
 #: ../libgimp/gimpprocbrowserdialog.c:144
 msgid "by copyright"
-msgstr "theo bản quyền"
+msgstr "theo tác quyền"
 
 #: ../libgimp/gimpprocbrowserdialog.c:145
 msgid "by date"
@@ -273,7 +250,7 @@ msgstr "Đang tìm kiếm theo tác giả"
 
 #: ../libgimp/gimpprocbrowserdialog.c:430
 msgid "Searching by copyright"
-msgstr "Đang tìm kiếm theo bản quyền"
+msgstr "Đang tìm kiếm theo tác quyền"
 
 #: ../libgimp/gimpprocbrowserdialog.c:437
 msgid "Searching by date"
@@ -291,19 +268,19 @@ msgstr[0] "Thủ tục %d"
 
 #: ../libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
-msgstr "Không khớp gì."
+msgstr "Không tìm thấy"
 
 #: ../libgimp/gimpprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
-msgstr[0] "%d thủ tục khớp với truy vấn bạn."
+msgstr[0] "%d thủ tục khớp với truy vấn của bạn"
 
 #.count label
 #: ../libgimp/gimpprocbrowserdialog.c:516
 #: ../libgimpwidgets/gimpbrowser.c:114
 msgid "No matches"
-msgstr "Không khớp gì."
+msgstr "Không tìm thấy"
 
 #: ../libgimp/gimpprocview.c:143
 msgid "Parameters"
@@ -311,7 +288,7 @@ msgstr "Tham số"
 
 #: ../libgimp/gimpprocview.c:156
 msgid "Return Values"
-msgstr "Giá trị trả gởi"
+msgstr "Giá trị trả lại"
 
 #: ../libgimp/gimpprocview.c:169
 msgid "Additional Information"
@@ -319,15 +296,15 @@ msgstr "Thông tin thêm"
 
 #: ../libgimp/gimpprocview.c:210
 msgid "Author:"
-msgstr "Tác giả :"
+msgstr "Tác giả:"
 
 #: ../libgimp/gimpprocview.c:222
 msgid "Date:"
-msgstr "Ngày :"
+msgstr "Ngày:"
 
 #: ../libgimp/gimpprocview.c:234
 msgid "Copyright:"
-msgstr "Bản quyền :"
+msgstr "Tác quyền:"
 
 #: ../libgimp/gimpunitcache.c:57
 msgid "percent"
@@ -335,11 +312,11 @@ msgstr "phần trăm"
 
 #: ../libgimpbase/gimpbaseenums.c:27
 msgid "_White (full opacity)"
-msgstr "_Trắng (đục hết)"
+msgstr "T_rắng (đục đầy)"
 
 #: ../libgimpbase/gimpbaseenums.c:28
 msgid "_Black (full transparency)"
-msgstr "_Đen (trong suốt hết)"
+msgstr "Đ_en (trong suốt đầy)"
 
 #: ../libgimpbase/gimpbaseenums.c:29
 msgid "Layer's _alpha channel"
@@ -351,15 +328,15 @@ msgstr "Kênh anfa của lớp _truyền"
 
 #: ../libgimpbase/gimpbaseenums.c:31
 msgid "_Selection"
-msgstr "Sự _chọn lựa"
+msgstr "_Vùng chọn"
 
 #: ../libgimpbase/gimpbaseenums.c:32
 msgid "_Grayscale copy of layer"
-msgstr "Bản sao cân bằng _xám của lớp"
+msgstr "Bản sao mức _xám của lớp"
 
 #: ../libgimpbase/gimpbaseenums.c:33
 msgid "C_hannel"
-msgstr "Kên_h:"
+msgstr "Kên_h"
 
 #: ../libgimpbase/gimpbaseenums.c:63
 msgid "FG to BG (RGB)"
@@ -375,7 +352,7 @@ msgstr "Cảnh gần thành trong suốt"
 
 #: ../libgimpbase/gimpbaseenums.c:66
 msgid "Custom gradient"
-msgstr "Độ dốc tự chọn"
+msgstr "Dốc tự chọn"
 
 #: ../libgimpbase/gimpbaseenums.c:95
 msgid "FG color fill"
@@ -391,19 +368,19 @@ msgstr "Điền mẫu"
 
 #: ../libgimpbase/gimpbaseenums.c:127
 msgid "Add to the current selection"
-msgstr "Thêm vào lựa chọn hiện thời"
+msgstr "Thêm vào vùng chọn hiện thời"
 
 #: ../libgimpbase/gimpbaseenums.c:128
 msgid "Subtract from the current selection"
-msgstr "Trừ đi từ lựa chọn hiện thời"
+msgstr "Trừ khỏi vùng chọn hiện thời"
 
 #: ../libgimpbase/gimpbaseenums.c:129
 msgid "Replace the current selection"
-msgstr "Thay thế lựa chọn hiện thời"
+msgstr "Thay thế vùng chọn hiện thời"
 
 #: ../libgimpbase/gimpbaseenums.c:130
 msgid "Intersect with the current selection"
-msgstr "Cắt chéo với lựa chọn hiện thời"
+msgstr "Cắt chéo với vùng chọn hiện thời"
 
 #: ../libgimpbase/gimpbaseenums.c:162
 #: ../libgimpwidgets/gimpwidgetsenums.c:95
@@ -418,7 +395,7 @@ msgstr "Xanh lá cây"
 #: ../libgimpbase/gimpbaseenums.c:164
 #: ../libgimpwidgets/gimpwidgetsenums.c:97
 msgid "Blue"
-msgstr "Xanh da trời"
+msgstr "Xanh dương"
 
 #: ../libgimpbase/gimpbaseenums.c:165
 msgid "Gray"
@@ -448,15 +425,15 @@ msgstr "Lớn"
 
 #: ../libgimpbase/gimpbaseenums.c:230
 msgid "Light checks"
-msgstr "Kiểm tra độ sáng"
+msgstr "Đối sánh nhạt"
 
 #: ../libgimpbase/gimpbaseenums.c:231
 msgid "Mid-tone checks"
-msgstr "Kiểm tra nửa sắc"
+msgstr "Đối sánh nửa sắc"
 
 #: ../libgimpbase/gimpbaseenums.c:232
 msgid "Dark checks"
-msgstr "Kiểm tra độ tối"
+msgstr "Đối sánh tối"
 
 #: ../libgimpbase/gimpbaseenums.c:233
 msgid "White only"
@@ -480,7 +457,7 @@ msgstr "Nguồn mẫu"
 
 #: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
-msgstr "Độ nhẹ"
+msgstr "Độ nhạt"
 
 #: ../libgimpbase/gimpbaseenums.c:294
 msgid "Luminosity"
@@ -496,11 +473,10 @@ msgstr "Tránh"
 
 #: ../libgimpbase/gimpbaseenums.c:324
 msgid "Burn"
-msgstr "Ghi"
+msgstr "Đốt"
 
 #: ../libgimpbase/gimpbaseenums.c:388
-#: ../libgimpbase/gimpbaseenums.c:563
-msgid "Linear"
+msgid "gradient|Linear"
 msgstr "Tuyến"
 
 #: ../libgimpbase/gimpbaseenums.c:389
@@ -509,7 +485,7 @@ msgstr "Tuyến kép"
 
 #: ../libgimpbase/gimpbaseenums.c:390
 msgid "Radial"
-msgstr "Tỏa tròn"
+msgstr "Toả tròn"
 
 #: ../libgimpbase/gimpbaseenums.c:391
 msgid "Square"
@@ -537,11 +513,11 @@ msgstr "Vỡ hình (nhiều trũng)"
 
 #: ../libgimpbase/gimpbaseenums.c:397
 msgid "Spiral (cw)"
-msgstr "Xoắn ốc (chiều kim đồng hồ)"
+msgstr "Xoắn ốc (xuôi chiều)"
 
 #: ../libgimpbase/gimpbaseenums.c:398
 msgid "Spiral (ccw)"
-msgstr "Xoắn ốc (ngược chiều kim đồng hồ)"
+msgstr "Xoắn ốc (ngược chiều)"
 
 #: ../libgimpbase/gimpbaseenums.c:429
 msgid "Intersections (dots)"
@@ -569,11 +545,11 @@ msgstr "ID chuẩn"
 
 #: ../libgimpbase/gimpbaseenums.c:463
 msgid "Inline pixbuf"
-msgstr "Ký hiệu trực tiếp"
+msgstr "Bộ đệm điểm ảnh trực tiếp"
 
 #: ../libgimpbase/gimpbaseenums.c:464
 msgid "Image file"
-msgstr "Cỡ ảnh"
+msgstr "Tập tin ảnh"
 
 #: ../libgimpbase/gimpbaseenums.c:493
 msgid "RGB color"
@@ -582,12 +558,13 @@ msgstr "Màu RGB"
 #: ../libgimpbase/gimpbaseenums.c:494
 #: ../libgimpbase/gimpbaseenums.c:529
 msgid "Grayscale"
-msgstr "Cân bằng xám"
+msgstr "Mức xám"
 
 #: ../libgimpbase/gimpbaseenums.c:495
 msgid "Indexed color"
 msgstr "Màu phụ lục"
 
+# Name: don't translate / Tên: đừng dịch
 #: ../libgimpbase/gimpbaseenums.c:527
 msgid "RGB"
 msgstr "RGB"
@@ -608,6 +585,10 @@ msgstr "Phụ lục-anfa"
 msgid "None (Fastest)"
 msgstr "Không (nhanh nhất)"
 
+#: ../libgimpbase/gimpbaseenums.c:563
+msgid "interpolation|Linear"
+msgstr "Tuyến"
+
 #: ../libgimpbase/gimpbaseenums.c:564
 msgid "Cubic"
 msgstr "Khối"
@@ -618,14 +599,14 @@ msgstr "Lanczos (tốt nhất)"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
-msgstr "Liên tiếp"
+msgstr "Liên tục"
 
 #: ../libgimpbase/gimpbaseenums.c:594
 msgid "Incremental"
 msgstr "Dần dần"
 
 #: ../libgimpbase/gimpbaseenums.c:623
-#: ../modules/cdisplay_lcms.c:254
+#: ../modules/cdisplay_lcms.c:256
 msgid "None"
 msgstr "Không có"
 
@@ -643,7 +624,7 @@ msgstr "Chạy tương tác"
 
 #: ../libgimpbase/gimpbaseenums.c:655
 msgid "Run non-interactively"
-msgstr "Chạy không tương tác"
+msgstr "Chạy khác tương tác"
 
 #: ../libgimpbase/gimpbaseenums.c:656
 msgid "Run with last used values"
@@ -683,7 +664,7 @@ msgstr "Thủ tục GIMP nội bộ"
 
 #: ../libgimpbase/gimpbaseenums.c:849
 msgid "GIMP Plug-In"
-msgstr "Phần bổ sung GIMP"
+msgstr "Bổ sung GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:850
 msgid "GIMP Extension"
@@ -744,9 +725,9 @@ msgstr "%.1f GB"
 msgid "%d GB"
 msgstr "%d GB"
 
-#: ../libgimpbase/gimputils.c:169
-#: ../libgimpbase/gimputils.c:174
-#: ../modules/cdisplay_lcms.c:246
+#: ../libgimpbase/gimputils.c:170
+#: ../libgimpbase/gimputils.c:175
+#: ../modules/cdisplay_lcms.c:248
 msgid "(invalid UTF-8 string)"
 msgstr "(chuỗi UTF-8 không hợp lệ)"
 
@@ -756,15 +737,14 @@ msgstr "Chế độ thao tác quản lý màu sắc."
 
 #: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "The color profile of your (primary) monitor."
-msgstr "Xãc lập màu của màn hình (chính) của bạn."
+msgstr "Hồ sơ màu của màn hình (chính) của bạn."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid ""
 "When enabled, the GIMP will try to use the display color profile from the "
 "windowing system. The configured monitor profile is then only used as a "
 "fallback."
-msgstr "Khi bật, GIMP sẽ cố dùng xác lập màu bộ trình bày từ hệ thống cửa sổ. Như "
-"thế thì, nó dùng xác lập màn hình đã cấu hình chỉ như là dự trữ."
+msgstr "Khi bật, GIMP sẽ thử dùng hồ sơ màu bộ trình bày từ hệ thống cửa sổ. Hồ sơ bộ trình bày đã cấu hình thì chỉ dùng là sự chọn dữ trữ."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "The default RGB workspace color profile."
@@ -772,11 +752,11 @@ msgstr "Xác lập màu vùng làm việc RGB mặc định."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr "Xác lập màu CMYK được dùng để chuyển đổi giữa RGB và CMYK."
+msgstr "Hồ sơ màu CMYK dùng để chuyển đổi giữa RGB và CMYK."
 
 #: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The color profile used for simulating a printed version (softproof)."
-msgstr "Xác lập được dùng để mô phỏng phiên bản in (xem thử)."
+msgstr "Hồ sơ dùng để mô phỏng phiên bản đã in (xem thử mềm)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "Sets how colors are mapped for your display."
@@ -800,23 +780,18 @@ msgid "Print simulation"
 msgstr "Mô phỏng in"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:56
-#: ../modules/cdisplay_proof.c:55
 msgid "Perceptual"
-msgstr "Đựa vào nhận thức"
+msgstr "Dựa vào nhận thức"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57
-#: ../modules/cdisplay_proof.c:56
 msgid "Relative colorimetric"
 msgstr "Đo màu tượng ứng"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
-#: ../modules/cdisplay_proof.c:57
-msgid "Saturation"
+msgid "intent|Saturation"
 msgstr "Độ bão hòa"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
-#: ../modules/cdisplay_proof.c:58
 msgid "Absolute colorimetric"
 msgstr "Đo màu tuyệt đối"
 
@@ -826,7 +801,7 @@ msgstr "Hỏi"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:89
 msgid "Use embedded profile"
-msgstr "Dùng xác lập đá nhúng"
+msgstr "Dùng hồ sơ nhúng"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:90
 msgid "Convert to RGB workspace"
@@ -838,22 +813,22 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "giá trị cho hiệu bài %s không phải là chuỗi UTF-8 hợp lệ"
 
 #.please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:423
+#: ../libgimpconfig/gimpconfig-deserialize.c:426
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "ngờ « có » hay « không » cho for hiệu bài Bun %s, mà nhận « %s »."
+msgstr "ngờ « có » (yes) hay « không » (no) cho hiệu bài luận lý %s, còn nhận « %s »"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:497
+#: ../libgimpconfig/gimpconfig-deserialize.c:500
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr "giá trị không hợp lệ « %s » cho hiệu bài %s."
+msgstr "giá trị không hợp lệ « %s » cho hiệu bài %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:512
+#: ../libgimpconfig/gimpconfig-deserialize.c:515
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr "giá trị không hợp lệ « %ld » cho hiệu bài %s."
+msgstr "giá trị không hợp lệ « %ld » cho hiệu bài %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:581
+#: ../libgimpconfig/gimpconfig-deserialize.c:584
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "trong khi phân tách hiệu bài « %s »: %s"
@@ -873,7 +848,7 @@ msgstr "Không thể mở rộng ${%s}"
 #: ../libgimpconfig/gimpconfigwriter.c:135
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
-msgstr "Không tạo được tập tin tạm thời cho « %s »: %s"
+msgstr "Không thể tạo tập tin tạm thời cho « %s »: %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:148
 #, c-format
@@ -885,16 +860,16 @@ msgstr "Không thể mở « %s » để ghi: %s"
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
-msgstr "Gặp lỗi khi ghi vào tập tin tạm cho « %s »: %s\n"
-"Không đụng tới tập tin gốc."
+msgstr "Gặp lỗi khi ghi vào tập tin tạm thời cho « %s »: %s\n"
+"Tập tin gốc chưa được đụng."
 
 #: ../libgimpconfig/gimpconfigwriter.c:675
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
-msgstr "Gặp lỗi khi ghi vào tập tin tạm cho « %s »: %s\n"
-"Không tạo một tập tin nào."
+msgstr "Gặp lỗi khi ghi vào tập tin tạm thời cho « %s »: %s\n"
+"Chưa tạo tập tin nào."
 
 #: ../libgimpconfig/gimpconfigwriter.c:686
 #, c-format
@@ -904,7 +879,7 @@ msgstr "Gặp lỗi khi ghi vào « %s »: %s"
 #: ../libgimpconfig/gimpconfigwriter.c:704
 #, c-format
 msgid "Could not create '%s': %s"
-msgstr "Không thể xóa « %s »: %s"
+msgstr "Không thể tạo « %s »: %s"
 
 #: ../libgimpconfig/gimpscanner.c:255
 msgid "invalid UTF-8 string"
@@ -913,7 +888,7 @@ msgstr "chuỗi UTF-8 không hợp lệ"
 #: ../libgimpconfig/gimpscanner.c:606
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "Gặp lỗi khi phân tách « %s » trong dòng %d: %s"
+msgstr "Gặp lỗi khi phân tách « %s » trên dòng %d: %s"
 
 #: ../libgimpmodule/gimpmodule.c:152
 #: ../libgimpmodule/gimpmodule.c:170
@@ -934,7 +909,7 @@ msgstr "Đã tải"
 
 #: ../libgimpmodule/gimpmodule.c:376
 msgid "Load failed"
-msgstr "Không tải được"
+msgstr "Lỗi tải"
 
 #: ../libgimpmodule/gimpmodule.c:377
 msgid "Not loaded"
@@ -946,7 +921,7 @@ msgid ""
 "Cannot determine a valid home directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr "Không thể quyết định thư mục chính hợp lệ.\n"
-"Các hình thu nhỏ sẽ được lưu vào thư mục cho tập tin tạm (%s) thay thế."
+"Nư thế thì chác hình thu nhỏ sẽ được lưu vào thư mục cho tập tin tạm thời (%s) thay thế."
 
 #: ../libgimpthumb/gimpthumb-utils.c:249
 #: ../libgimpthumb/gimpthumb-utils.c:317
@@ -973,11 +948,11 @@ msgstr "Màu _nền"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:126
 msgid "Blac_k"
-msgstr "_Đen"
+msgstr "Đ_en"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:130
 msgid "_White"
-msgstr "_Trắng"
+msgstr "T_rắng"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
@@ -985,45 +960,47 @@ msgstr "Tỷ lệ"
 
 #: ../libgimpwidgets/gimpcolorselection.c:187
 msgid "Current:"
-msgstr "Hiện thời :"
+msgstr "Hiện thời:"
 
 #: ../libgimpwidgets/gimpcolorselection.c:209
 msgid "Old:"
 msgstr "Cũ :"
 
 #: ../libgimpwidgets/gimpcolorselection.c:263
-msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Cách ghi màu thập lục phân như dạng HTML và CSS."
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr "Cách ghi màu thập lục như dạng HTML và CSS. Mục nhập này cũng chấp nhận tên màu kiểu CSS."
 
-#: ../libgimpwidgets/gimpcolorselection.c:268
+#: ../libgimpwidgets/gimpcolorselection.c:269
 msgid "HTML _notation:"
 msgstr "Cách _ghi HTML:"
 
-#: ../libgimpwidgets/gimpfileentry.c:172
+#: ../libgimpwidgets/gimpfileentry.c:174
 msgid "Open a file selector to browse your folders"
 msgstr "Mở hộp chọn tập tin để duyệt qua các thư mục của bạn"
 
-#: ../libgimpwidgets/gimpfileentry.c:173
+#: ../libgimpwidgets/gimpfileentry.c:175
 msgid "Open a file selector to browse your files"
 msgstr "Mở hộp chọn tập tin để duyệt qua các tập tin của bạn"
 
-#: ../libgimpwidgets/gimpfileentry.c:333
+#: ../libgimpwidgets/gimpfileentry.c:335
 msgid "Select Folder"
 msgstr "Chọn thư mục"
 
-#: ../libgimpwidgets/gimpfileentry.c:335
+#: ../libgimpwidgets/gimpfileentry.c:337
 msgid "Select File"
 msgstr "Chọn tập tin"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:203
+#: ../libgimpwidgets/gimpmemsizeentry.c:202
 msgid "Kilobytes"
 msgstr "Kilo-byte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:203
 msgid "Megabytes"
 msgstr "Mega-byte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:205
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Gigabytes"
 msgstr "Giga-byte"
 
@@ -1039,7 +1016,7 @@ msgstr "Chọn _hết"
 
 #: ../libgimpwidgets/gimppageselector.c:307
 msgid "Select _range:"
-msgstr "Chọn _phạm vi:"
+msgstr "Chọn _phạm vị:"
 
 #: ../libgimpwidgets/gimppageselector.c:319
 msgid "Open _pages as"
@@ -1061,19 +1038,21 @@ msgstr "Một trang đã chọn"
 
 #: ../libgimpwidgets/gimppageselector.c:1183
 #, c-format
-msgid "All %d pages selected"
-msgstr "Mọi %d trang đã chọn"
+msgid "All %d page selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "Mọi %d trang đã chọn"
 
-#: ../libgimpwidgets/gimppageselector.c:1185
+#: ../libgimpwidgets/gimppageselector.c:1187
 #, c-format
-msgid "%d pages selected"
-msgstr "%d trang đã chọn"
+msgid "%d page selected"
+msgid_plural "%d pages selected"
+msgstr[0] "%d trang đã chọn"
 
-#: ../libgimpwidgets/gimppatheditor.c:212
+#: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
 msgstr "Có thể ghi"
 
-#: ../libgimpwidgets/gimppatheditor.c:221
+#: ../libgimpwidgets/gimppatheditor.c:223
 msgid "Folder"
 msgstr "Thư mục"
 
@@ -1081,8 +1060,7 @@ msgstr "Thư mục"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr "Hãy nhắp vào ống nhỏ giọt, rồi nhắp vào màu tại bất cứ nơi nào trên màn "
-"hình, để chọn màu đó."
+msgstr "Hãy nhấn vào ống nhỏ giọt, rồi nhấn vào bất cứ nơi nào trên màn hình, để chọn màu đó."
 
 #: ../libgimpwidgets/gimppreviewarea.c:94
 msgid "Check Size"
@@ -1101,7 +1079,7 @@ msgstr "_Xem thử"
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
-msgstr[0] "Trường nhập chữ này có giới hạn là %d ký tự."
+msgstr[0] "Trường nhập chữ này có hạn chế là %d ký tự."
 
 #: ../libgimpwidgets/gimpresolutionentry.c:382
 #, c-format
@@ -1114,7 +1092,7 @@ msgstr "Neo"
 
 #: ../libgimpwidgets/gimpstock.c:114
 msgid "C_enter"
-msgstr "_Giữa"
+msgstr "G_iữa"
 
 #: ../libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
@@ -1122,7 +1100,7 @@ msgstr "_Nhân đôi"
 
 #: ../libgimpwidgets/gimpstock.c:116
 msgid "_Edit"
-msgstr "_Hiệu chỉnh"
+msgstr "_Sửa"
 
 #: ../libgimpwidgets/gimpstock.c:117
 msgid "Linked"
@@ -1142,7 +1120,7 @@ msgstr "Đặt _lại"
 
 #: ../libgimpwidgets/gimpstock.c:121
 msgid "Visible"
-msgstr "Nhìn được"
+msgstr "Hiển thị"
 
 #: ../libgimpwidgets/gimpstock.c:157
 #: ../libgimpwidgets/gimpstock.c:161
@@ -1151,7 +1129,7 @@ msgstr "_Nét"
 
 #: ../libgimpwidgets/gimpstock.c:173
 msgid "L_etter Spacing"
-msgstr "Khoảng cách c_hữ"
+msgstr "Kh_oảng cách chữ"
 
 #: ../libgimpwidgets/gimpstock.c:174
 msgid "L_ine Spacing"
@@ -1159,26 +1137,26 @@ msgstr "Khoảng cách _dòng"
 
 #: ../libgimpwidgets/gimpstock.c:190
 msgid "_Resize"
-msgstr "_Đổi cỡ"
+msgstr "Đổ_i cỡ"
 
 #: ../libgimpwidgets/gimpstock.c:191
-#: ../libgimpwidgets/gimpstock.c:301
+#: ../libgimpwidgets/gimpstock.c:302
 msgid "_Scale"
 msgstr "_Co dãn"
 
-#: ../libgimpwidgets/gimpstock.c:279
+#: ../libgimpwidgets/gimpstock.c:280
 msgid "Crop"
 msgstr "Xén"
 
-#: ../libgimpwidgets/gimpstock.c:297
+#: ../libgimpwidgets/gimpstock.c:298
 msgid "_Transform"
-msgstr "Chuyển _dạng"
+msgstr "Chu_yển dạng"
 
-#: ../libgimpwidgets/gimpstock.c:300
+#: ../libgimpwidgets/gimpstock.c:301
 msgid "_Rotate"
 msgstr "_Xoay"
 
-#: ../libgimpwidgets/gimpstock.c:302
+#: ../libgimpwidgets/gimpstock.c:303
 msgid "_Shear"
 msgstr "_Kéo cắt"
 
@@ -1198,22 +1176,21 @@ msgstr "Đơn vị"
 msgid "Factor"
 msgstr "Hệ số"
 
-#: ../libgimpwidgets/gimpwidgets.c:1003
+#: ../libgimpwidgets/gimpwidgets.c:1005
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr "Hãy dùng giá trị này để gieo trình sinh số ngẫu nhiên — điều này cho phép "
-"nhắc lại hoạt động « ngẫu nhiên » được trao."
+msgstr "Hãy dùng giá trị này để gieo trình sinh số ngẫu nhiên — điều này cho bạn có khả năng nhắc lại hoạt động « ngẫu nhiên » đưa ra."
 
-#: ../libgimpwidgets/gimpwidgets.c:1007
+#: ../libgimpwidgets/gimpwidgets.c:1009
 msgid "_New Seed"
 msgstr "Hạt _mới"
 
-#: ../libgimpwidgets/gimpwidgets.c:1020
+#: ../libgimpwidgets/gimpwidgets.c:1022
 msgid "Seed random number generator with a generated random number"
-msgstr "Gieo trình sinh số ngẫu nhiên bằng số ngẫu nhiên được tạo ra."
+msgstr "Gieo trình sinh số ngẫu nhiên bằng số ngẫu nhiên được tạo ra"
 
-#: ../libgimpwidgets/gimpwidgets.c:1024
+#: ../libgimpwidgets/gimpwidgets.c:1026
 msgid "_Randomize"
 msgstr "Để ngẫ_u nhiên"
 
@@ -1223,11 +1200,15 @@ msgstr "_S"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:92
 msgid "Hue"
-msgstr "Màu sắc"
+msgstr "Sắc màu"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:93
 msgid "_S"
-msgstr "_S"
+msgstr "_B"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:93
+msgid "Saturation"
+msgstr "Độ bão hòa"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:94
 msgid "_V"
@@ -1239,15 +1220,15 @@ msgstr "Giá trị"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:95
 msgid "_R"
-msgstr "_R"
+msgstr "_MĐ"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:96
 msgid "_G"
-msgstr "_G"
+msgstr "_XLC"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:97
 msgid "_B"
-msgstr "_B"
+msgstr "X_D"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:98
 msgid "_A"
@@ -1270,7 +1251,7 @@ msgid "Zoom out"
 msgstr "Thu nhỏ"
 
 #: ../modules/cdisplay_colorblind.c:67
-msgid "Protanopia (insensitivity to red"
+msgid "Protanopia (insensitivity to red)"
 msgstr "Không nhạy cảm màu đỏ"
 
 #: ../modules/cdisplay_colorblind.c:69
@@ -1279,7 +1260,7 @@ msgstr "Không nhạy cảm màu xanh lá cây"
 
 #: ../modules/cdisplay_colorblind.c:71
 msgid "Tritanopia (insensitivity to blue)"
-msgstr "Không nhạy cảm màu xanh nước biển"
+msgstr "Không nhạy cảm màu xanh dương"
 
 #: ../modules/cdisplay_colorblind.c:200
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
@@ -1291,7 +1272,7 @@ msgstr "Nhìn thiếu màu"
 
 #: ../modules/cdisplay_colorblind.c:503
 msgid "Color _deficiency type:"
-msgstr "Kiểu _thiếu màu :"
+msgstr "Kiể_u thiếu màu :"
 
 #: ../modules/cdisplay_gamma.c:91
 msgid "Gamma color display filter"
@@ -1315,59 +1296,59 @@ msgstr "Độ tương phản"
 
 #: ../modules/cdisplay_highcontrast.c:251
 msgid "Contrast c_ycles:"
-msgstr "_Chu kỳ tương phản:"
+msgstr "Ch_u kỳ tương phản:"
 
-#: ../modules/cdisplay_lcms.c:105
+#: ../modules/cdisplay_lcms.c:107
 msgid "Color management display filter using ICC color profiles"
 msgstr "Bộ lọc trình bày quản lý màu, dùng xác lập màu ICC"
 
-#: ../modules/cdisplay_lcms.c:173
+#: ../modules/cdisplay_lcms.c:175
 msgid "Color Management"
 msgstr "Quản lý màu"
 
-#: ../modules/cdisplay_lcms.c:288
+#: ../modules/cdisplay_lcms.c:290
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr "Bộ lọc này lấy cấu hình từ phần Quản lý Màu trong hộp thoại « Tùy thích »."
+msgstr "Bộ lọc này bắt cấu hình từ phần Quản Lý Màu trong hộp thoại « Tùy thích »."
 
-#: ../modules/cdisplay_lcms.c:311
+#: ../modules/cdisplay_lcms.c:313
 msgid "Mode of operation:"
 msgstr "Chế độ thao tác:"
 
-#: ../modules/cdisplay_lcms.c:322
+#: ../modules/cdisplay_lcms.c:324
 msgid "RGB workspace profile:"
 msgstr "Xác lập vùng làm việc RGB:"
 
-#: ../modules/cdisplay_lcms.c:332
+#: ../modules/cdisplay_lcms.c:334
 msgid "Monitor profile:"
 msgstr "Xác lập bộ trình bày:"
 
-#: ../modules/cdisplay_lcms.c:342
+#: ../modules/cdisplay_lcms.c:344
 msgid "Print simulation profile:"
-msgstr "Xác lập mô phỏng in:"
+msgstr "Hồ sơ mô phỏng in:"
 
-#: ../modules/cdisplay_proof.c:127
+#: ../modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
-msgstr "Bộ xem thử màu dùng xác lập màu ICC"
+msgstr "Bộ lọc xem thử màu dùng hồ sơ màu ICC"
 
-#: ../modules/cdisplay_proof.c:221
+#: ../modules/cdisplay_proof.c:179
 msgid "Color Proof"
 msgstr "Xem thử màu"
 
-#: ../modules/cdisplay_proof.c:346
+#: ../modules/cdisplay_proof.c:304
 msgid "_Intent:"
-msgstr "_Định:"
+msgstr "Địn_h:"
 
-#: ../modules/cdisplay_proof.c:350
+#: ../modules/cdisplay_proof.c:308
 msgid "Choose an ICC Color Profile"
-msgstr "Chọn xác lập màu ICC"
+msgstr "Chọn hồ sơ màu ICC"
 
-#: ../modules/cdisplay_proof.c:353
+#: ../modules/cdisplay_proof.c:311
 msgid "_Profile:"
-msgstr "_Xác lập:"
+msgstr "Hồ _sơ :"
 
-#: ../modules/cdisplay_proof.c:358
+#: ../modules/cdisplay_proof.c:316
 msgid "_Black Point Compensation"
 msgstr "_Bù điểm đen"
 
@@ -1375,6 +1356,7 @@ msgstr "_Bù điểm đen"
 msgid "CMYK color selector"
 msgstr "Bộ chọn màu CMYK"
 
+# Name: don't translate / Tên: đừng dịch
 #: ../modules/colorsel_cmyk.c:130
 msgid "CMYK"
 msgstr "CMYK"
@@ -1397,7 +1379,7 @@ msgstr "_V"
 #.Key (Black)
 #: ../modules/colorsel_cmyk.c:154
 msgid "_K"
-msgstr "_Đ"
+msgstr "_MĐ"
 
 #: ../modules/colorsel_cmyk.c:158
 msgid "Cyan"
@@ -1417,7 +1399,7 @@ msgstr "Đen"
 
 #: ../modules/colorsel_cmyk.c:195
 msgid "Black _pullout:"
-msgstr "_Kéo ra đen:"
+msgstr "Kéo _ra đen:"
 
 #: ../modules/colorsel_cmyk.c:212
 msgid "The percentage of black to pull out of the colored inks."
@@ -1425,7 +1407,7 @@ msgstr "Phần trăm màu đen cần kéo ra các mực màu."
 
 #: ../modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
-msgstr "Bộ chọn màu kiểu dáng thợ sơn"
+msgstr "Bộ chọn màu tam giác kiểu dáng thợ sơn"
 
 #: ../modules/colorsel_triangle.c:170
 msgid "Triangle"
@@ -1485,7 +1467,7 @@ msgstr "Nút 9"
 
 #: ../modules/controller_linux_input.c:66
 msgid "Button Mouse"
-msgstr "Con chuột nút"
+msgstr "Chuột nút"
 
 #: ../modules/controller_linux_input.c:67
 msgid "Button Left"
@@ -1545,13 +1527,13 @@ msgid "Linux input event controller"
 msgstr "Bộ điều khiển sự kiện nhập Linux"
 
 #: ../modules/controller_linux_input.c:222
-#: ../modules/controller_midi.c:244
+#: ../modules/controller_midi.c:246
 msgid "Device:"
 msgstr "Thiết bị:"
 
 #: ../modules/controller_linux_input.c:223
 msgid "The name of the device to read Linux Input events from."
-msgstr "Tên thiết bị từ mà cần đọc các sự kiện nhập Linux."
+msgstr "Tên thiết bị từ đó cần đọc các sự kiện Nhập Linux."
 
 #: ../modules/controller_linux_input.c:227
 msgid "Linux Input"
@@ -1562,59 +1544,73 @@ msgid "Linux Input Events"
 msgstr "Sự Kiện Nhập Linux"
 
 #: ../modules/controller_linux_input.c:372
-#: ../modules/controller_midi.c:480
-#: ../modules/controller_midi.c:506
+#: ../modules/controller_midi.c:482
+#: ../modules/controller_midi.c:508
 #, c-format
 msgid "Reading from %s"
-msgstr "Đang đoc từ %s..."
+msgstr "Đang đọc từ %s"
 
 #: ../modules/controller_linux_input.c:388
 #: ../modules/controller_linux_input.c:431
-#: ../modules/controller_midi.c:462
-#: ../modules/controller_midi.c:523
-#: ../modules/controller_midi.c:594
+#: ../modules/controller_midi.c:464
+#: ../modules/controller_midi.c:525
+#: ../modules/controller_midi.c:596
 #, c-format
 msgid "Device not available: %s"
 msgstr "Thiết bị không sẵn sàng: %s"
 
 #: ../modules/controller_linux_input.c:396
-#: ../modules/controller_midi.c:531
+#: ../modules/controller_midi.c:533
 msgid "No device configured"
 msgstr "Chưa cấu hình thiết bị nào"
 
 #: ../modules/controller_linux_input.c:440
-#: ../modules/controller_midi.c:603
+#: ../modules/controller_midi.c:605
 msgid "End of file"
 msgstr "Kết thúc tập tin"
 
-#: ../modules/controller_midi.c:166
+#: ../modules/controller_midi.c:168
 msgid "MIDI event controller"
 msgstr "Bộ điều khiển sự kiện MIDI"
 
-#: ../modules/controller_midi.c:235
+#: ../modules/controller_midi.c:237
 msgid "The name of the device to read MIDI events from."
-msgstr "Tên thiết bị từ mà cần đọc các sự kiện MIDI."
+msgstr "Tên của thiết bị từ đó cần đọc các sự kiện MIDI."
 
-#: ../modules/controller_midi.c:238
+#: ../modules/controller_midi.c:240
 msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr "Hãy nhập « alsa » để sử dụng bộ sắp xếp dãy ALSA"
+msgstr "Hãy nhập « alsa » để sử dụng bộ sắp xếp dãy ALSA."
 
-#: ../modules/controller_midi.c:253
+#: ../modules/controller_midi.c:255
 msgid "Channel:"
 msgstr "Kênh:"
 
-#: ../modules/controller_midi.c:254
+#: ../modules/controller_midi.c:256
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
-msgstr "Kênh MIDI từ mà cần đọc các sự kiện. Hãy lập nó thành -1 để đọc từ mọi kênh "
-"MIDI."
+msgstr "Kênh MIDI từ đó cần đọc các sự kiện. Hãy đặt nó là -1 để đọc từ mọi kênh MIDI."
 
 # Name: don't translate / Tên: đừng dịch
-#: ../modules/controller_midi.c:258
+#: ../modules/controller_midi.c:260
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:434
+#: ../modules/controller_midi.c:383
+#, c-format
+msgid "Note %02x on"
+msgstr "Ghi chú %02x bật"
+
+#: ../modules/controller_midi.c:386
+#, c-format
+msgid "Note %02x off"
+msgstr "Ghi chú %02x tắt"
+
+#: ../modules/controller_midi.c:389
+#, c-format
+msgid "Controller %03d"
+msgstr "Bộ điều khiển %03d"
+
+#: ../modules/controller_midi.c:436
 msgid "MIDI Events"
 msgstr "Sự Kiện MIDI"
