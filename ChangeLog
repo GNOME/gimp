@@ -1,5 +1,10 @@
 2006-08-22  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/gimp-composite-regression.[ch]: use gulong instead
+	of u_long. Should fix bug #352221.
+
+2006-08-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpwire.h
 	* libgimpbase/gimpreloc.h
 	* libgimp/gimpdrawablepreview.h

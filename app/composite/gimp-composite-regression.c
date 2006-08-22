@@ -316,9 +316,9 @@ gimp_composite_regression_compare_contexts (char *operation, GimpCompositeContex
  * Return value:
  **/
 int
-gimp_composite_regression_comp_rgba8 (char *str, gimp_rgba8_t *rgba8A, gimp_rgba8_t *rgba8B, gimp_rgba8_t *expected, gimp_rgba8_t *actual, u_long length)
+gimp_composite_regression_comp_rgba8 (char *str, gimp_rgba8_t *rgba8A, gimp_rgba8_t *rgba8B, gimp_rgba8_t *expected, gimp_rgba8_t *actual, gulong length)
 {
-  u_long i;
+  gulong i;
   int failed;
   int fail_count;
 
@@ -364,7 +364,7 @@ gimp_composite_regression_comp_rgba8 (char *str, gimp_rgba8_t *rgba8A, gimp_rgba
  * Return value:
  **/
 int
-gimp_composite_regression_comp_va8 (char *str, gimp_va8_t *va8A, gimp_va8_t *va8B, gimp_va8_t *expected, gimp_va8_t *actual, u_long length)
+gimp_composite_regression_comp_va8 (char *str, gimp_va8_t *va8A, gimp_va8_t *va8B, gimp_va8_t *expected, gimp_va8_t *actual, gulong length)
 {
   int i;
   int failed;
@@ -404,7 +404,7 @@ gimp_composite_regression_comp_va8 (char *str, gimp_va8_t *va8A, gimp_va8_t *va8
  *
  **/
 void
-gimp_composite_regression_dump_rgba8 (char *str, gimp_rgba8_t *rgba, u_long n_pixels)
+gimp_composite_regression_dump_rgba8 (char *str, gimp_rgba8_t *rgba, gulong n_pixels)
 {
   int i;
 
@@ -445,12 +445,12 @@ gimp_composite_regression_timer_report (char *name, double t1, double t2)
  * Return value:
  **/
 double
-gimp_composite_regression_time_function (u_long iterations, void (*func)(), GimpCompositeContext *ctx)
+gimp_composite_regression_time_function (gulong iterations, void (*func)(), GimpCompositeContext *ctx)
 {
   struct timeval t0;
   struct timeval t1;
   struct timeval tv_elapsed;
-  u_long i;
+  gulong i;
 
   gettimeofday (&t0, NULL);
   for (i = 0; i < iterations; i++) { (*func)(ctx); }
@@ -469,10 +469,10 @@ gimp_composite_regression_time_function (u_long iterations, void (*func)(), Gimp
  * Return value:
  **/
 gimp_rgba8_t *
-gimp_composite_regression_random_rgba8 (u_long n_pixels)
+gimp_composite_regression_random_rgba8 (gulong n_pixels)
 {
   gimp_rgba8_t *rgba8;
-  u_long i;
+  gulong i;
 
   if ((rgba8 = (gimp_rgba8_t *) calloc (sizeof(gimp_rgba8_t), n_pixels))) {
     for (i = 0; i < n_pixels; i++) {
@@ -495,11 +495,11 @@ gimp_composite_regression_random_rgba8 (u_long n_pixels)
  * Return value:
  **/
 gimp_rgba8_t *
-gimp_composite_regression_fixed_rgba8 (u_long n_pixels)
+gimp_composite_regression_fixed_rgba8 (gulong n_pixels)
 {
   gimp_rgba8_t *rgba8;
-  u_long i;
-  u_long v;
+  gulong i;
+  gulong v;
 
   if ((rgba8 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels))) {
     for (i = 0; i < n_pixels; i++) {
