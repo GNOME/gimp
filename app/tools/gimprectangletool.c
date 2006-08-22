@@ -1108,6 +1108,11 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
             x1 = curx;
           else
             y1 = cury;
+          if (fixed_center)
+            {
+              x2 = x1 + 2 * (center_x - x1);
+              y2 = y1 + 2 * (center_y - y1);
+            }
           break;
 
         case RECT_RESIZING_UPPER_RIGHT:
@@ -1117,6 +1122,11 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
             x2 = curx;
           else
             y1 = cury;
+          if (fixed_center)
+            {
+              x1 = x2 - 2 * (x2 - center_x);
+              y2 = y1 + 2 * (center_y - y1);
+            }
           break;
 
         case RECT_RESIZING_LOWER_LEFT:
@@ -1126,6 +1136,11 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
             x1 = curx;
           else
             y2 = cury;
+          if (fixed_center)
+            {
+              x2 = x1 + 2 * (center_x - x1);
+              y1 = y2 - 2 * (y2 - center_y);
+            }
           break;
 
         case RECT_RESIZING_LOWER_RIGHT:
@@ -1135,10 +1150,17 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
             x2 = curx;
           else
             y2 = cury;
+          if (fixed_center)
+            {
+              x1 = x2 - 2 * (x2 - center_x);
+              y1 = y2 - 2 * (y2 - center_y);
+            }
           break;
 
         case RECT_RESIZING_TOP:
           x2 = rx1 + (ry2 - y1) * aspect + .5;
+          if (fixed_center)
+            x1 = x2 - 2 * (x2 - center_x);
           break;
 
         case RECT_RESIZING_LEFT:
@@ -1147,10 +1169,14 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
            * and not relevant to the result
            */
           y2 = ry1 + (rx2 - x1) / aspect + .5;
+          if (fixed_center)
+            y1 = y2 - 2 * (y2 - center_y);
           break;
 
         case RECT_RESIZING_BOTTOM:
           x2 = rx1 + (y2 - ry1) * aspect + .5;
+          if (fixed_center)
+            x1 = x2 - 2 * (x2 - center_x);
           break;
 
         case RECT_RESIZING_RIGHT:
@@ -1159,6 +1185,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
            * and not relevant to the result
            */
           y2 = ry1 + (x2 - rx1) / aspect + 0.5;
+          if (fixed_center)
+            y1 = y2 - 2 * (y2 - center_y);
           break;
 
         default:
