@@ -1,7 +1,7 @@
 2006-08-22  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/gauss.c: reverted change from bug #331051 that
-	shouldn't have been backported to the stable branch.
+	shouldn't have been backported to the stable branch (bug #343047).
 
 2006-08-22  Sven Neumann  <sven@gimp.org>
 
