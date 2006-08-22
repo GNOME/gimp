@@ -1,3 +1,8 @@
+2006-08-22  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/gimp-composite-regression.[ch]: use gulong instead
+	of u_long. Should fix bug #352221.
+
 2006-08-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/autocrop.c: merged changes from HEAD branch.
