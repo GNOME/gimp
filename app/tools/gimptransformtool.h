@@ -45,48 +45,49 @@ struct _GimpTransformTool
 {
   GimpDrawTool    parent_instance;
 
-  gdouble         startx;         /*  starting x coord                 */
-  gdouble         starty;         /*  starting y coord                 */
+  gdouble         startx;          /*  starting x coord                  */
+  gdouble         starty;          /*  starting y coord                  */
 
-  gdouble         curx;           /*  current x coord                  */
-  gdouble         cury;           /*  current y coord                  */
+  gdouble         curx;            /*  current x coord                   */
+  gdouble         cury;            /*  current y coord                   */
 
-  gdouble         lastx;          /*  last x coord                     */
-  gdouble         lasty;          /*  last y coord                     */
+  gdouble         lastx;           /*  last x coord                      */
+  gdouble         lasty;           /*  last y coord                      */
 
-  GdkModifierType state;          /*  state of buttons and keys        */
+  GdkModifierType state;           /*  state of buttons and keys         */
 
-  gint            x1, y1;         /*  upper left hand coordinate       */
-  gint            x2, y2;         /*  lower right hand coords          */
-  gdouble         cx, cy;         /*  center point (for rotation)      */
+  gint            x1, y1;          /*  upper left hand coordinate        */
+  gint            x2, y2;          /*  lower right hand coords           */
+  gdouble         cx, cy;          /*  center point (for rotation)       */
 
-  gdouble         tx1, ty1;       /*  transformed coords               */
+  gdouble         tx1, ty1;        /*  transformed coords                */
   gdouble         tx2, ty2;
   gdouble         tx3, ty3;
   gdouble         tx4, ty4;
   gdouble         tcx, tcy;
 
-  GimpMatrix3     transform;      /*  transformation matrix            */
-  TransInfo       trans_info;     /*  transformation info              */
+  GimpMatrix3     transform;       /*  transformation matrix             */
+  TransInfo       trans_info;      /*  transformation info               */
 
-  TransInfo       old_trans_info; /*  for cancelling a drag operation  */
+  TransInfo       old_trans_info;  /*  for cancelling a drag operation   */
 
-  TileManager    *original;       /*  pointer to original tiles        */
+  TileManager    *original;        /*  pointer to original tiles         */
 
-  TransformAction function;       /*  current tool activity            */
+  TransformAction function;        /*  current tool activity             */
 
-  gboolean        use_grid;       /*  does the tool use the grid       */
-  gboolean        use_handles;    /*  uses the corner handles          */
-  gboolean        use_center;     /*  uses the center handle           */
+  gboolean        use_grid;        /*  does the tool use the grid        */
+  gboolean        use_handles;     /*  uses the corner handles           */
+  gboolean        use_center;      /*  uses the center handle            */
+  gboolean        use_mid_handles; /*  use handles at midpoints of edges */
 
-  gint            ngx, ngy;       /*  number of grid lines in original
-                                   *  x and y directions
-                                   */
-  gdouble        *grid_coords;    /*  x and y coordinates of the grid
-                                   *  endpoints (a total of (ngx+ngy)*2
-                                   *  coordinate pairs)
-                                   */
-  gdouble        *tgrid_coords;   /*  transformed grid_coords          */
+  gint            ngx, ngy;        /*  number of grid lines in original
+                                    *  x and y directions
+                                    */
+  gdouble        *grid_coords;     /*  x and y coordinates of the grid
+                                    *  endpoints (a total of (ngx+ngy)*2
+                                    *  coordinate pairs)
+                                    */
+  gdouble        *tgrid_coords;    /*  transformed grid_coords           */
 
   GimpTransformType       type;
   GimpTransformDirection  direction;

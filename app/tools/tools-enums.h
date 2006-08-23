@@ -174,6 +174,10 @@ typedef enum /*< skip >*/
   TRANSFORM_HANDLE_NE, /* north east */
   TRANSFORM_HANDLE_SW, /* south west */
   TRANSFORM_HANDLE_SE, /* south east */
+  TRANSFORM_HANDLE_N,  /* north      */
+  TRANSFORM_HANDLE_S,  /* south      */
+  TRANSFORM_HANDLE_E,  /* east       */
+  TRANSFORM_HANDLE_W,  /* west       */
   TRANSFORM_HANDLE_CENTER
 } TransformAction;
 

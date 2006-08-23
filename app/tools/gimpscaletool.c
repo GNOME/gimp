@@ -105,13 +105,14 @@ gimp_scale_tool_init (GimpScaleTool *scale_tool)
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_RESIZE);
 
-  tr_tool->undo_desc     = Q_("command|Scale");
-  tr_tool->shell_desc    = _("Scaling Information");
-  tr_tool->progress_text = _("Scaling");
+  tr_tool->undo_desc       = Q_("command|Scale");
+  tr_tool->shell_desc      = _("Scaling Information");
+  tr_tool->progress_text   = _("Scaling");
 
-  tr_tool->use_grid      = TRUE;
-  tr_tool->use_handles   = TRUE;
-  tr_tool->use_center    = TRUE;
+  tr_tool->use_grid        = TRUE;
+  tr_tool->use_handles     = TRUE;
+  tr_tool->use_center      = TRUE;
+  tr_tool->use_mid_handles = TRUE;
 }
 
 static void
@@ -198,6 +199,8 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
 
   switch (tr_tool->function)
     {
+    case TRANSFORM_HANDLE_N:
+      diff_x = 0; /* and fall through */
     case TRANSFORM_HANDLE_NW:
       x1 = &tr_tool->trans_info[X0];
       y1 = &tr_tool->trans_info[Y0];
@@ -206,6 +209,8 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
       dir_x = dir_y = 1;
       break;
 
+    case TRANSFORM_HANDLE_E:
+      diff_y = 0; /* and fall through */
     case TRANSFORM_HANDLE_NE:
       x1 = &tr_tool->trans_info[X1];
       y1 = &tr_tool->trans_info[Y0];
@@ -215,6 +220,8 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
       dir_y = 1;
       break;
 
+    case TRANSFORM_HANDLE_W:
+      diff_y = 0; /* and fall through */
     case TRANSFORM_HANDLE_SW:
       x1 = &tr_tool->trans_info[X0];
       y1 = &tr_tool->trans_info[Y1];
@@ -224,6 +231,8 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
       dir_y = -1;
       break;
 
+    case TRANSFORM_HANDLE_S:
+      diff_x = 0; /* and fall through */
     case TRANSFORM_HANDLE_SE:
       x1 = &tr_tool->trans_info[X1];
       y1 = &tr_tool->trans_info[Y1];

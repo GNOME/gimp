@@ -1,3 +1,12 @@
+2006-08-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/tools-enums.h
+	* app/tools/gimptransformtool.[ch]: add support for handles at
+	midpoints of edges.
+
+	* app/tools/gimpscaletool.c: use midpoint handles for scaling
+	with fixed width or height.  Fixes bug #344955.
+	
 2006-08-23  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpbaseenums.[ch]: removed "(Fastest)" from "None"
