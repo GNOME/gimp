@@ -20,6 +20,9 @@ Bugs fixed in GIMP 2.2.13
 - fixed compile errors in regression tests on OS X (bug #352221)
 - fixed regression in Gaussian Blur plug-in (bug #343047)
 - fixed crash when opening an RGB image in an indexed image (bug #345051)
+- fixed a possible crash in the Save dialog (bug #329001)
+- fixed Lighten Only layer mode on SSE2 platforms (bug #164061)
+- work with newer versions of autoconf
 
 
 Bugs fixed in GIMP 2.2.12
