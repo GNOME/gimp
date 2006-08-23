@@ -1,5 +1,18 @@
 2006-08-23  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpbaseenums.[ch]: removed "(Fastest)" from "None"
+	and added translation context (bug #343576).
+
+	* app/actions/select-actions.c (select_actions): added translation
+	context for "None" and "All".
+
+	* app/widgets/gimpactiongroup.c: strip translation context from
+	all labels.
+
+	* libgimpwidgets/gimppageselector.c: fixed singular form.
+
+2006-08-23  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpbaseenums.h: do the change for bug #343576 here;
 	the .c file is generated.
 

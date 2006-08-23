@@ -47,13 +47,13 @@ static const GimpActionEntry select_actions[] =
   { "select-menu", NULL, N_("_Select") },
 
   { "select-all", GIMP_STOCK_SELECTION_ALL,
-    N_("_All"), "<control>A",
+    N_("select|_All"), "<control>A",
     N_("Select everything"),
     G_CALLBACK (select_all_cmd_callback),
     GIMP_HELP_SELECTION_ALL },
 
   { "select-none", GIMP_STOCK_SELECTION_NONE,
-    N_("_None"), "<control><shift>A",
+    N_("select|_None"), "<control><shift>A",
     N_("Dismiss the selection"),
     G_CALLBACK (select_none_cmd_callback),
     GIMP_HELP_SELECTION_NONE },
