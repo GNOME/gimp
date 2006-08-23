@@ -191,15 +191,14 @@ file_save_overwrite (GtkWidget   *save_dialog,
   overwrite_data->uri          = g_strdup (uri);
   overwrite_data->raw_filename = g_strdup (raw_filename);
 
-  dialog =
-    gimp_message_dialog_new (_("File exists"), GIMP_STOCK_WARNING,
-                             save_dialog, 0,
-                             gimp_standard_help_func, NULL,
+  dialog = gimp_message_dialog_new (_("File exists"), GIMP_STOCK_WARNING,
+                                    save_dialog, GTK_DIALOG_DESTROY_WITH_PARENT,
+                                    gimp_standard_help_func, NULL,
 
-                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                             _("_Replace"),    GTK_RESPONSE_OK,
+                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                    _("_Replace"),    GTK_RESPONSE_OK,
 
-                             NULL);
+                                    NULL);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (file_save_overwrite_response),

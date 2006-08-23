@@ -1,3 +1,8 @@
+2006-08-23  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/file-save-dialog.c (file_save_overwrite): set the
+	GTK_DIALOG_DESTROY_WITH_PARENT flag. Fixes bug #329001.
+
 2006-08-22  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimplayer.c (gimp_layer_convert): backport the fix for
