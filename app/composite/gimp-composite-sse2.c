@@ -137,7 +137,7 @@ gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpminub  %%mm3,%%mm2\n"
                     "\tpand    %%mm0,%%mm2\n"
                     "\tpor     %%mm2,%%mm1\n"
-                    "\tmovq    %%mm1,%0\n"
+                    "\tmovntq  %%mm1,%0\n"
                     : "=m" (*d)
                     : "m" (*a), "m" (*b)
                     : "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
@@ -165,15 +165,6 @@ gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 
   asm("emms");
 }
-
-
-#if 0
-void
-xxxgimp_composite_burn_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
-{
-
-}
-#endif
 
 void
 gimp_composite_darken_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
@@ -208,7 +199,7 @@ gimp_composite_darken_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
     {
       asm volatile ("  movq       %1, %%mm2\n"
                     "\tpminub     %2, %%mm2\n"
-                    "\tmovq    %%mm2, %0\n"
+                    "\tmovntq  %%mm2, %0\n"
                     : "=m" (*d)
                     : "m" (*a), "m" (*b)
                     : "%mm1", "%mm2", "%mm3", "%mm4");
@@ -289,7 +280,7 @@ gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpminub  %%mm3, %%mm2\n"
                     "\tpand    %%mm0, %%mm2\n"
                     "\tpor     %%mm2, %%mm1\n"
-                    "\tmovq    %%mm1, %0\n"
+                    "\tmovntq  %%mm1, %0\n"
                     : "=m" (*d)
                     : "m" (*a), "m" (*b)
                     : "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
@@ -321,142 +312,6 @@ gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
   asm("emms");
 }
 
-
-#if 0
-void
-xxxgimp_composite_dodge_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
-{
-  GimpCompositeContext op = *_op;
-
-  for (; op.n_pixels >= 4; op.n_pixels -= 4)
-    {
-      asm volatile ("  movdqu        %1,%%xmm0\n"
-                    "\tmovdqu        %2,%%xmm1\n"
-                    "\tmovdqu    %%xmm1,%%xmm3\n"
-                    "\tpxor      %%xmm2,%%xmm2\n"
-                    "\tpunpcklbw %%xmm2,%%xmm3\n"
-                    "\tpunpcklbw %%xmm0,%%xmm2\n"
-
-                    "\tmovdqu        %3,%%xmm4\n"
-                    "\tpsubw     %%xmm3,%%xmm4\n"
-
-                    "\t" xmm_pdivwuqX(xmm2,xmm4,xmm5,xmm6) "\n"
-
-                    "\tmovdqu    %%xmm1,%%xmm3\n"
-                    "\tpxor      %%xmm2,%%xmm2\n"
-                    "\tpunpckhbw %%xmm2,%%xmm3\n"
-                    "\tpunpckhbw %%xmm0,%%xmm2\n"
-
-                    "\tmovdqu        %3,%%xmm4\n"
-                    "\tpsubw     %%xmm3,%%xmm4\n"
-
-                    "\t" xmm_pdivwuqX(xmm2,xmm4,xmm6,xmm7) "\n"
-
-                    "\tpackuswb  %%xmm6,%%xmm5\n"
-
-                    "\tmovdqu        %4,%%xmm6\n"
-                    "\tmovdqu    %%xmm1,%%xmm7\n"
-                    "\tpminub    %%xmm0,%%xmm7\n"
-                    "\tpand      %%xmm6,%%xmm7\n"
-                    "\tpandn     %%xmm5,%%xmm6\n"
-
-                    "\tpor       %%xmm6,%%xmm7\n"
-
-                    "\tmovdqu    %%xmm7,%0\n"
-                    : "=m" (*op.D)
-                    : "m" (*op.A), "m" (*op.B), "m" (*rgba8_w256_128), "m" (*rgba8_alpha_mask_128)
-                    : "%eax", "%ecx", "%edx", "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5", "%xmm6", "%xmm7");
-      op.A += 16;
-      op.B += 16;
-      op.D += 16;
-    }
-
-  for (; op.n_pixels >= 2; op.n_pixels -= 2)
-    {
-      asm volatile ("  movq         %1,%%mm0\n"
-                    "\tmovq         %2,%%mm1\n"
-                    "\tmovq      %%mm1,%%mm3\n"
-                    "\tpxor      %%mm2,%%mm2\n"
-                    "\tpunpcklbw %%mm2,%%mm3\n"
-                    "\tpunpcklbw %%mm0,%%mm2\n"
-
-                    "\tmovq         %3,%%mm4\n"
-                    "\tpsubw     %%mm3,%%mm4\n"
-
-                    "\t" pdivwuqX(mm2,mm4,mm5) "\n"
-
-                    "\tmovq      %%mm1,%%mm3\n"
-                    "\tpxor      %%mm2,%%mm2\n"
-                    "\tpunpckhbw %%mm2,%%mm3\n"
-                    "\tpunpckhbw %%mm0,%%mm2\n"
-
-                    "\tmovq         %3,%%mm4\n"
-                    "\tpsubw     %%mm3,%%mm4\n"
-
-                    "\t" pdivwuqX(mm2,mm4,mm6) "\n"
-
-                    "\tpackuswb  %%mm6,%%mm5\n"
-
-                    "\tmovq         %4,%%mm6\n"
-                    "\tmovq      %%mm1,%%mm7\n"
-                    "\tpminub    %%mm0,%%mm7\n"
-                    "\tpand      %%mm6,%%mm7\n"
-                    "\tpandn     %%mm5,%%mm6\n"
-
-                    "\tpor       %%mm6,%%mm7\n"
-
-                    "\tmovq      %%mm7,%0\n"
-                    : (*op.D)
-                    : "m" (*op.A), "m" (*op.B), "m" (*rgba8_w256_64), "m" (*rgba8_alpha_mask_64)
-                    : "%eax", "%ecx", "%edx", "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
-      op.A += 8;
-      op.B += 8;
-      op.D += 8;
-    }
-
-  if (op.n_pixels)
-    {
-      asm volatile ("  movd         %1,%%mm0\n"
-                    "\tmovq         %2,%%mm1\n"
-                    "\tmovq      %%mm1,%%mm3\n"
-                    "\tpxor      %%mm2,%%mm2\n"
-                    "\tpunpcklbw %%mm2,%%mm3\n"
-                    "\tpunpcklbw %%mm0,%%mm2\n"
-
-                    "\tmovq         %3,%%mm4\n"
-                    "\tpsubw     %%mm3,%%mm4\n"
-
-                    "\t" pdivwuqX(mm2,mm4,mm5) "\n"
-
-                    "\tmovq      %%mm1,%%mm3\n"
-                    "\tpxor      %%mm2,%%mm2\n"
-                    "\tpunpckhbw %%mm2,%%mm3\n"
-                    "\tpunpckhbw %%mm0,%%mm2\n"
-
-                    "\tmovq         %3,%%mm4\n"
-                    "\tpsubw     %%mm3,%%mm4\n"
-
-                    "\t" pdivwuqX(mm2,mm4,mm6) "\n"
-
-                    "\tpackuswb  %%mm6,%%mm5\n"
-
-                    "\tmovq         %4,%%mm6\n"
-                    "\tmovq      %%mm1,%%mm7\n"
-                    "\tpminub    %%mm0,%%mm7\n"
-                    "\tpand      %%mm6,%%mm7\n"
-                    "\tpandn     %%mm5,%%mm6\n"
-
-                    "\tpor       %%mm6,%%mm7\n"
-
-                    "\tmovd      %%mm7,%0\n"
-                    : "=m" (*op.D)
-                    : "m" (*op.A), "m" (*op.B), "m" (*rgba8_w256_64), "m" (*rgba8_alpha_mask_64)
-                    : "%eax", "%ecx", "%edx", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
-    }
-
-  asm("emms");
-}
-#endif
 
 void
 gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
@@ -508,7 +363,7 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tmovdqu    %%xmm1,%0\n"
                     : "=m" (*D)
                     : "m" (*A), "m" (*B)
-                    : "%xmm1", "%xmm2", "%xmm3", "%xmm4");
+                    : "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5");
       A++;
       B++;
       D++;
@@ -544,10 +399,10 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpand      %%mm0,%%mm2\n"
 
                     "\tpor       %%mm2,%%mm1\n"
-                    "\tmovq      %%mm1,%0\n"
+                    "\tmovntq    %%mm1,%0\n"
                     : "=m" (*d)
                     : "m" (*a), "m" (*b)
-                    : "%mm1", "%mm2", "%mm3", "%mm4");
+                    : "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
       a++;
       b++;
       d++;
@@ -572,7 +427,7 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tmovd      %%mm1, %0\n"
                     : "=m" (*d)
                     : "m" (*a), "m" (*b)
-                    : "%mm1", "%mm2", "%mm3", "%mm4");
+                    : "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
     }
 
   asm("emms");
@@ -589,7 +444,12 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
   uint128 *B = (uint128 *) _op->B;
   gulong n_pixels = _op->n_pixels;
 
-  asm volatile ("movdqu    %0,%%xmm0"  :  : "m" (*rgba8_alpha_mask_64) : "%xmm0");
+  asm volatile ("  movdqu    %0,%%xmm0\n"
+                "\tmovq      %1,%%mm0"
+                : /* empty */
+                : "m" (*rgba8_alpha_mask_128), "m" (*rgba8_alpha_mask_64)
+                : "%xmm0", "%mm0");
+
 
   for (; n_pixels >= 4; n_pixels -= 4)
     {
@@ -626,7 +486,7 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpminub  %%mm2, %%mm3\n"
                     "\tpand    %%mm0, %%mm3\n"
                     "\tpor     %%mm3, %%mm1\n"
-                    "\tmovq    %%mm1, %0\n"
+                    "\tmovntq  %%mm1, %0\n"
                     : "=m" (*d)
                     : "m" (*a), "m" (*b)
                     : "%mm1", "%mm2", "%mm3", "%mm4");
@@ -643,7 +503,7 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpmaxub  %%mm3, %%mm4\n"
                     "\tmovq    %%mm0, %%mm1\n"
                     "\tpandn   %%mm4, %%mm1\n"
-                    "\tpminub  %%mm2,%%mm3\n"
+                    "\tpminub  %%mm2, %%mm3\n"
                     "\tpand    %%mm0, %%mm3\n"
                     "\tpor     %%mm3, %%mm1\n"
                     "\tmovd    %%mm1, %0\n"
@@ -708,7 +568,7 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpminub  %%mm3,%%mm2\n"
                     "\tpand    %%mm0,%%mm2\n"
                     "\tpor     %%mm2,%%mm1\n"
-                    "\tmovq    %%mm1,%0\n"
+                    "\tmovntq  %%mm1,%0\n"
                     : "=m" (*d)
                     : "m" (*a), "m" (*b)
                     : "%mm1", "%mm2", "%mm3", "%mm4");
@@ -837,7 +697,7 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       asm volatile ("  movq      %0,%%mm2\n"
                     "\tmovq      %1,%%mm3\n"
                     "\tmovq   %%mm3,%0\n"
-                    "\tmovq   %%mm2,%1\n"
+                    "\tmovntq %%mm2,%1\n"
                     : "+m" (*op.A), "+m" (*op.B)
                     : /* empty */
                     : "%mm2", "%mm3");

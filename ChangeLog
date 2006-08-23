@@ -1,5 +1,17 @@
 2006-08-23  Sven Neumann  <sven@gimp.org>
 
+	Merged a fix from the HEAD branch to fix bug #164061:
+
+	* app/composite/gimp-composite-sse2.c: Repaired a latent bug in
+	gimp_composite_lighten_rgba8_rgba8_rgba8_sse2 where setting up
+	the alpha masks were not done correctly.
+
+	Use movntq instructions to avoid processor cache pollution.
+
+	Some adjustments to register allocation specifications.
+
+2006-08-23  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/file-save-dialog.c (file_save_overwrite): set the
 	GTK_DIALOG_DESTROY_WITH_PARENT flag. Fixes bug #329001.
 
