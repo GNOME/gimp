@@ -1,5 +1,15 @@
 2006-08-23  Sven Neumann  <sven@gimp.org>
 
+	* data/misc/Makefile.am: also substitute ${datarootdir} to work
+	with newer autoconf.
+
+	Merged from HEAD branch:
+
+	* gimptool-2.0.in
+	* gimptool-win32.c.in: add reference to datarootdir.
+
+2006-08-23  Sven Neumann  <sven@gimp.org>
+
 	Merged a fix from the HEAD branch to fix bug #164061:
 
 	* app/composite/gimp-composite-sse2.c: Repaired a latent bug in
