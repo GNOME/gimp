@@ -1,3 +1,10 @@
+2006-08-24  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL: mention that multi-processor support is on by default.
+
+	* app/base/tile-cache.c: fixed compilation if multi-processor
+	support is disabled (bug #352609).
+
 2006-08-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/tools-enums.h

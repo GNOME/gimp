@@ -168,12 +168,8 @@ These are:
      their API references so that the libgimp reference can link to
      them.
 
-  --enable-mp. This options control whether to build GIMP with or without
-     support for multiple processors. This option is off by default. If
-     you do have multiply processors and run GIMP with an OS supporting
-     them you will like to enable this features to use all of your
-     horsepower. Enabling it on singleprocessor systems won't harm but
-     cause a bit processing overhead.
+  --disable-mp. This option allows you to disable support for multiple
+     processors. It is enabled by default.
 
   --with-sendmail=[PATH]. This option is used to tell GIMP where to find
      the sendmail command. Normally this options don't have to be used

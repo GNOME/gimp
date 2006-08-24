@@ -64,23 +64,28 @@ static TileList dirty_list      = { NULL, NULL };
 
 #ifdef ENABLE_MP
 
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-static GThread        *preswap_thread   = NULL;
-static GMutex         *dirty_mutex      = NULL;
-static GCond          *dirty_signal     = NULL;
-#else
-static guint           idle_swapper     = 0;
-#endif
+static GStaticMutex   tile_cache_mutex = G_STATIC_MUTEX_INIT;
 
-static GStaticMutex    tile_cache_mutex = G_STATIC_MUTEX_INIT;
-
-#define CACHE_LOCK     g_static_mutex_lock (&tile_cache_mutex)
-#define CACHE_UNLOCK   g_static_mutex_unlock (&tile_cache_mutex)
+#define CACHE_LOCK    g_static_mutex_lock (&tile_cache_mutex)
+#define CACHE_UNLOCK  g_static_mutex_unlock (&tile_cache_mutex)
 
 #else
 
 #define CACHE_LOCK   /* nothing */
 #define CACHE_UNLOCK /* nothing */
+
+#endif
+
+
+#ifdef ENABLE_THREADED_TILE_SWAPPER
+
+static GThread *preswap_thread = NULL;
+static GMutex  *dirty_mutex    = NULL;
+static GCond   *dirty_signal   = NULL;
+
+#else
+
+static guint    idle_swapper   = 0;
 
 #endif
 
