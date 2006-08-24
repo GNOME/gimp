@@ -1,5 +1,11 @@
 2006-08-24  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-preview.c
+	(gimp_display_shell_draw_tri): just return if gdk_drawable_get_size()
+	returns 0 for width or height (bug #340056).
+
+2006-08-24  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL: mention that multi-processor support is on by default.
 
 	* app/base/tile-cache.c: fixed compilation if multi-processor

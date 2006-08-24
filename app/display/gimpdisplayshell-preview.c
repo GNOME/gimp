@@ -138,10 +138,10 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
           gint         j, k, sub;
 
           gfloat       du, dv, dx, dy;
-          gint         x [MAX_SUB_COLS * MAX_SUB_ROWS][4],
-                       y [MAX_SUB_COLS * MAX_SUB_ROWS][4];
-          gfloat       u [MAX_SUB_COLS * MAX_SUB_ROWS][4],
-                       v [MAX_SUB_COLS * MAX_SUB_ROWS][4];
+          gint         x[MAX_SUB_COLS * MAX_SUB_ROWS][4],
+                       y[MAX_SUB_COLS * MAX_SUB_ROWS][4];
+          gfloat       u[MAX_SUB_COLS * MAX_SUB_ROWS][4],
+                       v[MAX_SUB_COLS * MAX_SUB_ROWS][4];
 
           mask = NULL;
           mask_offx = mask_offy = 0;
@@ -184,8 +184,8 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
             gdouble tx1, ty1; \
             gdouble tx2, ty2; \
 \
-            u [sub][index] = tr_tool->x1 + (dx * (col + (index & 1))); \
-            v [sub][index] = tr_tool->y1 + (dy * (row + (index >> 1))); \
+            u[sub][index] = tr_tool->x1 + (dx * (col + (index & 1))); \
+            v[sub][index] = tr_tool->y1 + (dy * (row + (index >> 1))); \
 \
             gimp_matrix3_transform_point (&tr_tool->transform, \
                                           u[sub][index], v[sub][index], \
@@ -195,18 +195,18 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
                                                tx1, ty1, \
                                                &tx2, &ty2, \
                                                FALSE); \
-            x [sub][index] = (gint) tx2; \
-            y [sub][index] = (gint) ty2; \
+            x[sub][index] = (gint) tx2; \
+            y[sub][index] = (gint) ty2; \
 \
-            u [sub][index] = mask_x1 + (du * (col + (index & 1))); \
-            v [sub][index] = mask_y1 + (dv * (row + (index >> 1))); \
+            u[sub][index] = mask_x1 + (du * (col + (index & 1))); \
+            v[sub][index] = mask_y1 + (dv * (row + (index >> 1))); \
           }
 
 #define COPY_VERTEX(subdest, idest, subsrc, isrc) \
-          x [subdest][idest] = x [subsrc][isrc]; \
-          y [subdest][idest] = y [subsrc][isrc]; \
-          u [subdest][idest] = u [subsrc][isrc]; \
-          v [subdest][idest] = v [subsrc][isrc];
+          x[subdest][idest] = x[subsrc][isrc]; \
+          y[subdest][idest] = y[subsrc][isrc]; \
+          u[subdest][idest] = u[subsrc][isrc]; \
+          v[subdest][idest] = v[subsrc][isrc];
 
           /*
            * upper left corner subdivision: calculate all vertices
@@ -266,7 +266,7 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
             gimp_display_shell_draw_quad (tool->drawable,
                             GDK_DRAWABLE (GTK_WIDGET (shell->canvas)->window),
                             mask, mask_offx, mask_offy,
-                            x [j], y [j], u [j], v [j]);
+                            x[j], y[j], u[j], v[j]);
 
         }
     }
@@ -286,12 +286,12 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
                               gfloat       *u,
                               gfloat       *v)
 {
-  gint   x2 [3], y2 [3];
-  gfloat u2 [3], v2 [3];
+  gint   x2[3], y2[3];
+  gfloat u2[3], v2[3];
 
-  x2 [0] = x [3];  y2 [0] = y [3];  u2 [0] = u [3];  v2 [0] = v [3];
-  x2 [1] = x [2];  y2 [1] = y [2];  u2 [1] = u [2];  v2 [1] = v [2];
-  x2 [2] = x [1];  y2 [2] = y [1];  u2 [2] = u [1];  v2 [2] = v [1];
+  x2[0] = x[3];  y2[0] = y[3];  u2[0] = u[3];  v2[0] = v[3];
+  x2[1] = x[2];  y2[1] = y[2];  u2[1] = u[2];  v2[1] = v[2];
+  x2[2] = x[1];  y2[2] = y[1];  u2[2] = u[1];  v2[2] = v[1];
 
   gimp_display_shell_draw_tri (texture, dest, mask, mask_offx, mask_offy,
                                x, y, u, v);
@@ -325,61 +325,63 @@ gimp_display_shell_draw_tri (GimpDrawable *texture,
 
   g_return_if_fail (x != NULL && y != NULL && u != NULL && v != NULL);
 
+  gdk_drawable_get_size (dest, &dwidth, &dheight);
+
+  if (dwidth > 0 && dheight > 0)
+    row = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+                          mask ? TRUE : gimp_drawable_has_alpha (texture),
+                          8, dwidth, 1);
+  else
+    return;
+
+  g_return_if_fail (row != NULL);
+
   left = right = NULL;
   dul = dvl = dur = dvr = 0;
   u_l = v_l = u_r = v_r = 0;
-
-  gdk_drawable_get_size (dest, &dwidth, &dheight);
-
-  row = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-                        mask ? TRUE : gimp_drawable_has_alpha (texture),
-                        8, dwidth, 1);
-  g_return_if_fail (row != NULL);
 
   /* sort vertices in order of y-coordinate */
 
   for (j = 0; j < 3; j++)
     for (k = j + 1; k < 3; k++)
-      if (y [k] < y [j])
+      if (y[k] < y[j])
         {
           gint tmp;
           gfloat ftmp;
 
-          tmp  = y [k];  y [k] = y [j];  y [j] = tmp;
-          tmp  = x [k];  x [k] = x [j];  x [j] = tmp;
-          ftmp = u [k];  u [k] = u [j];  u [j] = ftmp;
-          ftmp = v [k];  v [k] = v [j];  v [j] = ftmp;
+          tmp  = y[k];  y[k] = y[j];  y[j] = tmp;
+          tmp  = x[k];  x[k] = x[j];  x[j] = tmp;
+          ftmp = u[k];  u[k] = u[j];  u[j] = ftmp;
+          ftmp = v[k];  v[k] = v[j];  v[j] = ftmp;
         }
 
-  if (y [2] == y [0])
+  if (y[2] == y[0])
     return;
 
-  l_edge = g_malloc ((y [2] - y [0]) * sizeof (gint));
-  r_edge = g_malloc ((y [2] - y [0]) * sizeof (gint));
+  l_edge = g_new (gint, y[2] - y[0]);
+  r_edge = g_new (gint, y[2] - y[0]);
 
   /* draw the triangle */
 
-  gimp_display_shell_trace_tri_edge (l_edge,
-                                     x [0], y [0],
-                                     x [2], y [2]);
+  gimp_display_shell_trace_tri_edge (l_edge, x[0], y[0], x[2], y[2]);
+
   left = l_edge;
-  dul  = (u [2] - u [0]) / (y [2] - y [0]);
-  dvl  = (v [2] - v [0]) / (y [2] - y [0]);
-  u_l  = u [0];
-  v_l  = v [0];
+  dul  = (u[2] - u[0]) / (y[2] - y[0]);
+  dvl  = (v[2] - v[0]) / (y[2] - y[0]);
+  u_l  = u[0];
+  v_l  = v[0];
 
-  if (y [0] != y [1])
+  if (y[0] != y[1])
     {
-      gimp_display_shell_trace_tri_edge (r_edge,
-                                         x [0], y [0],
-                                         x [1], y [1]);
-      right = r_edge;
-      dur   = (u [1] - u [0]) / (y [1] - y [0]);
-      dvr   = (v [1] - v [0]) / (y [1] - y [0]);
-      u_r   = u [0];
-      v_r   = v [0];
+      gimp_display_shell_trace_tri_edge (r_edge, x[0], y[0], x[1], y[1]);
 
-      for (ry = y [0]; ry < y [1]; ry++)
+      right = r_edge;
+      dur   = (u[1] - u[0]) / (y[1] - y[0]);
+      dvr   = (v[1] - v[0]) / (y[1] - y[0]);
+      u_r   = u[0];
+      v_r   = v[0];
+
+      for (ry = y[0]; ry < y[1]; ry++)
         {
           if (ry >= 0 && ry < dheight)
             {
@@ -402,18 +404,17 @@ gimp_display_shell_draw_tri (GimpDrawable *texture,
         }
     }
 
-  if (y [1] != y [2])
+  if (y[1] != y[2])
     {
-      gimp_display_shell_trace_tri_edge (r_edge,
-                                         x [1], y [1],
-                                         x [2], y [2]);
-      right = r_edge;
-      dur   = (u [2] - u [1]) / (y [2] - y [1]);
-      dvr   = (v [2] - v [1]) / (y [2] - y [1]);
-      u_r   = u [1];
-      v_r   = v [1];
+      gimp_display_shell_trace_tri_edge (r_edge, x[1], y[1], x[2], y[2]);
 
-      for (ry = y [1]; ry < y [2]; ry++)
+      right = r_edge;
+      dur   = (u[2] - u[1]) / (y[2] - y[1]);
+      dvr   = (v[2] - v[1]) / (y[2] - y[1]);
+      u_r   = u[1];
+      v_r   = v[1];
+
+      for (ry = y[1]; ry < y[2]; ry++)
         {
           if (ry >= 0 && ry < dheight)
             {
@@ -436,9 +437,10 @@ gimp_display_shell_draw_tri (GimpDrawable *texture,
         }
     }
 
-  g_object_unref (row);
   g_free (l_edge);
   g_free (r_edge);
+
+  g_object_unref (row);
 }
 
 static void
@@ -459,7 +461,7 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
   gfloat        u, v;
   gfloat        du, dv;
   gint          dx;
-  guchar        pixel [4];
+  guchar        pixel[4];
   const guchar *cmap;
   gint          offset;
 
@@ -519,11 +521,11 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
-          offset = pixel [0] + pixel [0] + pixel [0];
+          offset = pixel[0] + pixel[0] + pixel[0];
 
-          *pptr++ = cmap [offset];
-          *pptr++ = cmap [offset + 1];
-          *pptr++ = cmap [offset + 2];
+          *pptr++ = cmap[offset];
+          *pptr++ = cmap[offset + 1];
+          *pptr++ = cmap[offset + 2];
 
           u += du;
           v += dv;
@@ -537,12 +539,12 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
-          offset = pixel [0] + pixel [0] + pixel [0];
+          offset = pixel[0] + pixel[0] + pixel[0];
 
-          *pptr++ = cmap [offset];
-          *pptr++ = cmap [offset + 1];
-          *pptr++ = cmap [offset + 2];
-          *pptr++ = pixel [1];
+          *pptr++ = cmap[offset];
+          *pptr++ = cmap[offset + 1];
+          *pptr++ = cmap[offset + 2];
+          *pptr++ = pixel[1];
 
           u += du;
           v += dv;
@@ -554,9 +556,9 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
-          *pptr++ = pixel [0];
-          *pptr++ = pixel [0];
-          *pptr++ = pixel [0];
+          *pptr++ = pixel[0];
+          *pptr++ = pixel[0];
+          *pptr++ = pixel[0];
 
           u += du;
           v += dv;
@@ -568,10 +570,10 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
-          *pptr++ = pixel [0];
-          *pptr++ = pixel [0];
-          *pptr++ = pixel [0];
-          *pptr++ = pixel [1];
+          *pptr++ = pixel[0];
+          *pptr++ = pixel[0];
+          *pptr++ = pixel[0];
+          *pptr++ = pixel[1];
 
           u += du;
           v += dv;
@@ -620,7 +622,7 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
   gfloat        mu, mv;
   gfloat        du, dv;
   gint          dx;
-  guchar        pixel [4], maskval;
+  guchar        pixel[4], maskval;
   const guchar *cmap;
   gint          offset;
 
@@ -683,11 +685,11 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + alpha);
 
-          offset = pixel [0] + pixel [0] + pixel [0];
+          offset = pixel[0] + pixel[0] + pixel[0];
 
-          *pptr++ = cmap [offset];
-          *pptr++ = cmap [offset + 1];
-          *pptr++ = cmap [offset + 2];
+          *pptr++ = cmap[offset];
+          *pptr++ = cmap[offset + 1];
+          *pptr++ = cmap[offset + 2];
 
           pptr ++;
           u += du;
@@ -705,12 +707,12 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
-          offset = pixel [0] + pixel [0] + pixel [0];
+          offset = pixel[0] + pixel[0] + pixel[0];
 
-          *pptr++ = cmap [offset];
-          *pptr++ = cmap [offset + 1];
-          *pptr++ = cmap [offset + 2];
-          *pptr++ = ((gint) maskval * pixel [1]) >> 8;
+          *pptr++ = cmap[offset];
+          *pptr++ = cmap[offset + 1];
+          *pptr++ = cmap[offset + 2];
+          *pptr++ = ((gint) maskval * pixel[1]) >> 8;
 
           u += du;
           v += dv;
@@ -725,9 +727,9 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + alpha);
 
-          *pptr++ = pixel [0];
-          *pptr++ = pixel [0];
-          *pptr++ = pixel [0];
+          *pptr++ = pixel[0];
+          *pptr++ = pixel[0];
+          *pptr++ = pixel[0];
 
           pptr ++;
           u += du;
@@ -743,10 +745,10 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
-          *pptr++ = pixel [0];
-          *pptr++ = pixel [0];
-          *pptr++ = pixel [0];
-          *pptr++ = ((gint) maskval * pixel [1]) >> 8;
+          *pptr++ = pixel[0];
+          *pptr++ = pixel[0];
+          *pptr++ = pixel[0];
+          *pptr++ = ((gint) maskval * pixel[1]) >> 8;
 
           u += du;
           v += dv;
@@ -775,7 +777,7 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pptr);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
-          pptr [alpha] = ((gint) maskval * pptr [alpha]) >> 8;
+          pptr[alpha] = ((gint) maskval * pptr[alpha]) >> 8;
 
           pptr += bytes;
           u += du;
