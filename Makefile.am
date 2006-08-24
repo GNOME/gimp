@@ -76,7 +76,7 @@ EXTRA_DIST = \
 	po-script-fu/update.sh
 
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-gimp-console
+DISTCHECK_CONFIGURE_FLAGS = --enable-gimp-console --disable-print
 
 DISTCLEANFILES = \
 	intltool-extract	\

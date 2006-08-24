@@ -52,7 +52,8 @@ msgstr ""
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
-msgstr "Tažení s <tt>Ctrl</tt> s nástrojem Rotovat omezí rotaci na násobky 15 stupňů."
+msgstr ""
+"Tažení s <tt>Ctrl</tt> s nástrojem Rotovat omezí rotaci na násobky 15 stupňů."
 
 #: tips/gimp-tips.xml.in.h:6
 msgid ""
@@ -162,8 +163,10 @@ msgstr ""
 "<tt>Ctrl</tt> před provedením výběru odebírá od aktuálního."
 
 #: tips/gimp-tips.xml.in.h:16
-msgid "The GIMP can undo most changes to the image, so feel free to experiment."
-msgstr "GIMP může vrátit zpět většinu změn obrázku, takže se nebojte experimentovat."
+msgid ""
+"The GIMP can undo most changes to the image, so feel free to experiment."
+msgstr ""
+"GIMP může vrátit zpět většinu změn obrázku, takže se nebojte experimentovat."
 
 #: tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -217,10 +220,10 @@ msgid ""
 "cursor position. If you also press <tt>Ctrl</tt>, the line will be "
 "constrained to 15 degree angles."
 msgstr ""
-"Při použití kreslicího nástroje (Štětec, Rozprašovač nebo Tužka), "
-"kliknutí se <tt>Shift</tt> nakreslí rovnou čáru z vašeho předchozího bodu "
-"kreslení na aktuální pozici kurzoru. Stisknete-li také <tt>Ctrl</tt>, bude "
-"čára omezena na násobky 15 stupňů."
+"Při použití kreslicího nástroje (Štětec, Rozprašovač nebo Tužka), kliknutí "
+"se <tt>Shift</tt> nakreslí rovnou čáru z vašeho předchozího bodu kreslení na "
+"aktuální pozici kurzoru. Stisknete-li také <tt>Ctrl</tt>, bude čára omezena "
+"na násobky 15 stupňů."
 
 #: tips/gimp-tips.xml.in.h:22
 msgid ""
@@ -353,4 +356,3 @@ msgstr ""
 "Rychlá maska&quot; ve spodním levém rohu okna obrázku. Změňte svůj výběr "
 "kreslením v obrázku a dalším kliknutím na toto tlačítko jej převeďte zpět na "
 "normální výběr."
-

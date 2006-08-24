@@ -1,5 +1,9 @@
 2006-08-24  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.2.13 release.
+
+2006-08-24  Sven Neumann  <sven@gimp.org>
+
 	Merged from HEAD branch:
 
 	* data/misc/gimp.desktop.in.in (Categories): removed "Application"
