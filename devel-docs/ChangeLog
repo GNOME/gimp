@@ -1,3 +1,8 @@
+2006-08-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* devel-docs/vbr.txt:  added new description of the VBR
+	file format.
+
 2006-08-09  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt

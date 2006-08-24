@@ -1,0 +1,65 @@
+The GIMP Generated Brush File Format Version 1 (.vbr)
+-----------------------------------------------------
+
+Updated August 24, 2006.
+
+The VBR format is used for "generated" brushes, that is, brushes
+specified by a set of numerical parameters rather than a bitmap or
+pixmap.  This format dates back to at least 1998, although it
+has been tweaked several times.  The most recent tweak, in August
+2004, added support for variable shapes.  In spite of the tweaks, the
+version number has always been set to 1.0.  
+
+VBR files are ASCII, consisting of a set of fields separated by line
+breaks.  The number of lines is variable, 10 if the brush is "shaped",
+8 otherwise.  The only way to distinguish between shaped and
+non-shaped brushes is by looking at line 4:  if it contains a number,
+the brush is non-shaped; if it contains the name of a shape, the brush
+is shaped.  All numerical fields are in float format, except the
+number of spikes (for shaped brushes), which is an integer.
+
+Non-shaped brushes:
+
+Line 1: Must always contain the magic string "GIMP-VBR".
+
+Line 2: Version number, always "1.0".
+
+Line 3: The name of the brush.  This is a UTF-8 string, with a maximum
+        length of 255 bytes.
+
+Line 4: The brush spacing.
+
+Line 5: The brush radius, in pixels.
+
+Line 6: The brush hardness.
+
+Line 7: The brush aspect ratio.
+
+Line 8: The brush angle.
+
+
+Shaped brushes:
+
+Line 1: Must always contain the magic string "GIMP-VBR".
+
+Line 2: Version number, always "1.0".
+
+Line 3: The name of the brush.  This is a UTF-8 string, with a maximum
+        length of 255 bytes.
+
+Line 4: A string giving the shape of the brush.  Currently "Circle",
+        "Square", and "Diamond" are supported.  The possible shapes
+        are defined by the GimpBrushGeneratedShape enum in
+        core-enums.h.
+
+Line 5: The brush spacing.
+
+Line 6: The number of spikes for the shape.
+
+Line 7: The brush radius, in pixels.
+
+Line 8: The brush hardness.
+
+Line 9: The brush aspect ratio.
+
+Line 10: The brush angle.
