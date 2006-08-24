@@ -2,6 +2,13 @@
 
 	Merged from HEAD branch:
 
+	* data/misc/gimp.desktop.in.in (Categories): removed "Application"
+	which is not any longer in the Desktop Menu spec.
+
+2006-08-24  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
 	* plug-ins/winicon/icodialog.c
 	* plug-ins/winicon/icosave.c: fixed handling of indexed images
 	(bug #342883).
