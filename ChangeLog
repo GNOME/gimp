@@ -2,6 +2,14 @@
 
 	Merged from HEAD branch:
 
+	* plug-ins/winicon/icodialog.c
+	* plug-ins/winicon/icosave.c: fixed handling of indexed images
+	(bug #342883).
+
+2006-08-24  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
 	* docs/gimp.1.in: explain ${datarootdir}.
 
 2006-08-24  Sven Neumann  <sven@gimp.org>
