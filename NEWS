@@ -23,6 +23,8 @@ Bugs fixed in GIMP 2.2.13
 - fixed a possible crash in the Save dialog (bug #329001)
 - fixed Lighten Only layer mode on SSE2 platforms (bug #164061)
 - work with newer versions of autoconf
+- protect against bogus values returned from GDK (bug #340056)
+- fixed handling of indexed images in the Winicon save plug-in (bug #342883)
 
 
 Bugs fixed in GIMP 2.2.12
