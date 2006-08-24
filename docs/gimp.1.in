@@ -162,9 +162,11 @@ by the environment variables mentioned above.
 
 
 .SH FILES
-GIMP's data files are stored in @gimpdatadir@, where ${prefix}
-is set on install, but is typically /usr/local. GIMP's system-wide
-configuration files are stored in @gimpsysconfdir@.
+GIMP's data files are stored in @gimpdatadir@, where ${datarootdir}
+is set on install, but is typically /usr/local/share. GIMP's
+system-wide configuration files are stored in @gimpsysconfdir@,
+where ${prefix} is typically /usr/local.
+
 Most GIMP configuration is read in from the user's init file,
 \fB$HOME\fP/@gimpdir@/gimprc. The system wide equivalent is in
 @sysconfdir@/gimprc. The system wide file is parsed
