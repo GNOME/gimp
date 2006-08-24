@@ -2,6 +2,12 @@
 
 	Merged from HEAD branch:
 
+	* docs/gimp.1.in: explain ${datarootdir}.
+
+2006-08-24  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
 	* app/display/gimpdisplayshell-preview.c
 	(gimp_display_shell_draw_tri): just return if gdk_drawable_get_size()
 	returns 0 for width or height (bug #340056).
