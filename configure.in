@@ -158,6 +158,9 @@ AM_PROG_AS
 dnl Initialize maintainer mode
 AM_MAINTAINER_MODE
 
+dnl Honor aclocal flags
+ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
+
 
 ###########################
 # Check target architecture
@@ -240,6 +243,7 @@ AM_CONDITIONAL(HAVE_WINDRES, test "x$WINDRES" != "x:")
 
 AC_SUBST(WINDRES)
 
+
 ###############
 # Generic stuff
 ###############
@@ -306,6 +310,11 @@ if eval "test x$GCC = xyes"; then
 fi
 changequote([,])dnl
 
+# If possible, warn if C99isms are used 
+GIMP_DETECT_CFLAGS(extra_warnings, '-Wdeclaration-after-statement')
+CFLAGS="$CFLAGS $extra_warnings"
+
+
 # Ensure MSVC-compatible struct packing convention is used when
 # compiling for Win32 with gcc.
 # What flag to depends on gcc version: gcc3 uses "-mms-bitfields", while
@@ -340,9 +349,6 @@ if test x"$os_win32" = xyes; then
     fi
   fi
 fi
-
-# Honor aclocal flags
-ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
 
 
 AC_HEADER_DIRENT
