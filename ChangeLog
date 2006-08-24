@@ -1,5 +1,11 @@
 2006-08-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/winicon/icodialog.c
+	* plug-ins/winicon/icosave.c: fixed handling of indexed images
+	(bug #342883).
+
+2006-08-24  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: add -Wdeclaration_after_statement to the CFLAGS if
 	the compiler supports this flag.
 

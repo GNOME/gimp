@@ -883,6 +883,16 @@ ico_image_get_reduced_buf (guint32   layer,
                                   gimp_image_base_type (image));
       gimp_image_undo_disable (tmp_image);
 
+      if (gimp_drawable_is_indexed (layer))
+        {
+          guchar *cmap;
+          gint    num_colors;
+
+          cmap = gimp_image_get_colormap (image, &num_colors);
+          gimp_image_set_colormap (tmp_image, cmap, num_colors);
+          g_free (cmap);
+        }
+
       tmp_layer = gimp_layer_new (tmp_image, "tmp", w, h,
                                   gimp_drawable_type (layer),
                                   100, GIMP_NORMAL_MODE);

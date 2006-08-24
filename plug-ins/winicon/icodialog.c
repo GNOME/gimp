@@ -251,7 +251,20 @@ ico_specs_dialog_update_icon_preview (GtkWidget *dialog,
       guchar       *buffer;
 
       image = gimp_drawable_get_image (layer);
+
       tmp_image = gimp_image_new (w, h, gimp_image_base_type (image));
+      gimp_image_undo_disable (tmp_image);
+
+      if (gimp_drawable_is_indexed (layer))
+        {
+          guchar *cmap;
+          gint    num_colors;
+
+          cmap = gimp_image_get_colormap (image, &num_colors);
+          gimp_image_set_colormap (tmp_image, cmap, num_colors);
+          g_free (cmap);
+        }
+
       tmp_layer = gimp_layer_new (tmp_image, "temporary", w, h,
                                   gimp_drawable_type (layer),
                                   100, GIMP_NORMAL_MODE);
