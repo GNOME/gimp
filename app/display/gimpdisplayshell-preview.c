@@ -331,9 +331,13 @@ gimp_display_shell_draw_tri (GimpDrawable *texture,
 
   gdk_drawable_get_size (dest, &dwidth, &dheight);
 
-  row = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-                        mask ? TRUE : gimp_drawable_has_alpha (texture),
-                        8, dwidth, 1);
+  if (dwidth > 0 && dheight > 0)
+    row = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+                          mask ? TRUE : gimp_drawable_has_alpha (texture),
+                          8, dwidth, 1);
+  else
+    return;
+
   g_return_if_fail (row != NULL);
 
   /* sort vertices in order of y-coordinate */

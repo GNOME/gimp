@@ -1,3 +1,11 @@
+2006-08-24  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/display/gimpdisplayshell-preview.c
+	(gimp_display_shell_draw_tri): just return if gdk_drawable_get_size()
+	returns 0 for width or height (bug #340056).
+
 2006-08-23  Sven Neumann  <sven@gimp.org>
 
 	* data/misc/Makefile.am: also substitute ${datarootdir} to work
