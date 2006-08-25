@@ -1,3 +1,11 @@
+2006-08-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/file-actions.c (file_actions_setup)
+	(file_actions_last_opened_update): if there are too few images in
+	the document history, use the action's name as its label for the
+	empty slots, to keep the translation of "" from showing up in the
+	shortcut editor.
+
 2006-08-24  Sven Neumann  <sven@gimp.org>
 
 	* desktop/gimp.desktop.in.in (Categories): removed "Application"
