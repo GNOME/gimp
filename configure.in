@@ -1856,7 +1856,7 @@ AC_OUTPUT
 
 dnl Print a summary of features enabled/disabled:
 AC_MSG_RESULT([
-Building GIMP with prefix=$prefix
+Building GIMP with prefix=$prefix, datarootdir=$datarootdir
 Desktop files install into $DESKTOP_DATADIR
 
 Extra Binaries:

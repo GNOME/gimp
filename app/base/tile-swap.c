@@ -926,7 +926,7 @@ tile_swap_in_attempt (DefSwapFile *def_swap_file,
       def_swap_file->cur_position = tile->swap_offset;
 
       if (lseek (fd, tile->swap_offset, SEEK_SET) == -1)
-        return;
+        goto out;
     }
 
   tile_alloc (tile);
@@ -943,7 +943,8 @@ tile_swap_in_attempt (DefSwapFile *def_swap_file,
       if (err <= 0)
         {
           g_free (tile->data);
-          return;
+          tile->data = NULL;
+          goto out;
         }
 
       nleft -= err;

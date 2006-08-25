@@ -1,9 +1,16 @@
+2006-08-25  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: print the value of $datarootdir in the summary.
+
+	* app/base/tile-swap.c (tile_swap_in_attempt): fixed error
+	handling in this unused function.
+
 2006-08-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/file-actions.c (file_actions_setup)
 	(file_actions_last_opened_update): if there are too few images in
-	the document history, use the action's name as its label for the
-	empty slots, to keep the translation of "" from showing up in the
+	the document history, use the action's name as label for the empty
+	slots, to keep the translation of "" from showing up in the
 	shortcut editor.
 
 2006-08-24  Sven Neumann  <sven@gimp.org>
