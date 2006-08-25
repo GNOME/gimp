@@ -122,40 +122,49 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  if (key == GDK_SHIFT_MASK || key == GDK_CONTROL_MASK)
+  if (key == GDK_SHIFT_MASK   ||
+      key == GDK_CONTROL_MASK ||
+      key == GDK_MOD1_MASK)
     {
       SelectOps button_op = options->operation;
 
-      if (press)
+      if (state & GDK_MOD1_MASK)
         {
-          if (key == (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)))
-            {
-              /*  first modifier pressed  */
-
-              selection_tool->saved_op = options->operation;
-            }
+          button_op = selection_tool->saved_op;
         }
       else
         {
-          if (! (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)))
+          if (press)
             {
-              /*  last modifier released  */
+              if (key == (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)))
+                {
+                  /*  first modifier pressed  */
 
-              button_op = selection_tool->saved_op;
+                  selection_tool->saved_op = options->operation;
+                }
             }
-        }
+          else
+            {
+              if (! (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)))
+                {
+                  /*  last modifier released  */
 
-      if ((state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK))
-        {
-          button_op = SELECTION_INTERSECT;
-        }
-      else if (state & GDK_SHIFT_MASK)
-        {
-          button_op = SELECTION_ADD;
-        }
-      else if (state & GDK_CONTROL_MASK)
-        {
-          button_op = SELECTION_SUBTRACT;
+                  button_op = selection_tool->saved_op;
+                }
+            }
+
+          if ((state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK))
+            {
+              button_op = SELECTION_INTERSECT;
+            }
+          else if (state & GDK_SHIFT_MASK)
+            {
+              button_op = SELECTION_ADD;
+            }
+          else if (state & GDK_CONTROL_MASK)
+            {
+              button_op = SELECTION_SUBTRACT;
+            }
         }
 
       if (button_op != options->operation)

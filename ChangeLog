@@ -1,5 +1,11 @@
 2006-08-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimpselectiontool.c (gimp_selection_tool_modifier_key):
+	When Alt is down, don't allow other modifiers to change the
+	operation shown in the options.  Fixes bug #349338.
+	
+2006-08-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/core/gimpchannel-select.[ch]: add push_undo arguments
 	to several gimp_channel_select_foo functions.
 
