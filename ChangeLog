@@ -1,5 +1,25 @@
 2006-08-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/core/gimpchannel-select.[ch]: add push_undo arguments
+	to several gimp_channel_select_foo functions.
+
+	* app/actions/vectors-commands.c
+	* app/core/gimpchannel-select.c
+	* app/core/gimpchannel-select.h
+	* app/pdb/paths_cmds.c
+	* app/pdb/selection_tools_cmds.c
+	* app/pdb/vectors_cmds.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimprectangleselecttool.c
+	* app/tools/gimpvectortool.c
+	* tools/pdbgen/pdb/paths.pdb
+	* tools/pdbgen/pdb/selection_tools.pdb
+	* tools/pdbgen/pdb/vectors.pdb:  add push_undo argument
+	to function calls where needed.
+
+2006-08-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/display/gimpnavigationeditor.c: put zoom label next to
 	scrollbar instead of above it; fixes bug #346880.
 	

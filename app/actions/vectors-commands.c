@@ -300,7 +300,7 @@ vectors_to_selection_cmd_callback (GtkAction *action,
   gimp_channel_select_vectors (gimp_image_get_mask (image),
                                _("Path to Selection"),
                                vectors,
-                               op, TRUE, FALSE, 0, 0);
+                               op, TRUE, FALSE, 0, 0, TRUE);
   gimp_image_flush (image);
 }
 

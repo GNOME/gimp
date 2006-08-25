@@ -524,7 +524,8 @@ gimp_rect_select_tool_real_select (GimpRectSelectTool *rect_select,
                                  operation,
                                  options->feather,
                                  options->feather_radius,
-                                 options->feather_radius);
+                                 options->feather_radius,
+                                 TRUE);
 }
 
 /*

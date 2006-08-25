@@ -150,5 +150,6 @@ gimp_ellipse_select_tool_select (GimpRectSelectTool *rect_tool,
                                options->antialias,
                                options->feather,
                                options->feather_radius,
-                               options->feather_radius);
+                               options->feather_radius,
+                               TRUE);
 }

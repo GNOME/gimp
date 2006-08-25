@@ -47,12 +47,14 @@ gimp_channel_select_rectangle (GimpChannel    *channel,
                                GimpChannelOps  op,
                                gboolean        feather,
                                gdouble         feather_radius_x,
-                               gdouble         feather_radius_y)
+                               gdouble         feather_radius_y,
+                               gboolean        push_undo)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
 
-  gimp_channel_push_undo (channel, Q_("command|Rectangle Select"));
+  if (push_undo)
+    gimp_channel_push_undo (channel, Q_("command|Rectangle Select"));
 
   /*  if applicable, replace the current selection  */
   if (op == GIMP_CHANNEL_OP_REPLACE)
@@ -96,12 +98,14 @@ gimp_channel_select_ellipse (GimpChannel    *channel,
                              gboolean        antialias,
                              gboolean        feather,
                              gdouble         feather_radius_x,
-                             gdouble         feather_radius_y)
+                             gdouble         feather_radius_y,
+                             gboolean        push_undo)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
 
-  gimp_channel_push_undo (channel, Q_("command|Ellipse Select"));
+  if (push_undo)
+    gimp_channel_push_undo (channel, Q_("command|Ellipse Select"));
 
   /*  if applicable, replace the current selection  */
   if (op == GIMP_CHANNEL_OP_REPLACE)
@@ -149,7 +153,8 @@ gimp_channel_select_scan_convert (GimpChannel     *channel,
                                   gboolean         antialias,
                                   gboolean         feather,
                                   gdouble          feather_radius_x,
-                                  gdouble          feather_radius_y)
+                                  gdouble          feather_radius_y,
+                                  gboolean         push_undo)
 {
   GimpItem    *item;
   GimpChannel *add_on;
@@ -159,7 +164,8 @@ gimp_channel_select_scan_convert (GimpChannel     *channel,
   g_return_if_fail (undo_desc != NULL);
   g_return_if_fail (scan_convert != NULL);
 
-  gimp_channel_push_undo (channel, undo_desc);
+  if (push_undo)
+    gimp_channel_push_undo (channel, undo_desc);
 
   /*  if applicable, replace the current selection  */
   if (op == GIMP_CHANNEL_OP_REPLACE)
@@ -193,7 +199,8 @@ gimp_channel_select_polygon (GimpChannel    *channel,
                              gboolean        antialias,
                              gboolean        feather,
                              gdouble         feather_radius_x,
-                             gdouble         feather_radius_y)
+                             gdouble         feather_radius_y,
+                             gboolean        push_undo)
 {
   GimpScanConvert *scan_convert;
 
@@ -207,7 +214,8 @@ gimp_channel_select_polygon (GimpChannel    *channel,
 
   gimp_channel_select_scan_convert (channel, undo_desc, scan_convert, 0, 0,
                                     op, antialias, feather,
-                                    feather_radius_x, feather_radius_y);
+                                    feather_radius_x, feather_radius_y,
+                                    push_undo);
 
   gimp_scan_convert_free (scan_convert);
 }
@@ -220,7 +228,8 @@ gimp_channel_select_vectors (GimpChannel    *channel,
                              gboolean        antialias,
                              gboolean        feather,
                              gdouble         feather_radius_x,
-                             gdouble         feather_radius_y)
+                             gdouble         feather_radius_y,
+                             gboolean        push_undo)
 {
   GimpScanConvert *scan_convert;
   GList           *stroke;
@@ -268,7 +277,8 @@ gimp_channel_select_vectors (GimpChannel    *channel,
   if (coords_added)
     gimp_channel_select_scan_convert (channel, undo_desc, scan_convert, 0, 0,
                                       op, antialias, feather,
-                                      feather_radius_x, feather_radius_y);
+                                      feather_radius_x, feather_radius_y,
+                                      push_undo);
 
   gimp_scan_convert_free (scan_convert);
 }

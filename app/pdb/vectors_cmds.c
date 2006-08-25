@@ -864,7 +864,8 @@ vectors_to_selection_invoker (GimpProcedure     *procedure,
                                      antialias,
                                      feather,
                                      feather_radius_x,
-                                     feather_radius_y);
+                                     feather_radius_y,
+                                     TRUE);
       else
         success = FALSE;
     }

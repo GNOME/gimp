@@ -30,7 +30,8 @@ void   gimp_channel_select_rectangle    (GimpChannel         *channel,
                                          GimpChannelOps       op,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
-                                         gdouble              feather_radius_y);
+                                         gdouble              feather_radius_y,
+                                         gboolean             push_undo);
 void   gimp_channel_select_ellipse      (GimpChannel         *channel,
                                          gint                 x,
                                          gint                 y,
@@ -40,7 +41,8 @@ void   gimp_channel_select_ellipse      (GimpChannel         *channel,
                                          gboolean             antialias,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
-                                         gdouble              feather_radius_y);
+                                         gdouble              feather_radius_y,
+                                         gboolean             push_undo);
 
 
 /*  select by GimpScanConvert functions  */
@@ -54,7 +56,8 @@ void   gimp_channel_select_scan_convert (GimpChannel         *channel,
                                          gboolean             antialias,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
-                                         gdouble              feather_radius_y);
+                                         gdouble              feather_radius_y,
+                                         gboolean             push_undo);
 void   gimp_channel_select_polygon      (GimpChannel         *channel,
                                          const gchar         *undo_desc,
                                          gint                 n_points,
@@ -63,7 +66,8 @@ void   gimp_channel_select_polygon      (GimpChannel         *channel,
                                          gboolean             antialias,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
-                                         gdouble              feather_radius_y);
+                                         gdouble              feather_radius_y,
+                                         gboolean             push_undo);
 void   gimp_channel_select_vectors      (GimpChannel         *channel,
                                          const gchar         *undo_desc,
                                          GimpVectors         *vectors,
@@ -71,7 +75,8 @@ void   gimp_channel_select_vectors      (GimpChannel         *channel,
                                          gboolean             antialias,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
-                                         gdouble              feather_radius_y);
+                                         gdouble              feather_radius_y,
+                                         gboolean             push_undo);
 
 
 /*  select by GimpChannel functions  */

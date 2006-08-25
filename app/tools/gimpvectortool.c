@@ -1873,7 +1873,7 @@ gimp_vector_tool_to_selection_extended (GimpVectorTool *vector_tool,
                                _("Path to selection"),
                                vector_tool->vectors,
                                operation,
-                               TRUE, FALSE, 0, 0);
+                               TRUE, FALSE, 0, 0, TRUE);
   gimp_image_flush (image);
 }
 

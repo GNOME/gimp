@@ -317,7 +317,8 @@ gimp_free_select_tool_real_select (GimpFreeSelectTool *free_sel,
                                options->antialias,
                                options->feather,
                                options->feather_radius,
-                               options->feather_radius);
+                               options->feather_radius,
+                               TRUE);
 }
 
 static void

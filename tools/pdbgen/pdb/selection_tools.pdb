@@ -199,7 +199,8 @@ HELP
                                antialias,
                                feather,
                                feather_radius,
-                               feather_radius);
+                               feather_radius,
+                               TRUE);
 }
 CODE
     );
@@ -252,7 +253,8 @@ HELP
                                antialias,
                                feather,
                                feather_radius,
-                               feather_radius);
+                               feather_radius,
+                               TRUE);
 }
 CODE
     );
@@ -462,7 +464,8 @@ HELP
                                  operation,
                                  feather,
                                  feather_radius,
-                                 feather_radius);
+                                 feather_radius,
+                                 TRUE);
 }
 CODE
     );

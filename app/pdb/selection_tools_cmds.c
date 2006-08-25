@@ -169,7 +169,8 @@ ellipse_select_invoker (GimpProcedure     *procedure,
                                    antialias,
                                    feather,
                                    feather_radius,
-                                   feather_radius);
+                                   feather_radius,
+                                   TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -209,7 +210,8 @@ free_select_invoker (GimpProcedure     *procedure,
                                    antialias,
                                    feather,
                                    feather_radius,
-                                   feather_radius);
+                                   feather_radius,
+                                   TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -351,7 +353,8 @@ rect_select_invoker (GimpProcedure     *procedure,
                                      operation,
                                      feather,
                                      feather_radius,
-                                     feather_radius);
+                                     feather_radius,
+                                     TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
