@@ -315,9 +315,8 @@ The canonical place to find GIMP info is at http://www.gimp.org/.
 Here you can find links to just about many other GIMP sites,
 tutorials, data sets, mailing list archives, and more.
 
-There is also a GIMP User Manual available at
-http://manual.gimp.org/ that goes into much more detail
-about the interactive use of GIMP.
+There is also a GIMP User Manual available at http://docs.gimp.org/
+that goes into much more detail about the interactive use of GIMP.
 
 The latest version of GIMP and the GTK+ libs is always available at
 ftp://ftp.gimp.org/.

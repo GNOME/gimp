@@ -1,5 +1,9 @@
 2006-08-25  Sven Neumann  <sven@gimp.org>
 
+	* docs/gimp.1.in: updated the URL of the user manual.
+
+2006-08-25  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: print the value of $datarootdir in the summary.
 
 	* app/base/tile-swap.c (tile_swap_in_attempt): fixed error
