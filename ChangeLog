@@ -1,3 +1,8 @@
+2006-08-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/display/gimpnavigationeditor.c: put zoom label next to
+	scrollbar instead of above it; fixes bug #346880.
+	
 2006-08-25  Sven Neumann  <sven@gimp.org>
 
 	* docs/gimp.1.in: updated the URL of the user manual.
