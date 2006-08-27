@@ -1,3 +1,11 @@
+2006-08-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpcolortool.c (gimp_color_tool_real_picked): applied
+	modified patch from David Gowers which selects a matching color
+	from the palette editor's active palette. I'm not sure if this
+	behavior is desirable but we'll never find out if we dont't try.
+	Fixes bug #343358.
+
 2006-08-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpselectiontool.c (gimp_selection_tool_modifier_key):

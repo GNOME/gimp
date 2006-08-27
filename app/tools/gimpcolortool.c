@@ -610,31 +610,47 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
                              GimpRGB            *color,
                              gint                color_index)
 {
-  GimpTool    *tool = GIMP_TOOL (color_tool);
-  GimpContext *user_context;
+  GimpTool          *tool = GIMP_TOOL (color_tool);
+  GimpContext       *user_context;
+  GimpDialogFactory *dialog_factory;
 
-  user_context = gimp_get_user_context (tool->display->image->gimp);
+  user_context   = gimp_get_user_context (tool->display->image->gimp);
+  dialog_factory = gimp_dialog_factory_from_name ("dock");
 
-  if ((color_tool->pick_mode == GIMP_COLOR_PICK_MODE_FOREGROUND ||
-       color_tool->pick_mode == GIMP_COLOR_PICK_MODE_BACKGROUND) &&
-      GIMP_IMAGE_TYPE_IS_INDEXED (sample_type))
+  if (color_tool->pick_mode == GIMP_COLOR_PICK_MODE_FOREGROUND ||
+      color_tool->pick_mode == GIMP_COLOR_PICK_MODE_BACKGROUND)
     {
-      GimpDialogFactory *dialog_factory;
-      GimpSessionInfo   *info;
+      GimpSessionInfo *info;
 
-      dialog_factory = gimp_dialog_factory_from_name ("dock");
-      info = gimp_dialog_factory_find_session_info (dialog_factory,
-                                                    "gimp-indexed-palette");
-
-      if (info && info->widget)
+      if (GIMP_IMAGE_TYPE_IS_INDEXED (sample_type))
         {
-          GtkWidget *colormap_editor;
+          info = gimp_dialog_factory_find_session_info (dialog_factory,
+                                                        "gimp-indexed-palette");
+          if (info && info->widget)
+            {
+              GimpColormapEditor *editor;
 
-          colormap_editor = gtk_bin_get_child (GTK_BIN (info->widget));
+              editor = GIMP_COLORMAP_EDITOR (gtk_bin_get_child (GTK_BIN (info->widget)));
 
-          gtk_adjustment_set_value
-            (GIMP_COLORMAP_EDITOR (colormap_editor)->index_adjustment,
-             color_index);
+              gimp_colormap_editor_set_index (editor, color_index, NULL);
+            }
+        }
+
+      if (TRUE)
+        {
+          info = gimp_dialog_factory_find_session_info (dialog_factory,
+                                                        "gimp-palette-editor");
+          if (info && info->widget)
+            {
+              GimpPaletteEditor *editor;
+              gint               index;
+
+              editor = GIMP_PALETTE_EDITOR (gtk_bin_get_child (GTK_BIN (info->widget)));
+
+              index = gimp_palette_editor_get_index (editor, color);
+              if (index != -1)
+                gimp_palette_editor_set_index (editor, index, NULL);
+            }
         }
     }
 
@@ -653,16 +669,13 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
 
     case GIMP_COLOR_PICK_MODE_PALETTE:
       {
-        GimpDialogFactory *dialog_factory;
-        GdkScreen         *screen;
-        GtkWidget         *dockable;
+        GdkScreen *screen;
+        GtkWidget *dockable;
 
-        dialog_factory = gimp_dialog_factory_from_name ("dock");
         screen = gtk_widget_get_screen (tool->display->shell);
         dockable = gimp_dialog_factory_dialog_raise (dialog_factory, screen,
                                                      "gimp-palette-editor",
                                                      -1);
-
         if (dockable)
           {
             GtkWidget *palette_editor;
