@@ -1,5 +1,5 @@
 # Vietnamese translation for the GIMP.
-# Copyright © 2002-2006 Gnome i18n Project for Vietnamese.
+# Copyright © 2006 Gnome i18n Project for Vietnamese.
 # T.M.Thanh <tmthanh@yahoo.com>, 2002-2003.
 # Clytie Siddall <clytie@riverland.net.au>, 2005-2006.
 # 
@@ -7,8 +7,8 @@ msgid ""
 ""
 msgstr "Project-Id-Version: gimp Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-22 03:04+0200\n"
-"PO-Revision-Date: 2006-08-22 21:59+0930\n"
+"POT-Creation-Date: 2006-08-27 02:59+0200\n"
+"PO-Revision-Date: 2006-08-27 16:30+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -3212,16 +3212,16 @@ msgid "_Select"
 msgstr "_Chọn"
 
 #: ../app/actions/select-actions.c:50
-msgid "_All"
-msgstr "_Tất cả"
+msgid "select|_All"
+msgstr "Tất _cả"
 
 #: ../app/actions/select-actions.c:51
 msgid "Select everything"
 msgstr "Chọn mọi gì"
 
 #: ../app/actions/select-actions.c:56
-msgid "_None"
-msgstr "Khô_ng có"
+msgid "select|_None"
+msgstr "Khô_ng gì"
 
 #: ../app/actions/select-actions.c:57
 msgid "Dismiss the selection"
@@ -4659,7 +4659,11 @@ msgid ""
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
 "images that wouldn't fit into memory otherwise.  If you have a lot of RAM, "
 "you may want to set this to a higher value."
-msgstr "Khi số lượng dữ liệu điểm ảnh vượt quá hạn chế này, GIMP sẽ bắt đầu trao đổi các « ô » (256×256 điểm ảnh) với đĩa. Tiến trình này là rất chậm hơn, còn cho bạn vẫn có khả năng thao tác ảnh mà bằng bất cứ cách khác nào chiếm quá nhiều bộ nhớ. Nếu bạn có rất nhiều bộ nhớ RAM, bạn có thể đặt giá trị này là cao hơn."
+msgstr "Khi số lượng dữ liệu điểm ảnh vượt quá hạn chế này, GIMP sẽ bắt đầu trao đổi "
+"các « ô » (256×256 điểm ảnh) với đĩa. Tiến trình này là rất chậm hơn, còn "
+"cho bạn vẫn có khả năng thao tác ảnh mà bằng bất cứ cách khác nào chiếm quá "
+"nhiều bộ nhớ. Nếu bạn có rất nhiều bộ nhớ RAM, bạn có thể đặt giá trị này là "
+"cao hơn."
 
 #: ../app/config/gimprc-blurbs.h:393
 msgid ""
@@ -4696,8 +4700,8 @@ msgid ""
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 msgstr "Đặt giới hạn trên của bộ nhớ được dùng cho mỗi ảnh, để giữ thao tác trong "
-"đống hủy bước. Bất chấp thiết lập này, có thể hủy bước ít nhất số mức hủy bước "
-"đã cấu hình."
+"đống hủy bước. Bất chấp thiết lập này, có thể hủy bước ít nhất số mức hủy "
+"bước đã cấu hình."
 
 #: ../app/config/gimprc-blurbs.h:416
 msgid "Sets the size of the previews in the Undo History."
@@ -5338,14 +5342,16 @@ msgstr "Cảnh gần tới trong suốt"
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
-msgstr "Có vẻ là bạn đã sử dụng GIMP %s lần trước. Như thế thì GIMP sẽ chuyển thiết lập người dùng của bạn sang « %s »."
+msgstr "Có vẻ là bạn đã sử dụng GIMP %s lần trước. Như thế thì GIMP sẽ chuyển thiết "
+"lập người dùng của bạn sang « %s »."
 
 #: ../app/core/gimp-user-install.c:199
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
 "a folder named '%s' and copy some files to it."
-msgstr "Có vẻ là bạn đang sử dụng GIMP lần đầu tiên. Như thế thì GIMP sẽ tạo một thư mục tên « %s » và sao chép một số tập tin vào nó."
+msgstr "Có vẻ là bạn đang sử dụng GIMP lần đầu tiên. Như thế thì GIMP sẽ tạo một thư "
+"mục tên « %s » và sao chép một số tập tin vào nó."
 
 #: ../app/core/gimp-user-install.c:301
 #, c-format
@@ -5507,29 +5513,29 @@ msgstr "Tập tin bị cụt"
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: tập tin bị hỏng."
 
-#: ../app/core/gimpchannel-select.c:55
+#: ../app/core/gimpchannel-select.c:57
 msgid "command|Rectangle Select"
 msgstr "Chọn hình chữ nhật"
 
-#: ../app/core/gimpchannel-select.c:104
+#: ../app/core/gimpchannel-select.c:108
 msgid "command|Ellipse Select"
 msgstr "Chọn hình bầu dục"
 
-#: ../app/core/gimpchannel-select.c:364
+#: ../app/core/gimpchannel-select.c:374
 msgid "Alpha to Selection"
 msgstr "Anfa vào vùng chọn"
 
-#: ../app/core/gimpchannel-select.c:402
+#: ../app/core/gimpchannel-select.c:412
 #, c-format
 msgid "%s Channel to Selection"
 msgstr "%s Kênh tới tùy chọn"
 
-#: ../app/core/gimpchannel-select.c:450
+#: ../app/core/gimpchannel-select.c:460
 #: ../app/tools/gimpfuzzyselecttool.c:79
 msgid "command|Fuzzy Select"
 msgstr "Chọn mờ"
 
-#: ../app/core/gimpchannel-select.c:497
+#: ../app/core/gimpchannel-select.c:507
 #: ../app/tools/gimpbycolorselecttool.c:81
 msgid "command|Select by Color"
 msgstr "Chọn theo màu"
@@ -8053,7 +8059,7 @@ msgstr "(gột)"
 
 #: ../app/display/gimpdisplayshell-title.c:328
 #: ../app/display/gimpdisplayshell-title.c:340
-#: ../app/widgets/gimpactiongroup.c:778
+#: ../app/widgets/gimpactiongroup.c:782
 msgid "(none)"
 msgstr "(không có)"
 
@@ -8292,7 +8298,7 @@ msgid ""
 msgstr "Độ phân giải ảnh nằm ngoài giới hạn, nên dùng độ phân giải mặc định để thay "
 "thế."
 
-#: ../app/pdb/selection_tools_cmds.c:205
+#: ../app/pdb/selection_tools_cmds.c:206
 #: ../app/tools/gimpfreeselecttool.c:96
 msgid "Free Select"
 msgstr "Chọn tự do"
@@ -8334,8 +8340,8 @@ msgid ""
 msgstr "bổ sung đã sụp đổ : « %s »\n"
 "(%s)\n"
 "\n"
-"Bổ sung đang kết thúc có thể đã tạo lỗi trong tính trạng nội bộ của "
-"GIMP. Như thế thì đề nghị bạn lưu các ảnh và khởi chạy lại GIMP."
+"Bổ sung đang kết thúc có thể đã tạo lỗi trong tính trạng nội bộ của GIMP. "
+"Như thế thì đề nghị bạn lưu các ảnh và khởi chạy lại GIMP."
 
 #: ../app/plug-in/gimppluginmanager.c:292
 msgid "Plug-In Interpreters"
@@ -9806,8 +9812,8 @@ msgstr "Chọn vùng hình chữ nhật của ảnh"
 msgid "_Rect Select"
 msgstr "Chọn c_hữ nhật"
 
-#: ../app/tools/gimprectangletool.c:1384
-#: ../app/tools/gimprectangletool.c:2084
+#: ../app/tools/gimprectangletool.c:1306
+#: ../app/tools/gimprectangletool.c:2006
 msgid "Rectangle: "
 msgstr "Hình chữ nhật:"
 
@@ -9900,39 +9906,39 @@ msgstr "Chọn bằng:"
 msgid "Auto shrink selection"
 msgstr "Tự động thu nhỏ vùng chọn"
 
-#: ../app/tools/gimpselectiontool.c:267
+#: ../app/tools/gimpselectiontool.c:276
 msgid "Click-Drag to replace the current selection."
 msgstr "Nhấn-kéo để thay thế vùng chọn hiện có."
 
-#: ../app/tools/gimpselectiontool.c:274
+#: ../app/tools/gimpselectiontool.c:283
 msgid "Click-Drag to create a new selection."
 msgstr "Nhấn-kéo để tạo một vùng chọn mới."
 
-#: ../app/tools/gimpselectiontool.c:278
+#: ../app/tools/gimpselectiontool.c:287
 msgid "Click-Drag to add to the current selection."
 msgstr "Nhấn-kéo để thêm vào vùng chọn hiện có."
 
-#: ../app/tools/gimpselectiontool.c:287
+#: ../app/tools/gimpselectiontool.c:296
 msgid "Click-Drag to subtract from the current selection."
 msgstr "Nhấn-kéo để trừ khỏi vùng chọn hiện có."
 
-#: ../app/tools/gimpselectiontool.c:296
+#: ../app/tools/gimpselectiontool.c:305
 msgid "Click-Drag to intersect with the current selection."
 msgstr "Nhấn-kéo để cắt chéo với vùng chọn hiện có."
 
-#: ../app/tools/gimpselectiontool.c:304
+#: ../app/tools/gimpselectiontool.c:313
 msgid "Click-Drag to move the selection mask."
 msgstr "Nhấn-kéo để di chuyển mặt nạ lựa chọn."
 
-#: ../app/tools/gimpselectiontool.c:312
+#: ../app/tools/gimpselectiontool.c:321
 msgid "Click-Drag to move the selected pixels."
 msgstr "Nhấn-kéo để di chuyển các điểm ảnh đã chọn."
 
-#: ../app/tools/gimpselectiontool.c:316
+#: ../app/tools/gimpselectiontool.c:325
 msgid "Click-Drag to move a copy of the selected pixels."
 msgstr "Nhấn-kéo để di chuyển một bản sao của các điểm ảnh đã chọn."
 
-#: ../app/tools/gimpselectiontool.c:320
+#: ../app/tools/gimpselectiontool.c:329
 msgid "Click to anchor the floating selection."
 msgstr "Nhấn để cụ neo vùng chọn đang nổi."
 
@@ -9983,8 +9989,8 @@ msgstr "Nhấn để nhoè đường."
 #: ../app/tools/gimptextoptions.c:116
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
-msgstr "Gợi ý thì thay đổi các cạnh của phông chữ, để hiển thị mảng ảnh chính xác ngay "
-"cả khi dùng kích thước nhỏ."
+msgstr "Gợi ý thì thay đổi các cạnh của phông chữ, để hiển thị mảng ảnh chính xác "
+"ngay cả khi dùng kích thước nhỏ."
 
 #: ../app/tools/gimptextoptions.c:123
 msgid ""
@@ -10118,7 +10124,7 @@ msgstr "15°  (%s)"
 msgid "Keep aspect  (%s)"
 msgstr "Giữ khía cạnh (%s)"
 
-#: ../app/tools/gimptransformtool.c:226
+#: ../app/tools/gimptransformtool.c:227
 msgid "Transforming"
 msgstr "Đang chuyển dạng..."
 
@@ -10431,7 +10437,7 @@ msgstr "Không tìm thấy đường dẫn nào trong bộ đệm."
 msgid "Failed to import paths from '%s': %s"
 msgstr "Lỗi nhập đường dẫn từ « %s »: %s"
 
-#: ../app/widgets/gimpactiongroup.c:775
+#: ../app/widgets/gimpactiongroup.c:779
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -10567,7 +10573,8 @@ msgstr "Chưa chọn bộ lọc nào"
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
-msgstr "Cách ghi màu thập lục phân như dạng HTML và CSS. Mục nhập này cũng chấp nhận các tên màu kiểu CSS."
+msgstr "Cách ghi màu thập lục phân như dạng HTML và CSS. Mục nhập này cũng chấp nhận "
+"các tên màu kiểu CSS."
 
 #: ../app/widgets/gimpcolorframe.c:415
 msgid "Index:"
@@ -10966,7 +10973,8 @@ msgid ""
 "This window has %d tab open. Closing the window will also close all its tabs."
 msgid_plural "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
-msgstr[0] "Cửa sổ này có %d thanh được mở. Việc đóng cửa sổ thì sẽ cũng đóng các thanh của nó."
+msgstr[0] "Cửa sổ này có %d thanh được mở. Việc đóng cửa sổ thì sẽ cũng đóng các thanh "
+"của nó."
 
 #: ../app/widgets/gimpdockable.c:166
 msgid "Configure this tab"

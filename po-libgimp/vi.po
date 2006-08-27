@@ -7,8 +7,8 @@ msgid ""
 ""
 msgstr "Project-Id-Version: Gimp-libgimp Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-22 11:40+0200\n"
-"PO-Revision-Date: 2006-08-22 22:37+0930\n"
+"POT-Creation-Date: 2006-08-27 03:24+0200\n"
+"PO-Revision-Date: 2006-08-27 16:32+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -582,8 +582,8 @@ msgid "Indexed-alpha"
 msgstr "Phụ lục-anfa"
 
 #: ../libgimpbase/gimpbaseenums.c:562
-msgid "None (Fastest)"
-msgstr "Không (nhanh nhất)"
+msgid "interpolation|None"
+msgstr "Không có"
 
 #: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|Linear"
@@ -593,9 +593,10 @@ msgstr "Tuyến"
 msgid "Cubic"
 msgstr "Khối"
 
+# Name: don't translate/Tên: đừng dịch
 #: ../libgimpbase/gimpbaseenums.c:565
-msgid "Lanczos (Best)"
-msgstr "Lanczos (tốt nhất)"
+msgid "Lanczos"
+msgstr "Lanczos"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -744,7 +745,8 @@ msgid ""
 "When enabled, the GIMP will try to use the display color profile from the "
 "windowing system. The configured monitor profile is then only used as a "
 "fallback."
-msgstr "Khi bật, GIMP sẽ thử dùng hồ sơ màu bộ trình bày từ hệ thống cửa sổ. Hồ sơ bộ trình bày đã cấu hình thì chỉ dùng là sự chọn dữ trữ."
+msgstr "Khi bật, GIMP sẽ thử dùng hồ sơ màu bộ trình bày từ hệ thống cửa sổ. Hồ sơ "
+"bộ trình bày đã cấu hình thì chỉ dùng là sự chọn dữ trữ."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "The default RGB workspace color profile."
@@ -921,7 +923,8 @@ msgid ""
 "Cannot determine a valid home directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr "Không thể quyết định thư mục chính hợp lệ.\n"
-"Nư thế thì chác hình thu nhỏ sẽ được lưu vào thư mục cho tập tin tạm thời (%s) thay thế."
+"Nư thế thì chác hình thu nhỏ sẽ được lưu vào thư mục cho tập tin tạm thời (%"
+"s) thay thế."
 
 #: ../libgimpthumb/gimpthumb-utils.c:249
 #: ../libgimpthumb/gimpthumb-utils.c:317
@@ -970,7 +973,8 @@ msgstr "Cũ :"
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
-msgstr "Cách ghi màu thập lục như dạng HTML và CSS. Mục nhập này cũng chấp nhận tên màu kiểu CSS."
+msgstr "Cách ghi màu thập lục như dạng HTML và CSS. Mục nhập này cũng chấp nhận tên "
+"màu kiểu CSS."
 
 #: ../libgimpwidgets/gimpcolorselection.c:269
 msgid "HTML _notation:"
@@ -1037,15 +1041,10 @@ msgid "One page selected"
 msgstr "Một trang đã chọn"
 
 #: ../libgimpwidgets/gimppageselector.c:1183
-#, c-format
-msgid "All %d page selected"
-msgid_plural "All %d pages selected"
-msgstr[0] "Mọi %d trang đã chọn"
-
 #: ../libgimpwidgets/gimppageselector.c:1187
 #, c-format
 msgid "%d page selected"
-msgid_plural "%d pages selected"
+msgid_plural "All %d pages selected"
 msgstr[0] "%d trang đã chọn"
 
 #: ../libgimpwidgets/gimppatheditor.c:214
@@ -1060,7 +1059,8 @@ msgstr "Thư mục"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr "Hãy nhấn vào ống nhỏ giọt, rồi nhấn vào bất cứ nơi nào trên màn hình, để chọn màu đó."
+msgstr "Hãy nhấn vào ống nhỏ giọt, rồi nhấn vào bất cứ nơi nào trên màn hình, để "
+"chọn màu đó."
 
 #: ../libgimpwidgets/gimppreviewarea.c:94
 msgid "Check Size"
@@ -1180,7 +1180,8 @@ msgstr "Hệ số"
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr "Hãy dùng giá trị này để gieo trình sinh số ngẫu nhiên — điều này cho bạn có khả năng nhắc lại hoạt động « ngẫu nhiên » đưa ra."
+msgstr "Hãy dùng giá trị này để gieo trình sinh số ngẫu nhiên — điều này cho bạn có "
+"khả năng nhắc lại hoạt động « ngẫu nhiên » đưa ra."
 
 #: ../libgimpwidgets/gimpwidgets.c:1009
 msgid "_New Seed"
@@ -1589,7 +1590,8 @@ msgstr "Kênh:"
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
-msgstr "Kênh MIDI từ đó cần đọc các sự kiện. Hãy đặt nó là -1 để đọc từ mọi kênh MIDI."
+msgstr "Kênh MIDI từ đó cần đọc các sự kiện. Hãy đặt nó là -1 để đọc từ mọi kênh "
+"MIDI."
 
 # Name: don't translate / Tên: đừng dịch
 #: ../modules/controller_midi.c:260
