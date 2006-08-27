@@ -118,13 +118,11 @@ GtkWidget *
 gimp_flip_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
+  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *frame;
   gchar     *str;
-
-  vbox = gimp_tool_options_gui (tool_options);
 
   hbox = gimp_prop_enum_stock_box_new (config, "type", "gimp", 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);

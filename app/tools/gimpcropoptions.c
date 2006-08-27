@@ -143,13 +143,11 @@ GtkWidget *
 gimp_crop_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
+  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *vbox_rectangle;
   GtkWidget *frame;
   GtkWidget *button;
   gchar     *str;
-
-  vbox = gimp_tool_options_gui (tool_options);
 
   /*  tool toggle  */
   str = g_strdup_printf (_("Tool Toggle  (%s)"),

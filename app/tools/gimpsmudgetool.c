@@ -89,10 +89,8 @@ static GtkWidget *
 gimp_smudge_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
+  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *table;
-
-  vbox = gimp_paint_options_gui (tool_options);
 
   /*  the rate scale  */
   table = gtk_table_new (1, 3, FALSE);

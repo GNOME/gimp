@@ -1,3 +1,29 @@
+2006-08-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpalignoptions.c
+	* app/tools/gimpblendoptions.c
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorpickeroptions.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcropoptions.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpflipoptions.c
+	* app/tools/gimphistogramoptions.c
+	* app/tools/gimpinkoptions-gui.c
+	* app/tools/gimpmagnifyoptions.c
+	* app/tools/gimpmeasureoptions.c
+	* app/tools/gimpmoveoptions.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimprectangleoptions.c
+	* app/tools/gimprectangleselectoptions.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptextoptions.c
+	* app/tools/gimptransformoptions.c
+	* app/tools/gimpvectoroptions.c: code cleanup.
+
 2006-08-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpcolortool.c (gimp_color_tool_real_picked): applied

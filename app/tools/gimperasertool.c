@@ -144,11 +144,9 @@ static GtkWidget *
 gimp_eraser_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
+  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *button;
   gchar     *str;
-
-  vbox = gimp_paint_options_gui (tool_options);
 
   /* the anti_erase toggle */
   str = g_strdup_printf (_("Anti erase  (%s)"),

@@ -42,10 +42,8 @@ gimp_align_options_init (GimpAlignOptions *options)
 GtkWidget *
 gimp_align_options_gui (GimpToolOptions *tool_options)
 {
-  GtkWidget *vbox;
+  GtkWidget *vbox = gimp_tool_options_gui (tool_options);
   GtkWidget *container;
-
-  vbox = gimp_tool_options_gui (tool_options);
 
   container = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), container, FALSE, FALSE, 0);

@@ -68,10 +68,8 @@ gimp_rect_select_options_rectangle_options_iface_init (GimpRectangleOptionsInter
 GtkWidget *
 gimp_rect_select_options_gui (GimpToolOptions *tool_options)
 {
-  GtkWidget *vbox;
+  GtkWidget *vbox = gimp_selection_options_gui (tool_options);
   GtkWidget *vbox_rectangle;
-
-  vbox = gimp_selection_options_gui (tool_options);
 
   /*  rectangle options  */
   vbox_rectangle = gimp_rectangle_options_gui (tool_options);
@@ -80,5 +78,6 @@ gimp_rect_select_options_gui (GimpToolOptions *tool_options)
 
   gimp_rectangle_options_set_highlight (GIMP_RECTANGLE_OPTIONS (tool_options),
                                         FALSE);
+
   return vbox;
 }

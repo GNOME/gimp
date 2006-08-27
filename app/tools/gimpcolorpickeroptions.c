@@ -150,12 +150,10 @@ GtkWidget *
 gimp_color_picker_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
+  GtkWidget *vbox   = gimp_color_options_gui (tool_options);
   GtkWidget *button;
   GtkWidget *frame;
   gchar     *str;
-
-  vbox = gimp_color_options_gui (tool_options);
 
   /*  the sample merged toggle button  */
   button = gimp_prop_check_button_new (config, "sample-merged",

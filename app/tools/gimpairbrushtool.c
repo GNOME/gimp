@@ -83,13 +83,9 @@ gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
 static GtkWidget *
 gimp_airbrush_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
-  GtkWidget *vbox;
+  GObject   *config = G_OBJECT (tool_options);
+  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *table;
-
-  config = G_OBJECT (tool_options);
-
-  vbox = gimp_paint_options_gui (tool_options);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);

@@ -36,7 +36,7 @@
 #include "gimp-intl.h"
 
 
-static GtkWidget * blob_image_new  (GimpInkBlobType  blob_type);
+static GtkWidget * blob_image_new (GimpInkBlobType blob_type);
 
 
 GtkWidget *
@@ -44,15 +44,13 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
 {
   GObject        *config      = G_OBJECT (tool_options);
   GimpInkOptions *ink_options = GIMP_INK_OPTIONS (tool_options);
+  GtkWidget      *vbox        = gimp_paint_options_gui (tool_options);
+  GtkWidget      *frame;
   GtkWidget      *table;
-  GtkWidget      *vbox;
   GtkWidget      *blob_vbox;
   GtkWidget      *hbox;
-  GtkWidget      *frame;
   GtkWidget      *editor;
   GtkObject      *adj;
-
-  vbox = gimp_paint_options_gui (tool_options);
 
   /* adjust sliders */
   frame = gimp_frame_new (_("Adjustment"));

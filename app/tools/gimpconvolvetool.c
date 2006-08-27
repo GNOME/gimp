@@ -159,6 +159,7 @@ gimp_convolve_tool_oper_update (GimpTool        *tool,
   GimpConvolveOptions *options;
 
   options = GIMP_CONVOLVE_OPTIONS (tool->tool_info->tool_options);
+
   gimp_convolve_tool_status_update (tool, options->type);
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
@@ -190,18 +191,17 @@ gimp_convolve_tool_status_update (GimpTool         *tool,
     }
 }
 
+
 /*  tool options stuff  */
 
 static GtkWidget *
 gimp_convolve_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
+  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *table;
   GtkWidget *frame;
   gchar     *str;
-
-  vbox = gimp_paint_options_gui (tool_options);
 
   /*  the type radio box  */
   str = g_strdup_printf (_("Convolve Type  (%s)"),

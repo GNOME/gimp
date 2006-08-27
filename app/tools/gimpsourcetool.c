@@ -283,8 +283,7 @@ gimp_clone_tool_modifier_key (GimpTool        *tool,
 
   if (! (state & GDK_BUTTON1_MASK))
     {
-      if (options->clone_type == GIMP_IMAGE_CLONE
-          && key == GDK_CONTROL_MASK)
+      if (options->clone_type == GIMP_IMAGE_CLONE && key == GDK_CONTROL_MASK)
         {
           if (press)
             paint_tool->status = _("Click to set the clone source.");
@@ -447,14 +446,12 @@ static GtkWidget *
 gimp_clone_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
+  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *frame;
   GtkWidget *button;
   GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *combo;
-
-  vbox = gimp_paint_options_gui (tool_options);
 
   frame = gimp_prop_enum_radio_frame_new (config, "clone-type",
                                           _("Source"), 0, 0);

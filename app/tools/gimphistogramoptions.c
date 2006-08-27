@@ -117,10 +117,8 @@ GtkWidget *
 gimp_histogram_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
+  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *frame;
-
-  vbox = gimp_tool_options_gui (tool_options);
 
   frame = gimp_prop_enum_radio_frame_new (config, "histogram-scale",
                                           _("Histogram Scale"), 0, 0);

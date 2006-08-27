@@ -75,7 +75,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 {
   GObject          *config  = G_OBJECT (tool_options);
   GimpPaintOptions *options = GIMP_PAINT_OPTIONS (tool_options);
-  GtkWidget        *vbox;
+  GtkWidget        *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget        *frame;
   GtkWidget        *table;
   GtkWidget        *menu;
@@ -84,8 +84,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   GtkWidget        *incremental_toggle = NULL;
   gint              table_row          = 0;
   GType             tool_type;
-
-  vbox = gimp_tool_options_gui (tool_options);
 
   tool_type = tool_options->tool_info->tool_type;
 
@@ -218,12 +216,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
   GtkWidget *wbox   = NULL;
   GtkWidget *button;
 
-  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
-      tool_type == GIMP_TYPE_CLONE_TOOL                  ||
-      tool_type == GIMP_TYPE_CONVOLVE_TOOL               ||
-      tool_type == GIMP_TYPE_DODGE_BURN_TOOL             ||
-      tool_type == GIMP_TYPE_ERASER_TOOL                 ||
-      tool_type == GIMP_TYPE_SMUDGE_TOOL)
+  if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
       GtkWidget *inner_frame;
 
@@ -321,12 +314,7 @@ fade_options_gui (GimpFadeOptions  *fade,
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame  = NULL;
 
-  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
-      tool_type == GIMP_TYPE_CLONE_TOOL                  ||
-      tool_type == GIMP_TYPE_CONVOLVE_TOOL               ||
-      tool_type == GIMP_TYPE_DODGE_BURN_TOOL             ||
-      tool_type == GIMP_TYPE_ERASER_TOOL                 ||
-      tool_type == GIMP_TYPE_SMUDGE_TOOL)
+  if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
       GtkWidget *table;
       GtkWidget *spinbutton;
@@ -380,12 +368,7 @@ jitter_options_gui (GimpJitterOptions  *jitter,
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame  = NULL;
 
-  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
-      tool_type == GIMP_TYPE_CLONE_TOOL                  ||
-      tool_type == GIMP_TYPE_CONVOLVE_TOOL               ||
-      tool_type == GIMP_TYPE_DODGE_BURN_TOOL             ||
-      tool_type == GIMP_TYPE_ERASER_TOOL                 ||
-      tool_type == GIMP_TYPE_SMUDGE_TOOL)
+  if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
       GtkWidget *table;
       GtkWidget *button;

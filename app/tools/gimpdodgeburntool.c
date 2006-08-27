@@ -83,7 +83,7 @@ gimp_dodge_burn_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_dodge_burn_tool_class_init (GimpDodgeBurnToolClass *klass)
 {
-  GimpToolClass        *tool_class = GIMP_TOOL_CLASS (klass);
+  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
 
   tool_class->modifier_key  = gimp_dodge_burn_tool_modifier_key;
   tool_class->cursor_update = gimp_dodge_burn_tool_cursor_update;
@@ -132,7 +132,8 @@ gimp_dodge_burn_tool_modifier_key (GimpTool        *tool,
         }
     }
 
-  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state, display);
+  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
+                                                display);
 }
 
 static void
@@ -147,19 +148,21 @@ gimp_dodge_burn_tool_cursor_update (GimpTool        *tool,
 
   gimp_tool_control_set_toggled (tool->control, (options->type == GIMP_BURN));
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
+                                                 display);
 }
 
 static void
 gimp_dodge_burn_tool_oper_update (GimpTool        *tool,
-                                GimpCoords      *coords,
-                                GdkModifierType  state,
-                                gboolean         proximity,
-                                GimpDisplay     *display)
+                                  GimpCoords      *coords,
+                                  GdkModifierType  state,
+                                  gboolean         proximity,
+                                  GimpDisplay     *display)
 {
   GimpDodgeBurnOptions *options;
 
   options = GIMP_DODGE_BURN_OPTIONS (tool->tool_info->tool_options);
+
   gimp_dodge_burn_tool_status_update (tool, options->type);
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
@@ -198,12 +201,10 @@ static GtkWidget *
 gimp_dodge_burn_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
+  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *table;
   GtkWidget *frame;
   gchar     *str;
-
-  vbox = gimp_paint_options_gui (tool_options);
 
   /* the type (dodge or burn) */
   str = g_strdup_printf (_("Type  (%s)"),

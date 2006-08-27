@@ -213,7 +213,7 @@ GtkWidget *
 gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
+  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *vbox2;
   GtkWidget *table;
   GtkWidget *frame;
@@ -221,8 +221,6 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   GtkWidget *button;
   GtkWidget *combo;
   gchar     *str;
-
-  vbox = gimp_paint_options_gui (tool_options);
 
   /*  fill type  */
   str = g_strdup_printf (_("Fill Type  (%s)"),

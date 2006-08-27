@@ -118,10 +118,8 @@ GtkWidget *
 gimp_measure_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
+  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *button;
-
-  vbox = gimp_tool_options_gui (tool_options);
 
   /*  the use_info_window toggle button  */
   button = gimp_prop_check_button_new (config, "use-info-window",

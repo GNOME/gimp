@@ -889,7 +889,7 @@ GtkWidget *
 gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 {
   GObject     *config  = G_OBJECT (tool_options);
-  GtkWidget   *vbox;
+  GtkWidget   *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget   *button;
   GtkWidget   *combo;
   GtkWidget   *table;
@@ -900,8 +900,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   GtkWidget   *vbox2;
   GtkWidget   *expander;
   GtkObject   *adjustment;
-
-  vbox = gimp_tool_options_gui (tool_options);
 
   button = gimp_prop_check_button_new (config, "fixed-center",
                                        _("Expand from center"));
