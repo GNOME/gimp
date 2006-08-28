@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontainerview.c
- * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2006 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,6 +78,8 @@ static GimpContainerViewPrivate *
 
 static void   gimp_container_view_real_set_container (GimpContainerView *view,
                                                       GimpContainer     *container);
+static void   gimp_container_view_real_set_context   (GimpContainerView *view,
+                                                      GimpContext       *context);
 
 static void   gimp_container_view_clear_items      (GimpContainerView  *view);
 static void   gimp_container_view_real_clear_items (GimpContainerView  *view);
@@ -189,6 +191,7 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
   view_iface->context_item  = NULL;
 
   view_iface->set_container = gimp_container_view_real_set_container;
+  view_iface->set_context   = gimp_container_view_real_set_context;
   view_iface->insert_item   = NULL;
   view_iface->remove_item   = NULL;
   view_iface->reorder_item  = NULL;
@@ -456,7 +459,7 @@ gimp_container_view_real_set_container (GimpContainerView *view,
           object = gimp_context_get_by_type (private->context,
                                              private->container->children_type);
 
-          gimp_container_view_select_item (view, (GimpViewable *) object);
+          gimp_container_view_select_item (view, GIMP_VIEWABLE (object));
 
           if (private->dnd_widget)
             gimp_dnd_viewable_dest_add (private->dnd_widget,
@@ -486,12 +489,23 @@ gimp_container_view_set_context (GimpContainerView *view,
   GimpContainerViewPrivate *private;
 
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
-  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
   private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  if (context == private->context)
-    return;
+  if (context != private->context)
+    {
+      GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->set_context (view, context);
+
+      g_object_notify (G_OBJECT (view), "context");
+    }
+}
+
+static void
+gimp_container_view_real_set_context (GimpContainerView *view,
+                                      GimpContext       *context)
+{
+  GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
   if (private->context)
     {
@@ -534,7 +548,7 @@ gimp_container_view_set_context (GimpContainerView *view,
           object = gimp_context_get_by_type (private->context,
                                              private->container->children_type);
 
-          gimp_container_view_select_item (view, (GimpViewable *) object);
+          gimp_container_view_select_item (view, GIMP_VIEWABLE (object));
 
           if (private->dnd_widget)
             gimp_dnd_viewable_dest_add (private->dnd_widget,
@@ -543,8 +557,6 @@ gimp_container_view_set_context (GimpContainerView *view,
                                         view);
         }
     }
-
-  g_object_notify (G_OBJECT (view), "context");
 }
 
 gint
@@ -1041,7 +1053,7 @@ gimp_container_view_thaw (GimpContainerView *view,
       object = gimp_context_get_by_type (private->context,
                                          private->container->children_type);
 
-      gimp_container_view_select_item (view, (GimpViewable *) object);
+      gimp_container_view_select_item (view, GIMP_VIEWABLE (object));
     }
 }
 
