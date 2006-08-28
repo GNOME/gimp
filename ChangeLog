@@ -1,3 +1,10 @@
+2006-08-28  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptextoptions.[ch]
+	* app/tools/gimptexttool.c
+	* app/widgets/gimptexteditor.[ch]: make the text editor transient
+	to the display shell.
+
 2006-08-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppdbdialog.c (gimp_pdb_dialog_run_callback):

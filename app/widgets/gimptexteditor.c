@@ -127,6 +127,7 @@ gimp_text_editor_finalize (GObject *object)
 
 GtkWidget *
 gimp_text_editor_new (const gchar     *title,
+                      GtkWindow       *parent,
                       GimpMenuFactory *menu_factory)
 {
   GimpTextEditor *editor;
@@ -135,6 +136,7 @@ gimp_text_editor_new (const gchar     *title,
   GtkWidget      *scrolled_window;
 
   g_return_val_if_fail (title != NULL, NULL);
+  g_return_val_if_fail (parent == NULL || GTK_IS_WINDOW (parent), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
   editor = g_object_new (GIMP_TYPE_TEXT_EDITOR,
@@ -150,6 +152,9 @@ gimp_text_editor_new (const gchar     *title,
   g_signal_connect (editor, "response",
                     G_CALLBACK (gtk_widget_destroy),
                     NULL);
+
+  if (parent)
+    gtk_window_set_transient_for (GTK_WINDOW (editor), parent);
 
   editor->ui_manager = gimp_menu_factory_manager_new (menu_factory,
                                                       "<TextEditor>",

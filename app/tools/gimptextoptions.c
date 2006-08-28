@@ -543,7 +543,8 @@ gimp_text_options_editor_notify_font (GimpTextOptions *options,
 }
 
 GtkWidget *
-gimp_text_options_editor_new (GimpTextOptions *options,
+gimp_text_options_editor_new (GtkWindow       *parent,
+                              GimpTextOptions *options,
                               GimpMenuFactory *menu_factory,
                               const gchar     *title)
 {
@@ -554,7 +555,7 @@ gimp_text_options_editor_new (GimpTextOptions *options,
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (title != NULL, NULL);
 
-  editor = gimp_text_editor_new (title, menu_factory);
+  editor = gimp_text_editor_new (title, parent, menu_factory);
 
   font_name = gimp_context_get_font_name (GIMP_CONTEXT (options));
 

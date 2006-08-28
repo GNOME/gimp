@@ -739,6 +739,7 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
 {
   GimpTextOptions   *options;
   GimpDialogFactory *dialog_factory;
+  GtkWindow         *parent = NULL;
 
   if (text_tool->editor)
     {
@@ -750,7 +751,10 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
 
   dialog_factory = gimp_dialog_factory_from_name ("toplevel");
 
-  text_tool->editor = gimp_text_options_editor_new (options,
+  if (GIMP_TOOL (text_tool)->display)
+    parent = GTK_WINDOW (GIMP_TOOL (text_tool)->display->shell);
+
+  text_tool->editor = gimp_text_options_editor_new (parent, options,
                                                     dialog_factory->menu_factory,
                                                     _("GIMP Text Editor"));
 

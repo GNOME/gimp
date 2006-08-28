@@ -67,7 +67,8 @@ void        gimp_text_options_connect_text (GimpTextOptions *options,
 
 GtkWidget * gimp_text_options_gui          (GimpToolOptions *tool_options);
 
-GtkWidget * gimp_text_options_editor_new   (GimpTextOptions *options,
+GtkWidget * gimp_text_options_editor_new   (GtkWindow       *parent,
+                                            GimpTextOptions *options,
                                             GimpMenuFactory *menu_factory,
                                             const gchar     *title);
 
