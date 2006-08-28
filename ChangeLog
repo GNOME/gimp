@@ -1,3 +1,10 @@
+2006-08-28  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+        * plug-ins/winicon/icoload.c: avoid crashing on newer versions of
+        the winicon file format (bug #352899).
+
 2006-08-25  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.2.14, interface_age 14.

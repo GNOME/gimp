@@ -370,6 +370,10 @@ ico_to_gimp (MsIcon *ico)
 
       w = ico->icon_dir[icon_nr].width;
       h = ico->icon_dir[icon_nr].height;
+
+      if (w <= 0 || h <= 0)
+        continue;
+
       palette = ico->icon_data[icon_nr].palette;
       xor_map = ico->icon_data[icon_nr].xor_map;
       and_map = ico->icon_data[icon_nr].and_map;
