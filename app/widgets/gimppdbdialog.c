@@ -339,7 +339,8 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
 
           if (g_value_get_enum (&return_vals->values[0]) != GIMP_PDB_SUCCESS)
             {
-              gimp_show_message_dialog (dialog, GTK_MESSAGE_ERROR,
+              gimp_show_message_dialog (GTK_WIDGET (dialog),
+                                        GTK_MESSAGE_ERROR,
                                         _("Unable to run %s callback. "
                                           "The corresponding plug-in may have "
                                           "crashed."),
