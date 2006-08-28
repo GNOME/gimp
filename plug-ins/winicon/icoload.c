@@ -337,6 +337,9 @@ ico_load_layer (gint32  image,
 
   gimp_progress_update ((gdouble) i / (gdouble) ico->icon_count);
 
+  if (w <= 0 || h <= 0)
+    return -1;
+
   g_snprintf (buf, sizeof (buf), _("Icon #%i"), i + 1);
 
   layer = gimp_layer_new (image, buf, w, h,
@@ -497,7 +500,8 @@ ico_load_image (const gchar *filename)
   for (i = 1; i < ico.icon_count; i++)
     ico_load_layer (image, &ico, i);
 
-  gimp_image_set_active_layer (image, layer);
+  if (layer != -1)
+    gimp_image_set_active_layer (image, layer);
 
   D(("*** icon successfully loaded.\n\n"));
 
