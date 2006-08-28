@@ -1,6 +1,6 @@
 2006-08-28  Michael Natterer  <mitch@gimp.org>
 
-	* app/widgets/gimpcontainerview.[ch]: made set_container() a
+	* app/widgets/gimpcontainerview.[ch]: made set_context() a
 	virtual function of the GimpContainerView interface.
 
 2006-08-28  Sven Neumann  <sven@gimp.org>
