@@ -20,6 +20,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "paint-funcs/paint-funcs.h"
@@ -27,7 +29,6 @@
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 
-#include "gimp-utils.h"
 #include "gimpchannel.h"
 #include "gimpchannel-combine.h"
 

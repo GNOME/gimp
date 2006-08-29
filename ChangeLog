@@ -1,5 +1,32 @@
 2006-08-29  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/Makefile.am
+	* libgimpbase/gimpbase.h
+	* libgimpbase/gimprectangle.[ch]: added new files that hold
+	gimp_rectangle_intersect(), factored out of the core.
+
+	* libgimpbase/gimpbase.def: updated.
+
+	* app/core/gimp-edit.c
+	* app/core/gimp-utils.c
+	* app/core/gimp-utils.h
+	* app/core/gimpchannel-combine.c
+	* app/core/gimpdrawable-foreground-extract.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-preview.c
+	* app/core/gimplayer.c
+	* app/core/gimpscanconvert.c
+	* app/display/gimpdisplayshell-draw.c: changed includes accordingly.
+
+	* libgimp/gimpdrawablepreview.c: don't duplicate
+	gimp_rectangle_intersect() here, use the function in libgimpbase.
+
+	* app/base/siox.c: use gimp_rectangle_intersect() to reduce the
+	working area to the region of interest. Fixes bug #340422.
+
+2006-08-29  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/postscript.c (dither_grey): code cleanup and fix
 	for bug #353381 (crash when Preview option is selected).
 

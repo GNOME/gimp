@@ -102,6 +102,8 @@ libgimpbase_sources = \
 	gimpparasiteio.h	\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
+	gimprectangle.c		\
+	gimprectangle.h		\
 	gimpreloc.c		\
 	gimpreloc.h		\
 	gimpsignal.c            \
@@ -135,6 +137,7 @@ libgimpbaseinclude_HEADERS = \
 	gimpmemsize.h		\
 	gimpparasite.h		\
 	gimpparasiteio.h	\
+	gimprectangle.h		\
 	gimpsignal.h		\
 	gimpunit.h		\
 	gimputils.h

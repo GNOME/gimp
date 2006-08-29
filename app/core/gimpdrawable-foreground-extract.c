@@ -20,6 +20,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "base/pixel-region.h"
@@ -32,7 +34,6 @@
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpprogress.h"
-#include "gimp-utils.h"
 
 #include "gimp-intl.h"
 

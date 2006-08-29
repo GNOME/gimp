@@ -20,6 +20,7 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
@@ -32,7 +33,6 @@
 #include "paint-funcs/paint-funcs.h"
 #include "paint-funcs/scale-funcs.h"
 
-#include "gimp-utils.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-combine.h"

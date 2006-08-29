@@ -20,9 +20,10 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "display-types.h"
 
-#include "core/gimp-utils.h"
 #include "core/gimpcontext.h"
 #include "core/gimpgrid.h"
 #include "core/gimpguide.h"

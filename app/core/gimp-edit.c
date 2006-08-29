@@ -22,6 +22,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "base/pixel-region.h"
@@ -33,7 +35,6 @@
 
 #include "gimp.h"
 #include "gimp-edit.h"
-#include "gimp-utils.h"
 #include "gimpbuffer.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"

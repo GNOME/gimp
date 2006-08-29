@@ -20,19 +20,6 @@
 #define __APP_GIMP_UTILS_H__
 
 
-gboolean      gimp_rectangle_intersect         (gint           x1,
-                                                gint           y1,
-                                                gint           width1,
-                                                gint           height1,
-                                                gint           x2,
-                                                gint           y2,
-                                                gint           width2,
-                                                gint           height2,
-                                                gint          *dest_x,
-                                                gint          *dest_y,
-                                                gint          *dest_width,
-                                                gint          *dest_height);
-
 gint64        gimp_g_type_instance_get_memsize (GTypeInstance *instance);
 gint64        gimp_g_object_get_memsize        (GObject       *object);
 gint64        gimp_g_hash_table_get_memsize    (GHashTable    *hash);

@@ -25,6 +25,7 @@
 #include <libart_lgpl/libart.h>
 #include <libart_lgpl/art_svp_intersect.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
@@ -33,7 +34,6 @@
 #include "base/tile-manager.h"
 
 #include "gimpscanconvert.h"
-#include "gimp-utils.h"
 
 
 struct _GimpScanConvert
