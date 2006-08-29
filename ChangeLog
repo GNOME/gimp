@@ -1,3 +1,10 @@
+2006-08-29  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* plug-ins/common/postscript.c (dither_grey): code cleanup and fix
+	for bug #353381 (crash when Preview option is selected).
+
 2006-08-28  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
