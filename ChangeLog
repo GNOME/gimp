@@ -1,3 +1,7 @@
+2006-08-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpbrushcore.c: minor cleanup.
+
 2006-08-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/Makefile.am

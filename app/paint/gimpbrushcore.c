@@ -722,14 +722,17 @@ void
 gimp_brush_core_set_brush (GimpBrushCore *core,
                            GimpBrush     *brush)
 {
+  g_return_if_fail (GIMP_IS_BRUSH_CORE (core));
+  g_return_if_fail (brush == NULL || GIMP_IS_BRUSH (brush));
+
   g_signal_emit (core, core_signals[SET_BRUSH], 0, brush);
 }
 
 void
 gimp_brush_core_paste_canvas (GimpBrushCore            *core,
-                              GimpDrawable               *drawable,
-                              gdouble                        brush_opacity,
-                              gdouble                        image_opacity,
+                              GimpDrawable             *drawable,
+                              gdouble                   brush_opacity,
+                              gdouble                   image_opacity,
                               GimpLayerModeEffects      paint_mode,
                               GimpBrushApplicationMode  brush_hardness,
                               GimpPaintApplicationMode  mode)
@@ -771,7 +774,7 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
  */
 void
 gimp_brush_core_replace_canvas (GimpBrushCore            *core,
-                                GimpDrawable                 *drawable,
+                                GimpDrawable             *drawable,
                                 gdouble                   brush_opacity,
                                 gdouble                   image_opacity,
                                 GimpBrushApplicationMode  brush_hardness,
@@ -1476,4 +1479,3 @@ paint_line_pixmap_mask (GimpImage                *dest,
         }
     }
 }
-
