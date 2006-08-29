@@ -1,3 +1,8 @@
+2006-08-29  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpnavigationeditor.c: some adjustments to the fix
+	for bug #346880.
+
 2006-08-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainerview.[ch]: made set_context() a

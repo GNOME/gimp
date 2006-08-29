@@ -376,25 +376,9 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
 
       /* the zoom scale */
 
-      hbox = gtk_hbox_new (FALSE, 0);
+      hbox = gtk_hbox_new (FALSE, 6);
       gtk_box_pack_end (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
-
-      /* the zoom label */
-
-      editor->zoom_label = gtk_label_new ("100%");
-      gtk_box_pack_start (GTK_BOX (hbox), editor->zoom_label, FALSE, FALSE, 0);
-      gtk_widget_show (editor->zoom_label);
-
-      /* eek */
-      {
-        GtkRequisition requisition;
-
-        gtk_widget_size_request (editor->zoom_label, &requisition);
-        gtk_widget_set_size_request (editor->zoom_label,
-                                     2 * requisition.width,
-                                     requisition.height);
-      }
 
       editor->zoom_adjustment =
         GTK_ADJUSTMENT (gtk_adjustment_new (0.0, -8.0, 8.0, 0.5, 1.0, 0.0));
@@ -406,10 +390,15 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
       hscale = gtk_hscale_new (GTK_ADJUSTMENT (editor->zoom_adjustment));
       gtk_range_set_update_policy (GTK_RANGE (hscale), GTK_UPDATE_DELAYED);
       gtk_scale_set_draw_value (GTK_SCALE (hscale), FALSE);
-      gtk_scale_set_digits (GTK_SCALE (hscale), 2);
       gtk_box_pack_start (GTK_BOX (hbox), hscale, TRUE, TRUE, 0);
       gtk_widget_show (hscale);
 
+      /* the zoom label */
+
+      editor->zoom_label = gtk_label_new ("100%");
+      gtk_label_set_width_chars (GTK_LABEL (editor->zoom_label), 7);
+      gtk_box_pack_start (GTK_BOX (hbox), editor->zoom_label, FALSE, FALSE, 0);
+      gtk_widget_show (editor->zoom_label);
     }
 
   gimp_view_renderer_set_background (GIMP_VIEW (editor->view)->renderer,
