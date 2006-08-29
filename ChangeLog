@@ -1,3 +1,8 @@
+2006-08-29  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/common/dog.c (query): Removed incorrect mention of
+	Gauss IIR in blurb (the plug-in uses the RLE algorithm).
+
 2006-08-29  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/gimpplugin.c (gimp_plug_in_recv_message): use
