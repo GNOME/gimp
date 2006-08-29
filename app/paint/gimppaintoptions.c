@@ -626,7 +626,8 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
 
   if (pressure_options->color)
     {
-      gimp_gradient_get_color_at (gradient, NULL, pressure,
+      gimp_gradient_get_color_at (gradient, GIMP_CONTEXT (paint_options),
+                                  NULL, pressure,
                                   gradient_options->gradient_reverse,
                                   color);
 
@@ -670,7 +671,8 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
       else
         pos = pos - (gint) pos;
 
-      gimp_gradient_get_color_at (gradient, NULL, pos,
+      gimp_gradient_get_color_at (gradient, GIMP_CONTEXT (paint_options),
+                                  NULL, pos,
                                   gradient_options->gradient_reverse,
                                   color);
 

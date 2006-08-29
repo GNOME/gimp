@@ -552,7 +552,8 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
                 {
                   push_undo = FALSE;
                   undo->time = now;
-                  gimp_undo_refresh_preview (undo);
+                  gimp_undo_refresh_preview (undo,
+                                             gimp_get_user_context (image->gimp));
                 }
             }
         }

@@ -32,8 +32,12 @@
 struct _GimpGradientSegment
 {
   gdouble                  left, middle, right;
+
+  GimpGradientColor        left_color_type;
   GimpRGB                  left_color;
+  GimpGradientColor        right_color_type;
   GimpRGB                  right_color;
+
   GimpGradientSegmentType  type;          /*  Segment's blending function  */
   GimpGradientSegmentColor color;         /*  Segment's coloring type      */
 
@@ -71,6 +75,7 @@ GimpData            * gimp_gradient_new            (const gchar   *name);
 GimpData            * gimp_gradient_get_standard   (void);
 
 GimpGradientSegment * gimp_gradient_get_color_at   (GimpGradient        *gradient,
+                                                    GimpContext         *context,
                                                     GimpGradientSegment *seg,
                                                     gdouble              pos,
                                                     gboolean             reverse,
@@ -91,10 +96,12 @@ void                  gimp_gradient_segment_free      (GimpGradientSegment *seg)
 void                  gimp_gradient_segments_free     (GimpGradientSegment *seg);
 
 void    gimp_gradient_segment_split_midpoint  (GimpGradient         *gradient,
+                                               GimpContext          *context,
                                                GimpGradientSegment  *lseg,
                                                GimpGradientSegment **newl,
                                                GimpGradientSegment **newr);
 void    gimp_gradient_segment_split_uniform   (GimpGradient         *gradient,
+                                               GimpContext          *context,
                                                GimpGradientSegment  *lseg,
                                                gint                  parts,
                                                GimpGradientSegment **newl,
@@ -190,6 +197,7 @@ void    gimp_gradient_segment_range_replicate (GimpGradient         *gradient,
 
 void    gimp_gradient_segment_range_split_midpoint
                                               (GimpGradient         *gradient,
+                                               GimpContext          *context,
                                                GimpGradientSegment  *start_seg,
                                                GimpGradientSegment  *end_seg,
                                                GimpGradientSegment **final_start_seg,
@@ -197,6 +205,7 @@ void    gimp_gradient_segment_range_split_midpoint
 
 void    gimp_gradient_segment_range_split_uniform
                                               (GimpGradient         *gradient,
+                                               GimpContext          *context,
                                                GimpGradientSegment  *start_seg,
                                                GimpGradientSegment  *end_seg,
                                                gint                  parts,

@@ -161,6 +161,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
           TempBuf *temp_buf;
 
           temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
+                                                    renderer->context,
                                                     item->width,
                                                     item->height);
 
@@ -175,6 +176,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
   else
     {
       render_buf = gimp_viewable_get_new_preview (renderer->viewable,
+                                                  renderer->context,
                                                   view_width,
                                                   view_height);
     }

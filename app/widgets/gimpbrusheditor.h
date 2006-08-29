@@ -60,7 +60,7 @@ struct _GimpBrushEditorClass
 
 GType       gimp_brush_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_brush_editor_new      (Gimp            *gimp,
+GtkWidget * gimp_brush_editor_new      (GimpContext     *context,
                                         GimpMenuFactory *menu_factory);
 
 

@@ -427,12 +427,12 @@ void
 gradient_editor_split_midpoint_cmd_callback (GtkAction *action,
                                              gpointer   data)
 {
-  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
-  GimpGradient       *gradient;
-
-  gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
+  GimpGradientEditor *editor      = GIMP_GRADIENT_EDITOR (data);
+  GimpDataEditor     *data_editor = GIMP_DATA_EDITOR (data);
+  GimpGradient       *gradient    = GIMP_GRADIENT (data_editor->data);
 
   gimp_gradient_segment_range_split_midpoint (gradient,
+                                              data_editor->context,
                                               editor->control_sel_l,
                                               editor->control_sel_r,
                                               &editor->control_sel_l,
@@ -794,9 +794,11 @@ gradient_editor_split_uniform_response (GtkWidget          *widget,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpGradient *gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
+      GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+      GimpGradient   *gradient    = GIMP_GRADIENT (data_editor->data);
 
       gimp_gradient_segment_range_split_uniform (gradient,
+                                                 data_editor->context,
                                                  editor->control_sel_l,
                                                  editor->control_sel_r,
                                                  editor->split_parts,

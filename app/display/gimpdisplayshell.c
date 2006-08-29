@@ -1444,14 +1444,17 @@ gimp_display_shell_resume (GimpDisplayShell *shell)
 void
 gimp_display_shell_update_icon (GimpDisplayShell *shell)
 {
+  GimpImage *image;
   GdkPixbuf *pixbuf;
   gint       width, height;
   gdouble    factor;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  factor = ((gdouble) gimp_image_get_height (shell->display->image) /
-            (gdouble) gimp_image_get_width (shell->display->image));
+  image = shell->display->image;
+
+  factor = ((gdouble) gimp_image_get_height (image) /
+            (gdouble) gimp_image_get_width  (image));
 
   if (factor >= 1)
     {
@@ -1464,7 +1467,8 @@ gimp_display_shell_update_icon (GimpDisplayShell *shell)
       width  = MAX (shell->icon_size, 1);
     }
 
-  pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (shell->display->image),
+  pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (image),
+                                     gimp_get_user_context (image->gimp),
                                      width, height);
 
   gtk_window_set_icon (GTK_WINDOW (shell), pixbuf);

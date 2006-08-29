@@ -25,6 +25,7 @@
 
 #include "dialogs-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
@@ -259,7 +260,9 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_widget_show (private->area);
 
   gimp_viewable_get_preview_size (viewable, 200, FALSE, TRUE, &width, &height);
-  pixbuf = gimp_viewable_get_pixbuf (viewable, width, height);
+  pixbuf = gimp_viewable_get_pixbuf (viewable,
+                                     gimp_get_user_context (image->gimp),
+                                     width, height);
 
   if (pixbuf)
     gimp_offset_area_set_pixbuf (GIMP_OFFSET_AREA (private->area), pixbuf);

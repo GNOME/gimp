@@ -34,6 +34,7 @@
 
 #include "base/temp-buf.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
@@ -117,28 +118,31 @@ gimp_view_renderer_class_init (GimpViewRendererClass *klass)
 static void
 gimp_view_renderer_init (GimpViewRenderer *renderer)
 {
-  renderer->viewable     = NULL;
+  renderer->context       = NULL;
 
-  renderer->width        = 8;
-  renderer->height       = 8;
-  renderer->border_width = 0;
-  renderer->dot_for_dot  = TRUE;
-  renderer->is_popup     = FALSE;
+  renderer->viewable_type = G_TYPE_NONE;
+  renderer->viewable      = NULL;
 
-  renderer->border_type  = GIMP_VIEW_BORDER_BLACK;
-  renderer->border_color = black_color;
-  renderer->gc           = NULL;
+  renderer->width         = 8;
+  renderer->height        = 8;
+  renderer->border_width  = 0;
+  renderer->dot_for_dot   = TRUE;
+  renderer->is_popup      = FALSE;
 
-  renderer->buffer       = NULL;
-  renderer->rowstride    = 0;
-  renderer->bytes        = 3;
+  renderer->border_type   = GIMP_VIEW_BORDER_BLACK;
+  renderer->border_color  = black_color;
+  renderer->gc            = NULL;
 
-  renderer->pixbuf       = NULL;
-  renderer->bg_stock_id  = NULL;
+  renderer->buffer        = NULL;
+  renderer->rowstride     = 0;
+  renderer->bytes         = 3;
 
-  renderer->size         = -1;
-  renderer->needs_render = TRUE;
-  renderer->idle_id      = 0;
+  renderer->pixbuf        = NULL;
+  renderer->bg_stock_id   = NULL;
+
+  renderer->size          = -1;
+  renderer->needs_render  = TRUE;
+  renderer->idle_id       = 0;
 }
 
 static void
@@ -187,14 +191,16 @@ gimp_view_renderer_finalize (GObject *object)
 }
 
 static GimpViewRenderer *
-gimp_view_renderer_new_internal (GType     viewable_type,
-                                 gboolean  is_popup)
+gimp_view_renderer_new_internal (GimpContext *context,
+                                 GType        viewable_type,
+                                 gboolean     is_popup)
 {
   GimpViewRenderer *renderer;
 
   renderer = g_object_new (gimp_view_renderer_type_from_viewable_type (viewable_type),
                            NULL);
 
+  renderer->context       = context;
   renderer->viewable_type = viewable_type;
   renderer->is_popup      = is_popup ? TRUE : FALSE;
 
@@ -205,20 +211,23 @@ gimp_view_renderer_new_internal (GType     viewable_type,
 /*  public functions  */
 
 GimpViewRenderer *
-gimp_view_renderer_new (GType    viewable_type,
-                        gint     size,
-                        gint     border_width,
-                        gboolean is_popup)
+gimp_view_renderer_new (GimpContext *context,
+                        GType        viewable_type,
+                        gint         size,
+                        gint         border_width,
+                        gboolean    is_popup)
 {
   GimpViewRenderer *renderer;
 
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE), NULL);
   g_return_val_if_fail (size >  0 &&
                         size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (border_width >= 0 &&
                         border_width <= GIMP_VIEW_MAX_BORDER_WIDTH, NULL);
 
-  renderer = gimp_view_renderer_new_internal (viewable_type, is_popup);
+  renderer = gimp_view_renderer_new_internal (context, viewable_type,
+                                              is_popup);
 
   gimp_view_renderer_set_size (renderer, size, border_width);
   gimp_view_renderer_remove_idle (renderer);
@@ -227,14 +236,16 @@ gimp_view_renderer_new (GType    viewable_type,
 }
 
 GimpViewRenderer *
-gimp_view_renderer_new_full (GType    viewable_type,
-                             gint     width,
-                             gint     height,
-                             gint     border_width,
-                             gboolean is_popup)
+gimp_view_renderer_new_full (GimpContext *context,
+                             GType        viewable_type,
+                             gint         width,
+                             gint         height,
+                             gint         border_width,
+                             gboolean     is_popup)
 {
   GimpViewRenderer *renderer;
 
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE), NULL);
   g_return_val_if_fail (width >  0 &&
                         width <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
@@ -243,12 +254,29 @@ gimp_view_renderer_new_full (GType    viewable_type,
   g_return_val_if_fail (border_width >= 0 &&
                         border_width <= GIMP_VIEW_MAX_BORDER_WIDTH, NULL);
 
-  renderer = gimp_view_renderer_new_internal (viewable_type, is_popup);
+  renderer = gimp_view_renderer_new_internal (context, viewable_type,
+                                              is_popup);
 
   gimp_view_renderer_set_size_full (renderer, width, height, border_width);
   gimp_view_renderer_remove_idle (renderer);
 
   return renderer;
+}
+
+void
+gimp_view_renderer_set_context (GimpViewRenderer *renderer,
+                                GimpContext      *context)
+{
+  g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+
+  if (context != renderer->context)
+    {
+      renderer->context = context;
+
+      if (renderer->viewable)
+        gimp_view_renderer_invalidate (renderer);
+    }
 }
 
 void
@@ -605,6 +633,27 @@ gimp_view_renderer_draw (GimpViewRenderer   *renderer,
                             rect.width  - 2 * i - 1,
                             rect.height - 2 * i - 1);
     }
+
+  if (! renderer->context)
+    {
+      GdkRectangle rect;
+
+      rect.width  = renderer->width  + 2 * renderer->border_width;
+      rect.height = renderer->height + 2 * renderer->border_width;
+      rect.x      = draw_area->x + (draw_area->width  - rect.width)  / 2;
+      rect.y      = draw_area->y + (draw_area->height - rect.height) / 2;
+
+      if (! renderer->gc)
+        renderer->gc = gimp_view_renderer_create_gc (renderer,
+                                                     window, widget);
+
+      gdk_draw_line (window,
+                     renderer->gc,
+                     rect.x,
+                     rect.y,
+                     rect.x + rect.width  - 1,
+                     rect.y + rect.height - 1);
+    }
 }
 
 
@@ -713,6 +762,7 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
   const gchar *stock_id;
 
   pixbuf = gimp_viewable_get_pixbuf (renderer->viewable,
+                                     renderer->context,
                                      renderer->width,
                                      renderer->height);
   if (pixbuf)
@@ -722,6 +772,7 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
     }
 
   temp_buf = gimp_viewable_get_preview (renderer->viewable,
+                                        renderer->context,
                                         renderer->width,
                                         renderer->height);
   if (temp_buf)

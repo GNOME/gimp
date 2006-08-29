@@ -271,13 +271,17 @@ gimp_undo_editor_fill (GimpUndoEditor *editor)
     {
       gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
                                        GIMP_VIEWABLE (top_undo_item));
-      gimp_undo_create_preview (top_undo_item, FALSE);
+      gimp_undo_create_preview (top_undo_item,
+                                gimp_get_user_context (image->gimp),
+                                FALSE);
     }
   else
     {
       gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
                                        GIMP_VIEWABLE (editor->base_item));
-      gimp_undo_create_preview (editor->base_item, TRUE);
+      gimp_undo_create_preview (editor->base_item,
+                                gimp_get_user_context (image->gimp),
+                                TRUE);
     }
 
   g_signal_handlers_unblock_by_func (editor->view,
@@ -309,9 +313,7 @@ gimp_undo_editor_undo_event (GimpImage      *image,
                              GimpUndo       *undo,
                              GimpUndoEditor *editor)
 {
-  GimpUndo *top_undo_item;
-
-  top_undo_item = gimp_undo_stack_peek (image->undo_stack);
+  GimpUndo *top_undo_item = gimp_undo_stack_peek (image->undo_stack);
 
   switch (event)
     {
@@ -323,7 +325,9 @@ gimp_undo_editor_undo_event (GimpImage      *image,
       gimp_container_insert (editor->container, GIMP_OBJECT (undo), -1);
       gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
                                        GIMP_VIEWABLE (undo));
-      gimp_undo_create_preview (undo, FALSE);
+      gimp_undo_create_preview (undo,
+                                gimp_get_user_context (image->gimp),
+                                FALSE);
 
       g_signal_handlers_unblock_by_func (editor->view,
                                          gimp_undo_editor_select_item,
@@ -345,13 +349,17 @@ gimp_undo_editor_undo_event (GimpImage      *image,
         {
           gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
                                            GIMP_VIEWABLE (top_undo_item));
-          gimp_undo_create_preview (top_undo_item, FALSE);
+          gimp_undo_create_preview (top_undo_item,
+                                    gimp_get_user_context (image->gimp),
+                                    FALSE);
         }
       else
         {
           gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
                                            GIMP_VIEWABLE (editor->base_item));
-          gimp_undo_create_preview (editor->base_item, TRUE);
+          gimp_undo_create_preview (editor->base_item,
+                                    gimp_get_user_context (image->gimp),
+                                    TRUE);
         }
 
       g_signal_handlers_unblock_by_func (editor->view,

@@ -287,8 +287,8 @@ gimp_device_status_device_add (GimpContainer    *devices,
 
   /*  the tool  */
 
-  entry->tool = gimp_prop_view_new (G_OBJECT (context),
-                                    "tool", CELL_SIZE);
+  entry->tool = gimp_prop_view_new (G_OBJECT (context), "tool",
+                                    context, CELL_SIZE);
   GIMP_VIEW (entry->tool)->clickable = TRUE;
   gtk_table_attach (GTK_TABLE (entry->table), entry->tool,
                     1, 2, 1, 2, 0, 0, 0, 0);
@@ -324,8 +324,8 @@ gimp_device_status_device_add (GimpContainer    *devices,
 
   /*  the brush  */
 
-  entry->brush = gimp_prop_view_new (G_OBJECT (context),
-                                     "brush", CELL_SIZE);
+  entry->brush = gimp_prop_view_new (G_OBJECT (context), "brush",
+                                     context, CELL_SIZE);
   GIMP_VIEW (entry->brush)->clickable  = TRUE;
   GIMP_VIEW (entry->brush)->show_popup = TRUE;
   gtk_table_attach (GTK_TABLE (entry->table), entry->brush,
@@ -338,8 +338,8 @@ gimp_device_status_device_add (GimpContainer    *devices,
 
   /*  the pattern  */
 
-  entry->pattern = gimp_prop_view_new (G_OBJECT (context),
-                                       "pattern", CELL_SIZE);
+  entry->pattern = gimp_prop_view_new (G_OBJECT (context), "pattern",
+                                       context, CELL_SIZE);
   GIMP_VIEW (entry->pattern)->clickable  = TRUE;
   GIMP_VIEW (entry->pattern)->show_popup = TRUE;
   gtk_table_attach (GTK_TABLE (entry->table), entry->pattern,
@@ -352,8 +352,8 @@ gimp_device_status_device_add (GimpContainer    *devices,
 
   /*  the gradient  */
 
-  entry->gradient = gimp_prop_view_new (G_OBJECT (context),
-                                        "gradient", 2 * CELL_SIZE);
+  entry->gradient = gimp_prop_view_new (G_OBJECT (context), "gradient",
+                                        context, 2 * CELL_SIZE);
   GIMP_VIEW (entry->gradient)->clickable  = TRUE;
   GIMP_VIEW (entry->gradient)->show_popup = TRUE;
   gtk_table_attach (GTK_TABLE (entry->table), entry->gradient,

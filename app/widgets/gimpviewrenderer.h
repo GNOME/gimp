@@ -40,14 +40,16 @@ struct _GimpViewRenderer
 {
   GObject             parent_instance;
 
+  GimpContext        *context;
+
   GType               viewable_type;
   GimpViewable       *viewable;
 
   gint                width;
   gint                height;
   gint                border_width;
-  gboolean            dot_for_dot;
-  gboolean            is_popup;
+  guint               dot_for_dot : 1;
+  guint               is_popup    : 1;
 
   GimpViewBorderType  border_type;
   GimpRGB             border_color;
@@ -91,16 +93,20 @@ struct _GimpViewRendererClass
 
 GType              gimp_view_renderer_get_type (void) G_GNUC_CONST;
 
-GimpViewRenderer * gimp_view_renderer_new      (GType    viewable_type,
-                                                gint     size,
-                                                gint     border_width,
-                                                gboolean is_popup);
-GimpViewRenderer * gimp_view_renderer_new_full (GType    viewable_type,
-                                                gint     width,
-                                                gint     height,
-                                                gint     border_width,
-                                                gboolean is_popup);
+GimpViewRenderer * gimp_view_renderer_new      (GimpContext *context,
+                                                GType        viewable_type,
+                                                gint         size,
+                                                gint         border_width,
+                                                gboolean     is_popup);
+GimpViewRenderer * gimp_view_renderer_new_full (GimpContext *context,
+                                                GType        viewable_type,
+                                                gint         width,
+                                                gint         height,
+                                                gint         border_width,
+                                                gboolean     is_popup);
 
+void   gimp_view_renderer_set_context      (GimpViewRenderer   *renderer,
+                                            GimpContext        *context);
 void   gimp_view_renderer_set_viewable     (GimpViewRenderer   *renderer,
                                             GimpViewable       *viewable);
 void   gimp_view_renderer_set_size         (GimpViewRenderer   *renderer,

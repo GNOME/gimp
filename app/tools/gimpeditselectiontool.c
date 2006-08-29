@@ -1254,7 +1254,8 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
   if (push_undo)
     gimp_image_undo_group_end (display->image);
   else
-    gimp_undo_refresh_preview (undo);
+    gimp_undo_refresh_preview (undo,
+                               gimp_get_user_context (display->image->gimp));
 
   gimp_image_flush (display->image);
 

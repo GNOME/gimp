@@ -266,7 +266,8 @@ gimp_container_combo_box_set (GimpContainerComboBox *combo_box,
 
   name = gimp_viewable_get_description (viewable, NULL);
 
-  renderer = gimp_view_renderer_new (G_TYPE_FROM_INSTANCE (viewable),
+  renderer = gimp_view_renderer_new (gimp_container_view_get_context (view),
+                                     G_TYPE_FROM_INSTANCE (viewable),
                                      view_size, border_width,
                                      FALSE);
   gimp_view_renderer_set_viewable (renderer, viewable);

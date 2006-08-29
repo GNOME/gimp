@@ -125,11 +125,6 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
 }
 
 static void
-gimp_channel_tree_view_init (GimpChannelTreeView *view)
-{
-}
-
-static void
 gimp_channel_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
 {
   parent_view_iface = g_type_interface_peek_parent (view_iface);
@@ -143,6 +138,11 @@ gimp_channel_tree_view_docked_iface_init (GimpDockedInterface *docked_iface)
   parent_docked_iface = g_type_interface_peek_parent (docked_iface);
 
   docked_iface->set_context = gimp_channel_tree_view_set_context;
+}
+
+static void
+gimp_channel_tree_view_init (GimpChannelTreeView *view)
+{
 }
 
 static GObject *

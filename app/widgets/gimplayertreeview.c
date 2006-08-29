@@ -49,6 +49,7 @@
 #include "gimpcellrendererviewable.h"
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
+#include "gimpdocked.h"
 #include "gimphelp-ids.h"
 #include "gimplayertreeview.h"
 #include "gimpviewrenderer.h"
@@ -58,7 +59,8 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_layer_tree_view_view_iface_init (GimpContainerViewInterface *iface);
+static void   gimp_layer_tree_view_view_iface_init   (GimpContainerViewInterface *iface);
+static void   gimp_layer_tree_view_docked_iface_init (GimpDockedInterface *docked_iface);
 
 static GObject * gimp_layer_tree_view_constructor (GType                type,
                                                    guint                n_params,
@@ -78,6 +80,9 @@ static gboolean gimp_layer_tree_view_select_item  (GimpContainerView   *view,
                                                    GimpViewable        *item,
                                                    gpointer             insert_data);
 static void    gimp_layer_tree_view_set_view_size (GimpContainerView   *view);
+
+static void    gimp_layer_tree_view_set_context   (GimpDocked          *docked,
+                                                   GimpContext         *context);
 
 static gboolean gimp_layer_tree_view_drop_possible(GimpContainerTreeView *view,
                                                    GimpDndType          src_type,
@@ -161,11 +166,14 @@ static void   gimp_layer_tree_view_alpha_changed  (GimpLayer           *layer,
 G_DEFINE_TYPE_WITH_CODE (GimpLayerTreeView, gimp_layer_tree_view,
                          GIMP_TYPE_DRAWABLE_TREE_VIEW,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
-                                                gimp_layer_tree_view_view_iface_init))
+                                                gimp_layer_tree_view_view_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_layer_tree_view_docked_iface_init))
 
 #define parent_class gimp_layer_tree_view_parent_class
 
-static GimpContainerViewInterface *parent_view_iface = NULL;
+static GimpContainerViewInterface *parent_view_iface   = NULL;
+static GimpDockedInterface        *parent_docked_iface = NULL;
 
 
 static void
@@ -217,6 +225,28 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->duplicate_action    = "layers-duplicate";
   item_view_class->delete_action       = "layers-delete";
   item_view_class->reorder_desc        = _("Reorder Layer");
+}
+
+static void
+gimp_layer_tree_view_view_iface_init (GimpContainerViewInterface *iface)
+{
+  parent_view_iface = g_type_interface_peek_parent (iface);
+
+  iface->set_container = gimp_layer_tree_view_set_container;
+  iface->insert_item   = gimp_layer_tree_view_insert_item;
+  iface->select_item   = gimp_layer_tree_view_select_item;
+  iface->set_view_size = gimp_layer_tree_view_set_view_size;
+}
+
+static void
+gimp_layer_tree_view_docked_iface_init (GimpDockedInterface *iface)
+{
+  parent_docked_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
+  iface->set_context = gimp_layer_tree_view_set_context;
 }
 
 static void
@@ -325,17 +355,6 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   view->opacity_changed_handler_id    = 0;
   view->lock_alpha_changed_handler_id = 0;
   view->mask_changed_handler_id       = 0;
-}
-
-static void
-gimp_layer_tree_view_view_iface_init (GimpContainerViewInterface *iface)
-{
-  parent_view_iface = g_type_interface_peek_parent (iface);
-
-  iface->set_container = gimp_layer_tree_view_set_container;
-  iface->insert_item   = gimp_layer_tree_view_insert_item;
-  iface->select_item   = gimp_layer_tree_view_select_item;
-  iface->set_view_size = gimp_layer_tree_view_set_view_size;
 }
 
 static GObject *
@@ -613,6 +632,39 @@ gimp_layer_tree_view_set_view_size (GimpContainerView *view)
     }
 
   parent_view_iface->set_view_size (view);
+}
+
+
+/*  GimpDocked methods  */
+
+static void
+gimp_layer_tree_view_set_context (GimpDocked  *docked,
+                                  GimpContext *context)
+{
+  GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (docked);
+  GimpLayerTreeView     *layer_view = GIMP_LAYER_TREE_VIEW (docked);
+
+  parent_docked_iface->set_context (docked, context);
+
+  if (tree_view->model)
+    {
+      GtkTreeIter iter;
+      gboolean    iter_valid;
+
+      for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
+           iter_valid;
+           iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
+        {
+          GimpViewRenderer *renderer;
+
+          gtk_tree_model_get (tree_view->model, &iter,
+                              layer_view->model_column_mask, &renderer,
+                              -1);
+
+          gimp_view_renderer_set_context (renderer, context);
+          g_object_unref (renderer);
+        }
+    }
 }
 
 
@@ -939,7 +991,8 @@ gimp_layer_tree_view_paint_mode_menu_callback (GtkWidget         *widget,
           gimp_image_flush (image);
 
           if (! push_undo)
-            gimp_undo_refresh_preview (undo);
+            gimp_undo_refresh_preview (undo,
+                                       GIMP_ITEM_TREE_VIEW (view)->context);
         }
     }
 }
@@ -1018,7 +1071,8 @@ gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
           gimp_image_flush (image);
 
           if (! push_undo)
-            gimp_undo_refresh_preview (undo);
+            gimp_undo_refresh_preview (undo,
+                                       GIMP_ITEM_TREE_VIEW (view)->context);
         }
     }
 }
@@ -1124,6 +1178,7 @@ gimp_layer_tree_view_mask_update (GimpLayerTreeView *layer_view,
 {
   GimpContainerView     *view         = GIMP_CONTAINER_VIEW (layer_view);
   GimpContainerTreeView *tree_view    = GIMP_CONTAINER_TREE_VIEW (layer_view);
+  GimpItemTreeView      *item_view    = GIMP_ITEM_TREE_VIEW (layer_view);
   GimpLayerMask         *mask;
   GimpViewRenderer      *renderer     = NULL;
   gboolean               mask_visible = FALSE;
@@ -1140,7 +1195,8 @@ gimp_layer_tree_view_mask_update (GimpLayerTreeView *layer_view,
 
       mask_visible = TRUE;
 
-      renderer = gimp_view_renderer_new (G_TYPE_FROM_INSTANCE (mask),
+      renderer = gimp_view_renderer_new (item_view->context,
+                                         G_TYPE_FROM_INSTANCE (mask),
                                          view_size, border_width,
                                          FALSE);
       gimp_view_renderer_set_viewable (renderer, GIMP_VIEWABLE (mask));

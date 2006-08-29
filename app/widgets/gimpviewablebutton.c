@@ -324,7 +324,7 @@ gimp_viewable_button_new (GimpContainer     *container,
   prop_name = gimp_context_type_to_prop_name (container->children_type);
 
   button->view = gimp_prop_view_new (G_OBJECT (context), prop_name,
-                                     button->button_view_size);
+                                     context, button->button_view_size);
   gtk_container_add (GTK_CONTAINER (button), button->view);
   gtk_widget_show (button->view);
 

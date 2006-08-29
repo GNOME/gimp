@@ -236,7 +236,7 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
   GimpViewableDialog *dialog;
   va_list             args;
 
-  g_return_val_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
@@ -267,7 +267,7 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
                                    GimpViewable       *viewable)
 {
   g_return_if_fail (GIMP_IS_VIEWABLE_DIALOG (dialog));
-  g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
+  g_return_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable));
 
   if (dialog->view)
     {
@@ -298,7 +298,8 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
                                dialog,
                                0);
 
-      dialog->view = gimp_view_new (viewable, 32, 1, TRUE);
+      dialog->view = gimp_view_new (NULL, /* FIXME */
+                                    viewable, 32, 1, TRUE);
       gtk_box_pack_end (GTK_BOX (dialog->icon->parent), dialog->view,
                         FALSE, FALSE, 2);
       gtk_widget_show (dialog->view);

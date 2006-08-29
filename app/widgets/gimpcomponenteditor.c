@@ -83,6 +83,7 @@ static void gimp_component_editor_active_changed    (GimpImage           *image,
                                                      GimpChannelType      channel,
                                                      GimpComponentEditor *editor);
 static GimpImage * gimp_component_editor_drag_component (GtkWidget       *widget,
+                                                         GimpContext    **context,
                                                          GimpChannelType *channel,
                                                          gpointer         data);
 
@@ -353,7 +354,8 @@ gimp_component_editor_create_components (GimpComponentEditor *editor)
 
       visible = gimp_image_get_component_visible (image, components[i]);
 
-      renderer = gimp_view_renderer_new (G_TYPE_FROM_INSTANCE (image),
+      renderer = gimp_view_renderer_new (GIMP_IMAGE_EDITOR (editor)->context,
+                                         G_TYPE_FROM_INSTANCE (image),
                                          editor->view_size, 1, FALSE);
       gimp_view_renderer_set_viewable (renderer, GIMP_VIEWABLE (image));
       gimp_view_renderer_remove_idle (renderer);
@@ -597,9 +599,10 @@ gimp_component_editor_active_changed (GimpImage           *image,
 }
 
 static GimpImage *
-gimp_component_editor_drag_component (GtkWidget       *widget,
-                                      GimpChannelType *channel,
-                                      gpointer         data)
+gimp_component_editor_drag_component (GtkWidget        *widget,
+                                      GimpContext     **context,
+                                      GimpChannelType  *channel,
+                                      gpointer          data)
 {
   GimpComponentEditor *editor = GIMP_COMPONENT_EDITOR (data);
 
@@ -608,6 +611,9 @@ gimp_component_editor_drag_component (GtkWidget       *widget,
     {
       if (channel)
         *channel = editor->clicked_component;
+
+      if (context)
+        *context = GIMP_IMAGE_EDITOR (editor)->context;
 
       return GIMP_IMAGE_EDITOR (editor)->image;
     }

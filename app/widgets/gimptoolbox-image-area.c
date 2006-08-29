@@ -97,7 +97,8 @@ gimp_toolbox_image_area_create (GimpToolbox *toolbox,
 
   context = GIMP_DOCK (toolbox)->context;
 
-  image_view = gimp_view_new_full_by_types (GIMP_TYPE_VIEW, GIMP_TYPE_IMAGE,
+  image_view = gimp_view_new_full_by_types (context,
+                                            GIMP_TYPE_VIEW, GIMP_TYPE_IMAGE,
                                             width, height, 0,
                                             FALSE, TRUE, TRUE);
 
@@ -106,7 +107,7 @@ gimp_toolbox_image_area_create (GimpToolbox *toolbox,
                     NULL);
 
   gimp_view_set_viewable (GIMP_VIEW (image_view),
-                          (GimpViewable *) gimp_context_get_image (context));
+                          GIMP_VIEWABLE (gimp_context_get_image (context)));
 
   gtk_widget_show (image_view);
 

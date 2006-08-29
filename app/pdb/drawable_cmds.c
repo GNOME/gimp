@@ -1011,7 +1011,7 @@ drawable_thumbnail_invoker (GimpProcedure     *procedure,
         width  = MAX (1, (height * dwidth) / dheight);
 
       if (image->gimp->config->layer_previews)
-        buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable),
+        buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable), context,
                                              width, height);
       else
         buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),

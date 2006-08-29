@@ -55,20 +55,21 @@
 #define MAX_SCALE_BUF 20
 
 
-static void   gimp_navigation_editor_docked_iface_init (GimpDockedInterface *iface);
-static void   gimp_navigation_editor_set_context       (GimpDocked       *docked,
-                                                        GimpContext      *context);
+static void   gimp_navigation_editor_docked_iface_init (GimpDockedInterface  *iface);
 
-static void   gimp_navigation_editor_destroy           (GtkObject          *object);
+static void   gimp_navigation_editor_destroy           (GtkObject            *object);
 
-static GtkWidget * gimp_navigation_editor_new_private  (GimpMenuFactory    *menu_factory,
-                                                        GimpDisplayShell   *shell);
+static void   gimp_navigation_editor_set_context       (GimpDocked           *docked,
+                                                        GimpContext          *context);
+
+static GtkWidget * gimp_navigation_editor_new_private  (GimpMenuFactory      *menu_factory,
+                                                        GimpDisplayShell     *shell);
 
 static void     gimp_navigation_editor_set_shell       (GimpNavigationEditor *view,
                                                         GimpDisplayShell     *shell);
-static gboolean gimp_navigation_editor_button_release  (GtkWidget          *widget,
-                                                        GdkEventButton     *bevent,
-                                                        GimpDisplayShell   *shell);
+static gboolean gimp_navigation_editor_button_release  (GtkWidget            *widget,
+                                                        GdkEventButton       *bevent,
+                                                        GimpDisplayShell     *shell);
 static void   gimp_navigation_editor_marker_changed    (GimpNavigationView   *view,
                                                         gdouble               x,
                                                         gdouble               y,
@@ -109,18 +110,26 @@ gimp_navigation_editor_class_init (GimpNavigationEditorClass *klass)
 }
 
 static void
+gimp_navigation_editor_docked_iface_init (GimpDockedInterface *iface)
+{
+  iface->set_context = gimp_navigation_editor_set_context;
+}
+
+static void
 gimp_navigation_editor_init (GimpNavigationEditor *editor)
 {
   GtkWidget *frame;
 
-  editor->shell = NULL;
+  editor->context = NULL;
+  editor->shell   = NULL;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  editor->view = gimp_view_new_by_types (GIMP_TYPE_NAVIGATION_VIEW,
+  editor->view = gimp_view_new_by_types (NULL,
+                                         GIMP_TYPE_NAVIGATION_VIEW,
                                          GIMP_TYPE_IMAGE,
                                          GIMP_VIEW_SIZE_MEDIUM, 0, TRUE);
   gtk_container_add (GTK_CONTAINER (frame), editor->view);
@@ -140,9 +149,14 @@ gimp_navigation_editor_init (GimpNavigationEditor *editor)
 }
 
 static void
-gimp_navigation_editor_docked_iface_init (GimpDockedInterface *iface)
+gimp_navigation_editor_destroy (GtkObject *object)
 {
-  iface->set_context = gimp_navigation_editor_set_context;
+  GimpNavigationEditor *editor = GIMP_NAVIGATION_EDITOR (object);
+
+  if (editor->shell)
+    gimp_navigation_editor_set_shell (editor, NULL);
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -184,21 +198,13 @@ gimp_navigation_editor_set_context (GimpDocked  *docked,
       display = gimp_context_get_display (context);
     }
 
+  gimp_view_renderer_set_context (GIMP_VIEW (editor->view)->renderer,
+                                  context);
+
   if (display)
     shell = GIMP_DISPLAY_SHELL (display->shell);
 
   gimp_navigation_editor_set_shell (editor, shell);
-}
-
-static void
-gimp_navigation_editor_destroy (GtkObject *object)
-{
-  GimpNavigationEditor *editor = GIMP_NAVIGATION_EDITOR (object);
-
-  if (editor->shell)
-    gimp_navigation_editor_set_shell (editor, NULL);
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 
@@ -330,8 +336,11 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
       gimp_view_renderer_set_size (view->renderer,
                                    config->nav_preview_size * 3,
                                    view->renderer->border_width);
+      gimp_view_renderer_set_context (view->renderer,
+                                      gimp_get_user_context (shell->display->image->gimp));
 
       gimp_navigation_editor_set_shell (editor, shell);
+
     }
   else
     {

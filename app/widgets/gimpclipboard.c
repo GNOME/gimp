@@ -693,6 +693,7 @@ gimp_clipboard_send_buffer (GtkClipboard     *clipboard,
   gimp_set_busy (gimp);
 
   pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (gimp_clip->buffer),
+                                     gimp_get_user_context (gimp),
                                      gimp_buffer_get_width (gimp_clip->buffer),
                                      gimp_buffer_get_height (gimp_clip->buffer));
 

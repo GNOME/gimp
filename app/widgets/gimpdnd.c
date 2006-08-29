@@ -1151,10 +1151,12 @@ gimp_dnd_get_xds_data (GtkWidget        *widget,
                        gpointer          get_image_data,
                        GtkSelectionData *selection)
 {
-  GimpImage *image;
+  GimpImage   *image;
+  GimpContext *gimp_context;
 
   image = (GimpImage *)
-    (* (GimpDndDragViewableFunc) get_image_func) (widget, get_image_data);
+    (* (GimpDndDragViewableFunc) get_image_func) (widget, &gimp_context,
+                                                  get_image_data);
 
   if (image)
     gimp_dnd_xds_save_image (context, image, selection);
@@ -1175,8 +1177,12 @@ gimp_dnd_xds_drag_begin (GtkWidget      *widget,
 
   if (get_data_func)
     {
-      GimpImage *image = (GimpImage *)
-        (* (GimpDndDragViewableFunc) get_data_func) (widget, get_data_data);
+      GimpImage   *image;
+      GimpContext *gimp_context;
+
+      image = (GimpImage *)
+        (* (GimpDndDragViewableFunc) get_data_func) (widget, &gimp_context,
+                                                     get_data_data);
 
       gimp_dnd_xds_source_set (context, image);
     }
@@ -1594,15 +1600,18 @@ gimp_dnd_get_component_icon (GtkWidget *widget,
 {
   GtkWidget       *view;
   GimpImage       *image;
+  GimpContext     *context;
   GimpChannelType  channel;
 
-  image = (* (GimpDndDragComponentFunc) get_comp_func) (widget, &channel,
+  image = (* (GimpDndDragComponentFunc) get_comp_func) (widget, &context,
+                                                        &channel,
                                                         get_comp_data);
 
   if (! image)
     return NULL;
 
-  view = gimp_view_new (GIMP_VIEWABLE (image), DRAG_PREVIEW_SIZE, 0, TRUE);
+  view = gimp_view_new (context, GIMP_VIEWABLE (image),
+                        DRAG_PREVIEW_SIZE, 0, TRUE);
 
   GIMP_VIEW_RENDERER_IMAGE (GIMP_VIEW (view)->renderer)->channel = channel;
 
@@ -1617,9 +1626,11 @@ gimp_dnd_get_component_data (GtkWidget        *widget,
                              GtkSelectionData *selection)
 {
   GimpImage       *image;
+  GimpContext     *gimp_context;
   GimpChannelType  channel = 0;
 
-  image = (* (GimpDndDragComponentFunc) get_comp_func) (widget, &channel,
+  image = (* (GimpDndDragComponentFunc) get_comp_func) (widget, &gimp_context,
+                                                        &channel,
                                                         get_comp_data);
 
   if (image)
@@ -1701,16 +1712,18 @@ gimp_dnd_get_viewable_icon (GtkWidget *widget,
                             gpointer   get_viewable_data)
 {
   GimpViewable *viewable;
+  GimpContext  *context;
   GtkWidget    *view;
   gchar        *desc;
 
-  viewable = (* (GimpDndDragViewableFunc) get_viewable_func) (widget,
+  viewable = (* (GimpDndDragViewableFunc) get_viewable_func) (widget, &context,
                                                               get_viewable_data);
 
   if (! viewable)
     return NULL;
 
-  view = gimp_view_new (viewable, DRAG_PREVIEW_SIZE, 0, TRUE);
+  view = gimp_view_new (context, viewable,
+                        DRAG_PREVIEW_SIZE, 0, TRUE);
 
   desc = gimp_viewable_get_description (viewable, NULL);
 
@@ -1941,6 +1954,7 @@ gimp_dnd_get_drag_data (GtkWidget *widget)
   GimpDndType              data_type;
   GimpDndDragViewableFunc  get_data_func = NULL;
   gpointer                 get_data_data = NULL;
+  GimpContext             *context;
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), NULL);
 
@@ -1963,7 +1977,7 @@ gimp_dnd_get_drag_data (GtkWidget *widget)
   if (! get_data_func)
     return NULL;
 
-  return (GimpViewable *) (* get_data_func) (widget, get_data_data);
+  return (GimpViewable *) (* get_data_func) (widget, &context, get_data_data);
 
 }
 
@@ -1979,10 +1993,12 @@ gimp_dnd_get_image_data (GtkWidget        *widget,
                          gpointer          get_image_data,
                          GtkSelectionData *selection)
 {
-  GimpImage *image;
+  GimpImage   *image;
+  GimpContext *gimp_context;
 
   image = (GimpImage *)
-    (* (GimpDndDragViewableFunc) get_image_func) (widget, get_image_data);
+    (* (GimpDndDragViewableFunc) get_image_func) (widget, &gimp_context,
+                                                  get_image_data);
 
   if (image)
     gimp_selection_data_set_image (selection, image);
@@ -2020,10 +2036,12 @@ gimp_dnd_get_item_data (GtkWidget        *widget,
                         gpointer          get_item_data,
                         GtkSelectionData *selection)
 {
-  GimpItem *item;
+  GimpItem    *item;
+  GimpContext *gimp_context;
 
   item = (GimpItem *)
-    (* (GimpDndDragViewableFunc) get_item_func) (widget, get_item_data);
+    (* (GimpDndDragViewableFunc) get_item_func) (widget, &gimp_context,
+                                                 get_item_data);
 
   if (item)
     gimp_selection_data_set_item (selection, item);
@@ -2061,10 +2079,12 @@ gimp_dnd_get_object_data (GtkWidget        *widget,
                           gpointer          get_object_data,
                           GtkSelectionData *selection)
 {
-  GimpObject *object;
+  GimpObject  *object;
+  GimpContext *gimp_context;
 
   object = (GimpObject *)
-    (* (GimpDndDragViewableFunc) get_object_func) (widget, get_object_data);
+    (* (GimpDndDragViewableFunc) get_object_func) (widget, &gimp_context,
+                                                   get_object_data);
 
   if (GIMP_IS_OBJECT (object))
     gimp_selection_data_set_object (selection, object);

@@ -31,6 +31,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimagefile.h"
 #include "core/gimpprogress.h"
 
@@ -283,7 +284,7 @@ gimp_thumb_box_progress_message (GimpProgress      *progress,
 /*  public functions  */
 
 GtkWidget *
-gimp_thumb_box_new (Gimp *gimp)
+gimp_thumb_box_new (GimpContext *context)
 {
   GimpThumbBox   *box;
   GtkWidget      *vbox;
@@ -298,7 +299,7 @@ gimp_thumb_box_new (Gimp *gimp)
   GtkRequisition  thumb_progress_requisition;
   GtkRequisition  progress_requisition;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   box = g_object_new (GIMP_TYPE_THUMB_BOX, NULL);
 
@@ -355,7 +356,7 @@ gimp_thumb_box_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  box->imagefile = gimp_imagefile_new (gimp, NULL);
+  box->imagefile = gimp_imagefile_new (context->gimp, NULL);
 
   g_signal_connect (box->imagefile, "info-changed",
                     G_CALLBACK (gimp_thumb_box_imagefile_info_changed),
@@ -367,9 +368,11 @@ gimp_thumb_box_new (Gimp *gimp)
 
   gimp_view_renderer_get_frame_size (&h, &v);
 
-  box->preview = gimp_view_new (GIMP_VIEWABLE (box->imagefile),
+  box->preview = gimp_view_new (context,
+                                GIMP_VIEWABLE (box->imagefile),
                                 /* add padding for the shadow frame */
-                                gimp->config->thumbnail_size + MAX (h, v),
+                                context->gimp->config->thumbnail_size +
+                                MAX (h, v),
                                 0, FALSE);
 
   gtk_box_pack_start (GTK_BOX (hbox), box->preview, TRUE, FALSE, 2);

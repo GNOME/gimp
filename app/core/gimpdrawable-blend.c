@@ -49,6 +49,7 @@
 typedef struct
 {
   GimpGradient     *gradient;
+  GimpContext      *context;
   gboolean          reverse;
   gdouble           offset;
   gdouble           sx, sy;
@@ -765,7 +766,7 @@ gradient_render_pixel (gdouble   x,
 
   if (rbd->blend_mode == GIMP_CUSTOM_MODE)
     {
-      gimp_gradient_get_color_at (rbd->gradient, NULL,
+      gimp_gradient_get_color_at (rbd->gradient, rbd->context, NULL,
                                   factor, rbd->reverse, color);
     }
   else
@@ -867,6 +868,7 @@ gradient_fill_region (GimpImage        *image,
   RenderBlendData  rbd;
 
   rbd.gradient = gimp_context_get_gradient (context);
+  rbd.context  = context;
   rbd.reverse  = reverse;
 
   gimp_context_get_foreground (context, &rbd.fg);

@@ -64,6 +64,7 @@ static gboolean   gimp_pattern_get_size        (GimpViewable  *viewable,
                                                 gint          *width,
                                                 gint          *height);
 static TempBuf  * gimp_pattern_get_new_preview (GimpViewable  *viewable,
+                                                GimpContext   *context,
                                                 gint           width,
                                                 gint           height);
 static gchar    * gimp_pattern_get_description (GimpViewable  *viewable,
@@ -147,6 +148,7 @@ gimp_pattern_get_size (GimpViewable *viewable,
 
 static TempBuf *
 gimp_pattern_get_new_preview (GimpViewable *viewable,
+                              GimpContext  *context,
                               gint          width,
                               gint          height)
 {

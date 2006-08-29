@@ -188,7 +188,8 @@ gimp_container_entry_set (GimpContainerEntry *entry,
 
   view_size = gimp_container_view_get_view_size (view, &border_width);
 
-  renderer = gimp_view_renderer_new (G_TYPE_FROM_INSTANCE (viewable),
+  renderer = gimp_view_renderer_new (gimp_container_view_get_context (view),
+                                     G_TYPE_FROM_INSTANCE (viewable),
                                      view_size, border_width,
                                      FALSE);
   gimp_view_renderer_set_viewable (renderer, viewable);

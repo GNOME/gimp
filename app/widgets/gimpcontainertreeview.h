@@ -63,7 +63,7 @@ struct _GimpContainerTreeView
 
   gboolean           dnd_drop_to_empty;
   Gimp              *dnd_gimp; /* eek */
-  GimpViewable      *dnd_viewable;
+  GimpViewRenderer  *dnd_renderer;
 
   guint              scroll_timeout_id;
   guint              scroll_timeout_interval;

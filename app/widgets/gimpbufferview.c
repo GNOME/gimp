@@ -36,6 +36,7 @@
 #include "gimpcontainerview.h"
 #include "gimpbufferview.h"
 #include "gimpdnd.h"
+#include "gimpdocked.h"
 #include "gimpeditor.h"
 #include "gimphelp-ids.h"
 #include "gimpview.h"
@@ -45,19 +46,29 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_buffer_view_activate_item  (GimpContainerEditor *editor,
-                                               GimpViewable        *viewable);
+static void   gimp_buffer_view_docked_iface_init (GimpDockedInterface *iface);
 
-static void   gimp_buffer_view_buffer_changed (Gimp                *gimp,
-                                               GimpBufferView      *buffer_view);
-static void   gimp_buffer_view_view_notify    (GimpContainerView   *view,
-                                               GParamSpec          *pspec,
-                                               GimpBufferView      *buffer_view);
+static void   gimp_buffer_view_set_context       (GimpDocked          *docked,
+                                                  GimpContext         *context);
+
+static void   gimp_buffer_view_activate_item     (GimpContainerEditor *editor,
+                                                  GimpViewable        *viewable);
+
+static void   gimp_buffer_view_buffer_changed    (Gimp                *gimp,
+                                                  GimpBufferView      *buffer_view);
+static void   gimp_buffer_view_view_notify       (GimpContainerView   *view,
+                                                  GParamSpec          *pspec,
+                                                  GimpBufferView      *buffer_view);
 
 
-G_DEFINE_TYPE (GimpBufferView, gimp_buffer_view, GIMP_TYPE_CONTAINER_EDITOR)
+G_DEFINE_TYPE_WITH_CODE (GimpBufferView, gimp_buffer_view,
+                         GIMP_TYPE_CONTAINER_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_buffer_view_docked_iface_init))
 
 #define parent_class gimp_buffer_view_parent_class
+
+static GimpDockedInterface *parent_docked_iface = NULL;
 
 
 static void
@@ -69,6 +80,17 @@ gimp_buffer_view_class_init (GimpBufferViewClass *klass)
 }
 
 static void
+gimp_buffer_view_docked_iface_init (GimpDockedInterface *iface)
+{
+  parent_docked_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
+  iface->set_context = gimp_buffer_view_set_context;
+}
+
+static void
 gimp_buffer_view_init (GimpBufferView *view)
 {
   view->paste_button        = NULL;
@@ -76,6 +98,21 @@ gimp_buffer_view_init (GimpBufferView *view)
   view->paste_as_new_button = NULL;
   view->delete_button       = NULL;
 }
+
+static void
+gimp_buffer_view_set_context (GimpDocked  *docked,
+                              GimpContext *context)
+{
+  GimpBufferView *view = GIMP_BUFFER_VIEW (docked);
+
+  parent_docked_iface->set_context (docked, context);
+
+  gimp_view_renderer_set_context (GIMP_VIEW (view->global_view)->renderer,
+                                  context);
+}
+
+
+/*  public functions  */
 
 GtkWidget *
 gimp_buffer_view_new (GimpViewType     view_type,
@@ -117,7 +154,8 @@ gimp_buffer_view_new (GimpViewType     view_type,
   gtk_widget_show (hbox);
 
   buffer_view->global_view =
-    gimp_view_new_full_by_types (GIMP_TYPE_VIEW,
+    gimp_view_new_full_by_types (NULL,
+                                 GIMP_TYPE_VIEW,
                                  GIMP_TYPE_BUFFER,
                                  view_size, view_size, view_border_width,
                                  FALSE, FALSE, TRUE);
@@ -176,6 +214,9 @@ gimp_buffer_view_new (GimpViewType     view_type,
 
   return GTK_WIDGET (buffer_view);
 }
+
+
+/*  private functions  */
 
 static void
 gimp_buffer_view_activate_item (GimpContainerEditor *editor,

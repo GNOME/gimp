@@ -29,7 +29,7 @@
 
 #include "base/temp-buf.h"
 
-#include "gimpimage.h"
+#include "gimpcontext.h"
 #include "gimpgradient.h"
 #include "gimpgradient-save.h"
 
@@ -55,6 +55,7 @@ static gboolean   gimp_gradient_get_popup_size   (GimpViewable      *viewable,
                                                   gint              *popup_width,
                                                   gint              *popup_height);
 static TempBuf  * gimp_gradient_get_new_preview  (GimpViewable      *viewable,
+                                                  GimpContext       *context,
                                                   gint               width,
                                                   gint               height);
 static gchar    * gimp_gradient_get_extension    (GimpData          *data);
@@ -173,6 +174,7 @@ gimp_gradient_get_popup_size (GimpViewable *viewable,
 
 static TempBuf *
 gimp_gradient_get_new_preview (GimpViewable *viewable,
+                               GimpContext  *context,
                                gint          width,
                                gint          height)
 {
@@ -194,7 +196,8 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
 
   for (x = 0; x < width; x++)
     {
-      seg = gimp_gradient_get_color_at (gradient, seg, cur_x, FALSE, &color);
+      seg = gimp_gradient_get_color_at (gradient, context, seg, cur_x,
+                                        FALSE, &color);
 
       *p++ = color.r * 255.0;
       *p++ = color.g * 255.0;
@@ -298,10 +301,11 @@ gimp_gradient_get_extension (GimpData *data)
 /**
  * gimp_gradient_get_color_at:
  * @gradient: a gradient
- * @seg: a segment to seed the search with (or %NULL)
- * @pos: position in the gradient (between 0.0 and 1.0)
- * @reverse:
- * @color: returns the color
+ * @context:  a context
+ * @seg:      a segment to seed the search with (or %NULL)
+ * @pos:      position in the gradient (between 0.0 and 1.0)
+ * @reverse:  when %TRUE, use the reversed gradient
+ * @color:    returns the color
  *
  * If you are iterating over an gradient, you should pass the the
  * return value from the last call for @seg.
@@ -310,6 +314,7 @@ gimp_gradient_get_extension (GimpData *data)
  **/
 GimpGradientSegment *
 gimp_gradient_get_color_at (GimpGradient        *gradient,
+                            GimpContext         *context,
                             GimpGradientSegment *seg,
                             gdouble              pos,
                             gboolean             reverse,
@@ -318,9 +323,12 @@ gimp_gradient_get_color_at (GimpGradient        *gradient,
   gdouble  factor = 0.0;
   gdouble  seg_len;
   gdouble  middle;
+  GimpRGB  left_color;
+  GimpRGB  right_color;
   GimpRGB  rgb;
 
   g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
   pos = CLAMP (pos, 0.0, 1.0);
@@ -371,26 +379,81 @@ gimp_gradient_get_color_at (GimpGradient        *gradient,
       break;
     }
 
+  /* Get left/right colors */
+
+  switch (seg->left_color_type)
+    {
+    case GIMP_GRADIENT_COLOR_FIXED:
+      left_color = seg->left_color;
+      break;
+
+    case GIMP_GRADIENT_COLOR_FOREGROUND:
+    case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
+      if (context)
+        gimp_context_get_foreground (context, &left_color);
+      else
+        gimp_rgba_set (&left_color, 0.0, 0.0, 0.0, 1.0);
+
+      if (seg->left_color_type == GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT)
+        gimp_rgb_set_alpha (&left_color, 0.0);
+      break;
+
+    case GIMP_GRADIENT_COLOR_BACKGROUND:
+    case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
+      if (context)
+        gimp_context_get_background (context, &left_color);
+      else
+        gimp_rgba_set (&left_color, 1.0, 1.0, 1.0, 1.0);
+
+      if (seg->left_color_type == GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
+        gimp_rgb_set_alpha (&left_color, 0.0);
+      break;
+    }
+
+  switch (seg->right_color_type)
+    {
+    case GIMP_GRADIENT_COLOR_FIXED:
+      right_color = seg->right_color;
+      break;
+
+    case GIMP_GRADIENT_COLOR_FOREGROUND:
+    case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
+      if (context)
+        gimp_context_get_foreground (context, &right_color);
+      else
+        gimp_rgba_set (&right_color, 0.0, 0.0, 0.0, 1.0);
+
+      if (seg->right_color_type == GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT)
+        gimp_rgb_set_alpha (&right_color, 0.0);
+      break;
+
+    case GIMP_GRADIENT_COLOR_BACKGROUND:
+    case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
+      if (context)
+        gimp_context_get_background (context, &right_color);
+      else
+        gimp_rgba_set (&right_color, 1.0, 1.0, 1.0, 1.0);
+
+      if (seg->right_color_type == GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
+        gimp_rgb_set_alpha (&right_color, 0.0);
+      break;
+    }
+
   /* Calculate color components */
 
   if (seg->color == GIMP_GRADIENT_SEGMENT_RGB)
     {
-      rgb.r =
-        seg->left_color.r + (seg->right_color.r - seg->left_color.r) * factor;
-
-      rgb.g =
-        seg->left_color.g + (seg->right_color.g - seg->left_color.g) * factor;
-
-      rgb.b =
-        seg->left_color.b + (seg->right_color.b - seg->left_color.b) * factor;
+      rgb.r = left_color.r + (right_color.r - left_color.r) * factor;
+      rgb.g = left_color.g + (right_color.g - left_color.g) * factor;
+      rgb.b = left_color.b + (right_color.b - left_color.b) * factor;
     }
   else
     {
       GimpHSV left_hsv;
       GimpHSV right_hsv;
 
-      gimp_rgb_to_hsv (&seg->left_color,  &left_hsv);
-      gimp_rgb_to_hsv (&seg->right_color, &right_hsv);
+      gimp_rgb_to_hsv (&left_color,  &left_hsv);
+      gimp_rgb_to_hsv (&right_color, &right_hsv);
 
       left_hsv.s = left_hsv.s + (right_hsv.s - left_hsv.s) * factor;
       left_hsv.v = left_hsv.v + (right_hsv.v - left_hsv.v) * factor;
@@ -436,8 +499,7 @@ gimp_gradient_get_color_at (GimpGradient        *gradient,
 
   /* Calculate alpha */
 
-  rgb.a =
-    seg->left_color.a + (seg->right_color.a - seg->left_color.a) * factor;
+  rgb.a = left_color.a + (right_color.a - left_color.a) * factor;
 
   *color = rgb;
 
@@ -466,7 +528,10 @@ gimp_gradient_segment_new (void)
   seg->middle = 0.5;
   seg->right  = 1.0;
 
+  seg->left_color_type = GIMP_GRADIENT_COLOR_FIXED;
   gimp_rgba_set (&seg->left_color,  0.0, 0.0, 0.0, 1.0);
+
+  seg->right_color_type = GIMP_GRADIENT_COLOR_FIXED;
   gimp_rgba_set (&seg->right_color, 1.0, 1.0, 1.0, 1.0);
 
   seg->type  = GIMP_GRADIENT_SEGMENT_LINEAR;
@@ -550,6 +615,7 @@ gimp_gradient_segment_get_nth (GimpGradientSegment *seg,
 
 void
 gimp_gradient_segment_split_midpoint (GimpGradient         *gradient,
+                                      GimpContext          *context,
                                       GimpGradientSegment  *lseg,
                                       GimpGradientSegment **newl,
                                       GimpGradientSegment **newr)
@@ -558,6 +624,7 @@ gimp_gradient_segment_split_midpoint (GimpGradient         *gradient,
   GimpGradientSegment *newseg;
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
   g_return_if_fail (lseg != NULL);
   g_return_if_fail (newl != NULL);
   g_return_if_fail (newr != NULL);
@@ -565,7 +632,8 @@ gimp_gradient_segment_split_midpoint (GimpGradient         *gradient,
   gimp_data_freeze (GIMP_DATA (gradient));
 
   /* Get color at original segment's midpoint */
-  gimp_gradient_get_color_at (gradient, lseg, lseg->middle, FALSE, &color);
+  gimp_gradient_get_color_at (gradient, context, lseg, lseg->middle,
+                              FALSE, &color);
 
   /* Create a new segment and insert it in the list */
 
@@ -614,6 +682,7 @@ gimp_gradient_segment_split_midpoint (GimpGradient         *gradient,
 
 void
 gimp_gradient_segment_split_uniform (GimpGradient         *gradient,
+                                     GimpContext          *context,
                                      GimpGradientSegment  *lseg,
                                      gint                  parts,
                                      GimpGradientSegment **newl,
@@ -624,6 +693,7 @@ gimp_gradient_segment_split_uniform (GimpGradient         *gradient,
   gint                 i;
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
   g_return_if_fail (lseg != NULL);
   g_return_if_fail (newl != NULL);
   g_return_if_fail (newr != NULL);
@@ -647,9 +717,9 @@ gimp_gradient_segment_split_uniform (GimpGradient         *gradient,
       seg->right  = lseg->left + (i + 1) * seg_len;
       seg->middle = (seg->left + seg->right) / 2.0;
 
-      gimp_gradient_get_color_at (gradient, lseg,
+      gimp_gradient_get_color_at (gradient, context, lseg,
                                   seg->left,  FALSE, &seg->left_color);
-      gimp_gradient_get_color_at (gradient, lseg,
+      gimp_gradient_get_color_at (gradient, context, lseg,
                                   seg->right, FALSE, &seg->right_color);
 
       seg->type  = lseg->type;
@@ -1305,6 +1375,7 @@ gimp_gradient_segment_range_replicate (GimpGradient         *gradient,
 
 void
 gimp_gradient_segment_range_split_midpoint (GimpGradient         *gradient,
+                                            GimpContext          *context,
                                             GimpGradientSegment  *start_seg,
                                             GimpGradientSegment  *end_seg,
                                             GimpGradientSegment **final_start_seg,
@@ -1313,6 +1384,7 @@ gimp_gradient_segment_range_split_midpoint (GimpGradient         *gradient,
   GimpGradientSegment *seg, *lseg, *rseg;
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
   gimp_data_freeze (GIMP_DATA (gradient));
 
@@ -1323,7 +1395,8 @@ gimp_gradient_segment_range_split_midpoint (GimpGradient         *gradient,
 
   do
     {
-      gimp_gradient_segment_split_midpoint (gradient, seg, &lseg, &rseg);
+      gimp_gradient_segment_split_midpoint (gradient, context,
+                                            seg, &lseg, &rseg);
       seg = rseg->next;
     }
   while (lseg != end_seg);
@@ -1339,6 +1412,7 @@ gimp_gradient_segment_range_split_midpoint (GimpGradient         *gradient,
 
 void
 gimp_gradient_segment_range_split_uniform (GimpGradient         *gradient,
+                                           GimpContext          *context,
                                            GimpGradientSegment  *start_seg,
                                            GimpGradientSegment  *end_seg,
                                            gint                  parts,
@@ -1348,6 +1422,7 @@ gimp_gradient_segment_range_split_uniform (GimpGradient         *gradient,
   GimpGradientSegment *seg, *aseg, *lseg, *rseg, *lsel;
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
   if (! end_seg)
     end_seg = gimp_gradient_segment_get_last (start_seg);
@@ -1368,7 +1443,7 @@ gimp_gradient_segment_range_split_uniform (GimpGradient         *gradient,
     {
       aseg = seg;
 
-      gimp_gradient_segment_split_uniform (gradient, seg,
+      gimp_gradient_segment_split_uniform (gradient, context, seg,
                                            parts,
                                            &lseg, &rseg);
 

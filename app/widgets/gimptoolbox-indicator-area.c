@@ -136,7 +136,8 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
   /*  brush view  */
 
   brush_view =
-    gimp_view_new_full_by_types (GIMP_TYPE_VIEW, GIMP_TYPE_BRUSH,
+    gimp_view_new_full_by_types (context,
+                                 GIMP_TYPE_VIEW, GIMP_TYPE_BRUSH,
                                  CELL_SIZE, CELL_SIZE, 0,
                                  FALSE, TRUE, TRUE);
   gimp_view_set_viewable (GIMP_VIEW (brush_view),
@@ -166,7 +167,8 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
   /*  pattern view  */
 
   pattern_view =
-    gimp_view_new_full_by_types (GIMP_TYPE_VIEW, GIMP_TYPE_PATTERN,
+    gimp_view_new_full_by_types (context,
+                                 GIMP_TYPE_VIEW, GIMP_TYPE_PATTERN,
                                  CELL_SIZE, CELL_SIZE, 0,
                                  FALSE, TRUE, TRUE);
   gimp_view_set_viewable (GIMP_VIEW (pattern_view),
@@ -197,7 +199,8 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
   /*  gradient view  */
 
   gradient_view =
-    gimp_view_new_full_by_types (GIMP_TYPE_VIEW, GIMP_TYPE_GRADIENT,
+    gimp_view_new_full_by_types (context,
+                                 GIMP_TYPE_VIEW, GIMP_TYPE_GRADIENT,
                                  GRAD_CELL_WIDTH, GRAD_CELL_HEIGHT, 0,
                                  FALSE, TRUE, TRUE);
   gimp_view_set_viewable (GIMP_VIEW (gradient_view),

@@ -673,7 +673,7 @@ dialogs_brush_editor_get (GimpDialogFactory *factory,
                           GimpContext       *context,
                           gint               view_size)
 {
-  return gimp_brush_editor_new (context->gimp,
+  return gimp_brush_editor_new (context,
                                 factory->menu_factory);
 }
 
@@ -682,7 +682,7 @@ dialogs_gradient_editor_get (GimpDialogFactory *factory,
                              GimpContext       *context,
                              gint               view_size)
 {
-  return gimp_gradient_editor_new (context->gimp,
+  return gimp_gradient_editor_new (context,
                                    factory->menu_factory);
 }
 
@@ -691,7 +691,7 @@ dialogs_palette_editor_get (GimpDialogFactory *factory,
                             GimpContext       *context,
                             gint               view_size)
 {
-  return gimp_palette_editor_new (context->gimp,
+  return gimp_palette_editor_new (context,
                                   factory->menu_factory);
 }
 

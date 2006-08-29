@@ -1,5 +1,110 @@
 2006-08-29  Michael Natterer  <mitch@gimp.org>
 
+	Changed GimpViewable preview rendering to have a context to get
+	FG/BG/whatever from. Use the context to enable dynamic FG/BG
+	colors in gradients. Fixes bug #127676 and bug #352214. Addresses
+	bug #128367 (doesn't fix it because there's no loading/saving and
+	no GUI yet).
+
+	* app/core/core-enums.[ch]: added enum GimpGradientColor to enable
+	specifying gradient colors in terms of foreground and background.
+
+	* app/core/gimpgradient.[ch]: added color_type members to the
+	GimpGradientSegment struct and honor them in
+	gimp_gradient_get_color_at(). Added GimpContext parameters to all
+	functions which finally call get_color_at().
+
+	* app/core/gimp-gradients.c: use the new method to implement the
+	builtin gradients.
+
+	* app/core/gimpviewable.[ch]: added GimpContext parameters to all
+	get_preview() and get_pixbuf() functions.
+
+	* app/core/gimpbrush.c
+	* app/core/gimpbuffer.c
+	* app/core/gimpdrawable-preview.[ch]
+	* app/core/gimpgradient.c
+	* app/core/gimpimage-preview.[ch]
+	* app/core/gimpimagefile.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c
+	* app/core/gimpundo.[ch]
+	* app/text/gimpfont.c
+	* app/vectors/gimpvectors-preview.[ch]: changed ::get_preview()
+	and ::get_pixbuf() implementations accordingly.
+
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimppalette-import.[ch]
+	* app/dialogs/dialogs-constructors.c
+	* app/dialogs/palette-import-dialog.c
+	* app/dialogs/resize-dialog.c
+	* app/display/gimpdisplayshell-layer-select.c
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpnavigationeditor.c
+	* app/paint/gimppaintoptions.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimptexttool.c
+	* app/actions/gradient-editor-commands.c
+	* app/widgets/gimpaction.c
+	* app/widgets/gimpbrusheditor.[ch]
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpcellrendererviewable.c
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpclipboard.c
+	* app/widgets/gimpcoloreditor.c
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimpcontainerbox.c
+	* app/widgets/gimpcontainercombobox.c
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpcontainerentry.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainertreeview.[ch]
+	* app/widgets/gimpdataeditor.[ch]
+	* app/widgets/gimpdevicestatus.c
+	* app/widgets/gimpdnd.[ch]
+	* app/widgets/gimpdrawabletreeview.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpgradienteditor.[ch]
+	* app/widgets/gimpgradientselect.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimppaletteeditor.[ch]
+	* app/widgets/gimppropwidgets.[ch]
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimpthumbbox.[ch]
+	* app/widgets/gimptoolbox-image-area.c
+	* app/widgets/gimptoolbox-indicator-area.c
+	* app/widgets/gimptooloptionseditor.c
+	* app/widgets/gimpundoeditor.c
+	* app/widgets/gimpvectorstreeview.c
+	* app/widgets/gimpview-popup.[ch]
+	* app/widgets/gimpview.[ch]
+	* app/widgets/gimpviewablebutton.c
+	* app/widgets/gimpviewabledialog.c
+	* app/widgets/gimpviewrenderer.[ch]
+	* app/widgets/gimpviewrenderer-frame.c
+	* app/widgets/gimpviewrendererbrush.c
+	* app/widgets/gimpviewrendererbuffer.c
+	* app/widgets/gimpviewrendererdrawable.c
+	* app/widgets/gimpviewrenderergradient.c
+	* app/widgets/gimpviewrendererimage.c
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/gradient.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/image.pdb: added tons of GimpContext members
+	and parameters, implement GimpDocked::set_context() in many
+	widgets. Pass these locally remembered contexts to GimpViewable
+	functions. Did some minor cleanups on the way. There are still
+	some minor FIXMEs around where the code uses a NULL context (which
+	is allowed by the APIs)
+
+	* app/pdb/drawable_cmds.c
+	* app/pdb/gradient_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/image_cmds.c: regenerated.
+
+2006-08-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpbrushcore.c: minor cleanup.
 
 2006-08-29  Sven Neumann  <sven@gimp.org>

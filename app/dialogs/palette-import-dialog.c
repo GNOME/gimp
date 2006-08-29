@@ -396,7 +396,8 @@ palette_import_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
-  dialog->preview = gimp_view_new_full_by_types (GIMP_TYPE_VIEW,
+  dialog->preview = gimp_view_new_full_by_types (gimp_get_user_context (gimp),
+                                                 GIMP_TYPE_VIEW,
                                                  GIMP_TYPE_PALETTE,
                                                  192, 192, 1,
                                                  TRUE, FALSE, FALSE);
@@ -795,6 +796,7 @@ palette_import_make_palette (ImportDialog *dialog)
         gradient = gimp_context_get_gradient (dialog->context);
 
         palette = gimp_palette_import_from_gradient (gradient,
+                                                     dialog->context,
                                                      FALSE,
                                                      palette_name,
                                                      n_colors);

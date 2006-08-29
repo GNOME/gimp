@@ -44,6 +44,7 @@
 
 #include "gimpselectioneditor.h"
 #include "gimpdnd.h"
+#include "gimpdocked.h"
 #include "gimpmenufactory.h"
 #include "gimpview.h"
 #include "gimpviewrenderer.h"
@@ -52,12 +53,17 @@
 #include "gimp-intl.h"
 
 
+static void  gimp_selection_editor_docked_iface_init (GimpDockedInterface *iface);
+
 static GObject * gimp_selection_editor_constructor (GType                type,
                                                     guint                n_params,
                                                     GObjectConstructParam *params);
 
 static void   gimp_selection_editor_set_image      (GimpImageEditor     *editor,
                                                     GimpImage           *image);
+
+static void   gimp_selection_editor_set_context    (GimpDocked          *docked,
+                                                    GimpContext         *context);
 
 static gboolean gimp_selection_view_button_press   (GtkWidget           *widget,
                                                     GdkEventButton      *bevent,
@@ -72,14 +78,18 @@ static void   gimp_selection_editor_mask_changed   (GimpImage           *image,
                                                     GimpSelectionEditor *editor);
 
 
-G_DEFINE_TYPE (GimpSelectionEditor, gimp_selection_editor,
-               GIMP_TYPE_IMAGE_EDITOR)
+G_DEFINE_TYPE_WITH_CODE (GimpSelectionEditor, gimp_selection_editor,
+                         GIMP_TYPE_IMAGE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_selection_editor_docked_iface_init))
 
 #define parent_class gimp_selection_editor_parent_class
 
+static GimpDockedInterface *parent_docked_iface = NULL;
+
 
 static void
-gimp_selection_editor_class_init (GimpSelectionEditorClass* klass)
+gimp_selection_editor_class_init (GimpSelectionEditorClass *klass)
 {
   GObjectClass         *object_class       = G_OBJECT_CLASS (klass);
   GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
@@ -87,6 +97,17 @@ gimp_selection_editor_class_init (GimpSelectionEditorClass* klass)
   object_class->constructor     = gimp_selection_editor_constructor;
 
   image_editor_class->set_image = gimp_selection_editor_set_image;
+}
+
+static void
+gimp_selection_editor_docked_iface_init (GimpDockedInterface *iface)
+{
+  parent_docked_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
+  iface->set_context = gimp_selection_editor_set_context;
 }
 
 static void
@@ -99,7 +120,8 @@ gimp_selection_editor_init (GimpSelectionEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  editor->view = gimp_view_new_by_types (GIMP_TYPE_VIEW,
+  editor->view = gimp_view_new_by_types (NULL,
+                                         GIMP_TYPE_VIEW,
                                          GIMP_TYPE_SELECTION,
                                          GIMP_VIEW_SIZE_HUGE,
                                          0, TRUE);
@@ -195,6 +217,18 @@ gimp_selection_editor_set_image (GimpImageEditor *image_editor,
     {
       gimp_view_set_viewable (GIMP_VIEW (editor->view), NULL);
     }
+}
+
+static void
+gimp_selection_editor_set_context (GimpDocked  *docked,
+                                   GimpContext *context)
+{
+  GimpSelectionEditor *editor = GIMP_SELECTION_EDITOR (docked);
+
+  parent_docked_iface->set_context (docked, context);
+
+  gimp_view_renderer_set_context (GIMP_VIEW (editor->view)->renderer,
+                                  context);
 }
 
 

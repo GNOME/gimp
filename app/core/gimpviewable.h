@@ -80,15 +80,19 @@ struct _GimpViewableClass
                                       gint          *popup_width,
                                       gint          *popup_height);
   TempBuf   * (* get_preview)        (GimpViewable  *viewable,
+                                      GimpContext   *context,
                                       gint           width,
                                       gint           height);
   TempBuf   * (* get_new_preview)    (GimpViewable  *viewable,
+                                      GimpContext   *context,
                                       gint           width,
                                       gint           height);
   GdkPixbuf * (* get_pixbuf)         (GimpViewable  *viewable,
+                                      GimpContext   *context,
                                       gint           width,
                                       gint           height);
   GdkPixbuf * (* get_new_pixbuf)     (GimpViewable  *viewable,
+                                      GimpContext   *context,
                                       gint           width,
                                       gint           height);
   gchar     * (* get_description)    (GimpViewable  *viewable,
@@ -129,9 +133,11 @@ gboolean    gimp_viewable_get_popup_size     (GimpViewable  *viewable,
                                               gint          *popup_height);
 
 TempBuf   * gimp_viewable_get_preview        (GimpViewable  *viewable,
+                                              GimpContext   *context,
                                               gint           width,
                                               gint           height);
 TempBuf   * gimp_viewable_get_new_preview    (GimpViewable  *viewable,
+                                              GimpContext   *context,
                                               gint           width,
                                               gint           height);
 
@@ -141,9 +147,11 @@ TempBuf   * gimp_viewable_get_dummy_preview  (GimpViewable  *viewable,
                                               gint           bpp);
 
 GdkPixbuf * gimp_viewable_get_pixbuf         (GimpViewable  *viewable,
+                                              GimpContext   *context,
                                               gint           width,
                                               gint           height);
 GdkPixbuf * gimp_viewable_get_new_pixbuf     (GimpViewable  *viewable,
+                                              GimpContext   *context,
                                               gint           width,
                                               gint           height);
 

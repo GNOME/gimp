@@ -64,6 +64,7 @@ static void        gimp_imagefile_notify_thumbnail (GimpImagefile  *imagefile,
                                                     GParamSpec     *pspec);
 
 static GdkPixbuf * gimp_imagefile_get_new_pixbuf   (GimpViewable   *viewable,
+                                                    GimpContext    *context,
                                                     gint            width,
                                                     gint            height);
 static GdkPixbuf * gimp_imagefile_load_thumb       (GimpImagefile  *imagefile,
@@ -438,6 +439,7 @@ gimp_imagefile_notify_thumbnail (GimpImagefile *imagefile,
 
 static GdkPixbuf *
 gimp_imagefile_get_new_pixbuf (GimpViewable *viewable,
+                               GimpContext  *context,
                                gint          width,
                                gint          height)
 {
@@ -758,7 +760,10 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
         }
     }
 
-  pixbuf = gimp_viewable_get_new_pixbuf (GIMP_VIEWABLE (image), width, height);
+  pixbuf = gimp_viewable_get_new_pixbuf (GIMP_VIEWABLE (image),
+                                         /* random context, unused */
+                                         gimp_get_user_context (image->gimp),
+                                         width, height);
 
   /*  when layer previews are disabled, we won't get a pixbuf  */
   if (! pixbuf)

@@ -297,6 +297,7 @@ static void   gimp_prop_view_notify (GObject      *config,
 /**
  * gimp_prop_view_new:
  * @config:        #GimpConfig object to which property is attached.
+ * @context:       a #Gimpcontext.
  * @property_name: Name of #GimpViewable property.
  * @size:          Width and height of preview display.
  *
@@ -309,6 +310,7 @@ static void   gimp_prop_view_notify (GObject      *config,
 GtkWidget *
 gimp_prop_view_new (GObject     *config,
                     const gchar *property_name,
+                    GimpContext *context,
                     gint         size)
 {
   GParamSpec   *param_spec;
@@ -328,7 +330,8 @@ gimp_prop_view_new (GObject     *config,
       return NULL;
     }
 
-  view = gimp_view_new_by_types (GIMP_TYPE_VIEW,
+  view = gimp_view_new_by_types (context,
+                                 GIMP_TYPE_VIEW,
                                  param_spec->value_type,
                                  size, 0, FALSE);
 

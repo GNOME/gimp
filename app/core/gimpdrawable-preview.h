@@ -24,6 +24,7 @@
  *  virtual function of GimpDrawable -- dont't call directly
  */
 TempBuf * gimp_drawable_get_preview     (GimpViewable *viewable,
+                                         GimpContext  *context,
                                          gint          width,
                                          gint          height);
 

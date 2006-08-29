@@ -149,9 +149,11 @@ layer_select_new (GimpImage *image,
   gtk_box_pack_start (GTK_BOX (hbox), alignment, FALSE, FALSE, 0);
   gtk_widget_show (alignment);
 
-  layer_select->view = gimp_view_new_by_types (GIMP_TYPE_VIEW,
-                                               GIMP_TYPE_LAYER,
-                                               view_size, 1, FALSE);
+  layer_select->view =
+    gimp_view_new_by_types (gimp_get_user_context (image->gimp),
+                            GIMP_TYPE_VIEW,
+                            GIMP_TYPE_LAYER,
+                            view_size, 1, FALSE);
   gimp_view_set_viewable (GIMP_VIEW (layer_select->view),
                           GIMP_VIEWABLE (layer));
   gtk_container_add (GTK_CONTAINER (alignment), layer_select->view);

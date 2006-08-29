@@ -64,6 +64,7 @@
 #include "core/gimpgradient.h"
 
 #include "gimpdnd.h"
+#include "gimpdocked.h"
 #include "gimpgradienteditor.h"
 #include "gimphelp-ids.h"
 #include "gimpview.h"
@@ -78,8 +79,8 @@
 #define GRAD_SCROLLBAR_STEP_SIZE 0.05
 #define GRAD_SCROLLBAR_PAGE_SIZE 0.75
 
-#define GRAD_VIEW_WIDTH  128
-#define GRAD_VIEW_HEIGHT  96
+#define GRAD_VIEW_WIDTH     128
+#define GRAD_VIEW_HEIGHT     96
 #define GRAD_CONTROL_HEIGHT  10
 
 #define GRAD_MOVE_TIME 150 /* ms between mouse click and detection of movement in gradient control */
@@ -103,6 +104,8 @@
 
 /*  local function prototypes  */
 
+static void  gimp_gradient_editor_docked_iface_init (GimpDockedInterface *face);
+
 static GObject * gimp_gradient_editor_constructor   (GType               type,
                                                      guint               n_params,
                                                      GObjectConstructParam *params);
@@ -112,6 +115,9 @@ static void   gimp_gradient_editor_unmap            (GtkWidget          *widget)
 static void   gimp_gradient_editor_unrealize        (GtkWidget          *widget);
 static void   gimp_gradient_editor_set_data         (GimpDataEditor     *editor,
                                                      GimpData           *data);
+
+static void   gimp_gradient_editor_set_context      (GimpDocked         *docked,
+                                                     GimpContext        *context);
 
 static void   gimp_gradient_editor_gradient_dirty   (GimpGradientEditor *editor,
                                                      GimpGradient       *gradient);
@@ -241,10 +247,14 @@ static gboolean  seg_in_selection                 (GimpGradient         *grad,
 static GtkWidget * gradient_hint_label_add        (GtkBox *box);
 
 
-G_DEFINE_TYPE (GimpGradientEditor, gimp_gradient_editor,
-               GIMP_TYPE_DATA_EDITOR)
+G_DEFINE_TYPE_WITH_CODE (GimpGradientEditor, gimp_gradient_editor,
+                         GIMP_TYPE_DATA_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_gradient_editor_docked_iface_init))
 
 #define parent_class gimp_gradient_editor_parent_class
+
+static GimpDockedInterface *parent_docked_iface = NULL;
 
 
 static void
@@ -264,6 +274,17 @@ gimp_gradient_editor_class_init (GimpGradientEditorClass *klass)
 
   editor_class->set_data    = gimp_gradient_editor_set_data;
   editor_class->title       = _("Gradient Editor");
+}
+
+static void
+gimp_gradient_editor_docked_iface_init (GimpDockedInterface *iface)
+{
+  parent_docked_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
+  iface->set_context = gimp_gradient_editor_set_context;
 }
 
 static void
@@ -288,7 +309,8 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   editor->view_last_x      = 0;
   editor->view_button_down = FALSE;
 
-  editor->view = gimp_view_new_full_by_types (GIMP_TYPE_VIEW,
+  editor->view = gimp_view_new_full_by_types (NULL,
+                                              GIMP_TYPE_VIEW,
                                               GIMP_TYPE_GRADIENT,
                                               GRAD_VIEW_WIDTH,
                                               GRAD_VIEW_HEIGHT, 0,
@@ -496,62 +518,37 @@ gimp_gradient_editor_set_data (GimpDataEditor *editor,
   gimp_view_set_viewable (GIMP_VIEW (gradient_editor->view),
                           GIMP_VIEWABLE (data));
 
-  gtk_widget_set_sensitive (gradient_editor->control, editor->data_editable);
-
   control_update (gradient_editor, GIMP_GRADIENT (data), TRUE);
 }
 
 static void
-gimp_gradient_editor_gradient_dirty (GimpGradientEditor *editor,
-                                     GimpGradient       *gradient)
+gimp_gradient_editor_set_context (GimpDocked  *docked,
+                                  GimpContext *context)
 {
-  GimpGradientSegment *segment;
-  gboolean             left_seen  = FALSE;
-  gboolean             right_seen = FALSE;
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (docked);
 
-  for (segment = gradient->segments; segment; segment = segment->next)
-    {
-      if (segment == editor->control_sel_l)
-        left_seen = TRUE;
+  parent_docked_iface->set_context (docked, context);
 
-      if (segment == editor->control_sel_r)
-        right_seen = TRUE;
-
-      if (right_seen && ! left_seen)
-        {
-          GimpGradientSegment *tmp;
-
-          tmp = editor->control_sel_l;
-          editor->control_sel_l = editor->control_sel_r;
-          editor->control_sel_r = tmp;
-
-          right_seen = FALSE;
-          left_seen  = TRUE;
-        }
-    }
-
-  control_update (editor, gradient, ! (left_seen && right_seen));
+  gimp_view_renderer_set_context (GIMP_VIEW (editor->view)->renderer,
+                                  context);
 }
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_gradient_editor_new (Gimp            *gimp,
+gimp_gradient_editor_new (GimpContext     *context,
                           GimpMenuFactory *menu_factory)
 {
-  GimpGradient *gradient;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  gradient = gimp_context_get_gradient (gimp_get_user_context (gimp));
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return g_object_new (GIMP_TYPE_GRADIENT_EDITOR,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<GradientEditor>",
                        "ui-path",         "/gradient-editor-popup",
-                       "data-factory",    gimp->gradient_factory,
-                       "data",            gradient,
+                       "data-factory",    context->gimp->gradient_factory,
+                       "context",         context,
+                       "data",            gimp_context_get_gradient (context),
                        NULL);
 }
 
@@ -629,6 +626,38 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
 /*  private functions  */
 
 static void
+gimp_gradient_editor_gradient_dirty (GimpGradientEditor *editor,
+                                     GimpGradient       *gradient)
+{
+  GimpGradientSegment *segment;
+  gboolean             left_seen  = FALSE;
+  gboolean             right_seen = FALSE;
+
+  for (segment = gradient->segments; segment; segment = segment->next)
+    {
+      if (segment == editor->control_sel_l)
+        left_seen = TRUE;
+
+      if (segment == editor->control_sel_r)
+        right_seen = TRUE;
+
+      if (right_seen && ! left_seen)
+        {
+          GimpGradientSegment *tmp;
+
+          tmp = editor->control_sel_l;
+          editor->control_sel_l = editor->control_sel_r;
+          editor->control_sel_r = tmp;
+
+          right_seen = FALSE;
+          left_seen  = TRUE;
+        }
+    }
+
+  control_update (editor, gradient, ! (left_seen && right_seen));
+}
+
+static void
 gradient_editor_drop_gradient (GtkWidget    *widget,
                                gint          x,
                                gint          y,
@@ -657,7 +686,8 @@ gradient_editor_drop_color (GtkWidget     *widget,
 
   gimp_data_freeze (GIMP_DATA (gradient));
 
-  gimp_gradient_segment_split_midpoint (gradient, seg, &lseg, &rseg);
+  gimp_gradient_segment_split_midpoint (gradient, editor->context,
+                                        seg, &lseg, &rseg);
 
   if (lseg)
     {
@@ -845,8 +875,7 @@ view_events (GtkWidget          *widget,
             break;
 
           case 3:
-            if (GIMP_DATA_EDITOR (editor)->data_editable)
-              gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
+            gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
             break;
 
           default:
@@ -942,7 +971,8 @@ view_set_hint (GimpGradientEditor *editor,
 
   xpos = control_calc_g_pos (editor, x);
 
-  gimp_gradient_get_color_at (GIMP_GRADIENT (data_editor->data), NULL,
+  gimp_gradient_get_color_at (GIMP_GRADIENT (data_editor->data),
+                              editor->context, NULL,
                               xpos, FALSE, &rgb);
 
   gimp_rgb_to_hsv (&rgb, &hsv);
@@ -981,7 +1011,8 @@ view_set_foreground (GimpGradientEditor *editor,
 
   xpos = control_calc_g_pos (editor, x);
 
-  gimp_gradient_get_color_at (gradient, NULL, xpos, FALSE, &color);
+  gimp_gradient_get_color_at (gradient, editor->context,
+                              NULL, xpos, FALSE, &color);
 
   gimp_context_set_foreground (user_context, &color);
 
@@ -1016,7 +1047,8 @@ view_set_background (GimpGradientEditor *editor,
 
   xpos = control_calc_g_pos (editor, x);
 
-  gimp_gradient_get_color_at (gradient, NULL, xpos, FALSE, &color);
+  gimp_gradient_get_color_at (gradient, editor->context,
+                              NULL, xpos, FALSE, &color);
 
   gimp_context_set_background (user_context, &color);
 
@@ -1087,14 +1119,16 @@ control_events (GtkWidget          *widget,
             {
               gtk_grab_add (widget);
 
-              g_signal_handlers_block_by_func (gradient,
-                                               gimp_gradient_editor_gradient_dirty,
-                                               editor);
+              if (GIMP_DATA_EDITOR (editor)->data_editable)
+                {
+                  g_signal_handlers_block_by_func (gradient,
+                                                   gimp_gradient_editor_gradient_dirty,
+                                                   editor);
 
-              if (! editor->instant_update)
-                gimp_data_freeze (GIMP_DATA (gradient));
+                  if (! editor->instant_update)
+                    gimp_data_freeze (GIMP_DATA (gradient));
+                }
             }
-
         }
       break;
 
@@ -1129,12 +1163,15 @@ control_events (GtkWidget          *widget,
 
       if (editor->control_drag_mode != GRAD_DRAG_NONE)
         {
-          if (! editor->instant_update)
-            gimp_data_thaw (GIMP_DATA (gradient));
+          if (GIMP_DATA_EDITOR (editor)->data_editable)
+            {
+              if (! editor->instant_update)
+                gimp_data_thaw (GIMP_DATA (gradient));
 
-          g_signal_handlers_unblock_by_func (gradient,
-                                             gimp_gradient_editor_gradient_dirty,
-                                             editor);
+              g_signal_handlers_unblock_by_func (gradient,
+                                                 gimp_gradient_editor_gradient_dirty,
+                                                 editor);
+            }
 
           gtk_grab_remove (widget);
 
@@ -1176,7 +1213,8 @@ control_events (GtkWidget          *widget,
         {
           editor->control_last_x = x;
 
-          if (editor->control_drag_mode != GRAD_DRAG_NONE)
+          if (GIMP_DATA_EDITOR (editor)->data_editable &&
+              editor->control_drag_mode != GRAD_DRAG_NONE)
             {
               time = ((GdkEventButton *) event)->time;
 
@@ -1375,8 +1413,6 @@ control_button_press (GimpGradientEditor *editor,
                   control_select_single_segment (editor, seg);
                   gimp_gradient_editor_update (editor);
                 }
-
-              return;
             }
           else  /* seg == NULL */
             {
@@ -1393,8 +1429,6 @@ control_button_press (GimpGradientEditor *editor,
                   control_select_single_segment (editor, seg);
                   gimp_gradient_editor_update (editor);
                 }
-
-              return;
             }
 
           break;
@@ -1411,12 +1445,11 @@ control_button_press (GimpGradientEditor *editor,
               editor->control_drag_segment = seg;
             }
 
-          return;
+          break;
 
         default:
           g_warning ("%s: in_handle is true, but received handle type %d.",
                      G_STRFUNC, in_handle);
-          return;
         }
     }
   else  /* !in_handle */
@@ -1430,8 +1463,6 @@ control_button_press (GimpGradientEditor *editor,
 
       if (state & GDK_SHIFT_MASK)
         editor->control_compress = TRUE;
-
-      return;
     }
 }
 

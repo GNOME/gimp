@@ -51,6 +51,7 @@ static gboolean    gimp_brush_get_size              (GimpViewable  *viewable,
                                                      gint          *width,
                                                      gint          *height);
 static TempBuf   * gimp_brush_get_new_preview       (GimpViewable  *viewable,
+                                                     GimpContext   *context,
                                                      gint           width,
                                                      gint           height);
 static gchar     * gimp_brush_get_description       (GimpViewable  *viewable,
@@ -170,6 +171,7 @@ gimp_brush_get_size (GimpViewable *viewable,
 
 static TempBuf *
 gimp_brush_get_new_preview (GimpViewable *viewable,
+                            GimpContext  *context,
                             gint          width,
                             gint          height)
 {

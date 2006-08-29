@@ -36,6 +36,7 @@
 #include "gimpbrusheditor.h"
 #include "gimpdocked.h"
 #include "gimpview.h"
+#include "gimpviewrenderer.h"
 
 #include "gimp-intl.h"
 
@@ -46,12 +47,17 @@
 
 /*  local function prototypes  */
 
+static void   gimp_brush_editor_docked_iface_init (GimpDockedInterface *face);
+
 static GObject * gimp_brush_editor_constructor (GType              type,
                                                 guint              n_params,
                                                 GObjectConstructParam *params);
 
 static void   gimp_brush_editor_set_data       (GimpDataEditor     *editor,
                                                 GimpData           *data);
+
+static void   gimp_brush_editor_set_context    (GimpDocked         *docked,
+                                                GimpContext        *context);
 
 static void   gimp_brush_editor_update_brush   (GtkAdjustment      *adjustment,
                                                 GimpBrushEditor    *editor);
@@ -62,9 +68,14 @@ static void   gimp_brush_editor_notify_brush   (GimpBrushGenerated *brush,
                                                 GimpBrushEditor    *editor);
 
 
-G_DEFINE_TYPE (GimpBrushEditor, gimp_brush_editor, GIMP_TYPE_DATA_EDITOR)
+G_DEFINE_TYPE_WITH_CODE (GimpBrushEditor, gimp_brush_editor,
+                         GIMP_TYPE_DATA_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_brush_editor_docked_iface_init))
 
 #define parent_class gimp_brush_editor_parent_class
+
+static GimpDockedInterface *parent_docked_iface = NULL;
 
 
 static void
@@ -80,6 +91,17 @@ gimp_brush_editor_class_init (GimpBrushEditorClass *klass)
 }
 
 static void
+gimp_brush_editor_docked_iface_init (GimpDockedInterface *iface)
+{
+  parent_docked_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
+  iface->set_context = gimp_brush_editor_set_context;
+}
+
+static void
 gimp_brush_editor_init (GimpBrushEditor *editor)
 {
   GtkWidget *frame;
@@ -91,7 +113,8 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  editor->view = gimp_view_new_full_by_types (GIMP_TYPE_VIEW,
+  editor->view = gimp_view_new_full_by_types (NULL,
+                                              GIMP_TYPE_VIEW,
                                               GIMP_TYPE_BRUSH,
                                               BRUSH_VIEW_WIDTH,
                                               BRUSH_VIEW_HEIGHT, 0,
@@ -274,25 +297,34 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
   gtk_adjustment_set_value (brush_editor->spacing_data,      spacing);
 }
 
+static void
+gimp_brush_editor_set_context (GimpDocked  *docked,
+                               GimpContext *context)
+{
+  GimpBrushEditor *editor = GIMP_BRUSH_EDITOR (docked);
+
+  parent_docked_iface->set_context (docked, context);
+
+  gimp_view_renderer_set_context (GIMP_VIEW (editor->view)->renderer,
+                                  context);
+}
+
 
 /*  public functions  */
 
 GtkWidget *
-gimp_brush_editor_new (Gimp            *gimp,
+gimp_brush_editor_new (GimpContext     *context,
                        GimpMenuFactory *menu_factory)
 {
-  GimpBrush *brush;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  brush = gimp_context_get_brush (gimp_get_user_context (gimp));
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return g_object_new (GIMP_TYPE_BRUSH_EDITOR,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<BrushEditor>",
                        "ui-path",         "/brush-editor-popup",
-                       "data-factory",    gimp->brush_factory,
-                       "data",            brush,
+                       "data-factory",    context->gimp->brush_factory,
+                       "context",         context,
+                       "data",            gimp_context_get_brush (context),
                        NULL);
 }
 

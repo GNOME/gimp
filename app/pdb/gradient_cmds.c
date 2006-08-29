@@ -314,7 +314,8 @@ gradient_get_uniform_samples_invoker (GimpProcedure     *procedure,
             {
               GimpRGB color;
 
-              seg = gimp_gradient_get_color_at (gradient, seg, pos, reverse, &color);
+              seg = gimp_gradient_get_color_at (gradient, context, seg,
+                                                pos, reverse, &color);
 
               *sample++ = color.r;
               *sample++ = color.g;
@@ -378,7 +379,8 @@ gradient_get_custom_samples_invoker (GimpProcedure     *procedure,
             {
               GimpRGB color;
 
-              seg = gimp_gradient_get_color_at (gradient, seg, *positions,
+              seg = gimp_gradient_get_color_at (gradient, context,
+                                                seg, *positions,
                                                 reverse, &color);
 
               *sample++ = color.r;
@@ -1072,7 +1074,7 @@ gradient_segment_range_split_midpoint_invoker (GimpProcedure     *procedure,
 
       if (start_seg && GIMP_DATA (gradient)->writable)
         {
-          gimp_gradient_segment_range_split_midpoint (gradient,
+          gimp_gradient_segment_range_split_midpoint (gradient, context,
                                                       start_seg, end_seg,
                                                       NULL, NULL);
         }
@@ -1112,7 +1114,7 @@ gradient_segment_range_split_uniform_invoker (GimpProcedure     *procedure,
 
       if (start_seg && GIMP_DATA (gradient)->writable)
         {
-          gimp_gradient_segment_range_split_uniform (gradient,
+          gimp_gradient_segment_range_split_uniform (gradient, context,
                                                      start_seg, end_seg,
                                                      split_parts,
                                                      NULL, NULL);

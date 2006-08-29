@@ -58,6 +58,7 @@ static void      gimp_drawable_preview_scale   (GimpImageType  type,
 
 TempBuf *
 gimp_drawable_get_preview (GimpViewable *viewable,
+                           GimpContext  *context,
                            gint          width,
                            gint          height)
 {

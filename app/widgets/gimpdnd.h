@@ -191,6 +191,7 @@ void  gimp_dnd_pixbuf_dest_remove   (GtkWidget              *widget);
 /*  component dnd functions  */
 
 typedef GimpImage * (* GimpDndDragComponentFunc) (GtkWidget       *widget,
+                                                  GimpContext    **context,
                                                   GimpChannelType *channel,
                                                   gpointer         data);
 typedef void        (* GimpDndDropComponentFunc) (GtkWidget       *widget,
@@ -214,6 +215,7 @@ void  gimp_dnd_component_dest_remove   (GtkWidget                 *widget);
 /*  GimpViewable (by GType) dnd functions  */
 
 typedef GimpViewable * (* GimpDndDragViewableFunc) (GtkWidget     *widget,
+                                                    GimpContext  **context,
                                                     gpointer       data);
 typedef void           (* GimpDndDropViewableFunc) (GtkWidget     *widget,
                                                     gint           x,

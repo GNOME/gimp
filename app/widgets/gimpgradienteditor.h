@@ -52,6 +52,8 @@ struct _GimpGradientEditor
 {
   GimpDataEditor  parent_instance;
 
+  GimpContext    *context;
+
   GtkWidget      *hint_label1;
   GtkWidget      *hint_label2;
   GtkWidget      *hint_label3;
@@ -111,7 +113,7 @@ struct _GimpGradientEditorClass
 
 GType       gimp_gradient_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_gradient_editor_new      (Gimp               *gimp,
+GtkWidget * gimp_gradient_editor_new      (GimpContext        *context,
                                            GimpMenuFactory    *menu_factory);
 
 void        gimp_gradient_editor_update   (GimpGradientEditor *editor);

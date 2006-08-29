@@ -49,6 +49,7 @@ enum
 {
   PROP_0,
   PROP_DATA_FACTORY,
+  PROP_CONTEXT,
   PROP_DATA
 };
 
@@ -68,6 +69,8 @@ static void       gimp_data_editor_get_property      (GObject        *object,
                                                       GParamSpec     *pspec);
 static void       gimp_data_editor_dispose           (GObject        *object);
 
+static void       gimp_data_editor_set_context       (GimpDocked     *docked,
+                                                      GimpContext    *context);
 static void       gimp_data_editor_set_aux_info      (GimpDocked     *docked,
                                                       GList          *aux_info);
 static GList    * gimp_data_editor_get_aux_info      (GimpDocked     *docked);
@@ -76,6 +79,9 @@ static gchar    * gimp_data_editor_get_title         (GimpDocked     *docked);
 static void       gimp_data_editor_real_set_data     (GimpDataEditor *editor,
                                                       GimpData       *data);
 
+static void       gimp_data_editor_data_changed      (GimpContext    *context,
+                                                      GimpData       *data,
+                                                      GimpDataEditor *editor);
 static gboolean   gimp_data_editor_name_key_press    (GtkWidget      *widget,
                                                       GdkEventKey    *kevent,
                                                       GimpDataEditor *editor);
@@ -123,6 +129,12 @@ gimp_data_editor_class_init (GimpDataEditorClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_CONTEXT,
+                                   g_param_spec_object ("context",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_CONTEXT,
+                                                        GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_DATA,
                                    g_param_spec_object ("data",
                                                         NULL, NULL,
@@ -134,6 +146,7 @@ static void
 gimp_data_editor_init (GimpDataEditor *editor)
 {
   editor->data_factory  = NULL;
+  editor->context       = NULL;
   editor->data          = NULL;
   editor->data_editable = FALSE;
 
@@ -162,6 +175,7 @@ gimp_data_editor_docked_iface_init (GimpDockedInterface *iface)
   if (! parent_docked_iface)
     parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
 
+  iface->set_context  = gimp_data_editor_set_context;
   iface->set_aux_info = gimp_data_editor_set_aux_info;
   iface->get_aux_info = gimp_data_editor_get_aux_info;
   iface->get_title    = gimp_data_editor_get_title;
@@ -219,9 +233,12 @@ gimp_data_editor_set_property (GObject      *object,
     case PROP_DATA_FACTORY:
       editor->data_factory = g_value_get_object (value);
       break;
+    case PROP_CONTEXT:
+      gimp_docked_set_context (GIMP_DOCKED (object),
+                               g_value_get_object (value));
+      break;
     case PROP_DATA:
-      gimp_data_editor_set_data (editor,
-                                 (GimpData *) g_value_get_object (value));
+      gimp_data_editor_set_data (editor, g_value_get_object (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -241,6 +258,9 @@ gimp_data_editor_get_property (GObject    *object,
     {
     case PROP_DATA_FACTORY:
       g_value_set_object (value, editor->data_factory);
+      break;
+    case PROP_CONTEXT:
+      g_value_set_object (value, editor->context);
       break;
     case PROP_DATA:
       g_value_set_object (value, editor->data);
@@ -263,7 +283,52 @@ gimp_data_editor_dispose (GObject *object)
       gimp_data_editor_set_data (editor, NULL);
     }
 
+  if (editor->context)
+    gimp_docked_set_context (GIMP_DOCKED (editor), NULL);
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_data_editor_set_context (GimpDocked  *docked,
+                              GimpContext *context)
+{
+  GimpDataEditor *editor = GIMP_DATA_EDITOR (docked);
+
+  if (context == editor->context)
+    return;
+
+  if (parent_docked_iface->set_context)
+    parent_docked_iface->set_context (docked, context);
+
+  if (editor->context)
+    {
+      g_signal_handlers_disconnect_by_func (editor->context,
+                                            gimp_data_editor_data_changed,
+                                            editor);
+
+      g_object_unref (editor->context);
+    }
+
+  editor->context = context;
+
+  if (editor->context)
+    {
+      GType     data_type;
+      GimpData *data;
+
+      g_object_ref (editor->context);
+
+      data_type = editor->data_factory->container->children_type;
+      data = GIMP_DATA (gimp_context_get_by_type (editor->context, data_type));
+
+      g_signal_connect (editor->context,
+                        gimp_context_type_to_signal_name (data_type),
+                        G_CALLBACK (gimp_data_editor_data_changed),
+                        editor);
+
+      gimp_data_editor_data_changed (editor->context, data, editor);
+    }
 }
 
 #define AUX_INFO_EDIT_ACTIVE  "edit-active"
@@ -427,32 +492,18 @@ gimp_data_editor_set_edit_active (GimpDataEditor *editor,
 
   if (editor->edit_active != edit_active)
     {
-      GimpContext *user_context;
-
-      user_context = gimp_get_user_context (editor->data_factory->gimp);
-
       editor->edit_active = edit_active;
 
-      if (editor->edit_active)
+      if (editor->edit_active && editor->context)
         {
           GType     data_type;
           GimpData *data;
 
           data_type = editor->data_factory->container->children_type;
-          data = GIMP_DATA (gimp_context_get_by_type (user_context, data_type));
-
-          g_signal_connect_object (user_context,
-                                   gimp_context_type_to_signal_name (data_type),
-                                   G_CALLBACK (gimp_data_editor_set_data),
-                                   editor, G_CONNECT_SWAPPED);
+          data = GIMP_DATA (gimp_context_get_by_type (editor->context,
+                                                      data_type));
 
           gimp_data_editor_set_data (editor, data);
-        }
-      else
-        {
-          g_signal_handlers_disconnect_by_func (user_context,
-                                                gimp_data_editor_set_data,
-                                                editor);
         }
     }
 }
@@ -467,6 +518,15 @@ gimp_data_editor_get_edit_active (GimpDataEditor *editor)
 
 
 /*  private functions  */
+
+static void
+gimp_data_editor_data_changed (GimpContext    *context,
+                               GimpData       *data,
+                               GimpDataEditor *editor)
+{
+  if (editor->edit_active)
+    gimp_data_editor_set_data (editor, data);
+}
 
 static gboolean
 gimp_data_editor_name_key_press (GtkWidget      *widget,

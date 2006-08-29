@@ -33,7 +33,7 @@
 
 
 /*
- * these enums that are registered with the type system
+ * these enums are registered with the type system
  */
 
 
@@ -479,6 +479,20 @@ typedef enum
   GIMP_OFFSET_BACKGROUND,
   GIMP_OFFSET_TRANSPARENT
 } GimpOffsetType;
+
+
+#define GIMP_TYPE_GRADIENT_COLOR (gimp_gradient_color_get_type ())
+
+GType gimp_gradient_color_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_GRADIENT_COLOR_FIXED,
+  GIMP_GRADIENT_COLOR_FOREGROUND,
+  GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT,
+  GIMP_GRADIENT_COLOR_BACKGROUND,
+  GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT
+} GimpGradientColor;
 
 
 #define GIMP_TYPE_GRADIENT_SEGMENT_TYPE (gimp_gradient_segment_type_get_type ())

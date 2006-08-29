@@ -120,6 +120,14 @@ gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass)
 }
 
 static void
+gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *iface)
+{
+  parent_view_iface = g_type_interface_peek_parent (iface);
+
+  iface->select_item = gimp_drawable_tree_view_select_item;
+}
+
+static void
 gimp_drawable_tree_view_init (GimpDrawableTreeView *view)
 {
 }
@@ -153,14 +161,6 @@ gimp_drawable_tree_view_constructor (GType                  type,
   return object;
 }
 
-static void
-gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *iface)
-{
-  parent_view_iface = g_type_interface_peek_parent (iface);
-
-  iface->select_item = gimp_drawable_tree_view_select_item;
-}
-
 
 /*  GimpContainerView methods  */
 
@@ -174,16 +174,15 @@ gimp_drawable_tree_view_select_item (GimpContainerView *view,
 
   if (item_view->image)
     {
-      GimpViewable *floating_sel;
+      GimpLayer *floating_sel = gimp_image_floating_sel (item_view->image);
 
-      floating_sel = (GimpViewable *)
-        gimp_image_floating_sel (item_view->image);
-
-      success = (item == NULL || floating_sel == NULL || item == floating_sel);
+      success = (item         == NULL ||
+                 floating_sel == NULL ||
+                 item         == GIMP_VIEWABLE (floating_sel));
     }
 
   if (success)
-    return parent_view_iface->select_item (view, item, insert_data);
+    success = parent_view_iface->select_item (view, item, insert_data);
 
   return success;
 }

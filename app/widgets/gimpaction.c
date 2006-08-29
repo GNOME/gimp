@@ -327,7 +327,8 @@ gimp_action_set_proxy (GimpAction *action,
 
           gtk_icon_size_lookup_for_settings (settings, size, &width, &height);
 
-          view = gimp_view_new_full (action->viewable,
+          view = gimp_view_new_full (NULL /* FIXME */,
+                                     action->viewable,
                                      width, height, border_width,
                                      FALSE, FALSE, FALSE);
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), view);

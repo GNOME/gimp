@@ -432,7 +432,7 @@ gimp_file_dialog_add_preview (GimpFileDialog *dialog,
                     G_CALLBACK (gimp_file_dialog_update_preview),
                     dialog);
 
-  dialog->thumb_box = gimp_thumb_box_new (gimp);
+  dialog->thumb_box = gimp_thumb_box_new (gimp_get_user_context (gimp));
   gtk_widget_set_sensitive (GTK_WIDGET (dialog->thumb_box), FALSE);
   gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog),
                                        dialog->thumb_box);

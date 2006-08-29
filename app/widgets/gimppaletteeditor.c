@@ -66,15 +66,17 @@ static GObject * gimp_palette_editor_constructor   (GType              type,
                                                     guint              n_params,
                                                     GObjectConstructParam *params);
 
-static void   gimp_palette_editor_set_aux_info     (GimpDocked        *docked,
-                                                    GList             *aux_info);
-static GList *gimp_palette_editor_get_aux_info     (GimpDocked        *docked);
-
 static void   gimp_palette_editor_destroy          (GtkObject         *object);
 static void   gimp_palette_editor_unmap            (GtkWidget         *widget);
 
 static void   gimp_palette_editor_set_data         (GimpDataEditor    *editor,
                                                     GimpData          *data);
+
+static void   gimp_palette_editor_set_context      (GimpDocked        *docked,
+                                                    GimpContext       *context);
+static void   gimp_palette_editor_set_aux_info     (GimpDocked        *docked,
+                                                    GList             *aux_info);
+static GList *gimp_palette_editor_get_aux_info     (GimpDocked        *docked);
 
 static void   palette_editor_invalidate_preview    (GimpPalette       *palette,
                                                     GimpPaletteEditor *editor);
@@ -155,6 +157,19 @@ gimp_palette_editor_class_init (GimpPaletteEditorClass *klass)
 }
 
 static void
+gimp_palette_editor_docked_iface_init (GimpDockedInterface *iface)
+{
+  parent_docked_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
+  iface->set_context  = gimp_palette_editor_set_context;
+  iface->set_aux_info = gimp_palette_editor_set_aux_info;
+  iface->get_aux_info = gimp_palette_editor_get_aux_info;
+}
+
+static void
 gimp_palette_editor_init (GimpPaletteEditor *editor)
 {
   GtkWidget *scrolled_win;
@@ -198,7 +213,8 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_container_add (GTK_CONTAINER (eventbox), alignment);
   gtk_widget_show (alignment);
 
-  editor->view = gimp_view_new_full_by_types (GIMP_TYPE_PALETTE_VIEW,
+  editor->view = gimp_view_new_full_by_types (NULL,
+                                              GIMP_TYPE_PALETTE_VIEW,
                                               GIMP_TYPE_PALETTE,
                                               PREVIEW_WIDTH, PREVIEW_HEIGHT, 0,
                                               FALSE, TRUE, FALSE);
@@ -258,18 +274,6 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
                     editor);
 }
 
-static void
-gimp_palette_editor_docked_iface_init (GimpDockedInterface *iface)
-{
-  parent_docked_iface = g_type_interface_peek_parent (iface);
-
-  if (! parent_docked_iface)
-    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
-
-  iface->set_aux_info = gimp_palette_editor_set_aux_info;
-  iface->get_aux_info = gimp_palette_editor_get_aux_info;
-}
-
 static GObject *
 gimp_palette_editor_constructor (GType                  type,
                                  guint                  n_params,
@@ -304,54 +308,6 @@ gimp_palette_editor_constructor (GType                  type,
                                  "palette-editor-zoom-all", NULL);
 
   return object;
-}
-
-#define AUX_INFO_ZOOM_FACTOR "zoom-factor"
-
-static void
-gimp_palette_editor_set_aux_info (GimpDocked *docked,
-                                  GList      *aux_info)
-{
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (docked);
-  GList             *list;
-
-  parent_docked_iface->set_aux_info (docked, aux_info);
-
-  for (list = aux_info; list; list = g_list_next (list))
-    {
-      GimpSessionInfoAux *aux = list->data;
-
-      if (! strcmp (aux->name, AUX_INFO_ZOOM_FACTOR))
-        {
-          gdouble zoom_factor;
-
-          zoom_factor = g_ascii_strtod (aux->value, NULL);
-
-          editor->zoom_factor = CLAMP (zoom_factor, 0.1, 4.0);
-        }
-    }
-}
-
-static GList *
-gimp_palette_editor_get_aux_info (GimpDocked *docked)
-{
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (docked);
-  GList             *aux_info;
-
-  aux_info = parent_docked_iface->get_aux_info (docked);
-
-  if (editor->zoom_factor != 1.0)
-    {
-      GimpSessionInfoAux *aux;
-      gchar               value[G_ASCII_DTOSTR_BUF_SIZE];
-
-      g_ascii_formatd (value, sizeof (value), "%.2f", editor->zoom_factor);
-
-      aux = gimp_session_info_aux_new (AUX_INFO_ZOOM_FACTOR, value);
-      aux_info = g_list_append (aux_info, aux);
-    }
-
-  return aux_info;
 }
 
 static void
@@ -431,24 +387,82 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
                                      editor);
 }
 
+static void
+gimp_palette_editor_set_context (GimpDocked  *docked,
+                                 GimpContext *context)
+{
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (docked);
+
+  parent_docked_iface->set_context (docked, context);
+
+  gimp_view_renderer_set_context (GIMP_VIEW (editor->view)->renderer,
+                                  context);
+}
+
+#define AUX_INFO_ZOOM_FACTOR "zoom-factor"
+
+static void
+gimp_palette_editor_set_aux_info (GimpDocked *docked,
+                                  GList      *aux_info)
+{
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (docked);
+  GList             *list;
+
+  parent_docked_iface->set_aux_info (docked, aux_info);
+
+  for (list = aux_info; list; list = g_list_next (list))
+    {
+      GimpSessionInfoAux *aux = list->data;
+
+      if (! strcmp (aux->name, AUX_INFO_ZOOM_FACTOR))
+        {
+          gdouble zoom_factor;
+
+          zoom_factor = g_ascii_strtod (aux->value, NULL);
+
+          editor->zoom_factor = CLAMP (zoom_factor, 0.1, 4.0);
+        }
+    }
+}
+
+static GList *
+gimp_palette_editor_get_aux_info (GimpDocked *docked)
+{
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (docked);
+  GList             *aux_info;
+
+  aux_info = parent_docked_iface->get_aux_info (docked);
+
+  if (editor->zoom_factor != 1.0)
+    {
+      GimpSessionInfoAux *aux;
+      gchar               value[G_ASCII_DTOSTR_BUF_SIZE];
+
+      g_ascii_formatd (value, sizeof (value), "%.2f", editor->zoom_factor);
+
+      aux = gimp_session_info_aux_new (AUX_INFO_ZOOM_FACTOR, value);
+      aux_info = g_list_append (aux_info, aux);
+    }
+
+  return aux_info;
+}
+
+
 /*  public functions  */
 
 GtkWidget *
-gimp_palette_editor_new (Gimp            *gimp,
+gimp_palette_editor_new (GimpContext     *context,
                          GimpMenuFactory *menu_factory)
 {
-  GimpPalette *palette;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  palette = gimp_context_get_palette (gimp_get_user_context (gimp));
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return g_object_new (GIMP_TYPE_PALETTE_EDITOR,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<PaletteEditor>",
                        "ui-path",         "/palette-editor-popup",
-                       "data-factory",    gimp->palette_factory,
-                       "data",            palette,
+                       "data-factory",    context->gimp->palette_factory,
+                       "context",         context,
+                       "data",            gimp_context_get_palette (context),
                        NULL);
 }
 

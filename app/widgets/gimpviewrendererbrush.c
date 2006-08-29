@@ -96,6 +96,7 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
   gimp_viewable_get_size (renderer->viewable, &brush_width, &brush_height);
 
   temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
+                                            renderer->context,
                                             renderer->width,
                                             renderer->height);
 
@@ -307,6 +308,7 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
     GIMP_BRUSH (brush_pipe->brushes[renderbrush->pipe_animation_index]);
 
   temp_buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (brush),
+                                            renderer->context,
                                             renderer->width,
                                             renderer->height);
 

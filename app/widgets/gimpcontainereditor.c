@@ -41,7 +41,7 @@
 #include "gimpuimanager.h"
 
 
-static void   gimp_container_editor_docked_iface_init (GimpDockedInterface      *iface);
+static void  gimp_container_editor_docked_iface_init (GimpDockedInterface *iface);
 
 static gboolean gimp_container_editor_select_item    (GtkWidget           *widget,
                                                       GimpViewable        *viewable,
@@ -90,12 +90,6 @@ gimp_container_editor_class_init (GimpContainerEditorClass *klass)
 }
 
 static void
-gimp_container_editor_init (GimpContainerEditor *view)
-{
-  view->view = NULL;
-}
-
-static void
 gimp_container_editor_docked_iface_init (GimpDockedInterface *iface)
 {
   iface->get_preview         = gimp_container_editor_get_preview;
@@ -104,6 +98,12 @@ gimp_container_editor_docked_iface_init (GimpDockedInterface *iface)
   iface->has_button_bar      = gimp_container_editor_has_button_bar;
   iface->set_show_button_bar = gimp_container_editor_set_show_button_bar;
   iface->get_show_button_bar = gimp_container_editor_get_show_button_bar;
+}
+
+static void
+gimp_container_editor_init (GimpContainerEditor *view)
+{
+  view->view = NULL;
 }
 
 gboolean

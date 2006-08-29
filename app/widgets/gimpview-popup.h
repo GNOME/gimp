@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpview-popup.h
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2003-2006 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 
 gboolean   gimp_view_popup_show (GtkWidget      *widget,
                                  GdkEventButton *bevent,
+                                 GimpContext    *context,
                                  GimpViewable   *viewable,
                                  gint            view_width,
                                  gint            view_height,

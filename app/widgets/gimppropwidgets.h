@@ -44,6 +44,7 @@ GtkWidget * gimp_prop_color_button_new    (GObject     *config,
 
 GtkWidget * gimp_prop_view_new            (GObject     *config,
                                            const gchar *property_name,
+                                           GimpContext *context,
                                            gint         size);
 
 
