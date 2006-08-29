@@ -1,4 +1,4 @@
-# translation of gimp-libgimp.HEAD.mk.po to Macedonian
+# translation of mk.po to Macedonian
 # Macedonian translation of gimp-libgimp
 # Courtesy of mkde team (http://mkde.sourceforge.net/) -- 2004.
 #
@@ -9,14 +9,15 @@
 #
 # Vladimir Stefanov <vladoboss@mt.net.mk>, 2005, 2006.
 # Vladimir Stefanov <vladoboss@gmail.com>, 2006.
+# Jovan Naumovski <jovan@lugola.net>, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp.HEAD.mk\n"
+"Project-Id-Version: mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-14 11:35+0200\n"
-"PO-Revision-Date: 2006-08-15 09:34+0200\n"
-"Last-Translator: Vladimir Stefanov <vladoboss@mt.net.mk>\n"
-"Language-Team: Macedonian <dev@l10n.openoffice.org>\n"
+"POT-Creation-Date: 2006-08-28 19:54+0200\n"
+"PO-Revision-Date: 2006-08-29 13:10+0200\n"
+"Last-Translator: Jovan Naumovski <jovan@lugola.net>\n"
+"Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -31,7 +32,7 @@ msgstr "%s Не може да ракува со нивоата"
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
 msgid "Merge Visible Layers"
-msgstr "Спој ги видливите нивоа"
+msgstr "Спој ги видливите слоеви"
 
 #: ../libgimp/gimpexport.c:226
 #, c-format
@@ -41,7 +42,7 @@ msgstr "%s Не може да ракува со офсетот на нивото
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "%s може да ракува со нивоата само како со анимациони оквири"
+msgstr "%s може да ракува со слоевите само како со анимациони оквири"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -170,7 +171,7 @@ msgstr ""
 #. the footline
 #: ../libgimp/gimpexport.c:573
 msgid "The export conversion won't modify your original image."
-msgstr "Извозното претварање нема да ја измени вашата оригинална слика."
+msgstr "Извозното претворање нема да ја измени вашата оригинална слика."
 
 #: ../libgimp/gimpexport.c:673
 #, c-format
@@ -179,7 +180,7 @@ msgid ""
 "This will not save the visible layers."
 msgstr ""
 "Вие ќе ја зачувате маската на нивото како %s.\n"
-"Ова нема да ги зачува видливите нивоа."
+"Ова нема да ги зачува видливите слоеви."
 
 #: ../libgimp/gimpexport.c:679
 #, c-format
@@ -188,7 +189,7 @@ msgid ""
 "This will not save the visible layers."
 msgstr ""
 "Ви сте во тек да го зачувате каналот (зачуваната селекција) како %s.\n"
-"Ова нема да ги зачува видливите нивоа."
+"Ова нема да ги зачува видливите слоеви."
 
 #: ../libgimp/gimpfontselectbutton.c:130
 msgid "Font Selection"
@@ -521,11 +522,11 @@ msgstr "Спирала (обратно од стрелките на часовн
 
 #: ../libgimpbase/gimpbaseenums.c:429
 msgid "Intersections (dots)"
-msgstr "Меѓусекунди (точки)"
+msgstr "Пресеци (точки)"
 
 #: ../libgimpbase/gimpbaseenums.c:430
 msgid "Intersections (crosshairs)"
-msgstr "Меѓусекунди (крстови)"
+msgstr "Пресеци (крстови)"
 
 #: ../libgimpbase/gimpbaseenums.c:431
 msgid "Dashed"
@@ -541,7 +542,7 @@ msgstr "Цврсто"
 
 #: ../libgimpbase/gimpbaseenums.c:462
 msgid "Stock ID"
-msgstr "Испорачана ИБ"
+msgstr "Испорачана Ид."
 
 #: ../libgimpbase/gimpbaseenums.c:463
 msgid "Inline pixbuf"
@@ -580,8 +581,8 @@ msgid "Indexed-alpha"
 msgstr "Индексирано-алфа"
 
 #: ../libgimpbase/gimpbaseenums.c:562
-msgid "None (Fastest)"
-msgstr "Ништо (најбрзо)"
+msgid "interpolation|None"
+msgstr "Ништо"
 
 #: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|Linear"
@@ -592,8 +593,8 @@ msgid "Cubic"
 msgstr "Кубен"
 
 #: ../libgimpbase/gimpbaseenums.c:565
-msgid "Lanczos (Best)"
-msgstr "Ланцзос (Најдобро)"
+msgid "Lanczos"
+msgstr "Ланчош"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -657,15 +658,15 @@ msgstr "Назад"
 
 #: ../libgimpbase/gimpbaseenums.c:848
 msgid "Internal GIMP procedure"
-msgstr "Внатрешна ГИМП процедура"
+msgstr "Внатрешна GIMP процедура"
 
 #: ../libgimpbase/gimpbaseenums.c:849
 msgid "GIMP Plug-In"
-msgstr "ГИМП додаток"
+msgstr "GIMP додаток"
 
 #: ../libgimpbase/gimpbaseenums.c:850
 msgid "GIMP Extension"
-msgstr "ГИМП проширување"
+msgstr "GIMP проширување"
 
 #: ../libgimpbase/gimpbaseenums.c:851
 msgid "Temporary Procedure"
@@ -744,7 +745,7 @@ msgid ""
 "windowing system. The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Кога е овозможено, ГИМП ќе проба да го користи профилот за приказ на бои од "
+"Кога е овозможено, GIMP ќе проба да го користи профилот за приказ на бои од "
 "системот за прозорци. Конфигурираниот профил на мониторот тогаш се користи "
 "како отстапница."
 
@@ -977,7 +978,9 @@ msgstr "Старо:"
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
-msgstr "Хексадецимално обележување на боја како што се користи во HTML и CSS.  Овој внес исто така прифаќа и CSS имиња на бои."
+msgstr ""
+"Хексадецимално обележување на боја како што се користи во HTML и CSS.  Овој "
+"запис исто така прифаќа и CSS имиња на бои."
 
 #: ../libgimpwidgets/gimpcolorselection.c:269
 msgid "HTML _notation:"
@@ -1044,17 +1047,10 @@ msgid "One page selected"
 msgstr "Изберена е една страница"
 
 #: ../libgimpwidgets/gimppageselector.c:1183
-#, c-format
-msgid "All %d page selected"
-msgid_plural "All %d pages selected"
-msgstr[0] "Изберена е %d страница"
-msgstr[1] "Изберени се сите %d страници"
-msgstr[2] "Изберени се сите %d страници"
-
 #: ../libgimpwidgets/gimppageselector.c:1187
 #, c-format
 msgid "%d page selected"
-msgid_plural "%d pages selected"
+msgid_plural "All %d pages selected"
 msgstr[0] "Изберена е %d страница"
 msgstr[1] "Изберени се %d страници"
 msgstr[2] "Изберени се %d страници"
@@ -1065,7 +1061,7 @@ msgstr "Записливо"
 
 #: ../libgimpwidgets/gimppatheditor.c:223
 msgid "Folder"
-msgstr "Директориум"
+msgstr "Папка"
 
 #: ../libgimpwidgets/gimppickbutton.c:107
 msgid ""
@@ -1195,7 +1191,7 @@ msgid ""
 "a given \"random\" operation"
 msgstr ""
 "Употребете ја оваа вредност за семе за случајно генериран број - ова "
-"виовозможува да ја повторувате зададената \"случајна\" операција"
+"Ви овозможува да ја повторувате зададената \"случајна\" операција"
 
 #: ../libgimpwidgets/gimpwidgets.c:1009
 msgid "_New Seed"
@@ -1524,11 +1520,11 @@ msgstr "Копче запчаник нагоре"
 
 #: ../modules/controller_linux_input.c:87
 msgid "Wheel Turn Left"
-msgstr "Волан заврти налево"
+msgstr "Вртење на тркалцето кон лево"
 
 #: ../modules/controller_linux_input.c:88
 msgid "Wheel Turn Right"
-msgstr "Волан заврти надесно"
+msgstr "Вртење на тркалцето кон десно"
 
 #: ../modules/controller_linux_input.c:89
 msgid "Dial Turn Left"

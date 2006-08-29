@@ -9,14 +9,15 @@
 #
 # Maintainer: Vladimir Stefanov <vladoboss@mt.net.mk>, 2004, 2005, 2006.
 # Vladimir Stefanov <vladoboss@gmail.com>, 2006.
+# Jovan Naumovski <jovan@lugola.net>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD.mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-14 11:50+0200\n"
-"PO-Revision-Date: 2006-08-15 10:14+0200\n"
-"Last-Translator: Vladimir Stefanov <vladoboss@mt.net.mk>\n"
-"Language-Team: Macedonian <dev@l10n.openoffice.org>\n"
+"POT-Creation-Date: 2006-08-28 20:12+0200\n"
+"PO-Revision-Date: 2006-08-29 12:25+0200\n"
+"Last-Translator: Jovan Naumovski <jovan@lugola.net>\n"
+"Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,7 +25,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
-msgstr "Скрипт-Фу Конзола"
+msgstr "Script-Fu Конзола"
 
 #: ../plug-ins/script-fu/script-fu-console.c:237
 msgid "_Browse..."
@@ -32,11 +33,11 @@ msgstr "_Прелистај..."
 
 #: ../plug-ins/script-fu/script-fu-console.c:275
 msgid "Script-Fu Procedure Browser"
-msgstr "Скрипт-Фу прелистувач на процедури"
+msgstr "Script-Fu прелистувач на процедури"
 
 #: ../plug-ins/script-fu/script-fu-console.c:591
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
-msgstr "Скрипт-Фу режимот за проверката е дозволува само не-интерактивен повик"
+msgstr "Script-Fu режимот за проверката е дозволува само не-интерактивен повик"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:177
 msgid "Script-Fu cannot process two scripts at the same time."
@@ -45,19 +46,19 @@ msgstr "Script-fu не може да обработува две скрипти 
 #: ../plug-ins/script-fu/script-fu-interface.c:179
 #, c-format
 msgid "You are already running the \"%s\" script."
-msgstr "Веќе ја имате пуштено \"%s\" скриптата."
+msgstr "Веќе ја имате пуштено скриптата \"%s\"."
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: ../plug-ins/script-fu/script-fu-interface.c:202
 #: ../plug-ins/script-fu/script-fu-interface.c:204
 msgid "/Script-Fu/"
-msgstr "/Скрипт-Фу/"
+msgstr "/Script-Fu/"
 
 #
 #: ../plug-ins/script-fu/script-fu-interface.c:222
 #, c-format
 msgid "Script-Fu: %s"
-msgstr "Скрипт-Фу: %s"
+msgstr "Script-Fu: %s"
 
 #
 #. we add a colon after the label;
@@ -69,35 +70,35 @@ msgstr "%s:"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:331
 msgid "Script-Fu Color Selection"
-msgstr "Скрипт-Фу Избор на боја"
+msgstr "Script-Fu избор на боја"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:438
 msgid "Script-Fu File Selection"
-msgstr "Скрипт-Фу Избор на датотека"
+msgstr "Script-Fu избор на датотека"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:441
 msgid "Script-Fu Folder Selection"
-msgstr "Скрипт-Фу Избор на директориум"
+msgstr "Script-Fu избор на директориум"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:453
 msgid "Script-Fu Font Selection"
-msgstr "Скрипт-Фу Избор на фонт"
+msgstr "Script-Fu избор на фонт"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:461
 msgid "Script-Fu Palette Selection"
-msgstr "Скрипт-Фу Избор на палета"
+msgstr "Script-Fu избор на палета"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-fu Pattern Selection"
-msgstr "Скрипт-Фу Избор на шаблон"
+msgstr "Script-Fu избор на шаблон"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Gradient Selection"
-msgstr "Скрипт-Фу Избор на Градиент"
+msgstr "Script-Fu избор на Градиент"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:488
 msgid "Script-Fu Brush Selection"
-msgstr "Скрипт-Фу Избор на четка"
+msgstr "Script-Fu избор на четка"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:656
 #, c-format
@@ -112,7 +113,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu-server.c:710
 msgid "Script-Fu Server Options"
-msgstr "Скрипт-Фу Поставки на серверот"
+msgstr "Script-Fu опции на серверот"
 
 #: ../plug-ins/script-fu/script-fu-server.c:715
 msgid "_Start Server"
@@ -124,24 +125,24 @@ msgstr "Серверска порта:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:749
 msgid "Server logfile:"
-msgstr "Дневник на серверот:"
+msgstr "Лог на серверот:"
 
 #: ../plug-ins/script-fu/script-fu.c:109
 msgid "Interactive console for Script-Fu development"
-msgstr "Интерактивна конзола за развој на Скрипт-Фу"
+msgstr "Интерактивна конзола за развој на Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:115
 msgid "Script-Fu _Console"
-msgstr "Скрипт-Фу _Конзола"
+msgstr "Script-Fu _Конзола"
 
 #: ../plug-ins/script-fu/script-fu.c:122 ../plug-ins/script-fu/script-fu.c:151
 #: ../plug-ins/script-fu/script-fu.c:314
 msgid "<Toolbox>/Xtns/Languages/Script-Fu"
-msgstr "<Toolbox>/Проширувања/Јазици/Скрипт-Фу"
+msgstr "<Toolbox>/Проширувања/Јазици/Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:139
 msgid "Server for remote Script-Fu operation"
-msgstr "Сервер за далечно работење со Скрипт-Фу"
+msgstr "Сервер за далечно работење со Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:144
 msgid "_Start Server..."
@@ -158,7 +159,7 @@ msgstr "_Упатство за корисникот"
 
 #: ../plug-ins/script-fu/script-fu.c:271
 msgid "_Script-Fu"
-msgstr "_Скрипт-Фу"
+msgstr "_Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:273
 msgid "_Buttons"
@@ -190,7 +191,7 @@ msgstr "Теми за _веб страни"
 
 #: ../plug-ins/script-fu/script-fu.c:287
 msgid "_Alien Glow"
-msgstr "Вонземско _светло"
+msgstr "Вонземјанско _светло"
 
 #: ../plug-ins/script-fu/script-fu.c:289
 msgid "_Beveled Pattern"
@@ -214,7 +215,7 @@ msgstr "_Исцртување"
 
 #: ../plug-ins/script-fu/script-fu.c:301
 msgid "Re-read all available Script-Fu scripts"
-msgstr "Повторно вчитај ги сите достапни Скрипт-Фу скрипти"
+msgstr "Повторно вчитај ги сите достапни Script-Fu скрипти"
 
 #: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Refresh Scripts"
@@ -224,7 +225,10 @@ msgstr "_Освежи скрипти"
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
-msgstr "Не можете да користите \"Освежи скрипти\" додека е отворен дијалогот на Скрипт-Фу.  Ве молам затворете ги сите Скрипт_фу прозорци и пробајте повторно."
+msgstr ""
+"Не можете да користите \"Освежи скрипти\" додека е отворен дијалогот на "
+"Script-Fu.  Ве молам затворете ги сите Скрипт_фу прозорци и пробајте "
+"повторно."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -461,7 +465,7 @@ msgstr "Густина"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
 msgid "Add B_evel..."
-msgstr "Додади ис_пакнување..."
+msgstr "Додај ис_пакнување..."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:10
@@ -479,19 +483,19 @@ msgstr "Работи на копија"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:1
 msgid "Add _Border..."
-msgstr "Додади _граница..."
+msgstr "Додај _граница..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Border X size"
-msgstr "Големина на ивицата Х"
+msgstr "Големина на работ Х"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border Y size"
-msgstr "Големина на ивицата Y"
+msgstr "Големина на работ Y"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border color"
-msgstr "Боја на ивица"
+msgstr "Боја на работ"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Delta value on color"
@@ -500,7 +504,7 @@ msgstr "Делта вредност на бојата"
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "Down"
-msgstr "Доле"
+msgstr "Долу"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
@@ -773,7 +777,7 @@ msgstr "Густина на точките Y"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 msgid "Add glowing"
-msgstr "Додади сјај"
+msgstr "Додај сјај"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "After glow"
@@ -1160,7 +1164,7 @@ msgstr "Примени ја генерираната маска на слојо�
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
 msgid "Border size"
-msgstr "Големина на ивицата"
+msgstr "Големина на работ"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:3
 msgid "Clear unselected maskarea"
@@ -1240,7 +1244,7 @@ msgstr "_Користи име на фонтот како текст"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "_Border (pixels)"
-msgstr "_Ивица (точки)"
+msgstr "_Раб (точки)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:7
 msgid "_Color scheme"
@@ -1264,11 +1268,11 @@ msgstr "_Замрзнат..."
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "Add shadow"
-msgstr "Додади сенка"
+msgstr "Додај сенка"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Blur border"
-msgstr "Ивица на заматувањето"
+msgstr "Замати го работ"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
 msgid "Granularity (1 is Low)"
@@ -1410,7 +1414,7 @@ msgstr "Висина на вдлабнувањето (Острина)"
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
 msgid "Border size (pixels)"
-msgstr "Големина на ивицата (точки)"
+msgstr "Големина на работ (точки)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
 msgid "Gradient Beve_l..."
@@ -1643,7 +1647,7 @@ msgstr "Црвеносмеѓа"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
 msgid "_Old Photo..."
-msgstr "Стара _Фотографија..."
+msgstr "Стара _фотографија..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
@@ -1692,7 +1696,7 @@ msgstr "_Перспектива..."
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
 msgid "Edge amount"
-msgstr "Вредност на ивицата"
+msgstr "Вредност на работ"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:3
 msgid "Pixel amount"
@@ -1772,7 +1776,7 @@ msgstr "Црна"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Edge behavior"
-msgstr "Однесување на ивицата"
+msgstr "Однесување на работ"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
@@ -1797,15 +1801,15 @@ msgstr "_Мрешкање..."
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:1
 msgid "Add background"
-msgstr "Додади позадина"
+msgstr "Додај позадина"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:2
 msgid "Add drop-shadow"
-msgstr "Додади отфрлање на сенка"
+msgstr "Додај отфрлање на сенка"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:4
 msgid "Edge radius"
-msgstr "Радиус на ивицата"
+msgstr "Радиус на работ"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:8
 msgid "_Round Corners..."
@@ -1850,7 +1854,7 @@ msgstr "_Слајд..."
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
 msgid "SOTA Chrome..."
-msgstr "SOTA Хром..."
+msgstr "SOTA хром..."
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
 msgid "Speed Text..."
@@ -1874,7 +1878,7 @@ msgstr "_Кугла..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Frames"
-msgstr "Оквири"
+msgstr "Рамки"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Index to n colors (0 = remain RGB)"
@@ -1930,7 +1934,7 @@ msgstr "Прелив: повторувачки триаголник"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Hexagon"
-msgstr "Хексагон"
+msgstr "Шестоаголник"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hole ratio"
@@ -2063,11 +2067,11 @@ msgstr "Основна боја"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
 msgid "Edge only"
-msgstr "Само ивица"
+msgstr "Само раб"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 msgid "Edge width"
-msgstr "Ширина на ивицата"
+msgstr "Ширина на работ"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
 msgid "Hit rate"
@@ -2095,7 +2099,7 @@ msgstr "Крај на стопувањето"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
 msgid "Hexagons"
-msgstr "Хаксагони"
+msgstr "Шестоаголници"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
 msgid "Mosaic tile type"
@@ -2103,7 +2107,7 @@ msgstr "Типови на делови на мозаикот"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Octagons"
-msgstr "Октагони"
+msgstr "Осумаголници"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Squares"
@@ -2223,7 +2227,7 @@ msgstr "Создади, отвори и зачувај _датотеки"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "Drawing _Simple Objects"
-msgstr "Цртање на _Едноставни објекти"
+msgstr "Цртање на _едноставни објекти"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
 msgid "How to Use _Dialogs"
