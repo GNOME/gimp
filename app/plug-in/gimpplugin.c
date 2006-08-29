@@ -595,12 +595,18 @@ gimp_plug_in_recv_message (GIOChannel   *channel,
     }
 
   if (! got_message)
-    g_message (_("Plug-in crashed: \"%s\"\n(%s)\n\n"
-                 "The dying plug-in may have messed up GIMP's internal state. "
-                 "You may want to save your images and restart GIMP "
-                 "to be on the safe side."),
-               gimp_object_get_name (GIMP_OBJECT (plug_in)),
-               gimp_filename_to_utf8 (plug_in->prog));
+    {
+      GimpPlugInProcFrame *frame    = gimp_plug_in_get_proc_frame (plug_in);
+      GimpProgress        *progress = frame ? frame->progress : NULL;
+
+      gimp_message (plug_in->manager->gimp, progress,
+                    _("Plug-in crashed: \"%s\"\n(%s)\n\n"
+                      "The dying plug-in may have messed up GIMP's internal "
+                      "state. You may want to save your images and restart "
+                      "GIMP to be on the safe side."),
+                    gimp_object_get_name (GIMP_OBJECT (plug_in)),
+                    gimp_filename_to_utf8 (plug_in->prog));
+    }
 
   g_object_unref (plug_in);
 
