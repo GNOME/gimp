@@ -395,8 +395,17 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
   basename = file_utils_uri_display_basename (uri);
 
   if (dirname && strlen (dirname) && strcmp (dirname, "."))
-    gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog),
-                                             dirname);
+    {
+      gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog),
+                                               dirname);
+    }
+  else if (g_object_get_data (G_OBJECT (image), "gimp-image-dirname"))
+    {
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog),
+                                           g_object_get_data (G_OBJECT (image),
+                                                              "gimp-image-dirname"));
+    }
+
 
   gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
 

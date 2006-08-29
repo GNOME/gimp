@@ -1,5 +1,12 @@
 2006-08-29  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-duplicate.c (gimp_image_duplicate)
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_image): a
+	somewhat hackish implementation of what's suggested in bug #353246.
+	Let the save dialog default to the folder of the duplicated image.
+
+2006-08-29  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpnavigationeditor.c: some adjustments to the fix
 	for bug #346880.
 
