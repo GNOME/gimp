@@ -1,3 +1,7 @@
+2006-08-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/png.c: removed debugging output; minor cleanup.
+
 2006-08-30  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/png.c: when saving an IA image, don't load

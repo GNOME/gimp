@@ -1524,19 +1524,15 @@ static gint
 find_unused_ia_color (GimpDrawable *drawable,
                       gint         *colors)
 {
-  gint          i;
   gboolean      ix_used[256];
   gboolean      trans_used = FALSE;
   GimpPixelRgn  pixel_rgn;
   gpointer      pr;
-  guchar       *pixel_row;
   gint          row, col;
-  guchar       *pixel;
+  gint          i;
 
   for (i = 0; i < *colors; i++)
-    {
-      ix_used[i] = FALSE;
-    }
+    ix_used[i] = FALSE;
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
                        drawable->width, drawable->height, FALSE, FALSE);
@@ -1545,10 +1541,12 @@ find_unused_ia_color (GimpDrawable *drawable,
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
-      pixel_row = pixel_rgn.data;
+      const guchar *pixel_row = pixel_rgn.data;
+
       for (row = 0; row < pixel_rgn.h; row++)
         {
-          pixel = pixel_row;
+          const guchar *pixel = pixel_row;
+
           for (col = 0; col < pixel_rgn.w; col++)
             {
               if (pixel[1] > 127)
@@ -1558,6 +1556,7 @@ find_unused_ia_color (GimpDrawable *drawable,
 
               pixel += 2;
             }
+
           pixel_row += pixel_rgn.rowstride;
         }
     }
@@ -1569,9 +1568,7 @@ find_unused_ia_color (GimpDrawable *drawable,
   for (i = 0; i < *colors; i++)
     {
       if (ix_used[i] == FALSE)
-        {
-          return i;
-        }
+        return i;
     }
 
   /* Couldn't find an unused color index within the number of
@@ -1617,8 +1614,6 @@ respin_cmap (png_structp   pp,
   if (ia_has_transparent_pixels (drawable))
     {
       gint transparent = find_unused_ia_color (drawable, &colors);
-
-      g_print ("has transparent pixels, unused color is %d\n", transparent);
 
       if (transparent != -1)        /* we have a winner for a transparent
                                      * index - do like gif2png and swap
