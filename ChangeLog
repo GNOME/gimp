@@ -1,3 +1,9 @@
+2006-08-30  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/png.c: when saving an IA image, don't load
+	the entire image into memory to search for an unused color.
+	Fixes bug #308909.
+
 2006-08-30  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimprc-blurbs.h

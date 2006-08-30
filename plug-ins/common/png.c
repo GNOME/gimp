@@ -139,11 +139,9 @@ static void      save_dialog_response      (GtkWidget        *widget,
                                             gint              response_id,
                                             gpointer          data);
 
-static gboolean  ia_has_transparent_pixels (const guchar     *pixels,
-                                            gint              numpixels);
+static gboolean  ia_has_transparent_pixels (GimpDrawable     *drawable);
 
-static gint      find_unused_ia_color      (const guchar     *pixels,
-                                            gint              numpixels,
+static gint      find_unused_ia_color      (GimpDrawable     *drawable,
                                             gint             *colors);
 
 static gboolean  load_defaults             (void);
@@ -589,59 +587,6 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
-}
-
-
-/* Try to find a color in the palette which isn't actually
- * used in the image, so that we can use it as the transparency
- * index. Taken from gif.c */
-static gint
-find_unused_ia_color (const guchar *pixels,
-                      gint          numpixels,
-                      gint         *colors)
-{
-  gint     i;
-  gboolean ix_used[256];
-  gboolean trans_used = FALSE;
-
-  for (i = 0; i < *colors; i++)
-    {
-      ix_used[i] = FALSE;
-    }
-
-  for (i = 0; i < numpixels; i++)
-    {
-      /* If alpha is over a threshold, the color index in the
-       * palette is taken. Otherwise, this pixel is transparent. */
-      if (pixels[i * 2 + 1] > 127)
-        ix_used[pixels[i * 2]] = TRUE;
-      else
-        trans_used = TRUE;
-    }
-
-  /* If there is no transparency, ignore alpha. */
-  if (trans_used == FALSE)
-    return -1;
-
-  for (i = 0; i < *colors; i++)
-    {
-      if (ix_used[i] == FALSE)
-        {
-          return i;
-        }
-    }
-
-  /* Couldn't find an unused color index within the number of
-     bits per pixel we wanted.  Will have to increment the number
-     of colors in the image and assign a transparent pixel there. */
-  if ((*colors) < 256)
-    {
-      (*colors)++;
-
-      return (*colors) - 1;
-    }
-
-  return -1;
 }
 
 
@@ -1540,19 +1485,108 @@ save_image (const gchar *filename,
 }
 
 static gboolean
-ia_has_transparent_pixels (const guchar *pixels,
-                           gint          numpixels)
+ia_has_transparent_pixels (GimpDrawable *drawable)
 {
-  while (numpixels --)
-    {
-      if (pixels [1] <= 127)
-        return TRUE;
+  GimpPixelRgn  pixel_rgn;
+  gpointer      pr;
+  guchar       *pixel_row;
+  gint          row, col;
+  guchar       *pixel;
 
-      pixels += 2;
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
+                       drawable->width, drawable->height, FALSE, FALSE);
+
+  for (pr = gimp_pixel_rgns_register (1, &pixel_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
+    {
+      pixel_row = pixel_rgn.data;
+      for (row = 0; row < pixel_rgn.h; row++)
+        {
+          pixel = pixel_row;
+          for (col = 0; col < pixel_rgn.w; col++)
+            {
+              if (pixel[1] <= 127)
+                return TRUE;
+              pixel += 2;
+            }
+          pixel_row += pixel_rgn.rowstride;
+        }
     }
 
   return FALSE;
 }
+
+/* Try to find a color in the palette which isn't actually
+ * used in the image, so that we can use it as the transparency
+ * index. Taken from gif.c */
+static gint
+find_unused_ia_color (GimpDrawable *drawable,
+                      gint         *colors)
+{
+  gint          i;
+  gboolean      ix_used[256];
+  gboolean      trans_used = FALSE;
+  GimpPixelRgn  pixel_rgn;
+  gpointer      pr;
+  guchar       *pixel_row;
+  gint          row, col;
+  guchar       *pixel;
+
+  for (i = 0; i < *colors; i++)
+    {
+      ix_used[i] = FALSE;
+    }
+
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
+                       drawable->width, drawable->height, FALSE, FALSE);
+
+  for (pr = gimp_pixel_rgns_register (1, &pixel_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
+    {
+      pixel_row = pixel_rgn.data;
+      for (row = 0; row < pixel_rgn.h; row++)
+        {
+          pixel = pixel_row;
+          for (col = 0; col < pixel_rgn.w; col++)
+            {
+              if (pixel[1] > 127)
+                ix_used[ pixel[0] ] = TRUE;
+              else
+                trans_used = TRUE;
+
+              pixel += 2;
+            }
+          pixel_row += pixel_rgn.rowstride;
+        }
+    }
+
+  /* If there is no transparency, ignore alpha. */
+  if (trans_used == FALSE)
+    return -1;
+
+  for (i = 0; i < *colors; i++)
+    {
+      if (ix_used[i] == FALSE)
+        {
+          return i;
+        }
+    }
+
+  /* Couldn't find an unused color index within the number of
+     bits per pixel we wanted.  Will have to increment the number
+     of colors in the image and assign a transparent pixel there. */
+  if ((*colors) < 256)
+    {
+      (*colors)++;
+
+      return (*colors) - 1;
+    }
+
+  return -1;
+}
+
 
 static void
 respin_cmap (png_structp   pp,
@@ -1565,10 +1599,6 @@ respin_cmap (png_structp   pp,
 
   gint          colors;
   guchar       *before;
-  gint          cols, rows;
-  GimpPixelRgn  pixel_rgn;
-  guchar       *pixels;
-  gint          numpixels;
 
   before = gimp_image_get_colormap (image_ID, &colors);
 
@@ -1581,25 +1611,14 @@ respin_cmap (png_structp   pp,
       colors = 1;
     }
 
-  cols      = drawable->width;
-  rows      = drawable->height;
-  numpixels = cols * rows;
-
-  pixels = g_new (guchar, numpixels * 2); /* GIMP_INDEXEDA_IMAGE */
-
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                       drawable->width, drawable->height, FALSE, FALSE);
-
-  gimp_pixel_rgn_get_rect (&pixel_rgn, pixels,
-                           0, 0, drawable->width, drawable->height);
-
-
   /* Try to find an entry which isn't actually used in the
      image, for a transparency index. */
 
-  if (ia_has_transparent_pixels (pixels, numpixels))
+  if (ia_has_transparent_pixels (drawable))
     {
-      gint transparent = find_unused_ia_color (pixels, numpixels, &colors);
+      gint transparent = find_unused_ia_color (drawable, &colors);
+
+      g_print ("has transparent pixels, unused color is %d\n", transparent);
 
       if (transparent != -1)        /* we have a winner for a transparent
                                      * index - do like gif2png and swap
@@ -1645,7 +1664,6 @@ respin_cmap (png_structp   pp,
       png_set_PLTE (pp, info, (png_colorp) before, colors);
     }
 
-  g_free (pixels);
 }
 
 static gboolean
