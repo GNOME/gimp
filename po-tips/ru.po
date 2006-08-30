@@ -1,19 +1,17 @@
-# translation of ru.po to Russian
-# translation of gimp.TIPS.ru.po to russian
-# translation of gimp20-tips.po to russian
+# translation of gimp tips to Russian
 # Copyright (C) 2004, 2005 Free Software Foundation, Inc.
-# Roxana Chernogolova <padavan@mail.ru>, 2004.
+# Roxana Kolosova <mavka@justos.org>, 2004.
 # AnatolyA. Yakushin <jaa@altlinux.ru>, 2004.
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp tips\n"
+"Project-Id-Version: gimp tips HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-21 04:28+0300\n"
+"POT-Creation-Date: 2006-08-30 20:20+0400\n"
 "PO-Revision-Date: 2005-06-30 20:09+0400\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
-"Language-Team: Russian <ru@li.org>\n"
+"Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"

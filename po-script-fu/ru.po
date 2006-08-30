@@ -1,23 +1,23 @@
-# translation of ru.po to Russian
+# translation of gimp script-fu to Russian
 # Copyright (C) 2000-2002,2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 #
 # Valek Filippov <frob@df.ru>, 2000-2002.
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
 # AnatolyA. Yakushin <jaa@altlinux.ru>, 2004.
-# Roxana Chernogolova <mavka@justos.org>, 2003-2006.
+# Roxana Kolosova <mavka@justos.org>, 2003-2006.
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp script-fu\n"
+"Project-Id-Version: gimp script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-21 04:28+0300\n"
-"PO-Revision-Date: 2006-04-02 22:03+0400\n"
+"POT-Creation-Date: 2006-08-30 20:17+0400\n"
+"PO-Revision-Date: 2006-08-29 19:57+0400\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
-"Language-Team: Russian <ru@li.org>\n"
+"Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.1\n"
+"X-Generator: KBabel 1.11.2\n"
 "Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -33,91 +33,70 @@ msgstr "_Просмотреть..."
 msgid "Script-Fu Procedure Browser"
 msgstr "Просмотр процедур Скрипт-Фу"
 
-#: ../plug-ins/script-fu/script-fu-console.c:584
-msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "Режим выполнения Скрипт-Фу допускает только неинтерактивную работу"
+#: ../plug-ins/script-fu/script-fu-console.c:591
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "Режим оценки в Script-Fu допускает только неинтерактивный вызов"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:174
+#: ../plug-ins/script-fu/script-fu-interface.c:177
 msgid "Script-Fu cannot process two scripts at the same time."
-msgstr "Скрипт-Фу не может выполнять два скрипта одновременно."
+msgstr "Script-Fu не может выполнять два сценария одновременно."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:176
+#: ../plug-ins/script-fu/script-fu-interface.c:179
 #, c-format
 msgid "You are already running the \"%s\" script."
-msgstr "Вы уже запустили скрипт \"%s\"."
+msgstr "Вы уже запустили сценарий \"%s\"."
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:199
-#: ../plug-ins/script-fu/script-fu-interface.c:201
+#: ../plug-ins/script-fu/script-fu-interface.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:204
 msgid "/Script-Fu/"
-msgstr "/Скрипт-Фу/"
+msgstr "/Script-Fu/"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:214
+#: ../plug-ins/script-fu/script-fu-interface.c:222
 #, c-format
 msgid "Script-Fu: %s"
-msgstr "Скрипт-Фу: %s"
+msgstr "Script-Fu: %s"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:281
+#: ../plug-ins/script-fu/script-fu-interface.c:288
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:324
+#: ../plug-ins/script-fu/script-fu-interface.c:331
 msgid "Script-Fu Color Selection"
-msgstr "Скрипт-Фу: Выбор цвета"
+msgstr "Script-Fu: Выбор цвета"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:431
+#: ../plug-ins/script-fu/script-fu-interface.c:438
 msgid "Script-Fu File Selection"
-msgstr "Скрипт-Фу: Выбор файла"
+msgstr "Script-Fu: Выбор файла"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:435
+#: ../plug-ins/script-fu/script-fu-interface.c:441
 msgid "Script-Fu Folder Selection"
-msgstr "Скрипт-Фу: Выбор каталога"
+msgstr "Script-Fu: Выбор каталога"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:449
+#: ../plug-ins/script-fu/script-fu-interface.c:453
 msgid "Script-Fu Font Selection"
-msgstr "Скрипт-Фу: Выбор шрифта"
+msgstr "Script-Fu: Выбор шрифта"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:457
+#: ../plug-ins/script-fu/script-fu-interface.c:461
 msgid "Script-Fu Palette Selection"
-msgstr "Скрипт-Фу: Выбор выбор палитры"
+msgstr "Script-Fu: Выбор выбор палитры"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:465
+#: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-fu Pattern Selection"
-msgstr "Скрипт-Фу: Выбор шаблона"
+msgstr "Script-Fu: Выбор текстуры"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:472
+#: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Gradient Selection"
-msgstr "Скрипт-Фу: Выбор градиента"
+msgstr "Script-Fu: Выбор градиента"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:480
+#: ../plug-ins/script-fu/script-fu-interface.c:488
 msgid "Script-Fu Brush Selection"
-msgstr "Скрипт-Фу: Выбор кисти"
+msgstr "Script-Fu: Выбор кисти"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1008
-#, c-format
-msgid "About %s"
-msgstr "О %s"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1073
-msgid "Author:"
-msgstr "Автор:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1080
-msgid "Copyright:"
-msgstr "Авторское право:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1087
-msgid "Date:"
-msgstr "Дата:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1096
-msgid "Image Types:"
-msgstr "Типы изображений:"
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:644
+#: ../plug-ins/script-fu/script-fu-scripts.c:656
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -128,107 +107,127 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:653
+#: ../plug-ins/script-fu/script-fu-server.c:710
 msgid "Script-Fu Server Options"
-msgstr "Скрипт-Фу: параметры сервера"
+msgstr "Script-Fu: параметры сервера"
 
-#: ../plug-ins/script-fu/script-fu-server.c:658
+#: ../plug-ins/script-fu/script-fu-server.c:715
 msgid "_Start Server"
 msgstr "_Запустить сервер"
 
-#: ../plug-ins/script-fu/script-fu-server.c:686
+#: ../plug-ins/script-fu/script-fu-server.c:743
 msgid "Server port:"
 msgstr "Порт сервера:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:692
+#: ../plug-ins/script-fu/script-fu-server.c:749
 msgid "Server logfile:"
 msgstr "Журнал сервера:"
 
-#: ../plug-ins/script-fu/script-fu.c:116
-msgid "Script-Fu _Console"
-msgstr "_Консоль Скрипт-Фу"
+#: ../plug-ins/script-fu/script-fu.c:109
+msgid "Interactive console for Script-Fu development"
+msgstr "Интерактивная консоль для разработки на Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:316
+#: ../plug-ins/script-fu/script-fu.c:115
+msgid "Script-Fu _Console"
+msgstr "_Консоль Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:122 ../plug-ins/script-fu/script-fu.c:151
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "<Toolbox>/Xtns/Languages/Script-Fu"
 msgstr "<Toolbox>/Расш./Языки/Скрипт-Фу"
 
-#: ../plug-ins/script-fu/script-fu.c:145
+#: ../plug-ins/script-fu/script-fu.c:139
+msgid "Server for remote Script-Fu operation"
+msgstr "Сервер для удалённого исполнения Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:144
 msgid "_Start Server..."
 msgstr "_Запустить сервер..."
 
-#: ../plug-ins/script-fu/script-fu.c:269
+#: ../plug-ins/script-fu/script-fu.c:267
 msgid "_GIMP Online"
 msgstr "GIMP в _Интернете"
 
-#: ../plug-ins/script-fu/script-fu.c:270
+#: ../plug-ins/script-fu/script-fu.c:268
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
 msgid "_User Manual"
 msgstr "_Руководство пользователя"
 
-#: ../plug-ins/script-fu/script-fu.c:273
+#: ../plug-ins/script-fu/script-fu.c:271
 msgid "_Script-Fu"
 msgstr "С_крипт-Фу"
 
-#: ../plug-ins/script-fu/script-fu.c:275
+#: ../plug-ins/script-fu/script-fu.c:273
 msgid "_Buttons"
 msgstr "_Кнопки"
 
-#: ../plug-ins/script-fu/script-fu.c:277
+#: ../plug-ins/script-fu/script-fu.c:275
 msgid "_Logos"
 msgstr "_Логотипы"
 
-#: ../plug-ins/script-fu/script-fu.c:279
+#: ../plug-ins/script-fu/script-fu.c:277
 msgid "_Misc"
 msgstr "_Разное"
 
-#: ../plug-ins/script-fu/script-fu.c:281
+#: ../plug-ins/script-fu/script-fu.c:279
 msgid "_Patterns"
 msgstr "_Текстуры"
 
-#: ../plug-ins/script-fu/script-fu.c:283
+#: ../plug-ins/script-fu/script-fu.c:281
 msgid "_Test"
 msgstr "_Тест"
 
-#: ../plug-ins/script-fu/script-fu.c:285
+#: ../plug-ins/script-fu/script-fu.c:283
 msgid "_Utils"
 msgstr "_Утилиты"
 
-#: ../plug-ins/script-fu/script-fu.c:287
+#: ../plug-ins/script-fu/script-fu.c:285
 msgid "_Web Page Themes"
 msgstr "Темы _веб-страниц"
 
-#: ../plug-ins/script-fu/script-fu.c:289
+#: ../plug-ins/script-fu/script-fu.c:287
 msgid "_Alien Glow"
 msgstr "_Чужое свечение..."
 
-#: ../plug-ins/script-fu/script-fu.c:291
+#: ../plug-ins/script-fu/script-fu.c:289
 msgid "_Beveled Pattern"
 msgstr "_Приподнятые объекты"
 
-#: ../plug-ins/script-fu/script-fu.c:293
+#: ../plug-ins/script-fu/script-fu.c:291
 msgid "_Classic.Gimp.Org"
 msgstr "_Классический Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:296
+#: ../plug-ins/script-fu/script-fu.c:294
 msgid "Alpha to _Logo"
 msgstr "_Альфа в логотип"
 
-#: ../plug-ins/script-fu/script-fu.c:298
+#: ../plug-ins/script-fu/script-fu.c:296
 msgid "_Decor"
 msgstr "_Декор"
 
-#: ../plug-ins/script-fu/script-fu.c:300
+#: ../plug-ins/script-fu/script-fu.c:298
 msgid "_Render"
 msgstr "_Отрисовка"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:301
+msgid "Re-read all available Script-Fu scripts"
+msgstr "Перечитать все доступные сценарии Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Refresh Scripts"
-msgstr "Обновить скрипты"
+msgstr "_Обновить сценарии"
+
+#: ../plug-ins/script-fu/script-fu.c:329
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr ""
+"Вы не можете использовать функцию «Обновить сценарии», пока открыт диалог "
+"Script-Fu. Закройте все окна Script-Fu и попробуйте снова."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
-msgstr "Объемный контур..."
+msgstr "О_бъёмный контур..."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
@@ -331,7 +330,7 @@ msgstr "Радиус размывания контура"
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:11
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:9
 msgid "Pattern"
-msgstr "Шаблон"
+msgstr "Текстура"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:14
@@ -461,7 +460,7 @@ msgstr "Толщина"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
 msgid "Add B_evel..."
-msgstr "Добавить фаску..."
+msgstr "Добавить _фаску..."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:10
@@ -479,11 +478,11 @@ msgstr "Работать с копией"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:1
 msgid "Add _Border..."
-msgstr "Добавить рамку..."
+msgstr "Добавить _рамку..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Border X size"
-msgstr "Ширина гризонт. планки"
+msgstr "Ширина горизонт. планки"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border Y size"
@@ -893,7 +892,7 @@ msgstr "Падающая тень"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Fill BG with pattern"
-msgstr "Заполнить фон шаблоном"
+msgstr "Залить фон текстурой"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:8
 msgid "Invert"
@@ -1008,12 +1007,9 @@ msgid "_Clothify..."
 msgstr "Холст..."
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:1
-msgid ""
-"Darken only\n"
-"(Better, but only for images with a lot of white)"
+msgid "Darken only\\n(Better, but only for images with a lot of white)"
 msgstr ""
-"Замена тёмным\n"
-"(Лучше, но лишь для изображений с большим количеством белого)"
+"Замена тёмным\\n(Лучше, но лишь для изображений с большим количеством белого)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid "Stains"
@@ -1363,15 +1359,15 @@ msgstr "Перевернуть градиент контура"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Pattern (outline)"
-msgstr "Шаблон (контур)"
+msgstr "Текстура (контур)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (overlay)"
-msgstr "Шаблон (наложение)"
+msgstr "Текстура (наложение)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (text)"
-msgstr "Шаблон (текст)"
+msgstr "Текстура (текст)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:13
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:4
@@ -1384,15 +1380,15 @@ msgstr "Перевернуть градиент текста"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:18
 msgid "Use pattern for outline instead of gradient"
-msgstr "Использовать для контура шаблон вместо градиента"
+msgstr "Использовать для контура текстуру вместо градиента"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use pattern for text instead of gradient"
-msgstr "Использовать для текста шаблон вместо градиента"
+msgstr "Использовать для текста текстуру вместо градиента"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use pattern overlay"
-msgstr "Использовать наложение шаблонов"
+msgstr "Использовать наложение текстур"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
 msgid "Effect size (pixels * 3)"
@@ -1460,13 +1456,17 @@ msgid "Position (in %)"
 msgstr "Расположение (в %)"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
 msgid "Vertical"
 msgstr "Вертикаль"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:3
 msgid "New _Guide..."
 msgstr "_Новая направляющая..."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+msgid "Position"
+msgstr "Положение"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "_Remove all Guides"
@@ -1664,7 +1664,7 @@ msgstr "Новая _текстура..."
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
 msgid "Pattern name"
-msgstr "Имя шаблона"
+msgstr "Имя текстуры"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
 msgid "Angle"
@@ -1789,7 +1789,7 @@ msgstr "Заворачивать"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "_Rippling..."
-msgstr "Рябь..."
+msgstr "_Рябь..."
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:1
 msgid "Add background"
@@ -1805,19 +1805,19 @@ msgstr "Радиус края"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:8
 msgid "_Round Corners..."
-msgstr "Скругленные уголки..."
+msgstr "С_кругленные уголы..."
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "To _Brush..."
-msgstr "В кисть..."
+msgstr "В _кисть..."
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "To _Image"
-msgstr "в изображение"
+msgstr "В _изображение"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 msgid "To _Pattern..."
-msgstr "В шаблон..."
+msgstr "В _текстуру..."
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "Concave"
@@ -1830,7 +1830,7 @@ msgstr "Радиус (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
 msgid "Rounded R_ectangle..."
-msgstr "Скругленный прямоугольник..."
+msgstr "Закруглить _прямоугольник..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:2
 msgid "Font color"
@@ -1842,7 +1842,7 @@ msgstr "Номер"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:6
 msgid "_Slide..."
-msgstr "Слайд..."
+msgstr "С_лайд..."
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
 msgid "SOTA Chrome..."
@@ -1866,7 +1866,7 @@ msgstr "Цвет сферы"
 
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:6
 msgid "_Sphere..."
-msgstr "Сфера..."
+msgstr "С_фера..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Frames"
@@ -1882,7 +1882,7 @@ msgstr "Повернуть слева на право"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:6
 msgid "_Spinning Globe..."
-msgstr "Вращающийся шар..."
+msgstr "Вращающийся _шар..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 msgid "Airbrush"
@@ -1903,10 +1903,11 @@ msgstr "Метод окраски"
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid ""
 "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
-"netword.com/*spyrogimp"
+"www.wisdom.weizmann.ac.il/~elad/spyrogimp/"
 msgstr ""
-"Рисование спирографов, эпитрохоид. Дополнительная информация находится на "
-"сайте http://netword.com/*spyrogimp"
+"Рисование спирографов, эпитрохоид и кривых Лиссажу. Дополнительная "
+"информация находится на сайте http://www.wisdom.weizmann.ac.il/~elad/"
+"spyrogimp/"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid "Epitrochoid"
@@ -2111,11 +2112,11 @@ msgstr "Начальный цвет"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:13
 msgid "Text pattern"
-msgstr "Шаблон текста"
+msgstr "Текстура текста"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
 msgid "_Textured..."
-msgstr "_Текстура..."
+msgstr "_Текстуризованный..."
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:1
 msgid "Blur horizontally"
