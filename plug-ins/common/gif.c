@@ -583,14 +583,13 @@ typedef long int count_int;
 
 
 
-static gint find_unused_ia_colour         (guchar *pixels,
-                                           gint    numpixels,
-                                           gint    num_indices,
-                                           gint   *colors);
+static gint find_unused_ia_colour   (const guchar *pixels,
+                                     gint          numpixels,
+                                     gint          num_indices,
+                                     gint         *colors);
 
 static void special_flatten_indexed_alpha (guchar *pixels,
-                                           gint   *transparent,
-                                           gint   *colors,
+                                           gint   transparent,
                                            gint    numpixels);
 static int colors_to_bpp  (int);
 static int bpp_to_colors  (int);
@@ -635,33 +634,31 @@ static void flush_char (void);
 
 
 static gint
-find_unused_ia_colour (guchar *pixels,
-                       gint    numpixels,
-                       gint    num_indices,
-                       gint   *colors)
+find_unused_ia_colour (const guchar *pixels,
+                       gint          numpixels,
+                       gint          num_indices,
+                       gint         *colors)
 {
-  int i;
   gboolean ix_used[256];
+  gint i;
 
 #ifdef GIFDEBUG
   g_printerr ("GIF: fuiac: Image claims to use %d/%d indices - finding free "
-              "index...\n", (int)(*colors),(int)num_indices);
+              "index...\n", *colors, num_indices);
 #endif
 
   for (i = 0; i < 256; i++)
-    {
-      ix_used[i] = (gboolean) FALSE;
-    }
+    ix_used[i] = FALSE;
 
   for (i = 0; i < numpixels; i++)
     {
       if (pixels[i * 2 + 1])
-        ix_used[pixels[i * 2]] = (gboolean) TRUE;
+        ix_used[pixels[i * 2]] = TRUE;
     }
 
   for (i = num_indices - 1; i >= 0; i--)
     {
-      if (ix_used[i] == (gboolean) FALSE)
+      if (! ix_used[i])
         {
 #ifdef GIFDEBUG
           g_printerr ("GIF: Found unused colour index %d.\n", (int) i);
@@ -673,32 +670,33 @@ find_unused_ia_colour (guchar *pixels,
   /* Couldn't find an unused colour index within the number of
      bits per pixel we wanted.  Will have to increment the number
      of colours in the image and assign a transparent pixel there. */
-  if ((*colors) < 256)
+  if (*colors < 256)
     {
       (*colors)++;
+
       g_printerr ("GIF: 2nd pass "
                   "- Increasing bounds and using colour index %d.\n",
-                  (int) (*colors) - 1);
+                  *colors - 1);
       return ((*colors) - 1);
     }
 
   g_message (_("Couldn't simply reduce colors further. Saving as opaque."));
-  return (-1);
+
+  return -1;
 }
 
 
 static void
 special_flatten_indexed_alpha (guchar *pixels,
-                               int *transparent,
-                               int *colors,
-                               int numpixels)
+                               gint    transparent,
+                               gint    numpixels)
 {
   guint32 i;
 
   /* Each transparent pixel in the image is mapped to a uniform value for
      encoding, if image already has <=255 colours */
 
-  if ((*transparent) == -1) /* tough, no indices left for the trans. index */
+  if (transparent == -1) /* tough, no indices left for the trans. index */
     {
       for (i = 0; i < numpixels; i++)
         pixels[i] = pixels[i * 2];
@@ -709,7 +707,7 @@ special_flatten_indexed_alpha (guchar *pixels,
         {
           if (! (pixels[i * 2 + 1] & 128))
             {
-              pixels[i] = (guchar) (*transparent);
+              pixels[i] = (guchar) transparent;
             }
           else
             {
@@ -717,16 +715,11 @@ special_flatten_indexed_alpha (guchar *pixels,
             }
         }
     }
-
-
-  /* Pixel data now takes half as much space (the alpha data has been
-     discarded) */
-  /*  pixels = g_realloc (pixels, numpixels);*/
 }
 
 
-static int
-parse_ms_tag (char *str)
+static gint
+parse_ms_tag (const gchar *str)
 {
   gint sum = 0;
   gint offset = 0;
@@ -764,8 +757,8 @@ find_another_bra:
 }
 
 
-static int
-parse_disposal_tag (char *str)
+static gint
+parse_disposal_tag (const gchar *str)
 {
   gint offset = 0;
   gint length;
@@ -1075,14 +1068,13 @@ save_image (const gchar *filename,
              image, for a transparency index. */
 
           transparent =
-            find_unused_ia_colour(pixels,
-                                  drawable->width * drawable->height,
-                                  bpp_to_colors (colors_to_bpp (colors)),
-                                  &colors);
+            find_unused_ia_colour (pixels,
+                                   drawable->width * drawable->height,
+                                   bpp_to_colors (colors_to_bpp (colors)),
+                                   &colors);
 
           special_flatten_indexed_alpha (pixels,
-                                         &transparent,
-                                         &colors,
+                                         transparent,
                                          drawable->width * drawable->height);
         }
       else
