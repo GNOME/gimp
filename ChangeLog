@@ -1,5 +1,12 @@
 2006-08-30  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimprc-blurbs.h
+	* app/dialogs/preferences-dialog.c
+	* app/tools/gimpmoveoptions.c: string changes as suggested in
+	bug #353440.
+
+2006-08-30  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/emboss.c: fixed off-by-one error and cleaned up
 	the code a bit. Fixes bug #353227.
 

@@ -203,9 +203,8 @@ N_("Sets the monitor's vertical resolution, in dots per inch.  If set to " \
    "resolution information.")
 
 #define MOVE_TOOL_CHANGES_ACTIVE_BLURB \
-N_("If enabled, the move tool changes the active layer or path when a layer " \
-   "or path is being picked. This used to be the default behaviour in older " \
-   "versions.")
+N_("If enabled, the move tool sets the edited layer or path as active.  " \
+   "This used to be the default behaviour in older versions.")
 
 #define NAVIGATION_PREVIEW_SIZE_BLURB \
 N_("Sets the size of the navigation preview available in the lower right " \

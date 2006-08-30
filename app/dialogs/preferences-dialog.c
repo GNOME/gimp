@@ -1820,7 +1820,7 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add_with_icon (object, "move-tool-changes-active",
-                                    _("Change current layer or path"),
+                                    _("Set layer or path as active"),
                                     GIMP_STOCK_TOOL_MOVE,
                                     GTK_BOX (vbox2), size_group);
 
