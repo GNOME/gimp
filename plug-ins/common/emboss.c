@@ -22,8 +22,6 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $Id$
  */
 
 #include "config.h"
@@ -75,28 +73,30 @@ struct embossFilter
   gdouble bg;
 } Filter;
 
-static void query (void);
-static void run   (const gchar      *name,
-                   gint              nparam,
-                   const GimpParam  *param,
-                   gint             *nretvals,
-                   GimpParam       **retvals);
+static void     query         (void);
+static void     run           (const gchar      *name,
+                               gint              nparam,
+                               const GimpParam  *param,
+                               gint             *nretvals,
+                               GimpParam       **retvals);
 
-static gint emboss            (GimpDrawable *drawable,
-                               GimpPreview  *preview);
-static gint emboss_dialog     (GimpDrawable *drawable);
+static void     emboss        (GimpDrawable     *drawable,
+                               GimpPreview      *preview);
+static gboolean emboss_dialog (GimpDrawable     *drawable);
 
-static inline void EmbossInit (gdouble       azimuth,
-                               gdouble       elevation,
-                               gushort       width45);
-static inline void EmbossRow  (guchar       *src,
-                               guchar       *texture,
-                               guchar       *dst,
-                               guint         xSize,
-                               guint         bypp,
-                               gint          alpha);
+static void     emboss_init   (gdouble           azimuth,
+                               gdouble           elevation,
+                               gushort           width45);
+static void     emboss_row    (const guchar     *src,
+                               const guchar     *texture,
+                               guchar           *dst,
+                               guint             width,
+                               guint             bypp,
+                               gboolean          alpha);
+
 
 #define DtoR(d) ((d)*(G_PI/(gdouble)180))
+
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -119,7 +119,7 @@ query (void)
     { GIMP_PDB_FLOAT,    "azimuth",   "The Light Angle (degrees)"     },
     { GIMP_PDB_FLOAT,    "elevation", "The Elevation Angle (degrees)" },
     { GIMP_PDB_INT32,    "depth",     "The Filter Width"              },
-    { GIMP_PDB_INT32,    "embossp",   "Emboss or Bumpmap"             }
+    { GIMP_PDB_INT32,    "emboss",    "Emboss or Bumpmap"             }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
@@ -165,9 +165,9 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &evals);
 
-      if (emboss_dialog (drawable) == -1)
+      if (! emboss_dialog (drawable))
         {
-          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+          rvals[0].data.d_status = GIMP_PDB_CANCEL;
         }
       else
         {
@@ -188,20 +188,13 @@ run (const gchar      *name,
       evals.depth     = param[5].data.d_int32;
       evals.embossp   = param[6].data.d_int32;
 
-      if (emboss (drawable, NULL)==-1)
-        {
-          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-          break;
-        }
+      emboss (drawable, NULL);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data (PLUG_IN_PROC, &evals);
       /* use this image and drawable, even with last args */
-      if (emboss (drawable, NULL)==-1)
-        {
-          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-        }
+      emboss (drawable, NULL);
     break;
   }
 }
@@ -209,9 +202,9 @@ run (const gchar      *name,
 #define pixelScale 255.9
 
 static void
-EmbossInit (gdouble azimuth,
-            gdouble elevation,
-            gushort width45)
+emboss_init (gdouble azimuth,
+             gdouble elevation,
+             gushort width45)
 {
   /*
    * compute the light vector from the input parameters.
@@ -247,56 +240,60 @@ EmbossInit (gdouble azimuth,
  * The unary case ('texture' == NULL) uses the shading result as output.
  * The binary case multiples the optional 'texture' image by the shade.
  * Images are in row major order with interleaved color components (rgbrgb...).
- * E.g., component c of pixel x,y of 'dst' is dst[3*(y*xSize + x) + c].
+ * E.g., component c of pixel x,y of 'dst' is dst[3*(y*width + x) + c].
  *
  */
 
-static inline void
-EmbossRow (guchar *src,
-           guchar *texture,
-           guchar *dst,
-           guint   xSize,
-           guint   bypp,
-           gint    alpha)
+static void
+emboss_row (const guchar *src,
+            const guchar *texture,
+            guchar       *dst,
+            guint         width,
+            guint         bypp,
+            gboolean      alpha)
 {
-  glong   Nx, Ny, NdotL;
-  guchar *s[3];
-  gint    i, j, x, shade, b;
-  gint    bytes;
-  gdouble M[3][3];
-  gdouble a;
+  const guchar *s[3];
+  gdouble       M[3][3];
+  gint          x, bytes;
 
   /* mung pixels, avoiding edge pixels */
-  s[0] = src + bypp;
-  s[1] = s[0] + (xSize * bypp);
-  s[2] = s[1] + (xSize * bypp);
+  s[0] = src;
+  s[1] = s[0] + (width * bypp);
+  s[2] = s[1] + (width * bypp);
   dst += bypp;
 
   bytes = (alpha) ? bypp - 1 : bypp;
 
   if (texture)
-    texture += (xSize + 1) * bypp;
+    texture += (width + 1) * bypp;
 
-  for (x = 1; x < xSize - 1; x++)
+  for (x = 1; x < width - 1; x++)
     {
+      gdouble a;
+      glong   Nx, Ny, NdotL;
+      gint    shade, b;
+      gint    i, j;
+
       for (i = 0; i < 3; i++)
         s[i] += bypp;
 
       for (i = 0; i < 3; i++)
         for (j = 0; j < 3; j++)
-          M[i][j] = 0;
+          M[i][j] = 0.0;
 
       for (b = 0; b < bytes; b++)
-        for (i = 0; i < 3; i++)
-          for (j = 0; j < 3; j++)
-            {
-              if (alpha)
-                a = s[i][(j - 1) * bypp + bytes] / (gdouble) 255;
-              else
-                a = 1;
+        {
+          for (i = 0; i < 3; i++)
+            for (j = 0; j < 3; j++)
+              {
+                if (alpha)
+                  a = s[i][(j - 1) * bypp + bytes] / 255.0;
+                else
+                  a = 1.0;
 
-              M[i][j] += a * s[i][(j - 1) * bypp + b];
-            }
+                M[i][j] += a * s[i][(j - 1) * bypp + b];
+              }
+        }
 
       Nx = M[0][0] + M[1][0] + M[2][0] - M[0][2] - M[1][2] - M[2][2];
       Ny = M[2][0] + M[2][1] + M[2][2] - M[0][0] - M[0][1] - M[0][2];
@@ -313,9 +310,8 @@ EmbossRow (guchar *src,
       if (texture)
         {
           for (b = 0; b < bytes; b++)
-            {
-              *dst++ = (*texture++ * shade) >> 8;
-            }
+            *dst++ = (*texture++ * shade) >> 8;
+
           if (alpha)
             {
               *dst++ = s[1][bytes]; /* preserve the alpha */
@@ -325,18 +321,18 @@ EmbossRow (guchar *src,
       else
         {
           for (b = 0; b < bytes; b++)
-            {
-              *dst++ = shade;
-            }
+            *dst++ = shade;
+
           if (alpha)
             *dst++ = s[1][bytes]; /* preserve the alpha */
         }
     }
+
   if (texture)
     texture += bypp;
 }
 
-static gint
+static void
 emboss (GimpDrawable *drawable,
         GimpPreview  *preview)
 {
@@ -345,7 +341,8 @@ emboss (GimpDrawable *drawable,
   gint          y;
   gint          x1, y1, x2, y2;
   gint          width, height;
-  gint          bypp, rowsize, has_alpha;
+  gint          bypp, rowsize;
+  gboolean      has_alpha;
   guchar       *srcbuf, *dstbuf;
 
   if (preview)
@@ -368,6 +365,7 @@ emboss (GimpDrawable *drawable,
       width = x2 - x1;
       height = y2 - y1;
     }
+
   bypp = drawable->bpp;
   p_update = MAX (1, height / 20);
   rowsize = width * bypp;
@@ -383,34 +381,35 @@ emboss (GimpDrawable *drawable,
   srcbuf = g_new0 (guchar, rowsize * 3);
   dstbuf = g_new0 (guchar, rowsize);
 
-  EmbossInit (DtoR(evals.azimuth), DtoR(evals.elevation), evals.depth);
+  emboss_init (DtoR(evals.azimuth), DtoR(evals.elevation), evals.depth);
   if (!preview)
     gimp_progress_init (_("Emboss"));
 
   /* first row */
   gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y1, width, 3);
   memcpy (srcbuf, srcbuf + rowsize, rowsize);
-  EmbossRow (srcbuf, evals.embossp ? (guchar *) 0 : srcbuf,
-             dstbuf, width, bypp, has_alpha);
+  emboss_row (srcbuf, evals.embossp ? NULL : srcbuf,
+              dstbuf, width, bypp, has_alpha);
   gimp_pixel_rgn_set_row (&dst, dstbuf, 0, 0, width);
 
-  /* last row */
-  gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y2-3, width, 3);
-  memcpy (srcbuf + rowsize * 2, srcbuf + rowsize, rowsize);
-  EmbossRow (srcbuf, evals.embossp ? (guchar *) 0 : srcbuf,
-             dstbuf, width, bypp, has_alpha);
-  gimp_pixel_rgn_set_row (&dst, dstbuf, x1, y2-1, width);
-
+  /* middle rows */
   for (y = 0; y < height - 2; y++)
     {
       if (! preview && (y % p_update == 0))
         gimp_progress_update ((gdouble) y / (gdouble) height);
 
-      gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y1+y, width, 3);
-      EmbossRow (srcbuf, evals.embossp ? (guchar *) 0 : srcbuf,
-                 dstbuf, width, bypp, has_alpha);
-     gimp_pixel_rgn_set_row (&dst, dstbuf, x1, y1+y+1, width);
-  }
+      gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y1 + y, width, 3);
+      emboss_row (srcbuf, evals.embossp ? NULL : srcbuf,
+                  dstbuf, width, bypp, has_alpha);
+      gimp_pixel_rgn_set_row (&dst, dstbuf, x1, y1 + y + 1, width);
+    }
+
+  /* last row */
+  gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y2 - 3, width, 3);
+  memcpy (srcbuf + rowsize * 2, srcbuf + rowsize, rowsize);
+  emboss_row (srcbuf, evals.embossp ? NULL : srcbuf,
+              dstbuf, width, bypp, has_alpha);
+  gimp_pixel_rgn_set_row (&dst, dstbuf, x1, y2 - 1, width);
 
   if (preview)
     {
@@ -429,11 +428,9 @@ emboss (GimpDrawable *drawable,
 
   g_free (srcbuf);
   g_free (dstbuf);
-
-  return 0;
 }
 
-static gint
+static gboolean
 emboss_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dialog;
@@ -545,7 +542,7 @@ emboss_dialog (GimpDrawable *drawable)
   gtk_widget_destroy (dialog);
 
   if (run)
-    return emboss (drawable, NULL);
+    emboss (drawable, NULL);
 
-  return -1;
+  return run;
 }
