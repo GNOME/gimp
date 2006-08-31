@@ -43,11 +43,9 @@ gimp_gradient_load (const gchar  *filename,
                     GError      **error)
 {
   GimpGradient        *gradient;
-  GimpGradientSegment *seg;
   GimpGradientSegment *prev;
   gint                 num_segments;
   gint                 i;
-  gint                 type, color;
   FILE                *file;
   gchar                line[1024];
 
@@ -114,7 +112,10 @@ gimp_gradient_load (const gchar  *filename,
 
   for (i = 0; i < num_segments; i++)
     {
-      gchar *end;
+      GimpGradientSegment *seg;
+      gint                 type, color;
+      gint                 left_color_type, right_color_type;
+      gchar               *end;
 
       seg = gimp_gradient_segment_new ();
 
@@ -151,11 +152,30 @@ gimp_gradient_load (const gchar  *filename,
       if (end && errno != ERANGE)
         seg->right_color.a = g_ascii_strtod (end, &end);
 
-      if (errno != ERANGE &&
-          sscanf (end, "%d %d", &type, &color) == 2)
+      if (errno != ERANGE)
         {
-          seg->type  = (GimpGradientSegmentType) type;
-          seg->color = (GimpGradientSegmentColor) color;
+          switch (sscanf (end, "%d %d %d %d",
+                          &type, &color,
+                          &left_color_type, &right_color_type))
+            {
+            case 4:
+              seg->left_color_type  = (GimpGradientColor) left_color_type;
+              seg->right_color_type = (GimpGradientColor) right_color_type;
+              /* fall thru */
+
+            case 2:
+              seg->type  = (GimpGradientSegmentType) type;
+              seg->color = (GimpGradientSegmentColor) color;
+              break;
+
+            default:
+              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                           _("Corrupt segment %d in gradient file '%s'."),
+                           i, gimp_filename_to_utf8 (filename));
+              g_object_unref (gradient);
+              fclose (file);
+              return NULL;
+            }
         }
       else
         {

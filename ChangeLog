@@ -1,5 +1,18 @@
 2006-09-01  Michael Natterer  <mitch@gimp.org>
 
+	Extended the GIMP Gradient file format to contain the endpoint
+	color types for each segment (this is backward compatible because
+	old parsers just ignore excess fields at the end of segment
+	lines). Fixes bug #128367.
+
+	* app/core/gimpgradient-load.c: optionally load two more fields
+	per segment line which contain the color types.
+
+	* app/core/gimpgradient-save.c: save the color types at the end of
+	the segment lines.
+
+2006-09-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/gradient-editor-actions.c
 	* app/actions/gradient-editor-commands.[ch]: added actions and
 	callbacks to select a gradient segment's left and right color

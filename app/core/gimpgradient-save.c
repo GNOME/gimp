@@ -59,8 +59,8 @@ gimp_gradient_save (GimpData  *data,
    *   GIMP Gradient
    *   Name: name
    *   number_of_segments
-   *   left middle right r0 g0 b0 a0 r1 g1 b1 a1 type coloring
-   *   left middle right r0 g0 b0 a0 r1 g1 b1 a1 type coloring
+   *   left middle right r0 g0 b0 a0 r1 g1 b1 a1 type coloring left_color_type
+   *   left middle right r0 g0 b0 a0 r1 g1 b1 a1 type coloring right_color_type
    *   ...
    */
 
@@ -108,11 +108,14 @@ gimp_gradient_save (GimpData  *data,
       g_ascii_formatd (buf[10], G_ASCII_DTOSTR_BUF_SIZE,
                        "%f", seg->right_color.a);
 
-      fprintf (file, "%s %s %s %s %s %s %s %s %s %s %s %d %d\n",
-               buf[0], buf[1], buf[2], buf[3], buf[4],
-               buf[5], buf[6], buf[7], buf[8], buf[9], buf[10],
+      fprintf (file, "%s %s %s %s %s %s %s %s %s %s %s %d %d %d %d\n",
+               buf[0], buf[1], buf[2],          /* left, middle, right */
+               buf[3], buf[4], buf[5], buf[6],  /* left color          */
+               buf[7], buf[8], buf[9], buf[10], /* right color         */
                (gint) seg->type,
-               (gint) seg->color);
+               (gint) seg->color,
+               (gint) seg->left_color_type,
+               (gint) seg->right_color_type);
     }
 
   fclose (file);
