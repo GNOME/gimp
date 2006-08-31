@@ -332,6 +332,9 @@ gimp_controller_list_constructor (GType                  type,
   gimp_container_view_set_container (GIMP_CONTAINER_VIEW (list->dest),
                                      gimp_controllers_get_list (list->gimp));
 
+  gimp_container_view_set_context (GIMP_CONTAINER_VIEW (list->dest),
+                                   gimp_get_user_context (list->gimp));
+
   return object;
 }
 

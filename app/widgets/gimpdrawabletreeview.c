@@ -342,7 +342,7 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
       if (tool_info && tool_info->tool_options)
         context = GIMP_CONTEXT (tool_info->tool_options);
       else
-        context = view->context;
+        context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view));
 
       gimp_drawable_bucket_fill_full (drawable,
                                       fill_mode,

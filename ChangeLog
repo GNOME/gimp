@@ -1,5 +1,36 @@
 2006-08-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainerview.c 
+	(gimp_container_view_real_set_container)
+	(gimp_container_view_real_set_context)
+	(gimp_container_view_item_selected)
+	(gimp_container_view_thaw): support setting a context even if
+	the viewed container's children_type is *not* a property of
+	GimpContext. This removes a major restriction of container
+	views and allows to get rid of some hacks:
+
+	* app/widgets/gimpitemtreeview.[ch]: removed GimpContext member
+	and implement GimpContainerView::set_context() instead of
+	GimpDocked::set_context().
+
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpdrawabletreeview.c
+	* app/widgets/gimplayertreeview.c: use GimpContainerView's context
+	instead of GimpItemTreeView's and implement GimpContainerView's
+	set_context() instead of GimpDocked's.
+
+	* app/actions/actions.c (action_data_get_gimp)
+	(action_data_get_context): don't special-case GimpItemTreeView any
+	more, it's just like a normal GimpContainerView now.
+
+	* app/widgets/gimpcontrollerlist.c
+	(gimp_controller_list_constructor): set a context on the
+	GimpContainerView so its renderers have a context to use.
+
+2006-08-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpthumbbox.[ch]: remember the context passed to
 	gimp_thumb_box_new() and use it instead of the user context when
 	creating thumbnails.

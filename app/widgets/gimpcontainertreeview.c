@@ -38,7 +38,6 @@
 #include "gimpcontainertreeview-dnd.h"
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
-#include "gimpdocked.h"
 #include "gimpviewrenderer.h"
 #include "gimpwidgets-utils.h"
 
@@ -52,8 +51,7 @@ enum
 };
 
 
-static void  gimp_container_tree_view_view_iface_init   (GimpContainerViewInterface *iface);
-static void  gimp_container_tree_view_docked_iface_init (GimpDockedInterface        *iface);
+static void  gimp_container_tree_view_view_iface_init (GimpContainerViewInterface *iface);
 
 static GObject *gimp_container_tree_view_constructor  (GType                   type,
                                                        guint                   n_params,
@@ -65,6 +63,8 @@ static gboolean  gimp_container_tree_view_popup_menu  (GtkWidget              *w
 
 static void    gimp_container_tree_view_set_container (GimpContainerView      *view,
                                                        GimpContainer          *container);
+static void    gimp_container_tree_view_set_context   (GimpContainerView      *view,
+                                                       GimpContext            *context);
 static gpointer gimp_container_tree_view_insert_item  (GimpContainerView      *view,
                                                        GimpViewable           *viewable,
                                                        gint                    index);
@@ -87,9 +87,6 @@ static void    gimp_container_tree_view_set_view_size (GimpContainerView      *v
 static void gimp_container_tree_view_name_canceled    (GtkCellRendererText    *cell,
                                                        GimpContainerTreeView  *tree_view);
 
-static void    gimp_container_tree_view_set_context   (GimpDocked            *view,
-                                                       GimpContext            *context);
-
 static void gimp_container_tree_view_selection_changed (GtkTreeSelection      *sel,
                                                         GimpContainerTreeView *tree_view);
 static gboolean gimp_container_tree_view_button_press (GtkWidget              *widget,
@@ -108,14 +105,11 @@ static GdkPixbuf    * gimp_container_tree_view_drag_pixbuf   (GtkWidget       *w
 G_DEFINE_TYPE_WITH_CODE (GimpContainerTreeView, gimp_container_tree_view,
                          GIMP_TYPE_CONTAINER_BOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
-                                                gimp_container_tree_view_view_iface_init)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_container_tree_view_docked_iface_init))
+                                                gimp_container_tree_view_view_iface_init))
 
 #define parent_class gimp_container_tree_view_parent_class
 
-static GimpContainerViewInterface *parent_view_iface   = NULL;
-static GimpDockedInterface        *parent_docked_iface = NULL;
+static GimpContainerViewInterface *parent_view_iface = NULL;
 
 
 static void
@@ -145,6 +139,7 @@ gimp_container_tree_view_view_iface_init (GimpContainerViewInterface *iface)
   parent_view_iface = g_type_interface_peek_parent (iface);
 
   iface->set_container = gimp_container_tree_view_set_container;
+  iface->set_context   = gimp_container_tree_view_set_context;
   iface->insert_item   = gimp_container_tree_view_insert_item;
   iface->remove_item   = gimp_container_tree_view_remove_item;
   iface->reorder_item  = gimp_container_tree_view_reorder_item;
@@ -154,17 +149,6 @@ gimp_container_tree_view_view_iface_init (GimpContainerViewInterface *iface)
   iface->set_view_size = gimp_container_tree_view_set_view_size;
 
   iface->insert_data_free = (GDestroyNotify) g_free;
-}
-
-static void
-gimp_container_tree_view_docked_iface_init (GimpDockedInterface *iface)
-{
-  parent_docked_iface = g_type_interface_peek_parent (iface);
-
-  if (! parent_docked_iface)
-    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
-
-  iface->set_context = gimp_container_tree_view_set_context;
 }
 
 static void
@@ -494,6 +478,35 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
   parent_view_iface->set_container (view, container);
 }
 
+static void
+gimp_container_tree_view_set_context (GimpContainerView *view,
+                                      GimpContext       *context)
+{
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+
+  parent_view_iface->set_context (view, context);
+
+  if (tree_view->model)
+    {
+      GtkTreeIter iter;
+      gboolean    iter_valid;
+
+      for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
+           iter_valid;
+           iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
+        {
+          GimpViewRenderer *renderer;
+
+          gtk_tree_model_get (tree_view->model, &iter,
+                              COLUMN_RENDERER, &renderer,
+                              -1);
+
+          gimp_view_renderer_set_context (renderer, context);
+          g_object_unref (renderer);
+        }
+    }
+}
+
 static gpointer
 gimp_container_tree_view_insert_item (GimpContainerView *view,
                                       GimpViewable      *viewable,
@@ -757,38 +770,6 @@ gimp_container_tree_view_set_view_size (GimpContainerView *view)
     }
 
   gtk_tree_view_columns_autosize (tree_view->view);
-}
-
-
-/*  GimpDocked methods  */
-
-static void
-gimp_container_tree_view_set_context (GimpDocked  *docked,
-                                      GimpContext *context)
-{
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (docked);
-
-  parent_docked_iface->set_context (docked, context);
-
-  if (tree_view->model)
-    {
-      GtkTreeIter iter;
-      gboolean    iter_valid;
-
-      for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
-           iter_valid;
-           iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
-        {
-          GimpViewRenderer *renderer;
-
-          gtk_tree_model_get (tree_view->model, &iter,
-                              COLUMN_RENDERER, &renderer,
-                              -1);
-
-          gimp_view_renderer_set_context (renderer, context);
-          g_object_unref (renderer);
-        }
-    }
 }
 
 
