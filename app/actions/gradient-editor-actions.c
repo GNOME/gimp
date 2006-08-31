@@ -46,11 +46,15 @@ static const GimpActionEntry gradient_editor_actions[] =
     N_("Gradient Editor Menu"), NULL, NULL, NULL,
     GIMP_HELP_GRADIENT_EDITOR_DIALOG },
 
+  { "gradient-editor-left-color-type", NULL,
+    N_("Left Color Type") },
   { "gradient-editor-load-left-color", GTK_STOCK_REVERT_TO_SAVED,
     N_("_Load Left Color From") },
   { "gradient-editor-save-left-color", GTK_STOCK_SAVE,
     N_("_Save Left Color To") },
 
+  { "gradient-editor-right-color-type", NULL,
+    N_("Right Color Type") },
   { "gradient-editor-load-right-color", GTK_STOCK_REVERT_TO_SAVED,
     N_("Load Right Color Fr_om") },
   { "gradient-editor-save-right-color", GTK_STOCK_SAVE,
@@ -248,6 +252,62 @@ static const GimpEnumActionEntry gradient_editor_save_right_actions[] =
 #undef SAVE_RIGHT_TO
 
 
+static const GimpRadioActionEntry gradient_editor_left_color_type_actions[] =
+{
+  { "gradient-editor-left-color-fixed", NULL,
+    N_("_Fixed"), NULL, NULL,
+    GIMP_GRADIENT_COLOR_FIXED,
+    GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
+
+  { "gradient-editor-left-color-foreground", NULL,
+    N_("F_oreground Color"), NULL, NULL,
+    GIMP_GRADIENT_COLOR_FOREGROUND,
+    GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
+
+  { "gradient-editor-left-color-foreground-transparent", NULL,
+    N_("Fo_reground Color (Transparent)"), NULL, NULL,
+    GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT,
+    GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
+
+  { "gradient-editor-left-color-background", NULL,
+    N_("_Background Color"), NULL, NULL,
+    GIMP_GRADIENT_COLOR_BACKGROUND,
+    GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
+
+  { "gradient-editor-left-color-background-transparent", NULL,
+    N_("B_ackground Color (Transparent)"), NULL, NULL,
+    GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT,
+    GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR }
+};
+
+static const GimpRadioActionEntry gradient_editor_right_color_type_actions[] =
+{
+  { "gradient-editor-right-color-fixed", NULL,
+    N_("_Fixed"), NULL, NULL,
+    GIMP_GRADIENT_COLOR_FIXED,
+    GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
+
+  { "gradient-editor-right-color-foreground", NULL,
+    N_("F_oreground Color"), NULL, NULL,
+    GIMP_GRADIENT_COLOR_FOREGROUND,
+    GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
+
+  { "gradient-editor-right-color-foreground-transparent", NULL,
+    N_("Fo_reground Color (Transparent)"), NULL, NULL,
+    GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT,
+    GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
+
+  { "gradient-editor-right-color-background", NULL,
+    N_("_Background Color"), NULL, NULL,
+    GIMP_GRADIENT_COLOR_BACKGROUND,
+    GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
+
+  { "gradient-editor-right-color-background-transparent", NULL,
+    N_("B_ackground Color (Transparent)"), NULL, NULL,
+    GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT,
+    GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR }
+};
+
 static const GimpRadioActionEntry gradient_editor_blending_actions[] =
 {
   { "gradient-editor-blending-linear", NULL,
@@ -359,6 +419,20 @@ gradient_editor_actions_setup (GimpActionGroup *group)
                                       G_CALLBACK (gradient_editor_save_right_cmd_callback));
 
   gimp_action_group_add_radio_actions (group,
+                                       gradient_editor_left_color_type_actions,
+                                       G_N_ELEMENTS (gradient_editor_left_color_type_actions),
+                                       NULL,
+                                       0,
+                                       G_CALLBACK (gradient_editor_left_color_type_cmd_callback));
+
+  gimp_action_group_add_radio_actions (group,
+                                       gradient_editor_right_color_type_actions,
+                                       G_N_ELEMENTS (gradient_editor_right_color_type_actions),
+                                       NULL,
+                                       0,
+                                       G_CALLBACK (gradient_editor_right_color_type_cmd_callback));
+
+  gimp_action_group_add_radio_actions (group,
                                        gradient_editor_blending_actions,
                                        G_N_ELEMENTS (gradient_editor_blending_actions),
                                        NULL,
@@ -385,40 +459,66 @@ gradient_editor_actions_update (GimpActionGroup *group,
   GimpGradientEditor  *editor         = GIMP_GRADIENT_EDITOR (data);
   GimpDataEditor      *data_editor    = GIMP_DATA_EDITOR (data);
   GimpGradient        *gradient;
-  GimpContext         *context;
   gboolean             editable       = FALSE;
-  GimpGradientSegment *left_seg       = NULL;
-  GimpGradientSegment *right_seg      = NULL;
+  GimpRGB              left_color;
+  GimpRGB              right_color;
+  GimpRGB              left_seg_color;
+  GimpRGB              right_seg_color;
   GimpRGB              fg;
   GimpRGB              bg;
   gboolean             blending_equal = TRUE;
   gboolean             coloring_equal = TRUE;
+  gboolean             left_editable  = TRUE;
+  gboolean             right_editable = TRUE;
   gboolean             selection      = FALSE;
   gboolean             delete         = FALSE;
   gboolean             edit_active    = FALSE;
 
   gradient = GIMP_GRADIENT (data_editor->data);
 
-  context = gimp_get_user_context (data_editor->data_factory->gimp);
-
   if (gradient)
     {
       GimpGradientSegmentType  type;
       GimpGradientSegmentColor color;
+      GimpGradientSegment     *left_seg;
+      GimpGradientSegment     *right_seg;
       GimpGradientSegment     *seg, *aseg;
 
       if (data_editor->data_editable)
         editable = TRUE;
+
+      gimp_gradient_get_color_at (gradient, data_editor->context,
+                                  editor->control_sel_l,
+                                  editor->control_sel_l->left, FALSE,
+                                  &left_color);
 
       if (editor->control_sel_l->prev)
         left_seg = editor->control_sel_l->prev;
       else
         left_seg = gimp_gradient_segment_get_last (editor->control_sel_l);
 
+      gimp_gradient_get_color_at (gradient, data_editor->context,
+                                  left_seg, left_seg->right, FALSE,
+                                  &left_seg_color);
+
+      gimp_gradient_get_color_at (gradient, data_editor->context,
+                                  editor->control_sel_r,
+                                  editor->control_sel_r->right, FALSE,
+                                  &right_color);
+
       if (editor->control_sel_r->next)
         right_seg = editor->control_sel_r->next;
       else
         right_seg = gimp_gradient_segment_get_first (editor->control_sel_r);
+
+      gimp_gradient_get_color_at (gradient, data_editor->context,
+                                  right_seg, right_seg->left, FALSE,
+                                  &right_seg_color);
+
+      left_editable  = (editor->control_sel_l->left_color_type ==
+                        GIMP_GRADIENT_COLOR_FIXED);
+      right_editable = (editor->control_sel_r->right_color_type ==
+                        GIMP_GRADIENT_COLOR_FIXED);
 
       type  = editor->control_sel_l->type;
       color = editor->control_sel_l->color;
@@ -439,10 +539,10 @@ gradient_editor_actions_update (GimpActionGroup *group,
       delete    = (editor->control_sel_l->prev || editor->control_sel_r->next);
     }
 
-  if (context)
+  if (data_editor->context)
     {
-      gimp_context_get_foreground (context, &fg);
-      gimp_context_get_background (context, &bg);
+      gimp_context_get_foreground (data_editor->context, &fg);
+      gimp_context_get_background (data_editor->context, &bg);
     }
 
   /*  pretend the gradient not being editable while the dialog is
@@ -451,6 +551,12 @@ gradient_editor_actions_update (GimpActionGroup *group,
    */
   if (! GTK_WIDGET_SENSITIVE (editor))
     editable = FALSE;
+
+  if (! editable)
+    {
+      left_editable  = FALSE;
+      right_editable = FALSE;
+    }
 
   edit_active = gimp_data_editor_get_edit_active (data_editor);
 
@@ -465,36 +571,66 @@ gradient_editor_actions_update (GimpActionGroup *group,
 #define SET_VISIBLE(action,condition) \
         gimp_action_group_set_action_visible (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("gradient-editor-left-color",               editable);
+  SET_SENSITIVE ("gradient-editor-left-color-fixed",                  editable);
+  SET_SENSITIVE ("gradient-editor-left-color-foreground",             editable);
+  SET_SENSITIVE ("gradient-editor-left-color-foreground-transparent", editable);
+  SET_SENSITIVE ("gradient-editor-left-color-background",             editable);
+  SET_SENSITIVE ("gradient-editor-left-color-background-transparent", editable);
+
+  if (gradient)
+    {
+      switch (editor->control_sel_l->left_color_type)
+        {
+        case GIMP_GRADIENT_COLOR_FIXED:
+          SET_ACTIVE ("gradient-editor-left-color-fixed", TRUE);
+          break;
+        case GIMP_GRADIENT_COLOR_FOREGROUND:
+          SET_ACTIVE ("gradient-editor-left-color-foreground", TRUE);
+          break;
+        case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
+          SET_ACTIVE ("gradient-editor-left-color-foreground-transparent", TRUE);
+          break;
+        case GIMP_GRADIENT_COLOR_BACKGROUND:
+          SET_ACTIVE ("gradient-editor-left-color-background", TRUE);
+          break;
+        case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
+          SET_ACTIVE ("gradient-editor-left-color-background-transparent", TRUE);
+          break;
+        }
+    }
+
+  SET_SENSITIVE ("gradient-editor-left-color",               left_editable);
   SET_SENSITIVE ("gradient-editor-load-left-left-neighbor",  editable);
   SET_SENSITIVE ("gradient-editor-load-left-right-endpoint", editable);
 
   if (gradient)
     {
       SET_COLOR ("gradient-editor-left-color",
-                 &editor->control_sel_l->left_color, FALSE);
+                 &left_color, FALSE);
       SET_COLOR ("gradient-editor-load-left-left-neighbor",
-                 &left_seg->right_color, FALSE);
+                 &left_seg_color, FALSE);
       SET_COLOR ("gradient-editor-load-left-right-endpoint",
-                 &editor->control_sel_r->right_color, FALSE);
+                 &right_color, FALSE);
     }
 
-  SET_SENSITIVE ("gradient-editor-load-left-fg", editable);
-  SET_SENSITIVE ("gradient-editor-load-left-bg", editable);
+  SET_SENSITIVE ("gradient-editor-load-left-fg", left_editable);
+  SET_SENSITIVE ("gradient-editor-load-left-bg", left_editable);
 
-  SET_COLOR ("gradient-editor-load-left-fg", context ? &fg : NULL, FALSE);
-  SET_COLOR ("gradient-editor-load-left-bg", context ? &bg : NULL, FALSE);
+  SET_COLOR ("gradient-editor-load-left-fg",
+             data_editor->context ? &fg : NULL, FALSE);
+  SET_COLOR ("gradient-editor-load-left-bg",
+             data_editor->context ? &bg : NULL, FALSE);
 
-  SET_SENSITIVE ("gradient-editor-load-left-01", editable);
-  SET_SENSITIVE ("gradient-editor-load-left-02", editable);
-  SET_SENSITIVE ("gradient-editor-load-left-03", editable);
-  SET_SENSITIVE ("gradient-editor-load-left-04", editable);
-  SET_SENSITIVE ("gradient-editor-load-left-05", editable);
-  SET_SENSITIVE ("gradient-editor-load-left-06", editable);
-  SET_SENSITIVE ("gradient-editor-load-left-07", editable);
-  SET_SENSITIVE ("gradient-editor-load-left-08", editable);
-  SET_SENSITIVE ("gradient-editor-load-left-09", editable);
-  SET_SENSITIVE ("gradient-editor-load-left-10", editable);
+  SET_SENSITIVE ("gradient-editor-load-left-01", left_editable);
+  SET_SENSITIVE ("gradient-editor-load-left-02", left_editable);
+  SET_SENSITIVE ("gradient-editor-load-left-03", left_editable);
+  SET_SENSITIVE ("gradient-editor-load-left-04", left_editable);
+  SET_SENSITIVE ("gradient-editor-load-left-05", left_editable);
+  SET_SENSITIVE ("gradient-editor-load-left-06", left_editable);
+  SET_SENSITIVE ("gradient-editor-load-left-07", left_editable);
+  SET_SENSITIVE ("gradient-editor-load-left-08", left_editable);
+  SET_SENSITIVE ("gradient-editor-load-left-09", left_editable);
+  SET_SENSITIVE ("gradient-editor-load-left-10", left_editable);
 
   SET_COLOR ("gradient-editor-load-left-01", &editor->saved_colors[0], TRUE);
   SET_COLOR ("gradient-editor-load-left-02", &editor->saved_colors[1], TRUE);
@@ -529,36 +665,66 @@ gradient_editor_actions_update (GimpActionGroup *group,
   SET_COLOR ("gradient-editor-save-left-09", &editor->saved_colors[8], TRUE);
   SET_COLOR ("gradient-editor-save-left-10", &editor->saved_colors[9], TRUE);
 
-  SET_SENSITIVE ("gradient-editor-right-color",               editable);
+  SET_SENSITIVE ("gradient-editor-right-color-fixed",                  editable);
+  SET_SENSITIVE ("gradient-editor-right-color-foreground",             editable);
+  SET_SENSITIVE ("gradient-editor-right-color-foreground-transparent", editable);
+  SET_SENSITIVE ("gradient-editor-right-color-background",             editable);
+  SET_SENSITIVE ("gradient-editor-right-color-background-transparent", editable);
+
+  if (gradient)
+    {
+      switch (editor->control_sel_r->right_color_type)
+        {
+        case GIMP_GRADIENT_COLOR_FIXED:
+          SET_ACTIVE ("gradient-editor-right-color-fixed", TRUE);
+          break;
+        case GIMP_GRADIENT_COLOR_FOREGROUND:
+          SET_ACTIVE ("gradient-editor-right-color-foreground", TRUE);
+          break;
+        case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
+          SET_ACTIVE ("gradient-editor-right-color-foreground-transparent", TRUE);
+          break;
+        case GIMP_GRADIENT_COLOR_BACKGROUND:
+          SET_ACTIVE ("gradient-editor-right-color-background", TRUE);
+          break;
+        case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
+          SET_ACTIVE ("gradient-editor-right-color-background-transparent", TRUE);
+          break;
+        }
+    }
+
+  SET_SENSITIVE ("gradient-editor-right-color",               right_editable);
   SET_SENSITIVE ("gradient-editor-load-right-right-neighbor", editable);
   SET_SENSITIVE ("gradient-editor-load-right-left-endpoint",  editable);
 
   if (gradient)
     {
       SET_COLOR ("gradient-editor-right-color",
-                 &editor->control_sel_r->right_color, FALSE);
+                 &right_color, FALSE);
       SET_COLOR ("gradient-editor-load-right-right-neighbor",
-                 &right_seg->left_color, FALSE);
+                 &right_seg_color, FALSE);
       SET_COLOR ("gradient-editor-load-right-left-endpoint",
-                 &editor->control_sel_l->left_color, FALSE);
+                 &left_color, FALSE);
     }
 
-  SET_SENSITIVE ("gradient-editor-load-right-fg", editable);
-  SET_SENSITIVE ("gradient-editor-load-right-bg", editable);
+  SET_SENSITIVE ("gradient-editor-load-right-fg", right_editable);
+  SET_SENSITIVE ("gradient-editor-load-right-bg", right_editable);
 
-  SET_COLOR ("gradient-editor-load-right-fg", context ? &fg : NULL, FALSE);
-  SET_COLOR ("gradient-editor-load-right-bg", context ? &bg : NULL, FALSE);
+  SET_COLOR ("gradient-editor-load-right-fg",
+             data_editor->context ? &fg : NULL, FALSE);
+  SET_COLOR ("gradient-editor-load-right-bg",
+             data_editor->context ? &bg : NULL, FALSE);
 
-  SET_SENSITIVE ("gradient-editor-load-right-01", editable);
-  SET_SENSITIVE ("gradient-editor-load-right-02", editable);
-  SET_SENSITIVE ("gradient-editor-load-right-03", editable);
-  SET_SENSITIVE ("gradient-editor-load-right-04", editable);
-  SET_SENSITIVE ("gradient-editor-load-right-05", editable);
-  SET_SENSITIVE ("gradient-editor-load-right-06", editable);
-  SET_SENSITIVE ("gradient-editor-load-right-07", editable);
-  SET_SENSITIVE ("gradient-editor-load-right-08", editable);
-  SET_SENSITIVE ("gradient-editor-load-right-09", editable);
-  SET_SENSITIVE ("gradient-editor-load-right-10", editable);
+  SET_SENSITIVE ("gradient-editor-load-right-01", right_editable);
+  SET_SENSITIVE ("gradient-editor-load-right-02", right_editable);
+  SET_SENSITIVE ("gradient-editor-load-right-03", right_editable);
+  SET_SENSITIVE ("gradient-editor-load-right-04", right_editable);
+  SET_SENSITIVE ("gradient-editor-load-right-05", right_editable);
+  SET_SENSITIVE ("gradient-editor-load-right-06", right_editable);
+  SET_SENSITIVE ("gradient-editor-load-right-07", right_editable);
+  SET_SENSITIVE ("gradient-editor-load-right-08", right_editable);
+  SET_SENSITIVE ("gradient-editor-load-right-09", right_editable);
+  SET_SENSITIVE ("gradient-editor-load-right-10", right_editable);
 
   SET_COLOR ("gradient-editor-load-right-01", &editor->saved_colors[0], TRUE);
   SET_COLOR ("gradient-editor-load-right-02", &editor->saved_colors[1], TRUE);

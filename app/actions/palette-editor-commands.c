@@ -104,15 +104,12 @@ palette_editor_new_color_cmd_callback (GtkAction *action,
   if (data_editor->data_editable)
     {
       GimpPalette *palette = GIMP_PALETTE (data_editor->data);
-      GimpContext *context;
       GimpRGB      color;
 
-      context = gimp_get_user_context (data_editor->data_factory->gimp);
-
       if (value)
-        gimp_context_get_background (context, &color);
+        gimp_context_get_background (data_editor->context, &color);
       else
-        gimp_context_get_foreground (context, &color);
+        gimp_context_get_foreground (data_editor->context, &color);
 
       editor->color = gimp_palette_add_entry (palette, -1, NULL, &color);
     }

@@ -70,12 +70,9 @@ brush_editor_actions_update (GimpActionGroup *group,
                              gpointer         user_data)
 {
   GimpDataEditor  *data_editor = GIMP_DATA_EDITOR (user_data);
-  GimpContext     *context;
   GimpData        *data;
   gboolean         editable    = FALSE;
   gboolean         edit_active = FALSE;
-
-  context = gimp_get_user_context (group->gimp);
 
   data = data_editor->data;
 

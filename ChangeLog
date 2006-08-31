@@ -1,3 +1,22 @@
+2006-09-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/gradient-editor-actions.c
+	* app/actions/gradient-editor-commands.[ch]: added actions and
+	callbacks to select a gradient segment's left and right color
+	type. Handle FG/BG color correctly in a few places. Use
+	GimpDataEditor's context instead of the user context.
+
+	* menus/gradient-editor-menu.xml: added the actions to the menu.
+
+	Cleanup:
+
+	* app/actions/palette-editor-actions.c
+	* app/actions/palette-editor-commands.c: use GimpDataEditor's
+	context instead of the user context.
+
+	* app/actions/brush-editor-actions.c: remove unused context
+	variable.
+
 2006-08-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainerview.c 
