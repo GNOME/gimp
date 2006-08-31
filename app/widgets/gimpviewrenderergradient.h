@@ -45,6 +45,7 @@ struct _GimpViewRendererGradient
   gdouble           right;
 
   gboolean          reverse;
+  gboolean          has_fg_bg_segments;
 };
 
 struct _GimpViewRendererGradientClass

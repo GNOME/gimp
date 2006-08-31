@@ -78,16 +78,19 @@ struct _GimpViewRendererClass
   gint           frame_top;
 
   /*  signals  */
-  void (* update) (GimpViewRenderer   *renderer);
+  void (* update)      (GimpViewRenderer   *renderer);
 
   /*  virtual functions  */
-  void (* draw)   (GimpViewRenderer   *renderer,
-                   GdkWindow          *window,
-                   GtkWidget          *widget,
-                   const GdkRectangle *draw_area,
-                   const GdkRectangle *expose_area);
-  void (* render) (GimpViewRenderer   *renderer,
-                   GtkWidget          *widget);
+  void (* set_context) (GimpViewRenderer   *renderer,
+                        GimpContext        *context);
+  void (* invalidate)  (GimpViewRenderer   *renderer);
+  void (* draw)        (GimpViewRenderer   *renderer,
+                        GdkWindow          *window,
+                        GtkWidget          *widget,
+                        const GdkRectangle *draw_area,
+                        const GdkRectangle *expose_area);
+  void (* render)      (GimpViewRenderer   *renderer,
+                        GtkWidget          *widget);
 };
 
 

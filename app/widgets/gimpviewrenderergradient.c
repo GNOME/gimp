@@ -36,10 +36,13 @@
 #include "gimpviewrenderergradient.h"
 
 
-static void   gimp_view_renderer_gradient_finalize (GObject          *object);
+static void   gimp_view_renderer_gradient_finalize    (GObject          *object);
 
-static void   gimp_view_renderer_gradient_render   (GimpViewRenderer *renderer,
-                                                    GtkWidget        *widget);
+static void   gimp_view_renderer_gradient_set_context (GimpViewRenderer *renderer,
+                                                       GimpContext      *context);
+static void   gimp_view_renderer_gradient_invalidate  (GimpViewRenderer *renderer);
+static void   gimp_view_renderer_gradient_render      (GimpViewRenderer *renderer,
+                                                       GtkWidget        *widget);
 
 
 G_DEFINE_TYPE (GimpViewRendererGradient, gimp_view_renderer_gradient,
@@ -54,9 +57,11 @@ gimp_view_renderer_gradient_class_init (GimpViewRendererGradientClass *klass)
   GObjectClass          *object_class   = G_OBJECT_CLASS (klass);
   GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
-  object_class->finalize = gimp_view_renderer_gradient_finalize;
+  object_class->finalize      = gimp_view_renderer_gradient_finalize;
 
-  renderer_class->render = gimp_view_renderer_gradient_render;
+  renderer_class->set_context = gimp_view_renderer_gradient_set_context;
+  renderer_class->invalidate  = gimp_view_renderer_gradient_invalidate;
+  renderer_class->render      = gimp_view_renderer_gradient_render;
 }
 
 static void
@@ -88,6 +93,88 @@ gimp_view_renderer_gradient_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_view_renderer_gradient_fg_bg_changed (GimpContext      *context,
+                                           const GimpRGB    *color,
+                                           GimpViewRenderer *renderer)
+{
+  g_printerr ("%s: invalidating %s\n", G_STRFUNC,
+              gimp_object_get_name (GIMP_OBJECT (renderer->viewable)));
+
+  gimp_view_renderer_invalidate (renderer);
+}
+
+static void
+gimp_view_renderer_gradient_set_context (GimpViewRenderer *renderer,
+                                         GimpContext      *context)
+{
+  GimpViewRendererGradient *rendergrad;
+
+  rendergrad = GIMP_VIEW_RENDERER_GRADIENT (renderer);
+
+  if (renderer->context && rendergrad->has_fg_bg_segments)
+    {
+      g_signal_handlers_disconnect_by_func (renderer->context,
+                                            gimp_view_renderer_gradient_fg_bg_changed,
+                                            renderer);
+    }
+
+  GIMP_VIEW_RENDERER_CLASS (parent_class)->set_context (renderer, context);
+
+  if (renderer->context && rendergrad->has_fg_bg_segments)
+    {
+      g_signal_connect (renderer->context, "foreground-changed",
+                        G_CALLBACK (gimp_view_renderer_gradient_fg_bg_changed),
+                        renderer);
+      g_signal_connect (renderer->context, "background-changed",
+                        G_CALLBACK (gimp_view_renderer_gradient_fg_bg_changed),
+                        renderer);
+
+      gimp_view_renderer_gradient_fg_bg_changed (renderer->context,
+                                                 NULL,
+                                                 renderer);
+    }
+}
+
+static void
+gimp_view_renderer_gradient_invalidate (GimpViewRenderer *renderer)
+{
+  GimpViewRendererGradient *rendergrad;
+  gboolean                  has_fg_bg_segments = FALSE;
+
+  rendergrad = GIMP_VIEW_RENDERER_GRADIENT (renderer);
+
+  if (renderer->viewable)
+    has_fg_bg_segments =
+      gimp_gradient_has_fg_bg_segments (GIMP_GRADIENT (renderer->viewable));
+
+  if (rendergrad->has_fg_bg_segments != has_fg_bg_segments)
+    {
+      if (renderer->context)
+        {
+          if (rendergrad->has_fg_bg_segments)
+            {
+              g_signal_handlers_disconnect_by_func (renderer->context,
+                                                    gimp_view_renderer_gradient_fg_bg_changed,
+                                                    renderer);
+            }
+          else
+            {
+              g_signal_connect (renderer->context, "foreground-changed",
+                                G_CALLBACK (gimp_view_renderer_gradient_fg_bg_changed),
+                                renderer);
+              g_signal_connect (renderer->context, "background-changed",
+                                G_CALLBACK (gimp_view_renderer_gradient_fg_bg_changed),
+                                renderer);
+            }
+        }
+
+      rendergrad->has_fg_bg_segments = has_fg_bg_segments;
+    }
+
+  GIMP_VIEW_RENDERER_CLASS (parent_class)->invalidate (renderer);
 }
 
 static void

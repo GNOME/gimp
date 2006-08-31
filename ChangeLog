@@ -1,3 +1,31 @@
+2006-08-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpgradient.[ch] (gimp_gradient_has_fg_bg_segments):
+	new funtion which returns TRUE if any of the gradient's segments
+	refer to FG of BG.
+
+	(gimp_gradient_segment_get_left_color_type)
+	(gimp_gradient_segment_set_left_color_type)
+	(gimp_gradient_segment_get_right_color_type)
+	(gimp_gradient_segment_set_right_color_type): new accessors for
+	the new GimpGradientColor stuff.
+
+	(gimp_gradient_segment_split_midpoint)
+	(gimp_gradient_segment_range_flip)
+	(gimp_gradient_segment_range_replicate): split, flip and replicate
+	the segments' color_types too.
+
+	* app/widgets/gimpviewrenderer.[ch]: added virtual functions
+	::set_context() and ::invalidate() and call them.
+
+	* app/widgets/gimpviewrenderergradient.[ch]: implement the virtual
+	functions. Connect to the context's "foreground-changed" and
+	"background-changed" signals if the gradient contains FG or BG
+	colors and invalidate the renderer whenever they change.
+
+	* app/core/gimp-gradients.c: removed signal connections which
+	invalidated the gradients on FG/BG changes of the user context.
+
 2006-08-31  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/happy-valley-relief.py: fixed a typo.

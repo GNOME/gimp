@@ -83,6 +83,8 @@ GimpGradientSegment * gimp_gradient_get_color_at   (GimpGradient        *gradien
 GimpGradientSegment * gimp_gradient_get_segment_at (GimpGradient  *grad,
                                                     gdouble        pos);
 
+gboolean          gimp_gradient_has_fg_bg_segments (GimpGradient  *gradient);
+
 
 /*  gradient segment functions  */
 
@@ -124,6 +126,27 @@ void    gimp_gradient_segment_get_right_color (GimpGradient         *gradient,
 void    gimp_gradient_segment_set_right_color (GimpGradient         *gradient,
                                                GimpGradientSegment  *seg,
                                                const GimpRGB        *color);
+
+
+GimpGradientColor
+gimp_gradient_segment_get_left_color_type     (GimpGradient         *gradient,
+                                               GimpGradientSegment  *seg);
+
+void
+gimp_gradient_segment_set_left_color_type     (GimpGradient         *gradient,
+                                               GimpGradientSegment  *seg,
+                                               GimpGradientColor     color_type);
+
+
+GimpGradientColor
+gimp_gradient_segment_get_right_color_type    (GimpGradient         *gradient,
+                                               GimpGradientSegment  *seg);
+
+void
+gimp_gradient_segment_set_right_color_type    (GimpGradient         *gradient,
+                                               GimpGradientSegment  *seg,
+                                               GimpGradientColor     color_type);
+
 
 /* Position Setting/Getting Routines */
 /* (Setters return the position after it was set) */

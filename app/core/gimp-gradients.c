@@ -23,13 +23,10 @@
 
 #include <glib-object.h>
 
-#include "libgimpcolor/gimpcolor.h"
-
 #include "core-types.h"
 
 #include "gimp.h"
 #include "gimpcontainer.h"
-#include "gimpcontext.h"
 #include "gimpdatafactory.h"
 #include "gimpgradient.h"
 
@@ -44,12 +41,9 @@
 
 /*  local function prototypes  */
 
-static GimpGradient * gimp_gradients_add_gradient  (Gimp          *gimp,
-                                                    const gchar   *name,
-                                                    const gchar   *id);
-static void           gimp_gradients_color_changed (GimpContext   *context,
-                                                    const GimpRGB *fg,
-                                                    Gimp          *gimp);
+static GimpGradient * gimp_gradients_add_gradient (Gimp        *gimp,
+                                                   const gchar *name,
+                                                   const gchar *id);
 
 
 /*  public functions  */
@@ -80,13 +74,6 @@ gimp_gradients_init (Gimp *gimp)
                                           _("FG to Transparent"),
                                           FG_TRANSPARENT_KEY);
   gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT;
-
-  g_signal_connect (gimp->user_context, "foreground-changed",
-                    G_CALLBACK (gimp_gradients_color_changed),
-                    gimp);
-  g_signal_connect (gimp->user_context, "background-changed",
-                    G_CALLBACK (gimp_gradients_color_changed),
-                    gimp);
 }
 
 
@@ -111,28 +98,4 @@ gimp_gradients_add_gradient (Gimp        *gimp,
   g_object_set_data (G_OBJECT (gimp), id, gradient);
 
   return gradient;
-}
-
-static void
-gimp_gradients_color_changed (GimpContext   *context,
-                              const GimpRGB *color,
-                              Gimp          *gimp)
-{
-  GimpGradient *gradient;
-
-  gradient = g_object_get_data (G_OBJECT (gimp), FG_BG_RGB_KEY);
-  if (gradient)
-    gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gradient));
-
-  gradient = g_object_get_data (G_OBJECT (gimp), FG_BG_HSV_CCW_KEY);
-  if (gradient)
-    gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gradient));
-
-  gradient = g_object_get_data (G_OBJECT (gimp), FG_BG_HSV_CW_KEY);
-  if (gradient)
-    gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gradient));
-
-  gradient = g_object_get_data (G_OBJECT (gimp), FG_TRANSPARENT_KEY);
-  if (gradient)
-    gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gradient));
 }

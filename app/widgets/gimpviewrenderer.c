@@ -51,23 +51,26 @@ enum
 };
 
 
-static void      gimp_view_renderer_dispose      (GObject            *object);
-static void      gimp_view_renderer_finalize     (GObject            *object);
+static void      gimp_view_renderer_dispose          (GObject            *object);
+static void      gimp_view_renderer_finalize         (GObject            *object);
 
-static gboolean  gimp_view_renderer_idle_update  (GimpViewRenderer   *renderer);
-static void      gimp_view_renderer_real_draw    (GimpViewRenderer   *renderer,
-                                                  GdkWindow          *window,
-                                                  GtkWidget          *widget,
-                                                  const GdkRectangle *draw_area,
-                                                  const GdkRectangle *expose_area);
-static void      gimp_view_renderer_real_render  (GimpViewRenderer   *renderer,
-                                                  GtkWidget          *widget);
+static gboolean  gimp_view_renderer_idle_update      (GimpViewRenderer   *renderer);
+static void      gimp_view_renderer_real_set_context (GimpViewRenderer   *renderer,
+                                                      GimpContext        *context);
+static void      gimp_view_renderer_real_invalidate  (GimpViewRenderer   *renderer);
+static void      gimp_view_renderer_real_draw        (GimpViewRenderer   *renderer,
+                                                      GdkWindow          *window,
+                                                      GtkWidget          *widget,
+                                                      const GdkRectangle *draw_area,
+                                                      const GdkRectangle *expose_area);
+static void      gimp_view_renderer_real_render      (GimpViewRenderer   *renderer,
+                                                      GtkWidget          *widget);
 
-static void      gimp_view_renderer_size_changed (GimpViewRenderer   *renderer,
-                                                  GimpViewable       *viewable);
-static GdkGC   * gimp_view_renderer_create_gc    (GimpViewRenderer   *renderer,
-                                                  GdkWindow          *window,
-                                                  GtkWidget          *widget);
+static void      gimp_view_renderer_size_changed     (GimpViewRenderer   *renderer,
+                                                      GimpViewable       *viewable);
+static GdkGC   * gimp_view_renderer_create_gc        (GimpViewRenderer   *renderer,
+                                                      GdkWindow          *window,
+                                                      GtkWidget          *widget);
 
 
 G_DEFINE_TYPE (GimpViewRenderer, gimp_view_renderer, G_TYPE_OBJECT)
@@ -100,6 +103,8 @@ gimp_view_renderer_class_init (GimpViewRendererClass *klass)
   object_class->finalize = gimp_view_renderer_finalize;
 
   klass->update          = NULL;
+  klass->set_context     = gimp_view_renderer_real_set_context;
+  klass->invalidate      = gimp_view_renderer_real_invalidate;
   klass->draw            = gimp_view_renderer_real_draw;
   klass->render          = gimp_view_renderer_real_render;
 
@@ -153,6 +158,9 @@ gimp_view_renderer_dispose (GObject *object)
   if (renderer->viewable)
     gimp_view_renderer_set_viewable (renderer, NULL);
 
+  if (renderer->context)
+    gimp_view_renderer_set_context (renderer, NULL);
+
   gimp_view_renderer_remove_idle (renderer);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -200,9 +208,11 @@ gimp_view_renderer_new_internal (GimpContext *context,
   renderer = g_object_new (gimp_view_renderer_type_from_viewable_type (viewable_type),
                            NULL);
 
-  renderer->context       = context;
   renderer->viewable_type = viewable_type;
   renderer->is_popup      = is_popup ? TRUE : FALSE;
+
+  if (context)
+    gimp_view_renderer_set_context (renderer, context);
 
   return renderer;
 }
@@ -272,7 +282,8 @@ gimp_view_renderer_set_context (GimpViewRenderer *renderer,
 
   if (context != renderer->context)
     {
-      renderer->context = context;
+      GIMP_VIEW_RENDERER_GET_CLASS (renderer)->set_context (renderer,
+                                                            context);
 
       if (renderer->viewable)
         gimp_view_renderer_invalidate (renderer);
@@ -521,9 +532,12 @@ gimp_view_renderer_invalidate (GimpViewRenderer *renderer)
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
 
   if (renderer->idle_id)
-    g_source_remove (renderer->idle_id);
+    {
+      g_source_remove (renderer->idle_id);
+      renderer->idle_id = 0;
+    }
 
-  renderer->needs_render = TRUE;
+  GIMP_VIEW_RENDERER_GET_CLASS (renderer)->invalidate (renderer);
 
   renderer->idle_id =
     g_idle_add_full (G_PRIORITY_LOW,
@@ -667,6 +681,19 @@ gimp_view_renderer_idle_update (GimpViewRenderer *renderer)
   gimp_view_renderer_update (renderer);
 
   return FALSE;
+}
+
+static void
+gimp_view_renderer_real_set_context (GimpViewRenderer *renderer,
+                                     GimpContext      *context)
+{
+  renderer->context = context;
+}
+
+static void
+gimp_view_renderer_real_invalidate (GimpViewRenderer *renderer)
+{
+  renderer->needs_render = TRUE;
 }
 
 static void

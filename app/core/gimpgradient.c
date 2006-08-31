@@ -515,6 +515,22 @@ gimp_gradient_get_segment_at (GimpGradient *gradient,
   return gimp_gradient_get_segment_at_internal (gradient, NULL, pos);
 }
 
+gboolean
+gimp_gradient_has_fg_bg_segments (GimpGradient *gradient)
+{
+  GimpGradientSegment *segment;
+
+  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), FALSE);
+
+  for (segment = gradient->segments; segment; segment = segment->next)
+    if (segment->left_color_type  != GIMP_GRADIENT_COLOR_FIXED ||
+        segment->right_color_type != GIMP_GRADIENT_COLOR_FIXED)
+      return TRUE;
+
+  return FALSE;
+}
+
+
 /*  gradient segment functions  */
 
 GimpGradientSegment *
@@ -660,12 +676,11 @@ gimp_gradient_segment_split_midpoint (GimpGradient         *gradient,
 
   /* Set colors of both segments */
 
-  newseg->right_color = lseg->right_color;
+  newseg->right_color_type = lseg->right_color_type;
+  newseg->right_color      = lseg->right_color;
 
-  lseg->right_color.r = newseg->left_color.r = color.r;
-  lseg->right_color.g = newseg->left_color.g = color.g;
-  lseg->right_color.b = newseg->left_color.b = color.b;
-  lseg->right_color.a = newseg->left_color.a = color.a;
+  lseg->right_color_type = newseg->left_color_type = GIMP_GRADIENT_COLOR_FIXED;
+  lseg->right_color      = newseg->left_color      = color;
 
   /* Set parameters of new segment */
 
@@ -717,6 +732,9 @@ gimp_gradient_segment_split_uniform (GimpGradient         *gradient,
       seg->right  = lseg->left + (i + 1) * seg_len;
       seg->middle = (seg->left + seg->right) / 2.0;
 
+      seg->left_color_type  = GIMP_GRADIENT_COLOR_FIXED;
+      seg->right_color_type = GIMP_GRADIENT_COLOR_FIXED;
+
       gimp_gradient_get_color_at (gradient, context, lseg,
                                   seg->left,  FALSE, &seg->left_color);
       gimp_gradient_get_color_at (gradient, context, lseg,
@@ -736,9 +754,11 @@ gimp_gradient_segment_split_uniform (GimpGradient         *gradient,
 
   /* Fix edges */
 
-  tmp->left_color = lseg->left_color;
+  tmp->left_color_type = lseg->left_color_type;
+  tmp->left_color      = lseg->left_color;
 
-  seg->right_color = lseg->right_color;
+  seg->right_color_type = lseg->right_color_type;
+  seg->right_color      = lseg->right_color;
 
   tmp->left  = lseg->left;
   seg->right = lseg->right; /* To squish accumulative error */
@@ -822,6 +842,56 @@ gimp_gradient_segment_set_right_color (GimpGradient        *gradient,
   gimp_gradient_segment_range_blend (gradient, seg, seg,
                                      &seg->left_color, color,
                                      TRUE, TRUE);
+
+  gimp_data_thaw (GIMP_DATA (gradient));
+}
+
+GimpGradientColor
+gimp_gradient_segment_get_left_color_type (GimpGradient        *gradient,
+                                           GimpGradientSegment *seg)
+{
+  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0);
+  g_return_val_if_fail (seg != NULL, 0);
+
+  return seg->left_color_type;
+}
+
+void
+gimp_gradient_segment_set_left_color_type (GimpGradient        *gradient,
+                                           GimpGradientSegment *seg,
+                                           GimpGradientColor    color_type)
+{
+  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (seg != NULL);
+
+  gimp_data_freeze (GIMP_DATA (gradient));
+
+  seg->left_color_type = color_type;
+
+  gimp_data_thaw (GIMP_DATA (gradient));
+}
+
+GimpGradientColor
+gimp_gradient_segment_get_right_color_type (GimpGradient        *gradient,
+                                            GimpGradientSegment *seg)
+{
+  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0);
+  g_return_val_if_fail (seg != NULL, 0);
+
+  return seg->right_color_type;
+}
+
+void
+gimp_gradient_segment_set_right_color_type (GimpGradient        *gradient,
+                                            GimpGradientSegment *seg,
+                                            GimpGradientColor    color_type)
+{
+  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (seg != NULL);
+
+  gimp_data_freeze (GIMP_DATA (gradient));
+
+  seg->right_color_type = color_type;
 
   gimp_data_thaw (GIMP_DATA (gradient));
 }
@@ -1152,9 +1222,11 @@ gimp_gradient_segment_range_flip (GimpGradient         *gradient,
       seg->middle = left + right - oseg->middle;
       seg->right  = left + right - oseg->left;
 
-      seg->left_color = oseg->right_color;
+      seg->left_color_type = oseg->right_color_type;
+      seg->left_color      = oseg->right_color;
 
-      seg->right_color = oseg->left_color;
+      seg->right_color_type = oseg->left_color_type;
+      seg->right_color      = oseg->left_color;
 
       switch (oseg->type)
         {
@@ -1309,8 +1381,11 @@ gimp_gradient_segment_range_replicate (GimpGradient         *gradient,
           seg->middle = new_left + factor * (oseg->middle - sel_left);
           seg->right  = new_left + factor * (oseg->right - sel_left);
 
-          seg->left_color  = oseg->left_color;
-          seg->right_color = oseg->right_color;
+          seg->left_color_type = oseg->left_color_type;
+          seg->left_color      = oseg->left_color;
+
+          seg->right_color_type = oseg->right_color_type;
+          seg->right_color      = oseg->right_color;
 
           seg->type  = oseg->type;
           seg->color = oseg->color;
