@@ -1,3 +1,8 @@
+2006-08-31  Dave Neary  <bolsh@gimp.org>
+
+	* devel-docs/xcf.txt: Commit Henning Makholm's amazing spec of the XCF
+	format.
+
 2006-08-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* devel-docs/vbr.txt:  added new description of the VBR
