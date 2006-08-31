@@ -34,6 +34,7 @@ struct _GimpThumbBox
 {
   GtkFrame       parent_instance;
 
+  GimpContext   *context;
   GimpImagefile *imagefile;
   GSList        *uris;
 

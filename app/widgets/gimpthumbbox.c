@@ -303,6 +303,8 @@ gimp_thumb_box_new (GimpContext *context)
 
   box = g_object_new (GIMP_TYPE_THUMB_BOX, NULL);
 
+  box->context = context;
+
   ebox = gtk_event_box_new ();
   gtk_container_add (GTK_CONTAINER (box), ebox);
   gtk_widget_show (ebox);
@@ -687,10 +689,7 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
       (gimp_thumbnail_peek_thumb (thumb, size) < GIMP_THUMB_STATE_FAILED &&
        ! gimp_thumbnail_has_failed (thumb)))
     {
-      Gimp *gimp = box->imagefile->gimp;
-
-      gimp_imagefile_create_thumbnail (box->imagefile,
-                                       gimp_get_user_context (gimp),
+      gimp_imagefile_create_thumbnail (box->imagefile, box->context,
                                        GIMP_PROGRESS (box),
                                        size,
                                        !force);
@@ -738,8 +737,7 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
                                   _("Creating preview..."));
             }
 
-          gimp_imagefile_create_thumbnail_weak (box->imagefile,
-                                                gimp_get_user_context (gimp),
+          gimp_imagefile_create_thumbnail_weak (box->imagefile, box->context,
                                                 GIMP_PROGRESS (box),
                                                 gimp->config->thumbnail_size,
                                                 TRUE);

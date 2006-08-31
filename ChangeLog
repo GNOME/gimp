@@ -1,5 +1,11 @@
 2006-08-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpthumbbox.[ch]: remember the context passed to
+	gimp_thumb_box_new() and use it instead of the user context when
+	creating thumbnails.
+
+2006-08-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpgradienteditor.[ch] (struct GimpGradientEditor):
 	removed GimpContext member I added before deciding it needs to be
 	added to GimpDataEditor.
