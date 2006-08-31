@@ -1,5 +1,9 @@
 2006-08-31  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/happy-valley-relief.py: fixed a typo.
+
+2006-08-31  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimp-tools.c: use italic style for the informative label.
 
 2006-08-31  Sven Neumann  <sven@gimp.org>
