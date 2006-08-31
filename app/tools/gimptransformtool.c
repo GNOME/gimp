@@ -1055,6 +1055,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
   GimpContext          *context;
   GimpItem             *active_item = NULL;
   TileManager          *new_tiles;
+  const gchar          *message     = NULL;
   gboolean              new_layer;
   gboolean              mask_empty;
 
@@ -1065,19 +1066,25 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
       active_item = (GimpItem *) gimp_image_active_drawable (display->image);
+      message = _("There is no layer to transform.");
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
       active_item = (GimpItem *) gimp_image_get_mask (display->image);
+      message = _("There is no selection to transform.");
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
       active_item = (GimpItem *) gimp_image_get_active_vectors (display->image);
+      message = _("There is no path to transform.");
       break;
     }
 
   if (! active_item)
-    return;
+    {
+      gimp_message (display->image->gimp, GIMP_PROGRESS (display), message);
+      return;
+    }
 
   mask_empty = gimp_channel_is_empty (gimp_image_get_mask (display->image));
 

@@ -1294,6 +1294,12 @@ gimp_composite_addition_va8_va8_va8_mmx (GimpCompositeContext *_op)
   uint64 *d = (uint64 *) _op->D;
   uint64 *a = (uint64 *) _op->A;
   uint64 *b = (uint64 *) _op->B;
+  uint32 *a32;
+  uint32 *b32;
+  uint32 *d32;
+  uint16 *a16;
+  uint16 *b16;
+  uint16 *d16;
   gulong n_pixels = _op->n_pixels;
 
   asm volatile ("movq    %0,%%mm0"
@@ -1321,9 +1327,9 @@ gimp_composite_addition_va8_va8_va8_mmx (GimpCompositeContext *_op)
       d++;
     }
 
-  uint32 *a32 = (uint32 *) a;
-  uint32 *b32 = (uint32 *) b;
-  uint32 *d32 = (uint32 *) d;
+  a32 = (uint32 *) a;
+  b32 = (uint32 *) b;
+  d32 = (uint32 *) d;
 
   for (; n_pixels >= 2; n_pixels -= 2)
     {
@@ -1345,9 +1351,9 @@ gimp_composite_addition_va8_va8_va8_mmx (GimpCompositeContext *_op)
       d32++;
     }
 
-  uint16 *a16 = (uint16 *) a32;
-  uint16 *b16 = (uint16 *) b32;
-  uint16 *d16 = (uint16 *) d32;
+  a16 = (uint16 *) a32;
+  b16 = (uint16 *) b32;
+  d16 = (uint16 *) d32;
 
   for (; n_pixels >= 1; n_pixels -= 1)
     {
@@ -1380,6 +1386,12 @@ gimp_composite_subtract_va8_va8_va8_mmx (GimpCompositeContext *_op)
   uint64 *d = (uint64 *) _op->D;
   uint64 *a = (uint64 *) _op->A;
   uint64 *b = (uint64 *) _op->B;
+  uint32 *a32;
+  uint32 *b32;
+  uint32 *d32;
+  uint16 *a16;
+  uint16 *b16;
+  uint16 *d16;
   gulong n_pixels = _op->n_pixels;
 
   asm volatile ("movq    %0,%%mm0"
@@ -1407,9 +1419,9 @@ gimp_composite_subtract_va8_va8_va8_mmx (GimpCompositeContext *_op)
       d++;
     }
 
-  uint32 *a32 = (uint32 *) a;
-  uint32 *b32 = (uint32 *) b;
-  uint32 *d32 = (uint32 *) d;
+  a32 = (uint32 *) a;
+  b32 = (uint32 *) b;
+  d32 = (uint32 *) d;
 
   for (; n_pixels >= 2; n_pixels -= 2)
     {
@@ -1431,9 +1443,9 @@ gimp_composite_subtract_va8_va8_va8_mmx (GimpCompositeContext *_op)
       d32++;
     }
 
-  uint16 *a16 = (uint16 *) a32;
-  uint16 *b16 = (uint16 *) b32;
-  uint16 *d16 = (uint16 *) d32;
+  a16 = (uint16 *) a32;
+  b16 = (uint16 *) b32;
+  d16 = (uint16 *) d32;
 
   for (; n_pixels >= 1; n_pixels -= 1)
     {

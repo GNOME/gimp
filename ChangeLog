@@ -1,3 +1,12 @@
+2006-08-31  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/gimp-composite-mmx.c: moved declarations at the
+	beginning of the functions.
+
+	* app/tools/gimptransformtool.c (gimp_transform_tool_doit):
+	display a message if no paths are available. Could catch this
+	earlier, but this is the least intrusive change to fix bug #353495.
+
 2006-08-30  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/gif.c: similar cleanup, removed unused parameters.
