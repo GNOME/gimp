@@ -1,5 +1,9 @@
 2006-08-31  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimp-tools.c: use italic style for the informative label.
+
+2006-08-31  Sven Neumann  <sven@gimp.org>
+
 	* app/composite/gimp-composite-mmx.c: moved declarations at the
 	beginning of the functions.
 

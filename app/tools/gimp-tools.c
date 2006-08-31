@@ -29,6 +29,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
@@ -312,7 +313,11 @@ gimp_tools_restore (Gimp *gimp)
 
           options_gui = gimp_tool_options_gui (tool_info->tool_options);
 
-          label = gtk_label_new (_("This tool has no options."));
+          label = gtk_label_new (_("This tool has\nno options."));
+          gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
+          gimp_label_set_attributes (GTK_LABEL (label),
+                                     PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                                     -1);
           gtk_box_pack_start (GTK_BOX (options_gui), label, FALSE, FALSE, 6);
           gtk_widget_show (label);
         }
