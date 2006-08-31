@@ -686,7 +686,8 @@ gradient_editor_drop_color (GtkWidget     *widget,
 
   gimp_data_freeze (GIMP_DATA (gradient));
 
-  gimp_gradient_segment_split_midpoint (gradient, editor->context,
+  gimp_gradient_segment_split_midpoint (gradient,
+                                        GIMP_DATA_EDITOR (editor)->context,
                                         seg, &lseg, &rseg);
 
   if (lseg)
@@ -958,7 +959,7 @@ static void
 view_set_hint (GimpGradientEditor *editor,
                gint                x)
 {
-  GimpDataEditor *data_editor;
+  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
   gdouble         xpos;
   GimpRGB         rgb;
   GimpHSV         hsv;
@@ -967,12 +968,10 @@ view_set_hint (GimpGradientEditor *editor,
   gchar          *str3;
   gchar          *str4;
 
-  data_editor = GIMP_DATA_EDITOR (editor);
-
   xpos = control_calc_g_pos (editor, x);
 
   gimp_gradient_get_color_at (GIMP_GRADIENT (data_editor->data),
-                              editor->context, NULL,
+                              data_editor->context, NULL,
                               xpos, FALSE, &rgb);
 
   gimp_rgb_to_hsv (&rgb, &hsv);
@@ -999,7 +998,6 @@ view_set_foreground (GimpGradientEditor *editor,
                      gint                x)
 {
   GimpGradient *gradient;
-  GimpContext  *user_context;
   GimpRGB       color;
   gdouble       xpos;
   gchar        *str2;
@@ -1007,14 +1005,13 @@ view_set_foreground (GimpGradientEditor *editor,
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->data_factory->gimp);
-
   xpos = control_calc_g_pos (editor, x);
 
-  gimp_gradient_get_color_at (gradient, editor->context,
+  gimp_gradient_get_color_at (gradient,
+                              GIMP_DATA_EDITOR (editor)->context,
                               NULL, xpos, FALSE, &color);
 
-  gimp_context_set_foreground (user_context, &color);
+  gimp_context_set_foreground (GIMP_DATA_EDITOR (editor)->context, &color);
 
   str2 = g_strdup_printf (_("RGB (%d, %d, %d)"),
                           (gint) (color.r * 255.0),
@@ -1035,7 +1032,6 @@ view_set_background (GimpGradientEditor *editor,
                      gint                x)
 {
   GimpGradient *gradient;
-  GimpContext  *user_context;
   GimpRGB       color;
   gdouble       xpos;
   gchar        *str2;
@@ -1043,14 +1039,13 @@ view_set_background (GimpGradientEditor *editor,
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->data_factory->gimp);
-
   xpos = control_calc_g_pos (editor, x);
 
-  gimp_gradient_get_color_at (gradient, editor->context,
+  gimp_gradient_get_color_at (gradient,
+                              GIMP_DATA_EDITOR (editor)->context,
                               NULL, xpos, FALSE, &color);
 
-  gimp_context_set_background (user_context, &color);
+  gimp_context_set_background (GIMP_DATA_EDITOR (editor)->context, &color);
 
   str2 = g_strdup_printf (_("RGB (%d, %d, %d)"),
                           (gint) (color.r * 255.0),

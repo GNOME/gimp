@@ -1,5 +1,18 @@
 2006-08-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpgradienteditor.[ch] (struct GimpGradientEditor):
+	removed GimpContext member I added before deciding it needs to be
+	added to GimpDataEditor.
+
+	Use GimpDataEditor's context instead of the bogus one. Also use
+	the data editor's context instead of the user context wherever it
+	was used.
+	
+	* app/widgets/gimppaletteeditor.c: use GimpDataEditor's context
+	instead of the user context here too.
+
+2006-08-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpgradient.[ch] (gimp_gradient_has_fg_bg_segments):
 	new funtion which returns TRUE if any of the gradient's segments
 	refer to FG of BG.

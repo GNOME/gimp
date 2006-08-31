@@ -722,16 +722,12 @@ palette_editor_entry_clicked (GimpPaletteView   *view,
 {
   if (entry)
     {
-      Gimp        *gimp;
-      GimpContext *user_context;
-
-      gimp         = GIMP_DATA_EDITOR (editor)->data_factory->gimp;
-      user_context = gimp_get_user_context (gimp);
+      GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
 
       if (state & GDK_CONTROL_MASK)
-        gimp_context_set_background (user_context, &entry->color);
+        gimp_context_set_background (data_editor->context, &entry->color);
       else
-        gimp_context_set_foreground (user_context, &entry->color);
+        gimp_context_set_foreground (data_editor->context, &entry->color);
     }
 }
 

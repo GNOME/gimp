@@ -52,8 +52,6 @@ struct _GimpGradientEditor
 {
   GimpDataEditor  parent_instance;
 
-  GimpContext    *context;
-
   GtkWidget      *hint_label1;
   GtkWidget      *hint_label2;
   GtkWidget      *hint_label3;
