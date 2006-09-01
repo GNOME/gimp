@@ -1,3 +1,7 @@
+2006-09-01  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpstatusbar.c: minor cleanup.
+
 2006-09-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpviewabledialog.[ch]: added GimpContext

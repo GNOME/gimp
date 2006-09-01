@@ -205,8 +205,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
    *  next call the resize doesn't seem to happen any longer.
    */
 
-  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (statusbar->progressbar),
-                             "GIMP");
+  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (statusbar->progressbar), "GIMP");
 
   statusbar->seq_context_id = 1;
   statusbar->messages       = NULL;
@@ -378,7 +377,7 @@ gimp_statusbar_progress_canceled (GtkWidget     *button,
 static void
 gimp_statusbar_update (GimpStatusbar *statusbar)
 {
-  gchar *text = NULL;
+  const gchar *text = NULL;
 
   if (statusbar->messages)
     {
@@ -562,8 +561,8 @@ gimp_statusbar_replace (GimpStatusbar *statusbar,
                         const gchar   *message)
 {
   GimpStatusbarMsg *msg;
-  guint             context_id;
   GSList           *list;
+  guint             context_id;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (message != NULL);
@@ -613,8 +612,8 @@ void
 gimp_statusbar_pop (GimpStatusbar *statusbar,
                     const gchar   *context)
 {
-  guint   context_id;
   GSList *list;
+  guint   context_id;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
 
@@ -803,7 +802,8 @@ gimp_statusbar_get_context_id (GimpStatusbar *statusbar,
   string = g_strconcat ("gimp-status-bar-context:", context, NULL);
 
   id = g_object_get_data (G_OBJECT (statusbar), string);
-  if (!id)
+
+  if (! id)
     {
       id = g_new (guint, 1);
       *id = statusbar->seq_context_id++;
