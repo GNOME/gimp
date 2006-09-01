@@ -429,6 +429,23 @@ gimp_undo_free (GimpUndo     *undo,
   g_signal_emit (undo, undo_signals[FREE], 0, undo_mode);
 }
 
+typedef struct _GimpUndoIdle GimpUndoIdle;
+
+struct _GimpUndoIdle
+{
+  GimpUndo    *undo;
+  GimpContext *context;
+};
+
+static void
+gimp_undo_idle_free (GimpUndoIdle *idle)
+{
+  if (idle->context)
+    g_object_unref (idle->context);
+
+  g_free (idle);
+}
+
 void
 gimp_undo_create_preview (GimpUndo    *undo,
                           GimpContext *context,
@@ -441,22 +458,36 @@ gimp_undo_create_preview (GimpUndo    *undo,
     return;
 
   if (create_now)
-    gimp_undo_create_preview_private (undo, context);
+    {
+      gimp_undo_create_preview_private (undo, context);
+    }
   else
-    undo->preview_idle_id = g_idle_add (gimp_undo_create_preview_idle, undo);
+    {
+      GimpUndoIdle *idle = g_new0 (GimpUndoIdle, 1);
+
+      idle->undo = undo;
+
+      if (context)
+        idle->context = g_object_ref (context);
+
+      undo->preview_idle_id =
+        g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                         gimp_undo_create_preview_idle,
+                         idle, (GDestroyNotify) gimp_undo_idle_free);
+    }
 }
 
 static gboolean
 gimp_undo_create_preview_idle (gpointer data)
 {
-  GimpUndo *undo = GIMP_UNDO (data);
+  GimpUndoIdle *idle = data;
 
-  if (undo == gimp_undo_stack_peek (undo->image->undo_stack))
+  if (idle->undo == gimp_undo_stack_peek (idle->undo->image->undo_stack))
     {
-      gimp_undo_create_preview_private (undo, NULL /* FIXME */);
+      gimp_undo_create_preview_private (idle->undo, idle->context);
     }
 
-  undo->preview_idle_id = 0;
+  idle->undo->preview_idle_id = 0;
 
   return FALSE;
 }

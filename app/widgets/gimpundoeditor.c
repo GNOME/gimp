@@ -34,6 +34,7 @@
 
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
+#include "gimpdocked.h"
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
 #include "gimpundoeditor.h"
@@ -48,6 +49,8 @@ enum
 };
 
 
+static void   gimp_undo_editor_docked_iface_init (GimpDockedInterface *iface);
+
 static GObject * gimp_undo_editor_constructor    (GType              type,
                                                   guint              n_params,
                                                   GObjectConstructParam *params);
@@ -58,6 +61,9 @@ static void      gimp_undo_editor_set_property   (GObject           *object,
 
 static void      gimp_undo_editor_set_image      (GimpImageEditor   *editor,
                                                   GimpImage         *image);
+
+static void      gimp_undo_editor_set_context    (GimpDocked        *docked,
+                                                  GimpContext       *context);
 
 static void      gimp_undo_editor_fill           (GimpUndoEditor    *editor);
 static void      gimp_undo_editor_clear          (GimpUndoEditor    *editor);
@@ -73,9 +79,14 @@ static void      gimp_undo_editor_select_item    (GimpContainerView *view,
                                                   GimpUndoEditor    *editor);
 
 
-G_DEFINE_TYPE (GimpUndoEditor, gimp_undo_editor, GIMP_TYPE_IMAGE_EDITOR)
+G_DEFINE_TYPE_WITH_CODE (GimpUndoEditor, gimp_undo_editor,
+                         GIMP_TYPE_IMAGE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_undo_editor_docked_iface_init))
 
 #define parent_class gimp_undo_editor_parent_class
+
+static GimpDockedInterface *parent_docked_iface = NULL;
 
 
 static void
@@ -96,6 +107,17 @@ gimp_undo_editor_class_init (GimpUndoEditorClass *klass)
                                                       GIMP_VIEW_SIZE_LARGE,
                                                       GIMP_PARAM_WRITABLE |
                                                       G_PARAM_CONSTRUCT_ONLY));
+}
+
+static void
+gimp_undo_editor_docked_iface_init (GimpDockedInterface *iface)
+{
+  parent_docked_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
+  iface->set_context = gimp_undo_editor_set_context;
 }
 
 static void
@@ -188,6 +210,26 @@ gimp_undo_editor_set_image (GimpImageEditor *image_editor,
     }
 }
 
+static void
+gimp_undo_editor_set_context (GimpDocked  *docked,
+                              GimpContext *context)
+{
+  GimpUndoEditor *editor = GIMP_UNDO_EDITOR (docked);
+
+  parent_docked_iface->set_context (docked, context);
+
+  if (editor->context)
+    g_object_unref (editor->context);
+
+  editor->context = context;
+
+  if (editor->context)
+    g_object_ref (editor->context);
+
+  gimp_container_view_set_context (GIMP_CONTAINER_VIEW (editor->view),
+                                   context);
+}
+
 
 /*  public functions  */
 
@@ -271,17 +313,13 @@ gimp_undo_editor_fill (GimpUndoEditor *editor)
     {
       gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
                                        GIMP_VIEWABLE (top_undo_item));
-      gimp_undo_create_preview (top_undo_item,
-                                gimp_get_user_context (image->gimp),
-                                FALSE);
+      gimp_undo_create_preview (top_undo_item, editor->context, FALSE);
     }
   else
     {
       gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
                                        GIMP_VIEWABLE (editor->base_item));
-      gimp_undo_create_preview (editor->base_item,
-                                gimp_get_user_context (image->gimp),
-                                TRUE);
+      gimp_undo_create_preview (editor->base_item, editor->context, TRUE);
     }
 
   g_signal_handlers_unblock_by_func (editor->view,
@@ -325,9 +363,7 @@ gimp_undo_editor_undo_event (GimpImage      *image,
       gimp_container_insert (editor->container, GIMP_OBJECT (undo), -1);
       gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
                                        GIMP_VIEWABLE (undo));
-      gimp_undo_create_preview (undo,
-                                gimp_get_user_context (image->gimp),
-                                FALSE);
+      gimp_undo_create_preview (undo, editor->context, FALSE);
 
       g_signal_handlers_unblock_by_func (editor->view,
                                          gimp_undo_editor_select_item,
@@ -349,17 +385,13 @@ gimp_undo_editor_undo_event (GimpImage      *image,
         {
           gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
                                            GIMP_VIEWABLE (top_undo_item));
-          gimp_undo_create_preview (top_undo_item,
-                                    gimp_get_user_context (image->gimp),
-                                    FALSE);
+          gimp_undo_create_preview (top_undo_item, editor->context, FALSE);
         }
       else
         {
           gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
                                            GIMP_VIEWABLE (editor->base_item));
-          gimp_undo_create_preview (editor->base_item,
-                                    gimp_get_user_context (image->gimp),
-                                    TRUE);
+          gimp_undo_create_preview (editor->base_item, editor->context, TRUE);
         }
 
       g_signal_handlers_unblock_by_func (editor->view,

@@ -1,5 +1,19 @@
 2006-09-01  Michael Natterer  <mitch@gimp.org>
 
+	This commit *should* fix the remaining missing contexts for
+	preview creation. Eek at me if it doesn't.
+
+	* app/core/gimpundo.c: pass a struct containing a context to
+	gimp_undo_create_preview_idle().
+
+	* app/widgets/gimpundoeditor.[ch]: implement
+	GimpDocked::set_context(), remember the context and use it for the
+	undo treeview.
+
+	* app/widgets/gimpviewrenderergradient.c: disable debugging output.
+
+2006-09-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpaction.[ch]: added a context property and use
 	it when creating GimpViews.
 

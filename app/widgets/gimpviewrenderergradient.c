@@ -100,8 +100,10 @@ gimp_view_renderer_gradient_fg_bg_changed (GimpContext      *context,
                                            const GimpRGB    *color,
                                            GimpViewRenderer *renderer)
 {
+#if 0
   g_printerr ("%s: invalidating %s\n", G_STRFUNC,
               gimp_object_get_name (GIMP_OBJECT (renderer->viewable)));
+#endif
 
   gimp_view_renderer_invalidate (renderer);
 }
