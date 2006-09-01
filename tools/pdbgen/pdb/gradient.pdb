@@ -423,10 +423,10 @@ CODE
 }
 
 sub gradient_segment_set_left_color {
-    $blurb = 'Retrieves the left endpoint color of the specified segment';
+    $blurb = 'Sets the left endpoint color of the specified segment';
 
     $help = <<'HELP';
-This procedure retrieves the left endpoint color of the specified segment of
+This procedure sets the left endpoint color of the specified segment of
 the specified gradient.
 HELP
 
@@ -464,10 +464,10 @@ CODE
 }
 
 sub gradient_segment_set_right_color {
-    $blurb = 'Retrieves the right endpoint color of the specified segment';
+    $blurb = 'Sets the right endpoint color of the specified segment';
 
     $help = <<'HELP';
-This procedure retrieves the right endpoint color of the specified segment of
+This procedure sets the right endpoint color of the specified segment of
 the specified gradient.
 HELP
 

@@ -1631,8 +1631,8 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-set-left-color");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradient-segment-set-left-color",
-                                     "Retrieves the left endpoint color of the specified segment",
-                                     "This procedure retrieves the left endpoint color of the specified segment of the specified gradient.",
+                                     "Sets the left endpoint color of the specified segment",
+                                     "This procedure sets the left endpoint color of the specified segment of the specified gradient.",
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
                                      "2003",
@@ -1715,8 +1715,8 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-set-right-color");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradient-segment-set-right-color",
-                                     "Retrieves the right endpoint color of the specified segment",
-                                     "This procedure retrieves the right endpoint color of the specified segment of the specified gradient.",
+                                     "Sets the right endpoint color of the specified segment",
+                                     "This procedure sets the right endpoint color of the specified segment of the specified gradient.",
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
                                      "2003",

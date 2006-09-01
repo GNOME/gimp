@@ -1,3 +1,10 @@
+2006-09-01  Simon Budig  <simon@gimp.org>
+
+	* tools/pdbgen/pdb/gradient.pdb: minor documentation fix
+
+	* app/pdb/gradient_cmds.c
+	* libgimp/gimpgradient_pdb.c: regenerated
+
 2006-09-01  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpstatusbar.[ch]: use a hash table instead of object

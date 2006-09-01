@@ -363,10 +363,10 @@ gimp_gradient_segment_get_left_color (const gchar *name,
  * @color: The color to set.
  * @opacity: The opacity to set for the endpoint.
  *
- * Retrieves the left endpoint color of the specified segment
+ * Sets the left endpoint color of the specified segment
  *
- * This procedure retrieves the left endpoint color of the specified
- * segment of the specified gradient.
+ * This procedure sets the left endpoint color of the specified segment
+ * of the specified gradient.
  *
  * Returns: TRUE on success.
  *
@@ -451,9 +451,9 @@ gimp_gradient_segment_get_right_color (const gchar *name,
  * @color: The color to set.
  * @opacity: The opacity to set for the endpoint.
  *
- * Retrieves the right endpoint color of the specified segment
+ * Sets the right endpoint color of the specified segment
  *
- * This procedure retrieves the right endpoint color of the specified
+ * This procedure sets the right endpoint color of the specified
  * segment of the specified gradient.
  *
  * Returns: TRUE on success.
