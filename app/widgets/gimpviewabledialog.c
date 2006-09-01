@@ -27,6 +27,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 
@@ -34,12 +35,14 @@
 
 #include "gimpview.h"
 #include "gimpviewabledialog.h"
+#include "gimpviewrenderer.h"
 
 
 enum
 {
   PROP_0,
   PROP_VIEWABLE,
+  PROP_CONTEXT,
   PROP_STOCK_ID,
   PROP_DESC,
   PROP_PARENT
@@ -81,6 +84,10 @@ gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass)
   g_object_class_install_property (object_class, PROP_VIEWABLE,
                                    g_param_spec_object ("viewable", NULL, NULL,
                                                         GIMP_TYPE_VIEWABLE,
+                                                        GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_CONTEXT,
+                                   g_param_spec_object ("context", NULL, NULL,
+                                                        GIMP_TYPE_CONTEXT,
                                                         GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_STOCK_ID,
                                    g_param_spec_string ("stock-id", NULL, NULL,
@@ -158,7 +165,16 @@ gimp_viewable_dialog_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_VIEWABLE:
-      gimp_viewable_dialog_set_viewable (dialog, g_value_get_object (value));
+      gimp_viewable_dialog_set_viewable (dialog,
+                                         g_value_get_object (value),
+                                         dialog->context);
+      break;
+    case PROP_CONTEXT:
+      gimp_viewable_dialog_set_viewable (dialog,
+                                         dialog->view ?
+                                         GIMP_VIEW (dialog->view)->viewable :
+                                         NULL,
+                                         g_value_get_object (value));
       break;
     case PROP_STOCK_ID:
       gtk_image_set_from_stock (GTK_IMAGE (dialog->icon),
@@ -205,6 +221,9 @@ gimp_viewable_dialog_get_property (GObject    *object,
                           dialog->view ?
                           GIMP_VIEW (dialog->view)->viewable : NULL);
       break;
+    case PROP_CONTEXT:
+      g_value_set_object (value, dialog->context);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -217,13 +236,14 @@ gimp_viewable_dialog_destroy (GtkObject *object)
   GimpViewableDialog *dialog = GIMP_VIEWABLE_DIALOG (object);
 
   if (dialog->view)
-    gimp_viewable_dialog_set_viewable (dialog, NULL);
+    gimp_viewable_dialog_set_viewable (dialog, NULL, NULL);
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GtkWidget *
 gimp_viewable_dialog_new (GimpViewable *viewable,
+                          GimpContext  *context,
                           const gchar  *title,
                           const gchar  *role,
                           const gchar  *stock_id,
@@ -237,6 +257,7 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
   va_list             args;
 
   g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
@@ -246,6 +267,7 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
 
   dialog = g_object_new (GIMP_TYPE_VIEWABLE_DIALOG,
                          "viewable",    viewable,
+                         "context",     context,
                          "title",       title,
                          "role",        role,
                          "help-func",   help_func,
@@ -264,17 +286,25 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
 
 void
 gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
-                                   GimpViewable       *viewable)
+                                   GimpViewable       *viewable,
+                                   GimpContext        *context)
 {
   g_return_if_fail (GIMP_IS_VIEWABLE_DIALOG (dialog));
   g_return_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+
+  dialog->context = context;
 
   if (dialog->view)
     {
       GimpViewable *old_viewable = GIMP_VIEW (dialog->view)->viewable;
 
       if (viewable == old_viewable)
-        return;
+        {
+          gimp_view_renderer_set_context (GIMP_VIEW (dialog->view)->renderer,
+                                          context);
+          return;
+        }
 
       gtk_widget_destroy (dialog->view);
 
@@ -298,8 +328,7 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
                                dialog,
                                0);
 
-      dialog->view = gimp_view_new (NULL, /* FIXME */
-                                    viewable, 32, 1, TRUE);
+      dialog->view = gimp_view_new (context, viewable, 32, 1, TRUE);
       gtk_box_pack_end (GTK_BOX (dialog->icon->parent), dialog->view,
                         FALSE, FALSE, 2);
       gtk_widget_show (dialog->view);

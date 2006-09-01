@@ -49,8 +49,8 @@ static void   layer_options_dialog_toggle_rename (GtkWidget          *widget,
 
 LayerOptionsDialog *
 layer_options_dialog_new (GimpImage    *image,
-                          GimpContext  *context,
                           GimpLayer    *layer,
+                          GimpContext  *context,
                           GtkWidget    *parent,
                           const gchar  *layer_name,
                           GimpFillType  layer_fill_type,
@@ -70,6 +70,11 @@ layer_options_dialog_new (GimpImage    *image,
   GtkWidget          *frame;
   GtkWidget          *button;
 
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (layer == NULL || GIMP_IS_LAYER (layer), NULL);
+  g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
+
   options = g_new0 (LayerOptionsDialog, 1);
 
   options->image     = image;
@@ -83,7 +88,8 @@ layer_options_dialog_new (GimpImage    *image,
     viewable = GIMP_VIEWABLE (image);
 
   options->dialog =
-    gimp_viewable_dialog_new (viewable, title, role, stock_id, desc,
+    gimp_viewable_dialog_new (viewable, context,
+                              title, role, stock_id, desc,
                               parent,
                               gimp_standard_help_func, help_id,
 

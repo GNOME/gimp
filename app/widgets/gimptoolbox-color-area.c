@@ -148,7 +148,7 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
 
       toplevel_factory = gimp_dialog_factory_from_name ("toplevel");
 
-      color_dialog = gimp_color_dialog_new (NULL, NULL, NULL, NULL,
+      color_dialog = gimp_color_dialog_new (NULL, NULL, NULL, NULL, NULL,
                                             GTK_WIDGET (editor),
                                             toplevel_factory,
                                             "gimp-toolbox-color-dialog",

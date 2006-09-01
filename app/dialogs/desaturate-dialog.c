@@ -24,6 +24,7 @@
 
 #include "dialogs-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimplayer.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -38,6 +39,7 @@
 
 DesaturateDialog *
 desaturate_dialog_new (GimpDrawable       *drawable,
+                       GimpContext        *context,
                        GtkWidget          *parent,
                        GimpDesaturateMode  mode)
 {
@@ -47,6 +49,7 @@ desaturate_dialog_new (GimpDrawable       *drawable,
   GtkWidget        *button;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
 
   dialog = g_new0 (DesaturateDialog, 1);
@@ -55,7 +58,7 @@ desaturate_dialog_new (GimpDrawable       *drawable,
   dialog->mode     = mode;
 
   dialog->dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (drawable),
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (drawable), context,
                               _("Desaturate"), "gimp-drawable-desaturate",
                               GIMP_STOCK_CONVERT_GRAYSCALE,
                               _("Remove Colors"),

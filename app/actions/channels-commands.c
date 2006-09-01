@@ -77,9 +77,8 @@ channels_edit_attributes_cmd_callback (GtkAction *action,
   return_if_no_channel (image, channel, data);
   return_if_no_widget (widget, data);
 
-  options = channel_options_dialog_new (image,
+  options = channel_options_dialog_new (image, channel,
                                         action_data_get_context (data),
-                                        channel,
                                         widget,
                                         &channel->color,
                                         gimp_object_get_name (GIMP_OBJECT (channel)),
@@ -109,9 +108,8 @@ channels_new_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  options = channel_options_dialog_new (image,
+  options = channel_options_dialog_new (image, NULL,
                                         action_data_get_context (data),
-                                        NULL,
                                         widget,
                                         &channel_color,
                                         channel_name ? channel_name :

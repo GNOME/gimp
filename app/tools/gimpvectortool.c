@@ -1902,6 +1902,7 @@ gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
     }
 
   dialog = stroke_dialog_new (GIMP_ITEM (vector_tool->vectors),
+                              GIMP_CONTEXT (GIMP_TOOL (vector_tool)->tool_info->tool_options),
                               _("Stroke Path"),
                               GIMP_STOCK_PATH_STROKE,
                               GIMP_HELP_PATH_STROKE,

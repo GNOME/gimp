@@ -629,7 +629,7 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
       return;
     }
 
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (list->dest_info),
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (list->dest_info), NULL, /* FIXME */
                                      _("Configure Controller"),
                                      "gimp-controller-editor-dialog",
                                      GTK_STOCK_EDIT,

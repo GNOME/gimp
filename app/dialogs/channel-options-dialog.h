@@ -36,8 +36,8 @@ struct _ChannelOptionsDialog
 
 
 ChannelOptionsDialog * channel_options_dialog_new (GimpImage     *image,
-                                                   GimpContext   *context,
                                                    GimpChannel   *channel,
+                                                   GimpContext   *context,
                                                    GtkWidget     *parent,
                                                    const GimpRGB *channel_color,
                                                    const gchar   *channel_name,

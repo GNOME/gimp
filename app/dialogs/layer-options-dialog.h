@@ -40,8 +40,8 @@ struct _LayerOptionsDialog
 
 
 LayerOptionsDialog * layer_options_dialog_new (GimpImage    *image,
-                                               GimpContext  *context,
                                                GimpLayer    *layer,
+                                               GimpContext  *context,
                                                GtkWidget    *parent,
                                                const gchar  *layer_name,
                                                GimpFillType  layer_fill_type,

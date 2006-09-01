@@ -1,3 +1,51 @@
+2006-09-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpviewabledialog.[ch]: added GimpContext
+	parameters and create the GimpView with that context.
+
+	* app/widgets/gimpcolordialog.[ch]
+	* app/dialogs/convert-dialog.[ch]
+	* app/dialogs/desaturate-dialog.[ch]
+	* app/dialogs/grid-dialog.[ch]
+	* app/dialogs/image-properties-dialog.[ch]
+	* app/dialogs/layer-add-mask-dialog.[ch]
+	* app/dialogs/offset-dialog.[ch]
+	* app/dialogs/print-size-dialog.[ch]
+	* app/dialogs/resize-dialog.[ch]
+	* app/dialogs/scale-dialog.[ch]
+	* app/dialogs/stroke-dialog.[ch]
+	* app/dialogs/template-options-dialog.[ch]
+	* app/dialogs/vectors-options-dialog.[ch]: added GimpContext
+	parameters here too and pass them to gimp_viewable_dialog_new().
+
+	* app/actions/colormap-editor-commands.c
+	* app/actions/drawable-commands.c
+	* app/actions/gradient-editor-commands.c
+	* app/actions/image-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/palette-editor-commands.c
+	* app/actions/select-commands.c
+	* app/actions/vectors-commands.c
+	* app/actions/view-commands.c
+	* app/dialogs/channel-options-dialog.c
+	* app/dialogs/dialogs-constructors.c
+	* app/dialogs/image-merge-layers-dialog.c
+	* app/dialogs/image-scale-dialog.c
+	* app/dialogs/layer-options-dialog.c
+	* app/display/gimpdisplayshell-filter-dialog.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.c
+	* app/widgets/gimpcolorpanel.c
+	* app/widgets/gimpcontrollereditor.c
+	* app/widgets/gimpcontrollerlist.c
+	* app/widgets/gimptoolbox-color-area.c: pass contexts to above
+	dialog constructors.
+
 2006-09-01  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpviewrendererdrawable.c: fixed includes for

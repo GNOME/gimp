@@ -157,7 +157,7 @@ gimp_color_panel_clicked (GtkButton *button)
   if (! panel->color_dialog)
     {
       panel->color_dialog =
-        gimp_color_dialog_new (NULL,
+        gimp_color_dialog_new (NULL, NULL,
                                GIMP_COLOR_BUTTON (button)->title,
                                NULL, NULL,
                                GTK_WIDGET (button),

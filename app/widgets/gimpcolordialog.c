@@ -27,6 +27,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
@@ -234,6 +235,7 @@ gimp_color_dialog_response (GtkDialog *gtk_dialog,
 
 GtkWidget *
 gimp_color_dialog_new (GimpViewable      *viewable,
+                       GimpContext       *context,
                        const gchar       *title,
                        const gchar       *stock_id,
                        const gchar       *desc,
@@ -248,6 +250,7 @@ gimp_color_dialog_new (GimpViewable      *viewable,
   const gchar     *role;
 
   g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (dialog_factory == NULL ||
                         GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
@@ -269,7 +272,7 @@ gimp_color_dialog_new (GimpViewable      *viewable,
 
   if (viewable)
     gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (dialog),
-                                       viewable);
+                                       viewable, context);
   else
     gtk_widget_hide (GIMP_VIEWABLE_DIALOG (dialog)->icon->parent->parent);
 

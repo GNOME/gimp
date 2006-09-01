@@ -32,6 +32,7 @@ struct _DesaturateDialog
 
 
 DesaturateDialog * desaturate_dialog_new (GimpDrawable       *drawable,
+                                          GimpContext        *context,
                                           GtkWidget          *parent,
                                           GimpDesaturateMode  mode);
 

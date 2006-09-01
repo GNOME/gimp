@@ -20,7 +20,7 @@
 #define __IMAGE_NEW_DIALOG_H__
 
 
-GtkWidget * image_new_dialog_new (Gimp         *gimp);
+GtkWidget * image_new_dialog_new (GimpContext  *context);
 
 void        image_new_dialog_set (GtkWidget    *widget,
                                   GimpImage    *image,

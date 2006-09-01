@@ -867,6 +867,7 @@ gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
     }
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (text_tool->layer),
+                                     GIMP_CONTEXT (tool->tool_info->tool_options),
                                      _("Confirm Text Editing"),
                                      "gimp-text-tool-confirm",
                                      GIMP_STOCK_TEXT_LAYER,

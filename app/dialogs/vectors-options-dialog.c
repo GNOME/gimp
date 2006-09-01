@@ -26,6 +26,7 @@
 
 #include "dialogs-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
 #include "vectors/gimpvectors.h"
@@ -42,6 +43,7 @@
 VectorsOptionsDialog *
 vectors_options_dialog_new (GimpImage   *image,
                             GimpVectors *vectors,
+                            GimpContext *context,
                             GtkWidget   *parent,
                             const gchar *vectors_name,
                             const gchar *title,
@@ -58,6 +60,7 @@ vectors_options_dialog_new (GimpImage   *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
@@ -76,7 +79,7 @@ vectors_options_dialog_new (GimpImage   *image,
     viewable = GIMP_VIEWABLE (image);
 
   options->dialog =
-    gimp_viewable_dialog_new (viewable,
+    gimp_viewable_dialog_new (viewable, context,
                               title, role, stock_id, desc,
                               parent,
                               gimp_standard_help_func,

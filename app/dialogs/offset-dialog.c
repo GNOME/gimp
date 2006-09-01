@@ -27,6 +27,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-offset.h"
 #include "core/gimplayer.h"
@@ -51,6 +52,8 @@ typedef struct _OffsetDialog OffsetDialog;
 
 struct _OffsetDialog
 {
+  GimpContext    *context;
+
   GtkWidget      *dialog;
   GtkWidget      *off_se;
 
@@ -73,6 +76,7 @@ static void  offset_halfheight_callback (GtkWidget    *widget,
 
 GtkWidget *
 offset_dialog_new (GimpDrawable *drawable,
+                   GimpContext  *context,
                    GtkWidget    *parent)
 {
   OffsetDialog *dialog;
@@ -87,12 +91,14 @@ offset_dialog_new (GimpDrawable *drawable,
   const gchar  *title = NULL;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
 
   dialog = g_new0 (OffsetDialog, 1);
 
+  dialog->context   = context;
   dialog->fill_type = gimp_drawable_has_alpha (drawable) | WRAP_AROUND;
-  dialog->image    = gimp_item_get_image (GIMP_ITEM (drawable));
+  dialog->image     = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (GIMP_IS_LAYER (drawable))
     title = _("Offset Layer");
@@ -104,7 +110,7 @@ offset_dialog_new (GimpDrawable *drawable,
     g_warning ("%s: unexpected drawable type", G_STRFUNC);
 
   dialog->dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (drawable),
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (drawable), context,
                               _("Offset"), "gimp-drawable-offset",
                               GIMP_STOCK_TOOL_MOVE,
                               title,
@@ -259,7 +265,7 @@ offset_response (GtkWidget    *widget,
                                               1));
 
           gimp_drawable_offset (drawable,
-                                gimp_get_user_context (image->gimp),
+                                dialog->context,
                                 dialog->fill_type & WRAP_AROUND ? TRUE : FALSE,
                                 dialog->fill_type & FILL_MASK,
                                 offset_x, offset_y);

@@ -25,6 +25,7 @@
 
 #include "dialogs-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimp-utils.h"
 
@@ -74,6 +75,7 @@ static void   print_size_dialog_set_resolution     (PrintSizeDialog *private,
 
 GtkWidget *
 print_size_dialog_new (GimpImage              *image,
+                       GimpContext            *context,
                        const gchar            *title,
                        const gchar            *role,
                        GtkWidget              *parent,
@@ -96,9 +98,10 @@ print_size_dialog_new (GimpImage              *image,
   GList           *focus_chain = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (callback != NULL, NULL);
 
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
                                      title, role,
                                      GIMP_STOCK_PRINT_RESOLUTION, title,
                                      parent,

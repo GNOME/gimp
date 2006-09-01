@@ -1584,7 +1584,8 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
   if (tr_tool->dialog)
     {
       gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (tr_tool->dialog),
-                                         GIMP_VIEWABLE (gimp_image_active_drawable (display->image)));
+                                         GIMP_VIEWABLE (gimp_image_active_drawable (display->image)),
+                                         GIMP_CONTEXT (options));
 
       gtk_widget_set_sensitive (tr_tool->dialog, TRUE);
     }

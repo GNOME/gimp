@@ -565,14 +565,16 @@ view_padding_color_cmd_callback (GtkAction *action,
 
         if (! color_dialog)
           {
-            color_dialog = gimp_color_dialog_new (GIMP_VIEWABLE (display->image),
-                                                  _("Set Canvas Padding Color"),
-                                                  GTK_STOCK_SELECT_COLOR,
-                                                  _("Set Custom Canvas Padding Color"),
-                                                  display->shell,
-                                                  NULL, NULL,
-                                                  &options->padding_color,
-                                                  FALSE, FALSE);
+            color_dialog =
+              gimp_color_dialog_new (GIMP_VIEWABLE (display->image),
+                                     action_data_get_context (data),
+                                     _("Set Canvas Padding Color"),
+                                     GTK_STOCK_SELECT_COLOR,
+                                     _("Set Custom Canvas Padding Color"),
+                                     display->shell,
+                                     NULL, NULL,
+                                     &options->padding_color,
+                                     FALSE, FALSE);
 
             g_signal_connect (color_dialog, "update",
                               G_CALLBACK (view_padding_color_dialog_update),

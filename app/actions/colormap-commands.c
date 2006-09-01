@@ -73,6 +73,7 @@ colormap_editor_edit_color_cmd_callback (GtkAction *action,
     {
       editor->color_dialog =
         gimp_color_dialog_new (GIMP_VIEWABLE (image),
+                               action_data_get_context (data),
                                _("Edit Colormap Entry"),
                                GIMP_STOCK_COLORMAP,
                                desc,
@@ -93,7 +94,8 @@ colormap_editor_edit_color_cmd_callback (GtkAction *action,
   else
     {
       gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (editor->color_dialog),
-                                         GIMP_VIEWABLE (image));
+                                         GIMP_VIEWABLE (image),
+                                         action_data_get_context (data));
       g_object_set (editor->color_dialog, "description", desc, NULL);
       gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
                                    &color);

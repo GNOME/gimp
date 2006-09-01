@@ -65,6 +65,7 @@ palette_editor_edit_color_cmd_callback (GtkAction *action,
     {
       editor->color_dialog =
         gimp_color_dialog_new (GIMP_VIEWABLE (palette),
+                               data_editor->context,
                                _("Edit Palette Color"),
                                GIMP_STOCK_PALETTE,
                                _("Edit Color Palette Entry"),
@@ -85,7 +86,8 @@ palette_editor_edit_color_cmd_callback (GtkAction *action,
   else
     {
       gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (editor->color_dialog),
-                                         GIMP_VIEWABLE (palette));
+                                         GIMP_VIEWABLE (palette),
+                                         data_editor->context);
       gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
                                    &editor->color->color);
     }

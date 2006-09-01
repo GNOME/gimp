@@ -64,12 +64,12 @@ static void  stroke_dialog_paint_info_selected (GimpContainerView *view,
 
 GtkWidget *
 stroke_dialog_new (GimpItem    *item,
+                   GimpContext *context,
                    const gchar *title,
                    const gchar *stock_id,
                    const gchar *help_id,
                    GtkWidget   *parent)
 {
-  GimpContext    *context;
   GimpStrokeDesc *desc;
   GimpStrokeDesc *saved_desc;
   GimpImage      *image;
@@ -82,12 +82,12 @@ stroke_dialog_new (GimpItem    *item,
   GtkWidget      *frame;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
-  image   = gimp_item_get_image (item);
-  context = gimp_get_user_context (image->gimp);
+  image = gimp_item_get_image (item);
 
   desc = gimp_stroke_desc_new (context->gimp, context);
 
@@ -96,7 +96,7 @@ stroke_dialog_new (GimpItem    *item,
   if (saved_desc)
     gimp_config_sync (G_OBJECT (saved_desc), G_OBJECT (desc), 0);
 
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item),
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item), context,
                                      title, "gimp-stroke-options",
                                      stock_id,
                                      _("Choose Stroke Style"),

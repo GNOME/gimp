@@ -21,6 +21,7 @@
 
 
 GtkWidget * offset_dialog_new (GimpDrawable *drawable,
+                               GimpContext  *context,
                                GtkWidget    *parent);
 
 

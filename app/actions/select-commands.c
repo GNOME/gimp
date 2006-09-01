@@ -291,6 +291,7 @@ select_stroke_cmd_callback (GtkAction *action,
     }
 
   dialog = stroke_dialog_new (GIMP_ITEM (gimp_image_get_mask (image)),
+                              action_data_get_context (data),
                               _("Stroke Selection"),
                               GIMP_STOCK_SELECTION_STROKE,
                               GIMP_HELP_SELECTION_STROKE,

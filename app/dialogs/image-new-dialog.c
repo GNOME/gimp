@@ -31,6 +31,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-new.h"
 #include "core/gimptemplate.h"
@@ -57,7 +58,7 @@ typedef struct
   GtkWidget    *combo;
   GtkWidget    *editor;
 
-  Gimp         *gimp;
+  GimpContext  *context;
   GimpTemplate *template;
 } ImageNewDialog;
 
@@ -78,18 +79,18 @@ static void   image_new_create_image    (ImageNewDialog     *dialog);
 /*  public functions  */
 
 GtkWidget *
-image_new_dialog_new (Gimp *gimp)
+image_new_dialog_new (GimpContext *context)
 {
   ImageNewDialog *dialog;
   GtkWidget      *main_vbox;
   GtkWidget      *table;
   GimpSizeEntry  *entry;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   dialog = g_new0 (ImageNewDialog, 1);
 
-  dialog->gimp     = gimp;
+  dialog->context  = context;
   dialog->template = g_object_new (GIMP_TYPE_TEMPLATE, NULL);
 
   dialog->dialog = gimp_dialog_new (_("Create a New Image"),
@@ -131,7 +132,7 @@ image_new_dialog_new (Gimp *gimp)
   gtk_widget_show (table);
 
   dialog->combo = g_object_new (GIMP_TYPE_CONTAINER_COMBO_BOX,
-                                "container",         gimp->templates,
+                                "container",         context->gimp->templates,
                                 "view-size",         16,
                                 "view-border-width", 0,
                                 "ellipsize",         PANGO_ELLIPSIZE_NONE,
@@ -147,7 +148,8 @@ image_new_dialog_new (Gimp *gimp)
                     dialog);
 
   /*  Template editor  */
-  dialog->editor = gimp_template_editor_new (dialog->template, gimp, FALSE);
+  dialog->editor = gimp_template_editor_new (dialog->template, context->gimp,
+                                             FALSE);
   gtk_box_pack_start (GTK_BOX (main_vbox), dialog->editor, FALSE, FALSE, 0);
   gtk_widget_show (dialog->editor);
 
@@ -180,7 +182,8 @@ image_new_dialog_set (GtkWidget    *widget,
     }
   else
     {
-      template = gimp_image_new_get_last_template (dialog->gimp, image);
+      template = gimp_image_new_get_last_template (dialog->context->gimp,
+                                                   image);
 
       gimp_config_sync (G_OBJECT (template), G_OBJECT (dialog->template), 0);
 
@@ -199,7 +202,7 @@ image_new_response (GtkWidget      *widget,
   switch (response_id)
     {
     case RESPONSE_RESET:
-      gimp_config_sync (G_OBJECT (dialog->gimp->config->default_image),
+      gimp_config_sync (G_OBJECT (dialog->context->gimp->config->default_image),
                         G_OBJECT (dialog->template), 0);
       gimp_container_view_select_item (GIMP_CONTAINER_VIEW (dialog->combo),
                                        NULL);
@@ -207,7 +210,7 @@ image_new_response (GtkWidget      *widget,
 
     case GTK_RESPONSE_OK:
       if (dialog->template->initial_size >
-          GIMP_GUI_CONFIG (dialog->gimp->config)->max_new_image_size)
+          GIMP_GUI_CONFIG (dialog->context->gimp->config)->max_new_image_size)
         image_new_confirm_dialog (dialog);
       else
         image_new_create_image (dialog);
@@ -303,7 +306,7 @@ image_new_confirm_dialog (ImageNewDialog *data)
                                        "with a size of %s."), size);
   g_free (size);
 
-  config = GIMP_GUI_CONFIG (data->gimp->config);
+  config = GIMP_GUI_CONFIG (data->context->gimp->config);
   size = gimp_memsize_to_string (config->max_new_image_size);
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                               _("An image of the chosen size will use more "
@@ -324,11 +327,11 @@ image_new_create_image (ImageNewDialog *dialog)
   Gimp         *gimp;
 
   template = g_object_ref (dialog->template);
-  gimp     = dialog->gimp;
+  gimp     = dialog->context->gimp;
 
   gtk_widget_destroy (dialog->dialog);
 
-  gimp_template_create_image (gimp, template, gimp_get_user_context (gimp));
+  gimp_template_create_image (gimp, template, dialog->context);
   gimp_image_new_set_last_template (gimp, template);
 
   g_object_unref (template);

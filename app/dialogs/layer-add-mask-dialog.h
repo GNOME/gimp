@@ -34,6 +34,7 @@ struct _LayerAddMaskDialog
 
 
 LayerAddMaskDialog * layer_add_mask_dialog_new (GimpLayer       *layer,
+                                                GimpContext     *context,
                                                 GtkWidget       *parent,
                                                 GimpAddMaskType  add_mask_type,
                                                 gboolean         invert);

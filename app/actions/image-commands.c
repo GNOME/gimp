@@ -185,7 +185,9 @@ image_convert_cmd_callback (GtkAction *action,
 
         if (! dialog)
           {
-            dialog = convert_dialog_new (image, widget,
+            dialog = convert_dialog_new (image,
+                                         action_data_get_context (data),
+                                         widget,
                                          GIMP_PROGRESS (display));
 
             g_object_set_data (G_OBJECT (widget),
@@ -229,6 +231,7 @@ image_resize_cmd_callback (GtkAction *action,
     unit = GIMP_DISPLAY_SHELL (display->shell)->unit;
 
   dialog = resize_dialog_new (GIMP_VIEWABLE (image),
+                              action_data_get_context (data),
                               _("Set Image Canvas Size"), "gimp-image-resize",
                               widget,
                               gimp_standard_help_func, GIMP_HELP_IMAGE_RESIZE,
@@ -278,6 +281,7 @@ image_print_size_cmd_callback (GtkAction *action,
   return_if_no_widget (widget, data);
 
   dialog = print_size_dialog_new (display->image,
+                                  action_data_get_context (data),
                                   _("Set Image Print Resolution"),
                                   "gimp-image-print-size",
                                   widget,
@@ -446,7 +450,9 @@ image_configure_grid_cmd_callback (GtkAction *action,
 
   if (! shell->grid_dialog)
     {
-      shell->grid_dialog = grid_dialog_new (display->image, display->shell);
+      shell->grid_dialog = grid_dialog_new (display->image,
+                                            action_data_get_context (data),
+                                            display->shell);
 
       gtk_window_set_transient_for (GTK_WINDOW (shell->grid_dialog),
                                     GTK_WINDOW (display->shell));
@@ -473,7 +479,9 @@ image_properties_cmd_callback (GtkAction *action,
   shell = GIMP_DISPLAY_SHELL (display->shell);
   image = display->image;
 
-  dialog = image_properties_dialog_new (display->image, display->shell);
+  dialog = image_properties_dialog_new (display->image,
+                                        action_data_get_context (data),
+                                        display->shell);
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog),
                                 GTK_WINDOW (display->shell));

@@ -27,6 +27,7 @@
 
 #include "dialogs-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -41,16 +42,18 @@
 /*  public functions  */
 
 GtkWidget *
-image_properties_dialog_new (GimpImage *image,
-                             GtkWidget *parent)
+image_properties_dialog_new (GimpImage   *image,
+                             GimpContext *context,
+                             GtkWidget   *parent)
 {
   GtkWidget *dialog;
   GtkWidget *view;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
                                      _("Image Properties"),
                                      "gimp-image-properties",
                                      GTK_STOCK_INFO,

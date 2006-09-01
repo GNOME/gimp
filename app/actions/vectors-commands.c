@@ -135,8 +135,8 @@ vectors_edit_attributes_cmd_callback (GtkAction *action,
   return_if_no_vectors (image, vectors, data);
   return_if_no_widget (widget, data);
 
-  options = vectors_options_dialog_new (image,
-                                        vectors,
+  options = vectors_options_dialog_new (image, vectors,
+                                        action_data_get_context (data),
                                         widget,
                                         gimp_object_get_name (GIMP_OBJECT (vectors)),
                                         _("Path Attributes"),
@@ -162,8 +162,8 @@ vectors_new_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  options = vectors_options_dialog_new (image,
-                                        NULL,
+  options = vectors_options_dialog_new (image, NULL,
+                                        action_data_get_context (data),
                                         widget,
                                         vectors_name ? vectors_name :
                                         _("New Path"),
@@ -365,6 +365,7 @@ vectors_stroke_cmd_callback (GtkAction *action,
     }
 
   dialog = stroke_dialog_new (GIMP_ITEM (vectors),
+                              action_data_get_context (data),
                               _("Stroke Path"),
                               GIMP_STOCK_PATH_STROKE,
                               GIMP_HELP_PATH_STROKE,

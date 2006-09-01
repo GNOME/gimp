@@ -75,7 +75,9 @@ drawable_desaturate_cmd_callback (GtkAction *action,
       return;
     }
 
-  dialog = desaturate_dialog_new (drawable, widget, desaturate_mode);
+  dialog = desaturate_dialog_new (drawable,
+                                  action_data_get_context (data),
+                                  widget, desaturate_mode);
 
   g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (desaturate_response),
@@ -151,7 +153,8 @@ drawable_offset_cmd_callback (GtkAction *action,
   return_if_no_drawable (image, drawable, data);
   return_if_no_widget (widget, data);
 
-  dialog = offset_dialog_new (drawable, widget);
+  dialog = offset_dialog_new (drawable, action_data_get_context (data),
+                              widget);
   gtk_widget_show (dialog);
 }
 

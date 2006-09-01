@@ -26,6 +26,7 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
@@ -52,6 +53,7 @@ static gboolean   layer_add_mask_dialog_channel_selected (GimpContainerView  *vi
 
 LayerAddMaskDialog *
 layer_add_mask_dialog_new (GimpLayer       *layer,
+                           GimpContext     *context,
                            GtkWidget       *parent,
                            GimpAddMaskType  add_mask_type,
                            gboolean         invert)
@@ -65,6 +67,7 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
 
   dialog = g_new0 (LayerAddMaskDialog, 1);
 
@@ -73,7 +76,7 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
   dialog->invert        = invert;
 
   dialog->dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (layer),
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (layer), context,
                               _("Add Layer Mask"), "gimp-layer-add-mask",
                               GIMP_STOCK_LAYER_MASK,
                               _("Add a Mask to the Layer"),
@@ -114,7 +117,7 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
   gtk_widget_show (frame);
 
   combo = gimp_container_combo_box_new (GIMP_ITEM (layer)->image->channels,
-                                        NULL,
+                                        context,
                                         GIMP_VIEW_SIZE_SMALL, 1);
   gimp_enum_radio_frame_add (GTK_FRAME (frame), combo, GIMP_ADD_CHANNEL_MASK);
   gtk_widget_show (combo);

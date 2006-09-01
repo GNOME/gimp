@@ -32,6 +32,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-undo.h"
@@ -62,8 +63,9 @@ static void  grid_dialog_response (GtkWidget *widget,
 
 
 GtkWidget *
-grid_dialog_new (GimpImage *image,
-                 GtkWidget *parent)
+grid_dialog_new (GimpImage   *image,
+                 GimpContext *context,
+                 GtkWidget   *parent)
 {
   GimpGrid  *grid;
   GimpGrid  *grid_backup;
@@ -71,12 +73,13 @@ grid_dialog_new (GimpImage *image,
   GtkWidget *editor;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
   grid = gimp_image_get_grid (GIMP_IMAGE (image));
   grid_backup = gimp_config_duplicate (GIMP_CONFIG (grid));
 
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
                                      _("Configure Grid"), "gimp-grid-configure",
                                      GIMP_STOCK_GRID, _("Configure Image Grid"),
                                      parent,

@@ -307,7 +307,8 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
   drawable = gimp_image_active_drawable (display->image);
 
   gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (image_map_tool->shell),
-                                     GIMP_VIEWABLE (drawable));
+                                     GIMP_VIEWABLE (drawable),
+                                     GIMP_CONTEXT (tool_info->tool_options));
 
   gtk_widget_show (image_map_tool->shell);
 

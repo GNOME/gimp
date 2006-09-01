@@ -117,7 +117,7 @@ templates_new_cmd_callback (GtkAction *action,
 
   context = gimp_container_view_get_context (editor->view);
 
-  options = template_options_dialog_new (context->gimp, NULL,
+  options = template_options_dialog_new (NULL, context,
                                          GTK_WIDGET (editor),
                                          _("New Template"),
                                          "gimp-template-new",
@@ -179,7 +179,7 @@ templates_edit_cmd_callback (GtkAction *action,
     {
       TemplateOptionsDialog *options;
 
-      options = template_options_dialog_new (context->gimp, template,
+      options = template_options_dialog_new (template, context,
                                              GTK_WIDGET (editor),
                                              _("Edit Template"),
                                              "gimp-template-edit",

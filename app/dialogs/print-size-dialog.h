@@ -29,6 +29,7 @@ typedef void (* GimpResolutionCallback) (GtkWidget *dialog,
 
 
 GtkWidget * print_size_dialog_new (GimpImage              *image,
+                                   GimpContext            *context,
                                    const gchar            *title,
                                    const gchar            *role,
                                    GtkWidget              *parent,

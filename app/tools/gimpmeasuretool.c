@@ -329,7 +329,8 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 
   if (mtool->dialog)
     gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (mtool->dialog),
-                                       GIMP_VIEWABLE (tool->display->image));
+                                       GIMP_VIEWABLE (tool->display->image),
+                                       GIMP_CONTEXT (options));
 }
 
 static void

@@ -100,7 +100,7 @@ dialogs_image_new_new (GimpDialogFactory *factory,
                        GimpContext       *context,
                        gint               view_size)
 {
-  return image_new_dialog_new (context->gimp);
+  return image_new_dialog_new (context);
 }
 
 GtkWidget *

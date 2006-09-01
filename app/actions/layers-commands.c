@@ -195,8 +195,9 @@ layers_edit_attributes_cmd_callback (GtkAction *action,
   return_if_no_widget (widget, data);
 
   dialog = layer_options_dialog_new (gimp_item_get_image (GIMP_ITEM (layer)),
+                                     layer,
                                      action_data_get_context (data),
-                                     layer, widget,
+                                     widget,
                                      gimp_object_get_name (GIMP_OBJECT (layer)),
                                      layer_fill_type,
                                      _("Layer Attributes"),
@@ -233,8 +234,9 @@ layers_new_cmd_callback (GtkAction *action,
       return;
     }
 
-  dialog = layer_options_dialog_new (image, action_data_get_context (data),
-                                     NULL, widget,
+  dialog = layer_options_dialog_new (image, NULL,
+                                     action_data_get_context (data),
+                                     widget,
                                      layer_name ? layer_name : _("New Layer"),
                                      layer_fill_type,
                                      _("New Layer"),
@@ -532,6 +534,7 @@ layers_resize_cmd_callback (GtkAction *action,
     unit = display ? GIMP_DISPLAY_SHELL (display->shell)->unit : GIMP_UNIT_PIXEL;
 
   dialog = resize_dialog_new (GIMP_VIEWABLE (layer),
+                              action_data_get_context (data),
                               _("Set Layer Boundary Size"), "gimp-layer-resize",
                               widget,
                               gimp_standard_help_func, GIMP_HELP_LAYER_RESIZE,
@@ -575,6 +578,7 @@ layers_scale_cmd_callback (GtkAction *action,
     unit = display ? GIMP_DISPLAY_SHELL (display->shell)->unit : GIMP_UNIT_PIXEL;
 
   dialog = scale_dialog_new (GIMP_VIEWABLE (layer),
+                             action_data_get_context (data),
                              _("Scale Layer"), "gimp-layer-scale",
                              widget,
                              gimp_standard_help_func, GIMP_HELP_LAYER_SCALE,
@@ -629,7 +633,8 @@ layers_mask_add_cmd_callback (GtkAction *action,
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
-  dialog = layer_add_mask_dialog_new (layer, widget,
+  dialog = layer_add_mask_dialog_new (layer, action_data_get_context (data),
+                                      widget,
                                       layer_add_mask_type, layer_mask_invert);
 
   g_signal_connect (dialog->dialog, "response",

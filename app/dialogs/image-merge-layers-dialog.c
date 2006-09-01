@@ -59,7 +59,7 @@ image_merge_layers_dialog_new (GimpImage     *image,
   dialog->merge_type = GIMP_EXPAND_AS_NECESSARY;
 
   dialog->dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
                               _("Merge Layers"), "gimp-image-merge-layers",
                               GIMP_STOCK_MERGE_DOWN,
                               _("Layers Merge Options"),

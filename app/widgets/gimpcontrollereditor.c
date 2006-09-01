@@ -664,7 +664,7 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
                                event_blurb);
 
       editor->edit_dialog =
-        gimp_viewable_dialog_new (GIMP_VIEWABLE (editor->info),
+        gimp_viewable_dialog_new (GIMP_VIEWABLE (editor->info), NULL, /* FIXME */
                                   _("Select Controller Event Action"),
                                   "gimp-controller-action-dialog",
                                   GTK_STOCK_EDIT,

@@ -32,8 +32,8 @@ struct _TemplateOptionsDialog
 };
 
 
-TemplateOptionsDialog * template_options_dialog_new (Gimp         *gimp,
-                                                     GimpTemplate *template,
+TemplateOptionsDialog * template_options_dialog_new (GimpTemplate *template,
+                                                     GimpContext  *context,
                                                      GtkWidget    *parent,
                                                      const gchar  *title,
                                                      const gchar  *role,

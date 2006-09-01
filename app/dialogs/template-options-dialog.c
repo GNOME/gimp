@@ -28,6 +28,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimptemplate.h"
 
 #include "widgets/gimptemplateeditor.h"
@@ -41,8 +42,8 @@
 /*  public functions */
 
 TemplateOptionsDialog *
-template_options_dialog_new (Gimp         *gimp,
-                             GimpTemplate *template,
+template_options_dialog_new (GimpTemplate *template,
+                             GimpContext  *context,
                              GtkWidget    *parent,
                              const gchar  *title,
                              const gchar  *role,
@@ -54,8 +55,8 @@ template_options_dialog_new (Gimp         *gimp,
   GimpViewable          *viewable = NULL;
   GtkWidget             *vbox;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (template == NULL || GIMP_IS_TEMPLATE (template), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
@@ -65,7 +66,7 @@ template_options_dialog_new (Gimp         *gimp,
 
   options = g_new0 (TemplateOptionsDialog, 1);
 
-  options->gimp     = gimp;
+  options->gimp     = context->gimp;
   options->template = template;
 
   if (template)
@@ -76,13 +77,13 @@ template_options_dialog_new (Gimp         *gimp,
   else
     {
       template =
-        gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_image));
+        gimp_config_duplicate (GIMP_CONFIG (options->gimp->config->default_image));
 
       gimp_object_set_static_name (GIMP_OBJECT (template), _("Unnamed"));
     }
 
   options->dialog =
-    gimp_viewable_dialog_new (viewable,
+    gimp_viewable_dialog_new (viewable, context,
                               title, role, stock_id, desc,
                               parent,
                               gimp_standard_help_func, help_id,
@@ -105,7 +106,7 @@ template_options_dialog_new (Gimp         *gimp,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->dialog)->vbox), vbox);
   gtk_widget_show (vbox);
 
-  options->editor = gimp_template_editor_new (template, gimp, TRUE);
+  options->editor = gimp_template_editor_new (template, options->gimp, TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), options->editor, FALSE, FALSE, 0);
   gtk_widget_show (options->editor);
 

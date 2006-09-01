@@ -82,6 +82,7 @@ gradient_editor_left_color_cmd_callback (GtkAction *action,
 
   editor->color_dialog =
     gimp_color_dialog_new (GIMP_VIEWABLE (gradient),
+                           GIMP_DATA_EDITOR (editor)->context,
                            _("Left Endpoint Color"),
                            GIMP_STOCK_GRADIENT,
                            _("Gradient Segment's Left Endpoint Color"),
@@ -232,6 +233,7 @@ gradient_editor_right_color_cmd_callback (GtkAction *action,
 
   editor->color_dialog =
     gimp_color_dialog_new (GIMP_VIEWABLE (gradient),
+                           GIMP_DATA_EDITOR (editor)->context,
                            _("Right Endpoint Color"),
                            GIMP_STOCK_GRADIENT,
                            _("Gradient Segment's Right Endpoint Color"),
@@ -436,7 +438,8 @@ void
 gradient_editor_replicate_cmd_callback (GtkAction *action,
                                         gpointer   data)
 {
-  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
+  GimpGradientEditor *editor      = GIMP_GRADIENT_EDITOR (data);
+  GimpDataEditor     *data_editor = GIMP_DATA_EDITOR (data);
   GtkWidget          *dialog;
   GtkWidget          *vbox;
   GtkWidget          *label;
@@ -457,7 +460,8 @@ gradient_editor_replicate_cmd_callback (GtkAction *action,
     }
 
   dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (GIMP_DATA_EDITOR (editor)->data),
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (data_editor->data),
+                              data_editor->context,
                               title, "gimp-gradient-segment-replicate",
                               GIMP_STOCK_GRADIENT, desc,
                               GTK_WIDGET (editor),
@@ -535,7 +539,8 @@ void
 gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
                                               gpointer   data)
 {
-  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
+  GimpGradientEditor *editor      = GIMP_GRADIENT_EDITOR (data);
+  GimpDataEditor     *data_editor = GIMP_DATA_EDITOR (data);
   GtkWidget          *dialog;
   GtkWidget          *vbox;
   GtkWidget          *label;
@@ -556,7 +561,8 @@ gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
     }
 
   dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (GIMP_DATA_EDITOR (editor)->data),
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (data_editor->data),
+                              data_editor->context,
                               title, "gimp-gradient-segment-split-uniformly",
                               GIMP_STOCK_GRADIENT, desc,
                               GTK_WIDGET (editor),

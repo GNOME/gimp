@@ -34,6 +34,7 @@ struct _VectorsOptionsDialog
 
 VectorsOptionsDialog * vectors_options_dialog_new (GimpImage   *image,
                                                    GimpVectors *vectors,
+                                                   GimpContext *context,
                                                    GtkWidget   *parent,
                                                    const gchar *vectors_name,
                                                    const gchar *title,

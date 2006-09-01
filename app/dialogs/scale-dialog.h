@@ -33,6 +33,7 @@ typedef void (* GimpScaleCallback) (GtkWidget             *dialog,
 
 
 GtkWidget * scale_dialog_new (GimpViewable          *viewable,
+                              GimpContext           *context,
                               const gchar           *title,
                               const gchar           *role,
                               GtkWidget             *parent,

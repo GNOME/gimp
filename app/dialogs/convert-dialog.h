@@ -21,6 +21,7 @@
 
 
 GtkWidget * convert_dialog_new (GimpImage    *image,
+                                GimpContext  *context,
                                 GtkWidget    *parent,
                                 GimpProgress *progress);
 
