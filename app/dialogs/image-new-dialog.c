@@ -37,7 +37,6 @@
 #include "core/gimptemplate.h"
 
 #include "widgets/gimpcontainercombobox.h"
-#include "widgets/gimpcontainerview.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
@@ -65,15 +64,15 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void   image_new_response        (GtkWidget         *widget,
-                                         gint               response_id,
-                                         ImageNewDialog     *dialog);
-static void   image_new_template_select (GimpContainerView *view,
-                                         GimpTemplate      *template,
-                                         gpointer           insert_data,
-                                         ImageNewDialog     *dialog);
-static void   image_new_confirm_dialog  (ImageNewDialog     *dialog);
-static void   image_new_create_image    (ImageNewDialog     *dialog);
+static void   image_new_free             (ImageNewDialog *dialog);
+static void   image_new_response         (GtkWidget      *widget,
+                                          gint            response_id,
+                                          ImageNewDialog *dialog);
+static void   image_new_template_changed (GimpContext    *context,
+                                          GimpTemplate   *template,
+                                          ImageNewDialog *dialog);
+static void   image_new_confirm_dialog   (ImageNewDialog *dialog);
+static void   image_new_create_image     (ImageNewDialog *dialog);
 
 
 /*  public functions  */
@@ -90,7 +89,8 @@ image_new_dialog_new (GimpContext *context)
 
   dialog = g_new0 (ImageNewDialog, 1);
 
-  dialog->context  = context;
+  dialog->context  = gimp_context_new (context->gimp, "image-new-dialog",
+                                       context);
   dialog->template = g_object_new (GIMP_TYPE_TEMPLATE, NULL);
 
   dialog->dialog = gimp_dialog_new (_("Create a New Image"),
@@ -108,7 +108,7 @@ image_new_dialog_new (GimpContext *context)
 
   g_object_set_data_full (G_OBJECT (dialog->dialog),
                           "gimp-image-new-dialog", dialog,
-                          (GDestroyNotify) g_free);
+                          (GDestroyNotify) image_new_free);
 
   g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (image_new_response),
@@ -133,6 +133,7 @@ image_new_dialog_new (GimpContext *context)
 
   dialog->combo = g_object_new (GIMP_TYPE_CONTAINER_COMBO_BOX,
                                 "container",         context->gimp->templates,
+                                "context",           dialog->context,
                                 "view-size",         16,
                                 "view-border-width", 0,
                                 "ellipsize",         PANGO_ELLIPSIZE_NONE,
@@ -143,8 +144,8 @@ image_new_dialog_new (GimpContext *context)
                              _("_Template:"),  0.0, 0.5,
                              dialog->combo, 1, TRUE);
 
-  g_signal_connect (dialog->combo, "select-item",
-                    G_CALLBACK (image_new_template_select),
+  g_signal_connect (dialog->context, "template-changed",
+                    G_CALLBACK (image_new_template_changed),
                     dialog);
 
   /*  Template editor  */
@@ -156,6 +157,10 @@ image_new_dialog_new (GimpContext *context)
   entry = GIMP_SIZE_ENTRY (GIMP_TEMPLATE_EDITOR (dialog->editor)->size_se);
   gimp_size_entry_set_activates_default (entry, TRUE);
   gimp_size_entry_grab_focus (entry);
+
+  image_new_template_changed (dialog->context,
+                              gimp_context_get_template (dialog->context),
+                              dialog);
 
   return dialog->dialog;
 }
@@ -175,12 +180,9 @@ image_new_dialog_set (GtkWidget    *widget,
 
   g_return_if_fail (dialog != NULL);
 
-  if (template)
-    {
-      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (dialog->combo),
-                                       GIMP_VIEWABLE (template));
-    }
-  else
+  gimp_context_set_template (dialog->context, template);
+
+  if (! template)
     {
       template = gimp_image_new_get_last_template (dialog->context->gimp,
                                                    image);
@@ -195,6 +197,14 @@ image_new_dialog_set (GtkWidget    *widget,
 /*  private functions  */
 
 static void
+image_new_free (ImageNewDialog *dialog)
+{
+  g_object_unref (dialog->context);
+  g_object_unref (dialog->template);
+  g_free (dialog);
+}
+
+static void
 image_new_response (GtkWidget      *widget,
                     gint            response_id,
                     ImageNewDialog *dialog)
@@ -204,8 +214,7 @@ image_new_response (GtkWidget      *widget,
     case RESPONSE_RESET:
       gimp_config_sync (G_OBJECT (dialog->context->gimp->config->default_image),
                         G_OBJECT (dialog->template), 0);
-      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (dialog->combo),
-                                       NULL);
+      gimp_context_set_template (dialog->context, NULL);
       break;
 
     case GTK_RESPONSE_OK:
@@ -223,10 +232,9 @@ image_new_response (GtkWidget      *widget,
 }
 
 static void
-image_new_template_select (GimpContainerView  *view,
-                           GimpTemplate       *template,
-                           gpointer            insert_data,
-                           ImageNewDialog     *dialog)
+image_new_template_changed (GimpContext    *context,
+                            GimpTemplate   *template,
+                            ImageNewDialog *dialog)
 {
   gchar *comment = NULL;
 

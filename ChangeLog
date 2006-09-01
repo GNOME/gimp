@@ -1,3 +1,16 @@
+2006-09-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainercombobox.c: implement set_context() and
+	set the view renderers' contexts.
+
+	(gimp_container_combo_box_insert_item): unselect after inserting
+	the first item, GimpContainerView doesn't select items by itself.
+
+	* app/dialogs/image-new-dialog.c: create a local context for the
+	combo box, connect to the context's "template-changed" signal
+	instead of the combo boxed's "select-item", fix some stuff and
+	don't leak the local GimpTemplate.
+
 2006-09-01  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpgradient.c: disallow NULL context and removed code
