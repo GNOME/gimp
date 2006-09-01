@@ -1,5 +1,11 @@
 2006-09-01  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/scripts/gradient-example.scm: pop the context
+	before rendering the gradient so we draw the gradient with the
+	user's colors, not with the ones the script uses temporarily.
+
+2006-09-01  Michael Natterer  <mitch@gimp.org>
+
 	This commit *should* fix the remaining missing contexts for
 	preview creation. Eek at me if it doesn't.
 
