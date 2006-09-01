@@ -40,11 +40,11 @@ struct _GimpStatusbar
 {
   GtkHBox           parent_instance;
 
-  GSList           *messages;
-  GSList           *keys;
-  guint             seq_context_id;
-
   GimpDisplayShell *shell;
+
+  GSList           *messages;
+  GHashTable       *context_ids;
+  guint             seq_context_id;
 
   gchar             cursor_format_str[CURSOR_FORMAT_LENGTH];
   gchar             length_format_str[CURSOR_FORMAT_LENGTH];
