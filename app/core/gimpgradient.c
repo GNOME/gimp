@@ -328,7 +328,7 @@ gimp_gradient_get_color_at (GimpGradient        *gradient,
   GimpRGB  rgb;
 
   g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
   pos = CLAMP (pos, 0.0, 1.0);
@@ -374,8 +374,7 @@ gimp_gradient_get_color_at (GimpGradient        *gradient,
       break;
 
     default:
-      g_warning ("%s: Unknown gradient type %d.",
-                 G_STRFUNC, seg->type);
+      g_warning ("%s: Unknown gradient type %d.", G_STRFUNC, seg->type);
       break;
     }
 
@@ -389,10 +388,7 @@ gimp_gradient_get_color_at (GimpGradient        *gradient,
 
     case GIMP_GRADIENT_COLOR_FOREGROUND:
     case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
-      if (context)
-        gimp_context_get_foreground (context, &left_color);
-      else
-        gimp_rgba_set (&left_color, 0.0, 0.0, 0.0, 1.0);
+      gimp_context_get_foreground (context, &left_color);
 
       if (seg->left_color_type == GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT)
         gimp_rgb_set_alpha (&left_color, 0.0);
@@ -400,10 +396,7 @@ gimp_gradient_get_color_at (GimpGradient        *gradient,
 
     case GIMP_GRADIENT_COLOR_BACKGROUND:
     case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
-      if (context)
-        gimp_context_get_background (context, &left_color);
-      else
-        gimp_rgba_set (&left_color, 1.0, 1.0, 1.0, 1.0);
+      gimp_context_get_background (context, &left_color);
 
       if (seg->left_color_type == GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
         gimp_rgb_set_alpha (&left_color, 0.0);
@@ -418,10 +411,7 @@ gimp_gradient_get_color_at (GimpGradient        *gradient,
 
     case GIMP_GRADIENT_COLOR_FOREGROUND:
     case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
-      if (context)
-        gimp_context_get_foreground (context, &right_color);
-      else
-        gimp_rgba_set (&right_color, 0.0, 0.0, 0.0, 1.0);
+      gimp_context_get_foreground (context, &right_color);
 
       if (seg->right_color_type == GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT)
         gimp_rgb_set_alpha (&right_color, 0.0);
@@ -429,10 +419,7 @@ gimp_gradient_get_color_at (GimpGradient        *gradient,
 
     case GIMP_GRADIENT_COLOR_BACKGROUND:
     case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
-      if (context)
-        gimp_context_get_background (context, &right_color);
-      else
-        gimp_rgba_set (&right_color, 1.0, 1.0, 1.0, 1.0);
+      gimp_context_get_background (context, &right_color);
 
       if (seg->right_color_type == GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
         gimp_rgb_set_alpha (&right_color, 0.0);
@@ -640,7 +627,7 @@ gimp_gradient_segment_split_midpoint (GimpGradient         *gradient,
   GimpGradientSegment *newseg;
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (lseg != NULL);
   g_return_if_fail (newl != NULL);
   g_return_if_fail (newr != NULL);
@@ -708,7 +695,7 @@ gimp_gradient_segment_split_uniform (GimpGradient         *gradient,
   gint                 i;
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (lseg != NULL);
   g_return_if_fail (newl != NULL);
   g_return_if_fail (newr != NULL);
@@ -1459,7 +1446,7 @@ gimp_gradient_segment_range_split_midpoint (GimpGradient         *gradient,
   GimpGradientSegment *seg, *lseg, *rseg;
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   gimp_data_freeze (GIMP_DATA (gradient));
 
@@ -1497,7 +1484,7 @@ gimp_gradient_segment_range_split_uniform (GimpGradient         *gradient,
   GimpGradientSegment *seg, *aseg, *lseg, *rseg, *lsel;
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   if (! end_seg)
     end_seg = gimp_gradient_segment_get_last (start_seg);

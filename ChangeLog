@@ -1,3 +1,8 @@
+2006-09-01  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpgradient.c: disallow NULL context and removed code
+	that used to deal with this case.
+
 2006-09-01  Simon Budig  <simon@gimp.org>
 
 	* tools/pdbgen/pdb/gradient.pdb: minor documentation fix
