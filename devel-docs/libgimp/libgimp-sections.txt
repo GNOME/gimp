@@ -74,6 +74,7 @@ GimpMergeType
 GimpOffsetType
 GimpOrientationType
 GimpRotationType
+GimpSelectCriterion
 gimp_enums_get_type_names
 <SUBSECTION Standard>
 GIMP_TYPE_BRUSH_APPLICATION_MODE
@@ -93,6 +94,7 @@ GIMP_TYPE_MERGE_TYPE
 GIMP_TYPE_OFFSET_TYPE
 GIMP_TYPE_ORIENTATION_TYPE
 GIMP_TYPE_ROTATION_TYPE
+GIMP_TYPE_SELECT_CRITERION
 gimp_brush_application_mode_get_type
 gimp_brush_generated_shape_get_type
 gimp_convert_dither_type_get_type
@@ -110,6 +112,7 @@ gimp_merge_type_get_type
 gimp_offset_type_get_type
 gimp_orientation_type_get_type
 gimp_rotation_type_get_type
+gimp_select_criterion_get_type
 </SECTION>
 
 <SECTION>
@@ -836,18 +839,21 @@ gimp_tile_cache_ntiles
 gimp_airbrush
 gimp_airbrush_default
 gimp_by_color_select
+gimp_by_color_select_full
 gimp_clone
 gimp_clone_default
 gimp_convolve
 gimp_convolve_default
 gimp_dodgeburn
 gimp_dodgeburn_default
+gimp_edit_bucket_fill_full
 gimp_ellipse_select
 gimp_eraser
 gimp_eraser_default
 gimp_flip
 gimp_free_select
 gimp_fuzzy_select
+gimp_fuzzy_select_full
 gimp_paintbrush
 gimp_paintbrush_default
 gimp_pencil
@@ -910,6 +916,7 @@ GimpPixbufTransparency
 gimp_image_get_thumbnail
 gimp_drawable_get_thumbnail
 gimp_drawable_get_sub_thumbnail
+gimp_layer_new_from_pixbuf
 </SECTION>
 
 <SECTION>

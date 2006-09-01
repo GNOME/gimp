@@ -57,6 +57,24 @@ Functions giving access to common toolbox tools.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_by_color_select_full ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@color: 
+@threshold: 
+@operation: 
+@antialias: 
+@feather: 
+@feather_radius: 
+@sample_merged: 
+@select_transparent: 
+@select_criterion: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_clone ##### -->
 <para>
 
@@ -129,6 +147,24 @@ Functions giving access to common toolbox tools.
 @drawable_ID: 
 @num_strokes: 
 @strokes: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_edit_bucket_fill_full ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@fill_mode: 
+@paint_mode: 
+@opacity: 
+@threshold: 
+@sample_merged: 
+@fill_transparent: 
+@select_criterion: 
+@x: 
+@y: 
 @Returns: 
 
 
@@ -212,6 +248,25 @@ Functions giving access to common toolbox tools.
 @feather: 
 @feather_radius: 
 @sample_merged: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_fuzzy_select_full ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@x: 
+@y: 
+@threshold: 
+@operation: 
+@antialias: 
+@feather: 
+@feather_radius: 
+@sample_merged: 
+@select_transparent: 
+@select_criterion: 
 @Returns: 
 
 

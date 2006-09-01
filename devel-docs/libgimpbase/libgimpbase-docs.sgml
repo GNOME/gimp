@@ -23,6 +23,7 @@
     <xi:include href="xml/gimpdatafiles.xml" />
     <xi:include href="xml/gimpenv.xml" />
     <xi:include href="xml/gimpmemsize.xml" />
+    <xi:include href="xml/gimprectangle.xml" />
     <xi:include href="xml/gimpparasite.xml" />
     <xi:include href="xml/gimpparasiteio.xml" />
     <xi:include href="xml/gimpsignal.xml" />

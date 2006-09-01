@@ -66,3 +66,18 @@ Get a thumbnail pixbuf for a drawable or image.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_layer_new_from_pixbuf ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@name: 
+@pixbuf: 
+@opacity: 
+@mode: 
+@progress_start: 
+@progress_end: 
+@Returns: 
+
+
