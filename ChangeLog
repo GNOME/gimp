@@ -1,3 +1,8 @@
+2006-09-01  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpgradient-load.c (gimp_gradient_load): use sizeof()
+	instead of hardcoding the buffer size.
+
 2006-09-01  Michael Natterer  <mitch@gimp.org>
 
 	Extended the GIMP Gradient file format to contain the endpoint
