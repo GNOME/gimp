@@ -40,6 +40,8 @@ struct _GimpAction
 {
   GtkAction     parent_instance;
 
+  GimpContext  *context;
+
   GimpRGB      *color;
   GimpViewable *viewable;
 };

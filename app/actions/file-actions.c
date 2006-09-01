@@ -170,10 +170,17 @@ file_actions_setup (GimpActionGroup *group)
 
   for (i = 0; i < n_entries; i++)
     {
+      GtkAction *action;
+
       gimp_action_group_set_action_visible (group, entries[i].name, FALSE);
 
-      g_free ((gchar *) entries[i].name);
+      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                            entries[i].name);
+      g_object_set (action,
+                    "context", gimp_get_user_context (group->gimp),
+                    NULL);
 
+      g_free ((gchar *) entries[i].name);
       if (i < 9)
         g_free ((gchar *) entries[i].accelerator);
     }

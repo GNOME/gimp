@@ -31,6 +31,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpimagefile.h"  /* eek */
 #include "core/gimpviewable.h"
@@ -43,6 +44,7 @@
 enum
 {
   PROP_0,
+  PROP_CONTEXT,
   PROP_COLOR,
   PROP_VIEWABLE
 };
@@ -83,6 +85,12 @@ gimp_action_class_init (GimpActionClass *klass)
 
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 
+  g_object_class_install_property (object_class, PROP_CONTEXT,
+                                   g_param_spec_object ("context",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_CONTEXT,
+                                                        GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_COLOR,
                                    gimp_param_spec_rgb ("color",
                                                         NULL, NULL,
@@ -107,6 +115,12 @@ static void
 gimp_action_finalize (GObject *object)
 {
   GimpAction *action = GIMP_ACTION (object);
+
+  if (action->context)
+    {
+      g_object_unref (action->context);
+      action->context = NULL;
+    }
 
   if (action->color)
     {
@@ -133,6 +147,9 @@ gimp_action_get_property (GObject    *object,
 
   switch (prop_id)
     {
+    case PROP_CONTEXT:
+      g_value_set_object (value, action->context);
+      break;
     case PROP_COLOR:
       g_value_set_boxed (value, action->color);
       break;
@@ -156,6 +173,11 @@ gimp_action_set_property (GObject      *object,
 
   switch (prop_id)
     {
+    case PROP_CONTEXT:
+      if (action->context)
+        g_object_unref  (action->context);
+      action->context = GIMP_CONTEXT (g_value_dup_object (value));
+      break;
     case PROP_COLOR:
       if (action->color)
         g_free (action->color);
@@ -165,7 +187,7 @@ gimp_action_set_property (GObject      *object,
     case PROP_VIEWABLE:
       if (action->viewable)
         g_object_unref  (action->viewable);
-      action->viewable = (GimpViewable *) g_value_dup_object (value);
+      action->viewable = GIMP_VIEWABLE (g_value_dup_object (value));
       set_proxy = TRUE;
       break;
     default:
@@ -327,8 +349,7 @@ gimp_action_set_proxy (GimpAction *action,
 
           gtk_icon_size_lookup_for_settings (settings, size, &width, &height);
 
-          view = gimp_view_new_full (NULL /* FIXME */,
-                                     action->viewable,
+          view = gimp_view_new_full (action->context, action->viewable,
                                      width, height, border_width,
                                      FALSE, FALSE, FALSE);
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), view);

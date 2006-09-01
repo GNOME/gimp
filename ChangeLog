@@ -1,5 +1,13 @@
 2006-09-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpaction.[ch]: added a context property and use
+	it when creating GimpViews.
+
+	* app/actions/file-actions.c: set the context on the "Open Recent"
+	actions.
+
+2006-09-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainercombobox.c: implement set_context() and
 	set the view renderers' contexts.
 
