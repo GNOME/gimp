@@ -1,10 +1,15 @@
+2006-09-01  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (EXTRA_DIST): added vbr.txt.
+
 2006-09-01  Michael Natterer  <mitch@gimp.org>
 
 	* ggr.txt: updated for the new fields in the gradient files.
 
 2006-08-31  Dave Neary  <bolsh@gimp.org>
 
-	* xcf.txt: commit Henning Makholm's spec of the XCF format.
+	* Makefile.am (EXTRA_DIST)
+	* xcf.txt: added draft for XCF spec contributed by Henning Makholm.
 
 2006-08-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
