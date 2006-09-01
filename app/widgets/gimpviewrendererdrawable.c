@@ -23,13 +23,13 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "widgets-types.h"
 
 #include "base/temp-buf.h"
 
-#include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-preview.h"
 #include "core/gimpimage.h"
