@@ -1,3 +1,7 @@
+2006-09-01  Michael Natterer  <mitch@gimp.org>
+
+	* ggr.txt: updated for the new fields in the gradient files.
+
 2006-08-31  Dave Neary  <bolsh@gimp.org>
 
 	* devel-docs/xcf.txt: Commit Henning Makholm's amazing spec of the XCF

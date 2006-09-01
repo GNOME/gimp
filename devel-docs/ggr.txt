@@ -1,7 +1,7 @@
     The .ggr file format.
 
 GGR files are used to store GIMP gradients.  A gradient consists of a
-series of consecutive *segments* spanning the range from 0 to 1.  Each
+series of consecutive *segments* spanning the range from 0.0 to 1.0.  Each
 segment has the following attributes:
 
 Left Endpoint coordinate: (double)
@@ -9,10 +9,22 @@ Left Endpoint color (RGBA color)
 Right Endpoint coordinate (double)
 Right Endpoint color (RGBA color)
 Midpoint coordinate (double)
-Blend function (enum; values are 0 = "linear", 1 = "curved",
-                2 = "sinusoidal", 3 = "spherical (increasing)", 
-                4 = "spherical (decreasing)")
-Color type (enum; values are 0 = "RGB", 1 = "HSV CCW", 2 = "HSV CW")
+Blending function (enum; values are:
+                   0 = "linear"
+                   1 = "curved"
+                   2 = "sinusoidal"
+                   3 = "spherical (increasing)"
+                   4 = "spherical (decreasing)")
+Coloring type (enum; values are:
+               0 = "RGB"
+               1 = "HSV CCW"
+               2 = "HSV CW")
+Left and right Endpoint Color type (enum; values are:
+                                    0 = "fixed"
+                                    1 = "foreground",
+                                    2 = "foreground transparent"
+                                    3 = "background",
+                                    4 = "background transparent")
 
 
 A GGR file is an ASCII file structured as follows:
@@ -22,8 +34,8 @@ Line 2: "Name: " followed by the name of the gradient
 Line 3: the number of segments 
 
 The remaining lines consist of segment specifications.  There must be
-one line for each segment.  Each line contains 13 numbers -- the first
-11 are floats, the remaining 2 are ints.  Here is what each field
+one line for each segment.  Each line contains 15 numbers -- the first
+11 are floats, the remaining 4 are ints.  Here is what each field
 encodes:
 
 Field      Meaning
@@ -38,8 +50,10 @@ Field      Meaning
   8          Right endpoint G
   9          Right endpoint B
  10          Right endpoint A
- 11          Blend function type
- 12          Color type
+ 11          Blending function type
+ 12          Coloring type
+ 13          Left endpoint color type
+ 14          Right endpoint color type
 
 The left endpoint coordinate of each segment must equal the right
 endpoint coordinate of the preceding segment.
@@ -47,14 +61,11 @@ endpoint coordinate of the preceding segment.
 Note 1: This is a description of the *new* gradient file format.  In
 earlier versions of GIMP a different format was used.
 
-Note 2: A few of the gradients at the top of the list in the Gradients
-Dialog are special ones, for which shades of gray are replaced with
-proportionate blends of the current foreground and background colors.
-These special gradients are not represented by .ggr files in the
-"gradients" directory, and there is currently no way to get this
-behavior for a custom gradient.
+Note 2: In GIMP versions prior to 2.3.11 the file format didn't contain
+the color types of the endpoints, thus it was impossible to get the
+behavior of the special "FG to BG" etc. gradients in custom gradients.
 
-Note 3: Starting with version 2.1, Gimp now has the ability to load
+Note 3: Starting with version 2.1, GIMP now has the ability to load
 gradients in SVG gradient format, if the file is placed in the user's
 personal "gradients" directory, or some other location in the
 gradients search path.
