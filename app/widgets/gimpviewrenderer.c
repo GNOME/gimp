@@ -687,7 +687,13 @@ static void
 gimp_view_renderer_real_set_context (GimpViewRenderer *renderer,
                                      GimpContext      *context)
 {
+  if (renderer->context)
+    g_object_unref (renderer->context);
+
   renderer->context = context;
+
+  if (renderer->context)
+    g_object_ref (renderer->context);
 }
 
 static void

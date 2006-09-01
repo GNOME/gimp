@@ -1,3 +1,8 @@
+2006-09-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpviewrenderer.c
+	(gimp_view_renderer_real_set_context): ref the context.
+
 2006-09-01  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpgradient-load.c (gimp_gradient_load): use sizeof()
