@@ -71,7 +71,11 @@ libapppaint_a_sources = \
 	gimpsmudge.c		\
 	gimpsmudge.h		\
 	gimpsmudgeoptions.c	\
-	gimpsmudgeoptions.h
+	gimpsmudgeoptions.h	\
+	gimpsourcecore.c	\
+	gimpsourcecore.h	\
+	gimpsourceoptions.c	\
+	gimpsourceoptions.h
 
 libapppaint_a_built_sources = paint-enums.c
 

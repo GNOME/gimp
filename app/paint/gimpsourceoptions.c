@@ -24,54 +24,44 @@
 
 #include "paint-types.h"
 
-#include "gimpcloneoptions.h"
-
-
-#define CLONE_DEFAULT_TYPE       GIMP_IMAGE_CLONE
-#define CLONE_DEFAULT_ALIGN_MODE GIMP_CLONE_ALIGN_NO
+#include "gimpsourceoptions.h"
 
 
 enum
 {
   PROP_0,
-  PROP_CLONE_TYPE,
   PROP_ALIGN_MODE,
   PROP_SAMPLE_MERGED
 };
 
 
+static void   gimp_source_options_set_property (GObject      *object,
+                                                guint         property_id,
+                                                const GValue *value,
+                                                GParamSpec   *pspec);
+static void   gimp_source_options_get_property (GObject      *object,
+                                                guint         property_id,
+                                                GValue       *value,
+                                                GParamSpec   *pspec);
 
-static void   gimp_clone_options_set_property (GObject      *object,
-                                               guint         property_id,
-                                               const GValue *value,
-                                               GParamSpec   *pspec);
-static void   gimp_clone_options_get_property (GObject      *object,
-                                               guint         property_id,
-                                               GValue       *value,
-                                               GParamSpec   *pspec);
 
-
-G_DEFINE_TYPE (GimpCloneOptions, gimp_clone_options, GIMP_TYPE_PAINT_OPTIONS)
+G_DEFINE_TYPE (GimpSourceOptions, gimp_source_options, GIMP_TYPE_PAINT_OPTIONS)
 
 
 static void
-gimp_clone_options_class_init (GimpCloneOptionsClass *klass)
+gimp_source_options_class_init (GimpSourceOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_clone_options_set_property;
-  object_class->get_property = gimp_clone_options_get_property;
+  object_class->set_property = gimp_source_options_set_property;
+  object_class->get_property = gimp_source_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CLONE_TYPE,
-                                 "clone-type", NULL,
-                                 GIMP_TYPE_CLONE_TYPE,
-                                 CLONE_DEFAULT_TYPE,
-                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ALIGN_MODE,
                                  "align-mode", NULL,
-                                 GIMP_TYPE_CLONE_ALIGN_MODE,
-                                 CLONE_DEFAULT_ALIGN_MODE,
+                                 GIMP_TYPE_SOURCE_ALIGN_MODE,
+                                 GIMP_SOURCE_ALIGN_NO,
                                  GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                                     "sample-merged", NULL,
                                     FALSE,
@@ -79,23 +69,20 @@ gimp_clone_options_class_init (GimpCloneOptionsClass *klass)
 }
 
 static void
-gimp_clone_options_init (GimpCloneOptions *options)
+gimp_source_options_init (GimpSourceOptions *options)
 {
 }
 
 static void
-gimp_clone_options_set_property (GObject      *object,
-                                 guint         property_id,
-                                 const GValue *value,
-                                 GParamSpec   *pspec)
+gimp_source_options_set_property (GObject      *object,
+                                  guint         property_id,
+                                  const GValue *value,
+                                  GParamSpec   *pspec)
 {
-  GimpCloneOptions *options = GIMP_CLONE_OPTIONS (object);
+  GimpSourceOptions *options = GIMP_SOURCE_OPTIONS (object);
 
   switch (property_id)
     {
-    case PROP_CLONE_TYPE:
-      options->clone_type = g_value_get_enum (value);
-      break;
     case PROP_ALIGN_MODE:
       options->align_mode = g_value_get_enum (value);
       break;
@@ -109,18 +96,15 @@ gimp_clone_options_set_property (GObject      *object,
 }
 
 static void
-gimp_clone_options_get_property (GObject    *object,
-                                 guint       property_id,
-                                 GValue     *value,
-                                 GParamSpec *pspec)
+gimp_source_options_get_property (GObject    *object,
+                                  guint       property_id,
+                                  GValue     *value,
+                                  GParamSpec *pspec)
 {
-  GimpCloneOptions *options = GIMP_CLONE_OPTIONS (object);
+  GimpSourceOptions *options = GIMP_SOURCE_OPTIONS (object);
 
   switch (property_id)
     {
-    case PROP_CLONE_TYPE:
-      g_value_set_enum (value, options->clone_type);
-      break;
     case PROP_ALIGN_MODE:
       g_value_set_enum (value, options->align_mode);
       break;

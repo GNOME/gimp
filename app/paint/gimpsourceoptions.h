@@ -16,35 +16,39 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CLONE_OPTIONS_H__
-#define __GIMP_CLONE_OPTIONS_H__
+#ifndef __GIMP_SOURCE_OPTIONS_H__
+#define __GIMP_SOURCE_OPTIONS_H__
 
 
 #include "gimppaintoptions.h"
 
 
-#define GIMP_TYPE_CLONE_OPTIONS            (gimp_clone_options_get_type ())
-#define GIMP_CLONE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CLONE_OPTIONS, GimpCloneOptions))
-#define GIMP_CLONE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CLONE_OPTIONS, GimpCloneOptionsClass))
-#define GIMP_IS_CLONE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CLONE_OPTIONS))
-#define GIMP_IS_CLONE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CLONE_OPTIONS))
-#define GIMP_CLONE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CLONE_OPTIONS, GimpCloneOptionsClass))
+#define GIMP_TYPE_SOURCE_OPTIONS            (gimp_source_options_get_type ())
+#define GIMP_SOURCE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SOURCE_OPTIONS, GimpSourceOptions))
+#define GIMP_SOURCE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SOURCE_OPTIONS, GimpSourceOptionsClass))
+#define GIMP_IS_SOURCE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SOURCE_OPTIONS))
+#define GIMP_IS_SOURCE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SOURCE_OPTIONS))
+#define GIMP_SOURCE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SOURCE_OPTIONS, GimpSourceOptionsClass))
 
 
-typedef struct _GimpCloneOptions      GimpCloneOptions;
-typedef struct _GimpPaintOptionsClass GimpCloneOptionsClass;
+typedef struct _GimpSourceOptions      GimpSourceOptions;
+typedef struct _GimpSourceOptionsClass GimpSourceOptionsClass;
 
-struct _GimpCloneOptions
+struct _GimpSourceOptions
 {
-  GimpPaintOptions    paint_options;
+  GimpPaintOptions    parent_instance;
 
-  GimpCloneType       clone_type;
-  GimpCloneAlignMode  align_mode;
+  GimpSourceAlignMode align_mode;
   gboolean            sample_merged;
 };
 
+struct _GimpSourceOptionsClass
+{
+  GimpPaintOptionsClass parent_class;
+};
 
-GType   gimp_clone_options_get_type (void) G_GNUC_CONST;
+
+GType   gimp_source_options_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_CLONE_OPTIONS_H__  */
+#endif  /*  __GIMP_SOURCE_OPTIONS_H__  */

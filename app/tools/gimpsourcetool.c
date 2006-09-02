@@ -205,12 +205,14 @@ gimp_clone_tool_button_press (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *display)
 {
-  GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
-  GimpCloneTool    *clone_tool = GIMP_CLONE_TOOL (tool);
-  GimpClone        *clone      = GIMP_CLONE (paint_tool->core);
-  GimpCloneOptions *options;
+  GimpPaintTool     *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpCloneTool     *clone_tool = GIMP_CLONE_TOOL (tool);
+  GimpSourceCore    *source     = GIMP_SOURCE_CORE (paint_tool->core);
+  GimpCloneOptions  *options;
+  GimpSourceOptions *source_options;
 
-  options = GIMP_CLONE_OPTIONS (tool->tool_info->tool_options);
+  options        = GIMP_CLONE_OPTIONS (tool->tool_info->tool_options);
+  source_options = GIMP_SOURCE_OPTIONS (options);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -218,16 +220,16 @@ gimp_clone_tool_button_press (GimpTool        *tool,
 
   if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
     {
-      clone->set_source = TRUE;
+      source->set_source = TRUE;
 
       clone_tool->src_display = display;
     }
   else
     {
-      clone->set_source = FALSE;
+      source->set_source = FALSE;
 
       if (options->clone_type == GIMP_IMAGE_CLONE &&
-          options->sample_merged                  &&
+          source_options->sample_merged           &&
           display == clone_tool->src_display)
         {
           paint_tool->core->use_saved_proj = TRUE;
@@ -237,8 +239,8 @@ gimp_clone_tool_button_press (GimpTool        *tool,
   GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
                                                 display);
 
-  clone_tool->src_x = clone->src_x;
-  clone_tool->src_y = clone->src_y;
+  clone_tool->src_x = source->src_x;
+  clone_tool->src_y = source->src_y;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -250,21 +252,21 @@ gimp_clone_tool_motion (GimpTool        *tool,
                         GdkModifierType  state,
                         GimpDisplay     *display)
 {
-  GimpCloneTool *clone_tool = GIMP_CLONE_TOOL (tool);
-  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
-  GimpClone     *clone      = GIMP_CLONE (paint_tool->core);
+  GimpCloneTool  *clone_tool = GIMP_CLONE_TOOL (tool);
+  GimpPaintTool  *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpSourceCore *source     = GIMP_SOURCE_CORE (paint_tool->core);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
-    clone->set_source = TRUE;
+    source->set_source = TRUE;
   else
-    clone->set_source = FALSE;
+    source->set_source = FALSE;
 
   GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
 
-  clone_tool->src_x = clone->src_x;
-  clone_tool->src_y = clone->src_y;
+  clone_tool->src_x = source->src_x;
+  clone_tool->src_y = source->src_y;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -321,7 +323,7 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
         {
           cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
         }
-      else if (! GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable)
+      else if (! GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (tool)->core)->src_drawable)
         {
           modifier = GIMP_CURSOR_MODIFIER_BAD;
         }
@@ -340,10 +342,12 @@ gimp_clone_tool_oper_update (GimpTool        *tool,
                              gboolean         proximity,
                              GimpDisplay     *display)
 {
-  GimpCloneTool    *clone_tool = GIMP_CLONE_TOOL (tool);
-  GimpCloneOptions *options;
+  GimpCloneTool     *clone_tool = GIMP_CLONE_TOOL (tool);
+  GimpCloneOptions  *options;
+  GimpSourceOptions *source_options;
 
-  options = GIMP_CLONE_OPTIONS (tool->tool_info->tool_options);
+  options        = GIMP_CLONE_OPTIONS (tool->tool_info->tool_options);
+  source_options = GIMP_SOURCE_OPTIONS (options);
 
   if (proximity)
     {
@@ -360,9 +364,9 @@ gimp_clone_tool_oper_update (GimpTool        *tool,
 
   if (options->clone_type == GIMP_IMAGE_CLONE && proximity)
     {
-      GimpClone *clone = GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core);
+      GimpSourceCore *source = GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (tool)->core);
 
-      if (clone->src_drawable == NULL)
+      if (source->src_drawable == NULL)
         {
           if (state & GDK_CONTROL_MASK)
             gimp_tool_replace_status (tool, display,
@@ -370,6 +374,7 @@ gimp_clone_tool_oper_update (GimpTool        *tool,
           else
             {
               gchar *status;
+
               status = g_strdup_printf (_("%s%sClick to set a clone source."),
                                         gimp_get_mod_name_control (),
                                         gimp_get_mod_separator ());
@@ -381,20 +386,25 @@ gimp_clone_tool_oper_update (GimpTool        *tool,
         {
           gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-          clone_tool->src_x = clone->src_x;
-          clone_tool->src_y = clone->src_y;
+          clone_tool->src_x = source->src_x;
+          clone_tool->src_y = source->src_y;
 
-          if (! clone->first_stroke)
+          if (! source->first_stroke)
             {
-              if (options->align_mode == GIMP_CLONE_ALIGN_YES)
+              switch (source_options->align_mode)
                 {
-                  clone_tool->src_x = coords->x + clone->offset_x;
-                  clone_tool->src_y = coords->y + clone->offset_y;
-                }
-              else if (options->align_mode == GIMP_CLONE_ALIGN_REGISTERED)
-                {
+                case GIMP_SOURCE_ALIGN_YES:
+                  clone_tool->src_x = coords->x + source->offset_x;
+                  clone_tool->src_y = coords->y + source->offset_y;
+                  break;
+
+                case GIMP_SOURCE_ALIGN_REGISTERED:
                   clone_tool->src_x = coords->x;
                   clone_tool->src_y = coords->y;
+                  break;
+
+                default:
+                  break;
                 }
             }
 
@@ -408,19 +418,19 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpTool         *tool       = GIMP_TOOL (draw_tool);
   GimpCloneTool    *clone_tool = GIMP_CLONE_TOOL (draw_tool);
-  GimpClone        *clone      = GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core);
+  GimpSourceCore   *source     = GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (tool)->core);
   GimpCloneOptions *options;
 
   options = GIMP_CLONE_OPTIONS (tool->tool_info->tool_options);
 
   if (options->clone_type == GIMP_IMAGE_CLONE &&
-      clone->src_drawable && clone_tool->src_display)
+      source->src_drawable && clone_tool->src_display)
     {
       GimpDisplay *tmp_display;
       gint         off_x;
       gint         off_y;
 
-      gimp_item_offsets (GIMP_ITEM (clone->src_drawable), &off_x, &off_y);
+      gimp_item_offsets (GIMP_ITEM (source->src_drawable), &off_x, &off_y);
 
       tmp_display = draw_tool->display;
       draw_tool->display = clone_tool->src_display;

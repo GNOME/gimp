@@ -16,52 +16,56 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CLONE_H__
-#define __GIMP_CLONE_H__
+#ifndef __GIMP_SOURCE_CORE_H__
+#define __GIMP_SOURCE_CORE_H__
 
 
 #include "gimpbrushcore.h"
 
 
-#define GIMP_TYPE_CLONE            (gimp_clone_get_type ())
-#define GIMP_CLONE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CLONE, GimpClone))
-#define GIMP_CLONE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CLONE, GimpCloneClass))
-#define GIMP_IS_CLONE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CLONE))
-#define GIMP_IS_CLONE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CLONE))
-#define GIMP_CLONE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CLONE, GimpCloneClass))
+#define GIMP_TYPE_SOURCE_CORE            (gimp_source_core_get_type ())
+#define GIMP_SOURCE_CORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SOURCE_CORE, GimpSourceCore))
+#define GIMP_SOURCE_CORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SOURCE_CORE, GimpSourceCoreClass))
+#define GIMP_IS_SOURCE_CORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SOURCE_CORE))
+#define GIMP_IS_SOURCE_CORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SOURCE_CORE))
+#define GIMP_SOURCE_CORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SOURCE_CORE, GimpSourceCoreClass))
 
 
-typedef struct _GimpClone      GimpClone;
-typedef struct _GimpCloneClass GimpCloneClass;
+typedef struct _GimpSourceCore      GimpSourceCore;
+typedef struct _GimpSourceCoreClass GimpSourceCoreClass;
 
-struct _GimpClone
+struct _GimpSourceCore
 {
-  GimpBrushCore parent_instance;
+  GimpBrushCore  parent_instance;
 
-  gboolean      set_source;
+  gboolean       set_source;
 
-  GimpDrawable *src_drawable;
-  gdouble       src_x;
-  gdouble       src_y;
+  GimpDrawable  *src_drawable;
+  gdouble        src_x;
+  gdouble        src_y;
 
-  gdouble       orig_src_x;
-  gdouble       orig_src_y;
+  gdouble        orig_src_x;
+  gdouble        orig_src_y;
 
-  gdouble       offset_x;
-  gdouble       offset_y;
-  gboolean      first_stroke;
+  gdouble        offset_x;
+  gdouble        offset_y;
+  gboolean       first_stroke;
 };
 
-struct _GimpCloneClass
+struct _GimpSourceCoreClass
 {
-  GimpBrushCoreClass parent_class;
+  GimpBrushCoreClass  parent_class;
+
+  void (*  motion) (GimpSourceCore   *source_core,
+                    GimpDrawable     *drawable,
+                    GimpPaintOptions *paint_options);
 };
 
 
-void    gimp_clone_register (Gimp                      *gimp,
-                             GimpPaintRegisterCallback  callback);
+void    gimp_source_core_register (Gimp                      *gimp,
+                                   GimpPaintRegisterCallback  callback);
 
-GType   gimp_clone_get_type (void) G_GNUC_CONST;
+GType   gimp_source_core_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_CLONE_H__  */
+#endif  /*  __GIMP_SOURCE_CORE_H__  */

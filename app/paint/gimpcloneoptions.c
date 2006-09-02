@@ -27,18 +27,11 @@
 #include "gimpcloneoptions.h"
 
 
-#define CLONE_DEFAULT_TYPE       GIMP_IMAGE_CLONE
-#define CLONE_DEFAULT_ALIGN_MODE GIMP_CLONE_ALIGN_NO
-
-
 enum
 {
   PROP_0,
-  PROP_CLONE_TYPE,
-  PROP_ALIGN_MODE,
-  PROP_SAMPLE_MERGED
+  PROP_CLONE_TYPE
 };
-
 
 
 static void   gimp_clone_options_set_property (GObject      *object,
@@ -51,7 +44,7 @@ static void   gimp_clone_options_get_property (GObject      *object,
                                                GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpCloneOptions, gimp_clone_options, GIMP_TYPE_PAINT_OPTIONS)
+G_DEFINE_TYPE (GimpCloneOptions, gimp_clone_options, GIMP_TYPE_SOURCE_OPTIONS)
 
 
 static void
@@ -65,17 +58,8 @@ gimp_clone_options_class_init (GimpCloneOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CLONE_TYPE,
                                  "clone-type", NULL,
                                  GIMP_TYPE_CLONE_TYPE,
-                                 CLONE_DEFAULT_TYPE,
+                                 GIMP_IMAGE_CLONE,
                                  GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ALIGN_MODE,
-                                 "align-mode", NULL,
-                                 GIMP_TYPE_CLONE_ALIGN_MODE,
-                                 CLONE_DEFAULT_ALIGN_MODE,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
-                                    "sample-merged", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -96,12 +80,6 @@ gimp_clone_options_set_property (GObject      *object,
     case PROP_CLONE_TYPE:
       options->clone_type = g_value_get_enum (value);
       break;
-    case PROP_ALIGN_MODE:
-      options->align_mode = g_value_get_enum (value);
-      break;
-    case PROP_SAMPLE_MERGED:
-      options->sample_merged = g_value_get_boolean (value);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -120,12 +98,6 @@ gimp_clone_options_get_property (GObject    *object,
     {
     case PROP_CLONE_TYPE:
       g_value_set_enum (value, options->clone_type);
-      break;
-    case PROP_ALIGN_MODE:
-      g_value_set_enum (value, options->align_mode);
-      break;
-    case PROP_SAMPLE_MERGED:
-      g_value_set_boolean (value, options->sample_merged);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

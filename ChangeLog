@@ -1,3 +1,20 @@
+2006-09-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/paint-enums.[ch]: renamed enum GimpCloneAlignMode to
+	GimpSourceAlignMode.
+
+	* app/paint/Makefile.am
+	* app/paint/gimpsourcecore.[ch]
+	* app/paint/gimpsourceoptions.[ch]: new classes which contain the
+	source selection functionality factored out of the clone core and
+	options.
+
+	* app/paint/gimpclone.[ch]
+	* app/paint/gimpcloneoptions.[ch]: remove that functionality here
+	and derive from the new classes.
+
+	* app/tools/gimpclonetool.c: changed accordingly.
+
 2006-09-02  Michael Natterer  <mitch@gimp.org>
 
 	Merged the "soc-2006-healing-brush" branch. That branch is now
