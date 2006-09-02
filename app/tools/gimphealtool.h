@@ -19,7 +19,9 @@
 #ifndef __GIMP_HEAL_TOOL_H__
 #define __GIMP_HEAL_TOOL_H__
 
-#include "gimppainttool.h"
+
+#include "gimpbrushtool.h"
+
 
 #define GIMP_TYPE_HEAL_TOOL            (gimp_heal_tool_get_type ())
 #define GIMP_HEAL_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HEAL_TOOL, GimpHealTool))
@@ -28,12 +30,14 @@
 #define GIMP_IS_HEAL_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HEAL_TOOL))
 #define GIMP_HEAL_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HEAL_TOOL, GimpHealToolClass))
 
+
 typedef struct _GimpHealTool      GimpHealTool;
 typedef struct _GimpHealToolClass GimpHealToolClass;
 
+
 struct _GimpHealTool
 {
-  GimpPaintTool  parent_instance;
+  GimpBrushTool  parent_instance;
 
   GimpDisplay   *src_display;   /* Detail about the source location to paint from */
   gint           src_x;
@@ -42,13 +46,14 @@ struct _GimpHealTool
 
 struct _GimpHealToolClass
 {
-  GimpPaintToolClass parent_class;
+  GimpBrushToolClass parent_class;
 };
 
 
 void    gimp_heal_tool_register (GimpToolRegisterCallback  callback,
-                                    gpointer                  data);
+                                 gpointer                  data);
 
 GType   gimp_heal_tool_get_type (void) G_GNUC_CONST;
+
 
 #endif  /*  __GIMP_HEAL_TOOL_H__  */

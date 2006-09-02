@@ -84,6 +84,18 @@ typedef enum  /*< pdb-skip >*/
 } GimpInkBlobType;
 
 
+#define GIMP_TYPE_HEAL_ALIGN_MODE (gimp_heal_align_mode_get_type ())
+
+GType gimp_heal_align_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< pdb-skip >*/
+{
+  GIMP_HEAL_ALIGN_NO,          /*< desc="None"        >*/
+  GIMP_HEAL_ALIGN_YES,         /*< desc="Aligned"     >*/
+  GIMP_HEAL_ALIGN_FIXED        /*< desc="Fixed"       >*/
+} GimpHealAlignMode;
+
+
 /*
  * non-registered enums; register them if needed
  */

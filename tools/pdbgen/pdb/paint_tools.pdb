@@ -440,6 +440,98 @@ CODE
     );
 }
 
+sub heal {
+    $blurb = <<'BLURB';
+Heal from the source to the dest drawable using the current brush
+BLURB
+
+    $help = <<'HELP';
+This tool heals the source drawable starting at the specified
+source coordinates to the dest drawable. For image healing, if the sum of the
+src coordinates and subsequent stroke offsets exceeds the extents of the src
+drawable, then no paint is transferred. The healing tool is capable of
+transforming between any image types except RGB->Indexed.
+HELP
+
+    &kevins_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
+	{ name => 'src_drawable', type => 'drawable',
+	  desc => 'The source drawable' },
+	{ name => 'src_x', type => 'float',
+	  desc => 'The x coordinate in the source image' },
+	{ name => 'src_y', type => 'float',
+	  desc => 'The y coordinate in the source image' },
+	&stroke_arg
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPaintInfo *info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-heal");
+
+  success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
+
+  if (success)
+    {
+      GimpPaintOptions *options = gimp_paint_options_new (info);
+
+      success = paint_tools_stroke (gimp, context, options, drawable,
+                                    num_strokes, strokes,
+                                    "src-drawable", src_drawable,
+                                    "src-x",        src_x,
+                                    "src-y",        src_y,
+                                    NULL);
+    }
+}
+CODE
+    );
+}
+
+sub heal_default {
+    $blurb = <<'BLURB';
+Heal from the source to the dest drawable using the current brush
+BLURB
+
+    $help = <<'HELP';
+This tool heals from the source drawable starting at the specified
+source coordinates to the dest drawable. This function performs exactly
+the same as the gimp_heal() function except that the tools arguments are
+obtained from the healing option dialog. It this dialog has not been activated
+then the dialogs default values will be used.
+HELP
+
+    &kevins_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
+	&stroke_arg
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPaintInfo *info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-heal");
+
+  success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
+
+  if (success)
+    {
+      GimpPaintOptions *options = gimp_paint_options_new (info);
+
+      success = paint_tools_stroke (gimp, context, options, drawable,
+                                    num_strokes, strokes, NULL);
+    }
+}
+CODE
+    );
+}
+
 sub paintbrush {
     $blurb = <<'BLURB';
 Paint in the current brush with optional fade out parameter and pull colors
@@ -844,6 +936,7 @@ CODE
             convolve convolve_default
             dodgeburn dodgeburn_default
 	    eraser eraser_default
+            heal heal_default
             paintbrush paintbrush_default
 	    pencil
             smudge smudge_default);

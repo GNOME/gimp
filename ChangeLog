@@ -1,5 +1,59 @@
 2006-09-02  Michael Natterer  <mitch@gimp.org>
 
+	Merged the "soc-2006-healing-brush" branch. That branch is now
+	officially closed and all further fixes and changes have to be
+	applied to HEAD.
+
+	Did some minor adjustments, mostly small indentation and spacing
+	fixes. Derive the tool from the newly introduced GimpBrushTool
+	which did not exist when the branch was created.
+
+	Thanks a lot to Kevin Sookocheff for this nice contribution!
+
+	* app/paint/paint-enums.[ch]: new enum GimpHealAlignMode.
+
+	* app/paint/Makefile.am
+	* app/paint/makefile.msc
+	* app/paint/gimpheal.[ch]
+	* app/paint/gimphealoptions.[ch]: the heal core and its options.
+
+	* app/paint/gimp-paint.c: register the heal core.
+
+	* app/tools/Makefile.am
+	* app/tools/makefile.msc
+	* app/tools/gimphealtool.[ch]: the heal tool.
+
+	* app/tools/gimp-tools.c: register the heal tool.
+
+	* app/tools/gimppaintoptions-gui.c: show the widgets that are used
+	by heal.
+
+	* app/widgets/gimphelp-ids.h: the heal help ID.
+
+	* tools/pdbgen/stddefs.pdb
+	* tools/pdbgen/pdb/paint_tools.pdb: the heal PDB wrappers.
+
+	* app/widgets/widgets-enums.h
+	* app/widgets/gimpcursor.c
+	* cursors/Makefile.am
+	* cursors/makefile.msc
+	* cursors/tool-heal.png
+	* cursors/xbm/tool-heal.xbm
+	* cursors/xbm/tool-heal-mask.xbm: a new cursor for the heal tool.
+
+	* libgimpwidgets/gimpstock.[ch]
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/makefile.msc
+	* themes/Default/images/tools/stock-tool-heal-16.png
+	* themes/Default/images/tools/stock-tool-heal-22.png: new stock
+	icons for the heal tool.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/paint_tools_cmds.c
+	* libgimp/gimppainttools_pdb.[ch]: regenerated.
+
+2006-09-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpclone.c
 	* app/paint/gimpink.c: minor cosmetic cleanup merged from the
 	soc-2006-healing-brush branch.

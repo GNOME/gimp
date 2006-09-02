@@ -44,6 +44,7 @@
 #include "gimpdodgeburntool.h"
 #include "gimpdodgeburntool.h"
 #include "gimperasertool.h"
+#include "gimphealtool.h"
 #include "gimpinktool.h"
 #include "gimppaintbrushtool.h"
 #include "gimppaintoptions-gui.h"
@@ -182,6 +183,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   /* the "hard edge" toggle */
   if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
       tool_type == GIMP_TYPE_CLONE_TOOL      ||
+      tool_type == GIMP_TYPE_HEAL_TOOL       ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
       tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
@@ -237,6 +239,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
   /*  the opacity toggle  */
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
       tool_type == GIMP_TYPE_CLONE_TOOL                  ||
+      tool_type == GIMP_TYPE_HEAL_TOOL                   ||
       tool_type == GIMP_TYPE_DODGE_BURN_TOOL             ||
       tool_type == GIMP_TYPE_ERASER_TOOL)
     {
@@ -249,6 +252,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
   /*  the pressure toggle  */
   if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL   ||
       tool_type == GIMP_TYPE_CLONE_TOOL      ||
+      tool_type == GIMP_TYPE_HEAL_TOOL       ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
       tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
       tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
@@ -273,6 +277,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
 
   /*  the size toggle  */
   if (tool_type == GIMP_TYPE_CLONE_TOOL      ||
+      tool_type == GIMP_TYPE_HEAL_TOOL       ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
       tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
       tool_type == GIMP_TYPE_ERASER_TOOL     ||

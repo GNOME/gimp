@@ -112,6 +112,8 @@
 #include "cursors/xbm/tool-airbrush-mask.xbm"
 #include "cursors/xbm/tool-clone.xbm"
 #include "cursors/xbm/tool-clone-mask.xbm"
+#include "cursors/xbm/tool-heal.xbm"
+#include "cursors/xbm/tool-heal-mask.xbm"
 #include "cursors/xbm/tool-blur.xbm"
 #include "cursors/xbm/tool-blur-mask.xbm"
 #include "cursors/xbm/tool-ink.xbm"
@@ -437,6 +439,12 @@ static GimpCursor gimp_tool_cursors[] =
     tool_clone_width, tool_clone_height,
     0, 0,
     tool_clone, NULL, NULL, NULL
+  },
+  {
+    tool_heal_bits, tool_heal_mask_bits,
+    tool_heal_width, tool_heal_height,
+    0, 0,
+    tool_heal, NULL, NULL, NULL
   },
   {
     tool_eraser_bits, tool_eraser_mask_bits,

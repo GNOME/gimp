@@ -42,6 +42,8 @@ OBJECTS = \
 	gimpink-blob.obj \
 	gimpink-undo.obj \
 	gimpinkoptions.obj \
+	gimpheal.obj \
+	gimphealoptions.obj \
 	gimppaintbrush.obj \
 	gimppaintcore.obj \
 	gimppaintcore-stroke.obj \

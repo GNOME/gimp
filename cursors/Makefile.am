@@ -46,6 +46,7 @@ CURSOR_IMAGES = \
 	tool-free-select.png		\
 	tool-fuzzy-select.png		\
 	tool-hand.png			\
+	tool-heal.png			\
 	tool-ink.png			\
 	tool-iscissors.png		\
 	tool-measure.png		\
@@ -193,7 +194,9 @@ EXTRA_DIST = \
 	xbm/tool-measure.xbm			\
 	xbm/tool-measure-mask.xbm		\
 	xbm/tool-hand.xbm			\
-	xbm/tool-hand-mask.xbm
+	xbm/tool-hand-mask.xbm			\
+	xbm/tool-heal.xbm			\
+	xbm/tool-heal-mask.xbm
 
 noinst_DATA = gimp-tool-cursors.h
 

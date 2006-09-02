@@ -23,7 +23,9 @@
 #include "libgimpconfig/gimpconfig.h"
 
 #include "paint-types.h"
+
 #include "gimphealoptions.h"
+
 
 enum
 {
@@ -31,6 +33,7 @@ enum
   PROP_ALIGN_MODE,
   PROP_SAMPLE_MERGED
 };
+
 
 static void   gimp_heal_options_set_property (GObject      *object,
                                               guint         property_id,
@@ -41,7 +44,9 @@ static void   gimp_heal_options_get_property (GObject      *object,
                                               GValue       *value,
                                               GParamSpec   *pspec);
 
+
 G_DEFINE_TYPE (GimpHealOptions, gimp_heal_options, GIMP_TYPE_PAINT_OPTIONS)
+
 
 static void
 gimp_heal_options_class_init (GimpHealOptionsClass *klass)
@@ -61,7 +66,6 @@ gimp_heal_options_class_init (GimpHealOptionsClass *klass)
                                     "sample-merged", NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
-
 }
 
 static void

@@ -46,6 +46,7 @@ CURSOR_LIST = \
 	tool_free_select		tool-free-select.png \
 	tool_fuzzy_select		tool-fuzzy-select.png \
 	tool_hand		tool-hand.png \
+	tool_heal		tool-heal.png \
 	tool_ink		tool-ink.png \
 	tool_iscissors		tool-iscissors.png \
 	tool_measure		tool-measure.png \

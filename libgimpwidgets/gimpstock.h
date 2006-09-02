@@ -118,6 +118,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOL_FREE_SELECT         "gimp-tool-free-select"
 #define GIMP_STOCK_TOOL_FOREGROUND_SELECT   "gimp-tool-foreground-select"
 #define GIMP_STOCK_TOOL_FUZZY_SELECT        "gimp-tool-fuzzy-select"
+#define GIMP_STOCK_TOOL_HEAL                "gimp-tool-heal"
 #define GIMP_STOCK_TOOL_HUE_SATURATION      "gimp-tool-hue-saturation"
 #define GIMP_STOCK_TOOL_INK                 "gimp-tool-ink"
 #define GIMP_STOCK_TOOL_ISCISSORS           "gimp-tool-iscissors"

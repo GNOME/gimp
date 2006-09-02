@@ -57,6 +57,7 @@ OBJECTS = \
 	gimpforegroundselecttool.obj \
 	gimpfreeselecttool.obj \
 	gimpfuzzyselecttool.obj \
+	gimphealtool.obj \
 	gimphistogramoptions.obj \
 	gimphuesaturationtool.obj \
 	gimpimagemapoptions.obj \

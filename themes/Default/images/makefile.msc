@@ -251,6 +251,8 @@ STOCK_TOOL_VARIABLES = \
 	stock_tool_free_select_22		tools/stock-tool-free-select-22.png	\
 	stock_tool_fuzzy_select_16		tools/stock-tool-fuzzy-select-16.png	\
 	stock_tool_fuzzy_select_22		tools/stock-tool-fuzzy-select-22.png	\
+	stock_tool_heal_16			tools/stock-tool-heal-16.png	\
+	stock_tool_heal_22			tools/stock-tool-heal-22.png	\
 	stock_tool_hue_saturation_16		tools/stock-tool-hue-saturation-16.png	\
 	stock_tool_hue_saturation_22		tools/stock-tool-hue-saturation-22.png	\
 	stock_tool_ink_16		tools/stock-tool-ink-16.png	\

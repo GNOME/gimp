@@ -454,6 +454,99 @@ gimp_eraser_default (gint32         drawable_ID,
 }
 
 /**
+ * gimp_heal:
+ * @drawable_ID: The affected drawable.
+ * @src_drawable_ID: The source drawable.
+ * @src_x: The x coordinate in the source image.
+ * @src_y: The y coordinate in the source image.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Heal from the source to the dest drawable using the current brush
+ *
+ * This tool heals the source drawable starting at the specified source
+ * coordinates to the dest drawable. For image healing, if the sum of
+ * the src coordinates and subsequent stroke offsets exceeds the
+ * extents of the src drawable, then no paint is transferred. The
+ * healing tool is capable of transforming between any image types
+ * except RGB-&gt;Indexed.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_heal (gint32         drawable_ID,
+           gint32         src_drawable_ID,
+           gdouble        src_x,
+           gdouble        src_y,
+           gint           num_strokes,
+           const gdouble *strokes)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-heal",
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_DRAWABLE, src_drawable_ID,
+                                    GIMP_PDB_FLOAT, src_x,
+                                    GIMP_PDB_FLOAT, src_y,
+                                    GIMP_PDB_INT32, num_strokes,
+                                    GIMP_PDB_FLOATARRAY, strokes,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_heal_default:
+ * @drawable_ID: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Heal from the source to the dest drawable using the current brush
+ *
+ * This tool heals from the source drawable starting at the specified
+ * source coordinates to the dest drawable. This function performs
+ * exactly the same as the gimp_heal() function except that the tools
+ * arguments are obtained from the healing option dialog. It this
+ * dialog has not been activated then the dialogs default values will
+ * be used.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_heal_default (gint32         drawable_ID,
+                   gint           num_strokes,
+                   const gdouble *strokes)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-heal-default",
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_INT32, num_strokes,
+                                    GIMP_PDB_FLOATARRAY, strokes,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_paintbrush:
  * @drawable_ID: The affected drawable.
  * @fade_out: Fade out parameter.

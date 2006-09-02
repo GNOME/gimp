@@ -31,8 +31,8 @@
 #define GIMP_HEAL_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HEAL_OPTIONS, GimpHealOptionsClass))
 
 
-typedef struct _GimpHealOptions         GimpHealOptions;
-typedef struct _GimpPaintOptionsClass   GimpHealOptionsClass;
+typedef struct _GimpHealOptions       GimpHealOptions;
+typedef struct _GimpPaintOptionsClass GimpHealOptionsClass;
 
 struct _GimpHealOptions
 {
@@ -41,8 +41,9 @@ struct _GimpHealOptions
   GimpHealAlignMode align_mode;
   gboolean          sample_merged;
 };
-  
+
 
 GType   gimp_heal_options_get_type (void) G_GNUC_CONST;
+
 
 #endif  /*  __GIMP_HEAL_OPTIONS_H__  */

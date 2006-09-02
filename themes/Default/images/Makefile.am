@@ -272,6 +272,8 @@ STOCK_TOOL_IMAGES = \
 	tools/stock-tool-fuzzy-select-22.png		\
 	tools/stock-tool-hue-saturation-16.png		\
 	tools/stock-tool-hue-saturation-22.png		\
+	tools/stock-tool-heal-16.png			\
+	tools/stock-tool-heal-22.png			\
 	tools/stock-tool-ink-16.png			\
 	tools/stock-tool-ink-22.png			\
 	tools/stock-tool-iscissors-16.png		\

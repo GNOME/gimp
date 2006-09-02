@@ -71,6 +71,15 @@ gboolean gimp_eraser             (gint32                    drawable_ID,
 gboolean gimp_eraser_default     (gint32                    drawable_ID,
                                   gint                      num_strokes,
                                   const gdouble            *strokes);
+gboolean gimp_heal               (gint32                    drawable_ID,
+                                  gint32                    src_drawable_ID,
+                                  gdouble                   src_x,
+                                  gdouble                   src_y,
+                                  gint                      num_strokes,
+                                  const gdouble            *strokes);
+gboolean gimp_heal_default       (gint32                    drawable_ID,
+                                  gint                      num_strokes,
+                                  const gdouble            *strokes);
 gboolean gimp_paintbrush         (gint32                    drawable_ID,
                                   gdouble                   fade_out,
                                   gint                      num_strokes,

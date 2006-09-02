@@ -126,6 +126,36 @@ gimp_ink_blob_type_get_type (void)
   return type;
 }
 
+GType
+gimp_heal_align_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_HEAL_ALIGN_NO, "GIMP_HEAL_ALIGN_NO", "no" },
+    { GIMP_HEAL_ALIGN_YES, "GIMP_HEAL_ALIGN_YES", "yes" },
+    { GIMP_HEAL_ALIGN_FIXED, "GIMP_HEAL_ALIGN_FIXED", "fixed" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_HEAL_ALIGN_NO, N_("None"), NULL },
+    { GIMP_HEAL_ALIGN_YES, N_("Aligned"), NULL },
+    { GIMP_HEAL_ALIGN_FIXED, N_("Fixed"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpHealAlignMode", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

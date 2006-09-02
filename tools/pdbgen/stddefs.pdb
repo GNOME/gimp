@@ -82,6 +82,10 @@ sub josh_pdb_misc {
     contrib_pdb_misc('Josh MacDonald', '', @_);
 }
 
+sub kevins_pdb_misc {
+    contrib_pdb_misc('Kevin Sookocheff', '', @_);
+}
+
 sub larry_pdb_misc {
     contrib_pdb_misc('Larry Ewing', '', @_);
 }

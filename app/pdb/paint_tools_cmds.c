@@ -495,6 +495,86 @@ eraser_default_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
+heal_invoker (GimpProcedure     *procedure,
+              Gimp              *gimp,
+              GimpContext       *context,
+              GimpProgress      *progress,
+              const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  GimpDrawable *src_drawable;
+  gdouble src_x;
+  gdouble src_y;
+  gint32 num_strokes;
+  const gdouble *strokes;
+
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  src_drawable = gimp_value_get_drawable (&args->values[1], gimp);
+  src_x = g_value_get_double (&args->values[2]);
+  src_y = g_value_get_double (&args->values[3]);
+  num_strokes = g_value_get_int (&args->values[4]);
+  strokes = gimp_value_get_floatarray (&args->values[5]);
+
+  if (success)
+    {
+      GimpPaintInfo *info = (GimpPaintInfo *)
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-heal");
+
+      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
+
+      if (success)
+        {
+          GimpPaintOptions *options = gimp_paint_options_new (info);
+
+          success = paint_tools_stroke (gimp, context, options, drawable,
+                                        num_strokes, strokes,
+                                        "src-drawable", src_drawable,
+                                        "src-x",        src_x,
+                                        "src-y",        src_y,
+                                        NULL);
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+heal_default_invoker (GimpProcedure     *procedure,
+                      Gimp              *gimp,
+                      GimpContext       *context,
+                      GimpProgress      *progress,
+                      const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 num_strokes;
+  const gdouble *strokes;
+
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  num_strokes = g_value_get_int (&args->values[1]);
+  strokes = gimp_value_get_floatarray (&args->values[2]);
+
+  if (success)
+    {
+      GimpPaintInfo *info = (GimpPaintInfo *)
+        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-heal");
+
+      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
+
+      if (success)
+        {
+          GimpPaintOptions *options = gimp_paint_options_new (info);
+
+          success = paint_tools_stroke (gimp, context, options, drawable,
+                                        num_strokes, strokes, NULL);
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
 paintbrush_invoker (GimpProcedure     *procedure,
                     Gimp              *gimp,
                     GimpContext       *context,
@@ -1081,6 +1161,90 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      "Andy Thomas",
                                      "Andy Thomas",
                                      "1999",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-heal
+   */
+  procedure = gimp_procedure_new (heal_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-heal");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-heal",
+                                     "Heal from the source to the dest drawable using the current brush",
+                                     "This tool heals the source drawable starting at the specified source coordinates to the dest drawable. For image healing, if the sum of the src coordinates and subsequent stroke offsets exceeds the extents of the src drawable, then no paint is transferred. The healing tool is capable of transforming between any image types except RGB->Indexed.",
+                                     "Kevin Sookocheff",
+                                     "Kevin Sookocheff",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("src-drawable",
+                                                            "src drawable",
+                                                            "The source drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("src-x",
+                                                    "src x",
+                                                    "The x coordinate in the source image",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("src-y",
+                                                    "src y",
+                                                    "The y coordinate in the source image",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-heal-default
+   */
+  procedure = gimp_procedure_new (heal_default_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-heal-default");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-heal-default",
+                                     "Heal from the source to the dest drawable using the current brush",
+                                     "This tool heals from the source drawable starting at the specified source coordinates to the dest drawable. This function performs exactly the same as the 'gimp-heal' function except that the tools arguments are obtained from the healing option dialog. It this dialog has not been activated then the dialogs default values will be used.",
+                                     "Kevin Sookocheff",
+                                     "Kevin Sookocheff",
+                                     "2006",
                                      NULL);
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",

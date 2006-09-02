@@ -24,13 +24,13 @@
 
 #include "tools-types.h"
 
-#include "core/gimpchannel.h"      
+#include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimpheal.h"
-#include "paint/gimphealoptions.h"  
+#include "paint/gimphealoptions.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewablebox.h"
@@ -41,15 +41,17 @@
 #include "gimphealtool.h"
 #include "gimppaintoptions-gui.h"
 #include "gimptoolcontrol.h"
-    
+
 #include "gimp-intl.h"
+
 
 #define TARGET_WIDTH  15
 #define TARGET_HEIGHT 15
 
+
 static gboolean      gimp_heal_tool_has_display   (GimpTool        *tool,
                                                    GimpDisplay     *display);
-static GimpDisplay  *gimp_heal_tool_has_image     (GimpTool        *tool,
+static GimpDisplay * gimp_heal_tool_has_image     (GimpTool        *tool,
                                                    GimpImage       *image);
 
 static void          gimp_heal_tool_button_press  (GimpTool        *tool,
@@ -79,39 +81,39 @@ static void          gimp_heal_tool_oper_update   (GimpTool        *tool,
                                                    gboolean         proximity,
                                                    GimpDisplay     *display);
 
-static void          gimp_heal_tool_draw          (GimpDrawTool *draw_tool);
+static void          gimp_heal_tool_draw          (GimpDrawTool    *draw_tool);
 
-static GtkWidget    *gimp_heal_options_gui        (GimpToolOptions *tool_options);
+static GtkWidget   * gimp_heal_options_gui        (GimpToolOptions *tool_options);
 
-G_DEFINE_TYPE (GimpHealTool, gimp_heal_tool, GIMP_TYPE_PAINT_TOOL)
+
+G_DEFINE_TYPE (GimpHealTool, gimp_heal_tool, GIMP_TYPE_BRUSH_TOOL)
+
 
 void
 gimp_heal_tool_register (GimpToolRegisterCallback  callback,
                          gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_HEAL_TOOL,               /* tool type */
-                GIMP_TYPE_HEAL_OPTIONS,            /* tool option type */
-                gimp_heal_options_gui,             /* options gui */
-                GIMP_PAINT_OPTIONS_CONTEXT_MASK,   /* context properties */
-                "gimp-heal-tool",                  /* identifier */
-                _("Heal"),                         /* blurb */
-                _("Heal image irregularities"),    /* help */
-                N_("_Heal"),                       /* menu path */
-                "H",                               /* menu accelerator */
-                NULL,                              /* help domain */
-                GIMP_HELP_TOOL_HEAL,               /* help data */
-                GIMP_STOCK_TOOL_HEAL,              /* stock id */
-                data);                             /* register */
+  (* callback) (GIMP_TYPE_HEAL_TOOL,
+                GIMP_TYPE_HEAL_OPTIONS,
+                gimp_heal_options_gui,
+                GIMP_PAINT_OPTIONS_CONTEXT_MASK,
+                "gimp-heal-tool",
+                _("Heal"),
+                _("Heal image irregularities"),
+                N_("_Heal"),
+                "H",
+                NULL,
+                GIMP_HELP_TOOL_HEAL,
+                GIMP_STOCK_TOOL_HEAL,
+                data);
 }
 
 static void
 gimp_heal_tool_class_init (GimpHealToolClass *klass)
 {
-  /* get parent classes where we override methods */
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  /* override the methods */
   tool_class->has_display   = gimp_heal_tool_has_display;
   tool_class->has_image     = gimp_heal_tool_has_image;
   tool_class->control       = gimp_heal_tool_control;
@@ -129,8 +131,7 @@ gimp_heal_tool_init (GimpHealTool *heal)
   GimpTool      *tool       = GIMP_TOOL (heal);
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
 
-  gimp_tool_control_set_tool_cursor     (tool->control,
-                                         GIMP_TOOL_CURSOR_HEAL);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_HEAL);
 
   paint_tool->status      = _("Click to heal.");
   paint_tool->status_ctrl = _("%s to set a new heal source");
@@ -143,7 +144,8 @@ gimp_heal_tool_has_display (GimpTool    *tool,
   GimpHealTool *heal_tool = GIMP_HEAL_TOOL (tool);
 
   return (display == heal_tool->src_display ||
-          GIMP_TOOL_CLASS (gimp_heal_tool_parent_class)->has_display (tool, display));
+          GIMP_TOOL_CLASS (gimp_heal_tool_parent_class)->has_display (tool,
+                                                                      display));
 }
 
 static GimpDisplay *
@@ -153,7 +155,8 @@ gimp_heal_tool_has_image (GimpTool  *tool,
   GimpHealTool *heal_tool = GIMP_HEAL_TOOL (tool);
   GimpDisplay  *display;
 
-  display = GIMP_TOOL_CLASS (gimp_heal_tool_parent_class)->has_image (tool, image);
+  display = GIMP_TOOL_CLASS (gimp_heal_tool_parent_class)->has_image (tool,
+                                                                      image);
 
   if (! display && heal_tool->src_display)
     {
@@ -200,9 +203,9 @@ gimp_heal_tool_button_press (GimpTool        *tool,
                              GdkModifierType  state,
                              GimpDisplay     *display)
 {
-  GimpPaintTool   *paint_tool   = GIMP_PAINT_TOOL (tool);
-  GimpHealTool    *heal_tool    = GIMP_HEAL_TOOL (tool);
-  GimpHeal        *heal         = GIMP_HEAL (paint_tool->core);
+  GimpPaintTool   *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpHealTool    *heal_tool  = GIMP_HEAL_TOOL (tool);
+  GimpHeal        *heal       = GIMP_HEAL (paint_tool->core);
   GimpHealOptions *options;
 
   options = GIMP_HEAL_OPTIONS (tool->tool_info->tool_options);
@@ -216,9 +219,9 @@ gimp_heal_tool_button_press (GimpTool        *tool,
 
   /* state holds a set of bit-flags to indicate the state of modifier keys and
    * mouse buttons in various event types. Typical modifier keys are Shift,
-   * Control, Meta, Super, Hyper, Alt, Compose, Apple, CapsLock or ShiftLock. 
+   * Control, Meta, Super, Hyper, Alt, Compose, Apple, CapsLock or ShiftLock.
    * Part of gtk -> GdkModifierType */
-  if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK) 
+  if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
     /* we enter here only if CTRL is pressed */
     {
       /* mark that the source display has been set.  defined in gimpheal.h */
@@ -256,10 +259,10 @@ gimp_heal_tool_button_press (GimpTool        *tool,
 
   /* chain up to call the parents functions */
   GIMP_TOOL_CLASS (gimp_heal_tool_parent_class)->button_press (tool, coords,
-                                                               time, state, 
+                                                               time, state,
                                                                display);
 
-  /* set the tool display's source position to match the current heal 
+  /* set the tool display's source position to match the current heal
    * implementation source position */
   heal_tool->src_x = heal->src_x;
   heal_tool->src_y = heal->src_y;
@@ -275,9 +278,9 @@ gimp_heal_tool_motion (GimpTool        *tool,
                        GdkModifierType  state,
                        GimpDisplay     *display)
 {
-  GimpHealTool    *heal_tool    = GIMP_HEAL_TOOL (tool);
-  GimpPaintTool   *paint_tool   = GIMP_PAINT_TOOL (tool);
-  GimpHeal        *heal         = GIMP_HEAL (paint_tool->core);
+  GimpHealTool  *heal_tool  = GIMP_HEAL_TOOL (tool);
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpHeal      *heal       = GIMP_HEAL (paint_tool->core);
 
   /* pause drawing */
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
@@ -309,9 +312,9 @@ gimp_heal_tool_cursor_update (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *display)
 {
-  GimpHealOptions     *options;
-  GimpCursorType        cursor   = GIMP_CURSOR_MOUSE;
-  GimpCursorModifier    modifier = GIMP_CURSOR_MODIFIER_NONE;
+  GimpHealOptions    *options;
+  GimpCursorType      cursor   = GIMP_CURSOR_MOUSE;
+  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   options = GIMP_HEAL_OPTIONS (tool->tool_info->tool_options);
 
@@ -340,8 +343,7 @@ gimp_heal_tool_cursor_update (GimpTool        *tool,
 
   /* chain up to the parent class */
   GIMP_TOOL_CLASS (gimp_heal_tool_parent_class)->cursor_update (tool, coords,
-                                                                state, display); 
-
+                                                                state, display);
 }
 
 static void
@@ -365,7 +367,7 @@ gimp_heal_tool_oper_update (GimpTool        *tool,
 
   /* chain up to the parent class */
   GIMP_TOOL_CLASS (gimp_heal_tool_parent_class)->oper_update (tool, coords,
-                                                              state, proximity, 
+                                                              state, proximity,
                                                               display);
 
   if (proximity)
@@ -461,15 +463,11 @@ gimp_heal_tool_draw (GimpDrawTool *draw_tool)
 static GtkWidget *
 gimp_heal_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
-  GtkWidget *vbox;
+  GObject   *config = G_OBJECT (tool_options);
+  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *button;
   GtkWidget *table;
   GtkWidget *combo;
-
-  config = G_OBJECT (tool_options);
-
-  vbox = gimp_paint_options_gui (tool_options);
 
   /* create and attach the sample merged checkbox */
   button = gimp_prop_check_button_new (config, "sample-merged",
