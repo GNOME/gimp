@@ -349,7 +349,7 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
         return;
 
       src_pickable = GIMP_PICKABLE (clone->src_drawable);
-      src_image   = gimp_pickable_get_image (src_pickable);
+      src_image    = gimp_pickable_get_image (src_pickable);
 
       if (options->sample_merged)
         {
@@ -396,7 +396,7 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
        *  Otherwise, we need a call to get_orig_image to make sure
        *  we get a copy of the unblemished (offset) image
        */
-      if ((  options->sample_merged && (src_image          != image)) ||
+      if ((  options->sample_merged && (src_image           != image)) ||
           (! options->sample_merged && (clone->src_drawable != drawable)))
         {
           pixel_region_init (&srcPR, src_tiles,

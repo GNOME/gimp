@@ -321,7 +321,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
       blob_to_render = blob_union;
     }
 
-  /* Get the the buffer */
+  /* Get the buffer */
   ink->cur_blob = blob_to_render;
   area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
   ink->cur_blob = NULL;

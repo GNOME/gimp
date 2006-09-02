@@ -1,5 +1,11 @@
 2006-09-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpclone.c
+	* app/paint/gimpink.c: minor cosmetic cleanup merged from the
+	soc-2006-healing-brush branch.
+
+2006-09-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/quit-dialog.c (quit_close_all_dialog_new): create a
 	temporary context for the container view so its renderers have one.
 
