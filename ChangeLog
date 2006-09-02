@@ -1,3 +1,8 @@
+2006-09-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/quit-dialog.c (quit_close_all_dialog_new): create a
+	temporary context for the container view so its renderers have one.
+
 2006-09-01  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/scripts/gradient-example.scm: pop the context
