@@ -1,3 +1,10 @@
+2006-09-03  Hans Breuer  <hans@breuer.org>
+
+	* app/core/gimp-gradients.c : include "gimpcontext.h" for 
+	gimp_context_set_gradient()
+	
+	* **/makefile.msc app/gimpcore.def : updated
+	
 2006-09-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/paint-enums.[ch]: renamed enum GimpCloneAlignMode to

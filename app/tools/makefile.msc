@@ -32,6 +32,7 @@ OBJECTS = \
 	gimpblendoptions.obj \
 	gimpblendtool.obj \
 	gimpbrightnesscontrasttool.obj \
+	gimpbrushtool.obj \
 	gimpbucketfilloptions.obj \
 	gimpbucketfilltool.obj \
 	gimpbycolorselecttool.obj \

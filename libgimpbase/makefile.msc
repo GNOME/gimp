@@ -42,6 +42,7 @@ OBJECTS = \
 	gimpparasite.obj \
 	gimpparasiteio.obj \
 	gimpprotocol.obj \
+	gimprectangle.obj \
 	gimpreloc.obj \
 	gimpsignal.obj \
 	gimpunit.obj \

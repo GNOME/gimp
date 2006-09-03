@@ -23,8 +23,13 @@ sub-all:
 
 sub-one:
 	cd $(THIS)
-	nmake -nologo -f makefile.msc
+	nmake -nologo -f makefile.msc $(TARGET)
 	cd ..
+
+clean :: sub-clean
+
+sub-clean:
+	for %d in ($(SUBDIRS)) do nmake -nologo -f makefile.msc sub-one THIS=%d TARGET=clean
 
 LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG)
 

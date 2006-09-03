@@ -53,6 +53,8 @@ OBJECTS = \
 	gimppenciloptions.obj \
 	gimpsmudge.obj \
 	gimpsmudgeoptions.obj \
+	gimpsourcecore.obj \
+	gimpsourceoptions.obj \
 	paint-enums.obj \
 
 INCLUDES = \
