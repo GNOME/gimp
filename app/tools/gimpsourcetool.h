@@ -16,43 +16,44 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CLONE_TOOL_H__
-#define __GIMP_CLONE_TOOL_H__
+#ifndef __GIMP_SOURCE_TOOL_H__
+#define __GIMP_SOURCE_TOOL_H__
 
 
 #include "gimpbrushtool.h"
 
 
-#define GIMP_TYPE_CLONE_TOOL            (gimp_clone_tool_get_type ())
-#define GIMP_CLONE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CLONE_TOOL, GimpCloneTool))
-#define GIMP_CLONE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CLONE_TOOL, GimpCloneToolClass))
-#define GIMP_IS_CLONE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CLONE_TOOL))
-#define GIMP_IS_CLONE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CLONE_TOOL))
-#define GIMP_CLONE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CLONE_TOOL, GimpCloneToolClass))
+#define GIMP_TYPE_SOURCE_TOOL            (gimp_source_tool_get_type ())
+#define GIMP_SOURCE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SOURCE_TOOL, GimpSourceTool))
+#define GIMP_SOURCE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SOURCE_TOOL, GimpSourceToolClass))
+#define GIMP_IS_SOURCE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SOURCE_TOOL))
+#define GIMP_IS_SOURCE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SOURCE_TOOL))
+#define GIMP_SOURCE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SOURCE_TOOL, GimpSourceToolClass))
 
 
-typedef struct _GimpCloneTool      GimpCloneTool;
-typedef struct _GimpCloneToolClass GimpCloneToolClass;
+typedef struct _GimpSourceTool      GimpSourceTool;
+typedef struct _GimpSourceToolClass GimpSourceToolClass;
 
-struct _GimpCloneTool
+struct _GimpSourceTool
 {
   GimpBrushTool  parent_instance;
 
   GimpDisplay   *src_display;
   gint           src_x;
   gint           src_y;
+
+  const gchar   *status_paint;
+  const gchar   *status_set_source;
+  const gchar   *status_set_source_ctrl;
 };
 
-struct _GimpCloneToolClass
+struct _GimpSourceToolClass
 {
   GimpBrushToolClass parent_class;
 };
 
 
-void    gimp_clone_tool_register (GimpToolRegisterCallback  callback,
-                                  gpointer                  data);
-
-GType   gimp_clone_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_source_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_CLONE_TOOL_H__  */
+#endif  /*  __GIMP_SOURCE_TOOL_H__  */

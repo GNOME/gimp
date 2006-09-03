@@ -1,7 +1,17 @@
+2006-09-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/Makefile.am
+	* app/tools/gimpsourcetool.[ch]: new class which is essentially a
+	copy of GimpCloneTool with s/clone/source/ plus some minor
+	modifications.
+
+	* app/tools/gimpclonetool.[ch]: remove almost everything and
+	derive from GimpSourceTool.
+
 2006-09-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/palette-import-dialog.[ch]: removed
-	palette_inport_dialog_show() and palette_import_dialog_destroy()
+	palette_import_dialog_show() and palette_import_dialog_destroy()
 	and don't remember the created dialog internally. Instead, made
 	palette_import_dialog_new() public.
 

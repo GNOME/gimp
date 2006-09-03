@@ -142,6 +142,8 @@ libapptools_a_sources = \
 	gimpsheartool.h			\
 	gimpsmudgetool.c		\
 	gimpsmudgetool.h		\
+	gimpsourcetool.c		\
+	gimpsourcetool.h		\
 	gimptextoptions.c		\
 	gimptextoptions.h		\
 	gimptexttool.c			\
