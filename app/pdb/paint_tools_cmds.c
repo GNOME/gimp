@@ -126,7 +126,9 @@ airbrush_invoker (GimpProcedure     *procedure,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes, NULL);
+                                        num_strokes, strokes,
+                                        "undo-desc", info->blurb,
+                                        NULL);
         }
     }
 
@@ -161,7 +163,9 @@ airbrush_default_invoker (GimpProcedure     *procedure,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes, NULL);
+                                        num_strokes, strokes,
+                                        "undo-desc", info->blurb,
+                                        NULL);
         }
     }
 
@@ -209,6 +213,7 @@ clone_invoker (GimpProcedure     *procedure,
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes,
+                                        "undo-desc",    info->blurb,
                                         "src-drawable", src_drawable,
                                         "src-x",        src_x,
                                         "src-y",        src_y,
@@ -247,7 +252,9 @@ clone_default_invoker (GimpProcedure     *procedure,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes, NULL);
+                                        num_strokes, strokes,
+                                        "undo-desc", info->blurb,
+                                        NULL);
         }
     }
 
@@ -291,7 +298,9 @@ convolve_invoker (GimpProcedure     *procedure,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes, NULL);
+                                        num_strokes, strokes,
+                                        "undo-desc", info->blurb,
+                                        NULL);
         }
     }
 
@@ -326,7 +335,9 @@ convolve_default_invoker (GimpProcedure     *procedure,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes, NULL);
+                                        num_strokes, strokes,
+                                        "undo-desc", info->blurb,
+                                        NULL);
         }
     }
 
@@ -373,7 +384,9 @@ dodgeburn_invoker (GimpProcedure     *procedure,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes, NULL);
+                                        num_strokes, strokes,
+                                        "undo-desc", info->blurb,
+                                        NULL);
         }
     }
 
@@ -408,7 +421,9 @@ dodgeburn_default_invoker (GimpProcedure     *procedure,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes, NULL);
+                                        num_strokes, strokes,
+                                        "undo-desc", info->blurb,
+                                        NULL);
         }
     }
 
@@ -452,7 +467,9 @@ eraser_invoker (GimpProcedure     *procedure,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes, NULL);
+                                        num_strokes, strokes,
+                                        "undo-desc", info->blurb,
+                                        NULL);
         }
     }
 
@@ -487,7 +504,9 @@ eraser_default_invoker (GimpProcedure     *procedure,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes, NULL);
+                                        num_strokes, strokes,
+                                        "undo-desc", info->blurb,
+                                        NULL);
         }
     }
 
@@ -529,6 +548,7 @@ heal_invoker (GimpProcedure     *procedure,
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes,
+                                        "undo-desc",    info->blurb,
                                         "src-drawable", src_drawable,
                                         "src-x",        src_x,
                                         "src-y",        src_y,
@@ -567,7 +587,9 @@ heal_default_invoker (GimpProcedure     *procedure,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes, NULL);
+                                        num_strokes, strokes,
+                                        "undo-desc", info->blurb,
+                                        NULL);
         }
     }
 
@@ -616,7 +638,9 @@ paintbrush_invoker (GimpProcedure     *procedure,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes, NULL);
+                                        num_strokes, strokes,
+                                        "undo-desc", info->blurb,
+                                        NULL);
         }
     }
 
@@ -651,7 +675,9 @@ paintbrush_default_invoker (GimpProcedure     *procedure,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes, NULL);
+                                        num_strokes, strokes,
+                                        "undo-desc", info->blurb,
+                                        NULL);
         }
     }
 
@@ -686,7 +712,9 @@ pencil_invoker (GimpProcedure     *procedure,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes, NULL);
+                                        num_strokes, strokes,
+                                        "undo-desc", info->blurb,
+                                        NULL);
         }
     }
 
@@ -727,7 +755,9 @@ smudge_invoker (GimpProcedure     *procedure,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes, NULL);
+                                        num_strokes, strokes,
+                                        "undo-desc", info->blurb,
+                                        NULL);
         }
     }
 
@@ -762,7 +792,9 @@ smudge_default_invoker (GimpProcedure     *procedure,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes, NULL);
+                                        num_strokes, strokes,
+                                        "undo-desc", info->blurb,
+                                        NULL);
         }
     }
 

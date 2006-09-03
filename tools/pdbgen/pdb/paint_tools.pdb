@@ -67,7 +67,9 @@ HELP
                     NULL);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE
@@ -107,7 +109,9 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE
@@ -167,6 +171,7 @@ HELP
 
       success = paint_tools_stroke (gimp, context, options, drawable,
                                     num_strokes, strokes,
+				    "undo-desc",    info->blurb,
                                     "src-drawable", src_drawable,
                                     "src-x",        src_x,
                                     "src-y",        src_y,
@@ -211,7 +216,9 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE
@@ -251,7 +258,9 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE
@@ -298,7 +307,9 @@ HELP
                     NULL);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE
@@ -336,7 +347,9 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE
@@ -384,7 +397,9 @@ HELP
                     NULL);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE
@@ -433,7 +448,9 @@ HELP
                     NULL);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE
@@ -481,6 +498,7 @@ HELP
 
       success = paint_tools_stroke (gimp, context, options, drawable,
                                     num_strokes, strokes,
+				    "undo-desc",    info->blurb,
                                     "src-drawable", src_drawable,
                                     "src-x",        src_x,
                                     "src-y",        src_y,
@@ -525,7 +543,9 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE
@@ -584,7 +604,9 @@ HELP
                     NULL);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE
@@ -632,7 +654,9 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE
@@ -671,7 +695,9 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE
@@ -713,7 +739,9 @@ HELP
                     NULL);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE
@@ -753,7 +781,9 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE
@@ -802,7 +832,9 @@ HELP
                     NULL);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE
@@ -842,7 +874,9 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes, NULL);
+                                    num_strokes, strokes,
+				    "undo-desc", info->blurb,
+				    NULL);
     }
 }
 CODE

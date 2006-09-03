@@ -142,6 +142,7 @@ gimp_paint_tool_constructor (GType                  type,
 {
   GObject       *object;
   GimpTool      *tool;
+  GimpPaintInfo *paint_info;
   GimpPaintTool *paint_tool;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
@@ -151,10 +152,13 @@ gimp_paint_tool_constructor (GType                  type,
 
   g_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
   g_assert (GIMP_IS_PAINT_INFO (tool->tool_info->paint_info));
-  g_assert (g_type_is_a (tool->tool_info->paint_info->paint_type,
-                         GIMP_TYPE_PAINT_CORE));
 
-  paint_tool->core = g_object_new (tool->tool_info->paint_info->paint_type,
+  paint_info = tool->tool_info->paint_info;
+
+  g_assert (g_type_is_a (paint_info->paint_type, GIMP_TYPE_PAINT_CORE));
+
+  paint_tool->core = g_object_new (paint_info->paint_type,
+                                   "undo-desc", paint_info->blurb,
                                    NULL);
 
   return object;

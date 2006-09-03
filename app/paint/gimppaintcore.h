@@ -39,6 +39,8 @@ struct _GimpPaintCore
 
   gint         ID;               /*  unique instance ID                  */
 
+  gchar       *undo_desc;        /*  undo description                    */
+
   GimpCoords   start_coords;     /*  starting coords (for undo only)     */
 
   GimpCoords   cur_coords;       /*  current coords                      */

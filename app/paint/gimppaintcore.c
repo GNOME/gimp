@@ -32,11 +32,9 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
-#include "core/gimppaintinfo.h"
 #include "core/gimppickable.h"
 
 #include "gimppaintcore.h"
@@ -48,9 +46,24 @@
 #include "gimp-intl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_UNDO_DESC
+};
+
+
 /*  local function prototypes  */
 
 static void      gimp_paint_core_finalize            (GObject          *object);
+static void      gimp_paint_core_set_property        (GObject          *object,
+                                                      guint             property_id,
+                                                      const GValue     *value,
+                                                      GParamSpec       *pspec);
+static void      gimp_paint_core_get_property        (GObject          *object,
+                                                      guint             property_id,
+                                                      GValue           *value,
+                                                      GParamSpec       *pspec);
 
 static gboolean  gimp_paint_core_real_start          (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
@@ -100,21 +113,31 @@ gimp_paint_core_class_init (GimpPaintCoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize  = gimp_paint_core_finalize;
+  object_class->finalize     = gimp_paint_core_finalize;
+  object_class->set_property = gimp_paint_core_set_property;
+  object_class->get_property = gimp_paint_core_get_property;
 
-  klass->start            = gimp_paint_core_real_start;
-  klass->pre_paint        = gimp_paint_core_real_pre_paint;
-  klass->paint            = gimp_paint_core_real_paint;
-  klass->post_paint       = gimp_paint_core_real_post_paint;
-  klass->interpolate      = gimp_paint_core_real_interpolate;
-  klass->get_paint_area   = gimp_paint_core_real_get_paint_area;
-  klass->push_undo        = gimp_paint_core_real_push_undo;
+  klass->start               = gimp_paint_core_real_start;
+  klass->pre_paint           = gimp_paint_core_real_pre_paint;
+  klass->paint               = gimp_paint_core_real_paint;
+  klass->post_paint          = gimp_paint_core_real_post_paint;
+  klass->interpolate         = gimp_paint_core_real_interpolate;
+  klass->get_paint_area      = gimp_paint_core_real_get_paint_area;
+  klass->push_undo           = gimp_paint_core_real_push_undo;
+
+  g_object_class_install_property (object_class, PROP_UNDO_DESC,
+                                   g_param_spec_string ("undo-desc", NULL, NULL,
+                                                        _("Paint"),
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
 gimp_paint_core_init (GimpPaintCore *core)
 {
   core->ID               = global_core_ID++;
+
+  core->undo_desc        = NULL;
 
   core->distance         = 0.0;
   core->pixel_dist       = 0.0;
@@ -142,7 +165,51 @@ gimp_paint_core_finalize (GObject *object)
 
   gimp_paint_core_cleanup (core);
 
+  g_free (core->undo_desc);
+  core->undo_desc = NULL;
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_paint_core_set_property (GObject      *object,
+                              guint         property_id,
+                              const GValue *value,
+                              GParamSpec   *pspec)
+{
+  GimpPaintCore *core = GIMP_PAINT_CORE (object);
+
+  switch (property_id)
+    {
+    case PROP_UNDO_DESC:
+      g_free (core->undo_desc);
+      core->undo_desc = g_value_dup_string (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_paint_core_get_property (GObject    *object,
+                              guint       property_id,
+                              GValue     *value,
+                              GParamSpec *pspec)
+{
+  GimpPaintCore *core = GIMP_PAINT_CORE (object);
+
+  switch (property_id)
+    {
+    case PROP_UNDO_DESC:
+      g_value_set_string (value, core->undo_desc);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static gboolean
@@ -312,8 +379,7 @@ void
 gimp_paint_core_finish (GimpPaintCore *core,
                         GimpDrawable  *drawable)
 {
-  GimpPaintInfo *paint_info;
-  GimpImage     *image;
+  GimpImage *image;
 
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -327,12 +393,7 @@ gimp_paint_core_finish (GimpPaintCore *core,
   if ((core->x2 == core->x1) || (core->y2 == core->y1))
     return;
 
-  paint_info = (GimpPaintInfo *)
-    gimp_container_get_child_by_name (image->gimp->paint_info_list,
-                                      g_type_name (G_TYPE_FROM_INSTANCE (core)));
-
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
-                               paint_info ? paint_info->blurb : _("Paint"));
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT, core->undo_desc);
 
   GIMP_PAINT_CORE_GET_CLASS (core)->push_undo (core, image, NULL);
 
