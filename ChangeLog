@@ -1,7 +1,19 @@
+2006-09-03  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimppaintcore.[ch]: added construct-only property
+	"undo-desc". Use this when pushing an undo instead of attempting
+	an unsuccessful lookup of the GimpPaintInfo object.
+
+	* tools/pdbgen/pdb/paint_tools.pdb
+	* app/tools/gimppainttool.c: use paint_info->blurb as undo
+	description when constructing the paint core.
+
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
 2006-09-03  Hans Breuer  <hans@breuer.org>
 
 	* app/core/gimp-gradients.c : include "gimpcontext.h" for 
-	gimp_context_set_gradient()
+	gimp_context_set_gradient().
 	
 	* **/makefile.msc app/gimpcore.def : updated
 	
