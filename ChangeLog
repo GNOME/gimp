@@ -1,3 +1,15 @@
+2006-09-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpsourceoptions.[ch] (struct GimpSourceOptions): added
+	non-property boolean member "use_source" which defalts to TRUE.
+
+	* app/paint/gimpcloneoptions.c: imeplement GObject::notify() and
+	set source_options->use_source to TRUE if the clone type is
+	GIMP_IMAGE_CLONE.
+
+	* app/paint/gimpsourcecore.h: removed bogus
+	gimp_source_core_register() prototype.
+
 2006-09-03  Sven Neumann  <sven@gimp.org>
 
 	* app/paint/gimppaintcore.[ch]: added construct-only property

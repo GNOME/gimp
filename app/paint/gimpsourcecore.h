@@ -62,9 +62,6 @@ struct _GimpSourceCoreClass
 };
 
 
-void    gimp_source_core_register (Gimp                      *gimp,
-                                   GimpPaintRegisterCallback  callback);
-
 GType   gimp_source_core_get_type (void) G_GNUC_CONST;
 
 
