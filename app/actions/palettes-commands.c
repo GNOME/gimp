@@ -31,11 +31,13 @@
 #include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpview.h"
 
-#include "dialogs/palette-import-dialog.h"
+#include "dialogs/dialogs.h"
 
+#include "actions.h"
 #include "palettes-commands.h"
 
 #include "gimp-intl.h"
@@ -54,12 +56,12 @@ void
 palettes_import_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context;
+  GtkWidget *widget;
+  return_if_no_widget (widget, data);
 
-  context = gimp_container_view_get_context (editor->view);
-
-  palette_import_dialog_show (context->gimp);
+  gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                  gtk_widget_get_screen (widget),
+                                  "gimp-palette-import-dialog", -1, TRUE);
 }
 
 void

@@ -93,7 +93,7 @@ struct _ImportDialog
 };
 
 
-static ImportDialog * palette_import_dialog_new   (Gimp           *gimp);
+static void   palette_import_free                 (ImportDialog   *dialog);
 static void   palette_import_response             (GtkWidget      *widget,
                                                    gint            response_id,
                                                    ImportDialog   *dialog);
@@ -131,36 +131,10 @@ static void   palette_import_image_remove         (GimpContainer  *container,
 static void   palette_import_make_palette         (ImportDialog   *dialog);
 
 
-static ImportDialog *the_import_dialog = NULL;
-
-
 /*  public functions  */
 
-void
-palette_import_dialog_show (Gimp *gimp)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  if (! the_import_dialog)
-    the_import_dialog = palette_import_dialog_new (gimp);
-
-  gtk_window_present (GTK_WINDOW (the_import_dialog->dialog));
-}
-
-void
-palette_import_dialog_destroy (void)
-{
-  if (the_import_dialog)
-    palette_import_response (NULL, GTK_RESPONSE_CANCEL, the_import_dialog);
-}
-
-
-/*  private functions  */
-
-/*  the palette import dialog constructor  ***********************************/
-
-static ImportDialog *
-palette_import_dialog_new (Gimp *gimp)
+GtkWidget *
+palette_import_dialog_new (GimpContext *context)
 {
   ImportDialog *dialog;
   GimpGradient *gradient;
@@ -173,13 +147,15 @@ palette_import_dialog_new (Gimp *gimp)
   GtkSizeGroup *size_group;
   GSList       *group = NULL;
 
-  gradient = gimp_context_get_gradient (gimp_get_user_context (gimp));
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  gradient = gimp_context_get_gradient (context);
 
   dialog = g_new0 (ImportDialog, 1);
 
   dialog->import_type = GRADIENT_IMPORT;
-  dialog->context     = gimp_context_new (gimp, "Palette Import",
-                                          gimp_get_user_context (gimp));
+  dialog->context     = gimp_context_new (context->gimp, "Palette Import",
+                                          context);
 
   dialog->dialog = gimp_dialog_new (_("Import a New Palette"),
                                     "gimp-palette-import", NULL, 0,
@@ -200,6 +176,9 @@ palette_import_dialog_new (Gimp *gimp)
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  g_object_set_data_full (G_OBJECT (dialog->dialog), "palette-import-dialog",
+                          dialog, (GDestroyNotify) palette_import_free);
 
   g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (palette_import_response),
@@ -260,7 +239,7 @@ palette_import_dialog_new (Gimp *gimp)
                     dialog);
 
   gtk_widget_set_sensitive (dialog->image_radio,
-                            ! gimp_container_is_empty (gimp->images));
+                            ! gimp_container_is_empty (context->gimp->images));
 
   dialog->sample_merged_toggle =
     gtk_check_button_new_with_mnemonic (_("Sample _Merged"));
@@ -301,7 +280,7 @@ palette_import_dialog_new (Gimp *gimp)
 
   /*  The gradient menu  */
   dialog->gradient_combo =
-    gimp_container_combo_box_new (gimp->gradient_factory->container,
+    gimp_container_combo_box_new (context->gimp->gradient_factory->container,
                                   dialog->context, 24, 1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              NULL, 0.0, 0.5, dialog->gradient_combo, 1, FALSE);
@@ -309,7 +288,8 @@ palette_import_dialog_new (Gimp *gimp)
 
   /*  The image menu  */
   dialog->image_combo =
-    gimp_container_combo_box_new (gimp->images, dialog->context, 24, 1);
+    gimp_container_combo_box_new (context->gimp->images, dialog->context,
+                                  24, 1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              NULL, 0.0, 0.5, dialog->image_combo, 1, FALSE);
   gtk_size_group_add_widget (size_group, dialog->image_combo);
@@ -396,7 +376,7 @@ palette_import_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
-  dialog->preview = gimp_view_new_full_by_types (gimp_get_user_context (gimp),
+  dialog->preview = gimp_view_new_full_by_types (dialog->context,
                                                  GIMP_TYPE_VIEW,
                                                  GIMP_TYPE_PALETTE,
                                                  192, 192, 1,
@@ -417,10 +397,10 @@ palette_import_dialog_new (Gimp *gimp)
 
   /*  keep the dialog up-to-date  */
 
-  g_signal_connect (gimp->images, "add",
+  g_signal_connect (context->gimp->images, "add",
                     G_CALLBACK (palette_import_image_add),
                     dialog);
-  g_signal_connect (gimp->images, "remove",
+  g_signal_connect (context->gimp->images, "remove",
                     G_CALLBACK (palette_import_image_remove),
                     dialog);
 
@@ -436,7 +416,30 @@ palette_import_dialog_new (Gimp *gimp)
 
   palette_import_grad_callback (dialog->gradient_radio, dialog);
 
-  return dialog;
+  return dialog->dialog;
+}
+
+
+/*  private functions  */
+
+static void
+palette_import_free (ImportDialog *dialog)
+{
+  Gimp *gimp = dialog->context->gimp;
+
+  g_signal_handlers_disconnect_by_func (gimp->images,
+                                        palette_import_image_add,
+                                        dialog);
+  g_signal_handlers_disconnect_by_func (gimp->images,
+                                        palette_import_image_remove,
+                                        dialog);
+
+  if (dialog->palette)
+    g_object_unref (dialog->palette);
+
+  g_object_unref (dialog->context);
+
+  g_free (dialog);
 }
 
 
@@ -451,13 +454,6 @@ palette_import_response (GtkWidget    *widget,
 
   palette_import_image_changed (dialog->context, NULL, dialog);
 
-  g_signal_handlers_disconnect_by_func (gimp->images,
-                                        palette_import_image_add,
-                                        dialog);
-  g_signal_handlers_disconnect_by_func (gimp->images,
-                                        palette_import_image_remove,
-                                        dialog);
-
   if (dialog->palette)
     {
       if (response_id == GTK_RESPONSE_OK)
@@ -470,15 +466,9 @@ palette_import_response (GtkWidget    *widget,
           gimp_container_add (gimp->palette_factory->container,
                               GIMP_OBJECT (dialog->palette));
         }
-
-      g_object_unref (dialog->palette);
     }
 
-  g_object_unref (dialog->context);
   gtk_widget_destroy (dialog->dialog);
-  g_free (dialog);
-
-  the_import_dialog = NULL;
 }
 
 

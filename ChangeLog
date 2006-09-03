@@ -1,5 +1,19 @@
 2006-09-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/palette-import-dialog.[ch]: removed
+	palette_inport_dialog_show() and palette_import_dialog_destroy()
+	and don't remember the created dialog internally. Instead, made
+	palette_import_dialog_new() public.
+
+	* app/dialogs/dialogs.c
+	* app/dialogs/dialogs-constructors.[ch]: register it with the
+	toplevel dialog factory as singleton toplevel.
+
+	* app/actions/palettes-commands.c (palettes_import_cmd_callback):
+	use the dialog factory to create the palette import dialog.
+
+2006-09-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpsourceoptions.[ch] (struct GimpSourceOptions): added
 	non-property boolean member "use_source" which defalts to TRUE.
 

@@ -77,6 +77,7 @@
 #include "image-new-dialog.h"
 #include "keyboard-shortcuts-dialog.h"
 #include "module-dialog.h"
+#include "palette-import-dialog.h"
 #include "preferences-dialog.h"
 #include "quit-dialog.h"
 #include "tips-dialog.h"
@@ -149,6 +150,14 @@ dialogs_module_get (GimpDialogFactory *factory,
                     gint               view_size)
 {
   return module_dialog_new (context->gimp);
+}
+
+GtkWidget *
+dialogs_palette_import_get (GimpDialogFactory *factory,
+                            GimpContext       *context,
+                            gint               view_size)
+{
+  return palette_import_dialog_new (context);
 }
 
 GtkWidget *

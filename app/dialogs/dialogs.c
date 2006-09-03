@@ -96,6 +96,8 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
             dialogs_keyboard_shortcuts_get, TRUE, TRUE,  TRUE),
   TOPLEVEL ("gimp-module-dialog",
             dialogs_module_get,             TRUE, TRUE,  TRUE),
+  TOPLEVEL ("gimp-palette-import-dialog",
+            dialogs_palette_import_get,     TRUE, TRUE,  TRUE),
   TOPLEVEL ("gimp-tips-dialog",
             dialogs_tips_get,               TRUE, FALSE, FALSE),
   TOPLEVEL ("gimp-about-dialog",
