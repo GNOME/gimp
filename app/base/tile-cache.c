@@ -107,10 +107,6 @@ tile_cache_init (gulong tile_cache_size)
       dirty_signal = g_cond_new ();
 
       preswap_thread = g_thread_create (&tile_idle_thread, NULL, FALSE, NULL);
-#else
-      idle_swapper = g_timeout_add (IDLE_SWAPPER_TIMEOUT,
-                                    tile_idle_preswap,
-                                    NULL);
 #endif
     }
 }
@@ -118,6 +114,12 @@ tile_cache_init (gulong tile_cache_size)
 void
 tile_cache_exit (void)
 {
+  if (idle_swapper)
+    {
+      g_source_remove (idle_swapper);
+      idle_swapper = 0;
+    }
+
   tile_cache_set_size (0);
 }
 
@@ -211,6 +213,12 @@ tile_cache_insert (Tile *tile)
       g_mutex_lock (dirty_mutex);
       g_cond_signal (dirty_signal);
       g_mutex_unlock (dirty_mutex);
+#else
+      if (! idle_swapper && cur_cache_dirty * 2 < max_cache_size)
+        idle_swapper = g_timeout_add_full (G_PRIORITY_LOW,
+                                           IDLE_SWAPPER_TIMEOUT,
+                                           tile_idle_preswap,
+                                           NULL, NULL);
 #endif
     }
 
@@ -405,7 +413,10 @@ tile_idle_preswap (gpointer data)
   Tile *tile;
 
   if (cur_cache_dirty * 2 < max_cache_size)
-    return TRUE;
+    {
+      idle_swapper = 0;
+      return FALSE;
+    }
 
   CACHE_LOCK;
 

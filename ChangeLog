@@ -1,3 +1,8 @@
+2006-09-04  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-cache.c: only run the idle swapper if needed and
+	use a lower priority for the timeout.
+
 2006-09-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/Makefile.am
