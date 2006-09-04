@@ -2,8 +2,8 @@
 
 	* app/display/gimpdisplayshell.c
 	* app/display/gimpdisplayshell-selection.c: more code cleanup.
-	Monitor the shell's window visibility and don't run the timeout if
-	the shell is fully obscured.
+	Monitor the shell's window state visibility and don't run the
+	timeout if the shell is fully obscured, iconified or withdrawn.
 
 2006-09-04  Sven Neumann  <sven@gimp.org>
 
