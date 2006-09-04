@@ -96,9 +96,9 @@ static void      selection_free_segs      (Selection      *selection);
 static gboolean  selection_start_timeout  (Selection      *selection);
 static gboolean  selection_timeout        (Selection      *selection);
 
-static gboolean  selection_window_state_event (GtkWidget           *shell,
-                                               GdkEventWindowState *event,
-                                               Selection           *selection);
+static gboolean  selection_visibility_notify_event (GtkWidget          *shell,
+                                                    GdkEventVisibility *event,
+                                                    Selection          *selection);
 
 
 /*  public functions  */
@@ -125,8 +125,8 @@ gimp_display_shell_selection_init (GimpDisplayShell *shell)
 
   shell->selection = selection;
 
-  g_signal_connect (shell, "window-state-event",
-                    G_CALLBACK (selection_window_state_event),
+  g_signal_connect (shell, "visibility-notify-event",
+                    G_CALLBACK (selection_visibility_notify_event),
                     selection);
 }
 
@@ -142,7 +142,7 @@ gimp_display_shell_selection_free (GimpDisplayShell *shell)
       selection_stop (selection);
 
       g_signal_handlers_disconnect_by_func (shell,
-                                            G_CALLBACK (selection_window_state_event),
+                                            selection_visibility_notify_event,
                                             selection);
 
       selection_free_segs (selection);
@@ -711,17 +711,13 @@ selection_timeout (Selection *selection)
 }
 
 static gboolean
-selection_window_state_event (GtkWidget           *shell,
-                              GdkEventWindowState *event,
-                              Selection           *selection)
+selection_visibility_notify_event (GtkWidget          *shell,
+                                   GdkEventVisibility *event,
+                                   Selection          *selection)
 {
-  gboolean visible;
+  selection->visible = (event->state != GDK_VISIBILITY_FULLY_OBSCURED);
 
-  visible = (event->new_window_state & (GDK_WINDOW_STATE_WITHDRAWN |
-                                        GDK_WINDOW_STATE_ICONIFIED)) == 0;
-  selection->visible = visible;
-
-  if (visible)
+  if (selection->visible)
     selection_start (selection, FALSE);
   else
     selection_stop (selection);

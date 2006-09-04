@@ -307,6 +307,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                                               GDK_KEY_PRESS_MASK           |
                                               GDK_KEY_RELEASE_MASK         |
                                               GDK_FOCUS_CHANGE_MASK        |
+                                              GDK_VISIBILITY_NOTIFY_MASK   |
                                               GDK_SCROLL_MASK));
 
   /*  active display callback  */
