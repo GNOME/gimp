@@ -434,7 +434,7 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
   gimp_display_shell_draw_cursor (shell);
 
   /* restart (and recalculate) the selection boundaries */
-  gimp_display_shell_selection_start (shell->select, TRUE);
+  gimp_display_shell_selection_start (shell->select);
 
   gimp_display_shell_resume (shell);
 

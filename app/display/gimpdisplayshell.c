@@ -1562,7 +1562,7 @@ gimp_display_shell_selection_visibility (GimpDisplayShell     *shell,
           gimp_display_shell_selection_layer_invis (shell->select);
           break;
         case GIMP_SELECTION_ON:
-          gimp_display_shell_selection_start (shell->select, TRUE);
+          gimp_display_shell_selection_start (shell->select);
           break;
         case GIMP_SELECTION_PAUSE:
           gimp_display_shell_selection_pause (shell->select);

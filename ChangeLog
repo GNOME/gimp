@@ -1,3 +1,12 @@
+2006-09-04  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-selection.[ch]: some cleanup. Made
+	the Selection struct private and removed unused state member.
+	Removed redundant parameter from gimp_display_shell_selection_start().
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell.c: changed accordingly.
+
 2006-09-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/paint-enums.[ch]: removed enum GimpHealAlignMode, we

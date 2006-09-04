@@ -20,35 +20,14 @@
 #define __GIMP_DISPLAY_SHELL_SELECTION_H__
 
 
-struct _Selection
-{
-  GimpDisplayShell *shell;            /*  shell that owns the selection     */
-  GdkSegment       *segs_in;          /*  gdk segments of area boundary     */
-  GdkSegment       *segs_out;         /*  gdk segments of area boundary     */
-  GdkSegment       *segs_layer;       /*  gdk segments of area boundary     */
-  gint              num_segs_in;      /*  number of segments in segs1       */
-  gint              num_segs_out;     /*  number of segments in segs2       */
-  gint              num_segs_layer;   /*  number of segments in segs3       */
-  guint             index;            /*  index of current stipple pattern  */
-  gint              state;            /*  internal drawing state            */
-  gint              paused;           /*  count of pause requests           */
-  gboolean          recalc;           /*  flag to recalculate the selection */
-  gboolean          hidden;           /*  is the selection hidden?          */
-  gboolean          layer_hidden;     /*  is the layer boundary hidden?     */
-  guint             timeout_id;       /*  timer for successive draws        */
-  GdkPoint         *points_in[8];     /*  points of segs_in for fast ants   */
-  gint              num_points_in[8]; /*  number of points in points_in     */
-};
-
-
 Selection * gimp_display_shell_selection_new     (GimpDisplayShell *shell);
+
 void   gimp_display_shell_selection_free             (Selection    *select);
 
 void   gimp_display_shell_selection_pause            (Selection    *select);
 void   gimp_display_shell_selection_resume           (Selection    *select);
 
-void   gimp_display_shell_selection_start            (Selection    *select,
-                                                      gboolean      recalc);
+void   gimp_display_shell_selection_start            (Selection    *select);
 void   gimp_display_shell_selection_invis            (Selection    *select);
 void   gimp_display_shell_selection_layer_invis      (Selection    *select);
 

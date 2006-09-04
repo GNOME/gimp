@@ -38,15 +38,30 @@
 #include "gimpdisplayshell-transform.h"
 
 
-#define USE_DRAWPOINTS
 #undef  VERBOSE
 
-/*  The possible internal drawing states...  */
-#define INVISIBLE         0
-#define INTRO             1
-#define MARCHING          2
-
 #define INITIAL_DELAY     15  /* in milleseconds */
+#define USE_DRAWPOINTS    1
+
+
+struct _Selection
+{
+  GimpDisplayShell *shell;            /*  shell that owns the selection     */
+  GdkSegment       *segs_in;          /*  gdk segments of area boundary     */
+  GdkSegment       *segs_out;         /*  gdk segments of area boundary     */
+  GdkSegment       *segs_layer;       /*  gdk segments of layer boundary    */
+  gint              num_segs_in;      /*  number of segments in segs1       */
+  gint              num_segs_out;     /*  number of segments in segs2       */
+  gint              num_segs_layer;   /*  number of segments in segs3       */
+  guint             index;            /*  index of current stipple pattern  */
+  gint              paused;           /*  count of pause requests           */
+  gboolean          recalc;           /*  flag to recalculate the selection */
+  gboolean          hidden;           /*  is the selection hidden?          */
+  gboolean          layer_hidden;     /*  is the layer boundary hidden?     */
+  guint             timeout_id;       /*  timer for successive draws        */
+  GdkPoint         *points_in[8];     /*  points of segs_in for fast ants   */
+  gint              num_points_in[8]; /*  number of points in points_in     */
+};
 
 
 /*  local function prototypes  */
@@ -64,8 +79,8 @@ static void       selection_transform_segs  (Selection      *select,
                                              gint            num_segs);
 static void       selection_generate_segs   (Selection      *select);
 static void       selection_free_segs       (Selection      *select);
-static gboolean   selection_start_marching  (gpointer        data);
-static gboolean   selection_march_ants      (gpointer        data);
+static gboolean   selection_start_marching  (Selection      *select);
+static gboolean   selection_march_ants      (Selection      *select);
 
 
 /*  public functions  */
@@ -81,7 +96,6 @@ gimp_display_shell_selection_new (GimpDisplayShell *shell)
   new = g_new0 (Selection, 1);
 
   new->shell        = shell;
-  new->state        = INVISIBLE;
   new->recalc       = TRUE;
   new->hidden       = ! gimp_display_shell_get_show_selection (shell);
   new->layer_hidden = ! gimp_display_shell_get_show_layer (shell);
@@ -112,8 +126,6 @@ gimp_display_shell_selection_pause (Selection *select)
       select->timeout_id = 0;
     }
 
-  select->state = INVISIBLE;
-
   select->paused++;
 }
 
@@ -121,40 +133,27 @@ void
 gimp_display_shell_selection_resume (Selection *select)
 {
   if (select->paused == 1)
-    {
-      select->state      = INTRO;
-      select->timeout_id = g_timeout_add (INITIAL_DELAY,
-                                          selection_start_marching,
-                                          select);
-    }
+    select->timeout_id = g_timeout_add (INITIAL_DELAY,
+                                        (GSourceFunc) selection_start_marching,
+                                        select);
 
   select->paused--;
 }
 
 void
-gimp_display_shell_selection_start (Selection *select,
-                                    gboolean   recalc)
+gimp_display_shell_selection_start (Selection *select)
 {
-  /*  A call to selection_start with recalc == TRUE means that
-   *  we want to recalculate the selection boundary--usually
-   *  after scaling or panning the display, or modifying the
-   *  selection in some way.  If recalc == FALSE, the already
-   *  calculated boundary is simply redrawn.
-   */
-  if (recalc)
-    select->recalc = TRUE;
+  select->recalc = TRUE;
 
   /*  If this selection is paused, do not start it  */
   if (select->paused > 0)
     return;
 
-  select->state = INTRO;  /*  The state before the first draw  */
-
   if (select->timeout_id)
     g_source_remove (select->timeout_id);
 
   select->timeout_id = g_timeout_add (INITIAL_DELAY,
-                                      selection_start_marching,
+                                      (GSourceFunc) selection_start_marching,
                                       select);
 }
 
@@ -169,8 +168,6 @@ gimp_display_shell_selection_invis (Selection *select)
       select->timeout_id = 0;
     }
 
-  select->state = INVISIBLE;
-
   /*  Find the bounds of the selection  */
   if (gimp_display_shell_mask_bounds (select->shell, &x1, &y1, &x2, &y2))
     {
@@ -179,7 +176,7 @@ gimp_display_shell_selection_invis (Selection *select)
     }
   else
     {
-      gimp_display_shell_selection_start (select, TRUE);
+      gimp_display_shell_selection_start (select);
     }
 }
 
@@ -197,8 +194,6 @@ gimp_display_shell_selection_layer_invis (Selection *select)
       g_source_remove (select->timeout_id);
       select->timeout_id = 0;
     }
-
-  select->state = INVISIBLE;
 
   if (select->segs_layer != NULL && select->num_segs_layer == 4)
     {
@@ -236,7 +231,7 @@ gimp_display_shell_selection_set_hidden (Selection *select,
 
       select->hidden = hidden;
 
-      gimp_display_shell_selection_start (select, TRUE);
+      gimp_display_shell_selection_start (select);
     }
 }
 
@@ -251,7 +246,7 @@ gimp_display_shell_selection_layer_set_hidden (Selection *select,
 
       select->layer_hidden = hidden;
 
-      gimp_display_shell_selection_start (select, TRUE);
+      gimp_display_shell_selection_start (select);
     }
 }
 
@@ -592,29 +587,22 @@ selection_free_segs (Selection *select)
 
 
 static gboolean
-selection_start_marching (gpointer data)
+selection_start_marching (Selection *select)
 {
-  Selection         *select = (Selection *) data;
-  GimpCanvas        *canvas;
+  GimpCanvas        *canvas = GIMP_CANVAS (select->shell->canvas);
   GimpDisplayConfig *config;
 
-  canvas = GIMP_CANVAS (select->shell->canvas);
   config = GIMP_DISPLAY_CONFIG (select->shell->display->image->gimp->config);
 
-  /*  if the RECALC bit is set, reprocess the boundaries  */
   if (select->recalc)
     {
       selection_free_segs (select);
       selection_generate_segs (select);
 
-      /* Toggle the RECALC flag */
       select->recalc = FALSE;
     }
 
   select->index = 0;
-
-  /*  Make sure the state is set to marching  */
-  select->state = MARCHING;
 
   if (! select->layer_hidden && select->segs_layer)
     gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_LAYER_BOUNDARY,
@@ -632,7 +620,7 @@ selection_start_marching (gpointer data)
 
   /*  Reset the timer  */
   select->timeout_id = g_timeout_add (config->marching_ants_speed,
-                                      selection_march_ants,
+                                      (GSourceFunc) selection_march_ants,
                                       select);
 
   return FALSE;
@@ -640,10 +628,8 @@ selection_start_marching (gpointer data)
 
 
 static gboolean
-selection_march_ants (gpointer data)
+selection_march_ants (Selection *select)
 {
-  Selection *select = data;
-
   select->index++;
   selection_draw (select);
 
