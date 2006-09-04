@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-13 23:34+0200\n"
-"PO-Revision-Date: 2006-08-13 23:43+0200\n"
+"POT-Creation-Date: 2006-09-04 02:47+0200\n"
+"PO-Revision-Date: 2006-09-04 02:48+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -579,20 +579,20 @@ msgid "Indexed-alpha"
 msgstr "Indicizzato-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:562
-msgid "None (Fastest)"
-msgstr "Nessuna (veloce)"
+msgid "interpolation|None"
+msgstr "interpolazione|Nessuna"
 
 #: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|Linear"
-msgstr "Lineare"
+msgstr "interpolazione|Lineare"
 
 #: ../libgimpbase/gimpbaseenums.c:564
 msgid "Cubic"
 msgstr "Cubica"
 
 #: ../libgimpbase/gimpbaseenums.c:565
-msgid "Lanczos (Best)"
-msgstr "Lanczos (migliore)"
+msgid "Lanczos"
+msgstr "Lanczos"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -1043,16 +1043,10 @@ msgid "One page selected"
 msgstr "Una pagina selezionata"
 
 #: ../libgimpwidgets/gimppageselector.c:1183
-#, c-format
-msgid "All %d page selected"
-msgid_plural "All %d pages selected"
-msgstr[0] "Tutta la %d pagina selezionata"
-msgstr[1] "Tutte le %d pagine selezionate"
-
 #: ../libgimpwidgets/gimppageselector.c:1187
 #, c-format
 msgid "%d page selected"
-msgid_plural "%d pages selected"
+msgid_plural "All %d pages selected"
 msgstr[0] "%d pagina selezionata"
 msgstr[1] "%d pagine selezionate"
 
@@ -1154,7 +1148,7 @@ msgstr "Spaziatura r_ighe"
 msgid "_Resize"
 msgstr "_Ridimensiona"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:302
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:303
 msgid "_Scale"
 msgstr "_Scala"
 
@@ -1162,15 +1156,15 @@ msgstr "_Scala"
 msgid "Crop"
 msgstr "Ritaglia"
 
-#: ../libgimpwidgets/gimpstock.c:298
+#: ../libgimpwidgets/gimpstock.c:299
 msgid "_Transform"
 msgstr "_Trasforma"
 
-#: ../libgimpwidgets/gimpstock.c:301
+#: ../libgimpwidgets/gimpstock.c:302
 msgid "_Rotate"
 msgstr "_Ruota"
 
-#: ../libgimpwidgets/gimpstock.c:303
+#: ../libgimpwidgets/gimpstock.c:304
 msgid "_Shear"
 msgstr "_Inclina"
 
@@ -1627,3 +1621,11 @@ msgstr "Controllore %03d"
 #: ../modules/controller_midi.c:436
 msgid "MIDI Events"
 msgstr "Eventi MIDI"
+
+#~ msgid "None (Fastest)"
+#~ msgstr "Nessuna (veloce)"
+
+#~ msgid "All %d page selected"
+#~ msgid_plural "All %d pages selected"
+#~ msgstr[0] "Tutta la %d pagina selezionata"
+#~ msgstr[1] "Tutte le %d pagine selezionate"
