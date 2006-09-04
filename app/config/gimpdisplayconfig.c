@@ -118,7 +118,7 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_MARCHING_ANTS_SPEED,
                                 "marching-ants-speed",
                                 MARCHING_ANTS_SPEED_BLURB,
-                                50, G_MAXINT, 300,
+                                10, 1000, 100,
                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_ZOOM,
                                     "resize-windows-on-zoom",

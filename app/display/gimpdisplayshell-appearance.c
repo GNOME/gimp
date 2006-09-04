@@ -265,8 +265,7 @@ gimp_display_shell_set_show_selection (GimpDisplayShell *shell,
 
   g_object_set (options, "show-selection", show, NULL);
 
-  if (shell->select)
-    gimp_display_shell_selection_set_hidden (shell->select, ! show);
+  gimp_display_shell_selection_set_hidden (shell, ! show);
 
   SET_ACTIVE (shell->menubar_manager, "view-show-selection", show);
 
@@ -294,8 +293,7 @@ gimp_display_shell_set_show_layer (GimpDisplayShell *shell,
 
   g_object_set (options, "show-layer-boundary", show, NULL);
 
-  if (shell->select)
-    gimp_display_shell_selection_layer_set_hidden (shell->select, ! show);
+  gimp_display_shell_selection_layer_set_hidden (shell, ! show);
 
   SET_ACTIVE (shell->menubar_manager, "view-show-layer-boundary", show);
 

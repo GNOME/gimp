@@ -20,21 +20,16 @@
 #define __GIMP_DISPLAY_SHELL_SELECTION_H__
 
 
-Selection * gimp_display_shell_selection_new     (GimpDisplayShell *shell);
+void   gimp_display_shell_selection_init     (GimpDisplayShell     *shell);
+void   gimp_display_shell_selection_free     (GimpDisplayShell     *shell);
 
-void   gimp_display_shell_selection_free             (Selection    *select);
+void   gimp_display_shell_selection_control  (GimpDisplayShell     *shell,
+                                              GimpSelectionControl  control);
 
-void   gimp_display_shell_selection_pause            (Selection    *select);
-void   gimp_display_shell_selection_resume           (Selection    *select);
-
-void   gimp_display_shell_selection_start            (Selection    *select);
-void   gimp_display_shell_selection_invis            (Selection    *select);
-void   gimp_display_shell_selection_layer_invis      (Selection    *select);
-
-void   gimp_display_shell_selection_set_hidden       (Selection    *select,
-                                                      gboolean      hidden);
-void   gimp_display_shell_selection_layer_set_hidden (Selection    *select,
-                                                      gboolean      hidden);
+void   gimp_display_shell_selection_set_hidden       (GimpDisplayShell *shell,
+                                                      gboolean          hidden);
+void   gimp_display_shell_selection_layer_set_hidden (GimpDisplayShell *shell,
+                                                      gboolean          hidden);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SELECTION_H__  */

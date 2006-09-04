@@ -94,7 +94,7 @@ struct _GimpDisplayShell
   gboolean          snap_to_canvas;    /*  should the canvas be snapped to?   */
   gboolean          snap_to_vectors;   /*  should the active path be snapped  */
 
-  Selection        *select;            /*  Selection object                   */
+  Selection        *selection;         /*  Selection (marching ants)          */
 
   GtkWidget        *canvas;            /*  GimpCanvas widget                  */
   GdkGC            *grid_gc;           /*  GC for grid drawing                */
@@ -184,65 +184,63 @@ struct _GimpDisplayShellClass
 };
 
 
-GType       gimp_display_shell_get_type              (void) G_GNUC_CONST;
+GType       gimp_display_shell_get_type            (void) G_GNUC_CONST;
 
-GtkWidget * gimp_display_shell_new                   (GimpDisplay      *display,
-                                                      GimpUnit          unit,
-                                                      gdouble           scale,
-                                                      GimpMenuFactory  *menu_factory,
-                                                      GimpUIManager    *popup_manager);
+GtkWidget * gimp_display_shell_new                 (GimpDisplay        *display,
+                                                    GimpUnit            unit,
+                                                    gdouble             scale,
+                                                    GimpMenuFactory    *menu_factory,
+                                                    GimpUIManager      *popup_manager);
 
-void        gimp_display_shell_reconnect             (GimpDisplayShell *shell);
+void        gimp_display_shell_reconnect           (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_scaled                (GimpDisplayShell *shell);
-void        gimp_display_shell_scrolled              (GimpDisplayShell *shell);
+void        gimp_display_shell_scaled              (GimpDisplayShell   *shell);
+void        gimp_display_shell_scrolled            (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_set_unit              (GimpDisplayShell *shell,
-                                                      GimpUnit          unit);
-GimpUnit    gimp_display_shell_get_unit              (GimpDisplayShell *shell);
+void        gimp_display_shell_set_unit            (GimpDisplayShell   *shell,
+                                                    GimpUnit            unit);
+GimpUnit    gimp_display_shell_get_unit            (GimpDisplayShell   *shell);
 
-gboolean    gimp_display_shell_snap_coords           (GimpDisplayShell *shell,
-                                                      GimpCoords       *coords,
-                                                      GimpCoords       *snapped_coords,
-                                                      gint              snap_offset_x,
-                                                      gint              snap_offset_y,
-                                                      gint              snap_width,
-                                                      gint              snap_height);
+gboolean    gimp_display_shell_snap_coords         (GimpDisplayShell   *shell,
+                                                    GimpCoords         *coords,
+                                                    GimpCoords         *snapped_coords,
+                                                    gint                snap_offset_x,
+                                                    gint                snap_offset_y,
+                                                    gint                snap_width,
+                                                    gint                snap_height);
 
-gboolean    gimp_display_shell_mask_bounds           (GimpDisplayShell *shell,
-                                                      gint             *x1,
-                                                      gint             *y1,
-                                                      gint             *x2,
-                                                      gint             *y2);
+gboolean    gimp_display_shell_mask_bounds         (GimpDisplayShell   *shell,
+                                                    gint               *x1,
+                                                    gint               *y1,
+                                                    gint               *x2,
+                                                    gint               *y2);
 
-void        gimp_display_shell_expose_area           (GimpDisplayShell *shell,
-                                                      gint              x,
-                                                      gint              y,
-                                                      gint              w,
-                                                      gint              h);
-void        gimp_display_shell_expose_guide          (GimpDisplayShell *shell,
-                                                      GimpGuide        *guide);
-void        gimp_display_shell_expose_sample_point   (GimpDisplayShell *shell,
-                                                      GimpSamplePoint  *sample_point);
-void        gimp_display_shell_expose_full           (GimpDisplayShell *shell);
+void        gimp_display_shell_expose_area         (GimpDisplayShell   *shell,
+                                                    gint                x,
+                                                    gint                y,
+                                                    gint                w,
+                                                    gint                h);
+void        gimp_display_shell_expose_guide        (GimpDisplayShell   *shell,
+                                                    GimpGuide          *guide);
+void        gimp_display_shell_expose_sample_point (GimpDisplayShell   *shell,
+                                                    GimpSamplePoint    *sample_point);
+void        gimp_display_shell_expose_full         (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_flush                 (GimpDisplayShell *shell,
-                                                      gboolean          now);
+void        gimp_display_shell_flush               (GimpDisplayShell   *shell,
+                                                    gboolean            now);
 
-void        gimp_display_shell_pause                 (GimpDisplayShell *shell);
-void        gimp_display_shell_resume                (GimpDisplayShell *shell);
+void        gimp_display_shell_pause               (GimpDisplayShell   *shell);
+void        gimp_display_shell_resume              (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_update_icon           (GimpDisplayShell *shell);
+void        gimp_display_shell_update_icon         (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_shrink_wrap           (GimpDisplayShell *shell);
+void        gimp_display_shell_shrink_wrap         (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_selection_visibility  (GimpDisplayShell *shell,
-                                                      GimpSelectionControl  control);
-void        gimp_display_shell_set_highlight         (GimpDisplayShell *shell,
-                                                      const GdkRectangle *highlight);
-void        gimp_display_shell_set_mask              (GimpDisplayShell *shell,
-                                                      GimpDrawable     *mask,
-                                                      GimpChannelType   color);
+void        gimp_display_shell_set_highlight       (GimpDisplayShell   *shell,
+                                                    const GdkRectangle *highlight);
+void        gimp_display_shell_set_mask            (GimpDisplayShell   *shell,
+                                                    GimpDrawable       *mask,
+                                                    GimpChannelType     color);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */

@@ -432,7 +432,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   tool_manager_push_tool (display->image->gimp, GIMP_TOOL (edit_select));
 
   /*  pause the current selection  */
-  gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_PAUSE);
+  gimp_display_shell_selection_control (shell, GIMP_SELECTION_PAUSE);
 
   /* initialize the statusbar display */
   gimp_tool_push_status_coords (GIMP_TOOL (edit_select), display,
@@ -454,7 +454,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
   GimpItem              *active_item;
 
   /*  resume the current selection  */
-  gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_RESUME);
+  gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
 
   gimp_tool_pop_status (tool, display);
 

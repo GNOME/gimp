@@ -40,6 +40,7 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-draw.h"
+#include "display/gimpdisplayshell-selection.h"
 #include "display/gimpdisplayshell-transform.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -258,8 +259,8 @@ gimp_move_tool_button_press (GimpTool        *tool,
               gimp_tool_control_set_scroll_lock (tool->control, TRUE);
               gimp_tool_control_activate (tool->control);
 
-              gimp_display_shell_selection_visibility (shell,
-                                                       GIMP_SELECTION_PAUSE);
+              gimp_display_shell_selection_control (shell,
+                                                    GIMP_SELECTION_PAUSE);
 
               gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
@@ -364,8 +365,7 @@ gimp_move_tool_button_release (GimpTool        *tool,
           move->guide_position    = -1;
           move->guide_orientation = GIMP_ORIENTATION_UNKNOWN;
 
-          gimp_display_shell_selection_visibility (shell,
-                                                   GIMP_SELECTION_RESUME);
+          gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
           return;
         }
 
@@ -426,7 +426,7 @@ gimp_move_tool_button_release (GimpTool        *tool,
             }
         }
 
-      gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_RESUME);
+      gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
       gimp_image_flush (display->image);
 
       if (move->guide)
@@ -799,8 +799,8 @@ gimp_move_tool_start_guide (GimpMoveTool        *move,
 {
   GimpTool *tool = GIMP_TOOL (move);
 
-  gimp_display_shell_selection_visibility (GIMP_DISPLAY_SHELL (display->shell),
-                                           GIMP_SELECTION_PAUSE);
+  gimp_display_shell_selection_control (GIMP_DISPLAY_SHELL (display->shell),
+                                        GIMP_SELECTION_PAUSE);
 
   tool->display = display;
   gimp_tool_control_activate (tool->control);

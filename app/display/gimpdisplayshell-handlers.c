@@ -399,7 +399,7 @@ gimp_display_shell_selection_control_handler (GimpImage            *image,
                                               GimpSelectionControl  control,
                                               GimpDisplayShell     *shell)
 {
-  gimp_display_shell_selection_visibility (shell, control);
+  gimp_display_shell_selection_control (shell, control);
 }
 
 static void
@@ -647,8 +647,8 @@ gimp_display_shell_ants_speed_notify_handler (GObject          *config,
                                               GParamSpec       *param_spec,
                                               GimpDisplayShell *shell)
 {
-  gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_PAUSE);
-  gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_RESUME);
+  gimp_display_shell_selection_control (shell, GIMP_SELECTION_PAUSE);
+  gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
 }
 
 static gboolean

@@ -45,6 +45,7 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-draw.h"
+#include "display/gimpdisplayshell-selection.h"
 #include "display/gimpdisplayshell-transform.h"
 
 #include "gimpcoloroptions.h"
@@ -244,7 +245,7 @@ gimp_color_tool_button_press (GimpTool        *tool,
       color_tool->sample_point_x      = color_tool->sample_point->x;
       color_tool->sample_point_y      = color_tool->sample_point->y;
 
-      gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_PAUSE);
+      gimp_display_shell_selection_control (shell, GIMP_SELECTION_PAUSE);
 
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
@@ -300,8 +301,7 @@ gimp_color_tool_button_release (GimpTool        *tool,
           color_tool->sample_point_x      = -1;
           color_tool->sample_point_y      = -1;
 
-          gimp_display_shell_selection_visibility (shell,
-                                                   GIMP_SELECTION_RESUME);
+          gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
           return;
         }
 
@@ -339,7 +339,7 @@ gimp_color_tool_button_release (GimpTool        *tool,
             }
         }
 
-      gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_RESUME);
+      gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
       gimp_image_flush (display->image);
 
       if (color_tool->sample_point)
@@ -793,8 +793,8 @@ gimp_color_tool_start_sample_point (GimpTool    *tool,
 
   color_tool = GIMP_COLOR_TOOL (tool);
 
-  gimp_display_shell_selection_visibility (GIMP_DISPLAY_SHELL (display->shell),
-                                           GIMP_SELECTION_PAUSE);
+  gimp_display_shell_selection_control (GIMP_DISPLAY_SHELL (display->shell),
+                                        GIMP_SELECTION_PAUSE);
 
   tool->display = display;
   gimp_tool_control_activate (tool->control);

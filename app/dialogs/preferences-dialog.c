@@ -1951,7 +1951,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
-  prefs_spin_button_add (object, "marching-ants-speed", 10.0, 100.0, 0,
+  prefs_spin_button_add (object, "marching-ants-speed", 1.0, 10.0, 0,
                          _("Marching _ants speed:"),
                          GTK_TABLE (table), 0, size_group);
 

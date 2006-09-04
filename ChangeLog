@@ -1,5 +1,21 @@
 2006-09-04  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-selection.[ch]: hide the internal API.
+
+	* app/display/gimpdisplayshell-appearance.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell.[ch]
+	* app/tools/gimpcolortool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpmovetool.c: changed accordingly.
+
+	* app/config/gimpdisplayconfig.c
+	* app/dialogs/preferences-dialog.c: increased the default marching
+	ants speed.
+
+2006-09-04  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-selection.[ch]: some cleanup. Made
 	the Selection struct private and removed unused state member.
 	Removed redundant parameter from gimp_display_shell_selection_start().

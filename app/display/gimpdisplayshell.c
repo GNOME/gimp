@@ -226,7 +226,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->snap_to_canvas         = FALSE;
   shell->snap_to_vectors        = FALSE;
 
-  shell->select                 = NULL;
+  shell->selection              = NULL;
 
   shell->canvas                 = NULL;
   shell->grid_gc                = NULL;
@@ -401,11 +401,7 @@ gimp_display_shell_destroy (GtkObject *object)
 
   shell->popup_manager = NULL;
 
-  if (shell->select)
-    {
-      gimp_display_shell_selection_free (shell->select);
-      shell->select = NULL;
-    }
+  gimp_display_shell_selection_free (shell);
 
   if (shell->filter_stack)
     gimp_display_shell_filter_set (shell, NULL);
@@ -845,7 +841,7 @@ gimp_display_shell_new (GimpDisplay     *display,
 
   shell->canvas = gimp_canvas_new ();
 
-  shell->select = gimp_display_shell_selection_new (shell);
+  gimp_display_shell_selection_init (shell);
 
   /*  the horizontal ruler  */
   shell->hrule = gtk_hruler_new ();
@@ -1359,12 +1355,6 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->select)
-    {
-      g_warning ("%s: called unrealized", G_STRFUNC);
-      return;
-    }
-
   gimp_display_shell_title_update (shell);
 
   if (now)
@@ -1542,35 +1532,6 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
       gtk_window_resize (GTK_WINDOW (shell),
                          width  + border_x,
                          height + border_y);
-    }
-}
-
-void
-gimp_display_shell_selection_visibility (GimpDisplayShell     *shell,
-                                         GimpSelectionControl  control)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (shell->select)
-    {
-      switch (control)
-        {
-        case GIMP_SELECTION_OFF:
-          gimp_display_shell_selection_invis (shell->select);
-          break;
-        case GIMP_SELECTION_LAYER_OFF:
-          gimp_display_shell_selection_layer_invis (shell->select);
-          break;
-        case GIMP_SELECTION_ON:
-          gimp_display_shell_selection_start (shell->select);
-          break;
-        case GIMP_SELECTION_PAUSE:
-          gimp_display_shell_selection_pause (shell->select);
-          break;
-        case GIMP_SELECTION_RESUME:
-          gimp_display_shell_selection_resume (shell->select);
-          break;
-        }
     }
 }
 
