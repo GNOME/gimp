@@ -235,10 +235,13 @@ gimp_heal_laplace_iteration (gdouble *matrix,
     {
       for (j = 0; j < width; j++)
         {
-          if ((i == 0) || (i == (height - 1)) || (j == 0) || (j == (height - 1)))
-            /* do nothing at the boundary */
-            for (k = 0; k < depth; k++)
-              *(solution + k) = *(matrix + k);
+          if ((i == 0) || (i == (height - 1)) ||
+              (j == 0) || (j == (height - 1)))
+            {
+              /* do nothing at the boundary */
+              for (k = 0; k < depth; k++)
+                *(solution + k) = *(matrix + k);
+            }
           else
             {
               /* calculate the mean of four neighbours for all color channels */
@@ -259,7 +262,8 @@ gimp_heal_laplace_iteration (gdouble *matrix,
             }
 
           /* advance pointers to data */
-          matrix += depth; solution += depth;
+          matrix += depth;
+          solution += depth;
         }
     }
 
@@ -311,11 +315,12 @@ PixelRegion *
 gimp_heal_region (PixelRegion *tempPR,
                   PixelRegion *srcPR)
 {
-  gdouble *i_1 = g_malloc (tempPR->h * tempPR->bytes * tempPR->w * sizeof (gdouble));
-  gdouble *i_2 = g_malloc (tempPR->h * tempPR->bytes * tempPR->w * sizeof (gdouble));
+  gdouble *i_1 = g_new (gdouble, tempPR->h * tempPR->bytes * tempPR->w);
+  gdouble *i_2 = g_new (gdouble, tempPR->h * tempPR->bytes * tempPR->w);
 
   /* substitute 0's for 1's for the division and multiplication operations that
-   * come later */
+   * come later
+   */
   gimp_heal_substitute_0_for_1 (srcPR);
 
   /* divide tempPR by srcPR and store the result as a double in i_1 */
@@ -379,30 +384,20 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   /* FIXME: the area under the cursor and the source area should be x% larger
    * than the brush size.  Otherwise the brush must be a lot bigger than the
    * area to heal to get good results.  Having the user pick such a large brush
-   * is perhaps counter-intutitive? */
+   * is perhaps counter-intutitive?
+   */
 
   /* Get the area underneath the cursor */
   {
-    TileManager *tiles = gimp_drawable_get_tiles (drawable);
-    TempBuf     *orig;
-    gint         x1, x2, y1, y2;
+    TempBuf *orig;
+    gint     x1, x2, y1, y2;
 
-    x1 = CLAMP (paint_area->x,
-                0, tile_manager_width  (tiles));
-    y1 = CLAMP (paint_area->y,
-                0, tile_manager_height (tiles));
-    x2 = CLAMP (paint_area->x + paint_area->width,
-                0, tile_manager_width  (tiles));
-    y2 = CLAMP (paint_area->y + paint_area->height,
-                0, tile_manager_height (tiles));
+    x1 = paint_area->x + paint_area_offset_x;
+    y1 = paint_area->y + paint_area_offset_y;
+    x2 = x1 + srcPR->w;
+    y2 = y1 + srcPR->h;
 
-    if (! (x2 - x1) || (! (y2 - y1)))
-      {
-        temp_buf_free (src);
-        return;
-      }
-
-    /*  get the original image data at the cursor location */
+    /* get the original image data at the cursor location */
     orig = gimp_paint_core_get_orig_image (paint_core, drawable,
                                            x1, y1, x2, y2);
 
@@ -412,7 +407,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   temp = temp_buf_new (origPR.w, origPR.h,
                        gimp_drawable_bytes_with_alpha (drawable),
                        0, 0, NULL);
-  pixel_region_init_temp_buf (&tempPR, temp, 0, 0, origPR.w, origPR.h);
+  pixel_region_init_temp_buf (&tempPR, temp, 0, 0, temp->width, temp->height);
 
   if (gimp_drawable_has_alpha (drawable))
     copy_region (&origPR, &tempPR);
@@ -421,11 +416,11 @@ gimp_heal_motion (GimpSourceCore   *source_core,
 
   if (tempPR.bytes != srcPR->bytes)
     {
-      TempBuf  *temp2;
-      gboolean  new_buf;
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      TempBuf   *temp2;
+      gboolean   new_buf;
 
-      temp2 = gimp_image_transform_temp_buf (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                             drawable,
+      temp2 = gimp_image_transform_temp_buf (image, drawable,
                                              temp, &new_buf);
 
       if (new_buf)
@@ -446,13 +441,12 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                               paint_area_offset_x, paint_area_offset_y,
                               srcPR->w, srcPR->h);
 
-  /* FIXME: Can we ensure that this is true in the code above?
-   * Is it already guaranteed to be true before we get here? */
   /* check that srcPR, tempPR, and destPR are the same size */
   if ((srcPR->w != tempPR.w) || (srcPR->w != destPR.w) ||
       (srcPR->h != tempPR.h) || (srcPR->h != destPR.h))
     {
-      g_message (_("Source and destination regions are not the same size."));
+      g_printerr ("%s: Error: Source and destination are not the same size.",
+                  G_STRFUNC);
       temp_buf_free (src);
       temp_buf_free (temp);
       return;

@@ -1,5 +1,14 @@
 2006-09-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpheal.c (gimp_heal_motion): corrected origPR
+	extents calculation. Makes the tool work at image borders
+	where it used to warn.
+
+	(gimp_heal_laplace_iteration)
+	(gimp_heal_region): minor coding style stuff.
+
+2006-09-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpsourcecore.[ch] (gimp_source_core_motion): do a
 	lot of stuff that was duplicated in clone and heal. Added lots of
 	parameters to GimpSourceCore::motion() to get the stuff down to
