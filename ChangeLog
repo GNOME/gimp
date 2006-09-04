@@ -1,3 +1,8 @@
+2006-09-04  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/tools/stock-tool-heal*: touch up the heal
+		brush tool icon
+
 2006-09-04  Sven Neumann  <sven@gimp.org>
 
 	* app/base/tile-cache.c: only run the idle swapper if needed and
