@@ -28,11 +28,6 @@
 #include "tile-private.h"
 
 
-/*  This is the percentage of the maximum cache size that should be cleared
- *  from the cache when an eviction is necessary
- */
-#define FREE_QUANTUM          0.1
-
 #define IDLE_SWAPPER_TIMEOUT  250
 
 
@@ -114,11 +109,13 @@ tile_cache_init (gulong tile_cache_size)
 void
 tile_cache_exit (void)
 {
+#ifndef ENABLE_THREADED_TILE_SWAPPER
   if (idle_swapper)
     {
       g_source_remove (idle_swapper);
       idle_swapper = 0;
     }
+#endif
 
   tile_cache_set_size (0);
 }
@@ -214,11 +211,14 @@ tile_cache_insert (Tile *tile)
       g_cond_signal (dirty_signal);
       g_mutex_unlock (dirty_mutex);
 #else
-      if (! idle_swapper && cur_cache_dirty * 2 < max_cache_size)
-        idle_swapper = g_timeout_add_full (G_PRIORITY_LOW,
-                                           IDLE_SWAPPER_TIMEOUT,
-                                           tile_idle_preswap,
-                                           NULL, NULL);
+      if (! idle_swapper &&
+          cur_cache_dirty * 2 > max_cache_size)
+        {
+          idle_swapper = g_timeout_add_full (G_PRIORITY_LOW,
+                                             IDLE_SWAPPER_TIMEOUT,
+                                             tile_idle_preswap,
+                                             NULL, NULL);
+        }
 #endif
     }
 
