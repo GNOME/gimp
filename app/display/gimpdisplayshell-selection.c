@@ -56,10 +56,11 @@ struct _Selection
   gint              num_segs_layer;   /*  number of segments in segs3       */
   guint             index;            /*  index of current stipple pattern  */
   gint              paused;           /*  count of pause requests           */
+  gboolean          visible;          /*  visility of the display shell     */
   gboolean          recalc;           /*  flag to recalculate the selection */
   gboolean          hidden;           /*  is the selection hidden?          */
   gboolean          layer_hidden;     /*  is the layer boundary hidden?     */
-  guint             timeout_id;       /*  timer for successive draws        */
+  guint             timeout;          /*  timer for successive draws        */
   GdkPoint         *points_in[8];     /*  points of segs_in for fast ants   */
   gint              num_points_in[8]; /*  number of points in points_in     */
 };
@@ -67,32 +68,37 @@ struct _Selection
 
 /*  local function prototypes  */
 
-static void      selection_stop           (Selection      *select);
-static void      selection_start          (Selection      *select);
+static void      selection_start          (Selection      *selection,
+                                           gboolean        recalc);
+static void      selection_stop           (Selection      *selection);
 
-static void      selection_pause          (Selection      *select);
-static void      selection_resume         (Selection      *select);
+static void      selection_pause          (Selection      *selection);
+static void      selection_resume         (Selection      *selection);
 
-static void      selection_draw           (Selection      *select);
-static void      selection_undraw         (Selection      *select);
-static void      selection_layer_undraw   (Selection      *select);
+static void      selection_draw           (Selection      *selection);
+static void      selection_undraw         (Selection      *selection);
+static void      selection_layer_undraw   (Selection      *selection);
 
 static void      selection_add_point      (GdkPoint       *points[8],
                                            gint            max_npoints[8],
                                            gint            npoints[8],
                                            gint            x,
                                            gint            y);
-static void      selection_render_points  (Selection      *select);
+static void      selection_render_points  (Selection      *selection);
 
-static void      selection_transform_segs (Selection      *select,
+static void      selection_transform_segs (Selection      *selection,
                                            const BoundSeg *src_segs,
                                            GdkSegment     *dest_segs,
                                            gint            num_segs);
-static void      selection_generate_segs  (Selection      *select);
-static void      selection_free_segs      (Selection      *select);
+static void      selection_generate_segs  (Selection      *selection);
+static void      selection_free_segs      (Selection      *selection);
 
-static gboolean  selection_start_timeout (Selection      *select);
-static gboolean  selection_timeout        (Selection      *select);
+static gboolean  selection_start_timeout  (Selection      *selection);
+static gboolean  selection_timeout        (Selection      *selection);
+
+static gboolean  selection_window_state_event (GtkWidget           *shell,
+                                               GdkEventWindowState *event,
+                                               Selection           *selection);
 
 
 /*  public functions  */
@@ -100,23 +106,28 @@ static gboolean  selection_timeout        (Selection      *select);
 void
 gimp_display_shell_selection_init (GimpDisplayShell *shell)
 {
-  Selection *select;
+  Selection *selection;
   gint       i;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (shell->selection == NULL);
 
-  select = g_new0 (Selection, 1);
+  selection = g_new0 (Selection, 1);
 
-  select->shell        = shell;
-  select->recalc       = TRUE;
-  select->hidden       = ! gimp_display_shell_get_show_selection (shell);
-  select->layer_hidden = ! gimp_display_shell_get_show_layer (shell);
+  selection->shell        = shell;
+  selection->visible      = TRUE;
+  selection->recalc       = TRUE;
+  selection->hidden       = ! gimp_display_shell_get_show_selection (shell);
+  selection->layer_hidden = ! gimp_display_shell_get_show_layer (shell);
 
   for (i = 0; i < 8; i++)
-    select->points_in[i] = NULL;
+    selection->points_in[i] = NULL;
 
-  shell->selection = select;
+  shell->selection = selection;
+
+  g_signal_connect (shell, "window-state-event",
+                    G_CALLBACK (selection_window_state_event),
+                    selection);
 }
 
 void
@@ -126,12 +137,17 @@ gimp_display_shell_selection_free (GimpDisplayShell *shell)
 
   if (shell->selection)
     {
-      Selection *select = shell->selection;
+      Selection *selection = shell->selection;
 
-      selection_stop (select);
-      selection_free_segs (select);
+      selection_stop (selection);
 
-      g_free (select);
+      g_signal_handlers_disconnect_by_func (shell,
+                                            G_CALLBACK (selection_window_state_event),
+                                            selection);
+
+      selection_free_segs (selection);
+
+      g_free (selection);
 
       shell->selection = NULL;
     }
@@ -145,29 +161,29 @@ gimp_display_shell_selection_control (GimpDisplayShell     *shell,
 
   if (shell->selection)
     {
-      Selection *select = shell->selection;
+      Selection *selection = shell->selection;
 
       switch (control)
         {
         case GIMP_SELECTION_OFF:
-          selection_stop (select);
-          selection_undraw (select);
+          selection_stop (selection);
+          selection_undraw (selection);
           break;
 
         case GIMP_SELECTION_LAYER_OFF:
-          selection_layer_undraw (select);
+          selection_layer_undraw (selection);
           break;
 
         case GIMP_SELECTION_ON:
-          selection_start (select);
+          selection_start (selection, TRUE);
           break;
 
         case GIMP_SELECTION_PAUSE:
-          selection_pause (select);
+          selection_pause (selection);
           break;
 
         case GIMP_SELECTION_RESUME:
-          selection_resume (select);
+          selection_resume (selection);
           break;
         }
     }
@@ -181,16 +197,16 @@ gimp_display_shell_selection_set_hidden (GimpDisplayShell *shell,
 
   if (shell->selection)
     {
-      Selection *select = shell->selection;
+      Selection *selection = shell->selection;
 
-      if (hidden != select->hidden)
+      if (hidden != selection->hidden)
         {
-          selection_undraw (select);
-          selection_layer_undraw (select);
+          selection_undraw (selection);
+          selection_layer_undraw (selection);
 
-          select->hidden = hidden;
+          selection->hidden = hidden;
 
-          selection_start (select);
+          selection_start (selection, FALSE);
         }
     }
 }
@@ -203,16 +219,16 @@ gimp_display_shell_selection_layer_set_hidden (GimpDisplayShell *shell,
 
   if (shell->selection)
     {
-      Selection *select = shell->selection;
+      Selection *selection = shell->selection;
 
-      if (hidden != select->layer_hidden)
+      if (hidden != selection->layer_hidden)
         {
-          selection_undraw (select);
-          selection_layer_undraw (select);
+          selection_undraw (selection);
+          selection_layer_undraw (selection);
 
-          select->layer_hidden = hidden;
+          selection->layer_hidden = hidden;
 
-          selection_start (select);
+          selection_start (selection, FALSE);
         }
     }
 }
@@ -221,54 +237,57 @@ gimp_display_shell_selection_layer_set_hidden (GimpDisplayShell *shell,
 /*  private functions  */
 
 static void
-selection_stop (Selection *select)
+selection_start (Selection *selection,
+                 gboolean   recalc)
 {
-  if (select->timeout_id)
+  selection_stop (selection);
+
+  selection->recalc = recalc;
+
+  /*  If this selection is paused or invisible, do not start it  */
+  if (selection->paused == 0 && selection->visible)
     {
-      g_source_remove (select->timeout_id);
-      select->timeout_id = 0;
+      selection->timeout = g_timeout_add (INITIAL_DELAY,
+                                          (GSourceFunc) selection_start_timeout,
+                                          selection);
     }
 }
 
 static void
-selection_start (Selection *select)
+selection_stop (Selection *selection)
 {
-  selection_stop (select);
-
-  select->recalc = TRUE;
-
-  /*  If this selection is paused, do not start it  */
-  if (select->paused > 0)
-    return;
-
-  select->timeout_id = g_timeout_add (INITIAL_DELAY,
-                                      (GSourceFunc) selection_start_timeout,
-                                      select);
+  if (selection->timeout)
+    {
+      g_source_remove (selection->timeout);
+      selection->timeout = 0;
+    }
 }
 
 static void
-selection_pause (Selection *select)
+selection_pause (Selection *selection)
 {
-  selection_stop (select);
+  selection_stop (selection);
 
-  select->paused++;
+  selection->paused++;
 }
 
 static void
-selection_resume (Selection *select)
+selection_resume (Selection *selection)
 {
-  if (select->paused == 1)
-    select->timeout_id = g_timeout_add (INITIAL_DELAY,
-                                        (GSourceFunc) selection_start_timeout,
-                                        select);
+  if (selection->paused == 1 && selection->visible)
+    {
+      selection->timeout = g_timeout_add (INITIAL_DELAY,
+                                          (GSourceFunc) selection_start_timeout,
+                                          selection);
+    }
 
-  select->paused--;
+  selection->paused--;
 }
 
 static void
-selection_draw (Selection *select)
+selection_draw (Selection *selection)
 {
-  GimpCanvas *canvas = GIMP_CANVAS (select->shell->canvas);
+  GimpCanvas *canvas = GIMP_CANVAS (selection->shell->canvas);
 
 #ifdef USE_DRAWPOINTS
 
@@ -278,105 +297,103 @@ selection_draw (Selection *select)
 
     sum = 0;
     for (j = 0; j < 8; j++)
-      sum += select->num_points_in[j];
+      sum += selection->num_points_in[j];
 
-    g_print ("%d segments, %d points\n", select->num_segs_in, sum);
+    g_print ("%d segments, %d points\n", selection->num_segs_in, sum);
   }
 #endif
-  if (select->segs_in)
+  if (selection->segs_in)
     {
       gint i;
 
-      if (select->index == 0)
+      if (selection->index == 0)
         {
           for (i = 0; i < 4; i++)
-            if (select->num_points_in[i])
+            if (selection->num_points_in[i])
               gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_WHITE,
-                                       select->points_in[i],
-                                       select->num_points_in[i]);
+                                       selection->points_in[i],
+                                       selection->num_points_in[i]);
 
           for (i = 4; i < 8; i++)
-            if (select->num_points_in[i])
+            if (selection->num_points_in[i])
               gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_BLACK,
-                                       select->points_in[i],
-                                       select->num_points_in[i]);
+                                       selection->points_in[i],
+                                       selection->num_points_in[i]);
         }
       else
         {
-          i = ((select->index + 3) & 7);
-          if (select->num_points_in[i])
+          i = ((selection->index + 3) & 7);
+          if (selection->num_points_in[i])
             gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_WHITE,
-                                     select->points_in[i],
-                                     select->num_points_in[i]);
+                                     selection->points_in[i],
+                                     selection->num_points_in[i]);
 
-          i = ((select->index + 7) & 7);
-          if (select->num_points_in[i])
+          i = ((selection->index + 7) & 7);
+          if (selection->num_points_in[i])
             gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_BLACK,
-                                     select->points_in[i],
-                                     select->num_points_in[i]);
+                                     selection->points_in[i],
+                                     selection->num_points_in[i]);
         }
     }
 
 #else  /*  ! USE_DRAWPOINTS  */
   gimp_canvas_set_stipple_index (canvas,
                                  GIMP_CANVAS_STYLE_SELECTION_IN,
-                                 select->index);
-  if (select->segs_in)
+                                 selection->index);
+  if (selection->segs_in)
     gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_SELECTION_IN,
-                               select->segs_in, select->num_segs_in);
+                               selection->segs_in,
+                               selection->num_segs_in);
 #endif
 }
 
 static void
-selection_undraw (Selection *select)
+selection_undraw (Selection *selection)
 {
   gint x1, y1, x2, y2;
 
   /*  Find the bounds of the selection  */
-  if (gimp_display_shell_mask_bounds (select->shell, &x1, &y1, &x2, &y2))
+  if (gimp_display_shell_mask_bounds (selection->shell, &x1, &y1, &x2, &y2))
     {
-      gimp_display_shell_expose_area (select->shell,
+      gimp_display_shell_expose_area (selection->shell,
                                       x1, y1, (x2 - x1), (y2 - y1));
     }
-  else
-    {
-      selection_start (select);
-    }
 }
 
 static void
-selection_layer_draw (Selection *select)
+selection_layer_draw (Selection *selection)
 {
-  GimpCanvas *canvas = GIMP_CANVAS (select->shell->canvas);
+  GimpCanvas *canvas = GIMP_CANVAS (selection->shell->canvas);
 
-  if (select->segs_layer)
+  if (selection->segs_layer)
     gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_LAYER_BOUNDARY,
-                               select->segs_layer, select->num_segs_layer);
+                               selection->segs_layer,
+                               selection->num_segs_layer);
 }
 
 static void
-selection_layer_undraw (Selection *select)
+selection_layer_undraw (Selection *selection)
 {
-  if (select->segs_layer != NULL && select->num_segs_layer == 4)
+  if (selection->segs_layer != NULL && selection->num_segs_layer == 4)
     {
-      gint x1 = select->segs_layer[0].x1 - 1;
-      gint y1 = select->segs_layer[0].y1 - 1;
-      gint x2 = select->segs_layer[3].x2 + 1;
-      gint y2 = select->segs_layer[3].y2 + 1;
+      gint x1 = selection->segs_layer[0].x1 - 1;
+      gint y1 = selection->segs_layer[0].y1 - 1;
+      gint x2 = selection->segs_layer[3].x2 + 1;
+      gint y2 = selection->segs_layer[3].y2 + 1;
 
-      gint x3 = select->segs_layer[0].x1 + 1;
-      gint y3 = select->segs_layer[0].y1 + 1;
-      gint x4 = select->segs_layer[3].x2 - 1;
-      gint y4 = select->segs_layer[3].y2 - 1;
+      gint x3 = selection->segs_layer[0].x1 + 1;
+      gint y3 = selection->segs_layer[0].y1 + 1;
+      gint x4 = selection->segs_layer[3].x2 - 1;
+      gint y4 = selection->segs_layer[3].y2 - 1;
 
       /*  expose the region  */
-      gimp_display_shell_expose_area (select->shell,
+      gimp_display_shell_expose_area (selection->shell,
                                       x1, y1, (x2 - x1) + 1, (y3 - y1) + 1);
-      gimp_display_shell_expose_area (select->shell,
+      gimp_display_shell_expose_area (selection->shell,
                                       x1, y3, (x3 - x1) + 1, (y4 - y3) + 1);
-      gimp_display_shell_expose_area (select->shell,
+      gimp_display_shell_expose_area (selection->shell,
                                       x1, y4, (x2 - x1) + 1, (y2 - y4) + 1);
-      gimp_display_shell_expose_area (select->shell,
+      gimp_display_shell_expose_area (selection->shell,
                                       x4, y3, (x2 - x4) + 1, (y4 - y3) + 1);
     }
 }
@@ -406,7 +423,7 @@ selection_add_point (GdkPoint *points[8],
 
 /* Render the segs_in array into points_in */
 static void
-selection_render_points (Selection *select)
+selection_render_points (Selection *selection)
 {
   gint i, j;
   gint max_npoints[8];
@@ -415,27 +432,27 @@ selection_render_points (Selection *select)
   gint dxa, dya;
   gint r;
 
-  if (select->segs_in == NULL)
+  if (selection->segs_in == NULL)
     return;
 
   for (j = 0; j < 8; j++)
     {
       max_npoints[j] = MAX_POINTS_INC;
-      select->points_in[j] = g_new (GdkPoint, max_npoints[j]);
-      select->num_points_in[j] = 0;
+      selection->points_in[j] = g_new (GdkPoint, max_npoints[j]);
+      selection->num_points_in[j] = 0;
     }
 
-  for (i = 0; i < select->num_segs_in; i++)
+  for (i = 0; i < selection->num_segs_in; i++)
     {
 #ifdef VERBOSE
       g_print ("%2d: (%d, %d) - (%d, %d)\n", i,
-               select->segs_in[i].x1,
-               select->segs_in[i].y1,
-               select->segs_in[i].x2,
-               select->segs_in[i].y2);
+               selection->segs_in[i].x1,
+               selection->segs_in[i].y1,
+               selection->segs_in[i].x2,
+               selection->segs_in[i].y2);
 #endif
-      x = select->segs_in[i].x1;
-      dxa = select->segs_in[i].x2 - x;
+      x = selection->segs_in[i].x1;
+      dxa = selection->segs_in[i].x2 - x;
 
       if (dxa > 0)
         {
@@ -447,8 +464,8 @@ selection_render_points (Selection *select)
           dx = -1;
         }
 
-      y = select->segs_in[i].y1;
-      dya = select->segs_in[i].y2 - y;
+      y = selection->segs_in[i].y1;
+      dya = selection->segs_in[i].y2 - y;
 
       if (dya > 0)
         {
@@ -465,9 +482,9 @@ selection_render_points (Selection *select)
           r = dya;
           do
             {
-              selection_add_point (select->points_in,
+              selection_add_point (selection->points_in,
                                    max_npoints,
-                                   select->num_points_in,
+                                   selection->num_points_in,
                                    x, y);
               x += dx;
               r += dya;
@@ -477,16 +494,16 @@ selection_render_points (Selection *select)
                   y += dy;
                   r -= (dxa << 1);
                 }
-            } while (x != select->segs_in[i].x2);
+            } while (x != selection->segs_in[i].x2);
         }
       else if (dxa < dya)
         {
           r = dxa;
           do
             {
-              selection_add_point (select->points_in,
+              selection_add_point (selection->points_in,
                                    max_npoints,
-                                   select->num_points_in,
+                                   selection->num_points_in,
                                    x, y);
               y += dy;
               r += dxa;
@@ -496,29 +513,29 @@ selection_render_points (Selection *select)
                   x += dx;
                   r -= (dya << 1);
                 }
-            } while (y != select->segs_in[i].y2);
+            } while (y != selection->segs_in[i].y2);
         }
       else
         {
-          selection_add_point (select->points_in,
+          selection_add_point (selection->points_in,
                                max_npoints,
-                               select->num_points_in,
+                               selection->num_points_in,
                                x, y);
         }
     }
 }
 
 static void
-selection_transform_segs (Selection      *select,
+selection_transform_segs (Selection      *selection,
                           const BoundSeg *src_segs,
                           GdkSegment     *dest_segs,
                           gint            num_segs)
 {
-  gint xclamp = select->shell->disp_width + 1;
-  gint yclamp = select->shell->disp_height + 1;
+  gint xclamp = selection->shell->disp_width + 1;
+  gint yclamp = selection->shell->disp_height + 1;
   gint i;
 
-  gimp_display_shell_transform_segments (select->shell,
+  gimp_display_shell_transform_segments (selection->shell,
                                          src_segs, dest_segs, num_segs, FALSE);
 
   for (i = 0; i < num_segs; i++)
@@ -552,7 +569,7 @@ selection_transform_segs (Selection      *select,
 }
 
 static void
-selection_generate_segs (Selection *select)
+selection_generate_segs (Selection *selection)
 {
   const BoundSeg *segs_in;
   const BoundSeg *segs_out;
@@ -561,131 +578,153 @@ selection_generate_segs (Selection *select)
   /*  Ask the image for the boundary of its selected region...
    *  Then transform that information into a new buffer of GdkSegments
    */
-  gimp_channel_boundary (gimp_image_get_mask (select->shell->display->image),
+  gimp_channel_boundary (gimp_image_get_mask (selection->shell->display->image),
                          &segs_in, &segs_out,
-                         &select->num_segs_in, &select->num_segs_out,
+                         &selection->num_segs_in, &selection->num_segs_out,
                          0, 0, 0, 0);
 
-  if (select->num_segs_in)
+  if (selection->num_segs_in)
     {
-      select->segs_in = g_new (GdkSegment, select->num_segs_in);
-      selection_transform_segs (select, segs_in,
-                                select->segs_in, select->num_segs_in);
+      selection->segs_in = g_new (GdkSegment, selection->num_segs_in);
+      selection_transform_segs (selection, segs_in,
+                                selection->segs_in, selection->num_segs_in);
 
 #ifdef USE_DRAWPOINTS
-      selection_render_points (select);
+      selection_render_points (selection);
 #endif
     }
   else
     {
-      select->segs_in = NULL;
+      selection->segs_in = NULL;
     }
 
   /*  Possible secondary boundary representation  */
-  if (select->num_segs_out)
+  if (selection->num_segs_out)
     {
-      select->segs_out = g_new (GdkSegment, select->num_segs_out);
-      selection_transform_segs (select, segs_out,
-                                select->segs_out, select->num_segs_out);
+      selection->segs_out = g_new (GdkSegment, selection->num_segs_out);
+      selection_transform_segs (selection, segs_out,
+                                selection->segs_out, selection->num_segs_out);
     }
   else
     {
-      select->segs_out = NULL;
+      selection->segs_out = NULL;
     }
 
   /*  The active layer's boundary  */
-  gimp_image_layer_boundary (select->shell->display->image,
-                             &segs_layer, &select->num_segs_layer);
+  gimp_image_layer_boundary (selection->shell->display->image,
+                             &segs_layer, &selection->num_segs_layer);
 
-  if (select->num_segs_layer)
+  if (selection->num_segs_layer)
     {
-      select->segs_layer = g_new (GdkSegment, select->num_segs_layer);
-      selection_transform_segs (select, segs_layer,
-                                select->segs_layer, select->num_segs_layer);
+      selection->segs_layer = g_new (GdkSegment, selection->num_segs_layer);
+      selection_transform_segs (selection, segs_layer,
+                                selection->segs_layer,
+                                selection->num_segs_layer);
     }
   else
     {
-      select->segs_layer = NULL;
+      selection->segs_layer = NULL;
     }
 
   g_free (segs_layer);
 }
 
 static void
-selection_free_segs (Selection *select)
+selection_free_segs (Selection *selection)
 {
   gint j;
 
-  if (select->segs_in)
-    g_free (select->segs_in);
+  if (selection->segs_in)
+    g_free (selection->segs_in);
 
-  if (select->segs_out)
-    g_free (select->segs_out);
+  if (selection->segs_out)
+    g_free (selection->segs_out);
 
-  if (select->segs_layer)
-    g_free (select->segs_layer);
+  if (selection->segs_layer)
+    g_free (selection->segs_layer);
+
+  selection->segs_in        = NULL;
+  selection->num_segs_in    = 0;
+  selection->segs_out       = NULL;
+  selection->num_segs_out   = 0;
+  selection->segs_layer     = NULL;
+  selection->num_segs_layer = 0;
 
   for (j = 0; j < 8; j++)
     {
-      if (select->points_in[j])
-        g_free (select->points_in[j]);
+      if (selection->points_in[j])
+        g_free (selection->points_in[j]);
 
-      select->points_in[j]     = NULL;
-      select->num_points_in[j] = 0;
+      selection->points_in[j]     = NULL;
+      selection->num_points_in[j] = 0;
     }
 
-  select->segs_in        = NULL;
-  select->num_segs_in    = 0;
-  select->segs_out       = NULL;
-  select->num_segs_out   = 0;
-  select->segs_layer     = NULL;
-  select->num_segs_layer = 0;
 }
 
 static gboolean
-selection_start_timeout (Selection *select)
+selection_start_timeout (Selection *selection)
 {
-  if (select->recalc)
+  if (selection->recalc)
     {
-      selection_free_segs (select);
-      selection_generate_segs (select);
+      selection_free_segs (selection);
+      selection_generate_segs (selection);
 
-      select->recalc = FALSE;
+      selection->recalc = FALSE;
     }
 
-  select->index = 0;
+  selection->index = 0;
 
-  if (! select->layer_hidden)
-    selection_layer_draw (select);
+  if (! selection->layer_hidden)
+    selection_layer_draw (selection);
 
   /*  Draw the ants  */
-  if (! select->hidden)
+  if (! selection->hidden)
     {
-      GimpCanvas        *canvas = GIMP_CANVAS (select->shell->canvas);
+      GimpCanvas        *canvas = GIMP_CANVAS (selection->shell->canvas);
       GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG
-        (select->shell->display->image->gimp->config);
+        (selection->shell->display->image->gimp->config);
 
-      selection_draw (select);
+      selection_draw (selection);
 
-      if (select->segs_out)
+      if (selection->segs_out)
         gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_SELECTION_OUT,
-                                   select->segs_out, select->num_segs_out);
+                                   selection->segs_out,
+                                   selection->num_segs_out);
 
 
-      if (select->segs_in)
-        select->timeout_id = g_timeout_add (config->marching_ants_speed,
+      if (selection->segs_in)
+        selection->timeout = g_timeout_add (config->marching_ants_speed,
                                             (GSourceFunc) selection_timeout,
-                                            select);
+                                            selection);
     }
 
   return FALSE;
 }
 
 static gboolean
-selection_timeout (Selection *select)
+selection_timeout (Selection *selection)
 {
-  select->index++;
-  selection_draw (select);
+  selection->index++;
+  selection_draw (selection);
 
   return TRUE;
+}
+
+static gboolean
+selection_window_state_event (GtkWidget           *shell,
+                              GdkEventWindowState *event,
+                              Selection           *selection)
+{
+  gboolean visible;
+
+  visible = (event->new_window_state & (GDK_WINDOW_STATE_WITHDRAWN |
+                                        GDK_WINDOW_STATE_ICONIFIED)) == 0;
+  selection->visible = visible;
+
+  if (visible)
+    selection_start (selection, FALSE);
+  else
+    selection_stop (selection);
+
+  return FALSE;
 }

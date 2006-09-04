@@ -1,5 +1,11 @@
 2006-09-04  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-selection.c: more code cleanup.
+	Monitor the shell's window state and don't run the timeout if the
+	shell is withdrawn or iconified.
+
+2006-09-04  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-selection.c: code cleanup. Only use
 	a timeout if there is actually a selection and if it is not hidden.
 
