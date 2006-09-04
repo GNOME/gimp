@@ -41,6 +41,7 @@
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-scale.h"
+#include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
 
 
