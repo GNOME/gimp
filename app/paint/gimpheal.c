@@ -18,7 +18,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
 #include <string.h>
 
 #include <glib-object.h>
@@ -33,243 +32,56 @@
 #include "base/temp-buf.h"
 #include "base/tile-manager.h"
 
-#include "core/gimpitem.h"
 #include "core/gimppickable.h"
 #include "core/gimpimage.h"
 #include "core/gimpdrawable.h"
-#include "core/gimppattern.h"
 
 #include "gimpheal.h"
-#include "gimphealoptions.h"
+#include "gimpsourceoptions.h"
 
 #include "gimp-intl.h"
+
 
 /* NOTES:
  *
  * I had the code working for healing from a pattern, but the results look
  * terrible and I can't see a use for it right now.
- *
- * The support for registered alignment has been removed because it doesn't make
- * sense for healing.
  */
 
-enum
-{
-  PROP_0,
-  PROP_SRC_DRAWABLE,
-  PROP_SRC_X,
-  PROP_SRC_Y
-};
 
-static void   gimp_heal_set_property     (GObject          *object,
-                                          guint             property_id,
-                                          const GValue     *value,
-                                          GParamSpec       *pspec);
-
-static void   gimp_heal_get_property     (GObject          *object,
-                                          guint             property_id,
-                                          GValue           *value,
-                                          GParamSpec       *pspec);
-
-static void   gimp_heal_paint            (GimpPaintCore    *paint_core,
-                                          GimpDrawable     *drawable,
-                                          GimpPaintOptions *paint_options,
-                                          GimpPaintState    paint_state,
-                                          guint32           time);
-
-static void   gimp_heal_motion           (GimpPaintCore    *paint_core,
-                                          GimpDrawable     *drawable,
-                                          GimpPaintOptions *paint_options);
-
-static void   gimp_heal_set_src_drawable (GimpHeal         *heal,
-                                          GimpDrawable     *drawable);
+static void   gimp_heal_motion (GimpSourceCore   *source_core,
+                                GimpDrawable     *drawable,
+                                GimpPaintOptions *paint_options);
 
 
-G_DEFINE_TYPE (GimpHeal, gimp_heal, GIMP_TYPE_BRUSH_CORE)
+G_DEFINE_TYPE (GimpHeal, gimp_heal, GIMP_TYPE_SOURCE_CORE)
+
+#define parent_class gimp_heal_parent_class
 
 
 void
 gimp_heal_register (Gimp                      *gimp,
                     GimpPaintRegisterCallback  callback)
 {
-  (* callback) (gimp,                    /* gimp */
-                GIMP_TYPE_HEAL,          /* paint type */
-                GIMP_TYPE_HEAL_OPTIONS,  /* paint options type */
-                "gimp-heal",             /* identifier */
-                _("Heal"),               /* blurb */
-                "gimp-tool-heal");       /* stock id */
+  (* callback) (gimp,
+                GIMP_TYPE_HEAL,
+                GIMP_TYPE_SOURCE_OPTIONS,
+                "gimp-heal",
+                _("Heal"),
+                "gimp-tool-heal");
 }
 
 static void
 gimp_heal_class_init (GimpHealClass *klass)
 {
-  GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
-  GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
-  GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
+  GimpSourceCoreClass *source_core_class = GIMP_SOURCE_CORE_CLASS (klass);
 
-  object_class->set_property               = gimp_heal_set_property;
-  object_class->get_property               = gimp_heal_get_property;
-
-  paint_core_class->paint                  = gimp_heal_paint;
-
-  brush_core_class->handles_changing_brush = TRUE;
-
-  g_object_class_install_property (object_class, PROP_SRC_DRAWABLE,
-                                   g_param_spec_object ("src-drawable",
-                                                        NULL, NULL,
-                                                        GIMP_TYPE_DRAWABLE,
-                                                        GIMP_PARAM_READWRITE));
-
-  g_object_class_install_property (object_class, PROP_SRC_X,
-                                   g_param_spec_double ("src-x", NULL, NULL,
-                                                        0, GIMP_MAX_IMAGE_SIZE,
-                                                        0.0,
-                                                        GIMP_PARAM_READWRITE));
-
-  g_object_class_install_property (object_class, PROP_SRC_Y,
-                                   g_param_spec_double ("src-y", NULL, NULL,
-                                                        0, GIMP_MAX_IMAGE_SIZE,
-                                                        0.0,
-                                                        GIMP_PARAM_READWRITE));
+  source_core_class->motion = gimp_heal_motion;
 }
 
 static void
 gimp_heal_init (GimpHeal *heal)
 {
-  heal->set_source   = FALSE;
-
-  heal->src_drawable = NULL;
-  heal->src_x        = 0.0;
-  heal->src_y        = 0.0;
-
-  heal->offset_x     = 0.0;
-  heal->offset_y     = 0.0;
-  heal->first_stroke = TRUE;
-}
-
-static void
-gimp_heal_set_property (GObject      *object,
-                        guint         property_id,
-                        const GValue *value,
-                        GParamSpec   *pspec)
-{
-  GimpHeal *heal = GIMP_HEAL (object);
-
-  switch (property_id)
-    {
-    case PROP_SRC_DRAWABLE:
-      gimp_heal_set_src_drawable (heal, g_value_get_object (value));
-      break;
-    case PROP_SRC_X:
-      heal->src_x = g_value_get_double (value);
-      break;
-    case PROP_SRC_Y:
-      heal->src_y = g_value_get_double (value);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_heal_get_property (GObject    *object,
-                        guint       property_id,
-                        GValue     *value,
-                        GParamSpec *pspec)
-{
-  GimpHeal *heal = GIMP_HEAL (object);
-
-  switch (property_id)
-    {
-    case PROP_SRC_DRAWABLE:
-      g_value_set_object (value, heal->src_drawable);
-      break;
-    case PROP_SRC_X:
-      g_value_set_int (value, heal->src_x);
-      break;
-    case PROP_SRC_Y:
-      g_value_set_int (value, heal->src_y);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_heal_paint (GimpPaintCore    *paint_core,
-                 GimpDrawable     *drawable,
-                 GimpPaintOptions *paint_options,
-                 GimpPaintState    paint_state,
-                 guint32           time)
-{
-  GimpHeal *heal = GIMP_HEAL (paint_core);
-
-  /* gimp passes the current state of the painting system to the function */
-  switch (paint_state)
-    {
-    case GIMP_PAINT_STATE_INIT:
-      /* heal->set_source is set by gimphealtool when CTRL is pressed */
-      if (heal->set_source)
-        {
-          /* defined later in this file, sets heal to the current drawable
-           * and notifies heal that the drawable is ready */
-          gimp_heal_set_src_drawable (heal, drawable);
-
-          /* get the current source coordinates from the paint core */
-          heal->src_x = paint_core->cur_coords.x;
-          heal->src_y = paint_core->cur_coords.y;
-
-          /* set first stroke to be true */
-          heal->first_stroke = TRUE;
-        }
-      break;
-
-    case GIMP_PAINT_STATE_MOTION:
-      if (heal->set_source)
-        {
-          /*  if the control key is down, move the src and return */
-          heal->src_x = paint_core->cur_coords.x;
-          heal->src_y = paint_core->cur_coords.y;
-
-          heal->first_stroke = TRUE;
-        }
-      else
-        {
-          /*  otherwise, update the target  */
-
-          /* get the current destination from the paint core */
-          gint dest_x = paint_core->cur_coords.x;
-          gint dest_y = paint_core->cur_coords.y;
-
-          /* if this is the first stroke, record the offset of the destination
-           * relative to the source */
-          if (heal->first_stroke)
-            {
-              heal->offset_x = heal->src_x - dest_x;
-              heal->offset_y = heal->src_y - dest_y;
-
-              heal->first_stroke = FALSE;
-            }
-
-          /* if this is not the first stroke, set the source as
-           * destination + offset */
-          heal->src_x = dest_x + heal->offset_x;
-          heal->src_y = dest_y + heal->offset_y;
-
-          /* defined later, does the actual cloning */
-          gimp_heal_motion (paint_core, drawable, paint_options);
-        }
-      break;
-
-    default:
-      break;
-    }
-
-  /* notify the brush that the src attributes have changed */
-  g_object_notify (G_OBJECT (heal), "src-x");
-  g_object_notify (G_OBJECT (heal), "src-y");
 }
 
 /*
@@ -515,12 +327,12 @@ gimp_heal_region (PixelRegion *tempPR,
 }
 
 static void
-gimp_heal_motion (GimpPaintCore     *paint_core,
-                  GimpDrawable      *drawable,
-                  GimpPaintOptions  *paint_options)
+gimp_heal_motion (GimpSourceCore   *source_core,
+                  GimpDrawable     *drawable,
+                  GimpPaintOptions *paint_options)
 {
-  GimpHeal            *heal             = GIMP_HEAL (paint_core);
-  GimpHealOptions     *options          = GIMP_HEAL_OPTIONS (paint_options);
+  GimpPaintCore       *paint_core       = GIMP_PAINT_CORE (source_core);
+  GimpSourceOptions   *options          = GIMP_SOURCE_OPTIONS (paint_options);
   GimpContext         *context          = GIMP_CONTEXT (paint_options);
   GimpPressureOptions *pressure_options = paint_options->pressure_options;
   GimpImage           *image;
@@ -546,21 +358,22 @@ gimp_heal_motion (GimpPaintCore     *paint_core,
       return;
     }
 
-  opacity = gimp_paint_options_get_fade (paint_options, image, paint_core->pixel_dist);
+  opacity = gimp_paint_options_get_fade (paint_options, image,
+                                         paint_core->pixel_dist);
 
   if (opacity == 0.0)
     return;
 
-  if (! heal->src_drawable)
+  if (! source_core->src_drawable)
     return;
 
   /* prepare the regions to get data from */
-  src_pickable = GIMP_PICKABLE (heal->src_drawable);
+  src_pickable = GIMP_PICKABLE (source_core->src_drawable);
   src_image    = gimp_pickable_get_image (src_pickable);
 
   /* make local copies */
-  offset_x = heal->offset_x;
-  offset_y = heal->offset_y;
+  offset_x = source_core->offset_x;
+  offset_y = source_core->offset_y;
 
   /* adjust offsets and pickable if we are merging layers */
   if (options->sample_merged)
@@ -569,7 +382,7 @@ gimp_heal_motion (GimpPaintCore     *paint_core,
 
       src_pickable = GIMP_PICKABLE (src_image->projection);
 
-      gimp_item_offsets (GIMP_ITEM (heal->src_drawable), &off_x, &off_y);
+      gimp_item_offsets (GIMP_ITEM (source_core->src_drawable), &off_x, &off_y);
 
       offset_x += off_x;
       offset_y += off_y;
@@ -703,47 +516,4 @@ gimp_heal_motion (GimpPaintCore     *paint_core,
                                   gimp_context_get_opacity (context),
                                   gimp_paint_options_get_brush_mode (paint_options),
                                   GIMP_PAINT_CONSTANT);
-}
-
-static void
-gimp_heal_src_drawable_removed (GimpDrawable *drawable,
-                                GimpHeal     *heal)
-{
-  /* set the drawable to NULL */
-  if (drawable == heal->src_drawable)
-    {
-      heal->src_drawable = NULL;
-    }
-
-  /* disconnect the signal handler for this function */
-  g_signal_handlers_disconnect_by_func (drawable,
-                                        gimp_heal_src_drawable_removed,
-                                        heal);
-}
-
-static void
-gimp_heal_set_src_drawable (GimpHeal     *heal,
-                            GimpDrawable *drawable)
-{
-  /* check if we already have a drawable */
-  if (heal->src_drawable == drawable)
-    return;
-
-  /* remove the current signal handler */
-  if (heal->src_drawable)
-    g_signal_handlers_disconnect_by_func (heal->src_drawable,
-                                          gimp_heal_src_drawable_removed,
-                                          heal);
-
-  /* set the drawable */
-  heal->src_drawable = drawable;
-
-  /* connect the signal handler that handles the "remove" signal */
-  if (heal->src_drawable)
-    g_signal_connect (heal->src_drawable, "removed",
-                      G_CALLBACK (gimp_heal_src_drawable_removed),
-                      heal);
-
-  /* notify heal that the source drawable is set */
-  g_object_notify (G_OBJECT (heal), "src-drawable");
 }

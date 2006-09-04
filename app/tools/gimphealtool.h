@@ -20,7 +20,7 @@
 #define __GIMP_HEAL_TOOL_H__
 
 
-#include "gimpbrushtool.h"
+#include "gimpsourcetool.h"
 
 
 #define GIMP_TYPE_HEAL_TOOL            (gimp_heal_tool_get_type ())
@@ -37,16 +37,12 @@ typedef struct _GimpHealToolClass GimpHealToolClass;
 
 struct _GimpHealTool
 {
-  GimpBrushTool  parent_instance;
-
-  GimpDisplay   *src_display;   /* Detail about the source location to paint from */
-  gint           src_x;
-  gint           src_y;
+  GimpSourceTool  parent_instance;
 };
 
 struct _GimpHealToolClass
 {
-  GimpBrushToolClass parent_class;
+  GimpSourceToolClass parent_class;
 };
 
 

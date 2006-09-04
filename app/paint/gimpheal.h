@@ -20,7 +20,7 @@
 #define __GIMP_HEAL_H__
 
 
-#include "gimpbrushcore.h"
+#include "gimpsourcecore.h"
 
 
 #define GIMP_TYPE_HEAL            (gimp_heal_get_type ())
@@ -36,25 +36,12 @@ typedef struct _GimpHealClass GimpHealClass;
 
 struct _GimpHeal
 {
-  GimpBrushCore  parent_instance;
-
-  gboolean       set_source;
-
-  GimpDrawable  *src_drawable;
-  gdouble        src_x;
-  gdouble        src_y;
-
-  gdouble        orig_src_x;
-  gdouble        orig_src_y;
-
-  gdouble        offset_x;
-  gdouble        offset_y;
-  gboolean       first_stroke;
+  GimpSourceCore  parent_instance;
 };
 
 struct _GimpHealClass
 {
-  GimpBrushCoreClass  parent_class;
+  GimpSourceCoreClass  parent_class;
 };
 
 

@@ -1,3 +1,17 @@
+2006-09-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/paint-enums.[ch]: removed enum GimpHealAlignMode, we
+	use the GimpSourceAlignMode now and can always disable REGISTERED
+	in the GUI should it turn out to be really totally pointless.
+
+	* app/paint/Makefile.am
+	* app/paint/gimphealoptions.[ch]: removed. Its properties are
+	completely covered by GimpSourceOptions.
+
+	* app/paint/gimpheal.[ch]
+
+	* app/tools/gimphealtool.[ch]
+
 2006-09-04  Sven Neumann  <sven@gimp.org>
 
 	* menus/image-menu.xml.in: added the Heal tool to the Tools menu.

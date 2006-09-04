@@ -44,8 +44,6 @@ libapppaint_a_sources = \
 	gimperaseroptions.h	\
 	gimpheal.c		\
 	gimpheal.h		\
-	gimphealoptions.c	\
-	gimphealoptions.h	\
 	gimpink.c		\
 	gimpink.h		\
 	gimpink-blob.c		\
