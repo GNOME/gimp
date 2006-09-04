@@ -1,3 +1,7 @@
+2006-09-04  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added files for the new heal tool.
+
 2006-09-03  Marco Ciampa  <ciampix@libero.it>
 
 	* it.po: updated italian translation

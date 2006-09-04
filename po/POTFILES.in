@@ -208,6 +208,7 @@ app/paint/gimpbrushcore.c
 app/paint/gimpclone.c
 app/paint/gimpconvolve.c
 app/paint/gimpdodgeburn.c
+app/paint/gimpheal.c
 app/paint/gimperaser.c
 app/paint/gimpink.c
 app/paint/gimppaintbrush.c
@@ -283,6 +284,7 @@ app/tools/gimpforegroundselectoptions.c
 app/tools/gimpforegroundselecttool.c
 app/tools/gimpfreeselecttool.c
 app/tools/gimpfuzzyselecttool.c
+app/tools/gimphealtool.c
 app/tools/gimphistogramoptions.c
 app/tools/gimphuesaturationtool.c
 app/tools/gimpimagemaptool.c
