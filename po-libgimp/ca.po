@@ -1,102 +1,94 @@
-# translation of ca.po to Català
 # gimp-libgimp translation to Catalan
+#
 # Jordi Jover, jordijn@softcatala.org, 2002.
 # Xavier Conde Rueda <xavi.conde a gmail.com>, 2004, 2005.
 # Quim Perez i Noguer <noguer[AT]osona.com>, 2005.
 # Softcatala <tradgnome@softcatala.org>, 2000-2002.
-# Quim Perez i Noguer, 2006.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-09 00:51+0100\n"
-"PO-Revision-Date: 2006-02-15 23:47+0100\n"
+"POT-Creation-Date: 2006-09-05 00:43+0200\n"
+"PO-Revision-Date: 2006-09-05 00:47+0200\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: KBabel 1.10.2\n"
 
-#: ../libgimp/gimpbrushmenu.c:140
-msgid "Brush Selection"
-msgstr "Selecció del pinzell"
-
-#: ../libgimp/gimpbrushmenu.c:180 ../libgimp/gimppatternmenu.c:165
-msgid "_Browse..."
-msgstr "_Navega..."
-
-#: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
+#: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
 msgid "%s can't handle layers"
 msgstr "%s no pot gestionar capes"
 
-#: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
-#: ../libgimp/gimpexport.c:234
+#: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
+#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
 msgid "Merge Visible Layers"
 msgstr "Fusiona les capes visibles"
 
-#: ../libgimp/gimpexport.c:224
+#: ../libgimp/gimpexport.c:226
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr "%s no pot gestionar desplaçaments de capa, mida o opacitat"
 
-#: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
+#: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr "%s només pot gestionar les capes com a marcs d'animació"
 
-#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:243
+#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
 msgstr "Anomena i desa com a animació"
 
-#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:252
-#: ../libgimp/gimpexport.c:261
+#: ../libgimp/gimpexport.c:245 ../libgimp/gimpexport.c:254
+#: ../libgimp/gimpexport.c:263
 msgid "Flatten Image"
 msgstr "Aplana la imatge"
 
-#: ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:262
 #, c-format
 msgid "%s can't handle transparency"
 msgstr "%s no pot gestionar transparències"
 
-#: ../libgimp/gimpexport.c:269
+#: ../libgimp/gimpexport.c:271
 #, c-format
 msgid "%s can't handle layer masks"
 msgstr "%s no pot gestionar màscares de capa"
 
-#: ../libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
 msgstr "Aplica les màscares de capa"
 
-#: ../libgimp/gimpexport.c:278
+#: ../libgimp/gimpexport.c:280
 #, c-format
 msgid "%s can only handle RGB images"
 msgstr "%s només pot gestionar imatges RGB"
 
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:328
 msgid "Convert to RGB"
 msgstr "Converteix a RGB"
 
-#: ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:289
 #, c-format
 msgid "%s can only handle grayscale images"
 msgstr "%s només pot gestionar imatges d'escala de grisos"
 
-#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:338
+#: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:340
 msgid "Convert to Grayscale"
 msgstr "Converteix a escala de grisos"
 
-#: ../libgimp/gimpexport.c:296
+#: ../libgimp/gimpexport.c:298
 #, c-format
 msgid "%s can only handle indexed images"
 msgstr "%s només pot gestionar imatges indexades"
 
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
-#: ../libgimp/gimpexport.c:336
+#: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
+#: ../libgimp/gimpexport.c:338
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -104,13 +96,13 @@ msgstr ""
 "Converteix a indexades amb els paràmetres per defecte\n"
 "(Feu-ho de forma manual per a ajustar el resultat)"
 
-#: ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
 msgstr ""
 "%s només pot gestionar els mapes de bits (dos colors) o les imatges indexades"
 
-#: ../libgimp/gimpexport.c:307
+#: ../libgimp/gimpexport.c:309
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -118,52 +110,52 @@ msgstr ""
 "Converteix a indexat amb els paràmetres per defecte\n"
 "(feu-ho de forma manual per a ajustar el resultat)"
 
-#: ../libgimp/gimpexport.c:316
+#: ../libgimp/gimpexport.c:318
 #, c-format
 msgid "%s can only handle RGB or grayscale images"
 msgstr "%s només pot gestionar imatges RGB o d'escala de grisos"
 
-#: ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:327
 #, c-format
 msgid "%s can only handle RGB or indexed images"
 msgstr "%s només pot gestionar les imatges RGB o les indexades"
 
-#: ../libgimp/gimpexport.c:335
+#: ../libgimp/gimpexport.c:337
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
 msgstr "%s només pot gestionar les imatges d'escala de grisos o les indexades"
 
-#: ../libgimp/gimpexport.c:346
+#: ../libgimp/gimpexport.c:348
 #, c-format
 msgid "%s needs an alpha channel"
 msgstr "%s necessita un canal alfa"
 
-#: ../libgimp/gimpexport.c:347
+#: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
 msgstr "Afegeix un canal alfa"
 
-#: ../libgimp/gimpexport.c:381
+#: ../libgimp/gimpexport.c:383
 msgid "Confirm Save"
 msgstr "Comfirmeu que voleu desar"
 
-#: ../libgimp/gimpexport.c:387
+#: ../libgimp/gimpexport.c:389
 msgid "Confirm"
 msgstr "Confirmeu"
 
-#: ../libgimp/gimpexport.c:462
+#: ../libgimp/gimpexport.c:464
 msgid "Export File"
 msgstr "Exporta un fitxer"
 
-#: ../libgimp/gimpexport.c:466
+#: ../libgimp/gimpexport.c:468
 msgid "_Ignore"
 msgstr "_Ignora"
 
-#: ../libgimp/gimpexport.c:468
+#: ../libgimp/gimpexport.c:470
 msgid "_Export"
 msgstr "_Exporta"
 
 #. the headline
-#: ../libgimp/gimpexport.c:497
+#: ../libgimp/gimpexport.c:499
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -173,11 +165,11 @@ msgstr ""
 "%s:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:568
+#: ../libgimp/gimpexport.c:573
 msgid "The export conversion won't modify your original image."
 msgstr "La conversió de l'exportació no modificarà la imatge original."
 
-#: ../libgimp/gimpexport.c:668
+#: ../libgimp/gimpexport.c:673
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -186,7 +178,7 @@ msgstr ""
 "Ara desareu una màscara de capa com a %s.\n"
 "No es desaran les capes visibles."
 
-#: ../libgimp/gimpexport.c:674
+#: ../libgimp/gimpexport.c:679
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -195,29 +187,17 @@ msgstr ""
 "Ara desareu un canal (selecció desada) com a %s.\n"
 "No es desaran les capes visibles."
 
-#: ../libgimp/gimpfontselectbutton.c:126 ../libgimp/gimpfontselectbutton.c:177
+#: ../libgimp/gimpfontselectbutton.c:130
 msgid "Font Selection"
 msgstr "Selecció de tipus de lletra"
 
-#: ../libgimp/gimpfontselectbutton.c:139 ../libgimp/gimpfontselectbutton.c:178
+#: ../libgimp/gimpfontselectbutton.c:145
 msgid "Sans"
 msgstr "Sans"
-
-#: ../libgimp/gimpgradientmenu.c:115
-msgid "Gradient Selection"
-msgstr "Selecció de gradient"
 
 #: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
 msgid "(Empty)"
 msgstr "(Buit)"
-
-#: ../libgimp/gimppalettemenu.c:102
-msgid "Palette Selection"
-msgstr "Selecció de paleta"
-
-#: ../libgimp/gimppatternmenu.c:125
-msgid "Pattern Selection"
-msgstr "Selecció de patró"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
@@ -330,342 +310,362 @@ msgstr "Copyright:"
 msgid "percent"
 msgstr "percentatge"
 
-#: ../libgimpbase/gimpbaseenums.c:26
+#: ../libgimpbase/gimpbaseenums.c:27
 msgid "_White (full opacity)"
 msgstr "_Blanc (opac del tot)"
 
-#: ../libgimpbase/gimpbaseenums.c:27
+#: ../libgimpbase/gimpbaseenums.c:28
 msgid "_Black (full transparency)"
 msgstr "_Negre (transparent del tot)"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: ../libgimpbase/gimpbaseenums.c:29
 msgid "Layer's _alpha channel"
 msgstr "Canal _alfa de la capa"
 
-#: ../libgimpbase/gimpbaseenums.c:29
+#: ../libgimpbase/gimpbaseenums.c:30
 msgid "_Transfer layer's alpha channel"
 msgstr "_Tranfereix canal alfa de la capa"
 
-#: ../libgimpbase/gimpbaseenums.c:30
+#: ../libgimpbase/gimpbaseenums.c:31
 msgid "_Selection"
 msgstr "_Selecció"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: ../libgimpbase/gimpbaseenums.c:32
 msgid "_Grayscale copy of layer"
 msgstr "Còpia de capa en escala de _grisos"
 
-#: ../libgimpbase/gimpbaseenums.c:61
+#: ../libgimpbase/gimpbaseenums.c:33
+msgid "C_hannel"
+msgstr "_Canal"
+
+#: ../libgimpbase/gimpbaseenums.c:63
 msgid "FG to BG (RGB)"
 msgstr "De primer pla a fons (RGB)"
 
-#: ../libgimpbase/gimpbaseenums.c:62
+#: ../libgimpbase/gimpbaseenums.c:64
 msgid "FG to BG (HSV)"
 msgstr "De primer pla a fons (HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:63
+#: ../libgimpbase/gimpbaseenums.c:65
 msgid "FG to transparent"
 msgstr "De primer pla a transparent"
 
-#: ../libgimpbase/gimpbaseenums.c:64
+#: ../libgimpbase/gimpbaseenums.c:66
 msgid "Custom gradient"
 msgstr "Degradat personalitzat"
 
-#: ../libgimpbase/gimpbaseenums.c:93
+#: ../libgimpbase/gimpbaseenums.c:95
 msgid "FG color fill"
 msgstr "Omple amb el color del primer pla"
 
-#: ../libgimpbase/gimpbaseenums.c:94
+#: ../libgimpbase/gimpbaseenums.c:96
 msgid "BG color fill"
 msgstr "Omple amb el color de fons"
 
-#: ../libgimpbase/gimpbaseenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:97
 msgid "Pattern fill"
 msgstr "Omple amb el patró"
 
-#: ../libgimpbase/gimpbaseenums.c:125
+#: ../libgimpbase/gimpbaseenums.c:127
 msgid "Add to the current selection"
 msgstr "Afegeix a la selecció actual"
 
-#: ../libgimpbase/gimpbaseenums.c:126
+#: ../libgimpbase/gimpbaseenums.c:128
 msgid "Subtract from the current selection"
 msgstr "Sostreu de la selecció actual"
 
-#: ../libgimpbase/gimpbaseenums.c:127
+#: ../libgimpbase/gimpbaseenums.c:129
 msgid "Replace the current selection"
 msgstr "Canvia la selecció actual"
 
-#: ../libgimpbase/gimpbaseenums.c:128
+#: ../libgimpbase/gimpbaseenums.c:130
 msgid "Intersect with the current selection"
 msgstr "Creua amb la selecció"
 
-#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:95
 msgid "Red"
 msgstr "Vermell"
 
-#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:96
 msgid "Green"
 msgstr "Verd"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:97
 msgid "Blue"
 msgstr "Blau"
 
-#: ../libgimpbase/gimpbaseenums.c:163
+#: ../libgimpbase/gimpbaseenums.c:165
 msgid "Gray"
 msgstr "Gris"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:529
+#: ../libgimpbase/gimpbaseenums.c:166 ../libgimpbase/gimpbaseenums.c:531
 msgid "Indexed"
 msgstr "Indexat"
 
-#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:98
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:194
+#: ../libgimpbase/gimpbaseenums.c:196
 msgid "Small"
 msgstr "Petita"
 
-#: ../libgimpbase/gimpbaseenums.c:195
+#: ../libgimpbase/gimpbaseenums.c:197
 msgid "Medium"
 msgstr "Mitjana"
 
-#: ../libgimpbase/gimpbaseenums.c:196
+#: ../libgimpbase/gimpbaseenums.c:198
 msgid "Large"
 msgstr "Gran"
 
-#: ../libgimpbase/gimpbaseenums.c:228
+#: ../libgimpbase/gimpbaseenums.c:230
 msgid "Light checks"
 msgstr "Quadres clars"
 
-#: ../libgimpbase/gimpbaseenums.c:229
+#: ../libgimpbase/gimpbaseenums.c:231
 msgid "Mid-tone checks"
 msgstr "Quadres a mig to"
 
-#: ../libgimpbase/gimpbaseenums.c:230
+#: ../libgimpbase/gimpbaseenums.c:232
 msgid "Dark checks"
 msgstr "Quadres foscos"
 
-#: ../libgimpbase/gimpbaseenums.c:231
+#: ../libgimpbase/gimpbaseenums.c:233
 msgid "White only"
 msgstr "Només blanc"
 
-#: ../libgimpbase/gimpbaseenums.c:232
+#: ../libgimpbase/gimpbaseenums.c:234
 msgid "Gray only"
 msgstr "Només gris"
 
-#: ../libgimpbase/gimpbaseenums.c:233
+#: ../libgimpbase/gimpbaseenums.c:235
 msgid "Black only"
 msgstr "Només negre"
 
-#: ../libgimpbase/gimpbaseenums.c:261
+#: ../libgimpbase/gimpbaseenums.c:263
 msgid "Image source"
 msgstr "Copia d'una altra imatge"
 
-#: ../libgimpbase/gimpbaseenums.c:262
+#: ../libgimpbase/gimpbaseenums.c:264
 msgid "Pattern source"
 msgstr "Un patró de la llista"
 
 # #####################################################
 # EN DESUS A PARTIR DE GIMP 2.2.7
 # #####################################################
-#: ../libgimpbase/gimpbaseenums.c:291
+#: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
 msgstr "Claredat"
 
-#: ../libgimpbase/gimpbaseenums.c:292
+#: ../libgimpbase/gimpbaseenums.c:294
 msgid "Luminosity"
 msgstr "Lluminositat"
 
-#: ../libgimpbase/gimpbaseenums.c:293
+#: ../libgimpbase/gimpbaseenums.c:295
 msgid "Average"
 msgstr "Mitja"
 
-#: ../libgimpbase/gimpbaseenums.c:321
+#: ../libgimpbase/gimpbaseenums.c:323
 msgid "Dodge"
 msgstr "Esvaeix"
 
-#: ../libgimpbase/gimpbaseenums.c:322
+#: ../libgimpbase/gimpbaseenums.c:324
 msgid "Burn"
 msgstr "Crema"
 
-#: ../libgimpbase/gimpbaseenums.c:386 ../libgimpbase/gimpbaseenums.c:561
-msgid "Linear"
+#: ../libgimpbase/gimpbaseenums.c:388
+msgid "gradient|Linear"
 msgstr "Lineal"
 
-#: ../libgimpbase/gimpbaseenums.c:387
+#: ../libgimpbase/gimpbaseenums.c:389
 msgid "Bi-linear"
 msgstr "Bilineal"
 
-#: ../libgimpbase/gimpbaseenums.c:388
+#: ../libgimpbase/gimpbaseenums.c:390
 msgid "Radial"
 msgstr "Radial"
 
-#: ../libgimpbase/gimpbaseenums.c:389
+#: ../libgimpbase/gimpbaseenums.c:391
 msgid "Square"
 msgstr "Quadrat"
 
-#: ../libgimpbase/gimpbaseenums.c:390
+#: ../libgimpbase/gimpbaseenums.c:392
 msgid "Conical (sym)"
 msgstr "Cònic (simètric)"
 
-#: ../libgimpbase/gimpbaseenums.c:391
+#: ../libgimpbase/gimpbaseenums.c:393
 msgid "Conical (asym)"
 msgstr "Cònic (asimètric)"
 
-#: ../libgimpbase/gimpbaseenums.c:392
+#: ../libgimpbase/gimpbaseenums.c:394
 msgid "Shaped (angular)"
 msgstr "Adaptació angular"
 
-#: ../libgimpbase/gimpbaseenums.c:393
+#: ../libgimpbase/gimpbaseenums.c:395
 msgid "Shaped (spherical)"
 msgstr "Adaptació esfèrica"
 
-#: ../libgimpbase/gimpbaseenums.c:394
+#: ../libgimpbase/gimpbaseenums.c:396
 msgid "Shaped (dimpled)"
 msgstr "Adaptació foradada"
 
-#: ../libgimpbase/gimpbaseenums.c:395
+#: ../libgimpbase/gimpbaseenums.c:397
 msgid "Spiral (cw)"
 msgstr "Espiral (horari)"
 
-#: ../libgimpbase/gimpbaseenums.c:396
+#: ../libgimpbase/gimpbaseenums.c:398
 msgid "Spiral (ccw)"
 msgstr "Espiral (antihorari)"
 
-#: ../libgimpbase/gimpbaseenums.c:427
+#: ../libgimpbase/gimpbaseenums.c:429
 msgid "Intersections (dots)"
 msgstr "Interseccions (punts)"
 
-#: ../libgimpbase/gimpbaseenums.c:428
+#: ../libgimpbase/gimpbaseenums.c:430
 msgid "Intersections (crosshairs)"
 msgstr "Interseccions (creus)"
 
-#: ../libgimpbase/gimpbaseenums.c:429
+#: ../libgimpbase/gimpbaseenums.c:431
 msgid "Dashed"
 msgstr "Punts"
 
-#: ../libgimpbase/gimpbaseenums.c:430
+#: ../libgimpbase/gimpbaseenums.c:432
 msgid "Double dashed"
 msgstr "Punts dobles"
 
-#: ../libgimpbase/gimpbaseenums.c:431
+#: ../libgimpbase/gimpbaseenums.c:433
 msgid "Solid"
 msgstr "Sòlid"
 
-#: ../libgimpbase/gimpbaseenums.c:460
+#: ../libgimpbase/gimpbaseenums.c:462
 msgid "Stock ID"
 msgstr "ID d'element"
 
-#: ../libgimpbase/gimpbaseenums.c:461
+#: ../libgimpbase/gimpbaseenums.c:463
 msgid "Inline pixbuf"
 msgstr "Pixbuf incrustat"
 
-#: ../libgimpbase/gimpbaseenums.c:462
+#: ../libgimpbase/gimpbaseenums.c:464
 msgid "Image file"
 msgstr "Fitxer d'imatge"
 
-#: ../libgimpbase/gimpbaseenums.c:491
+#: ../libgimpbase/gimpbaseenums.c:493
 msgid "RGB color"
 msgstr "Color RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:492 ../libgimpbase/gimpbaseenums.c:527
+#: ../libgimpbase/gimpbaseenums.c:494 ../libgimpbase/gimpbaseenums.c:529
 msgid "Grayscale"
 msgstr "Escala de grisos"
 
-#: ../libgimpbase/gimpbaseenums.c:493
+#: ../libgimpbase/gimpbaseenums.c:495
 msgid "Indexed color"
 msgstr "Color indexat"
 
-#: ../libgimpbase/gimpbaseenums.c:525
+#: ../libgimpbase/gimpbaseenums.c:527
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:526
+#: ../libgimpbase/gimpbaseenums.c:528
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:528
+#: ../libgimpbase/gimpbaseenums.c:530
 msgid "Grayscale-alpha"
 msgstr "Escala de grisos-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:530
+#: ../libgimpbase/gimpbaseenums.c:532
 msgid "Indexed-alpha"
 msgstr "Indexat-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:560
-msgid "None (Fastest)"
-msgstr "Cap (el més ràpid)"
-
 #: ../libgimpbase/gimpbaseenums.c:562
+msgid "interpolation|None"
+msgstr "Cap"
+
+#: ../libgimpbase/gimpbaseenums.c:563
+msgid "interpolation|Linear"
+msgstr "Lineal"
+
+#: ../libgimpbase/gimpbaseenums.c:564
 msgid "Cubic"
 msgstr "Cúbic"
 
-#: ../libgimpbase/gimpbaseenums.c:563
-msgid "Lanczos (Best)"
-msgstr "Lanczos (millor)"
+#: ../libgimpbase/gimpbaseenums.c:565
+msgid "Lanczos"
+msgstr "Lanczos"
 
-#: ../libgimpbase/gimpbaseenums.c:591
+#: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
 msgstr "Constant"
 
-#: ../libgimpbase/gimpbaseenums.c:592
+#: ../libgimpbase/gimpbaseenums.c:594
 msgid "Incremental"
 msgstr "Incremental"
 
-#: ../libgimpbase/gimpbaseenums.c:621 ../modules/cdisplay_lcms.c:254
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:256
 msgid "None"
 msgstr "Cap"
 
-#: ../libgimpbase/gimpbaseenums.c:622
+#: ../libgimpbase/gimpbaseenums.c:624
 msgid "Sawtooth wave"
 msgstr "Ona de dents de serra"
 
-#: ../libgimpbase/gimpbaseenums.c:623
+#: ../libgimpbase/gimpbaseenums.c:625
 msgid "Triangular wave"
 msgstr "Ona triangular"
 
-#: ../libgimpbase/gimpbaseenums.c:651
+#: ../libgimpbase/gimpbaseenums.c:654
+msgid "Run interactively"
+msgstr "Executa interactivament"
+
+#: ../libgimpbase/gimpbaseenums.c:655
+msgid "Run non-interactively"
+msgstr "Executa sense interacció"
+
+#: ../libgimpbase/gimpbaseenums.c:656
+msgid "Run with last used values"
+msgstr "Executa amb els últims valors"
+
+#: ../libgimpbase/gimpbaseenums.c:684
 msgid "Pixels"
 msgstr "Píxels"
 
-#: ../libgimpbase/gimpbaseenums.c:652
+#: ../libgimpbase/gimpbaseenums.c:685
 msgid "Points"
 msgstr "Punts"
 
-#: ../libgimpbase/gimpbaseenums.c:681
+#: ../libgimpbase/gimpbaseenums.c:714
 msgid "Shadows"
 msgstr "Ombres"
 
-#: ../libgimpbase/gimpbaseenums.c:682
+#: ../libgimpbase/gimpbaseenums.c:715
 msgid "Midtones"
 msgstr "Tons mitjans"
 
-#: ../libgimpbase/gimpbaseenums.c:683
+#: ../libgimpbase/gimpbaseenums.c:716
 msgid "Highlights"
 msgstr "Ressaltats"
 
-#: ../libgimpbase/gimpbaseenums.c:711
+#: ../libgimpbase/gimpbaseenums.c:744
 msgid "Forward"
 msgstr "Endavant"
 
-#: ../libgimpbase/gimpbaseenums.c:712
+#: ../libgimpbase/gimpbaseenums.c:745
 msgid "Backward"
 msgstr "Endarrere"
 
-#: ../libgimpbase/gimpbaseenums.c:815
+#: ../libgimpbase/gimpbaseenums.c:848
 msgid "Internal GIMP procedure"
 msgstr "Procediment intern del GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:816
+#: ../libgimpbase/gimpbaseenums.c:849
 msgid "GIMP Plug-In"
 msgstr "Connector del GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:817
+#: ../libgimpbase/gimpbaseenums.c:850
 msgid "GIMP Extension"
 msgstr "Extensió del GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:818
+#: ../libgimpbase/gimpbaseenums.c:851
 msgid "Temporary Procedure"
 msgstr "Procediment temporal"
 
@@ -721,8 +721,8 @@ msgstr "%.1f GB"
 msgid "%d GB"
 msgstr "%d GB"
 
-#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
-#: ../modules/cdisplay_lcms.c:246
+#: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
+#: ../modules/cdisplay_lcms.c:248
 msgid "(invalid UTF-8 string)"
 msgstr "(la cadena de text UTF-8 no és vàlida)"
 
@@ -740,7 +740,7 @@ msgid ""
 "windowing system. The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Quan estigui habilitat, el GIMP intentarà fer servir el perfil de color del "
+"Si es marca l'opció, el GIMP intentarà fer servir el perfil de color del "
 "sistema de finestres. El perfil configurat del monitor només es faria servir "
 "com a darrera opció final."
 
@@ -750,11 +750,11 @@ msgstr "El perfil de color predeterminat de l'espai de treball RGB."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr "El perfil de color CMYK usat per convertir entre RGB i CMYK."
+msgstr "El perfil de color CMYK emprat per convertir entre RGB i CMYK."
 
 #: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The color profile used for simulating a printed version (softproof)."
-msgstr "El perfil de color usat per simular una versió impressa (softproof)."
+msgstr "El perfil de color emprat per simular una versió impresa (softproof)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "Sets how colors are mapped for your display."
@@ -779,20 +779,19 @@ msgstr "Pantalla amb colors gestionats"
 msgid "Print simulation"
 msgstr "Simulació d'impressió"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:56 ../modules/cdisplay_proof.c:55
+#: ../libgimpconfig/gimpcolorconfig-enums.c:56
 msgid "Perceptual"
 msgstr "Perceptual"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:56
+#: ../libgimpconfig/gimpcolorconfig-enums.c:57
 msgid "Relative colorimetric"
 msgstr "Mètrica de color relativa"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#: ../libgimpwidgets/gimpwidgetsenums.c:93 ../modules/cdisplay_proof.c:57
-msgid "Saturation"
+msgid "intent|Saturation"
 msgstr "Saturació"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59 ../modules/cdisplay_proof.c:58
+#: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
 msgstr "Mètrica de color absoluta"
 
@@ -802,7 +801,7 @@ msgstr "Demana-ho"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:89
 msgid "Use embedded profile"
-msgstr "Usa el perfil inclòs"
+msgstr "Empra el perfil inclòs"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:90
 msgid "Convert to RGB workspace"
@@ -814,22 +813,22 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "el valor per a l'element %s no és una cadena de text UTF-8 vàlida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:423
+#: ../libgimpconfig/gimpconfig-deserialize.c:426
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "S'esperava 'yes' o 'no' per a l'element booleà %s. S'obtingué '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:497
+#: ../libgimpconfig/gimpconfig-deserialize.c:500
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "El valor '%s' no és vàlid per a l'element %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:512
+#: ../libgimpconfig/gimpconfig-deserialize.c:515
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "El valor '%ld' no és vàlid per a l'element %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:581
+#: ../libgimpconfig/gimpconfig-deserialize.c:584
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "en analitzar l'element '%s': %s"
@@ -967,30 +966,42 @@ msgid "Old:"
 msgstr "Antic:"
 
 #: ../libgimpwidgets/gimpcolorselection.c:263
-msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Notació de color hexadecimal, com en l'HTML i CSS"
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr ""
+"Notació hexadecimal utilitzada en l'HTML i el CSS. També permet utilitzar "
+"els noms de colors del CSS."
 
-#: ../libgimpwidgets/gimpcolorselection.c:268
+#: ../libgimpwidgets/gimpcolorselection.c:269
 msgid "HTML _notation:"
 msgstr "_Notació HTML:"
 
-#: ../libgimpwidgets/gimpfileentry.c:320
+#: ../libgimpwidgets/gimpfileentry.c:174
+msgid "Open a file selector to browse your folders"
+msgstr "Obre un gestor de fitxers per trobar les teves carpetes"
+
+#: ../libgimpwidgets/gimpfileentry.c:175
+msgid "Open a file selector to browse your files"
+msgstr "Obre un gestor de fitxers per trobar els teus fitxers"
+
+#: ../libgimpwidgets/gimpfileentry.c:335
 msgid "Select Folder"
 msgstr "Seleccioneu una carpeta"
 
-#: ../libgimpwidgets/gimpfileentry.c:322
+#: ../libgimpwidgets/gimpfileentry.c:337
 msgid "Select File"
 msgstr "Seleccioneu un fitxer"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:203
+#: ../libgimpwidgets/gimpmemsizeentry.c:202
 msgid "Kilobytes"
 msgstr "KiloBytes"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:203
 msgid "Megabytes"
 msgstr "MegaBytes"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:205
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Gigabytes"
 msgstr "GigaBytes"
 
@@ -1027,20 +1038,18 @@ msgid "One page selected"
 msgstr "Una pàgina seleccionada"
 
 #: ../libgimpwidgets/gimppageselector.c:1183
+#: ../libgimpwidgets/gimppageselector.c:1187
 #, c-format
-msgid "All %d pages selected"
-msgstr "Seleccionades totes %d pàgines "
+msgid "%d page selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "%d pàgina seleccionada"
+msgstr[1] "%d pàgines seleccionades"
 
-#: ../libgimpwidgets/gimppageselector.c:1185
-#, c-format
-msgid "%d pages selected"
-msgstr "%d pàgines seleccionades"
-
-#: ../libgimpwidgets/gimppatheditor.c:212
+#: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
 msgstr "Desable"
 
-#: ../libgimpwidgets/gimppatheditor.c:221
+#: ../libgimpwidgets/gimppatheditor.c:223
 msgid "Folder"
 msgstr "Carpeta"
 
@@ -1066,7 +1075,7 @@ msgstr "Comprova l'estil"
 msgid "_Preview"
 msgstr "_Previsualitza"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1872
+#: ../libgimpwidgets/gimppropwidgets.c:1869
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1116,7 +1125,7 @@ msgstr "Visible"
 
 #: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
 msgid "_Stroke"
-msgstr "_Traça"
+msgstr "_Pinta el traçat"
 
 #: ../libgimpwidgets/gimpstock.c:173
 msgid "L_etter Spacing"
@@ -1130,23 +1139,23 @@ msgstr "Espa_iat de les línies"
 msgid "_Resize"
 msgstr "Canvia la _mida"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:300
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:303
 msgid "_Scale"
 msgstr "E_scala"
 
-#: ../libgimpwidgets/gimpstock.c:278
+#: ../libgimpwidgets/gimpstock.c:280
 msgid "Crop"
 msgstr "Escapça"
 
-#: ../libgimpwidgets/gimpstock.c:296
+#: ../libgimpwidgets/gimpstock.c:299
 msgid "_Transform"
 msgstr "_Transforma"
 
-#: ../libgimpwidgets/gimpstock.c:299
+#: ../libgimpwidgets/gimpstock.c:302
 msgid "_Rotate"
 msgstr "Gi_ra"
 
-#: ../libgimpwidgets/gimpstock.c:301
+#: ../libgimpwidgets/gimpstock.c:304
 msgid "_Shear"
 msgstr "Re_talla"
 
@@ -1166,24 +1175,24 @@ msgstr "Unitat"
 msgid "Factor"
 msgstr "Factor"
 
-#: ../libgimpwidgets/gimpwidgets.c:1003
+#: ../libgimpwidgets/gimpwidgets.c:1005
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
 "Utilitzeu aquest valor com a generador de nombres aleatoris. Això us "
-"permetrà repetir una operació \"aleatòria\" ja feta"
+"permetrà repetir una operació «aleatòria» ja feta"
 
-#: ../libgimpwidgets/gimpwidgets.c:1007
+#: ../libgimpwidgets/gimpwidgets.c:1009
 msgid "_New Seed"
 msgstr "_Nova llavor"
 
-#: ../libgimpwidgets/gimpwidgets.c:1020
+#: ../libgimpwidgets/gimpwidgets.c:1022
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Configura el generador de nombres aleatoris amb el nombre aleatori generat"
 
-#: ../libgimpwidgets/gimpwidgets.c:1024
+#: ../libgimpwidgets/gimpwidgets.c:1026
 msgid "_Randomize"
 msgstr "Aleato_ritza"
 
@@ -1198,6 +1207,10 @@ msgstr "To"
 #: ../libgimpwidgets/gimpwidgetsenums.c:93
 msgid "_S"
 msgstr "_S"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:93
+msgid "Saturation"
+msgstr "Saturació"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:94
 msgid "_V"
@@ -1237,19 +1250,19 @@ msgstr "Amplia"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:187
 msgid "Zoom out"
-msgstr "Allunya"
+msgstr "Redueix"
 
 #: ../modules/cdisplay_colorblind.c:67
-msgid "Protanopia (insensitivity to red"
-msgstr "Protanòpia (insensible al vermell)"
+msgid "Protanopia (insensitivity to red)"
+msgstr "Protanopia (insensible al vermell)"
 
 #: ../modules/cdisplay_colorblind.c:69
 msgid "Deuteranopia (insensitivity to green)"
-msgstr "Deuteranòpia (insensible al verd)"
+msgstr "Deuteranopia (insensible al verd)"
 
 #: ../modules/cdisplay_colorblind.c:71
 msgid "Tritanopia (insensitivity to blue)"
-msgstr "Tritanòpia (insensible al blau)"
+msgstr "Tritanopia (insensible al blau)"
 
 #: ../modules/cdisplay_colorblind.c:200
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
@@ -1288,16 +1301,16 @@ msgstr "Contrast"
 msgid "Contrast c_ycles:"
 msgstr "C_icles de contrast:"
 
-#: ../modules/cdisplay_lcms.c:105
+#: ../modules/cdisplay_lcms.c:107
 msgid "Color management display filter using ICC color profiles"
 msgstr ""
 "Filtre de gestió de color de pantalles que fa servir perfils de color ICC"
 
-#: ../modules/cdisplay_lcms.c:173
+#: ../modules/cdisplay_lcms.c:175
 msgid "Color Management"
 msgstr "Gestió del color"
 
-#: ../modules/cdisplay_lcms.c:288
+#: ../modules/cdisplay_lcms.c:290
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1305,43 +1318,43 @@ msgstr ""
 "Aquest filtre pren la seva configuració de la secció de «Gestió de color» en "
 "el diàleg de «Preferències»."
 
-#: ../modules/cdisplay_lcms.c:311
+#: ../modules/cdisplay_lcms.c:313
 msgid "Mode of operation:"
 msgstr "Mode d'operació:"
 
-#: ../modules/cdisplay_lcms.c:322
+#: ../modules/cdisplay_lcms.c:324
 msgid "RGB workspace profile:"
 msgstr "Perfil de l'espai de treball RGB:"
 
-#: ../modules/cdisplay_lcms.c:332
+#: ../modules/cdisplay_lcms.c:334
 msgid "Monitor profile:"
 msgstr "Perfil del monitor:"
 
-#: ../modules/cdisplay_lcms.c:342
+#: ../modules/cdisplay_lcms.c:344
 msgid "Print simulation profile:"
 msgstr "Perfil de simulació d'impressió:"
 
-#: ../modules/cdisplay_proof.c:127
+#: ../modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
-msgstr "Filtre de prova de color que usa un perfil de color ICC"
+msgstr "Filtre de prova de color que empra un perfil de color ICC"
 
-#: ../modules/cdisplay_proof.c:221
+#: ../modules/cdisplay_proof.c:179
 msgid "Color Proof"
 msgstr "Prova de color"
 
-#: ../modules/cdisplay_proof.c:346
+#: ../modules/cdisplay_proof.c:304
 msgid "_Intent:"
 msgstr "_Propòsit:"
 
-#: ../modules/cdisplay_proof.c:350
+#: ../modules/cdisplay_proof.c:308
 msgid "Choose an ICC Color Profile"
 msgstr "Escolliu un perfil de color ICC"
 
-#: ../modules/cdisplay_proof.c:353
+#: ../modules/cdisplay_proof.c:311
 msgid "_Profile:"
 msgstr "_Perfil:"
 
-#: ../modules/cdisplay_proof.c:358
+#: ../modules/cdisplay_proof.c:316
 msgid "_Black Point Compensation"
 msgstr "Co_mpensació de punt negre"
 
@@ -1405,15 +1418,15 @@ msgstr "Triangle selector de color amb estil de pintor"
 msgid "Triangle"
 msgstr "Triangle"
 
-#: ../modules/colorsel_water.c:88
+#: ../modules/colorsel_water.c:84
 msgid "Watercolor style color selector"
 msgstr "Selector de color amb estil aquarel·la"
 
-#: ../modules/colorsel_water.c:154
+#: ../modules/colorsel_water.c:150
 msgid "Watercolor"
 msgstr "Aquarel·la"
 
-#: ../modules/colorsel_water.c:220
+#: ../modules/colorsel_water.c:213
 msgid "Pressure"
 msgstr "Pressió"
 
@@ -1518,7 +1531,7 @@ msgstr "Dial cap a la dreta"
 msgid "Linux input event controller"
 msgstr "Controlador de senyals d'entrada del Linux"
 
-#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:244
+#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:246
 msgid "Device:"
 msgstr "Dispositiu:"
 
@@ -1534,44 +1547,44 @@ msgstr "Senyal del Linux"
 msgid "Linux Input Events"
 msgstr "Senyals del Linux"
 
-#: ../modules/controller_linux_input.c:372 ../modules/controller_midi.c:480
-#: ../modules/controller_midi.c:506
+#: ../modules/controller_linux_input.c:372 ../modules/controller_midi.c:482
+#: ../modules/controller_midi.c:508
 #, c-format
 msgid "Reading from %s"
 msgstr "S'està llegint de %s"
 
 #: ../modules/controller_linux_input.c:388
-#: ../modules/controller_linux_input.c:431 ../modules/controller_midi.c:462
-#: ../modules/controller_midi.c:523 ../modules/controller_midi.c:594
+#: ../modules/controller_linux_input.c:431 ../modules/controller_midi.c:464
+#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
 #, c-format
 msgid "Device not available: %s"
 msgstr "Dispositiu desconnectat: %s"
 
-#: ../modules/controller_linux_input.c:396 ../modules/controller_midi.c:531
+#: ../modules/controller_linux_input.c:396 ../modules/controller_midi.c:533
 msgid "No device configured"
 msgstr "No s'ha configurat cap dispositiu"
 
-#: ../modules/controller_linux_input.c:440 ../modules/controller_midi.c:603
+#: ../modules/controller_linux_input.c:440 ../modules/controller_midi.c:605
 msgid "End of file"
 msgstr "Fi del fitxer"
 
-#: ../modules/controller_midi.c:166
+#: ../modules/controller_midi.c:168
 msgid "MIDI event controller"
 msgstr "Controlador MIDI"
 
-#: ../modules/controller_midi.c:235
+#: ../modules/controller_midi.c:237
 msgid "The name of the device to read MIDI events from."
 msgstr "Nom del dispositiu que rebrà els senyals MIDI."
 
-#: ../modules/controller_midi.c:238
+#: ../modules/controller_midi.c:240
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Escriviu 'alsa' si voleu utilitzar el seqüenciador ALSA."
 
-#: ../modules/controller_midi.c:253
+#: ../modules/controller_midi.c:255
 msgid "Channel:"
 msgstr "Canal:"
 
-#: ../modules/controller_midi.c:254
+#: ../modules/controller_midi.c:256
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
@@ -1579,10 +1592,25 @@ msgstr ""
 "Canal MIDI d'on es rebran els senyals. Poseu-ho a -1 per rebre senyal de "
 "tots els canals MIDI."
 
-#: ../modules/controller_midi.c:258
+#: ../modules/controller_midi.c:260
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:434
+#: ../modules/controller_midi.c:383
+#, c-format
+msgid "Note %02x on"
+msgstr "Nota %02x activa"
+
+#: ../modules/controller_midi.c:386
+#, c-format
+msgid "Note %02x off"
+msgstr "Nota %02x aturada"
+
+#: ../modules/controller_midi.c:389
+#, c-format
+msgid "Controller %03d"
+msgstr "Controlador %03d"
+
+#: ../modules/controller_midi.c:436
 msgid "MIDI Events"
 msgstr "Senyals MIDI"

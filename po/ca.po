@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-04 23:43+0200\n"
-"PO-Revision-Date: 2006-09-05 00:36+0200\n"
+"PO-Revision-Date: 2006-09-05 01:28+0200\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
@@ -11544,7 +11544,7 @@ msgstr "Obre el diàleg de selecció de degradat"
 
 #: ../app/widgets/gimpviewablebox.c:219
 msgid "Reverse"
-msgstr "Torna a estat anterior"
+msgstr "Torna a l'estat anterior"
 
 #: ../app/widgets/gimpviewablebox.c:298
 msgid "Open the palette selection dialog"
@@ -11719,7 +11719,7 @@ msgstr "Creeu imatges i editeu fotografies"
 
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
-msgstr "Editor d'imatge"
+msgstr "Editor d'imatges"
 
 #: ../tools/gimp-remote.c:84
 msgid "Use a running GIMP only, never start a new one"
