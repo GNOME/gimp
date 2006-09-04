@@ -1,7 +1,11 @@
+2006-09-04  Sven Neumann  <sven@gimp.org>
+
+	* menus/image-menu.xml.in: added the Heal tool to the Tools menu.
+
 2006-09-04  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/tools/stock-tool-heal*: touch up the heal
-		brush tool icon
+	brush tool icon
 
 2006-09-04  Sven Neumann  <sven@gimp.org>
 
