@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-01-22 17:32+0100\n"
-"PO-Revision-Date: 2004-12-20 08:24+0100\n"
+"PO-Revision-Date: 2006-09-04 22:34+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1344,7 +1344,7 @@ msgstr "Salva come _modello..."
 
 #: app/actions/file-actions.c:106
 msgid "Re_vert..."
-msgstr "In_verti..."
+msgstr "_Ricarica..."
 
 #: app/actions/file-actions.c:111
 msgid "_Quit"

@@ -1,3 +1,7 @@
+2006-09-04  Alessio Frusciante  <algol@firenze.linux.it>
+
+	* it.po: Fixed a bug in translation (#169507).
+
 2006-08-01  Jakub Friedl  <jfriedl@suse.cz>
 
 	* cs.po: fixed a bug in translation
