@@ -8,9 +8,9 @@
 	* app/paint/gimphealoptions.[ch]: removed. Its properties are
 	completely covered by GimpSourceOptions.
 
-	* app/paint/gimpheal.[ch]
+	* app/paint/gimpheal.[ch]: derive from GimpSourceCore.
 
-	* app/tools/gimphealtool.[ch]
+	* app/tools/gimphealtool.[ch]: derive from GimpSourceTool.
 
 2006-09-04  Sven Neumann  <sven@gimp.org>
 
