@@ -58,7 +58,14 @@ struct _GimpSourceCoreClass
 
   void (*  motion) (GimpSourceCore   *source_core,
                     GimpDrawable     *drawable,
-                    GimpPaintOptions *paint_options);
+                    GimpPaintOptions *paint_options,
+                    gdouble           opacity,
+                    GimpImage        *src_image,
+                    GimpPickable     *src_pickable,
+                    PixelRegion      *srcPR,
+                    TempBuf          *paint_area,
+                    gint              paint_area_offset_x,
+                    gint              paint_area_offset_y);
 };
 
 

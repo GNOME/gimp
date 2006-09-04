@@ -24,9 +24,14 @@
 
 #include "paint-types.h"
 
+#include "base/temp-buf.h"
+#include "base/tile-manager.h"
+#include "base/pixel-region.h"
+
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimppickable.h"
 
 #include "gimpsourcecore.h"
 #include "gimpsourceoptions.h"
@@ -269,9 +274,118 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                          GimpDrawable     *drawable,
                          GimpPaintOptions *paint_options)
 {
+  GimpPaintCore     *paint_core   = GIMP_PAINT_CORE (source_core);
+  GimpSourceOptions *options      = GIMP_SOURCE_OPTIONS (paint_options);
+  GimpImage         *image        = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpImage         *src_image    = NULL;
+  GimpPickable      *src_pickable = NULL;
+  PixelRegion        srcPR;
+  TempBuf           *paint_area;
+  gint               offset_x;
+  gint               offset_y;
+  gdouble            opacity;
+
+  opacity = gimp_paint_options_get_fade (paint_options, image,
+                                         paint_core->pixel_dist);
+  if (opacity == 0.0)
+    return;
+
+  offset_x = source_core->offset_x;
+  offset_y = source_core->offset_y;
+
+  if (options->use_source)
+    {
+      if (! source_core->src_drawable)
+        return;
+
+      src_pickable = GIMP_PICKABLE (source_core->src_drawable);
+      src_image    = gimp_pickable_get_image (src_pickable);
+
+      if (options->sample_merged)
+        {
+          gint off_x, off_y;
+
+          src_pickable = GIMP_PICKABLE (src_image->projection);
+
+          gimp_item_offsets (GIMP_ITEM (source_core->src_drawable),
+                             &off_x, &off_y);
+
+          offset_x += off_x;
+          offset_y += off_y;
+        }
+
+      gimp_pickable_flush (src_pickable);
+    }
+
+  paint_area = gimp_paint_core_get_paint_area (paint_core, drawable,
+                                               paint_options);
+  if (! paint_area)
+    return;
+
+  if (options->use_source)
+    {
+      TileManager *src_tiles = gimp_pickable_get_tiles (src_pickable);
+      gint         x1, y1;
+      gint         x2, y2;
+
+      x1 = CLAMP (paint_area->x + offset_x,
+                  0, tile_manager_width  (src_tiles));
+      y1 = CLAMP (paint_area->y + offset_y,
+                  0, tile_manager_height (src_tiles));
+      x2 = CLAMP (paint_area->x + offset_x + paint_area->width,
+                  0, tile_manager_width  (src_tiles));
+      y2 = CLAMP (paint_area->y + offset_y + paint_area->height,
+                  0, tile_manager_height (src_tiles));
+
+      if (!(x2 - x1) || !(y2 - y1))
+        return;
+
+      /*  If the source image is different from the destination,
+       *  then we should copy straight from the source image
+       *  to the canvas.
+       *  Otherwise, we need a call to get_orig_image to make sure
+       *  we get a copy of the unblemished (offset) image
+       */
+      if ((  options->sample_merged && (src_image != image)) ||
+          (! options->sample_merged && (source_core->src_drawable != drawable)))
+        {
+          pixel_region_init (&srcPR, src_tiles,
+                             x1, y1, x2 - x1, y2 - y1, FALSE);
+        }
+      else
+        {
+          TempBuf *orig;
+
+          /*  get the original image  */
+          if (options->sample_merged)
+            orig = gimp_paint_core_get_orig_proj (paint_core,
+                                                  src_pickable,
+                                                  x1, y1, x2, y2);
+          else
+            orig = gimp_paint_core_get_orig_image (paint_core,
+                                                   GIMP_DRAWABLE (src_pickable),
+                                                   x1, y1, x2, y2);
+
+          pixel_region_init_temp_buf (&srcPR, orig,
+                                      0, 0, x2 - x1, y2 - y1);
+        }
+
+      offset_x = x1 - (paint_area->x + offset_x);
+      offset_y = y1 - (paint_area->y + offset_y);
+    }
+
+  /*  Set the paint area to transparent  */
+  temp_buf_data_clear (paint_area);
+
   GIMP_SOURCE_CORE_GET_CLASS (source_core)->motion (source_core,
                                                     drawable,
-                                                    paint_options);
+                                                    paint_options,
+                                                    opacity,
+                                                    src_image,
+                                                    src_pickable,
+                                                    &srcPR,
+                                                    paint_area,
+                                                    offset_x, offset_y);
 }
 
 static void

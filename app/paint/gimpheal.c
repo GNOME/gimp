@@ -51,7 +51,14 @@
 
 static void   gimp_heal_motion (GimpSourceCore   *source_core,
                                 GimpDrawable     *drawable,
-                                GimpPaintOptions *paint_options);
+                                GimpPaintOptions *paint_options,
+                                gdouble           opacity,
+                                GimpImage        *src_image,
+                                GimpPickable     *src_pickable,
+                                PixelRegion      *srcPR,
+                                TempBuf          *paint_area,
+                                gint              paint_area_offset_x,
+                                gint              paint_area_offset_y);
 
 
 G_DEFINE_TYPE (GimpHeal, gimp_heal, GIMP_TYPE_SOURCE_CORE)
@@ -329,75 +336,45 @@ gimp_heal_region (PixelRegion *tempPR,
 static void
 gimp_heal_motion (GimpSourceCore   *source_core,
                   GimpDrawable     *drawable,
-                  GimpPaintOptions *paint_options)
+                  GimpPaintOptions *paint_options,
+                  gdouble           opacity,
+                  GimpImage        *src_image,
+                  GimpPickable     *src_pickable,
+                  PixelRegion      *srcPR,
+                  TempBuf          *paint_area,
+                  gint              paint_area_offset_x,
+                  gint              paint_area_offset_y)
 {
-  GimpPaintCore       *paint_core       = GIMP_PAINT_CORE (source_core);
-  GimpSourceOptions   *options          = GIMP_SOURCE_OPTIONS (paint_options);
-  GimpContext         *context          = GIMP_CONTEXT (paint_options);
-  GimpPressureOptions *pressure_options = paint_options->pressure_options;
-  GimpImage           *image;
-  GimpImage           *src_image        = NULL;
-  GimpPickable        *src_pickable     = NULL;
-  TileManager         *src_tiles;
-  TempBuf             *area;
-  TempBuf             *temp;
-  gdouble              opacity;
-  PixelRegion          tempPR;
-  PixelRegion          srcPR;
-  PixelRegion          destPR;
-  gint                 offset_x;
-  gint                 offset_y;
+  GimpPaintCore *paint_core = GIMP_PAINT_CORE (source_core);
+  GimpContext   *context    = GIMP_CONTEXT (paint_options);
+  TempBuf       *src;
+  TempBuf       *temp;
+  PixelRegion    origPR;
+  PixelRegion    tempPR;
+  PixelRegion    destPR;
+  GimpImageType  src_type;
 
-  /* get the image */
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  /* display a warning about indexed images and return */
-  if (GIMP_IMAGE_TYPE_IS_INDEXED (drawable->type))
+  if (gimp_drawable_is_indexed (drawable))
     {
       g_message (_("Indexed images are not currently supported."));
       return;
     }
 
-  opacity = gimp_paint_options_get_fade (paint_options, image,
-                                         paint_core->pixel_dist);
+  src_type = gimp_pickable_get_image_type (src_pickable);
 
-  if (opacity == 0.0)
-    return;
+  /* we need the source area with alpha and we modify it, so make a copy */
+  src = temp_buf_new (srcPR->w, srcPR->h,
+                      GIMP_IMAGE_TYPE_BYTES (GIMP_IMAGE_TYPE_WITH_ALPHA (src_type)),
+                      0, 0, NULL);
+  pixel_region_init_temp_buf (&tempPR, src, 0, 0, src->width, src->height);
 
-  if (! source_core->src_drawable)
-    return;
+  if (GIMP_IMAGE_TYPE_HAS_ALPHA (src_type))
+    copy_region (srcPR, &tempPR);
+  else
+    add_alpha_region (srcPR, &tempPR);
 
-  /* prepare the regions to get data from */
-  src_pickable = GIMP_PICKABLE (source_core->src_drawable);
-  src_image    = gimp_pickable_get_image (src_pickable);
-
-  /* make local copies */
-  offset_x = source_core->offset_x;
-  offset_y = source_core->offset_y;
-
-  /* adjust offsets and pickable if we are merging layers */
-  if (options->sample_merged)
-    {
-      gint off_x, off_y;
-
-      src_pickable = GIMP_PICKABLE (src_image->projection);
-
-      gimp_item_offsets (GIMP_ITEM (source_core->src_drawable), &off_x, &off_y);
-
-      offset_x += off_x;
-      offset_y += off_y;
-    }
-
-  /* get the canvas area */
-  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
-  if (!area)
-    return;
-
-  /* clear the area where we want to paint */
-  temp_buf_data_clear (area);
-
-  /* get the source tiles */
-  src_tiles = gimp_pickable_get_tiles (src_pickable);
+  /* reinitialize srcPR */
+  pixel_region_init_temp_buf (srcPR, src, 0, 0, src->width, src->height);
 
   /* FIXME: the area under the cursor and the source area should be x% larger
    * than the brush size.  Otherwise the brush must be a lot bigger than the
@@ -406,107 +383,91 @@ gimp_heal_motion (GimpSourceCore   *source_core,
 
   /* Get the area underneath the cursor */
   {
-    TempBuf  *orig;
-    gint      x1, x2, y1, y2;
+    TileManager *tiles = gimp_drawable_get_tiles (drawable);
+    TempBuf     *orig;
+    gint         x1, x2, y1, y2;
 
-    x1 = CLAMP (area->x,
-                0, tile_manager_width  (src_tiles));
-    y1 = CLAMP (area->y,
-                0, tile_manager_height (src_tiles));
-    x2 = CLAMP (area->x + area->width,
-                0, tile_manager_width  (src_tiles));
-    y2 = CLAMP (area->y + area->height,
-                0, tile_manager_height (src_tiles));
+    x1 = CLAMP (paint_area->x,
+                0, tile_manager_width  (tiles));
+    y1 = CLAMP (paint_area->y,
+                0, tile_manager_height (tiles));
+    x2 = CLAMP (paint_area->x + paint_area->width,
+                0, tile_manager_width  (tiles));
+    y2 = CLAMP (paint_area->y + paint_area->height,
+                0, tile_manager_height (tiles));
 
     if (! (x2 - x1) || (! (y2 - y1)))
-      return;
+      {
+        temp_buf_free (src);
+        return;
+      }
 
     /*  get the original image data at the cursor location */
-    if (options->sample_merged)
-      orig = gimp_paint_core_get_orig_proj (paint_core,
-                                            src_pickable,
-                                            x1, y1, x2, y2);
-    else
-      orig = gimp_paint_core_get_orig_image (paint_core,
-                                             GIMP_DRAWABLE (src_pickable),
-                                             x1, y1, x2, y2);
+    orig = gimp_paint_core_get_orig_image (paint_core, drawable,
+                                           x1, y1, x2, y2);
 
-    pixel_region_init_temp_buf (&srcPR, orig, 0, 0, x2 - x1, y2 - y1);
+    pixel_region_init_temp_buf (&origPR, orig, 0, 0, x2 - x1, y2 - y1);
   }
 
-  temp = temp_buf_new (srcPR.w, srcPR.h, srcPR.bytes, 0, 0, NULL);
+  temp = temp_buf_new (origPR.w, origPR.h,
+                       gimp_drawable_bytes_with_alpha (drawable),
+                       0, 0, NULL);
+  pixel_region_init_temp_buf (&tempPR, temp, 0, 0, origPR.w, origPR.h);
 
-  pixel_region_init_temp_buf (&tempPR, temp, 0, 0, srcPR.w, srcPR.h);
+  if (gimp_drawable_has_alpha (drawable))
+    copy_region (&origPR, &tempPR);
+  else
+    add_alpha_region (&origPR, &tempPR);
 
-  copy_region (&srcPR, &tempPR);
+  if (tempPR.bytes != srcPR->bytes)
+    {
+      TempBuf  *temp2;
+      gboolean  new_buf;
 
-  /* now tempPR holds the data under the cursor */
+      temp2 = gimp_image_transform_temp_buf (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                             drawable,
+                                             temp, &new_buf);
 
-  /* get a copy of the location we will sample from */
-  {
-    TempBuf  *orig;
-    gint      x1, x2, y1, y2;
+      if (new_buf)
+        temp_buf_free (temp);
 
-    x1 = CLAMP (area->x + offset_x,
-                0, tile_manager_width  (src_tiles));
-    y1 = CLAMP (area->y + offset_y,
-                0, tile_manager_height (src_tiles));
-    x2 = CLAMP (area->x + offset_x + area->width,
-                0, tile_manager_width  (src_tiles));
-    y2 = CLAMP (area->y + offset_y + area->height,
-                0, tile_manager_height (src_tiles));
+      temp = temp2;
+    }
 
-    if (! (x2 - x1) || (! (y2 - y1)))
-      return;
+  /* reinitialize tempPR */
+  pixel_region_init_temp_buf (&tempPR, temp, 0, 0, temp->width, temp->height);
 
-    /* get the original image data at the sample location */
-    if (options->sample_merged)
-      orig = gimp_paint_core_get_orig_proj (paint_core,
-                                            src_pickable,
-                                            x1, y1, x2, y2);
-    else
-      orig = gimp_paint_core_get_orig_image (paint_core,
-                                             GIMP_DRAWABLE (src_pickable),
-                                             x1, y1, x2, y2);
-
-    pixel_region_init_temp_buf (&srcPR, orig, 0, 0, x2 - x1, y2 - y1);
-
-    /* set the proper offset */
-    offset_x = x1 - (area->x + offset_x);
-    offset_y = y1 - (area->y + offset_y);
-  }
-
-  /* now srcPR holds the source area to sample from */
+  /* now tempPR holds the data under the cursor and
+   * srcPR holds the area to sample from
+   */
 
   /* get the destination to paint to */
-  pixel_region_init_temp_buf (&destPR, area, offset_x, offset_y, srcPR.w, srcPR.h);
+  pixel_region_init_temp_buf (&destPR, paint_area,
+                              paint_area_offset_x, paint_area_offset_y,
+                              srcPR->w, srcPR->h);
 
   /* FIXME: Can we ensure that this is true in the code above?
    * Is it already guaranteed to be true before we get here? */
   /* check that srcPR, tempPR, and destPR are the same size */
-  if ((srcPR.w     != tempPR.w    ) || (srcPR.w     != destPR.w    ) ||
-      (srcPR.h     != tempPR.h    ) || (srcPR.h     != destPR.h    ))
+  if ((srcPR->w != tempPR.w) || (srcPR->w != destPR.w) ||
+      (srcPR->h != tempPR.h) || (srcPR->h != destPR.h))
     {
       g_message (_("Source and destination regions are not the same size."));
+      temp_buf_free (src);
+      temp_buf_free (temp);
       return;
     }
 
   /* heal tempPR using srcPR */
-  gimp_heal_region (&tempPR, &srcPR);
+  gimp_heal_region (&tempPR, srcPR);
 
-  /* re-initialize tempPR so that it can be used within copy_region */
-  pixel_region_init_data (&tempPR, tempPR.data, tempPR.bytes, tempPR.rowstride,
-                          0, 0, tempPR.w, tempPR.h);
+  /* reinitialize tempPR */
+  pixel_region_init_temp_buf (&tempPR, temp, 0, 0, temp->width, temp->height);
 
-  /* add an alpha region to the area if necessary.
-   * sample_merged doesn't need an alpha because its always 4 bpp */
-  if ((! gimp_drawable_has_alpha (drawable)) && (! options->sample_merged))
-    add_alpha_region (&tempPR, &destPR);
-  else
-    copy_region (&tempPR, &destPR);
+  copy_region (&tempPR, &destPR);
 
   /* check the brush pressure */
-  if (pressure_options->opacity)
+  if (paint_options->pressure_options->opacity)
     opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
   /* replace the canvas with our healed data */
@@ -516,4 +477,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                   gimp_context_get_opacity (context),
                                   gimp_paint_options_get_brush_mode (paint_options),
                                   GIMP_PAINT_CONSTANT);
+
+  temp_buf_free (src);
+  temp_buf_free (temp);
 }

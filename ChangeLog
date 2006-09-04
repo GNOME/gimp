@@ -1,3 +1,17 @@
+2006-09-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpsourcecore.[ch] (gimp_source_core_motion): do a
+	lot of stuff that was duplicated in clone and heal. Added lots of
+	parameters to GimpSourceCore::motion() to get the stuff down to
+	clone and heal.
+
+	* app/paint/gimpclone.c (gimp_clone_motion): changed accordingly.
+
+	* app/paint/gimpheal.c (gimp_heal_motion): ditto. Made it work for
+	dest_drawable != src_pickable. Always add alpha to all buffers and
+	convert the source buffer to the dest drawable's color space
+	because the algorithm works only on buffers of same depth.
+
 2006-09-04  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.c
