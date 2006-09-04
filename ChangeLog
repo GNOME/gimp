@@ -1,5 +1,10 @@
 2006-09-04  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-selection.c: code cleanup. Only use
+	a timeout if there is actually a selection and if it is not hidden.
+
+2006-09-04  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-selection.[ch]: hide the internal API.
 
 	* app/display/gimpdisplayshell-appearance.c
