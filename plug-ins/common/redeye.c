@@ -125,6 +125,38 @@ query (void)
 }
 
 
+static GtkWidget *
+redeye_hints_new (void)
+{
+  GtkWidget *hbox;
+  GtkWidget *image;
+  GtkWidget *label;
+
+  hbox = gtk_hbox_new (FALSE, 12);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_INFO, GTK_ICON_SIZE_DIALOG);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  label = g_object_new (GTK_TYPE_LABEL,
+                        "label",
+                        _("Manually selecting the eyes may "
+                          "improve the results."),
+                        "wrap",    TRUE,
+                        "justify", GTK_JUSTIFY_LEFT,
+                        "xalign",  0.0,
+                        "yalign",  0.5,
+                        NULL);
+
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  return hbox;
+}
+
 /*
  * Create dialog for red eye removal
  */
@@ -137,9 +169,8 @@ dialog (gint32        image_id,
   GtkWidget *preview;
   GtkWidget *table;
   GtkWidget *main_vbox;
-  GtkWidget *label;
   GtkObject *adj;
-  gboolean  run = FALSE;
+  gboolean   run = FALSE;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -179,19 +210,14 @@ dialog (gint32        image_id,
                              0, 100,
                              _("Threshold for the red eye color to remove."),
                              NULL);
-  label = g_object_new (GTK_TYPE_LABEL,
-                        "label",  _("Manually selecting the eyes may "
-                                    "improve the results."),
-                        "xalign", 0.0,
-                        "wrap",   TRUE,
-                        NULL);
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                             -1);
-  gtk_box_pack_end (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
 
   if (gimp_selection_is_empty (gimp_drawable_get_image (drawable->drawable_id)))
-    gtk_widget_show (label);
+    {
+      GtkWidget *hints = redeye_hints_new ();
+
+      gtk_box_pack_end (GTK_BOX (main_vbox), hints, FALSE, FALSE, 0);
+      gtk_widget_show (hints);
+    }
 
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (remove_redeye_preview),

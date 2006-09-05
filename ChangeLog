@@ -1,8 +1,13 @@
+2006-09-05  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/redeye.c (dialog): use the wilber icon / label
+	combination for hints that is also used in colormap-remap.
+
 2006-09-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptool.[ch]: added gimp_tool_get_options() so tools
-	don't need to incude "core/gimptoolinfo.h" just to get to
-	their options.
+	don't need to include "core/gimptoolinfo.h" just to get to their
+	options.
 
 	* app/tools/gimp*tool.h: added macros GIMP_FOO_TOOL_GET_OPTIONS()
 	which return specific tool options types and do all casting
