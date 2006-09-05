@@ -36,6 +36,7 @@
         <menuitem action="debug-mem-profile" />
         <menuitem action="debug-dump-items" />
         <menuitem action="debug-dump-managers" />
+        <menuitem action="debug-dump-attached-data" />
       </menu>
 
       <separator />

@@ -1,3 +1,11 @@
+2006-09-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/debug-actions.c
+	* app/actions/debug-commands.[ch]
+	* menus/toolbox-menu.xml.in: added "Dump Attached Data" menu item
+	which prints the stuff that is attached to the gimp and
+	user_context objects.
+
 2006-09-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/redeye.c (dialog): use the wilber icon / label
