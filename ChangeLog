@@ -1,5 +1,12 @@
 2006-09-05  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpselectiondata.c: disabled debug spew.
+
+	* plug-ins/common/raw.c: fixed saving of INDEXEDA drawables. Added
+	code to load such files. Fixes bug #354034.
+
+2006-09-05  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-selection.c: switch from a short
 	timeout to an idle handler for starting the animation.
 

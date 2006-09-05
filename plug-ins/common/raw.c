@@ -58,7 +58,8 @@ typedef enum
   RAW_RGB,                      /* RGB Image */
   RAW_RGBA,                     /* RGB Image with an Alpha channel */
   RAW_PLANAR,                   /* Planar RGB */
-  RAW_INDEXED                   /* Indexed image */
+  RAW_INDEXED,                  /* Indexed image */
+  RAW_INDEXEDA                  /* Indexed image with an Alpha channel */
 } RawType;
 
 typedef enum
@@ -99,10 +100,10 @@ static gboolean          raw_load_standard (RawGimpData      *data,
                                             gint              bpp);
 static gboolean          raw_load_planar   (RawGimpData      *data);
 static gboolean          raw_load_palette  (RawGimpData      *data,
-                                            gchar            *palette_filename);
+                                            const gchar      *palette_filename);
 
 /* support functions */
-static gint32            get_file_info     (gchar            *filename);
+static gint32            get_file_info     (const gchar      *filename);
 static void              raw_read_row      (FILE             *fp,
                                             guchar           *buf,
                                             gint32            offset,
@@ -112,16 +113,16 @@ static int               mmap_read         (gint              fd,
                                             gint32            len,
                                             gint32            pos,
                                             gint              rowstride);
-static gint32            load_image        (gchar            *filename);
-static GimpPDBStatusType save_image        (gchar            *filename,
+static gint32            load_image        (const gchar      *filename);
+static GimpPDBStatusType save_image        (const gchar      *filename,
                                             gint32            image_id,
                                             gint32            drawable_id);
 
 /* gui functions */
 static void              preview_update    (GimpPreviewArea   *preview);
 static void              palette_update    (GimpPreviewArea   *preview);
-static gboolean          load_dialog       (gchar             *name);
-static gboolean          save_dialog       (gchar             *filename,
+static gboolean          load_dialog       (const gchar       *filename);
+static gboolean          save_dialog       (const gchar       *filename,
                                             gint32             image_id,
                                             gint32             drawable_id);
 static void              palette_callback  (GtkFileChooser    *button,
@@ -320,7 +321,7 @@ run (const gchar      *name,
 
 /* get file size from a filename */
 static gint32
-get_file_info (gchar *filename)
+get_file_info (const gchar *filename)
 {
   struct stat status;
 
@@ -361,7 +362,7 @@ mmap_read (gint    fd,
   return 0;
 }
 
-/* this handles 1, 3, 4 bpp "standard" images */
+/* this handles 1, 2, 3, 4 bpp "standard" images */
 static gboolean
 raw_load_standard (RawGimpData *data,
                    gint         bpp)
@@ -432,7 +433,7 @@ raw_load_planar (RawGimpData *data)
 
 static gboolean
 raw_load_palette (RawGimpData *data,
-                  gchar       *palette_file)
+                  const gchar *palette_file)
 {
   guchar temp[1024];
   gint   fd, i, j;
@@ -484,9 +485,9 @@ raw_load_palette (RawGimpData *data,
 /* end new image handle functions */
 
 static GimpPDBStatusType
-save_image (gchar  *filename,
-            gint32  image_id,
-            gint32  drawable_id)
+save_image (const gchar  *filename,
+            gint32        image_id,
+            gint32        drawable_id)
 {
   GimpDrawable     *drawable;
   GimpPixelRgn      pixel_rgn;
@@ -507,10 +508,7 @@ save_image (gchar  *filename,
   have_alpha = gimp_drawable_has_alpha (drawable_id);
 
   if (gimp_drawable_is_indexed (drawable_id))
-    {
-      bpp  = 1;
-      cmap = gimp_image_get_colormap (image_id, &palsize);
-    }
+    cmap = gimp_image_get_colormap (image_id, &palsize);
 
   width  = drawable->width;
   height = drawable->height;
@@ -630,7 +628,7 @@ save_image (gchar  *filename,
 }
 
 static gint32
-load_image (gchar *filename)
+load_image (const gchar *filename)
 {
   RawGimpData       *data;
   gint32             layer_id = -1;
@@ -674,6 +672,12 @@ load_image (gchar *filename)
       ltype = GIMP_INDEXED_IMAGE;
       itype = GIMP_INDEXED;
       break;
+
+    case RAW_INDEXEDA:        /* Indexed + alpha */
+      bpp   = 2;
+      ltype = GIMP_INDEXEDA_IMAGE;
+      itype = GIMP_INDEXED;
+      break;
     }
 
   /* make sure we don't load image bigger than file size */
@@ -707,6 +711,7 @@ load_image (gchar *filename)
       break;
 
     case RAW_INDEXED:
+    case RAW_INDEXEDA:
       raw_load_palette (data, palfile);
       raw_load_standard (data, bpp);
       break;
@@ -728,13 +733,14 @@ preview_update (GimpPreviewArea *preview)
 {
   gint     width;
   gint     height;
-  gint32   pos, len;
+  gint32   pos;
   gint     x, y;
 
   width  = MIN (runtime->image_width,  preview->width);
   height = MIN (runtime->image_height, preview->height);
 
-  gimp_preview_area_fill (preview, 0, 0, preview->width, preview->height,
+  gimp_preview_area_fill (preview,
+                          0, 0, preview->width, preview->height,
                           255, 255, 255);
 
   switch (runtime->image_type)
@@ -744,12 +750,10 @@ preview_update (GimpPreviewArea *preview)
       {
         guchar *row = g_malloc0 (width * 3);
 
-        len = width * 3;
-
         for (y = 0; y < height; y++)
           {
             pos = runtime->file_offset + runtime->image_width * y * 3;
-            mmap_read (preview_fd, row, len, pos, width * 3);
+            mmap_read (preview_fd, row, width * 3, pos, width * 3);
 
             gimp_preview_area_draw (preview, 0, y, width, 1,
                                     GIMP_RGB_IMAGE, row, width * 3);
@@ -805,12 +809,10 @@ preview_update (GimpPreviewArea *preview)
       {
         guchar *row = g_malloc0 (width * 4);
 
-        len = width * 4;
-
         for (y = 0; y < height; y++)
           {
             pos = runtime->file_offset + runtime->image_width * y * 4;
-            mmap_read (preview_fd, row, len, pos, width * 4);
+            mmap_read (preview_fd, row, width * 4, pos, width * 4);
 
             gimp_preview_area_draw (preview, 0, y, width, 1,
                                     GIMP_RGBA_IMAGE, row, width * 4);
@@ -821,12 +823,12 @@ preview_update (GimpPreviewArea *preview)
       break;
 
     case RAW_INDEXED:
+    case RAW_INDEXEDA:
       /* indexed image */
       {
-        guchar *index = g_malloc0 (width);
-        guchar *row   = g_malloc0 (width * 3);
-
-        len = width;
+        gboolean  alpha = (runtime->image_type == RAW_INDEXEDA);
+        guchar   *index = g_malloc0 (width * (alpha ? 2 : 1));
+        guchar   *row   = g_malloc0 (width * (alpha ? 4 : 3));
 
         if (preview_cmap_update)
           {
@@ -847,6 +849,7 @@ preview_update (GimpPreviewArea *preview)
                   {
                     preview_cmap[x++] = y;
                     preview_cmap[x++] = y;
+
                     if (runtime->palette_type == RAW_PALETTE_RGB)
                       {
                         preview_cmap[x++] = y;
@@ -866,30 +869,61 @@ preview_update (GimpPreviewArea *preview)
           {
             guchar *p = row;
 
-            pos = runtime->file_offset + runtime->image_width * y;
-            mmap_read (preview_fd, index, len, pos, width);
-
-            for (x = 0; x < width; x++)
+            if (alpha)
               {
-                switch (runtime->palette_type)
-                  {
-                  case RAW_PALETTE_RGB:
-                    *p++ = preview_cmap[index[x] * 3 + 0];
-                    *p++ = preview_cmap[index[x] * 3 + 1];
-                    *p++ = preview_cmap[index[x] * 3 + 2];
-                    break;
-                  case RAW_PALETTE_BGR:
-                    *p++ = preview_cmap[index[x] * 4 + 2];
-                    *p++ = preview_cmap[index[x] * 4 + 1];
-                    *p++ = preview_cmap[index[x] * 4 + 0];
-                    break;
-                  }
-              }
+                pos = runtime->file_offset + runtime->image_width * 2 * y;
+                mmap_read (preview_fd, index, width * 2, pos, width);
 
-            gimp_preview_area_draw (preview, 0, y, width, 1,
-                                    GIMP_RGB_IMAGE, row, width * 3);
+                for (x = 0; x < width; x++)
+                  {
+                    switch (runtime->palette_type)
+                      {
+                      case RAW_PALETTE_RGB:
+                        *p++ = preview_cmap[index[2 * x] * 3 + 0];
+                        *p++ = preview_cmap[index[2 * x] * 3 + 1];
+                        *p++ = preview_cmap[index[2 * x] * 3 + 2];
+                        *p++ = index[2 * x + 1];
+                        break;
+                      case RAW_PALETTE_BGR:
+                        *p++ = preview_cmap[index[2 * x] * 4 + 2];
+                        *p++ = preview_cmap[index[2 * x] * 4 + 1];
+                        *p++ = preview_cmap[index[2 * x] * 4 + 0];
+                        *p++ = index[2 * x + 1];
+                        break;
+                      }
+                  }
+
+                gimp_preview_area_draw (preview, 0, y, width, 1,
+                                        GIMP_RGBA_IMAGE, row, width * 4);
+              }
+            else
+              {
+                pos = runtime->file_offset + runtime->image_width * y;
+                mmap_read (preview_fd, index, width, pos, width);
+
+                for (x = 0; x < width; x++)
+                  {
+                    switch (runtime->palette_type)
+                      {
+                      case RAW_PALETTE_RGB:
+                        *p++ = preview_cmap[index[x] * 3 + 0];
+                        *p++ = preview_cmap[index[x] * 3 + 1];
+                        *p++ = preview_cmap[index[x] * 3 + 2];
+                        break;
+                      case RAW_PALETTE_BGR:
+                        *p++ = preview_cmap[index[x] * 4 + 2];
+                        *p++ = preview_cmap[index[x] * 4 + 1];
+                        *p++ = preview_cmap[index[x] * 4 + 0];
+                        break;
+                      }
+                  }
+
+                gimp_preview_area_draw (preview, 0, y, width, 1,
+                                        GIMP_RGB_IMAGE, row, width * 3);
+              }
           }
 
+        g_free (row);
         g_free (index);
       }
       break;
@@ -905,7 +939,7 @@ palette_update (GimpPreviewArea *preview)
 }
 
 static gboolean
-load_dialog (gchar *filename)
+load_dialog (const gchar *filename)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
@@ -965,10 +999,11 @@ load_dialog (gchar *filename)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  combo = gimp_int_combo_box_new (_("RGB"),        RAW_RGB,
-                                  _("RGBA"),       RAW_RGBA,
-                                  _("Planar RGB"), RAW_PLANAR,
-                                  _("Indexed"),    RAW_INDEXED,
+  combo = gimp_int_combo_box_new (_("RGB"),           RAW_RGB,
+                                  _("RGB Alpha"),     RAW_RGBA,
+                                  _("Planar RGB"),    RAW_PLANAR,
+                                  _("Indexed"),       RAW_INDEXED,
+                                  _("Indexed Alpha"), RAW_INDEXEDA,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                  runtime->image_type);
@@ -1085,9 +1120,9 @@ load_dialog (gchar *filename)
 }
 
 static gboolean
-save_dialog (gchar * filename,
-             gint32 image_id,
-             gint32 drawable_id)
+save_dialog (const gchar *filename,
+             gint32       image_id,
+             gint32       drawable_id)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
