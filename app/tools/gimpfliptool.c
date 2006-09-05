@@ -30,7 +30,6 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimppickable.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -118,7 +117,7 @@ gimp_flip_tool_modifier_key (GimpTool        *tool,
                              GdkModifierType  state,
                              GimpDisplay     *display)
 {
-  GimpFlipOptions *options = GIMP_FLIP_OPTIONS (tool->tool_info->tool_options);
+  GimpFlipOptions *options = GIMP_FLIP_TOOL_GET_OPTIONS (tool);
 
   if (key == GDK_CONTROL_MASK)
     {
@@ -148,10 +147,8 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *display)
 {
-  GimpFlipOptions    *options;
+  GimpFlipOptions    *options  = GIMP_FLIP_TOOL_GET_OPTIONS (tool);
   GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_BAD;
-
-  options = GIMP_FLIP_OPTIONS (tool->tool_info->tool_options);
 
   if (gimp_image_coords_in_active_pickable (display->image, coords,
                                             FALSE, TRUE))
@@ -175,15 +172,11 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
                           gboolean           mask_empty,
                           GimpDisplay       *display)
 {
-  GimpTransformOptions *tr_options;
-  GimpFlipOptions      *options;
-  GimpContext          *context;
-  gdouble               axis = 0.0;
-  TileManager          *ret  = NULL;
-
-  options = GIMP_FLIP_OPTIONS (GIMP_TOOL (trans_tool)->tool_info->tool_options);
-  tr_options = GIMP_TRANSFORM_OPTIONS (options);
-  context    = GIMP_CONTEXT (options);
+  GimpFlipOptions      *options    = GIMP_FLIP_TOOL_GET_OPTIONS (trans_tool);
+  GimpTransformOptions *tr_options = GIMP_TRANSFORM_OPTIONS (options);
+  GimpContext          *context    = GIMP_CONTEXT (options);
+  gdouble               axis       = 0.0;
+  TileManager          *ret        = NULL;
 
   switch (options->flip_type)
     {

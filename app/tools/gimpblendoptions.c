@@ -27,7 +27,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpwidgets-utils.h"
 

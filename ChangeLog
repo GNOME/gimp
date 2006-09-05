@@ -1,5 +1,24 @@
 2006-09-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptool.[ch]: added gimp_tool_get_options() so tools
+	don't need to incude "core/gimptoolinfo.h" just to get to
+	their options.
+
+	* app/tools/gimp*tool.h: added macros GIMP_FOO_TOOL_GET_OPTIONS()
+	which return specific tool options types and do all casting
+	themselves.
+
+	* app/tools/*.c: use the new macros and don't include
+	"core/gimptoolinfo.h" in most files.
+
+	* app/tools/gimpcolorpickertool.c (gimp_color_picker_tool_register):
+	make it use the parent context's FG and BG.
+
+	* app/tools/gimpcolortool.c (gimp_color_tool_real_picked): set the
+	color on the tool's options, not on the user context.
+
+2006-09-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpmenudock.c: don't #include "core/gimptoolinfo.h"
 
 2006-09-05  Sven Neumann  <sven@gimp.org>

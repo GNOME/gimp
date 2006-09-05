@@ -33,7 +33,6 @@
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimppickable.h"
-#include "core/gimptoolinfo.h"
 #include "core/gimp-utils.h"
 #include "core/gimpundo.h"
 #include "core/gimpundostack.h"
@@ -212,9 +211,9 @@ gimp_rect_select_tool_constructor (GType                  type,
 
   gimp_rectangle_tool_constructor (object);
 
-  tool = GIMP_TOOL (object);
+  tool    = GIMP_TOOL (object);
+  options = G_OBJECT (gimp_tool_get_options (tool));
 
-  options = G_OBJECT (tool->tool_info->tool_options);
   g_signal_connect_object (options, "notify::auto-shrink",
                            G_CALLBACK (gimp_rect_select_tool_auto_shrink_notify),
                            GIMP_RECTANGLE_TOOL (tool), 0);
@@ -227,9 +226,7 @@ gimp_rect_select_tool_dispose (GObject *object)
 {
   GimpTool          *tool      = GIMP_TOOL (object);
   GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (object);
-  GObject           *options;
-
-  options = G_OBJECT (tool->tool_info->tool_options);
+  GObject           *options   = G_OBJECT (gimp_tool_get_options (tool));
 
   gimp_rectangle_tool_dispose (object);
 
@@ -311,12 +308,11 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
     }
   else
     {
-      GimpImage             *image       = tool->display->image;
-      GimpUndo              *undo;
-      GimpSelectionOptions *options;
+      GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+      GimpImage            *image   = tool->display->image;
+      GimpUndo             *undo;
       SelectOps             operation;
 
-      options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
       if (rect_select->use_saved_op)
         operation = rect_select->operation;
       else
@@ -358,14 +354,12 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
 {
   GimpRectSelectTool   *rect_select = GIMP_RECT_SELECT_TOOL (tool);
   GimpRectangleTool    *rectangle   = GIMP_RECTANGLE_TOOL (tool);
+  GimpSelectionOptions *options     = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   gboolean              auto_shrink;
-  GimpSelectionOptions *options;
 
   gimp_tool_pop_status (tool, display);
   gimp_display_shell_set_show_selection (GIMP_DISPLAY_SHELL (display->shell),
                                          rect_select->saved_show_selection);
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   /*
    * if the user has not moved the mouse, we need to redo the operation
@@ -477,12 +471,10 @@ gimp_rect_select_tool_select (GimpRectangleTool *rectangle,
 {
   GimpTool             *tool        = GIMP_TOOL (rectangle);
   GimpRectSelectTool   *rect_select = GIMP_RECT_SELECT_TOOL (rectangle);
-  GimpSelectionOptions *options;
+  GimpSelectionOptions *options     = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpImage            *image;
   gboolean              rectangle_exists;
   SelectOps             operation;
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   gimp_tool_pop_status (tool, tool->display);
 
@@ -514,10 +506,8 @@ gimp_rect_select_tool_real_select (GimpRectSelectTool *rect_select,
                                    gint                w,
                                    gint                h)
 {
-  GimpTool             *tool = GIMP_TOOL (rect_select);
-  GimpSelectionOptions *options;
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  GimpTool             *tool    = GIMP_TOOL (rect_select);
+  GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
 
   gimp_channel_select_rectangle (gimp_image_get_mask (tool->display->image),
                                  x, y, w, h,
@@ -687,7 +677,6 @@ gimp_rect_select_tool_rectangle_changed (GimpRectangleTool  *rectangle)
   if (tool->display)
     {
       GimpRectSelectTool   *rect_select = GIMP_RECT_SELECT_TOOL (tool);
-      GimpSelectionOptions *options;
       GimpImage            *image       = tool->display->image;
       GimpUndo             *undo;
       gint                  x1, y1, x2, y2;
@@ -720,8 +709,7 @@ gimp_rect_select_tool_rectangle_changed (GimpRectangleTool  *rectangle)
       if (! rect_select->use_saved_op)
         {
           /* remember the operation now in case we modify the rectangle */
-          options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
-          g_object_get (options,
+          g_object_get (gimp_tool_get_options (tool),
                         "operation", &rect_select->operation,
                         NULL);
           rect_select->use_saved_op = TRUE;
@@ -778,10 +766,10 @@ gimp_rect_select_tool_auto_shrink (GimpRectSelectTool *rect_select)
   if (! display)
     return;
 
-  width = display->image->width;
+  width  = display->image->width;
   height = display->image->height;
 
-  g_object_get (GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options),
+  g_object_get (gimp_tool_get_options (tool),
                 "shrink-merged", &shrink_merged,
                 NULL);
 

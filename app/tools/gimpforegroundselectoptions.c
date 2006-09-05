@@ -27,8 +27,6 @@
 
 #include "base/siox.h"
 
-#include "core/gimptoolinfo.h"
-
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpforegroundselectoptions.h"

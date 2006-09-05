@@ -30,6 +30,8 @@
 #define GIMP_IS_PAINT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINT_TOOL))
 #define GIMP_PAINT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAINT_TOOL, GimpPaintToolClass))
 
+#define GIMP_PAINT_TOOL_GET_OPTIONS(t)  (GIMP_PAINT_OPTIONS (gimp_tool_get_options (GIMP_TOOL (tool))))
+
 
 typedef struct _GimpPaintToolClass GimpPaintToolClass;
 

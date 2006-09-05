@@ -29,7 +29,6 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpcolorframe.h"
 #include "widgets/gimphelp-ids.h"
@@ -95,7 +94,7 @@ gimp_color_picker_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_COLOR_PICKER_TOOL,
                 GIMP_TYPE_COLOR_PICKER_OPTIONS,
                 gimp_color_picker_options_gui,
-                0,
+                GIMP_CONTEXT_FOREGROUND_MASK | GIMP_CONTEXT_BACKGROUND_MASK,
                 "gimp-color-picker-tool",
                 _("Color Picker"),
                 _("Pick colors from the image"),
@@ -143,7 +142,7 @@ gimp_color_picker_tool_constructor (GType                  type,
   tool = GIMP_TOOL (object);
 
   gimp_color_tool_enable (GIMP_COLOR_TOOL (object),
-                          GIMP_COLOR_OPTIONS (tool->tool_info->tool_options));
+                          GIMP_COLOR_TOOL_GET_OPTIONS (tool));
 
   return object;
 }
@@ -190,9 +189,7 @@ gimp_color_picker_tool_modifier_key (GimpTool        *tool,
                                      GdkModifierType  state,
                                      GimpDisplay     *display)
 {
-  GimpColorPickerOptions *options;
-
-  options = GIMP_COLOR_PICKER_OPTIONS (tool->tool_info->tool_options);
+  GimpColorPickerOptions *options = GIMP_COLOR_PICKER_TOOL_GET_OPTIONS (tool);
 
   if (key == GDK_SHIFT_MASK)
     {
@@ -227,9 +224,7 @@ gimp_color_picker_tool_oper_update (GimpTool        *tool,
                                     gboolean         proximity,
                                     GimpDisplay     *display)
 {
-  GimpColorPickerOptions *options;
-
-  options = GIMP_COLOR_PICKER_OPTIONS (tool->tool_info->tool_options);
+  GimpColorPickerOptions *options = GIMP_COLOR_PICKER_TOOL_GET_OPTIONS (tool);
 
   GIMP_COLOR_TOOL (tool)->pick_mode = options->pick_mode;
 
@@ -247,7 +242,7 @@ gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
   GimpColorPickerTool    *picker_tool = GIMP_COLOR_PICKER_TOOL (color_tool);
   GimpColorPickerOptions *options;
 
-  options = GIMP_COLOR_PICKER_OPTIONS (color_tool->options);
+  options = GIMP_COLOR_PICKER_TOOL_GET_OPTIONS (color_tool);
 
   if (options->use_info_window && ! picker_tool->dialog)
     gimp_color_picker_tool_info_create (picker_tool);
@@ -284,7 +279,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
 
   gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (picker_tool->dialog),
                                      GIMP_VIEWABLE (tool->drawable),
-                                     GIMP_CONTEXT (tool->tool_info->tool_options));
+                                     GIMP_CONTEXT (gimp_tool_get_options (tool)));
 
   g_signal_connect (picker_tool->dialog, "response",
                     G_CALLBACK (gimp_color_picker_tool_info_response),

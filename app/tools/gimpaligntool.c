@@ -33,7 +33,6 @@
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
-#include "core/gimptoolinfo.h"
 #include "core/gimplist.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -177,10 +176,7 @@ gimp_align_tool_constructor (GType                  type,
 
   tool       = GIMP_TOOL (object);
   align_tool = GIMP_ALIGN_TOOL (object);
-
-  g_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
-
-  options = G_OBJECT (tool->tool_info->tool_options);
+  options    = G_OBJECT (gimp_tool_get_options (tool));
 
   container = GTK_CONTAINER (g_object_get_data (options,
                                                 "controls-container"));

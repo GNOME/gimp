@@ -19,6 +19,7 @@
 #ifndef  __GIMP_RECTANGLE_TOOL_H__
 #define  __GIMP_RECTANGLE_TOOL_H__
 
+
 #include "gimptool.h"
 
 
@@ -43,6 +44,8 @@ typedef enum
 #define GIMP_IS_RECTANGLE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_RECTANGLE_TOOL))
 #define GIMP_RECTANGLE_TOOL(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RECTANGLE_TOOL, GimpRectangleTool))
 #define GIMP_RECTANGLE_TOOL_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_RECTANGLE_TOOL, GimpRectangleToolInterface))
+
+#define GIMP_RECTANGLE_TOOL_GET_OPTIONS(t)     (GIMP_RECTANGLE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
 
 
 /*  possible functions  */

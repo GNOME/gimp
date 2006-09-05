@@ -41,7 +41,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
 #include "core/gimpprogress.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpcolorbar.h"
 #include "widgets/gimphelp-ids.h"
@@ -344,8 +343,8 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
 static void
 gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpLevelsTool  *tool = GIMP_LEVELS_TOOL (image_map_tool);
-  GimpToolOptions *tool_options;
+  GimpLevelsTool  *tool         = GIMP_LEVELS_TOOL (image_map_tool);
+  GimpToolOptions *tool_options = GIMP_TOOL_GET_OPTIONS (image_map_tool);
   GtkListStore    *store;
   GtkWidget       *vbox;
   GtkWidget       *vbox2;
@@ -361,8 +360,6 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget       *bar;
   GtkObject       *data;
   gint             border;
-
-  tool_options = GIMP_TOOL (tool)->tool_info->tool_options;
 
   vbox = image_map_tool->main_vbox;
 
@@ -1018,7 +1015,7 @@ levels_input_picker_toggled (GtkWidget      *widget,
       tool->active_picker = widget;
 
       gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
-                              GIMP_COLOR_OPTIONS (GIMP_TOOL (tool)->tool_info->tool_options));
+                              GIMP_COLOR_TOOL_GET_OPTIONS (tool));
     }
   else if (tool->active_picker == widget)
     {

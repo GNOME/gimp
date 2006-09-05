@@ -401,9 +401,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
                                   GimpDisplay     *display)
 {
   GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GimpSelectionOptions *options;
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  GimpSelectionOptions *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
 
   iscissors->x = RINT (coords->x);
   iscissors->y = RINT (coords->y);
@@ -509,7 +507,7 @@ static void
 iscissors_convert (GimpIscissorsTool *iscissors,
                    GimpDisplay       *display)
 {
-  GimpSelectionOptions *options;
+  GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (iscissors);
   GimpScanConvert      *sc;
   GimpVector2          *points;
   guint                 n_points;
@@ -517,9 +515,6 @@ iscissors_convert (GimpIscissorsTool *iscissors,
   ICurve               *icurve;
   gint                  i;
   gint                  index;
-
-  options =
-    GIMP_SELECTION_OPTIONS (GIMP_TOOL (iscissors)->tool_info->tool_options);
 
   sc = gimp_scan_convert_new ();
 
@@ -566,10 +561,8 @@ gimp_iscissors_tool_button_release (GimpTool        *tool,
                                     GimpDisplay     *display)
 {
   GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GimpSelectionOptions *options;
+  GimpSelectionOptions *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   ICurve               *curve;
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   /* Make sure X didn't skip the button release event -- as it's known
    * to do
@@ -684,9 +677,7 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
                             GimpDisplay     *display)
 {
   GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GimpSelectionOptions *options;
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  GimpSelectionOptions *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
 
   if (iscissors->state == NO_ACTION)
     return;

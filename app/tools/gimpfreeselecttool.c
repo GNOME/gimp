@@ -28,7 +28,6 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer-floating-sel.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -198,9 +197,7 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
                                       GimpDisplay     *display)
 {
   GimpFreeSelectTool   *free_sel = GIMP_FREE_SELECT_TOOL (tool);
-  GimpSelectionOptions *options;
-
-  options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  GimpSelectionOptions *options  = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
@@ -304,10 +301,8 @@ static void
 gimp_free_select_tool_real_select (GimpFreeSelectTool *free_sel,
                                    GimpDisplay        *display)
 {
-  GimpTool             *tool = GIMP_TOOL (free_sel);
-  GimpSelectionOptions *options;
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  GimpTool             *tool    = GIMP_TOOL (free_sel);
+  GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (free_sel);
 
   gimp_channel_select_polygon (gimp_image_get_mask (display->image),
                                Q_("command|Free Select"),

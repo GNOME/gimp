@@ -38,7 +38,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
 #include "core/gimpscanconvert.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -203,7 +202,7 @@ gimp_foreground_select_tool_constructor (GType                  type,
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
-  options = GIMP_TOOL (object)->tool_info->tool_options;
+  options = GIMP_TOOL_GET_OPTIONS (object);
 
   g_signal_connect_object (options, "notify",
                            G_CALLBACK (gimp_foreground_select_options_notify),
@@ -348,7 +347,7 @@ gimp_foreground_select_tool_modifier_key (GimpTool        *tool,
         {
           GimpForegroundSelectOptions *options;
 
-          options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
+          options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
 
           g_object_set (options,
                         "background", ! options->background,
@@ -369,7 +368,7 @@ gimp_foreground_select_tool_cursor_update (GimpTool        *tool,
     {
       GimpForegroundSelectOptions *options;
 
-      options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
+      options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
 
       gimp_tool_control_set_toggled (tool->control, options->background);
 
@@ -467,7 +466,7 @@ gimp_foreground_select_tool_button_release (GimpTool        *tool,
     {
       GimpForegroundSelectOptions *options;
 
-      options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
+      options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
 
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -547,10 +546,10 @@ static void
 gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpForegroundSelectTool    *fg_select = GIMP_FOREGROUND_SELECT_TOOL (draw_tool);
-  GimpTool                    *tool = GIMP_TOOL (draw_tool);
+  GimpTool                    *tool      = GIMP_TOOL (draw_tool);
   GimpForegroundSelectOptions *options;
 
-  options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
 
   if (fg_select->stroke)
     {
@@ -609,15 +608,13 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 {
   GimpForegroundSelectTool    *fg_select;
   GimpForegroundSelectOptions *options;
-
-  GimpTool        *tool     = GIMP_TOOL (free_sel);
-  GimpImage       *image   = display->image;
-  GimpDrawable    *drawable = gimp_image_active_drawable (image);
-  GimpScanConvert *scan_convert;
-  GimpChannel     *mask;
+  GimpImage                   *image    = display->image;
+  GimpDrawable                *drawable = gimp_image_active_drawable (image);
+  GimpScanConvert             *scan_convert;
+  GimpChannel                 *mask;
 
   fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
-  options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
+  options   = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (free_sel);
 
   if (fg_select->idle_id)
     {
@@ -696,6 +693,8 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
   GimpTool                    *tool = GIMP_TOOL (fg_select);
   GimpForegroundSelectOptions *options;
 
+  options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
+
   if (fg_select->mask == mask)
     return;
 
@@ -708,17 +707,11 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
   if (mask)
     fg_select->mask = g_object_ref (mask);
 
-  options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
-
   gimp_display_shell_set_mask (GIMP_DISPLAY_SHELL (display->shell),
                                GIMP_DRAWABLE (mask), options->mask_color);
 
   if (mask)
     {
-      GimpForegroundSelectOptions *options;
-
-      options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
-
       gimp_tool_control_set_tool_cursor        (tool->control,
                                                 GIMP_TOOL_CURSOR_PAINTBRUSH);
       gimp_tool_control_set_toggle_tool_cursor (tool->control,
@@ -741,16 +734,14 @@ static void
 gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
                                    GimpDisplay              *display)
 {
-  GimpTool             *tool = GIMP_TOOL (fg_select);
-  GimpChannelOps        op   = GIMP_SELECTION_TOOL (tool)->op;
-  GimpSelectionOptions *options;
+  GimpTool             *tool    = GIMP_TOOL (fg_select);
+  GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GimpChannelOps        op      = GIMP_SELECTION_TOOL (tool)->op;
 
   g_return_if_fail (fg_select->mask != NULL);
 
   if (op > GIMP_CHANNEL_OP_INTERSECT)
     op = GIMP_CHANNEL_OP_REPLACE;
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   gimp_channel_select_channel (gimp_image_get_mask (display->image),
                                Q_("command|Foreground Select"),

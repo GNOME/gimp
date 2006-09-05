@@ -150,7 +150,7 @@ gimp_brush_tool_constructor (GType                  type,
                            G_CALLBACK (gimp_brush_tool_notify_brush),
                            brush_tool, 0);
 
-  g_signal_connect_object (tool->tool_info->tool_options, "brush-changed",
+  g_signal_connect_object (gimp_tool_get_options (tool), "brush-changed",
                            G_CALLBACK (gimp_brush_tool_brush_changed),
                            brush_tool, 0);
 
@@ -194,10 +194,8 @@ gimp_brush_tool_oper_update (GimpTool        *tool,
                              gboolean         proximity,
                              GimpDisplay     *display)
 {
-  GimpBrushTool    *brush_tool = GIMP_BRUSH_TOOL (tool);
-  GimpPaintOptions *paint_options;
-
-  paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
+  GimpBrushTool    *brush_tool    = GIMP_BRUSH_TOOL (tool);
+  GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
 
   if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
@@ -294,7 +292,7 @@ gimp_brush_tool_draw (GimpDrawTool *draw_tool)
               GimpPaintOptions *paint_options;
               gdouble           brush_x, brush_y;
 
-              paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
+              paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (draw_tool);
 
               brush_x = (brush_tool->brush_x -
                          ((gdouble) brush_core->brush_bound_width  / 2.0));

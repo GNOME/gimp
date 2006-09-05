@@ -29,7 +29,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
-#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 
@@ -120,7 +119,7 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
   if (state & GDK_BUTTON1_MASK)
     return;
 
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
 
   if (key == GDK_SHIFT_MASK   ||
       key == GDK_CONTROL_MASK ||
@@ -191,7 +190,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
   gboolean              move_floating_sel = FALSE;
   gboolean              selection_empty;
 
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
 
   selection    = gimp_image_get_mask (display->image);
   drawable     = gimp_image_active_drawable (display->image);

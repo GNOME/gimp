@@ -30,6 +30,8 @@
 #define GIMP_IS_MOVE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MOVE_TOOL))
 #define GIMP_MOVE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MOVE_TOOL, GimpMoveToolClass))
 
+#define GIMP_MOVE_TOOL_GET_OPTIONS(t)  (GIMP_MOVE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
 
 typedef struct _GimpMoveTool      GimpMoveTool;
 typedef struct _GimpMoveToolClass GimpMoveToolClass;

@@ -35,7 +35,6 @@
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
-#include "core/gimptoolinfo.h"
 #include "core/gimpunit.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -174,12 +173,10 @@ gimp_measure_tool_button_press (GimpTool        *tool,
                                 GdkModifierType  state,
                                 GimpDisplay     *display)
 {
-  GimpMeasureTool    *mtool = GIMP_MEASURE_TOOL (tool);
-  GimpMeasureOptions *options;
+  GimpMeasureTool    *mtool   = GIMP_MEASURE_TOOL (tool);
+  GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (tool);
   GimpDisplayShell   *shell;
   gint                i;
-
-  options = GIMP_MEASURE_OPTIONS (tool->tool_info->tool_options);
 
   shell = GIMP_DISPLAY_SHELL (display->shell);
 
@@ -353,12 +350,9 @@ gimp_measure_tool_motion (GimpTool        *tool,
                           GimpDisplay     *display)
 {
   GimpMeasureTool    *mtool = GIMP_MEASURE_TOOL (tool);
-  GimpMeasureOptions *options;
   gint                dx, dy;
   gint                i;
   gint                tmp;
-
-  options = GIMP_MEASURE_OPTIONS (tool->tool_info->tool_options);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (mtool));
 

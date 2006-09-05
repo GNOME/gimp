@@ -474,9 +474,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 
       if (image_map_tool->image_map)
         {
-          GimpImageMapOptions *options;
-
-          options = GIMP_IMAGE_MAP_OPTIONS (tool->tool_info->tool_options);
+          GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
 
           gimp_tool_control_set_preserve (tool->control, TRUE);
 
@@ -555,9 +553,8 @@ gimp_image_map_tool_preview (GimpImageMapTool *image_map_tool)
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (image_map_tool));
 
-  tool = GIMP_TOOL (image_map_tool);
-
-  options = GIMP_IMAGE_MAP_OPTIONS (tool->tool_info->tool_options);
+  tool    = GIMP_TOOL (image_map_tool);
+  options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
 
   if (options->preview)
     {
@@ -592,7 +589,7 @@ gimp_image_map_tool_load_save (GimpImageMapTool *tool,
       return;
     }
 
-  g_object_set (GIMP_TOOL (tool)->tool_info->tool_options,
+  g_object_set (GIMP_TOOL_GET_OPTIONS (tool),
                 "settings", filename,
                 NULL);
 
@@ -658,7 +655,7 @@ gimp_image_map_tool_load_ext_clicked (GtkWidget        *widget,
     {
       gchar *filename;
 
-      g_object_get (GIMP_TOOL (tool)->tool_info->tool_options,
+      g_object_get (GIMP_TOOL_GET_OPTIONS (tool),
                     "settings", &filename,
                     NULL);
 
@@ -692,7 +689,7 @@ gimp_image_map_tool_save_ext_clicked (GtkWidget        *widget,
     {
       gchar *filename;
 
-      g_object_get (GIMP_TOOL (tool)->tool_info->tool_options,
+      g_object_get (GIMP_TOOL_GET_OPTIONS (tool),
                     "settings", &filename,
                     NULL);
 
@@ -713,14 +710,13 @@ gimp_image_map_tool_settings_dialog (GimpImageMapTool *tool,
                                      const gchar      *title,
                                      gboolean          save)
 {
-  GimpImageMapOptions *options;
+  GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
   GtkFileChooser      *chooser;
   const gchar         *settings_name;
   gchar               *folder;
 
-  g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool));
-
   settings_name = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name;
+
   g_return_if_fail (settings_name != NULL);
 
   if (tool->settings_dialog)
@@ -767,8 +763,6 @@ gimp_image_map_tool_settings_dialog (GimpImageMapTool *tool,
 
   folder = g_build_filename (gimp_directory (), settings_name, NULL);
   gtk_file_chooser_add_shortcut_folder (chooser, folder, NULL);
-
-  options = GIMP_IMAGE_MAP_OPTIONS (GIMP_TOOL (tool)->tool_info->tool_options);
 
   if (options->settings)
     gtk_file_chooser_set_filename (chooser, options->settings);

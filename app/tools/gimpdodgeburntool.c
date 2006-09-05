@@ -24,8 +24,6 @@
 
 #include "tools-types.h"
 
-#include "core/gimptoolinfo.h"
-
 #include "paint/gimpdodgeburnoptions.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -110,9 +108,7 @@ gimp_dodge_burn_tool_modifier_key (GimpTool        *tool,
                                    GdkModifierType  state,
                                    GimpDisplay     *display)
 {
-  GimpDodgeBurnOptions *options;
-
-  options = GIMP_DODGE_BURN_OPTIONS (tool->tool_info->tool_options);
+  GimpDodgeBurnOptions *options = GIMP_DODGE_BURN_TOOL_GET_OPTIONS (tool);
 
   if (key == GDK_CONTROL_MASK &&
       ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
@@ -142,9 +138,7 @@ gimp_dodge_burn_tool_cursor_update (GimpTool        *tool,
                                     GdkModifierType  state,
                                     GimpDisplay     *display)
 {
-  GimpDodgeBurnOptions *options;
-
-  options = GIMP_DODGE_BURN_OPTIONS (tool->tool_info->tool_options);
+  GimpDodgeBurnOptions *options = GIMP_DODGE_BURN_TOOL_GET_OPTIONS (tool);
 
   gimp_tool_control_set_toggled (tool->control, (options->type == GIMP_BURN));
 
@@ -159,9 +153,7 @@ gimp_dodge_burn_tool_oper_update (GimpTool        *tool,
                                   gboolean         proximity,
                                   GimpDisplay     *display)
 {
-  GimpDodgeBurnOptions *options;
-
-  options = GIMP_DODGE_BURN_OPTIONS (tool->tool_info->tool_options);
+  GimpDodgeBurnOptions *options = GIMP_DODGE_BURN_TOOL_GET_OPTIONS (tool);
 
   gimp_dodge_burn_tool_status_update (tool, options->type);
 

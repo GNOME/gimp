@@ -29,6 +29,9 @@
 #define GIMP_TEXT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEXT_TOOL, GimpTextToolClass))
 #define GIMP_IS_TEXT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TEXT_TOOL))
 
+#define GIMP_TEXT_TOOL_GET_OPTIONS(t)  (GIMP_TEXT_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
+
 typedef struct _GimpTextTool       GimpTextTool;
 typedef struct _GimpTextToolClass  GimpTextToolClass;
 

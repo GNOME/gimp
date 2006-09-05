@@ -275,7 +275,7 @@ gimp_curves_tool_initialize (GimpTool    *tool,
 
   /*  always pick colors  */
   gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
-                          GIMP_COLOR_OPTIONS (tool->tool_info->tool_options));
+                          GIMP_COLOR_TOOL_GET_OPTIONS (tool));
 
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (c_tool->channel_menu),
                                       curves_menu_sensitivity, c_tool, NULL);
@@ -535,8 +535,8 @@ gimp_curves_tool_map (GimpImageMapTool *image_map_tool)
 static void
 gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpCurvesTool  *tool = GIMP_CURVES_TOOL (image_map_tool);
-  GimpToolOptions *tool_options;
+  GimpCurvesTool  *tool         = GIMP_CURVES_TOOL (image_map_tool);
+  GimpToolOptions *tool_options = GIMP_TOOL_GET_OPTIONS (image_map_tool);
   GtkListStore    *store;
   GtkWidget       *vbox;
   GtkWidget       *vbox2;
@@ -550,8 +550,6 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget       *button;
   GtkWidget       *bar;
   gint             padding;
-
-  tool_options = GIMP_TOOL (tool)->tool_info->tool_options;
 
   vbox = image_map_tool->main_vbox;
 

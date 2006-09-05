@@ -31,7 +31,6 @@
 #include "core/gimp-transform-utils.h"
 #include "core/gimpimage.h"
 #include "core/gimpdrawable-transform.h"
-#include "core/gimptoolinfo.h"
 #include "core/gimpunit.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -123,13 +122,10 @@ gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
 static void
 gimp_scale_tool_dialog_update (GimpTransformTool *tr_tool)
 {
-  GimpTransformOptions *options;
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
 
   gint width  = ROUND (tr_tool->trans_info[X1] - tr_tool->trans_info[X0]);
   gint height = ROUND (tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0]);
-
-  options =
-    GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
 
   g_object_set (GIMP_SCALE_TOOL (tr_tool)->box,
                 "width",       width,
@@ -142,10 +138,8 @@ static void
 gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
                          GimpDisplay       *display)
 {
-  GimpScaleTool        *scale = GIMP_SCALE_TOOL (tr_tool);
-  GimpTransformOptions *options;
-
-  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (scale)->tool_info->tool_options);
+  GimpScaleTool        *scale   = GIMP_SCALE_TOOL (tr_tool);
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
 
   tr_tool->trans_info[X0] = (gdouble) tr_tool->x1;
   tr_tool->trans_info[Y0] = (gdouble) tr_tool->y1;
@@ -187,7 +181,7 @@ static void
 gimp_scale_tool_motion (GimpTransformTool *tr_tool,
                         GimpDisplay       *display)
 {
-  GimpTransformOptions *options;
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
   gdouble              *x1;
   gdouble              *y1;
   gdouble              *x2;
@@ -257,9 +251,6 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
     }
 
   /*  if control is being held, constrain the aspect ratio  */
-  options =
-    GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
-
   if (options->constrain)
     {
       gdouble mag;
@@ -329,10 +320,7 @@ gimp_scale_tool_size_notify (GtkWidget         *box,
                              GParamSpec        *pspec,
                              GimpTransformTool *tr_tool)
 {
-  GimpTransformOptions *options;
-
-  options =
-    GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
 
   if (! strcmp (pspec->name, "width") ||
       ! strcmp (pspec->name, "height"))

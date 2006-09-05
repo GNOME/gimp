@@ -28,7 +28,6 @@
 #include "core/gimp-transform-utils.h"
 #include "core/gimpimage.h"
 #include "core/gimpdrawable-transform.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -239,7 +238,7 @@ static void
 gimp_rotate_tool_motion (GimpTransformTool *tr_tool,
                          GimpDisplay       *display)
 {
-  GimpTransformOptions *options;
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
   gdouble               angle1, angle2, angle;
   gdouble               cx, cy;
   gdouble               x1, y1, x2, y2;
@@ -253,9 +252,6 @@ gimp_rotate_tool_motion (GimpTransformTool *tr_tool,
 
       return;
     }
-
-  options =
-    GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
 
   cx = tr_tool->trans_info[CENTER_X];
   cy = tr_tool->trans_info[CENTER_Y];

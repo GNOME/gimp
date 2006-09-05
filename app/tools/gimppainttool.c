@@ -218,7 +218,7 @@ gimp_paint_tool_control (GimpTool       *tool,
     case GIMP_TOOL_ACTION_HALT:
       gimp_paint_core_paint (paint_tool->core,
                              drawable,
-                             GIMP_PAINT_OPTIONS (tool->tool_info->tool_options),
+                             GIMP_PAINT_TOOL_GET_OPTIONS (tool),
                              GIMP_PAINT_STATE_FINISH, 0);
       gimp_paint_core_cleanup (paint_tool->core);
       break;
@@ -267,16 +267,14 @@ gimp_paint_tool_button_press (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *display)
 {
-  GimpDrawTool     *draw_tool  = GIMP_DRAW_TOOL (tool);
-  GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
-  GimpPaintOptions *paint_options;
+  GimpDrawTool     *draw_tool     = GIMP_DRAW_TOOL (tool);
+  GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
+  GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpPaintCore    *core;
   GimpDrawable     *drawable;
   GdkDisplay       *gdk_display;
   GimpCoords        curr_coords;
   gint              off_x, off_y;
-
-  paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
 
   core = paint_tool->core;
 
@@ -375,12 +373,10 @@ gimp_paint_tool_button_release (GimpTool        *tool,
                                 GdkModifierType  state,
                                 GimpDisplay     *display)
 {
-  GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
-  GimpPaintOptions *paint_options;
+  GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
+  GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpPaintCore    *core;
   GimpDrawable     *drawable;
-
-  paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
 
   core = paint_tool->core;
 
@@ -416,13 +412,11 @@ gimp_paint_tool_motion (GimpTool        *tool,
                         GdkModifierType  state,
                         GimpDisplay     *display)
 {
-  GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
-  GimpPaintOptions *paint_options;
+  GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
+  GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpPaintCore    *core;
   GimpDrawable     *drawable;
   gint              off_x, off_y;
-
-  paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
 
   core = paint_tool->core;
 
@@ -486,6 +480,7 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
 
               gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
                                       GIMP_COLOR_OPTIONS (info->tool_options));
+
               switch (GIMP_COLOR_TOOL (tool)->pick_mode)
                 {
                 case GIMP_COLOR_PICK_MODE_FOREGROUND:
@@ -523,14 +518,12 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
                              gboolean         proximity,
                              GimpDisplay     *display)
 {
-  GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
-  GimpDrawTool     *draw_tool  = GIMP_DRAW_TOOL (tool);
-  GimpPaintOptions *paint_options;
+  GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
+  GimpDrawTool     *draw_tool     = GIMP_DRAW_TOOL (tool);
+  GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpPaintCore    *core;
   GimpDisplayShell *shell;
   GimpDrawable     *drawable;
-
-  paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
     {

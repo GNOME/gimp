@@ -326,6 +326,15 @@ gimp_tool_real_cursor_update (GimpTool        *tool,
 
 /*  public functions  */
 
+GimpToolOptions *
+gimp_tool_get_options (GimpTool *tool)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
+  g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool->tool_info), NULL);
+
+  return tool->tool_info->tool_options;
+}
+
 gboolean
 gimp_tool_has_display (GimpTool    *tool,
                        GimpDisplay *display)

@@ -29,8 +29,7 @@
 
 #include "config/gimpconfig-utils.h"
 
-#include "core/gimp.h"
-#include "core/gimptoolinfo.h"
+#include "core/gimpviewable.h"
 
 #include "text/gimptext.h"
 

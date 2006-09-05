@@ -31,7 +31,6 @@
 #include "core/gimpimage-contiguous-region.h"
 #include "core/gimpitem.h"
 #include "core/gimppickable.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -94,14 +93,12 @@ static GimpChannel *
 gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
                                     GimpDisplay          *display)
 {
-  GimpTool              *tool = GIMP_TOOL (region_select);
-  GimpSelectionOptions  *options;
+  GimpTool              *tool    = GIMP_TOOL (region_select);
+  GimpSelectionOptions  *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpDrawable          *drawable;
   GimpPickable          *pickable;
   guchar                *col;
   gint                   x, y;
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   drawable = gimp_image_active_drawable (display->image);
 

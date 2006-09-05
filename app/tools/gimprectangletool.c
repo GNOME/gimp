@@ -29,7 +29,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
-#include "core/gimptoolinfo.h"
 #include "core/gimpmarshal.h"
 
 #include "display/gimpcanvas.h"
@@ -641,9 +640,7 @@ gimp_rectangle_tool_constructor (GObject *object)
 
   tool->display = NULL;
 
-  g_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
-
-  options = G_OBJECT (tool->tool_info->tool_options);
+  options = G_OBJECT (gimp_tool_get_options (tool));
 
   g_signal_connect_object (options, "notify::width",
                            G_CALLBACK (gimp_rectangle_tool_notify_width),
@@ -670,9 +667,7 @@ gimp_rectangle_tool_dispose (GObject *object)
 {
   GimpTool          *tool      = GIMP_TOOL (object);
   GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (object);
-  GObject           *options;
-
-  options = G_OBJECT (tool->tool_info->tool_options);
+  GObject           *options   = G_OBJECT (gimp_tool_get_options (tool));
 
   g_signal_handlers_disconnect_by_func (options,
                                         G_CALLBACK (gimp_rectangle_tool_notify_width),
@@ -696,7 +691,7 @@ gimp_rectangle_tool_initialize (GimpTool    *tool,
                                 GimpDisplay *display)
 {
   GimpRectangleToolPrivate *private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-  GObject                  *options = G_OBJECT (tool->tool_info->tool_options);
+  GObject                  *options = G_OBJECT (gimp_tool_get_options (tool));
   GimpSizeEntry            *entry;
 
   g_object_get (options,
@@ -776,10 +771,9 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
   gint                      y         = ROUND (coords->y);
   GimpRectangleOptions     *options;
 
-
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
-  options = GIMP_RECTANGLE_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
 
   if (display != tool->display)
     {
@@ -862,7 +856,7 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
-  options = GIMP_RECTANGLE_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
 
   gimp_tool_control_halt (tool->control);
 
@@ -911,8 +905,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
                             GdkModifierType  state,
                             GimpDisplay     *display)
 {
-  GimpRectangleToolPrivate *private;
   GimpRectangleTool        *rectangle = GIMP_RECTANGLE_TOOL (tool);
+  GimpRectangleToolPrivate *private;
   GimpRectangleOptions     *options;
   guint                     function;
   gint                      x1, y1, x2, y2;
@@ -931,6 +925,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+  options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
 
   /*  This is the only case when the motion events should be ignored --
    *  we're just waiting for the button release event to execute.
@@ -952,8 +947,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   /*  If there have been no changes... return  */
   if (private->lastx == curx && private->lasty == cury)
     return;
-
-  options = GIMP_RECTANGLE_OPTIONS (tool->tool_info->tool_options);
 
   g_object_get (options,
                 "new-fixed-width",  &fixed_width,
@@ -1330,14 +1323,12 @@ gimp_rectangle_tool_modifier_key (GimpTool        *tool,
                                   GdkModifierType  state,
                                   GimpDisplay     *display)
 {
-  GimpRectangleTool        *rectangle = GIMP_RECTANGLE_TOOL (tool);
+  GimpRectangleTool    *rectangle = GIMP_RECTANGLE_TOOL (tool);
+  GimpRectangleOptions *options   = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
+
 
   if (press)
     {
-      GimpRectangleOptions     *options;
-
-      options = GIMP_RECTANGLE_OPTIONS (tool->tool_info->tool_options);
-
       if (key == GDK_SHIFT_MASK)
         {
           gboolean aspect_square;
@@ -1932,20 +1923,22 @@ gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
 void
 gimp_rectangle_tool_configure (GimpRectangleTool *rectangle)
 {
-  GimpTool                 *tool  = GIMP_TOOL (rectangle);
-  GimpDisplayShell         *shell = GIMP_DISPLAY_SHELL (tool->display->shell);
+  GimpTool                 *tool = GIMP_TOOL (rectangle);
   GimpRectangleToolPrivate *private;
   GimpRectangleOptions     *options;
+  GimpDisplayShell         *shell;
   gboolean                  highlight;
   gint                      x1, y1;
   gint                      x2, y2;
   gint                      dx1, dx2, dy1, dy2, dcw, dch;
 
-  options = GIMP_RECTANGLE_OPTIONS (tool->tool_info->tool_options);
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+  options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
 
   if (! tool->display)
     return;
+
+  shell = GIMP_DISPLAY_SHELL (tool->display->shell);
 
   g_object_get (options, "highlight", &highlight, NULL);
 
@@ -2074,13 +2067,13 @@ static void
 gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
                                     GimpDisplay       *display)
 {
+  GimpRectangleOptions *options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rectangle);
   gdouble               width;
   gdouble               height;
   gdouble               aspect;
   gdouble               center_x, center_y;
   GimpSizeEntry        *entry;
   gint                  x1, y1, x2, y2;
-  GimpRectangleOptions *options;
   gboolean              fixed_width;
   gboolean              fixed_height;
   gboolean              fixed_aspect;
@@ -2092,9 +2085,6 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
                 "x2", &x2,
                 "y2", &y2,
                 NULL);
-
-  options =
-    GIMP_RECTANGLE_OPTIONS (GIMP_TOOL (rectangle)->tool_info->tool_options);
 
   g_object_get (options,
                 "new-fixed-width",  &fixed_width,

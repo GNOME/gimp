@@ -42,6 +42,8 @@ typedef enum
 #define GIMP_IS_MEASURE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MEASURE_TOOL))
 #define GIMP_MEASURE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MEASURE_TOOL, GimpMeasureToolClass))
 
+#define GIMP_MEASURE_TOOL_GET_OPTIONS(t)  (GIMP_MEASURE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (tool))))
+
 
 typedef struct _GimpMeasureTool      GimpMeasureTool;
 typedef struct _GimpMeasureToolClass GimpMeasureToolClass;

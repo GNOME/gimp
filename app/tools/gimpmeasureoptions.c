@@ -28,8 +28,6 @@
 
 #include "tools-types.h"
 
-#include "core/gimptoolinfo.h"
-
 #include "gimpmeasureoptions.h"
 #include "gimptooloptions-gui.h"
 

@@ -31,7 +31,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
-#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -164,11 +163,9 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
                                   GimpDisplay     *display)
 {
   GimpMagnifyTool    *magnify = GIMP_MAGNIFY_TOOL (tool);
-  GimpMagnifyOptions *options;
+  GimpMagnifyOptions *options = GIMP_MAGNIFY_TOOL_GET_OPTIONS (tool);
   GimpDisplayShell   *shell;
   gdouble             current;
-
-  options = GIMP_MAGNIFY_OPTIONS (tool->tool_info->tool_options);
 
   shell = GIMP_DISPLAY_SHELL (tool->display->shell);
 
@@ -268,9 +265,7 @@ gimp_magnify_tool_modifier_key (GimpTool        *tool,
                                 GdkModifierType  state,
                                 GimpDisplay     *display)
 {
-  GimpMagnifyOptions *options;
-
-  options = GIMP_MAGNIFY_OPTIONS (tool->tool_info->tool_options);
+  GimpMagnifyOptions *options = GIMP_MAGNIFY_TOOL_GET_OPTIONS (tool);
 
   if (key == GDK_CONTROL_MASK)
     {
@@ -296,9 +291,7 @@ gimp_magnify_tool_cursor_update (GimpTool        *tool,
                                  GdkModifierType  state,
                                  GimpDisplay     *display)
 {
-  GimpMagnifyOptions *options;
-
-  options = GIMP_MAGNIFY_OPTIONS (tool->tool_info->tool_options);
+  GimpMagnifyOptions *options = GIMP_MAGNIFY_TOOL_GET_OPTIONS (tool);
 
   gimp_tool_control_set_toggled (tool->control,
                                  options->zoom_type == GIMP_ZOOM_OUT);
@@ -309,10 +302,7 @@ gimp_magnify_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_magnify_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpMagnifyTool    *magnify = GIMP_MAGNIFY_TOOL (draw_tool);
-  GimpMagnifyOptions *options;
-
-  options = GIMP_MAGNIFY_OPTIONS (GIMP_TOOL (draw_tool)->tool_info->tool_options);
+  GimpMagnifyTool *magnify = GIMP_MAGNIFY_TOOL (draw_tool);
 
   gimp_draw_tool_draw_rectangle (draw_tool,
                                  FALSE,

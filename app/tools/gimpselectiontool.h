@@ -30,6 +30,8 @@
 #define GIMP_IS_SELECTION_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SELECTION_TOOL))
 #define GIMP_SELECTION_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SELECTION_TOOL, GimpSelectionToolClass))
 
+#define GIMP_SELECTION_TOOL_GET_OPTIONS(t)  (GIMP_SELECTION_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
 
 typedef struct _GimpSelectionTool      GimpSelectionTool;
 typedef struct _GimpSelectionToolClass GimpSelectionToolClass;

@@ -35,7 +35,6 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer-floating-sel.h"
-#include "core/gimptoolinfo.h"
 
 #include "display/gimpcanvas.h"
 #include "display/gimpdisplay.h"
@@ -149,9 +148,7 @@ gimp_region_select_tool_button_press (GimpTool        *tool,
                                       GimpDisplay     *display)
 {
   GimpRegionSelectTool *region_sel = GIMP_REGION_SELECT_TOOL (tool);
-  GimpSelectionOptions *options;
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  GimpSelectionOptions *options    = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
 
   region_sel->x               = coords->x;
   region_sel->y               = coords->y;
@@ -181,9 +178,7 @@ gimp_region_select_tool_button_release (GimpTool        *tool,
                                         GimpDisplay     *display)
 {
   GimpRegionSelectTool *region_sel = GIMP_REGION_SELECT_TOOL (tool);
-  GimpSelectionOptions *options;
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  GimpSelectionOptions *options    = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
 
   gimp_tool_pop_status (tool, display);
 
@@ -269,15 +264,13 @@ gimp_region_select_tool_motion (GimpTool        *tool,
                                 GimpDisplay     *display)
 {
   GimpRegionSelectTool *region_sel = GIMP_REGION_SELECT_TOOL (tool);
-  GimpSelectionOptions *options;
+  GimpSelectionOptions *options    = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GdkSegment           *new_segs;
   gint                  num_new_segs;
   gint                  diff_x, diff_y;
   gdouble               diff;
 
   static guint32 last_time = 0;
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   /* don't let the events come in too fast, ignore below a delay of 100 ms */
   if (time - last_time < 100)
@@ -316,10 +309,8 @@ gimp_region_select_tool_cursor_update (GimpTool        *tool,
                                        GdkModifierType  state,
                                        GimpDisplay     *display)
 {
-  GimpSelectionOptions *options;
+  GimpSelectionOptions *options  = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpCursorModifier    modifier = GIMP_CURSOR_MODIFIER_NONE;
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   if (! gimp_image_coords_in_active_pickable (display->image, coords,
                                               options->sample_merged, FALSE))
@@ -352,15 +343,13 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
                                    GimpDisplay          *display,
                                    gint                 *num_segs)
 {
-  GimpTool             *tool = GIMP_TOOL (region_sel);
-  GimpSelectionOptions *options;
+  GimpTool             *tool    = GIMP_TOOL (region_sel);
+  GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpDisplayShell     *shell;
   GimpDrawable         *drawable;
   GdkSegment           *segs;
   BoundSeg             *bsegs;
   PixelRegion           maskPR;
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   shell = GIMP_DISPLAY_SHELL (display->shell);
 

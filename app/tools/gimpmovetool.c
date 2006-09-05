@@ -34,7 +34,6 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimplayer-floating-sel.h"
-#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -204,7 +203,7 @@ gimp_move_tool_button_press (GimpTool        *tool,
 {
   GimpMoveTool     *move    = GIMP_MOVE_TOOL (tool);
   GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (display->shell);
-  GimpMoveOptions  *options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
+  GimpMoveOptions  *options = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
 
   tool->display = display;
 
@@ -557,7 +556,7 @@ gimp_move_tool_modifier_key (GimpTool        *tool,
                              GimpDisplay     *display)
 {
   GimpMoveTool    *move    = GIMP_MOVE_TOOL (tool);
-  GimpMoveOptions *options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
+  GimpMoveOptions *options = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
 
   if (state & GDK_BUTTON1_MASK)
     return;
@@ -615,8 +614,8 @@ gimp_move_tool_oper_update (GimpTool        *tool,
                             GimpDisplay     *display)
 {
   GimpMoveTool     *move    = GIMP_MOVE_TOOL (tool);
+  GimpMoveOptions  *options = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
   GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (display->shell);
-  GimpMoveOptions  *options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
   GimpGuide        *guide   = NULL;
 
   if (options->move_type == GIMP_TRANSFORM_TYPE_LAYER &&
@@ -649,12 +648,11 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *display)
 {
-  GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (display->shell);
-  GimpMoveOptions  *options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
-
-  GimpCursorType     cursor      = GIMP_CURSOR_MOUSE;
-  GimpToolCursorType tool_cursor = GIMP_TOOL_CURSOR_MOVE;
-  GimpCursorModifier modifier    = GIMP_CURSOR_MODIFIER_NONE;
+  GimpDisplayShell   *shell       = GIMP_DISPLAY_SHELL (display->shell);
+  GimpMoveOptions    *options     = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
+  GimpCursorType      cursor      = GIMP_CURSOR_MOUSE;
+  GimpToolCursorType  tool_cursor = GIMP_TOOL_CURSOR_MOVE;
+  GimpCursorModifier  modifier    = GIMP_CURSOR_MODIFIER_NONE;
 
   if (options->move_type == GIMP_TRANSFORM_TYPE_PATH)
     {

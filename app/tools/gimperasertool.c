@@ -24,8 +24,6 @@
 
 #include "tools-types.h"
 
-#include "core/gimptoolinfo.h"
-
 #include "paint/gimperaseroptions.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -110,9 +108,7 @@ gimp_eraser_tool_modifier_key (GimpTool        *tool,
 {
   if (key == GDK_MOD1_MASK)
     {
-      GimpEraserOptions *options;
-
-      options = GIMP_ERASER_OPTIONS (tool->tool_info->tool_options);
+      GimpEraserOptions *options = GIMP_ERASER_TOOL_GET_OPTIONS (tool);
 
       g_object_set (options,
                     "anti-erase", ! options->anti_erase,
@@ -128,9 +124,7 @@ gimp_eraser_tool_cursor_update (GimpTool        *tool,
                                 GdkModifierType  state,
                                 GimpDisplay     *display)
 {
-  GimpEraserOptions *options;
-
-  options = GIMP_ERASER_OPTIONS (tool->tool_info->tool_options);
+  GimpEraserOptions *options = GIMP_ERASER_TOOL_GET_OPTIONS (tool);
 
   gimp_tool_control_set_toggled (tool->control, options->anti_erase);
 

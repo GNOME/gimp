@@ -25,8 +25,6 @@
 
 #include "tools-types.h"
 
-#include "core/gimptoolinfo.h"
-
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpmoveoptions.h"

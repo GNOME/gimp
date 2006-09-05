@@ -29,7 +29,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -138,11 +137,8 @@ gimp_ellipse_select_tool_select (GimpRectSelectTool *rect_tool,
                                  gint                w,
                                  gint                h)
 {
-  GimpTool             *tool;
-  GimpSelectionOptions *options;
-
-  tool     = GIMP_TOOL (rect_tool);
-  options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  GimpTool             *tool    = GIMP_TOOL (rect_tool);
+  GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (rect_tool);
 
   gimp_channel_select_ellipse (gimp_image_get_mask (tool->display->image),
                                x, y, w, h,

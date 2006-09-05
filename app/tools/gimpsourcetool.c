@@ -25,7 +25,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
-#include "core/gimptoolinfo.h"
 
 #include "paint/gimpsourcecore.h"
 #include "paint/gimpsourceoptions.h"
@@ -173,9 +172,7 @@ gimp_source_tool_button_press (GimpTool        *tool,
   GimpPaintTool     *paint_tool  = GIMP_PAINT_TOOL (tool);
   GimpSourceTool    *source_tool = GIMP_SOURCE_TOOL (tool);
   GimpSourceCore    *source      = GIMP_SOURCE_CORE (paint_tool->core);
-  GimpSourceOptions *options;
-
-  options = GIMP_SOURCE_OPTIONS (tool->tool_info->tool_options);
+  GimpSourceOptions *options     = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -243,9 +240,7 @@ gimp_source_tool_modifier_key (GimpTool        *tool,
 {
   GimpSourceTool    *source_tool = GIMP_SOURCE_TOOL (tool);
   GimpPaintTool     *paint_tool  = GIMP_PAINT_TOOL (tool);
-  GimpSourceOptions *options;
-
-  options = GIMP_SOURCE_OPTIONS (tool->tool_info->tool_options);
+  GimpSourceOptions *options     = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);
 
   if (! (state & GDK_BUTTON1_MASK))
     {
@@ -268,11 +263,9 @@ gimp_source_tool_cursor_update (GimpTool        *tool,
                                 GdkModifierType  state,
                                 GimpDisplay     *display)
 {
-  GimpSourceOptions  *options;
+  GimpSourceOptions  *options  = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);
   GimpCursorType      cursor   = GIMP_CURSOR_MOUSE;
   GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_NONE;
-
-  options = GIMP_SOURCE_OPTIONS (tool->tool_info->tool_options);
 
   if (options->use_source)
     {
@@ -300,9 +293,7 @@ gimp_source_tool_oper_update (GimpTool        *tool,
                               GimpDisplay     *display)
 {
   GimpSourceTool    *source_tool = GIMP_SOURCE_TOOL (tool);
-  GimpSourceOptions *options;
-
-  options = GIMP_SOURCE_OPTIONS (tool->tool_info->tool_options);
+  GimpSourceOptions *options     = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);
 
   if (proximity)
     {
@@ -375,9 +366,7 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
   GimpTool          *tool        = GIMP_TOOL (draw_tool);
   GimpSourceTool    *source_tool = GIMP_SOURCE_TOOL (draw_tool);
   GimpSourceCore    *source      = GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (tool)->core);
-  GimpSourceOptions *options;
-
-  options = GIMP_SOURCE_OPTIONS (tool->tool_info->tool_options);
+  GimpSourceOptions *options     = GIMP_SOURCE_TOOL_GET_OPTIONS (draw_tool);
 
   if (options->use_source && source->src_drawable && source_tool->src_display)
     {

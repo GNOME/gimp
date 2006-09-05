@@ -30,6 +30,8 @@
 #define GIMP_IS_BUCKET_FILL_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUCKET_FILL_TOOL))
 #define GIMP_BUCKET_FILL_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BUCKET_FILL_TOOL, GimpBucketFillToolClass))
 
+#define GIMP_BUCKET_FILL_TOOL_GET_OPTIONS(t)  (GIMP_BUCKET_FILL_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
 
 typedef struct _GimpBucketFillTool      GimpBucketFillTool;
 typedef struct _GimpBucketFillToolClass GimpBucketFillToolClass;

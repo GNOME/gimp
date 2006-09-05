@@ -248,10 +248,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 {
   GimpDrawTool      *draw_tool   = GIMP_DRAW_TOOL (tool);
   GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
-  GimpVectorOptions *options;
+  GimpVectorOptions *options     = GIMP_VECTOR_TOOL_GET_OPTIONS (tool);
   GimpVectors       *vectors;
-
-  options = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
   /* do nothing if we are an FINISHED state */
   if (vector_tool->function == VECTORS_FINISHED)
@@ -641,10 +639,8 @@ gimp_vector_tool_motion (GimpTool        *tool,
                          GimpDisplay     *display)
 {
   GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
-  GimpVectorOptions *options;
+  GimpVectorOptions *options     = GIMP_VECTOR_TOOL_GET_OPTIONS (tool);
   GimpAnchor        *anchor;
-
-  options = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
   if (vector_tool->function == VECTORS_FINISHED)
     return;
@@ -747,7 +743,7 @@ gimp_vector_tool_key_press (GimpTool     *tool,
 {
   GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
   GimpDrawTool      *draw_tool   = GIMP_DRAW_TOOL (tool);
-  GimpVectorOptions *options;
+  GimpVectorOptions *options     = GIMP_VECTOR_TOOL_GET_OPTIONS (tool);
   GimpDisplayShell  *shell;
   gdouble            xdist, ydist;
   gdouble            pixels = 1.0;
@@ -816,8 +812,6 @@ gimp_vector_tool_key_press (GimpTool     *tool,
       break;
 
     case GDK_Escape:
-      options = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
-
       if (options->edit_mode != GIMP_VECTOR_MODE_DESIGN)
         g_object_set (options, "vectors-edit-mode",
                       GIMP_VECTOR_MODE_DESIGN, NULL);
@@ -840,21 +834,17 @@ gimp_vector_tool_modifier_key (GimpTool        *tool,
                                GimpDisplay     *display)
 {
   GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
-  GimpVectorOptions *options;
+  GimpVectorOptions *options     = GIMP_VECTOR_TOOL_GET_OPTIONS (tool);
 
   if (state & GDK_BUTTON1_MASK)
     return;
-
-  options = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
   if (key == TOGGLE_MASK)
     return;
 
   if (key == INSDEL_MASK || key == MOVE_MASK)
     {
-      GimpVectorMode button_mode;
-
-      button_mode = options->edit_mode;
+      GimpVectorMode button_mode = options->edit_mode;
 
       if (press)
         {
@@ -900,7 +890,7 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
 {
   GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
   GimpDrawTool      *draw_tool   = GIMP_DRAW_TOOL (tool);
-  GimpVectorOptions *options;
+  GimpVectorOptions *options     = GIMP_VECTOR_TOOL_GET_OPTIONS (tool);
   GimpAnchor        *anchor      = NULL;
   GimpAnchor        *anchor2     = NULL;
   GimpStroke        *stroke      = NULL;
@@ -908,8 +898,6 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
   gboolean           on_handle   = FALSE;
   gboolean           on_curve    = FALSE;
   gboolean           on_vectors  = FALSE;
-
-  options = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
   vector_tool->modifier_lock = FALSE;
 
@@ -1181,7 +1169,7 @@ gimp_vector_tool_status_update (GimpTool        *tool,
           free_status = TRUE;
           break;
         case VECTORS_MOVE_CURVE:
-          if (GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options)->polygonal)
+          if (GIMP_VECTOR_TOOL_GET_OPTIONS (tool)->polygonal)
             status = gimp_suggest_modifiers (_("Click-Drag to move the "
                                                "anchors around."),
                                              GDK_SHIFT_MASK & ~state,
@@ -1504,7 +1492,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 
   draw_tool = GIMP_DRAW_TOOL (vector_tool);
   tool      = GIMP_TOOL (vector_tool);
-  options   = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
+  options   = GIMP_VECTOR_TOOL_GET_OPTIONS (vector_tool);
 
   if (vectors)
     item = GIMP_ITEM (vectors);
@@ -1902,7 +1890,7 @@ gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
     }
 
   dialog = stroke_dialog_new (GIMP_ITEM (vector_tool->vectors),
-                              GIMP_CONTEXT (GIMP_TOOL (vector_tool)->tool_info->tool_options),
+                              GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (vector_tool)),
                               _("Stroke Path"),
                               GIMP_STOCK_PATH_STROKE,
                               GIMP_HELP_PATH_STROKE,

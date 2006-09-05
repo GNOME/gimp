@@ -611,10 +611,12 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
                              gint                color_index)
 {
   GimpTool          *tool = GIMP_TOOL (color_tool);
-  GimpContext       *user_context;
+  GimpContext       *context;
   GimpDialogFactory *dialog_factory;
 
-  user_context   = gimp_get_user_context (tool->display->image->gimp);
+  /*  use this tool's own options here (NOT color_tool->options)  */
+  context = GIMP_CONTEXT (gimp_tool_get_options (tool));
+
   dialog_factory = gimp_dialog_factory_from_name ("dock");
 
   if (color_tool->pick_mode == GIMP_COLOR_PICK_MODE_FOREGROUND ||
@@ -660,11 +662,11 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
       break;
 
     case GIMP_COLOR_PICK_MODE_FOREGROUND:
-      gimp_context_set_foreground (user_context, color);
+      gimp_context_set_foreground (context, color);
       break;
 
     case GIMP_COLOR_PICK_MODE_BACKGROUND:
-      gimp_context_set_background (user_context, color);
+      gimp_context_set_background (context, color);
       break;
 
     case GIMP_COLOR_PICK_MODE_PALETTE:
@@ -691,7 +693,7 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
 
             if (! data)
               {
-                data = GIMP_DATA (gimp_context_get_palette (user_context));
+                data = GIMP_DATA (gimp_context_get_palette (context));
 
                 gimp_data_editor_set_data (GIMP_DATA_EDITOR (palette_editor),
                                            data);

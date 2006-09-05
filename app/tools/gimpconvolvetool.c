@@ -24,8 +24,6 @@
 
 #include "tools-types.h"
 
-#include "core/gimptoolinfo.h"
-
 #include "paint/gimpconvolveoptions.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -110,9 +108,7 @@ gimp_convolve_tool_modifier_key (GimpTool        *tool,
                                  GdkModifierType  state,
                                  GimpDisplay     *display)
 {
-  GimpConvolveOptions *options;
-
-  options = GIMP_CONVOLVE_OPTIONS (tool->tool_info->tool_options);
+  GimpConvolveOptions *options = GIMP_CONVOLVE_TOOL_GET_OPTIONS (tool);
 
   if ((key == GDK_CONTROL_MASK) &&
       ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
@@ -139,9 +135,7 @@ gimp_convolve_tool_cursor_update (GimpTool        *tool,
                                   GdkModifierType  state,
                                   GimpDisplay     *display)
 {
-  GimpConvolveOptions *options;
-
-  options = GIMP_CONVOLVE_OPTIONS (tool->tool_info->tool_options);
+  GimpConvolveOptions *options = GIMP_CONVOLVE_TOOL_GET_OPTIONS (tool);
 
   gimp_tool_control_set_toggled (tool->control,
                                  (options->type == GIMP_SHARPEN_CONVOLVE));
@@ -156,9 +150,7 @@ gimp_convolve_tool_oper_update (GimpTool        *tool,
                                 gboolean         proximity,
                                 GimpDisplay     *display)
 {
-  GimpConvolveOptions *options;
-
-  options = GIMP_CONVOLVE_OPTIONS (tool->tool_info->tool_options);
+  GimpConvolveOptions *options = GIMP_CONVOLVE_TOOL_GET_OPTIONS (tool);
 
   gimp_convolve_tool_status_update (tool, options->type);
 

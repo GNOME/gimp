@@ -26,7 +26,6 @@
 
 #include "core/gimpimage.h"
 #include "core/gimpimage-crop.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -199,7 +198,7 @@ gimp_crop_tool_button_release (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *display)
 {
-  GimpCropOptions *options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
+  GimpCropOptions *options = GIMP_CROP_TOOL_GET_OPTIONS (tool);
 
   if (options->crop_mode == GIMP_CROP_MODE_CROP)
     gimp_tool_push_status (tool, display,
@@ -243,13 +242,11 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
                         gint                w,
                         gint                h)
 {
-  GimpTool        *tool      = GIMP_TOOL (rectangle);
-  GimpCropOptions *options;
+  GimpTool        *tool    = GIMP_TOOL (rectangle);
+  GimpCropOptions *options = GIMP_CROP_TOOL_GET_OPTIONS (tool);
   GimpImage       *image;
   gint             max_x, max_y;
   gboolean         rectangle_exists;
-
-  options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   gimp_tool_pop_status (tool, tool->display);
 

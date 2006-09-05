@@ -196,7 +196,7 @@ gimp_text_tool_constructor (GType                  type,
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   text_tool = GIMP_TEXT_TOOL (object);
-  options = GIMP_TEXT_OPTIONS (GIMP_TOOL (text_tool)->tool_info->tool_options);
+  options   = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
 
   text_tool->proxy = g_object_new (GIMP_TYPE_TEXT, NULL);
 
@@ -327,9 +327,7 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
 
   if (text_tool->text != text)
     {
-      GimpTextOptions *options;
-
-      options = GIMP_TEXT_OPTIONS (tool->tool_info->tool_options);
+      GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (tool);
 
       if (text_tool->text)
         {
@@ -550,10 +548,12 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
               if (now >= undo->time &&
                   now - undo->time < TEXT_UNDO_TIMEOUT)
                 {
+                  GimpTool *tool = GIMP_TOOL (text_tool);
+
                   push_undo = FALSE;
                   undo->time = now;
                   gimp_undo_refresh_preview (undo,
-                                             gimp_get_user_context (image->gimp));
+                                             GIMP_CONTEXT (gimp_tool_get_options (tool)));
                 }
             }
         }
@@ -738,17 +738,15 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
 static void
 gimp_text_tool_editor (GimpTextTool *text_tool)
 {
-  GimpTextOptions   *options;
+  GimpTextOptions   *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
   GimpDialogFactory *dialog_factory;
-  GtkWindow         *parent = NULL;
+  GtkWindow         *parent  = NULL;
 
   if (text_tool->editor)
     {
       gtk_window_present (GTK_WINDOW (text_tool->editor));
       return;
     }
-
-  options = GIMP_TEXT_OPTIONS (GIMP_TOOL (text_tool)->tool_info->tool_options);
 
   dialog_factory = gimp_dialog_factory_from_name ("toplevel");
 
@@ -867,7 +865,7 @@ gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
     }
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (text_tool->layer),
-                                     GIMP_CONTEXT (tool->tool_info->tool_options),
+                                     GIMP_CONTEXT (gimp_tool_get_options (tool)),
                                      _("Confirm Text Editing"),
                                      "gimp-text-tool-confirm",
                                      GIMP_STOCK_TEXT_LAYER,
@@ -949,7 +947,7 @@ gimp_text_tool_set_image (GimpTextTool *text_tool,
 
   if (image)
     {
-      GimpToolOptions *options;
+      GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
 
       text_tool->image = image;
       g_object_add_weak_pointer (G_OBJECT (text_tool->image),
@@ -959,8 +957,7 @@ gimp_text_tool_set_image (GimpTextTool *text_tool,
                                G_CALLBACK (gimp_text_tool_layer_changed),
                                text_tool, 0);
 
-      options = GIMP_TOOL (text_tool)->tool_info->tool_options;
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (GIMP_TEXT_OPTIONS (options)->size_entry),
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options->size_entry),
                                       0, image->yresolution, FALSE);
     }
 }
