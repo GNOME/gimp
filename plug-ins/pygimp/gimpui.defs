@@ -119,6 +119,13 @@
   (gtype-id "GIMP_TYPE_FRAME")
 )
 
+(define-object HintBox
+  (in-module "Gimp")
+  (parent "GtkHBox")
+  (c-name "GimpHintBox")
+  (gtype-id "GIMP_TYPE_HINT_BOX")
+)
+
 (define-object IntComboBox
   (in-module "Gimp")
   (parent "GtkComboBox")
@@ -1525,6 +1532,24 @@
     '("GimpIntSensitivityFunc" "func")
     '("gpointer" "data")
     '("GDestroyNotify" "destroy")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimphintbox.h
+
+(define-function gimp_hint_box_get_type
+  (c-name "gimp_hint_box_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_hint_box_new
+  (c-name "gimp_hint_box_new")
+  (is-constructor-of "GimpHintBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const gchar*" "hint")
   )
 )
 

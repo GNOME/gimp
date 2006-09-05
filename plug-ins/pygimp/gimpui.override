@@ -582,6 +582,34 @@ _wrap_gimp_dialog_new(PyGObject *self, PyObject *args, PyObject *kwargs)
 %%
 new-constructor GIMP_TYPE_DIALOG
 %%
+override gimp_hint_box_new kwargs
+static int
+_wrap_gimp_hint_box_new(PyGObject *self, PyObject *args, PyObject *kwargs)
+{				  
+    const char *hint     = NULL;
+    const char *stock_id = NULL;
+
+    static char *kwlist[] = { "hint", "stock-id", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                    "s|s:gimpui.GimpHintBox.__init__",
+                                     kwlist,
+				     &hint, &stock_id))
+        return -1;
+
+    pygobject_construct(self,
+                        "hint",                               hint,
+			stock_id != NULL ? "stock-id" : NULL, stock_id,
+                        NULL);
+
+    if (!self->obj) {
+        PyErr_SetString(PyExc_RuntimeError,
+                        "could not create GimpHintBox object");
+        return -1;
+    }
+    return 0;
+} 
+%%
 override gimp_color_button_get_color noargs
 static PyObject *
 _wrap_gimp_color_button_get_color(PyGObject *self)

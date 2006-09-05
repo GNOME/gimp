@@ -291,7 +291,7 @@ def _interact(proc_name, start_params):
 
     import gimpui
     import gtk
-    import pango
+#    import pango
 
     defaults = _get_defaults(proc_name)
 
@@ -509,16 +509,10 @@ def _interact(proc_name, start_params):
     dialog.vbox.pack_start(vbox)
     vbox.show()
 
-    label = gtk.Label(blurb)
-    label.set_line_wrap(True)
-    label.set_justify(gtk.JUSTIFY_LEFT)
-
-    attrs = pango.AttrList()
-    attrs.insert(pango.AttrStyle(pango.STYLE_ITALIC, 0, -1))
-    label.set_attributes(attrs)
-
-    vbox.pack_start(label, expand=False)
-    label.show()
+    if blurb:
+        box = gimpui.HintBox(blurb)
+        vbox.pack_start(box, expand=False)
+        box.show()
 
     table = gtk.Table(len(params), 2, False)
     table.set_row_spacings(6)
