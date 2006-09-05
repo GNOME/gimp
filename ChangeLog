@@ -1,3 +1,7 @@
+2006-09-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpmenudock.c: don't #include "core/gimptoolinfo.h"
+
 2006-09-05  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/gimppluginmanager.c (gimp_plug_in_manager_restore):
