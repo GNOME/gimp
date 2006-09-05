@@ -45,11 +45,11 @@ A typical gimpfu plugin would look like this:
               "author",
               "copyright",
               "year",
-              "<Image>/Somewhere/My plugin",
+              "My plugin",
               "*",
               [(PF_STRING, "arg", "The argument", "default-value")],
               [],
-              plugin_func)
+              plugin_func, menu="<Image>/Somewhere")
   main()
 
 The call to "from gimpfu import *" will import all the gimp constants into

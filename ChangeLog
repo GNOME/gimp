@@ -1,5 +1,9 @@
 2006-09-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/gimpfu.py: document the new menu registration syntax.
+
+2006-09-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/pygimp/gimpui.defs
 	* plug-ins/pygimp/gimpui.override: wrap the new GimpHintBox widget.
 
