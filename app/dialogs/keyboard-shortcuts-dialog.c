@@ -40,11 +40,9 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
-  GtkWidget *hbox;
   GtkWidget *scrolled_window;
   GtkWidget *view;
-  GtkWidget *image;
-  GtkWidget *label;
+  GtkWidget *box;
   GtkWidget *button;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -80,30 +78,12 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (scrolled_window), view);
   gtk_widget_show (view);
 
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  image = gtk_image_new_from_stock (GIMP_STOCK_INFO, GTK_ICON_SIZE_DIALOG);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
-
-  label = g_object_new (GTK_TYPE_LABEL,
-                        "label",   _("To edit a shortcut key, click on the "
-                                     "corresponding row and type a new "
-                                     "accelerator, or press backspace to "
-                                     "clear."),
-                        "wrap",    TRUE,
-                        "justify", GTK_JUSTIFY_LEFT,
-                        "xalign",  0.0,
-                        "yalign",  0.5,
-                        NULL);
-
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  box = gimp_hint_box_new (_("To edit a shortcut key, click on the "
+                             "corresponding row and type a new "
+                             "accelerator, or press backspace to "
+                             "clear."));
+  gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
+  gtk_widget_show (box);
 
   button = gimp_prop_check_button_new (G_OBJECT (gimp->config), "save-accels",
                                        _("_Save keyboard shortcuts on exit"));

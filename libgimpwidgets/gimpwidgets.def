@@ -135,6 +135,8 @@ EXPORTS
 	gimp_help_enable_tooltips
 	gimp_help_id_quark
 	gimp_help_set_help_data
+	gimp_hint_box_get_type
+	gimp_hint_box_new
 	gimp_int_adjustment_update
 	gimp_int_combo_box_append
 	gimp_int_combo_box_connect

@@ -125,38 +125,6 @@ query (void)
 }
 
 
-static GtkWidget *
-redeye_hints_new (void)
-{
-  GtkWidget *hbox;
-  GtkWidget *image;
-  GtkWidget *label;
-
-  hbox = gtk_hbox_new (FALSE, 12);
-
-  image = gtk_image_new_from_stock (GIMP_STOCK_INFO, GTK_ICON_SIZE_DIALOG);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
-
-  label = g_object_new (GTK_TYPE_LABEL,
-                        "label",
-                        _("Manually selecting the eyes may "
-                          "improve the results."),
-                        "wrap",    TRUE,
-                        "justify", GTK_JUSTIFY_LEFT,
-                        "xalign",  0.0,
-                        "yalign",  0.5,
-                        NULL);
-
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  return hbox;
-}
-
 /*
  * Create dialog for red eye removal
  */
@@ -213,7 +181,8 @@ dialog (gint32        image_id,
 
   if (gimp_selection_is_empty (gimp_drawable_get_image (drawable->drawable_id)))
     {
-      GtkWidget *hints = redeye_hints_new ();
+      GtkWidget *hints = gimp_hint_box_new (_("Manually selecting the eyes may "
+                                              "improve the results."));
 
       gtk_box_pack_end (GTK_BOX (main_vbox), hints, FALSE, FALSE, 0);
       gtk_widget_show (hints);

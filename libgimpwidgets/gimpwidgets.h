@@ -50,6 +50,7 @@
 #include <libgimpwidgets/gimpfileentry.h>
 #include <libgimpwidgets/gimpframe.h>
 #include <libgimpwidgets/gimphelpui.h>
+#include <libgimpwidgets/gimphintbox.h>
 #include <libgimpwidgets/gimpintcombobox.h>
 #include <libgimpwidgets/gimpintstore.h>
 #include <libgimpwidgets/gimpmemsizeentry.h>

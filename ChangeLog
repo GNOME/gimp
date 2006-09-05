@@ -1,3 +1,18 @@
+2006-09-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimphintbox.[ch]: added simple widget to display
+	a user hint. Having this as a widget will allow us to change the
+	look, perhaps even using style properties.
+
+	* libgimpwidgets/gimpwidgets.def: added the new symbols.
+
+	* app/dialogs/keyboard-shortcuts-dialog.c
+	* plug-ins/common/colormap-remap.c
+	* plug-ins/common/redeye.c: use the new widget instead of
+	duplicating the code.
+
 2006-09-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/debug-actions.c

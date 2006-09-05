@@ -532,39 +532,6 @@ remap_ui_manager_new (GtkWidget    *window,
   return ui_manager;
 }
 
-static GtkWidget *
-remap_hints_new (void)
-{
-  GtkWidget *hbox;
-  GtkWidget *image;
-  GtkWidget *label;
-
-  hbox = gtk_hbox_new (FALSE, 12);
-
-  image = gtk_image_new_from_stock (GIMP_STOCK_INFO, GTK_ICON_SIZE_DIALOG);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
-
-  label = g_object_new (GTK_TYPE_LABEL,
-                        "label",
-                        _("Drag and drop colors to rearrange the colormap.  "
-                          "The numbers shown are the original indices.  "
-                          "Right-click for a menu with sort options."),
-                        "wrap",    TRUE,
-                        "justify", GTK_JUSTIFY_LEFT,
-                        "xalign",  0.0,
-                        "yalign",  0.5,
-                        NULL);
-
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  return hbox;
-}
-
 static gboolean
 remap_popup_menu (GtkWidget      *widget,
                   GdkEventButton *event)
@@ -617,7 +584,7 @@ remap_dialog (gint32  image_ID,
 {
   GtkWidget       *dialog;
   GtkWidget       *vbox;
-  GtkWidget       *hbox;
+  GtkWidget       *box;
   GtkWidget       *iconview;
   GtkListStore    *store;
   GtkCellRenderer *renderer;
@@ -731,9 +698,12 @@ remap_dialog (gint32  image_ID,
                     G_CALLBACK (remap_button_press),
                     NULL);
 
-  hbox = remap_hints_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  box = gimp_hint_box_new (_("Drag and drop colors to rearrange the colormap.  "
+                             "The numbers shown are the original indices.  "
+                             "Right-click for a menu with sort options."));
+
+  gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
+  gtk_widget_show (box);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (remap_response),
