@@ -518,19 +518,13 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
   g_slist_free (manager->plug_in_defs);
   manager->plug_in_defs = NULL;
 
+  /* bind plug-in text domains  */
   if (! gimp->no_interface)
     {
       gchar **locale_domains;
       gchar **locale_paths;
       gint    n_domains;
       gint    i;
-
-      manager->load_procs = g_slist_sort_with_data (manager->load_procs,
-                                                    gimp_plug_in_manager_file_proc_compare,
-                                                    manager);
-      manager->save_procs = g_slist_sort_with_data (manager->save_procs,
-                                                    gimp_plug_in_manager_file_proc_compare,
-                                                    manager);
 
       n_domains = gimp_plug_in_manager_get_locale_domains (manager,
                                                            &locale_domains,
@@ -552,6 +546,19 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
   for (list = manager->plug_in_procedures; list; list = list->next)
     {
       gimp_plug_in_manager_add_to_db (manager, context, list->data);
+    }
+
+  /* sort the load and save procedures  */
+  if (! gimp->no_interface)
+    {
+      manager->load_procs =
+        g_slist_sort_with_data (manager->load_procs,
+                                gimp_plug_in_manager_file_proc_compare,
+                                manager);
+      manager->save_procs =
+        g_slist_sort_with_data (manager->save_procs,
+                                gimp_plug_in_manager_file_proc_compare,
+                                manager);
     }
 
   /* run automatically started extensions */
@@ -829,10 +836,9 @@ gimp_plug_in_manager_add_from_rc (GimpPlugInManager *manager,
 
   /*  If this is a file load or save plugin, make sure we have
    *  something for one of the extensions, prefixes, or magic number.
-   *  Other bits of code rely on detecting file plugins by the presence
-   *  of one of these things, but Nick Lamb's alien/unknown format
-   *  loader needs to be able to register no extensions, prefixes or
-   *  magics. -- austin 13/Feb/99
+   *  Other bits of code rely on detecting file plugins by the
+   *  presence of one of these things, but the raw plug-in needs to be
+   *  able to register no extensions, prefixes or magics.
    */
   for (list = plug_in_def->procedures; list; list = list->next)
     {

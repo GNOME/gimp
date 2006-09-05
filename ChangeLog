@@ -1,5 +1,11 @@
 2006-09-05  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimppluginmanager.c (gimp_plug_in_manager_restore):
+	sort the load and save procedures after adding them to the
+	database, otherwise there is nothing to sort.
+
+2006-09-05  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpselectiondata.c: disabled debug spew.
 
 	* plug-ins/common/raw.c: fixed saving of INDEXEDA drawables. Added
