@@ -40,7 +40,6 @@
 
 #undef  VERBOSE
 
-#define INITIAL_DELAY     15  /* in milleseconds */
 #define MAX_POINTS_INC    2048
 #define USE_DRAWPOINTS    TRUE
 
@@ -256,9 +255,8 @@ selection_start (Selection *selection,
   /*  If this selection is paused or invisible, do not start it  */
   if (selection->paused == 0 && selection->visible)
     {
-      selection->timeout = g_timeout_add (INITIAL_DELAY,
-                                          (GSourceFunc) selection_start_timeout,
-                                          selection);
+      selection->timeout = g_idle_add ((GSourceFunc) selection_start_timeout,
+                                       selection);
     }
 }
 
@@ -285,9 +283,8 @@ selection_resume (Selection *selection)
 {
   if (selection->paused == 1 && selection->visible)
     {
-      selection->timeout = g_timeout_add (INITIAL_DELAY,
-                                          (GSourceFunc) selection_start_timeout,
-                                          selection);
+      selection->timeout = g_idle_add ((GSourceFunc) selection_start_timeout,
+                                       selection);
     }
 
   selection->paused--;
@@ -713,8 +710,6 @@ selection_start_timeout (Selection *selection)
 static gboolean
 selection_timeout (Selection *selection)
 {
-  g_printerr (".");
-
   selection->index++;
   selection_draw (selection);
 
