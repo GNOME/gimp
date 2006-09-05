@@ -1,21 +1,24 @@
+# translation of ca.po to Català
 # translation of ca.po to Catalan
 # Catalan translation of gimp-tips.
 # Copyright © 2004, 2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Xavier Beà <xbea@pie.xtec.es>, 2004, 2006.
+# Quim Perez i Noguer, 2006.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-09 01:02+0100\n"
-"PO-Revision-Date: 2006-02-04 15:29+0100\n"
-"Last-Translator: \n"
-"Language-Team: Catalan <ca@li.org>\n"
+"POT-Creation-Date: 2006-09-06 00:07+0200\n"
+"PO-Revision-Date: 2006-09-06 00:11+0200\n"
+"Last-Translator: Quim Perez i Noguer\n"
+"Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: KBabel 1.10.2\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
@@ -58,7 +61,7 @@ msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
 msgstr ""
-"Premeu <tt>majúscules</tt>-clic en la icona ull del diàleg de capes per a "
+"Premeu <tt>majúscules</tt>-clic a la icona ull del diàleg de capes per a "
 "amagar totes les capes menys una. Premeu <tt>majúscules</tt>-clic de nou per "
 "a mostrar-les totes."
 
@@ -70,7 +73,7 @@ msgid ""
 "use the menus to do the same."
 msgstr ""
 "Cal ancorar una selecció flotant en una nova capa o a l'última capa activa "
-"abans de fer altres operacions en la imatge. Cliqueu els botons &quot;Nova "
+"abans de fer altres operacions a la imatge. Cliqueu els botons &quot;Nova "
 "capa&quot; o &quot;Ancora la capa&quot; en el diàleg capes, o utilitzeu els "
 "menús per fer el mateix."
 
@@ -103,7 +106,7 @@ msgid ""
 "GIMP allows you to undo most changes to the image, so feel free to "
 "experiment."
 msgstr ""
-"El GIMP us permet desfer la majoria de canvis en la imatge, així que podeu "
+"El GIMP us permet desfer la majoria de canvis a la imatge, així que podeu "
 "experimentar sense patir."
 
 #: ../data/tips/gimp-tips.xml.in.h:11
@@ -142,10 +145,10 @@ msgid ""
 "tool (Layer-&gt;Colors-&gt;Levels). If there are any color casts, you can "
 "correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
 msgstr ""
-"Si algunes de les fotos escanejades no tenen prou color, podeu millorar "
-"fàcilment el seu to amb el botó &quot;Automàtic&quot; en l'eina nivells "
-"(Capes-&gt;Colors-&gt;Nivells). Si hi ha algun color buit, el podeu corregir "
-"amb l'eina corbes (Capes-&gt;Colors-&gt;Corbes)."
+"Si algunes de les fotos escanejades no tenen prou color, podeu millorar-ne "
+"fàcilment el to amb el botó &quot;Automàtic&quot; de l'eina nivells (Capes-"
+"&gt;Colors-&gt;Nivells). Si hi ha algun color buit, el podeu corregir amb "
+"l'eina corbes (Capes-&gt;Colors-&gt;Corbes)."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
@@ -220,7 +223,7 @@ msgid ""
 "cursor position. If you also press <tt>Ctrl</tt>, the line will be "
 "constrained to 15 degree angles."
 msgstr ""
-"Quan utilitzeu una eina de dibuix (pincell, vaporitzador o llapis), "
+"Quan utilitzeu una eina de dibuix (pinzell, vaporitzador o llapis), "
 "<tt>majúscules</tt>-clic dibuixarà una línia recta des del darrer punt "
 "dibuixat fins la posició actual del cursor. Si, a més, premeu <tt>Ctrl</tt>, "
 "forçareu la línia en angles de 15 graus."
@@ -233,7 +236,7 @@ msgid ""
 "completed, you can save it as JPEG, PNG, GIF, ..."
 msgstr ""
 "Quan deseu una imatge per tornar-hi a treballar més tard, feu servir el "
-"format XCF, el format de fitxer natiu del GIMP (utilitzeu la extensió de "
+"format XCF, el format de fitxer natiu del GIMP (utilitzeu l'extensió de "
 "fitxer <tt>.xcf</tt>). Aquest format preserva totes les capes i elements de "
 "vostre feina. Un cop acabat el projecte, deseu-ho com a JPEG, PNG, GIF..."
 
@@ -243,9 +246,10 @@ msgid ""
 "the window move, your window manager uses the <tt>Alt</tt> key already. Try "
 "pressing <tt>Shift</tt> at the same time."
 msgstr ""
-"Podeu ajustar i remplaçar una selecció utilitzant <tt>Alt</tt>-arrossega. Si "
-"això fa que es mogui la finestra, el vostre gestor de finestres ja utilitza "
-"la tecla <tt>Alt</tt>. Proveu de prémer <tt>majúscules</tt> al mateix temps."
+"Podeu ajustar i reemplaçar una selecció utilitzant <tt>Alt</tt>-arrossega. "
+"Si això fa que es mogui la finestra, el vostre gestor de finestres ja "
+"utilitza la tecla <tt>Alt</tt>. Proveu de prémer <tt>majúscules</tt> al "
+"mateix temps."
 
 #: ../data/tips/gimp-tips.xml.in.h:24
 msgid ""
@@ -347,7 +351,7 @@ msgid ""
 "than its display window."
 msgstr ""
 "Podeu utilitzar el botó central del ratolí per a enquadrar la imatge, si "
-"aquesta és més gran que la finesta on es veu."
+"aquesta és més gran que la finestra on es veu."
 
 #: ../data/tips/gimp-tips.xml.in.h:35
 msgid ""
