@@ -443,7 +443,8 @@ value_propagate_body (GimpDrawable *drawable,
     }
   else
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &begx, &begy, &endx, &endy);
+      gimp_drawable_mask_bounds (drawable->drawable_id,
+                                 &begx, &begy, &endx, &endy);
       width  = endx - begx;
       height = endy - begy;
     }
@@ -472,7 +473,7 @@ value_propagate_body (GimpDrawable *drawable,
   best = g_new (guchar, bytes);
 
   if (!preview)
-    gimp_progress_init (_("Value Propagating"));
+    gimp_progress_init (_("Value Propagate"));
 
   gimp_context_get_foreground (&foreground);
   gimp_rgb_get_uchar (&foreground, fore+0, fore+1, fore+2);
@@ -481,16 +482,21 @@ value_propagate_body (GimpDrawable *drawable,
   for (y = begy ; y < endy ; y++)
     {
       prepare_row (&srcRgn, nr, begx, ((y+1) < endy) ? y+1 : endy, endx-begx);
+
       for (index = 0; index < (endx - begx) * bytes; index++)
         dest_row[index] = cr[index];
+
       for (x = 0 ; x < endx - begx; x++)
         {
           dest = dest_row + (x * bytes);
           here = cr + (x * bytes);
+
           /* *** copy source value to best value holder *** */
-          memcpy ((void *)best, (void *)here, bytes);
+          memcpy (best, here, bytes);
+
           if (operation.initializer)
             (* operation.initializer)(dtype, bytes, best, here, &tmp);
+
           /* *** gather neighbors' values: loop-unfolded version *** */
           if (up_index == -1)
             for (dx = left_index ; dx <= right_index ; dx++)
@@ -504,16 +510,19 @@ value_propagate_body (GimpDrawable *drawable,
           /* *** store it to dest_row*** */
           (* operation.finalizer)(dtype, bytes, best, here, dest, tmp);
         }
+
       /* now store destline to destRgn */
       gimp_pixel_rgn_set_row (&destRgn, dest_row, begx, y, endx - begx);
+
       /* shift the row pointers  */
       swap = pr;
       pr = cr;
       cr = nr;
       nr = swap;
-      /* update each UPDATE_STEP (optimizer must generate cheap code) */
-      if (((y % 5) == 0) && !preview) /*(y % (int) ((endy - begy) / UPDATE_STEP)) == 0 */
-        gimp_progress_update ((double)y / (double)(endy - begy));
+
+
+      if (((y % 5) == 0) && !preview)
+        gimp_progress_update ((gdouble) y / (gdouble) (endy - begy));
     }
 
   if (preview)

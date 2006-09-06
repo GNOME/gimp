@@ -1,5 +1,13 @@
 2006-09-06  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/plug-in-commands.c (plug_in_run_cmd_callback)
+	(plug_in_repeat_cmd_callback): also add the procedure to the
+	history if it is called from the "Repeat" or "Re-Show" menus.
+
+	* plug-ins/common/vpropagate.c: changed progress text.
+
+2006-09-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/pygimp/gimpfu.py: document the new menu registration syntax.
 
 2006-09-06  Sven Neumann  <sven@gimp.org>
