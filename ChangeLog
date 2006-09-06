@@ -1,3 +1,9 @@
+2006-09-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/paint-funcs/scale-funcs.[ch]: apply patch from Geert
+	Jordaens to improve Lanczos scaling, with coding style
+	cleanups; partly fixes bug #167956.
+
 2006-09-06  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/plug-in-commands.c (plug_in_run_cmd_callback)
