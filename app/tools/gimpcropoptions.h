@@ -39,7 +39,6 @@ struct _GimpCropOptions
   GimpToolOptions  parent_instence;
 
   gboolean         layer_only;
-  GimpCropMode     crop_mode;
 };
 
 

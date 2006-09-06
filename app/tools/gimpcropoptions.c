@@ -37,8 +37,7 @@
 
 enum
 {
-  PROP_LAYER_ONLY = GIMP_RECTANGLE_OPTIONS_PROP_LAST + 1,
-  PROP_CROP_MODE
+  PROP_LAYER_ONLY = GIMP_RECTANGLE_OPTIONS_PROP_LAST + 1
 };
 
 
@@ -72,11 +71,6 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
                                     "layer-only", NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CROP_MODE,
-                                 "crop-mode", NULL,
-                                 GIMP_TYPE_CROP_MODE,
-                                 GIMP_CROP_MODE_CROP,
-                                 GIMP_PARAM_STATIC_STRINGS);
 
   gimp_rectangle_options_install_properties (object_class);
 }
@@ -106,9 +100,6 @@ gimp_crop_options_set_property (GObject      *object,
     case PROP_LAYER_ONLY:
       options->layer_only = g_value_get_boolean (value);
       break;
-    case PROP_CROP_MODE:
-      options->crop_mode = g_value_get_enum (value);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -130,9 +121,6 @@ gimp_crop_options_get_property (GObject    *object,
     case PROP_LAYER_ONLY:
       g_value_set_boolean (value, options->layer_only);
       break;
-    case PROP_CROP_MODE:
-      g_value_set_enum (value, options->crop_mode);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -145,20 +133,7 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *vbox_rectangle;
-  GtkWidget *frame;
   GtkWidget *button;
-  gchar     *str;
-
-  /*  tool toggle  */
-  str = g_strdup_printf (_("Tool Toggle  (%s)"),
-                         gimp_get_mod_string (GDK_CONTROL_MASK));
-
-  frame = gimp_prop_enum_radio_frame_new (config, "crop-mode",
-                                          str, 0, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  g_free (str);
 
   /*  layer toggle  */
   button = gimp_prop_check_button_new (config, "layer-only",

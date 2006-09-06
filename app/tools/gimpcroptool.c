@@ -198,14 +198,8 @@ gimp_crop_tool_button_release (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *display)
 {
-  GimpCropOptions *options = GIMP_CROP_TOOL_GET_OPTIONS (tool);
-
-  if (options->crop_mode == GIMP_CROP_MODE_CROP)
-    gimp_tool_push_status (tool, display,
-                           _("Click or press enter to crop."));
-  else
-    gimp_tool_push_status (tool, display,
-                           _("Click or press enter to resize."));
+  gimp_tool_push_status (tool, display,
+                         _("Click or press enter to crop."));
 
   gimp_rectangle_tool_button_release (tool, coords, time, state, display);
 }
@@ -282,7 +276,7 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
       gimp_image_crop (image, GIMP_CONTEXT (options),
                        x, y, w + x, h + y,
                        options->layer_only,
-                       options->crop_mode == GIMP_CROP_MODE_CROP);
+                       TRUE);
 
       gimp_image_flush (image);
 

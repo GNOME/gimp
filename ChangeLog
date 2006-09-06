@@ -1,5 +1,11 @@
 2006-09-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcropoptions.[ch]: remove "crop vs resize"
+	option, as recommended in bug #353936.
+	
+2006-09-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/paint-funcs/scale-funcs.[ch]: apply patch from Geert
 	Jordaens to improve Lanczos scaling, with coding style
 	cleanups; partly fixes bug #167956.
