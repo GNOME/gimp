@@ -1,3 +1,24 @@
+2006-09-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/tools-enums.[ch]: add GimpRectangleConstraint
+	enum.
+
+	* app/tools/gimprectangletool.[ch]: replace "constrain"
+	boolean with "constraint" enum property.  Implement
+	constraints in motion handler -- the implementation
+	is rather elegant but pretty tricky.
+
+	* app/tools/gimpcroptool.c: constrain to image bounds,
+	or to active drawable bounds if "current layer only"
+	option is checked.
+	
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimprectangleselecttool.c: no constraint.
+
+	This addresses bug #353936 -- I would say fixes it, but it
+	probably needs some fine-tuning.  Also perhaps fixes
+	bug #329817 a bit better than before.
+	
 2006-09-06  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/gimppluginmanager-history.c

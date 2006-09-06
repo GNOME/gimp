@@ -74,6 +74,36 @@ gimp_rectangle_guide_get_type (void)
 }
 
 GType
+gimp_rectangle_constraint_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_RECTANGLE_CONSTRAIN_NONE, "GIMP_RECTANGLE_CONSTRAIN_NONE", "none" },
+    { GIMP_RECTANGLE_CONSTRAIN_IMAGE, "GIMP_RECTANGLE_CONSTRAIN_IMAGE", "image" },
+    { GIMP_RECTANGLE_CONSTRAIN_DRAWABLE, "GIMP_RECTANGLE_CONSTRAIN_DRAWABLE", "drawable" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_RECTANGLE_CONSTRAIN_NONE, N_("No constraint"), NULL },
+    { GIMP_RECTANGLE_CONSTRAIN_IMAGE, N_("Image bounds"), NULL },
+    { GIMP_RECTANGLE_CONSTRAIN_DRAWABLE, N_("Drawable bounds"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpRectangleConstraint", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_rect_select_mode_get_type (void)
 {
   static const GEnumValue values[] =

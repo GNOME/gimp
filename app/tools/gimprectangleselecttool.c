@@ -177,14 +177,11 @@ static void
 gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
 {
   GimpTool          *tool      = GIMP_TOOL (rect_select);
-  GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (rect_select);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_RECT_SELECT);
   gimp_tool_control_set_dirty_mask  (tool->control,
                                      GIMP_DIRTY_IMAGE_SIZE |
                                      GIMP_DIRTY_SELECTION);
-
-  gimp_rectangle_tool_set_constrain (rect_tool, TRUE);
 
   rect_select->undo = NULL;
   rect_select->redo = NULL;

@@ -48,6 +48,15 @@ typedef enum
   GIMP_RECTANGLE_GUIDE_GOLDEN         /*< desc="Golden sections" >*/
 } GimpRectangleGuide;
 
+GType gimp_rectangle_constraint_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_RECTANGLE_CONSTRAIN_NONE,      /*< desc="No constraint"   >*/
+  GIMP_RECTANGLE_CONSTRAIN_IMAGE,     /*< desc="Image bounds"    >*/
+  GIMP_RECTANGLE_CONSTRAIN_DRAWABLE   /*< desc="Drawable bounds" >*/
+} GimpRectangleConstraint;
+
 
 #define GIMP_TYPE_RECT_SELECT_MODE (gimp_rect_select_mode_get_type ())
 
