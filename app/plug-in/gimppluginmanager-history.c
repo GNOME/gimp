@@ -70,6 +70,10 @@ gimp_plug_in_manager_history_add (GimpPlugInManager   *manager,
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure));
 
+  /* return early if the procedure is already at the top */
+  if (manager->history && manager->history->data == procedure)
+    return;
+
   history_size = gimp_plug_in_manager_history_size (manager);
 
   manager->history = g_slist_remove (manager->history, procedure);

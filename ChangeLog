@@ -1,3 +1,9 @@
+2006-09-06  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/gimppluginmanager-history.c
+	(gimp_plug_in_manager_history_add): bail out early if the
+	procedure is already at the start of the list.
+
 2006-09-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/tools-enums.[ch]: remove GimpCropMode enum;
@@ -19,7 +25,7 @@
 
 	* app/actions/plug-in-commands.c (plug_in_run_cmd_callback)
 	(plug_in_repeat_cmd_callback): also add the procedure to the
-	history if it is called from the "Repeat" or "Re-Show" menus.
+	history if it is called from the "Recently Used"  menu.
 
 	* plug-ins/common/vpropagate.c: changed progress text.
 
