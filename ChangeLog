@@ -1,5 +1,10 @@
 2006-09-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/tools-enums.[ch]: remove GimpCropMode enum;
+	missed in previous commit.
+	
+2006-09-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimpcroptool.c
 	* app/tools/gimpcropoptions.[ch]: remove "crop vs resize"
 	option, as recommended in bug #353936.
