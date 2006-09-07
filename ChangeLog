@@ -1106,12 +1106,14 @@
 	* app/tools/gimpvectortool.c: change  modifier_key method
 	to prevent any bad consequences.
 
-	* app/tools/gimprectangletool.[ch]:  add modifier_key handler, and use it
-	to toggle "make-square" if Shift is pressed while button1 is down, and
-	"fixed-center" if Control is pressed while button1 is down.
+	* app/tools/gimprectangletool.[ch]: add modifier_key handler, and
+	use it to toggle "make-square" if Shift is pressed while button1
+	is down, and "fixed-center" if Control is pressed while button1 is
+	down.
 	
-	* app/tools/gimprectangleselecttool.c (gimp_rectangle_tool_modifier_key):
-	call rectangle tool modifer_key method after chaining up.
+	* app/tools/gimprectangleselecttool.c
+	(gimp_rectangle_tool_modifier_key): call rectangle tool modifer_key
+	method after chaining up.
 
 2006-08-18  Sven Neumann  <sven@gimp.org>
 
@@ -1279,8 +1281,8 @@
 2006-08-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/paint/gimpbrushcore.c (gimp_brush_core_color_area_with_pixmap):
-	kludge to adjust offset for even-dimensioned brushes;
-	fixes bug #166622.
+	kludge to adjust offset for even-dimensioned brushes; fixes
+	bug #166622.
 
 2006-08-15  Sven Neumann  <sven@gimp.org>
 
