@@ -1,3 +1,7 @@
+2006-09-07  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.3.11 development release.
+
 2006-09-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpfreeselecttool.c: removed unused variable.
