@@ -99,12 +99,9 @@ static void    tile_swap_open             (SwapFile    *swap_file);
 
 static gint    tile_swap_default          (gint         fd,
                                            Tile        *tile,
-                                           gint         cmd,
+                                           SwapCommand  cmd,
                                            gpointer     user_data);
 static void    tile_swap_default_in       (DefSwapFile *def_swap_file,
-                                           gint         fd,
-                                           Tile        *tile);
-static void    tile_swap_default_in_async (DefSwapFile *def_swap_file,
                                            gint         fd,
                                            Tile        *tile);
 static void    tile_swap_default_out      (DefSwapFile *def_swap_file,
@@ -300,15 +297,6 @@ tile_swap_remove (gint swap_num)
 }
 
 void
-tile_swap_in_async (Tile *tile)
-{
-  if (tile->swap_offset == -1)
-    return;
-
-  tile_swap_command (tile, SWAP_IN_ASYNC);
-}
-
-void
 tile_swap_in (Tile *tile)
 {
   if (tile->swap_offset == -1)
@@ -330,12 +318,6 @@ void
 tile_swap_delete (Tile *tile)
 {
   tile_swap_command (tile, SWAP_DELETE);
-}
-
-void
-tile_swap_compress (gint swap_num)
-{
-  tile_swap_command (NULL, SWAP_COMPRESS);
 }
 
 /* check if we can open a swap file */
@@ -457,22 +439,17 @@ tile_swap_open (SwapFile *swap_file)
  */
 
 static int
-tile_swap_default (gint      fd,
-                   Tile     *tile,
-                   gint      cmd,
-                   gpointer  user_data)
+tile_swap_default (gint         fd,
+                   Tile        *tile,
+                   SwapCommand  cmd,
+                   gpointer     user_data)
 {
-  DefSwapFile *def_swap_file;
-
-  def_swap_file = (DefSwapFile*) user_data;
+  DefSwapFile *def_swap_file = (DefSwapFile*) user_data;
 
   switch (cmd)
     {
     case SWAP_IN:
       tile_swap_default_in (def_swap_file, fd, tile);
-      break;
-    case SWAP_IN_ASYNC:
-      tile_swap_default_in_async (def_swap_file, fd, tile);
       break;
     case SWAP_OUT:
       tile_swap_default_out (def_swap_file, fd, tile);
@@ -480,48 +457,18 @@ tile_swap_default (gint      fd,
     case SWAP_DELETE:
       tile_swap_default_delete (def_swap_file, fd, tile);
       break;
-    case SWAP_COMPRESS:
-      g_warning ("tile_swap_default: SWAP_COMPRESS: UNFINISHED");
-      break;
     }
 
   return FALSE;
 }
 
 static void
-tile_swap_default_in_async (DefSwapFile *def_swap_file,
-                            gint         fd,
-                            Tile        *tile)
-{
-  /* ignore; it's only a hint anyway */
-  /* this could be changed to call out to another program that
-   * tries to make the OS read the data in from disk.
-   */
-}
-
-/* NOTE: if you change this function, check to see if your changes
- * apply to tile_swap_in_attempt() near the end of the file.  The
- * difference is that this version makes guarantees about what it
- * provides, but tile_swap_in_attempt() just tries and gives up if
- * anything goes wrong.
- *
- * I'm not sure that it is worthwhile to try to pull out common
- * bits; I think the two functions are (at least for now) different
- * enough to keep as two functions.
- *
- * N.B. the mutex on the tile must already have been locked on entry
- * to this function.  DO NOT LOCK IT HERE.
- */
-static void
 tile_swap_default_in (DefSwapFile *def_swap_file,
                       gint         fd,
                       Tile        *tile)
 {
-  gint  err;
   gint  nleft;
   off_t offset;
-
-  err = -1;
 
   if (tile->data)
     return;
@@ -534,7 +481,8 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
       if (offset == -1)
         {
           if (seek_err_msg)
-            g_message ("unable to seek to tile location on disk: %d", err);
+            g_message ("unable to seek to tile location on disk: %s",
+                       g_strerror (errno));
           seek_err_msg = FALSE;
           return;
         }
@@ -545,6 +493,8 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
   nleft = tile->size;
   while (nleft > 0)
     {
+      gint err;
+
       do
         {
           err = read (fd, tile->data + tile->size - nleft, nleft);
@@ -578,7 +528,6 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
                        Tile        *tile)
 {
   gint  bytes;
-  gint  err;
   gint  nleft;
   off_t offset;
   off_t newpos;
@@ -608,7 +557,8 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
   nleft = tile->size;
   while (nleft > 0)
     {
-      err = write (fd, tile->data + tile->size - nleft, nleft);
+      gint err = write (fd, tile->data + tile->size - nleft, nleft);
+
       if (err <= 0)
         {
           if (write_err_msg)
@@ -807,9 +757,8 @@ static Gap *
 tile_swap_gap_new (off_t start,
                    off_t end)
 {
-  Gap *gap;
+  Gap *gap = g_new (Gap, 1);
 
-  gap = g_new (Gap, 1);
   gap->start = start;
   gap->end = end;
 
@@ -821,4 +770,3 @@ tile_swap_gap_destroy (Gap *gap)
 {
   g_free (gap);
 }
-

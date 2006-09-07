@@ -23,17 +23,15 @@
 typedef enum
 {
   SWAP_IN = 1,
-  SWAP_IN_ASYNC,
   SWAP_OUT,
-  SWAP_DELETE,
-  SWAP_COMPRESS
+  SWAP_DELETE
 } SwapCommand;
 
 
-typedef gint (* SwapFunc) (gint      fd,
-                           Tile     *tile,
-                           gint      cmd,
-                           gpointer  user_data);
+typedef gint (* SwapFunc) (gint         fd,
+                           Tile        *tile,
+                           SwapCommand  cmd,
+                           gpointer     user_data);
 
 
 void     tile_swap_init     (const gchar *path);
@@ -43,10 +41,8 @@ gint     tile_swap_add      (gchar       *filename,
                              gpointer     user_data);
 void     tile_swap_remove   (gint         swap_num);
 void     tile_swap_in       (Tile        *tile);
-void     tile_swap_in_async (Tile        *tile);
 void     tile_swap_out      (Tile        *tile);
 void     tile_swap_delete   (Tile        *tile);
-void     tile_swap_compress (gint         swap_num);
 gboolean tile_swap_test     (void);
 
 

@@ -135,24 +135,6 @@ pixel_region_resize (PixelRegion *PR,
   PR->h = h;
 }
 
-
-/* request that tiles within a region be fetched asynchronously */
-void
-pixel_region_get_async (PixelRegion *PR,
-                        gint         ulx,
-                        gint         uly,
-                        gint         lrx,
-                        gint         lry)
-{
-  gint x;
-  gint y;
-
-  for (y = uly; y < lry; y += TILE_HEIGHT)
-    for (x = ulx; x < lrx; x += TILE_WIDTH)
-      tile_manager_get_async (PR->tiles, x, y);
-}
-
-
 void
 pixel_region_get_row (PixelRegion *PR,
                       gint         x,
@@ -172,14 +154,12 @@ pixel_region_get_row (PixelRegion *PR,
 
   end = x + w;
 
-  pixel_region_get_async (PR, x, y, end, y);
-
   bpp = tile_manager_bpp (PR->tiles);
   inc = subsample * bpp;
 
   if (subsample == 1)
     {
-      read_pixel_data (PR->tiles, x, y, end-1, y, data, bpp);
+      read_pixel_data (PR->tiles, x, y, end - 1, y, data, bpp);
     }
   else
     {
@@ -212,15 +192,10 @@ pixel_region_set_row (PixelRegion  *PR,
                       gint          w,
                       const guchar *data)
 {
-  gint end;
-  gint bpp;
+  gint end = x + w;
+  gint bpp = tile_manager_bpp (PR->tiles);
 
-  end = x + w;
-  bpp = tile_manager_bpp (PR->tiles);
-
-  pixel_region_get_async (PR, x, y, end, y);
-
-  write_pixel_data (PR->tiles, x, y, end-1, y, data, bpp);
+  write_pixel_data (PR->tiles, x, y, end - 1, y, data, bpp);
 }
 
 
@@ -241,9 +216,6 @@ pixel_region_get_col (PixelRegion *PR,
   gint    b;
 
   end = y + h;
-
-  pixel_region_get_async (PR, x, y, x, end);
-
   bpp = tile_manager_bpp (PR->tiles);
 
   while (y < end)
@@ -277,14 +249,8 @@ pixel_region_set_col (PixelRegion  *PR,
                       gint          h,
                       const guchar *data)
 {
-  gint bpp;
-  gint end;
-
-  end = y + h;
-
-  pixel_region_get_async (PR, x, y, x, end);
-
-  bpp = tile_manager_bpp (PR->tiles);
+  gint end = y + h;
+  gint bpp = tile_manager_bpp (PR->tiles);
 
   write_pixel_data (PR->tiles, x, y, x, end-1, data, bpp);
 }

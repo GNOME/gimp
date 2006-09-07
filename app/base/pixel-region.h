@@ -86,11 +86,6 @@ void     pixel_region_resize        (PixelRegion         *PR,
                                      gint                 y,
                                      gint                 w,
                                      gint                 h);
-void     pixel_region_get_async     (PixelRegion         *PR,
-                                     gint                 ulx,
-                                     gint                 uly,
-                                     gint                 lrx,
-                                     gint                 lry);
 void     pixel_region_get_row       (PixelRegion         *PR,
                                      gint                 x,
                                      gint                 y,

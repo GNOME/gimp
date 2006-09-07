@@ -69,14 +69,6 @@ Tile        * tile_manager_get               (TileManager *tm,
                                               gint         wantread,
                                               gint         wantwrite);
 
-/* Request that (if possible) the tile at x,y be swapped in.  This is
- * only a hint to improve performance; no guarantees.  The tile may be
- * swapped in or otherwise made more accessible if it is convenient...
- */
-void          tile_manager_get_async         (TileManager *tm,
-                                              gint         xpixel,
-                                              gint         ypixel);
-
 void          tile_manager_map_tile          (TileManager *tm,
                                               gint         xpixel,
                                               gint         ypixel,

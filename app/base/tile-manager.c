@@ -252,22 +252,6 @@ tile_manager_get (TileManager *tm,
 }
 
 void
-tile_manager_get_async (TileManager *tm,
-                        gint         xpixel,
-                        gint         ypixel)
-{
-  gint  num;
-
-  g_return_if_fail (tm != NULL);
-
-  num = tile_manager_get_tile_num (tm, xpixel, ypixel);
-  if (num < 0)
-    return;
-
-  tile_swap_in_async (tm->tiles[num]);
-}
-
-void
 tile_manager_validate (TileManager *tm,
                        Tile        *tile)
 {

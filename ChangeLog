@@ -1,5 +1,12 @@
 2006-09-07  Sven Neumann  <sven@gimp.org>
 
+	* app/base/pixel-region.[ch]
+	* app/base/tile-manager.[ch]
+	* app/base/tile-swap.[ch]: removed code that tried to swap in
+	tiles asynchronously (but ended up calling up nothing).
+
+2006-09-07  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-cache.c
 	* app/base/tile-manager.c
 	* app/base/tile-private.h
