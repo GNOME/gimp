@@ -498,6 +498,7 @@
 	<menuitem action="tools-ink" />
 	<menuitem action="tools-clone" />
 	<menuitem action="tools-heal" />
+	<menuitem action="tools-perspective-clone" />
 	<menuitem action="tools-convolve" />
 	<menuitem action="tools-smudge" />
 	<menuitem action="tools-dodge-burn" />

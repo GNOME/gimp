@@ -37,6 +37,7 @@
 #include "gimppaintoptions.h"
 #include "gimppaintbrush.h"
 #include "gimppencil.h"
+#include "gimpperspectiveclone.h"
 #include "gimpsmudge.h"
 
 
@@ -60,8 +61,9 @@ gimp_paint_init (Gimp *gimp)
     gimp_dodge_burn_register,
     gimp_smudge_register,
     gimp_convolve_register,
-    gimp_clone_register,
+    gimp_perspective_clone_register,
     gimp_heal_register,
+    gimp_clone_register,
     gimp_ink_register,
     gimp_airbrush_register,
     gimp_eraser_register,

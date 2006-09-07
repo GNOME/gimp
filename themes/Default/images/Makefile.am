@@ -292,6 +292,8 @@ STOCK_TOOL_IMAGES = \
 	tools/stock-tool-pencil-22.png			\
 	tools/stock-tool-perspective-16.png		\
 	tools/stock-tool-perspective-22.png		\
+	tools/stock-tool-perspective-clone-16.png	\
+	tools/stock-tool-perspective-clone-22.png	\
 	tools/stock-tool-posterize-16.png		\
 	tools/stock-tool-posterize-22.png		\
 	tools/stock-tool-rect-select-16.png		\

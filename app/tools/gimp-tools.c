@@ -73,6 +73,7 @@
 #include "gimpmovetool.h"
 #include "gimppaintbrushtool.h"
 #include "gimppenciltool.h"
+#include "gimpperspectiveclonetool.h"
 #include "gimpperspectivetool.h"
 #include "gimpposterizetool.h"
 #include "gimpthresholdtool.h"
@@ -133,6 +134,7 @@ gimp_tools_init (Gimp *gimp)
     gimp_dodge_burn_tool_register,
     gimp_smudge_tool_register,
     gimp_convolve_tool_register,
+    gimp_perspective_clone_tool_register,
     gimp_heal_tool_register,
     gimp_clone_tool_register,
     gimp_ink_tool_register,
@@ -517,6 +519,10 @@ gimp_tools_register (GType                   tool_type,
   else if (tool_type == GIMP_TYPE_HEAL_TOOL)
     {
       paint_core_name = "gimp-heal";
+    }
+  else if (tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL)
+    {
+      paint_core_name = "gimp-perspective-clone";
     }
   else if (tool_type == GIMP_TYPE_CONVOLVE_TOOL)
     {

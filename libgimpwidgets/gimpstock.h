@@ -129,6 +129,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOL_PATH                "gimp-tool-path"
 #define GIMP_STOCK_TOOL_PENCIL              "gimp-tool-pencil"
 #define GIMP_STOCK_TOOL_PERSPECTIVE         "gimp-tool-perspective"
+#define GIMP_STOCK_TOOL_PERSPECTIVE_CLONE   "gimp-tool-perspective-clone"
 #define GIMP_STOCK_TOOL_POSTERIZE           "gimp-tool-posterize"
 #define GIMP_STOCK_TOOL_RECT_SELECT         "gimp-tool-rect-select"
 #define GIMP_STOCK_TOOL_ROTATE              "gimp-tool-rotate"

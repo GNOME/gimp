@@ -37,6 +37,34 @@ gimp_brush_application_mode_get_type (void)
 }
 
 GType
+gimp_perspective_clone_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_PERSPECTIVE_CLONE_MODE_ADJUST, "GIMP_PERSPECTIVE_CLONE_MODE_ADJUST", "adjust" },
+    { GIMP_PERSPECTIVE_CLONE_MODE_PAINT, "GIMP_PERSPECTIVE_CLONE_MODE_PAINT", "paint" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_PERSPECTIVE_CLONE_MODE_ADJUST, N_("Modify Perspective Plane"), NULL },
+    { GIMP_PERSPECTIVE_CLONE_MODE_PAINT, N_("Perspective Clone"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpPerspectiveCloneMode", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_source_align_mode_get_type (void)
 {
   static const GEnumValue values[] =

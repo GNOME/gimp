@@ -47,6 +47,17 @@ typedef enum
 } GimpBrushApplicationMode;
 
 
+#define GIMP_TYPE_PERSPECTIVE_CLONE_MODE (gimp_perspective_clone_mode_get_type ())
+
+GType gimp_perspective_clone_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_PERSPECTIVE_CLONE_MODE_ADJUST,  /*< desc="Modify Perspective Plane" >*/
+  GIMP_PERSPECTIVE_CLONE_MODE_PAINT    /*< desc="Perspective Clone"        >*/
+} GimpPerspectiveCloneMode;
+
+
 #define GIMP_TYPE_SOURCE_ALIGN_MODE (gimp_source_align_mode_get_type ())
 
 GType gimp_source_align_mode_get_type (void) G_GNUC_CONST;

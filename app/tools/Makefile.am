@@ -116,6 +116,8 @@ libapptools_a_sources = \
 	gimppainttool.h			\
 	gimppenciltool.c		\
 	gimppenciltool.h		\
+	gimpperspectiveclonetool.c	\
+	gimpperspectiveclonetool.h	\
 	gimpperspectivetool.c		\
 	gimpperspectivetool.h		\
 	gimpposterizetool.c		\

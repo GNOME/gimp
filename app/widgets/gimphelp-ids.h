@@ -264,6 +264,7 @@
 #define GIMP_HELP_TOOL_PAINTBRUSH                 "gimp-tool-paintbrush"
 #define GIMP_HELP_TOOL_PENCIL                     "gimp-tool-pencil"
 #define GIMP_HELP_TOOL_PERSPECTIVE                "gimp-tool-perspective"
+#define GIMP_HELP_TOOL_PERSPECTIVE_CLONE          "gimp-tool-perspective-clone"
 #define GIMP_HELP_TOOL_POSTERIZE                  "gimp-tool-posterize"
 #define GIMP_HELP_TOOL_RECT_SELECT                "gimp-tool-rect-select"
 #define GIMP_HELP_TOOL_ROTATE                     "gimp-tool-rotate"

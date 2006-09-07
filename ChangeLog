@@ -1,3 +1,42 @@
+2006-09-07  Michael Natterer  <mitch@gimp.org>
+
+	Merged the "soc-2006-perspective-clone" branch. That branch is
+	now officially closed and all further fixes and changes have to
+	be applied to HEAD.
+
+	Did some minor adjustments, mostly small indentation and spacing
+	fixes. Derive the tool from GimpBrushTool and renamed the enum
+	added to paint-enums.h and it values, added stock icon and menu
+	entry.
+
+	Thanks a lot to Pedro Alonso Ferrer!
+
+	* app/paint/paint-enums.[ch]: new enum GimpPerspectiveCloneMode.
+
+	* app/paint/Makefile.am
+	* app/paint/gimpperspectiveclone.[ch]
+	* app/paint/gimpperspectivecloneoptions.[ch]: the perspective
+	clone core and its options.
+
+	* app/paint/gimp-paint.c: register it.
+
+	* app/tools/Makefile.am
+	* app/tools/gimpperspectiveclonetool.[ch]: the perspective clone tool.
+
+	* app/tools/gimp-tools.c: register it.
+
+	* app/tools/gimppaintoptions-gui.c: show the widgets that are used
+	by perspective clone.
+
+	* app/widgets/gimphelp-ids.h: the help ID.
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/tools/stock-tool-perspective-clone-16.png
+	* themes/Default/images/tools/stock-tool-perspective-clone-22.png
+	* libgimpwidgets/gimpstock.[ch]: its stock ID and icons.
+
+	* menus/image-menu.xml.in: added it to the menu.
+
 2006-09-07  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.3.12.
