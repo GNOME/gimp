@@ -58,7 +58,9 @@ static void   gimp_heal_motion (GimpSourceCore   *source_core,
                                 PixelRegion      *srcPR,
                                 TempBuf          *paint_area,
                                 gint              paint_area_offset_x,
-                                gint              paint_area_offset_y);
+                                gint              paint_area_offset_y,
+                                gint              paint_area_width,
+                                gint              paint_area_height);
 
 
 G_DEFINE_TYPE (GimpHeal, gimp_heal, GIMP_TYPE_SOURCE_CORE)
@@ -348,7 +350,9 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                   PixelRegion      *srcPR,
                   TempBuf          *paint_area,
                   gint              paint_area_offset_x,
-                  gint              paint_area_offset_y)
+                  gint              paint_area_offset_y,
+                  gint              paint_area_width,
+                  gint              paint_area_height)
 {
   GimpPaintCore *paint_core = GIMP_PAINT_CORE (source_core);
   GimpContext   *context    = GIMP_CONTEXT (paint_options);
@@ -394,14 +398,15 @@ gimp_heal_motion (GimpSourceCore   *source_core,
 
     x1 = paint_area->x + paint_area_offset_x;
     y1 = paint_area->y + paint_area_offset_y;
-    x2 = x1 + srcPR->w;
-    y2 = y1 + srcPR->h;
+    x2 = x1 + paint_area_width;
+    y2 = y1 + paint_area_height;
 
     /* get the original image data at the cursor location */
     orig = gimp_paint_core_get_orig_image (paint_core, drawable,
                                            x1, y1, x2, y2);
 
-    pixel_region_init_temp_buf (&origPR, orig, 0, 0, x2 - x1, y2 - y1);
+    pixel_region_init_temp_buf (&origPR, orig, 0, 0,
+                                paint_area_width, paint_area_height);
   }
 
   temp = temp_buf_new (origPR.w, origPR.h,
@@ -439,7 +444,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   /* get the destination to paint to */
   pixel_region_init_temp_buf (&destPR, paint_area,
                               paint_area_offset_x, paint_area_offset_y,
-                              srcPR->w, srcPR->h);
+                              paint_area_width, paint_area_height);
 
   /* check that srcPR, tempPR, and destPR are the same size */
   if ((srcPR->w != tempPR.w) || (srcPR->w != destPR.w) ||

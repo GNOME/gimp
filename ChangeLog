@@ -1,3 +1,14 @@
+2006-09-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpsourcecore.[ch] (gimp_source_core_motion): pass
+	the width and height of the sub-area of paint_area to
+	GimpSourceCore::motion().
+
+	* app/paint/gimpclone.c (gimp_clone_motion)
+	* app/paint/gimpheal.c (gimp_heal_motion): use the new parameters
+	instead of taking these values from srcPR->w and ->h, which was
+	very confusing.
+
 2006-09-07  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/edit-actions.c (edit_actions_setup): set the context

@@ -281,6 +281,8 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   GimpPickable      *src_pickable = NULL;
   PixelRegion        srcPR;
   TempBuf           *paint_area;
+  gint               paint_area_width;
+  gint               paint_area_height;
   gint               offset_x;
   gint               offset_y;
   gdouble            opacity;
@@ -322,6 +324,9 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   if (! paint_area)
     return;
 
+  paint_area_width  = paint_area->width;
+  paint_area_height = paint_area->height;
+
   if (options->use_source)
     {
       TileManager *src_tiles = gimp_pickable_get_tiles (src_pickable);
@@ -346,7 +351,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
        *  Otherwise, we need a call to get_orig_image to make sure
        *  we get a copy of the unblemished (offset) image
        */
-      if ((  options->sample_merged && (src_image != image)) ||
+      if ((  options->sample_merged && (src_image                 != image)) ||
           (! options->sample_merged && (source_core->src_drawable != drawable)))
         {
           pixel_region_init (&srcPR, src_tiles,
@@ -372,6 +377,9 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
 
       offset_x = x1 - (paint_area->x + offset_x);
       offset_y = y1 - (paint_area->y + offset_y);
+
+      paint_area_width  = x2 - x1;
+      paint_area_height = y2 - y1;
     }
 
   /*  Set the paint area to transparent  */
@@ -385,7 +393,9 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                                                     src_pickable,
                                                     &srcPR,
                                                     paint_area,
-                                                    offset_x, offset_y);
+                                                    offset_x, offset_y,
+                                                    paint_area_width,
+                                                    paint_area_height);
 }
 
 static void

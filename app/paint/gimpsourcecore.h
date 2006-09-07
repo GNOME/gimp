@@ -65,7 +65,9 @@ struct _GimpSourceCoreClass
                     PixelRegion      *srcPR,
                     TempBuf          *paint_area,
                     gint              paint_area_offset_x,
-                    gint              paint_area_offset_y);
+                    gint              paint_area_offset_y,
+                    gint              paint_area_width,
+                    gint              paint_area_height);
 };
 
 

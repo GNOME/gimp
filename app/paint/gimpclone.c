@@ -60,7 +60,9 @@ static void   gimp_clone_motion       (GimpSourceCore   *source_core,
                                        PixelRegion      *srcPR,
                                        TempBuf          *paint_area,
                                        gint              paint_area_offset_x,
-                                       gint              paint_area_offset_y);
+                                       gint              paint_area_offset_y,
+                                       gint              paint_area_width,
+                                       gint              paint_area_height);
 
 static void   gimp_clone_line_image   (GimpImage        *dest,
                                        GimpImage        *src,
@@ -150,7 +152,9 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                    PixelRegion      *srcPR,
                    TempBuf          *paint_area,
                    gint              paint_area_offset_x,
-                   gint              paint_area_offset_y)
+                   gint              paint_area_offset_y,
+                   gint              paint_area_width,
+                   gint              paint_area_height)
 {
   GimpPaintCore       *paint_core     = GIMP_PAINT_CORE (source_core);
   GimpCloneOptions    *options        = GIMP_CLONE_OPTIONS (paint_options);
@@ -170,7 +174,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
     case GIMP_IMAGE_CLONE:
       pixel_region_init_temp_buf (&destPR, paint_area,
                                   paint_area_offset_x, paint_area_offset_y,
-                                  srcPR->w, srcPR->h);
+                                  paint_area_width, paint_area_height);
 
       pr = pixel_regions_register (2, srcPR, &destPR);
       break;
