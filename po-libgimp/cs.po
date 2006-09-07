@@ -1,3 +1,4 @@
+# translation of cs.po to Czech
 # translation of cs.po to
 # Translation of gimp-libgimp to Czech
 # Copyright (C) 2000,2003, 2006 Free Software Foundation, Inc.
@@ -11,10 +12,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-17 11:27+0200\n"
-"PO-Revision-Date: 2006-07-17 14:35+0200\n"
+"POT-Creation-Date: 2006-09-07 09:00+0200\n"
+"PO-Revision-Date: 2006-09-07 09:18+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team:  <cs@li.org>\n"
+"Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -578,8 +579,8 @@ msgid "Indexed-alpha"
 msgstr "Indexovaná-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:562
-msgid "None (Fastest)"
-msgstr "Žádná (nejrychlejší)"
+msgid "interpolation|None"
+msgstr "Žádná"
 
 #: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|Linear"
@@ -590,8 +591,8 @@ msgid "Cubic"
 msgstr "Kubická"
 
 #: ../libgimpbase/gimpbaseenums.c:565
-msgid "Lanczos (Best)"
-msgstr "Lanczos (nejlepší)"
+msgid "Lanczos"
+msgstr "Lanczos"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -812,24 +813,24 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "hodnota pro prvek %s není platný řetězec v kódování UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:423
+#: ../libgimpconfig/gimpconfig-deserialize.c:426
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "očekávána hodnota 'yes' nebo 'no' pro prvek typu boolean %s, obdržena "
 "hodnota '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:497
+#: ../libgimpconfig/gimpconfig-deserialize.c:500
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "neplatná hodnota '%s' pro prvek %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:512
+#: ../libgimpconfig/gimpconfig-deserialize.c:515
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "neplatná hodnota '%ld' pro prvek %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:581
+#: ../libgimpconfig/gimpconfig-deserialize.c:584
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "při zpracování prvku '%s': %s"
@@ -1039,17 +1040,10 @@ msgid "One page selected"
 msgstr "Vybrána jedna strana"
 
 #: ../libgimpwidgets/gimppageselector.c:1183
-#, c-format
-msgid "All %d page selected"
-msgid_plural "All %d pages selected"
-msgstr[0] "%d existující strana vybrána"
-msgstr[1] "Všechny %d strany vybrány"
-msgstr[2] "Všech %d stran vybráno"
-
 #: ../libgimpwidgets/gimppageselector.c:1187
 #, c-format
 msgid "%d page selected"
-msgid_plural "%d pages selected"
+msgid_plural "All %d pages selected"
 msgstr[0] "Vybrána %d strana"
 msgstr[1] "Vybrány %d strany"
 msgstr[2] "Vybráno %d stran"
@@ -1148,7 +1142,7 @@ msgstr "Pro_klad"
 msgid "_Resize"
 msgstr "Změnit _velikost"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:302
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:303
 msgid "_Scale"
 msgstr "Š_kálovat"
 
@@ -1156,15 +1150,15 @@ msgstr "Š_kálovat"
 msgid "Crop"
 msgstr "Ořezat"
 
-#: ../libgimpwidgets/gimpstock.c:298
+#: ../libgimpwidgets/gimpstock.c:299
 msgid "_Transform"
 msgstr "_Transformace"
 
-#: ../libgimpwidgets/gimpstock.c:301
+#: ../libgimpwidgets/gimpstock.c:302
 msgid "_Rotate"
 msgstr "_Rotovat"
 
-#: ../libgimpwidgets/gimpstock.c:303
+#: ../libgimpwidgets/gimpstock.c:304
 msgid "_Shear"
 msgstr "Na_klonění"
 
