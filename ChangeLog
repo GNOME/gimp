@@ -1,3 +1,11 @@
+2006-09-07  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-cache.c
+	* app/base/tile-manager.c
+	* app/base/tile-private.h
+	* app/base/tile.c: removed tile locking macros that were only used
+	for the threaded tile swapper.
+
 2006-09-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpsourcecore.[ch] (gimp_source_core_motion): pass

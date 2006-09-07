@@ -82,8 +82,4 @@ struct _Tile
 };
 
 
-#define TILE_MUTEX_LOCK(tile)   /* nothing */
-#define TILE_MUTEX_UNLOCK(tile) /* nothing */
-
-
 #endif /* __TILE_PRIVATE_H__ */

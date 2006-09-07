@@ -266,8 +266,6 @@ tile_cache_zorch_next (void)
   else
     return FALSE;
 
-  TILE_MUTEX_LOCK (tile);
-
   tile_cache_flush_internal (tile);
 
   if (tile->dirty || tile->swap_offset == -1)
@@ -279,14 +277,11 @@ tile_cache_zorch_next (void)
     {
       g_free (tile->data);
       tile->data = NULL;
-      TILE_MUTEX_UNLOCK (tile);
 
       return TRUE;
     }
 
   /* unable to swap out tile for some reason */
-  TILE_MUTEX_UNLOCK (tile);
-
   return FALSE;
 }
 

@@ -124,8 +124,6 @@ tile_lock (Tile *tile)
 
   /* Increment this tile's reference count.
    */
-
-  TILE_MUTEX_LOCK (tile);
   tile->ref_count++;
 
   if (tile->ref_count == 1)
@@ -143,8 +141,6 @@ tile_lock (Tile *tile)
       tile_swap_in (tile);
     }
 
-  TILE_MUTEX_UNLOCK (tile);
-
   /* Call 'tile_manager_validate' if the tile was invalid.
    */
   if (! tile->valid)
@@ -161,8 +157,6 @@ tile_release (Tile     *tile,
   /* Decrement the global reference count.
    */
   tile_ref_count--;
-
-  TILE_MUTEX_LOCK (tile);
 
   /* Decrement this tile's reference count.
    */
@@ -202,8 +196,6 @@ tile_release (Tile     *tile,
           tile_cache_insert (tile);
         }
     }
-
-  TILE_MUTEX_UNLOCK (tile);
 }
 
 void
@@ -256,8 +248,6 @@ tile_destroy (Tile *tile)
   if (tile->listhead)
     tile_cache_flush (tile);
 
-  TILE_MUTEX_UNLOCK (tile);
-
   g_free (tile);
 
   tile_count--;
@@ -303,11 +293,7 @@ tile_is_valid (Tile *tile)
 void
 tile_mark_valid (Tile *tile)
 {
-  TILE_MUTEX_LOCK (tile);
-
   tile->valid = TRUE;
-
-  TILE_MUTEX_UNLOCK (tile);
 }
 
 void
@@ -375,11 +361,7 @@ tile_detach (Tile *tile,
   tile->share_count--;
 
   if (tile->share_count == 0 && tile->ref_count == 0)
-    {
-      tile_destroy (tile);
-      return;
-    }
-  TILE_MUTEX_UNLOCK (tile);
+    tile_destroy (tile);
 }
 
 gpointer
@@ -387,7 +369,7 @@ tile_data_pointer (Tile *tile,
                    gint  xoff,
                    gint  yoff)
 {
-  gint offset = yoff * tile->ewidth + xoff;
+  gsize offset = yoff * tile->ewidth + xoff;
 
   return (gpointer) (tile->data + offset * tile->bpp);
 }
