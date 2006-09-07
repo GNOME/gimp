@@ -1,3 +1,7 @@
+2006-09-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpfreeselecttool.c: removed unused variable.
+
 2006-09-07  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpchainbutton.c: added "position" construct-only

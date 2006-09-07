@@ -196,8 +196,7 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
                                       GdkModifierType  state,
                                       GimpDisplay     *display)
 {
-  GimpFreeSelectTool   *free_sel = GIMP_FREE_SELECT_TOOL (tool);
-  GimpSelectionOptions *options  = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GimpFreeSelectTool *free_sel = GIMP_FREE_SELECT_TOOL (tool);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
