@@ -122,32 +122,18 @@ static void    tile_swap_resize           (DefSwapFile *def_swap_file,
 static Gap   * tile_swap_gap_new          (off_t        start,
                                            off_t        end);
 static void    tile_swap_gap_destroy      (Gap         *gap);
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-static gpointer tile_swap_in_thread       (gpointer);
-#endif
 
 
-static gboolean        initialized      = FALSE;
-static GHashTable    * swap_files       = NULL;
-static GList         * open_swap_files  = NULL;
-static gint            nopen_swap_files = 0;
-static gint            next_swap_num    = 1;
-static const off_t     swap_file_grow   = 1024 * TILE_WIDTH * TILE_HEIGHT * 4;
+static gboolean      initialized      = FALSE;
+static GHashTable  * swap_files       = NULL;
+static GList       * open_swap_files  = NULL;
+static gint          nopen_swap_files = 0;
+static gint          next_swap_num    = 1;
+static const off_t   swap_file_grow   = 1024 * TILE_WIDTH * TILE_HEIGHT * 4;
 
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-static GStaticMutex    swapfile_mutex         = G_STATIC_MUTEX_INIT;
-
-/* async_swapin_mutex protects only the list, not the tiles therein */
-static GThread       * swapin_thread          = NULL;
-static GMutex        * async_swapin_mutex     = NULL;
-static GCond         * async_swapin_signal    = NULL;
-static GSList        * async_swapin_tiles     = NULL;
-static GSList        * async_swapin_tiles_end = NULL;
-#endif
-
-static gboolean seek_err_msg  = TRUE;
-static gboolean read_err_msg  = TRUE;
-static gboolean write_err_msg = TRUE;
+static gboolean      seek_err_msg     = TRUE;
+static gboolean      read_err_msg     = TRUE;
+static gboolean      write_err_msg    = TRUE;
 
 
 #ifdef GIMP_UNSTABLE
@@ -241,13 +227,6 @@ tile_swap_init (const gchar *path)
   tile_swap_add (swappath, NULL, NULL);
 
   g_free (swappath);
-
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-  async_swapin_signal = g_cond_new ();
-  async_swapin_mutex  = g_mutex_new ();
-
-  swapin_thread = g_thread_create (tile_swap_in_thread, NULL, FALSE, NULL);
-#endif
 }
 
 void
@@ -274,10 +253,6 @@ tile_swap_add (gchar    *filename,
   SwapFile    *swap_file;
   DefSwapFile *def_swap_file;
 
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-  g_static_mutex_lock (&swapfile_mutex);
-#endif
-
   g_return_val_if_fail (initialized, -1);
 
   swap_file = g_new (SwapFile, 1);
@@ -302,10 +277,6 @@ tile_swap_add (gchar    *filename,
 
   g_hash_table_insert (swap_files, &swap_file->swap_num, swap_file);
 
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-  g_static_mutex_unlock (&swapfile_mutex);
-#endif
-
   return swap_file->swap_num;
 }
 
@@ -314,15 +285,11 @@ tile_swap_remove (gint swap_num)
 {
   SwapFile *swap_file;
 
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-  g_static_mutex_lock (&swapfile_mutex);
-#endif
-
   g_return_if_fail (initialized);
 
   swap_file = g_hash_table_lookup (swap_files, &swap_num);
   if (!swap_file)
-    goto out;
+    return;
 
   g_hash_table_remove (swap_files, &swap_num);
 
@@ -330,13 +297,6 @@ tile_swap_remove (gint swap_num)
     close (swap_file->fd);
 
   g_free (swap_file);
-
-out:
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-  g_static_mutex_unlock (&swapfile_mutex);
-#endif
-
-  return;
 }
 
 void
@@ -426,37 +386,27 @@ tile_swap_command (Tile *tile,
 {
   SwapFile *swap_file;
 
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-  g_static_mutex_lock (&swapfile_mutex);
-#endif
-
   g_return_if_fail (initialized);
 
-  do {
-    swap_file = g_hash_table_lookup (swap_files, &tile->swap_num);
-    if (!swap_file)
-      {
-        g_warning ("could not find swap file for tile");
-        goto out;
-      }
+  do
+    {
+      swap_file = g_hash_table_lookup (swap_files, &tile->swap_num);
+      if (!swap_file)
+        {
+          g_warning ("could not find swap file for tile");
+          return;
+        }
 
-    if (swap_file->fd == -1)
-      {
-        tile_swap_open (swap_file);
+      if (swap_file->fd == -1)
+        {
+          tile_swap_open (swap_file);
 
-        if (swap_file->fd == -1)
-          goto out;
-      }
-  }
+          if (swap_file->fd == -1)
+            return;
+        }
+    }
   while ((* swap_file->swap_func) (swap_file->fd,
                                    tile, command, swap_file->user_data));
-
-out:
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-  g_static_mutex_unlock (&swapfile_mutex);
-#endif
-
-  return;
 }
 
 static void
@@ -543,31 +493,10 @@ tile_swap_default_in_async (DefSwapFile *def_swap_file,
                             gint         fd,
                             Tile        *tile)
 {
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-  AsyncSwapArgs *args = g_new (AsyncSwapArgs, 1);
-
-  args->def_swap_file = def_swap_file;
-  args->fd            = fd;
-  args->tile          = tile;
-
-  /* add this tile to the list of tiles for the async swapin task */
-  g_mutex_lock (async_swapin_mutex);
-  g_slist_append (async_swapin_tiles_end, args);
-
-  if (! async_swapin_tiles)
-    async_swapin_tiles = async_swapin_tiles_end;
-
-  g_cond_broadcast (async_swapin_signal);
-  g_mutex_unlock (async_swapin_mutex);
-
-#else
   /* ignore; it's only a hint anyway */
   /* this could be changed to call out to another program that
    * tries to make the OS read the data in from disk.
    */
-#endif
-
-  return;
 }
 
 /* NOTE: if you change this function, check to see if your changes
@@ -595,9 +524,7 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
   err = -1;
 
   if (tile->data)
-    {
-      return;
-    }
+    return;
 
   if (def_swap_file->cur_position != tile->swap_offset)
     {
@@ -627,7 +554,8 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
       if (err <= 0)
         {
           if (read_err_msg)
-            g_message ("unable to read tile data from disk: %s (%d/%d bytes read)",
+            g_message ("unable to read tile data from disk: "
+                       "%s (%d/%d bytes read)",
                        g_strerror (errno), err, nleft);
           read_err_msg = FALSE;
           return;
@@ -684,7 +612,8 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
       if (err <= 0)
         {
           if (write_err_msg)
-            g_message ("unable to write tile data to disk: %s (%d/%d bytes written)",
+            g_message ("unable to write tile data to disk: "
+                       "%s (%d/%d bytes written)",
                        g_strerror (errno), err, nleft);
           write_err_msg = FALSE;
           return;
@@ -893,96 +822,3 @@ tile_swap_gap_destroy (Gap *gap)
   g_free (gap);
 }
 
-
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-/* go through the list of tiles that are likely to be used soon and
- * try to swap them in.  If any tile is not in a state to be swapped
- * in, ignore it, and the error will get dealt with when the tile
- * is really needed -- assuming that the error still happens.
- *
- * Potential future enhancement: for non-threaded systems, we could
- * fork() a process which merely attempts to bring tiles into the
- * OS's buffer/page cache, where they will be read into the gimp
- * more quickly.  This would be pretty trivial, actually.
- */
-
-static void
-tile_swap_in_attempt (DefSwapFile *def_swap_file,
-                      gint         fd,
-                      Tile        *tile)
-{
-  gint  err = -1;
-  gint  nleft;
-
-  TILE_MUTEX_LOCK (tile);
-  if (tile->data)
-    goto out;
-
-  if (! tile->swap_num || ! tile->swap_offset)
-    goto out;
-
-  if (def_swap_file->cur_position != tile->swap_offset)
-    {
-      def_swap_file->cur_position = tile->swap_offset;
-
-      if (lseek (fd, tile->swap_offset, SEEK_SET) == -1)
-        goto out;
-    }
-
-  tile_alloc (tile);
-
-  nleft = tile->size;
-  while (nleft > 0)
-    {
-      do
-        {
-          err = read (fd, tile->data + tile->size - nleft, nleft);
-        }
-      while ((err == -1) && ((errno == EAGAIN) || (errno == EINTR)));
-
-      if (err <= 0)
-        {
-          g_free (tile->data);
-          tile->data = NULL;
-          goto out;
-        }
-
-      nleft -= err;
-    }
-
-  def_swap_file->cur_position += tile->size;
-
-out:
-  TILE_MUTEX_UNLOCK (tile);
-}
-
-static gpointer
-tile_swap_in_thread (gpointer data)
-{
-  AsyncSwapArgs *args;
-  GSList        *free_item;
-
-  while (TRUE)
-    {
-      g_mutex_lock (async_swapin_mutex);
-
-      if (! async_swapin_tiles)
-        g_cond_wait (async_swapin_signal, async_swapin_mutex);
-
-      args = async_swapin_tiles->data;
-
-      free_item = async_swapin_tiles;
-      async_swapin_tiles = async_swapin_tiles->next;
-      g_slist_free_1 (free_item);
-
-      if (! async_swapin_tiles)
-        async_swapin_tiles_end = NULL;
-
-      g_mutex_unlock (async_swapin_mutex);
-
-      tile_swap_in_attempt (args->def_swap_file, args->fd, args->tile);
-
-      g_free(args);
-    }
-}
-#endif

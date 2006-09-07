@@ -1,3 +1,13 @@
+2006-09-07  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: removed --enable_threaded_tile_swapper option.
+
+	* app/base/tile-cache.c
+	* app/base/tile-private.h
+	* app/base/tile-swap.c
+	* app/base/tile.c: removed threaded tile swapper code which has
+	been sitting here unused for too long.
+
 2006-09-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpsourcecore.[ch] (gimp_source_core_motion): pass

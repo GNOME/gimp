@@ -870,16 +870,6 @@ if test "x$enable_mp" != "xno"; then
   )
 fi
 
-if test "x$GIMP_UNSTABLE" = "xyes"; then
-  AC_ARG_ENABLE(threaded-tile-swapper, [  --enable-threaded-tile-swapper  (experimental)])
-  if test "x$enable_threaded_tile_swapper" = "xyes"; then
-    PKG_CHECK_MODULES(GTHREAD, gthread-2.0,
-      [AC_DEFINE(ENABLE_THREADED_TILE_SWAPPER, 1,
-	       [Define to 1 to enable the experimental threaded tile-swapper.])]
-    )
-  fi
-fi
-
 
 ################################
 # Some plug-ins are X11 specific

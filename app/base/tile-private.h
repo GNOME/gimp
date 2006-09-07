@@ -79,20 +79,11 @@ struct _Tile
   Tile     *next;
   Tile     *prev;       /* List pointers for the tile cache lists */
   gpointer  listhead;   /* Pointer to the head of the list this tile is on */
-
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-  GMutex   *mutex;
-#endif
 };
 
 
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-#define TILE_MUTEX_LOCK(tile)   g_mutex_lock((tile)->mutex)
-#define TILE_MUTEX_UNLOCK(tile) g_mutex_unlock((tile)->mutex)
-#else
 #define TILE_MUTEX_LOCK(tile)   /* nothing */
 #define TILE_MUTEX_UNLOCK(tile) /* nothing */
-#endif
 
 
 #endif /* __TILE_PRIVATE_H__ */

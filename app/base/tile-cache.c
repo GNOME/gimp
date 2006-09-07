@@ -34,11 +34,7 @@
 static gboolean  tile_cache_zorch_next     (void);
 static void      tile_cache_flush_internal (Tile     *tile);
 
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-static gpointer  tile_idle_thread          (gpointer  data);
-#else
 static gboolean  tile_idle_preswap         (gpointer  data);
-#endif
 
 
 static gboolean initialize = TRUE;
@@ -55,6 +51,7 @@ static gulong   max_cache_size  = 0;
 static gulong   cur_cache_dirty = 0;
 static TileList clean_list      = { NULL, NULL };
 static TileList dirty_list      = { NULL, NULL };
+static guint    idle_swapper    = 0;
 
 
 #ifdef ENABLE_MP
@@ -72,19 +69,6 @@ static GStaticMutex   tile_cache_mutex = G_STATIC_MUTEX_INIT;
 #endif
 
 
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-
-static GThread *preswap_thread = NULL;
-static GMutex  *dirty_mutex    = NULL;
-static GCond   *dirty_signal   = NULL;
-
-#else
-
-static guint    idle_swapper   = 0;
-
-#endif
-
-
 void
 tile_cache_init (gulong tile_cache_size)
 {
@@ -96,26 +80,17 @@ tile_cache_init (gulong tile_cache_size)
       dirty_list.first = dirty_list.last = NULL;
 
       max_cache_size = tile_cache_size;
-
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-      dirty_mutex  = g_mutex_new ();
-      dirty_signal = g_cond_new ();
-
-      preswap_thread = g_thread_create (&tile_idle_thread, NULL, FALSE, NULL);
-#endif
     }
 }
 
 void
 tile_cache_exit (void)
 {
-#ifndef ENABLE_THREADED_TILE_SWAPPER
   if (idle_swapper)
     {
       g_source_remove (idle_swapper);
       idle_swapper = 0;
     }
-#endif
 
   tile_cache_set_size (0);
 }
@@ -206,11 +181,6 @@ tile_cache_insert (Tile *tile)
     {
       cur_cache_dirty += tile->size;
 
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-      g_mutex_lock (dirty_mutex);
-      g_cond_signal (dirty_signal);
-      g_mutex_unlock (dirty_mutex);
-#else
       if (! idle_swapper &&
           cur_cache_dirty * 2 > max_cache_size)
         {
@@ -219,7 +189,6 @@ tile_cache_insert (Tile *tile)
                                              tile_idle_preswap,
                                              NULL, NULL);
         }
-#endif
     }
 
 out:
@@ -321,92 +290,6 @@ tile_cache_zorch_next (void)
   return FALSE;
 }
 
-
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-
-static gpointer
-tile_idle_thread (gpointer data)
-{
-  Tile     *tile;
-  TileList *list;
-  gint      count;
-
-  g_printerr ("starting tile preswapper thread\n");
-
-  count = 0;
-  while (TRUE)
-    {
-      CACHE_LOCK;
-
-      if (count > 5 || dirty_list.first == NULL)
-        {
-          CACHE_UNLOCK;
-
-          count = 0;
-
-          g_mutex_lock (dirty_mutex);
-          g_cond_wait (dirty_signal, dirty_mutex);
-          g_mutex_unlock (dirty_mutex);
-
-          CACHE_LOCK;
-        }
-
-      if ((tile = dirty_list.first))
-        {
-          CACHE_UNLOCK;
-          TILE_MUTEX_LOCK (tile);
-          CACHE_LOCK;
-
-          if (tile->dirty || tile->swap_offset == -1)
-            {
-              list = tile->listhead;
-
-              if (list == &dirty_list)
-                cur_cache_dirty -= tile->size;
-
-              if (tile->next)
-                tile->next->prev = tile->prev;
-              else
-                list->last = tile->prev;
-
-              if (tile->prev)
-                tile->prev->next = tile->next;
-              else
-                list->first = tile->next;
-
-              tile->next = NULL;
-              tile->prev = clean_list.last;
-              tile->listhead = &clean_list;
-
-              if (clean_list.last)
-                clean_list.last->next = tile;
-              else
-                clean_list.first = tile;
-
-              clean_list.last = tile;
-
-              CACHE_UNLOCK;
-
-              tile_swap_out (tile);
-            }
-          else
-            {
-              CACHE_UNLOCK;
-            }
-
-          TILE_MUTEX_UNLOCK (tile);
-        }
-      else
-        {
-          CACHE_UNLOCK;
-        }
-
-      count++;
-    }
-}
-
-#else  /* !ENABLE_THREADED_TILE_SWAPPER */
-
 static gboolean
 tile_idle_preswap (gpointer data)
 {
@@ -448,5 +331,3 @@ tile_idle_preswap (gpointer data)
 
   return TRUE;
 }
-
-#endif  /* !ENABLE_THREADED_TILE_SWAPPER */

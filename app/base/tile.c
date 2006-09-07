@@ -103,10 +103,6 @@ tile_init (Tile *tile,
   tile->listhead    = NULL;
   tile->rowhint     = NULL;
 
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-  tile->mutex       = g_mutex_new ();
-#endif
-
   tile_count++;
 }
 
@@ -261,10 +257,6 @@ tile_destroy (Tile *tile)
     tile_cache_flush (tile);
 
   TILE_MUTEX_UNLOCK (tile);
-
-#ifdef ENABLE_THREADED_TILE_SWAPPER
-  g_mutex_free (tile->mutex);
-#endif
 
   g_free (tile);
 
