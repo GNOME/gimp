@@ -542,8 +542,8 @@
   (c-name "gimp_chain_button_new")
   (is-constructor-of "GimpChainButton")
   (return-type "GtkWidget*")
-  (parameters
-    '("GimpChainPosition" "position")
+  (properties
+    '("position")
   )
 )
 
@@ -3538,9 +3538,8 @@
   (c-name "gimp_aspect_preview_new")
   (is-constructor-of "GimpAspectPreview")
   (return-type "GtkWidget*")
-  (parameters
-    '("GimpDrawable*" "drawable")
-    '("gboolean*" "toggle")
+  (properties
+    '("drawable")
   )
 )
 
@@ -3553,12 +3552,12 @@
   (return-type "GType")
 )
 
-(define-method preview_new
-  (of-object "GimpDrawable")
+(define-function gimp_drawable_preview_new
   (c-name "gimp_drawable_preview_new")
+  (is-constructor-of "GimpDrawablePreview")
   (return-type "GtkWidget*")
-  (parameters
-    '("gboolean*" "toggle")
+  (properties
+    '("drawable")
   )
 )
 
@@ -3931,8 +3930,8 @@
   (c-name "gimp_zoom_preview_new")
   (is-constructor-of "GimpZoomPreview")
   (return-type "GtkWidget*")
-  (parameters
-    '("GimpDrawable*" "drawable")
+  (properties
+    '("drawable")
   )
 )
 

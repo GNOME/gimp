@@ -1,5 +1,13 @@
 2006-09-07  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpchainbutton.c: added "position" construct-only
+	property to allow construction using g_object_new().
+
+	* plug-ins/pygimp/gimpui.defs: use new style constructors for some
+	more widgets.
+
+2006-09-07  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/pygimp/gimpui.defs: updated the GimpHintBox constructor
 	definition to use pygtk 2.8 features.
 

@@ -32,10 +32,27 @@
 
 enum
 {
+  PROP_0,
+  PROP_POSITION
+};
+
+enum
+{
   TOGGLED,
   LAST_SIGNAL
 };
 
+static GObject * gimp_chain_button_constructor      (GType            type,
+                                                     guint            n_params,
+                                                     GObjectConstructParam *params);
+static void      gimp_chain_button_set_property     (GObject         *object,
+                                                     guint            property_id,
+                                                     const GValue    *value,
+                                                     GParamSpec      *pspec);
+static void      gimp_chain_button_get_property     (GObject         *object,
+                                                     guint            property_id,
+                                                     GValue          *value,
+                                                     GParamSpec      *pspec);
 
 static void      gimp_chain_button_clicked_callback (GtkWidget       *widget,
                                                      GimpChainButton *button);
@@ -62,6 +79,12 @@ static const gchar * const gimp_chain_stock_items[] =
 static void
 gimp_chain_button_class_init (GimpChainButtonClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->constructor  = gimp_chain_button_constructor;
+  object_class->set_property = gimp_chain_button_set_property;
+  object_class->get_property = gimp_chain_button_get_property;
+
   gimp_chain_button_signals[TOGGLED] =
     g_signal_new ("toggled",
                   G_TYPE_FROM_CLASS (klass),
@@ -72,6 +95,20 @@ gimp_chain_button_class_init (GimpChainButtonClass *klass)
                   G_TYPE_NONE, 0);
 
   klass->toggled = NULL;
+
+  /**
+   * GimpChainButton:position:
+   *
+   * The position in which the chain button will be used.
+   *
+   * Since: GIMP 2.4
+   */
+  g_object_class_install_property (object_class, PROP_POSITION,
+                                   g_param_spec_enum ("position", NULL, NULL,
+                                                      GIMP_TYPE_CHAIN_POSITION,
+                                                      GIMP_CHAIN_TOP,
+                                                      G_PARAM_CONSTRUCT_ONLY |
+                                                      GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -101,40 +138,25 @@ gimp_chain_button_init (GimpChainButton *button)
                     button);
 }
 
-
-/**
- * gimp_chain_button_new:
- * @position: The position you are going to use for the button
- *            with respect to the widgets you want to chain.
- *
- * Creates a new #GimpChainButton widget.
- *
- * This returns a button showing either a broken or a linked chain and
- * small clamps attached to both sides that visually group the two widgets
- * you want to connect. This widget looks best when attached
- * to a table taking up two columns (or rows respectively) next
- * to the widgets that it is supposed to connect. It may work
- * for more than two widgets, but the look is optimized for two.
- *
- * Returns: Pointer to the new #GimpChainButton, which is inactive
- *          by default. Use gimp_chain_button_set_active() to
- *          change its state.
- */
-GtkWidget *
-gimp_chain_button_new (GimpChainPosition position)
+static GObject *
+gimp_chain_button_constructor (GType                  type,
+                               guint                  n_params,
+                               GObjectConstructParam *params)
 {
+  GObject         *object;
   GimpChainButton *button;
 
-  button = g_object_new (GIMP_TYPE_CHAIN_BUTTON, NULL);
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
-  button->position = position;
+  button = GIMP_CHAIN_BUTTON (object);
 
   gtk_image_set_from_stock
     (GTK_IMAGE (button->image),
-     gimp_chain_stock_items[((position & GIMP_CHAIN_LEFT) << 1) + ! button->active],
+     gimp_chain_stock_items[((button->position & GIMP_CHAIN_LEFT) << 1) +
+                            button->active ? 0 : 1],
      GTK_ICON_SIZE_BUTTON);
 
-  if (position & GIMP_CHAIN_LEFT) /* are we a vertical chainbutton? */
+  if (button->position & GIMP_CHAIN_LEFT) /* are we a vertical chainbutton? */
     {
       gtk_table_resize (GTK_TABLE (button), 3, 1);
       gtk_table_attach (GTK_TABLE (button), button->button, 0, 1, 1, 2,
@@ -159,7 +181,73 @@ gimp_chain_button_new (GimpChainPosition position)
   gtk_widget_show (button->line1);
   gtk_widget_show (button->line2);
 
-  return GTK_WIDGET (button);
+  return object;
+}
+
+static void
+gimp_chain_button_set_property (GObject      *object,
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
+{
+  GimpChainButton *button = GIMP_CHAIN_BUTTON (object);
+
+  switch (property_id)
+    {
+    case PROP_POSITION:
+      button->position = g_value_get_enum (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_chain_button_get_property (GObject    *object,
+                                guint       property_id,
+                                GValue     *value,
+                                GParamSpec *pspec)
+{
+  GimpChainButton *button = GIMP_CHAIN_BUTTON (object);
+
+  switch (property_id)
+    {
+    case PROP_POSITION:
+      g_value_set_enum (value, button->position);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+/**
+ * gimp_chain_button_new:
+ * @position: The position you are going to use for the button
+ *            with respect to the widgets you want to chain.
+ *
+ * Creates a new #GimpChainButton widget.
+ *
+ * This returns a button showing either a broken or a linked chain and
+ * small clamps attached to both sides that visually group the two widgets
+ * you want to connect. This widget looks best when attached
+ * to a table taking up two columns (or rows respectively) next
+ * to the widgets that it is supposed to connect. It may work
+ * for more than two widgets, but the look is optimized for two.
+ *
+ * Returns: Pointer to the new #GimpChainButton, which is inactive
+ *          by default. Use gimp_chain_button_set_active() to
+ *          change its state.
+ */
+GtkWidget *
+gimp_chain_button_new (GimpChainPosition position)
+{
+  return g_object_new (GIMP_TYPE_CHAIN_BUTTON,
+                       "position", position,
+                       NULL);
 }
 
 /**
