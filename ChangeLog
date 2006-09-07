@@ -1,3 +1,8 @@
+2006-09-07  Jakub Steiner <jimmac@ximian.com>
+
+	* stock-tool-perspective-clone*png: add the element of perspective
+		in. Perhaps needs a bit of work on the anti-aliasing still.
+
 2006-09-07  Michael Natterer  <mitch@gimp.org>
 
 	Merged the "soc-2006-perspective-clone" branch. That branch is
