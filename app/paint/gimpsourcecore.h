@@ -63,6 +63,8 @@ struct _GimpSourceCoreClass
                     GimpImage        *src_image,
                     GimpPickable     *src_pickable,
                     PixelRegion      *srcPR,
+                    gint              src_offset_x,
+                    gint              src_offset_y,
                     TempBuf          *paint_area,
                     gint              paint_area_offset_x,
                     gint              paint_area_offset_y,

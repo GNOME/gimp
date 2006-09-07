@@ -1,3 +1,15 @@
+2006-09-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpsourcecore.[ch] (gimp_source_core_motion): pass
+	the src_offset_x and src_offset_y as separate parameters to
+	GimpSourceCore::motion().
+
+	* app/paint/gimpheal.c (gimp_heal_motion): changed accordingly.
+
+	* app/paint/gimpclone.c (gimp_clone_motion): ditto and use the new
+	values for pattern cloning instead of asuming stuff that relies on
+	knowledge of gimp_source_core_motion()'s internals.
+
 2006-09-07  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: removed --enable_threaded_tile_swapper option.

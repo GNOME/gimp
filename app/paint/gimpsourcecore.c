@@ -280,11 +280,13 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   GimpImage         *src_image    = NULL;
   GimpPickable      *src_pickable = NULL;
   PixelRegion        srcPR;
+  gint               src_offset_x;
+  gint               src_offset_y;
   TempBuf           *paint_area;
+  gint               paint_area_offset_x;
+  gint               paint_area_offset_y;
   gint               paint_area_width;
   gint               paint_area_height;
-  gint               offset_x;
-  gint               offset_y;
   gdouble            opacity;
 
   opacity = gimp_paint_options_get_fade (paint_options, image,
@@ -292,8 +294,8 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   if (opacity == 0.0)
     return;
 
-  offset_x = source_core->offset_x;
-  offset_y = source_core->offset_y;
+  src_offset_x = source_core->offset_x;
+  src_offset_y = source_core->offset_y;
 
   if (options->use_source)
     {
@@ -312,8 +314,8 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
           gimp_item_offsets (GIMP_ITEM (source_core->src_drawable),
                              &off_x, &off_y);
 
-          offset_x += off_x;
-          offset_y += off_y;
+          src_offset_x += off_x;
+          src_offset_y += off_y;
         }
 
       gimp_pickable_flush (src_pickable);
@@ -324,8 +326,10 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   if (! paint_area)
     return;
 
-  paint_area_width  = paint_area->width;
-  paint_area_height = paint_area->height;
+  paint_area_offset_x = 0;
+  paint_area_offset_y = 0;
+  paint_area_width    = paint_area->width;
+  paint_area_height   = paint_area->height;
 
   if (options->use_source)
     {
@@ -333,13 +337,13 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
       gint         x1, y1;
       gint         x2, y2;
 
-      x1 = CLAMP (paint_area->x + offset_x,
+      x1 = CLAMP (paint_area->x + src_offset_x,
                   0, tile_manager_width  (src_tiles));
-      y1 = CLAMP (paint_area->y + offset_y,
+      y1 = CLAMP (paint_area->y + src_offset_y,
                   0, tile_manager_height (src_tiles));
-      x2 = CLAMP (paint_area->x + offset_x + paint_area->width,
+      x2 = CLAMP (paint_area->x + src_offset_x + paint_area_width,
                   0, tile_manager_width  (src_tiles));
-      y2 = CLAMP (paint_area->y + offset_y + paint_area->height,
+      y2 = CLAMP (paint_area->y + src_offset_y + paint_area_height,
                   0, tile_manager_height (src_tiles));
 
       if (!(x2 - x1) || !(y2 - y1))
@@ -375,11 +379,10 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                                       0, 0, x2 - x1, y2 - y1);
         }
 
-      offset_x = x1 - (paint_area->x + offset_x);
-      offset_y = y1 - (paint_area->y + offset_y);
-
-      paint_area_width  = x2 - x1;
-      paint_area_height = y2 - y1;
+      paint_area_offset_x = x1 - (paint_area->x + src_offset_x);
+      paint_area_offset_y = y1 - (paint_area->y + src_offset_y);
+      paint_area_width    = x2 - x1;
+      paint_area_height   = y2 - y1;
     }
 
   /*  Set the paint area to transparent  */
@@ -392,8 +395,11 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                                                     src_image,
                                                     src_pickable,
                                                     &srcPR,
+                                                    src_offset_x,
+                                                    src_offset_y,
                                                     paint_area,
-                                                    offset_x, offset_y,
+                                                    paint_area_offset_x,
+                                                    paint_area_offset_y,
                                                     paint_area_width,
                                                     paint_area_height);
 }
