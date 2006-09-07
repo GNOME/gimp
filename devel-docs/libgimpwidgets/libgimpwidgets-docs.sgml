@@ -37,6 +37,7 @@
     <xi:include href="xml/gimpenumlabel.xml" />
     <xi:include href="xml/gimpfileentry.xml" />
     <xi:include href="xml/gimpframe.xml" />
+    <xi:include href="xml/gimphintbox.xml" />
     <xi:include href="xml/gimpintcombobox.xml" />
     <xi:include href="xml/gimpintstore.xml" />
     <xi:include href="xml/gimpmemsizeentry.xml" />

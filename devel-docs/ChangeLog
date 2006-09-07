@@ -1,3 +1,16 @@
+2006-09-07  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* tools/widgets.c: added GimpHintBox and GIMP_STOCK_HEAL_TOOL.
+
+	* libgimpwidgets/images/*.png: updated screenshots.
+
+	* libgimpwidgets/tmpl/gimphintbox.sgml: new file.
+
+	* libgimpwidgets/tmpl/gimpstock.sgml: added GIMP_STOCK_HEAL_TOOL.
+
 2006-09-01  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt

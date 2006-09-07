@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-gimprectangle
+GimpHintBox
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -17,23 +17,12 @@ gimprectangle
 <!-- ##### SECTION Stability_Level ##### -->
 
 
-<!-- ##### FUNCTION gimp_rectangle_intersect ##### -->
+<!-- ##### FUNCTION gimp_hint_box_new ##### -->
 <para>
 
 </para>
 
-@x1: 
-@y1: 
-@width1: 
-@height1: 
-@x2: 
-@y2: 
-@width2: 
-@height2: 
-@dest_x: 
-@dest_y: 
-@dest_width: 
-@dest_height: 
+@hint: 
 @Returns: 
 
 

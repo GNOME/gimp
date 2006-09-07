@@ -431,6 +431,14 @@ create_frame (void)
 }
 
 static WidgetInfo *
+create_hint_box (void)
+{
+  GtkWidget *box = gimp_hint_box_new ("This is a user hint.");
+
+  return new_widget_info ("gimp-hint-box", box, MEDIUM);
+}
+
+static WidgetInfo *
 create_int_combo_box (void)
 {
   GtkWidget *vbox;
@@ -439,7 +447,7 @@ create_int_combo_box (void)
 
   vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
-  combo = gimp_int_combo_box_new ("Sobel",       1,
+  combo = gimp_int_combo_box_new ("Sobel",        1,
                                   "Prewitt",      2,
                                   "Gradient",     3,
                                   "Roberts",      4,
@@ -641,6 +649,7 @@ get_all_widgets (void)
   retval = g_list_append (retval, create_enum_label ());
   retval = g_list_append (retval, create_file_entry ());
   retval = g_list_append (retval, create_frame ());
+  retval = g_list_append (retval, create_hint_box ());
   retval = g_list_append (retval, create_int_combo_box ());
   retval = g_list_append (retval, create_memsize_entry ());
   retval = g_list_append (retval, create_offset_area ());

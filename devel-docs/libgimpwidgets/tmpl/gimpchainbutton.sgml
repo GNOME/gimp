@@ -42,6 +42,11 @@ up two GimpSizeEntries (see #GimpSizeEntry) linked with a #GimpChainButton.
 
 @gimpchainbutton: the object which received the signal.
 
+<!-- ##### ARG GimpChainButton:position ##### -->
+<para>
+
+</para>
+
 <!-- ##### ENUM GimpChainPosition ##### -->
 <para>
 

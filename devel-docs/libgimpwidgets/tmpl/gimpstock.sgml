@@ -1141,6 +1141,14 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_TOOL_HEAL ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-tool-heal-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-heal-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_TOOL_HUE_SATURATION ##### -->
 <para xml:base="../gimpstock.xml">
 <inlinegraphic fileref="stock-tool-hue-saturation-22.png" format="png"></inlinegraphic>
