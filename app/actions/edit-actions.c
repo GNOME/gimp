@@ -208,6 +208,10 @@ edit_actions_setup (GimpActionGroup *group)
                                         "edit-paste-as-new-short");
   gtk_action_set_accel_path (action, "<Actions>/edit/edit-paste-as-new");
 
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                        "edit-fill-pattern");
+  g_object_set (action, "context", context, NULL);
+
   g_signal_connect_object (context, "foreground-changed",
                            G_CALLBACK (edit_actions_foreground_changed),
                            group, 0);

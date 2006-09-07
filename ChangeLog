@@ -1,3 +1,8 @@
+2006-09-07  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/edit-actions.c (edit_actions_setup): set the context
+	property on the "edit-fill-pattern" action.
+
 2006-09-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/tools-enums.[ch]: add GimpRectangleConstraint
