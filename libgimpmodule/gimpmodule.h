@@ -137,7 +137,7 @@ const gchar * gimp_module_state_name       (GimpModuleState  state);
 
 #ifndef GIMP_DISABLE_DEPRECATED
 GType         gimp_module_register_enum    (GTypeModule      *module,
-                                            const gchar             *name,
+                                            const gchar      *name,
                                             const GEnumValue *const_static_values);
 #endif /* GIMP_DISABLE_DEPRECATED */
 
