@@ -1,5 +1,12 @@
 2006-09-07  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/gimpui.defs: updated the GimpHintBox constructor
+	definition to use pygtk 2.8 features.
+
+	* plug-ins/pygimp/gimpui.override: removed hand-written constructor.
+
+2006-09-07  Sven Neumann  <sven@gimp.org>
+
 	* app/base/pixel-region.[ch]
 	* app/base/tile-manager.[ch]
 	* app/base/tile-swap.[ch]: removed code that tried to swap in

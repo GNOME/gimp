@@ -1548,8 +1548,8 @@
   (c-name "gimp_hint_box_new")
   (is-constructor-of "GimpHintBox")
   (return-type "GtkWidget*")
-  (parameters
-    '("const gchar*" "hint")
+  (properties
+    '("hint") ("stock-id" (optional))
   )
 )
 
