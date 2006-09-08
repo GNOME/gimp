@@ -1,25 +1,27 @@
+# translation of de.po to Deutsch
 # This is the German locale definition for the GIMP tips.
-# Copyright (C) 2002 Free Software Foundation, Inc.
+# Copyright (C) 2002, 2006 Free Software Foundation, Inc.
 # Sven Neumann <sven@gimp.org>
+#
+#
 # Sven Neumann <sven@gimp.org>, 2004.
-# 
-# 
+# Hendrik Brandt <heb@gnome-de.org>, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.3\n"
+"Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-15 14:54+0100\n"
-"PO-Revision-Date: 2005-11-15 14:57+0100\n"
-"Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
+"POT-Creation-Date: 2006-09-08 20:19+0200\n"
+"PO-Revision-Date: 2006-09-08 21:30+0200\n"
+"Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr ""
-"<big>Willkommen bei The GIMP, dem »GNU Image Manipulation Program«.</big>"
+msgstr "<big>Willkommen bei The GIMP, dem »GNU Image Manipulation Program«.</big>"
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
@@ -70,7 +72,7 @@ msgid ""
 "Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
 "use the menus to do the same."
 msgstr ""
-"Eine schwebende Auswahl muss mit einer neuen Ebene oder der zuletzt aktiven  "
+"Eine schwebende Auswahl muss mit einer neuen Ebene oder der zuletzt aktiven "
 "Ebene verankert werden, bevor Sie andere Funktionen auf das Bild anwenden "
 "können. Klicken Sie dazu auf die Schaltfläche »Neue Ebene« oder »Ebene "
 "verankern« im Ebenendialog, oder verwenden Sie dafür die Menüs."
@@ -83,8 +85,8 @@ msgid ""
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
 "you exit GIMP."
 msgstr ""
-"Nachdem Sie in den Einstellungen »Dynamische Tastaturkürzel« aktiviert haben,"
-"können Sie Tastaturkürzel einfach zuweisen oder verändern. Wählen Sie dazu "
+"Nachdem Sie in den Einstellungen »Dynamische Tastenkürzel« aktiviert haben,"
+"können Sie einfach Tastenkürzel zuweisen oder verändern. Wählen Sie dazu "
 "mit dem Mauspfeil den entsprechende Menüeintrag aus und drücken Sie "
 "anschließend die neue neue Tastenkombination. Wenn »Tastenkürzel speichern« "
 "aktiviert ist, werden die von Ihnen definierten Tastenkürzel gespeichert, "
@@ -99,7 +101,7 @@ msgstr ""
 "Durch Anklicken der Lineale am Rande des Bildes können Hilfslinien auf das "
 "Bild gezogen und dort platziert werden. Alle von Ihnen verschobenen "
 "Auswahlen werden entlang dieser Hilfslinien einrasten. Sie können "
-"Hilfslinien wieder entfernen, indem Sie diese mit dem Verschieben-Werkzeug "
+"Hilfslinien wieder entfernen, indem Sie diese mit dem Verschiebenwerkzeug "
 "über die Bildgrenzen hinaus verschieben."
 
 #: ../data/tips/gimp-tips.xml.in.h:10
@@ -108,7 +110,7 @@ msgid ""
 "experiment."
 msgstr ""
 "The GIMP kann die meisten Änderungen an einem Bild rückgängig machen - Sie "
-"können also frei nach Belieben experimentieren."
+"können also nach Belieben experimentieren."
 
 #: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
@@ -139,8 +141,8 @@ msgid ""
 "Layer-&gt;Transparency-&gt;Add Alpha Channel."
 msgstr ""
 "Wenn im Ebenendialog ein Ebenenname in <b>fetter</b> Schrift angezeigt wird, "
-"bedeutet dies, dass diese Ebene keinen Alpha-Kanal besitzt. Sie können einen "
-"Alpha-Kanal hinzufügen, indem Sie »Ebene-&gt; Transparenz-&gt; Alpha-Kanal "
+"bedeutet dies, dass diese Ebene keinen Alphakanal besitzt. Sie können einen "
+"Alpha-Kanal hinzufügen, indem Sie »Ebene-&gt; Transparenz-&gt; Alphakanal "
 "hinzufügen« anwenden."
 
 #: ../data/tips/gimp-tips.xml.in.h:14
@@ -152,8 +154,8 @@ msgid ""
 msgstr ""
 "Wenn einige Ihrer eingescannten Fotos nicht farbenfroh genug aussehen, "
 "können Sie einfach einen Farbtonabgleich mit der Schaltfläche »Automatisch« "
-"des Farbwerte-Werkzeugs ausführen (Ebene-&gt;Farben-&gt;Farbwerte). Falls es "
-"irgendwelche Farbstiche gibt, können Sie diese mit dem Farbkurven-Werkzeug "
+"des Farbwertewerkzeugs ausführen (Ebene-&gt;Farben-&gt;Farbwerte). Falls es "
+"irgendwelche Farbstiche gibt, können Sie diese mit dem Farbkurvenwerkzeug "
 "korrigiert werden (Ebene-&gt;Farben-&gt;Farbkurven)."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
@@ -162,10 +164,10 @@ msgid ""
 "with their current settings. You can use the Paintbrush in gradient mode or "
 "even the Eraser or the Smudge tool."
 msgstr ""
-"Wenn Sie einen Pfad nachziehen (Bearbeiten-&gt;Pfad nachziehen...), kann das "
+"Wenn Sie einen Pfad nachziehen (Bearbeiten-&gt;Pfad nachziehen …), kann das "
 "Malwerkzeug mit den aktuellen Einstellungen benutzt werden. Sie können z.B. "
 "der Sprühpistole im Farbverlaufsmodus oder auch den Radierer oder das "
-"Verwischen-Werkzeug verwenden."
+"Verwischenwerkzeug verwenden."
 
 #: ../data/tips/gimp-tips.xml.in.h:16
 msgid ""
@@ -257,7 +259,7 @@ msgid ""
 msgstr ""
 "Sie können eine Auswahl anpassen oder verschieben, indem Sie beim Ziehen die "
 "<tt>Alt</tt>-Taste drücken. Falls dies dazu führt, dass sich Ihr Fenster "
-"bewegt, ist die  <tt>Alt</tt>-Taste bereits von Ihrem Fenster-Manager "
+"bewegt, ist die <tt>Alt</tt>-Taste bereits von Ihrem Fenster-Manager "
 "belegt. Versuchen Sie dann gleichzeitig die <tt>Umschalt</tt>-Taste zu "
 "drücken."
 
@@ -293,7 +295,7 @@ msgid ""
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current image or selection with that color."
 msgstr ""
-"In The  GIMP können verschiedenste Dinge verschoben und verändert werden. "
+"In The GIMP können verschiedenste Dinge verschoben und verändert werden. "
 "Wenn Sie z.B. eine Farbe aus dem Werkzeugkasten oder aus der Farbpalette "
 "heraus auf ein Bild ziehen, wird dieses Bild oder die aktuelle Auswahl mit "
 "dieser Farbe ausgefüllt."
@@ -308,7 +310,7 @@ msgstr ""
 "eine bestehende Auswahl mit dem aktuellen Pinsel nachgezeichnet wird. Dazu "
 "steht der Befehl »Bearbeiten-&gt;Auswahl nachziehen« zur Verfügung. "
 "Komplexere Formen können mit dem Pfad-Werkzeug oder dem GFig-Plugin (Filter-"
-"&gt;Render-&gt;Gfig) gezeichnet werden."
+"&gt;Render-&gt;GFig) gezeichnet werden."
 
 #: ../data/tips/gimp-tips.xml.in.h:29
 msgid ""
@@ -324,7 +326,7 @@ msgid ""
 "a layer in the Layers dialog."
 msgstr ""
 "Viele Ebenenoperationen werden durch Klicken mit der rechten Maustaste auf "
-"den Namen der Ebene im Ebenen-Dialog durchgeführt."
+"den Namen der Ebene im Ebenendialog durchgeführt."
 
 #: ../data/tips/gimp-tips.xml.in.h:31
 msgid ""
@@ -354,7 +356,7 @@ msgid ""
 "image (if your window manager doesn't trap those keys...)."
 msgstr ""
 "<tt>Alt</tt>-<tt>Tabulator</tt> erlaubt es, durch die Ebenen eines Bildes zu "
-"schalten (wenn Ihr Fenstermanager diese Tastenkombination nicht abfängt...)."
+"schalten (wenn Ihr Fenstermanager diese Tastenkombination nicht abfängt …)."
 
 #: ../data/tips/gimp-tips.xml.in.h:34
 msgid ""
