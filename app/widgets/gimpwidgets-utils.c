@@ -519,6 +519,8 @@ gimp_substitute_underscores (gchar *str)
       *p = ' ';
 }
 
+
+/* pretty much straight copy of _gtk_accel_label_class_get_accelerator_label */
 gchar *
 gimp_get_accel_string (guint           key,
                        GdkModifierType modifiers)
@@ -542,10 +544,12 @@ gimp_get_accel_string (guint           key,
       switch (ch)
         {
         case ' ':
-          g_string_append (gstring, "Space");
+          /* do not translate the part before the | */
+          g_string_append (gstring, Q_("keyboard label|Space"));
           break;
         case '\\':
-          g_string_append (gstring, "Backslash");
+          /* do not translate the part before the | */
+          g_string_append (gstring, Q_("keyboard label|Backslash"));
           break;
         default:
           g_string_append_unichar (gstring, g_unichar_toupper (ch));

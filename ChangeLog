@@ -1,3 +1,8 @@
+2006-09-08  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpwidgets-utils.c: mark "Space" and "Backslash"
+	for translation (using the same translation context as in GTK+).
+
 2006-09-08  Hans Breuer  <hans@breuer.org>
 
 	* **/makefile.msc app/gimpcore.def : updated
@@ -5,7 +10,7 @@
 	* app/paint/gimpperspectiveclone.c : error C2057: expected constant 
 	expression. Stack allocation of dynamic sized arrays is afaik a GCC
 	extension, use g_alloca() instead.
-	
+
 2006-09-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpperspectiveclonetool.c
