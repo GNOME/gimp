@@ -1,7 +1,13 @@
+2006-09-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpperspectiveclonetool.c
+	(gimp_perspective_clone_tool_register): fix the tool's menu path
+	and accelerator.
+
 2006-09-07  Jakub Steiner <jimmac@ximian.com>
 
 	* stock-tool-perspective-clone*png: add the element of perspective
-		in. Perhaps needs a bit of work on the anti-aliasing still.
+	in. Perhaps needs a bit of work on the anti-aliasing still.
 
 2006-09-07  Michael Natterer  <mitch@gimp.org>
 
