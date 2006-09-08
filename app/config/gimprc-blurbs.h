@@ -330,6 +330,9 @@ N_("Enable displaying a handy GIMP tip on startup.")
 #define SHOW_TOOLTIPS_BLURB \
 N_("Show a tooltip when the pointer hovers over an item.")
 
+#define SPACE_BAR_ACTION_BLURB \
+N_("What to do when the space bar is pressed in the image window.")
+
 #define SWAP_PATH_BLURB \
 N_("Sets the swap file location. GIMP uses a tile based memory allocation " \
    "scheme. The swap file is used to quickly and easily swap tiles out to " \

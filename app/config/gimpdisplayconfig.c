@@ -65,7 +65,8 @@ enum
   PROP_NAV_PREVIEW_SIZE,
   PROP_DEFAULT_VIEW,
   PROP_DEFAULT_FULLSCREEN_VIEW,
-  PROP_ACTIVATE_ON_FOCUS
+  PROP_ACTIVATE_ON_FOCUS,
+  PROP_SPACE_BAR_ACTION
 };
 
 
@@ -198,7 +199,6 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                  GIMP_TYPE_VIEW_SIZE,
                                  GIMP_VIEW_SIZE_MEDIUM,
                                  GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_VIEW,
                                    "default-view",
                                    DEFAULT_VIEW_BLURB,
@@ -216,6 +216,12 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                     ACTIVATE_ON_FOCUS_BLURB,
                                     DEFAULT_ACTIVATE_ON_FOCUS,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SPACE_BAR_ACTION,
+                                 "space-bar-action",
+                                 SPACE_BAR_ACTION_BLURB,
+                                 GIMP_TYPE_SPACE_BAR_ACTION,
+                                 GIMP_SPACE_BAR_ACTION_PAN,
+                                 GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -339,6 +345,9 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_ACTIVATE_ON_FOCUS:
       display_config->activate_on_focus = g_value_get_boolean (value);
       break;
+    case PROP_SPACE_BAR_ACTION:
+      display_config->space_bar_action = g_value_get_enum (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -424,6 +433,9 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_ACTIVATE_ON_FOCUS:
       g_value_set_boolean (value, display_config->activate_on_focus);
+      break;
+    case PROP_SPACE_BAR_ACTION:
+      g_value_set_enum (value, display_config->space_bar_action);
       break;
 
     default:

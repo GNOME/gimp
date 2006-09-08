@@ -1,5 +1,15 @@
 2006-09-08  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpdisplayconfig.[ch]
+	* app/config/gimprc-blurbs.h
+	* app/display/display-enums.[ch]: added new gimprc option
+	"space-bar-action" and default to "pan". Will add a GUI for this later.
+
+	* app/display/gimpdisplayshell-callbacks.c: respect the new option
+	and either pan the display or push the move tool. Fixes bug #349903.
+
+2006-09-08  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp.[ch]: added function gimp_get_tool_info().
 
 	* app/actions/tools-commands.c

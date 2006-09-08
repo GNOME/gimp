@@ -70,6 +70,36 @@ gimp_canvas_padding_mode_get_type (void)
   return type;
 }
 
+GType
+gimp_space_bar_action_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_SPACE_BAR_ACTION_NONE, "GIMP_SPACE_BAR_ACTION_NONE", "none" },
+    { GIMP_SPACE_BAR_ACTION_PAN, "GIMP_SPACE_BAR_ACTION_PAN", "pan" },
+    { GIMP_SPACE_BAR_ACTION_MOVE, "GIMP_SPACE_BAR_ACTION_MOVE", "move" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_SPACE_BAR_ACTION_NONE, N_("None"), NULL },
+    { GIMP_SPACE_BAR_ACTION_PAN, N_("Pan"), NULL },
+    { GIMP_SPACE_BAR_ACTION_MOVE, N_("Move"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpSpaceBarAction", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 
