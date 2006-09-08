@@ -1,3 +1,8 @@
+2006-09-08  Hendrik Brandt  <heb@gnome-de.org>
+
+	* de.po: Bugfixes in German translation.
+	         Re-mark a few strings as fuzzy as the current is not OK
+
 2006-09-06  Josep Puigdemont i Casamajó  <josep.puigdemont@gmail.com>
 
 	* ca.po: Updated Catalan translation by
