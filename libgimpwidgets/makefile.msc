@@ -57,6 +57,7 @@ OBJECTS = \
 	gimpfileentry.obj \
 	gimpframe.obj \
 	gimphelpui.obj \
+	gimphintbox.obj \
 	gimpintcombobox.obj \
 	gimpintstore.obj \
 	gimpmemsizeentry.obj \

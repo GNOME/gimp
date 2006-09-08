@@ -136,6 +136,7 @@ OBJECTS = \
 	gimpstrokeoptions.obj \
 	gimptemplate.obj \
 	gimptooloptions.obj \
+#	gimp-transform-resize.obj \
 	gimp-transform-utils.obj \
 	gimp-templates.obj \
 	gimptoolinfo.obj \

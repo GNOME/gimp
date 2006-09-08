@@ -56,6 +56,7 @@ OBJECTS = \
 	gimpfliptool.obj \
 	gimpforegroundselectoptions.obj \
 	gimpforegroundselecttool.obj \
+	gimpforegroundselecttool-undo.obj \
 	gimpfreeselecttool.obj \
 	gimpfuzzyselecttool.obj \
 	gimphealtool.obj \
@@ -78,6 +79,7 @@ OBJECTS = \
 	gimppainttool.obj \
 	gimppenciltool.obj \
 	gimpperspectivetool.obj \
+	gimpperspectiveclonetool.obj \
 	gimpposterizetool.obj \
 	gimprectangleoptions.obj \
 	gimprectangletool.obj \
@@ -89,6 +91,7 @@ OBJECTS = \
 	gimpselectionoptions.obj \
 	gimpselectiontool.obj \
 	gimpsheartool.obj \
+	gimpsourcetool.obj \
 	gimpsmudgetool.obj \
 	gimptextoptions.obj \
 	gimptexttool.obj \

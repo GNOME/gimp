@@ -43,7 +43,6 @@ OBJECTS = \
 	gimpink-undo.obj \
 	gimpinkoptions.obj \
 	gimpheal.obj \
-	gimphealoptions.obj \
 	gimppaintbrush.obj \
 	gimppaintcore.obj \
 	gimppaintcore-stroke.obj \
@@ -51,6 +50,8 @@ OBJECTS = \
 	gimppaintoptions.obj \
 	gimppencil.obj \
 	gimppenciloptions.obj \
+	gimpperspectiveclone.obj \
+	gimpperspectivecloneoptions.obj \
 	gimpsmudge.obj \
 	gimpsmudgeoptions.obj \
 	gimpsourcecore.obj \

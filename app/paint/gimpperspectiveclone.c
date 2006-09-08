@@ -522,10 +522,10 @@ gimp_perspective_clone_motion (GimpPaintCore    *paint_core,
                   itemp_y < (tile_manager_height (src_tiles)-1))
                 {
                   guchar  *src_pixel;
-                  guchar   color1[temp_buf->bytes - 1];
-                  guchar   color2[temp_buf->bytes - 1];
-                  guchar   color3[temp_buf->bytes - 1];
-                  guchar   color4[temp_buf->bytes - 1];
+                  guchar  *color1 = g_alloca (temp_buf->bytes - 1);
+                  guchar  *color2 = g_alloca (temp_buf->bytes - 1);
+                  guchar  *color3 = g_alloca (temp_buf->bytes - 1);
+                  guchar  *color4 = g_alloca (temp_buf->bytes - 1);
                   gdouble  dx, dy;
                   gint     k;
 

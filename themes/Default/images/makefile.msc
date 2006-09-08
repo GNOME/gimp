@@ -273,6 +273,8 @@ STOCK_TOOL_VARIABLES = \
 	stock_tool_pencil_22		tools/stock-tool-pencil-22.png	\
 	stock_tool_perspective_16		tools/stock-tool-perspective-16.png	\
 	stock_tool_perspective_22		tools/stock-tool-perspective-22.png	\
+	stock_tool_perspective_clone_16		tools/stock-tool-perspective-clone-16.png	\
+	stock_tool_perspective_clone_22		tools/stock-tool-perspective-clone-22.png	\
 	stock_tool_posterize_16		tools/stock-tool-posterize-16.png	\
 	stock_tool_posterize_22		tools/stock-tool-posterize-22.png	\
 	stock_tool_rect_select_16		tools/stock-tool-rect-select-16.png	\
