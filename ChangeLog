@@ -1,3 +1,7 @@
+2006-09-08  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/preferences-dialog.c: added GUI for "space-bar-action".
+
 2006-09-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpperspectiveclone.c (gimp_perspective_clone_motion):

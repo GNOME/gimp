@@ -1974,6 +1974,16 @@ prefs_dialog_new (Gimp       *gimp,
                                _("Initial zoom _ratio:"),
                                GTK_TABLE (table), 0, size_group);
 
+  /*  Space Bar  */
+  vbox2 = prefs_frame_new (_("Space Bar"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  prefs_enum_combo_box_add (object, "space-bar-action", 0, 0,
+                            _("Action bound to the space bar:"),
+                            GTK_TABLE (table), 0, size_group);
+
   /*  Mouse Pointers  */
   vbox2 = prefs_frame_new (_("Mouse Pointers"),
                            GTK_CONTAINER (vbox), FALSE);
