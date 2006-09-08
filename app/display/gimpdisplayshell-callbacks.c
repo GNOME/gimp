@@ -448,6 +448,36 @@ gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
 }
 
 static void
+gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
+                                    gint              x,
+                                    gint              y)
+{
+  g_return_if_fail (! shell->scrolling);
+
+  shell->scrolling      = TRUE;
+  shell->scroll_start_x = x + shell->offset_x;
+  shell->scroll_start_y = y + shell->offset_y;
+
+  gimp_display_shell_set_override_cursor (shell, GDK_FLEUR);
+
+  gtk_grab_add (shell->canvas);
+}
+
+static void
+gimp_display_shell_stop_scrolling (GimpDisplayShell *shell)
+{
+  g_return_if_fail (shell->scrolling);
+
+  shell->scrolling      = FALSE;
+  shell->scroll_start_x = 0;
+  shell->scroll_start_y = 0;
+
+  gimp_display_shell_unset_override_cursor (shell);
+
+  gtk_grab_remove (shell->canvas);
+}
+
+static void
 gimp_display_shell_space_pressed (GimpDisplayShell *shell,
                                   GdkModifierType   state,
                                   guint32           time)
@@ -460,24 +490,22 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
   switch (GIMP_DISPLAY_CONFIG (gimp->config)->space_bar_action)
     {
     case GIMP_SPACE_BAR_ACTION_NONE:
-      break;
+      return;
 
     case GIMP_SPACE_BAR_ACTION_PAN:
       {
-        gint x, y;
+        GimpCoords coords;
 
-        gdk_window_get_pointer (GTK_WIDGET (shell)->window, &x, &y, NULL);
+        gimp_display_shell_get_device_coords (shell,
+                                              gimp_devices_get_current (gimp),
+                                              &coords);
 
-        shell->scrolling = TRUE;
+        gimp_display_shell_start_scrolling (shell, coords.x, coords.y);
 
-        shell->scroll_start_x = x + shell->offset_x;
-        shell->scroll_start_y = y + shell->offset_y;
-
-        gimp_display_shell_set_override_cursor (shell, GDK_FLEUR);
-
-        gtk_grab_add (shell->canvas);
-
-        shell->space_pressed = TRUE;
+        gdk_pointer_grab (shell->canvas->window, FALSE,
+                          GDK_POINTER_MOTION_MASK |
+                          GDK_POINTER_MOTION_HINT_MASK,
+                          NULL, NULL, time);
       }
       break;
 
@@ -485,24 +513,24 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
       {
         GimpTool *active_tool = tool_manager_get_active (gimp);
 
-        if (active_tool && ! GIMP_IS_MOVE_TOOL (active_tool))
-          {
-            shell->space_shaded_tool =
-              gimp_object_get_name (GIMP_OBJECT (active_tool->tool_info));
+        if (! active_tool || GIMP_IS_MOVE_TOOL (active_tool))
+          return;
 
-            gimp_context_set_tool (gimp_get_user_context (gimp),
-                                   gimp_get_tool_info (gimp, "gimp-move-tool"));
+        shell->space_shaded_tool =
+          gimp_object_get_name (GIMP_OBJECT (active_tool->tool_info));
 
-            tool_manager_focus_display_active (gimp, shell->display);
-            tool_manager_modifier_state_active (gimp, state, shell->display);
+        gimp_context_set_tool (gimp_get_user_context (gimp),
+                               gimp_get_tool_info (gimp, "gimp-move-tool"));
 
-            gdk_keyboard_grab (shell->canvas->window, FALSE, time);
-
-            shell->space_pressed = TRUE;
-          }
+        tool_manager_focus_display_active (gimp, shell->display);
+        tool_manager_modifier_state_active (gimp, state, shell->display);
       }
       break;
   }
+
+  gdk_keyboard_grab (shell->canvas->window, FALSE, time);
+
+  shell->space_pressed = TRUE;
 }
 
 static void
@@ -518,19 +546,12 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
   switch (GIMP_DISPLAY_CONFIG (gimp->config)->space_bar_action)
     {
     case GIMP_SPACE_BAR_ACTION_NONE:
-      return;
+      break;
 
     case GIMP_SPACE_BAR_ACTION_PAN:
-      shell->scrolling      = FALSE;
-      shell->scroll_start_x = 0;
-      shell->scroll_start_y = 0;
-
-      gimp_display_shell_unset_override_cursor (shell);
-
-      gtk_grab_remove (shell->canvas);
-
-      shell->space_pressed = FALSE;
-      return;
+      gimp_display_shell_stop_scrolling (shell);
+      gdk_display_pointer_ungrab (gtk_widget_get_display (shell->canvas), time);
+      break;
 
     case GIMP_SPACE_BAR_ACTION_MOVE:
       gimp_context_set_tool (gimp_get_user_context (gimp),
@@ -540,12 +561,12 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
 
       tool_manager_focus_display_active (gimp, shell->display);
       tool_manager_modifier_state_active (gimp, state, shell->display);
-
-      gdk_display_keyboard_ungrab (gtk_widget_get_display (shell->canvas),
-                                   time);
-
-      shell->space_pressed = FALSE;
+      break;
     }
+
+  gdk_display_keyboard_ungrab (gtk_widget_get_display (shell->canvas), time);
+
+  shell->space_pressed = FALSE;
 }
 
 gboolean
@@ -848,14 +869,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
           case 2:
             state |= GDK_BUTTON2_MASK;
-
-            shell->scrolling      = TRUE;
-            shell->scroll_start_x = bevent->x + shell->offset_x;
-            shell->scroll_start_y = bevent->y + shell->offset_y;
-
-            gtk_grab_add (canvas);
-
-            gimp_display_shell_set_override_cursor (shell, GDK_FLEUR);
+            gimp_display_shell_start_scrolling (shell, bevent->x, bevent->y);
             break;
 
           case 3:
@@ -928,14 +942,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
           case 2:
             state &= ~GDK_BUTTON2_MASK;
-
-            shell->scrolling      = FALSE;
-            shell->scroll_start_x = 0;
-            shell->scroll_start_y = 0;
-
-            gtk_grab_remove (canvas);
-
-            gimp_display_shell_unset_override_cursor (shell);
+            gimp_display_shell_stop_scrolling (shell);
             break;
 
           case 3:

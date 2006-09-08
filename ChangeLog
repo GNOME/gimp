@@ -1,3 +1,9 @@
+2006-09-08  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c: use coordinates from
+	the current device when starting to scroll. Grab the keyboard and
+	pointer when panning with the space bar.
+
 2006-09-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/text/gimptextlayout-render.c (gimp_text_layout_render_glyphs): 
