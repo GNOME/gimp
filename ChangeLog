@@ -1,6 +1,12 @@
 2006-09-08  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-drawable.c
+	* plug-ins/pygimp/pygimp-pdb.c: reorder includes to avoid preprocessor
+	symbol redefinition warnings.
+
+2006-09-08  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-drawable.c
 	* plug-ins/pygimp/pygimp-pdb.c: #define NO_IMPORT_PYGOBJECT, so
 	the internal pygobject API symbol is only defined once.
 

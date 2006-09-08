@@ -21,8 +21,6 @@
 #  include <config.h>
 #endif
 
-#include <glib-object.h>
-
 #define NO_IMPORT_PYGOBJECT
 #include <pygobject.h>
 
@@ -30,6 +28,8 @@
 
 #define NO_IMPORT_PYGIMPCOLOR
 #include "pygimpcolor-api.h"
+
+#include <glib-object.h>
 
 static void
 ensure_drawable(PyGimpDrawable *self)

@@ -21,8 +21,6 @@
 #  include <config.h>
 #endif
 
-#include <glib-object.h>
-
 #define NO_IMPORT_PYGOBJECT
 #include <pygobject.h>
 
@@ -32,6 +30,8 @@
 #include "pygimpcolor-api.h"
 
 #include <structmember.h>
+
+#include <glib-object.h>
 
 #ifndef PG_DEBUG
 # define PG_DEBUG 0
