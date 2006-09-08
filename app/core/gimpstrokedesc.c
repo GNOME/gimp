@@ -54,18 +54,29 @@ enum
 static void      gimp_stroke_desc_config_iface_init (gpointer    iface,
                                                      gpointer    iface_data);
 
-static GObject * gimp_stroke_desc_constructor  (GType            type,
-                                                guint            n_params,
-                                                GObjectConstructParam *params);
-static void      gimp_stroke_desc_finalize     (GObject         *object);
-static void      gimp_stroke_desc_set_property (GObject         *object,
-                                                guint            property_id,
-                                                const GValue    *value,
-                                                GParamSpec      *pspec);
-static void      gimp_stroke_desc_get_property (GObject         *object,
-                                                guint            property_id,
-                                                GValue          *value,
-                                                GParamSpec      *pspec);
+static GObject * gimp_stroke_desc_constructor         (GType            type,
+                                                       guint            n_params,
+                                                       GObjectConstructParam *params);
+static void      gimp_stroke_desc_finalize            (GObject         *object);
+static void      gimp_stroke_desc_set_property        (GObject         *object,
+                                                       guint            property_id,
+                                                       const GValue    *value,
+                                                       GParamSpec      *pspec);
+static void      gimp_stroke_desc_get_property        (GObject         *object,
+                                                       guint            property_id,
+                                                       GValue          *value,
+                                                       GParamSpec      *pspec);
+static gboolean  gimp_stroke_desc_serialize_property  (GimpConfig       *config,
+                                                       guint             property_id,
+                                                       const GValue     *value,
+                                                       GParamSpec       *pspec,
+                                                       GimpConfigWriter *writer);
+static gboolean gimp_stroke_desc_deserialize_property (GimpConfig *object,
+                                                       guint       property_id,
+                                                       GValue     *value,
+                                                       GParamSpec *pspec,
+                                                       GScanner   *scanner,
+                                                       GTokenType *expected);
 
 static GimpConfig * gimp_stroke_desc_duplicate (GimpConfig      *config);
 
@@ -121,7 +132,9 @@ gimp_stroke_desc_config_iface_init (gpointer  iface,
 {
   GimpConfigInterface *config_iface = (GimpConfigInterface *) iface;
 
-  config_iface->duplicate = gimp_stroke_desc_duplicate;
+  config_iface->duplicate            = gimp_stroke_desc_duplicate;
+  config_iface->serialize_property   = gimp_stroke_desc_serialize_property;
+  config_iface->deserialize_property = gimp_stroke_desc_deserialize_property;
 }
 
 static void
@@ -270,6 +283,89 @@ gimp_stroke_desc_duplicate (GimpConfig *config)
     }
 
   return GIMP_CONFIG (new_desc);
+}
+
+static gboolean
+gimp_stroke_desc_serialize_property (GimpConfig       *config,
+                                     guint             property_id,
+                                     const GValue     *value,
+                                     GParamSpec       *pspec,
+                                     GimpConfigWriter *writer)
+{
+  GimpObject     *serialize_obj;
+
+  if (property_id == PROP_PAINT_INFO)
+    serialize_obj = g_value_get_object (value);
+  else
+    return FALSE;
+
+  gimp_config_writer_open (writer, pspec->name);
+
+  if (serialize_obj)
+    gimp_config_writer_string (writer, gimp_object_get_name (serialize_obj));
+  else
+    gimp_config_writer_print (writer, "NULL", 4);
+
+  gimp_config_writer_close (writer);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_stroke_desc_deserialize_property (GimpConfig *object,
+                                       guint       property_id,
+                                       GValue     *value,
+                                       GParamSpec *pspec,
+                                       GScanner   *scanner,
+                                       GTokenType *expected)
+{
+  GimpStrokeDesc *stroke_desc = GIMP_STROKE_DESC (object);
+  GimpContainer  *container;
+  GimpObject     *current;
+  gboolean        no_data = FALSE;
+  gchar          *object_name;
+
+  if (property_id == PROP_PAINT_INFO)
+    {
+      container = stroke_desc->gimp->paint_info_list;
+      current   = (GimpObject *) (GIMP_CONTEXT (stroke_desc->stroke_options)->paint_info);
+      no_data   = TRUE;
+    }
+  else
+    return FALSE;
+
+  if (! no_data)
+    no_data = stroke_desc->gimp->no_data;
+
+  if (gimp_scanner_parse_identifier (scanner, "NULL"))
+    {
+      g_value_set_object (value, NULL);
+    }
+  else if (gimp_scanner_parse_string (scanner, &object_name))
+    {
+      GimpObject *deserialize_obj;
+
+      if (! object_name)
+        object_name = g_strdup ("");
+
+      deserialize_obj = gimp_container_get_child_by_name (container,
+                                                          object_name);
+
+      if (! deserialize_obj && ! no_data)
+        {
+          deserialize_obj = current;
+        }
+
+      g_value_set_object (value, deserialize_obj);
+
+      g_free (object_name);
+    }
+  else
+    {
+      *expected = G_TOKEN_STRING;
+    }
+
+  return TRUE;
 }
 
 

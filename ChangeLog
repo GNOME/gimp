@@ -1,3 +1,11 @@
+2006-09-08  Hendrik Boom  <hboom@cvs.gnome.org>
+
+	* app/core/gimpstrokedesc.c: added
+	gimp_stroke_desc_(de)serialize_property functions with the effect that
+	the GimpPaintInfo property of GimpStrokeDesc is now serialized by name
+	rather than by value. Images with vector layers can now be saved and
+	re-loaded without the previously mentionned error message.
+
 2006-08-20  Hendrik Boom  <hboom@cvs.gnome.org>
 	Note: an error message is shown when loading images with vector layers
 	produced by recent versions of this code. This is caused by improper

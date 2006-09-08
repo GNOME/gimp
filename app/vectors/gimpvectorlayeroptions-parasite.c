@@ -82,8 +82,7 @@ gimp_vector_layer_options_from_parasite (const GimpParasite  *parasite,
   options = g_object_new (GIMP_TYPE_VECTOR_LAYER_OPTIONS,
                           "gimp", gimp,
                           NULL);
-
-  /* g_printf(str); */
+  
   gimp_config_deserialize_string (GIMP_CONFIG (options),
                                   str,
                                   gimp_parasite_data_size (parasite),
