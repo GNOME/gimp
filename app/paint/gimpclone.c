@@ -55,7 +55,6 @@ static void   gimp_clone_motion       (GimpSourceCore   *source_core,
                                        GimpDrawable     *drawable,
                                        GimpPaintOptions *paint_options,
                                        gdouble           opacity,
-                                       GimpImage        *src_image,
                                        GimpPickable     *src_pickable,
                                        PixelRegion      *srcPR,
                                        gint              src_offset_x,
@@ -149,7 +148,6 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                    GimpDrawable     *drawable,
                    GimpPaintOptions *paint_options,
                    gdouble           opacity,
-                   GimpImage        *src_image,
                    GimpPickable     *src_pickable,
                    PixelRegion      *srcPR,
                    gint              src_offset_x,
@@ -164,13 +162,15 @@ gimp_clone_motion (GimpSourceCore   *source_core,
   GimpCloneOptions    *options        = GIMP_CLONE_OPTIONS (paint_options);
   GimpSourceOptions   *source_options = GIMP_SOURCE_OPTIONS (paint_options);
   GimpContext         *context        = GIMP_CONTEXT (paint_options);
+  GimpImage           *src_image;
   GimpImage           *image;
   gpointer             pr = NULL;
   gint                 y;
   PixelRegion          destPR;
   GimpPattern         *pattern = NULL;
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
+  src_image = gimp_pickable_get_image (src_pickable);
+  image     = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /*  configure the destination  */
   switch (options->clone_type)

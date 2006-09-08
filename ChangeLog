@@ -1,3 +1,19 @@
+2006-09-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpperspectiveclone.c (gimp_perspective_clone_motion):
+	must not clamp the paint area against the boundary of the
+	src_tiles. Various small cleanups.
+
+	* app/paint/gimpsourcecore.[ch] (GimpSourceCore::motion): removed
+	src_image parameter.
+
+	Added new virtual function GimpSourceCore::get_source() and moved
+	the source PR initialization code to its default implementation.
+	(GimpPerspectiveClone will override this method later).
+
+	* app/paint/gimpclone.c (gimp_clone_motion)
+	* app/paint/gimpheal.c (gimp_heal_motion): changed accordingly.
+
 2006-09-08  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpdisplayconfig.[ch]

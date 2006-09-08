@@ -48,26 +48,40 @@ enum
 };
 
 
-static void   gimp_source_core_set_property     (GObject          *object,
-                                                 guint             property_id,
-                                                 const GValue     *value,
-                                                 GParamSpec       *pspec);
-static void   gimp_source_core_get_property     (GObject          *object,
-                                                 guint             property_id,
-                                                 GValue           *value,
-                                                 GParamSpec       *pspec);
+static void   gimp_source_core_set_property      (GObject          *object,
+                                                  guint             property_id,
+                                                  const GValue     *value,
+                                                  GParamSpec       *pspec);
+static void   gimp_source_core_get_property      (GObject          *object,
+                                                  guint             property_id,
+                                                  GValue           *value,
+                                                  GParamSpec       *pspec);
 
-static void   gimp_source_core_paint            (GimpPaintCore    *paint_core,
-                                                 GimpDrawable     *drawable,
-                                                 GimpPaintOptions *paint_options,
-                                                 GimpPaintState    paint_state,
-                                                 guint32           time);
+static void   gimp_source_core_paint             (GimpPaintCore    *paint_core,
+                                                  GimpDrawable     *drawable,
+                                                  GimpPaintOptions *paint_options,
+                                                  GimpPaintState    paint_state,
+                                                  guint32           time);
 
-static void   gimp_source_core_motion           (GimpSourceCore   *source_core,
-                                                 GimpDrawable     *drawable,
-                                                 GimpPaintOptions *paint_options);
-static void   gimp_source_core_set_src_drawable (GimpSourceCore   *source_core,
-                                                 GimpDrawable     *drawable);
+static void   gimp_source_core_motion            (GimpSourceCore   *source_core,
+                                                  GimpDrawable     *drawable,
+                                                  GimpPaintOptions *paint_options);
+
+static gboolean gimp_source_core_real_get_source (GimpSourceCore   *source_core,
+                                                  GimpDrawable     *drawable,
+                                                  GimpPaintOptions *paint_options,
+                                                  GimpPickable     *src_pickable,
+                                                  gint              src_offset_x,
+                                                  gint              src_offset_y,
+                                                  TempBuf          *paint_area,
+                                                  gint             *paint_area_offset_x,
+                                                  gint             *paint_area_offset_y,
+                                                  gint             *paint_area_width,
+                                                  gint             *paint_area_height,
+                                                  PixelRegion      *srcPR);
+
+static void   gimp_source_core_set_src_drawable  (GimpSourceCore   *source_core,
+                                                  GimpDrawable     *drawable);
 
 
 G_DEFINE_TYPE (GimpSourceCore, gimp_source_core, GIMP_TYPE_BRUSH_CORE)
@@ -87,6 +101,7 @@ gimp_source_core_class_init (GimpSourceCoreClass *klass)
 
   brush_core_class->handles_changing_brush = TRUE;
 
+  klass->get_source                        = gimp_source_core_real_get_source;
   klass->motion                            = NULL;
 
   g_object_class_install_property (object_class, PROP_SRC_DRAWABLE,
@@ -277,7 +292,6 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   GimpPaintCore     *paint_core   = GIMP_PAINT_CORE (source_core);
   GimpSourceOptions *options      = GIMP_SOURCE_OPTIONS (paint_options);
   GimpImage         *image        = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpImage         *src_image    = NULL;
   GimpPickable      *src_pickable = NULL;
   PixelRegion        srcPR;
   gint               src_offset_x;
@@ -299,6 +313,8 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
 
   if (options->use_source)
     {
+      GimpImage *src_image;
+
       if (! source_core->src_drawable)
         return;
 
@@ -331,58 +347,21 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   paint_area_width    = paint_area->width;
   paint_area_height   = paint_area->height;
 
-  if (options->use_source)
+  if (options->use_source &&
+      ! GIMP_SOURCE_CORE_GET_CLASS (source_core)->get_source (source_core,
+                                                              drawable,
+                                                              paint_options,
+                                                              src_pickable,
+                                                              src_offset_x,
+                                                              src_offset_y,
+                                                              paint_area,
+                                                              &paint_area_offset_x,
+                                                              &paint_area_offset_y,
+                                                              &paint_area_width,
+                                                              &paint_area_height,
+                                                              &srcPR))
     {
-      TileManager *src_tiles = gimp_pickable_get_tiles (src_pickable);
-      gint         x1, y1;
-      gint         x2, y2;
-
-      x1 = CLAMP (paint_area->x + src_offset_x,
-                  0, tile_manager_width  (src_tiles));
-      y1 = CLAMP (paint_area->y + src_offset_y,
-                  0, tile_manager_height (src_tiles));
-      x2 = CLAMP (paint_area->x + src_offset_x + paint_area_width,
-                  0, tile_manager_width  (src_tiles));
-      y2 = CLAMP (paint_area->y + src_offset_y + paint_area_height,
-                  0, tile_manager_height (src_tiles));
-
-      if (!(x2 - x1) || !(y2 - y1))
-        return;
-
-      /*  If the source image is different from the destination,
-       *  then we should copy straight from the source image
-       *  to the canvas.
-       *  Otherwise, we need a call to get_orig_image to make sure
-       *  we get a copy of the unblemished (offset) image
-       */
-      if ((  options->sample_merged && (src_image                 != image)) ||
-          (! options->sample_merged && (source_core->src_drawable != drawable)))
-        {
-          pixel_region_init (&srcPR, src_tiles,
-                             x1, y1, x2 - x1, y2 - y1, FALSE);
-        }
-      else
-        {
-          TempBuf *orig;
-
-          /*  get the original image  */
-          if (options->sample_merged)
-            orig = gimp_paint_core_get_orig_proj (paint_core,
-                                                  src_pickable,
-                                                  x1, y1, x2, y2);
-          else
-            orig = gimp_paint_core_get_orig_image (paint_core,
-                                                   GIMP_DRAWABLE (src_pickable),
-                                                   x1, y1, x2, y2);
-
-          pixel_region_init_temp_buf (&srcPR, orig,
-                                      0, 0, x2 - x1, y2 - y1);
-        }
-
-      paint_area_offset_x = x1 - (paint_area->x + src_offset_x);
-      paint_area_offset_y = y1 - (paint_area->y + src_offset_y);
-      paint_area_width    = x2 - x1;
-      paint_area_height   = y2 - y1;
+      return;
     }
 
   /*  Set the paint area to transparent  */
@@ -392,7 +371,6 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                                                     drawable,
                                                     paint_options,
                                                     opacity,
-                                                    src_image,
                                                     src_pickable,
                                                     &srcPR,
                                                     src_offset_x,
@@ -402,6 +380,77 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                                                     paint_area_offset_y,
                                                     paint_area_width,
                                                     paint_area_height);
+}
+
+static gboolean
+gimp_source_core_real_get_source (GimpSourceCore   *source_core,
+                                  GimpDrawable     *drawable,
+                                  GimpPaintOptions *paint_options,
+                                  GimpPickable     *src_pickable,
+                                  gint              src_offset_x,
+                                  gint              src_offset_y,
+                                  TempBuf          *paint_area,
+                                  gint             *paint_area_offset_x,
+                                  gint             *paint_area_offset_y,
+                                  gint             *paint_area_width,
+                                  gint             *paint_area_height,
+                                  PixelRegion      *srcPR)
+{
+  GimpSourceOptions *options   = GIMP_SOURCE_OPTIONS (paint_options);
+  GimpImage         *image     = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpImage         *src_image = gimp_pickable_get_image (src_pickable);
+  TileManager       *src_tiles = gimp_pickable_get_tiles (src_pickable);
+  gint               x1, y1;
+  gint               x2, y2;
+
+  x1 = CLAMP (paint_area->x + src_offset_x,
+              0, tile_manager_width  (src_tiles));
+  y1 = CLAMP (paint_area->y + src_offset_y,
+              0, tile_manager_height (src_tiles));
+  x2 = CLAMP (paint_area->x + src_offset_x + paint_area->width,
+              0, tile_manager_width  (src_tiles));
+  y2 = CLAMP (paint_area->y + src_offset_y + paint_area->height,
+              0, tile_manager_height (src_tiles));
+
+  if (!(x2 - x1) || !(y2 - y1))
+    return FALSE;
+
+  /*  If the source image is different from the destination,
+   *  then we should copy straight from the source image
+   *  to the canvas.
+   *  Otherwise, we need a call to get_orig_image to make sure
+   *  we get a copy of the unblemished (offset) image
+   */
+  if ((  options->sample_merged && (src_image                 != image)) ||
+      (! options->sample_merged && (source_core->src_drawable != drawable)))
+    {
+      pixel_region_init (srcPR, src_tiles,
+                         x1, y1, x2 - x1, y2 - y1, FALSE);
+    }
+  else
+    {
+      TempBuf *orig;
+
+      /*  get the original image  */
+      if (options->sample_merged)
+        orig = gimp_paint_core_get_orig_proj (GIMP_PAINT_CORE (source_core),
+                                              src_pickable,
+                                              x1, y1, x2, y2);
+      else
+        orig = gimp_paint_core_get_orig_image (GIMP_PAINT_CORE (source_core),
+                                               GIMP_DRAWABLE (src_pickable),
+                                               x1, y1, x2, y2);
+
+      pixel_region_init_temp_buf (srcPR, orig,
+                                  0, 0, x2 - x1, y2 - y1);
+    }
+
+  *paint_area_offset_x = x1 - (paint_area->x + src_offset_x);
+  *paint_area_offset_y = y1 - (paint_area->y + src_offset_y);
+  *paint_area_width    = x2 - x1;
+  *paint_area_height   = y2 - y1;
+
+  return TRUE;
 }
 
 static void

@@ -56,20 +56,32 @@ struct _GimpSourceCoreClass
 {
   GimpBrushCoreClass  parent_class;
 
-  void (*  motion) (GimpSourceCore   *source_core,
-                    GimpDrawable     *drawable,
-                    GimpPaintOptions *paint_options,
-                    gdouble           opacity,
-                    GimpImage        *src_image,
-                    GimpPickable     *src_pickable,
-                    PixelRegion      *srcPR,
-                    gint              src_offset_x,
-                    gint              src_offset_y,
-                    TempBuf          *paint_area,
-                    gint              paint_area_offset_x,
-                    gint              paint_area_offset_y,
-                    gint              paint_area_width,
-                    gint              paint_area_height);
+  gboolean (* get_source) (GimpSourceCore   *source_core,
+                           GimpDrawable     *drawable,
+                           GimpPaintOptions *paint_options,
+                           GimpPickable     *src_pickable,
+                           gint              src_offset_x,
+                           gint              src_offset_y,
+                           TempBuf          *paint_area,
+                           gint             *paint_area_offset_x,
+                           gint             *paint_area_offset_y,
+                           gint             *paint_area_width,
+                           gint             *paint_area_height,
+                           PixelRegion      *srcPR);
+
+  void     (*  motion)    (GimpSourceCore   *source_core,
+                           GimpDrawable     *drawable,
+                           GimpPaintOptions *paint_options,
+                           gdouble           opacity,
+                           GimpPickable     *src_pickable,
+                           PixelRegion      *srcPR,
+                           gint              src_offset_x,
+                           gint              src_offset_y,
+                           TempBuf          *paint_area,
+                           gint              paint_area_offset_x,
+                           gint              paint_area_offset_y,
+                           gint              paint_area_width,
+                           gint              paint_area_height);
 };
 
 

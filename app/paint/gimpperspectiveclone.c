@@ -422,17 +422,14 @@ gimp_perspective_clone_motion (GimpPaintCore    *paint_core,
       src_tiles = gimp_pickable_get_tiles (src_pickable);
 
       /* Destination coordinates that will be painted */
-      x1d = CLAMP (area->x,
-                   0, tile_manager_width  (src_tiles));
-      y1d = CLAMP (area->y,
-                   0, tile_manager_height (src_tiles));
-      x2d = CLAMP (area->x + area->width,
-                   0, tile_manager_width  (src_tiles));
-      y2d = CLAMP (area->y + area->height,
-                   0, tile_manager_height (src_tiles));
+      x1d = area->x;
+      y1d = area->y;
+      x2d = area->x + area->width;
+      y2d = area->y + area->height;
 
-      /* Boundary box for source pixels to copy:
-       * Convert all the vertex of the box to paint in destination area to its correspondent in source area bearing in mind perspective
+      /* Boundary box for source pixels to copy: Convert all the
+       * vertex of the box to paint in destination area to its
+       * correspondent in source area bearing in mind perspective
        */
       gimp_perspective_clone_get_source_point (clone, x1d, y1d, &x1s, &y1s);
       gimp_perspective_clone_get_source_point (clone, x1d, y2d, &x2s, &y2s);
@@ -440,21 +437,14 @@ gimp_perspective_clone_motion (GimpPaintCore    *paint_core,
       gimp_perspective_clone_get_source_point (clone, x2d, y2d, &x4s, &y4s);
 
       xmin = floor (MIN4 (x1s, x2s, x3s, x4s));
-      xmax = ceil  (MAX4 (x1s, x2s, x3s, x4s));
       ymin = floor (MIN4 (y1s, y2s, y3s, y4s));
+      xmax = ceil  (MAX4 (x1s, x2s, x3s, x4s));
       ymax = ceil  (MAX4 (y1s, y2s, y3s, y4s));
 
-      xmax++; xmin--;
-      ymax++; ymin--;
-
-      xmin = CLAMP (xmin,
-                    0, tile_manager_width  (src_tiles));
-      ymin = CLAMP (ymin,
-                    0, tile_manager_height (src_tiles));
-      xmax = CLAMP (xmax,
-                    0, tile_manager_width  (src_tiles));
-      ymax = CLAMP (ymax,
-                    0, tile_manager_height (src_tiles));
+      xmin = CLAMP (xmin - 1, 0, tile_manager_width  (src_tiles));
+      ymin = CLAMP (ymin - 1, 0, tile_manager_height (src_tiles));
+      xmax = CLAMP (xmax + 1, 0, tile_manager_width  (src_tiles));
+      ymax = CLAMP (ymax + 1, 0, tile_manager_height (src_tiles));
 
       /* if the source area is completely out of the image */
       if (!(xmax - xmin) || !(ymax - ymin))
@@ -471,8 +461,10 @@ gimp_perspective_clone_motion (GimpPaintCore    *paint_core,
         {
           /*  get the original image  */
           pixel_region_init (&auxPR, src_tiles,
-                             xmin, ymin, xmax-xmin, ymax - ymin, FALSE);
-          orig = temp_buf_new (xmax-xmin, ymax-ymin, auxPR.bytes, 0, 0, NULL);
+                             xmin, ymin, xmax - xmin, ymax - ymin,
+                             FALSE);
+          orig = temp_buf_new (xmax - xmin, ymax - ymin, auxPR.bytes,
+                               0, 0, NULL);
 
           pixel_region_init_temp_buf (&auxPR2, orig,
                                       0, 0, xmax - xmin, ymax - ymin);
