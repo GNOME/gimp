@@ -41,7 +41,6 @@
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
-#include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
 #include "core/gimpprogress.h"
@@ -166,11 +165,8 @@ layers_text_tool_cmd_callback (GtkAction *action,
 
   if (! GIMP_IS_TEXT_TOOL (active_tool))
     {
-      GimpToolInfo *tool_info;
-
-      tool_info = (GimpToolInfo *)
-        gimp_container_get_child_by_name (image->gimp->tool_info_list,
-                                          "gimp-text-tool");
+      GimpToolInfo *tool_info = gimp_get_tool_info (image->gimp,
+                                                    "gimp-text-tool");
 
       if (GIMP_IS_TOOL_INFO (tool_info))
         {

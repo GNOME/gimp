@@ -26,7 +26,6 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-bucket-fill.h"
@@ -330,21 +329,17 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
 
   if (item)
     {
-      GimpDrawable *drawable = GIMP_DRAWABLE (item);
-      GimpToolInfo *tool_info;
-      GimpContext  *context;
-
       /*  Get the bucket fill context  */
-      tool_info = (GimpToolInfo *)
-        gimp_container_get_child_by_name (view->image->gimp->tool_info_list,
-                                          "gimp-bucket-fill-tool");
+      GimpContext  *context;
+      GimpToolInfo *tool_info = gimp_get_tool_info (view->image->gimp,
+                                                    "gimp-bucket-fill-tool");
 
       if (tool_info && tool_info->tool_options)
         context = GIMP_CONTEXT (tool_info->tool_options);
       else
         context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view));
 
-      gimp_drawable_bucket_fill_full (drawable,
+      gimp_drawable_bucket_fill_full (GIMP_DRAWABLE (item),
                                       fill_mode,
                                       gimp_context_get_paint_mode (context),
                                       gimp_context_get_opacity (context),

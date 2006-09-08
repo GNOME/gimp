@@ -161,6 +161,7 @@ struct _GimpDisplayShell
   /*  the state of gimp_display_shell_tool_events()  */
   gboolean          space_pressed;
   gboolean          space_release_pending;
+  const gchar      *space_shaded_tool;
   gboolean          scrolling;
   gint              scroll_start_x;
   gint              scroll_start_y;

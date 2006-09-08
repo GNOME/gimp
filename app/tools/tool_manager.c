@@ -39,8 +39,6 @@
 #include "gimptoolcontrol.h"
 #include "tool_manager.h"
 
-#include "gimp-intl.h"
-
 
 typedef struct _GimpToolManager GimpToolManager;
 
@@ -504,7 +502,8 @@ tool_manager_tool_changed (GimpContext  *user_context,
     {
       GimpToolInfo *old_tool_info = tool_manager->active_tool->tool_info;
 
-      gimp_context_set_parent (GIMP_CONTEXT (old_tool_info->tool_options), NULL);
+      gimp_context_set_parent (GIMP_CONTEXT (old_tool_info->tool_options),
+                               NULL);
     }
 
   /*  connect the new tool's context  */
@@ -551,9 +550,7 @@ tool_manager_image_clean_dirty (GimpImage       *image,
       ! gimp_tool_control_get_preserve (tool->control) &&
       (gimp_tool_control_get_dirty_mask (tool->control) & dirty_mask))
     {
-      GimpDisplay *display;
-
-      display = gimp_tool_has_image (tool, image);
+      GimpDisplay *display = gimp_tool_has_image (tool, image);
 
       if (display)
         tool_manager_control_active (image->gimp, GIMP_TOOL_ACTION_HALT,

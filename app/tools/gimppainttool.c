@@ -24,7 +24,6 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimppaintinfo.h"
@@ -464,14 +463,8 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
     {
       if (press)
         {
-          GimpContainer *tool_info_list;
-          GimpToolInfo  *info;
-
-          tool_info_list = display->image->gimp->tool_info_list;
-
-          info = (GimpToolInfo *)
-            gimp_container_get_child_by_name (tool_info_list,
-                                              "gimp-color-picker-tool");
+          GimpToolInfo *info = gimp_get_tool_info (display->image->gimp,
+                                                   "gimp-color-picker-tool");
 
           if (GIMP_IS_TOOL_INFO (info))
             {

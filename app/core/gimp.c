@@ -977,6 +977,20 @@ gimp_get_user_context (Gimp *gimp)
   return gimp->user_context;
 }
 
+GimpToolInfo *
+gimp_get_tool_info (Gimp        *gimp,
+                    const gchar *tool_id)
+{
+  gpointer info;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (tool_id != NULL, NULL);
+
+  info = gimp_container_get_child_by_name (gimp->tool_info_list, tool_id);
+
+  return (GimpToolInfo *) info;
+}
+
 void
 gimp_message (Gimp         *gimp,
               GimpProgress *progress,

@@ -265,9 +265,8 @@ gimp_selection_view_button_press (GtkWidget           *widget,
 
   renderer = GIMP_VIEW (editor->view)->renderer;
 
-  tool_info = (GimpToolInfo *)
-    gimp_container_get_child_by_name (image_editor->image->gimp->tool_info_list,
-                                      "gimp-by-color-select-tool");
+  tool_info = gimp_get_tool_info (image_editor->image->gimp,
+                                  "gimp-by-color-select-tool");
 
   if (! tool_info)
     return TRUE;
@@ -337,10 +336,8 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
   if (! editor->image)
     return;
 
-  tool_info = (GimpToolInfo *)
-    gimp_container_get_child_by_name (editor->image->gimp->tool_info_list,
-                                      "gimp-by-color-select-tool");
-
+  tool_info = gimp_get_tool_info (editor->image->gimp,
+                                  "gimp-by-color-select-tool");
   if (! tool_info)
     return;
 

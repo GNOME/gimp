@@ -335,9 +335,7 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
 
   config = GIMP_GUI_CONFIG (gimp->config);
 
-  tool_info = (GimpToolInfo *)
-    gimp_container_get_child_by_name (gimp->tool_info_list,
-                                      "gimp-rect-select-tool");
+  tool_info = gimp_get_tool_info (gimp, "gimp-rect-select-tool");
   tool_button = g_object_get_data (G_OBJECT (tool_info), TOOL_BUTTON_DATA_KEY);
 
   if (tool_button)
@@ -501,9 +499,7 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
 
   gimp = GIMP_DOCK (toolbox)->context->gimp;
 
-  tool_info = (GimpToolInfo *)
-    gimp_container_get_child_by_name (gimp->tool_info_list,
-                                      "gimp-rect-select-tool");
+  tool_info = gimp_get_tool_info (gimp, "gimp-rect-select-tool");
   tool_button = g_object_get_data (G_OBJECT (tool_info), TOOL_BUTTON_DATA_KEY);
 
   if (tool_button)

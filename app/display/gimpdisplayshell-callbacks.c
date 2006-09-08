@@ -32,7 +32,6 @@
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
@@ -451,6 +450,78 @@ gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
   shell->draw_cursor = ! current_device->has_cursor;
 }
 
+static void
+gimp_display_shell_space_pressed (GimpDisplayShell *shell,
+                                  GdkModifierType   state,
+                                  guint32           time)
+{
+  if (! shell->space_pressed)
+    {
+      GimpDisplay *display     = shell->display;
+      Gimp        *gimp        = display->image->gimp;
+      GimpTool    *active_tool = tool_manager_get_active (gimp);
+
+      if (active_tool && ! GIMP_IS_MOVE_TOOL (active_tool))
+        {
+          GimpToolInfo *move_tool_info;
+
+          move_tool_info = gimp_get_tool_info (gimp, "gimp-move-tool");
+
+          if (GIMP_IS_TOOL_INFO (move_tool_info))
+            {
+#ifdef DEBUG_MOVE_PUSH
+              g_printerr ("%s: pushing move tool\n", G_STRFUNC);
+#endif
+
+              shell->space_shaded_tool =
+                gimp_object_get_name (GIMP_OBJECT (active_tool->tool_info));
+
+              gdk_keyboard_grab (shell->canvas->window, FALSE, time);
+
+              gimp_context_set_tool (gimp_get_user_context (gimp),
+                                     move_tool_info);
+
+              tool_manager_focus_display_active (gimp, display);
+              tool_manager_modifier_state_active (gimp, state, display);
+
+              shell->space_pressed = TRUE;
+            }
+        }
+    }
+}
+
+
+static void
+gimp_display_shell_space_released (GimpDisplayShell *shell,
+                                   GdkModifierType   state,
+                                   guint32           time)
+{
+  if (shell->space_pressed)
+    {
+      GimpDisplay  *display = shell->display;
+      Gimp         *gimp    = display->image->gimp;
+
+#ifdef DEBUG_MOVE_PUSH
+      g_printerr ("%s: popping move tool\n", G_STRFUNC);
+#endif
+
+      gimp_context_set_tool (gimp_get_user_context (gimp),
+                             gimp_get_tool_info (gimp,
+                                                 shell->space_shaded_tool));
+      shell->space_shaded_tool = NULL;
+
+      tool_manager_focus_display_active (gimp, display);
+      tool_manager_modifier_state_active (gimp, state, display);
+
+      shell->space_pressed = FALSE;
+
+      gdk_display_keyboard_ungrab (gtk_widget_get_display (shell->canvas),
+                                   time);
+    }
+}
+
+
+
 gboolean
 gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                        GdkEvent         *event,
@@ -467,8 +538,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   guint32              time;
   gboolean             return_val        = FALSE;
   gboolean             update_sw_cursor  = FALSE;
-
-  static GimpToolInfo *space_shaded_tool = NULL;
 
   g_return_val_if_fail (GTK_WIDGET_REALIZED (canvas), FALSE);
 
@@ -828,27 +897,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             gtk_grab_remove (canvas);
 
             if (shell->space_release_pending)
-              {
-#ifdef DEBUG_MOVE_PUSH
-                g_printerr ("%s: popping move tool\n", G_STRFUNC);
-#endif
-
-                gimp_context_set_tool (gimp_get_user_context (gimp),
-                                       space_shaded_tool);
-                space_shaded_tool = NULL;
-
-                tool_manager_focus_display_active (gimp, display);
-                tool_manager_modifier_state_active (gimp, state, display);
-
-                tool_manager_oper_update_active (gimp,
-                                                 &image_coords, state,
-                                                 shell->proximity,
-                                                 display);
-
-                shell->space_release_pending = FALSE;
-
-                gdk_display_keyboard_ungrab (gdk_display, time);
-              }
+              gimp_display_shell_space_released (shell, state, time);
             break;
 
           case 2:
@@ -1163,9 +1212,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                  kevent,
                                                  display))
               {
-                GimpController *keyboard;
-
-                keyboard = gimp_controllers_get_keyboard (gimp);
+                GimpController *keyboard = gimp_controllers_get_keyboard (gimp);
 
                 if (keyboard)
                   gimp_controller_keyboard_key_press (GIMP_CONTROLLER_KEYBOARD (keyboard),
@@ -1176,39 +1223,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             break;
 
           case GDK_space:
-            {
-              active_tool = tool_manager_get_active (gimp);
-
-              if (active_tool &&
-                  ! shell->space_pressed && ! GIMP_IS_MOVE_TOOL (active_tool))
-                {
-                  GimpToolInfo *move_tool_info;
-
-                  move_tool_info = (GimpToolInfo *)
-                    gimp_container_get_child_by_name (gimp->tool_info_list,
-                                                      "gimp-move-tool");
-
-                  if (GIMP_IS_TOOL_INFO (move_tool_info))
-                    {
-#ifdef DEBUG_MOVE_PUSH
-                      g_printerr ("%s: pushing move tool\n", G_STRFUNC);
-#endif
-
-                      space_shaded_tool = active_tool->tool_info;
-
-                      gdk_keyboard_grab (canvas->window, FALSE, time);
-
-                      gimp_context_set_tool (gimp_get_user_context (gimp),
-                                             move_tool_info);
-
-                      tool_manager_focus_display_active (gimp, display);
-                      tool_manager_modifier_state_active (gimp, state, display);
-
-                      shell->space_pressed = TRUE;
-                    }
-                }
-            }
-
+            gimp_display_shell_space_pressed (shell, state, time);
             return_val = TRUE;
             break;
 
@@ -1271,24 +1286,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         switch (kevent->keyval)
           {
           case GDK_space:
-            if (shell->space_pressed)
-              {
-#ifdef DEBUG_MOVE_PUSH
-                g_printerr ("%s: popping move tool\n", G_STRFUNC);
-#endif
-
-                gimp_context_set_tool (gimp_get_user_context (gimp),
-                                       space_shaded_tool);
-                space_shaded_tool = NULL;
-
-                tool_manager_focus_display_active (gimp, display);
-                tool_manager_modifier_state_active (gimp, state, display);
-
-                shell->space_pressed = FALSE;
-
-                gdk_display_keyboard_ungrab (gdk_display, time);
-             }
-
+            gimp_display_shell_space_released (shell, state, time);
             return_val = TRUE;
             break;
 
@@ -1398,11 +1396,10 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
         {
           GimpToolInfo *tool_info;
 
-          tool_info = (GimpToolInfo *)
-            gimp_container_get_child_by_name (display->image->gimp->tool_info_list,
-                                              sample_point ?
-                                              "gimp-color-picker-tool" :
-                                              "gimp-move-tool");
+          tool_info = gimp_get_tool_info (display->image->gimp,
+                                          sample_point ?
+                                          "gimp-color-picker-tool" :
+                                          "gimp-move-tool");
 
           if (tool_info)
             gimp_context_set_tool (gimp_get_user_context (display->image->gimp),

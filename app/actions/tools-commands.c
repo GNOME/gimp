@@ -71,8 +71,7 @@ tools_select_cmd_callback (GtkAction   *action,
       value = "gimp-rotate-tool";
     }
 
-  tool_info = (GimpToolInfo *)
-    gimp_container_get_child_by_name (gimp->tool_info_list, value);
+  tool_info = gimp_get_tool_info (gimp, value);
 
   context = gimp_get_user_context (gimp);
 

@@ -30,7 +30,6 @@
 #include "core/gimp-utils.h"
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
@@ -107,11 +106,8 @@ vectors_vectors_tool_cmd_callback (GtkAction *action,
 
   if (! GIMP_IS_VECTOR_TOOL (active_tool))
     {
-      GimpToolInfo  *tool_info;
-
-      tool_info = (GimpToolInfo *)
-        gimp_container_get_child_by_name (image->gimp->tool_info_list,
-                                          "gimp-vector-tool");
+      GimpToolInfo  *tool_info = gimp_get_tool_info (image->gimp,
+                                                     "gimp-vector-tool");
 
       if (GIMP_IS_TOOL_INFO (tool_info))
         {

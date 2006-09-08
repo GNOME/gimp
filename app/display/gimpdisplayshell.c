@@ -290,6 +290,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->space_pressed          = FALSE;
   shell->space_release_pending  = FALSE;
+  shell->space_shaded_tool      = NULL;
+
   shell->scrolling              = FALSE;
   shell->scroll_start_x         = 0;
   shell->scroll_start_y         = 0;

@@ -1,5 +1,24 @@
 2006-09-08  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp.[ch]: added function gimp_get_tool_info().
+
+	* app/actions/tools-commands.c
+	* app/actions/vectors-commands.c
+	* app/tools/gimppainttool.c
+	* app/widgets/gimpdrawabletreeview.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimptoolbox.c: use the new function instead of poking
+	into gimp->tool_info_list.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell.[ch]: moved code that deals with
+	the space key into separate functions. Added space_shaded_tool
+	to GimpDisplayShell instead of using a static variable for it.
+
+	* app/tools/tool_manager.c: removed unused include.
+
+2006-09-08  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpwidgets-utils.c: mark "Space" and "Backslash"
 	for translation (using the same translation context as in GTK+).
 
