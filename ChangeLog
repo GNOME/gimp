@@ -1,3 +1,9 @@
+2006-09-08  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-drawable.c
+	* plug-ins/pygimp/pygimp-pdb.c: #define NO_IMPORT_PYGOBJECT, so
+	the internal pygobject API symbol is only defined once.
+
 2006-09-08  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c: use coordinates from

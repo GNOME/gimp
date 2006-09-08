@@ -21,14 +21,15 @@
 #  include <config.h>
 #endif
 
+#include <glib-object.h>
+
+#define NO_IMPORT_PYGOBJECT
+#include <pygobject.h>
+
 #include "pygimp.h"
 
 #define NO_IMPORT_PYGIMPCOLOR
 #include "pygimpcolor-api.h"
-
-#include <glib-object.h>
-
-#include <pygobject.h>
 
 static void
 ensure_drawable(PyGimpDrawable *self)
