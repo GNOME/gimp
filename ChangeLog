@@ -1,3 +1,9 @@
+2006-09-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/text/gimptextlayout-render.c (gimp_text_layout_render_glyphs): 
+	handle tabs correctly, as instructed by behdad.  Fixes
+	bug #353132.
+
 2006-09-08  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/preferences-dialog.c: added GUI for "space-bar-action".
