@@ -83,9 +83,9 @@ gimp_space_bar_action_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_SPACE_BAR_ACTION_NONE, N_("None"), NULL },
-    { GIMP_SPACE_BAR_ACTION_PAN, N_("Pan"), NULL },
-    { GIMP_SPACE_BAR_ACTION_MOVE, N_("Move"), NULL },
+    { GIMP_SPACE_BAR_ACTION_NONE, N_("No action"), NULL },
+    { GIMP_SPACE_BAR_ACTION_PAN, N_("Pan view"), NULL },
+    { GIMP_SPACE_BAR_ACTION_MOVE, N_("Switch to Move tool"), NULL },
     { 0, NULL, NULL }
   };
 

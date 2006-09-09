@@ -52,9 +52,9 @@ GType gimp_space_bar_action_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_SPACE_BAR_ACTION_NONE,  /*< desc="None" >*/
-  GIMP_SPACE_BAR_ACTION_PAN,   /*< desc="Pan"  >*/
-  GIMP_SPACE_BAR_ACTION_MOVE   /*< desc="Move" >*/
+  GIMP_SPACE_BAR_ACTION_NONE,  /*< desc="No action"           >*/
+  GIMP_SPACE_BAR_ACTION_PAN,   /*< desc="Pan view"            >*/
+  GIMP_SPACE_BAR_ACTION_MOVE   /*< desc="Switch to Move tool" >*/
 } GimpSpaceBarAction;
 
 

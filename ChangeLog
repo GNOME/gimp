@@ -1,3 +1,12 @@
+2006-09-09  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/about-dialog.c: added missing include.
+
+	* app/display/display-enums.[ch]
+	* app/dialogs/preferences-dialog.c: changed labels for
+	"space-bar-action" preference. Suggestions welcome for further
+	improvements.
+
 2006-09-08  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-drawable.c
@@ -166,7 +175,7 @@
 	* app/base/pixel-region.[ch]
 	* app/base/tile-manager.[ch]
 	* app/base/tile-swap.[ch]: removed code that tried to swap in
-	tiles asynchronously (but ended up calling up nothing).
+	tiles asynchronously (but ended up calling nothing).
 
 2006-09-07  Sven Neumann  <sven@gimp.org>
 
