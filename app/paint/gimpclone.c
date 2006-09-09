@@ -68,7 +68,7 @@ static void   gimp_clone_motion       (GimpSourceCore   *source_core,
 static void   gimp_clone_line_image   (GimpImage        *dest,
                                        GimpImage        *src,
                                        GimpDrawable     *d_drawable,
-                                       GimpPickable     *s_pickable,
+                                       GimpImageType     src_type,
                                        guchar           *s,
                                        guchar           *d,
                                        gint              src_bytes,
@@ -164,6 +164,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
   GimpContext         *context        = GIMP_CONTEXT (paint_options);
   GimpImage           *src_image;
   GimpImage           *image;
+  GimpImageType        src_type;
   gpointer             pr = NULL;
   gint                 y;
   PixelRegion          destPR;
@@ -171,6 +172,11 @@ gimp_clone_motion (GimpSourceCore   *source_core,
 
   src_image = gimp_pickable_get_image (src_pickable);
   image     = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  src_type = gimp_pickable_get_image_type (src_pickable);
+
+  if (gimp_pickable_get_bytes (src_pickable) < srcPR->bytes)
+    src_type = GIMP_IMAGE_TYPE_WITH_ALPHA (src_type);
 
   /*  configure the destination  */
   switch (options->clone_type)
@@ -207,7 +213,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
             {
             case GIMP_IMAGE_CLONE:
               gimp_clone_line_image (image, src_image,
-                                     drawable, src_pickable,
+                                     drawable, src_type,
                                      s, d,
                                      srcPR->bytes, destPR.bytes, destPR.w);
               s += srcPR->rowstride;
@@ -247,15 +253,15 @@ gimp_clone_motion (GimpSourceCore   *source_core,
 }
 
 static void
-gimp_clone_line_image (GimpImage    *dest,
-                       GimpImage    *src,
-                       GimpDrawable *d_drawable,
-                       GimpPickable *s_pickable,
-                       guchar       *s,
-                       guchar       *d,
-                       gint          src_bytes,
-                       gint          dest_bytes,
-                       gint          width)
+gimp_clone_line_image (GimpImage     *dest,
+                       GimpImage     *src,
+                       GimpDrawable  *d_drawable,
+                       GimpImageType  src_type,
+                       guchar        *s,
+                       guchar        *d,
+                       gint           src_bytes,
+                       gint           dest_bytes,
+                       gint           width)
 {
   guchar rgba[MAX_CHANNELS];
   gint   alpha;
@@ -264,8 +270,7 @@ gimp_clone_line_image (GimpImage    *dest,
 
   while (width--)
     {
-      gimp_image_get_color (src, gimp_pickable_get_image_type (s_pickable),
-                            s, rgba);
+      gimp_image_get_color (src, src_type, s, rgba);
       gimp_image_transform_color (dest, d_drawable, d, GIMP_RGB, rgba);
 
       d[alpha] = rgba[ALPHA_PIX];

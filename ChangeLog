@@ -1,3 +1,12 @@
+2006-09-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpclone.c (gimp_clone_line_image): changed src_pickable
+	parameter to src_type.
+
+	(gimp_clone_motion): allow the passed srcPR to have alpha even if
+	the source pickable is flat. Pass the correct GimpImageType to
+	gimp_clone_line_image().
+
 2006-09-09  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.c
