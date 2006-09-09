@@ -1,5 +1,10 @@
 2006-09-09  Sven Neumann  <sven@gimp.org>
 
+	* app/app_procs.c
+	* app/errors.[ch]: moved some code from app_run() to errors_init().
+
+2006-09-09  Sven Neumann  <sven@gimp.org>
+
 	* app/app_procs.[ch]
 	* app/main.c: initialize the error subsystem after the gimp object
 	has been created.

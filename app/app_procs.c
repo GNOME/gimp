@@ -170,30 +170,6 @@ app_run (const gchar         *full_prog_name,
   gboolean            swap_is_ok;
   gint                i;
 
-  const gchar *log_domains[] =
-  {
-    "Gimp",
-    "Gimp-Actions",
-    "Gimp-Base",
-    "Gimp-Composite",
-    "Gimp-Config",
-    "Gimp-Core",
-    "Gimp-Dialogs",
-    "Gimp-Display",
-    "Gimp-File",
-    "Gimp-GUI",
-    "Gimp-Menus",
-    "Gimp-PDB",
-    "Gimp-Paint",
-    "Gimp-Paint-Funcs",
-    "Gimp-Plug-In",
-    "Gimp-Text",
-    "Gimp-Tools",
-    "Gimp-Vectors",
-    "Gimp-Widgets",
-    "Gimp-XCF"
-  };
-
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
    */
@@ -208,16 +184,7 @@ app_run (const gchar         *full_prog_name,
                    stack_trace_mode,
                    pdb_compat_mode);
 
-  gimp_errors_init (gimp, full_prog_name, use_debug_handler, stack_trace_mode);
-
-  for (i = 0; i < G_N_ELEMENTS (log_domains); i++)
-    g_log_set_handler (log_domains[i],
-                       G_LOG_LEVEL_MESSAGE,
-                       gimp_message_log_func, &gimp);
-
-  g_log_set_handler (NULL,
-                     G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
-                     gimp_error_log_func, &gimp);
+  errors_init (gimp, full_prog_name, use_debug_handler, stack_trace_mode);
 
   units_init (gimp);
 

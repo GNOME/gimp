@@ -45,6 +45,7 @@
 
 /*  private variables  */
 
+static Gimp                *the_errors_gimp   = NULL;
 static gboolean             use_debug_handler = FALSE;
 static GimpStackTraceMode   stack_trace_mode  = GIMP_STACK_TRACE_QUERY;
 static gchar               *full_prog_name    = NULL;
@@ -56,18 +57,50 @@ static G_GNUC_NORETURN void  gimp_eek (const gchar *reason,
                                        const gchar *message,
                                        gboolean     use_handler);
 
+static void   gimp_message_log_func (const gchar        *log_domain,
+                                     GLogLevelFlags      flags,
+                                     const gchar        *message,
+                                     gpointer            data);
+static void   gimp_error_log_func   (const gchar        *domain,
+                                     GLogLevelFlags      flags,
+                                     const gchar        *message,
+                                     gpointer            data) G_GNUC_NORETURN;
 
-static Gimp *the_errors_gimp = NULL;
 
 
 /*  public functions  */
 
 void
-gimp_errors_init (Gimp               *gimp,
-                  const gchar        *_full_prog_name,
-                  gboolean            _use_debug_handler,
-                  GimpStackTraceMode  _stack_trace_mode)
+errors_init (Gimp               *gimp,
+             const gchar        *_full_prog_name,
+             gboolean            _use_debug_handler,
+             GimpStackTraceMode  _stack_trace_mode)
 {
+  const gchar * const log_domains[] =
+  {
+    "Gimp",
+    "Gimp-Actions",
+    "Gimp-Base",
+    "Gimp-Composite",
+    "Gimp-Config",
+    "Gimp-Core",
+    "Gimp-Dialogs",
+    "Gimp-Display",
+    "Gimp-File",
+    "Gimp-GUI",
+    "Gimp-Menus",
+    "Gimp-PDB",
+    "Gimp-Paint",
+    "Gimp-Paint-Funcs",
+    "Gimp-Plug-In",
+    "Gimp-Text",
+    "Gimp-Tools",
+    "Gimp-Vectors",
+    "Gimp-Widgets",
+    "Gimp-XCF"
+  };
+  gint i;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (_full_prog_name != NULL);
   g_return_if_fail (full_prog_name == NULL);
@@ -86,34 +119,15 @@ gimp_errors_init (Gimp               *gimp,
   use_debug_handler = _use_debug_handler ? TRUE : FALSE;
   stack_trace_mode  = _stack_trace_mode;
   full_prog_name    = g_strdup (_full_prog_name);
-}
 
-void
-gimp_message_log_func (const gchar    *log_domain,
-                       GLogLevelFlags  flags,
-                       const gchar    *message,
-                       gpointer        data)
-{
-  Gimp **gimp = (Gimp **) data;
+  for (i = 0; i < G_N_ELEMENTS (log_domains); i++)
+    g_log_set_handler (log_domains[i],
+                       G_LOG_LEVEL_MESSAGE,
+                       gimp_message_log_func, &gimp);
 
-  if (gimp && GIMP_IS_GIMP (*gimp))
-    {
-      gimp_show_message (*gimp, NULL, NULL, message);
-    }
-  else
-    {
-      g_printerr ("%s: %s\n\n",
-                  gimp_filename_to_utf8 (full_prog_name), message);
-    }
-}
-
-void
-gimp_error_log_func (const gchar    *domain,
-                     GLogLevelFlags  flags,
-                     const gchar    *message,
-                     gpointer        data)
-{
-  gimp_fatal_error (message);
+  g_log_set_handler (NULL,
+                     G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
+                     gimp_error_log_func, &gimp);
 }
 
 void
@@ -144,6 +158,34 @@ gimp_terminate (const gchar *fmt, ...)
 
 
 /*  private functions  */
+
+static void
+gimp_message_log_func (const gchar    *log_domain,
+                       GLogLevelFlags  flags,
+                       const gchar    *message,
+                       gpointer        data)
+{
+  Gimp **gimp = (Gimp **) data;
+
+  if (gimp && GIMP_IS_GIMP (*gimp))
+    {
+      gimp_show_message (*gimp, NULL, NULL, message);
+    }
+  else
+    {
+      g_printerr ("%s: %s\n\n",
+                  gimp_filename_to_utf8 (full_prog_name), message);
+    }
+}
+
+static void
+gimp_error_log_func (const gchar    *domain,
+                     GLogLevelFlags  flags,
+                     const gchar    *message,
+                     gpointer        data)
+{
+  gimp_fatal_error (message);
+}
 
 static void
 gimp_eek (const gchar *reason,
