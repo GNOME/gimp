@@ -655,7 +655,7 @@ gimp_new (const gchar       *name,
   g_return_val_if_fail (name != NULL, NULL);
 
   gimp = g_object_new (GIMP_TYPE_GIMP,
-                       "name",    name,
+                       "name", name,
                        NULL);
 
   gimp->session_name     = g_strdup (session_name);

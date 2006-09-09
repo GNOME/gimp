@@ -41,6 +41,7 @@ gimp_gui_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
+  gimp->gui.ungrab              = NULL;
   gimp->gui.threads_enter       = NULL;
   gimp->gui.threads_leave       = NULL;
   gimp->gui.set_busy            = NULL;
@@ -60,6 +61,15 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.progress_free       = NULL;
   gimp->gui.pdb_dialog_set      = NULL;
   gimp->gui.pdb_dialog_close    = NULL;
+}
+
+void
+gimp_gui_ungrab (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->gui.ungrab)
+    gimp->gui.ungrab (gimp);
 }
 
 void

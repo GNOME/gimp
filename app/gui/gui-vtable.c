@@ -70,6 +70,8 @@
 
 /*  local function prototypes  */
 
+static void           gui_ungrab               (Gimp                *gimp);
+
 static void           gui_threads_enter        (Gimp                *gimp);
 static void           gui_threads_leave        (Gimp                *gimp);
 static void           gui_set_busy             (Gimp                *gimp);
@@ -121,6 +123,7 @@ gui_vtable_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
+  gimp->gui.ungrab              = gui_ungrab;
   gimp->gui.threads_enter       = gui_threads_enter;
   gimp->gui.threads_leave       = gui_threads_leave;
   gimp->gui.set_busy            = gui_set_busy;
@@ -145,6 +148,15 @@ gui_vtable_init (Gimp *gimp)
 
 
 /*  private functions  */
+
+static void
+gui_ungrab (Gimp *gimp)
+{
+  GdkDisplay *display = gdk_display_get_default ();
+
+  gdk_display_pointer_ungrab (display, GDK_CURRENT_TIME);
+  gdk_display_keyboard_ungrab (display, GDK_CURRENT_TIME);
+}
 
 static void
 gui_threads_enter (Gimp *gimp)

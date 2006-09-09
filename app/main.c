@@ -313,8 +313,6 @@ main (int    argc,
 
   gimp_init_signal_handlers ();
 
-  gimp_errors_init (argv[0], use_debug_handler, stack_trace_mode);
-
   app_run (argv[0],
            filenames,
            system_gimprc,
@@ -330,6 +328,7 @@ main (int    argc,
            use_shm,
            use_cpu_accel,
            console_messages,
+           use_debug_handler,
            stack_trace_mode,
            pdb_compat_mode);
 

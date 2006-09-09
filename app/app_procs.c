@@ -159,6 +159,7 @@ app_run (const gchar         *full_prog_name,
          gboolean             use_shm,
          gboolean             use_cpu_accel,
          gboolean             console_messages,
+         gboolean             use_debug_handler,
          GimpStackTraceMode   stack_trace_mode,
          GimpPDBCompatMode    pdb_compat_mode)
 {
@@ -206,6 +207,8 @@ app_run (const gchar         *full_prog_name,
                    console_messages,
                    stack_trace_mode,
                    pdb_compat_mode);
+
+  gimp_errors_init (gimp, full_prog_name, use_debug_handler, stack_trace_mode);
 
   for (i = 0; i < G_N_ELEMENTS (log_domains); i++)
     g_log_set_handler (log_domains[i],

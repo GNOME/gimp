@@ -24,7 +24,8 @@
 #endif
 
 
-void   gimp_errors_init      (const gchar        *full_prog_name,
+void   gimp_errors_init      (Gimp               *gimp,
+                              const gchar        *full_prog_name,
                               gboolean            use_debug_handler,
                               GimpStackTraceMode  stack_trace_mode);
 

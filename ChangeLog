@@ -1,5 +1,17 @@
 2006-09-09  Sven Neumann  <sven@gimp.org>
 
+	* app/app_procs.[ch]
+	* app/main.c: initialize the error subsystem after the gimp object
+	has been created.
+
+	* app/errors.[ch]: store a reference to the gimp object (eek) and
+	use it to call gimp_gui_ungrab() before g_on_error_query().
+
+	* app/core/gimp-gui.[ch]
+	* app/gui/gui-vtable.c: added gimp_gui_ungrab().
+
+2006-09-09  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/emboss.c: hopefully really fixed bug #353227
 	this time.
 

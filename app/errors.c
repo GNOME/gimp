@@ -57,13 +57,18 @@ static G_GNUC_NORETURN void  gimp_eek (const gchar *reason,
                                        gboolean     use_handler);
 
 
+static Gimp *the_errors_gimp = NULL;
+
+
 /*  public functions  */
 
 void
-gimp_errors_init (const gchar        *_full_prog_name,
+gimp_errors_init (Gimp               *gimp,
+                  const gchar        *_full_prog_name,
                   gboolean            _use_debug_handler,
                   GimpStackTraceMode  _stack_trace_mode)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (_full_prog_name != NULL);
   g_return_if_fail (full_prog_name == NULL);
 
@@ -75,6 +80,8 @@ gimp_errors_init (const gchar        *_full_prog_name,
   g_printerr ("You can minimize this window, but don't close it.\n\n");
 #endif
 #endif /* GIMP_UNSTABLE */
+
+  the_errors_gimp   = gimp;
 
   use_debug_handler = _use_debug_handler ? TRUE : FALSE;
   stack_trace_mode  = _stack_trace_mode;
@@ -144,7 +151,6 @@ gimp_eek (const gchar *reason,
           gboolean     use_handler)
 {
 #ifndef G_OS_WIN32
-
   g_printerr ("%s: %s: %s\n", gimp_filename_to_utf8 (full_prog_name),
               reason, message);
 
@@ -161,6 +167,10 @@ gimp_eek (const gchar *reason,
 
             sigemptyset (&sigset);
             sigprocmask (SIG_SETMASK, &sigset, NULL);
+
+            if (the_errors_gimp)
+              gimp_gui_ungrab (the_errors_gimp);
+
             g_on_error_query (full_prog_name);
           }
           break;
@@ -171,6 +181,7 @@ gimp_eek (const gchar *reason,
 
             sigemptyset (&sigset);
             sigprocmask (SIG_SETMASK, &sigset, NULL);
+
             g_on_error_stack_trace (full_prog_name);
           }
           break;
@@ -179,7 +190,6 @@ gimp_eek (const gchar *reason,
           break;
         }
     }
-
 #else
 
   /* g_on_error_* don't do anything reasonable on Win32. */

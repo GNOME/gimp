@@ -24,6 +24,8 @@ typedef struct _GimpGui GimpGui;
 
 struct _GimpGui
 {
+  void           (* ungrab)              (Gimp                *gimp);
+
   void           (* threads_enter)       (Gimp                *gimp);
   void           (* threads_leave)       (Gimp                *gimp);
 
@@ -80,6 +82,8 @@ struct _GimpGui
 
 
 void           gimp_gui_init             (Gimp                *gimp);
+
+void           gimp_gui_ungrab           (Gimp                *gimp);
 
 void           gimp_threads_enter        (Gimp                *gimp);
 void           gimp_threads_leave        (Gimp                *gimp);
