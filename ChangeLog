@@ -1,5 +1,10 @@
 2006-09-09  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/emboss.c: hopefully really fixed bug #353227
+	this time.
+
+2006-09-09  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/about-dialog.c: added missing include.
 
 	* app/display/display-enums.[ch]

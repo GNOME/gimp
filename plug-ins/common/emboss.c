@@ -275,9 +275,6 @@ emboss_row (const guchar *src,
       gint    i, j;
 
       for (i = 0; i < 3; i++)
-        s[i] += bypp;
-
-      for (i = 0; i < 3; i++)
         for (j = 0; j < 3; j++)
           M[i][j] = 0.0;
 
@@ -287,11 +284,11 @@ emboss_row (const guchar *src,
             for (j = 0; j < 3; j++)
               {
                 if (alpha)
-                  a = s[i][(j - 1) * bypp + bytes] / 255.0;
+                  a = s[i][j * bypp + bytes] / 255.0;
                 else
                   a = 1.0;
 
-                M[i][j] += a * s[i][(j - 1) * bypp + b];
+                M[i][j] += a * s[i][j * bypp + b];
               }
         }
 
@@ -314,7 +311,7 @@ emboss_row (const guchar *src,
 
           if (alpha)
             {
-              *dst++ = s[1][bytes]; /* preserve the alpha */
+              *dst++ = s[1][bypp + bytes]; /* preserve the alpha */
               texture++;
             }
         }
@@ -324,8 +321,11 @@ emboss_row (const guchar *src,
             *dst++ = shade;
 
           if (alpha)
-            *dst++ = s[1][bytes]; /* preserve the alpha */
+            *dst++ = s[1][bypp + bytes]; /* preserve the alpha */
         }
+
+      for (i = 0; i < 3; i++)
+        s[i] += bypp;
     }
 
   if (texture)
