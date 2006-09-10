@@ -1,3 +1,8 @@
+2006-09-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/jpeg/jpeg-exif.c: added a thumbnail to the "Rotate
+	Image?" query dialog as suggested in bug #355213.
+
 2006-09-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/file-save-dialog.c (file_save_dialog_check_uri):

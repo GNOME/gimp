@@ -49,10 +49,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static gboolean   jpeg_query (const gchar *primary,
-                              const gchar *secondary,
-                              const gchar *cancel_label,
-                              const gchar *ok_label);
+#define THUMBNAIL_SIZE   128
+
+static gboolean   jpeg_rotate_query (gint32 image_ID);
 
 
 /*  Replacement for exif_data_new_from_file() to work around
@@ -111,11 +110,8 @@ jpeg_apply_exif_data_to_image (const gchar  *filename,
     {
       gint orient = exif_get_short (entry->data, byte_order);
 
-      if (load_interactive && orient > 1 && orient <= 8 &&
-          jpeg_query (_("According to the EXIF data, this image is rotated."),
-                      _("Would you like GIMP to rotate it into the standard "
-                        "orientation?"),
-                      _("_Keep Orientation"), GIMP_STOCK_TOOL_ROTATE))
+      if (orient > 1 && orient <= 8 &&
+          load_interactive && jpeg_rotate_query (image_ID))
         {
           switch (orient)
             {
@@ -251,37 +247,99 @@ jpeg_setup_exif_for_save (ExifData      *exif_data,
 
 
 static gboolean
-jpeg_query (const gchar *primary,
-            const gchar *secondary,
-            const gchar *cancel_label,
-            const gchar *ok_label)
+jpeg_rotate_query (gint32 image_ID)
 {
   GtkWidget *dialog;
+  GtkWidget *hbox;
+  GtkWidget *vbox;
+  GtkWidget *label;
+  GdkPixbuf *pixbuf;
   gint       response;
 
-  /*  FIXME: jpeg_query() needs to know about it's parent window  */
-  dialog = gtk_message_dialog_new (NULL, 0,
-                                   GTK_MESSAGE_QUESTION,
-                                   GTK_BUTTONS_NONE,
-                                   "%s", primary);
+  dialog = gimp_dialog_new (_("Rotate Image?"), PLUG_IN_BINARY,
+                            NULL, 0, NULL, NULL,
 
-  gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-                                            "%s", secondary);
+                            _("_Keep Orientation"), GTK_RESPONSE_CANCEL,
+                            GIMP_STOCK_TOOL_ROTATE, GTK_RESPONSE_OK,
 
-
-  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          cancel_label, GTK_RESPONSE_CANCEL,
-                          ok_label,     GTK_RESPONSE_OK,
-                          NULL);
+                            NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  response = gtk_dialog_run (GTK_DIALOG (dialog));
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+                      hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  pixbuf = gimp_image_get_thumbnail (image_ID,
+                                     THUMBNAIL_SIZE, THUMBNAIL_SIZE,
+                                     GIMP_PIXBUF_SMALL_CHECKS);
+
+  if (pixbuf)
+    {
+      GtkWidget *image;
+      gchar     *name;
+
+      image = gtk_image_new_from_pixbuf (pixbuf);
+      g_object_unref (pixbuf);
+
+      gtk_box_pack_start (GTK_BOX (vbox), image, FALSE, FALSE, 0);
+      gtk_widget_show (image);
+
+      name = gimp_image_get_name (image_ID);
+
+      label = gtk_label_new (name);
+      gimp_label_set_attributes (GTK_LABEL (label),
+                                 PANGO_ATTR_STYLE,  PANGO_STYLE_ITALIC,
+                                 -1);
+      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      g_free (name);
+    }
+
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  label = g_object_new (GTK_TYPE_LABEL,
+                        "label",   _("According to the EXIF data, "
+                                     "this image is rotated."),
+                        "wrap",    TRUE,
+                        "justify", GTK_JUSTIFY_LEFT,
+                        "xalign",  0.0,
+                        "yalign",  0.5,
+                        NULL);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  label = g_object_new (GTK_TYPE_LABEL,
+                        "label",   _("Would you like GIMP to rotate it "
+                                     "into the standard orientation?"),
+                        "wrap",    TRUE,
+                        "justify", GTK_JUSTIFY_LEFT,
+                        "xalign",  0.0,
+                        "yalign",  0.5,
+                        NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  response = gimp_dialog_run (GIMP_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
