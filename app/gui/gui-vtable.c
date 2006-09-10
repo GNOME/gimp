@@ -154,8 +154,11 @@ gui_ungrab (Gimp *gimp)
 {
   GdkDisplay *display = gdk_display_get_default ();
 
-  gdk_display_pointer_ungrab (display, GDK_CURRENT_TIME);
-  gdk_display_keyboard_ungrab (display, GDK_CURRENT_TIME);
+  if (display)
+    {
+      gdk_display_pointer_ungrab (display, GDK_CURRENT_TIME);
+      gdk_display_keyboard_ungrab (display, GDK_CURRENT_TIME);
+    }
 }
 
 static void

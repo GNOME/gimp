@@ -123,11 +123,11 @@ errors_init (Gimp               *gimp,
   for (i = 0; i < G_N_ELEMENTS (log_domains); i++)
     g_log_set_handler (log_domains[i],
                        G_LOG_LEVEL_MESSAGE,
-                       gimp_message_log_func, &gimp);
+                       gimp_message_log_func, gimp);
 
   g_log_set_handler (NULL,
                      G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
-                     gimp_error_log_func, &gimp);
+                     gimp_error_log_func, gimp);
 }
 
 void
@@ -165,11 +165,11 @@ gimp_message_log_func (const gchar    *log_domain,
                        const gchar    *message,
                        gpointer        data)
 {
-  Gimp **gimp = (Gimp **) data;
+  Gimp *gimp = data;
 
-  if (gimp && GIMP_IS_GIMP (*gimp))
+  if (gimp)
     {
-      gimp_show_message (*gimp, NULL, NULL, message);
+      gimp_show_message (gimp, NULL, NULL, message);
     }
   else
     {

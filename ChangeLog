@@ -1,7 +1,12 @@
+2006-09-10  Sven Neumann  <sven@gimp.org>
+
+	* app/errors.c
+	* app/gui/gui-vtable.c: minor cleanup.
+
 2006-09-09  Jakub Steiner <jimmac@ximian.com>
 
-	* themes/Default/images/tools/stock-tool-perspective*xcf:
-		forgot to add the source XCFs
+	* themes/Default/images/tools/stock-tool-perspective*.xcf:
+	forgot to add the source XCFs
 
 2006-09-09  Michael Natterer  <mitch@gimp.org>
 
