@@ -1,3 +1,10 @@
+2006-09-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/depthmerge.c (dialogDepthMap2ChangedCallback):
+	change "depthMap1Drawable" to "depthMap2Drawable" to fix
+	typo introduced in version 1.35 committed on 2004-04-21.
+	Should fix bug #355219.
+
 2006-09-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/jpeg/jpeg-exif.c: added a thumbnail to the "Rotate

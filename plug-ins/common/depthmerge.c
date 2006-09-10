@@ -996,7 +996,7 @@ dialogDepthMap2ChangedCallback (GtkWidget  *widget,
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
                                  &dm->params.depthMap2);
 
-  dm->depthMap1Drawable = ((dm->params.depthMap2 == -1) ?
+  dm->depthMap2Drawable = ((dm->params.depthMap2 == -1) ?
                            NULL :
                            gimp_drawable_get (dm->params.depthMap2));
 
