@@ -1,3 +1,9 @@
+2006-09-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/file-save-dialog.c (file_save_dialog_check_uri):
+	after appending an extension, invoke "response" on the dialog and
+	bail out, so the file chooser re-runs the overwrite-confirm check.
+
 2006-09-10  Sven Neumann  <sven@gimp.org>
 
 	* app/errors.c

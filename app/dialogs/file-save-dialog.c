@@ -234,8 +234,8 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
               uri      = ext_uri;
               basename = ext_basename;
 
-              uri_proc = file_utils_find_proc (gimp->plug_in_manager->save_procs,
-                                               uri, NULL);
+              uri_proc      = file_utils_find_proc (gimp->plug_in_manager->save_procs,
+                                                    uri, NULL);
               basename_proc = file_utils_find_proc (gimp->plug_in_manager->save_procs,
                                                     basename, NULL);
 
@@ -243,6 +243,21 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
               gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (save_dialog),
                                                  utf8);
               g_free (utf8);
+
+#ifdef DEBUG_SPEW
+              g_print ("%s: set basename to %s, rerunning response and "
+                       "bailing out\n", G_STRFUNC, basename);
+#endif
+
+              /*  call the response callback again, so the
+               *  overwrite-confirm logic can check the changed uri
+               */
+              gtk_dialog_response (GTK_DIALOG (save_dialog), GTK_RESPONSE_OK);
+
+              g_free (uri);
+              g_free (basename);
+
+              return FALSE;
             }
           else
             {
