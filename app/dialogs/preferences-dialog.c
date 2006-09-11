@@ -1884,7 +1884,9 @@ prefs_dialog_new (Gimp       *gimp,
   {
     GtkWidget *combo;
 
-    combo = gimp_container_combo_box_new (gimp->templates, NULL, 16, 0);
+    combo = gimp_container_combo_box_new (gimp->templates,
+                                          gimp_get_user_context (gimp),
+                                          16, 0);
     gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                                _("_Template:"),  0.0, 0.5,
                                combo, 1, FALSE);
