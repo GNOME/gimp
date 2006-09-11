@@ -182,13 +182,13 @@ gimp_image_prop_view_constructor (GType                  type,
   gtk_table_set_row_spacing (GTK_TABLE (view), row++, 12);
 
   view->filename_label =
-    gimp_image_prop_view_add_label (table, row++, _("Filename:"));
+    gimp_image_prop_view_add_label (table, row++, _("File Name:"));
 
   view->filesize_label =
-    gimp_image_prop_view_add_label (table, row++, _("Filesize:"));
+    gimp_image_prop_view_add_label (table, row++, _("File Size:"));
 
   view->filetype_label =
-    gimp_image_prop_view_add_label (table, row, _("Filetype:"));
+    gimp_image_prop_view_add_label (table, row, _("File Type:"));
 
   gtk_table_set_row_spacing (GTK_TABLE (view), row++, 12);
 

@@ -1,5 +1,9 @@
 2006-09-11  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpimagepropview.c: string changes.
+
+2006-09-11  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimppluginmanager.[ch]: added a convenience function
 	to retrieve the translated procedure label.
 
