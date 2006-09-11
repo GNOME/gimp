@@ -304,7 +304,7 @@ gimp_stroke_style_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_STROKE_STYLE_SOLID, N_("Solid"), NULL },
+    { GIMP_STROKE_STYLE_SOLID, N_("Solid color"), NULL },
     { GIMP_STROKE_STYLE_PATTERN, N_("Pattern"), NULL },
     { 0, NULL, NULL }
   };

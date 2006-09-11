@@ -163,8 +163,8 @@ GType gimp_stroke_style_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_STROKE_STYLE_SOLID,  /*< desc="Solid"   >*/
-  GIMP_STROKE_STYLE_PATTERN /*< desc="Pattern" >*/
+  GIMP_STROKE_STYLE_SOLID,  /*< desc="Solid color" >*/
+  GIMP_STROKE_STYLE_PATTERN /*< desc="Pattern"     >*/
 } GimpStrokeStyle;
 
 

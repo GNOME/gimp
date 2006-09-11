@@ -171,7 +171,7 @@ gimp_stroke_editor_constructor (GType                   type,
 
   g_assert (editor->options != NULL);
 
-  gtk_box_set_spacing (GTK_BOX (editor), 6);
+  gtk_box_set_spacing (GTK_BOX (editor), 12);
 
   box = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
@@ -180,6 +180,11 @@ gimp_stroke_editor_constructor (GType                   type,
   label = gtk_label_new (_("Line width:"));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  box = gimp_prop_enum_radio_box_new (G_OBJECT (editor->options), "style",
+                                      0, 0);
+  gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
+  gtk_widget_show (box);
 
   size = gimp_prop_size_entry_new (G_OBJECT (editor->options), "width", "unit",
                                    "%a", GIMP_SIZE_ENTRY_UPDATE_SIZE,
@@ -197,10 +202,10 @@ gimp_stroke_editor_constructor (GType                   type,
   gtk_widget_show (frame);
 
   table = gtk_table_new (5, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 4, 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 4, 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -293,11 +298,6 @@ gimp_stroke_editor_constructor (GType                   type,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
   row++;
-
-  box = gimp_prop_enum_radio_box_new (G_OBJECT (editor->options), "style",
-                                      0, 0);
-  gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
-  gtk_widget_show (box);
 
   return object;
 }

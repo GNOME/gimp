@@ -215,7 +215,8 @@ stroke_dialog_new (GimpItem    *item,
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
 
-    combo = gimp_container_combo_box_new (image->gimp->paint_info_list, NULL,
+    combo = gimp_container_combo_box_new (image->gimp->paint_info_list,
+                                          context,
                                           16, 0);
     gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo),
                                      GIMP_VIEWABLE (desc->paint_info));

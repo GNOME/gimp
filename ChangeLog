@@ -1,5 +1,16 @@
 2006-09-11  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-enums.[ch]: use "Solid color" as description for
+	GIMP_STROKE_STYLE_SOLID.
+
+	* app/widgets/gimpstrokeeditor.c: moved "style" control further up
+	to make it less ambiguous (bug #309740).
+
+	* app/dialogs/stroke-dialog.c (stroke_dialog_new): pass the context
+	to gimp_container_combo_box_new().
+
+2006-09-11  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_draw_area):
 	fixed calculation of offset into the source buffer (bug #353639).
 
