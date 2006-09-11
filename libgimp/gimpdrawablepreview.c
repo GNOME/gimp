@@ -430,7 +430,9 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
                                   draw_height,
                                   gimp_drawable_type (drawable->drawable_id),
                                   src, draw_width * drawable->bpp,
-                                  buf + (draw_x - x) + (draw_y - y) * rowstride,
+                                  (buf +
+                                   (draw_x - x) * drawable->bpp +
+                                   (draw_y - y) * rowstride),
                                   rowstride,
                                   sel, draw_width);
 

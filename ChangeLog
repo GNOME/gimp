@@ -1,5 +1,10 @@
 2006-09-11  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_draw_area):
+	fixed calculation of offset into the source buffer (bug #353639).
+
+2006-09-11  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-selection.c: minor cleanup.
 
 2006-09-11  Michael Natterer  <mitch@gimp.org>
