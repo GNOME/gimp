@@ -273,7 +273,8 @@ selection_stop (Selection *selection)
 static void
 selection_pause (Selection *selection)
 {
-  selection_stop (selection);
+  if (selection->paused == 0)
+    selection_stop (selection);
 
   selection->paused++;
 }
@@ -281,13 +282,10 @@ selection_pause (Selection *selection)
 static void
 selection_resume (Selection *selection)
 {
-  if (selection->paused == 1 && selection->visible)
-    {
-      selection->timeout = g_idle_add ((GSourceFunc) selection_start_timeout,
-                                       selection);
-    }
-
   selection->paused--;
+
+  if (selection->paused == 0)
+    selection_start (selection, FALSE);
 }
 
 static void

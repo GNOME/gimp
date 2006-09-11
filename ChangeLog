@@ -1,3 +1,7 @@
+2006-09-11  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-selection.c: minor cleanup.
+
 2006-09-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c
