@@ -769,6 +769,20 @@ gimp_plug_in_manager_history_changed (GimpPlugInManager *manager)
   g_signal_emit (manager, manager_signals[HISTORY_CHANGED], 0);
 }
 
+gchar *
+gimp_plug_in_manager_get_label (GimpPlugInManager   *manager,
+                                GimpPlugInProcedure *proc)
+{
+  const gchar *domain;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
+
+  domain = gimp_plug_in_manager_get_locale_domain (manager, proc->prog, NULL);
+
+  return gimp_plug_in_procedure_get_label (proc, domain);
+}
+
 
 /*  private functions  */
 

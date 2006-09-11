@@ -1,5 +1,13 @@
 2006-09-11  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimppluginmanager.[ch]: added a convenience function
+	to retrieve the translated procedure label.
+
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpimagepropview.c: use it.
+
+2006-09-11  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimppluginmanager-locale-domain.h: corrected comment.
 
 	* app/widgets/gimpimagepropview.[ch]: added file related info to

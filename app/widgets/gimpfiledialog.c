@@ -40,7 +40,6 @@
 #include "pdb/gimppdb.h"
 
 #include "plug-in/gimppluginmanager.h"
-#include "plug-in/gimppluginmanager-locale-domain.h"
 #include "plug-in/gimppluginprocedure.h"
 
 #include "gimpfiledialog.h"
@@ -467,18 +466,13 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
       if (file_proc->extensions_list)
         {
           GtkFileFilter *filter = gtk_file_filter_new ();
-          const gchar   *domain;
           gchar         *label;
           GString       *str;
           GSList        *ext;
           gint           i;
 
-          domain = gimp_plug_in_manager_get_locale_domain (gimp->plug_in_manager,
-                                                           file_proc->prog,
-                                                           NULL);
-
-          label = gimp_plug_in_procedure_get_label (file_proc, domain);
-
+          label = gimp_plug_in_manager_get_label (gimp->plug_in_manager,
+                                                  file_proc);
           str = g_string_new (label);
           g_free (label);
 

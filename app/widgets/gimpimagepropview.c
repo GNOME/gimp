@@ -45,8 +45,6 @@
 #include "file/file-utils.h"
 
 #include "plug-in/gimppluginmanager.h"
-#include "plug-in/gimppluginmanager-locale-domain.h"
-#include "plug-in/gimppluginprocedure.h"
 
 #include "gimpimagepropview.h"
 #include "gimppropwidgets.h"
@@ -361,9 +359,10 @@ gimp_image_prop_view_label_set_filetype (GtkWidget *label,
                                          GimpImage *image)
 {
   GimpPlugInManager   *manager = image->gimp->plug_in_manager;
-  GimpPlugInProcedure *proc    = gimp_image_get_save_proc (image);
-  gchar               *text    = NULL;
+  GimpPlugInProcedure *proc;
+  gchar               *text;
 
+  proc = gimp_image_get_save_proc (image);
   if (! proc)
     {
       gchar *filename = gimp_image_get_filename (image);
@@ -372,11 +371,7 @@ gimp_image_prop_view_label_set_filetype (GtkWidget *label,
       g_free (filename);
     }
 
-  if (proc)
-    {
-      text = gimp_plug_in_procedure_get_label (proc,
-                                               gimp_plug_in_manager_get_locale_domain (manager, proc->prog, NULL));
-    }
+  text = proc ? gimp_plug_in_manager_get_label (manager, proc) : NULL;
 
   gtk_label_set_text (GTK_LABEL (label), text);
   g_free (text);
@@ -480,6 +475,10 @@ gimp_image_prop_view_update (GimpImagePropView *view)
 
   gtk_label_set_text (GTK_LABEL (view->colorspace_label), buf);
 
+  /*  size in memory  */
+  gimp_image_prop_view_label_set_memsize (view->memsize_label,
+                                          GIMP_OBJECT (image));
+
   /*  undo / redo  */
   gimp_image_prop_view_label_set_undo (view->undo_label, image->undo_stack);
   gimp_image_prop_view_label_set_undo (view->redo_label, image->redo_stack);
@@ -517,8 +516,4 @@ gimp_image_prop_view_file_update (GimpImagePropView *view)
 
   /*  filetype  */
   gimp_image_prop_view_label_set_filetype (view->filetype_label, image);
-
-  /*  size in memory  */
-  gimp_image_prop_view_label_set_memsize (view->memsize_label,
-                                          GIMP_OBJECT (image));
 }
