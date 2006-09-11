@@ -1,5 +1,12 @@
 2006-09-11  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimppluginmanager-locale-domain.h: corrected comment.
+
+	* app/widgets/gimpimagepropview.[ch]: added file related info to
+	the Image Properties dialog as requested in bug #86276.
+
+2006-09-11  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/preferences-dialog.c: pass the user context to
 	gimp_container_combo_box_new().
 

@@ -35,7 +35,7 @@ const gchar * gimp_plug_in_manager_get_locale_domain  (GimpPlugInManager   *mana
                                                        const gchar         *prog_name,
                                                        const gchar        **locale_path);
 
-/* Retrieve all help domains */
+/* Retrieve all locale domains */
 gint          gimp_plug_in_manager_get_locale_domains (GimpPlugInManager   *manager,
                                                        gchar             ***locale_domains,
                                                        gchar             ***locale_paths);
