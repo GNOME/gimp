@@ -1,3 +1,11 @@
+2006-09-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_ruler_button_press): don't just
+	unconditionally use the active tool for sample point moving if it
+	is a GimpColorTool, use it only if it is a GimpColorTool but *not*
+	a GimpPaintTool with color picking disabled. Fixed bug #355237.
+
 2006-09-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/depthmerge.c (dialogDepthMap2ChangedCallback):
