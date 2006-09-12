@@ -578,10 +578,11 @@ gimp_palette_editor_get_index (GimpPaletteEditor *editor,
 
   if (search)
     {
-      if (! editor->color ||
-          gimp_rgb_distance (&editor->color->color, search) > EPSILON)
+      if (! editor->color)
         {
           GList *list;
+
+          /* search from the start */
 
           for (list = palette->colors; list; list = g_list_next (list))
             {
@@ -591,6 +592,43 @@ gimp_palette_editor_get_index (GimpPaletteEditor *editor,
                 {
                   index = entry->position;
                   break;
+                }
+            }
+        }
+      else if (gimp_rgb_distance (&editor->color->color, search) > EPSILON)
+        {
+          GList *old  = g_list_nth (palette->colors, editor->color->position);
+          GList *next = old->next;
+          GList *prev = old->prev;
+
+          /* proximity-based search */
+
+          while (next || prev)
+            {
+              if (next)
+                {
+                  GimpPaletteEntry *entry = next->data;
+
+                  if (gimp_rgb_distance (&entry->color, search) < EPSILON)
+                    {
+                      index = entry->position;
+                      break;
+                    }
+
+                  next = next->next;
+                }
+
+              if (prev)
+                {
+                  GimpPaletteEntry *entry = prev->data;
+
+                  if (gimp_rgb_distance (&entry->color, search) < EPSILON)
+                    {
+                      index = entry->position;
+                      break;
+                    }
+
+                  prev = prev->prev;
                 }
             }
         }

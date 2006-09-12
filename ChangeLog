@@ -1,5 +1,12 @@
 2006-09-12  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimppaletteeditor.c (gimp_palette_editor_get_index):
+	applied a modified patch from David Gowers that changes the search
+	behaviour to favour colors in the neighborhood of the selected color
+	(bug #355520).
+
+2006-09-12  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: mention the Win32 twain plug-in in the summary.
 
 2006-09-12  Michael Natterer  <mitch@gimp.org>
