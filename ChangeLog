@@ -1,5 +1,16 @@
 2006-09-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpcolortool.c (gimp_color_tool_button_press)
+	(gimp_color_tool_button_release): chain up to activate/halt the tool.
+
+	* app/tools/gimppainttool.c (gimp_paint_tool_button_press)
+	(gimp_paint_tool_button_release)
+	(gimp_paint_tool_motion): if the color tool is enabled, chain up
+	early and return. Fixes selection PAUSE/RESUME mismatch that was
+	hiding this display's selection forever when moving sample points.
+
+2006-09-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	* app/tools/gimpforegroundselecttool.c
 	* app/tools/gimpmovetool.c

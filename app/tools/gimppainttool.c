@@ -269,13 +269,18 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   GimpDrawTool     *draw_tool     = GIMP_DRAW_TOOL (tool);
   GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
-  GimpPaintCore    *core;
+  GimpPaintCore    *core          = paint_tool->core;
   GimpDrawable     *drawable;
   GdkDisplay       *gdk_display;
   GimpCoords        curr_coords;
   gint              off_x, off_y;
 
-  core = paint_tool->core;
+  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+    {
+      GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
+                                                    display);
+      return;
+    }
 
   drawable = gimp_image_active_drawable (display->image);
 
@@ -334,12 +339,9 @@ gimp_paint_tool_button_press (GimpTool        *tool,
       gimp_paint_tool_round_line (core, hard, state);
     }
 
-  /*  let the parent class activate the tool  */
-  GIMP_TOOL_CLASS (parent_class)->button_press (tool,
-                                                coords, time, state, display);
-
-  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
-    return;
+  /*  chain up to activate the tool  */
+  GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
+                                                display);
 
   /*  pause the current selection  */
   gimp_image_selection_control (display->image, GIMP_SELECTION_PAUSE);
@@ -374,10 +376,15 @@ gimp_paint_tool_button_release (GimpTool        *tool,
 {
   GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
-  GimpPaintCore    *core;
+  GimpPaintCore    *core          = paint_tool->core;
   GimpDrawable     *drawable;
 
-  core = paint_tool->core;
+  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+    {
+      GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time,
+                                                      state, display);
+      return;
+    }
 
   drawable = gimp_image_active_drawable (display->image);
 
@@ -391,8 +398,8 @@ gimp_paint_tool_button_release (GimpTool        *tool,
   gimp_image_selection_control (display->image, GIMP_SELECTION_RESUME);
 
   /*  chain up to halt the tool */
-  GIMP_TOOL_CLASS (parent_class)->button_release (tool,
-                                                  coords, time, state, display);
+  GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
+                                                  display);
 
   if (state & GDK_BUTTON3_MASK)
     gimp_paint_core_cancel (core, drawable);
@@ -413,11 +420,16 @@ gimp_paint_tool_motion (GimpTool        *tool,
 {
   GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
-  GimpPaintCore    *core;
+  GimpPaintCore    *core          = paint_tool->core;
   GimpDrawable     *drawable;
   gint              off_x, off_y;
 
-  core = paint_tool->core;
+  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+    {
+      GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state,
+                                              display);
+      return;
+    }
 
   drawable = gimp_image_active_drawable (display->image);
 
@@ -428,10 +440,8 @@ gimp_paint_tool_motion (GimpTool        *tool,
   core->cur_coords.x -= off_x;
   core->cur_coords.y -= off_y;
 
-  GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
-
-  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
-    return;
+  GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state,
+                                          display);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -511,20 +521,16 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
   GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
   GimpDrawTool     *draw_tool     = GIMP_DRAW_TOOL (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
-  GimpPaintCore    *core;
-  GimpDisplayShell *shell;
+  GimpPaintCore    *core          = paint_tool->core;
+  GimpDisplayShell *shell         = GIMP_DISPLAY_SHELL (display->shell);
   GimpDrawable     *drawable;
 
-  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
+  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
       GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
                                                    proximity, display);
       return;
     }
-
-  core = paint_tool->core;
-
-  shell = GIMP_DISPLAY_SHELL (display->shell);
 
   if (gimp_draw_tool_is_active (draw_tool))
     gimp_draw_tool_stop (draw_tool);

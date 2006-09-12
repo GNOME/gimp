@@ -231,10 +231,9 @@ gimp_color_tool_button_press (GimpTool        *tool,
   GimpColorTool    *color_tool = GIMP_COLOR_TOOL (tool);
   GimpDisplayShell *shell      = GIMP_DISPLAY_SHELL (display->shell);
 
-  /*  Make the tool active and set its display & drawable  */
-  tool->display  = display;
-  tool->drawable = gimp_image_active_drawable (display->image);
-  gimp_tool_control_activate (tool->control);
+  /*  Chain up to activate the tool  */
+  GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
+                                                display);
 
   if (! color_tool->enabled)
     return;
@@ -282,7 +281,9 @@ gimp_color_tool_button_release (GimpTool        *tool,
   GimpColorTool    *color_tool = GIMP_COLOR_TOOL (tool);
   GimpDisplayShell *shell      = GIMP_DISPLAY_SHELL (display->shell);
 
-  gimp_tool_control_halt (tool->control);
+  /*  Chain up to halt the tool  */
+  GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
+                                                  display);
 
   if (! color_tool->enabled)
     return;
