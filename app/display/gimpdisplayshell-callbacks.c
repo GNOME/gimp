@@ -122,6 +122,16 @@ gimp_display_shell_events (GtkWidget        *widget,
          */
         if (kevent->state & GDK_BUTTON1_MASK)
           {
+            if (kevent->keyval == GDK_Shift_L   ||
+                kevent->keyval == GDK_Shift_R   ||
+                kevent->keyval == GDK_Control_L ||
+                kevent->keyval == GDK_Control_R ||
+                kevent->keyval == GDK_Alt_L     ||
+                kevent->keyval == GDK_Alt_R)
+              {
+                break;
+              }
+
             if (event->type == GDK_KEY_PRESS)
               {
                 if (kevent->keyval == GDK_space && shell->space_release_pending)
@@ -518,7 +528,7 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
         tool_manager_modifier_state_active (gimp, state, shell->display);
       }
       break;
-  }
+    }
 
   gdk_keyboard_grab (shell->canvas->window, FALSE, time);
 
@@ -1213,131 +1223,181 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       break;
 
     case GDK_KEY_PRESS:
-      {
-        GdkEventKey *kevent = (GdkEventKey *) event;
+      if (state & GDK_BUTTON1_MASK)
+        {
+          GdkEventKey *kevent = (GdkEventKey *) event;
 
-        tool_manager_focus_display_active (gimp, display);
-
-        switch (kevent->keyval)
-          {
-          case GDK_Return:
-          case GDK_KP_Enter:
-          case GDK_BackSpace:
-          case GDK_Delete:
-          case GDK_Escape:
-          case GDK_Left:
-          case GDK_Right:
-          case GDK_Up:
-          case GDK_Down:
-            if (gimp_image_is_empty (image) ||
-                ! tool_manager_key_press_active (gimp,
-                                                 kevent,
-                                                 display))
+          switch (kevent->keyval)
+            {
+            case GDK_Alt_L:     case GDK_Alt_R:
+            case GDK_Shift_L:   case GDK_Shift_R:
+            case GDK_Control_L: case GDK_Control_R:
               {
-                GimpController *keyboard = gimp_controllers_get_keyboard (gimp);
+                GdkModifierType key;
 
-                if (keyboard)
-                  gimp_controller_keyboard_key_press (GIMP_CONTROLLER_KEYBOARD (keyboard),
-                                                      kevent);
-              }
+                key = gimp_display_shell_key_to_state (kevent->keyval);
+                state |= key;
 
-            return_val = TRUE;
-            break;
-
-          case GDK_space:
-            gimp_display_shell_space_pressed (shell, state, time);
-            return_val = TRUE;
-            break;
-
-          case GDK_Tab:
-          case GDK_ISO_Left_Tab:
-            if (state & GDK_CONTROL_MASK)
-              {
-                if (! gimp_image_is_empty (image))
+                if (active_tool                                        &&
+                    gimp_tool_control_is_active (active_tool->control) &&
+                    ! gimp_image_is_empty (image))
                   {
-                    if (kevent->keyval == GDK_Tab)
-                      gimp_display_shell_layer_select_init (shell,
-                                                            1, kevent->time);
-                    else
-                      gimp_display_shell_layer_select_init (shell,
-                                                            -1, kevent->time);
+                    tool_manager_active_modifier_state_active (gimp, state,
+                                                               display);
                   }
               }
-            else
+              break;
+            }
+        }
+      else
+        {
+          GdkEventKey *kevent = (GdkEventKey *) event;
+
+          tool_manager_focus_display_active (gimp, display);
+
+          switch (kevent->keyval)
+            {
+            case GDK_Return:
+            case GDK_KP_Enter:
+            case GDK_BackSpace:
+            case GDK_Delete:
+            case GDK_Escape:
+            case GDK_Left:
+            case GDK_Right:
+            case GDK_Up:
+            case GDK_Down:
+              if (gimp_image_is_empty (image) ||
+                  ! tool_manager_key_press_active (gimp,
+                                                   kevent,
+                                                   display))
+                {
+                  GimpController *keyboard = gimp_controllers_get_keyboard (gimp);
+
+                  if (keyboard)
+                    gimp_controller_keyboard_key_press (GIMP_CONTROLLER_KEYBOARD (keyboard),
+                                                        kevent);
+                }
+
+              return_val = TRUE;
+              break;
+
+            case GDK_space:
+              gimp_display_shell_space_pressed (shell, state, time);
+              return_val = TRUE;
+              break;
+
+            case GDK_Tab:
+            case GDK_ISO_Left_Tab:
+              if (state & GDK_CONTROL_MASK)
+                {
+                  if (! gimp_image_is_empty (image))
+                    {
+                      if (kevent->keyval == GDK_Tab)
+                        gimp_display_shell_layer_select_init (shell,
+                                                              1, kevent->time);
+                      else
+                        gimp_display_shell_layer_select_init (shell,
+                                                              -1, kevent->time);
+                    }
+                }
+              else
+                {
+                  gimp_dialog_factories_toggle ();
+                }
+
+              return_val = TRUE;
+              break;
+
+              /*  Update the state based on modifiers being pressed  */
+            case GDK_Alt_L:     case GDK_Alt_R:
+            case GDK_Shift_L:   case GDK_Shift_R:
+            case GDK_Control_L: case GDK_Control_R:
               {
-                gimp_dialog_factories_toggle ();
+                GdkModifierType key;
+
+                key = gimp_display_shell_key_to_state (kevent->keyval);
+                state |= key;
+
+                if (! gimp_image_is_empty (image))
+                  tool_manager_modifier_state_active (gimp, state, display);
               }
 
-            return_val = TRUE;
-            break;
-
-            /*  Update the state based on modifiers being pressed  */
-          case GDK_Alt_L:     case GDK_Alt_R:
-          case GDK_Shift_L:   case GDK_Shift_R:
-          case GDK_Control_L: case GDK_Control_R:
-            {
-              GdkModifierType key;
-
-              key = gimp_display_shell_key_to_state (kevent->keyval);
-              state |= key;
-
-              /*  For all modifier keys: call the tools modifier_state *and*
-               *  oper_update method so tools can choose if they are interested
-               *  in the release itself or only in the resulting state
-               */
-              if (! gimp_image_is_empty (image))
-                tool_manager_modifier_state_active (gimp, state, display);
+              break;
             }
 
-            break;
-          }
-
-        tool_manager_oper_update_active (gimp,
-                                         &image_coords, state,
-                                         shell->proximity,
-                                         display);
-      }
+          tool_manager_oper_update_active (gimp,
+                                           &image_coords, state,
+                                           shell->proximity,
+                                           display);
+        }
       break;
 
     case GDK_KEY_RELEASE:
-      {
-        GdkEventKey *kevent = (GdkEventKey *) event;
+      if (state & GDK_BUTTON1_MASK)
+        {
+          GdkEventKey *kevent = (GdkEventKey *) event;
 
-        tool_manager_focus_display_active (gimp, display);
-
-        switch (kevent->keyval)
-          {
-          case GDK_space:
-            gimp_display_shell_space_released (shell, state, time);
-            return_val = TRUE;
-            break;
-
-            /*  Update the state based on modifiers being pressed  */
-          case GDK_Alt_L:     case GDK_Alt_R:
-          case GDK_Shift_L:   case GDK_Shift_R:
-          case GDK_Control_L: case GDK_Control_R:
+          switch (kevent->keyval)
             {
-              GdkModifierType key;
+            case GDK_Alt_L:     case GDK_Alt_R:
+            case GDK_Shift_L:   case GDK_Shift_R:
+            case GDK_Control_L: case GDK_Control_R:
+              {
+                GdkModifierType key;
 
-              key = gimp_display_shell_key_to_state (kevent->keyval);
-              state &= ~key;
+                key = gimp_display_shell_key_to_state (kevent->keyval);
+                state &= ~key;
 
-              /*  For all modifier keys: call the tools modifier_state *and*
-               *  oper_update method so tools can choose if they are interested
-               *  in the press itself or only in the resulting state
-               */
-              if (! gimp_image_is_empty (image))
-                tool_manager_modifier_state_active (gimp, state, display);
+                if (active_tool                                        &&
+                    gimp_tool_control_is_active (active_tool->control) &&
+                    ! gimp_image_is_empty (image))
+                  {
+                    tool_manager_active_modifier_state_active (gimp, state,
+                                                               display);
+                  }
+              }
+              break;
+            }
+        }
+      else
+        {
+          GdkEventKey *kevent = (GdkEventKey *) event;
+
+          tool_manager_focus_display_active (gimp, display);
+
+          switch (kevent->keyval)
+            {
+            case GDK_space:
+              gimp_display_shell_space_released (shell, state, time);
+              return_val = TRUE;
+              break;
+
+              /*  Update the state based on modifiers being pressed  */
+            case GDK_Alt_L:     case GDK_Alt_R:
+            case GDK_Shift_L:   case GDK_Shift_R:
+            case GDK_Control_L: case GDK_Control_R:
+              {
+                GdkModifierType key;
+
+                key = gimp_display_shell_key_to_state (kevent->keyval);
+                state &= ~key;
+
+                /*  For all modifier keys: call the tools modifier_state *and*
+                 *  oper_update method so tools can choose if they are interested
+                 *  in the press itself or only in the resulting state
+                 */
+                if (! gimp_image_is_empty (image))
+                  tool_manager_modifier_state_active (gimp, state, display);
+              }
+
+              break;
             }
 
-            break;
-          }
-
-        tool_manager_oper_update_active (gimp,
-                                         &image_coords, state,
-                                         shell->proximity,
-                                         display);
-      }
+          tool_manager_oper_update_active (gimp,
+                                           &image_coords, state,
+                                           shell->proximity,
+                                           display);
+        }
       break;
 
     default:

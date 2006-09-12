@@ -1,3 +1,31 @@
+2006-09-12  Michael Natterer  <mitch@gimp.org>
+
+	Added new tool API for modifier key events while the tool
+	is active and implement it in the rect select and crop tools.
+	Fixes bug #316156 and bug #355302.
+
+	* app/tools/gimptool.[ch]: added GimpTool::active_modifier_key()
+	and public function gimp_tool_set_active_motifier_state(). Remember
+	the active_state at button_press and reset it on button_release.
+	Ignore releases of modifiers that were pressed at button_press (but
+	only ignore them once).
+
+	* app/tools/tool_manager.[ch]: added wrapper
+	tool_manager_active_modifier_state_active().
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_events): return FALSE for all modifiers even
+	when mouse button 1 is pressed.
+
+	(gimp_display_shell_canvas_tool_events): when bouse button 1 is
+	pressed *and* the tool is active, dispatch the new active_modifier
+	events to tools.
+
+	* app/tools/gimpcroptool.c
+	* app/tools/gimprectangleselecttool.c
+	* app/tools/gimprectangletool.[ch]: implement active_modifier_key()
+	instead of modifier_key().
+
 2006-09-12  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-selection.c (selection_undraw): need

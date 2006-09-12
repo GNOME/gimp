@@ -83,6 +83,11 @@ static void          gimp_tool_real_modifier_key   (GimpTool        *tool,
                                                     gboolean         press,
                                                     GdkModifierType  state,
                                                     GimpDisplay     *display);
+static void     gimp_tool_real_active_modifier_key (GimpTool        *tool,
+                                                    GdkModifierType  key,
+                                                    gboolean         press,
+                                                    GdkModifierType  state,
+                                                    GimpDisplay     *display);
 static void          gimp_tool_real_oper_update    (GimpTool        *tool,
                                                     GimpCoords      *coords,
                                                     GdkModifierType  state,
@@ -119,6 +124,7 @@ gimp_tool_class_init (GimpToolClass *klass)
   klass->motion              = gimp_tool_real_motion;
   klass->key_press           = gimp_tool_real_key_press;
   klass->modifier_key        = gimp_tool_real_modifier_key;
+  klass->active_modifier_key = gimp_tool_real_active_modifier_key;
   klass->oper_update         = gimp_tool_real_oper_update;
   klass->cursor_update       = gimp_tool_real_cursor_update;
 
@@ -303,6 +309,15 @@ gimp_tool_real_modifier_key (GimpTool        *tool,
 }
 
 static void
+gimp_tool_real_active_modifier_key (GimpTool        *tool,
+                                    GdkModifierType  key,
+                                    gboolean         press,
+                                    GdkModifierType  state,
+                                    GimpDisplay     *display)
+{
+}
+
+static void
 gimp_tool_real_oper_update (GimpTool        *tool,
                             GimpCoords      *coords,
                             GdkModifierType  state,
@@ -416,7 +431,14 @@ gimp_tool_button_press (GimpTool        *tool,
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  GIMP_TOOL_GET_CLASS (tool)->button_press (tool, coords, time, state, display);
+  GIMP_TOOL_GET_CLASS (tool)->button_press (tool, coords, time, state,
+                                            display);
+
+  if (gimp_tool_control_is_active (tool->control))
+    {
+      tool->button_press_state    = state;
+      tool->active_modifier_state = state;
+    }
 }
 
 void
@@ -430,7 +452,10 @@ gimp_tool_button_release (GimpTool        *tool,
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  GIMP_TOOL_GET_CLASS (tool)->button_release (tool, coords, time, state, display);
+  gimp_tool_set_active_modifier_state (tool, 0, display);
+
+  GIMP_TOOL_GET_CLASS (tool)->button_release (tool, coords, time, state,
+                                              display);
 }
 
 void
@@ -535,6 +560,100 @@ gimp_tool_set_modifier_state (GimpTool        *tool,
     }
 
   tool->modifier_state = state;
+}
+
+static void
+gimp_tool_active_modifier_key (GimpTool        *tool,
+                               GdkModifierType  key,
+                               gboolean         press,
+                               GdkModifierType  state,
+                               GimpDisplay     *display)
+{
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (display == tool->focus_display);
+
+  GIMP_TOOL_GET_CLASS (tool)->active_modifier_key (tool, key, press, state,
+                                                   display);
+}
+
+void
+gimp_tool_set_active_modifier_state (GimpTool        *tool,
+                                     GdkModifierType  state,
+                                     GimpDisplay     *display)
+{
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
+
+  g_return_if_fail (display == tool->focus_display);
+
+  if ((tool->active_modifier_state & GDK_SHIFT_MASK) !=
+      (state & GDK_SHIFT_MASK))
+    {
+#ifdef DEBUG_ACTIVE_STATE
+      g_printerr ("%s: SHIFT %s\n", G_STRFUNC,
+                  (state & GDK_SHIFT_MASK) ? "pressed" : "released");
+#endif
+
+      if (! (state & GDK_SHIFT_MASK) &&
+          (tool->button_press_state & GDK_SHIFT_MASK))
+        {
+          tool->button_press_state &= ~GDK_SHIFT_MASK;
+        }
+      else
+        {
+          gimp_tool_active_modifier_key (tool, GDK_SHIFT_MASK,
+                                         (state & GDK_SHIFT_MASK) ? TRUE : FALSE,
+                                         state,
+                                         display);
+        }
+    }
+
+  if ((tool->active_modifier_state & GDK_CONTROL_MASK) !=
+      (state & GDK_CONTROL_MASK))
+    {
+#ifdef DEBUG_ACTIVE_STATE
+      g_printerr ("%s: CONTROL %s\n", G_STRFUNC,
+                  (state & GDK_CONTROL_MASK) ? "pressed" : "released");
+#endif
+
+      if (! (state & GDK_CONTROL_MASK) &&
+          (tool->button_press_state & GDK_CONTROL_MASK))
+        {
+          tool->button_press_state &= ~GDK_MOD1_MASK;
+        }
+      else
+        {
+          gimp_tool_active_modifier_key (tool, GDK_CONTROL_MASK,
+                                         (state & GDK_CONTROL_MASK) ? TRUE : FALSE,
+                                         state,
+                                         display);
+        }
+    }
+
+  if ((tool->active_modifier_state & GDK_MOD1_MASK) !=
+      (state & GDK_MOD1_MASK))
+    {
+#ifdef DEBUG_ACTIVE_STATE
+      g_printerr ("%s: ALT %s\n", G_STRFUNC,
+                  (state & GDK_MOD1_MASK) ? "pressed" : "released");
+#endif
+
+      if (! (state & GDK_MOD1_MASK) &&
+          (tool->button_press_state & GDK_MOD1_MASK))
+        {
+          tool->button_press_state &= ~GDK_MOD1_MASK;
+        }
+      else
+        {
+          gimp_tool_active_modifier_key (tool, GDK_MOD1_MASK,
+                                         (state & GDK_MOD1_MASK) ? TRUE : FALSE,
+                                         state,
+                                         display);
+        }
+    }
+
+  tool->active_modifier_state = state;
 }
 
 void

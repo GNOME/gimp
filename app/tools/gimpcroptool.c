@@ -43,44 +43,45 @@
 static void     gimp_crop_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface);
 
 static GObject *
-                gimp_crop_tool_constructor    (GType           type,
-                                               guint           n_params,
-                                               GObjectConstructParam *params);
-static void     gimp_crop_tool_dispose        (GObject        *object);
-static void     gimp_crop_tool_finalize       (GObject        *object);
-static gboolean gimp_crop_tool_initialize     (GimpTool       *tool,
-                                               GimpDisplay    *display);
-static void     gimp_crop_tool_control        (GimpTool       *tool,
-                                               GimpToolAction  action,
-                                               GimpDisplay    *display);
+                gimp_crop_tool_constructor         (GType              type,
+                                                    guint              n_params,
+                                                    GObjectConstructParam *params);
+static void     gimp_crop_tool_dispose             (GObject           *object);
+static void     gimp_crop_tool_finalize            (GObject           *object);
+static gboolean gimp_crop_tool_initialize          (GimpTool          *tool,
+                                                    GimpDisplay       *display);
+static void     gimp_crop_tool_control             (GimpTool          *tool,
+                                                    GimpToolAction     action,
+                                                    GimpDisplay       *display);
 
-static void     gimp_crop_tool_button_press   (GimpTool       *tool,
-                                               GimpCoords     *coords,
-                                               guint32         time,
-                                               GdkModifierType state,
-                                               GimpDisplay    *display);
-static void     gimp_crop_tool_button_release (GimpTool       *tool,
-                                               GimpCoords     *coords,
-                                               guint32         time,
-                                               GdkModifierType state,
-                                               GimpDisplay    *display);
-static void     gimp_crop_tool_modifier_key   (GimpTool       *tool,
-                                               GdkModifierType key,
-                                               gboolean        press,
-                                               GdkModifierType state,
-                                               GimpDisplay    *display);
-static void     gimp_crop_tool_cursor_update  (GimpTool       *tool,
-                                               GimpCoords     *coords,
-                                               GdkModifierType state,
-                                               GimpDisplay    *display);
-static gboolean gimp_crop_tool_execute        (GimpRectangleTool *rectangle,
-                                               gint            x,
-                                               gint            y,
-                                               gint            w,
-                                               gint            h);
-static void     gimp_crop_tool_notify_layer_only (GimpCropOptions *options,
-                                                  GParamSpec      *pspec,
-                                                  GimpTool        *tool);
+static void     gimp_crop_tool_button_press        (GimpTool          *tool,
+                                                    GimpCoords        *coords,
+                                                    guint32            time,
+                                                    GdkModifierType    state,
+                                                    GimpDisplay       *display);
+static void     gimp_crop_tool_button_release      (GimpTool          *tool,
+                                                    GimpCoords        *coords,
+                                                    guint32            time,
+                                                    GdkModifierType    state,
+                                                    GimpDisplay       *display);
+static void     gimp_crop_tool_active_modifier_key (GimpTool          *tool,
+                                                    GdkModifierType    key,
+                                                    gboolean           press,
+                                                    GdkModifierType    state,
+                                                    GimpDisplay       *display);
+static void     gimp_crop_tool_cursor_update       (GimpTool          *tool,
+                                                    GimpCoords        *coords,
+                                                    GdkModifierType    state,
+                                                    GimpDisplay       *display);
+static gboolean gimp_crop_tool_execute             (GimpRectangleTool *rectangle,
+                                                    gint               x,
+                                                    gint               y,
+                                                    gint               w,
+                                                    gint               h);
+static void     gimp_crop_tool_notify_layer_only   (GimpCropOptions   *options,
+                                                    GParamSpec        *pspec,
+                                                    GimpTool          *tool);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpCropTool, gimp_crop_tool, GIMP_TYPE_DRAW_TOOL,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_TOOL,
@@ -122,17 +123,17 @@ gimp_crop_tool_class_init (GimpCropToolClass *klass)
   object_class->get_property = gimp_rectangle_tool_get_property;
   gimp_rectangle_tool_install_properties (object_class);
 
-  tool_class->initialize     = gimp_crop_tool_initialize;
-  tool_class->control        = gimp_crop_tool_control;
-  tool_class->button_press   = gimp_crop_tool_button_press;
-  tool_class->button_release = gimp_crop_tool_button_release;
-  tool_class->motion         = gimp_rectangle_tool_motion;
-  tool_class->key_press      = gimp_rectangle_tool_key_press;
-  tool_class->modifier_key   = gimp_crop_tool_modifier_key;
-  tool_class->oper_update    = gimp_rectangle_tool_oper_update;
-  tool_class->cursor_update  = gimp_crop_tool_cursor_update;
+  tool_class->initialize          = gimp_crop_tool_initialize;
+  tool_class->control             = gimp_crop_tool_control;
+  tool_class->button_press        = gimp_crop_tool_button_press;
+  tool_class->button_release      = gimp_crop_tool_button_release;
+  tool_class->motion              = gimp_rectangle_tool_motion;
+  tool_class->key_press           = gimp_rectangle_tool_key_press;
+  tool_class->active_modifier_key = gimp_crop_tool_active_modifier_key;
+  tool_class->oper_update         = gimp_rectangle_tool_oper_update;
+  tool_class->cursor_update       = gimp_crop_tool_cursor_update;
 
-  draw_tool_class->draw      = gimp_rectangle_tool_draw;
+  draw_tool_class->draw           = gimp_rectangle_tool_draw;
 }
 
 static void
@@ -244,16 +245,16 @@ gimp_crop_tool_button_release (GimpTool        *tool,
 }
 
 static void
-gimp_crop_tool_modifier_key (GimpTool        *tool,
-                             GdkModifierType  key,
-                             gboolean         press,
-                             GdkModifierType  state,
-                             GimpDisplay     *display)
+gimp_crop_tool_active_modifier_key (GimpTool        *tool,
+                                    GdkModifierType  key,
+                                    gboolean         press,
+                                    GdkModifierType  state,
+                                    GimpDisplay     *display)
 {
-  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
-                                                display);
+  GIMP_TOOL_CLASS (parent_class)->active_modifier_key (tool, key, press, state,
+                                                       display);
 
-  gimp_rectangle_tool_modifier_key (tool, key, press, state, display);
+  gimp_rectangle_tool_active_modifier_key (tool, key, press, state, display);
 }
 
 static void

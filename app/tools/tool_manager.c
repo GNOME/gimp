@@ -380,6 +380,25 @@ tool_manager_modifier_state_active (Gimp            *gimp,
 }
 
 void
+tool_manager_active_modifier_state_active (Gimp            *gimp,
+                                           GdkModifierType  state,
+                                           GimpDisplay     *display)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      gimp_tool_set_active_modifier_state (tool_manager->active_tool,
+                                           state,
+                                           display);
+    }
+}
+
+void
 tool_manager_oper_update_active (Gimp            *gimp,
                                  GimpCoords      *coords,
                                  GdkModifierType  state,

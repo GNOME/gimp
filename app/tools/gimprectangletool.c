@@ -1389,52 +1389,49 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
 }
 
 void
-gimp_rectangle_tool_modifier_key (GimpTool        *tool,
-                                  GdkModifierType  key,
-                                  gboolean         press,
-                                  GdkModifierType  state,
-                                  GimpDisplay     *display)
+gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
+                                         GdkModifierType  key,
+                                         gboolean         press,
+                                         GdkModifierType  state,
+                                         GimpDisplay     *display)
 {
   GimpRectangleTool    *rectangle = GIMP_RECTANGLE_TOOL (tool);
   GimpRectangleOptions *options   = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
 
-  if (press)
+  if (key == GDK_SHIFT_MASK)
     {
-      if (key == GDK_SHIFT_MASK)
-        {
-          gboolean aspect_square;
+      gboolean aspect_square;
 
-          g_object_get (options,
-                        "aspect-square", &aspect_square,
-                        NULL);
+      g_object_get (options,
+                    "aspect-square", &aspect_square,
+                    NULL);
+
+      g_object_set (options,
+                    "aspect-square", ! aspect_square,
+                    NULL);
+    }
+
+  if (key == GDK_CONTROL_MASK)
+    {
+      gboolean fixed_center;
+
+      g_object_get (options,
+                    "fixed-center", &fixed_center,
+                    NULL);
+
+      g_object_set (options,
+                    "fixed-center", ! fixed_center,
+                    NULL);
+
+      if (! fixed_center)
+        {
+          gdouble center_x = gimp_rectangle_tool_get_pressx (rectangle);
+          gdouble center_y = gimp_rectangle_tool_get_pressy (rectangle);
 
           g_object_set (options,
-                        "aspect-square", ! aspect_square,
+                        "center-x", center_x,
+                        "center-y", center_y,
                         NULL);
-        }
-
-      if (key == GDK_CONTROL_MASK)
-        {
-          gboolean fixed_center;
-
-          g_object_get (options,
-                        "fixed-center", &fixed_center,
-                        NULL);
-
-          g_object_set (options,
-                        "fixed-center", ! fixed_center,
-                        NULL);
-
-         if (! fixed_center)
-           {
-             gdouble center_x = gimp_rectangle_tool_get_pressx (rectangle);
-             gdouble center_y = gimp_rectangle_tool_get_pressy (rectangle);
-
-             g_object_set (options,
-                           "center-x", center_x,
-                           "center-y", center_y,
-                           NULL);
-           }
         }
     }
 }
