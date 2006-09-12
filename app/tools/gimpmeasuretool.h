@@ -53,6 +53,8 @@ struct _GimpMeasureTool
   GimpDrawTool     parent_instance;
 
   MeasureFunction  function;    /*  function we're performing  */
+  gdouble          mouse_x;     /*  pointer x coordinate       */
+  gdouble          mouse_y;     /*  pointer y coordinate       */
   gint             last_x;      /*  last x coordinate          */
   gint             last_y;      /*  last y coordinate          */
   gint             point;       /*  what are we manipulating?  */

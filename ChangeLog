@@ -1,5 +1,11 @@
 2006-09-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpmeasuretool.[ch]: implement active_modifier_key()
+	and give immediate feedback when Control (constrain to 15 degrees)
+	is toggled. Did a s/mtool/measure/g.
+
+2006-09-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptool.c (gimp_tool_button_release): reset the
 	active_modifier_state *after* invoking the tool's button_release().
 
