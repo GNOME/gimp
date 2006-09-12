@@ -1865,7 +1865,8 @@ Optional Plug-Ins:
   Script-Fu:         $enable_script_fu
   SVG:               $have_librsvg
   TIFF:              $have_libtiff
-  MacOS X TWAIN:     $mac_twain_ok
+  TWAIN (MacOS X):   $mac_twain_ok
+  TWAIN (Win32):     $os_win32
   URI:               $uri_plugin
   Win Snap:          $os_win32
   WMF:               $have_libwmf
