@@ -1,3 +1,7 @@
+2006-09-12  Pema Geyleg  <pgeyleg@gmail.com>
+
+	* configure.in: Added 'dz' (Dzongkha) to ALL_LINGUAS
+
 2006-09-11  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpimagepropview.c: string changes.

@@ -1,0 +1,1601 @@
+# translation of gimp-libgimp.HEAD.po to Dzongkha
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Dorji Tashi <dorjee_doss@hotmail.com>, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-libgimp.HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-04-19 03:10+0200\n"
+"PO-Revision-Date: 2006-05-03 14:55+0530\n"
+"Last-Translator: \n"
+"Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2;plural=(n!=1)\n"
+"X-Generator: KBabel 1.10.2\n"
+
+#: ../libgimp/gimpbrushmenu.c:140
+msgid "Brush Selection"
+msgstr "པྱིར་གྱི་སེལ་འཐུ།"
+
+#: ../libgimp/gimpbrushmenu.c:180
+#: ../libgimp/gimppatternmenu.c:165
+msgid "_Browse..."
+msgstr "བརྡ་འཚོལ།(_B)"
+
+#: ../libgimp/gimpexport.c:215
+#: ../libgimp/gimpexport.c:251
+#, c-format
+msgid "%s can't handle layers"
+msgstr "%s་གིས་བང་རིམ་ཚུ་ལེགས་སྐྱོང་འཐབ་མི་ཚུགས།"
+
+#: ../libgimp/gimpexport.c:216
+#: ../libgimp/gimpexport.c:225
+#: ../libgimp/gimpexport.c:234
+#: ../libgimp/gimpexport.c:252
+msgid "Merge Visible Layers"
+msgstr "མཐོང་ཚུགས་པའི་བང་རིམ་ཚུ་ མཉམ་བསྡོམས་འབད།"
+
+#: ../libgimp/gimpexport.c:224
+#, c-format
+msgid "%s can't handle layer offsets, size or opacity"
+msgstr "%s གིས་ པར་ལེན་ཚུ་དང་ ཚད་ཡང་ན་ དྭངས་སྒྲིབ་ཚུ་ལེགས་སྐྱོང་འཐབ་མི་ཚུགས།"
+
+#: ../libgimp/gimpexport.c:233
+#: ../libgimp/gimpexport.c:242
+#, c-format
+msgid "%s can only handle layers as animation frames"
+msgstr "%sགིས་རྐྱངམ་ཅིག་ བང་རིམ་ཚུ་ བསྒུལ་བཟོ་གཞི་ཁྲམ་བཟུམ་སྦེ་ ལེགས་སྐྱོང་འཐབ་ཚུགས།"
+
+#: ../libgimp/gimpexport.c:234
+#: ../libgimp/gimpexport.c:243
+msgid "Save as Animation"
+msgstr "བསྒུལ་བཟོ་བཟུམ་སྦེ་ སྲུང་བཞག་འབད།"
+
+#: ../libgimp/gimpexport.c:243
+#: ../libgimp/gimpexport.c:252
+#: ../libgimp/gimpexport.c:261
+msgid "Flatten Image"
+msgstr "གཟུགས་བརྙན་ལེབ་ཏེམ་བཟོ།"
+
+#: ../libgimp/gimpexport.c:260
+#, c-format
+msgid "%s can't handle transparency"
+msgstr "%s་གིས་ དྭངས་གསལ་ ལེགས་སྐྱོང་འཐབ་མི་ཚུགས།"
+
+#: ../libgimp/gimpexport.c:269
+#, c-format
+msgid "%s can't handle layer masks"
+msgstr "%s་གིས་ བང་རིམ་གི་གདོང་ཁེབས་ཚུ་ ལེགས་སྐྱོང་འཐབ་མི་ཚུགས།"
+
+#: ../libgimp/gimpexport.c:270
+msgid "Apply Layer Masks"
+msgstr "བང་རིམ་གྱི་གདོང་ཁེབས་ཚུ་ འཇུག་སྤྱོད་འབད།"
+
+#: ../libgimp/gimpexport.c:278
+#, c-format
+msgid "%s can only handle RGB images"
+msgstr "%s་གིས་རྐྱངམ་ཅིག་ ཨཱར་བི་ཇི་གཟུགས་བརྙན་ཚུ་ ལེགས་སྐྱོང་འཐབ་ཚུགས།"
+
+#: ../libgimp/gimpexport.c:279
+#: ../libgimp/gimpexport.c:317
+#: ../libgimp/gimpexport.c:326
+msgid "Convert to RGB"
+msgstr "ཨཱར་བི་ཇི་ལུ་ གཞི་བསྒྱུར་འབད།"
+
+#: ../libgimp/gimpexport.c:287
+#, c-format
+msgid "%s can only handle grayscale images"
+msgstr "%s་གིས་རྐྱངམ་ཅིག་གཟུགས་བརྙན་གེརེ་སིཀེལ་དེ་ ལེགས་སྐྱོང་འཐབ་ཚུགས།"
+
+#: ../libgimp/gimpexport.c:288
+#: ../libgimp/gimpexport.c:317
+#: ../libgimp/gimpexport.c:338
+msgid "Convert to Grayscale"
+msgstr "གེརེ་སིཀེལ་ལུ་གཞི་བསྒྱུར་འབད།"
+
+#: ../libgimp/gimpexport.c:296
+#, c-format
+msgid "%s can only handle indexed images"
+msgstr "%s་རྐྱངམ་ཅིག་གིས་ ཟུར་སྦྲགས་འབད་ཡོད་པའི་གཟུགས་བརྙན་ཚུ་ ལེགས་སྐྱོང་འཐབ་ཚུགས།"
+
+#: ../libgimp/gimpexport.c:297
+#: ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:336
+msgid ""
+"Convert to Indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"སྔོན་སྒྲིག་ སྒྲིག་སྟངས་ཚུ་ལག་ལེན་འཐབ་པའི་ཐོག་ལས་ ཟུར་སྦྲགས་འབད་ཡོད་མི་ལུ་ གཞི་བསྒྱུར་འབད།\n"
+"(གྲུབ་འབྲས་དེ་ ཊུ་ཡིན་འབད་ནིའི་དོན་ལུ་ ལག་ཐོག་ལས་འབད།)"
+
+#: ../libgimp/gimpexport.c:306
+#, c-format
+msgid "%s can only handle bitmap (two color) indexed images"
+msgstr "%s་གིས་ བིཊི་མེབ་(ཚོས་གཞི་གཉིས་) ཟུར་སྦྲགས་འབད་ཡོད་པའི་ གཟུགས་བརྙན་ཚུ་ ལེགས་སྐྱོང་འཐབ་ཨིན། "
+
+#: ../libgimp/gimpexport.c:307
+msgid ""
+"Convert to Indexed using bitmap default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"བིཊི་མེབ་ སྔོན་སྒྲིག་གི་སྒྲིག་སྟངས་ཚུ་ ལག་་ལེན་འཐབ་པའི་ཐོག་ལས་་ཟུར་སྦྲགས་འབད་ཡོད་མི་ལུ་ གཞི་བསྒྱུར་འབད།\n"
+"(གྲུབ་འབྲས་དེ་ཊུ་ཡིན་འབད་ནིའི་དོན་ལུ་ ལག་ཐོག་ལས་འབད།)"
+
+#: ../libgimp/gimpexport.c:316
+#, c-format
+msgid "%s can only handle RGB or grayscale images"
+msgstr "%s་གིས་ཨཱར་བི་ཇི་ ཡང་ན་ གེརེ་སིཀེལ་གཟུགས་བརྙན་ཚུ་རྐྱངམ་ཅིག་ ལེགས་སྐྱོང་འཐབ་ཚུགས།"
+
+#: ../libgimp/gimpexport.c:325
+#, c-format
+msgid "%s can only handle RGB or indexed images"
+msgstr "%s་གིས་ཨཱར་བི་ཇི་དང་ ཟུར་སྦྲགས་འབད་ཡོད་པའི་གཟུགས་བརྙན་ཚུ་རྐྱངམ་ཅིག་ ལེགས་སྐྱོང་འཐབ་ཚུགསཔ་ཨིན།"
+
+#: ../libgimp/gimpexport.c:335
+#, c-format
+msgid "%s can only handle grayscale or indexed images"
+msgstr "%s གིས་ གེརེ་སིཀེལ་ཡང་ན་ ཟུར་སྦྲགས་འབད་ཡོད་པའི་ ཟགུགས་བརྙན་ཚུ་རྐྱངམ་ཅིག་ ལེགས་སྐྱོང་འཐབ་ཚུགཔ་ཨིན།"
+
+#: ../libgimp/gimpexport.c:346
+#, c-format
+msgid "%s needs an alpha channel"
+msgstr "%s ལུ་ ཨལ་ཕའི་རྒྱུད་ལམ་ དགོས་མཁོ་ཡོདཔ་ཨིན།"
+
+#: ../libgimp/gimpexport.c:347
+msgid "Add Alpha Channel"
+msgstr "ཨཱལ་ཕ་རྒྱུ་་ལམ་དེ་ ཁ་སྐོང་རྐྱབས།"
+
+#: ../libgimp/gimpexport.c:381
+msgid "Confirm Save"
+msgstr "སྲུང་བཞག་འབད་ནི་ངེས་དཔྱད་འབད་ནི།"
+
+#: ../libgimp/gimpexport.c:387
+msgid "Confirm"
+msgstr "ངེས་དཔྱད་འབད་ནི།"
+
+#: ../libgimp/gimpexport.c:462
+msgid "Export File"
+msgstr "ཡིག་སྣོད་ཕྱིར་འདྲེན་འབད།"
+
+#: ../libgimp/gimpexport.c:466
+msgid "_Ignore"
+msgstr "སྣང་མེད་བཞག(_I)"
+
+#: ../libgimp/gimpexport.c:468
+msgid "_Export"
+msgstr "ཕྱིར་འདྲེན།(_E)"
+
+#. the headline
+#: ../libgimp/gimpexport.c:497
+#, c-format
+msgid "Your image should be exported before it can be saved as %s for the following reasons:"
+msgstr "འོག་ལུ་བཀོད་དེ་ཡོད་མི་རྒྱུ་མཚན་ཚུ་གི་དོན་ལུ་ %s་བཟུམ་སྦེ་སྲུང་བཞག་འབད་མ་ཚུགས་པའི་ཧེ་མ་ལས་ ཁྱོད་ཀྱི་གཟུགས་བརྙན་དེ་ཕྱིར་འདྲེན་འབད་དགོཔ་ཨིན།"
+
+#. the footline
+#: ../libgimp/gimpexport.c:571
+msgid "The export conversion won't modify your original image."
+msgstr "ཕྱིར་འདྲེན་གཞི་བསྒྱུར་གྱིས་ ཁྱོད་ཀྱི་གཟུགས་བརྙན་ངོ་མ་དེ་ ལེགས་བཅོས་མི་འབད།"
+
+#: ../libgimp/gimpexport.c:671
+#, c-format
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"ཁྱོད་ཀྱིས་ བང་རིམ་གདོང་ཁེབས་ཅིག་%s་བཟུམ་སྦེ་སྲུང་བཞག་འབད་ནི་གུར་ལྷོད་སོང་ནུག\n"
+"འདི་གིས་ མཐོང་ཚུགས་པའི་བང་རིམ་ཚུ་ སྲུང་བཞག་མི་འབད།"
+
+#: ../libgimp/gimpexport.c:677
+#, c-format
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"ཁྱོད་ཀྱིས་རྒྱུ་ལམ་(སྲུང་བཞག་འབད་ཡོད་པའི་རྒྱུ་ལམ་)་ཅིག་%s་བཟུམ་སྦེ་སྲུང་བཞག་འབད་ནི་གུར་ལྷོད་སོང་ནུག\n"
+"འདི་གིས་ མཐོང་ཚུགས་པའི་བང་རིམ་ཚུ་ སྲུང་བཞག་མི་འབད།"
+
+#: ../libgimp/gimpfontselectbutton.c:126
+#: ../libgimp/gimpfontselectbutton.c:177
+msgid "Font Selection"
+msgstr "ཡིག་གཟུགས་སེལ་འཐུ།"
+
+#: ../libgimp/gimpfontselectbutton.c:139
+#: ../libgimp/gimpfontselectbutton.c:178
+msgid "Sans"
+msgstr "སེནསི།"
+
+#: ../libgimp/gimpgradientmenu.c:115
+msgid "Gradient Selection"
+msgstr "སྟེགས་རིས་ སེལ་འཐུ།"
+
+#: ../libgimp/gimpmenu.c:450
+#: ../libgimpwidgets/gimpintstore.c:131
+msgid "(Empty)"
+msgstr "(སྟོངམ་)"
+
+#: ../libgimp/gimppalettemenu.c:102
+msgid "Palette Selection"
+msgstr "པེ་ལེཊི་སེལ་འཐུ།"
+
+#: ../libgimp/gimppatternmenu.c:125
+msgid "Pattern Selection"
+msgstr "དཔེ་གཞི་སེལ་འཐུ།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:140
+msgid "by name"
+msgstr "མིང་གི་ཐོག་ལས།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:141
+msgid "by description"
+msgstr "འགྲེལ་བཤད་ཀྱི་ཐོག་ལས།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:142
+msgid "by help"
+msgstr "གྲོགས་རམ་གྱི་ཐོག་ལས།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:143
+msgid "by author"
+msgstr "རྩོམ་སྒྲིག་གི་ཐོག་ལས།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:144
+msgid "by copyright"
+msgstr "འདྲ་བཤུས་དབང་ཆའི་ཐོག་ལས།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:145
+msgid "by date"
+msgstr "ཚེས་གྲངས་ཀྱི་ཐོག་ལས།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:146
+msgid "by type"
+msgstr "དབྱེ་བའི་ཐོག་ལས།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:377
+msgid "Searching"
+msgstr "འཚོལ་ཞིབ་འབད་དོ།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:388
+msgid "Searching by name"
+msgstr "མིང་གི་ཐོག་ལས་ འཚོལ་ཞིབ་འབད་དོ།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:409
+msgid "Searching by description"
+msgstr "འགྲེལ་བཤད་ཀྱི་ཐོག་ལས་ འཚོལ་ཞིབ་འབད་དོ།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:416
+msgid "Searching by help"
+msgstr "གྲོགས་རམ་གྱི་ཐོག་ལས་ འཚོལ་ཞིབ་འབད་དོ།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:423
+msgid "Searching by author"
+msgstr "རྩོམ་པ་པོའི་ཐོག་ལས་ འཚོལ་ཞིབ་འབད་དོ།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:430
+msgid "Searching by copyright"
+msgstr "འདྲ་བཤུས་དབང་ཆའི་ཐོག་ལས་ འཚོལ་ཞིབ་འབད་དོ།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:437
+msgid "Searching by date"
+msgstr "ཚེས་གྲངས་ཀྱི་ཐོག་ལས་ འཚོལ་ཞིབ་འབད་དོ།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:444
+msgid "Searching by type"
+msgstr "དབྱེ་བའི་ཐོག་ལས་ འཚོལ་ཞིབ་འབད་དོ།"
+
+#: ../libgimp/gimpprocbrowserdialog.c:454
+#, c-format
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d བྱ་སྒོའི་ལམ་ལུགས་ཚུ།"
+msgstr[1] ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:463
+msgid "No matches for your query"
+msgstr "ཁྱོད་ཀྱི་འདྲི་དཔྱད་ཀྱི་ལུ་མཐུན་སྒྲིག་མིན་འདུག"
+
+#: ../libgimp/gimpprocbrowserdialog.c:467
+#, c-format
+msgid "%d procedure matches your query"
+msgid_plural "%d procedures match your query"
+msgstr[0] "ཁྱོད་ཀྱི་འདྲི་དཔྱད་ཀྱི་དང་ %d བྱ་སྒོའི་ལམ་ལུགས་དེ་ མཐུན་སྒྲིག་འབདཝ་མས།"
+msgstr[1] ""
+
+#. count label
+#: ../libgimp/gimpprocbrowserdialog.c:516
+#: ../libgimpwidgets/gimpbrowser.c:114
+msgid "No matches"
+msgstr "མཐུན་སྒྲིག་མིན་འདུག"
+
+#: ../libgimp/gimpprocview.c:143
+msgid "Parameters"
+msgstr "ཚད་བཟུང་།"
+
+#: ../libgimp/gimpprocview.c:156
+msgid "Return Values"
+msgstr "གནས་གོང་ཚུ་སླར་ལོག་གཏང་།"
+
+#: ../libgimp/gimpprocview.c:169
+msgid "Additional Information"
+msgstr "བརྡ་དོན་ཁ་སྐོང་།"
+
+#: ../libgimp/gimpprocview.c:210
+msgid "Author:"
+msgstr "རྩོམ་པ་པོ:"
+
+#: ../libgimp/gimpprocview.c:222
+msgid "Date:"
+msgstr "ཚེས་གྲངས:"
+
+#: ../libgimp/gimpprocview.c:234
+msgid "Copyright:"
+msgstr "འདྲ་བཤུས་དབང་ཆ:"
+
+#: ../libgimp/gimpunitcache.c:57
+msgid "percent"
+msgstr "བརྒྱ་ཆ།"
+
+#: ../libgimpbase/gimpbaseenums.c:26
+msgid "_White (full opacity)"
+msgstr "དཀརཔོ་(དྭངས་སྒྲིབ་ཆ་ཚང་)(_W)"
+
+#: ../libgimpbase/gimpbaseenums.c:27
+msgid "_Black (full transparency)"
+msgstr "ནགཔོ་(དྭངས་གསལ་ཆ་ཚང་།)(_B)"
+
+#: ../libgimpbase/gimpbaseenums.c:28
+msgid "Layer's _alpha channel"
+msgstr "བང་ིརམ་གྱི་ ཨཱལ་ཕ་རྒྱུ་ལམ།(_a)"
+
+#: ../libgimpbase/gimpbaseenums.c:29
+msgid "_Transfer layer's alpha channel"
+msgstr "བང་རིམ་གྱི་ ཨཱལ་ཕ་རྒྱ་ལམ་དེ་ གནས་སོར་གཏང་།(_T)"
+
+#: ../libgimpbase/gimpbaseenums.c:30
+msgid "_Selection"
+msgstr "སེལ་འཐུ།(_S)"
+
+#: ../libgimpbase/gimpbaseenums.c:31
+msgid "_Grayscale copy of layer"
+msgstr "བང་རིམ་གྱི་ གེརེ་སིཀེལ་འདྲ་བཤུས།(_G)"
+
+#: ../libgimpbase/gimpbaseenums.c:61
+msgid "FG to BG (RGB)"
+msgstr "ཨེཕ་ཇི་ལས་བི་ཇི་ལུ་(ཨཱར་བི་ཇི།)"
+
+#: ../libgimpbase/gimpbaseenums.c:62
+msgid "FG to BG (HSV)"
+msgstr "ཨེཕ་ཇི་ལས་བི་ཇི་ལུ་(ཨེཆ་ཨེསི་ཝི།)"
+
+#: ../libgimpbase/gimpbaseenums.c:63
+msgid "FG to transparent"
+msgstr "ཨེཕ་ཇི་ལས་ དྭངས་གསལ་ལུ།"
+
+#: ../libgimpbase/gimpbaseenums.c:64
+msgid "Custom gradient"
+msgstr "སྲོལ་སྒྲིག་སྟེགས་རིས།"
+
+#: ../libgimpbase/gimpbaseenums.c:93
+msgid "FG color fill"
+msgstr "ཨེཕ་ཇི་་ཚོས་གཞི་བཀང་ནི།"
+
+#: ../libgimpbase/gimpbaseenums.c:94
+msgid "BG color fill"
+msgstr "བི་ཇི་ ཚོས་གཞི་བཀང་ནི།"
+
+#: ../libgimpbase/gimpbaseenums.c:95
+msgid "Pattern fill"
+msgstr "དཔེ་གཞི་ བཀང་ནི།"
+
+#: ../libgimpbase/gimpbaseenums.c:125
+msgid "Add to the current selection"
+msgstr "ད་སྟོའི་སེལ་འཐུ་ལུ་ ཁ་སྐོང་རྐྱབས།"
+
+#: ../libgimpbase/gimpbaseenums.c:126
+msgid "Subtract from the current selection"
+msgstr "ད་སྟོའི་སེལ་འཐུའི་ནང་ལས་ ཕབ།"
+
+#: ../libgimpbase/gimpbaseenums.c:127
+msgid "Replace the current selection"
+msgstr "ད་ལྟོའི་སེལ་འཐུ་དེ་ ཚབ་བཙུགས།"
+
+#: ../libgimpbase/gimpbaseenums.c:128
+msgid "Intersect with the current selection"
+msgstr "ད་ལྟོའི་སེལ་འཐུ་དང་གཅིག་ཁར་ དུམ་བུར་གཅོད།"
+
+#: ../libgimpbase/gimpbaseenums.c:160
+#: ../libgimpwidgets/gimpwidgetsenums.c:95
+msgid "Red"
+msgstr "དམརཔོ།"
+
+#: ../libgimpbase/gimpbaseenums.c:161
+#: ../libgimpwidgets/gimpwidgetsenums.c:96
+msgid "Green"
+msgstr "ལྗང་ཁུ།"
+
+#: ../libgimpbase/gimpbaseenums.c:162
+#: ../libgimpwidgets/gimpwidgetsenums.c:97
+msgid "Blue"
+msgstr "ཧོནམ།"
+
+#: ../libgimpbase/gimpbaseenums.c:163
+msgid "Gray"
+msgstr "སྐྱ་ཐལ།"
+
+#: ../libgimpbase/gimpbaseenums.c:164
+#: ../libgimpbase/gimpbaseenums.c:529
+msgid "Indexed"
+msgstr "ཟུར་སྦྲགས་འབད་ཡོདཔ།"
+
+#: ../libgimpbase/gimpbaseenums.c:165
+#: ../libgimpwidgets/gimpwidgetsenums.c:98
+msgid "Alpha"
+msgstr "ཨཱལ་ཕ།"
+
+#: ../libgimpbase/gimpbaseenums.c:194
+msgid "Small"
+msgstr "ཆུང་ཀུ།"
+
+#: ../libgimpbase/gimpbaseenums.c:195
+msgid "Medium"
+msgstr "འབྲིང་མ།"
+
+#: ../libgimpbase/gimpbaseenums.c:196
+msgid "Large"
+msgstr "ཆེ་བ།"
+
+#: ../libgimpbase/gimpbaseenums.c:228
+msgid "Light checks"
+msgstr "ཞིབ་དཔྱད་ཡང་བ།"
+
+#: ../libgimpbase/gimpbaseenums.c:229
+msgid "Mid-tone checks"
+msgstr "མིཌི་ཊོ་གི་ཞགབ་དཔྱད།"
+
+#: ../libgimpbase/gimpbaseenums.c:230
+msgid "Dark checks"
+msgstr "གྲིབ་གནག་གི་ཞིབ་དཔྱད།"
+
+#: ../libgimpbase/gimpbaseenums.c:231
+msgid "White only"
+msgstr "དཀརཔོ་རྐྱངམ་ཅིག"
+
+#: ../libgimpbase/gimpbaseenums.c:232
+msgid "Gray only"
+msgstr "སྐྱ་ཐལ་རྐྱངམ་ཅིག"
+
+#: ../libgimpbase/gimpbaseenums.c:233
+msgid "Black only"
+msgstr "ནགཔོ་རྐྱངམ་ཅིག"
+
+#: ../libgimpbase/gimpbaseenums.c:261
+msgid "Image source"
+msgstr "གཟུགས་བརྙན་གྱི་ འབྱུང་ཁོངས།"
+
+#: ../libgimpbase/gimpbaseenums.c:262
+msgid "Pattern source"
+msgstr "དཔེ་གཞི་འབྱུང་ཁུངས།"
+
+#: ../libgimpbase/gimpbaseenums.c:291
+msgid "Lightness"
+msgstr "ཡང་བ།"
+
+#: ../libgimpbase/gimpbaseenums.c:292
+msgid "Luminosity"
+msgstr "འོད་ཤུགས།"
+
+#: ../libgimpbase/gimpbaseenums.c:293
+msgid "Average"
+msgstr "ཆ་སྙོམས།"
+
+#: ../libgimpbase/gimpbaseenums.c:321
+msgid "Dodge"
+msgstr "གཟུར་ཐབས།"
+
+#: ../libgimpbase/gimpbaseenums.c:322
+msgid "Burn"
+msgstr "བཙུགས་སྤྱོད།"
+
+#: ../libgimpbase/gimpbaseenums.c:386
+#: ../libgimpbase/gimpbaseenums.c:561
+msgid "Linear"
+msgstr "རིང་ཚད་ཀྱི།"
+
+#: ../libgimpbase/gimpbaseenums.c:387
+msgid "Bi-linear"
+msgstr "རིང་ཚད་གཉིས་ཅན།"
+
+#: ../libgimpbase/gimpbaseenums.c:388
+msgid "Radial"
+msgstr "འོད་ཟེར་གྱི།"
+
+#: ../libgimpbase/gimpbaseenums.c:389
+msgid "Square"
+msgstr "གྲུ་བཞི།"
+
+#: ../libgimpbase/gimpbaseenums.c:390
+msgid "Conical (sym)"
+msgstr "ཀོ་ནི་ཀཱལ།(sym)"
+
+#: ../libgimpbase/gimpbaseenums.c:391
+msgid "Conical (asym)"
+msgstr "ཀོ་ནི་ཀཱལ།(asym)"
+
+#: ../libgimpbase/gimpbaseenums.c:392
+msgid "Shaped (angular)"
+msgstr "དབྱིབས་གཟུགངས་ཅན།(གྲུ་ཟུར་ཅན།)"
+
+#: ../libgimpbase/gimpbaseenums.c:393
+msgid "Shaped (spherical)"
+msgstr "དབྱིབས་གཟུགས་ཅན།(ཟླུམ་གཟུགས་ཅན།)"
+
+#: ../libgimpbase/gimpbaseenums.c:394
+msgid "Shaped (dimpled)"
+msgstr "དབྱིབས་གཟུགས་ཅན།(dimpled)"
+
+#: ../libgimpbase/gimpbaseenums.c:395
+msgid "Spiral (cw)"
+msgstr "ནང་སྒྲིལ།(cw)"
+
+#: ../libgimpbase/gimpbaseenums.c:396
+msgid "Spiral (ccw)"
+msgstr "ནང་སྒྲིལ།(ccw)"
+
+#: ../libgimpbase/gimpbaseenums.c:427
+msgid "Intersections (dots)"
+msgstr "དུམ་བུར་གཅོད་ནི། (dots)"
+
+#: ../libgimpbase/gimpbaseenums.c:428
+msgid "Intersections (crosshairs)"
+msgstr "དུམ་བུར་གཅོད་ནི།(crosshairs)"
+
+#: ../libgimpbase/gimpbaseenums.c:429
+msgid "Dashed"
+msgstr "སྦྲེལ་རྟགས་བཀལ་ཡོདཔ།"
+
+#: ../libgimpbase/gimpbaseenums.c:430
+msgid "Double dashed"
+msgstr "སྦྲེལ་རྟགས་གཉིས་ལྡན།"
+
+#: ../libgimpbase/gimpbaseenums.c:431
+msgid "Solid"
+msgstr "རགས་པ།"
+
+#: ../libgimpbase/gimpbaseenums.c:460
+msgid "Stock ID"
+msgstr "ཅ་མཛོད་ ཨའི་ཌི།"
+
+#: ../libgimpbase/gimpbaseenums.c:461
+msgid "Inline pixbuf"
+msgstr "ཨིན་ལའིན་ པར་ཁོངས།"
+
+#: ../libgimpbase/gimpbaseenums.c:462
+msgid "Image file"
+msgstr "གཟུགས་བརྙན་ཡིག་སྣོད།"
+
+#: ../libgimpbase/gimpbaseenums.c:491
+msgid "RGB color"
+msgstr "ཨཱར་བི་ཇི་ ཚོས་གཞི།"
+
+#: ../libgimpbase/gimpbaseenums.c:492
+#: ../libgimpbase/gimpbaseenums.c:527
+msgid "Grayscale"
+msgstr "གེརེ་སིཀེལ།"
+
+#: ../libgimpbase/gimpbaseenums.c:493
+msgid "Indexed color"
+msgstr "ཟུར་སྦྲགས་འབད་ཡོད་པའི་ ཚོས་གཞི།"
+
+#: ../libgimpbase/gimpbaseenums.c:525
+msgid "RGB"
+msgstr "ཨཱར་བི་ཇི།"
+
+#: ../libgimpbase/gimpbaseenums.c:526
+msgid "RGB-alpha"
+msgstr "ཨཱརཡ་བ་ིཇི་-ཨཱལ་ཕ།"
+
+#: ../libgimpbase/gimpbaseenums.c:528
+msgid "Grayscale-alpha"
+msgstr "གེརེ་སིཀེལ་-ཨཱལ་ཕ།"
+
+#: ../libgimpbase/gimpbaseenums.c:530
+msgid "Indexed-alpha"
+msgstr "ཟུར་སྦྲགས་འབད་ཡོད་པའི་-ཨཱལ་ཕ།"
+
+#: ../libgimpbase/gimpbaseenums.c:560
+msgid "None (Fastest)"
+msgstr "ཅི་་མེད།(མགྱོགས་ཤོས།)"
+
+#: ../libgimpbase/gimpbaseenums.c:562
+msgid "Cubic"
+msgstr "ཀུས་བིཀ"
+
+#: ../libgimpbase/gimpbaseenums.c:563
+msgid "Lanczos (Best)"
+msgstr "ལེནཀི་ཛོསི།(དྲག་ཤོས།)"
+
+#: ../libgimpbase/gimpbaseenums.c:591
+msgid "Constant"
+msgstr "ཆད་མེད།"
+
+#: ../libgimpbase/gimpbaseenums.c:592
+msgid "Incremental"
+msgstr "ཡར་འཕར་ཅན།"
+
+#: ../libgimpbase/gimpbaseenums.c:621
+#: ../modules/cdisplay_lcms.c:254
+msgid "None"
+msgstr "ཅི་་མེད།"
+
+#: ../libgimpbase/gimpbaseenums.c:622
+msgid "Sawtooth wave"
+msgstr "སྭོ་ཊུཏི་ ཝེབས།"
+
+#: ../libgimpbase/gimpbaseenums.c:623
+msgid "Triangular wave"
+msgstr "ཟུར་གསུམ་ཅན་གྱི་ཝེབས།"
+
+#: ../libgimpbase/gimpbaseenums.c:652
+msgid "Run interactively"
+msgstr "ཕན་ཚུན་འབྲེལ་བའི་ཐོག་ལས་ གཡོག་བཀོལ།"
+
+#: ../libgimpbase/gimpbaseenums.c:653
+msgid "Run non-interactively"
+msgstr "ཕན་ཚུན་འབྲེལ་མེད་ཀྱི་ཐོག་ལས་ གཡོག་བཀོལ།"
+
+#: ../libgimpbase/gimpbaseenums.c:654
+msgid "Run with last used values"
+msgstr "མཇུག་མམ་གྱི་ གནས་གོང་ཚུ་ལག་ལེན་འཐབ་པའི་ཐོག་ལས་ གཡོག་བཀོལ།"
+
+#: ../libgimpbase/gimpbaseenums.c:682
+msgid "Pixels"
+msgstr "པིག་སེལསི།"
+
+#: ../libgimpbase/gimpbaseenums.c:683
+msgid "Points"
+msgstr "ཡིག་ཚད་ཚུ།"
+
+#: ../libgimpbase/gimpbaseenums.c:712
+msgid "Shadows"
+msgstr "གྱིབ་མ་ཚུ།"
+
+#: ../libgimpbase/gimpbaseenums.c:713
+msgid "Midtones"
+msgstr "མིཌི་ཊོནིསི།"
+
+#: ../libgimpbase/gimpbaseenums.c:714
+msgid "Highlights"
+msgstr "གཙོ་དམིགས།"
+
+#: ../libgimpbase/gimpbaseenums.c:742
+msgid "Forward"
+msgstr "གདོང་བསྐྱོད།"
+
+#: ../libgimpbase/gimpbaseenums.c:743
+msgid "Backward"
+msgstr "རྒྱབ་བསྐྱོད།"
+
+#: ../libgimpbase/gimpbaseenums.c:846
+msgid "Internal GIMP procedure"
+msgstr "ནང་འཁོད་ ཇི་ཨའི་ཨེམ་པི་གི་ བྱ་སྒོའི་ལམ་ལུགས།"
+
+#: ../libgimpbase/gimpbaseenums.c:847
+msgid "GIMP Plug-In"
+msgstr "ཇི་ཨཱི་ཨེམ་པི་ པ་ལག་ཨིན།"
+
+#: ../libgimpbase/gimpbaseenums.c:848
+msgid "GIMP Extension"
+msgstr "ཇི་ཨཱི་ཨེམ་པི་ རྒྱ་བསྐྱེད།"
+
+#: ../libgimpbase/gimpbaseenums.c:849
+msgid "Temporary Procedure"
+msgstr "གནས་སྐབས་ཀྱི་བྱ་སྒོའི་ལམ་ལུགས།"
+
+#: ../libgimpbase/gimpmemsize.c:180
+#, c-format
+msgid "%d Byte"
+msgid_plural "%d Bytes"
+msgstr[0] "%d བཱའིཊི།"
+msgstr[1] ""
+
+#: ../libgimpbase/gimpmemsize.c:186
+#, c-format
+msgid "%.2f KB"
+msgstr "%2f ཀེ་བི།"
+
+#: ../libgimpbase/gimpmemsize.c:190
+#, c-format
+msgid "%.1f KB"
+msgstr "%1f ཀེ་བི།"
+
+#: ../libgimpbase/gimpmemsize.c:194
+#, c-format
+msgid "%d KB"
+msgstr "%d ཀེ་བི།"
+
+#: ../libgimpbase/gimpmemsize.c:201
+#, c-format
+msgid "%.2f MB"
+msgstr "%2f ཨེམ་བི།"
+
+#: ../libgimpbase/gimpmemsize.c:205
+#, c-format
+msgid "%.1f MB"
+msgstr "%1f ཨེམ་བི།"
+
+#: ../libgimpbase/gimpmemsize.c:209
+#, c-format
+msgid "%d MB"
+msgstr "%d ཨེམ་བི།"
+
+#: ../libgimpbase/gimpmemsize.c:216
+#, c-format
+msgid "%.2f GB"
+msgstr "%2f ཇི་བི།"
+
+#: ../libgimpbase/gimpmemsize.c:220
+#, c-format
+msgid "%.1f GB"
+msgstr "%1f ཇི་བི།"
+
+#: ../libgimpbase/gimpmemsize.c:224
+#, c-format
+msgid "%d GB"
+msgstr "%d ཇི་བི"
+
+#: ../libgimpbase/gimputils.c:169
+#: ../libgimpbase/gimputils.c:174
+#: ../modules/cdisplay_lcms.c:246
+msgid "(invalid UTF-8 string)"
+msgstr "(ནུས་མེད་ཀྱི་ ཡུ་ཊི་ཨེཕ-༨ ་ཡིག་རྒྱུན།)"
+
+#: ../libgimpconfig/gimpcolorconfig.c:40
+msgid "Mode of operation for color management."
+msgstr "ཚོས་གཞི་འཛིན་སྐྱོང་གི་དོན་ལུ་ བཀོལ་སྤྱོད་ཀྱི་ཐབས་ལམ།"
+
+#: ../libgimpconfig/gimpcolorconfig.c:42
+msgid "The color profile of your (primary) monitor."
+msgstr "ཁྱོད་རའི་(གཞི་རིམ་)ལྟ་རྟོག་པའི་ ཚོས་གཞི་གསལ་སྡུད།"
+
+#: ../libgimpconfig/gimpcolorconfig.c:44
+msgid "When enabled, the GIMP will try to use the display color profile from the windowing system. The configured monitor profile is then only used as a fallback."
+msgstr "ལྕོགས་ཅན་བཟོ་ཚར་ཞིནམ་ལས་ ཇི་ཨའི་ཨེམ་པི་གིས་ སྒཽ་སྒྲིག་བཟི་ནིའི་རིམ་ལུགས་ནང་ལས་ བཀྲམ་སྟོན་ཚོས་གཞི་གསལ་སྡུད་དེ་ ལག་ལེན་འཐབ་ནི་ལུ་ འབད་རྩོལ་བསྐྱོད་འོང་། རིམ་སྒྲིག་འབད་ཡོད་པའི་སྟ་རྟོག་པའི་གསལ་སྡུད་དེ་ དེ་ལས་ གློ་བུར་རྒྱབ་ཐག་སྦེ་ལག་ལེན་འཐབ་ཨིན"
+
+#: ../libgimpconfig/gimpcolorconfig.c:48
+msgid "The default RGB workspace color profile."
+msgstr "སྔོན་སྒྲིག་་ཨཱར་བི་ཇི་ ལཱ་གཡོག་གི་ ཚོས་གཞི་ གསལ་སྡུད།"
+
+#: ../libgimpconfig/gimpcolorconfig.c:50
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr "ཨཱར་བི་ཇི་དང་ སི་ཨིམ་ཝའི་ཀེ་ ་གཉིས་ཀྱི་བར་ན་གཞི་བསྒྱུར་འབད་ནིའི་དོན་ལུ་ལག་ལེན་འཐབ་ཡོད་པའི་ སི་ཨེམ་ཝའི་ཀེ་གི་ ཚོས་གཞི་གསལ་སྡུད།"
+
+#: ../libgimpconfig/gimpcolorconfig.c:52
+msgid "The color profile used for simulating a printed version (softproof)."
+msgstr "དཔར་བསྐྲུན་འབད་ཡོད་པའི་ཐོན་རིམ(སོཕཊི་པུརུཕ་).ཤུགས་སྐྱེད་འབད་ནིའི་དོན་ལུ་ལག་ལེན་འཐབ་ཡོད་མི་ ཚོས་གཞི་ གསལ་སྡུད།"
+
+#: ../libgimpconfig/gimpcolorconfig.c:54
+msgid "Sets how colors are mapped for your display."
+msgstr "ཁྱོད་རའི་བཀྲམ་སྟོན་གྱི་དོན་ལུ་ ཚོས་གཞི་ཚུ་ག་དེ་སྦེ་ས་ཁྲ་བཟོཝ་ཨིན་ན་སྟོནམ་ཨིན།"
+
+#: ../libgimpconfig/gimpcolorconfig.c:56
+msgid "Sets how colors are converted from workspace to the print simulation device."
+msgstr "ཚོས་གཞི་ཚུ་ ལཱ་གཡོག་བར་སྟོང་ནང་ལས་ དཔར་བསྐྲུན་ཤུགས་སྐྱེད་ཐབས་འཕྲུལ་ནང་ལུ་ ག་དེ་སྦེ་ གཞི་བསྒྱུར་འབད་ནི་ཨིན་ན་ གཞི་སྒྲིག་འབདཝ་ཨིན།"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:24
+msgid "No color management"
+msgstr "ཚོས་གཞི་འཛིན་སྐྱོང་འཐབ་ནི་མེད།"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:25
+msgid "Color managed display"
+msgstr "ཚོས་གཞི་འཛིན་སྐྱོང་འཐབ་ཡོད་པའི་བསྐྲམ་སྟོན།"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:26
+msgid "Print simulation"
+msgstr "ཤུགས་སྐྱེད་ དཔར་བསྐྲུན་འབད།"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:56
+#: ../modules/cdisplay_proof.c:55
+msgid "Perceptual"
+msgstr "མངོན་སུམ་གྱི།"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:57
+#: ../modules/cdisplay_proof.c:56
+msgid "Relative colorimetric"
+msgstr "འབྲེལ་བ་ཅན་གྱི་ཀོ་ལོ་རི་མི་ཊིཀ"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:58
+#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../modules/cdisplay_proof.c:57
+msgid "Saturation"
+msgstr "མཐའ་ཚད།"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:59
+#: ../modules/cdisplay_proof.c:58
+msgid "Absolute colorimetric"
+msgstr "ཀོ་ལོ་རི་མི་ཊིཀ་ ཡང་དག"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:88
+msgid "Ask"
+msgstr "འདྲི་ནི།"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:89
+msgid "Use embedded profile"
+msgstr "གནས་འདྲེན་གསལ་སྡུད་ ལག་ལེན་འཐབ།"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:90
+msgid "Convert to RGB workspace"
+msgstr "ཨཱར་བི་ཇི་ ལཱ་གཡོག་བར་སྟོང་ལུ་གཞི་བསྒྱུར་འབད།"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#, c-format
+msgid "value for token %s is not a valid UTF-8 string"
+msgstr "ངོ་རྟགས་%s་གི་དོན་ལུ་གནས་གོང་དེ་ ཡུ་ཊི་ཨེཕ་ཡིག་རྒྱུན་ནུས་ཅན་ཅིག་མེན་པས།"
+
+#. please don't translate 'yes' and 'no'
+#: ../libgimpconfig/gimpconfig-deserialize.c:423
+#, c-format
+msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
+msgstr "བོ་ལིན་ངོ་རྟགས་%s,ཀྱི་དོན་ལུ་ རོ་བ་ཡོད་པའི་ 'བཏུབ་' ཡང་ན་ 'མི་བཏུབ་' ཐོབ་ཡོདཔ་'%s'"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:497
+#, c-format
+msgid "invalid value '%s' for token %s"
+msgstr "ནུས་མེད་གནས་གོང་ '%s' གི་དོན་ལུ་ %s"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:512
+#, c-format
+msgid "invalid value '%ld' for token %s"
+msgstr "ནུས་མེད་གནས་གོང་'%ld'ངོ་རྟགས་%s་གི་དོན་ལུ"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:581
+#, c-format
+msgid "while parsing token '%s': %s"
+msgstr "ངོ་རྟགས་མིང་དཔཱད་འབད་བའི་སྐབས་སུ་'%s': %s"
+
+#: ../libgimpconfig/gimpconfig-iface.c:453
+#: ../libgimpconfig/gimpconfig-iface.c:466
+#: ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpscanner.c:579
+msgid "fatal parse error"
+msgstr "མིང་དཔྱད་ཀྱི་འཛོལ་བ་འཚུབ་ཆེན།"
+
+#: ../libgimpconfig/gimpconfig-path.c:376
+#, c-format
+msgid "Cannot expand ${%s}"
+msgstr "${%s}དེ་རྒྱ་བསྐྱེད་འབད་མི་ཚུ་གས།"
+
+#: ../libgimpconfig/gimpconfigwriter.c:135
+#, c-format
+msgid "Could not create temporary file for '%s': %s"
+msgstr "'%s': %sདེ་གི་དོན་ལུ་ གནས་སྐབས་ཀྱི་ ཡིག་སྣོད་གསར་བསྐྲུན་འབད་མ་ཚུགས།"
+
+#: ../libgimpconfig/gimpconfigwriter.c:148
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "%s་འབྲི་ནིའི་དོན་ལུ་ '%s'དེ་ཁ་ཕྱེ་མ་ཚུགས།"
+
+#: ../libgimpconfig/gimpconfigwriter.c:667
+#, c-format
+msgid ""
+"Error writing to temporary file for '%s': %s\n"
+"The original file has not been touched."
+msgstr ""
+"'%s': %s་དེ་གི་དོན་ལུ་ གནས་སྐབས་ཀྱི་ཡིག་སྣོད་ལུ་འབྲི་ལུ་འཛོལ་བ་འདུག\n"
+"ཡིག་སྣོད་ངོ་མ་དེ་ དཀྲོག་རང་མ་དཀྲོགས།"
+
+#: ../libgimpconfig/gimpconfigwriter.c:675
+#, c-format
+msgid ""
+"Error writing to temporary file for '%s': %s\n"
+"No file has been created."
+msgstr ""
+"'%s': %s་དེ་གི་དོན་ལུ་ གནས་སྐབས་ཡིག་སྣོད་འབྲི་ནི་ལུ་འཛོལ་བ་འདུག\n"
+"ཡིག་སྣོད་ཅིག་ཡང་ གསར་བསྐྲུན་མ་འབད་བས།"
+
+#: ../libgimpconfig/gimpconfigwriter.c:686
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "'%s': %s་དེ་ལུ་འབྲི་ནི་ལུ་ འཛོལ་བ།"
+
+#: ../libgimpconfig/gimpconfigwriter.c:704
+#, c-format
+msgid "Could not create '%s': %s"
+msgstr " '%s': %sདེ་གསར་བསྐྲུན་འབད་མ་ཚུགས།"
+
+#: ../libgimpconfig/gimpscanner.c:255
+msgid "invalid UTF-8 string"
+msgstr "ནུས་མེད་ཀྱི་ ཡུ་ཊི་ཨེཕ་ ཡིག་རྒྱུན།"
+
+#: ../libgimpconfig/gimpscanner.c:606
+#, c-format
+msgid "Error while parsing '%s' in line %d: %s"
+msgstr "གྲལ་ཐིག་'%s'དེ་%d: %s་ལུ་མིང་དཐཔྱད་འབད་བའི་སྐབས་ལུ་འཛོལ་བ་འདུག"
+
+#: ../libgimpmodule/gimpmodule.c:152
+#: ../libgimpmodule/gimpmodule.c:170
+#: ../libgimpmodule/gimpmodule.c:279
+#: ../libgimpmodule/gimpmodule.c:306
+#: ../libgimpmodule/gimpmodule.c:417
+#, c-format
+msgid "Module '%s' load error: %s"
+msgstr "ཚད་གཞི་'%s'འཛོལ་བ་མངོན་གསལ་འབད:%s"
+
+#: ../libgimpmodule/gimpmodule.c:374
+msgid "Module error"
+msgstr "ཚད་གཞི་གི་འཛོལ་བ།"
+
+#: ../libgimpmodule/gimpmodule.c:375
+msgid "Loaded"
+msgstr "མངོན་གསལ་འབད་ཡོདཔ།"
+
+#: ../libgimpmodule/gimpmodule.c:376
+msgid "Load failed"
+msgstr "མངོན་གསལ་འཐུས་ཤོར་བྱུང་ཡོདཔ།"
+
+#: ../libgimpmodule/gimpmodule.c:377
+msgid "Not loaded"
+msgstr "མངོན་གསལ་མ་འབད་བས།"
+
+#: ../libgimpthumb/gimpthumb-utils.c:125
+#, c-format
+msgid ""
+"Cannot determine a valid home directory.\n"
+"Thumbnails will be stored in the folder for temporary files (%s) instead."
+msgstr ""
+"ནུས་ཅན་ཁྱིམ་གྱི་སྣོད་ཐོ་དེ་ གཏན་འབེབས་བཟོ་མ་ཚུགས།\n"
+"དེ་གི་ཚབས་ལུ་ གནས་སྐབས་ཡིག་སྣོད་(%s)ཀྱི་དོན་ལུ་ སྣོད་འཛིན་ནང་ལུ་ མཐེ་གཟེར་ཚུ་གསོག་འཇོག་སྦེ་བཞག་འོང་།"
+
+#: ../libgimpthumb/gimpthumb-utils.c:249
+#: ../libgimpthumb/gimpthumb-utils.c:317
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr "མཐེ་གཟེར་སྣོད་འཛིན་%s'གསར་བསྐྲུན་འབད་ནི་ལུལ འཐུས་ཤོར་བྱུང་ནུག"
+
+#: ../libgimpthumb/gimpthumbnail.c:889
+#, c-format
+msgid "Could not create thumbnail for %s: %s"
+msgstr "%s: %sདེ་གི་དོན་ལུ་ མཐེ་གཟེར་གསར་བསྐྲུན་འབད་མ་ཚུགས།"
+
+#: ../libgimpwidgets/gimpbrowser.c:98
+msgid "_Search:"
+msgstr "འཚོལ་ཞིབ:(_S)"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:118
+msgid "_Foreground Color"
+msgstr "གདོང་གཞི་ཚོས་གཞི།(_F)"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:122
+msgid "_Background Color"
+msgstr "རྒྱབ་གཞི་ཚོས་གཞི།(_B)"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:126
+msgid "Blac_k"
+msgstr "གནགཔོ།"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:130
+msgid "_White"
+msgstr "དཀརཔོ།(_W)"
+
+#: ../libgimpwidgets/gimpcolorscales.c:98
+msgid "Scales"
+msgstr "ཚད་ཤིང་ཚུ།"
+
+#: ../libgimpwidgets/gimpcolorselection.c:187
+msgid "Current:"
+msgstr "ད་ལྟོའི:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:209
+msgid "Old:"
+msgstr "རྙིངམ།"
+
+#: ../libgimpwidgets/gimpcolorselection.c:263
+msgid "Hexadecimal color notation as used in HTML and CSS"
+msgstr "ཨེཕ་ཊི་ཨེམ་ཨེལ་ དང་ སི་ཨེསི་ཨེསི་ ནང་ལུ་ལག་ལེན་འཐབ་དོ་བཟུམ་སྦེ་ ཧེག་ཟ་ཌེ་སི་མཱལ་ཚོས་གཞི་དབྱངས་རྟགས།"
+
+#: ../libgimpwidgets/gimpcolorselection.c:268
+msgid "HTML _notation:"
+msgstr "ཨེཕ་ཊི་ཨེམ་ཨེལ་ དབྱངས་རྟགས།(_n)"
+
+#: ../libgimpwidgets/gimpfileentry.c:320
+msgid "Select Folder"
+msgstr "སྣོད་འཛིན་སེལ་འཐུ་འབད།"
+
+#: ../libgimpwidgets/gimpfileentry.c:322
+msgid "Select File"
+msgstr "ཡིག་སྣོད་སེལ་འཐུ་འབད།"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:203
+msgid "Kilobytes"
+msgstr "ཀི་ལོ་བཱའིཊིསི།"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
+msgid "Megabytes"
+msgstr "མེ་ག་བཱའིཊིསི།"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
+msgid "Gigabytes"
+msgstr "གི་ག་བཱའིཊིསི།"
+
+#. Count label
+#: ../libgimpwidgets/gimppageselector.c:269
+#: ../libgimpwidgets/gimppageselector.c:1171
+msgid "Nothing selected"
+msgstr "ག་ནི་ཡང་སེལ་འཐུ་མ་འབད་བས།"
+
+#: ../libgimpwidgets/gimppageselector.c:287
+msgid "Select _All"
+msgstr "ཆ་མཉམ་སེལ་འཐུ་འབད།(_A)"
+
+#: ../libgimpwidgets/gimppageselector.c:307
+msgid "Select _range:"
+msgstr "ཁྱབ་ཚད་སེལ་འཐུ་འབད།(_r)"
+
+#: ../libgimpwidgets/gimppageselector.c:319
+msgid "Open _pages as"
+msgstr "བཟུམ་སྦེ་ ཤོག་ལེབ་ཚུ་སྲུང་བཞག་འབད།(_p)"
+
+#: ../libgimpwidgets/gimppageselector.c:420
+msgid "Page 000"
+msgstr "ཤོག་ལེབ་ ༠༠༠།"
+
+#: ../libgimpwidgets/gimppageselector.c:512
+#: ../libgimpwidgets/gimppageselector.c:749
+#, c-format
+msgid "Page %d"
+msgstr "ཤོག་ལེབ་%d"
+
+#: ../libgimpwidgets/gimppageselector.c:1176
+msgid "One page selected"
+msgstr "ཤོག་ལེབ་གཅིག་ སེལ་འཐུ་འབད་ནུག"
+
+#: ../libgimpwidgets/gimppageselector.c:1183
+#, c-format
+msgid "All %d pages selected"
+msgstr "%d འབད་མི་ཤོག་ལེབ་ཆ་མཉམ་སེལ་འཐུ་འབད་ནུག"
+
+#: ../libgimpwidgets/gimppageselector.c:1185
+#, c-format
+msgid "%d pages selected"
+msgstr "%d་འབད་མི་ཤོག་ལེབ་ཚུ་ སེལ་འཐུ་འབད་ནུག"
+
+#: ../libgimpwidgets/gimppatheditor.c:212
+msgid "Writable"
+msgstr "འབྲི་བཏུབ་མི།"
+
+#: ../libgimpwidgets/gimppatheditor.c:221
+msgid "Folder"
+msgstr "སྣོད་འཛིན།"
+
+#: ../libgimpwidgets/gimppickbutton.c:107
+msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
+msgstr "འ་ཕི་ཚོས་གཞི་སེལ་འཐུ་འབད་ནིའི་དོན་ལུ་ ཚོས་གཞི་འདེམས་བྱེད་དེ་ཨེབ་གཏང་འབད་ཞིནམ་ལས་ དེ་ལས་ གསལ་གཞི་ནང་གི་ཚོས་གཞི་གང་རུང་ཅིག་ལུ་ ཨེབ་གཏང་འབད།"
+
+#: ../libgimpwidgets/gimppreviewarea.c:94
+msgid "Check Size"
+msgstr "ཚད་ཞིབ་དཔྱད་འབད།"
+
+#: ../libgimpwidgets/gimppreviewarea.c:101
+msgid "Check Style"
+msgstr "བཟོ་རྣམ་ཞིབ་དཔྱད་འབད།"
+
+#. toggle button to (des)activate the instant preview
+#: ../libgimpwidgets/gimppreview.c:265
+msgid "_Preview"
+msgstr "སྔོན་བལྟ།(_P)"
+
+#: ../libgimpwidgets/gimppropwidgets.c:1872
+#, c-format
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "ཚིག་ཡིག་ཨིན་པུཊི་ས་སྒོ་འདི་  %d་ཡིག་འབྲུ་ལུ་ ཚད་བཀལ་བཞག་ནུག"
+msgstr[1] "ཚིག་ཡིག་ཨིན་པུཊི་ས་སྒོ་འདི་  %d་ཡིག་འབྲུ་ཚུ་ལུ་ ཚད་བཀལ་བཞག་ནུག"
+
+#: ../libgimpwidgets/gimpresolutionentry.c:382
+#, c-format
+msgid "pixels/%s"
+msgstr "པིག་སེལ་/%s"
+
+#: ../libgimpwidgets/gimpstock.c:113
+msgid "Anchor"
+msgstr "ཨེན་ཀོར།"
+
+#: ../libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr "དབུས།(_e)"
+
+#: ../libgimpwidgets/gimpstock.c:115
+msgid "_Duplicate"
+msgstr "འཛུན་མ།(_D)"
+
+#: ../libgimpwidgets/gimpstock.c:116
+msgid "_Edit"
+msgstr "ཞུན་དག(_E)"
+
+#: ../libgimpwidgets/gimpstock.c:117
+msgid "Linked"
+msgstr "འབྲེལ་མཐུད་འབད་ཡོདཔ།"
+
+#: ../libgimpwidgets/gimpstock.c:118
+msgid "Paste as New"
+msgstr "གསརཔ་སྦེ་སྲུང་བཞག་འབད།"
+
+#: ../libgimpwidgets/gimpstock.c:119
+msgid "Paste Into"
+msgstr "ནང་ལུ་ སྦྱར།"
+
+#: ../libgimpwidgets/gimpstock.c:120
+msgid "_Reset"
+msgstr "སླར་སྒྲིག(_R)"
+
+#: ../libgimpwidgets/gimpstock.c:121
+msgid "Visible"
+msgstr "མཐོང་ཚུགས་པའི།"
+
+#: ../libgimpwidgets/gimpstock.c:157
+#: ../libgimpwidgets/gimpstock.c:161
+msgid "_Stroke"
+msgstr "སིཊོཀ།(_S)"
+
+#: ../libgimpwidgets/gimpstock.c:173
+msgid "L_etter Spacing"
+msgstr "ཡི་གུ་བར་སྟོང་བཏོན་ནི།(_e)"
+
+#: ../libgimpwidgets/gimpstock.c:174
+msgid "L_ine Spacing"
+msgstr "གྲལ་ཐིག་བར་སྟོང་བཏོན་ནི།(_i)"
+
+#: ../libgimpwidgets/gimpstock.c:190
+msgid "_Resize"
+msgstr "ཚད་བསྐྱར་བཟོ་འབད་ནི།(_R)"
+
+#: ../libgimpwidgets/gimpstock.c:191
+#: ../libgimpwidgets/gimpstock.c:300
+msgid "_Scale"
+msgstr "ཚད་ཤིང་།(_S)"
+
+#: ../libgimpwidgets/gimpstock.c:278
+msgid "Crop"
+msgstr "བཏོག་བཅོས།"
+
+#: ../libgimpwidgets/gimpstock.c:296
+msgid "_Transform"
+msgstr "བཟོ་བསྒྱུར།(_T)"
+
+#: ../libgimpwidgets/gimpstock.c:299
+msgid "_Rotate"
+msgstr "བསྒྱིར།(_R)"
+
+#: ../libgimpwidgets/gimpstock.c:301
+msgid "_Shear"
+msgstr "གཏུབ།(_S)"
+
+#: ../libgimpwidgets/gimpunitmenu.c:267
+msgid "More..."
+msgstr "ཧེང་བཀལ།"
+
+#: ../libgimpwidgets/gimpunitmenu.c:577
+msgid "Unit Selection"
+msgstr "ཆ་ཕྲན་སེལ་འཐུ།"
+
+#: ../libgimpwidgets/gimpunitmenu.c:625
+msgid "Unit"
+msgstr "ཆ་ཕྲན།"
+
+#: ../libgimpwidgets/gimpunitmenu.c:629
+msgid "Factor"
+msgstr "ཆ་རྐྱེན།"
+
+#: ../libgimpwidgets/gimpwidgets.c:1003
+msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
+msgstr "གང་འབྱུང་ཨང་གྲངས་བཟོ་བཏོན་འབད་མི་སོན་གྱི་དོན་ལུ་ གནས་གོང་འདི་ལག་ལེན་འཐབ། འདི་གིས་ བཀོད་དེ་ཡོད་པའི་\"random\"བཟོ་བཏོན་འབད་ནི་དེ་ ཡང་བསྐྱར་འབད་བཅུགཔ་ཨིན།"
+
+#: ../libgimpwidgets/gimpwidgets.c:1007
+msgid "_New Seed"
+msgstr "སོན་གསརཔ།(_N)"
+
+#: ../libgimpwidgets/gimpwidgets.c:1020
+msgid "Seed random number generator with a generated random number"
+msgstr "བཟོ་བཏོན་འབད་ཡོད་པའི་ གང་འབྱུང་ཨང་གྲངས་དང་གཅིག་ཁར་ གང་འབྱུང་སོན་གྱི་ཨང་གྲངས་བཟོ་བཏོན་འབད་མི།"
+
+#: ../libgimpwidgets/gimpwidgets.c:1024
+msgid "_Randomize"
+msgstr "གང་འབྱུང་སྦེ་བཟོ།(_R)"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:92
+msgid "_H"
+msgstr "ཨེཅ།(_H)"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:92
+msgid "Hue"
+msgstr "ཚོན་མདངས།"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:93
+msgid "_S"
+msgstr "ཨེསི།(_S)"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:94
+msgid "_V"
+msgstr "ཝི།(_V)"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:94
+msgid "Value"
+msgstr "གནས་གོང་།"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:95
+msgid "_R"
+msgstr "ཨཱར།(_R)"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:96
+msgid "_G"
+msgstr "ཇི།(_G)"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:97
+msgid "_B"
+msgstr "བི།(_B)"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:98
+msgid "_A"
+msgstr "ཨེ།(_A)"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
+msgid "Layers"
+msgstr "བང་རིམ་ཚུ།"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
+msgid "Images"
+msgstr "གཟུགས་བརྙན།"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:186
+msgid "Zoom in"
+msgstr "ཕྱིར་རྒྱས།"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:187
+msgid "Zoom out"
+msgstr "ནང་བཟུམ།"
+
+#: ../modules/cdisplay_colorblind.c:67
+msgid "Protanopia (insensitivity to red"
+msgstr "པོརོ་ཊ་ནོ་པི་ཡ(དམརཔོ་ལུ་ དྲན་ཚོར་མེད།)"
+
+#: ../modules/cdisplay_colorblind.c:69
+msgid "Deuteranopia (insensitivity to green)"
+msgstr "ཌིའུ་ཊི་ར་ནོ་པི་ཡ་(ལྗང་ཁུ་ལུ་དྲན་ཚོར་མེད།)"
+
+#: ../modules/cdisplay_colorblind.c:71
+msgid "Tritanopia (insensitivity to blue)"
+msgstr "ཊི་ཊ་ནོ་པི་ཡ་(ཧོནམ་ལུ་དྲན་ཚོར་མེད།)"
+
+#: ../modules/cdisplay_colorblind.c:200
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr "ཚོས་གཞི་ཆད་འབབ་ཤུགས་སྐྱེད་ ཚགས་མ།(བྲི་ཊིལ-ཝའི་ནོཊི-མོ་ལོན་ ཨཱལ་གོ་རི་དམ།)"
+
+#: ../modules/cdisplay_colorblind.c:290
+msgid "Color Deficient Vision"
+msgstr "ཚོས་གཞི་ཆད་འབབ་མཆར་སྣང་།"
+
+#: ../modules/cdisplay_colorblind.c:503
+msgid "Color _deficiency type:"
+msgstr "ཚོས་གཞི་ཆད་འབབ་ཀྱི་དབྱེ་བ།(_d)"
+
+#: ../modules/cdisplay_gamma.c:91
+msgid "Gamma color display filter"
+msgstr "གམ་མ་ཚོས་གཞིའི་བཀྲམ་སྟོན་གྱི་ཚགས་མ།"
+
+#: ../modules/cdisplay_gamma.c:160
+msgid "Gamma"
+msgstr "གམ་མ།"
+
+#: ../modules/cdisplay_gamma.c:251
+msgid "_Gamma:"
+msgstr "གམ་མ:(_G)"
+
+#: ../modules/cdisplay_highcontrast.c:91
+msgid "High Contrast color display filter"
+msgstr "ཚོས་གཞི་གི་ཚོན་མདངས་མཐོ་སུ་སྦེ་ བཀྲམ་སྟོན་འབད་ནི་གི་ ཚགས་མ།"
+
+#: ../modules/cdisplay_highcontrast.c:160
+msgid "Contrast"
+msgstr "ཚོན་མདངས།"
+
+#: ../modules/cdisplay_highcontrast.c:251
+msgid "Contrast c_ycles:"
+msgstr "ཚོན་མདངས་ བསྐྱར་འཁོར་འབདཝ་ཨིན:(_y)"
+
+#: ../modules/cdisplay_lcms.c:105
+msgid "Color management display filter using ICC color profiles"
+msgstr "ཨའི་སི་སི་ ཚོས་གཞི་གསལ་སྡུད་ཚུ་ལག་ལེན་འཐབ་པའི་ཐོག་ལས་ ཚོས་གཞི་འཛིན་སྐྱོང་བཀྲམ་སྟོན་གྱི་ཚགས་མ།"
+
+#: ../modules/cdisplay_lcms.c:173
+msgid "Color Management"
+msgstr "ཚོས་གཞི་འཛིན་སྐྱོང་།"
+
+#: ../modules/cdisplay_lcms.c:288
+msgid "This filter takes its configuration from the Color Management section in the Preferences dialog."
+msgstr "ཚགས་མ་འདི་གིས་ དགའ་གདམ་ནང་ལུ་ཡོད་མི་ཚོས་གཞི་འཛིན་སྐྱོང་དབྱེ་ཚན་ནང་ལས་ ཁོ་རའི་རིམ་སྒྲིག་ འབག་འགྱོཝ་ཨིན།"
+
+#: ../modules/cdisplay_lcms.c:311
+msgid "Mode of operation:"
+msgstr "བཀོལ་སྤྱོད་ཀྱི་ཐབས་ལམ:"
+
+#: ../modules/cdisplay_lcms.c:322
+msgid "RGB workspace profile:"
+msgstr "ཨཱར་བི་ཇི་ ལཱ་གཡོག་བར་སྟོང་གསལ་སྡུད:"
+
+#: ../modules/cdisplay_lcms.c:332
+msgid "Monitor profile:"
+msgstr "ལྟ་རྟོག་པ་སྣོད་འཛིན:"
+
+#: ../modules/cdisplay_lcms.c:342
+msgid "Print simulation profile:"
+msgstr "ཤུགས་སྐྱེད་གསལ་སྡུད་དཔར་བསྐྲུན་འབད:"
+
+#: ../modules/cdisplay_proof.c:127
+msgid "Color proof filter using ICC color profile"
+msgstr "ཨའི་སི་སི་ཚོས་གཞི་སྣོད་འཛིན་དེ་ ལག་ལེན་འཐབ་པའི་ཐོག་ལས་ ཞུན་ལྷག་གི་ཚགས་མ་ ཚོན་བཏང་།"
+
+#: ../modules/cdisplay_proof.c:221
+msgid "Color Proof"
+msgstr "ཞུན་ལྷག་ཚོན་བཏང་།"
+
+#: ../modules/cdisplay_proof.c:346
+msgid "_Intent:"
+msgstr "རེ་བ།(_I)"
+
+#: ../modules/cdisplay_proof.c:350
+msgid "Choose an ICC Color Profile"
+msgstr "ཨཱི་སི་སི་ ཚོས་གཞི་གསལ་སྡུད་དེ་ གདམ་ཁ་རྐྱབས།"
+
+#: ../modules/cdisplay_proof.c:353
+msgid "_Profile:"
+msgstr "གསལ་སྡུད།(_P)"
+
+#: ../modules/cdisplay_proof.c:358
+msgid "_Black Point Compensation"
+msgstr "ཡིག་ཚད་གནགཔོ་འབད་མི་ རྒུད་འཐུས།(_B)"
+
+#: ../modules/colorsel_cmyk.c:73
+msgid "CMYK color selector"
+msgstr "སི་ཨེམ་ཝའི་ཀེ་ ཚོས་གཞི་སེལ་འཐུ་འབད་མི།"
+
+#: ../modules/colorsel_cmyk.c:130
+msgid "CMYK"
+msgstr "སི་ཨེམ་ཝའི་ཀེ"
+
+#. Cyan
+#: ../modules/colorsel_cmyk.c:148
+msgid "_C"
+msgstr "སི།(_C)"
+
+#. Magenta
+#: ../modules/colorsel_cmyk.c:150
+msgid "_M"
+msgstr "ཨེམ།(_M)"
+
+#. Yellow
+#: ../modules/colorsel_cmyk.c:152
+msgid "_Y"
+msgstr "ཝའི།(_Y)"
+
+#. Key (Black)
+#: ../modules/colorsel_cmyk.c:154
+msgid "_K"
+msgstr "ཀེ(_K)"
+
+#: ../modules/colorsel_cmyk.c:158
+msgid "Cyan"
+msgstr "སྔོ་ལྗང།"
+
+#: ../modules/colorsel_cmyk.c:159
+msgid "Magenta"
+msgstr "དམར་སྨུག།"
+
+#: ../modules/colorsel_cmyk.c:160
+msgid "Yellow"
+msgstr "སེརཔོ།"
+
+#: ../modules/colorsel_cmyk.c:161
+msgid "Black"
+msgstr "གནགཔོ།"
+
+#: ../modules/colorsel_cmyk.c:195
+msgid "Black _pullout:"
+msgstr "གནགཔོ་ ཕྱི་ཁར་འཐེན:(_p)"
+
+#: ../modules/colorsel_cmyk.c:212
+msgid "The percentage of black to pull out of the colored inks."
+msgstr "སྣག་རྩི་ཚོན་ཅན་ནང་ལས་ཕྱི་ཁར་འཐེན་ནིའི་དོན་ལུ་ གནགཔོ་གི་བརྒྱ་ཆ།"
+
+#: ../modules/colorsel_triangle.c:104
+msgid "Painter-style triangle color selector"
+msgstr "ཚོན་བཏང་མི-ཟུར་གསུམ་མ་ཚོན་བཏང་མི་སེལ་འཐུ་འབད་མི་དེ་ བཟོ་རྣམ་བཀོད།"
+
+#: ../modules/colorsel_triangle.c:170
+msgid "Triangle"
+msgstr "ཟུར་གསུམ་མ།"
+
+#: ../modules/colorsel_water.c:84
+msgid "Watercolor style color selector"
+msgstr "ཆུ་ཚོན་གྱི་བཟོ་རྣམ་བཟུམ་སྦེ་ཡོད་མི་ ཚོས་གཞི་སེལ་འཐུ་འབད་མི།"
+
+#: ../modules/colorsel_water.c:150
+msgid "Watercolor"
+msgstr "ཆུ་ཚོན།"
+
+#: ../modules/colorsel_water.c:213
+msgid "Pressure"
+msgstr "ཨེབ་ཤུགས།"
+
+#: ../modules/controller_linux_input.c:56
+msgid "Button 0"
+msgstr "ཨེབ་རྟ་༠།"
+
+#: ../modules/controller_linux_input.c:57
+msgid "Button 1"
+msgstr "ཨེབ་རྟ་༡།"
+
+#: ../modules/controller_linux_input.c:58
+msgid "Button 2"
+msgstr "ཨེབ་རྟ་༢ །"
+
+#: ../modules/controller_linux_input.c:59
+msgid "Button 3"
+msgstr "ཨེབ་རྟ་༣།"
+
+#: ../modules/controller_linux_input.c:60
+msgid "Button 4"
+msgstr "ཨེབ་རྟ་༤།"
+
+#: ../modules/controller_linux_input.c:61
+msgid "Button 5"
+msgstr "ཨེབ་རྟ་༥།"
+
+#: ../modules/controller_linux_input.c:62
+msgid "Button 6"
+msgstr "ཨེབ་རྟ་༦།"
+
+#: ../modules/controller_linux_input.c:63
+msgid "Button 7"
+msgstr "ཨེབ་རྟ་༧།"
+
+#: ../modules/controller_linux_input.c:64
+msgid "Button 8"
+msgstr "ཨེབ་རྟ་༨།"
+
+#: ../modules/controller_linux_input.c:65
+msgid "Button 9"
+msgstr "ཨེབ་རྟ་༩།"
+
+#: ../modules/controller_linux_input.c:66
+msgid "Button Mouse"
+msgstr "ཨེབ་རྟ་མཱའུསི།"
+
+#: ../modules/controller_linux_input.c:67
+msgid "Button Left"
+msgstr "ཨེབ་རྟ་གཡོན།"
+
+#: ../modules/controller_linux_input.c:68
+msgid "Button Right"
+msgstr "ཨེབ་རྟ་གཡས།"
+
+#: ../modules/controller_linux_input.c:69
+msgid "Button Middle"
+msgstr "ཨེབ་རྟ་བར་མ།"
+
+#: ../modules/controller_linux_input.c:70
+msgid "Button Side"
+msgstr "ཨེབ་རྟ་ཟུར།"
+
+#: ../modules/controller_linux_input.c:71
+msgid "Button Extra"
+msgstr "ཨེབ་རྟ་ཐེབས།"
+
+#: ../modules/controller_linux_input.c:72
+#: ../modules/controller_linux_input.c:73
+msgid "Button Forward"
+msgstr "ཨེབ་རྟ་དགོང་བསྐྱོད།"
+
+#: ../modules/controller_linux_input.c:75
+msgid "Button Wheel"
+msgstr "ཨེབ་རྟ་འཁོར་ལོ།"
+
+#: ../modules/controller_linux_input.c:78
+msgid "Button Gear Down"
+msgstr "ཨེབ་རྟ་གེཡིར་མར།"
+
+#: ../modules/controller_linux_input.c:81
+msgid "Button Gear Up"
+msgstr "ཨེབ་རྟ་གེཡིར་ཡར།"
+
+#: ../modules/controller_linux_input.c:87
+msgid "Wheel Turn Left"
+msgstr "འཁོར་ལོ་ གཡོན་ལུ་བསྒྱིར་།"
+
+#: ../modules/controller_linux_input.c:88
+msgid "Wheel Turn Right"
+msgstr "འཁོར་ལོ་གཡས་ལུ་བསྒྱིར།"
+
+#: ../modules/controller_linux_input.c:89
+msgid "Dial Turn Left"
+msgstr "ཌ་ཡེལ་གཡོན་ལུ་བསྒྱིར།"
+
+#: ../modules/controller_linux_input.c:90
+msgid "Dial Turn Right"
+msgstr "ཌ་ཡེལ་གཡས་ལུ་བསྒྱིར།"
+
+#: ../modules/controller_linux_input.c:154
+msgid "Linux input event controller"
+msgstr "ལའི་ནགསི་ཨིན་པུཊི་བྱུང་ལས་ཚད་འཛིན་པ།"
+
+#: ../modules/controller_linux_input.c:222
+#: ../modules/controller_midi.c:244
+msgid "Device:"
+msgstr "ཐབས་འཕྲུལ:"
+
+#: ../modules/controller_linux_input.c:223
+msgid "The name of the device to read Linux Input events from."
+msgstr "ནང་ལས་ ལའི་ནོགསི་ཨིན་པུཊི་གི་བྱུང་ལས་ལྷག་ནིའི་དོན་ལུ་ ཐབས་འཕྲུལ་གྱི་མིང་།"
+
+#: ../modules/controller_linux_input.c:227
+msgid "Linux Input"
+msgstr "ལའི་ནགསི་ཨིན་པུཊི།"
+
+#: ../modules/controller_linux_input.c:351
+msgid "Linux Input Events"
+msgstr "ལའི་ནགསི་ཨིན་པུཊི་ བྱུང་ལས།"
+
+#: ../modules/controller_linux_input.c:372
+#: ../modules/controller_midi.c:480
+#: ../modules/controller_midi.c:506
+#, c-format
+msgid "Reading from %s"
+msgstr "%sནང་ལས་ལྷག་དོ།"
+
+#: ../modules/controller_linux_input.c:388
+#: ../modules/controller_linux_input.c:431
+#: ../modules/controller_midi.c:462
+#: ../modules/controller_midi.c:523
+#: ../modules/controller_midi.c:594
+#, c-format
+msgid "Device not available: %s"
+msgstr "ཐབས་འཕྲུལ་ཐོབ་མི་ཚུགས:%s"
+
+#: ../modules/controller_linux_input.c:396
+#: ../modules/controller_midi.c:531
+msgid "No device configured"
+msgstr "ཐབས་ཕྲུལ་རིམ་སྒྲིག་འབད་དེ་མིན་འདུག"
+
+#: ../modules/controller_linux_input.c:440
+#: ../modules/controller_midi.c:603
+msgid "End of file"
+msgstr "ཡིག་སྣོད་ཀྱི་མཇུག"
+
+#: ../modules/controller_midi.c:166
+msgid "MIDI event controller"
+msgstr "ཨེམ་ཨའི་ཌི་ཨའི་ བྱུང་ལས་ཚད་འཛིན་པ།"
+
+#: ../modules/controller_midi.c:235
+msgid "The name of the device to read MIDI events from."
+msgstr "ནང་ལས་ ཨེམ་ཨའི་ཌི་ཨའི་བྱུང་ལས་ཚུ་ལྷག་ནིའ་དོན་ལུ་ ཐབས་འཕྲུལ་གྱི་མིང་།"
+
+#: ../modules/controller_midi.c:238
+msgid "Enter 'alsa' to use the ALSA sequencer."
+msgstr "ཨེ་ཨེལ་ཨེསི་ཨེ་ འབྱུང་རིམ་པ་ ལག་ལེན་འཐབ་ནིའི་དོན་ལུ་ 'ཨཱལ་ས་' བཙུགས།"
+
+#: ../modules/controller_midi.c:253
+msgid "Channel:"
+msgstr "རྒྱུ་་ལམ:"
+
+#: ../modules/controller_midi.c:254
+msgid "The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."
+msgstr "ནང་ལས་ བྱུང་ལས་ཚུ་ལྷག་ནིའི་དོན་ལུ་ ཨེམ་ཨའི་ཌི་ཨའི། ལུ་ གཞི་སྒྲིག་འབད-༡་དེ་ ཨེམ་ཨའི་ཌི་ཨའི་རྒྱུ་་ལམ་ཆ་མཉམ་ནང་ལས་ལྷག་ནིའི་དོན་ལུ་ཨིན།"
+
+#: ../modules/controller_midi.c:258
+msgid "MIDI"
+msgstr "ཨེམ་ཨའི་ཌི་ཨའི།"
+
+#: ../modules/controller_midi.c:434
+msgid "MIDI Events"
+msgstr "ཨེམ་ཨའི་ཌི་ཨའི་བྱུང་ལས་ཚུ།"
+
