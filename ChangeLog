@@ -1,3 +1,8 @@
+2006-09-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptool.c (gimp_tool_set_active_modifier_state):
+	added local "gboolean press" variables to improve readability.
+
 2006-09-12  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/tiff.c: added a parargaph of the original
@@ -64,7 +69,7 @@
 
 	* app/paint/gimpperspectiveclone.[ch]: derive from GimpClone and
 	remove everything that is already imeplemented in the parent
-	classes. Particullarly, removed motion() implementation in favor
+	classes. Particularly, removed motion() implementation in favor
 	of a get_source() implementation and simply use GimpClone's
 	motion(). Also refuse to work on indexed drawables.
 
