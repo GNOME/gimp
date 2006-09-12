@@ -452,10 +452,10 @@ gimp_tool_button_release (GimpTool        *tool,
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  gimp_tool_set_active_modifier_state (tool, 0, display);
-
   GIMP_TOOL_GET_CLASS (tool)->button_release (tool, coords, time, state,
                                               display);
+
+  gimp_tool_set_active_modifier_state (tool, 0, display);
 }
 
 void

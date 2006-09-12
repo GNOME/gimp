@@ -51,27 +51,32 @@
 
 /*  local function prototypes  */
 
-static void   gimp_blend_tool_button_press   (GimpTool        *tool,
-                                              GimpCoords      *coords,
-                                              guint32          time,
-                                              GdkModifierType  state,
-                                              GimpDisplay     *display);
-static void   gimp_blend_tool_button_release (GimpTool        *tool,
-                                              GimpCoords      *coords,
-                                              guint32          time,
-                                              GdkModifierType  state,
-                                              GimpDisplay     *display);
-static void   gimp_blend_tool_motion         (GimpTool        *tool,
-                                              GimpCoords      *coords,
-                                              guint32          time,
-                                              GdkModifierType  state,
-                                              GimpDisplay     *display);
-static void   gimp_blend_tool_cursor_update  (GimpTool        *tool,
-                                              GimpCoords      *coords,
-                                              GdkModifierType  state,
-                                              GimpDisplay     *display);
+static void   gimp_blend_tool_button_press        (GimpTool        *tool,
+                                                   GimpCoords      *coords,
+                                                   guint32          time,
+                                                   GdkModifierType  state,
+                                                   GimpDisplay     *display);
+static void   gimp_blend_tool_button_release      (GimpTool        *tool,
+                                                   GimpCoords      *coords,
+                                                   guint32          time,
+                                                   GdkModifierType  state,
+                                                   GimpDisplay     *display);
+static void   gimp_blend_tool_motion              (GimpTool        *tool,
+                                                   GimpCoords      *coords,
+                                                   guint32          time,
+                                                   GdkModifierType  state,
+                                                   GimpDisplay     *display);
+static void   gimp_blend_tool_active_modifier_key (GimpTool        *tool,
+                                                   GdkModifierType  key,
+                                                   gboolean         press,
+                                                   GdkModifierType  state,
+                                                   GimpDisplay     *display);
+static void   gimp_blend_tool_cursor_update       (GimpTool        *tool,
+                                                   GimpCoords      *coords,
+                                                   GdkModifierType  state,
+                                                   GimpDisplay     *display);
 
-static void   gimp_blend_tool_draw           (GimpDrawTool    *draw_tool);
+static void   gimp_blend_tool_draw                (GimpDrawTool    *draw_tool);
 
 
 G_DEFINE_TYPE (GimpBlendTool, gimp_blend_tool, GIMP_TYPE_DRAW_TOOL)
@@ -106,12 +111,13 @@ gimp_blend_tool_class_init (GimpBlendToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  tool_class->button_press   = gimp_blend_tool_button_press;
-  tool_class->button_release = gimp_blend_tool_button_release;
-  tool_class->motion         = gimp_blend_tool_motion;
-  tool_class->cursor_update  = gimp_blend_tool_cursor_update;
+  tool_class->button_press        = gimp_blend_tool_button_press;
+  tool_class->button_release      = gimp_blend_tool_button_release;
+  tool_class->motion              = gimp_blend_tool_motion;
+  tool_class->active_modifier_key = gimp_blend_tool_active_modifier_key;
+  tool_class->cursor_update       = gimp_blend_tool_cursor_update;
 
-  draw_tool_class->draw      = gimp_blend_tool_draw;
+  draw_tool_class->draw           = gimp_blend_tool_draw;
 }
 
 static void
@@ -158,8 +164,11 @@ gimp_blend_tool_button_press (GimpTool        *tool,
 
   gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
-  blend_tool->endx = blend_tool->startx = coords->x - off_x;
-  blend_tool->endy = blend_tool->starty = coords->y - off_y;
+  blend_tool->mousex = coords->x - off_x;
+  blend_tool->mousey = coords->y - off_y;
+
+  blend_tool->endx = blend_tool->startx = blend_tool->mousex;
+  blend_tool->endy = blend_tool->starty = blend_tool->mousey;
 
   tool->display = display;
 
@@ -243,8 +252,11 @@ gimp_blend_tool_motion (GimpTool        *tool,
                      &off_x, &off_y);
 
   /*  Get the current coordinates  */
-  blend_tool->endx = coords->x - off_x;
-  blend_tool->endy = coords->y - off_y;
+  blend_tool->mousex = coords->x - off_x;
+  blend_tool->mousey = coords->y - off_y;
+
+  blend_tool->endx = blend_tool->mousex;
+  blend_tool->endy = blend_tool->mousey;
 
   /* Restrict to multiples of 15 degrees if ctrl is pressed */
   if (state & GDK_CONTROL_MASK)
@@ -261,6 +273,32 @@ gimp_blend_tool_motion (GimpTool        *tool,
                                 blend_tool->endy - blend_tool->starty);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+}
+
+static void
+gimp_blend_tool_active_modifier_key (GimpTool        *tool,
+                                     GdkModifierType  key,
+                                     gboolean         press,
+                                     GdkModifierType  state,
+                                     GimpDisplay     *display)
+{
+  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
+
+  if (key == GDK_CONTROL_MASK)
+    {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+      blend_tool->endx = blend_tool->mousex;
+      blend_tool->endy = blend_tool->mousey;
+
+      if (press)
+        {
+          gimp_tool_motion_constrain (blend_tool->startx, blend_tool->starty,
+                                      &blend_tool->endx, &blend_tool->endy);
+        }
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+    }
 }
 
 static void
