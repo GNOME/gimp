@@ -1,5 +1,10 @@
 2006-09-12  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-selection.c (selection_undraw): need
+	to restart the selection here. Should fix bug #355395 and bug #355456.
+
+2006-09-12  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpbrushtool.c (gimp_brush_tool_cursor_update): if
 	the "bad" cursor modifier is set, show the cursor regardless of
 	the gimprc "show-paint-tool-cursor" setting.

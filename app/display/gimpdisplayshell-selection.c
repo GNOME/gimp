@@ -359,8 +359,13 @@ selection_undraw (Selection *selection)
   /*  Find the bounds of the selection  */
   if (gimp_display_shell_mask_bounds (selection->shell, &x1, &y1, &x2, &y2))
     {
+      /* expose will restart the selection */
       gimp_display_shell_expose_area (selection->shell,
                                       x1, y1, (x2 - x1), (y2 - y1));
+    }
+  else
+    {
+      selection_start (selection, TRUE);
     }
 }
 
@@ -390,7 +395,7 @@ selection_layer_undraw (Selection *selection)
       gint x4 = selection->segs_layer[3].x2 - 1;
       gint y4 = selection->segs_layer[3].y2 - 1;
 
-      /*  expose the region  */
+      /*  expose the region, this will restart the selection  */
       gimp_display_shell_expose_area (selection->shell,
                                       x1, y1, (x2 - x1) + 1, (y3 - y1) + 1);
       gimp_display_shell_expose_area (selection->shell,
