@@ -137,10 +137,9 @@ const GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-#define UPDATE_STEP         20
 #define SCALE_WIDTH        100
-#define PROPAGATING_VALUE  1<<0
-#define PROPAGATING_ALPHA  1<<1
+#define PROPAGATING_VALUE  (1 << 0)
+#define PROPAGATING_ALPHA  (1 << 1)
 
 /* parameters */
 typedef struct

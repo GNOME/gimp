@@ -55,8 +55,6 @@
 #define PLUG_IN_BINARY         "iwarp"
 #define RESPONSE_RESET         1
 
-#define MAX_PREVIEW_WIDTH      1024
-#define MAX_PREVIEW_HEIGHT     1024
 #define MAX_DEFORM_AREA_RADIUS 250
 
 #define SCALE_WIDTH            100

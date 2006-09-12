@@ -52,9 +52,6 @@
 #include "gimp-intl.h"
 
 
-#define MAX_SCALE_BUF 20
-
-
 static void   gimp_navigation_editor_docked_iface_init (GimpDockedInterface  *iface);
 
 static void   gimp_navigation_editor_destroy           (GtkObject            *object);

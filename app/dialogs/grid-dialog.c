@@ -49,7 +49,6 @@
 
 
 #define GRID_RESPONSE_RESET 1
-#define GRID_COLOR_SIZE     20
 
 
 /*  local functions  */

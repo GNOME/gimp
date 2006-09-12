@@ -39,10 +39,6 @@
 #include "gimp-intl.h"
 
 
-#define CELL_WIDTH   48
-#define CELL_HEIGHT  48
-
-
 static void
 image_preview_clicked (GtkWidget       *widget,
                        GdkModifierType  state,

@@ -71,8 +71,9 @@
 
 #define PLUG_IN_PROC   "plug-in-nova"
 #define PLUG_IN_BINARY "nova"
-#define ENTRY_WIDTH     50
+
 #define SCALE_WIDTH    125
+
 
 typedef struct
 {

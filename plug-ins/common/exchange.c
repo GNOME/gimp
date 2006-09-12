@@ -45,8 +45,9 @@
 
 #define PLUG_IN_PROC   "plug-in-exchange"
 #define PLUG_IN_BINARY "exchange"
+
 #define SCALE_WIDTH    128
-#define PREVIEW_SIZE   128
+
 
 /* datastructure to store parameters in */
 typedef struct

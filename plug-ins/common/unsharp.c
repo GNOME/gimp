@@ -30,7 +30,6 @@
 
 #define PLUG_IN_PROC    "plug-in-unsharp-mask"
 #define PLUG_IN_BINARY  "unsharp"
-#define PLUG_IN_VERSION "0.10"
 
 #define SCALE_WIDTH   120
 #define ENTRY_WIDTH     5

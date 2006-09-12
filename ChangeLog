@@ -1,5 +1,39 @@
 2006-09-12  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/gimp-composite-generic.c
+	* app/core/gimpimage-convert.c
+	* app/actions/view-actions.c
+	* app/dialogs/grid-dialog.c
+	* app/dialogs/offset-dialog.c
+	* app/dialogs/palette-import-dialog.c
+	* app/display/gimpnavigationeditor.c
+	* app/tools/gimpiscissorstool.c
+	* app/widgets/gimptoolbox-image-area.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/exchange.c
+	* plug-ins/common/fp.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/iwarp.c
+	* plug-ins/common/laplace.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/nlfilt.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/psp.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/tga.c
+	* plug-ins/common/threshold_alpha.c
+	* plug-ins/common/unsharp.c
+	* plug-ins/common/vpropagate.c
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/ifscompose/ifscompose.c: removed unused macros.
+
+2006-09-12  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpviewrenderer-frame.c: removed unused variables.
 
 2006-09-12  Sven Neumann  <sven@gimp.org>

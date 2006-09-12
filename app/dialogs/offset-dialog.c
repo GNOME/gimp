@@ -42,8 +42,6 @@
 #include "gimp-intl.h"
 
 
-#define ENTRY_WIDTH  60
-
 #define WRAP_AROUND  (1 << 3)
 #define FILL_MASK    (GIMP_OFFSET_BACKGROUND | GIMP_OFFSET_TRANSPARENT)
 

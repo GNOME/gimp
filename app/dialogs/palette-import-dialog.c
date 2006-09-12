@@ -49,9 +49,6 @@
 #include "gimp-intl.h"
 
 
-#define IMPORT_PREVIEW_SIZE 80
-
-
 typedef enum
 {
   GRADIENT_IMPORT,

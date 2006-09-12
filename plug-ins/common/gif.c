@@ -2012,8 +2012,6 @@ typedef unsigned char char_type;
  *
  */
 
-#define ARGVAL() (*++(*argv) || (--argc && *++argv))
-
 static int n_bits;                /* number of bits/code */
 static int maxbits = GIF_BITS;        /* user settable max # bits/code */
 static code_int maxcode;        /* maximum code, given n_bits */
@@ -2029,23 +2027,10 @@ static unsigned short codetab[HSIZE];
 #define HashTabOf(i)       htab[i]
 #define CodeTabOf(i)    codetab[i]
 
-static const code_int hsize = HSIZE;        /* the original reason for this being
-                                   variable was "for dynamic table sizing",
-                                   but since it was never actually changed
-                                   I made it const   --Adam. */
-
-/*
- * To save much memory, we overlay the table used by compress() with those
- * used by decompress().  The tab_prefix table is the same size and type
- * as the codetab.  The tab_suffix table needs 2**GIF_BITS characters.  We
- * get this from the beginning of htab.  The output stack uses the rest
- * of htab, and contains characters.  There is plenty of room for any
- * possible stack (stack used to be 8000 characters).
- */
-
-#define tab_prefixof(i) CodeTabOf(i)
-#define tab_suffixof(i)        ((char_type*)(htab))[i]
-#define de_stack               ((char_type*)&tab_suffixof((code_int)1<<GIF_BITS))
+static const code_int hsize = HSIZE; /* the original reason for this being
+                                        variable was "for dynamic table sizing",
+                                        but since it was never actually changed
+                                        I made it const   --Adam. */
 
 static code_int free_ent = 0;        /* first unused entry */
 
@@ -2496,7 +2481,6 @@ output (code_int code)
    */
   if (free_ent > maxcode || clear_flg)
     {
-
       if (clear_flg)
         {
 

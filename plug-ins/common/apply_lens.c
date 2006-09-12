@@ -45,9 +45,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_PROC   "plug-in-applylens"
-#define PLUG_IN_BINARY "apply_lens"
-#define ENTRY_WIDTH    100
+#define PLUG_IN_PROC    "plug-in-applylens"
+#define PLUG_IN_BINARY  "apply_lens"
 
 
 /* Declare local functions.

@@ -60,30 +60,18 @@
 #include "gfig-star.h"
 #include "gfig-stock.h"
 
-#define BRUSH_PREVIEW_SZ 32
-#define SEL_BUTTON_WIDTH 100
-#define SEL_BUTTON_HEIGHT 20
+#define SEL_BUTTON_WIDTH  100
+#define SEL_BUTTON_HEIGHT  20
 
-#define PREVIEW_MASK  (GDK_EXPOSURE_MASK       | \
-                       GDK_POINTER_MOTION_MASK | \
-                       GDK_BUTTON_PRESS_MASK   | \
-                       GDK_BUTTON_RELEASE_MASK | \
-                       GDK_BUTTON_MOTION_MASK  | \
-                       GDK_KEY_PRESS_MASK      | \
-                       GDK_KEY_RELEASE_MASK)
+#define GRID_TYPE_MENU      1
+#define GRID_RENDER_MENU    2
 
-#define GRID_TYPE_MENU   1
-#define GRID_RENDER_MENU 2
-#define GRID_IGNORE      0
-#define GRID_HIGHTLIGHT  1
-#define GRID_RESTORE     2
+#define PAINT_BGS_MENU      2
+#define PAINT_TYPE_MENU     3
 
-#define PAINT_BGS_MENU    2
-#define PAINT_TYPE_MENU   3
-
-#define OBJ_SELECT_GT 1
-#define OBJ_SELECT_LT 2
-#define OBJ_SELECT_EQ 4
+#define OBJ_SELECT_GT       1
+#define OBJ_SELECT_LT       2
+#define OBJ_SELECT_EQ       4
 
 /* Globals */
 gint   undo_level;  /* Last slot filled in -1 = no undo */

@@ -84,8 +84,7 @@
 /*  Other defines...  */
 #define  MAX_GRADIENT      179.606  /* == sqrt (127^2 + 127^2) */
 #define  GRADIENT_SEARCH   32  /* how far to look when snapping to an edge */
-#define  TARGET_HEIGHT     25
-#define  TARGET_WIDTH      25
+#define  TARGET_SIZE      25
 #define  POINT_WIDTH       9   /* size (in pixels) of seed handles */
 #define  POINT_HALFWIDTH   (POINT_WIDTH / 2)
 #define  EXTEND_BY         0.2 /* proportion to expand cost map by */
@@ -93,10 +92,6 @@
 #define  MIN_GRADIENT      63  /* gradients < this are directionless */
 
 #define  COST_WIDTH         2  /* number of bytes for each pixel in cost map  */
-#define  BLOCK_WIDTH       64
-#define  BLOCK_HEIGHT      64
-#define  CONV_WIDTH        (BLOCK_WIDTH + 2)
-#define  CONV_HEIGHT       (BLOCK_HEIGHT + 2)
 
 /* weight to give between gradient (_G) and direction (_D) */
 #define  OMEGA_D           0.2
@@ -753,10 +748,8 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
     {
       gimp_draw_tool_draw_handle (draw_tool,
                                   GIMP_HANDLE_CROSS,
-                                  iscissors->x,
-                                  iscissors->y,
-                                  TARGET_WIDTH,
-                                  TARGET_WIDTH,
+                                  iscissors->x, iscissors->y,
+                                  TARGET_SIZE, TARGET_SIZE,
                                   GTK_ANCHOR_CENTER,
                                   FALSE);
 

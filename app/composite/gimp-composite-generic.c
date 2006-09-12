@@ -40,22 +40,10 @@
 #define OPAQUE_OPACITY       255
 #define TRANSPARENT_OPACITY  0
 
+#define RANDOM_TABLE_SIZE    4096
+
 
 #define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
-
-/* This version of INT_MULT3 is very fast, but suffers from some
-   slight roundoff errors.  It returns the correct result 99.987
-   percent of the time */
-#define INT_MULT3(a,b,c,t)  ((t) = (a) * (b) * (c) + 0x7F5B, ((((t) >> 7) + (t)) >> 16))
-/*
-  This version of INT_MULT3 always gives the correct result, but runs at
-  approximatly one third the speed. */
-/*  #define INT_MULT3(a,b,c,t) (((a) * (b) * (c) + 32512) / 65025.0)
- */
-
-#define INT_BLEND(a,b,alpha,tmp)  (INT_MULT((a) - (b), alpha, tmp) + (b))
-
-#define RANDOM_TABLE_SIZE  4096
 
 /* A drawable has an alphachannel if contains either 4 or 2 bytes data
  * aka GRAYA and RGBA and thus the macro below works. This will have
@@ -66,9 +54,9 @@
 #define HAS_ALPHA(bytes) (~bytes & 1)
 
 
-static guchar add_lut[511];
-static gint32 random_table[RANDOM_TABLE_SIZE];
-static guchar burn_lut[256][256];
+static guchar  add_lut[511];
+static gint32  random_table[RANDOM_TABLE_SIZE];
+static guchar  burn_lut[256][256];
 
 /*
  *
@@ -1280,7 +1268,8 @@ gimp_composite_dissolve_any_any_any_generic (GimpCompositeContext * ctx)
           combined_opacity = opacity;
       }
 
-      dest[alpha] = (rand_val >= combined_opacity) ? 0 : OPAQUE_OPACITY;
+      dest[alpha] =
+        (rand_val >= combined_opacity) ? TRANSPARENT_OPACITY : OPAQUE_OPACITY;
 
       dest += db;
       src += sb;

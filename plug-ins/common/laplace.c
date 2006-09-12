@@ -166,8 +166,6 @@ laplace_prepare_row (GimpPixelRgn *pixel_rgn,
     }
 }
 
-#define SIGN(a) (((a) > 0) ? 1 : -1)
-#define RMS(a,b) (sqrt (pow ((a),2) + pow ((b), 2)))
 #define BLACK_REGION(val) ((val) > 128)
 #define WHITE_REGION(val) ((val) <= 128)
 
