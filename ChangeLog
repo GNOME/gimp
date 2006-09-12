@@ -1,5 +1,9 @@
 2006-09-12  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontainerpopup.c: removed unused includes.
+
+2006-09-12  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpclonetool.c
 	* app/tools/gimpconvolvetool.c
 	* app/tools/gimpcroptool.c
