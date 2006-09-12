@@ -232,18 +232,20 @@ gimp_brush_tool_cursor_update (GimpTool        *tool,
 {
   GimpBrushTool *brush_tool = GIMP_BRUSH_TOOL (tool);
 
-  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)) &&
-      ! brush_tool->show_cursor)
+  if (! brush_tool->show_cursor &&
+      ! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)) &&
+      gimp_tool_control_get_cursor_modifier (tool->control) != GIMP_CURSOR_MODIFIER_BAD)
     {
       gimp_tool_set_cursor (tool, display,
                             GIMP_CURSOR_NONE,
                             GIMP_TOOL_CURSOR_NONE,
                             GIMP_CURSOR_MODIFIER_NONE);
-
-      return;
     }
-
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+  else
+    {
+      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool,
+                                                     coords, state, display);
+    }
 }
 
 static void

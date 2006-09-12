@@ -1,3 +1,9 @@
+2006-09-12  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpbrushtool.c (gimp_brush_tool_cursor_update): if
+	the "bad" cursor modifier is set, show the cursor regardless of
+	the gimprc "show-paint-tool-cursor" setting.
+
 2006-09-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpsourcecore.[ch]: made gimp_source_core_motion() a
