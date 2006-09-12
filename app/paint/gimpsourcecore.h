@@ -87,5 +87,10 @@ struct _GimpSourceCoreClass
 
 GType   gimp_source_core_get_type (void) G_GNUC_CONST;
 
+/* TEMP HACK */
+void    gimp_source_core_motion   (GimpSourceCore   *source_core,
+                                   GimpDrawable     *drawable,
+                                   GimpPaintOptions *paint_options);
+
 
 #endif  /*  __GIMP_SOURCE_CORE_H__  */

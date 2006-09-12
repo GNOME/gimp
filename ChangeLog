@@ -1,3 +1,22 @@
+2006-09-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpsourcecore.[ch]: made gimp_source_core_motion() a
+	public function for the time being, pending further refactoring.
+
+	* app/paint/gimpperspectiveclone.[ch]: derive from GimpClone and
+	remove everything that is already imeplemented in the parent
+	classes. Particullarly, removed motion() implementation in favor
+	of a get_source() implementation and simply use GimpClone's
+	motion(). Also refuse to work on indexed drawables.
+
+	* app/paint/gimpperspectivecloneoptions.[ch]: derive from
+	GimpCloneOptions and remove everything that is already done by the
+	parent classes.
+
+	* app/tools/gimpperspectiveclonetool.c: changed
+	accordingly. Doesn't derive from GimpSourceTool yet since there is
+	some virtual function refactoring in GimpSourceTool missing.
+
 2006-09-12  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite-generic.c

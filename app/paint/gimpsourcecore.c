@@ -63,9 +63,11 @@ static void   gimp_source_core_paint             (GimpPaintCore    *paint_core,
                                                   GimpPaintState    paint_state,
                                                   guint32           time);
 
+#if 0
 static void   gimp_source_core_motion            (GimpSourceCore   *source_core,
                                                   GimpDrawable     *drawable,
                                                   GimpPaintOptions *paint_options);
+#endif
 
 static gboolean gimp_source_core_real_get_source (GimpSourceCore   *source_core,
                                                   GimpDrawable     *drawable,
@@ -284,7 +286,7 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
   g_object_notify (G_OBJECT (source_core), "src-y");
 }
 
-static void
+void
 gimp_source_core_motion (GimpSourceCore   *source_core,
                          GimpDrawable     *drawable,
                          GimpPaintOptions *paint_options)

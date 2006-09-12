@@ -27,18 +27,10 @@
 #include "gimpperspectivecloneoptions.h"
 
 
-#define PERSPECTIVE_CLONE_DEFAULT_MODE       GIMP_PERSPECTIVE_CLONE_MODE_ADJUST
-#define PERSPECTIVE_CLONE_DEFAULT_TYPE       GIMP_IMAGE_CLONE
-#define PERSPECTIVE_CLONE_DEFAULT_ALIGN_MODE GIMP_SOURCE_ALIGN_NO
-
-
 enum
 {
   PROP_0,
-  PROP_CLONE_MODE,
-  PROP_CLONE_TYPE,
-  PROP_ALIGN_MODE,
-  PROP_SAMPLE_MERGED
+  PROP_CLONE_MODE
 };
 
 
@@ -53,7 +45,7 @@ static void   gimp_perspective_clone_options_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpPerspectiveCloneOptions, gimp_perspective_clone_options,
-               GIMP_TYPE_PAINT_OPTIONS)
+               GIMP_TYPE_CLONE_OPTIONS)
 
 
 static void
@@ -67,22 +59,8 @@ gimp_perspective_clone_options_class_init (GimpPerspectiveCloneOptionsClass *kla
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CLONE_MODE,
                                  "clone-mode", NULL,
                                  GIMP_TYPE_PERSPECTIVE_CLONE_MODE,
-                                 PERSPECTIVE_CLONE_DEFAULT_MODE,
+                                 GIMP_PERSPECTIVE_CLONE_MODE_ADJUST,
                                  GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CLONE_TYPE,
-                                 "clone-type", NULL,
-                                 GIMP_TYPE_CLONE_TYPE,
-                                 PERSPECTIVE_CLONE_DEFAULT_TYPE,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ALIGN_MODE,
-                                 "align-mode", NULL,
-                                 GIMP_TYPE_SOURCE_ALIGN_MODE,
-                                 PERSPECTIVE_CLONE_DEFAULT_ALIGN_MODE,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
-                                    "sample-merged", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -103,15 +81,7 @@ gimp_perspective_clone_options_set_property (GObject      *object,
     case PROP_CLONE_MODE:
       options->clone_mode = g_value_get_enum (value);
       break;
-    case PROP_CLONE_TYPE:
-      options->clone_type = g_value_get_enum (value);
-      break;
-    case PROP_ALIGN_MODE:
-      options->align_mode = g_value_get_enum (value);
-      break;
-    case PROP_SAMPLE_MERGED:
-      options->sample_merged = g_value_get_boolean (value);
-      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -131,15 +101,7 @@ gimp_perspective_clone_options_get_property (GObject    *object,
     case PROP_CLONE_MODE:
       g_value_set_enum (value, options->clone_mode);
       break;
-    case PROP_CLONE_TYPE:
-      g_value_set_enum (value, options->clone_type);
-      break;
-    case PROP_ALIGN_MODE:
-      g_value_set_enum (value, options->align_mode);
-      break;
-    case PROP_SAMPLE_MERGED:
-      g_value_set_boolean (value, options->sample_merged);
-      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

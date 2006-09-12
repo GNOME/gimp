@@ -36,37 +36,26 @@ typedef struct _GimpPerspectiveCloneClass GimpPerspectiveCloneClass;
 
 struct _GimpPerspectiveClone
 {
-  GimpClone     parent_instance;
+  GimpClone    parent_instance;
 
-  gboolean      set_source;
+  gdouble      dest_x;       /* coords where the stroke starts */
+  gdouble      dest_y;
 
-  GimpDrawable *src_drawable;
-  gdouble       src_x;          /* coordinates where the cross that indicate where is copying each moment is painted */
-  gdouble       src_y;
+  gdouble      src_x_fv;     /* source coords in front_view perspective */
+  gdouble      src_y_fv;
 
-  gdouble       orig_src_x;
-  gdouble       orig_src_y;
+  gdouble      dest_x_fv;    /* destination coords in front_view perspective */
+  gdouble      dest_y_fv;
 
-  gdouble       dest_x;         /* coords where the stroke starts */
-  gdouble       dest_y;
+  GimpMatrix3  transform;
+  GimpMatrix3  transform_inv;
 
-  gdouble       src_x_fv;       /* source coords in front_view perspective */
-  gdouble       src_y_fv;
-
-  gdouble       dest_x_fv;      /* destination coords in front_view perspective */
-  gdouble       dest_y_fv;
-
-  gdouble       offset_x;
-  gdouble       offset_y;
-  gboolean      first_stroke;
-
-  GimpMatrix3   transform;
-  GimpMatrix3   transform_inv;
+  TempBuf     *src_area;
 };
 
 struct _GimpPerspectiveCloneClass
 {
-  GimpCloneClass parent_class;
+  GimpCloneClass  parent_class;
 };
 
 
@@ -76,9 +65,10 @@ void    gimp_perspective_clone_register   (Gimp                      *gimp,
 GType   gimp_perspective_clone_get_type   (void) G_GNUC_CONST;
 
 void   gimp_perspective_clone_get_source_point  (GimpPerspectiveClone   *clone,
-                                                        gdouble                 x,
-                                                        gdouble                 y,
-                                                        gdouble                 *newx,
-                                                        gdouble                 *newy);
+                                                 gdouble                 x,
+                                                 gdouble                 y,
+                                                 gdouble                 *newx,
+                                                 gdouble                 *newy);
 
-#endif  /*  __GIMP_CLONE_VANISHIGN_H__  */
+
+#endif  /*  __GIMP_PERSPECTIVE_CLONE_H__  */

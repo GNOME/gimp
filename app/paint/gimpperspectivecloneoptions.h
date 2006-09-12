@@ -20,7 +20,7 @@
 #define __GIMP_PERSPECTIVE_CLONE_OPTIONS_H__
 
 
-#include "gimppaintoptions.h"
+#include "gimpcloneoptions.h"
 
 
 #define GIMP_TYPE_PERSPECTIVE_CLONE_OPTIONS            (gimp_perspective_clone_options_get_type ())
@@ -36,17 +36,14 @@ typedef struct _GimpPerspectiveCloneOptionsClass GimpPerspectiveCloneOptionsClas
 
 struct _GimpPerspectiveCloneOptions
 {
-  GimpPaintOptions          paint_instance;
+  GimpCloneOptions         paint_instance;
 
-  GimpPerspectiveCloneMode  clone_mode;
-  GimpCloneType             clone_type;
-  GimpSourceAlignMode       align_mode;
-  gboolean                  sample_merged;
+  GimpPerspectiveCloneMode clone_mode;
 };
 
 struct _GimpPerspectiveCloneOptionsClass
 {
-  GimpPaintOptionsClass parent_class;
+  GimpCloneOptionsClass parent_class;
 };
 
 
