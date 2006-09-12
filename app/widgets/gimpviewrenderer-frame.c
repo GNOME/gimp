@@ -104,9 +104,7 @@ stretch_frame_image (GdkPixbuf *frame_image,
                      gint       dest_height)
 {
   GdkPixbuf *pixbuf;
-  guchar    *pixels;
   gint       frame_width, frame_height;
-  gint       row_stride;
   gint       target_width,  target_frame_width;
   gint       target_height, target_frame_height;
 
@@ -117,11 +115,9 @@ stretch_frame_image (GdkPixbuf *frame_image,
                            dest_width, dest_height);
   gdk_pixbuf_fill (pixbuf, 0);
 
-  row_stride = gdk_pixbuf_get_rowstride (pixbuf);
-  pixels = gdk_pixbuf_get_pixels (pixbuf);
-
-  target_width = dest_width - left_offset - right_offset;
+  target_width  = dest_width - left_offset - right_offset;
   target_height = dest_height - top_offset - bottom_offset;
+
   target_frame_width  = frame_width - left_offset - right_offset;
   target_frame_height = frame_height - top_offset - bottom_offset;
 
@@ -130,8 +126,9 @@ stretch_frame_image (GdkPixbuf *frame_image,
   top_offset    += MIN (target_height / 4, target_frame_height / 4);
   bottom_offset += MIN (target_height / 4, target_frame_height / 4);
 
-  target_width = dest_width - left_offset - right_offset;
+  target_width  = dest_width - left_offset - right_offset;
   target_height = dest_height - top_offset - bottom_offset;
+
   target_frame_width  = frame_width - left_offset - right_offset;
   target_frame_height = frame_height - top_offset - bottom_offset;
 

@@ -1,5 +1,9 @@
 2006-09-12  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpviewrenderer-frame.c: removed unused variables.
+
+2006-09-12  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimppaletteeditor.c (gimp_palette_editor_get_index):
 	applied a modified patch from David Gowers that changes the search
 	behaviour to favour colors in the neighborhood of the selected color
