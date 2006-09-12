@@ -358,12 +358,12 @@ gimp_curves_tool_oper_update (GimpTool        *tool,
   if (state & GDK_SHIFT_MASK)
     {
       mode   = GIMP_COLOR_PICK_MODE_PALETTE;
-      status = _("Click to add a control point.");
+      status = _("Click to add a control point");
     }
   else if (state & GDK_CONTROL_MASK)
     {
       mode   = GIMP_COLOR_PICK_MODE_PALETTE;
-      status = _("Click to add control points to all channels.");
+      status = _("Click to add control points to all channels");
     }
 
   GIMP_COLOR_TOOL (tool)->pick_mode = mode;

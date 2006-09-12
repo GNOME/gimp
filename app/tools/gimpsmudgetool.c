@@ -75,8 +75,8 @@ gimp_smudge_tool_init (GimpSmudgeTool *smudge)
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (smudge),
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);
 
-  paint_tool->status      = _("Click to smudge.");
-  paint_tool->status_line = _("Click to smudge the line.");
+  paint_tool->status      = _("Click to smudge");
+  paint_tool->status_line = _("Click to smudge the line");
   paint_tool->status_ctrl = NULL; /* don't suggest Ctrl even if it works */
 }
 

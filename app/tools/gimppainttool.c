@@ -127,8 +127,8 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
   paint_tool->pick_colors = FALSE;
   paint_tool->draw_line   = FALSE;
 
-  paint_tool->status      = _("Click to paint.");
-  paint_tool->status_line = _("Click to draw the line.");
+  paint_tool->status      = _("Click to paint");
+  paint_tool->status_line = _("Click to draw the line");
   paint_tool->status_ctrl = _("%s to pick a color");
 
   paint_tool->core        = NULL;
@@ -479,13 +479,13 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
                 case GIMP_COLOR_PICK_MODE_FOREGROUND:
                   gimp_tool_push_status (tool, display,
                                          _("Click in any image to pick the "
-                                           "foreground color."));
+                                           "foreground color"));
                   break;
 
                 case GIMP_COLOR_PICK_MODE_BACKGROUND:
                   gimp_tool_push_status (tool, display,
                                          _("Click in any image to pick the "
-                                           "background color."));
+                                           "background color"));
                   break;
 
                 default:
@@ -557,11 +557,11 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
            *  draw a line.
            */
 
-          gdouble      dx, dy, dist;
-          gchar        status_str[STATUSBAR_SIZE];
-          gchar       *status_help;
-          gint         off_x, off_y;
-          gboolean     hard;
+          gchar     status_str[STATUSBAR_SIZE];
+          gchar    *status_help;
+          gdouble   dx, dy, dist;
+          gint      off_x, off_y;
+          gboolean  hard;
 
           core->cur_coords = *coords;
 

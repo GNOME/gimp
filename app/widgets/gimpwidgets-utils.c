@@ -600,50 +600,78 @@ gimp_suggest_modifiers (const gchar     *message,
                         const gchar     *control_format,
                         const gchar     *alt_format)
 {
-  gchar msg_buf[3][BUF_SIZE];
-  gint  num_msgs = 0;
+  gchar     msg_buf[3][BUF_SIZE];
+  gint      num_msgs = 0;
+  gboolean  try      = FALSE;
 
   if (modifiers & GDK_SHIFT_MASK)
     {
       if (shift_format && *shift_format)
-        g_snprintf (msg_buf[num_msgs], BUF_SIZE, shift_format,
-                    gimp_get_mod_name_shift ());
+        {
+          g_snprintf (msg_buf[num_msgs], BUF_SIZE, shift_format,
+                      gimp_get_mod_name_shift ());
+        }
       else
-        g_strlcpy (msg_buf[num_msgs], gimp_get_mod_name_shift (), BUF_SIZE);
+        {
+          g_strlcpy (msg_buf[num_msgs], gimp_get_mod_name_shift (), BUF_SIZE);
+          try = TRUE;
+        }
+
       num_msgs++;
     }
+
   if (modifiers & GDK_CONTROL_MASK)
     {
       if (control_format && *control_format)
-        g_snprintf (msg_buf[num_msgs], BUF_SIZE, control_format,
-                    gimp_get_mod_name_control ());
+        {
+          g_snprintf (msg_buf[num_msgs], BUF_SIZE, control_format,
+                      gimp_get_mod_name_control ());
+        }
       else
-        g_strlcpy (msg_buf[num_msgs], gimp_get_mod_name_control (), BUF_SIZE);
+        {
+          g_strlcpy (msg_buf[num_msgs], gimp_get_mod_name_control (), BUF_SIZE);
+          try = TRUE;
+        }
+
       num_msgs++;
     }
+
   if (modifiers & GDK_MOD1_MASK)
     {
       if (alt_format && *alt_format)
-        g_snprintf (msg_buf[num_msgs], BUF_SIZE, alt_format,
-                    gimp_get_mod_name_alt ());
+        {
+          g_snprintf (msg_buf[num_msgs], BUF_SIZE, alt_format,
+                      gimp_get_mod_name_alt ());
+        }
       else
-        g_strlcpy (msg_buf[num_msgs], gimp_get_mod_name_alt (), BUF_SIZE);
+        {
+          g_strlcpy (msg_buf[num_msgs], gimp_get_mod_name_alt (), BUF_SIZE);
+          try = TRUE;
+        }
+
       num_msgs++;
     }
+
   /* This convoluted way to build the message using multiple format strings
    * tries to make the messages easier to translate to other languages.
    */
-  if (num_msgs == 1)
-    return g_strdup_printf (_("%s (try %s)"), message,
-                            msg_buf[0]);
-  else if (num_msgs == 2)
-    return g_strdup_printf (_("%s (try %s, %s)"), message,
-                            msg_buf[0], msg_buf[1]);
-  else if (num_msgs == 3)
-    return g_strdup_printf (_("%s (try %s, %s, %s)"), message,
-                            msg_buf[0], msg_buf[1], msg_buf[2]);
-  else
-    return g_strdup (message);
+
+  switch (num_msgs)
+    {
+    case 1:
+      return g_strdup_printf (try ? _("%s (try %s)") : _("%s (%s)"),
+                              message, msg_buf[0]);
+
+    case 2:
+      return g_strdup_printf (_("%s (try %s, %s)"),
+                              message, msg_buf[0], msg_buf[1]);
+
+    case 3:
+      return g_strdup_printf (_("%s (try %s, %s, %s)"),
+                              message, msg_buf[0], msg_buf[1], msg_buf[2]);
+    }
+
+  return g_strdup (message);
 }
 #undef BUF_SIZE
 

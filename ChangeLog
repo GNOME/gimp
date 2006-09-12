@@ -1,3 +1,22 @@
+2006-09-12  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimpperspectiveclonetool.c
+	* app/tools/gimpregionselecttool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimpvectortool.c: removed trailing dot from statusbar
+	messages.
+
+	* app/widgets/gimpwidgets-utils.c (gimp_suggest_modifiers): don't
+	use "try" if the modifier action has been specified.
+
 2006-09-12  Pema Geyleg  <pgeyleg@gmail.com>
 
 	* configure.in: Added 'dz' (Dzongkha) to ALL_LINGUAS

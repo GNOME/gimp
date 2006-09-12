@@ -167,14 +167,14 @@ gimp_convolve_tool_status_update (GimpTool         *tool,
   switch (type)
     {
     case GIMP_BLUR_CONVOLVE:
-      paint_tool->status      = _("Click to blur.");
-      paint_tool->status_line = _("Click to blur the line.");
+      paint_tool->status      = _("Click to blur");
+      paint_tool->status_line = _("Click to blur the line");
       paint_tool->status_ctrl = _("%s to sharpen");
       break;
 
     case GIMP_SHARPEN_CONVOLVE:
-      paint_tool->status      = _("Click to sharpen.");
-      paint_tool->status_line = _("Click to sharpen the line.");
+      paint_tool->status      = _("Click to sharpen");
+      paint_tool->status_line = _("Click to sharpen the line");
       paint_tool->status_ctrl = _("%s to blur");
       break;
 

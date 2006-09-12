@@ -170,14 +170,14 @@ gimp_dodge_burn_tool_status_update (GimpTool          *tool,
   switch (type)
     {
     case GIMP_DODGE:
-      paint_tool->status      = _("Click to dodge.");
-      paint_tool->status_line = _("Click to dodge the line.");
+      paint_tool->status      = _("Click to dodge");
+      paint_tool->status_line = _("Click to dodge the line");
       paint_tool->status_ctrl = _("%s to burn");
       break;
 
     case GIMP_BURN:
-      paint_tool->status      = _("Click to burn.");
-      paint_tool->status_line = _("Click to burn the line.");
+      paint_tool->status      = _("Click to burn");
+      paint_tool->status_line = _("Click to burn the line");
       paint_tool->status_ctrl = _("%s to dodge");
       break;
 

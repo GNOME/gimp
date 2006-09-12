@@ -273,18 +273,20 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
           if (! selection_empty)
             {
               status = gimp_suggest_modifiers (_("Click-Drag to replace the "
-                                                 "current selection."),
+                                                 "current selection"),
                                                modifiers & ~state,
                                                NULL, NULL, NULL);
               free_status = TRUE;
             }
           else
-            status = _("Click-Drag to create a new selection.");
+            {
+              status = _("Click-Drag to create a new selection");
+            }
           break;
 
         case SELECTION_ADD:
           status = gimp_suggest_modifiers (_("Click-Drag to add to the "
-                                             "current selection."),
+                                             "current selection"),
                                            modifiers
                                            & ~(state | GDK_SHIFT_MASK),
                                            NULL, NULL, NULL);
@@ -293,7 +295,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
 
         case SELECTION_SUBTRACT:
           status = gimp_suggest_modifiers (_("Click-Drag to subtract from the "
-                                             "current selection."),
+                                             "current selection"),
                                            modifiers
                                            & ~(state | GDK_CONTROL_MASK),
                                            NULL, NULL, NULL);
@@ -302,7 +304,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
 
         case SELECTION_INTERSECT:
           status = gimp_suggest_modifiers (_("Click-Drag to intersect with "
-                                             "the current selection."),
+                                             "the current selection"),
                                            modifiers & ~state,
                                            NULL, NULL, NULL);
           free_status = TRUE;
@@ -310,22 +312,22 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
 
         case SELECTION_MOVE_MASK:
           status = gimp_suggest_modifiers (_("Click-Drag to move the "
-                                             "selection mask."),
+                                             "selection mask"),
                                            modifiers & ~state,
                                            NULL, NULL, NULL);
           free_status = TRUE;
           break;
 
         case SELECTION_MOVE:
-          status = _("Click-Drag to move the selected pixels.");
+          status = _("Click-Drag to move the selected pixels");
           break;
 
         case SELECTION_MOVE_COPY:
-          status = _("Click-Drag to move a copy of the selected pixels.");
+          status = _("Click-Drag to move a copy of the selected pixels");
           break;
 
         case SELECTION_ANCHOR:
-          status = _("Click to anchor the floating selection.");
+          status = _("Click to anchor the floating selection");
           break;
 
         default:

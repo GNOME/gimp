@@ -161,7 +161,7 @@ gimp_region_select_tool_button_press (GimpTool        *tool,
     return;
 
   gimp_tool_push_status (tool, display,
-                         _("Move the mouse to change threshold."));
+                         _("Move the mouse to change threshold"));
 
   /*  calculate the region boundary  */
   region_sel->segs = gimp_region_select_tool_calculate (region_sel, display,

@@ -647,7 +647,7 @@ gimp_perspective_clone_tool_oper_update (GimpTool        *tool,
           if (clone->src_drawable == NULL)
             {
               gimp_tool_replace_status (tool, display,
-                                        _("Ctrl-Click to set a clone source."));
+                                        _("Ctrl-Click to set a clone source"));
             }
           else
             {
