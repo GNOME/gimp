@@ -1398,7 +1398,6 @@ gimp_rectangle_tool_modifier_key (GimpTool        *tool,
   GimpRectangleTool    *rectangle = GIMP_RECTANGLE_TOOL (tool);
   GimpRectangleOptions *options   = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
 
-
   if (press)
     {
       if (key == GDK_SHIFT_MASK)
@@ -1829,7 +1828,7 @@ gimp_rectangle_tool_cursor_update (GimpTool        *tool,
 
   rectangle = GIMP_RECTANGLE_TOOL (tool);
 
-  if (tool->display == display && ! (state & GDK_BUTTON1_MASK))
+  if (tool->display == display)
     {
       guint function;
 

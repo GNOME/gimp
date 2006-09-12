@@ -242,15 +242,12 @@ gimp_source_tool_modifier_key (GimpTool        *tool,
   GimpPaintTool     *paint_tool  = GIMP_PAINT_TOOL (tool);
   GimpSourceOptions *options     = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);
 
-  if (! (state & GDK_BUTTON1_MASK))
+  if (options->use_source && key == GDK_CONTROL_MASK)
     {
-      if (options->use_source && key == GDK_CONTROL_MASK)
-        {
-          if (press)
-            paint_tool->status = source_tool->status_set_source;
-          else
-            paint_tool->status = source_tool->status_paint;
-        }
+      if (press)
+        paint_tool->status = source_tool->status_set_source;
+      else
+        paint_tool->status = source_tool->status_paint;
     }
 
   GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,

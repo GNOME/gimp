@@ -116,9 +116,6 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
   GimpSelectionTool    *selection_tool = GIMP_SELECTION_TOOL (tool);
   GimpSelectionOptions *options;
 
-  if (state & GDK_BUTTON1_MASK)
-    return;
-
   options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
 
   if (key == GDK_SHIFT_MASK   ||

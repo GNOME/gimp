@@ -453,9 +453,6 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
   GimpDrawTool  *draw_tool  = GIMP_DRAW_TOOL (tool);
 
-  if (state & GDK_BUTTON1_MASK)
-    return;
-
   if (key != GDK_CONTROL_MASK)
     return;
 

@@ -1,3 +1,18 @@
+2006-09-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimprectangletool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimpsourcetool.c
+	* app/tools/gimpvectortool.c: back out change committed on
+	2006-08-21 which passed modifier events to tools even while mouse1
+	was down. This generated way too much unexpected events that would
+	have to be special cased in all tools. Will implement an anternate
+	solution soon.
+
 2006-09-12  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcontainerpopup.c: removed unused includes.

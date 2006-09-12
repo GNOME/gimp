@@ -116,20 +116,12 @@ gimp_display_shell_events (GtkWidget        *widget,
         if (gimp->busy)
           return TRUE;
 
-        /*  do not process any key events while BUTTON1 is down, except modifier
-         *  key events. We do this so that tools don't get interrupted between
-         *  button press and button release.
+        /*  do not process any key events while BUTTON1 is down. We do this
+         *  so tools keep the modifier state they were in when BUTTON1 was
+         *  pressed and to prevent accelerators from being invoked.
          */
         if (kevent->state & GDK_BUTTON1_MASK)
           {
-            if (kevent->keyval == GDK_Shift_L   ||
-                kevent->keyval == GDK_Shift_R   ||
-                kevent->keyval == GDK_Control_L ||
-                kevent->keyval == GDK_Control_R   )
-              {
-                return FALSE;
-              }
-
             if (event->type == GDK_KEY_PRESS)
               {
                 if (kevent->keyval == GDK_space && shell->space_release_pending)
