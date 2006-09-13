@@ -1,3 +1,8 @@
+2006-09-13  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpmeasuretool.c (gimp_measure_tool_active_modifier_key):
+	update status bar and optional dialog window.
+
 2006-09-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptool.c (gimp_tool_set_active_modifier_state):

@@ -509,6 +509,8 @@ gimp_measure_tool_active_modifier_key (GimpTool        *tool,
       measure->x[measure->point] = ROUND (x);
       measure->y[measure->point] = ROUND (y);
 
+      gimp_measure_tool_dialog_update (measure, display);
+
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
 }
@@ -799,14 +801,14 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
 
   if (shell->unit == GIMP_UNIT_PIXEL)
     {
-      g_snprintf (buf, sizeof (buf), "%.1f %s, %.2f \302\260 (%d × %d)",
+      g_snprintf (buf, sizeof (buf), "%.1f %s, %.2f\302\260 (%d × %d)",
                   pixel_distance, _("pixels"), pixel_angle,
                   pixel_width, pixel_height);
     }
   else
     {
       g_snprintf (format, sizeof (format),
-                  "%%.%df %s, %%.2f \302\260 (%%.%df × %%.%df)",
+                  "%%.%df %s, %%.2f\302\260 (%%.%df × %%.%df)",
                   _gimp_unit_get_digits (image->gimp, shell->unit),
                   _gimp_unit_get_plural (image->gimp, shell->unit),
                   _gimp_unit_get_digits (image->gimp, shell->unit),
