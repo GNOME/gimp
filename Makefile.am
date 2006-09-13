@@ -9,6 +9,7 @@ SUBDIRS = \
 	po		\
 	po-libgimp	\
 	po-plug-ins	\
+	po-python	\
 	po-script-fu	\
 	po-tips		\
 	data		\

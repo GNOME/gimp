@@ -1,0 +1,39 @@
+# Spanish translation for gimp-python.
+# Copyright © 1998-2000,2003 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gimp package.
+# Oscar Cebellán Ramos <cebaman@bigfoot.com>
+# Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
+# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005.
+# Francisco Vila <francisco.vila@hispalinux.es>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: es\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2006-07-26 19:08+0200\n"
+"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
+"Language-Team:  <traductores@es.gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"\n"
+"X-Generator: xemacs21\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr "Consola de Python"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+msgid "_Browse..."
+msgstr "_Examinar..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "Consola de Python"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+#, fuzzy
+msgid "Interactive Python Development"
+msgstr "Consola interactiva para el desarrollo de Python"

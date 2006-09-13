@@ -1,0 +1,36 @@
+# Hungarian translation of gimp-python.
+# Copyright (C) 2001, 2003, 2004 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gimp-python package.
+# Andras Timar <timar@gnome.hu>, 2001, 2003.
+# Emese Kovacs <emese@gnome.hu>, 2001.
+# Laszlo Dvornik <dvornik@gnome.hu>, 2004.
+# Arpad Biro <biro_arpad@yahoo.com>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-python\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2004-12-02 11:06+0100\n"
+"Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
+"Language-Team: Hungarian <gnome@gnome.hu>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr "Python konzol"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+msgid "_Browse..."
+msgstr "_Tallózás..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "Python konzol"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""

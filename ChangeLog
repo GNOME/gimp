@@ -1,3 +1,14 @@
+2006-09-13  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am
+	* configure.in
+	* po-python: added basic infrastructure for a gimp20-python
+	translation domain.
+
+	* plug-ins/pygimp/plug-ins/gimpcons.py
+	* plug-ins/pygimp/plug-ins/gtkcons.py: mark some strings for
+	translation, based on a patch from David Gowers (bug #351287).
+
 2006-09-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpperspectiveclonetool.h: added macro

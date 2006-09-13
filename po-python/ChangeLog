@@ -1,0 +1,5 @@
+2006-09-13  Sven Neumann  <sven@gimp.org>
+
+	* Added basic infrastructure for i18n of gimp-python. The initial
+	po files are based on po-script-fu.
+

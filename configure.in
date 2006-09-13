@@ -386,9 +386,9 @@ fi
 # Internationalisation
 ######################
 
-dnl Note to translators: you MUST have .po files in all 4 directories: po,
-dnl po-libgimp, po-plug-ins, and po-script-fu before adding your language
-dnl code to ALL_LINGUAS
+dnl Note to translators: you MUST have .po files in all 5 directories: po,
+dnl po-libgimp, po-plug-ins, po-python and po-script-fu before adding your
+dnl language code to ALL_LINGUAS.
 ALL_LINGUAS="bg ca cs da de dz el en_CA en_GB es et eu fi fr ga gl gu he hu hr id it ja ko lt mk ms nb ne nl pa pl pt pt_BR ro ru rw sk sr sr@Latn sv tr tt uk vi xh yi zh_CN zh_TW"
 
 AC_PROG_INTLTOOL
@@ -1815,6 +1815,7 @@ m4macros/Makefile
 po/Makefile.in
 po-libgimp/Makefile.in
 po-plug-ins/Makefile.in
+po-python/Makefile.in
 po-script-fu/Makefile.in
 po-tips/Makefile.in
 gimp-zip
@@ -1838,6 +1839,7 @@ AC_CONFIG_COMMANDS([chmod-scripts],
 
 AC_CONFIG_COMMANDS([sed-po-makefiles],
 [sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile
+sed -e "/POTFILES =/r po-python/POTFILES" po-python/Makefile.in > po-python/Makefile
 sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile
 sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile
 sed -e "/POTFILES =/r po-tips/POTFILES" po-tips/Makefile.in > po-tips/Makefile])

@@ -1,0 +1,36 @@
+# Swedish messages for GIMP Python.
+# Copyright (C) 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
+# Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
+# Jan Morén <jan.moren@lucs.lu.se>, 2003.
+# Tomas Ögren <stric@ing.umu.se>, 2001.
+#
+# $Id$
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-python\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2005-03-18 16:36+0900\n"
+"Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
+"Language-Team: Swedish <sv@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr "Python-konsoll"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+msgid "_Browse..."
+msgstr "_Bläddra..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "Python-konsoll"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""

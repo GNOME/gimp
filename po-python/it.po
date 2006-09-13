@@ -1,0 +1,33 @@
+# This is the Italian catalog for The GIMP.
+# Copyright (C) 1999 Free Software Foundation, Inc.
+# Daniele Medri <madrid@linux.it>, 2000, 2001, 2002
+# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp 2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2006-08-09 11:45+0200\n"
+"Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
+"Language-Team: gimp.linux.it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr "Console Python"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+msgid "_Browse..."
+msgstr "_Naviga..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "Console Python"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+#, fuzzy
+msgid "Interactive Python Development"
+msgstr "Console interattiva per sviluppo Python"

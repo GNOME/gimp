@@ -1,0 +1,40 @@
+# translation of gl.po to Galego
+# Traducción ó Galego do GIMP
+# Copyright (C) 2000 Francisco Xosé Vázquez Grandal.
+#
+#  O teu SO en Galego ¿en que se non?.      ¡¡MOITO TRASNO!!
+#
+#      ¿Que queres colaborar co TRASNO? pois visita:
+#                 http://trasno.gpul.org
+#
+# Francisco Xosé Vázquez Grandal <grandal@mundivia.es>, 2001.
+# Ignacio Casal Quinteiro <nacho.resa@gmail.com>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: gl\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2006-04-16 15:39+0200\n"
+"Last-Translator: Ignacio Casal Quinteiro <nacho.resa@gmail.com>\n"
+"Language-Team: Galego <trasno@ceu.fi.udc.es>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr "Consola Python"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+msgid "_Browse..."
+msgstr "E_xaminar..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "Consola Python"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""

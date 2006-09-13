@@ -1,0 +1,33 @@
+# Norwegian translation of gimp-po-python.
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Kjartan Maraas <kmaraas@gnome.org>, 2000.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: achtung 1.1.25\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2003-01-26 17:18+0100\n"
+"Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
+"Language-Team: Norwegian <no@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8-bit\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr "Python konsoll"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#, fuzzy
+msgid "_Browse..."
+msgstr "Bla gjennom..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "Python konsoll"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""

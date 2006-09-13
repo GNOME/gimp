@@ -1,0 +1,35 @@
+# traditional Chinese translation for gimp-python.
+# Copyright (C) 2001, 2003, 2004 Free Software Foundation, Inc.
+# Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
+# 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
+# Abel Cheung <maddog@linuxhall.org>, 2001, 2003, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-python 2.1.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2004-09-28 11:10+0800\n"
+"Last-Translator: Abel Cheung <maddog@linuxhall.org>\n"
+"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr "Python 訊息視窗"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#, fuzzy
+msgid "_Browse..."
+msgstr "瀏覽..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "Python 訊息視窗"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""

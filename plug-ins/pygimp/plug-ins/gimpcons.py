@@ -18,6 +18,7 @@
 #   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 from gimpfu import *
+from gettext import gettext as _
 
 def console():
     import pygtk
@@ -39,7 +40,7 @@ def console():
     def bye(*args):
         gtk.main_quit()
 
-    dialog = gtk.Dialog(title="Python Console",
+    dialog = gtk.Dialog(title=_("Python Console"),
                         buttons=(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE))
     dialog.set_has_separator(False)
     dialog.connect("response", bye)
@@ -71,7 +72,7 @@ def console():
         import gimpprocbrowser
         gimpprocbrowser.dialog_new(on_apply)
 
-    button = gtk.Button("_Browse...")
+    button = gtk.Button(_("_Browse..."))
     button.connect("clicked", browse, cons)
 
     cons.inputbox.pack_end(button, fill=False, expand=False, padding=2)

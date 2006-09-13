@@ -1,0 +1,38 @@
+# gimp-python's Portuguese translation.
+# Copyright © 2002, 2004 gimp
+# This file is distributed under the same license as the GIMP package
+# Filipe Maia <fmaia@gmx.net>, 2002
+# Duarte Loreto <happyguy_pt@hotmail.com>, 2003, 2004
+#
+# Baseado na versão brasileria por  Marcia Norie Nakaza <norie@conectiva.com.br>, 2000.
+# 
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 2.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2004-03-08 21:40+0000\n"
+"Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8-bit\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr "Consola Python"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#, fuzzy
+msgid "_Browse..."
+msgstr "Procurar..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "Consola Python"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""

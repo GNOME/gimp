@@ -1,0 +1,37 @@
+# Serbian translation of gimp
+# Courtesy of Prevod.org team (http://www.prevod.org/) -- 2003, 2004.
+#
+# This file is distributed under the same license as the gimp package.
+#
+# Maintainer: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-python\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2004-08-08 14:24+0200\n"
+"Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
+"Language-Team: Serbian (sr) <gnom@prevod.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr "Скрипт-Фу Конзола"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#, fuzzy
+msgid "_Browse..."
+msgstr "Тражи..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "Скрипт-Фу Конзола"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""
