@@ -1535,7 +1535,7 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (3, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "layer-preview-size", 0, 0,
-                            _("Default _layer & channel preview size:"),
+                            _("_Default layer & channel preview size:"),
                             GTK_TABLE (table), 0, size_group);
   prefs_enum_combo_box_add (object, "navigation-preview-size", 0, 0,
                             _("Na_vigation preview size:"),
@@ -1549,7 +1549,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Show menu _mnemonics (access keys)"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (object, "can-change-accels",
-                          _("Use _dynamic keyboard shortcuts"),
+                          _("_Use dynamic keyboard shortcuts"),
                           GTK_BOX (vbox2));
 
   button = prefs_button_add (GTK_STOCK_PREFERENCES,
