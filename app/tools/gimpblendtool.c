@@ -78,6 +78,9 @@ static void   gimp_blend_tool_cursor_update       (GimpTool        *tool,
 
 static void   gimp_blend_tool_draw                (GimpDrawTool    *draw_tool);
 
+static void   gimp_blend_tool_push_status         (GimpBlendTool   *blend_tool,
+                                                   GimpDisplay     *display);
+
 
 G_DEFINE_TYPE (GimpBlendTool, gimp_blend_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -174,10 +177,8 @@ gimp_blend_tool_button_press (GimpTool        *tool,
 
   gimp_tool_control_activate (tool->control);
 
-  /* initialize the statusbar display */
-  gimp_tool_push_status_coords (tool, display, _("Blend: "), 0, ", ", 0);
+  gimp_blend_tool_push_status (blend_tool, display);
 
-  /*  Start drawing the blend tool  */
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 }
 
@@ -266,11 +267,7 @@ gimp_blend_tool_motion (GimpTool        *tool,
     }
 
   gimp_tool_pop_status (tool, display);
-  gimp_tool_push_status_coords (tool, display,
-                                _("Blend: "),
-                                blend_tool->endx - blend_tool->startx,
-                                ", ",
-                                blend_tool->endy - blend_tool->starty);
+  gimp_blend_tool_push_status (blend_tool, display);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -296,6 +293,9 @@ gimp_blend_tool_active_modifier_key (GimpTool        *tool,
           gimp_tool_motion_constrain (blend_tool->startx, blend_tool->starty,
                                       &blend_tool->endx, &blend_tool->endy);
         }
+
+      gimp_tool_pop_status (tool, display);
+      gimp_blend_tool_push_status (blend_tool, display);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
@@ -355,4 +355,15 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
                             floor (blend_tool->endx) + 0.5,
                             floor (blend_tool->endy) + 0.5,
                             TRUE);
+}
+
+static void
+gimp_blend_tool_push_status (GimpBlendTool *blend_tool,
+                             GimpDisplay   *display)
+{
+  gimp_tool_push_status_coords (GIMP_TOOL (blend_tool), display,
+                                _("Blend: "),
+                                blend_tool->endx - blend_tool->startx,
+                                ", ",
+                                blend_tool->endy - blend_tool->starty);
 }

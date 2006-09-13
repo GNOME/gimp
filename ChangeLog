@@ -1,5 +1,10 @@
 2006-09-13  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpblendtool.c (gimp_blend_tool_active_modifier_key):
+	update coordinates in status bar.
+
+2006-09-13  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/pix.c (query): changed label to not include a
 	"|" which can be easily confused with a translation context.
 
