@@ -101,6 +101,7 @@ libexec_PROGRAMS = \
 	iwarp \
 	jigsaw \
 	laplace \
+	lens \
 	lic \
 	$(MAIL) \
 	mapcolor \
@@ -1175,6 +1176,21 @@ laplace_LDADD = \
 	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+lens_SOURCES = \
+	lens.c
+
+lens_LDADD = \
+	$(libgimpui)		\
+	$(libgimpconfig)	\
+	$(libgimpwidgets)	\
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpmath)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 

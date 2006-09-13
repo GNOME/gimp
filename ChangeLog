@@ -1,5 +1,13 @@
 2006-09-13  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/lens.c: added Lens Distortion plug-in. Written by
+	David Hodson and ported to newer GIMP APIs by Aurimas Juška and me
+	(bug #324849).
+
+2006-09-13  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/image-new-dialog.c (image_new_create_image): ref the
 	context before destroying the dialog.
 

@@ -81,6 +81,7 @@ plug-ins/common/illusion.c
 plug-ins/common/iwarp.c
 plug-ins/common/jigsaw.c
 plug-ins/common/laplace.c
+plug-ins/common/lens.c
 plug-ins/common/lic.c
 plug-ins/common/mail.c
 plug-ins/common/mapcolor.c
