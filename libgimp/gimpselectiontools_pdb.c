@@ -47,8 +47,8 @@
  * selection. The antialiasing parameter allows the final selection
  * mask to contain intermediate values based on close misses to the
  * threshold bar. Feathering can be enabled optionally and is
- * controlled with the \"feather_radius\" parameter. If the
- * sample_merged parameter is TRUE, the data of the composite image
+ * controlled with the 'feather-radius' parameter. If the
+ * 'sample-merged' parameter is TRUE, the data of the composite image
  * will be used instead of that for the specified drawable. This is
  * equivalent to sampling for colors after merging all visible layers.
  * In the case of a merged sampling, the supplied drawable is ignored.
@@ -113,8 +113,8 @@ gimp_by_color_select (gint32          drawable_ID,
  * also have minimum alpha. The antialiasing parameter allows the final
  * selection mask to contain intermediate values based on close misses
  * to the threshold bar. Feathering can be enabled optionally and is
- * controlled with the \"feather_radius\" parameter. If the
- * sample_merged parameter is TRUE, the data of the composite image
+ * controlled with the 'feather-radius' parameter. If the
+ * 'sample-merged' parameter is TRUE, the data of the composite image
  * will be used instead of that for the specified drawable. This is
  * equivalent to sampling for colors after merging all visible layers.
  * In the case of a merged sampling, the supplied drawable is ignored.
@@ -303,8 +303,8 @@ gimp_free_select (gint32          image_ID,
  * antialiasing parameter allows the final selection mask to contain
  * intermediate values based on close misses to the threshold bar at
  * pixels along the seed fill boundary. Feathering can be enabled
- * optionally and is controlled with the \"feather_radius\" paramter.
- * If the sample_merged parameter is TRUE, the data of the composite
+ * optionally and is controlled with the 'feather-radius' paramter. If
+ * the 'sample-merged' parameter is TRUE, the data of the composite
  * image will be used instead of that for the specified drawable. This
  * is equivalent to sampling for colors after merging all visible
  * layers. In the case of a merged sampling, the supplied drawable is
@@ -376,8 +376,8 @@ gimp_fuzzy_select (gint32         drawable_ID,
  * antialiasing parameter allows the final selection mask to contain
  * intermediate values based on close misses to the threshold bar at
  * pixels along the seed fill boundary. Feathering can be enabled
- * optionally and is controlled with the \"feather_radius\" paramter.
- * If the sample_merged parameter is TRUE, the data of the composite
+ * optionally and is controlled with the 'feather-radius' paramter. If
+ * the 'sample-merged' parameter is TRUE, the data of the composite
  * image will be used instead of that for the specified drawable. This
  * is equivalent to sampling for colors after merging all visible
  * layers. In the case of a merged sampling, the supplied drawable is

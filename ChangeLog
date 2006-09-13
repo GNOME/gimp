@@ -1,3 +1,13 @@
+2006-09-13  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/paint_tools.pdb
+	* tools/pdbgen/pdb/selection_tools.pdb: use the canonical form when
+	refering to parameters in the procedure description.
+
 2006-09-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpsmudge.c: cosmetic cleanups, renamed

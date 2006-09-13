@@ -197,7 +197,7 @@ gimp_layer_add_alpha (gint32 layer_ID)
  * Scale the layer to the specified extents.
  *
  * This procedure scales the layer so that its new width and height are
- * equal to the supplied parameters. The \"local_origin\" parameter
+ * equal to the supplied parameters. The 'local-origin' parameter
  * specifies whether to scale from the center of the layer, or from the
  * image origin. This operation only works if the layer has been added
  * to an image.

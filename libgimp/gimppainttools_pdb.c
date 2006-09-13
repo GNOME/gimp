@@ -561,13 +561,12 @@ gimp_heal_default (gint32         drawable_ID,
  * This tool is the standard paintbrush. It draws linearly interpolated
  * lines through the specified stroke coordinates. It operates on the
  * specified drawable in the foreground color with the active brush.
- * The \"fade_out\" parameter is measured in pixels and allows the
- * brush stroke to linearly fall off. The pressure is set to the
- * maximum at the beginning of the stroke. As the distance of the
- * stroke nears the fade_out value, the pressure will approach zero.
- * The gradient_length is the distance to spread the gradient over. It
- * is measured in pixels. If the gradient_length is 0, no gradient is
- * used.
+ * The 'fade-out' parameter is measured in pixels and allows the brush
+ * stroke to linearly fall off. The pressure is set to the maximum at
+ * the beginning of the stroke. As the distance of the stroke nears the
+ * fade-out value, the pressure will approach zero. The gradient-length
+ * is the distance to spread the gradient over. It is measured in
+ * pixels. If the gradient-length is 0, no gradient is used.
  *
  * Returns: TRUE on success.
  */
@@ -614,13 +613,13 @@ gimp_paintbrush (gint32                    drawable_ID,
  * This tool is similar to the standard paintbrush. It draws linearly
  * interpolated lines through the specified stroke coordinates. It
  * operates on the specified drawable in the foreground color with the
- * active brush. The \"fade_out\" parameter is measured in pixels and
+ * active brush. The 'fade-out' parameter is measured in pixels and
  * allows the brush stroke to linearly fall off (value obtained from
  * the option dialog). The pressure is set to the maximum at the
  * beginning of the stroke. As the distance of the stroke nears the
- * fade_out value, the pressure will approach zero. The gradient_length
+ * fade-out value, the pressure will approach zero. The gradient-length
  * (value obtained from the option dialog) is the distance to spread
- * the gradient over. It is measured in pixels. If the gradient_length
+ * the gradient over. It is measured in pixels. If the gradient-length
  * is 0, no gradient is used.
  *
  * Returns: TRUE on success.

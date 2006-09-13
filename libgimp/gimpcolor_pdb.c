@@ -456,7 +456,7 @@ gimp_curves_explicit (gint32                drawable_ID,
  * positive values increase the amount of the latter. Color balance can
  * be controlled with the 'transfer_mode' setting, which allows
  * shadows, midtones, and highlights in an image to be affected
- * differently. The 'preserve_lum' parameter, if TRUE, ensures that the
+ * differently. The 'preserve-lum' parameter, if TRUE, ensures that the
  * luminosity of each pixel remains fixed.
  *
  * Returns: TRUE on success.
@@ -624,7 +624,7 @@ gimp_histogram (gint32                drawable_ID,
  * Modify hue, lightness, and saturation in the specified drawable.
  *
  * This procedures allows the hue, lightness, and saturation in the
- * specified drawable to be modified. The 'hue_range' parameter
+ * specified drawable to be modified. The 'hue-range' parameter
  * provides the capability to limit range of affected hues.
  *
  * Returns: TRUE on success.

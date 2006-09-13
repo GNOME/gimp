@@ -1576,7 +1576,7 @@ gimp_image_merge_down (gint32        image_ID,
  *
  * This procedure returns an actual pointer to the image's colormap, as
  * well as the number of bytes contained in the colormap. The actual
- * number of colors in the transmitted colormap will be \"num_bytes\" /
+ * number of colors in the transmitted colormap will be 'num-bytes' /
  * 3. If the image is not in Indexed color mode, no colormap is
  * returned.
  *
@@ -1620,10 +1620,10 @@ _gimp_image_get_colormap (gint32  image_ID,
  * Sets the entries in the image's colormap.
  *
  * This procedure sets the entries in the specified image's colormap.
- * The number of entries is specified by the \"num_bytes\" parameter
- * and corresponds to the number of INT8 triples that must be contained
- * in the \"colormap\" array. The actual number of colors in the
- * transmitted colormap is \"num_bytes\" / 3.
+ * The number of entries is specified by the 'num-bytes' parameter and
+ * corresponds to the number of INT8 triples that must be contained in
+ * the 'colormap' array. The actual number of colors in the transmitted
+ * colormap is 'num-bytes' / 3.
  *
  * Returns: TRUE on success.
  */

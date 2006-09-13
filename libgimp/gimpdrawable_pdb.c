@@ -903,7 +903,7 @@ gimp_drawable_mask_intersect (gint32  drawable_ID,
  * Merge the shadow buffer with the specified drawable.
  *
  * This procedure combines the contents of the image's shadow buffer
- * (for temporary processing) with the specified drawable. The \"undo\"
+ * (for temporary processing) with the specified drawable. The 'undo'
  * parameter specifies whether to add an undo step for the operation.
  * Requesting no undo is useful for such applications as 'auto-apply'.
  *
@@ -1124,7 +1124,7 @@ gimp_drawable_fill (gint32       drawable_ID,
  * TRUE, then portions of the drawable which are offset out of bounds
  * are wrapped around. Alternatively, the undefined regions of the
  * drawable can be filled with transparency or the background color, as
- * specified by the 'fill_type' parameter.
+ * specified by the 'fill-type' parameter.
  *
  * Returns: TRUE on success.
  */
