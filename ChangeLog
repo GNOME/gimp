@@ -1,5 +1,10 @@
 2006-09-13  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcroptool.c (gimp_crop_tool_register): removed
+	"Resize" from the tool name and description.
+
+2006-09-13  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/preferences-dialog.c: changed mnemonics (bug #355761).
 
 2006-09-13  Sven Neumann  <sven@gimp.org>
