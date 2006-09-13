@@ -25,11 +25,9 @@
 #include "tools-types.h"
 
 #include "core/gimp-transform-utils.h"
-#include "core/gimpchannel.h"
-#include "core/gimpimage.h"
-#include "core/gimppickable.h"
-#include "core/gimptoolinfo.h"
 #include "core/gimpdrawable-transform.h"
+#include "core/gimpimage.h"
+#include "core/gimpitem.h"
 
 #include "paint/gimpperspectiveclone.h"
 #include "paint/gimpperspectivecloneoptions.h"
@@ -180,32 +178,28 @@ gimp_perspective_clone_tool_constructor (GType                  type,
                                          guint                  n_params,
                                          GObjectConstructParam *params)
 {
-  GObject                  *object;
-  GimpTool                 *tool;
-  GimpPerspectiveCloneTool *perspective_clone_tool;
-  GObject                  *options;
+  GObject                     *object;
+  GimpTool                    *tool;
+  GimpPerspectiveCloneTool    *perspective_clone_tool;
+  GimpPerspectiveCloneOptions *options;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   tool       = GIMP_TOOL (object);
   perspective_clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (object);
 
-  options = G_OBJECT (tool->tool_info->tool_options);
-
-  g_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
+  options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
 
   g_signal_connect_object (options,
                            "notify::clone-mode",
                            G_CALLBACK (gimp_perspective_clone_tool_mode_notify),
                            perspective_clone_tool, 0);
 
-  /* set cursor depending work mode */
-  if (GIMP_PERSPECTIVE_CLONE_OPTIONS (options)->clone_mode ==
-      GIMP_PERSPECTIVE_CLONE_MODE_ADJUST)
-    gimp_tool_control_set_tool_cursor (GIMP_TOOL(perspective_clone_tool)->control,
+  if (options->clone_mode == GIMP_PERSPECTIVE_CLONE_MODE_ADJUST)
+    gimp_tool_control_set_tool_cursor (tool->control,
                                        GIMP_TOOL_CURSOR_PERSPECTIVE);
   else
-    gimp_tool_control_set_tool_cursor (GIMP_TOOL(perspective_clone_tool)->control,
+    gimp_tool_control_set_tool_cursor (tool->control,
                                        GIMP_TOOL_CURSOR_CLONE);
 
   return object;
@@ -322,7 +316,7 @@ gimp_perspective_clone_tool_button_press (GimpTool        *tool,
   GimpSourceCore              *source_core = GIMP_SOURCE_CORE (clone);
   GimpPerspectiveCloneOptions *options;
 
-  options = GIMP_PERSPECTIVE_CLONE_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
 
   if (options->clone_mode == GIMP_PERSPECTIVE_CLONE_MODE_ADJUST)
     {
@@ -426,7 +420,7 @@ gimp_perspective_clone_tool_motion (GimpTool        *tool,
   GimpSourceCore              *source_core = GIMP_SOURCE_CORE (clone);
   GimpPerspectiveCloneOptions *options;
 
-  options = GIMP_PERSPECTIVE_CLONE_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
 
   if (options->clone_mode == GIMP_PERSPECTIVE_CLONE_MODE_ADJUST)
     {
@@ -514,7 +508,7 @@ gimp_perspective_clone_tool_cursor_update (GimpTool        *tool,
   GimpCursorType               cursor     = GIMP_CURSOR_MOUSE;
   GimpCursorModifier           modifier   = GIMP_CURSOR_MODIFIER_NONE;
 
-  options = GIMP_PERSPECTIVE_CLONE_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
 
   if (gimp_image_coords_in_active_pickable (display->image, coords,
                                             FALSE, TRUE))
@@ -584,7 +578,7 @@ gimp_perspective_clone_tool_oper_update (GimpTool        *tool,
   GimpPerspectiveCloneTool    *clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (tool);
   GimpPerspectiveCloneOptions *options;
 
-  options = GIMP_PERSPECTIVE_CLONE_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
 
   if (options->clone_mode == GIMP_PERSPECTIVE_CLONE_MODE_ADJUST)
     {
@@ -693,7 +687,7 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
   GimpSourceCore              *source_core = GIMP_SOURCE_CORE (clone);
   GimpPerspectiveCloneOptions *options;
 
-  options = GIMP_PERSPECTIVE_CLONE_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
 
   if (clone_tool->use_handles)
     {

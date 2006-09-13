@@ -1,3 +1,11 @@
+2006-09-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpperspectiveclonetool.h: added macro
+	GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS()
+
+	* app/tools/gimpperspectiveclonetool.c: use it. Some minor
+	cleanups, removed unused includes.
+
 2006-09-13  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/color.pdb
