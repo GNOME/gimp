@@ -331,16 +331,15 @@ image_new_confirm_dialog (ImageNewDialog *data)
 static void
 image_new_create_image (ImageNewDialog *dialog)
 {
-  GimpTemplate *template;
-  Gimp         *gimp;
-
-  template = g_object_ref (dialog->template);
-  gimp     = dialog->context->gimp;
+  GimpTemplate *template = g_object_ref (dialog->template);
+  GimpContext  *context  = g_object_ref (dialog->context);
+  Gimp         *gimp     = dialog->context->gimp;
 
   gtk_widget_destroy (dialog->dialog);
 
-  gimp_template_create_image (gimp, template, dialog->context);
+  gimp_template_create_image (gimp, template, context);
   gimp_image_new_set_last_template (gimp, template);
 
   g_object_unref (template);
+  g_object_unref (context);
 }

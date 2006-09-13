@@ -1,3 +1,8 @@
+2006-09-13  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/image-new-dialog.c (image_new_create_image): ref the
+	context before destroying the dialog.
+
 2006-09-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpbrushtool.c: simplified by calling
