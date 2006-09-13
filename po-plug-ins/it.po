@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-13 01:46+0200\n"
-"PO-Revision-Date: 2006-09-13 02:04+0200\n"
+"POT-Creation-Date: 2006-09-13 21:58+0200\n"
+"PO-Revision-Date: 2006-09-13 22:04+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -4978,6 +4978,46 @@ msgstr "_Laplace..."
 msgid "Cleanup"
 msgstr "Pulizia"
 
+#: ../plug-ins/common/lens.c:156
+msgid "Corrects lens distortion"
+msgstr "Correzione distorsione lente"
+
+#: ../plug-ins/common/lens.c:161
+msgid "Lens Distortion..."
+msgstr "Distorsione lente..."
+
+#: ../plug-ins/common/lens.c:716
+msgid "Lens distortion"
+msgstr "Distorsione lente"
+
+#: ../plug-ins/common/lens.c:814
+msgid "Lens Distortion"
+msgstr "Distorsione lente"
+
+#: ../plug-ins/common/lens.c:852
+msgid "_Main:"
+msgstr "_Principale:"
+
+#: ../plug-ins/common/lens.c:866
+msgid "_Edge:"
+msgstr "_Margine:"
+
+#: ../plug-ins/common/lens.c:880 ../plug-ins/flame/flame.c:1209
+msgid "_Zoom:"
+msgstr "_Zoom:"
+
+#: ../plug-ins/common/lens.c:894
+msgid "_Brighten:"
+msgstr "_Brillantezza:"
+
+#: ../plug-ins/common/lens.c:908
+msgid "_X shift:"
+msgstr "Spostamento _X:"
+
+#: ../plug-ins/common/lens.c:922
+msgid "_Y shift:"
+msgstr "Spostamento _Y:"
+
 #: ../plug-ins/common/lic.c:566 ../plug-ins/common/lic.c:641
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
@@ -5837,8 +5877,8 @@ msgid "Percent _white:"
 msgstr "Percentuale del _bianco:"
 
 #: ../plug-ins/common/pix.c:140 ../plug-ins/common/pix.c:157
-msgid "Alias|Wavefront PIX image"
-msgstr "Immagine PIX Alias|Wavefront"
+msgid "Alias Pix image"
+msgstr "Immagine Alias Pix"
 
 #: ../plug-ins/common/pixelize.c:164
 msgid "Simplify image into an array of solid-colored squares"
@@ -8892,10 +8932,6 @@ msgstr "Gradiente personale"
 msgid "C_amera"
 msgstr "C_amera"
 
-#: ../plug-ins/flame/flame.c:1209
-msgid "_Zoom:"
-msgstr "_Zoom:"
-
 #: ../plug-ins/gfig/gfig-bezier.c:442
 msgid "Closed"
 msgstr "Chiuso"
@@ -8964,7 +9000,7 @@ msgstr "Mostra immagine"
 #. "snap to grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:493
 msgid "checkbutton|Snap to grid"
-msgstr "pulsantiera|Griglia magnetica"
+msgstr "Griglia magnetica"
 
 #. "show grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:502

@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-13 01:10+0200\n"
-"PO-Revision-Date: 2006-09-13 01:23+0200\n"
+"POT-Creation-Date: 2006-09-13 21:54+0200\n"
+"PO-Revision-Date: 2006-09-13 21:56+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -3167,7 +3167,7 @@ msgstr "_Seleziona"
 
 #: ../app/actions/select-actions.c:50
 msgid "select|_All"
-msgstr "seleziona|_Tutto"
+msgstr "_Tutto"
 
 #: ../app/actions/select-actions.c:51
 msgid "Select everything"
@@ -3175,7 +3175,7 @@ msgstr "Seleziona tutto"
 
 #: ../app/actions/select-actions.c:56
 msgid "select|_None"
-msgstr "seleziona|_Nulla"
+msgstr "_Nulla"
 
 #: ../app/actions/select-actions.c:57
 msgid "Dismiss the selection"
@@ -4566,7 +4566,8 @@ msgstr "Mostra un suggerimento quando il puntatore passa sopra un elemento."
 
 #: ../app/config/gimprc-blurbs.h:334
 msgid "What to do when the space bar is pressed in the image window."
-msgstr "Cosa fare quando la barra spazio viene premuta nella finestra immagine."
+msgstr ""
+"Cosa fare quando la barra spazio viene premuta nella finestra immagine."
 
 #: ../app/config/gimprc-blurbs.h:337
 msgid ""
@@ -5480,11 +5481,11 @@ msgstr "Errore fatale di analisi nel file pennello '%s': il file è errato."
 
 #: ../app/core/gimpchannel-select.c:57
 msgid "command|Rectangle Select"
-msgstr "comando|Selezione rettangolare"
+msgstr "Selezione rettangolare"
 
 #: ../app/core/gimpchannel-select.c:108
 msgid "command|Ellipse Select"
-msgstr "comando|Selezione ellittica"
+msgstr "Selezione ellittica"
 
 #: ../app/core/gimpchannel-select.c:374
 msgid "Alpha to Selection"
@@ -5497,12 +5498,12 @@ msgstr "%s canale a selezione"
 
 #: ../app/core/gimpchannel-select.c:460 ../app/tools/gimpfuzzyselecttool.c:78
 msgid "command|Fuzzy Select"
-msgstr "comando|Selezione Fuzzy"
+msgstr "Selezione Fuzzy"
 
 #: ../app/core/gimpchannel-select.c:507
 #: ../app/tools/gimpbycolorselecttool.c:80
 msgid "command|Select by Color"
-msgstr "comando|Selezione per colore"
+msgstr "Selezione per colore"
 
 #: ../app/core/gimpchannel.c:256
 msgid "Channel"
@@ -5625,7 +5626,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable-blend.c:247 ../app/tools/gimpblendtool.c:100
+#: ../app/core/gimpdrawable-blend.c:247 ../app/tools/gimpblendtool.c:103
 msgid "Blend"
 msgstr "Sfumatura"
 
@@ -5635,7 +5636,7 @@ msgstr "Nessun motivo disponibile per questa operazione."
 
 #: ../app/core/gimpdrawable-bucket-fill.c:277
 msgid "command|Bucket Fill"
-msgstr "comando|Riempimento colore"
+msgstr "Riempimento colore"
 
 #: ../app/core/gimpdrawable-desaturate.c:97
 #: ../app/dialogs/desaturate-dialog.c:62
@@ -5670,12 +5671,12 @@ msgstr "Disegna il delineato"
 #. Start a transform undo group
 #: ../app/core/gimpdrawable-transform.c:972 ../app/tools/gimpfliptool.c:110
 msgid "command|Flip"
-msgstr "comando|Inverti"
+msgstr "Inverti"
 
 #. Start a transform undo group
 #: ../app/core/gimpdrawable-transform.c:1056 ../app/tools/gimprotatetool.c:114
 msgid "command|Rotate"
-msgstr "comando|Ruota"
+msgstr "Ruota"
 
 #: ../app/core/gimpdrawable-transform.c:1176 ../app/core/gimplayer.c:252
 msgid "Transform Layer"
@@ -5801,7 +5802,7 @@ msgstr "Conversione in indicizzata (fase 3)"
 
 #: ../app/core/gimpimage-crop.c:125
 msgid "command|Crop Image"
-msgstr "comando|Ritaglia immagine"
+msgstr "Ritaglia immagine"
 
 #: ../app/core/gimpimage-crop.c:128 ../app/core/gimpimage-resize.c:88
 msgid "Resize Image"
@@ -6378,9 +6379,9 @@ msgstr "Sfondo"
 msgid "pixel"
 msgstr "pixel"
 
-#: ../app/core/gimpunit.c:55 ../app/tools/gimpmeasuretool.c:803
-#: ../app/tools/gimpmeasuretool.c:943 ../app/tools/gimpmeasuretool.c:995
-#: ../app/tools/gimpmeasuretool.c:1021 ../app/tools/gimppainttool.c:595
+#: ../app/core/gimpunit.c:55 ../app/tools/gimpmeasuretool.c:805
+#: ../app/tools/gimpmeasuretool.c:945 ../app/tools/gimpmeasuretool.c:997
+#: ../app/tools/gimpmeasuretool.c:1023 ../app/tools/gimppainttool.c:595
 msgid "pixels"
 msgstr "pixel"
 
@@ -6424,7 +6425,7 @@ msgstr "percento"
 
 #: ../app/core/gimpunit.c:70
 msgid "plural|percent"
-msgstr "plurale|percento"
+msgstr "percento"
 
 #: ../app/dialogs/about-dialog.c:121
 msgid "Visit the GIMP website"
@@ -6649,7 +6650,7 @@ msgstr ""
 
 #: ../app/dialogs/image-scale-dialog.c:97
 msgid "dialog-title|Scale Image"
-msgstr "titolo-finestra|Scala immagine"
+msgstr "Ridimensionamento immagine"
 
 #: ../app/dialogs/image-scale-dialog.c:175
 msgid "Confirm Scaling"
@@ -6713,12 +6714,12 @@ msgstr "_Nome livello:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:133
-#: ../app/tools/gimpmeasuretool.c:985
+#: ../app/tools/gimpmeasuretool.c:987
 msgid "Width:"
 msgstr "Larghezza:"
 
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1011
+#: ../app/tools/gimpmeasuretool.c:1013
 msgid "Height:"
 msgstr "Altezza:"
 
@@ -7105,8 +7106,8 @@ msgid "_Enable layer & channel previews"
 msgstr "_Abilita anteprime del livello e del canale"
 
 #: ../app/dialogs/preferences-dialog.c:1538
-msgid "Default _layer & channel preview size:"
-msgstr "Dimensione predefinita anteprime di _livello e del canale:"
+msgid "_Default layer & channel preview size:"
+msgstr "_Dimensione predefinita anteprime di livello e del canale:"
 
 #: ../app/dialogs/preferences-dialog.c:1541
 msgid "Na_vigation preview size:"
@@ -7122,8 +7123,8 @@ msgid "Show menu _mnemonics (access keys)"
 msgstr "Mostra _mnemonici menu (tasti di accesso)"
 
 #: ../app/dialogs/preferences-dialog.c:1552
-msgid "Use _dynamic keyboard shortcuts"
-msgstr "Usa tasti scorciatoia _dinamici"
+msgid "_Use dynamic keyboard shortcuts"
+msgstr "_Usa tasti scorciatoia dinamici"
 
 #: ../app/dialogs/preferences-dialog.c:1556
 msgid "Configure _Keyboard Shortcuts..."
@@ -8235,7 +8236,7 @@ msgstr "Trasformazione 2D"
 msgid "2D Transforming"
 msgstr "Trasformazione 2D in corso"
 
-#: ../app/pdb/edit_cmds.c:631 ../app/tools/gimpblendtool.c:211
+#: ../app/pdb/edit_cmds.c:631 ../app/tools/gimpblendtool.c:212
 msgid "Blending"
 msgstr "Sfumatura in corso"
 
@@ -8502,7 +8503,7 @@ msgid "_Airbrush"
 msgstr "_Aerografo"
 
 #: ../app/tools/gimpairbrushtool.c:95 ../app/tools/gimpconvolvetool.c:217
-#: ../app/tools/gimpsmudgetool.c:101
+#: ../app/tools/gimpsmudgetool.c:98
 msgid "Rate:"
 msgstr "Ammontare:"
 
@@ -8609,20 +8610,19 @@ msgstr "Definizione max:"
 msgid "Threshold:"
 msgstr "Soglia:"
 
-#: ../app/tools/gimpblendtool.c:101
+#: ../app/tools/gimpblendtool.c:104
 msgid "Fill with a color gradient"
 msgstr "Riempi con un gradiente di colore"
 
-#: ../app/tools/gimpblendtool.c:102
+#: ../app/tools/gimpblendtool.c:105
 msgid "Blen_d"
 msgstr "S_fumatura"
 
-#: ../app/tools/gimpblendtool.c:157
+#: ../app/tools/gimpblendtool.c:160
 msgid "Blend: Invalid for indexed images."
 msgstr "Sfumatura: non valida per immagini indicizzate."
 
-#. initialize the statusbar display
-#: ../app/tools/gimpblendtool.c:178 ../app/tools/gimpblendtool.c:270
+#: ../app/tools/gimpblendtool.c:365
 msgid "Blend: "
 msgstr "Sfumatura:"
 
@@ -8933,16 +8933,16 @@ msgid "Current layer only"
 msgstr "Solo livello corrente"
 
 #: ../app/tools/gimpcroptool.c:104
-msgid "Crop & Resize"
-msgstr "Taglio e ridimensione"
+msgid "Crop"
+msgstr "Ritaglia"
 
 #: ../app/tools/gimpcroptool.c:105
-msgid "Crop or Resize an image"
-msgstr "Ritaglia o ridimensiona un'immagine"
+msgid "Crop an image"
+msgstr "Ritaglia un'immagine"
 
 #: ../app/tools/gimpcroptool.c:106
-msgid "_Crop & Resize"
-msgstr "_Taglio e ridimensione"
+msgid "_Crop"
+msgstr "_Ritaglia"
 
 #: ../app/tools/gimpcroptool.c:242
 msgid "Click or press enter to crop"
@@ -9228,23 +9228,23 @@ msgstr "Disegna un cerchio intorno all'oggetto da estrarre"
 
 #: ../app/tools/gimpforegroundselecttool.c:744
 msgid "command|Foreground Select"
-msgstr "comando|Selezione primo piano"
+msgstr "Selezione primo piano"
 
 #: ../app/tools/gimpfreeselecttool.c:96
 msgid "Select hand-drawn regions"
-msgstr "Selezione Lazo"
+msgstr "Selezione a mano libera"
 
 #: ../app/tools/gimpfreeselecttool.c:97
 msgid "_Free Select"
-msgstr "_Libera"
+msgstr "A mano _libera"
 
 #: ../app/tools/gimpfreeselecttool.c:307
 msgid "command|Free Select"
-msgstr "comando|Selezione libera"
+msgstr "A mano libera"
 
 #: ../app/tools/gimpfuzzyselecttool.c:63
 msgid "Fuzzy Select"
-msgstr "Selezione Fuzzy"
+msgstr "Fuzzy"
 
 #: ../app/tools/gimpfuzzyselecttool.c:64
 msgid "Select contiguous regions"
@@ -9365,7 +9365,7 @@ msgstr "Regolazione"
 msgid "Size:"
 msgstr "Dimensione:"
 
-#: ../app/tools/gimpinkoptions-gui.c:76 ../app/tools/gimpmeasuretool.c:959
+#: ../app/tools/gimpinkoptions-gui.c:76 ../app/tools/gimpmeasuretool.c:961
 #: ../app/tools/gimprotatetool.c:144 ../app/widgets/gimpbrusheditor.c:208
 msgid "Angle:"
 msgstr "Angolo:"
@@ -9490,7 +9490,7 @@ msgstr "Zoom"
 
 #: ../app/tools/gimpmagnifytool.c:93
 msgid "tool|_Zoom"
-msgstr "strumento|_Zoom"
+msgstr "_Zoom"
 
 #: ../app/tools/gimpmeasureoptions.c:124
 msgid "Use info window"
@@ -9513,11 +9513,11 @@ msgid "Add Guides"
 msgstr "Aggiungi righelli"
 
 #. tool->display->shell
-#: ../app/tools/gimpmeasuretool.c:913
+#: ../app/tools/gimpmeasuretool.c:915
 msgid "Measure Distances and Angles"
 msgstr "Misura distanze e angoli"
 
-#: ../app/tools/gimpmeasuretool.c:933
+#: ../app/tools/gimpmeasuretool.c:935
 msgid "Distance:"
 msgstr "Distanza:"
 
@@ -9543,7 +9543,7 @@ msgstr "Sposta il tracciato attivo"
 
 #: ../app/tools/gimpmovetool.c:117
 msgid "tool|Move"
-msgstr "strumento|Sposta"
+msgstr "Sposta"
 
 #: ../app/tools/gimpmovetool.c:118
 msgid "Move layers & selections"
@@ -9692,7 +9692,7 @@ msgstr "_Prospettiva"
 
 #: ../app/tools/gimpperspectivetool.c:97
 msgid "command|Perspective"
-msgstr "comando|Prospettiva"
+msgstr "Prospettiva"
 
 #: ../app/tools/gimpperspectivetool.c:98
 msgid "Perspective Transform Information"
@@ -9832,11 +9832,11 @@ msgstr "_Scala"
 
 #: ../app/tools/gimpscaletool.c:107
 msgid "command|Scale"
-msgstr "comando|Scala"
+msgstr "Ridimensionamento"
 
 #: ../app/tools/gimpscaletool.c:108
 msgid "Scaling Information"
-msgstr "Informazioni sulla scalatura"
+msgstr "Informazioni sul ridimensionamento"
 
 #: ../app/tools/gimpselectionoptions.c:103
 msgid "Smooth edges"
@@ -9928,7 +9928,7 @@ msgstr "_Inclina"
 
 #: ../app/tools/gimpsheartool.c:114
 msgid "command|Shear"
-msgstr "comando|Inclina"
+msgstr "Inclina"
 
 #: ../app/tools/gimpsheartool.c:115
 msgid "Shearing Information"
@@ -9950,11 +9950,11 @@ msgstr "Sfuma immagine"
 msgid "_Smudge"
 msgstr "_Sfumino"
 
-#: ../app/tools/gimpsmudgetool.c:78
+#: ../app/tools/gimpsmudgetool.c:75
 msgid "Click to smudge"
 msgstr "Fare clic per sfumare"
 
-#: ../app/tools/gimpsmudgetool.c:79
+#: ../app/tools/gimpsmudgetool.c:76
 msgid "Click to smudge the line"
 msgstr "Fare clic per sfumare la riga"
 
@@ -11555,12 +11555,12 @@ msgstr "Apri la finestra della selezione caratteri"
 #. do not translate the part before the |
 #: ../app/widgets/gimpwidgets-utils.c:548
 msgid "keyboard label|Space"
-msgstr "etichetta tastiera|Spazio"
+msgstr "Spazio"
 
 #. do not translate the part before the |
 #: ../app/widgets/gimpwidgets-utils.c:552
 msgid "keyboard label|Backslash"
-msgstr "etichetta tastiera|Barra retroversa"
+msgstr "Barra retroversa"
 
 #: ../app/widgets/gimpwidgets-utils.c:662
 #, c-format

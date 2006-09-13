@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-04 02:47+0200\n"
-"PO-Revision-Date: 2006-09-04 02:48+0200\n"
+"POT-Creation-Date: 2006-09-13 21:57+0200\n"
+"PO-Revision-Date: 2006-09-13 21:27+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -476,7 +476,7 @@ msgstr "Brucia"
 
 #: ../libgimpbase/gimpbaseenums.c:388
 msgid "gradient|Linear"
-msgstr "gradiente|Lineare"
+msgstr "Lineare"
 
 #: ../libgimpbase/gimpbaseenums.c:389
 msgid "Bi-linear"
@@ -580,11 +580,11 @@ msgstr "Indicizzato-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:562
 msgid "interpolation|None"
-msgstr "interpolazione|Nessuna"
+msgstr "Nessuna"
 
 #: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|Linear"
-msgstr "interpolazione|Lineare"
+msgstr "Lineare"
 
 #: ../libgimpbase/gimpbaseenums.c:564
 msgid "Cubic"
@@ -792,7 +792,7 @@ msgstr "Colorimetrico relativo"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
 msgid "intent|Saturation"
-msgstr "intento|Saturazione"
+msgstr "Saturazione"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
@@ -1148,7 +1148,7 @@ msgstr "Spaziatura r_ighe"
 msgid "_Resize"
 msgstr "_Ridimensiona"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:303
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:304
 msgid "_Scale"
 msgstr "_Scala"
 
@@ -1160,11 +1160,11 @@ msgstr "Ritaglia"
 msgid "_Transform"
 msgstr "_Trasforma"
 
-#: ../libgimpwidgets/gimpstock.c:302
+#: ../libgimpwidgets/gimpstock.c:303
 msgid "_Rotate"
 msgstr "_Ruota"
 
-#: ../libgimpwidgets/gimpstock.c:304
+#: ../libgimpwidgets/gimpstock.c:305
 msgid "_Shear"
 msgstr "_Inclina"
 
