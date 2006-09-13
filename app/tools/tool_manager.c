@@ -167,6 +167,7 @@ tool_manager_push_tool (Gimp     *gimp,
                         GimpTool *tool)
 {
   GimpToolManager *tool_manager;
+  GimpDisplay     *focus_display = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_TOOL (tool));
@@ -175,6 +176,8 @@ tool_manager_push_tool (Gimp     *gimp,
 
   if (tool_manager->active_tool)
     {
+      focus_display = tool_manager->active_tool->focus_display;
+
       tool_manager->tool_stack = g_slist_prepend (tool_manager->tool_stack,
                                                   tool_manager->active_tool);
 
@@ -182,6 +185,9 @@ tool_manager_push_tool (Gimp     *gimp,
     }
 
   tool_manager_select_tool (gimp, tool);
+
+  if (focus_display)
+    tool_manager_focus_display_active (gimp, focus_display);
 }
 
 void
@@ -195,14 +201,20 @@ tool_manager_pop_tool (Gimp *gimp)
 
   if (tool_manager->tool_stack)
     {
-      GimpTool *tool = tool_manager->tool_stack->data;
+      GimpTool    *tool          = tool_manager->tool_stack->data;
+      GimpDisplay *focus_display = NULL;
+
+      if (tool_manager->active_tool)
+        focus_display = tool_manager->active_tool->focus_display;
 
       tool_manager->tool_stack = g_slist_remove (tool_manager->tool_stack,
                                                  tool);
 
       tool_manager_select_tool (gimp, tool);
-
       g_object_unref (tool);
+
+      if (focus_display)
+        tool_manager_focus_display_active (gimp, focus_display);
     }
 }
 

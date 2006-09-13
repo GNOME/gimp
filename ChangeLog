@@ -1,3 +1,19 @@
+2006-09-13  Michael Natterer  <mitch@gimp.org>
+
+	Need to be more careful with setting a tool's focus_dislay now
+	that tools can receive modifier events in more circumstances
+	(fixes warnings with GimpEditSelectionTool)
+
+	* app/tools/gimptool.c (gimp_tool_button_release): ref the tool
+	around the function's body (GimpEditSelectionTool unrefs itself in
+	button_release()), don't reset the active_modifier_state if it is 0.
+
+	(gimp_tool_set_focus_display): reset the active_modifier_state if
+	it is != 0 and the tool had an old focus_display.
+
+	* app/tools/tool_manager.c (tool_manager_push,pop_tool): set the
+	old active_tool's focus_display on the new one.
+
 2006-09-13  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am
