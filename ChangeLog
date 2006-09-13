@@ -1,5 +1,11 @@
 2006-09-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainerentry.c: Don't popup the completion
+	when there is only a single match because we already use inline
+	completion.
+
+2006-09-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainerentry.c: implement
 	GimpContainerView::set_context() and set the renderers'
 	contexts. Fixes more preview rendering warnings.
