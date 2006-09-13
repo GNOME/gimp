@@ -1,5 +1,11 @@
 2006-09-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpsourcetool.c (gimp_source_tool_control): chain
+	up before clearing src_drawable and src_display, so the draw
+	tool can undraw the source marker. Fixes bug #355746.
+
+2006-09-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpclone.c (gimp_clone_motion): don't access the
 	src_pickable when cloning from a pattern. Fixes runtime warnings.
 

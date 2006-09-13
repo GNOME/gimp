@@ -145,6 +145,11 @@ gimp_source_tool_control (GimpTool       *tool,
 {
   GimpSourceTool *source_tool = GIMP_SOURCE_TOOL (tool);
 
+  /*  chain up early so the draw tool can undraw the source marker
+   *  while we still know about source drawable and display
+   */
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+
   switch (action)
     {
     case GIMP_TOOL_ACTION_PAUSE:
@@ -158,8 +163,6 @@ gimp_source_tool_control (GimpTool       *tool,
                     NULL);
       break;
     }
-
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
