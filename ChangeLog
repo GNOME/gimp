@@ -1,3 +1,9 @@
+2006-09-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpsmudge.c: cosmetic cleanups, renamed
+	gimp_smudge_nonclipped_painthit_coords() to
+	gimp_smudge_brush_coords ().
+
 2006-09-13  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcroptool.c (gimp_crop_tool_register): removed
