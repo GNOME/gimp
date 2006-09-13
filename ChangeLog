@@ -1,5 +1,16 @@
 2006-09-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpbrushtool.c: simplified by calling
+	gimp_draw_tool_pause/resume() unconditionally (it does no harm,
+	regardless of whether the tool is in color picking mode or not).
+	Return early in gimp_brush_tool_draw() if color picking is
+	enabled.
+
+	* app/tools/gimpsmudgetool.c (gimp_smudge_tool_init): don't enable
+	color picking, the tool doesn't use FG or BG.
+
+2006-09-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpsourcetool.c (gimp_source_tool_control): chain
 	up before clearing src_drawable and src_display, so the draw
 	tool can undraw the source marker. Fixes bug #355746.

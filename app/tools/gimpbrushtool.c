@@ -173,8 +173,7 @@ gimp_brush_tool_motion (GimpTool        *tool,
 {
   GimpBrushTool *brush_tool = GIMP_BRUSH_TOOL (tool);
 
-  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
-    gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
 
@@ -182,9 +181,9 @@ gimp_brush_tool_motion (GimpTool        *tool,
     {
       brush_tool->brush_x = coords->x;
       brush_tool->brush_y = coords->y;
-
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 static void
@@ -197,31 +196,28 @@ gimp_brush_tool_oper_update (GimpTool        *tool,
   GimpBrushTool    *brush_tool    = GIMP_BRUSH_TOOL (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
 
-  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
-    gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
                                                proximity, display);
 
-  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)) &&
+      gimp_image_active_drawable (display->image) && proximity)
     {
-      if (gimp_image_active_drawable (display->image) && proximity)
-        {
-          GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
-          GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
-          GimpBrush     *brush;
+      GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
+      GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
+      GimpBrush     *brush;
 
-          brush_tool->brush_x = coords->x;
-          brush_tool->brush_y = coords->y;
+      brush_tool->brush_x = coords->x;
+      brush_tool->brush_y = coords->y;
 
-          brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+      brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
 
-          if (brush_core->main_brush != brush)
-            gimp_brush_core_set_brush (brush_core, brush);
-        }
-
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+      if (brush_core->main_brush != brush)
+        gimp_brush_core_set_brush (brush_core, brush);
     }
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 static void
@@ -234,7 +230,8 @@ gimp_brush_tool_cursor_update (GimpTool        *tool,
 
   if (! brush_tool->show_cursor &&
       ! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)) &&
-      gimp_tool_control_get_cursor_modifier (tool->control) != GIMP_CURSOR_MODIFIER_BAD)
+      gimp_tool_control_get_cursor_modifier (tool->control) !=
+      GIMP_CURSOR_MODIFIER_BAD)
     {
       gimp_tool_set_cursor (tool, display,
                             GIMP_CURSOR_NONE,
@@ -251,78 +248,76 @@ gimp_brush_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_brush_tool_draw (GimpDrawTool *draw_tool)
 {
+  GimpBrushTool *brush_tool = GIMP_BRUSH_TOOL (draw_tool);
+
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 
-  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
+  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
+    return;
+
+  if (brush_tool->draw_brush)
     {
-      GimpBrushTool *brush_tool = GIMP_BRUSH_TOOL (draw_tool);
-      GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (draw_tool);
-      GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
+      GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (draw_tool);
+      GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (draw_tool);
+      GimpBrushCore    *brush_core    = GIMP_BRUSH_CORE (paint_tool->core);
 
-      if (brush_tool->draw_brush)
+      if (! brush_core->brush_bound_segs && brush_core->main_brush)
         {
-          if (! brush_core->brush_bound_segs && brush_core->main_brush)
+          TempBuf     *mask = gimp_brush_get_mask (brush_core->main_brush);
+          PixelRegion  PR   = { 0, };
+          BoundSeg    *boundary;
+          gint         num_groups;
+
+          pixel_region_init_temp_buf (&PR, mask,
+                                      0, 0, mask->width, mask->height);
+
+          boundary = boundary_find (&PR, BOUNDARY_WITHIN_BOUNDS,
+                                    0, 0, PR.w, PR.h,
+                                    0,
+                                    &brush_core->n_brush_bound_segs);
+
+          brush_core->brush_bound_segs =
+            boundary_sort (boundary, brush_core->n_brush_bound_segs,
+                           &num_groups);
+
+          brush_core->n_brush_bound_segs += num_groups;
+
+          g_free (boundary);
+
+          brush_core->brush_bound_width  = mask->width;
+          brush_core->brush_bound_height = mask->height;
+        }
+
+      if (brush_core->brush_bound_segs)
+        {
+          gdouble brush_x, brush_y;
+
+          brush_x = (brush_tool->brush_x -
+                     ((gdouble) brush_core->brush_bound_width  / 2.0));
+          brush_y = (brush_tool->brush_y -
+                     ((gdouble) brush_core->brush_bound_height / 2.0));
+
+          if (gimp_paint_options_get_brush_mode (paint_options) ==
+              GIMP_BRUSH_HARD)
             {
-              TempBuf     *mask = gimp_brush_get_mask (brush_core->main_brush);
-              PixelRegion  PR   = { 0, };
-              BoundSeg    *boundary;
-              gint         num_groups;
-
-              pixel_region_init_temp_buf (&PR, mask,
-                                          0, 0, mask->width, mask->height);
-
-              boundary = boundary_find (&PR, BOUNDARY_WITHIN_BOUNDS,
-                                        0, 0, PR.w, PR.h,
-                                        0,
-                                        &brush_core->n_brush_bound_segs);
-
-              brush_core->brush_bound_segs =
-                boundary_sort (boundary, brush_core->n_brush_bound_segs,
-                               &num_groups);
-
-              brush_core->n_brush_bound_segs += num_groups;
-
-              g_free (boundary);
-
-              brush_core->brush_bound_width  = mask->width;
-              brush_core->brush_bound_height = mask->height;
-            }
-
-          if (brush_core->brush_bound_segs)
-            {
-              GimpTool         *tool = GIMP_TOOL (draw_tool);
-              GimpPaintOptions *paint_options;
-              gdouble           brush_x, brush_y;
-
-              paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (draw_tool);
-
-              brush_x = (brush_tool->brush_x -
-                         ((gdouble) brush_core->brush_bound_width  / 2.0));
-              brush_y = (brush_tool->brush_y -
-                         ((gdouble) brush_core->brush_bound_height / 2.0));
-
-              if (gimp_paint_options_get_brush_mode (paint_options) ==
-                  GIMP_BRUSH_HARD)
-                {
 #define EPSILON 0.000001
 
-                  /*  Add EPSILON before rounding since e.g.
-                   *  (5.0 - 0.5) may end up at (4.499999999....)
-                   *  due to floating point fnords
-                   */
-                  brush_x = RINT (brush_x + EPSILON);
-                  brush_y = RINT (brush_y + EPSILON);
+              /*  Add EPSILON before rounding since e.g.
+               *  (5.0 - 0.5) may end up at (4.499999999....)
+               *  due to floating point fnords
+               */
+              brush_x = RINT (brush_x + EPSILON);
+              brush_y = RINT (brush_y + EPSILON);
 
 #undef EPSILON
-                }
-
-              gimp_draw_tool_draw_boundary (draw_tool,
-                                            brush_core->brush_bound_segs,
-                                            brush_core->n_brush_bound_segs,
-                                            brush_x,
-                                            brush_y,
-                                            FALSE);
             }
+
+          gimp_draw_tool_draw_boundary (draw_tool,
+                                        brush_core->brush_bound_segs,
+                                        brush_core->n_brush_bound_segs,
+                                        brush_x,
+                                        brush_y,
+                                        FALSE);
         }
     }
 }
