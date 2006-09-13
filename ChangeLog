@@ -1,3 +1,8 @@
+2006-09-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpmeasuretool.h
+	* app/tools/gimppainttool.h: fixed _GET_OPTIONS() macros.
+
 2006-09-13  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpblendtool.c (gimp_blend_tool_active_modifier_key):
