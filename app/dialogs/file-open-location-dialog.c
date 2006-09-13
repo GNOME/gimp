@@ -28,6 +28,7 @@
 #include "dialogs-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpprogress.h"
 
 #include "plug-in/gimppluginmanager.h"
@@ -60,6 +61,7 @@ static gboolean  file_open_location_completion (GtkEntryCompletion *completion,
 GtkWidget *
 file_open_location_dialog_new (Gimp *gimp)
 {
+  GimpContext        *context;
   GtkWidget          *dialog;
   GtkWidget          *hbox;
   GtkWidget          *vbox;
@@ -113,8 +115,13 @@ file_open_location_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  entry = gimp_container_entry_new (gimp->documents, NULL,
+  /* we don't want the context to affect the entry, so create
+   * a scratch one instead of using e.g. the user context
+   */
+  context = gimp_context_new (gimp, "file-open-location-dialog", NULL);
+  entry = gimp_container_entry_new (gimp->documents, context,
                                     GIMP_VIEW_SIZE_SMALL, 0);
+  g_object_unref (context);
 
   completion = gtk_entry_get_completion (GTK_ENTRY (entry));
   gtk_entry_completion_set_match_func (completion,

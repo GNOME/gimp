@@ -1,5 +1,10 @@
 2006-09-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/file-open-location-dialog.c: set a context on the
+	GimpContainerEntry.
+
+2006-09-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainerentry.c: Don't popup the completion
 	when there is only a single match because we already use inline
 	completion.
