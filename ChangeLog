@@ -1,5 +1,10 @@
 2006-09-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpclone.c (gimp_clone_motion): don't access the
+	src_pickable when cloning from a pattern. Fixes runtime warnings.
+
+2006-09-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpmeasuretool.h
 	* app/tools/gimppainttool.h: fixed _GET_OPTIONS() macros.
 

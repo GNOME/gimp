@@ -162,26 +162,26 @@ gimp_clone_motion (GimpSourceCore   *source_core,
   GimpCloneOptions    *options        = GIMP_CLONE_OPTIONS (paint_options);
   GimpSourceOptions   *source_options = GIMP_SOURCE_OPTIONS (paint_options);
   GimpContext         *context        = GIMP_CONTEXT (paint_options);
-  GimpImage           *src_image;
+  GimpImage           *src_image      = NULL;
+  GimpImageType        src_type       = 0;
   GimpImage           *image;
-  GimpImageType        src_type;
   gpointer             pr = NULL;
   gint                 y;
   PixelRegion          destPR;
   GimpPattern         *pattern = NULL;
 
-  src_image = gimp_pickable_get_image (src_pickable);
-  image     = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  src_type = gimp_pickable_get_image_type (src_pickable);
-
-  if (gimp_pickable_get_bytes (src_pickable) < srcPR->bytes)
-    src_type = GIMP_IMAGE_TYPE_WITH_ALPHA (src_type);
-
-  /*  configure the destination  */
   switch (options->clone_type)
     {
     case GIMP_IMAGE_CLONE:
+      src_image = gimp_pickable_get_image (src_pickable);
+
+      src_type = gimp_pickable_get_image_type (src_pickable);
+
+      if (gimp_pickable_get_bytes (src_pickable) < srcPR->bytes)
+        src_type = GIMP_IMAGE_TYPE_WITH_ALPHA (src_type);
+
       pixel_region_init_temp_buf (&destPR, paint_area,
                                   paint_area_offset_x, paint_area_offset_y,
                                   paint_area_width, paint_area_height);
