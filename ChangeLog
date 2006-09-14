@@ -1,5 +1,11 @@
 2006-09-14  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontrollereditor.[ch]
+	* app/widgets/gimpcontrollerlist.c: pass a GimpContext to
+	gimp_viewable_dialog_new().
+
+2006-09-14  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/image-actions.c
 	* app/dialogs/preferences-dialog.c
 	* app/tools/gimpvectortool.c

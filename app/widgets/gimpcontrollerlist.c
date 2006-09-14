@@ -629,7 +629,8 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
       return;
     }
 
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (list->dest_info), NULL, /* FIXME */
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (list->dest_info),
+                                     gimp_get_user_context (list->gimp),
                                      _("Configure Controller"),
                                      "gimp-controller-editor-dialog",
                                      GTK_STOCK_EDIT,
@@ -650,7 +651,8 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
                     G_CALLBACK (gtk_widget_destroy),
                     NULL);
 
-  editor = gimp_controller_editor_new (list->dest_info);
+  editor = gimp_controller_editor_new (list->dest_info,
+                                       gimp_get_user_context (list->gimp));
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), editor);
   gtk_widget_show (editor);

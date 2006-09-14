@@ -32,6 +32,8 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontext.h"
+
 #include "gimpactionview.h"
 #include "gimpcontrollereditor.h"
 #include "gimpcontrollerinfo.h"
@@ -46,7 +48,8 @@
 enum
 {
   PROP_0,
-  PROP_CONTROLLER_INFO
+  PROP_CONTROLLER_INFO,
+  PROP_CONTEXT
 };
 
 enum
@@ -121,6 +124,12 @@ gimp_controller_editor_class_init (GimpControllerEditorClass *klass)
                                    g_param_spec_object ("controller-info",
                                                         NULL, NULL,
                                                         GIMP_TYPE_CONTROLLER_INFO,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_CONTEXT,
+                                   g_param_spec_object ("context",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_CONTEXT,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
@@ -435,6 +444,11 @@ gimp_controller_editor_set_property (GObject      *object,
     case PROP_CONTROLLER_INFO:
       editor->info = GIMP_CONTROLLER_INFO (g_value_dup_object (value));
       break;
+
+    case PROP_CONTEXT:
+      editor->context = GIMP_CONTEXT (g_value_dup_object (value));
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -454,6 +468,11 @@ gimp_controller_editor_get_property (GObject    *object,
     case PROP_CONTROLLER_INFO:
       g_value_set_object (value, editor->info);
       break;
+
+    case PROP_CONTEXT:
+      g_value_set_object (value, editor->context);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -471,6 +490,12 @@ gimp_controller_editor_finalize (GObject *object)
 
       g_object_unref (editor->info);
       editor->info = NULL;
+    }
+
+  if (editor->context)
+    {
+      g_object_unref (editor->context);
+      editor->context = NULL;
     }
 
   if (editor->edit_dialog)
@@ -495,12 +520,15 @@ gimp_controller_editor_unmap (GtkWidget *widget)
 /*  public functions  */
 
 GtkWidget *
-gimp_controller_editor_new (GimpControllerInfo *info)
+gimp_controller_editor_new (GimpControllerInfo *info,
+                            GimpContext        *context)
 {
   g_return_val_if_fail (GIMP_IS_CONTROLLER_INFO (info), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return g_object_new (GIMP_TYPE_CONTROLLER_EDITOR,
                        "controller-info", info,
+                       "context",         context,
                        NULL);
 }
 
@@ -664,7 +692,7 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
                                event_blurb);
 
       editor->edit_dialog =
-        gimp_viewable_dialog_new (GIMP_VIEWABLE (editor->info), NULL, /* FIXME */
+        gimp_viewable_dialog_new (GIMP_VIEWABLE (editor->info), editor->context,
                                   _("Select Controller Event Action"),
                                   "gimp-controller-action-dialog",
                                   GTK_STOCK_EDIT,
