@@ -21,7 +21,7 @@
 
 2006-09-14  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/pygimp/gimpfu.py: marged strings for translation.
+	* plug-ins/pygimp/gimpfu.py: marked strings for translation.
 
 2006-09-14  Michael Natterer  <mitch@gimp.org>
 
@@ -37,11 +37,10 @@
 2006-09-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainerentry.c: implement
-	GimpContainerView::set_context() and set the renderers'
-	contexts. Fixes more preview rendering warnings.
-	Connect to GtkEntryCompletion::match-selected in addition to
-	GtkEntry::changed to select the active item. Makes the whole
-	thing work a lot better.
+	GimpContainerView::set_context() and set the renderers'	contexts.
+	Fixes more preview rendering warnings.  Connect to
+	GtkEntryCompletion::match-selected in addition to GtkEntry::changed
+	to select the active item. Makes the whole thing work a lot better.
 
 2006-09-13  Michael Natterer  <mitch@gimp.org>
 
