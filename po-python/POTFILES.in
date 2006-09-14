@@ -1,5 +1,7 @@
 # Files from the Gimp distribution which have already been
 # marked to allow runtime translation of messages
 
+plug-ins/pygimp/gimpfu.py
+
 plug-ins/pygimp/plug-ins/gimpcons.py
 plug-ins/pygimp/plug-ins/gtkcons.py

@@ -62,6 +62,7 @@ element in their description tuple -- a 3-tuple of the form (lower,upper,step),
 which defines the limits for the slider or spinner.'''
 
 import string as _string
+from gettext import gettext as _
 import gimp
 from gimpenums import *
 pdb = gimp.pdb
@@ -384,7 +385,7 @@ def _interact(proc_name, start_params):
         def __init__(self, default=0):
             gtk.ToggleButton.__init__(self)
 
-            self.label = gtk.Label("No")
+            self.label = gtk.Label(_("No"))
             self.add(self.label)
             self.label.show()
 
@@ -394,15 +395,15 @@ def _interact(proc_name, start_params):
 
         def changed(self, tog):
             if tog.get_active():
-                self.label.set_text("Yes")
+                self.label.set_text(_("Yes"))
             else:
-                self.label.set_text("No")
+                self.label.set_text(_("No"))
 
         def get_value(self):
             return self.get_active()
 
     class RadioEntry(gtk.Frame):
-        def __init__(self, default=0, items=(("Yes", 1), ("No", 0))):
+        def __init__(self, default=0, items=((_("Yes"), 1), (_("No"), 0))):
             gtk.Frame.__init__(self)
 
             box = gtk.VBox(False, 6)
@@ -439,7 +440,8 @@ def _interact(proc_name, start_params):
 
     class FilenameSelector(gtk.FileChooserButton):
         def __init__(self, default='', save_mode=False):
-            gtk.FileChooserButton.__init__(self, "Python-Fu File Selection")
+            gtk.FileChooserButton.__init__(self,
+                                           _("Python-Fu File Selection"))
             self.set_action(gtk.FILE_CHOOSER_ACTION_OPEN)
             if default:
                 self.set_filename(default)
@@ -449,7 +451,8 @@ def _interact(proc_name, start_params):
 
     class DirnameSelector(gtk.FileChooserButton):
         def __init__(self, default=''):
-            gtk.FileChooserButton.__init__(self, "Python-Fu Folder Selection")
+            gtk.FileChooserButton.__init__(self,
+                                           _("Python-Fu Folder Selection"))
             self.set_action(gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
             if default:
                 self.set_filename(default)

@@ -1,3 +1,7 @@
+2006-09-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/gimpfu.py: marged strings for translation.
+
 2006-09-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/file-open-location-dialog.c: set a context on the
