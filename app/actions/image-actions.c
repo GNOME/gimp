@@ -65,8 +65,8 @@ static const GimpActionEntry image_actions[] =
   { "colors-menu",            NULL, N_("_Colors")     },
   { "colors-info-menu",       NULL, N_("I_nfo")       },
   { "colors-auto-menu",       NULL, N_("_Auto")       },
-  { "colors-map-menu",        NULL, N_("Ma_p")        },
-  { "colors-components-menu", NULL, N_("_Components") },
+  { "colors-map-menu",        NULL, N_("_Map")        },
+  { "colors-components-menu", NULL, N_("C_omponents") },
 
   { "image-new", GTK_STOCK_NEW,
     N_("_New..."), "<control>N",
@@ -135,7 +135,7 @@ static const GimpActionEntry image_actions[] =
     GIMP_HELP_IMAGE_GRID },
 
   { "image-properties", GTK_STOCK_INFO,
-    N_("Image Properties"), NULL,
+    N_("Image Pr_operties"), NULL,
     N_("Display information about this image"),
     G_CALLBACK (image_properties_cmd_callback),
     GIMP_HELP_IMAGE_PROPERTIES }

@@ -157,7 +157,7 @@ gimp_vector_tool_register (GimpToolRegisterCallback callback,
                 "gimp-vector-tool",
                 _("Paths"),
                 _("Create and edit paths"),
-                N_("_Paths"), "b",
+                N_("Pat_hs"), "b",
                 NULL, GIMP_HELP_TOOL_PATH,
                 GIMP_STOCK_TOOL_PATH,
                 data);

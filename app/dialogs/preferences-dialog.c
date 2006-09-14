@@ -1983,7 +1983,7 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "space-bar-action", 0, 0,
-                            _("While space bar is pressed:"),
+                            _("_While space bar is pressed:"),
                             GTK_TABLE (table), 0, size_group);
 
   /*  Mouse Pointers  */

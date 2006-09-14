@@ -184,12 +184,12 @@ gimp_controller_editor_constructor (GType                  type,
   gtk_widget_show (entry);
 
   button = gimp_prop_check_button_new (G_OBJECT (info), "debug-events",
-                                       _("Dump events from this controller"));
+                                       _("_Dump events from this controller"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (G_OBJECT (info), "enabled",
-                                       _("Enable this controller"));
+                                       _("_Enable this controller"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

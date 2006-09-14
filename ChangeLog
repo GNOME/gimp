@@ -1,3 +1,13 @@
+2006-09-14  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/image-actions.c
+	* app/dialogs/preferences-dialog.c
+	* app/tools/gimpvectortool.c
+	* app/widgets/gimpcontrollereditor.c: 
+	* plug-ins/common/autocrop.c
+	* plug-ins/common/max_rgb.c: resolved conflicting mnemonics, added
+	some new ones (bug #355761).
+
 2006-09-14  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/.../help-system.png:
@@ -78,6 +88,7 @@
 	gimp_smudge_nonclipped_painthit_coords() to
 	gimp_smudge_brush_coords ().
 
+>>>>>>> 1.13285
 2006-09-13  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcroptool.c (gimp_crop_tool_register): removed
