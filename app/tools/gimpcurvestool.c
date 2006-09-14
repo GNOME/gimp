@@ -1106,7 +1106,9 @@ curves_graph_events (GtkWidget      *widget,
       tool->grabbed = FALSE;
 
       curves_set_cursor (tool, GDK_FLEUR);
-      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
+
+      if (tool->curves->curve_type[tool->channel] == GIMP_CURVE_FREE)
+        gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
 
       return TRUE;
 
@@ -1143,6 +1145,9 @@ curves_graph_events (GtkWidget      *widget,
 
               curves_calculate_curve (tool->curves, tool->channel);
             }
+
+          gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
+
           break;
 
         case GIMP_CURVE_FREE:
