@@ -39,6 +39,7 @@ PREFS_IMAGES = \
 	folders-tools-22.png		\
 	folders-22.png			\
 	folders.png			\
+	help-system-22.png			\
 	help-system.png			\
 	image-title-22.png			\
 	image-title.png			\
