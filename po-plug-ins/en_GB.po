@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp CVS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-14 07:33+0100\n"
-"PO-Revision-Date: 2006-09-14 07:41-0000\n"
+"POT-Creation-Date: 2006-09-14 19:18+0100\n"
+"PO-Revision-Date: 2006-09-14 19:18-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2219,16 +2219,16 @@ msgid "Remove empty borders from the image"
 msgstr "Remove empty borders from the image"
 
 #: ../plug-ins/common/autocrop.c:89
-msgid "_Autocrop Image"
-msgstr "_Autocrop Image"
+msgid "Autocrop Imag_e"
+msgstr "Autocrop Imag_e"
 
 #: ../plug-ins/common/autocrop.c:98
 msgid "Remove empty borders from the layer"
 msgstr "Remove empty borders from the layer"
 
 #: ../plug-ins/common/autocrop.c:103
-msgid "_Autocrop Layer"
-msgstr "_Autocrop Layer"
+msgid "Autocrop Lay_er"
+msgstr "Autocrop Lay_er"
 
 #: ../plug-ins/common/autocrop.c:150
 msgid "Cropping"
@@ -5398,8 +5398,8 @@ msgid "Reduce image to pure red, green, and blue"
 msgstr "Reduce image to pure red, green, and blue"
 
 #: ../plug-ins/common/max_rgb.c:95
-msgid "_Maximum RGB..."
-msgstr "_Maximum RGB..."
+msgid "Ma_ximum RGB..."
+msgstr "Ma_ximum RGB..."
 
 #: ../plug-ins/common/max_rgb.c:134
 msgid "Can only operate on RGB drawables."

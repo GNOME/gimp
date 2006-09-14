@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-14 07:25+0100\n"
-"PO-Revision-Date: 2006-09-14 07:25-0000\n"
+"POT-Creation-Date: 2006-09-14 19:16+0100\n"
+"PO-Revision-Date: 2006-09-14 19:16-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: English, British\n"
 "MIME-Version: 1.0\n"
@@ -917,7 +917,6 @@ msgid "_Channels"
 msgstr "_Channels"
 
 #: ../app/actions/dialogs-actions.c:85
-#: ../app/tools/gimpvectortool.c:160
 msgid "_Paths"
 msgstr "_Paths"
 
@@ -2237,12 +2236,13 @@ msgid "_Auto"
 msgstr "_Auto"
 
 #: ../app/actions/image-actions.c:68
-msgid "Ma_p"
-msgstr "Ma_p"
+#: ../app/actions/plug-in-actions.c:94
+msgid "_Map"
+msgstr "_Map"
 
 #: ../app/actions/image-actions.c:69
-msgid "_Components"
-msgstr "_Components"
+msgid "C_omponents"
+msgstr "C_omponents"
 
 #: ../app/actions/image-actions.c:72
 #: ../app/actions/image-actions.c:78
@@ -2330,10 +2330,8 @@ msgid "Configure the grid for this image"
 msgstr "Configure the grid for this image"
 
 #: ../app/actions/image-actions.c:138
-#: ../app/dialogs/image-properties-dialog.c:57
-#: ../app/dialogs/image-properties-dialog.c:60
-msgid "Image Properties"
-msgstr "Image Properties"
+msgid "Image Pr_operties"
+msgstr "Image Pr_operties"
 
 #: ../app/actions/image-actions.c:139
 msgid "Display information about this image"
@@ -2641,8 +2639,8 @@ msgid "Change the size of the layer content"
 msgstr "Change the size of the layer content"
 
 #: ../app/actions/layers-actions.c:182
-msgid "Cr_op Layer"
-msgstr "Cr_op Layer"
+msgid "_Crop Layer"
+msgstr "_Crop Layer"
 
 #: ../app/actions/layers-actions.c:183
 msgid "Crop the layer to the extents of the selection"
@@ -3087,10 +3085,6 @@ msgstr "_Distorts"
 #: ../app/actions/plug-in-actions.c:93
 msgid "_Artistic"
 msgstr "_Artistic"
-
-#: ../app/actions/plug-in-actions.c:94
-msgid "_Map"
-msgstr "_Map"
 
 #: ../app/actions/plug-in-actions.c:95
 msgid "_Render"
@@ -6462,6 +6456,11 @@ msgstr "You are trying to create an image with a size of %s."
 msgid "An image of the chosen size will use more memory than what is configured as \"Maximum Image Size\" in the Preferences dialog (currently %s)."
 msgstr "An image of the chosen size will use more memory than what is configured as \"Maximum Image Size\" in the Preferences dialogue (currently %s)."
 
+#: ../app/dialogs/image-properties-dialog.c:57
+#: ../app/dialogs/image-properties-dialog.c:60
+msgid "Image Properties"
+msgstr "Image Properties"
+
 #: ../app/dialogs/image-scale-dialog.c:97
 msgid "dialog-title|Scale Image"
 msgstr "Scale Image"
@@ -6597,7 +6596,7 @@ msgid "Location:"
 msgstr "Location:"
 
 #: ../app/dialogs/module-dialog.c:504
-#: ../app/widgets/gimpcontrollereditor.c:219
+#: ../app/widgets/gimpcontrollereditor.c:228
 msgid "State:"
 msgstr "State:"
 
@@ -6951,7 +6950,7 @@ msgstr "Help System"
 #: ../app/dialogs/preferences-dialog.c:1711
 #: ../app/dialogs/preferences-dialog.c:1762
 #: ../app/dialogs/preferences-dialog.c:1948
-#: ../app/widgets/gimpcontrollereditor.c:174
+#: ../app/widgets/gimpcontrollereditor.c:183
 msgid "General"
 msgstr "General"
 
@@ -7100,8 +7099,8 @@ msgid "Space Bar"
 msgstr "Space Bar"
 
 #: ../app/dialogs/preferences-dialog.c:1986
-msgid "While space bar is pressed:"
-msgstr "While space bar is pressed:"
+msgid "_While space bar is pressed:"
+msgstr "_While space bar is pressed:"
 
 #. Mouse Pointers
 #: ../app/dialogs/preferences-dialog.c:1990
@@ -9543,57 +9542,57 @@ msgstr "Posterise does not operate on indexed layers."
 msgid "Posterize _levels:"
 msgstr "Posterise _levels:"
 
-#: ../app/tools/gimprectangleoptions.c:905
+#: ../app/tools/gimprectangleoptions.c:958
 msgid "Expand from center"
 msgstr "Expand from centre"
 
-#: ../app/tools/gimprectangleoptions.c:910
+#: ../app/tools/gimprectangleoptions.c:963
 msgid "Make square"
 msgstr "Make square"
 
-#: ../app/tools/gimprectangleoptions.c:915
+#: ../app/tools/gimprectangleoptions.c:968
 msgid "Highlight"
 msgstr "Highlight"
 
-#: ../app/tools/gimprectangleoptions.c:924
+#: ../app/tools/gimprectangleoptions.c:977
 msgid "Rectangle Controls"
 msgstr "Rectangle Controls"
 
-#: ../app/tools/gimprectangleoptions.c:940
+#: ../app/tools/gimprectangleoptions.c:993
 msgid "Fix"
 msgstr "Fix"
 
-#: ../app/tools/gimprectangleoptions.c:945
+#: ../app/tools/gimprectangleoptions.c:998
 #: ../app/widgets/gimpgrideditor.c:239
 #: ../app/widgets/gimpgrideditor.c:271
 msgid "Width"
 msgstr "Width"
 
-#: ../app/tools/gimprectangleoptions.c:955
+#: ../app/tools/gimprectangleoptions.c:1008
 #: ../app/widgets/gimpgrideditor.c:241
 #: ../app/widgets/gimpgrideditor.c:273
 msgid "Height"
 msgstr "Height"
 
-#: ../app/tools/gimprectangleoptions.c:965
+#: ../app/tools/gimprectangleoptions.c:1018
 msgid "Aspect"
 msgstr "Aspect"
 
-#: ../app/tools/gimprectangleoptions.c:996
+#: ../app/tools/gimprectangleoptions.c:1053
 msgid "1 "
 msgstr "1 "
 
-#: ../app/tools/gimprectangleoptions.c:997
+#: ../app/tools/gimprectangleoptions.c:1054
 msgid "2 "
 msgstr "2 "
 
-#: ../app/tools/gimprectangleoptions.c:998
+#: ../app/tools/gimprectangleoptions.c:1055
 #: ../app/widgets/gimpcursorview.c:136
 #: ../app/widgets/gimpcursorview.c:158
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangleoptions.c:999
+#: ../app/tools/gimprectangleoptions.c:1056
 #: ../app/widgets/gimpcursorview.c:142
 #: ../app/widgets/gimpcursorview.c:164
 msgid "Y"
@@ -9611,8 +9610,8 @@ msgstr "Select a Rectangular part of an image"
 msgid "_Rect Select"
 msgstr "_Rect Select"
 
-#: ../app/tools/gimprectangletool.c:1371
-#: ../app/tools/gimprectangletool.c:2067
+#: ../app/tools/gimprectangletool.c:1379
+#: ../app/tools/gimprectangletool.c:2075
 msgid "Rectangle: "
 msgstr "Rectangle: "
 
@@ -9964,6 +9963,10 @@ msgstr "Create Selection from Path"
 msgid "Create and edit paths"
 msgstr "Create and edit paths"
 
+#: ../app/tools/gimpvectortool.c:160
+msgid "Pat_hs"
+msgstr "Pat_hs"
+
 #: ../app/tools/gimpvectortool.c:319
 msgid "Add Stroke"
 msgstr "Add Stroke"
@@ -10251,7 +10254,7 @@ msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: ../app/widgets/gimpactionview.c:303
-#: ../app/widgets/gimpcontrollereditor.c:370
+#: ../app/widgets/gimpcontrollereditor.c:379
 msgid "Action"
 msgstr "Action"
 
@@ -10465,47 +10468,46 @@ msgstr "Smaller Previews"
 msgid "Larger Previews"
 msgstr "Larger Previews"
 
-#: ../app/widgets/gimpcontrollereditor.c:187
-msgid "Dump events from this controller"
-msgstr "Dump events from this controller"
+#: ../app/widgets/gimpcontrollereditor.c:196
+msgid "_Dump events from this controller"
+msgstr "_Dump events from this controller"
 
-#: ../app/widgets/gimpcontrollereditor.c:192
-msgid "Enable this controller"
-msgstr "Enable this controller"
+#: ../app/widgets/gimpcontrollereditor.c:201
+msgid "_Enable this controller"
+msgstr "_Enable this controller"
 
-#: ../app/widgets/gimpcontrollereditor.c:213
+#: ../app/widgets/gimpcontrollereditor.c:222
 msgid "Name:"
 msgstr "Name:"
 
-#: ../app/widgets/gimpcontrollereditor.c:364
+#: ../app/widgets/gimpcontrollereditor.c:373
 msgid "Event"
 msgstr "Event"
 
-#: ../app/widgets/gimpcontrollereditor.c:389
+#: ../app/widgets/gimpcontrollereditor.c:398
 msgid "_Grab event"
 msgstr "_Grab event"
 
-#: ../app/widgets/gimpcontrollereditor.c:399
+#: ../app/widgets/gimpcontrollereditor.c:408
 msgid "Select the next event arriving from the controller"
 msgstr "Select the next event arriving from the controller"
 
-#: ../app/widgets/gimpcontrollereditor.c:537
+#: ../app/widgets/gimpcontrollereditor.c:565
 #, c-format
 msgid "Remove the action assigned to '%s'"
 msgstr "Remove the action assigned to '%s'"
 
-#: ../app/widgets/gimpcontrollereditor.c:541
+#: ../app/widgets/gimpcontrollereditor.c:569
 #, c-format
 msgid "Assign an action to '%s'"
 msgstr "Assign an action to '%s'"
 
-#: ../app/widgets/gimpcontrollereditor.c:663
+#: ../app/widgets/gimpcontrollereditor.c:691
 #, c-format
 msgid "Select Action for Event '%s'"
 msgstr "Select Action for Event '%s'"
 
-#. FIXME
-#: ../app/widgets/gimpcontrollereditor.c:668
+#: ../app/widgets/gimpcontrollereditor.c:696
 msgid "Select Controller Event Action"
 msgstr "Select Controller Event Action"
 
@@ -10643,12 +10645,11 @@ msgstr ""
 "\n"
 "Selecting \"Disable Controller\" will disable the controller without removing it."
 
-#. FIXME
-#: ../app/widgets/gimpcontrollerlist.c:633
+#: ../app/widgets/gimpcontrollerlist.c:634
 msgid "Configure Controller"
 msgstr "Configure Controller"
 
-#: ../app/widgets/gimpcontrollerlist.c:636
+#: ../app/widgets/gimpcontrollerlist.c:637
 msgid "Configure Input Controller"
 msgstr "Configure Input Controller"
 
@@ -11574,6 +11575,10 @@ msgstr "Make sure that the Toolbox is visible!"
 msgid "Couldn't start '%s': %s"
 msgstr "Couldn't start '%s': %s"
 
+#~ msgid "Ma_p"
+#~ msgstr "Ma_p"
+#~ msgid "Cr_op Layer"
+#~ msgstr "Cr_op Layer"
 #~ msgid "Crop & Resize"
 #~ msgstr "Crop & Resize"
 #~ msgid "Crop or Resize an image"
