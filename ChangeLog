@@ -1,5 +1,11 @@
 2006-09-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/gtkcons.py: use gtk.CLOSE instead of
+	"Close" to clarify why this string doesn't need to be marked for
+	translation.
+
+2006-09-14  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontrollereditor.[ch]
 	* app/widgets/gimpcontrollerlist.c: pass a GimpContext to
 	gimp_viewable_dialog_new().

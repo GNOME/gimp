@@ -146,7 +146,7 @@ class Console(gtk.VBox):
                                                scale=pango.SCALE_SMALL)
         self.emphasis = self.buffer.create_tag('Emphasis',
                                                style=pango.STYLE_OBLIQUE)
-        self.error = self.buffer.create_tag('Error'),
+        self.error = self.buffer.create_tag('Error',
                                             foreground='red')
         self.command = self.buffer.create_tag('Command')
 
@@ -161,7 +161,7 @@ class Console(gtk.VBox):
         self.prompt.show()
 
         if closer:
-            self.closer = gtk.Button("Close")
+            self.closer = gtk.Button(gtk.CLOSE)
             self.closer.connect("clicked", self.quit)
             self.inputbox.pack_end(self.closer, fill=False, expand=False)
             self.closer.show()
