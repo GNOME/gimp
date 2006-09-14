@@ -1,5 +1,11 @@
 2006-09-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/widgets/gimprectangletool.c: even if constraining to boundaries,
+	keep updating rectangel when pointer goes outside boundaries.
+	Fixes bug #355740.
+	
+2006-09-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/widgets/gimppropwidgets.[ch]: add prop widget specially
 	for controlling aspect ratio.
 

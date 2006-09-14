@@ -160,7 +160,8 @@ gboolean        gimp_rectangle_tool_constraint_violated (GimpRectangleTool   *re
                                                          gint                 y1,
                                                          gint                 x2,
                                                          gint                 y2,
-                                                         gdouble             *alpha);
+                                                         gdouble             *alpha,
+                                                         gdouble             *beta);
 
 static guint gimp_rectangle_tool_signals[LAST_SIGNAL] = { 0 };
 
@@ -935,6 +936,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   gdouble                   center_x, center_y;
   gboolean                  aspect_square;
   gdouble                   alpha;
+  gdouble                   beta;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
@@ -1212,12 +1214,12 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
    * to avoid leaving the rectangle edge hanging some pixels away from the
    * constraining boundary if the user moves the pointer quickly.
    */
-  if (gimp_rectangle_tool_constraint_violated (rectangle, x1, y1, x2, y2, &alpha))
+  if (gimp_rectangle_tool_constraint_violated (rectangle, x1, y1, x2, y2, &alpha, &beta))
     {
       GimpCoords new_coords;
 
       inc_x *= alpha;
-      inc_y *= alpha;
+      inc_y *= beta;
 
       if (inc_x != 0 || inc_y != 0)
         {
@@ -2544,13 +2546,16 @@ gimp_rectangle_tool_constraint_violated (GimpRectangleTool *rectangle,
                                          gint               y1,
                                          gint               x2,
                                          gint               y2,
-                                         gdouble           *alpha)
+                                         gdouble           *alpha,
+                                         gdouble           *beta)
 {
   GimpRectangleConstraint  constraint    = gimp_rectangle_tool_get_constraint (rectangle);
   GimpTool                *tool          = GIMP_TOOL (rectangle);
   GimpImage               *image         = tool->display->image;
   gint                     min_x, min_y;
   gint                     max_x, max_y;
+
+  *alpha = *beta = 1;
 
   switch (constraint)
     {
@@ -2600,7 +2605,7 @@ gimp_rectangle_tool_constraint_violated (GimpRectangleTool *rectangle,
                     "y1", &ry1,
                     NULL);
 
-      *alpha = (ry1 - min_y) / (gdouble) (ry1 - y1);
+      *beta = (ry1 - min_y) / (gdouble) (ry1 - y1);
       return TRUE;
     }
 
@@ -2624,7 +2629,7 @@ gimp_rectangle_tool_constraint_violated (GimpRectangleTool *rectangle,
                     "y2", &ry2,
                     NULL);
 
-      *alpha = (max_y - ry2) / (gdouble) (y2 - ry2);
+      *beta = (max_y - ry2) / (gdouble) (y2 - ry2);
       return TRUE;
     }
 
