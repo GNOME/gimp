@@ -28,6 +28,8 @@
 
 #include "core/gimptooloptions.h"
 
+#include "widgets/gimppropwidgets.h"
+
 #include "gimprectangleoptions.h"
 #include "gimptooloptions-gui.h"
 
@@ -50,7 +52,8 @@ struct _GimpRectangleOptionsPrivate
   gdouble  height;
 
   gboolean fixed_aspect;
-  gdouble  aspect;
+  gdouble  aspect_numerator;
+  gdouble  aspect_denominator;
   gboolean aspect_square;        /* if set, overrides fixed-aspect setting */
 
   gboolean fixed_center;
@@ -92,9 +95,16 @@ gdouble     gimp_rectangle_options_get_height          (GimpRectangleOptions *op
 void        gimp_rectangle_options_set_fixed_aspect    (GimpRectangleOptions *options,
                                                         gboolean              fixed_aspect);
 gboolean    gimp_rectangle_options_get_fixed_aspect    (GimpRectangleOptions *options);
-void        gimp_rectangle_options_set_aspect          (GimpRectangleOptions *options,
-                                                        gdouble               aspect);
-gdouble     gimp_rectangle_options_get_aspect          (GimpRectangleOptions *options);
+void        gimp_rectangle_options_set_aspect_numerator
+                                                       (GimpRectangleOptions *options,
+                                                        gdouble               val);
+gdouble     gimp_rectangle_options_get_aspect_numerator
+                                                       (GimpRectangleOptions *options);
+void        gimp_rectangle_options_set_aspect_denominator
+                                                       (GimpRectangleOptions *options,
+                                                        gdouble               val);
+gdouble     gimp_rectangle_options_get_aspect_denominator
+                                                       (GimpRectangleOptions *options);
 void        gimp_rectangle_options_set_aspect_square   (GimpRectangleOptions *options,
                                                         gboolean              square);
 gboolean    gimp_rectangle_options_get_aspect_square   (GimpRectangleOptions *options);
@@ -207,10 +217,18 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                                                  GIMP_PARAM_STATIC_STRINGS));
 
       g_object_interface_install_property (iface,
-                                           g_param_spec_double ("aspect",
+                                           g_param_spec_double ("aspect-numerator",
                                                                 NULL, NULL,
                                                                 0.0, GIMP_MAX_IMAGE_SIZE,
                                                                 0.0,
+                                                                GIMP_CONFIG_PARAM_FLAGS |
+                                                                GIMP_PARAM_STATIC_STRINGS));
+
+      g_object_interface_install_property (iface,
+                                           g_param_spec_double ("aspect-denominator",
+                                                                NULL, NULL,
+                                                                0.0, GIMP_MAX_IMAGE_SIZE,
+                                                                1.0,
                                                                 GIMP_CONFIG_PARAM_FLAGS |
                                                                 GIMP_PARAM_STATIC_STRINGS));
 
@@ -348,8 +366,11 @@ gimp_rectangle_options_install_properties (GObjectClass *klass)
                                     GIMP_RECTANGLE_OPTIONS_PROP_FIXED_ASPECT,
                                     "fixed-aspect");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_ASPECT,
-                                    "aspect");
+                                    GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR,
+                                    "aspect-numerator");
+  g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR,
+                                    "aspect-denominator");
   g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_SQUARE,
                                     "aspect-square");
@@ -556,8 +577,8 @@ gimp_rectangle_options_get_fixed_aspect (GimpRectangleOptions *options)
 }
 
 void
-gimp_rectangle_options_set_aspect (GimpRectangleOptions *options,
-                                   gdouble               aspect)
+gimp_rectangle_options_set_aspect_numerator (GimpRectangleOptions *options,
+                                             gdouble               val)
 {
   GimpRectangleOptionsPrivate *private;
 
@@ -565,12 +586,12 @@ gimp_rectangle_options_set_aspect (GimpRectangleOptions *options,
 
   private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
-  private->aspect = aspect;
-  g_object_notify (G_OBJECT (options), "aspect");
+  private->aspect_numerator = val;
+  g_object_notify (G_OBJECT (options), "aspect-numerator");
 }
 
 gdouble
-gimp_rectangle_options_get_aspect (GimpRectangleOptions *options)
+gimp_rectangle_options_get_aspect_numerator (GimpRectangleOptions *options)
 {
   GimpRectangleOptionsPrivate *private;
 
@@ -578,7 +599,33 @@ gimp_rectangle_options_get_aspect (GimpRectangleOptions *options)
 
   private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
-  return private->aspect;
+  return private->aspect_numerator;
+}
+
+void
+gimp_rectangle_options_set_aspect_denominator (GimpRectangleOptions *options,
+                                               gdouble               val)
+{
+  GimpRectangleOptionsPrivate *private;
+
+  g_return_if_fail (GIMP_IS_RECTANGLE_OPTIONS (options));
+
+  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+
+  private->aspect_denominator = val;
+  g_object_notify (G_OBJECT (options), "aspect-denominator");
+}
+
+gdouble
+gimp_rectangle_options_get_aspect_denominator (GimpRectangleOptions *options)
+{
+  GimpRectangleOptionsPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_RECTANGLE_OPTIONS (options), 0);
+
+  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+
+  return private->aspect_denominator;
 }
 
 void
@@ -794,8 +841,11 @@ gimp_rectangle_options_set_property (GObject      *object,
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_ASPECT:
       gimp_rectangle_options_set_fixed_aspect (options, g_value_get_boolean (value));
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT:
-      gimp_rectangle_options_set_aspect (options, g_value_get_double (value));
+    case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR:
+      gimp_rectangle_options_set_aspect_numerator (options, g_value_get_double (value));
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR:
+      gimp_rectangle_options_set_aspect_denominator (options, g_value_get_double (value));
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_SQUARE:
       gimp_rectangle_options_set_aspect_square (options, g_value_get_boolean (value));
@@ -855,8 +905,11 @@ gimp_rectangle_options_get_property (GObject      *object,
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_ASPECT:
       g_value_set_boolean (value, gimp_rectangle_options_get_fixed_aspect (options));
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT:
-      g_value_set_double (value, gimp_rectangle_options_get_aspect (options));
+    case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR:
+      g_value_set_double (value, gimp_rectangle_options_get_aspect_numerator (options));
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR:
+      g_value_set_double (value, gimp_rectangle_options_get_aspect_denominator (options));
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_SQUARE:
       g_value_set_boolean (value, gimp_rectangle_options_get_aspect_square (options));
@@ -965,9 +1018,13 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                        _("Aspect"));
   gtk_widget_show (button);
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 3, 4);
-  spinbutton = gimp_prop_spin_button_new (config, "aspect", 0.01, 0.1, 4);
-  gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 1, 2, 3, 4);
-  gtk_widget_show (spinbutton);
+
+  hbox = gimp_prop_aspect_ratio_new (config,
+                                     "aspect-numerator",
+                                     "aspect-denominator",
+                                     3);
+  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 3, 4);
+  gtk_widget_show (hbox);
 
   gtk_widget_show (table);
 

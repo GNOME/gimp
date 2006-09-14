@@ -1,3 +1,15 @@
+2006-09-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/widgets/gimppropwidgets.[ch]: add prop widget specially
+	for controlling aspect ratio.
+
+	* app/tools/gimprectangleoptions.ch]: use "aspect-numerator"
+	and "aspect-denominator" properties instead of "aspect",
+	and use new prop widget in gui to set and display them.
+
+	* app/tools/gimprectangletool.c: calculate aspect from
+	numerator and denominator.
+
 2006-09-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpcurvestool.c (curves_graph_events): when editing a

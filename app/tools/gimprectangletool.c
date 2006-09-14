@@ -657,7 +657,10 @@ gimp_rectangle_tool_constructor (GObject *object)
   g_signal_connect_object (options, "notify::height",
                            G_CALLBACK (gimp_rectangle_tool_notify_height),
                            rectangle, 0);
-  g_signal_connect_object (options, "notify::aspect",
+  g_signal_connect_object (options, "notify::aspect-numerator",
+                           G_CALLBACK (gimp_rectangle_tool_notify_aspect),
+                           rectangle, 0);
+  g_signal_connect_object (options, "notify::aspect-denominator",
                            G_CALLBACK (gimp_rectangle_tool_notify_aspect),
                            rectangle, 0);
   g_signal_connect_object (options, "notify::highlight",
@@ -1079,8 +1082,13 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
         aspect = 1;
       else
         {
-          g_object_get (options, "aspect", &aspect, NULL);
-          aspect = CLAMP (aspect,
+          gdouble numerator, denominator;
+
+          g_object_get (options,
+                        "aspect-numerator",   &numerator,
+                        "aspect-denominator", &denominator,
+                        NULL);
+          aspect = CLAMP (numerator / denominator,
                           1.0 / display->image->height,
                           display->image->width);
         }
@@ -2206,7 +2214,8 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
 
   if (aspect_square || ! fixed_aspect)
     g_object_set (options,
-                  "aspect", aspect,
+                  "aspect-numerator",   aspect,
+                  "aspect-denominator", 1.0,
                   NULL);
 
   g_signal_handlers_unblock_by_func (options,
@@ -2328,6 +2337,7 @@ gimp_rectangle_tool_notify_aspect (GimpRectangleOptions *options,
   gint                      rx1, rx2, ry1, ry2;
   GimpCoords                coords;
   gdouble                   aspect;
+  gdouble                   numerator, denominator;
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
 
@@ -2335,8 +2345,11 @@ gimp_rectangle_tool_notify_aspect (GimpRectangleOptions *options,
     return;
 
   g_object_get (options,
-                "aspect", &aspect,
+                "aspect-numerator",   &numerator,
+                "aspect-denominator", &denominator,
                 NULL);
+  aspect = numerator / denominator;
+
   g_object_get (rectangle,
                 "x1", &rx1,
                 "y1", &ry1,

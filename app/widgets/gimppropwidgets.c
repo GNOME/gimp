@@ -23,6 +23,7 @@
 #include "config.h"
 
 #include <string.h>
+#include <stdlib.h>
 
 #include <gtk/gtk.h>
 
@@ -497,3 +498,120 @@ connect_notify (GObject     *config,
 
   g_free (notify_name);
 }
+
+
+static void gimp_prop_numeric_entry_notify   (GObject       *config,
+                                              GParamSpec    *param_spec,
+                                              GtkEntry      *entry);
+
+static void gimp_prop_numeric_entry_callback (GtkWidget *widget,
+                                              GObject   *config);
+
+/**
+ * gimp_prop_aspect_ratio_new:
+ * @config:               Object to which property is attached.
+ * @numerator_property:   Name of double property controlled by the first entry.
+ * @denominator_property: Name of double property controlled by the second entry.
+ * @digits:               Number of digits after decimal point to display.
+ *
+ * Creates a pair of entries separated by a ":" label.  Intended to provide
+ * a gui for setting an aspect ratio.
+ *
+ * Return value: A new #HBox, containing the entries and label.
+ *
+ * Since GIMP 2.4
+ */
+GtkWidget *
+gimp_prop_aspect_ratio_new (GObject     *config,
+                            const gchar *numerator_property,
+                            const gchar *denominator_property,
+                            gint         digits)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *hbox;
+  GtkWidget  *label;
+  GtkWidget  *entry;
+
+  hbox = gtk_hbox_new (FALSE, 0);
+
+  /* numerator entry */
+  param_spec = find_param_spec (config, numerator_property, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+  entry = gtk_entry_new ();
+  gtk_entry_set_width_chars (GTK_ENTRY (entry), 5);
+  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
+  set_param_spec (G_OBJECT (entry), entry, param_spec);
+  g_signal_connect (entry, "activate",
+                    G_CALLBACK (gimp_prop_numeric_entry_callback),
+                    config);
+  connect_notify (config, numerator_property,
+                  G_CALLBACK (gimp_prop_numeric_entry_notify),
+                  entry);
+  gtk_widget_show (entry);
+
+  /* ":" label */
+  label = gtk_label_new (":");
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 5);
+  gtk_widget_show (label);
+
+  /* denominator entry */
+  param_spec = find_param_spec (config, denominator_property, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+  entry = gtk_entry_new ();
+  gtk_entry_set_width_chars (GTK_ENTRY (entry), 5);
+  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
+  set_param_spec (G_OBJECT (entry), entry, param_spec);
+  g_signal_connect (entry, "activate",
+                    G_CALLBACK (gimp_prop_numeric_entry_callback),
+                    config);
+  connect_notify (config, denominator_property,
+                  G_CALLBACK (gimp_prop_numeric_entry_notify),
+                  entry);
+  gtk_widget_show (entry);
+
+
+  return hbox;
+}
+
+static void
+gimp_prop_numeric_entry_notify (GObject       *config,
+                                GParamSpec    *param_spec,
+                                GtkEntry      *entry)
+{
+  gdouble value;
+  gchar   text[20];
+
+  g_object_get (config, param_spec->name, &value, NULL);
+
+  sprintf (text, "%3lg", value);
+
+  gtk_entry_set_text (entry, text);
+}
+
+static void
+gimp_prop_numeric_entry_callback (GtkWidget *widget,
+                                  GObject   *config)
+{
+  GParamSpec  *param_spec;
+  gdouble      value;
+
+  g_return_if_fail (GTK_IS_ENTRY (widget));
+
+  param_spec = get_param_spec (G_OBJECT (widget));
+  if (! param_spec)
+    return;
+
+  /* we use strtod instead of g_ascii_strtod because it uses the locale,
+     which is what we want here */
+  value = strtod (gtk_entry_get_text (GTK_ENTRY (widget)), NULL);
+
+  if (value != 0)
+    g_object_set (config,
+                  param_spec->name, value,
+                  NULL);
+  else
+    g_message ("Invalid value entered for aspect ratio.");
+}
+
