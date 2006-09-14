@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-12 22:59+0100\n"
-"PO-Revision-Date: 2006-09-12 23:17-0000\n"
+"POT-Creation-Date: 2006-09-14 07:25+0100\n"
+"PO-Revision-Date: 2006-09-14 07:25-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: English, British\n"
 "MIME-Version: 1.0\n"
@@ -835,7 +835,7 @@ msgstr "Sample Merged"
 #: ../app/actions/file-commands.c:176
 #: ../app/dialogs/file-open-dialog.c:204
 #: ../app/dialogs/file-open-dialog.c:255
-#: ../app/dialogs/file-open-location-dialog.c:205
+#: ../app/dialogs/file-open-location-dialog.c:212
 #: ../app/display/gimpdisplayshell-dnd.c:452
 #: ../app/widgets/gimplayertreeview.c:763
 #: ../app/widgets/gimptoolbox-dnd.c:157
@@ -5471,7 +5471,7 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdrawable-blend.c:247
-#: ../app/tools/gimpblendtool.c:100
+#: ../app/tools/gimpblendtool.c:103
 msgid "Blend"
 msgstr "Blend"
 
@@ -5898,8 +5898,20 @@ msgstr "(Preview may be out of date)"
 #: ../app/widgets/gimpimagepropview.c:427
 #: ../app/widgets/gimpsizebox.c:437
 #: ../app/widgets/gimptemplateeditor.c:564
+#, c-format
+msgid "%d × %d pixel"
+msgid_plural "%d × %d pixels"
+msgstr[0] "%d × %d pixel"
+msgstr[1] "%d × %d pixels"
+
 #: ../app/core/gimpimagefile.c:629
 #: ../app/display/gimpdisplayshell-title.c:316
+#, c-format
+msgid "%d layer"
+msgid_plural "%d layers"
+msgstr[0] "%d layer"
+msgstr[1] "%d layers"
+
 #: ../app/core/gimpimagefile.c:675
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
@@ -6193,10 +6205,10 @@ msgid "pixel"
 msgstr "pixel"
 
 #: ../app/core/gimpunit.c:55
-#: ../app/tools/gimpmeasuretool.c:803
-#: ../app/tools/gimpmeasuretool.c:943
-#: ../app/tools/gimpmeasuretool.c:995
-#: ../app/tools/gimpmeasuretool.c:1021
+#: ../app/tools/gimpmeasuretool.c:805
+#: ../app/tools/gimpmeasuretool.c:945
+#: ../app/tools/gimpmeasuretool.c:997
+#: ../app/tools/gimpmeasuretool.c:1023
 #: ../app/tools/gimppainttool.c:595
 msgid "pixels"
 msgstr "pixels"
@@ -6357,11 +6369,11 @@ msgstr "Navigation"
 msgid "FG/BG"
 msgstr "FG/BG"
 
-#: ../app/dialogs/file-open-location-dialog.c:73
+#: ../app/dialogs/file-open-location-dialog.c:75
 msgid "Open Location"
 msgstr "Open Location"
 
-#: ../app/dialogs/file-open-location-dialog.c:111
+#: ../app/dialogs/file-open-location-dialog.c:113
 msgid "Enter location (URI):"
 msgstr "Enter location (URI):"
 
@@ -6502,12 +6514,12 @@ msgstr "Layer _name:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:133
-#: ../app/tools/gimpmeasuretool.c:985
+#: ../app/tools/gimpmeasuretool.c:987
 msgid "Width:"
 msgstr "Width:"
 
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1011
+#: ../app/tools/gimpmeasuretool.c:1013
 msgid "Height:"
 msgstr "Height:"
 
@@ -6882,8 +6894,8 @@ msgid "_Enable layer & channel previews"
 msgstr "_Enable layer & channel previews"
 
 #: ../app/dialogs/preferences-dialog.c:1538
-msgid "Default _layer & channel preview size:"
-msgstr "Default _layer & channel preview size:"
+msgid "_Default layer & channel preview size:"
+msgstr "_Default layer & channel preview size:"
 
 #: ../app/dialogs/preferences-dialog.c:1541
 msgid "Na_vigation preview size:"
@@ -6899,8 +6911,8 @@ msgid "Show menu _mnemonics (access keys)"
 msgstr "Show menu _mnemonics (access keys)"
 
 #: ../app/dialogs/preferences-dialog.c:1552
-msgid "Use _dynamic keyboard shortcuts"
-msgstr "Use _dynamic keyboard shortcuts"
+msgid "_Use dynamic keyboard shortcuts"
+msgstr "_Use dynamic keyboard shortcuts"
 
 #: ../app/dialogs/preferences-dialog.c:1556
 msgid "Configure _Keyboard Shortcuts..."
@@ -8029,7 +8041,7 @@ msgid "2D Transforming"
 msgstr "2D Transforming"
 
 #: ../app/pdb/edit_cmds.c:631
-#: ../app/tools/gimpblendtool.c:211
+#: ../app/tools/gimpblendtool.c:212
 msgid "Blending"
 msgstr "Blending"
 
@@ -8290,7 +8302,7 @@ msgstr "_Airbrush"
 
 #: ../app/tools/gimpairbrushtool.c:95
 #: ../app/tools/gimpconvolvetool.c:217
-#: ../app/tools/gimpsmudgetool.c:101
+#: ../app/tools/gimpsmudgetool.c:98
 msgid "Rate:"
 msgstr "Rate:"
 
@@ -8400,21 +8412,19 @@ msgstr "Max depth:"
 msgid "Threshold:"
 msgstr "Threshold:"
 
-#: ../app/tools/gimpblendtool.c:101
+#: ../app/tools/gimpblendtool.c:104
 msgid "Fill with a color gradient"
 msgstr "Fill with a colour gradient"
 
-#: ../app/tools/gimpblendtool.c:102
+#: ../app/tools/gimpblendtool.c:105
 msgid "Blen_d"
 msgstr "Blen_d"
 
-#: ../app/tools/gimpblendtool.c:157
+#: ../app/tools/gimpblendtool.c:160
 msgid "Blend: Invalid for indexed images."
 msgstr "Blend: Invalid for indexed images."
 
-#. initialize the statusbar display
-#: ../app/tools/gimpblendtool.c:178
-#: ../app/tools/gimpblendtool.c:270
+#: ../app/tools/gimpblendtool.c:365
 msgid "Blend: "
 msgstr "Blend: "
 
@@ -8733,16 +8743,16 @@ msgid "Current layer only"
 msgstr "Current layer only"
 
 #: ../app/tools/gimpcroptool.c:104
-msgid "Crop & Resize"
-msgstr "Crop & Resize"
+msgid "Crop"
+msgstr "Crop"
 
 #: ../app/tools/gimpcroptool.c:105
-msgid "Crop or Resize an image"
-msgstr "Crop or Resize an image"
+msgid "Crop an image"
+msgstr "Crop an image"
 
 #: ../app/tools/gimpcroptool.c:106
-msgid "_Crop & Resize"
-msgstr "_Crop & Resize"
+msgid "_Crop"
+msgstr "_Crop"
 
 #: ../app/tools/gimpcroptool.c:242
 msgid "Click or press enter to crop"
@@ -9171,7 +9181,7 @@ msgid "Size:"
 msgstr "Size:"
 
 #: ../app/tools/gimpinkoptions-gui.c:76
-#: ../app/tools/gimpmeasuretool.c:959
+#: ../app/tools/gimpmeasuretool.c:961
 #: ../app/tools/gimprotatetool.c:144
 #: ../app/widgets/gimpbrusheditor.c:208
 msgid "Angle:"
@@ -9321,11 +9331,11 @@ msgid "Add Guides"
 msgstr "Add Guides"
 
 #. tool->display->shell
-#: ../app/tools/gimpmeasuretool.c:913
+#: ../app/tools/gimpmeasuretool.c:915
 msgid "Measure Distances and Angles"
 msgstr "Measure Distances and Angles"
 
-#: ../app/tools/gimpmeasuretool.c:933
+#: ../app/tools/gimpmeasuretool.c:935
 msgid "Distance:"
 msgstr "Distance:"
 
@@ -9767,11 +9777,11 @@ msgstr "Smudge image"
 msgid "_Smudge"
 msgstr "_Smudge"
 
-#: ../app/tools/gimpsmudgetool.c:78
+#: ../app/tools/gimpsmudgetool.c:75
 msgid "Click to smudge"
 msgstr "Click to smudge"
 
-#: ../app/tools/gimpsmudgetool.c:79
+#: ../app/tools/gimpsmudgetool.c:76
 msgid "Click to smudge the line"
 msgstr "Click to smudge the line"
 
@@ -11564,6 +11574,12 @@ msgstr "Make sure that the Toolbox is visible!"
 msgid "Couldn't start '%s': %s"
 msgstr "Couldn't start '%s': %s"
 
+#~ msgid "Crop & Resize"
+#~ msgstr "Crop & Resize"
+#~ msgid "Crop or Resize an image"
+#~ msgstr "Crop or Resize an image"
+#~ msgid "_Crop & Resize"
+#~ msgstr "_Crop & Resize"
 #~ msgid ""
 #~ "GIMP is not properly installed for the current user.\n"
 #~ "User installation was skipped because the '--no-interface' flag was "
@@ -11864,8 +11880,6 @@ msgstr "Couldn't start '%s': %s"
 #~ msgstr "Loading preview ..."
 #~ msgid "1 Layer"
 #~ msgstr "1 Layer"
-#~ msgid "%d Layers"
-#~ msgstr "%d Layers"
 #~ msgid ""
 #~ "Unknown type of palette file:\n"
 #~ "%s"
@@ -12344,8 +12358,6 @@ msgstr "Couldn't start '%s': %s"
 #~ msgstr "GIMP Extension"
 #~ msgid "Temporary Procedure"
 #~ msgstr "Temporary Procedure"
-#~ msgid "Crop"
-#~ msgstr "Crop"
 #~ msgid "Resize"
 #~ msgstr "Resize"
 #~ msgid "Execute"
