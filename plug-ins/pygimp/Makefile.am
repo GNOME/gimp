@@ -38,6 +38,7 @@ gimp_la_SOURCES = \
 	pygimp-tile.c		\
 	pygimp.h		\
 	pygimp-api.h		\
+	pygimp-intl.h		\
 	pygimp-util.h
 
 gimp_la_LDFLAGS = -module -avoid-version $(no_undefined) \

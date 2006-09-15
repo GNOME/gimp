@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-15 11:50+0200\n"
-"PO-Revision-Date: 2006-09-15 11:50+0200\n"
+"POT-Creation-Date: 2006-09-15 12:05+0200\n"
+"PO-Revision-Date: 2006-09-15 12:07+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,6 +31,10 @@ msgstr "Python-Fu Dateiauswahl"
 #: ../plug-ins/pygimp/gimpfu.py:458
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu Verzeichnisauswahl"
+
+#: ../plug-ins/pygimp/procbrowser.c:174
+msgid "Python Procedure Browser"
+msgstr "Python Prozedurbrowser"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
 msgid "Python Console"

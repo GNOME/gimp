@@ -18,6 +18,8 @@
     02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <Python.h>
 #include <structseq.h>
 
@@ -31,6 +33,7 @@
 
 #include "pygimp-api.h"
 
+#include "pygimp-intl.h"
 
 typedef struct
 {
@@ -168,7 +171,7 @@ proc_browser_dialog_new(PyObject *self, PyObject *args, PyObject *kwargs)
 	}
     }
 
-    dlg = G_OBJECT(gimp_proc_browser_dialog_new("Python Procedure Browser",
+    dlg = G_OBJECT(gimp_proc_browser_dialog_new(_("Python Procedure Browser"),
                                                 "python-fu-procedure-browser",
                                                 gimp_standard_help_func, NULL,
                                                 NULL));

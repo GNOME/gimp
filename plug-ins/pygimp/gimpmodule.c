@@ -34,8 +34,8 @@
 
 #include <pygobject.h>
 
-/* maximum bits per pixel ... */
-#define MAX_BPP 4
+#include "pygimp-intl.h"
+
 
 PyObject *pygimp_error;
 
@@ -190,7 +190,7 @@ pygimp_main(PyObject *self, PyObject *args)
     int argc, i;
     char **argv;
     PyObject *ip, *qp, *query, *rp;
-	
+
     if (!PyArg_ParseTuple(args, "OOOO:main", &ip, &qp, &query, &rp))
 	return NULL;
 
@@ -1632,6 +1632,12 @@ initgimp(void)
 
     init_pygobject();
     init_pygimpcolor();
+
+    /* initialize i18n support */
+    bindtextdomain (GETTEXT_PACKAGE"-python", gimp_locale_directory ());
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
+    bind_textdomain_codeset (GETTEXT_PACKAGE"-python", "UTF-8");
+#endif
 
     /* set the default python encoding to utf-8 */
     PyUnicode_SetDefaultEncoding("utf-8");

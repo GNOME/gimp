@@ -1,5 +1,15 @@
 2006-09-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/Makefile.am
+	* plug-ins/pygimp/pygimp-intl.h: added header file for i18n support.
+
+	* plug-ins/pygimp/gimpmodule.c: bind to the gimp20-python
+	translation domain.
+
+	* plug-ins/pygimp/procbrowser.c: marked a string for translation.
+
+2006-09-15  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/pygimp/gimpfu.py: translate strings in the gimp20-python
 	textdomain.
 
