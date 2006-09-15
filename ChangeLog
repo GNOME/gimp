@@ -1,3 +1,8 @@
+2006-09-15  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/unsharp.c (run): only store the settings if run
+	interactively. Fixes bug #356044.
+
 2006-09-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Trying to implement some usability recommendations from
