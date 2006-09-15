@@ -116,6 +116,12 @@ void       gimp_draw_tool_draw_rectangle           (GimpDrawTool     *draw_tool,
                                                     gdouble           width,
                                                     gdouble           height,
                                                     gboolean          use_offsets);
+void       gimp_draw_tool_draw_rectangle_stippled  (GimpDrawTool     *draw_tool,
+                                                    gdouble           x,
+                                                    gdouble           y,
+                                                    gdouble           width,
+                                                    gdouble           height,
+                                                    gboolean          use_offsets);
 void       gimp_draw_tool_draw_arc                 (GimpDrawTool     *draw_tool,
                                                     gboolean          filled,
                                                     gdouble           x,

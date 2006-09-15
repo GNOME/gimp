@@ -1,5 +1,20 @@
 2006-09-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	Trying to implement some usability recommendations from
+	Peter Sikking: bigger handles, more feedback to user.
+	
+	* app/display/gimpcanvas.[ch]: add
+	GIMP_CANVAS_STYLE_XOR_STIPPLED to set of styles.
+
+	* app/tools/gimpdrawtool.[ch]
+	(gimp_draw_tool_draw_rectangle_stippled): new function.
+	Needs a better stipple pattern, though.
+
+	* app/tools/gimprectangletool.c: bigger handles in corners,
+	and highlight thing that user is currently moving.
+	
+2006-09-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/widgets/gimprectangletool.c: even if constraining to boundaries,
 	keep updating rectangel when pointer goes outside boundaries.
 	Fixes bug #355740.

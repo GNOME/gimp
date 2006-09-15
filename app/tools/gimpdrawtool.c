@@ -563,6 +563,63 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
                                 w - 1, h - 1);
 }
 
+/**
+ * gimp_draw_tool_draw_rectangle_stippled:
+ * @draw_tool:   the #GimpDrawTool
+ * @x:           horizontal image coordinate
+ * @y:           vertical image coordinate
+ * @width:       width in image coordinates
+ * @height:      height in image coordinates
+ * @use_offsets: whether to use the image pixel offsets of the tool's display
+ *
+ * This function takes image space coordinates and transforms them to
+ * screen window coordinates, then draws the resulting rectangle, filling
+ * it with the default stipple pattern.
+ **/
+void
+gimp_draw_tool_draw_rectangle_stippled (GimpDrawTool *draw_tool,
+                                        gdouble       x,
+                                        gdouble       y,
+                                        gdouble       width,
+                                        gdouble       height,
+                                        gboolean      use_offsets)
+{
+  GimpDisplayShell *shell;
+  gint              tx1, ty1;
+  gint              tx2, ty2;
+  guint             w, h;
+
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
+  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+
+  gimp_display_shell_transform_xy (shell,
+                                   MIN (x, x + width), MIN (y, y + height),
+                                   &tx1, &ty1,
+                                   use_offsets);
+  gimp_display_shell_transform_xy (shell,
+                                   MAX (x, x + width), MAX (y, y + height),
+                                   &tx2, &ty2,
+                                   use_offsets);
+
+  tx1 = CLAMP (tx1, -1, shell->disp_width + 1);
+  ty1 = CLAMP (ty1, -1, shell->disp_height + 1);
+  tx2 = CLAMP (tx2, -1, shell->disp_width + 1);
+  ty2 = CLAMP (ty2, -1, shell->disp_height + 1);
+
+  tx2 -= tx1;
+  ty2 -= ty1;
+  w = MAX (0, tx2);
+  h = MAX (0, ty2);
+
+  if (w > 0 && h > 0)
+    gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
+                                GIMP_CANVAS_STYLE_XOR_STIPPLED,
+                                TRUE,
+                                tx1, ty1,
+                                w - 1, h - 1);
+}
+
 void
 gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
                          gboolean      filled,

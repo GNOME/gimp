@@ -854,7 +854,9 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
   private->lastx = x;
   private->lasty = y;
 
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
   gimp_tool_control_activate (tool->control);
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 void
@@ -873,7 +875,9 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
 
   options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
 
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
   gimp_tool_control_halt (tool->control);
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
   g_object_get (rectangle, "function", &function, NULL);
@@ -1884,7 +1888,7 @@ gimp_rectangle_tool_cursor_update (GimpTool        *tool,
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 }
 
-#define ANCHOR_SIZE 6
+#define ANCHOR_SIZE 20
 
 void
 gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
@@ -1892,8 +1896,12 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
   GimpRectangleToolPrivate *private;
   gint                      x1, x2, y1, y2;
   guint                     function;
+  gboolean                  button1_down;
+  GimpTool                 *tool;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (draw_tool));
+
+  tool = GIMP_TOOL (draw_tool);
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (draw_tool);
 
@@ -1910,18 +1918,104 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
   gimp_draw_tool_draw_rectangle (draw_tool, FALSE,
                                  x1, y1, x2 - x1, y2 - y1, FALSE);
 
-  gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                              x1, y1, ANCHOR_SIZE, ANCHOR_SIZE,
-                              GTK_ANCHOR_NORTH_WEST, FALSE);
-  gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                              x2, y1, ANCHOR_SIZE, ANCHOR_SIZE,
-                              GTK_ANCHOR_NORTH_EAST, FALSE);
-  gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                              x1, y2, ANCHOR_SIZE, ANCHOR_SIZE,
-                              GTK_ANCHOR_SOUTH_WEST, FALSE);
-  gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                              x2, y2, ANCHOR_SIZE, ANCHOR_SIZE,
-                              GTK_ANCHOR_SOUTH_EAST, FALSE);
+
+  button1_down = gimp_tool_control_is_active (tool->control);
+
+  if (button1_down)
+    {
+      GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (tool->display->shell);
+      gdouble           handle_w;
+      gdouble           handle_h;
+      gint              X1, Y1;
+      gint              X2, Y2;
+      gboolean          do_it    = TRUE;
+
+      handle_w = private->dcw / SCALEFACTOR_X (shell);
+      handle_h = private->dch / SCALEFACTOR_Y (shell);
+
+      switch (private->function)
+      {
+      case RECT_RESIZING_LEFT:
+        X1 = x1;
+        X2 = x1 + handle_w / 2;
+        Y1 = y1;
+        Y2 = y2;
+        break;
+
+      case RECT_RESIZING_RIGHT:
+        X1 = x2 - handle_w / 2;
+        X2 = x2;
+        Y1 = y1;
+        Y2 = y2;
+        break;
+
+      case RECT_RESIZING_TOP:
+        X1 = x1 + handle_w;
+        X2 = x2 - handle_w;
+        Y1 = y1;
+        Y2 = y1 + handle_h / 2;
+        break;
+
+      case RECT_RESIZING_BOTTOM:
+        X1 = x1;
+        X2 = x2;
+        Y1 = y2 - handle_h / 2;
+        Y2 = y2;
+        break;
+
+      case RECT_RESIZING_UPPER_LEFT:
+        X1 = x1;
+        X2 = x1 + handle_w;
+        Y1 = y1;
+        Y2 = y1 + handle_h;
+        break;
+
+      case RECT_RESIZING_UPPER_RIGHT:
+        X1 = x2 - handle_w;
+        X2 = x2;
+        Y1 = y1;
+        Y2 = y1 + handle_h;
+        break;
+
+      case RECT_RESIZING_LOWER_LEFT:
+        X1 = x1;
+        X2 = x1 + handle_w;
+        Y1 = y2 - handle_h;
+        Y2 = y2;
+        break;
+
+      case RECT_RESIZING_LOWER_RIGHT:
+        X1 = x2 - handle_w;
+        X2 = x2;
+        Y1 = y2 - handle_h;
+        Y2 = y2;
+        break;
+
+      default:
+        do_it = FALSE;
+        break;
+      }
+
+      if (do_it)
+        gimp_draw_tool_draw_rectangle_stippled (draw_tool,
+                                                X1, Y1, X2 - X1, Y2 - Y1,
+                                                FALSE);
+    }
+  else
+    {
+      gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                                  x1, y1, ANCHOR_SIZE, ANCHOR_SIZE,
+                                  GTK_ANCHOR_NORTH_WEST, FALSE);
+      gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                                  x2, y1, ANCHOR_SIZE, ANCHOR_SIZE,
+                                  GTK_ANCHOR_NORTH_EAST, FALSE);
+      gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                                  x1, y2, ANCHOR_SIZE, ANCHOR_SIZE,
+                                  GTK_ANCHOR_SOUTH_WEST, FALSE);
+      gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                                  x2, y2, ANCHOR_SIZE, ANCHOR_SIZE,
+                                  GTK_ANCHOR_SOUTH_EAST, FALSE);
+    }
 
   gimp_rectangle_tool_draw_guides (draw_tool);
 }
@@ -2048,8 +2142,8 @@ gimp_rectangle_tool_configure (GimpRectangleTool *rectangle)
                                    &dx2, &dy2,
                                    FALSE);
 
-#define SRW 10
-#define SRH 10
+#define SRW 20
+#define SRH 20
 
   dcw = ((dx2 - dx1) < SRW) ? (dx2 - dx1) : SRW;
   dch = ((dy2 - dy1) < SRH) ? (dy2 - dy1) : SRH;
