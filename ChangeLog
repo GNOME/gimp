@@ -1,3 +1,8 @@
+2006-09-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/screenshot.c: when shooting a region, apply delay
+	_after_ selecting region, applying before is useless.
+	
 2006-09-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/gimpmodule.c: added domain_register method.

@@ -328,7 +328,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (shootvals.select_delay > 0)
+      if (shootvals.select_delay > 0 && shootvals.shoot_type != SHOOT_REGION)
 	shoot_delay (shootvals.select_delay);
 
       if (shootvals.shoot_type != SHOOT_ROOT && ! shootvals.window_id)
@@ -338,6 +338,9 @@ run (const gchar      *name,
           if (! shootvals.window_id)
             status = GIMP_PDB_CANCEL;
         }
+
+      if (shootvals.select_delay > 0 && shootvals.shoot_type == SHOOT_REGION)
+	shoot_delay (shootvals.select_delay);
     }
 
   if (status == GIMP_PDB_SUCCESS)
