@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-15 12:05+0200\n"
-"PO-Revision-Date: 2006-09-15 12:07+0200\n"
+"POT-Creation-Date: 2006-09-15 13:29+0200\n"
+"PO-Revision-Date: 2006-09-15 13:30+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,20 +15,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:391 ../plug-ins/pygimp/gimpfu.py:403
-#: ../plug-ins/pygimp/gimpfu.py:409
+#: ../plug-ins/pygimp/gimpfu.py:394 ../plug-ins/pygimp/gimpfu.py:406
+#: ../plug-ins/pygimp/gimpfu.py:412
 msgid "No"
 msgstr "Nein"
 
-#: ../plug-ins/pygimp/gimpfu.py:401 ../plug-ins/pygimp/gimpfu.py:409
+#: ../plug-ins/pygimp/gimpfu.py:404 ../plug-ins/pygimp/gimpfu.py:412
 msgid "Yes"
 msgstr "Ja"
 
-#: ../plug-ins/pygimp/gimpfu.py:447
+#: ../plug-ins/pygimp/gimpfu.py:450
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu Dateiauswahl"
 
-#: ../plug-ins/pygimp/gimpfu.py:458
+#: ../plug-ins/pygimp/gimpfu.py:461
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu Verzeichnisauswahl"
 
@@ -36,13 +36,21 @@ msgstr "Python-Fu Verzeichnisauswahl"
 msgid "Python Procedure Browser"
 msgstr "Python Prozedurbrowser"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:42
 msgid "Python Console"
 msgstr "Python Konsole"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:74
 msgid "_Browse..."
 msgstr "_Durchsuchen …"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:98
+msgid "Interactive Gimp-Python interpreter"
+msgstr "Interaktiver Gimp-Python Interpreter"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:103
+msgid "_Console"
+msgstr "_Konsole"
 
 #: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
 msgid "Gimp-Python Console"

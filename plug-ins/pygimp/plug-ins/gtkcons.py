@@ -33,7 +33,11 @@ import sys, string, traceback
 import pygtk
 pygtk.require('2.0')
 import gtk, pango
-from gettext import gettext as _
+
+from gimp import locale_directory
+import gettext
+t = gettext.translation('gimp20-python', locale_directory)
+_ = t.ugettext
 
 stdout = sys.stdout
 
@@ -215,7 +219,7 @@ class Console(gtk.VBox):
             self.buffer.insert_with_tags(iter, *greeting)
 
         self.greetings = ((_('Gimp-Python Console'), 'Title'),
-                          (' -' + _('Interactive Python Development') + '\n',
+                          (' - ' + _('Interactive Python Development') + '\n',
                            'Emphasis'))
 
         for greeting in self.greetings:

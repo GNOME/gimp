@@ -1,5 +1,18 @@
 2006-09-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/gimpmodule.c: added domain_register method.
+
+	* plug-ins/pygimp/gimpfu.py: define N_(). Added an optional
+	"domain" parameter to the register() method. Register the domain
+	with GIMP and initialize gettext if it is specified.
+
+	* plug-ins/pygimp/plug-ins/gimpcons.py: use N_() to mark menu
+	label and blurb for translation. Specify the translation domain.
+
+	* plug-ins/pygimp/plug-ins/gtkcons.py: use gettext API for modules.
+
+2006-09-15  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/pygimp/Makefile.am
 	* plug-ins/pygimp/pygimp-intl.h: added header file for i18n support.
 

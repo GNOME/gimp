@@ -18,7 +18,6 @@
 #   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 from gimpfu import *
-from gettext import gettext as _
 
 def console():
     import pygtk
@@ -96,15 +95,15 @@ def console():
 
 register(
     "python-fu-console",
-    "Python interactive interpreter with gimp extensions",
+    N_("Interactive Gimp-Python interpreter"),
     "Type in commands and see results",
     "James Henstridge",
     "James Henstridge",
     "1997-1999",
-    "_Console",
+    N_("_Console"),
     "",
     [],
     [],
-    console, menu="<Toolbox>/Xtns/Languages/Python-Fu")
+    console, menu="<Toolbox>/Xtns/Languages/Python-Fu", domain="gimp20-python")
 
 main()

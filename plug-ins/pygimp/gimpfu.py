@@ -153,8 +153,8 @@ _type_mapping = {
 _registered_plugins_ = {}
 
 def register(proc_name, blurb, help, author, copyright, date, label,
-                 imagetypes, params, results, function, menu=None,
-                 on_query=None, on_run=None):
+                 imagetypes, params, results, function,
+                 menu=None, domain=None, on_query=None, on_run=None):
     '''This is called to register a new plugin.'''
 
     # First perform some sanity checks on the data
@@ -213,7 +213,7 @@ def register(proc_name, blurb, help, author, copyright, date, label,
     _registered_plugins_[proc_name] = (blurb, help, author, copyright,
                                        date, label, imagetypes,
                                        plugin_type, params, results,
-                                       function, menu, on_query, on_run)
+                                       function, menu, domain, on_query, on_run)
 
 file_params = [(PDB_STRING, "filename", "The name of the file"),
                (PDB_STRING, "raw-filename", "The name of the file")]
@@ -222,7 +222,7 @@ def _query():
     for plugin in _registered_plugins_.keys():
         (blurb, help, author, copyright, date,
          label, imagetypes, plugin_type,
-         params, results, function, menu,
+         params, results, function, menu, domain,
          on_query, on_run) = _registered_plugins_[plugin]
 
         def make_params(params):
@@ -247,6 +247,9 @@ def _query():
                     params[3:3] = file_params
 
         results = make_params(results)
+
+        if domain:
+            gimp.domain_register(domain)
         gimp.install_procedure(plugin, blurb, help, author, copyright,
                                date, label, imagetypes, plugin_type,
                                params, results)
@@ -259,7 +262,7 @@ def _get_defaults(proc_name):
     import gimpshelf
     (blurb, help, author, copyright, date,
      menu, imagetypes, plugin_type,
-     params, results, function, menu,
+     params, results, function, menu, domain,
      on_query, on_run) = _registered_plugins_[proc_name]
 
     key = "python-fu-save--" + proc_name
@@ -279,7 +282,7 @@ def _set_defaults(proc_name, defaults):
 def _interact(proc_name, start_params):
     (blurb, help, author, copyright, date,
      menu, imagetypes, plugin_type,
-     params, results, function, menu,
+     params, results, function, menu, domain,
      on_query, on_run) = _registered_plugins_[proc_name]
 
     def run_script(run_params):
@@ -612,6 +615,10 @@ def _run(proc_name, params):
     plugin_type = _registered_plugins_[proc_name][7]
     func = _registered_plugins_[proc_name][10]
     menu = _registered_plugins_[proc_name][11]
+    domain = _registered_plugins_[proc_name][12]
+
+    if domain:
+        gettext.install(domain, gimp.locale_directory, unicode=1)
 
     if plugin_type == PLUGIN and menu[:7] == '<Image>':
         end = 3
@@ -651,3 +658,5 @@ def fail(msg):
     gimp.message(msg)
     raise error, msg
 
+def N_(message):
+    return message

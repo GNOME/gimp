@@ -725,6 +725,20 @@ pygimp_register_save_handler(PyObject *self, PyObject *args)
 }
 
 static PyObject *
+pygimp_domain_register(PyObject *self, PyObject *args)
+{
+    char *name, *path = NULL;
+
+    if (!PyArg_ParseTuple(args, "s|s:domain_register", &name, &path))
+	return NULL;
+
+    gimp_plugin_domain_register(name, path);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
 pygimp_menu_register(PyObject *self, PyObject *args)
 {
     char *name, *path;
@@ -1498,6 +1512,7 @@ static struct PyMethodDef gimp_methods[] = {
     {"register_magic_load_handler",	(PyCFunction)pygimp_register_magic_load_handler,	METH_VARARGS},
     {"register_load_handler",	(PyCFunction)pygimp_register_load_handler,	METH_VARARGS},
     {"register_save_handler",	(PyCFunction)pygimp_register_save_handler,	METH_VARARGS},
+    {"domain_register",         (PyCFunction)pygimp_domain_register,	METH_VARARGS},
     {"menu_register",           (PyCFunction)pygimp_menu_register,	METH_VARARGS},
     {"gamma",	(PyCFunction)pygimp_gamma,	METH_NOARGS},
     {"install_cmap",	(PyCFunction)pygimp_install_cmap,	METH_NOARGS},
@@ -1634,9 +1649,9 @@ initgimp(void)
     init_pygimpcolor();
 
     /* initialize i18n support */
-    bindtextdomain (GETTEXT_PACKAGE"-python", gimp_locale_directory ());
+    bindtextdomain (GETTEXT_PACKAGE "-python", gimp_locale_directory ());
 #ifdef HAVE_BIND_TEXTDOMAIN_CODESET
-    bind_textdomain_codeset (GETTEXT_PACKAGE"-python", "UTF-8");
+    bind_textdomain_codeset (GETTEXT_PACKAGE "-python", "UTF-8");
 #endif
 
     /* set the default python encoding to utf-8 */
