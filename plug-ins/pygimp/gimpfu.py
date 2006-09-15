@@ -62,10 +62,13 @@ element in their description tuple -- a 3-tuple of the form (lower,upper,step),
 which defines the limits for the slider or spinner.'''
 
 import string as _string
-from gettext import gettext as _
 import gimp
 from gimpenums import *
 pdb = gimp.pdb
+
+import gettext
+t = gettext.translation('gimp20-python', gimp.locale_directory)
+_ = t.ugettext
 
 class error(RuntimeError):pass
 class CancelError(RuntimeError):pass

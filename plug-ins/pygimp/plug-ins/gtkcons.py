@@ -215,7 +215,7 @@ class Console(gtk.VBox):
             self.buffer.insert_with_tags(iter, *greeting)
 
         self.greetings = ((_('Gimp-Python Console'), 'Title'),
-                          (' -' + _('Interactive Python Development' + '\n'),
+                          (' -' + _('Interactive Python Development') + '\n',
                            'Emphasis'))
 
         for greeting in self.greetings:

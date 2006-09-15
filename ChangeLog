@@ -1,5 +1,12 @@
 2006-09-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/gimpfu.py: translate strings in the gimp20-python
+	textdomain.
+
+	* plug-ins/pygimp/plug-ins/gtkcons.py: fixed a translation mark.
+
+2006-09-15  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/unsharp.c (run): only store the settings if run
 	interactively. Fixes bug #356044.
 
