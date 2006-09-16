@@ -1,3 +1,12 @@
+2006-09-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpperspectiveclonetool.c (button_press)
+	* app/tools/gimpsourcetool.c (button_press): need to instruct the
+	paint_core to make a copy of the projection whenever we clone from
+	the same *image*, not from the same display. Fixes crash when
+	cloning from the same image's projection in another view
+	(bug #356209).
+
 2006-09-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/screenshot.c: when shooting a region, apply delay

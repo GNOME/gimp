@@ -191,9 +191,10 @@ gimp_source_tool_button_press (GimpTool        *tool,
     {
       source->set_source = FALSE;
 
-      if (options->use_source    &&
-          options->sample_merged &&
-          display == source_tool->src_display)
+      if (options->use_source      &&
+          options->sample_merged   &&
+          source_tool->src_display &&
+          source_tool->src_display->image && display->image)
         {
           paint_tool->core->use_saved_proj = TRUE;
         }

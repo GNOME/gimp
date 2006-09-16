@@ -348,7 +348,8 @@ gimp_perspective_clone_tool_button_press (GimpTool        *tool,
 
           if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE  &&
               GIMP_SOURCE_OPTIONS (options)->sample_merged                  &&
-              display == clone_tool->src_display)
+              clone_tool->src_display                                       &&
+              clone_tool->src_display->image == display->image)
             {
               paint_tool->core->use_saved_proj = TRUE;
             }
