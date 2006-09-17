@@ -752,8 +752,10 @@ hsv_set(PyObject *self, PyObject *args, PyObject *kwargs)
     hsv = pyg_boxed_get(self, GimpHSV);
     tmphsv = *hsv;
 
-#define SET_MEMBER(m)	G_STMT_START {				\
-    if (PyFloat_Check(m))					\
+#define SET_MEMBER(m, s)	G_STMT_START {			\
+    if (PyInt_Check(m))						\
+        tmphsv.m = (double) PyInt_AS_LONG(m) / s;		\
+    else if (PyFloat_Check(m))					\
         tmphsv.m = PyFloat_AS_DOUBLE(m);			\
     else {							\
 	PyErr_SetString(PyExc_TypeError,			\
@@ -763,13 +765,13 @@ hsv_set(PyObject *self, PyObject *args, PyObject *kwargs)
 } G_STMT_END
 
     if (h) {
-	SET_MEMBER(h);
-	SET_MEMBER(s);
-	SET_MEMBER(v);
+	SET_MEMBER(h, 360.0);
+	SET_MEMBER(s, 100.0);
+	SET_MEMBER(v, 100.0);
     }
 
     if (a)
-	SET_MEMBER(a);
+	SET_MEMBER(a, 255.0);
 
 #undef SET_MEMBER
 
@@ -793,7 +795,9 @@ hsv_set_alpha(PyObject *self, PyObject *args, PyObject *kwargs)
 
     hsv = pyg_boxed_get(self, GimpHSV);
 
-    if (PyFloat_Check(py_a))
+    if (PyInt_Check(py_a))
+        hsv->a = (double) PyInt_AS_LONG(py_a) / 255.0;
+    else if (PyFloat_Check(py_a))
         hsv->a = PyFloat_AS_DOUBLE(py_a);
     else {
 	PyErr_SetString(PyExc_TypeError, "a must be a float");
@@ -852,7 +856,7 @@ static PyMethodDef hsv_methods[] = {
     { NULL, NULL, 0 }
 };
 
-#define MEMBER_ACCESSOR(m) \
+#define MEMBER_ACCESSOR(m, s) \
 static PyObject *							\
 hsv_get_ ## m(PyObject *self, void *closure)				\
 {									\
@@ -866,7 +870,9 @@ hsv_set_ ## m(PyObject *self, PyObject *value, void *closure)		\
 	PyErr_SetString(PyExc_TypeError, "cannot delete value");	\
 	return -1;							\
     }									\
-    if (PyFloat_Check(value))						\
+    else if (PyInt_Check(value))					\
+        hsv->m = (double) PyInt_AS_LONG(value) / s;			\
+    else if (PyFloat_Check(value))					\
         hsv->m = PyFloat_AS_DOUBLE(value);				\
     else {								\
 	PyErr_SetString(PyExc_TypeError, "type mismatch");		\
@@ -875,10 +881,10 @@ hsv_set_ ## m(PyObject *self, PyObject *value, void *closure)		\
     return 0;								\
 }
 
-MEMBER_ACCESSOR(h);
-MEMBER_ACCESSOR(s);
-MEMBER_ACCESSOR(v);
-MEMBER_ACCESSOR(a);
+MEMBER_ACCESSOR(h, 360.0);
+MEMBER_ACCESSOR(s, 100.0);
+MEMBER_ACCESSOR(v, 100.0);
+MEMBER_ACCESSOR(a, 255.0);
 
 #undef MEMBER_ACCESSOR
 
@@ -904,7 +910,7 @@ static PyObject *
 hsv_getitem(PyObject *self, int pos)
 {
     GimpHSV *hsv;
-    double val;
+    double val, scale_factor;
 
     if (pos < 0)
         pos += 4;
@@ -917,16 +923,16 @@ hsv_getitem(PyObject *self, int pos)
     hsv = pyg_boxed_get(self, GimpHSV); 
 
     switch (pos) {
-    case 0: val = hsv->h; break;
-    case 1: val = hsv->s; break;
-    case 2: val = hsv->v; break;
-    case 3: val = hsv->a; break;
+    case 0: val = hsv->h; scale_factor = 360.0; break;
+    case 1: val = hsv->s; scale_factor = 100.0; break;
+    case 2: val = hsv->v; scale_factor = 100.0; break;
+    case 3: val = hsv->a; scale_factor = 255.0; break;
     default:
         g_assert_not_reached();
         return NULL;
     }
 
-    return PyFloat_FromDouble(val);
+    return PyInt_FromLong(ROUND(CLAMP(val, 0.0, 1.0) * scale_factor));
 }
 
 static int
@@ -1183,8 +1189,10 @@ hsl_set(PyObject *self, PyObject *args, PyObject *kwargs)
     hsl = pyg_boxed_get(self, GimpHSL);
     tmphsl = *hsl;
 
-#define SET_MEMBER(m)	G_STMT_START {				\
-    if (PyFloat_Check(m))					\
+#define SET_MEMBER(m, s)	G_STMT_START {			\
+    if (PyInt_Check(m))						\
+        tmphsl.m = (double) PyInt_AS_LONG(m) / s;		\
+    else if (PyFloat_Check(m))					\
         tmphsl.m = PyFloat_AS_DOUBLE(m);			\
     else {							\
 	PyErr_SetString(PyExc_TypeError,			\
@@ -1194,13 +1202,13 @@ hsl_set(PyObject *self, PyObject *args, PyObject *kwargs)
 } G_STMT_END
 
     if (h) {
-	SET_MEMBER(h);
-	SET_MEMBER(s);
-	SET_MEMBER(l);
+	SET_MEMBER(h, 360.0);
+	SET_MEMBER(s, 100.0);
+	SET_MEMBER(l, 100.0);
     }
 
     if (a)
-	SET_MEMBER(a);
+	SET_MEMBER(a, 255.0);
 
 #undef SET_MEMBER
 
@@ -1224,7 +1232,9 @@ hsl_set_alpha(PyObject *self, PyObject *args, PyObject *kwargs)
 
     hsl = pyg_boxed_get(self, GimpHSL);
 
-    if (PyFloat_Check(py_a))
+    if (PyInt_Check(py_a))
+        hsl->a = (double) PyInt_AS_LONG(py_a) / 255.0;
+    else if (PyFloat_Check(py_a))
         hsl->a = PyFloat_AS_DOUBLE(py_a);
     else {
 	PyErr_SetString(PyExc_TypeError, "a must be a float");
@@ -1273,7 +1283,7 @@ static PyMethodDef hsl_methods[] = {
     { NULL, NULL, 0 }
 };
 
-#define MEMBER_ACCESSOR(m) \
+#define MEMBER_ACCESSOR(m, s) \
 static PyObject *							\
 hsl_get_ ## m(PyObject *self, void *closure)				\
 {									\
@@ -1287,7 +1297,9 @@ hsl_set_ ## m(PyObject *self, PyObject *value, void *closure)		\
 	PyErr_SetString(PyExc_TypeError, "cannot delete value");	\
 	return -1;							\
     }									\
-    if (PyFloat_Check(value))						\
+    else if (PyInt_Check(value))					\
+        hsl->m = (double) PyInt_AS_LONG(value) / s;			\
+    else if (PyFloat_Check(value))					\
         hsl->m = PyFloat_AS_DOUBLE(value);				\
     else {								\
 	PyErr_SetString(PyExc_TypeError, "type mismatch");		\
@@ -1296,10 +1308,10 @@ hsl_set_ ## m(PyObject *self, PyObject *value, void *closure)		\
     return 0;								\
 }
 
-MEMBER_ACCESSOR(h);
-MEMBER_ACCESSOR(s);
-MEMBER_ACCESSOR(l);
-MEMBER_ACCESSOR(a);
+MEMBER_ACCESSOR(h, 360.0);
+MEMBER_ACCESSOR(s, 100.0);
+MEMBER_ACCESSOR(l, 100.0);
+MEMBER_ACCESSOR(a, 255.0);
 
 #undef MEMBER_ACCESSOR
 
@@ -1325,7 +1337,7 @@ static PyObject *
 hsl_getitem(PyObject *self, int pos)
 {
     GimpHSL *hsl;
-    double val;
+    double val, scale_factor;
 
     if (pos < 0)
         pos += 4;
@@ -1338,16 +1350,16 @@ hsl_getitem(PyObject *self, int pos)
     hsl = pyg_boxed_get(self, GimpHSL); 
 
     switch (pos) {
-    case 0: val = hsl->h; break;
-    case 1: val = hsl->s; break;
-    case 2: val = hsl->l; break;
-    case 3: val = hsl->a; break;
+    case 0: val = hsl->h; scale_factor = 360.0; break;
+    case 1: val = hsl->s; scale_factor = 100.0; break;
+    case 2: val = hsl->l; scale_factor = 100.0; break;
+    case 3: val = hsl->a; scale_factor = 255.0; break;
     default:
         g_assert_not_reached();
         return NULL;
     }
 
-    return PyFloat_FromDouble(val);
+    return PyInt_FromLong(ROUND(CLAMP(val, 0.0, 1.0) * scale_factor));
 }
 
 static int

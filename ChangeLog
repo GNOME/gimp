@@ -1,5 +1,10 @@
 2006-09-17  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/pygimp-colors.c: HSV and HSL now handle integer
+	values the same way as the RGB and CMYK objects do, for consistency.
+
+2006-09-17  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/pygimp-colors.c: Use proper return value types
 	for object constructors. Fixes bug #354555.
 
