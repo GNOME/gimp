@@ -1,3 +1,12 @@
+2006-09-16  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpfu.py
+	* plug-ins/pygimp/plug-ins/gtkcons.py: let the gettext module
+
+	* po-python/POTFILES.in
+	* plug-ins/pygimp/gimpui.py: Mark a couple strings for translation
+	here.
+
 2006-09-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpperspectiveclonetool.c (button_press)

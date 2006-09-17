@@ -36,7 +36,7 @@ import gtk, pango
 
 from gimp import locale_directory
 import gettext
-t = gettext.translation('gimp20-python', locale_directory)
+t = gettext.translation('gimp20-python', locale_directory, fallback=True)
 _ = t.ugettext
 
 stdout = sys.stdout

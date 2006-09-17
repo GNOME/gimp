@@ -67,7 +67,7 @@ from gimpenums import *
 pdb = gimp.pdb
 
 import gettext
-t = gettext.translation('gimp20-python', gimp.locale_directory)
+t = gettext.translation('gimp20-python', gimp.locale_directory, fallback=True)
 _ = t.ugettext
 
 class error(RuntimeError):pass

@@ -35,6 +35,10 @@ import gtk, gobject, gimp, gimpcolor
 
 from _gimpui import *
 
+import gettext
+t = gettext.translation('gimp20-python', gimp.locale_directory, fallback=True)
+_ = t.ugettext
+
 def _callbackWrapper(menu_item, callback, data):
     callback(menu_item.get_data("Gimp-ID"), data)
 
@@ -146,7 +150,7 @@ class ColorSelector(ColorButton):
             color = default
         elif isinstance(default, tuple):
             color = apply(gimpcolor.RGB, default)
-        ColorButton.__init__(self, "Python-Fu Color Selection", 100, 20,
+        ColorButton.__init__(self, _("Python-Fu Color Selection"), 100, 20,
                              color, COLOR_AREA_FLAT)
     def get_value(self):
         return self.get_color();
@@ -193,7 +197,7 @@ class FontSelector(FontSelectButton):
                 
 class FileSelector(gtk.FileChooserButton):
     def __init__(self, default=""):
-        gtk.FileChooserButton.__init__(self, "Python-Fu File Selection")
+        gtk.FileChooserButton.__init__(self, _("Python-Fu File Selection"))
         if default:
             self.set_filename(default)
     def get_value(self):
