@@ -458,10 +458,11 @@ user_install_migrate_files (GimpUserInstall *install)
 
       if (g_file_test (source, G_FILE_TEST_IS_REGULAR))
         {
-          /*  skip these for all old versions  */
+          /*  skip these files for all old versions  */
           if ((strncmp (basename, "gimpswap.", 9) == 0) ||
-              (strncmp (basename, "pluginrc",  8) == 0) ||
-              (strncmp (basename, "themerc",   7) == 0))
+              (strcmp (basename, "pluginrc") == 0)      ||
+              (strcmp (basename, "themerc") == 0)       ||
+              (strcmp (basename, "toolrc") == 0))
             {
               goto next_file;
             }
@@ -477,9 +478,15 @@ user_install_migrate_files (GimpUserInstall *install)
 
           user_install_file_copy (install, source, dest);
         }
-      else if (g_file_test (source, G_FILE_TEST_IS_DIR) &&
-               strcmp (basename, "tmp") != 0)
+      else if (g_file_test (source, G_FILE_TEST_IS_DIR))
         {
+          /*  skip these directories for all old versions  */
+          if (strcmp (basename, "tmp") == 0 ||
+              strcmp (basename, "tool-options") == 0)
+            {
+              goto next_file;
+            }
+
           user_install_dir_copy (install, source, gimp_directory ());
         }
 
