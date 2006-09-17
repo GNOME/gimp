@@ -1,3 +1,10 @@
+2006-09-17  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/Makefile.am
+	* plug-ins/pygimp/gimpthumb.defs
+	* plug-ins/pygimp/gimpthumb.override
+	* plug-ins/pygimp/gimpthumbmodule.c: Bindings for libgimpthumb.
+
 2006-09-17  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-user-install.c (user_install_migrate_files):
