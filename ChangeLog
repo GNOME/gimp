@@ -1,5 +1,10 @@
 2006-09-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/tiff.c: try to set a reasonable tile cache size
+	for load and save operations.
+
+2006-09-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/lens.c: applied patch from Aurimas Juška which,
 	among other changes, ports the plug-in to GimpZoomPreview
 	(bug #324849).

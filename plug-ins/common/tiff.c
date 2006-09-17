@@ -524,7 +524,6 @@ load_image (const gchar *filename)
   guchar       *icc_profile;
 #endif
 
-
   gimp_rgb_set (&color, 0.0, 0.0, 0.0);
 
   TIFFSetWarningHandler (tiff_warning);
@@ -707,7 +706,9 @@ load_image (const gchar *filename)
 
       /* attach a parasite containing the compression */
       if (!TIFFGetField (tif, TIFFTAG_COMPRESSION, &tmp))
-        save_vals.compression = COMPRESSION_NONE;
+        {
+          save_vals.compression = COMPRESSION_NONE;
+        }
       else
         {
           switch (tmp)
@@ -1031,6 +1032,8 @@ load_rgba (TIFF         *tif,
   TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &imageWidth);
   TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &imageLength);
 
+  gimp_tile_cache_ntiles (1 + imageWidth / gimp_tile_width ());
+
   gimp_pixel_rgn_init (&(channel[0].pixel_rgn), channel[0].drawable,
                        0, 0, imageWidth, imageLength, TRUE, FALSE);
 
@@ -1082,6 +1085,12 @@ load_tiles (TIFF         *tif,
   TIFFGetField (tif, TIFFTAG_TILEWIDTH, &tileWidth);
   TIFFGetField (tif, TIFFTAG_TILELENGTH, &tileLength);
 
+  if (tileWidth > gimp_tile_width () || tileLength > gimp_tile_height ())
+    {
+      gimp_tile_cache_ntiles ((1 + tileWidth / gimp_tile_width ()) *
+                              (1 + tileLength / gimp_tile_width ()));
+    }
+
   one_row = (gdouble) tileLength / (gdouble) imageLength;
   buffer = g_malloc (TIFFTileSize (tif));
 
@@ -1124,6 +1133,7 @@ load_tiles (TIFF         *tif,
                             alpha, extra, tileWidth - cols);
             }
         }
+
       progress += one_row;
     }
 
@@ -1159,6 +1169,8 @@ load_lines (TIFF         *tif,
       channel[i].pixels = g_new (guchar,
                                  tile_height * cols * channel[i].drawable->bpp);
     }
+
+  gimp_tile_cache_ntiles (1 + cols / gimp_tile_width ());
 
   buffer = g_malloc (lineSize * tile_height);
 
@@ -1938,6 +1950,8 @@ save_image (const gchar *filename,
 
   cols = drawable->width;
   rows = drawable->height;
+
+  gimp_tile_cache_ntiles (1 + drawable->width / gimp_tile_width ());
 
   switch (drawable_type)
     {
