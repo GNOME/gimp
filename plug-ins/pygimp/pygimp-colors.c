@@ -632,7 +632,7 @@ rgb_str(PyObject *self)
     return rgb_pretty_print(self, TRUE);
 }
 
-static PyObject *
+static int
 rgb_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
 {
     PyObject *r, *g, *b, *a = NULL;
@@ -642,7 +642,7 @@ rgb_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
 	                             "OOO|O:set", kwlist,
 				     &r, &g, &b, &a))
-        return NULL;
+        return -1;
 
 #define SET_MEMBER(m)	G_STMT_START {				\
     if (PyInt_Check(m))						\
@@ -652,7 +652,7 @@ rgb_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     else {							\
 	PyErr_SetString(PyExc_TypeError,			\
 			#m " must be an int or a float");	\
-	return NULL;						\
+	return -1;						\
     }								\
 } G_STMT_END
 
@@ -671,8 +671,7 @@ rgb_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     self->free_on_dealloc = TRUE;
     self->boxed = g_boxed_copy(GIMP_TYPE_RGB, &rgb);
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    return 0;
 }
 
 PyTypeObject PyGimpRGB_Type = {
@@ -1064,7 +1063,7 @@ hsv_str(PyObject *self)
     return hsv_pretty_print(self, TRUE);
 }
 
-static PyObject *
+static int
 hsv_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
 {
     PyObject *h, *s, *v, *a = NULL;
@@ -1074,24 +1073,26 @@ hsv_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
 	                             "OOO|O:set", kwlist,
 				     &h, &s, &v, &a))
-        return NULL;
+        return -1;
 
-#define SET_MEMBER(m)	G_STMT_START {				\
-    if (PyFloat_Check(m))					\
+#define SET_MEMBER(m, s)	G_STMT_START {			\
+    if (PyInt_Check(m))						\
+        hsv.m = (double) PyInt_AS_LONG(m) / s;			\
+    else if (PyFloat_Check(m))					\
         hsv.m = PyFloat_AS_DOUBLE(m);				\
     else {							\
 	PyErr_SetString(PyExc_TypeError,			\
-			#m " must be a float");			\
-	return NULL;						\
+			#m " must be an int or a float");	\
+	return -1;						\
     }								\
 } G_STMT_END
 
-    SET_MEMBER(h);
-    SET_MEMBER(s);
-    SET_MEMBER(v);
+    SET_MEMBER(h, 360.0);
+    SET_MEMBER(s, 100.0);
+    SET_MEMBER(v, 100.0);
 
     if (a)
-	SET_MEMBER(a);
+	SET_MEMBER(a, 255.0);
     else
         hsv.a = 1.0;
 
@@ -1101,8 +1102,7 @@ hsv_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     self->free_on_dealloc = TRUE;
     self->boxed = g_boxed_copy(GIMP_TYPE_HSV, &hsv);
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    return 0;
 }
 
 PyTypeObject PyGimpHSV_Type = {
@@ -1484,7 +1484,7 @@ hsl_str(PyObject *self)
     return hsl_pretty_print(self, TRUE);
 }
 
-static PyObject *
+static int
 hsl_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
 {
     PyObject *h, *s, *l, *a = NULL;
@@ -1494,24 +1494,26 @@ hsl_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
 	                             "OOO|O:set", kwlist,
 				     &h, &s, &l, &a))
-        return NULL;
+        return -1;
 
-#define SET_MEMBER(m)	G_STMT_START {				\
-    if (PyFloat_Check(m))					\
+#define SET_MEMBER(m, s)	G_STMT_START {			\
+    if (PyInt_Check(m))						\
+        hsl.m = (double) PyInt_AS_LONG(m) / s;			\
+    else if (PyFloat_Check(m))					\
         hsl.m = PyFloat_AS_DOUBLE(m);				\
     else {							\
 	PyErr_SetString(PyExc_TypeError,			\
 			#m " must be a float");			\
-	return NULL;						\
+	return -1;						\
     }								\
 } G_STMT_END
 
-    SET_MEMBER(h);
-    SET_MEMBER(s);
-    SET_MEMBER(l);
+    SET_MEMBER(h, 360.0);
+    SET_MEMBER(s, 100.0);
+    SET_MEMBER(l, 100.0);
 
     if (a)
-	SET_MEMBER(a);
+	SET_MEMBER(a, 255.0);
     else
         hsl.a = 1.0;
 
@@ -1521,8 +1523,7 @@ hsl_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     self->free_on_dealloc = TRUE;
     self->boxed = g_boxed_copy(GIMP_TYPE_HSL, &hsl);
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    return 0;
 }
 
 PyTypeObject PyGimpHSL_Type = {
@@ -1906,7 +1907,7 @@ cmyk_str(PyObject *self)
     return cmyk_pretty_print(self, TRUE);
 }
 
-static PyObject *
+static int
 cmyk_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
 {
     PyObject *c, *m, *y, *k, *a = NULL;
@@ -1916,7 +1917,7 @@ cmyk_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
 	                             "OOOO|O:set", kwlist,
 				     &c, &m, &y, &k, &a))
-        return NULL;
+        return -1;
 
 #define SET_MEMBER(m)	G_STMT_START {				\
     if (PyInt_Check(m))						\
@@ -1926,7 +1927,7 @@ cmyk_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     else {							\
 	PyErr_SetString(PyExc_TypeError,			\
 			#m " must be an int or a float");	\
-	return NULL;						\
+	return -1;						\
     }								\
 } G_STMT_END
 
@@ -1946,8 +1947,7 @@ cmyk_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     self->free_on_dealloc = TRUE;
     self->boxed = g_boxed_copy(GIMP_TYPE_CMYK, &cmyk);
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    return 0;
 }
 
 PyTypeObject PyGimpCMYK_Type = {
