@@ -40,31 +40,32 @@
 
 #define RESPONSE_RESET   1
 
-#define LENSE_PIXEL_ACCESS_REGIONS  20
-#define LENSE_PIXEL_ACCESS_WIDTH    40
-#define LENSE_PIXEL_ACCESS_HEIGHT   20
-#define LENSE_PIXEL_ACCESS_XOFFSET   3
-#define LENSE_PIXEL_ACCESS_YOFFSET   3
+#define LENS_PIXEL_ACCESS_REGIONS  20
+#define LENS_PIXEL_ACCESS_WIDTH    40
+#define LENS_PIXEL_ACCESS_HEIGHT   20
+#define LENS_PIXEL_ACCESS_XOFFSET   3
+#define LENS_PIXEL_ACCESS_YOFFSET   3
 
-#define LENSE_MAX_PIXEL_DEPTH        4
+#define LENS_MAX_PIXEL_DEPTH        4
 
 
 typedef struct
 {
-  GimpPixelRgn  src_rgn;
-  guchar       *buffer[LENSE_PIXEL_ACCESS_REGIONS];
+  guchar       *src_buffer; /* preview pixels */
+  GimpPixelRgn  src_rgn; /* image pixels */
+  guchar       *buffer[LENS_PIXEL_ACCESS_REGIONS];
   gint          width;
   gint          height;
   gint          depth;
   gint          image_width;
   gint          image_height;
-  gint          tile_xmin[LENSE_PIXEL_ACCESS_REGIONS];
-  gint          tile_xmax[LENSE_PIXEL_ACCESS_REGIONS];
-  gint          tile_ymin[LENSE_PIXEL_ACCESS_REGIONS];
-  gint          tile_ymax[LENSE_PIXEL_ACCESS_REGIONS];
+  gint          tile_xmin[LENS_PIXEL_ACCESS_REGIONS];
+  gint          tile_xmax[LENS_PIXEL_ACCESS_REGIONS];
+  gint          tile_ymin[LENS_PIXEL_ACCESS_REGIONS];
+  gint          tile_ymax[LENS_PIXEL_ACCESS_REGIONS];
 #if GATHERING_STATS
   gint          pixels_found;
-  gint          pixels_found_in_buffer[LENSE_PIXEL_ACCESS_REGIONS];
+  gint          pixels_found_in_buffer[LENS_PIXEL_ACCESS_REGIONS];
   gint          pixels_loaded_from_image;
 #endif
 } LensPixelAccess;
@@ -78,15 +79,6 @@ typedef struct
   gdouble  scale_a;
   gdouble  brighten;
 } LensValues;
-
-typedef struct
-{
-  GimpDrawable *drawable;
-  gint32        id;
-  gint          width;
-  gint          height;
-  gint          depth;
-} LensContextValues;
 
 typedef struct
 {
@@ -109,18 +101,12 @@ static void     run   (const gchar      *name,
                        gint             *nreturn_vals,
                        GimpParam       **return_vals);
 
-static void     lens_setup_context (GimpDrawable *drawable);
-static void     lens_setup_calc    (void);
-static void     lens_distortion    (GimpDrawable *drawable,
-                                    GimpPreview  *preview);
-static void     lens_calc_rect     (GimpPixelRgn *rgn,
-                                    gint          step);
-static gboolean lens_dialog        (void);
+static void     lens_correction    (GimpDrawable *drawable);
+static gboolean lens_dialog        (GimpDrawable *drawable);
+
 
 static LensValues         vals = { 0.0, 0.0, 0.0, 0.0 };
-static LensContextValues  context_vals;
 static LensCalcValues     calc_vals;
-static LensPixelAccess   *pa;
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -176,24 +162,27 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
+  gint32             image_ID;
   GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
-  GimpRunMode        run_mode = param[0].data.d_int32;
+  GimpRunMode        run_mode;
+
+  run_mode = param[0].data.d_int32;
+  image_ID = param[1].data.d_int32;
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   INIT_I18N ();
 
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
+
   *nreturn_vals = 1;
   *return_vals = values;
-
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
-  lens_setup_context (drawable);
 
   switch (run_mode) {
   case GIMP_RUN_INTERACTIVE:
     gimp_get_data (PLUG_IN_PROC, &vals);
-    if (! lens_dialog ())
+    if (! lens_dialog (drawable))
       return;
     break;
 
@@ -223,7 +212,7 @@ run (const gchar      *name,
 
   if ( status == GIMP_PDB_SUCCESS )
     {
-      lens_distortion (drawable, NULL);
+      lens_correction (drawable);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -267,24 +256,13 @@ lens_get_source_coords (gdouble  i,
 }
 
 static void
-lens_setup_context (GimpDrawable *drawable)
-{
-  context_vals.drawable = drawable;
-  context_vals.id       = drawable->drawable_id;
-  context_vals.width    = drawable->width;
-  context_vals.height   = drawable->height;
-  context_vals.depth    = drawable->bpp;
-}
-
-static void
-lens_setup_calc (void)
+lens_setup_calc (gint width, gint height)
 {
   calc_vals.normallise_radius_sq =
-    4.0 / (context_vals.width * context_vals.width +
-           context_vals.height * context_vals.height);
+    4.0 / (width * width + height * height);
 
-  calc_vals.centre_x = context_vals.width * (100.0 + vals.centre_x) / 200.0;
-  calc_vals.centre_y = context_vals.height * (100.0 + vals.centre_y) / 200.0;
+  calc_vals.centre_x = width * (100.0 + vals.centre_x) / 200.0;
+  calc_vals.centre_y = height * (100.0 + vals.centre_y) / 200.0;
   calc_vals.mult_sq = vals.square_a / 200.0;
   calc_vals.mult_qd = vals.quad_a / 200.0;
   calc_vals.rescale = pow(2.0, - vals.scale_a / 100.0);
@@ -317,7 +295,7 @@ lens_cubic_interpolate (const guchar *src,
   gfloat um1, u, up1, up2;
   gfloat vm1, v, vp1, vp2;
   gint   c;
-  gfloat verts[4 * LENSE_MAX_PIXEL_DEPTH];
+  gfloat verts[4 * LENS_MAX_PIXEL_DEPTH];
 
   um1 = ((-0.5 * dx + 1.0) * dx - 0.5) * dx;
   u = (1.5 * dx - 2.5) * dx * dx + 1.0;
@@ -364,14 +342,14 @@ lens_cubic_interpolate (const guchar *src,
 /* Solving the eternal problem: random, cubic-interpolated,
  * sub-pixel coordinate access to a tiled image.
  * Assuming that accesses are at least slightly coherent,
- * LensPixelAccess keeps LENSE_PIXEL_ACCESS_REGIONS buffers, each containing a
- * LENSE_PIXEL_ACCESS_WIDTH x LENSE_PIXEL_ACCESS_HEIGHT region of pixels.
+ * LensPixelAccess keeps LENS_PIXEL_ACCESS_REGIONS buffers, each containing a
+ * LENS_PIXEL_ACCESS_WIDTH x LENS_PIXEL_ACCESS_HEIGHT region of pixels.
  * Buffer[0] is always checked first, so move the last accessed
  * region into that position.
  * When a request arrives which is outside all the regions,
  * get a new region (using GimpPixelRgn - good idea? bad idea?).
  * The new region is placed so that the requested pixel is positioned
- * at [LENSE_PIXEL_ACCESS_XOFFSET, LENSE_PIXEL_ACCESS_YOFFSET] in the region.
+ * at [LENS_PIXEL_ACCESS_XOFFSET, LENS_PIXEL_ACCESS_YOFFSET] in the region.
  */
 
 #if GATHERING_STATS
@@ -388,13 +366,13 @@ lens_pixel_access_dump_region (LensPixelAccess* pa,
 static void
 lens_pixel_access_dump_stats (LensPixelAccess* pa)
 {
-  gprint ("Pixels found %d\n", pa->pixels_found);
+  g_print ("Pixels found %d\n", pa->pixels_found);
 
   if (pa->pixels_found)
     {
       gint i;
 
-      for (i = 0; i < LENSE_PIXEL_ACCESS_REGIONS; ++i)
+      for (i = 0; i < LENS_PIXEL_ACCESS_REGIONS; ++i)
         {
           g_print ("  In buffer[%d]: %d ratio %f\n", i,
                    pa->pixels_found_in_buffer[i],
@@ -413,14 +391,49 @@ lens_pixel_access_dump_stats (LensPixelAccess* pa)
 }
 #endif
 
+/* get rect of pixels from preview data */
+static void
+lens_pixel_access_get_rect (LensPixelAccess *pa,
+                            guchar          *buffer,
+                            gint             x,
+                            gint             y,
+                            gint             width,
+                            gint             height)
+{
+  gint    i, j;
+  guchar *row;
+  gint    rowstride;
+  gint    rowbytes;
+
+  g_assert (pa->src_buffer);
+  g_assert (x + width <= pa->image_width);
+  g_assert (y + height <= pa->image_height);
+
+  rowstride = pa->image_width * pa->depth;
+  rowbytes = width * pa->depth;
+  row = pa->src_buffer + (rowstride * y + x * pa->depth);
+
+  for ( i = 0; i < height; i++ )
+    {
+      for ( j = 0; j < width; j++ )
+        {
+          memcpy (buffer, row, rowbytes);
+        }
+      buffer += rowbytes;
+      row += rowstride;
+    }
+}
+
 static LensPixelAccess *
 lens_pixel_access_new (GimpDrawable *drawable)
 {
   LensPixelAccess *pa = g_new (LensPixelAccess, 1);
   gint             i;
+  gint             buffer_size;
 
-  pa->width = LENSE_PIXEL_ACCESS_WIDTH;
-  pa->height = LENSE_PIXEL_ACCESS_HEIGHT;
+  pa->src_buffer = NULL;
+  pa->width = LENS_PIXEL_ACCESS_WIDTH;
+  pa->height = LENS_PIXEL_ACCESS_HEIGHT;
   pa->depth = drawable->bpp;
   pa->image_width = drawable->width;
   pa->image_height = drawable->height;
@@ -428,21 +441,72 @@ lens_pixel_access_new (GimpDrawable *drawable)
   gimp_pixel_rgn_init (&pa->src_rgn, drawable, 0, 0, drawable->width,
                        drawable->height, FALSE, FALSE);
 
-  for (i = 0; i < LENSE_PIXEL_ACCESS_REGIONS; ++i)
+  buffer_size = pa->height * pa->width * pa->depth;
+  pa->buffer[0] = (guchar*) g_malloc (buffer_size);
+  /* better: lens_pixel_access_reposition(), pixelAccessSelect()! */
+  gimp_pixel_rgn_get_rect (&pa->src_rgn, pa->buffer[0], 0, 0,
+                           pa->width, pa->height);
+  pa->tile_xmin[0] = 1;
+  pa->tile_xmax[0] = pa->width - 2;
+  pa->tile_ymin[0] = 1;
+  pa->tile_ymax[0] = pa->height - 2;
+
+  for (i = 1; i < LENS_PIXEL_ACCESS_REGIONS; ++i)
     {
-      pa->buffer[i] = (guchar*) g_malloc (pa->height * pa->width * pa->depth);
-      /* better: lens_pixel_access_reposition(), pixelAccessSelect()! */
-      gimp_pixel_rgn_get_rect (&pa->src_rgn, pa->buffer[i], 0, 0,
-                               pa->width, pa->height);
+      pa->buffer[i] = (guchar*) g_malloc (buffer_size);
+      memcpy (pa->buffer[i], pa->buffer[0], buffer_size);
       pa->tile_xmin[i] = 1;
       pa->tile_xmax[i] = pa->width - 2;
       pa->tile_ymin[i] = 1;
       pa->tile_ymax[i] = pa->height - 2;
-#if GATHERING_STATS
-      pa->pixels_found_in_buffer[i] = 0;
-#endif
     }
 #if GATHERING_STATS
+  for ( i = 0; i < LENS_PIXEL_ACCESS_REGIONS; i++ )
+    pa->pixels_found_in_buffer[i] = 0;
+  pa->pixels_found = 0;
+  pa->pixels_loaded_from_image = 0;
+#endif
+
+  return pa;
+}
+
+static LensPixelAccess *
+lens_pixel_access_new_for_preview (guchar *buffer,
+                                   gint width,
+                                   gint height,
+                                   gint depth)
+{
+  LensPixelAccess *pa = g_new (LensPixelAccess, 1);
+  gint             i;
+  gint             buffer_size;
+
+  pa->src_buffer = buffer;
+  pa->width = LENS_PIXEL_ACCESS_WIDTH;
+  pa->height = LENS_PIXEL_ACCESS_HEIGHT;
+  pa->depth = depth;
+  pa->image_width = width;
+  pa->image_height = height;
+
+  buffer_size = pa->height * pa->width * pa->depth;
+  pa->buffer[0] = (guchar*) g_malloc (buffer_size);
+  lens_pixel_access_get_rect (pa, pa->buffer[0], 0, 0, pa->width, pa->height);
+  pa->tile_xmin[0] = 1;
+  pa->tile_xmax[0] = pa->width - 2;
+  pa->tile_ymin[0] = 1;
+  pa->tile_ymax[0] = pa->height - 2;
+
+  for (i = 1; i < LENS_PIXEL_ACCESS_REGIONS; ++i)
+    {
+      pa->buffer[i] = (guchar*) g_malloc (buffer_size);
+      memcpy (pa->buffer[i], pa->buffer[0], buffer_size);
+      pa->tile_xmin[i] = 1;
+      pa->tile_xmax[i] = pa->width - 2;
+      pa->tile_ymin[i] = 1;
+      pa->tile_ymax[i] = pa->height - 2;
+    }
+#if GATHERING_STATS
+  for ( i = 0; i < LENS_PIXEL_ACCESS_REGIONS; i++ )
+    pa->pixels_found_in_buffer[i] = 0;
   pa->pixels_found = 0;
   pa->pixels_loaded_from_image = 0;
 #endif
@@ -455,13 +519,13 @@ lens_pixel_access_delete (LensPixelAccess *pa)
 {
   gint i;
 
-  for (i = 0; i < LENSE_PIXEL_ACCESS_REGIONS; ++i)
+  for (i = 0; i < LENS_PIXEL_ACCESS_REGIONS; ++i)
     g_free (pa->buffer[i]);
 
   g_free (pa);
 }
 
-static inline guchar *
+static guchar *
 lens_pixel_access_address (LensPixelAccess *pa,
                            gint             i,
                            gint             j)
@@ -531,7 +595,10 @@ lens_pixel_access_do_edge (LensPixelAccess *pa,
 #if GATHERING_STATS
       pa->pixels_loaded_from_image += line_width;
 #endif
-      gimp_pixel_rgn_get_row (&pa->src_rgn, line, line_start, y, line_width);
+      if (pa->src_buffer)
+        lens_pixel_access_get_rect (pa, line, line_start, y, line_width, 1);
+      else
+        gimp_pixel_rgn_get_row (&pa->src_rgn, line, line_start, y, line_width);
     }
 }
 
@@ -551,8 +618,8 @@ lens_pixel_access_reposition (LensPixelAccess *pa,
    *  new_ystart = y_int - pa->height / 2;
    */
   /* this assumes mostly stepping min->max in x and y */
-  new_xstart = x_int - LENSE_PIXEL_ACCESS_XOFFSET;
-  new_ystart = y_int - LENSE_PIXEL_ACCESS_YOFFSET;
+  new_xstart = x_int - LENS_PIXEL_ACCESS_XOFFSET;
+  new_ystart = y_int - LENS_PIXEL_ACCESS_YOFFSET;
 
   pa->tile_xmin[0] = new_xstart + 1;
   pa->tile_xmax[0] = new_xstart + pa->width - 2;
@@ -582,8 +649,14 @@ lens_pixel_access_reposition (LensPixelAccess *pa,
 #if GATHERING_STATS
       pa->pixels_loaded_from_image += pa->width * pa->height;
 #endif
-      gimp_pixel_rgn_get_rect (&pa->src_rgn, pa->buffer[0],
-                               new_xstart, new_ystart, pa->width, pa->height);
+      if ( pa->src_buffer )
+        lens_pixel_access_get_rect (pa, pa->buffer[0],
+                                    new_xstart, new_ystart,
+                                    pa->width, pa->height);
+      else
+        gimp_pixel_rgn_get_rect (&pa->src_rgn, pa->buffer[0],
+                                 new_xstart, new_ystart,
+                                 pa->width, pa->height);
     }
 }
 
@@ -625,7 +698,7 @@ lens_pixel_access_get_cubic (LensPixelAccess *pa,
     }
 
   /* or maybe it was a while back... */
-  for (i = 1; i < LENSE_PIXEL_ACCESS_REGIONS; ++i)
+  for (i = 1; i < LENS_PIXEL_ACCESS_REGIONS; ++i)
     {
       if ((x_int >= pa->tile_xmin[i]) && (x_int < pa->tile_xmax[i]) &&
           (y_int >= pa->tile_ymin[i]) && (y_int < pa->tile_ymax[i]) )
@@ -643,7 +716,7 @@ lens_pixel_access_get_cubic (LensPixelAccess *pa,
     }
 
   /* nope, recycle an old region */
-  lens_pixel_access_select_region (pa, LENSE_PIXEL_ACCESS_REGIONS - 1);
+  lens_pixel_access_select_region (pa, LENS_PIXEL_ACCESS_REGIONS - 1);
   lens_pixel_access_reposition (pa, x_int, y_int);
 
   corner = lens_pixel_access_address (pa, x_int - 1, y_int - 1);
@@ -657,111 +730,118 @@ lens_pixel_access_get_cubic (LensPixelAccess *pa,
  * NB: d <= image.bpp
  */
 static void
-lens_calc_rect (GimpPixelRgn *rgn,
-                gint          step)
+lens_calc_rect (LensPixelAccess *pa,
+                guchar          *dst,
+                gint             x,
+                gint             y,
+                gint             width,
+                gint             height,
+                gint             depth,
+                gint             rowstride,
+                gint             step)
 {
-  guchar *dst;
   gdouble src_x, src_y, mag, brighten;
-  gint    x, y;
+  gint    i, j;
   gint    xlimit, ylimit;
-  gint    row_padding;
+  gint    rowpad;
 
-  dst = rgn->data;
+  xlimit = x + width * step;
+  ylimit = y + height * step;
+  rowpad = rowstride - width * depth;
 
-  xlimit = rgn->x + rgn->w * step;
-  ylimit = rgn->y + rgn->h * step;
-  row_padding = rgn->rowstride - rgn->w * rgn->bpp;
-
-  for (y = rgn->y; y < ylimit; y += step)
+  for (i = y; i < ylimit; i += step)
     {
-      for (x = rgn->x; x < xlimit; x += step)
+      for ( j = x; j < xlimit; j += step)
         {
-          lens_get_source_coords (x, y, &src_x, &src_y, &mag);
+          lens_get_source_coords (j, i, &src_x, &src_y, &mag);
           brighten = 1.0 + mag * calc_vals.brighten;
           lens_pixel_access_get_cubic (pa, src_x, src_y, brighten,
-                                       dst, rgn->bpp);
-          dst += rgn->bpp;
+                                       dst, depth);
+          dst += depth;
         }
 
-      dst += row_padding;
+      dst += rowpad;
     }
 }
 
 static void
-lens_distortion (GimpDrawable *drawable,
-                 GimpPreview  *preview)
+lens_correction (GimpDrawable *drawable)
 {
-  GimpPixelRgn  dest_rgn;
-  gpointer      pr;
-  guchar       *dest;
-  gint          x1, y1, x2, y2;
-  gint          width, height;
-  gint          progress, progress_max;
+  GimpPixelRgn     dest_rgn;
+  gpointer         pr;
+  guchar          *dest;
+  gint             x1, y1, x2, y2;
+  gint             width, height;
+  gint             progress, progress_max;
+  LensPixelAccess *pa;
 
-  lens_setup_calc ();
+  lens_setup_calc (drawable->width, drawable->height);
 
-  if (preview)
-    {
-      gimp_preview_get_position (preview, &x1, &y1);
-      gimp_preview_get_size (preview, &width, &height);
-      x2 = x1 + width;
-      y2 = y1 + height;
-    }
-  else
-    {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-      width  = x2 - x1;
-      height = y2 - y1;
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  width  = x2 - x1;
+  height = y2 - y1;
 
-      gimp_progress_init (_("Lens distortion"));
-    }
+  gimp_progress_init (_("Lens distortion"));
 
   progress_max = ((width - 1) / gimp_tile_width() + 1) *
     ((height - 1) / gimp_tile_height() + 1);
 
-  dest = g_malloc (gimp_tile_width() * gimp_tile_height() *
-                   context_vals.depth);
+  dest = g_malloc (gimp_tile_width() * gimp_tile_height() * drawable->bpp);
 
   pa = lens_pixel_access_new (drawable);
 #if GATHERING_STATS
   lens_pixel_access_dump_stats (pa);
 #endif
-  gimp_pixel_rgn_init (&dest_rgn, context_vals.drawable, x1, y1,
-                       width, height, preview==NULL, TRUE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1,
+                       width, height, TRUE, TRUE);
   pr = gimp_pixel_rgns_register (1, &dest_rgn);
 
   progress = 0;
   for ( ; pr; pr = gimp_pixel_rgns_process (pr))
     {
-      lens_calc_rect (&dest_rgn, 1);
+      lens_calc_rect (pa, dest_rgn.data, dest_rgn.x, dest_rgn.y,
+                      dest_rgn.w, dest_rgn.h, dest_rgn.bpp,
+                      dest_rgn.rowstride, 1);
 
-      if (preview)
-        {
-          gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
-                                             &dest_rgn);
-        }
-      else
-        {
-          gimp_progress_update ((gfloat) progress / (gfloat) progress_max);
-          ++progress;
-        }
+      gimp_progress_update ((gfloat) progress / (gfloat) progress_max);
+      ++progress;
     }
 
   g_free(dest);
 
-  if (! preview)
-    {
-      gimp_progress_update (1.0);
-      gimp_drawable_flush (context_vals.drawable);
-      gimp_drawable_merge_shadow (context_vals.id, TRUE);
-      gimp_drawable_update (context_vals.id, x1, y1, width, height);
-    }
+  gimp_progress_update (1.0);
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
 
 #if GATHERING_STATS
   lens_pixel_access_dump_stats (pa);
 #endif
 
   lens_pixel_access_delete (pa);
+}
+
+static void
+lens_correction_preview (GimpDrawable *drawable,
+                         GimpPreview  *preview)
+{
+  guchar          *src, *dest;
+  gint             width, height;
+  gint             bpp;
+  LensPixelAccess *pa;
+
+  src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                      &width, &height, &bpp);
+  lens_setup_calc (width, height);
+  dest = g_new (guchar, width * height * bpp);
+  pa = lens_pixel_access_new_for_preview (src, width, height, bpp);
+  lens_calc_rect (pa, dest, 0, 0, width, height, bpp, width*bpp, 1);
+
+  gimp_preview_draw_buffer (preview, dest, width * bpp);
+
+  lens_pixel_access_delete (pa);
+  g_free (dest);
+  g_free (src);
 }
 
 /* UI callback functions */
@@ -799,7 +879,7 @@ lens_response (GtkWidget *widget,
 }
 
 static gboolean
-lens_dialog (void)
+lens_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
@@ -834,13 +914,12 @@ lens_dialog (void)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (context_vals.drawable, NULL);
+  preview = gimp_zoom_preview_new (drawable);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
-
   g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (lens_distortion),
-                            context_vals.drawable);
+                            G_CALLBACK (lens_correction_preview),
+                            drawable);
 
   table = gtk_table_new (6, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
