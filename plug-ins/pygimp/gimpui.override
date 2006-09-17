@@ -13,7 +13,7 @@ headers
 
 #define NO_IMPORT_PYGIMPCOLOR
 #include "pygimpcolor-api.h"
-#
+
 typedef struct {
     PyObject *constraint;
     PyObject *user_data;
@@ -609,4 +609,13 @@ _wrap_gimp_brush_select_button_get_brush(PyGObject *self)
     return Py_BuildValue("(sdiN)", brush_name, opacity, spacing,
 			 pyg_enum_from_gtype(GIMP_TYPE_LAYER_MODE_EFFECTS,
 					     paint_mode));
+}
+%%
+override gimp_window_set_transient
+static PyObject *
+_wrap_gimp_window_set_transient(PyGObject *self)
+{
+    gimp_window_set_transient(GTK_WINDOW(self->obj));
+    Py_INCREF(Py_None);
+    return Py_None;
 }
