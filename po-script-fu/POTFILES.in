@@ -94,7 +94,6 @@ plug-ins/script-fu/scripts/starscape-logo.scm
 plug-ins/script-fu/scripts/swirltile.scm
 plug-ins/script-fu/scripts/swirly-pattern.scm
 plug-ins/script-fu/scripts/t-o-p-logo.scm
-plug-ins/script-fu/scripts/test-sphere.scm
 plug-ins/script-fu/scripts/text-circle.scm
 plug-ins/script-fu/scripts/textured-logo.scm
 plug-ins/script-fu/scripts/tileblur.scm
