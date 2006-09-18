@@ -1,3 +1,50 @@
+2006-09-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpaligntool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimphealtool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppaintbrushtool.c
+	* app/tools/gimppenciltool.c
+	* app/tools/gimpperspectiveclonetool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimprectangleselecttool.c
+	* app/tools/gimprectangletool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/gimpvectortool.c:  Apply patch from J. Baker,
+	with some modifications, to improve tooltips and tool
+	names.  Almost fixes bug #356137.
+
 2006-09-18  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpaligntool.c: rewrote the UI without tables and

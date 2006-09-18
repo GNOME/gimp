@@ -1641,6 +1641,7 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
       return TRUE;
 
     default:
+      g_print ("Key %d pressed\n", kevent->keyval);
       return FALSE;
     }
 

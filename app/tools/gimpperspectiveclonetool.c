@@ -118,8 +118,8 @@ gimp_perspective_clone_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_CONTEXT_PATTERN_MASK,
                 "gimp-perspective-clone-tool",
                 _("Perspective Clone"),
-                _("Paint using Image Regions Preserving "
-                  "the Perspective of the Image"),
+                _("Perspective Clone Tool: Clone from an image source "
+                  "after applying a perspective transformation"),
                 N_("_Perspective Clone"), NULL,
                 NULL, GIMP_HELP_TOOL_PERSPECTIVE_CLONE,
                 GIMP_STOCK_TOOL_PERSPECTIVE_CLONE,
