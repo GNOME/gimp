@@ -1,3 +1,7 @@
+2006-09-18  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Czech translation. Thanks for the infrastructure.
+
 2006-09-13  Sven Neumann  <sven@gimp.org>
 
 	* Added basic infrastructure for i18n of gimp-python. The initial

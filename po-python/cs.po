@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-13 21:07+0200\n"
-"PO-Revision-Date: 2006-07-27 20:23+0200\n"
+"POT-Creation-Date: 2006-09-18 14:02+0200\n"
+"PO-Revision-Date: 2006-09-18 14:04+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,20 +22,52 @@ msgstr ""
 "X-Generator: KBabel 1.10.2\n"
 "Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+#: ../plug-ins/pygimp/gimpfu.py:394 ../plug-ins/pygimp/gimpfu.py:406
+#: ../plug-ins/pygimp/gimpfu.py:412
+msgid "No"
+msgstr "Ne"
+
+#: ../plug-ins/pygimp/gimpfu.py:404 ../plug-ins/pygimp/gimpfu.py:412
+msgid "Yes"
+msgstr "Ano"
+
+#: ../plug-ins/pygimp/gimpfu.py:450 ../plug-ins/pygimp/gimpui.py:200
+msgid "Python-Fu File Selection"
+msgstr "Výběr souboru Python-Fu"
+
+#: ../plug-ins/pygimp/gimpfu.py:461
+msgid "Python-Fu Folder Selection"
+msgstr "Výběr složky Python-Fu"
+
+#: ../plug-ins/pygimp/gimpui.py:153
+msgid "Python-Fu Color Selection"
+msgstr "Výběr barev Python-Fu"
+
+#: ../plug-ins/pygimp/procbrowser.c:174
+msgid "Python Procedure Browser"
+msgstr "Prohlížeč procedur Pythonu"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:42
 msgid "Python Console"
 msgstr "Konzole skript-fu"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:74
 msgid "_Browse..."
 msgstr "_Procházet..."
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
-#, fuzzy
-msgid "Gimp-Python Console"
-msgstr "Konzole skript-fu"
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:98
+msgid "Interactive Gimp-Python interpreter"
+msgstr "Interaktivní interpretr Gimp-Pythonu"
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
-#, fuzzy
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:103
+msgid "_Console"
+msgstr "_Konzole"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:221
+msgid "Gimp-Python Console"
+msgstr "Konzole Gimp-Python"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:222
 msgid "Interactive Python Development"
-msgstr "Interaktivní konzole pro vývoj Python"
+msgstr "Interaktivní vývoj v Pythonu"
+
