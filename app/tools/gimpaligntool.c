@@ -183,6 +183,7 @@ gimp_align_tool_constructor (GType                  type,
 
   align_tool->controls = gimp_align_tool_controls (align_tool);
   gtk_container_add (container, align_tool->controls);
+  gtk_widget_show (align_tool->controls);
 
   return object;
 }
@@ -558,196 +559,150 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
     }
 }
 
-
 static GtkWidget *
 gimp_align_tool_controls (GimpAlignTool *align_tool)
 {
   GtkWidget *main_vbox;
+  GtkWidget *vbox;
   GtkWidget *hbox;
-  GtkWidget *hbox2;
-  GtkWidget *table;
+  GtkWidget *frame;
   GtkWidget *label;
   GtkWidget *button;
   GtkWidget *spinbutton;
   GtkWidget *combo;
-  GtkWidget *separator;
-  gint       row, col, n;
+  gint       n = 0;
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  main_vbox = gtk_vbox_new (FALSE, 12);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (hbox), main_vbox, FALSE, FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
-  gtk_widget_show (main_vbox);
+  frame = gimp_frame_new (_("Align"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  table = gtk_table_new (8, 9, FALSE);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 5);
-  gtk_widget_show (table);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 10);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  row = col = 0;
-
-  /* Top row */
-  hbox2 = gtk_hbox_new (FALSE, 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox2, 0, 8, row, row + 1);
-  gtk_widget_show (hbox2);
-  label = gtk_label_new (_("Align"));
-  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+  label = gtk_label_new (_("Relative to:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  row++;
-
-  /* align reference row */
-  hbox2 = gtk_hbox_new (FALSE, 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox2, 1, 8, row, row + 1);
-  gtk_widget_show (hbox2);
-  label = gtk_label_new (_("Relative to"));
-  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
   combo = gimp_enum_combo_box_new (GIMP_TYPE_ALIGN_REFERENCE);
-  gtk_box_pack_start (GTK_BOX (hbox2), combo, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               GIMP_ALIGN_REFERENCE_FIRST,
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &align_tool->align_reference_type);
   gtk_widget_show (combo);
 
-  gtk_table_set_row_spacing (GTK_TABLE (table), row, 10);
-  row++;
-
- /* horizontal align row */
-
-  col = 1;
-  n = 0;
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   button = button_with_stock (GIMP_ALIGN_LEFT, align_tool);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Align left edge of target"), NULL);
   align_tool->button[n++] = button;
-  ++col;
-  ++col;
+  gimp_help_set_help_data (button, _("Align left edge of target"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   button = button_with_stock (GIMP_ALIGN_HCENTER, align_tool);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Align center of target"), NULL);
   align_tool->button[n++] = button;
-  ++col;
-  ++col;
+  gimp_help_set_help_data (button, _("Align center of target"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   button = button_with_stock (GIMP_ALIGN_RIGHT, align_tool);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Align right edge of target"), NULL);
   align_tool->button[n++] = button;
-  ++col;
-  ++col;
+  gimp_help_set_help_data (button, _("Align right edge of target"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-  row++;
-
-  /* vertical align row */
-
-  col = 1;
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   button = button_with_stock (GIMP_ALIGN_TOP, align_tool);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Align top edge of target"), NULL);
   align_tool->button[n++] = button;
-  ++col;
-  ++col;
+  gimp_help_set_help_data (button, _("Align top edge of target"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   button = button_with_stock (GIMP_ALIGN_VCENTER, align_tool);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Align middle of target"), NULL);
   align_tool->button[n++] = button;
-  ++col;
-  ++col;
+  gimp_help_set_help_data (button, _("Align middle of target"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   button = button_with_stock (GIMP_ALIGN_BOTTOM, align_tool);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Align bottom of target"), NULL);
   align_tool->button[n++] = button;
-  ++col;
-  ++col;
+  gimp_help_set_help_data (button, _("Align bottom of target"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-  gtk_table_set_row_spacing (GTK_TABLE (table), row, 10);
-  row++;
+  frame = gimp_frame_new (_("Distribute"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  /* separator */
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
-  separator = gtk_hseparator_new ();
-  gtk_table_attach_defaults (GTK_TABLE (table), separator, 0, 8, row, row + 1);
-  gtk_widget_show (separator);
-
-  row++;
-
-  /* label row */
-  hbox2 = gtk_hbox_new (FALSE, 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox2, 0, 8, row, row + 1);
-  gtk_widget_show (hbox2);
-  label = gtk_label_new (_("Distribute"));
-  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  row++;
-
-  /* horizontal distribute row */
-
-  col = 1;
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   button = button_with_stock (GIMP_ARRANGE_LEFT, align_tool);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Distribute left edges of targets"), NULL);
   align_tool->button[n++] = button;
-  ++col;
-  ++col;
+  gimp_help_set_help_data (button, _("Distribute left edges of targets"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   button = button_with_stock (GIMP_ARRANGE_HCENTER, align_tool);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Distribute horiz centers of targets"), NULL);
   align_tool->button[n++] = button;
-  ++col;
-  ++col;
+  gimp_help_set_help_data (button,
+                           _("Distribute horizontal centers of targets"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   button = button_with_stock (GIMP_ARRANGE_RIGHT, align_tool);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Distribute right edges of targets"), NULL);
   align_tool->button[n++] = button;
-  ++col;
-  ++col;
+  gimp_help_set_help_data (button,
+                           _("Distribute right edges of targets"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-  row++;
-
-  /* vertical distribute row */
-
-  col = 1;
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   button = button_with_stock (GIMP_ARRANGE_TOP, align_tool);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Distribute top edges of targets"), NULL);
   align_tool->button[n++] = button;
-  ++col;
-  ++col;
+  gimp_help_set_help_data (button, _("Distribute top edges of targets"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   button = button_with_stock (GIMP_ARRANGE_VCENTER, align_tool);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Distribute vertical centers of targets"), NULL);
   align_tool->button[n++] = button;
-  ++col;
-  ++col;
+  gimp_help_set_help_data (button,
+                           _("Distribute vertical centers of targets"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   button = button_with_stock (GIMP_ARRANGE_BOTTOM, align_tool);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
-  gimp_help_set_help_data (button, _("Distribute bottoms of targets"), NULL);
   align_tool->button[n++] = button;
-  ++col;
-  ++col;
+  gimp_help_set_help_data (button, _("Distribute bottoms of targets"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-  row++;
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  /* offset row */
   label = gtk_label_new (_("Offset:"));
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, row, row + 1);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   spinbutton = gimp_spin_button_new (&align_tool->horz_offset_adjustment,
@@ -755,14 +710,13 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
                                      -100000.,
                                      100000.,
                                      1., 20., 20., 1., 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 3, 7, row, row + 1);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   g_signal_connect (align_tool->horz_offset_adjustment, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &align_tool->horz_offset);
   gtk_widget_show (spinbutton);
 
-  gtk_widget_show (hbox);
-  return hbox;
+  return main_vbox;
 }
 
 
@@ -879,15 +833,13 @@ do_alignment (GtkWidget *widget,
   gimp_image_flush (image);
 }
 
-
-
-
 static GtkWidget *
 button_with_stock (GimpAlignmentType  action,
                    GimpAlignTool     *align_tool)
 {
-  GtkWidget *button;
-  gchar     *stock_id;
+  GtkWidget   *button;
+  GtkWidget   *image;
+  const gchar *stock_id = NULL;
 
   switch (action)
     {
@@ -928,13 +880,17 @@ button_with_stock (GimpAlignmentType  action,
       stock_id = GIMP_STOCK_GRAVITY_SOUTH;
       break;
     default:
-      stock_id = "?";
+      g_return_val_if_reached (NULL);
       break;
     }
 
-  button = gtk_button_new_from_stock (stock_id);
-
+  button = gtk_button_new ();
   g_object_set_data (G_OBJECT (button), "action", GINT_TO_POINTER (action));
+
+  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  gtk_misc_set_padding (GTK_MISC (image), 2, 2);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (do_alignment),
@@ -1022,6 +978,3 @@ select_layer_by_coords (GimpImage *image,
 
   return NULL;
 }
-
-
-
