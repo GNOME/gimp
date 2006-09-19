@@ -1006,7 +1006,7 @@ INTERFACE static pointer mk_array(scheme *sc, int len, int type) {
        size = len * sizeof(gint16);
        break;
      case array_int8:
-       size = len * sizeof(gint8);
+       size = len * sizeof(guint8);
        break;
      case array_float:
        size = len * sizeof(gdouble);
@@ -1044,7 +1044,7 @@ INTERFACE static pointer array_elem(scheme *sc, pointer a, int ielem) {
       x = sc->vptr->mk_integer (sc, ((gint16 *)elem)[ielem]);
       break;
     case array_int8:
-      x = sc->vptr->mk_integer (sc, ((gint8 *)elem)[ielem] & 0x255);
+      x = sc->vptr->mk_integer (sc, ((guint8 *)elem)[ielem] & 0x255);
       break;
     case array_float:
       x = sc->vptr->mk_real (sc, ((gdouble *)elem)[ielem]);
@@ -1071,7 +1071,7 @@ INTERFACE static pointer set_array_elem(scheme *sc, pointer a,
       ((gint16 *)elem)[ielem] = sc->vptr->ivalue(v);
       break;
     case array_int8:
-      ((gint8 *)elem)[ielem] = sc->vptr->ivalue(v);
+      ((guint8 *)elem)[ielem] = sc->vptr->ivalue(v);
       break;
     case array_float:
       ((gdouble *)elem)[ielem] = sc->vptr->rvalue(v);
