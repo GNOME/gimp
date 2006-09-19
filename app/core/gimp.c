@@ -1008,4 +1008,6 @@ gimp_message (Gimp         *gimp,
   va_end (args);
 
   gimp_show_message (gimp, progress, NULL, message);
+
+  g_free (message);
 }

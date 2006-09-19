@@ -1,3 +1,13 @@
+2006-09-19  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp.c (gimp_message): don't leak the message.
+
+	* app/file/file-utils.c (file_utils_find_proc): clear the error
+	if we found a file procedure by matching the file extension.
+
+	* plug-ins/common/png.c (load_image): don't call gimp_quit() if
+	opening the file fails but return with GIMP_PDB_EXECUTION_ERROR.
+
 2006-09-19  Michael Natterer  <mitch@gimp.org>
 
 	Fix disabling of deprecated procedures (bug #345733):

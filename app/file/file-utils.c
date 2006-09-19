@@ -274,9 +274,18 @@ file_utils_find_proc (GSList       *procs,
   /* As a last resort, try matching by name */
   file_proc = file_proc_find_by_name (all_procs, uri, FALSE);
 
-  if (! file_proc && error && *error == NULL)
-    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                 _("Unknown file type"));
+  if (file_proc)
+    {
+      /* we found a procedure, clear error that might have been set */
+      g_clear_error (error);
+    }
+  else
+    {
+      /* set an error message unless one was already set */
+      if (error && *error == NULL)
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                     _("Unknown file type"));
+    }
 
   return file_proc;
 }

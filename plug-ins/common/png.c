@@ -649,7 +649,7 @@ load_image (const gchar *filename,
     {
       g_message (_("Could not open '%s' for reading: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
-      gimp_quit ();
+      return -1;
     }
 
   png_init_io (pp, fp);
@@ -768,7 +768,7 @@ load_image (const gchar *filename,
     {
       g_message ("Could not create new image for '%s'",
                  gimp_filename_to_utf8 (filename));
-      gimp_quit ();
+      return -1;
     }
 
   /*
