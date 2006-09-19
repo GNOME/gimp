@@ -48,23 +48,27 @@ enum
 };
 
 
-static void   gimp_source_core_set_property      (GObject          *object,
+static void     gimp_source_core_set_property    (GObject          *object,
                                                   guint             property_id,
                                                   const GValue     *value,
                                                   GParamSpec       *pspec);
-static void   gimp_source_core_get_property      (GObject          *object,
+static void     gimp_source_core_get_property    (GObject          *object,
                                                   guint             property_id,
                                                   GValue           *value,
                                                   GParamSpec       *pspec);
 
-static void   gimp_source_core_paint             (GimpPaintCore    *paint_core,
+static gboolean gimp_source_core_start           (GimpPaintCore    *paint_core,
+                                                  GimpDrawable     *drawable,
+                                                  GimpPaintOptions *paint_options,
+                                                  GimpCoords       *coords);
+static void     gimp_source_core_paint           (GimpPaintCore    *paint_core,
                                                   GimpDrawable     *drawable,
                                                   GimpPaintOptions *paint_options,
                                                   GimpPaintState    paint_state,
                                                   guint32           time);
 
 #if 0
-static void   gimp_source_core_motion            (GimpSourceCore   *source_core,
+static void     gimp_source_core_motion          (GimpSourceCore   *source_core,
                                                   GimpDrawable     *drawable,
                                                   GimpPaintOptions *paint_options);
 #endif
@@ -82,11 +86,13 @@ static gboolean gimp_source_core_real_get_source (GimpSourceCore   *source_core,
                                                   gint             *paint_area_height,
                                                   PixelRegion      *srcPR);
 
-static void   gimp_source_core_set_src_drawable  (GimpSourceCore   *source_core,
+static void    gimp_source_core_set_src_drawable (GimpSourceCore   *source_core,
                                                   GimpDrawable     *drawable);
 
 
 G_DEFINE_TYPE (GimpSourceCore, gimp_source_core, GIMP_TYPE_BRUSH_CORE)
+
+#define parent_class gimp_source_core_parent_class
 
 
 static void
@@ -99,6 +105,7 @@ gimp_source_core_class_init (GimpSourceCoreClass *klass)
   object_class->set_property               = gimp_source_core_set_property;
   object_class->get_property               = gimp_source_core_get_property;
 
+  paint_core_class->start                  = gimp_source_core_start;
   paint_core_class->paint                  = gimp_source_core_paint;
 
   brush_core_class->handles_changing_brush = TRUE;
@@ -191,6 +198,39 @@ gimp_source_core_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static gboolean
+gimp_source_core_start (GimpPaintCore    *paint_core,
+                        GimpDrawable     *drawable,
+                        GimpPaintOptions *paint_options,
+                        GimpCoords       *coords)
+{
+  GimpSourceCore    *source_core = GIMP_SOURCE_CORE (paint_core);
+  GimpSourceOptions *options     = GIMP_SOURCE_OPTIONS (paint_options);
+
+  if (! GIMP_PAINT_CORE_CLASS (parent_class)->start (paint_core, drawable,
+                                                     paint_options, coords))
+    {
+      return FALSE;
+    }
+
+  paint_core->use_saved_proj = FALSE;
+
+  if (! source_core->set_source && options->use_source)
+    {
+      if (! source_core->src_drawable)
+        return FALSE;
+
+      if (options->sample_merged &&
+          gimp_item_get_image (GIMP_ITEM (source_core->src_drawable)) ==
+          gimp_item_get_image (GIMP_ITEM (drawable)))
+        {
+          paint_core->use_saved_proj = TRUE;
+        }
+    }
+
+  return TRUE;
 }
 
 static void
@@ -315,17 +355,12 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
 
   if (options->use_source)
     {
-      GimpImage *src_image;
-
-      if (! source_core->src_drawable)
-        return;
-
       src_pickable = GIMP_PICKABLE (source_core->src_drawable);
-      src_image    = gimp_pickable_get_image (src_pickable);
 
       if (options->sample_merged)
         {
-          gint off_x, off_y;
+          GimpImage *src_image = gimp_pickable_get_image (src_pickable);
+          gint       off_x, off_y;
 
           src_pickable = GIMP_PICKABLE (src_image->projection);
 

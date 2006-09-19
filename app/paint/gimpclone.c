@@ -45,43 +45,42 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_clone_paint        (GimpPaintCore    *paint_core,
-                                       GimpDrawable     *drawable,
-                                       GimpPaintOptions *paint_options,
-                                       GimpPaintState    paint_state,
-                                       guint32           time);
+static gboolean gimp_clone_start        (GimpPaintCore    *paint_core,
+                                         GimpDrawable     *drawable,
+                                         GimpPaintOptions *paint_options,
+                                         GimpCoords       *coords);
 
-static void   gimp_clone_motion       (GimpSourceCore   *source_core,
-                                       GimpDrawable     *drawable,
-                                       GimpPaintOptions *paint_options,
-                                       gdouble           opacity,
-                                       GimpPickable     *src_pickable,
-                                       PixelRegion      *srcPR,
-                                       gint              src_offset_x,
-                                       gint              src_offset_y,
-                                       TempBuf          *paint_area,
-                                       gint              paint_area_offset_x,
-                                       gint              paint_area_offset_y,
-                                       gint              paint_area_width,
-                                       gint              paint_area_height);
+static void     gimp_clone_motion       (GimpSourceCore   *source_core,
+                                         GimpDrawable     *drawable,
+                                         GimpPaintOptions *paint_options,
+                                         gdouble           opacity,
+                                         GimpPickable     *src_pickable,
+                                         PixelRegion      *srcPR,
+                                         gint              src_offset_x,
+                                         gint              src_offset_y,
+                                         TempBuf          *paint_area,
+                                         gint              paint_area_offset_x,
+                                         gint              paint_area_offset_y,
+                                         gint              paint_area_width,
+                                         gint              paint_area_height);
 
-static void   gimp_clone_line_image   (GimpImage        *dest,
-                                       GimpImage        *src,
-                                       GimpDrawable     *d_drawable,
-                                       GimpImageType     src_type,
-                                       guchar           *s,
-                                       guchar           *d,
-                                       gint              src_bytes,
-                                       gint              dest_bytes,
-                                       gint              width);
-static void   gimp_clone_line_pattern (GimpImage        *dest,
-                                       GimpDrawable     *drawable,
-                                       GimpPattern      *pattern,
-                                       guchar           *d,
-                                       gint              x,
-                                       gint              y,
-                                       gint              bytes,
-                                       gint              width);
+static void     gimp_clone_line_image   (GimpImage        *dest_image,
+                                         GimpDrawable     *dest_drawable,
+                                         GimpImage        *src_image,
+                                         GimpImageType     src_type,
+                                         guchar           *s,
+                                         guchar           *d,
+                                         gint              src_bytes,
+                                         gint              dest_bytes,
+                                         gint              width);
+static void     gimp_clone_line_pattern (GimpImage        *dest_image,
+                                         GimpDrawable     *dest_drawable,
+                                         GimpPattern      *pattern,
+                                         guchar           *d,
+                                         gint              x,
+                                         gint              y,
+                                         gint              dest_bytes,
+                                         gint              width);
 
 
 G_DEFINE_TYPE (GimpClone, gimp_clone, GIMP_TYPE_SOURCE_CORE)
@@ -107,7 +106,7 @@ gimp_clone_class_init (GimpCloneClass *klass)
   GimpPaintCoreClass  *paint_core_class  = GIMP_PAINT_CORE_CLASS (klass);
   GimpSourceCoreClass *source_core_class = GIMP_SOURCE_CORE_CLASS (klass);
 
-  paint_core_class->paint   = gimp_clone_paint;
+  paint_core_class->start   = gimp_clone_start;
 
   source_core_class->motion = gimp_clone_motion;
 }
@@ -117,30 +116,30 @@ gimp_clone_init (GimpClone *clone)
 {
 }
 
-static void
-gimp_clone_paint (GimpPaintCore    *paint_core,
+static gboolean
+gimp_clone_start (GimpPaintCore    *paint_core,
                   GimpDrawable     *drawable,
                   GimpPaintOptions *paint_options,
-                  GimpPaintState    paint_state,
-                  guint32           time)
+                  GimpCoords       *coords)
 {
   GimpCloneOptions *options = GIMP_CLONE_OPTIONS (paint_options);
 
-  switch (paint_state)
+  if (! GIMP_PAINT_CORE_CLASS (parent_class)->start (paint_core, drawable,
+                                                     paint_options, coords))
     {
-    case GIMP_PAINT_STATE_INIT:
-      if (options->clone_type == GIMP_PATTERN_CLONE)
-        if (! gimp_context_get_pattern (GIMP_CONTEXT (options)))
-          g_message (_("No patterns available for this operation."));
-      break;
-
-    default:
-      break;
+      return FALSE;
     }
 
-  GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawable,
-                                               paint_options, paint_state,
-                                               time);
+  if (options->clone_type == GIMP_PATTERN_CLONE)
+    {
+      if (! gimp_context_get_pattern (GIMP_CONTEXT (options)))
+        {
+          g_message (_("No patterns available for this operation."));
+          return FALSE;
+        }
+    }
+
+  return TRUE;
 }
 
 static void
@@ -158,17 +157,17 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                    gint              paint_area_width,
                    gint              paint_area_height)
 {
-  GimpPaintCore       *paint_core     = GIMP_PAINT_CORE (source_core);
-  GimpCloneOptions    *options        = GIMP_CLONE_OPTIONS (paint_options);
-  GimpSourceOptions   *source_options = GIMP_SOURCE_OPTIONS (paint_options);
-  GimpContext         *context        = GIMP_CONTEXT (paint_options);
-  GimpImage           *src_image      = NULL;
-  GimpImageType        src_type       = 0;
-  GimpImage           *image;
-  gpointer             pr = NULL;
-  gint                 y;
-  PixelRegion          destPR;
-  GimpPattern         *pattern = NULL;
+  GimpPaintCore     *paint_core     = GIMP_PAINT_CORE (source_core);
+  GimpCloneOptions  *options        = GIMP_CLONE_OPTIONS (paint_options);
+  GimpSourceOptions *source_options = GIMP_SOURCE_OPTIONS (paint_options);
+  GimpContext       *context        = GIMP_CONTEXT (paint_options);
+  GimpImage         *src_image      = NULL;
+  GimpImageType      src_type       = 0;
+  GimpImage         *image;
+  gpointer           pr = NULL;
+  gint               y;
+  PixelRegion        destPR;
+  GimpPattern       *pattern = NULL;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -191,8 +190,6 @@ gimp_clone_motion (GimpSourceCore   *source_core,
 
     case GIMP_PATTERN_CLONE:
       pattern = gimp_context_get_pattern (context);
-      if (! pattern)
-        return;
 
       pixel_region_init_temp_buf (&destPR, paint_area,
                                   0, 0,
@@ -212,8 +209,8 @@ gimp_clone_motion (GimpSourceCore   *source_core,
           switch (options->clone_type)
             {
             case GIMP_IMAGE_CLONE:
-              gimp_clone_line_image (image, src_image,
-                                     drawable, src_type,
+              gimp_clone_line_image (image, drawable,
+                                     src_image, src_type,
                                      s, d,
                                      srcPR->bytes, destPR.bytes, destPR.w);
               s += srcPR->rowstride;
@@ -253,9 +250,9 @@ gimp_clone_motion (GimpSourceCore   *source_core,
 }
 
 static void
-gimp_clone_line_image (GimpImage     *dest,
-                       GimpImage     *src,
-                       GimpDrawable  *d_drawable,
+gimp_clone_line_image (GimpImage     *dest_image,
+                       GimpDrawable  *dest_drawable,
+                       GimpImage     *src_image,
                        GimpImageType  src_type,
                        guchar        *s,
                        guchar        *d,
@@ -270,8 +267,9 @@ gimp_clone_line_image (GimpImage     *dest,
 
   while (width--)
     {
-      gimp_image_get_color (src, src_type, s, rgba);
-      gimp_image_transform_color (dest, d_drawable, d, GIMP_RGB, rgba);
+      gimp_image_get_color (src_image, src_type, s, rgba);
+      gimp_image_transform_color (dest_image, dest_drawable, d,
+                                  GIMP_RGB, rgba);
 
       d[alpha] = rgba[ALPHA_PIX];
 
@@ -281,13 +279,13 @@ gimp_clone_line_image (GimpImage     *dest,
 }
 
 static void
-gimp_clone_line_pattern (GimpImage    *dest,
-                         GimpDrawable *drawable,
+gimp_clone_line_pattern (GimpImage    *dest_image,
+                         GimpDrawable *dest_drawable,
                          GimpPattern  *pattern,
                          guchar       *d,
                          gint          x,
                          gint          y,
-                         gint          bytes,
+                         gint          dest_bytes,
                          gint          width)
 {
   guchar            *pat, *p;
@@ -311,19 +309,20 @@ gimp_clone_line_pattern (GimpImage    *dest,
   color_type = (pat_bytes == 3 ||
                 pat_bytes == 4) ? GIMP_RGB : GIMP_GRAY;
 
-  alpha = bytes - 1;
+  alpha = dest_bytes - 1;
 
   for (i = 0; i < width; i++)
     {
       p = pat + ((i + x) % pattern->mask->width) * pat_bytes;
 
-      gimp_image_transform_color (dest, drawable, d, color_type, p);
+      gimp_image_transform_color (dest_image, dest_drawable, d,
+                                  color_type, p);
 
       if (pat_bytes == 2 || pat_bytes == 4)
         d[alpha] = p[pat_bytes - 1];
       else
         d[alpha] = OPAQUE_OPACITY;
 
-      d += bytes;
+      d += dest_bytes;
     }
 }

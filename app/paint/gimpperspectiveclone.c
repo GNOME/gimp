@@ -176,10 +176,6 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
 
           source_core->first_stroke = TRUE;
         }
-
-      if (clone_options->clone_type == GIMP_PATTERN_CLONE)
-        if (! gimp_context_get_pattern (context))
-          g_message (_("No patterns available for this operation."));
       break;
 
     case GIMP_PAINT_STATE_MOTION:

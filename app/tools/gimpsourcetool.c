@@ -172,14 +172,11 @@ gimp_source_tool_button_press (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *display)
 {
-  GimpPaintTool     *paint_tool  = GIMP_PAINT_TOOL (tool);
-  GimpSourceTool    *source_tool = GIMP_SOURCE_TOOL (tool);
-  GimpSourceCore    *source      = GIMP_SOURCE_CORE (paint_tool->core);
-  GimpSourceOptions *options     = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);
+  GimpPaintTool  *paint_tool  = GIMP_PAINT_TOOL (tool);
+  GimpSourceTool *source_tool = GIMP_SOURCE_TOOL (tool);
+  GimpSourceCore *source      = GIMP_SOURCE_CORE (paint_tool->core);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-  paint_tool->core->use_saved_proj = FALSE;
 
   if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
     {
@@ -190,14 +187,6 @@ gimp_source_tool_button_press (GimpTool        *tool,
   else
     {
       source->set_source = FALSE;
-
-      if (options->use_source      &&
-          options->sample_merged   &&
-          source_tool->src_display &&
-          source_tool->src_display->image && display->image)
-        {
-          paint_tool->core->use_saved_proj = TRUE;
-        }
     }
 
   GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,

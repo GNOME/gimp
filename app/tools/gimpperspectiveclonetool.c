@@ -334,8 +334,6 @@ gimp_perspective_clone_tool_button_press (GimpTool        *tool,
 
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-      paint_tool->core->use_saved_proj = FALSE;
-
       if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
         {
           source_core->set_source = TRUE;
@@ -345,14 +343,6 @@ gimp_perspective_clone_tool_button_press (GimpTool        *tool,
       else
         {
           source_core->set_source = FALSE;
-
-          if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE  &&
-              GIMP_SOURCE_OPTIONS (options)->sample_merged                  &&
-              clone_tool->src_display                                       &&
-              clone_tool->src_display->image == display->image)
-            {
-              paint_tool->core->use_saved_proj = TRUE;
-            }
         }
 
       GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
