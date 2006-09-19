@@ -257,8 +257,8 @@ def _query():
 
         if domain:
             try:
-                (domain, path) = domain
-                gimp.domain_register(domain, path)
+                (domain, locale_dir) = domain
+                gimp.domain_register(domain, locale_dir)
             except ValueError:
                 gimp.domain_register(domain)
 
@@ -632,10 +632,10 @@ def _run(proc_name, params):
 
     if domain:
         try:
-            (domain, path) = domain
+            (domain, locale_dir) = domain
+            gettext.install(domain, locale_dir, unicode=1)
         except ValueError:
-            path = gimp.locale_directory
-        gettext.install(domain, path, unicode=1)
+            gettext.install(domain, unicode=1)
 
     if plugin_type == PLUGIN and menu[:7] == '<Image>':
         end = 3
