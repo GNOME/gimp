@@ -1,4 +1,4 @@
-#   Gimp-Python - allows the writing of Gimp plugins in Python.
+#   Gimp-Python - allows the writing of GIMP plug-ins in Python.
 #   Copyright (C) 1997  James Henstridge <james@daa.com.au>
 #
 #   This program is free software; you can redistribute it and/or modify
@@ -15,25 +15,25 @@
 #   along with this program; if not, write to the Free Software
 #   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-'''Simple interface to writing GIMP plugins in python.
+'''Simple interface to writing GIMP plug-ins in Python.
 
 Instead of worrying about all the user interaction, saving last used values
 and everything, the gimpfu module can take care of it for you.  It provides
-a simple register() function that will register your plugin if needed, and
-cause your plugin function to be called when needed.
+a simple register() function that will register your plug-in if needed, and
+cause your plug-in function to be called when needed.
 
-Gimpfu will also handle showing a user interface for editing plugin parameters
-if the plugin is called interactively, and will also save the last used
+Gimpfu will also handle showing a user interface for editing plug-in parameters
+if the plug-in is called interactively, and will also save the last used
 parameters, so the RUN_WITH_LAST_VALUES run_type will work correctly.  It
-will also make sure that the displays are flushed on completion if the plugin
+will also make sure that the displays are flushed on completion if the plug-in
 was run interactively.
 
-When registering the plugin, you do not need to worry about specifying
-the run_type parameter.  And if the plugin is an image plugin (the menu
+When registering the plug-in, you do not need to worry about specifying
+the run_type parameter.  And if the plug-in is an image plug-in (the menu
 path starts with <Image>/), the image and drawable parameters are also
 automatically added.
 
-A typical gimpfu plugin would look like this:
+A typical gimpfu plug-in would look like this:
   from gimpfu import *
 
   def plugin_func(image, drawable, args):
@@ -45,7 +45,7 @@ A typical gimpfu plugin would look like this:
               "author",
               "copyright",
               "year",
-              "My plugin",
+              "My plug-in",
               "*",
               [(PF_STRING, "arg", "The argument", "default-value")],
               [],
@@ -53,13 +53,20 @@ A typical gimpfu plugin would look like this:
   main()
 
 The call to "from gimpfu import *" will import all the gimp constants into
-the plugin namespace, and also import the symbols gimp, pdb, register and
-main.  This should be just about all any plugin needs.  You can use any
-of the PF_* constants below as parameter types, and an appropriate user
-interface element will be displayed when the plugin is run in interactive
-mode.  Note that the the PF_SPINNER and PF_SLIDER types expect a fifth
-element in their description tuple -- a 3-tuple of the form (lower,upper,step),
-which defines the limits for the slider or spinner.'''
+the plug-in namespace, and also import the symbols gimp, pdb, register and
+main.  This should be just about all any plug-in needs.
+
+You can use any of the PF_* constants below as parameter types, and an
+appropriate user interface element will be displayed when the plug-in is
+run in interactive mode.  Note that the the PF_SPINNER and PF_SLIDER types
+expect a fifth element in their description tuple -- a 3-tuple of the form
+(lower,upper,step), which defines the limits for the slider or spinner.
+
+If want to localize your plug-in, add an optional domain parameter to the
+register call. It can be the name of the translation domain or a tuple that
+consists of the translation domain and the directory where the translations
+are installed. You can then use N_() and _() to localize your plug-in.
+'''
 
 import string as _string
 import gimp
@@ -155,7 +162,7 @@ _registered_plugins_ = {}
 def register(proc_name, blurb, help, author, copyright, date, label,
                  imagetypes, params, results, function,
                  menu=None, domain=None, on_query=None, on_run=None):
-    '''This is called to register a new plugin.'''
+    '''This is called to register a new plug-in.'''
 
     # First perform some sanity checks on the data
     def letterCheck(str):
@@ -249,10 +256,16 @@ def _query():
         results = make_params(results)
 
         if domain:
-            gimp.domain_register(domain)
+            try:
+                (domain, path) = domain
+                gimp.domain_register(domain, path)
+            except ValueError:
+                gimp.domain_register(domain)
+
         gimp.install_procedure(plugin, blurb, help, author, copyright,
                                date, label, imagetypes, plugin_type,
                                params, results)
+
         if menu:
             gimp.menu_register(plugin, menu)
         if on_query:
@@ -618,7 +631,11 @@ def _run(proc_name, params):
     domain = _registered_plugins_[proc_name][12]
 
     if domain:
-        gettext.install(domain, gimp.locale_directory, unicode=1)
+        try:
+            (domain, path) = domain
+        except ValueError:
+            path = gimp.locale_directory
+        gettext.install(domain, path, unicode=1)
 
     if plugin_type == PLUGIN and menu[:7] == '<Image>':
         end = 3
@@ -650,7 +667,7 @@ def _run(proc_name, params):
     return res
 
 def main():
-    '''This should be called after registering the plugin.'''
+    '''This should be called after registering the plug-in.'''
     gimp.main(None, None, _query, _run)
 
 def fail(msg):

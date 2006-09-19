@@ -1,5 +1,11 @@
 2006-09-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/gimpfu.py: allow to pass a (domain, path) tuple
+	as value for the domain argument of the register() call. Document
+	the domain argument.
+
+2006-09-19  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp.c (gimp_message): don't leak the message.
 
 	* app/file/file-utils.c (file_utils_find_proc): clear the error
