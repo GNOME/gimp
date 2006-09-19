@@ -392,19 +392,15 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
                          canonical, procedure->deprecated);
             }
         }
-      else if (plug_in->manager->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_OFF)
-        {
-          procedure = NULL;
-        }
     }
 
   if (! proc_name)
     proc_name = canonical;
 
-  if (procedure)
-    args = plug_in_params_to_args (procedure->args, procedure->num_args,
-                                   proc_run->params, proc_run->nparams,
-                                   FALSE, FALSE);
+  args = plug_in_params_to_args (procedure ? procedure->args     : NULL,
+                                 procedure ? procedure->num_args : 0,
+                                 proc_run->params, proc_run->nparams,
+                                 FALSE, FALSE);
 
   /*  Execute the procedure even if gimp_pdb_lookup_procedure()
    *  returned NULL, gimp_pdb_execute_procedure_by_name_args() will

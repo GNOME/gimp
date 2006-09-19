@@ -1,3 +1,16 @@
+2006-09-19  Michael Natterer  <mitch@gimp.org>
+
+	Fix disabling of deprecated procedures (bug #345733):
+
+	* app/pdb/gimppdb.c (gimp_pdb_register_procedure): silently drop
+	deprecated procedures if they are disabled via --pdb-compat-mode.
+
+	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_proc_run):
+	remove code that handles deprecated procedures even when they are
+	disabled, the change above makes this impossible.
+	Call plug_in_params_to_args() also if we didn't find the
+	procedure, so the PDB doesn't choke on NULL args.
+
 2006-09-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpairbrushtool.c
@@ -298,7 +311,6 @@
 	gimp_smudge_nonclipped_painthit_coords() to
 	gimp_smudge_brush_coords ().
 
->>>>>>> 1.13285
 2006-09-13  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcroptool.c (gimp_crop_tool_register): removed

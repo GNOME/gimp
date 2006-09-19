@@ -220,8 +220,12 @@ gimp_pdb_register_procedure (GimpPDB       *pdb,
   g_return_if_fail (GIMP_IS_PDB (pdb));
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  g_signal_emit (pdb, gimp_pdb_signals[REGISTER_PROCEDURE], 0,
-                 procedure);
+  if (! procedure->deprecated ||
+      pdb->gimp->pdb_compat_mode != GIMP_PDB_COMPAT_OFF)
+    {
+      g_signal_emit (pdb, gimp_pdb_signals[REGISTER_PROCEDURE], 0,
+                     procedure);
+    }
 }
 
 void
