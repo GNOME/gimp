@@ -517,6 +517,72 @@ gimp_gradient_has_fg_bg_segments (GimpGradient *gradient)
   return FALSE;
 }
 
+GimpGradient *
+gimp_gradient_flatten (GimpGradient *gradient,
+                       GimpContext  *context)
+{
+  GimpGradient        *flat;
+  GimpGradientSegment *seg;
+
+  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  flat = GIMP_GRADIENT (gimp_data_duplicate (GIMP_DATA (gradient)));
+
+  for (seg = flat->segments; seg; seg = seg->next)
+    {
+      switch (seg->left_color_type)
+        {
+        case GIMP_GRADIENT_COLOR_FIXED:
+          break;
+
+        case GIMP_GRADIENT_COLOR_FOREGROUND:
+        case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
+          gimp_context_get_foreground (context, &seg->left_color);
+
+          if (seg->left_color_type == GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT)
+            gimp_rgb_set_alpha (&seg->left_color, 0.0);
+          break;
+
+        case GIMP_GRADIENT_COLOR_BACKGROUND:
+        case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
+          gimp_context_get_background (context, &seg->left_color);
+
+          if (seg->left_color_type == GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
+            gimp_rgb_set_alpha (&seg->left_color, 0.0);
+          break;
+        }
+
+      seg->left_color_type = GIMP_GRADIENT_COLOR_FIXED;
+
+      switch (seg->right_color_type)
+        {
+        case GIMP_GRADIENT_COLOR_FIXED:
+          break;
+
+        case GIMP_GRADIENT_COLOR_FOREGROUND:
+        case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
+          gimp_context_get_foreground (context, &seg->right_color);
+
+          if (seg->right_color_type == GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT)
+            gimp_rgb_set_alpha (&seg->right_color, 0.0);
+          break;
+
+        case GIMP_GRADIENT_COLOR_BACKGROUND:
+        case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
+          gimp_context_get_background (context, &seg->right_color);
+
+          if (seg->right_color_type == GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
+            gimp_rgb_set_alpha (&seg->right_color, 0.0);
+          break;
+        }
+
+      seg->right_color_type = GIMP_GRADIENT_COLOR_FIXED;
+    }
+
+  return flat;
+}
+
 
 /*  gradient segment functions  */
 

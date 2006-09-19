@@ -1,3 +1,14 @@
+2006-09-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpgradient.[ch]: added gimp_gradient_flatten() which
+	creates a copy of a gradient with all colors that refer to FG or
+	BG turned into constant colors.
+
+	* app/core/gimpdrawable-blend.c (gradient_fill_region): create a
+	flat copy of the gradient if it contains FG/BG colors. Avoids
+	gazillions of context color lookups while rendering, depending on
+	gradient and blend complexity.
+
 2006-09-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py: allow to pass a (domain, path) tuple

@@ -84,6 +84,8 @@ GimpGradientSegment * gimp_gradient_get_segment_at (GimpGradient  *grad,
                                                     gdouble        pos);
 
 gboolean          gimp_gradient_has_fg_bg_segments (GimpGradient  *gradient);
+GimpGradient    * gimp_gradient_flatten            (GimpGradient  *gradient,
+                                                    GimpContext   *context);
 
 
 /*  gradient segment functions  */

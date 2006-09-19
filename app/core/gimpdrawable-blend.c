@@ -865,11 +865,16 @@ gradient_fill_region (GimpImage        *image,
                       gdouble           ey,
                       GimpProgress     *progress)
 {
-  RenderBlendData  rbd;
+  RenderBlendData rbd;
 
   rbd.gradient = gimp_context_get_gradient (context);
   rbd.context  = context;
   rbd.reverse  = reverse;
+
+  if (gimp_gradient_has_fg_bg_segments (rbd.gradient))
+    rbd.gradient = gimp_gradient_flatten (rbd.gradient, context);
+  else
+    rbd.gradient = g_object_ref (rbd.gradient);
 
   gimp_context_get_foreground (context, &rbd.fg);
   gimp_context_get_background (context, &rbd.bg);
@@ -1012,6 +1017,8 @@ gradient_fill_region (GimpImage        *image,
       if (dither)
         g_rand_free (rbd.seed);
     }
+
+  g_object_unref (rbd.gradient);
 }
 
 static void
