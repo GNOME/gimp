@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-18 14:11+0200\n"
-"PO-Revision-Date: 2006-09-18 14:20+0200\n"
+"POT-Creation-Date: 2006-09-20 10:57+0200\n"
+"PO-Revision-Date: 2006-09-20 11:03+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -5547,7 +5547,7 @@ msgstr ""
 msgid "Blend"
 msgstr "Mísení"
 
-#: ../app/core/gimpdrawable-bucket-fill.c:86 ../app/paint/gimpclone.c:134
+#: ../app/core/gimpdrawable-bucket-fill.c:86 ../app/paint/gimpclone.c:137
 msgid "No patterns available for this operation."
 msgstr "Nejsou k dispozici žádné vzorky pro tuto operaci."
 
@@ -7972,7 +7972,7 @@ msgstr "Zásuvný modul nemohl uložit obrázek"
 msgid "Invalid character sequence in URI"
 msgstr "Neplatná posloupnost znaků v URI"
 
-#: ../app/file/file-utils.c:279
+#: ../app/file/file-utils.c:287
 msgid "Unknown file type"
 msgstr "Neznámý typ souboru"
 
@@ -7998,11 +7998,11 @@ msgstr "Rozprašovač"
 msgid "No brushes available for use with this tool."
 msgstr "Nejsou dostupné žádné stopy pro použití s tímto nástrojem."
 
-#: ../app/paint/gimpclone.c:100 ../app/tools/gimpclonetool.c:61
+#: ../app/paint/gimpclone.c:99 ../app/tools/gimpclonetool.c:61
 msgid "Clone"
 msgstr "Klonování"
 
-#: ../app/paint/gimpconvolve.c:121 ../app/tools/gimpconvolvetool.c:73
+#: ../app/paint/gimpconvolve.c:121
 msgid "Convolve"
 msgstr "Změna ostrosti"
 
@@ -8123,7 +8123,7 @@ msgstr "2D transformace"
 msgid "Blending"
 msgstr "Mísení"
 
-#: ../app/pdb/gimppdb.c:299 ../app/pdb/gimppdb.c:364
+#: ../app/pdb/gimppdb.c:303 ../app/pdb/gimppdb.c:368
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -8132,7 +8132,7 @@ msgstr ""
 "Chyba volání PDB:\n"
 "procedura '%s' nenalezena"
 
-#: ../app/pdb/gimppdb.c:398
+#: ../app/pdb/gimppdb.c:402
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -8371,7 +8371,8 @@ msgstr ""
 "nemá volby."
 
 #: ../app/tools/gimpairbrushtool.c:55
-msgid "Airbrush with variable pressure"
+#, fuzzy
+msgid "Airbrush Tool: Paint using a brush, with variable pressure"
 msgstr "Rozprašovač s nastavitelným tlakem"
 
 #: ../app/tools/gimpairbrushtool.c:56
@@ -8387,80 +8388,76 @@ msgstr "Přeběh:"
 msgid "Pressure:"
 msgstr "Tlak:"
 
-#: ../app/tools/gimpaligntool.c:117
-msgid "Alignment Tool"
-msgstr "Zarovnání"
+#: ../app/tools/gimpaligntool.c:117 ../app/tools/gimpaligntool.c:577
+msgid "Align"
+msgstr "Zarovnat"
 
 #: ../app/tools/gimpaligntool.c:118
-msgid "Align or arrange layers and other items"
+#, fuzzy
+msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "Zarovnat či uspořádat vrstvy a jiné objekty"
 
 #: ../app/tools/gimpaligntool.c:119
 msgid "_Align"
 msgstr "Z_arovnat"
 
-#: ../app/tools/gimpaligntool.c:596
-msgid "Align"
-msgstr "Zarovnat"
-
-#: ../app/tools/gimpaligntool.c:606
-msgid "Relative to"
+#: ../app/tools/gimpaligntool.c:589
+msgid "Relative to:"
 msgstr "Relativně k "
 
-#: ../app/tools/gimpaligntool.c:627
+#: ../app/tools/gimpaligntool.c:607
 msgid "Align left edge of target"
 msgstr "Zarovnat levý okraj cíle"
 
-#: ../app/tools/gimpaligntool.c:634
+#: ../app/tools/gimpaligntool.c:613
 msgid "Align center of target"
 msgstr "Zarovnat střed cíle"
 
-#: ../app/tools/gimpaligntool.c:641
+#: ../app/tools/gimpaligntool.c:619
 msgid "Align right edge of target"
 msgstr "Zarovnat pravý okraj cíle"
 
-#: ../app/tools/gimpaligntool.c:654
+#: ../app/tools/gimpaligntool.c:629
 msgid "Align top edge of target"
 msgstr "Zarovnat horní okraj cíle"
 
-#: ../app/tools/gimpaligntool.c:661
+#: ../app/tools/gimpaligntool.c:635
 msgid "Align middle of target"
 msgstr "Zarovnat střed cíle"
 
-#: ../app/tools/gimpaligntool.c:668
+#: ../app/tools/gimpaligntool.c:641
 msgid "Align bottom of target"
 msgstr "Zarovnat dolní okraj cíle"
 
-#: ../app/tools/gimpaligntool.c:688
+#: ../app/tools/gimpaligntool.c:645
 msgid "Distribute"
 msgstr "Rozmístit"
 
-#: ../app/tools/gimpaligntool.c:700
+#: ../app/tools/gimpaligntool.c:659
 msgid "Distribute left edges of targets"
 msgstr "Rozmístit levé okraje cílů"
 
-#: ../app/tools/gimpaligntool.c:707
-msgid "Distribute horiz centers of targets"
+#: ../app/tools/gimpaligntool.c:666
+msgid "Distribute horizontal centers of targets"
 msgstr "Rozmístit vodorovné středy cílů"
 
-#: ../app/tools/gimpaligntool.c:714
+#: ../app/tools/gimpaligntool.c:673
 msgid "Distribute right edges of targets"
 msgstr "Rozmístit pravé okraje cílů"
 
-#: ../app/tools/gimpaligntool.c:727
+#: ../app/tools/gimpaligntool.c:683
 msgid "Distribute top edges of targets"
 msgstr "Rozmístit horní okraje cílů"
 
-#: ../app/tools/gimpaligntool.c:734
+#: ../app/tools/gimpaligntool.c:690
 msgid "Distribute vertical centers of targets"
 msgstr "Rozmístit svislé středy cílů"
 
-#: ../app/tools/gimpaligntool.c:741
+#: ../app/tools/gimpaligntool.c:696
 msgid "Distribute bottoms of targets"
 msgstr "Rozmístit dolní okraje cílů"
 
-#. offset row
-#: ../app/tools/gimpaligntool.c:749 ../app/tools/gimpblendoptions.c:213
+#: ../app/tools/gimpaligntool.c:704 ../app/tools/gimpblendoptions.c:213
 msgid "Offset:"
 msgstr "Posun:"
 
@@ -8487,7 +8484,8 @@ msgid "Threshold:"
 msgstr "Práh:"
 
 #: ../app/tools/gimpblendtool.c:104
-msgid "Fill with a color gradient"
+#, fuzzy
+msgid "Blend Tool: Fill selected area with a color gradient"
 msgstr "Vyplňování barevným přechodem"
 
 #: ../app/tools/gimpblendtool.c:105
@@ -8503,8 +8501,8 @@ msgid "Blend: "
 msgstr "Mísení: "
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:102
-msgid "Adjust brightness and contrast"
-msgstr "Upravit jas a kontrast"
+msgid "Brightness/Contrast Tool: Adjust brightness and contrast"
+msgstr "Jas/Kontrast: úprava jasu a kontrastu"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:103
 msgid "B_rightness-Contrast..."
@@ -8584,7 +8582,8 @@ msgid "Bucket Fill"
 msgstr "Plechovka"
 
 #: ../app/tools/gimpbucketfilltool.c:89
-msgid "Fill with a color or pattern"
+#, fuzzy
+msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr "Vyplňování barvou nebo vzorkem"
 
 #: ../app/tools/gimpbucketfilltool.c:90
@@ -8596,16 +8595,16 @@ msgid "Select by Color"
 msgstr "Výběr dle barvy"
 
 #: ../app/tools/gimpbycolorselecttool.c:66
-msgid "Select regions by color"
-msgstr "Výběr oblastí podle barvy"
+msgid "Select by Color Tool: Select regions with similar colors"
+msgstr ""
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "_By Color Select"
 msgstr "_Podle barvy výběru"
 
 #: ../app/tools/gimpclonetool.c:62
-msgid "Paint using Patterns or Image Regions"
-msgstr "Kreslit pomocí stop nebo oblastí obrázku"
+msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
+msgstr ""
 
 #: ../app/tools/gimpclonetool.c:63
 msgid "_Clone"
@@ -8633,8 +8632,8 @@ msgid "Alignment:"
 msgstr "Zarovnání"
 
 #: ../app/tools/gimpcolorbalancetool.c:96
-msgid "Adjust color balance"
-msgstr "Upravit vyvážení barev"
+msgid "Color Balance Tool: Adjust color distribution"
+msgstr ""
 
 #: ../app/tools/gimpcolorbalancetool.c:97
 msgid "Color _Balance..."
@@ -8680,7 +8679,8 @@ msgid "Preserve _luminosity"
 msgstr "Zachovat svět_lost"
 
 #: ../app/tools/gimpcolorizetool.c:94
-msgid "Colorize the image"
+#, fuzzy
+msgid "Colorize Tool: Colorize the image"
 msgstr "Obarvit obrázek"
 
 #: ../app/tools/gimpcolorizetool.c:95
@@ -8740,7 +8740,8 @@ msgid "Color Picker"
 msgstr "Barevná pipeta"
 
 #: ../app/tools/gimpcolorpickertool.c:100
-msgid "Pick colors from the image"
+#, fuzzy
+msgid "Color Picker Tool: Set colors from image pixels"
 msgstr "Nasátí barvy z obrázku"
 
 #: ../app/tools/gimpcolorpickertool.c:101
@@ -8764,9 +8765,13 @@ msgstr "Zrušit vzorkovací bod"
 msgid "Add Sample Point: "
 msgstr "Přidat vzorkovací bod: "
 
+#: ../app/tools/gimpconvolvetool.c:73
+msgid "Blur/Sharpen"
+msgstr "Rozostření/zaostření"
+
 #: ../app/tools/gimpconvolvetool.c:74
-msgid "Blur or Sharpen"
-msgstr "Rozmazání nebo zaostření"
+msgid "Blur/Sharpen Tool: Selective blurring or unblurring using a brush"
+msgstr "Rozostření/Zaostření: selektivní rozostřování či zaostřování štětcem"
 
 #: ../app/tools/gimpconvolvetool.c:75
 msgid "Con_volve"
@@ -8813,8 +8818,8 @@ msgid "Crop"
 msgstr "Oříznout"
 
 #: ../app/tools/gimpcroptool.c:105
-msgid "Crop an image"
-msgstr "Ořezat obrázek"
+msgid "Crop Tool: Remove edge areas from image or layer"
+msgstr ""
 
 #: ../app/tools/gimpcroptool.c:106
 msgid "_Crop"
@@ -8825,8 +8830,8 @@ msgid "Click or press enter to crop"
 msgstr "Klikněte nebo stiskněte Enter pro oříznutí"
 
 #: ../app/tools/gimpcurvestool.c:149
-msgid "Adjust color curves"
-msgstr "Úprava barevných křivek"
+msgid "Curves Tool: Adjust color curves"
+msgstr "Nástroj křivky: Úprava barevných křivek"
 
 #: ../app/tools/gimpcurvestool.c:150
 msgid "_Curves..."
@@ -8891,11 +8896,12 @@ msgid "parse error"
 msgstr "chyba zpracování"
 
 #: ../app/tools/gimpdodgeburntool.c:74
-msgid "Dodge or Burn strokes"
-msgstr "Zesvětlující nebo ztmavující tahy"
+msgid "Dodge/Burn Tool: Selectively lighten or darken using a brush"
+msgstr ""
 
 #: ../app/tools/gimpdodgeburntool.c:75
-msgid "Dod_geBurn"
+#, fuzzy
+msgid "Dod_ge-Burn"
 msgstr "_Zesvětlování/tmavnutí"
 
 #: ../app/tools/gimpdodgeburntool.c:173
@@ -8953,7 +8959,8 @@ msgid "Ellipse Select"
 msgstr "Výběr elipsy"
 
 #: ../app/tools/gimpellipseselecttool.c:73
-msgid "Select elliptical regions"
+#, fuzzy
+msgid "Ellipse Select Tool: Select an elliptical region"
 msgstr "Výběr eliptických oblastí"
 
 #: ../app/tools/gimpellipseselecttool.c:74
@@ -8961,7 +8968,8 @@ msgid "_Ellipse Select"
 msgstr "Výběr _elipsy"
 
 #: ../app/tools/gimperasertool.c:67
-msgid "Erase to background or transparency"
+#, fuzzy
+msgid "Eraser Tool: Erase to background or transparency using a brush"
 msgstr "Gumování do pozadí nebo průhlednosti"
 
 #: ../app/tools/gimperasertool.c:68
@@ -9003,8 +9011,8 @@ msgid "Flip"
 msgstr "Překlopení"
 
 #: ../app/tools/gimpfliptool.c:78
-msgid "Flip the layer or selection"
-msgstr "Překlopení vrstvy nebo výběru"
+msgid "Flip Tool: Reverse the layer horizontally or vertically"
+msgstr ""
 
 #: ../app/tools/gimpfliptool.c:79
 msgid "_Flip"
@@ -9081,8 +9089,8 @@ msgid "Foreground Select"
 msgstr "Výběr popředí"
 
 #: ../app/tools/gimpforegroundselecttool.c:144
-msgid "Extract foreground objects"
-msgstr "Extrahovat objekty v popředí"
+msgid "Foreground Select Tool: Select a region containing foreground objects"
+msgstr "Výběr popředí: výběr oblasti obsahující objekty v popředí"
 
 #: ../app/tools/gimpforegroundselecttool.c:145
 msgid "F_oreground Select"
@@ -9105,7 +9113,8 @@ msgid "command|Foreground Select"
 msgstr "Výběr popředí"
 
 #: ../app/tools/gimpfreeselecttool.c:96
-msgid "Select hand-drawn regions"
+#, fuzzy
+msgid "Free Select Tool: Select a hand-drawn region"
 msgstr "Ruční výběr oblastí"
 
 #: ../app/tools/gimpfreeselecttool.c:97
@@ -9121,15 +9130,16 @@ msgid "Fuzzy Select"
 msgstr "Přibližný výběr"
 
 #: ../app/tools/gimpfuzzyselecttool.c:64
-msgid "Select contiguous regions"
-msgstr "Výběr spojitých oblastí"
+msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
+msgstr ""
 
 #: ../app/tools/gimpfuzzyselecttool.c:65
 msgid "Fu_zzy Select"
 msgstr "Při_bližný výběr"
 
 #: ../app/tools/gimphealtool.c:58
-msgid "Heal image irregularities"
+#, fuzzy
+msgid "Healing Tool: Heal image irregularities"
 msgstr "Léčba nepravidelností obrázku"
 
 #: ../app/tools/gimphealtool.c:59
@@ -9154,8 +9164,8 @@ msgid "Histogram Scale"
 msgstr "Měřítko histogramu"
 
 #: ../app/tools/gimphuesaturationtool.c:115
-msgid "Adjust hue and saturation"
-msgstr "Úprava odstínu a sytosti"
+msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
+msgstr "Odstín-Sytost: úprava odstínu, sytosti a světlosti"
 
 #: ../app/tools/gimphuesaturationtool.c:116
 msgid "Hue-_Saturation..."
@@ -9267,8 +9277,8 @@ msgid "Shape"
 msgstr "Tvar"
 
 #: ../app/tools/gimpinktool.c:56
-msgid "Draw in ink"
-msgstr "Kreslení perem"
+msgid "Ink Tool: Calligraphy-style painting"
+msgstr "Nástroj inkoust: kaligrafické kreslení"
 
 #: ../app/tools/gimpinktool.c:57
 msgid "In_k"
@@ -9279,15 +9289,16 @@ msgid "Scissors"
 msgstr "Nůžky"
 
 #: ../app/tools/gimpiscissorstool.c:273
-msgid "Select shapes from image"
-msgstr "Výběr tvarů z obrázku"
+msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
+msgstr ""
 
 #: ../app/tools/gimpiscissorstool.c:274
 msgid "Intelligent _Scissors"
 msgstr "_Inteligentní nůžky"
 
 #: ../app/tools/gimplevelstool.c:156
-msgid "Adjust color levels"
+#, fuzzy
+msgid "Levels Tool: Adjust color levels"
 msgstr "Úprava úrovní barev"
 
 #: ../app/tools/gimplevelstool.c:157
@@ -9359,8 +9370,8 @@ msgid "Zoom"
 msgstr "Přiblížení"
 
 #: ../app/tools/gimpmagnifytool.c:92
-msgid "Zoom in & out"
-msgstr "Přiblížení nebo oddálení"
+msgid "Zoom Tool: Adjust the zoom level"
+msgstr ""
 
 #: ../app/tools/gimpmagnifytool.c:93
 msgid "tool|_Zoom"
@@ -9375,7 +9386,8 @@ msgid "Measure"
 msgstr "Měřidlo"
 
 #: ../app/tools/gimpmeasuretool.c:122
-msgid "Measure distances and angles"
+#, fuzzy
+msgid "Measure Tool: Measure distances and angles"
 msgstr "Měření vzdáleností a úhlů"
 
 #: ../app/tools/gimpmeasuretool.c:123
@@ -9420,8 +9432,8 @@ msgid "tool|Move"
 msgstr "Přesun"
 
 #: ../app/tools/gimpmovetool.c:118
-msgid "Move layers & selections"
-msgstr "Přesun vrstev a výběrů"
+msgid "Move Tool: Move layers, selections, and other objects"
+msgstr ""
 
 #: ../app/tools/gimpmovetool.c:119
 msgid "_Move"
@@ -9440,8 +9452,8 @@ msgid "Add Guide: "
 msgstr "Přidat vodítko: "
 
 #: ../app/tools/gimppaintbrushtool.c:52
-msgid "Paint fuzzy brush strokes"
-msgstr "Kreslení neostrých tahů štětcem"
+msgid "Paintbrush Tool: Paint smooth strokes using a brush"
+msgstr ""
 
 #: ../app/tools/gimppaintbrushtool.c:53
 msgid "_Paintbrush"
@@ -9549,15 +9561,16 @@ msgid "%s for a straight line"
 msgstr "%s pro rovnou čáru"
 
 #: ../app/tools/gimppenciltool.c:52
-msgid "Paint hard edged pixels"
-msgstr "Kreslení pixelů s ostrými hranami"
+msgid "Pencil Tool: Hard edge painting using a brush"
+msgstr ""
 
 #: ../app/tools/gimppenciltool.c:53
 msgid "Pe_ncil"
 msgstr "_Tužka"
 
 #: ../app/tools/gimpperspectivetool.c:69
-msgid "Change perspective of the layer or selection"
+#, fuzzy
+msgid "Perspective Tool: Change perspective of the layer or selection"
 msgstr "Změna perspektivy vrstvy nebo výběru"
 
 #: ../app/tools/gimpperspectivetool.c:70
@@ -9577,8 +9590,9 @@ msgid "Transformation Matrix"
 msgstr "Transformační matrix"
 
 #: ../app/tools/gimpposterizetool.c:79
-msgid "Reduce image to a fixed number of colors"
-msgstr "Redukce obrázku na pevně daný počet barev"
+#, fuzzy
+msgid "Posterize Tool: Reduce to a limited set of colors"
+msgstr "Posterizace (redukce počtu barev)"
 
 #: ../app/tools/gimpposterizetool.c:80
 msgid "_Posterize..."
@@ -9649,18 +9663,20 @@ msgid "Y"
 msgstr "Y"
 
 #: ../app/tools/gimprectangleselecttool.c:139
-msgid "Rect Select"
+#, fuzzy
+msgid "Rectangle Select"
 msgstr "Výběr obdélníku"
 
 #: ../app/tools/gimprectangleselecttool.c:140
-msgid "Select a Rectangular part of an image"
-msgstr "Výběr obdélníkové oblasti"
+msgid "Rectangle Select Tool: Select a rectangular region"
+msgstr ""
 
 #: ../app/tools/gimprectangleselecttool.c:141
-msgid "_Rect Select"
+#, fuzzy
+msgid "_Rectangle Select"
 msgstr "Výběr _obdélníku"
 
-#: ../app/tools/gimprectangletool.c:1385 ../app/tools/gimprectangletool.c:2171
+#: ../app/tools/gimprectangletool.c:1385 ../app/tools/gimprectangletool.c:2172
 msgid "Rectangle: "
 msgstr "Obdélník: "
 
@@ -9673,7 +9689,8 @@ msgid "Rotate"
 msgstr "Rotovat"
 
 #: ../app/tools/gimprotatetool.c:87
-msgid "Rotate the layer or selection"
+#, fuzzy
+msgid "Rotate Tool: Rotate the layer or selection"
 msgstr "Rotace vrstvy nebo výběru"
 
 #: ../app/tools/gimprotatetool.c:88
@@ -9697,7 +9714,8 @@ msgid "Scale"
 msgstr "Škála"
 
 #: ../app/tools/gimpscaletool.c:80
-msgid "Scale the layer or selection"
+#, fuzzy
+msgid "Scale Tool: Scale the layer or selection"
 msgstr "Škálování vrstvy nebo výběru"
 
 #: ../app/tools/gimpscaletool.c:81
@@ -9793,7 +9811,8 @@ msgid "Shear"
 msgstr "Naklonit"
 
 #: ../app/tools/gimpsheartool.c:87
-msgid "Shear the layer or selection"
+#, fuzzy
+msgid "Shear Tool: Shear the layer or selection"
 msgstr "Naklonění vrstvy nebo výběru"
 
 #: ../app/tools/gimpsheartool.c:88
@@ -9817,8 +9836,8 @@ msgid "Shear magnitude Y:"
 msgstr "Zvětšení Y naklonění:"
 
 #: ../app/tools/gimpsmudgetool.c:55
-msgid "Smudge image"
-msgstr "Rozmazání obrázku"
+msgid "Smudge Tool: Smudge selectively using a brush"
+msgstr ""
 
 #: ../app/tools/gimpsmudgetool.c:56
 msgid "_Smudge"
@@ -9889,8 +9908,8 @@ msgid "Text along Path"
 msgstr "Text podél cesty"
 
 #: ../app/tools/gimptexttool.c:144
-msgid "Add text to the image"
-msgstr "Přidání textu do obrázku"
+msgid "Text Tool: Create or edit text layers"
+msgstr ""
 
 #: ../app/tools/gimptexttool.c:145
 msgid "Te_xt"
@@ -9919,7 +9938,8 @@ msgstr ""
 "textu."
 
 #: ../app/tools/gimpthresholdtool.c:84
-msgid "Reduce image to two colors using a threshold"
+#, fuzzy
+msgid "Threshold Tool: Reduce image to two colors using a threshold"
 msgstr "Redukce obrázku do dvou barev pomocí prahu"
 
 #: ../app/tools/gimpthresholdtool.c:85
@@ -10015,7 +10035,8 @@ msgid "Create Selection from Path"
 msgstr "Vytvořit výběr z cesty"
 
 #: ../app/tools/gimpvectortool.c:159
-msgid "Create and edit paths"
+#, fuzzy
+msgid "Paths Tool: Create and edit paths"
 msgstr "Vytvořit a upravit cesty"
 
 #: ../app/tools/gimpvectortool.c:160
