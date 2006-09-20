@@ -19,6 +19,8 @@
 
 from gimpfu import *
 
+gettext.install("gimp20-python", gimp.locale_directory, unicode=1)
+
 def console():
     import pygtk
     pygtk.require('2.0')
@@ -104,6 +106,8 @@ register(
     "",
     [],
     [],
-    console, menu="<Toolbox>/Xtns/Languages/Python-Fu", domain="gimp20-python")
+    console,
+    menu="<Toolbox>/Xtns/Languages/Python-Fu",
+    domain=("gimp20-python", gimp.locale_directory))
 
 main()

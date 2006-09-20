@@ -65,7 +65,7 @@ expect a fifth element in their description tuple -- a 3-tuple of the form
 If want to localize your plug-in, add an optional domain parameter to the
 register call. It can be the name of the translation domain or a tuple that
 consists of the translation domain and the directory where the translations
-are installed. You can then use N_() and _() to localize your plug-in.
+are installed.
 '''
 
 import string as _string
@@ -532,6 +532,13 @@ def _interact(proc_name, start_params):
     vbox.show()
 
     if blurb:
+        if domain:
+            try:
+                (domain, locale_dir) = domain
+                trans = gettext.translation(domain, locale_dir, fallback=True)
+            except ValueError:
+                trans = gettext.translation(domain, fallback=True)
+            blurb = trans.ugettext(blurb)
         box = gimpui.HintBox(blurb)
         vbox.pack_start(box, expand=False)
         box.show()
@@ -628,14 +635,6 @@ def _run(proc_name, params):
     plugin_type = _registered_plugins_[proc_name][7]
     func = _registered_plugins_[proc_name][10]
     menu = _registered_plugins_[proc_name][11]
-    domain = _registered_plugins_[proc_name][12]
-
-    if domain:
-        try:
-            (domain, locale_dir) = domain
-            gettext.install(domain, locale_dir, unicode=1)
-        except ValueError:
-            gettext.install(domain, unicode=1)
 
     if plugin_type == PLUGIN and menu[:7] == '<Image>':
         end = 3

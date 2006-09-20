@@ -1,5 +1,14 @@
 2006-09-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/clothify.py
+	* plug-ins/pygimp/plug-ins/gimpcons.py: need to call gettext.install
+	here, otherwise we can't use _() in the register() call.
+
+	* plug-ins/pygimp/gimpfu.py: don't call gettext.install() for the
+	plug-in. Translate the blurb used as a user hint.
+
+2006-09-20  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-manager.c (read_pixel_data_1) (write_pixel_data_1):
 	fixed endian issues (bug #340965).
 

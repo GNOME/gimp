@@ -20,6 +20,8 @@
 import math
 from gimpfu import *
 
+gettext.install("gimp20-python", gimp.locale_directory, unicode=1)
+
 def clothify(timg, tdrawable, bx=9, by=9, azimuth=135, elevation=45, depth=3):
     width = tdrawable.width
     height = tdrawable.height
@@ -27,7 +29,7 @@ def clothify(timg, tdrawable, bx=9, by=9, azimuth=135, elevation=45, depth=3):
     img = gimp.Image(width, height, RGB)
     img.disable_undo()
 
-    layer_one = gimp.Layer(img, "X Dots", width, height, RGB_IMAGE,
+    layer_one = gimp.Layer(img, _("X Dots"), width, height, RGB_IMAGE,
                            100, NORMAL_MODE)
     img.add_layer(layer_one, 0)
     pdb.gimp_edit_fill(layer_one, BACKGROUND_FILL)
@@ -36,7 +38,7 @@ def clothify(timg, tdrawable, bx=9, by=9, azimuth=135, elevation=45, depth=3):
 
     layer_two = layer_one.copy()
     layer_two.mode = MULTIPLY_MODE
-    layer_two.name = "Y Dots"
+    layer_two.name = _("Y Dots")
     img.add_layer(layer_two, 0)
 
     pdb.plug_in_gauss_rle(img, layer_one, bx, 1, 0)
@@ -54,22 +56,24 @@ def clothify(timg, tdrawable, bx=9, by=9, azimuth=135, elevation=45, depth=3):
     gimp.delete(img)
 
 register(
-        "python-fu-clothify",
-        "Make the specified layer look like it is printed on cloth",
-        "Make the specified layer look like it is printed on cloth",
-        "James Henstridge",
-        "James Henstridge",
-        "1997-1999",
-        "_Clothify...",
-        "RGB*, GRAY*",
-        [
-                (PF_INT, "x-blur", "X blur", 9),
-                (PF_INT, "y-blur", "Y blur", 9),
-                (PF_INT, "azimuth", "Azimuth", 135),
-                (PF_INT, "elevation", "Elevation", 45),
-                (PF_INT, "depth", "Depth", 3)
-        ],
-        [],
-        clothify, menu="<Image>/Filters/Artistic")
+    "python-fu-clothify",
+    N_("Make the image look like it is printed on cloth"),
+    "Make the specified drawable look like it is printed on cloth",
+    "James Henstridge",
+    "James Henstridge",
+    "1997-1999",
+    N_("_Clothify..."),
+    "RGB*, GRAY*",
+    [
+       (PF_INT, "x-blur",    _("Horizontal blur"), 9),
+       (PF_INT, "y-blur",    _("Vertical blur"),   9),
+       (PF_INT, "azimuth",   _("Azimuth"),       135),
+       (PF_INT, "elevation", _("Elevation"),      45),
+       (PF_INT, "depth",     _("Depth"),           3)
+    ],
+    [],
+    clothify,
+    menu="<Image>/Filters/Artistic",
+    domain=("gimp20-python", gimp.locale_directory))
 
 main()

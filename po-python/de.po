@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-15 13:29+0200\n"
-"PO-Revision-Date: 2006-09-15 13:30+0200\n"
+"POT-Creation-Date: 2006-09-20 13:15+0200\n"
+"PO-Revision-Date: 2006-09-20 13:18+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,47 +15,87 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394 ../plug-ins/pygimp/gimpfu.py:406
-#: ../plug-ins/pygimp/gimpfu.py:412
+#: ../plug-ins/pygimp/gimpfu.py:407 ../plug-ins/pygimp/gimpfu.py:419
+#: ../plug-ins/pygimp/gimpfu.py:425
 msgid "No"
 msgstr "Nein"
 
-#: ../plug-ins/pygimp/gimpfu.py:404 ../plug-ins/pygimp/gimpfu.py:412
+#: ../plug-ins/pygimp/gimpfu.py:417 ../plug-ins/pygimp/gimpfu.py:425
 msgid "Yes"
 msgstr "Ja"
 
-#: ../plug-ins/pygimp/gimpfu.py:450
+#: ../plug-ins/pygimp/gimpfu.py:463 ../plug-ins/pygimp/gimpui.py:200
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu Dateiauswahl"
 
-#: ../plug-ins/pygimp/gimpfu.py:461
+#: ../plug-ins/pygimp/gimpfu.py:474
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu Verzeichnisauswahl"
+
+#: ../plug-ins/pygimp/gimpui.py:153
+msgid "Python-Fu Color Selection"
+msgstr "Python-Fu Farbauswahl"
 
 #: ../plug-ins/pygimp/procbrowser.c:174
 msgid "Python Procedure Browser"
 msgstr "Python Prozedurbrowser"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:42
+#: ../plug-ins/pygimp/plug-ins/clothify.py:32
+msgid "X Dots"
+msgstr "X Punkte"
+
+#: ../plug-ins/pygimp/plug-ins/clothify.py:41
+msgid "Y Dots"
+msgstr "Y Punkte"
+
+#: ../plug-ins/pygimp/plug-ins/clothify.py:60
+msgid "Make the image look like it is printed on cloth"
+msgstr "Lässt das Bild aussehen wie auf Leinen gedruckt"
+
+#: ../plug-ins/pygimp/plug-ins/clothify.py:65
+msgid "_Clothify..."
+msgstr "_Leinen..."
+
+#: ../plug-ins/pygimp/plug-ins/clothify.py:68
+msgid "Horizontal blur"
+msgstr "Horizontales Weichzeichnen"
+
+#: ../plug-ins/pygimp/plug-ins/clothify.py:69
+msgid "Vertical blur"
+msgstr "Vertikales Weichzeichnen"
+
+#: ../plug-ins/pygimp/plug-ins/clothify.py:70
+msgid "Azimuth"
+msgstr "Azimut"
+
+#: ../plug-ins/pygimp/plug-ins/clothify.py:71
+msgid "Elevation"
+msgstr "Erhebung"
+
+#: ../plug-ins/pygimp/plug-ins/clothify.py:72
+msgid "Depth"
+msgstr "Tiefe"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:44
 msgid "Python Console"
 msgstr "Python Konsole"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:74
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:76
 msgid "_Browse..."
 msgstr "_Durchsuchen …"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:98
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:100
 msgid "Interactive Gimp-Python interpreter"
 msgstr "Interaktiver Gimp-Python Interpreter"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:103
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:105
 msgid "_Console"
 msgstr "_Konsole"
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:221
 msgid "Gimp-Python Console"
 msgstr "Gimp-Python Konsole"
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:222
 msgid "Interactive Python Development"
 msgstr "Interaktive Python Entwicklung"
