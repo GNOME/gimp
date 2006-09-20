@@ -1,5 +1,10 @@
 2006-09-20  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimphistogrambox.c: draw slider positions more
+	accurately, fixed incorrect use of GtkAdjustments.
+
+2006-09-20  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimpperspectiveclone.c: removed unused variables and
 	unused macro.
 
