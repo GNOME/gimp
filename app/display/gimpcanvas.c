@@ -217,12 +217,6 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
       values.graphics_exposures = TRUE;
       break;
 
-    case GIMP_CANVAS_STYLE_XOR_STIPPLED:
-      mask |= GDK_GC_FILL | GDK_GC_STIPPLE;
-      values.fill      = GDK_STIPPLED;
-      values.stipple   = canvas->stipple[0];
-      /*  fallthrough  */
-
     case GIMP_CANVAS_STYLE_XOR_DOTTED:
     case GIMP_CANVAS_STYLE_XOR_DASHED:
       mask |= GDK_GC_LINE_STYLE;

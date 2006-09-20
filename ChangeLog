@@ -1,3 +1,12 @@
+2006-09-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/display/gimpcanvas.[ch]
+	* app/tools/gimpdrawtool.[ch]: remove recently added code relating
+	to stippled xor drawing -- not handled well by some display
+	drivers.
+	
+	* app/tools/gimprectangletool.c: improve drawing of handles.
+	
 2006-09-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/pygimp-drawable.c (drw_set_name): use

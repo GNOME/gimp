@@ -1889,7 +1889,7 @@ gimp_rectangle_tool_cursor_update (GimpTool        *tool,
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 }
 
-#define ANCHOR_SIZE 20
+#define ANCHOR_SIZE 14
 
 void
 gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
@@ -1927,8 +1927,10 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
       GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (tool->display->shell);
       gdouble           handle_w;
       gdouble           handle_h;
-      gint              X1, Y1;
-      gint              X2, Y2;
+      gint              X1 = x1;
+      gint              Y1 = y1;
+      gint              X2 = x2;
+      gint              Y2 = y2;
       gboolean          do_it    = TRUE;
 
       handle_w = private->dcw / SCALEFACTOR_X (shell);
@@ -1937,59 +1939,19 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
       switch (private->function)
       {
       case RECT_RESIZING_LEFT:
-        X1 = x1;
-        X2 = x1 + handle_w / 2;
-        Y1 = y1;
-        Y2 = y2;
+        X2 = x1 + handle_w / 3;
         break;
 
       case RECT_RESIZING_RIGHT:
-        X1 = x2 - handle_w / 2;
-        X2 = x2;
-        Y1 = y1;
-        Y2 = y2;
+        X1 = x2 - handle_w / 3;
         break;
 
       case RECT_RESIZING_TOP:
-        X1 = x1 + handle_w;
-        X2 = x2 - handle_w;
-        Y1 = y1;
-        Y2 = y1 + handle_h / 2;
+        Y2 = y1 + handle_h / 3;
         break;
 
       case RECT_RESIZING_BOTTOM:
-        X1 = x1;
-        X2 = x2;
-        Y1 = y2 - handle_h / 2;
-        Y2 = y2;
-        break;
-
-      case RECT_RESIZING_UPPER_LEFT:
-        X1 = x1;
-        X2 = x1 + handle_w;
-        Y1 = y1;
-        Y2 = y1 + handle_h;
-        break;
-
-      case RECT_RESIZING_UPPER_RIGHT:
-        X1 = x2 - handle_w;
-        X2 = x2;
-        Y1 = y1;
-        Y2 = y1 + handle_h;
-        break;
-
-      case RECT_RESIZING_LOWER_LEFT:
-        X1 = x1;
-        X2 = x1 + handle_w;
-        Y1 = y2 - handle_h;
-        Y2 = y2;
-        break;
-
-      case RECT_RESIZING_LOWER_RIGHT:
-        X1 = x2 - handle_w;
-        X2 = x2;
-        Y1 = y2 - handle_h;
-        Y2 = y2;
+        Y1 = y2 - handle_h / 3;
         break;
 
       default:
@@ -1998,9 +1960,65 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
       }
 
       if (do_it)
-        gimp_draw_tool_draw_rectangle_stippled (draw_tool,
-                                                X1, Y1, X2 - X1, Y2 - Y1,
-                                                FALSE);
+        {
+          gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
+                                         X1, Y1, X2 - X1, Y2 - Y1,
+                                         FALSE);
+        }
+      else
+        {
+          GimpCoords coords[3];
+
+          do_it     = TRUE;
+
+          switch (private->function)
+            {
+            case RECT_RESIZING_UPPER_LEFT:
+              coords[0].x = x1;
+              coords[0].y = y1;
+              coords[1].x = x1;
+              coords[1].y = y1 + handle_h;
+              coords[2].x = x1 + handle_w;
+              coords[2].y = y1;
+              break;
+
+            case RECT_RESIZING_UPPER_RIGHT:
+              coords[0].x = x2;
+              coords[0].y = y1;
+              coords[1].x = x2;
+              coords[1].y = y1 + handle_h;
+              coords[2].x = x2 - handle_w;
+              coords[2].y = y1;
+              break;
+
+            case RECT_RESIZING_LOWER_LEFT:
+              coords[0].x = x1;
+              coords[0].y = y2;
+              coords[1].x = x1;
+              coords[1].y = y2 - handle_h;
+              coords[2].x = x1 + handle_w;
+              coords[2].y = y2;
+              break;
+
+            case RECT_RESIZING_LOWER_RIGHT:
+              coords[0].x = x2;
+              coords[0].y = y2;
+              coords[1].x = x2;
+              coords[1].y = y2 - handle_h;
+              coords[2].x = x2 - handle_w;
+              coords[2].y = y2;
+              break;
+
+            default:
+              do_it = FALSE;
+              break;
+            }
+
+          if (do_it)
+            {
+              gimp_draw_tool_draw_strokes (draw_tool, coords, 3, TRUE, FALSE);
+            }
+        }
     }
   else
     {
