@@ -1,3 +1,8 @@
+2006-09-20  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolornotebook.c: use canonical names for
+	style properties.
+
 2006-09-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/display/gimpcanvas.[ch]
