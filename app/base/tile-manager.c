@@ -828,9 +828,12 @@ read_pixel_data_1 (TileManager *tm,
            switch (tm->bpp)
              {
              case 4:
+#if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
                *(guint32 *) buffer = *(const guint32 *) src;
                break;
-
+#else
+               *dest++ = *buffer++;
+#endif
              case 3:
                *buffer++ = *src++;
              case 2:
@@ -848,18 +851,18 @@ write_pixel_data_1 (TileManager  *tm,
                     gint          y,
                     const guchar *buffer)
 {
-  Tile   *tile;
-  guchar *dest;
-
-  tile = tile_manager_get_tile (tm, x, y, TRUE, TRUE);
-  dest = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+  Tile   *tile = tile_manager_get_tile (tm, x, y, TRUE, TRUE);
+  guchar *dest = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 
   switch (tm->bpp)
     {
     case 4:
+#if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
       *(guint32 *) dest = *(const guint32 *) buffer;
       break;
-
+#else
+      *dest++ = *buffer++;
+#endif
     case 3:
       *dest++ = *buffer++;
     case 2:

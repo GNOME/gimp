@@ -1,3 +1,8 @@
+2006-09-20  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-manager.c (read_pixel_data_1) (write_pixel_data_1):
+	fixed endian issues (bug #340965).
+
 2006-09-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/gimpplugin.c (gimp_plug_in_close): if the plug-in is
