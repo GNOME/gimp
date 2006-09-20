@@ -47,8 +47,6 @@
 #include "gimp-intl.h"
 
 
-#define round(x) ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
-
 #define MIN4(a,b,c,d) MIN(MIN(a,b),MIN(c,d))
 #define MAX4(a,b,c,d) MAX(MAX(a,b),MAX(c,d))
 
@@ -144,11 +142,9 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                               GimpPaintState    paint_state,
                               guint32           time)
 {
-  GimpSourceCore       *source_core   = GIMP_SOURCE_CORE (paint_core);
-  GimpPerspectiveClone *clone         = GIMP_PERSPECTIVE_CLONE (paint_core);
-  GimpSourceOptions    *options       = GIMP_SOURCE_OPTIONS (paint_options);
-  GimpCloneOptions     *clone_options = GIMP_CLONE_OPTIONS (paint_options);
-  GimpContext          *context       = GIMP_CONTEXT (paint_options);
+  GimpSourceCore       *source_core = GIMP_SOURCE_CORE (paint_core);
+  GimpPerspectiveClone *clone       = GIMP_PERSPECTIVE_CLONE (paint_core);
+  GimpSourceOptions    *options     = GIMP_SOURCE_OPTIONS (paint_options);
 
   switch (paint_state)
     {
