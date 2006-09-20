@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#define _GNU_SOURCE
+
 #include <errno.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -427,7 +429,13 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
             g_print (_("Terminating plug-in: '%s'\n"),
                      gimp_filename_to_utf8 (plug_in->prog));
 
-          status = kill (plug_in->pid, SIGKILL);
+          /*  If the plug-in opened a process group, kill the group instead
+           *  of only the plug-in, so we kill the plug-in's children too
+           */
+          if (getpgid (0) != getpgid (plug_in->pid))
+            status = kill (- plug_in->pid, SIGKILL);
+          else
+            status = kill (plug_in->pid, SIGKILL);
         }
 
       /* Wait for the process to exit. This will happen

@@ -1,3 +1,12 @@
+2006-09-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/gimpplugin.c (gimp_plug_in_close): if the plug-in is
+	in a different process group than GIMP, kill the entire group so
+	the plug-in's children are killed too.
+
+	* plug-ins/uri/uri-backend-wget.c (uri_backend_load_image): open
+	a process group so the wget process gets killed (bug #356643).
+
 2006-09-20  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimphistogrambox.c: draw slider positions more

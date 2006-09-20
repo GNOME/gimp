@@ -82,6 +82,9 @@ uri_backend_load_image (const gchar  *uri,
       return FALSE;
     }
 
+  /*  open a process group, so killing the plug-in will kill wget too  */
+  setpgrp ();
+
   if ((pid = fork()) < 0)
     {
       g_set_error (error, 0, 0, "fork() failed: %s", g_strerror (errno));
