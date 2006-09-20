@@ -55,7 +55,7 @@ def clothify(timg, tdrawable, bx=9, by=9, azimuth=135, elevation=45, depth=3):
 
 register(
         "python-fu-clothify",
-        "Make the image look like it is printed on cloth"
+        "Make the image look like it is printed on cloth",
         "Make the specified layer look like it is printed on cloth",
         "James Henstridge",
         "James Henstridge",
