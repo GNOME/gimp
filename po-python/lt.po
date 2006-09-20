@@ -7,27 +7,59 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-13 21:07+0200\n"
-"PO-Revision-Date: 2006-03-13 14:40+0200\n"
+"POT-Creation-Date: 2006-09-20 19:32+0300\n"
+"PO-Revision-Date: 2006-09-20 19:34+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+#: ../plug-ins/pygimp/gimpfu.py:407 ../plug-ins/pygimp/gimpfu.py:419
+#: ../plug-ins/pygimp/gimpfu.py:425
+msgid "No"
+msgstr "Ne"
+
+#: ../plug-ins/pygimp/gimpfu.py:417 ../plug-ins/pygimp/gimpfu.py:425
+msgid "Yes"
+msgstr "Taip"
+
+#: ../plug-ins/pygimp/gimpfu.py:463 ../plug-ins/pygimp/gimpui.py:200
+msgid "Python-Fu File Selection"
+msgstr "Python-Fu rinkmenų parinkimas"
+
+#: ../plug-ins/pygimp/gimpfu.py:474
+msgid "Python-Fu Folder Selection"
+msgstr "Python-Fu aplankų parinkimas"
+
+#: ../plug-ins/pygimp/gimpui.py:153
+msgid "Python-Fu Color Selection"
+msgstr "Python-Fu spalvų parinkimas"
+
+#: ../plug-ins/pygimp/procbrowser.c:174
+msgid "Python Procedure Browser"
+msgstr "Python procedūrų naršyklė"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:44
 msgid "Python Console"
 msgstr "Python konsolė"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:76
 msgid "_Browse..."
 msgstr "_Naršyti..."
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
-#, fuzzy
-msgid "Gimp-Python Console"
-msgstr "Python konsolė"
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:100
+msgid "Interactive Gimp-Python interpreter"
+msgstr "Interaktyvus Gimp-Python interpretatorius"
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:105
+msgid "_Console"
+msgstr "_Konsolė"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:221
+msgid "Gimp-Python Console"
+msgstr "Gimp-Python konsolė"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:222
 msgid "Interactive Python Development"
-msgstr ""
+msgstr "Interaktyvus programavimas Python"

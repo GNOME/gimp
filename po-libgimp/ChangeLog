@@ -1,3 +1,7 @@
+2006-09-20  Žygimantas Beručka  <zygis@gnome.org>
+
+	* lt.po: Updated Lithuanian translation.
+
 2006-09-14  Francisco Javier F. Serrador  <serrador@openshine.com>
 
 	* es.po: Fixed wrong handling of "|" context string. Closes #355936
