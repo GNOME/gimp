@@ -1,5 +1,13 @@
 2006-09-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/pygimp-drawable.c (drw_set_name): use
+	PyUnicode_Check() instead of PyString_Check().
+
+	* plug-ins/pygimp/plug-ins/clothify.py: reverted localisation;
+	this plug-in isn't installed by default.
+
+2006-09-20  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/pygimp/plug-ins/clothify.py
 	* plug-ins/pygimp/plug-ins/gimpcons.py: need to call gettext.install
 	here, otherwise we can't use _() in the register() call.

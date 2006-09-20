@@ -5,6 +5,5 @@ plug-ins/pygimp/gimpfu.py
 plug-ins/pygimp/gimpui.py
 plug-ins/pygimp/procbrowser.c
 
-plug-ins/pygimp/plug-ins/clothify.py
 plug-ins/pygimp/plug-ins/gimpcons.py
 plug-ins/pygimp/plug-ins/gtkcons.py

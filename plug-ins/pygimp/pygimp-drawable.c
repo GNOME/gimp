@@ -931,7 +931,7 @@ drw_set_name(PyGimpDrawable *self, PyObject *value, void *closure)
         return -1;
     }
 
-    if (!PyString_Check(value)) {
+    if (!PyUnicode_Check(value)) {
         PyErr_SetString(PyExc_TypeError, "type mismatch");
         return -1;
     }

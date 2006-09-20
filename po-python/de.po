@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-20 13:15+0200\n"
+"POT-Creation-Date: 2006-09-20 13:45+0200\n"
 "PO-Revision-Date: 2006-09-20 13:18+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -39,42 +39,6 @@ msgstr "Python-Fu Farbauswahl"
 #: ../plug-ins/pygimp/procbrowser.c:174
 msgid "Python Procedure Browser"
 msgstr "Python Prozedurbrowser"
-
-#: ../plug-ins/pygimp/plug-ins/clothify.py:32
-msgid "X Dots"
-msgstr "X Punkte"
-
-#: ../plug-ins/pygimp/plug-ins/clothify.py:41
-msgid "Y Dots"
-msgstr "Y Punkte"
-
-#: ../plug-ins/pygimp/plug-ins/clothify.py:60
-msgid "Make the image look like it is printed on cloth"
-msgstr "Lässt das Bild aussehen wie auf Leinen gedruckt"
-
-#: ../plug-ins/pygimp/plug-ins/clothify.py:65
-msgid "_Clothify..."
-msgstr "_Leinen..."
-
-#: ../plug-ins/pygimp/plug-ins/clothify.py:68
-msgid "Horizontal blur"
-msgstr "Horizontales Weichzeichnen"
-
-#: ../plug-ins/pygimp/plug-ins/clothify.py:69
-msgid "Vertical blur"
-msgstr "Vertikales Weichzeichnen"
-
-#: ../plug-ins/pygimp/plug-ins/clothify.py:70
-msgid "Azimuth"
-msgstr "Azimut"
-
-#: ../plug-ins/pygimp/plug-ins/clothify.py:71
-msgid "Elevation"
-msgstr "Erhebung"
-
-#: ../plug-ins/pygimp/plug-ins/clothify.py:72
-msgid "Depth"
-msgstr "Tiefe"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:44
 msgid "Python Console"
