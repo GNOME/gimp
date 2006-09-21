@@ -53,12 +53,12 @@
 ; units as passed in as the default value.
 ;
 ; Usage:
-; SF-BRUSH "Brush" '("Circle (03)" 1.0 44 0)
+; SF-BRUSH "Brush" '("Circle (03)" 100.0 44 0)
 ;
 ; Here the brush dialog will be popped up with a default brush of Circle (03)
-; opacity 1.0, spacing 44 and paint mode of Normal (value 0).
+; opacity 100, spacing 44 and paint mode of Normal (value 0).
 ; If this selection was unchanged the value passed to the function as a
-; paramater would be '("Circle (03)" 1.0 44 0). BTW the widget used
+; paramater would be '("Circle (03)" 100.0 44 0). BTW the widget used
 ; is generally available in the libgimpui library for any plugin that
 ; wishes to select a brush.
 ;
@@ -268,7 +268,7 @@
 		    SF-TOGGLE     "Shadow"             TRUE
 		    SF-COLOR      "Background color"   "white"
 		    SF-COLOR      "Sphere color"       "#FF0000"
-		    SF-BRUSH      "Brush"              '("Circle (03)" 1.0 44 0)
+		    SF-BRUSH      "Brush"              '("Circle (03)" 100.0 44 0)
 		    SF-STRING     "Text"               "Script-Fu rocks!"
 		    SF-TEXT       "Multi-line text"    "Hello,\nWorld!"
 		    SF-PATTERN    "Pattern"            "Maple Leaves"

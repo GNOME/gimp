@@ -1,5 +1,14 @@
 2006-09-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gfig/gfig-dialog.c: pass correct parameters to
+	gimp_brush_select_button_new(). Fixes bug #356901.
+
+	* plug-ins/script-fu/scripts/test-sphere.scm: use 100.0 as the
+	default opacity for SF-BRUSH.
+
+2006-09-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/test-sphere.scm ("script-fu-test-sphere"): 
 	* app/base/tile-manager.c (read_pixel_data_1) (write_pixel_data_1):
 	use the same code on all platforms. The optimization for bytes == 4
 	was pointless anyway.

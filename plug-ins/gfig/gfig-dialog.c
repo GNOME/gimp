@@ -246,7 +246,7 @@ gfig_dialog (void)
     {
       newlayer = gimp_layer_new (gfig_context->image_id, "GFig",
                                  img_width, img_height,
-                                 GIMP_RGBA_IMAGE, 100., GIMP_NORMAL_MODE);
+                                 GIMP_RGBA_IMAGE, 100.0, GIMP_NORMAL_MODE);
       gimp_drawable_fill (newlayer, GIMP_TRANSPARENT_FILL);
       gimp_image_add_layer (gfig_context->image_id, newlayer, -1);
       gfig_context->drawable_id = newlayer;
@@ -390,7 +390,7 @@ gfig_dialog (void)
   gfig_context->brush_select
     = gimp_brush_select_button_new ("Brush",
                                     gfig_context->default_style.brush_name,
-                                    -1.0, -1, -1);
+                                    100.0, -1, GIMP_NORMAL_MODE);
   g_signal_connect (gfig_context->brush_select, "brush-set",
                     G_CALLBACK (gfig_brush_changed_callback), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), gfig_context->brush_select,
