@@ -1,5 +1,10 @@
 2006-09-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/py-slice.py
+	* plug-ins/pygimp/plug-ins/shadow_bevel.py: prepared for translation.
+
+2006-09-21  Sven Neumann  <sven@gimp.org>
+
 	* menus/image-menu.xml.in: added align-tool (bug #356260).
 
 	* plug-ins/pygimp/plug-ins/palette-to-gradient.py
