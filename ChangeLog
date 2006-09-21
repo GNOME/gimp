@@ -1,3 +1,9 @@
+2006-09-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/paint-funcs/scale-funcs.[ch]:  commit patch from "gg"
+	to fix Lanczos problems, addresses bug #167956 and 
+	bug #355178.
+
 2006-09-21  Sven Neumann  <sven@gimp.org>
 
 	* README.i18n: mention po-python.
