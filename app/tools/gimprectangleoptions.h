@@ -25,6 +25,8 @@ typedef enum
   GIMP_RECTANGLE_OPTIONS_PROP_0,
   GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
   GIMP_RECTANGLE_OPTIONS_PROP_GUIDE,
+  GIMP_RECTANGLE_OPTIONS_PROP_X0,
+  GIMP_RECTANGLE_OPTIONS_PROP_Y0,
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_WIDTH,
   GIMP_RECTANGLE_OPTIONS_PROP_WIDTH,
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_HEIGHT,
@@ -32,14 +34,11 @@ typedef enum
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_ASPECT,
   GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR,
   GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR,
-  GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_SQUARE,
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER,
   GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X,
   GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y,
   GIMP_RECTANGLE_OPTIONS_PROP_UNIT,
-  GIMP_RECTANGLE_OPTIONS_PROP_CONTROLS_EXPANDED,
-  GIMP_RECTANGLE_OPTIONS_PROP_DIMENSIONS_ENTRY,
-  GIMP_RECTANGLE_OPTIONS_PROP_LAST = GIMP_RECTANGLE_OPTIONS_PROP_DIMENSIONS_ENTRY
+  GIMP_RECTANGLE_OPTIONS_PROP_LAST = GIMP_RECTANGLE_OPTIONS_PROP_UNIT
 } GimpRectangleOptionsProp;
 
 
@@ -74,7 +73,5 @@ void      gimp_rectangle_options_get_property       (GObject      *object,
                                                      guint         property_id,
                                                      GValue       *value,
                                                      GParamSpec   *pspec);
-void        gimp_rectangle_options_set_highlight    (GimpRectangleOptions *options,
-                                                     gboolean              highlight);
 
 #endif  /* __GIMP_RECTANGLE_OPTIONS_H__ */

@@ -500,12 +500,16 @@ connect_notify (GObject     *config,
 }
 
 
-static void gimp_prop_numeric_entry_notify   (GObject       *config,
-                                              GParamSpec    *param_spec,
-                                              GtkEntry      *entry);
+static void gimp_prop_numeric_entry_notify        (GObject       *config,
+                                                   GParamSpec    *param_spec,
+                                                   GtkEntry      *entry);
 
-static void gimp_prop_numeric_entry_callback (GtkWidget *widget,
-                                              GObject   *config);
+static void gimp_prop_numeric_entry_callback      (GtkWidget     *widget,
+                                                   GObject       *config);
+
+static gboolean gimp_prop_numeric_entry_focus_out (GtkWidget     *widget,
+                                                   GdkEventFocus *event,
+                                                   GObject       *config);
 
 /**
  * gimp_prop_aspect_ratio_new:
@@ -531,8 +535,16 @@ gimp_prop_aspect_ratio_new (GObject     *config,
   GtkWidget  *hbox;
   GtkWidget  *label;
   GtkWidget  *entry;
+  gdouble     numerator;
+  gdouble     denominator;
+  gchar       num_string[20];
 
   hbox = gtk_hbox_new (FALSE, 0);
+
+  g_object_get (config,
+                numerator_property,   &numerator,
+                denominator_property, &denominator,
+                NULL);
 
   /* numerator entry */
   param_spec = find_param_spec (config, numerator_property, G_STRFUNC);
@@ -540,10 +552,15 @@ gimp_prop_aspect_ratio_new (GObject     *config,
     return NULL;
   entry = gtk_entry_new ();
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 5);
+  sprintf (num_string, "%lg", numerator);
+  gtk_entry_set_text (GTK_ENTRY (entry), num_string);
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   set_param_spec (G_OBJECT (entry), entry, param_spec);
   g_signal_connect (entry, "activate",
                     G_CALLBACK (gimp_prop_numeric_entry_callback),
+                    config);
+  g_signal_connect (entry, "focus-out-event",
+                    G_CALLBACK (gimp_prop_numeric_entry_focus_out),
                     config);
   connect_notify (config, numerator_property,
                   G_CALLBACK (gimp_prop_numeric_entry_notify),
@@ -561,10 +578,15 @@ gimp_prop_aspect_ratio_new (GObject     *config,
     return NULL;
   entry = gtk_entry_new ();
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 5);
+  sprintf (num_string, "%lg", denominator);
+  gtk_entry_set_text (GTK_ENTRY (entry), num_string);
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   set_param_spec (G_OBJECT (entry), entry, param_spec);
   g_signal_connect (entry, "activate",
                     G_CALLBACK (gimp_prop_numeric_entry_callback),
+                    config);
+  g_signal_connect (entry, "focus-out-event",
+                    G_CALLBACK (gimp_prop_numeric_entry_focus_out),
                     config);
   connect_notify (config, denominator_property,
                   G_CALLBACK (gimp_prop_numeric_entry_notify),
@@ -588,6 +610,16 @@ gimp_prop_numeric_entry_notify (GObject       *config,
   sprintf (text, "%3lg", value);
 
   gtk_entry_set_text (entry, text);
+}
+
+static gboolean
+gimp_prop_numeric_entry_focus_out (GtkWidget     *widget,
+                                   GdkEventFocus *event,
+                                   GObject       *config)
+{
+  gimp_prop_numeric_entry_callback (widget, config);
+
+  return FALSE;
 }
 
 static void

@@ -1,5 +1,17 @@
 2006-09-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/widgets/gimppropwidgets.c (gimp_prop_aspect_ratio_new):
+	some small bug-fixes.
+
+	* app/tools/gimprectangleoptions.[ch]: major revision.  Got
+	rid of lots of unneeded getter/setter-clutter, simplified
+	set of options and appearance of gui.  Still work in progress.
+	
+	* app/tools/gimprectangleselectoptions.c
+	* app/tools/gimprectangletool.c: corresponding changes.
+
+2006-09-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimpselectionoptions.[ch]: remove
 	rectangle-related options no longer used anywhere.
 	
