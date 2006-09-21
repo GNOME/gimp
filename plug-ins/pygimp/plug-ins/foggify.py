@@ -20,6 +20,8 @@
 from gimpfu import *
 import time
 
+gettext.install("gimp20-python", gimp.locale_directory, unicode=1)
+
 def foggify(img, layer, name, colour, turbulence, opacity):
     img.undo_group_start()
 
@@ -46,20 +48,23 @@ def foggify(img, layer, name, colour, turbulence, opacity):
 
 register(
     "python-fu-foggify",
-    "Add a layer of fog to the image",
-    "Add a layer of fog to the image",
+    N_("Add a layer of fog"),
+    "Adds a layer of fog to the image.",
     "James Henstridge",
     "James Henstridge",
     "1999",
-    "Add _Fog...",
+    N_("_Fog..."),
     "RGB*, GRAY*",
     [
-        (PF_STRING, "name", "The new layer name", "Clouds"),
-        (PF_COLOUR, "colour", "The colour of the fog", (240,180,70)),
-        (PF_SLIDER, "turbulence", "The turbulence", 1.0, (0, 10, 0.1)),
-        (PF_SLIDER, "opacity", "The opacity", 100, (0, 100, 1)),
+        (PF_STRING, "name",       _("Layer name"), _("Clouds")),
+        (PF_COLOUR, "colour",     _("Fog color"),  (240, 180, 70)),
+        (PF_SLIDER, "turbulence", _("Turbulence"), 1.0, (0, 10, 0.1)),
+        (PF_SLIDER, "opacity",    _("Opacity"),    100, (0, 100, 1)),
     ],
     [],
-    foggify, menu="<Image>/Filters/Render/Clouds")
+    foggify,
+    menu="<Image>/Filters/Render/Clouds",
+    domain=("gimp20-python", gimp.locale_directory)
+    )
 
 main()

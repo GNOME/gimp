@@ -8,3 +8,4 @@ plug-ins/pygimp/procbrowser.c
 plug-ins/pygimp/plug-ins/colorxhtml.py
 plug-ins/pygimp/plug-ins/gimpcons.py
 plug-ins/pygimp/plug-ins/gtkcons.py
+plug-ins/pygimp/plug-ins/foggify.py

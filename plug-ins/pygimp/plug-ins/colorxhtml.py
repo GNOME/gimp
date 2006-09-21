@@ -180,7 +180,7 @@ class RowIterator:
 
 register(
     "file-colorxhtml-save",
-    _("Save the image as colored XHTML"),
+    N_("Save as colored XHTML"),
     "Saves the image as colored XHTML text (based on Perl version by Marc Lehmann)",
     "Manish Singh and Carol Spears",
     "Manish Singh and Carol Spears",

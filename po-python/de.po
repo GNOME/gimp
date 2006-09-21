@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-21 12:25+0200\n"
-"PO-Revision-Date: 2006-09-21 12:27+0200\n"
+"POT-Creation-Date: 2006-09-21 13:37+0200\n"
+"PO-Revision-Date: 2006-09-21 13:37+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -43,6 +43,10 @@ msgstr "Python Prozedurbrowser"
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:106
 msgid "Saving as colored XHTML"
 msgstr "Speichere als farbiges XHTML"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:183
+msgid "Save as colored XHTML"
+msgstr "Speichern als farbiges XHTML"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
 msgid "Colored XHTML"
@@ -99,3 +103,34 @@ msgstr "Gimp-Python Konsole"
 #: ../plug-ins/pygimp/plug-ins/gtkcons.py:222
 msgid "Interactive Python Development"
 msgstr "Interaktive Python Entwicklung"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+msgid "Add a layer of fog"
+msgstr "Erzeugt eine Ebene mit Nebel"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+msgid "_Fog..."
+msgstr "_Nebel..."
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+msgid "Layer name"
+msgstr "Ebenenname"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+msgid "Clouds"
+msgstr "Wolken"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:60
+msgid "Fog color"
+msgstr "Nebelfarbe"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "Turbulence"
+msgstr "Turbulenz"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+msgid "Opacity"
+msgstr "Transparenz"
+
+#~ msgid "Save the image as colored XHTML"
+#~ msgstr "Speichere als farbiges XHTML"
