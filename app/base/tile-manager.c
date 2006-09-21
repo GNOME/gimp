@@ -832,7 +832,7 @@ read_pixel_data_1 (TileManager *tm,
                *(guint32 *) buffer = *(const guint32 *) src;
                break;
 #else
-               *dest++ = *buffer++;
+               *buffer++ = *src++;
 #endif
              case 3:
                *buffer++ = *src++;

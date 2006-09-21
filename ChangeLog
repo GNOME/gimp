@@ -1,5 +1,10 @@
 2006-09-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/tile-manager.c (read_pixel_data_1): fix build on
+	big endian.
+
+2006-09-21  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/uri/uri-backend-wget.c (uri_backend_load_image): use
 	setpgid() instead of setpgrp(), the latter has a different number
 	of arguments on darwin. Let's see where it breaks now...
