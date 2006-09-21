@@ -828,12 +828,7 @@ read_pixel_data_1 (TileManager *tm,
            switch (tm->bpp)
              {
              case 4:
-#if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
-               *(guint32 *) buffer = *(const guint32 *) src;
-               break;
-#else
                *buffer++ = *src++;
-#endif
              case 3:
                *buffer++ = *src++;
              case 2:
@@ -857,12 +852,7 @@ write_pixel_data_1 (TileManager  *tm,
   switch (tm->bpp)
     {
     case 4:
-#if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
-      *(guint32 *) dest = *(const guint32 *) buffer;
-      break;
-#else
       *dest++ = *buffer++;
-#endif
     case 3:
       *dest++ = *buffer++;
     case 2:

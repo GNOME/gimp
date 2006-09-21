@@ -1,3 +1,9 @@
+2006-09-21  Sven Neumann  <neumann@jpk.com>
+
+	* app/base/tile-manager.c (read_pixel_data_1) (write_pixel_data_1):
+	use the same code on all platforms. The optimization for bytes == 4
+	was pointless anyway.
+
 2006-09-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/tile-manager.c (read_pixel_data_1): fix build on
