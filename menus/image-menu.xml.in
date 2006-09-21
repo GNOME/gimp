@@ -504,6 +504,7 @@
 	<menuitem action="tools-dodge-burn" />
       </menu>
       <menu action="tools-transform-menu" name="Transform Tools">
+	<menuitem action="tools-align" />
 	<menuitem action="tools-move" />
 	<menuitem action="tools-crop" />
 	<menuitem action="tools-rotate" />

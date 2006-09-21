@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: UTF-8 -*-
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,6 +17,7 @@
 
 from gimpfu import *
 
+gettext.install("gimp20-python", gimp.locale_directory, unicode=1)
 
 def make_gradient(palette, num_segments, num_colors):
     gradient = pdb.gimp_gradient_new(palette)
@@ -43,41 +43,45 @@ def make_gradient(palette, num_segments, num_colors):
 def palette_to_gradient_repeating(palette):
     num_colors = pdb.gimp_palette_get_info(palette)
     num_segments = num_colors
-    make_gradient(palette, num_segments, num_colors)
+    return make_gradient(palette, num_segments, num_colors)
 
 
 register(
     "python-fu-palette-to-gradient-repeating",
-    "Palette to gradient.",
-    "Use the colors in the palette to make a new repeating gradient",
+    N_("Create a repeating gradient using colors from the palette"),
+    "Create a new repeating gradient using colors from the palette.",
     "Carol Spears, reproduced from previous work by Adrian Likins and Jeff Trefftz",
     "Carol Spears",
     "2006",
-    "Palette to _Repeating Gradient",
+    N_("Palette to _Repeating Gradient"),
     "",
-    [(PF_PALETTE,  "palette",      "Name of palette to convert", "")],
-    [(PF_GRADIENT, "new_gradient", "Name of the New Gradient:", "")],
-    palette_to_gradient_repeating, menu="<Palettes>")
+    [(PF_PALETTE,  "palette", _("Palette"), "")],
+    [(PF_GRADIENT, "new-gradient", "Result")],
+    palette_to_gradient_repeating,
+    menu="<Palettes>",
+    domain=("gimp20-python", gimp.locale_directory)
+    )
 
 
 def palette_to_gradient(palette):
     num_colors = pdb.gimp_palette_get_info(palette)
     num_segments = num_colors - 1
-    make_gradient(palette, num_segments, num_colors)
-
+    return make_gradient(palette, num_segments, num_colors)
 
 register(
     "python-fu-palette-to-gradient",
-    "Palette to gradient.",
-    "Use the colors in the palette to make a new gradient",
+    N_("Create a gradient using colors from the palette"),
+    "Create a new gradient using colors from the palette.",
     "Carol Spears, reproduced from previous work by Adrian Likins and Jeff Trefftz",
     "Carol Spears",
     "2006",
-    "Palette to _Gradient",
+    N_("Palette to _Gradient"),
     "",
-    [(PF_PALETTE,  "palette",      "Name of palette to convert", "")],
-    [(PF_GRADIENT, "new-gradient", "Name of the New Gradient:")],
-    palette_to_gradient, menu="<Palettes>")
-
+    [(PF_PALETTE,  "palette", _("Palette"), "")],
+    [(PF_GRADIENT, "new-gradient", "Result")],
+    palette_to_gradient,
+    menu="<Palettes>",
+    domain=("gimp20-python", gimp.locale_directory)
+    )
 
 main ()

@@ -34,15 +34,18 @@ def pdb_browse():
 
 register(
     "python-fu-pdb-browse",
-    "Browse the Procedural Database",
+    N_("Browse the Procedural Database"),
     "Pick a PDB proc, and read the information",
     "James Henstridge",
     "James Henstridge",
     "1997-1999",
-    "_Procedure Browser",
+    N_("_Procedure Browser"),
     "",
     [],
     [],
-    pdb_browse, menu="<Toolbox>/Xtns/Languages/Python-Fu")
+    pdb_browse,
+    menu="<Toolbox>/Xtns/Languages/Python-Fu",
+    domain=("gimp20-python", gimp.locale_directory)
+    )
 
 main()
