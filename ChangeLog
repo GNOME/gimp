@@ -1,5 +1,12 @@
 2006-09-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* libgimpwidgets/gimppropwidgets.[ch]: added
+	gimp_prop_toggle_button_new(), and re-implemented
+	gimp_prop_check_button_new() in terms of it, as basically
+	a convenience function now.
+	
+2006-09-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/paint-funcs/scale-funcs.[ch]:  commit patch from "gg"
 	to fix Lanczos problems, addresses bug #167956 and 
 	bug #355178.

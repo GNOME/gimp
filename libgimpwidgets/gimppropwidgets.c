@@ -66,9 +66,9 @@ static void         connect_notify     (GObject     *config,
 /*  check button  */
 /******************/
 
-static void   gimp_prop_check_button_callback (GtkWidget  *widget,
+static void   gimp_prop_toggle_button_callback (GtkWidget  *widget,
                                                GObject    *config);
-static void   gimp_prop_check_button_notify   (GObject    *config,
+static void   gimp_prop_toggle_button_notify   (GObject    *config,
                                                GParamSpec *param_spec,
                                                GtkWidget  *button);
 
@@ -90,6 +90,30 @@ gimp_prop_check_button_new (GObject     *config,
                             const gchar *property_name,
                             const gchar *label)
 {
+  return gimp_prop_toggle_button_new (config, property_name,
+                                      label, TRUE);
+}
+
+/**
+ * gimp_prop_toggle_button_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of boolean property controlled by checkbutton.
+ * @label:         Label to give checkbutton (including mnemonic).
+ * @checkbutton:   TRUE if the toggle button should be a checkbutton.
+ *
+ * Creates a #GtkToggleButton that displays and sets the specified
+ * boolean property.
+ *
+ * Return value: The newly created #GtkToggleButton widget.
+ *
+ * Since GIMP 2.4
+ */
+GtkWidget *
+gimp_prop_toggle_button_new (GObject     *config,
+                             const gchar *property_name,
+                             const gchar *label,
+                             gboolean     checkbutton)
+{
   GParamSpec  *param_spec;
   GtkWidget   *button;
   gboolean     value;
@@ -106,25 +130,29 @@ gimp_prop_check_button_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  button = gtk_check_button_new_with_mnemonic (label);
+  if (checkbutton)
+    button = gtk_check_button_new_with_mnemonic (label);
+  else
+    button = gtk_toggle_button_new_with_mnemonic (label);
+
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), value);
 
   set_param_spec (G_OBJECT (button), button, param_spec);
 
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_prop_check_button_callback),
+                    G_CALLBACK (gimp_prop_toggle_button_callback),
                     config);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_check_button_notify),
+                  G_CALLBACK (gimp_prop_toggle_button_notify),
                   button);
 
   return button;
 }
 
 static void
-gimp_prop_check_button_callback (GtkWidget *widget,
-                                 GObject   *config)
+gimp_prop_toggle_button_callback (GtkWidget *widget,
+                                  GObject   *config)
 {
   GParamSpec *param_spec;
 
@@ -140,7 +168,7 @@ gimp_prop_check_button_callback (GtkWidget *widget,
 }
 
 static void
-gimp_prop_check_button_notify (GObject    *config,
+gimp_prop_toggle_button_notify (GObject    *config,
                                GParamSpec *param_spec,
                                GtkWidget  *button)
 {
@@ -153,14 +181,14 @@ gimp_prop_check_button_notify (GObject    *config,
   if (GTK_TOGGLE_BUTTON (button)->active != value)
     {
       g_signal_handlers_block_by_func (button,
-                                       gimp_prop_check_button_callback,
+                                       gimp_prop_toggle_button_callback,
                                        config);
 
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), value);
       gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (button));
 
       g_signal_handlers_unblock_by_func (button,
-                                         gimp_prop_check_button_callback,
+                                         gimp_prop_toggle_button_callback,
                                          config);
     }
 }

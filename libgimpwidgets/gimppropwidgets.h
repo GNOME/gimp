@@ -29,6 +29,10 @@
 GtkWidget     * gimp_prop_check_button_new        (GObject      *config,
                                                    const gchar  *property_name,
                                                    const gchar  *label);
+GtkWidget     * gimp_prop_toggle_button_new       (GObject      *config,
+                                                   const gchar  *property_name,
+                                                   const gchar  *label,
+                                                   gboolean      checkbutton);
 GtkWidget     * gimp_prop_boolean_combo_box_new   (GObject      *config,
                                                    const gchar  *property_name,
                                                    const gchar  *true_text,
