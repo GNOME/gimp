@@ -56,10 +56,6 @@ enum
   PROP_SELECT_CRITERION,
   PROP_AUTO_SHRINK,
   PROP_SHRINK_MERGED,
-  PROP_FIXED_MODE,
-  PROP_FIXED_WIDTH,
-  PROP_FIXED_HEIGHT,
-  PROP_FIXED_UNIT,
   PROP_INTERACTIVE
 };
 
@@ -145,24 +141,6 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FIXED_MODE,
-                                 "fixed-mode", NULL,
-                                 GIMP_TYPE_RECT_SELECT_MODE,
-                                 GIMP_RECT_SELECT_MODE_FREE,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FIXED_WIDTH,
-                                   "fixed-width", NULL,
-                                   0.0, GIMP_MAX_IMAGE_SIZE, 1.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FIXED_HEIGHT,
-                                   "fixed-height", NULL,
-                                   0.0, GIMP_MAX_IMAGE_SIZE, 1.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FIXED_UNIT,
-                                 "fixed-unit", NULL,
-                                 TRUE, TRUE, GIMP_UNIT_PIXEL,
-                                 GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INTERACTIVE,
                                     "interactive", NULL,
                                     FALSE,
@@ -217,19 +195,6 @@ gimp_selection_options_set_property (GObject      *object,
       options->shrink_merged = g_value_get_boolean (value);
       break;
 
-    case PROP_FIXED_MODE:
-      options->fixed_mode = g_value_get_enum (value);
-      break;
-    case PROP_FIXED_WIDTH:
-      options->fixed_width = g_value_get_double (value);
-      break;
-    case PROP_FIXED_HEIGHT:
-      options->fixed_height = g_value_get_double (value);
-      break;
-    case PROP_FIXED_UNIT:
-      options->fixed_unit = g_value_get_int (value);
-      break;
-
     case PROP_INTERACTIVE:
       options->interactive = g_value_get_boolean (value);
       break;
@@ -281,19 +246,6 @@ gimp_selection_options_get_property (GObject    *object,
       break;
     case PROP_SHRINK_MERGED:
       g_value_set_boolean (value, options->shrink_merged);
-      break;
-
-    case PROP_FIXED_MODE:
-      g_value_set_enum (value, options->fixed_mode);
-      break;
-    case PROP_FIXED_WIDTH:
-      g_value_set_double (value, options->fixed_width);
-      break;
-    case PROP_FIXED_HEIGHT:
-      g_value_set_double (value, options->fixed_height);
-      break;
-    case PROP_FIXED_UNIT:
-      g_value_set_int (value, options->fixed_unit);
       break;
 
     case PROP_INTERACTIVE:

@@ -54,11 +54,6 @@ struct _GimpSelectionOptions
   gboolean            auto_shrink;
   gboolean            shrink_merged;
 
-  GimpRectSelectMode  fixed_mode;
-  gdouble             fixed_width;
-  gdouble             fixed_height;
-  GimpUnit            fixed_unit;
-
   /*  used by iscissors */
   gboolean            interactive;
 };
