@@ -1,5 +1,7 @@
 2006-09-21  Sven Neumann  <sven@gimp.org>
 
+	* README.i18n: mention po-python.
+
 	* plug-ins/pygimp/plug-ins/py-slice.py
 	* plug-ins/pygimp/plug-ins/shadow_bevel.py: prepared for translation.
 
