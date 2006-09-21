@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: UTF-8 -*-
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,9 +14,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
-
 from gimpfu import *
 
+gettext.install("gimp20-python", gimp.locale_directory, unicode=1)
 
 def palette_sort (palette, model, channel, ascending):
     #If palette is read only, work on a copy:        
@@ -47,26 +46,29 @@ def palette_sort (palette, model, channel, ascending):
 
 register(
     "python-fu-palette-sort",
-    "Sort the palette",
+    N_("Sort a palette"),
     "palette_merge (palette, model, channel, ascending) -> new_palette",
     "Joao S. O. Bueno Calligaris, Carol Spears",
     "Joao S. O. Bueno Calligaris",
     "2006",
-    "_Sort Palette...",
+    N_("_Sort Palette..."),
     "",
     [
-        (PF_PALETTE, "palette", "name of palette to sort", ""),
-        (PF_RADIO,   "model", "Color model to sort in  ", "HSV", 
-                     (("RGB", "RGB"), 
-                      ("HSV", "HSV"))),
-        (PF_RADIO,   "channel", "Channel to sort", 2, 
-                     (("Red or Hue", 0), 
-                      ("Green or Saturation", 1), 
-                      ("Blue or Value", 2))),
-        (PF_BOOL,   "ascending", "Sort in ascending order", True)
+        (PF_PALETTE, "palette",  _("Palette"), ""),
+        (PF_RADIO,   "model",    _("Color model"), "HSV", 
+                                    ((_("RGB"), "RGB"), 
+                                     (_("HSV"), "HSV"))),
+        (PF_RADIO,   "channel",  _("Channel to sort"), 2, 
+                                    ((_("Red or Hue"),          0), 
+                                     (_("Green or Saturation"), 1), 
+                                     (_("Blue or Value"),       2))),
+        (PF_BOOL,   "ascending", _("Ascending"), True)
     ],     
     [],
-    palette_sort, menu="<Palettes>")
+    palette_sort,
+    menu="<Palettes>",
+    domain=("gimp20-python", gimp.locale_directory)
+    )
 
 
 main ()

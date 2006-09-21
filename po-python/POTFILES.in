@@ -9,3 +9,5 @@ plug-ins/pygimp/plug-ins/colorxhtml.py
 plug-ins/pygimp/plug-ins/gimpcons.py
 plug-ins/pygimp/plug-ins/gtkcons.py
 plug-ins/pygimp/plug-ins/foggify.py
+plug-ins/pygimp/plug-ins/palette-offset.py
+plug-ins/pygimp/plug-ins/palette-sort.py
