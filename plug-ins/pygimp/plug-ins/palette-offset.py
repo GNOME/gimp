@@ -42,7 +42,7 @@ def palette_offset(palette, amount):
 
 register(
     "python-fu-palette-offset",
-    N_("Offset a color palette"),
+    N_("Offset the colors in a palette"),
     "palette_offset (palette, amount) -> modified_palette",
     "Joao S. O. Bueno Calligaris, Carol Spears",
     "(c) Joao S. O. Bueno Calligaris",

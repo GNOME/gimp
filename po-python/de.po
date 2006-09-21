@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-21 13:37+0200\n"
-"PO-Revision-Date: 2006-09-21 13:37+0200\n"
+"POT-Creation-Date: 2006-09-21 16:06+0200\n"
+"PO-Revision-Date: 2006-09-21 16:06+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -132,5 +132,85 @@ msgstr "Turbulenz"
 msgid "Opacity"
 msgstr "Transparenz"
 
-#~ msgid "Save the image as colored XHTML"
-#~ msgstr "Speichere als farbiges XHTML"
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+msgid "Offset the colors in a palette"
+msgstr "Verschiebt die Farben in der Palette"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+msgid "_Offset Palette..."
+msgstr "Palette _verschieben..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:58
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:80
+msgid "Palette"
+msgstr "Palette"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
+msgid "Offset"
+msgstr "Versatz"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+msgid "Sort the colors in a palette"
+msgstr "Verschiebt die Farben in der Palette"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+msgid "_Sort Palette..."
+msgstr "Palette _sortieren..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "Color model"
+msgstr "Farbmodell"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "RGB"
+msgstr "RGB"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+msgid "HSV"
+msgstr "HSV"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+msgid "Channel to sort"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Red or Hue"
+msgstr "Rot bzw. Farbton"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+msgid "Green or Saturation"
+msgstr "Grün bzw. Sättigung"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+msgid "Blue or Value"
+msgstr "Blau oder Wert"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+msgid "Ascending"
+msgstr "Aufsteigend"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:51
+msgid "Create a repeating gradient using colors from the palette"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:56
+msgid "Palette to _Repeating Gradient"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:73
+msgid "Create a gradient using colors from the palette"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:78
+msgid "Palette to _Gradient"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/pdbbrowse.py:37
+msgid "Browse the Procedural Database"
+msgstr "Die Datenbank an Prozeduren durchsuchen"
+
+#: ../plug-ins/pygimp/plug-ins/pdbbrowse.py:42
+msgid "_Procedure Browser"
+msgstr "Prozedurbrowser"

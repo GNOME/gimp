@@ -46,7 +46,7 @@ def palette_sort (palette, model, channel, ascending):
 
 register(
     "python-fu-palette-sort",
-    N_("Sort a palette"),
+    N_("Sort the colors in a palette"),
     "palette_merge (palette, model, channel, ascending) -> new_palette",
     "Joao S. O. Bueno Calligaris, Carol Spears",
     "Joao S. O. Bueno Calligaris",
