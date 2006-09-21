@@ -25,6 +25,8 @@ import os.path
 import gimp
 from gimpfu import *
 
+gettext.install("gimp20-python", gimp.locale_directory, unicode=1)
+
 (CHARS_SOURCE, CHARS_FILE, CHARS_PARAMETER) = range(3)
 
 escape_table = {
@@ -101,7 +103,7 @@ def colorxhtml(img, drawable, filename, raw_filename,
 
     pr = drawable.get_pixel_rgn(0, 0, width, height, False, False)
 
-    gimp.progress_init("Saving '%s' as COLORXHTML..." % filename)
+    gimp.progress_init(_("Saving as colored XHTML"))
 
     style = style_def % size
 
@@ -178,24 +180,26 @@ class RowIterator:
 
 register(
     "file-colorxhtml-save",
-    "Saves the image as colored XHTML text",
-    "Saves the image as colored XHTML text (based on perl version by Marc Lehmann)",
+    _("Save the image as colored XHTML"),
+    "Saves the image as colored XHTML text (based on Perl version by Marc Lehmann)",
     "Manish Singh and Carol Spears",
     "Manish Singh and Carol Spears",
     "2003",
-    "Colored XHTML",
+    N_("Colored XHTML"),
     "RGB",
     [
-        (PF_RADIO, "source", "Where to take the characters from", 0,
-                   (("Source code", CHARS_SOURCE),
-                    ("Text file",   CHARS_FILE),
-                    ("Entry box",   CHARS_PARAMETER))),
-        (PF_FILE, "characters", "The filename to read or the characters to use",
-                  ""),
-        (PF_INT, "font-size", "The font size in pixels", 10),
-        (PF_BOOL, "separate", "Separate CSS file", True)
+        (PF_RADIO, "source", _("Character source"), 0,
+                   ((_("Source code"), CHARS_SOURCE),
+                    (_("Text file"),   CHARS_FILE),
+                    (_("Entry box"),   CHARS_PARAMETER))),
+        (PF_FILE,  "characters", _("File to read or characters to use"),
+                   ""),
+        (PF_INT,   "font-size",  _("Font size in pixels"), 10),
+        (PF_BOOL,  "separate",   _("Write a separate CSS file"),   True)
     ],
     [],
-    colorxhtml, menu="<Save>", on_query=register_save)
+    colorxhtml, on_query=register_save,
+    menu="<Save>", domain=("gimp20-python", gimp.locale_directory)
+    )
 
 main()

@@ -556,7 +556,7 @@ _wrap_gimp_dialog_new(PyGObject *self, PyObject *args, PyObject *kwargs)
     for (i = 0; i < len; i += 2) {
         PyObject *text = PyTuple_GetItem(py_buttons, i);
         PyObject *id = PyTuple_GetItem(py_buttons, i + 1);
-        if (!PyString_Check(text)) {
+        if (!PyString_Check(text) && !PyUnicode_Check(text)) {
             gtk_object_destroy(GTK_OBJECT(self->obj));
             self->obj = NULL;
             PyErr_SetString(PyExc_RuntimeError,

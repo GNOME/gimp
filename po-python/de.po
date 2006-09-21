@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-20 13:45+0200\n"
-"PO-Revision-Date: 2006-09-20 13:18+0200\n"
+"POT-Creation-Date: 2006-09-21 12:25+0200\n"
+"PO-Revision-Date: 2006-09-21 12:27+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -39,6 +39,42 @@ msgstr "Python-Fu Farbauswahl"
 #: ../plug-ins/pygimp/procbrowser.c:174
 msgid "Python Procedure Browser"
 msgstr "Python Prozedurbrowser"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:106
+msgid "Saving as colored XHTML"
+msgstr "Speichere als farbiges XHTML"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
+msgid "Colored XHTML"
+msgstr "Farbiges XHTML"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
+msgid "Character source"
+msgstr "Quelle für Buchstaben"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
+msgid "Source code"
+msgstr "Quellcode"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
+msgid "Text file"
+msgstr "Textdatei"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:194
+msgid "Entry box"
+msgstr "Eingabefeld"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+msgid "File to read or characters to use"
+msgstr "Dateiname oder Buchstaben"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+msgid "Font size in pixels"
+msgstr "Schriftgrösse in Pixeln"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+msgid "Write a separate CSS file"
+msgstr "Erstelle separate CSS Datei"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:44
 msgid "Python Console"
