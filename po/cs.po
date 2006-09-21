@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-20 10:57+0200\n"
-"PO-Revision-Date: 2006-09-20 11:03+0200\n"
+"POT-Creation-Date: 2006-09-21 10:26+0200\n"
+"PO-Revision-Date: 2006-09-21 10:31+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -8187,12 +8187,12 @@ msgstr "V souboru interpretru %s se odkazuje na špatný interpretr: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Špatný řetězec binárního formátu v souboru interpretru %s"
 
-#: ../app/plug-in/gimpplugin.c:427 ../app/plug-in/gimpplugin.c:460
+#: ../app/plug-in/gimpplugin.c:429 ../app/plug-in/gimpplugin.c:468
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
 msgstr "Ukončuji zásuvný modul: '%s'\n"
 
-#: ../app/plug-in/gimpplugin.c:603
+#: ../app/plug-in/gimpplugin.c:611
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -8371,9 +8371,8 @@ msgstr ""
 "nemá volby."
 
 #: ../app/tools/gimpairbrushtool.c:55
-#, fuzzy
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
-msgstr "Rozprašovač s nastavitelným tlakem"
+msgstr "Rozprašovač: kreslení štětcem s proměnným tlakem"
 
 #: ../app/tools/gimpairbrushtool.c:56
 msgid "_Airbrush"
@@ -8900,9 +8899,8 @@ msgid "Dodge/Burn Tool: Selectively lighten or darken using a brush"
 msgstr ""
 
 #: ../app/tools/gimpdodgeburntool.c:75
-#, fuzzy
 msgid "Dod_ge-Burn"
-msgstr "_Zesvětlování/tmavnutí"
+msgstr "_Zesvětlování-tmavnutí"
 
 #: ../app/tools/gimpdodgeburntool.c:173
 msgid "Click to dodge"
@@ -8959,7 +8957,6 @@ msgid "Ellipse Select"
 msgstr "Výběr elipsy"
 
 #: ../app/tools/gimpellipseselecttool.c:73
-#, fuzzy
 msgid "Ellipse Select Tool: Select an elliptical region"
 msgstr "Výběr eliptických oblastí"
 
@@ -8968,9 +8965,8 @@ msgid "_Ellipse Select"
 msgstr "Výběr _elipsy"
 
 #: ../app/tools/gimperasertool.c:67
-#, fuzzy
 msgid "Eraser Tool: Erase to background or transparency using a brush"
-msgstr "Gumování do pozadí nebo průhlednosti"
+msgstr "Guma: mazání štětcem do pozadí nebo průhlednosti"
 
 #: ../app/tools/gimperasertool.c:68
 msgid "_Eraser"
@@ -9138,9 +9134,8 @@ msgid "Fu_zzy Select"
 msgstr "Při_bližný výběr"
 
 #: ../app/tools/gimphealtool.c:58
-#, fuzzy
 msgid "Healing Tool: Heal image irregularities"
-msgstr "Léčba nepravidelností obrázku"
+msgstr "Léčení: léčba nepravidelností obrázku"
 
 #: ../app/tools/gimphealtool.c:59
 msgid "_Heal"
@@ -9371,7 +9366,7 @@ msgstr "Přiblížení"
 
 #: ../app/tools/gimpmagnifytool.c:92
 msgid "Zoom Tool: Adjust the zoom level"
-msgstr ""
+msgstr "Přiblížení: změna stupně přiblížení"
 
 #: ../app/tools/gimpmagnifytool.c:93
 msgid "tool|_Zoom"
@@ -9433,7 +9428,7 @@ msgstr "Přesun"
 
 #: ../app/tools/gimpmovetool.c:118
 msgid "Move Tool: Move layers, selections, and other objects"
-msgstr ""
+msgstr "Přesun: přesun vrstev, výběrů a dalších objektů"
 
 #: ../app/tools/gimpmovetool.c:119
 msgid "_Move"
@@ -9562,16 +9557,15 @@ msgstr "%s pro rovnou čáru"
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Pencil Tool: Hard edge painting using a brush"
-msgstr ""
+msgstr "Tužka: kreslení s tvrdým okrajem"
 
 #: ../app/tools/gimppenciltool.c:53
 msgid "Pe_ncil"
 msgstr "_Tužka"
 
 #: ../app/tools/gimpperspectivetool.c:69
-#, fuzzy
 msgid "Perspective Tool: Change perspective of the layer or selection"
-msgstr "Změna perspektivy vrstvy nebo výběru"
+msgstr "Perspektiva: změna perspektivy vrstvy nebo výběru"
 
 #: ../app/tools/gimpperspectivetool.c:70
 msgid "_Perspective"
@@ -9676,7 +9670,7 @@ msgstr ""
 msgid "_Rectangle Select"
 msgstr "Výběr _obdélníku"
 
-#: ../app/tools/gimprectangletool.c:1385 ../app/tools/gimprectangletool.c:2172
+#: ../app/tools/gimprectangletool.c:1385 ../app/tools/gimprectangletool.c:2190
 msgid "Rectangle: "
 msgstr "Obdélník: "
 
