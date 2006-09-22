@@ -542,7 +542,7 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
 {
   Gimp *gimp = shell->display->image->gimp;
 
-  if (! shell->space_pressed)
+  if (! shell->space_pressed && ! shell->space_release_pending)
     return;
 
   switch (GIMP_DISPLAY_CONFIG (gimp->config)->space_bar_action)
@@ -568,7 +568,8 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
 
   gdk_display_keyboard_ungrab (gtk_widget_get_display (shell->canvas), time);
 
-  shell->space_pressed = FALSE;
+  shell->space_pressed         = FALSE;
+  shell->space_release_pending = FALSE;
 }
 
 gboolean
