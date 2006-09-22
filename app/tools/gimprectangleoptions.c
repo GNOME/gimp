@@ -453,6 +453,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   GtkWidget   *entry;
   GtkWidget   *hbox;
   GtkWidget   *label;
+  gint         row;
 
   button = gimp_prop_check_button_new (config, "fixed-center",
                                        _("Expand from center"));
@@ -468,59 +469,89 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  table = gtk_table_new (4, 3, FALSE);
+  table = gtk_table_new (6, 6, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 5);
   gtk_table_set_row_spacings (GTK_TABLE (table), 5);
   gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 5);
 
-  /* Height */
-  button = gimp_prop_toggle_button_new (config, "fixed-width",
-                                        _("Fix"), FALSE);
-  gtk_widget_show (button);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 1, 2);
-
-  entry = gimp_prop_size_entry_new (config, "width", "unit", "%a",
+  /* X */
+  row = 0;
+  entry = gimp_prop_size_entry_new (config, "x0", "unit", "%a",
                                     GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
-  label = gtk_label_new (_("Width"));
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, 1, 2);
+  label = gtk_label_new (_("X"));
+  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, row, row + 1);
   gtk_widget_show (label);
 
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
-  gtk_table_attach_defaults (GTK_TABLE (table), entry, 2, 3, 1, 2);
+  gtk_table_attach_defaults (GTK_TABLE (table), entry, 2, 5, row, row + 1);
   gtk_widget_show (entry);
 
-  /* Height */
-  button = gimp_prop_toggle_button_new (config, "fixed-height",
-                                        _("Fix"), FALSE);
-  gtk_widget_show (button);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 2, 3);
+  /* Y */
+  row++;
+  entry = gimp_prop_size_entry_new (config, "y0", "unit", "%a",
+                                    GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
+  label = gtk_label_new (_("Y"));
+  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, row, row + 1);
+  gtk_widget_show (label);
 
+  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
+  gtk_table_attach_defaults (GTK_TABLE (table), entry, 2, 5, row, row + 1);
+  gtk_widget_show (entry);
+
+  /* Width */
+  row++;
+  entry = gimp_prop_size_entry_new (config, "width", "unit", "%a",
+                                    GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
+  label = gtk_label_new (_("Width"));
+  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, row, row + 1);
+  gtk_widget_show (label);
+
+  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
+  gtk_table_attach_defaults (GTK_TABLE (table), entry, 2, 5, row, row + 1);
+  gtk_widget_show (entry);
+
+  button = gimp_prop_check_button_new (config, "fixed-width", _("Fix"));
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
+  gtk_widget_show (button);
+  gtk_table_attach_defaults (GTK_TABLE (table), button, 5, 6, row, row + 1);
+
+  /* Height */
+  row++;
   label = gtk_label_new (_("Height"));
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, 2, 3);
+  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, row, row + 1);
   gtk_widget_show (label);
 
   entry = gimp_prop_size_entry_new (config, "height", "unit", "%a",
                                     GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
-  gtk_table_attach_defaults (GTK_TABLE (table), entry, 2, 3, 2, 3);
+  gtk_table_attach_defaults (GTK_TABLE (table), entry, 2, 5, row, row + 1);
   gtk_widget_show (entry);
 
-  /* Aspect */
-  button = gimp_prop_toggle_button_new (config, "fixed-aspect",
-                                        _("Fix"), FALSE);
+  button = gimp_prop_check_button_new (config, "fixed-height", _("Fix"));
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
   gtk_widget_show (button);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 3, 4);
+  gtk_table_attach_defaults (GTK_TABLE (table), button, 5, 6, row, row + 1);
 
+  /* Aspect */
+  row++;
   label = gtk_label_new (_("Aspect"));
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, 3, 4);
+  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, row, row + 1);
   gtk_widget_show (label);
 
-  hbox = gimp_prop_aspect_ratio_new (config,
-                                     "aspect-numerator",
-                                     "aspect-denominator",
-                                     3);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 2, 3, 3, 4);
-  gtk_widget_show (hbox);
+  gimp_prop_aspect_ratio_new (config,
+                              "aspect-numerator",
+                              "aspect-denominator",
+                              "fixed-aspect",
+                              "width",
+                              "height",
+                              3,
+                              GTK_TABLE (table),
+                              row, 2);
+
+  button = gimp_prop_check_button_new (config, "fixed-aspect", _("Fix"));
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
+  gtk_widget_show (button);
+  gtk_table_attach_defaults (GTK_TABLE (table), button, 5, 6, row, row + 1);
 
   gtk_widget_show (table);
 

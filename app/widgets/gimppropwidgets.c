@@ -500,6 +500,16 @@ connect_notify (GObject     *config,
 }
 
 
+typedef struct
+{
+  GObject     *config;
+  const gchar *numerator_property;
+  const gchar *denominator_property;
+  const gchar *fixed_aspect_property;
+  const gchar *width_property;
+  const gchar *height_property;
+} AspectData;
+
 static void gimp_prop_numeric_entry_notify        (GObject       *config,
                                                    GParamSpec    *param_spec,
                                                    GtkEntry      *entry);
@@ -510,6 +520,8 @@ static void gimp_prop_numeric_entry_callback      (GtkWidget     *widget,
 static gboolean gimp_prop_numeric_entry_focus_out (GtkWidget     *widget,
                                                    GdkEventFocus *event,
                                                    GObject       *config);
+static void gimp_prop_aspect_ratio_flip           (GtkWidget     *widget,
+                                                   gpointer       data);
 
 /**
  * gimp_prop_aspect_ratio_new:
@@ -525,36 +537,50 @@ static gboolean gimp_prop_numeric_entry_focus_out (GtkWidget     *widget,
  *
  * Since GIMP 2.4
  */
-GtkWidget *
+void
 gimp_prop_aspect_ratio_new (GObject     *config,
                             const gchar *numerator_property,
                             const gchar *denominator_property,
-                            gint         digits)
+                            const char  *fixed_aspect_property,
+                            const gchar *width_property,
+                            const gchar *height_property,
+                            gint         digits,
+                            GtkTable    *table,
+                            gint         row0,
+                            gint         col0)
 {
+  AspectData *aspect_data;
   GParamSpec *param_spec;
-  GtkWidget  *hbox;
   GtkWidget  *label;
   GtkWidget  *entry;
+  GtkWidget  *button;
   gdouble     numerator;
   gdouble     denominator;
   gchar       num_string[20];
-
-  hbox = gtk_hbox_new (FALSE, 0);
 
   g_object_get (config,
                 numerator_property,   &numerator,
                 denominator_property, &denominator,
                 NULL);
 
+  aspect_data = g_new0 (AspectData, 1);
+  aspect_data->config = config;
+  aspect_data->numerator_property    = numerator_property;
+  aspect_data->denominator_property  = denominator_property;
+  aspect_data->fixed_aspect_property = fixed_aspect_property;
+  aspect_data->width_property        = width_property;
+  aspect_data->height_property       = height_property;
+
   /* numerator entry */
   param_spec = find_param_spec (config, numerator_property, G_STRFUNC);
   if (! param_spec)
-    return NULL;
+    return;
   entry = gtk_entry_new ();
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 5);
   sprintf (num_string, "%lg", numerator);
   gtk_entry_set_text (GTK_ENTRY (entry), num_string);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), entry,
+                             col0, col0 + 1, row0, row0 + 1);
   set_param_spec (G_OBJECT (entry), entry, param_spec);
   g_signal_connect (entry, "activate",
                     G_CALLBACK (gimp_prop_numeric_entry_callback),
@@ -569,18 +595,20 @@ gimp_prop_aspect_ratio_new (GObject     *config,
 
   /* ":" label */
   label = gtk_label_new (":");
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 5);
+  gtk_table_attach_defaults (GTK_TABLE (table), label,
+                             col0 + 1, col0 + 2, row0, row0 + 1);
   gtk_widget_show (label);
 
   /* denominator entry */
   param_spec = find_param_spec (config, denominator_property, G_STRFUNC);
   if (! param_spec)
-    return NULL;
+    return;
   entry = gtk_entry_new ();
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 5);
   sprintf (num_string, "%lg", denominator);
   gtk_entry_set_text (GTK_ENTRY (entry), num_string);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), entry,
+                             col0 + 2, col0 + 3, row0, row0 + 1);
   set_param_spec (G_OBJECT (entry), entry, param_spec);
   g_signal_connect (entry, "activate",
                     G_CALLBACK (gimp_prop_numeric_entry_callback),
@@ -593,8 +621,15 @@ gimp_prop_aspect_ratio_new (GObject     *config,
                   entry);
   gtk_widget_show (entry);
 
-
-  return hbox;
+  /* flip button */
+  button = gtk_button_new_from_stock (GIMP_STOCK_FLIP_HORIZONTAL);
+  gtk_button_set_use_stock (GTK_BUTTON (button), TRUE);
+  gtk_table_attach_defaults (GTK_TABLE (table), button,
+                             col0, col0 + 3, row0 + 1, row0 + 2);
+  g_signal_connect (button, "pressed",
+                    G_CALLBACK (gimp_prop_aspect_ratio_flip),
+                    aspect_data);
+  gtk_widget_show (button);
 }
 
 static void
@@ -647,3 +682,53 @@ gimp_prop_numeric_entry_callback (GtkWidget *widget,
     g_message ("Invalid value entered for aspect ratio.");
 }
 
+static void
+gimp_prop_aspect_ratio_flip (GtkWidget *widget,
+                             gpointer   data)
+{
+  AspectData *aspect_data  = data;
+  gdouble     numerator;
+  gdouble     denominator;
+  gdouble     height;
+  gdouble     width;
+  gboolean    fixed_aspect = FALSE;
+
+  if (aspect_data->fixed_aspect_property)
+    {
+      g_object_get (aspect_data->config,
+                    aspect_data->fixed_aspect_property, &fixed_aspect,
+                    NULL);
+    }
+
+  g_object_get (aspect_data->config,
+                aspect_data->numerator_property,   &numerator,
+                aspect_data->denominator_property, &denominator,
+                NULL);
+
+  if (fixed_aspect)
+    {
+      if (aspect_data->width_property && aspect_data->height_property)
+        {
+          g_object_get (aspect_data->config,
+                        aspect_data->width_property,  &width,
+                        aspect_data->height_property, &height,
+                        NULL);
+        }
+    }
+
+  g_object_set (aspect_data->config,
+                aspect_data->numerator_property,   denominator,
+                aspect_data->denominator_property, numerator,
+                NULL);
+
+  if (fixed_aspect)
+    {
+      if (aspect_data->width_property && aspect_data->height_property)
+        {
+          g_object_set (aspect_data->config,
+                        aspect_data->width_property,  height,
+                        aspect_data->height_property, width,
+                        NULL);
+        }
+    }
+}

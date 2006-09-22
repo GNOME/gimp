@@ -134,6 +134,12 @@ static void     gimp_rectangle_tool_draw_guides     (GimpDrawTool          *draw
 static void     gimp_rectangle_tool_update_options  (GimpRectangleTool     *rectangle,
                                                      GimpDisplay           *display);
 
+static void     gimp_rectangle_tool_notify_x          (GimpRectangleOptions  *options,
+                                                       GParamSpec            *pspec,
+                                                       GimpRectangleTool     *rectangle);
+static void     gimp_rectangle_tool_notify_y          (GimpRectangleOptions  *options,
+                                                       GParamSpec            *pspec,
+                                                       GimpRectangleTool     *rectangle);
 static void     gimp_rectangle_tool_notify_width      (GimpRectangleOptions  *options,
                                                        GParamSpec            *pspec,
                                                        GimpRectangleTool     *rectangle);
@@ -649,6 +655,12 @@ gimp_rectangle_tool_constructor (GObject *object)
 
   options = G_OBJECT (gimp_tool_get_options (tool));
 
+  g_signal_connect_object (options, "notify::x0",
+                           G_CALLBACK (gimp_rectangle_tool_notify_x),
+                           rectangle, 0);
+  g_signal_connect_object (options, "notify::y0",
+                           G_CALLBACK (gimp_rectangle_tool_notify_y),
+                           rectangle, 0);
   g_signal_connect_object (options, "notify::width",
                            G_CALLBACK (gimp_rectangle_tool_notify_width),
                            rectangle, 0);
@@ -681,6 +693,12 @@ gimp_rectangle_tool_dispose (GObject *object)
   GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (object);
   GObject           *options   = G_OBJECT (gimp_tool_get_options (tool));
 
+  g_signal_handlers_disconnect_by_func (options,
+                                        G_CALLBACK (gimp_rectangle_tool_notify_x),
+                                        rectangle);
+  g_signal_handlers_disconnect_by_func (options,
+                                        G_CALLBACK (gimp_rectangle_tool_notify_y),
+                                        rectangle);
   g_signal_handlers_disconnect_by_func (options,
                                         G_CALLBACK (gimp_rectangle_tool_notify_width),
                                         rectangle);
@@ -2214,6 +2232,8 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
                                     GimpDisplay       *display)
 {
   GimpRectangleOptions *options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rectangle);
+  gdouble               x;
+  gdouble               y;
   gdouble               width;
   gdouble               height;
   gdouble               center_x, center_y;
@@ -2233,18 +2253,22 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
                 "fixed-height",     &fixed_height,
                 NULL);
 
+  x = x1;
+  y = y1;
   width  = x2 - x1;
   height = y2 - y1;
 
   center_x = (x1 + x2) / 2.0;
   center_y = (y1 + y2) / 2.0;
 
-  g_signal_handlers_block_by_func (options,
-                                   gimp_rectangle_tool_notify_width,
-                                   rectangle);
-  g_signal_handlers_block_by_func (options,
-                                   gimp_rectangle_tool_notify_height,
-                                   rectangle);
+  /* need to block "notify" handlers for the options */
+  g_signal_handlers_block_matched (options, G_SIGNAL_MATCH_DATA,
+                                   0, 0, NULL, NULL, rectangle);
+
+  g_object_set (options,
+                "x0", x,
+                "y0", y,
+                NULL);
 
   if (! fixed_width)
     g_object_set (options,
@@ -2256,12 +2280,9 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
                   "height", height,
                   NULL);
 
-  g_signal_handlers_unblock_by_func (options,
-                                     gimp_rectangle_tool_notify_width,
-                                     rectangle);
-  g_signal_handlers_unblock_by_func (options,
-                                     gimp_rectangle_tool_notify_height,
-                                     rectangle);
+  g_signal_handlers_unblock_matched (options, G_SIGNAL_MATCH_DATA,
+                                     0, 0, NULL, NULL, rectangle);
+
 
   g_object_set (options,
                 "center-x", center_x,
@@ -2307,6 +2328,94 @@ gimp_rectangle_tool_notify_width (GimpRectangleOptions *options,
                 NULL);
   private->startx = rx2;
   private->starty = ry2;
+
+  gimp_rectangle_tool_motion (GIMP_TOOL (rectangle), &coords, 0, 0,
+                              GIMP_TOOL (rectangle)->display);
+
+  g_signal_emit_by_name (rectangle, "rectangle-changed", NULL);
+}
+
+/*
+ * we handle changes in x by treating them as movement of the left edge
+ */
+static void
+gimp_rectangle_tool_notify_x (GimpRectangleOptions *options,
+                                  GParamSpec           *pspec,
+                                  GimpRectangleTool    *rectangle)
+{
+  GimpRectangleToolPrivate *private;
+  gint                      rx1, rx2, ry1, ry2;
+  GimpCoords                coords;
+  gdouble                   x;
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
+
+  /* make sure a rectangle exists */
+  if (! GIMP_TOOL (rectangle)->display)
+    return;
+
+  g_object_get (options,
+                "x0", &x,
+                NULL);
+  g_object_get (rectangle,
+                "x1", &rx1,
+                "y1", &ry1,
+                "x2", &rx2,
+                "y2", &ry2,
+                NULL);
+
+  coords.x = x;
+  coords.y = ry2;
+
+  g_object_set (rectangle,
+                "function", RECT_RESIZING_LEFT,
+                NULL);
+  private->startx = rx1;
+  private->starty = ry1;
+
+  gimp_rectangle_tool_motion (GIMP_TOOL (rectangle), &coords, 0, 0,
+                              GIMP_TOOL (rectangle)->display);
+
+  g_signal_emit_by_name (rectangle, "rectangle-changed", NULL);
+}
+
+/*
+ * we handle changes in y by treating them as movement of the top edge
+ */
+static void
+gimp_rectangle_tool_notify_y (GimpRectangleOptions *options,
+                                  GParamSpec           *pspec,
+                                  GimpRectangleTool    *rectangle)
+{
+  GimpRectangleToolPrivate *private;
+  gint                      rx1, rx2, ry1, ry2;
+  GimpCoords                coords;
+  gdouble                   y;
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
+
+  /* make sure a rectangle exists */
+  if (! GIMP_TOOL (rectangle)->display)
+    return;
+
+  g_object_get (options,
+                "y0", &y,
+                NULL);
+  g_object_get (rectangle,
+                "x1", &rx1,
+                "y1", &ry1,
+                "x2", &rx2,
+                "y2", &ry2,
+                NULL);
+
+  coords.x = rx1;
+  coords.y = y;
+
+  g_object_set (rectangle,
+                "function", RECT_RESIZING_TOP,
+                NULL);
+  private->startx = rx1;
+  private->starty = ry1;
 
   gimp_rectangle_tool_motion (GIMP_TOOL (rectangle), &coords, 0, 0,
                               GIMP_TOOL (rectangle)->display);
@@ -2370,6 +2479,7 @@ gimp_rectangle_tool_notify_aspect (GimpRectangleOptions *options,
   GimpCoords                coords;
   gdouble                   aspect;
   gdouble                   numerator, denominator;
+  gboolean                  fixed_aspect;
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
 
@@ -2379,7 +2489,12 @@ gimp_rectangle_tool_notify_aspect (GimpRectangleOptions *options,
   g_object_get (options,
                 "aspect-numerator",   &numerator,
                 "aspect-denominator", &denominator,
+                "fixed-aspect",       &fixed_aspect,
                 NULL);
+
+  if (! fixed_aspect)
+    return;
+
   aspect = numerator / denominator;
 
   g_object_get (rectangle,

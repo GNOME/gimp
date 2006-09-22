@@ -1,5 +1,12 @@
 2006-09-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/widgets/gimppropwidgets.[ch]
+	* app/tools/gimprectangleoptions.c
+	* app/tools/gimprectangletool.c: more work on option
+	layout and handling.
+	
+2006-09-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* libgimpwidgets/gimppropwidgets.[ch]: revert previous
 	change; was not necessary.
 
