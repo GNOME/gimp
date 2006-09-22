@@ -44,18 +44,19 @@ style_def = """body {
 }
 """
 
-preamble = """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+preamble = """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>css color html by The GIMP</title>
+<title>CSS Color XHTML written by GIMP</title>
 %s
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
 <pre>
 """
 
-postamble = """\n</pre>\n</html>\n"""
+postamble = """\n</pre>\n</body>\n</html>\n"""
 
 def colorxhtml(img, drawable, filename, raw_filename,
 	       source_type, characters, size, separate):
@@ -108,7 +109,7 @@ def colorxhtml(img, drawable, filename, raw_filename,
     style = style_def % size
 
     if separate:
-        ss = '<link rel="stylesheet" type="text/css" href="%s">' % cssfile
+        ss = '<link rel="stylesheet" type="text/css" href="%s" />' % cssfile
         css.write(style)
     else:
         ss = '<style type="text/css">\n%s</style>' % style
