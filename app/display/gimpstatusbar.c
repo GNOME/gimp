@@ -842,7 +842,7 @@ gimp_statusbar_progress_style_set (GtkWidget     *widget,
                                           n_spaces + 1);
 
       memset (statusbar->temp_spaces, ' ', n_spaces);
-      statusbar->temp_spaces[n_spaces + 1] = '\0';
+      statusbar->temp_spaces[n_spaces] = '\0';
 
       pango_layout_set_text (layout, statusbar->temp_spaces, -1);
       pango_layout_get_pixel_size (layout, &layout_width, NULL);

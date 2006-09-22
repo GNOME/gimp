@@ -1,5 +1,10 @@
 2006-09-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpstatusbar.c (gimp_statusbar_progress_style_set):
+	terminate the spaces string correctly. Spotted by bill.
+
+2006-09-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpstatusbar.[ch]: changed all message setting
 	functions to use printf-style argument lists. Added new API to
 	show a temporary message that stays on top regardless of any other
