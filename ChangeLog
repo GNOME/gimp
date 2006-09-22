@@ -1,5 +1,10 @@
 2006-09-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/colorxhtml.py: pass the correct function
+	name to inspect.getsourcefile().
+
+2006-09-22  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/gui-message.c
 	* app/widgets/gimpwidgets-utils.[ch]: moved utility function to
 	gimpwidgets-utils.

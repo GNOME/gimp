@@ -78,7 +78,7 @@ def colorxhtml(img, drawable, filename, raw_filename,
         css = file(cssname, 'w')
 
     if source_type == CHARS_SOURCE:
-        chars = file(inspect.getsourcefile(python_colorxhtml)).read()
+        chars = file(inspect.getsourcefile(colorxhtml)).read()
     elif source_type == CHARS_FILE:
         chars = file(characters).read()
     elif source_type == CHARS_PARAMETER:
