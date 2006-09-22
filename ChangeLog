@@ -1,3 +1,19 @@
+2006-09-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpstatusbar.[ch]: changed all message setting
+	functions to use printf-style argument lists. Added new API to
+	show a temporary message that stays on top regardless of any other
+	message activity and disappears after 3 seconds.
+
+	* app/actions/edit-commands.c: show a statusbar message when
+	pasting fails because the clipboard contains no image data. Pop a
+	dialog when "Paste as New" fails. Addresses bug #357059 for
+	internal functions.
+
+	* app/display/gimpdisplayshell-title.c
+	* app/gui/gui.c
+	* app/tools/gimptool.c: changed accordingly.
+
 2006-09-22  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-selection.c: always recalculate the

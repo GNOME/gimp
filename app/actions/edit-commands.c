@@ -40,6 +40,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
+#include "display/gimpstatusbar.h"
 
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimphelp-ids.h"
@@ -263,6 +264,10 @@ edit_paste_as_new_cmd_callback (GtkAction *action,
 
       g_object_unref (buffer);
     }
+  else
+    {
+      g_message (_("There is no image data in the clipboard to paste."));
+    }
 }
 
 void
@@ -411,6 +416,14 @@ edit_paste (GimpDisplay *display,
             }
 
           g_object_unref (buffer);
+        }
+      else
+        {
+          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+
+          gimp_statusbar_push_temp (GIMP_STATUSBAR (shell->statusbar),
+                                    _("There is no image data in "
+                                      "the clipboard to paste."));
         }
     }
 }

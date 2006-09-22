@@ -712,7 +712,7 @@ gimp_tool_push_status (GimpTool    *tool,
 
   gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),
                        G_OBJECT_TYPE_NAME (tool),
-                       message);
+                       "%s", message);
 }
 
 void
@@ -768,7 +768,7 @@ gimp_tool_replace_status (GimpTool    *tool,
 
   gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar),
                           G_OBJECT_TYPE_NAME (tool),
-                          message);
+                          "%s", message);
 }
 
 void

@@ -46,6 +46,10 @@ struct _GimpStatusbar
   GHashTable       *context_ids;
   guint             seq_context_id;
 
+  guint             temp_context_id;
+  guint             temp_timeout_id;
+  gchar            *temp_spaces;
+
   gchar             cursor_format_str[CURSOR_FORMAT_LENGTH];
   gchar             length_format_str[CURSOR_FORMAT_LENGTH];
 
@@ -70,7 +74,8 @@ GtkWidget * gimp_statusbar_new          (GimpDisplayShell    *shell);
 
 void        gimp_statusbar_push         (GimpStatusbar       *statusbar,
                                          const gchar         *context,
-                                         const gchar         *message);
+                                         const gchar         *format,
+                                         ...) G_GNUC_PRINTF(3,4);
 void        gimp_statusbar_push_coords  (GimpStatusbar       *statusbar,
                                          const gchar         *context,
                                          const gchar         *title,
@@ -84,9 +89,15 @@ void        gimp_statusbar_push_length  (GimpStatusbar       *statusbar,
                                          gdouble              value);
 void        gimp_statusbar_replace      (GimpStatusbar       *statusbar,
                                          const gchar         *context,
-                                         const gchar         *message);
+                                         const gchar         *format,
+                                         ...) G_GNUC_PRINTF(3,4);
 void        gimp_statusbar_pop          (GimpStatusbar       *statusbar,
                                          const gchar         *context);
+
+void        gimp_statusbar_push_temp    (GimpStatusbar       *statusbar,
+                                         const gchar         *format,
+                                         ...) G_GNUC_PRINTF(2,3);
+void        gimp_statusbar_pop_temp     (GimpStatusbar       *statusbar);
 
 void        gimp_statusbar_set_cursor   (GimpStatusbar       *statusbar,
                                          gdouble              x,
