@@ -65,6 +65,7 @@ struct _GimpGui
 
   gboolean       (* pdb_dialog_new)      (Gimp                *gimp,
                                           GimpContext         *context,
+                                          GimpProgress        *progress,
                                           GimpContainer       *container,
                                           const gchar         *title,
                                           const gchar         *callback_name,
@@ -129,6 +130,7 @@ const gchar  * gimp_get_theme_dir        (Gimp                *gimp);
 
 gboolean       gimp_pdb_dialog_new       (Gimp                *gimp,
                                           GimpContext         *context,
+                                          GimpProgress        *progress,
                                           GimpContainer       *container,
                                           const gchar         *title,
                                           const gchar         *callback_name,

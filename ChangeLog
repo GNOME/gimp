@@ -1,3 +1,29 @@
+2006-09-22  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/gui-message.c
+	* app/widgets/gimpwidgets-utils.[ch]: moved utility function to
+	gimpwidgets-utils.
+
+	* app/core/gimp-gui.[ch]
+	* app/gui/gui-vtable.c: added a progress parameter to
+	gimp_pdb_dialog_new() and make the dialog transient to the progress
+	window.
+
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/font_select.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/palette_select.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb: pass progress to
+	gimp_pdb_dialog_new().
+
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/font_select_cmds.c
+	* app/pdb/gradient_select_cmds.c
+	* app/pdb/palette_select_cmds.c
+	* app/pdb/pattern_select_cmds.c: regenerated.
+
+	* libgimp/gimpselectbutton.c: cosmetics.
+
 2006-09-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimppropwidgets.c (gimp_prop_aspect_ratio_new):

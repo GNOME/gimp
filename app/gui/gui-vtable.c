@@ -101,6 +101,7 @@ static void           gui_free_progress        (Gimp                *gimp,
                                                 GimpProgress        *progress);
 static gboolean       gui_pdb_dialog_new       (Gimp                *gimp,
                                                 GimpContext         *context,
+                                                GimpProgress        *progress,
                                                 GimpContainer       *container,
                                                 const gchar         *title,
                                                 const gchar         *callback_name,
@@ -331,6 +332,7 @@ gui_free_progress (Gimp          *gimp,
 static gboolean
 gui_pdb_dialog_new (Gimp          *gimp,
                     GimpContext   *context,
+                    GimpProgress  *progress,
                     GimpContainer *container,
                     const gchar   *title,
                     const gchar   *callback_name,
@@ -413,6 +415,14 @@ gui_pdb_dialog_new (Gimp          *gimp,
           view = GIMP_PDB_DIALOG (dialog)->view;
           if (view)
             gimp_docked_set_show_button_bar (GIMP_DOCKED (view), FALSE);
+
+          if (progress)
+            {
+              guint32 window = gimp_progress_get_window (progress);
+
+              if (window)
+                gimp_window_set_transient_for (GTK_WINDOW (dialog), window);
+            }
 
           gtk_widget_show (dialog);
 

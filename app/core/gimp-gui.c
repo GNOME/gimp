@@ -329,6 +329,7 @@ gimp_free_progress (Gimp         *gimp,
 gboolean
 gimp_pdb_dialog_new (Gimp          *gimp,
                      GimpContext   *context,
+                     GimpProgress  *progress,
                      GimpContainer *container,
                      const gchar   *title,
                      const gchar   *callback_name,
@@ -339,17 +340,19 @@ gimp_pdb_dialog_new (Gimp          *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (title != NULL, FALSE);
   g_return_val_if_fail (callback_name != NULL, FALSE);
 
   if (gimp->gui.pdb_dialog_new)
     {
-      va_list  args;
+      va_list args;
 
       va_start (args, object_name);
 
-      retval = gimp->gui.pdb_dialog_new (gimp, context, container, title,
+      retval = gimp->gui.pdb_dialog_new (gimp, context, progress,
+                                         container, title,
                                          callback_name, object_name,
                                          args);
 
@@ -375,7 +378,7 @@ gimp_pdb_dialog_set (Gimp          *gimp,
 
   if (gimp->gui.pdb_dialog_set)
     {
-      va_list  args;
+      va_list args;
 
       va_start (args, object_name);
 

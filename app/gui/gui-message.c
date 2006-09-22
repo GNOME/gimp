@@ -38,6 +38,7 @@
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimperrordialog.h"
 #include "widgets/gimpprogressdialog.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "dialogs/dialogs.h"
 
@@ -51,9 +52,6 @@ static gboolean  gui_message_error_dialog  (GimpProgress *progress,
                                             const gchar  *message);
 static void      gui_message_console       (const gchar  *domain,
                                             const gchar  *message);
-
-static void      gimp_window_set_transient_for (GtkWindow *window,
-                                                guint32    parent_ID);
 
 
 void
@@ -189,37 +187,3 @@ gui_message_console (const gchar *domain,
 {
   g_printerr ("%s: %s\n\n", domain, message);
 }
-
-
-/*  utility functions, similar to what we have in libgimp/gimpui.c  */
-
-static void
-gimp_window_transient_realized (GtkWidget *window,
-                                GdkWindow *parent)
-{
-  if (GTK_WIDGET_REALIZED (window))
-    gdk_window_set_transient_for (window->window, parent);
-}
-
-static void
-gimp_window_set_transient_for (GtkWindow *window,
-                               guint32    parent_ID)
-{
-  GdkWindow *parent;
-
-  parent = gdk_window_foreign_new_for_display (gdk_display_get_default (),
-                                               parent_ID);
-
-  if (! parent)
-    return;
-
-  if (GTK_WIDGET_REALIZED (window))
-    gdk_window_set_transient_for (GTK_WIDGET (window)->window, parent);
-
-  g_signal_connect_object (window, "realize",
-                           G_CALLBACK (gimp_window_transient_realized),
-                           parent, 0);
-
-  g_object_unref (parent);
-}
-

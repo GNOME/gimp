@@ -58,7 +58,8 @@ gradients_popup_invoker (GimpProcedure     *procedure,
 
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
-          ! gimp_pdb_dialog_new (gimp, context, gimp->gradient_factory->container,
+          ! gimp_pdb_dialog_new (gimp, context, progress,
+                                 gimp->gradient_factory->container,
                                  popup_title, gradient_callback, initial_gradient,
                                  "sample-size", sample_size,
                                  NULL))

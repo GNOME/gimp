@@ -844,6 +844,37 @@ gimp_window_get_native (GtkWindow *window)
   return (GdkNativeWindow)0;
 }
 
+static void
+gimp_window_transient_realized (GtkWidget *window,
+                                GdkWindow *parent)
+{
+  if (GTK_WIDGET_REALIZED (window))
+    gdk_window_set_transient_for (window->window, parent);
+}
+
+/* similar to what we have in libgimp/gimpui.c */
+void
+gimp_window_set_transient_for (GtkWindow *window,
+                               guint32    parent_ID)
+{
+  GdkWindow *parent;
+
+  parent = gdk_window_foreign_new_for_display (gdk_display_get_default (),
+                                               parent_ID);
+
+  if (! parent)
+    return;
+
+  if (GTK_WIDGET_REALIZED (window))
+    gdk_window_set_transient_for (GTK_WIDGET (window)->window, parent);
+
+  g_signal_connect_object (window, "realize",
+                           G_CALLBACK (gimp_window_transient_realized),
+                           parent, 0);
+
+  g_object_unref (parent);
+}
+
 void
 gimp_dialog_set_sensitive (GtkDialog *dialog,
                            gboolean   sensitive)

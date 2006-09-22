@@ -73,6 +73,8 @@ void              gimp_rgb_set_gdk_color     (GimpRGB         *rgb,
 void              gimp_window_set_hint       (GtkWindow       *window,
                                               GimpWindowHint   hint);
 GdkNativeWindow   gimp_window_get_native     (GtkWindow       *window);
+void              gimp_window_set_transient_for (GtkWindow    *window,
+                                                 guint32       parent_ID);
 
 void              gimp_dialog_set_sensitive  (GtkDialog       *dialog,
                                               gboolean         sensitive);
