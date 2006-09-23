@@ -29,6 +29,7 @@
 #include "core/gimptooloptions.h"
 
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimprectangleoptions.h"
 #include "gimptooloptions-gui.h"
@@ -42,6 +43,9 @@ typedef struct _GimpRectangleOptionsPrivate GimpRectangleOptionsPrivate;
 
 struct _GimpRectangleOptionsPrivate
 {
+  gboolean auto_shrink;
+  gboolean shrink_merged;
+
   gboolean highlight;
   GimpRectangleGuide guide;
 
@@ -102,6 +106,20 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
 
   if (! initialized)
     {
+      g_object_interface_install_property (iface,
+                                           g_param_spec_boolean ("auto-shrink",
+                                                                 NULL, NULL,
+                                                                 FALSE,
+                                                                 GIMP_CONFIG_PARAM_FLAGS |
+                                                                 GIMP_PARAM_STATIC_STRINGS));
+      g_object_interface_install_property (iface,
+                                           g_param_spec_boolean ("shrink-merged",
+                                                                 NULL,
+                                                                 N_("Use all visible layers when shrinking "
+                                                                    "the selection"),
+                                                                 FALSE,
+                                                                 GIMP_CONFIG_PARAM_FLAGS |
+                                                                 GIMP_PARAM_STATIC_STRINGS));
       g_object_interface_install_property (iface,
                                            g_param_spec_boolean ("highlight",
                                                                  NULL, NULL,
@@ -269,6 +287,12 @@ void
 gimp_rectangle_options_install_properties (GObjectClass *klass)
 {
   g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_AUTO_SHRINK,
+                                    "auto-shrink");
+  g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_SHRINK_MERGED,
+                                    "shrink-merged");
+  g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
                                     "highlight");
   g_object_class_override_property (klass,
@@ -328,6 +352,12 @@ gimp_rectangle_options_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case GIMP_RECTANGLE_OPTIONS_PROP_AUTO_SHRINK:
+      private->auto_shrink = g_value_get_boolean (value);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_SHRINK_MERGED:
+      private->shrink_merged = g_value_get_boolean (value);
+      break;
     case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
       private->highlight = g_value_get_boolean (value);
       break;
@@ -393,6 +423,12 @@ gimp_rectangle_options_get_property (GObject      *object,
 
   switch (property_id)
     {
+    case GIMP_RECTANGLE_OPTIONS_PROP_AUTO_SHRINK:
+      g_value_set_boolean (value, private->auto_shrink);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_SHRINK_MERGED:
+      g_value_set_boolean (value, private->shrink_merged);
+      break;
     case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
       g_value_set_boolean (value, private->highlight);
       break;
@@ -447,6 +483,8 @@ gimp_rectangle_options_get_property (GObject      *object,
 GtkWidget *
 gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 {
+  GimpRectangleOptionsPrivate *private;
+
   GObject     *config  = G_OBJECT (tool_options);
   GtkWidget   *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget   *button;
@@ -455,7 +493,34 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   GtkWidget   *entry;
   GtkWidget   *hbox;
   GtkWidget   *label;
+  GtkWidget   *vbox2;
+  GtkWidget   *frame;
   gint         row;
+
+  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (tool_options);
+
+  frame = gimp_frame_new (NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  button = gimp_prop_check_button_new (config, "auto-shrink",
+                                       _("Auto shrink selection"));
+  gtk_frame_set_label_widget (GTK_FRAME (frame), button);
+  gtk_widget_show (button);
+
+  vbox2 = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  if (private->auto_shrink)
+    gtk_widget_show (vbox2);
+
+  g_signal_connect_object (button, "toggled",
+                           G_CALLBACK (gimp_toggle_button_set_visible),
+                           vbox2, 0);
+
+  button = gimp_prop_check_button_new (config, "shrink-merged",
+                                       _("Sample merged"));
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (config, "fixed-center",
                                        _("Expand from center"));

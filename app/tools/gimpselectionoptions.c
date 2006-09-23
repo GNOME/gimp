@@ -54,8 +54,6 @@ enum
   PROP_SAMPLE_MERGED,
   PROP_THRESHOLD,
   PROP_SELECT_CRITERION,
-  PROP_AUTO_SHRINK,
-  PROP_SHRINK_MERGED,
   PROP_INTERACTIVE
 };
 
@@ -130,17 +128,6 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
                                  GIMP_SELECT_CRITERION_COMPOSITE,
                                  GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTO_SHRINK,
-                                    "auto-shrink", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHRINK_MERGED,
-                                    "shrink-merged",
-                                    N_("Use all visible layers when shrinking "
-                                       "the selection"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INTERACTIVE,
                                     "interactive", NULL,
                                     FALSE,
@@ -188,13 +175,6 @@ gimp_selection_options_set_property (GObject      *object,
       options->select_criterion = g_value_get_enum (value);
       break;
 
-    case PROP_AUTO_SHRINK:
-      options->auto_shrink = g_value_get_boolean (value);
-      break;
-    case PROP_SHRINK_MERGED:
-      options->shrink_merged = g_value_get_boolean (value);
-      break;
-
     case PROP_INTERACTIVE:
       options->interactive = g_value_get_boolean (value);
       break;
@@ -239,13 +219,6 @@ gimp_selection_options_get_property (GObject    *object,
       break;
     case PROP_SELECT_CRITERION:
       g_value_set_enum (value, options->select_criterion);
-      break;
-
-    case PROP_AUTO_SHRINK:
-      g_value_set_boolean (value, options->auto_shrink);
-      break;
-    case PROP_SHRINK_MERGED:
-      g_value_set_boolean (value, options->shrink_merged);
       break;
 
     case PROP_INTERACTIVE:
@@ -464,38 +437,6 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                                  _("Select by:"), 0.0, 0.5,
                                  combo, 2, FALSE);
-    }
-
-  /*  widgets for fixed size select  */
-  if (g_type_is_a (tool_options->tool_info->tool_type,
-                   GIMP_TYPE_RECT_SELECT_TOOL))
-    {
-      GtkWidget *frame;
-      GtkWidget *vbox2;
-
-      frame = gimp_frame_new (NULL);
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
-
-      button = gimp_prop_check_button_new (config, "auto-shrink",
-                                           _("Auto shrink selection"));
-      gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-      gtk_widget_show (button);
-
-      vbox2 = gtk_vbox_new (FALSE, 0);
-      gtk_container_add (GTK_CONTAINER (frame), vbox2);
-      if (options->auto_shrink)
-        gtk_widget_show (vbox2);
-
-      g_signal_connect_object (button, "toggled",
-                               G_CALLBACK (gimp_toggle_button_set_visible),
-                               vbox2, 0);
-
-      button = gimp_prop_check_button_new (config, "shrink-merged",
-                                           _("Sample merged"));
-      gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-
     }
 
   return vbox;

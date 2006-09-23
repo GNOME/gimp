@@ -28,6 +28,7 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-crop.h"
 #include "core/gimppickable.h"
 #include "core/gimpmarshal.h"
 
@@ -165,6 +166,11 @@ gboolean        gimp_rectangle_tool_constraint_violated (GimpRectangleTool   *re
                                                          gint                 y2,
                                                          gdouble             *alpha,
                                                          gdouble             *beta);
+static void     gimp_rectangle_tool_auto_shrink_notify (GimpRectangleOptions *options,
+                                                        GParamSpec           *pspec,
+                                                        GimpRectangleTool    *rectangle);
+
+static void     gimp_rectangle_tool_auto_shrink       (GimpRectangleTool     *rectangle);
 
 static guint gimp_rectangle_tool_signals[LAST_SIGNAL] = { 0 };
 
@@ -682,6 +688,9 @@ gimp_rectangle_tool_constructor (GObject *object)
   g_signal_connect_object (options, "notify::guide",
                            G_CALLBACK (gimp_rectangle_tool_notify_guide),
                            rectangle, 0);
+  g_signal_connect_object (options, "notify::auto-shrink",
+                           G_CALLBACK (gimp_rectangle_tool_auto_shrink_notify),
+                           rectangle, 0);
 
   gimp_rectangle_tool_set_constraint (rectangle, GIMP_RECTANGLE_CONSTRAIN_NONE);
 }
@@ -835,10 +844,18 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
   GimpRectangleToolPrivate *private;
   guint                     function;
   GimpRectangleOptions     *options;
+  gboolean                  auto_shrink;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
   options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
+
+  g_object_get (options,
+                "auto-shrink", &auto_shrink,
+                NULL);
+
+  if (auto_shrink)
+    gimp_rectangle_tool_auto_shrink (rectangle);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
   gimp_tool_control_halt (tool->control);
@@ -2634,4 +2651,85 @@ gimp_rectangle_tool_constraint_violated (GimpRectangleTool *rectangle,
     }
 
   return FALSE;
+}
+
+static void
+gimp_rectangle_tool_auto_shrink_notify (GimpRectangleOptions *options,
+                                        GParamSpec           *pspec,
+                                        GimpRectangleTool    *rectangle)
+{
+  gboolean auto_shrink;
+
+  g_object_get (options,
+                "auto-shrink", &auto_shrink,
+                NULL);
+
+  if (auto_shrink)
+    gimp_rectangle_tool_auto_shrink (rectangle);
+
+  g_signal_emit_by_name (rectangle, "rectangle-changed", NULL);
+}
+
+static void
+gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rectangle)
+{
+  GimpTool             *tool      = GIMP_TOOL (rectangle);
+  GimpDisplay          *display   = tool->display;
+  gint                  width;
+  gint                  height;
+  gint                  offset_x  = 0;
+  gint                  offset_y  = 0;
+  gint                  rx1, ry1;
+  gint                  rx2, ry2;
+  gint                  x1, y1;
+  gint                  x2, y2;
+  gint                  shrunk_x1;
+  gint                  shrunk_y1;
+  gint                  shrunk_x2;
+  gint                  shrunk_y2;
+  gboolean              shrink_merged;
+
+  if (! display)
+    return;
+
+  width  = display->image->width;
+  height = display->image->height;
+
+  g_object_get (gimp_tool_get_options (tool),
+                "shrink-merged", &shrink_merged,
+                NULL);
+
+  g_object_get (rectangle,
+                "x1", &rx1,
+                "y1", &ry1,
+                "x2", &rx2,
+                "y2", &ry2,
+                NULL);
+
+  x1 = rx1 - offset_x  > 0      ? rx1 - offset_x : 0;
+  x2 = rx2 - offset_x  < width  ? rx2 - offset_x : width;
+  y1 = ry1 - offset_y  > 0      ? ry1 - offset_y : 0;
+  y2 = ry2 - offset_y  < height ? ry2 - offset_y : height;
+
+  if (gimp_image_crop_auto_shrink (display->image,
+                                   x1, y1, x2, y2,
+                                   ! shrink_merged,
+                                   &shrunk_x1,
+                                   &shrunk_y1,
+                                   &shrunk_x2,
+                                   &shrunk_y2))
+    {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (rectangle));
+
+      g_object_set (rectangle,
+                    "x1", offset_x + shrunk_x1,
+                    "y1", offset_y + shrunk_y1,
+                    "x2", offset_x + shrunk_x2,
+                    "y2", offset_y + shrunk_y2,
+                    NULL);
+
+      gimp_rectangle_tool_configure (rectangle);
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (rectangle));
+    }
 }

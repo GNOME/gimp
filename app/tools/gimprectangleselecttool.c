@@ -30,7 +30,6 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-crop.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimppickable.h"
 #include "core/gimp-utils.h"
@@ -107,11 +106,6 @@ static void     gimp_rect_select_tool_real_select         (GimpRectSelectTool *r
                                                            gint                w,
                                                            gint                h);
 
-static void     gimp_rect_select_tool_auto_shrink_notify  (GimpRectSelectOptions *options,
-                                                           GParamSpec            *pspec,
-                                                           GimpRectSelectTool    *rect_select);
-
-static void     gimp_rect_select_tool_auto_shrink         (GimpRectSelectTool *rect_select);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpRectSelectTool, gimp_rect_select_tool,
@@ -197,7 +191,6 @@ gimp_rect_select_tool_constructor (GType                  type,
                                    GObjectConstructParam *params)
 {
   GObject  *object;
-  GObject  *options;
   GimpTool *tool;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
@@ -205,11 +198,6 @@ gimp_rect_select_tool_constructor (GType                  type,
   gimp_rectangle_tool_constructor (object);
 
   tool    = GIMP_TOOL (object);
-  options = G_OBJECT (gimp_tool_get_options (tool));
-
-  g_signal_connect_object (options, "notify::auto-shrink",
-                           G_CALLBACK (gimp_rect_select_tool_auto_shrink_notify),
-                           GIMP_RECTANGLE_TOOL (tool), 0);
 
   return object;
 }
@@ -217,15 +205,7 @@ gimp_rect_select_tool_constructor (GType                  type,
 static void
 gimp_rect_select_tool_dispose (GObject *object)
 {
-  GimpTool          *tool      = GIMP_TOOL (object);
-  GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (object);
-  GObject           *options   = G_OBJECT (gimp_tool_get_options (tool));
-
   gimp_rectangle_tool_dispose (object);
-
-  g_signal_handlers_disconnect_by_func (options,
-                                        G_CALLBACK (gimp_rect_select_tool_auto_shrink_notify),
-                                        rectangle);
 }
 
 static void
@@ -347,8 +327,6 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
 {
   GimpRectSelectTool   *rect_select = GIMP_RECT_SELECT_TOOL (tool);
   GimpRectangleTool    *rectangle   = GIMP_RECTANGLE_TOOL (tool);
-  GimpSelectionOptions *options     = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  gboolean              auto_shrink;
 
   gimp_tool_pop_status (tool, display);
   gimp_display_shell_set_show_selection (GIMP_DISPLAY_SHELL (display->shell),
@@ -376,13 +354,6 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
           gimp_tool_control_set_preserve (tool->control, FALSE);
         }
     }
-
-  g_object_get (options,
-                "auto-shrink", &auto_shrink,
-                NULL);
-
-  if (auto_shrink)
-    gimp_rect_select_tool_auto_shrink (rect_select);
 
   gimp_rectangle_tool_button_release (tool, coords, time, state, display);
 
@@ -701,89 +672,4 @@ gimp_rect_select_tool_rectangle_changed (GimpRectangleTool  *rectangle)
   gimp_tool_control_set_preserve (tool->control, FALSE);
 
   return TRUE;
-}
-
-static void
-gimp_rect_select_tool_auto_shrink_notify (GimpRectSelectOptions *options,
-                                          GParamSpec            *pspec,
-                                          GimpRectSelectTool    *rect_select)
-{
-  gboolean auto_shrink;
-
-  g_object_get (GIMP_SELECTION_OPTIONS (options),
-                "auto-shrink",   &auto_shrink,
-                NULL);
-
-  if (auto_shrink)
-    gimp_rect_select_tool_auto_shrink (rect_select);
-
-  g_signal_emit_by_name (GIMP_RECTANGLE_TOOL (rect_select),
-                         "rectangle-changed", NULL);
-}
-
-
-
-static void
-gimp_rect_select_tool_auto_shrink (GimpRectSelectTool *rect_select)
-{
-  GimpRectangleTool    *rectangle = GIMP_RECTANGLE_TOOL (rect_select);
-  GimpTool             *tool      = GIMP_TOOL (rect_select);
-  GimpDisplay          *display   = GIMP_TOOL (rect_select)->display;
-  gint                  width;
-  gint                  height;
-  gint                  offset_x  = 0;
-  gint                  offset_y  = 0;
-  gint                  rx1, ry1;
-  gint                  rx2, ry2;
-  gint                  x1, y1;
-  gint                  x2, y2;
-  gint                  shrunk_x1;
-  gint                  shrunk_y1;
-  gint                  shrunk_x2;
-  gint                  shrunk_y2;
-  gboolean              shrink_merged;
-
-  if (! display)
-    return;
-
-  width  = display->image->width;
-  height = display->image->height;
-
-  g_object_get (gimp_tool_get_options (tool),
-                "shrink-merged", &shrink_merged,
-                NULL);
-
-  g_object_get (rectangle,
-                "x1", &rx1,
-                "y1", &ry1,
-                "x2", &rx2,
-                "y2", &ry2,
-                NULL);
-
-  x1 = rx1 - offset_x  > 0      ? rx1 - offset_x : 0;
-  x2 = rx2 - offset_x  < width  ? rx2 - offset_x : width;
-  y1 = ry1 - offset_y  > 0      ? ry1 - offset_y : 0;
-  y2 = ry2 - offset_y  < height ? ry2 - offset_y : height;
-
-  if (gimp_image_crop_auto_shrink (display->image,
-                                   x1, y1, x2, y2,
-                                   ! shrink_merged,
-                                   &shrunk_x1,
-                                   &shrunk_y1,
-                                   &shrunk_x2,
-                                   &shrunk_y2))
-    {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (rectangle));
-
-      g_object_set (rectangle,
-                    "x1", offset_x + shrunk_x1,
-                    "y1", offset_y + shrunk_y1,
-                    "x2", offset_x + shrunk_x2,
-                    "y2", offset_y + shrunk_y2,
-                    NULL);
-
-      gimp_rectangle_tool_configure (rectangle);
-
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (rectangle));
-    }
 }
