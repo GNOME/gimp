@@ -79,11 +79,6 @@ static void     gimp_rect_select_tool_button_release      (GimpTool          *to
                                                            guint32            time,
                                                            GdkModifierType    state,
                                                            GimpDisplay       *display);
-static void     gimp_rect_select_tool_active_modifier_key (GimpTool          *tool,
-                                                           GdkModifierType    key,
-                                                           gboolean           press,
-                                                           GdkModifierType    state,
-                                                           GimpDisplay       *display);
 static void     gimp_rect_select_tool_oper_update         (GimpTool          *tool,
                                                            GimpCoords        *coords,
                                                            GdkModifierType    state,
@@ -165,7 +160,6 @@ gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass)
   tool_class->button_release      = gimp_rect_select_tool_button_release;
   tool_class->motion              = gimp_rectangle_tool_motion;
   tool_class->key_press           = gimp_rectangle_tool_key_press;
-  tool_class->active_modifier_key = gimp_rect_select_tool_active_modifier_key;
   tool_class->oper_update         = gimp_rect_select_tool_oper_update;
   tool_class->cursor_update       = gimp_rect_select_tool_cursor_update;
 
@@ -408,19 +402,6 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
     }
 
   rect_select->redo = NULL;
-}
-
-static void
-gimp_rect_select_tool_active_modifier_key (GimpTool        *tool,
-                                           GdkModifierType  key,
-                                           gboolean         press,
-                                           GdkModifierType  state,
-                                           GimpDisplay     *display)
-{
-  GIMP_TOOL_CLASS (parent_class)->active_modifier_key (tool, key, press, state,
-                                                       display);
-
-  gimp_rectangle_tool_active_modifier_key (tool, key, press, state, display);
 }
 
 static void

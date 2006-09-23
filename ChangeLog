@@ -1,3 +1,16 @@
+2006-09-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/actions/tools-actions.c
+	* app/actions/tools-commands.[ch]: add new actions for
+	toggling "fixed-aspect" and "fixed-center" options of
+	rectangle tools.
+
+	* app/tools/gimprectangletool.[ch]
+	* app/tools/gimprectangleselecttool.c
+	* app/tools/gimpcroptool.c: rely on new actions for
+	keyboard control, not on modifiers pressed after
+	mouse1-down.
+	
 2006-09-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimppropwidgets.[ch]

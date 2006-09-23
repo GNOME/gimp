@@ -236,6 +236,20 @@ static const GimpEnumActionEntry tools_ink_blob_angle_actions[] =
     NULL },
 };
 
+static const GimpToggleActionEntry tools_rectangle_toggle_actions[] =
+{
+  { "tools-rectangle-toggle-fixed-aspect", GIMP_STOCK_TOOL_RECT_SELECT,
+    N_("Toggle Fixed-Aspect Option for Rectangle"), NULL, NULL,
+    G_CALLBACK (tools_rectangle_toggle_fixed_aspect),
+    TRUE,
+    NULL},
+  { "tools-rectangle-toggle-fixed-center", GIMP_STOCK_TOOL_RECT_SELECT,
+    N_("Toggle Expand-From-Center Option for Rectangle"), NULL, NULL,
+    G_CALLBACK (tools_rectangle_toggle_fixed_center),
+    TRUE,
+    NULL}
+};
+
 static const GimpEnumActionEntry tools_value_1_actions[] =
 {
   { "tools-value-1-set", GIMP_STOCK_TOOL_OPTIONS,
@@ -457,6 +471,10 @@ tools_actions_setup (GimpActionGroup *group)
                                       tools_ink_blob_angle_actions,
                                       G_N_ELEMENTS (tools_ink_blob_angle_actions),
                                       G_CALLBACK (tools_ink_blob_angle_cmd_callback));
+
+  gimp_action_group_add_toggle_actions (group,
+                                        tools_rectangle_toggle_actions,
+                                        G_N_ELEMENTS (tools_rectangle_toggle_actions));
 
   gimp_action_group_add_enum_actions (group,
                                       tools_value_1_actions,

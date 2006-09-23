@@ -693,24 +693,8 @@ gimp_rectangle_tool_dispose (GObject *object)
   GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (object);
   GObject           *options   = G_OBJECT (gimp_tool_get_options (tool));
 
-  g_signal_handlers_disconnect_by_func (options,
-                                        G_CALLBACK (gimp_rectangle_tool_notify_x),
-                                        rectangle);
-  g_signal_handlers_disconnect_by_func (options,
-                                        G_CALLBACK (gimp_rectangle_tool_notify_y),
-                                        rectangle);
-  g_signal_handlers_disconnect_by_func (options,
-                                        G_CALLBACK (gimp_rectangle_tool_notify_width),
-                                        rectangle);
-  g_signal_handlers_disconnect_by_func (options,
-                                        G_CALLBACK (gimp_rectangle_tool_notify_height),
-                                        rectangle);
-  g_signal_handlers_disconnect_by_func (options,
-                                        G_CALLBACK (gimp_rectangle_tool_notify_aspect),
-                                        rectangle);
-  g_signal_handlers_disconnect_by_func (options,
-                                        G_CALLBACK (gimp_rectangle_tool_notify_highlight),
-                                        rectangle);
+  g_signal_handlers_disconnect_matched (options, G_SIGNAL_MATCH_DATA,
+                                        0, 0, NULL, NULL, rectangle);
 }
 
 gboolean
@@ -1373,54 +1357,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-}
-
-void
-gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
-                                         GdkModifierType  key,
-                                         gboolean         press,
-                                         GdkModifierType  state,
-                                         GimpDisplay     *display)
-{
-  GimpRectangleTool    *rectangle = GIMP_RECTANGLE_TOOL (tool);
-  GimpRectangleOptions *options   = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
-
-  if (key == GDK_SHIFT_MASK)
-    {
-      gboolean fixed_aspect;
-
-      g_object_get (options,
-                    "fixed-aspect", &fixed_aspect,
-                    NULL);
-
-      g_object_set (options,
-                    "fixed-aspect", ! fixed_aspect,
-                    NULL);
-    }
-
-  if (key == GDK_CONTROL_MASK)
-    {
-      gboolean fixed_center;
-
-      g_object_get (options,
-                    "fixed-center", &fixed_center,
-                    NULL);
-
-      g_object_set (options,
-                    "fixed-center", ! fixed_center,
-                    NULL);
-
-      if (! fixed_center)
-        {
-          gdouble center_x = gimp_rectangle_tool_get_pressx (rectangle);
-          gdouble center_y = gimp_rectangle_tool_get_pressy (rectangle);
-
-          g_object_set (options,
-                        "center-x", center_x,
-                        "center-y", center_y,
-                        NULL);
-        }
-    }
 }
 
 /*
