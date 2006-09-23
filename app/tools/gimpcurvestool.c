@@ -1144,10 +1144,9 @@ curves_graph_events (GtkWidget      *widget,
                 }
 
               curves_calculate_curve (tool->curves, tool->channel);
+
+              gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
             }
-
-          gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
-
           break;
 
         case GIMP_CURVE_FREE:

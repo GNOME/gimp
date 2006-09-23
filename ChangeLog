@@ -1,3 +1,9 @@
+2006-09-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpcurvestool.c (curves_graph_events): jikes, update
+	the preview only if we actually drag the curve, not on any mouse
+	movement.
+
 2006-09-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpcroptool.c
