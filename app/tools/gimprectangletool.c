@@ -1179,6 +1179,59 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
+void
+gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
+                                         GdkModifierType  key,
+                                         gboolean         press,
+                                         GdkModifierType  state,
+                                         GimpDisplay     *display)
+{
+  GimpRectangleTool    *rectangle = GIMP_RECTANGLE_TOOL (tool);
+  GimpRectangleOptions *options   = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
+
+  if (key == GDK_SHIFT_MASK)
+    {
+      gboolean fixed_aspect;
+
+      g_object_get (options,
+                    "fixed-aspect", &fixed_aspect,
+                    NULL);
+
+      g_object_set (options,
+                    "fixed-aspect", ! fixed_aspect,
+                    NULL);
+    }
+
+  if (key == GDK_CONTROL_MASK)
+    {
+      gboolean fixed_center;
+
+      g_object_get (options,
+                    "fixed-center", &fixed_center,
+                    NULL);
+
+      g_object_set (options,
+                    "fixed-center", ! fixed_center,
+                    NULL);
+
+      if (! fixed_center)
+        {
+          gint    pressx, pressy;
+          gdouble center_x, center_y;
+
+          gimp_rectangle_tool_get_press_coords (rectangle, &pressx, &pressy);
+
+          center_x = pressx;
+          center_y = pressy;
+
+          g_object_set (options,
+                        "center-x", center_x,
+                        "center-y", center_y,
+                        NULL);
+        }
+    }
+}
+
 /*
  * gimp_rectangle_tool_check_function() is needed to deal with
  * situations where the user drags a corner or edge across one of the

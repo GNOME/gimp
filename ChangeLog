@@ -1,5 +1,12 @@
 2006-09-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimpcroptool.c
+	* app/tools/gimprectangleselecttool.c
+	* app/tools/gimprectangletool.[ch]: put back code for responding
+	to modifiers pressed after mouse1-down, at mitch's request.
+
+2006-09-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimprectangleselecttool.c
 	* app/tools/gimprectangletool.[ch]:simplify code by
 	removing unneeded properties and getters/setters.
