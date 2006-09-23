@@ -504,10 +504,7 @@ gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
           return TRUE;
         }
 
-      g_object_get (rectangle,
-                    "pressx", &pressx,
-                    "pressy", &pressy,
-                    NULL);
+      gimp_rectangle_tool_get_press_coords (rectangle, &pressx, &pressy);
 
       /*  if the click was inside the marching ants  */
       if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),

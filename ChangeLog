@@ -1,5 +1,11 @@
 2006-09-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimprectangleselecttool.c
+	* app/tools/gimprectangletool.[ch]:simplify code by
+	removing unneeded properties and getters/setters.
+
+2006-09-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimprectangleoptions.[ch]
 	* app/tools/gimprectangleselecttool.c
 	* app/tools/gimprectangletool.c

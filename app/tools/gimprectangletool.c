@@ -100,26 +100,6 @@ static void gimp_rectangle_tool_iface_base_init     (GimpRectangleToolInterface 
 static GimpRectangleToolPrivate *
             gimp_rectangle_tool_get_private         (GimpRectangleTool *tool);
 
-void        gimp_rectangle_tool_set_pressx          (GimpRectangleTool *tool,
-                                                     gint               pressx);
-gint        gimp_rectangle_tool_get_pressx          (GimpRectangleTool *tool);
-void        gimp_rectangle_tool_set_pressy          (GimpRectangleTool *tool,
-                                                     gint               pressy);
-gint        gimp_rectangle_tool_get_pressy          (GimpRectangleTool *tool);
-
-void        gimp_rectangle_tool_set_x1              (GimpRectangleTool *tool,
-                                                     gint               x1);
-gint        gimp_rectangle_tool_get_x1              (GimpRectangleTool *tool);
-void        gimp_rectangle_tool_set_y1              (GimpRectangleTool *tool,
-                                                     gint               y1);
-gint        gimp_rectangle_tool_get_y1              (GimpRectangleTool *tool);
-void        gimp_rectangle_tool_set_x2              (GimpRectangleTool *tool,
-                                                     gint               x2);
-gint        gimp_rectangle_tool_get_x2              (GimpRectangleTool *tool);
-void        gimp_rectangle_tool_set_y2              (GimpRectangleTool *tool,
-                                                     gint               y2);
-gint        gimp_rectangle_tool_get_y2              (GimpRectangleTool *tool);
-
 void        gimp_rectangle_tool_set_function        (GimpRectangleTool *tool,
                                                      guint              function);
 guint       gimp_rectangle_tool_get_function        (GimpRectangleTool *tool);
@@ -215,20 +195,6 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface)
                       NULL, NULL,
                       gimp_marshal_VOID__VOID,
                       G_TYPE_NONE, 0);
-
-      g_object_interface_install_property (iface,
-                                           g_param_spec_int ("pressx",
-                                                             NULL, NULL,
-                                                             G_MININT, G_MAXINT,
-                                                             0,
-                                                             GIMP_PARAM_READWRITE));
-
-      g_object_interface_install_property (iface,
-                                           g_param_spec_int ("pressy",
-                                                             NULL, NULL,
-                                                             G_MININT, G_MAXINT,
-                                                             0,
-                                                             GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (iface,
                                            g_param_spec_int ("x1",
@@ -329,12 +295,6 @@ void
 gimp_rectangle_tool_install_properties (GObjectClass *klass)
 {
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_TOOL_PROP_PRESSX,
-                                    "pressx");
-  g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_TOOL_PROP_PRESSY,
-                                    "pressy");
-  g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_TOOL_PROP_X1,
                                     "x1");
   g_object_class_override_property (klass,
@@ -352,168 +312,6 @@ gimp_rectangle_tool_install_properties (GObjectClass *klass)
   g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_TOOL_PROP_CONSTRAINT,
                                     "constraint");
-}
-
-void
-gimp_rectangle_tool_set_pressx (GimpRectangleTool *tool,
-                                gint               pressx)
-{
-  GimpRectangleToolPrivate *private;
-
-  g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-
-  private->pressx = pressx;
-
-  g_object_notify (G_OBJECT (tool), "pressx");
-}
-
-gint
-gimp_rectangle_tool_get_pressx (GimpRectangleTool *tool)
-{
-  GimpRectangleToolPrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (tool), 0);
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-
-  return private->pressx;
-}
-
-void
-gimp_rectangle_tool_set_pressy (GimpRectangleTool *tool,
-                                gint               pressy)
-{
-  GimpRectangleToolPrivate *private;
-
-  g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-
-  private->pressy = pressy;
-
-  g_object_notify (G_OBJECT (tool), "pressy");
-}
-
-gint
-gimp_rectangle_tool_get_pressy (GimpRectangleTool *tool)
-{
-  GimpRectangleToolPrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (tool), 0);
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-
-  return private->pressy;
-}
-
-void
-gimp_rectangle_tool_set_x1 (GimpRectangleTool *tool,
-                            gint               x1)
-{
-  GimpRectangleToolPrivate *private;
-
-  g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-
-  private->x1 = x1;
-
-  g_object_notify (G_OBJECT (tool), "x1");
-}
-
-gint
-gimp_rectangle_tool_get_x1 (GimpRectangleTool *tool)
-{
-  GimpRectangleToolPrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (tool), 0);
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-
-  return private->x1;
-}
-
-void
-gimp_rectangle_tool_set_y1 (GimpRectangleTool *tool,
-                            gint               y1)
-{
-  GimpRectangleToolPrivate *private;
-
-  g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-
-  private->y1 = y1;
-
-  g_object_notify (G_OBJECT (tool), "y1");
-}
-
-gint
-gimp_rectangle_tool_get_y1 (GimpRectangleTool *tool)
-{
-  GimpRectangleToolPrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (tool), 0);
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-
-  return private->y1;
-}
-
-void
-gimp_rectangle_tool_set_x2 (GimpRectangleTool *tool,
-                            gint               x2)
-{
-  GimpRectangleToolPrivate *private;
-
-  g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-
-  private->x2 = x2;
-
-  g_object_notify (G_OBJECT (tool), "x2");
-}
-
-gint
-gimp_rectangle_tool_get_x2 (GimpRectangleTool *tool)
-{
-  GimpRectangleToolPrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (tool), 0);
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-
-  return private->x2;
-}
-
-void
-gimp_rectangle_tool_set_y2 (GimpRectangleTool *tool,
-                            gint               y2)
-{
-  GimpRectangleToolPrivate *private;
-
-  g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-
-  private->y2 = y2;
-
-  g_object_notify (G_OBJECT (tool), "y2");
-}
-
-gint
-gimp_rectangle_tool_get_y2 (GimpRectangleTool *tool)
-{
-  GimpRectangleToolPrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (tool), 0);
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-
-  return private->y2;
 }
 
 void
@@ -571,38 +369,48 @@ gimp_rectangle_tool_get_constraint (GimpRectangleTool *tool)
 }
 
 void
+gimp_rectangle_tool_get_press_coords (GimpRectangleTool *rectangle,
+                                      gint              *pressx_ptr,
+                                      gint              *pressy_ptr)
+{
+  GimpRectangleToolPrivate *private;
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
+
+  *pressx_ptr = private->pressx;
+  *pressy_ptr = private->pressy;
+}
+
+void
 gimp_rectangle_tool_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpRectangleTool *tool = GIMP_RECTANGLE_TOOL (object);
+  GimpRectangleTool        *rectangle = GIMP_RECTANGLE_TOOL (object);
+  GimpRectangleToolPrivate *private;
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
 
   switch (property_id)
     {
-    case GIMP_RECTANGLE_TOOL_PROP_PRESSX:
-      gimp_rectangle_tool_set_pressx (tool, g_value_get_int (value));
-      break;
-    case GIMP_RECTANGLE_TOOL_PROP_PRESSY:
-      gimp_rectangle_tool_set_pressy (tool, g_value_get_int (value));
-      break;
     case GIMP_RECTANGLE_TOOL_PROP_X1:
-      gimp_rectangle_tool_set_x1 (tool, g_value_get_int (value));
+      private->x1 = g_value_get_int (value);
       break;
     case GIMP_RECTANGLE_TOOL_PROP_Y1:
-      gimp_rectangle_tool_set_y1 (tool, g_value_get_int (value));
+      private->y1 = g_value_get_int (value);
       break;
     case GIMP_RECTANGLE_TOOL_PROP_X2:
-      gimp_rectangle_tool_set_x2 (tool, g_value_get_int (value));
+      private->x2 = g_value_get_int (value);
       break;
     case GIMP_RECTANGLE_TOOL_PROP_Y2:
-      gimp_rectangle_tool_set_y2 (tool, g_value_get_int (value));
+      private->y2 = g_value_get_int (value);
       break;
     case GIMP_RECTANGLE_TOOL_PROP_FUNCTION:
-      gimp_rectangle_tool_set_function (tool, g_value_get_uint (value));
+      gimp_rectangle_tool_set_function (rectangle, g_value_get_uint (value));
       break;
     case GIMP_RECTANGLE_TOOL_PROP_CONSTRAINT:
-      gimp_rectangle_tool_set_constraint (tool, g_value_get_uint (value));
+      gimp_rectangle_tool_set_constraint (rectangle, g_value_get_uint (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -616,33 +424,30 @@ gimp_rectangle_tool_get_property (GObject      *object,
                                   GValue       *value,
                                   GParamSpec   *pspec)
 {
-  GimpRectangleTool *tool = GIMP_RECTANGLE_TOOL (object);
+  GimpRectangleTool        *rectangle = GIMP_RECTANGLE_TOOL (object);
+  GimpRectangleToolPrivate *private;
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
 
   switch (property_id)
     {
-    case GIMP_RECTANGLE_TOOL_PROP_PRESSX:
-      g_value_set_int (value, gimp_rectangle_tool_get_pressx (tool));
-      break;
-    case GIMP_RECTANGLE_TOOL_PROP_PRESSY:
-      g_value_set_int (value, gimp_rectangle_tool_get_pressy (tool));
-      break;
     case GIMP_RECTANGLE_TOOL_PROP_X1:
-      g_value_set_int (value, gimp_rectangle_tool_get_x1 (tool));
+      g_value_set_int (value, private->x1);
       break;
     case GIMP_RECTANGLE_TOOL_PROP_Y1:
-      g_value_set_int (value, gimp_rectangle_tool_get_y1 (tool));
+      g_value_set_int (value, private->y1);
       break;
     case GIMP_RECTANGLE_TOOL_PROP_X2:
-      g_value_set_int (value, gimp_rectangle_tool_get_x2 (tool));
+      g_value_set_int (value, private->x2);
       break;
     case GIMP_RECTANGLE_TOOL_PROP_Y2:
-      g_value_set_int (value, gimp_rectangle_tool_get_y2 (tool));
+      g_value_set_int (value, private->y2);
       break;
     case GIMP_RECTANGLE_TOOL_PROP_FUNCTION:
-      g_value_set_uint (value, gimp_rectangle_tool_get_function (tool));
+      g_value_set_uint (value, gimp_rectangle_tool_get_function (rectangle));
       break;
     case GIMP_RECTANGLE_TOOL_PROP_CONSTRAINT:
-      g_value_set_uint (value, gimp_rectangle_tool_get_constraint (tool));
+      g_value_set_uint (value, gimp_rectangle_tool_get_constraint (rectangle));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -818,10 +623,8 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
 
-  g_object_set (rectangle,
-                "pressx", x,
-                "pressy", y,
-                NULL);
+  private->pressx = x;
+  private->pressy = y;
 
   private->startx = x;
   private->starty = y;
@@ -2538,17 +2341,12 @@ gimp_rectangle_tool_notify_guide (GimpRectangleOptions *options,
 gboolean
 gimp_rectangle_tool_no_movement (GimpRectangleTool *rectangle)
 {
-  gint                      pressx, pressy;
   GimpRectangleToolPrivate *private;
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
 
-  g_object_get (rectangle,
-                "pressx", &pressx,
-                "pressy", &pressy,
-                NULL);
-
-  return (private->lastx == pressx && private->lasty == pressy);
+  return (private->lastx == private->pressx &&
+          private->lasty == private->pressy);
 }
 
 /*
