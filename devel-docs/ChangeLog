@@ -1,3 +1,7 @@
+2006-09-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* vbr.txt: fix an error concerning version numbers.
+
 2006-09-07  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-docs.sgml

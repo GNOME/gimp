@@ -7,15 +7,13 @@ The VBR format is used for "generated" brushes, that is, brushes
 specified by a set of numerical parameters rather than a bitmap or
 pixmap.  This format dates back to at least 1998, although it
 has been tweaked several times.  The most recent tweak, in August
-2004, added support for variable shapes.  In spite of the tweaks, the
-version number has always been set to 1.0.  
+2004, added support for variable shapes.  Prior to this, the
+version number used was always 1.0.  The version number used for
+shaped brushes is 1.5. 
 
 VBR files are ASCII, consisting of a set of fields separated by line
 breaks.  The number of lines is variable, 10 if the brush is "shaped",
-8 otherwise.  The only way to distinguish between shaped and
-non-shaped brushes is by looking at line 4:  if it contains a number,
-the brush is non-shaped; if it contains the name of a shape, the brush
-is shaped.  All numerical fields are in float format, except the
+8 otherwise.  All numerical fields are in float format, except the
 number of spikes (for shaped brushes), which is an integer.
 
 Non-shaped brushes:
@@ -42,7 +40,7 @@ Shaped brushes:
 
 Line 1: Must always contain the magic string "GIMP-VBR".
 
-Line 2: Version number, always "1.0".
+Line 2: Version number, always "1.5".
 
 Line 3: The name of the brush.  This is a UTF-8 string, with a maximum
         length of 255 bytes.
