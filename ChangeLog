@@ -1,5 +1,11 @@
 2006-09-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/widgets/gimppropwidgets.c
+	* app/tools/gimprectangleoptions.c: add functionality
+	for aspect ratio control.
+	
+2006-09-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/actions/tools-actions.c
 	* app/actions/tools-commands.[ch]: add new actions for
 	toggling "fixed-aspect" and "fixed-center" options of

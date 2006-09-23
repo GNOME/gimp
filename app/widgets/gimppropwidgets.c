@@ -522,18 +522,34 @@ static gboolean gimp_prop_numeric_entry_focus_out (GtkWidget     *widget,
                                                    GObject       *config);
 static void gimp_prop_aspect_ratio_flip           (GtkWidget     *widget,
                                                    gpointer       data);
+static void gimp_prop_aspect_ratio_square         (GtkWidget     *widget,
+                                                   gpointer       data);
+static void gimp_prop_aspect_ratio_set            (GtkWidget     *widget,
+                                                   gpointer       data);
 
 /**
  * gimp_prop_aspect_ratio_new:
- * @config:               Object to which property is attached.
- * @numerator_property:   Name of double property controlled by the first entry.
- * @denominator_property: Name of double property controlled by the second entry.
- * @digits:               Number of digits after decimal point to display.
+ * @config:                Object to which property is attached.
+ * @numerator_property:    Name of double property controlled by the first entry.
+ * @denominator_property:  Name of double property controlled by the second entry.
+ * @fixed_aspect_property: Name of Boolean property specifying whether aspect is fixed.
+ * @width_property:        Name of double property specifying width of object.
+ * @height_property:       Name of double property controlled by the second entry.
+ * @digits:                Number of digits after decimal point to display.
+ * @table:                 The #GtkTable in which the controls should be inserted.
+ * @row0:                  The first table row to use.
+ * @col0:                  The first table column to use.
  *
- * Creates a pair of entries separated by a ":" label.  Intended to provide
- * a gui for setting an aspect ratio.
+ * Creates a set of widgets for controlling an aspect ratio, and
+ * inserts them into the specified table.  The widgets include
+ * two text entries and a ":" label on the top line, for specifying
+ * the aspect ratio, and on the second line, a "flip" button, a "1:1"
+ * button for setting the aspect to square, and a "set" button for
+ * setting the aspect from the existing height and width.
  *
- * Return value: A new #HBox, containing the entries and label.
+ * The @fixed_aspect_property, @width_property, and @height_property can
+ * be set to #NULL, in which case the controls will not do anything
+ * affecting or depending on these properties.
  *
  * Since GIMP 2.4
  */
@@ -553,6 +569,7 @@ gimp_prop_aspect_ratio_new (GObject     *config,
   GParamSpec *param_spec;
   GtkWidget  *label;
   GtkWidget  *entry;
+  GtkWidget  *hbox;
   GtkWidget  *button;
   gdouble     numerator;
   gdouble     denominator;
@@ -621,15 +638,34 @@ gimp_prop_aspect_ratio_new (GObject     *config,
                   entry);
   gtk_widget_show (entry);
 
-  /* flip button */
+  /* flip, 1:1, set buttons */
+  hbox = gtk_hbox_new (TRUE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), hbox,
+                             col0, col0 + 3, row0 + 1, row0 + 2);
+  gtk_widget_show (hbox);
+
   button = gtk_button_new_from_stock (GIMP_STOCK_FLIP_HORIZONTAL);
   gtk_button_set_use_stock (GTK_BUTTON (button), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (table), button,
-                             col0, col0 + 3, row0 + 1, row0 + 2);
   g_signal_connect (button, "pressed",
                     G_CALLBACK (gimp_prop_aspect_ratio_flip),
                     aspect_data);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
+
+  button = gtk_button_new_with_label (_("1:1"));
+  g_signal_connect (button, "pressed",
+                    G_CALLBACK (gimp_prop_aspect_ratio_square),
+                    aspect_data);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label (_("Set"));
+  g_signal_connect (button, "pressed",
+                    G_CALLBACK (gimp_prop_aspect_ratio_set),
+                    aspect_data);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
 }
 
 static void
@@ -732,3 +768,57 @@ gimp_prop_aspect_ratio_flip (GtkWidget *widget,
         }
     }
 }
+
+static void
+gimp_prop_aspect_ratio_square (GtkWidget *widget,
+                               gpointer   data)
+{
+  AspectData *aspect_data  = data;
+
+  g_object_set (aspect_data->config,
+                aspect_data->numerator_property,    1.0,
+                aspect_data->denominator_property,  1.0,
+                aspect_data->fixed_aspect_property, TRUE,
+                NULL);
+}
+
+static void
+gimp_prop_aspect_ratio_set (GtkWidget *widget,
+                            gpointer   data)
+{
+  AspectData *aspect_data  = data;
+  gdouble     height;
+  gdouble     width;
+
+  if (aspect_data->width_property && aspect_data->height_property)
+    {
+      g_object_get (aspect_data->config,
+                    aspect_data->width_property,  &width,
+                    aspect_data->height_property, &height,
+                    NULL);
+    }
+  else
+    return;
+
+  if (width < 1 || height < 1)
+    return;
+
+  g_object_set (aspect_data->config,
+                aspect_data->numerator_property,   width,
+                aspect_data->denominator_property, height,
+                NULL);
+
+  /* just to make sure */
+  g_object_set (aspect_data->config,
+                aspect_data->width_property,  width,
+                aspect_data->height_property, height,
+                NULL);
+
+  if (aspect_data->fixed_aspect_property)
+    {
+      g_object_set (aspect_data->config,
+                    aspect_data->fixed_aspect_property, TRUE,
+                    NULL);
+    }
+}
+

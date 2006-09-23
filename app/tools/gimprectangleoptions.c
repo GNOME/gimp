@@ -119,7 +119,8 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
       g_object_interface_install_property (iface,
                                            g_param_spec_double ("x0",
                                                                 NULL, NULL,
-                                                                0.0, GIMP_MAX_IMAGE_SIZE,
+                                                                -GIMP_MAX_IMAGE_SIZE,
+                                                                GIMP_MAX_IMAGE_SIZE,
                                                                 0.0,
                                                                 GIMP_CONFIG_PARAM_FLAGS |
                                                                 GIMP_PARAM_STATIC_STRINGS));
@@ -127,7 +128,8 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
       g_object_interface_install_property (iface,
                                            g_param_spec_double ("y0",
                                                                 NULL, NULL,
-                                                                0.0, GIMP_MAX_IMAGE_SIZE,
+                                                                -GIMP_MAX_IMAGE_SIZE,
+                                                                GIMP_MAX_IMAGE_SIZE,
                                                                 0.0,
                                                                 GIMP_CONFIG_PARAM_FLAGS |
                                                                 GIMP_PARAM_STATIC_STRINGS));
@@ -565,3 +567,4 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
   return vbox;
 }
+
