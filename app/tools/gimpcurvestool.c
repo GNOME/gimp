@@ -1080,6 +1080,8 @@ curves_graph_events (GtkWidget      *widget,
           tool->selected = closest_point;
           tool->curves->points[tool->channel][tool->selected][0] = x;
           tool->curves->points[tool->channel][tool->selected][1] = 255 - y;
+
+          gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
           break;
 
         case GIMP_CURVE_FREE:

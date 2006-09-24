@@ -1,5 +1,30 @@
 2006-09-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimagemap.c (gimp_image_map_apply): don't restore
+	the entire affected area of the drawable here (it can take *long*
+	on large selections).
+
+	(gimp_image_map_do): do it here instead, as we idle-process the
+	chunks. Slightly reduces overall speed but improves responsiveness
+	*massively*
+
+	(gimp_image_map_get_color_at): fixed to honor undo tiles offset
+	and be readable.
+
+	(gimp_image_map_commit)
+	(gimp_image_map_clear)
+	(gimp_image_map_clear): don't unref the image_map here. Objects
+	don't memory manage themselves.
+
+	Cleaned up the entire file and got rid of all sorts of uglyness.
+
+	* app/tools/gimpimagemaptool.c: unref the image_map here.
+
+	* app/tools/gimpcurvestool.c (curves_graph_events): update the
+	preview on button_press when we are dragging a free curve.
+
+2006-09-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpcurvestool.c (curves_graph_events): jikes, update
 	the preview only if we actually drag the curve, not on any mouse
 	movement.

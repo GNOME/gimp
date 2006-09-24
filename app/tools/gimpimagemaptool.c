@@ -387,12 +387,12 @@ gimp_image_map_tool_pick_color (GimpColorTool *color_tool,
   gint              off_x, off_y;
 
   gimp_item_offsets (GIMP_ITEM (tool->drawable), &off_x, &off_y);
-  x -= off_x;
-  y -= off_y;
 
   *sample_type = gimp_drawable_type (tool->drawable);
 
-  return gimp_pickable_pick_color (GIMP_PICKABLE (tool->image_map), x, y,
+  return gimp_pickable_pick_color (GIMP_PICKABLE (tool->image_map),
+                                   x - off_x,
+                                   y - off_y,
                                    color_tool->options->sample_average,
                                    color_tool->options->average_radius,
                                    color, color_index);
@@ -482,6 +482,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
             gimp_image_map_tool_map (image_map_tool);
 
           gimp_image_map_commit (image_map_tool->image_map);
+          g_object_unref (image_map_tool->image_map);
           image_map_tool->image_map = NULL;
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
@@ -501,6 +502,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
           gimp_tool_control_set_preserve (tool->control, TRUE);
 
           gimp_image_map_abort (image_map_tool->image_map);
+          g_object_unref (image_map_tool->image_map);
           image_map_tool->image_map = NULL;
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
