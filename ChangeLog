@@ -1,5 +1,11 @@
 2006-09-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/core/gimpdrawable-transform.c: apply patch from
+	Geert Jordaens to improve Lanczos performance;
+	probably fixes bug #355178.
+	
+2006-09-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* plug-ins/common/ripple.c: set min for "period" scale entry
 	to 1 instead of 0, and add error check for noninteractive.
 	Fixes bug #357431.
