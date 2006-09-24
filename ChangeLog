@@ -1,3 +1,8 @@
+2006-09-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/context-commands.c: don't allow editing of read-only
+	generated brushes. Addresses bug #357436.
+
 2006-09-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/script-fu/scripts/line-nova.scm: Change min for randomness

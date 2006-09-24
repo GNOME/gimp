@@ -481,7 +481,7 @@ context_brush_shape_cmd_callback (GtkAction *action,
 
   brush = gimp_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush))
+  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
     {
       GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
 
@@ -501,7 +501,7 @@ context_brush_radius_cmd_callback (GtkAction *action,
 
   brush = gimp_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush))
+  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
     {
       GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
       gdouble             radius;
@@ -526,7 +526,7 @@ context_brush_spikes_cmd_callback (GtkAction *action,
 
   brush = gimp_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush))
+  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
     {
       GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
       gint                spikes;
@@ -551,7 +551,7 @@ context_brush_hardness_cmd_callback (GtkAction *action,
 
   brush = gimp_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush))
+  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
     {
       GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
       gdouble             hardness;
@@ -576,7 +576,7 @@ context_brush_aspect_cmd_callback (GtkAction *action,
 
   brush = gimp_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush))
+  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
     {
       GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
       gdouble             aspect;
@@ -601,7 +601,7 @@ context_brush_angle_cmd_callback (GtkAction *action,
 
   brush = gimp_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush))
+  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
     {
       GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
       gdouble             angle;
