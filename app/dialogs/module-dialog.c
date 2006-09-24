@@ -151,8 +151,9 @@ module_dialog_new (Gimp *gimp)
   gtk_widget_show (listbox);
 
   dialog->list = gtk_list_store_new (NUM_COLUMNS,
-                                     G_TYPE_STRING, G_TYPE_BOOLEAN,
-                                     G_TYPE_POINTER);
+                                     G_TYPE_STRING,
+                                     G_TYPE_BOOLEAN,
+                                     GIMP_TYPE_MODULE);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (dialog->list));
   g_object_unref (dialog->list);
 
@@ -274,6 +275,9 @@ dialog_select_callback (GtkTreeSelection *sel,
   gtk_tree_model_get (GTK_TREE_MODEL (dialog->list), &iter,
                       MODULE_COLUMN, &module, -1);
 
+  if (module)
+    g_object_unref (module);
+
   if (dialog->last_update == module)
     return;
 
@@ -307,6 +311,8 @@ dialog_autoload_toggled (GtkCellRendererToggle *celltoggle,
 
   if (module)
     {
+      g_object_unref (module);
+
       gimp_module_set_load_inhibit (module, active);
 
       dialog->gimp->write_modulerc = TRUE;
@@ -382,6 +388,9 @@ dialog_info_remove (GimpModuleDB *db,
       gtk_tree_model_get (GTK_TREE_MODEL (dialog->list), &iter,
                           MODULE_COLUMN, &module,
                           -1);
+
+      if (module)
+        g_object_unref (module);
 
       if (module == mod)
         {

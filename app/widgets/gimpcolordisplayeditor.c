@@ -138,7 +138,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 
   editor->src = gtk_list_store_new (N_SRC_COLUMNS,
                                     G_TYPE_STRING,
-                                    G_TYPE_POINTER);
+                                    G_TYPE_GTYPE);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (editor->src));
   g_object_unref (editor->src);
 
@@ -398,13 +398,11 @@ gimp_color_display_editor_add_clicked (GtkWidget             *widget,
   if (gtk_tree_selection_get_selected (editor->src_sel, &model, &iter))
     {
       GimpColorDisplay *display;
-      GValue            val = { 0, };
+      GType             type;
 
-      gtk_tree_model_get_value (model, &iter, SRC_COLUMN_TYPE, &val);
+      gtk_tree_model_get (model, &iter, SRC_COLUMN_TYPE, &type, -1);
 
-      display = gimp_color_display_new ((GType) g_value_get_pointer (&val));
-
-      g_value_unset (&val);
+      display = gimp_color_display_new (type);
 
       if (display)
         {

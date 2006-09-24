@@ -123,10 +123,10 @@ gimp_file_proc_view_new (Gimp        *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   store = gtk_list_store_new (NUM_COLUMNS,
-                              G_TYPE_POINTER,    /*  COLUMN_PROC        */
-                              G_TYPE_STRING,     /*  COLUMN_LABEL       */
-                              G_TYPE_STRING,     /*  COLUMN_EXTENSIONS  */
-                              G_TYPE_STRING);    /*  COLUMN_HELP_ID     */
+                              GIMP_TYPE_PLUG_IN_PROCEDURE, /*  COLUMN_PROC   */
+                              G_TYPE_STRING,          /*  COLUMN_LABEL       */
+                              G_TYPE_STRING,          /*  COLUMN_EXTENSIONS  */
+                              G_TYPE_STRING);         /*  COLUMN_HELP_ID     */
 
   view = g_object_new (GIMP_TYPE_FILE_PROC_VIEW,
                        "model",      store,
@@ -252,6 +252,9 @@ gimp_file_proc_view_get_proc (GimpFileProcView  *view,
                             COLUMN_PROC,  &proc,
                             -1);
 
+      if (proc)
+        g_object_unref (proc);
+
       return proc;
     }
 
@@ -282,6 +285,10 @@ gimp_file_proc_view_set_proc (GimpFileProcView    *view,
       gtk_tree_model_get (model, &iter,
                           COLUMN_PROC, &this,
                           -1);
+
+      if (this)
+        g_object_unref (this);
+
       if (this == proc)
         break;
     }

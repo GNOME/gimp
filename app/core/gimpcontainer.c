@@ -185,10 +185,11 @@ gimp_container_class_init (GimpContainerClass *klass)
   klass->get_child_index         = NULL;
 
   g_object_class_install_property (object_class, PROP_CHILDREN_TYPE,
-                                   g_param_spec_pointer ("children-type",
-                                                         NULL, NULL,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT_ONLY));
+                                   g_param_spec_gtype ("children-type",
+                                                       NULL, NULL,
+                                                       GIMP_TYPE_OBJECT,
+                                                       GIMP_PARAM_READWRITE |
+                                                       G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_POLICY,
                                    g_param_spec_enum ("policy",
@@ -200,6 +201,13 @@ gimp_container_class_init (GimpContainerClass *klass)
 }
 
 static void
+gimp_container_config_iface_init (GimpConfigInterface *iface)
+{
+  iface->serialize   = gimp_container_serialize;
+  iface->deserialize = gimp_container_deserialize;
+}
+
+static void
 gimp_container_init (GimpContainer *container)
 {
   container->children_type = G_TYPE_NONE;
@@ -208,13 +216,6 @@ gimp_container_init (GimpContainer *container)
 
   container->handlers      = NULL;
   container->freeze_count  = 0;
-}
-
-static void
-gimp_container_config_iface_init (GimpConfigInterface *iface)
-{
-  iface->serialize   = gimp_container_serialize;
-  iface->deserialize = gimp_container_deserialize;
 }
 
 static void
@@ -249,7 +250,7 @@ gimp_container_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CHILDREN_TYPE:
-      container->children_type = (GType) g_value_get_pointer (value);
+      container->children_type = g_value_get_gtype (value);
       g_type_class_ref (container->children_type);
       break;
     case PROP_POLICY:
@@ -272,7 +273,7 @@ gimp_container_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_CHILDREN_TYPE:
-      g_value_set_pointer (value, (gpointer) container->children_type);
+      g_value_set_gtype (value, container->children_type);
       break;
     case PROP_POLICY:
       g_value_set_enum (value, container->policy);

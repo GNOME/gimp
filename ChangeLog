@@ -1,5 +1,27 @@
 2006-09-24  Michael Natterer  <mitch@gimp.org>
 
+	Some more proper typing instead of using pointers:
+
+	* libgimpconfig/gimpconfig-params.h: added macro
+	GIMP_CONFIG_INSTALL_PROP_BOXED().
+
+	* app/core/gimpcontainer.c: made "children-type" a GParamSpecGType.
+
+	* app/widgets/gimpcontrollerinfo.c: made "mapping" a
+	GParamSpecBoxed and use g_hash_table_unref() instead of destroy().
+
+	* app/widgets/gimppdbdialog.c: made "select-type" a GParamSpecGType.
+
+	* app/dialogs/module-dialog.c
+	* app/widgets/gimpcolordisplayeditor.c
+	* app/widgets/gimpcontrollerlist.c
+	* app/widgets/gimpfileprocview.c
+	* app/widgets/gimppluginaction.c: use proper object types, boxed
+	types and G_TYPE_GTYPE instead of G_TYPE_POINTER for various list
+	stores and signal signatues.
+
+2006-09-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimagemap.c (gimp_image_map_apply): don't restore
 	the entire affected area of the drawable here (it can take *long*
 	on large selections).

@@ -173,7 +173,7 @@ gimp_controller_list_init (GimpControllerList *list)
   list->src = gtk_list_store_new (NUM_COLUMNS,
                                   G_TYPE_STRING,
                                   G_TYPE_STRING,
-                                  G_TYPE_POINTER);
+                                  G_TYPE_GTYPE);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list->src));
   g_object_unref (list->src);
 

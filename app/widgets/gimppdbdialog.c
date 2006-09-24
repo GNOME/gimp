@@ -144,10 +144,11 @@ gimp_pdb_dialog_class_init (GimpPdbDialogClass *klass)
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_SELECT_TYPE,
-                                   g_param_spec_pointer ("select-type",
-                                                         NULL, NULL,
-                                                         GIMP_PARAM_WRITABLE |
-                                                         G_PARAM_CONSTRUCT_ONLY));
+                                   g_param_spec_gtype ("select-type",
+                                                       NULL, NULL,
+                                                       GIMP_TYPE_OBJECT,
+                                                       GIMP_PARAM_WRITABLE |
+                                                       G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_INITIAL_OBJECT,
                                    g_param_spec_object ("initial-object",
@@ -247,7 +248,7 @@ gimp_pdb_dialog_set_property (GObject      *object,
       dialog->caller_context = GIMP_CONTEXT (g_value_dup_object (value));
       break;
     case PROP_SELECT_TYPE:
-      dialog->select_type = (GType) g_value_get_pointer (value);
+      dialog->select_type = g_value_get_gtype (value);
       break;
     case PROP_INITIAL_OBJECT:
       /* don't ref, see constructor */
