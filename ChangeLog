@@ -1,3 +1,9 @@
+2006-09-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/ripple.c: set min for "period" scale entry
+	to 1 instead of 0, and add error check for noninteractive.
+	Fixes bug #357431.
+	
 2006-09-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/context-commands.c: don't allow editing of read-only
