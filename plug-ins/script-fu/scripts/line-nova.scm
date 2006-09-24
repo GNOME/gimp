@@ -81,7 +81,7 @@
 		    SF-ADJUSTMENT _"Number of lines"     '(200 40 1000 1 1 0 1)
 		    SF-ADJUSTMENT _"Sharpness (degrees)" '(1.0 0.0 10.0 0.1 1 1 1)
 		    SF-ADJUSTMENT _"Offset radius"       '(100 0 2000 1 1 0 1)
-		    SF-ADJUSTMENT _"Randomness"          '(30 0 2000 1 1 0 1))
+		    SF-ADJUSTMENT _"Randomness"          '(30 1 2000 1 1 0 1))
 
 (script-fu-menu-register "script-fu-line-nova"
 			 "<Image>/Filters/Render")

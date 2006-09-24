@@ -1,3 +1,8 @@
+2006-09-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/script-fu/scripts/line-nova.scm: Change min for randomness
+	from 0 to 1, should fix bug #357433.
+	
 2006-09-24  Michael Natterer  <mitch@gimp.org>
 
 	Some more proper typing instead of using pointers:
