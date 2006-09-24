@@ -258,6 +258,7 @@ plug-ins/sel2path/sel2path.c
 plug-ins/sgi/sgi.c
 plug-ins/twain/twain.c
 plug-ins/uri/uri-backend-gnomevfs.c
+plug-ins/uri/uri-backend-libcurl.c
 plug-ins/uri/uri-backend-wget.c
 plug-ins/uri/uri.c
 plug-ins/winicon/icodialog.c

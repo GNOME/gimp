@@ -55,6 +55,7 @@ m4_define([poppler_required_version], [0.3.1])
 m4_define([gnome_vfs_required_version], [2.10.0])
 m4_define([gnomeui_required_version], [2.10.0])
 m4_define([gnome_keyring_required_version], [0.4.5])
+m4_define([libcurl_required_version], [7.15.5])
 
 
 AC_INIT([GIMP], [gimp_version],
@@ -1228,30 +1229,40 @@ fi
 ###################################################################
 
 uri_plugin=no
-uri_modules="gnome-vfs-2.0 >= gnome_vfs_required_version"
+gnome_vfs_modules="gnome-vfs-2.0 >= gnome_vfs_required_version"
 
 if $PKG_CONFIG --atleast-version=gnomeui_required_version libgnomeui-2.0; then
   have_gnomeui=yes
-  uri_modules="$uri_modules libgnomeui-2.0"
+  gnome_vfs_modules="$gnome_vfs_modules libgnomeui-2.0"
 else
   have_gnomeui="no (libgnomeui-2.0 not found)"
 fi
 
 if $PKG_CONFIG --atleast-version=gnome_keyring_required_version gnome-keyring-1; then
   have_gnome_keyring=yes
-  uri_modules="$uri_modules gnome-keyring-1"
+  gnome_vfs_modules="$gnome_vfs_modules gnome-keyring-1"
 else
   have_gnome_keyring="no (gnome-keyring-1 not found)"
 fi
 
-PKG_CHECK_MODULES(URI, $uri_modules,
+PKG_CHECK_MODULES(URI_GNOME_VFS, $gnome_vfs_modules,
   have_gnomevfs=yes,
   have_gnomevfs="no (gnome-vfs-2.0 not found)")
 
 AM_CONDITIONAL(HAVE_GNOMEVFS, test x$have_gnomevfs = xyes)
 
+libcurl_modules="libcurl >= libcurl_required_version"
+
+PKG_CHECK_MODULES(URI_LIBCURL, $libcurl_modules,
+  have_libcurl=yes,
+  have_libcurl="no (libcurl not found)")
+
+AM_CONDITIONAL(HAVE_LIBCURL, test x$have_libcurl = xyes)
+
 if test "x$have_gnomevfs" = xyes; then
   uri_plugin="yes (using gnome-vfs)" 
+elif test x"$have_libcurl" = xyes; then
+  uri_plugin="yes (using libcurl)"
 elif test x"$os_win32" = xno; then
   uri_plugin="yes (using wget)"
 fi

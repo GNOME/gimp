@@ -1,3 +1,9 @@
+2006-09-24  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/uri/uri-backend-libcurl.c
+	* plug-ins/uri/Makefile.am
+        * configure.in: added a URI backed which uses the libcurl library
+
 2006-09-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpdrawable-transform.c: apply patch from
