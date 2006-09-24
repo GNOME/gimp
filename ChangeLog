@@ -1,3 +1,10 @@
+2006-09-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Merged from HEAD branch:
+
+	* plug-ins/script-fu/scripts/line-nova.scm: Change min for randomness
+	from 0 to 1, should fix bug #357433.
+
 2006-09-11  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
