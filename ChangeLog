@@ -2,6 +2,14 @@
 
 	Merged from HEAD branch:
 
+	* plug-ins/common/ripple.c: set min for "period" scale entry
+	to 1 instead of 0, and add error check for noninteractive.
+	Fixes bug #357431.
+
+2006-09-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Merged from HEAD branch:
+
 	* plug-ins/script-fu/scripts/line-nova.scm: Change min for randomness
 	from 0 to 1, should fix bug #357433.
 
