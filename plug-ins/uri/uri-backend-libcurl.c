@@ -35,8 +35,8 @@
 
 /*  private variables  */
 
-static gchar    *supported_protocols = NULL;
-static gchar    *user_agent = NULL;
+static gchar *supported_protocols = NULL;
+static gchar *user_agent          = NULL;
 
 
 /*  public functions  */
@@ -47,19 +47,19 @@ uri_backend_init (const gchar  *plugin_name,
                   GimpRunMode   run_mode,
                   GError      **error)
 {
-  GString                   *protocols;
-  curl_version_info_data    *vinfo;
+  GString                *protocols;
+  curl_version_info_data *vinfo;
 
   if (curl_global_init (CURL_GLOBAL_ALL))
     {
       g_set_error (error, 0, 0, _("Could not initialize libcurl"));
       return FALSE;
     }
-  
+
   vinfo = curl_version_info (CURLVERSION_NOW);
-  
+
   protocols = g_string_new ("http:,ftp:");
-  
+
   if (vinfo->features & CURL_VERSION_SSL)
     {
       g_string_append (protocols, ",https:,ftps:");
@@ -95,22 +95,32 @@ uri_backend_get_save_protocols (void)
 }
 
 
-int
-progress_callback (void *clientp,
-                       double dltotal,
-                       double dlnow,
-                       double ultotal,
-                       double ulnow)
+static int
+progress_callback (void   *clientp,
+                   double  dltotal,
+                   double  dlnow,
+                   double  ultotal,
+                   double  ulnow)
 {
+  gchar *memsize = NULL;
+
   if (dltotal > 0.0)
     {
+      memsize = gimp_memsize_to_string (dltotal);
+      gimp_progress_set_text_printf (_("Downloading %s of image data..."),
+                                     memsize);
       gimp_progress_update (dlnow / dltotal);
     }
   else
     {
+      memsize = gimp_memsize_to_string (dlnow);
+      gimp_progress_set_text_printf (_("Downloaded %s of image data"),
+                                     memsize);
       gimp_progress_pulse ();
     }
-  
+
+  g_free (memsize);
+
   return 0;
 }
 
@@ -127,14 +137,14 @@ uri_backend_load_image (const gchar  *uri,
   gint       response_code;
 
   gimp_progress_init (_("Connecting to server"));
-  
+
   if ((out_file = fopen(tmpname, "wb")) == NULL)
     {
       g_set_error (error, 0, 0,
                    _("Could not open output file for writing"));
       return FALSE;
     }
-  
+
   curl_handle = curl_easy_init ();
   curl_easy_setopt (curl_handle, CURLOPT_URL, uri);
   curl_easy_setopt (curl_handle, CURLOPT_WRITEDATA, out_file);
@@ -150,10 +160,8 @@ uri_backend_load_image (const gchar  *uri,
    * all supported encodings which turns on compression
    * if libcurl has support for compression
    */
-       
+
   curl_easy_setopt (curl_handle, CURLOPT_ENCODING, "");
-    
-  gimp_progress_update (0.0);
 
   if ((result = curl_easy_perform (curl_handle)) != 0)
     {
@@ -164,15 +172,15 @@ uri_backend_load_image (const gchar  *uri,
       curl_easy_cleanup (curl_handle);
       return FALSE;
     }
-  
-  curl_easy_getinfo (curl_handle, CURLINFO_RESPONSE_CODE,
-                                        &response_code);
+
+  curl_easy_getinfo (curl_handle, CURLINFO_RESPONSE_CODE, &response_code);
 
   if (response_code != 200)
     {
       fclose (out_file);
       g_set_error (error, 0, 0,
-                   _("Opening '%s' for reading resulted in HTTP response code: %d"),
+                   _("Opening '%s' for reading resulted in HTTP "
+                     "response code: %d"),
                    uri, response_code);
       curl_easy_cleanup (curl_handle);
       return FALSE;
@@ -197,4 +205,3 @@ uri_backend_save_image (const gchar  *uri,
 
   return FALSE;
 }
-

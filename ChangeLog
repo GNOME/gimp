@@ -1,3 +1,9 @@
+2006-09-25  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/uri/uri-backend-libcurl.c: while downloading, use the
+	same progress messages as the gnomevfs backend. Minor whitespace
+	and indentation cleanup.
+
 2006-09-24  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/uri/uri-backend-libcurl.c
