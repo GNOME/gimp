@@ -1,5 +1,10 @@
 2006-09-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/wmf.c (load_image): transfer the pixels
+	tile-by-tile instead of doing it row-by-row.
+
+2006-09-26  Sven Neumann  <sven@gimp.org>
+
 	* modules/Makefile.am
 	* modules/colorsel_cmyk_lcms.c: new CMYK color-selector that uses
 	littleCMS for the RGB <-> CMYK conversion. This is built instead

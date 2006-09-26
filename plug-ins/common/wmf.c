@@ -933,13 +933,15 @@ load_image (const gchar *filename)
   gint32        image;
   gint32	layer;
   GimpDrawable *drawable;
+  guchar       *pixels;
   GimpPixelRgn	pixel_rgn;
-  gint          i, rowstride;
-
-  guchar       *pixels, *buf;
   guint         width, height;
+  guint         rowstride;
+  guint         count = 0;
+  guint         done  = 0;
+  gpointer      pr;
 
-  pixels = buf = wmf_load_file (filename, &width, &height);
+  pixels = wmf_load_file (filename, &width, &height);
   rowstride = width * 4;
 
   if (!pixels)
@@ -964,18 +966,28 @@ load_image (const gchar *filename)
 
   drawable = gimp_drawable_get (layer);
 
-  gimp_tile_cache_ntiles ((width / gimp_tile_width ()) + 1);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, TRUE, FALSE);
 
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                       drawable->width, drawable->height, TRUE, FALSE);
-
-  for (i = 0; i < height; i++)
+  for (pr = gimp_pixel_rgns_register (1, &pixel_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
-      gimp_pixel_rgn_set_row (&pixel_rgn, buf, 0, i, width);
-      buf += rowstride;
+      const guchar *src  = pixels + pixel_rgn.y * rowstride + pixel_rgn.x * 4;
+      guchar       *dest = pixel_rgn.data;
+      gint          y;
 
-      if (i % 100 == 0)
-        gimp_progress_update ((gdouble) i / (gdouble) height);
+      for (y = 0; y < pixel_rgn.h; y++)
+        {
+          memcpy (dest, src, pixel_rgn.w * pixel_rgn.bpp);
+
+          src  += rowstride;
+          dest += pixel_rgn.rowstride;
+        }
+
+      done += pixel_rgn.h * pixel_rgn.w;
+
+      if (count++ % 16 == 0)
+        gimp_progress_update ((gdouble) done / (width * height));
     }
 
   g_free (pixels);
