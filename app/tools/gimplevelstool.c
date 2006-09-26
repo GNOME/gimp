@@ -239,7 +239,7 @@ gimp_levels_tool_initialize (GimpTool     *tool,
   if (gimp_drawable_is_indexed (drawable))
     {
       g_set_error (error, 0, 0,
-                   _("Levels for indexed layers cannot be adjusted."));
+                   _("Levels does not operate on indexed layers."));
       return FALSE;
     }
 

@@ -255,7 +255,7 @@ gimp_curves_tool_initialize (GimpTool     *tool,
   if (gimp_drawable_is_indexed (drawable))
     {
       g_set_error (error, 0, 0,
-                   _("Curves for indexed layers cannot be adjusted."));
+                   _("Curves does not operate on indexed layers."));
       return FALSE;
     }
 

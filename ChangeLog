@@ -1,5 +1,15 @@
 2006-09-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpclone.c
+	* app/paint/gimpheal.c
+	* app/paint/gimpperspectiveclone.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c: message review. Thanks to Bill.
+
+2006-09-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintcore.[ch]: added GError** parameter to
 	GimpPaintCore::start().
 

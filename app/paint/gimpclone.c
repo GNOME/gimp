@@ -138,7 +138,7 @@ gimp_clone_start (GimpPaintCore     *paint_core,
       if (! gimp_context_get_pattern (GIMP_CONTEXT (options)))
         {
           g_set_error (error, 0, 0,
-                       _("No patterns available for this operation."));
+                       _("No patterns available for use with this tool."));
           return FALSE;
         }
     }
