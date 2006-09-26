@@ -23,10 +23,14 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
@@ -258,6 +262,9 @@ gimp_color_dialog_new (GimpViewable      *viewable,
                         NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
+  if (! context)
+    g_warning ("gimp_color_dialog_new() called with a NULL context");
+
   role = dialog_identifier ? dialog_identifier : "gimp-color-selector";
 
   dialog = g_object_new (GIMP_TYPE_COLOR_DIALOG,
@@ -284,6 +291,11 @@ gimp_color_dialog_new (GimpViewable      *viewable,
 
   gimp_color_selection_set_show_alpha (GIMP_COLOR_SELECTION (dialog->selection),
                                        show_alpha);
+
+  if (context)
+    gimp_color_selection_set_config (GIMP_COLOR_SELECTION (dialog->selection),
+                                     context->gimp->config->color_management);
+
   gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
                                   color);
   gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (dialog->selection),

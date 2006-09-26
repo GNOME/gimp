@@ -31,6 +31,9 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 
 #include "gimpcoloreditor.h"
@@ -445,6 +448,9 @@ gimp_color_editor_set_context (GimpDocked  *docked,
           gimp_context_get_foreground (editor->context, &rgb);
           gimp_color_editor_fg_changed (editor->context, &rgb, editor);
         }
+
+      gimp_color_selector_set_config (GIMP_COLOR_SELECTOR (editor->notebook),
+                                      context->gimp->config->color_management);
     }
 
   gimp_fg_bg_editor_set_context (GIMP_FG_BG_EDITOR (editor->fg_bg), context);

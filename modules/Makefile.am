@@ -21,8 +21,11 @@ EXTRA_DIST = \
 	makefile.msc
 
 if HAVE_LCMS
+colorsel_cmyk_module = libcolorsel_cmyk_lcms.la
 cdisplay_lcms_module = libcdisplay_lcms.la
 cdisplay_proof_module = libcdisplay_proof.la
+else
+colorsel_cmyk_module = libcolorsel_cmyk.la
 endif
 
 if HAVE_LINUX_INPUT
@@ -30,7 +33,7 @@ controller_linux_input_module = libcontroller_linux_input.la
 endif
 
 lib_LTLIBRARIES = \
-	libcolorsel_cmyk.la		\
+	$(colorsel_cmyk_module)		\
 	libcolorsel_triangle.la		\
 	libcolorsel_water.la		\
 	libcdisplay_colorblind.la	\
@@ -51,6 +54,10 @@ controller_libadd = $(modules_libadd)
 libcolorsel_cmyk_la_SOURCES = colorsel_cmyk.c
 libcolorsel_cmyk_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcolorsel_cmyk_la_LIBADD = $(colorsel_libadd)
+
+libcolorsel_cmyk_lcms_la_SOURCES = colorsel_cmyk_lcms.c
+libcolorsel_cmyk_lcms_la_LDFLAGS = -avoid-version -module $(no_undefined)
+libcolorsel_cmyk_lcms_la_LIBADD = $(libgimpconfig) $(colorsel_libadd) $(LCMS_LIBS)
 
 libcolorsel_triangle_la_SOURCES = colorsel_triangle.c
 libcolorsel_triangle_la_LDFLAGS = -avoid-version -module $(no_undefined)

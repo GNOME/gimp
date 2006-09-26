@@ -68,6 +68,7 @@ EXPORTS
 	gimp_color_select_get_type
 	gimp_color_selection_color_changed
 	gimp_color_selection_get_color
+	gimp_color_selection_set_config
 	gimp_color_selection_get_old_color
 	gimp_color_selection_get_show_alpha
 	gimp_color_selection_get_type
@@ -83,6 +84,7 @@ EXPORTS
 	gimp_color_selector_new
 	gimp_color_selector_set_channel
 	gimp_color_selector_set_color
+	gimp_color_selector_set_config
 	gimp_color_selector_set_show_alpha
 	gimp_color_selector_set_toggles_sensitive
 	gimp_color_selector_set_toggles_visible

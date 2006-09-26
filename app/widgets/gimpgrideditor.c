@@ -28,9 +28,11 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpgrid.h"
 #include "core/gimpmarshal.h"
 
+#include "gimpcolorpanel.h"
 #include "gimpgrideditor.h"
 #include "gimppropwidgets.h"
 
@@ -47,6 +49,7 @@ enum
 {
   PROP_0,
   PROP_GRID,
+  PROP_CONTEXT,
   PROP_XRESOLUTION,
   PROP_YRESOLUTION
 };
@@ -86,6 +89,11 @@ gimp_grid_editor_class_init (GimpGridEditorClass *klass)
                                                         GIMP_TYPE_GRID,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_CONTEXT,
+                                   g_param_spec_object ("context", NULL, NULL,
+                                                        GIMP_TYPE_CONTEXT,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_XRESOLUTION,
                                    g_param_spec_double ("xresolution", NULL, NULL,
                                                         GIMP_MIN_RESOLUTION,
@@ -120,6 +128,9 @@ gimp_grid_editor_set_property (GObject      *object,
     case PROP_GRID:
       editor->grid = GIMP_GRID (g_value_dup_object (value));
       break;
+    case PROP_CONTEXT:
+      editor->context = GIMP_CONTEXT (g_value_dup_object (value));
+      break;
     case PROP_XRESOLUTION:
       editor->xresolution = g_value_get_double (value);
       break;
@@ -144,6 +155,9 @@ gimp_grid_editor_get_property (GObject    *object,
     {
     case PROP_GRID:
       g_value_set_object (value, editor->grid);
+      break;
+    case PROP_CONTEXT:
+      g_value_set_object (value, editor->context);
       break;
     case PROP_XRESOLUTION:
       g_value_set_double (value, editor->xresolution);
@@ -200,6 +214,8 @@ gimp_grid_editor_constructor (GType                  type,
                                              GRID_EDITOR_COLOR_BUTTON_WIDTH,
                                              GRID_EDITOR_COLOR_BUTTON_HEIGHT,
                                              GIMP_COLOR_AREA_FLAT);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
+                                editor->context);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Foreground color:"), 0.0, 0.5,
                              color_button, 1, TRUE);
@@ -209,6 +225,8 @@ gimp_grid_editor_constructor (GType                  type,
                                              GRID_EDITOR_COLOR_BUTTON_WIDTH,
                                              GRID_EDITOR_COLOR_BUTTON_HEIGHT,
                                              GIMP_COLOR_AREA_FLAT);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
+                                editor->context);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("_Background color:"), 0.0, 0.5,
                              color_button, 1, TRUE);
@@ -293,18 +311,26 @@ gimp_grid_editor_finalize (GObject *object)
       editor->grid = NULL;
     }
 
+  if (editor->context)
+    {
+      g_object_unref (editor->context);
+      editor->context = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 GtkWidget *
-gimp_grid_editor_new (GimpGrid *grid,
-                      gdouble   xresolution,
-                      gdouble   yresolution)
+gimp_grid_editor_new (GimpGrid    *grid,
+                      GimpContext *context,
+                      gdouble      xresolution,
+                      gdouble      yresolution)
 {
   g_return_val_if_fail (GIMP_IS_GRID (grid), NULL);
 
   return g_object_new (GIMP_TYPE_GRID_EDITOR,
                        "grid",        grid,
+                       "context",     context,
                        "xresolution", xresolution,
                        "yresolution", yresolution,
                        NULL);

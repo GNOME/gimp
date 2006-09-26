@@ -103,9 +103,8 @@ grid_dialog_new (GimpImage   *image,
                     G_CALLBACK (grid_dialog_response),
                     dialog);
 
-  editor = gimp_grid_editor_new (grid,
-                                 image->xresolution,
-                                 image->yresolution);
+  editor = gimp_grid_editor_new (grid, context,
+                                 image->xresolution, image->yresolution);
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox),
                      editor);

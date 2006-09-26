@@ -1078,7 +1078,8 @@ prefs_color_button_add (GObject      *config,
                         gint          table_row,
                         GtkSizeGroup *group)
 {
-  GtkWidget *button = gimp_prop_color_button_new (config, property_name, title,
+  GtkWidget *button = gimp_prop_color_button_new (config, property_name,
+                                                  title,
                                                   60, 20,
                                                   GIMP_COLOR_AREA_FLAT);
 
@@ -1921,6 +1922,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   /*  Grid  */
   editor = gimp_grid_editor_new (core_config->default_grid,
+                                 gimp_get_user_context (gimp),
                                  core_config->default_image->xresolution,
                                  core_config->default_image->yresolution);
 

@@ -1,3 +1,31 @@
+2006-09-26  Sven Neumann  <sven@gimp.org>
+
+	* modules/Makefile.am
+	* modules/colorsel_cmyk_lcms.c: new CMYK color-selector that uses
+	littleCMS for the RGB <-> CMYK conversion. This is built instead
+	of the standard CMYK color-selector if lcms is available.
+
+	* libgimpwidgets/gimpcolornotebook.c
+	* libgimpwidgets/gimpcolorselection.[ch]
+	* libgimpwidgets/gimpcolorselector.[ch]
+	* libgimpwidgets/gimpwidgets.def: added API to set the color
+	management configuration on color selectors.
+
+	* libgimpwidgets/gimpwidgetstypes.h: include
+	libgimpconfig/gimpconfigtypes.h.
+
+	* app/dialogs/grid-dialog.c
+	* app/dialogs/preferences-dialog.c
+	* app/widgets/gimpcolordialog.c
+	* app/widgets/gimpcoloreditor.c
+	* app/widgets/gimpcolorpanel.c
+	* app/widgets/gimpgrideditor.[ch]
+	* app/widgets/gimppropwidgets.c
+	* app/widgets/gimptoolbox-color-area.c: set the color management
+	configuration on (hopefully) all color selectors.
+
+	* modules/cdisplay_lcms.c: use a GimpHintBox widget.
+
 2006-09-25  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/uri/uri-backend-libcurl.c: while downloading, use the

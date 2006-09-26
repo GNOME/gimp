@@ -29,6 +29,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "gimpwidgetstypes.h"
 
@@ -86,6 +87,7 @@ gimp_color_selector_class_init (GimpColorSelectorClass *klass)
   klass->set_channel           = NULL;
   klass->color_changed         = NULL;
   klass->channel_changed       = NULL;
+  klass->set_config            = NULL;
 }
 
 static void
@@ -238,4 +240,28 @@ gimp_color_selector_channel_changed (GimpColorSelector *selector)
 
   g_signal_emit (selector, selector_signals[CHANNEL_CHANGED], 0,
                  selector->channel);
+}
+
+/**
+ * gimp_color_selector_set_config:
+ * @selector:
+ * @config:
+ *
+ * Sets the color management configuration to use with this color selector.
+ *
+ * Since: GIMP 2.4
+ */
+void
+gimp_color_selector_set_config (GimpColorSelector *selector,
+                                GimpColorConfig   *config)
+{
+  GimpColorSelectorClass *selector_class;
+
+  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
+
+  selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
+
+  if (selector_class->set_config)
+    selector_class->set_config (selector, config);
 }

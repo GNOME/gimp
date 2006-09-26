@@ -41,6 +41,7 @@ struct _GimpGridEditor
   GtkVBox       parent_instance;
 
   GimpGrid     *grid;
+  GimpContext  *context;
   gdouble       xresolution;
   gdouble       yresolution;
 };
@@ -53,9 +54,10 @@ struct _GimpGridEditorClass
 
 GType       gimp_grid_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_grid_editor_new      (GimpGrid *grid,
-                                       gdouble   xresolution,
-                                       gdouble   yresolution);
+GtkWidget * gimp_grid_editor_new      (GimpGrid    *grid,
+                                       GimpContext *context,
+                                       gdouble      xresolution,
+                                       gdouble      yresolution);
 
 
 #endif /*  __GIMP_GRID_EDITOR_H__  */

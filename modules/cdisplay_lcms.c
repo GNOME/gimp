@@ -264,9 +264,7 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   CdisplayLcms *lcms   = CDISPLAY_LCMS (display);
   GObject      *config = G_OBJECT (lcms->config);
   GtkWidget    *vbox;
-  GtkWidget    *hbox;
-  GtkWidget    *label;
-  GtkWidget    *image;
+  GtkWidget    *hint;
   GtkWidget    *table;
   cmsHPROFILE   profile;
   const gchar  *name;
@@ -278,29 +276,11 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
 
   vbox = gtk_vbox_new (FALSE, 12);
 
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  image = gtk_image_new_from_stock (GIMP_STOCK_INFO, GTK_ICON_SIZE_DIALOG);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
-
-  label = g_object_new (GTK_TYPE_LABEL,
-                        "label",   _("This filter takes its configuration "
-                                     "from the Color Management section "
-                                     "in the Preferences dialog."),
-                        "wrap",    TRUE,
-                        "justify", GTK_JUSTIFY_LEFT,
-                        "xalign",  0.0,
-                        "yalign",  0.5,
-                        NULL);
-
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  hint = gimp_hint_box_new (_("This filter takes its configuration "
+                              "from the Color Management section "
+                              "in the Preferences dialog."));
+  gtk_box_pack_start (GTK_BOX (vbox), hint, FALSE, FALSE, 0);
+  gtk_widget_show (hint);
 
   table = gtk_table_new (5, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
@@ -460,14 +440,15 @@ cdisplay_lcms_set_config (CdisplayLcms    *lcms,
 static cmsHPROFILE
 cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
 {
-  GimpColorConfig *config = lcms->config;
+  GimpColorConfig *config  = lcms->config;
+  cmsHPROFILE      profile = NULL;
 
   /*  this should be taken from the image  */
 
   if (config->rgb_profile)
-    return cmsOpenProfileFromFile (config->rgb_profile, "r");
+    profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
 
-  return cmsCreate_sRGBProfile ();
+  return profile ? profile : cmsCreate_sRGBProfile ();
 }
 
 static cmsHPROFILE
