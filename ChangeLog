@@ -1,3 +1,8 @@
+2006-09-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintcore.c: added some missing g_return_if_fail()
+	and moved variables to local scopes.
+
 2006-09-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/wmf.c (load_image): transfer the pixels

@@ -580,6 +580,10 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
   guchar      *d;
   gpointer     pr;
 
+  g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (core->undo_tiles != NULL, NULL);
+
   core->orig_buf = temp_buf_resize (core->orig_buf,
                                     gimp_drawable_bytes (drawable),
                                     x1, y1,
@@ -673,12 +677,16 @@ gimp_paint_core_get_orig_proj (GimpPaintCore *core,
   guchar      *d;
   gpointer     pr;
 
-  src_tiles = gimp_pickable_get_tiles (pickable);
+  g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+  g_return_val_if_fail (core->saved_proj_tiles != NULL, NULL);
 
   core->orig_proj_buf = temp_buf_resize (core->orig_proj_buf,
-                                         tile_manager_bpp (src_tiles),
+                                         gimp_pickable_get_bytes (pickable),
                                          x1, y1,
                                          (x2 - x1), (y2 - y1));
+
+  src_tiles = gimp_pickable_get_tiles (pickable);
 
   pickable_width  = tile_manager_width  (src_tiles);
   pickable_height = tile_manager_height (src_tiles);
@@ -1019,27 +1027,22 @@ gimp_paint_core_validate_undo_tiles (GimpPaintCore *core,
                                      gint           w,
                                      gint           h)
 {
-  gint  i;
-  gint  j;
-  Tile *src_tile;
-  Tile *dest_tile;
+  gint i, j;
 
-  if (! core->undo_tiles)
-    {
-      g_warning ("set_undo_tiles: undo_tiles is null");
-      return;
-    }
+  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (core->undo_tiles != NULL);
 
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
         {
-          dest_tile = tile_manager_get_tile (core->undo_tiles, j, i,
-                                             FALSE, FALSE);
+          Tile *dest_tile = tile_manager_get_tile (core->undo_tiles,
+                                                   j, i, FALSE, FALSE);
 
           if (! tile_is_valid (dest_tile))
             {
-              src_tile =
+              Tile *src_tile =
                 tile_manager_get_tile (gimp_drawable_get_tiles (drawable),
                                        j, i, TRUE, FALSE);
               tile_manager_map_tile (core->undo_tiles, j, i, src_tile);
@@ -1057,33 +1060,30 @@ gimp_paint_core_validate_saved_proj_tiles (GimpPaintCore *core,
                                            gint           w,
                                            gint           h)
 {
-  gint  i;
-  gint  j;
-  Tile *src_tile;
-  Tile *dest_tile;
+  gint i, j;
 
-  if (! core->saved_proj_tiles)
-    {
-      g_warning ("set_saved_proj_tiles: saved_proj_tiles is null");
-      return;
-    }
+  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
+  g_return_if_fail (GIMP_IS_PICKABLE (pickable));
+  g_return_if_fail (core->saved_proj_tiles != NULL);
 
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
         {
-          dest_tile = tile_manager_get_tile (core->saved_proj_tiles, j, i,
-                                             FALSE, FALSE);
+          Tile *dest_tile = tile_manager_get_tile (core->saved_proj_tiles,
+                                                   j, i, FALSE, FALSE);
 
           if (! tile_is_valid (dest_tile))
             {
-              dest_tile = tile_manager_get_tile (core->saved_proj_tiles, j, i,
-                                                 TRUE, TRUE);
-              src_tile = tile_manager_get_tile (gimp_pickable_get_tiles (pickable),
-                                                j, i, TRUE, FALSE);
+              Tile *src_tile =
+                tile_manager_get_tile (gimp_pickable_get_tiles (pickable),
+                                       j, i, TRUE, FALSE);
+
               /* copy the pixels instead of mapping the tile because
                * copy-on-write from the projection is broken
                */
+              dest_tile = tile_manager_get_tile (core->saved_proj_tiles,
+                                                 j, i, TRUE, TRUE);
               memcpy (tile_data_pointer (dest_tile, 0, 0),
                       tile_data_pointer (src_tile, 0, 0),
                       tile_size (src_tile));
@@ -1101,16 +1101,17 @@ gimp_paint_core_validate_canvas_tiles (GimpPaintCore *core,
                                        gint           w,
                                        gint           h)
 {
-  gint  i;
-  gint  j;
-  Tile *tile;
+  gint i, j;
+
+  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
+  g_return_if_fail (core->canvas_tiles != NULL);
 
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
         {
-          tile = tile_manager_get_tile (core->canvas_tiles, j, i,
-                                        FALSE, FALSE);
+          Tile *tile = tile_manager_get_tile (core->canvas_tiles, j, i,
+                                              FALSE, FALSE);
 
           if (! tile_is_valid (tile))
             {
