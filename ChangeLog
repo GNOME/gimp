@@ -1,3 +1,12 @@
+2006-09-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpconvolvetool.c (gimp_convolve_tool_register):
+	changed menu label to "Bl_ur / Sharpen" and shortcut to Shift+U.
+	Fixes bug #356137. Use "Blur / Sharpen" for all strings.
+
+	* app/tools/gimpdodgeburntool.c (gimp_dodge_burn_tool_register):
+	changed strings from "Dodge/Burn" to "Dodge / Burn".
+
 2006-09-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpclone.c
