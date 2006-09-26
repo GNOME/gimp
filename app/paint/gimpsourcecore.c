@@ -60,7 +60,8 @@ static void     gimp_source_core_get_property    (GObject          *object,
 static gboolean gimp_source_core_start           (GimpPaintCore    *paint_core,
                                                   GimpDrawable     *drawable,
                                                   GimpPaintOptions *paint_options,
-                                                  GimpCoords       *coords);
+                                                  GimpCoords       *coords,
+                                                  GError          **error);
 static void     gimp_source_core_paint           (GimpPaintCore    *paint_core,
                                                   GimpDrawable     *drawable,
                                                   GimpPaintOptions *paint_options,
@@ -201,16 +202,18 @@ gimp_source_core_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_source_core_start (GimpPaintCore    *paint_core,
-                        GimpDrawable     *drawable,
-                        GimpPaintOptions *paint_options,
-                        GimpCoords       *coords)
+gimp_source_core_start (GimpPaintCore     *paint_core,
+                        GimpDrawable      *drawable,
+                        GimpPaintOptions  *paint_options,
+                        GimpCoords        *coords,
+                        GError           **error)
 {
   GimpSourceCore    *source_core = GIMP_SOURCE_CORE (paint_core);
   GimpSourceOptions *options     = GIMP_SOURCE_OPTIONS (paint_options);
 
   if (! GIMP_PAINT_CORE_CLASS (parent_class)->start (paint_core, drawable,
-                                                     paint_options, coords))
+                                                     paint_options, coords,
+                                                     error))
     {
       return FALSE;
     }
@@ -220,7 +223,10 @@ gimp_source_core_start (GimpPaintCore    *paint_core,
   if (! source_core->set_source && options->use_source)
     {
       if (! source_core->src_drawable)
-        return FALSE;
+        {
+          g_set_error (error, 0, 0, _("Set a source image first."));
+          return FALSE;
+        }
 
       if (options->sample_merged &&
           gimp_item_get_image (GIMP_ITEM (source_core->src_drawable)) ==

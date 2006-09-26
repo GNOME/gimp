@@ -57,7 +57,8 @@ static void     gimp_brush_core_finalize          (GObject          *object);
 static gboolean gimp_brush_core_start             (GimpPaintCore    *core,
                                                    GimpDrawable     *drawable,
                                                    GimpPaintOptions *paint_options,
-                                                   GimpCoords       *coords);
+                                                   GimpCoords       *coords,
+                                                   GError          **error);
 static gboolean gimp_brush_core_pre_paint         (GimpPaintCore    *core,
                                                    GimpDrawable     *drawable,
                                                    GimpPaintOptions *paint_options,
@@ -320,10 +321,11 @@ gimp_brush_core_post_paint (GimpPaintCore    *paint_core,
 }
 
 static gboolean
-gimp_brush_core_start (GimpPaintCore    *paint_core,
-                       GimpDrawable     *drawable,
-                       GimpPaintOptions *paint_options,
-                       GimpCoords       *coords)
+gimp_brush_core_start (GimpPaintCore     *paint_core,
+                       GimpDrawable      *drawable,
+                       GimpPaintOptions  *paint_options,
+                       GimpCoords        *coords,
+                       GError           **error)
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
   GimpBrush     *brush;
@@ -335,7 +337,8 @@ gimp_brush_core_start (GimpPaintCore    *paint_core,
 
   if (! core->main_brush)
     {
-      g_message (_("No brushes available for use with this tool."));
+      g_set_error (error, 0, 0,
+                   _("No brushes available for use with this tool."));
       return FALSE;
     }
 

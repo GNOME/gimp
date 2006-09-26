@@ -48,7 +48,8 @@
 static gboolean gimp_clone_start        (GimpPaintCore    *paint_core,
                                          GimpDrawable     *drawable,
                                          GimpPaintOptions *paint_options,
-                                         GimpCoords       *coords);
+                                         GimpCoords       *coords,
+                                         GError          **error);
 
 static void     gimp_clone_motion       (GimpSourceCore   *source_core,
                                          GimpDrawable     *drawable,
@@ -117,15 +118,17 @@ gimp_clone_init (GimpClone *clone)
 }
 
 static gboolean
-gimp_clone_start (GimpPaintCore    *paint_core,
-                  GimpDrawable     *drawable,
-                  GimpPaintOptions *paint_options,
-                  GimpCoords       *coords)
+gimp_clone_start (GimpPaintCore     *paint_core,
+                  GimpDrawable      *drawable,
+                  GimpPaintOptions  *paint_options,
+                  GimpCoords        *coords,
+                  GError           **error)
 {
   GimpCloneOptions *options = GIMP_CLONE_OPTIONS (paint_options);
 
   if (! GIMP_PAINT_CORE_CLASS (parent_class)->start (paint_core, drawable,
-                                                     paint_options, coords))
+                                                     paint_options, coords,
+                                                     error))
     {
       return FALSE;
     }
@@ -134,7 +137,8 @@ gimp_clone_start (GimpPaintCore    *paint_core,
     {
       if (! gimp_context_get_pattern (GIMP_CONTEXT (options)))
         {
-          g_message (_("No patterns available for this operation."));
+          g_set_error (error, 0, 0,
+                       _("No patterns available for this operation."));
           return FALSE;
         }
     }

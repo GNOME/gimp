@@ -35,12 +35,10 @@
 #include "base/gimplut.h"
 #include "base/levels.h"
 
-#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
-#include "core/gimpprogress.h"
 
 #include "widgets/gimpcolorbar.h"
 #include "widgets/gimphelp-ids.h"
@@ -81,7 +79,8 @@
 static void     gimp_levels_tool_finalize       (GObject           *object);
 
 static gboolean gimp_levels_tool_initialize     (GimpTool          *tool,
-                                                 GimpDisplay       *display);
+                                                 GimpDisplay       *display,
+                                                 GError           **error);
 
 static void     gimp_levels_tool_color_picked   (GimpColorTool     *color_tool,
                                                  GimpColorPickState pick_state,
@@ -225,8 +224,9 @@ gimp_levels_tool_finalize (GObject *object)
 }
 
 static gboolean
-gimp_levels_tool_initialize (GimpTool    *tool,
-                             GimpDisplay *display)
+gimp_levels_tool_initialize (GimpTool     *tool,
+                             GimpDisplay  *display,
+                             GError      **error)
 {
   GimpLevelsTool *l_tool = GIMP_LEVELS_TOOL (tool);
   GimpDrawable   *drawable;
@@ -238,8 +238,8 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 
   if (gimp_drawable_is_indexed (drawable))
     {
-      gimp_message (display->image->gimp, GIMP_PROGRESS (display),
-                    _("Levels for indexed layers cannot be adjusted."));
+      g_set_error (error, 0, 0,
+                   _("Levels for indexed layers cannot be adjusted."));
       return FALSE;
     }
 
@@ -256,7 +256,7 @@ gimp_levels_tool_initialize (GimpTool    *tool,
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (l_tool->active_picker),
                                   FALSE);
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (l_tool->channel_menu),
                                       levels_menu_sensitivity, l_tool, NULL);

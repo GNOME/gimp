@@ -49,19 +49,25 @@
  */
 
 
-static void   gimp_heal_motion (GimpSourceCore   *source_core,
-                                GimpDrawable     *drawable,
-                                GimpPaintOptions *paint_options,
-                                gdouble           opacity,
-                                GimpPickable     *src_pickable,
-                                PixelRegion      *srcPR,
-                                gint              src_offset_x,
-                                gint              src_offset_y,
-                                TempBuf          *paint_area,
-                                gint              paint_area_offset_x,
-                                gint              paint_area_offset_y,
-                                gint              paint_area_width,
-                                gint              paint_area_height);
+static gboolean   gimp_heal_start  (GimpPaintCore    *paint_core,
+                                    GimpDrawable     *drawable,
+                                    GimpPaintOptions *paint_options,
+                                    GimpCoords       *coords,
+                                    GError          **error);
+
+static void       gimp_heal_motion (GimpSourceCore   *source_core,
+                                    GimpDrawable     *drawable,
+                                    GimpPaintOptions *paint_options,
+                                    gdouble           opacity,
+                                    GimpPickable     *src_pickable,
+                                    PixelRegion      *srcPR,
+                                    gint              src_offset_x,
+                                    gint              src_offset_y,
+                                    TempBuf          *paint_area,
+                                    gint              paint_area_offset_x,
+                                    gint              paint_area_offset_y,
+                                    gint              paint_area_width,
+                                    gint              paint_area_height);
 
 
 G_DEFINE_TYPE (GimpHeal, gimp_heal, GIMP_TYPE_SOURCE_CORE)
@@ -84,7 +90,10 @@ gimp_heal_register (Gimp                      *gimp,
 static void
 gimp_heal_class_init (GimpHealClass *klass)
 {
+  GimpPaintCoreClass  *paint_core_class  = GIMP_PAINT_CORE_CLASS (klass);
   GimpSourceCoreClass *source_core_class = GIMP_SOURCE_CORE_CLASS (klass);
+
+  paint_core_class->start   = gimp_heal_start;
 
   source_core_class->motion = gimp_heal_motion;
 }
@@ -92,6 +101,32 @@ gimp_heal_class_init (GimpHealClass *klass)
 static void
 gimp_heal_init (GimpHeal *heal)
 {
+}
+
+static gboolean
+gimp_heal_start (GimpPaintCore     *paint_core,
+                 GimpDrawable      *drawable,
+                 GimpPaintOptions  *paint_options,
+                 GimpCoords        *coords,
+                 GError           **error)
+{
+  GimpSourceCore *source_core = GIMP_SOURCE_CORE (paint_core);
+
+  if (! GIMP_PAINT_CORE_CLASS (parent_class)->start (paint_core, drawable,
+                                                     paint_options, coords,
+                                                     error))
+    {
+      return FALSE;
+    }
+
+  if (! source_core->set_source && gimp_drawable_is_indexed (drawable))
+    {
+      g_set_error (error, 0, 0,
+                   _("Indexed images are not currently supported."));
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 /*
@@ -364,12 +399,6 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   PixelRegion    tempPR;
   PixelRegion    destPR;
   GimpImageType  src_type;
-
-  if (gimp_drawable_is_indexed (drawable))
-    {
-      g_message (_("Indexed images are not currently supported."));
-      return;
-    }
 
   src_type = gimp_pickable_get_image_type (src_pickable);
 

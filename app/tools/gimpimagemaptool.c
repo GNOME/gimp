@@ -58,7 +58,8 @@
 static void     gimp_image_map_tool_finalize   (GObject          *object);
 
 static gboolean gimp_image_map_tool_initialize (GimpTool         *tool,
-                                                GimpDisplay      *display);
+                                                GimpDisplay      *display,
+                                                GError          **error);
 static void     gimp_image_map_tool_control    (GimpTool         *tool,
                                                 GimpToolAction    action,
                                                 GimpDisplay      *display);
@@ -178,14 +179,13 @@ gimp_image_map_tool_finalize (GObject *object)
 #define RESPONSE_RESET 1
 
 static gboolean
-gimp_image_map_tool_initialize (GimpTool    *tool,
-                                GimpDisplay *display)
+gimp_image_map_tool_initialize (GimpTool     *tool,
+                                GimpDisplay  *display,
+                                GError      **error)
 {
   GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
-  GimpToolInfo     *tool_info;
+  GimpToolInfo     *tool_info      = tool->tool_info;
   GimpDrawable     *drawable;
-
-  tool_info = tool->tool_info;
 
   /*  set display so the dialog can be hidden on display destruction  */
   tool->display = display;

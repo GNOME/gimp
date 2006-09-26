@@ -49,7 +49,8 @@ static GObject *
 static void     gimp_crop_tool_dispose             (GObject           *object);
 static void     gimp_crop_tool_finalize            (GObject           *object);
 static gboolean gimp_crop_tool_initialize          (GimpTool          *tool,
-                                                    GimpDisplay       *display);
+                                                    GimpDisplay       *display,
+                                                    GError           **error);
 static void     gimp_crop_tool_control             (GimpTool          *tool,
                                                     GimpToolAction     action,
                                                     GimpDisplay       *display);
@@ -167,8 +168,9 @@ gimp_crop_tool_constructor (GType                  type,
 }
 
 static gboolean
-gimp_crop_tool_initialize (GimpTool    *tool,
-                           GimpDisplay *display)
+gimp_crop_tool_initialize (GimpTool     *tool,
+                           GimpDisplay  *display,
+                           GError      **error)
 {
   GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
   GObject           *options    = G_OBJECT (gimp_tool_get_options (tool));
@@ -187,7 +189,7 @@ gimp_crop_tool_initialize (GimpTool    *tool,
   else
     gimp_rectangle_tool_set_constraint (rectangle, GIMP_RECTANGLE_CONSTRAIN_IMAGE);
 
-  return gimp_rectangle_tool_initialize (tool, display);
+  return gimp_rectangle_tool_initialize (tool, display, error);
 }
 
 static void

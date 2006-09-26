@@ -51,6 +51,9 @@
 
 /*  local function prototypes  */
 
+static gboolean gimp_blend_tool_initialize        (GimpTool        *tool,
+                                                   GimpDisplay     *display,
+                                                   GError         **error);
 static void   gimp_blend_tool_button_press        (GimpTool        *tool,
                                                    GimpCoords      *coords,
                                                    guint32          time,
@@ -114,6 +117,7 @@ gimp_blend_tool_class_init (GimpBlendToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
+  tool_class->initialize          = gimp_blend_tool_initialize;
   tool_class->button_press        = gimp_blend_tool_button_press;
   tool_class->button_release      = gimp_blend_tool_button_release;
   tool_class->motion              = gimp_blend_tool_motion;
@@ -139,6 +143,28 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
                                          "context/context-gradient-select-set");
 }
 
+static gboolean
+gimp_blend_tool_initialize (GimpTool     *tool,
+                            GimpDisplay  *display,
+                            GError      **error)
+{
+  GimpDrawable *drawable = gimp_image_active_drawable (display->image);
+
+  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
+    {
+      return FALSE;
+    }
+
+  if (gimp_drawable_is_indexed (drawable))
+    {
+      g_set_error (error, 0, 0,
+                   _("Blend: Invalid for indexed images."));
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
 static void
 gimp_blend_tool_button_press (GimpTool        *tool,
                               GimpCoords      *coords,
@@ -151,19 +177,6 @@ gimp_blend_tool_button_press (GimpTool        *tool,
   gint           off_x, off_y;
 
   drawable = gimp_image_active_drawable (display->image);
-
-  switch (gimp_drawable_type (drawable))
-    {
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
-      gimp_message (display->image->gimp, GIMP_PROGRESS (display),
-                    _("Blend: Invalid for indexed images."));
-      return;
-
-      break;
-    default:
-      break;
-    }
 
   gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 

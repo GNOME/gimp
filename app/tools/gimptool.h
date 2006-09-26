@@ -71,7 +71,8 @@ struct _GimpToolClass
                                          GimpImage       *image);
 
   gboolean      (* initialize)          (GimpTool        *tool,
-                                         GimpDisplay     *display);
+                                         GimpDisplay     *display,
+                                         GError         **error);
   void          (* control)             (GimpTool        *tool,
                                          GimpToolAction   action,
                                          GimpDisplay     *display);

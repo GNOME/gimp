@@ -42,7 +42,6 @@
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
-#include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpcolorbar.h"
@@ -75,7 +74,8 @@
 static void     gimp_curves_tool_finalize       (GObject           *object);
 
 static gboolean gimp_curves_tool_initialize     (GimpTool          *tool,
-                                                 GimpDisplay       *display);
+                                                 GimpDisplay       *display,
+                                                 GError           **error);
 static void     gimp_curves_tool_button_release (GimpTool          *tool,
                                                  GimpCoords        *coords,
                                                  guint32            time,
@@ -240,8 +240,9 @@ gimp_curves_tool_finalize (GObject *object)
 }
 
 static gboolean
-gimp_curves_tool_initialize (GimpTool    *tool,
-                             GimpDisplay *display)
+gimp_curves_tool_initialize (GimpTool     *tool,
+                             GimpDisplay  *display,
+                             GError      **error)
 {
   GimpCurvesTool *c_tool = GIMP_CURVES_TOOL (tool);
   GimpDrawable   *drawable;
@@ -253,8 +254,8 @@ gimp_curves_tool_initialize (GimpTool    *tool,
 
   if (gimp_drawable_is_indexed (drawable))
     {
-      gimp_message (display->image->gimp, GIMP_PROGRESS (display),
-                    _("Curves for indexed layers cannot be adjusted."));
+      g_set_error (error, 0, 0,
+                   _("Curves for indexed layers cannot be adjusted."));
       return FALSE;
     }
 
@@ -271,7 +272,7 @@ gimp_curves_tool_initialize (GimpTool    *tool,
   c_tool->grabbed  = FALSE;
   c_tool->last     = 0;
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
   /*  always pick colors  */
   gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),

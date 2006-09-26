@@ -53,6 +53,11 @@
 
 static void     gimp_perspective_clone_finalize   (GObject          *object);
 
+static gboolean gimp_perspective_clone_start      (GimpPaintCore    *paint_core,
+                                                   GimpDrawable     *drawable,
+                                                   GimpPaintOptions *paint_options,
+                                                   GimpCoords       *coords,
+                                                   GError          **error);
 static void     gimp_perspective_clone_paint      (GimpPaintCore    *paint_core,
                                                    GimpDrawable     *drawable,
                                                    GimpPaintOptions *paint_options,
@@ -100,6 +105,7 @@ gimp_perspective_clone_class_init (GimpPerspectiveCloneClass *klass)
 
   object_class->finalize        = gimp_perspective_clone_finalize;
 
+  paint_core_class->start       = gimp_perspective_clone_start;
   paint_core_class->paint       = gimp_perspective_clone_paint;
 
   source_core_class->get_source = gimp_perspective_clone_get_source;
@@ -133,6 +139,32 @@ gimp_perspective_clone_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gboolean
+gimp_perspective_clone_start (GimpPaintCore     *paint_core,
+                              GimpDrawable      *drawable,
+                              GimpPaintOptions  *paint_options,
+                              GimpCoords        *coords,
+                              GError           **error)
+{
+  GimpSourceCore *source_core = GIMP_SOURCE_CORE (paint_core);
+
+  if (! GIMP_PAINT_CORE_CLASS (parent_class)->start (paint_core, drawable,
+                                                     paint_options, coords,
+                                                     error))
+    {
+      return FALSE;
+    }
+
+  if (! source_core->set_source && gimp_drawable_is_indexed (drawable))
+    {
+      g_set_error (error, 0, 0,
+                   _("Indexed images are not currently supported."));
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 static void
@@ -271,12 +303,6 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   guchar               *dest_data;
   gint                  i, j;
   TempBuf              *orig;
-
-  if (gimp_drawable_is_indexed (drawable))
-    {
-      g_message (_("Indexed images are not currently supported."));
-      return FALSE;
-    }
 
   src_image = gimp_pickable_get_image (src_pickable);
   image     = gimp_item_get_image (GIMP_ITEM (drawable));

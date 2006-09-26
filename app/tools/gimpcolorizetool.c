@@ -28,11 +28,9 @@
 
 #include "base/colorize.h"
 
-#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
-#include "core/gimpprogress.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -61,7 +59,8 @@
 static void     gimp_colorize_tool_finalize    (GObject          *object);
 
 static gboolean gimp_colorize_tool_initialize  (GimpTool         *tool,
-                                                GimpDisplay      *display);
+                                                GimpDisplay      *display,
+                                                GError          **error);
 
 static void     gimp_colorize_tool_map         (GimpImageMapTool *im_tool);
 static void     gimp_colorize_tool_dialog      (GimpImageMapTool *im_tool);
@@ -139,8 +138,9 @@ gimp_colorize_tool_finalize (GObject *object)
 }
 
 static gboolean
-gimp_colorize_tool_initialize (GimpTool    *tool,
-                               GimpDisplay *display)
+gimp_colorize_tool_initialize (GimpTool     *tool,
+                               GimpDisplay  *display,
+                               GError      **error)
 {
   GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (tool);
   GimpDrawable     *drawable;
@@ -152,14 +152,14 @@ gimp_colorize_tool_initialize (GimpTool    *tool,
 
   if (! gimp_drawable_is_rgb (drawable))
     {
-      gimp_message (display->image->gimp, GIMP_PROGRESS (display),
-                    _("Colorize operates only on RGB color layers."));
+      g_set_error (error, 0, 0,
+                   _("Colorize operates only on RGB color layers."));
       return FALSE;
     }
 
   colorize_init (col_tool->colorize);
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
   colorize_update (col_tool, ALL);
 

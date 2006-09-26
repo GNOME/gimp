@@ -56,7 +56,8 @@ static GObject *     gimp_perspective_clone_tool_constructor   (GType           
                                                                 GObjectConstructParam *params);
 
 static gboolean      gimp_perspective_clone_tool_initialize    (GimpTool    *tool,
-                                                                GimpDisplay *display);
+                                                                GimpDisplay *display,
+                                                                GError     **error);
 
 static gboolean      gimp_perspective_clone_tool_has_display   (GimpTool        *tool,
                                                                 GimpDisplay     *display);
@@ -206,8 +207,9 @@ gimp_perspective_clone_tool_constructor (GType                  type,
 }
 
 static gboolean
-gimp_perspective_clone_tool_initialize (GimpTool    *tool,
-                                        GimpDisplay *display)
+gimp_perspective_clone_tool_initialize (GimpTool     *tool,
+                                        GimpDisplay  *display,
+                                        GError      **error)
 {
   GimpPerspectiveCloneTool *perspective_clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (tool);
 

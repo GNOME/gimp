@@ -512,14 +512,15 @@ gimp_rectangle_tool_dispose (GObject *object)
 }
 
 gboolean
-gimp_rectangle_tool_initialize (GimpTool    *tool,
-                                GimpDisplay *display)
+gimp_rectangle_tool_initialize (GimpTool     *tool,
+                                GimpDisplay  *display,
+                                GError      **error)
 {
   GimpRectangleToolPrivate *private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
   GObject                  *options = G_OBJECT (gimp_tool_get_options (tool));
 
   g_object_get (options,
-                "guide",            &private->guide,
+                "guide", &private->guide,
                 NULL);
 
   return TRUE;

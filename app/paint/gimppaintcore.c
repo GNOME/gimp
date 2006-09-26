@@ -68,7 +68,8 @@ static void      gimp_paint_core_get_property        (GObject          *object,
 static gboolean  gimp_paint_core_real_start          (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
                                                       GimpPaintOptions *paint_options,
-                                                      GimpCoords       *coords);
+                                                      GimpCoords       *coords,
+                                                      GError          **error);
 static gboolean  gimp_paint_core_real_pre_paint      (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
                                                       GimpPaintOptions *options,
@@ -216,7 +217,8 @@ static gboolean
 gimp_paint_core_real_start (GimpPaintCore    *core,
                             GimpDrawable     *drawable,
                             GimpPaintOptions *paint_options,
-                            GimpCoords       *coords)
+                            GimpCoords       *coords,
+                            GError          **error)
 {
   return TRUE;
 }
@@ -307,10 +309,11 @@ gimp_paint_core_paint (GimpPaintCore    *core,
 }
 
 gboolean
-gimp_paint_core_start (GimpPaintCore    *core,
-                       GimpDrawable     *drawable,
-                       GimpPaintOptions *paint_options,
-                       GimpCoords       *coords)
+gimp_paint_core_start (GimpPaintCore     *core,
+                       GimpDrawable      *drawable,
+                       GimpPaintOptions  *paint_options,
+                       GimpCoords        *coords,
+                       GError           **error)
 {
   GimpItem *item;
 
@@ -319,6 +322,7 @@ gimp_paint_core_start (GimpPaintCore    *core,
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   item = GIMP_ITEM (drawable);
 
@@ -326,7 +330,7 @@ gimp_paint_core_start (GimpPaintCore    *core,
 
   if (! GIMP_PAINT_CORE_GET_CLASS (core)->start (core, drawable,
                                                  paint_options,
-                                                 coords))
+                                                 coords, error))
     {
       return FALSE;
     }

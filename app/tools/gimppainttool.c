@@ -39,6 +39,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpstatusbar.h"
 
 #include "gimpcoloroptions.h"
 #include "gimppainttool.h"
@@ -274,6 +275,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   GdkDisplay       *gdk_display;
   GimpCoords        curr_coords;
   gint              off_x, off_y;
+  GError           *error = NULL;
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
@@ -312,8 +314,17 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   core->use_pressure = (gimp_devices_get_current (display->image->gimp) !=
                         gdk_display_get_core_pointer (gdk_display));
 
-  if (! gimp_paint_core_start (core, drawable, paint_options, &curr_coords))
-    return;
+  if (! gimp_paint_core_start (core, drawable, paint_options, &curr_coords,
+                               &error))
+    {
+      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+
+      gimp_statusbar_push_temp (GIMP_STATUSBAR (shell->statusbar),
+                                error->message);
+
+      g_clear_error (&error);
+      return;
+    }
 
   if ((display != tool->display) || ! paint_tool->draw_line)
     {

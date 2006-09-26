@@ -56,7 +56,8 @@ static gboolean      gimp_tool_real_has_display    (GimpTool        *tool,
 static GimpDisplay * gimp_tool_real_has_image      (GimpTool        *tool,
                                                     GimpImage       *image);
 static gboolean      gimp_tool_real_initialize     (GimpTool        *tool,
-                                                    GimpDisplay     *display);
+                                                    GimpDisplay     *display,
+                                                    GError         **error);
 static void          gimp_tool_real_control        (GimpTool        *tool,
                                                     GimpToolAction   action,
                                                     GimpDisplay     *display);
@@ -238,8 +239,9 @@ gimp_tool_real_has_image (GimpTool  *tool,
 }
 
 static gboolean
-gimp_tool_real_initialize (GimpTool    *tool,
-                           GimpDisplay *display)
+gimp_tool_real_initialize (GimpTool     *tool,
+                           GimpDisplay  *display,
+                           GError      **error)
 {
   return TRUE;
 }
@@ -376,10 +378,23 @@ gboolean
 gimp_tool_initialize (GimpTool    *tool,
                       GimpDisplay *display)
 {
+  GError *error = NULL;
+
   g_return_val_if_fail (GIMP_IS_TOOL (tool), FALSE);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
 
-  return GIMP_TOOL_GET_CLASS (tool)->initialize (tool, display);
+  if (! GIMP_TOOL_GET_CLASS (tool)->initialize (tool, display, &error))
+    {
+      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+
+      gimp_statusbar_push_temp (GIMP_STATUSBAR (shell->statusbar),
+                                error->message);
+
+      g_clear_error (&error);
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 void

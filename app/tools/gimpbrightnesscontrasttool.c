@@ -27,12 +27,10 @@
 #include "base/gimplut.h"
 #include "base/lut-funcs.h"
 
-#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
-#include "core/gimpprogress.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -55,7 +53,8 @@
 static void     gimp_brightness_contrast_tool_finalize       (GObject           *object);
 
 static gboolean gimp_brightness_contrast_tool_initialize     (GimpTool          *tool,
-                                                              GimpDisplay       *display);
+                                                              GimpDisplay       *display,
+                                                              GError           **error);
 
 static void     gimp_brightness_contrast_tool_button_press   (GimpTool          *tool,
                                                               GimpCoords        *coords,
@@ -150,8 +149,9 @@ gimp_brightness_contrast_tool_finalize (GObject *object)
 }
 
 static gboolean
-gimp_brightness_contrast_tool_initialize (GimpTool    *tool,
-                                          GimpDisplay *display)
+gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
+                                          GimpDisplay  *display,
+                                          GError      **error)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
   GimpDrawable               *drawable;
@@ -163,15 +163,15 @@ gimp_brightness_contrast_tool_initialize (GimpTool    *tool,
 
   if (gimp_drawable_is_indexed (drawable))
     {
-      gimp_message (display->image->gimp, GIMP_PROGRESS (display),
-                    _("Brightness-Contrast does not operate on indexed layers."));
+      g_set_error (error, 0, 0,
+                   _("Brightness-Contrast does not operate on indexed layers."));
       return FALSE;
     }
 
   bc_tool->brightness = 0.0;
   bc_tool->contrast   = 0.0;
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
   brightness_contrast_update (bc_tool, ALL);
 

@@ -76,7 +76,8 @@ static GObject * gimp_transform_tool_constructor   (GType              type,
 static void     gimp_transform_tool_finalize       (GObject           *object);
 
 static gboolean gimp_transform_tool_initialize     (GimpTool          *tool,
-                                                    GimpDisplay       *display);
+                                                    GimpDisplay       *display,
+                                                    GError           **error);
 static void     gimp_transform_tool_control        (GimpTool          *tool,
                                                     GimpToolAction     action,
                                                     GimpDisplay       *display);
@@ -314,8 +315,9 @@ gimp_transform_tool_finalize (GObject *object)
 }
 
 static gboolean
-gimp_transform_tool_initialize (GimpTool    *tool,
-                                GimpDisplay *display)
+gimp_transform_tool_initialize (GimpTool     *tool,
+                                GimpDisplay  *display,
+                                GError      **error)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
