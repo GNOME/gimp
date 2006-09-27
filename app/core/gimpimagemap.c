@@ -509,7 +509,6 @@ gimp_image_map_do (GimpImageMap *image_map)
                          w, h, FALSE);
       pixel_region_init (&destPR, gimp_drawable_get_tiles (image_map->drawable),
                          x, y, w, h, TRUE);
-      copy_region (&srcPR, &destPR);
 
       image_map->apply_func (image_map->user_data,
                              &image_map->srcPR,
