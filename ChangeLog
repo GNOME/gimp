@@ -1,3 +1,8 @@
+2006-09-28  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagemap.c (gimp_image_map_do): reverted previous
+	change; copy_region() is needed here.
+
 2006-09-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagemap.c (gimp_image_map_do): removed a redundant
