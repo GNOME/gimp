@@ -1219,7 +1219,7 @@ gimp_composite_dissolve_any_any_any_generic (GimpCompositeContext * ctx)
   gint sb = gimp_composite_pixel_bpp[ctx->pixelformat_B];
   gint x = ctx->dissolve.x;
   gint y = ctx->dissolve.y;
-  guchar *mask = ctx->M;
+  const guchar *mask = ctx->M;
   gint32 rand_val;
   guchar *dest = ctx->D;
   guchar *src = ctx->B;

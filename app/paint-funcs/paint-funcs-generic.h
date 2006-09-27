@@ -56,7 +56,7 @@ struct apply_layer_mode_struct
   guint              bytes2 : 3;
   guchar            *src1;
   guchar            *src2;
-  guchar            *mask;
+  const guchar      *mask;
   guchar           **dest;
   gint               x;
   gint               y;

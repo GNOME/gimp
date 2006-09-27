@@ -1,5 +1,15 @@
 2006-09-28  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/gimp-composite.h
+	* app/composite/gimp-composite-generic.c
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/paint-funcs/paint-funcs.c: added lots of const qualifiers,
+	moved variables to local scopes.
+
+	* app/base/pixel-processor.c: formatting.
+
+2006-09-28  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimagemap.c (gimp_image_map_do): reverted previous
 	change; copy_region() is needed here.
 

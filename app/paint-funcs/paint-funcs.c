@@ -153,11 +153,9 @@ update_tile_rowhints (Tile *tile,
                       gint  ymin,
                       gint  ymax)
 {
-  gint         bpp, ewidth;
-  gint         x, y;
-  guchar      *ptr;
-  guchar       alpha;
-  TileRowHint  thishint;
+  const guchar *ptr;
+  gint          bpp, ewidth;
+  gint          x, y;
 
 #ifdef HINTS_SANITY
   g_assert (tile != NULL);
@@ -168,16 +166,15 @@ update_tile_rowhints (Tile *tile,
   bpp = tile_bpp (tile);
   ewidth = tile_ewidth (tile);
 
-  if (bpp == 1 || bpp == 3)
+  switch (bpp)
     {
+    case 1:
+    case 3:
       for (y = ymin; y <= ymax; y++)
         tile_set_rowhint (tile, y, TILEROWHINT_OPAQUE);
+      break;
 
-      return;
-    }
-
-  if (bpp == 4)
-    {
+    case 4:
 #ifdef HINTS_SANITY
       g_assert (tile != NULL);
 #endif
@@ -190,36 +187,36 @@ update_tile_rowhints (Tile *tile,
 
       for (y = ymin; y <= ymax; y++)
         {
-          thishint = tile_get_rowhint (tile, y);
+          TileRowHint hint = tile_get_rowhint (tile, y);
 
 #ifdef HINTS_SANITY
-          if (thishint == TILEROWHINT_BROKEN)
+          if (hint == TILEROWHINT_BROKEN)
             g_error ("BROKEN y=%d", y);
-          if (thishint == TILEROWHINT_OUTOFRANGE)
+          if (hint == TILEROWHINT_OUTOFRANGE)
             g_error ("OOR y=%d", y);
-          if (thishint == TILEROWHINT_UNDEFINED)
+          if (hint == TILEROWHINT_UNDEFINED)
             g_error ("UNDEFINED y=%d - bpp=%d ew=%d eh=%d",
                      y, bpp, ewidth, eheight);
 #endif
 
 #ifdef HINTS_SANITY
-          if (thishint == TILEROWHINT_TRANSPARENT ||
-              thishint == TILEROWHINT_MIXED ||
-              thishint == TILEROWHINT_OPAQUE)
+          if (hint == TILEROWHINT_TRANSPARENT ||
+              hint == TILEROWHINT_MIXED ||
+              hint == TILEROWHINT_OPAQUE)
             {
               goto next_row4;
             }
 
-          if (thishint != TILEROWHINT_UNKNOWN)
+          if (hint != TILEROWHINT_UNKNOWN)
             {
               g_error ("MEGABOGUS y=%d - bpp=%d ew=%d eh=%d",
                        y, bpp, ewidth, eheight);
             }
 #endif
 
-          if (thishint == TILEROWHINT_UNKNOWN)
+          if (hint == TILEROWHINT_UNKNOWN)
             {
-              alpha = ptr[3];
+              const guchar alpha = ptr[3];
 
               /* row is all-opaque or all-transparent? */
               if (alpha == 0 || alpha == 255)
@@ -235,6 +232,7 @@ update_tile_rowhints (Tile *tile,
                             }
                         }
                     }
+
                   tile_set_rowhint (tile, y,
                                     (alpha == 0) ?
                                     TILEROWHINT_TRANSPARENT :
@@ -249,12 +247,9 @@ update_tile_rowhints (Tile *tile,
         next_row4:
           ptr += 4 * ewidth;
         }
+      break;
 
-      return;
-    }
-
-  if (bpp == 2)
-    {
+    case 2:
 #ifdef HINTS_SANITY
       g_assert (tile != NULL);
 #endif
@@ -267,36 +262,36 @@ update_tile_rowhints (Tile *tile,
 
       for (y = ymin; y <= ymax; y++)
         {
-          thishint = tile_get_rowhint (tile, y);
+          TileRowHint hint = tile_get_rowhint (tile, y);
 
 #ifdef HINTS_SANITY
-          if (thishint == TILEROWHINT_BROKEN)
+          if (hint == TILEROWHINT_BROKEN)
             g_error ("BROKEN y=%d",y);
-          if (thishint == TILEROWHINT_OUTOFRANGE)
+          if (hint == TILEROWHINT_OUTOFRANGE)
             g_error ("OOR y=%d",y);
-          if (thishint == TILEROWHINT_UNDEFINED)
+          if (hint == TILEROWHINT_UNDEFINED)
             g_error ("UNDEFINED y=%d - bpp=%d ew=%d eh=%d",
                      y, bpp, ewidth, eheight);
 #endif
 
 #ifdef HINTS_SANITY
-          if (thishint == TILEROWHINT_TRANSPARENT ||
-              thishint == TILEROWHINT_MIXED ||
-              thishint == TILEROWHINT_OPAQUE)
+          if (hint == TILEROWHINT_TRANSPARENT ||
+              hint == TILEROWHINT_MIXED ||
+              hint == TILEROWHINT_OPAQUE)
             {
               goto next_row2;
             }
 
-          if (thishint != TILEROWHINT_UNKNOWN)
+          if (hint != TILEROWHINT_UNKNOWN)
             {
               g_error ("MEGABOGUS y=%d - bpp=%d ew=%d eh=%d",
                        y, bpp, ewidth, eheight);
             }
 #endif
 
-          if (thishint == TILEROWHINT_UNKNOWN)
+          if (hint == TILEROWHINT_UNKNOWN)
             {
-              alpha = ptr[1];
+              const guchar alpha = ptr[1];
 
               /* row is all-opaque or all-transparent? */
               if (alpha == 0 || alpha == 255)
@@ -326,11 +321,12 @@ update_tile_rowhints (Tile *tile,
         next_row2:
           ptr += 2 * ewidth;
         }
+      break;
 
-      return;
+    default:
+      g_return_if_reached ();
+      break;
     }
-
-  g_warning ("update_tile_rowhints: Don't know about tiles with bpp==%d", bpp);
 }
 
 
@@ -465,17 +461,16 @@ combine_indexed_and_indexed_pixels (const guchar   *src1,
                                     guint           length,
                                     guint           bytes)
 {
-  gint          b;
-  guchar        new_alpha;
-  const guchar *m;
-  gint          tmp;
+  gint  b;
+  gint  tmp;
 
   if (mask)
     {
-      m = mask;
+      const guchar *m = mask;
+
       while (length --)
         {
-          new_alpha = INT_MULT(*m , opacity, tmp);
+          guchar  new_alpha = INT_MULT(*m , opacity, tmp);
 
           for (b = 0; b < bytes; b++)
             dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
@@ -491,7 +486,7 @@ combine_indexed_and_indexed_pixels (const guchar   *src1,
     {
       while (length --)
         {
-          new_alpha = opacity;
+          guchar  new_alpha = opacity;
 
           for (b = 0; b < bytes; b++)
             dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
@@ -514,21 +509,18 @@ combine_indexed_and_indexed_a_pixels (const guchar   *src1,
                                       guint           length,
                                       guint           bytes)
 {
-  gint   b, alpha;
-  guchar new_alpha;
-  gint   src2_bytes;
-  glong  tmp;
-  const guchar *m;
-
-  alpha = 1;
-  src2_bytes = 2;
+  const gint alpha      = 1;
+  const gint src2_bytes = 2;
+  glong      tmp;
+  gint       b;
 
   if (mask)
     {
-      m = mask;
+      const guchar *m = mask;
+
       while (length --)
         {
-          new_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+          guchar new_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
 
           for (b = 0; b < bytes; b++)
             dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
@@ -544,7 +536,7 @@ combine_indexed_and_indexed_a_pixels (const guchar   *src1,
     {
       while (length --)
         {
-          new_alpha = INT_MULT(src2[alpha], opacity, tmp);
+          guchar new_alpha = INT_MULT(src2[alpha], opacity, tmp);
 
           for (b = 0; b < bytes; b++)
             dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
@@ -567,20 +559,17 @@ combine_indexed_a_and_indexed_a_pixels (const guchar   *src1,
                                         guint           length,
                                         guint           bytes)
 {
-  const guchar * m;
-  gint   b, alpha;
-  guchar new_alpha;
-  glong  tmp;
-
-  alpha = 1;
+  const gint alpha = 1;
+  gint       b;
+  glong      tmp;
 
   if (mask)
     {
-      m = mask;
+      const guchar *m = mask;
 
       while (length --)
         {
-          new_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+          guchar new_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
 
           for (b = 0; b < alpha; b++)
             dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
@@ -599,7 +588,7 @@ combine_indexed_a_and_indexed_a_pixels (const guchar   *src1,
     {
       while (length --)
         {
-          new_alpha = INT_MULT(src2[alpha], opacity, tmp);
+          guchar new_alpha = INT_MULT(src2[alpha], opacity, tmp);
 
           for (b = 0; b < alpha; b++)
             dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
@@ -625,24 +614,18 @@ combine_inten_a_and_indexed_pixels (const guchar *src1,
                                     guint         length,
                                     guint         bytes)
 {
-  gint   b;
-  guchar new_alpha;
-  gint   src2_bytes;
-  gint   index;
-  glong  tmp;
-  const guchar *m;
-
-  src2_bytes = 1;
+  const gint src2_bytes = 1;
+  gint       b;
+  glong      tmp;
 
   if (mask)
     {
-      m = mask;
+      const guchar *m = mask;
 
       while (length --)
         {
-          new_alpha = INT_MULT3(255, *m, opacity, tmp);
-
-          index = src2[0] * 3;
+          gint   index     = src2[0] * 3;
+          guchar new_alpha = INT_MULT3(255, *m, opacity, tmp);
 
           for (b = 0; b < bytes-1; b++)
             dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
@@ -661,9 +644,8 @@ combine_inten_a_and_indexed_pixels (const guchar *src1,
     {
       while (length --)
         {
-          new_alpha = INT_MULT(255, opacity, tmp);
-
-          index = src2[0] * 3;
+          gint   index     = src2[0] * 3;
+          guchar new_alpha = INT_MULT(255, opacity, tmp);
 
           for (b = 0; b < bytes-1; b++)
             dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
@@ -691,25 +673,19 @@ combine_inten_a_and_indexed_a_pixels (const guchar *src1,
                                       guint         length,
                                       guint         bytes)
 {
-  gint   b, alpha;
-  guchar new_alpha;
-  gint   src2_bytes;
-  gint   index;
-  glong  tmp;
-  const guchar *m;
-
-  alpha = 1;
-  src2_bytes = 2;
+  const gint alpha = 1;
+  const gint src2_bytes = 2;
+  gint       b;
+  glong      tmp;
 
   if (mask)
     {
-      m = mask;
+      const guchar *m = mask;
 
       while (length --)
         {
-          new_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
-
-          index = src2[0] * 3;
+          gint   index     = src2[0] * 3;
+          guchar new_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
 
           for (b = 0; b < bytes-1; b++)
             dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
@@ -728,9 +704,8 @@ combine_inten_a_and_indexed_a_pixels (const guchar *src1,
     {
       while (length --)
         {
-          new_alpha = INT_MULT(src2[alpha], opacity, tmp);
-
-          index = src2[0] * 3;
+          gint   index     = src2[0] * 3;
+          guchar new_alpha = INT_MULT(src2[alpha], opacity, tmp);
 
           for (b = 0; b < bytes-1; b++)
             dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
@@ -2077,16 +2052,14 @@ void
 color_region (PixelRegion  *dest,
               const guchar *col)
 {
-  gint    h;
-  guchar *s;
-  void   *pr;
+  gpointer pr;
 
   for (pr = pixel_regions_register (1, dest);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      h = dest->h;
-      s = dest->data;
+      guchar *s = dest->data;
+      gint    h = dest->h;
 
       if (dest->w * dest->bytes == dest->rowstride)
         {
@@ -2101,6 +2074,7 @@ color_region (PixelRegion  *dest,
           while (h--)
             {
               color_pixels (s, col, dest->w, dest->bytes);
+
               s += dest->rowstride;
             }
         }
@@ -2112,18 +2086,15 @@ color_region_mask (PixelRegion  *dest,
                    PixelRegion  *mask,
                    const guchar *col)
 {
-  gint    h;
-  guchar *d;
-  guchar *m;
-  void   *pr;
+  gpointer pr;
 
   for (pr = pixel_regions_register (2, dest, mask);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      h = dest->h;
-      d = dest->data;
-      m = mask->data;
+      guchar       *d = dest->data;
+      const guchar *m = mask->data;
+      gint          h = dest->h;
 
       if (dest->w * dest->bytes == dest->rowstride &&
           mask->w * mask->bytes == mask->rowstride)
@@ -2139,6 +2110,7 @@ color_region_mask (PixelRegion  *dest,
           while (h--)
             {
               color_pixels_mask (d, m, col, dest->w, dest->bytes);
+
               d += dest->rowstride;
               m += mask->rowstride;
             }
@@ -2153,25 +2125,22 @@ pattern_region (PixelRegion  *dest,
                 gint          off_x,
                 gint          off_y)
 {
-  gint    y;
-  guchar *d;
-  guchar *m = NULL;
-  void   *pr;
+  gpointer pr;
 
   for (pr = pixel_regions_register (2, dest, mask);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      d = dest->data;
-
-      if (mask)
-        m = mask->data;
+      guchar       *d = dest->data;
+      const guchar *m = mask ? mask->data : NULL;
+      gint          y;
 
       for (y = 0; y < dest->h; y++)
         {
           pattern_pixels_mask (d, m, pattern, dest->w, dest->bytes,
                                off_x + dest->x,
                                off_y + dest->y + y);
+
           d += dest->rowstride;
 
           if (mask)
@@ -2186,22 +2155,21 @@ blend_region (PixelRegion *src1,
               PixelRegion *dest,
               guchar       blend)
 {
-  gint    h;
-  guchar *s1, *s2, * d;
-  void   *pr;
+  gpointer pr;
 
   for (pr = pixel_regions_register (3, src1, src2, dest);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      s1 = src1->data;
-      s2 = src2->data;
-      d = dest->data;
-      h = src1->h;
+      const guchar *s1 = src1->data;
+      const guchar *s2 = src2->data;
+      guchar       *d  = dest->data;
+      gint          h  = src1->h;
 
       while (h --)
         {
           blend_pixels (s1, s2, d, blend, src1->w, src1->bytes);
+
           s1 += src1->rowstride;
           s2 += src2->rowstride;
           d += dest->rowstride;
@@ -2216,16 +2184,14 @@ shade_region (PixelRegion *src,
               guchar      *color,
               guchar       blend)
 {
-  gint    h;
-  guchar *s, * d;
-
-  s = src->data;
-  d = dest->data;
-  h = src->h;
+  const guchar *s = src->data;
+  guchar       *d = dest->data;
+  gint          h = src->h;
 
   while (h --)
     {
-/*      blend_pixels (s, d, col, blend, src->w, src->bytes);*/
+      blend_pixels (s, d, color, blend, src->w, src->bytes);
+
       s += src->rowstride;
       d += dest->rowstride;
     }
@@ -2236,10 +2202,7 @@ void
 copy_region (PixelRegion *src,
              PixelRegion *dest)
 {
-  gint    h;
-  gint    pixelwidth;
-  guchar *s, *d;
-  void   *pr;
+  gpointer pr;
 
 #ifdef COWSHOW
   fputc ('[',stderr);
@@ -2265,17 +2228,19 @@ copy_region (PixelRegion *src,
         }
       else
         {
+          const guchar *s      = src->data;
+          guchar       *d      = dest->data;
+          gint          h      = src->h;
+          gint          pixels = src->w * src->bytes;
+
 #ifdef COWSHOW
           fputc ('.',stderr);
 #endif
-          pixelwidth = src->w * src->bytes;
-          s = src->data;
-          d = dest->data;
-          h = src->h;
 
           while (h --)
             {
-              memcpy (d, s, pixelwidth);
+              memcpy (d, s, pixels);
+
               s += src->rowstride;
               d += dest->rowstride;
             }
@@ -2292,23 +2257,21 @@ void
 copy_region_nocow (PixelRegion *src,
                    PixelRegion *dest)
 {
-  gint    h;
-  gint    pixelwidth;
-  guchar *s, *d;
-  void   *pr;
+  gpointer pr;
 
   for (pr = pixel_regions_register (2, src, dest);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      pixelwidth = src->w * src->bytes;
-      s = src->data;
-      d = dest->data;
-      h = src->h;
+      const guchar *s      = src->data;
+      guchar       *d      = dest->data;
+      gint          pixels = src->w * src->bytes;
+      gint          h      = src->h;
 
       while (h --)
         {
-          memcpy (d, s, pixelwidth);
+          memcpy (d, s, pixels);
+
           s += src->rowstride;
           d += dest->rowstride;
         }
@@ -2320,21 +2283,20 @@ void
 add_alpha_region (PixelRegion *src,
                   PixelRegion *dest)
 {
-  gint    h;
-  guchar *s, *d;
-  void   *pr;
+  gpointer pr;
 
   for (pr = pixel_regions_register (2, src, dest);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      s = src->data;
-      d = dest->data;
-      h = src->h;
+      const guchar *s = src->data;
+      guchar       *d = dest->data;
+      gint          h = src->h;
 
       while (h --)
         {
           add_alpha_pixels (s, d, src->w, src->bytes);
+
           s += src->rowstride;
           d += dest->rowstride;
         }
@@ -2347,17 +2309,15 @@ flatten_region (PixelRegion *src,
                 PixelRegion *dest,
                 guchar      *bg)
 {
-  gint    h;
-  guchar *s, *d;
-  void   *pr;
+  gpointer pr;
 
   for (pr = pixel_regions_register (2, src, dest);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      s = src->data;
-      d = dest->data;
-      h = src->h;
+      const guchar *s = src->data;
+      guchar       *d = dest->data;
+      gint          h = src->h;
 
       while (h --)
         {
@@ -2374,25 +2334,21 @@ extract_alpha_region (PixelRegion *src,
                       PixelRegion *mask,
                       PixelRegion *dest)
 {
-  gint h;
-  guchar * s, * m, * d;
-  void * pr;
+  gpointer pr;
 
   for (pr = pixel_regions_register (3, src, mask, dest);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      s = src->data;
-      d = dest->data;
-      if (mask)
-        m = mask->data;
-      else
-        m = NULL;
+      const guchar *m = mask ? mask->data : NULL;
+      const guchar *s = src->data;
+      guchar       *d = dest->data;
+      gint          h = src->h;
 
-      h = src->h;
       while (h --)
         {
           extract_alpha_pixels (s, m, d, src->w, src->bytes);
+
           s += src->rowstride;
           d += dest->rowstride;
           if (mask)
@@ -2411,18 +2367,16 @@ extract_from_region (PixelRegion       *src,
                      GimpImageBaseType  type,
                      gboolean           cut)
 {
-  gint    h;
-  guchar *s, *d, *m;
-  void   *pr;
+  gpointer pr;
 
   for (pr = pixel_regions_register (3, src, dest, mask);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      s = src->data;
-      d = dest->data;
-      m = (mask) ? mask->data : NULL;
-      h = src->h;
+      const guchar *m = mask ? mask->data : NULL;
+      guchar       *s = src->data;
+      guchar       *d = dest->data;
+      gint          h = src->h;
 
       while (h --)
         {
@@ -3980,23 +3934,21 @@ void
 swap_region (PixelRegion *src,
              PixelRegion *dest)
 {
-  gint h;
-  gint length;
-  guchar * s, * d;
-  void * pr;
+  gpointer pr;
 
   for (pr = pixel_regions_register (2, src, dest);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      s = src->data;
-      h = src->h;
-      d = dest->data;
-      length = src->w * src->bytes;
+      guchar *s      = src->data;
+      guchar *d      = dest->data;
+      gint    pixels = src->w * src->bytes;
+      gint    h      = src->h;
 
       while (h --)
         {
-          swap_pixels (s, d, length);
+          swap_pixels (s, d, pixels);
+
           s += src->rowstride;
           d += dest->rowstride;
         }
@@ -4396,7 +4348,7 @@ combine_sub_region (struct combine_regions_struct *st,
   guchar               *data;
   guint                 opacity;
   guint                 layer_mode_opacity;
-  guchar               *layer_mode_mask;
+  const guchar         *layer_mode_mask;
   GimpLayerModeEffects  mode;
   const gboolean       *affect;
   guint                 h;
@@ -4404,7 +4356,8 @@ combine_sub_region (struct combine_regions_struct *st,
   CombinationMode       type;
   gboolean              mode_affect = FALSE;
   guchar               *s, *s1, *s2;
-  guchar               *d, *m;
+  guchar               *d;
+  const guchar         *m;
   guchar               *buf;
   gboolean              opacity_quickskip_possible;
   gboolean              transparency_quickskip_possible;
