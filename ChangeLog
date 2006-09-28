@@ -1,5 +1,14 @@
 2006-09-28  Sven Neumann  <sven@gimp.org>
 
+	* configure.in
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/mkgen.pl
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/lcms.c: build framework for ICC color conversion
+	plug-in using littleCMS.
+
+2006-09-28  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell.[ch]: added
 	gimp_display_shell_message() and a valist variant and decide here
 	where the message is shown.

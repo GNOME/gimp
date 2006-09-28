@@ -1321,6 +1321,7 @@ if test "x$with_lcms" != xno; then
   ])
   if test $have_lcms = yes; then
     LCMS_LIBS="-llcms"
+    LCMS="lcms"
   else
     have_lcms="no (lcms not found or unusable)"
   fi
@@ -1328,6 +1329,7 @@ else
   have_lcms="no (lcms support disabled)"
 fi
 
+AC_SUBST(LCMS)
 AC_SUBST(LCMS_LIBS)
 AM_CONDITIONAL(HAVE_LCMS, test $have_lcms = yes)
 
@@ -1869,6 +1871,7 @@ Extra Binaries:
 Optional Plug-Ins:
   Ascii Art:         $have_libaa
   Help Browser:      $have_gtkhtml2
+  LCMS:              $have_lcms
   JPEG:              $jpeg_ok
   MNG:               $have_libmng
   PDF:               $have_poppler
@@ -1897,4 +1900,3 @@ Optional Modules:
   Color Correction:  $have_lcms
   Soft Proof:        $have_lcms
 ]);
-
