@@ -566,7 +566,6 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
            *  draw a line.
            */
 
-          gchar     status_str[STATUSBAR_SIZE];
           gchar    *status_help;
           gdouble   dx, dy, dist;
           gint      off_x, off_y;
@@ -597,8 +596,8 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
             {
               dist = sqrt (SQR (dx) + SQR (dy));
 
-              g_snprintf (status_str, sizeof (status_str), "%.1f %s.  %s",
-                          dist, _("pixels"), status_help);
+              gimp_tool_push_status (tool, display, "%.1f %s.  %s",
+                                     dist, _("pixels"), status_help);
             }
           else
             {
@@ -613,11 +612,11 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
                       sqrt (SQR (dx / image->xresolution) +
                             SQR (dy / image->yresolution)));
 
-              g_snprintf (status_str, sizeof (status_str), format_str, dist,
-                          status_help);
+              gimp_tool_push_status (tool, display, format_str,
+                                     dist, status_help);
             }
+
           g_free (status_help);
-          gimp_tool_push_status (tool, display, status_str);
 
           paint_tool->draw_line = TRUE;
         }
@@ -629,10 +628,13 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
           /* HACK: A paint tool may set status_ctrl to NULL to indicate that
            * it ignores the Ctrl modifier (temporarily or permanently), so
            * it should not be suggested.  This is different from how
-           * gimp_suggest_modifiers() would interpret this parameter. */
+           * gimp_suggest_modifiers() would interpret this parameter.
+           */
           if (paint_tool->status_ctrl != NULL)
             modifiers |= GDK_CONTROL_MASK;
-          /* suggest drawing lines only after the first point is set */
+
+          /* suggest drawing lines only after the first point is set
+           */
           if (display == tool->display)
             modifiers |= GDK_SHIFT_MASK;
 

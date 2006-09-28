@@ -175,7 +175,8 @@ void          gimp_tool_cursor_update       (GimpTool            *tool,
 
 void          gimp_tool_push_status         (GimpTool            *tool,
                                              GimpDisplay         *display,
-                                             const gchar         *message);
+                                             const gchar         *format,
+                                             ...) G_GNUC_PRINTF(3,4);
 void          gimp_tool_push_status_coords  (GimpTool            *tool,
                                              GimpDisplay         *display,
                                              const gchar         *title,
@@ -189,13 +190,15 @@ void          gimp_tool_push_status_length  (GimpTool            *tool,
                                              gdouble              value);
 void          gimp_tool_replace_status      (GimpTool            *tool,
                                              GimpDisplay         *display,
-                                             const gchar         *message);
+                                             const gchar         *format,
+                                             ...) G_GNUC_PRINTF(3,4);
 void          gimp_tool_pop_status          (GimpTool            *tool,
                                              GimpDisplay         *display);
 
 void          gimp_tool_message             (GimpTool            *tool,
                                              GimpDisplay         *display,
-                                             const gchar         *message);
+                                             const gchar         *format,
+                                             ...) G_GNUC_PRINTF(3,4);
 
 void          gimp_tool_set_cursor          (GimpTool            *tool,
                                              GimpDisplay         *display,

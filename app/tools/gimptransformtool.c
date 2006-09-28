@@ -31,6 +31,7 @@
 
 #include "base/tile-manager.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-transform.h"

@@ -1,3 +1,22 @@
+2006-09-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpstatusbar.[ch]: added _valist() variants
+	of all printf-style functions.
+
+	* app/tools/gimptool.[ch] (gimp_tool_push_status)
+	(gimp_tool_replace_status)
+	(gimp_tool_message): take printf-style ... arguments and use the
+	new valist() variants of the statusbar API to avoid additional
+	strdups. Revert previous commit from Sven, he will add back that
+	feature differently right away :)
+
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimppainttool.c: use the new printf-style status API
+	where possible.
+
+	* app/tools/gimptransformtool.c: accidentially removed
+	"core/gimp.h", added it back.
+
 2006-09-28  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp.[ch]: added gimp_message_valist().

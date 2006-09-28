@@ -457,19 +457,33 @@ gimp_statusbar_push (GimpStatusbar *statusbar,
                      const gchar   *format,
                      ...)
 {
-  GimpStatusbarMsg *msg;
-  guint             context_id;
-  GSList           *list;
-  va_list           args;
-  gchar            *message;
+  va_list args;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (context != NULL);
   g_return_if_fail (format != NULL);
 
   va_start (args, format);
-  message = g_strdup_vprintf (format, args);
+  gimp_statusbar_push_valist (statusbar, context, format, args);
   va_end (args);
+}
+
+void
+gimp_statusbar_push_valist (GimpStatusbar *statusbar,
+                            const gchar   *context,
+                            const gchar   *format,
+                            va_list        args)
+{
+  GimpStatusbarMsg *msg;
+  guint             context_id;
+  GSList           *list;
+  gchar            *message;
+
+  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (context != NULL);
+  g_return_if_fail (format != NULL);
+
+  message = g_strdup_vprintf (format, args);
 
   context_id = gimp_statusbar_get_context_id (statusbar, context);
 
@@ -607,19 +621,33 @@ gimp_statusbar_replace (GimpStatusbar *statusbar,
                         const gchar   *format,
                         ...)
 {
-  GimpStatusbarMsg *msg;
-  GSList           *list;
-  guint             context_id;
-  va_list           args;
-  gchar            *message;
+  va_list args;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (context != NULL);
   g_return_if_fail (format != NULL);
 
   va_start (args, format);
-  message = g_strdup_vprintf (format, args);
+  gimp_statusbar_replace_valist (statusbar, context, format, args);
   va_end (args);
+}
+
+void
+gimp_statusbar_replace_valist (GimpStatusbar *statusbar,
+                               const gchar   *context,
+                               const gchar   *format,
+                               va_list        args)
+{
+  GimpStatusbarMsg *msg;
+  GSList           *list;
+  guint             context_id;
+  gchar            *message;
+
+  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (context != NULL);
+  g_return_if_fail (format != NULL);
+
+  message = g_strdup_vprintf (format, args);
 
   context_id = gimp_statusbar_get_context_id (statusbar, context);
 
@@ -686,16 +714,28 @@ gimp_statusbar_push_temp (GimpStatusbar *statusbar,
                           const gchar   *format,
                           ...)
 {
-  GimpStatusbarMsg *msg = NULL;
-  va_list           args;
-  gchar            *message;
+  va_list args;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (format != NULL);
 
   va_start (args, format);
-  message = g_strdup_vprintf (format, args);
+  gimp_statusbar_push_temp_valist (statusbar, format, args);
   va_end (args);
+}
+
+void
+gimp_statusbar_push_temp_valist (GimpStatusbar *statusbar,
+                                 const gchar   *format,
+                                 va_list        args)
+{
+  GimpStatusbarMsg *msg = NULL;
+  gchar            *message;
+
+  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (format != NULL);
+
+  message = g_strdup_vprintf (format, args);
 
   if (statusbar->temp_timeout_id)
     g_source_remove (statusbar->temp_timeout_id);

@@ -747,7 +747,6 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
   gdouble           pixel_angle;
   gdouble           unit_angle;
   gchar             format[128];
-  gchar             buf[128];
 
   /*  calculate distance and angle  */
   ax = measure->x[1] - measure->x[0];
@@ -801,9 +800,10 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
 
   if (shell->unit == GIMP_UNIT_PIXEL)
     {
-      g_snprintf (buf, sizeof (buf), "%.1f %s, %.2f\302\260 (%d × %d)",
-                  pixel_distance, _("pixels"), pixel_angle,
-                  pixel_width, pixel_height);
+      gimp_tool_replace_status (GIMP_TOOL (measure), display,
+                                "%.1f %s, %.2f\302\260 (%d × %d)",
+                                pixel_distance, _("pixels"), pixel_angle,
+                                pixel_width, pixel_height);
     }
   else
     {
@@ -814,14 +814,15 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
                   _gimp_unit_get_digits (image->gimp, shell->unit),
                   _gimp_unit_get_digits (image->gimp, shell->unit));
 
-      g_snprintf (buf, sizeof (buf), format, unit_distance, unit_angle,
-                  unit_width, unit_height);
+      gimp_tool_replace_status (GIMP_TOOL (measure), display, format,
+                                unit_distance, unit_angle,
+                                unit_width, unit_height);
     }
-
-  gimp_tool_replace_status (GIMP_TOOL (measure), display, buf);
 
   if (measure->dialog)
     {
+      gchar buf[128];
+
       g_snprintf (format, sizeof (format), "%%.%df",
                   _gimp_unit_get_digits (image->gimp, shell->unit));
       /* Distance */

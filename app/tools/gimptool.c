@@ -714,19 +714,23 @@ gimp_tool_cursor_update (GimpTool        *tool,
 void
 gimp_tool_push_status (GimpTool    *tool,
                        GimpDisplay *display,
-                       const gchar *message)
+                       const gchar *format,
+                       ...)
 {
   GimpDisplayShell *shell;
+  va_list           args;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
-  g_return_if_fail (message != NULL);
+  g_return_if_fail (format != NULL);
 
   shell = GIMP_DISPLAY_SHELL (display->shell);
 
-  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),
-                       G_OBJECT_TYPE_NAME (tool),
-                       "%s", message);
+  va_start (args, format);
+  gimp_statusbar_push_valist (GIMP_STATUSBAR (shell->statusbar),
+                              G_OBJECT_TYPE_NAME (tool),
+                              format, args);
+  va_end (args);
 }
 
 void
@@ -771,19 +775,23 @@ gimp_tool_push_status_length (GimpTool            *tool,
 void
 gimp_tool_replace_status (GimpTool    *tool,
                           GimpDisplay *display,
-                          const gchar *message)
+                          const gchar *format,
+                          ...)
 {
   GimpDisplayShell *shell;
+  va_list           args;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
-  g_return_if_fail (message != NULL);
+  g_return_if_fail (format != NULL);
 
   shell = GIMP_DISPLAY_SHELL (display->shell);
 
-  gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar),
-                          G_OBJECT_TYPE_NAME (tool),
-                          "%s", message);
+  va_start (args, format);
+  gimp_statusbar_replace_valist (GIMP_STATUSBAR (shell->statusbar),
+                                 G_OBJECT_TYPE_NAME (tool),
+                                 format, args);
+  va_end (args);
 }
 
 void
@@ -804,26 +812,22 @@ gimp_tool_pop_status (GimpTool    *tool,
 void
 gimp_tool_message (GimpTool    *tool,
                    GimpDisplay *display,
-                   const gchar *message)
+                   const gchar *format,
+                   ...)
 {
   GimpDisplayShell *shell;
+  va_list           args;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
-  g_return_if_fail (message != NULL);
+  g_return_if_fail (format != NULL);
 
   shell = GIMP_DISPLAY_SHELL (display->shell);
 
-  if (GTK_WIDGET_VISIBLE (shell->statusbar))
-    {
-      gimp_statusbar_push_temp (GIMP_STATUSBAR (shell->statusbar),
-                                "%s", message);
-    }
-  else
-    {
-      gimp_message (tool->tool_info->gimp, GIMP_PROGRESS (display->shell),
-                    "%s", message);
-    }
+  va_start (args, format);
+  gimp_statusbar_push_temp_valist (GIMP_STATUSBAR (shell->statusbar),
+                                   format, args);
+  va_end (args);
 }
 
 void
