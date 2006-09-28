@@ -178,6 +178,10 @@ void           gimp_message              (Gimp                *gimp,
                                           GimpProgress        *progress,
                                           const gchar         *format,
                                           ...) G_GNUC_PRINTF(3,4);
+void           gimp_message_valist       (Gimp                *gimp,
+                                          GimpProgress        *progress,
+                                          const gchar         *format,
+                                          va_list              args);
 
 
 #endif  /* __GIMP_H__ */

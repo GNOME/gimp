@@ -1,5 +1,9 @@
 2006-09-28  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp.[ch]: added gimp_message_valist().
+
+2006-09-28  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp.h: formatting.
 
 	* app/tools/gimptool.c (gimp_tool_message): use gimp_message() if

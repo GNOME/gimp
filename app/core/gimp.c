@@ -997,15 +997,27 @@ gimp_message (Gimp         *gimp,
               const gchar  *format,
               ...)
 {
-  va_list  args;
-  gchar   *message;
+  va_list args;
+
+  va_start (args, format);
+
+  gimp_message_valist (gimp, progress, format, args);
+
+  va_end (args);
+}
+
+void
+gimp_message_valist (Gimp         *gimp,
+                     GimpProgress *progress,
+                     const gchar  *format,
+                     va_list       args)
+{
+  gchar *message;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  va_start (args, format);
   message = g_strdup_vprintf (format, args);
-  va_end (args);
 
   gimp_show_message (gimp, progress, NULL, message);
 
