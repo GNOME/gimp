@@ -300,7 +300,7 @@ update_tile_rowhints (Tile *tile,
                     {
                       for (x = 1; x < ewidth; x++)
                         {
-                          if (ptr[x*2 + 1] != alpha)
+                          if (ptr[x * 2 + 1] != alpha)
                             {
                               tile_set_rowhint (tile, y, TILEROWHINT_MIXED);
                               goto next_row2;
@@ -339,14 +339,11 @@ static gint *
 make_curve (gdouble  sigma,
             gint    *length)
 {
-  gint    *curve;
-  gdouble  sigma2;
-  gdouble  l;
-  gint     temp;
-  gint     i, n;
+  const gdouble sigma2 = 2 * sigma * sigma;
+  const gdouble l      = sqrt (-sigma2 * log (1.0 / 255.0));
 
-  sigma2 = 2 * sigma * sigma;
-  l = sqrt (-sigma2 * log (1.0 / 255.0));
+  gint *curve;
+  gint  i, n;
 
   n = ceil (l) * 2;
   if ((n % 2) == 0)
@@ -360,7 +357,8 @@ make_curve (gdouble  sigma,
 
   for (i = 1; i <= *length; i++)
     {
-      temp = (gint) (exp (- (i * i) / sigma2) * 255);
+      gint temp = (gint) (exp (- (i * i) / sigma2) * 255);
+
       curve[-i] = temp;
       curve[i] = temp;
     }
@@ -393,9 +391,11 @@ run_length_encode (const guchar *src,
               *dest++ = (i - j);
               *dest++ = last;
             }
+
           start = i;
           last = *src;
         }
+
       src += bytes;
     }
 
@@ -733,22 +733,21 @@ combine_inten_and_inten_pixels (const guchar   *src1,
                                 guint           length,
                                 guint           bytes)
 {
-  const guchar * m;
-  gint   b;
-  guchar new_alpha;
-  gint   tmp;
+  gint  b;
+  gint  tmp;
 
   if (mask)
     {
-      m = mask;
+      const guchar * m = mask;
+
       while (length --)
         {
-          new_alpha = INT_MULT(*m, opacity, tmp);
+          guchar new_alpha = INT_MULT(*m, opacity, tmp);
 
           for (b = 0; b < bytes; b++)
             dest[b] = (affect[b]) ?
               INT_BLEND(src2[b], src1[b], new_alpha, tmp) :
-            src1[b];
+              src1[b];
 
           m++;
 
@@ -765,7 +764,7 @@ combine_inten_and_inten_pixels (const guchar   *src1,
           for (b = 0; b < bytes; b++)
             dest[b] = (affect[b]) ?
               INT_BLEND(src2[b], src1[b], opacity, tmp) :
-            src1[b];
+              src1[b];
 
           src1 += bytes;
           src2 += bytes;
@@ -785,21 +784,18 @@ combine_inten_and_inten_a_pixels (const guchar   *src1,
                                   guint           length,
                                   guint           bytes)
 {
-  gint   alpha, b;
-  gint   src2_bytes;
-  guchar new_alpha;
-  const guchar   *m;
+  const gint      alpha      = bytes;
+  const gint      src2_bytes = bytes + 1;
+  gint            b;
   register glong  t1;
-
-  alpha = bytes;
-  src2_bytes = bytes + 1;
 
   if (mask)
     {
-      m = mask;
+      const guchar *m = mask;
+
       while (length --)
         {
-          new_alpha = INT_MULT3(src2[alpha], *m, opacity, t1);
+          guchar new_alpha = INT_MULT3(src2[alpha], *m, opacity, t1);
 
           for (b = 0; b < bytes; b++)
             dest[b] = (affect[b]) ?
@@ -815,28 +811,34 @@ combine_inten_and_inten_a_pixels (const guchar   *src1,
   else
     {
       if (bytes == 3 && affect[0] && affect[1] && affect[2])
-        while (length --)
         {
-          new_alpha = INT_MULT(src2[alpha],opacity,t1);
-          dest[0] = INT_BLEND(src2[0] , src1[0] , new_alpha, t1);
-          dest[1] = INT_BLEND(src2[1] , src1[1] , new_alpha, t1);
-          dest[2] = INT_BLEND(src2[2] , src1[2] , new_alpha, t1);
-          src1 += bytes;
-          src2 += src2_bytes;
-          dest += bytes;
+          while (length --)
+            {
+              guchar new_alpha = INT_MULT(src2[alpha],opacity,t1);
+
+              dest[0] = INT_BLEND(src2[0] , src1[0] , new_alpha, t1);
+              dest[1] = INT_BLEND(src2[1] , src1[1] , new_alpha, t1);
+              dest[2] = INT_BLEND(src2[2] , src1[2] , new_alpha, t1);
+              src1 += bytes;
+              src2 += src2_bytes;
+              dest += bytes;
+            }
         }
       else
-        while (length --)
         {
-          new_alpha = INT_MULT(src2[alpha],opacity,t1);
-          for (b = 0; b < bytes; b++)
-            dest[b] = (affect[b]) ?
-              INT_BLEND(src2[b] , src1[b] , new_alpha, t1) :
-            src1[b];
+          while (length --)
+            {
+              guchar new_alpha = INT_MULT(src2[alpha],opacity,t1);
 
-          src1 += bytes;
-          src2 += src2_bytes;
-          dest += bytes;
+              for (b = 0; b < bytes; b++)
+                dest[b] = (affect[b]) ?
+                  INT_BLEND(src2[b] , src1[b] , new_alpha, t1) :
+                  src1[b];
+
+              src1 += bytes;
+              src2 += src2_bytes;
+              dest += bytes;
+            }
         }
     }
 }
@@ -924,27 +926,25 @@ combine_inten_a_and_inten_pixels (const guchar   *src1,
                                   guint           length,
                                   guint           bytes)        /*  4 or 2 depending on RGBA or GRAYA  */
 {
-  gint          alpha, b;
-  gint          src2_bytes;
-  guchar        src2_alpha;
-  guchar        new_alpha;
-  const guchar *m;
-  gfloat        ratio, compl_ratio;
+  const gint    src2_bytes = bytes - 1;
+  const gint    alpha      = bytes - 1;
+  gint          b;
+  gfloat        ratio;
+  gfloat        compl_ratio;
   glong         tmp;
-
-  src2_bytes = bytes - 1;
-  alpha = bytes - 1;
 
   if (mask)
     {
-      m = mask;
+      const guchar *m = mask;
+
       if (opacity == OPAQUE_OPACITY) /* HAS MASK, FULL OPACITY */
         {
           while (length--)
             {
-              src2_alpha = *m;
-              new_alpha = src1[alpha] +
-                INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+              guchar src2_alpha = *m;
+              guchar new_alpha  =
+                src1[alpha] + INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+
               alphify (src2_alpha, new_alpha);
 
               if (mode_affect)
@@ -967,9 +967,10 @@ combine_inten_a_and_inten_pixels (const guchar   *src1,
         {
           while (length--)
             {
-              src2_alpha = INT_MULT(*m, opacity, tmp);
-              new_alpha = src1[alpha] +
-                INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+              guchar src2_alpha = INT_MULT(*m, opacity, tmp);
+              guchar new_alpha  =
+                src1[alpha] + INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+
               alphify (src2_alpha, new_alpha);
 
               if (mode_affect)
@@ -993,9 +994,10 @@ combine_inten_a_and_inten_pixels (const guchar   *src1,
     {
       while (length --)
         {
-          src2_alpha = opacity;
-          new_alpha = src1[alpha] +
-            INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+          guchar src2_alpha = opacity;
+          guchar new_alpha  =
+            src1[alpha] + INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+
           alphify (src2_alpha, new_alpha);
 
           if (mode_affect)
@@ -1022,12 +1024,11 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
                                     guint           length,
                                     guint           bytes)  /*  4 or 2 depending on RGBA or GRAYA  */
 {
-  guint b;
-  guchar src2_alpha;
-  guchar new_alpha;
-  gfloat ratio, compl_ratio;
-  glong tmp;
   const guint alpha = bytes - 1;
+  guint       b;
+  gfloat      ratio;
+  gfloat      compl_ratio;
+  glong       tmp;
 
   if (mask)
     {
@@ -1035,22 +1036,25 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
 
       if (opacity == OPAQUE_OPACITY) /* HAS MASK, FULL OPACITY */
         {
-          const gint* mask_ip;
-          gint i,j;
+          const gint *mask_ip;
+          gint        i, j;
 
-          if (length >= sizeof(int))
+          if (length >= sizeof (gint))
             {
               /* HEAD */
-              i =  (GPOINTER_TO_INT(m) & (sizeof(int)-1));
+              i =  (GPOINTER_TO_INT(m) & (sizeof (gint) - 1));
+
               if (i != 0)
                 {
-                  i = sizeof(int) - i;
+                  i = sizeof (gint) - i;
                   length -= i;
+
                   while (i--)
                     {
                       /* GUTS */
-                      src2_alpha = INT_MULT(src2[alpha], *m, tmp);
-                      new_alpha = src1[alpha] +
+                      guchar src2_alpha = INT_MULT(src2[alpha], *m, tmp);
+                      guchar new_alpha  =
+                        src1[alpha] +
                         INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
 
                       alphify (src2_alpha, new_alpha);
@@ -1074,20 +1078,23 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
                 }
 
               /* BODY */
-              mask_ip = (const gint *)m;
-              i = length / sizeof(int);
-              length %= sizeof(int);
+              mask_ip = (const gint *) m;
+              i = length / sizeof (gint);
+              length %= sizeof (gint);
+
               while (i--)
                 {
                   if (*mask_ip)
                     {
-                      m = (const guchar*)mask_ip;
-                      j = sizeof(int);
+                      m = (const guchar *) mask_ip;
+                      j = sizeof (gint);
+
                       while (j--)
                         {
                           /* GUTS */
-                          src2_alpha = INT_MULT(src2[alpha], *m, tmp);
-                          new_alpha = src1[alpha] +
+                          guchar src2_alpha = INT_MULT(src2[alpha], *m, tmp);
+                          guchar new_alpha  =
+                            src1[alpha] +
                             INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
 
                           alphify (src2_alpha, new_alpha);
@@ -1111,7 +1118,7 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
                     }
                   else
                     {
-                      j = bytes * sizeof(int);
+                      j = bytes * sizeof (gint);
                       src2 += j;
                       while (j--)
                         {
@@ -1121,16 +1128,16 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
                   mask_ip++;
                 }
 
-              m = (const guchar*)mask_ip;
+              m = (const guchar *) mask_ip;
             }
 
           /* TAIL */
           while (length--)
             {
               /* GUTS */
-              src2_alpha = INT_MULT(src2[alpha], *m, tmp);
-              new_alpha = src1[alpha] +
-                INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+              guchar src2_alpha = INT_MULT(src2[alpha], *m, tmp);
+              guchar new_alpha  =
+                src1[alpha] + INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
 
               alphify (src2_alpha, new_alpha);
 
@@ -1153,22 +1160,24 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
         }
       else /* HAS MASK, SEMI-OPACITY */
         {
-          const gint* mask_ip;
-          gint i,j;
+          const gint *mask_ip;
+          gint        i,j;
 
-          if (length >= sizeof(int))
+          if (length >= sizeof (gint))
             {
               /* HEAD */
-              i = (GPOINTER_TO_INT(m) & (sizeof(int)-1));
+              i = (GPOINTER_TO_INT(m) & (sizeof (gint) - 1));
               if (i != 0)
                 {
-                  i = sizeof(int) - i;
+                  i = sizeof (gint) - i;
                   length -= i;
+
                   while (i--)
                     {
                       /* GUTS */
-                      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
-                      new_alpha = src1[alpha] +
+                      guchar src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+                      guchar new_alpha  =
+                        src1[alpha] +
                         INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
 
                       alphify (src2_alpha, new_alpha);
@@ -1192,20 +1201,23 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
                 }
 
               /* BODY */
-              mask_ip = (const gint *)m;
-              i = length / sizeof(int);
-              length %= sizeof(int);
+              mask_ip = (const gint *) m;
+              i = length / sizeof (gint);
+              length %= sizeof(gint);
+
               while (i--)
                 {
                   if (*mask_ip)
                     {
-                      m = (const guchar*)mask_ip;
-                      j = sizeof(int);
-                      while (j--)
+                      m = (const guchar *) mask_ip;
+                      j = sizeof (gint);
+
+                     while (j--)
                         {
                           /* GUTS */
-                          src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
-                          new_alpha = src1[alpha] +
+                          guchar src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+                          guchar new_alpha  =
+                            src1[alpha] +
                             INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
 
                           alphify (src2_alpha, new_alpha);
@@ -1229,8 +1241,9 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
                     }
                   else
                     {
-                      j = bytes * sizeof(int);
+                      j = bytes * sizeof (gint);
                       src2 += j;
+
                       while (j--)
                         {
                           *(dest++) = *(src1++);
@@ -1239,15 +1252,16 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
                   mask_ip++;
                 }
 
-              m = (const guchar*)mask_ip;
+              m = (const guchar *) mask_ip;
             }
 
           /* TAIL */
           while (length--)
             {
               /* GUTS */
-              src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
-              new_alpha = src1[alpha] +
+              guchar src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+              guchar new_alpha  =
+                src1[alpha] +
                 INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
 
               alphify (src2_alpha, new_alpha);
@@ -1276,8 +1290,9 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
         {
           while (length --)
             {
-              src2_alpha = src2[alpha];
-              new_alpha = src1[alpha] +
+              guchar src2_alpha = src2[alpha];
+              guchar new_alpha  =
+                src1[alpha] +
                 INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
 
               alphify (src2_alpha, new_alpha);
@@ -1301,9 +1316,9 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
         {
           while (length --)
             {
-              src2_alpha = INT_MULT(src2[alpha], opacity, tmp);
-              new_alpha = src1[alpha] +
-                INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+              guchar src2_alpha = INT_MULT(src2[alpha], opacity, tmp);
+              guchar new_alpha  =
+                src1[alpha] + INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
 
               alphify (src2_alpha, new_alpha);
 
@@ -1335,31 +1350,35 @@ combine_inten_a_and_channel_mask_pixels (const guchar *src,
                                          guint         length,
                                          guint         bytes)
 {
-  gint   alpha, b;
-  guchar channel_alpha;
-  guchar new_alpha;
-  guchar compl_alpha;
-  gint   t, s;
+  const gint alpha = bytes - 1;
+  gint       b;
+  gint       t, s;
 
-  alpha = bytes - 1;
   while (length --)
     {
-      channel_alpha = INT_MULT (255 - *channel, opacity, t);
+      guchar channel_alpha = INT_MULT (255 - *channel, opacity, t);
+
       if (channel_alpha)
         {
-          new_alpha = src[alpha] + INT_MULT ((255 - src[alpha]), channel_alpha, t);
+          guchar compl_alpha;
+          guchar new_alpha =
+            src[alpha] + INT_MULT ((255 - src[alpha]), channel_alpha, t);
 
           if (new_alpha != 255)
             channel_alpha = (channel_alpha * 255) / new_alpha;
+
           compl_alpha = 255 - channel_alpha;
 
           for (b = 0; b < alpha; b++)
             dest[b] = INT_MULT (col[b], channel_alpha, t) +
               INT_MULT (src[b], compl_alpha, s);
+
           dest[b] = new_alpha;
         }
       else
-        memcpy(dest, src, bytes);
+        {
+          memcpy(dest, src, bytes);
+        }
 
       /*  advance pointers  */
       src+=bytes;
@@ -1378,27 +1397,29 @@ combine_inten_a_and_channel_selection_pixels (const guchar *src,
                                               guint         length,
                                               guint         bytes)
 {
-  gint   alpha, b;
-  guchar channel_alpha;
-  guchar new_alpha;
-  guchar compl_alpha;
-  gint   t, s;
+  const gint alpha = bytes - 1;
+  gint       b;
+  gint       t, s;
 
-  alpha = bytes - 1;
   while (length --)
     {
-      channel_alpha = INT_MULT (*channel, opacity, t);
+      guchar channel_alpha = INT_MULT (*channel, opacity, t);
+
       if (channel_alpha)
         {
-          new_alpha = src[alpha] + INT_MULT ((255 - src[alpha]), channel_alpha, t);
+          guchar compl_alpha;
+          guchar new_alpha =
+            src[alpha] + INT_MULT ((255 - src[alpha]), channel_alpha, t);
 
           if (new_alpha != 255)
             channel_alpha = (channel_alpha * 255) / new_alpha;
+
           compl_alpha = 255 - channel_alpha;
 
           for (b = 0; b < alpha; b++)
             dest[b] = INT_MULT (col[b], channel_alpha, t) +
               INT_MULT (src[b], compl_alpha, s);
+
           dest[b] = new_alpha;
         }
       else
@@ -1428,31 +1449,25 @@ behind_inten_pixels (const guchar   *src1,
                      guint           bytes1,
                      guint           bytes2)
 {
-  /* FIXME: Is this supposed to be different than in the other functions? */
-  const guint alpha = bytes1 - 1;
-  guint        b;
-  guchar        src1_alpha;
-  guchar        src2_alpha;
-  guchar        new_alpha;
-  const guchar *m;
-  gfloat        ratio, compl_ratio;
+  const guint   alpha = bytes1 - 1;
+  const guchar *m     = mask ? mask : &no_mask;
+  guint         b;
+  gfloat        ratio;
+  gfloat        compl_ratio;
   glong         tmp;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
 
   while (length --)
     {
-      src1_alpha = src1[alpha];
-      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
-      new_alpha = src2_alpha +
-        INT_MULT((255 - src2_alpha), src1_alpha, tmp);
+      guchar src1_alpha = src1[alpha];
+      guchar src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+      guchar new_alpha  =
+        src2_alpha + INT_MULT((255 - src2_alpha), src1_alpha, tmp);
+
       if (new_alpha)
         ratio = (float) src1_alpha / new_alpha;
       else
         ratio = 0.0;
+
       compl_ratio = 1.0 - ratio;
 
       for (b = 0; b < alpha; b++)
@@ -1488,29 +1503,23 @@ behind_indexed_pixels (const guchar   *src1,
                        guint           bytes1,
                        guint           bytes2)
 {
-  const guint alpha = bytes1 - 1;
-  guint b;
-  guchar        src1_alpha;
-  guchar        src2_alpha;
-  guchar        new_alpha;
-  const guchar *m;
+  const guint   alpha = bytes1 - 1;
+  const guchar *m     = mask ? mask : &no_mask;
+  guint         b;
   glong         tmp;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
 
   /*  the alpha channel  */
 
   while (length --)
     {
-      src1_alpha = src1[alpha];
-      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
-      new_alpha = (src2_alpha > 127) ? OPAQUE_OPACITY : TRANSPARENT_OPACITY;
+      guchar src1_alpha = src1[alpha];
+      guchar src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+      guchar new_alpha  =
+        (src2_alpha > 127) ? OPAQUE_OPACITY : TRANSPARENT_OPACITY;
 
       for (b = 0; b < bytes1; b++)
-        dest[b] = (affect[b] && new_alpha == OPAQUE_OPACITY && (src1_alpha > 127)) ?
+        dest[b] =
+          (affect[b] && new_alpha == OPAQUE_OPACITY && (src1_alpha > 127)) ?
           src2[b] : src1[b];
 
       if (mask)
@@ -1540,18 +1549,17 @@ replace_inten_pixels (const guchar   *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  const guint bytes = MIN (bytes1, bytes2);
+  const guint bytes      = MIN (bytes1, bytes2);
   guint b;
   gint  tmp;
 
   if (mask)
     {
-      guchar        mask_alpha;
       const guchar *m = mask;
 
       while (length --)
         {
-          mask_alpha = INT_MULT(*m, opacity, tmp);
+          guchar mask_alpha = INT_MULT(*m, opacity, tmp);
 
           for (b = 0; b < bytes; b++)
             dest[b] = (affect[b]) ?
@@ -1604,22 +1612,16 @@ replace_indexed_pixels (const guchar   *src1,
                         guint           bytes1,
                         guint           bytes2)
 {
-  const guint has_alpha1 = HAS_ALPHA (bytes1);
-  const guint has_alpha2 = HAS_ALPHA (bytes2);
-  const guint bytes = MIN (bytes1, bytes2);
-  const guchar *m;
-  guint b;
-  guchar        mask_alpha;
+  const guint   has_alpha1 = HAS_ALPHA (bytes1);
+  const guint   has_alpha2 = HAS_ALPHA (bytes2);
+  const guint   bytes      = MIN (bytes1, bytes2);
+  const guchar *m          = mask ? mask : &no_mask;
+  guint         b;
   gint          tmp;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
 
   while (length --)
     {
-      mask_alpha = INT_MULT(*m, opacity, tmp);
+      guchar mask_alpha = INT_MULT(*m, opacity, tmp);
 
       for (b = 0; b < bytes; b++)
         dest[b] = (affect[b] && mask_alpha) ? src2[b] : src1[b];
@@ -1651,9 +1653,9 @@ erase_inten_pixels (const guchar   *src1,
                     guint           bytes)
 {
   const guint alpha = bytes - 1;
-  guint b;
-  guchar     src2_alpha;
-  glong      tmp;
+  guint       b;
+  guchar      src2_alpha;
+  glong       tmp;
 
   if (mask)
     {
@@ -1708,16 +1710,11 @@ erase_indexed_pixels (const guchar   *src1,
                       guint           length,
                       guint           bytes)
 {
-  const guint alpha = bytes - 1;
-  const guchar *m;
-  guchar src2_alpha;
-  guint b;
-  glong tmp;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
+  const guint   alpha = bytes - 1;
+  const guchar *m     = mask ? mask : &no_mask;
+  guchar        src2_alpha;
+  guint         b;
+  glong         tmp;
 
   while (length --)
     {
@@ -1746,24 +1743,20 @@ anti_erase_inten_pixels (const guchar   *src1,
                          guint           length,
                          guint           bytes)
 {
-  gint          alpha, b;
+  const gint    alpha = bytes - 1;
+  const guchar *m     = mask ? mask : &no_mask;
+  gint          b;
   guchar        src2_alpha;
-  const guchar *m;
   glong         tmp;
 
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  alpha = bytes - 1;
   while (length --)
     {
       for (b = 0; b < alpha; b++)
         dest[b] = src1[b];
 
-      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
-      dest[alpha] = src1[alpha] + INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+      src2_alpha  = INT_MULT3(src2[alpha], *m, opacity, tmp);
+      dest[alpha] =
+        src1[alpha] + INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
 
       if (mask)
         m++;
@@ -1785,17 +1778,12 @@ anti_erase_indexed_pixels (const guchar   *src1,
                            guint           length,
                            guint           bytes)
 {
-  gint          alpha, b;
+  const guint   alpha = bytes - 1;
+  const guchar *m     = mask ? mask : &no_mask;
+  gint          b;
   guchar        src2_alpha;
-  const guchar *m;
   glong         tmp;
 
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  alpha = bytes - 1;
   while (length --)
     {
       for (b = 0; b < alpha; b++)
@@ -1889,15 +1877,10 @@ color_erase_inten_pixels (const guchar   *src1,
                           guint           length,
                           guint           bytes)
 {
+  const guchar *m     = mask ? mask : &no_mask;
   guchar        src2_alpha;
-  const guchar *m;
   glong         tmp;
   GimpRGB       bgcolor, color;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
 
   while (length --)
     {
@@ -1952,16 +1935,10 @@ extract_from_inten_pixels (guchar       *src,
                            guint         src_bytes,
                            guint         dest_bytes)
 {
-  gint          b, alpha;
-  const guchar *m;
+  const gint    alpha = HAS_ALPHA (src_bytes) ? src_bytes - 1 : src_bytes;
+  const guchar *m     = mask ? mask : &no_mask;
+  gint          b;
   gint          tmp;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  alpha = HAS_ALPHA (src_bytes) ? src_bytes - 1 : src_bytes;
 
   while (length --)
     {
@@ -2004,19 +1981,14 @@ extract_from_indexed_pixels (guchar       *src,
                              guint         src_bytes,
                              guint         dest_bytes)
 {
+  const guchar *m = mask ? mask : &no_mask;
   gint          b;
-  gint          index;
-  const guchar *m;
   gint          t;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
 
   while (length --)
     {
-      index = src[0] * 3;
+      gint index = src[0] * 3;
+
       for (b = 0; b < 3; b++)
         dest[b] = cmap[index + b];
 
