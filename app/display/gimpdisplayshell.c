@@ -1636,3 +1636,56 @@ gimp_display_shell_set_mask (GimpDisplayShell *shell,
 
   gimp_display_shell_expose_full (shell);
 }
+
+/**
+ * gimp_display_shell_message:
+ * @shell:  the #GimpDisplayShell
+ * @format: printf-like format string
+ * @...:    arguments
+ *
+ * Display a message in the display shell. If the statusbar is
+ * visible, the message will appear there, otherwise a dialog window
+ * is opened.
+ */
+void
+gimp_display_shell_message (GimpDisplayShell *shell,
+                            const gchar      *format,
+                            ...)
+{
+  va_list args;
+
+  va_start (args, format);
+
+  gimp_display_shell_message_valist (shell, format, args);
+
+  va_end (args);
+}
+
+/**
+ * gimp_display_shell_message_valist:
+ * @shell:  the #GimpDisplayShell
+ * @format: printf-like format string
+ * @args:   arguments
+ *
+ * Display a message in the display shell. See gimp_display_shell_message()
+ * for details.
+ */
+void
+gimp_display_shell_message_valist (GimpDisplayShell   *shell,
+                                   const gchar        *format,
+                                   va_list             args)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (format != NULL);
+
+  if (GTK_WIDGET_VISIBLE (shell->statusbar))
+    {
+      gimp_statusbar_push_temp_valist (GIMP_STATUSBAR (shell->statusbar),
+                                       format, args);
+    }
+  else
+    {
+      gimp_message_valist (shell->display->image->gimp, GIMP_PROGRESS (shell),
+                           format, args);
+    }
+}

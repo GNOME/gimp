@@ -1,3 +1,12 @@
+2006-09-28  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.[ch]: added
+	gimp_display_shell_message() and a valist variant and decide here
+	where the message is shown.
+
+	* app/actions/edit-commands.c (edit_paste)
+	* app/tools/gimptool.c (gimp_tool_message): use the new message API.
+
 2006-09-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpstatusbar.[ch]: added _valist() variants

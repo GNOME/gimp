@@ -243,5 +243,12 @@ void        gimp_display_shell_set_mask            (GimpDisplayShell   *shell,
                                                     GimpDrawable       *mask,
                                                     GimpChannelType     color);
 
+void        gimp_display_shell_message             (GimpDisplayShell   *shell,
+                                                    const gchar        *format,
+                                                    ...) G_GNUC_PRINTF(2,3);
+void        gimp_display_shell_message_valist      (GimpDisplayShell   *shell,
+                                                    const gchar        *format,
+                                                    va_list             args);
+
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */

@@ -815,18 +815,16 @@ gimp_tool_message (GimpTool    *tool,
                    const gchar *format,
                    ...)
 {
-  GimpDisplayShell *shell;
-  va_list           args;
+  va_list args;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
-  g_return_if_fail (format != NULL);
-
-  shell = GIMP_DISPLAY_SHELL (display->shell);
 
   va_start (args, format);
-  gimp_statusbar_push_temp_valist (GIMP_STATUSBAR (shell->statusbar),
-                                   format, args);
+
+  gimp_display_shell_message_valist (GIMP_DISPLAY_SHELL (display->shell),
+                                     format, args);
+
   va_end (args);
 }
 
