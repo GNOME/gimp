@@ -171,8 +171,8 @@ void           gimp_set_user_context     (Gimp                *gimp,
                                           GimpContext         *context);
 GimpContext  * gimp_get_user_context     (Gimp                *gimp);
 
-GimpToolInfo * gimp_get_tool_info       (Gimp                *gimp,
-                                         const gchar         *tool_name);
+GimpToolInfo * gimp_get_tool_info        (Gimp                *gimp,
+                                          const gchar         *tool_name);
 
 void           gimp_message              (Gimp                *gimp,
                                           GimpProgress        *progress,

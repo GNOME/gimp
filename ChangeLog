@@ -1,3 +1,10 @@
+2006-09-28  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp.h: formatting.
+
+	* app/tools/gimptool.c (gimp_tool_message): use gimp_message() if
+	the statusbar is not visible.
+
 2006-09-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptool.[ch]: added gimp_tool_message() which uses

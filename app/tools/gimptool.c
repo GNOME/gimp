@@ -22,7 +22,9 @@
 
 #include "tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
@@ -812,8 +814,16 @@ gimp_tool_message (GimpTool    *tool,
 
   shell = GIMP_DISPLAY_SHELL (display->shell);
 
-  gimp_statusbar_push_temp (GIMP_STATUSBAR (shell->statusbar),
-                            "%s", message);
+  if (GTK_WIDGET_VISIBLE (shell->statusbar))
+    {
+      gimp_statusbar_push_temp (GIMP_STATUSBAR (shell->statusbar),
+                                "%s", message);
+    }
+  else
+    {
+      gimp_message (tool->tool_info->gimp, GIMP_PROGRESS (display->shell),
+                    "%s", message);
+    }
 }
 
 void
