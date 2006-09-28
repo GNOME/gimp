@@ -33,8 +33,13 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_PROC_SET    "plug-in-icc-set"
-#define PLUG_IN_PROC_APPLY  "plug-in-icc-apply"
+#define PLUG_IN_PROC_SET        "plug-in-icc-set"
+#define PLUG_IN_PROC_SET_RGB    "plug-in-icc-set-rgb"
+
+#define PLUG_IN_PROC_APPLY      "plug-in-icc-apply"
+#define PLUG_IN_PROC_APPLY_RGB  "plug-in-icc-apply-rgb"
+
+#define PLUG_IN_PROC_INFO       "plug-in-icc-info"
 
 
 static void query (void);
@@ -58,26 +63,56 @@ MAIN ()
 static void
 query (void)
 {
+  static const GimpParamDef base_args[] =
+  {
+    { GIMP_PDB_INT32,  "run-mode", "Interactive, non-interactive"     },
+    { GIMP_PDB_IMAGE,  "image",    "Input image"                      },
+  };
   static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,  "run-mode", "Interactive, non-interactive"     },
     { GIMP_PDB_IMAGE,  "image",    "Input image"                      },
     { GIMP_PDB_STRING, "profile",  "Filename of an ICC color profile" }
   };
+  static const GimpParamDef info_return_vals[] =
+  {
+    { GIMP_PDB_STRING, "product-name", "Name"         },
+    { GIMP_PDB_STRING, "product-desc", "Description"  },
+    { GIMP_PDB_STRING, "product-info", "Info"         },
+    { GIMP_PDB_STRING, "manufacturer", "Manufacturer" },
+    { GIMP_PDB_STRING, "model",        "Model"        },
+    { GIMP_PDB_STRING, "copyright",    "Copyright"    }
+  };
 
   gimp_install_procedure (PLUG_IN_PROC_SET,
-                          "Set a color profile on the image w/o applying it",
+                          "Set ICC color profile on the image",
                           "This procedure sets an ICC color profile on an "
                           "image using the 'icc-profile' parasite. It does "
                           "not do any color conversion.",
                           "Sven Neumann",
                           "Sven Neumann",
                           "2006",
-                          "Set ICC Color Profile",
+                          NULL,
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_install_procedure (PLUG_IN_PROC_SET_RGB,
+                          "Set the default RGB color profile on the image",
+                          "This procedure sets the user-configured RGB "
+                          "profile on an image using the 'icc-profile' "
+                          "parasite. If no RGB profile is, sRGB is assumed "
+                          "and the parasite is unset. This procedure does "
+                          "not do any color conversion.",
+                          "Sven Neumann",
+                          "Sven Neumann",
+                          "2006",
+                          NULL,
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (base_args), 0,
+                          base_args, NULL);
 
   gimp_install_procedure (PLUG_IN_PROC_APPLY,
                           "Apply a color profile on the image",
@@ -89,11 +124,43 @@ query (void)
                           "Sven Neumann",
                           "Sven Neumann",
                           "2006",
-                          "Apply ICC Color Profile",
+                          NULL,
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_install_procedure (PLUG_IN_PROC_APPLY_RGB,
+                          "Apply default RGB color profile on the image",
+                          "This procedure transform from the image's color "
+                          "profile (or the default RGB profile if none is "
+                          "set) to the configured default RGB color profile. "
+                          "is then set on the image using the 'icc-profile' "
+                          "parasite. If no RGB color profile is configured, "
+                          "sRGB is assumed and the parasite is unset.",
+                          "Sven Neumann",
+                          "Sven Neumann",
+                          "2006",
+                          NULL,
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (base_args), 0,
+                          base_args, NULL);
+
+  gimp_install_procedure (PLUG_IN_PROC_INFO,
+                          "Retrieve information about an image's color profile",
+                          "This procedure returns information about the "
+                          "color profile attached to an image. If no profile "
+                          "is attached, sRGB is assumed.",
+                          "Sven Neumann",
+                          "Sven Neumann",
+                          "2006",
+                          NULL,
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (base_args),
+                          G_N_ELEMENTS (info_return_vals),
+                          base_args, info_return_vals);
 }
 
 static void
@@ -127,7 +194,19 @@ run (const gchar      *name,
     {
       status = GIMP_PDB_EXECUTION_ERROR;
     }
+  else if (strcmp (name, PLUG_IN_PROC_SET_RGB) == 0)
+    {
+      status = GIMP_PDB_EXECUTION_ERROR;
+    }
   else if (strcmp (name, PLUG_IN_PROC_APPLY) == 0)
+    {
+      status = GIMP_PDB_EXECUTION_ERROR;
+    }
+  else if (strcmp (name, PLUG_IN_PROC_APPLY_RGB) == 0)
+    {
+      status = GIMP_PDB_EXECUTION_ERROR;
+    }
+  else if (strcmp (name, PLUG_IN_PROC_INFO) == 0)
     {
       status = GIMP_PDB_EXECUTION_ERROR;
     }
