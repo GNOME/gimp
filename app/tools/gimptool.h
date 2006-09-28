@@ -193,6 +193,10 @@ void          gimp_tool_replace_status      (GimpTool            *tool,
 void          gimp_tool_pop_status          (GimpTool            *tool,
                                              GimpDisplay         *display);
 
+void          gimp_tool_message             (GimpTool            *tool,
+                                             GimpDisplay         *display,
+                                             const gchar         *message);
+
 void          gimp_tool_set_cursor          (GimpTool            *tool,
                                              GimpDisplay         *display,
                                              GimpCursorType       cursor,

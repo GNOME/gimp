@@ -1,3 +1,14 @@
+2006-09-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptool.[ch]: added gimp_tool_message() which uses
+	the new statusbar messages.
+
+	* app/tools/gimptool.c
+	* app/tools/gimppainttool.c: use it instead of accessing the
+	statusbar directly.
+
+	* app/tools/gimptransformtool.c: use it instead of gimp_message().
+
 2006-09-28  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c: some more cleanup.

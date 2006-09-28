@@ -39,7 +39,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpstatusbar.h"
 
 #include "gimpcoloroptions.h"
 #include "gimppainttool.h"
@@ -317,11 +316,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   if (! gimp_paint_core_start (core, drawable, paint_options, &curr_coords,
                                &error))
     {
-      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
-
-      gimp_statusbar_push_temp (GIMP_STATUSBAR (shell->statusbar),
-                                error->message);
-
+      gimp_tool_message (tool, display, error->message);
       g_clear_error (&error);
       return;
     }

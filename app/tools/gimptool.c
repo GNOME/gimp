@@ -385,11 +385,7 @@ gimp_tool_initialize (GimpTool    *tool,
 
   if (! GIMP_TOOL_GET_CLASS (tool)->initialize (tool, display, &error))
     {
-      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
-
-      gimp_statusbar_push_temp (GIMP_STATUSBAR (shell->statusbar),
-                                error->message);
-
+      gimp_tool_message (tool, display, error->message);
       g_clear_error (&error);
       return FALSE;
     }
@@ -722,6 +718,7 @@ gimp_tool_push_status (GimpTool    *tool,
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (message != NULL);
 
   shell = GIMP_DISPLAY_SHELL (display->shell);
 
@@ -778,6 +775,7 @@ gimp_tool_replace_status (GimpTool    *tool,
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (message != NULL);
 
   shell = GIMP_DISPLAY_SHELL (display->shell);
 
@@ -799,6 +797,23 @@ gimp_tool_pop_status (GimpTool    *tool,
 
   gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar),
                       G_OBJECT_TYPE_NAME (tool));
+}
+
+void
+gimp_tool_message (GimpTool    *tool,
+                   GimpDisplay *display,
+                   const gchar *message)
+{
+  GimpDisplayShell *shell;
+
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (message != NULL);
+
+  shell = GIMP_DISPLAY_SHELL (display->shell);
+
+  gimp_statusbar_push_temp (GIMP_STATUSBAR (shell->statusbar),
+                            "%s", message);
 }
 
 void
