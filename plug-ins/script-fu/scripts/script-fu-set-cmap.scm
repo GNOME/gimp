@@ -2,7 +2,7 @@
 ; by Kevin Cozens <kcozens@interlog.com>
 ;
 ; Change the colourmap of an image to the colours in a specified palette.
-; Included is tiny-fu-make-cmap-array (available for use in scripts) which
+; Included is script-fu-make-cmap-array (available for use in scripts) which
 ; returns an INT8ARRAY containing the colours from a specified palette.
 ; This array can be used as the cmap argument for gimp-image-set-cmap.
 
@@ -23,7 +23,7 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-(define (tiny-fu-make-cmap-array palette)
+(define (script-fu-make-cmap-array palette)
   (let* (
         (num-colours (car (gimp-palette-get-info palette)))
         (cmap (cons-array (* num-colours 3) 'byte))
@@ -43,14 +43,14 @@
   )
 )
 
-(define (tiny-fu-set-cmap img drawable palette)
+(define (script-fu-set-cmap img drawable palette)
   (gimp-image-set-colormap img
                            (* (car (gimp-palette-get-info palette)) 3)
-                           (tiny-fu-make-cmap-array palette))
+                           (script-fu-make-cmap-array palette))
   (gimp-displays-flush)
 )
 
-(tiny-fu-register "tiny-fu-set-cmap"
+(script-fu-register "script-fu-set-cmap"
     _"Set Colormap"
     "Change the colourmap of an image to the colours in a specified palette."
     "Kevin Cozens <kcozens@interlog.com>"
@@ -62,5 +62,5 @@
     SF-PALETTE  _"Palette"  "Default"
 )
 
-(tiny-fu-menu-register "tiny-fu-set-cmap"
+(script-fu-menu-register "script-fu-set-cmap"
                        "<Image>/Tiny-Fu/Utils")

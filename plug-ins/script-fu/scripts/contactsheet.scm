@@ -22,7 +22,7 @@
 ; Added ability to select sheet size, set font used for sheet and image
 ; titles, background color, and colour used for titles.
 
-(define (tiny-fu-contactsheet dir sheet-size
+(define (script-fu-contactsheet dir sheet-size
          title-font legend-font text-color bg-color)
 
   (define (init-sheet-data size)
@@ -271,7 +271,7 @@
   )
 )
 
-(tiny-fu-register "tiny-fu-contactsheet"
+(script-fu-register "script-fu-contactsheet"
     _"Contact Sheet"
     "Create a series of images containing thumbnail sized versions
      of all of the images contained in a specified directory."
@@ -290,5 +290,5 @@
     SF-COLOR   _"Background color" '(0 0 0)
 )
 
-(tiny-fu-menu-register "tiny-fu-contactsheet"
+(script-fu-menu-register "script-fu-contactsheet"
                        "<Toolbox>/Xtns/Utils")

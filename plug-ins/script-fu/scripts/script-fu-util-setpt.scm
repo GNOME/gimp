@@ -19,7 +19,7 @@
 ; The resulting image has the selected layer size.
 ; Copyright (C) 2002 Chauk-Mean PROUM
 ;
-(define (tiny-fu-set-pt a index x y)
+(define (script-fu-set-pt a index x y)
   (aset a (* index 2) x)
   (aset a (+ (* index 2) 1) y)
 )

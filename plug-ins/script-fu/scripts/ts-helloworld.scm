@@ -24,7 +24,7 @@
 ;
 ; Tiny-Fu first successfully ran this script at 2:07am on March 6, 2004.
 
-(define (tiny-fu-helloworld text font size colour)
+(define (script-fu-helloworld text font size colour)
   (let*
     (
 	(width 10)
@@ -50,7 +50,7 @@
   )
 )
 
-(tiny-fu-register "tiny-fu-helloworld"
+(script-fu-register "script-fu-helloworld"
     _"Hello World"
     "Creates an image with a user specified text string."
     "Kevin Cozens <kcozens@interlog.com>"
@@ -63,5 +63,5 @@
     SF-COLOR      _"Color"               '(0 0 0)
 )
 
-(tiny-fu-menu-register "tiny-fu-helloworld"
+(script-fu-menu-register "script-fu-helloworld"
                        "<Toolbox>/Xtns/Test")
