@@ -605,7 +605,7 @@ def _interact(proc_name, start_params):
                 for wid in edit_wids:
                     params.append(wid.get_value())
             except EntryValueError:
-                warning_dialog(dialog, _('Invalid input for "%s"') % wid.desc)
+                warning_dialog(dialog, _("Invalid input for '%s'") % wid.desc)
             else:
                 _set_defaults(proc_name, params)
                 try:
