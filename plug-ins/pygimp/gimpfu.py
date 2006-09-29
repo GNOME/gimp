@@ -274,7 +274,7 @@ def _query():
 def _get_defaults(proc_name):
     import gimpshelf
     (blurb, help, author, copyright, date,
-     menu, imagetypes, plugin_type,
+     label, imagetypes, plugin_type,
      params, results, function, menu, domain,
      on_query, on_run) = _registered_plugins_[proc_name]
 
@@ -294,7 +294,7 @@ def _set_defaults(proc_name, defaults):
 
 def _interact(proc_name, start_params):
     (blurb, help, author, copyright, date,
-     menu, imagetypes, plugin_type,
+     label, imagetypes, plugin_type,
      params, results, function, menu, domain,
      on_query, on_run) = _registered_plugins_[proc_name]
 
@@ -318,12 +318,48 @@ def _interact(proc_name, start_params):
     class EntryValueError(Exception):
         pass
 
-    def error_dialog(parent, msg):
+    def warning_dialog(parent, primary, secondary=None):
         dlg = gtk.MessageDialog(parent, gtk.DIALOG_DESTROY_WITH_PARENT,
                                         gtk.MESSAGE_WARNING, gtk.BUTTONS_CLOSE,
-                                        msg)
+                                        primary)
+        if secondary:
+            dlg.format_secondary_text(secondary)
         dlg.run()
         dlg.destroy()
+
+    def error_dialog(parent, proc_name):
+        import sys, traceback
+        title = _("An error occured running %s") % proc_name
+        dlg = gtk.MessageDialog(parent, gtk.DIALOG_DESTROY_WITH_PARENT,
+                                        gtk.MESSAGE_ERROR, gtk.BUTTONS_CLOSE,
+                                        title)
+        dlg.format_secondary_text(
+            "".join(
+                traceback.format_exception_only(sys.exc_type, sys.exc_value)
+                )
+            )
+
+        alignment = gtk.Alignment()
+        alignment.set_padding(0, 0, 12, 12)
+        dlg.vbox.pack_start(alignment)
+        alignment.show()
+
+        expander = gtk.Expander(_("_More Information"));
+        expander.set_use_underline(True)
+        expander.set_spacing(12)
+        alignment.add(expander)
+        expander.show()
+
+        label = gtk.Label(traceback.format_exc());
+        label.set_selectable(True)
+        expander.add(label)
+        label.show()
+
+        def response(widget, id):
+            widget.destroy()
+
+        dlg.connect("response", response)
+        dlg.show()
 
     # define a mapping of param types to edit objects ...
     class StringEntry(gtk.Entry):
@@ -560,10 +596,15 @@ def _interact(proc_name, start_params):
                 for wid in edit_wids:
                     params.append(wid.get_value())
             except EntryValueError:
-                error_dialog(dialog, 'Invalid input for "%s"' % wid.desc)
+                warning_dialog(dialog, _('Invalid input for "%s"') % wid.desc)
             else:
                 _set_defaults(proc_name, params)
-                dialog.res = run_script(params)
+                try:
+                    dialog.res = run_script(params)
+                except Exception:
+                    dlg.set_response_sensitive(gtk.RESPONSE_CANCEL, True)
+                    error_dialog(dialog, proc_name)
+                    raise
 
         gtk.main_quit()
 
