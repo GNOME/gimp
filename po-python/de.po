@@ -8,31 +8,45 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-27 17:44+0200\n"
-"PO-Revision-Date: 2006-09-27 18:02+0200\n"
+"POT-Creation-Date: 2006-09-29 17:20+0200\n"
+"PO-Revision-Date: 2006-09-29 17:22+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:407 ../plug-ins/pygimp/gimpfu.py:419
-#: ../plug-ins/pygimp/gimpfu.py:425
+#: ../plug-ins/pygimp/gimpfu.py:332
+#, python-format
+msgid "An error occured running %s"
+msgstr "Beim Ausführen von %s ist ein Fehler aufgetreten"
+
+#: ../plug-ins/pygimp/gimpfu.py:347
+msgid "_More Information"
+msgstr "_Mehr Information"
+
+#: ../plug-ins/pygimp/gimpfu.py:452 ../plug-ins/pygimp/gimpfu.py:464
+#: ../plug-ins/pygimp/gimpfu.py:470
 msgid "No"
 msgstr "Nein"
 
-#: ../plug-ins/pygimp/gimpfu.py:417 ../plug-ins/pygimp/gimpfu.py:425
+#: ../plug-ins/pygimp/gimpfu.py:462 ../plug-ins/pygimp/gimpfu.py:470
 msgid "Yes"
 msgstr "Ja"
 
-#: ../plug-ins/pygimp/gimpfu.py:463 ../plug-ins/pygimp/gimpui.py:200
+#: ../plug-ins/pygimp/gimpfu.py:508 ../plug-ins/pygimp/gimpui.py:200
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu-Dateiauswahl"
 
-#: ../plug-ins/pygimp/gimpfu.py:474
+#: ../plug-ins/pygimp/gimpfu.py:519
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu-Ordnerauswahl"
+
+#: ../plug-ins/pygimp/gimpfu.py:608
+#, python-format
+msgid "Invalid input for '%s'"
+msgstr "Ungültige Eingabe für '%s'"
 
 #: ../plug-ins/pygimp/gimpui.py:153
 msgid "Python-Fu Color Selection"
@@ -195,7 +209,8 @@ msgstr "Aufsteigend"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:51
 msgid "Create a repeating gradient using colors from the palette"
-msgstr "Erzeugt einen sich wiederholenden Farbverlauf mit Farben aus der Palette"
+msgstr ""
+"Erzeugt einen sich wiederholenden Farbverlauf mit Farben aus der Palette"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:56
 msgid "Palette to _Repeating Gradient"
@@ -223,7 +238,9 @@ msgstr "Zerteilen"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Zerschneidet eine Grafik entlang seiner Hilfslinien, erzeugt Einzelbilder und eine zugehörige HTML-Tabelle"
+msgstr ""
+"Zerschneidet eine Grafik entlang seiner Hilfslinien, erzeugt Einzelbilder "
+"und eine zugehörige HTML-Tabelle"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
@@ -267,7 +284,9 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Fügt einen Schlagschatten zu einer Ebene hinzu und schrägt sie falls gewünscht ab"
+msgstr ""
+"Fügt einen Schlagschatten zu einer Ebene hinzu und schrägt sie falls "
+"gewünscht ab"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
 msgid "_Drop Shadow and Bevel..."
@@ -292,4 +311,3 @@ msgstr "Schlagschatten X-Versatz"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow Y displacement"
 msgstr "Schlagschatten Y-Versatz"
-
