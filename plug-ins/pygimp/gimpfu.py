@@ -339,26 +339,35 @@ def _interact(proc_name, start_params):
                 )
             )
 
-        alignment = gtk.Alignment()
+        alignment = gtk.Alignment(0.0, 0.0, 1.0, 1.0)
         alignment.set_padding(0, 0, 12, 12)
         dlg.vbox.pack_start(alignment)
         alignment.show()
 
         expander = gtk.Expander(_("_More Information"));
         expander.set_use_underline(True)
-        expander.set_spacing(12)
+        expander.set_spacing(6)
         alignment.add(expander)
         expander.show()
 
+        scrolled = gtk.ScrolledWindow()
+        scrolled.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        scrolled.set_size_request(-1, 200)
+        expander.add(scrolled)
+        scrolled.show()
+
         label = gtk.Label(traceback.format_exc());
+        label.set_alignment(0.0, 0.0)
+        label.set_padding(6, 6)
         label.set_selectable(True)
-        expander.add(label)
+        scrolled.add_with_viewport(label)
         label.show()
 
         def response(widget, id):
             widget.destroy()
 
         dlg.connect("response", response)
+        dlg.set_resizable(True)
         dlg.show()
 
     # define a mapping of param types to edit objects ...
