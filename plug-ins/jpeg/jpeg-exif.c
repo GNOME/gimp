@@ -91,6 +91,10 @@ jpeg_apply_exif_data_to_image (const gchar  *filename,
   if (!exif_data)
     return;
 
+  /* return if there is no thumbnail, to work around bug #358117 */
+  if (!exif_data->data || exif_data->size == 0)
+    return;
+
   /*
    * Unfortunately libexif may return a non-null exif_data even if the file
    * contains no exif data.  We check for validity by making sure it

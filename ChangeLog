@@ -1,3 +1,9 @@
+2006-09-29  Bill Skaggs  <weskaggs@primate.ucdavis.ed>
+
+	* plug-ins/jpeg/jpeg-exif.c: don't let libexif crash us when
+	loading image with exif data but no thumbnail.  Works around
+	bug #358117.
+
 2006-09-28  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py: show a dialog for execution errors.
