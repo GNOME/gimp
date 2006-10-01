@@ -181,17 +181,17 @@ gimp_stroke_editor_constructor (GType                   type,
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  box = gimp_prop_enum_radio_box_new (G_OBJECT (editor->options), "style",
-                                      0, 0);
-  gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
-  gtk_widget_show (box);
-
   size = gimp_prop_size_entry_new (G_OBJECT (editor->options), "width", "unit",
                                    "%a", GIMP_SIZE_ENTRY_UPDATE_SIZE,
                                    editor->resolution);
   gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (size), 1);
   gtk_box_pack_start (GTK_BOX (box), size, FALSE, FALSE, 0);
   gtk_widget_show (size);
+
+  box = gimp_prop_enum_radio_box_new (G_OBJECT (editor->options), "style",
+                                      0, 0);
+  gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
+  gtk_widget_show (box);
 
   expander = gtk_expander_new_with_mnemonic (_("_Line Style"));
   gtk_box_pack_start (GTK_BOX (editor), expander, FALSE, FALSE, 0);
