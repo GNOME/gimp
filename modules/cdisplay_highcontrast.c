@@ -159,6 +159,8 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
 
   display_class->name        = _("Contrast");
   display_class->help_id     = "gimp-colordisplay-contrast";
+  display_class->stock_id    = GIMP_STOCK_DISPLAY_FILTER_CONTRAST;
+
   display_class->convert     = cdisplay_contrast_convert;
   display_class->configure   = cdisplay_contrast_configure;
 }

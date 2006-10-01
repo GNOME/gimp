@@ -215,9 +215,21 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOLS                    "gimp-tools"
 #define GIMP_STOCK_TOOL_OPTIONS             "gimp-tool-options"
 #define GIMP_STOCK_DEVICE_STATUS            "gimp-device-status"
-#define GIMP_STOCK_DISPLAY_FILTER           "gimp-display-filter"
 #define GIMP_STOCK_CURSOR                   "gimp-cursor"
 #define GIMP_STOCK_SAMPLE_POINT             "gimp-sample-point"
+
+#define GIMP_STOCK_CONTROLLER               "gimp-controller"
+#define GIMP_STOCK_CONTROLLER_KEYBOARD      "gimp-controller-keyboard"
+#define GIMP_STOCK_CONTROLLER_LINUX_INPUT   "gimp-controller-linux-input"
+#define GIMP_STOCK_CONTROLLER_MIDI          "gimp-controller-midi"
+#define GIMP_STOCK_CONTROLLER_WHEEL         "gimp-controller-wheel"
+
+#define GIMP_STOCK_DISPLAY_FILTER           "gimp-display-filter"
+#define GIMP_STOCK_DISPLAY_FILTER_COLORBLIND "gimp-display-filter-colorblind"
+#define GIMP_STOCK_DISPLAY_FILTER_CONTRAST  "gimp-display-filter-contrast"
+#define GIMP_STOCK_DISPLAY_FILTER_GAMMA     "gimp-display-filter-gamma"
+#define GIMP_STOCK_DISPLAY_FILTER_LCMS      "gimp-display-filter-lcms"
+#define GIMP_STOCK_DISPLAY_FILTER_PROOF     "gimp-display-filter-proof"
 
 #define GIMP_STOCK_LIST                     "gimp-list"
 #define GIMP_STOCK_GRID                     "gimp-grid"
@@ -231,9 +243,11 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_SHAPE_CIRCLE             "gimp-shape-circle"
 #define GIMP_STOCK_SHAPE_DIAMOND            "gimp-shape-diamond"
 #define GIMP_STOCK_SHAPE_SQUARE             "gimp-shape-square"
+
 #define GIMP_STOCK_CAP_BUTT                 "gimp-cap-butt"
 #define GIMP_STOCK_CAP_ROUND                "gimp-cap-round"
 #define GIMP_STOCK_CAP_SQUARE               "gimp-cap-square"
+
 #define GIMP_STOCK_JOIN_MITER               "gimp-join-miter"
 #define GIMP_STOCK_JOIN_ROUND               "gimp-join-round"
 #define GIMP_STOCK_JOIN_BEVEL               "gimp-join-bevel"

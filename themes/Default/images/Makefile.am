@@ -31,6 +31,11 @@ STOCK_MENU_IMAGES = \
 	stock-channels-16.png				\
 	stock-close-12.png				\
 	stock-colormap-16.png				\
+	stock-controller-16.png				\
+	stock-controller-keyboard-16.png		\
+	stock-controller-linux-input-16.png		\
+	stock-controller-midi-16.png			\
+	stock-controller-wheel-16.png			\
 	stock-convert-grayscale-16.png			\
 	stock-convert-indexed-16.png			\
 	stock-convert-rgb-16.png			\
@@ -38,6 +43,11 @@ STOCK_MENU_IMAGES = \
 	stock-default-colors-12.png			\
 	stock-device-status-16.png			\
 	stock-display-filter-16.png			\
+	stock-display-filter-colorblind-16.png		\
+	stock-display-filter-contrast-16.png		\
+	stock-display-filter-gamma-16.png		\
+	stock-display-filter-lcms-16.png		\
+	stock-display-filter-proof-16.png		\
 	stock-eye-12.png				\
 	stock-flip-horizontal-16.png			\
 	stock-flip-vertical-16.png			\
@@ -130,11 +140,21 @@ STOCK_BUTTON_IMAGES = \
 	stock-color-pick-from-screen-16.png	\
 	stock-color-triangle-16.png		\
 	stock-colormap-24.png			\
+	stock-controller-24.png			\
+	stock-controller-keyboard-24.png	\
+	stock-controller-linux-input-24.png	\
+	stock-controller-midi-24.png		\
+	stock-controller-wheel-24.png		\
 	stock-cursor-24.png			\
 	stock-curve-free-16.png			\
 	stock-curve-smooth-16.png		\
 	stock-device-status-24.png		\
 	stock-display-filter-24.png		\
+	stock-display-filter-colorblind-24.png	\
+	stock-display-filter-contrast-24.png	\
+	stock-display-filter-gamma-24.png	\
+	stock-display-filter-lcms-24.png	\
+	stock-display-filter-proof-24.png	\
 	stock-duplicate-16.png			\
 	stock-edit-16.png			\
 	stock-eye-20.png			\

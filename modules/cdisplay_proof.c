@@ -178,6 +178,8 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
 
   display_class->name        = _("Color Proof");
   display_class->help_id     = "gimp-colordisplay-proof";
+  display_class->stock_id    = GIMP_STOCK_DISPLAY_FILTER_PROOF;
+
   display_class->convert     = cdisplay_proof_convert;
   display_class->configure   = cdisplay_proof_configure;
   display_class->changed     = cdisplay_proof_changed;

@@ -159,6 +159,8 @@ cdisplay_gamma_class_init (CdisplayGammaClass *klass)
 
   display_class->name        = _("Gamma");
   display_class->help_id     = "gimp-colordisplay-gamma";
+  display_class->stock_id    = GIMP_STOCK_DISPLAY_FILTER_GAMMA;
+
   display_class->convert     = cdisplay_gamma_convert;
   display_class->configure   = cdisplay_gamma_configure;
 }

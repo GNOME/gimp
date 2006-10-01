@@ -33,13 +33,14 @@
 #include "gimp-intl.h"
 
 
-#define LIST_WIDTH  150
+#define LIST_WIDTH  200
 #define LIST_HEIGHT 100
 
 
 enum
 {
   SRC_COLUMN_NAME,
+  SRC_COLUMN_ICON,
   SRC_COLUMN_TYPE,
   N_SRC_COLUMNS
 };
@@ -48,6 +49,7 @@ enum
 {
   DEST_COLUMN_ENABLED,
   DEST_COLUMN_NAME,
+  DEST_COLUMN_ICON,
   DEST_COLUMN_FILTER,
   N_DEST_COLUMNS
 };
@@ -138,6 +140,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 
   editor->src = gtk_list_store_new (N_SRC_COLUMNS,
                                     G_TYPE_STRING,
+                                    G_TYPE_STRING,
                                     G_TYPE_GTYPE);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (editor->src));
   g_object_unref (editor->src);
@@ -145,11 +148,22 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_widget_set_size_request (tv, LIST_WIDTH, LIST_HEIGHT);
   gtk_tree_view_set_headers_clickable (GTK_TREE_VIEW (tv), FALSE);
 
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv),
-                                               0, _("Available Filters"),
-                                               gtk_cell_renderer_text_new (),
-                                               "text", SRC_COLUMN_NAME,
-                                               NULL);
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_column_set_title (column, _("Available Filters"));
+  gtk_tree_view_append_column (GTK_TREE_VIEW (tv), column);
+
+  rend = gtk_cell_renderer_pixbuf_new ();
+  gtk_tree_view_column_pack_start (column, rend, FALSE);
+  gtk_tree_view_column_set_attributes (column, rend,
+                                       "stock-id", SRC_COLUMN_ICON,
+                                       NULL);
+
+  rend = gtk_cell_renderer_text_new ();
+  gtk_tree_view_column_pack_start (column, rend, TRUE);
+  gtk_tree_view_column_set_attributes (column, rend,
+                                       "text", SRC_COLUMN_NAME,
+                                       NULL);
+
   gtk_container_add (GTK_CONTAINER (scrolled_win), tv);
   gtk_widget_show (tv);
 
@@ -226,6 +240,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   editor->dest = gtk_list_store_new (N_DEST_COLUMNS,
                                      G_TYPE_BOOLEAN,
                                      G_TYPE_STRING,
+                                     G_TYPE_STRING,
                                      GIMP_TYPE_COLOR_DISPLAY);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (editor->dest));
   g_object_unref (editor->dest);
@@ -249,11 +264,21 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_tree_view_column_set_widget (column, image);
   gtk_widget_show (image);
 
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv),
-                                               1, _("Active Filters"),
-                                               gtk_cell_renderer_text_new (),
-                                               "text", DEST_COLUMN_NAME,
-                                               NULL);
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_column_set_title (column, _("Active Filters"));
+  gtk_tree_view_append_column (GTK_TREE_VIEW (tv), column);
+
+  rend = gtk_cell_renderer_pixbuf_new ();
+  gtk_tree_view_column_pack_start (column, rend, FALSE);
+  gtk_tree_view_column_set_attributes (column, rend,
+                                       "stock-id", DEST_COLUMN_ICON,
+                                       NULL);
+
+  rend = gtk_cell_renderer_text_new ();
+  gtk_tree_view_column_pack_start (column, rend, TRUE);
+  gtk_tree_view_column_set_attributes (column, rend,
+                                       "text", DEST_COLUMN_NAME,
+                                       NULL);
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), tv);
   gtk_widget_show (tv);
@@ -342,6 +367,7 @@ gimp_color_display_editor_new (GimpColorDisplayStack *stack)
       gtk_list_store_append (editor->src, &iter);
 
       gtk_list_store_set (editor->src, &iter,
+                          SRC_COLUMN_ICON, display_class->stock_id,
                           SRC_COLUMN_NAME, display_class->name,
                           SRC_COLUMN_TYPE, display_types[i],
                           -1);
@@ -357,15 +383,18 @@ gimp_color_display_editor_new (GimpColorDisplayStack *stack)
       GtkTreeIter       iter;
       gboolean          enabled;
       const gchar      *name;
+      const gchar      *stock_id;
 
       enabled = gimp_color_display_get_enabled (display);
 
-      name = GIMP_COLOR_DISPLAY_GET_CLASS (display)->name;
+      name     = GIMP_COLOR_DISPLAY_GET_CLASS (display)->name;
+      stock_id = GIMP_COLOR_DISPLAY_GET_CLASS (display)->stock_id;
 
       gtk_list_store_append (editor->dest, &iter);
 
       gtk_list_store_set (editor->dest, &iter,
                           DEST_COLUMN_ENABLED, enabled,
+                          DEST_COLUMN_ICON,    stock_id,
                           DEST_COLUMN_NAME,    name,
                           DEST_COLUMN_FILTER,  display,
                           -1);
@@ -554,15 +583,18 @@ gimp_color_display_editor_added (GimpColorDisplayStack  *stack,
   GtkTreeIter  iter;
   gboolean     enabled;
   const gchar *name;
+  const gchar *stock_id;
 
   enabled = gimp_color_display_get_enabled (display);
 
-  name = GIMP_COLOR_DISPLAY_GET_CLASS (display)->name;
+  name     = GIMP_COLOR_DISPLAY_GET_CLASS (display)->name;
+  stock_id = GIMP_COLOR_DISPLAY_GET_CLASS (display)->stock_id;
 
   gtk_list_store_insert (editor->dest, &iter, position);
 
   gtk_list_store_set (editor->dest, &iter,
                       DEST_COLUMN_ENABLED, enabled,
+                      DEST_COLUMN_ICON,    stock_id,
                       DEST_COLUMN_NAME,    name,
                       DEST_COLUMN_FILTER,  display,
                       -1);

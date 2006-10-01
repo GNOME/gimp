@@ -100,11 +100,14 @@ static guint info_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_controller_info_class_init (GimpControllerInfoClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->finalize     = gimp_controller_info_finalize;
-  object_class->set_property = gimp_controller_info_set_property;
-  object_class->get_property = gimp_controller_info_get_property;
+  object_class->finalize           = gimp_controller_info_finalize;
+  object_class->set_property       = gimp_controller_info_set_property;
+  object_class->get_property       = gimp_controller_info_get_property;
+
+  viewable_class->default_stock_id = GIMP_STOCK_CONTROLLER;
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ENABLED,
                                     "enabled", NULL,
@@ -206,6 +209,9 @@ gimp_controller_info_set_property (GObject      *object,
                                    G_CALLBACK (gimp_controller_info_event),
                                    G_OBJECT (info),
                                    0);
+
+          gimp_viewable_set_stock_id (GIMP_VIEWABLE (info),
+                                      GIMP_CONTROLLER_GET_CLASS (info->controller)->stock_id);
         }
       break;
     case PROP_MAPPING:

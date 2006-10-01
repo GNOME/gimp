@@ -1,5 +1,52 @@
 2006-10-01  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpcolordisplay.[ch]
+	* libgimpwidgets/gimpcontroller.[ch]: added "const gchar *stock_id"
+	members to the class structs.
+
+	* libgimpwidgets/gimpstock.[ch]
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-controller-16.png
+	* themes/Default/images/stock-controller-24.png
+	* themes/Default/images/stock-controller-keyboard-16.png
+	* themes/Default/images/stock-controller-keyboard-24.png
+	* themes/Default/images/stock-controller-linux-input-16.png
+	* themes/Default/images/stock-controller-linux-input-24.png
+	* themes/Default/images/stock-controller-midi-16.png
+	* themes/Default/images/stock-controller-midi-24.png
+	* themes/Default/images/stock-controller-wheel-16.png
+	* themes/Default/images/stock-controller-wheel-24.png
+	* themes/Default/images/stock-display-filter-colorblind-16.png
+	* themes/Default/images/stock-display-filter-colorblind-24.png
+	* themes/Default/images/stock-display-filter-contrast-16.png
+	* themes/Default/images/stock-display-filter-contrast-24.png
+	* themes/Default/images/stock-display-filter-gamma-16.png
+	* themes/Default/images/stock-display-filter-gamma-24.png
+	* themes/Default/images/stock-display-filter-lcms-16.png
+	* themes/Default/images/stock-display-filter-lcms-24.png
+	* themes/Default/images/stock-display-filter-proof-16.png
+	* themes/Default/images/stock-display-filter-proof-24.png: added
+	icons for the various display filters and controllers. Made them
+	as ugly as sin to trigger some replacement pain in the relevant
+	people ;)
+
+	* modules/cdisplay_colorblind.c
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* modules/cdisplay_lcms.c
+	* modules/cdisplay_proof.c
+	* modules/controller_linux_input.c
+	* modules/controller_midi.c
+	* app/widgets/gimpcontrollerkeyboard.c
+	* app/widgets/gimpcontrollerwheel.c: set icons.
+
+	* app/widgets/gimpcolordisplayeditor.c
+	* app/widgets/gimpcontrollerinfo.c
+	* app/widgets/gimpcontrollerlist.c: show them in the display filter
+	and controller GUIs.
+
+2006-10-01  Michael Natterer  <mitch@gimp.org>
+
 	* themes/Small/gtkrc: it makes little sense to set focus-line-width
 	to 0 (hiding the focus line) but still leave padding for it (by
 	writing focus-line-padding instead of focus-padding), gah...

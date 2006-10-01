@@ -33,6 +33,7 @@
 
 #define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 #include "gimpcontroller.h"
+#include "gimpstock.h"
 
 enum
 {
@@ -95,6 +96,7 @@ gimp_controller_class_init (GimpControllerClass *klass)
   klass->name                = "Unnamed";
   klass->help_domain         = NULL;
   klass->help_id             = NULL;
+  klass->stock_id            = GIMP_STOCK_CONTROLLER;
 
   klass->get_n_events        = NULL;
   klass->get_event_name      = NULL;

@@ -223,7 +223,7 @@ gimp_controller_list_init (GimpControllerList *list)
 
       gtk_list_store_append (list->src, &iter);
       gtk_list_store_set (list->src, &iter,
-                          COLUMN_ICON, "gimp-info",
+                          COLUMN_ICON, controller_class->stock_id,
                           COLUMN_NAME, controller_class->name,
                           COLUMN_TYPE, controller_types[i],
                           -1);

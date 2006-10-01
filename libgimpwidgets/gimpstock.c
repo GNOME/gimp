@@ -199,7 +199,6 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TOOLS,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_OPTIONS,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_DEVICE_STATUS,            NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_DISPLAY_FILTER,           NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CURSOR,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SAMPLE_POINT,             NULL,        0, 0, LIBGIMP_DOMAIN },
 
@@ -236,6 +235,20 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_QUICK_MASK_ON,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { "gimp-qmask-off", /* compat */       NULL,        0, 0, LIBGIMP_DOMAIN },
   { "gimp-qmask-on",  /* compat */       NULL,        0, 0, LIBGIMP_DOMAIN },
+
+  { GIMP_STOCK_CONTROLLER,               NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CONTROLLER_KEYBOARD,      NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CONTROLLER_LINUX_INPUT,   NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CONTROLLER_MIDI,          NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CONTROLLER_WHEEL,         NULL,        0, 0, LIBGIMP_DOMAIN },
+
+  { GIMP_STOCK_DISPLAY_FILTER,           NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_DISPLAY_FILTER_COLORBLIND, NULL,       0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_DISPLAY_FILTER_CONTRAST,  NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_DISPLAY_FILTER_GAMMA,     NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_DISPLAY_FILTER_LCMS,      NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_DISPLAY_FILTER_PROOF,     NULL,        0, 0, LIBGIMP_DOMAIN },
+
   { GIMP_STOCK_LIST,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRID,                     NULL,        0, 0, LIBGIMP_DOMAIN },
 
@@ -249,9 +262,11 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_SHAPE_CIRCLE,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SHAPE_DIAMOND,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SHAPE_SQUARE,             NULL,        0, 0, LIBGIMP_DOMAIN },
+
   { GIMP_STOCK_CAP_BUTT,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CAP_ROUND,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CAP_SQUARE,               NULL,        0, 0, LIBGIMP_DOMAIN },
+
   { GIMP_STOCK_JOIN_MITER,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_JOIN_ROUND,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_JOIN_BEVEL,               NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -375,9 +390,21 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_TOOLS,                    stock_tools_24                    },
   { GIMP_STOCK_TOOL_OPTIONS,             stock_tool_options_24             },
   { GIMP_STOCK_DEVICE_STATUS,            stock_device_status_24            },
-  { GIMP_STOCK_DISPLAY_FILTER,           stock_display_filter_24           },
   { GIMP_STOCK_CURSOR,                   stock_cursor_24                   },
   { GIMP_STOCK_SAMPLE_POINT,             stock_sample_point_24             },
+
+  { GIMP_STOCK_CONTROLLER,               stock_controller_24               },
+  { GIMP_STOCK_CONTROLLER_KEYBOARD,      stock_controller_keyboard_24      },
+  { GIMP_STOCK_CONTROLLER_LINUX_INPUT,   stock_controller_linux_input_24   },
+  { GIMP_STOCK_CONTROLLER_MIDI,          stock_controller_midi_24          },
+  { GIMP_STOCK_CONTROLLER_WHEEL,         stock_controller_wheel_24         },
+
+  { GIMP_STOCK_DISPLAY_FILTER,            stock_display_filter_24            },
+  { GIMP_STOCK_DISPLAY_FILTER_COLORBLIND, stock_display_filter_colorblind_24 },
+  { GIMP_STOCK_DISPLAY_FILTER_CONTRAST,   stock_display_filter_contrast_24   },
+  { GIMP_STOCK_DISPLAY_FILTER_GAMMA,      stock_display_filter_gamma_24      },
+  { GIMP_STOCK_DISPLAY_FILTER_LCMS,       stock_display_filter_lcms_24       },
+  { GIMP_STOCK_DISPLAY_FILTER_PROOF,      stock_display_filter_proof_24      },
 
   { GIMP_STOCK_CHANNEL,                  stock_channel_24                  },
   { GIMP_STOCK_CHANNEL_RED,              stock_channel_red_24              },
@@ -487,9 +514,21 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_TOOLS,                    stock_tools_16                    },
   { GIMP_STOCK_TOOL_OPTIONS,             stock_tool_options_16             },
   { GIMP_STOCK_DEVICE_STATUS,            stock_device_status_16            },
-  { GIMP_STOCK_DISPLAY_FILTER,           stock_display_filter_16           },
   { GIMP_STOCK_CURSOR,                   stock_cursor_16                   },
   { GIMP_STOCK_SAMPLE_POINT,             stock_sample_point_16             },
+
+  { GIMP_STOCK_CONTROLLER,               stock_controller_16               },
+  { GIMP_STOCK_CONTROLLER_KEYBOARD,      stock_controller_keyboard_16      },
+  { GIMP_STOCK_CONTROLLER_LINUX_INPUT,   stock_controller_linux_input_16   },
+  { GIMP_STOCK_CONTROLLER_MIDI,          stock_controller_midi_16          },
+  { GIMP_STOCK_CONTROLLER_WHEEL,         stock_controller_wheel_16         },
+
+  { GIMP_STOCK_DISPLAY_FILTER,            stock_display_filter_16            },
+  { GIMP_STOCK_DISPLAY_FILTER_COLORBLIND, stock_display_filter_colorblind_16 },
+  { GIMP_STOCK_DISPLAY_FILTER_CONTRAST,   stock_display_filter_contrast_16   },
+  { GIMP_STOCK_DISPLAY_FILTER_GAMMA,      stock_display_filter_gamma_16      },
+  { GIMP_STOCK_DISPLAY_FILTER_LCMS,       stock_display_filter_lcms_16       },
+  { GIMP_STOCK_DISPLAY_FILTER_PROOF,      stock_display_filter_proof_16      },
 
   { GIMP_STOCK_CHANNEL,                  stock_channel_16                  },
   { GIMP_STOCK_CHANNEL_RED,              stock_channel_red_16              },

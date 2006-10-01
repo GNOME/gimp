@@ -177,6 +177,7 @@ gimp_controller_wheel_class_init (GimpControllerWheelClass *klass)
 
   controller_class->name            = _("Mouse Wheel");
   controller_class->help_id         = GIMP_HELP_CONTROLLER_WHEEL;
+  controller_class->stock_id        = GIMP_STOCK_CONTROLLER_WHEEL;
 
   controller_class->get_n_events    = gimp_controller_wheel_get_n_events;
   controller_class->get_event_name  = gimp_controller_wheel_get_event_name;
