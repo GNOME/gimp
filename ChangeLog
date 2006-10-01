@@ -1,5 +1,14 @@
 2006-10-01  Michael Natterer  <mitch@gimp.org>
 
+	* themes/Small/gtkrc: it makes little sense to set focus-line-width
+	to 0 (hiding the focus line) but still leave padding for it (by
+	writing focus-line-padding instead of focus-padding), gah...
+
+	Instead, set focus-line-width = 1 and focus-padding = 0, resulting
+	in a visible focus line without adding any extra allocation.
+
+2006-10-01  Michael Natterer  <mitch@gimp.org>
+
 	Get rid of one more user context hack:
 
 	* app/dialogs/stroke-dialog.c: attach the saved-stroke-desc to the
