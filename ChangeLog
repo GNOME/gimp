@@ -1,5 +1,19 @@
 2006-10-01  Michael Natterer  <mitch@gimp.org>
 
+	Get rid of one more user context hack:
+
+	* app/dialogs/stroke-dialog.c: attach the saved-stroke-desc to the
+	gimp object instead of to the passed context in one function, and
+	to the user context in the other (coincidentially these contexts
+	were the same).
+
+	* app/actions/select-commands.c
+	* app/actions/vectors-commands.c: changed accordingly. Pass the
+	callback's context instead of the user context to
+	stroke_dialog_new().
+
+2006-10-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpstrokeeditor.c (gimp_stroke_editor_constructor):
 	fix dialog layout (bug #309740).
 

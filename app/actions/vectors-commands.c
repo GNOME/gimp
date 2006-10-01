@@ -379,6 +379,7 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
   GimpContext    *context;
   GimpStrokeDesc *desc;
   return_if_no_vectors (image, vectors, data);
+  return_if_no_context (context, data);
 
   drawable = gimp_image_active_drawable (image);
 
@@ -388,9 +389,8 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
       return;
     }
 
-  context = gimp_get_user_context (image->gimp);
 
-  desc = g_object_get_data (G_OBJECT (context), "saved-stroke-desc");
+  desc = g_object_get_data (G_OBJECT (image->gimp), "saved-stroke-desc");
 
   if (desc)
     g_object_ref (desc);
