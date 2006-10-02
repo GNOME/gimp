@@ -1,8 +1,20 @@
+2006-10-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimptoolbox.[ch] (gimp_toolbox_new): changed Gimp
+	parameter to GimpContext and use it instead of getting the user
+	context from the Gimp.
+
+	(toolbox_tool_button_toggled): set the tool on the dock's
+	context instead of the user context.
+
+	* app/dialogs/dialogs-constructors.c (dialogs_toolbox_get): pass
+	the context to gimp_toolbox_new() instead of context->gimp.
+
 2006-10-02  Jakub Steiner <jimmac@ximian.com>
 
 	* stock-controller-midi*:
-	* stock-controller-wheel*: start replacing mitch's masterpieces with these
-		boring ones.
+	* stock-controller-wheel*: start replacing mitch's masterpieces
+	with these boring ones.
 
 2006-10-02  Michael Natterer  <mitch@gimp.org>
 

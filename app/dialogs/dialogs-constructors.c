@@ -214,7 +214,7 @@ dialogs_toolbox_get (GimpDialogFactory *factory,
    *  the toolbox constructor, because the global_toolbox_factory has no
    *  dockables registered
    */
-  return gimp_toolbox_new (global_dock_factory, context->gimp);
+  return gimp_toolbox_new (global_dock_factory, context);
 }
 
 GtkWidget *

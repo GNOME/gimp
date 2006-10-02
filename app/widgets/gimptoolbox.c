@@ -537,16 +537,16 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
 
 GtkWidget *
 gimp_toolbox_new (GimpDialogFactory *dialog_factory,
-                  Gimp              *gimp)
+                  GimpContext       *context)
 {
   GimpToolbox *toolbox;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   toolbox = g_object_new (GIMP_TYPE_TOOLBOX,
                           "title",          GIMP_ACRONYM,
-                          "context",        gimp_get_user_context (gimp),
+                          "context",        context,
                           "dialog-factory", dialog_factory,
                           NULL);
 
@@ -838,8 +838,10 @@ static void
 toolbox_tool_button_toggled (GtkWidget    *widget,
                              GimpToolInfo *tool_info)
 {
+  GtkWidget *toolbox = gtk_widget_get_toplevel (widget);
+
   if (GTK_TOGGLE_BUTTON (widget)->active)
-    gimp_context_set_tool (gimp_get_user_context (tool_info->gimp), tool_info);
+    gimp_context_set_tool (GIMP_DOCK (toolbox)->context, tool_info);
 }
 
 static gboolean
