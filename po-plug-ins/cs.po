@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-18 14:09+0200\n"
-"PO-Revision-Date: 2006-09-18 14:09+0200\n"
+"POT-Creation-Date: 2006-10-02 15:21+0200\n"
+"PO-Revision-Date: 2006-10-02 15:27+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,7 @@ msgstr ""
 "V gimprc chybí %1$s:\n"
 "Do svého souboru %4$s musíte\n"
 "přidat položku tvaru\n"
-"(%2$s \"%3$s\")"
+"(%2$s \"%3$s\")."
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:621
 msgid "Realtime preview"
@@ -317,8 +317,7 @@ msgstr "Inverze"
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr ""
-"Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
+msgstr "Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
 
 #. Greenmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1028
@@ -429,8 +428,8 @@ msgstr "Zapsat parametry fraktálu"
 #: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/domain.c:426
 #: ../plug-ins/jpeg/jpeg-load.c:88 ../plug-ins/jpeg/jpeg-load.c:874
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:257
-#: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2535
-#: ../plug-ins/xjt/xjt.c:2543
+#: ../plug-ins/uri/uri-backend-libcurl.c:170 ../plug-ins/winicon/icoload.c:135
+#: ../plug-ins/xjt/xjt.c:2535 ../plug-ins/xjt/xjt.c:2543
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nemohu otevřít '%s' pro čtení: %s"
@@ -530,8 +529,7 @@ msgstr "P_růhledné pozadí"
 
 #: ../plug-ins/Lighting/lighting_ui.c:302
 msgid "Make destination image transparent where bump height is zero"
-msgstr ""
-"Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
+msgstr "Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
 
 #: ../plug-ins/Lighting/lighting_ui.c:305
 msgid "Cre_ate new image"
@@ -1187,7 +1185,7 @@ msgstr "Špatná barevná mapa"
 #: ../plug-ins/common/postscript.c:1018 ../plug-ins/common/psd.c:1885
 #: ../plug-ins/common/raw.c:650 ../plug-ins/common/sunras.c:433
 #: ../plug-ins/common/tga.c:416 ../plug-ins/common/tiff.c:540
-#: ../plug-ins/common/wmf.c:952 ../plug-ins/common/xbm.c:725
+#: ../plug-ins/common/wmf.c:954 ../plug-ins/common/xbm.c:725
 #: ../plug-ins/common/xpm.c:343 ../plug-ins/common/xwd.c:473
 #: ../plug-ins/faxg3/faxg3.c:204 ../plug-ins/gfli/gfli.c:469
 #: ../plug-ins/jpeg/jpeg-load.c:94 ../plug-ins/sgi/sgi.c:318
@@ -1871,8 +1869,7 @@ msgstr "Varování: '%s' je soubor ve starém formátu."
 #: ../plug-ins/common/CML_explorer.c:2260
 #, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
-msgstr ""
-"Varování: '%s' je soubor parametrů pro novější CML_badatel, než jsem já."
+msgstr "Varování: '%s' je soubor parametrů pro novější CML_badatel, než jsem já."
 
 #: ../plug-ins/common/CML_explorer.c:2323
 msgid "Error: failed to load parameters"
@@ -2167,16 +2164,16 @@ msgid "Blinds"
 msgstr "Pruhy"
 
 #. Orientation toggle box
-#: ../plug-ins/common/blinds.c:259 ../plug-ins/common/ripple.c:532
+#: ../plug-ins/common/blinds.c:259 ../plug-ins/common/ripple.c:538
 msgid "Orientation"
 msgstr "Orientace"
 
-#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:536
+#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:542
 #: ../plug-ins/common/tileit.c:426 ../plug-ins/pagecurl/pagecurl.c:534
 msgid "_Horizontal"
 msgstr "_Vodorovně"
 
-#: ../plug-ins/common/blinds.c:264 ../plug-ins/common/ripple.c:537
+#: ../plug-ins/common/blinds.c:264 ../plug-ins/common/ripple.c:543
 #: ../plug-ins/common/tileit.c:436 ../plug-ins/pagecurl/pagecurl.c:533
 msgid "_Vertical"
 msgstr "_Svisle"
@@ -2289,8 +2286,7 @@ msgstr "Posun _X:"
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
-msgstr ""
-"Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
+msgstr "Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
 
 #: ../plug-ins/common/bumpmap.c:1011 ../plug-ins/common/postscript.c:3344
 msgid "_Y offset:"
@@ -2749,8 +2745,7 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:486
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr ""
-"Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
+msgstr "Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
 
 #: ../plug-ins/common/compose.c:519
 #, c-format
@@ -2827,8 +2822,7 @@ msgstr "Žádná rozumná přípona, ukládám jako gzipovaný XCF."
 
 #: ../plug-ins/common/compressor.c:514
 msgid "No sensible extension, attempting to load with file magic."
-msgstr ""
-"Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel."
+msgstr "Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel."
 
 #: ../plug-ins/common/convmatrix.c:77
 msgid "Gr_ey"
@@ -2855,7 +2849,7 @@ msgid "E_xtend"
 msgstr "Rozšíři_t"
 
 #: ../plug-ins/common/convmatrix.c:87 ../plug-ins/common/displace.c:475
-#: ../plug-ins/common/edge.c:700 ../plug-ins/common/ripple.c:557
+#: ../plug-ins/common/edge.c:700 ../plug-ins/common/ripple.c:563
 msgid "_Wrap"
 msgstr "_Přes"
 
@@ -3035,7 +3029,7 @@ msgstr "_Automatický náhled"
 
 #. Options area, bottom of column
 #. Options section
-#: ../plug-ins/common/curve_bend.c:1298 ../plug-ins/common/ripple.c:498
+#: ../plug-ins/common/curve_bend.c:1298 ../plug-ins/common/ripple.c:504
 #: ../plug-ins/gfig/gfig-dialog.c:1205
 msgid "Options"
 msgstr "Volby"
@@ -3052,7 +3046,7 @@ msgstr "_Vyhlazování"
 
 #. The antialiasing toggle
 #: ../plug-ins/common/curve_bend.c:1340 ../plug-ins/common/gqbist.c:839
-#: ../plug-ins/common/mosaic.c:730 ../plug-ins/common/ripple.c:507
+#: ../plug-ins/common/mosaic.c:730 ../plug-ins/common/ripple.c:513
 msgid "_Antialiasing"
 msgstr "_Vyhlazování"
 
@@ -3572,7 +3566,7 @@ msgid "Edge Behavior"
 msgstr "Chování hran"
 
 #: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:713
-#: ../plug-ins/common/ripple.c:558 ../plug-ins/common/waves.c:277
+#: ../plug-ins/common/ripple.c:564 ../plug-ins/common/waves.c:277
 msgid "_Smear"
 msgstr "_Rozmazat"
 
@@ -4250,8 +4244,7 @@ msgstr ""
 "nebyl uložen."
 
 #: ../plug-ins/common/gif.c:958
-msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nemohu ukládat barevné obrázky RGB. Nejdříve jej převeďte na indexovaný nebo "
 "do šedí."
@@ -4882,8 +4875,7 @@ msgstr "Interaktivní deformace"
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
-msgstr ""
-"Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
+msgstr "Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
 
 #: ../plug-ins/common/jigsaw.c:356
 msgid "Add a jigsaw-puzzle pattern to the image"
@@ -5275,8 +5267,7 @@ msgstr "Ú_hel:"
 #. * transparency & just use the full palette
 #: ../plug-ins/common/mng.c:498 ../plug-ins/common/png.c:1652
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr ""
-"Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
+msgstr "Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
 
 #: ../plug-ins/common/mng.c:1322
 msgid "Save as MNG"
@@ -6692,45 +6683,45 @@ msgstr "Přesunout pixely dle vlnitého vzoru"
 msgid "_Ripple..."
 msgstr "_Rozvlnit..."
 
-#: ../plug-ins/common/ripple.c:220
+#: ../plug-ins/common/ripple.c:226
 msgid "Rippling"
 msgstr "Rozvlňuji"
 
-#: ../plug-ins/common/ripple.c:462
+#: ../plug-ins/common/ripple.c:468
 msgid "Ripple"
 msgstr "Vlnění"
 
-#: ../plug-ins/common/ripple.c:519
+#: ../plug-ins/common/ripple.c:525
 msgid "_Retain tilability"
 msgstr "_Uchovat dlaždicovatelnost"
 
 #. Edges toggle box
-#: ../plug-ins/common/ripple.c:553
+#: ../plug-ins/common/ripple.c:559
 msgid "Edges"
 msgstr "Hrany"
 
-#: ../plug-ins/common/ripple.c:559
+#: ../plug-ins/common/ripple.c:565
 msgid "_Blank"
 msgstr "_Čistý"
 
 #. Wave toggle box
-#: ../plug-ins/common/ripple.c:581
+#: ../plug-ins/common/ripple.c:587
 msgid "Wave Type"
 msgstr "Typ vln"
 
-#: ../plug-ins/common/ripple.c:585
+#: ../plug-ins/common/ripple.c:591
 msgid "Saw_tooth"
 msgstr "Pi_lová"
 
-#: ../plug-ins/common/ripple.c:586
+#: ../plug-ins/common/ripple.c:592
 msgid "S_ine"
 msgstr "S_inus"
 
-#: ../plug-ins/common/ripple.c:609
+#: ../plug-ins/common/ripple.c:615
 msgid "_Period:"
 msgstr "_Perioda:"
 
-#: ../plug-ins/common/ripple.c:622
+#: ../plug-ins/common/ripple.c:628
 msgid "A_mplitude:"
 msgstr "_Amplituda:"
 
@@ -7708,8 +7699,7 @@ msgid "Import _paths"
 msgstr "Importovat _cesty"
 
 #: ../plug-ins/common/svg.c:903
-msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importovat elementy cesty z SVG, aby mohly být použity s nástrojem GIMPu pro "
 "cesty"
@@ -7945,8 +7935,7 @@ msgid "ID"
 msgstr "ID"
 
 #: ../plug-ins/common/uniteditor.c:96
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Tento řetězec bude použit pouze k identifikaci jednotky v konfiguračním "
 "souboru GIMPu."
@@ -8123,8 +8112,7 @@ msgstr "_Body"
 
 #: ../plug-ins/common/video.c:1806
 msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-msgstr ""
-"Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
+msgstr "Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
 
 #: ../plug-ins/common/video.c:1813
 msgid "Vi_deo..."
@@ -8561,12 +8549,12 @@ msgstr ""
 msgid "Render Windows Metafile"
 msgstr "Vykreslit Windows Metafile"
 
-#: ../plug-ins/common/wmf.c:947 ../plug-ins/sgi/sgi.c:313
+#: ../plug-ins/common/wmf.c:949 ../plug-ins/sgi/sgi.c:313
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "Nemohu otevřít '%s' pro čtení."
 
-#: ../plug-ins/common/wmf.c:961
+#: ../plug-ins/common/wmf.c:963
 msgid "Rendered WMF"
 msgstr "Vykreslené WMF"
 
@@ -9128,8 +9116,7 @@ msgstr "Kopírovat"
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
-msgstr ""
-"Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
+msgstr "Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
 
 #: ../plug-ins/gfig/gfig-dialog.c:1300
 msgid "Background:"
@@ -9254,8 +9241,7 @@ msgid "_Gfig..."
 msgstr "_Gfig..."
 
 #: ../plug-ins/gfig/gfig.c:731
-msgid ""
-"Error trying to save figure as a parasite: can't attach parasite to drawable."
+msgid "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Chyba při pokusu uložit obrázek jako parazita: nemohu připojit parazita k "
 "drawable."
@@ -9695,8 +9681,7 @@ msgid "Shadow depth:"
 msgstr "Hloubka stínu:"
 
 #: ../plug-ins/gimpressionist/general.c:243
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Hloubka vrženého stínu, tj. jak daleko od objektu budou"
 
 #: ../plug-ins/gimpressionist/general.c:248
@@ -10074,13 +10059,11 @@ msgid "Size:"
 msgstr "Velikost:"
 
 #: ../plug-ins/gimpressionist/size.c:142
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Nechť hodnota (jas) oblasti určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:146
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
+msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "Vzdálenost od středu obrázku určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:150
@@ -10982,19 +10965,19 @@ msgstr "Zobrazit zdroj"
 msgid "Edit Map Info..."
 msgstr "Úpravy informace o mapování..."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:259
+#: ../plug-ins/jpeg/jpeg-exif.c:263
 msgid "Rotate Image?"
 msgstr "Otočit obrázek?"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:262
+#: ../plug-ins/jpeg/jpeg-exif.c:266
 msgid "_Keep Orientation"
 msgstr "_Zachovat orientaci"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:317
+#: ../plug-ins/jpeg/jpeg-exif.c:321
 msgid "According to the EXIF data, this image is rotated."
 msgstr "Podle dat EXIF je tento obrázek rotován."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:332
+#: ../plug-ins/jpeg/jpeg-exif.c:336
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Chcete, aby jej GIMP rotoval do standardní orientace?"
 
@@ -11568,12 +11551,14 @@ msgid "Transferring data from scanner/camera"
 msgstr "Přenos dat ze skeneru/fotoaparátu"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:148
+#: ../plug-ins/uri/uri-backend-libcurl.c:110
 #, c-format
 msgid "Downloading %s of image data..."
 msgstr "Stahuji %s dat obrázku..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:149
-#: ../plug-ins/uri/uri-backend-wget.c:331
+#: ../plug-ins/uri/uri-backend-libcurl.c:117
+#: ../plug-ins/uri/uri-backend-wget.c:334
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "Staženo %s dat obrázku"
@@ -11589,7 +11574,8 @@ msgid "Uploaded %s of image data"
 msgstr "Odesláno %s dat obrázku"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:238
-#: ../plug-ins/uri/uri-backend-wget.c:180
+#: ../plug-ins/uri/uri-backend-libcurl.c:139
+#: ../plug-ins/uri/uri-backend-wget.c:183
 msgid "Connecting to server"
 msgstr "Připojování k serveru"
 
@@ -11603,17 +11589,30 @@ msgstr "Nemohu číst %s z '%s': %s"
 msgid "Failed to write %s to '%s': %s"
 msgstr "Nemohu zapsat %s do '%s': %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:147
-#: ../plug-ins/uri/uri-backend-wget.c:167
-#: ../plug-ins/uri/uri-backend-wget.c:186
-#: ../plug-ins/uri/uri-backend-wget.c:209
-#: ../plug-ins/uri/uri-backend-wget.c:238
+#: ../plug-ins/uri/uri-backend-libcurl.c:55
+msgid "Could not initialize libcurl"
+msgstr "Nelze inicializovat libcurl"
+
+#: ../plug-ins/uri/uri-backend-libcurl.c:144
+msgid "Could not open output file for writing"
+msgstr "Nelze otevřít výstupní soubor pro zápis."
+
+#: ../plug-ins/uri/uri-backend-libcurl.c:182
+#, c-format
+msgid "Opening '%s' for reading resulted in HTTP response code: %d"
+msgstr "Otevírání '%s' ke čtení vedlo k návratovému kódu HTTP: %d"
+
+#: ../plug-ins/uri/uri-backend-wget.c:150
+#: ../plug-ins/uri/uri-backend-wget.c:170
+#: ../plug-ins/uri/uri-backend-wget.c:189
+#: ../plug-ins/uri/uri-backend-wget.c:212
+#: ../plug-ins/uri/uri-backend-wget.c:241
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
 msgstr "wget skončil nenormálně na URI '%s'"
 
 #. The third line is "Connecting to..."
-#: ../plug-ins/uri/uri-backend-wget.c:175
+#: ../plug-ins/uri/uri-backend-wget.c:178
 #, c-format
 msgid "(timeout is %d second)"
 msgid_plural "(timeout is %d seconds)"
@@ -11622,22 +11621,22 @@ msgstr[1] "(časový limit jsou %d sekundy)"
 msgstr[2] "(časový limit je %d sekund)"
 
 #. The fourth line is either the network request or an error
-#: ../plug-ins/uri/uri-backend-wget.c:204
+#: ../plug-ins/uri/uri-backend-wget.c:207
 msgid "Opening URI"
 msgstr "Otvírání URI"
 
-#: ../plug-ins/uri/uri-backend-wget.c:215
-#: ../plug-ins/uri/uri-backend-wget.c:248
+#: ../plug-ins/uri/uri-backend-wget.c:218
+#: ../plug-ins/uri/uri-backend-wget.c:251
 #, c-format
 msgid "A network error occurred: %s"
 msgstr "Došlo k síťové chybě: %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:288
+#: ../plug-ins/uri/uri-backend-wget.c:291
 #, c-format
 msgid "Downloading %s of image data"
 msgstr "Stahuje se %s obrazových dat"
 
-#: ../plug-ins/uri/uri-backend-wget.c:293
+#: ../plug-ins/uri/uri-backend-wget.c:296
 msgid "Downloading unknown amount of image data"
 msgstr "Stahuje se neznámý objem obrazových dat"
 
@@ -11782,3 +11781,4 @@ msgstr "Chyba: Nemohu načíst soubor XJT vlastností '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Chyba: Soubor XJT vlastností '%s' je prázdný."
+

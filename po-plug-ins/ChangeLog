@@ -1,6 +1,10 @@
+2006-10-02  Jakub Friedl <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation
+
 2006-09-24  Mukund Sivaraman  <muks@mukund.org>
 
-        * POTFILES.in: added a URI backed which uses the libcurl library
+	* POTFILES.in: added a URI backed which uses the libcurl library
 
 2006-09-24  Pawan Chitrakar  <pchitrakar@gmail.com>
 
