@@ -1258,9 +1258,8 @@ iwarp_dialog (void)
   GtkWidget *dlg;
   GtkWidget *main_hbox;
   GtkWidget *vbox;
-  GtkWidget *label;
+  GtkWidget *hint;
   GtkWidget *notebook;
-
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -1302,17 +1301,10 @@ iwarp_dialog (void)
   gtk_widget_show (vbox);
 
   iwarp_preview_build (vbox);
-  label = g_object_new (GTK_TYPE_LABEL,
-                        "label",  _("Click and drag in the preview to define "
-                                    "the distortions to apply to the image."),
-                        "xalign", 0.0,
-                        "wrap",   TRUE,
-                        NULL);
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                             -1);
-  gtk_box_pack_end (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  hint = gimp_hint_box_new (_("Click and drag in the preview to define "
+                              "the distortions to apply to the image."));
+  gtk_box_pack_end (GTK_BOX (vbox), hint, FALSE, FALSE, 0);
+  gtk_widget_show (hint);
 
   notebook = gtk_notebook_new ();
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
