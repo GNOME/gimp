@@ -61,6 +61,8 @@ static void     gimp_statusbar_progress_iface_init (GimpProgressInterface *iface
 
 static void     gimp_statusbar_finalize           (GObject           *object);
 
+static void     gimp_statusbar_destroy            (GtkObject         *object);
+
 static GimpProgress *
                 gimp_statusbar_progress_start     (GimpProgress      *progress,
                                                    const gchar       *message,
@@ -105,10 +107,13 @@ G_DEFINE_TYPE_WITH_CODE (GimpStatusbar, gimp_statusbar, GTK_TYPE_HBOX,
 static void
 gimp_statusbar_class_init (GimpStatusbarClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
+  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
 
-  object_class->finalize  = gimp_statusbar_finalize;
+  object_class->finalize    = gimp_statusbar_finalize;
+
+  gtk_object_class->destroy = gimp_statusbar_destroy;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("shadow-type",
@@ -267,6 +272,20 @@ gimp_statusbar_finalize (GObject *object)
   statusbar->temp_spaces = NULL;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_statusbar_destroy (GtkObject *object)
+{
+  GimpStatusbar *statusbar = GIMP_STATUSBAR (object);
+
+  if (statusbar->temp_timeout_id)
+    {
+      g_source_remove (statusbar->temp_timeout_id);
+      statusbar->temp_timeout_id = 0;
+    }
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static GimpProgress *

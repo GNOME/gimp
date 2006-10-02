@@ -1,3 +1,8 @@
+2006-10-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpstatusbar.c: remove the temp message idle source
+	in GtkObject::destroy().
+
 2006-10-01  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcolordisplay.[ch]
