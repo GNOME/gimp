@@ -1,3 +1,9 @@
+2006-10-02  Jakub Steiner <jimmac@ximian.com>
+
+	* stock-controller-midi*:
+	* stock-controller-wheel*: start replacing mitch's masterpieces with these
+		boring ones.
+
 2006-10-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpstatusbar.c: remove the temp message idle source
