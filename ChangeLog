@@ -1,5 +1,14 @@
 2006-10-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/tools-enums.[ch]: change labels for transform
+	type enum.
+
+	* app/tools/gimpmoveoptions.c:
+	* app/tools/gimptransformoptions.c:  change "Affect:" to
+	"Move:" or "Transform:", respectively.  Fixes bug #358824.
+	
+2006-10-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/core/gimpimage-convert.c
 	(median_cut_pass2_nodestruct_dither_rgb): adjust alpha-dithering
 	and make code more readable; fixes bug #358851 as suggested

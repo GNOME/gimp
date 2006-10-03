@@ -278,13 +278,13 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Affect:"));
+  label = gtk_label_new (_("Transform:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (hbox), label, 0);
   gtk_widget_show (label);
 
   frame = gimp_prop_enum_radio_frame_new (config, "direction",
-                                          _("Transform Direction"), 0, 0);
+                                          _("Direction"), 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

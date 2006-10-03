@@ -146,9 +146,9 @@ gimp_transform_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_TRANSFORM_TYPE_LAYER, N_("Transform layer"), NULL },
-    { GIMP_TRANSFORM_TYPE_SELECTION, N_("Transform selection"), NULL },
-    { GIMP_TRANSFORM_TYPE_PATH, N_("Transform path"), NULL },
+    { GIMP_TRANSFORM_TYPE_LAYER, N_("Layer"), NULL },
+    { GIMP_TRANSFORM_TYPE_SELECTION, N_("Selection"), NULL },
+    { GIMP_TRANSFORM_TYPE_PATH, N_("Path"), NULL },
     { 0, NULL, NULL }
   };
 

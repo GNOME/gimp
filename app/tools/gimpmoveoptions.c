@@ -175,7 +175,7 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Affect:"));
+  label = gtk_label_new (_("Move:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (hbox), label, 0);
   gtk_widget_show (label);
