@@ -1,5 +1,14 @@
 2006-10-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/gimppattern-load.[ch]: new files.
+
+	* app/core/gimppattern.[ch]: removed the loading stuff here.
+
+	* app/core/gimp.c: changed accordingly.
+
+2006-10-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpgradient-load.h: keep the file extension defines
 	here, just as we do it for brushes.
 

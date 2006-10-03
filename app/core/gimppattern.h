@@ -23,9 +23,6 @@
 #include "gimpdata.h"
 
 
-#define GIMP_PATTERN_FILE_EXTENSION ".pat"
-
-
 #define GIMP_TYPE_PATTERN            (gimp_pattern_get_type ())
 #define GIMP_PATTERN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PATTERN, GimpPattern))
 #define GIMP_PATTERN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATTERN, GimpPatternClass))
@@ -51,14 +48,10 @@ struct _GimpPatternClass
 
 GType      gimp_pattern_get_type     (void) G_GNUC_CONST;
 
-GimpData * gimp_pattern_new          (const gchar        *name);
+GimpData * gimp_pattern_new          (const gchar       *name);
 GimpData * gimp_pattern_get_standard (void);
-GList    * gimp_pattern_load         (const gchar        *filename,
-                                      GError            **error);
-GList    * gimp_pattern_load_pixbuf  (const gchar        *filename,
-                                      GError            **error);
 
-TempBuf  * gimp_pattern_get_mask     (const GimpPattern  *pattern);
+TempBuf  * gimp_pattern_get_mask     (const GimpPattern *pattern);
 
 
 #endif /* __GIMP_PATTERN_H__ */
