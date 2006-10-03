@@ -50,6 +50,7 @@
 #include "gimpimage.h"
 #include "gimppalette.h"
 #include "gimppalette-import.h"
+#include "gimppalette-load.h"
 #include "gimppickable.h"
 
 #include "gimp-intl.h"

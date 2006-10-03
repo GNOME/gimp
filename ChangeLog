@@ -1,5 +1,16 @@
 2006-10-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/gimppalette-load.[ch]
+	* app/core/gimppalette-save.[ch]: new files.
+
+	* app/core/gimppalette.[ch]: removed loading and saving code here.
+
+	* app/core/gimp.c
+	* app/core/gimppalette-import.c: changed accordingly.
+
+2006-10-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpgradient-save.[ch]: renamed
 	gimp_gradient_save_as_pov() to gimp_gradient_save_pov().
 

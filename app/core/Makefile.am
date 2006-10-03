@@ -213,6 +213,10 @@ libappcore_a_sources = \
 	gimppalette.h			\
 	gimppalette-import.c		\
 	gimppalette-import.h		\
+	gimppalette-load.c		\
+	gimppalette-load.h		\
+	gimppalette-save.c		\
+	gimppalette-save.h		\
 	gimpparamspecs.c		\
 	gimpparamspecs.h		\
 	gimpparamspecs-desc.c		\

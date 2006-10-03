@@ -66,6 +66,7 @@
 #include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimppalette.h"
+#include "gimppalette-load.h"
 #include "gimppattern.h"
 #include "gimppattern-load.h"
 #include "gimppatternclipboard.h"
