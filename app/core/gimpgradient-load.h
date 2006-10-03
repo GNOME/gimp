@@ -20,6 +20,10 @@
 #define __GIMP_GRADIENT_LOAD_H__
 
 
+#define GIMP_GRADIENT_FILE_EXTENSION     ".ggr"
+#define GIMP_GRADIENT_SVG_FILE_EXTENSION ".svg"
+
+
 GList  * gimp_gradient_load     (const gchar  *filename,
                                  GError      **error);
 GList  * gimp_gradient_load_svg (const gchar  *filename,

@@ -31,6 +31,7 @@
 
 #include "gimpcontext.h"
 #include "gimpgradient.h"
+#include "gimpgradient-load.h"
 #include "gimpgradient-save.h"
 
 

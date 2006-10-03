@@ -23,10 +23,7 @@
 #include "gimpdata.h"
 
 
-#define GIMP_GRADIENT_FILE_EXTENSION       ".ggr"
-#define GIMP_GRADIENT_SVG_FILE_EXTENSION   ".svg"
-
-#define GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE  40
+#define GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE 40
 
 
 struct _GimpGradientSegment
