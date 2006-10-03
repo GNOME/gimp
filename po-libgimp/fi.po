@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-15 14:27+0300\n"
-"PO-Revision-Date: 2006-09-25 21:52+0300\n"
+"POT-Creation-Date: 2006-10-03 10:23+0300\n"
+"PO-Revision-Date: 2006-10-03 10:23+0300\n"
 "Last-Translator: Mikko Paananen <mikko at ipi.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -450,7 +450,7 @@ msgstr "Vaaleus"
 
 #: ../libgimpbase/gimpbaseenums.c:294
 msgid "Luminosity"
-msgstr ""
+msgstr "Kirkkaus"
 
 #: ../libgimpbase/gimpbaseenums.c:295
 msgid "Average"
@@ -569,8 +569,8 @@ msgid "Indexed-alpha"
 msgstr "Indeksoitu+alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:562
-msgid "None (Fastest)"
-msgstr "Ei mitään (Nopein)"
+msgid "interpolation|None"
+msgstr "Ei mitään"
 
 #: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|Linear"
@@ -581,8 +581,8 @@ msgid "Cubic"
 msgstr "Kuutio"
 
 #: ../libgimpbase/gimpbaseenums.c:565
-msgid "Lanczos (Best)"
-msgstr "Lanczos (paras)"
+msgid "Lanczos"
+msgstr "Lanczos"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -592,7 +592,7 @@ msgstr "Jatkuva"
 msgid "Incremental"
 msgstr "Inkrementaalinen"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:256
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:258
 msgid "None"
 msgstr "Ei mitään"
 
@@ -713,7 +713,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:248
+#: ../modules/cdisplay_lcms.c:250
 msgid "(invalid UTF-8 string)"
 msgstr "(Kelpaamaton unicode merkkijono)"
 
@@ -732,8 +732,8 @@ msgid ""
 "fallback."
 msgstr ""
 "Jos käytössä, GIMP yrittää käyttää näytön väriprofiilia "
-"ikkunointijärjestelmästä. Määritelty näyttöprofiili on tämän "
-"jälkeen käytetty varavaihtoehtona."
+"ikkunointijärjestelmästä. Määritelty näyttöprofiili on tämän jälkeen "
+"käytetty varavaihtoehtona."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "The default RGB workspace color profile."
@@ -776,7 +776,7 @@ msgstr "Havaittu"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57
 msgid "Relative colorimetric"
-msgstr ""
+msgstr "Suhteellinen värimetriikka"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
 msgid "intent|Saturation"
@@ -784,7 +784,7 @@ msgstr "Kylläisyys"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
-msgstr ""
+msgstr "Absoluuttinen värimetriikka"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:88
 msgid "Ask"
@@ -948,15 +948,15 @@ msgstr "_Valkoinen"
 msgid "Scales"
 msgstr "Asteikot"
 
-#: ../libgimpwidgets/gimpcolorselection.c:187
+#: ../libgimpwidgets/gimpcolorselection.c:210
 msgid "Current:"
 msgstr "Nykyinen:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:209
+#: ../libgimpwidgets/gimpcolorselection.c:232
 msgid "Old:"
 msgstr "Vanha:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:263
+#: ../libgimpwidgets/gimpcolorselection.c:286
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -964,7 +964,7 @@ msgstr ""
 "HTML ja CSS-tiedostoissa käytettä heksadesimaalimerkintä värimäärittely. "
 "Kohta hyväkysyy myös CSS värinimet."
 
-#: ../libgimpwidgets/gimpcolorselection.c:269
+#: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
 msgstr "HTML-_merkintä:"
 
@@ -1029,16 +1029,10 @@ msgid "One page selected"
 msgstr "Yksi sivu valittu"
 
 #: ../libgimpwidgets/gimppageselector.c:1183
-#, c-format
-msgid "All %d page selected"
-msgid_plural "All %d pages selected"
-msgstr[0] "Kaikki %d sivu valittu"
-msgstr[1] "Kaikki %d sivua valittu"
-
 #: ../libgimpwidgets/gimppageselector.c:1187
 #, c-format
 msgid "%d page selected"
-msgid_plural "%d pages selected"
+msgid_plural "All %d pages selected"
 msgstr[0] "%d sivu valittu"
 msgstr[1] "%d sivua valittu"
 
@@ -1135,23 +1129,23 @@ msgstr "Riviväli"
 msgid "_Resize"
 msgstr "Muuta _kokoa"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:302
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:319
 msgid "_Scale"
 msgstr "_Skaalaa"
 
-#: ../libgimpwidgets/gimpstock.c:280
+#: ../libgimpwidgets/gimpstock.c:295
 msgid "Crop"
 msgstr "Rajaa"
 
-#: ../libgimpwidgets/gimpstock.c:298
+#: ../libgimpwidgets/gimpstock.c:314
 msgid "_Transform"
 msgstr "_Muunna"
 
-#: ../libgimpwidgets/gimpstock.c:301
+#: ../libgimpwidgets/gimpstock.c:318
 msgid "_Rotate"
 msgstr "_Kierrä"
 
-#: ../libgimpwidgets/gimpstock.c:303
+#: ../libgimpwidgets/gimpstock.c:320
 msgid "_Shear"
 msgstr "_Väännä"
 
@@ -1267,7 +1261,7 @@ msgstr "Värisokeus simulaatio -suodatin (Brettel-Vienot-Mollon algoritmi)"
 msgid "Color Deficient Vision"
 msgstr "Värisokeus"
 
-#: ../modules/cdisplay_colorblind.c:503
+#: ../modules/cdisplay_colorblind.c:505
 msgid "Color _deficiency type:"
 msgstr "Värisokeuden _tyyppi:"
 
@@ -1279,7 +1273,7 @@ msgstr "Gammasuodatin"
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/cdisplay_gamma.c:251
+#: ../modules/cdisplay_gamma.c:253
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
@@ -1291,7 +1285,7 @@ msgstr "Suurikontrastinen suodatin"
 msgid "Contrast"
 msgstr "Kontrasti"
 
-#: ../modules/cdisplay_highcontrast.c:251
+#: ../modules/cdisplay_highcontrast.c:253
 msgid "Contrast c_ycles:"
 msgstr "Kontrasti_kierrokset:"
 
@@ -1303,26 +1297,26 @@ msgstr "Värikorjaussuodatin käyttäen ICC-profiileja"
 msgid "Color Management"
 msgstr "Värinhallinta"
 
-#: ../modules/cdisplay_lcms.c:290
+#: ../modules/cdisplay_lcms.c:281
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
 "Tämä suodatin ottaa asetuksensa Värienhallinta-osiosta asetusikkunassa."
 
-#: ../modules/cdisplay_lcms.c:313
+#: ../modules/cdisplay_lcms.c:295
 msgid "Mode of operation:"
 msgstr "Toimintatila:"
 
-#: ../modules/cdisplay_lcms.c:324
+#: ../modules/cdisplay_lcms.c:306
 msgid "RGB workspace profile:"
 msgstr "RGB-työtilan profiili:"
 
-#: ../modules/cdisplay_lcms.c:334
+#: ../modules/cdisplay_lcms.c:316
 msgid "Monitor profile:"
 msgstr "Näytön profiili:"
 
-#: ../modules/cdisplay_lcms.c:344
+#: ../modules/cdisplay_lcms.c:326
 msgid "Print simulation profile:"
 msgstr "Tulostus-simulaation profiili:"
 
@@ -1334,19 +1328,19 @@ msgstr "Värikorjaussuodatin ICC profiileille"
 msgid "Color Proof"
 msgstr "Värikorjaus"
 
-#: ../modules/cdisplay_proof.c:304
+#: ../modules/cdisplay_proof.c:306
 msgid "_Intent:"
 msgstr "_Aiottu:"
 
-#: ../modules/cdisplay_proof.c:308
+#: ../modules/cdisplay_proof.c:310
 msgid "Choose an ICC Color Profile"
 msgstr "Valitse ICC-väriprofiili"
 
-#: ../modules/cdisplay_proof.c:311
+#: ../modules/cdisplay_proof.c:313
 msgid "_Profile:"
 msgstr "_Profiili:"
 
-#: ../modules/cdisplay_proof.c:316
+#: ../modules/cdisplay_proof.c:318
 msgid "_Black Point Compensation"
 msgstr "_Mustan pisteen kompensaatio"
 
@@ -1535,28 +1529,28 @@ msgstr "Laite, josta Linuxin syötetapahtumia luetaan."
 msgid "Linux Input"
 msgstr "Linuxin syöte"
 
-#: ../modules/controller_linux_input.c:351
+#: ../modules/controller_linux_input.c:352
 msgid "Linux Input Events"
 msgstr "Linuxin syötetapahtumat"
 
-#: ../modules/controller_linux_input.c:372 ../modules/controller_midi.c:482
-#: ../modules/controller_midi.c:508
+#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:483
+#: ../modules/controller_midi.c:509
 #, c-format
 msgid "Reading from %s"
 msgstr "Luetaan laitteelta %s"
 
-#: ../modules/controller_linux_input.c:388
-#: ../modules/controller_linux_input.c:431 ../modules/controller_midi.c:464
-#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
+#: ../modules/controller_linux_input.c:389
+#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:465
+#: ../modules/controller_midi.c:526 ../modules/controller_midi.c:597
 #, c-format
 msgid "Device not available: %s"
 msgstr "Laite ei ole käytettävissä: %s"
 
-#: ../modules/controller_linux_input.c:396 ../modules/controller_midi.c:533
+#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:534
 msgid "No device configured"
 msgstr "Laitetta ei ole määritelty"
 
-#: ../modules/controller_linux_input.c:440 ../modules/controller_midi.c:605
+#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:606
 msgid "End of file"
 msgstr "Tiedosto päättyi"
 
@@ -1588,24 +1582,32 @@ msgstr ""
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:383
+#: ../modules/controller_midi.c:384
 #, c-format
 msgid "Note %02x on"
 msgstr "Kosketin %02x päälle"
 
-#: ../modules/controller_midi.c:386
+#: ../modules/controller_midi.c:387
 #, c-format
 msgid "Note %02x off"
 msgstr "Kosketin %02x pois päältä"
 
-#: ../modules/controller_midi.c:389
+#: ../modules/controller_midi.c:390
 #, c-format
 msgid "Controller %03d"
 msgstr "Ohjain %03d"
 
-#: ../modules/controller_midi.c:436
+#: ../modules/controller_midi.c:437
 msgid "MIDI Events"
 msgstr "MIDI-tapahtumat"
+
+#~ msgid "None (Fastest)"
+#~ msgstr "Ei mitään (Nopein)"
+
+#~ msgid "All %d page selected"
+#~ msgid_plural "All %d pages selected"
+#~ msgstr[0] "Kaikki %d sivu valittu"
+#~ msgstr[1] "Kaikki %d sivua valittu"
 
 #~ msgid "Brush Selection"
 #~ msgstr "Siveltimen valinta"
