@@ -26,8 +26,15 @@
 #include <unistd.h>
 #endif
 
+#include <sys/types.h>
+#include <fcntl.h>
+
 #include <glib-object.h>
 #include <glib/gstdio.h>
+
+#ifdef G_OS_WIN32
+#include "libgimpbase/gimpwin32-io.h"
+#endif
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -245,6 +252,186 @@ gimp_palette_load (const gchar  *filename,
   fclose (file);
 
   palette->colors = g_list_reverse (palette->colors);
+
+  return g_list_prepend (NULL, palette);
+}
+
+GList *
+gimp_palette_load_act (const gchar  *filename,
+                       GError      **error)
+{
+  GimpPalette *palette;
+  gchar       *palette_name;
+  gint         fd;
+  guchar       color_bytes[4];
+
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  fd = g_open (filename, O_RDONLY, 0);
+  if (! fd)
+    {
+      g_set_error (error,
+                   G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+      return NULL;
+    }
+
+  palette_name = g_filename_display_basename (filename);
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
+  g_free (palette_name);
+
+  while (read (fd, color_bytes, 3) == 3)
+    {
+      GimpRGB color;
+
+      gimp_rgba_set_uchar (&color,
+                           color_bytes[0],
+                           color_bytes[1],
+                           color_bytes[2],
+                           255);
+      gimp_palette_add_entry (palette, -1, NULL, &color);
+    }
+
+  close (fd);
+
+  return g_list_prepend (NULL, palette);
+}
+
+GList *
+gimp_palette_load_riff (const gchar  *filename,
+                        GError      **error)
+{
+  GimpPalette *palette;
+  gchar       *palette_name;
+  gint         fd;
+  guchar       color_bytes[4];
+
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  fd = g_open (filename, O_RDONLY, 0);
+  if (! fd)
+    {
+      g_set_error (error,
+                   G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+      return NULL;
+    }
+
+  palette_name = g_filename_display_basename (filename);
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
+  g_free (palette_name);
+
+  lseek (fd, 28, SEEK_SET);
+  while (read (fd,
+               color_bytes, sizeof (color_bytes)) == sizeof (color_bytes))
+    {
+      GimpRGB color;
+
+      gimp_rgba_set_uchar (&color,
+                           color_bytes[0],
+                           color_bytes[1],
+                           color_bytes[2],
+                           255);
+      gimp_palette_add_entry (palette, -1, NULL, &color);
+    }
+
+  close (fd);
+
+  return g_list_prepend (NULL, palette);
+}
+
+GList *
+gimp_palette_load_psp (const gchar  *filename,
+                       GError      **error)
+{
+  GimpPalette *palette;
+  gchar       *palette_name;
+  gint         fd;
+  guchar       color_bytes[4];
+  gint         number_of_colors;
+  gint         data_size;
+  gint         i, j;
+  gboolean     color_ok;
+  gchar        buffer[4096];
+  /*Maximum valid file size: 256 * 4 * 3 + 256 * 2  ~= 3650 bytes */
+  gchar      **lines;
+  gchar      **ascii_colors;
+
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  fd = g_open (filename, O_RDONLY, 0);
+  if (! fd)
+    {
+      g_set_error (error,
+                   G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+      return NULL;
+    }
+
+  palette_name = g_filename_display_basename (filename);
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
+  g_free (palette_name);
+
+  lseek (fd, 16, SEEK_SET);
+  data_size = read (fd, buffer, sizeof (buffer) - 1);
+  buffer[data_size] = '\0';
+
+  lines = g_strsplit (buffer, "\x0d\x0a", -1);
+
+  number_of_colors = atoi (lines[0]);
+
+  for (i = 0; i < number_of_colors; i++)
+    {
+      if (lines[i + 1] == NULL)
+        {
+          g_printerr ("Premature end of file reading %s.",
+                      gimp_filename_to_utf8 (filename));
+          break;
+        }
+
+      ascii_colors = g_strsplit (lines[i + 1], " ", 3);
+      color_ok = TRUE;
+
+      for (j = 0 ; j < 3; j++)
+        {
+          if (ascii_colors[j] == NULL)
+            {
+              g_printerr ("Corrupted palette file %s.",
+                          gimp_filename_to_utf8 (filename));
+              color_ok = FALSE;
+              break;
+            }
+
+          color_bytes[j] = atoi (ascii_colors[j]);
+        }
+
+      if (color_ok)
+        {
+          GimpRGB color;
+
+          gimp_rgba_set_uchar (&color,
+                               color_bytes[0],
+                               color_bytes[1],
+                               color_bytes[2],
+                               255);
+          gimp_palette_add_entry (palette, -1, NULL, &color);
+        }
+
+      g_strfreev (ascii_colors);
+    }
+
+  g_strfreev (lines);
+
+  close (fd);
 
   return g_list_prepend (NULL, palette);
 }

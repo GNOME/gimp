@@ -23,8 +23,14 @@
 #define GIMP_PALETTE_FILE_EXTENSION ".gpl"
 
 
-GList * gimp_palette_load (const gchar  *filename,
-                           GError      **error);
+GList * gimp_palette_load      (const gchar  *filename,
+                                GError      **error);
+GList * gimp_palette_load_act  (const gchar  *filename,
+                                GError      **error);
+GList * gimp_palette_load_riff (const gchar  *filename,
+                                GError      **error);
+GList * gimp_palette_load_psp  (const gchar  *filename,
+                                GError      **error);
 
 
 #endif /* __GIMP_PALETTE_H__ */

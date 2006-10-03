@@ -409,6 +409,7 @@ gimp_palette_import_from_image (GimpImage   *image,
   return gimp_palette_import_make_palette (colors, palette_name, n_colors);
 }
 
+
 /*  create a palette from an indexed image  **********************************/
 
 GimpPalette *
@@ -442,6 +443,7 @@ gimp_palette_import_from_indexed_image (GimpImage   *image,
 
   return palette;
 }
+
 
 /*  create a palette from a drawable  ****************************************/
 
@@ -489,6 +491,7 @@ gimp_palette_import_from_drawable (GimpDrawable *drawable,
   return gimp_palette_import_make_palette (colors, palette_name, n_colors);
 }
 
+
 /*  create a palette from a file  **********************************/
 
 typedef enum
@@ -513,18 +516,16 @@ gimp_palette_detect_file_format (const gchar *filename)
     {
       if (read (fd, header, sizeof (header)) == sizeof (header))
         {
-          if (strncmp (header + 0, "RIFF", 4) == 0 &&
+          if (strncmp (header + 0, "RIFF",     4) == 0 &&
               strncmp (header + 8, "PAL data", 8) == 0)
              {
               format = GIMP_PALETTE_FILE_FORMAT_RIFF_PAL;
             }
-
-          if (strncmp (header, "GIMP Palette", 12) == 0)
+          else if (strncmp (header, "GIMP Palette", 12) == 0)
             {
               format = GIMP_PALETTE_FILE_FORMAT_GPL;
             }
-
-          if (strncmp (header, "JASC-PAL", 8) == 0)
+          else if (strncmp (header, "JASC-PAL", 8) == 0)
             {
               format = GIMP_PALETTE_FILE_FORMAT_PSP_PAL;
             }
@@ -547,128 +548,28 @@ gimp_palette_import_from_file (const gchar  *filename,
                                const gchar  *palette_name,
                                GError      **error)
 {
-  GimpPalette *palette = NULL;
-  GList       *palette_list;
-  GimpRGB      color;
-  gint         fd;
-  guchar       color_bytes[4];
+  GList *palette_list = NULL;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  fd = g_open (filename, O_RDONLY, 0);
-  if (! fd)
-    {
-      g_set_error (error,
-                   G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Opening '%s' failed: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return NULL;
-    }
-
   switch (gimp_palette_detect_file_format (filename))
     {
     case GIMP_PALETTE_FILE_FORMAT_GPL:
       palette_list = gimp_palette_load (filename, error);
-      if (palette_list)
-        {
-          palette = palette_list->data;
-          g_list_free (palette_list);
-        }
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_ACT:
-      palette = GIMP_PALETTE (gimp_palette_new (palette_name));
-
-      while (read (fd, color_bytes, 3) == 3)
-        {
-          gimp_rgba_set_uchar (&color,
-                               color_bytes[0],
-                               color_bytes[1],
-                               color_bytes[2],
-                               255);
-          gimp_palette_add_entry (palette, -1, NULL, &color);
-        }
+      palette_list = gimp_palette_load_act (filename, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_RIFF_PAL:
-      palette = GIMP_PALETTE (gimp_palette_new (palette_name));
-
-      lseek (fd, 28, SEEK_SET);
-      while (read (fd,
-                   color_bytes, sizeof (color_bytes)) == sizeof (color_bytes))
-        {
-          gimp_rgba_set_uchar (&color,
-                               color_bytes[0],
-                               color_bytes[1],
-                               color_bytes[2],
-                               255);
-          gimp_palette_add_entry (palette, -1, NULL, &color);
-        }
+      palette_list = gimp_palette_load_riff (filename, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_PSP_PAL:
-      {
-        gint       number_of_colors;
-        gint       data_size;
-        gint       i, j;
-        gboolean   color_ok;
-        gchar      buffer[4096];
-        /*Maximum valid file size: 256 * 4 * 3 + 256 * 2  ~= 3650 bytes */
-        gchar    **lines;
-        gchar    **ascii_colors;
-
-        palette = GIMP_PALETTE (gimp_palette_new (palette_name));
-
-        lseek (fd, 16, SEEK_SET);
-        data_size = read (fd, buffer, sizeof (buffer) - 1);
-        buffer [data_size] = '\0';
-
-        lines = g_strsplit (buffer, "\x0d\x0a", -1);
-
-        number_of_colors = atoi (lines[0]);
-
-        for (i = 0; i < number_of_colors; i++)
-          {
-            if (lines[i + 1] == NULL)
-              {
-                g_printerr ("Premature end of file reading %s.",
-                            gimp_filename_to_utf8 (filename));
-                break;
-              }
-
-            ascii_colors = g_strsplit (lines [i + 1], " ", 3);
-            color_ok = TRUE;
-
-            for (j = 0 ; j < 3; j++)
-              {
-                if (ascii_colors [j] == NULL)
-                  {
-                    g_printerr ("Corrupted palette file %s.",
-                                gimp_filename_to_utf8 (filename));
-                    color_ok = FALSE;
-                    break;
-                  }
-
-                color_bytes [j] = atoi (ascii_colors[j]);
-              }
-
-            if (color_ok)
-              {
-                gimp_rgba_set_uchar (&color,
-                                     color_bytes[0],
-                                     color_bytes[1],
-                                     color_bytes[2],
-                                     255);
-                gimp_palette_add_entry (palette, -1, NULL, &color);
-              }
-
-            g_strfreev (ascii_colors);
-          }
-
-        g_strfreev (lines);
-      }
+      palette_list = gimp_palette_load_psp (filename, error);
       break;
 
     default:
@@ -679,8 +580,17 @@ gimp_palette_import_from_file (const gchar  *filename,
       break;
     }
 
-  close (fd);
+  if (palette_list)
+    {
+      GimpPalette *palette = g_object_ref (palette_list->data);
 
-  return palette;
+      gimp_object_set_name (GIMP_OBJECT (palette), palette_name);
+
+      g_list_foreach (palette_list, (GFunc) g_object_unref, NULL);
+      g_list_free (palette_list);
+
+      return palette;
+    }
+
+  return NULL;
 }
-

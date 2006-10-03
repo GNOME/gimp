@@ -1,5 +1,14 @@
 2006-10-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimppalette-load.[ch]: added functions to load ACT,
+	RIFF and PSP palette files but don't use them as data file
+	loaders (yet?)
+
+	* app/core/gimppalette-import.c (gimp_palette_import_from_file):
+	use the functions instead of implementing all formats inline.
+
+2006-10-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/gimppalette-load.[ch]
 	* app/core/gimppalette-save.[ch]: new files.
