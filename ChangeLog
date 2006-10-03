@@ -1,5 +1,11 @@
 2006-10-03  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-convert.[ch]
+	(gimp_image_convert_set_dither_matrix): applied patch from David
+	Gowers (bug #359175) and did some further cleanup.
+
+2006-10-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/iwarp.c (iwarp_dialog): use a GimpHintBox.
 
 2006-10-02  Michael Natterer  <mitch@gimp.org>

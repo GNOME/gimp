@@ -36,9 +36,9 @@ void   gimp_image_convert          (GimpImage              *image,
                                     GimpPalette            *custom_palette,
                                     GimpProgress           *progress);
 
-void gimp_image_convert_set_dither_matrix (gint             width,
-                                           gint             height,
-                                           guchar          *source);
+void   gimp_image_convert_set_dither_matrix (gint           width,
+                                             gint           height,
+                                             const guchar  *source);
 
 
 #endif  /*  __GIMP_IMAGE_CONVERT_H__  */
