@@ -122,7 +122,7 @@ gradients_save_as_pov_ray_response (GtkWidget    *dialog,
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      if (! gimp_gradient_save_as_pov (gradient, filename, &error))
+      if (! gimp_gradient_save_pov (gradient, filename, &error))
         {
           g_message (error->message);
           g_clear_error (&error);

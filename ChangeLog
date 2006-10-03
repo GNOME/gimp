@@ -1,5 +1,13 @@
 2006-10-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpgradient-save.[ch]: renamed
+	gimp_gradient_save_as_pov() to gimp_gradient_save_pov().
+
+	* app/actions/gradients-commands.c
+	(gradients_save_as_pov_ray_response): changed accordingly.
+
+2006-10-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/gimpbrushgenerated-load.[ch]
 	* app/core/gimpbrushgenerated-save.[ch]

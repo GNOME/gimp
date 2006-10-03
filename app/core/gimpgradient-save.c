@@ -124,9 +124,9 @@ gimp_gradient_save (GimpData  *data,
 }
 
 gboolean
-gimp_gradient_save_as_pov (GimpGradient  *gradient,
-                           const gchar   *filename,
-                           GError       **error)
+gimp_gradient_save_pov (GimpGradient  *gradient,
+                        const gchar   *filename,
+                        GError       **error)
 {
   FILE                *file;
   GimpGradientSegment *seg;
