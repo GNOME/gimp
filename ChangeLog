@@ -1,3 +1,10 @@
+2006-10-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpimage-convert.c
+	(median_cut_pass2_nodestruct_dither_rgb): adjust alpha-dithering
+	and make code more readable; fixes bug #358851 as suggested
+	by Tor Lillqvist.
+	
 2006-10-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimppalette-load.[ch]: added

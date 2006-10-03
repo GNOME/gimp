@@ -3291,10 +3291,26 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
         {
           for (col = 0; col < srcPR.w; col++)
             {
-              if ((has_alpha && (alpha_dither ?
-                                 ((src[alpha_pix]) > (DM[(col+srcPR.x+offsetx)&DM_WIDTHMASK][(row+srcPR.y+offsety)&DM_HEIGHTMASK])) :
-                                 (src[alpha_pix] > 127)))
-                  || !has_alpha)
+              gboolean transparent = FALSE;
+
+              if (has_alpha)
+                {
+                  if (alpha_dither)
+                    {
+                      gint dither_x = (col + srcPR.x + offsetx) & DM_WIDTHMASK;
+                      gint dither_y = (row + srcPR.y + offsety) & DM_HEIGHTMASK;
+
+                      if ((src[alpha_pix]) < DM[dither_x][dither_y])
+                        transparent = TRUE;
+                    }
+                  else
+                    {
+                      if (src[alpha_pix] < 128)
+                        transparent = TRUE;
+                    }
+                }
+
+              if (! transparent)
                 {
                   if ((lastred == src[red_pix]) &&
                       (lastgreen == src[green_pix]) &&
