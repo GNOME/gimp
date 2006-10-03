@@ -1,5 +1,11 @@
 2006-10-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/dialogs/offset-dialog.c:  apply patch from David
+	Gowers, with minor cleanups, to use item dimensions rather
+	than image dimensions; fixes bug #358322.
+	
+2006-10-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/tools-enums.[ch]: change labels for transform
 	type enum.
 

@@ -30,6 +30,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-offset.h"
+#include "core/gimpitem.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpimage.h"
@@ -77,6 +78,7 @@ offset_dialog_new (GimpDrawable *drawable,
                    GimpContext  *context,
                    GtkWidget    *parent)
 {
+  GimpItem     *item;
   OffsetDialog *dialog;
   GtkWidget    *main_vbox;
   GtkWidget    *vbox;
@@ -96,7 +98,8 @@ offset_dialog_new (GimpDrawable *drawable,
 
   dialog->context   = context;
   dialog->fill_type = gimp_drawable_has_alpha (drawable) | WRAP_AROUND;
-  dialog->image     = gimp_item_get_image (GIMP_ITEM (drawable));
+  item = GIMP_ITEM (drawable);
+  dialog->image     = gimp_item_get_image (item);
 
   if (GIMP_IS_LAYER (drawable))
     title = _("Offset Layer");
@@ -190,16 +193,16 @@ offset_dialog_new (GimpDrawable *drawable,
                                   dialog->image->yresolution, FALSE);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (dialog->off_se), 0,
-                                         -dialog->image->width,
-                                         dialog->image->width);
+                                         -item->width,
+                                         item->width);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (dialog->off_se), 1,
-                                         -dialog->image->height,
-                                         dialog->image->height);
+                                         -item->height,
+                                         item->height);
 
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (dialog->off_se), 0,
-                            0, dialog->image->width);
+                            0, item->width);
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (dialog->off_se), 1,
-                            0, dialog->image->height);
+                            0, item->width);
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se), 0, 0);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se), 1, 0);
@@ -278,10 +281,15 @@ static void
 offset_halfheight_callback (GtkWidget    *widget,
                             OffsetDialog *dialog)
 {
-  GimpImage *image = dialog->image;
+  GimpImage    *image = dialog->image;
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
-                              0, image->width / 2);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
-                              1, image->height / 2);
+  if (image)
+    {
+      GimpItem *item = GIMP_ITEM (gimp_image_active_drawable (image));
+
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
+                                  0, item->width / 2);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
+                                  1, item->height / 2);
+   }
 }
