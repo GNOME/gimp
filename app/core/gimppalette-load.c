@@ -435,3 +435,44 @@ gimp_palette_load_psp (const gchar  *filename,
 
   return g_list_prepend (NULL, palette);
 }
+
+GimpPaletteFileFormat
+gimp_palette_load_detect_format (const gchar *filename)
+{
+  GimpPaletteFileFormat format = GIMP_PALETTE_FILE_FORMAT_UNKNOWN;
+  gint                  fd;
+  gchar                 header[16];
+  struct stat           file_stat;
+
+  fd = g_open (filename, O_RDONLY, 0);
+  if (fd)
+    {
+      if (read (fd, header, sizeof (header)) == sizeof (header))
+        {
+          if (strncmp (header + 0, "RIFF",     4) == 0 &&
+              strncmp (header + 8, "PAL data", 8) == 0)
+             {
+              format = GIMP_PALETTE_FILE_FORMAT_RIFF_PAL;
+            }
+          else if (strncmp (header, "GIMP Palette", 12) == 0)
+            {
+              format = GIMP_PALETTE_FILE_FORMAT_GPL;
+            }
+          else if (strncmp (header, "JASC-PAL", 8) == 0)
+            {
+              format = GIMP_PALETTE_FILE_FORMAT_PSP_PAL;
+            }
+        }
+
+      if (fstat (fd, &file_stat) >= 0)
+        {
+          if (file_stat.st_size == 768)
+            format = GIMP_PALETTE_FILE_FORMAT_ACT;
+        }
+
+      close (fd);
+    }
+
+  return format;
+}
+

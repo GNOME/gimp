@@ -23,14 +23,26 @@
 #define GIMP_PALETTE_FILE_EXTENSION ".gpl"
 
 
-GList * gimp_palette_load      (const gchar  *filename,
-                                GError      **error);
-GList * gimp_palette_load_act  (const gchar  *filename,
-                                GError      **error);
-GList * gimp_palette_load_riff (const gchar  *filename,
-                                GError      **error);
-GList * gimp_palette_load_psp  (const gchar  *filename,
-                                GError      **error);
+typedef enum
+{
+  GIMP_PALETTE_FILE_FORMAT_UNKNOWN,
+  GIMP_PALETTE_FILE_FORMAT_GPL,      /* GIMP palette                        */
+  GIMP_PALETTE_FILE_FORMAT_RIFF_PAL, /* RIFF palette                        */
+  GIMP_PALETTE_FILE_FORMAT_ACT,      /* Photoshop binary color palette      */
+  GIMP_PALETTE_FILE_FORMAT_PSP_PAL   /* JASC's Paint Shop Pro color palette */
+} GimpPaletteFileFormat;
+
+
+GList               * gimp_palette_load               (const gchar  *filename,
+                                                       GError      **error);
+GList               * gimp_palette_load_act           (const gchar  *filename,
+                                                       GError      **error);
+GList               * gimp_palette_load_riff          (const gchar  *filename,
+                                                       GError      **error);
+GList               * gimp_palette_load_psp           (const gchar  *filename,
+                                                       GError      **error);
+
+GimpPaletteFileFormat gimp_palette_load_detect_format (const gchar  *filename);
 
 
 #endif /* __GIMP_PALETTE_H__ */

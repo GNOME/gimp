@@ -1,5 +1,13 @@
 2006-10-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimppalette-load.[ch]: added
+	gimp_palette_load_detect_format().
+
+	* app/core/gimppalette-import.c: removed it here. Also removed all
+	file I/O related includes.
+
+2006-10-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimppalette-load.[ch]: added functions to load ACT,
 	RIFF and PSP palette files but don't use them as data file
 	loaders (yet?)

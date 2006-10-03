@@ -18,23 +18,9 @@
 
 #include "config.h"
 
-#include <stdlib.h>
 #include <string.h>
-#include <errno.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <sys/types.h>
-#include <fcntl.h>
 
 #include <glib-object.h>
-#include <glib/gstdio.h>
-
-#ifdef G_OS_WIN32
-#include "libgimpbase/gimpwin32-io.h"
-#endif
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -494,55 +480,6 @@ gimp_palette_import_from_drawable (GimpDrawable *drawable,
 
 /*  create a palette from a file  **********************************/
 
-typedef enum
-{
-  GIMP_PALETTE_FILE_FORMAT_UNKNOWN,
-  GIMP_PALETTE_FILE_FORMAT_GPL,      /* GIMP palette                        */
-  GIMP_PALETTE_FILE_FORMAT_RIFF_PAL, /* RIFF palette                        */
-  GIMP_PALETTE_FILE_FORMAT_ACT,      /* Photoshop binary color palette      */
-  GIMP_PALETTE_FILE_FORMAT_PSP_PAL   /* JASC's Paint Shop Pro color palette */
-} GimpPaletteFileFormat;
-
-static GimpPaletteFileFormat
-gimp_palette_detect_file_format (const gchar *filename)
-{
-  GimpPaletteFileFormat format = GIMP_PALETTE_FILE_FORMAT_UNKNOWN;
-  gint                  fd;
-  gchar                 header[16];
-  struct stat           file_stat;
-
-  fd = g_open (filename, O_RDONLY, 0);
-  if (fd)
-    {
-      if (read (fd, header, sizeof (header)) == sizeof (header))
-        {
-          if (strncmp (header + 0, "RIFF",     4) == 0 &&
-              strncmp (header + 8, "PAL data", 8) == 0)
-             {
-              format = GIMP_PALETTE_FILE_FORMAT_RIFF_PAL;
-            }
-          else if (strncmp (header, "GIMP Palette", 12) == 0)
-            {
-              format = GIMP_PALETTE_FILE_FORMAT_GPL;
-            }
-          else if (strncmp (header, "JASC-PAL", 8) == 0)
-            {
-              format = GIMP_PALETTE_FILE_FORMAT_PSP_PAL;
-            }
-        }
-
-      if (fstat (fd, &file_stat) >= 0)
-        {
-          if (file_stat.st_size == 768)
-            format = GIMP_PALETTE_FILE_FORMAT_ACT;
-        }
-
-      close (fd);
-    }
-
-  return format;
-}
-
 GimpPalette *
 gimp_palette_import_from_file (const gchar  *filename,
                                const gchar  *palette_name,
@@ -554,7 +491,7 @@ gimp_palette_import_from_file (const gchar  *filename,
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  switch (gimp_palette_detect_file_format (filename))
+  switch (gimp_palette_load_detect_format (filename))
     {
     case GIMP_PALETTE_FILE_FORMAT_GPL:
       palette_list = gimp_palette_load (filename, error);
