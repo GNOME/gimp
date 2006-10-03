@@ -1,6 +1,18 @@
 2006-10-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am
+	* app/core/gimpbrushgenerated-load.[ch]
+	* app/core/gimpbrushgenerated-save.[ch]
+	* app/core/gimpbrushpipe-load.[ch]: new files.
+
+	* app/core/gimpbrushgenerated.[ch]
+	* app/core/gimpbrushpipe.[ch]: removed loading and saving code here.
+
+	* app/core/gimp.c: changed accordingly.
+
+2006-10-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
 	* app/core/gimppattern-load.[ch]: new files.
 
 	* app/core/gimppattern.[ch]: removed the loading stuff here.

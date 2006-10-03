@@ -20,16 +20,7 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <glib-object.h>
-#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
@@ -39,8 +30,8 @@
 #include "base/temp-buf.h"
 
 #include "gimpbrushgenerated.h"
-
-#include "gimp-intl.h"
+#include "gimpbrushgenerated-load.h"
+#include "gimpbrushgenerated-save.h"
 
 
 #define OVERSAMPLING 5
@@ -68,8 +59,6 @@ static void       gimp_brush_generated_get_property  (GObject      *object,
                                                       guint         property_id,
                                                       GValue       *value,
                                                       GParamSpec   *pspec);
-static gboolean   gimp_brush_generated_save          (GimpData     *data,
-                                                      GError      **error);
 static void       gimp_brush_generated_dirty         (GimpData     *data);
 static gchar    * gimp_brush_generated_get_extension (GimpData     *data);
 static GimpData * gimp_brush_generated_duplicate     (GimpData     *data);
@@ -204,94 +193,6 @@ gimp_brush_generated_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static gboolean
-gimp_brush_generated_save (GimpData  *data,
-                           GError   **error)
-{
-  GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (data);
-  const gchar        *name  = gimp_object_get_name (GIMP_OBJECT (data));
-  FILE               *file;
-  gchar               buf[G_ASCII_DTOSTR_BUF_SIZE];
-  gboolean            have_shape = FALSE;
-
-  g_return_val_if_fail (name != NULL && *name != '\0', FALSE);
-
-  file = g_fopen (data->filename, "wb");
-
-  if (! file)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (data->filename),
-                   g_strerror (errno));
-      return FALSE;
-    }
-
-  /* write magic header */
-  fprintf (file, "GIMP-VBR\n");
-
-  /* write version */
-  if (brush->shape != GIMP_BRUSH_GENERATED_CIRCLE || brush->spikes > 2)
-    {
-      fprintf (file, "1.5\n");
-      have_shape = TRUE;
-    }
-  else
-    {
-      fprintf (file, "1.0\n");
-    }
-
-  /* write name */
-  fprintf (file, "%.255s\n", name);
-
-  if (have_shape)
-    {
-      GEnumClass *enum_class;
-      GEnumValue *shape_val;
-
-      enum_class = g_type_class_peek (GIMP_TYPE_BRUSH_GENERATED_SHAPE);
-
-      /* write shape */
-      shape_val = g_enum_get_value (enum_class, brush->shape);
-      fprintf (file, "%s\n", shape_val->value_nick);
-    }
-
-  /* write brush spacing */
-  fprintf (file, "%s\n",
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                            GIMP_BRUSH (brush)->spacing));
-
-  /* write brush radius */
-  fprintf (file, "%s\n",
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                            brush->radius));
-
-  if (have_shape)
-    {
-      /* write brush spikes */
-      fprintf (file, "%d\n", brush->spikes);
-    }
-
-  /* write brush hardness */
-  fprintf (file, "%s\n",
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                            brush->hardness));
-
-  /* write brush aspect_ratio */
-  fprintf (file, "%s\n",
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                            brush->aspect_ratio));
-
-  /* write brush angle */
-  fprintf (file, "%s\n",
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                            brush->angle));
-
-  fclose (file);
-
-  return TRUE;
 }
 
 static gchar *
@@ -531,179 +432,6 @@ gimp_brush_generated_new (const gchar             *name,
   GIMP_BRUSH (brush)->spacing = 20;
 
   return GIMP_DATA (brush);
-}
-
-GList *
-gimp_brush_generated_load (const gchar  *filename,
-                           GError      **error)
-{
-  GimpBrush               *brush;
-  FILE                    *file;
-  gchar                    string[256];
-  gchar                   *name       = NULL;
-  GimpBrushGeneratedShape  shape      = GIMP_BRUSH_GENERATED_CIRCLE;
-  gboolean                 have_shape = FALSE;
-  gint                     spikes     = 2;
-  gdouble                  spacing;
-  gdouble                  radius;
-  gdouble                  hardness;
-  gdouble                  aspect_ratio;
-  gdouble                  angle;
-
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  file = g_fopen (filename, "rb");
-
-  if (! file)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return NULL;
-    }
-
-  /* make sure the file we are reading is the right type */
-  errno = 0;
-  if (! fgets (string, sizeof (string), file))
-    goto failed;
-
-  if (strncmp (string, "GIMP-VBR", 8) != 0)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parse error in brush file '%s': "
-                     "Not a GIMP brush file."),
-                   gimp_filename_to_utf8 (filename));
-      goto failed;
-    }
-
-  /* make sure we are reading a compatible version */
-  errno = 0;
-  if (! fgets (string, sizeof (string), file))
-    goto failed;
-
-  if (strncmp (string, "1.0", 3))
-    {
-      if (strncmp (string, "1.5", 3))
-        {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Fatal parse error in brush file '%s': "
-                         "Unknown GIMP brush version."),
-                       gimp_filename_to_utf8 (filename));
-          goto failed;
-        }
-      else
-        {
-          have_shape = TRUE;
-        }
-    }
-
-  /* read name */
-  errno = 0;
-  if (! fgets (string, sizeof (string), file))
-    goto failed;
-
-  g_strstrip (string);
-
-  /* the empty string is not an allowed name */
-  if (strlen (string) < 1)
-    g_strlcpy (string, _("Untitled"), sizeof (string));
-
-  name = gimp_any_to_utf8 (string, -1,
-                           _("Invalid UTF-8 string in brush file '%s'."),
-                           gimp_filename_to_utf8 (filename));
-
-  if (have_shape)
-    {
-      GEnumClass *enum_class;
-      GEnumValue *shape_val;
-
-      enum_class = g_type_class_peek (GIMP_TYPE_BRUSH_GENERATED_SHAPE);
-
-      /* read shape */
-      errno = 0;
-      if (! fgets (string, sizeof (string), file))
-        goto failed;
-
-      g_strstrip (string);
-      shape_val = g_enum_get_value_by_nick (enum_class, string);
-
-      if (!shape_val)
-        {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Fatal parse error in brush file '%s': "
-                         "Unknown GIMP brush shape."),
-                       gimp_filename_to_utf8 (filename));
-          goto failed;
-        }
-
-      shape = shape_val->value;
-    }
-
-  /* read brush spacing */
-  errno = 0;
-  if (! fgets (string, sizeof (string), file))
-    goto failed;
-  spacing = g_ascii_strtod (string, NULL);
-
-  /* read brush radius */
-  errno = 0;
-  if (! fgets (string, sizeof (string), file))
-    goto failed;
-  radius = g_ascii_strtod (string, NULL);
-
-  if (have_shape)
-    {
-      /* read brush radius */
-      errno = 0;
-      if (! fgets (string, sizeof (string), file))
-        goto failed;
-      spikes = CLAMP (atoi (string), 2, 20);
-    }
-
-  /* read brush hardness */
-  errno = 0;
-  if (! fgets (string, sizeof (string), file))
-    goto failed;
-  hardness = g_ascii_strtod (string, NULL);
-
-  /* read brush aspect_ratio */
-  errno = 0;
-  if (! fgets (string, sizeof (string), file))
-    goto failed;
-  aspect_ratio = g_ascii_strtod (string, NULL);
-
-  /* read brush angle */
-  errno = 0;
-  if (! fgets (string, sizeof (string), file))
-    goto failed;
-  angle = g_ascii_strtod (string, NULL);
-
-  fclose (file);
-
-  brush = GIMP_BRUSH (gimp_brush_generated_new (name, shape, radius, spikes,
-                                                hardness, aspect_ratio, angle));
-  g_free (name);
-
-  brush->spacing = spacing;
-
-  return g_list_prepend (NULL, brush);
-
- failed:
-
-  fclose (file);
-
-  if (name)
-    g_free (name);
-
-  if (error && *error == NULL)
-    g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                 _("Error while reading brush file '%s': %s"),
-                 gimp_filename_to_utf8 (filename),
-                 errno ? g_strerror (errno) : _("File is truncated"));
-
-  return NULL;
 }
 
 GimpBrushGeneratedShape
