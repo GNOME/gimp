@@ -124,7 +124,7 @@ gimp_free_select_tool_init (GimpFreeSelectTool *free_select)
 {
   GimpTool *tool = GIMP_TOOL (free_select);
 
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+  gimp_tool_control_set_scroll_lock (tool->control, FALSE);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_FREE_SELECT);
 

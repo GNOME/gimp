@@ -1,6 +1,11 @@
 2006-10-04  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/maze/maze_face.c: minor cleanup.
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimpfreeselecttool.c: unset scroll-lock (bug #359548).
+
+2006-10-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/maze/maze_face.c: minor code cleanup.
 
 2006-10-03  Manish Singh  <yosh@gimp.org>
 
