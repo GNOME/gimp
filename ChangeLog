@@ -1,3 +1,9 @@
+2006-10-03  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-drawable.c: a FALSE return from
+	gimp_drawable_mask_bounds doesn't mean failure. Restore old
+	behavior. Fixes bug #357223.
+
 2006-10-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/dialogs/offset-dialog.c:  apply patch from David

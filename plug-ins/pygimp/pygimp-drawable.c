@@ -994,11 +994,7 @@ drw_get_mask_bounds(PyGimpDrawable *self, void *closure)
 {
     gint x1, y1, x2, y2;
 
-    if (!gimp_drawable_mask_bounds(self->ID, &x1, &y1, &x2, &y2)) {
-	Py_INCREF(Py_None);
-	return Py_None;
-    }
-
+    gimp_drawable_mask_bounds(self->ID, &x1, &y1, &x2, &y2);
     return Py_BuildValue("(iiii)", x1, y1, x2, y2);
 }
 
