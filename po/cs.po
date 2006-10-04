@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-03 11:09+0200\n"
-"PO-Revision-Date: 2006-10-03 11:09+0200\n"
+"POT-Creation-Date: 2006-10-04 13:08+0200\n"
+"PO-Revision-Date: 2006-10-04 13:08+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -82,7 +82,7 @@ msgstr ""
 "Abyste předešli ztrátě dat, zkontrolujte prosím umístění a oprávnění "
 "odkládacího adresáře definovaného ve vašich Předvolbách (momentálně \"%s\")."
 
-#: ../app/app_procs.c:306 ../app/core/gimppalette-import.c:564
+#: ../app/app_procs.c:306
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Otevírání '%s' selhalo: %s"
@@ -230,7 +230,7 @@ msgstr "Editor stop"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:101 ../app/actions/dialogs-actions.c:130
-#: ../app/core/gimp.c:815 ../app/dialogs/dialogs.c:148
+#: ../app/core/gimp.c:817 ../app/dialogs/dialogs.c:148
 #: ../app/dialogs/preferences-dialog.c:2568
 msgid "Brushes"
 msgstr "Stopy"
@@ -299,7 +299,7 @@ msgstr "Soubor"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:146 ../app/actions/dialogs-actions.c:150
-#: ../app/core/gimp.c:831 ../app/dialogs/dialogs.c:156
+#: ../app/core/gimp.c:833 ../app/dialogs/dialogs.c:156
 #: ../app/dialogs/preferences-dialog.c:2584
 msgid "Fonts"
 msgstr "Písma"
@@ -311,7 +311,7 @@ msgstr "Editor přechodů"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:152 ../app/actions/dialogs-actions.c:140
-#: ../app/core/gimp.c:827 ../app/dialogs/dialogs.c:152
+#: ../app/core/gimp.c:829 ../app/dialogs/dialogs.c:152
 #: ../app/dialogs/preferences-dialog.c:2580
 msgid "Gradients"
 msgstr "Přechody"
@@ -343,14 +343,14 @@ msgstr "Editor palety"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:170 ../app/actions/dialogs-actions.c:145
-#: ../app/core/gimp.c:823 ../app/dialogs/dialogs.c:154
+#: ../app/core/gimp.c:825 ../app/dialogs/dialogs.c:154
 #: ../app/dialogs/preferences-dialog.c:2576
 msgid "Palettes"
 msgstr "Palety"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:173 ../app/actions/dialogs-actions.c:135
-#: ../app/core/gimp.c:819 ../app/dialogs/dialogs.c:150
+#: ../app/core/gimp.c:821 ../app/dialogs/dialogs.c:150
 #: ../app/dialogs/preferences-dialog.c:2572
 msgid "Patterns"
 msgstr "Vzorky"
@@ -374,7 +374,7 @@ msgid "Select"
 msgstr "Vybrat"
 
 #. initialize the template list
-#: ../app/actions/actions.c:188 ../app/core/gimp.c:840
+#: ../app/actions/actions.c:188 ../app/core/gimp.c:842
 #: ../app/dialogs/dialogs.c:164
 msgid "Templates"
 msgstr "Šablony"
@@ -822,11 +822,11 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:128 ../app/core/gimpbrushgenerated.c:611
-#: ../app/core/gimpimage.c:1330 ../app/core/gimppalette-import.c:223
-#: ../app/core/gimppalette.c:479 ../app/core/gimppalette.c:589
-#: ../app/dialogs/palette-import-dialog.c:771 ../app/pdb/image_cmds.c:1880
-#: ../app/widgets/gimpdnd-xds.c:97
+#: ../app/actions/data-commands.c:128
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:1330
+#: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:228
+#: ../app/core/gimppalette.c:335 ../app/dialogs/palette-import-dialog.c:771
+#: ../app/pdb/image_cmds.c:1880 ../app/widgets/gimpdnd-xds.c:97
 msgid "Untitled"
 msgstr "Bez názvu"
 
@@ -3390,10 +3390,12 @@ msgstr "Otevřít textový soubor (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:138
 #: ../app/config/gimpconfig-file.c:57 ../app/core/gimpbrush-load.c:115
-#: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated.c:562
-#: ../app/core/gimpbrushpipe.c:314 ../app/core/gimpgradient-load.c:60
-#: ../app/core/gimppalette.c:324 ../app/core/gimppattern.c:265
-#: ../app/tools/gimpimagemaptool.c:585 ../app/xcf/xcf.c:319
+#: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated-load.c:72
+#: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpgradient-load.c:60
+#: ../app/core/gimppalette-load.c:73 ../app/core/gimppalette-load.c:277
+#: ../app/core/gimppalette-load.c:321 ../app/core/gimppalette-load.c:375
+#: ../app/core/gimppattern-load.c:76 ../app/tools/gimpimagemaptool.c:585
+#: ../app/xcf/xcf.c:319
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nelze otevřít '%s' pro čtení: %s"
@@ -4111,9 +4113,9 @@ msgstr ""
 "práci pod jinými názvy souborů, spustit Gimp znovu a zkontrolovat nastavení "
 "odkládacího adresáře ve vašich Předvolbách."
 
-#: ../app/config/gimpconfig-file.c:66 ../app/core/gimpbrushgenerated.c:226
+#: ../app/config/gimpconfig-file.c:66 ../app/core/gimpbrushgenerated-save.c:63
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:145
-#: ../app/core/gimppalette.c:523 ../app/gui/themes.c:238
+#: ../app/core/gimppalette-save.c:56 ../app/gui/themes.c:238
 #: ../app/tools/gimpimagemaptool.c:584 ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:397
 #, c-format
@@ -4728,6 +4730,7 @@ msgid "First item"
 msgstr "První položka"
 
 #: ../app/core/core-enums.c:213 ../app/dialogs/dialogs.c:189
+#: ../app/tools/tools-enums.c:150
 msgid "Selection"
 msgstr "Výběr"
 
@@ -5286,31 +5289,31 @@ msgstr "Vytvářím adresář '%s'..."
 msgid "Cannot create folder '%s': %s"
 msgstr "Nelze vytvořit adresář '%s': %s"
 
-#: ../app/core/gimp.c:519
+#: ../app/core/gimp.c:521
 msgid "Initialization"
 msgstr "Inicializace"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:594
+#: ../app/core/gimp.c:596
 msgid "Internal Procedures"
 msgstr "Vnitřní procedury"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:811
+#: ../app/core/gimp.c:813
 msgid "Looking for data files"
 msgstr "Hledám datové soubory"
 
-#: ../app/core/gimp.c:811
+#: ../app/core/gimp.c:813
 msgid "Parasites"
 msgstr "Parazity"
 
 #. initialize the document history
-#: ../app/core/gimp.c:836
+#: ../app/core/gimp.c:838
 msgid "Documents"
 msgstr "Dokumenty"
 
 #. initialize the module list
-#: ../app/core/gimp.c:844 ../app/dialogs/preferences-dialog.c:2596
+#: ../app/core/gimp.c:846 ../app/dialogs/preferences-dialog.c:2596
 msgid "Modules"
 msgstr "Moduly"
 
@@ -5349,14 +5352,15 @@ msgstr "Fatální chyba zpracování souboru stopy '%s': Neznámá verze %d."
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr "Fatální chyba zpracování souboru stopy '%s': Soubor je zřejmě useknut."
 
-#: ../app/core/gimpbrush-load.c:251 ../app/core/gimpbrushgenerated.c:614
-#: ../app/core/gimpbrushpipe.c:330
+#: ../app/core/gimpbrush-load.c:251 ../app/core/gimpbrushgenerated-load.c:124
+#: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Neplatný řetězec v kódování UTF-8 v souboru se stopou '%s'."
 
 #: ../app/core/gimpbrush-load.c:258 ../app/core/gimpitem.c:538
-#: ../app/core/gimppattern.c:335 ../app/dialogs/template-options-dialog.c:82
+#: ../app/core/gimppattern-load.c:146
+#: ../app/dialogs/template-options-dialog.c:82
 #: ../app/tools/gimpvectortool.c:295
 msgid "Unnamed"
 msgstr "Beze jména"
@@ -5388,34 +5392,34 @@ msgstr "Fatální chyba zpracování souboru stopy '%s'"
 msgid "Clipboard"
 msgstr "Schránka"
 
-#: ../app/core/gimpbrushgenerated.c:575
+#: ../app/core/gimpbrushgenerated-load.c:85
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
 msgstr ""
 "Fatální chyba zpracování souboru stopy '%s': Není to soubor stopy GIMPu."
 
-#: ../app/core/gimpbrushgenerated.c:591
+#: ../app/core/gimpbrushgenerated-load.c:101
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
 msgstr ""
 "Fatální chyba zpracování souboru stopy '%s': Neznámá verze stopy GIMPu."
 
-#: ../app/core/gimpbrushgenerated.c:635
+#: ../app/core/gimpbrushgenerated-load.c:145
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
 msgstr "Fatální chyba zpracování souboru stopy '%s': Neznámý tvar stopy GIMPu."
 
-#: ../app/core/gimpbrushgenerated.c:702
+#: ../app/core/gimpbrushgenerated-load.c:212
 #, c-format
 msgid "Error while reading brush file '%s': %s"
 msgstr "Chyba při čtení souboru stopy '%s': %s"
 
-#: ../app/core/gimpbrushgenerated.c:704
+#: ../app/core/gimpbrushgenerated-load.c:214
 msgid "File is truncated"
 msgstr "Soubor je zkrácen"
 
-#: ../app/core/gimpbrushpipe.c:346 ../app/core/gimpbrushpipe.c:366
-#: ../app/core/gimpbrushpipe.c:456
+#: ../app/core/gimpbrushpipe-load.c:113 ../app/core/gimpbrushpipe-load.c:133
+#: ../app/core/gimpbrushpipe-load.c:223
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Fatální chyba zpracování souboru stopy '%s': Soubor je poškozen."
@@ -6038,7 +6042,7 @@ msgstr ""
 msgid "Floating Selection to Layer"
 msgstr "Plovoucí výběr do vrstvy"
 
-#: ../app/core/gimplayer.c:245
+#: ../app/core/gimplayer.c:245 ../app/tools/tools-enums.c:149
 msgid "Layer"
 msgstr "Vrstva"
 
@@ -6126,17 +6130,17 @@ msgstr "Přesunout masku vrstvy"
 msgid "Show Layer Mask"
 msgstr "Zobrazit masku vrstvy"
 
-#: ../app/core/gimppalette-import.c:431
+#: ../app/core/gimppalette-import.c:419
 #, c-format
 msgid "Index %d"
 msgstr "Index %d"
 
-#: ../app/core/gimppalette-import.c:676
+#: ../app/core/gimppalette-import.c:515
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Neznámý typ souboru palety: %s"
 
-#: ../app/core/gimppalette.c:339
+#: ../app/core/gimppalette-load.c:88
 #, c-format
 msgid ""
 "Fatal parse error in palette file '%s': Missing magic header.\n"
@@ -6145,25 +6149,25 @@ msgstr ""
 "Fatální chyba zpracovávání souboru palety '%s': Chybí kouzelná hlavička.\n"
 "Nepotřebuje tento soubor převod z DOSu?"
 
-#: ../app/core/gimppalette.c:345
+#: ../app/core/gimppalette-load.c:94
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
 msgstr ""
 "Fatální chyba zpracovávání souboru palety '%s': Chybí kouzelná hlavička."
 
-#: ../app/core/gimppalette.c:361 ../app/core/gimppalette.c:384
-#: ../app/core/gimppalette.c:414 ../app/core/gimppalette.c:492
+#: ../app/core/gimppalette-load.c:110 ../app/core/gimppalette-load.c:133
+#: ../app/core/gimppalette-load.c:163 ../app/core/gimppalette-load.c:241
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr ""
 "Fatální chyba zpracovávání souboru palety '%s': Chyba čtení na řádku %d."
 
-#: ../app/core/gimppalette.c:376
+#: ../app/core/gimppalette-load.c:125
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Neplatný řetězec v kódování UTF-8 v souboru s paletou '%s'"
 
-#: ../app/core/gimppalette.c:402
+#: ../app/core/gimppalette-load.c:151
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -6173,34 +6177,34 @@ msgstr ""
 "implicitní hodnotu."
 
 #. maybe we should just abort?
-#: ../app/core/gimppalette.c:440
+#: ../app/core/gimppalette-load.c:189
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Čtu soubor palety '%s': Chybí komponenta RED na řádku %d."
 
-#: ../app/core/gimppalette.c:448
+#: ../app/core/gimppalette-load.c:197
 #, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
 msgstr "Čtu soubor palety '%s': Chybí komponenta GREEN na řádku %d."
 
-#: ../app/core/gimppalette.c:456
+#: ../app/core/gimppalette-load.c:205
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Čtu soubor palety '%s': Chybí komponenta BLUE na řádku %d."
 
-#: ../app/core/gimppalette.c:466
+#: ../app/core/gimppalette-load.c:215
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "Čtu soubor palety '%s': Hodnota GRB mimo rozsah na řádku %d."
 
-#: ../app/core/gimppattern.c:274 ../app/core/gimppattern.c:320
-#: ../app/core/gimppattern.c:351
+#: ../app/core/gimppattern-load.c:85 ../app/core/gimppattern-load.c:131
+#: ../app/core/gimppattern-load.c:162
 #, c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
 msgstr ""
 "Fatální chyba zpracování souboru vzorku '%s': Soubor je zřejmě useknut."
 
-#: ../app/core/gimppattern.c:293
+#: ../app/core/gimppattern-load.c:104
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
@@ -6208,7 +6212,7 @@ msgstr ""
 "Fatální chyba zpracování v souboru vzorku '%s': Neznámá verze formátu vzorku "
 "%d."
 
-#: ../app/core/gimppattern.c:303
+#: ../app/core/gimppattern-load.c:114
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
@@ -6218,7 +6222,7 @@ msgstr ""
 "%d.\n"
 "Vzorky GIMPu musí být GRAY nebo RGB."
 
-#: ../app/core/gimppattern.c:328
+#: ../app/core/gimppattern-load.c:139
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Neplatný řetězec v kódování UTF-8 v souboru se vzorkem '%s'."
@@ -6726,55 +6730,55 @@ msgstr "Poslední chyba:"
 msgid "Available types:"
 msgstr "Dostupné typy:"
 
-#: ../app/dialogs/offset-dialog.c:102
+#: ../app/dialogs/offset-dialog.c:105
 msgid "Offset Layer"
 msgstr "Vrstva posunu"
 
-#: ../app/dialogs/offset-dialog.c:104
+#: ../app/dialogs/offset-dialog.c:107
 msgid "Offset Layer Mask"
 msgstr "Maska vrstvy posunu"
 
-#: ../app/dialogs/offset-dialog.c:106
+#: ../app/dialogs/offset-dialog.c:109
 msgid "Offset Channel"
 msgstr "Kanál posunu"
 
 #. The offset frame
-#: ../app/dialogs/offset-dialog.c:112 ../app/dialogs/offset-dialog.c:146
+#: ../app/dialogs/offset-dialog.c:115 ../app/dialogs/offset-dialog.c:149
 #: ../app/dialogs/resize-dialog.c:196 ../app/widgets/gimpgrideditor.c:268
 msgid "Offset"
 msgstr "Posun"
 
 #. offset, used as a verb
-#: ../app/dialogs/offset-dialog.c:121
+#: ../app/dialogs/offset-dialog.c:124
 msgid "_Offset"
 msgstr "P_osun"
 
-#: ../app/dialogs/offset-dialog.c:178 ../app/dialogs/resize-dialog.c:225
+#: ../app/dialogs/offset-dialog.c:181 ../app/dialogs/resize-dialog.c:225
 msgid "_X:"
 msgstr "_X:"
 
-#: ../app/dialogs/offset-dialog.c:180 ../app/dialogs/resize-dialog.c:226
+#: ../app/dialogs/offset-dialog.c:183 ../app/dialogs/resize-dialog.c:226
 msgid "_Y:"
 msgstr "_Y:"
 
-#: ../app/dialogs/offset-dialog.c:207
+#: ../app/dialogs/offset-dialog.c:210
 msgid "Offset by  x/_2, y/2"
 msgstr "Posun o x/_2, y/2"
 
 #. The edge behavior frame
-#: ../app/dialogs/offset-dialog.c:216
+#: ../app/dialogs/offset-dialog.c:219
 msgid "Edge Behavior"
 msgstr "Chování chran"
 
-#: ../app/dialogs/offset-dialog.c:220
+#: ../app/dialogs/offset-dialog.c:223
 msgid "_Wrap around"
 msgstr "Pokračovat od _druhého konce"
 
-#: ../app/dialogs/offset-dialog.c:223
+#: ../app/dialogs/offset-dialog.c:226
 msgid "Fill with _background color"
 msgstr "Vyplnit barvou po_zadí"
 
-#: ../app/dialogs/offset-dialog.c:226
+#: ../app/dialogs/offset-dialog.c:229
 msgid "Make _transparent"
 msgstr "Z_průhlednit"
 
@@ -8047,6 +8051,10 @@ msgstr "Změna ostrosti"
 msgid "Dodge/Burn"
 msgstr "Zesvětlování/tmavnutí"
 
+#: ../app/paint/gimperaser.c:62 ../app/tools/gimperasertool.c:66
+msgid "Eraser"
+msgstr "Guma"
+
 #: ../app/paint/gimpheal.c:86 ../app/tools/gimphealtool.c:57
 msgid "Heal"
 msgstr "Léčení"
@@ -8054,10 +8062,6 @@ msgstr "Léčení"
 #: ../app/paint/gimpheal.c:125
 msgid "Healing does not operate on indexed layers."
 msgstr "Léčení nefunguje na indexovaných vrstvách."
-
-#: ../app/paint/gimperaser.c:62 ../app/tools/gimperasertool.c:66
-msgid "Eraser"
-msgstr "Guma"
 
 #: ../app/paint/gimppaintbrush.c:63 ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
@@ -8067,17 +8071,26 @@ msgstr "Štětec"
 msgid "Pencil"
 msgstr "Tužka"
 
+#: ../app/paint/gimpperspectiveclone.c:95 ../app/paint/paint-enums.c:52
+#: ../app/tools/gimpperspectiveclonetool.c:121
+msgid "Perspective Clone"
+msgstr "Perspektivní klonování"
+
+#: ../app/paint/gimpperspectiveclone.c:163
+msgid "Perspective Clone does not operate on indexed layers."
+msgstr "Perspektivní klonování nefunguje na indexovaných vrstvách."
+
 #: ../app/paint/gimpsmudge.c:78 ../app/tools/gimpsmudgetool.c:54
 msgid "Smudge"
 msgstr "Rozmazání"
 
+#: ../app/paint/gimpsourcecore.c:227
+msgid "Set a source image first."
+msgstr "Nejprve nastavte zdrojový obrázek."
+
 #: ../app/paint/paint-enums.c:51
 msgid "Modify Perspective Plane"
 msgstr "Upravit perspektivní rovinu"
-
-#: ../app/paint/paint-enums.c:52
-msgid "Perspective Clone"
-msgstr "Perspektivní klonování"
 
 #: ../app/paint/paint-enums.c:82
 msgid "Aligned"
@@ -8431,9 +8444,8 @@ msgid "Align"
 msgstr "Zarovnat"
 
 #: ../app/tools/gimpaligntool.c:118
-#, fuzzy
 msgid "Alignment Tool: Align or arrange layers and other objects"
-msgstr "Zarovnat či uspořádat vrstvy a jiné objekty"
+msgstr "Nástroj zarovnání: Zarovnat či uspořádat vrstvy a jiné objekty"
 
 #: ../app/tools/gimpaligntool.c:119
 msgid "_Align"
@@ -8605,6 +8617,7 @@ msgstr "Vyplnit průhledné oblasti"
 
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160 ../app/tools/gimphealtool.c:103
+#: ../app/tools/gimpperspectiveclonetool.c:896
 #: ../app/tools/gimprectangleoptions.c:521
 #: ../app/tools/gimpselectionoptions.c:419
 msgid "Sample merged"
@@ -8660,10 +8673,12 @@ msgid "Click to set a new clone source"
 msgstr "Klikněte pro nastavení zdroje klonování"
 
 #: ../app/tools/gimpclonetool.c:109
+#: ../app/tools/gimpperspectiveclonetool.c:891
 msgid "Source"
 msgstr "Zdroj"
 
 #: ../app/tools/gimpclonetool.c:128 ../app/tools/gimphealtool.c:115
+#: ../app/tools/gimpperspectiveclonetool.c:910
 msgid "Alignment:"
 msgstr "Zarovnání"
 
@@ -8936,7 +8951,7 @@ msgstr "Zesvětlování / Tmavnutí"
 #: ../app/tools/gimpdodgeburntool.c:74
 #, fuzzy
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
-msgstr "Rozostření/Zaostření: selektivní rozostřování či zaostřování štětcem"
+msgstr "Rozostření / Zaostření: selektivní rozostřování či zaostřování štětcem"
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dod_ge / Burn"
@@ -8975,6 +8990,7 @@ msgid "Type  (%s)"
 msgstr "Typ  (%s)"
 
 #: ../app/tools/gimpdodgeburntool.c:214
+#: ../app/tools/gimpperspectiveclonetool.c:883
 msgid "Mode"
 msgstr "Režim"
 
@@ -9031,8 +9047,7 @@ msgstr "%s pro výběr barvy pozadí"
 msgid "Anti erase  (%s)"
 msgstr "Opak gumy  (%s)"
 
-#: ../app/tools/gimpflipoptions.c:129 ../app/tools/gimpmoveoptions.c:178
-#: ../app/tools/gimptransformoptions.c:281
+#: ../app/tools/gimpflipoptions.c:129
 msgid "Affect:"
 msgstr "Ovlivnit:"
 
@@ -9048,7 +9063,7 @@ msgstr "Překlopení"
 
 #: ../app/tools/gimpfliptool.c:78
 msgid "Flip Tool: Reverse the layer horizontally or vertically"
-msgstr ""
+msgstr "Nástroj překlopení: převrácení vrstvy vodorovně či svisle"
 
 #: ../app/tools/gimpfliptool.c:79
 msgid "_Flip"
@@ -9419,9 +9434,8 @@ msgid "Measure"
 msgstr "Měřidlo"
 
 #: ../app/tools/gimpmeasuretool.c:122
-#, fuzzy
 msgid "Measure Tool: Measure distances and angles"
-msgstr "Měření vzdáleností a úhlů"
+msgstr "Měřidlo: Měření vzdáleností a úhlů"
 
 #: ../app/tools/gimpmeasuretool.c:123
 msgid "_Measure"
@@ -9459,6 +9473,10 @@ msgstr "Vyberte cestu"
 #: ../app/tools/gimpmoveoptions.c:150
 msgid "Move the active path"
 msgstr "Přesunout aktivní cestu"
+
+#: ../app/tools/gimpmoveoptions.c:178
+msgid "Move:"
+msgstr "Přesun:"
 
 #: ../app/tools/gimpmovetool.c:117
 msgid "tool|Move"
@@ -9600,6 +9618,23 @@ msgstr "Tužka: kreslení s tvrdým okrajem"
 #: ../app/tools/gimppenciltool.c:53
 msgid "Pe_ncil"
 msgstr "_Tužka"
+
+#: ../app/tools/gimpperspectiveclonetool.c:122
+msgid ""
+"Perspective Clone Tool: Clone from an image source after applying a "
+"perspective transformation"
+msgstr ""
+"Perspektivní klonování: klonování z obrázku po aplikaci perspektivní "
+"transformace"
+
+#: ../app/tools/gimpperspectiveclonetool.c:124
+msgid "_Perspective Clone"
+msgstr "_Perspektivní klonování"
+
+#: ../app/tools/gimpperspectiveclonetool.c:641
+#, fuzzy
+msgid "Ctrl-Click to set a clone source"
+msgstr "Klikněte pro nastavení zdroje klonování"
 
 #: ../app/tools/gimpperspectivetool.c:69
 msgid "Perspective Tool: Change perspective of the layer or selection"
@@ -9927,7 +9962,7 @@ msgstr "Text podél cesty"
 
 #: ../app/tools/gimptexttool.c:144
 msgid "Text Tool: Create or edit text layers"
-msgstr ""
+msgstr "Nástroj text: tvorba a úprava textových vrstev"
 
 #: ../app/tools/gimptexttool.c:145
 msgid "Te_xt"
@@ -9976,9 +10011,15 @@ msgstr "Práh nefunguje na indexovaných vrstvách."
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Automaticky nastavit na optimální binarizační práh"
 
+#: ../app/tools/gimptransformoptions.c:281
+#, fuzzy
+msgid "Transform:"
+msgstr "Transformace"
+
 #: ../app/tools/gimptransformoptions.c:287
-msgid "Transform Direction"
-msgstr "Směr transformace"
+#, fuzzy
+msgid "Direction"
+msgstr "Popis"
 
 #: ../app/tools/gimptransformoptions.c:296
 msgid "Interpolation:"
@@ -10238,17 +10279,9 @@ msgstr "Pevná velikost"
 msgid "Fixed aspect ratio"
 msgstr "Pevný poměr stran"
 
-#: ../app/tools/tools-enums.c:149
-msgid "Transform layer"
-msgstr "Transformovat vrstvu"
-
-#: ../app/tools/tools-enums.c:150
-msgid "Transform selection"
-msgstr "Transformovat výběr"
-
-#: ../app/tools/tools-enums.c:151
-msgid "Transform path"
-msgstr "Transformovat cestu"
+#: ../app/tools/tools-enums.c:151 ../app/vectors/gimpvectors.c:191
+msgid "Path"
+msgstr "Cesta"
 
 #: ../app/tools/tools-enums.c:179
 msgid "Design"
@@ -10273,10 +10306,6 @@ msgstr "Počet řádků mřížky"
 #: ../app/tools/tools-enums.c:241
 msgid "Grid line spacing"
 msgstr "Prostor mezi řádky mřížky"
-
-#: ../app/vectors/gimpvectors.c:191
-msgid "Path"
-msgstr "Cesta"
 
 #: ../app/vectors/gimpvectors.c:192
 msgid "Rename Path"
