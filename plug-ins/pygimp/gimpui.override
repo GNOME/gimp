@@ -619,3 +619,92 @@ _wrap_gimp_window_set_transient(PyGObject *self)
     Py_INCREF(Py_None);
     return Py_None;
 }
+%%
+override gimp_color_button_new kwargs
+static int
+_wrap_gimp_color_button_new(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    gchar *title = NULL;
+    gint width = -1, height = -1;
+    PyObject *py_color = NULL, *py_type = NULL;
+    GimpRGB *color, default_color = { 0.0, 0.0, 0.0, 100.0 };
+    GimpColorAreaType type;
+    
+    static char *kwlist[] = { "title", "width", "height", "color", "type",
+                              NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "|ziiOO:gimpui.ColorButton.__init__",
+                                     kwlist,
+                                     &title, &width, &height,
+                                     &py_color, &py_type))
+        return -1;
+
+    if (py_color == NULL || (PyObject*)py_color == Py_None)
+        color = &default_color;
+    else if (pyg_boxed_check(py_color, GIMP_TYPE_RGB))
+        color = pyg_boxed_get(py_color, GimpRGB);
+    else {
+        PyErr_SetString(PyExc_TypeError, "color should be a GimpRGB or None");
+        return -1;
+    }
+
+    if (py_type == NULL || (PyObject*)py_type == Py_None)
+       type = GIMP_COLOR_AREA_FLAT;
+    else if (pyg_enum_get_value(GIMP_TYPE_COLOR_AREA_TYPE, py_type, (gint*)&type))
+       return -1;
+
+    if (pygobject_construct(self,
+                            "title", title,
+                            "type", type,
+                            "color", color,
+                            NULL))
+        return -1;
+
+    gtk_widget_set_size_request(GIMP_COLOR_BUTTON(self->obj)->color_area,
+                                width, height);
+    return 0;
+}
+%%
+new-constructor GIMP_TYPE_COLOR_BUTTON
+%%
+override gimp_color_scale_new kwargs
+static int
+_wrap_gimp_color_scale_new(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_orientation, *py_channel;
+    GtkOrientation orientation;
+    GimpColorSelectorChannel channel;
+    GimpColorScale *scale;
+    GtkRange *range;
+
+    static char *kwlist[] = { "orientation", "channel", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "OO:gimpui.ColorScale.__init__",
+                                     kwlist,
+                                     &py_orientation, &py_channel))
+        return -1;
+
+    if (pyg_enum_get_value(GTK_TYPE_ORIENTATION, py_orientation,
+                           (gint*)&orientation))
+        return -1;
+
+    if (pyg_enum_get_value(GIMP_TYPE_COLOR_SELECTOR_CHANNEL, py_channel, 
+                           (gint*)&channel))
+        return -1;
+
+    if (pygobject_construct(self, NULL))
+        return -1;
+
+    scale = GIMP_COLOR_SCALE(self->obj);
+    scale->channel = channel;
+
+    range = GTK_RANGE(scale);
+    range->orientation = orientation;
+    range->flippable   = (orientation == GTK_ORIENTATION_HORIZONTAL);
+    
+    return 0;
+}
+%%
+new-constructor GIMP_TYPE_COLOR_SCALE

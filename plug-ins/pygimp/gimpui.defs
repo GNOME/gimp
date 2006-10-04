@@ -637,12 +637,12 @@
   (c-name "gimp_color_button_new")
   (is-constructor-of "GimpColorButton")
   (return-type "GtkWidget*")
-  (parameters
-    '("const-gchar*" "title")
-    '("gint" "width")
-    '("gint" "height")
-    '("const-GimpRGB*" "color")
-    '("GimpColorAreaType" "type")
+  (properties
+    '("title" (optional))
+    '("width" (optional))
+    '("height" (optional))
+    '("color" (optional))
+    '("type" (optional))
   )
 )
 
@@ -922,9 +922,9 @@
   (c-name "gimp_color_scale_new")
   (is-constructor-of "GimpColorScale")
   (return-type "GtkWidget*")
-  (parameters
-    '("GtkOrientation" "orientation")
-    '("GimpColorSelectorChannel" "channel")
+  (properties
+    '("orientation")
+    '("channel")
   )
 )
 

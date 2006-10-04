@@ -1,3 +1,9 @@
+2006-10-04  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpui.defs
+	* plug-ins/pygimp/gimpui.override: new style constructors for
+	GimpColorButton and GimpColorScale.
+
 2006-10-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpbrushgenerated-load.c
