@@ -90,7 +90,10 @@ app/core/gimp.c
 app/core/gimpbrush-load.c
 app/core/gimpbrush.c
 app/core/gimpbrushclipboard.c
+app/core/gimpbrushgenerated-load.c
+app/core/gimpbrushgenerated-save.c
 app/core/gimpbrushgenerated.c
+app/core/gimpbrushpipe-load.c
 app/core/gimpbrushpipe.c
 app/core/gimpchannel-select.c
 app/core/gimpchannel.c
@@ -132,7 +135,10 @@ app/core/gimplayer-floating-sel.c
 app/core/gimplayer.c
 app/core/gimplayermask.c
 app/core/gimppalette-import.c
+app/core/gimppalette-load.c
+app/core/gimppalette-save.c
 app/core/gimppalette.c
+app/core/gimppattern-load.c
 app/core/gimppattern.c
 app/core/gimppatternclipboard.c
 app/core/gimppdbprogress.c
@@ -208,13 +214,15 @@ app/paint/gimpbrushcore.c
 app/paint/gimpclone.c
 app/paint/gimpconvolve.c
 app/paint/gimpdodgeburn.c
-app/paint/gimpheal.c
 app/paint/gimperaser.c
+app/paint/gimpheal.c
 app/paint/gimpink.c
 app/paint/gimppaintbrush.c
 app/paint/gimppaintcore.c
 app/paint/gimppencil.c
+app/paint/gimpperspectiveclone.c
 app/paint/gimpsmudge.c
+app/paint/gimpsourcecore.c
 app/paint/paint-enums.c
 
 app/pdb/channel_cmds.c
@@ -302,6 +310,7 @@ app/tools/gimppaintbrushtool.c
 app/tools/gimppaintoptions-gui.c
 app/tools/gimppainttool.c
 app/tools/gimppenciltool.c
+app/tools/gimpperspectiveclonetool.c
 app/tools/gimpperspectivetool.c
 app/tools/gimpposterizetool.c
 app/tools/gimprectangleoptions.c
