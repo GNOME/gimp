@@ -48,7 +48,7 @@ gimp_palette_save (GimpData  *data,
   GList       *list;
   FILE        *file;
 
-  file = g_fopen (data->filename, "w");
+  file = g_fopen (data->filename, "wb");
 
   if (! file)
     {

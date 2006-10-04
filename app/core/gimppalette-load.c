@@ -18,16 +18,19 @@
 
 #include "config.h"
 
+#include <errno.h>
+#include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
-#include <errno.h>
+#include <sys/types.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include <sys/types.h>
-#include <fcntl.h>
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
 
 #include <glib-object.h>
 #include <glib/gstdio.h>
@@ -65,7 +68,7 @@ gimp_palette_load (const gchar  *filename,
 
   r = g = b = 0;
 
-  file = g_fopen (filename, "r");
+  file = g_fopen (filename, "rb");
 
   if (! file)
     {
@@ -75,28 +78,24 @@ gimp_palette_load (const gchar  *filename,
       return NULL;
     }
 
-  linenum = 0;
-
-  fread (str, 13, 1, file);
-  str[13] = '\0';
-  linenum++;
-  if (strcmp (str, "GIMP Palette\n"))
+  linenum = 1;
+  if (! fgets (str, sizeof (str), file))
     {
-      /* bad magic, but maybe it has \r\n at the end of lines? */
-      if (!strcmp (str, "GIMP Palette\r"))
-        g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                     _("Fatal parse error in palette file '%s': "
-                       "Missing magic header.\n"
-                       "Does this file need converting from DOS?"),
-                     gimp_filename_to_utf8 (filename));
-      else
-        g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                     _("Fatal parse error in palette file '%s': "
-                       "Missing magic header."),
-                     gimp_filename_to_utf8 (filename));
-
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in palette file '%s': "
+                     "Read error in line %d."),
+                   gimp_filename_to_utf8 (filename), linenum);
       fclose (file);
+      return NULL;
+    }
 
+  if (strncmp (str, "GIMP Palette", strlen ("GIMP Palette")))
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in palette file '%s': "
+                     "Missing magic header."),
+                   gimp_filename_to_utf8 (filename));
+      fclose (file);
       return NULL;
     }
 
@@ -104,6 +103,7 @@ gimp_palette_load (const gchar  *filename,
                           "mime-type", "application/x-gimp-palette",
                           NULL);
 
+  linenum++;
   if (! fgets (str, sizeof (str), file))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
@@ -115,18 +115,16 @@ gimp_palette_load (const gchar  *filename,
       return NULL;
     }
 
-  linenum++;
-
   if (! strncmp (str, "Name: ", strlen ("Name: ")))
     {
       gchar *utf8;
 
-      utf8 = gimp_any_to_utf8 (&str[strlen ("Name: ")], -1,
+      utf8 = gimp_any_to_utf8 (g_strstrip (str + strlen ("Name: ")), -1,
                                _("Invalid UTF-8 string in palette file '%s'"),
                                gimp_filename_to_utf8 (filename));
+      gimp_object_take_name (GIMP_OBJECT (palette), utf8);
 
-      gimp_object_take_name (GIMP_OBJECT (palette), g_strstrip (utf8));
-
+      linenum++;
       if (! fgets (str, sizeof (str), file))
         {
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
@@ -138,13 +136,11 @@ gimp_palette_load (const gchar  *filename,
           return NULL;
         }
 
-      linenum++;
-
       if (! strncmp (str, "Columns: ", strlen ("Columns: ")))
         {
           gint columns;
 
-          columns = atoi (g_strstrip (&str[strlen ("Columns: ")]));
+          columns = atoi (g_strstrip (str + strlen ("Columns: ")));
 
           if (columns < 0 || columns > 256)
             {
@@ -157,6 +153,7 @@ gimp_palette_load (const gchar  *filename,
 
           palette->n_columns = columns;
 
+          linenum++;
           if (! fgets (str, sizeof (str), file))
             {
               g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
@@ -167,8 +164,6 @@ gimp_palette_load (const gchar  *filename,
               g_object_unref (palette);
               return NULL;
             }
-
-          linenum++;
         }
     }
   else /* old palette format */
@@ -232,6 +227,7 @@ gimp_palette_load (const gchar  *filename,
           palette->n_colors++;
         }
 
+      linenum++;
       if (! fgets (str, sizeof (str), file))
         {
           if (feof (file))
@@ -245,8 +241,6 @@ gimp_palette_load (const gchar  *filename,
           g_object_unref (palette);
           return NULL;
         }
-
-      linenum++;
     }
 
   fclose (file);
@@ -269,7 +263,7 @@ gimp_palette_load_act (const gchar  *filename,
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  fd = g_open (filename, O_RDONLY, 0);
+  fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
   if (! fd)
     {
       g_set_error (error,
@@ -313,7 +307,7 @@ gimp_palette_load_riff (const gchar  *filename,
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  fd = g_open (filename, O_RDONLY, 0);
+  fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
   if (! fd)
     {
       g_set_error (error,
@@ -367,7 +361,7 @@ gimp_palette_load_psp (const gchar  *filename,
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  fd = g_open (filename, O_RDONLY, 0);
+  fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
   if (! fd)
     {
       g_set_error (error,
@@ -444,7 +438,7 @@ gimp_palette_load_detect_format (const gchar *filename)
   gchar                 header[16];
   struct stat           file_stat;
 
-  fd = g_open (filename, O_RDONLY, 0);
+  fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
   if (fd)
     {
       if (read (fd, header, sizeof (header)) == sizeof (header))

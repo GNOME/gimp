@@ -1,3 +1,12 @@
+2006-10-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpbrushgenerated-load.c
+	* app/core/gimpgradient-load.c
+	* app/core/gimppalette-load.c
+	* app/core/gimppalette-save.c: read and write all files in binary
+	mode. Improved parser error messages (added line numbers). Minor
+	changes to simply read DOS files instead of barfing on them.
+
 2006-10-04  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpforegroundselecttool.c

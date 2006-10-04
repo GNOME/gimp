@@ -48,12 +48,14 @@ gimp_gradient_load (const gchar  *filename,
   gint                 i;
   FILE                *file;
   gchar                line[1024];
+  gint                 linenum;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   file = g_fopen (filename, "rb");
+
   if (!file)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
@@ -62,8 +64,18 @@ gimp_gradient_load (const gchar  *filename,
       return NULL;
     }
 
-  fgets (line, sizeof (line), file);
-  if (strcmp (line, "GIMP Gradient\n") != 0)
+  linenum = 1;
+  if (! fgets (line, sizeof (line), file))
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in gradient file '%s': "
+                     "Read error in line %d."),
+                   gimp_filename_to_utf8 (filename), linenum);
+      fclose (file);
+      return NULL;
+    }
+
+  if (strncmp (line, "GIMP Gradient", strlen ("GIMP Gradient")))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in gradient file '%s': "
@@ -77,17 +89,38 @@ gimp_gradient_load (const gchar  *filename,
                            "mime-type", "application/x-gimp-gradient",
                            NULL);
 
-  fgets (line, sizeof (line), file);
+  linenum++;
+  if (! fgets (line, sizeof (line), file))
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in gradient file '%s': "
+                     "Read error in line %d."),
+                   gimp_filename_to_utf8 (filename), linenum);
+      fclose (file);
+      g_object_unref (gradient);
+      return NULL;
+    }
+
   if (! strncmp (line, "Name: ", strlen ("Name: ")))
     {
       gchar *utf8;
 
-      utf8 = gimp_any_to_utf8 (&line[strlen ("Name: ")], -1,
+      utf8 = gimp_any_to_utf8 (g_strstrip (line + strlen ("Name: ")), -1,
                                _("Invalid UTF-8 string in gradient file '%s'."),
                                gimp_filename_to_utf8 (filename));
-      gimp_object_take_name (GIMP_OBJECT (gradient), g_strstrip (utf8));
+      gimp_object_take_name (GIMP_OBJECT (gradient), utf8);
 
-      fgets (line, sizeof (line), file);
+      linenum++;
+      if (! fgets (line, sizeof (line), file))
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Fatal parse error in gradient file '%s': "
+                         "Read error in line %d."),
+                       gimp_filename_to_utf8 (filename), linenum);
+          fclose (file);
+          g_object_unref (gradient);
+          return NULL;
+        }
     }
   else /* old gradient format */
     {
@@ -101,8 +134,8 @@ gimp_gradient_load (const gchar  *filename,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in gradient file '%s': "
-                     "File is corrupt."),
-                   gimp_filename_to_utf8 (filename));
+                     "File is corrupt in line %d."),
+                   gimp_filename_to_utf8 (filename), linenum);
       g_object_unref (gradient);
       fclose (file);
       return NULL;
@@ -128,7 +161,17 @@ gimp_gradient_load (const gchar  *filename,
       else
         gradient->segments = seg;
 
-      fgets (line, sizeof (line), file);
+      linenum++;
+      if (! fgets (line, sizeof (line), file))
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Fatal parse error in gradient file '%s': "
+                         "Read error in line %d."),
+                       gimp_filename_to_utf8 (filename), linenum);
+          fclose (file);
+          g_object_unref (gradient);
+          return NULL;
+        }
 
       seg->left = g_ascii_strtod (line, &end);
       if (end && errno != ERANGE)
@@ -172,8 +215,9 @@ gimp_gradient_load (const gchar  *filename,
 
             default:
               g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                           _("Corrupt segment %d in gradient file '%s'."),
-                           i, gimp_filename_to_utf8 (filename));
+                           _("Fatal parse error in gradient file '%s': "
+                             "Corrupt segment %d in line %d."),
+                           gimp_filename_to_utf8 (filename), i, linenum);
               g_object_unref (gradient);
               fclose (file);
               return NULL;
@@ -182,8 +226,9 @@ gimp_gradient_load (const gchar  *filename,
       else
         {
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Corrupt segment %d in gradient file '%s'."),
-                       i, gimp_filename_to_utf8 (filename));
+                       _("Fatal parse error in gradient file '%s': "
+                         "Corrupt segment %d in line %d."),
+                       gimp_filename_to_utf8 (filename), i, linenum);
           g_object_unref (gradient);
           fclose (file);
           return NULL;
