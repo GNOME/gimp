@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-02 15:30+0200\n"
-"PO-Revision-Date: 2006-10-02 15:35+0200\n"
+"POT-Creation-Date: 2006-10-04 13:11+0200\n"
+"PO-Revision-Date: 2006-10-04 14:12+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr ""
 #: ../plug-ins/pygimp/gimpfu.py:332
 #, python-format
 msgid "An error occured running %s"
-msgstr ""
+msgstr "Při běhu %s došlo k chybě"
 
 #: ../plug-ins/pygimp/gimpfu.py:347
 msgid "_More Information"
@@ -91,15 +91,15 @@ msgstr "Vstupní pole"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
 msgid "File to read or characters to use"
-msgstr ""
+msgstr "Soubor ke čtení nebo znaky k použití"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Font size in pixels"
-msgstr ""
+msgstr "Velikost písma v pixelech"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Write a separate CSS file"
-msgstr ""
+msgstr "Zapsat oddělený CSS soubor"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:44
 msgid "Python Console"
@@ -127,31 +127,31 @@ msgstr "Interaktivní vývoj v Pythonu"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:51
 msgid "Add a layer of fog"
-msgstr ""
+msgstr "Přidat vrstvu mlhy"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "_Fog..."
-msgstr ""
+msgstr "_Mlha..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
 msgid "Layer name"
-msgstr ""
+msgstr "Jméno vrstvy"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
 msgid "Clouds"
-msgstr ""
+msgstr "Mraky"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:60
 msgid "Fog color"
-msgstr ""
+msgstr "Barva mlhy"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "Turbulence"
-msgstr ""
+msgstr "Turbulence"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:62
 msgid "Opacity"
-msgstr ""
+msgstr "Krytí"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
 msgid "Offset the colors in a palette"
@@ -166,31 +166,31 @@ msgstr ""
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:58
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:80
 msgid "Palette"
-msgstr ""
+msgstr "Paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
 msgid "Offset"
-msgstr ""
+msgstr "Posun"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
 msgid "Sort the colors in a palette"
-msgstr ""
+msgstr "Třídit barvy v paletě"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
 msgid "_Sort Palette..."
-msgstr ""
+msgstr "_Třídit paletu..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
 msgid "Color model"
-msgstr ""
+msgstr "Barevný model"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
 msgid "Channel to sort"
@@ -198,19 +198,19 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
-msgstr ""
+msgstr "Červená nebo odstín"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
 msgid "Green or Saturation"
-msgstr ""
+msgstr "Zelená nebo sytost"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
 msgid "Blue or Value"
-msgstr ""
+msgstr "Modrá nebo hodnota"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
 msgid "Ascending"
-msgstr ""
+msgstr "Klesající"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:51
 msgid "Create a repeating gradient using colors from the palette"
@@ -218,15 +218,15 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:56
 msgid "Palette to _Repeating Gradient"
-msgstr ""
+msgstr "Paleta do _opakujícího se přechodu"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:73
 msgid "Create a gradient using colors from the palette"
-msgstr ""
+msgstr "Vytvořit přechod pomocí barev z palety"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:78
 msgid "Palette to _Gradient"
-msgstr ""
+msgstr "Paleta do _přechodu"
 
 #: ../plug-ins/pygimp/plug-ins/pdbbrowse.py:37
 msgid "Browse the Procedural Database"
