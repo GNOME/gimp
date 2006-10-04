@@ -36,8 +36,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define BORDER_TOLERANCE 1.00 /* maximum ratio of (max % divs) to width */
-#define ENTRY_WIDTH      75
+#define BORDER_TOLERANCE  1.00  /* maximum ratio of (max % divs) to width */
+#define ENTRY_WIDTH       75
 
 /* entscale stuff begin */
 /* FIXME: Entry-Scale stuff is probably in libgimpui by now.
@@ -71,8 +71,7 @@ gchar buffer[BUFSIZE];
 
 gboolean     maze_dialog         (void);
 
-static void  maze_msg            (const gchar *format,
-                                  ...) G_GNUC_PRINTF (1, 2);
+static void  maze_message        (const gchar *message);
 
 #ifdef SHOW_PRNG_PRIVATES
 static void  maze_entry_callback (GtkWidget   *widget,
@@ -425,8 +424,8 @@ div_button_callback (GtkWidget *button,
   /* Sanity check: */
   if (mvals.tile && ISODD(max))
     {
-      maze_msg (_("Selection size is not even.\n"
-		  "Tileable maze won't work perfectly."));
+      maze_message (_("Selection size is not even.\n"
+                      "Tileable maze won't work perfectly."));
       return;
     }
 
@@ -566,20 +565,9 @@ height_width_callback (gint        width,
 }
 
 static void
-maze_msg (const gchar *format,
-          ...)
+maze_message (const gchar *message)
 {
-  gchar *message;
-
-  va_list args;
-
-  va_start (args, format);
-  message = g_strdup_vprintf (format, args);
-  va_end (args);
-
   gtk_label_set_text (GTK_LABEL (msg_label), message);
-
-  g_free (message);
 }
 
 #ifdef SHOW_PRNG_PRIVATES

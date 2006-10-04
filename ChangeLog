@@ -1,7 +1,11 @@
+2006-10-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/maze/maze_face.c: minor cleanup.
+
 2006-10-03  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-drawable.c: a FALSE return from
-	gimp_drawable_mask_bounds doesn't mean failure. Restore old
+	gimp_drawable_mask_bounds() doesn't mean failure. Restore old
 	behavior. Fixes bug #357223.
 
 2006-10-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
