@@ -390,7 +390,7 @@ gfig_dialog (void)
   gfig_context->brush_select
     = gimp_brush_select_button_new ("Brush",
                                     gfig_context->default_style.brush_name,
-                                    100.0, -1, GIMP_NORMAL_MODE);
+                                    -1.0, -1, -1);
   g_signal_connect (gfig_context->brush_select, "brush-set",
                     G_CALLBACK (gfig_brush_changed_callback), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), gfig_context->brush_select,

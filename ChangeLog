@@ -1,3 +1,10 @@
+2006-10-05  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gfig/gfig-dialog.c: reverted change for bug #356901.
+
+	* plug-ins/script-fu/scripts/test-sphere.scm: removed superfluous
+	comment.
+
 2006-10-04  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpui.defs

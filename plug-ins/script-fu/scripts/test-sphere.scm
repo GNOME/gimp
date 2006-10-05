@@ -58,9 +58,7 @@
 ; Here the brush dialog will be popped up with a default brush of Circle (03)
 ; opacity 100, spacing 44 and paint mode of Normal (value 0).
 ; If this selection was unchanged the value passed to the function as a
-; paramater would be '("Circle (03)" 100.0 44 0). BTW the widget used
-; is generally available in the libgimpui library for any plugin that
-; wishes to select a brush.
+; parameter would be '("Circle (03)" 100.0 44 0).
 ;
 ; ----------------------------------------------------------------------
 ; SF-PATTERN
