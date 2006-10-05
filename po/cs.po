@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-04 13:08+0200\n"
-"PO-Revision-Date: 2006-10-04 13:08+0200\n"
+"POT-Creation-Date: 2006-10-05 11:12+0200\n"
+"PO-Revision-Date: 2006-10-05 11:12+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -823,8 +823,8 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:128
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:1330
-#: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:228
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1330
+#: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:335 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/pdb/image_cmds.c:1880 ../app/widgets/gimpdnd-xds.c:97
 msgid "Untitled"
@@ -3390,10 +3390,10 @@ msgstr "Otevřít textový soubor (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:138
 #: ../app/config/gimpconfig-file.c:57 ../app/core/gimpbrush-load.c:115
-#: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated-load.c:72
-#: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpgradient-load.c:60
-#: ../app/core/gimppalette-load.c:73 ../app/core/gimppalette-load.c:277
-#: ../app/core/gimppalette-load.c:321 ../app/core/gimppalette-load.c:375
+#: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated-load.c:73
+#: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpgradient-load.c:62
+#: ../app/core/gimppalette-load.c:76 ../app/core/gimppalette-load.c:271
+#: ../app/core/gimppalette-load.c:315 ../app/core/gimppalette-load.c:369
 #: ../app/core/gimppattern-load.c:76 ../app/tools/gimpimagemaptool.c:585
 #: ../app/xcf/xcf.c:319
 #, c-format
@@ -3553,7 +3553,7 @@ msgstr "Přepnout volbu pevného poměru obdélníku"
 
 #: ../app/actions/tools-actions.c:247
 msgid "Toggle Expand-From-Center Option for Rectangle"
-msgstr ""
+msgstr "Přepnout volbu Rozšiřovat ze středu pro obdélník"
 
 #: ../app/actions/vectors-actions.c:44
 msgid "Paths Menu"
@@ -5352,7 +5352,7 @@ msgstr "Fatální chyba zpracování souboru stopy '%s': Neznámá verze %d."
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr "Fatální chyba zpracování souboru stopy '%s': Soubor je zřejmě useknut."
 
-#: ../app/core/gimpbrush-load.c:251 ../app/core/gimpbrushgenerated-load.c:124
+#: ../app/core/gimpbrush-load.c:251 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
@@ -5392,31 +5392,42 @@ msgstr "Fatální chyba zpracování souboru stopy '%s'"
 msgid "Clipboard"
 msgstr "Schránka"
 
-#: ../app/core/gimpbrushgenerated-load.c:85
+#: ../app/core/gimpbrushgenerated-load.c:87
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
 msgstr ""
 "Fatální chyba zpracování souboru stopy '%s': Není to soubor stopy GIMPu."
 
-#: ../app/core/gimpbrushgenerated-load.c:101
+#: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
-msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
+msgid ""
+"Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr ""
-"Fatální chyba zpracování souboru stopy '%s': Neznámá verze stopy GIMPu."
+"Fatální chyba zpracování souboru stopy '%s': Neznámá verze stopy GIMPu v "
+"řádku %d."
 
-#: ../app/core/gimpbrushgenerated-load.c:145
+#: ../app/core/gimpbrushgenerated-load.c:150
 #, c-format
-msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
-msgstr "Fatální chyba zpracování souboru stopy '%s': Neznámý tvar stopy GIMPu."
+msgid ""
+"Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
+msgstr ""
+"Fatální chyba zpracování souboru stopy '%s': Neznámý tvar stopy GIMPu v "
+"řádku %d."
 
-#: ../app/core/gimpbrushgenerated-load.c:212
+#: ../app/core/gimpbrushgenerated-load.c:226
+#, c-format
+msgid "Line %d: %s"
+msgstr "Řádek %d: %s"
+
+#: ../app/core/gimpbrushgenerated-load.c:228
+#, c-format
+msgid "File is truncated in line %d"
+msgstr "Soubor je useknut na řádce %d"
+
+#: ../app/core/gimpbrushgenerated-load.c:231
 #, c-format
 msgid "Error while reading brush file '%s': %s"
 msgstr "Chyba při čtení souboru stopy '%s': %s"
-
-#: ../app/core/gimpbrushgenerated-load.c:214
-msgid "File is truncated"
-msgstr "Soubor je zkrácen"
 
 #: ../app/core/gimpbrushpipe-load.c:113 ../app/core/gimpbrushpipe-load.c:133
 #: ../app/core/gimpbrushpipe-load.c:223
@@ -5631,39 +5642,50 @@ msgstr "Transformovat vrstvu"
 msgid "Transformation"
 msgstr "Transformace"
 
-#: ../app/core/gimpgradient-load.c:69
+#: ../app/core/gimpgradient-load.c:71 ../app/core/gimpgradient-load.c:96
+#: ../app/core/gimpgradient-load.c:117 ../app/core/gimpgradient-load.c:168
+#, c-format
+msgid "Fatal parse error in gradient file '%s': Read error in line %d."
+msgstr ""
+"Fatální chyba zpracovávání souboru přechodu '%s': Chyba čtení na řádku %d."
+
+#: ../app/core/gimpgradient-load.c:81
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 msgstr ""
 "Fatální chyba zpracování souboru přechodu '%s': Není to soubor přechodu pro "
 "GIMP"
 
-#: ../app/core/gimpgradient-load.c:86
+#: ../app/core/gimpgradient-load.c:109
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
 msgstr "Neplatný řetězec v kódování UTF-8 v souboru s přechodem '%s'."
 
-#: ../app/core/gimpgradient-load.c:103
+#: ../app/core/gimpgradient-load.c:136
 #, c-format
-msgid "Fatal parse error in gradient file '%s': File is corrupt."
-msgstr "Fatální chyba zpracování souboru přechodu '%s': Soubor je poškozen."
+msgid "Fatal parse error in gradient file '%s': File is corrupt in line %d."
+msgstr ""
+"Fatální chyba zpracování souboru přechodu '%s': Soubor je poškozen na řádku %"
+"d."
 
-#: ../app/core/gimpgradient-load.c:175 ../app/core/gimpgradient-load.c:185
+#: ../app/core/gimpgradient-load.c:218 ../app/core/gimpgradient-load.c:229
 #, c-format
-msgid "Corrupt segment %d in gradient file '%s'."
-msgstr "Poškozený segment %d v souboru s přechodem '%s'."
+msgid "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
+msgstr ""
+"Fatální chyba zpracování souboru přechodu '%s': Poškozený segment %d na "
+"řádku %d."
 
-#: ../app/core/gimpgradient-load.c:196 ../app/core/gimpgradient-load.c:210
+#: ../app/core/gimpgradient-load.c:241 ../app/core/gimpgradient-load.c:255
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 msgstr "Soubor s přechodem '%s' je poškozen: Segmenty nepokrývají rozsah 0-1."
 
-#: ../app/core/gimpgradient-load.c:293
+#: ../app/core/gimpgradient-load.c:338
 #, c-format
 msgid "No linear gradients found in '%s'"
 msgstr "V '%s' nebyl nalezen lineáční přechod"
 
-#: ../app/core/gimpgradient-load.c:303
+#: ../app/core/gimpgradient-load.c:348
 #, c-format
 msgid "Failed to import gradients from '%s': %s"
 msgstr "Nemohu importovat přechody z '%s': %s"
@@ -6140,34 +6162,26 @@ msgstr "Index %d"
 msgid "Unknown type of palette file: %s"
 msgstr "Neznámý typ souboru palety: %s"
 
-#: ../app/core/gimppalette-load.c:88
-#, c-format
-msgid ""
-"Fatal parse error in palette file '%s': Missing magic header.\n"
-"Does this file need converting from DOS?"
-msgstr ""
-"Fatální chyba zpracovávání souboru palety '%s': Chybí kouzelná hlavička.\n"
-"Nepotřebuje tento soubor převod z DOSu?"
-
-#: ../app/core/gimppalette-load.c:94
-#, c-format
-msgid "Fatal parse error in palette file '%s': Missing magic header."
-msgstr ""
-"Fatální chyba zpracovávání souboru palety '%s': Chybí kouzelná hlavička."
-
-#: ../app/core/gimppalette-load.c:110 ../app/core/gimppalette-load.c:133
-#: ../app/core/gimppalette-load.c:163 ../app/core/gimppalette-load.c:241
+#: ../app/core/gimppalette-load.c:85 ../app/core/gimppalette-load.c:110
+#: ../app/core/gimppalette-load.c:131 ../app/core/gimppalette-load.c:160
+#: ../app/core/gimppalette-load.c:237
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr ""
 "Fatální chyba zpracovávání souboru palety '%s': Chyba čtení na řádku %d."
 
-#: ../app/core/gimppalette-load.c:125
+#: ../app/core/gimppalette-load.c:95
+#, c-format
+msgid "Fatal parse error in palette file '%s': Missing magic header."
+msgstr ""
+"Fatální chyba zpracovávání souboru palety '%s': Chybí kouzelná hlavička."
+
+#: ../app/core/gimppalette-load.c:123
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Neplatný řetězec v kódování UTF-8 v souboru s paletou '%s'"
 
-#: ../app/core/gimppalette-load.c:151
+#: ../app/core/gimppalette-load.c:147
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -6177,22 +6191,22 @@ msgstr ""
 "implicitní hodnotu."
 
 #. maybe we should just abort?
-#: ../app/core/gimppalette-load.c:189
+#: ../app/core/gimppalette-load.c:184
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Čtu soubor palety '%s': Chybí komponenta RED na řádku %d."
 
-#: ../app/core/gimppalette-load.c:197
+#: ../app/core/gimppalette-load.c:192
 #, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
 msgstr "Čtu soubor palety '%s': Chybí komponenta GREEN na řádku %d."
 
-#: ../app/core/gimppalette-load.c:205
+#: ../app/core/gimppalette-load.c:200
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Čtu soubor palety '%s': Chybí komponenta BLUE na řádku %d."
 
-#: ../app/core/gimppalette-load.c:215
+#: ../app/core/gimppalette-load.c:210
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "Čtu soubor palety '%s': Hodnota GRB mimo rozsah na řádku %d."
