@@ -213,7 +213,7 @@
 
 (script-fu-register "script-fu-3dtruchet"
 		    _"3_D Truchet..."
-		    "3D Truchet pattern"
+		    _"Create an image filled with a 3D Truchet pattern"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"
 		    "1997"

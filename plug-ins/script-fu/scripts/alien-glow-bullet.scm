@@ -94,7 +94,7 @@
 
 (script-fu-register "script-fu-alien-glow-bullet"
 		    _"_Bullet..."
-		    "Create a Bullet with an Alien Glow theme for web pages"
+		    _"Create a bullet graphic with an eerie glow theme for web pages"
 		    "Adrian Likins"
 		    "Adrian Likins"
 		    "1997"

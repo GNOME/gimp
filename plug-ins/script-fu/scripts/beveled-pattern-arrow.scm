@@ -141,7 +141,7 @@
 
 (script-fu-register "script-fu-beveled-pattern-arrow"
                     _"_Arrow..."
-                    "Beveled pattern arrow"
+                    _"Create a beveled pattern arrow for webpages"
                     "Federico Mena Quintero"
                     "Federico Mena Quintero"
                     "July 1997"

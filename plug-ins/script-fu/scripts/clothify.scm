@@ -46,7 +46,7 @@
 
 (script-fu-register "script-fu-clothify"
 		    _"_Clothify..."
-		    "Gives the current layer a cloth-like texture"
+		    _"Add a cloth-like texture to the selected region (or alpha)"
 		    "Tim Newsome <drz@froody.bloke.com>"
 		    "Tim Newsome"
 		    "4/11/97"

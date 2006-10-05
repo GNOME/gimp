@@ -137,7 +137,7 @@
 
 (script-fu-register "script-fu-button00"
 		    _"Simple _Beveled Button..."
-		    "Simple beveled button"
+		    _"Create a simple, beveled button graphic for webpages"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "June 1997"

@@ -179,7 +179,7 @@
 
 (script-fu-register "script-fu-add-bevel"
                     _"Add B_evel..."
-                    "Add a bevel to an image"
+                    _"Add a bevel border to an image"
                     "Andrew Donkin <ard@cs.waikato.ac.nz>"
                     "Andrew Donkin"
                     "1997/11/06"
@@ -191,4 +191,4 @@
                     SF-TOGGLE     _"Keep bump layer" FALSE)
 
 (script-fu-menu-register "script-fu-add-bevel"
-			 "<Image>/Filters/Decor")
+			 _"<Image>/Filters/Decor")

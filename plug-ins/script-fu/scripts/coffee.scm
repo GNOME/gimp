@@ -75,7 +75,7 @@
 
 (script-fu-register "script-fu-coffee-stain"
 		    _"_Coffee Stain..."
-		    "Draws realistic looking coffee stains"
+		    _"Add realistic looking coffee stains to the image"
 		    "Chris Gutteridge"
 		    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
 		    "25th April 1998"

@@ -177,7 +177,7 @@
 
 (script-fu-register "script-fu-neon-logo-alpha"
 		    _"N_eon..."
-		    "Neon logos"
+		    _"Convert the selected region (or alpha) into a neon-sign like object"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
@@ -209,7 +209,7 @@
 
 (script-fu-register "script-fu-neon-logo"
 		    _"N_eon..."
-		    "Neon logos"
+		     _"Create a logo in the style of a neon sign"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"

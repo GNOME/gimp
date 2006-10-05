@@ -114,7 +114,7 @@
 
 (script-fu-register "script-fu-beveled-pattern-button"
 		    _"B_utton..."
-		    "Beveled pattern button"
+		    _"Create a beveled pattern button for webpages"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "July 1997"

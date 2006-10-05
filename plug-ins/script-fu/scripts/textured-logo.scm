@@ -112,7 +112,7 @@
 
 (script-fu-register "script-fu-textured-logo-alpha"
 		    _"_Textured..."
-		    "Creates textured logos with blended backgrounds, highlights, and shadows"
+		    _"Fill the selected region (or alpha) with a texture and add highlights, shadows, and a mosaic background"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1996"
@@ -152,7 +152,7 @@
 
 (script-fu-register "script-fu-textured-logo"
 		    _"_Textured..."
-		    "Creates textured logos with blended backgrounds, highlights, and shadows"
+		    _"Create a textured logo with highlights, shadows, and a mosaic background"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1996"

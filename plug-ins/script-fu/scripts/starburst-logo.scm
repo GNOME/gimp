@@ -74,7 +74,7 @@
 
 (script-fu-register "script-fu-starburst-logo-alpha"
 		    _"Starb_urst..."
-		    "Starburst as inspired by GIMP News"
+		    _"Fill the selected region (or alpha) with a starburst gradient and add a shadow"
 		    "Spencer Kimball & Xach Beane"
 		    "Spencer Kimball & Xach Beane"
 		    "1997"
@@ -102,7 +102,7 @@
 
 (script-fu-register "script-fu-starburst-logo"
 		    _"Starb_urst..."
-		    "Starburst as inspired by GIMP News"
+                    _"Create a logo using a starburst gradient"
 		    "Spencer Kimball & Xach Beane"
 		    "Spencer Kimball & Xach Beane"
 		    "1997"

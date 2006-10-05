@@ -15,7 +15,7 @@
 
 (script-fu-register "script-fu-guides-remove"
 		    _"_Remove all Guides"
-		    "Removes all horizontal and vertical guides."
+		    _"Remove all horizontal and vertical guides"
 		    "Alan Horkan"
 		    "Alan Horkan, 2004. Public Domain."
 		    "April 2004"

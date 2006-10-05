@@ -155,7 +155,7 @@
 
 (script-fu-register "script-fu-fade-outline"
 		    _"_Fade to Layer Mask..."
-		    "Fade out using a layer mask"
+		    _"Create a layermask that fades the edges of the selected region (or alpha)"
 		    "Wolfgang Hofer <hof@hotbot.com>"
 		    "Wolfgang Hofer"
 		    "10 Nov 1999"

@@ -93,7 +93,7 @@
 
 (script-fu-register "script-fu-t-o-p-logo-alpha"
 		    _"_Particle Trace..."
-		    "Trace of Particles Effect"
+		    _"Add a Trace of Particles effect to the selected region (or alpha)"
 		    "Shuji Narazaki (narazaki@InetQ.or.jp)"
 		    "Shuji Narazaki"
 		    "1997"
@@ -130,7 +130,7 @@
 
 (script-fu-register "script-fu-t-o-p-logo"
 		    _"_Particle Trace..."
-		    "Trace of Particles Effect"
+		    _"Create a logo using a Trace Of Particles effect"
 		    "Shuji Narazaki (narazaki@InetQ.or.jp)"
 		    "Shuji Narazaki"
 		    "1997"

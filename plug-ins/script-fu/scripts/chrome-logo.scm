@@ -76,7 +76,7 @@
 
 (script-fu-register "script-fu-chrome-logo-alpha"
 		    _"C_hrome..."
-		    "Somewhat simplistic, but cool chromed logos"
+		    _"Add a simple chrome effect to the selected region (or alpha)"
 		    "Spencer Kimball"
 		    "Spencer Kimball & Peter Mattis"
 		    "1997"
@@ -104,7 +104,7 @@
 
 (script-fu-register "script-fu-chrome-logo"
 		    _"C_hrome..."
-		    "Somewhat simplistic, but cool chromed logos"
+		    _"Create a simplistic, but cool, chromed logo"
 		    "Spencer Kimball"
 		    "Spencer Kimball & Peter Mattis"
 		    "1997"

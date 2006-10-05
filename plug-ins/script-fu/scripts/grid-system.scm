@@ -83,8 +83,8 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-grid-system"
-		    _"_Divisions..."
-		    "Draw grid as specified by X-DIVIDES (list of propotions relative to the drawable) and Y-DIVIDES. The color and width of grid is detemined by the current settings of brush."
+		    _"_Grid..."
+		    _"Draw a grid as specified by the lists of X and Y locations using the current brush"
 		    "Shuji Narazaki <narazaki@InetQ.or.jp>"
 		    "Shuji Narazaki"
 		    "1997"

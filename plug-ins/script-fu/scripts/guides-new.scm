@@ -19,17 +19,17 @@
     (gimp-displays-flush)))
     
 (script-fu-register "script-fu-guide-new" 
-		    _"New _Guide..." 
-		    "Add a single Line Guide with the specified postion and orientation. Postion is specified in Pixels (px)."
-		    "Alan Horkan"
-		    "Alan Horkan, 2004.  Public Domain."
-		    "2004-04-02"
-		    ""
-		    SF-IMAGE      "Image"      0 
-		    SF-DRAWABLE   "Drawable"   0
-		    SF-OPTION     _"Direction" '(_"Horizontal" 
-						 _"Vertical")
-		    SF-ADJUSTMENT _"Position"  '(0 0 262144 1 10 0 1))
+                    _"New _Guide..." 
+                    _"Add a guide at the orientation and position specified (in pixels)"
+                    "Alan Horkan"
+                    "Alan Horkan, 2004.  Public Domain."
+                    "2004-04-02"
+                    ""
+                    SF-IMAGE      "Image"      0 
+                    SF-DRAWABLE   "Drawable"   0
+                    SF-OPTION     _"Direction" '(_"Horizontal" 
+                                  _"Vertical")
+                    SF-ADJUSTMENT _"Position"  '(0 0 262144 1 10 0 1))
     
 (script-fu-menu-register "script-fu-guide-new" 
 			 "<Image>/Image/Guides")

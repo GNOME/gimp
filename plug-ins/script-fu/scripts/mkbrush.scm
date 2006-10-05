@@ -57,8 +57,8 @@
     (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-rectangular"
-		    _"New Re_ctangular..."
-		    "Create size of brush"
+		    _"_Rectangular..."
+		    _"Create a rectangular brush"
 		    "Seth Burgess <sjburges@ou.edu>"
 		    "Seth Burgess"
 		    "1997"
@@ -117,8 +117,8 @@
     (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-rectangular-feathered"
-		    _"New Rectangular, Feathered..."
-		    "Create size of brush"
+		    _"Re_ctangular, Feathered..."
+		    _"Create a rectangular brush with feathered edges"
 		    "Seth Burgess <sjburges@ou.edu>"
 		    "Seth Burgess"
 		    "1997"
@@ -167,8 +167,8 @@
     (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-elliptical"
-		    _"New Elli_ptical..."
-		    "Create size of brush"
+		    _"_Elliptical..."
+		    _"Create an elliptical brush"
 		    "Seth Burgess <sjburges@ou.edu>"
 		    "Seth Burgess"
 		    "1997"
@@ -229,8 +229,8 @@
     (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-elliptical-feathered"
-		    _"New Elliptical, Feathered..."
-		    "Makes a feathered elliptical brush of specified size"
+		    _"Elli_ptical, Feathered..."
+    		    _"Create an elliptical brush with feathered edges"
 		    "Seth Burgess <sjburges@ou.edu>"
 		    "Seth Burgess"
 		    "1997"

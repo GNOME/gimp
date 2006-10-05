@@ -160,7 +160,7 @@
 
 (script-fu-register "script-fu-text-circle"
 		    _"Text C_ircle..."
-		    "Render the specified text along the perimeter of a circle"
+		    _"Create a logo by rendering the specified text along the perimeter of a circle"
 		    "Shuji Narazaki <narazaki@gimp.org>"
 		    "Shuji Narazaki"
 		    "1997-1998"

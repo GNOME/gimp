@@ -43,7 +43,7 @@
 
 (script-fu-register "script-fu-paste-as-pattern"
 		    _"New _Pattern..."
-		    "Pastes the clipboard contents into a new pattern"
+		    _"Paste the clipboard contents into a new pattern"
 		    "Michael Natterer <mitch@gimp.org>"
 		    "Michael Natterer"
 		    "2005-09-25"

@@ -110,7 +110,7 @@
 
 (script-fu-register "script-fu-3d-outline-logo-alpha"
                     _"3D _Outline..."
-                    "Creates outlined texts with drop shadow"
+                    _"Outline the selected region (or alpha) with a pattern and add a drop shadow"
                     "Hrvoje Horvat (hhorvat@open.hr)"
                     "Hrvoje Horvat"
                     "07 April, 1998"
@@ -151,7 +151,7 @@
 
 (script-fu-register "script-fu-3d-outline-logo"
                     _"3D _Outline..."
-                    "Creates outlined texts with drop shadow"
+                    _"Create a logo with outlined text and a drop shadow"
                     "Hrvoje Horvat (hhorvat@open.hr)"
                     "Hrvoje Horvat"
                     "07 April, 1998"

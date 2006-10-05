@@ -56,8 +56,8 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-gradient-example"
-		    _"Render _Image..."
-		    "Create an example image of a custom gradient"
+		    _"Custom _Gradient..."
+		    _"Create an image filled with an example of the current gradient"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "June 1997"

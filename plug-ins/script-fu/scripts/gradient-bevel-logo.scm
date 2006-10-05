@@ -89,7 +89,7 @@
 
 (script-fu-register "script-fu-gradient-bevel-logo-alpha"
 		    _"Gradient Beve_l..."
-		    "Makes Shiny Bevelly text"
+		    _"Add a shiny look and bevel effect to the selected region (or alpha)"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
 		    "April 1998"
@@ -123,7 +123,7 @@
 
 (script-fu-register "script-fu-gradient-bevel-logo"
 		    _"Gradient Beve_l..."
-		    "Makes Shiny Bevelly text"
+		    _"Create a logo with a shiny look and bevelled edges"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
 		    "April 1998"

@@ -230,7 +230,7 @@
 
 (script-fu-register "script-fu-slide"
 		    _"_Slide..."
-		    "Gives the image the look of a slide"
+		    _"Add a slide-film like frame, sprocket holes, and labels to an image"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
 		    "2004/03/28"

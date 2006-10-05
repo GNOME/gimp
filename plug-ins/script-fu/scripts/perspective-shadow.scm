@@ -176,7 +176,7 @@
 
 (script-fu-register "script-fu-perspective-shadow"
 		    _"_Perspective..."
-		    "Add a perspective shadow"
+		    _"Add a perspective shadow to the selected region (or alpha)"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
 		    "2000/11/08"

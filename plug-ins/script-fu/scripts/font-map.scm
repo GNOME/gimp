@@ -128,7 +128,7 @@
 
 (script-fu-register "script-fu-font-map"
 		    _"Render _Font Map..."
-		    "Generate a listing of fonts matching a filter"
+		    _"Create an image filled with previews of fonts matching a fontname filter"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"

@@ -88,7 +88,7 @@
 
 (script-fu-register "script-fu-waves-anim"
 		    _"_Waves..."
-		    "Animate an image like a stone's been thrown into it"
+		    _"Create a multi-layer image with an effect like a stone was thrown into the current image"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
 		    "1997/13/12"

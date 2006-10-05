@@ -83,7 +83,7 @@
 
 (script-fu-register "script-fu-alien-glow-horizontal-ruler"
 		    _"_Hrule..."
-		    "Create an Hrule with the Alien Glow look"
+		    _"Create an Hrule graphic with an eerie glow theme for web pages"
 		    "Adrian Likins"
 		    "Adrian Likins"
 		    "1997"

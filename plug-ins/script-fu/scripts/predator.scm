@@ -108,7 +108,7 @@
 
 (script-fu-register "script-fu-predator"
 		    _"_Predator..."
-		    "Looks like images from the movie Predator"
+		    _"Add a 'Predator' effect to the selected region (or alpha)"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
 		    "10/12/97"

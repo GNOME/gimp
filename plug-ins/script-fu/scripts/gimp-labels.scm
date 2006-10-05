@@ -106,7 +106,7 @@
 
 (script-fu-register "script-fu-tube-button-label-gimp-org"
 		    _"_Tube Button Label..."
-		    "Tube Button Label Header for gimp.org"
+		    _"Create an image of a Tube Button Label using the  gimp.org webpage theme"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
@@ -121,7 +121,7 @@
 
 (script-fu-register "script-fu-tube-subbutton-label-gimp-org"
 		    _"T_ube Sub-Button Label..."
-		    "Tube Button Label Header for gimp.org"
+		    _"Create an image of a Tube Button Label using the  gimp.org webpage theme"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
@@ -136,7 +136,7 @@
 
 (script-fu-register "script-fu-tube-subsubbutton-label-gimp-org"
 		    _"Tub_e Sub-Sub-Button Label..."
-		    "Tube Button Label Header for gimp.org"
+		    _"Create an image of a Tube Button Label using the  gimp.org webpage theme"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
@@ -151,7 +151,7 @@
 
 (script-fu-register "script-fu-labels-gimp-org"
 		    _"_General Tube Labels..."
-		    "Tube Button Label Header for gimp.org"
+		    _"Create an image of a Tube Button Label Header using the  gimp.org webpage theme"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"

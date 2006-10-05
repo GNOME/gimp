@@ -88,7 +88,7 @@
 
 (script-fu-register "script-fu-camo-pattern"
 		    _"_Camouflage..."
-		    "Camouflage pattern"
+		    _"Create an image filled with a camouflage pattern"
 		    "Chris Gutteridge: cjg@ecs.soton.ac.uk"
 		    "28th April 1998"
 		    "Chris Gutteridge / ECS @ University of Southampton, England"

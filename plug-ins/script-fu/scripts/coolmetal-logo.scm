@@ -123,7 +123,7 @@
 
 (script-fu-register "script-fu-cool-metal-logo-alpha"
 		    _"Cool _Metal..."
-		    "Metallic logos with reflections and perspective shadows"
+		    _"Add a metallic logo effect to the selected region (or alpha) with reflections and perspective shadows"
 		    "Spencer Kimball & Rob Malda"
 		    "Spencer Kimball & Rob Malda"
 		    "1997"
@@ -156,7 +156,7 @@
 
 (script-fu-register "script-fu-cool-metal-logo"
 		    _"Cool _Metal..."
-		    "Metallic logos with reflections and perspective shadows"
+		    _"Create a metallic logo with reflections and perspective shadows"
 		    "Spencer Kimball & Rob Malda"
 		    "Spencer Kimball & Rob Malda"
 		    "1997"

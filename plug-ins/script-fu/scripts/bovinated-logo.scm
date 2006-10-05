@@ -84,7 +84,7 @@
 
 (script-fu-register "script-fu-bovinated-logo-alpha"
 		    _"Bo_vination..."
-		    "Makes Cow-spotted logos"
+		    _"Add 'cow spots' to the selected region (or alpha)"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
 		    "April 1998"
@@ -115,7 +115,7 @@
 
 (script-fu-register "script-fu-bovinated-logo"
 		    _"Bo_vination..."
-		    "Makes Cow-spotted logos"
+		    _"Create a logo with text in the style of 'cow spots'"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
 		    "April 1998"

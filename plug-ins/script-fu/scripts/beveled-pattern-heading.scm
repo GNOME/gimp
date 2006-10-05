@@ -101,7 +101,7 @@
 
 (script-fu-register "script-fu-beveled-pattern-heading"
 		    _"H_eading..."
-		    "Beveled pattern heading"
+		    _"Create a beveled pattern heading for webpages"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "July 1997"

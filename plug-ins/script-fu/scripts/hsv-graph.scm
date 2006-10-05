@@ -332,7 +332,7 @@
 
 (script-fu-register "script-fu-hsv-graph"
 		    _"Draw _HSV Graph..."
-		    "Draph the graph of H/S/V values on the drawable"
+		    _"Create a graph of the Hue, Saturation, and Value distributions of the current drawable"
 		    "Shuji Narazaki <narazaki@InetQ.or.jp>"
 		    "Shuji Narazaki"
 		    "1997"

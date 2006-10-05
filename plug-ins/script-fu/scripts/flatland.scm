@@ -58,7 +58,7 @@
 
 (script-fu-register "script-fu-flatland"
 		    _"_Flatland..."
-		    "A Land Pattern"
+		    _"Create an image filled with a Land Pattern"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"
 		    "1997"

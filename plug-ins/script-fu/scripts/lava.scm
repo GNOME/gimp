@@ -99,7 +99,7 @@
 
 (script-fu-register "script-fu-lava"
 		    _"_Lava..."
-		    "Fills the current selection with lava."
+		    _"Fill the current selection with lava"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
 		    "10/12/97"

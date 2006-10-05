@@ -107,7 +107,7 @@
 
 (script-fu-register "script-fu-comic-logo-alpha"
 		    _"Comic Boo_k..."
-		    "Comic-book Style Logos"
+		    _"Add a comic-book effect to the selected region (or alpha) by outlining and filling with a gradient"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
 		    "April 1998"
@@ -144,7 +144,7 @@
 
 (script-fu-register "script-fu-comic-logo"
 		    _"Comic Boo_k..."
-		    "Comic-book Style Logos"
+		    _"Create a comic-book style logo"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
 		    "April 1998"

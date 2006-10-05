@@ -138,7 +138,7 @@
 
 (script-fu-register "script-fu-alien-glow-button"
 		    _"B_utton..."
-		    "Button with an eerie glow"
+		    _"Create a button graphic with an eerie glow theme for web pages"
 		    "Adrian Likins"
 		    "Adrian Likins"
 		    "July 1997"

@@ -159,7 +159,7 @@
 
 (script-fu-register "script-fu-title-header"
 		    _"Web Title Header..."
-		    "Web title header"
+		    _"Create a decorative web title header"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "June 1997"

@@ -45,7 +45,7 @@
 
 (script-fu-register "script-fu-swirl-tile"
 		    _"Swirl-_Tile..."
-		    "Create an interesting swirled tile"
+		    _"Create an image filled with a swirled tile effect"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"
 		    "1997"

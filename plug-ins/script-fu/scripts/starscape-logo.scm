@@ -123,7 +123,7 @@
 
 (script-fu-register "script-fu-starscape-logo-alpha"
 		    _"Sta_rscape..."
-		    "Starscape using the Nova plug-in"
+		    _"Fill the selected region (or alpha) with a 'rocky' texture and add a nova glow and shadow"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
@@ -152,7 +152,7 @@
 
 (script-fu-register "script-fu-starscape-logo"
 		    _"Sta_rscape..."
-		    "Starscape using the Nova plug-in"
+                    _"Create a logo using rock-like text backlit by a nova glow"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"

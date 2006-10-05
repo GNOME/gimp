@@ -64,8 +64,8 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-newsprint-text"
-		    _"Newsprint Te_xt..."
-		    "Apply a screen to text"
+		    _"Newsprint Text..."
+		    _"Create a logo in the style newpaper printing"
 		    "Austin Donnelly"
 		    "Austin Donnelly"
 		    "1998"

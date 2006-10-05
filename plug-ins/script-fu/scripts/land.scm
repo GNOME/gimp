@@ -69,7 +69,7 @@
 
 (script-fu-register "script-fu-land"
 		    _"_Land..."
-		    "A Topgraphic map pattern"
+		    _"Create an image filled with a topographic map pattern"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"
 		    "1997"

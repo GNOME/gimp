@@ -174,7 +174,7 @@
 
 (script-fu-register "script-fu-glossy-logo-alpha"
                     _"Glo_ssy..."
-                    "Creates anything you can create with it :)"
+                    _"Add gradients, patterns, shadows, and bump maps to the selected region (or alpha)"
                     "Hrvoje Horvat (hhorvat@open.hr)"
                     "Hrvoje Horvat"
                     "14/04/1998"
@@ -240,7 +240,7 @@
 
 (script-fu-register "script-fu-glossy-logo"
                     _"Glo_ssy..."
-                    "Creates anything you can create with it :)"
+                    _"Create a logo with gradients, patterns, shadows, and bump maps"
                     "Hrvoje Horvat (hhorvat@open.hr)"
                     "Hrvoje Horvat"
                     "14/04/1998"

@@ -111,7 +111,7 @@
 
 (script-fu-register "script-fu-ripply-anim"
 		    _"_Rippling..."
-		    "Ripple any image by creating animation frames as layers"
+		    _"Create a multi-layer image by adding a ripple effect to the current image"
 		    "Adam D. Moss (adam@foxbox.org)"
 		    "Adam D. Moss"
 		    "1997"

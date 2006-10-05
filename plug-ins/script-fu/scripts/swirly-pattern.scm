@@ -78,7 +78,7 @@
 
 (script-fu-register "script-fu-swirly-pattern"
 		    _"_Swirly..."
-		    "Create a swirly pattern"
+		    _"Create an image filled with a swirly pattern"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "June 1997"

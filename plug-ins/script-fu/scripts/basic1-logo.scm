@@ -50,7 +50,7 @@
 
 (script-fu-register "script-fu-basic1-logo-alpha"
 		    _"_Basic I..."
-		    "Creates a simple logo with a drop shadow"
+                    _"Add a gradient effect, a drop shadow, and a background to the selected region (or alpha)"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1996"
@@ -79,7 +79,7 @@
 
 (script-fu-register "script-fu-basic1-logo"
 		    _"_Basic I..."
-		    "Creates a simple logo with a drop shadow"
+                    _"Create a plain text logo and add a drop shadow"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1996"

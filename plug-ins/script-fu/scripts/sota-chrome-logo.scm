@@ -179,7 +179,7 @@
 
 (script-fu-register "script-fu-sota-chrome-logo"
 		    _"SOTA Chrome..."
-		    "State of the art chromed logos"
+		    _"Create a State Of The Art chromed logo"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"

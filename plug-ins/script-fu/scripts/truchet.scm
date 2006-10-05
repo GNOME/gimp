@@ -150,7 +150,7 @@
 
 (script-fu-register "script-fu-truchet"
 		    _"T_ruchet..."
-		    "Create a Truchet pattern \n\nWorks best with even sized thicknesses"
+		    _"Create an image filled with a Truchet pattern"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"
 		    "1997"

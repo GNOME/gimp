@@ -160,7 +160,7 @@
 
 (script-fu-register "script-fu-drop-shadow"
 		    _"_Drop-Shadow..."
-		    "Add a drop-shadow of the current selection or alpha-channel"
+		    _"Add a drop-shadow to the selected region (or alpha)"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
 		    "1999/12/21"

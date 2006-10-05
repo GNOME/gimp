@@ -175,7 +175,7 @@
 
 (script-fu-register "script-fu-carve-it"
 		    _"Stencil C_arve..."
-		    "Use the specified [GRAY] drawable as a stencil to carve from the specified image. The specified image must be either RGB colour or grayscale, not indexed."
+		    _"Create an image with a carved effect using the active (grayscale) drawable as a mask"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"

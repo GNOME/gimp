@@ -52,7 +52,7 @@
 
 (script-fu-register "script-fu-paste-as-brush"
 		    _"New _Brush..."
-		    "Pastes the clipboard contents into a new brush"
+		    _"Paste the clipboard contents into a new brush"
 		    "Michael Natterer <mitch@gimp.org>"
 		    "Michael Natterer"
 		    "2005-09-25"

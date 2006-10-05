@@ -25,7 +25,7 @@
 
 (script-fu-register "script-fu-guides-from-selection" 
 		    _"New Guides from _Selection"
-		    _"Creates four Guides around the bounding box of the current selection."
+		    _"Create four guides around the bounding box of the current selection"
 		    "Alan Horkan"
 		    "Alan Horkan, 2004.  Public Domain."
 		    "2004-08-13"

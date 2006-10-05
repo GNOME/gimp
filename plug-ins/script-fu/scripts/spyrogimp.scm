@@ -322,7 +322,7 @@
 
 (script-fu-register "script-fu-spyrogimp"
                     _"_Spyrogimp..."
-                    _"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://www.wisdom.weizmann.ac.il/~elad/spyrogimp/"
+                    _"Add Spirographs, Epitrochoids and Lissajous Curves to the current layer"
                     "Elad Shahar <elad@wisdom.weizmann.ac.il>"
                     "Elad Shahar"
                     "June 2003"

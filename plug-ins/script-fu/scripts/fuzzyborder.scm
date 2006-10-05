@@ -146,7 +146,7 @@
 
 (script-fu-register "script-fu-fuzzy-border"
 		    _"_Fuzzy Border..."
-		    "Fade border to chosen color"
+		    _"Add a jagged, fuzzy border to an image"
 		    "Chris Gutteridge"
 		    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
 		    "3rd April 1998"

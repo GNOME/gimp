@@ -29,7 +29,7 @@
 
 (script-fu-register "script-fu-copy-visible"
 		    "Copy Visible"
-		    "This procedure is deprecated! use \'gimp-edit-copy-visible\' instead."
+		    _"This procedure is deprecated! use \'gimp_edit_copy_visible\' instead."
 		    ""
 		    ""
 		    ""

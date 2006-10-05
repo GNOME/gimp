@@ -22,17 +22,17 @@
     (gimp-displays-flush)))
     
 (script-fu-register "script-fu-guide-new-percent"
-		    _"New Guide (by _Percent)..." 
-		    "Add a single Line Guide with the specified postion. Position specified as a percent of the image size."
-		    "Alan Horkan"
-		    "Alan Horkan, 2004"
-		    "April 2004"
-		    ""
-		    SF-IMAGE      "Input Image"      0 
-		    SF-DRAWABLE   "Input Drawable"   0
-		    SF-OPTION     _"Direction"       '(_"Horizontal" 
-						       _"Vertical")
-		    SF-ADJUSTMENT _"Position (in %)" '(50 0 100 1 10 0 1))
+                    _"New Guide (by _Percent)..." 
+                    _"Add a guide at the position specified as a percentage of the image size"
+                    "Alan Horkan"
+                    "Alan Horkan, 2004"
+                    "April 2004"
+                    ""
+                    SF-IMAGE      "Input Image"      0 
+                    SF-DRAWABLE   "Input Drawable"   0
+                    SF-OPTION     _"Direction"       '(_"Horizontal" 
+                                  _"Vertical")
+                    SF-ADJUSTMENT _"Position (in %)" '(50 0 100 1 10 0 1))
     
 (script-fu-menu-register "script-fu-guide-new-percent"
 			 "<Image>/Image/Guides")

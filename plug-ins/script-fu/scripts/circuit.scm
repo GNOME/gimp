@@ -128,7 +128,7 @@
 
 (script-fu-register "script-fu-circuit"
 		    _"_Circuit..."
-		    "Fills the current selection with something that looks vaguely like a circuit board."
+		    _"Fill the selected region (or alpha) with traces like those on a circuit board"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
 		    "10/17/97"

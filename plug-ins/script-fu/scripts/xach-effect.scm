@@ -112,7 +112,7 @@
 
 (script-fu-register "script-fu-xach-effect"
 		    _"_Xach-Effect..."
-		    "Add a subtle translucent 3-d effect to the current selection or alpha channel"
+		    _"Add a subtle translucent 3-d effect to the selected region (or alpha)"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
 		    "9/28/97"

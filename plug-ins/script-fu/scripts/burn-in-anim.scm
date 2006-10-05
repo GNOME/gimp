@@ -184,7 +184,7 @@
 
 (script-fu-register "script-fu-burn-in-anim"
 		    _"B_urn-In..."
-		    "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
+		    _"Create intermediate layers to produce an animated 'burn-in' transition between two layers"
 		    "Roland Berger roland@fuchur.leute.server.de"
 		    "Roland Berger"
 		    "January 2001"

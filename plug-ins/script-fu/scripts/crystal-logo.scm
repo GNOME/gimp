@@ -187,7 +187,7 @@
 
 (script-fu-register "script-fu-crystal-logo"
 		    _"Crystal..."
-		    "Crystal/Gel effect which displaces the image underneath"
+		    _"Create a logo with a crystal/gel effect displacing the image underneath"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"

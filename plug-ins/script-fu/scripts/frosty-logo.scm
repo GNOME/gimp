@@ -95,7 +95,7 @@
 
 (script-fu-register "script-fu-frosty-logo-alpha"
 		    _"_Frosty..."
-		    "Frozen logos with drop shadows"
+		    _"Add a frost effect to the selected region (or alpha)"
 		    "Spencer Kimball & Ed Mackey"
 		    "Spencer Kimball & Ed Mackey"
 		    "1997"
@@ -122,7 +122,7 @@
 
 (script-fu-register "script-fu-frosty-logo"
 		    _"_Frosty..."
-		    "Frozen logos with drop shadows"
+		    _"Create frozen logo with an added drop shadow"
 		    "Spencer Kimball & Ed Mackey"
 		    "Spencer Kimball & Ed Mackey"
 		    "1997"

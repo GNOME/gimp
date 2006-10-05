@@ -117,7 +117,7 @@
 
 (script-fu-register "script-fu-alien-neon-logo-alpha"
 		    _"Alien _Neon..."
-		    "Creates a psychedelic effect with outlines of the specified color around the letters"
+		    _"Add psychedelic outlines to the selected region (or alpha)"
 		    "Raphael Quinet (quinet@gamers.org)"
 		    "Raphael Quinet"
 		    "1999-2000"
@@ -155,7 +155,7 @@
 
 (script-fu-register "script-fu-alien-neon-logo"
 		    _"Alien _Neon..."
-		    "Creates a psychedelic effect with outlines of the specified color around the letters"
+		    _"Create a logo with psychedelic outlines around the text"
 		    "Raphael Quinet (quinet@gamers.org)"
 		    "Raphael Quinet"
 		    "1999-2000"

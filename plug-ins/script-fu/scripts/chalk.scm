@@ -67,7 +67,7 @@
 
 (script-fu-register "script-fu-chalk-logo-alpha"
                     _"_Chalk..."
-                    "Chalk scribbled logos"
+                    _"Create a chalk drawing effect for the selected region (or alpha)"
                     "Manish Singh <msingh@uclink4.berkeley.edu>"
                     "Manish Singh"
                     "October 1997"
@@ -103,7 +103,7 @@
 
 (script-fu-register "script-fu-chalk-logo"
                     _"_Chalk..."
-                    "Chalk scribbled logos"
+                    _"Create a logo resembling chalk scribbled on a blackboard"
                     "Manish Singh <msingh@uclink4.berkeley.edu>"
                     "Manish Singh"
                     "October 1997"

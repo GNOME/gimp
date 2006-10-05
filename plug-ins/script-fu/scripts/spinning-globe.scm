@@ -106,7 +106,7 @@
 
 (script-fu-register "script-fu-spinning-globe"
 		    _"_Spinning Globe..."
-		    "Maps the image on an animated spinning globe"
+		    _"Create an animation by mapping the current image onto a spinning sphere"
 		    "Chris Gutteridge"
 		    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
 		    "16th April 1998"

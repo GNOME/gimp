@@ -84,8 +84,8 @@
 
 
 (script-fu-register "script-fu-i26-gunya2"
-		    _"Imigre-_26..."
-		    "Two-colored text by hand"
+                    _"Imigre-_26..."
+                    _"Create a logo in a two-color, scribbled text style"
 		    "Shuji Narazaki"
 		    "Shuji Narazaki"
 		    "1997"

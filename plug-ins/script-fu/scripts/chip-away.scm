@@ -128,7 +128,7 @@
 
 (script-fu-register "script-fu-chip-away-logo-alpha"
 		    _"Chip Awa_y..."
-		    "Chip away effect"
+		    _"Add a chipped woodcarving effect to the selected region (or alpha)"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "1997"
@@ -171,7 +171,7 @@
 
 (script-fu-register "script-fu-chip-away-logo"
 		    _"Chip Awa_y..."
-		    "Chip away effect"
+		    _"Create a logo resembling a chipped wood carving"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "1997"

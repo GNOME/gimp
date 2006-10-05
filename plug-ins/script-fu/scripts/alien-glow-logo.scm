@@ -56,7 +56,7 @@
 
 (script-fu-register "script-fu-alien-glow-logo-alpha"
 		    _"Alien _Glow..."
-		    "Create an X-Files-esque logo with the specified glow color"
+		    _"Add an eerie glow around the selected region (or alpha)"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
@@ -91,7 +91,7 @@
 
 (script-fu-register "script-fu-alien-glow-logo"
 		    _"Alien _Glow..."
-		    "Create an X-Files-esque logo with the specified glow color"
+		    _"Create a logo with an alien glow around the text"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"

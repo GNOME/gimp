@@ -387,7 +387,7 @@
 
 (script-fu-register "script-fu-weave"
 		    _"_Weave..."
-		    "Weave effect like Alien Skin"
+		    _"Create a new layer filled with a weave effect to be used as an overlay or bump map"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "June 1997"

@@ -145,7 +145,7 @@
 
 (script-fu-register "script-fu-alien-glow-right-arrow"
                     _"_Arrow..."
-                    "Create an X-file deal"
+                    _"Create an arrow graphic with an eerie glow theme for web pages"
                     "Adrian Likins"
                     "Adrian Likins"
                     "1997"

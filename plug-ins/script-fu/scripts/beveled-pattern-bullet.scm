@@ -78,7 +78,7 @@
 
 (script-fu-register "script-fu-beveled-pattern-bullet"
 		    _"_Bullet..."
-		    "Beveled pattern bullet"
+		    _"Create a beveled pattern bullet for webpages"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "July 1997"

@@ -68,7 +68,7 @@
 
 (script-fu-register "script-fu-glowing-logo-alpha"
 		    _"Glo_wing Hot..."
-		    "Glowing hot logos"
+		    _"Add a glowing hot metal effect to the selected region (or alpha)"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
@@ -96,7 +96,7 @@
 
 (script-fu-register "script-fu-glowing-logo"
 		    _"Glo_wing Hot..."
-		    "Glowing hot logos"
+		    _"Create a logo that looks like glowing hot metal"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"

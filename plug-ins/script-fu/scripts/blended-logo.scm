@@ -116,7 +116,7 @@
 
 (script-fu-register "script-fu-blended-logo-alpha"
 		    _"Blen_ded..."
-		    "Creates logos with blended backgrounds, highlights, and shadows"
+		    _"Add blended backgrounds, highlights, and shadows to the selected region (or alpha)"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1996"
@@ -169,7 +169,7 @@
 
 (script-fu-register "script-fu-blended-logo"
 		    _"Blen_ded..."
-		    "Creates logos with blended backgrounds, highlights, and shadows"
+		    _"Create a logo with blended backgrounds, highlights, and shadows"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1996"

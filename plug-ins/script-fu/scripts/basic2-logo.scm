@@ -69,7 +69,7 @@
 
 (script-fu-register "script-fu-basic2-logo-alpha"
 		    _"B_asic II..."
-		    "Creates a simple logo with a shadow and a highlight"
+		    _"Add a shadow and a highlight to the selected region (or alpha)"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1996"
@@ -98,7 +98,7 @@
 
 (script-fu-register "script-fu-basic2-logo"
 		    _"B_asic II..."
-		    "Creates a simple logo with a shadow and a highlight"
+		    _"Create a simple logo with a shadow and a highlight"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1996"

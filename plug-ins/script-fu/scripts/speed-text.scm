@@ -79,7 +79,7 @@
 
 (script-fu-register "script-fu-speed-text"
 		    _"Speed Text..."
-		    "give text a speedy effect"
+		    _"Create a logo using a speedy text effect"
 		    "Austin Donnelly"
 		    "Austin Donnelly"
 		    "1998"

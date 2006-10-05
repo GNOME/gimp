@@ -84,7 +84,7 @@
 
 (script-fu-register "script-fu-distress-selection"
 		    _"_Distort..."
-		    "No description"
+		    _"Distress the selection"
 		    "Chris Gutteridge"
 		    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
 		    "23rd April 1998"

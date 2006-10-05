@@ -26,7 +26,7 @@
 
 (script-fu-register "script-fu-erase-rows"
 		    _"_Erase Every Other Row..."
-		    "Erase every other row/column with the background color"
+		    _"Erase every other row/column of pixels of the active drawable"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "June 1997"

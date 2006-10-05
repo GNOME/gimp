@@ -167,7 +167,7 @@
 
 (script-fu-register "script-fu-addborder"
                     _"Add _Border..."
-                    "Add a border around an image"
+                    _"Add a border around an image"
                     "Andy Thomas <alt@picnic.demon.co.uk>"
                     "Andy Thomas"
                     "6/10/97"

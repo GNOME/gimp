@@ -133,7 +133,7 @@
 
 (script-fu-register "script-fu-big-header-gimp-org"
 		    _"_Big Header..."
-		    "Big Gimp.org Header"
+		    _"Create an image of a large header using the Gimp.org webpage theme"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
@@ -155,7 +155,7 @@
 
 (script-fu-register "script-fu-small-header-gimp-org"
 		    _"_Small Header..."
-		    "Small Gimp.org Header"
+		    _"Create an image of a small header using the Gimp.org webpage theme"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
