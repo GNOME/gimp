@@ -1,6 +1,6 @@
 
 
-                       TinySCHEME Version 1.34
+                       TinySCHEME Version 1.38
 
                     "Safe if used as prescribed"
                     -- Philip K. Dick, "Ubik"
@@ -36,9 +36,7 @@ Please read accompanying file COPYING.
      Known bugs
      ----------
 
-     SCM tests had revealed a memory allocation error in the past, but not
-     anymore. It probably had to do with vectors, and version 1.21 probably
-     got rid of it.
+     TinyScheme is known to misbehave when memory is exhausted.
 
 
      Things that keep missing, or that need fixing
@@ -49,10 +47,8 @@ Please read accompanying file COPYING.
 
      Maybe (a subset of) SLIB will work with TinySCHEME...
 
-     I will add a debugger... The user will be able to specify breakpoints,
-     and a new toplevel will be entered when the breakpoint is reached. Most
-     of the actual debugger will be in Scheme, with minimal additions to
-     scheme.c.
+     Decent debugging facilities are missing. Only tracing is supported 
+     natively.
 
 
      Scheme Reference
@@ -132,8 +128,9 @@ Please read accompanying file COPYING.
 
           Literals
      String literals can contain escaped quotes \" as usual, but also
-     \n, \r, \t and \xDD (hex representations). Note also that it is 
-     possible to include literal newlines in string literals, e.g.
+     \n, \r, \t, \xDD (hex representations) and \DDD (octal representations).
+     Note also that it is possible to include literal newlines in string
+     literals, e.g.
 
           (define s "String with newline here
           and here
