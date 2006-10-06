@@ -1,3 +1,10 @@
+2006-10-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/convmatrix.c: commit patch from GG that
+	cleans up code and adds (commented out) support for larger
+	matrices, with some coding style fixes; see bug #357085.
+	This plug-in still needs help, though.
+
 2006-10-06  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/file-open-location-dialog.c
