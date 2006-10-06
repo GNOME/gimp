@@ -174,49 +174,61 @@ file_open_location_response (GtkDialog *dialog,
       gchar             *uri;
       gchar             *filename;
       gchar             *hostname;
-      GError            *error = NULL;
+      GError            *error  = NULL;
       GimpPDBStatusType  status;
 
       filename = g_filename_from_uri (text, &hostname, NULL);
 
       if (filename)
         {
-          uri = g_filename_to_uri (filename, hostname, NULL);
+          uri = g_filename_to_uri (filename, hostname, &error);
+
           g_free (hostname);
           g_free (filename);
         }
       else
         {
           uri = file_utils_filename_to_uri (gimp->plug_in_manager->load_procs,
-                                            text, NULL);
+                                            text, &error);
         }
 
       box = gimp_progress_box_new ();
       gtk_container_set_border_width (GTK_CONTAINER (box), 12);
       gtk_box_pack_end (GTK_BOX (dialog->vbox), box, FALSE, FALSE, 0);
-      gtk_widget_show (box);
 
       g_object_set_data (G_OBJECT (dialog), "progress-box", box);
 
-      image = file_open_with_proc_and_display (gimp,
-                                               gimp_get_user_context (gimp),
-                                               GIMP_PROGRESS (box),
-                                               uri, text, NULL,
-                                               &status, &error);
-
-      if (image == NULL && status != GIMP_PDB_CANCEL)
+      if (uri)
         {
-          gchar *filename = file_utils_uri_display_name (uri);
+          gtk_widget_show (box);
 
+          image = file_open_with_proc_and_display (gimp,
+                                                   gimp_get_user_context (gimp),
+                                                   GIMP_PROGRESS (box),
+                                                   uri, text, NULL,
+                                                   &status, &error);
+
+          if (image == NULL && status != GIMP_PDB_CANCEL)
+            {
+              gchar *filename = file_utils_uri_display_name (uri);
+
+              gimp_message (gimp, GIMP_PROGRESS (box),
+                            _("Opening '%s' failed:\n\n%s"),
+                            filename, error->message);
+              g_clear_error (&error);
+
+              g_free (filename);
+            }
+
+          g_free (uri);
+        }
+      else
+        {
           gimp_message (gimp, GIMP_PROGRESS (box),
                         _("Opening '%s' failed:\n\n%s"),
-                        filename, error->message);
+                        text, error->message);
           g_clear_error (&error);
-
-          g_free (filename);
         }
-
-      g_free (uri);
     }
 
   gtk_widget_destroy (GTK_WIDGET (dialog));

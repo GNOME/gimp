@@ -1,5 +1,14 @@
 2006-10-06  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/file-open-location-dialog.c
+	(file_open_location_response): slightly better error handling;
+	doesn't address bug #358203 yet.
+
+	* app/file/file-utils.c (file_check_single_magic)
+	(file_check_magic_list): code cleanup.
+
+2006-10-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/FractalExplorer/Dialogs.c: changed some labels to be
 	more descriptive instead of explaining the meaning in a tooltip.
 	Set slider senitivity according to fractal type.

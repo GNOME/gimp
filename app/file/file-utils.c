@@ -57,6 +57,14 @@
 #include "gimp-intl.h"
 
 
+typedef enum
+{
+  FILE_MATCH_NONE,
+  FILE_MATCH_MAGIC,
+  FILE_MATCH_SIZE
+} FileMatchType;
+
+
 /*  local function prototypes  */
 
 static GimpPlugInProcedure * file_proc_find_by_prefix    (GSList       *procs,
@@ -78,13 +86,13 @@ static void                  file_convert_string         (const gchar  *instr,
                                                           gchar        *outmem,
                                                           gint          maxmem,
                                                           gint         *nmem);
-static gint                  file_check_single_magic     (const gchar  *offset,
+static FileMatchType         file_check_single_magic     (const gchar  *offset,
                                                           const gchar  *type,
                                                           const gchar  *value,
                                                           const guchar *file_head,
                                                           gint          headsize,
                                                           FILE         *ifp);
-static gint                  file_check_magic_list       (GSList       *magics_list,
+static FileMatchType         file_check_magic_list       (GSList       *magics_list,
                                                           const guchar *head,
                                                           gint          headsize,
                                                           FILE         *ifp);
@@ -213,7 +221,7 @@ file_utils_find_proc (GSList       *procs,
       FILE                *ifp               = NULL;
       gint                 head_size         = -2;
       gint                 size_match_count  = 0;
-      gint                 match_val;
+      FileMatchType        match_val;
       guchar               head[256];
 
       while (procs)
@@ -520,7 +528,7 @@ file_proc_find_by_prefix (GSList      *procs,
            prefixes;
            prefixes = g_slist_next (prefixes))
         {
-          if (strncmp (uri, prefixes->data, strlen (prefixes->data)) == 0)
+          if (g_str_has_prefix (uri, prefixes->data))
             return proc;
         }
      }
@@ -726,7 +734,7 @@ file_convert_string (const gchar *instr,
   *nmem = ((gchar *) uout) - outmem;
 }
 
-static gint
+static FileMatchType
 file_check_single_magic (const gchar  *offset,
                          const gchar  *type,
                          const gchar  *value,
@@ -735,43 +743,41 @@ file_check_single_magic (const gchar  *offset,
                          FILE         *ifp)
 
 {
-  /* Return values are 0: no match, 1: magic match, 2: size match */
+  FileMatchType found = FILE_MATCH_NONE;
   glong         offs;
-  gulong        num_testval, num_operatorval;
-  gulong        fileval;
+  gulong        num_testval;
+  gulong        num_operatorval;
   gint          numbytes, k;
-  gint          c     = 0;
-  gint          found = 0;
   const gchar  *num_operator_ptr;
   gchar         num_operator;
-  gchar         num_test;
-  gchar         mem_testval[256];
 
   /* Check offset */
-  if (sscanf (offset, "%ld", &offs) != 1) return (0);
-  if (offs < 0) return (0);
+  if (sscanf (offset, "%ld", &offs) != 1)
+    return FILE_MATCH_NONE;
+
+  if (offs < 0)
+    return FILE_MATCH_NONE;
 
   /* Check type of test */
   num_operator_ptr = NULL;
   num_operator     = '\0';
-  num_test         = '=';
 
-  if (strncmp (type, "byte", 4) == 0)
+  if (g_str_has_prefix (type, "byte"))
     {
       numbytes = 1;
-      num_operator_ptr = type + 4;
+      num_operator_ptr = type + strlen ("byte");
     }
-  else if (strncmp (type, "short", 5) == 0)
+  else if (g_str_has_prefix (type, "short"))
     {
       numbytes = 2;
-      num_operator_ptr = type + 5;
+      num_operator_ptr = type + strlen ("short");
     }
-  else if (strncmp (type, "long", 4) == 0)
+  else if (g_str_has_prefix (type, "long"))
     {
       numbytes = 4;
-      num_operator_ptr = type + 4;
+      num_operator_ptr = type + strlen ("long");
     }
-  else if (strncmp (type, "size", 4) == 0)
+  else if (g_str_has_prefix (type, "size"))
     {
       numbytes = 5;
     }
@@ -779,7 +785,10 @@ file_check_single_magic (const gchar  *offset,
     {
       numbytes = 0;
     }
-  else return (0);
+  else
+    {
+      return FILE_MATCH_NONE;
+    }
 
   /* Check numerical operator value if present */
   if (num_operator_ptr && (*num_operator_ptr == '&'))
@@ -792,52 +801,57 @@ file_check_single_magic (const gchar  *offset,
             sscanf (num_operator_ptr+3, "%lx", &num_operatorval);
           else                                 /* octal */
             sscanf (num_operator_ptr+2, "%lo", &num_operatorval);
+
           num_operator = *num_operator_ptr;
         }
     }
 
   if (numbytes > 0)   /* Numerical test ? */
     {
+      gchar   num_test = '=';
+      gulong  fileval  = 0;
+
       /* Check test value */
-      if ((value[0] == '=') || (value[0] == '>') || (value[0] == '<'))
-      {
-        num_test = value[0];
-        value++;
-      }
-      if (!g_ascii_isdigit (value[0])) return (0);
+      if ((value[0] == '>') || (value[0] == '<'))
+        {
+          num_test = value[0];
+          value++;
+        }
 
-      /*
-       * to anybody reading this: is strtol's parsing behaviour
-       * (e.g. "0x" prefix) broken on some systems or why do we
-       * do the base detection ourselves?
-       * */
-      if (value[0] != '0')      /* decimal */
-        num_testval = strtol(value, NULL, 10);
-      else if (value[1] == 'x') /* hexadecimal */
-        num_testval = (unsigned long)strtoul(value+2, NULL, 16);
-      else                      /* octal */
-        num_testval = strtol(value+1, NULL, 8);
+      errno = 0;
+      num_testval = strtol (value, NULL, 0);
 
-      fileval = 0;
+      if (errno != 0)
+        return FILE_MATCH_NONE;
+
       if (numbytes == 5)    /* Check for file size ? */
         {
           struct stat buf;
 
-          if (fstat (fileno (ifp), &buf) < 0) return (0);
+          if (fstat (fileno (ifp), &buf) < 0)
+            return FILE_MATCH_NONE;
+
           fileval = buf.st_size;
         }
       else if (offs + numbytes <= headsize)  /* We have it in memory ? */
         {
           for (k = 0; k < numbytes; k++)
-          fileval = (fileval << 8) | (long)file_head[offs+k];
+            fileval = (fileval << 8) | (glong) file_head[offs+k];
         }
       else   /* Read it from file */
         {
-          if (fseek (ifp, offs, SEEK_SET) < 0) return (0);
+          gint c = 0;
+
+          if (fseek (ifp, offs, SEEK_SET) < 0)
+            return FILE_MATCH_NONE;
+
           for (k = 0; k < numbytes; k++)
             fileval = (fileval << 8) | (c = getc (ifp));
-          if (c == EOF) return (0);
+
+          if (c == EOF)
+            return FILE_MATCH_NONE;
         }
+
       if (num_operator == '&')
         fileval &= num_operatorval;
 
@@ -848,15 +862,19 @@ file_check_single_magic (const gchar  *offset,
       else
         found = (fileval == num_testval);
 
-      if (found && (numbytes == 5)) found = 2;
+      if (found && (numbytes == 5))
+        found = FILE_MATCH_SIZE;
     }
   else if (numbytes == 0) /* String test */
     {
+      gchar mem_testval[256];
+
       file_convert_string (value,
                            mem_testval, sizeof (mem_testval),
                            &numbytes);
 
-      if (numbytes <= 0) return (0);
+      if (numbytes <= 0)
+        return FILE_MATCH_NONE;
 
       if (offs + numbytes <= headsize)  /* We have it in memory ? */
         {
@@ -864,12 +882,16 @@ file_check_single_magic (const gchar  *offset,
         }
       else   /* Read it from file */
         {
-          if (fseek (ifp, offs, SEEK_SET) < 0) return (0);
-          found = 1;
+          if (fseek (ifp, offs, SEEK_SET) < 0)
+            return FILE_MATCH_NONE;
+
+          found = FILE_MATCH_MAGIC;
+
           for (k = 0; found && (k < numbytes); k++)
             {
-              c = getc (ifp);
-              found = (c != EOF) && (c == (int) mem_testval[k]);
+              gint c = getc (ifp);
+
+              found = (c != EOF) && (c == (gint) mem_testval[k]);
             }
         }
     }
@@ -877,22 +899,19 @@ file_check_single_magic (const gchar  *offset,
   return found;
 }
 
-/*
- *  Return values are 0: no match, 1: magic match, 2: size match
- */
-static gint
+static FileMatchType
 file_check_magic_list (GSList       *magics_list,
                        const guchar *head,
                        gint          headsize,
                        FILE         *ifp)
 
 {
-  const gchar *offset;
-  const gchar *type;
-  const gchar *value;
-  gint         and   = 0;
-  gint         found = 0;
-  gint         match_val;
+  const gchar   *offset;
+  const gchar   *type;
+  const gchar   *value;
+  gboolean       and   = FALSE;
+  FileMatchType  found = FILE_MATCH_NONE;
+  FileMatchType  match_val;
 
   while (magics_list)
     {
@@ -914,9 +933,9 @@ file_check_magic_list (GSList       *magics_list,
 
       and = (strchr (offset, '&') != NULL);
 
-      if ((!and) && found)
+      if ((! and) && found)
         return match_val;
     }
 
-  return 0;
+  return FILE_MATCH_NONE;
 }
