@@ -246,7 +246,24 @@ static void
 explorer_radio_update  (GtkWidget *widget,
                         gpointer   data)
 {
+  gboolean c_sensitive;
+
   gimp_radio_button_update (widget, data);
+
+  switch (wvals.fractaltype)
+    {
+    case TYPE_MANDELBROT:
+    case TYPE_SIERPINSKI:
+      c_sensitive = FALSE;
+      break;
+
+    default:
+      c_sensitive = TRUE;
+      break;
+    }
+
+  gimp_scale_entry_set_sensitive (elements->cx, c_sensitive);
+  gimp_scale_entry_set_sensitive (elements->cy, c_sensitive);
 
   set_cmap_preview ();
   dialog_update_preview ();
@@ -714,56 +731,47 @@ explorer_dialog (void)
 
   elements->xmin =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                          _("XMIN:"), SCALE_WIDTH, 10,
+                          _("Left:"), SCALE_WIDTH, 10,
                           wvals.xmin, -3, 3, 0.001, 0.01, 5,
-                          TRUE, 0, 0,
-                          _("Change the first (minimal) x-coordinate "
-                            "delimitation"), NULL);
+                          TRUE, 0, 0, NULL, NULL);
   g_signal_connect (elements->xmin, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmin);
 
   elements->xmax =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                          _("XMAX:"), SCALE_WIDTH, 10,
+                          _("Right:"), SCALE_WIDTH, 10,
                           wvals.xmax, -3, 3, 0.001, 0.01, 5,
-                          TRUE, 0, 0,
-                          _("Change the second (maximal) x-coordinate "
-                            "delimitation"), NULL);
+                          TRUE, 0, 0, NULL, NULL);
   g_signal_connect (elements->xmax, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmax);
 
   elements->ymin =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                          _("YMIN:"), SCALE_WIDTH, 10,
+                          _("Top:"), SCALE_WIDTH, 10,
                           wvals.ymin, -3, 3, 0.001, 0.01, 5,
-                          TRUE, 0, 0,
-                          _("Change the first (minimal) y-coordinate "
-                            "delimitation"), NULL);
+                          TRUE, 0, 0, NULL, NULL);
   g_signal_connect (elements->ymin, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymin);
 
   elements->ymax =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-                          _("YMAX:"), SCALE_WIDTH, 10,
+                          _("Bottom:"), SCALE_WIDTH, 10,
                           wvals.ymax, -3, 3, 0.001, 0.01, 5,
-                          TRUE, 0, 0,
-                          _("Change the second (maximal) y-coordinate "
-                            "delimitation"), NULL);
+                          TRUE, 0, 0, NULL, NULL);
   g_signal_connect (elements->ymax, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymax);
 
   elements->iter =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-                          _("ITER:"), SCALE_WIDTH, 10,
+                          _("Iterations:"), SCALE_WIDTH, 10,
                           wvals.iter, 1, 1000, 1, 10, 0,
                           TRUE, 0, 0,
-                          _("Change the iteration value. The higher it "
-                            "is, the more details will be calculated, "
-                            "which will take more time"), NULL);
+                          _("The higher the number of iterations, "
+                            "the more details will be calculated"), NULL);
   g_signal_connect (elements->iter, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.iter);
@@ -773,9 +781,7 @@ explorer_dialog (void)
                           _("CX:"), SCALE_WIDTH, 10,
                           wvals.cx, -2.5, 2.5, 0.001, 0.01, 5,
                           TRUE, 0, 0,
-                          _("Change the CX value (changes aspect of "
-                            "fractal, active with every fractal but "
-                            "Mandelbrot and Sierpinski)"), NULL);
+                          _("Changes aspect of fractal"), NULL);
   g_signal_connect (elements->cx, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.cx);
@@ -785,9 +791,7 @@ explorer_dialog (void)
                           _("CY:"), SCALE_WIDTH, 10,
                           wvals.cy, -2.5, 2.5, 0.001, 0.01, 5,
                           TRUE, 0, 0,
-                          _("Change the CY value (changes aspect of "
-                            "fractal, active with every fractal but "
-                            "Mandelbrot and Sierpinski)"), NULL);
+                          _("Changes aspect of fractal"), NULL);
   g_signal_connect (elements->cy, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.cy);
@@ -807,7 +811,7 @@ explorer_dialog (void)
   button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (dialog_reset_callback),
+                     G_CALLBACK (dialog_reset_callback),
                     dialog);
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Reset parameters to default values"),
@@ -1285,8 +1289,8 @@ dialog_update_preview (void)
 
           for (xcoord = 0; xcoord < preview_width; xcoord++)
             {
-              a = (double) xmin + (double) xcoord *xdiff;
-              b = (double) ymin + (double) ycoord *ydiff;
+              a = (double) xmin + (double) xcoord * xdiff;
+              b = (double) ymin + (double) ycoord * ydiff;
 
               if (wvals.fractaltype != TYPE_MANDELBROT)
                 {
@@ -1358,7 +1362,7 @@ dialog_update_preview (void)
                       foldyinity  = oldy * oldy;
                       foldxinity  = oldx * oldy;
                       /* orbit calculation */
-                      if(oldx > 0)
+                      if (oldx > 0)
                         {
                           xx = foldxinitx - foldyinity - 1.0;
                           y  = foldxinity * 2;

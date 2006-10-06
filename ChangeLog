@@ -1,5 +1,11 @@
 2006-10-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/FractalExplorer/Dialogs.c: changed some labels to be
+	more descriptive instead of explaining the meaning in a tooltip.
+	Set slider senitivity according to fractal type.
+	
+2006-10-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/FractalExplorer/Dialogs.c: don't show fractional values
 	for the ITER parameter; it is being used as an integer. Also make
 	sure that it never becomes zero as that used to crash the plug-in.
