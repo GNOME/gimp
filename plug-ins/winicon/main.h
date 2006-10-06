@@ -33,71 +33,74 @@
 #define D(x)
 #endif
 
+#define ICO_ALPHA_THRESHOLD 127
+#define ICO_MAXBUF          4096
 
-#define MAXLEN 4096
 
-typedef struct _MsIconEntry
+typedef struct _IcoFileHeader
 {
-  guint8        width;        /* Width of icon in pixels */
-  guint8        height;       /* Height of icon in pixels */
-  guint8        num_colors;   /* Maximum number of colors */
-  guint8        reserved;     /* Not used */
-  guint16       num_planes;   /* Not used */
-  guint16       bpp;
-  guint32       size;         /* Length of icon bitmap in bytes */
-  guint32       offset;       /* Offset position of icon bitmap in file */
-} MsIconEntry;
+  guint16   reserved;
+  guint16   resource_type;
+  guint16   icon_count;
+} IcoFileHeader;
 
-typedef struct _MsIconData
+typedef struct _IcoFileEntry
 {
-  /* Bitmap header data */
-  guint32       header_size;  /* = 40 Bytes */
-  guint32       width;
-  guint32       height;
-  guint16       planes;
+  guint8        width;      /* Width of icon in pixels */
+  guint8        height;    /* Height of icon in pixels */
+  guint8        num_colors; /* Number of colors of paletted image */
+  guint8        reserved;   /* Must be 0 */
+  guint16       planes;     /* Must be 1 */
+  guint16       bpp;        /* 1, 4, 8, 24 or 32 bits per pixel */
+  guint32       size;       /* Size of icon (including data header) */
+  guint32       offset;     /* Absolute offset of data in a file */
+ } IcoFileEntry;
+
+typedef struct _IcoFileDataHeader
+{
+  guint32       header_size; /* 40 bytes */
+  guint32       width;       /* Width of image in pixels */
+  guint32       height;      /* Height of image in pixels */
+  guint16       planes;      /* Must be 1 */
   guint16       bpp;
-  guint32       compression;  /* not used for icons */
-  guint32       image_size;   /* size of image */
+  guint32       compression; /* Not used for icons */
+  guint32       image_size;  /* Size of image (without this header) */
   guint32       x_res;
   guint32       y_res;
   guint32       used_clrs;
   guint32       important_clrs;
+} IcoFileDataHeader;
 
-  guint32      *palette;      /* Color palette, only if bpp <= 8. */
-  guint8       *xor_map;      /* Icon bitmap */
-  guint8       *and_map;      /* Display bit mask */
 
-  /* Only used when saving: */
-  gint          palette_len;
-  gint          xor_len;
-  gint          and_len;
-} MsIconData;
-
-typedef struct _MsIcon
+typedef struct _IcoLoadInfo
 {
-  FILE         *fp;
-  guint         cp;
-  const gchar  *filename;
+    guint    width;
+    guint    height;
+    gint     bpp;
+    gint     offset;
+    gint     size;
+} IcoLoadInfo;
 
-  guint16       reserved;
-  guint16       resource_type;
-  guint16       icon_count;
-  MsIconEntry  *icon_dir;
-  MsIconData   *icon_data;
-} MsIcon;
+typedef struct _IcoSaveInfo
+{
+    gint        *depths;
+    gint        *default_depths;
+    gint        *layers;
+    gint         num_icons;
+} IcoSaveInfo;
 
 
 /* Miscellaneous helper functions below: */
+
+gint     ico_rowstride (gint width,
+                        gint bpp);
 
 /* Allocates a 32-bit padded bitmap for various color depths.
    Returns the allocated array directly, and the length of the
    array in the len pointer */
 guint8 * ico_alloc_map  (gint     width,
-			 gint     height,
-			 gint     bpp,
-			 gint    *len);
-
-void     ico_cleanup    (MsIcon  *ico);
-
+                         gint     height,
+                         gint     bpp,
+                         gint    *len);
 
 #endif /* __MAIN_H__ */
