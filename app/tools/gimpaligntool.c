@@ -54,7 +54,8 @@ static GObject * gimp_align_tool_constructor (GType              type,
                                               guint              n_params,
                                               GObjectConstructParam *params);
 static gboolean gimp_align_tool_initialize   (GimpTool          *tool,
-                                              GimpDisplay       *display);
+                                              GimpDisplay       *display,
+                                              GError           **error);
 static void   gimp_align_tool_finalize       (GObject           *object);
 
 static void   gimp_align_tool_control        (GimpTool          *tool,
@@ -210,8 +211,9 @@ gimp_align_tool_finalize (GObject *object)
 }
 
 static gboolean
-gimp_align_tool_initialize (GimpTool    *tool,
-                            GimpDisplay *display)
+gimp_align_tool_initialize (GimpTool     *tool,
+                            GimpDisplay  *display,
+                            GError      **error)
 {
   if (tool->display != display)
     {

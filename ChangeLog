@@ -1,3 +1,8 @@
+2006-10-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpaligntool.c (gimp_align_tool_initialize): added
+	missing GError** parameter.
+
 2006-10-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/convmatrix.c: commit patch from GG that
