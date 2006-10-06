@@ -1194,7 +1194,7 @@ explorer_dialog (void)
                             gtk_label_new_with_mnemonic (_("_Fractals")));
   gtk_widget_show (frame);
 
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 1);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 0);
 
   gtk_widget_show (dialog);
   ready_now = TRUE;
@@ -1668,19 +1668,42 @@ dialog_change_scale (void)
 static void
 save_options (FILE * fp)
 {
+  gchar buf[64];
+
   /* Save options */
 
   fprintf (fp, "fractaltype: %i\n", wvals.fractaltype);
-  fprintf (fp, "xmin: %0.15f\n", wvals.xmin);
-  fprintf (fp, "xmax: %0.15f\n", wvals.xmax);
-  fprintf (fp, "ymin: %0.15f\n", wvals.ymin);
-  fprintf (fp, "ymax: %0.15f\n", wvals.ymax);
-  fprintf (fp, "iter: %0.15f\n", wvals.iter);
-  fprintf (fp, "cx: %0.15f\n", wvals.cx);
-  fprintf (fp, "cy: %0.15f\n", wvals.cy);
-  fprintf (fp, "redstretch: %0.15f\n", wvals.redstretch * 128.0);
-  fprintf (fp, "greenstretch: %0.15f\n", wvals.greenstretch * 128.0);
-  fprintf (fp, "bluestretch: %0.15f\n", wvals.bluestretch * 128.0);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.xmin);
+  fprintf (fp, "xmin: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.xmax);
+  fprintf (fp, "xmax: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.ymin);
+  fprintf (fp, "ymin: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.ymax);
+  fprintf (fp, "ymax: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.iter);
+  fprintf (fp, "iter: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.cx);
+  fprintf (fp, "cx: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.cy);
+  fprintf (fp, "cy: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.redstretch * 128.0);
+  fprintf (fp, "redstretch: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.greenstretch * 128.0);
+  fprintf (fp, "greenstretch: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.bluestretch * 128.0);
+  fprintf (fp, "bluestretch: %s\n", buf);
+
   fprintf (fp, "redmode: %i\n", wvals.redmode);
   fprintf (fp, "greenmode: %i\n", wvals.greenmode);
   fprintf (fp, "bluemode: %i\n", wvals.bluemode);
@@ -1739,6 +1762,28 @@ save_file_chooser_response (GtkFileChooser *chooser,
 }
 
 static void
+file_chooser_set_default_folder (GtkFileChooser *chooser)
+{
+  GList *path_list;
+  gchar *dir;
+
+  if (! fractalexplorer_path)
+    return;
+
+  path_list = gimp_path_parse (fractalexplorer_path, 16, FALSE, NULL);
+
+  dir = gimp_path_get_user_writable_dir (path_list);
+
+  if (! dir)
+    dir = g_strdup (gimp_directory ());
+
+  gtk_file_chooser_set_current_folder (chooser, dir);
+
+  g_free (dir);
+  gimp_path_free (path_list);
+}
+
+static void
 load_file_chooser_response (GtkFileChooser *chooser,
                             gint            response_id,
                             gpointer        data)
@@ -1785,6 +1830,8 @@ create_load_file_chooser (GtkWidget *widget,
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
+
+      file_chooser_set_default_folder (GTK_FILE_CHOOSER (window));
 
       g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
@@ -1834,26 +1881,9 @@ create_save_file_chooser (GtkWidget *widget,
     {
       gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (window), tpath);
     }
-  else if (fractalexplorer_path)
-    {
-      GList *path_list;
-      gchar *dir;
-
-      path_list = gimp_path_parse (fractalexplorer_path, 16, FALSE, NULL);
-
-      dir = gimp_path_get_user_writable_dir (path_list);
-
-      if (!dir)
-        dir = g_strdup (gimp_directory ());
-
-      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), dir);
-
-      g_free (dir);
-      gimp_path_free (path_list);
-    }
   else
     {
-      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), "/tmp");
+      file_chooser_set_default_folder (GTK_FILE_CHOOSER (window));
     }
 
   gtk_window_present (GTK_WINDOW (window));
