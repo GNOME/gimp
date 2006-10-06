@@ -1,5 +1,11 @@
 2006-10-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/FractalExplorer/Dialogs.c: don't show fractional values
+	for the ITER parameter; it is being used as an integer. Also make
+	sure that it never becomes zero as that used to crash the plug-in.
+
+2006-10-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/FractalExplorer/Dialogs.c: save files using
 	g_ascii_formatd() (fixes bug #360095).
 

@@ -759,7 +759,7 @@ explorer_dialog (void)
   elements->iter =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
                           _("ITER:"), SCALE_WIDTH, 10,
-                          wvals.iter, 0, 1000, 1, 10, 5,
+                          wvals.iter, 1, 1000, 1, 10, 0,
                           TRUE, 0, 0,
                           _("Change the iteration value. The higher it "
                             "is, the more details will be calculated, "
@@ -1203,7 +1203,6 @@ explorer_dialog (void)
   dialog_update_preview ();
 
   gtk_main ();
-  gdk_flush ();
 
   g_free (wint.wimage);
 
@@ -1248,7 +1247,7 @@ dialog_update_preview (void)
   gdouble  foldyinity;
   gdouble  adjust;
   gdouble  xx = 0;
-  gint     zaehler;
+  gint     counter;
   gint     color;
   gint     useloglog;
 
@@ -1278,7 +1277,7 @@ dialog_update_preview (void)
       py = 0;
 
       p_ul = wint.wimage;
-      iteration = (int) wvals.iter;
+      iteration = MAX (1, (int) wvals.iter);
       useloglog = wvals.useloglog;
       for (ycoord = 0; ycoord < preview_height; ycoord++)
         {
@@ -1299,9 +1298,9 @@ dialog_update_preview (void)
                   x = 0;
                   y = 0;
                 }
-              for (zaehler = 0;
-                   (zaehler < iteration) && ((x * x + y * y) < 4);
-                   zaehler++)
+              for (counter = 0;
+                   (counter < iteration) && ((x * x + y * y) < 4);
+                   counter++)
                 {
                   oldx = x;
                   oldy = y;
@@ -1421,19 +1420,20 @@ dialog_update_preview (void)
                 {
                   adjust = 0.0;
                 }
-              color = (int) (((zaehler - adjust) *
+
+              color = (int) (((counter - adjust) *
                               (wvals.ncolors - 1)) / iteration);
               p_ul[0] = colormap[color].r;
               p_ul[1] = colormap[color].g;
               p_ul[2] = colormap[color].b;
               p_ul += 3;
               px += 1;
-            } /* for */
+            }
+
           py += 1;
-        } /* for */
+        }
 
       preview_redraw ();
-      gdk_flush ();
     }
 }
 
