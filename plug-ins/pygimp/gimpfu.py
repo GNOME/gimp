@@ -329,15 +329,21 @@ def _interact(proc_name, start_params):
 
     def error_dialog(parent, proc_name):
         import sys, traceback
+
+        exc_str = exc_only_str = _('Missing exception information')
+
+        try:
+            etype, value, tb = sys.exc_info()        
+            exc_str = ''.join(traceback.format_exception(etype, value, tb))
+            exc_only_str = ''.join(traceback.format_exception_only(etype, value))
+        finally:
+            etype = value = tb = None
+
         title = _("An error occured running %s") % proc_name
         dlg = gtk.MessageDialog(parent, gtk.DIALOG_DESTROY_WITH_PARENT,
                                         gtk.MESSAGE_ERROR, gtk.BUTTONS_CLOSE,
                                         title)
-        dlg.format_secondary_text(
-            "".join(
-                traceback.format_exception_only(sys.exc_type, sys.exc_value)
-                )
-            )
+        dlg.format_secondary_text(exc_only_str)
 
         alignment = gtk.Alignment(0.0, 0.0, 1.0, 1.0)
         alignment.set_padding(0, 0, 12, 12)
@@ -356,7 +362,8 @@ def _interact(proc_name, start_params):
         expander.add(scrolled)
         scrolled.show()
 
-        label = gtk.Label(traceback.format_exc());
+        
+        label = gtk.Label(exc_str)
         label.set_alignment(0.0, 0.0)
         label.set_padding(6, 6)
         label.set_selectable(True)
