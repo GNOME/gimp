@@ -291,8 +291,9 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
       if (! success)
         {
           gimp_message (imagefile->gimp, G_OBJECT (progress),
-                        GIMP_MESSAGE_ERROR, error->message);
-          g_error_free (error);
+                        GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
+          g_clear_error (&error);
         }
     }
 }
@@ -392,8 +393,9 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
                                            &error);
       if (! success)
         {
-          g_message (error->message);
-          g_error_free (error);
+          gimp_message (imagefile->gimp, NULL, GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
+          g_clear_error (&error);
         }
     }
 
@@ -673,9 +675,10 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
     {
       if (error)
         {
-          g_message (_("Could not open thumbnail '%s': %s"),
-                     thumbnail->thumb_filename, error->message);
-          g_error_free (error);
+          gimp_message (imagefile->gimp, NULL, GIMP_MESSAGE_ERROR,
+                        _("Could not open thumbnail '%s': %s"),
+                        thumbnail->thumb_filename, error->message);
+          g_clear_error (&error);
         }
 
       return NULL;

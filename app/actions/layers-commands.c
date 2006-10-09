@@ -591,14 +591,17 @@ layers_crop_cmd_callback (GtkAction *action,
 {
   GimpImage *image;
   GimpLayer *layer;
+  GtkWidget *widget;
   gint       x1, y1, x2, y2;
   gint       off_x, off_y;
   return_if_no_layer (image, layer, data);
+  return_if_no_widget (widget, data);
 
   if (! gimp_channel_bounds (gimp_image_get_mask (image),
                              &x1, &y1, &x2, &y2))
     {
-      g_message (_("Cannot crop because the current selection is empty."));
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                    _("Cannot crop because the current selection is empty."));
       return;
     }
 
@@ -981,7 +984,8 @@ layers_add_mask_response (GtkWidget          *widget,
       if (dialog->add_mask_type == GIMP_ADD_CHANNEL_MASK &&
           ! dialog->channel)
         {
-          g_message (_("Please select a channel first"));
+          gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                        _("Please select a channel first"));
           return;
         }
 
@@ -1065,7 +1069,8 @@ layers_scale_layer_callback (GtkWidget             *dialog,
     }
   else
     {
-      g_message (_("Invalid width or height. Both must be positive."));
+      gimp_message (display->image->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Invalid width or height. Both must be positive.");
     }
 }
 
@@ -1103,7 +1108,8 @@ layers_resize_layer_callback (GtkWidget    *dialog,
     }
   else
     {
-      g_message (_("Invalid width or height. Both must be positive."));
+      gimp_message (context->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Invalid width or height. Both must be positive.");
     }
 }
 

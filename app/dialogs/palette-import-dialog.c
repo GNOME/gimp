@@ -848,7 +848,7 @@ palette_import_make_palette (ImportDialog *dialog)
           {
             gimp_message (dialog->context->gimp, G_OBJECT (dialog->dialog),
                           GIMP_MESSAGE_ERROR,
-                          error->message);
+                          "%s", error->message);
             g_error_free (error);
           }
       }

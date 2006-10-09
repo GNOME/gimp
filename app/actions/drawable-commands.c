@@ -71,7 +71,8 @@ drawable_desaturate_cmd_callback (GtkAction *action,
 
   if (! gimp_drawable_is_rgb (drawable))
     {
-      g_message (_("Desaturate operates only on RGB color layers."));
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                    _("Desaturate operates only on RGB color layers."));
       return;
     }
 
@@ -92,11 +93,14 @@ drawable_equalize_cmd_callback (GtkAction *action,
 {
   GimpImage    *image;
   GimpDrawable *drawable;
+  GtkWidget    *widget;
   return_if_no_drawable (image, drawable, data);
+  return_if_no_widget (widget, data);
 
   if (gimp_drawable_is_indexed (drawable))
     {
-      g_message (_("Equalize does not operate on indexed layers."));
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                    _("Equalize does not operate on indexed layers."));
       return;
     }
 
@@ -110,11 +114,14 @@ drawable_invert_cmd_callback (GtkAction *action,
 {
   GimpImage    *image;
   GimpDrawable *drawable;
+  GtkWidget    *widget;
   return_if_no_drawable (image, drawable, data);
+  return_if_no_widget (widget, data);
 
   if (gimp_drawable_is_indexed (drawable))
     {
-      g_message (_("Invert does not operate on indexed layers."));
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                    _("Invert does not operate on indexed layers."));
       return;
     }
 
@@ -129,12 +136,15 @@ drawable_levels_stretch_cmd_callback (GtkAction *action,
   GimpImage    *image;
   GimpDrawable *drawable;
   GimpContext  *context;
+  GtkWidget    *widget;
   return_if_no_drawable (image, drawable, data);
   return_if_no_context (context, data);
+  return_if_no_widget (widget, data);
 
   if (! gimp_drawable_is_rgb (drawable))
     {
-      g_message (_("White Balance operates only on RGB color layers."));
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                    _("White Balance operates only on RGB color layers."));
       return;
     }
 

@@ -306,10 +306,12 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
                                            gpointer   data)
 {
   GimpImage     *image;
+  GtkWidget     *widget;
   GimpProcedure *procedure;
   GValueArray   *args;
   GimpDisplay   *display;
   return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
 
   if (value)
     procedure = gimp_pdb_lookup_procedure (image->gimp->pdb,
@@ -320,7 +322,8 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
 
   if (! procedure)
     {
-      g_message ("Selection to path procedure lookup failed.");
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_ERROR,
+                    "Selection to path procedure lookup failed.");
       return;
     }
 
@@ -356,7 +359,7 @@ vectors_stroke_cmd_callback (GtkAction *action,
 
   if (! drawable)
     {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
                     _("There is no active layer or channel to stroke to."));
       return;
     }
@@ -378,15 +381,17 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
   GimpVectors    *vectors;
   GimpDrawable   *drawable;
   GimpContext    *context;
+  GtkWidget      *widget;
   GimpStrokeDesc *desc;
   return_if_no_vectors (image, vectors, data);
   return_if_no_context (context, data);
+  return_if_no_widget (widget, data);
 
   drawable = gimp_image_active_drawable (image);
 
   if (! drawable)
     {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
                     _("There is no active layer or channel to stroke to."));
       return;
     }
@@ -429,9 +434,11 @@ vectors_paste_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
   GimpImage *image;
+  GtkWidget *widget;
   gchar     *svg;
   gsize      svg_size;
   return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
 
   svg = gimp_clipboard_get_svg (image->gimp, &svg_size);
 
@@ -442,8 +449,8 @@ vectors_paste_cmd_callback (GtkAction *action,
       if (! gimp_vectors_import_buffer (image, svg, svg_size,
                                         TRUE, TRUE, -1, &error))
         {
-          gimp_message (image->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        error->message);
+          gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
           g_clear_error (&error);
         }
       else
@@ -624,9 +631,11 @@ vectors_import_response (GtkWidget           *widget,
         }
       else
         {
-          gimp_message (dialog->image->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        error->message);
+          gimp_message (dialog->image->gimp, G_OBJECT (widget),
+                        GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
           g_error_free (error);
+          return;
         }
 
       g_free (filename);
@@ -655,9 +664,11 @@ vectors_export_response (GtkWidget           *widget,
 
       if (! gimp_vectors_export_file (dialog->image, vectors, filename, &error))
         {
-          gimp_message (dialog->image->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        error->message);
+          gimp_message (dialog->image->gimp, G_OBJECT (widget),
+                        GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
           g_error_free (error);
+          return;
         }
 
       g_free (filename);

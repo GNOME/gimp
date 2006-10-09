@@ -760,7 +760,9 @@ gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
         {
           gchar *filename = file_utils_uri_display_name (uri);
 
-          g_message (_("Opening '%s' failed:\n\n%s"), filename, error->message);
+          gimp_message (image->gimp, NULL, GIMP_MESSAGE_ERROR,
+                        _("Opening '%s' failed:\n\n%s"),
+                        filename, error->message);
 
           g_clear_error (&error);
           g_free (filename);

@@ -24,6 +24,7 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpgradient-save.h"
 #include "core/gimpcontext.h"
 
@@ -79,6 +80,8 @@ gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  g_object_set_data (G_OBJECT (chooser), "gimp", context->gimp);
+
   g_free (title);
 
   gtk_window_set_screen (GTK_WINDOW (chooser),
@@ -124,8 +127,12 @@ gradients_save_as_pov_ray_response (GtkWidget    *dialog,
 
       if (! gimp_gradient_save_pov (gradient, filename, &error))
         {
-          g_message (error->message);
+          gimp_message (g_object_get_data (G_OBJECT (dialog), "gimp"),
+                        G_OBJECT (dialog),
+                        GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
           g_clear_error (&error);
+          return;
         }
     }
 

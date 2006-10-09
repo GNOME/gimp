@@ -187,7 +187,7 @@ sub palette_delete {
       if (! success)
         {
           gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-                        error->message);
+                       	"%s", error->message);
           g_clear_error (&error);
         }
     }

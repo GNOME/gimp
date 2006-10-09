@@ -49,8 +49,8 @@ gimp_templates_load (Gimp *gimp)
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
 
-  if (!gimp_config_deserialize_file (GIMP_CONFIG (gimp->templates),
-                                     filename, NULL, &error))
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp->templates),
+                                      filename, NULL, &error))
     {
       if (error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
         {
@@ -60,15 +60,16 @@ gimp_templates_load (Gimp *gimp)
           filename = g_build_filename (gimp_sysconf_directory (),
                                        "templaterc", NULL);
 
-          if (!gimp_config_deserialize_file (GIMP_CONFIG (gimp->templates),
-                                             filename, NULL, &error))
+          if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp->templates),
+                                              filename, NULL, &error))
             {
-              g_message (error->message);
+              gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                            "%s", error->message);
             }
         }
       else
         {
-          g_message (error->message);
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
         }
 
       g_clear_error (&error);
@@ -105,7 +106,7 @@ gimp_templates_save (Gimp *gimp)
                                        header, footer, NULL,
                                        &error))
     {
-      g_message (error->message);
+      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
       g_error_free (error);
     }
 

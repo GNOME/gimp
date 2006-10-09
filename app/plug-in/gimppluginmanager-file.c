@@ -59,8 +59,9 @@ gimp_plug_in_manager_register_load_handler (GimpPlugInManager *manager,
 
   if (! file_proc)
     {
-      g_message ("attempt to register nonexistent load handler \"%s\"",
-                 name);
+      gimp_message (manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "attempt to register nonexistent load handler \"%s\"",
+                    name);
       return FALSE;
     }
 
@@ -73,8 +74,9 @@ gimp_plug_in_manager_register_load_handler (GimpPlugInManager *manager,
       ! G_IS_PARAM_SPEC_STRING      (procedure->args[2]) ||
       ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0]))
     {
-      g_message ("load handler \"%s\" does not take the standard "
-                 "load handler args", name);
+      gimp_message (manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "load handler \"%s\" does not take the standard "
+                    "load handler args", name);
       return FALSE;
     }
 
@@ -109,8 +111,9 @@ gimp_plug_in_manager_register_save_handler (GimpPlugInManager *manager,
 
   if (! file_proc)
     {
-      g_message ("attempt to register nonexistent save handler \"%s\"",
-                 name);
+      gimp_message (manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "attempt to register nonexistent save handler \"%s\"",
+                    name);
       return FALSE;
     }
 
@@ -123,8 +126,9 @@ gimp_plug_in_manager_register_save_handler (GimpPlugInManager *manager,
       ! G_IS_PARAM_SPEC_STRING         (procedure->args[3]) ||
       ! G_IS_PARAM_SPEC_STRING         (procedure->args[4]))
     {
-      g_message ("save handler \"%s\" does not take the standard "
-                 "save handler args", name);
+      gimp_message (manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "save handler \"%s\" does not take the standard "
+                    "save handler args", name);
       return FALSE;
     }
 

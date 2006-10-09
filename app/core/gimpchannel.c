@@ -684,7 +684,9 @@ gimp_channel_stroke (GimpItem       *item,
                                &n_segs_in, &n_segs_out,
                                0, 0, 0, 0))
     {
-      g_message (_("Cannot stroke empty channel."));
+      gimp_message (gimp_item_get_image (item)->gimp, NULL,
+                    GIMP_MESSAGE_WARNING,
+                    _("Cannot stroke empty channel."));
       return FALSE;
     }
 

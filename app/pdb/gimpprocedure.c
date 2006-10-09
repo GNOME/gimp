@@ -63,6 +63,7 @@ static void    gimp_procedure_real_execute_async  (GimpProcedure *procedure,
 
 static void          gimp_procedure_free_strings  (GimpProcedure *procedure);
 static gboolean      gimp_procedure_validate_args (GimpProcedure *procedure,
+                                                   Gimp          *gimp,
                                                    GValueArray   *args);
 
 
@@ -308,7 +309,7 @@ gimp_procedure_execute (GimpProcedure *procedure,
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (args != NULL, NULL);
 
-  if (! gimp_procedure_validate_args (procedure, args))
+  if (! gimp_procedure_validate_args (procedure, gimp, args))
     {
       return_vals = gimp_procedure_get_return_values (procedure, FALSE);
       g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
@@ -350,7 +351,7 @@ gimp_procedure_execute_async (GimpProcedure *procedure,
   g_return_if_fail (args != NULL);
   g_return_if_fail (display == NULL || GIMP_IS_OBJECT (display));
 
-  if (gimp_procedure_validate_args (procedure, args))
+  if (gimp_procedure_validate_args (procedure, gimp, args))
     GIMP_PROCEDURE_GET_CLASS (procedure)->execute_async (procedure, gimp,
                                                          context, progress,
                                                          args, display);
@@ -479,6 +480,7 @@ gimp_procedure_free_strings (GimpProcedure *procedure)
 
 static gboolean
 gimp_procedure_validate_args (GimpProcedure *procedure,
+                              Gimp          *gimp,
                               GValueArray   *args)
 {
   gint i;
@@ -495,12 +497,13 @@ gimp_procedure_validate_args (GimpProcedure *procedure,
           const gchar *type_name = g_type_name (spec_type);
           const gchar *got       = g_type_name (arg_type);
 
-          g_message (_("PDB calling error for procedure '%s':\n"
-                       "Argument '%s' (#%d, type %s) type mismatch "
-                       "(got %s)."),
-                     gimp_object_get_name (GIMP_OBJECT (procedure)),
-                     g_param_spec_get_name (pspec),
-                     i + 1, type_name, got);
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                        _("PDB calling error for procedure '%s':\n"
+                          "Argument '%s' (#%d, type %s) type mismatch "
+                          "(got %s)."),
+                        gimp_object_get_name (GIMP_OBJECT (procedure)),
+                        g_param_spec_get_name (pspec),
+                        i + 1, type_name, got);
 
           return FALSE;
         }
@@ -533,13 +536,14 @@ gimp_procedure_validate_args (GimpProcedure *procedure,
               new_value = g_value_dup_string (&string_value);
               g_value_unset (&string_value);
 
-              g_message (_("PDB calling error for procedure '%s':\n"
-                           "Argument '%s' (#%d, type %s) out of bounds "
-                           "(validation changed '%s' to '%s')"),
-                         gimp_object_get_name (GIMP_OBJECT (procedure)),
-                         g_param_spec_get_name (pspec),
-                         i + 1, type_name,
-                         old_value, new_value);
+              gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                            _("PDB calling error for procedure '%s':\n"
+                              "Argument '%s' (#%d, type %s) out of bounds "
+                              "(validation changed '%s' to '%s')"),
+                            gimp_object_get_name (GIMP_OBJECT (procedure)),
+                            g_param_spec_get_name (pspec),
+                            i + 1, type_name,
+                            old_value, new_value);
 
               g_free (old_value);
               g_free (new_value);

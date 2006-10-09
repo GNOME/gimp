@@ -53,8 +53,8 @@ typedef struct _GimpDataDeleteData GimpDataDeleteData;
 
 struct _GimpDataDeleteData
 {
-  GimpDataFactory *factory;
-  GimpData        *data;
+  GimpDataFactoryView *view;
+  GimpData            *data;
 };
 
 
@@ -99,8 +99,10 @@ data_open_as_image_cmd_callback (GtkAction *action,
             {
               gchar *filename = file_utils_uri_display_name (uri);
 
-              g_message (_("Opening '%s' failed:\n\n%s"),
-                         filename, error->message);
+              gimp_message (context->gimp, G_OBJECT (view),
+                            GIMP_MESSAGE_ERROR,
+                            _("Opening '%s' failed:\n\n%s"),
+                            filename, error->message);
               g_clear_error (&error);
 
               g_free (filename);
@@ -218,8 +220,8 @@ data_delete_cmd_callback (GtkAction *action,
 
       delete_data = g_new0 (GimpDataDeleteData, 1);
 
-      delete_data->factory = view->factory;
-      delete_data->data    = data;
+      delete_data->view = view;
+      delete_data->data = data;
 
       dialog = gimp_message_dialog_new (_("Delete Object"), GIMP_STOCK_QUESTION,
                                         GTK_WIDGET (view), 0,
@@ -307,11 +309,13 @@ data_delete_confirm_response (GtkWidget          *dialog,
     {
       GError *error = NULL;
 
-      if (! gimp_data_factory_data_delete (delete_data->factory,
+      if (! gimp_data_factory_data_delete (delete_data->view->factory,
                                            delete_data->data,
                                            TRUE, &error))
         {
-          g_message (error->message);
+          gimp_message (delete_data->view->factory->gimp,
+                        G_OBJECT (delete_data->view), GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
           g_clear_error (&error);
         }
     }

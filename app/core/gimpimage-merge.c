@@ -285,9 +285,9 @@ gimp_image_merge_visible_vectors (GimpImage *image)
     }
   else
     {
-      g_message (_("Not enough visible paths for a merge. "
-                   "There must be at least two."));
-
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("Not enough visible paths for a merge. "
+                      "There must be at least two."));
       return NULL;
     }
 }

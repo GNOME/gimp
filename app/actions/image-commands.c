@@ -366,13 +366,16 @@ image_crop_cmd_callback (GtkAction *action,
                          gpointer   data)
 {
   GimpImage *image;
+  GtkWidget *widget;
   gint       x1, y1, x2, y2;
   return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
 
   if (! gimp_channel_bounds (gimp_image_get_mask (image),
                              &x1, &y1, &x2, &y2))
     {
-      g_message (_("Cannot crop because the current selection is empty."));
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                    _("Cannot crop because the current selection is empty."));
       return;
     }
 

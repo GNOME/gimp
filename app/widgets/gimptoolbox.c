@@ -912,8 +912,9 @@ toolbox_paste_received (GtkClipboard *clipboard,
             {
               gchar *filename = file_utils_uri_display_name (copy);
 
-              g_message (_("Opening '%s' failed:\n\n%s"),
-                         filename, error->message);
+              gimp_message (context->gimp, NULL, GIMP_MESSAGE_ERROR,
+                            _("Opening '%s' failed:\n\n%s"),
+                            filename, error->message);
 
               g_clear_error (&error);
               g_free (filename);

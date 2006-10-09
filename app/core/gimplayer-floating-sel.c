@@ -30,6 +30,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gimp.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -126,8 +127,9 @@ floating_sel_anchor (GimpLayer *layer)
 
   if (! gimp_layer_is_floating_sel (layer))
     {
-      g_message (_("Cannot anchor this layer because "
-                   "it is not a floating selection."));
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("Cannot anchor this layer because "
+                      "it is not a floating selection."));
       return;
     }
 
@@ -206,8 +208,9 @@ floating_sel_to_layer (GimpLayer *layer)
   /*  Check if the floating layer belongs to a channel...  */
   if (GIMP_IS_CHANNEL (layer->fs.drawable))
     {
-      g_message (_("Cannot create a new layer from the floating selection "
-                   "because it belongs to a layer mask or channel."));
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("Cannot create a new layer from the floating selection "
+                      "because it belongs to a layer mask or channel."));
       return;
     }
 

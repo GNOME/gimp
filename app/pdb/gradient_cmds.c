@@ -265,7 +265,7 @@ gradient_delete_invoker (GimpProcedure     *procedure,
           if (! success)
             {
               gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-                            error->message);
+                            "%s", error->message);
               g_clear_error (&error);
             }
         }

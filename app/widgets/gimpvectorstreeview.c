@@ -236,7 +236,7 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
                                     TRUE, TRUE, index, &error))
     {
       gimp_message (image->gimp, G_OBJECT (tree_view), GIMP_MESSAGE_ERROR,
-                    error->message);
+                    "%s", error->message);
       g_clear_error (&error);
     }
   else

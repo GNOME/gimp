@@ -83,7 +83,8 @@ gimp_drawable_bucket_fill (GimpDrawable        *drawable,
 
       if (! pattern)
         {
-          g_message (_("No patterns available for this operation."));
+          gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                        _("No patterns available for this operation."));
           return;
         }
     }

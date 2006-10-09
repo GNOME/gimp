@@ -511,8 +511,9 @@ gimp_edit_extract_visible (GimpImage   *image,
 
   if ((x1 == x2) || (y1 == y2))
     {
-      g_message (_("Unable to cut or copy because the "
-                   "selected region is empty."));
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("Unable to cut or copy because the "
+                      "selected region is empty."));
       return NULL;
     }
 

@@ -31,6 +31,7 @@
 
 #include "pdb/gimppdb.h"
 
+#include "gimp.h"
 #include "gimpparamspecs.h"
 #include "gimppdbprogress.h"
 #include "gimpprogress.h"
@@ -283,9 +284,10 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
 
       if (g_value_get_enum (&return_vals->values[0]) != GIMP_PDB_SUCCESS)
         {
-          g_message (_("Unable to run %s callback. "
-                       "The corresponding plug-in may have crashed."),
-                     g_type_name (G_TYPE_FROM_INSTANCE (progress)));
+          gimp_message (progress->context->gimp, NULL, GIMP_MESSAGE_ERROR,
+                        _("Unable to run %s callback. "
+                          "The corresponding plug-in may have crashed."),
+                        g_type_name (G_TYPE_FROM_INSTANCE (progress)));
         }
       else if (return_vals->n_values >= 2 &&
                G_VALUE_HOLDS_DOUBLE (&return_vals->values[1]))

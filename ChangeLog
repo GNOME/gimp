@@ -1,3 +1,61 @@
+2006-10-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/data-commands.c
+	* app/actions/documents-commands.c
+	* app/actions/drawable-commands.c
+	* app/actions/gradients-commands.c
+	* app/actions/image-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/palettes-commands.c
+	* app/actions/select-commands.c
+	* app/actions/vectors-commands.c
+	* app/core/gimp-contexts.c
+	* app/core/gimp-documents.c
+	* app/core/gimp-edit.c
+	* app/core/gimp-modules.c
+	* app/core/gimp-parasites.c
+	* app/core/gimp-templates.c
+	* app/core/gimp-units.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdatafactory.[ch]
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimagefile.c
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimppdbprogress.c
+	* app/core/gimpselection.c
+	* app/dialogs/palette-import-dialog.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/gui/session.c
+	* app/gui/themes.c
+	* app/pdb/gimpprocedure.c
+	* app/plug-in/gimpplugin-message.c
+	* app/plug-in/gimpplugin.c
+	* app/plug-in/gimppluginmanager-file.c
+	* app/plug-in/gimppluginmanager.c
+	* app/text/gimptextlayer-xcf.c
+	* app/text/gimptextlayer.c
+	* app/widgets/gimpcontrollers.c
+	* app/widgets/gimpdataeditor.c
+	* app/widgets/gimpdevices.c
+	* app/widgets/gimpdnd-xds.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimptoolbox-dnd.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimpuimanager.c
+	* app/widgets/gimpvectorstreeview.c
+	* tools/pdbgen/pdb/brush.pdb
+	* tools/pdbgen/pdb/gradient.pdb
+	* tools/pdbgen/pdb/palette.pdb: convert lots of g_message() to
+	gimp_message(). Make sure we never pass unknown strings (like
+	error->message) to printf-like functions directly; run them
+	thorugh "%s" instead. Don't translate some messages which should
+	never happen.
+
+	* app/pdb/brush_cmds.c
+	* app/pdb/gradient_cmds.c
+	* app/pdb/palette_cmds.c: regenerated.
+
 2006-10-09  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/tips-parser.[ch]: accept printf-style format strings.

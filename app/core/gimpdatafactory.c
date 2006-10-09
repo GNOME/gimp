@@ -403,7 +403,9 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
                */
               if (error)
                 {
-                  g_message (_("Failed to save data:\n\n%s"), error->message);
+                  gimp_message (factory->gimp, NULL, GIMP_MESSAGE_ERROR,
+                                _("Failed to save data:\n\n%s"),
+                                error->message);
                   g_clear_error (&error);
                 }
             }
@@ -542,13 +544,13 @@ gimp_data_factory_data_get_standard (GimpDataFactory *factory)
 }
 
 gboolean
-gimp_data_factory_data_save_single (GimpDataFactory *factory,
-                                    GimpData        *data)
+gimp_data_factory_data_save_single (GimpDataFactory  *factory,
+                                    GimpData         *data,
+                                    GError          **error)
 {
-  GError *error = NULL;
-
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
   g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (! data->dirty)
     return TRUE;
@@ -558,7 +560,12 @@ gimp_data_factory_data_save_single (GimpDataFactory *factory,
       gchar *writable_dir = gimp_data_factory_get_save_dir (factory);
 
       if (! writable_dir)
-        return FALSE;
+        {
+          g_set_error (error, GIMP_DATA_ERROR, 0,
+                       _("Failed to save data:\n\n%s"),
+                       _("You don't have a writable data folder configured."));
+          return FALSE;
+        }
 
       gimp_data_create_filename (data, writable_dir);
 
@@ -568,16 +575,15 @@ gimp_data_factory_data_save_single (GimpDataFactory *factory,
   if (! data->writable)
     return FALSE;
 
-  if (! gimp_data_save (data, &error))
+  if (! gimp_data_save (data, error))
     {
       /*  check if there actually was an error (no error
        *  means the data class does not implement save)
        */
-      if (error)
-        {
-          g_message (_("Failed to save data:\n\n%s"), error->message);
-          g_clear_error (&error);
-        }
+      if (! error)
+        g_set_error (error, GIMP_DATA_ERROR, 0,
+                     _("Failed to save data:\n\n%s"),
+                     "Data class does not implement saving");
 
       return FALSE;
     }
@@ -716,7 +722,8 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
           }
         else
           {
-            g_message (_("Failed to load data:\n\n%s"), error->message);
+            gimp_message (factory->gimp, NULL, GIMP_MESSAGE_ERROR,
+                          _("Failed to load data:\n\n%s"), error->message);
             g_clear_error (&error);
           }
       }

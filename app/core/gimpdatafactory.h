@@ -102,7 +102,8 @@ gboolean   gimp_data_factory_data_delete       (GimpDataFactory  *factory,
                                                 GError          **error);
 GimpData * gimp_data_factory_data_get_standard (GimpDataFactory  *factory);
 gboolean   gimp_data_factory_data_save_single  (GimpDataFactory  *factory,
-                                                GimpData         *data);
+                                                GimpData         *data,
+                                                GError          **error);
 
 
 #endif  /*  __GIMP_DATA_FACTORY_H__  */

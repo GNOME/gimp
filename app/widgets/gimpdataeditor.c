@@ -605,5 +605,16 @@ gimp_data_editor_save_dirty (GimpDataEditor *editor)
   GimpData *data = editor->data;
 
   if (data && data->dirty && data->writable)
-    gimp_data_factory_data_save_single (editor->data_factory, data);
+    {
+      GError *error = NULL;
+
+      if (! gimp_data_factory_data_save_single (editor->data_factory, data,
+                                                &error))
+        {
+          gimp_message (editor->data_factory->gimp, G_OBJECT (editor),
+                        GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
+          g_clear_error (&error);
+        }
+    }
 }

@@ -138,7 +138,7 @@ gimp_modules_load (Gimp *gimp)
 
       if (error)
         {
-          g_message (error->message);
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
           g_clear_error (&error);
         }
 
@@ -214,7 +214,7 @@ gimp_modules_unload (Gimp *gimp)
 
       if (error)
         {
-          g_message (error->message);
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
           g_clear_error (&error);
         }
     }

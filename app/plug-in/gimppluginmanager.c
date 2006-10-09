@@ -385,7 +385,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
   else
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-        g_message (error->message);
+        gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
 
       g_clear_error (&error);
     }
@@ -486,7 +486,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
 
       if (! plug_in_rc_write (manager->plug_in_defs, pluginrc, &error))
         {
-          g_message ("%s", error->message);
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
           g_clear_error (&error);
         }
 
