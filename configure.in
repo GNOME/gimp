@@ -1321,7 +1321,7 @@ if test "x$with_lcms" != xno; then
   ])
   if test $have_lcms = yes; then
     LCMS_LIBS="-llcms"
-    LCMS="lcms"
+    LCMS='lcms$(EXEEXT)'
   else
     have_lcms="no (lcms not found or unusable)"
   fi
