@@ -26,6 +26,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -34,6 +35,7 @@
 
 #include "gimperrorconsole.h"
 #include "gimpmenufactory.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -177,31 +179,35 @@ gimp_error_console_new (Gimp            *gimp,
 }
 
 void
-gimp_error_console_add (GimpErrorConsole *console,
-                        const gchar      *stock_id,
-                        const gchar      *domain,
-                        const gchar      *message)
+gimp_error_console_add (GimpErrorConsole    *console,
+                        GimpMessageSeverity  severity,
+                        const gchar         *domain,
+                        const gchar         *message)
 {
+  const gchar *desc;
   GtkTextIter  end;
   GtkTextMark *end_mark;
   GdkPixbuf   *pixbuf;
   gchar       *str;
 
   g_return_if_fail (GIMP_IS_ERROR_CONSOLE (console));
-  g_return_if_fail (stock_id != NULL);
   g_return_if_fail (domain != NULL);
   g_return_if_fail (message != NULL);
 
+  gimp_enum_get_value (GIMP_TYPE_MESSAGE_SEVERITY, severity,
+                       NULL, NULL, &desc, NULL);
+
   gtk_text_buffer_get_end_iter (console->text_buffer, &end);
 
-  pixbuf = gtk_widget_render_icon (console->text_view, stock_id,
+  pixbuf = gtk_widget_render_icon (console->text_view,
+                                   gimp_get_message_stock_id (severity),
                                    GTK_ICON_SIZE_MENU, NULL);
   gtk_text_buffer_insert_pixbuf (console->text_buffer, &end, pixbuf);
   g_object_unref (pixbuf);
 
   gtk_text_buffer_insert (console->text_buffer, &end, "  ", -1);
 
-  str = g_strdup_printf (_("%s Message"), domain);
+  str = g_strdup_printf ("%s %s", domain, desc);
   gtk_text_buffer_insert_with_tags_by_name (console->text_buffer, &end,
                                             str, -1,
                                             "title",

@@ -290,7 +290,8 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
 
       if (! success)
         {
-          gimp_message (imagefile->gimp, progress, error->message);
+          gimp_message (imagefile->gimp, G_OBJECT (progress),
+                        GIMP_MESSAGE_ERROR, error->message);
           g_error_free (error);
         }
     }

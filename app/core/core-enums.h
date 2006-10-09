@@ -549,7 +549,7 @@ typedef enum
 
 GType gimp_select_criterion_get_type (void) G_GNUC_CONST;
 
-typedef enum 
+typedef enum
 {
   GIMP_SELECT_CRITERION_COMPOSITE,  /*< desc="Composite"  >*/
   GIMP_SELECT_CRITERION_R,          /*< desc="Red"        >*/
@@ -559,6 +559,18 @@ typedef enum
   GIMP_SELECT_CRITERION_S,          /*< desc="Saturation" >*/
   GIMP_SELECT_CRITERION_V           /*< desc="Value"      >*/
 } GimpSelectCriterion;
+
+
+#define GIMP_TYPE_MESSAGE_SEVERITY (gimp_message_severity_get_type ())
+
+GType gimp_message_severity_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_MESSAGE_INFO,     /*< desc="Message" >*/
+  GIMP_MESSAGE_WARNING,  /*< desc="Warning" >*/
+  GIMP_MESSAGE_ERROR     /*< desc="Error"   >*/
+} GimpMessageSeverity;
 
 
 /*

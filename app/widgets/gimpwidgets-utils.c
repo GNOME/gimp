@@ -1131,33 +1131,20 @@ gimp_widget_set_accel_help (GtkWidget *widget,
     }
 }
 
-void
-gimp_show_message_dialog (GtkWidget       *parent,
-                          GtkMessageType   type,
-                          const gchar     *format,
-                          ...)
+const gchar *
+gimp_get_message_stock_id (GimpMessageSeverity severity)
 {
-  GtkWidget *dialog;
-  gchar     *message;
-  va_list    args;
+  switch (severity)
+    {
+    case GIMP_MESSAGE_INFO:
+      return GIMP_STOCK_INFO;
 
-  g_return_if_fail (GTK_IS_WIDGET (parent));
-  g_return_if_fail (format != NULL);
+    case GIMP_MESSAGE_WARNING:
+      return GIMP_STOCK_WARNING;
 
-  va_start (args, format);
-  message = g_strdup_vprintf (format, args);
-  va_end (args);
+    case GIMP_MESSAGE_ERROR:
+      return GIMP_STOCK_ERROR;
+    }
 
-  dialog =
-    gtk_message_dialog_new (GTK_WINDOW (gtk_widget_get_toplevel (parent)),
-                            GTK_DIALOG_DESTROY_WITH_PARENT,
-                            type, GTK_BUTTONS_OK,
-                            message);
-  g_free (message);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (gtk_widget_destroy),
-                    NULL);
-
-  gtk_widget_show (dialog);
+  g_return_val_if_reached (GIMP_STOCK_WARNING);
 }

@@ -175,11 +175,13 @@ GimpToolInfo * gimp_get_tool_info        (Gimp                *gimp,
                                           const gchar         *tool_name);
 
 void           gimp_message              (Gimp                *gimp,
-                                          GimpProgress        *progress,
+                                          GObject             *handler,
+                                          GimpMessageSeverity  severity,
                                           const gchar         *format,
-                                          ...) G_GNUC_PRINTF(3,4);
+                                          ...) G_GNUC_PRINTF(4,5);
 void           gimp_message_valist       (Gimp                *gimp,
-                                          GimpProgress        *progress,
+                                          GObject             *handler,
+                                          GimpMessageSeverity  severity,
                                           const gchar         *format,
                                           va_list              args);
 

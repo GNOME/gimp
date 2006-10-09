@@ -173,8 +173,9 @@ file_last_opened_cmd_callback (GtkAction *action,
           gchar *filename =
             file_utils_uri_display_name (GIMP_OBJECT (imagefile)->name);
 
-          g_message (_("Opening '%s' failed:\n\n%s"),
-                     filename, error->message);
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                        _("Opening '%s' failed:\n\n%s"),
+                        filename, error->message);
           g_clear_error (&error);
 
           g_free (filename);
@@ -219,6 +220,7 @@ file_save_cmd_callback (GtkAction *action,
           GimpPDBStatusType  status;
           GError            *error = NULL;
           GList             *list;
+          gchar             *filename;
 
           for (list = gimp_action_groups_from_name ("file");
                list;
@@ -233,18 +235,30 @@ file_save_cmd_callback (GtkAction *action,
                               uri, save_proc,
                               GIMP_RUN_WITH_LAST_VALS, FALSE, &error);
 
-          if (status != GIMP_PDB_SUCCESS &&
-              status != GIMP_PDB_CANCEL)
-            {
-              gchar *filename = file_utils_uri_display_name (uri);
+          filename = file_utils_uri_display_name (uri);
 
-              gimp_message (image->gimp, GIMP_PROGRESS (display),
+          switch (status)
+            {
+            case GIMP_PDB_SUCCESS:
+              gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_INFO,
+                            _("Image saved to '%s'"),
+                            filename);
+              break;
+
+            case GIMP_PDB_CANCEL:
+              gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_INFO,
+                            _("Saving canceled"));
+              break;
+
+            default:
+              gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
                             _("Saving '%s' failed:\n\n%s"),
                             filename, error->message);
               g_clear_error (&error);
-
-              g_free (filename);
+              break;
             }
+
+          g_free (filename);
 
           for (list = gimp_action_groups_from_name ("file");
                list;
@@ -326,7 +340,7 @@ file_revert_cmd_callback (GtkAction *action,
 
   if (! uri)
     {
-      gimp_message (image->gimp, GIMP_PROGRESS (display),
+      gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
                     _("Revert failed. "
                       "No file name associated with this image."));
     }
@@ -567,7 +581,7 @@ file_revert_confirm_response (GtkWidget   *dialog,
         {
           gchar *filename = file_utils_uri_display_name (uri);
 
-          gimp_message (gimp, GIMP_PROGRESS (display),
+          gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
                         _("Reverting to '%s' failed:\n\n%s"),
                         filename, error->message);
           g_clear_error (&error);

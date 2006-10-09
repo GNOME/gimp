@@ -212,7 +212,7 @@ file_open_location_response (GtkDialog *dialog,
             {
               gchar *filename = file_utils_uri_display_name (uri);
 
-              gimp_message (gimp, GIMP_PROGRESS (box),
+              gimp_message (gimp, G_OBJECT (box), GIMP_MESSAGE_ERROR,
                             _("Opening '%s' failed:\n\n%s"),
                             filename, error->message);
               g_clear_error (&error);
@@ -224,7 +224,7 @@ file_open_location_response (GtkDialog *dialog,
         }
       else
         {
-          gimp_message (gimp, GIMP_PROGRESS (box),
+          gimp_message (gimp, G_OBJECT (box), GIMP_MESSAGE_ERROR,
                         _("Opening '%s' failed:\n\n%s"),
                         text, error->message);
           g_clear_error (&error);

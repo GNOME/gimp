@@ -282,7 +282,7 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
                        G_STRFUNC);
 #endif
 
-              gimp_message (gimp, GIMP_PROGRESS (save_dialog),
+              gimp_message (gimp, G_OBJECT (save_dialog), GIMP_MESSAGE_WARNING,
                             _("The given filename does not have any known "
                               "file extension. Please enter a known file "
                               "extension or select a file format from the "
@@ -325,7 +325,7 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
                    G_STRFUNC);
 #endif
 
-          gimp_message (gimp, GIMP_PROGRESS (save_dialog),
+          gimp_message (gimp, G_OBJECT (save_dialog), GIMP_MESSAGE_WARNING,
                         _("The given filename does not have any known "
                           "file extension. Please enter a known file "
                           "extension or select a file format from the "
@@ -367,7 +367,7 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
 
               /*  remote URI  */
 
-              gimp_message (gimp, GIMP_PROGRESS (save_dialog),
+              gimp_message (gimp, G_OBJECT (save_dialog), GIMP_MESSAGE_WARNING,
                             _("Saving remote files needs to determine the "
                               "file format from the file extension. "
                               "Please enter a file extension that matches "
@@ -504,7 +504,7 @@ file_save_dialog_save_image (GtkWidget           *save_dialog,
     {
       gchar *filename = file_utils_uri_display_name (uri);
 
-      gimp_message (image->gimp, GIMP_PROGRESS (save_dialog),
+      gimp_message (image->gimp, G_OBJECT (save_dialog), GIMP_MESSAGE_ERROR,
                     _("Saving '%s' failed:\n\n%s"), filename, error->message);
       g_clear_error (&error);
 

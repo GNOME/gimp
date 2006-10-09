@@ -277,7 +277,7 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
                                     (const gchar *) svg_data, svg_data_len,
                                     TRUE, TRUE, -1, &error))
     {
-      gimp_message (image->gimp, GIMP_PROGRESS (shell->display),
+      gimp_message (image->gimp, G_OBJECT (shell->display), GIMP_MESSAGE_ERROR,
                     error->message);
       g_clear_error (&error);
     }
@@ -448,7 +448,8 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
         {
           gchar *filename = file_utils_uri_display_name (uri);
 
-          gimp_message (image->gimp, GIMP_PROGRESS (shell->display),
+          gimp_message (image->gimp, G_OBJECT (shell->display),
+                        GIMP_MESSAGE_ERROR,
                         _("Opening '%s' failed:\n\n%s"),
                         filename, error->message);
 

@@ -356,7 +356,8 @@ vectors_stroke_cmd_callback (GtkAction *action,
 
   if (! drawable)
     {
-      g_message (_("There is no active layer or channel to stroke to."));
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("There is no active layer or channel to stroke to."));
       return;
     }
 
@@ -385,7 +386,8 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
 
   if (! drawable)
     {
-      g_message (_("There is no active layer or channel to stroke to."));
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("There is no active layer or channel to stroke to."));
       return;
     }
 
@@ -440,7 +442,8 @@ vectors_paste_cmd_callback (GtkAction *action,
       if (! gimp_vectors_import_buffer (image, svg, svg_size,
                                         TRUE, TRUE, -1, &error))
         {
-          g_message (error->message);
+          gimp_message (image->gimp, NULL, GIMP_MESSAGE_ERROR,
+                        error->message);
           g_clear_error (&error);
         }
       else
@@ -621,7 +624,8 @@ vectors_import_response (GtkWidget           *widget,
         }
       else
         {
-          g_message (error->message);
+          gimp_message (dialog->image->gimp, NULL, GIMP_MESSAGE_ERROR,
+                        error->message);
           g_error_free (error);
         }
 
@@ -651,7 +655,8 @@ vectors_export_response (GtkWidget           *widget,
 
       if (! gimp_vectors_export_file (dialog->image, vectors, filename, &error))
         {
-          g_message (error->message);
+          gimp_message (dialog->image->gimp, NULL, GIMP_MESSAGE_ERROR,
+                        error->message);
           g_error_free (error);
         }
 

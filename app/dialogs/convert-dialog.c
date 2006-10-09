@@ -394,9 +394,10 @@ convert_dialog_palette_changed (GimpContext   *context,
 
   if (palette->n_colors > 256)
     {
-      gimp_show_message_dialog (dialog->dialog, GTK_MESSAGE_WARNING,
-                                _("Cannot convert to a palette "
-                                  "with more than 256 colors."));
+      gimp_message (dialog->image->gimp, G_OBJECT (dialog->dialog),
+                    GIMP_MESSAGE_WARNING,
+                    _("Cannot convert to a palette "
+                      "with more than 256 colors."));
     }
   else
     {

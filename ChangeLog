@@ -1,3 +1,98 @@
+2006-10-09  Michael Natterer  <mitch@gimp.org>
+
+	Added message severities and make sure all messages are routed
+	through a central function, so redirecting to the error console or
+	stderr work again:
+
+	* app/core/core-enums.[ch]: added enum GimpMessageSeverity { INFO,
+	WARNING, ERROR }.
+
+	* app/core/gimp.[ch] (gimp_message)
+	(gimp_message_valist): added severity parameter. Changed
+	"GimpProgress *progress" parameter to "GObject *handler", where
+	"handler" can be either a GimpProgress, a GtkWidget or NULL.
+
+	* app/core/gimp-gui.[ch] (gimp_show_message): ditto. Honor
+	--console-messages again. Always dispatch to the GUI message
+	handler first if it exists.
+
+	* app/gui/gui-message.[ch]: pass severity parameters around.
+
+	(gui_message_error_dialog): if "handler" is a progress, dispatch
+	the message to it first. If it is a widget (and *not* a progress),
+	use a GtkMessageDialog on top of that widget's toplevel. Fall
+	back to the usual GimpErrorDialog otherwise.
+
+	* app/core/gimpprogress.[ch] (gimp_progress_message): added
+	severity parameter. Also added boolean return value to the virtual
+	function so it can decide to fail if it can't handle the message.
+
+	* app/display/gimpdisplay.c: implement GimpProgress::message() and
+	redirect the message to GimpDisplayShell.
+
+	* app/display/gimpdisplayshell-progress.c: implement
+	GimpProgress::message() and redirect the message to GimpStatusbar
+	if it is not an error and if the status bar is visible.
+
+	* app/display/gimpstatusbar.[ch]: implement GimpProgress::message(),
+	but fail on messages that contain a newline. Show the right icons
+	for the message severities (work in progress).
+
+	* app/display/gimpdisplayshell.[ch]: removed
+	gimp_display_shell_message() and its _valist() variant.
+
+	* app/widgets/gimperrorconsole.[ch]: show the right icons for the
+	message severities.
+
+	* app/widgets/gimpthumbbox.c (gimp_thumb_box_progress_message):
+	return TRUE to swallow all messages.
+
+	* app/widgets/gimpwidgets-utils.[ch]: removed
+	gimp_show_message_dialog(). Added gimp_get_message_stock_id().
+
+	* app/errors.c
+	* app/actions/edit-commands.c
+	* app/actions/error-console-commands.c
+	* app/actions/file-commands.c
+	* app/actions/select-commands.c
+	* app/actions/text-editor-commands.c
+	* app/actions/vectors-commands.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimagefile.c
+	* app/dialogs/convert-dialog.c
+	* app/dialogs/file-open-dialog.c
+	* app/dialogs/file-open-location-dialog.c
+	* app/dialogs/file-save-dialog.c
+	* app/dialogs/palette-import-dialog.c
+	* app/dialogs/stroke-dialog.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/pdb/gimppdb.c
+	* app/plug-in/gimpplugin.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimptool.c
+	* app/tools/gimpvectortool.c
+	* app/widgets/gimpactionview.c
+	* app/widgets/gimpcontrollerlist.c
+	* app/widgets/gimppdbdialog.c
+	* app/widgets/gimpvectorstreeview.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/brush.pdb
+	* tools/pdbgen/pdb/gradient.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/message.pdb
+	* tools/pdbgen/pdb/palette.pdb: added severity parameter to
+	gimp_message() calls. Convert all calls to
+	gimp_show_message_dialog() and gimp_display_shell_message() to
+	gimp_message(). Also converted some more g_message() calls.
+
+	* app/pdb/brush_cmds.c
+	* app/pdb/gradient_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/message_cmds.c
+	* app/pdb/palette_cmds.c: regenerated.
+
 2006-10-07  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py: Don't use Python 2.4 specific functions,

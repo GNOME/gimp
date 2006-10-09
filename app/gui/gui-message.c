@@ -22,6 +22,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gui-types.h"
@@ -42,49 +43,57 @@
 
 #include "dialogs/dialogs.h"
 
+#include "gui-message.h"
+
 #include "gimp-intl.h"
 
 
-static gboolean  gui_message_error_console (const gchar  *domain,
-                                            const gchar  *message);
-static gboolean  gui_message_error_dialog  (GimpProgress *progress,
-                                            const gchar  *domain,
-                                            const gchar  *message);
-static void      gui_message_console       (const gchar  *domain,
-                                            const gchar  *message);
+static gboolean  gui_message_error_console (GimpMessageSeverity  severity,
+                                            const gchar         *domain,
+                                            const gchar         *message);
+static gboolean  gui_message_error_dialog  (Gimp                *gimp,
+                                            GObject             *handler,
+                                            GimpMessageSeverity  severity,
+                                            const gchar         *domain,
+                                            const gchar         *message);
+static void      gui_message_console       (GimpMessageSeverity  severity,
+                                            const gchar         *domain,
+                                            const gchar         *message);
 
 
 void
-gui_message (Gimp         *gimp,
-             GimpProgress *progress,
-             const gchar  *domain,
-             const gchar  *message)
+gui_message (Gimp                *gimp,
+             GObject             *handler,
+             GimpMessageSeverity  severity,
+             const gchar         *domain,
+             const gchar         *message)
 {
   switch (gimp->message_handler)
     {
     case GIMP_ERROR_CONSOLE:
-      if (gui_message_error_console (domain, message))
+      if (gui_message_error_console (severity, domain, message))
         return;
 
       gimp->message_handler = GIMP_MESSAGE_BOX;
       /*  fallthru  */
 
     case GIMP_MESSAGE_BOX:
-      if (gui_message_error_dialog (progress, domain, message))
+      if (gui_message_error_dialog (gimp, handler, severity, domain, message))
         return;
 
       gimp->message_handler = GIMP_CONSOLE;
       /*  fallthru  */
 
     case GIMP_CONSOLE:
-      gui_message_console (domain, message);
+      gui_message_console (severity, domain, message);
       break;
     }
 }
 
 static gboolean
-gui_message_error_console (const gchar *domain,
-                           const gchar *message)
+gui_message_error_console (GimpMessageSeverity  severity,
+                           const gchar         *domain,
+                           const gchar         *message)
 {
   GtkWidget *dockable;
 
@@ -95,7 +104,7 @@ gui_message_error_console (const gchar *domain,
   if (dockable)
     {
       gimp_error_console_add (GIMP_ERROR_CONSOLE (GTK_BIN (dockable)->child),
-                              GIMP_STOCK_WARNING, domain, message);
+                              severity, domain, message);
 
       return TRUE;
     }
@@ -158,21 +167,59 @@ global_error_dialog (void)
 }
 
 static gboolean
-gui_message_error_dialog (GimpProgress *progress,
-                          const gchar  *domain,
-                          const gchar  *message)
+gui_message_error_dialog (Gimp                *gimp,
+                          GObject             *handler,
+                          GimpMessageSeverity  severity,
+                          const gchar         *domain,
+                          const gchar         *message)
 {
   GtkWidget *dialog;
 
-  if (progress && ! GIMP_IS_PROGRESS_DIALOG (progress))
-    dialog = progress_error_dialog (progress);
+  if (GIMP_IS_PROGRESS (handler))
+    {
+      if (gimp_progress_message (GIMP_PROGRESS (handler), gimp,
+                                 severity, domain, message))
+        {
+          return TRUE;
+        }
+    }
+  else if (GTK_IS_WIDGET (handler))
+    {
+      GtkWidget      *parent = GTK_WIDGET (handler);
+      GtkMessageType  type   = GTK_MESSAGE_ERROR;
+
+      switch (severity)
+        {
+        case GIMP_MESSAGE_INFO:    type = GTK_MESSAGE_INFO;    break;
+        case GIMP_MESSAGE_WARNING: type = GTK_MESSAGE_WARNING; break;
+        case GIMP_MESSAGE_ERROR:   type = GTK_MESSAGE_ERROR;   break;
+        }
+
+      dialog =
+        gtk_message_dialog_new (GTK_WINDOW (gtk_widget_get_toplevel (parent)),
+                                GTK_DIALOG_DESTROY_WITH_PARENT,
+                                type, GTK_BUTTONS_OK,
+                                message);
+
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (gtk_widget_destroy),
+                        NULL);
+
+      gtk_widget_show (dialog);
+
+      return TRUE;
+    }
+
+  if (GIMP_IS_PROGRESS (handler) && ! GIMP_IS_PROGRESS_DIALOG (handler))
+    dialog = progress_error_dialog (GIMP_PROGRESS (handler));
   else
     dialog = global_error_dialog ();
 
   if (dialog)
     {
       gimp_error_dialog_add (GIMP_ERROR_DIALOG (dialog),
-                             GIMP_STOCK_WARNING, domain, message);
+                             gimp_get_message_stock_id (severity),
+                             domain, message);
       gtk_window_present (GTK_WINDOW (dialog));
 
       return TRUE;
@@ -182,8 +229,13 @@ gui_message_error_dialog (GimpProgress *progress,
 }
 
 static void
-gui_message_console (const gchar *domain,
-                     const gchar *message)
+gui_message_console (GimpMessageSeverity  severity,
+                     const gchar         *domain,
+                     const gchar         *message)
 {
-  g_printerr ("%s: %s\n\n", domain, message);
+  const gchar *desc = "Message";
+
+  gimp_enum_get_value (GIMP_TYPE_MESSAGE_SEVERITY, severity,
+                       NULL, NULL, &desc, NULL);
+  g_printerr ("%s-%s: %s\n\n", domain, desc, message);
 }

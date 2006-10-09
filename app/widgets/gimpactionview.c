@@ -30,6 +30,8 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
+
 #include "gimpaction.h"
 #include "gimpactiongroup.h"
 #include "gimpactionview.h"
@@ -462,6 +464,7 @@ gimp_action_view_accel_changed (GtkAccelGroup   *accel_group,
 
 typedef struct
 {
+  GimpUIManager   *manager;
   gchar           *accel_path;
   guint            accel_key;
   GdkModifierType  accel_mask;
@@ -481,8 +484,9 @@ gimp_action_view_conflict_response (GtkWidget   *dialog,
                                         confirm_data->accel_mask,
                                         TRUE))
         {
-          gimp_show_message_dialog (dialog, GTK_MESSAGE_ERROR,
-                                    _("Changing shortcut failed."));
+          gimp_message (confirm_data->manager->gimp, G_OBJECT (dialog),
+                        GIMP_MESSAGE_ERROR,
+                        _("Changing shortcut failed."));
         }
     }
 
@@ -517,6 +521,7 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
 
   confirm_data = g_new0 (ConfirmData, 1);
 
+  confirm_data->manager    = view->manager;
   confirm_data->accel_path = g_strdup (accel_path);
   confirm_data->accel_key  = accel_key;
   confirm_data->accel_mask = accel_mask;
@@ -600,14 +605,16 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
         {
           if (! gtk_accel_map_change_entry (accel_path, 0, 0, FALSE))
             {
-              gimp_show_message_dialog (GTK_WIDGET (view), GTK_MESSAGE_ERROR,
-                                        _("Removing shortcut failed."));
+              gimp_message (view->manager->gimp, G_OBJECT (view),
+                            GIMP_MESSAGE_ERROR,
+                            _("Removing shortcut failed."));
             }
         }
       else if (! accel_key)
         {
-          gimp_show_message_dialog (GTK_WIDGET (view), GTK_MESSAGE_ERROR,
-                                    _("Invalid shortcut."));
+          gimp_message (view->manager->gimp, G_OBJECT (view),
+                        GIMP_MESSAGE_ERROR,
+                        _("Invalid shortcut."));
         }
       else if (! gtk_accel_map_change_entry (accel_path,
                                              accel_key, accel_mask, FALSE))
@@ -666,9 +673,9 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
                 }
               else
                 {
-                  gimp_show_message_dialog (GTK_WIDGET (view),
-                                            GTK_MESSAGE_ERROR,
-                                            _("Changing shortcut failed."));
+                  gimp_message (view->manager->gimp, G_OBJECT (view),
+                                GIMP_MESSAGE_ERROR,
+                                _("Changing shortcut failed."));
                 }
             }
         }

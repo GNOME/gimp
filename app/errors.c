@@ -169,7 +169,7 @@ gimp_message_log_func (const gchar    *log_domain,
 
   if (gimp)
     {
-      gimp_show_message (gimp, NULL, NULL, message);
+      gimp_show_message (gimp, NULL, GIMP_MESSAGE_WARNING, NULL, message);
     }
   else
     {

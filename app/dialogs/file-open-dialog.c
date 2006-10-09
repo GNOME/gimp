@@ -200,7 +200,7 @@ file_open_dialog_open_image (GtkWidget           *open_dialog,
     {
       gchar *filename = file_utils_uri_display_name (uri);
 
-      gimp_message (gimp, GIMP_PROGRESS (open_dialog),
+      gimp_message (gimp, G_OBJECT (open_dialog), GIMP_MESSAGE_ERROR,
                     _("Opening '%s' failed:\n\n%s"), filename, error->message);
       g_clear_error (&error);
 
@@ -251,7 +251,7 @@ file_open_dialog_open_layer (GtkWidget           *open_dialog,
     {
       gchar *filename = file_utils_uri_display_name (uri);
 
-      gimp_message (image->gimp, GIMP_PROGRESS (open_dialog),
+      gimp_message (image->gimp, G_OBJECT (open_dialog), GIMP_MESSAGE_ERROR,
                     _("Opening '%s' failed:\n\n%s"), filename, error->message);
       g_clear_error (&error);
 

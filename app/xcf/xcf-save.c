@@ -158,7 +158,8 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
   info->cp += xcf_write_int32 (info->fp, data, count, &error); \
   if (error)                                                   \
     {                                                          \
-      gimp_message (info->gimp, info->progress,                \
+      gimp_message (info->gimp, G_OBJECT (info->progress),     \
+                    GIMP_MESSAGE_ERROR,                        \
                     _("Error saving XCF file: %s"),            \
                     error->message);                           \
       return FALSE;                                            \
@@ -169,7 +170,8 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
   info->cp += xcf_write_int8 (info->fp, data, count, &error); \
   if (error)                                                  \
     {                                                         \
-      gimp_message (info->gimp, info->progress,               \
+      gimp_message (info->gimp, G_OBJECT (info->progress),    \
+                    GIMP_MESSAGE_ERROR,                       \
                     _("Error saving XCF file: %s"),           \
                     error->message);                          \
       return FALSE;                                           \
@@ -180,7 +182,8 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
   info->cp += xcf_write_float (info->fp, data, count, &error); \
   if (error)                                                   \
     {                                                          \
-      gimp_message (info->gimp, info->progress,                \
+      gimp_message (info->gimp, G_OBJECT (info->progress),     \
+                    GIMP_MESSAGE_ERROR,                        \
                     _("Error saving XCF file: %s"),            \
                     error->message);                           \
       return FALSE;                                            \
@@ -191,7 +194,8 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
   info->cp += xcf_write_string (info->fp, data, count, &error); \
   if (error)                                                    \
     {                                                           \
-      gimp_message (info->gimp, info->progress,                 \
+      gimp_message (info->gimp, G_OBJECT (info->progress),      \
+                    GIMP_MESSAGE_ERROR,                         \
                     _("Error saving XCF file: %s"),             \
                     error->message);                            \
       return FALSE;                                             \
@@ -216,7 +220,8 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
 #define xcf_print_error(info, x) G_STMT_START {               \
   if (! (x))                                                  \
     {                                                         \
-      gimp_message (info->gimp, info->progress,               \
+      gimp_message (info->gimp, G_OBJECT (info->progress),    \
+                    GIMP_MESSAGE_ERROR,                       \
                     _("Error saving XCF file: %s"),           \
                     error->message);                          \
       return FALSE;                                           \

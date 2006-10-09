@@ -149,31 +149,41 @@ gimp_unset_busy (Gimp *gimp)
 }
 
 void
-gimp_show_message (Gimp         *gimp,
-                   GimpProgress *progress,
-                   const gchar  *domain,
-                   const gchar  *message)
+gimp_show_message (Gimp                *gimp,
+                   GObject             *handler,
+                   GimpMessageSeverity  severity,
+                   const gchar         *domain,
+                   const gchar         *message)
 {
+  const gchar *desc = "Message";
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (handler == NULL || G_IS_OBJECT (handler));
   g_return_if_fail (message != NULL);
 
   if (! domain)
     domain = GIMP_ACRONYM;
 
-  if (progress &&
-      gimp_progress_message (progress, gimp, domain, message))
+  if (! gimp->console_messages)
     {
-      /* message has already been handled by GimpProgress */
+      if (gimp->gui.show_message)
+        {
+          gimp->gui.show_message (gimp, handler,
+                                  severity, domain, message);
+          return;
+        }
+      else if (GIMP_IS_PROGRESS (handler) &&
+               gimp_progress_message (GIMP_PROGRESS (handler), gimp,
+                                      severity, domain, message))
+        {
+          /* message has been handled by GimpProgress */
+          return;
+        }
     }
-  else if (gimp->gui.show_message && ! gimp->console_messages)
-    {
-      gimp->gui.show_message (gimp, progress, domain, message);
-    }
-  else
-    {
-      g_printerr ("%s: %s\n\n", domain, message);
-    }
+
+  gimp_enum_get_value (GIMP_TYPE_MESSAGE_SEVERITY, severity,
+                       NULL, NULL, &desc, NULL);
+  g_printerr ("%s-%s: %s\n\n", domain, desc, message);
 }
 
 void

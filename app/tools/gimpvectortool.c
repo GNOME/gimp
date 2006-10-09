@@ -1880,9 +1880,9 @@ gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
 
   if (! active_drawable)
     {
-      gimp_message (image->gimp,
-                    GIMP_PROGRESS (GIMP_TOOL (vector_tool)->display),
-                    _("There is no active layer or channel to stroke to"));
+      gimp_tool_message (GIMP_TOOL (vector_tool),
+                         GIMP_TOOL (vector_tool)->display,
+                         _("There is no active layer or channel to stroke to"));
       return;
     }
 

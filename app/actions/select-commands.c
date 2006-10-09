@@ -286,7 +286,8 @@ select_stroke_cmd_callback (GtkAction *action,
 
   if (! drawable)
     {
-      g_message (_("There is no active layer or channel to stroke to."));
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("There is no active layer or channel to stroke to."));
       return;
     }
 
@@ -314,7 +315,8 @@ select_stroke_last_vals_cmd_callback (GtkAction *action,
 
   if (! drawable)
     {
-      g_message (_("There is no active layer or channel to stroke to."));
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("There is no active layer or channel to stroke to."));
       return;
     }
 

@@ -301,7 +301,7 @@ xcf_load_invoker (GimpProcedure     *procedure,
             }
           else
             {
-              gimp_message (gimp, progress,
+              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
                             _("XCF error: unsupported XCF file version %d "
                               "encountered"), info.file_version);
               success = FALSE;
@@ -315,7 +315,7 @@ xcf_load_invoker (GimpProcedure     *procedure,
     }
   else
     {
-      gimp_message (gimp, progress,
+      gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
                     _("Could not open '%s' for reading: %s"),
                     gimp_filename_to_utf8 (filename), g_strerror (errno));
     }
@@ -382,7 +382,7 @@ xcf_save_invoker (GimpProcedure     *procedure,
 
       if (fclose (info.fp) == EOF)
         {
-          gimp_message (gimp, progress,
+          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
                         _("Error saving XCF file: %s"), g_strerror (errno));
 
           success = FALSE;
@@ -393,7 +393,7 @@ xcf_save_invoker (GimpProcedure     *procedure,
     }
   else
     {
-      gimp_message (gimp, progress,
+      gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
                     _("Could not open '%s' for writing: %s"),
                     gimp_filename_to_utf8 (filename), g_strerror (errno));
     }

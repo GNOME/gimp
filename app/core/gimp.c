@@ -994,34 +994,37 @@ gimp_get_tool_info (Gimp        *gimp,
 }
 
 void
-gimp_message (Gimp         *gimp,
-              GimpProgress *progress,
-              const gchar  *format,
+gimp_message (Gimp                *gimp,
+              GObject             *handler,
+              GimpMessageSeverity  severity,
+              const gchar         *format,
               ...)
 {
   va_list args;
 
   va_start (args, format);
 
-  gimp_message_valist (gimp, progress, format, args);
+  gimp_message_valist (gimp, handler, severity, format, args);
 
   va_end (args);
 }
 
 void
-gimp_message_valist (Gimp         *gimp,
-                     GimpProgress *progress,
-                     const gchar  *format,
-                     va_list       args)
+gimp_message_valist (Gimp                *gimp,
+                     GObject             *handler,
+                     GimpMessageSeverity  severity,
+                     const gchar         *format,
+                     va_list              args)
 {
   gchar *message;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (handler == NULL || G_IS_OBJECT (handler));
+  g_return_if_fail (format != NULL);
 
   message = g_strdup_vprintf (format, args);
 
-  gimp_show_message (gimp, progress, NULL, message);
+  gimp_show_message (gimp, handler, severity, NULL, message);
 
   g_free (message);
 }

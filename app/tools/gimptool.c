@@ -24,7 +24,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
-#include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
@@ -727,9 +726,11 @@ gimp_tool_push_status (GimpTool    *tool,
   shell = GIMP_DISPLAY_SHELL (display->shell);
 
   va_start (args, format);
+
   gimp_statusbar_push_valist (GIMP_STATUSBAR (shell->statusbar),
                               G_OBJECT_TYPE_NAME (tool),
                               format, args);
+
   va_end (args);
 }
 
@@ -788,9 +789,11 @@ gimp_tool_replace_status (GimpTool    *tool,
   shell = GIMP_DISPLAY_SHELL (display->shell);
 
   va_start (args, format);
+
   gimp_statusbar_replace_valist (GIMP_STATUSBAR (shell->statusbar),
                                  G_OBJECT_TYPE_NAME (tool),
                                  format, args);
+
   va_end (args);
 }
 
@@ -819,11 +822,12 @@ gimp_tool_message (GimpTool    *tool,
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (format != NULL);
 
   va_start (args, format);
 
-  gimp_display_shell_message_valist (GIMP_DISPLAY_SHELL (display->shell),
-                                     format, args);
+  gimp_message_valist (display->image->gimp, G_OBJECT (display),
+                       GIMP_MESSAGE_WARNING, format, args);
 
   va_end (args);
 }

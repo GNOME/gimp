@@ -69,8 +69,9 @@ static void     gimp_thumb_box_progress_set_value (GimpProgress      *progress,
 static gdouble  gimp_thumb_box_progress_get_value (GimpProgress      *progress);
 static void     gimp_thumb_box_progress_pulse     (GimpProgress      *progress);
 
-static void     gimp_thumb_box_progress_message   (GimpProgress      *progress,
+static gboolean gimp_thumb_box_progress_message   (GimpProgress      *progress,
                                                    Gimp              *gimp,
+                                                   GimpMessageSeverity  severity,
                                                    const gchar       *domain,
                                                    const gchar       *message);
 
@@ -271,13 +272,16 @@ gimp_thumb_box_progress_pulse (GimpProgress *progress)
     }
 }
 
-static void
-gimp_thumb_box_progress_message (GimpProgress      *progress,
-                                 Gimp              *gimp,
-                                 const gchar       *domain,
-                                 const gchar       *message)
+static gboolean
+gimp_thumb_box_progress_message (GimpProgress        *progress,
+                                 Gimp                *gimp,
+                                 GimpMessageSeverity  severity,
+                                 const gchar         *domain,
+                                 const gchar         *message)
 {
   /*  GimpThumbBox never shows any messages  */
+
+  return TRUE;
 }
 
 

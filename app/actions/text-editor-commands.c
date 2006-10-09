@@ -25,8 +25,11 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
+
 #include "widgets/gimptexteditor.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "text-editor-commands.h"
@@ -134,10 +137,11 @@ text_editor_load_response (GtkWidget      *dialog,
 
       if (! gimp_text_buffer_load (buffer, filename, &error))
         {
-          gimp_show_message_dialog (dialog, GTK_MESSAGE_ERROR,
-                                    _("Could not open '%s' for reading: %s"),
-                                    gimp_filename_to_utf8 (filename),
-                                    error->message);
+          gimp_message (editor->ui_manager->gimp, G_OBJECT (dialog),
+                        GIMP_MESSAGE_ERROR,
+                        _("Could not open '%s' for reading: %s"),
+                        gimp_filename_to_utf8 (filename),
+                        error->message);
           g_clear_error (&error);
           g_free (filename);
           return;

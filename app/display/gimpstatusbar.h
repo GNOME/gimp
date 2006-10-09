@@ -103,9 +103,11 @@ void        gimp_statusbar_pop              (GimpStatusbar       *statusbar,
                                              const gchar         *context);
 
 void        gimp_statusbar_push_temp        (GimpStatusbar       *statusbar,
+                                             const gchar         *stock_id,
                                              const gchar         *format,
-                                             ...) G_GNUC_PRINTF(2,3);
+                                             ...) G_GNUC_PRINTF(3,4);
 void        gimp_statusbar_push_temp_valist (GimpStatusbar       *statusbar,
+                                             const gchar         *stock_id,
                                              const gchar         *format,
                                              va_list              args);
 void        gimp_statusbar_pop_temp         (GimpStatusbar       *statusbar);

@@ -340,12 +340,12 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
 
           if (g_value_get_enum (&return_vals->values[0]) != GIMP_PDB_SUCCESS)
             {
-              gimp_show_message_dialog (GTK_WIDGET (dialog),
-                                        GTK_MESSAGE_ERROR,
-                                        _("Unable to run %s callback. "
-                                          "The corresponding plug-in may have "
-                                          "crashed."),
-                                        g_type_name (G_TYPE_FROM_INSTANCE (dialog)));
+              gimp_message (dialog->context->gimp, G_OBJECT (dialog),
+                            GIMP_MESSAGE_ERROR,
+                            _("Unable to run %s callback. "
+                              "The corresponding plug-in may have "
+                              "crashed."),
+                            g_type_name (G_TYPE_FROM_INSTANCE (dialog)));
             }
 
           g_value_array_free (return_vals);

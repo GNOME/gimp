@@ -215,7 +215,8 @@ brush_delete_invoker (GimpProcedure     *procedure,
 
           if (! success)
             {
-              gimp_message (gimp, progress, error->message);
+              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                            error->message);
               g_clear_error (&error);
             }
         }

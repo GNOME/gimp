@@ -584,10 +584,11 @@ gimp_image_map_tool_load_save (GimpImageMapTool *tool,
         _("Could not open '%s' for writing: %s") :
         _("Could not open '%s' for reading: %s");
 
-      gimp_show_message_dialog (tool->shell, GTK_MESSAGE_ERROR,
-                                format,
-                                gimp_filename_to_utf8 (filename),
-                                g_strerror (errno));
+      gimp_message (GIMP_TOOL (tool)->tool_info->gimp, G_OBJECT (tool->shell),
+                    GIMP_MESSAGE_ERROR,
+                    format,
+                    gimp_filename_to_utf8 (filename),
+                    g_strerror (errno));
       return;
     }
 
@@ -601,10 +602,11 @@ gimp_image_map_tool_load_save (GimpImageMapTool *tool,
     }
   else if (! gimp_image_map_tool_settings_load (tool, file, &error))
     {
-      gimp_show_message_dialog (tool->shell, GTK_MESSAGE_ERROR,
-                                _("Error reading '%s': %s"),
-                                gimp_filename_to_utf8 (filename),
-                                error->message);
+      gimp_message (GIMP_TOOL (tool)->tool_info->gimp, G_OBJECT (tool->shell),
+                    GIMP_MESSAGE_ERROR,
+                    _("Error reading '%s': %s"),
+                    gimp_filename_to_utf8 (filename),
+                    error->message);
       g_error_free (error);
     }
 
