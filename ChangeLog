@@ -1,3 +1,10 @@
+2006-10-09  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/tips-parser.[ch]: accept printf-style format strings.
+
+	* app/dialogs/tips-dialog.c: avoid markup in translatable messages
+	(bug #360458).
+
 2006-10-09  Michael Natterer  <mitch@gimp.org>
 
 	Added message severities and make sure all messages are routed

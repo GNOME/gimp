@@ -106,21 +106,47 @@ static const GMarkupParser markup_parser =
 
 
 GimpTip *
-gimp_tip_new  (const gchar *welcome,
-               const gchar *thetip)
+gimp_tip_new  (const gchar *format,
+               ...)
 {
-  GimpTip *tip = g_new (GimpTip, 1);
+  GimpTip *tip;
+  va_list  args;
 
-  tip->welcome = welcome ? g_strdup (welcome) : NULL;
-  tip->thetip  = thetip  ? g_strdup (thetip)  : NULL;
+  g_return_val_if_fail (format != NULL, NULL);
+
+  tip = g_new0 (GimpTip, 1);
+
+  va_start (args, format);
+
+  tip->welcome = g_strdup_vprintf (format, args);
+
+  va_end (args);
 
   return tip;
 }
 
 void
+gimp_tip_set (GimpTip     *tip,
+              const gchar *format,
+              ...)
+{
+  va_list args;
+
+  g_return_if_fail (tip != NULL);
+  g_return_if_fail (format != NULL);
+
+  va_start (args, format);
+
+  g_free (tip->thetip);
+  tip->thetip = g_strdup_vprintf (format, args);
+
+  va_end (args);
+}
+
+void
 gimp_tip_free (GimpTip *tip)
 {
-  if (!tip)
+  if (! tip)
     return;
 
   g_free (tip->welcome);
