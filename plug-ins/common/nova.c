@@ -394,6 +394,7 @@ nova_dialog (GimpDrawable *drawable)
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
     }
+
   gtk_widget_show (dialog);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
@@ -775,10 +776,10 @@ nova (GimpDrawable *drawable,
 
            for (col = 0, x = 0; col < x2; col++, x++)
              {
-               u = (gdouble) (x - xc) /
-                          (pvals.radius * width / drawable->width);
-               v = (gdouble) (y - yc) /
-                          (pvals.radius * height / drawable->height);
+               u = ((gdouble) (x - xc) /
+                    ((gdouble) pvals.radius * width / drawable->width));
+               v = ((gdouble) (y - yc) /
+                    ((gdouble) pvals.radius * height / drawable->height));
                l = sqrt (u * u + v * v);
 
                /* This algorithm is still under construction. */
@@ -875,8 +876,8 @@ nova (GimpDrawable *drawable,
 
                for (col = 0, x = src_rgn.x; col < src_rgn.w; col++, x++)
                  {
-                   u = (gdouble) (x-xc) / pvals.radius;
-                   v = (gdouble) (y-yc) / pvals.radius;
+                   u = (gdouble) (x - xc) / pvals.radius;
+                   v = (gdouble) (y - yc) / pvals.radius;
                    l = sqrt(u*u + v*v);
 
                    /* This algorithm is still under construction. */
