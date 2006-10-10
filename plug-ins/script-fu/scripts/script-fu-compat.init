@@ -148,6 +148,10 @@
   (* 4 (atan 1.0))
 )
 
+(define (butlast x)
+  (reverse (cdr (reverse x)))
+)
+
 (define (cons-array count type)
   (case type
     ((long)   (make-array count "int32"))
@@ -197,6 +201,10 @@
         (string-length arg1)
       )
   )
+)
+
+(define (last x)
+  (cons (car (reverse x)) '())
 )
 
 (define (nth k list)
