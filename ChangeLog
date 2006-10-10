@@ -1,3 +1,8 @@
+2006-10-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/nova.c: applied patch from Aurimas Juška that
+	adds a missing cast which should fix bug #340073.
+
 2006-10-09  Tor Lillqvist  <tml@novell.com>
 
 	* configure.in: Suffix LCMS with EXEEXT. Unbreaks build on Win32.
