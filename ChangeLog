@@ -1,5 +1,11 @@
 2006-10-11  Sven Neumann  <sven@gimp.org>
 
+	* modules/Makefile.am: build the color-managed CMYK color selector
+	with the same filename as the naive implementation; they are
+	mutually exclusive.
+
+2006-10-11  Sven Neumann  <sven@gimp.org>
+
 	* app/pdb/gimppdb.c: added missing casts.
 
 2006-10-10  Manish Singh  <yosh@gimp.org>
