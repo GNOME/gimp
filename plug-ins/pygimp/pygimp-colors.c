@@ -520,15 +520,101 @@ rgb_setitem(PyObject *self, int pos, PyObject *value)
     }
 }
 
+static PyObject *
+rgb_slice(PyObject *self, int start, int end)
+{
+    PyTupleObject *ret;
+    int i;
+
+    if (start < 0)
+	start = 0;
+    if (end > 4)
+	end = 4;
+    if (end < start)
+	end = start;
+
+    ret = (PyTupleObject *)PyTuple_New(end - start);
+    if (ret == NULL)
+	return NULL;
+
+    for (i = start; i < end; i++)
+	PyTuple_SET_ITEM(ret, i - start, rgb_getitem(self, i));
+
+    return (PyObject *)ret;
+}
+
 static PySequenceMethods rgb_as_sequence = {
     (inquiry)rgb_length,
     (binaryfunc)0,
     (intargfunc)0,
     (intargfunc)rgb_getitem,
-    (intintargfunc)0,
+    (intintargfunc)rgb_slice,
     (intobjargproc)rgb_setitem,
     (intintobjargproc)0,
     (objobjproc)0,
+};
+
+static PyObject *
+rgb_subscript(PyObject *self, PyObject *item)
+{
+    if (PyInt_Check(item)) {
+	long i = PyInt_AS_LONG(item);
+	return rgb_getitem(self, i);
+    } else if (PyLong_Check(item)) {
+	long i = PyLong_AsLong(item);
+	if (i == -1 && PyErr_Occurred())
+	    return NULL;
+	return rgb_getitem(self, i);
+    } else if (PySlice_Check(item)) {
+	int start, stop, step, slicelength, cur, i;
+	PyObject *ret;
+
+	if (PySlice_GetIndicesEx((PySliceObject*)item, 4,
+				 &start, &stop, &step, &slicelength) < 0)
+	    return NULL;
+
+	if (slicelength <= 0) {
+	    return PyTuple_New(0);
+	} else {
+	    ret = PyTuple_New(slicelength);
+	    if (!ret)
+		return NULL;
+
+	    for (cur = start, i = 0; i < slicelength; cur += step, i++)
+		PyTuple_SET_ITEM(ret, i, rgb_getitem(self, cur));
+
+	    return ret;
+	}
+    } else if (PyString_Check(item)) {
+	char *s = PyString_AsString(item);
+
+	if (g_ascii_strcasecmp(s, "r") == 0 ||
+	    g_ascii_strcasecmp(s, "red") == 0)
+	    return rgb_get_r(self, NULL);
+	else if (g_ascii_strcasecmp(s, "g")  == 0 ||
+		 g_ascii_strcasecmp(s, "green") == 0)
+	    return rgb_get_g(self, NULL);
+	else if (g_ascii_strcasecmp(s, "b")  == 0 ||
+		 g_ascii_strcasecmp(s, "blue") == 0)
+	    return rgb_get_b(self, NULL);
+	else if (g_ascii_strcasecmp(s, "a")  == 0 ||
+		 g_ascii_strcasecmp(s, "alpha") == 0)
+	    return rgb_get_a(self, NULL);
+	else {
+	    PyErr_SetObject(PyExc_KeyError, item);
+	    return NULL;
+	} 
+    } else {
+	PyErr_SetString(PyExc_TypeError,
+			"indices must be integers");
+	return NULL;
+    }
+}
+
+static PyMappingMethods rgb_as_mapping = {
+    (inquiry)rgb_length,
+    (binaryfunc)rgb_subscript,
+    (objobjargproc)0
 };
 
 static long
@@ -689,7 +775,7 @@ PyTypeObject PyGimpRGB_Type = {
     (reprfunc)rgb_repr,			/* tp_repr */
     (PyNumberMethods*)0,		/* tp_as_number */
     &rgb_as_sequence,			/* tp_as_sequence */
-    (PyMappingMethods*)0,		/* tp_as_mapping */
+    &rgb_as_mapping,			/* tp_as_mapping */
     (hashfunc)rgb_hash,			/* tp_hash */
     (ternaryfunc)0,			/* tp_call */
     (reprfunc)rgb_str,			/* tp_str */
@@ -957,15 +1043,101 @@ hsv_setitem(PyObject *self, int pos, PyObject *value)
     }
 }
 
+static PyObject *
+hsv_slice(PyObject *self, int start, int end)
+{
+    PyTupleObject *ret;
+    int i;
+
+    if (start < 0)
+	start = 0;
+    if (end > 4)
+	end = 4;
+    if (end < start)
+	end = start;
+
+    ret = (PyTupleObject *)PyTuple_New(end - start);
+    if (ret == NULL)
+	return NULL;
+
+    for (i = start; i < end; i++)
+	PyTuple_SET_ITEM(ret, i - start, hsv_getitem(self, i));
+
+    return (PyObject *)ret;
+}
+
 static PySequenceMethods hsv_as_sequence = {
     (inquiry)hsv_length,
     (binaryfunc)0,
     (intargfunc)0,
     (intargfunc)hsv_getitem,
-    (intintargfunc)0,
+    (intintargfunc)hsv_slice,
     (intobjargproc)hsv_setitem,
     (intintobjargproc)0,
     (objobjproc)0,
+};
+
+static PyObject *
+hsv_subscript(PyObject *self, PyObject *item)
+{
+    if (PyInt_Check(item)) {
+	long i = PyInt_AS_LONG(item);
+	return hsv_getitem(self, i);
+    } else if (PyLong_Check(item)) {
+	long i = PyLong_AsLong(item);
+	if (i == -1 && PyErr_Occurred())
+	    return NULL;
+	return hsv_getitem(self, i);
+    } else if (PySlice_Check(item)) {
+	int start, stop, step, slicelength, cur, i;
+	PyObject *ret;
+
+	if (PySlice_GetIndicesEx((PySliceObject*)item, 4,
+				 &start, &stop, &step, &slicelength) < 0)
+	    return NULL;
+
+	if (slicelength <= 0) {
+	    return PyTuple_New(0);
+	} else {
+	    ret = PyTuple_New(slicelength);
+	    if (!ret)
+		return NULL;
+
+	    for (cur = start, i = 0; i < slicelength; cur += step, i++)
+		PyTuple_SET_ITEM(ret, i, hsv_getitem(self, cur));
+
+	    return ret;
+	}
+    } else if (PyString_Check(item)) {
+	char *s = PyString_AsString(item);
+
+	if (g_ascii_strcasecmp(s, "h") == 0 ||
+	    g_ascii_strcasecmp(s, "hue") == 0)
+	    return hsv_get_h(self, NULL);
+	else if (g_ascii_strcasecmp(s, "s")  == 0 ||
+		 g_ascii_strcasecmp(s, "saturation") == 0)
+	    return hsv_get_s(self, NULL);
+	else if (g_ascii_strcasecmp(s, "v")  == 0 ||
+		 g_ascii_strcasecmp(s, "value") == 0)
+	    return hsv_get_v(self, NULL);
+	else if (g_ascii_strcasecmp(s, "a")  == 0 ||
+		 g_ascii_strcasecmp(s, "alpha") == 0)
+	    return hsv_get_a(self, NULL);
+	else {
+	    PyErr_SetObject(PyExc_KeyError, item);
+	    return NULL;
+	}
+    } else {
+	PyErr_SetString(PyExc_TypeError,
+			"indices must be integers");
+	return NULL;
+    }
+}
+
+static PyMappingMethods hsv_as_mapping = {
+    (inquiry)hsv_length,
+    (binaryfunc)hsv_subscript,
+    (objobjargproc)0
 };
 
 static long
@@ -1126,7 +1298,7 @@ PyTypeObject PyGimpHSV_Type = {
     (reprfunc)hsv_repr,			/* tp_repr */
     (PyNumberMethods*)0,		/* tp_as_number */
     &hsv_as_sequence,			/* tp_as_sequence */
-    (PyMappingMethods*)0,		/* tp_as_mapping */
+    &hsv_as_mapping,			/* tp_as_mapping */
     (hashfunc)hsv_hash,			/* tp_hash */
     (ternaryfunc)0,			/* tp_call */
     (reprfunc)hsv_str,			/* tp_repr */
@@ -1384,15 +1556,101 @@ hsl_setitem(PyObject *self, int pos, PyObject *value)
     }
 }
 
+static PyObject *
+hsl_slice(PyObject *self, int start, int end)
+{
+    PyTupleObject *ret;
+    int i;
+
+    if (start < 0)
+        start = 0;
+    if (end > 4)
+        end = 4;
+    if (end < start)
+        end = start;
+
+    ret = (PyTupleObject *)PyTuple_New(end - start);
+    if (ret == NULL)
+        return NULL;
+
+    for (i = start; i < end; i++)
+        PyTuple_SET_ITEM(ret, i - start, hsl_getitem(self, i));
+
+    return (PyObject *)ret;
+}
+
 static PySequenceMethods hsl_as_sequence = {
     (inquiry)hsl_length,
     (binaryfunc)0,
     (intargfunc)0,
     (intargfunc)hsl_getitem,
-    (intintargfunc)0,
+    (intintargfunc)hsl_slice,
     (intobjargproc)hsl_setitem,
     (intintobjargproc)0,
     (objobjproc)0,
+};
+
+static PyObject *
+hsl_subscript(PyObject *self, PyObject *item)
+{
+    if (PyInt_Check(item)) {
+        long i = PyInt_AS_LONG(item);
+        return hsl_getitem(self, i);
+    } else if (PyLong_Check(item)) {
+        long i = PyLong_AsLong(item);
+        if (i == -1 && PyErr_Occurred())
+            return NULL;
+        return hsl_getitem(self, i);
+    } else if (PySlice_Check(item)) {
+        int start, stop, step, slicelength, cur, i;
+        PyObject *ret;
+
+        if (PySlice_GetIndicesEx((PySliceObject*)item, 4,
+                                 &start, &stop, &step, &slicelength) < 0)
+            return NULL;
+
+        if (slicelength <= 0) {
+            return PyTuple_New(0);
+        } else {
+            ret = PyTuple_New(slicelength);
+            if (!ret)
+                return NULL;
+
+            for (cur = start, i = 0; i < slicelength; cur += step, i++)
+                PyTuple_SET_ITEM(ret, i, hsl_getitem(self, cur));
+
+            return ret;
+        }
+    } else if (PyString_Check(item)) {
+        char *s = PyString_AsString(item);
+
+        if (g_ascii_strcasecmp(s, "h") == 0 ||
+            g_ascii_strcasecmp(s, "hue") == 0)
+            return hsl_get_h(self, NULL);
+        else if (g_ascii_strcasecmp(s, "s")  == 0 ||
+                 g_ascii_strcasecmp(s, "saturation") == 0)
+            return hsl_get_s(self, NULL);
+        else if (g_ascii_strcasecmp(s, "l")  == 0 ||
+                 g_ascii_strcasecmp(s, "lightness") == 0)
+            return hsl_get_l(self, NULL);
+        else if (g_ascii_strcasecmp(s, "a")  == 0 ||
+                 g_ascii_strcasecmp(s, "alpha") == 0)
+            return hsl_get_a(self, NULL);
+        else {
+            PyErr_SetObject(PyExc_KeyError, item);
+            return NULL;
+        }
+    } else {
+        PyErr_SetString(PyExc_TypeError,
+                        "indices must be integers");
+        return NULL;
+    }
+}
+
+static PyMappingMethods hsl_as_mapping = {
+    (inquiry)hsl_length,
+    (binaryfunc)hsl_subscript,
+    (objobjargproc)0
 };
 
 static long
@@ -1553,7 +1811,7 @@ PyTypeObject PyGimpHSL_Type = {
     (reprfunc)hsl_repr,			/* tp_repr */
     (PyNumberMethods*)0,		/* tp_as_number */
     &hsl_as_sequence,			/* tp_as_sequence */
-    (PyMappingMethods*)0,		/* tp_as_mapping */
+    &hsl_as_mapping,			/* tp_as_mapping */
     (hashfunc)hsl_hash,			/* tp_hash */
     (ternaryfunc)0,			/* tp_call */
     (reprfunc)hsl_str,			/* tp_repr */
@@ -1804,15 +2062,104 @@ cmyk_setitem(PyObject *self, int pos, PyObject *value)
     }
 }
 
+static PyObject *
+cmyk_slice(PyObject *self, int start, int end)
+{
+    PyTupleObject *ret;
+    int i;
+
+    if (start < 0)
+        start = 0;
+    if (end > 5)
+        end = 5;
+    if (end < start)
+        end = start;
+
+    ret = (PyTupleObject *)PyTuple_New(end - start);
+    if (ret == NULL)
+        return NULL;
+
+    for (i = start; i < end; i++)
+        PyTuple_SET_ITEM(ret, i - start, cmyk_getitem(self, i));
+
+    return (PyObject *)ret;
+}
+
 static PySequenceMethods cmyk_as_sequence = {
     (inquiry)cmyk_length,
     (binaryfunc)0,
     (intargfunc)0,
     (intargfunc)cmyk_getitem,
-    (intintargfunc)0,
+    (intintargfunc)cmyk_slice,
     (intobjargproc)cmyk_setitem,
     (intintobjargproc)0,
     (objobjproc)0,
+};
+
+static PyObject *
+cmyk_subscript(PyObject *self, PyObject *item)
+{
+    if (PyInt_Check(item)) {
+        long i = PyInt_AS_LONG(item);
+        return cmyk_getitem(self, i);
+    } else if (PyLong_Check(item)) {
+        long i = PyLong_AsLong(item);
+        if (i == -1 && PyErr_Occurred())
+            return NULL;
+        return cmyk_getitem(self, i);
+    } else if (PySlice_Check(item)) {
+        int start, stop, step, slicelength, cur, i;
+        PyObject *ret;
+
+        if (PySlice_GetIndicesEx((PySliceObject*)item, 5,
+                                 &start, &stop, &step, &slicelength) < 0)
+            return NULL;
+
+        if (slicelength <= 0) {
+            return PyTuple_New(0);
+        } else {
+            ret = PyTuple_New(slicelength);
+            if (!ret)
+                return NULL;
+
+            for (cur = start, i = 0; i < slicelength; cur += step, i++)
+                PyTuple_SET_ITEM(ret, i, cmyk_getitem(self, cur));
+
+            return ret;
+        }
+    } else if (PyString_Check(item)) {
+        char *s = PyString_AsString(item);
+
+        if (g_ascii_strcasecmp(s, "c") == 0 ||
+            g_ascii_strcasecmp(s, "cyan") == 0)
+            return cmyk_get_c(self, NULL);
+        else if (g_ascii_strcasecmp(s, "m")  == 0 ||
+                 g_ascii_strcasecmp(s, "magenta") == 0)
+            return cmyk_get_m(self, NULL);
+        else if (g_ascii_strcasecmp(s, "y")  == 0 ||
+                 g_ascii_strcasecmp(s, "yellow") == 0)
+            return cmyk_get_y(self, NULL);
+        else if (g_ascii_strcasecmp(s, "k")  == 0 ||
+                 g_ascii_strcasecmp(s, "black") == 0)
+            return cmyk_get_k(self, NULL);
+        else if (g_ascii_strcasecmp(s, "a")  == 0 ||
+                 g_ascii_strcasecmp(s, "alpha") == 0)
+            return cmyk_get_a(self, NULL);
+        else {
+            PyErr_SetObject(PyExc_KeyError, item);
+            return NULL;
+        }
+    } else {
+        PyErr_SetString(PyExc_TypeError,
+                        "indices must be integers");
+        return NULL;
+    }
+}
+
+static PyMappingMethods cmyk_as_mapping = {
+    (inquiry)cmyk_length,
+    (binaryfunc)cmyk_subscript,
+    (objobjargproc)0
 };
 
 static long
@@ -1977,7 +2324,7 @@ PyTypeObject PyGimpCMYK_Type = {
     (reprfunc)cmyk_repr,		/* tp_repr */
     (PyNumberMethods*)0,		/* tp_as_number */
     &cmyk_as_sequence,			/* tp_as_sequence */
-    (PyMappingMethods*)0,		/* tp_as_mapping */
+    &cmyk_as_mapping,			/* tp_as_mapping */
     (hashfunc)cmyk_hash,		/* tp_hash */
     (ternaryfunc)0,			/* tp_call */
     (reprfunc)cmyk_str,			/* tp_repr */
