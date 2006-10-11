@@ -13,6 +13,16 @@ Changes in GIMP 2.3.12
 - merged the Perspective Clone tool
 - allow to pan the image view using the Space bar
 - show a thumbnail in the "Rotate JPEG?" query dialog
+- added file information to the Image Properties dialog
+- more work on the new selection tools
+- give immidiate feedback when tool modifier keys are pressed
+- added Lens Distortion plug-in
+- internationalize Python binding and Python plug-ins
+- improved internal message infrastructure, use the statusbar for warnings
+- added an URL loader backend based on libcurl
+- build a color-managed CMYK color selector if lcms is available
+- localize Script-Fu procedure descriptions
+- lots of user interface polishing
 - bug fixes and code cleanup
 
 

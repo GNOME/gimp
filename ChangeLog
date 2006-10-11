@@ -1,3 +1,7 @@
+2006-10-11  Sven Neumann  <sven@gimp.org>
+
+	* app/pdb/gimppdb.c: added missing casts.
+
 2006-10-10  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-colors.c: Add slice support to the colors
@@ -203,7 +207,7 @@
 	* plug-ins/FractalExplorer/Dialogs.c: changed some labels to be
 	more descriptive instead of explaining the meaning in a tooltip.
 	Set slider senitivity according to fractal type.
-	
+
 2006-10-06  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/FractalExplorer/Dialogs.c: don't show fractional values
@@ -272,7 +276,7 @@
 	* app/dialogs/offset-dialog.c:  apply patch from David
 	Gowers, with minor cleanups, to use item dimensions rather
 	than image dimensions; fixes bug #358322.
-	
+
 2006-10-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/tools-enums.[ch]: change labels for transform
@@ -281,14 +285,14 @@
 	* app/tools/gimpmoveoptions.c:
 	* app/tools/gimptransformoptions.c:  change "Affect:" to
 	"Move:" or "Transform:", respectively.  Fixes bug #358824.
-	
+
 2006-10-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpimage-convert.c
 	(median_cut_pass2_nodestruct_dither_rgb): adjust alpha-dithering
 	and make code more readable; fixes bug #358851 as suggested
 	by Tor Lillqvist.
-	
+
 2006-10-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimppalette-load.[ch]: added
@@ -679,16 +683,16 @@
 
 2006-09-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* app/core/gimpdrawable-transform.c: apply patch from
-	Geert Jordaens to improve Lanczos performance;
-	probably fixes bug #355178.
-	
+	* app/core/gimpdrawable-transform.c: apply patch from Geert
+	Jordaens to improve Lanczos performance; probably fixes bug
+	#355178.
+
 2006-09-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* plug-ins/common/ripple.c: set min for "period" scale entry
-	to 1 instead of 0, and add error check for noninteractive.
-	Fixes bug #357431.
-	
+	* plug-ins/common/ripple.c: set min for "period" scale entry to 1
+	instead of 0, and add error check for noninteractive.  Fixes bug
+	#357431.
+
 2006-09-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/context-commands.c: don't allow editing of read-only
@@ -696,9 +700,9 @@
 
 2006-09-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* plug-ins/script-fu/scripts/line-nova.scm: Change min for randomness
-	from 0 to 1, should fix bug #357433.
-	
+	* plug-ins/script-fu/scripts/line-nova.scm: Change min for
+	randomness from 0 to 1, should fix bug #357433.
+
 2006-09-24  Michael Natterer  <mitch@gimp.org>
 
 	Some more proper typing instead of using pointers:
@@ -762,49 +766,46 @@
 2006-09-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimprectangleselecttool.c
-	* app/tools/gimprectangletool.[ch]:simplify code by
-	removing unneeded properties and getters/setters.
+	* app/tools/gimprectangletool.[ch]:simplify code by removing
+	unneeded properties and getters/setters.
 
 2006-09-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimprectangleoptions.[ch]
 	* app/tools/gimprectangleselecttool.c
 	* app/tools/gimprectangletool.c
-	* app/tools/gimpselectionoptions.c: move "auto-shrink"
-	and "shrink-merged" from selection options to 
-	rectangle options where they belong; now shown
-	for crop tool as well as rect select.
+	* app/tools/gimpselectionoptions.c: move "auto-shrink" and
+	"shrink-merged" from selection options to rectangle options where
+	they belong; now shown for crop tool as well as rect select.
 
 2006-09-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimppropwidgets.c
-	* app/tools/gimprectangleoptions.c: add functionality
-	for aspect ratio control.
-	
+	* app/tools/gimprectangleoptions.c: add functionality for aspect
+	ratio control.
+
 2006-09-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/actions/tools-actions.c
-	* app/actions/tools-commands.[ch]: add new actions for
-	toggling "fixed-aspect" and "fixed-center" options of
-	rectangle tools.
+	* app/actions/tools-commands.[ch]: add new actions for toggling
+	"fixed-aspect" and "fixed-center" options of rectangle tools.
 
 	* app/tools/gimprectangletool.[ch]
 	* app/tools/gimprectangleselecttool.c
-	* app/tools/gimpcroptool.c: rely on new actions for
-	keyboard control, not on modifiers pressed after
-	mouse1-down.
-	
+	* app/tools/gimpcroptool.c: rely on new actions for keyboard
+	control, not on modifiers pressed after mouse1-down.
+
 2006-09-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimppropwidgets.[ch]
 	* app/tools/gimprectangleoptions.c
-	* app/tools/gimprectangletool.c: more work on option
-	layout and handling.
-	
+	* app/tools/gimprectangletool.c: more work on option layout and
+	handling.
+
 2006-09-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* libgimpwidgets/gimppropwidgets.[ch]: revert previous
-	change; was not necessary.
+	* libgimpwidgets/gimppropwidgets.[ch]: revert previous change;
+	was not necessary.
 
 2006-09-22  Michael Natterer  <mitch@gimp.org>
 
@@ -830,7 +831,7 @@
 2006-09-22  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-selection.c: always recalculate the
-	selection when restarting it.	
+	selection when restarting it.
 
 2006-09-22  Michael Natterer  <mitch@gimp.org>
 
@@ -882,7 +883,7 @@
 	* app/tools/gimprectangleoptions.[ch]: major revision.  Got
 	rid of lots of unneeded getter/setter-clutter, simplified
 	set of options and appearance of gui.  Still work in progress.
-	
+
 	* app/tools/gimprectangleselectoptions.c
 	* app/tools/gimprectangletool.c: corresponding changes.
 
@@ -890,18 +891,18 @@
 
 	* app/tools/gimpselectionoptions.[ch]: remove
 	rectangle-related options no longer used anywhere.
-	
+
 2006-09-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* libgimpwidgets/gimppropwidgets.[ch]: added
 	gimp_prop_toggle_button_new(), and re-implemented
 	gimp_prop_check_button_new() in terms of it, as basically
 	a convenience function now.
-	
+
 2006-09-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/paint-funcs/scale-funcs.[ch]:  commit patch from "gg"
-	to fix Lanczos problems, addresses bug #167956 and 
+	to fix Lanczos problems, addresses bug #167956 and
 	bug #355178.
 
 2006-09-21  Sven Neumann  <sven@gimp.org>
@@ -968,9 +969,9 @@
 	* app/tools/gimpdrawtool.[ch]: remove recently added code relating
 	to stippled xor drawing -- not handled well by some display
 	drivers.
-	
+
 	* app/tools/gimprectangletool.c: improve drawing of handles.
-	
+
 2006-09-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/pygimp-drawable.c (drw_set_name): use
@@ -1197,7 +1198,7 @@
 
 	* plug-ins/common/screenshot.c: when shooting a region, apply delay
 	_after_ selecting region, applying before is useless.
-	
+
 2006-09-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/gimpmodule.c: added domain_register method.
@@ -1237,7 +1238,7 @@
 
 	Trying to implement some usability recommendations from
 	Peter Sikking: bigger handles, more feedback to user.
-	
+
 	* app/display/gimpcanvas.[ch]: add
 	GIMP_CANVAS_STYLE_XOR_STIPPLED to set of styles.
 
@@ -1247,13 +1248,13 @@
 
 	* app/tools/gimprectangletool.c: bigger handles in corners,
 	and highlight thing that user is currently moving.
-	
+
 2006-09-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimprectangletool.c: even if constraining to boundaries,
 	keep updating rectangel when pointer goes outside boundaries.
 	Fixes bug #355740.
-	
+
 2006-09-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimppropwidgets.[ch]: add prop widget specially
@@ -1289,7 +1290,7 @@
 	* app/actions/image-actions.c
 	* app/dialogs/preferences-dialog.c
 	* app/tools/gimpvectortool.c
-	* app/widgets/gimpcontrollereditor.c: 
+	* app/widgets/gimpcontrollereditor.c:
 	* plug-ins/common/autocrop.c
 	* plug-ins/common/max_rgb.c: resolved conflicting mnemonics, added
 	some new ones (bug #355761).
@@ -1762,7 +1763,7 @@
 
 2006-09-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* app/text/gimptextlayout-render.c (gimp_text_layout_render_glyphs): 
+	* app/text/gimptextlayout-render.c (gimp_text_layout_render_glyphs):
 	handle tabs correctly, as instructed by behdad.  Fixes
 	bug #353132.
 
@@ -1823,8 +1824,8 @@
 2006-09-08  Hans Breuer  <hans@breuer.org>
 
 	* **/makefile.msc app/gimpcore.def : updated
-	
-	* app/paint/gimpperspectiveclone.c : error C2057: expected constant 
+
+	* app/paint/gimpperspectiveclone.c : error C2057: expected constant
 	expression. Stack allocation of dynamic sized arrays is afaik a GCC
 	extension, use g_alloca() instead.
 
@@ -1971,14 +1972,14 @@
 	* app/tools/gimpcroptool.c: constrain to image bounds,
 	or to active drawable bounds if "current layer only"
 	option is checked.
-	
+
 	* app/tools/gimpellipseselecttool.c
 	* app/tools/gimprectangleselecttool.c: no constraint.
 
 	This addresses bug #353936 -- I would say fixes it, but it
 	probably needs some fine-tuning.  Also perhaps fixes
 	bug #329817 a bit better than before.
-	
+
 2006-09-06  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/gimppluginmanager-history.c
@@ -1989,13 +1990,13 @@
 
 	* app/tools/tools-enums.[ch]: remove GimpCropMode enum;
 	missed in previous commit.
-	
+
 2006-09-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpcroptool.c
 	* app/tools/gimpcropoptions.[ch]: remove "crop vs resize"
 	option, as recommended in bug #353936.
-	
+
 2006-09-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/paint-funcs/scale-funcs.[ch]: apply patch from Geert
@@ -2235,11 +2236,11 @@
 
 2006-09-03  Hans Breuer  <hans@breuer.org>
 
-	* app/core/gimp-gradients.c : include "gimpcontext.h" for 
+	* app/core/gimp-gradients.c : include "gimpcontext.h" for
 	gimp_context_set_gradient().
-	
+
 	* **/makefile.msc app/gimpcore.def : updated
-	
+
 2006-09-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/paint-enums.[ch]: renamed enum GimpCloneAlignMode to
@@ -2477,7 +2478,7 @@
 
 2006-08-31  Michael Natterer  <mitch@gimp.org>
 
-	* app/widgets/gimpcontainerview.c 
+	* app/widgets/gimpcontainerview.c
 	(gimp_container_view_real_set_container)
 	(gimp_container_view_real_set_context)
 	(gimp_container_view_item_selected)
@@ -2521,7 +2522,7 @@
 	Use GimpDataEditor's context instead of the bogus one. Also use
 	the data editor's context instead of the user context wherever it
 	was used.
-	
+
 	* app/widgets/gimppaletteeditor.c: use GimpDataEditor's context
 	instead of the user context here too.
 
@@ -2821,7 +2822,7 @@
 	* app/tools/gimpselectiontool.c (gimp_selection_tool_modifier_key):
 	When Alt is down, don't allow other modifiers to change the
 	operation shown in the options.  Fixes bug #349338.
-	
+
 2006-08-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpchannel-select.[ch]: add push_undo arguments
@@ -2846,7 +2847,7 @@
 
 	* app/display/gimpnavigationeditor.c: put zoom label next to
 	scrollbar instead of above it; fixes bug #346880.
-	
+
 2006-08-25  Sven Neumann  <sven@gimp.org>
 
 	* docs/gimp.1.in: updated the URL of the user manual.
@@ -2905,7 +2906,7 @@
 
 	* app/tools/gimpscaletool.c: use midpoint handles for scaling
 	with fixed width or height.  Fixes bug #344955.
-	
+
 2006-08-23  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpbaseenums.[ch]: removed "(Fastest)" from "None"
@@ -2930,7 +2931,7 @@
 	* plug-ins/Makefile.am
 	* plug-ins/common/png.c: revert changes accidentally
 	committed in previous commit.
-	
+
 2006-08-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* libgimpbase/gimpbaseenums.c: Don't label Lanczos as "best".
@@ -2980,12 +2981,12 @@
 	* app/tools/gimpclonetool.c
 	* app/tools/gimpforegroundselecttool.c: rewrite modifer_key
 	functions more readably; no functional changes.
-	
+
 2006-08-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/display/gimpdisplayshell-callbacks.c: allow modifier key events
 	for Shift and Control to be propagated even if button1 is down.
-	
+
 	* app/tools/gimpclonetool.c
 	* app/tools/gimpcroptool.c
 	* app/tools/gimpforegroundselecttool.c
@@ -2998,7 +2999,7 @@
 	use it to toggle "make-square" if Shift is pressed while button1
 	is down, and "fixed-center" if Control is pressed while button1 is
 	down.
-	
+
 	* app/tools/gimprectangleselecttool.c
 	(gimp_rectangle_tool_modifier_key): call rectangle tool modifer_key
 	method after chaining up.
@@ -3069,7 +3070,7 @@
 
 2006-08-16  Michael Schumacher  <schumaml@cvs.gnome.org>
 
-	* libgimpcolor/gimpcolor.def 
+	* libgimpcolor/gimpcolor.def
 	* libgimpwidgets/gimpwidgets.def: added some missing entries
 
 2006-08-16  Michael Schumacher  <schumaml@cvs.gnome.org>
@@ -3210,13 +3211,13 @@
 	* app/xcf/xcf-save.c(1464) : error C2036: 'void *' : unknown size
 	pointer arithmetics on void a pointer looks like a GCC extension
 	* app/tools/gimpbrightnesscontrasttool.c
-	  app/tools/gimpcolorbalancetool.c 
+	  app/tools/gimpcolorbalancetool.c
 	  app/tools/gimphuesaturationtool.c
 	  app/tools/gimpcolorizetool.c : #include "core/gimp.h" for gimp_message
 	* app/tools/gimpiscissorstool.c : use RINT() rather than rint()
-	* app/widgets/gimpcontrollerlist.c : #include "gimpwidgets-utils.h" 
+	* app/widgets/gimpcontrollerlist.c : #include "gimpwidgets-utils.h"
 	for gimp_show_message_dialog
-	* app/core/gimpprogress.c(229) : 'gimp_progress_message' must 
+	* app/core/gimpprogress.c(229) : 'gimp_progress_message' must
 	return a value
 
 2006-08-15  Sven Neumann  <sven@gimp.org>
@@ -3274,7 +3275,7 @@
 2006-08-14  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/context-commands.c (context_brush_radius_cmd_callback)
-	(context_actions_update) 
+	(context_actions_update)
 	* app/core/gimpbrushgenerated.c (gimp_brush_generated_class_init):
 	set upper brush size limit to 4000 pixels. Fixes bug #351175.
 
@@ -3377,14 +3378,14 @@
 	* libgimpwidgets/gimpwidgets.c (gimp_coordinate_callback):
 	Don't stop emission of "value-changed" signal.  Fixes
 	bug #346088.  Let's see if it breaks anything else...
-	
+
 2006-08-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimprectangleselecttool.[ch]: if the user is
 	modifying a rectangle and the mode is REPLACE, don't
 	show the marching ants for the previous selection, because
 	it confuses users.  Should fix bug #347945.
-	
+
 2006-08-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/autocrop.c: fixed the check for an empty image.
