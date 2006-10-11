@@ -1,3 +1,7 @@
+2006-10-11  Michael Schumacher  <schumaml@cvs.gnome.org>
+	
+	* libgimpthumb/gimpthumb.def: added gimp_thumb_file_type_get_type
+
 2006-10-11  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/paint-funcs/scale-funcs.[ch]:  apply patch from GG
