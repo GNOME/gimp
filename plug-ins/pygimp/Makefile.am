@@ -141,8 +141,13 @@ pygimp_PYTHON = \
 
 pygimp_DATA = pygimp-logo.png
 
-codegen_files = gimpcolor-types.defs gimpenums-types.defs \
-	gimpui.defs gimpui.override
+codegen_files = \
+	gimpcolor-types.defs	\
+	gimpenums-types.defs	\
+	gimpthumb.defs		\
+	gimpthumb.override	\
+	gimpui.defs		\
+	gimpui.override
 
 pyenvdir = $(gimpplugindir)/environ
 pyinterpdir = $(gimpplugindir)/interpreters

@@ -602,6 +602,12 @@ receives the focus. This is useful for window managers using "click to focus".
  Possible values are yes and no.
 
 .TP
+(space-bar-action pan)
+
+What to do when the space bar is pressed in the image window.  Possible values
+are none, pan and move.
+
+.TP
 (default-threshold 15)
 
 Tools such as fuzzy-select and bucket fill find regions based on a seed-fill

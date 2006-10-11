@@ -1,3 +1,9 @@
+2006-10-11  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.3.12 development release.
+
+	* plug-ins/pygimp/Makefile.am (codegen_files): added missing files.
+
 2006-10-11  Raphaël Quinet  <raphael@gimp.org>
 
 	* app/xcf/xcf-load.c (xcf_load_tile_rle): workaround for bug
@@ -7,7 +13,7 @@
 2006-10-11  Sven Neumann  <sven@gimp.org>
 
 	* modules/Makefile.am: build the color-managed CMYK color selector
-	with the same filename as the naive implementation; they are
+	with the same filename as the naïve implementation; they are
 	mutually exclusive.
 
 2006-10-11  Sven Neumann  <sven@gimp.org>
