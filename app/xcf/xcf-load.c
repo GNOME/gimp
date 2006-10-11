@@ -1365,6 +1365,15 @@ xcf_load_tile_rle (XcfInfo *info,
   gint nmemb_read_successfully;
   guchar *xcfdata, *xcfodata, *xcfdatalimit;
 
+  /* Workaround for bug #357809: avoid crashing on g_malloc() and skip
+   * this tile (return TRUE without storing data) as if it did not
+   * contain any data.  It is better than returning FALSE, which would
+   * skip the whole hierarchy while there may still be some valid
+   * tiles in the file.
+   */
+  if (data_length <= 0)
+    return TRUE;
+
   data = tile_data_pointer (tile, 0, 0);
   bpp = tile_bpp (tile);
 

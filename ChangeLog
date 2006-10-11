@@ -1,3 +1,9 @@
+2006-10-11  Raphaël Quinet  <raphael@gimp.org>
+
+	* app/xcf/xcf-load.c (xcf_load_tile_rle): workaround for bug
+	#357809: avoid crashing when invalid offsets are read for a
+	compressed tile in the XCF file.
+
 2006-10-11  Sven Neumann  <sven@gimp.org>
 
 	* modules/Makefile.am: build the color-managed CMYK color selector
