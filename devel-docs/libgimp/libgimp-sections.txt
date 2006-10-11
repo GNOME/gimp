@@ -854,6 +854,8 @@ gimp_flip
 gimp_free_select
 gimp_fuzzy_select
 gimp_fuzzy_select_full
+gimp_heal
+gimp_heal_default
 gimp_paintbrush
 gimp_paintbrush_default
 gimp_pencil

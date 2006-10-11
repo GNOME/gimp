@@ -1,3 +1,17 @@
+2006-10-11  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimpconfig/libgimpconfig-sections.txt
+	* libgimpwidgets/libgimpwidgets-sections.txt: added new API.
+
+	* libgimpwidgets/tmpl/gimpstock.sgml: added new icons.
+
+	* libgimp/tmpl/gimpfontselectbutton.sgml
+	* libgimp/tmpl/gimptools.sgml
+	* libgimpconfig/tmpl/gimpconfig-params.sgml
+	* libgimpwidgets/tmpl/gimpcolorselection.sgml
+	* libgimpwidgets/tmpl/gimpcolorselector.sgml: regenerated.
+
 2006-09-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* vbr.txt: fix an error concerning version numbers.

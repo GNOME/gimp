@@ -270,6 +270,31 @@ Functions giving access to common toolbox tools.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_heal ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@src_drawable_ID: 
+@src_x: 
+@src_y: 
+@num_strokes: 
+@strokes: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_heal_default ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@num_strokes: 
+@strokes: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_paintbrush ##### -->
 <para>
 

@@ -79,6 +79,19 @@ gimpconfig-params
 @flags: 
 
 
+<!-- ##### MACRO GIMP_CONFIG_INSTALL_PROP_BOXED ##### -->
+<para>
+
+</para>
+
+@class: 
+@id: 
+@name: 
+@blurb: 
+@boxed_type: 
+@flags: 
+
+
 <!-- ##### MACRO GIMP_CONFIG_INSTALL_PROP_RGB ##### -->
 <para>
 

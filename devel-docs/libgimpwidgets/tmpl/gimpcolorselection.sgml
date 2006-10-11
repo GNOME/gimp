@@ -30,6 +30,11 @@ Widget for doing a color selection.
 
 @gimpcolorselection: the object which received the signal.
 
+<!-- ##### ARG GimpColorSelection:config ##### -->
+<para>
+
+</para>
+
 <!-- ##### FUNCTION gimp_color_selection_new ##### -->
 <para>
 
@@ -106,5 +111,14 @@ Widget for doing a color selection.
 </para>
 
 @selection: 
+
+
+<!-- ##### FUNCTION gimp_color_selection_set_config ##### -->
+<para>
+
+</para>
+
+@selection: 
+@config: 
 
 

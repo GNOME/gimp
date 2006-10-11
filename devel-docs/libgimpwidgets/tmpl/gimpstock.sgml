@@ -981,6 +981,102 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_HCHAIN ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-hchain-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_HCHAIN_BROKEN ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-hchain-broken-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_VCHAIN ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-vchain-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_VCHAIN_BROKEN ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-vchain-broken-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TEXTURE ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-texture-64.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_FRAME ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-frame-64.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_ERROR ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-error-64.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_INFO ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-info-64.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-info-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-info-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_QUESTION ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-question-64.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_WARNING ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-warning-64.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-warning-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-warning-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_WILBER ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-wilber-64.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-wilber-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_WILBER_EEK ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-wilber-eek-64.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_ZOOM_FOLLOW_WINDOW ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-zoom-follow-window-12.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_TOOL_AIRBRUSH ##### -->
 <para xml:base="../gimpstock.xml">
 <inlinegraphic fileref="stock-tool-airbrush-22.png" format="png"></inlinegraphic>
@@ -1229,6 +1325,13 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_TOOL_PERSPECTIVE_CLONE ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_TOOL_POSTERIZE ##### -->
 <para xml:base="../gimpstock.xml">
 <inlinegraphic fileref="stock-tool-posterize-22.png" format="png"></inlinegraphic>
@@ -1301,98 +1404,82 @@ RTL variant
 
 
 
-<!-- ##### MACRO GIMP_STOCK_HCHAIN ##### -->
+<!-- ##### MACRO GIMP_STOCK_CONTROLLER ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-hchain-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-controller-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-controller-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_HCHAIN_BROKEN ##### -->
+<!-- ##### MACRO GIMP_STOCK_CONTROLLER_KEYBOARD ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-hchain-broken-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-controller-keyboard-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-controller-keyboard-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_VCHAIN ##### -->
+<!-- ##### MACRO GIMP_STOCK_CONTROLLER_LINUX_INPUT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-vchain-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-controller-linux-input-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-controller-linux-input-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_VCHAIN_BROKEN ##### -->
+<!-- ##### MACRO GIMP_STOCK_CONTROLLER_MIDI ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-vchain-broken-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-controller-midi-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-controller-midi-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TEXTURE ##### -->
+<!-- ##### MACRO GIMP_STOCK_CONTROLLER_WHEEL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-texture-64.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-controller-wheel-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-controller-wheel-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_FRAME ##### -->
+<!-- ##### MACRO GIMP_STOCK_DISPLAY_FILTER_COLORBLIND ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-frame-64.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-display-filter-colorblind-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-display-filter-colorblind-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_ERROR ##### -->
+<!-- ##### MACRO GIMP_STOCK_DISPLAY_FILTER_CONTRAST ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-error-64.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-display-filter-contrast-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-display-filter-contrast-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_INFO ##### -->
+<!-- ##### MACRO GIMP_STOCK_DISPLAY_FILTER_GAMMA ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-info-64.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-info-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-info-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-display-filter-gamma-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-display-filter-gamma-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_QUESTION ##### -->
+<!-- ##### MACRO GIMP_STOCK_DISPLAY_FILTER_LCMS ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-question-64.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-display-filter-lcms-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-display-filter-lcms-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_WARNING ##### -->
+<!-- ##### MACRO GIMP_STOCK_DISPLAY_FILTER_PROOF ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-warning-64.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-warning-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-warning-16.png" format="png"></inlinegraphic>
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_WILBER ##### -->
-<para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-wilber-64.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-wilber-16.png" format="png"></inlinegraphic>
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_WILBER_EEK ##### -->
-<para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-wilber-eek-64.png" format="png"></inlinegraphic>
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_ZOOM_FOLLOW_WINDOW ##### -->
-<para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-zoom-follow-window-12.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-display-filter-proof-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-display-filter-proof-16.png" format="png"></inlinegraphic>
 </para>
 
 
