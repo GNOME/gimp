@@ -6,41 +6,45 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-01 16:18+0200\n"
-"PO-Revision-Date: 2006-10-02 18:26+0200\n"
+"POT-Creation-Date: 2006-10-11 16:24+0200\n"
+"PO-Revision-Date: 2006-10-11 16:25+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:332
+#: ../plug-ins/pygimp/gimpfu.py:333
+msgid "Missing exception information"
+msgstr "Informazioni sull'eccezione mancanti"
+
+#: ../plug-ins/pygimp/gimpfu.py:342
 #, python-format
 msgid "An error occured running %s"
 msgstr "Errore durante l'esecuzione di %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:347
+#: ../plug-ins/pygimp/gimpfu.py:353
 msgid "_More Information"
 msgstr "_Ulteriori informazioni"
 
-#: ../plug-ins/pygimp/gimpfu.py:452 ../plug-ins/pygimp/gimpfu.py:464
-#: ../plug-ins/pygimp/gimpfu.py:470
+#: ../plug-ins/pygimp/gimpfu.py:459 ../plug-ins/pygimp/gimpfu.py:471
+#: ../plug-ins/pygimp/gimpfu.py:477
 msgid "No"
 msgstr "No"
 
-#: ../plug-ins/pygimp/gimpfu.py:462 ../plug-ins/pygimp/gimpfu.py:470
+#: ../plug-ins/pygimp/gimpfu.py:469 ../plug-ins/pygimp/gimpfu.py:477
 msgid "Yes"
 msgstr "Sì"
 
-#: ../plug-ins/pygimp/gimpfu.py:508 ../plug-ins/pygimp/gimpui.py:200
+#: ../plug-ins/pygimp/gimpfu.py:515 ../plug-ins/pygimp/gimpui.py:200
 msgid "Python-Fu File Selection"
 msgstr "Selezione file Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:519
+#: ../plug-ins/pygimp/gimpfu.py:526
 msgid "Python-Fu Folder Selection"
 msgstr "Selezione cartelle Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:608
+#: ../plug-ins/pygimp/gimpfu.py:615
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Ingresso non valido per \"%s\""
@@ -234,7 +238,9 @@ msgstr "Fetta"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Taglia un'immagine lungo le sue guide, crea immagini e un pezzo di tabella HTML "
+msgstr ""
+"Taglia un'immagine lungo le sue guide, crea immagini e un pezzo di tabella "
+"HTML "
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
