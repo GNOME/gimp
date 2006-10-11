@@ -868,13 +868,14 @@ inv_lin_trans (const gdouble *t,
 }
 
 
-/* allocate and fill lookup table of Lanczos windowed sinc funtion */
-gdouble *
+/* allocate and fill lookup table of Lanczos windowed sinc function */
+/* use gfloat since errors due to granularity of array far exceed data precision*/
+gfloat *
 create_lanczos_lookup (void)
 {
   const gdouble dx = (gdouble) LANCZOS_WIDTH / (gdouble) (LANCZOS_SAMPLES - 1);
 
-  gdouble *lookup = g_new (gdouble, LANCZOS_SAMPLES);
+  gfloat *lookup = g_new (gfloat, LANCZOS_SAMPLES);
   gdouble  x      = 0.0;
   gint     i;
 
@@ -895,7 +896,7 @@ scale_region_lanczos (PixelRegion           *srcPR,
                       gpointer               progress_data)
 
 {
-  gdouble       *lanczos  = NULL;             /* Lanczos lookup table                */
+  gfloat        *lanczos  = NULL;             /* Lanczos lookup table                */
   gdouble        x_kernel[LANCZOS_WIDTH2],    /* 1-D kernels of Lanczos window coeffs */
                  y_kernel[LANCZOS_WIDTH2];
   gdouble        kx_sum, ky_sum;              /* sums of Lanczos kernel coeffs       */
