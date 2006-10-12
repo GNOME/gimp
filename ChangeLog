@@ -1,3 +1,8 @@
+2006-10-12  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/imagemap/imap_main.c (do_data_changed_dialog): Fixed
+	compiler warning by using proper cast.
+
 2006-10-12  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/paint-funcs/scale-funcs.c:  apply modified patch

@@ -384,7 +384,7 @@ redraw_preview(void)
 
 void
 set_preview_color (GtkRadioAction *action, GtkRadioAction *current,
-		   gpointer user_data)
+                   gpointer user_data)
 {
   _map_info.show_gray = (gtk_radio_action_get_current_value (current) == 1);
    set_zoom(_zoom_factor);
@@ -392,7 +392,7 @@ set_preview_color (GtkRadioAction *action, GtkRadioAction *current,
 
 void
 set_zoom_factor (GtkRadioAction *action, GtkRadioAction *current,
-		 gpointer user_data)
+                 gpointer user_data)
 {
   gint factor = gtk_radio_action_get_current_value (current);
   set_zoom (factor + 1);
@@ -658,8 +658,8 @@ do_data_changed_dialog(void (*continue_cb)(gpointer), gpointer param)
       GTK_MESSAGE_QUESTION,
       GTK_BUTTONS_YES_NO,
       _("Some data has been changed!"));
-   gtk_message_dialog_format_secondary_text 
-     (GTK_DIALOG (dialog),
+   gtk_message_dialog_format_secondary_text
+     (GTK_MESSAGE_DIALOG (dialog),
       _("Do you really want to discard your changes?"));
 
    if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES)
