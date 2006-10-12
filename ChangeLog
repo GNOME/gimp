@@ -1,3 +1,9 @@
+2006-10-12  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/paint-funcs/scale-funcs.c:  apply modified patch
+	from GG to improve accuracy of Lanczos,  probably fixes
+	bug #358481.
+
 2006-10-12  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL: improvements based on a patch from bug #361672.
