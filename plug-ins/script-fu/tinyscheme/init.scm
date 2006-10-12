@@ -1,4 +1,4 @@
-;    Initialization file for TinySCHEME 1.34
+;    Initialization file for TinySCHEME 1.38
 
 ; Per R5RS, up to four deep compositions should be defined
 (define (caar x) (car (car x)))
@@ -64,25 +64,16 @@
      (foldr (lambda (a b) (if (< a b) a b)) (car lst) (cdr lst)))
 (define (succ x) (+ x 1))
 (define (pred x) (- x 1))
-(define gcd
-  (lambda a
-    (if (null? a)
-      0
-      (let ((aa (abs (car a)))
-	    (bb (abs (cadr a))))
-         (if (= bb 0)
-              aa
-              (gcd bb (remainder aa bb)))))))
-(define lcm
-  (lambda a
-    (if (null? a)
-      1
-      (let ((aa (abs (car a)))
-        (bb (abs (cadr a))))
-         (if (or (= aa 0) (= bb 0))
-             0
-             (abs (* (quotient aa (gcd aa bb)) bb)))))))
-
+(define (gcd a b)
+  (let ((aa (abs a))
+	(bb (abs b)))
+     (if (= bb 0)
+          aa
+          (gcd bb (remainder aa bb)))))
+(define (lcm a b)
+     (if (or (= a 0) (= b 0))
+          0
+          (abs (* (quotient a (gcd a b)) b))))
 
 (define call/cc call-with-current-continuation)
 
@@ -127,9 +118,9 @@
   (if (pred n)
       (atom->string n)
       (error "xxx->string: not a xxx" n)))
+  
 
-
-(define (number->string n) (anyatom->string n number?))
+(define (number->string n) (anyatom->string n number?))    
 
 (define (char-cmp? cmp a b)
      (cmp (char->integer a) (char->integer b)))
@@ -190,8 +181,8 @@
       (cons cars cdrs)
       (let ((car1 (caar lists))
 	    (cdr1 (cdar lists)))
-	(unzip1-with-cdr-iterative
-	 (cdr lists)
+	(unzip1-with-cdr-iterative 
+	 (cdr lists) 
 	 (append cars (list car1))
 	 (append cdrs (list cdr1))))))
 
@@ -475,7 +466,7 @@
      (and (input-port? p) (output-port? p)))
 
 (define (close-port p)
-     (cond
+     (cond 
           ((input-output-port? p) (close-input-port (close-output-port p)))
           ((input-port? p) (close-input-port p))
           ((output-port? p) (close-output-port p))
@@ -548,7 +539,7 @@
                     (* (quotient *seed* q) r)))
           (if (< *seed* 0) (set! *seed* (+ *seed* m)))
           *seed*))
-;; SRFI-0
+;; SRFI-0 
 ;; COND-EXPAND
 ;; Implemented as a macro
 (define *features* '(srfi-0))

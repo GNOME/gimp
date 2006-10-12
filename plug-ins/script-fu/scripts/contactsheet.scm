@@ -273,8 +273,7 @@
 
 (script-fu-register "script-fu-contactsheet"
     _"Contact Sheet"
-    "Create a series of images containing thumbnail sized versions
-     of all of the images contained in a specified directory."
+    _"Create a series of images containing thumbnail sized versions of all of the images in a specified directory."
     "Kevin Cozens <kcozens@interlog.com>"
     "Kevin Cozens"
     "July 19, 2004"
