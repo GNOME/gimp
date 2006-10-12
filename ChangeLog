@@ -1,5 +1,8 @@
 2006-10-12  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpstock.c (gimp_stock_items): added a mnemonic
+	for GIMP_STOCK_TOOL_CROP.
+
 	* plug-ins/common/gif.c (bad_bounds_dialog): improved warning dialog.
 
 2006-10-11  Michael Schumacher  <schumaml@cvs.gnome.org>
