@@ -1168,46 +1168,36 @@ static gboolean
 bad_bounds_dialog (void)
 {
   GtkWidget *dialog;
-  GtkWidget *label;
-  GtkWidget *vbox;
   gboolean   crop;
 
-  dialog = gimp_dialog_new (_("GIF Warning"), "gif_warning",
-                            NULL, 0,
-                            gimp_standard_help_func, "file-gif-save",
+  dialog = gtk_message_dialog_new (NULL, 0,
+                                   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
+                                   _("The image you are trying to save as a "
+                                     "GIF contains layers which extend beyond "
+                                     "the actual borders of the image."));
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                            NULL);
+  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                          GTK_STOCK_CANCEL,     GTK_RESPONSE_CANCEL,
+                          GIMP_STOCK_TOOL_CROP, GTK_RESPONSE_OK,
+                          NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  /*  the warning message  */
-
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  label= gtk_label_new (_("The image which you are trying to save as a GIF\n"
-                          "contains layers which extend beyond the actual\n"
-                          "borders of the image.  This isn't allowed in GIFs,\n"
-                          "I'm afraid.\n\n"
-                          "You may choose whether to crop all of the layers to\n"
-                          "the image borders, or cancel this save."));
-  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
-  gtk_widget_show (label);
+  gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                            _("The GIF file format does not "
+                                              "allow this.  You may choose "
+                                              "whether to crop all of the "
+                                              "layers to the image borders, "
+                                              "or cancel this save."));
 
   gtk_widget_show (dialog);
 
-  crop = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  crop = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 

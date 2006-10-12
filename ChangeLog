@@ -1,3 +1,7 @@
+2006-10-12  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/gif.c (bad_bounds_dialog): improved warning dialog.
+
 2006-10-11  Michael Schumacher  <schumaml@cvs.gnome.org>
 	
 	* libgimpthumb/gimpthumb.def: added gimp_thumb_file_type_get_type
