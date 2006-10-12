@@ -1,5 +1,9 @@
 2006-10-12  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL: improvements based on a patch from bug #361672.
+
+2006-10-12  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpstock.c (gimp_stock_items): added a mnemonic
 	for GIMP_STOCK_TOOL_CROP.
 
