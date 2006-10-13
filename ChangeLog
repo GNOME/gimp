@@ -1,3 +1,8 @@
+2006-10-13  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcropoptions.c (gimp_crop_options_[gs]et_property):
+	minor cleanup.
+
 2006-10-12  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/imagemap/imap_main.c (do_data_changed_dialog): Fixed

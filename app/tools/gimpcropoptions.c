@@ -91,17 +91,14 @@ gimp_crop_options_set_property (GObject      *object,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpCropOptions *options = GIMP_CROP_OPTIONS (object);
-
-  if (property_id <= GIMP_RECTANGLE_OPTIONS_PROP_LAST)
-    gimp_rectangle_options_set_property (object, property_id, value, pspec);
-  else switch (property_id)
+  switch (property_id)
     {
     case PROP_LAYER_ONLY:
-      options->layer_only = g_value_get_boolean (value);
+      GIMP_CROP_OPTIONS (object)->layer_only = g_value_get_boolean (value);
       break;
+
     default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      gimp_rectangle_options_set_property (object, property_id, value, pspec);
       break;
     }
 }
@@ -112,17 +109,14 @@ gimp_crop_options_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpCropOptions *options = GIMP_CROP_OPTIONS (object);
-
-  if (property_id <= GIMP_RECTANGLE_OPTIONS_PROP_LAST)
-    gimp_rectangle_options_get_property (object, property_id, value, pspec);
-  else switch (property_id)
+  switch (property_id)
     {
     case PROP_LAYER_ONLY:
-      g_value_set_boolean (value, options->layer_only);
+      g_value_set_boolean (value, GIMP_CROP_OPTIONS (object)->layer_only);
       break;
+
     default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      gimp_rectangle_options_get_property (object, property_id, value, pspec);
       break;
     }
 }
