@@ -1980,7 +1980,24 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
           }
      } else if (is_array(l)) {
           p = sc->strbuff;
-          sprintf(p, "#<ARRAY%d>", arraytype(l));
+          switch (arraytype(l))
+          {
+          case 0:
+            strcpy(p, "#<INT32ARRAY>");
+            break;
+          case 1:
+            strcpy(p, "#<INT16ARRAY>");
+            break;
+          case 2:
+            strcpy(p, "#<INT8ARRAY>");
+            break;
+          case 3:
+            strcpy(p, "#<FLOATARRAY>");
+            break;
+          case 4:
+            strcpy(p, "#<STRINGARRAY>");
+            break;
+          }
      } else if (is_character(l)) {
           gunichar c=charvalue(l);
           p = sc->strbuff;
