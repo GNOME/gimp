@@ -1,5 +1,12 @@
 2006-10-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpgrid.c: don't include "libgimpbase/gimplimits.h"
+
+	* app/core/gimpimage-undo-push.c: one more g_message() converted
+	to gimp_message().
+
+2006-10-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimprectangleselecttool.c (gimp_rect_select_tool_execute):
 	flush the image after clearing the selection and after anchoring
 	a floating layer. Fixes bug #362096.

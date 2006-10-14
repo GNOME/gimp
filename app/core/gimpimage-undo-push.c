@@ -32,19 +32,19 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "gimp-parasites.h"
 #include "gimp.h"
+#include "gimp-parasites.h"
 #include "gimpgrid.h"
 #include "gimpguide.h"
+#include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-grid.h"
 #include "gimpimage-guides.h"
 #include "gimpimage-sample-points.h"
 #include "gimpimage-undo.h"
-#include "gimpimage.h"
 #include "gimpitemundo.h"
-#include "gimplayer-floating-sel.h"
 #include "gimplayer.h"
+#include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
 #include "gimplist.h"
 #include "gimpparasitelist.h"
@@ -3295,7 +3295,8 @@ undo_pop_cantundo (GimpUndo            *undo,
   switch (undo_mode)
     {
     case GIMP_UNDO_MODE_UNDO:
-      g_message (_("Can't undo %s"), GIMP_OBJECT (undo)->name);
+      gimp_message (undo->image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("Can't undo %s"), GIMP_OBJECT (undo)->name);
       break;
 
     case GIMP_UNDO_MODE_REDO:
