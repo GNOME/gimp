@@ -481,7 +481,7 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 	 factory = ((ObjectFactory_t*(*)(guint)) data)(event->state);
 	 obj = object_factory_create_object(factory, x, y);
 	 
-	 gdk_gc_set_function(preferences->normal_gc, GDK_EQUIV);
+	 gdk_gc_set_function(preferences->normal_gc, GDK_XOR);
 
 	 g_signal_connect(widget, "motion_notify_event",
                           G_CALLBACK(button_motion), factory);
