@@ -16,39 +16,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __IMAGE_SCALE_LAYERS_DIALOG_H__
-#define __IMAGE_SCALE_LAYERS_DIALOG_H__
+#ifndef __IMAGE_SCALE_DIALOG_H__
+#define __IMAGE_SCALE_DIALOG_H__
 
 
-typedef struct _ImageScaleDialog ImageScaleDialog;
-
-typedef void (* ImageScaleDialogCallback) (ImageScaleDialog *dialog);
-
-struct _ImageScaleDialog
-{
-  GtkWidget                *dialog;
-
-  GimpImage                *image;
-  GimpDisplay              *display;
-  GimpContext              *context;
-
-  gint                      width;
-  gint                      height;
-  GimpUnit                  unit;
-  GimpInterpolationType     interpolation;
-  gdouble                   xresolution;
-  gdouble                   yresolution;
-  GimpUnit                  resolution_unit;
-
-  ImageScaleDialogCallback  callback;
-};
-
-
-ImageScaleDialog * image_scale_dialog_new (GimpImage                *image,
-                                           GimpDisplay              *display,
-                                           GimpContext              *context,
-                                           GtkWidget                *parent,
-                                           ImageScaleDialogCallback  callback);
+GtkWidget * image_scale_dialog_new (GimpImage             *image,
+                                    GimpContext           *context,
+                                    GtkWidget             *parent,
+                                    GimpUnit               unit,
+                                    GimpInterpolationType  interpolation,
+                                    GimpScaleCallback      callback,
+                                    gpointer               user_data);
 
 
 #endif /* __IMAGE_SCALE_DIALOG_H__ */

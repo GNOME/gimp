@@ -1,6 +1,29 @@
 2006-10-14  Michael Natterer  <mitch@gimp.org>
 
-	* app/core/gimpgrid.c: don't include "libgimpbase/gimplimits.h"
+	Remember the settings in the scale and resize dialogs for images
+	and layers. Fixes bug #164995, bug #316392, and bug #357424.
+
+	* app/dialogs/scale-dialog.h: removed GimpScaleCallback typedef.
+
+	* app/dialogs/dialogs-types.h: added it here.
+
+	* app/dialogs/image-scale-dialog.[ch]: made the ImageScaleDialog
+	struct private, return a GtkWidget* from image_scale_dialog_new()
+	and use a GimpScaleCallback in the public API.
+
+	* app/actions/actions-types.h: #include "dialogs/dialogs-types.h"
+
+	* app/actions/image-commands.c: changed according to image scale
+	dialog changes. Remember the scale dialog's unit (if it is
+	"percent") and interpolation type across dialog invocations. Also
+	remember the resize dialog's unit (if it is "percent").
+
+	* app/actions/layers-commands.c: remember scale and resize dialog
+	stuff as in image-commands.c
+
+2006-10-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpgrid.c: don't #include "libgimpbase/gimplimits.h"
 
 	* app/core/gimpimage-undo-push.c: one more g_message() converted
 	to gimp_message().

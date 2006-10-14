@@ -36,9 +36,6 @@
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-
 #include "scale-dialog.h"
 
 #include "image-scale-dialog.h"
@@ -46,16 +43,36 @@
 #include "gimp-intl.h"
 
 
-static void  image_scale_callback (GtkWidget             *widget,
-                                   GimpViewable          *viewable,
-                                   gint                   width,
-                                   gint                   height,
-                                   GimpUnit               unit,
-                                   GimpInterpolationType  interpolation,
-                                   gdouble                xresolution,
-                                   gdouble                yresolution,
-                                   GimpUnit               resolution_unit,
-                                   gpointer               data);
+typedef struct _ImageScaleDialog ImageScaleDialog;
+
+struct _ImageScaleDialog
+{
+  GtkWidget             *dialog;
+
+  GimpImage             *image;
+
+  gint                   width;
+  gint                   height;
+  GimpUnit               unit;
+  GimpInterpolationType  interpolation;
+  gdouble                xresolution;
+  gdouble                yresolution;
+  GimpUnit               resolution_unit;
+
+  GimpScaleCallback      callback;
+  gpointer               user_data;
+};
+
+static void        image_scale_callback (GtkWidget             *widget,
+                                         GimpViewable          *viewable,
+                                         gint                   width,
+                                         gint                   height,
+                                         GimpUnit               unit,
+                                         GimpInterpolationType  interpolation,
+                                         gdouble                xresolution,
+                                         gdouble                yresolution,
+                                         GimpUnit               resolution_unit,
+                                         gpointer               data);
 
 static GtkWidget * image_scale_confirm_dialog   (ImageScaleDialog *dialog);
 static void        image_scale_confirm_large    (ImageScaleDialog *dialog,
@@ -66,50 +83,44 @@ static void        image_scale_confirm_response (GtkWidget        *widget,
                                                  gint              response_id,
                                                  ImageScaleDialog *dialog);
 
+
 /*  public functions  */
 
-ImageScaleDialog *
-image_scale_dialog_new (GimpImage                *image,
-                        GimpDisplay              *display,
-                        GimpContext              *context,
-                        GtkWidget                *parent,
-                        ImageScaleDialogCallback  callback)
+GtkWidget *
+image_scale_dialog_new (GimpImage             *image,
+                        GimpContext           *context,
+                        GtkWidget             *parent,
+                        GimpUnit               unit,
+                        GimpInterpolationType  interpolation,
+                        GimpScaleCallback      callback,
+                        gpointer               user_data)
 {
   ImageScaleDialog *dialog;
-  GimpUnit          unit;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (callback != NULL, NULL);
 
   dialog = g_new0 (ImageScaleDialog, 1);
 
-  unit = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (image),
-                                             "scale-dialog-unit"));
-  if (! unit)
-    unit = GIMP_DISPLAY_SHELL (display->shell)->unit;
+  dialog->image  = image;
+  dialog->dialog = scale_dialog_new (GIMP_VIEWABLE (image), context,
+                                     Q_("dialog-title|Scale Image"),
+                                     "gimp-image-scale",
+                                     parent,
+                                     gimp_standard_help_func,
+                                     GIMP_HELP_IMAGE_SCALE,
+                                     unit,
+                                     interpolation,
+                                     image_scale_callback,
+                                     dialog);
 
-  dialog->image   = image;
-  dialog->display = display;
-  dialog->context = context;
-  dialog->dialog  = scale_dialog_new (GIMP_VIEWABLE (display->image), context,
-                                      Q_("dialog-title|Scale Image"),
-                                      "gimp-image-scale",
-                                      parent,
-                                      gimp_standard_help_func,
-                                      GIMP_HELP_IMAGE_SCALE,
-                                      unit,
-                                      image->gimp->config->interpolation_type,
-                                      image_scale_callback,
-                                      dialog);
+  g_object_weak_ref (G_OBJECT (dialog->dialog), (GWeakNotify) g_free, dialog);
 
-  g_object_weak_ref (G_OBJECT (dialog->dialog),
-                     (GWeakNotify) g_free, dialog);
+  dialog->callback  = callback;
+  dialog->user_data = user_data;
 
-  dialog->callback = callback;
-
-  return dialog;
+  return dialog->dialog;
 }
 
 static void
@@ -157,7 +168,16 @@ image_scale_callback (GtkWidget             *widget,
 
     case GIMP_IMAGE_SCALE_OK:
       /* If all is well, return directly after scaling image. */
-      dialog->callback (dialog);
+      dialog->callback (dialog->dialog,
+                        GIMP_VIEWABLE (dialog->image),
+                        dialog->width,
+                        dialog->height,
+                        dialog->unit,
+                        dialog->interpolation,
+                        dialog->xresolution,
+                        dialog->yresolution,
+                        dialog->resolution_unit,
+                        dialog->user_data);
       gtk_widget_destroy (widget);
 
       /* remember the last used unit */
@@ -184,14 +204,14 @@ image_scale_confirm_dialog (ImageScaleDialog *dialog)
 
                                     NULL);
 
-  g_signal_connect (widget, "response",
-                    G_CALLBACK (image_scale_confirm_response),
-                    dialog);
-
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (widget),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  g_signal_connect (widget, "response",
+                    G_CALLBACK (image_scale_confirm_response),
+                    dialog);
 
   return widget;
 }
@@ -245,7 +265,16 @@ image_scale_confirm_response (GtkWidget        *widget,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      dialog->callback (dialog);
+      dialog->callback (dialog->dialog,
+                        GIMP_VIEWABLE (dialog->image),
+                        dialog->width,
+                        dialog->height,
+                        dialog->unit,
+                        dialog->interpolation,
+                        dialog->xresolution,
+                        dialog->yresolution,
+                        dialog->resolution_unit,
+                        dialog->user_data);
       gtk_widget_destroy (dialog->dialog);
     }
   else

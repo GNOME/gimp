@@ -20,6 +20,7 @@
 #define __ACTIONS_TYPES_H__
 
 
+#include "dialogs/dialogs-types.h"
 #include "tools/tools-types.h"
 
 
