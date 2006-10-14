@@ -18,12 +18,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 #include "config.h"
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimplimits.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -72,7 +71,7 @@ grid_dialog_new (GimpImage   *image,
   GtkWidget *editor;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
   grid = gimp_image_get_grid (GIMP_IMAGE (image));
@@ -132,7 +131,7 @@ grid_dialog_response (GtkWidget  *widget,
   GimpImage *grid;
   GimpGrid  *grid_backup;
 
-  image      = g_object_get_data (G_OBJECT (dialog), "image");
+  image       = g_object_get_data (G_OBJECT (dialog), "image");
   grid        = g_object_get_data (G_OBJECT (dialog), "grid");
   grid_backup = g_object_get_data (G_OBJECT (dialog), "grid-backup");
 

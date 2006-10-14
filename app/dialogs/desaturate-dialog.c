@@ -49,7 +49,7 @@ desaturate_dialog_new (GimpDrawable       *drawable,
   GtkWidget        *button;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
 
   dialog = g_new0 (DesaturateDialog, 1);

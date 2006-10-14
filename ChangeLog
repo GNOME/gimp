@@ -1,5 +1,19 @@
 2006-10-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/convert-dialog.c
+	* app/dialogs/desaturate-dialog.c
+	* app/dialogs/grid-dialog.c
+	* app/dialogs/image-properties-dialog.c
+	* app/dialogs/layer-add-mask-dialog.c
+	* app/dialogs/layer-options-dialog.c
+	* app/dialogs/print-size-dialog.c
+	* app/dialogs/resize-dialog.c
+	* app/dialogs/scale-dialog.c
+	* app/dialogs/vectors-options-dialog.c: don't allow "context" to
+	be NULL in any dialog constructor.
+
+2006-10-14  Michael Natterer  <mitch@gimp.org>
+
 	Remember the settings in the scale and resize dialogs for images
 	and layers. Fixes bug #164995, bug #316392, and bug #357424.
 

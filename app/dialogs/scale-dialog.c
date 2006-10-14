@@ -86,7 +86,7 @@ scale_dialog_new (GimpViewable          *viewable,
   gdouble      xres, yres;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (callback != NULL, NULL);
 
   if (GIMP_IS_IMAGE (viewable))

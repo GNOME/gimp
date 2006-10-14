@@ -71,8 +71,8 @@ layer_options_dialog_new (GimpImage    *image,
   GtkWidget          *button;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (layer == NULL || GIMP_IS_LAYER (layer), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
 
   options = g_new0 (LayerOptionsDialog, 1);

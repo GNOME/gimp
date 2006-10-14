@@ -67,7 +67,7 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   dialog = g_new0 (LayerAddMaskDialog, 1);
 
