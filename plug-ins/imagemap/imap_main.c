@@ -1028,8 +1028,8 @@ move_selected_objects(gint dx, gint dy, gboolean fast)
    _dx += dx;
    _dy += dy;
 
-   gdk_gc_set_function(_preferences.normal_gc, GDK_EQUIV);
-   gdk_gc_set_function(_preferences.selected_gc, GDK_EQUIV);
+   gdk_gc_set_function(_preferences.normal_gc, GDK_XOR);
+   gdk_gc_set_function(_preferences.selected_gc, GDK_XOR);
    object_list_draw_selected(_shapes, _preview->preview->window);
    object_list_move_selected(_shapes, dx, dy);
    object_list_draw_selected(_shapes, _preview->preview->window);

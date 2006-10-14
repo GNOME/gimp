@@ -1,5 +1,13 @@
 2006-10-14  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/imagemap/imap_cmd_move.c
+	* plug-ins/imagemap/imap_cmd_move_sash.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_object.c: use GDK_XOR instead of
+	GDK_EQUIV. Fixes bug #311621.
+
+2006-10-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/convert-dialog.c
 	* app/dialogs/desaturate-dialog.c
 	* app/dialogs/grid-dialog.c
