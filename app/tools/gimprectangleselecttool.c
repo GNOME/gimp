@@ -520,6 +520,7 @@ gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
       if (gimp_image_floating_sel (image))
         {
           floating_sel_anchor (gimp_image_floating_sel (image));
+          gimp_image_flush (image);
           return TRUE;
         }
 
@@ -592,6 +593,7 @@ gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
 
           /* otherwise clear the selection */
           gimp_channel_clear (selection, NULL, TRUE);
+          gimp_image_flush (image);
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
         }
