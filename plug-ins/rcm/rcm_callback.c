@@ -436,11 +436,10 @@ rcm_motion_notify_event (GtkWidget *widget,
   cw_ccw = circle->angle->cw_ccw;
   delta  = angle_mod_2PI (cw_ccw * (*beta - *alpha));
 
-  values.foreground = Current.From->preview->style->white;
-  values.function = GDK_XOR;
+  values.function = GDK_INVERT;
   xor_gc = gdk_gc_new_with_values (Current.From->preview->window,
-				   &values,
-                                   GDK_GC_FOREGROUND | GDK_GC_FUNCTION);
+                                   &values,
+                                   GDK_GC_FUNCTION);
 
   gdk_window_get_pointer (widget->window, &x, &y, NULL);
   clicked_angle = angle_mod_2PI (arctg (CENTER-y, x-CENTER));
@@ -574,11 +573,10 @@ rcm_gray_motion_notify_event (GtkWidget *widget,
   gint        x, y;
   GdkGCValues values;
 
-  values.foreground = Current.From->preview->style->white;
-  values.function = GDK_XOR;
+  values.function = GDK_INVERT;
   xor_gc = gdk_gc_new_with_values (Current.From->preview->window,
 				   &values,
-                                   GDK_GC_FOREGROUND | GDK_GC_FUNCTION);
+                                   GDK_GC_FUNCTION);
 
   if (circle->action_flag == DRAG_START)
     {

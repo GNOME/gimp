@@ -1,5 +1,10 @@
 2006-10-14  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/rcm/rcm_callback.c: use GDK_INVERT instead of GDK_XOR
+	with white foreground color.
+
+2006-10-14  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/imagemap/imap_cmd_move.c
 	* plug-ins/imagemap/imap_cmd_move_sash.c
 	* plug-ins/imagemap/imap_main.c
