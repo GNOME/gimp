@@ -1,5 +1,9 @@
 2006-10-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpview-popup.c: close the popup when a drag starts.
+
+2006-10-15  Michael Natterer  <mitch@gimp.org>
+
 	Applied slightly modified patch from Martin Nordholts which
 	implements more fine-grained steps for actions. Fixes bug #165612.
 

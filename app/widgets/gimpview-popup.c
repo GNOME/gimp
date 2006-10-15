@@ -66,6 +66,9 @@ static gboolean   gimp_view_popup_button_release (GtkWidget      *widget,
                                                   GimpViewPopup  *popup);
 static void       gimp_view_popup_unmap          (GtkWidget      *widget,
                                                   GimpViewPopup  *popup);
+static void       gimp_view_popup_drag_begin     (GtkWidget      *widget,
+                                                  GdkDragContext *context,
+                                                  GimpViewPopup  *popup);
 static gboolean   gimp_view_popup_timeout        (GimpViewPopup  *popup);
 
 
@@ -121,6 +124,9 @@ gimp_view_popup_show (GtkWidget      *widget,
   g_signal_connect (widget, "unmap",
                     G_CALLBACK (gimp_view_popup_unmap),
                     popup);
+  g_signal_connect (widget, "drag-begin",
+                    G_CALLBACK (gimp_view_popup_drag_begin),
+                    popup);
 
   popup->timeout_id = g_timeout_add (VIEW_POPUP_DELAY,
                                      (GSourceFunc) gimp_view_popup_timeout,
@@ -152,6 +158,9 @@ gimp_view_popup_hide (GimpViewPopup *popup)
   g_signal_handlers_disconnect_by_func (popup->widget,
                                         gimp_view_popup_unmap,
                                         popup);
+  g_signal_handlers_disconnect_by_func (popup->widget,
+                                        gimp_view_popup_drag_begin,
+                                        popup);
 
   gtk_grab_remove (popup->widget);
 
@@ -172,6 +181,14 @@ gimp_view_popup_button_release (GtkWidget      *widget,
 static void
 gimp_view_popup_unmap (GtkWidget     *widget,
                        GimpViewPopup *popup)
+{
+  g_object_set_data (G_OBJECT (popup->widget), "gimp-view-popup", NULL);
+}
+
+static void
+gimp_view_popup_drag_begin (GtkWidget      *widget,
+                            GdkDragContext *context,
+                            GimpViewPopup  *popup)
 {
   g_object_set_data (G_OBJECT (popup->widget), "gimp-view-popup", NULL);
 }
