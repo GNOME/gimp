@@ -228,6 +228,9 @@ file_open_location_response (GtkDialog *dialog,
                         _("Opening '%s' failed:\n\n%s"),
                         text, error->message);
           g_clear_error (&error);
+
+          gimp_dialog_set_sensitive (dialog, TRUE);
+          return;
         }
     }
 

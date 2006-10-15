@@ -125,6 +125,30 @@ file_utils_filename_to_uri (GSList       *procs,
           return NULL;
         }
     }
+  else if (strstr (filename, "://"))
+    {
+      gchar *scheme;
+      gchar *canon;
+
+      scheme = g_strndup (filename, (strstr (filename, "://") - filename));
+      canon  = g_strdup (scheme);
+
+      g_strcanon (canon, G_CSET_A_2_Z G_CSET_a_2_z G_CSET_DIGITS "+-.", '-');
+
+      if (! strcmp (scheme, canon) && g_ascii_isgraph (canon[0]))
+        {
+          g_set_error (error, G_FILE_ERROR, 0,
+                       _("URI scheme '%s:' is not supported"), scheme);
+
+          g_free (scheme);
+          g_free (canon);
+
+          return NULL;
+        }
+
+      g_free (scheme);
+      g_free (canon);
+    }
 
   if (! g_path_is_absolute (filename))
     {

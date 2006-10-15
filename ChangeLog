@@ -1,5 +1,17 @@
 2006-10-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/file/file-utils.c (file_utils_filename_to_uri): if the
+	passed filename starts with a valid, but unhandled uri scheme,
+	fail with an error saying "URI scheme 'foo:' is not supported"
+	instead of treating it as relative file path. Fixes bug #358203.
+
+	* app/dialogs/file-open-location-dialog.c
+	(file_open_location_response): don't close the dialog on errors
+	that are related to the entered URI because these errors are
+	failed user input validation, not failed open.
+
+2006-10-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpview-popup.c: close the popup when a drag starts.
 
 2006-10-15  Michael Natterer  <mitch@gimp.org>
