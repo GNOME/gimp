@@ -46,6 +46,7 @@
 
 #include "dialogs/dialogs.h"
 
+#include "actions.h"
 #include "brush-editor-actions.h"
 #include "brushes-actions.h"
 #include "buffers-actions.h"
@@ -371,8 +372,10 @@ action_select_value (GimpActionSelectType  select_type,
                      gdouble               value,
                      gdouble               min,
                      gdouble               max,
+                     gdouble               small_inc,
                      gdouble               inc,
                      gdouble               skip_inc,
+                     gdouble               delta_factor,
                      gboolean              wrap)
 {
   switch (select_type)
@@ -383,6 +386,14 @@ action_select_value (GimpActionSelectType  select_type,
 
     case GIMP_ACTION_SELECT_LAST:
       value = max;
+      break;
+
+    case GIMP_ACTION_SELECT_SMALL_PREVIOUS:
+      value -= small_inc;
+      break;
+
+    case GIMP_ACTION_SELECT_SMALL_NEXT:
+      value += small_inc;
       break;
 
     case GIMP_ACTION_SELECT_PREVIOUS:
@@ -399,6 +410,16 @@ action_select_value (GimpActionSelectType  select_type,
 
     case GIMP_ACTION_SELECT_SKIP_NEXT:
       value += skip_inc;
+      break;
+
+    case GIMP_ACTION_SELECT_PERCENT_PREVIOUS:
+      g_return_val_if_fail (delta_factor >= 0.0, value);
+      value /= (1.0 + delta_factor);
+      break;
+
+    case GIMP_ACTION_SELECT_PERCENT_NEXT:
+      g_return_val_if_fail (delta_factor >= 0.0, value);
+      value *= (1.0 + delta_factor);
       break;
 
     default:
@@ -429,6 +450,7 @@ void
 action_select_property (GimpActionSelectType  select_type,
                         GObject              *object,
                         const gchar          *property_name,
+                        gdouble               small_inc,
                         gdouble               inc,
                         gdouble               skip_inc,
                         gboolean              wrap)
@@ -450,7 +472,7 @@ action_select_property (GimpActionSelectType  select_type,
                                value,
                                G_PARAM_SPEC_DOUBLE (pspec)->minimum,
                                G_PARAM_SPEC_DOUBLE (pspec)->maximum,
-                               inc, skip_inc, wrap);
+                               small_inc, inc, skip_inc, 0, wrap);
 
   g_object_set (object, property_name, value, NULL);
 }

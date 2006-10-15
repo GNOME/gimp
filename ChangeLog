@@ -1,3 +1,27 @@
+2006-10-15  Michael Natterer  <mitch@gimp.org>
+
+	Applied slightly modified patch from Martin Nordholts which
+	implements more fine-grained steps for actions. Fixes bug #165612.
+
+	* app/actions/actions-types.h: add additional values to
+	enum GimpActionSelectType.
+
+	* app/actions/actions.[ch] (action_select_value)
+	(action_select_property): handle them here and added "small_inc"
+	and "delta_factor" parameters.
+
+	* app/actions/context-actions.c: added small and percent actions
+	for the brush radius.
+
+	* app/actions/context-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/tools-commands.c
+	* app/actions/view-commands.c: pass small and percent increase
+	values to the action_select_foo() functions.
+
+	* app/actions/context-commands.c (context_brush_radius_cmd_callback):
+	make sure we don't end up with 1.1, 2.1 etc brush radius values.
+
 2006-10-14  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/rcm/rcm_callback.c: use GDK_INVERT instead of GDK_XOR

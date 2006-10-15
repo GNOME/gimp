@@ -266,7 +266,7 @@ tools_color_average_radius_cmd_callback (GtkAction *action,
       action_select_property ((GimpActionSelectType) value,
                               G_OBJECT (tool_info->tool_options),
                               "average-radius",
-                              1.0, 10.0, FALSE);
+                              1.0, 1.0, 10.0, FALSE);
     }
 }
 
@@ -286,7 +286,7 @@ tools_ink_blob_size_cmd_callback (GtkAction *action,
       action_select_property ((GimpActionSelectType) value,
                               G_OBJECT (tool_info->tool_options),
                               "size",
-                              1.0, 10.0, FALSE);
+                              1.0, 1.0, 10.0, FALSE);
     }
 }
 
@@ -306,7 +306,7 @@ tools_ink_blob_aspect_cmd_callback (GtkAction *action,
       action_select_property ((GimpActionSelectType) value,
                               G_OBJECT (tool_info->tool_options),
                               "blob-aspect",
-                              0.1, 1.0, FALSE);
+                              1.0, 0.1, 1.0, FALSE);
     }
 }
 
@@ -326,7 +326,7 @@ tools_ink_blob_angle_cmd_callback (GtkAction *action,
       action_select_property ((GimpActionSelectType) value,
                               G_OBJECT (tool_info->tool_options),
                               "blob-angle",
-                              1.0, 15.0, TRUE);
+                              1.0, 1.0, 15.0, TRUE);
     }
 }
 
@@ -361,7 +361,6 @@ tools_rectangle_toggle_fixed_aspect (GtkAction *action,
     }
 }
 
-
 void
 tools_rectangle_toggle_fixed_center (GtkAction *action,
                                      gpointer   data)
@@ -392,7 +391,6 @@ tools_rectangle_toggle_fixed_center (GtkAction *action,
         }
     }
 }
-
 
 void
 tools_value_1_cmd_callback (GtkAction *action,

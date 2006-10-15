@@ -822,7 +822,7 @@ layers_opacity_cmd_callback (GtkAction *action,
   opacity = action_select_value ((GimpActionSelectType) value,
                                  gimp_layer_get_opacity (layer),
                                  0.0, 1.0,
-                                 0.01, 0.1, FALSE);
+                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
   gimp_layer_set_opacity (layer, opacity, push_undo);
   gimp_image_flush (image);
 }
@@ -851,7 +851,7 @@ layers_mode_cmd_callback (GtkAction *action,
   index = action_select_value ((GimpActionSelectType) value,
                                layers_mode_index (layer_mode),
                                0, G_N_ELEMENTS (layer_modes) - 1,
-                               1.0, 1.0, FALSE);
+                               0.0, 1.0, 1.0, 0.0, FALSE);
   gimp_layer_set_mode (layer, layer_modes[index], push_undo);
   gimp_image_flush (image);
 }
