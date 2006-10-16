@@ -1,3 +1,10 @@
+2006-10-16  Tor Lillqvist  <tml@novell.com>
+
+	* libgimp/gimpui.c (gimp_window_set_transient_for)
+	* app/widgets/gimpwidgets-utils.c (gimp_window_set_transient_for):
+	These functions are used for cross-process transient-for, which
+	causes hangs on Win32. Bypass on Win32 for now. (#359538)
+
 2006-10-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/winicon/icodialog.c
