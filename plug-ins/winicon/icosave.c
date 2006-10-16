@@ -29,6 +29,8 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include <png.h>
+
 /* #define ICO_DBG */
 
 #include "main.h"
@@ -164,6 +166,7 @@ ico_save_init (gint32 image_ID, IcoSaveInfo *info)
   info->layers = layers;
   info->depths = g_new (gint, info->num_icons);
   info->default_depths = g_new (gint, info->num_icons);
+  info->compress = g_new (gboolean, info->num_icons);
 
   /* Limit the color depths to values that don't cause any color loss --
      the user should pick these anyway, so we can save her some time.
@@ -200,6 +203,17 @@ ico_save_init (gint32 image_ID, IcoSaveInfo *info)
         {
           /* Otherwise, or if real alpha levels are used, stick with 32bpp */
           info->default_depths [i] = 32;
+        }
+
+      // vista icons
+      if (gimp_drawable_width (layers[i]) > 255
+          || gimp_drawable_height (layers[i]) > 255 )
+        {
+          info->compress[i] = TRUE;
+        }
+      else
+        {
+          info->compress[i] = FALSE;
         }
     }
 
@@ -672,6 +686,81 @@ ico_image_get_reduced_buf (guint32   layer,
 }
 
 static gboolean
+ico_write_png (FILE   *fp,
+               gint32  layer,
+               gint32  depth)
+{
+  png_structp png_ptr;
+  png_infop   info_ptr;
+  png_byte  **row_pointers;
+  gint        i, rowstride;
+  gint        width, height;
+  gint        num_colors_used;
+  guchar     *palette;
+  guchar     *buffer;
+
+  row_pointers = NULL;
+  palette = NULL;
+  buffer = NULL;
+
+  width = gimp_drawable_width (layer);
+  height = gimp_drawable_height (layer);
+
+  png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+  if ( !png_ptr )
+    return FALSE;
+
+  info_ptr = png_create_info_struct (png_ptr);
+  if ( !info_ptr )
+    {
+      png_destroy_write_struct (&png_ptr, NULL);
+      return FALSE;
+    }
+
+  if (setjmp (png_jmpbuf (png_ptr)))
+    {
+      png_destroy_write_struct (&png_ptr, &info_ptr);
+      if ( row_pointers )
+        g_free (row_pointers);
+      if (palette)
+        g_free (palette);
+      if (buffer)
+        g_free (buffer);
+      return FALSE;
+    }
+
+  ico_image_get_reduced_buf (layer, depth, &num_colors_used,
+                             &palette, &buffer);
+
+  png_init_io (png_ptr, fp);
+  png_set_IHDR (png_ptr, info_ptr, width, height,
+                8,
+                PNG_COLOR_TYPE_RGBA,
+                PNG_INTERLACE_NONE,
+                PNG_COMPRESSION_TYPE_DEFAULT,
+                PNG_FILTER_TYPE_DEFAULT);
+  png_write_info (png_ptr, info_ptr);
+
+  rowstride = ico_rowstride (width, 32);
+  row_pointers = g_new (png_byte*, height);
+  for (i = 0; i < height; i++)
+    {
+      row_pointers[i] = buffer + rowstride * i;
+    }
+  png_write_image (png_ptr, row_pointers);
+
+  row_pointers = NULL;
+
+  png_write_end (png_ptr, info_ptr);
+  png_destroy_write_struct (&png_ptr, &info_ptr);
+
+  g_free (row_pointers);
+  g_free (palette);
+  g_free (buffer);
+  return TRUE;
+}
+
+static gboolean
 ico_write_icon (FILE   *fp,
                 gint32  layer,
                 gint32  depth)
@@ -892,6 +981,7 @@ ico_save_info_free (IcoSaveInfo  *info)
 {
   g_free (info->depths);
   g_free (info->default_depths);
+  g_free (info->compress);
   g_free (info->layers);
   memset (info, 0, sizeof (IcoSaveInfo));
 }
@@ -975,13 +1065,19 @@ ico_save_image (const gchar *filename,
       entries[i].planes = 1;
       entries[i].bpp = info.depths[i];
       entries[i].offset = ftell (fp);
-      saved = ico_write_icon (fp, info.layers[i], info.depths[i]);
+
+      if (info.compress[i])
+        saved = ico_write_png (fp, info.layers[i], info.depths[i]);
+      else
+        saved = ico_write_icon (fp, info.layers[i], info.depths[i]);
+
       if (!saved)
         {
           ico_save_info_free (&info);
           fclose (fp);
           return GIMP_PDB_EXECUTION_ERROR;
         }
+
       entries[i].size = ftell (fp) - entries[i].offset;
     }
 

@@ -35,6 +35,8 @@
 
 static void   ico_bpp_changed (GtkWidget *combo,
                                GObject   *hbox);
+static void   ico_toggle_compress (GtkWidget *checkbox,
+                                   GObject   *hbox);
 
 
 
@@ -126,6 +128,7 @@ ico_create_icon_hbox (GtkWidget   *icon_preview,
   GtkWidget *vbox;
   GtkWidget *alignment;
   GtkWidget *combo;
+  GtkWidget *checkbox;
 
   hbox = gtk_hbox_new (FALSE, 6);
 
@@ -150,7 +153,7 @@ ico_create_icon_hbox (GtkWidget   *icon_preview,
 
   gtk_size_group_add_widget (size, alignment);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -171,6 +174,14 @@ ico_create_icon_hbox (GtkWidget   *icon_preview,
 
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
+
+  checkbox = gtk_check_button_new_with_label (_("Compressed (PNG)"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbox),
+                                info->compress[layer_num]);
+  g_signal_connect (checkbox, "toggled",
+                    G_CALLBACK (ico_toggle_compress), hbox);
+  gtk_box_pack_start (GTK_BOX (vbox), checkbox, FALSE, FALSE, 0);
+  gtk_widget_show (checkbox);
 
   return hbox;
 }
@@ -438,3 +449,21 @@ ico_bpp_changed (GtkWidget *combo,
   ico_dialog_update_icon_preview (dialog, layer, bpp);
 }
 
+static void
+ico_toggle_compress (GtkWidget *checkbox,
+                     GObject   *hbox)
+{
+  GtkWidget   *dialog;
+  gint         layer_num;
+  IcoSaveInfo *info;
+
+  dialog = gtk_widget_get_toplevel (checkbox);
+
+  info = g_object_get_data (G_OBJECT (dialog), "save_info");
+  g_assert (info);
+  layer_num = GPOINTER_TO_INT (g_object_get_data (hbox, "icon_layer_num"));
+
+  /* Update vector entry for later when we're actually saving */
+  info->compress[layer_num] =
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkbox));
+}

@@ -1034,6 +1034,8 @@ fi
 AC_SUBST(PNG)
 AC_SUBST(LIBPNG)
 
+AM_CONDITIONAL(HAVE_PNG, test x$have_libpng = xyes)
+
 
 ##################
 # Check for libmng
@@ -1889,6 +1891,7 @@ Optional Plug-Ins:
   TWAIN (Win32):     $os_win32
   URI:               $uri_plugin
   Win Snap:          $os_win32
+  Windows ICO        $have_libpng
   WMF:               $have_libwmf
   XJT:               $have_xjt
   XPM:               $have_libxpm

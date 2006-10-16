@@ -24,6 +24,10 @@ if HAVE_MAC_TWAIN
 twain = twain
 endif
 
+if HAVE_PNG
+winicon = winicon
+endif
+
 if OS_WIN32
 twain = twain
 winsnap = winsnap
@@ -64,7 +68,7 @@ SUBDIRS = \
 	sel2path		\
 	$(twain)		\
 	$(uri)			\
-	winicon			\
+	$(winicon)		\
 	$(winsnap)		\
 	$(xjt)			\
 	common

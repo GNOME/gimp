@@ -1,3 +1,17 @@
+2006-10-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/winicon/Makefile.am
+	* plug-ins/winicon/icodialog.c
+	* plug-ins/winicon/icoload.c
+	* plug-ins/winicon/icosave.c
+	* plug-ins/winicon/main.h: applied patch from Aurimas Juška that
+	adds support for the loading and saving Vista 256x256 PNG
+	Compressed Icons (bug #352899).
+
+	* configure.in
+	* plug-ins/Makefile.am: don't build the winicon plug-in if PNG
+	support has been explicitely disabled.
+
 2006-10-16  Tor Lillqvist  <tml@novell.com>
 
 	* libgimp/gimpui.c (gimp_window_set_transient_for)

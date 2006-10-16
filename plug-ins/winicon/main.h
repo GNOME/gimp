@@ -33,6 +33,7 @@
 #define D(x)
 #endif
 
+#define ICO_PNG_MAGIC       0x474e5089
 #define ICO_ALPHA_THRESHOLD 127
 #define ICO_MAXBUF          4096
 
@@ -85,6 +86,7 @@ typedef struct _IcoSaveInfo
 {
     gint        *depths;
     gint        *default_depths;
+    gboolean    *compress;
     gint        *layers;
     gint         num_icons;
 } IcoSaveInfo;
