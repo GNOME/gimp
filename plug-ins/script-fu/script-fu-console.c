@@ -292,7 +292,7 @@ script_fu_console_response (GtkWidget        *widget,
     default:
       gtk_main_quit ();
       break;
-  }
+    }
 }
 
 
