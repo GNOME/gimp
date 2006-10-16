@@ -197,6 +197,8 @@ gimp_item_class_init (GimpItemClass *klass)
 static void
 gimp_item_init (GimpItem *item)
 {
+  g_object_force_floating (G_OBJECT (item));
+
   item->ID        = 0;
   item->tattoo    = 0;
   item->image     = NULL;
@@ -207,7 +209,6 @@ gimp_item_init (GimpItem *item)
   item->offset_y  = 0;
   item->visible   = TRUE;
   item->linked    = FALSE;
-  item->floating  = TRUE;
   item->removed   = FALSE;
 }
 
@@ -405,41 +406,6 @@ gimp_item_real_resize (GimpItem    *item,
 
   g_object_notify (G_OBJECT (item), "width");
   g_object_notify (G_OBJECT (item), "height");
-}
-
-/**
- * gimp_item_is_floating:
- * @item: the #GimpItem to check.
- *
- * Returns: #TRUE if the item is floating.
- */
-gboolean
-gimp_item_is_floating (const GimpItem *item)
-{
-  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
-
-  return item->floating;
-}
-
-/**
- * gimp_item_sink:
- * @item: the #GimpItem to sink.
- *
- * If @item is floating, this function sets it so that
- * it is not, and removes a reference to it.  If @item
- * is not floating, the function does nothing.
- */
-void
-gimp_item_sink (GimpItem *item)
-{
-  g_return_if_fail (GIMP_IS_ITEM (item));
-
-  if (item->floating)
-    {
-      item->floating = FALSE;
-
-      g_object_unref (item);
-    }
 }
 
 /**

@@ -1,3 +1,22 @@
+2006-10-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpitem.[ch]: removed the "floating" flag and the
+	floating/sink API.
+
+	(gimp_item_init): call g_object_force_floating() instead.
+
+	* app/core/gimpimage.c
+	* app/core/gimplayer.c
+	* app/xcf/xcf-load.c
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/image.pdb: use combinations of
+	g_object_ref_sink() and g_object_unref() instead of
+	gimp_item_sink(). Use g_object_is_floating() instead of
+	gimp_item_is_floating().
+
+	* app/pdb/drawable_cmds.c
+	* app/pdb/image_cmds.c: regenerated.
+
 2006-10-16  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* configure.in: Set enable_python to yes if it wasn't set to no.

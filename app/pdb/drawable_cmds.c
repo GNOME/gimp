@@ -59,8 +59,11 @@ drawable_delete_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      if (gimp_item_is_floating (GIMP_ITEM (drawable)))
-        gimp_item_sink (GIMP_ITEM (drawable));
+      if (g_object_is_floating (drawable))
+        {
+          g_object_ref_sink (drawable);
+          g_object_unref (drawable);
+        }
       else
         success = FALSE;
     }

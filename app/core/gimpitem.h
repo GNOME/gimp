@@ -50,7 +50,6 @@ struct _GimpItem
   gboolean          visible;            /*  control visibility       */
   gboolean          linked;             /*  control linkage          */
 
-  gboolean          floating;           /*  added to an image?       */
   gboolean          removed;            /*  removed from the image?  */
 };
 
@@ -127,9 +126,6 @@ struct _GimpItemClass
 
 
 GType           gimp_item_get_type         (void) G_GNUC_CONST;
-
-gboolean        gimp_item_is_floating      (const GimpItem     *item);
-void            gimp_item_sink             (GimpItem           *item);
 
 void            gimp_item_removed          (GimpItem           *item);
 gboolean        gimp_item_is_removed       (const GimpItem     *item);

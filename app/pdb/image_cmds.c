@@ -792,7 +792,7 @@ image_add_layer_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      if (! gimp_item_is_floating (GIMP_ITEM (layer)) ||
+      if (! g_object_is_floating (layer) ||
           GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))) !=
           gimp_image_base_type (image))
         {
@@ -935,7 +935,7 @@ image_add_channel_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      if (gimp_item_is_floating (GIMP_ITEM (channel)))
+      if (g_object_is_floating (channel))
         success = gimp_image_add_channel (image, channel, MAX (position, -1));
       else
         success = FALSE;
@@ -1028,7 +1028,7 @@ image_add_vectors_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      if (gimp_item_is_floating (GIMP_ITEM (vectors)))
+      if (g_object_is_floating (vectors))
         success = gimp_image_add_vectors (image, vectors, MAX (position, -1));
       else
         success = FALSE;

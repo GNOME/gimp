@@ -680,8 +680,7 @@ gimp_image_constructor (GType                  type,
   image->selection_mask = gimp_selection_new (image,
                                               image->width,
                                               image->height);
-  g_object_ref (image->selection_mask);
-  gimp_item_sink (GIMP_ITEM (image->selection_mask));
+  g_object_ref_sink (image->selection_mask);
 
   g_signal_connect (image->selection_mask, "update",
                     G_CALLBACK (gimp_image_mask_update),
@@ -2795,8 +2794,9 @@ gimp_image_add_layer (GimpImage *image,
   if (position > gimp_container_num_children (image->layers))
     position = gimp_container_num_children (image->layers);
 
+  g_object_ref_sink (layer);
   gimp_container_insert (image->layers, GIMP_OBJECT (layer), position);
-  gimp_item_sink (GIMP_ITEM (layer));
+  g_object_unref (layer);
 
   /*  notify the layers dialog of the currently active layer  */
   gimp_image_set_active_layer (image, layer);
@@ -3059,8 +3059,9 @@ gimp_image_add_channel (GimpImage   *image,
   if (position > gimp_container_num_children (image->channels))
     position = gimp_container_num_children (image->channels);
 
+  g_object_ref_sink (channel);
   gimp_container_insert (image->channels, GIMP_OBJECT (channel), position);
-  gimp_item_sink (GIMP_ITEM (channel));
+  g_object_unref (channel);
 
   /*  notify this image of the currently active channel  */
   gimp_image_set_active_channel (image, channel);
@@ -3310,8 +3311,9 @@ gimp_image_add_vectors (GimpImage   *image,
   if (position > gimp_container_num_children (image->vectors))
     position = gimp_container_num_children (image->vectors);
 
+  g_object_ref_sink (vectors);
   gimp_container_insert (image->vectors, GIMP_OBJECT (vectors), position);
-  gimp_item_sink (GIMP_ITEM (vectors));
+  g_object_unref (vectors);
 
   /*  notify this image of the currently active vectors  */
   gimp_image_set_active_vectors (image, vectors);
