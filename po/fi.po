@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-14 08:10+0300\n"
-"PO-Revision-Date: 2006-10-14 08:17+0300\n"
+"PO-Revision-Date: 2006-10-16 07:33+0300\n"
 "Last-Translator: Heino Keränen <h2k@nic.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -3554,11 +3554,11 @@ msgstr "Mielivaltainen kierto..."
 
 #: ../app/actions/tools-actions.c:242
 msgid "Toggle Fixed-Aspect Option for Rectangle"
-msgstr ""
+msgstr "Vaihtele kiinteän sivusuhteen -valitsinta nelikulmiolle"
 
 #: ../app/actions/tools-actions.c:247
 msgid "Toggle Expand-From-Center Option for Rectangle"
-msgstr ""
+msgstr "Vaihtele \"Laajenna keskeltä\" -valitsinta nelikulmiolle"
 
 #: ../app/actions/vectors-actions.c:44
 msgid "Paths Menu"
@@ -5313,7 +5313,7 @@ msgstr "Sisäiset proseduurit"
 #. initialize  the global parasite table
 #: ../app/core/gimp.c:813
 msgid "Looking for data files"
-msgstr "Etsin datatiedostoja"
+msgstr "Etsitään datatiedostoja"
 
 #: ../app/core/gimp.c:813
 msgid "Parasites"
@@ -7862,7 +7862,7 @@ msgstr "Ei toimintoa"
 
 #: ../app/display/display-enums.c:87
 msgid "Pan view"
-msgstr ""
+msgstr "Muuta näkyvää aluetta"
 
 #: ../app/display/display-enums.c:88
 msgid "Switch to Move tool"
