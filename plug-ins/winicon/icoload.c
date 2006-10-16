@@ -280,6 +280,8 @@ ico_read_icon (FILE    *fp,
   guchar             *xor_map, *and_map;
   guint32            *palette;
   guint32            *dest_vec;
+  guchar             *row;
+  gint                rowstride;
 
   palette = NULL;
 
@@ -408,29 +410,37 @@ ico_read_icon (FILE    *fp,
 
     default:
       {
-        gint bytespp = data.bpp/8;
+        gint bytespp = data.bpp / 8;
+
+        rowstride = ico_rowstride (w, data.bpp);
 
         for (y = 0; y < h; y++)
-          for (x = 0; x < w; x++)
-            {
-              guint32 *dest = dest_vec + (h - 1 - y) * w + x;
+          {
+            row = xor_map + rowstride * y;
 
-              B_VAL_GIMP (dest) = xor_map[(y * w + x) * bytespp];
-              G_VAL_GIMP (dest) = xor_map[(y * w + x) * bytespp + 1];
-              R_VAL_GIMP (dest) = xor_map[(y * w + x) * bytespp + 2];
+            for (x = 0; x < w; x++)
+              {
+                guint32 *dest = dest_vec + (h - 1 - y) * w + x;
 
-              if (data.bpp < 32)
-                {
-                  if (ico_get_bit_from_data (and_map, w, y * w + x))
-                    A_VAL_GIMP (dest) = 0;
-                  else
-                    A_VAL_GIMP (dest) = 255;
-                }
-              else
-                {
-                  A_VAL_GIMP (dest) = xor_map[(y * w + x) * bytespp + 3];
-                }
-            }
+                B_VAL_GIMP (dest) = row[0];
+                G_VAL_GIMP (dest) = row[1];
+                R_VAL_GIMP (dest) = row[2];
+
+                if (data.bpp < 32)
+                  {
+                    if (ico_get_bit_from_data (and_map, w, y * w + x))
+                      A_VAL_GIMP (dest) = 0;
+                    else
+                      A_VAL_GIMP (dest) = 255;
+                  }
+                else
+                  {
+                    A_VAL_GIMP (dest) = row[3];
+                  }
+
+                row += bytespp;
+              }
+          }
       }
     }
   if (palette)

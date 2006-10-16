@@ -1,5 +1,13 @@
 2006-10-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/winicon/icodialog.c
+	* plug-ins/winicon/icoload.c
+	* plug-ins/winicon/icosave.c: applied patches from Aurimas Juška
+	that add support for saving 24 bit files and fix a bug in the
+	load routines for this format (bug #352899).
+
+2006-10-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-console.c: fixed some minor user
 	interface and coding style issues.
 

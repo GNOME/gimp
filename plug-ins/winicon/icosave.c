@@ -190,6 +190,11 @@ ico_save_init (gint32 image_ID, IcoSaveInfo *info)
               /* Let's suggest 8bpp */
               info->default_depths [i] = 8;
             }
+          else
+            {
+              /* Let's suggest 24bpp */
+              info->default_depths [i] = 24;
+            }
         }
       else
         {
@@ -546,7 +551,7 @@ ico_image_get_reduced_buf (guint32   layer,
 
   buffer = g_new (guchar, w * h * 4);
 
-  if (bpp <= 8 || drawable->bpp != 4)
+  if (bpp <= 8 || bpp == 24 || drawable->bpp != 4)
     {
       gint32        image = gimp_drawable_get_image (layer);
       GimpDrawable *tmp;
@@ -629,6 +634,20 @@ ico_image_get_reduced_buf (guint32   layer,
             }
 
           gimp_image_convert_rgb (tmp_image);
+        }
+      else if (bpp == 24)
+        {
+          GimpParam    *return_vals;
+          gint          n_return_vals;
+
+          return_vals =
+            gimp_run_procedure ("plug-in-threshold-alpha", &n_return_vals,
+                                GIMP_PDB_INT32, GIMP_RUN_NONINTERACTIVE,
+                                GIMP_PDB_IMAGE, tmp_image,
+                                GIMP_PDB_DRAWABLE, tmp_layer,
+                                GIMP_PDB_INT32, ICO_ALPHA_THRESHOLD,
+                                GIMP_PDB_END);
+          gimp_destroy_params (return_vals, n_return_vals);
         }
 
       gimp_layer_add_alpha (tmp_layer);
@@ -716,7 +735,6 @@ ico_write_icon (FILE   *fp,
 
   /* Create and_map. It's padded out to 32 bits per line: */
   and_map = ico_alloc_map (width, height, 1, &and_len);
-  and_len = and_len;
 
   for (y = 0; y < height; y++)
     for (x = 0; x < width; x++)
@@ -724,12 +742,11 @@ ico_write_icon (FILE   *fp,
         pixel = (guint8 *) &buffer32[y * width + x];
 
         ico_set_bit_in_data (and_map, width,
-                             (height-y-1) * width + x,
+                             (height - y -1) * width + x,
                              (pixel[3] > ICO_ALPHA_THRESHOLD ? 0 : 1));
       }
 
   xor_map = ico_alloc_map (width, height, header.bpp, &xor_len);
-  xor_len = xor_len;
 
   /* Now fill in the xor map */
   switch (header.bpp)
@@ -743,16 +760,16 @@ ico_write_icon (FILE   *fp,
                                                    pixel[1], pixel[2]);
 
             if (ico_get_bit_from_data (and_map, width,
-                                       (height-y-1) * width + x))
+                                       (height - y - 1) * width + x))
               {
                 ico_set_bit_in_data (xor_map, width,
-                                     (height-y-1) * width + x,
+                                     (height - y -1) * width + x,
                                      black_index);
               }
             else
               {
                 ico_set_bit_in_data (xor_map, width,
-                                     (height-y-1) * width + x,
+                                     (height - y -1) * width + x,
                                      palette_index);
               }
           }
@@ -767,16 +784,16 @@ ico_write_icon (FILE   *fp,
                                                   pixel[1], pixel[2]);
 
             if (ico_get_bit_from_data (and_map, width,
-                                       (height-y-1) * width + x))
+                                       (height - y - 1) * width + x))
               {
                 ico_set_nibble_in_data (xor_map, width,
-                                        (height-y-1) * width + x,
+                                        (height - y -1) * width + x,
                                         black_index);
               }
             else
               {
                 ico_set_nibble_in_data (xor_map, width,
-                                        (height-y-1) * width + x,
+                                        (height - y - 1) * width + x,
                                         palette_index);
               }
           }
@@ -793,20 +810,38 @@ ico_write_icon (FILE   *fp,
                                                    pixel[2]);
 
             if (ico_get_bit_from_data (and_map, width,
-                                       (height-y-1) * width + x))
+                                       (height - y - 1) * width + x))
               {
                 ico_set_byte_in_data (xor_map, width,
-                                      (height-y-1) * width + x,
+                                      (height - y - 1) * width + x,
                                       black_index);
               }
             else
               {
                 ico_set_byte_in_data (xor_map, width,
-                                      (height-y-1) * width + x,
+                                      (height - y - 1) * width + x,
                                       palette_index);
               }
 
           }
+      break;
+
+    case 24:
+      for (y = 0; y < height; y++)
+        {
+          guchar *row = xor_map + (xor_len * (height - y - 1) / height);
+
+          for (x = 0; x < width; x++)
+            {
+              pixel = (guint8 *) &buffer32[y * width + x];
+
+              row[0] = pixel[2];
+              row[1] = pixel[1];
+              row[2] = pixel[0];
+
+              row += 3;
+            }
+        }
       break;
 
     default:
@@ -815,7 +850,7 @@ ico_write_icon (FILE   *fp,
           {
             pixel = (guint8 *) &buffer32[y * width + x];
 
-            ((guint32 *) xor_map)[(height-y-1) * width + x] =
+            ((guint32 *) xor_map)[(height - y -1) * width + x] =
               GUINT32_TO_LE ((pixel[0] << 16) |
                              (pixel[1] << 8)  |
                              (pixel[2])       |
@@ -832,8 +867,8 @@ ico_write_icon (FILE   *fp,
       g_hash_table_destroy (color_to_slot);
     }
 
-  g_free(palette);
-  g_free(buffer);
+  g_free (palette);
+  g_free (buffer);
 
   ico_write_int32 (fp, (guint32*) &header, 3);
   ico_write_int16 (fp, &header.planes, 2);
@@ -841,13 +876,14 @@ ico_write_icon (FILE   *fp,
 
   if (palette_len)
     ico_write_int8 (fp, (guint8 *) palette32, palette_len);
+
   ico_write_int8 (fp, xor_map, xor_len);
   ico_write_int8 (fp, and_map, and_len);
 
-  if (palette32)
-    g_free (palette32);
+  g_free (palette32);
   g_free (xor_map);
   g_free (and_map);
+
   return TRUE;
 }
 
