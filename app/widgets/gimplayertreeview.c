@@ -31,6 +31,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
