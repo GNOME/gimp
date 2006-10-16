@@ -77,7 +77,7 @@
 #else
 static int stricmp(const char *s1, const char *s2)
 {
-  unsigned char *s1a, *s2a;
+  char *s1a, *s2a;
   int result;
 
   s1a = g_utf8_strdown(s1, -1);
@@ -1887,7 +1887,7 @@ static int token(scheme *sc) {
 static void printslashstring(scheme *sc, char *p, int len) {
   int i;
   gunichar c;
-  unsigned char *s=(unsigned char*)p;
+  char *s=(char*)p;
 
   putcharacter(sc,'"');
   for (i=0; i<len; i++) {

@@ -1,3 +1,9 @@
+2006-10-16  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: Eliminated compiler warnings.
+
+	* plug-ins/script-fu/scripts/script-fu-compat.init: Added 'nil'.
+
 2006-10-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem.[ch]: removed the "floating" flag and the

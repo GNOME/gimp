@@ -139,6 +139,7 @@
 (define aref array-ref)
 (define fopen open-input-file)
 (define mapcar map)
+(define nil '())
 (define nreverse reverse)
 (define pow expt)
 (define string-lessp string<?)
