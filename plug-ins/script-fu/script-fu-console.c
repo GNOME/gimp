@@ -19,25 +19,24 @@
 #include "config.h"
 
 #include <errno.h>
-#include <gdk/gdkkeysyms.h>
 
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
-#include "script-fu-intl.h"
+#include <gdk/gdkkeysyms.h>
 
 #include "tinyscheme/scheme.h"
+
 #include "scheme-wrapper.h"
 #include "script-fu-console.h"
+
+#include "script-fu-intl.h"
 
 
 #define TEXT_WIDTH  480
 #define TEXT_HEIGHT 400
 
-#define BUFSIZE     256
-
 #define PROC_NAME   "plug-in-script-fu-console"
-
 
 typedef struct
 {
@@ -46,6 +45,7 @@ typedef struct
   GtkWidget     *cc;
   GtkWidget     *text_view;
   GtkWidget     *proc_browser;
+  GtkWidget     *save_dialog;
 
   gint32         input_id;
 
@@ -55,55 +55,45 @@ typedef struct
   gint           history_max;
 } ConsoleInterface;
 
-
-enum TF_RESPONSES {
-  RESPONSE_CLEAR, RESPONSE_SAVE
+enum
+{
+  RESPONSE_CLEAR,
+  RESPONSE_SAVE
 };
 
 /*
  *  Local Functions
  */
-static void       script_fu_console_interface    (void);
-static void       script_fu_response             (GtkWidget        *widget,
+static void      script_fu_console_interface     (void);
+static void      script_fu_console_response      (GtkWidget        *widget,
                                                   gint              response_id,
                                                   ConsoleInterface *console);
-static void       script_fu_save_dialog          (GtkWidget        *parent);
-static void       script_fu_save_output          (GtkWidget        *dialog,
-                                                  gint              response_id,
-                                                  gpointer          data);
-static void       script_fu_browse_callback      (GtkWidget        *widget,
-                                                  ConsoleInterface *console);
-static void       script_fu_browse_response      (GtkWidget        *widget,
+static void      script_fu_console_save_dialog   (ConsoleInterface *console);
+static void      script_fu_console_save_response (GtkWidget        *dialog,
                                                   gint              response_id,
                                                   ConsoleInterface *console);
-static void       script_fu_browse_row_activated (GtkDialog        *dialog);
-static gboolean   script_fu_cc_is_empty          (ConsoleInterface *console);
-static gboolean   script_fu_cc_key_function      (GtkWidget        *widget,
+
+static void      script_fu_browse_callback       (GtkWidget        *widget,
+                                                  ConsoleInterface *console);
+static void      script_fu_browse_response       (GtkWidget        *widget,
+                                                  gint              response_id,
+                                                  ConsoleInterface *console);
+static void      script_fu_browse_row_activated  (GtkDialog        *dialog);
+
+static gboolean  script_fu_cc_is_empty           (ConsoleInterface *console);
+static gboolean  script_fu_cc_key_function       (GtkWidget        *widget,
                                                   GdkEventKey      *event,
                                                   ConsoleInterface *console);
 
-static void       script_fu_open_ts_console      (void);
-static void       script_fu_close_ts_console     (void);
+static void      script_fu_open_ts_console       (void);
+static void      script_fu_close_ts_console      (void);
 
 
 /*
  *  Local variables
  */
-static ConsoleInterface cint =
-{
-  NULL,  /*  dialog  */
-  NULL,  /*  console  */
-  NULL,  /*  current command  */
-  NULL,  /*  text view  */
-  NULL,  /*  proc browser  */
 
-  -1,    /*  input id  */
-
-  NULL,
-  0,
-  0,
-  50
-};
+static GtkWidget *output = NULL;
 
 
 /*
@@ -143,12 +133,9 @@ script_fu_console_interface (void)
 
   gimp_ui_init ("script-fu", FALSE);
 
-  console = &cint;
+  console = g_new0 (ConsoleInterface, 1);
 
   console->input_id    = -1;
-  console->history     = NULL;
-  console->history_len = 0;
-  console->history_cur = 0;
   console->history_max = 50;
 
   console->dialog = gimp_dialog_new (_("Script-Fu Console"),
@@ -156,18 +143,24 @@ script_fu_console_interface (void)
                                      NULL, 0,
                                      gimp_standard_help_func, PROC_NAME,
 
-                                     _("_Save Output"),  RESPONSE_SAVE,
-                                     _("Cl_ear Output"), RESPONSE_CLEAR,
+                                     GTK_STOCK_SAVE,  RESPONSE_SAVE,
+                                     GTK_STOCK_CLEAR, RESPONSE_CLEAR,
                                      GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
                                      NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (console->dialog),
+                                           GTK_RESPONSE_CLOSE,
+                                           RESPONSE_CLEAR,
+                                           RESPONSE_SAVE,
+                                           -1);
+
+  g_object_add_weak_pointer (G_OBJECT (console->dialog),
+                             (gpointer) &console->dialog);
+
   g_signal_connect (console->dialog, "response",
-                    G_CALLBACK (script_fu_response),
+                    G_CALLBACK (script_fu_console_response),
                     console);
-  g_signal_connect (console->dialog, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &console->dialog);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 12);
@@ -187,6 +180,8 @@ script_fu_console_interface (void)
   console->console = gtk_text_buffer_new (NULL);
   console->text_view = gtk_text_view_new_with_buffer (console->console);
   g_object_unref (console->console);
+
+  output = console->text_view;
 
   gtk_text_view_set_editable (GTK_TEXT_VIEW (console->text_view), FALSE);
   gtk_text_view_set_left_margin (GTK_TEXT_VIEW (console->text_view), 12);
@@ -264,68 +259,82 @@ script_fu_console_interface (void)
 
   g_source_remove (console->input_id);
 
+  output = NULL;
+
+  if (console->save_dialog)
+    gtk_widget_destroy (console->save_dialog);
+
   if (console->dialog)
     gtk_widget_destroy (console->dialog);
+
+  g_free (console);
 }
 
 static void
-script_fu_response (GtkWidget        *widget,
-                    gint              response_id,
-                    ConsoleInterface *console)
+script_fu_console_response (GtkWidget        *widget,
+                            gint              response_id,
+                            ConsoleInterface *console)
 {
   GtkTextIter start, end;
 
   switch (response_id)
-  {
-  case RESPONSE_CLEAR:
-    gtk_text_buffer_get_start_iter (console->console, &start);
-    gtk_text_buffer_get_end_iter (console->console, &end);
-    gtk_text_buffer_delete (console->console, &start, &end);
-    break;
-  case RESPONSE_SAVE:
-    script_fu_save_dialog(widget);
-    break;
-  default:
-  gtk_main_quit ();
-    break;
+    {
+    case RESPONSE_CLEAR:
+      gtk_text_buffer_get_start_iter (console->console, &start);
+      gtk_text_buffer_get_end_iter (console->console, &end);
+      gtk_text_buffer_delete (console->console, &start, &end);
+      break;
+
+    case RESPONSE_SAVE:
+      script_fu_console_save_dialog (console);
+      break;
+
+    default:
+      gtk_main_quit ();
+      break;
   }
 }
 
 
 static void
-script_fu_save_dialog(GtkWidget *parent)
+script_fu_console_save_dialog (ConsoleInterface *console)
 {
-  static GtkWidget *dialog = NULL;
-
-  if (! dialog)
+  if (! console->save_dialog)
     {
-       dialog =
-         gtk_file_chooser_dialog_new (_("Save TinyScheme Output"),
-                                      NULL,
-                                      GTK_FILE_CHOOSER_ACTION_SAVE,
-                                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                      GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
-                                      NULL);
+      console->save_dialog =
+        gtk_file_chooser_dialog_new (_("Save Script-Fu Console Output"),
+                                     GTK_WINDOW (console->dialog),
+                                     GTK_FILE_CHOOSER_ACTION_SAVE,
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                                     NULL);
 
-      g_signal_connect (dialog, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &dialog);
-      g_signal_connect (dialog, "response",
-                        G_CALLBACK (script_fu_save_output),
-                        NULL);
+      gtk_dialog_set_default_response (GTK_DIALOG (console->save_dialog),
+                                       GTK_RESPONSE_OK);
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (console->save_dialog),
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
+
+      g_object_add_weak_pointer (G_OBJECT (console->save_dialog),
+                                 (gpointer) &console->save_dialog);
+
+      g_signal_connect (console->save_dialog, "response",
+                        G_CALLBACK (script_fu_console_save_response),
+                        console);
     }
 
-  gtk_window_present (GTK_WINDOW (dialog));
+  gtk_window_present (GTK_WINDOW (console->save_dialog));
 }
 
 static void
-script_fu_save_output (GtkWidget *dialog,
-                       gint       response_id,
-                       gpointer   data)
+script_fu_console_save_response (GtkWidget        *dialog,
+                                 gint              response_id,
+                                 ConsoleInterface *console)
 {
   GtkTextIter start, end;
 
-  if (response_id == GTK_RESPONSE_ACCEPT)
+  if (response_id == GTK_RESPONSE_OK)
     {
       gchar *filename;
       gchar *str;
@@ -334,29 +343,29 @@ script_fu_save_output (GtkWidget *dialog,
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
       fh = fopen (filename, "w");
+
       if (! fh)
         {
-          gchar *message =
-            g_strdup_printf ("Could not open '%s' for writing: %s",
-                             gimp_filename_to_utf8 (filename),
-                             g_strerror (errno));
+          g_message (_("Could not open '%s' for writing: %s"),
+                     gimp_filename_to_utf8 (filename),
+                     g_strerror (errno));
 
-          g_message (message);
-
-          g_free (message);
           g_free (filename);
-
           return;
         }
 
-      gtk_text_buffer_get_start_iter (cint.console, &start);
-      gtk_text_buffer_get_end_iter (cint.console, &end);
-      str = gtk_text_buffer_get_text (cint.console, &start, &end, TRUE);
+      gtk_text_buffer_get_start_iter (console->console, &start);
+      gtk_text_buffer_get_end_iter (console->console, &end);
+
+      str = gtk_text_buffer_get_text (console->console, &start, &end, FALSE);
+
       fputs (str, fh);
       fclose (fh);
+
+      g_free (str);
     }
 
-  gtk_widget_destroy (dialog);
+  gtk_widget_hide (dialog);
 }
 
 static void
@@ -377,6 +386,10 @@ script_fu_browse_callback (GtkWidget        *widget,
 
       gtk_dialog_set_default_response (GTK_DIALOG (console->proc_browser),
                                        GTK_RESPONSE_APPLY);
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (console->proc_browser),
+                                               GTK_RESPONSE_CLOSE,
+                                               GTK_RESPONSE_APPLY,
+                                               -1);
 
       g_object_add_weak_pointer (G_OBJECT (console->proc_browser),
                                  (gpointer) &console->proc_browser);
@@ -467,35 +480,45 @@ script_fu_browse_row_activated (GtkDialog *dialog)
 }
 
 static gboolean
-script_fu_console_idle_scroll_end (ConsoleInterface *console)
+script_fu_console_idle_scroll_end (GtkWidget *view)
 {
-  GtkAdjustment *adj = GTK_TEXT_VIEW (console->text_view)->vadjustment;
+  GtkAdjustment *adj = GTK_TEXT_VIEW (view)->vadjustment;
 
   gtk_adjustment_set_value (adj, adj->upper - adj->page_size);
+
+  g_object_unref (view);
 
   return FALSE;
 }
 
 static void
-script_fu_console_scroll_end (ConsoleInterface *console)
+script_fu_console_scroll_end (GtkWidget *view)
 {
-  /*  the text view idle updates so we need to idle scroll too
+  /*  the text view idle updates, so we need to idle scroll too
    */
-  g_idle_add ((GSourceFunc) script_fu_console_idle_scroll_end, console);
+  g_object_ref (view);
+
+  g_idle_add ((GSourceFunc) script_fu_console_idle_scroll_end, view);
 }
 
 void
-script_fu_output_to_console (gchar *text)
+script_fu_output_to_console (const gchar *text)
 {
-  GtkTextIter cursor;
+  /* FIXME: This function needs to be passed a pointer to the console.
+   */
+  if (output)
+    {
+      GtkTextBuffer *buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (output));
+      GtkTextIter    cursor;
 
-  gtk_text_buffer_get_end_iter (cint.console, &cursor);
-  gtk_text_buffer_insert_with_tags_by_name (cint.console, &cursor,
-                                            text, -1,
-                                            "weak",
-                                            NULL);
+      gtk_text_buffer_get_end_iter (buffer, &cursor);
+      gtk_text_buffer_insert_with_tags_by_name (buffer, &cursor,
+                                                text, -1,
+                                                "weak",
+                                                NULL);
 
-  script_fu_console_scroll_end (&cint);
+      script_fu_console_scroll_end (output);
+    }
 }
 
 static gboolean
@@ -541,7 +564,7 @@ script_fu_cc_key_function (GtkWidget        *widget,
       gtk_text_buffer_get_end_iter (console->console, &cursor);
 
       gtk_text_buffer_insert_with_tags_by_name (console->console, &cursor,
-                                                "\n=> ", -1,
+                                                "\n> ", -1,
                                                 "strong",
                                                 NULL);
 
@@ -555,7 +578,7 @@ script_fu_cc_key_function (GtkWidget        *widget,
                                                 "weak",
                                                 NULL);
 
-      script_fu_console_scroll_end (console);
+      script_fu_console_scroll_end (console->text_view);
 
       gtk_entry_set_text (GTK_ENTRY (console->cc), "");
 
@@ -563,15 +586,19 @@ script_fu_cc_key_function (GtkWidget        *widget,
       gimp_displays_flush ();
 
       console->history = g_list_append (console->history, NULL);
+
       if (console->history_len == console->history_max)
-      {
-        console->history = g_list_remove (console->history,
-                                          console->history->data);
-        if (console->history->data)
-          g_free (console->history->data);
-      }
+        {
+          console->history = g_list_remove (console->history,
+                                            console->history->data);
+          if (console->history->data)
+            g_free (console->history->data);
+        }
       else
-        console->history_len++;
+        {
+          console->history_len++;
+        }
+
       console->history_cur = g_list_length (console->history) - 1;
 
       return TRUE;
@@ -607,16 +634,18 @@ script_fu_cc_key_function (GtkWidget        *widget,
     {
       /*  Make sure we keep track of the current one  */
       if (console->history_cur == g_list_length (console->history) - 1)
-      {
-        list = g_list_nth (console->history, console->history_cur);
-        if (list->data)
+        {
+          list = g_list_nth (console->history, console->history_cur);
+
           g_free (list->data);
-        list->data = g_strdup (gtk_entry_get_text (GTK_ENTRY (console->cc)));
-      }
+          list->data = g_strdup (gtk_entry_get_text (GTK_ENTRY (console->cc)));
+        }
 
       console->history_cur += direction;
+
       if (console->history_cur < 0)
         console->history_cur = 0;
+
       if (console->history_cur >= console->history_len)
         console->history_cur = console->history_len - 1;
 

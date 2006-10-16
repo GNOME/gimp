@@ -20,18 +20,18 @@
 #define __SCRIPT_FU_CONSOLE_H__
 
 
-void   script_fu_console_run (const gchar      *name,
-			      gint              nparams,
-			      const GimpParam  *params,
-			      gint             *nreturn_vals,
-			      GimpParam       **return_vals);
-void   script_fu_eval_run    (const gchar      *name,
-			      gint              nparams,
-			      const GimpParam  *params,
-			      gint             *nreturn_vals,
-			      GimpParam       **return_vals);
+void   script_fu_console_run       (const gchar      *name,
+                                    gint              nparams,
+                                    const GimpParam  *params,
+                                    gint             *nreturn_vals,
+                                    GimpParam       **return_vals);
+void   script_fu_eval_run          (const gchar      *name,
+                                    gint              nparams,
+                                    const GimpParam  *params,
+                                    gint             *nreturn_vals,
+                                    GimpParam       **return_vals);
 
-void   script_fu_output_to_console (gchar *text);
+void   script_fu_output_to_console (const gchar      *text);
 
 
 #endif /*  __SCRIPT_FU_CONSOLE__  */
