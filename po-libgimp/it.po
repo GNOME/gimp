@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-01 16:13+0200\n"
-"PO-Revision-Date: 2006-09-13 21:27+0200\n"
+"POT-Creation-Date: 2006-10-15 23:50+0200\n"
+"PO-Revision-Date: 2006-10-16 00:22+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -602,7 +602,7 @@ msgstr "Costante"
 msgid "Incremental"
 msgstr "Incrementale"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:256
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:258
 msgid "None"
 msgstr "Nessuno"
 
@@ -723,7 +723,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:248
+#: ../modules/cdisplay_lcms.c:250
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
 
@@ -1148,23 +1148,23 @@ msgstr "Spaziatura r_ighe"
 msgid "_Resize"
 msgstr "_Ridimensiona"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:304
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:319
 msgid "_Scale"
 msgstr "_Scala"
 
-#: ../libgimpwidgets/gimpstock.c:280
-msgid "Crop"
-msgstr "Ritaglia"
+#: ../libgimpwidgets/gimpstock.c:295
+msgid "Cr_op"
+msgstr "Rita_glia"
 
-#: ../libgimpwidgets/gimpstock.c:299
+#: ../libgimpwidgets/gimpstock.c:314
 msgid "_Transform"
 msgstr "_Trasforma"
 
-#: ../libgimpwidgets/gimpstock.c:303
+#: ../libgimpwidgets/gimpstock.c:318
 msgid "_Rotate"
 msgstr "_Ruota"
 
-#: ../libgimpwidgets/gimpstock.c:305
+#: ../libgimpwidgets/gimpstock.c:320
 msgid "_Shear"
 msgstr "_Inclina"
 
@@ -1281,7 +1281,7 @@ msgstr "Filtro di simulazione deficit colore (algoritmo Brettel-Vienot-Mollon)"
 msgid "Color Deficient Vision"
 msgstr "Visione con deficit di colore"
 
-#: ../modules/cdisplay_colorblind.c:503
+#: ../modules/cdisplay_colorblind.c:505
 msgid "Color _deficiency type:"
 msgstr "Tipo di _deficit di colore:"
 
@@ -1293,7 +1293,7 @@ msgstr "Filtro di visualizzazione gamma dei colori"
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/cdisplay_gamma.c:251
+#: ../modules/cdisplay_gamma.c:253
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
@@ -1305,7 +1305,7 @@ msgstr "Filtro di visualizzazione colore ad alto contrasto"
 msgid "Contrast"
 msgstr "Contrasto"
 
-#: ../modules/cdisplay_highcontrast.c:251
+#: ../modules/cdisplay_highcontrast.c:253
 msgid "Contrast c_ycles:"
 msgstr "_Cicli di contrasto:"
 
@@ -1317,7 +1317,7 @@ msgstr "Il filtro di gestione colore del display usa i profili di colore ICC"
 msgid "Color Management"
 msgstr "Gestione del colore"
 
-#: ../modules/cdisplay_lcms.c:279
+#: ../modules/cdisplay_lcms.c:281
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1325,19 +1325,19 @@ msgstr ""
 "Questo filtro prende la sua configurazione dalla sezione gestione colore "
 "nella finestra delle preferenze."
 
-#: ../modules/cdisplay_lcms.c:293
+#: ../modules/cdisplay_lcms.c:295
 msgid "Mode of operation:"
 msgstr "Modalità di operazione:"
 
-#: ../modules/cdisplay_lcms.c:304
+#: ../modules/cdisplay_lcms.c:306
 msgid "RGB workspace profile:"
 msgstr "Profilo di colore RGB:"
 
-#: ../modules/cdisplay_lcms.c:314
+#: ../modules/cdisplay_lcms.c:316
 msgid "Monitor profile:"
 msgstr "Profilo del monitor:"
 
-#: ../modules/cdisplay_lcms.c:324
+#: ../modules/cdisplay_lcms.c:326
 msgid "Print simulation profile:"
 msgstr "Profilo di simulazione di stampa:"
 
@@ -1349,19 +1349,19 @@ msgstr "Fitro a prova di colore usando i profili di colore ICC"
 msgid "Color Proof"
 msgstr "A prova di colore"
 
-#: ../modules/cdisplay_proof.c:304
+#: ../modules/cdisplay_proof.c:306
 msgid "_Intent:"
 msgstr "_Intento:"
 
-#: ../modules/cdisplay_proof.c:308
+#: ../modules/cdisplay_proof.c:310
 msgid "Choose an ICC Color Profile"
 msgstr "Scegli un profilo di colore ICC"
 
-#: ../modules/cdisplay_proof.c:311
+#: ../modules/cdisplay_proof.c:313
 msgid "_Profile:"
 msgstr "_Profilo:"
 
-#: ../modules/cdisplay_proof.c:316
+#: ../modules/cdisplay_proof.c:318
 msgid "_Black Point Compensation"
 msgstr "Compensazione del punto _nero"
 
@@ -1550,28 +1550,28 @@ msgstr "Il nome del dispositivo da cui leggere gli eventi Linux in ingresso."
 msgid "Linux Input"
 msgstr "Ingresso Linux"
 
-#: ../modules/controller_linux_input.c:351
+#: ../modules/controller_linux_input.c:352
 msgid "Linux Input Events"
 msgstr "Eventi Linux in ingresso"
 
-#: ../modules/controller_linux_input.c:372 ../modules/controller_midi.c:482
-#: ../modules/controller_midi.c:508
+#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:483
+#: ../modules/controller_midi.c:509
 #, c-format
 msgid "Reading from %s"
 msgstr "Lettura da %s"
 
-#: ../modules/controller_linux_input.c:388
-#: ../modules/controller_linux_input.c:431 ../modules/controller_midi.c:464
-#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
+#: ../modules/controller_linux_input.c:389
+#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:465
+#: ../modules/controller_midi.c:526 ../modules/controller_midi.c:597
 #, c-format
 msgid "Device not available: %s"
 msgstr "Dispositivo non disponibile: %s"
 
-#: ../modules/controller_linux_input.c:396 ../modules/controller_midi.c:533
+#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:534
 msgid "No device configured"
 msgstr "Nessun dispositivo configurato"
 
-#: ../modules/controller_linux_input.c:440 ../modules/controller_midi.c:605
+#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:606
 msgid "End of file"
 msgstr "Fine del file"
 
@@ -1603,29 +1603,21 @@ msgstr ""
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:383
+#: ../modules/controller_midi.c:384
 #, c-format
 msgid "Note %02x on"
 msgstr "Nota %02x on"
 
-#: ../modules/controller_midi.c:386
+#: ../modules/controller_midi.c:387
 #, c-format
 msgid "Note %02x off"
 msgstr "Nota %02x off"
 
-#: ../modules/controller_midi.c:389
+#: ../modules/controller_midi.c:390
 #, c-format
 msgid "Controller %03d"
 msgstr "Controllore %03d"
 
-#: ../modules/controller_midi.c:436
+#: ../modules/controller_midi.c:437
 msgid "MIDI Events"
 msgstr "Eventi MIDI"
-
-#~ msgid "None (Fastest)"
-#~ msgstr "Nessuna (veloce)"
-
-#~ msgid "All %d page selected"
-#~ msgid_plural "All %d pages selected"
-#~ msgstr[0] "Tutta la %d pagina selezionata"
-#~ msgstr[1] "Tutte le %d pagine selezionate"

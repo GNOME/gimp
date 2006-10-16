@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-04 18:16+0200\n"
-"PO-Revision-Date: 2006-10-04 10:58+0200\n"
+"POT-Creation-Date: 2006-10-16 18:22+0200\n"
+"PO-Revision-Date: 2006-10-16 18:22+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:530
+#: ../plug-ins/FractalExplorer/Dialogs.c:547
 #: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/gflare/gflare.c:883
 #: ../plug-ins/gimpressionist/utils.c:124
 #, c-format
@@ -30,244 +30,219 @@ msgstr ""
 "(%s \"%s\")\n"
 "al tuo file %s."
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:621
+#: ../plug-ins/FractalExplorer/Dialogs.c:638
 msgid "Realtime preview"
 msgstr "Anteprima in tempo reale"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:629
+#: ../plug-ins/FractalExplorer/Dialogs.c:646
 msgid "If enabled the preview will be redrawn automatically"
 msgstr "Se abilitata l'anteprima si aggiornerà automaticamente"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:632
+#: ../plug-ins/FractalExplorer/Dialogs.c:649
 msgid "R_edraw preview"
 msgstr "Ridis_egna l'anteprima"
 
 #. Zoom Options
-#: ../plug-ins/FractalExplorer/Dialogs.c:640
+#: ../plug-ins/FractalExplorer/Dialogs.c:657
 msgid "Zoom"
 msgstr "Zoom"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:676
+#: ../plug-ins/FractalExplorer/Dialogs.c:693
 msgid "Undo last zoom change"
 msgstr "Annulla l'ultimo cambiamento di zoom"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:686
+#: ../plug-ins/FractalExplorer/Dialogs.c:703
 msgid "Redo last zoom change"
 msgstr "Ripeti l'ultimo cambiamento di zoom"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:701
+#: ../plug-ins/FractalExplorer/Dialogs.c:718
 msgid "_Parameters"
 msgstr "_Parametri"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:704
+#: ../plug-ins/FractalExplorer/Dialogs.c:721
 msgid "Fractal Parameters"
 msgstr "Parametri frattali"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:717
-msgid "XMIN:"
-msgstr "XMIN:"
+#: ../plug-ins/FractalExplorer/Dialogs.c:734
+#: ../plug-ins/MapObject/mapobject_ui.c:1111
+msgid "Left:"
+msgstr "Sinistra:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:720
-msgid "Change the first (minimal) x-coordinate delimitation"
-msgstr "Cambia il primo (minimo) delimitatore della coordinata x"
+#: ../plug-ins/FractalExplorer/Dialogs.c:743
+#: ../plug-ins/MapObject/mapobject_ui.c:1111
+msgid "Right:"
+msgstr "Destra:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:728
-msgid "XMAX:"
-msgstr "XMAX:"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:731
-msgid "Change the second (maximal) x-coordinate delimitation"
-msgstr "Cambia il secondo (massimo) delimitatore della coordinata x"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:739
-msgid "YMIN:"
-msgstr "YMIN:"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:742
-msgid "Change the first (minimal) y-coordinate delimitation"
-msgstr "Cambia il primo (minimo) delimitatore della coordinata y"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:750
-msgid "YMAX:"
-msgstr "YMAX:"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:753
-msgid "Change the second (maximal) y-coordinate delimitation"
-msgstr "Cambia il secondo (massimo) delimitatore della coordinata y"
+#: ../plug-ins/FractalExplorer/Dialogs.c:752
+#: ../plug-ins/MapObject/mapobject_ui.c:1110
+msgid "Top:"
+msgstr "Alto:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:761
-msgid "ITER:"
-msgstr "ITER:"
+#: ../plug-ins/MapObject/mapobject_ui.c:1110
+msgid "Bottom:"
+msgstr "Basso:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:764
-msgid ""
-"Change the iteration value. The higher it is, the more details will be "
-"calculated, which will take more time"
-msgstr ""
-"Cambia il valore di iterazione. Maggiore è quest'ultimo e migliore sarà il "
-"livello di dettaglio calcolato, con tempi maggiori"
+#: ../plug-ins/FractalExplorer/Dialogs.c:770 ../plug-ins/common/warp.c:434
+#: ../plug-ins/ifscompose/ifscompose.c:1210
+msgid "Iterations:"
+msgstr "Iterazioni:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:773
+msgid ""
+"The higher the number of iterations, the more details will be calculated"
+msgstr "Maggiore è il numero delle iterazioni, più dettagli verranno calcolati"
+
+#: ../plug-ins/FractalExplorer/Dialogs.c:781
 msgid "CX:"
 msgstr "CX:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:776
-msgid ""
-"Change the CX value (changes aspect of fractal, active with every fractal "
-"but Mandelbrot and Sierpinski)"
-msgstr ""
-"Cambia il valore CX (cambiamento aspetto del frattale, attivato con ogni "
-"frattale esclusi Mandelbrot e Sierpinski)"
+#: ../plug-ins/FractalExplorer/Dialogs.c:784
+#: ../plug-ins/FractalExplorer/Dialogs.c:794
+msgid "Changes aspect of fractal"
+msgstr "Cambia aspetto del frattale"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:785
+#: ../plug-ins/FractalExplorer/Dialogs.c:791
 msgid "CY:"
 msgstr "CY:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:788
-msgid ""
-"Change the CY value (changes aspect of fractal, active with every fractal "
-"but Mandelbrot and Sierpinski)"
-msgstr ""
-"Cambia il valore CY (cambiamento aspetto del frattale, attivato con ogni "
-"frattale esclusi Mandelbrot e Sierpinski)"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:805
+#: ../plug-ins/FractalExplorer/Dialogs.c:809
 msgid "Load a fractal from file"
 msgstr "Carica un frattale da file"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:813
+#: ../plug-ins/FractalExplorer/Dialogs.c:817
 msgid "Reset parameters to default values"
 msgstr "Reimposta i parametri su valori predefiniti"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:822
+#: ../plug-ins/FractalExplorer/Dialogs.c:826
 msgid "Save active fractal to file"
 msgstr "Salva frattale attivo in file"
 
 #. Fractal type toggle box
-#: ../plug-ins/FractalExplorer/Dialogs.c:825
+#: ../plug-ins/FractalExplorer/Dialogs.c:829
 msgid "Fractal Type"
 msgstr "Tipo frattale"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:838
+#: ../plug-ins/FractalExplorer/Dialogs.c:842
 msgid "Mandelbrot"
 msgstr "Mandelbrot"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:840
+#: ../plug-ins/FractalExplorer/Dialogs.c:844
 msgid "Julia"
 msgstr "Julia"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:842
+#: ../plug-ins/FractalExplorer/Dialogs.c:846
 msgid "Barnsley 1"
 msgstr "Barnsley 1"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:844
+#: ../plug-ins/FractalExplorer/Dialogs.c:848
 msgid "Barnsley 2"
 msgstr "Barnsley 2"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:846
+#: ../plug-ins/FractalExplorer/Dialogs.c:850
 msgid "Barnsley 3"
 msgstr "Barnsley 3"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:848
+#: ../plug-ins/FractalExplorer/Dialogs.c:852
 msgid "Spider"
 msgstr "Spider"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:850
+#: ../plug-ins/FractalExplorer/Dialogs.c:854
 msgid "Man'o'war"
 msgstr "Man'o'war"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:852
+#: ../plug-ins/FractalExplorer/Dialogs.c:856
 msgid "Lambda"
 msgstr "Lambda"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:854
+#: ../plug-ins/FractalExplorer/Dialogs.c:858
 msgid "Sierpinski"
 msgstr "Sierpinski"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:900 ../plug-ins/common/sinus.c:886
+#: ../plug-ins/FractalExplorer/Dialogs.c:904 ../plug-ins/common/sinus.c:886
 msgid "Co_lors"
 msgstr "Co_lori"
 
 #. Number of Colors frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:904
+#: ../plug-ins/FractalExplorer/Dialogs.c:908
 #: ../plug-ins/common/borderaverage.c:415
 msgid "Number of Colors"
 msgstr "Numero di colori"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:916
+#: ../plug-ins/FractalExplorer/Dialogs.c:920
 msgid "Number of colors:"
 msgstr "Numero di colori:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:919
+#: ../plug-ins/FractalExplorer/Dialogs.c:923
 msgid "Change the number of colors in the mapping"
 msgstr "Cambia il numero di colori nella mappatura"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:926
+#: ../plug-ins/FractalExplorer/Dialogs.c:930
 msgid "Use loglog smoothing"
 msgstr "Usa smussamento loglog"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:933
+#: ../plug-ins/FractalExplorer/Dialogs.c:937
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr "Usa smussamento log log per eliminare \"le bande\" nel risultato"
 
 #. Color Density frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:937
+#: ../plug-ins/FractalExplorer/Dialogs.c:941
 msgid "Color Density"
 msgstr "Densità colore"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: ../plug-ins/FractalExplorer/Dialogs.c:949 ../plug-ins/common/fp.c:226
+#: ../plug-ins/FractalExplorer/Dialogs.c:953 ../plug-ins/common/fp.c:226
 msgid "Red:"
 msgstr "Rosso:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:952
+#: ../plug-ins/FractalExplorer/Dialogs.c:956
 msgid "Change the intensity of the red channel"
 msgstr "Cambia l'intensità del canale rosso"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:959 ../plug-ins/common/fp.c:227
+#: ../plug-ins/FractalExplorer/Dialogs.c:963 ../plug-ins/common/fp.c:227
 msgid "Green:"
 msgstr "Verde:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:962
+#: ../plug-ins/FractalExplorer/Dialogs.c:966
 msgid "Change the intensity of the green channel"
 msgstr "Cambia l'intensità del canale verde"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:969 ../plug-ins/common/fp.c:228
+#: ../plug-ins/FractalExplorer/Dialogs.c:973 ../plug-ins/common/fp.c:228
 msgid "Blue:"
 msgstr "Blu:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:972
+#: ../plug-ins/FractalExplorer/Dialogs.c:976
 msgid "Change the intensity of the blue channel"
 msgstr "Cambia l'intensità del canale blu"
 
 #. Color Function frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:978
+#: ../plug-ins/FractalExplorer/Dialogs.c:982
 msgid "Color Function"
 msgstr "Funzione colore"
 
 #. Redmode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:987
+#: ../plug-ins/FractalExplorer/Dialogs.c:991
 #: ../plug-ins/common/channel_mixer.c:539 ../plug-ins/common/decompose.c:166
 msgid "Red"
 msgstr "Rosso"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:991
-#: ../plug-ins/FractalExplorer/Dialogs.c:1032
-#: ../plug-ins/FractalExplorer/Dialogs.c:1073
-msgid "Sine"
-msgstr "Seno"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:993
-#: ../plug-ins/FractalExplorer/Dialogs.c:1034
-#: ../plug-ins/FractalExplorer/Dialogs.c:1075
-msgid "Cosine"
-msgstr "Coseno"
-
 #: ../plug-ins/FractalExplorer/Dialogs.c:995
 #: ../plug-ins/FractalExplorer/Dialogs.c:1036
 #: ../plug-ins/FractalExplorer/Dialogs.c:1077
+msgid "Sine"
+msgstr "Seno"
+
+#: ../plug-ins/FractalExplorer/Dialogs.c:997
+#: ../plug-ins/FractalExplorer/Dialogs.c:1038
+#: ../plug-ins/FractalExplorer/Dialogs.c:1079
+msgid "Cosine"
+msgstr "Coseno"
+
+#: ../plug-ins/FractalExplorer/Dialogs.c:999
+#: ../plug-ins/FractalExplorer/Dialogs.c:1040
+#: ../plug-ins/FractalExplorer/Dialogs.c:1081
 #: ../plug-ins/Lighting/lighting_ui.c:406
 #: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:421
 #: ../plug-ins/common/align_layers.c:452 ../plug-ins/common/postscript.c:3184
@@ -276,21 +251,21 @@ msgstr "Coseno"
 msgid "None"
 msgstr "Nessuna"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1000
-#: ../plug-ins/FractalExplorer/Dialogs.c:1041
-#: ../plug-ins/FractalExplorer/Dialogs.c:1082
+#: ../plug-ins/FractalExplorer/Dialogs.c:1004
+#: ../plug-ins/FractalExplorer/Dialogs.c:1045
+#: ../plug-ins/FractalExplorer/Dialogs.c:1086
 msgid "Use sine-function for this color component"
 msgstr "Usa funzione seno per il componente colore"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1003
-#: ../plug-ins/FractalExplorer/Dialogs.c:1044
-#: ../plug-ins/FractalExplorer/Dialogs.c:1085
+#: ../plug-ins/FractalExplorer/Dialogs.c:1007
+#: ../plug-ins/FractalExplorer/Dialogs.c:1048
+#: ../plug-ins/FractalExplorer/Dialogs.c:1089
 msgid "Use cosine-function for this color component"
 msgstr "Usa funzione coseno per il componente colore"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1006
-#: ../plug-ins/FractalExplorer/Dialogs.c:1047
-#: ../plug-ins/FractalExplorer/Dialogs.c:1088
+#: ../plug-ins/FractalExplorer/Dialogs.c:1010
+#: ../plug-ins/FractalExplorer/Dialogs.c:1051
+#: ../plug-ins/FractalExplorer/Dialogs.c:1092
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
@@ -298,15 +273,15 @@ msgstr ""
 "Per questo canale colore usa mappatura lineare al posto di ogni altra "
 "funzione trigonometrica"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1015
-#: ../plug-ins/FractalExplorer/Dialogs.c:1056
-#: ../plug-ins/FractalExplorer/Dialogs.c:1097
+#: ../plug-ins/FractalExplorer/Dialogs.c:1019
+#: ../plug-ins/FractalExplorer/Dialogs.c:1060
+#: ../plug-ins/FractalExplorer/Dialogs.c:1101
 msgid "Inversion"
 msgstr "Inversione"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1023
-#: ../plug-ins/FractalExplorer/Dialogs.c:1064
-#: ../plug-ins/FractalExplorer/Dialogs.c:1105
+#: ../plug-ins/FractalExplorer/Dialogs.c:1027
+#: ../plug-ins/FractalExplorer/Dialogs.c:1068
+#: ../plug-ins/FractalExplorer/Dialogs.c:1109
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
@@ -315,27 +290,27 @@ msgstr ""
 "più bassi e viceversa"
 
 #. Greenmode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:1028
+#: ../plug-ins/FractalExplorer/Dialogs.c:1032
 #: ../plug-ins/common/channel_mixer.c:544 ../plug-ins/common/decompose.c:167
 msgid "Green"
 msgstr "Verde"
 
 #. Bluemode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:1069
+#: ../plug-ins/FractalExplorer/Dialogs.c:1073
 #: ../plug-ins/common/channel_mixer.c:549 ../plug-ins/common/decompose.c:168
 msgid "Blue"
 msgstr "Blu"
 
 #. Colormode toggle box
-#: ../plug-ins/FractalExplorer/Dialogs.c:1110
+#: ../plug-ins/FractalExplorer/Dialogs.c:1114
 msgid "Color Mode"
 msgstr "Modalità colore"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1119
+#: ../plug-ins/FractalExplorer/Dialogs.c:1123
 msgid "As specified above"
 msgstr "Come specificato sopra"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1131
+#: ../plug-ins/FractalExplorer/Dialogs.c:1135
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
@@ -343,23 +318,23 @@ msgstr ""
 "Crea una mappa colore con l'opzione specificata sopra (funzione densità/"
 "colore). Il risultato è visibile nell'anteprima"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1141
+#: ../plug-ins/FractalExplorer/Dialogs.c:1145
 msgid "Apply active gradient to final image"
 msgstr "Applica gradiente attivi all'immagine finale"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1153
+#: ../plug-ins/FractalExplorer/Dialogs.c:1157
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr "Crea una mappa colore usando un gradiente dall'editor dei gradienti"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1164
+#: ../plug-ins/FractalExplorer/Dialogs.c:1168
 msgid "FractalExplorer Gradient"
 msgstr "Gradiente FractalExplorer"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1194
+#: ../plug-ins/FractalExplorer/Dialogs.c:1198
 msgid "_Fractals"
 msgstr "_Frattali"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1706
+#: ../plug-ins/FractalExplorer/Dialogs.c:1733
 #: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:294
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2008
 #: ../plug-ins/common/channel_mixer.c:1062 ../plug-ins/common/compressor.c:410
@@ -379,28 +354,28 @@ msgstr "_Frattali"
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:715
 #: ../plug-ins/ifscompose/ifscompose.c:2377 ../plug-ins/jpeg/jpeg-save.c:268
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:268
-#: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1277
+#: ../plug-ins/winicon/icosave.c:1019 ../plug-ins/xjt/xjt.c:1277
 #: ../plug-ins/xjt/xjt.c:1711
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossibile aprire '%s' in scrittura: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1720
+#: ../plug-ins/FractalExplorer/Dialogs.c:1747
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Errore di scrittura '%s': %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1773
+#: ../plug-ins/FractalExplorer/Dialogs.c:1822
 msgid "Load Fractal Parameters"
 msgstr "Carica parametri frattali"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1809
+#: ../plug-ins/FractalExplorer/Dialogs.c:1860
 msgid "Save Fractal Parameters"
 msgstr "Salva parametri frattali"
 
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
-#: ../plug-ins/FractalExplorer/Dialogs.c:2015
+#: ../plug-ins/FractalExplorer/Dialogs.c:2049
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:930
 #: ../plug-ins/Lighting/lighting_ui.c:1312 ../plug-ins/bmp/bmpread.c:149
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2228
@@ -423,18 +398,19 @@ msgstr "Salva parametri frattali"
 #: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/domain.c:426
 #: ../plug-ins/jpeg/jpeg-load.c:88 ../plug-ins/jpeg/jpeg-load.c:874
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:257
-#: ../plug-ins/uri/uri-backend-libcurl.c:170 ../plug-ins/winicon/icoload.c:135
-#: ../plug-ins/xjt/xjt.c:2535 ../plug-ins/xjt/xjt.c:2543
+#: ../plug-ins/uri/uri-backend-libcurl.c:170 ../plug-ins/winicon/icoload.c:651
+#: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2535
+#: ../plug-ins/xjt/xjt.c:2543
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossibile aprire '%s' in lettura: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2023
+#: ../plug-ins/FractalExplorer/Dialogs.c:2057
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "'%s' non è un file FractalExplorer"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2029
+#: ../plug-ins/FractalExplorer/Dialogs.c:2063
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "Il file '%s' è corrotto. Sezione opzione non corretta alla linea %d"
@@ -1074,22 +1050,6 @@ msgstr "Fronte:"
 msgid "Back:"
 msgstr "Retro:"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1110
-msgid "Top:"
-msgstr "Alto:"
-
-#: ../plug-ins/MapObject/mapobject_ui.c:1110
-msgid "Bottom:"
-msgstr "Basso:"
-
-#: ../plug-ins/MapObject/mapobject_ui.c:1111
-msgid "Left:"
-msgstr "Sinistra:"
-
-#: ../plug-ins/MapObject/mapobject_ui.c:1111
-msgid "Right:"
-msgstr "Destra:"
-
 #: ../plug-ins/MapObject/mapobject_ui.c:1117
 msgid "Map Images to Box Faces"
 msgstr "Mappa Immagini sulle facciate di un cubo"
@@ -1189,7 +1149,7 @@ msgstr "Mappa colore non valida"
 #: ../plug-ins/common/xpm.c:343 ../plug-ins/common/xwd.c:473
 #: ../plug-ins/faxg3/faxg3.c:204 ../plug-ins/gfli/gfli.c:469
 #: ../plug-ins/jpeg/jpeg-load.c:94 ../plug-ins/sgi/sgi.c:318
-#: ../plug-ins/winicon/icoload.c:463 ../plug-ins/xjt/xjt.c:3319
+#: ../plug-ins/winicon/icoload.c:645 ../plug-ins/xjt/xjt.c:3319
 #, c-format
 msgid "Opening '%s'"
 msgstr "Apertura di '%s'"
@@ -1267,7 +1227,7 @@ msgstr "Il canale alfa verrà ignorato."
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
 #: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:226
-#: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:987
+#: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:1014
 #: ../plug-ins/xjt/xjt.c:1694
 #, c-format
 msgid "Saving '%s'"
@@ -2834,86 +2794,85 @@ msgstr "Nessuna estensione sensibile, salvamento come XCF compresso."
 msgid "No sensible extension, attempting to load with file magic."
 msgstr "Nessuna estensione sensibile, provo a salvare con il magic del file."
 
-#: ../plug-ins/common/convmatrix.c:77
+#: ../plug-ins/common/convmatrix.c:101
 msgid "Gr_ey"
 msgstr "_Grigio"
 
-#: ../plug-ins/common/convmatrix.c:78
+#: ../plug-ins/common/convmatrix.c:102
 msgid "Re_d"
 msgstr "_Rosso"
 
-#: ../plug-ins/common/convmatrix.c:79 ../plug-ins/common/newsprint.c:355
+#: ../plug-ins/common/convmatrix.c:103 ../plug-ins/common/newsprint.c:355
 msgid "_Green"
 msgstr "_Verde"
 
-#: ../plug-ins/common/convmatrix.c:80 ../plug-ins/common/newsprint.c:363
+#: ../plug-ins/common/convmatrix.c:104 ../plug-ins/common/newsprint.c:363
 msgid "_Blue"
 msgstr "_Blu"
 
-#: ../plug-ins/common/convmatrix.c:81
+#: ../plug-ins/common/convmatrix.c:105
 msgid "_Alpha"
 msgstr "_Alfa"
 
-#: ../plug-ins/common/convmatrix.c:86
+#: ../plug-ins/common/convmatrix.c:110
 msgid "E_xtend"
 msgstr "_Estendi"
 
-#: ../plug-ins/common/convmatrix.c:87 ../plug-ins/common/displace.c:475
+#: ../plug-ins/common/convmatrix.c:111 ../plug-ins/common/displace.c:475
 #: ../plug-ins/common/edge.c:700 ../plug-ins/common/ripple.c:563
 msgid "_Wrap"
 msgstr "_Wrap"
 
-#: ../plug-ins/common/convmatrix.c:88
+#: ../plug-ins/common/convmatrix.c:112
 msgid "Cro_p"
 msgstr "_Taglierino"
 
-#: ../plug-ins/common/convmatrix.c:184
+#: ../plug-ins/common/convmatrix.c:238
 msgid "Apply a generic 5x5 convolution matrix"
 msgstr "Applica una generica matrice di convoluzione 5x5"
 
-#: ../plug-ins/common/convmatrix.c:189
+#: ../plug-ins/common/convmatrix.c:243
 msgid "_Convolution Matrix..."
 msgstr "Matrice di _convoluzione..."
 
-#: ../plug-ins/common/convmatrix.c:224
-msgid "Convolution Matrix does not work on layers smaller than 3 pixels."
-msgstr ""
-"La matrice di convoluzione non funziona su livelli più piccoli di 3 punti."
+#: ../plug-ins/common/convmatrix.c:278
+msgid "Convolution does not work on layers smaller than 3x3 pixels."
+msgstr "Convoluzione non funziona su livelli più piccoli di 3x3 pixel."
 
-#: ../plug-ins/common/convmatrix.c:297
+#: ../plug-ins/common/convmatrix.c:351
 msgid "Applying convolution"
 msgstr "Convoluzione in corso"
 
-#: ../plug-ins/common/convmatrix.c:873
+#: ../plug-ins/common/convmatrix.c:951
 msgid "Convolution Matrix"
 msgstr "Matrice di convoluzione"
 
-#: ../plug-ins/common/convmatrix.c:910
+#: ../plug-ins/common/convmatrix.c:988
 msgid "Matrix"
 msgstr "Matrice"
 
-#: ../plug-ins/common/convmatrix.c:947
+#: ../plug-ins/common/convmatrix.c:1026
 msgid "D_ivisor:"
 msgstr "D_ivisore:"
 
-#: ../plug-ins/common/convmatrix.c:971 ../plug-ins/common/depthmerge.c:767
+#: ../plug-ins/common/convmatrix.c:1052 ../plug-ins/common/depthmerge.c:767
 #: ../plug-ins/common/raw.c:1022
 msgid "O_ffset:"
 msgstr "O_ffset:"
 
-#: ../plug-ins/common/convmatrix.c:1000
-msgid "A_utomatic"
-msgstr "A_utomatico"
+#: ../plug-ins/common/convmatrix.c:1081
+msgid "N_ormalise"
+msgstr "N_ormalizza"
 
-#: ../plug-ins/common/convmatrix.c:1012
+#: ../plug-ins/common/convmatrix.c:1093
 msgid "A_lpha-weighting"
 msgstr "Ponderazione-alfa"
 
-#: ../plug-ins/common/convmatrix.c:1031
+#: ../plug-ins/common/convmatrix.c:1112
 msgid "Border"
 msgstr "Bordo"
 
-#: ../plug-ins/common/convmatrix.c:1058
+#: ../plug-ins/common/convmatrix.c:1139
 msgid "Channels"
 msgstr "Canali"
 
@@ -4272,90 +4231,85 @@ msgstr ""
 "dell'animazione."
 
 #: ../plug-ins/common/gif.c:1175
-msgid "GIF Warning"
-msgstr "Avvertimento GIF"
-
-#: ../plug-ins/common/gif.c:1199
 msgid ""
-"The image which you are trying to save as a GIF\n"
-"contains layers which extend beyond the actual\n"
-"borders of the image.  This isn't allowed in GIFs,\n"
-"I'm afraid.\n"
-"\n"
-"You may choose whether to crop all of the layers to\n"
-"the image borders, or cancel this save."
+"The image you are trying to save as a GIF contains layers which extend "
+"beyond the actual borders of the image."
 msgstr ""
-"L'immagine che state tentando di salvare come GIF\n"
-"contiene livelli che si estendono oltre i margini\n"
-"dell'immagine. Nei GIF ciò non è consentito.\n"
-"\n"
-"Potete tagliare tutti i livelli ai bordi \n"
+"L'immagine che si sta tentando di salvare in formato GIF contiene livelli "
+"che si estendono oltre i limiti dell'immagine."
+
+#: ../plug-ins/common/gif.c:1192
+msgid ""
+"The GIF file format does not allow this.  You may choose whether to crop all "
+"of the layers to the image borders, or cancel this save."
+msgstr ""
+"Nei GIF ciò non è consentito. Potete tagliare tutti i livelli ai bordi \n"
 "dell'immagine o annullare il salvataggio."
 
-#: ../plug-ins/common/gif.c:1243
+#: ../plug-ins/common/gif.c:1233
 msgid "Save as GIF"
 msgstr "Salva come GIF"
 
 #. regular gif parameter settings
-#: ../plug-ins/common/gif.c:1265
+#: ../plug-ins/common/gif.c:1255
 msgid "GIF Options"
 msgstr "Opzioni GIF"
 
-#: ../plug-ins/common/gif.c:1271
+#: ../plug-ins/common/gif.c:1261
 msgid "I_nterlace"
 msgstr "I_nterlaccia"
 
-#: ../plug-ins/common/gif.c:1287
+#: ../plug-ins/common/gif.c:1277
 msgid "_GIF comment:"
 msgstr "Commento _GIF:"
 
 #. additional animated gif parameter settings
-#: ../plug-ins/common/gif.c:1344
+#: ../plug-ins/common/gif.c:1334
 msgid "Animated GIF Options"
 msgstr "Opzioni GIF animata"
 
-#: ../plug-ins/common/gif.c:1350
+#: ../plug-ins/common/gif.c:1340
 msgid "_Loop forever"
 msgstr "Cic_lo infinito"
 
-#: ../plug-ins/common/gif.c:1363
+#: ../plug-ins/common/gif.c:1353
 msgid "_Delay between frames where unspecified:"
 msgstr "Ritar_do predefinito tra fotogrammi:"
 
-#: ../plug-ins/common/gif.c:1378 ../plug-ins/common/mng.c:1542
+#: ../plug-ins/common/gif.c:1368 ../plug-ins/common/mng.c:1542
 msgid "milliseconds"
 msgstr "millisecondi"
 
-#: ../plug-ins/common/gif.c:1388
+#: ../plug-ins/common/gif.c:1378
 msgid "_Frame disposal where unspecified:"
 msgstr "Disposizione del _fotogramma quando non specificato: "
 
-#: ../plug-ins/common/gif.c:1392
+#: ../plug-ins/common/gif.c:1382
 msgid "I don't care"
 msgstr "Non importa"
 
-#: ../plug-ins/common/gif.c:1394
+#: ../plug-ins/common/gif.c:1384
 msgid "Cumulative layers (combine)"
 msgstr "Livelli cumulativi (combina)"
 
-#: ../plug-ins/common/gif.c:1396
+#: ../plug-ins/common/gif.c:1386
 msgid "One frame per layer (replace)"
 msgstr "Un fotogramma per livello (rimpiazza)"
 
 #. The "Always use default values" toggles
-#: ../plug-ins/common/gif.c:1412
+#: ../plug-ins/common/gif.c:1402
 msgid "_Use delay entered above for all frames"
 msgstr "_Usa il ritardo immesso sopra per tutti i fotogrammi"
 
-#: ../plug-ins/common/gif.c:1422
+#: ../plug-ins/common/gif.c:1412
 msgid "U_se disposal entered above for all frames"
 msgstr "U_sa eliminazione immessa sopra per tutti i fotogrammi"
 
-#: ../plug-ins/common/gif.c:2575
+#: ../plug-ins/common/gif.c:2565
 msgid "Error writing output file."
 msgstr "Errore durante la scrittura del file di uscita."
 
-#: ../plug-ins/common/gif.c:2645
+#: ../plug-ins/common/gif.c:2635
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Il commento predefinito è limitato a %d caratteri."
@@ -8300,10 +8254,6 @@ msgstr "Opzioni di base"
 msgid "Step size:"
 msgstr "Ampiezza passo:"
 
-#: ../plug-ins/common/warp.c:434 ../plug-ins/ifscompose/ifscompose.c:1210
-msgid "Iterations:"
-msgstr "Iterazioni:"
-
 #. Displacement map menu
 #: ../plug-ins/common/warp.c:443
 msgid "Displacement map:"
@@ -11047,7 +10997,7 @@ msgstr "Vuoi che Gimp la ruoti per riportarla all'orientamento standard?"
 msgid "JPEG preview"
 msgstr "Anteprima JPEG"
 
-#: ../plug-ins/jpeg/jpeg-load.c:609 ../plug-ins/winicon/icoload.c:528
+#: ../plug-ins/jpeg/jpeg-load.c:609 ../plug-ins/winicon/icoload.c:722
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "Apertura miniatura per '%s'"
@@ -11706,39 +11656,43 @@ msgstr "Scaricamento quantità sconosciuta di dati immagine"
 msgid "URI"
 msgstr "URI"
 
-#: ../plug-ins/winicon/icodialog.c:99
-msgid "1 bpp, 1-bit alpha, 2-slot palette"
-msgstr "1 bpp, 1-bit alfa, 2-colori tavolozza"
-
-#: ../plug-ins/winicon/icodialog.c:100
-msgid "4 bpp, 1-bit alpha, 16-slot palette"
-msgstr "4 bpp, 1-bit alfa, 16-colori tavolozza"
-
-#: ../plug-ins/winicon/icodialog.c:101
-msgid "8 bpp, 1-bit alpha, 256-slot palette"
-msgstr "8 bpp, 1-bit alfa, 256-colori tavolozza"
-
-#: ../plug-ins/winicon/icodialog.c:102
-msgid "32 bpp, 8-bit alpha, no palette"
-msgstr "32 bpp, 8-bit alfa, senza tavolozza"
-
-#: ../plug-ins/winicon/icodialog.c:128
+#: ../plug-ins/winicon/icodialog.c:69
 msgid "Save as Windows Icon"
 msgstr "Salva come icona di Windows"
 
-#: ../plug-ins/winicon/icodialog.c:158
+#: ../plug-ins/winicon/icodialog.c:95
 msgid "Icon Details"
 msgstr "Dettagli icona"
 
-#: ../plug-ins/winicon/icoload.c:343
+#: ../plug-ins/winicon/icodialog.c:160
+msgid "1 bpp, 1-bit alpha, 2-slot palette"
+msgstr "1 bpp, 1-bit alfa, 2-colori tavolozza"
+
+#: ../plug-ins/winicon/icodialog.c:161
+msgid "4 bpp, 1-bit alpha, 16-slot palette"
+msgstr "4 bpp, 1-bit alfa, 16-colori tavolozza"
+
+#: ../plug-ins/winicon/icodialog.c:162
+msgid "8 bpp, 1-bit alpha, 256-slot palette"
+msgstr "8 bpp, 1-bit alfa, 256-colori tavolozza"
+
+#: ../plug-ins/winicon/icodialog.c:163
+msgid "24 bpp, 1-bit alpha, no palette"
+msgstr "24 bpp, 1-bit alfa, senza tavolozza"
+
+#: ../plug-ins/winicon/icodialog.c:164
+msgid "32 bpp, 8-bit alpha, no palette"
+msgstr "32 bpp, 8-bit alfa, senza tavolozza"
+
+#: ../plug-ins/winicon/icodialog.c:178
+msgid "Compressed (PNG)"
+msgstr "Compresso (PNG)"
+
+#. read successfully. add to image
+#: ../plug-ins/winicon/icoload.c:616
 #, c-format
 msgid "Icon #%i"
 msgstr "Icona #%i"
-
-#: ../plug-ins/winicon/icosave.c:979
-msgid "Windows icons cannot be higher or wider than 255 pixels."
-msgstr ""
-"Le icone di Windows non possono esser più alte o più larghe di 256 punti."
 
 #: ../plug-ins/winicon/main.c:103 ../plug-ins/winicon/main.c:137
 msgid "Microsoft Windows icon"
