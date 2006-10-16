@@ -38,26 +38,28 @@
   (cadr (cddr extents)))
 
 (define (script-fu-beveled-pattern-button
-	 text text-size font text-color pattern pressed)
-  (let* ((text-extents (gimp-text-get-extents-fontname
-			text text-size PIXELS font))
-	 (ascent (text-ascent text-extents))
-	 (descent (text-descent text-extents))
+         text text-size font text-color pattern pressed)
+  (let* (
+        (text-extents (gimp-text-get-extents-fontname
+                       text text-size PIXELS font))
+        (ascent (text-ascent text-extents))
+        (descent (text-descent text-extents))
 
-	 (xpadding 8)
-	 (ypadding 6)
+        (xpadding 8)
+        (ypadding 6)
 
-	 (width (+ (* 2 xpadding)
-		   (text-width text-extents)))
-	 (height (+ (* 2 ypadding)
-		    (+ ascent descent)))
+        (width (+ (* 2 xpadding)
+                  (text-width text-extents)))
+        (height (+ (* 2 ypadding)
+                   (+ ascent descent)))
 
-	 (img (car (gimp-image-new width height RGB)))
-	 (background (car (gimp-layer-new img width height RGBA-IMAGE "Background" 100 NORMAL-MODE)))
-	 (bumpmap (car (gimp-layer-new img width height RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE)))
-	 (textl (car
-		 (gimp-text-fontname
-		  img -1 0 0 text 0 TRUE text-size PIXELS font))))
+        (img (car (gimp-image-new width height RGB)))
+        (background (car (gimp-layer-new img width height RGBA-IMAGE "Background" 100 NORMAL-MODE)))
+        (bumpmap (car (gimp-layer-new img width height RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE)))
+        (textl (car
+                (gimp-text-fontname
+                 img -1 0 0 text 0 TRUE text-size PIXELS font)))
+        )
 
     (gimp-context-push)
 
@@ -97,8 +99,8 @@
     (gimp-edit-fill textl BACKGROUND-FILL)
 
     (gimp-layer-set-offsets textl
-			    xpadding
-			    (+ ypadding descent))
+                            xpadding
+                            (+ ypadding descent))
 
     ; Clean up
 
@@ -109,22 +111,25 @@
     (gimp-image-undo-enable img)
     (gimp-display-new img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 
 (script-fu-register "script-fu-beveled-pattern-button"
-		    _"B_utton..."
-		    _"Create a beveled pattern button for webpages"
-		    "Federico Mena Quintero"
-		    "Federico Mena Quintero"
-		    "July 1997"
-		    ""
-		    SF-STRING     _"Text"               "Hello world!"
-		    SF-ADJUSTMENT _"Font size (pixels)" '(32 2 1000 1 10 0 1)
-		    SF-FONT       _"Font"               "Sans"
-		    SF-COLOR      _"Text color"         "black"
-		    SF-PATTERN    _"Pattern"            "Wood"
-		    SF-TOGGLE     _"Pressed"            FALSE)
+  _"B_utton..."
+  _"Create a beveled pattern button for webpages"
+  "Federico Mena Quintero"
+  "Federico Mena Quintero"
+  "July 1997"
+  ""
+  SF-STRING  _"Text"       "Hello world!"
+  SF-ADJUSTMENT _"Font size (pixels)" '(32 2 1000 1 10 0 1)
+  SF-FONT    _"Font" "Sans"
+  SF-COLOR   _"Text color" '(0 0 0)
+  SF-PATTERN _"Pattern"    "Wood"
+  SF-TOGGLE  _"Pressed"   FALSE
+)
 
 (script-fu-menu-register "script-fu-beveled-pattern-button"
-			 "<Toolbox>/Xtns/Web Page Themes/Beveled Pattern")
+                         "<Toolbox>/Xtns/Web Page Themes/Beveled Pattern")

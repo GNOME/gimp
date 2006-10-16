@@ -1,6 +1,6 @@
 ; The GIMP -- an image manipulation program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
-; 
+;
 ; Bump-mapped title script --- create a bump-mapped title image for web pages
 ; Copyright (C) 1997 Federico Mena Quintero
 ; federico@nuclecu.unam.mx
@@ -12,75 +12,76 @@
 ; The call to gimp-context-set-background has been given a real layer
 ; (although it is not used) otherwise gimp 1.1 crashed.
 ; ************************************************************************
-; 
+;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
 ; the Free Software Foundation; either version 2 of the License, or
 ; (at your option) any later version.
-; 
+;
 ; This program is distributed in the hope that it will be useful,
 ; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ; GNU General Public License for more details.
-; 
+;
 ; You should have received a copy of the GNU General Public License
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
 (define (script-fu-title-header text
-				size
-				fontname
-				gradient-reverse)
+                                size
+                                fontname
+                                gradient-reverse)
   (let* (; Parameters
-	 
-	 (padding 8)
-	 (fade-width 64)
 
-	 ; Image 
+         (padding 8)
+         (fade-width 64)
 
-	 (img (car (gimp-image-new 256 256 RGB)))
+         ; Image
 
-	 ; Text layer
+         (img (car (gimp-image-new 256 256 RGB)))
 
-	 (text-layer (car (gimp-text-fontname
-			   img
-			   -1
-			   0
-			   0
-			   text
-			   padding
-			   TRUE
-			   size
-			   PIXELS
-			   fontname)))
-	 (text-width (car (gimp-drawable-width text-layer)))
-	 (text-height (car (gimp-drawable-height text-layer)))
+         ; Text layer
 
-	 ; Sizes
+         (text-layer (car (gimp-text-fontname
+                           img
+                           -1
+                           0
+                           0
+                           text
+                           padding
+                           TRUE
+                           size
+                           PIXELS
+                           fontname)))
+         (text-width (car (gimp-drawable-width text-layer)))
+         (text-height (car (gimp-drawable-height text-layer)))
 
-	 (text-layers-offset (/ text-height 2))
+         ; Sizes
 
-	 (img-width (+ text-layers-offset text-width fade-width))
-	 (img-height text-height)
+         (text-layers-offset (/ text-height 2))
 
-	 ; Additional layers
-	 
-	 (bg-layer (car (gimp-layer-new img img-width img-height RGBA-IMAGE
-					"bg-layer" 100 NORMAL-MODE)))
-	 (bumpmap-layer (car (gimp-layer-new img
-					     text-width
-					     text-height
-					     RGBA-IMAGE
-					     "bumpmap-layer"
-					     100
-					     NORMAL-MODE)))
-	 (fore-layer (car (gimp-layer-new img text-width text-height RGBA-IMAGE
-					  "fore-layer" 100 NORMAL-MODE))))
+         (img-width (+ text-layers-offset text-width fade-width))
+         (img-height text-height)
 
-    (gimp-context-push)
+         ; Additional layers
+
+         (bg-layer (car (gimp-layer-new img img-width img-height RGBA-IMAGE
+                                        "bg-layer" 100 NORMAL-MODE)))
+         (bumpmap-layer (car (gimp-layer-new img
+                                             text-width
+                                             text-height
+                                             RGBA-IMAGE
+                                             "bumpmap-layer"
+                                             100
+                                             NORMAL-MODE)))
+         (fore-layer (car (gimp-layer-new img text-width text-height RGBA-IMAGE
+                                          "fore-layer" 100 NORMAL-MODE)))
+       )
 
     ; Create image
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-resize img img-width img-height 0 0)
@@ -119,10 +120,10 @@
     (gimp-layer-set-lock-alpha text-layer TRUE)
 
     (gimp-edit-blend text-layer CUSTOM-MODE NORMAL-MODE
-		     GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
-		     FALSE 0.2 3 TRUE
-		     padding padding
-		     (- text-width padding 1) (- text-height padding 1))
+                     GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
+                     FALSE 0.2 3 TRUE
+                     padding padding
+                     (- text-width padding 1) (- text-height padding 1))
 
     ; Semicircle at the left
 
@@ -131,43 +132,46 @@
 
     (gimp-ellipse-select img 0 0 text-height text-height CHANNEL-OP-REPLACE TRUE FALSE 0)
     (gimp-context-set-background (car (gimp-image-pick-color img text-layer
-							     text-layers-offset 0
-							     TRUE FALSE 0)))
+                                                             text-layers-offset 0
+                                                             TRUE FALSE 0)))
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
     ; Fade-out gradient at the right
 
     (gimp-rect-select img (- img-width fade-width) 0 fade-width text-height
-		      CHANNEL-OP-REPLACE FALSE 0)
+                      CHANNEL-OP-REPLACE FALSE 0)
     (gimp-context-set-foreground (car (gimp-context-get-background)))
     (gimp-context-set-background '(0 0 0))
 
     (gimp-edit-blend bg-layer FG-BG-RGB-MODE NORMAL-MODE
-		     GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
-		     FALSE 0.2 3 TRUE
-		     (- img-width fade-width) 0 (- img-width 1) 0)
+                     GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
+                     FALSE 0.2 3 TRUE
+                     (- img-width fade-width) 0 (- img-width 1) 0)
 
     (gimp-selection-none img)
 
     ; Done
-    
+
 ;    (gimp-image-flatten img)
     (gimp-image-undo-enable img)
     (gimp-display-new img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 (script-fu-register "script-fu-title-header"
-		    _"Web Title Header..."
-		    _"Create a decorative web title header"
-		    "Federico Mena Quintero"
-		    "Federico Mena Quintero"
-		    "June 1997"
-		    ""
-		    SF-STRING     _"Text"               "Hello world!"
-		    SF-ADJUSTMENT _"Font size (pixels)" '(32 2 256 1 10 0 0)
-		    SF-FONT       _"Font"               "Sans"
-		    SF-TOGGLE     _"Gradient reverse"   FALSE)
+  _"Web Title Header..."
+  _"Create a decorative web title header"
+  "Federico Mena Quintero"
+  "Federico Mena Quintero"
+  "June 1997"
+  ""
+  SF-STRING     _"Text"               "Hello world!"
+  SF-ADJUSTMENT _"Font size (pixels)" '(32 2 256 1 10 0 0)
+  SF-FONT       _"Font"               "Sans"
+  SF-TOGGLE     _"Gradient reverse"   FALSE
+)
 
 (script-fu-menu-register "script-fu-title-header"
-			 "<Toolbox>/Xtns/Logos")
+                         "<Toolbox>/Xtns/Logos")

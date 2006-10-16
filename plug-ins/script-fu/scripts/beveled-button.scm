@@ -1,20 +1,20 @@
 ; The GIMP -- an image manipulation program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
-; 
+;
 ; Button00 --- create a simple beveled Web button
 ; Copyright (C) 1997 Federico Mena Quintero
 ; federico@nuclecu.unam.mx
-; 
+;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
 ; the Free Software Foundation; either version 2 of the License, or
 ; (at your option) any later version.
-; 
+;
 ; This program is distributed in the hope that it will be useful,
 ; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ; GNU General Public License for more details.
-; 
+;
 ; You should have received a copy of the GNU General Public License
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -39,52 +39,54 @@
   (cadr (cddr extents)))
 
 (define (blend-bumpmap img
-		       drawable
-		       x1
-		       y1
-		       x2
-		       y2)
+                       drawable
+                       x1
+                       y1
+                       x2
+                       y2)
   (gimp-edit-blend drawable FG-BG-RGB-MODE DARKEN-ONLY-MODE
-		   GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
-		   FALSE 0 0 TRUE
-		   x1 y1 x2 y2))
+                   GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
+                   FALSE 0 0 TRUE
+                   x1 y1 x2 y2))
 
 (define (script-fu-button00 text
-			    size
-			    font
-			    ul-color
-			    lr-color
-			    text-color
-			    padding
-			    bevel-width
-			    pressed)
-  (let* ((text-extents (gimp-text-get-extents-fontname text
-					      size
-					      PIXELS
-					      font))
-	 (ascent (text-ascent text-extents))
-	 (descent (text-descent text-extents))
+                            size
+                            font
+                            ul-color
+                            lr-color
+                            text-color
+                            padding
+                            bevel-width
+                            pressed)
+  (let* (
+        (text-extents (gimp-text-get-extents-fontname text
+                                                      size
+                                                      PIXELS
+                                                      font))
+        (ascent (text-ascent text-extents))
+        (descent (text-descent text-extents))
 
-	 (img-width (+ (* 2 (+ padding bevel-width))
-		       (text-width text-extents)))
-	 (img-height (+ (* 2 (+ padding bevel-width))
-			(+ ascent descent)))
+        (img-width (+ (* 2 (+ padding bevel-width))
+                      (text-width text-extents)))
+        (img-height (+ (* 2 (+ padding bevel-width))
+                       (+ ascent descent)))
 
-	 (img (car (gimp-image-new img-width img-height RGB)))
+        (img (car (gimp-image-new img-width img-height RGB)))
 
-	 (bumpmap (car (gimp-layer-new img
-				       img-width img-height RGBA-IMAGE
-				       "Bumpmap" 100 NORMAL-MODE)))
-	 (gradient (car (gimp-layer-new img
-					img-width img-height RGBA-IMAGE
-					"Gradient" 100 NORMAL-MODE))))
+        (bumpmap (car (gimp-layer-new img
+                                      img-width img-height RGBA-IMAGE
+                                      "Bumpmap" 100 NORMAL-MODE)))
+        (gradient (car (gimp-layer-new img
+                                       img-width img-height RGBA-IMAGE
+                                       "Gradient" 100 NORMAL-MODE)))
+        )
 
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
 
     ; Create bumpmap layer
-    
+
     (gimp-image-add-layer img bumpmap -1)
     (gimp-context-set-foreground '(0 0 0))
     (gimp-context-set-background '(255 255 255))
@@ -111,21 +113,21 @@
     (gimp-context-set-background lr-color)
 
     (gimp-edit-blend gradient FG-BG-RGB-MODE NORMAL-MODE
-		     GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
-		     FALSE 0 0 TRUE
-		     0 0 (- img-width 1) (- img-height 1))
+                     GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
+                     FALSE 0 0 TRUE
+                     0 0 (- img-width 1) (- img-height 1))
 
     (plug-in-bump-map 1 img gradient bumpmap
-		      135 45 bevel-width 0 0 0 0 TRUE pressed 0)
+                      135 45 bevel-width 0 0 0 0 TRUE pressed 0)
 
     ; Create text layer
 
     (gimp-context-set-foreground text-color)
     (let ((textl (car (gimp-text-fontname
-		       img -1 0 0 text 0 TRUE size PIXELS font))))
+                       img -1 0 0 text 0 TRUE size PIXELS font))))
       (gimp-layer-set-offsets textl
-			      (+ bevel-width padding)
-			      (+ bevel-width padding descent)))
+                              (+ bevel-width padding)
+                              (+ bevel-width padding descent)))
 
     ; Done
 
@@ -133,24 +135,26 @@
     (gimp-image-undo-enable img)
     (gimp-display-new img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 (script-fu-register "script-fu-button00"
-		    _"Simple _Beveled Button..."
-		    _"Create a simple, beveled button graphic for webpages"
-		    "Federico Mena Quintero"
-		    "Federico Mena Quintero"
-		    "June 1997"
-		    ""
-		    SF-STRING     _"Text"               "Hello world!"
-		    SF-ADJUSTMENT _"Font size (pixels)" '(16 2 100 1 1 0 1)
-		    SF-FONT       _"Font"               "Sans"
-		    SF-COLOR      _"Upper-left color"   '(0 255 127)
-		    SF-COLOR      _"Lower-right color"  '(0 127 255)
-		    SF-COLOR      _"Text color"         "black"
-		    SF-ADJUSTMENT _"Padding"            '(2 1 100 1 10 0 1)
-		    SF-ADJUSTMENT _"Bevel width"        '(4 1 100 1 10 0 1)
-		    SF-TOGGLE     _"Pressed"            FALSE)
+                    _"Simple _Beveled Button..."
+                    _"Create a simple, beveled button graphic for webpages"
+                    "Federico Mena Quintero"
+                    "Federico Mena Quintero"
+                    "June 1997"
+                    ""
+                    SF-STRING     _"Text"               "Hello world!"
+                    SF-ADJUSTMENT _"Font size (pixels)" '(16 2 100 1 1 0 1)
+                    SF-FONT       _"Font"               "Sans"
+                    SF-COLOR      _"Upper-left color"   '(0 255 127)
+                    SF-COLOR      _"Lower-right color"  '(0 127 255)
+                    SF-COLOR      _"Text color"         '(0 0 0)
+                    SF-ADJUSTMENT _"Padding"            '(2 1 100 1 10 0 1)
+                    SF-ADJUSTMENT _"Bevel width"        '(4 1 100 1 10 0 1)
+                    SF-TOGGLE     _"Pressed"            FALSE)
 
 (script-fu-menu-register "script-fu-button00"
-			 "<Toolbox>/Xtns/Buttons")
+                         "<Toolbox>/Xtns/Buttons")

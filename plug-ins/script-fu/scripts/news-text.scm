@@ -3,31 +3,34 @@
 ;
 ;
 ; Based on alien glow code from Adrian Likins
-; 
+;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
 ; the Free Software Foundation; either version 2 of the License, or
 ; (at your option) any later version.
-; 
+;
 ; This program is distributed in the hope that it will be useful,
 ; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ; GNU General Public License for more details.
-; 
+;
 ; You should have received a copy of the GNU General Public License
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
-(define (script-fu-newsprint-text string font font-size cell-size density blur-radius text-color bg-color)
-  (let* ((text-ext (gimp-text-get-extents-fontname string font-size PIXELS font))
-	 (width (+ (car text-ext) 20 blur-radius))
-	 (height  (+ (nth 1 text-ext) 20 blur-radius))
-	 (img (car (gimp-image-new width height RGB)))
-	 (bg-layer (car (gimp-layer-new img width height  RGB-IMAGE "Background" 100 NORMAL-MODE)))
-	 (text-layer (car (gimp-layer-new img width height  RGBA-IMAGE "Text layer" 100 NORMAL-MODE)))
-	 (text-mask 0)
-	 (grey (/ (* density 255) 100)))
+(define (script-fu-newsprint-text string font font-size cell-size
+                                  density blur-radius text-color bg-color)
+  (let* (
+        (text-ext (gimp-text-get-extents-fontname string font-size PIXELS font))
+        (width (+ (car text-ext) 20 blur-radius))
+        (height (+ (list-ref text-ext 1) 20 blur-radius))
+        (img (car (gimp-image-new width height RGB)))
+        (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
+        (text-layer (car (gimp-layer-new img width height RGBA-IMAGE "Text layer" 100 NORMAL-MODE)))
+        (text-mask 0)
+        (grey (/ (* density 255) 100))
+        )
 
     (gimp-context-push)
 
@@ -40,7 +43,10 @@
     (gimp-edit-clear text-layer)
 
     (gimp-context-set-foreground text-color)
-    (gimp-floating-sel-anchor (car (gimp-text-fontname img text-layer (/ (+ 20 blur-radius) 2) (/ (+ 20 blur-radius) 2) string 0 TRUE font-size PIXELS font)))
+    (gimp-floating-sel-anchor
+      (car (gimp-text-fontname img text-layer
+                               (/ (+ 20 blur-radius) 2) (/ (+ 20 blur-radius) 2)
+                               string 0 TRUE font-size PIXELS font)))
 
     (set! text-mask (car (gimp-layer-create-mask text-layer ADD-ALPHA-MASK)))
     (gimp-layer-add-mask text-layer text-mask)
@@ -53,31 +59,36 @@
         (plug-in-gauss-iir 1 img text-mask blur-radius 1 1)
     )
 
-    (plug-in-newsprint 1 img text-mask cell-size 0 0 45.0 3 45.0 0 45.0 0 45.0 0 3)
+    (plug-in-newsprint 1 img text-mask cell-size
+                       0 0 45.0 3 45.0 0 45.0 0 45.0 0 3)
 
     (gimp-edit-fill text-layer FOREGROUND-FILL)
     (gimp-layer-remove-mask text-layer MASK-APPLY)
 
     (gimp-image-undo-enable img)
+
     (gimp-display-new img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 (script-fu-register "script-fu-newsprint-text"
-		    _"Newsprint Text..."
-		    _"Create a logo in the style newpaper printing"
-		    "Austin Donnelly"
-		    "Austin Donnelly"
-		    "1998"
-		    ""
-		    SF-STRING     _"Text"               "Newsprint"
-		    SF-FONT       _"Font"               "Sans"
-		    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-ADJUSTMENT _"Cell size (pixels)" '(7 1 100 1 10 0 1)
-		    SF-ADJUSTMENT _"Density (%)"        '(60 0 100 1 10 0 0)
-		    SF-ADJUSTMENT _"Blur radius"        '(0 0 100 1 5 0 0)
-                    SF-COLOR      _"Text color"         "black"
-		    SF-COLOR      _"Background color"   "white")
+  _"Newsprint Te_xt..."
+  _"Create a logo in the style newpaper printing"
+  "Austin Donnelly"
+  "Austin Donnelly"
+  "1998"
+  ""
+  SF-STRING     _"Text"               "Newsprint"
+  SF-FONT       _"Font"               "Sans"
+  SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
+  SF-ADJUSTMENT _"Cell size (pixels)" '(7 1 100 1 10 0 1)
+  SF-ADJUSTMENT _"Density (%)"        '(60 0 100 1 10 0 0)
+  SF-ADJUSTMENT _"Blur radius"        '(0 0 100 1 5 0 0)
+  SF-COLOR      _"Text color"         '(0 0 0)
+  SF-COLOR      _"Background color"   '(255 255 255)
+)
 
 (script-fu-menu-register "script-fu-newsprint-text"
-			 "<Toolbox>/Xtns/Logos")
+                         "<Toolbox>/Xtns/Logos")

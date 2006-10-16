@@ -22,38 +22,35 @@
 
 (define (script-fu-beveled-pattern-arrow size orientation pattern)
 
-  ; define some local helper functions
-  (define (map proc seq)
-    (if (null? seq)
-        '()
-        (cons (proc (car seq))
-              (map proc (cdr seq)))))
-
-  (define (for-each proc seq)
-    (if (not (null? seq))
-        (begin
-          (proc (car seq))
-          (for-each proc (cdr seq)))))
-
   (define (make-point x y)
-    (cons x y))
+    (cons x y)
+  )
 
   (define (point-x p)
-    (car p))
+    (car p)
+  )
 
   (define (point-y p)
-    (cdr p))
+    (cdr p)
+  )
 
   (define (point-list->double-array point-list)
-    (let* ((how-many (length point-list))
-           (a (cons-array (* 2 how-many) 'double))
-           (count 0))
-      (for-each (lambda (p)
-                  (aset a (* count 2) (point-x p))
-                  (aset a (+ 1 (* count 2)) (point-y p))
-                  (set! count (+ count 1)))
-                point-list)
-      a))
+    (let* (
+          (how-many (length point-list))
+          (a (cons-array (* 2 how-many) 'double))
+          (count 0)
+          (point)
+          )
+      (while (< count how-many)
+        (set! point (car point-list))
+        (set! point-list (cdr point-list))
+        (aset a (* count 2) (point-x point))
+        (aset a (+ 1 (* count 2)) (point-y point))
+        (set! count (+ 1 count))
+      )
+      a
+    )
+  )
 
   (define (rotate-points points size orientation)
     (map (lambda (p)
@@ -62,22 +59,31 @@
              (cond ((= orientation 0) (make-point px py))           ; right
                    ((= orientation 1) (make-point (- size px) py))  ; left
                    ((= orientation 2) (make-point py (- size px)))  ; up
-                   ((= orientation 3) (make-point py px)))))        ; down
-         points))
+                   ((= orientation 3) (make-point py px))           ; down
+             )
+           )
+         )
+         points
+    )
+  )
 
   (define (make-arrow size offset)
     (list (make-point offset offset)
           (make-point (- size offset) (/ size 2))
-          (make-point offset (- size offset))))
+          (make-point offset (- size offset)))
+  )
 
   ; the main function
 
-  (let* ((img (car (gimp-image-new size size RGB)))
-         (background (car (gimp-layer-new img size size RGB-IMAGE "Arrow" 100 NORMAL-MODE)))
-         (bumpmap (car (gimp-layer-new img size size RGB-IMAGE "Bumpmap" 100 NORMAL-MODE)))
-         (big-arrow (point-list->double-array (rotate-points (make-arrow size 6) size orientation)))
-         (med-arrow (point-list->double-array (rotate-points (make-arrow size 7) size orientation)))
-         (small-arrow (point-list->double-array (rotate-points (make-arrow size 8) size orientation))))
+  (let* (
+        (img (car (gimp-image-new size size RGB)))
+        (background (car (gimp-layer-new img size size RGB-IMAGE "Arrow" 100 NORMAL-MODE)))
+        (bumpmap (car (gimp-layer-new img size size RGB-IMAGE "Bumpmap" 100 NORMAL-MODE)))
+        (big-arrow (point-list->double-array (rotate-points (make-arrow size 6) size orientation)))
+        (med-arrow (point-list->double-array (rotate-points (make-arrow size 7) size orientation)))
+(display big-arrow)
+        (small-arrow (point-list->double-array (rotate-points (make-arrow size 8) size orientation)))
+        )
 
     (gimp-context-push)
 
@@ -136,22 +142,22 @@
     (gimp-image-undo-enable img)
     (gimp-display-new img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 
 (script-fu-register "script-fu-beveled-pattern-arrow"
-                    _"_Arrow..."
-                    _"Create a beveled pattern arrow for webpages"
-                    "Federico Mena Quintero"
-                    "Federico Mena Quintero"
-                    "July 1997"
-                    ""
-                    SF-ADJUSTMENT _"Size"        '(32 5 150 1 10 0 1)
-                    SF-OPTION     _"Orientation" '(_"Right"
-						   _"Left"
-						   _"Up"
-						   _"Down")
-                    SF-PATTERN    _"Pattern"     "Wood")
+    _"_Arrow..."
+    _"Create a beveled pattern arrow for webpages"
+    "Federico Mena Quintero"
+    "Federico Mena Quintero"
+    "July 1997"
+    ""
+    SF-ADJUSTMENT _"Size"     '(32 5 150 1 10 0 1)
+    SF-OPTION     _"Orientation" '(_"Right" _"Left" _"Up" _"Down")
+    SF-PATTERN    _"Pattern"     "Wood"
+)
 
 (script-fu-menu-register "script-fu-beveled-pattern-arrow"
-			 "<Toolbox>/Xtns/Web Page Themes/Beveled Pattern")
+                         "<Toolbox>/Xtns/Web Page Themes/Beveled Pattern")

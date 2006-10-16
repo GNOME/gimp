@@ -1,16 +1,16 @@
 ; The GIMP -- an image manipulation program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
-; 
+;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
 ; the Free Software Foundation; either version 2 of the License, or
 ; (at your option) any later version.
-; 
+;
 ; This program is distributed in the hope that it will be useful,
 ; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ; GNU General Public License for more details.
-; 
+;
 ; You should have received a copy of the GNU General Public License
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -20,7 +20,7 @@
 ; Version 0.2 10.6.97 Changed to new script-fu interface in 0.99.10
 
 ; Delta the colour by the given amount. Check for boundary conditions
-; If < 0 set to zero 
+; If < 0 set to zero
 ; If > 255 set to 255
 ; Return the new value
 
@@ -28,8 +28,9 @@
   (let* ((newcol (+ col delta)))
     (if (< newcol 0) (set! newcol 0))
     (if (> newcol 255) (set! newcol 255))
-    newcol)
+    newcol
   )
+)
 
 (define (adjcolour col delta)
   (mapcar (lambda (x) (deltacolour x delta)) col)
@@ -101,12 +102,9 @@
          (oheight (car (gimp-image-height img)))
          (width (+ owidth (* 2 xsize)))
          (height (+ oheight (* 2 ysize)))
-         (layer (car (gimp-layer-new img
-                                     width height
+         (layer (car (gimp-layer-new img width height
                                      (car (gimp-drawable-type-with-alpha adraw))
                                      "Border-Layer" 100 NORMAL-MODE))))
-
-;Add this for debugging    (verbose 4)
 
     (gimp-context-push)
 
@@ -163,21 +161,24 @@
     (gimp-image-undo-group-end img)
     (gimp-displays-flush)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+    )
+)
 
 (script-fu-register "script-fu-addborder"
-                    _"Add _Border..."
-                    _"Add a border around an image"
-                    "Andy Thomas <alt@picnic.demon.co.uk>"
-                    "Andy Thomas"
-                    "6/10/97"
-                    "*"
-                    SF-IMAGE       "Input image"          0
-                    SF-DRAWABLE    "Input drawable"       0
-                    SF-ADJUSTMENT _"Border X size"        '(12 1 250 1 10 0 1)
-                    SF-ADJUSTMENT _"Border Y size"        '(12 1 250 1 10 0 1)
-                    SF-COLOR      _"Border color"         '(38 31 207)
-                    SF-ADJUSTMENT _"Delta value on color" '(25 1 255 1 10 0 1))
+    _"Add _Border..."
+    "Add a border around an image"
+    "Andy Thomas <alt@picnic.demon.co.uk>"
+    "Andy Thomas"
+    "6/10/97"
+    "*"
+    SF-IMAGE       "Input image" 0
+    SF-DRAWABLE    "Input drawable" 0
+    SF-ADJUSTMENT _"Border X size" '(12 1 250 1 10 0 1)
+    SF-ADJUSTMENT _"Border Y size" '(12 1 250 1 10 0 1)
+    SF-COLOR      _"Border color" '(38 31 207)
+    SF-ADJUSTMENT _"Delta value on color" '(25 1 255 1 10 0 1)
+)
 
 (script-fu-menu-register "script-fu-addborder"
                          "<Image>/Filters/Decor")

@@ -3,24 +3,24 @@
 ;   Written by Spencer Kimball
 
 (define (apply-frosty-logo-effect img
-				  logo-layer
-				  size
-				  bg-color)
-  (let* ((border (/ size 5))
-	 (width (+ (car (gimp-drawable-width logo-layer)) border))
-	 (height (+ (car (gimp-drawable-height logo-layer)) border))
-	 (logo-layer-mask (car (gimp-layer-create-mask logo-layer ADD-BLACK-MASK)))
-	 (sparkle-layer (car (gimp-layer-new img width height RGBA-IMAGE "Sparkle" 100 NORMAL-MODE)))
-	 (matte-layer (car (gimp-layer-new img width height RGBA-IMAGE "Matte" 100 NORMAL-MODE)))
-	 (shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Shadow" 90 MULTIPLY-MODE)))
-	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
-	 (selection 0))
-
-    (define (for-each proc seq)
-      (if (not (null? seq))
-        (begin
-          (proc (car seq))
-          (for-each proc (cdr seq)))))
+                                  logo-layer
+                                  size
+                                  bg-color)
+  (let* (
+        (border (/ size 5))
+        (width (+ (car (gimp-drawable-width logo-layer)) border))
+        (height (+ (car (gimp-drawable-height logo-layer)) border))
+        (logo-layer-mask (car (gimp-layer-create-mask logo-layer ADD-BLACK-MASK)))
+        (sparkle-layer (car (gimp-layer-new img width height RGBA-IMAGE
+                                            "Sparkle" 100 NORMAL-MODE)))
+        (matte-layer (car (gimp-layer-new img width height RGBA-IMAGE
+                                          "Matte" 100 NORMAL-MODE)))
+        (shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE
+                                           "Shadow" 90 MULTIPLY-MODE)))
+        (bg-layer (car (gimp-layer-new img width height RGB-IMAGE
+                                       "Background" 100 NORMAL-MODE)))
+        (selection 0)
+        )
 
     (gimp-context-push)
 
@@ -43,7 +43,9 @@
     (plug-in-noisify 1 img sparkle-layer FALSE 0.2 0.2 0.2 0.0)
     (plug-in-c-astretch 1 img sparkle-layer)
     (gimp-selection-none img)
-    (plug-in-sparkle 1 img sparkle-layer 0.03 0.5 (/ (min width height) 2) 6 15 1.0 0.0 0.0 0.0 FALSE FALSE FALSE 0)
+    (plug-in-sparkle 1 img sparkle-layer 0.03 0.5
+                     (/ (min width height) 2)
+                     6 15 1.0 0.0 0.0 0.0 FALSE FALSE FALSE 0)
     (gimp-levels sparkle-layer 1 0 255 0.2 0 255)
     (gimp-levels sparkle-layer 2 0 255 0.7 0 255)
     (gimp-selection-layer-alpha sparkle-layer)
@@ -72,65 +74,80 @@
     (gimp-edit-stroke logo-layer)
     (gimp-selection-none img)
     (gimp-image-remove-channel img selection)
-    (for-each (lambda (the-layer) 
-                (gimp-layer-resize the-layer (- width border) (- height border) (- border) (- border))
-                ; (gimp-layer-translate the-layer border border)
-                )
-              (list sparkle-layer matte-layer bg-layer))
+    (for-each (lambda (the-layer)
+              (gimp-layer-resize the-layer (- width border) (- height border)
+                                           (- border) (- border))
+              ; (gimp-layer-translate the-layer border border)
+              )
+              (list sparkle-layer matte-layer bg-layer)
+    )
     (gimp-layer-resize shadow-layer (- width border) (- height border) 0 0)
+
     (gimp-layer-translate shadow-layer border border)
+
     (script-fu-util-image-resize-from-layer img logo-layer)
-    (gimp-context-pop)))
+
+    (gimp-context-pop)
+  )
+)
 
 (define (script-fu-frosty-logo-alpha img
-				     logo-layer
-				     size
-				     bg-color)
+                                     logo-layer
+                                     size
+                                     bg-color)
   (begin
     (gimp-image-undo-group-start img)
     (apply-frosty-logo-effect img logo-layer size bg-color)
     (gimp-image-undo-group-end img)
-    (gimp-displays-flush)))
-
+    (gimp-displays-flush)
+  )
+)
 
 (script-fu-register "script-fu-frosty-logo-alpha"
-		    _"_Frosty..."
-		    _"Add a frost effect to the selected region (or alpha)"
-		    "Spencer Kimball & Ed Mackey"
-		    "Spencer Kimball & Ed Mackey"
-		    "1997"
-		    "RGBA"
-                    SF-IMAGE      "Image"                 0
-                    SF-DRAWABLE   "Drawable"              0
-		    SF-ADJUSTMENT _"Effect size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-COLOR      _"Background color"     "white")
+  _"_Frosty..."
+  _"Add a frost effect to the selected region (or alpha) with an added drop shadow"
+  "Spencer Kimball & Ed Mackey"
+  "Spencer Kimball & Ed Mackey"
+  "1997"
+  "RGBA"
+  SF-IMAGE      "Image"                 0
+  SF-DRAWABLE   "Drawable"              0
+  SF-ADJUSTMENT _"Effect size (pixels)" '(100 2 1000 1 10 0 1)
+  SF-COLOR      _"Background color"     '(255 255 255)
+)
 
 (script-fu-menu-register "script-fu-frosty-logo-alpha"
-			 "<Image>/Filters/Alpha to Logo")
+                         "<Image>/Filters/Alpha to Logo")
+
 
 (define (script-fu-frosty-logo text
-			       size
-			       font
-			       bg-color)
-  (let* ((img (car (gimp-image-new 256 256 RGB)))
-	 (border (/ size 5))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text (* border 2) TRUE size PIXELS font))))
+                               size
+                               font
+                               bg-color)
+  (let* (
+        (img (car (gimp-image-new 256 256 RGB)))
+        (border (/ size 5))
+        (text-layer (car (gimp-text-fontname img -1 0 0 text (* border 2) TRUE size PIXELS font)))
+        )
     (gimp-image-undo-disable img)
     (apply-frosty-logo-effect img text-layer size bg-color)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+  )
+)
 
 (script-fu-register "script-fu-frosty-logo"
-		    _"_Frosty..."
-		    _"Create frozen logo with an added drop shadow"
-		    "Spencer Kimball & Ed Mackey"
-		    "Spencer Kimball & Ed Mackey"
-		    "1997"
-		    ""
-		    SF-STRING     _"Text"               "GIMP"
-		    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-FONT       _"Font"               "Becker"
-		    SF-COLOR      _"Background color"   "white")
+  _"_Frosty..."
+  _"Create frozen logo with an added drop shadow"
+  "Spencer Kimball & Ed Mackey"
+  "Spencer Kimball & Ed Mackey"
+  "1997"
+  ""
+  SF-STRING _"Text"                   "The GIMP"
+  SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
+  SF-FONT   _"Font"                   "Becker"
+  SF-COLOR  _"Background color"       '(255 255 255)
+)
 
 (script-fu-menu-register "script-fu-frosty-logo"
-			 "<Toolbox>/Xtns/Logos")
+                         "<Toolbox>/Xtns/Logos")

@@ -27,21 +27,19 @@
 
 
 (define (script-fu-beveled-pattern-heading
-	 text text-size font pattern transparent)
-  (let* ((img (car (gimp-image-new 10 10 RGB)))
-	 (textl
-	  (car
-	   (gimp-text-fontname img -1 0 0 text 0 TRUE text-size PIXELS font)))
+         text text-size font pattern transparent)
+  (let* (
+        (img (car (gimp-image-new 10 10 RGB)))
+        (textl
+          (car
+           (gimp-text-fontname img -1 0 0 text 0 TRUE text-size PIXELS font)))
 
-	 (width (car (gimp-drawable-width textl)))
-	 (height (car (gimp-drawable-height textl)))
+        (width (car (gimp-drawable-width textl)))
+        (height (car (gimp-drawable-height textl)))
 
-	 (background (car (gimp-layer-new img
-					  width height RGBA-IMAGE
-					  "Background" 100 NORMAL-MODE)))
-	 (bumpmap (car (gimp-layer-new img
-				       width height RGBA-IMAGE
-				       "Bumpmap" 100 NORMAL-MODE))))
+        (background (car (gimp-layer-new img width height RGBA-IMAGE "Background" 100 NORMAL-MODE)))
+        (bumpmap (car (gimp-layer-new img width height RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE)))
+        )
 
     (gimp-context-push)
 
@@ -56,7 +54,7 @@
     (gimp-edit-fill background BACKGROUND-FILL)
     (gimp-context-set-pattern pattern)
     (gimp-edit-bucket-fill background
-			   PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+                           PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
 
     ; Create bumpmap layer
 
@@ -91,26 +89,29 @@
     (gimp-image-remove-layer img textl)
 
     (if (= transparent FALSE)
-	(gimp-image-flatten img))
+        (gimp-image-flatten img))
 
     (gimp-image-undo-enable img)
     (gimp-display-new img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 
 (script-fu-register "script-fu-beveled-pattern-heading"
-		    _"H_eading..."
-		    _"Create a beveled pattern heading for webpages"
-		    "Federico Mena Quintero"
-		    "Federico Mena Quintero"
-		    "July 1997"
-		    ""
-		    SF-STRING     _"Text"                   "Hello world!"
-		    SF-ADJUSTMENT _"Font size (pixels)"     '(72 2 200 1 1 0 1)
-		    SF-FONT       _"Font"                   "Sans"
-		    SF-PATTERN    _"Pattern"                "Wood"
-		    SF-TOGGLE     _"Transparent background" FALSE)
+  _"H_eading..."
+  _"Create a beveled pattern heading for webpages"
+  "Federico Mena Quintero"
+  "Federico Mena Quintero"
+  "July 1997"
+  ""
+  SF-STRING     _"Text"               "Hello world!"
+  SF-ADJUSTMENT _"Font size (pixels)" '(72 2 200 1 1 0 1)
+  SF-FONT       _"Font"               "Sans"
+  SF-PATTERN    _"Pattern"            "Wood"
+  SF-TOGGLE     _"Transparent background" FALSE
+)
 
 (script-fu-menu-register "script-fu-beveled-pattern-heading"
-			 "<Toolbox>/Xtns/Web Page Themes/Beveled Pattern")
+                         "<Toolbox>/Xtns/Web Page Themes/Beveled Pattern")

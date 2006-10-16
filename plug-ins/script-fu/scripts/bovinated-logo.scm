@@ -1,16 +1,16 @@
 ; The GIMP -- an image manipulation program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
-; 
+;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
 ; the Free Software Foundation; either version 2 of the License, or
 ; (at your option) any later version.
-; 
+;
 ; This program is distributed in the hope that it will be useful,
 ; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ; GNU General Public License for more details.
-; 
+;
 ; You should have received a copy of the GNU General Public License
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -20,19 +20,14 @@
 ;  Creates Cow-spotted logs.. what else?
 
 (define (apply-bovinated-logo-effect img
-				     logo-layer
-				     spots-x
-				     spots-y
-				     bg-color)
+                                     logo-layer
+                                     spots-x
+                                     spots-y
+                                     bg-color)
   (let* ((width (car (gimp-drawable-width logo-layer)))
-	 (height (car (gimp-drawable-height logo-layer)))
-	 (bg-layer (car (gimp-layer-new img
-					width height RGBA-IMAGE
-					"Background" 100 NORMAL-MODE)))
-	 (blur-layer (car (gimp-layer-new img
-					  width height RGBA-IMAGE
-					  "Blur" 100 NORMAL-MODE))))
-
+         (height (car (gimp-drawable-height logo-layer)))
+         (bg-layer (car (gimp-layer-new img width height RGBA-IMAGE "Background" 100 NORMAL-MODE)))
+         (blur-layer (car (gimp-layer-new img width height RGBA-IMAGE "Blur" 100 NORMAL-MODE))))
     (gimp-context-push)
 
     (script-fu-util-image-resize-from-layer img logo-layer)
@@ -63,69 +58,75 @@
     (gimp-selection-none img)
     (gimp-layer-set-lock-alpha logo-layer FALSE)
     (plug-in-bump-map 1 img logo-layer blur-layer
-		      135 50 10 0 0 0 30 TRUE FALSE 0)
+                      135 50 10 0 0 0 30 TRUE FALSE 0)
     (gimp-layer-set-offsets blur-layer 5 5)
     (gimp-invert blur-layer)
     (gimp-layer-set-opacity blur-layer 50.0)
     (gimp-image-set-active-layer img logo-layer)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 (define (script-fu-bovinated-logo-alpha img
-					logo-layer
-					spots-x
-					spots-y
-					bg-color)
+                                        logo-layer
+                                        spots-x
+                                        spots-y
+                                        bg-color)
   (begin
     (gimp-image-undo-group-start img)
     (apply-bovinated-logo-effect img logo-layer spots-x spots-y bg-color)
     (gimp-image-undo-group-end img)
-    (gimp-displays-flush)))
+    (gimp-displays-flush)
+  )
+)
 
 (script-fu-register "script-fu-bovinated-logo-alpha"
-		    _"Bo_vination..."
-		    _"Add 'cow spots' to the selected region (or alpha)"
-		    "Brian McFee <keebler@wco.com>"
-		    "Brian McFee"
-		    "April 1998"
-		    "RGBA"
-                    SF-IMAGE       "Image"            0
-                    SF-DRAWABLE    "Drawable"         0
-		    SF-ADJUSTMENT _"Spots density X"  '(16 1 16 1 10 0 1)
-		    SF-ADJUSTMENT _"Spots density Y"  '(4 1 16 1 10 0 1)
-		    SF-COLOR      _"Background color" "white")
-
-(script-fu-menu-register "script-fu-bovinated-logo-alpha"
-			 "<Image>/Filters/Alpha to Logo")
-
+    _"Bo_vination..."
+    _"Add 'cow spots' to the selected region (or alpha)"
+    "Brian McFee <keebler@wco.com>"
+    "Brian McFee"
+    "April 1998"
+    "RGBA"
+    SF-IMAGE      "Image"             0
+    SF-DRAWABLE   "Drawable"          0
+    SF-ADJUSTMENT _"Spots density X"  '(16 1 16 1 10 0 1)
+    SF-ADJUSTMENT _"Spots density Y"  '(4 1 16 1 10 0 1)
+    SF-COLOR      _"Background Color" '(255 255 255)
+)
 
 (define (script-fu-bovinated-logo text
-				  size
-				  font
-				  spots-x
-				  spots-y
-				  bg-color)
+                                  size
+                                  font
+                                  spots-x
+                                  spots-y
+                                  bg-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
          (border (/ size 4))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font))))
+         (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font))))
     (gimp-image-undo-disable img)
     (apply-bovinated-logo-effect img text-layer spots-x spots-y bg-color)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img))
+)
+
+(script-fu-menu-register "script-fu-bovinated-logo-alpha"
+                         "<Image>/Filters/Alpha to Logo")
 
 (script-fu-register "script-fu-bovinated-logo"
-		    _"Bo_vination..."
-		    _"Create a logo with text in the style of 'cow spots'"
-		    "Brian McFee <keebler@wco.com>"
-		    "Brian McFee"
-		    "April 1998"
-		    ""
-		    SF-STRING     _"Text"               "Fear the Cow"
-		    SF-ADJUSTMENT _"Font size (pixels)" '(80 2 1000 1 10 0 1)
-		    SF-FONT       _"Font"               "RoostHeavy"
-		    SF-ADJUSTMENT _"Spots density X"    '(16 1 16 1 10 0 1)
-		    SF-ADJUSTMENT _"Spots density Y"    '(4 1 16 1 10 0 1)
-		    SF-COLOR      _"Background color"   "white")
+    _"Bo_vination..."
+    _"Create a logo with text in the style of 'cow spots'"
+    "Brian McFee <keebler@wco.com>"
+    "Brian McFee"
+    "April 1998"
+    ""
+    SF-STRING     _"Text"               "Fear the Cow"
+    SF-ADJUSTMENT _"Font size (pixels)" '(80 2 1000 1 10 0 1)
+    SF-FONT       _"Font"               "RoostHeavy"
+    SF-ADJUSTMENT _"Spots density X"    '(16 1 16 1 10 0 1)
+    SF-ADJUSTMENT _"Spots density Y"    '(4 1 16 1 10 0 1)
+    SF-COLOR      _"Background color"   '(255 255 255)
+)
 
 (script-fu-menu-register "script-fu-bovinated-logo"
-			 "<Toolbox>/Xtns/Logos")
+                         "<Toolbox>/Xtns/Logos")

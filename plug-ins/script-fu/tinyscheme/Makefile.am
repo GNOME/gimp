@@ -8,7 +8,7 @@ AM_CFLAGS = \
     -DUSE_STRLWR=0      \
     -DUSE_STRCASECMP=1  \
     -I$(top_srcdir)     \
-    $(GIMP_CFLAGS)        
+    $(GLIB_CFLAGS)        
 
 noinst_LIBRARIES = libtinyscheme.a
 

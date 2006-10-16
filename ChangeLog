@@ -1,3 +1,53 @@
+2006-10-15  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	With this commit we finally say goodbye to SIOD. This large set of
+	changes updates the Script-Fu plug-in to use the TinyScheme Scheme
+	interpreter. These changes originated with changes originally made
+	to Script-Fu which created Tiny-Fu (aka. the gimp-tiny-fu module).
+
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu-interface.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-scripts.h
+	* plug-ins/script-fu/script-fu-server.c
+	* plug-ins/script-fu/script-fu-text-console.c
+	* plug-ins/script-fu/script-fu.c: Updated with the changes made to
+	these files as part of the work on the Tiny-Fu project.
+
+	* plug-ins/script-fu/scheme-wrapper.c
+	* plug-ins/script-fu/scheme-wrapper.h: Renamed from siod-wrapper.[ch]
+	and updated based on differences to ts-wrapper.[ch] from gimp-tiny-fu.
+
+	* plug-ins/script-fu/ftx/*
+	* plug-ins/script-fu/re/*
+	* plug-ins/script-fu/tinyscheme/*
+	* plug-ins/script-fu/scripts/script-fu.init
+	* plug-ins/script-fu/scripts/script-fu-compat.init
+	* plug-ins/script-fu/scripts/contactsheet.scm
+	* plug-ins/script-fu/scripts/script-fu-set-cmap.scm
+	* plug-ins/script-fu/scripts/script-fu-util-setpt.scm
+	* plug-ins/script-fu/scripts/ts-helloworld.scm: Added all of these
+	files and directories from Tiny-Fu. Updated the Makefile.am files
+	of ftx, re, and tinyscheme now they are in the GIMP source tree.
+
+	* plug-ins/script-fu/scripts/*.scm: All scripts have been updated as
+	needed to ensure they will work with the TinyScheme interpreter. Most
+	of the files have been reformatted making it easier to see the syntax
+	of Scheme and making them easier to read.
+
+	* plug-ins/script-fu/scripts/Makefile.am: Updated script file lists.
+
+	* plug-ins/script-fu/siod-wrapper.c
+	* plug-ins/script-fu/siod-wrapper.h
+	* plug-ins/script-fu/siod/*: Removed obsolete files.
+
+	* configure.in: Updated list of files in AC_CONFIG_FILES. Changed
+	--disable-script-fu to --without-script-fu which it should have
+	been when originally added.
+
+	* INSTALL: Updated to show change to --without-script-fu.
+
 2006-10-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/file/file-utils.c (file_utils_filename_to_uri): if the

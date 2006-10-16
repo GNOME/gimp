@@ -21,13 +21,11 @@
 
 
 (define (script-fu-beveled-pattern-hrule width height pattern)
-  (let* ((img (car (gimp-image-new width height RGB)))
-	 (background (car (gimp-layer-new img
-					  width height RGB-IMAGE
-					  "Hrule" 100 NORMAL-MODE)))
-	 (bumpmap (car (gimp-layer-new img
-				       width height RGBA-IMAGE
-				       "Bumpmap" 100 NORMAL-MODE))))
+  (let* (
+        (img (car (gimp-image-new width height RGB)))
+        (background (car (gimp-layer-new img width height RGB-IMAGE "Hrule" 100 NORMAL-MODE)))
+        (bumpmap (car (gimp-layer-new img width height RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE)))
+        )
 
     (gimp-context-push)
 
@@ -66,19 +64,22 @@
     (gimp-image-undo-enable img)
     (gimp-display-new img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 
 (script-fu-register "script-fu-beveled-pattern-hrule"
-		    _"_Hrule..."
-		    _"Create a beveled pattern hrule for webpages"
-		    "Federico Mena Quintero"
-		    "Federico Mena Quintero"
-		    "July 1997"
-		    ""
-                    SF-ADJUSTMENT _"Width"   '(480 5 1500 1 10 0 1)
-                    SF-ADJUSTMENT _"Height"  '(16 1 100 1 10 0 1)
-		    SF-PATTERN    _"Pattern" "Wood")
+    _"_Hrule..."
+    _"Create a beveled pattern hrule for webpages"
+    "Federico Mena Quintero"
+    "Federico Mena Quintero"
+    "July 1997"
+    ""
+    SF-ADJUSTMENT _"Width"   '(480 5 1500 1 10 0 1)
+    SF-ADJUSTMENT _"Height"  '(16 1 100 1 10 0 1)
+    SF-PATTERN    _"Pattern" "Wood"
+)
 
 (script-fu-menu-register "script-fu-beveled-pattern-hrule"
-			 "<Toolbox>/Xtns/Web Page Themes/Beveled Pattern")
+                         "<Toolbox>/Xtns/Web Page Themes/Beveled Pattern")

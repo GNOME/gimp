@@ -2,19 +2,21 @@
 ;  Create a text effect that simulates a glowing hot logo
 
 (define (apply-glowing-logo-effect img
-				   logo-layer
-				   size
-				   bg-color)
-  (let* ((grow (/ size 4))
-	 (feather1 (/ size 3))
-	 (feather2 (/ size 7))
-	 (feather3 (/ size 10))
-	 (width (car (gimp-drawable-width logo-layer)))
-	 (height (car (gimp-drawable-height logo-layer)))
-     (posx (- (car (gimp-drawable-offsets logo-layer))))
-     (posy (- (cadr (gimp-drawable-offsets logo-layer))))
-	 (glow-layer (car (gimp-layer-copy logo-layer TRUE)))
-	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE))))
+                                   logo-layer
+                                   size
+                                   bg-color)
+  (let* (
+        (grow (/ size 4))
+        (feather1 (/ size 3))
+        (feather2 (/ size 7))
+        (feather3 (/ size 10))
+        (width (car (gimp-drawable-width logo-layer)))
+        (height (car (gimp-drawable-height logo-layer)))
+        (posx (- (car (gimp-drawable-offsets logo-layer))))
+        (posy (- (cadr (gimp-drawable-offsets logo-layer))))
+        (glow-layer (car (gimp-layer-copy logo-layer TRUE)))
+        (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
+        )
 
     (gimp-context-push)
 
@@ -53,58 +55,67 @@
     (gimp-layer-set-mode logo-layer OVERLAY-MODE)
     (gimp-drawable-set-name glow-layer "Glow Layer")
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 
 (define (script-fu-glowing-logo-alpha img
-				      logo-layer
-				      size
-				      bg-color)
+                                      logo-layer
+                                      size
+                                      bg-color)
   (begin
     (gimp-image-undo-group-start img)
     (apply-glowing-logo-effect img logo-layer size bg-color)
     (gimp-image-undo-group-end img)
-    (gimp-displays-flush)))
+    (gimp-displays-flush)
+  )
+)
 
 (script-fu-register "script-fu-glowing-logo-alpha"
-		    _"Glo_wing Hot..."
-		    _"Add a glowing hot metal effect to the selected region (or alpha)"
-		    "Spencer Kimball"
-		    "Spencer Kimball"
-		    "1997"
-		    "RGBA"
-                    SF-IMAGE      "Image"                     0
-                    SF-DRAWABLE   "Drawable"                  0
-		    SF-ADJUSTMENT _"Effect size (pixels * 3)" '(150 2 1000 1 10 0 1)
-		    SF-COLOR      _"Background color"         '(7 0 20))
+  _"Glo_wing Hot..."
+  _"Add a glowing hot metal effect to the selected region (or alpha)"
+  "Spencer Kimball"
+  "Spencer Kimball"
+  "1997"
+  "RGBA"
+  SF-IMAGE      "Image" 0
+  SF-DRAWABLE   "Drawable" 0
+  SF-ADJUSTMENT _"Effect size (pixels * 3)" '(150 2 1000 1 10 0 1)
+  SF-COLOR      _"Background color" '(7 0 20)
+)
 
 (script-fu-menu-register "script-fu-glowing-logo-alpha"
-			 "<Image>/Filters/Alpha to Logo")
-
+                         "<Image>/Filters/Alpha to Logo")
 
 (define (script-fu-glowing-logo text
-				size
-				font
-				bg-color)
-  (let* ((img (car (gimp-image-new 256 256 RGB)))
-	 (border (/ size 4))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font))))
+                                size
+                                font
+                                bg-color)
+  (let* (
+        (img (car (gimp-image-new 256 256 RGB)))
+        (border (/ size 4))
+        (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
+        )
     (gimp-image-undo-disable img)
     (apply-glowing-logo-effect img text-layer size bg-color)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+  )
+)
 
 (script-fu-register "script-fu-glowing-logo"
-		    _"Glo_wing Hot..."
-		    _"Create a logo that looks like glowing hot metal"
-		    "Spencer Kimball"
-		    "Spencer Kimball"
-		    "1997"
-		    ""
-		    SF-STRING     _"Text"               "GLOWING"
-		    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT       _"Font"               "Slogan"
-		    SF-COLOR      _"Background color"   '(7 0 20))
+  _"Glo_wing Hot..."
+  _"Create a logo that looks like glowing hot metal"
+  "Spencer Kimball"
+  "Spencer Kimball"
+  "1997"
+  ""
+  SF-STRING     _"Text" "GLOWING"
+  SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
+  SF-FONT       _"Font" "Slogan"
+  SF-COLOR      _"Background color" '(7 0 20)
+)
 
 (script-fu-menu-register "script-fu-glowing-logo"
-			 "<Toolbox>/Xtns/Logos")
+                         "<Toolbox>/Xtns/Logos")

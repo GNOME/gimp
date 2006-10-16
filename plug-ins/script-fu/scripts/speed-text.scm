@@ -3,34 +3,37 @@
 ;
 ;
 ; Based on alien glow code from Adrian Likins
-; 
+;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
 ; the Free Software Foundation; either version 2 of the License, or
 ; (at your option) any later version.
-; 
+;
 ; This program is distributed in the hope that it will be useful,
 ; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ; GNU General Public License for more details.
-; 
+;
 ; You should have received a copy of the GNU General Public License
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
 (define (script-fu-speed-text string font font-size density text-color bg-color)
-  (let* ((text-ext (gimp-text-get-extents-fontname string font-size PIXELS font))
-	 (wid (+ (car text-ext) 20))
-	 (hi  (+ (nth 1 text-ext) 20))
-	 (img (car (gimp-image-new wid hi RGB)))
-	 (bg-layer (car (gimp-layer-new img wid hi  RGB-IMAGE "Background" 100 NORMAL-MODE)))
-	 (text-layer (car (gimp-layer-new img wid hi  RGBA-IMAGE "Text layer" 100 NORMAL-MODE)))
-	 (text-mask 0)
-	 (saved-select 0)
-	 (cell-size (/ font-size 8))
-	 (grey (/ (* density 255) 100))
-     (saved-sel))
+  (let* (
+        (text-ext (gimp-text-get-extents-fontname string font-size PIXELS font))
+        (wid (+ (car text-ext) 20))
+        (hi  (+ (list-ref text-ext 1) 20))
+        (img (car (gimp-image-new wid hi RGB)))
+        (bg-layer (car (gimp-layer-new img wid hi  RGB-IMAGE "Background" 100 NORMAL-MODE)))
+        (text-layer (car (gimp-layer-new img wid hi  RGBA-IMAGE "Text layer" 100 NORMAL-MODE)))
+        (text-mask 0)
+        (saved-select 0)
+        (cell-size (/ font-size 8))
+        (grey (/ (* density 255) 100))
+        (saved-sel)
+        (text-mask)
+        )
 
     (gimp-context-push)
 
@@ -75,21 +78,24 @@
     (gimp-image-undo-enable img)
     (gimp-display-new img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 (script-fu-register "script-fu-speed-text"
-		    _"Speed Text..."
-		    _"Create a logo using a speedy text effect"
-		    "Austin Donnelly"
-		    "Austin Donnelly"
-		    "1998"
-		    ""
-		    SF-STRING     _"Text"               "Speed!"
-		    SF-FONT       _"Font"               "Charter"
-		    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-ADJUSTMENT _"Density (%)"        '(80 0 100 1 10 0 0)
-                    SF-COLOR      _"Text color"         "black"
-		    SF-COLOR      _"Background color"   "white")
+  _"Speed Text..."
+  _"Create a logo with a speedy text effect"
+  "Austin Donnelly"
+  "Austin Donnelly"
+  "1998"
+  ""
+  SF-STRING     _"Text"               "Speed!"
+  SF-FONT       _"Font"               "Charter"
+  SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
+  SF-ADJUSTMENT _"Density (%)"        '(80 0 100 1 10 0 0)
+  SF-COLOR      _"Text color"         '(0 0 0)
+  SF-COLOR      _"Background color"   '(255 255 255)
+)
 
 (script-fu-menu-register "script-fu-speed-text"
-			 "<Toolbox>/Xtns/Logos")
+                         "<Toolbox>/Xtns/Logos")

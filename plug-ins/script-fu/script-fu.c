@@ -23,7 +23,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "siod/siod.h"
+#include "tinyscheme/scheme.h"
 
 #include "script-fu-types.h"
 
@@ -33,7 +33,7 @@
 #include "script-fu-server.h"
 #include "script-fu-text-console.h"
 
-#include "siod-wrapper.h"
+#include "scheme-wrapper.h"
 
 #include "script-fu-intl.h"
 
@@ -95,28 +95,28 @@ script_fu_query (void)
   gimp_plugin_domain_register (GETTEXT_PACKAGE "-script-fu", NULL);
 
   gimp_install_procedure ("extension-script-fu",
-			  "A scheme interpreter for scripting GIMP operations",
-			  "More help here later",
-			  "Spencer Kimball & Peter Mattis",
-			  "Spencer Kimball & Peter Mattis",
-			  "1997",
-			  NULL,
-			  NULL,
-			  GIMP_EXTENSION,
-			  0, 0, NULL, NULL);
+                          "A scheme interpreter for scripting GIMP operations",
+                          "More help here later",
+                          "Spencer Kimball & Peter Mattis",
+                          "Spencer Kimball & Peter Mattis",
+                          "1997",
+                          NULL,
+                          NULL,
+                          GIMP_EXTENSION,
+                          0, 0, NULL, NULL);
 
   gimp_install_procedure ("plug-in-script-fu-console",
-			  N_("Interactive console for Script-Fu development"),
-			  "Provides an interface which allows interactive "
-                          "scheme development.",
-			  "Spencer Kimball & Peter Mattis",
-			  "Spencer Kimball & Peter Mattis",
-			  "1997",
-			  N_("Script-Fu _Console"),
-			  NULL,
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (console_args), 0,
-			  console_args, NULL);
+                          N_("Interactive console for Script-Fu development"),
+                          "Provides an interface which allows interactive "
+                                      "scheme development.",
+                          "Spencer Kimball & Peter Mattis",
+                          "Spencer Kimball & Peter Mattis",
+                          "1997",
+                          N_("Script-Fu _Console"),
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (console_args), 0,
+                          console_args, NULL);
 
   gimp_plugin_menu_register ("plug-in-script-fu-console",
                              N_("<Toolbox>/Xtns/Languages/Script-Fu"));
@@ -129,52 +129,51 @@ script_fu_query (void)
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
                           "1997",
-			  NULL,
+                          NULL,
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (textconsole_args), 0,
                           textconsole_args, NULL);
 
   gimp_install_procedure ("plug-in-script-fu-server",
-			  N_("Server for remote Script-Fu operation"),
-			  "Provides a server for remote script-fu operation",
-			  "Spencer Kimball & Peter Mattis",
-			  "Spencer Kimball & Peter Mattis",
-			  "1997",
-			  N_("_Start Server..."),
-			  NULL,
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (server_args), 0,
-			  server_args, NULL);
+                          N_("Server for remote Script-Fu operation"),
+                          "Provides a server for remote script-fu operation",
+                          "Spencer Kimball & Peter Mattis",
+                          "Spencer Kimball & Peter Mattis",
+                          "1997",
+                          N_("_Start Server..."),
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (server_args), 0,
+                          server_args, NULL);
 
   gimp_plugin_menu_register ("plug-in-script-fu-server",
                              N_("<Toolbox>/Xtns/Languages/Script-Fu"));
 
   gimp_install_procedure ("plug-in-script-fu-eval",
-			  "Evaluate scheme code",
-			  "Evaluate the code under the scheme interpreter "
-                          "(primarily for batch mode)",
-			  "Manish Singh",
-			  "Manish Singh",
-			  "1998",
-			  NULL,
-			  NULL,
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (eval_args), 0,
-			  eval_args, NULL);
+                          "Evaluate scheme code",
+                          "Evaluate the code under the scheme interpreter "
+                                      "(primarily for batch mode)",
+                          "Manish Singh",
+                          "Manish Singh",
+                          "1998",
+                          NULL,
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (eval_args), 0,
+                          eval_args, NULL);
 }
 
 static void
 script_fu_run (const gchar      *name,
-	       gint              nparams,
-	       const GimpParam  *param,
-	       gint             *nreturn_vals,
-	       GimpParam       **return_vals)
+               gint              nparams,
+               const GimpParam  *param,
+               gint             *nreturn_vals,
+               GimpParam       **return_vals)
 {
   INIT_I18N();
 
-  siod_set_console_mode (0);
-  siod_set_output_file (stdout);
+  ts_set_console_mode (0);
 
   /*  Determine before we allow scripts to register themselves
    *   whether this is the base, automatically installed script-fu extension
@@ -184,13 +183,13 @@ script_fu_run (const gchar      *name,
       /*  Setup auxillary temporary procedures for the base extension  */
       script_fu_extension_init ();
 
-      /*  Init the interpreter  */
-      siod_init (TRUE);
+      /*  Init the interpreter and register scripts */
+      tinyscheme_init (TRUE);
     }
   else
     {
       /*  Init the interpreter  */
-      siod_init (FALSE);
+      tinyscheme_init (FALSE);
     }
 
   /*  Load all of the available scripts  */
@@ -209,7 +208,7 @@ script_fu_run (const gchar      *name,
 
       /*  Go into an endless loop  */
       while (TRUE)
-	gimp_extension_process (0);
+        gimp_extension_process (0);
 
       /*  Set return values; pointless because we never get out of the loop  */
       *nreturn_vals = 1;
@@ -221,20 +220,20 @@ script_fu_run (const gchar      *name,
   else if (strcmp (name, "plug-in-script-fu-text-console") == 0)
     {
       /*
-       *  The script-fu text console for interactive SIOD development
+       *  The script-fu text console for interactive Scheme development
        */
 
       script_fu_text_console_run (name, nparams, param,
-				  nreturn_vals, return_vals);
+                                  nreturn_vals, return_vals);
     }
   else if (strcmp (name, "plug-in-script-fu-console") == 0)
     {
       /*
-       *  The script-fu console for interactive SIOD development
+       *  The script-fu console for interactive Scheme development
        */
 
       script_fu_console_run (name, nparams, param,
-			     nreturn_vals, return_vals);
+                             nreturn_vals, return_vals);
     }
   else if (strcmp (name, "plug-in-script-fu-server") == 0)
     {
@@ -243,7 +242,7 @@ script_fu_run (const gchar      *name,
        */
 
       script_fu_server_run (name, nparams, param,
-			    nreturn_vals, return_vals);
+                            nreturn_vals, return_vals);
     }
   else if (strcmp (name, "plug-in-script-fu-eval") == 0)
     {
@@ -252,9 +251,10 @@ script_fu_run (const gchar      *name,
        */
 
       script_fu_eval_run (name, nparams, param,
-			  nreturn_vals, return_vals);
+                          nreturn_vals, return_vals);
     }
 }
+
 
 static void
 script_fu_extension_init (void)
@@ -293,22 +293,40 @@ script_fu_extension_init (void)
   gimp_plugin_menu_branch_register ("<Image>/Filters",
                                     N_("Alpha to _Logo"));
   gimp_plugin_menu_branch_register ("<Image>/Filters",
+                                    N_("An_imation"));
+  gimp_plugin_menu_branch_register ("<Image>/Filters/Animation",
+                                    N_("_Animators"));
+  gimp_plugin_menu_branch_register ("<Image>/Filters",
+                                    N_("_Artistic"));
+  gimp_plugin_menu_branch_register ("<Image>/Filters",
+                                    N_("_Blur"));
+  gimp_plugin_menu_branch_register ("<Image>/Filters",
                                     N_("_Decor"));
   gimp_plugin_menu_branch_register ("<Image>/Filters",
+                                    N_("_Effects"));
+  gimp_plugin_menu_branch_register ("<Image>/Filters",
+                                    N_("En_hance"));
+  gimp_plugin_menu_branch_register ("<Image>/Filters",
+                                    N_("_Light and Shadow"));
+  gimp_plugin_menu_branch_register ("<Image>/Filters/Light and Shadow",
+                                    N_("S_hadow"));
+  gimp_plugin_menu_branch_register ("<Image>/Filters",
                                     N_("_Render"));
+  gimp_plugin_menu_branch_register ("<Image>/Filters/Effects",
+                                    N_("_Alchemy"));
 
   gimp_install_temp_proc ("script-fu-refresh",
-			  N_("Re-read all available Script-Fu scripts"),
-			  "Re-read all available scripts",
-			  "Spencer Kimball & Peter Mattis",
-			  "Spencer Kimball & Peter Mattis",
-			  "1997",
-			  N_("_Refresh Scripts"),
-			  NULL,
-			  GIMP_TEMPORARY,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL,
-			  script_fu_refresh_proc);
+                          N_("Re-read all available Script-Fu scripts"),
+                          "Re-read all available Script-Fu scripts",
+                          "Spencer Kimball & Peter Mattis",
+                          "Spencer Kimball & Peter Mattis",
+                          "1997",
+                          N_("_Refresh Scripts"),
+                          NULL,
+                          GIMP_TEMPORARY,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL,
+                          script_fu_refresh_proc);
 
   gimp_plugin_menu_register ("script-fu-refresh",
                              N_("<Toolbox>/Xtns/Languages/Script-Fu"));
@@ -316,10 +334,10 @@ script_fu_extension_init (void)
 
 static void
 script_fu_refresh_proc (const gchar      *name,
-			gint              nparams,
-			const GimpParam  *params,
-			gint             *nreturn_vals,
-			GimpParam       **return_vals)
+                        gint              nparams,
+                        const GimpParam  *params,
+                        gint             *nreturn_vals,
+                        GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpPDBStatusType status;
@@ -327,8 +345,8 @@ script_fu_refresh_proc (const gchar      *name,
   if (script_fu_interface_is_active ())
     {
       g_message (_("You can not use \"Refresh Scripts\" while a "
-		   "Script-Fu dialog box is open.  Please close "
-		   "all Script-Fu windows and try again."));
+                   "Script-Fu dialog box is open.  Please close "
+                   "all Script-Fu windows and try again."));
 
       status = GIMP_PDB_EXECUTION_ERROR;
     }

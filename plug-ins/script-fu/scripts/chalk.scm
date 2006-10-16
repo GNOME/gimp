@@ -1,16 +1,16 @@
 ; The GIMP -- an image manipulation program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
-; 
+;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
 ; the Free Software Foundation; either version 2 of the License, or
 ; (at your option) any later version.
-; 
+;
 ; This program is distributed in the hope that it will be useful,
 ; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ; GNU General Public License for more details.
-; 
+;
 ; You should have received a copy of the GNU General Public License
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -18,17 +18,17 @@
 ; chalk.scm  version 0.11  10/10/97
 ;
 ; Copyright (C) 1997 Manish Singh <msingh@uclink4.berkeley.edu>
-;  
+;
 ; Makes a logo with a chalk-like text effect.
 
 (define (apply-chalk-logo-effect img
-				 logo-layer
-				 bg-color)
-  (let* ((width (car (gimp-drawable-width logo-layer)))
-	 (height (car (gimp-drawable-height logo-layer)))
-	 (bg-layer (car (gimp-layer-new img
-					width height RGB-IMAGE
-					"Background" 100 NORMAL-MODE))))
+                                 logo-layer
+                                 bg-color)
+  (let* (
+        (width (car (gimp-drawable-width logo-layer)))
+        (height (car (gimp-drawable-height logo-layer)))
+        (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
+        )
 
     (gimp-context-push)
 
@@ -53,41 +53,48 @@
     (gimp-edit-clear logo-layer)
     (gimp-selection-none img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 
 (define (script-fu-chalk-logo-alpha img
-				    logo-layer
-				    bg-color)
+                                    logo-layer
+                                    bg-color)
   (begin
     (gimp-image-undo-group-start img)
     (apply-chalk-logo-effect img logo-layer bg-color)
     (gimp-image-undo-group-end img)
-    (gimp-displays-flush)))
+    (gimp-displays-flush)
+  )
+)
 
 (script-fu-register "script-fu-chalk-logo-alpha"
-                    _"_Chalk..."
-                    _"Create a chalk drawing effect for the selected region (or alpha)"
-                    "Manish Singh <msingh@uclink4.berkeley.edu>"
-                    "Manish Singh"
-                    "October 1997"
-                    "RGBA"
-                    SF-IMAGE     "Image"            0
-                    SF-DRAWABLE  "Drawable"         0
-                    SF-COLOR    _"Background color" '(0 0 0))
+    _"_Chalk..."
+    _"Create a chalk drawing effect for the selected region (or alpha)"
+    "Manish Singh <msingh@uclink4.berkeley.edu>"
+    "Manish Singh"
+    "October 1997"
+    "RGBA"
+    SF-IMAGE     "Image"            0
+    SF-DRAWABLE  "Drawable"         0
+    SF-COLOR    _"Background color" '(0 0 0)
+)
 
 (script-fu-menu-register "script-fu-chalk-logo-alpha"
-			 "<Image>/Filters/Alpha to Logo")
+                         "<Image>/Filters/Alpha to Logo")
 
 
 (define (script-fu-chalk-logo text
-			      size
-			      font
-			      bg-color
-			      chalk-color)
-  (let* ((img (car (gimp-image-new 256 256 RGB)))
-	 (border (/ size 4))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font))))
+                              size
+                              font
+                              bg-color
+                              chalk-color)
+  (let* (
+        (img (car (gimp-image-new 256 256 RGB)))
+        (border (/ size 4))
+        (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
+        )
 
     (gimp-context-push)
 
@@ -99,20 +106,23 @@
     (gimp-image-undo-enable img)
     (gimp-display-new img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 (script-fu-register "script-fu-chalk-logo"
-                    _"_Chalk..."
-                    _"Create a logo resembling chalk scribbled on a blackboard"
-                    "Manish Singh <msingh@uclink4.berkeley.edu>"
-                    "Manish Singh"
-                    "October 1997"
-                    ""
-                    SF-STRING     _"Text"               "CHALK"
-                    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
-                    SF-FONT       _"Font"               "Cooper"
-                    SF-COLOR      _"Background color"   "black"
-                    SF-COLOR      _"Chalk color"        "white")
+  _"_Chalk..."
+  _"Create a logo resembling chalk scribbled on a blackboard"
+  "Manish Singh <msingh@uclink4.berkeley.edu>"
+  "Manish Singh"
+  "October 1997"
+  ""
+  SF-STRING     _"Text"               "CHALK"
+  SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
+  SF-FONT       _"Font"               "Cooper"
+  SF-COLOR      _"Background color"   '(0 0 0)
+  SF-COLOR      _"Chalk color"        '(255 255 255)
+)
 
 (script-fu-menu-register "script-fu-chalk-logo"
-			 "<Toolbox>/Xtns/Logos")
+                         "<Toolbox>/Xtns/Logos")

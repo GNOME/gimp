@@ -5,41 +5,43 @@
 ;  if the blend colors are specified as high intensity, the sharp option
 ;   should be enabled or the logo will come out blurry
 
-(define (scale size
-	       percent)
-  (* size percent))
+(define (blended-logo-scale size percent)
+  (* size percent)
+)
 
 (define (apply-blended-logo-effect img
-				   logo-layer
-				   b-size
-				   bg-color
-				   blend-mode
-				   blend-fg
-				   blend-bg
-				   blend-gradient
-				   blend-gradient-reverse)
-  (let* ((b-size-2 (scale b-size 0.5))
-	 (f-size (scale b-size 0.75))
-	 (ds-size (scale b-size 0.5))
-	 (ts-size (- b-size-2 3))
-	 (width (car (gimp-drawable-width logo-layer)))
-	 (height (car (gimp-drawable-height logo-layer)))
-	 (blend-layer (car (gimp-layer-new img
-					   width height RGBA-IMAGE
-					   "Blend" 100 NORMAL-MODE)))
-	 (shadow-layer (car (gimp-layer-new img
-					    width height RGBA-IMAGE
-					    "Shadow" 100 NORMAL-MODE)))
-	 (text-shadow-layer (car (gimp-layer-new img
-						 width height RGBA-IMAGE
-						 "Text Shadow" 100 MULTIPLY-MODE)))
-	 (tsl-layer-mask (car (gimp-layer-create-mask text-shadow-layer
-						      ADD-BLACK-MASK)))
-	 (drop-shadow-layer (car (gimp-layer-new img
-						 width height RGBA-IMAGE
-						 "Drop Shadow" 100 MULTIPLY-MODE)))
-	 (dsl-layer-mask (car (gimp-layer-create-mask drop-shadow-layer
-						      ADD-BLACK-MASK))))
+                                   logo-layer
+                                   b-size
+                                   bg-color
+                                   blend-mode
+                                   blend-fg
+                                   blend-bg
+                                   blend-gradient
+                                   blend-gradient-reverse)
+  (let* (
+        (b-size-2 (blended-logo-scale b-size 0.5))
+        (f-size (blended-logo-scale b-size 0.75))
+        (ds-size (blended-logo-scale b-size 0.5))
+        (ts-size (- b-size-2 3))
+        (width (car (gimp-drawable-width logo-layer)))
+        (height (car (gimp-drawable-height logo-layer)))
+        (blend-layer (car (gimp-layer-new img
+                                          width height RGBA-IMAGE
+                                          "Blend" 100 NORMAL-MODE)))
+        (shadow-layer (car (gimp-layer-new img
+                                           width height RGBA-IMAGE
+                                           "Shadow" 100 NORMAL-MODE)))
+        (text-shadow-layer (car (gimp-layer-new img
+                                                width height RGBA-IMAGE
+                                                "Text Shadow" 100 MULTIPLY-MODE)))
+        (tsl-layer-mask (car (gimp-layer-create-mask text-shadow-layer
+                                                     ADD-BLACK-MASK)))
+        (drop-shadow-layer (car (gimp-layer-new img
+                                                width height RGBA-IMAGE
+                                                "Drop Shadow" 100 MULTIPLY-MODE)))
+        (dsl-layer-mask (car (gimp-layer-create-mask drop-shadow-layer
+                                                     ADD-BLACK-MASK)))
+        )
 
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img shadow-layer 1)
@@ -67,9 +69,9 @@
     (gimp-context-set-foreground '(255 255 255))
 
     (gimp-edit-blend text-shadow-layer FG-BG-RGB-MODE NORMAL-MODE
-		     GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
-		     FALSE 0 0 TRUE
-		     0 0 1 1)
+                     GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+                     FALSE 0 0 TRUE
+                     0 0 1 1)
 
     (gimp-selection-none img)
     (gimp-context-set-foreground blend-fg)
@@ -77,9 +79,9 @@
     (gimp-context-set-gradient blend-gradient)
 
     (gimp-edit-blend blend-layer blend-mode NORMAL-MODE
-		     GRADIENT-LINEAR 100 0 REPEAT-NONE blend-gradient-reverse
-		     FALSE 0 0 TRUE
-		     0 0 width 0)
+                     GRADIENT-LINEAR 100 0 REPEAT-NONE blend-gradient-reverse
+                     FALSE 0 0 TRUE
+                     0 0 width 0)
 
     (gimp-layer-translate logo-layer (- b-size-2) (- b-size-2))
     (gimp-layer-translate blend-layer (- b-size) (- b-size))
@@ -90,69 +92,73 @@
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill dsl-layer-mask BACKGROUND-FILL)
     (gimp-layer-remove-mask drop-shadow-layer MASK-APPLY)
-    (gimp-selection-none img)))
+    (gimp-selection-none img)
+  )
+)
 
 (define (script-fu-blended-logo-alpha img
-				      logo-layer
-				      b-size
-				      bg-color
-				      blend-mode
-				      blend-fg
-				      blend-bg
-				      blend-gradient
-				      blend-gradient-reverse)
+                                      logo-layer
+                                      b-size
+                                      bg-color
+                                      blend-mode
+                                      blend-fg
+                                      blend-bg
+                                      blend-gradient
+                                      blend-gradient-reverse)
   (begin
     (gimp-context-push)
 
     (gimp-image-undo-group-start img)
     (apply-blended-logo-effect img logo-layer b-size bg-color
-			       blend-mode blend-fg blend-bg
-			       blend-gradient blend-gradient-reverse)
+                               blend-mode blend-fg blend-bg
+                               blend-gradient blend-gradient-reverse)
     (gimp-image-undo-group-end img)
     (gimp-displays-flush)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 
 (script-fu-register "script-fu-blended-logo-alpha"
-		    _"Blen_ded..."
-		    _"Add blended backgrounds, highlights, and shadows to the selected region (or alpha)"
-		    "Spencer Kimball"
-		    "Spencer Kimball"
-		    "1996"
-		    "RGBA"
-                    SF-IMAGE      "Image"             0
-                    SF-DRAWABLE   "Drawable"          0
-		    SF-ADJUSTMENT _"Offset (pixels)"  '(15 1 100 1 10 0 1)
-		    SF-COLOR      _"Background color" "white"
-		    SF-OPTION     _"Blend mode"       '(_"FG-BG-RGB"
-							_"FG-BG-HSV"
-							_"FG-Transparent"
-							_"Custom Gradient")
-		    SF-COLOR      _"Start blend"      '(22 9 129)
-		    SF-COLOR      _"End blend"        '(129 9 82)
-		    SF-GRADIENT   _"Gradient"         "Golden"
-		    SF-TOGGLE     _"Gradient reverse" FALSE)
+    _"Blen_ded..."
+    _"Add blended backgrounds, highlights, and shadows to the selected region (or alpha)"
+    "Spencer Kimball"
+    "Spencer Kimball"
+    "1996"
+    "RGBA"
+    SF-IMAGE      "Image"             0
+    SF-DRAWABLE   "Drawable"          0
+    SF-ADJUSTMENT _"Offset (pixels)"  '(15 1 100 1 10 0 1)
+    SF-COLOR      _"Background color" '(255 255 255)
+    SF-OPTION     _"Blend mode"       '(_"FG-BG-RGB"
+                                        _"FG-BG-HSV"
+                                        _"FG-Transparent"
+                                        _"Custom Gradient")
+    SF-COLOR      _"Start blend"      '(22 9 129)
+    SF-COLOR      _"End blend"        '(129 9 82)
+    SF-GRADIENT   _"Gradient"         "Golden"
+    SF-TOGGLE     _"Gradient reverse" FALSE
+)
 
 (script-fu-menu-register "script-fu-blended-logo-alpha"
-			 "<Image>/Filters/Alpha to Logo")
-
+                         "<Image>/Filters/Alpha to Logo")
 
 (define (script-fu-blended-logo text
-				size
-				font
-				text-color
-				bg-color
-				blend-mode
-				blend-fg
-				blend-bg
-				blend-gradient
-				blend-gradient-reverse)
-  (let* ((img (car (gimp-image-new 256 256 RGB)))
-	 (b-size (scale size 0.1))
-	 (text-layer (car (gimp-text-fontname img
-					      -1 0 0 text b-size TRUE
-					      size PIXELS font))))
+                                size
+                                font
+                                text-color
+                                bg-color
+                                blend-mode
+                                blend-fg
+                                blend-bg
+                                blend-gradient
+                                blend-gradient-reverse)
+  (let* (
+        (img (car (gimp-image-new 256 256 RGB)))
+        (b-size (blended-logo-scale size 0.1))
+        (text-layer (car (gimp-text-fontname img -1 0 0 text b-size TRUE size PIXELS font)))
+        )
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
@@ -160,33 +166,36 @@
     (gimp-layer-set-lock-alpha text-layer TRUE)
     (gimp-edit-fill text-layer FOREGROUND-FILL)
     (apply-blended-logo-effect img text-layer b-size bg-color
-			       blend-mode blend-fg blend-bg
-			       blend-gradient blend-gradient-reverse)
+                               blend-mode blend-fg blend-bg
+                               blend-gradient blend-gradient-reverse)
     (gimp-image-undo-enable img)
     (gimp-display-new img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 (script-fu-register "script-fu-blended-logo"
-		    _"Blen_ded..."
-		    _"Create a logo with blended backgrounds, highlights, and shadows"
-		    "Spencer Kimball"
-		    "Spencer Kimball"
-		    "1996"
-		    ""
-		    SF-STRING     _"Text"               "GIMP"
-		    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT       _"Font"               "Crillee"
-		    SF-COLOR      _"Text color"         '(124 174 255)
-		    SF-COLOR      _"Background color"   "white"
-		    SF-OPTION     _"Blend mode"         '(_"FG-BG-RGB"
-							  _"FG-BG-HSV"
-							  _"FG-Transparent"
-							  _"Custom Gradient")
-		    SF-COLOR      _"Start blend"        '(22 9 129)
-		    SF-COLOR      _"End blend"          '(129 9 82)
-		    SF-GRADIENT   _"Gradient"           "Golden"
-		    SF-TOGGLE     _"Gradient reverse"   FALSE)
+    _"Blen_ded..."
+    _"Create a logo with blended backgrounds, highlights, and shadows"
+    "Spencer Kimball"
+    "Spencer Kimball"
+    "1996"
+    ""
+    SF-STRING     _"Text"               "The GIMP"
+    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
+    SF-FONT       _"Font"               "Crillee"
+    SF-COLOR      _"Text color"         '(124 174 255)
+    SF-COLOR      _"Background color"   '(255 255 255)
+    SF-OPTION     _"Blend mode"         '(_"FG-BG-RGB"
+                                          _"FG-BG-HSV"
+                                          _"FG-Transparent"
+                                          _"Custom Gradient")
+    SF-COLOR      _"Start blend"        '(22 9 129)
+    SF-COLOR      _"End blend"          '(129 9 82)
+    SF-GRADIENT   _"Gradient"           "Golden"
+    SF-TOGGLE     _"Gradient reverse"   FALSE
+)
 
 (script-fu-menu-register "script-fu-blended-logo"
-			 "<Toolbox>/Xtns/Logos")
+                         "<Toolbox>/Xtns/Logos")

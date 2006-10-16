@@ -8,14 +8,27 @@ libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 
+libtinyscheme=tinyscheme/libtinyscheme.a
+libftx=ftx/libftx.a
+libre=re/libre.a
+
 if OS_WIN32
 mwindows = -mwindows
 WINSOCK_LIBS = -lws2_32
 endif
 
+AM_CFLAGS = \
+	-DUSE_INTERFACE=1  \
+	-DUSE_STRCASECMP=1 \
+	-DUSE_STRLWR=1     \
+	-I$(top_srcdir)    \
+	$(GTK_CFLAGS)      \
+	-I$(includedir)
+
 AM_LDFLAGS = $(mwindows)
 
-SUBDIRS = siod scripts
+SUBDIRS = tinyscheme ftx re scripts
+
 
 libexecdir = $(gimpplugindir)/plug-ins
 
@@ -36,13 +49,8 @@ script_fu_SOURCES = \
 	script-fu-server.h		\
 	script-fu-types.h		\
 	script-fu-enums.h		\
-	siod-wrapper.c			\
-	siod-wrapper.h
-
-INCLUDES = \
-	-I$(top_srcdir)	\
-	$(GTK_CFLAGS)	\
-	-I$(includedir)
+	scheme-wrapper.c		\
+	scheme-wrapper.h
 
 if HAVE_GLIBC_REGEX
 REGEXREPL =
@@ -58,7 +66,9 @@ LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	siod/libsiod.a		\
+	$(libtinyscheme)	\
+	$(libftx)		\
+	$(libre)		\
 	$(REGEXREPL)		\
 	$(GTK_LIBS)		\
 	$(SOCKET_LIBS)		\

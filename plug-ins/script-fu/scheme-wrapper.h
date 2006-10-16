@@ -16,31 +16,29 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef SIOD_WRAPPER_H
-#define SIOD_WRAPPER_H
+#ifndef SCHEME_WRAPPER_H
+#define SCHEME_WRAPPER_H
 
+FILE        * ts_get_output_file   (void);
+void          ts_set_output_file   (FILE *file);
 
-void          siod_init              (gboolean register_scripts);
+void          ts_set_console_mode  (int flag);
 
-FILE        * siod_get_output_file   (void);
-void          siod_set_output_file   (FILE *file);
+gint          ts_get_verbose_level (void);
+void          ts_set_verbose_level (gint);
 
-void          siod_set_console_mode  (int flag);
+void          ts_set_print_flag    (gint);
+void          ts_print_welcome     (void);
 
-gint          siod_get_verbose_level (void);
-void          siod_set_verbose_level (gint verbose_level);
+const gchar * ts_get_error_msg     (void);
+const gchar * ts_get_success_msg   (void);
 
-void          siod_print_welcome     (void);
+void          tinyscheme_init      (gboolean);
+void          tinyscheme_deinit    (void);
 
-const gchar * siod_get_error_msg     (void);
-const gchar * siod_get_success_msg   (void);
-
-void          siod_output_string     (FILE        *fp,
-                                      const gchar *format,
-                                      ...) G_GNUC_PRINTF (2, 3);
+void          ts_output_string     (FILE *fp, char *string, int len);
 
 /* if the return value is 0, success. error otherwise. */
-gint          siod_interpret_string  (const gchar *expr);
+gint          ts_interpret_string  (const gchar *);
 
-
-#endif /* SIOD_WRAPPER_H */
+#endif /* SCHEME_WRAPPER_H */

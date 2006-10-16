@@ -4,19 +4,21 @@
 ;;; Version 0.8
 
 (define (script-fu-unsharp-mask img drw mask-size mask-opacity)
-  (let* ((drawable-width (car (gimp-drawable-width drw)))
-	 (drawable-height (car (gimp-drawable-height drw)))
-	 (new-image (car (gimp-image-new drawable-width drawable-height RGB)))
-	 (original-layer (car (gimp-layer-new new-image
-					      drawable-width drawable-height
-					      RGB-IMAGE "Original"
-					      100 NORMAL-MODE)))
-	 (original-layer-for-darker #f)
-	 (original-layer-for-lighter #f)
-	 (blured-layer-for-darker #f)
-	 (blured-layer-for-lighter #f)
-	 (darker-layer #f)
-	 (lighter-layer #f))
+  (let* (
+        (drawable-width (car (gimp-drawable-width drw)))
+        (drawable-height (car (gimp-drawable-height drw)))
+        (new-image (car (gimp-image-new drawable-width drawable-height RGB)))
+        (original-layer (car (gimp-layer-new new-image
+                                             drawable-width drawable-height
+                                             RGB-IMAGE "Original"
+                                             100 NORMAL-MODE)))
+        (original-layer-for-darker)
+        (original-layer-for-lighter)
+        (blured-layer-for-darker)
+        (blured-layer-for-lighter)
+        (darker-layer)
+        (lighter-layer)
+        )
 
     (gimp-selection-all img)
     (gimp-edit-copy drw)
@@ -25,7 +27,7 @@
 
     (gimp-image-add-layer new-image original-layer 0)
     (gimp-floating-sel-anchor
-     (car (gimp-edit-paste original-layer FALSE)))
+      (car (gimp-edit-paste original-layer FALSE)))
 
     (set! original-layer-for-darker (car (gimp-layer-copy original-layer TRUE)))
     (set! original-layer-for-lighter (car (gimp-layer-copy original-layer TRUE)))
@@ -36,13 +38,13 @@
     ;; make darker mask
     (gimp-image-add-layer new-image blured-layer-for-darker -1)
     (plug-in-gauss-iir TRUE new-image blured-layer-for-darker mask-size
-		       TRUE TRUE)
+                       TRUE TRUE)
     (set! blured-layer-for-lighter
-	  (car (gimp-layer-copy blured-layer-for-darker TRUE)))
+          (car (gimp-layer-copy blured-layer-for-darker TRUE)))
     (gimp-image-add-layer new-image original-layer-for-darker -1)
     (gimp-layer-set-mode original-layer-for-darker SUBTRACT-MODE)
     (set! darker-layer
-	  (car (gimp-image-merge-visible-layers new-image CLIP-TO-IMAGE)))
+          (car (gimp-image-merge-visible-layers new-image CLIP-TO-IMAGE)))
     (gimp-drawable-set-name darker-layer "darker mask")
     (gimp-drawable-set-visible darker-layer FALSE)
 
@@ -51,7 +53,7 @@
     (gimp-image-add-layer new-image blured-layer-for-lighter -1)
     (gimp-layer-set-mode blured-layer-for-lighter SUBTRACT-MODE)
     (set! lighter-layer
-	  (car (gimp-image-merge-visible-layers new-image CLIP-TO-IMAGE)))
+          (car (gimp-image-merge-visible-layers new-image CLIP-TO-IMAGE)))
     (gimp-drawable-set-name lighter-layer "lighter mask")
 
     ;; combine them
@@ -64,17 +66,22 @@
     (gimp-drawable-set-visible lighter-layer TRUE)
 
     (gimp-image-undo-enable new-image)
-    (gimp-displays-flush)))
-
+    (gimp-displays-flush)
+  )
+)
 
 (script-fu-register "script-fu-unsharp-mask"
-		    _"_Unsharp Mask..."
-		    "Make a new image from the current layer by applying the unsharp mask method"
-		    "Shuji Narazaki <narazaki@gimp.org>"
-		    "Shuji Narazaki"
-		    "1997,1998"
-		    ""
-		    SF-IMAGE       "Image"             0
-		    SF-DRAWABLE    "Drawable to apply" 0
-		    SF-ADJUSTMENT _"Mask size"         '(5 1 100 1 1 0 1)
-		    SF-ADJUSTMENT _"Mask opacity"      '(50 0 100 1 1 0 1))
+  _"Unsharp Mask..."
+  _"Make a new image from the current layer by applying the unsharp mask method"
+  "Shuji Narazaki <narazaki@gimp.org>"
+  "Shuji Narazaki"
+  "1997,1998"
+  ""
+  SF-IMAGE       "Image"             0
+  SF-DRAWABLE    "Drawable to apply" 0
+  SF-ADJUSTMENT _"Mask size"         '(5 1 100 1 1 0 1)
+  SF-ADJUSTMENT _"Mask opacity"      '(50 0 100 1 1 0 1)
+)
+
+(script-fu-menu-register "script-fu-unsharp-mask"
+                         "<Image>/Filters/Enhance")

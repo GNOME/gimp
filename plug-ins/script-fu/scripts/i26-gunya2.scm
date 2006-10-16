@@ -13,21 +13,23 @@
 ;;; Code:
 
 (define (script-fu-i26-gunya2 text text-color frame-color font font-size frame-size)
-  (let* ((img (car (gimp-image-new 256 256 RGB)))
-	 (border (/ font-size 10))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text (* border 2)
-					      TRUE font-size PIXELS font))) 
-	 (width (car (gimp-drawable-width text-layer)))
-	 (height (car (gimp-drawable-height text-layer)))
-	 (dist-text-layer (car (gimp-layer-new img width height RGBA-IMAGE
-					       "Distorted text" 100 NORMAL-MODE)))
-	 (dist-frame-layer (car (gimp-layer-new img width height RGBA-IMAGE
-						"Distorted text" 100 NORMAL-MODE)))
-	 (distortion-img (car (gimp-image-new width height GRAY)))
-	 (distortion-layer (car (gimp-layer-new distortion-img width height
-						GRAY-IMAGE "temp" 100 NORMAL-MODE)))
-	 (radius (/ font-size 10))
-	 (prob 0.5))
+  (let* (
+        (img (car (gimp-image-new 256 256 RGB)))
+        (border (/ font-size 10))
+        (text-layer (car (gimp-text-fontname img -1 0 0 text (* border 2)
+                                             TRUE font-size PIXELS font)))
+        (width (car (gimp-drawable-width text-layer)))
+        (height (car (gimp-drawable-height text-layer)))
+        (dist-text-layer (car (gimp-layer-new img width height RGBA-IMAGE
+                                              "Distorted text" 100 NORMAL-MODE)))
+        (dist-frame-layer (car (gimp-layer-new img width height RGBA-IMAGE
+                                               "Distorted text" 100 NORMAL-MODE)))
+        (distortion-img (car (gimp-image-new width height GRAY)))
+        (distortion-layer (car (gimp-layer-new distortion-img width height
+                                               GRAY-IMAGE "temp" 100 NORMAL-MODE)))
+        (radius (/ font-size 10))
+        (prob 0.5)
+        )
 
     (gimp-context-push)
 
@@ -59,7 +61,7 @@
     (plug-in-gauss-rle 1 distortion-img distortion-layer radius 1 1)
     ;; OK, apply it to dist-text-layer
     (plug-in-displace 1 img dist-text-layer radius radius 1 1
-		      distortion-layer distortion-layer 0)
+                      distortion-layer distortion-layer 0)
     ;; make the distortion data once again fro the frame
     (gimp-edit-fill distortion-layer BACKGROUND-FILL)
     (plug-in-noisify 1 distortion-img distortion-layer FALSE prob prob prob 0.0)
@@ -68,7 +70,7 @@
     (plug-in-gauss-rle 1 distortion-img distortion-layer radius 1 1)
     ;; then, apply it to dist-frame-layer
     (plug-in-displace 1 img dist-frame-layer radius radius 1 1
-		      distortion-layer distortion-layer 0)
+                      distortion-layer distortion-layer 0)
     ;; Finally, clear the bottom layer (text-layer)
     (gimp-selection-all img)
     (gimp-context-set-background '(255 255 255))
@@ -80,22 +82,27 @@
     (gimp-image-delete distortion-img)
     (gimp-display-new img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 
 (script-fu-register "script-fu-i26-gunya2"
-                    _"Imigre-_26..."
-                    _"Create a logo in a two-color, scribbled text style"
-		    "Shuji Narazaki"
-		    "Shuji Narazaki"
-		    "1997"
-		    ""
-		    SF-STRING     _"Text"               "GIMP"
-		    SF-COLOR      _"Text color"         "red"
-		    SF-COLOR      _"Frame color"        '(0 34 255)
-		    SF-FONT       _"Font"               "Becker"
-		    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-ADJUSTMENT _"Frame size"         '(2 1 20 1 5 0 1))
+  _"Imigre-_26..."
+  _"Create a logo in a two-color, scribbled text style"
+  "Shuji Narazaki"
+  "Shuji Narazaki"
+  "1997"
+  ""
+  SF-STRING     _"Text"               "The GIMP"
+  SF-COLOR      _"Text color"         '(255 0 0)
+  SF-COLOR      _"Frame color"        '(0 34 255)
+  SF-FONT       _"Font"               "Becker"
+  SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
+  SF-ADJUSTMENT _"Frame size"         '(2 1 20 1 5 0 1)
+)
+
+;;; i26-gunya2.scm ends here
 
 (script-fu-menu-register "script-fu-i26-gunya2"
-			 "<Toolbox>/Xtns/Logos")
+                         "<Toolbox>/Xtns/Logos")

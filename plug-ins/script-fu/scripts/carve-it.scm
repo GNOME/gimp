@@ -11,22 +11,22 @@
 
 (define (carve-brush brush-size)
   (cond ((<= brush-size 5) "Circle (05)")
-	((<= brush-size 7) "Circle (07)")
-	((<= brush-size 9) "Circle (09)")
-	((<= brush-size 11) "Circle (11)")
-	((<= brush-size 13) "Circle (13)")
-	((<= brush-size 15) "Circle (15)")
-	((<= brush-size 17) "Circle (17)")
-	(else "Circle (19)")))
+        ((<= brush-size 7) "Circle (07)")
+        ((<= brush-size 9) "Circle (09)")
+        ((<= brush-size 11) "Circle (11)")
+        ((<= brush-size 13) "Circle (13)")
+        ((<= brush-size 15) "Circle (15)")
+        ((<= brush-size 17) "Circle (17)")
+        (else "Circle (19)")))
 
 (define (carve-scale val scale)
   (* (sqrt val) scale))
 
 (define (calculate-inset-gamma img layer)
   (let* ((stats (gimp-histogram layer 0 0 255))
-	 (mean (car stats)))
+         (mean (car stats)))
     (cond ((< mean 127) (+ 1.0 (* 0.5 (/ (- 127 mean) 127.0))))
-	  ((>= mean 127) (- 1.0 (* 0.5 (/ (- mean 127) 127.0)))))))
+          ((>= mean 127) (- 1.0 (* 0.5 (/ (- mean 127) 127.0)))))))
 
 
 (define (copy-layer-carve-it dest-image dest-drawable source-image source-drawable)
@@ -36,43 +36,45 @@
   (gimp-selection-all source-image)
   (gimp-edit-copy source-drawable)
       (let ((floating-sel (car (gimp-edit-paste dest-drawable FALSE))))
-	(gimp-floating-sel-anchor floating-sel)))
+        (gimp-floating-sel-anchor floating-sel)))
 
 
 
 (define (script-fu-carve-it mask-img mask-drawable bg-layer carve-white)
-  (let* ((width (car (gimp-drawable-width mask-drawable)))
-	 (height (car (gimp-drawable-height mask-drawable)))
-	 (type (car (gimp-drawable-type bg-layer)))
-	 (img (car (gimp-image-new width height (cond ((= type RGB-IMAGE) RGB)
-						      ((= type RGBA-IMAGE) RGB)
-						      ((= type GRAY-IMAGE) GRAY)
-						      ((= type GRAYA-IMAGE) GRAY)
-						      ((= type INDEXED-IMAGE) INDEXED)
-						      ((= type INDEXEDA-IMAGE) INDEXED)))))
-	 (size (min width height))
-	 (offx (carve-scale size 0.33))
-	 (offy (carve-scale size 0.25))
-	 (feather (carve-scale size 0.3))
-	 (brush-size (carve-scale size 0.3))
-	 (mask-fs 0)
-	 (mask (car (gimp-channel-new img width height "Engraving Mask" 50 '(0 0 0))))
-	 (inset-gamma (calculate-inset-gamma (car (gimp-drawable-get-image bg-layer)) bg-layer))
-	 (mask-fat 0)
-	 (mask-emboss 0)
-	 (mask-highlight 0)
-	 (mask-shadow 0)
-	 (shadow-layer 0)
-	 (highlight-layer 0)
-	 (cast-shadow-layer 0)
-	 (csl-mask 0)
-	 (inset-layer 0)
-	 (il-mask 0)
-	 (bg-width (car (gimp-drawable-width bg-layer)))
-	 (bg-height (car (gimp-drawable-height bg-layer)))
-	 (bg-type (car (gimp-drawable-type bg-layer)))
-	 (bg-image (car (gimp-drawable-get-image bg-layer)))
-	 (layer1 (car (gimp-layer-new img bg-width bg-height bg-type "Layer1" 100 NORMAL-MODE))))
+  (let* (
+        (width (car (gimp-drawable-width mask-drawable)))
+        (height (car (gimp-drawable-height mask-drawable)))
+        (type (car (gimp-drawable-type bg-layer)))
+        (img (car (gimp-image-new width height (cond ((= type RGB-IMAGE) RGB)
+                                                     ((= type RGBA-IMAGE) RGB)
+                                                     ((= type GRAY-IMAGE) GRAY)
+                                                     ((= type GRAYA-IMAGE) GRAY)
+                                                     ((= type INDEXED-IMAGE) INDEXED)
+                                                     ((= type INDEXEDA-IMAGE) INDEXED)))))
+        (size (min width height))
+        (offx (carve-scale size 0.33))
+        (offy (carve-scale size 0.25))
+        (feather (carve-scale size 0.3))
+        (brush-size (carve-scale size 0.3))
+        (mask-fs 0)
+        (mask (car (gimp-channel-new img width height "Engraving Mask" 50 '(0 0 0))))
+        (inset-gamma (calculate-inset-gamma (car (gimp-drawable-get-image bg-layer)) bg-layer))
+        (mask-fat 0)
+        (mask-emboss 0)
+        (mask-highlight 0)
+        (mask-shadow 0)
+        (shadow-layer 0)
+        (highlight-layer 0)
+        (cast-shadow-layer 0)
+        (csl-mask 0)
+        (inset-layer 0)
+        (il-mask 0)
+        (bg-width (car (gimp-drawable-width bg-layer)))
+        (bg-height (car (gimp-drawable-height bg-layer)))
+        (bg-type (car (gimp-drawable-type bg-layer)))
+        (bg-image (car (gimp-drawable-get-image bg-layer)))
+        (layer1 (car (gimp-layer-new img bg-width bg-height bg-type "Layer1" 100 NORMAL-MODE)))
+        )
 
     (gimp-context-push)
 
@@ -92,7 +94,7 @@
     (set! mask-fs (car (gimp-edit-paste mask FALSE)))
     (gimp-floating-sel-anchor mask-fs)
     (if (= carve-white FALSE)
-	(gimp-invert mask))
+        (gimp-invert mask))
 
     (set! mask-fat (car (gimp-channel-copy mask)))
     (gimp-image-add-channel img mask-fat 0)
@@ -171,19 +173,22 @@
     (gimp-display-new img)
     (gimp-image-undo-enable img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 (script-fu-register "script-fu-carve-it"
-		    _"Stencil C_arve..."
-		    _"Create an image with a carved effect using the active (grayscale) drawable as a mask"
-		    "Spencer Kimball"
-		    "Spencer Kimball"
-		    "1997"
-		    "GRAY"
-		    SF-IMAGE     "Mask image"        0
-		    SF-DRAWABLE  "Mask drawable"     0
-		    SF-DRAWABLE _"Image to carve"    0
-		    SF-TOGGLE   _"Carve white areas" TRUE)
+    _"Stencil C_arve..."
+    "Use the specified [GRAY] drawable as a stencil to carve from the specified image. The specified image must be either RGB colour or grayscale, not indexed."
+    "Spencer Kimball"
+    "Spencer Kimball"
+    "1997"
+    "GRAY"
+    SF-IMAGE     "Mask image"        0
+    SF-DRAWABLE  "Mask drawable"     0
+    SF-DRAWABLE _"Image to carve"    0
+    SF-TOGGLE   _"Carve white areas" TRUE
+)
 
 (script-fu-menu-register "script-fu-carve-it"
-			 "<Image>/Filters/Decor")
+                         "<Image>/Filters/Decor")

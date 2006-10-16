@@ -1479,16 +1479,17 @@ AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
 # Check whether script_fu should be built
 #########################################
 
-AC_ARG_ENABLE(script-fu,
-  AC_HELP_STRING([--disable-script-fu],
+have_script_fu=yes
+AC_ARG_WITH(script-fu,
+  AC_HELP_STRING([--without-script-fu],
                  [do not build the script-fu extension]))
 
-if test "x$enable_script_fu" != "xno"; then
-    enable_script_fu="yes"
+if test "x$have_script_fu" = "xyes"; then
+    have_script_fu="yes"
 else
-    enable_script_fu="no (script-fu extension disabled)"
+    have_script_fu="no (script-fu extension disabled)"
 fi
-AM_CONDITIONAL(BUILD_SCRIPT_FU, test "x$enable_script_fu" == "xyes")
+AM_CONDITIONAL(BUILD_SCRIPT_FU, test "x$have_script_fu" == "xyes")
 
 
 ###########################################################
@@ -1737,7 +1738,9 @@ app/widgets/Makefile
 app/xcf/Makefile
 plug-ins/Makefile
 plug-ins/script-fu/Makefile
-plug-ins/script-fu/siod/Makefile
+plug-ins/script-fu/ftx/Makefile
+plug-ins/script-fu/re/Makefile
+plug-ins/script-fu/tinyscheme/Makefile
 plug-ins/script-fu/scripts/Makefile
 plug-ins/script-fu/scripts/images/Makefile
 plug-ins/xjt/Makefile
@@ -1878,7 +1881,8 @@ Optional Plug-Ins:
   PNG:               $have_libpng
   Print:             $enable_print
   PSP:               $have_zlib
-  Script-Fu:         $enable_script_fu
+  Python:            $enable_python
+  Script-Fu:         $have_script_fu
   SVG:               $have_librsvg
   TIFF:              $have_libtiff
   TWAIN (MacOS X):   $mac_twain_ok

@@ -5,29 +5,31 @@
 ;  This script was inspired by Rob Malda's 'coolmetal.gif' graphic
 
 (define (apply-cool-metal-logo-effect img
-				      logo-layer
-				      size
-				      bg-color
-				      gradient
-				      gradient-reverse)
-  (let* ((feather (/ size 5))
-	 (smear 7.5)
-	 (period (/ size 3))
-	 (amplitude (/ size 40))
-	 (shrink (+ 1 (/ size 30)))
-	 (depth (/ size 20))
-	 (width (car (gimp-drawable-width logo-layer)))
-	 (height (car (gimp-drawable-height logo-layer)))
-	 (posx (- (car (gimp-drawable-offsets logo-layer))))
-	 (posy (- (cadr (gimp-drawable-offsets logo-layer))))
-	 (img-width (+ width (* 0.15 height) 10))
-	 (img-height (+ (* 1.85 height) 10))
-	 (bg-layer (car (gimp-layer-new img img-width img-height RGB-IMAGE "Background" 100 NORMAL-MODE)))
-	 (shadow-layer (car (gimp-layer-new img img-width img-height RGBA-IMAGE "Shadow" 100 NORMAL-MODE)))
-	 (reflect-layer (car (gimp-layer-new img width height RGBA-IMAGE "Reflection" 100 NORMAL-MODE)))
-	 (channel 0)
-	 (fs 0)
-	 (layer-mask 0))
+                                      logo-layer
+                                      size
+                                      bg-color
+                                      gradient
+                                      gradient-reverse)
+  (let* (
+        (feather (/ size 5))
+        (smear 7.5)
+        (period (/ size 3))
+        (amplitude (/ size 40))
+        (shrink (+ 1 (/ size 30)))
+        (depth (/ size 20))
+        (width (car (gimp-drawable-width logo-layer)))
+        (height (car (gimp-drawable-height logo-layer)))
+        (posx (- (car (gimp-drawable-offsets logo-layer))))
+        (posy (- (cadr (gimp-drawable-offsets logo-layer))))
+        (img-width (+ width (* 0.15 height) 10))
+        (img-height (+ (* 1.85 height) 10))
+        (bg-layer (car (gimp-layer-new img img-width img-height RGB-IMAGE "Background" 100 NORMAL-MODE)))
+        (shadow-layer (car (gimp-layer-new img img-width img-height RGBA-IMAGE "Shadow" 100 NORMAL-MODE)))
+        (reflect-layer (car (gimp-layer-new img width height RGBA-IMAGE "Reflection" 100 NORMAL-MODE)))
+        (channel 0)
+        (fs 0)
+        (layer-mask 0)
+        )
 
     (gimp-context-push)
 
@@ -47,9 +49,9 @@
     (gimp-context-set-gradient gradient)
 
     (gimp-edit-blend logo-layer CUSTOM-MODE NORMAL-MODE
-		     GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
-		     FALSE 0 0 TRUE
-		     0 0 0 (+ height 5))
+                     GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
+                     FALSE 0 0 TRUE
+                     0 0 0 (+ height 5))
 
     (gimp-rect-select img 0 (- (/ height 2) feather) img-width (* 2 feather) CHANNEL-OP-REPLACE 0 0)
     (plug-in-gauss-iir 1 img logo-layer smear TRUE TRUE)
@@ -75,11 +77,11 @@
     (set! fs (car (gimp-selection-float shadow-layer 0 0)))
     (gimp-edit-clear shadow-layer)
     (gimp-drawable-transform-perspective-default fs
-						 (+ 5 (* 0.15 height)) (- height (* 0.15 height))
-						 (+ 5 width (* 0.15 height)) (- height (* 0.15 height))
-						 5 height
-						 (+ 5 width) height
-						 FALSE FALSE)
+                      (+ 5 (* 0.15 height)) (- height (* 0.15 height))
+                      (+ 5 width (* 0.15 height)) (- height (* 0.15 height))
+                      5 height
+                      (+ 5 width) height
+                      FALSE FALSE)
     (gimp-floating-sel-anchor fs)
     (plug-in-gauss-rle 1 img shadow-layer smear TRUE TRUE)
 
@@ -88,10 +90,11 @@
     (set! fs (car (gimp-edit-paste reflect-layer FALSE)))
     (gimp-floating-sel-anchor fs)
     (gimp-drawable-transform-scale-default reflect-layer
-					   0 0 width (* 0.85 height)
-					   FALSE FALSE)
-    (gimp-drawable-transform-flip-simple reflect-layer ORIENTATION-VERTICAL
-					 TRUE 0 TRUE)
+                                            0 0 width (* 0.85 height)
+                                            FALSE FALSE)
+    (gimp-drawable-transform-flip-simple reflect-layer
+                                         ORIENTATION-VERTICAL
+                                         TRUE 0 TRUE)
     (gimp-layer-set-offsets reflect-layer 5 (+ 3 height))
 
     (set! layer-mask (car (gimp-layer-create-mask reflect-layer ADD-WHITE-MASK)))
@@ -99,74 +102,84 @@
     (gimp-context-set-foreground '(255 255 255))
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-blend layer-mask FG-BG-RGB-MODE NORMAL-MODE
-		     GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
-		     FALSE 0 0 TRUE
-		     0 (- (/ height 2)) 0 height)
+                     GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
+                     FALSE 0 0 TRUE
+                     0 (- (/ height 2)) 0 height)
 
     (gimp-image-remove-channel img channel)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 
 (define (script-fu-cool-metal-logo-alpha img
-					 logo-layer
-					 size
-					 bg-color
-					 gradient
-					 gradient-reverse)
+                                       logo-layer
+                                       size
+                                       bg-color
+                                       gradient
+                                       gradient-reverse)
   (begin
     (gimp-image-undo-group-start img)
     (apply-cool-metal-logo-effect img logo-layer size bg-color
-				  gradient gradient-reverse)
+                                  gradient gradient-reverse)
     (gimp-image-undo-group-end img)
-    (gimp-displays-flush)))
+    (gimp-displays-flush)
+  )
+)
 
 (script-fu-register "script-fu-cool-metal-logo-alpha"
-		    _"Cool _Metal..."
-		    _"Add a metallic logo effect to the selected region (or alpha) with reflections and perspective shadows"
-		    "Spencer Kimball & Rob Malda"
-		    "Spencer Kimball & Rob Malda"
-		    "1997"
-		    "RGBA"
-                    SF-IMAGE       "Image"                0
-                    SF-DRAWABLE    "Drawable"             0
-		    SF-ADJUSTMENT _"Effect size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-COLOR      _"Background color"     "white"
-		    SF-GRADIENT   _"Gradient"             "Horizon 1"
-		    SF-TOGGLE     _"Gradient reverse"     FALSE)
+  _"Cool _Metal..."
+  _"Add a metallic effect to the selected region (or alpha) with reflections and perspective shadows"
+  "Spencer Kimball & Rob Malda"
+  "Spencer Kimball & Rob Malda"
+  "1997"
+  "RGBA"
+  SF-IMAGE      "Image"                 0
+  SF-DRAWABLE   "Drawable"              0
+  SF-ADJUSTMENT _"Effect size (pixels)" '(100 2 1000 1 10 0 1)
+  SF-COLOR      _"Background color"     '(255 255 255)
+  SF-GRADIENT   _"Gradient"             "Horizon 1"
+  SF-TOGGLE     _"Gradient reverse"     FALSE
+)
 
 (script-fu-menu-register "script-fu-cool-metal-logo-alpha"
-			 "<Image>/Filters/Alpha to Logo")
+                         "<Image>/Filters/Alpha to Logo")
 
 
 (define (script-fu-cool-metal-logo text
-				   size
-				   font
-				   bg-color
-				   gradient
-				   gradient-reverse)
-  (let* ((img (car (gimp-image-new 256 256 RGB)))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text 0 TRUE
-					      size PIXELS font))))
+                                   size
+                                   font
+                                   bg-color
+                                   gradient
+                                   gradient-reverse)
+  (let* (
+        (img (car (gimp-image-new 256 256 RGB)))
+        (text-layer (car (gimp-text-fontname img -1 0 0 text 0 TRUE
+                                              size PIXELS font)))
+        )
     (gimp-image-undo-disable img)
     (apply-cool-metal-logo-effect img text-layer size bg-color
-				  gradient gradient-reverse)
+                                  gradient gradient-reverse)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+  )
+)
 
 (script-fu-register "script-fu-cool-metal-logo"
-		    _"Cool _Metal..."
-		    _"Create a metallic logo with reflections and perspective shadows"
-		    "Spencer Kimball & Rob Malda"
-		    "Spencer Kimball & Rob Malda"
-		    "1997"
-		    ""
-		    SF-STRING     _"Text"               "Cool Metal"
-		    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-FONT       _"Font"               "Crillee"
-		    SF-COLOR      _"Background color"   "white"
-		    SF-GRADIENT   _"Gradient"           "Horizon 1"
-		    SF-TOGGLE     _"Gradient reverse"   FALSE)
+  _"Cool _Metal..."
+  _"Create a metallic logo with reflections and perspective shadows"
+  "Spencer Kimball & Rob Malda"
+  "Spencer Kimball & Rob Malda"
+  "1997"
+  ""
+  SF-STRING     _"Text"               "Cool Metal"
+  SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
+  SF-FONT       _"Font"               "Crillee"
+  SF-COLOR      _"Background color"   '(255 255 255)
+  SF-GRADIENT   _"Gradient"           "Horizon 1"
+  SF-TOGGLE     _"Gradient reverse"   FALSE
+)
 
 (script-fu-menu-register "script-fu-cool-metal-logo"
-			 "<Toolbox>/Xtns/Logos")
+                         "<Toolbox>/Xtns/Logos")

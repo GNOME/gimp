@@ -23,16 +23,16 @@
 (define (script-fu-swirly-pattern qsize angle times)
   (define (whirl-it img drawable angle times)
     (if (> times 0)
-	(begin
-	  (plug-in-whirl-pinch 1 img drawable angle 0.0 1.0)
-	  (whirl-it img drawable angle (- times 1)))))
+        (begin
+          (plug-in-whirl-pinch 1 img drawable angle 0.0 1.0)
+          (whirl-it img drawable angle (- times 1)))))
 
   (let* ((hsize (* qsize 2))
-	 (img-size (* qsize 4))
-	 (img (car (gimp-image-new img-size img-size RGB)))
-	 (drawable (car (gimp-layer-new img img-size img-size
-					RGB-IMAGE "Swirly pattern"
-					100 NORMAL-MODE))))
+         (img-size (* qsize 4))
+         (img (car (gimp-image-new img-size img-size RGB)))
+         (drawable (car (gimp-layer-new img img-size img-size
+                                        RGB-IMAGE "Swirly pattern"
+                                        100 NORMAL-MODE))))
 
     (gimp-context-push)
 
@@ -74,18 +74,21 @@
     (gimp-image-undo-enable img)
     (gimp-display-new img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 (script-fu-register "script-fu-swirly-pattern"
-		    _"_Swirly..."
-		    _"Create an image filled with a swirly pattern"
-		    "Federico Mena Quintero"
-		    "Federico Mena Quintero"
-		    "June 1997"
-		    ""
-		    SF-ADJUSTMENT _"Quarter size"             '(20 0 2048 1 10 0 1)
-		    SF-ADJUSTMENT _"Whirl angle"              '(90 0 360 1 1 0 0)
-		    SF-ADJUSTMENT _"Number of times to whirl" '(4 0 128 1 1 0 1))
+  _"_Swirly..."
+  _"Create an image filled with a swirly pattern"
+  "Federico Mena Quintero"
+  "Federico Mena Quintero"
+  "June 1997"
+  ""
+  SF-ADJUSTMENT _"Quarter size"             '(20 0 2048 1 10 0 1)
+  SF-ADJUSTMENT _"Whirl angle"              '(90 0 360 1 1 0 0)
+  SF-ADJUSTMENT _"Number of times to whirl" '(4 0 128 1 1 0 1)
+)
 
 (script-fu-menu-register "script-fu-swirly-pattern"
-			 "<Toolbox>/Xtns/Patterns")
+                         "<Toolbox>/Xtns/Patterns")

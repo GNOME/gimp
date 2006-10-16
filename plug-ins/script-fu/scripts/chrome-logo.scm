@@ -1,22 +1,24 @@
 ;  CHROME-LOGOS
 
 (define (apply-chrome-logo-effect img
-				  logo-layer
-				  offsets
-				  bg-color)
-  (let* ((offx1 (* offsets 0.4))
-	 (offy1 (* offsets 0.3))
-	 (offx2 (* offsets (- 0.4)))
-	 (offy2 (* offsets (- 0.3)))
-	 (feather (* offsets 0.5))
-	 (width (car (gimp-drawable-width logo-layer)))
-	 (height (car (gimp-drawable-height logo-layer)))
-	 (layer1 (car (gimp-layer-new img width height RGBA-IMAGE "Layer 1" 100 DIFFERENCE-MODE)))
-	 (layer2 (car (gimp-layer-new img width height RGBA-IMAGE "Layer 2" 100 DIFFERENCE-MODE)))
-	 (layer3 (car (gimp-layer-new img width height RGBA-IMAGE "Layer 3" 100 NORMAL-MODE)))
-	 (shadow (car (gimp-layer-new img width height RGBA-IMAGE "Drop Shadow" 100 NORMAL-MODE)))
-	 (background (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
-	 (layer-mask (car (gimp-layer-create-mask layer1 ADD-BLACK-MASK))))
+                                  logo-layer
+                                  offsets
+                                  bg-color)
+  (let* (
+        (offx1 (* offsets 0.4))
+        (offy1 (* offsets 0.3))
+        (offx2 (* offsets (- 0.4)))
+        (offy2 (* offsets (- 0.3)))
+        (feather (* offsets 0.5))
+        (width (car (gimp-drawable-width logo-layer)))
+        (height (car (gimp-drawable-height logo-layer)))
+        (layer1 (car (gimp-layer-new img width height RGBA-IMAGE "Layer 1" 100 DIFFERENCE-MODE)))
+        (layer2 (car (gimp-layer-new img width height RGBA-IMAGE "Layer 2" 100 DIFFERENCE-MODE)))
+        (layer3 (car (gimp-layer-new img width height RGBA-IMAGE "Layer 3" 100 NORMAL-MODE)))
+        (shadow (car (gimp-layer-new img width height RGBA-IMAGE "Drop Shadow" 100 NORMAL-MODE)))
+        (background (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
+        (layer-mask (car (gimp-layer-create-mask layer1 ADD-BLACK-MASK)))
+        )
 
     (gimp-context-push)
 
@@ -62,57 +64,66 @@
     (gimp-drawable-set-name layer1 (car (gimp-drawable-get-name logo-layer)))
     (gimp-image-remove-layer img logo-layer)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 (define (script-fu-chrome-logo-alpha img
-				     logo-layer
-				     offsets
-				     bg-color)
+                                     logo-layer
+                                     offsets
+                                     bg-color)
   (begin
     (gimp-image-undo-group-start img)
     (apply-chrome-logo-effect img logo-layer offsets bg-color)
     (gimp-image-undo-group-end img)
-    (gimp-displays-flush)))
+    (gimp-displays-flush)
+  )
+)
 
 (script-fu-register "script-fu-chrome-logo-alpha"
-		    _"C_hrome..."
-		    _"Add a simple chrome effect to the selected region (or alpha)"
-		    "Spencer Kimball"
-		    "Spencer Kimball & Peter Mattis"
-		    "1997"
-		    "RGBA"
-                    SF-IMAGE       "Image"                0
-                    SF-DRAWABLE    "Drawable"             0
-		    SF-ADJUSTMENT _"Offsets (pixels * 2)" '(10 2 100 1 10 0 1)
-		    SF-COLOR      _"Background color"     '(191 191 191))
+  _"C_hrome..."
+  _"Add a simple chrome effect to the selected region (or alpha)"
+  "Spencer Kimball"
+  "Spencer Kimball & Peter Mattis"
+  "1997"
+  "RGBA"
+  SF-IMAGE       "Image"                0
+  SF-DRAWABLE    "Drawable"             0
+  SF-ADJUSTMENT _"Offsets (pixels * 2)" '(10 2 100 1 10 0 1)
+  SF-COLOR      _"Background Color"     '(191 191 191)
+)
 
 (script-fu-menu-register "script-fu-chrome-logo-alpha"
-			 "<Image>/Filters/Alpha to Logo")
-
+                         "<Image>/Filters/Alpha to Logo")
 
 (define (script-fu-chrome-logo text
-			       size
-			       font
-			       bg-color)
-  (let* ((img (car (gimp-image-new 256 256 RGB)))
-	 (b-size (* size 0.2))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text b-size TRUE size PIXELS font))))
+                               size
+                               font
+                               bg-color)
+  (let* (
+        (img (car (gimp-image-new 256 256 RGB)))
+        (b-size (* size 0.2))
+        (text-layer (car (gimp-text-fontname img -1 0 0 text b-size TRUE size PIXELS font)))
+        )
     (gimp-image-undo-disable img)
     (apply-chrome-logo-effect img text-layer (* size 0.1) bg-color)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+  )
+)
 
 (script-fu-register "script-fu-chrome-logo"
-		    _"C_hrome..."
-		    _"Create a simplistic, but cool, chromed logo"
-		    "Spencer Kimball"
-		    "Spencer Kimball & Peter Mattis"
-		    "1997"
-		    ""
-		    SF-STRING     _"Text"               "GIMP"
-		    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-FONT       _"Font"               "Bodoni"
-		    SF-COLOR      _"Background color"   "lightgrey")
+  _"C_hrome..."
+  _"Create a simplistic, but cool, chromed logo"
+  "Spencer Kimball"
+  "Spencer Kimball & Peter Mattis"
+  "1997"
+  ""
+  SF-STRING     _"Text"               "The GIMP"
+  SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
+  SF-FONT       _"Font"               "Bodoni"
+  SF-COLOR      _"Background color"   '(191 191 191)
+)
 
 (script-fu-menu-register "script-fu-chrome-logo"
-			 "<Toolbox>/Xtns/Logos")
+                         "<Toolbox>/Xtns/Logos")

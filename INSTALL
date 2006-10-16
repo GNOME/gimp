@@ -197,8 +197,8 @@ These are:
   --disable-python.  If for some reason you don't want to build the
      Python based pygimp plug-in, you can use --disable-python.
 
-  --disable-script-fu.  If for some reason you don't want to build the
-     Script-Fu plug-in, you can use --disable-script-fu.
+  --without-script-fu.  If for some reason you don't want to build the
+     Script-Fu plug-in, you can use --without-script-fu.
 
 The `make' command builds several things:
  - A bunch of public libraries in the directories starting with 'libgimp'.

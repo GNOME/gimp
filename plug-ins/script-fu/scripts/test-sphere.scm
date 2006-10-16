@@ -8,7 +8,7 @@
 ; In interactive mode it creates an adjustment widget in the dialog.
 ;
 ; Usage:
-; SF-ADJUSTMENT "label" '(value, lower, upper, step_inc, page_inc, digits, type)
+; SF-ADJUSTMENT "label" '(value lower upper step_inc page_inc digits type)
 ;
 ; type is one of: SF-SLIDER(0), SF-SPINNER(1)
 ;
@@ -53,12 +53,12 @@
 ; units as passed in as the default value.
 ;
 ; Usage:
-; SF-BRUSH "Brush" '("Circle (03)" 100.0 44 0)
+; SF-BRUSH "Brush" '("Circle (03)" 100 44 0)
 ;
 ; Here the brush dialog will be popped up with a default brush of Circle (03)
-; opacity 100, spacing 44 and paint mode of Normal (value 0).
+; opacity 100 spacing 44 and paint mode of Normal (value 0).
 ; If this selection was unchanged the value passed to the function as a
-; parameter would be '("Circle (03)" 100.0 44 0).
+; parameter would be '("Circle (03)" 100 44 0).
 ;
 ; ----------------------------------------------------------------------
 ; SF-PATTERN
@@ -154,45 +154,50 @@
 
 
 (define (script-fu-test-sphere radius
-			       light
-			       shadow
-			       bg-color
-			       sphere-color
-			       brush
-			       text
-			       multi-text
-			       pattern
-			       gradient
-			       gradient-reverse
-			       font
-			       size
-			       unused-palette
-			       unused-filename
-			       unused-orientation
-			       unused-interpolation
-			       unused-dirname
-			       unused-image
-			       unused-layer
-			       unused-channel
-			       unused-drawable)
-  (let* ((width (* radius 3.75))
-	 (height (* radius 2.5))
-	 (img (car (gimp-image-new width height RGB)))
-	 (drawable (car (gimp-layer-new img width height RGB-IMAGE
-					"Sphere Layer" 100 NORMAL-MODE)))
-	 (radians (/ (* light *pi*) 180))
-	 (cx (/ width 2))
-	 (cy (/ height 2))
-	 (light-x (+ cx (* radius (* 0.6 (cos radians)))))
-	 (light-y (- cy (* radius (* 0.6 (sin radians)))))
-	 (light-end-x (+ cx (* radius (cos (+ *pi* radians)))))
-	 (light-end-y (- cy (* radius (sin (+ *pi* radians)))))
-	 (offset (* radius 0.1))
-	 (text-extents (gimp-text-get-extents-fontname multi-text
-						       size PIXELS
-						       font))
-	 (x-position (- cx (/ (car text-extents) 2)))
-	 (y-position (- cy (/ (cadr text-extents) 2))))
+                               light
+                               shadow
+                               bg-color
+                               sphere-color
+                               brush
+                               text
+                               multi-text
+                               pattern
+                               gradient
+                               gradient-reverse
+                               font
+                               size
+                               unused-palette
+                               unused-filename
+                               unused-orientation
+                               unused-interpolation
+                               unused-dirname
+                               unused-image
+                               unused-layer
+                               unused-channel
+                               unused-drawable)
+  (let* (
+        (width (* radius 3.75))
+        (height (* radius 2.5))
+        (img (car (gimp-image-new width height RGB)))
+        (drawable (car (gimp-layer-new img width height RGB-IMAGE
+                                       "Sphere Layer" 100 NORMAL-MODE)))
+        (*pi* (* 4 (atan 1.0)))
+        (radians (/ (* light *pi*) 180))
+        (cx (/ width 2))
+        (cy (/ height 2))
+        (light-x (+ cx (* radius (* 0.6 (cos radians)))))
+        (light-y (- cy (* radius (* 0.6 (sin radians)))))
+        (light-end-x (+ cx (* radius (cos (+ *pi* radians)))))
+        (light-end-y (- cy (* radius (sin (+ *pi* radians)))))
+        (offset (* radius 0.1))
+        (text-extents (gimp-text-get-extents-fontname multi-text
+                                                      size PIXELS
+                                                      font))
+        (x-position (- cx (/ (car text-extents) 2)))
+        (y-position (- cy (/ (cadr text-extents) 2)))
+        (shadow-w)
+        (shadow-x)
+        )
 
     (gimp-context-push)
 
@@ -204,30 +209,30 @@
     (gimp-context-set-background '(20 20 20))
 
     (if (and
-	 (or (and (>= light 45) (<= light 75))
-	     (and (<= light 135) (>= light 105)))
-	 (= shadow TRUE))
-	(let ((shadow-w (* (* radius 2.5) (cos (+ *pi* radians))))
-	      (shadow-h (* radius 0.5))
-	      (shadow-x cx)
-	      (shadow-y (+ cy (* radius 0.65))))
-	  (if (< shadow-w 0)
-	      (prog1 (set! shadow-x (+ cx shadow-w))
-		     (set! shadow-w (- shadow-w))))
+         (or (and (>= light 45) (<= light 75))
+             (and (<= light 135) (>= light 105)))
+         (= shadow TRUE))
+        (let ((shadow-w (* (* radius 2.5) (cos (+ *pi* radians))))
+              (shadow-h (* radius 0.5))
+              (shadow-x cx)
+              (shadow-y (+ cy (* radius 0.65))))
+          (if (< shadow-w 0)
+              (begin (set! shadow-x (+ cx shadow-w))
+                     (set! shadow-w (- shadow-w))))
 
-	  (gimp-ellipse-select img shadow-x shadow-y shadow-w shadow-h
-			       CHANNEL-OP-REPLACE TRUE TRUE 7.5)
-	  (gimp-context-set-pattern pattern)
-	  (gimp-edit-bucket-fill drawable PATTERN-BUCKET-FILL MULTIPLY-MODE
-			    100 0 FALSE 0 0)))
+          (gimp-ellipse-select img shadow-x shadow-y shadow-w shadow-h
+                               CHANNEL-OP-REPLACE TRUE TRUE 7.5)
+          (gimp-context-set-pattern pattern)
+          (gimp-edit-bucket-fill drawable PATTERN-BUCKET-FILL MULTIPLY-MODE
+                            100 0 FALSE 0 0)))
 
     (gimp-ellipse-select img (- cx radius) (- cy radius)
-			 (* 2 radius) (* 2 radius) CHANNEL-OP-REPLACE TRUE FALSE 0)
+                         (* 2 radius) (* 2 radius) CHANNEL-OP-REPLACE TRUE FALSE 0)
 
     (gimp-edit-blend drawable FG-BG-RGB-MODE NORMAL-MODE
-		     GRADIENT-RADIAL 100 offset REPEAT-NONE FALSE
-		     FALSE 0 0 TRUE
-		     light-x light-y light-end-x light-end-y)
+                     GRADIENT-RADIAL 100 offset REPEAT-NONE FALSE
+                     FALSE 0 0 TRUE
+                     light-x light-y light-end-x light-end-y)
 
     (gimp-selection-none img)
 
@@ -235,57 +240,60 @@
     (gimp-ellipse-select img 10 10 50 50 CHANNEL-OP-REPLACE TRUE FALSE 0)
 
     (gimp-edit-blend drawable CUSTOM-MODE NORMAL-MODE
-		     GRADIENT-LINEAR 100 offset REPEAT-NONE gradient-reverse
-		     FALSE 0 0 TRUE
-		     10 10 30 60)
+                     GRADIENT-LINEAR 100 offset REPEAT-NONE gradient-reverse
+                     FALSE 0 0 TRUE
+                     10 10 30 60)
 
     (gimp-selection-none img)
 
     (gimp-context-set-foreground '(0 0 0))
     (gimp-floating-sel-anchor (car (gimp-text-fontname img drawable
-						       x-position y-position
-						       multi-text
-						       0 TRUE
-						       size PIXELS
-						       font)))
+                                                       x-position y-position
+                                                       multi-text
+                                                       0 TRUE
+                                                       size PIXELS
+                                                       font)))
 
     (gimp-image-undo-enable img)
     (gimp-display-new img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 (script-fu-register "script-fu-test-sphere"
-		    "_Sphere..."
-		    "Simple script to test and show the usage of the new Script-Fu API extensions."
-		    "Spencer Kimball, Sven Neumann"
-		    "Spencer Kimball"
-		    "1996, 1998"
-		    ""
-		    SF-ADJUSTMENT "Radius (in pixels)" '(100 1 5000 1 10 0 1)
-		    SF-ADJUSTMENT "Lighting (degrees)" '(45 0 360 1 10 1 0)
-		    SF-TOGGLE     "Shadow"             TRUE
-		    SF-COLOR      "Background color"   "white"
-		    SF-COLOR      "Sphere color"       "#FF0000"
-		    SF-BRUSH      "Brush"              '("Circle (03)" 100.0 44 0)
-		    SF-STRING     "Text"               "Script-Fu rocks!"
-		    SF-TEXT       "Multi-line text"    "Hello,\nWorld!"
-		    SF-PATTERN    "Pattern"            "Maple Leaves"
-		    SF-GRADIENT   "Gradient"           "Deep Sea"
-		    SF-TOGGLE     "Gradient reverse"   FALSE
-		    SF-FONT       "Font"               "Agate"
-		    SF-ADJUSTMENT "Font size (pixels)" '(50 1 1000 1 10 0 1)
-		    SF-PALETTE    "Palette"            "Default"
-		    SF-FILENAME   "Environment map"
-		                  (string-append ""
-						 gimp-data-directory
-						 "/scripts/images/beavis.jpg")
-		    SF-OPTION     "Orientation"        '("Horizontal" "Vertical")
-		    SF-ENUM       "Interpolation"      '("InterpolationType" "linear")
-		    SF-DIRNAME    "Output directory"   "/var/tmp/"
-		    SF-IMAGE      "Image"              -1
-		    SF-LAYER      "Layer"              -1
-		    SF-CHANNEL    "Channel"            -1
-		    SF-DRAWABLE   "Drawable"           -1)
+  _"_Sphere"
+  "Simple script to test and show the usage of the new Script-Fu API extensions."
+  "Spencer Kimball, Sven Neumann"
+  "Spencer Kimball"
+  "1996, 1998"
+  ""
+  SF-ADJUSTMENT "Radius (in pixels)" '(100 1 5000 1 10 0 SF-SPINNER)
+  SF-ADJUSTMENT "Lighting (degrees)" '(45 0 360 1 10 1 SF-SLIDER)
+  SF-TOGGLE     "Shadow"             TRUE
+  SF-COLOR      "Background color"   "white"
+  SF-COLOR      "Sphere color"       "#FF0000"
+  SF-BRUSH      "Brush"              '("Circle (03)" 1.0 44 0)
+  SF-STRING     "Text"               "Tiny-Fu rocks!"
+  SF-TEXT       "Multi-line text"    "Hello,\nWorld!"
+  SF-PATTERN    "Pattern"            "Maple Leaves"
+  SF-GRADIENT   "Gradient"           "Deep Sea"
+  SF-TOGGLE     "Gradient reverse"   FALSE
+  SF-FONT       "Font"               "Agate"
+  SF-ADJUSTMENT "Font size (pixels)" '(50 1 1000 1 10 0 SF-SPINNER)
+  SF-PALETTE    "Palette"            "Default"
+  SF-FILENAME   "Environment map"
+                (string-append gimp-data-directory
+                               "/scripts/images/beavis.jpg")
+  SF-OPTION     "Orientation"        '("Horizontal"
+                                       "Vertical")
+  SF-ENUM       "Interpolation"      '("InterpolationType" "linear")
+  SF-DIRNAME    "Output directory"   "/var/tmp/"
+  SF-IMAGE      "Image"              -1
+  SF-LAYER      "Layer"              -1
+  SF-CHANNEL    "Channel"            -1
+  SF-DRAWABLE   "Drawable"           -1
+)
 
 (script-fu-menu-register "script-fu-test-sphere"
-			 "<Toolbox>/Xtns/Languages/Script-Fu/Test")
+                         "<Toolbox>/Xtns/Languages/Script-Fu/Test")

@@ -21,9 +21,11 @@
 
 
 (define (script-fu-beveled-pattern-bullet diameter pattern transparent)
-  (let* ((img (car (gimp-image-new diameter diameter RGB)))
-	 (background (car (gimp-layer-new img diameter diameter RGBA-IMAGE "Bullet" 100 NORMAL-MODE)))
-	 (bumpmap (car (gimp-layer-new img diameter diameter RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE))))
+  (let* (
+        (img (car (gimp-image-new diameter diameter RGB)))
+        (background (car (gimp-layer-new img diameter diameter RGBA-IMAGE "Bullet" 100 NORMAL-MODE)))
+        (bumpmap (car (gimp-layer-new img diameter diameter RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE)))
+        )
 
     (gimp-context-push)
 
@@ -68,24 +70,27 @@
     (gimp-image-remove-layer img bumpmap)
 
     (if (= transparent FALSE)
-	(gimp-image-flatten img))
+        (gimp-image-flatten img))
 
     (gimp-image-undo-enable img)
     (gimp-display-new img)
 
-    (gimp-context-pop)))
+    (gimp-context-pop)
+  )
+)
 
 
 (script-fu-register "script-fu-beveled-pattern-bullet"
-		    _"_Bullet..."
-		    _"Create a beveled pattern bullet for webpages"
-		    "Federico Mena Quintero"
-		    "Federico Mena Quintero"
-		    "July 1997"
-		    ""
-		    SF-ADJUSTMENT _"Diameter"               '(16 1 150 1 10 0 1)
-		    SF-PATTERN    _"Pattern"                "Wood"
-		    SF-TOGGLE     _"Transparent background" FALSE)
+  _"_Bullet..."
+  _"Create a beveled pattern bullet for webpages"
+  "Federico Mena Quintero"
+  "Federico Mena Quintero"
+  "July 1997"
+  ""
+  SF-ADJUSTMENT _"Diameter"               '(16 1 150 1 10 0 1)
+  SF-PATTERN    _"Pattern"                "Wood"
+  SF-TOGGLE     _"Transparent background" FALSE
+)
 
 (script-fu-menu-register "script-fu-beveled-pattern-bullet"
-			 "<Toolbox>/Xtns/Web Page Themes/Beveled Pattern")
+                         "<Toolbox>/Xtns/Web Page Themes/Beveled Pattern")

@@ -54,27 +54,28 @@
                              work-on-copy
                              keep-bump-layer)
 
-  (let* ((index 0)
-         (bevelling-whole-image FALSE)
-         (greyness 0)
-         (thickness (abs thickness))
-         (type (car (gimp-drawable-type-with-alpha drawable)))
-         (image (if (= work-on-copy TRUE) (car (gimp-image-duplicate img)) img))
-         (pic-layer (car (gimp-image-get-active-drawable image)))
-         (offsets (gimp-drawable-offsets pic-layer))
-         (width (car (gimp-drawable-width pic-layer)))
-         (height (car (gimp-drawable-height pic-layer)))
-
-         ; Bumpmap has a one pixel border on each side
-         (bump-layer (car (gimp-layer-new image
-                                          (+ width 2)
-                                          (+ height 2)
-                                          GRAY
-                                          "Bumpmap"
-                                          100
-                                          NORMAL-MODE)))
-         (bevelling-whole-image TRUE)
-         (select))
+  (let* (
+        (index 1)
+        (bevelling-whole-image FALSE)
+        (greyness 0)
+        (thickness (abs thickness))
+        (type (car (gimp-drawable-type-with-alpha drawable)))
+        (image (if (= work-on-copy TRUE) (car (gimp-image-duplicate img)) img))
+        (pic-layer (car (gimp-image-get-active-drawable image)))
+        (offsets (gimp-drawable-offsets pic-layer))
+        (width (car (gimp-drawable-width pic-layer)))
+        (height (car (gimp-drawable-height pic-layer)))
+        ; Bumpmap has a one pixel border on each side
+        (bump-layer (car (gimp-layer-new image
+                                         (+ width 2)
+                                         (+ height 2)
+                                         GRAY
+                                         "Bumpmap"
+                                         100
+                                         NORMAL-MODE)))
+        (select)
+        (bevelling-whole-image)
+        )
 
     (gimp-context-push)
 
@@ -117,7 +118,6 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-drawable-fill bump-layer BACKGROUND-FILL)
 
-    (set! index 1)
     (while (< index thickness)
            (set! greyness (/ (* index 255) thickness))
            (gimp-context-set-background (list greyness greyness greyness))
@@ -161,34 +161,39 @@
     ; clean up
     (gimp-image-remove-channel image select)
     (if (= keep-bump-layer TRUE)
-	(gimp-drawable-set-visible bump-layer 0)
-        (gimp-image-remove-layer image bump-layer))
+        (gimp-drawable-set-visible bump-layer 0)
+        (gimp-image-remove-layer image bump-layer)
+    )
 
     (gimp-image-set-active-layer image pic-layer)
 
     ; enable undo / end undo group
-    (if (= work-on-copy TRUE) 
-	(begin
-	  (gimp-display-new image)
-	  (gimp-image-undo-enable image))
-	(gimp-image-undo-group-end image))
+    (if (= work-on-copy TRUE)
+      (begin
+        (gimp-display-new image)
+        (gimp-image-undo-enable image)
+      )
+      (gimp-image-undo-group-end image)
+    )
 
+    (gimp-context-pop)
     (gimp-displays-flush)
-
-    (gimp-context-pop)))
+  )
+)
 
 (script-fu-register "script-fu-add-bevel"
-                    _"Add B_evel..."
-                    _"Add a bevel border to an image"
-                    "Andrew Donkin <ard@cs.waikato.ac.nz>"
-                    "Andrew Donkin"
-                    "1997/11/06"
-                    "RGB* GRAY*"
-                    SF-IMAGE       "Image"           0
-                    SF-DRAWABLE    "Drawable"        0
-                    SF-ADJUSTMENT _"Thickness"       '(5 0 30 1 2 0 0)
-                    SF-TOGGLE     _"Work on copy"    TRUE
-                    SF-TOGGLE     _"Keep bump layer" FALSE)
+    _"Add B_evel..."
+    _"Add a bevelled border to an image"
+    "Andrew Donkin <ard@cs.waikato.ac.nz>"
+    "Andrew Donkin"
+    "1997/11/06"
+    "RGB* GRAY*"
+    SF-IMAGE       "Image"           0
+    SF-DRAWABLE    "Drawable"        0
+    SF-ADJUSTMENT _"Thickness"       '(5 0 30 1 2 0 0)
+    SF-TOGGLE     _"Work on copy"    TRUE
+    SF-TOGGLE     _"Keep bump layer" FALSE
+)
 
 (script-fu-menu-register "script-fu-add-bevel"
-			 _"<Image>/Filters/Decor")
+                         "<Image>/Filters/Decor")

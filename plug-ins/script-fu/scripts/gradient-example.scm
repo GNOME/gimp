@@ -20,16 +20,18 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 (define (script-fu-gradient-example width
-				    height
-				    gradient-reverse)
-  (let* ((img (car (gimp-image-new width height RGB)))
-	 (drawable (car (gimp-layer-new img width height RGB
-					"Gradient example" 100 NORMAL-MODE)))
+                                    height
+                                    gradient-reverse)
+  (let* (
+        (img (car (gimp-image-new width height RGB)))
+        (drawable (car (gimp-layer-new img width height RGB
+                                       "Gradient example" 100 NORMAL-MODE)))
 
-	 ; Calculate colors for checkerboard... just like in the gradient editor
+        ; Calculate colors for checkerboard... just like in the gradient editor
 
-	 (fg-color (* 255 (/ 2 3)))
-	 (bg-color (* 255 (/ 1 3))))
+        (fg-color (* 255 (/ 2 3)))
+        (bg-color (* 255 (/ 1 3)))
+        )
 
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
@@ -47,24 +49,28 @@
     ; Render gradient
 
     (gimp-edit-blend drawable CUSTOM-MODE NORMAL-MODE
-		     GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
-		     FALSE 0 0 TRUE
-		     0 0 (- width 1) 0)
+                     GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
+                     FALSE 0 0 TRUE
+                     0 0 (- width 1) 0)
 
     ; Terminate
+
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+  )
+)
 
 (script-fu-register "script-fu-gradient-example"
-		    _"Custom _Gradient..."
-		    _"Create an image filled with an example of the current gradient"
-		    "Federico Mena Quintero"
-		    "Federico Mena Quintero"
-		    "June 1997"
-		    ""
-		    SF-ADJUSTMENT _"Width"            '(400 1 2000 1 10 0 1)
-		    SF-ADJUSTMENT _"Height"           '(30 1 2000 1 10 0 1)
-		    SF-TOGGLE     _"Gradient reverse" FALSE)
+    _"Custom _Gradient..."
+    _"Create an image filled with an example of the current gradient"
+    "Federico Mena Quintero"
+    "Federico Mena Quintero"
+    "June 1997"
+    ""
+    SF-ADJUSTMENT _"Width"            '(400 1 2000 1 10 0 1)
+    SF-ADJUSTMENT _"Height"           '(30 1 2000 1 10 0 1)
+    SF-TOGGLE     _"Gradient reverse" FALSE
+)
 
 (script-fu-menu-register "script-fu-gradient-example"
-			 "<Gradients>")
+                         "<Gradients>")
