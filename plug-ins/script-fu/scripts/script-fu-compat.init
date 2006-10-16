@@ -143,6 +143,7 @@
 (define pow expt)
 (define string-lessp string<?)
 (define symbol-bound? defined?)
+(define the-environment current-environment)
 
 (define *pi*
   (* 4 (atan 1.0))

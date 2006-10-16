@@ -1,3 +1,11 @@
+2006-10-16  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* configure.in: Set enable_python to yes if it wasn't set to no.
+	Fixes display of Python status in "Optional Plug-Ins" section. 
+
+	* plug-ins/script-fu/scripts/script-fu-compat.init: Added
+	'the-environment'.
+
 2006-10-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimplayertreeview.c: #include "core/gimp.h" for

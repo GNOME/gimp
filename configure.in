@@ -1434,6 +1434,7 @@ m4_define([pycheck_error], [
 *** to use scripts for GIMP that are written in Python).])
 
 if test "x$enable_python" != xno; then
+  enable_python = "yes"
   dnl check for Python
   AM_PATH_PYTHON(2.3.5,,
     [AC_MSG_ERROR([pycheck_error([Python 2.3.5 or better], [it])])])
