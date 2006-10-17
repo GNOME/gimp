@@ -57,91 +57,92 @@
 ; shortcuts to help topics
 (script-fu-register "gimp-help-2-concepts-paths"
    _"Using _Paths"
-    "Bookmark to gimp-concepts-paths"
+   _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
     "Roman Joost <romanofski@gimp.org>"
     "2006"
     ""
 )
 (script-fu-menu-register "gimp-help-2-concepts-paths"
-			                   "<Toolbox>/Help/User Manual")
+			 "<Toolbox>/Help/User Manual")
 
 (script-fu-register "gimp-help-2-using-web"
    _"_Preparing your Images for the Web"
-    "Bookmark to gimp-using-web"
+   _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
     "Roman Joost <romanofski@gimp.org>"
     "2006"
     ""
 )
 (script-fu-menu-register "gimp-help-2-using-web"
-			                   "<Toolbox>/Help/User Manual")
+			 "<Toolbox>/Help/User Manual")
 
 (script-fu-register "gimp-help-2-using-photography"
    _"_Working with Digital Camera Photos"
-    "Bookmark to gimp-using-photography"
+   _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
     "Roman Joost <romanofski@gimp.org>"
     "2006"
     ""
 )
 (script-fu-menu-register "gimp-help-2-using-photography"
-             			       "<Toolbox>/Help/User Manual")
+			 "<Toolbox>/Help/User Manual")
 
 (script-fu-register "gimp-help-2-using-fileformats"
    _"Create, Open and Save _Files"
-    "Bookmark to gimp-using-fileformats."
+   _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
     "Roman Joost <romanofski@gimp.org>"
     "2006"
     ""
 )
 (script-fu-menu-register "gimp-help-2-using-fileformats"
-			                   "<Toolbox>/Help/User Manual")
+			 "<Toolbox>/Help/User Manual")
 
 (script-fu-register "gimp-help-2-concepts-usage"
    _"_Basic Concepts"
-    "Bookmark to gimp-concepts-usage."
+   _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
     "Roman Joost <romanofski@gimp.org>"
     "2006"
     ""
 )
 (script-fu-menu-register "gimp-help-2-concepts-usage"
-			                   "<Toolbox>/Help/User Manual")
+			 "<Toolbox>/Help/User Manual")
 
 (script-fu-register "gimp-help-2-using-docks"
    _"How to Use _Dialogs"
-    "Bookmark to gimp-using-docks"
+   _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
     "Roman Joost <romanofski@gimp.org>"
     "2006"
     ""
 )
 (script-fu-menu-register "gimp-help-2-using-docks"
-			                   "<Toolbox>/Help/User Manual")
+			 "<Toolbox>/Help/User Manual")
 
 (script-fu-register "gimp-help-2-using-simpleobjects"
    _"Drawing _Simple Objects"
-    "Bookmark to gimp-using-simpleobjects"
+   _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
     "Roman Joost <romanofski@gimp.org>"
     "2006"
     ""
 )
 (script-fu-menu-register "gimp-help-2-using-simpleobjects"
-			                   "<Toolbox>/Help/User Manual")
+			 "<Toolbox>/Help/User Manual")
 
 (script-fu-register "gimp-help-2-using-selections"
    _"Create and Use _Selections"
-		"Bookmark to gimp-using-selections"
-		"Roman Joost <romanofski@gimp.org>"
-		"Roman Joost <romanofski@gimp.org>"
-		"2006"
+   _"Bookmark to the user manual"
+    "Roman Joost <romanofski@gimp.org>"
+    "Roman Joost <romanofski@gimp.org>"
+    "2006"
     ""
 )
 (script-fu-menu-register "gimp-help-2-using-simpleobjects"
-			                   "<Toolbox>/Help/User Manual")
+			 "<Toolbox>/Help/User Manual")
+
 
 ;; Links to GIMP related web sites
 
@@ -159,7 +160,7 @@
 
 (script-fu-register "gimp-online-main-web-site"
    _"_Main Web Site"
-    "Link to http://www.gimp.org/"
+   _"Bookmark to the GIMP web site"
     "Henrik Brix Andersen <brix@gimp.org>"
     "Henrik Brix Andersen <brix@gimp.org>"
     "2003"
@@ -171,7 +172,7 @@
 
 (script-fu-register "gimp-online-developer-web-site"
    _"_Developer Web Site"
-    "Link to http://www.gimp.org/"
+   _"Bookmark to the GIMP web site"
     "Henrik Brix Andersen <brix@gimp.org>"
     "Henrik Brix Andersen <brix@gimp.org>"
     "2003"
@@ -183,7 +184,7 @@
 
 (script-fu-register "gimp-online-docs-web-site"
    _"_User Manual Web Site"
-    "Link to http://docs.gimp.org"
+   _"Bookmark to the GIMP web site"
     "Roman Joost <romanofski@gimp.org>"
     "Roman Joost <romanofski@gimp.org>"
     "2006"
@@ -192,7 +193,7 @@
 
 (script-fu-register "gimp-online-plug-in-web-site"
    _"Plug-in _Registry"
-    "Link to http://www.gimp.org/"
+   _"Bookmark to the GIMP web site"
     "Henrik Brix Andersen <brix@gimp.org>"
     "Henrik Brix Andersen <brix@gimp.org>"
     "2003"
