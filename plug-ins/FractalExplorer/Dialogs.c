@@ -811,7 +811,7 @@ explorer_dialog (void)
   button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   g_signal_connect (button, "clicked",
-                     G_CALLBACK (dialog_reset_callback),
+                    G_CALLBACK (dialog_reset_callback),
                     dialog);
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Reset parameters to default values"),
