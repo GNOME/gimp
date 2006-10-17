@@ -37,7 +37,7 @@ struct _GimpRectSelectTool
 {
   GimpSelectionTool  parent_instance;
 
-  SelectOps          operation;            /* remember for use when modifying   */
+  GimpChannelOps     operation;            /* remember for use when modifying   */
   gboolean           use_saved_op;         /* use operation or get from options */
   gboolean           saved_show_selection; /* used to remember existing value   */
   GimpUndo          *undo;
@@ -49,7 +49,7 @@ struct _GimpRectSelectToolClass
   GimpSelectionToolClass parent_class;
 
   void (* select) (GimpRectSelectTool *rect_select,
-                   SelectOps           operation,
+                   GimpChannelOps      operation,
                    gint                x,
                    gint                y,
                    gint                w,
@@ -58,7 +58,7 @@ struct _GimpRectSelectToolClass
 
 
 void    gimp_rect_select_tool_register (GimpToolRegisterCallback  callback,
-                                            gpointer                  data);
+                                        gpointer                  data);
 
 GType   gimp_rect_select_tool_get_type (void) G_GNUC_CONST;
 

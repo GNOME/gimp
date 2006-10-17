@@ -105,7 +105,7 @@ static gboolean gimp_rect_select_tool_execute             (GimpRectangleTool *re
 static void     gimp_rect_select_tool_cancel              (GimpRectangleTool *rect_tool);
 static gboolean gimp_rect_select_tool_rectangle_changed   (GimpRectangleTool *rect_tool);
 static void     gimp_rect_select_tool_real_select         (GimpRectSelectTool *rect_select,
-                                                           SelectOps           operation,
+                                                           GimpChannelOps      operation,
                                                            gint                x,
                                                            gint                y,
                                                            gint                w,
@@ -290,7 +290,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
       GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
       GimpImage            *image   = tool->display->image;
       GimpUndo             *undo;
-      SelectOps             operation;
+      GimpChannelOps        operation;
 
       if (rect_select->use_saved_op)
         operation = rect_select->operation;
@@ -316,7 +316,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
 
       /* if the operation is "Replace", turn off the marching ants,
          because they are confusing */
-      if (operation == SELECTION_REPLACE)
+      if (operation == GIMP_CHANNEL_OP_REPLACE)
         gimp_display_shell_set_show_selection (GIMP_DISPLAY_SHELL (display->shell),
                                                FALSE);
     }
@@ -444,7 +444,7 @@ gimp_rect_select_tool_select (GimpRectangleTool *rectangle,
   GimpSelectionOptions *options     = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpImage            *image;
   gboolean              rectangle_exists;
-  SelectOps             operation;
+  GimpChannelOps        operation;
 
   gimp_tool_pop_status (tool, tool->display);
 
@@ -464,13 +464,13 @@ gimp_rect_select_tool_select (GimpRectangleTool *rectangle,
   /* if rectangle exists, turn it into a selection */
   if (rectangle_exists)
     GIMP_RECT_SELECT_TOOL_GET_CLASS (rect_select)->select (rect_select,
-                                                               operation,
-                                                               x, y, w, h);
+                                                           operation,
+                                                           x, y, w, h);
 }
 
 static void
 gimp_rect_select_tool_real_select (GimpRectSelectTool *rect_select,
-                                   SelectOps           operation,
+                                   GimpChannelOps      operation,
                                    gint                x,
                                    gint                y,
                                    gint                w,

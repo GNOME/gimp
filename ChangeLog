@@ -1,5 +1,11 @@
 2006-10-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimprectangleselecttool.[ch]
+	* app/tools/gimpellipseselecttool.c: use enum GimpChannelOps
+	instead of SelectOps.
+
+2006-10-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpselectioneditor.c: use enum GimpChannelOps
 	instead of SelectOps (which is a tool state).
 

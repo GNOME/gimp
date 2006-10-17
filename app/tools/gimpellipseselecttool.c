@@ -45,7 +45,7 @@
 static void   gimp_ellipse_select_tool_draw   (GimpDrawTool       *draw_tool);
 
 static void   gimp_ellipse_select_tool_select (GimpRectSelectTool *rect_tool,
-                                               SelectOps           operation,
+                                               GimpChannelOps      operation,
                                                gint                x,
                                                gint                y,
                                                gint                w,
@@ -129,7 +129,7 @@ gimp_ellipse_select_tool_draw (GimpDrawTool *draw_tool)
 
 static void
 gimp_ellipse_select_tool_select (GimpRectSelectTool *rect_tool,
-                                 SelectOps           operation,
+                                 GimpChannelOps      operation,
                                  gint                x,
                                  gint                y,
                                  gint                w,
