@@ -1,5 +1,13 @@
 2006-10-17  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c: mention paths in the tooltips.
+
+2006-10-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-console.[ch]
 	(script_fu_output_to_console): added a length parameter to avoid
 	needless string duplication.
