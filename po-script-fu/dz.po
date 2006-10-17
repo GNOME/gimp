@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp_script_fu.head.pot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-19 03:23+0200\n"
-"PO-Revision-Date: 2006-05-03 10:35-0500\n"
-"Last-Translator: sonam pelden\n"
+"POT-Creation-Date: 2006-10-13 04:02+0200\n"
+"PO-Revision-Date: 2006-10-17 16:36+0530\n"
+"Last-Translator: wangmo sherpa <rinwanshe@yahoo.com>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
-msgstr "ཨིསི་ཀིརིཔིཊི་_ཕུ་མ་སྒྲོམ།"
+msgstr "ཨིསི་ཀིརིཔིཊི་ཕུ་མ་སྒྲོམ།(_F)"
 
 #: ../plug-ins/script-fu/script-fu-console.c:237
 msgid "_Browse..."
@@ -31,91 +31,70 @@ msgstr "བརྡ་འཚོལ...(_B)"
 msgid "Script-Fu Procedure Browser"
 msgstr "ཨིསི་ཀིརིཔིཊི-ཕུ་བྱ་སྒོའི་ལམ་ལུགས་ཀྱི་བརའུ་ཟར།"
 
-#: ../plug-ins/script-fu/script-fu-console.c:584
-msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "ཨིསི་ཀིརིཔིཊི-ཕུ་ བརྟག་ཞིབ་ཐབས་ལམ་འདི་གིས་ ལས་བཀོལ་ཕན་ཚུན་འབྲེལ་ལྡན་རྐྱངམ་ཅིག་འབད་བཅུགཔ་ཨིན།"
+#: ../plug-ins/script-fu/script-fu-console.c:591
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "ཨིསི་ཀིརིཔིཊི-ཕུ་ བརྟག་ཞིབ་ཐབས་ལམ་འདི་གིས་ ཕན་ཚུན་འབྲེལ་ལྡན་མ་ཡིན་པའི་ལས་བཀོལ་རྐྱངམ་ཅིག་འབད་བཅུགཔ་ཨིན།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:174
+#: ../plug-ins/script-fu/script-fu-interface.c:177
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གིས་ ཚར་ཅིག་གུ་ཡིག་ཚུགས་གཉིས་ལས་སྦྱོར་འབད་མི་ཚུགས།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:176
+#: ../plug-ins/script-fu/script-fu-interface.c:179
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "ཁྱོད་ཀྱིས་ ཧེ་མ་ལས་ \"%s\" ཡིག་ཚུགས་འདི་གཡོག་བཀོལ་བའི་བསྒང་ཨིན་པས།"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:199
-#: ../plug-ins/script-fu/script-fu-interface.c:201
+#: ../plug-ins/script-fu/script-fu-interface.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:204
 msgid "/Script-Fu/"
 msgstr "/ཨིསི་ཀིརིཔིཊི-ཕུ།/"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:214
+#: ../plug-ins/script-fu/script-fu-interface.c:222
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ།: %s"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:281
+#: ../plug-ins/script-fu/script-fu-interface.c:288
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:324
+#: ../plug-ins/script-fu/script-fu-interface.c:331
 msgid "Script-Fu Color Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་ ཚོས་གཞི་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:431
+#: ../plug-ins/script-fu/script-fu-interface.c:438
 msgid "Script-Fu File Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གི་ཡིག་སྣོད་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:435
+#: ../plug-ins/script-fu/script-fu-interface.c:441
 msgid "Script-Fu Folder Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གི་ཡིག་སྣོད་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:449
+#: ../plug-ins/script-fu/script-fu-interface.c:453
 msgid "Script-Fu Font Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གི་ཡིག་གཟུགས་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:457
+#: ../plug-ins/script-fu/script-fu-interface.c:461
 msgid "Script-Fu Palette Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གི་པེ་ལེཊི་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:465
+#: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-fu Pattern Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གི་དཔེ་རིས་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:472
+#: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Gradient Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གི་ སྟེགས་རིས་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:480
+#: ../plug-ins/script-fu/script-fu-interface.c:488
 msgid "Script-Fu Brush Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གི་ པྱིར་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1008
-#, c-format
-msgid "About %s"
-msgstr "%s སྐོར་ལས།"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1073
-msgid "Author:"
-msgstr "རྩོམ་པ་པོ:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1080
-msgid "Copyright:"
-msgstr "འདྲ་བཤུས་དབང་ཆ:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1087
-msgid "Date:"
-msgstr "ཚེས་གྲངས:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1096
-msgid "Image Types:"
-msgstr "གཟུགས་བརྙན་གྱི་དབྱེ་བ:"
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:644
+#: ../plug-ins/script-fu/script-fu-scripts.c:656
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -126,298 +105,322 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:653
+#: ../plug-ins/script-fu/script-fu-server.c:710
 msgid "Script-Fu Server Options"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་ སར་བར་གྱི་གདམ་ཁ་ཚུ།"
 
-#: ../plug-ins/script-fu/script-fu-server.c:658
+#: ../plug-ins/script-fu/script-fu-server.c:715
 msgid "_Start Server"
 msgstr "སར་བར་འགོ་བཙུགས།(_S)"
 
-#: ../plug-ins/script-fu/script-fu-server.c:686
+#: ../plug-ins/script-fu/script-fu-server.c:743
 msgid "Server port:"
 msgstr "སར་བར་འདྲེན་ལམ:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:692
+#: ../plug-ins/script-fu/script-fu-server.c:749
 msgid "Server logfile:"
 msgstr "སར་བར་དྲན་དེབ་ཡིག་སྣོད:"
 
-#: ../plug-ins/script-fu/script-fu.c:116
+#: ../plug-ins/script-fu/script-fu.c:109
+msgid "Interactive console for Script-Fu development"
+msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་ གོང་འཕེལ་དོན་ལུ་ ཕན་ཚུན་འབྲེལ་ལྡན་མ་སྒྲོམ།"
+
+#: ../plug-ins/script-fu/script-fu.c:115
 msgid "Script-Fu _Console"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གི་མ་སྒྲོམ།(_C)"
 
-#: ../plug-ins/script-fu/script-fu.c:123
-#: ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:316
+#: ../plug-ins/script-fu/script-fu.c:122
+#: ../plug-ins/script-fu/script-fu.c:151
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "<Toolbox>/Xtns/Languages/Script-Fu"
 msgstr "<ལག་ཆས་སྒྲོམ>/ཨེགས་ཊི་ཨེན་ཨེསི/སྐད་ཡིག་/ཨིསི་ཀིརིཔིཊི་-ཕུ།"
 
-#: ../plug-ins/script-fu/script-fu.c:145
+#: ../plug-ins/script-fu/script-fu.c:139
+msgid "Server for remote Script-Fu operation"
+msgstr "ཐག་རིང་གི་ ཨིསི་ཀིརིཔིཊི་-ཕུ་ བཀོལ་སྤྱོད་དོན་ལུ་ སར་བར།"
+
+#: ../plug-ins/script-fu/script-fu.c:144
 msgid "_Start Server..."
 msgstr "སར་བར་འགོ་བཙུགས...(_S)"
 
-#: ../plug-ins/script-fu/script-fu.c:269
+#: ../plug-ins/script-fu/script-fu.c:267
 msgid "_GIMP Online"
-msgstr "ཇི་ཨའི་ཨེམ་པི་ གློག་ཐོག(_G)"
+msgstr "ཇི་ཨའི་ཨེམ་པི་ གློག་ཐོག་ལམ་ཐོག་ལུ།(_G)"
 
-#: ../plug-ins/script-fu/script-fu.c:270
+#: ../plug-ins/script-fu/script-fu.c:268
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
 msgid "_User Manual"
 msgstr "ལག་ལེན་པའི་ལག་ཐོག(_U)"
 
-#: ../plug-ins/script-fu/script-fu.c:273
+#: ../plug-ins/script-fu/script-fu.c:271
 msgid "_Script-Fu"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ།(_S)"
 
-#: ../plug-ins/script-fu/script-fu.c:275
+#: ../plug-ins/script-fu/script-fu.c:273
 msgid "_Buttons"
 msgstr "ཨེབ་རྟ་ཚུ།(_B)"
 
-#: ../plug-ins/script-fu/script-fu.c:277
+#: ../plug-ins/script-fu/script-fu.c:275
 msgid "_Logos"
 msgstr "ལས་རྟགས་ཚུ།(_L)"
 
-#: ../plug-ins/script-fu/script-fu.c:279
+#: ../plug-ins/script-fu/script-fu.c:277
 msgid "_Misc"
 msgstr "སྣ་ཚོགས།(_M)"
 
-#: ../plug-ins/script-fu/script-fu.c:281
+#: ../plug-ins/script-fu/script-fu.c:279
 msgid "_Patterns"
-msgstr "དཔེ་རིས་ཚུ།(_P)"
+msgstr "དཔེ་གཞི་ཚུ།(_P)"
 
-#: ../plug-ins/script-fu/script-fu.c:283
+#: ../plug-ins/script-fu/script-fu.c:281
 msgid "_Test"
 msgstr "བརྟག་ཞིབ།(_T)"
 
-#: ../plug-ins/script-fu/script-fu.c:285
+#: ../plug-ins/script-fu/script-fu.c:283
 msgid "_Utils"
 msgstr "ཡུ་ཊི་ཨའི་ཨེལ་ཨེསི།(_U)"
 
-#: ../plug-ins/script-fu/script-fu.c:287
+#: ../plug-ins/script-fu/script-fu.c:285
 msgid "_Web Page Themes"
-msgstr "ཝེབ་ཤོག་ལེབ་ཀྱི་བརྗོད་དོན།(_W)"
+msgstr "ཝེབ་ཤོག་ལེབ་ཀྱི་བརྗོད་དོན་ཚུ།(_W)"
+
+#: ../plug-ins/script-fu/script-fu.c:287
+msgid "_Alien Glow"
+msgstr "ཨེ་ལིན་དམར་མདངས།(_A)"
 
 #: ../plug-ins/script-fu/script-fu.c:289
-msgid "_Alien Glow"
-msgstr "ཨེ་ལིན་གོལོ།(_A)"
+msgid "_Beveled Pattern"
+msgstr "སེར་ཁ་བཟོ་བཟོཝ་བའི་དཔེ་གཞི།(_B)"
 
 #: ../plug-ins/script-fu/script-fu.c:291
-msgid "_Beveled Pattern"
-msgstr "དཔེ་རིས་སེར་ཁ་བཟོ་བཟོཝ།(_B)"
-
-#: ../plug-ins/script-fu/script-fu.c:293
 msgid "_Classic.Gimp.Org"
 msgstr "སྔོན་སྲོལ་ཇི་ཨའེ་ཨེམ་པི་ལས་སྡེ།(_O)"
 
-#: ../plug-ins/script-fu/script-fu.c:296
+#: ../plug-ins/script-fu/script-fu.c:294
 msgid "Alpha to _Logo"
 msgstr "ཨཱལ་ཕ་ལས་ལས་རྟགས་ཚུན།(_L)"
 
-#: ../plug-ins/script-fu/script-fu.c:298
+#: ../plug-ins/script-fu/script-fu.c:296
 msgid "_Decor"
-msgstr "ཌི་ཀོའོར།(_D)"
+msgstr "མཛེས་བཀོད།(_D)"
 
-#: ../plug-ins/script-fu/script-fu.c:300
+#: ../plug-ins/script-fu/script-fu.c:298
 msgid "_Render"
 msgstr "ལྷག་སྟོན་འབད་ནི།(_R)"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:301
+msgid "Re-read all available Script-Fu scripts"
+msgstr "འཐོམ་ཆོག་ཆོག་ཡོད་པའི་ ཨིསི་ཀིརིཔིཊི་-ཕུ་ ཨིསི་ཀིརིཔིཊིསི་ཆ་མཉམ་རང་ ལོག་ལྷག"
+
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Refresh Scripts"
-msgstr "ཡིག་ཚུགས་ཚུ་ཡང་སེལ་འབད་བཞག(_R)"
+msgstr "ཡིག་ཚུགས་ཚུ་ཡང་སེལ་འབད།(_R)"
+
+#: ../plug-ins/script-fu/script-fu.c:329
+msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
+msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་ ཌའི་ལོག་སྒྲོམ་འདི་ཁ་ཕྱེ་ཡོདཔ་ད་ ཁྱོད་ཀྱིས་ \"Refresh Scripts\" འདི་ ལག་ལེན་འཐབ་མི་ཚུགསཔ་ཨིན། ཁྱོད་ཀྱིས་ ཨིསི་ཀིརིཔིཊི་-ཕུ་ཝིན་ཌོསི་ཆ་མཉམ་རང་ཁ་བསྡམས་ཏེ་ ལོག་སྟེ་རང་འབད་རྩོལ་བསྐྱེད་གནང་།"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
-msgstr "གློག་ཐོག...3D (_O)"
+msgstr "ཕྱོགས་གསུམ་མཐའ་ཐིག... (_O)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
 msgstr "བཱམཔ་མེཔི་(ཨཱལ་ཕ་བང་རིམ།)མཐའ་འཁོར་རབ་རིབ།"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:4
+msgid "Create a logo with outlined text and a drop shadow"
+msgstr "མཐའ་ཐིག་འབྲི་ཡོད་པའི་ཚིག་ཡིག་དང་བཅསཔ་སྦེ་ ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད་ཞིནམ་ལས་ གྱིབ་མ་བཀོ་བཞག"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:6
 msgid "Default bumpmap settings"
 msgstr "སྔོན་སྒྲིག་བཱམཔ་མེཔི་གཞི་སྒྲིག་ཚུ།"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:3
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:5
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:6
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
-#: ../plug-ins/script-fu/scripts/slide.scm.h:1
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:4
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/title-header.scm.h:1
-msgid "Font"
-msgstr "ཡིག་གཟུགས།"
-
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:5
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:3
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:4
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:7
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:5
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:8
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:6
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:7
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:7
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/slide.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:5
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:2
+msgid "Font"
+msgstr "ཡིག་གཟུགས།"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:12
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:6
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:9
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:8
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:8
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:3
 msgid "Font size (pixels)"
 msgstr "ཡིག་གཟུགས་ཀྱི་ཚད།(པིག་སེལསི།)"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:6
-msgid "Outline blur radius"
-msgstr "གློག་ཐོག་གུ་མཐའ་འཁོར་རབ་རིབ།"
-
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:11
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:9
+msgid "Outline blur radius"
+msgstr "མཐའ་འཁོར་རབ་རིབ་མཐའ་ཐིག་འབྲི།"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
+msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་འདི་དཔེ་གཞི་དང་གཅིག་ཁར་མཐའ་ཐིག་འབྲི་ཞིནམ་ལས་ (ཡང་ན་ཨཱལ་ཕ་) གྱིབ་མ་མར་བཞག་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:13
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
 msgid "Pattern"
 msgstr "དཔེ་རིས།"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:14
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:16
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:6
 msgid "Shadow X offset"
 msgstr "གྱིབ་མ་ཨེགསི་པར་ལེན།"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:15
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:6
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:17
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:7
 msgid "Shadow Y offset"
 msgstr "གྱིབ་མ་ཝའི་པར་ལེན།"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:12
 msgid "Shadow blur radius"
 msgstr "གྱིབ་མའི་མཐའ་འཁོར་རབ་རིབ།"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:11
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:8
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:5
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:16
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:9
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:12
-#: ../plug-ins/script-fu/scripts/slide.scm.h:4
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:12
-#: ../plug-ins/script-fu/scripts/title-header.scm.h:4
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:13
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:17
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:7
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:14
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:18
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:10
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:13
+#: ../plug-ins/script-fu/scripts/slide.scm.h:5
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:8
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:5
 msgid "Text"
 msgstr "ཚིག་ཡིག"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:1
 msgid "3_D Truchet..."
-msgstr "3Dཊུ་ཆེཊི...(_T)"
+msgstr "ཕྱོགས་གསུམ་ ཊྲ་ཅེཊི།...(_D)"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:1
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:1
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:2
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:1
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:1
 msgid "Background color"
@@ -429,50 +432,62 @@ msgid "Block size"
 msgstr "ཚད་སྡེབ་ཚན།"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:4
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
+msgid "Create an image filled with a 3D Truchet pattern"
+msgstr "ཕྱོགས་གསུམ་ ཊྲ་ཅེཊི་དཔེ་གཞི་དང་གཅིག་ཁར་བཀང་ཡོད་པའི་ གཟུགས་བརྙན་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
 msgid "End blend"
 msgstr "མཉམ་སྡེབ་མཇུག"
 
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:4
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:6
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:5
 msgid "Number of X tiles"
 msgstr "ཨེགསི་ཊ་ཡིལ་གྱི་ཨང་གྲངས།"
 
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:6
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:5
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:7
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:6
 msgid "Number of Y tiles"
 msgstr "ཝའི་ཊ་ཡིལ་གྱི་ཨང་གྲངས།"
 
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:7
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:14
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:8
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:16
 msgid "Start blend"
 msgstr "མཉམ་སྡེབ་འགོ་བཙུགས།"
 
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:8
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:9
 msgid "Supersample"
 msgstr "དཔེ་ཚད་ཡང་དག"
 
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:9
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:7
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:10
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:8
 msgid "Thickness"
 msgstr "སྟུག་ཚད།"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
-msgid "Add B_evel..."
-msgstr "སེར་ཁ་བསྡོམས...(_e)"
+msgid "<Image>/Filters/Decor"
+msgstr "<Image>/ཚགས་མ་ཚུ་/མཛེས་བཀོད།"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:10
+msgid "Add B_evel..."
+msgstr "སེར་ཁ་ཁ་སྐོང་བརྐྱབ།...(_e)"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
+msgid "Add a bevel border to an image"
+msgstr "གཟུགས་བརྙན་གཅིག་ལུ་ སེར་ཁ་མཐའ་མཚམས་གཅིག་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
 msgid "Keep bump layer"
 msgstr "བཱམཔ་གི་བང་རིམ་བདག་འཛིན་སྦེ་བཞག"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:5
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:7
-#: ../plug-ins/script-fu/scripts/slide.scm.h:5
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:5
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:6
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:8
+#: ../plug-ins/script-fu/scripts/slide.scm.h:6
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:6
 msgid "Work on copy"
 msgstr "འདྲ་བཤུས་གུ་ལཱ་འབད།"
 
@@ -481,75 +496,83 @@ msgid "Add _Border..."
 msgstr "མཐའ་བཚབས་བསྡོམས...(_B)"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
+msgid "Add a border around an image"
+msgstr "གཟུགས་བརྙེན་གྱི་མཐའ་སྐོར་ལུ་ མཐའ་མཚམས་གཅིག་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border X size"
 msgstr "མཐའ་མཚམས་ཨེགསི་གི་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:3
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border Y size"
 msgstr "མཐའ་མཚམས་ཝའི་གི་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Border color"
 msgstr "མཐའ་མཚམས་ཚོས་གཞི།"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:6
 msgid "Delta value on color"
 msgstr "ཚོས་གཞི་གུ་ཌེལ་ཊའི་གནས་གོང་།"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
-msgid "Down"
-msgstr "མར།"
+msgid "Create an arrow graphic with an eerie glow theme for web pages"
+msgstr "ཝེབ་ཤོག་ལེབ་ཚུའི་དོན་ལུ་ དམར་མདངས་བརྗོད་དོན་གཡང་ཟ་སི་སི་དང་གཅིག་ཁར་ བརྡ་རྟགས་ཚད་རིས་གཅིག་གསར་བསྐྲུན་འབད།"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
-#: ../plug-ins/script-fu/scripts/camo.scm.h:4
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
-msgid "Flatten image"
-msgstr "གཟུགས་བརྙན་ལེབ་ཏེམ་བཟོ།"
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+msgid "Down"
+msgstr "མར།"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
-msgid "Glow color"
-msgstr "ཚོས་གཞི་གོལོ།"
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/camo.scm.h:5
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
+msgid "Flatten image"
+msgstr "གཟུགས་བརྙན་ལེབ་ཏེམ་བཟོ།"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
-msgid "Left"
-msgstr "གཡོན།"
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+msgid "Glow color"
+msgstr "ཚོས་གཞི་དམར་མདངས།"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
+msgid "Left"
+msgstr "གཡོན།"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
 msgid "Orientation"
 msgstr "ཕྱོགས།"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
 msgid "Right"
 msgstr "གཡས།"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
-#: ../plug-ins/script-fu/scripts/lava.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/lava.scm.h:7
 msgid "Size"
 msgstr "ཚད།"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
 msgid "Up"
 msgstr "ཡར།"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
 msgid "_Arrow..."
 msgstr "མདའ་རྟགས...(_A)"
 
@@ -561,222 +584,310 @@ msgstr "མཐོ་ཚད་ཕྲ་རིང་།"
 msgid "Bar length"
 msgstr "རིང་ཚད་ཕྲ་རིང་།"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
-msgid "_Hrule..."
-msgstr "ཧུརལི...(_H)"
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+msgid "Create an Hrule graphic with an eerie glow theme for web pages"
+msgstr "ཝེབ་ཤོག་ལེབ་ཚུའི་དོན་ལུ་ དམར་མདངས་བརྗོད་དོན་གཡང་ཟ་སི་སི་དང་གཅིག་ཁར་ Hrule ཚད་རིས་གསར་བསྐྲུན་འབད།"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
+msgid "_Hrule..."
+msgstr "_Hrule..."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+msgid "Create a bullet graphic with an eerie glow theme for web pages"
+msgstr "ཝེབ་ཤོག་ལེབ་ཚུའི་དམར་མདངས་བརྗོད་དོན་གཡང་ཟ་སི་སི་དང་གཅིག་ཁར་ འགོ་ཚག་ཚད་རིས་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:7
 msgid "Radius"
 msgstr "མཐའ་འཁོར།"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
 msgid "_Bullet..."
 msgstr "འགོ་ཚག...(_B)"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "B_utton..."
-msgstr "ཨེབ་རྟ(_u)..."
+msgstr "ཨེབ་རྟ།...(_u)"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
-msgid "Glow radius"
-msgstr "མཐའ་འཁོར་གོལོ།"
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+msgid "Create a button graphic with an eerie glow theme for web pages"
+msgstr "ཝེབ་ཤོག་ལེབ་ཚུའི་དོན་ལུ་ དམར་མདངས་བརྗོད་དོན་གཡང་ཟ་སི་སི་དང་གཅིག་ཁར་ འགོ་ཚག་ཚད་རིས་གསར་བསྐྲུན་འབད།"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
+msgid "Glow radius"
+msgstr "མཐའ་འཁོར་དམར་མདངས།"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:6
 msgid "Padding"
 msgstr "བར་ཤབས།"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:16
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:10
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:13
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:18
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:11
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:9
 msgid "Text color"
 msgstr "ཚོས་གཞི་གི་ཚིག་ཡིག"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
-msgid "Alien _Glow..."
-msgstr "ཨེ་ལིན་གོལོ...(_G)"
+msgid "Add an eerie glow around the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་(ཡང་ན་ཨཱལ་ཕ་) གི་མཐའ་སྐོར་ལུ་ དམར་མདངས་གཡང་ཟ་སི་སི་གཅིག་ཁ་སྐོང་བརྐྱབ།"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
+msgid "Alien _Glow..."
+msgstr "ཨེ་ལིན་དམར་མདངས།...(_G)"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
+msgid "Create a logo with an alien glow around the text"
+msgstr "ཚིག་ཡིག་གི་མཐའ་སྐོར་ལུ་ཨེ་ལེན་དམར་མདངས་དང་བཅས་ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
 msgid "Glow size (pixels * 4)"
-msgstr "གོལོ་ཚད། (པིག་སེལ། * 4)"
+msgstr "དམར་མདངས་ཚད། (པིག་སེལ། * 4)"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
+msgid "Add psychedelic outlines to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་ལུ་ (ཡང་ན་ཨཱལ་ཕ་) སའི་ཀི་ཌི་ལིཀ་མཐའ་ཐིག་ཚུ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "Alien _Neon..."
 msgstr "ཨེ་ལིན་ནིཨོན...(_N)"
 
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
+msgid "Create a logo with psychedelic outlines around the text"
+msgstr "ཚིག་ཡིག་གི་མཐའ་སྐོར་ལུ་ སའི་ཀི་ཌི་ལིཀ་མཐའ་ཐིག་ཚུ་དང་བཅས་པའི་ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
 msgid "Fade away"
 msgstr "ཡལ་འགྱོ་ནི།"
 
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
 msgid "Number of bands"
 msgstr "བཀག་ཆ་གི་ཨང་གྲངས།"
 
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
 msgid "Width of bands"
 msgstr "བཀག་ཆ་གི་རྒྱ་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
 msgid "Width of gaps"
 msgstr "བར་སྟོང་གི་རྒྱ་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
+msgid "Add a gradient effect, a drop shadow, and a background to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་ལུ་ (ཡང་ན་ཨཱལ་ཕ་) སྟེགས་རིས་ནུས་པ་ གྱིབ་མ་བཀོ་བཞག་ དང་ རྒྱབ་གཞི་ཚུ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
+msgid "Create a plain text logo and add a drop shadow"
+msgstr "ཚིག་ཡིག་ལས་རྟགས་ཉག་རྐྱང་གཅིག་གསར་བསྐྲུན་འབད་ཞིནམ་ལས་ གྱིབ་མ་བཀོ་བཞག་འདི་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
 msgstr "གཞི་རྟེན I...(_B)"
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:1
+msgid "Add a shadow and a highlight to the selected region (or alpha)"
+msgstr "གྱིབ་མ་གཅིག་ཁ་སྐོང་བརྐྱབ་ཞིནམ་ལས་ སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་ལུ་(ཡང་ན་ཨཱལ་ཕ་) གཙོ་རྟགས་བཀལ།"
+
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 msgid "B_asic II..."
-msgstr "གཞི་རྟེན...(_a)"
+msgstr "གཞི་རྟེན་ II...(_a)"
+
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+msgid "Create a simple logo with a shadow and a highlight"
+msgstr "གྱིབ་མ་དང་ གཙོ་རྟགས་གཅིག་ཁར་ ལས་རྟགས་འཇམ་སམ་གཅིག་གསར་བསྐྲུན་འབད།"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "Bevel width"
 msgstr "སེར་ཁ་གི་རྒྱ་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
+msgid "Create a simple, beveled button graphic for webpages"
+msgstr "ཝེབ་ཤོག་ལེབ་ཚུའི་དོན་ལུ་ སེར་ཁ་བཟོ་བཟོཝ་བའི་ཚད་རིས་ཨེབ་རྟ་འཇམ་སམ་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
 msgid "Lower-right color"
 msgstr "འོག་ལུ་གཡས་ཀྱི་ཚོས་གཞི།"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:11
 msgid "Pressed"
 msgstr "ཨེབ་པ།"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:8
 msgid "Simple _Beveled Button..."
-msgstr "སེར་ཁ་གི་ཨེབ་རྟ་འཇམ་སམ...(_B)"
+msgstr "སེར་ཁ་བཟོ་བཟོཝ་བའི་ཨེབ་རྟ་འཇམ་སམ...(_B)"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:11
 msgid "Upper-left color"
 msgstr "ཡར་གྱི་གཡོན་ལུ་ཡོད་པའི་ཚོས་གཞི།(_l)"
 
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+msgid "Create a beveled pattern arrow for webpages"
+msgstr "ཝེབ་ཤོག་ལེབ་ཚུའི་དོན་ལུ་ སེར་ཁ་བཟོ་བཟོཝ་བའི་དཔེ་གཞི་བརྡ་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+msgid "Create a beveled pattern bullet for webpages"
+msgstr "ཝེབ་ཤོག་ལེབ་ཚུའི་དོན་ལུ་ སེར་ཁ་བཟོ་བཟོཝ་བའི་ དཔེ་གཞི་འགོ་ཚག་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
 msgstr "སྒོར་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:4
 msgid "Transparent background"
 msgstr "རྒྱབ་གཞི་དྭངས་གསལ་ཅན།"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+msgid "Create a beveled pattern button for webpages"
+msgstr "ཝེབ་ཤོག་ལེབ་ཚུའི་དོན་ལུ་ སེར་ཁ་བཟོ་བཟོཝ་བའི་དཔེ་གཞི་ཨེབ་རྟ་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+msgid "Create a beveled pattern heading for webpages"
+msgstr "ཝེབ་ཤོག་ལེབ་ཚུའི་དོན་ལུ་ སེར་ཁ་བཟོ་བཟོཝ་བའི་ དཔེ་གཞི་མགུ་རྒྱན་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
 msgid "H_eading..."
-msgstr "མགུ་རྒྱུན...(_e)"
+msgstr "མགུ་རྒྱན།...(_e)"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:6
+msgid "Create a beveled pattern hrule for webpages"
+msgstr "ཝེབ་ཤོག་ལེབ་ཚུའི་དོན་ལུ་ སེར་ཁ་བཟོ་བཟོཝ་བའི་དཔེ་གཞི་hrule གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
 msgstr "མཐོ་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:5
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:11
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:11
 msgid "Width"
 msgstr "རྒྱ་ཚད།"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
+msgid "Create intermediate layers to blend two or more layers over a background as an animation"
+msgstr "རྒྱབ་གཞི་གི་ལྟག་ལུ་ བསྒུལ་བཟོ་སྦེ་གཉིས་སམ་གཉིས་ལས་ལྷག་པའི་བང་རིམ་ཚུ་མཉམ་སྡེབ་འབད་ནིའི་དོན་ལུ་ བར་མའི་བང་རིམ་ཚུ་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
 msgid "Intermediate frames"
 msgstr "གཞི་ཁྲམ་བར་མ།"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Looped"
 msgstr "འཕྲལ་བཀོལ།"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
 msgid "Max. blur radius"
 msgstr "རབ་རིབ་མཐའ་འཁོར་མཐོ་ཤོས།"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
 msgid "_Blend..."
 msgstr "མཉམ་སྡེབ...(_B)"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
+msgid "Add blended backgrounds, highlights, and shadows to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་ལུ་(ཡང་ན་ཨཱལ་ཕ་) མཉམ་སྡེབ་འབད་ཡོད་པའི་རྒྱབ་གཞི་ གཙོ་རྟགས་དང་ གྱིབ་མ་ཚུ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
 msgstr "མཉམ་སྡེབ་བཟོ་བཟོཝ...(_d)"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blend mode"
 msgstr "མཉམ་སྡེབ་ཡོད་མི་གི་ཐབས་ལམ།"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
+msgid "Create a logo with blended backgrounds, highlights, and shadows"
+msgstr "མཉམ་སྡེབ་འབད་ཡོད་པའི་རྒྱབ་གཞི་དང་ གཙོ་རྟགས་དེ་ལས་གྱིབ་མ་ཚུ་དང་གཅིག་ཁར་ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "Custom Gradient"
 msgstr "སྟེགས་རིས་སྲོལ་སྒྲིག"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:8
 msgid "FG-BG-HSV"
 msgstr "ཨེཕ་ཇི-བི་ཇི-ཨེཆ་ཨེསིཝི།"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:9
 msgid "FG-BG-RGB"
 msgstr "ཨེཕ་ཇི-བི་ཇི-ཨར་ཇི་བི།"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
 msgid "FG-Transparent"
 msgstr "FG-དྭངས་གསལ་ཅན།"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:11
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/land.scm.h:2
-#: ../plug-ins/script-fu/scripts/lava.scm.h:1
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/land.scm.h:3
+#: ../plug-ins/script-fu/scripts/lava.scm.h:2
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Gradient"
 msgstr "སྟེགས་རིས།"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:12
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
-#: ../plug-ins/script-fu/scripts/title-header.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:14
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:3
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:5
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:4
 msgid "Gradient reverse"
 msgstr "སྟེགས་རིས་རིམ་ལོག"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
 msgid "Offset (pixels)"
 msgstr "པར་ལེན།(པིག་སེལ།)"
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
+msgid "Add 'cow spots' to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་(ཡང་ན་ཨཱལ་ཕ་) ལུ་ 'cow spots' ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
 msgid "Bo_vination..."
 msgstr "བོ་བི་ནེ་ཤཱོན...(_v)"
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+msgid "Create a logo with text in the style of 'cow spots'"
+msgstr "'cow spots' གི་བཟོ་རྣམ་ནང་ ཚིག་ཡིག་དང་གཅིག་ཁར་ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 msgid "Spots density X"
 msgstr "ས་ཁོངས་ཚུ་གི་སྟུག་ཚད་ཨེགསི།"
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 msgid "Spots density Y"
 msgstr "ས་ཁོངས་ཚུ་གི་སྟུག་ཚད་ཝའི།"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 msgid "Add glowing"
-msgstr "གོལོ་ཡིང་ཁ་སྐོང་རྐྱབ།"
+msgstr "དམརཔོ་འགྱོ་མི་འདི་ཁ་སྐོང་རྐྱབ།"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "After glow"
-msgstr "གོལོ་གི་ཤ྄ལ་ལས།"
+msgstr "དམར་མདངས་ཀྱི་ཤུལ་ལས།"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "B_urn-In..."
@@ -791,18 +902,22 @@ msgid "Corona width"
 msgstr "ཀོ་རོ་ན་གི་རྒྱ་ཚད།"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+msgid "Create intermediate layers to produce an animated 'burn-in' transition between two layers"
+msgstr "བང་རིམ་གཉིས་ཀྱི་བར་ 'burn-in' བསྒུལ་བཟོ་འགྱུར་བ་གཅིག་བཟོ་སྟོན་འབད་ནིའི་དོན་ལུ་ བར་མའི་བང་རིམ་ཚུ་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
 msgstr "བཀྱག་ཉམས་ནི།"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Fadeout width"
 msgstr "རྒྱ་ཚད་ཀྱི་བཀྱག་ཉམས་ནི།"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Prepare for GIF"
 msgstr "ཇི་ཨའི་ཨེཕ་གི་དོན་ལུ་གྲ་སྒྱིག་འབད།"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
 msgid "Speed (pixels/frame)"
 msgstr "མགྱོགས་ཚད།(པིག་སེལ་/གཞི་ཁྲམ་)"
 
@@ -818,22 +933,26 @@ msgstr "ཚོས་གཞི་2"
 msgid "Color 3"
 msgstr "ཚོས་གཞི་3"
 
-#: ../plug-ins/script-fu/scripts/camo.scm.h:5
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:5
-msgid "Granularity"
-msgstr "ཟེགས་མ།"
+#: ../plug-ins/script-fu/scripts/camo.scm.h:4
+msgid "Create an image filled with a camouflage pattern"
+msgstr "རྫུས་ཆས་དཔེ་གཞི་དང་གཅིག་ཁར་ གཟུགས་བརྙན་བཀང་ཡོད་མི་གཅིག་གསར་བསྐྲུན་འབད།"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:6
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:6
+msgid "Granularity"
+msgstr "ཟེགས་མ།"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:7
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:7
 msgid "Image size"
 msgstr "གཟུགས་བརྙན་གྱི་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/camo.scm.h:7
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
+#: ../plug-ins/script-fu/scripts/camo.scm.h:8
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:3
 msgid "Smooth"
 msgstr "ཧུམ་ཁྱུག་ཁྱུ།"
 
-#: ../plug-ins/script-fu/scripts/camo.scm.h:8
+#: ../plug-ins/script-fu/scripts/camo.scm.h:9
 msgid "_Camouflage..."
 msgstr "རྫུས་ཆས...(_C)"
 
@@ -842,12 +961,16 @@ msgid "Carve white areas"
 msgstr "མངའ་ཁོངས་དཀརཔ་ཚུ་རྐོ།"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
+msgid "Create an image with a carved effect using the active (grayscale) drawable as a mask"
+msgstr "འབྲི་བཏུབ་པའི་ཤུགས་ལྡན་ () འདི་ གདོང་ཁེབས་སྦེ་ལག་ལེན་འཐབ་ཐོག་ལས་ པ་ཏྲ་བརྐོ་བའི་ནུས་པ་དང་གཅིག་ཁར་གཟུགས་བརྙན་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Image to carve"
 msgstr "གཟུགས་བརྙན་རྐོ་ནི།"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:4
 msgid "Stencil C_arve..."
-msgstr "སྣུམ་ཤོག་བརྐོ་ནི...(_C)"
+msgstr "སྣུམ་ཤོག་བརྐོ་ནི...(_a)"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
@@ -862,7 +985,11 @@ msgstr "ཚིག་ཡིག་རྐོ་མི་འདི་ཆེར་བ
 msgid "Carved..."
 msgstr "རྐོ་ནི..."
 
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
+msgid "Create a logo with carved text raised above the specified background image"
+msgstr "གསལ་བཀོད་འབད་ཡོད་པའི་རྒྱབ་གཞི་གཟུགས་བརྙན་གྱི་ལྟག་ལུ་ཆེར་བསྐྱེད་འབད་ཡོད་པའི་པ་ཏྲ་བརྐོ་བའི་ཚིག་ཡིག་དང་གཅིག་ཁར་ ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
 msgstr "ཚིག་ཡིག་གི་མཐའ་སྐོར་ལུ་བར་ཤབས།"
 
@@ -870,83 +997,111 @@ msgstr "ཚིག་ཡིག་གི་མཐའ་སྐོར་ལུ་བ
 msgid "Chalk color"
 msgstr "ས་སྨྱུག་གི་ཚོས་གཞི།"
 
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:6
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:3
+msgid "Create a chalk drawing effect for the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་ (ཡང་ན་ ཨཱལ་ཕ་) དོན་ལུ་ ས་སྨྱུག་པར་རིས་ནུས་པ་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:4
+msgid "Create a logo resembling chalk scribbled on a blackboard"
+msgstr "བྱང་ཤིང་གུ་ལུ་ ཐབ་ཐོབ་སྦེ་འབྲི་ཡོད་པའི་ས་སྨྱུག་འདྲ་བའི་ ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:8
 msgid "_Chalk..."
 msgstr "ས་སྨྱུག...(_C)"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
+msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ ལུང་ཕྱོགས་ (ཡང་ན་ ཨཱལ་ཕ་) ལུ་ གཞོག་ཡོད་པའི་ཤིང་པ་ཏྲ་བརྐོ་ནི་ནུས་པ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
 msgstr "རབ་རིབ་ཀྱི་མང་ཉུང་།"
 
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
-msgid "Chip Awa_y..."
-msgstr "ཅིབ་གཏང་ནི...(_A)"
-
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:3
+msgid "Chip Awa_y..."
+msgstr "ཅིབ་གཏང་ནི...(_y)"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:4
 msgid "Chip amount"
 msgstr "ཅིབ་ཀྱི་མང་ཉུང་།"
 
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:4
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
+msgid "Create a logo resembling a chipped wood carving"
+msgstr "གཞོག་ཡོད་པའི་ཤིང་པ་ཏྲ་བརྐོ་ནི་འདྲ་བའི་ ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Drop shadow"
 msgstr "གྱིབ་མ་ བཀོག་བཞག"
 
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:7
 msgid "Fill BG with pattern"
 msgstr "བི་ཇི་འདི་དཔེ་རིས་བཅས་བཀང་།"
 
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:8
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:10
 msgid "Invert"
 msgstr "གནས་ལོག་འབད།"
 
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:9
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:11
 msgid "Keep background"
 msgstr "རྒྱབ་གཞི་འདི་བདག་འཛིན་སྦེ་བཞག"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:1
+msgid "Add a chrome effect to the selected region (or alpha) using a specified (grayscale) stencil"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་ (ཡང་ན་ ཨཱལ་ཕ་) ལུ་ གསལ་བཀོད་འབད་ཡོད་པའི་ (གེརེ་སིཀེལ་) སྣུམ་ཤོག་ ལག་ལེན་འཐབ་ཐོག་ལས་ ཀོརོམ་ནུས་པ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "Chrome balance"
 msgstr "ཀོརོམ་གྱི་ཚད་སྙོམས།"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome factor"
 msgstr "ཀོརོམ་གྱི་ཆ་རྐྱེན།"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
 msgid "Chrome lightness"
 msgstr "ཀོརོམ་ཡང་བ།"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome saturation"
 msgstr "ཀོརོམ་གྱི་མཐའ་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
 msgid "Chrome white areas"
 msgstr "ཀོརོམ་གྱི་མངའ་ཁོངས་དཀརཔོ།"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
 msgid "Environment map"
 msgstr "མཐའ་འཁོར་གྱི་ས་ཁྲ།"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
-msgid "Highlight balance"
-msgstr "ལྷག་ལུས་འདི་གཙོ་དམིགས་བཀོད།"
-
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+msgid "Highlight balance"
+msgstr "ལྷག་ལུས་འདི་གཙོ་རྟགས་བཀལ།"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
 msgid "Stencil C_hrome..."
 msgstr "སྣུམ་ཤོག་གི་ཀོརོམ...(_h)"
 
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
+msgid "Add a simple chrome effect to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་ (ཡང་ན་ ཨཱལ་ཕ་) ལུ་ ཀོརོམ་ནུས་པ་འཇམ་སམ་གཅིག་ཁ་སྐོང་བརྐྱབ། "
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
 msgid "C_hrome..."
 msgstr "ཀོརོམ...(_h)"
 
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+msgid "Create a simplistic, but cool, chromed logo"
+msgstr "འཇམ་སམ་དེ་འབདཝ་དང་ ལྷོད་ཆི་ཆི་ཀོརོམཌི་ ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:7
 msgid "Offsets (pixels * 2)"
 msgstr "པར་ལེན། (པིག་སེལསི * 2)"
 
@@ -955,58 +1110,70 @@ msgid "Circuit seed"
 msgstr "གློག་རྒྱུན་གྱི་སོན།"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-#: ../plug-ins/script-fu/scripts/lava.scm.h:2
-#: ../plug-ins/script-fu/scripts/predator.scm.h:2
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
+msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་ (ཡང་ན་ ཨཱལ་ཕ་) འདི་ གླིང་སྐོར་ལམ་པང་དེབ་བཟུམ་མའི་རྗེས་བཤུལ་གྱིས་ བཀང་།"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:3
+#: ../plug-ins/script-fu/scripts/lava.scm.h:3
+#: ../plug-ins/script-fu/scripts/predator.scm.h:3
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "Keep selection"
 msgstr "སེལ་འཐུ་འདི་བཞག"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:3
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:4
 msgid "No background (only for separate layer)"
 msgstr "རྒྱབ་གཞི་མིན་འདུག(བང་རིམ་སོ་སོ་གི་དོན་ལུ་རྐྱངམ་ཅིག)"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:4
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:5
 msgid "Oilify mask size"
 msgstr "གདོང་ཁེབས་ཀྱི་ཚད་འདི་ཨོའི་ལི་ཕའི་འབད།"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:5
-#: ../plug-ins/script-fu/scripts/lava.scm.h:5
-#: ../plug-ins/script-fu/scripts/predator.scm.h:5
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:6
+#: ../plug-ins/script-fu/scripts/lava.scm.h:6
+#: ../plug-ins/script-fu/scripts/predator.scm.h:6
 msgid "Separate layer"
 msgstr "བང་རུམ་འདི་སོ་སོ་ཁ་ཕྱེ།"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:6
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:7
 msgid "_Circuit..."
 msgstr "གློག་རྒྱུན...(_C)"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:1
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་ (ཡང་ན་ ཨཱལ་ཕ་) ལུ་ རས་ཆ་-བཟུམ་མའི་རེག་བྱ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:2
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
 msgid "Azimuth"
 msgstr "ཕྱོགས་ཀྱི་ཆ་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:2
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:3
 msgid "Blur X"
 msgstr "རབ་རིབ་ཨེགསི།"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:3
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:4
 msgid "Blur Y"
 msgstr "རབ་རིབ་ཝའི།"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:4
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:5
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:5
 msgid "Depth"
 msgstr "གཏིང་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:5
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:5
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:6
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:6
 msgid "Elevation"
 msgstr "འདྲུད་སྐས་འབད་ནི།"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:6
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:7
 msgid "_Clothify..."
 msgstr "ཀོལོ་ཐི་ཕའི...(_C)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:1
+msgid "Add realistic looking coffee stains to the image"
+msgstr "གཟུགས་བརྙན་ལུ་ ཀཱ་ཕི་དྲི་ནོག་དངོས་མཐོང་བ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid ""
 "Darken only\n"
 "(Better, but only for images with a lot of white)"
@@ -1014,100 +1181,132 @@ msgstr ""
 "གནགཔོ་བཟོ་བཟོཝ་རྐྱངམ་ཅིག\n"
 "(ལེགས་མི་ དེ་འབདཝ་ད་དཀརཔོ་ལེ་ཤ་ཡོད་པའི་གཟུགས་བརྙན་གྱི་དོན་ལུ་རྐྱངམ་ཅིག)"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm.h:2
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
 msgstr "དྲི་ནོག"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm.h:3
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:4
 msgid "_Coffee Stain..."
 msgstr "ཀོ་ཕི་གི་དྲི་ནོག...(_C)"
 
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
+msgid "Add a comic-book effect to the selected region (or alpha) by outlining and filling with a gradient"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་ (ཡང་ན་ ཨཱལ་ཕ་) ལུ་ སྟེགས་རིས་ཀྱིས་བཀང་ནི་དང་མཐའ་ཐིག་འབྲི་བའི་ཐོག་ལས་ པར་-སྲུང་དེབ་ནུས་པ་གཅིག་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
 msgstr "པར་སྲུངས་ཀི་དེབ...(_k)"
 
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
+msgid "Create a comic-book style logo"
+msgstr "ལས་རྟགས་པར་སྲུང་-དེབ་བཟོ་རྣམ་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 msgid "Outline color"
 msgstr "མཐའ་ཐིག་གི་ཚོས་གཞི།"
 
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:9
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Outline size"
 msgstr "མཐའ་ཐིག་གི་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
+msgid "Add a metallic logo effect to the selected region (or alpha) with reflections and perspective shadows"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་(ཡང་ན་ ཨཱལ་ཕ་) ལུ་ སྣང་བརྙན་ཚུ་དང་ སྣང་ཚུལ་གྱིབ་མ་ཚུ་གཅིག་ཁར་ ལྕགས་ཀྱི་ལས་རྟགས་ནུས་པ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
 msgstr "བསིལ་བ་དང་ལྡན་པའི་ལྕགས...(_M)"
 
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
+msgid "Create a metallic logo with reflections and perspective shadows"
+msgstr "སྣང་བརྙན་ཚུ་དང་ སྣང་ཚུལ་གྱིབ་མ་ཚུ་དང་གཅིག་ཁར་ ལྕགས་ཀྱི་ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 msgid "Effect size (pixels)"
 msgstr "ནུས་པ་ཚད་དང་ལྡན་པ།(པིག་སེལསི་)"
 
+#: ../plug-ins/script-fu/scripts/copy-visible.scm.h:1
+msgid "This procedure is deprecated! use 'gimp_edit_copy_visible' instead."
+msgstr "འ་ནི་བྱ་སྒོའི་ལམ་ལུགས་འདི་ ངོས་ལེན་མེདཔ་ཨིནམ་ལས་! ཚབ་ལུ་ 'gimp_edit_copy_visible' ལག་ལེན་འཐབ།"
+
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
+msgid "Create a logo with a crystal/gel effect displacing the image underneath"
+msgstr "གཟུགས་བརྙན་གྱི་འོག་ལུ་གནས་སྤང་འབད་དེ་ ཤེལ་/ཇེལ་ནུས་པ་དང་གཅིག་ཁར་ ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
 msgstr "ཤེལ..."
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
+msgid "Distress the selection"
+msgstr "སེལ་འཐུ་འདི་ ཌིསི་ཊེརེསི་འབད།"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
 msgid "Granularity (1 is low)"
 msgstr "ཟེགས་མ (1འདི་དམའ་བས་)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:3
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:4
 msgid "Smooth horizontally"
 msgstr "ཐད་སྙོམས་སྦེ་ཧུམ་ཁྱུག་ཁྱུ།"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:4
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:5
 msgid "Smooth vertically"
 msgstr "ཀེར་ཕྲང་ཧུམ་ཁྱུག་ཁྱུ།"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:5
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:6
 msgid "Spread"
 msgstr "ཁྱབ་གདལ།"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:6
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (bigger 1<-->255 smaller)"
 msgstr "ཐེརེཤ་ཧཱོལ།(སྦོམ་མི་ 1<-->255 ཆུང་མི་)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
 msgid "_Distort..."
 msgstr "བཟོ་ཉེས་བཟོ་ནི...(_D)"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
+msgid "Add a drop-shadow to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་(ཡང་ན་ ཨཱལ་ཕ་) ལུ་ གྱིབ་མ་-བཀོ་བཞག་ནི་གཅིག་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
 msgid "Allow resizing"
 msgstr "ཚད་བསྐྱར་བཟོ་འབད་བཅུག"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:3
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:2
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:3
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:3
 msgid "Blur radius"
 msgstr "མཐའ་འཁོར་རབ་རིབ།"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:3
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:4
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:4
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:5
 msgid "Color"
 msgstr "ཚོས་གཞི།"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:4
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
 msgid "Offset X"
 msgstr "པར་ལེན་ཨེགསི།"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
 msgid "Offset Y"
 msgstr "པར་ལེན་ཝའི།"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:7
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
 msgid "Opacity"
 msgstr "དྭངས་སྒྲིབ།"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:7
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
 msgid "_Drop-Shadow..."
 msgstr "གྱིབ་མ་-བཀོག་བཞག...(_D)"
 
@@ -1120,34 +1319,38 @@ msgid "Erase"
 msgstr "ཀྲེག་གཏང་ནི།"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
+msgid "Erase every other row/column of pixels of the active drawable"
+msgstr "འབྲི་བཏུབ་པའི་ཤུགས་ལྡན་གྱི་ པིག་སེལསི་གི་ གྲལ་ཐིག་/ཀེར་ཐིག་གཞན་མི་ཆ་མཉམ་རང་ཀྲེག་གཏང་།"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
 msgstr "ཀྲེག་གཏང་ནི/བཀང་ནི།"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:5
 msgid "Even"
 msgstr "ཆ་ཅན།"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:5
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:6
 msgid "Even/odd"
 msgstr "ཆ་ཅན/ཡ་ཅན།"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:6
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:7
 msgid "Fill with BG"
 msgstr "བི་ཇི་དང་བཅས་བཀང་།"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:7
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:8
 msgid "Odd"
 msgstr "ཡ་ཅན།"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:8
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:9
 msgid "Rows"
 msgstr "གྲལ་ཐིག་ཚུ།"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:9
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:10
 msgid "Rows/cols"
 msgstr "གྱར་ཐིག་ཚུ་/ཀཱོལསི།"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:10
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:11
 msgid "_Erase Every Other Row..."
 msgstr "གྲལ་ཐིག་གཞན་མི་རེ་རེ་སྦེ་ཀྲེག་གཏང་ད...(_E)"
 
@@ -1156,7 +1359,7 @@ msgid "Apply generated layermask"
 msgstr "བཟོ་བཏོན་འབད་ཡོད་མི་འདི་བང་རིམ་གྱི་གདོང་ཁེབས་ལུ་འཇུག་སྤྱོད་འབད།"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:2
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
 msgid "Border size"
 msgstr "མཐའ་མཚམས་ཀྱི་ཚད།"
@@ -1165,55 +1368,63 @@ msgstr "མཐའ་མཚམས་ཀྱི་ཚད།"
 msgid "Clear unselected maskarea"
 msgstr "སེལ་འཐུ་མ་འབད་བ་ཡོད་མི་གདོང་ཁེབས་ཀྱི་མངའ་ཁོངས་འདི་བསལ་ད།"
 
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:5
+#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:4
+msgid "Create a layermask that fades the edges of the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་(ཡང་ན་ ཨཱལ་ཕ་) གི་མཐའམ་ཚུ་བཀྱག་ཉམས་འགྱོ་བའི་བང་རིམ་གདོང་ཁེབས་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:6
 #, no-c-format
 msgid "Fade from %"
 msgstr "% ལས་ཡལ་ནི།"
 
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:7
+#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:8
 #, no-c-format
 msgid "Fade to %"
 msgstr "% ལུ་ཡལ་ནི།"
 
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:8
+#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:9
 msgid "Use growing selection"
 msgstr "སེལ་འཐུ་ཡར་བསྐྱེད་འགྱོ་མི་འདི་ལག་ལེན་འཐབ།"
 
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:9
+#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:10
 msgid "_Fade to Layer Mask..."
 msgstr "བང་རིམ་གྱི་གདོང་ཁེབས་ལུ་ཡལ་འགྱོ་ནི...(_F)"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
-#: ../plug-ins/script-fu/scripts/land.scm.h:1
+msgid "Create an image filled with a Land Pattern"
+msgstr "ས་གཞིའི་དཔེ་གཞི་གིས་བཀང་ཡོད་པའི་གཟུགས་བརྙན་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:2
+#: ../plug-ins/script-fu/scripts/land.scm.h:2
 msgid "Detail level"
 msgstr "གནས་རིམ་རྒྱས་བཤད།"
 
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:2
-#: ../plug-ins/script-fu/scripts/land.scm.h:3
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:3
+#: ../plug-ins/script-fu/scripts/land.scm.h:4
 msgid "Image height"
 msgstr "གཟུགས་བརྙན་གྱི་མཐོ་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:3
-#: ../plug-ins/script-fu/scripts/land.scm.h:4
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:4
+#: ../plug-ins/script-fu/scripts/land.scm.h:5
 msgid "Image width"
 msgstr "གཟུགས་བརྙན་གྱི་རྒྱ་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:4
-#: ../plug-ins/script-fu/scripts/land.scm.h:6
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:5
+#: ../plug-ins/script-fu/scripts/land.scm.h:7
 msgid "Random seed"
 msgstr "སོན་གང་འབྱུང་།"
 
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:5
-#: ../plug-ins/script-fu/scripts/land.scm.h:7
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:6
+#: ../plug-ins/script-fu/scripts/land.scm.h:8
 msgid "Scale X"
 msgstr "ཆ་ཚད་ཨེགསི།"
 
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:6
-#: ../plug-ins/script-fu/scripts/land.scm.h:8
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:7
+#: ../plug-ins/script-fu/scripts/land.scm.h:9
 msgid "Scale Y"
 msgstr "ཆ་ཚད་ཝའི།"
 
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:7
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:8
 msgid "_Flatland..."
 msgstr "ས་ཐང་...(_F)"
 
@@ -1226,59 +1437,75 @@ msgid "Black on white"
 msgstr "དཀརཔོ་གུ་གནགཔོ།"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
-msgid "Font _size (pixels)"
-msgstr "ཡིག་གཟུགས་ཀྱི་ཚད།(པིག་སེལསི།)"
+msgid "Create an image filled with previews of fonts matching a fontname filter"
+msgstr "ཡིག་མིང་ཚགས་མ་མཐུན་སྒྲིག་འབད་བའི་ཡིག་གཟུགས་ཚུའི་ སྔོན་བལྟ་ཚུ་གིས་བཀང་ཡོད་པའི་གཟུགས་བརྙན་གཅིག་གསར་བསྐྲུན་འབད།"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
+msgid "Font _size (pixels)"
+msgstr "ཡིག་གཟུགས་ཀྱི་ཚད།(པིག་སེལསི།)(_s)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "Render _Font Map..."
 msgstr "ཡིག་གཟུགས་ཀྱི་ས་ཁྲ་འདི་ལྷག་སྟོན་འབད...(_F)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:5
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "Use font _name as text"
 msgstr "ཡིག་གཟུགས་ཀྱི་མིང་འདི་ཚིག་ཡིག་འབད་ལག་ལེན་འཐབ།(_n)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:6
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:7
 msgid "_Border (pixels)"
 msgstr "མཐའ་མཚམས། (པིག་སེལསི།)(_B)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:7
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Color scheme"
 msgstr "ཚོས་གཞི་གི་འཆར་ལས།(_C)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:8
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:9
 msgid "_Filter (regexp)"
 msgstr "ཚགས་མ།( དུས་རྒྱུན་བརྗོད་ཚུལ།)(_F)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:9
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:10
 msgid "_Labels"
 msgstr "ཁ་ཡིག།(_L)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:10
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:11
 msgid "_Text"
 msgstr "ཚིག་ཡིག(_T)"
 
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
+msgid "Add a frost effect to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་(ཡང་ན་ ཨཱལ་ཕ་) ལུ་ བ་མོའི་ནུས་པ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
+msgid "Create frozen logo with an added drop shadow"
+msgstr "ཁ་སྐོང་བརྐྱབ་ཡོད་པའི་གྱིབ་མ་བཀོ་བཞག་དང་གཅིག་ཁར་ སྤར་མ་བཏུབ་པའི་ལས་རྟགས་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 msgid "_Frosty..."
 msgstr "བ་མོ་ཅན...(_F)"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
+msgid "Add a jagged, fuzzy border to an image"
+msgstr "གཟུགས་བརྙན་གཅིག་ལུ་ རྩེ་རང་རོང་ཡོད་པའི་མི་གསལ་བའི་མཐའ་མཚམས་གཅིག་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add shadow"
 msgstr "གྱིབ་མ་ཁ་སྐོང་རྐྱབ།"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur border"
 msgstr "མཐའ་མཚམས་རབ་རིབ།"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
 msgstr "ཟེགས་མ། (1 འདི་དམའ་བས)"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:8
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
 #, no-c-format
 msgid "Shadow weight (%)"
 msgstr "གྱིབ་མ་གི་ལྗིད་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
 msgid "_Fuzzy Border..."
 msgstr "མཐའ་མཚམས་ཕ་ཛི...(_F)"
 
@@ -1287,187 +1514,251 @@ msgid "Autocrop"
 msgstr "རང་བཞིན་བཏོག་བཅོས།"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
+msgid "Create an image of a large header using the Gimp.org webpage theme"
+msgstr "ཇི་ཨའི་ཨེམ་པི་ལས་སྡེ་ཝེབ་ཤོག་ལེབ་བརྗོད་དོན་ལག་ལེན་འཐབ་ཐོག་ལས་ མགོ་ཡིག་ཆེ་བ་གི་གཟུགས་བརྙན་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
+msgid "Create an image of a small header using the Gimp.org webpage theme"
+msgstr "ཇི་ཨའི་ཨེམ་པི་ལས་སྡེ་ཝེབ་ཤོག་ལེབ་བརྗོད་དོན་ལག་ལེན་འཐབ་ཐོག་ལས་ མགོ་ཡིག་ཆུང་བ་གི་ གཟུགས་བརྙན་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 msgid "Dark color"
 msgstr "ཚོས་གཞི་གྲིབ་གནག།"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
 msgid "Highlight color"
-msgstr "ཚོས་གཞི་གཙོ་དམིགས་བཀོད།"
+msgstr "ཚོས་གཞི་གཙོ་རྟགས་བཀལ།"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
 msgid "Index image"
 msgstr "ཟུར་ཐོ་གི་གཟིགས་བརྙན།"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
 msgid "Number of colors"
 msgstr "ཚོས་གཞི་ཚུ་གི་ཨང་གྲངས།"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Remove background"
 msgstr "རྒྱབ་གཞི་འདི་རྩ་བསྐྲད་གཏང་།"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Select-by-color threshold"
 msgstr "ཚོས་གཞི་-ཐེརེཤ་ཧཱོལ་གི་འབད་-སེལ་འཐུ་འབད།"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
 msgid "Shadow color"
 msgstr "གྱིབ་མ་གི་ཚོས་གཞི།"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:15
 msgid "_Big Header..."
 msgstr "མགོ་ཡིག་སྦོམ...(_B)"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:16
 msgid "_Small Header..."
 msgstr "མགོ་ཡིག་ཆུང་ཀུ...(_S)"
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+msgid "Create an image of a Tube Button Label Header using the  gimp.org webpage theme"
+msgstr "ཇི་ཨའི་ཨེམ་པི་ ལས་སྡེ་ཝེབ་ཤོག་ལེབ་བརྗོད་དོན་ལག་ལེན་འཐབ་ཐོག་ལས་ དུང་ཅུང་ཨེབ་རྟ་ཁ་ཡིག་བཏགས་ནི་མགོ་ཡིག་གི་ གཟུགས་བརྙན་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+msgid "Create an image of a Tube Button Label using the  gimp.org webpage theme"
+msgstr "ཇི་ཨའི་ཨེམ་པི་ ལས་སྡེ་ཝེབ་ཤོག་ལེབ་བརྗོད་དོན་ལག་ལེན་འཐབ་ཐོག་ལས་ དུང་ཅུང་ཨེབ་རྟ་ཁ་ཡིག་བཏགས་ནི་གི་གཟུགས་བརྙན་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
 msgid "T_ube Sub-Button Label..."
 msgstr "ཨེབ་རྟའི་དུང་ཅུང་འོག་མ་གི་ཁ་ཡིག...(_u)"
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 msgid "Tub_e Sub-Sub-Button Label..."
 msgstr "ཨེབ་རྟའི་དུང་ཅུང་འོག་གི་འོག་མའི་ཁ་ཡིག...(_e)"
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:18
 msgid "_General Tube Labels..."
 msgstr "ཡོངས་ཁྱབ་གདུང་ཅུང་གི་ཁ་ཡིག...(_G)"
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
 msgid "_Tube Button Label..."
 msgstr "གདུང་ཅུང་ཨེབ་རྟ་གི་ཁ་ཡིག...(_T)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:2
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:1
+msgid "Add gradients, patterns, shadows, and bump maps to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་(ཡང་ན་ ཨཱལ་ཕ་)ལུ་ སྟེགས་རི་ཚུ་ དཔེ་གཞི་ཚུ་ གྱིབ་མ་ཚུ་ དང་ བཱམཔ་ས་ཁྲ་ཚུ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
 msgstr "སྟེགས་རིས་མཉམ་སྡེབ།(མཐའ་ཐིག)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:3
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Blend gradient (text)"
 msgstr "སྟེགས་རིས་མཉམ་སྡེབ། (ཚིག་ཡིག)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:7
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:5
+msgid "Create a logo with gradients, patterns, shadows, and bump maps"
+msgstr "སྟེགས་རིས་ཚུ་ དཔེ་གཞི་ཚུ་ གྱིབ་མ་ཚུ་དང་ བཱམཔ་ས་ཁྲ་ཚུ་དང་གཅིག་ཁར་ ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Glo_ssy..."
 msgstr "འོད་མདངས...(_s)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:8
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Outline gradient reverse"
 msgstr "མཐའ་ཐིག་སྟེགས་རིས་རིམ་ལོག།"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:10
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (outline)"
 msgstr "དཔེ་རིས། (མཐའ་ཐིག)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:11
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:13
 msgid "Pattern (overlay)"
 msgstr "དཔེ་རིས། (སྤུར་ཁེབས།)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:12
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:14
 msgid "Pattern (text)"
 msgstr "དཔེ་རིས་ (ཚིག་ཡིག)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:13
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:4
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:15
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "གྱིབ་མ།"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:17
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Text gradient reverse"
 msgstr "ཚིག་ཡིག་གི་སྟེགས་རིས་རིམ་རོག"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:18
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use pattern for outline instead of gradient"
 msgstr "མཐའ་ཐིག་གི་དོན་ལས་ སྟེགས་རིས་ཀྱི་ཚབ་ལུ་དཔེ་རིས་ལག་ལེན་འཐབ།"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:19
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:21
 msgid "Use pattern for text instead of gradient"
 msgstr "ཚིག་ཡིག་གི་དོན་ལས་ སྟེགས་རིས་ཀྱི་ཚབ་ལུ་དཔེ་རིས་ལག་ལེན་འཐབ།"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:20
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:22
 msgid "Use pattern overlay"
 msgstr "དཔེ་རིས་སྤུར་ཁེབས་འདི་ལག་ལེན་འཐབ།"
 
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
+msgid "Add a glowing hot metal effect to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་(ཡང་ན་ ཨཱལ་ཕ་) ལུ་ དམརཔོ་འགྱོ་བའི་ལྕགས་ཚ་ཏོམ་གྱི་ནུས་པ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
+msgid "Create a logo that looks like glowing hot metal"
+msgstr "དམརཔོ་འགྱོ་བའི་ལྕགས་ཚ་ཏོམ་བཟུམ་མཐོང་པའི་ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
 msgid "Effect size (pixels * 3)"
 msgstr "ནུས་ཅན་གྱི་ཚད། (པིག་སེལསི * 3)"
 
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
-msgstr "ཚ་བ་ལུ་གོལོ་ཡིང་...(_w)"
+msgstr "འོད་འཐོན་པའི་ཚ་བ།...(_w)"
 
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་ (ཡང་ན་ ཨཱལ་ཕ་) ལུ་ འོད་ལྡན་མཐོང་སྣང་དང་ སེར་ཁ་ནུས་པ་གཅིག་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
 msgstr "སེར་ཁ་གི་མཐོ་ཚད། (རྣོན་པོ)"
 
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
 msgid "Border size (pixels)"
 msgstr "མཐའ་མཚམས་ཀྱི་ཚད།(པིག་སེལསི)"
 
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+msgid "Create a logo with a shiny look and bevelled edges"
+msgstr "སེར་ཁ་བཟོ་བཟོཝ་བའི་མཐའམ་ཚུ་དང་ འོད་ལྡན་མཐོང་སྣང་གཅིག་ཁར་ ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 msgid "Gradient Beve_l..."
 msgstr "སེར་ཁ་གི་སྟེགས་རིས...(_l)"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:3
-msgid "Render _Image..."
-msgstr "གཟུགས་བརྙན་ལྷག་སྟོན་འབད...(_i)"
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
+msgid "Create an image filled with an example of the current gradient"
+msgstr "ད་ལྟོའི་སྟེགས་རིས་ཀྱི་ དཔེར་བརྗོད་ཀྱིས་བཀང་སྟེ་ཡོད་པའི་གཟུགས་བརྙན་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
+msgid "Custom _Gradient..."
+msgstr "སྲོལ་སྒྲིག་ སྟེགས་རིས།...(_G)"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
+msgid "Draw a grid as specified by the lists of X and Y locations using the current brush"
+msgstr "ད་ལྟོའི་པྱིར་ལག་ལེན་འཐབ་ཐོག་ལས་ ཨེགསི་དང་ ཝའི་གནས་ཁོངས་ཚུ་གི་ཐོ་ཡིག་གསལ་བཀོད་འབད་ཡོད་དོ་བཟུམ་མའི་ གིརིཌི་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X divisions"
 msgstr "སྡེ་ཚན་ཨེགསི་ཚུ།"
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:3
 msgid "Y divisions"
 msgstr "སྡེ་ཚན་ཝའི་ཚུ།"
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm.h:3
-msgid "_Divisions..."
-msgstr "སྡེ་ཚན་ཚུ...(_D)"
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:4
+msgid "_Grid..."
+msgstr "གིརིཌི།...(_G)"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
-msgid "Creates four Guides around the bounding box of the current selection."
-msgstr "ད་ལྟོ་སེལ་འཐུའི་བཅད་མཚམས་སྒྲོམ་གི་ མཐའ་འཁོར་ལུ་ལམ་སྟོན་པ་བཞི་གསར་བཀྲུན་འབདཝ་ཨིན།"
+msgid "Create four guides around the bounding box of the current selection"
+msgstr "ད་ལྟོའི་སེལ་འཐུའི་བའུན་ཌིང་སྒྲོམ་གི་ མཐའ་སྐོར་ལུ་ལམ་སྟོན་པ་བཞི་གསར་བཀྲུན་འབད།"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"
 msgstr "སེལ་འཐུ་ལས་ལམ་སྟོན་པ་གསརཔ།(_S)"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
-msgid "Direction"
-msgstr "བཀོད་རྒྱ།"
+msgid "Add a guide at the position specified as a percentage of the image size"
+msgstr "གཟུགས་བརྙན་ཚད་ཀྱི་བརྒྱ་ཆ་སྦེ་གསལ་བཀོད་འབད་ཡོད་པའི་གནས་ས་ལུ་ ལམ་སྟོན་པ་གཅིག་ཁ་སྐོང་བརྐྱབ།"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:2
+msgid "Direction"
+msgstr "བཀོད་རྒྱ།"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:3
 msgid "Horizontal"
 msgstr "ཐད་སྙོམས།"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:4
 msgid "New Guide (by _Percent)..."
-msgstr "ལམ་སྟོན་པ་གསརཔ།(བརྒྱ་ཆ་གི་འབད།( _P)..."
+msgstr "ལམ་སྟོན་པ་གསརཔ།(བརྒྱ་ཆ་གི་འབད།...(_p)"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:5
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
 #, no-c-format
 msgid "Position (in %)"
 msgstr "གནས་ས། (ནང་ན།%)"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:7
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:6
 msgid "Vertical"
 msgstr "ཀེར་ཕྲང་།"
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:3
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr "གསལ་བཀོད་འབད་ཡོད་པའི་གནས་ས་དང་ཕྱོགས་གུ་ལུ་(པིག་སེལསི་) ལམ་སྟོན་པ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
 msgid "New _Guide..."
 msgstr "ལམ་སྟོན་པ་གསརཔ...(_G)"
 
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
+msgid "Position"
+msgstr "གནས་ས།"
+
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
+msgid "Remove all horizontal and vertical guides"
+msgstr "ཐད་སྙོམས་དང་ཀེར་ཕྲང་ལམ་སྟོན་པ་ཚུ་ཆ་མཉམ་རང་རྩ་བསྐྲད་གཏང་།"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
 msgstr "ལམ་སྟོན་པ་ཚུ་ཆ་མཉམ་རྩ་བསྐྲད་གཏང་།(_R)"
 
@@ -1476,137 +1767,181 @@ msgid "BG opacity"
 msgstr "བི་ཇི་དྭངས་སྒྲིབ།"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
+msgid "Create a graph of the Hue, Saturation, and Value distributions of the current drawable"
+msgstr "ད་ལྟོའི་འབྲི་བཏུབ་པའི་ཚོན་མདངས་ མཐའ་ཚད་ དང་ གནས་གོང་བགོ་བཀྲམ་ཚུའི་ཚད་ཁྲམ་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
 msgid "Draw _HSV Graph..."
 msgstr "ཨེཆ་ཨོསི་ཝི་ཚད་ཁྲམ་འབྲི...(_H)"
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
 msgid "End X"
 msgstr "ཨེགསི་གི་མཇུག"
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:5
 msgid "End Y"
 msgstr "ཝའི་གི་མཇུག"
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:5
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:6
 msgid "From top-left to bottom-right"
 msgstr "མགོའི་གཡོན་-ལས་མཇུག་གི་གཡས་-ཚུན།"
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:6
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
 msgid "Graph scale"
 msgstr "ཚད་ཁྲམ་ཆ་ཚན།"
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:8
 msgid "Start X"
 msgstr "ཨེགསི་འགོ་བཙུགས།"
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:8
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
 msgid "Start Y"
 msgstr "ཝའི་འགོ་བཙུགས།"
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:10
 msgid "Use selection bounds instead of belows"
 msgstr "འོག་གི་ཚབ་ལུ་སེལ་འཐུའི་བཅད་མཚམས་འདི་ལག་ལེན་འཐབ།"
 
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
+msgid "Create a logo in a two-color, scribbled text style"
+msgstr "ཚིག་ཡིག་བཟོ་རྣམ་ནང་ཐབ་ཐོབ་སྦེ་འབྲི་ཡོད་པའི་ཚོས་གཞི་གཉིས་-ནང་ ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame color"
 msgstr "ཚོས་གཞིའི་གཞི་ཁྲམ།"
 
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
 msgid "Frame size"
 msgstr "གཞི་ཁྲམ་གྱི་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
 msgid "Imigre-_26..."
 msgstr "ཨི་མིག་རི་ ༢༦ ...(_2)"
 
-#: ../plug-ins/script-fu/scripts/land.scm.h:5
+#: ../plug-ins/script-fu/scripts/land.scm.h:1
+msgid "Create an image filled with a topographic map pattern"
+msgstr "ས་ཁམས་ཀྱི་ས་ཁྲ་དཔེ་གཞི་གིས་ བཀང་ཡོད་པའི་གཟུགས་བརྙན་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Land height"
 msgstr "ས་ཆའི་མཐོ་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/land.scm.h:9
+#: ../plug-ins/script-fu/scripts/land.scm.h:10
 msgid "Sea depth"
 msgstr "རྒྱ་མཚོའི་གཏིང་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/land.scm.h:10
+#: ../plug-ins/script-fu/scripts/land.scm.h:11
 msgid "_Land..."
 msgstr "ས་ཆ...(_L)"
 
-#: ../plug-ins/script-fu/scripts/lava.scm.h:3
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
+#: ../plug-ins/script-fu/scripts/lava.scm.h:1
+msgid "Fill the current selection with lava"
+msgstr "ད་ལྟོའི་སེལ་འཐུ་འདི་ ལཱ་བ་གིས་བཀང་།"
+
+#: ../plug-ins/script-fu/scripts/lava.scm.h:4
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
 msgid "Roughness"
 msgstr "རགས་བྲིས་ཡོད་མི།"
 
-#: ../plug-ins/script-fu/scripts/lava.scm.h:4
+#: ../plug-ins/script-fu/scripts/lava.scm.h:5
 msgid "Seed"
 msgstr "ས་བོན།"
 
-#: ../plug-ins/script-fu/scripts/lava.scm.h:7
+#: ../plug-ins/script-fu/scripts/lava.scm.h:8
 msgid "Use current gradient"
 msgstr "ད་ལྟོའི་སྟེགས་རིས་འདི་ལག་ལེན་འཐབ།"
 
-#: ../plug-ins/script-fu/scripts/lava.scm.h:8
+#: ../plug-ins/script-fu/scripts/lava.scm.h:9
 msgid "_Lava..."
 msgstr "ལཱ་བ...(_L)"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
+msgid "Fill a layer with rays emanating outward from its center using the FG color"
+msgstr "ཨེཕ་ཇི་ཚོད་གཞི་ལག་ལེན་འཐབ་ཐོག་ལས་ དེའི་དབུས་ལས་ཕྱི་ཁར་འཕྲོ་བའི་འོད་ཀྱིས་བང་རིམ་བཀང་། "
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
 msgstr "གྲལ་ཐིག་ནོ་བ...(_N)"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:3
 msgid "Number of lines"
 msgstr "གྲལ་ཐིག་ཚུ་གི་ཨང་གྲངས།"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm.h:3
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:4
 msgid "Offset radius"
 msgstr "པར་ལེན་མཐའ་འཁོར།"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm.h:4
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:5
 msgid "Randomness"
 msgstr "གང་འབྱུང་འབད།"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm.h:5
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:6
 msgid "Sharpness (degrees)"
 msgstr "རྣོན་པ་ཅན།(དབྱེ་རིམ་ཚུ་)"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
+msgid "Create a rectangular brush"
+msgstr "པྱིར་གྲུ་བཞི་ནར་མོ་ཅན་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
+msgid "Create a rectangular brush with feathered edges"
+msgstr "སྒྲོ་ལྡན་མཐའམ་ཚུ་དང་གཅིག་ཁར་ གྲུ་བཞི་ནར་མོ་ཅན་པྱིར་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
+msgid "Create an elliptical brush"
+msgstr "སྒོང་དབྱིབས་ཅན་པྱིར་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
+msgid "Create an elliptical brush with feathered edges"
+msgstr "སྒྲོ་ལྡན་མཐའམ་ཚུ་དང་གཅིག་ཁར་ པྱིར་སྒོང་དབྱིབས་ཅན་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
+msgid "Elli_ptical, Feathered..."
+msgstr "སྒོང་དབྱིབས་ཅན་གསརཔ་ སྒྲོ་ལྡན...(_p)"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
 msgid "Feathering"
 msgstr "མདའ་སྒྲོ།"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
 msgid "Name"
 msgstr "མིང་།"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
-msgid "New Elli_ptical..."
-msgstr "སྒོང་དབྱིབས་ཅན་གསརཔ...(_p)"
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
+msgid "Re_ctangular, Feathered..."
+msgstr "གྲུ་གཞི་ནར་མོ་ཅན་གསརཔ་འདི་ སྒྲོ་ལྡན...(_c)"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
-msgid "New Elliptical, Feathered..."
-msgstr "སྒོང་དབྱིབས་ཅན་གསརཔ་ སྒྲོ་ལྡན..."
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
-msgid "New Re_ctangular..."
-msgstr "གྲུ་བཞི་ནར་མོ་ཅན...(_c)"
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
-msgid "New Rectangular, Feathered..."
-msgstr "གྲུ་གཞི་ནར་མོ་ཅན་གསརཔ་འདི་ སྒྲོ་ལྡན..."
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:10
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:5
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 msgid "Spacing"
 msgstr "བར་སྟོང་བཞག་ཐང་།"
 
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:12
+msgid "_Elliptical..."
+msgstr "སྒོང་དབྱིབས་ཅན།...(_E)"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:13
+msgid "_Rectangular..."
+msgstr "གྲུ་བཞི་ནར་མོ་ཅན།...(_R)"
+
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
+msgid "Convert the selected region (or alpha) into a neon-sign like object"
+msgstr "ནིཨོན་-བརྡ་རྟགས་བཟུམ་མའི་དངོས་པོ་ ནང་ལུ་ སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་ (ཡང་ན་ ཨཱལ་ཕ་) འདི་ གཞི་བསྒྱུར་འབད།"
+
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
+msgid "Create a logo in the style of a neon sign"
+msgstr "ནི་ཨོན་བརྡ་རྟགས་ཀྱི་ བཟོ་རྣམ་ནང་ ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create shadow"
 msgstr "གྱིབ་མ་གསར་བསྐྲུན་འབད།"
 
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
 msgid "Effect size (pixels * 5)"
 msgstr "ནུས་ཅན་གྱི་ཚད།(པིག་སེལསི་ * 5)"
 
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
 msgid "N_eon..."
 msgstr "དྲག་རིམ...(_e)"
 
@@ -1614,29 +1949,37 @@ msgstr "དྲག་རིམ...(_e)"
 msgid "Cell size (pixels)"
 msgstr "ནང་ཐིག་གི་ཚད།(པིག་སེལསི།)"
 
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:5
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:3
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:4
+msgid "Create a logo in the style newpaper printing"
+msgstr "གསར་ཤོག་དཔར་བསྐྲུན་འབད་བའི་བཟོ་རྣམ་ནང་ ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:6
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:4
 #, no-c-format
 msgid "Density (%)"
 msgstr "སྟུག་ཚད།(%)"
 
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:8
-msgid "Newsprint Te_xt..."
-msgstr "གནས་ཚུལ་དཔར་བསྐྲུན་གྱི་ཚིག་ཡིག...(_x)"
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:9
+msgid "Newsprint Text..."
+msgstr "གནས་ཚུལ་དཔར་བསྐྲུན་ཚིག་ཡིག..."
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Defocus"
 msgstr "ཆད་དམིགས་མ་འབད་བས།"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:3
+msgid "Make an image look like an old photo"
+msgstr "གཟུགས་བརྙན་གཅིག་ པར་རྙིངམ་ཅིག་བཟུམ་མཐོངམ་བཟོ།"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:4
 msgid "Mottle"
 msgstr "ཐིག་ཁྲ་ཅན།"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:4
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:5
 msgid "Sepia"
 msgstr "ཉ་ཚོན།"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:7
 msgid "_Old Photo..."
 msgstr "དཔར་རྙིངམ...(_O)"
 
@@ -1656,92 +1999,112 @@ msgstr "ཡིག་སྣོད་ཀྱི་མིང་།"
 msgid "New _Brush..."
 msgstr "པྱིར་གསརཔ...(_B)"
 
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
+msgid "Paste the clipboard contents into a new brush"
+msgstr "པྱིར་གསརཔ་ནང་ན་ལུ་ འཛིན་པང་ནང་དོན་ཚུ་ སྦྱར།"
+
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
-msgstr "དཔེ་རིས་གསརཔ...(_p)"
+msgstr "དཔེ་རིས་གསརཔ...(_P)"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
+msgid "Paste the clipboard contents into a new pattern"
+msgstr "འཛིན་པང་ནང་དོན་ཚུ་ དཔེ་གཞི་གསརཔ་ཅིག་ནང་སྦྱར།"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:4
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
 msgid "Pattern name"
 msgstr "དཔེ་རིས་ཀྱི་མིང་།"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཤཡོད་པའི་ལུང་ཕྱོགས་ (ཡང་ན་ ཨཱལ་ཕ་) ལུ་ གྱིབ་མ་སྣང་ཚུལ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 msgid "Angle"
 msgstr "ཟུར་ཅན།"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
 msgid "Interpolation"
 msgstr "བསྐྱར་བསྣོན། "
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
 msgid "Relative distance of horizon"
 msgstr "ཐད་སྙོམས་ཀྱི་འབྲེལ་བའི་གྱང་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
 msgid "Relative length of shadow"
 msgstr "གྱིབ་མ་གི་འབྲེལ་བའི་རིང་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
 msgid "_Perspective..."
 msgstr "སྣང་ཚུལ...(_P)"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
+msgid "Add a 'Predator' effect to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ ལུང་ཕྱོགས་ (ཡང་ན་ ཨཱལ་ཕ་) ལུ་ 'Predator' ནུས་པ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge amount"
 msgstr "མཐའམ་གྱི་མང་ཉུང་།"
 
-#: ../plug-ins/script-fu/scripts/predator.scm.h:3
+#: ../plug-ins/script-fu/scripts/predator.scm.h:4
 msgid "Pixel amount"
 msgstr "པིག་སེལསི་གི་མང་ཉུང་།"
 
-#: ../plug-ins/script-fu/scripts/predator.scm.h:4
+#: ../plug-ins/script-fu/scripts/predator.scm.h:5
 msgid "Pixelize"
 msgstr "པིག་སེལཱསི།"
 
-#: ../plug-ins/script-fu/scripts/predator.scm.h:6
+#: ../plug-ins/script-fu/scripts/predator.scm.h:7
 msgid "_Predator..."
 msgstr "སྲོག་ཆག་གཞན་བཟའ་མི...(_P)"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
+msgid "Create images, each containing an oval button graphic"
+msgstr "རེ་རེའི་ནང་ན་ སྒོང་དབྱིབས་ཨེབ་རྟ་ཚད་རིས་ཤོམ་པའི་གཟུགས་བརྙན་ཚུ་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:5
 msgid "Lower color"
 msgstr "འོག་གི་ཚོས་གཞི།"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:6
 msgid "Lower color (active)"
 msgstr "འོག་གི་ཚོས་གཞི།(ཤུགས་ལྡན།)"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:7
 msgid "Not pressed"
 msgstr "མ་ཨེབ་པས།"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:8
 msgid "Not pressed (active)"
 msgstr "མ་ཨེབ་པས།(ཤུགས་ལྡན།)"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:9
 msgid "Padding X"
 msgstr "བར་ཤབས་ཨེགསི།"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:10
 msgid "Padding Y"
 msgstr "བར་ཤབས་ཝའི།"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:12
 msgid "Round ratio"
 msgstr "དཔྱ་ཚད་སྒོར་སྒོརམ།"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:15
 msgid "Text color (active)"
 msgstr "ཚིག་ཡིག་གི་ཚོས་གཞི།(ཤུགས་ལྡན།)"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:15
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:16
 msgid "Upper color"
 msgstr "ཡར་གྱི་ཚོས་གཞི།"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:16
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:17
 msgid "Upper color (active)"
 msgstr "ཡར་གྱི་ཚོས་གཞི།(ཤུགས་ལྡན།)"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:17
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:18
 msgid "_Round Button..."
 msgstr "ཨེབ་རྟ་སྒོར་སྒོརམ...(_R)"
 
@@ -1750,14 +2113,18 @@ msgid "Behavior"
 msgstr "སྤྱོད་ལམ།"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
+msgid "Create an image filled with an Earth-like map pattern"
+msgstr "འཛམ་གླིང་-བཟུམ་མའི་ས་ཁྲ་དཔེ་གཞི་གིས་ བཀང་ཡོད་པའི་ གཟུགས་བརྙན་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
 msgid "Detail in middle"
 msgstr "བར་མ་གི་ནང་ལུ་རྒྱས་བཤད་འབད།"
 
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:7
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:8
 msgid "Render _Map..."
 msgstr "ས་ཁྲ་ལྷག་སྟོན་འབད...(_M)"
 
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:8
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:9
 msgid "Tile"
 msgstr "ཊ་ཡིལ།"
 
@@ -1766,27 +2133,31 @@ msgid "Black"
 msgstr "གནགཔོ།"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+msgid "Create a multi-layer image by adding a ripple effect to the current image"
+msgstr "ད་ལྟོའི་གཟུགས་བརྙན་ལུ་ ཆུ་རླབས་ནུས་པ་ཁ་སྐོང་བརྐྱབ་པའི་ཐོག་ལས་ གཟུགས་བརྙན་ བང་རིམ་-སྣ་མང་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 msgid "Edge behavior"
 msgstr "མཐའམ་གྱི་སྤྱོད་ལམ།"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
-#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:4
 msgid "Number of frames"
 msgstr "གཞི་ཁྲམ་ཚུ་གྱི་ཨང་གྲངས།"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling strength"
 msgstr "རིཔ་ལིང་གི་སྟོབས་ཤུགས།"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:5
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:6
 msgid "Smear"
 msgstr "དབུར་ནི།"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:6
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
 msgstr "ལོག་མཚམས།"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:7
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:8
 msgid "_Rippling..."
 msgstr "རིཔ་ལིང་...(_R)"
 
@@ -1802,7 +2173,11 @@ msgstr "གྱིབ་མ་མར་བཞག་འདི་-བསྡོམ�
 msgid "Edge radius"
 msgstr "མཐའམ་གྱི་མཐའ་འཁོར།"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:8
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
+msgid "Round the corners of an image and optionally add a drop-shadow and background"
+msgstr "གདམ་ཁ་དང་འཁྲིལ་ཏེ་ གཟུགས་བརྙན་གྱི་སྒྱིད་ཁུག་ཚུ་པད་སྐོར་བསྒྱིར་ཏེ་ གྱིབ་མ་-བཀོ་བཞག་དང་ རྒྱབ་གཞི་ཁ་སྐོང་བརྐྱབ་ཨིན། "
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
 msgstr "སྒྱིད་ཁུག་སྒོར་སྒོརམ་ཚུ...(_R)"
 
@@ -1816,7 +2191,7 @@ msgstr "གཟུགས་བརྙན་ལུ།(_I)"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 msgid "To _Pattern..."
-msgstr "དཔེ་རིས་ལུ...(_p)"
+msgstr "དཔེ་རིས་ལུ...(_P)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "Concave"
@@ -1828,80 +2203,108 @@ msgid "Radius (%)"
 msgstr "མཐའ་འཁོར།(%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
+msgid "Round the corners of the current selection"
+msgstr "ད་ལྟོ་སེལ་འཐུའི་སྒྱིད་ཁུག་ཚུ་ མཐའ་བསྐོར་ཏེ།"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
+msgid "Round the corners of the current selection (deprecated, use Rounded Rectangle)"
+msgstr "ད་ལྟོའི་སེལ་འཐུ་གི་སྒྱིད་ཁུག་ཚུ་པད་སྐོར་བསྒྱིར་་(ངོས་ལེན་མེདཔ་ པད་སྐོར་བསྒྱིར་ཡོད་པའི་གྲུ་བཞི་ནར་མོ་ལག་ལེན་འཐབ) །"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:6
 msgid "Rounded R_ectangle..."
 msgstr "གྲུ་བཞི་ནར་མོ་སྒོར་སྒོརམ་བཟོ་བཟོཝ...(_e)"
 
-#: ../plug-ins/script-fu/scripts/slide.scm.h:2
+#: ../plug-ins/script-fu/scripts/slide.scm.h:1
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr "གཟུགས་བརྙན་གཅིག་ལུ་ ཁ་ཡིག་བཏགས་ནི་དང་ འཁོར་སོ་སོ་ཅན་མའི་དོང་ཕུ་ གཞི་ཁྲམ་བཟུམ་མའི་ བཤུད་-བརྙན་ཤོག་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font color"
 msgstr "ཡིག་གཟུགས་ཀྱི་ཚོས་གཞི།"
 
-#: ../plug-ins/script-fu/scripts/slide.scm.h:3
+#: ../plug-ins/script-fu/scripts/slide.scm.h:4
 msgid "Number"
 msgstr "ཨང་གྲངས།"
 
-#: ../plug-ins/script-fu/scripts/slide.scm.h:6
+#: ../plug-ins/script-fu/scripts/slide.scm.h:7
 msgid "_Slide..."
 msgstr "བཤུད...(_S)"
 
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+msgid "Create a State Of The Art chromed logo"
+msgstr "རི་མོ་ཀོརོམཌི་ལས་རྟགས་ཀྱི་ གནས་ལུགས་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
 msgid "SOTA Chrome..."
 msgstr "ཨེསི་ཨོ་ཊི་ཨེ་ཀོརོམ..."
 
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
+msgid "Create a logo using a speedy text effect"
+msgstr "ཚིག་ཡིག་ནུས་པ་མགྱོགས་དྲགས་གཅིག་ལག་ལེན་འཐབ་ཐོག་ལས་ ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
 msgstr "ཚིག་ཡིག་མགྱོགས་ཚད།"
 
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:2
+msgid "Create a simple sphere with a drop shadow"
+msgstr "གྱིབ་མ་བཀོ་བཞག་དང་གཅིག་ཁར་ ཟླུམ་གཟུགས་འཇམ་སམ་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
 msgstr "འོད།(དབྱེ་རིམ།)"
 
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:3
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:4
 msgid "Radius (pixels)"
 msgstr "མཐའ་འཁོར།(པིག་སེལསི།)"
 
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:5
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:6
 msgid "Sphere color"
 msgstr "ཟླུམ་གཟུགས་ཀྱི་ཚོས་གཞི།"
 
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:6
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:7
 msgid "_Sphere..."
 msgstr "ཟླུམ་གཟུགས...(_S)"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
+msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgstr "འཕང་གི་ཟླུམ་གཟུགས་གུ་ལུ་ ད་ལྟོའི་གཟུགས་བརྙན་འདི་ས་ཁྲ་བཟོ་བའི་ཐོག་ལས་ བསྒུལ་བཟོ་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
 msgstr "གཞི་ཁྲམ་ཚུ།"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "ཚོས་གཞི་ཨོན་ལུ་ཟུར་ཐོ།(0 = ཨར་བི་ཇི་ལྷག་ལུས།)"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:5
 msgid "Turn from left to right"
 msgstr "གཡོན་ལས་གཡས་ལུ་ཊཱན་འབད།"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:6
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:7
 msgid "_Spinning Globe..."
 msgstr "འཛམ་གླིང་བསྒྱིར་འགྱོ་མི...(_S)"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+msgid "Add Spirographs, Epitrochoids and Lissajous Curves to the current layer"
+msgstr "ད་ལྟོའི་བང་རིམ་ལུ་ སིཔི་རོ་གརཕསི་ ཨི་པི་ཊོརོ་ཀོའིཊིསི་ དང་ ལི་ས་ཇོསི་ གུག་གུགཔ་ཚུ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
 msgstr "རླུང་པྱིར།"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:3
 msgid "Brush"
 msgstr "པྱིར།"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Circle"
 msgstr "སྒོར་ཐིག།"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid "Color method"
 msgstr "ཚོས་གཞི་གི་ཐབས་ལམ།"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:6
-msgid "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://netword.com/*spyrogimp"
-msgstr "ཨིསི་པི་རོ་གརཔསི་ ཨི་པི་ཐོརོ་ཀོའིཊསི་དང་ ལི་ས་ཇའོསི་གི་གུག་གུགཔ་ཚུ་འཐེནམ་ཨིན།http://netword.com/*spyrogimp ལུ་བརྡ་དོན་ཧེང་བཀལ།"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid "Epitrochoid"
@@ -1984,7 +2387,7 @@ msgid "Square"
 msgstr "གྲུ་བཞི།"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
 msgid "Start angle"
 msgstr "ཟུར་ཅན་འགོ་བཙུགས།"
 
@@ -2009,62 +2412,94 @@ msgid "Burst color"
 msgstr "ཚོས་གཞི་གག་ནི།"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:3
+msgid "Create a logo using a starburst gradient"
+msgstr "སིཊར་བརསིཊི་སྟེགས་རིས་ལག་ལེན་འཐབ་ཐོག་ལས་ ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:4
 msgid "Effect size (pixels * 30)"
 msgstr "ནུས་ཤུགས་ཀྱི་ཚད། (པིག་སེལསི * 30)"
 
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:5
+msgid "Fill the selected region (or alpha) with a starburst gradient and add a shadow"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་(ཡང་ན་ ཨཱལ་ཕ་) འདི་ སིཊར་བརསིཊི་སྟེགས་རིས་ཀྱིས་བཀང་ཞིནམ་ལས་ གྱིབ་མ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
 msgid "Starb_urst..."
 msgstr "སྐར་མ་གས་པ...(_u)"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
+msgid "Create a logo using rock-like text backlit by a nova glow"
+msgstr "ནོ་བ་དམར་མདངས་ཀྱིས་ རྒྱབ་འོད་འབར་ཡོད་པའི་ རོཀ་-བཟུམ་མའི་ཚིག་ཡིག་ལག་ལེན་འཐབ་ཐོག་ལས་ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 msgid "Effect size (pixels * 4)"
 msgstr "ནུས་ཅན་གྱི་ཚད། (པིག་སེལསི་* 4)"
 
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
+msgid "Fill the selected region (or alpha) with a 'rocky' texture and add a nova glow and shadow"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་(ཡང་ན་ ཨཱལ་ཕ་) འདི་ 'rocky' རེག་བྱ་གིས་བཀང་ཞིནམ་ལས་ ནོ་བ་དམར་མདངས་དང་གྱིབ་མ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
 msgid "Sta_rscape..."
 msgstr "སྐར་མའི་མཛེས་བཀོད།...(_r)"
 
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
+msgid "Create an image filled with a swirled tile effect"
+msgstr "འཁོར་འཚུབ་པའི་ཊི་ཡིལ་ནུས་པ་གིས་བཀང་ཡོད་པའི་གཟུགས་བརྙན་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Swirl-_Tile..."
 msgstr "རྦ་འཁོར-ཊ་ཡིལ...(_T)"
 
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Whirl amount"
 msgstr "འཁྱིར་རླུང་མང་ཉུང་།"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
+msgid "Create an image filled with a swirly pattern"
+msgstr "འཁོར་འཚུབ་པའི་དཔེ་གཞི་གིས་བཀང་ཡོད་པའི་གཟུགས་བརྙན་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of times to whirl"
 msgstr "འཁྱིར་རླུང་ལུ་དུས་ཡུན་གྱི་ཨང་གྲངས།"
 
-#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
 msgid "Quarter size"
 msgstr "བཞི་ཆ་གཅིག"
 
-#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
 msgid "Whirl angle"
 msgstr "འཁྱིར་རླུང་གི་ཟུར་ཅན།"
 
-#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:5
 msgid "_Swirly..."
 msgstr "རྦ་འཁོར་འབད...(_S)"
 
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+msgid "Add a Trace of Particles effect to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་(ཡང་ན་ ཨཱལ་ཕ་) ལུ་ ཚིག་ཕྲད་ནུས་པ་ཚུའི་རྗེས་བཤུལ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 msgid "Base color"
 msgstr "ཚོས་གཞི་གཞི་རྟེན།"
 
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
+msgid "Create a logo using a Trace Of Particles effect"
+msgstr "ཚིག་ཕྲད་ནུས་པ་ཚུའི་རྗེས་བཤུལ་ལག་ལེན་འཐབ་ཐོག་ལས་ ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
 msgid "Edge only"
 msgstr "མཐའམ་རྐྱངམ་ཅིག"
 
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
 msgid "Edge width"
 msgstr "མཐའམ་གྱི་རྒྱ་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
 msgid "Hit rate"
 msgstr "མགྱོགས་ཚ་ལུ་ཨེབ་ནི།"
 
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
 msgid "_Particle Trace..."
 msgstr "ཕྲ་མོའི་བཤུལ...(_P)"
 
@@ -2073,80 +2508,104 @@ msgid "Antialias"
 msgstr "ཨེན་ཊི་ཨེ་ལའིསི།"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
+msgid "Create a logo by rendering the specified text along the perimeter of a circle"
+msgstr "སྒོར་ཐིག་གི་ཚད་བཟུང་བདའ་སྟེ་ གསལ་བཀོད་འབད་ཡོད་པའི་ཚིག་ཡིག་ལྷག་སྟོན་འབད་བའི་ཐོག་ལས་ ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 msgid "Fill angle"
 msgstr "ཟུར་ཅན་བཀང་།"
 
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:9
 msgid "Text C_ircle..."
 msgstr "ཚིག་ཡིག་གི་སྒོར་ཐིག...(_i)"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
+msgid "Create a textured logo with highlights, shadows, and a mosaic background"
+msgstr "གཙུ་རྟགས་ཚུ་དང་ གྱིབ་མ་ཚུ་ དེ་ལས་ མོ་ས་ཡིཀ་རྒྱབ་གཞི་ཚུ་དང་གཅིག་ཁར་ རེག་བྱ་ལས་རྟགས་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"
 msgstr "མཉམ་སྡེབ་མཇུག་བསྡུ་ནི།"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
+msgid "Fill the selected region (or alpha) with a texture and add highlights, shadows, and a mosaic background"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་འདི་ (ཡང་ན་ ཨཱལ་ཕ་) རེག་བྱ་དང་གཅིག་ཁར་བཀང་ཞིནམ་ལས་ གཙོ་རྟགས་དང་ གྱིབ་མ་ དེ་ལས་ མོ་ས་ཡིཀ་རྒྱབ་གཞི་ཚུ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
 msgstr "ཟུར་དྲུག་མ་ཚུ།"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:9
 msgid "Mosaic tile type"
 msgstr "མོ་ས་ཡིཀ་ཊ་ཡིལ་གྱི་དབྱེ་བ།"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Octagons"
 msgstr "ཟུར་བརྒྱད་མ་ཚུ།"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:12
 msgid "Squares"
 msgstr "གྲུ་བཞི་ཚུ།"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:13
 msgid "Starting blend"
 msgstr "མཉམ་སྡེབ་འགོ་བཙུགས་པའི་བསྒང་།"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:13
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:15
 msgid "Text pattern"
-msgstr "ཚིག་ཡིག་གི་དཔེ་རིས།"
+msgstr "ཚིག་ཡིག་གི་དཔེ་གཞིི།"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:16
 msgid "_Textured..."
 msgstr "རེག་བྱ...(_T)"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:1
 msgid "Blur horizontally"
-msgstr "ཐད་སྙོམས་སྦེ་རབ་རིབ།"
+msgstr "རབ་རིབ་ཐད་སྙོམས་སྦེ།"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
-msgid "Blur type"
-msgstr "རབ་རིབ་ཀྱི་དབྱེ་བ།"
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr "གྲུབ་འབྲས་འདི་ཚེམས་སྲུབ་མེད་པའི་ཐོག་ལས་ཊ་ཡིལསི་འབད་ནིའི་དོན་ལུ་ གཟུགས་བརྙན་གྱི་ མཐའམ་ཚུ་རབ་རིབ།"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
-msgid "Blur vertically"
-msgstr "ཀེར་ཕྲང་རབ་རིབ།"
+msgid "Blur type"
+msgstr "རབ་རིབ་དབྱེ་བ།"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:4
+msgid "Blur vertically"
+msgstr "རབ་རིབ་ཀེར་ཕྲང་སྦེ།"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:5
 msgid "IIR"
 msgstr "ཨའེ་ཨའེ་ཨར།"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:5
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:6
 msgid "RLE"
-msgstr "ཨར་ཨོལ་ཨི།"
+msgstr "ཨར་ཨེལ་ཨི།"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:7
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:8
 msgid "_Tileable Blur..."
 msgstr "རབ་རིབ་ཊ་ཡིལ་ཨེ་བལ...(_T)"
 
-#: ../plug-ins/script-fu/scripts/title-header.scm.h:5
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:1
+msgid "Create a decorative web title header"
+msgstr "མཛེས་པའི་ཝེབ་མགོ་ཡིག་མགོ་མིང་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:6
 msgid "Web Title Header..."
 msgstr "ཝེབ་མགོ་མིང་གི་མགོ་ཡིག..."
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:3
+msgid "Create an image filled with a Truchet pattern"
+msgstr "ཊྲ་ཅེཊི་དཔེ་གཞི་གིས་བཀང་ཡོད་པའི་གཟུགས་བརྙན་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground color"
 msgstr "གདོང་གཞི་གི་ཚོས་གཞི།"
 
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:6
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:7
 msgid "T_ruchet..."
-msgstr "ཊ་ཆིཊི...(_r)"
+msgstr "ཊྲ་ཅེཊི།...(_r)"
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
 msgid "Mask opacity"
@@ -2156,51 +2615,63 @@ msgstr "གདོང་ཁེབས་དྭངས་སྒྲིབ།"
 msgid "Mask size"
 msgstr "གདོང་ཁེབས་ཀྱི་ཚད།"
 
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
+msgid "_Unsharp Mask..."
+msgstr "རྣོས་མ་བཏོན་པའི་ པར་གཟུགས།...(_U)"
+
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:1
 msgid "Amplitude"
 msgstr "རྒྱ་ཆེ་བ།"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:2
+msgid "Create a multi-layer image with an effect like a stone was thrown into the current image"
+msgstr "ད་ལྟོའི་གཟུགས་བརྙན་ནང་ན་ རྡོ་བཀོག་ཡོདཔ་བཟུམ་མའི་ནུས་པ་དང་བཅས་པའི་ བང་རིམ་གཟུགས་བརྙན་- སྣ་མང་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
 msgstr "བཀོད་རྒྱ་གནས་ལོག་འབད།"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:5
 msgid "Wavelength"
 msgstr "གཡབ་ཀྱི་རིང་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:5
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:6
 msgid "_Waves..."
 msgstr "གཡབ་ཚུ...(_W)"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:1
+msgid "Create a new layer filled with a weave effect to be used as an overlay or bump map"
+msgstr "སྤུར་ཁེབས་ཡང་ན་ བཱམཔ་མེཔི་སྦེ་ལག་ལེན་འཐབ་ནི་ཨིན་པའི་ ཚེམ་དྲུབ་ནུས་པ་གིས་བཀང་ཡོད་པའི་ བང་རིམ་གསརཔ་གཅིག་གསར་བསྐྲུན་འབད།"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
 msgstr "སྣག་ཐག་བར་སྟོང་བཞག་ཐང་།"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:2
+#: ../plug-ins/script-fu/scripts/weave.scm.h:3
 msgid "Ribbon width"
 msgstr "སྣག་ཐག་རྒྱ་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:3
+#: ../plug-ins/script-fu/scripts/weave.scm.h:4
 msgid "Shadow darkness"
 msgstr "གྱིབ་མ་གི་གྲིབ་གནག་ཆན།"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:4
+#: ../plug-ins/script-fu/scripts/weave.scm.h:5
 msgid "Shadow depth"
 msgstr "གྱིབ་མ་གི་གཏིང་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:5
+#: ../plug-ins/script-fu/scripts/weave.scm.h:6
 msgid "Thread density"
 msgstr "ཐེ་རེཌི་སྟུག་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:6
+#: ../plug-ins/script-fu/scripts/weave.scm.h:7
 msgid "Thread intensity"
 msgstr "ཐེ་རེཌི་དྲག་ཤུགས།"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:7
+#: ../plug-ins/script-fu/scripts/weave.scm.h:8
 msgid "Thread length"
 msgstr "ཐེ་རེཌི་རིང་ཚད།"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:8
+#: ../plug-ins/script-fu/scripts/weave.scm.h:9
 msgid "_Weave..."
 msgstr "ཚེམ་དྲུབ...(_W)"
 
@@ -2249,38 +2720,57 @@ msgid "_Working with Digital Camera Photos"
 msgstr "ཌི་ཇི་ཊཱལ་པར་ཆས་ཀྱི་དཔར་དང་བཅས་ལཱ་འབད་དོ།(_W)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
+msgid "Add a subtle translucent 3-d effect to the selected region (or alpha)"
+msgstr "སེལ་འཐུ་གྲུབ་ཡོད་པའི་ལུང་ཕྱོགས་ (ཡང་ན་ཨཱལ་ཕ་) ལུ་ ཕྲ་ཞིང་འཇམ་པའི་འོད་བརྒྱུད་ཅན་ཕྱོགས་གསུམ་པའི་ནུས་པ་ཁ་སྐོང་བརྐྱབ།"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
 msgstr "གྱིབ་མ་གི་ཨེགསི་པར་ལེན་འདི་བཀོག་བཞག"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:3
 msgid "Drop shadow Y offset"
 msgstr "གྱིབ་མ་གི་ཝའི་པར་ལེན་འདི་བཀོག་བཞག"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:3
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:4
 msgid "Drop shadow blur radius"
 msgstr "གྱིབ་མ་རབ་རིབ་ཀྱི་མཐའ་འཁོར་འདི་བཀོག་བཞག"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:4
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:5
 msgid "Drop shadow color"
 msgstr "གྱིབ་མ་གི་ཚོས་གཞི་འདི་བཀོག་བཞག"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:5
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:6
 msgid "Drop shadow opacity"
 msgstr "གྱིབ་མ་གི་དྭངས་སྒྲིབ་འདི་བཀོག་བཞག"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:6
-msgid "Highlight X offset"
-msgstr "ཨེགསི་པར་ལེན་འདི་གཙོ་དམིགས་འབད།"
-
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
+msgid "Highlight X offset"
+msgstr "ཨེགསི་པར་ལེན་འདི་གཙོ་རྟགས་བཀལ།"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
 msgid "Highlight Y offset"
-msgstr "ཝའི་པར་ལེན་འདི་གཙོ་དམིགས་འབད།"
+msgstr "ཝའི་པར་ལེན་འདི་གཙོ་རྟགས་བཀལ།"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
-msgstr "དྭངས་སྒྲིབ་འདི་པར་ལེན་འབད།"
+msgstr "དྭངས་སྒྲིབ་འདི་གཙོ་རྟགས་བཀལ།"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "ཨེགསི་ཨེ་སི་ཨེཆ་-གི་ནུས་པ...(_X)"
+
+#~ msgid "About %s"
+#~ msgstr "%s སྐོར་ལས།"
+#~ msgid "Author:"
+#~ msgstr "རྩོམ་པ་པོ:"
+#~ msgid "Copyright:"
+#~ msgstr "འདྲ་བཤུས་དབང་ཆ:"
+#~ msgid "Date:"
+#~ msgstr "ཚེས་གྲངས:"
+#~ msgid "Image Types:"
+#~ msgstr "གཟུགས་བརྙན་གྱི་དབྱེ་བ:"
+#~ msgid "Render _Image..."
+#~ msgstr "གཟུགས་བརྙན་ལྷག་སྟོན་འབད...(_i)"
+#~ msgid "_Divisions..."
+#~ msgstr "སྡེ་ཚན་ཚུ...(_D)"
 
