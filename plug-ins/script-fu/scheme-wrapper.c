@@ -272,23 +272,14 @@ ts_get_success_msg (void)
 void
 ts_output_string (FILE *fp, char *string, int len)
 {
-  gchar *buff;
-
   g_return_if_fail (len >= 0);
 
-  if (len == 0)
-     return;
-
-  if (ts_console_mode && fp == stdout)
+  if (len > 0 && ts_console_mode && fp == stdout)
   {
-    len = g_utf8_offset_to_pointer(string, (long)len) - string;
-    buff = g_strndup (string, len);
-    if (buff == NULL)
-       return;  /* Should "No memory" be output here? */
+    /* len is the number of UTF-8 characters; we need the number of bytes */
+    len = g_utf8_offset_to_pointer (string, len) - string;
 
-    script_fu_output_to_console (buff);
-
-    g_free (buff);
+    script_fu_output_to_console (string, len);
   }
 }
 
@@ -310,7 +301,7 @@ tinyscheme_init (gboolean local_register_scripts)
   /* init the interpreter */
   if (!scheme_init (&sc))
   {
-     g_message ("Could not initialize TinyScheme!\n");
+     g_message ("Could not initialize TinyScheme!");
      return;
   }
 
@@ -589,17 +580,23 @@ convert_string (gchar *str)
     }
 }
 
-/* This routine will eventually display a dialog box containing */
-/* the error message. For now, just print the message to stderr */
 static pointer
 my_err (char *msg, pointer a)
 {
-//        if (run_mode == GIMP_RUN_INTERACTIVE)
-                g_message (msg);
-//        else
-//                fprintf (stderr, "%s\n", msg);
+  if (ts_console_mode)
+    {
+      gchar *tmp = g_strdup_printf ("Error: %s\n", msg);
 
-        return sc.NIL;
+      script_fu_output_to_console (tmp, -1);
+
+      g_free (tmp);
+    }
+  else
+    {
+      g_message (msg);
+    }
+
+  return sc.NIL;
 }
 
 

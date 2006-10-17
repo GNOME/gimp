@@ -502,7 +502,8 @@ script_fu_console_scroll_end (GtkWidget *view)
 }
 
 void
-script_fu_output_to_console (const gchar *text)
+script_fu_output_to_console (const gchar *text,
+                             gint         len)
 {
   /* FIXME: This function needs to be passed a pointer to the console.
    */
@@ -513,7 +514,7 @@ script_fu_output_to_console (const gchar *text)
 
       gtk_text_buffer_get_end_iter (buffer, &cursor);
       gtk_text_buffer_insert_with_tags_by_name (buffer, &cursor,
-                                                text, -1,
+                                                text, len,
                                                 "weak",
                                                 NULL);
 

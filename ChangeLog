@@ -1,3 +1,13 @@
+2006-10-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-console.[ch]
+	(script_fu_output_to_console): added a length parameter to avoid
+	needless string duplication.
+
+	* plug-ins/script-fu/scheme-wrapper.c (ts_output_string): changed
+	accordingly.
+	(my_err): in console mode, send error messages to the console.
+
 2006-10-16  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.c: Eliminated compiler warnings.
