@@ -637,7 +637,8 @@ gimp_plug_in_procedure_get_sensitive (const GimpPlugInProcedure *proc,
 }
 
 static GimpPlugInImageType
-image_types_parse (const gchar *image_types)
+image_types_parse (const gchar *name,
+                   const gchar *image_types)
 {
   const gchar         *type_spec = image_types;
   GimpPlugInImageType  types     = 0;
@@ -712,14 +713,16 @@ image_types_parse (const gchar *image_types)
             }
           else
             {
-              g_printerr ("image_type contains unrecognizable parts: '%s'\n",
-                          type_spec);
+              g_printerr ("%s: image-type contains unrecognizable parts:"
+                          "'%s'\n", name, type_spec);
 
               while (*image_types &&
                      ((*image_types != ' ') ||
                       (*image_types != '\t') ||
                       (*image_types != ',')))
-                image_types++;
+                {
+                  image_types++;
+                }
             }
         }
     }
@@ -736,9 +739,9 @@ gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure *proc,
   if (proc->image_types)
     g_free (proc->image_types);
 
-  proc->image_types = g_strdup (image_types);
-
-  proc->image_types_val = image_types_parse (proc->image_types);
+  proc->image_types     = g_strdup (image_types);
+  proc->image_types_val = image_types_parse (gimp_object_get_name (GIMP_OBJECT (proc)),
+                                             proc->image_types);
 }
 
 static GSList *
