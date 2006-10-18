@@ -1,16 +1,17 @@
+# translation of ca.po to Català
 # gimp-libgimp translation to Catalan
 #
 # Jordi Jover, jordijn@softcatala.org, 2002.
 # Xavier Conde Rueda <xavi.conde a gmail.com>, 2004, 2005.
-# Quim Perez i Noguer <noguer[AT]osona.com>, 2005.
 # Softcatala <tradgnome@softcatala.org>, 2000-2002.
+# Quim Perez i Noguer <noguer a gmail.com, 2005, 2006.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-05 00:43+0200\n"
-"PO-Revision-Date: 2006-09-05 00:47+0200\n"
+"POT-Creation-Date: 2006-10-18 23:56+0200\n"
+"PO-Revision-Date: 2006-10-07 15:57+0200\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +38,7 @@ msgstr "%s no pot gestionar desplaçaments de capa, mida o opacitat"
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "%s només pot gestionar les capes com a marcs d'animació"
+msgstr "%s només pot gestionar les capes com a fotogrames de l'animació"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -136,7 +137,7 @@ msgstr "Afegeix un canal alfa"
 
 #: ../libgimp/gimpexport.c:383
 msgid "Confirm Save"
-msgstr "Comfirmeu que voleu desar"
+msgstr "Confirmeu que voleu desar"
 
 #: ../libgimp/gimpexport.c:389
 msgid "Confirm"
@@ -324,7 +325,7 @@ msgstr "Canal _alfa de la capa"
 
 #: ../libgimpbase/gimpbaseenums.c:30
 msgid "_Transfer layer's alpha channel"
-msgstr "_Tranfereix canal alfa de la capa"
+msgstr "_Transfereix canal alfa de la capa"
 
 #: ../libgimpbase/gimpbaseenums.c:31
 msgid "_Selection"
@@ -601,7 +602,7 @@ msgstr "Constant"
 msgid "Incremental"
 msgstr "Incremental"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:256
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:258
 msgid "None"
 msgstr "Cap"
 
@@ -722,7 +723,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:248
+#: ../modules/cdisplay_lcms.c:250
 msgid "(invalid UTF-8 string)"
 msgstr "(la cadena de text UTF-8 no és vàlida)"
 
@@ -870,7 +871,7 @@ msgid ""
 "No file has been created."
 msgstr ""
 "S'ha produït un error en escriure el fitxer temporal per a '%s': %s\n"
-"No s'ha creat cap fitxer"
+"No s'ha creat cap fitxer."
 
 #: ../libgimpconfig/gimpconfigwriter.c:686
 #, c-format
@@ -957,15 +958,15 @@ msgstr "_Blanc"
 msgid "Scales"
 msgstr "Escales"
 
-#: ../libgimpwidgets/gimpcolorselection.c:187
+#: ../libgimpwidgets/gimpcolorselection.c:210
 msgid "Current:"
 msgstr "Actual:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:209
+#: ../libgimpwidgets/gimpcolorselection.c:232
 msgid "Old:"
 msgstr "Antic:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:263
+#: ../libgimpwidgets/gimpcolorselection.c:286
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -973,7 +974,7 @@ msgstr ""
 "Notació hexadecimal utilitzada en l'HTML i el CSS. També permet utilitzar "
 "els noms de colors del CSS."
 
-#: ../libgimpwidgets/gimpcolorselection.c:269
+#: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
 msgstr "_Notació HTML:"
 
@@ -1021,7 +1022,7 @@ msgstr "Selecciona _entre:"
 
 #: ../libgimpwidgets/gimppageselector.c:319
 msgid "Open _pages as"
-msgstr "Obre les pàgines com"
+msgstr "Obre les _pàgines com a"
 
 #: ../libgimpwidgets/gimppageselector.c:420
 msgid "Page 000"
@@ -1117,7 +1118,7 @@ msgstr "Enganxa-ho a dins"
 
 #: ../libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
-msgstr "_Redefineix"
+msgstr "_Recupera"
 
 #: ../libgimpwidgets/gimpstock.c:121
 msgid "Visible"
@@ -1139,23 +1140,24 @@ msgstr "Espa_iat de les línies"
 msgid "_Resize"
 msgstr "Canvia la _mida"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:303
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:319
 msgid "_Scale"
 msgstr "E_scala"
 
-#: ../libgimpwidgets/gimpstock.c:280
-msgid "Crop"
+#: ../libgimpwidgets/gimpstock.c:295
+#, fuzzy
+msgid "Cr_op"
 msgstr "Escapça"
 
-#: ../libgimpwidgets/gimpstock.c:299
+#: ../libgimpwidgets/gimpstock.c:314
 msgid "_Transform"
 msgstr "_Transforma"
 
-#: ../libgimpwidgets/gimpstock.c:302
+#: ../libgimpwidgets/gimpstock.c:318
 msgid "_Rotate"
 msgstr "Gi_ra"
 
-#: ../libgimpwidgets/gimpstock.c:304
+#: ../libgimpwidgets/gimpstock.c:320
 msgid "_Shear"
 msgstr "Re_talla"
 
@@ -1273,7 +1275,7 @@ msgstr ""
 msgid "Color Deficient Vision"
 msgstr "Visió amb dèficit de color"
 
-#: ../modules/cdisplay_colorblind.c:503
+#: ../modules/cdisplay_colorblind.c:505
 msgid "Color _deficiency type:"
 msgstr "Tipus _de dèficit de color:"
 
@@ -1285,7 +1287,7 @@ msgstr "Filtre de visualització de la gamma de color"
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/cdisplay_gamma.c:251
+#: ../modules/cdisplay_gamma.c:253
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
@@ -1297,7 +1299,7 @@ msgstr "Filtre de visualització de color d'alt contrast"
 msgid "Contrast"
 msgstr "Contrast"
 
-#: ../modules/cdisplay_highcontrast.c:251
+#: ../modules/cdisplay_highcontrast.c:253
 msgid "Contrast c_ycles:"
 msgstr "C_icles de contrast:"
 
@@ -1310,7 +1312,7 @@ msgstr ""
 msgid "Color Management"
 msgstr "Gestió del color"
 
-#: ../modules/cdisplay_lcms.c:290
+#: ../modules/cdisplay_lcms.c:281
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1318,19 +1320,19 @@ msgstr ""
 "Aquest filtre pren la seva configuració de la secció de «Gestió de color» en "
 "el diàleg de «Preferències»."
 
-#: ../modules/cdisplay_lcms.c:313
+#: ../modules/cdisplay_lcms.c:295
 msgid "Mode of operation:"
 msgstr "Mode d'operació:"
 
-#: ../modules/cdisplay_lcms.c:324
+#: ../modules/cdisplay_lcms.c:306
 msgid "RGB workspace profile:"
 msgstr "Perfil de l'espai de treball RGB:"
 
-#: ../modules/cdisplay_lcms.c:334
+#: ../modules/cdisplay_lcms.c:316
 msgid "Monitor profile:"
 msgstr "Perfil del monitor:"
 
-#: ../modules/cdisplay_lcms.c:344
+#: ../modules/cdisplay_lcms.c:326
 msgid "Print simulation profile:"
 msgstr "Perfil de simulació d'impressió:"
 
@@ -1342,19 +1344,19 @@ msgstr "Filtre de prova de color que empra un perfil de color ICC"
 msgid "Color Proof"
 msgstr "Prova de color"
 
-#: ../modules/cdisplay_proof.c:304
+#: ../modules/cdisplay_proof.c:306
 msgid "_Intent:"
 msgstr "_Propòsit:"
 
-#: ../modules/cdisplay_proof.c:308
+#: ../modules/cdisplay_proof.c:310
 msgid "Choose an ICC Color Profile"
 msgstr "Escolliu un perfil de color ICC"
 
-#: ../modules/cdisplay_proof.c:311
+#: ../modules/cdisplay_proof.c:313
 msgid "_Profile:"
 msgstr "_Perfil:"
 
-#: ../modules/cdisplay_proof.c:316
+#: ../modules/cdisplay_proof.c:318
 msgid "_Black Point Compensation"
 msgstr "Co_mpensació de punt negre"
 
@@ -1543,28 +1545,28 @@ msgstr "Nom del dispositiu del qual s'han de rebre esdeveniments."
 msgid "Linux Input"
 msgstr "Senyal del Linux"
 
-#: ../modules/controller_linux_input.c:351
+#: ../modules/controller_linux_input.c:352
 msgid "Linux Input Events"
 msgstr "Senyals del Linux"
 
-#: ../modules/controller_linux_input.c:372 ../modules/controller_midi.c:482
-#: ../modules/controller_midi.c:508
+#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:483
+#: ../modules/controller_midi.c:509
 #, c-format
 msgid "Reading from %s"
 msgstr "S'està llegint de %s"
 
-#: ../modules/controller_linux_input.c:388
-#: ../modules/controller_linux_input.c:431 ../modules/controller_midi.c:464
-#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
+#: ../modules/controller_linux_input.c:389
+#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:465
+#: ../modules/controller_midi.c:526 ../modules/controller_midi.c:597
 #, c-format
 msgid "Device not available: %s"
 msgstr "Dispositiu desconnectat: %s"
 
-#: ../modules/controller_linux_input.c:396 ../modules/controller_midi.c:533
+#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:534
 msgid "No device configured"
 msgstr "No s'ha configurat cap dispositiu"
 
-#: ../modules/controller_linux_input.c:440 ../modules/controller_midi.c:605
+#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:606
 msgid "End of file"
 msgstr "Fi del fitxer"
 
@@ -1596,21 +1598,21 @@ msgstr ""
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:383
+#: ../modules/controller_midi.c:384
 #, c-format
 msgid "Note %02x on"
 msgstr "Nota %02x activa"
 
-#: ../modules/controller_midi.c:386
+#: ../modules/controller_midi.c:387
 #, c-format
 msgid "Note %02x off"
 msgstr "Nota %02x aturada"
 
-#: ../modules/controller_midi.c:389
+#: ../modules/controller_midi.c:390
 #, c-format
 msgid "Controller %03d"
 msgstr "Controlador %03d"
 
-#: ../modules/controller_midi.c:436
+#: ../modules/controller_midi.c:437
 msgid "MIDI Events"
 msgstr "Senyals MIDI"

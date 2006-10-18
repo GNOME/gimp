@@ -3,15 +3,15 @@
 # Catalan translation of gimp-tips.
 # Copyright © 2004, 2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
-# Xavier Beà <xbea@pie.xtec.es>, 2004, 2006.
-# Quim Perez i Noguer, 2006.
+# Xavier Beà <xbea a pie.xtec.es>, 2004, 2006.
+# Quim Perez i Noguer <noguer a gmail.com>, 2006.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-06 00:07+0200\n"
-"PO-Revision-Date: 2006-09-06 00:11+0200\n"
+"POT-Creation-Date: 2006-10-19 00:22+0200\n"
+"PO-Revision-Date: 2006-10-12 11:31+0200\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
@@ -256,8 +256,8 @@ msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
 msgstr ""
-"Podeu ajustar el rang de selecció per a selecció difosa clicant i "
-"arrossegant a dreta i esquerra."
+"Podeu ajustar l'abast de la selecció de regió contigua clicant i arrossegant "
+"a la dreta i a l'esquerra."
 
 #: ../data/tips/gimp-tips.xml.in.h:25
 msgid ""

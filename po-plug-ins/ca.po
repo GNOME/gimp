@@ -1,17 +1,17 @@
+# translation of ca.po to Català
 # translation of plugins-ca.po to Catalan
 # Copyright © 2000,2005, 2006 Free Software Foundation, Inc.
 # Jordi Jover, jordijn@softcatala.org
-# Joaquim Perez i Noguer, 2006.
 # Softcatala <tradgnome@softcatala.org>, 2000-2002.
-# Quim Perez i Noguer <noguer@osona.com>, 2005, 2006.
-# Xavier Conde Rueda <xavi.conde@gmail.com>, 2005, 2006.
+# Quim Perez i Noguer <noguer a osona.com>, 2005, 2006.
+# Xavier Conde Rueda <xavi.conde a gmail.com>, 2005, 2006.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-22 00:07+0200\n"
-"PO-Revision-Date: 2006-09-05 00:59+0200\n"
+"POT-Creation-Date: 2006-10-18 23:59+0200\n"
+"PO-Revision-Date: 2006-10-19 00:15+0200\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
@@ -20,8 +20,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: KBabel 1.10.2\n"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:530
-#: ../plug-ins/gfig/gfig-dialog.c:286 ../plug-ins/gflare/gflare.c:887
+#: ../plug-ins/FractalExplorer/Dialogs.c:547
+#: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/gflare/gflare.c:883
 #: ../plug-ins/gimpressionist/utils.c:124
 #, c-format
 msgid ""
@@ -35,196 +35,170 @@ msgstr ""
 "(%s «%s»)\n"
 "al fitxer %s."
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:621
+#: ../plug-ins/FractalExplorer/Dialogs.c:638
 msgid "Realtime preview"
 msgstr "Previsualització en temps real"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:629
+#: ../plug-ins/FractalExplorer/Dialogs.c:646
 msgid "If enabled the preview will be redrawn automatically"
 msgstr "Si es marca l'opció, la previsualització es redibuixarà automàticament"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:632
+#: ../plug-ins/FractalExplorer/Dialogs.c:649
 msgid "R_edraw preview"
 msgstr "R_edibuixa la previsualització"
 
 #  Zoom Options
 #. Zoom Options
-#: ../plug-ins/FractalExplorer/Dialogs.c:640
+#: ../plug-ins/FractalExplorer/Dialogs.c:657
 msgid "Zoom"
 msgstr "Ampliació"
 
-# era: msgstr "Zoom"
-#: ../plug-ins/FractalExplorer/Dialogs.c:676
+#: ../plug-ins/FractalExplorer/Dialogs.c:693
 msgid "Undo last zoom change"
-msgstr "Desfés la darrera ampliació"
+msgstr "Desfà la darrera ampliació/reducció"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:686
+#: ../plug-ins/FractalExplorer/Dialogs.c:703
 msgid "Redo last zoom change"
-msgstr "Torna a fer la darrera ampliació"
+msgstr "Refà la darrera ampliació/reducció"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:701
+#: ../plug-ins/FractalExplorer/Dialogs.c:718
 msgid "_Parameters"
 msgstr "_Paràmetres"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:704
+#: ../plug-ins/FractalExplorer/Dialogs.c:721
 msgid "Fractal Parameters"
-msgstr "Paràmetres del fractal"
+msgstr "Paràmetres de la fractal"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:717
-msgid "XMIN:"
-msgstr "XMIN:"
+#: ../plug-ins/FractalExplorer/Dialogs.c:734
+#: ../plug-ins/MapObject/mapobject_ui.c:1111
+msgid "Left:"
+msgstr "Esquerra:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:720
-msgid "Change the first (minimal) x-coordinate delimitation"
-msgstr "Canvia la primera (mínima) delimitació de la coordenada x"
+#: ../plug-ins/FractalExplorer/Dialogs.c:743
+#: ../plug-ins/MapObject/mapobject_ui.c:1111
+msgid "Right:"
+msgstr "Dreta:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:728
-msgid "XMAX:"
-msgstr "XMAX:"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:731
-msgid "Change the second (maximal) x-coordinate delimitation"
-msgstr "Canvia la segona (màxima) delimitació de la coordenada x"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:739
-msgid "YMIN:"
-msgstr "YMIN:"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:742
-msgid "Change the first (minimal) y-coordinate delimitation"
-msgstr "Canvia la primera (mínima) delimitació de la coordenada y"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:750
-msgid "YMAX:"
-msgstr "YMAX:"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:753
-msgid "Change the second (maximal) y-coordinate delimitation"
-msgstr "Canvia la segona (màxima) delimitació de la coordenada y"
+#: ../plug-ins/FractalExplorer/Dialogs.c:752
+#: ../plug-ins/MapObject/mapobject_ui.c:1110
+msgid "Top:"
+msgstr "Part superior:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:761
-msgid "ITER:"
-msgstr "ITER:"
+#: ../plug-ins/MapObject/mapobject_ui.c:1110
+msgid "Bottom:"
+msgstr "Part inferior:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:764
-msgid ""
-"Change the iteration value. The higher it is, the more details will be "
-"calculated, which will take more time"
-msgstr ""
-"Canvia el valor de la iteració. Com més alt sigui, calcularà més detalls i "
-"trigarà més."
+#: ../plug-ins/FractalExplorer/Dialogs.c:770 ../plug-ins/common/warp.c:434
+#: ../plug-ins/ifscompose/ifscompose.c:1210
+msgid "Iterations:"
+msgstr "Iteracions:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:773
+msgid ""
+"The higher the number of iterations, the more details will be calculated"
+msgstr "Com més alt sigui el nombre d'iteracions, més detalls es calcularan"
+
+#: ../plug-ins/FractalExplorer/Dialogs.c:781
 msgid "CX:"
 msgstr "CX:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:776
-msgid ""
-"Change the CX value (changes aspect of fractal, active with every fractal "
-"but Mandelbrot and Sierpinski)"
-msgstr ""
-"Canvia el valor CX (canvia l'aspecte del fractal, actiu amb tots els "
-"fractals tret del Mandelbrot i el Sierpinski)"
+#: ../plug-ins/FractalExplorer/Dialogs.c:784
+#: ../plug-ins/FractalExplorer/Dialogs.c:794
+msgid "Changes aspect of fractal"
+msgstr "Canvia l'aspecte de la fractal"
 
 # era: msgstr "Canvia el valor CX (canvia l'aspecte del fractal, actiu amb tots els fractals tret del Mandelbrot i l'Spierinski)"
-#: ../plug-ins/FractalExplorer/Dialogs.c:785
+#: ../plug-ins/FractalExplorer/Dialogs.c:791
 msgid "CY:"
 msgstr "CY:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:788
-msgid ""
-"Change the CY value (changes aspect of fractal, active with every fractal "
-"but Mandelbrot and Sierpinski)"
-msgstr ""
-"Canvia el valor CY (canvia l'aspecte del fractal, actiu amb tots els "
-"fractals tret del Mandelbrot i el Sierpinski)"
-
 # era: msgstr "Canvia el valor CY (canvia l'aspecte del fractal, actiu amb tots els fractals tret del Mandelbrot i l'Spierinski)"
-#: ../plug-ins/FractalExplorer/Dialogs.c:805
+#: ../plug-ins/FractalExplorer/Dialogs.c:809
 msgid "Load a fractal from file"
-msgstr "Carrega un fractal des del fitxer"
+msgstr "Carrega una fractal d'un fitxer"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:813
+#: ../plug-ins/FractalExplorer/Dialogs.c:817
 msgid "Reset parameters to default values"
 msgstr "Reestableix els paràmetres predeterminats"
 
 # era: msgstr "Fes que els paràmetres tornin als valors per defecte"
-#: ../plug-ins/FractalExplorer/Dialogs.c:822
+#: ../plug-ins/FractalExplorer/Dialogs.c:826
 msgid "Save active fractal to file"
-msgstr "Desa el fractal actiu al fitxer"
+msgstr "Desa la fractal activa al fitxer"
 
 #  Fractal type toggle box
 #. Fractal type toggle box
-#: ../plug-ins/FractalExplorer/Dialogs.c:825
+#: ../plug-ins/FractalExplorer/Dialogs.c:829
 msgid "Fractal Type"
 msgstr "Tipus de fractal"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:838
+#: ../plug-ins/FractalExplorer/Dialogs.c:842
 msgid "Mandelbrot"
 msgstr "Mandelbrot"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:840
+#: ../plug-ins/FractalExplorer/Dialogs.c:844
 msgid "Julia"
 msgstr "Julia"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:842
+#: ../plug-ins/FractalExplorer/Dialogs.c:846
 msgid "Barnsley 1"
 msgstr "Barnsley 1"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:844
+#: ../plug-ins/FractalExplorer/Dialogs.c:848
 msgid "Barnsley 2"
 msgstr "Barnsley 2"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:846
+#: ../plug-ins/FractalExplorer/Dialogs.c:850
 msgid "Barnsley 3"
 msgstr "Barnsley 3"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:848
+#: ../plug-ins/FractalExplorer/Dialogs.c:852
 msgid "Spider"
 msgstr "Aranya"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:850
+#: ../plug-ins/FractalExplorer/Dialogs.c:854
 msgid "Man'o'war"
 msgstr "Guerrer"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:852
+#: ../plug-ins/FractalExplorer/Dialogs.c:856
 msgid "Lambda"
 msgstr "Lambda"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:854
+#: ../plug-ins/FractalExplorer/Dialogs.c:858
 msgid "Sierpinski"
 msgstr "Sierpinski"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:900 ../plug-ins/common/sinus.c:886
+#: ../plug-ins/FractalExplorer/Dialogs.c:904 ../plug-ins/common/sinus.c:886
 msgid "Co_lors"
 msgstr "Co_lors"
 
 #  Number of Colors frame
 #. Number of Colors frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:904
+#: ../plug-ins/FractalExplorer/Dialogs.c:908
 #: ../plug-ins/common/borderaverage.c:415
 msgid "Number of Colors"
 msgstr "Nombre de colors"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:916
+#: ../plug-ins/FractalExplorer/Dialogs.c:920
 msgid "Number of colors:"
 msgstr "Nombre de colors:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:919
+#: ../plug-ins/FractalExplorer/Dialogs.c:923
 msgid "Change the number of colors in the mapping"
 msgstr "Canvia el nombre de colors en el mapatge"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:926
+#: ../plug-ins/FractalExplorer/Dialogs.c:930
 msgid "Use loglog smoothing"
 msgstr "Utilitza la suavització loglog"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:933
+#: ../plug-ins/FractalExplorer/Dialogs.c:937
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr "Utilitza la suavització 'log log' per eliminar les bandes del resultat"
 
 #  Color Density frame
 #. Color Density frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:937
+#: ../plug-ins/FractalExplorer/Dialogs.c:941
 msgid "Color Density"
 msgstr "Densitat del color"
 
@@ -234,81 +208,81 @@ msgstr "Densitat del color"
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: ../plug-ins/FractalExplorer/Dialogs.c:949 ../plug-ins/common/fp.c:227
+#: ../plug-ins/FractalExplorer/Dialogs.c:953 ../plug-ins/common/fp.c:226
 msgid "Red:"
 msgstr "Vermell:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:952
+#: ../plug-ins/FractalExplorer/Dialogs.c:956
 msgid "Change the intensity of the red channel"
 msgstr "Canvia la intensitat del canal vermell"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:959 ../plug-ins/common/fp.c:228
+#: ../plug-ins/FractalExplorer/Dialogs.c:963 ../plug-ins/common/fp.c:227
 msgid "Green:"
 msgstr "Verd:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:962
+#: ../plug-ins/FractalExplorer/Dialogs.c:966
 msgid "Change the intensity of the green channel"
 msgstr "Canvia la intensitat del canal verd"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:969 ../plug-ins/common/fp.c:229
+#: ../plug-ins/FractalExplorer/Dialogs.c:973 ../plug-ins/common/fp.c:228
 msgid "Blue:"
 msgstr "Blau:"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:972
+#: ../plug-ins/FractalExplorer/Dialogs.c:976
 msgid "Change the intensity of the blue channel"
 msgstr "Canvia la intensitat del canal blau"
 
 #  Color Function frame
 #. Color Function frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:978
+#: ../plug-ins/FractalExplorer/Dialogs.c:982
 msgid "Color Function"
 msgstr "Funció del color"
 
 #  Redmode radio frame
 #. Redmode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:987
+#: ../plug-ins/FractalExplorer/Dialogs.c:991
 #: ../plug-ins/common/channel_mixer.c:539 ../plug-ins/common/decompose.c:166
 msgid "Red"
 msgstr "Vermell"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:991
-#: ../plug-ins/FractalExplorer/Dialogs.c:1032
-#: ../plug-ins/FractalExplorer/Dialogs.c:1073
-msgid "Sine"
-msgstr "Sinus"
-
-#: ../plug-ins/FractalExplorer/Dialogs.c:993
-#: ../plug-ins/FractalExplorer/Dialogs.c:1034
-#: ../plug-ins/FractalExplorer/Dialogs.c:1075
-msgid "Cosine"
-msgstr "Cosinus"
-
 #: ../plug-ins/FractalExplorer/Dialogs.c:995
 #: ../plug-ins/FractalExplorer/Dialogs.c:1036
 #: ../plug-ins/FractalExplorer/Dialogs.c:1077
+msgid "Sine"
+msgstr "Sinus"
+
+#: ../plug-ins/FractalExplorer/Dialogs.c:997
+#: ../plug-ins/FractalExplorer/Dialogs.c:1038
+#: ../plug-ins/FractalExplorer/Dialogs.c:1079
+msgid "Cosine"
+msgstr "Cosinus"
+
+#: ../plug-ins/FractalExplorer/Dialogs.c:999
+#: ../plug-ins/FractalExplorer/Dialogs.c:1040
+#: ../plug-ins/FractalExplorer/Dialogs.c:1081
 #: ../plug-ins/Lighting/lighting_ui.c:406
 #: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:421
-#: ../plug-ins/common/align_layers.c:452 ../plug-ins/common/postscript.c:3168
-#: ../plug-ins/common/postscript.c:3180 ../plug-ins/common/psp.c:421
+#: ../plug-ins/common/align_layers.c:452 ../plug-ins/common/postscript.c:3184
+#: ../plug-ins/common/postscript.c:3196 ../plug-ins/common/psp.c:418
 #: ../plug-ins/fits/fits.c:1019
 msgid "None"
 msgstr "Cap"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1000
-#: ../plug-ins/FractalExplorer/Dialogs.c:1041
-#: ../plug-ins/FractalExplorer/Dialogs.c:1082
+#: ../plug-ins/FractalExplorer/Dialogs.c:1004
+#: ../plug-ins/FractalExplorer/Dialogs.c:1045
+#: ../plug-ins/FractalExplorer/Dialogs.c:1086
 msgid "Use sine-function for this color component"
 msgstr "Fes servir la funció sinus en l'element d'aquest color"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1003
-#: ../plug-ins/FractalExplorer/Dialogs.c:1044
-#: ../plug-ins/FractalExplorer/Dialogs.c:1085
+#: ../plug-ins/FractalExplorer/Dialogs.c:1007
+#: ../plug-ins/FractalExplorer/Dialogs.c:1048
+#: ../plug-ins/FractalExplorer/Dialogs.c:1089
 msgid "Use cosine-function for this color component"
 msgstr "Fes servir la funció cosinus en l'element d'aquest color"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1006
-#: ../plug-ins/FractalExplorer/Dialogs.c:1047
-#: ../plug-ins/FractalExplorer/Dialogs.c:1088
+#: ../plug-ins/FractalExplorer/Dialogs.c:1010
+#: ../plug-ins/FractalExplorer/Dialogs.c:1051
+#: ../plug-ins/FractalExplorer/Dialogs.c:1092
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
@@ -316,15 +290,15 @@ msgstr ""
 "Fes servir un mapatge lineal en comptes d'una funció trigonomètrica en el "
 "canal d'aquest color"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1015
-#: ../plug-ins/FractalExplorer/Dialogs.c:1056
-#: ../plug-ins/FractalExplorer/Dialogs.c:1097
+#: ../plug-ins/FractalExplorer/Dialogs.c:1019
+#: ../plug-ins/FractalExplorer/Dialogs.c:1060
+#: ../plug-ins/FractalExplorer/Dialogs.c:1101
 msgid "Inversion"
 msgstr "Inversió"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1023
-#: ../plug-ins/FractalExplorer/Dialogs.c:1064
-#: ../plug-ins/FractalExplorer/Dialogs.c:1105
+#: ../plug-ins/FractalExplorer/Dialogs.c:1027
+#: ../plug-ins/FractalExplorer/Dialogs.c:1068
+#: ../plug-ins/FractalExplorer/Dialogs.c:1109
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
@@ -334,29 +308,29 @@ msgstr ""
 
 #  Greenmode radio frame
 #. Greenmode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:1028
+#: ../plug-ins/FractalExplorer/Dialogs.c:1032
 #: ../plug-ins/common/channel_mixer.c:544 ../plug-ins/common/decompose.c:167
 msgid "Green"
 msgstr "Verd"
 
 #  Bluemode radio frame
 #. Bluemode radio frame
-#: ../plug-ins/FractalExplorer/Dialogs.c:1069
+#: ../plug-ins/FractalExplorer/Dialogs.c:1073
 #: ../plug-ins/common/channel_mixer.c:549 ../plug-ins/common/decompose.c:168
 msgid "Blue"
 msgstr "Blau"
 
 #  Colormode toggle box
 #. Colormode toggle box
-#: ../plug-ins/FractalExplorer/Dialogs.c:1110
+#: ../plug-ins/FractalExplorer/Dialogs.c:1114
 msgid "Color Mode"
 msgstr "Mode de color"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1119
+#: ../plug-ins/FractalExplorer/Dialogs.c:1123
 msgid "As specified above"
 msgstr "Com s'especifica a sobre"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1131
+#: ../plug-ins/FractalExplorer/Dialogs.c:1135
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
@@ -365,128 +339,128 @@ msgstr ""
 "funció del color). El resultat es pot veure en la previsualització d'imatge"
 
 # era: msgstr "Crea un mapa de color amb les opcions que heu especificat abans (densitat/funciódel colr). El resultat es pot veure com a imatge de la visualització prèvia"
-#: ../plug-ins/FractalExplorer/Dialogs.c:1141
+#: ../plug-ins/FractalExplorer/Dialogs.c:1145
 msgid "Apply active gradient to final image"
 msgstr "Aplica el degradat actual a la imatge final"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1153
+#: ../plug-ins/FractalExplorer/Dialogs.c:1157
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr "Crea un mapa de color fent servir un degradat de l'editor de degradats"
 
 # era: msgstr "Crea un mapa de color fent servir un gradient de l'editor de gradients"
-#: ../plug-ins/FractalExplorer/Dialogs.c:1164
+#: ../plug-ins/FractalExplorer/Dialogs.c:1168
 msgid "FractalExplorer Gradient"
 msgstr "Degradat de l'explorador de fractals"
 
-# era msgstr "Gradient de l'explorador de fractals"
-#: ../plug-ins/FractalExplorer/Dialogs.c:1194
+#: ../plug-ins/FractalExplorer/Dialogs.c:1198
 msgid "_Fractals"
 msgstr "_Fractals"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1706
+#: ../plug-ins/FractalExplorer/Dialogs.c:1733
 #: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:294
-#: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2013
+#: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2008
 #: ../plug-ins/common/channel_mixer.c:1062 ../plug-ins/common/compressor.c:410
-#: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:838
+#: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:836
 #: ../plug-ins/common/dicom.c:691 ../plug-ins/common/gbr.c:616
-#: ../plug-ins/common/gif.c:993 ../plug-ins/common/gih.c:1258
+#: ../plug-ins/common/gif.c:986 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
 #: ../plug-ins/common/mng.c:953 ../plug-ins/common/pat.c:447
 #: ../plug-ins/common/pcx.c:588 ../plug-ins/common/pix.c:508
-#: ../plug-ins/common/png.c:1221 ../plug-ins/common/pnm.c:929
+#: ../plug-ins/common/png.c:1166 ../plug-ins/common/pnm.c:929
 #: ../plug-ins/common/postscript.c:1185 ../plug-ins/common/psd_save.c:1448
-#: ../plug-ins/common/raw.c:530 ../plug-ins/common/raw.c:557
+#: ../plug-ins/common/raw.c:528 ../plug-ins/common/raw.c:555
 #: ../plug-ins/common/spheredesigner.c:2119 ../plug-ins/common/sunras.c:507
-#: ../plug-ins/common/tga.c:1030 ../plug-ins/common/tiff.c:1920
+#: ../plug-ins/common/tga.c:1027 ../plug-ins/common/tiff.c:1938
 #: ../plug-ins/common/xbm.c:1002 ../plug-ins/common/xwd.c:565
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:715
-#: ../plug-ins/ifscompose/ifscompose.c:2379 ../plug-ins/jpeg/jpeg-save.c:268
+#: ../plug-ins/ifscompose/ifscompose.c:2377 ../plug-ins/jpeg/jpeg-save.c:268
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:268
-#: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1277
+#: ../plug-ins/winicon/icosave.c:1019 ../plug-ins/xjt/xjt.c:1277
 #: ../plug-ins/xjt/xjt.c:1711
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "No s'ha pogut obrir '%s' en escriptura: %s"
 
 # era: msgstr "No s'ha pogut obrir '%s' en escritura: %s"
-#: ../plug-ins/FractalExplorer/Dialogs.c:1720
+#: ../plug-ins/FractalExplorer/Dialogs.c:1747
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "No s'ha pogut escriure '%s': %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1773
+#: ../plug-ins/FractalExplorer/Dialogs.c:1822
 msgid "Load Fractal Parameters"
-msgstr "Carrega els paràmetres del fractal"
+msgstr "Carrega els paràmetres de la fractal"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1809
+#: ../plug-ins/FractalExplorer/Dialogs.c:1860
 msgid "Save Fractal Parameters"
-msgstr "Desa els paràmetres dels fractals"
+msgstr "Desa els paràmetres de les fractals"
 
 #  Do not rely on librsvg setting GError on failure!
 #  stat error (file does not exist)
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
-#: ../plug-ins/FractalExplorer/Dialogs.c:2015
+#: ../plug-ins/FractalExplorer/Dialogs.c:2049
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:930
 #: ../plug-ins/Lighting/lighting_ui.c:1312 ../plug-ins/bmp/bmpread.c:149
-#: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2233
-#: ../plug-ins/common/channel_mixer.c:979 ../plug-ins/common/curve_bend.c:890
+#: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2228
+#: ../plug-ins/common/channel_mixer.c:979 ../plug-ins/common/curve_bend.c:888
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:309 ../plug-ins/common/gih.c:649
 #: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:317
 #: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
-#: ../plug-ins/common/png.c:705 ../plug-ins/common/pnm.c:480
+#: ../plug-ins/common/png.c:650 ../plug-ins/common/pnm.c:480
 #: ../plug-ins/common/poppler.c:368 ../plug-ins/common/postscript.c:1012
-#: ../plug-ins/common/postscript.c:2977 ../plug-ins/common/psd.c:1880
-#: ../plug-ins/common/psp.c:1463 ../plug-ins/common/raw.c:242
-#: ../plug-ins/common/raw.c:647 ../plug-ins/common/spheredesigner.c:2009
+#: ../plug-ins/common/postscript.c:2993 ../plug-ins/common/psd.c:1880
+#: ../plug-ins/common/psp.c:1460 ../plug-ins/common/raw.c:243
+#: ../plug-ins/common/raw.c:645 ../plug-ins/common/spheredesigner.c:2009
 #: ../plug-ins/common/sunras.c:379 ../plug-ins/common/svg.c:307
-#: ../plug-ins/common/svg.c:677 ../plug-ins/common/tga.c:414
-#: ../plug-ins/common/tiff.c:530 ../plug-ins/common/xbm.c:720
+#: ../plug-ins/common/svg.c:677 ../plug-ins/common/tga.c:411
+#: ../plug-ins/common/tiff.c:535 ../plug-ins/common/xbm.c:720
 #: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
 #: ../plug-ins/fits/fits.c:342 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:429
 #: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/domain.c:426
 #: ../plug-ins/jpeg/jpeg-load.c:88 ../plug-ins/jpeg/jpeg-load.c:874
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:257
-#: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2535
+#: ../plug-ins/uri/uri-backend-libcurl.c:170 ../plug-ins/winicon/icoload.c:651
+#: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2535
 #: ../plug-ins/xjt/xjt.c:2543
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "No s'ha pogut obrir '%s' en lectura: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2023
+#: ../plug-ins/FractalExplorer/Dialogs.c:2057
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "El '%s' no és un fitxer explorador de fractals"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2029
+#: ../plug-ins/FractalExplorer/Dialogs.c:2063
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "'%s' és corrupte. L'opció de la línia %d és una secció incorrecta"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:247
 msgid "Render fractal art"
-msgstr "Composa el fractal artístic"
+msgstr "Composa la fractal artística"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:252
 msgid "_Fractal Explorer..."
-msgstr "Explorador del _fractal..."
+msgstr "Explorador de _fractals..."
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:382
 msgid "Rendering fractal"
-msgstr "S'està composant el fractal"
+msgstr "S'està composant la fractal"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:757
-#: ../plug-ins/gflare/gflare.c:3130
+#: ../plug-ins/gflare/gflare.c:3126
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Esteu segur que voleu suprimir «%s» de la llista i del disc?"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:761
 msgid "Delete Fractal"
-msgstr "Suprimeix el fractal"
+msgstr "Suprimeix la fractal"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:951
 #, c-format
@@ -504,7 +478,7 @@ msgstr ""
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:1004
 msgid "My first fractal"
-msgstr "El meu primer fractal"
+msgstr "La meva primera fractal"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:1068
 msgid "Select folder and rescan collection"
@@ -512,15 +486,15 @@ msgstr "Seleccioneu una carpeta i torneu a escanejar la col·lecció"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:1080
 msgid "Apply currently selected fractal"
-msgstr "Aplica el fractal seleccionat"
+msgstr "Aplica la fractal seleccionada"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:1092
 msgid "Delete currently selected fractal"
-msgstr "Suprimeix el fractal seleccionat actualment"
+msgstr "Suprimeix la fractal seleccionada actualment"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:1115
 msgid "Rescan for Fractals"
-msgstr "Torna a escanejar els fractals"
+msgstr "Torna a escanejar les fractals"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:1134
 msgid "Add FractalExplorer Path"
@@ -646,7 +620,7 @@ msgstr "_Intensitat:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:451
 msgid "Light intensity"
-msgstr "Intensitat de llum"
+msgstr "Intensitat de la llum"
 
 #: ../plug-ins/Lighting/lighting_ui.c:454
 #: ../plug-ins/MapObject/mapobject_ui.c:671
@@ -655,9 +629,9 @@ msgid "Position"
 msgstr "Posició"
 
 #: ../plug-ins/Lighting/lighting_ui.c:464 ../plug-ins/common/flarefx.c:760
-#: ../plug-ins/common/mblur.c:992 ../plug-ins/common/nova.c:456
+#: ../plug-ins/common/mblur.c:992 ../plug-ins/common/nova.c:457
 #: ../plug-ins/common/papertile.c:273 ../plug-ins/flame/flame.c:1223
-#: ../plug-ins/gflare/gflare.c:2655
+#: ../plug-ins/gflare/gflare.c:2651
 msgid "_X:"
 msgstr "_X:"
 
@@ -667,9 +641,9 @@ msgid "Light source X position in XYZ space"
 msgstr "Posició de la font de llum X en l'espai XYZ"
 
 #: ../plug-ins/Lighting/lighting_ui.c:477 ../plug-ins/common/flarefx.c:765
-#: ../plug-ins/common/mblur.c:997 ../plug-ins/common/nova.c:461
+#: ../plug-ins/common/mblur.c:997 ../plug-ins/common/nova.c:462
 #: ../plug-ins/common/papertile.c:282 ../plug-ins/flame/flame.c:1237
-#: ../plug-ins/gflare/gflare.c:2659
+#: ../plug-ins/gflare/gflare.c:2655
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -705,7 +679,7 @@ msgstr "Direcció"
 #: ../plug-ins/MapObject/mapobject_ui.c:741
 #: ../plug-ins/MapObject/mapobject_ui.c:1009
 #: ../plug-ins/MapObject/mapobject_ui.c:1058
-#: ../plug-ins/ifscompose/ifscompose.c:527
+#: ../plug-ins/ifscompose/ifscompose.c:525
 msgid "X:"
 msgstr "X:"
 
@@ -722,7 +696,7 @@ msgstr "Direcció de la font de llum X en l'espai XYZ"
 #: ../plug-ins/MapObject/mapobject_ui.c:1022
 #: ../plug-ins/MapObject/mapobject_ui.c:1069
 #: ../plug-ins/MapObject/mapobject_ui.c:1167
-#: ../plug-ins/ifscompose/ifscompose.c:541
+#: ../plug-ins/ifscompose/ifscompose.c:539
 msgid "Y:"
 msgstr "Y:"
 
@@ -802,16 +776,16 @@ msgstr "_Metàlic"
 # era: msgstr "_Metalic"
 #: ../plug-ins/Lighting/lighting_ui.c:761
 msgid "E_nable bump mapping"
-msgstr "Eleva a partir d'u_n mapa de relleu."
+msgstr "Eleva a partir d'u_n mapa de relleu"
 
 #: ../plug-ins/Lighting/lighting_ui.c:775
 msgid "Enable/disable bump-mapping (image depth)"
 msgstr ""
-"Habilita/inhabilita l'efecte d'elevar la imatge a partir d'un mapa de relleu."
+"Habilita/inhabilita l'efecte d'elevar la imatge a partir d'un mapa de relleu"
 
 #: ../plug-ins/Lighting/lighting_ui.c:793
 msgid "Bumpm_ap image:"
-msgstr "Mapa de _relleu:"
+msgstr "M_apa de relleu:"
 
 #  Map type menu
 #. Map type menu
@@ -894,7 +868,7 @@ msgstr "Act_ualitza"
 #: ../plug-ins/Lighting/lighting_ui.c:1041
 #: ../plug-ins/MapObject/mapobject_ui.c:1409
 msgid "Recompute preview image"
-msgstr "Tornar a calcular la imatge de la visualització prèvia"
+msgstr "Tornar a calcular la imatge de previsualització"
 
 #: ../plug-ins/Lighting/lighting_ui.c:1043
 msgid "I_nteractive"
@@ -1004,7 +978,7 @@ msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Habilita/inhabilita la supressió de vores irregulars (suavitzat)"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:579 ../plug-ins/common/bumpmap.c:983
-#: ../plug-ins/common/emboss.c:528 ../plug-ins/common/fractaltrace.c:792
+#: ../plug-ins/common/emboss.c:525 ../plug-ins/common/fractaltrace.c:792
 #: ../plug-ins/common/struc.c:1326
 msgid "_Depth:"
 msgstr "Profun_ditat:"
@@ -1013,7 +987,7 @@ msgstr "Profun_ditat:"
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Qualitat de suavitzat de vores. Com més alta millor, però va més lenta"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:591 ../plug-ins/common/redeye.c:174
+#: ../plug-ins/MapObject/mapobject_ui.c:591 ../plug-ins/common/redeye.c:173
 #: ../plug-ins/common/unsharp.c:707 ../plug-ins/common/wind.c:1008
 #: ../plug-ins/imagemap/imap_preferences.c:441
 msgid "_Threshold:"
@@ -1093,7 +1067,7 @@ msgstr "Posició de l'objecte Z en l'espai XYZ"
 #  Rotation
 #. Rotation
 #: ../plug-ins/MapObject/mapobject_ui.c:1047
-#: ../plug-ins/common/postscript.c:3365
+#: ../plug-ins/common/postscript.c:3382
 msgid "Rotation"
 msgstr "Rotació"
 
@@ -1116,22 +1090,6 @@ msgstr "Davant:"
 #: ../plug-ins/MapObject/mapobject_ui.c:1109
 msgid "Back:"
 msgstr "Endarrere:"
-
-#: ../plug-ins/MapObject/mapobject_ui.c:1110
-msgid "Top:"
-msgstr "Part superior:"
-
-#: ../plug-ins/MapObject/mapobject_ui.c:1110
-msgid "Bottom:"
-msgstr "Part inferior:"
-
-#: ../plug-ins/MapObject/mapobject_ui.c:1111
-msgid "Left:"
-msgstr "Esquerra:"
-
-#: ../plug-ins/MapObject/mapobject_ui.c:1111
-msgid "Right:"
-msgstr "Dreta:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1117
 msgid "Map Images to Box Faces"
@@ -1205,7 +1163,7 @@ msgstr "_Previsualitza"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1427
 msgid "Show preview _wireframe"
-msgstr "Mostra previsualització _wireframe"
+msgstr "Mostra previsualització amb _fil ferros"
 
 #: ../plug-ins/bmp/bmp.c:124 ../plug-ins/bmp/bmp.c:143
 msgid "Windows BMP image"
@@ -1223,16 +1181,16 @@ msgstr "Mapa de color erroni"
 #: ../plug-ins/common/dicom.c:301 ../plug-ins/common/gbr.c:353
 #: ../plug-ins/common/gifload.c:314 ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:314
-#: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:712
+#: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:657
 #: ../plug-ins/common/pnm.c:485 ../plug-ins/common/poppler.c:414
 #: ../plug-ins/common/postscript.c:1018 ../plug-ins/common/psd.c:1885
-#: ../plug-ins/common/raw.c:652 ../plug-ins/common/sunras.c:433
-#: ../plug-ins/common/tga.c:419 ../plug-ins/common/tiff.c:535
-#: ../plug-ins/common/wmf.c:952 ../plug-ins/common/xbm.c:725
+#: ../plug-ins/common/raw.c:650 ../plug-ins/common/sunras.c:433
+#: ../plug-ins/common/tga.c:416 ../plug-ins/common/tiff.c:540
+#: ../plug-ins/common/wmf.c:954 ../plug-ins/common/xbm.c:725
 #: ../plug-ins/common/xpm.c:343 ../plug-ins/common/xwd.c:473
 #: ../plug-ins/faxg3/faxg3.c:204 ../plug-ins/gfli/gfli.c:469
 #: ../plug-ins/jpeg/jpeg-load.c:94 ../plug-ins/sgi/sgi.c:318
-#: ../plug-ins/winicon/icoload.c:460 ../plug-ins/xjt/xjt.c:3319
+#: ../plug-ins/winicon/icoload.c:645 ../plug-ins/xjt/xjt.c:3319
 #, c-format
 msgid "Opening '%s'"
 msgstr "S'està obrint '%s'"
@@ -1271,13 +1229,13 @@ msgstr "No es permeten imatges amb aquest nombre de bits de color per píxel."
 #: ../plug-ins/common/dicom.c:486 ../plug-ins/common/film.c:944
 #: ../plug-ins/common/gifload.c:879 ../plug-ins/common/pcx.c:339
 #: ../plug-ins/common/pcx.c:345 ../plug-ins/common/pix.c:368
-#: ../plug-ins/common/png.c:833 ../plug-ins/common/pnm.c:564
-#: ../plug-ins/common/psd.c:2310 ../plug-ins/common/raw.c:687
+#: ../plug-ins/common/png.c:778 ../plug-ins/common/pnm.c:564
+#: ../plug-ins/common/psd.c:2310 ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:917
-#: ../plug-ins/common/tga.c:931 ../plug-ins/common/tiff.c:886
+#: ../plug-ins/common/tga.c:928 ../plug-ins/common/tiff.c:893
 #: ../plug-ins/common/tile.c:265 ../plug-ins/common/xbm.c:866
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:508
-#: ../plug-ins/gfig/gfig-dialog.c:1294
+#: ../plug-ins/gfig/gfig-dialog.c:1282
 #: ../plug-ins/gimpressionist/general.c:121 ../plug-ins/jpeg/jpeg-load.c:239
 #: ../plug-ins/jpeg/jpeg-load.c:741 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:574 ../plug-ins/winsnap/winsnap.c:1155
@@ -1304,21 +1262,21 @@ msgstr "El canal alfa s'ignorarà."
 #. And let's begin the progress
 #. init the progress meter
 #: ../plug-ins/bmp/bmpwrite.c:305 ../plug-ins/common/CEL.c:573
-#: ../plug-ins/common/gbr.c:621 ../plug-ins/common/gif.c:1000
+#: ../plug-ins/common/gbr.c:621 ../plug-ins/common/gif.c:993
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
 #: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:550
-#: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1228
+#: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1173
 #: ../plug-ins/common/pnm.c:934 ../plug-ins/common/postscript.c:1190
 #: ../plug-ins/common/psd_save.c:1453 ../plug-ins/common/sunras.c:512
-#: ../plug-ins/common/tga.c:1035 ../plug-ins/common/tiff.c:1925
+#: ../plug-ins/common/tga.c:1032 ../plug-ins/common/tiff.c:1943
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
 #: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:226
-#: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:977
+#: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:1014
 #: ../plug-ins/xjt/xjt.c:1694
 #, c-format
 msgid "Saving '%s'"
-msgstr "S'està desant '%s'..."
+msgstr "S'està desant '%s'"
 
 #: ../plug-ins/bmp/bmpwrite.c:791
 msgid "Save as BMP"
@@ -1414,7 +1372,7 @@ msgstr "Canvi de fa_se blau:"
 
 #: ../plug-ins/common/AlienMap2.c:153
 msgid "Luminosity pha_seshift:"
-msgstr "Canvi de fa_se lluminositat::"
+msgstr "Canvi de fa_se lluminositat:"
 
 #: ../plug-ins/common/AlienMap2.c:183
 msgid "Alter colors in various psychedelic ways"
@@ -1445,7 +1403,7 @@ msgstr "Angle de fase. Abast: 0-360"
 #  Propagate Mode
 #. Propagate Mode
 #: ../plug-ins/common/AlienMap2.c:514 ../plug-ins/common/hot.c:595
-#: ../plug-ins/common/vpropagate.c:1090 ../plug-ins/common/waves.c:273
+#: ../plug-ins/common/vpropagate.c:1098 ../plug-ins/common/waves.c:273
 msgid "Mode"
 msgstr "Mode"
 
@@ -1690,7 +1648,7 @@ msgstr "Valor"
 
 #: ../plug-ins/common/CML_explorer.c:307
 msgid "(None)"
-msgstr "Cap"
+msgstr "(Cap)"
 
 # era: msgstr "_Explorador CML: s'està desenvolupant..."
 #: ../plug-ins/common/CML_explorer.c:457
@@ -1703,72 +1661,72 @@ msgstr "_Explorador CML..."
 
 #: ../plug-ins/common/CML_explorer.c:758
 msgid "CML Explorer: evoluting"
-msgstr "Explorador CML: s'està evolucionant..."
+msgstr "Explorador CML: s'està calculant"
 
 # era: msgstr "_Explorador CML: s'està desenvolupant..."
-#: ../plug-ins/common/CML_explorer.c:1184
+#: ../plug-ins/common/CML_explorer.c:1179
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "Explorador Coupled-Map-Lattice"
 
-#: ../plug-ins/common/CML_explorer.c:1231
+#: ../plug-ins/common/CML_explorer.c:1226
 msgid "New Seed"
 msgstr "Nova llavor"
 
-#: ../plug-ins/common/CML_explorer.c:1242
+#: ../plug-ins/common/CML_explorer.c:1237
 msgid "Fix Seed"
 msgstr "Llavor fixa"
 
-#: ../plug-ins/common/CML_explorer.c:1253
+#: ../plug-ins/common/CML_explorer.c:1248
 msgid "Random Seed"
 msgstr "Llavor aleatòria"
 
-#: ../plug-ins/common/CML_explorer.c:1295 ../plug-ins/common/fp.c:697
+#: ../plug-ins/common/CML_explorer.c:1290 ../plug-ins/common/fp.c:696
 #: ../plug-ins/common/lic.c:671
 msgid "_Hue"
 msgstr "_To"
 
-#: ../plug-ins/common/CML_explorer.c:1299
+#: ../plug-ins/common/CML_explorer.c:1294
 msgid "Sat_uration"
 msgstr "Sat_uració"
 
-#: ../plug-ins/common/CML_explorer.c:1303 ../plug-ins/common/fp.c:705
+#: ../plug-ins/common/CML_explorer.c:1298 ../plug-ins/common/fp.c:704
 msgid "_Value"
-msgstr "_Valor:"
+msgstr "_Valor"
 
-#: ../plug-ins/common/CML_explorer.c:1307
+#: ../plug-ins/common/CML_explorer.c:1302
 msgid "_Advanced"
 msgstr "_Avançat"
 
-#: ../plug-ins/common/CML_explorer.c:1322
+#: ../plug-ins/common/CML_explorer.c:1317
 msgid "Channel Independent Parameters"
 msgstr "Paràmetres independents del canal"
 
 # era: msgstr "Paràmetres del canal no dependent"
-#: ../plug-ins/common/CML_explorer.c:1344
+#: ../plug-ins/common/CML_explorer.c:1339
 msgid "Initial value:"
 msgstr "Valor inicial:"
 
-#: ../plug-ins/common/CML_explorer.c:1350
+#: ../plug-ins/common/CML_explorer.c:1345
 msgid "Zoom scale:"
 msgstr "Escala de l'ampliació:"
 
-#: ../plug-ins/common/CML_explorer.c:1359
+#: ../plug-ins/common/CML_explorer.c:1354
 msgid "Start offset:"
 msgstr "Inicia el desplaçament:"
 
-#: ../plug-ins/common/CML_explorer.c:1368
+#: ../plug-ins/common/CML_explorer.c:1363
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "Llavor inicial (només per als modes «amb llavor»)"
 
-#: ../plug-ins/common/CML_explorer.c:1379 ../plug-ins/maze/maze_face.c:300
+#: ../plug-ins/common/CML_explorer.c:1374 ../plug-ins/maze/maze_face.c:299
 msgid "Seed:"
 msgstr "Llavor:"
 
-#: ../plug-ins/common/CML_explorer.c:1392
+#: ../plug-ins/common/CML_explorer.c:1387
 msgid "Switch to \"From seed\" With the Last Seed"
 msgstr "Commuta a «Amb llavor» amb la darrera llavor"
 
-#: ../plug-ins/common/CML_explorer.c:1404
+#: ../plug-ins/common/CML_explorer.c:1399
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -1781,130 +1739,129 @@ msgstr ""
 "és diferent de la previsualitzada) i (2) tots els valors de mutació són "
 "igual a zero."
 
-#: ../plug-ins/common/CML_explorer.c:1412
+#: ../plug-ins/common/CML_explorer.c:1407
 msgid "O_thers"
 msgstr "Al_tres"
 
-#: ../plug-ins/common/CML_explorer.c:1427
+#: ../plug-ins/common/CML_explorer.c:1422
 msgid "Copy Settings"
 msgstr "Copia els paràmetres"
 
-#: ../plug-ins/common/CML_explorer.c:1446
+#: ../plug-ins/common/CML_explorer.c:1441
 msgid "Source channel:"
 msgstr "Canal font:"
 
-#: ../plug-ins/common/CML_explorer.c:1461
-#: ../plug-ins/common/CML_explorer.c:1509
+#: ../plug-ins/common/CML_explorer.c:1456
+#: ../plug-ins/common/CML_explorer.c:1504
 msgid "Destination channel:"
 msgstr "Canal de destinació:"
 
-#: ../plug-ins/common/CML_explorer.c:1465
+#: ../plug-ins/common/CML_explorer.c:1460
 msgid "Copy Parameters"
 msgstr "Copia els paràmetres"
 
-#: ../plug-ins/common/CML_explorer.c:1474
+#: ../plug-ins/common/CML_explorer.c:1469
 msgid "Selective Load Settings"
 msgstr "Paràmetres de càrrega selectiva"
 
-#: ../plug-ins/common/CML_explorer.c:1494
+#: ../plug-ins/common/CML_explorer.c:1489
 msgid "Source channel in file:"
 msgstr "Canal font del fitxer:"
 
-#: ../plug-ins/common/CML_explorer.c:1515
+#: ../plug-ins/common/CML_explorer.c:1510
 msgid "_Misc Ops."
 msgstr "_Opcions diverses"
 
-#: ../plug-ins/common/CML_explorer.c:1564
+#: ../plug-ins/common/CML_explorer.c:1559
 msgid "Function type:"
 msgstr "Tipus de funció:"
 
-#: ../plug-ins/common/CML_explorer.c:1580
+#: ../plug-ins/common/CML_explorer.c:1575
 msgid "Composition:"
 msgstr "Composició:"
 
-#: ../plug-ins/common/CML_explorer.c:1594
+#: ../plug-ins/common/CML_explorer.c:1589
 msgid "Misc arrange:"
 msgstr "Disposicions diverses:"
 
-#: ../plug-ins/common/CML_explorer.c:1598
+#: ../plug-ins/common/CML_explorer.c:1593
 msgid "Use cyclic range"
 msgstr "Utilitza un abast cíclic"
 
-#: ../plug-ins/common/CML_explorer.c:1608
+#: ../plug-ins/common/CML_explorer.c:1603
 msgid "Mod. rate:"
-msgstr "Velocitat de modificació:"
+msgstr "Factor de mod.:"
 
-#: ../plug-ins/common/CML_explorer.c:1617
+#: ../plug-ins/common/CML_explorer.c:1612
 msgid "Env. sensitivity:"
-msgstr "Sensibilitat de l'entorn:"
+msgstr "S. entorn:"
 
-#: ../plug-ins/common/CML_explorer.c:1626
+#: ../plug-ins/common/CML_explorer.c:1621
 msgid "Diffusion dist.:"
-msgstr "Distància de difusió:"
+msgstr "Dist. de difusió:"
 
-#: ../plug-ins/common/CML_explorer.c:1635
+#: ../plug-ins/common/CML_explorer.c:1630
 msgid "# of subranges:"
-msgstr "Nombre de subabastos:"
+msgstr "Num. de subabast:"
 
-# era: msgstr "# de sub-abastos:"
-#: ../plug-ins/common/CML_explorer.c:1644
+#: ../plug-ins/common/CML_explorer.c:1639
 msgid "P(ower factor):"
-msgstr "I(ntensitat, factor):"
+msgstr "P(factor potència):"
 
-#: ../plug-ins/common/CML_explorer.c:1653
+#: ../plug-ins/common/CML_explorer.c:1648
 msgid "Parameter k:"
 msgstr "Paràmetre k:"
 
-#: ../plug-ins/common/CML_explorer.c:1662
+#: ../plug-ins/common/CML_explorer.c:1657
 msgid "Range low:"
 msgstr "Abast curt:"
 
 # era msgstr "Abast Curt:"
-#: ../plug-ins/common/CML_explorer.c:1671
+#: ../plug-ins/common/CML_explorer.c:1666
 msgid "Range high:"
 msgstr "Abast llarg:"
 
 # era: msgstr "Abast Llarg:"
-#: ../plug-ins/common/CML_explorer.c:1683
+#: ../plug-ins/common/CML_explorer.c:1678
 msgid "Plot a Graph of the Settings"
 msgstr "Traça una gràfica dels paràmetres"
 
-#: ../plug-ins/common/CML_explorer.c:1728
+#: ../plug-ins/common/CML_explorer.c:1723
 msgid "Ch. sensitivity:"
-msgstr "Sensibilitat del canal:"
+msgstr "S.  canal:"
 
-#: ../plug-ins/common/CML_explorer.c:1738
+#: ../plug-ins/common/CML_explorer.c:1733
 msgid "Mutation rate:"
-msgstr "Velocitat de mutació:"
+msgstr "Vel. de mutació:"
 
-#: ../plug-ins/common/CML_explorer.c:1748
+#: ../plug-ins/common/CML_explorer.c:1743
 msgid "Mutation dist.:"
-msgstr "Distància de mutació:"
+msgstr "Dist. de mutació:"
 
-#: ../plug-ins/common/CML_explorer.c:1825
+#: ../plug-ins/common/CML_explorer.c:1820
 msgid "Graph of the Current Settings"
-msgstr "Gràfica dels paràmteres actuals"
+msgstr "Gràfica dels paràmeteres actuals"
 
-#: ../plug-ins/common/CML_explorer.c:1896
+#: ../plug-ins/common/CML_explorer.c:1891
 msgid "Warning: the source and the destination are the same channel."
 msgstr "Avís: la font i la destinació són el mateix canal."
 
-#: ../plug-ins/common/CML_explorer.c:1955
+#: ../plug-ins/common/CML_explorer.c:1950
 msgid "Save Parameters To"
 msgstr "Desa els paràmetres a"
 
-#: ../plug-ins/common/CML_explorer.c:2068
+#: ../plug-ins/common/CML_explorer.c:2063
 #: ../plug-ins/common/channel_mixer.c:1070
 #, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "Els paràmetres s'han desat a '%s'"
 
-#: ../plug-ins/common/CML_explorer.c:2089
+#: ../plug-ins/common/CML_explorer.c:2084
 msgid "CML Explorer: Overwrite File?"
 msgstr "Explorador CML: voleu sobreescriure el fitxer?"
 
 # era: msgstr "Explorador CML: Voleu sobrescriure el fitxer?"
-#: ../plug-ins/common/CML_explorer.c:2103
+#: ../plug-ins/common/CML_explorer.c:2098
 #: ../plug-ins/common/channel_mixer.c:1101
 #, c-format
 msgid ""
@@ -1914,24 +1871,24 @@ msgstr ""
 "El fitxer '%s' ja existeix.\n"
 "El voleu sobreescriure?"
 
-#: ../plug-ins/common/CML_explorer.c:2157
+#: ../plug-ins/common/CML_explorer.c:2152
 msgid "Load Parameters From"
 msgstr "Carrega els paràmetres des de"
 
-#: ../plug-ins/common/CML_explorer.c:2159
+#: ../plug-ins/common/CML_explorer.c:2154
 msgid "Selective Load From"
 msgstr "Carrega selectivament des de"
 
-#: ../plug-ins/common/CML_explorer.c:2255
+#: ../plug-ins/common/CML_explorer.c:2250
 msgid "Error: it's not CML parameter file."
 msgstr "S'ha produït un error: aquest no és un fitxer CML."
 
-#: ../plug-ins/common/CML_explorer.c:2262
+#: ../plug-ins/common/CML_explorer.c:2257
 #, c-format
 msgid "Warning: '%s' is an old format file."
 msgstr "Avís: '%s' és un fitxer en format antic."
 
-#: ../plug-ins/common/CML_explorer.c:2265
+#: ../plug-ins/common/CML_explorer.c:2260
 #, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
 msgstr ""
@@ -1940,7 +1897,7 @@ msgstr ""
 
 # era: msgstr "Avís: '%s' és un fitxer de paràmetres  per a un _explorador CML més modern que el que esteu fent servir."
 # el guió baix no pertany a un accelerador, sino al nom de l'aplicació
-#: ../plug-ins/common/CML_explorer.c:2328
+#: ../plug-ins/common/CML_explorer.c:2323
 msgid "Error: failed to load parameters"
 msgstr "S'ha produït un error: no es poden carregar els paràmetres"
 
@@ -1968,7 +1925,7 @@ msgstr "Alinea les capes _visibles..."
 
 #: ../plug-ins/common/align_layers.c:171
 msgid "There are not enough layers to align."
-msgstr "No hi han prou capes per alinear"
+msgstr "No hi ha prou capes per alinear."
 
 #: ../plug-ins/common/align_layers.c:397
 msgid "Align Visible Layers"
@@ -2000,7 +1957,7 @@ msgid "Left edge"
 msgstr "Vora esquerra"
 
 #: ../plug-ins/common/align_layers.c:439 ../plug-ins/common/align_layers.c:469
-#: ../plug-ins/gflare/gflare.c:2643
+#: ../plug-ins/gflare/gflare.c:2639
 msgid "Center"
 msgstr "Centre"
 
@@ -2088,12 +2045,12 @@ msgstr "Reproducció de l'animació:"
 
 #: ../plug-ins/common/animationplay.c:734
 msgid "Tried to display an invalid layer."
-msgstr "S'ha intentat mostrar una capa invàlida"
+msgstr "S'ha intentat mostrar una capa invàlida."
 
 #: ../plug-ins/common/animationplay.c:1254
 #, c-format
 msgid "Frame %d of %d"
-msgstr "Marc %d de %d"
+msgstr "Fotograma %d de %d"
 
 #: ../plug-ins/common/animationplay.c:1370
 msgid "Stop playback"
@@ -2149,39 +2106,39 @@ msgstr "Cerca del fons de l'animació"
 msgid "Optimizing animation"
 msgstr "Optimització de l'animació"
 
-#: ../plug-ins/common/apply_lens.c:109
+#: ../plug-ins/common/apply_lens.c:108
 msgid "Simulate an elliptical lens over the image"
 msgstr "Simula unes lents el·líptiques damunt de la imatge"
 
-#: ../plug-ins/common/apply_lens.c:115
+#: ../plug-ins/common/apply_lens.c:114
 msgid "Apply _Lens..."
 msgstr "Aplica la _lent..."
 
-#: ../plug-ins/common/apply_lens.c:182
+#: ../plug-ins/common/apply_lens.c:181
 msgid "Applying lens"
 msgstr "Aplicació de la lent"
 
-#: ../plug-ins/common/apply_lens.c:394
+#: ../plug-ins/common/apply_lens.c:393
 msgid "Lens Effect"
 msgstr "Efecte de lent"
 
-#: ../plug-ins/common/apply_lens.c:427
+#: ../plug-ins/common/apply_lens.c:426
 msgid "_Keep original surroundings"
 msgstr "_Conserva la resta igual"
 
-#: ../plug-ins/common/apply_lens.c:442
+#: ../plug-ins/common/apply_lens.c:441
 msgid "_Set surroundings to index 0"
 msgstr "Calcula la resta amb un ín_dex 0"
 
-#: ../plug-ins/common/apply_lens.c:443
+#: ../plug-ins/common/apply_lens.c:442
 msgid "_Set surroundings to background color"
 msgstr "_Pinta la resta amb el color del fons"
 
-#: ../plug-ins/common/apply_lens.c:458
+#: ../plug-ins/common/apply_lens.c:457
 msgid "_Make surroundings transparent"
 msgstr "_Fes la resta transparent"
 
-#: ../plug-ins/common/apply_lens.c:475
+#: ../plug-ins/common/apply_lens.c:474
 msgid "_Lens refraction index:"
 msgstr "Índex de refracció de la _lent:"
 
@@ -2190,16 +2147,16 @@ msgid "Remove empty borders from the image"
 msgstr "Suprimeix les vores buides de la imatge"
 
 #: ../plug-ins/common/autocrop.c:89
-msgid "_Autocrop Image"
-msgstr "Escapça _automàticament la imatge"
+msgid "Autocrop Imag_e"
+msgstr "_Escapça la imatge, automàtic"
 
 #: ../plug-ins/common/autocrop.c:98
 msgid "Remove empty borders from the layer"
 msgstr "Suprimeix les vores buides de la capa"
 
 #: ../plug-ins/common/autocrop.c:103
-msgid "_Autocrop Layer"
-msgstr "Escapça _automàticament la capa"
+msgid "Autocrop Lay_er"
+msgstr "_Escapça la capa, automàtic"
 
 #: ../plug-ins/common/autocrop.c:150
 msgid "Cropping"
@@ -2240,16 +2197,16 @@ msgstr "Angles morts"
 
 #  Orientation toggle box
 #. Orientation toggle box
-#: ../plug-ins/common/blinds.c:259 ../plug-ins/common/ripple.c:532
+#: ../plug-ins/common/blinds.c:259 ../plug-ins/common/ripple.c:538
 msgid "Orientation"
 msgstr "Orientació"
 
-#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:536
+#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:542
 #: ../plug-ins/common/tileit.c:426 ../plug-ins/pagecurl/pagecurl.c:534
 msgid "_Horizontal"
 msgstr "_Horitzontal"
 
-#: ../plug-ins/common/blinds.c:264 ../plug-ins/common/ripple.c:537
+#: ../plug-ins/common/blinds.c:264 ../plug-ins/common/ripple.c:543
 #: ../plug-ins/common/tileit.c:436 ../plug-ins/pagecurl/pagecurl.c:533
 msgid "_Vertical"
 msgstr "_Vertical"
@@ -2310,7 +2267,7 @@ msgstr "Mida del cu_bell:"
 
 #: ../plug-ins/common/bumpmap.c:330
 msgid "Create an embossing effect using a bump map"
-msgstr "Ressalta una part de la imatge utilitzant un mapa d'elevació"
+msgstr "Ressalta la imatge utilitzant un mapa de relleu"
 
 #: ../plug-ins/common/bumpmap.c:340
 msgid "_Bump Map..."
@@ -2327,7 +2284,7 @@ msgstr "Eleva"
 # era: msgstr "Bump Map"
 #: ../plug-ins/common/bumpmap.c:899
 msgid "_Bump map:"
-msgstr "_Eleva:"
+msgstr "Mapa de r_elleu:"
 
 # era: msgstr "_Bump map:"
 #: ../plug-ins/common/bumpmap.c:911
@@ -2338,14 +2295,13 @@ msgstr "Tipus de _mapa:"
 #. Compensate darkening
 #: ../plug-ins/common/bumpmap.c:916
 msgid "Co_mpensate for darkening"
-msgstr "Co_mpensa-ho per enfosquir-ho"
+msgstr "Co_mpensa la foscor"
 
-#  Invert bumpmap
 #  Invert bumpmap
 #. Invert bumpmap
 #: ../plug-ins/common/bumpmap.c:930
 msgid "I_nvert bumpmap"
-msgstr "I_nverteix les zones elevades"
+msgstr "I_nverteix el mapa de relleu"
 
 # era: msgstr "I_nverteix el Bumpmap"
 #  Tile bumpmap
@@ -2355,7 +2311,7 @@ msgstr "I_nverteix les zones elevades"
 msgid "_Tile bumpmap"
 msgstr "_Fes un mosaic del mapa de relleu"
 
-#: ../plug-ins/common/bumpmap.c:959 ../plug-ins/common/emboss.c:504
+#: ../plug-ins/common/bumpmap.c:959 ../plug-ins/common/emboss.c:501
 msgid "_Azimuth:"
 msgstr "_Azimut:"
 
@@ -2363,7 +2319,7 @@ msgstr "_Azimut:"
 msgid "_Elevation:"
 msgstr "_Elevació:"
 
-#: ../plug-ins/common/bumpmap.c:997 ../plug-ins/common/postscript.c:3319
+#: ../plug-ins/common/bumpmap.c:997 ../plug-ins/common/postscript.c:3335
 msgid "_X offset:"
 msgstr "Desplaçament en _X:"
 
@@ -2375,7 +2331,7 @@ msgstr ""
 "El desplaçament es pot ajustar arrossegant la previsualització utilitzant el "
 "botó central del ratolí."
 
-#: ../plug-ins/common/bumpmap.c:1011 ../plug-ins/common/postscript.c:3328
+#: ../plug-ins/common/bumpmap.c:1011 ../plug-ins/common/postscript.c:3344
 msgid "_Y offset:"
 msgstr "Desplaçament en _Y:"
 
@@ -2409,19 +2365,19 @@ msgstr "Simula un còmic ressaltant les vores amb negre"
 
 #: ../plug-ins/common/cartoon.c:149
 msgid "Ca_rtoon..."
-msgstr "_Ressegueix vores amb negre..."
+msgstr "Cò_mic..."
 
-#: ../plug-ins/common/cartoon.c:231 ../plug-ins/common/dog.c:249
+#: ../plug-ins/common/cartoon.c:231 ../plug-ins/common/dog.c:248
 #: ../plug-ins/common/gauss.c:445 ../plug-ins/common/neon.c:225
 #: ../plug-ins/common/photocopy.c:243 ../plug-ins/common/sel_gauss.c:213
-#: ../plug-ins/common/softglow.c:221 ../plug-ins/gflare/gflare.c:969
+#: ../plug-ins/common/softglow.c:221 ../plug-ins/gflare/gflare.c:965
 #: ../plug-ins/sgi/sgi.c:520 ../plug-ins/xjt/xjt.c:1685
 msgid "Cannot operate on indexed color images."
 msgstr "No es pot operar amb imatges de color indexat."
 
 #: ../plug-ins/common/cartoon.c:811
 msgid "Cartoon"
-msgstr "Ressegueix vores amb negre"
+msgstr "Còmic"
 
 #: ../plug-ins/common/cartoon.c:848 ../plug-ins/common/photocopy.c:876
 msgid "_Mask radius:"
@@ -2467,7 +2423,7 @@ msgstr "Nombre de colors únics: %d"
 #: ../plug-ins/common/ccanalyze.c:398
 #, c-format
 msgid "Uncompressed size: %s"
-msgstr "Mida descomprimida: %s"
+msgstr "Mida sense comprimir: %s"
 
 #: ../plug-ins/common/ccanalyze.c:405
 #, c-format
@@ -2477,7 +2433,7 @@ msgstr "Nom del fitxer: %s"
 #: ../plug-ins/common/ccanalyze.c:406
 #, c-format
 msgid "Compressed size: %s"
-msgstr "Mida comprimida: %s"
+msgstr "Mida si es comprimeix: %s"
 
 #: ../plug-ins/common/ccanalyze.c:407
 #, c-format
@@ -2490,7 +2446,7 @@ msgstr "Altera els colors barregant els canals RGB"
 
 #: ../plug-ins/common/channel_mixer.c:183
 msgid "Channel Mi_xer..."
-msgstr "Me_sclador de canal..."
+msgstr "Me_sclador de canals..."
 
 #. printf("Channel Mixer:: Mode:%d  r %f  g %f  b %f\n ",
 #. param[3].data.d_int32, mix.black.red_gain,
@@ -2498,7 +2454,7 @@ msgstr "Me_sclador de canal..."
 #: ../plug-ins/common/channel_mixer.c:274
 #: ../plug-ins/common/channel_mixer.c:494
 msgid "Channel Mixer"
-msgstr "Mesclador de canal"
+msgstr "Mesclador de canals"
 
 #: ../plug-ins/common/channel_mixer.c:530
 msgid "O_utput channel:"
@@ -2507,7 +2463,7 @@ msgstr "Canal de s_ortida:"
 #: ../plug-ins/common/channel_mixer.c:584 ../plug-ins/common/compose.c:185
 #: ../plug-ins/common/compose.c:196 ../plug-ins/common/diffraction.c:501
 #: ../plug-ins/common/diffraction.c:539 ../plug-ins/common/diffraction.c:577
-#: ../plug-ins/common/exchange.c:399 ../plug-ins/common/noisify.c:530
+#: ../plug-ins/common/exchange.c:400 ../plug-ins/common/noisify.c:530
 #: ../plug-ins/common/noisify.c:537
 msgid "_Red:"
 msgstr "Ve_rmell:"
@@ -2516,7 +2472,7 @@ msgstr "Ve_rmell:"
 #: ../plug-ins/common/channel_mixer.c:602 ../plug-ins/common/compose.c:186
 #: ../plug-ins/common/compose.c:197 ../plug-ins/common/diffraction.c:510
 #: ../plug-ins/common/diffraction.c:548 ../plug-ins/common/diffraction.c:586
-#: ../plug-ins/common/exchange.c:459 ../plug-ins/common/noisify.c:531
+#: ../plug-ins/common/exchange.c:460 ../plug-ins/common/noisify.c:531
 #: ../plug-ins/common/noisify.c:538
 msgid "_Green:"
 msgstr "_Verd:"
@@ -2524,7 +2480,7 @@ msgstr "_Verd:"
 #: ../plug-ins/common/channel_mixer.c:621 ../plug-ins/common/compose.c:187
 #: ../plug-ins/common/compose.c:198 ../plug-ins/common/diffraction.c:519
 #: ../plug-ins/common/diffraction.c:557 ../plug-ins/common/diffraction.c:595
-#: ../plug-ins/common/exchange.c:520 ../plug-ins/common/noisify.c:532
+#: ../plug-ins/common/exchange.c:521 ../plug-ins/common/noisify.c:532
 #: ../plug-ins/common/noisify.c:539
 msgid "_Blue:"
 msgstr "_Blau:"
@@ -2598,7 +2554,7 @@ msgstr "A_coloreix..."
 
 #: ../plug-ins/common/colorify.c:169
 msgid "Colorifying"
-msgstr "S'està acolorint..."
+msgstr "S'està acolorint"
 
 #: ../plug-ins/common/colorify.c:255
 msgid "Colorify"
@@ -2618,7 +2574,7 @@ msgstr "Torna a ajustar el mapa de colors"
 
 #: ../plug-ins/common/colormap-remap.c:104
 msgid "R_earrange Colormap..."
-msgstr "Ajusta _els colors"
+msgstr "Ajusta _els colors..."
 
 #: ../plug-ins/common/colormap-remap.c:116
 msgid "Swap two colors in the colormap"
@@ -2658,7 +2614,11 @@ msgstr "Inverteix l'ordre"
 msgid "Reset Order"
 msgstr "Inicialitza l'ordre"
 
-#: ../plug-ins/common/colormap-remap.c:550
+#: ../plug-ins/common/colormap-remap.c:598
+msgid "Rearrange Colormap"
+msgstr "Ajusta els colors"
+
+#: ../plug-ins/common/colormap-remap.c:701
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
@@ -2666,10 +2626,6 @@ msgstr ""
 "Arrossegueu colors per ajustar el mapa de colors.  El números que es mostren "
 "són els índex originals.  Feu clic amb el botó dret per veure les opcions "
 "d'ordenació."
-
-#: ../plug-ins/common/colormap-remap.c:631
-msgid "Rearrange Colormap"
-msgstr "Ajusta els colors"
 
 #: ../plug-ins/common/colortoalpha.c:96
 msgid "Convert a specified color to transparency"
@@ -2705,12 +2661,11 @@ msgid "to alpha"
 msgstr "a l'alfa"
 
 #: ../plug-ins/common/compose.c:184 ../plug-ins/common/decompose.c:162
-#: ../plug-ins/common/raw.c:968
+#: ../plug-ins/common/raw.c:1002
 msgid "RGB"
 msgstr "RGB"
 
 #: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:170
-#: ../plug-ins/common/raw.c:969
 msgid "RGBA"
 msgstr "RGBA"
 
@@ -2896,7 +2851,7 @@ msgstr "Composa els canals"
 #  Colormode toggle box
 #: ../plug-ins/common/compose.c:1463 ../plug-ins/common/decompose.c:1378
 msgid "Color _model:"
-msgstr "_Model de color"
+msgstr "_Model de color:"
 
 #  The right frame keeps the selection menues for images.
 #  Because the labels within this frame will change when a toggle
@@ -2928,86 +2883,87 @@ msgid "No sensible extension, attempting to load with file magic."
 msgstr ""
 "No hi ha cap extensió reconeguda; s'intentarà esbrinar el tipus de fitxer."
 
-#: ../plug-ins/common/convmatrix.c:77
+#: ../plug-ins/common/convmatrix.c:101
 msgid "Gr_ey"
 msgstr "_Gris"
 
-#: ../plug-ins/common/convmatrix.c:78
+#: ../plug-ins/common/convmatrix.c:102
 msgid "Re_d"
 msgstr "_Vermell"
 
-#: ../plug-ins/common/convmatrix.c:79 ../plug-ins/common/newsprint.c:355
+#: ../plug-ins/common/convmatrix.c:103 ../plug-ins/common/newsprint.c:355
 msgid "_Green"
 msgstr "V_erd"
 
-#: ../plug-ins/common/convmatrix.c:80 ../plug-ins/common/newsprint.c:363
+#: ../plug-ins/common/convmatrix.c:104 ../plug-ins/common/newsprint.c:363
 msgid "_Blue"
 msgstr "_Blau"
 
-#: ../plug-ins/common/convmatrix.c:81
+#: ../plug-ins/common/convmatrix.c:105
 msgid "_Alpha"
 msgstr "_Alfa"
 
-#: ../plug-ins/common/convmatrix.c:86
+#: ../plug-ins/common/convmatrix.c:110
 msgid "E_xtend"
 msgstr "E_stén"
 
-#: ../plug-ins/common/convmatrix.c:87 ../plug-ins/common/displace.c:475
-#: ../plug-ins/common/edge.c:700 ../plug-ins/common/ripple.c:557
+#: ../plug-ins/common/convmatrix.c:111 ../plug-ins/common/displace.c:475
+#: ../plug-ins/common/edge.c:700 ../plug-ins/common/ripple.c:563
 msgid "_Wrap"
 msgstr "_Ajusta"
 
-#: ../plug-ins/common/convmatrix.c:88
+#: ../plug-ins/common/convmatrix.c:112
 msgid "Cro_p"
 msgstr "Esca_pça"
 
-#: ../plug-ins/common/convmatrix.c:184
+#: ../plug-ins/common/convmatrix.c:238
 msgid "Apply a generic 5x5 convolution matrix"
 msgstr "Aplica una matriu de convolució genèrica de 5x5"
 
-#: ../plug-ins/common/convmatrix.c:189
+#: ../plug-ins/common/convmatrix.c:243
 msgid "_Convolution Matrix..."
-msgstr "Matriu de _circumvolució..."
+msgstr "Matriu de _convolució..."
 
-#: ../plug-ins/common/convmatrix.c:224
-msgid "Convolution Matrix does not work on layers smaller than 3 pixels."
+#: ../plug-ins/common/convmatrix.c:278
+msgid "Convolution does not work on layers smaller than 3x3 pixels."
 msgstr ""
-"La matriu de circumvolució no funciona en capes més petites de 3 píxels."
+"La matriu de convolució no funciona en capes més petites de 3x3 píxels."
 
-#: ../plug-ins/common/convmatrix.c:297
+#: ../plug-ins/common/convmatrix.c:351
 msgid "Applying convolution"
-msgstr "S'està aplicant la circumvolució"
+msgstr "S'està aplicant la matriu de convolució"
 
-#: ../plug-ins/common/convmatrix.c:873
+#: ../plug-ins/common/convmatrix.c:951
 msgid "Convolution Matrix"
-msgstr "Matriu de circumvolució"
+msgstr "Matriu de convolució"
 
-#: ../plug-ins/common/convmatrix.c:910
+#: ../plug-ins/common/convmatrix.c:988
 msgid "Matrix"
 msgstr "Matriu"
 
-#: ../plug-ins/common/convmatrix.c:947
+#: ../plug-ins/common/convmatrix.c:1026
 msgid "D_ivisor:"
 msgstr "D_ivisor:"
 
-#: ../plug-ins/common/convmatrix.c:971 ../plug-ins/common/depthmerge.c:767
-#: ../plug-ins/common/raw.c:987
+#: ../plug-ins/common/convmatrix.c:1052 ../plug-ins/common/depthmerge.c:767
+#: ../plug-ins/common/raw.c:1022
 msgid "O_ffset:"
 msgstr "_Desplaçament:"
 
-#: ../plug-ins/common/convmatrix.c:1000
-msgid "A_utomatic"
-msgstr "A_utomàtic"
+# era: msgstr "R_adi 2_"
+#: ../plug-ins/common/convmatrix.c:1081
+msgid "N_ormalise"
+msgstr "N_ormalitza"
 
-#: ../plug-ins/common/convmatrix.c:1012
+#: ../plug-ins/common/convmatrix.c:1093
 msgid "A_lpha-weighting"
 msgstr "Ponderació a_lfa"
 
-#: ../plug-ins/common/convmatrix.c:1031
+#: ../plug-ins/common/convmatrix.c:1112
 msgid "Border"
 msgstr "Vora"
 
-#: ../plug-ins/common/convmatrix.c:1058
+#: ../plug-ins/common/convmatrix.c:1139
 msgid "Channels"
 msgstr "Canals"
 
@@ -3090,7 +3046,7 @@ msgstr "Mida del _mosaic:"
 # era msgstr "Mida del _mosaic:"
 #: ../plug-ins/common/cubism.c:317
 msgid "T_ile saturation:"
-msgstr "Saturació del mosà_ic:"
+msgstr "Saturació del mosa_ic:"
 
 # era: msgstr "Saturació del mosa_ic:"
 #: ../plug-ins/common/cubism.c:328
@@ -3101,24 +3057,24 @@ msgstr "_Utilitza el color del fons"
 msgid "Cubistic transformation"
 msgstr "Transformació cubista"
 
-#: ../plug-ins/common/curve_bend.c:523
+#: ../plug-ins/common/curve_bend.c:521
 msgid "Bend the image using two control curves"
 msgstr "Distorsionala imatge utilitzant dues corbes de control"
 
 # era: msgstr "Transformació cubísta..."
-#: ../plug-ins/common/curve_bend.c:544
+#: ../plug-ins/common/curve_bend.c:542
 msgid "_Curve Bend..."
 msgstr "_Distorsiona segons la corba..."
 
-#: ../plug-ins/common/curve_bend.c:680
+#: ../plug-ins/common/curve_bend.c:678
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Només es pot operar en les capes (però es feia en canal o màscara)."
 
-#: ../plug-ins/common/curve_bend.c:698
+#: ../plug-ins/common/curve_bend.c:696
 msgid "Cannot operate on layers with masks."
 msgstr "No es pot operar en capes amb màscares."
 
-#: ../plug-ins/common/curve_bend.c:713
+#: ../plug-ins/common/curve_bend.c:711
 msgid "Cannot operate on empty selections."
 msgstr "No es pot operar en seleccions buides."
 
@@ -3128,13 +3084,13 @@ msgstr "No es pot operar en seleccions buides."
 #  The shell and main vbox
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: ../plug-ins/common/curve_bend.c:1216 ../plug-ins/common/curve_bend.c:2933
+#: ../plug-ins/common/curve_bend.c:1214 ../plug-ins/common/curve_bend.c:2931
 msgid "Curve Bend"
 msgstr "Distorsiona segons la corba"
 
 #  Preview area, top of column
 #. Preview area, top of column
-#: ../plug-ins/common/curve_bend.c:1252
+#: ../plug-ins/common/curve_bend.c:1250
 #: ../plug-ins/gimpressionist/orientmap.c:574
 #: ../plug-ins/gimpressionist/sizemap.c:443
 msgid "Preview"
@@ -3142,13 +3098,13 @@ msgstr "Previsualitza"
 
 #  The preview button
 #. The preview button
-#: ../plug-ins/common/curve_bend.c:1281
+#: ../plug-ins/common/curve_bend.c:1279
 msgid "_Preview Once"
 msgstr "_Previsualitza una vegada"
 
 #  The preview toggle
 #. The preview toggle
-#: ../plug-ins/common/curve_bend.c:1290
+#: ../plug-ins/common/curve_bend.c:1288
 msgid "Automatic pre_view"
 msgstr "Pre_visualització automàtica"
 
@@ -3157,114 +3113,114 @@ msgstr "Pre_visualització automàtica"
 #  Options section
 #. Options area, bottom of column
 #. Options section
-#: ../plug-ins/common/curve_bend.c:1300 ../plug-ins/common/ripple.c:498
-#: ../plug-ins/gfig/gfig-dialog.c:1217
+#: ../plug-ins/common/curve_bend.c:1298 ../plug-ins/common/ripple.c:504
+#: ../plug-ins/gfig/gfig-dialog.c:1205
 msgid "Options"
 msgstr "Opcions"
 
 #  Rotate spinbutton
 #. Rotate spinbutton
-#: ../plug-ins/common/curve_bend.c:1314
+#: ../plug-ins/common/curve_bend.c:1312
 msgid "Rotat_e:"
 msgstr "_Gira:"
 
 #  The smoothing toggle
 #. The smoothing toggle
-#: ../plug-ins/common/curve_bend.c:1332
+#: ../plug-ins/common/curve_bend.c:1330
 msgid "Smoo_thing"
 msgstr "Suavi_tza"
 
 #  The antialiasing toggle
 #. The antialiasing toggle
-#: ../plug-ins/common/curve_bend.c:1342 ../plug-ins/common/gqbist.c:839
-#: ../plug-ins/common/mosaic.c:730 ../plug-ins/common/ripple.c:507
+#: ../plug-ins/common/curve_bend.c:1340 ../plug-ins/common/gqbist.c:839
+#: ../plug-ins/common/mosaic.c:730 ../plug-ins/common/ripple.c:513
 msgid "_Antialiasing"
 msgstr "Su_avitza les vores"
 
 #  The work_on_copy toggle
 #. The work_on_copy toggle
-#: ../plug-ins/common/curve_bend.c:1352
+#: ../plug-ins/common/curve_bend.c:1350
 msgid "Work on cop_y"
 msgstr "Treballa amb la còp_ia"
 
 #  The curves graph
 #. The curves graph
-#: ../plug-ins/common/curve_bend.c:1362
+#: ../plug-ins/common/curve_bend.c:1360
 msgid "Modify Curves"
 msgstr "Modifica les corbes"
 
-#: ../plug-ins/common/curve_bend.c:1390
+#: ../plug-ins/common/curve_bend.c:1388
 msgid "Curve for Border"
 msgstr "Corba per a la vora"
 
-#: ../plug-ins/common/curve_bend.c:1394
+#: ../plug-ins/common/curve_bend.c:1392
 msgid "_Upper"
 msgstr "S_uperior"
 
-#: ../plug-ins/common/curve_bend.c:1395
+#: ../plug-ins/common/curve_bend.c:1393
 msgid "_Lower"
 msgstr "_Inferior"
 
-#: ../plug-ins/common/curve_bend.c:1405
+#: ../plug-ins/common/curve_bend.c:1403
 msgid "Curve Type"
 msgstr "Tipus de corba"
 
-#: ../plug-ins/common/curve_bend.c:1409
+#: ../plug-ins/common/curve_bend.c:1407
 msgid "Smoot_h"
 msgstr "S_uau"
 
-#: ../plug-ins/common/curve_bend.c:1410
+#: ../plug-ins/common/curve_bend.c:1408
 msgid "_Free"
 msgstr "_Lliure"
 
 #  The Copy button
 #. The Copy button
-#: ../plug-ins/common/curve_bend.c:1425
+#: ../plug-ins/common/curve_bend.c:1423
 msgid "_Copy"
 msgstr "_Copia"
 
-#: ../plug-ins/common/curve_bend.c:1430
+#: ../plug-ins/common/curve_bend.c:1428
 msgid "Copy the active curve to the other border"
 msgstr "Copia la corba activa a l'altra vora"
 
 #  The CopyInv button
 #. The CopyInv button
-#: ../plug-ins/common/curve_bend.c:1437
+#: ../plug-ins/common/curve_bend.c:1435
 msgid "_Mirror"
 msgstr "Re_flexa"
 
-#: ../plug-ins/common/curve_bend.c:1442
+#: ../plug-ins/common/curve_bend.c:1440
 msgid "Mirror the active curve to the other border"
 msgstr "Reflexa la corba activa a l'altra vora"
 
 #  The Swap button
 #. The Swap button
-#: ../plug-ins/common/curve_bend.c:1450
+#: ../plug-ins/common/curve_bend.c:1448
 msgid "S_wap"
 msgstr "Interca_nvia"
 
-#: ../plug-ins/common/curve_bend.c:1455
+#: ../plug-ins/common/curve_bend.c:1453
 msgid "Swap the two curves"
 msgstr "Intercanvia les dues corbes"
 
-#: ../plug-ins/common/curve_bend.c:1467
+#: ../plug-ins/common/curve_bend.c:1465
 msgid "Reset the active curve"
 msgstr "Reinicia la corba activa"
 
 # era: msgstr "Reseta la corba activa"
-#: ../plug-ins/common/curve_bend.c:1484
+#: ../plug-ins/common/curve_bend.c:1482
 msgid "Load the curves from a file"
 msgstr "Carrega les corbes del fitxer"
 
-#: ../plug-ins/common/curve_bend.c:1496
+#: ../plug-ins/common/curve_bend.c:1494
 msgid "Save the curves to a file"
 msgstr "Desa les corbes al fitxer"
 
-#: ../plug-ins/common/curve_bend.c:2031
+#: ../plug-ins/common/curve_bend.c:2029
 msgid "Load Curve Points from File"
 msgstr "Carrega els punts de la corba del fitxer"
 
-#: ../plug-ins/common/curve_bend.c:2066
+#: ../plug-ins/common/curve_bend.c:2064
 msgid "Save Curve Points to File"
 msgstr "Desa els punts de la corba a fitxer"
 
@@ -3413,7 +3369,7 @@ msgstr "_Descomposa..."
 
 #: ../plug-ins/common/decompose.c:392
 msgid "Decomposing"
-msgstr "S'està descomposant..."
+msgstr "S'està descomposant"
 
 #: ../plug-ins/common/decompose.c:1343
 msgid "Decompose"
@@ -3540,19 +3496,19 @@ msgstr "R_ecursiu"
 
 # era: msgstr "R_ecurrent"
 #: ../plug-ins/common/despeckle.c:460 ../plug-ins/common/neon.c:739
-#: ../plug-ins/common/nlfilt.c:1091 ../plug-ins/common/nova.c:364
+#: ../plug-ins/common/nlfilt.c:1090 ../plug-ins/common/nova.c:365
 #: ../plug-ins/common/unsharp.c:681 ../plug-ins/common/whirlpinch.c:588
-#: ../plug-ins/gflare/gflare.c:2688 ../plug-ins/imagemap/imap_circle.c:278
+#: ../plug-ins/gflare/gflare.c:2684 ../plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
 msgstr "_Radi:"
 
 #: ../plug-ins/common/despeckle.c:476
 msgid "_Black level:"
-msgstr "Nivell _negre:"
+msgstr "Nivell de _negre:"
 
 #: ../plug-ins/common/despeckle.c:492
 msgid "_White level:"
-msgstr "Nivell _blanc:"
+msgstr "Nivell de _blanc:"
 
 #: ../plug-ins/common/destripe.c:102
 msgid "Remove vertical stripe artifacts from the image"
@@ -3571,8 +3527,8 @@ msgid "Destripe"
 msgstr "Treu les bandes"
 
 #: ../plug-ins/common/destripe.c:471 ../plug-ins/common/gtm.c:583
-#: ../plug-ins/common/postscript.c:3093 ../plug-ins/common/postscript.c:3301
-#: ../plug-ins/common/raw.c:1000 ../plug-ins/common/smooth_palette.c:436
+#: ../plug-ins/common/postscript.c:3109 ../plug-ins/common/postscript.c:3317
+#: ../plug-ins/common/raw.c:1035 ../plug-ins/common/smooth_palette.c:436
 #: ../plug-ins/common/tile.c:423 ../plug-ins/imagemap/imap_cmd_guides.c:167
 #: ../plug-ins/imagemap/imap_rectangle.c:403
 msgid "_Width:"
@@ -3633,7 +3589,7 @@ msgstr "Contorns"
 
 #: ../plug-ins/common/diffraction.c:603
 msgid "Sharp Edges"
-msgstr "Afila les vores"
+msgstr "Ressalta les vores"
 
 #: ../plug-ins/common/diffraction.c:615 ../plug-ins/common/softglow.c:681
 #: ../plug-ins/flame/flame.c:1053
@@ -3655,7 +3611,7 @@ msgstr "Altres opcions"
 #  X options
 #: ../plug-ins/common/displace.c:145
 msgid "_X displacement"
-msgstr "Desplaçament en _X:"
+msgstr "Desplaçament en _X"
 
 #: ../plug-ins/common/displace.c:145
 msgid "_Pinch"
@@ -3664,7 +3620,7 @@ msgstr "_Enfonsa"
 #  Y Options
 #: ../plug-ins/common/displace.c:146
 msgid "_Y displacement"
-msgstr "Desplaçament en _Y:"
+msgstr "Desplaçament en _Y"
 
 #: ../plug-ins/common/displace.c:146
 msgid "_Whirl"
@@ -3680,7 +3636,7 @@ msgstr "_Desplaça..."
 
 #: ../plug-ins/common/displace.c:293
 msgid "Displacing"
-msgstr "S'està desplaçant..."
+msgstr "S'està desplaçant"
 
 #: ../plug-ins/common/displace.c:329
 msgid "Displace"
@@ -3715,7 +3671,7 @@ msgid "Edge Behavior"
 msgstr "Comportament de les vores"
 
 #: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:713
-#: ../plug-ins/common/ripple.c:558 ../plug-ins/common/waves.c:277
+#: ../plug-ins/common/ripple.c:564 ../plug-ins/common/waves.c:277
 msgid "_Smear"
 msgstr "_Taca"
 
@@ -3728,32 +3684,32 @@ msgstr "_Negre"
 msgid "Edge detection with control of edge thickness"
 msgstr "Detecta les vores segons la mida de les vores"
 
-#: ../plug-ins/common/dog.c:143
+#: ../plug-ins/common/dog.c:142
 msgid "_Difference of Gaussians..."
 msgstr "_Diferència de gaussians..."
 
-#: ../plug-ins/common/dog.c:231 ../plug-ins/common/dog.c:276
+#: ../plug-ins/common/dog.c:230 ../plug-ins/common/dog.c:275
 msgid "DoG Edge Detect"
 msgstr "Detecció de vora DoG"
 
-#: ../plug-ins/common/dog.c:304
+#: ../plug-ins/common/dog.c:303
 msgid "Smoothing Parameters"
 msgstr "Paràmetres de suavitzat"
 
-#: ../plug-ins/common/dog.c:318
+#: ../plug-ins/common/dog.c:317
 msgid "_Radius 1:"
 msgstr "_Radi 1:"
 
-#: ../plug-ins/common/dog.c:322
+#: ../plug-ins/common/dog.c:321
 msgid "R_adius 2:"
 msgstr "R_adi 2:"
 
 # era: msgstr "R_adi 2_"
-#: ../plug-ins/common/dog.c:334 ../plug-ins/common/normalize.c:89
+#: ../plug-ins/common/dog.c:333 ../plug-ins/common/normalize.c:89
 msgid "_Normalize"
 msgstr "_Normalitza"
 
-#: ../plug-ins/common/dog.c:345 ../plug-ins/gimpressionist/paper.c:149
+#: ../plug-ins/common/dog.c:344 ../plug-ins/gimpressionist/paper.c:149
 msgid "_Invert"
 msgstr "_Inverteix"
 
@@ -3795,7 +3751,7 @@ msgid "Differential"
 msgstr "Diferencial"
 
 # era: msgstr "_Diferencial"
-#: ../plug-ins/common/edge.c:664 ../plug-ins/common/laplace.c:245
+#: ../plug-ins/common/edge.c:664 ../plug-ins/common/laplace.c:243
 msgid "Laplace"
 msgstr "Laplace"
 
@@ -3815,46 +3771,49 @@ msgstr "Simula una imatge esculpida sobre la pedra"
 msgid "_Emboss..."
 msgstr "_Esculpeix..."
 
-#: ../plug-ins/common/emboss.c:388 ../plug-ins/common/emboss.c:451
+#: ../plug-ins/common/emboss.c:386 ../plug-ins/common/emboss.c:448
 msgid "Emboss"
 msgstr "Esculpeix"
 
-#: ../plug-ins/common/emboss.c:479
+#: ../plug-ins/common/emboss.c:476
 msgid "Function"
 msgstr "Funció"
 
-#: ../plug-ins/common/emboss.c:483
+#: ../plug-ins/common/emboss.c:480
 msgid "_Bumpmap"
 msgstr "_Mapa de relleu"
 
-#: ../plug-ins/common/emboss.c:484
+#: ../plug-ins/common/emboss.c:481
 msgid "_Emboss"
 msgstr "R_elleu"
 
-#: ../plug-ins/common/emboss.c:516
+#: ../plug-ins/common/emboss.c:513
 msgid "E_levation:"
 msgstr "E_levació:"
 
+# Quim: El filtre engrave (dins filtres - distorcions) substitueix el color amb una sèrie de franges negres horitzonals
 #: ../plug-ins/common/engrave.c:103
 msgid "Simulate an antique engraving"
-msgstr "Simula un gravat antic"
+msgstr "Simula un gravat antic amb franges negres"
 
+# Quim: El filtre engrave (dins filtres - distorcions) substitueix el color amb una sèrie de franges negres horitzonals
 #: ../plug-ins/common/engrave.c:108
 msgid "En_grave..."
-msgstr "_Grava..."
+msgstr "_Grava amb franges negres..."
 
+# Quim: El filtre engrave (dins filtres - distorcions) substitueix el color amb una sèrie de franges negres horitzonals
 #: ../plug-ins/common/engrave.c:182
 msgid "Engraving"
-msgstr "S'està gravant..."
+msgstr "S'està gravant amb franges negres"
 
-# era: msgstr "S'està gravant"
+# Quim: El filtre engrave (dins filtres - distorcions) substitueix el color amb una sèrie de franges negres horitzonals
 #: ../plug-ins/common/engrave.c:211
 msgid "Engrave"
-msgstr "Grava"
+msgstr "Grava amb franges negres"
 
 #: ../plug-ins/common/engrave.c:245 ../plug-ins/common/film.c:1201
-#: ../plug-ins/common/gtm.c:599 ../plug-ins/common/postscript.c:3102
-#: ../plug-ins/common/postscript.c:3310 ../plug-ins/common/raw.c:1013
+#: ../plug-ins/common/gtm.c:599 ../plug-ins/common/postscript.c:3118
+#: ../plug-ins/common/postscript.c:3326 ../plug-ins/common/raw.c:1048
 #: ../plug-ins/common/smooth_palette.c:441 ../plug-ins/common/tile.c:427
 #: ../plug-ins/imagemap/imap_cmd_guides.c:177
 #: ../plug-ins/imagemap/imap_rectangle.c:410
@@ -3867,55 +3826,55 @@ msgstr "A_lçada:"
 msgid "_Limit line width"
 msgstr "Amplada de la línia _límit"
 
-#: ../plug-ins/common/exchange.c:123
+#: ../plug-ins/common/exchange.c:124
 msgid "Swap one color with another"
 msgstr "Intercanvia un color amb un altre"
 
-#: ../plug-ins/common/exchange.c:129
+#: ../plug-ins/common/exchange.c:130
 msgid "_Color Exchange..."
-msgstr "Substitueix un  _color..."
+msgstr "Substitueix un _color..."
 
 #  set up the dialog
-#: ../plug-ins/common/exchange.c:214 ../plug-ins/common/exchange.c:288
+#: ../plug-ins/common/exchange.c:215 ../plug-ins/common/exchange.c:289
 msgid "Color Exchange"
 msgstr "Substitueix un  color"
 
-#: ../plug-ins/common/exchange.c:310
+#: ../plug-ins/common/exchange.c:311
 msgid "Middle-Click Inside Preview to Pick \"From Color\""
 msgstr ""
 "Cliqueu amb el botó del mig dins la previsualització per triar «Des del "
 "color»"
 
 # era: msgstr "Cliqueu amb el botó del mig dins lla previsualització per triar \"Des del color\""
-#: ../plug-ins/common/exchange.c:348
+#: ../plug-ins/common/exchange.c:349
 msgid "To Color"
 msgstr "Al color"
 
-#: ../plug-ins/common/exchange.c:348
+#: ../plug-ins/common/exchange.c:349
 msgid "From Color"
 msgstr "Des del color"
 
-#: ../plug-ins/common/exchange.c:366
+#: ../plug-ins/common/exchange.c:367
 msgid "Color Exchange: To Color"
 msgstr "Canvi de color: al color"
 
-#: ../plug-ins/common/exchange.c:367
+#: ../plug-ins/common/exchange.c:368
 msgid "Color Exchange: From Color"
 msgstr "Canvi de color: des del color"
 
-#: ../plug-ins/common/exchange.c:425
+#: ../plug-ins/common/exchange.c:426
 msgid "R_ed threshold:"
 msgstr "Llindar v_ermell:"
 
-#: ../plug-ins/common/exchange.c:485
+#: ../plug-ins/common/exchange.c:486
 msgid "G_reen threshold:"
 msgstr "Llindar ve_rd:"
 
-#: ../plug-ins/common/exchange.c:546
+#: ../plug-ins/common/exchange.c:547
 msgid "B_lue threshold:"
 msgstr "Llindar b_lau:"
 
-#: ../plug-ins/common/exchange.c:574
+#: ../plug-ins/common/exchange.c:575
 msgid "Lock _thresholds"
 msgstr "Bloca els _llindars"
 
@@ -3929,7 +3888,7 @@ msgstr "_Pel·lícula..."
 
 #: ../plug-ins/common/film.c:323
 msgid "Composing images"
-msgstr "S'estan composant les imatges..."
+msgstr "S'estan composant les imatges"
 
 #: ../plug-ins/common/film.c:436 ../plug-ins/common/guillotine.c:185
 #: ../plug-ins/helpbrowser/dialog.c:863
@@ -3972,7 +3931,7 @@ msgid "Select Film Color"
 msgstr "Tria el color de la pel·lícula"
 
 #: ../plug-ins/common/film.c:1224 ../plug-ins/common/film.c:1274
-#: ../plug-ins/common/nova.c:351
+#: ../plug-ins/common/nova.c:352
 msgid "Co_lor:"
 msgstr "Co_lor:"
 
@@ -4034,7 +3993,7 @@ msgstr "Amp_lada del forat:"
 
 #: ../plug-ins/common/film.c:1392
 msgid "Hol_e height:"
-msgstr "Alçada d_el forat"
+msgstr "Alçada d_el forat:"
 
 #: ../plug-ins/common/film.c:1403
 msgid "Hole sp_acing:"
@@ -4067,182 +4026,182 @@ msgid "Center of Flare Effect"
 msgstr "Focus del llum enlluernador"
 
 #  Put buttons in
-#: ../plug-ins/common/flarefx.c:781 ../plug-ins/common/nova.c:477
+#: ../plug-ins/common/flarefx.c:781 ../plug-ins/common/nova.c:478
 msgid "Show _position"
 msgstr "Mostra la _posició"
 
-#: ../plug-ins/common/fp.c:230
+#: ../plug-ins/common/fp.c:229
 msgid "Cyan:"
 msgstr "Cian:"
 
-#: ../plug-ins/common/fp.c:231
+#: ../plug-ins/common/fp.c:230
 msgid "Yellow:"
 msgstr "Groc:"
 
-#: ../plug-ins/common/fp.c:232
+#: ../plug-ins/common/fp.c:231
 msgid "Magenta:"
 msgstr "Magenta:"
 
-#: ../plug-ins/common/fp.c:234
+#: ../plug-ins/common/fp.c:233
 msgid "Darker:"
 msgstr "Més fosc:"
 
-#: ../plug-ins/common/fp.c:235
+#: ../plug-ins/common/fp.c:234
 msgid "Lighter:"
 msgstr "Més clar:"
 
-#: ../plug-ins/common/fp.c:237
+#: ../plug-ins/common/fp.c:236
 msgid "More Sat:"
 msgstr "Més satur.:"
 
-#: ../plug-ins/common/fp.c:238
+#: ../plug-ins/common/fp.c:237
 msgid "Less Sat:"
 msgstr "Menys satur.:"
 
-#: ../plug-ins/common/fp.c:240 ../plug-ins/common/fp.c:530
+#: ../plug-ins/common/fp.c:239 ../plug-ins/common/fp.c:529
 msgid "Current:"
 msgstr "Actual:"
 
-#: ../plug-ins/common/fp.c:324
+#: ../plug-ins/common/fp.c:323
 msgid "Interactively modify the image colors"
 msgstr "Modifica els colors de la imatge interactivament"
 
-#: ../plug-ins/common/fp.c:329
+#: ../plug-ins/common/fp.c:328
 msgid "_Filter Pack..."
 msgstr "Paquet de _filtres..."
 
-#: ../plug-ins/common/fp.c:375
+#: ../plug-ins/common/fp.c:374
 msgid "FP can only be used on RGB images."
 msgstr "FP només es pot operar en imatge RGB."
 
-#: ../plug-ins/common/fp.c:385
+#: ../plug-ins/common/fp.c:384
 msgid "FP can only be run interactively."
 msgstr "FP només es pot executar de manera interactiva."
 
 # era: msgstr "Abans, convertiu la imatge a format RGB!"
-#: ../plug-ins/common/fp.c:403
+#: ../plug-ins/common/fp.c:402
 msgid "Applying filter pack"
-msgstr "S'està aplicant el paquet de filtratge..."
+msgstr "S'està aplicant el paquet de filtratge"
 
-#: ../plug-ins/common/fp.c:522
+#: ../plug-ins/common/fp.c:521
 msgid "Original:"
 msgstr "Original:"
 
-#: ../plug-ins/common/fp.c:574
+#: ../plug-ins/common/fp.c:573
 msgid "Hue Variations"
 msgstr "Variacions de tinta"
 
-#: ../plug-ins/common/fp.c:628
+#: ../plug-ins/common/fp.c:627
 msgid "Roughness"
 msgstr "Aspror"
 
-#: ../plug-ins/common/fp.c:671
+#: ../plug-ins/common/fp.c:670
 msgid "Affected Range"
 msgstr "Abast afectat"
 
-#: ../plug-ins/common/fp.c:675
+#: ../plug-ins/common/fp.c:674
 msgid "Sha_dows"
 msgstr "Om_bres"
 
-#: ../plug-ins/common/fp.c:676
+#: ../plug-ins/common/fp.c:675
 msgid "_Midtones"
 msgstr "Tons _mitjans"
 
-#: ../plug-ins/common/fp.c:677
+#: ../plug-ins/common/fp.c:676
 msgid "H_ighlights"
 msgstr "Re_ssaltats"
 
-#: ../plug-ins/common/fp.c:691
+#: ../plug-ins/common/fp.c:690
 msgid "Windows"
 msgstr "Finestres"
 
-#: ../plug-ins/common/fp.c:701 ../plug-ins/common/lic.c:672
+#: ../plug-ins/common/fp.c:700 ../plug-ins/common/lic.c:672
 msgid "_Saturation"
 msgstr "_Saturació"
 
-#: ../plug-ins/common/fp.c:709
+#: ../plug-ins/common/fp.c:708
 msgid "A_dvanced"
 msgstr "Ava_nçat"
 
-#: ../plug-ins/common/fp.c:729
+#: ../plug-ins/common/fp.c:728
 msgid "Value Variations"
 msgstr "Variacions de valor"
 
-#: ../plug-ins/common/fp.c:773
+#: ../plug-ins/common/fp.c:772
 msgid "Saturation Variations"
 msgstr "Variacions de saturació"
 
-#: ../plug-ins/common/fp.c:825
+#: ../plug-ins/common/fp.c:824
 msgid "Select Pixels By"
 msgstr "Seleccioneu els píxels per"
 
-#: ../plug-ins/common/fp.c:830
+#: ../plug-ins/common/fp.c:829
 msgid "H_ue"
 msgstr "_To"
 
-#: ../plug-ins/common/fp.c:831
+#: ../plug-ins/common/fp.c:830
 msgid "Satu_ration"
 msgstr "Satu_ració"
 
-#: ../plug-ins/common/fp.c:832
+#: ../plug-ins/common/fp.c:831
 msgid "V_alue"
 msgstr "V_alor"
 
-#: ../plug-ins/common/fp.c:858
+#: ../plug-ins/common/fp.c:857
 msgid "Show"
 msgstr "Mostra"
 
-#: ../plug-ins/common/fp.c:863
+#: ../plug-ins/common/fp.c:862
 msgid "_Entire image"
 msgstr "Imatg_e sencera"
 
-#: ../plug-ins/common/fp.c:864
+#: ../plug-ins/common/fp.c:863
 msgid "Se_lection only"
 msgstr "Només la se_lecció"
 
-#: ../plug-ins/common/fp.c:865
+#: ../plug-ins/common/fp.c:864
 msgid "Selec_tion in context"
 msgstr "Selecció en con_text"
 
-#: ../plug-ins/common/fp.c:1180
+#: ../plug-ins/common/fp.c:1179
 msgid "Filter Pack Simulation"
 msgstr "Simulació del paquet de filtres"
 
 # era: msgstr "Filtra la simulació del paquet"
-#: ../plug-ins/common/fp.c:1298
+#: ../plug-ins/common/fp.c:1297
 msgid "Shadows:"
 msgstr "Ombres:"
 
-#: ../plug-ins/common/fp.c:1299
+#: ../plug-ins/common/fp.c:1298
 msgid "Midtones:"
 msgstr "Tons mitjans:"
 
-#: ../plug-ins/common/fp.c:1300
+#: ../plug-ins/common/fp.c:1299
 msgid "Highlights:"
 msgstr "Ressaltaments:"
 
-#: ../plug-ins/common/fp.c:1312
+#: ../plug-ins/common/fp.c:1311
 msgid "Advanced Filter Pack Options"
 msgstr "Opcions avançades del paquet de filtratge"
 
 # era: msgstr "Opcions avançades de filtratge del paquet:"
-#: ../plug-ins/common/fp.c:1323
+#: ../plug-ins/common/fp.c:1322
 msgid "Smoothness of Aliasing"
 msgstr "Intentsitat del suavitzat"
 
 # era: msgstr "Suavitat de la contrarèplica"
-#: ../plug-ins/common/fp.c:1423
+#: ../plug-ins/common/fp.c:1422
 msgid "Preview as You Drag"
-msgstr "Previsualitza metre arrosegues"
+msgstr "Previsualitza metre arrossegueu"
 
 # era: msgstr "Previsualitza així que ho arrosseguis"
-#: ../plug-ins/common/fp.c:1427
+#: ../plug-ins/common/fp.c:1426
 msgid "Preview Size"
 msgstr "Previsualitza la mida"
 
 #: ../plug-ins/common/fractaltrace.c:116
 msgid "Transform image with the Mandelbrot Fractal"
-msgstr "Transforma la imatge amb un fractal Mandelbrot"
+msgstr "Transforma la imatge amb una fractal Mandelbrot"
 
 #: ../plug-ins/common/fractaltrace.c:121
 msgid "_Fractal Trace..."
@@ -4342,21 +4301,21 @@ msgstr "Format de pinzell no suportat"
 #: ../plug-ins/common/gbr.c:411
 #, c-format
 msgid "Error in GIMP brush file '%s'"
-msgstr "S'ha produït un error al fitxer de pinzell del GIMP '%s'"
+msgstr "El fitxer del pinzell del GIMP '%s' està malament"
 
 #: ../plug-ins/common/gbr.c:419
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Cadena UTF-8 invàlida al fitxer de pinzell '%s'."
+msgstr "S'ha trobat una cadena UTF-8 invàlida al fitxer del pinzell '%s'."
 
 #: ../plug-ins/common/gbr.c:425 ../plug-ins/common/gih.c:499
-#: ../plug-ins/common/gih.c:1158 ../plug-ins/gflare/gflare.c:2993
+#: ../plug-ins/common/gih.c:1158 ../plug-ins/gflare/gflare.c:2989
 msgid "Unnamed"
 msgstr "Sense nom"
 
 #: ../plug-ins/common/gbr.c:607
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "Els pinzells GIMP són en escala de grisos o bé RGBA"
+msgstr "Els pinzells del GIMP són en escala de grisos o bé en RGBA"
 
 #: ../plug-ins/common/gbr.c:704
 msgid "Save as Brush"
@@ -4403,11 +4362,11 @@ msgstr "Una creació obsoleta de %s"
 msgid "GIF image"
 msgstr "Imatge GIF"
 
-#: ../plug-ins/common/gif.c:685
+#: ../plug-ins/common/gif.c:683
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr "No s'ha pogut reduir més els colors. S'està desant com a opac."
 
-#: ../plug-ins/common/gif.c:906
+#: ../plug-ins/common/gif.c:899
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -4415,104 +4374,98 @@ msgstr ""
 "El format GIF només suporta comentaris codificats en ASCII 7 bits. No s'ha "
 "desat cap comentari."
 
-#: ../plug-ins/common/gif.c:965
+#: ../plug-ins/common/gif.c:958
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "No es poden desar les imatges de color RGB. Convertiu-les primer a color "
 "indexat o a escala de grisos."
 
-#: ../plug-ins/common/gif.c:1143
+#: ../plug-ins/common/gif.c:1135
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Posa retards en l'animació per prevenir sobresaturacions a la CPU."
 
-# era: msgstr "Retràs inserit per prevenir sobresaturacions a la unitat central."
-#: ../plug-ins/common/gif.c:1183
-msgid "GIF Warning"
-msgstr "Avís GIF"
-
-#: ../plug-ins/common/gif.c:1207
+#: ../plug-ins/common/gif.c:1175
 msgid ""
-"The image which you are trying to save as a GIF\n"
-"contains layers which extend beyond the actual\n"
-"borders of the image.  This isn't allowed in GIFs,\n"
-"I'm afraid.\n"
-"\n"
-"You may choose whether to crop all of the layers to\n"
-"the image borders, or cancel this save."
+"The image you are trying to save as a GIF contains layers which extend "
+"beyond the actual borders of the image."
 msgstr ""
-"La imatge que esteu intentant desar en format GIF\n"
-"conté capes que s'estenen més enllà de les vores\n"
-"actuals de la imatge. Això no està permès en les imatges GIF.\n"
-"\n"
-"Podeu escollir entre escapçar totes les capes d'acord amb\n"
-"les vores de les imatges o no desar."
+"La imatge que esteu intentant desar en format GIF conté capes que s'estenen "
+"més enllà de les vores."
 
-#: ../plug-ins/common/gif.c:1251
+#: ../plug-ins/common/gif.c:1192
+msgid ""
+"The GIF file format does not allow this.  You may choose whether to crop all "
+"of the layers to the image borders, or cancel this save."
+msgstr ""
+" Això no està permès en les imatges GIF. Podeu escollir entre escapçar totes "
+"les capes d'acord amb les vores de les imatges o no desar."
+
+#: ../plug-ins/common/gif.c:1233
 msgid "Save as GIF"
 msgstr "Desa en format GIF"
 
 #. regular gif parameter settings
-#: ../plug-ins/common/gif.c:1273
+#: ../plug-ins/common/gif.c:1255
 msgid "GIF Options"
 msgstr "Opcions del GIF"
 
-#: ../plug-ins/common/gif.c:1279
+#: ../plug-ins/common/gif.c:1261
 msgid "I_nterlace"
 msgstr "E_ntrellaça"
 
-#: ../plug-ins/common/gif.c:1295
+#: ../plug-ins/common/gif.c:1277
 msgid "_GIF comment:"
 msgstr "Comentari del _GIF:"
 
 #. additional animated gif parameter settings
-#: ../plug-ins/common/gif.c:1352
+#: ../plug-ins/common/gif.c:1334
 msgid "Animated GIF Options"
 msgstr "Opcions del GIF animat"
 
-#: ../plug-ins/common/gif.c:1358
+#: ../plug-ins/common/gif.c:1340
 msgid "_Loop forever"
 msgstr "Buc_le infinit"
 
 # era: msgstr "Fes sempre un buc_le"
-#: ../plug-ins/common/gif.c:1371
+#: ../plug-ins/common/gif.c:1353
 msgid "_Delay between frames where unspecified:"
-msgstr "Retar_d entre marcs quan no estigui especificat:"
+msgstr "Retar_d per defecte entre fotogrames:"
 
-#: ../plug-ins/common/gif.c:1386 ../plug-ins/common/mng.c:1542
+#: ../plug-ins/common/gif.c:1368 ../plug-ins/common/mng.c:1542
 msgid "milliseconds"
 msgstr "mil·lisegons"
 
-#: ../plug-ins/common/gif.c:1396
+#: ../plug-ins/common/gif.c:1378
 msgid "_Frame disposal where unspecified:"
-msgstr "Disposició del marc _quan no estigui especificada:"
+msgstr "Disposició per defecte dels _fotogrames:"
 
-#: ../plug-ins/common/gif.c:1400
+#: ../plug-ins/common/gif.c:1382
 msgid "I don't care"
 msgstr "No importa"
 
-#: ../plug-ins/common/gif.c:1402
+#: ../plug-ins/common/gif.c:1384
 msgid "Cumulative layers (combine)"
 msgstr "Capes acumulatives (combina)"
 
-#: ../plug-ins/common/gif.c:1404
+#: ../plug-ins/common/gif.c:1386
 msgid "One frame per layer (replace)"
-msgstr "Un marc per capa (substitueix)"
+msgstr "Un fotograma per capa (substitueix)"
 
 #. The "Always use default values" toggles
-#: ../plug-ins/common/gif.c:1420
+#: ../plug-ins/common/gif.c:1402
 msgid "_Use delay entered above for all frames"
-msgstr "_Empra el retard especificat, per a tots els marcs"
+msgstr "_Empra el mateix retard en tots els fotogrames"
 
-#: ../plug-ins/common/gif.c:1430
+#: ../plug-ins/common/gif.c:1412
 msgid "U_se disposal entered above for all frames"
-msgstr "Empra la _disposició especificada, per a tots els marcs"
+msgstr "Empra la mateixa di_sposició en tots els fotogrames"
 
-#: ../plug-ins/common/gif.c:2599
+#: ../plug-ins/common/gif.c:2565
 msgid "Error writing output file."
 msgstr "S'ha produït un error en escriure el fitxer de sortida."
 
-#: ../plug-ins/common/gif.c:2669
+#: ../plug-ins/common/gif.c:2635
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "El comentari per defecte està limitat a %d caràcters."
@@ -4533,18 +4486,18 @@ msgstr "Fons (%d%s)"
 #: ../plug-ins/common/gifload.c:904
 #, c-format
 msgid "Opening '%s' (frame %d)"
-msgstr "S'està obrint '%s' (marc %d)"
+msgstr "S'està obrint '%s' (fotograma %d)"
 
-#: ../plug-ins/common/gifload.c:933 ../plug-ins/common/iwarp.c:798
-#: ../plug-ins/common/iwarp.c:833
+#: ../plug-ins/common/gifload.c:933 ../plug-ins/common/iwarp.c:796
+#: ../plug-ins/common/iwarp.c:831
 #, c-format
 msgid "Frame %d"
-msgstr "Marc %d"
+msgstr "Fotograma %d"
 
 #: ../plug-ins/common/gifload.c:935
 #, c-format
 msgid "Frame %d (%d%s)"
-msgstr "Marc %d (%d%s)"
+msgstr "Fotograma %d (%d%s)"
 
 #: ../plug-ins/common/gifload.c:966
 #, c-format
@@ -4646,7 +4599,7 @@ msgstr "Am_plada del mosaic:"
 # era: msgstr "Am_plada del mosaic:"
 #: ../plug-ins/common/glasstile.c:304 ../plug-ins/common/mosaic.c:663
 msgid "Tile _height:"
-msgstr "Alçada del mosài_c:"
+msgstr "Alçada del mosai_c:"
 
 #: ../plug-ins/common/gqbist.c:402
 msgid "Generate a huge variety of abstract patterns"
@@ -4709,7 +4662,7 @@ msgstr "_Graella..."
 msgid "Drawing grid"
 msgstr "Graella de dibuix"
 
-#: ../plug-ins/common/grid.c:635 ../plug-ins/gfig/gfig-dialog.c:1365
+#: ../plug-ins/common/grid.c:635 ../plug-ins/gfig/gfig-dialog.c:1353
 msgid "Grid"
 msgstr "Graella"
 
@@ -4868,11 +4821,11 @@ msgstr ""
 
 #: ../plug-ins/common/gtm.c:614
 msgid "Cell-_padding:"
-msgstr "_Emplenat de les cel·les:"
+msgstr "Se_paració entre les cel·les:"
 
 #: ../plug-ins/common/gtm.c:618
 msgid "The amount of cellpadding."
-msgstr "La quantitat de farciment de les cel·les."
+msgstr "Distància de separació entre cel·les."
 
 #: ../plug-ins/common/gtm.c:627
 msgid "Cell-_spacing:"
@@ -4955,110 +4908,113 @@ msgstr "Mode _1"
 msgid "Mode _2"
 msgstr "Mode _2"
 
-#: ../plug-ins/common/iwarp.c:264
+#: ../plug-ins/common/iwarp.c:262
 msgid "Use mouse control to warp image areas"
 msgstr "Utilitza el ratolí per deformar la imatge manualment"
 
-#: ../plug-ins/common/iwarp.c:269
+#: ../plug-ins/common/iwarp.c:267
 msgid "_IWarp..."
-msgstr "_Manualment..."
+msgstr "Deforma _intercativament..."
 
-#: ../plug-ins/common/iwarp.c:704
+#: ../plug-ins/common/iwarp.c:702
 msgid "Warping"
-msgstr "Aplicant les deformacions"
+msgstr "S'està aplicant les deformacions"
 
-#: ../plug-ins/common/iwarp.c:809
+#: ../plug-ins/common/iwarp.c:807
 #, c-format
 msgid "Warping Frame %d"
-msgstr "S'està deformant el marc núm. %d"
+msgstr "S'està deformant el fotograma %d"
 
-#: ../plug-ins/common/iwarp.c:821
+#: ../plug-ins/common/iwarp.c:819
 msgid "Ping pong"
 msgstr "Ping-pong"
 
-#: ../plug-ins/common/iwarp.c:1027
+#: ../plug-ins/common/iwarp.c:1025
 msgid "A_nimate"
 msgstr "A_nima"
 
-#: ../plug-ins/common/iwarp.c:1046
+#: ../plug-ins/common/iwarp.c:1044
 msgid "Number of _frames:"
-msgstr "Nombre de _marcs:"
+msgstr "Nombre de _fotogrames:"
 
-#: ../plug-ins/common/iwarp.c:1055
+#: ../plug-ins/common/iwarp.c:1053
 msgid "R_everse"
 msgstr "Invert_eix"
 
-#: ../plug-ins/common/iwarp.c:1064
+#: ../plug-ins/common/iwarp.c:1062
 msgid "_Ping pong"
 msgstr "_Ping-pong"
 
-#: ../plug-ins/common/iwarp.c:1077
+#: ../plug-ins/common/iwarp.c:1075
 msgid "_Animate"
 msgstr "_Anima"
 
-#: ../plug-ins/common/iwarp.c:1098
+# Quim: títol de secció dins el dialeg Filtres - Distorcions - Manualment (IWrap)
+#: ../plug-ins/common/iwarp.c:1096
 msgid "Deform Mode"
-msgstr "Canvia el mode"
+msgstr "Tipus de deformació"
 
-#: ../plug-ins/common/iwarp.c:1111
+#: ../plug-ins/common/iwarp.c:1109
 msgid "_Move"
 msgstr "_Mou"
 
-#: ../plug-ins/common/iwarp.c:1112
+#: ../plug-ins/common/iwarp.c:1110
 msgid "_Grow"
 msgstr "_Creix"
 
-#: ../plug-ins/common/iwarp.c:1113
+#: ../plug-ins/common/iwarp.c:1111
 msgid "S_wirl CCW"
 msgstr "Arremolina en sentit anti_horari"
 
-#: ../plug-ins/common/iwarp.c:1114
+# Quim: serveix per desfer una deformació feta amb qualsevol eina de IWrap (Filtres - Distorcions - Manualment...)
+#: ../plug-ins/common/iwarp.c:1112
 msgid "Remo_ve"
-msgstr "_Suprimeix"
+msgstr "Re_staura"
 
-#: ../plug-ins/common/iwarp.c:1115
+#: ../plug-ins/common/iwarp.c:1113
 msgid "S_hrink"
 msgstr "_Encongeix"
 
-#: ../plug-ins/common/iwarp.c:1116
+#: ../plug-ins/common/iwarp.c:1114
 msgid "Sw_irl CW"
 msgstr "Arremol_ina en sentit horari"
 
 # era: msgstr "Arremolina en sentit horari"
-#: ../plug-ins/common/iwarp.c:1145
+#: ../plug-ins/common/iwarp.c:1143
 msgid "_Deform radius:"
 msgstr "Varia el ra_di:"
 
-#: ../plug-ins/common/iwarp.c:1155
+#: ../plug-ins/common/iwarp.c:1153
 msgid "D_eform amount:"
 msgstr "Varia la _quantitat:"
 
-#: ../plug-ins/common/iwarp.c:1164
+#: ../plug-ins/common/iwarp.c:1162
 msgid "_Bilinear"
 msgstr "_Bilineal"
 
-#: ../plug-ins/common/iwarp.c:1178
+#: ../plug-ins/common/iwarp.c:1176
 msgid "Adaptive s_upersample"
 msgstr "S_upermostra adaptable"
 
-#: ../plug-ins/common/iwarp.c:1198
+#: ../plug-ins/common/iwarp.c:1196
 msgid "Ma_x depth:"
 msgstr "Profunditat mà_xima:"
 
-#: ../plug-ins/common/iwarp.c:1208
+#: ../plug-ins/common/iwarp.c:1206
 msgid "Thresho_ld:"
 msgstr "_Llindar:"
 
-#: ../plug-ins/common/iwarp.c:1221 ../plug-ins/common/sinus.c:771
-#: ../plug-ins/gflare/gflare.c:2797
+#: ../plug-ins/common/iwarp.c:1219 ../plug-ins/common/sinus.c:771
+#: ../plug-ins/gflare/gflare.c:2793
 msgid "_Settings"
 msgstr "_Paràmetres"
 
-#: ../plug-ins/common/iwarp.c:1271
+# Quim: títol de la finestra, no és una traducció literal però explica pq serveix el filtre
+#: ../plug-ins/common/iwarp.c:1268
 msgid "IWarp"
-msgstr "IWarp"
+msgstr "Deforma interactivament"
 
-#: ../plug-ins/common/iwarp.c:1308
+#: ../plug-ins/common/iwarp.c:1304
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
@@ -5097,7 +5053,7 @@ msgstr "Nombre de peces que cauen"
 
 #: ../plug-ins/common/jigsaw.c:2492
 msgid "Bevel Edges"
-msgstr "Biselat de les vores"
+msgstr "Bisellatge de les vores"
 
 #: ../plug-ins/common/jigsaw.c:2502
 msgid "_Bevel width:"
@@ -5144,9 +5100,50 @@ msgstr "Detecció de vores d'alta resolució"
 msgid "_Laplace"
 msgstr "_Laplace"
 
-#: ../plug-ins/common/laplace.c:323
+#: ../plug-ins/common/laplace.c:321
 msgid "Cleanup"
 msgstr "Neteja"
+
+#: ../plug-ins/common/lens.c:142
+msgid "Corrects lens distortion"
+msgstr "Corregeix la distorsió de les lents"
+
+#: ../plug-ins/common/lens.c:147
+msgid "Lens Distortion..."
+msgstr "Distorsió de les lents..."
+
+#: ../plug-ins/common/lens.c:784
+msgid "Lens distortion"
+msgstr "Distorsió de les lents"
+
+#: ../plug-ins/common/lens.c:894
+msgid "Lens Distortion"
+msgstr "Distorsió de les lents"
+
+#: ../plug-ins/common/lens.c:931
+msgid "_Main:"
+msgstr "_Principal:"
+
+#  Edges toggle box
+#: ../plug-ins/common/lens.c:945
+msgid "_Edge:"
+msgstr "_Vora:"
+
+#: ../plug-ins/common/lens.c:959 ../plug-ins/flame/flame.c:1209
+msgid "_Zoom:"
+msgstr "A_mpliació:"
+
+#: ../plug-ins/common/lens.c:973
+msgid "_Brighten:"
+msgstr "_Lluentor:"
+
+#: ../plug-ins/common/lens.c:987
+msgid "_X shift:"
+msgstr "Despl. _X:"
+
+#: ../plug-ins/common/lens.c:1001
+msgid "_Y shift:"
+msgstr "Despl. _Y:"
 
 #: ../plug-ins/common/lic.c:566 ../plug-ins/common/lic.c:641
 msgid "Van Gogh (LIC)"
@@ -5353,12 +5350,12 @@ msgid "Reduce image to pure red, green, and blue"
 msgstr "Redueix la imatge en colors vermells, verd i blaus purs"
 
 #: ../plug-ins/common/max_rgb.c:95
-msgid "_Maximum RGB..."
-msgstr "RGB _màxim..."
+msgid "Ma_ximum RGB..."
+msgstr "RGB mà_xim..."
 
 #: ../plug-ins/common/max_rgb.c:134
 msgid "Can only operate on RGB drawables."
-msgstr "Només es pot operar en dibuixables RGB."
+msgstr "Només funciona en imatges RGB."
 
 #: ../plug-ins/common/max_rgb.c:234
 msgid "Max RGB"
@@ -5431,7 +5428,7 @@ msgstr "_Angle:"
 #  * transparency & just use the full palette
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/mng.c:498 ../plug-ins/common/png.c:1638
+#: ../plug-ins/common/mng.c:498 ../plug-ins/common/png.c:1652
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "No s'ha pogut desar la transparència sense pèrdues. Es desarà l'opacitat."
@@ -5502,13 +5499,13 @@ msgstr "Substitueix"
 
 #: ../plug-ins/common/mng.c:1445
 msgid "Default frame disposal:"
-msgstr "Disposició del marc per defecte:"
+msgstr "Disposició per defecte dels fotogrames:"
 
 #: ../plug-ins/common/mng.c:1457
 msgid "PNG compression level:"
 msgstr "Nivell de compressió PNG:"
 
-#: ../plug-ins/common/mng.c:1465 ../plug-ins/common/png.c:1786
+#: ../plug-ins/common/mng.c:1465 ../plug-ins/common/png.c:1799
 msgid "Choose a high compression level for small file size"
 msgstr "Escull un nivell de compressió alt per a una mida de fitxer petita"
 
@@ -5530,7 +5527,7 @@ msgstr "Bucle"
 
 #: ../plug-ins/common/mng.c:1526
 msgid "Default frame delay:"
-msgstr "Retard per defecte del marc:"
+msgstr "Retard per defecte entre fotogrames:"
 
 #: ../plug-ins/common/mng.c:1599
 msgid "MNG animation"
@@ -5548,13 +5545,13 @@ msgstr "_Mosaic..."
 #. progress bar for gradient finding
 #: ../plug-ins/common/mosaic.c:505
 msgid "Finding edges"
-msgstr "S'està trobant les vores..."
+msgstr "S'estan trobant les vores"
 
 #  Progress bar for rendering tiles
 #. Progress bar for rendering tiles
 #: ../plug-ins/common/mosaic.c:559
 msgid "Rendering tiles"
-msgstr "S'està composant els mosaics..."
+msgstr "S'està composant els mosaics"
 
 #: ../plug-ins/common/mosaic.c:592
 msgid "Mosaic"
@@ -5723,7 +5720,7 @@ msgid "C_ell size:"
 msgstr "Mida de la c_el·la:"
 
 #. screen settings
-#: ../plug-ins/common/newsprint.c:1300 ../plug-ins/gflare/gflare.c:559
+#: ../plug-ins/common/newsprint.c:1300 ../plug-ins/gflare/gflare.c:555
 msgid "Screen"
 msgstr "Pantalla"
 
@@ -5756,7 +5753,7 @@ msgid "_Factory Defaults"
 msgstr "Con_figuració original"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1443 ../plug-ins/gfig/gfig-dialog.c:1266
+#: ../plug-ins/common/newsprint.c:1443 ../plug-ins/gfig/gfig-dialog.c:1254
 msgid "Antialiasing"
 msgstr "Suavitzat"
 
@@ -5773,28 +5770,28 @@ msgstr "Filtre navalla suïssa no-lineal"
 msgid "_NL Filter..."
 msgstr "Filtre _NL..."
 
-#: ../plug-ins/common/nlfilt.c:955 ../plug-ins/common/nlfilt.c:1018
+#: ../plug-ins/common/nlfilt.c:954 ../plug-ins/common/nlfilt.c:1017
 msgid "NL Filter"
 msgstr "Filtre NL"
 
-#: ../plug-ins/common/nlfilt.c:1046
+#: ../plug-ins/common/nlfilt.c:1045
 msgid "Filter"
 msgstr "Filtre"
 
-#: ../plug-ins/common/nlfilt.c:1050
+#: ../plug-ins/common/nlfilt.c:1049
 msgid "_Alpha trimmed mean"
 msgstr "Mitja retallada d'_alfa"
 
 # era: msgstr "Principal retallat _alfa"
-#: ../plug-ins/common/nlfilt.c:1052
+#: ../plug-ins/common/nlfilt.c:1051
 msgid "Op_timal estimation"
 msgstr "Estimació òp_tima"
 
-#: ../plug-ins/common/nlfilt.c:1054
+#: ../plug-ins/common/nlfilt.c:1053
 msgid "_Edge enhancement"
 msgstr "Millora de les vor_es"
 
-#: ../plug-ins/common/nlfilt.c:1079
+#: ../plug-ins/common/nlfilt.c:1078
 msgid "A_lpha:"
 msgstr "A_lfa:"
 
@@ -5839,35 +5836,35 @@ msgstr "Millora la brillantor de la imatge"
 msgid "Normalizing"
 msgstr "S'està normalitzant"
 
-#: ../plug-ins/common/nova.c:167
+#: ../plug-ins/common/nova.c:168
 msgid "Add a starburst to the image"
 msgstr "Afegeix una estrella supernova a la imatge"
 
-#: ../plug-ins/common/nova.c:176
+#: ../plug-ins/common/nova.c:177
 msgid "Su_pernova..."
 msgstr "Su_pernova..."
 
-#: ../plug-ins/common/nova.c:260
+#: ../plug-ins/common/nova.c:261
 msgid "Rendering supernova"
 msgstr "S'està generant la supernova"
 
-#: ../plug-ins/common/nova.c:303
+#: ../plug-ins/common/nova.c:304
 msgid "Supernova"
 msgstr "Supernova"
 
-#: ../plug-ins/common/nova.c:347
+#: ../plug-ins/common/nova.c:348
 msgid "Supernova Color Picker"
 msgstr "Seleccionador de color supernova"
 
-#: ../plug-ins/common/nova.c:376
+#: ../plug-ins/common/nova.c:377
 msgid "_Spokes:"
 msgstr "Rajo_s:"
 
-#: ../plug-ins/common/nova.c:391
+#: ../plug-ins/common/nova.c:392
 msgid "R_andom hue:"
 msgstr "To _aleatori:"
 
-#: ../plug-ins/common/nova.c:443
+#: ../plug-ins/common/nova.c:444
 msgid "Center of Nova"
 msgstr "Centre de la supernova"
 
@@ -5905,7 +5902,7 @@ msgstr "Divisió"
 
 #: ../plug-ins/common/papertile.c:299
 msgid "Fractional Pixels"
-msgstr "Píxels fraccionats"
+msgstr "Píxels fraccionaris"
 
 #: ../plug-ins/common/papertile.c:304
 msgid "_Background"
@@ -5933,7 +5930,7 @@ msgstr "_Màxim (%):"
 
 #: ../plug-ins/common/papertile.c:349
 msgid "_Wrap around"
-msgstr "_Torna a començar"
+msgstr "Dóna la _volta"
 
 # era: msgstr "_Ajusta l'entorn"
 #: ../plug-ins/common/papertile.c:359
@@ -5983,7 +5980,8 @@ msgstr "Patró del GIMP"
 #: ../plug-ins/common/pat.c:358
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Hi ha una cadena de text UTF-8 invàlida al fitxer de patró '%s'."
+msgstr ""
+"S'ha trobat una cadena de text UTF-8 invàlida al fitxer del patró '%s'."
 
 #: ../plug-ins/common/pat.c:513
 msgid "Save as Pattern"
@@ -6005,7 +6003,7 @@ msgstr "'%s': no és un fitxer PCX"
 
 #: ../plug-ins/common/pcx.c:380
 msgid "Unusual PCX flavour, giving up"
-msgstr "El tipus de fitxer PCX no és el normal. No se seguirà."
+msgstr "El tipus de fitxer PCX no és el normal. No se seguirà"
 
 #: ../plug-ins/common/photocopy.c:155
 msgid "Simulate color distortion produced by a copy machine"
@@ -6022,7 +6020,7 @@ msgstr "Fotocòpia"
 #: ../plug-ins/common/photocopy.c:890 ../plug-ins/common/sharpen.c:514
 #: ../plug-ins/common/softglow.c:695
 msgid "_Sharpness:"
-msgstr "Afila_ment:"
+msgstr "De_finició:"
 
 #: ../plug-ins/common/photocopy.c:904
 msgid "Percent _black:"
@@ -6033,8 +6031,8 @@ msgid "Percent _white:"
 msgstr "Percentatge de _blanc:"
 
 #: ../plug-ins/common/pix.c:140 ../plug-ins/common/pix.c:157
-msgid "Alias|Wavefront PIX image"
-msgstr "Imatge PIX d'Alias|Wavefront"
+msgid "Alias Pix image"
+msgstr "Imatge Alias Pix"
 
 #: ../plug-ins/common/pixelize.c:164
 msgid "Simplify image into an array of solid-colored squares"
@@ -6107,8 +6105,8 @@ msgstr "No s'ha torbat cap connector"
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
-msgstr[0] "S'han trobat %d connectors"
-msgstr[1] ""
+msgstr[0] "S'ha trobat %d connector"
+msgstr[1] "S'han trobat %d connectors"
 
 #: ../plug-ins/common/plugin-browser.c:529
 msgid "No matches"
@@ -6146,24 +6144,24 @@ msgstr "Visualitza com a llista"
 msgid "Tree View"
 msgstr "Visualitza com a arbre"
 
-#: ../plug-ins/common/png.c:261 ../plug-ins/common/png.c:282
-#: ../plug-ins/common/png.c:304 ../plug-ins/common/png.c:323
+#: ../plug-ins/common/png.c:259 ../plug-ins/common/png.c:280
+#: ../plug-ins/common/png.c:302 ../plug-ins/common/png.c:321
 msgid "PNG image"
 msgstr "Imatge PNG"
 
-#: ../plug-ins/common/png.c:688
+#: ../plug-ins/common/png.c:633
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
-msgstr "S'ha produït un error en llegir '%s'. Potser el fitxer està corromput."
+msgstr "S'ha produït un error en llegir '%s'. Potser el fitxer està malmès?"
 
 #  Aie! Unknown type
 #. Aie! Unknown type
-#: ../plug-ins/common/png.c:816
+#: ../plug-ins/common/png.c:761
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "No es coneix el model de color del fitxer PNG '%s'."
 
-#: ../plug-ins/common/png.c:870
+#: ../plug-ins/common/png.c:815
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -6171,60 +6169,60 @@ msgstr ""
 "El fitxer PNG especifica un desplaçament que ha causat que la capa es "
 "posicioni fora de la imatge."
 
-#: ../plug-ins/common/png.c:1206
+#: ../plug-ins/common/png.c:1151
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "S'ha produït un error en desar '%s'. No s'ha pogut desar la imatge."
 
-#: ../plug-ins/common/png.c:1664
+#: ../plug-ins/common/png.c:1677
 msgid "Save as PNG"
 msgstr "Desa com a PNG"
 
-#: ../plug-ins/common/png.c:1695
+#: ../plug-ins/common/png.c:1708
 msgid "_Interlacing (Adam7)"
 msgstr "_Entrellaçat (Adam7)"
 
-#: ../plug-ins/common/png.c:1706
+#: ../plug-ins/common/png.c:1719
 msgid "Save _background color"
 msgstr "Desa el color de _fons"
 
-#: ../plug-ins/common/png.c:1714
+#: ../plug-ins/common/png.c:1727
 msgid "Save _gamma"
 msgstr "Desa la _gamma"
 
-#: ../plug-ins/common/png.c:1724
+#: ../plug-ins/common/png.c:1737
 msgid "Save layer o_ffset"
 msgstr "Desa el des_plaçament de la capa"
 
-#: ../plug-ins/common/png.c:1733
+#: ../plug-ins/common/png.c:1746
 msgid "Save _resolution"
 msgstr "Desa la _resolució"
 
-#: ../plug-ins/common/png.c:1743
+#: ../plug-ins/common/png.c:1756
 msgid "Save creation _time"
 msgstr "Desa el momen_t de creació"
 
-#: ../plug-ins/common/png.c:1752
+#: ../plug-ins/common/png.c:1765
 msgid "Save comme_nt"
 msgstr "Desa el come_ntari"
 
-#: ../plug-ins/common/png.c:1768
+#: ../plug-ins/common/png.c:1781
 msgid "Save color _values from transparent pixels"
 msgstr "Desa els _valors de color dels píxels transparents"
 
-#: ../plug-ins/common/png.c:1782
+#: ../plug-ins/common/png.c:1795
 msgid "Co_mpression level:"
 msgstr "Nivell de co_mpressió:"
 
-#: ../plug-ins/common/png.c:1800
+#: ../plug-ins/common/png.c:1813
 msgid "_Load Defaults"
 msgstr "Carrega va_lors per defecte"
 
-#: ../plug-ins/common/png.c:1808
+#: ../plug-ins/common/png.c:1821
 msgid "S_ave Defaults"
 msgstr "De_sa valors per defecte"
 
-#: ../plug-ins/common/png.c:1917
+#: ../plug-ins/common/png.c:1930
 msgid "Could not load PNG defaults"
 msgstr "No s'ha pogut carregar la configuració predeterminada de PNG"
 
@@ -6368,13 +6366,13 @@ msgstr "%s-%s"
 #: ../plug-ins/common/poppler.c:454 ../plug-ins/common/postscript.c:1100
 #, c-format
 msgid "%s-pages"
-msgstr "%s-pages"
+msgstr "%s-pàgines"
 
 #: ../plug-ins/common/poppler.c:650
 msgid "Import from PDF"
 msgstr "Importa d'un PDF"
 
-#: ../plug-ins/common/poppler.c:655 ../plug-ins/common/postscript.c:3032
+#: ../plug-ins/common/poppler.c:655 ../plug-ins/common/postscript.c:3048
 msgid "_Import"
 msgstr "_Importa"
 
@@ -6402,7 +6400,7 @@ msgstr "Document PostScript"
 
 #: ../plug-ins/common/postscript.c:607 ../plug-ins/common/postscript.c:696
 msgid "Encapsulated PostScript image"
-msgstr "Imatge Postscript encapsolada"
+msgstr "Imatge PostScript encapsulada"
 
 #: ../plug-ins/common/postscript.c:627
 msgid "PDF document"
@@ -6431,113 +6429,113 @@ msgstr ""
 "li al GIMP on es troba.\n"
 "(%s)"
 
-#: ../plug-ins/common/postscript.c:1886 ../plug-ins/common/tiff.c:888
+#: ../plug-ins/common/postscript.c:1886 ../plug-ins/common/tiff.c:895
 #, c-format
 msgid "Page %d"
 msgstr "Pàgina %d"
 
-#: ../plug-ins/common/postscript.c:2538 ../plug-ins/common/postscript.c:2671
-#: ../plug-ins/common/postscript.c:2823 ../plug-ins/common/postscript.c:2952
+#: ../plug-ins/common/postscript.c:2554 ../plug-ins/common/postscript.c:2687
+#: ../plug-ins/common/postscript.c:2839 ../plug-ins/common/postscript.c:2968
 #: ../plug-ins/common/sunras.c:1446 ../plug-ins/common/sunras.c:1554
 #: ../plug-ins/fits/fits.c:828 ../plug-ins/fits/fits.c:952
 msgid "Write error occurred"
 msgstr "S'ha produït un error d'escriptura"
 
-#: ../plug-ins/common/postscript.c:3027
+#: ../plug-ins/common/postscript.c:3043
 msgid "Import from PostScript"
 msgstr "Importa del PostScript"
 
 #. Rendering
-#: ../plug-ins/common/postscript.c:3068
+#: ../plug-ins/common/postscript.c:3084
 msgid "Rendering"
 msgstr "S'està generant la imatge"
 
 # era: msgstr "S'està generant una visualització realista"
 #. Resolution
-#: ../plug-ins/common/postscript.c:3084 ../plug-ins/common/svg.c:871
+#: ../plug-ins/common/postscript.c:3100 ../plug-ins/common/svg.c:871
 #: ../plug-ins/common/wmf.c:670
 msgid "Resolution:"
 msgstr "Resolució:"
 
-#: ../plug-ins/common/postscript.c:3114
+#: ../plug-ins/common/postscript.c:3130
 msgid "Pages:"
 msgstr "Pàgines:"
 
-#: ../plug-ins/common/postscript.c:3121
+#: ../plug-ins/common/postscript.c:3137
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr "Pàgines a carregar (p.e. 1-4 o 1,3,5-7)"
+msgstr "Pàgines a carregar (p.ex. 1-4 o 1,3,5-7)"
 
-#: ../plug-ins/common/postscript.c:3125
+#: ../plug-ins/common/postscript.c:3141
 #: ../plug-ins/common/spheredesigner.c:2645
 msgid "Layers"
 msgstr "Capes"
 
-#: ../plug-ins/common/postscript.c:3127
+#: ../plug-ins/common/postscript.c:3143
 msgid "Images"
 msgstr "Imatge"
 
-#: ../plug-ins/common/postscript.c:3130
+#: ../plug-ins/common/postscript.c:3146
 msgid "Open as"
 msgstr "Obre com a"
 
-#: ../plug-ins/common/postscript.c:3134
+#: ../plug-ins/common/postscript.c:3150
 msgid "Try Bounding Box"
 msgstr "Intenta delimitar el quadre"
 
 #. Colouring
-#: ../plug-ins/common/postscript.c:3147
+#: ../plug-ins/common/postscript.c:3163
 msgid "Coloring"
 msgstr "Acoloriment"
 
 # era: msgstr "S'està acolorint"
-#: ../plug-ins/common/postscript.c:3151
+#: ../plug-ins/common/postscript.c:3167
 msgid "B/W"
 msgstr "B/N"
 
-#: ../plug-ins/common/postscript.c:3152 ../plug-ins/rcm/rcm_dialog.c:419
+#: ../plug-ins/common/postscript.c:3168 ../plug-ins/rcm/rcm_dialog.c:419
 msgid "Gray"
 msgstr "Gris"
 
-#: ../plug-ins/common/postscript.c:3153 ../plug-ins/common/xpm.c:468
+#: ../plug-ins/common/postscript.c:3169 ../plug-ins/common/xpm.c:468
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:151
 msgid "Color"
 msgstr "Color"
 
-#: ../plug-ins/common/postscript.c:3154 ../plug-ins/fits/fits.c:1007
+#: ../plug-ins/common/postscript.c:3170 ../plug-ins/fits/fits.c:1007
 msgid "Automatic"
 msgstr "Automàtic"
 
-#: ../plug-ins/common/postscript.c:3164
+#: ../plug-ins/common/postscript.c:3180
 msgid "Text antialiasing"
 msgstr "Suavitza les vores del text"
 
-#: ../plug-ins/common/postscript.c:3169 ../plug-ins/common/postscript.c:3181
+#: ../plug-ins/common/postscript.c:3185 ../plug-ins/common/postscript.c:3197
 msgid "Weak"
 msgstr "Feble"
 
-#: ../plug-ins/common/postscript.c:3170 ../plug-ins/common/postscript.c:3182
+#: ../plug-ins/common/postscript.c:3186 ../plug-ins/common/postscript.c:3198
 msgid "Strong"
 msgstr "Fort"
 
-#: ../plug-ins/common/postscript.c:3176
+#: ../plug-ins/common/postscript.c:3192
 msgid "Graphic antialiasing"
 msgstr "Suavitza les vores de la imatge"
 
-#: ../plug-ins/common/postscript.c:3254
+#: ../plug-ins/common/postscript.c:3270
 msgid "Save as PostScript"
 msgstr "Desa com a PostScript"
 
 #. Image Size
-#: ../plug-ins/common/postscript.c:3285
+#: ../plug-ins/common/postscript.c:3301
 msgid "Image Size"
 msgstr "Mida de la imatge"
 
-#: ../plug-ins/common/postscript.c:3334
+#: ../plug-ins/common/postscript.c:3350
 msgid "_Keep aspect ratio"
 msgstr "_Conserva la relació d'aspecte"
 
-#: ../plug-ins/common/postscript.c:3340
+#: ../plug-ins/common/postscript.c:3356
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -6546,36 +6544,36 @@ msgstr ""
 "donada sense canviar la relació d'aspecte."
 
 #. Unit
-#: ../plug-ins/common/postscript.c:3349
+#: ../plug-ins/common/postscript.c:3366
 msgid "Unit"
 msgstr "Unitat"
 
-#: ../plug-ins/common/postscript.c:3353
+#: ../plug-ins/common/postscript.c:3370
 msgid "_Inch"
 msgstr "_Polzada"
 
-#: ../plug-ins/common/postscript.c:3354
+#: ../plug-ins/common/postscript.c:3371
 msgid "_Millimeter"
 msgstr "_Mil·límetre"
 
 #. Format
-#: ../plug-ins/common/postscript.c:3380
+#: ../plug-ins/common/postscript.c:3397
 msgid "Output"
 msgstr "Sortida"
 
-#: ../plug-ins/common/postscript.c:3386
+#: ../plug-ins/common/postscript.c:3403
 msgid "_PostScript level 2"
-msgstr "_Postscript nivell 2"
+msgstr "_PostScript nivell 2"
 
-#: ../plug-ins/common/postscript.c:3395
+#: ../plug-ins/common/postscript.c:3412
 msgid "_Encapsulated PostScript"
-msgstr "Postscript _encapsulat"
+msgstr "PostScript _encapsulat"
 
-#: ../plug-ins/common/postscript.c:3404
+#: ../plug-ins/common/postscript.c:3421
 msgid "P_review"
 msgstr "P_revisualitza"
 
-#: ../plug-ins/common/postscript.c:3425
+#: ../plug-ins/common/postscript.c:3442
 msgid "Preview _size:"
 msgstr "Mida de previ_sualització:"
 
@@ -6631,24 +6629,24 @@ msgstr ""
 "No s'ha pogut desar '%s'. El format de fitxer psd no suporta imatges amb "
 "capes de més de 30000 píxels d'amplada o alçada."
 
-#: ../plug-ins/common/psp.c:359 ../plug-ins/common/psp.c:383
+#: ../plug-ins/common/psp.c:356 ../plug-ins/common/psp.c:380
 msgid "Paint Shop Pro image"
 msgstr "Imatge del Paint Shop Pro"
 
-#: ../plug-ins/common/psp.c:400
+#: ../plug-ins/common/psp.c:397
 msgid "Save as PSP"
 msgstr "Desa com a PSP"
 
 #. file save type
-#: ../plug-ins/common/psp.c:417
+#: ../plug-ins/common/psp.c:414
 msgid "Data Compression"
 msgstr "Compressió de dades"
 
-#: ../plug-ins/common/psp.c:422
+#: ../plug-ins/common/psp.c:419
 msgid "RLE"
 msgstr "RLE"
 
-#: ../plug-ins/common/psp.c:423
+#: ../plug-ins/common/psp.c:420
 msgid "LZ77"
 msgstr "LZ77"
 
@@ -6709,77 +6707,85 @@ msgstr "R_epeteix:"
 msgid "Number of times to apply filter"
 msgstr "Nombre de vegades que cal aplicar el filtre"
 
-#: ../plug-ins/common/raw.c:178 ../plug-ins/common/raw.c:193
+#: ../plug-ins/common/raw.c:179 ../plug-ins/common/raw.c:194
 msgid "Raw image data"
 msgstr "Dades d'imatge sense format"
 
-#: ../plug-ins/common/raw.c:925
+#: ../plug-ins/common/raw.c:959
 msgid "Load Image from Raw Data"
 msgstr "Carrega una imatge des de dades sense format"
 
 # era: msgstr "Carregador d'imatge Raw"
-#: ../plug-ins/common/raw.c:958
+#: ../plug-ins/common/raw.c:992
 msgid "Image"
 msgstr "Imatge"
 
-#: ../plug-ins/common/raw.c:970
+#: ../plug-ins/common/raw.c:1003
+msgid "RGB Alpha"
+msgstr "RGB amb Alfa"
+
+#: ../plug-ins/common/raw.c:1004
 msgid "Planar RGB"
 msgstr "RGB planar"
 
-#: ../plug-ins/common/raw.c:971
+#: ../plug-ins/common/raw.c:1005
 msgid "Indexed"
 msgstr "Indexat"
 
-#: ../plug-ins/common/raw.c:976
+#: ../plug-ins/common/raw.c:1006
+msgid "Indexed Alpha"
+msgstr "Indexat amb Alfa"
+
+#: ../plug-ins/common/raw.c:1011
 msgid "Image _Type:"
 msgstr "_Tipus d'imatge:"
 
-#: ../plug-ins/common/raw.c:1026
+#: ../plug-ins/common/raw.c:1061
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../plug-ins/common/raw.c:1036 ../plug-ins/common/raw.c:1135
+#: ../plug-ins/common/raw.c:1071 ../plug-ins/common/raw.c:1170
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normal)"
 
-#: ../plug-ins/common/raw.c:1037 ../plug-ins/common/raw.c:1137
+#: ../plug-ins/common/raw.c:1072 ../plug-ins/common/raw.c:1172
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (estil BMP)"
 
-#: ../plug-ins/common/raw.c:1042
+#: ../plug-ins/common/raw.c:1077
 msgid "_Palette Type:"
 msgstr "Tipus de _paleta"
 
-#: ../plug-ins/common/raw.c:1053
+#: ../plug-ins/common/raw.c:1088
 msgid "Off_set:"
 msgstr "De_splaçament:"
 
-#: ../plug-ins/common/raw.c:1065
+#: ../plug-ins/common/raw.c:1100
 msgid "Select Palette File"
 msgstr "Selecció del fitxer amb la paleta de colors"
 
-#: ../plug-ins/common/raw.c:1071
+#: ../plug-ins/common/raw.c:1106
 msgid "Pal_ette File:"
-msgstr "Fitxer amb la pal_eta:"
+msgstr "Fitxer pal_eta:"
 
-#: ../plug-ins/common/raw.c:1099
+#: ../plug-ins/common/raw.c:1134
 msgid "Raw Image Save"
 msgstr "Desa imatge sense format"
 
 # era: msgstr "Desa imatge Raw"
-#: ../plug-ins/common/raw.c:1121
+#: ../plug-ins/common/raw.c:1156
 msgid "RGB Save Type"
 msgstr "Tipus de desat RGB"
 
-#: ../plug-ins/common/raw.c:1125
+#: ../plug-ins/common/raw.c:1160
 msgid "Standard (R,G,B)"
 msgstr "Estàndard (R,G,B)"
 
-#: ../plug-ins/common/raw.c:1126
+#: ../plug-ins/common/raw.c:1161
 msgid "Planar (RRR,GGG,BBB)"
-msgstr "Planar (RRR,GGG,BBB)"
+msgstr "Plana (RRR,GGG,BBB)"
 
-#: ../plug-ins/common/raw.c:1131
+#: ../plug-ins/common/raw.c:1166
 msgid "Indexed Palette Type"
 msgstr "Tipus de paleta indexada"
 
@@ -6790,22 +6796,22 @@ msgstr ""
 
 #: ../plug-ins/common/redeye.c:118
 msgid "_Red Eye Removal..."
-msgstr "Elimina _ulls vermells"
+msgstr "Elimina _ulls vermells..."
 
-#: ../plug-ins/common/redeye.c:146
+#: ../plug-ins/common/redeye.c:145
 msgid "Red Eye Removal"
 msgstr "Elimina ulls vermells"
 
-#: ../plug-ins/common/redeye.c:180
+#: ../plug-ins/common/redeye.c:179
 msgid "Threshold for the red eye color to remove."
 msgstr "Valor del color de l'ull vermell que es vol eliminar."
 
-#: ../plug-ins/common/redeye.c:183
+#: ../plug-ins/common/redeye.c:184
 msgid "Manually selecting the eyes may improve the results."
 msgstr "Seleccionant els ulls manualment millorarà el resultat."
 
 # era: msgstr "Color a _Alfa"
-#: ../plug-ins/common/redeye.c:322
+#: ../plug-ins/common/redeye.c:317
 msgid "Removing red eye"
 msgstr "S'està eliminant els ulls vermells"
 
@@ -6865,46 +6871,46 @@ msgstr "Desplaça els píxels seguint un patró en forma d'ona"
 msgid "_Ripple..."
 msgstr "_Onades del mar..."
 
-#: ../plug-ins/common/ripple.c:220
+#: ../plug-ins/common/ripple.c:226
 msgid "Rippling"
 msgstr "S'estan fent les onades de mar"
 
-#: ../plug-ins/common/ripple.c:462
+#: ../plug-ins/common/ripple.c:468
 msgid "Ripple"
 msgstr "Onades del mar"
 
-#: ../plug-ins/common/ripple.c:519
+#: ../plug-ins/common/ripple.c:525
 msgid "_Retain tilability"
 msgstr "_Reté el mosaic"
 
 #  Edges toggle box
 #. Edges toggle box
-#: ../plug-ins/common/ripple.c:553
+#: ../plug-ins/common/ripple.c:559
 msgid "Edges"
 msgstr "Vores"
 
-#: ../plug-ins/common/ripple.c:559
+#: ../plug-ins/common/ripple.c:565
 msgid "_Blank"
 msgstr "_Espai buït"
 
 #. Wave toggle box
-#: ../plug-ins/common/ripple.c:581
+#: ../plug-ins/common/ripple.c:587
 msgid "Wave Type"
 msgstr "Tipus d'onada"
 
-#: ../plug-ins/common/ripple.c:585
+#: ../plug-ins/common/ripple.c:591
 msgid "Saw_tooth"
 msgstr "Den_t de serra"
 
-#: ../plug-ins/common/ripple.c:586
+#: ../plug-ins/common/ripple.c:592
 msgid "S_ine"
 msgstr "S_inus"
 
-#: ../plug-ins/common/ripple.c:609
+#: ../plug-ins/common/ripple.c:615
 msgid "_Period:"
 msgstr "_Període:"
 
-#: ../plug-ins/common/ripple.c:622
+#: ../plug-ins/common/ripple.c:628
 msgid "A_mplitude:"
 msgstr "A_mplitud:"
 
@@ -6939,7 +6945,7 @@ msgstr "Acoloreix la mostra"
 
 #: ../plug-ins/common/sample_colorize.c:1319
 msgid "Get _Sample Colors"
-msgstr "Obté color_s de mostra"
+msgstr "Obtén color_s de mostra"
 
 #. layer combo_box (Dst)
 #: ../plug-ins/common/sample_colorize.c:1348
@@ -6985,7 +6991,7 @@ msgstr "Nivells de sortida:"
 #. check button
 #: ../plug-ins/common/sample_colorize.c:1641
 msgid "Hold intensity"
-msgstr "Reté intensitat"
+msgstr "Mantén la intensitat"
 
 #  check button
 #. check button
@@ -7009,9 +7015,10 @@ msgstr "Suavitza les mostres"
 msgid "Sample analyze"
 msgstr "Analitza la mostra"
 
+# per fer: (Quim) no sé si és correcta
 #: ../plug-ins/common/sample_colorize.c:3031
 msgid "Remap colorized"
-msgstr "Torna a fer el mapa acolorit"
+msgstr "Aplica mapa de colors"
 
 #: ../plug-ins/common/scatter_hsv.c:105
 msgid "Randomize hue/saturation/value independently"
@@ -7083,7 +7090,7 @@ msgstr "_decora la finestra"
 
 #: ../plug-ins/common/screenshot.c:859
 msgid "Take a screenshot of the entire _screen"
-msgstr "Obté un captura de la pantalla _sencera"
+msgstr "Obtén un captura de la pantalla _sencera"
 
 #: ../plug-ins/common/screenshot.c:877
 msgid "Select a _region to grab"
@@ -7155,12 +7162,12 @@ msgstr "S'està semiaplanant"
 #: ../plug-ins/common/sharpen.c:115
 msgid "Make image sharper (less powerful than Unsharp Mask)"
 msgstr ""
-"Fa la imatge més afilada (tot i que no és tant poderosa com la màscara de "
-"desafilar)"
+"Ressalta les vores de la imatge (tot i que no es pot aconseguir el mateix i "
+"més amb Difuminat amb màscara)"
 
 #: ../plug-ins/common/sharpen.c:122
 msgid "_Sharpen..."
-msgstr "A_fila..."
+msgstr "Re_ssalta les vores..."
 
 #  * Let the user know what we're doing...
 #.
@@ -7168,11 +7175,11 @@ msgstr "A_fila..."
 #.
 #: ../plug-ins/common/sharpen.c:309
 msgid "Sharpening"
-msgstr "S'està afilant"
+msgstr "S'està ressaltant les vores de la imatge"
 
 #: ../plug-ins/common/sharpen.c:478
 msgid "Sharpen"
-msgstr "Afila"
+msgstr "Ressalta les vores"
 
 #: ../plug-ins/common/shift.c:103
 msgid "Shift each row of pixels by a random amount"
@@ -7244,9 +7251,10 @@ msgstr "Paràmetres de càlcul"
 msgid "R_andom seed:"
 msgstr "Llavor _aleatòria:"
 
+# Quim: no és una pregunta, és un checkbox
 #: ../plug-ins/common/sinus.c:750
 msgid "_Force tiling?"
-msgstr "Voleu _forçar en mosaic?"
+msgstr "C_omposa un mosaic"
 
 #: ../plug-ins/common/sinus.c:763
 msgid "_Ideal"
@@ -7300,7 +7308,7 @@ msgstr "S_egon color:"
 
 #: ../plug-ins/common/sinus.c:895
 msgid "Blend Settings"
-msgstr "Paràmetres de la mescla"
+msgstr "Paràmetres del degradat"
 
 # era: msgstr "Barreja els paràmetres"
 #: ../plug-ins/common/sinus.c:908
@@ -7321,7 +7329,7 @@ msgstr "_Exponent:"
 
 #: ../plug-ins/common/sinus.c:932
 msgid "_Blend"
-msgstr "_Barreja"
+msgstr "_Degradat"
 
 #: ../plug-ins/common/sinus.c:1049
 msgid "Do _preview"
@@ -7337,7 +7345,7 @@ msgstr "Pale_ta suau..."
 
 #: ../plug-ins/common/smooth_palette.c:179
 msgid "Deriving smooth palette"
-msgstr "S'està calculant la paleta suau..."
+msgstr "S'està calculant la paleta suau"
 
 #: ../plug-ins/common/smooth_palette.c:412
 msgid "Smooth Palette"
@@ -7428,143 +7436,143 @@ msgstr "Lluentor suau"
 msgid "_Glow radius:"
 msgstr "Radi de la _lluentor:"
 
-#: ../plug-ins/common/sparkle.c:181
+#: ../plug-ins/common/sparkle.c:180
 msgid "Turn bright spots into starry sparkles"
 msgstr "Converteix les taques de llum en espurnes enlluernadores"
 
-#: ../plug-ins/common/sparkle.c:189
+#: ../plug-ins/common/sparkle.c:188
 msgid "_Sparkle..."
-msgstr "_Llampada..."
+msgstr "E_spurnes..."
 
-#: ../plug-ins/common/sparkle.c:226
+#: ../plug-ins/common/sparkle.c:225
 msgid "Region selected for filter is empty"
 msgstr "La regió seleccionada pel filtre està buida"
 
-#: ../plug-ins/common/sparkle.c:302
+#: ../plug-ins/common/sparkle.c:301
 msgid "Sparkling"
-msgstr "S'està llampant"
+msgstr "S'estan composant les espurnes"
 
-#: ../plug-ins/common/sparkle.c:340
+#: ../plug-ins/common/sparkle.c:339
 msgid "Sparkle"
-msgstr "Llampada"
+msgstr "Espurnes"
 
-#: ../plug-ins/common/sparkle.c:376
+#: ../plug-ins/common/sparkle.c:375
 msgid "Luminosity _threshold:"
 msgstr "Llindar de lluminosi_tat:"
 
-#: ../plug-ins/common/sparkle.c:379
+#: ../plug-ins/common/sparkle.c:378
 msgid "Adjust the luminosity threshold"
 msgstr "Ajusta el llindar de lluminositat"
 
-#: ../plug-ins/common/sparkle.c:389
+#: ../plug-ins/common/sparkle.c:388
 msgid "F_lare intensity:"
 msgstr "I_ntensitat:"
 
-#: ../plug-ins/common/sparkle.c:392
+#: ../plug-ins/common/sparkle.c:391
 msgid "Adjust the flare intensity"
 msgstr "Ajusta la intensitat"
 
-#: ../plug-ins/common/sparkle.c:402
+#: ../plug-ins/common/sparkle.c:401
 msgid "_Spike length:"
-msgstr "L_ongitut de les puntes:"
+msgstr "L_ongitud de les puntes:"
 
-#: ../plug-ins/common/sparkle.c:405
+#: ../plug-ins/common/sparkle.c:404
 msgid "Adjust the spike length"
-msgstr "Ajusta la longitut de les puntes"
+msgstr "Ajusta la longitud de les puntes"
 
-#: ../plug-ins/common/sparkle.c:415
+#: ../plug-ins/common/sparkle.c:414
 msgid "Sp_ike points:"
 msgstr "Nombre de _focus:"
 
-#: ../plug-ins/common/sparkle.c:418
+#: ../plug-ins/common/sparkle.c:417
 msgid "Adjust the number of spikes"
 msgstr "Ajusta el nombre de focus"
 
-#: ../plug-ins/common/sparkle.c:428
+#: ../plug-ins/common/sparkle.c:427
 msgid "Spi_ke angle (-1: random):"
 msgstr "An_gle de les puntes (-1: aleatori):"
 
-#: ../plug-ins/common/sparkle.c:431
+#: ../plug-ins/common/sparkle.c:430
 msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
 msgstr "Ajusta l'angle entre les puntes (-1 per a un angle aleatori)"
 
-#: ../plug-ins/common/sparkle.c:442
+#: ../plug-ins/common/sparkle.c:441
 msgid "Spik_e density:"
 msgstr "D_ensitat de puntes:"
 
-#: ../plug-ins/common/sparkle.c:445
+#: ../plug-ins/common/sparkle.c:444
 msgid "Adjust the spike density"
 msgstr "Ajusta la densitat de puntes"
 
-#: ../plug-ins/common/sparkle.c:455
+#: ../plug-ins/common/sparkle.c:454
 msgid "Tr_ansparency:"
 msgstr "Tr_ansparència:"
 
-#: ../plug-ins/common/sparkle.c:458
+#: ../plug-ins/common/sparkle.c:457
 msgid "Adjust the opacity of the spikes"
 msgstr "Ajusta l'opacitat de les puntes"
 
-#: ../plug-ins/common/sparkle.c:468
+#: ../plug-ins/common/sparkle.c:467
 msgid "_Random hue:"
 msgstr "To aleato_ri:"
 
-#: ../plug-ins/common/sparkle.c:471
+#: ../plug-ins/common/sparkle.c:470
 msgid "Adjust how much the hue should be changed randomly"
 msgstr "Ajusta com canvia aleatòriament el to del color"
 
-#: ../plug-ins/common/sparkle.c:481
+#: ../plug-ins/common/sparkle.c:480
 msgid "Rando_m saturation:"
 msgstr "Saturació a_leatòria:"
 
-#: ../plug-ins/common/sparkle.c:484
+#: ../plug-ins/common/sparkle.c:483
 msgid "Adjust how much the saturation should be changed randomly"
 msgstr "Ajusta com canvia aleatòriament la saturació del color"
 
-#: ../plug-ins/common/sparkle.c:501
+#: ../plug-ins/common/sparkle.c:500
 msgid "_Preserve luminosity"
 msgstr "_Preserva la lluminositat"
 
-#: ../plug-ins/common/sparkle.c:508
+#: ../plug-ins/common/sparkle.c:507
 msgid "Should the luminosity be preserved?"
 msgstr "Cal preservar la lluminositat ?"
 
-#: ../plug-ins/common/sparkle.c:517
+#: ../plug-ins/common/sparkle.c:516
 msgid "In_verse"
 msgstr "In_vers"
 
-#: ../plug-ins/common/sparkle.c:523
+#: ../plug-ins/common/sparkle.c:522
 msgid "Should the effect be inversed?"
-msgstr "Fa l'efecte invers"
+msgstr "Voleu invertir l'efecte?"
 
-#: ../plug-ins/common/sparkle.c:532
+#: ../plug-ins/common/sparkle.c:531
 msgid "A_dd border"
 msgstr "Afegeix una _vora"
 
-#: ../plug-ins/common/sparkle.c:538
+#: ../plug-ins/common/sparkle.c:537
 msgid "Draw a border of spikes around the image"
 msgstr "Dibuixa una vora plena de puntes al voltant de la imatge"
 
-#: ../plug-ins/common/sparkle.c:552
+#: ../plug-ins/common/sparkle.c:551
 msgid "_Natural color"
 msgstr "Color _natural"
 
-#: ../plug-ins/common/sparkle.c:553
+#: ../plug-ins/common/sparkle.c:552
 msgid "_Foreground color"
 msgstr "Color del _primer pla"
 
-#: ../plug-ins/common/sparkle.c:554
+#: ../plug-ins/common/sparkle.c:553
 msgid "_Background color"
 msgstr "Color del _fons"
 
-#: ../plug-ins/common/sparkle.c:561
+#: ../plug-ins/common/sparkle.c:560
 msgid "Use the color of the image"
 msgstr "Utilitza el color de la imatge"
 
-#: ../plug-ins/common/sparkle.c:562
+#: ../plug-ins/common/sparkle.c:561
 msgid "Use the foreground color"
 msgstr "Utilitza el color del primer pla"
 
-#: ../plug-ins/common/sparkle.c:563
+#: ../plug-ins/common/sparkle.c:562
 msgid "Use the background color"
 msgstr "Utilitza el color del fons"
 
@@ -7660,7 +7668,7 @@ msgstr "Diàleg de la selecció del color"
 #. Scale
 #: ../plug-ins/common/spheredesigner.c:2750
 #: ../plug-ins/gimpressionist/paper.c:176
-#: ../plug-ins/ifscompose/ifscompose.c:555
+#: ../plug-ins/ifscompose/ifscompose.c:553
 msgid "Scale:"
 msgstr "Escala:"
 
@@ -7714,7 +7722,7 @@ msgstr "Posició Z:"
 
 #: ../plug-ins/common/spheredesigner.c:2965
 msgid "Rendering sphere"
-msgstr "S'està composant l'esfera..."
+msgstr "S'està composant l'esfera"
 
 #: ../plug-ins/common/spheredesigner.c:3015
 msgid "Create an image of a textured sphere"
@@ -7886,7 +7894,7 @@ msgstr "Ràtio _Y:"
 
 #: ../plug-ins/common/svg.c:866 ../plug-ins/common/wmf.c:665
 msgid "Constrain aspect ratio"
-msgstr "Restringeix la proporció d'aspecte"
+msgstr "Restringeix la relació d'aspecte"
 
 #: ../plug-ins/common/svg.c:877 ../plug-ins/common/wmf.c:676
 #, c-format
@@ -7910,33 +7918,33 @@ msgstr ""
 msgid "Merge imported paths"
 msgstr "Fusiona els camins importats"
 
-#: ../plug-ins/common/tga.c:232 ../plug-ins/common/tga.c:248
+#: ../plug-ins/common/tga.c:229 ../plug-ins/common/tga.c:245
 msgid "TarGA image"
 msgstr "Imatge Targa"
 
-#: ../plug-ins/common/tga.c:425
+#: ../plug-ins/common/tga.c:422
 #, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "No es pot llegir el peu de pàgina de '%s"
 
-#: ../plug-ins/common/tga.c:441
+#: ../plug-ins/common/tga.c:438
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "No es pot llegir l'extensió de '%s'"
 
-#: ../plug-ins/common/tga.c:1189
+#: ../plug-ins/common/tga.c:1186
 msgid "Save as TGA"
 msgstr "Desa com a TGA"
 
 #  rle
 #. rle
-#: ../plug-ins/common/tga.c:1212
+#: ../plug-ins/common/tga.c:1209
 msgid "_RLE compression"
 msgstr "Compressió _RLE"
 
 #  origin
 #. origin
-#: ../plug-ins/common/tga.c:1222
+#: ../plug-ins/common/tga.c:1219
 msgid "Or_igin at bottom left"
 msgstr "Or_igen a baix a l'esquerra"
 
@@ -7968,16 +7976,16 @@ msgstr "Llindar alfa"
 msgid "Threshold:"
 msgstr "Llindar:"
 
-#: ../plug-ins/common/tiff.c:231 ../plug-ins/common/tiff.c:252
-#: ../plug-ins/common/tiff.c:269
+#: ../plug-ins/common/tiff.c:237 ../plug-ins/common/tiff.c:258
+#: ../plug-ins/common/tiff.c:275
 msgid "TIFF image"
 msgstr "Imatge TIFF"
 
-#: ../plug-ins/common/tiff.c:904
+#: ../plug-ins/common/tiff.c:911
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: ../plug-ins/common/tiff.c:913
+#: ../plug-ins/common/tiff.c:920
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -7989,7 +7997,7 @@ msgstr ""
 "gestionar-ne de 8 bits, per tant es convertirà automàticament. Es perdrà "
 "informació a causa d'aquesta conversió."
 
-#: ../plug-ins/common/tiff.c:2085
+#: ../plug-ins/common/tiff.c:2105
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7997,40 +8005,40 @@ msgstr ""
 "El format TIFF només suporta comentaris en\n"
 "codificació ASCII de 7 bits. No es desarà cap comentari."
 
-#: ../plug-ins/common/tiff.c:2248
+#: ../plug-ins/common/tiff.c:2268
 msgid "Save as TIFF"
 msgstr "Desa com a TIFF"
 
 #. compression
-#: ../plug-ins/common/tiff.c:2270
+#: ../plug-ins/common/tiff.c:2290
 msgid "Compression"
 msgstr "Compressió"
 
-#: ../plug-ins/common/tiff.c:2274
+#: ../plug-ins/common/tiff.c:2294
 msgid "_None"
 msgstr "_Cap"
 
-#: ../plug-ins/common/tiff.c:2275
+#: ../plug-ins/common/tiff.c:2295
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/tiff.c:2276
+#: ../plug-ins/common/tiff.c:2296
 msgid "_Pack Bits"
 msgstr "_Paquet de bits"
 
-#: ../plug-ins/common/tiff.c:2277
+#: ../plug-ins/common/tiff.c:2297
 msgid "_Deflate"
 msgstr "_Desinfla"
 
-#: ../plug-ins/common/tiff.c:2278
+#: ../plug-ins/common/tiff.c:2298
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/tiff.c:2287
+#: ../plug-ins/common/tiff.c:2307
 msgid "Save _color values from transparent pixels"
 msgstr "Desa el valor dels _colors dels píxels transparents"
 
-#: ../plug-ins/common/tiff.c:2303 ../plug-ins/common/xbm.c:1213
+#: ../plug-ins/common/tiff.c:2323 ../plug-ins/common/xbm.c:1213
 msgid "Comment:"
 msgstr "Comentari:"
 
@@ -8079,7 +8087,7 @@ msgstr "Redueix i composa un mosaic"
 
 #. Area for buttons etc
 #. Flip
-#: ../plug-ins/common/tileit.c:414 ../plug-ins/ifscompose/ifscompose.c:611
+#: ../plug-ins/common/tileit.c:414 ../plug-ins/ifscompose/ifscompose.c:609
 msgid "Flip"
 msgstr "Inverteix"
 
@@ -8115,15 +8123,16 @@ msgstr "Nombre de segments"
 
 #: ../plug-ins/common/tiler.c:67
 msgid "Alters edges to make the image seamlessly tileable"
-msgstr "Modifica els marges de la imatge perquè se'n pugui fer un mosaic"
+msgstr "Arregla les vores de la imatge perquè se'n pugui fer un mosaic"
 
+# Quim: En el menú filtres - mapa per crear una nova imatge que es pot concatenar amb ella mateixa per crear mosaics
 #: ../plug-ins/common/tiler.c:73
 msgid "_Make Seamless"
-msgstr "_Quadruplica per fer un mosaic"
+msgstr "_Rajola de mosaic"
 
 #: ../plug-ins/common/tiler.c:338
 msgid "Tiler"
-msgstr "Composa mosaics"
+msgstr "Rajola de mosaic"
 
 #: ../plug-ins/common/uniteditor.c:94
 msgid "Saved"
@@ -8180,7 +8189,7 @@ msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
 msgstr ""
-"El símbol de la unitat si en té (p.e. «'» per a les polzades). Feu servir "
+"El símbol de la unitat si en té (p.ex. «'» per a les polzades). Feu servir "
 "l'abreviatura de la unitat si no té un símbol."
 
 #: ../plug-ins/common/uniteditor.c:107
@@ -8189,7 +8198,7 @@ msgstr "Abreviatura"
 
 #: ../plug-ins/common/uniteditor.c:107
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr "L'abreviatura de la unitat (p.e. «cm» per centímetres."
+msgstr "L'abreviatura de la unitat (p.ex. «cm» per centímetres)."
 
 #: ../plug-ins/common/uniteditor.c:109
 msgid "Singular"
@@ -8209,11 +8218,11 @@ msgstr "La forma en plural de la unitat."
 
 #: ../plug-ins/common/uniteditor.c:121
 msgid "Create a new unit from scratch"
-msgstr "Crea una unitat nova des de zero."
+msgstr "Crea una unitat nova des de zero"
 
 #: ../plug-ins/common/uniteditor.c:127
 msgid "Create a new unit using the currently selected unit as template"
-msgstr "Crea una unitat nova a partir de la unitat seleccionada."
+msgstr "Crea una unitat nova a partir de la unitat seleccionada"
 
 #: ../plug-ins/common/uniteditor.c:145
 msgid "Create or alter units used in GIMP"
@@ -8267,13 +8276,13 @@ msgstr "Ompliu tot els camps."
 msgid "Unit Editor"
 msgstr "Gestor d'unitats mètriques"
 
-#: ../plug-ins/common/unsharp.c:131
+#: ../plug-ins/common/unsharp.c:130
 msgid "The most widely useful method for sharpening an image"
-msgstr "La forma més utilitzada per afilar/desafilar una imatge"
+msgstr "La forma més utilitzada per difuminar/desdifuminar una imatge"
 
-#: ../plug-ins/common/unsharp.c:141
+#: ../plug-ins/common/unsharp.c:140
 msgid "_Unsharp Mask..."
-msgstr "Fes la màscara _borrosa..."
+msgstr "Dif_uminat amb màscara..."
 
 #: ../plug-ins/common/unsharp.c:477
 msgid "Merging"
@@ -8281,7 +8290,7 @@ msgstr "S'està combinant"
 
 #: ../plug-ins/common/unsharp.c:644
 msgid "Unsharp Mask"
-msgstr "Fes la màscara borrosa"
+msgstr "Difuminat amb màscara"
 
 #: ../plug-ins/common/video.c:41
 msgid "_Staggered"
@@ -8351,116 +8360,112 @@ msgstr "Inverteix la brillantor de cada píxel"
 
 #: ../plug-ins/common/vinvert.c:104
 msgid "_Value Invert"
-msgstr "Inversió de _valor..."
+msgstr "Inversió de _valor"
 
 #: ../plug-ins/common/vinvert.c:191
 msgid "Value Invert"
 msgstr "Inversió de _valor"
 
-#: ../plug-ins/common/vpropagate.c:192
+#: ../plug-ins/common/vpropagate.c:191
 msgid "More _white (larger value)"
 msgstr "Més _blanc (valor més alt)"
 
-#: ../plug-ins/common/vpropagate.c:195
+#: ../plug-ins/common/vpropagate.c:194
 msgid "More blac_k (smaller value)"
 msgstr "Més negre (valor més bai_x)"
 
 # era: msgstr "Més _negre (valor més bai_x)"
-#: ../plug-ins/common/vpropagate.c:198
+#: ../plug-ins/common/vpropagate.c:197
 msgid "_Middle value to peaks"
 msgstr "Valor _mitjà a pics"
 
-#: ../plug-ins/common/vpropagate.c:201
+#: ../plug-ins/common/vpropagate.c:200
 msgid "_Foreground to peaks"
 msgstr "_Primer pla a pics"
 
-#: ../plug-ins/common/vpropagate.c:204
+#: ../plug-ins/common/vpropagate.c:203
 msgid "O_nly foreground"
 msgstr "_Només el primer pla"
 
-#: ../plug-ins/common/vpropagate.c:207
+#: ../plug-ins/common/vpropagate.c:206
 msgid "Only b_ackground"
 msgstr "Només _el fons"
 
-#: ../plug-ins/common/vpropagate.c:210
+#: ../plug-ins/common/vpropagate.c:209
 msgid "Mor_e opaque"
 msgstr "Més opa_c"
 
-#: ../plug-ins/common/vpropagate.c:213
+#: ../plug-ins/common/vpropagate.c:212
 msgid "More t_ransparent"
 msgstr "Més t_ransparent"
 
-#: ../plug-ins/common/vpropagate.c:236
+#: ../plug-ins/common/vpropagate.c:235
 msgid "Propagate certain colors to neighboring pixels"
 msgstr "Propaga certs colors als píxels veïns"
 
-#: ../plug-ins/common/vpropagate.c:241
+#: ../plug-ins/common/vpropagate.c:240
 msgid "_Value Propagate..."
 msgstr "Filtra el _llindar dels colors..."
 
-#: ../plug-ins/common/vpropagate.c:248
+#: ../plug-ins/common/vpropagate.c:247
 msgid "Shrink darker areas of the image"
 msgstr "Erosiona les àrees fosques de la imatge"
 
-#: ../plug-ins/common/vpropagate.c:253
+#: ../plug-ins/common/vpropagate.c:252
 msgid "E_rode"
 msgstr "E_rosiona"
 
-#: ../plug-ins/common/vpropagate.c:260
+#: ../plug-ins/common/vpropagate.c:259
 msgid "Grow darker areas of the image"
 msgstr "Expandeix les àrees fosques de la imatge"
 
-#: ../plug-ins/common/vpropagate.c:265
+#: ../plug-ins/common/vpropagate.c:264
 msgid "_Dilate"
 msgstr "_Dilata"
 
-#: ../plug-ins/common/vpropagate.c:475
-msgid "Value Propagating"
-msgstr "Propagació de valors"
-
-#: ../plug-ins/common/vpropagate.c:1057
+#: ../plug-ins/common/vpropagate.c:475 ../plug-ins/common/vpropagate.c:1065
 msgid "Value Propagate"
 msgstr "Filtra el llindar dels colors"
 
 #  Parameter settings
 #. Parameter settings
-#: ../plug-ins/common/vpropagate.c:1122
+#: ../plug-ins/common/vpropagate.c:1130
 msgid "Propagate"
 msgstr "Propaga"
 
-#: ../plug-ins/common/vpropagate.c:1135
+#: ../plug-ins/common/vpropagate.c:1143
 msgid "Lower t_hreshold:"
 msgstr "L_lindar més baix:"
 
-#: ../plug-ins/common/vpropagate.c:1147
+#: ../plug-ins/common/vpropagate.c:1155
 msgid "_Upper threshold:"
 msgstr "Llindar més al_t:"
 
-#: ../plug-ins/common/vpropagate.c:1159
+#: ../plug-ins/common/vpropagate.c:1167
 msgid "_Propagating rate:"
 msgstr "Relació de _propagació:"
 
-#: ../plug-ins/common/vpropagate.c:1170
+#: ../plug-ins/common/vpropagate.c:1178
 msgid "To l_eft"
 msgstr "A l'_esquerra"
 
-#: ../plug-ins/common/vpropagate.c:1173
+#: ../plug-ins/common/vpropagate.c:1181
 msgid "To _right"
 msgstr "A la d_reta"
 
-#: ../plug-ins/common/vpropagate.c:1176
+#: ../plug-ins/common/vpropagate.c:1184
 msgid "To _top"
 msgstr "A dal_t"
 
-#: ../plug-ins/common/vpropagate.c:1179
+#: ../plug-ins/common/vpropagate.c:1187
 msgid "To _bottom"
 msgstr "A _baix"
 
-#: ../plug-ins/common/vpropagate.c:1188
+#: ../plug-ins/common/vpropagate.c:1196
 msgid "Propagating _alpha channel"
 msgstr "S'està propagant el canal _alfa"
 
-#: ../plug-ins/common/vpropagate.c:1199
+#: ../plug-ins/common/vpropagate.c:1207
 msgid "Propagating value channel"
 msgstr "S'està propagant el canal del valor"
 
@@ -8483,10 +8488,6 @@ msgstr "Opcions bàsiques"
 #: ../plug-ins/common/warp.c:420
 msgid "Step size:"
 msgstr "Mida del pas:"
-
-#: ../plug-ins/common/warp.c:434 ../plug-ins/ifscompose/ifscompose.c:1212
-msgid "Iterations:"
-msgstr "Iteracions:"
 
 #  Displacement map menu
 #. Displacement map menu
@@ -8511,7 +8512,7 @@ msgid "Smear"
 msgstr "Taca"
 
 #: ../plug-ins/common/warp.c:502 ../plug-ins/fits/fits.c:995
-#: ../plug-ins/flame/flame.c:1147 ../plug-ins/gfig/gfig-dialog.c:1470
+#: ../plug-ins/flame/flame.c:1147 ../plug-ins/gfig/gfig-dialog.c:1458
 msgid "Black"
 msgstr "Negre"
 
@@ -8567,10 +8568,10 @@ msgstr "Menú de selecció del mapa degradat"
 
 #: ../plug-ins/common/warp.c:673
 msgid "Vector mag:"
-msgstr "Magnitut del vector:"
+msgstr "Magnitud del vector:"
 
 #. Angle
-#: ../plug-ins/common/warp.c:688 ../plug-ins/ifscompose/ifscompose.c:569
+#: ../plug-ins/common/warp.c:688 ../plug-ins/ifscompose/ifscompose.c:567
 msgid "Angle:"
 msgstr "Angle:"
 
@@ -8590,7 +8591,7 @@ msgstr "S'està suavitzant el degradat Y"
 #. calculate new X,Y Displacement image maps
 #: ../plug-ins/common/warp.c:1234
 msgid "Finding XY gradient"
-msgstr "S'està cercant el gradient XY"
+msgstr "S'està cercant el degradat XY"
 
 #: ../plug-ins/common/warp.c:1256
 #, c-format
@@ -8778,12 +8779,12 @@ msgstr ""
 msgid "Render Windows Metafile"
 msgstr "Composa un metafitxer del Windows"
 
-#: ../plug-ins/common/wmf.c:947 ../plug-ins/sgi/sgi.c:313
+#: ../plug-ins/common/wmf.c:949 ../plug-ins/sgi/sgi.c:313
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "No s'ha pogut obrir '%s' per escriure-hi."
 
-#: ../plug-ins/common/wmf.c:961
+#: ../plug-ins/common/wmf.c:963
 msgid "Rendered WMF"
 msgstr "WMF composat"
 
@@ -8918,7 +8919,7 @@ msgstr "Llindar _alfa:"
 
 #: ../plug-ins/common/xwd.c:276 ../plug-ins/common/xwd.c:296
 msgid "X window dump"
-msgstr "Volcat de la finestra X"
+msgstr "Bolcat de la finestra X"
 
 #: ../plug-ins/common/xwd.c:428
 #, c-format
@@ -8995,8 +8996,8 @@ msgstr "Carrega un fitxer FITS"
 msgid "Replacement for undefined pixels"
 msgstr "Recanvi pels píxels indefinits"
 
-#: ../plug-ins/fits/fits.c:996 ../plug-ins/gfig/gfig-dialog.c:1296
-#: ../plug-ins/gfig/gfig-dialog.c:1471
+#: ../plug-ins/fits/fits.c:996 ../plug-ins/gfig/gfig-dialog.c:1284
+#: ../plug-ins/gfig/gfig-dialog.c:1459
 msgid "White"
 msgstr "Blanca"
 
@@ -9014,7 +9015,7 @@ msgstr "Composa la imatge"
 
 #: ../plug-ins/flame/flame.c:128
 msgid "Create cosmic recursive fractal flames"
-msgstr "Crea unes flames amb fractals recursius còsmics"
+msgstr "Crea unes flames amb fractals recursivess còsmiques"
 
 #: ../plug-ins/flame/flame.c:133
 msgid "_Flame..."
@@ -9070,7 +9071,7 @@ msgstr "Moviment"
 msgid "Horseshoe"
 msgstr "Ferradura"
 
-#: ../plug-ins/flame/flame.c:747 ../plug-ins/gfig/gfig-dialog.c:1452
+#: ../plug-ins/flame/flame.c:747 ../plug-ins/gfig/gfig-dialog.c:1440
 msgid "Polar"
 msgstr "Polar"
 
@@ -9130,10 +9131,6 @@ msgstr "Degradat personalitzat"
 msgid "C_amera"
 msgstr "Càmer_a"
 
-#: ../plug-ins/flame/flame.c:1209
-msgid "_Zoom:"
-msgstr "A_mpliació:"
-
 #: ../plug-ins/gfig/gfig-bezier.c:442
 msgid "Closed"
 msgstr "Tancat"
@@ -9152,291 +9149,291 @@ msgstr "Dibuixa línies entre els punts de control. Només durant la creació"
 
 #  Start building the dialog up
 #. Start building the dialog up
-#: ../plug-ins/gfig/gfig-dialog.c:298
+#: ../plug-ins/gfig/gfig-dialog.c:286
 msgid "Gfig"
-msgstr "Gfig"
+msgstr "Figures (Gfig)"
 
 #  Tool options notebook
 #. Tool options notebook
-#: ../plug-ins/gfig/gfig-dialog.c:349
+#: ../plug-ins/gfig/gfig-dialog.c:337
 msgid "Tool Options"
 msgstr "Opcions d'eina"
 
 #  Stroke frame on right side
-#: ../plug-ins/gfig/gfig-dialog.c:366
+#: ../plug-ins/gfig/gfig-dialog.c:354
 msgid "_Stroke"
 msgstr "_Traça"
 
 #  Fill frame on right side
 #. Fill frame on right side
-#: ../plug-ins/gfig/gfig-dialog.c:413
+#: ../plug-ins/gfig/gfig-dialog.c:401
 msgid "Fill"
 msgstr "Omple"
 
-#: ../plug-ins/gfig/gfig-dialog.c:427
+#: ../plug-ins/gfig/gfig-dialog.c:415
 msgid "No fill"
 msgstr "Sense emplenat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:428
+#: ../plug-ins/gfig/gfig-dialog.c:416
 msgid "Color fill"
 msgstr "Color d'emplenat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:429
+#: ../plug-ins/gfig/gfig-dialog.c:417
 msgid "Pattern fill"
 msgstr "Omple amb el patró"
 
-#: ../plug-ins/gfig/gfig-dialog.c:430
+#: ../plug-ins/gfig/gfig-dialog.c:418
 msgid "Shape gradient"
 msgstr "Degradat de la figura"
 
-#: ../plug-ins/gfig/gfig-dialog.c:431
+#: ../plug-ins/gfig/gfig-dialog.c:419
 msgid "Vertical gradient"
 msgstr "Degradat vertical"
 
-#: ../plug-ins/gfig/gfig-dialog.c:432
+#: ../plug-ins/gfig/gfig-dialog.c:420
 msgid "Horizontal gradient"
 msgstr "Degradat horitzontal"
 
 #  "show image" checkbutton at bottom of style frame
 #. "show image" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:492
+#: ../plug-ins/gfig/gfig-dialog.c:480
 msgid "Show image"
 msgstr "Mostra la imatge"
 
 #  "snap to grid" checkbutton at bottom of style frame
 #. "snap to grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:505
+#: ../plug-ins/gfig/gfig-dialog.c:493
 msgid "checkbutton|Snap to grid"
 msgstr "Ajusta a la graella"
 
 #  "show grid" checkbutton at bottom of style frame
 #. "show grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:514
+#: ../plug-ins/gfig/gfig-dialog.c:502
 msgid "Show grid"
 msgstr "Mostra la graella"
 
-#: ../plug-ins/gfig/gfig-dialog.c:649
+#: ../plug-ins/gfig/gfig-dialog.c:637
 msgid "Load Gfig Object Collection"
 msgstr "Carrega la col·lecció d'objectes Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:698
+#: ../plug-ins/gfig/gfig-dialog.c:686
 msgid "Save Gfig Drawing"
 msgstr "Desa el dibuix Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:841
+#: ../plug-ins/gfig/gfig-dialog.c:829
 msgid "First Gfig"
 msgstr "Primer Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:880
+#: ../plug-ins/gfig/gfig-dialog.c:868
 msgid "_Undo"
 msgstr "_Desfés"
 
-#: ../plug-ins/gfig/gfig-dialog.c:884
+#: ../plug-ins/gfig/gfig-dialog.c:872
 msgid "_Clear"
 msgstr "_Neteja"
 
-#: ../plug-ins/gfig/gfig-dialog.c:888
+#: ../plug-ins/gfig/gfig-dialog.c:876
 msgid "_Grid"
 msgstr "_Graella"
 
-#: ../plug-ins/gfig/gfig-dialog.c:896
+#: ../plug-ins/gfig/gfig-dialog.c:884
 msgid "Raise selected object"
 msgstr "Apuja l'objecte seleccionat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:900
+#: ../plug-ins/gfig/gfig-dialog.c:888
 msgid "Lower selected object"
 msgstr "Abaixa l'objecte seleccionat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:904
+#: ../plug-ins/gfig/gfig-dialog.c:892
 msgid "Raise selected object to top"
 msgstr "Apuja l'objecte seleccionat al capdamunt"
 
-#: ../plug-ins/gfig/gfig-dialog.c:908
+#: ../plug-ins/gfig/gfig-dialog.c:896
 msgid "Lower selected object to bottom"
 msgstr "Abaixa l'objecte seleccionat al capdavall"
 
-#: ../plug-ins/gfig/gfig-dialog.c:912
+#: ../plug-ins/gfig/gfig-dialog.c:900
 msgid "Show previous object"
 msgstr "Mostra l'objecte anterior"
 
-#: ../plug-ins/gfig/gfig-dialog.c:916
+#: ../plug-ins/gfig/gfig-dialog.c:904
 msgid "Show next object"
 msgstr "Mostra l'objecte següent"
 
-#: ../plug-ins/gfig/gfig-dialog.c:920 ../plug-ins/gfig/gfig-stock.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:908 ../plug-ins/gfig/gfig-stock.c:53
 msgid "Show all objects"
 msgstr "Mostra tots els objectes"
 
-#: ../plug-ins/gfig/gfig-dialog.c:926 ../plug-ins/gfig/gfig-stock.c:47
+#: ../plug-ins/gfig/gfig-dialog.c:914 ../plug-ins/gfig/gfig-stock.c:47
 msgid "Create line"
 msgstr "Crea una línia"
 
-#: ../plug-ins/gfig/gfig-dialog.c:929 ../plug-ins/gfig/gfig-stock.c:51
+#: ../plug-ins/gfig/gfig-dialog.c:917 ../plug-ins/gfig/gfig-stock.c:51
 msgid "Create rectangle"
 msgstr "Crea un rectangle"
 
-#: ../plug-ins/gfig/gfig-dialog.c:932 ../plug-ins/gfig/gfig-stock.c:42
+#: ../plug-ins/gfig/gfig-dialog.c:920 ../plug-ins/gfig/gfig-stock.c:42
 msgid "Create circle"
 msgstr "Crea un cercle"
 
-#: ../plug-ins/gfig/gfig-dialog.c:935 ../plug-ins/gfig/gfig-stock.c:46
+#: ../plug-ins/gfig/gfig-dialog.c:923 ../plug-ins/gfig/gfig-stock.c:46
 msgid "Create ellipse"
 msgstr "Crea una el·lipse"
 
-#: ../plug-ins/gfig/gfig-dialog.c:938 ../plug-ins/gfig/gfig-stock.c:44
+#: ../plug-ins/gfig/gfig-dialog.c:926 ../plug-ins/gfig/gfig-stock.c:44
 msgid "Create arc"
 msgstr "Crea un arc"
 
-#: ../plug-ins/gfig/gfig-dialog.c:941 ../plug-ins/gfig/gfig-stock.c:50
+#: ../plug-ins/gfig/gfig-dialog.c:929 ../plug-ins/gfig/gfig-stock.c:50
 msgid "Create reg polygon"
 msgstr "Crea un polígon regular"
 
-#: ../plug-ins/gfig/gfig-dialog.c:944 ../plug-ins/gfig/gfig-stock.c:55
+#: ../plug-ins/gfig/gfig-dialog.c:932 ../plug-ins/gfig/gfig-stock.c:55
 msgid "Create star"
 msgstr "Crea un estrella"
 
-#: ../plug-ins/gfig/gfig-dialog.c:947 ../plug-ins/gfig/gfig-stock.c:54
+#: ../plug-ins/gfig/gfig-dialog.c:935 ../plug-ins/gfig/gfig-stock.c:54
 msgid "Create spiral"
 msgstr "Crea un espiral"
 
-#: ../plug-ins/gfig/gfig-dialog.c:950
+#: ../plug-ins/gfig/gfig-dialog.c:938
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr ""
 "Crea una corba de Bezier. Maj + botó per acabar la creació de l'objecte."
 
-#: ../plug-ins/gfig/gfig-dialog.c:954 ../plug-ins/gfig/gfig-stock.c:48
+#: ../plug-ins/gfig/gfig-dialog.c:942 ../plug-ins/gfig/gfig-stock.c:48
 msgid "Move an object"
 msgstr "Mou un objecte"
 
-#: ../plug-ins/gfig/gfig-dialog.c:957 ../plug-ins/gfig/gfig-stock.c:49
+#: ../plug-ins/gfig/gfig-dialog.c:945 ../plug-ins/gfig/gfig-stock.c:49
 msgid "Move a single point"
 msgstr "Mou només un punt"
 
-#: ../plug-ins/gfig/gfig-dialog.c:960 ../plug-ins/gfig/gfig-stock.c:43
+#: ../plug-ins/gfig/gfig-dialog.c:948 ../plug-ins/gfig/gfig-stock.c:43
 msgid "Copy an object"
 msgstr "Copia un objecte"
 
-#: ../plug-ins/gfig/gfig-dialog.c:963 ../plug-ins/gfig/gfig-stock.c:45
+#: ../plug-ins/gfig/gfig-dialog.c:951 ../plug-ins/gfig/gfig-stock.c:45
 msgid "Delete an object"
 msgstr "Suprimeix un objecte"
 
-#: ../plug-ins/gfig/gfig-dialog.c:966 ../plug-ins/gfig/gfig-stock.c:52
+#: ../plug-ins/gfig/gfig-dialog.c:954 ../plug-ins/gfig/gfig-stock.c:52
 msgid "Select an object"
 msgstr "Seleccioneu un objecte"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1048
+#: ../plug-ins/gfig/gfig-dialog.c:1036
 msgid "This tool has no options"
 msgstr "Aquesta eina no té opcions"
 
 #  Put buttons in
 #. Put buttons in
-#: ../plug-ins/gfig/gfig-dialog.c:1238
+#: ../plug-ins/gfig/gfig-dialog.c:1226
 msgid "Show position"
 msgstr "Mostra la posició"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1250
+#: ../plug-ins/gfig/gfig-dialog.c:1238
 msgid "Show control points"
 msgstr "Mostra els punts de control"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1284
+#: ../plug-ins/gfig/gfig-dialog.c:1272
 msgid "Max undo:"
 msgstr "Desfés al màxim:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1293
+#: ../plug-ins/gfig/gfig-dialog.c:1281
 #: ../plug-ins/gimpressionist/general.c:166
 msgid "Transparent"
 msgstr "Transparent"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1295
+#: ../plug-ins/gfig/gfig-dialog.c:1283
 msgid "Foreground"
 msgstr "Primer pla"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1297 ../plug-ins/imagemap/imap_cmd_copy.c:54
+#: ../plug-ins/gfig/gfig-dialog.c:1285 ../plug-ins/imagemap/imap_cmd_copy.c:54
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:55
 msgid "Copy"
 msgstr "Copia"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1306
+#: ../plug-ins/gfig/gfig-dialog.c:1294
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
 msgstr ""
 "Tipus de capa de fons. En copiar la capa anterior es copia abans que el "
-"dibuix estigui acabat"
+"dibuix estigui acabat."
 
-#: ../plug-ins/gfig/gfig-dialog.c:1312
+#: ../plug-ins/gfig/gfig-dialog.c:1300
 msgid "Background:"
 msgstr "Fons:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1315
+#: ../plug-ins/gfig/gfig-dialog.c:1303
 msgid "Feather"
 msgstr "Plomall"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1339
+#: ../plug-ins/gfig/gfig-dialog.c:1327
 msgid "Radius:"
 msgstr "Radi:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1396
+#: ../plug-ins/gfig/gfig-dialog.c:1384
 msgid "Grid spacing:"
 msgstr "Espaiat de la graella:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1413
+#: ../plug-ins/gfig/gfig-dialog.c:1401
 msgid "Polar grid sectors desired:"
 msgstr "Sectors de la graella polar desitjats:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1435
+#: ../plug-ins/gfig/gfig-dialog.c:1423
 msgid "Polar grid radius interval:"
 msgstr "Interval del radi de la graella polar:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1451
+#: ../plug-ins/gfig/gfig-dialog.c:1439
 msgid "Rectangle"
 msgstr "Rectangle"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1453
+#: ../plug-ins/gfig/gfig-dialog.c:1441
 msgid "Isometric"
 msgstr "Isomètric"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1462
+#: ../plug-ins/gfig/gfig-dialog.c:1450
 msgid "Grid type:"
 msgstr "Tipus de graella:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1469 ../plug-ins/gflare/gflare.c:556
+#: ../plug-ins/gfig/gfig-dialog.c:1457 ../plug-ins/gflare/gflare.c:552
 msgid "Normal"
 msgstr "Normal"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1472
+#: ../plug-ins/gfig/gfig-dialog.c:1460
 msgid "Grey"
 msgstr "Gris"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1473
+#: ../plug-ins/gfig/gfig-dialog.c:1461
 msgid "Darker"
 msgstr "Més fosc"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1474
+#: ../plug-ins/gfig/gfig-dialog.c:1462
 msgid "Lighter"
 msgstr "Més clar"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1475
+#: ../plug-ins/gfig/gfig-dialog.c:1463
 msgid "Very dark"
 msgstr "Molt fosc"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1484
+#: ../plug-ins/gfig/gfig-dialog.c:1472
 msgid "Grid color:"
 msgstr "Color de la graella:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1707
+#: ../plug-ins/gfig/gfig-dialog.c:1695
 msgid "Sides:"
 msgstr "Cares:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1717
+#: ../plug-ins/gfig/gfig-dialog.c:1705
 msgid "Right"
 msgstr "Dreta"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1718
+#: ../plug-ins/gfig/gfig-dialog.c:1706
 msgid "Left"
 msgstr "Esquerra"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1728
+#: ../plug-ins/gfig/gfig-dialog.c:1716
 #: ../plug-ins/gimpressionist/orientation.c:130
 msgid "Orientation:"
 msgstr "Orientació:"
@@ -9485,7 +9482,7 @@ msgstr "Crea formes geomètriques"
 
 #: ../plug-ins/gfig/gfig.c:135
 msgid "_Gfig..."
-msgstr "_Gfig..."
+msgstr "_Figures (Gfig)..."
 
 #: ../plug-ins/gfig/gfig.c:731
 msgid ""
@@ -9501,46 +9498,46 @@ msgstr ""
 "S'ha produït un error quan s'estava obrint el fitxer temporal '%s' per "
 "carregar el paràsit: %s"
 
-#: ../plug-ins/gflare/gflare.c:557
+#: ../plug-ins/gflare/gflare.c:553
 msgid "Addition"
 msgstr "Suma"
 
-#: ../plug-ins/gflare/gflare.c:558
+#: ../plug-ins/gflare/gflare.c:554
 msgid "Overlay"
 msgstr "Superposa"
 
-#: ../plug-ins/gflare/gflare.c:813
+#: ../plug-ins/gflare/gflare.c:809
 msgid "Produce a lense flare effect using gradients"
 msgstr ""
 "Produeix un efecte de punt de llum enlluernador utilitzant petits degradats"
 
-#: ../plug-ins/gflare/gflare.c:818
+#: ../plug-ins/gflare/gflare.c:814
 msgid "_Gradient Flare..."
 msgstr "Llum enlluernador _GFlare..."
 
 #.
 #. *    Dialog Shell
 #.
-#: ../plug-ins/gflare/gflare.c:957 ../plug-ins/gflare/gflare.c:2291
+#: ../plug-ins/gflare/gflare.c:953 ../plug-ins/gflare/gflare.c:2287
 msgid "Gradient Flare"
 msgstr "Llum enlluernador GFlare"
 
-#: ../plug-ins/gflare/gflare.c:1259
+#: ../plug-ins/gflare/gflare.c:1255
 #, c-format
 msgid "Failed to open GFlare file '%s': %s"
 msgstr "No s'ha pogut obrir el fitxer GFlare '%s': %s"
 
-#: ../plug-ins/gflare/gflare.c:1267
+#: ../plug-ins/gflare/gflare.c:1263
 #, c-format
 msgid "'%s' is not a valid GFlare file."
 msgstr "'%s' no és un fitxer GFlare vàlid."
 
-#: ../plug-ins/gflare/gflare.c:1321
+#: ../plug-ins/gflare/gflare.c:1317
 #, c-format
 msgid "invalid formatted GFlare file: %s\n"
 msgstr "fitxer del Gflare amb un format no válid: %s\n"
 
-#: ../plug-ins/gflare/gflare.c:1446
+#: ../plug-ins/gflare/gflare.c:1442
 #, c-format
 msgid ""
 "GFlare '%s' is not saved. If you add a new entry in '%s', like:\n"
@@ -9552,20 +9549,20 @@ msgstr ""
 "i creeu una carpeta '%s', podeu desar els vostres propis GFlare's en aquesta "
 "carpeta."
 
-#: ../plug-ins/gflare/gflare.c:1479
+#: ../plug-ins/gflare/gflare.c:1475
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "No s'ha pogut escriure el fitxer GFlare '%s': %s"
 
-#: ../plug-ins/gflare/gflare.c:2348
+#: ../plug-ins/gflare/gflare.c:2344
 msgid "A_uto update preview"
 msgstr "Previs_ualització automàtica"
 
-#: ../plug-ins/gflare/gflare.c:2399
+#: ../plug-ins/gflare/gflare.c:2395
 msgid "`Default' is created."
 msgstr "S'ha creat `Per defecte'."
 
-#: ../plug-ins/gflare/gflare.c:2400
+#: ../plug-ins/gflare/gflare.c:2396
 msgid "Default"
 msgstr "Per defecte"
 
@@ -9575,177 +9572,177 @@ msgstr "Per defecte"
 #.
 #. *    Scales
 #.
-#: ../plug-ins/gflare/gflare.c:2675 ../plug-ins/gflare/gflare.c:3512
-#: ../plug-ins/gflare/gflare.c:3617 ../plug-ins/gflare/gflare.c:3754
+#: ../plug-ins/gflare/gflare.c:2671 ../plug-ins/gflare/gflare.c:3508
+#: ../plug-ins/gflare/gflare.c:3613 ../plug-ins/gflare/gflare.c:3750
 msgid "Parameters"
 msgstr "Paràmetres"
 
-#: ../plug-ins/gflare/gflare.c:2701
+#: ../plug-ins/gflare/gflare.c:2697
 msgid "Ro_tation:"
 msgstr "Ro_tació:"
 
-#: ../plug-ins/gflare/gflare.c:2713
+#: ../plug-ins/gflare/gflare.c:2709
 msgid "_Hue rotation:"
 msgstr "Rotació del _to:"
 
-#: ../plug-ins/gflare/gflare.c:2725
+#: ../plug-ins/gflare/gflare.c:2721
 msgid "Vector _angle:"
 msgstr "_Angle del vector:"
 
-#: ../plug-ins/gflare/gflare.c:2737
+#: ../plug-ins/gflare/gflare.c:2733
 msgid "Vector _length:"
 msgstr "_Longitud del vector:"
 
-#: ../plug-ins/gflare/gflare.c:2758
+#: ../plug-ins/gflare/gflare.c:2754
 msgid "A_daptive supersampling"
 msgstr "Supermostreig a_daptable"
 
-#: ../plug-ins/gflare/gflare.c:2777
+#: ../plug-ins/gflare/gflare.c:2773
 msgid "_Max depth:"
 msgstr "Profunditat _màxima:"
 
-#: ../plug-ins/gflare/gflare.c:2787
+#: ../plug-ins/gflare/gflare.c:2783
 msgid "_Threshold"
 msgstr "_Llindar"
 
-#: ../plug-ins/gflare/gflare.c:2925
+#: ../plug-ins/gflare/gflare.c:2921
 msgid "S_elector"
 msgstr "S_elector"
 
-#: ../plug-ins/gflare/gflare.c:2989
+#: ../plug-ins/gflare/gflare.c:2985
 msgid "New Gradient Flare"
 msgstr "Nou GFlare"
 
-#: ../plug-ins/gflare/gflare.c:2992
+#: ../plug-ins/gflare/gflare.c:2988
 msgid "Enter a name for the new GFlare"
 msgstr "Introduïu un nom per al GFlare nou"
 
-#: ../plug-ins/gflare/gflare.c:3012
+#: ../plug-ins/gflare/gflare.c:3008
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "El nom '%s' ja s'ha utilitzat"
 
-#: ../plug-ins/gflare/gflare.c:3068
+#: ../plug-ins/gflare/gflare.c:3064
 msgid "Copy Gradient Flare"
 msgstr "Copia el degradat llampant"
 
-#: ../plug-ins/gflare/gflare.c:3071
+#: ../plug-ins/gflare/gflare.c:3067
 msgid "Enter a name for the copied GFlare"
 msgstr "Introduïu un nom per al GFlare copiat"
 
-#: ../plug-ins/gflare/gflare.c:3093
+#: ../plug-ins/gflare/gflare.c:3089
 #, c-format
 msgid "The name `%s' is used already!"
 msgstr "El nom '%s' ja s'utilitza"
 
-#: ../plug-ins/gflare/gflare.c:3124
+#: ../plug-ins/gflare/gflare.c:3120
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "No es pot suprimir. Cal que hi hagi un GFlare com a mínim."
 
-#: ../plug-ins/gflare/gflare.c:3134
+#: ../plug-ins/gflare/gflare.c:3130
 msgid "Delete Gradient Flare"
 msgstr "Suprimeix el degradat llampant"
 
-#: ../plug-ins/gflare/gflare.c:3206
+#: ../plug-ins/gflare/gflare.c:3202
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "no s'ha trobat %s a gflares_list"
 
-#: ../plug-ins/gflare/gflare.c:3247
+#: ../plug-ins/gflare/gflare.c:3243
 msgid "Gradient Flare Editor"
 msgstr "Editor del degradat llampant"
 
-#: ../plug-ins/gflare/gflare.c:3251
+#: ../plug-ins/gflare/gflare.c:3247
 msgid "Rescan Gradients"
 msgstr "Explora els degradats"
 
 #. Glow
-#: ../plug-ins/gflare/gflare.c:3376
+#: ../plug-ins/gflare/gflare.c:3372
 msgid "Glow Paint Options"
 msgstr "Opcions de pintura fosforescent"
 
-#: ../plug-ins/gflare/gflare.c:3387 ../plug-ins/gflare/gflare.c:3415
-#: ../plug-ins/gflare/gflare.c:3443
+#: ../plug-ins/gflare/gflare.c:3383 ../plug-ins/gflare/gflare.c:3411
+#: ../plug-ins/gflare/gflare.c:3439
 msgid "Opacity:"
 msgstr "Opacitat:"
 
-#: ../plug-ins/gflare/gflare.c:3400 ../plug-ins/gflare/gflare.c:3428
-#: ../plug-ins/gflare/gflare.c:3456
+#: ../plug-ins/gflare/gflare.c:3396 ../plug-ins/gflare/gflare.c:3424
+#: ../plug-ins/gflare/gflare.c:3452
 msgid "Paint mode:"
 msgstr "Mode de pintura:"
 
 #. Rays
-#: ../plug-ins/gflare/gflare.c:3404
+#: ../plug-ins/gflare/gflare.c:3400
 msgid "Rays Paint Options"
 msgstr "Opcions de pintura dels raigs"
 
 #  Rays
 #. Rays
-#: ../plug-ins/gflare/gflare.c:3432
+#: ../plug-ins/gflare/gflare.c:3428
 msgid "Second Flares Paint Options"
 msgstr "Opcions de pintura de les flamarades secundàries"
 
-#: ../plug-ins/gflare/gflare.c:3459 ../plug-ins/gimpressionist/general.c:115
+#: ../plug-ins/gflare/gflare.c:3455 ../plug-ins/gimpressionist/general.c:115
 msgid "_General"
 msgstr "_General"
 
 #.
 #. *  Gradient Menus
 #.
-#: ../plug-ins/gflare/gflare.c:3485 ../plug-ins/gflare/gflare.c:3588
-#: ../plug-ins/gflare/gflare.c:3727
+#: ../plug-ins/gflare/gflare.c:3481 ../plug-ins/gflare/gflare.c:3584
+#: ../plug-ins/gflare/gflare.c:3723
 msgid "Gradients"
 msgstr "Degradats"
 
-#: ../plug-ins/gflare/gflare.c:3496 ../plug-ins/gflare/gflare.c:3601
-#: ../plug-ins/gflare/gflare.c:3738
+#: ../plug-ins/gflare/gflare.c:3492 ../plug-ins/gflare/gflare.c:3597
+#: ../plug-ins/gflare/gflare.c:3734
 msgid "Radial gradient:"
 msgstr "Degradat radial:"
 
-#: ../plug-ins/gflare/gflare.c:3500 ../plug-ins/gflare/gflare.c:3605
+#: ../plug-ins/gflare/gflare.c:3496 ../plug-ins/gflare/gflare.c:3601
 msgid "Angular gradient:"
 msgstr "Degradat angular:"
 
-#: ../plug-ins/gflare/gflare.c:3504 ../plug-ins/gflare/gflare.c:3609
+#: ../plug-ins/gflare/gflare.c:3500 ../plug-ins/gflare/gflare.c:3605
 msgid "Angular size gradient:"
 msgstr "Degradat de mida angular:"
 
-#: ../plug-ins/gflare/gflare.c:3524 ../plug-ins/gflare/gflare.c:3629
-#: ../plug-ins/gflare/gflare.c:3766
+#: ../plug-ins/gflare/gflare.c:3520 ../plug-ins/gflare/gflare.c:3625
+#: ../plug-ins/gflare/gflare.c:3762
 msgid "Size (%):"
 msgstr "Mida (%):"
 
-#: ../plug-ins/gflare/gflare.c:3536 ../plug-ins/gflare/gflare.c:3641
-#: ../plug-ins/gflare/gflare.c:3778
+#: ../plug-ins/gflare/gflare.c:3532 ../plug-ins/gflare/gflare.c:3637
+#: ../plug-ins/gflare/gflare.c:3774
 msgid "Rotation:"
 msgstr "Rotació:"
 
-#: ../plug-ins/gflare/gflare.c:3548 ../plug-ins/gflare/gflare.c:3654
-#: ../plug-ins/gflare/gflare.c:3791
+#: ../plug-ins/gflare/gflare.c:3544 ../plug-ins/gflare/gflare.c:3650
+#: ../plug-ins/gflare/gflare.c:3787
 msgid "Hue rotation:"
 msgstr "Rotació del to:"
 
-#: ../plug-ins/gflare/gflare.c:3562
+#: ../plug-ins/gflare/gflare.c:3558
 msgid "G_low"
 msgstr "_Lluentor"
 
-#: ../plug-ins/gflare/gflare.c:3666
+#: ../plug-ins/gflare/gflare.c:3662
 msgid "# of Spikes:"
 msgstr "Nombre de punxes:"
 
-#: ../plug-ins/gflare/gflare.c:3678
+#: ../plug-ins/gflare/gflare.c:3674
 msgid "Spike thickness:"
 msgstr "Gruix de les punxes:"
 
-#: ../plug-ins/gflare/gflare.c:3692
+#: ../plug-ins/gflare/gflare.c:3688
 msgid "_Rays"
 msgstr "_Raigs"
 
-#: ../plug-ins/gflare/gflare.c:3742
+#: ../plug-ins/gflare/gflare.c:3738
 msgid "Size factor gradient:"
 msgstr "Degradat del factor de mida:"
 
-#: ../plug-ins/gflare/gflare.c:3746
+#: ../plug-ins/gflare/gflare.c:3742
 msgid "Probability gradient:"
 msgstr "Degradat de la probabilitat:"
 
@@ -9753,23 +9750,23 @@ msgstr "Degradat de la probabilitat:"
 #.
 #. *    Shape Radio Button Frame
 #.
-#: ../plug-ins/gflare/gflare.c:3808
+#: ../plug-ins/gflare/gflare.c:3804
 msgid "Shape of Second Flares"
 msgstr "Forma de les flamarades secundàries"
 
-#: ../plug-ins/gflare/gflare.c:3816
+#: ../plug-ins/gflare/gflare.c:3812
 msgid "Circle"
 msgstr "Cercle"
 
-#: ../plug-ins/gflare/gflare.c:3833
+#: ../plug-ins/gflare/gflare.c:3829
 msgid "Polygon"
 msgstr "Polígon"
 
-#: ../plug-ins/gflare/gflare.c:3866
+#: ../plug-ins/gflare/gflare.c:3862
 msgid "Random seed:"
 msgstr "Llavor aleatòria:"
 
-#: ../plug-ins/gflare/gflare.c:3880
+#: ../plug-ins/gflare/gflare.c:3876
 msgid "_Second Flares"
 msgstr "Flamarades _secundàries"
 
@@ -9780,7 +9777,7 @@ msgstr "Animació FLIC d'Autodesk"
 #: ../plug-ins/gfli/gfli.c:529
 #, c-format
 msgid "Frame (%i)"
-msgstr "Marc (%i)"
+msgstr "Fotograma (%i)"
 
 #: ../plug-ins/gfli/gfli.c:680
 msgid "Sorry, I can save only INDEXED and GRAY images."
@@ -9788,11 +9785,11 @@ msgstr "Només es poden desar imatges indexades i grises."
 
 #: ../plug-ins/gfli/gfli.c:811
 msgid "GFLI 1.3 - Load framestack"
-msgstr "GFLI 1.3 - carrega la pila de marcs"
+msgstr "GFLI 1.3 - carrega la pila de fotogrames"
 
 #: ../plug-ins/gfli/gfli.c:879
 msgid "GFLI 1.3 - Save framestack"
-msgstr "GFLI 1.3 - desa la pila de marcs"
+msgstr "GFLI 1.3 - desa la pila de fotogrames"
 
 #: ../plug-ins/gimpressionist/brush.c:230
 msgid "Can only save drawables!"
@@ -9820,7 +9817,7 @@ msgstr "Selecciona:"
 
 #: ../plug-ins/gimpressionist/brush.c:580
 msgid "Aspect ratio:"
-msgstr "Ràtio de l'aspecte:"
+msgstr "Relació d'aspecte:"
 
 #: ../plug-ins/gimpressionist/brush.c:584
 msgid "Specifies the aspect ratio of the brush"
@@ -9853,8 +9850,7 @@ msgstr "C_entre del pinzell"
 #: ../plug-ins/gimpressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr ""
-"El color es calcula amb la mitja de tots els píxels que hi han sota el "
-"pinzell"
+"El color es calcula amb la mitja de tots els píxels que hi ha sota el pinzell"
 
 #: ../plug-ins/gimpressionist/color.c:65
 msgid "Samples the color from the pixel in the center of the brush"
@@ -9870,7 +9866,7 @@ msgstr "Afegeix aleatòriament soroll al color"
 
 #: ../plug-ins/gimpressionist/general.c:131
 msgid "Keep original"
-msgstr "Manté l'original"
+msgstr "Mantén l'original"
 
 #: ../plug-ins/gimpressionist/general.c:132
 msgid "Preserve the original image as a background"
@@ -9903,7 +9899,7 @@ msgstr ""
 "imatge"
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:194 ../plug-ins/maze/maze_face.c:317
+#: ../plug-ins/gimpressionist/general.c:194 ../plug-ins/maze/maze_face.c:316
 msgid "Tileable"
 msgstr "Fer mosaic"
 
@@ -9913,7 +9909,7 @@ msgstr "Seleccioneu-lo si la imatge resultant hauria de semblar-se a un mosaic"
 
 #: ../plug-ins/gimpressionist/general.c:203
 msgid "Drop shadow"
-msgstr "Ombreja"
+msgstr "Ombra"
 
 #: ../plug-ins/gimpressionist/general.c:208
 msgid "Adds a shadow effect to each brush stroke"
@@ -9933,7 +9929,7 @@ msgstr "Foscor de l'ombra:"
 
 #: ../plug-ins/gimpressionist/general.c:234
 msgid "How much to \"darken\" the drop shadow"
-msgstr "Quant s'ha d'«enfosquir» l'ombrejat"
+msgstr "Quantitat de «foscor» de l'ombra"
 
 #: ../plug-ins/gimpressionist/general.c:239
 msgid "Shadow depth:"
@@ -9943,7 +9939,7 @@ msgstr "Profunditat de l'ombra:"
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
-"La profunditat de l'ombrejat, p.e. quina distància s'hauria d'allunyar de "
+"La profunditat de l'ombrejat, p.ex. quina distància s'hauria d'allunyar de "
 "l'objecte"
 
 #: ../plug-ins/gimpressionist/general.c:248
@@ -9952,7 +9948,7 @@ msgstr "Difumina l'ombra:"
 
 #: ../plug-ins/gimpressionist/general.c:252
 msgid "How much to blur the drop shadow"
-msgstr "Quant s'ha de difuminar l'ombra"
+msgstr "Quantitat del difuminat de l'ombra"
 
 #: ../plug-ins/gimpressionist/general.c:257
 msgid "Deviation threshold:"
@@ -9988,7 +9984,7 @@ msgstr "Direccions:"
 
 #: ../plug-ins/gimpressionist/orientation.c:92
 msgid "The number of directions (i.e. brushes) to use"
-msgstr "El nombre de direccions (p.e. pinzells) a utilitzar"
+msgstr "El nombre de direccions (p.ex. pinzells) a utilitzar"
 
 #: ../plug-ins/gimpressionist/orientation.c:100
 msgid "Start angle:"
@@ -10096,7 +10092,7 @@ msgstr ""
 #: ../plug-ins/gimpressionist/orientmap.c:572
 #: ../plug-ins/gimpressionist/sizemap.c:441
 msgid "Adjust the preview's brightness"
-msgstr "Ajusteu la brillantor de la visualització prèvia"
+msgstr "Ajusta la brillantor de la previsualització"
 
 #: ../plug-ins/gimpressionist/orientmap.c:594
 msgid "Select previous vector"
@@ -10294,7 +10290,7 @@ msgstr "Torna a llegir la carpeta de predefinits"
 
 #: ../plug-ins/gimpressionist/preview.c:191
 msgid "Refresh the Preview window"
-msgstr "Refresca la finestra de visualització prèvia"
+msgstr "Actualitza la finestra de previsualització"
 
 #: ../plug-ins/gimpressionist/preview.c:199
 msgid "Revert to the original image"
@@ -10424,7 +10420,7 @@ msgid ""
 "influence"
 msgstr ""
 "El mode Voronoi farà que només el vector sm més proper al punt donat tingui "
-"alguna influència."
+"alguna influència"
 
 #: ../plug-ins/help/domain.c:177
 msgid "The GIMP help files are not found."
@@ -10492,160 +10488,160 @@ msgstr "No s'ha trobat el document"
 msgid "The requested URL could not be loaded:"
 msgstr "No s'ha pogut carregar la URL demanada:"
 
-#: ../plug-ins/ifscompose/ifscompose.c:335
+#: ../plug-ins/ifscompose/ifscompose.c:333
 msgid "Create an Iterated Function System (IFS) fractal"
-msgstr "Crea un fractal del tipus IFS (Sistema de Funció Iterativa)"
+msgstr "Crea una fractal del tipus IFS (Sistema de Funció Iterativa)"
 
-#: ../plug-ins/ifscompose/ifscompose.c:347
+#: ../plug-ins/ifscompose/ifscompose.c:345
 msgid "_IFS Fractal..."
 msgstr "Fractal _IFS..."
 
 #. Asym
-#: ../plug-ins/ifscompose/ifscompose.c:583
+#: ../plug-ins/ifscompose/ifscompose.c:581
 msgid "Asymmetry:"
 msgstr "Asimetria:"
 
 #. Shear
-#: ../plug-ins/ifscompose/ifscompose.c:597
+#: ../plug-ins/ifscompose/ifscompose.c:595
 msgid "Shear:"
 msgstr "Desproveir:"
 
 #. Simple color control section
-#: ../plug-ins/ifscompose/ifscompose.c:642
+#: ../plug-ins/ifscompose/ifscompose.c:640
 msgid "Simple"
 msgstr "Senzill"
 
-#: ../plug-ins/ifscompose/ifscompose.c:651
+#: ../plug-ins/ifscompose/ifscompose.c:649
 msgid "IFS Fractal: Target"
 msgstr "Fractal IFS: destí"
 
-#: ../plug-ins/ifscompose/ifscompose.c:657
+#: ../plug-ins/ifscompose/ifscompose.c:655
 msgid "Scale hue by:"
 msgstr "Escala el to per:"
 
-#: ../plug-ins/ifscompose/ifscompose.c:672
+#: ../plug-ins/ifscompose/ifscompose.c:670
 msgid "Scale value by:"
 msgstr "Escala el valor per:"
 
 #. Full color control section
-#: ../plug-ins/ifscompose/ifscompose.c:689
+#: ../plug-ins/ifscompose/ifscompose.c:687
 msgid "Full"
 msgstr "Sencer"
 
-#: ../plug-ins/ifscompose/ifscompose.c:697
+#: ../plug-ins/ifscompose/ifscompose.c:695
 msgid "IFS Fractal: Red"
 msgstr "Fractal IFS: vermell"
 
-#: ../plug-ins/ifscompose/ifscompose.c:705
+#: ../plug-ins/ifscompose/ifscompose.c:703
 msgid "IFS Fractal: Green"
 msgstr "Fractal IFS: verd"
 
-#: ../plug-ins/ifscompose/ifscompose.c:713
+#: ../plug-ins/ifscompose/ifscompose.c:711
 msgid "IFS Fractal: Blue"
 msgstr "Fractal IFS: blau"
 
-#: ../plug-ins/ifscompose/ifscompose.c:721
+#: ../plug-ins/ifscompose/ifscompose.c:719
 msgid "IFS Fractal: Black"
 msgstr "Fractal IFS: negre"
 
-#: ../plug-ins/ifscompose/ifscompose.c:771
+#: ../plug-ins/ifscompose/ifscompose.c:769
 msgid "IFS Fractal"
 msgstr "Fractal IFS"
 
-#: ../plug-ins/ifscompose/ifscompose.c:869
+#: ../plug-ins/ifscompose/ifscompose.c:867
 msgid "Spatial Transformation"
 msgstr "Transformació espacial"
 
-#: ../plug-ins/ifscompose/ifscompose.c:875
+#: ../plug-ins/ifscompose/ifscompose.c:873
 msgid "Color Transformation"
 msgstr "Transformació de color"
 
-#: ../plug-ins/ifscompose/ifscompose.c:885
+#: ../plug-ins/ifscompose/ifscompose.c:883
 msgid "Relative probability:"
 msgstr "Probabilitat relativa:"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1060
+#: ../plug-ins/ifscompose/ifscompose.c:1058
 msgid "Select _All"
 msgstr "Seleccion_a-ho tot"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1064
+#: ../plug-ins/ifscompose/ifscompose.c:1062
 msgid "Re_center"
 msgstr "Torna a _centrar"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1064
+#: ../plug-ins/ifscompose/ifscompose.c:1062
 msgid "Recompute Center"
 msgstr "Torna a calcular el centre"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1068
+#: ../plug-ins/ifscompose/ifscompose.c:1066
 msgid "Render Options"
 msgstr "Opcions de composició"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1074
+#: ../plug-ins/ifscompose/ifscompose.c:1072
 #: ../plug-ins/imagemap/imap_cmd_move.c:86
 #: ../plug-ins/imagemap/imap_cmd_object_move.c:57
 msgid "Move"
 msgstr "Mou"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1077
+#: ../plug-ins/ifscompose/ifscompose.c:1075
 msgid "Rotate"
 msgstr "Gira"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1077
+#: ../plug-ins/ifscompose/ifscompose.c:1075
 msgid "Rotate / Scale"
 msgstr "Gira / escala"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1080
+#: ../plug-ins/ifscompose/ifscompose.c:1078
 msgid "Stretch"
 msgstr "Amplia"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1178
+#: ../plug-ins/ifscompose/ifscompose.c:1176
 msgid "IFS Fractal Render Options"
-msgstr "Opcions de composició del fractal IFS"
+msgstr "Opcions de composició de la fractal IFS"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1199
+#: ../plug-ins/ifscompose/ifscompose.c:1197
 msgid "Max. memory:"
 msgstr "Memòria màx.:"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1226
+#: ../plug-ins/ifscompose/ifscompose.c:1224
 msgid "Subdivide:"
 msgstr "Subdivideix:"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1239
+#: ../plug-ins/ifscompose/ifscompose.c:1237
 msgid "Spot radius:"
 msgstr "Radi del punt:"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1305
+#: ../plug-ins/ifscompose/ifscompose.c:1303
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "S'està composant l'IFS (%d/%d)"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1471
+#: ../plug-ins/ifscompose/ifscompose.c:1469
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformació %s"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2384
+#: ../plug-ins/ifscompose/ifscompose.c:2382
 #: ../plug-ins/metadata/interface.c:563 ../plug-ins/metadata/interface.c:573
 msgid "Save failed"
 msgstr "No s'ha pogut desar"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2465
-#: ../plug-ins/ifscompose/ifscompose.c:2478
+#: ../plug-ins/ifscompose/ifscompose.c:2463
+#: ../plug-ins/ifscompose/ifscompose.c:2476
 #: ../plug-ins/metadata/interface.c:462 ../plug-ins/metadata/interface.c:472
 #: ../plug-ins/metadata/interface.c:548
 msgid "Open failed"
 msgstr "No s'ha pogut obrir"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2473
+#: ../plug-ins/ifscompose/ifscompose.c:2471
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
-msgstr "El fitxer '%s' no sembla un fitxer fractal IFS"
+msgstr "El fitxer '%s' no sembla un fitxer fractal IFS."
 
-#: ../plug-ins/ifscompose/ifscompose.c:2513
+#: ../plug-ins/ifscompose/ifscompose.c:2511
 msgid "Save as IFS Fractal file"
 msgstr "Desa com a fitxer fractal IFS"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2548
+#: ../plug-ins/ifscompose/ifscompose.c:2546
 msgid "Open IFS Fractal file"
 msgstr "Obre el fitxer fractal IFS"
 
@@ -10792,7 +10788,7 @@ msgstr "Espaiat _vertical:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:205
 msgid "No. _down:"
-msgstr "Nº abai_x:"
+msgstr "Num. _avall:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:214
 msgid "Base _URL:"
@@ -10917,9 +10913,10 @@ msgstr "Selecciona el fitxer html"
 msgid "Relati_ve link"
 msgstr "Enllaç relati_u"
 
+# Quim: FRAME és un nom de tag html i no es pot traduir
 #: ../plug-ins/imagemap/imap_edit_area_info.c:270
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
-msgstr "Nom del marc objec_tiu/ID: (opcional - utilitzat només per a marcs)"
+msgstr "_Nom del FRAME/ID: (opcional - només per pàgines amb FRAMES)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:273
 msgid "ALT te_xt: (optional)"
@@ -11078,7 +11075,7 @@ msgstr "_Desfés %s"
 #: ../plug-ins/imagemap/imap_menu.c:152
 #, c-format
 msgid "_Redo %s"
-msgstr "To_rna a fer %s"
+msgstr "_Refés %s"
 
 #: ../plug-ins/imagemap/imap_polygon.c:72
 msgid "_Polygon"
@@ -11237,9 +11234,10 @@ msgstr "_URL per defecte:"
 msgid "_Description:"
 msgstr "_Descripció:"
 
+# Quim: Títol de secció dins del diàleg informació del imap
 #: ../plug-ins/imagemap/imap_settings.c:130
 msgid "Map File Format"
-msgstr "Format de fitxer de mapa"
+msgstr "Format de fitxer del mapa"
 
 #: ../plug-ins/imagemap/imap_source.c:63
 msgid "View Source"
@@ -11249,27 +11247,31 @@ msgstr "Mostra la font"
 msgid "Edit Map Info..."
 msgstr "Edita la informació del mapa..."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:115
+#: ../plug-ins/jpeg/jpeg-exif.c:263
+msgid "Rotate Image?"
+msgstr "Voleu girar la imatge?"
+
+#  Orientation toggle box
+#: ../plug-ins/jpeg/jpeg-exif.c:266
+msgid "_Keep Orientation"
+msgstr "_Conserva l'orientació"
+
+#: ../plug-ins/jpeg/jpeg-exif.c:321
 msgid "According to the EXIF data, this image is rotated."
 msgstr "Segons les dades del EXIF, la imatge està girada."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:116
+#: ../plug-ins/jpeg/jpeg-exif.c:336
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Voleu que el GIMP giri la imatge i la posi en l'orientació correcta?"
-
-#  Orientation toggle box
-#: ../plug-ins/jpeg/jpeg-exif.c:118
-msgid "_Keep Orientation"
-msgstr "_Conserva l'orientació"
 
 #: ../plug-ins/jpeg/jpeg-load.c:232
 msgid "JPEG preview"
 msgstr "Previsualització JPEG"
 
-#: ../plug-ins/jpeg/jpeg-load.c:609 ../plug-ins/winicon/icoload.c:524
+#: ../plug-ins/jpeg/jpeg-load.c:609 ../plug-ins/winicon/icoload.c:722
 #, c-format
 msgid "Opening thumbnail for '%s'"
-msgstr "S'està obrint miniatura per a '%s'..."
+msgstr "S'està obrint miniatura per a '%s'"
 
 #: ../plug-ins/jpeg/jpeg-save.c:141
 #, c-format
@@ -11382,11 +11384,11 @@ msgstr "S'ignoraran les dades EXIF."
 
 #: ../plug-ins/maze/algorithms.c:287
 msgid "Constructing maze using Prim's Algorithm"
-msgstr "S'està construint un laberint amb l'algorisme de Prim..."
+msgstr "S'està construint un laberint amb l'algorisme de Prim"
 
 #: ../plug-ins/maze/algorithms.c:463
 msgid "Constructing tileable maze using Prim's Algorithm"
-msgstr "S'està construint el mosaic laberint amb l'algorisme de Prim..."
+msgstr "S'està construint el mosaic laberint amb l'algorisme de Prim"
 
 #: ../plug-ins/maze/maze.c:153
 msgid "Draw a labyrinth"
@@ -11405,46 +11407,46 @@ msgid "Maze"
 msgstr "Laberint"
 
 #. The maze size frame
-#: ../plug-ins/maze/maze_face.c:202
+#: ../plug-ins/maze/maze_face.c:201
 msgid "Maze Size"
 msgstr "Mida del laberint"
 
 #  entscale == Entry and Scale pair function found in pixelize.c
 #. entscale == Entry and Scale pair function found in pixelize.c
-#: ../plug-ins/maze/maze_face.c:219
+#: ../plug-ins/maze/maze_face.c:218
 msgid "Width (pixels):"
 msgstr "Amplada (píxels):"
 
-#: ../plug-ins/maze/maze_face.c:231 ../plug-ins/maze/maze_face.c:247
+#: ../plug-ins/maze/maze_face.c:230 ../plug-ins/maze/maze_face.c:246
 msgid "Pieces:"
 msgstr "Peces:"
 
-#: ../plug-ins/maze/maze_face.c:236
+#: ../plug-ins/maze/maze_face.c:235
 msgid "Height (pixels):"
 msgstr "Alçada (píxels):"
 
-#: ../plug-ins/maze/maze_face.c:259
+#: ../plug-ins/maze/maze_face.c:258
 msgid "Multiple (57):"
 msgstr "Múltiple (57):"
 
-#: ../plug-ins/maze/maze_face.c:272
+#: ../plug-ins/maze/maze_face.c:271
 msgid "Offset (1):"
 msgstr "Desplaçament (1):"
 
 #. The maze algorithm frame
-#: ../plug-ins/maze/maze_face.c:283
+#: ../plug-ins/maze/maze_face.c:282
 msgid "Algorithm"
 msgstr "Algorisme"
 
-#: ../plug-ins/maze/maze_face.c:309
+#: ../plug-ins/maze/maze_face.c:308
 msgid "Depth first"
 msgstr "Primer en profunditat"
 
-#: ../plug-ins/maze/maze_face.c:310
+#: ../plug-ins/maze/maze_face.c:309
 msgid "Prim's algorithm"
 msgstr "Algorisme de Prim"
 
-#: ../plug-ins/maze/maze_face.c:428
+#: ../plug-ins/maze/maze_face.c:427
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
@@ -11842,12 +11844,14 @@ msgid "Transferring data from scanner/camera"
 msgstr "S'està transferint dades de l'escàner/càmera"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:148
+#: ../plug-ins/uri/uri-backend-libcurl.c:110
 #, c-format
 msgid "Downloading %s of image data..."
 msgstr "S'està descarregant el %s de les dades de la imatge..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:149
-#: ../plug-ins/uri/uri-backend-wget.c:331
+#: ../plug-ins/uri/uri-backend-libcurl.c:117
+#: ../plug-ins/uri/uri-backend-wget.c:334
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "S'ha descarregat %s de les dades de la imatge"
@@ -11863,7 +11867,8 @@ msgid "Uploaded %s of image data"
 msgstr "S'ha enviat %s de les dades de la imatge"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:238
-#: ../plug-ins/uri/uri-backend-wget.c:180
+#: ../plug-ins/uri/uri-backend-libcurl.c:139
+#: ../plug-ins/uri/uri-backend-wget.c:183
 msgid "Connecting to server"
 msgstr "S'està connectant al servidor"
 
@@ -11880,17 +11885,31 @@ msgstr "No s'ha pogut llegir %s del '%s': %s"
 msgid "Failed to write %s to '%s': %s"
 msgstr "No s'ha pogut escriure %s del '%s': %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:147
-#: ../plug-ins/uri/uri-backend-wget.c:167
-#: ../plug-ins/uri/uri-backend-wget.c:186
-#: ../plug-ins/uri/uri-backend-wget.c:209
-#: ../plug-ins/uri/uri-backend-wget.c:238
+#: ../plug-ins/uri/uri-backend-libcurl.c:55
+msgid "Could not initialize libcurl"
+msgstr "No s'ha pogut inicialitzar libcurl"
+
+#: ../plug-ins/uri/uri-backend-libcurl.c:144
+msgid "Could not open output file for writing"
+msgstr "No s'ha pogut obrir el fitxer per a escriure-hi"
+
+#: ../plug-ins/uri/uri-backend-libcurl.c:182
+#, c-format
+msgid "Opening '%s' for reading resulted in HTTP response code: %d"
+msgstr ""
+"Quan s'estava mirant de llegir '%s' s'ha rebut un codi de resposta HTTP: %d"
+
+#: ../plug-ins/uri/uri-backend-wget.c:150
+#: ../plug-ins/uri/uri-backend-wget.c:170
+#: ../plug-ins/uri/uri-backend-wget.c:189
+#: ../plug-ins/uri/uri-backend-wget.c:212
+#: ../plug-ins/uri/uri-backend-wget.c:241
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
 msgstr "wget ha retornat un error amb l'URI '%s'"
 
 #. The third line is "Connecting to..."
-#: ../plug-ins/uri/uri-backend-wget.c:175
+#: ../plug-ins/uri/uri-backend-wget.c:178
 #, c-format
 msgid "(timeout is %d second)"
 msgid_plural "(timeout is %d seconds)"
@@ -11910,22 +11929,22 @@ msgstr[1] "(cronòmetre: %d segons)"
 #  -1  assume fsel is not available (and not attached to any drawable)
 #  -1  assume there is no floating selection
 #. The fourth line is either the network request or an error
-#: ../plug-ins/uri/uri-backend-wget.c:204
+#: ../plug-ins/uri/uri-backend-wget.c:207
 msgid "Opening URI"
 msgstr "S'està obrint l'URI"
 
-#: ../plug-ins/uri/uri-backend-wget.c:215
-#: ../plug-ins/uri/uri-backend-wget.c:248
+#: ../plug-ins/uri/uri-backend-wget.c:218
+#: ../plug-ins/uri/uri-backend-wget.c:251
 #, c-format
 msgid "A network error occurred: %s"
 msgstr "S'ha produït un error de xarxa: %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:288
+#: ../plug-ins/uri/uri-backend-wget.c:291
 #, c-format
 msgid "Downloading %s of image data"
-msgstr "S'està descarregant el %s de les dades de la imatge..."
+msgstr "S'està descarregant el %s de les dades de la imatge"
 
-#: ../plug-ins/uri/uri-backend-wget.c:293
+#: ../plug-ins/uri/uri-backend-wget.c:296
 msgid "Downloading unknown amount of image data"
 msgstr "S'està descarregant dades d'imatge de mida indeterminada"
 
@@ -11933,38 +11952,43 @@ msgstr "S'està descarregant dades d'imatge de mida indeterminada"
 msgid "URI"
 msgstr "URI"
 
-#: ../plug-ins/winicon/icodialog.c:99
-msgid "1 bpp, 1-bit alpha, 2-slot palette"
-msgstr "1 bpp, alfa 1-bit, paleta 2-safates"
-
-#: ../plug-ins/winicon/icodialog.c:100
-msgid "4 bpp, 1-bit alpha, 16-slot palette"
-msgstr "4 bpp, alfa 1-bit, paleta 16-safates"
-
-#: ../plug-ins/winicon/icodialog.c:101
-msgid "8 bpp, 1-bit alpha, 256-slot palette"
-msgstr "8 bpp, alpha 1-bit, paleta 256-safates"
-
-#: ../plug-ins/winicon/icodialog.c:102
-msgid "32 bpp, 8-bit alpha, no palette"
-msgstr "32 bpp, 8-bit alfa, sense paleta"
-
-#: ../plug-ins/winicon/icodialog.c:128
+#: ../plug-ins/winicon/icodialog.c:69
 msgid "Save as Windows Icon"
 msgstr "Desa com a icona del Windows"
 
-#: ../plug-ins/winicon/icodialog.c:158
+#: ../plug-ins/winicon/icodialog.c:95
 msgid "Icon Details"
 msgstr "Detalls de la icona"
 
-#: ../plug-ins/winicon/icoload.c:340
+#: ../plug-ins/winicon/icodialog.c:160
+msgid "1 bpp, 1-bit alpha, 2-slot palette"
+msgstr "1 bpp, alfa 1-bit, paleta 2-safates"
+
+#: ../plug-ins/winicon/icodialog.c:161
+msgid "4 bpp, 1-bit alpha, 16-slot palette"
+msgstr "4 bpp, alfa 1-bit, paleta 16-safates"
+
+#: ../plug-ins/winicon/icodialog.c:162
+msgid "8 bpp, 1-bit alpha, 256-slot palette"
+msgstr "8 bpp, alpha 1-bit, paleta 256-safates"
+
+#: ../plug-ins/winicon/icodialog.c:163
+msgid "24 bpp, 1-bit alpha, no palette"
+msgstr "24 bpp, 1-bit alfa, sense paleta"
+
+#: ../plug-ins/winicon/icodialog.c:164
+msgid "32 bpp, 8-bit alpha, no palette"
+msgstr "32 bpp, 8-bit alfa, sense paleta"
+
+#: ../plug-ins/winicon/icodialog.c:178
+msgid "Compressed (PNG)"
+msgstr "Comprimit (PNG)"
+
+#. read successfully. add to image
+#: ../plug-ins/winicon/icoload.c:616
 #, c-format
 msgid "Icon #%i"
 msgstr "Icona #%i"
-
-#: ../plug-ins/winicon/icosave.c:969
-msgid "Windows icons cannot be higher or wider than 255 pixels."
-msgstr "Les icones de Windows no poden ser més altes o amples de 255 píxels."
 
 #: ../plug-ins/winicon/main.c:103 ../plug-ins/winicon/main.c:137
 msgid "Microsoft Windows icon"
@@ -12069,4 +12093,8 @@ msgstr "Error: no s'ha pogut llegir el fitxer de propietats XJT '%s'."
 #: ../plug-ins/xjt/xjt.c:3204
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
-msgstr "Error: el fitxer de propietats XJT '%s' és buit."
+msgstr "Error: el fitxer de propietats XJT '%s' està buit."
+
+# era: msgstr "Retràs inserit per prevenir sobresaturacions a la unitat central."
+#~ msgid "GIF Warning"
+#~ msgstr "Avís GIF"
