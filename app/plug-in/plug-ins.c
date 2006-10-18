@@ -317,14 +317,14 @@ plug_ins_init (Gimp               *gimp,
 
   if (! gimp->no_interface)
     {
+      gimp_menus_init (gimp, gimp->plug_in_defs, STD_PLUGINS_DOMAIN);
+
       gimp->load_procs = g_slist_sort_with_data (gimp->load_procs,
                                                  plug_ins_file_proc_compare,
                                                  gimp);
       gimp->save_procs = g_slist_sort_with_data (gimp->save_procs,
                                                  plug_ins_file_proc_compare,
                                                  gimp);
-
-      gimp_menus_init (gimp, gimp->plug_in_defs, STD_PLUGINS_DOMAIN);
     }
 
   /* build list of automatically started extensions */
