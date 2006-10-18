@@ -118,7 +118,7 @@ cdisplay_contrast_get_type (GTypeModule *module)
 {
   if (! cdisplay_contrast_type)
     {
-      static const GTypeInfo display_info =
+      const GTypeInfo display_info =
       {
         sizeof (CdisplayContrastClass),
 	(GBaseInitFunc) NULL,

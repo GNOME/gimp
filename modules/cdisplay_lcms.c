@@ -134,7 +134,7 @@ cdisplay_lcms_get_type (GTypeModule *module)
 {
   if (! cdisplay_lcms_type)
     {
-      static const GTypeInfo display_info =
+      const GTypeInfo display_info =
       {
         sizeof (CdisplayLcmsClass),
         (GBaseInitFunc)     NULL,

@@ -129,7 +129,7 @@ gimp_container_view_interface_get_type (void)
 
   if (! iface_type)
     {
-      static const GTypeInfo iface_info =
+      const GTypeInfo iface_info =
       {
         sizeof (GimpContainerViewInterface),
         (GBaseInitFunc)     gimp_container_view_iface_base_init,

@@ -89,7 +89,7 @@ gimp_pdb_dialog_get_type (void)
 
   if (! dialog_type)
     {
-      static const GTypeInfo dialog_info =
+      const GTypeInfo dialog_info =
       {
         sizeof (GimpPdbDialogClass),
         (GBaseInitFunc) NULL,

@@ -56,7 +56,7 @@ gimp_progress_interface_get_type (void)
 
   if (! progress_iface_type)
     {
-      static const GTypeInfo progress_iface_info =
+      const GTypeInfo progress_iface_info =
       {
         sizeof (GimpProgressInterface),
         (GBaseInitFunc)     gimp_progress_iface_base_init,

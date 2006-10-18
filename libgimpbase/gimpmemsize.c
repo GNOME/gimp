@@ -39,9 +39,9 @@ gimp_memsize_get_type (void)
 {
   static GType memsize_type = 0;
 
-  if (!memsize_type)
+  if (! memsize_type)
     {
-      static const GTypeInfo type_info = { 0, };
+      const GTypeInfo type_info = { 0, };
 
       memsize_type = g_type_register_static (G_TYPE_UINT64, "GimpMemsize",
                                              &type_info, 0);
@@ -271,9 +271,9 @@ gimp_param_memsize_get_type (void)
 {
   static GType spec_type = 0;
 
-  if (!spec_type)
+  if (! spec_type)
     {
-      static const GTypeInfo type_info =
+      const GTypeInfo type_info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,

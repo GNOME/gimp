@@ -97,7 +97,7 @@ gimp_data_get_type (void)
 
   if (! data_type)
     {
-      static const GTypeInfo data_info =
+      const GTypeInfo data_info =
       {
         sizeof (GimpDataClass),
         (GBaseInitFunc) NULL,

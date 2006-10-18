@@ -99,7 +99,7 @@ gimp_scrolled_preview_get_type (void)
 
   if (! preview_type)
     {
-      static const GTypeInfo preview_info =
+      const GTypeInfo preview_info =
       {
         sizeof (GimpScrolledPreviewClass),
         (GBaseInitFunc) NULL,

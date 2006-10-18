@@ -160,9 +160,9 @@ gimp_rectangle_tool_interface_get_type (void)
 {
   static GType iface_type = 0;
 
-  if (!iface_type)
+  if (! iface_type)
     {
-      static const GTypeInfo iface_info =
+      const GTypeInfo iface_info =
       {
         sizeof (GimpRectangleToolInterface),
         (GBaseInitFunc)     gimp_rectangle_tool_iface_base_init,

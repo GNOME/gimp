@@ -183,7 +183,7 @@ linux_input_get_type (GTypeModule *module)
 {
   if (! controller_type)
     {
-      static const GTypeInfo controller_info =
+      const GTypeInfo controller_info =
       {
         sizeof (ControllerLinuxInputClass),
         (GBaseInitFunc) NULL,

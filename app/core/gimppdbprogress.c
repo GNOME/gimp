@@ -87,7 +87,7 @@ gimp_pdb_progress_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GimpPdbProgressClass),
         (GBaseInitFunc) NULL,
@@ -100,7 +100,7 @@ gimp_pdb_progress_get_type (void)
         (GInstanceInitFunc) gimp_pdb_progress_init,
       };
 
-      static const GInterfaceInfo progress_iface_info =
+      const GInterfaceInfo progress_iface_info =
       {
         (GInterfaceInitFunc) gimp_pdb_progress_progress_iface_init,
         NULL,           /* iface_finalize */

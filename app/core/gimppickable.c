@@ -38,7 +38,7 @@ gimp_pickable_interface_get_type (void)
 
   if (! pickable_iface_type)
     {
-      static const GTypeInfo pickable_iface_info =
+      const GTypeInfo pickable_iface_info =
       {
         sizeof (GimpPickableInterface),
         (GBaseInitFunc)     NULL,

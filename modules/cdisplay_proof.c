@@ -129,7 +129,7 @@ cdisplay_proof_get_type (GTypeModule *module)
 {
   if (! cdisplay_proof_type)
     {
-      static const GTypeInfo display_info =
+      const GTypeInfo display_info =
       {
         sizeof (CdisplayProofClass),
         (GBaseInitFunc)     NULL,

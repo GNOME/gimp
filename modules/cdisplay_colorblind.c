@@ -230,7 +230,7 @@ cdisplay_colorblind_get_type (GTypeModule *module)
 {
   if (! cdisplay_colorblind_type)
     {
-      static const GTypeInfo display_info =
+      const GTypeInfo display_info =
       {
         sizeof (CdisplayColorblindClass),
         (GBaseInitFunc) NULL,

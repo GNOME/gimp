@@ -99,7 +99,7 @@ gimp_resolution_entry_get_type (void)
 
   if (! gre_type)
     {
-      static const GTypeInfo gre_info =
+      const GTypeInfo gre_info =
       {
         sizeof (GimpResolutionEntryClass),
         (GBaseInitFunc) NULL,

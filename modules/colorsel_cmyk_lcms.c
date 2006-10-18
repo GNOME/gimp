@@ -116,7 +116,7 @@ colorsel_cmyk_get_type (GTypeModule *module)
 {
   if (! colorsel_cmyk_type)
     {
-      static const GTypeInfo select_info =
+      const GTypeInfo select_info =
       {
         sizeof (ColorselCmykClass),
 	(GBaseInitFunc) NULL,

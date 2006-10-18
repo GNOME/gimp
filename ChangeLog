@@ -1,5 +1,10 @@
 2006-10-18  Sven Neumann  <sven@gimp.org>
 
+	* [lots of files]: there's no need to make GTypeInfo and
+	GInterfaceInfo structs static.
+
+2006-10-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/unsharp-mask.scm: this script should
 	not register in the menus. Also unmarked strings for translation.
 

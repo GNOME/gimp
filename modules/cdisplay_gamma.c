@@ -118,7 +118,7 @@ cdisplay_gamma_get_type (GTypeModule *module)
 {
   if (! cdisplay_gamma_type)
     {
-      static const GTypeInfo display_info =
+      const GTypeInfo display_info =
       {
         sizeof (CdisplayGammaClass),
 	(GBaseInitFunc)     NULL,
