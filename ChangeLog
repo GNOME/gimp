@@ -1,3 +1,29 @@
+2006-10-18  Michael Natterer  <mitch@gimp.org>
+
+	Separate selection tool function (select, move, cut, ...) from
+	selection mode (replace, add, ...). Fixes bug #313634 (that bug
+	wasn't triggered any more in HEAD, but was still there).
+
+	* app/tools/tools-enums.h: renamed enum SelectOp to SelectFunction
+	and replaced the values REPLACE, ADD, SUBTRACT and INTERSECT by a
+	single value SELECT.
+
+	* app/tools/gimpselectiontool.h (struct GimpSelectionTool):
+	renamed member "op" to "function". Changed "SelectOps saved_op" to
+	"GimpChannelOps saved_operation".
+
+	* app/tools/gimpselectiontool.c: we always have the right
+	GimpChannelOps in the tool options, so simply use it instead of
+	mixing up unrelated stuff in one enum. Results is some medium-ugly
+	nested switches, but is generally much cleaner than before.
+
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpregionselecttool.c: changed accordingly. Use the
+	operation from the tool options instead of selection_tool->op when
+	making the actual selection.
+
 2006-10-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimprectangleselecttool.[ch]

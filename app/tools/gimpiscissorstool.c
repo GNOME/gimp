@@ -468,7 +468,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
                                        tool->tool_info->blurb,
                                        iscissors->mask,
                                        0, 0,
-                                       GIMP_SELECTION_TOOL (tool)->op,
+                                       options->operation,
                                        options->feather,
                                        options->feather_radius,
                                        options->feather_radius);

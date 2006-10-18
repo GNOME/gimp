@@ -38,12 +38,12 @@ typedef struct _GimpSelectionToolClass GimpSelectionToolClass;
 
 struct _GimpSelectionTool
 {
-  GimpDrawTool  parent_instance;
+  GimpDrawTool   parent_instance;
 
-  SelectOps     op;       /*  selection operation (SELECTION_ADD etc.)  */
-  SelectOps     saved_op; /*  saved tool options state                  */
+  SelectFunction function;         /*  selection function        */
+  GimpChannelOps saved_operation;  /*  saved tool options state  */
 
-  gboolean      allow_move;
+  gboolean       allow_move;
 };
 
 struct _GimpSelectionToolClass

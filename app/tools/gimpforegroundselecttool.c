@@ -294,9 +294,9 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
 
   if (fg_select->mask)
     {
-      switch (GIMP_SELECTION_TOOL (tool)->op)
+      switch (GIMP_SELECTION_TOOL (tool)->function)
         {
-        case SELECTION_REPLACE:
+        case SELECTION_SELECT:
         case SELECTION_MOVE_MASK:
         case SELECTION_MOVE:
         case SELECTION_MOVE_COPY:
@@ -312,12 +312,9 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
     }
   else
     {
-      switch (GIMP_SELECTION_TOOL (tool)->op)
+      switch (GIMP_SELECTION_TOOL (tool)->function)
         {
-        case SELECTION_ADD:
-        case SELECTION_SUBTRACT:
-        case SELECTION_INTERSECT:
-        case SELECTION_REPLACE:
+        case SELECTION_SELECT:
           status = _("Draw a rough circle around the object to extract");
           break;
         default:
@@ -369,7 +366,7 @@ gimp_foreground_select_tool_cursor_update (GimpTool        *tool,
 
       gimp_tool_control_set_toggled (tool->control, options->background);
 
-      switch (GIMP_SELECTION_TOOL (tool)->op)
+      switch (GIMP_SELECTION_TOOL (tool)->function)
         {
         case SELECTION_MOVE_MASK:
         case SELECTION_MOVE:
@@ -733,17 +730,13 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
 {
   GimpTool             *tool    = GIMP_TOOL (fg_select);
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  GimpChannelOps        op      = GIMP_SELECTION_TOOL (tool)->op;
 
   g_return_if_fail (fg_select->mask != NULL);
-
-  if (op > GIMP_CHANNEL_OP_INTERSECT)
-    op = GIMP_CHANNEL_OP_REPLACE;
 
   gimp_channel_select_channel (gimp_image_get_mask (display->image),
                                Q_("command|Foreground Select"),
                                fg_select->mask, 0, 0,
-                               op,
+                               options->operation,
                                options->feather,
                                options->feather_radius,
                                options->feather_radius);

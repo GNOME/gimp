@@ -237,9 +237,9 @@ gimp_free_select_tool_motion (GimpTool        *tool,
   GimpFreeSelectTool *free_sel = GIMP_FREE_SELECT_TOOL (tool);
   GimpSelectionTool  *sel_tool = GIMP_SELECTION_TOOL (tool);
 
-  if (sel_tool->op == SELECTION_ANCHOR)
+  if (sel_tool->function == SELECTION_ANCHOR)
     {
-      sel_tool->op = SELECTION_REPLACE;
+      sel_tool->function = SELECTION_SELECT;
 
       gimp_tool_cursor_update (tool, coords, state, display);
     }
@@ -300,14 +300,13 @@ static void
 gimp_free_select_tool_real_select (GimpFreeSelectTool *free_sel,
                                    GimpDisplay        *display)
 {
-  GimpTool             *tool    = GIMP_TOOL (free_sel);
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (free_sel);
 
   gimp_channel_select_polygon (gimp_image_get_mask (display->image),
                                Q_("command|Free Select"),
                                free_sel->num_points,
                                free_sel->points,
-                               GIMP_SELECTION_TOOL (tool)->op,
+                               options->operation,
                                options->antialias,
                                options->feather,
                                options->feather_radius,

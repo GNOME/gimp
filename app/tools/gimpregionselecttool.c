@@ -191,7 +191,7 @@ gimp_region_select_tool_button_release (GimpTool        *tool,
     {
       gint off_x, off_y;
 
-      if (GIMP_SELECTION_TOOL (tool)->op == SELECTION_ANCHOR)
+      if (GIMP_SELECTION_TOOL (tool)->function == SELECTION_ANCHOR)
         {
           if (gimp_image_floating_sel (display->image))
             {
@@ -227,7 +227,7 @@ gimp_region_select_tool_button_release (GimpTool        *tool,
                                        region_sel->region_mask,
                                        off_x,
                                        off_y,
-                                       GIMP_SELECTION_TOOL (tool)->op,
+                                       options->operation,
                                        options->feather,
                                        options->feather_radius,
                                        options->feather_radius);
