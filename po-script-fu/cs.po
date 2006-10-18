@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-18 11:14+0200\n"
-"PO-Revision-Date: 2006-10-18 11:14+0200\n"
+"POT-Creation-Date: 2006-10-18 13:03+0200\n"
+"PO-Revision-Date: 2006-10-18 13:17+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,6 @@ msgid "Welcome to TinyScheme\n"
 msgstr "Vítá vás TinyScheme\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:209
-#, fuzzy
 msgid ""
 "Copyright (c) Dimitrios Souflis\n"
 "\n"
@@ -58,7 +57,7 @@ msgstr "Uložit výstup konzole Script-Fu"
 #: ../plug-ins/script-fu/script-fu-console.c:349
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr ""
+msgstr "Nelze otevřít '%s' pro zápis: %s"
 
 #: ../plug-ins/script-fu/script-fu-console.c:378
 msgid "Script-Fu Procedure Browser"
@@ -128,7 +127,7 @@ msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu výběr stopy"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:674
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error while executing\n"
 "%s\n"
@@ -137,6 +136,7 @@ msgid ""
 msgstr ""
 "Chyba při spouštění\n"
 "%s\n"
+"\n"
 "%s"
 
 #: ../plug-ins/script-fu/script-fu-server.c:711
@@ -233,55 +233,46 @@ msgid "Alpha to _Logo"
 msgstr "Alfa do _loga"
 
 #: ../plug-ins/script-fu/script-fu.c:296
-#, fuzzy
 msgid "An_imation"
 msgstr "An_imace"
 
 #: ../plug-ins/script-fu/script-fu.c:298
-#, fuzzy
 msgid "_Animators"
 msgstr "_Animátory"
 
 #: ../plug-ins/script-fu/script-fu.c:300
-#, fuzzy
 msgid "_Artistic"
 msgstr "_Umění"
 
 #: ../plug-ins/script-fu/script-fu.c:302
-#, fuzzy
 msgid "_Blur"
-msgstr "Rozostření X"
+msgstr "_Rozostření"
 
 #: ../plug-ins/script-fu/script-fu.c:304
 msgid "_Decor"
 msgstr "_Dekorace"
 
 #: ../plug-ins/script-fu/script-fu.c:306
-#, fuzzy
 msgid "_Effects"
-msgstr "Efekt _Xach..."
+msgstr "_Efekty"
 
 #: ../plug-ins/script-fu/script-fu.c:308
-#, fuzzy
 msgid "En_hance"
 msgstr "Vy_lepšit"
 
 #: ../plug-ins/script-fu/script-fu.c:310
-#, fuzzy
 msgid "_Light and Shadow"
 msgstr "_Světlo a stín"
 
 #: ../plug-ins/script-fu/script-fu.c:312
-#, fuzzy
 msgid "S_hadow"
-msgstr "Stín"
+msgstr "_Stín"
 
 #: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Render"
 msgstr "_Vykreslit"
 
 #: ../plug-ins/script-fu/script-fu.c:316
-#, fuzzy
 msgid "_Alchemy"
 msgstr "_Alchymie"
 
@@ -402,8 +393,7 @@ msgid "Outline blur radius"
 msgstr "Poloměr rozostření obrysu"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
-msgid ""
-"Outline the selected region (or alpha) with a pattern and add a drop shadow"
+msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
@@ -952,7 +942,6 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
-#, fuzzy
 msgid "Background Color"
 msgstr "Barva pozadí"
 
@@ -1064,7 +1053,6 @@ msgid "Stencil C_arve..."
 msgstr "_Vyřezat..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
-#, fuzzy
 msgid "Background Image"
 msgstr "Obrázek na pozadí"
 
@@ -1205,8 +1193,7 @@ msgid "Circuit seed"
 msgstr "Hnízdo okruhu"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-msgid ""
-"Fill the selected region (or alpha) with traces like those on a circuit board"
+msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
@@ -1477,8 +1464,7 @@ msgid "Clear unselected maskarea"
 msgstr "Vymazat nevybranou oblast masky"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid ""
-"Create a layermask that fades the edges of the selected region (or alpha)"
+msgid "Create a layermask that fades the edges of the selected region (or alpha)"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:6
@@ -1547,8 +1533,7 @@ msgid "Black on white"
 msgstr "Černá na bílé"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
-msgid ""
-"Create an image filled with previews of fonts matching a fontname filter"
+msgid "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
@@ -1805,7 +1790,7 @@ msgstr "Velikost okraje (pixely)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 msgid "Create a logo with a shiny look and beveled edges"
-msgstr ""
+msgstr "Vytvořit zářivé logo se zkosenými okraji"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 msgid "Gradient Beve_l..."
@@ -1813,12 +1798,11 @@ msgstr "_Šikmý přechod..."
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "Create an image filled with an example of the current gradient"
-msgstr ""
+msgstr "Vytvořit obrázek vyplněný příkladem aktuálního přechodu"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
-#, fuzzy
 msgid "Custom _Gradient..."
-msgstr "Vlastní přechod"
+msgstr "Vlastní _přechod..."
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
@@ -1969,7 +1953,7 @@ msgstr "_Země..."
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:1
 msgid "Fill the current selection with lava"
-msgstr ""
+msgstr "Vyplnit aktuální výběr lávou"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:4
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
@@ -1989,8 +1973,7 @@ msgid "_Lava..."
 msgstr "_Láva..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
-msgid ""
-"Fill a layer with rays emanating outward from its center using the FG color"
+msgid "Fill a layer with rays emanating outward from its center using the FG color"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
@@ -2015,15 +1998,16 @@ msgstr "Ostrost (stupně)"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
 msgid "Create a rectangular brush"
-msgstr ""
+msgstr "Vytvořit obdélníkovou stopu"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
+#, fuzzy
 msgid "Create a rectangular brush with feathered edges"
-msgstr ""
+msgstr "Vytvořit obdélníkovou stopu s"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "Create an elliptical brush"
-msgstr ""
+msgstr "Vytvořit eliptickou stopu"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid "Create an elliptical brush with feathered edges"
@@ -2089,7 +2073,7 @@ msgstr "Velikost buňky (pixely)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
 msgid "Create a logo in the style newpaper printing"
-msgstr ""
+msgstr "Vytvořit logo ve stylu novinového tisku"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:4
@@ -2107,7 +2091,7 @@ msgstr "Rozostření"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Make an image look like an old photo"
-msgstr ""
+msgstr "Dodat obrázku vzhled staré fotografie"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:4
 msgid "Mottle"
@@ -2139,7 +2123,7 @@ msgstr "Nová _stopa..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
 msgid "Paste the clipboard contents into a new brush"
-msgstr ""
+msgstr "Vložit obsah schránky do nové stopy"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
@@ -2147,7 +2131,7 @@ msgstr "Nový _vzorek..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
 msgid "Paste the clipboard contents into a new pattern"
-msgstr ""
+msgstr "Vložit obsah schránky do nového vzorku"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:4
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
@@ -2255,7 +2239,6 @@ msgid "Create an image filled with an Earth-like map pattern"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
-#, fuzzy
 msgid "Detail in Middle"
 msgstr "Detail uprostřed"
 
@@ -2272,8 +2255,7 @@ msgid "Black"
 msgstr "Černá"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
-msgid ""
-"Create a multi-layer image by adding a ripple effect to the current image"
+msgid "Create a multi-layer image by adding a ripple effect to the current image"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
@@ -2314,8 +2296,7 @@ msgid "Edge radius"
 msgstr "Poloměr hran"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
-msgid ""
-"Round the corners of an image and optionally add a drop-shadow and background"
+msgid "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
@@ -2332,7 +2313,7 @@ msgstr "Do _stopy..."
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "Convert a selection to an image"
-msgstr ""
+msgstr "Převést výběr na obrázek"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:2
 msgid "To _Image"
@@ -2340,7 +2321,7 @@ msgstr "Do _obrázku"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
 msgid "Convert a selection to a pattern"
-msgstr ""
+msgstr "Převést výběr na vzorek"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "To _Pattern..."
@@ -2356,9 +2337,8 @@ msgid "Radius (%)"
 msgstr "Poloměr (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
-#, fuzzy
 msgid "Round the corners of the current selection"
-msgstr "Vytvoří čtyři vodítka okolo obdélníku opsanému aktuálnímu výběru."
+msgstr "Zaoblit rohy aktuálního výběru"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
 msgid ""
@@ -2444,8 +2424,7 @@ msgstr "_Rotující glóbus..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 #, fuzzy
-msgid ""
-"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr ""
 "Vykresluje hypotrochoidy, epitrochoidy a Lissajousovy křivky. Více informací "
 "http://www.wisdom.weizmann.ac.il/~elad/spyrogimp/"
@@ -2674,8 +2653,7 @@ msgid "Antialias"
 msgstr "Vyhlazování"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
-msgid ""
-"Create a logo by rendering the specified text along the perimeter of a circle"
+msgid "Create a logo by rendering the specified text along the perimeter of a circle"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
@@ -2687,8 +2665,7 @@ msgid "Text C_ircle..."
 msgstr "Textový _kruh..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
-msgid ""
-"Create a textured logo with highlights, shadows, and a mosaic background"
+msgid "Create a textured logo with highlights, shadows, and a mosaic background"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
@@ -2778,8 +2755,7 @@ msgid "T_ruchet..."
 msgstr "_Klikatice..."
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
-msgid ""
-"Make a new image from the current layer by applying the unsharp mask method"
+msgid "Make a new image from the current layer by applying the unsharp mask method"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
@@ -2856,11 +2832,11 @@ msgstr "_Tkát..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "Bookmark to the GIMP web site"
-msgstr ""
+msgstr "Záložka pro web GIMPu"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "Bookmark to the user manual"
-msgstr ""
+msgstr "Záložka pro uživatelskou příručku"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "Create and Use _Selections"
@@ -2950,3 +2926,4 @@ msgstr "Krytí světel"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Efekt _Xach..."
+
