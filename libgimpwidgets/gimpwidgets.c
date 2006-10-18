@@ -1397,9 +1397,7 @@ void
 gimp_toggle_button_update (GtkWidget *widget,
                            gpointer   data)
 {
-  gint *toggle_val;
-
-  toggle_val = (gint *) data;
+  gint *toggle_val = (gint *) data;
 
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     *toggle_val = TRUE;
@@ -1421,11 +1419,9 @@ void
 gimp_radio_button_update (GtkWidget *widget,
                           gpointer   data)
 {
-  gint *toggle_val;
-
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
-      toggle_val = (gint *) data;
+      gint *toggle_val = (gint *) data;
 
       *toggle_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                                         "gimp-item-data"));
@@ -1447,9 +1443,8 @@ void
 gimp_int_adjustment_update (GtkAdjustment *adjustment,
                             gpointer       data)
 {
-  gint *val;
+  gint *val = (gint *) data;
 
-  val = (gint *) data;
   *val = RINT (adjustment->value);
 }
 
@@ -1466,9 +1461,8 @@ void
 gimp_uint_adjustment_update (GtkAdjustment *adjustment,
                              gpointer       data)
 {
-  guint *val;
+  guint *val = (guint *) data;
 
-  val = (guint *) data;
   *val = (guint) (adjustment->value + 0.5);
 }
 
@@ -1482,10 +1476,9 @@ void
 gimp_float_adjustment_update (GtkAdjustment *adjustment,
                               gpointer       data)
 {
-  gfloat *val;
-
-  val = (gfloat *) data;
+  gfloat *val = (gfloat *) data;
   *val = adjustment->value;
+
 }
 
 /**
@@ -1498,9 +1491,8 @@ void
 gimp_double_adjustment_update (GtkAdjustment *adjustment,
                                gpointer       data)
 {
-  gdouble *val;
+  gdouble *val = (gdouble *) data;
 
-  val = (gdouble *) data;
   *val = adjustment->value;
 }
 
@@ -1522,11 +1514,10 @@ void
 gimp_unit_menu_update (GtkWidget *widget,
                        gpointer   data)
 {
-  GimpUnit  *val;
+  GimpUnit  *val = (GimpUnit *) data;
   GtkWidget *spinbutton;
   gint       digits;
 
-  val = (GimpUnit *) data;
   *val = gimp_unit_menu_get_unit (GIMP_UNIT_MENU (widget));
 
   digits = ((*val == GIMP_UNIT_PIXEL) ? 0 :
@@ -1552,19 +1543,27 @@ static GtkWidget *
 find_mnemonic_widget (GtkWidget *widget,
                       gint       level)
 {
-  GtkWidget *mnemonic_widget = NULL;
 
   if (GTK_WIDGET_GET_CLASS (widget)->activate_signal ||
       GTK_WIDGET_CAN_FOCUS (widget)                  ||
       GTK_WIDGET_GET_CLASS (widget)->mnemonic_activate !=
       GTK_WIDGET_CLASS (g_type_class_peek (GTK_TYPE_WIDGET))->mnemonic_activate)
     {
-      mnemonic_widget = widget;
+      return widget;
+    }
+
+  if (GIMP_IS_SIZE_ENTRY (widget))
+    {
+      GimpSizeEntry *entry = GIMP_SIZE_ENTRY (widget);
+
+      return gimp_size_entry_get_help_widget (entry,
+                                              entry->number_of_fields - 1);
     }
   else if (GTK_IS_CONTAINER (widget))
     {
-      GList *children;
-      GList *list;
+      GtkWidget *mnemonic_widget = NULL;
+      GList     *children;
+      GList     *list;
 
       children = gtk_container_get_children (GTK_CONTAINER (widget));
 
@@ -1577,9 +1576,11 @@ find_mnemonic_widget (GtkWidget *widget,
         }
 
       g_list_free (children);
+
+      return mnemonic_widget;
     }
 
-  return mnemonic_widget;
+  return NULL;
 }
 
 /**
