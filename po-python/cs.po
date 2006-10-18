@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-04 13:11+0200\n"
-"PO-Revision-Date: 2006-10-04 14:12+0200\n"
+"POT-Creation-Date: 2006-10-18 11:16+0200\n"
+"PO-Revision-Date: 2006-10-18 13:01+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,33 +22,37 @@ msgstr ""
 "X-Generator: KBabel 1.10.2\n"
 "Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:332
+#: ../plug-ins/pygimp/gimpfu.py:333
+msgid "Missing exception information"
+msgstr "Chybějící informace o výjimce"
+
+#: ../plug-ins/pygimp/gimpfu.py:342
 #, python-format
 msgid "An error occured running %s"
 msgstr "Při běhu %s došlo k chybě"
 
-#: ../plug-ins/pygimp/gimpfu.py:347
+#: ../plug-ins/pygimp/gimpfu.py:353
 msgid "_More Information"
 msgstr "_Více informací"
 
-#: ../plug-ins/pygimp/gimpfu.py:452 ../plug-ins/pygimp/gimpfu.py:464
-#: ../plug-ins/pygimp/gimpfu.py:470
+#: ../plug-ins/pygimp/gimpfu.py:459 ../plug-ins/pygimp/gimpfu.py:471
+#: ../plug-ins/pygimp/gimpfu.py:477
 msgid "No"
 msgstr "Ne"
 
-#: ../plug-ins/pygimp/gimpfu.py:462 ../plug-ins/pygimp/gimpfu.py:470
+#: ../plug-ins/pygimp/gimpfu.py:469 ../plug-ins/pygimp/gimpfu.py:477
 msgid "Yes"
 msgstr "Ano"
 
-#: ../plug-ins/pygimp/gimpfu.py:508 ../plug-ins/pygimp/gimpui.py:200
+#: ../plug-ins/pygimp/gimpfu.py:515 ../plug-ins/pygimp/gimpui.py:200
 msgid "Python-Fu File Selection"
 msgstr "Výběr souboru Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:519
+#: ../plug-ins/pygimp/gimpfu.py:526
 msgid "Python-Fu Folder Selection"
 msgstr "Výběr složky Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:608
+#: ../plug-ins/pygimp/gimpfu.py:615
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Neplatný vstup pro '%s'"
@@ -75,7 +79,7 @@ msgstr "Barevné XHTML"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
 msgid "Character source"
-msgstr ""
+msgstr "Zdroj znaku"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
 msgid "Source code"
@@ -155,11 +159,11 @@ msgstr "Krytí"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
 msgid "Offset the colors in a palette"
-msgstr ""
+msgstr "Posunout barvy v paletě"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
 msgid "_Offset Palette..."
-msgstr ""
+msgstr "P_osunout paletu..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
@@ -194,7 +198,7 @@ msgstr "HSV"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
 msgid "Channel to sort"
-msgstr ""
+msgstr "Kanál k setřídění"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
@@ -214,7 +218,7 @@ msgstr "Klesající"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:51
 msgid "Create a repeating gradient using colors from the palette"
-msgstr ""
+msgstr "Vytvořit opakující se přechod z barev palety"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:56
 msgid "Palette to _Repeating Gradient"
@@ -230,7 +234,7 @@ msgstr "Paleta do _přechodu"
 
 #: ../plug-ins/pygimp/plug-ins/pdbbrowse.py:37
 msgid "Browse the Procedural Database"
-msgstr ""
+msgstr "Procházet databázi procedur"
 
 #: ../plug-ins/pygimp/plug-ins/pdbbrowse.py:42
 msgid "_Procedure Browser"
@@ -274,11 +278,11 @@ msgstr "Složka pro export obrázku"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Space between table elements"
-msgstr ""
+msgstr "Prostor mezi prvky tabulky"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Javascript for onmouseover and clicked)"
-msgstr ""
+msgstr "Javascript při přejetí myší a kliknutí"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:442
 msgid "Skip animation for table caps"
@@ -294,11 +298,11 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
 msgid "Shadow blur"
-msgstr ""
+msgstr "Rozostření stínu"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 msgid "Bevel"
-msgstr ""
+msgstr "Zkosení"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "Drop shadow"
