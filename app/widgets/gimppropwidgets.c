@@ -42,6 +42,7 @@
 #include "gimpview.h"
 #include "gimppropwidgets.h"
 #include "gimpwidgets-constructors.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -65,6 +66,51 @@ static void         connect_notify     (GObject     *config,
                                         const gchar *property_name,
                                         GCallback    callback,
                                         gpointer     callback_data);
+
+
+/*********************/
+/*  expanding frame  */
+/*********************/
+
+GtkWidget *
+gimp_prop_expanding_frame_new (GObject      *config,
+                               const gchar  *property_name,
+                               const gchar  *button_label,
+                               GtkWidget    *child,
+                               GtkWidget   **button)
+{
+  GtkWidget *frame;
+  GtkWidget *toggle;
+  gboolean   value;
+
+  if (! check_param_spec (config, property_name,
+                          G_TYPE_PARAM_BOOLEAN, G_STRFUNC))
+    return NULL;
+
+  frame = gimp_frame_new (NULL);
+
+  toggle = gimp_prop_check_button_new (config, property_name, button_label);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
+  gtk_widget_show (toggle);
+
+  gtk_container_add (GTK_CONTAINER (frame), child);
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  if (value)
+    gtk_widget_show (child);
+
+  g_signal_connect_object (toggle, "toggled",
+                           G_CALLBACK (gimp_toggle_button_set_visible),
+                           child, 0);
+
+  if (button)
+    *button = toggle;
+
+  return frame;
+}
 
 
 /****************/

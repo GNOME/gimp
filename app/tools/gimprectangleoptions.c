@@ -29,7 +29,6 @@
 #include "core/gimptooloptions.h"
 
 #include "widgets/gimppropwidgets.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "gimprectangleoptions.h"
 #include "gimptooloptions-gui.h"
@@ -499,23 +498,13 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
   private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (tool_options);
 
-  frame = gimp_frame_new (NULL);
+  vbox2 = gtk_vbox_new (FALSE, 0);
+
+  frame = gimp_prop_expanding_frame_new (config, "auto-shrink",
+                                         _("Auto shrink selection"),
+                                         vbox2, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  button = gimp_prop_check_button_new (config, "auto-shrink",
-                                       _("Auto shrink selection"));
-  gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-  gtk_widget_show (button);
-
-  vbox2 = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  if (private->auto_shrink)
-    gtk_widget_show (vbox2);
-
-  g_signal_connect_object (button, "toggled",
-                           G_CALLBACK (gimp_toggle_button_set_visible),
-                           vbox2, 0);
 
   button = gimp_prop_check_button_new (config, "shrink-merged",
                                        _("Sample merged"));
@@ -632,4 +621,3 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
   return vbox;
 }
-

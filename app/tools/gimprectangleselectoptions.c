@@ -28,7 +28,7 @@
 
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/gimppropwidgets.h"
 
 #include "gimprectangleoptions.h"
 #include "gimprectangleselectoptions.h"
@@ -148,30 +148,19 @@ gimp_rect_select_options_gui (GimpToolOptions *tool_options)
       GtkWidget *button;
       GtkWidget *table;
 
-      frame = gimp_frame_new (NULL);
+      table = gtk_table_new (1, 3, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+
+      frame = gimp_prop_expanding_frame_new (config, "round-corners",
+                                             _("Rounded corners"),
+                                             table, &button);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
-
-      button = gimp_prop_check_button_new (config, "round-corners",
-                                           _("Rounded corners"));
-      gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-      gtk_widget_show (button);
 
       g_object_set_data (G_OBJECT (button), "set_sensitive",
                          GIMP_SELECTION_OPTIONS (tool_options)->antialias_toggle);
       gtk_widget_set_sensitive (GIMP_SELECTION_OPTIONS (tool_options)->antialias_toggle,
                                 GIMP_RECT_SELECT_OPTIONS (tool_options)->round_corners);
-
-      table = gtk_table_new (1, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-      gtk_container_add (GTK_CONTAINER (frame), table);
-
-      if (GIMP_RECT_SELECT_OPTIONS (tool_options)->round_corners)
-        gtk_widget_show (table);
-
-      g_signal_connect_object (button, "toggled",
-                               G_CALLBACK (gimp_toggle_button_set_visible),
-                               table, 0);
 
       gimp_prop_scale_entry_new (config, "corner-radius",
                                  GTK_TABLE (table), 0, 0,

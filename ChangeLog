@@ -1,5 +1,18 @@
 2006-10-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimppropwidgets.[ch]: added
+	gimp_prop_expanding_frame_new() which creates a frame with a
+	toggle button in the title.
+
+	* app/tools/gimpblendoptions.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimprectangleoptions.c
+	* app/tools/gimprectangleselectoptions.c
+	* app/tools/gimpselectionoptions.c: use it instead of duplicating
+	this code all over the place.
+
+2006-10-18  Michael Natterer  <mitch@gimp.org>
+
 	Applied modified patch from Martin Nordholts which adds a "Rounded
 	Corners" option to the rectangle select tool. Fixes bug #86279.
 

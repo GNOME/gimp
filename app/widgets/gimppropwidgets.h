@@ -23,6 +23,15 @@
 #define __GIMP_APP_PROP_WIDGETS_H__
 
 
+/*  GParamBoolean  */
+
+GtkWidget * gimp_prop_expanding_frame_new (GObject     *config,
+                                           const gchar *property_name,
+                                           const gchar *button_label,
+                                           GtkWidget   *child,
+                                           GtkWidget  **button);
+
+
 /*  GParamEnum  */
 
 GtkWidget * gimp_prop_paint_mode_menu_new (GObject     *config,

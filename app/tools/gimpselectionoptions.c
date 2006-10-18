@@ -31,6 +31,7 @@
 #include "core/gimp.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpforegroundselecttool.h"
@@ -355,24 +356,14 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     GtkWidget *frame;
     GtkWidget *table;
 
-    frame = gimp_frame_new (NULL);
-    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-    gtk_widget_show (frame);
-
-    button = gimp_prop_check_button_new (config, "feather",
-                                         _("Feather edges"));
-    gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-    gtk_widget_show (button);
-
     table = gtk_table_new (1, 3, FALSE);
     gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-    gtk_container_add (GTK_CONTAINER (frame), table);
-    if (options->feather)
-      gtk_widget_show (table);
 
-    g_signal_connect_object (button, "toggled",
-                             G_CALLBACK (gimp_toggle_button_set_visible),
-                             table, 0);
+    frame = gimp_prop_expanding_frame_new (config, "feather",
+                                           _("Feather edges"),
+                                           table, NULL);
+    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+    gtk_widget_show (frame);
 
     /*  the feather radius scale  */
     gimp_prop_scale_entry_new (config, "feather-radius",

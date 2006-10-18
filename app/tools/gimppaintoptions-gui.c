@@ -328,25 +328,14 @@ fade_options_gui (GimpFadeOptions  *fade,
     {
       GtkWidget *table;
       GtkWidget *spinbutton;
-      GtkWidget *button;
       GtkWidget *menu;
-
-      frame = gimp_frame_new (NULL);
-
-      button = gimp_prop_check_button_new (config, "use-fade",
-                                           _("Fade out"));
-      gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-      gtk_widget_show (button);
 
       table = gtk_table_new (1, 3, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-      gtk_container_add (GTK_CONTAINER (frame), table);
-      if (fade->use_fade)
-        gtk_widget_show (table);
 
-      g_signal_connect_object (button, "toggled",
-                               G_CALLBACK (gimp_toggle_button_set_visible),
-                               table, 0);
+      frame = gimp_prop_expanding_frame_new (config, "use-fade",
+                                             _("Fade out"),
+                                             table, NULL);
 
       /*  the fade-out sizeentry  */
       spinbutton = gimp_prop_spin_button_new (config, "fade-length",
@@ -381,25 +370,13 @@ jitter_options_gui (GimpJitterOptions  *jitter,
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
       GtkWidget *table;
-      GtkWidget *button;
-
-      frame = gimp_frame_new (NULL);
-
-      button = gimp_prop_check_button_new (config, "use-jitter",
-                                           _("Apply Jitter"));
-
-      gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-      gtk_widget_show (button);
 
       table = gtk_table_new (1, 3, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-      gtk_container_add (GTK_CONTAINER (frame), table);
-      if (jitter->use_jitter)
-        gtk_widget_show (table);
 
-      g_signal_connect_object (button, "toggled",
-                               G_CALLBACK (gimp_toggle_button_set_visible),
-                               table, 0);
+      frame = gimp_prop_expanding_frame_new (config, "use-jitter",
+                                             _("Apply Jitter"),
+                                             table, NULL);
 
       gimp_prop_scale_entry_new (config, "jitter-amount",
                                  GTK_TABLE (table), 0, 0,
@@ -428,23 +405,13 @@ gradient_options_gui (GimpGradientOptions *gradient,
       GtkWidget *menu;
       GtkWidget *combo;
 
-      frame = gimp_frame_new (NULL);
-
-      button = gimp_prop_check_button_new (config, "use-gradient",
-                                           _("Use color from gradient"));
-      gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-      gtk_widget_show (button);
-
       table = gtk_table_new (3, 3, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table), 2);
       gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-      gtk_container_add (GTK_CONTAINER (frame), table);
-      if (gradient->use_gradient)
-        gtk_widget_show (table);
 
-      g_signal_connect_object (button, "toggled",
-                               G_CALLBACK (gimp_toggle_button_set_visible),
-                               table, 0);
+      frame = gimp_prop_expanding_frame_new (config, "use-gradient",
+                                             _("Use color from gradient"),
+                                             table, &button);
 
       if (incremental_toggle)
         {
