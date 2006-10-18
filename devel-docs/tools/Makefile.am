@@ -12,22 +12,10 @@ INCLUDES = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)
 
-LDADDS = \
-	$(libgimpwidgets)	\
-	$(libgimpconfig)	\
-	$(libgimpmodule)	\
-	$(libgimpmath)		\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(X_LIBS) -lX11
-
 
 if ENABLE_GTK_DOC
 noinst_PROGRAMS = $(DOC_SHOOTER)
 endif
-
-EXTRA_PROGRAMS = doc-shooter
 
 doc_shooter_SOURCES = \
 	shadow.c	\
@@ -38,7 +26,18 @@ doc_shooter_SOURCES = \
 	widgets.c	\
 	widgets.h
 
-doc_shooter_LDADD = $(LDADDS)
+doc_shooter_LDADD = \
+	$(libgimpwidgets)	\
+	$(libgimpconfig)	\
+	$(libgimpmodule)	\
+	$(libgimpmath)		\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(X_LIBS) -lX11 -lXext
+
+
+EXTRA_PROGRAMS = doc-shooter
 
 EXTRA_DIST = README.shooter
 

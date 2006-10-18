@@ -1,3 +1,7 @@
+2006-10-18  Sven Neumann  <sven@gimp.org>
+
+	* tools/Makefile.am (doc_shooter_LDADD): added -lXext (bug #362877).
+
 2006-10-11  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt
