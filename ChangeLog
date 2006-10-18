@@ -1,3 +1,36 @@
+2006-10-18  Michael Natterer  <mitch@gimp.org>
+
+	Applied modified patch from Martin Nordholts which adds a "Rounded
+	Corners" option to the rectangle select tool. Fixes bug #86279.
+
+	* app/core/gimpchannel-combine.[ch]: added
+	gimp_channel_combine_ellipse_rect(). Use it from
+	gimp_channel_combine_ellipse().
+
+	* app/core/gimpchannel-select.[ch]: added
+	gimp_channel_select_round_rect()
+
+	* app/tools/gimprectangleselectoptions.[ch]: added properties
+	"round-corners" and "corner-radius" and GUI for the new propeties.
+
+	* app/tools/gimprectangleselecttool.h: added macro
+	GIMP_RECT_SELECT_TOOL_GET_OPTIONS().
+
+	* app/tools/gimprectangleselecttool.c (gimp_rect_select_tool_draw):
+	draw round corners if enabled.
+
+	(gimp_rect_select_tool_real_select): use
+	gimp_channel_select_round_rect() if enabled.
+
+	* app/tools/gimpselectionoptions.[ch]: added "antialias_toggle"
+	to the GimpSelectionOptions struct so the rect select options
+	can set its sensitivity.
+
+	Unrelated:
+
+	* app/tools/gimpellipseselecttool.c (gimp_ellipse_select_tool_draw):
+	use 360 * 64 instead of 23040.
+
 2006-10-18  Sven Neumann  <sven@gimp.org>
 
 	* [lots of files]: there's no need to make GTypeInfo and

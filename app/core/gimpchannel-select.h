@@ -43,7 +43,19 @@ void   gimp_channel_select_ellipse      (GimpChannel         *channel,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y,
                                          gboolean             push_undo);
-
+void   gimp_channel_select_round_rect   (GimpChannel         *channel,
+                                         gint                 x,
+                                         gint                 y,
+                                         gint                 w,
+                                         gint                 h,
+                                         gdouble              corner_radius_y,
+                                         gdouble              corner_radius_x,
+                                         GimpChannelOps       op,
+                                         gboolean             antialias,
+                                         gboolean             feather,
+                                         gdouble              feather_radius_x,
+                                         gdouble              feather_radius_y,
+                                         gboolean             push_undo);
 
 /*  select by GimpScanConvert functions  */
 

@@ -121,7 +121,7 @@ gimp_ellipse_select_tool_draw (GimpDrawTool *draw_tool)
                            FALSE,
                            x1, y1,
                            x2 - x1, y2 - y1,
-                           0, 23040,
+                           0, 360 * 64,
                            FALSE);
 
   gimp_rectangle_tool_draw (draw_tool);

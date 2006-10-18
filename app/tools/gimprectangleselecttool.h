@@ -29,6 +29,8 @@
 #define GIMP_IS_RECT_SELECT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_RECT_SELECT_TOOL))
 #define GIMP_RECT_SELECT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_RECT_SELECT_TOOL, GimpRectSelectToolClass))
 
+#define GIMP_RECT_SELECT_TOOL_GET_OPTIONS(t)  (GIMP_RECT_SELECT_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
 
 typedef struct _GimpRectSelectTool      GimpRectSelectTool;
 typedef struct _GimpRectSelectToolClass GimpRectSelectToolClass;

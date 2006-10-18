@@ -56,6 +56,9 @@ struct _GimpSelectionOptions
 
   /*  used by iscissors */
   gboolean            interactive;
+
+  /*  options gui  */
+  GtkWidget          *antialias_toggle;
 };
 
 

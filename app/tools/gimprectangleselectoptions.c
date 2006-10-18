@@ -26,22 +26,39 @@
 
 #include "tools-types.h"
 
+#include "core/gimptoolinfo.h"
+
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimprectangleoptions.h"
 #include "gimprectangleselectoptions.h"
+#include "gimprectangleselecttool.h"
 #include "gimptooloptions-gui.h"
 
 #include "gimp-intl.h"
 
 
-static void   gimp_rect_select_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *iface);
+enum
+{
+  PROP_ROUND_CORNERS = GIMP_RECTANGLE_OPTIONS_PROP_LAST + 1,
+  PROP_CORNER_RADIUS
+};
+
+
+static void   gimp_rect_select_options_set_property (GObject      *object,
+                                                     guint         property_id,
+                                                     const GValue *value,
+                                                     GParamSpec   *pspec);
+static void   gimp_rect_select_options_get_property (GObject      *object,
+                                                     guint         property_id,
+                                                     GValue       *value,
+                                                     GParamSpec   *pspec);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpRectSelectOptions, gimp_rect_select_options,
                          GIMP_TYPE_SELECTION_OPTIONS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_OPTIONS,
-                                                gimp_rect_select_options_rectangle_options_iface_init))
+                                                NULL))
 
 
 static void
@@ -49,8 +66,18 @@ gimp_rect_select_options_class_init (GimpRectSelectOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_rectangle_options_set_property;
-  object_class->get_property = gimp_rectangle_options_get_property;
+  object_class->set_property = gimp_rect_select_options_set_property;
+  object_class->get_property = gimp_rect_select_options_get_property;
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ROUND_CORNERS,
+                                    "round-corners", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CORNER_RADIUS,
+                                   "corner-radius", NULL,
+                                   0.0, 100.0, 5.0,
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   gimp_rectangle_options_install_properties (object_class);
 }
@@ -61,24 +88,110 @@ gimp_rect_select_options_init (GimpRectSelectOptions *options)
 }
 
 static void
-gimp_rect_select_options_rectangle_options_iface_init (GimpRectangleOptionsInterface *iface)
+gimp_rect_select_options_set_property (GObject      *object,
+                                       guint         property_id,
+                                       const GValue *value,
+                                       GParamSpec   *pspec)
 {
+  GimpRectSelectOptions *options = GIMP_RECT_SELECT_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_ROUND_CORNERS:
+      options->round_corners = g_value_get_boolean (value);
+      break;
+
+    case PROP_CORNER_RADIUS:
+      options->corner_radius = g_value_get_double (value);
+      break;
+
+    default:
+      gimp_rectangle_options_set_property (object, property_id, value, pspec);
+      break;
+    }
+}
+
+static void
+gimp_rect_select_options_get_property (GObject      *object,
+                                       guint         property_id,
+                                       GValue       *value,
+                                       GParamSpec   *pspec)
+{
+  GimpRectSelectOptions *options = GIMP_RECT_SELECT_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_ROUND_CORNERS:
+      g_value_set_boolean (value, options->round_corners);
+      break;
+
+    case PROP_CORNER_RADIUS:
+      g_value_set_double (value, options->corner_radius);
+      break;
+
+    default:
+      gimp_rectangle_options_get_property (object, property_id, value, pspec);
+      break;
+    }
 }
 
 GtkWidget *
 gimp_rect_select_options_gui (GimpToolOptions *tool_options)
 {
-  GtkWidget *vbox = gimp_selection_options_gui (tool_options);
-  GtkWidget *vbox_rectangle;
+  GObject   *config = G_OBJECT (tool_options);
+  GtkWidget *vbox   = gimp_selection_options_gui (tool_options);
 
-  /*  rectangle options  */
-  vbox_rectangle = gimp_rectangle_options_gui (tool_options);
-  gtk_box_pack_start (GTK_BOX (vbox), vbox_rectangle, FALSE, FALSE, 0);
-  gtk_widget_show (vbox_rectangle);
+  /*  the round corners frame  */
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
+    {
+      GtkWidget *frame;
+      GtkWidget *button;
+      GtkWidget *table;
 
-  g_object_set (GIMP_RECTANGLE_OPTIONS (tool_options),
-                "highlight", FALSE,
-                NULL);
+      frame = gimp_frame_new (NULL);
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+
+      button = gimp_prop_check_button_new (config, "round-corners",
+                                           _("Rounded corners"));
+      gtk_frame_set_label_widget (GTK_FRAME (frame), button);
+      gtk_widget_show (button);
+
+      g_object_set_data (G_OBJECT (button), "set_sensitive",
+                         GIMP_SELECTION_OPTIONS (tool_options)->antialias_toggle);
+      gtk_widget_set_sensitive (GIMP_SELECTION_OPTIONS (tool_options)->antialias_toggle,
+                                GIMP_RECT_SELECT_OPTIONS (tool_options)->round_corners);
+
+      table = gtk_table_new (1, 3, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+      gtk_container_add (GTK_CONTAINER (frame), table);
+
+      if (GIMP_RECT_SELECT_OPTIONS (tool_options)->round_corners)
+        gtk_widget_show (table);
+
+      g_signal_connect_object (button, "toggled",
+                               G_CALLBACK (gimp_toggle_button_set_visible),
+                               table, 0);
+
+      gimp_prop_scale_entry_new (config, "corner-radius",
+                                 GTK_TABLE (table), 0, 0,
+                                 _("Radius:"),
+                                 0.0, 100.0, 1,
+                                 FALSE, 0.0, 0.0);
+  }
+
+  /*  the rectangle options  */
+  {
+    GtkWidget *vbox_rectangle;
+
+    vbox_rectangle = gimp_rectangle_options_gui (tool_options);
+    gtk_box_pack_start (GTK_BOX (vbox), vbox_rectangle, FALSE, FALSE, 0);
+    gtk_widget_show (vbox_rectangle);
+
+    g_object_set (GIMP_RECTANGLE_OPTIONS (tool_options),
+                  "highlight", FALSE,
+                  NULL);
+  }
 
   return vbox;
 }

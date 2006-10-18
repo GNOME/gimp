@@ -37,6 +37,9 @@ typedef struct _GimpToolOptionsClass  GimpRectSelectOptionsClass;
 struct _GimpRectSelectOptions
 {
   GimpSelectionOptions  parent_instence;
+
+  gboolean              round_corners;
+  gdouble               corner_radius;
 };
 
 

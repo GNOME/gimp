@@ -38,6 +38,7 @@
 #include "gimpregionselecttool.h"
 #include "gimpiscissorstool.h"
 #include "gimpselectionoptions.h"
+#include "gimprectangleselectoptions.h"
 #include "gimptooloptions-gui.h"
 
 #include "gimp-intl.h"
@@ -241,7 +242,7 @@ gimp_selection_options_reset (GimpToolOptions *tool_options)
 
   if (pspec)
     G_PARAM_SPEC_BOOLEAN (pspec)->default_value =
-      (tool_options->tool_info->tool_type != GIMP_TYPE_RECT_SELECT_TOOL);
+      (tool_options->tool_info->tool_type != GIMP_TYPE_FOREGROUND_SELECT_TOOL);
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
                                         "threshold");
@@ -344,11 +345,10 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL ||
-      tool_options->tool_info->tool_type == GIMP_TYPE_FOREGROUND_SELECT_TOOL)
-    {
-      gtk_widget_set_sensitive (button, FALSE);
-    }
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_FOREGROUND_SELECT_TOOL)
+    gtk_widget_set_sensitive (button, FALSE);
+
+  options->antialias_toggle = button;
 
   /*  the feather frame  */
   {

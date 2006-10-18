@@ -140,6 +140,63 @@ gimp_channel_select_ellipse (GimpChannel    *channel,
     }
 }
 
+void
+gimp_channel_select_round_rect (GimpChannel         *channel,
+                                gint                 x,
+                                gint                 y,
+                                gint                 w,
+                                gint                 h,
+                                gdouble              corner_radius_x,
+                                gdouble              corner_radius_y,
+                                GimpChannelOps       op,
+                                gboolean             antialias,
+                                gboolean             feather,
+                                gdouble              feather_radius_x,
+                                gdouble              feather_radius_y,
+                                gboolean             push_undo)
+{
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
+
+  if (push_undo)
+    gimp_channel_push_undo (channel, Q_("command|Rounded Rectangle Select"));
+
+  /*  if applicable, replace the current selection  */
+  if (op == GIMP_CHANNEL_OP_REPLACE)
+    gimp_channel_clear (channel, NULL, FALSE);
+
+  /*  if feathering for rect, make a new mask with the
+   *  rectangle and feather that with the old mask
+   */
+  if (feather || op == GIMP_CHANNEL_OP_INTERSECT)
+    {
+      GimpItem    *item = GIMP_ITEM (channel);
+      GimpChannel *add_on;
+
+      add_on = gimp_channel_new_mask (gimp_item_get_image (item),
+                                      gimp_item_width (item),
+                                      gimp_item_height (item));
+      gimp_channel_combine_ellipse_rect (add_on, GIMP_CHANNEL_OP_ADD,
+                                         x, y, w, h,
+                                         corner_radius_x, corner_radius_y,
+                                         antialias);
+
+      if (feather)
+        gimp_channel_feather (add_on,
+                              feather_radius_x,
+                              feather_radius_y,
+                              FALSE /* no undo */);
+
+      gimp_channel_combine_mask (channel, add_on, op, 0, 0);
+      g_object_unref (add_on);
+    }
+  else
+    {
+      gimp_channel_combine_ellipse_rect (channel, op, x, y, w, h,
+                                         corner_radius_x, corner_radius_y,
+                                         antialias);
+    }
+}
 
 /*  select by GimpScanConvert functions  */
 

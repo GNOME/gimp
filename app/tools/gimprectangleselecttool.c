@@ -92,6 +92,7 @@ static void     gimp_rect_select_tool_cursor_update       (GimpTool          *to
                                                            GimpCoords        *coords,
                                                            GdkModifierType    state,
                                                            GimpDisplay       *display);
+static void     gimp_rect_select_tool_draw                (GimpDrawTool      *draw_tool);
 static void     gimp_rect_select_tool_select              (GimpRectangleTool *rect_tool,
                                                            gint               x,
                                                            gint               y,
@@ -163,7 +164,7 @@ gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass)
   tool_class->oper_update         = gimp_rect_select_tool_oper_update;
   tool_class->cursor_update       = gimp_rect_select_tool_cursor_update;
 
-  draw_tool_class->draw           = gimp_rectangle_tool_draw;
+  draw_tool_class->draw           = gimp_rect_select_tool_draw;
 
   klass->select                   = gimp_rect_select_tool_real_select;
 }
@@ -231,11 +232,64 @@ gimp_rect_select_tool_control (GimpTool       *tool,
 }
 
 static void
+gimp_rect_select_tool_draw (GimpDrawTool *draw_tool)
+{
+  GimpRectSelectTool *rect_sel = GIMP_RECT_SELECT_TOOL (draw_tool);
+  GimpRectSelectOptions *options = GIMP_RECT_SELECT_TOOL_GET_OPTIONS (draw_tool);
+  gint    x1, y1;
+  gint    x2, y2;
+
+  g_object_get (rect_sel,
+                "x1", &x1,
+                "y1", &y1,
+                "x2", &x2,
+                "y2", &y2,
+                NULL);
+
+  if (options->round_corners)
+    {
+      gint    bounding_square_size;
+      gdouble radius;
+
+      radius = MIN (options->corner_radius,
+                    MIN ((x2 - x1) / 2.0, (y2 - y1) / 2.0));
+
+      bounding_square_size = (int) (radius * 2);
+
+      gimp_draw_tool_draw_arc (draw_tool, FALSE,
+                               x1, y1,
+                               bounding_square_size, bounding_square_size,
+                               90 * 64,  90 * 64,
+                               FALSE);
+
+      gimp_draw_tool_draw_arc (draw_tool, FALSE,
+                               x2 - bounding_square_size, y1,
+                               bounding_square_size, bounding_square_size,
+                               0,        90 * 64,
+                               FALSE);
+
+      gimp_draw_tool_draw_arc (draw_tool, FALSE,
+                               x2 - bounding_square_size, y2 - bounding_square_size,
+                               bounding_square_size, bounding_square_size,
+                               270 * 64, 90 * 64,
+                               FALSE);
+
+      gimp_draw_tool_draw_arc (draw_tool, FALSE,
+                               x1, y2 - bounding_square_size,
+                               bounding_square_size, bounding_square_size,
+                               180 * 64, 90 * 64,
+                               FALSE);
+    }
+
+  gimp_rectangle_tool_draw (draw_tool);
+}
+
+static void
 gimp_rect_select_tool_button_press (GimpTool        *tool,
-                                        GimpCoords      *coords,
-                                        guint32          time,
-                                        GdkModifierType  state,
-                                        GimpDisplay     *display)
+                                    GimpCoords      *coords,
+                                    guint32          time,
+                                    GdkModifierType  state,
+                                    GimpDisplay     *display)
 {
   GimpRectSelectTool   *rect_select = GIMP_RECT_SELECT_TOOL (tool);
   guint                 function;
@@ -476,16 +530,39 @@ gimp_rect_select_tool_real_select (GimpRectSelectTool *rect_select,
                                    gint                w,
                                    gint                h)
 {
-  GimpTool             *tool    = GIMP_TOOL (rect_select);
-  GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GimpTool              *tool = GIMP_TOOL (rect_select);
+  GimpSelectionOptions  *options;
+  GimpRectSelectOptions *rect_select_options;
 
-  gimp_channel_select_rectangle (gimp_image_get_mask (tool->display->image),
-                                 x, y, w, h,
-                                 operation,
-                                 options->feather,
-                                 options->feather_radius,
-                                 options->feather_radius,
-                                 TRUE);
+  options             = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  rect_select_options = GIMP_RECT_SELECT_TOOL_GET_OPTIONS (tool);
+
+  if (rect_select_options->round_corners)
+    {
+      /* To prevent elliptification of the rect, we must cap the corner radius */
+      gdouble radius = MIN (rect_select_options->corner_radius,
+                            MIN (w / 2.0, h / 2.0));
+
+      gimp_channel_select_round_rect (gimp_image_get_mask (tool->display->image),
+                                      x, y, w, h,
+                                      radius, radius,
+                                      operation,
+                                      options->antialias,
+                                      options->feather,
+                                      options->feather_radius,
+                                      options->feather_radius,
+                                      TRUE);
+    }
+  else
+    {
+      gimp_channel_select_rectangle (gimp_image_get_mask (tool->display->image),
+                                     x, y, w, h,
+                                     operation,
+                                     options->feather,
+                                     options->feather_radius,
+                                     options->feather_radius,
+                                     TRUE);
+    }
 }
 
 /*
