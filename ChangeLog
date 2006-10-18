@@ -1,5 +1,10 @@
 2006-10-18  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/unsharp-mask.scm: this script should
+	not register in the menus. Also unmarked strings for translation.
+
+2006-10-18  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.c (find_mnemonic_widget): special
 	case GimpSizeEntry and use the last entry.
 
