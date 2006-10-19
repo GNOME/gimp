@@ -29,6 +29,7 @@
 
 #include "tools-types.h"
 
+#include "base/boundary.h"
 #include "base/tile-manager.h"
 
 #include "core/gimp.h"
@@ -876,7 +877,94 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                   FALSE);
     }
 
-  if (tr_tool->type == GIMP_TRANSFORM_TYPE_PATH)
+  if (tr_tool->type == GIMP_TRANSFORM_TYPE_SELECTION)
+    {
+      GimpMatrix3     matrix = tr_tool->transform;
+      const BoundSeg *orig_in;
+      const BoundSeg *orig_out;
+      BoundSeg       *segs_in;
+      BoundSeg       *segs_out;
+      gint            num_segs_in;
+      gint            num_segs_out;
+      gint            num_groups;
+      gint            i;
+
+      gimp_channel_boundary (gimp_image_get_mask (tool->display->image),
+                             &orig_in, &orig_out,
+                             &num_segs_in, &num_segs_out,
+                             0, 0, 0, 0);
+
+      segs_in = boundary_sort (orig_in, num_segs_in, &num_groups);
+      num_segs_in += num_groups;
+
+      segs_out = boundary_sort (orig_out, num_segs_out, &num_groups);
+      num_segs_out += num_groups;
+
+      if (segs_in)
+        {
+          for (i = 0; i < num_segs_in; i++)
+            {
+              gdouble tx, ty;
+
+              if (segs_in[i].x1 != -1 &&
+                  segs_in[i].y1 != -1 &&
+                  segs_in[i].x2 != -1 &&
+                  segs_in[i].y2 != -1)
+                {
+                  gimp_matrix3_transform_point (&matrix,
+                                                segs_in[i].x1, segs_in[i].y1,
+                                                &tx, &ty);
+                  segs_in[i].x1 = RINT (tx);
+                  segs_in[i].y1 = RINT (ty);
+
+                  gimp_matrix3_transform_point (&matrix,
+                                                segs_in[i].x2, segs_in[i].y2,
+                                                &tx, &ty);
+                  segs_in[i].x2 = RINT (tx);
+                  segs_in[i].y2 = RINT (ty);
+                }
+            }
+
+          gimp_draw_tool_draw_boundary (draw_tool,
+                                        segs_in, num_segs_in,
+                                        0, 0,
+                                        FALSE);
+          g_free (segs_in);
+        }
+
+      if (segs_out)
+        {
+          for (i = 0; i < num_segs_out; i++)
+            {
+              gdouble tx, ty;
+
+              if (segs_out[i].x1 != -1 &&
+                  segs_out[i].y1 != -1 &&
+                  segs_out[i].x2 != -1 &&
+                  segs_out[i].y2 != -1)
+                {
+                  gimp_matrix3_transform_point (&matrix,
+                                                segs_out[i].x1, segs_out[i].y1,
+                                                &tx, &ty);
+                  segs_out[i].x1 = RINT (tx);
+                  segs_out[i].y1 = RINT (ty);
+
+                  gimp_matrix3_transform_point (&matrix,
+                                                segs_out[i].x2, segs_out[i].y2,
+                                                &tx, &ty);
+                  segs_out[i].x2 = RINT (tx);
+                  segs_out[i].y2 = RINT (ty);
+                }
+            }
+
+          gimp_draw_tool_draw_boundary (draw_tool,
+                                        segs_out, num_segs_out,
+                                        0, 0,
+                                        FALSE);
+          g_free (segs_out);
+        }
+    }
+  else if (tr_tool->type == GIMP_TRANSFORM_TYPE_PATH)
     {
       GimpVectors *vectors;
       GimpStroke  *stroke = NULL;
