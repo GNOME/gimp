@@ -59,8 +59,8 @@ named_constant {
     int value;
 };
 
-struct named_constant
-script_constants[] = {
+struct named_constant const script_constants[] =
+{
   /* Useful misc stuff */
   { "TRUE",           TRUE  },
   { "FALSE",          FALSE },
@@ -96,8 +96,8 @@ script_constants[] = {
 /* The following constants are deprecated. They are */
 /* included to keep backwards compatability with    */
 /* older scripts used with version 2.0 of GIMP.     */
-struct named_constant
-old_constants[] = {
+struct named_constant const old_constants[] =
+{
   { "NORMAL",       GIMP_NORMAL_MODE       },
   { "DISSOLVE",     GIMP_DISSOLVE_MODE     },
   { "BEHIND",       GIMP_BEHIND_MODE       },
@@ -292,11 +292,9 @@ static void  init_procedures  (void);
 static gboolean register_scripts = FALSE;
 
 void
-tinyscheme_init (gboolean local_register_scripts)
+tinyscheme_init (const gchar *path,
+                 gboolean     local_register_scripts)
 {
-  FILE  *fin;
-  gchar *filename;
-
   register_scripts = local_register_scripts;
   ts_output_routine = ts_output_string;
 
@@ -318,21 +316,32 @@ tinyscheme_init (gboolean local_register_scripts)
   init_constants ();
   init_procedures ();
 
-  /* FIXME: need to search in the scripts search path */
-  filename = g_build_filename (gimp_data_directory (), "scripts",
-                               "script-fu.init", NULL);
-  fin = g_fopen (filename, "r");
-  if (fin == NULL)
-  {
-     g_printerr ("Unable to read initialization file\n");
-  }
-  else
-  {
-     scheme_load_file (&sc, fin);
-     fclose (fin);
-  }
+  if (path)
+    {
+      GList *dir_list = gimp_path_parse (path, 16, TRUE, NULL);
+      GList *list;
 
-  g_free (filename);
+      for (list = dir_list; list; list = g_list_next (list))
+        {
+          gchar *filename = g_build_filename (list->data,
+                                              "script-fu.init", NULL);
+          FILE  *fin      = g_fopen (filename, "rb");
+
+          g_free (filename);
+
+          if (fin)
+            {
+              scheme_load_file (&sc, fin);
+              fclose (fin);
+              break;
+            }
+        }
+
+      if (list == NULL)
+        g_printerr ("Unable to read initialization file script-fu.init\n");
+
+      gimp_path_free (dir_list);
+    }
 }
 
 void

@@ -40,18 +40,19 @@
 
 /* Declare local functions. */
 
-static void  script_fu_query          (void);
-static void  script_fu_run            (const gchar      *name,
-                                       gint              nparams,
-                                       const GimpParam  *params,
-                                       gint             *nreturn_vals,
-                                       GimpParam       **return_vals);
-static void  script_fu_extension_init (void);
-static void  script_fu_refresh_proc   (const gchar      *name,
-                                       gint              nparams,
-                                       const GimpParam  *params,
-                                       gint             *nreturn_vals,
-                                       GimpParam       **return_vals);
+static void    script_fu_query          (void);
+static void    script_fu_run            (const gchar      *name,
+                                         gint              nparams,
+                                         const GimpParam  *params,
+                                         gint             *nreturn_vals,
+                                         GimpParam       **return_vals);
+static gchar * script_fu_search_path    (void);
+static void    script_fu_extension_init (void);
+static void    script_fu_refresh_proc   (const gchar      *name,
+                                         gint              nparams,
+                                         const GimpParam  *params,
+                                         gint             *nreturn_vals,
+                                         GimpParam       **return_vals);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -171,7 +172,11 @@ script_fu_run (const gchar      *name,
                gint             *nreturn_vals,
                GimpParam       **return_vals)
 {
+  gchar *path;
+
   INIT_I18N();
+
+  path = script_fu_search_path ();
 
   ts_set_console_mode (0);
 
@@ -184,16 +189,18 @@ script_fu_run (const gchar      *name,
       script_fu_extension_init ();
 
       /*  Init the interpreter and register scripts */
-      tinyscheme_init (TRUE);
+      tinyscheme_init (path, TRUE);
     }
   else
     {
       /*  Init the interpreter  */
-      tinyscheme_init (FALSE);
+      tinyscheme_init (path, FALSE);
     }
 
   /*  Load all of the available scripts  */
-  script_fu_find_scripts ();
+  script_fu_find_scripts (path);
+
+  g_free (path);
 
   if (strcmp (name, "extension-script-fu") == 0)
     {
@@ -255,6 +262,32 @@ script_fu_run (const gchar      *name,
     }
 }
 
+static gchar *
+script_fu_search_path (void)
+{
+  gchar  *path_str;
+  gchar  *path  = NULL;
+
+  path_str = gimp_gimprc_query ("script-fu-path");
+
+  if (path_str)
+    {
+      GError *error = NULL;
+
+      path = g_filename_from_utf8 (path_str, -1, NULL, NULL, &error);
+
+      g_free (path_str);
+
+      if (! path)
+        {
+          g_warning ("Can't convert script-fu-path to filesystem encoding: %s",
+                     error->message);
+          g_error_free (error);
+        }
+    }
+
+  return path;
+}
 
 static void
 script_fu_extension_init (void)
@@ -353,7 +386,11 @@ script_fu_refresh_proc (const gchar      *name,
   else
     {
       /*  Reload all of the available scripts  */
-      script_fu_find_scripts ();
+      gchar *path = script_fu_search_path ();
+
+      script_fu_find_scripts (path);
+
+      g_free (path);
 
       status = GIMP_PDB_SUCCESS;
     }

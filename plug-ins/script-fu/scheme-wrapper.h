@@ -33,7 +33,8 @@ void          ts_print_welcome     (void);
 const gchar * ts_get_error_msg     (void);
 const gchar * ts_get_success_msg   (void);
 
-void          tinyscheme_init      (gboolean);
+void          tinyscheme_init      (const gchar *path,
+                                    gboolean     local_register_scripts);
 void          tinyscheme_deinit    (void);
 
 void          ts_output_string     (FILE *fp, char *string, int len);
