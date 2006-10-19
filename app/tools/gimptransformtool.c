@@ -773,12 +773,10 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       z4 = ((tr_tool->tx3 - tr_tool->tx2) * (tr_tool->ty1 - tr_tool->ty2) -
             (tr_tool->tx1 - tr_tool->tx2) * (tr_tool->ty3 - tr_tool->ty2));
 
-      /*  Draw the grid (not for path transform since it looks ugly)  */
-
-      if (tr_tool->type != GIMP_TRANSFORM_TYPE_PATH &&
-          tr_tool->grid_coords                      &&
-          tr_tool->tgrid_coords                     &&
-          z1 * z2 > 0                               &&
+      /*  draw the grid  */
+      if (tr_tool->grid_coords  &&
+          tr_tool->tgrid_coords &&
+          z1 * z2 > 0           &&
           z3 * z4 > 0)
         {
           gint gci, i, k;
