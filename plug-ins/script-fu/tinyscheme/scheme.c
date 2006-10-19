@@ -1391,7 +1391,7 @@ static void finalize_cell(scheme *sc, pointer a) {
 /* ========== Routines for Reading ========== */
 
 static int file_push(scheme *sc, const char *fname) {
-  FILE *fin=fopen(fname,"r");
+  FILE *fin=fopen(fname,"rb");
   if(fin!=0) {
     sc->file_i++;
     sc->load_stack[sc->file_i].kind=port_file|port_input;
@@ -1425,11 +1425,11 @@ static port *port_rep_from_filename(scheme *sc, const char *fn, int prop) {
   char *rw;
   port *pt;
   if(prop==(port_input|port_output)) {
-    rw="a+";
+    rw="a+b";
   } else if(prop==port_output) {
-    rw="w";
+    rw="wb";
   } else {
-    rw="r";
+    rw="rb";
   }
   f=fopen(fn,rw);
   if(f==0) {
