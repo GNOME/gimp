@@ -1,5 +1,12 @@
 2006-10-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptransformtool.c
+	(gimp_transform_tool_button_release): call response(OK) instead of
+	calling doit() directly, so all transform confirmation goes
+	through response() now.
+
+2006-10-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptransformtool.c (gimp_transform_tool_draw): show
 	the outline of the selection while transforming it.
 	Fixes bug #362587.

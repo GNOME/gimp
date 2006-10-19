@@ -421,7 +421,7 @@ gimp_transform_tool_button_release (GimpTool        *tool,
       /* Shift-clicking is another way to approve the transform  */
       if ((state & GDK_SHIFT_MASK) || ! tr_tool->use_grid)
         {
-          gimp_transform_tool_doit (tr_tool, display);
+          gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, tr_tool);
         }
     }
   else
