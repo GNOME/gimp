@@ -154,7 +154,8 @@ script_fu_interface_report_cc (const gchar *command)
 }
 
 void
-script_fu_interface (SFScript *script)
+script_fu_interface (SFScript *script,
+                     gint      start_arg)
 {
   GtkWidget    *dialog;
   GtkWidget    *menu;
@@ -201,6 +202,7 @@ script_fu_interface (SFScript *script)
 
   /* strip the first part of the menupath if it contains _("/Script-Fu/") */
   tmp = strstr (gettext (script->menu_path), _("/Script-Fu/"));
+
   if (tmp)
     sf_interface->title = g_strdup (tmp + strlen (_("/Script-Fu/")));
   else
@@ -259,10 +261,7 @@ script_fu_interface (SFScript *script)
   gtk_widget_show (vbox);
 
   /*  The argument table  */
-  if (script->image_based)
-    sf_interface->table = gtk_table_new (script->num_args - 1, 3, FALSE);
-  else
-    sf_interface->table = gtk_table_new (script->num_args + 1, 3, FALSE);
+  sf_interface->table = gtk_table_new (script->num_args - start_arg, 3, FALSE);
 
   gtk_table_set_col_spacings (GTK_TABLE (sf_interface->table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (sf_interface->table), 6);
@@ -271,7 +270,7 @@ script_fu_interface (SFScript *script)
 
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
-  for (i = script->image_based ? 2 : 0; i < script->num_args; i++)
+  for (i = start_arg; i < script->num_args; i++)
     {
       GtkWidget *widget       = NULL;
       GtkObject *adj;
@@ -279,15 +278,13 @@ script_fu_interface (SFScript *script)
       gfloat     label_yalign = 0.5;
       gint      *ID_ptr       = NULL;
       gint       row          = i;
-      gboolean   left_align     = FALSE;
+      gboolean   left_align   = FALSE;
 
-      if (script->image_based)
-        row -= 2;
+      row -= start_arg;
 
       /*  we add a colon after the label;
           some languages want an extra space here  */
-      label_text =  g_strdup_printf (_("%s:"),
-                                     gettext (script->arg_labels[i]));
+      label_text = g_strdup_printf (_("%s:"), gettext (script->arg_labels[i]));
 
       switch (script->arg_types[i])
       {
@@ -365,39 +362,39 @@ script_fu_interface (SFScript *script)
                             script->arg_values[i].sfa_value);
         break;
 
-          case SF_TEXT:
-            {
-              GtkWidget     *view;
-              GtkTextBuffer *buffer;
+      case SF_TEXT:
+        {
+          GtkWidget     *view;
+          GtkTextBuffer *buffer;
 
-              widget = gtk_scrolled_window_new (NULL, NULL);
-              gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (widget),
-                                                   GTK_SHADOW_IN);
-              gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (widget),
-                                              GTK_POLICY_AUTOMATIC,
-                                              GTK_POLICY_AUTOMATIC);
-              gtk_widget_set_size_request (widget, TEXT_WIDTH, -1);
+          widget = gtk_scrolled_window_new (NULL, NULL);
+          gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (widget),
+                                               GTK_SHADOW_IN);
+          gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (widget),
+                                          GTK_POLICY_AUTOMATIC,
+                                          GTK_POLICY_AUTOMATIC);
+          gtk_widget_set_size_request (widget, TEXT_WIDTH, -1);
 
-              view = gtk_text_view_new ();
-              gtk_container_add (GTK_CONTAINER (widget), view);
-              gtk_widget_show (view);
+          view = gtk_text_view_new ();
+          gtk_container_add (GTK_CONTAINER (widget), view);
+          gtk_widget_show (view);
 
-              buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
-              gtk_text_view_set_editable (GTK_TEXT_VIEW (view), TRUE);
+          buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
+          gtk_text_view_set_editable (GTK_TEXT_VIEW (view), TRUE);
 
-              gtk_text_buffer_set_text (buffer,
-                                        script->arg_values[i].sfa_value, -1);
+          gtk_text_buffer_set_text (buffer,
+                                    script->arg_values[i].sfa_value, -1);
 
-              label_yalign = 0.0;
-            }
-            break;
+          label_yalign = 0.0;
+        }
+        break;
 
       case SF_ADJUSTMENT:
         switch (script->arg_defaults[i].sfa_adjustment.type)
           {
           case SF_SLIDER:
             script->arg_values[i].sfa_adjustment.adj = (GtkAdjustment *)
-                        gimp_scale_entry_new (GTK_TABLE (sf_interface->table),
+              gimp_scale_entry_new (GTK_TABLE (sf_interface->table),
                         0, row,
                         label_text, SLIDER_WIDTH, -1,
                         script->arg_values[i].sfa_adjustment.value,
@@ -898,12 +895,12 @@ script_fu_reset (SFScript *script)
         case SF_COLOR:
           gimp_color_button_set_color (GIMP_COLOR_BUTTON (widget),
                                        &script->arg_defaults[i].sfa_color);
-    break;
+          break;
 
         case SF_TOGGLE:
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
                                         script->arg_defaults[i].sfa_toggle);
-    break;
+          break;
 
         case SF_VALUE:
         case SF_STRING:
@@ -950,7 +947,7 @@ script_fu_reset (SFScript *script)
           break;
 
         case SF_PATTERN:
-      gimp_pattern_select_button_set_pattern (GIMP_PATTERN_SELECT_BUTTON (widget),
+          gimp_pattern_select_button_set_pattern (GIMP_PATTERN_SELECT_BUTTON (widget),
                                                   script->arg_defaults[i].sfa_pattern);
           break;
 

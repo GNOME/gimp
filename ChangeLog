@@ -1,3 +1,14 @@
+2006-10-19  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-interface.[ch]
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-types.h: don't look at the menu path
+	to see if a script is image-based. Instead check the passed and the
+	expected parameter types.
+
+	* plug-ins/script-fu/scripts/tileblur.scm: global variables won't
+	work with tiny-scheme.
+
 2006-10-19  Tor Lillqvist  <tml@novell.com>
 
 	* plug-ins/script-fu/tinyscheme/scheme.c

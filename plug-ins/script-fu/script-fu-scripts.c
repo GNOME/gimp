@@ -167,10 +167,6 @@ script_fu_add_script (scheme *sc, pointer a)
   /*  Find the script menu_path  */
   val = sc->vptr->string_value (sc->vptr->pair_car (a));
   script->menu_path = g_strdup (val);
-  if (strncmp (script->menu_path, "<Image>", 7) == 0)
-    script->image_based = TRUE;
-  else
-    script->image_based = FALSE;
   a = sc->vptr->pair_cdr (a);
 
   /*  Find the script blurb  */
@@ -765,7 +761,7 @@ script_fu_script_proc (const gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
   SFScript          *script;
-  gint               min_args;
+  gint               min_args = 0;
 
   run_mode = params[0].data.d_int32;
 
@@ -782,26 +778,25 @@ script_fu_script_proc (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
-          /*  Determine whether the script is image based (runs on an image).
-           *  When being called from an image, nparams is 3, otherwise it's 1.
-           */
-          if (nparams == 3 && script->num_args >= 2)
+          if (nparams > 1 && params[1].type == GIMP_PDB_IMAGE &&
+              script->num_args > 0 && script->arg_types[0] == SF_IMAGE)
             {
-              script->arg_values[0].sfa_image    = params[1].data.d_image;
-              script->arg_values[1].sfa_drawable = params[2].data.d_drawable;
-              script->image_based = TRUE;
+              script->arg_values[0].sfa_image = params[1].data.d_image;
+              min_args++;
             }
-          else
+
+          if (nparams > 2 && params[2].type == GIMP_PDB_DRAWABLE &&
+              script->num_args > 1 && script->arg_types[1] == SF_DRAWABLE)
             {
-              script->image_based = FALSE;
+              script->arg_values[1].sfa_drawable = params[2].data.d_drawable;
+              min_args++;
             }
 
           /*  First acquire information with a dialog  */
           /*  Skip this part if the script takes no parameters */
-          min_args = (script->image_based) ? 2 : 0;
           if (script->num_args > min_args)
             {
-              script_fu_interface (script);
+              script_fu_interface (script, min_args);
               break;
             }
           /*  else fallthrough  */

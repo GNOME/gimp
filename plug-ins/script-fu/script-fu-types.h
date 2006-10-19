@@ -94,7 +94,6 @@ typedef struct
   gchar        **arg_labels;
   SFArgValue    *arg_defaults;
   SFArgValue    *arg_values;
-  gboolean       image_based;
   GimpParamDef  *args;     /*  used only temporary until installed  */
 } SFScript;
 

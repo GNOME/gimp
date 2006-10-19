@@ -18,9 +18,9 @@
 
 (define (script-fu-tile-blur inImage inLayer inRadius inVert inHoriz inType)
 
-  (define (cjg-pasteat xoff yoff)
-     (let ( (theFloat (car (gimp-edit-paste theLayer 0))) )
-       (gimp-layer-set-offsets theFloat (* xoff theWidth) (* yoff theHeight) )
+  (define (tile-blur-paste-at layer width height xoff yoff)
+     (let ( (theFloat (car (gimp-edit-paste layer 0))) )
+       (gimp-layer-set-offsets theFloat (* xoff width) (* yoff height) )
        (gimp-floating-sel-anchor theFloat)
      )
   )
@@ -41,9 +41,15 @@
   (gimp-selection-none theImage)
   (gimp-layer-set-offsets theLayer theWidth theHeight)
 
-  (cjg-pasteat 1 1) (cjg-pasteat 1 2) (cjg-pasteat 1 3)
-  (cjg-pasteat 2 1) (cjg-pasteat 2 2) (cjg-pasteat 2 3)
-  (cjg-pasteat 3 1) (cjg-pasteat 3 2) (cjg-pasteat 3 3)
+  (tile-blur-paste-at theLayer theWidth theHeight 1 1)
+  (tile-blur-paste-at theLayer theWidth theHeight 1 2)
+  (tile-blur-paste-at theLayer theWidth theHeight 1 3)
+  (tile-blur-paste-at theLayer theWidth theHeight 2 1)
+  (tile-blur-paste-at theLayer theWidth theHeight 2 2)
+  (tile-blur-paste-at theLayer theWidth theHeight 2 3)
+  (tile-blur-paste-at theLayer theWidth theHeight 3 1)
+  (tile-blur-paste-at theLayer theWidth theHeight 3 2)
+  (tile-blur-paste-at theLayer theWidth theHeight 3 3)
 
   (gimp-selection-none theImage)
   (if (= inType 0)
