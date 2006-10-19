@@ -510,8 +510,8 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   /*  the image's size in display coordinates  */
-  sx = shell->disp_xoffset > 0 ? shell->disp_xoffset : - shell->offset_x;
-  sy = shell->disp_yoffset > 0 ? shell->disp_yoffset : - shell->offset_y;
+  sx = shell->disp_xoffset - shell->offset_x;
+  sy = shell->disp_yoffset - shell->offset_y;
   sw = SCALEX (shell, shell->display->image->width);
   sh = SCALEY (shell, shell->display->image->height);
 
@@ -520,7 +520,8 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
    */
   if (gimp_rectangle_intersect (x, y, w, h,
                                 0, 0, shell->disp_width,  shell->disp_height,
-                                &x, &y, &w, &h) &&
+                                &x, &y, &w, &h)
+      &&
       gimp_rectangle_intersect (x, y, w, h,
                                 sx, sy, sw, sh,
                                 &x, &y, &w, &h))
