@@ -1,5 +1,16 @@
 2006-10-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/script-fu.init: don't load
+	script-fu-compat.init here.
+
+	* plug-ins/script-fu/scheme-wrapper.c (tinyscheme_init): load it
+	here, from the same place where script-fu.init was found.
+
+	* plug-ins/script-fu/script-fu-interface.c: made the code more
+	robust against invalid adjustment types.
+
+2006-10-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-interface.[ch]
 	* plug-ins/script-fu/script-fu-scripts.c
 	* plug-ins/script-fu/script-fu-types.h: don't look at the menu path

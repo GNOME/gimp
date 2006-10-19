@@ -333,6 +333,21 @@ tinyscheme_init (const gchar *path,
             {
               scheme_load_file (&sc, fin);
               fclose (fin);
+
+              /*  To improve compatibility with older Script-Fu scripts,
+               *  load script-fu-compat.init from the same directory.
+               */
+              filename = g_build_filename (list->data,
+                                           "script-fu-compat.init", NULL);
+              fin = g_fopen (filename, "rb");
+              g_free (filename);
+
+              if (fin)
+                {
+                  scheme_load_file (&sc, fin);
+                  fclose (fin);
+                }
+
               break;
             }
         }

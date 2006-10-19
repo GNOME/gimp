@@ -408,6 +408,11 @@ script_fu_interface (SFScript *script,
               gtk_entry_set_activates_default (GIMP_SCALE_ENTRY_SPINBUTTON (script->arg_values[i].sfa_adjustment.adj), TRUE);
             break;
 
+          default:
+            g_warning ("unexpected adjustment type: %d",
+                       script->arg_defaults[i].sfa_adjustment.type);
+            /* fallthrough */
+
           case SF_SPINNER:
             left_align = TRUE;
             widget =
