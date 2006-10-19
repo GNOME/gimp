@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-18 23:59+0200\n"
-"PO-Revision-Date: 2006-10-19 00:15+0200\n"
+"POT-Creation-Date: 2006-10-19 20:49+0200\n"
+"PO-Revision-Date: 2006-10-19 21:57+0200\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
@@ -2275,7 +2275,7 @@ msgstr "_Eleva..."
 
 #: ../plug-ins/common/bumpmap.c:489
 msgid "Bump-mapping"
-msgstr "S'estan elevant les zones mapajades"
+msgstr "S'estan elevant les zones mapades"
 
 #: ../plug-ins/common/bumpmap.c:833
 msgid "Bump Map"
@@ -3497,7 +3497,7 @@ msgstr "R_ecursiu"
 # era: msgstr "R_ecurrent"
 #: ../plug-ins/common/despeckle.c:460 ../plug-ins/common/neon.c:739
 #: ../plug-ins/common/nlfilt.c:1090 ../plug-ins/common/nova.c:365
-#: ../plug-ins/common/unsharp.c:681 ../plug-ins/common/whirlpinch.c:588
+#: ../plug-ins/common/unsharp.c:681 ../plug-ins/common/whirlpinch.c:587
 #: ../plug-ins/gflare/gflare.c:2684 ../plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
 msgstr "_Radi:"
@@ -4192,7 +4192,7 @@ msgstr "Intentsitat del suavitzat"
 # era: msgstr "Suavitat de la contrarèplica"
 #: ../plug-ins/common/fp.c:1422
 msgid "Preview as You Drag"
-msgstr "Previsualitza metre arrossegueu"
+msgstr "Previsualitza mentre arrossegueu"
 
 # era: msgstr "Previsualitza així que ho arrosseguis"
 #: ../plug-ins/common/fp.c:1426
@@ -5053,11 +5053,11 @@ msgstr "Nombre de peces que cauen"
 
 #: ../plug-ins/common/jigsaw.c:2492
 msgid "Bevel Edges"
-msgstr "Bisellatge de les vores"
+msgstr "Vores bisellades"
 
 #: ../plug-ins/common/jigsaw.c:2502
 msgid "_Bevel width:"
-msgstr "Amplada del _biselat:"
+msgstr "Amplada del _bisellat:"
 
 #: ../plug-ins/common/jigsaw.c:2506
 msgid "Degree of slope of each piece's edge"
@@ -5203,7 +5203,7 @@ msgstr "Valor _mínim:"
 
 #: ../plug-ins/common/lic.c:763
 msgid "M_aximum value:"
-msgstr "Valor m_àxim:"
+msgstr "V_alor màxim:"
 
 #: ../plug-ins/common/lic.c:809
 msgid "Special effects that nobody understands"
@@ -5320,7 +5320,7 @@ msgstr "S'estan ajustant els colors de fons i primer pla"
 
 #: ../plug-ins/common/mapcolor.c:277
 msgid "Mapping colors"
-msgstr "Mapejat de colors"
+msgstr "Mapatge de colors"
 
 # era: msgstr "S'estan mapant els colors..."
 #: ../plug-ins/common/mapcolor.c:352
@@ -5367,12 +5367,12 @@ msgstr "Valor màxim RGB"
 
 #: ../plug-ins/common/max_rgb.c:291
 msgid "_Hold the maximal channels"
-msgstr "Reté els canals _màxims"
+msgstr "Retén els canals _màxims"
 
 # era: msgstr "Retingueu els canals m_àxims"
 #: ../plug-ins/common/max_rgb.c:294
 msgid "Ho_ld the minimal channels"
-msgstr "Reté els canals mí_nims"
+msgstr "Retén els canals mí_nims"
 
 #: ../plug-ins/common/mblur.c:167
 msgid "Simulate movement using directional blur"
@@ -6881,7 +6881,7 @@ msgstr "Onades del mar"
 
 #: ../plug-ins/common/ripple.c:525
 msgid "_Retain tilability"
-msgstr "_Reté el mosaic"
+msgstr "_Retén el mosaic"
 
 #  Edges toggle box
 #. Edges toggle box
@@ -8657,32 +8657,32 @@ msgstr ""
 "%s"
 
 # era: msgstr "Gira i contrau"
-#: ../plug-ins/common/whirlpinch.c:139
+#: ../plug-ins/common/whirlpinch.c:138
 msgid "Distort an image by whirling and pinching"
 msgstr "Distorsiona una imatge amb girs i contraccions"
 
-#: ../plug-ins/common/whirlpinch.c:150
+#: ../plug-ins/common/whirlpinch.c:149
 msgid "W_hirl and Pinch..."
 msgstr "_Gira i contrau..."
 
-#: ../plug-ins/common/whirlpinch.c:193
+#: ../plug-ins/common/whirlpinch.c:192
 msgid "Region affected by plug-in is empty"
 msgstr "La regió afectada pel connector està buida"
 
 # era: msgstr "Gira i contrau"
-#: ../plug-ins/common/whirlpinch.c:341
+#: ../plug-ins/common/whirlpinch.c:340
 msgid "Whirling and pinching"
 msgstr "S'està girant i contraient"
 
-#: ../plug-ins/common/whirlpinch.c:528
+#: ../plug-ins/common/whirlpinch.c:527
 msgid "Whirl and Pinch"
 msgstr "Gira i contrau"
 
-#: ../plug-ins/common/whirlpinch.c:564
+#: ../plug-ins/common/whirlpinch.c:563
 msgid "_Whirl angle:"
 msgstr "An_gle de gir:"
 
-#: ../plug-ins/common/whirlpinch.c:576
+#: ../plug-ins/common/whirlpinch.c:575
 msgid "_Pinch amount:"
 msgstr "_Quantitat de contraccions:"
 
@@ -9015,7 +9015,7 @@ msgstr "Composa la imatge"
 
 #: ../plug-ins/flame/flame.c:128
 msgid "Create cosmic recursive fractal flames"
-msgstr "Crea unes flames amb fractals recursivess còsmiques"
+msgstr "Crea unes flames amb fractals recursives còsmiques"
 
 #: ../plug-ins/flame/flame.c:133
 msgid "_Flame..."
