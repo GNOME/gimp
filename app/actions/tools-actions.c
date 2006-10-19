@@ -101,7 +101,7 @@ static const GimpStringActionEntry tools_alternative_actions[] =
     GIMP_HELP_TOOL_BY_COLOR_SELECT },
 
   { "tools-rotate-arbitrary", GIMP_STOCK_TOOL_ROTATE,
-    N_("_Arbitrary Rotation..."), NULL, NULL,
+    N_("_Arbitrary Rotation..."), "", NULL,
     "gimp-rotate-layer",
     GIMP_HELP_TOOL_ROTATE }
 };
@@ -449,10 +449,6 @@ tools_actions_setup (GimpActionGroup *group)
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                         "tools-by-color-select-short");
   gtk_action_set_accel_path (action, "<Actions>/tools/tools-by-color-select");
-
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        "tools-rotate-arbitrary");
-  gtk_action_set_accel_path (action, "<Actions>/tools/tools-rotate");
 
   gimp_action_group_add_enum_actions (group,
                                       tools_color_average_radius_actions,
