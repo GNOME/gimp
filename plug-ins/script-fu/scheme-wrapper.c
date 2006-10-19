@@ -25,6 +25,8 @@
 
 #include <string.h> /* memcpy, strcpy, strlen */
 
+#include <glib/gstdio.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimp/gimp.h"
@@ -292,8 +294,8 @@ static gboolean register_scripts = FALSE;
 void
 tinyscheme_init (gboolean local_register_scripts)
 {
-  char buff[80];
-  FILE *fin;
+  FILE  *fin;
+  gchar *filename;
 
   register_scripts = local_register_scripts;
   ts_output_routine = ts_output_string;
@@ -316,16 +318,21 @@ tinyscheme_init (gboolean local_register_scripts)
   init_constants ();
   init_procedures ();
 
-  g_snprintf (buff, sizeof (buff),
-              "%s%s", gimp_data_directory (), "/scripts/script-fu.init");
-  fin = fopen (buff, "r");
+  /* FIXME: need to search in the scripts search path */
+  filename = g_build_filename (gimp_data_directory (), "scripts",
+                               "script-fu.init", NULL);
+  fin = g_fopen (filename, "r");
   if (fin == NULL)
-     fprintf (stderr, "Unable to read initialization file\n");
+  {
+     g_printerr ("Unable to read initialization file\n");
+  }
   else
   {
      scheme_load_file (&sc, fin);
      fclose (fin);
   }
+
+  g_free (filename);
 }
 
 void

@@ -20,6 +20,8 @@
 
 #include <errno.h>
 
+#include <glib/gstdio.h>
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
@@ -342,7 +344,7 @@ script_fu_console_save_response (GtkWidget        *dialog,
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      fh = fopen (filename, "w");
+      fh = g_fopen (filename, "w");
 
       if (! fh)
         {

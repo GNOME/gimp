@@ -31,6 +31,7 @@
 #include <libgimp/gimpui.h>
 
 #include "tinyscheme/scheme-private.h"
+
 #include "scheme-wrapper.h"
 
 #include "script-fu-types.h"
@@ -39,10 +40,6 @@
 #include "script-fu-scripts.h"
 
 #include "script-fu-intl.h"
-
-
-#define RESPONSE_RESET         1
-#define RESPONSE_ABOUT         2
 
 
 typedef struct
