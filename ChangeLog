@@ -1,3 +1,16 @@
+2006-10-20  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/stddefs.pdb
+	* tools/pdbgen/pdb/selection_tools.pdb: added wrapper for
+	gimp-round-rect-select. Added feather_radius_x and _y to
+	gimp-by-color-select-full and gimp-fuzzy-select-full.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/selection_tools_cmds.c
+	* libgimp/gimpselectiontools_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: changed accordingly.
+
 2006-10-20  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpui.defs: clone methods can't be marked as

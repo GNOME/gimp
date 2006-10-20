@@ -94,6 +94,10 @@ sub marc_pdb_misc {
     contrib_pdb_misc('Marc Lehmann', '', @_);
 }
 
+sub martin_pdb_misc {
+    contrib_pdb_misc('Martin Nordholts', '', @_);
+}
+
 sub mitch_pdb_misc {
     contrib_pdb_misc('Michael Natterer', 'mitch@gimp.org', @_);
 }

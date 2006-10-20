@@ -96,7 +96,8 @@ gimp_by_color_select (gint32          drawable_ID,
  * @operation: The selection operation.
  * @antialias: Antialiasing.
  * @feather: Feather option for selections.
- * @feather_radius: Radius for feather operation.
+ * @feather_radius_x: Radius for feather operation in X direction.
+ * @feather_radius_y: Radius for feather operation in Y direction.
  * @sample_merged: Use the composite image, not the drawable.
  * @select_transparent: Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.
  * @select_criterion: The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.
@@ -130,7 +131,8 @@ gimp_by_color_select_full (gint32               drawable_ID,
                            GimpChannelOps       operation,
                            gboolean             antialias,
                            gboolean             feather,
-                           gdouble              feather_radius,
+                           gdouble              feather_radius_x,
+                           gdouble              feather_radius_y,
                            gboolean             sample_merged,
                            gboolean             select_transparent,
                            GimpSelectCriterion  select_criterion)
@@ -147,7 +149,8 @@ gimp_by_color_select_full (gint32               drawable_ID,
                                     GIMP_PDB_INT32, operation,
                                     GIMP_PDB_INT32, antialias,
                                     GIMP_PDB_INT32, feather,
-                                    GIMP_PDB_FLOAT, feather_radius,
+                                    GIMP_PDB_FLOAT, feather_radius_x,
+                                    GIMP_PDB_FLOAT, feather_radius_y,
                                     GIMP_PDB_INT32, sample_merged,
                                     GIMP_PDB_INT32, select_transparent,
                                     GIMP_PDB_INT32, select_criterion,
@@ -358,7 +361,8 @@ gimp_fuzzy_select (gint32         drawable_ID,
  * @operation: The selection operation.
  * @antialias: Antialiasing.
  * @feather: Feather option for selections.
- * @feather_radius: Radius for feather operation.
+ * @feather_radius_x: Radius for feather operation in X direction.
+ * @feather_radius_y: Radius for feather operation in Y direction.
  * @sample_merged: Use the composite image, not the drawable.
  * @select_transparent: Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.
  * @select_criterion: The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.
@@ -397,7 +401,8 @@ gimp_fuzzy_select_full (gint32              drawable_ID,
                         GimpChannelOps      operation,
                         gboolean            antialias,
                         gboolean            feather,
-                        gdouble             feather_radius,
+                        gdouble             feather_radius_x,
+                        gdouble             feather_radius_y,
                         gboolean            sample_merged,
                         gboolean            select_transparent,
                         GimpSelectCriterion select_criterion)
@@ -415,7 +420,8 @@ gimp_fuzzy_select_full (gint32              drawable_ID,
                                     GIMP_PDB_INT32, operation,
                                     GIMP_PDB_INT32, antialias,
                                     GIMP_PDB_INT32, feather,
-                                    GIMP_PDB_FLOAT, feather_radius,
+                                    GIMP_PDB_FLOAT, feather_radius_x,
+                                    GIMP_PDB_FLOAT, feather_radius_y,
                                     GIMP_PDB_INT32, sample_merged,
                                     GIMP_PDB_INT32, select_transparent,
                                     GIMP_PDB_INT32, select_criterion,
@@ -474,6 +480,76 @@ gimp_rect_select (gint32         image_ID,
                                     GIMP_PDB_INT32, operation,
                                     GIMP_PDB_INT32, feather,
                                     GIMP_PDB_FLOAT, feather_radius,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_round_rect_select:
+ * @image_ID: The image.
+ * @x: x coordinate of upper-left corner of rectangle.
+ * @y: y coordinate of upper-left corner of rectangle.
+ * @width: The width of the rectangle.
+ * @height: The height of the rectangle.
+ * @corner_radius_x: The corner radius in X direction.
+ * @corner_radius_y: The corner radius in Y direction.
+ * @operation: The selection operation.
+ * @antialias: Antialiasing.
+ * @feather: Feather option for selections.
+ * @feather_radius_x: Radius for feather operation in X direction.
+ * @feather_radius_y: Radius for feather operation in Y direction.
+ *
+ * Create a rectangular selection with round corners over the specified
+ * image;
+ *
+ * This tool creates a rectangular selection with round corners over
+ * the specified image. The rectangular region can be either added to,
+ * subtracted from, or replace the contents of the previous selection
+ * mask. If the feather option is enabled, the resulting selection is
+ * blurred before combining. The blur is a gaussian blur with the
+ * specified feather radius.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_round_rect_select (gint32         image_ID,
+                        gdouble        x,
+                        gdouble        y,
+                        gdouble        width,
+                        gdouble        height,
+                        gdouble        corner_radius_x,
+                        gdouble        corner_radius_y,
+                        GimpChannelOps operation,
+                        gboolean       antialias,
+                        gboolean       feather,
+                        gdouble        feather_radius_x,
+                        gdouble        feather_radius_y)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-round-rect-select",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_FLOAT, x,
+                                    GIMP_PDB_FLOAT, y,
+                                    GIMP_PDB_FLOAT, width,
+                                    GIMP_PDB_FLOAT, height,
+                                    GIMP_PDB_FLOAT, corner_radius_x,
+                                    GIMP_PDB_FLOAT, corner_radius_y,
+                                    GIMP_PDB_INT32, operation,
+                                    GIMP_PDB_INT32, antialias,
+                                    GIMP_PDB_INT32, feather,
+                                    GIMP_PDB_FLOAT, feather_radius_x,
+                                    GIMP_PDB_FLOAT, feather_radius_y,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

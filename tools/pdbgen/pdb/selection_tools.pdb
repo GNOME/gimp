@@ -116,8 +116,10 @@ HELP
 	  desc => 'Antialiasing' },
 	{ name => 'feather', type => 'boolean',
 	  desc => 'Feather option for selections' },
-	{ name => 'feather_radius', type => '0 <= float',
-	  desc => 'Radius for feather operation' },
+	{ name => 'feather_radius_x', type => '0 <= float',
+	  desc => 'Radius for feather operation in X direction' },
+	{ name => 'feather_radius_y', type => '0 <= float',
+	  desc => 'Radius for feather operation in Y direction' },
 	{ name => 'sample_merged', type => 'boolean',
 	  desc => 'Use the composite image, not the drawable' },
         { name => 'select_transparent', type => 'boolean',
@@ -144,8 +146,8 @@ HELP
                                 operation,
                                 antialias,
                                 feather,
-                                feather_radius,
-                                feather_radius);
+                                feather_radius_x,
+                                feather_radius_y);
 }
 CODE
     );
@@ -206,6 +208,7 @@ CODE
     );
 }
 
+
 sub free_select {
     $blurb = 'Create a polygonal selection over the specified image.';
 
@@ -259,6 +262,7 @@ HELP
 CODE
     );
 }
+
 
 sub fuzzy_select {
     $blurb = <<'BLURB';
@@ -332,10 +336,6 @@ CODE
 }
 
 
-
-
-
-
 sub fuzzy_select_full {
     $blurb = <<'BLURB';
 Create a fuzzy selection starting at the specified coordinates on the specified
@@ -379,8 +379,10 @@ HELP
 	  desc => 'Antialiasing' },
 	{ name => 'feather', type => 'boolean',
 	  desc => 'Feather option for selections' },
-	{ name => 'feather_radius', type => '0 <= float',
-	  desc => 'Radius for feather operation' },
+	{ name => 'feather_radius_x', type => '0 <= float',
+	  desc => 'Radius for feather operation in X direction' },
+	{ name => 'feather_radius_y', type => '0 <= float',
+	  desc => 'Radius for feather operation in Y direction' },
 	{ name => 'sample_merged', type => 'boolean',
 	  desc => 'Use the composite image, not the drawable' },
 	{ name => 'select_transparent', type => 'boolean',
@@ -408,19 +410,12 @@ HELP
                              operation,
                              antialias,
                              feather,
-                             feather_radius,
-                             feather_radius);
+                             feather_radius_x,
+                             feather_radius_y);
 }
 CODE
     );
 }
-
-
-
-
-
-
-
 
 
 sub rect_select {
@@ -472,12 +467,74 @@ CODE
 }
 
 
+sub round_rect_select {
+    $blurb = 'Create a rectangular selection with round corners over the specified image;';
+
+    $help = <<'HELP';
+This tool creates a rectangular selection with round corners over the
+specified image. The rectangular region can be either added to,
+subtracted from, or replace the contents of the previous selection
+mask. If the feather option is enabled, the resulting selection is
+blurred before combining. The blur is a gaussian blur with the
+specified feather radius.
+HELP
+
+    &martin_pdb_misc("2006","2.4");
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'x', type => 'float',
+	  desc => 'x coordinate of upper-left corner of rectangle' },
+	{ name => 'y', type => 'float',
+	  desc => 'y coordinate of upper-left corner of rectangle' },
+	{ name => 'width', type => '0 < float',
+	  desc => 'The width of the rectangle' },
+	{ name => 'height', type => '0 < float',
+	  desc => 'The height of the rectangle' },
+        { name => 'corner_radius_x', type => '0 < float < GIMP_MAX_IMAGE_SIZE',
+          desc => 'The corner radius in X direction' },
+        { name => 'corner_radius_y', type => '0 < float < GIMP_MAX_IMAGE_SIZE',
+          desc => 'The corner radius in Y direction' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' },
+	{ name => 'antialias', type => 'boolean',
+	  desc => 'Antialiasing' },
+	{ name => 'feather', type => 'boolean',
+	  desc => 'Feather option for selections' },
+	{ name => 'feather_radius_x', type => '0 <= float',
+	  desc => 'Radius for feather operation in X direction' },
+	{ name => 'feather_radius_y', type => '0 <= float',
+	  desc => 'Radius for feather operation in Y direction' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_channel_select_round_rect (gimp_image_get_mask (image),
+                                  (gint) x, (gint) y,
+                                  (gint) width, (gint) height,
+                                  corner_radius_x,
+                                  corner_radius_y,
+                                  operation,
+                                  antialias,
+                                  feather,
+                                  feather_radius_x,
+                                  feather_radius_y,
+                                  TRUE);
+}
+CODE
+    );
+}
+
+
 @headers = qw("core/gimpchannel-select.h" "gimp-intl.h");
 
 @procs = qw(by_color_select by_color_select_full
-            ellipse_select free_select 
+            ellipse_select
+            free_select 
 	    fuzzy_select fuzzy_select_full
-	    rect_select);
+	    rect_select round_rect_select);
 
 %exports = (app => [@procs], lib => [@procs]);
 

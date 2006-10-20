@@ -75,7 +75,7 @@ void register_undo_procs               (GimpPDB *pdb);
 void register_unit_procs               (GimpPDB *pdb);
 void register_vectors_procs            (GimpPDB *pdb);
 
-/* 532 procedures registered total */
+/* 533 procedures registered total */
 
 void
 internal_procs_init (GimpPDB *pdb)

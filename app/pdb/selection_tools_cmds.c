@@ -96,7 +96,8 @@ by_color_select_full_invoker (GimpProcedure     *procedure,
   gint32 operation;
   gboolean antialias;
   gboolean feather;
-  gdouble feather_radius;
+  gdouble feather_radius_x;
+  gdouble feather_radius_y;
   gboolean sample_merged;
   gboolean select_transparent;
   gint32 select_criterion;
@@ -107,10 +108,11 @@ by_color_select_full_invoker (GimpProcedure     *procedure,
   operation = g_value_get_enum (&args->values[3]);
   antialias = g_value_get_boolean (&args->values[4]);
   feather = g_value_get_boolean (&args->values[5]);
-  feather_radius = g_value_get_double (&args->values[6]);
-  sample_merged = g_value_get_boolean (&args->values[7]);
-  select_transparent = g_value_get_boolean (&args->values[8]);
-  select_criterion = g_value_get_enum (&args->values[9]);
+  feather_radius_x = g_value_get_double (&args->values[6]);
+  feather_radius_y = g_value_get_double (&args->values[7]);
+  sample_merged = g_value_get_boolean (&args->values[8]);
+  select_transparent = g_value_get_boolean (&args->values[9]);
+  select_criterion = g_value_get_enum (&args->values[10]);
 
   if (success)
     {
@@ -125,8 +127,8 @@ by_color_select_full_invoker (GimpProcedure     *procedure,
                                     operation,
                                     antialias,
                                     feather,
-                                    feather_radius,
-                                    feather_radius);
+                                    feather_radius_x,
+                                    feather_radius_y);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -281,7 +283,8 @@ fuzzy_select_full_invoker (GimpProcedure     *procedure,
   gint32 operation;
   gboolean antialias;
   gboolean feather;
-  gdouble feather_radius;
+  gdouble feather_radius_x;
+  gdouble feather_radius_y;
   gboolean sample_merged;
   gboolean select_transparent;
   gint32 select_criterion;
@@ -293,10 +296,11 @@ fuzzy_select_full_invoker (GimpProcedure     *procedure,
   operation = g_value_get_enum (&args->values[4]);
   antialias = g_value_get_boolean (&args->values[5]);
   feather = g_value_get_boolean (&args->values[6]);
-  feather_radius = g_value_get_double (&args->values[7]);
-  sample_merged = g_value_get_boolean (&args->values[8]);
-  select_transparent = g_value_get_boolean (&args->values[9]);
-  select_criterion = g_value_get_enum (&args->values[10]);
+  feather_radius_x = g_value_get_double (&args->values[7]);
+  feather_radius_y = g_value_get_double (&args->values[8]);
+  sample_merged = g_value_get_boolean (&args->values[9]);
+  select_transparent = g_value_get_boolean (&args->values[10]);
+  select_criterion = g_value_get_enum (&args->values[11]);
 
   if (success)
     {
@@ -312,8 +316,8 @@ fuzzy_select_full_invoker (GimpProcedure     *procedure,
                                  operation,
                                  antialias,
                                  feather,
-                                 feather_radius,
-                                 feather_radius);
+                                 feather_radius_x,
+                                 feather_radius_y);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -355,6 +359,58 @@ rect_select_invoker (GimpProcedure     *procedure,
                                      feather_radius,
                                      feather_radius,
                                      TRUE);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+round_rect_select_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gdouble x;
+  gdouble y;
+  gdouble width;
+  gdouble height;
+  gdouble corner_radius_x;
+  gdouble corner_radius_y;
+  gint32 operation;
+  gboolean antialias;
+  gboolean feather;
+  gdouble feather_radius_x;
+  gdouble feather_radius_y;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  x = g_value_get_double (&args->values[1]);
+  y = g_value_get_double (&args->values[2]);
+  width = g_value_get_double (&args->values[3]);
+  height = g_value_get_double (&args->values[4]);
+  corner_radius_x = g_value_get_double (&args->values[5]);
+  corner_radius_y = g_value_get_double (&args->values[6]);
+  operation = g_value_get_enum (&args->values[7]);
+  antialias = g_value_get_boolean (&args->values[8]);
+  feather = g_value_get_boolean (&args->values[9]);
+  feather_radius_x = g_value_get_double (&args->values[10]);
+  feather_radius_y = g_value_get_double (&args->values[11]);
+
+  if (success)
+    {
+      gimp_channel_select_round_rect (gimp_image_get_mask (image),
+                                      (gint) x, (gint) y,
+                                      (gint) width, (gint) height,
+                                      corner_radius_x,
+                                      corner_radius_y,
+                                      operation,
+                                      antialias,
+                                      feather,
+                                      feather_radius_x,
+                                      feather_radius_y,
+                                      TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -483,9 +539,15 @@ register_selection_tools_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("feather-radius",
-                                                    "feather radius",
-                                                    "Radius for feather operation",
+                               g_param_spec_double ("feather-radius-x",
+                                                    "feather radius x",
+                                                    "Radius for feather operation in X direction",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("feather-radius-y",
+                                                    "feather radius y",
+                                                    "Radius for feather operation in Y direction",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -769,9 +831,15 @@ register_selection_tools_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("feather-radius",
-                                                    "feather radius",
-                                                    "Radius for feather operation",
+                               g_param_spec_double ("feather-radius-x",
+                                                    "feather radius x",
+                                                    "Radius for feather operation in X direction",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("feather-radius-y",
+                                                    "feather radius y",
+                                                    "Radius for feather operation in Y direction",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -856,6 +924,95 @@ register_selection_tools_procs (GimpPDB *pdb)
                                g_param_spec_double ("feather-radius",
                                                     "feather radius",
                                                     "Radius for feather operation",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-round-rect-select
+   */
+  procedure = gimp_procedure_new (round_rect_select_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-round-rect-select");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-round-rect-select",
+                                     "Create a rectangular selection with round corners over the specified image;",
+                                     "This tool creates a rectangular selection with round corners over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask. If the feather option is enabled, the resulting selection is blurred before combining. The blur is a gaussian blur with the specified feather radius.",
+                                     "Martin Nordholts",
+                                     "Martin Nordholts",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("x",
+                                                    "x",
+                                                    "x coordinate of upper-left corner of rectangle",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("y",
+                                                    "y",
+                                                    "y coordinate of upper-left corner of rectangle",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("width",
+                                                    "width",
+                                                    "The width of the rectangle",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("height",
+                                                    "height",
+                                                    "The height of the rectangle",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("corner-radius-x",
+                                                    "corner radius x",
+                                                    "The corner radius in X direction",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("corner-radius-y",
+                                                    "corner radius y",
+                                                    "The corner radius in Y direction",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("antialias",
+                                                     "antialias",
+                                                     "Antialiasing",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("feather",
+                                                     "feather",
+                                                     "Feather option for selections",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("feather-radius-x",
+                                                    "feather radius x",
+                                                    "Radius for feather operation in X direction",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("feather-radius-y",
+                                                    "feather radius y",
+                                                    "Radius for feather operation in Y direction",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

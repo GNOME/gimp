@@ -557,6 +557,7 @@ EXPORTS
 	gimp_rgn_iterator_src_dest
 	gimp_rotate
 	gimp_rotation_type_get_type
+	gimp_round_rect_select
 	gimp_run_procedure
 	gimp_run_procedure2
 	gimp_scale

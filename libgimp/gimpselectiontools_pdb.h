@@ -43,7 +43,8 @@ gboolean gimp_by_color_select_full (gint32               drawable_ID,
                                     GimpChannelOps       operation,
                                     gboolean             antialias,
                                     gboolean             feather,
-                                    gdouble              feather_radius,
+                                    gdouble              feather_radius_x,
+                                    gdouble              feather_radius_y,
                                     gboolean             sample_merged,
                                     gboolean             select_transparent,
                                     GimpSelectCriterion  select_criterion);
@@ -79,7 +80,8 @@ gboolean gimp_fuzzy_select_full    (gint32               drawable_ID,
                                     GimpChannelOps       operation,
                                     gboolean             antialias,
                                     gboolean             feather,
-                                    gdouble              feather_radius,
+                                    gdouble              feather_radius_x,
+                                    gdouble              feather_radius_y,
                                     gboolean             sample_merged,
                                     gboolean             select_transparent,
                                     GimpSelectCriterion  select_criterion);
@@ -91,6 +93,18 @@ gboolean gimp_rect_select          (gint32               image_ID,
                                     GimpChannelOps       operation,
                                     gboolean             feather,
                                     gdouble              feather_radius);
+gboolean gimp_round_rect_select    (gint32               image_ID,
+                                    gdouble              x,
+                                    gdouble              y,
+                                    gdouble              width,
+                                    gdouble              height,
+                                    gdouble              corner_radius_x,
+                                    gdouble              corner_radius_y,
+                                    GimpChannelOps       operation,
+                                    gboolean             antialias,
+                                    gboolean             feather,
+                                    gdouble              feather_radius_x,
+                                    gdouble              feather_radius_y);
 
 
 G_END_DECLS
