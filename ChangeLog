@@ -1,3 +1,8 @@
+2006-10-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scheme-wrapper.c (init_constants):
+	* plug-ins/script-fu/script-fu-scripts.c minor cleanups.
+
 2006-10-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am

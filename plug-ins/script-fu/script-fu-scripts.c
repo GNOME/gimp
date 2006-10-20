@@ -368,21 +368,27 @@ script_fu_add_script (scheme *sc, pointer a)
                   adj_list = sc->vptr->pair_car (a);
                   script->arg_defaults[i].sfa_adjustment.value =
                     sc->vptr->rvalue (sc->vptr->pair_car (adj_list));
+
                   adj_list = sc->vptr->pair_cdr (adj_list);
                   script->arg_defaults[i].sfa_adjustment.lower =
                     sc->vptr->rvalue (sc->vptr->pair_car (adj_list));
+
                   adj_list = sc->vptr->pair_cdr (adj_list);
                   script->arg_defaults[i].sfa_adjustment.upper =
                     sc->vptr->rvalue (sc->vptr->pair_car (adj_list));
+
                   adj_list = sc->vptr->pair_cdr (adj_list);
                   script->arg_defaults[i].sfa_adjustment.step =
                     sc->vptr->rvalue (sc->vptr->pair_car (adj_list));
+
                   adj_list = sc->vptr->pair_cdr (adj_list);
                   script->arg_defaults[i].sfa_adjustment.page =
                     sc->vptr->rvalue (sc->vptr->pair_car (adj_list));
+
                   adj_list = sc->vptr->pair_cdr (adj_list);
                   script->arg_defaults[i].sfa_adjustment.digits =
                     sc->vptr->ivalue (sc->vptr->pair_car (adj_list));
+
                   adj_list = sc->vptr->pair_cdr (adj_list);
                   script->arg_defaults[i].sfa_adjustment.type =
                     sc->vptr->ivalue (sc->vptr->pair_car (adj_list));

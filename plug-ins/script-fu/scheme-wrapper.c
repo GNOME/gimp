@@ -423,11 +423,11 @@ init_constants (void)
 
       for (value = enum_class->values; value->value_name; value++)
         {
-          if (! strncmp ("GIMP_", value->value_name, 5))
+          if (g_str_has_prefix (value->value_name, "GIMP_"))
             {
               gchar *scheme_name;
 
-              scheme_name = g_strdup (value->value_name + 5);
+              scheme_name = g_strdup (value->value_name + strlen ("GIMP_"));
               convert_string (scheme_name);
 
               symbol = sc.vptr->mk_symbol (&sc, scheme_name);
@@ -449,6 +449,7 @@ init_constants (void)
       gchar *tmp;
       gchar *scheme_name;
 
+      /* FIXME: gimp_unit_get_singular() returns a translated string */
       tmp = g_ascii_strup (gimp_unit_get_singular (unit), -1);
       scheme_name = g_strconcat ("UNIT-", tmp, NULL);
       g_free (tmp);
@@ -463,12 +464,12 @@ init_constants (void)
 
   /* Constants used in the register block of scripts */
   for (i = 0; script_constants[i].name != NULL; ++i)
-  {
+    {
       symbol = sc.vptr->mk_symbol (&sc, script_constants[i].name);
       sc.vptr->scheme_define (&sc, sc.global_env, symbol,
                     sc.vptr->mk_integer (&sc, script_constants[i].value));
       sc.vptr->setimmutable(symbol);
-  }
+    }
 
   /* Define string constant for use in building paths to files/directories */
   symbol = sc.vptr->mk_symbol (&sc, "DIR-SEPARATOR");
@@ -493,12 +494,12 @@ init_constants (void)
   sc.vptr->setimmutable(symbol);
 
   for (i = 0; old_constants[i].name != NULL; ++i)
-  {
+    {
       symbol = sc.vptr->mk_symbol (&sc, old_constants[i].name);
       sc.vptr->scheme_define (&sc, sc.global_env, symbol,
                     sc.vptr->mk_integer (&sc, old_constants[i].value));
       sc.vptr->setimmutable(symbol);
-  }
+    }
 }
 
 static void
