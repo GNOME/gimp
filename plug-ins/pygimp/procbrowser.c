@@ -33,6 +33,8 @@
 
 #include "pygimp-api.h"
 
+#include "pygimp-util.h"
+
 #include "pygimp-intl.h"
 
 typedef struct
@@ -217,7 +219,7 @@ initgimpprocbrowser(void)
 {
     PyObject *m;
 
-    init_pygobject();
+    pygimp_init_pygobject();
     init_pygtk();
     init_pygimp();
 

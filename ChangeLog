@@ -1,3 +1,9 @@
+2006-10-20  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpmodule.c
+	* plug-ins/pygimp/procbrowser.c: use pygimp_init_pygobject here too.
+	Report and patch from Eric Lamarque (fixes bug #363516).
+
 2006-10-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptransformtool.c

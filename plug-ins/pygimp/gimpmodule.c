@@ -34,6 +34,8 @@
 
 #include <pygobject.h>
 
+#include "pygimp-util.h"
+
 #include "pygimp-intl.h"
 
 
@@ -1645,7 +1647,7 @@ initgimp(void)
     if (PyType_Ready(&PyGimpParasite_Type) < 0)
 	return;
 
-    init_pygobject();
+    pygimp_init_pygobject();
     init_pygimpcolor();
 
     /* initialize i18n support */
