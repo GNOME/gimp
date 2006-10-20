@@ -90,10 +90,9 @@
     (set! fs (car (gimp-edit-paste reflect-layer FALSE)))
     (gimp-floating-sel-anchor fs)
     (gimp-drawable-transform-scale-default reflect-layer
-                                            0 0 width (* 0.85 height)
-                                            FALSE FALSE)
-    (gimp-drawable-transform-flip-simple reflect-layer
-                                         ORIENTATION-VERTICAL
+                                           0 0 width (* 0.85 height)
+                                           FALSE FALSE)
+    (gimp-drawable-transform-flip-simple reflect-layer ORIENTATION-VERTICAL
                                          TRUE 0 TRUE)
     (gimp-layer-set-offsets reflect-layer 5 (+ 3 height))
 
@@ -114,11 +113,11 @@
 
 
 (define (script-fu-cool-metal-logo-alpha img
-                                       logo-layer
-                                       size
-                                       bg-color
-                                       gradient
-                                       gradient-reverse)
+                                         logo-layer
+                                         size
+                                         bg-color
+                                         gradient
+                                         gradient-reverse)
   (begin
     (gimp-image-undo-group-start img)
     (apply-cool-metal-logo-effect img logo-layer size bg-color

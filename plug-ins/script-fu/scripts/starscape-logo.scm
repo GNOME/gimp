@@ -153,7 +153,7 @@
         (img (car (gimp-image-new 256 256 RGB)))
         (border (/ size 4))
         (text-layer (car (gimp-text-fontname img -1 0 0 text border
-                          TRUE size PIXELS fontname)))
+                                             TRUE size PIXELS fontname)))
         )
     (gimp-image-undo-disable img)
     (apply-starscape-logo-effect img text-layer size glow-color)

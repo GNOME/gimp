@@ -13,6 +13,7 @@
         )
 
     (gimp-context-push)
+
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img shadow-layer 1)
@@ -36,9 +37,11 @@
                      0 0 width height)
 
     (gimp-layer-translate shadow-layer 3 3)
+
     (gimp-context-pop)
   )
 )
+
 
 (define (script-fu-basic1-logo-alpha img
                                      logo-layer
@@ -61,7 +64,7 @@
   "RGBA"
   SF-IMAGE      "Image"             0
   SF-DRAWABLE   "Drawable"          0
-  SF-COLOR      _"Background color" '(255 255 255)
+  SF-COLOR      _"Background color" "white"
   SF-COLOR      _"Text color"       '(6 6 206)
 )
 
@@ -92,10 +95,10 @@
   "Spencer Kimball"
   "1996"
   ""
-  SF-STRING     _"Text"               "The Gimp"
+  SF-STRING     _"Text"               "GIMP"
   SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
   SF-FONT       _"Font"               "Dragonwick"
-  SF-COLOR      _"Background color"   '(255 255 255)
+  SF-COLOR      _"Background color"   "white"
   SF-COLOR      _"Text color"         '(6 6 206)
 )
 

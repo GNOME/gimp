@@ -123,8 +123,8 @@
   SF-GRADIENT   _"Gradient"         "Incandescent"
   SF-TOGGLE     _"Gradient reverse" FALSE
   SF-ADJUSTMENT _"Outline size"     '(5 1 100 1 10 0 1)
-  SF-COLOR      _"Outline color"    '(255 255 255)
-  SF-COLOR      _"Background color" '(255 255 255)
+  SF-COLOR      _"Outline color"    "white"
+  SF-COLOR      _"Background color" "white"
 )
 
 (script-fu-menu-register "script-fu-comic-logo-alpha"
@@ -164,8 +164,8 @@
   SF-GRADIENT   _"Gradient"           "Incandescent"
   SF-TOGGLE     _"Gradient reverse"   FALSE
   SF-ADJUSTMENT _"Outline size"       '(5 1 100 1 10 0 1)
-  SF-COLOR      _"Outline color"      '(255 255 255)
-  SF-COLOR      _"Background color"   '(255 255 255)
+  SF-COLOR      _"Outline color"      "white"
+  SF-COLOR      _"Background color"   "white"
 )
 
 (script-fu-menu-register "script-fu-comic-logo"

@@ -23,8 +23,12 @@
 (define (script-fu-beveled-pattern-hrule width height pattern)
   (let* (
         (img (car (gimp-image-new width height RGB)))
-        (background (car (gimp-layer-new img width height RGB-IMAGE "Hrule" 100 NORMAL-MODE)))
-        (bumpmap (car (gimp-layer-new img width height RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE)))
+        (background (car (gimp-layer-new img
+                                         width height RGB-IMAGE
+                                         "Hrule" 100 NORMAL-MODE)))
+        (bumpmap (car (gimp-layer-new img
+                                      width height RGBA-IMAGE
+                                      "Bumpmap" 100 NORMAL-MODE)))
         )
 
     (gimp-context-push)

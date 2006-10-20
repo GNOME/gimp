@@ -32,13 +32,17 @@
         (img (car (gimp-image-new 10 10 RGB)))
         (textl
           (car
-           (gimp-text-fontname img -1 0 0 text 0 TRUE text-size PIXELS font)))
+            (gimp-text-fontname img -1 0 0 text 0 TRUE text-size PIXELS font)))
 
         (width (car (gimp-drawable-width textl)))
         (height (car (gimp-drawable-height textl)))
 
-        (background (car (gimp-layer-new img width height RGBA-IMAGE "Background" 100 NORMAL-MODE)))
-        (bumpmap (car (gimp-layer-new img width height RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE)))
+        (background (car (gimp-layer-new img
+                                         width height RGBA-IMAGE
+                                         "Background" 100 NORMAL-MODE)))
+        (bumpmap (car (gimp-layer-new img
+                                      width height RGBA-IMAGE
+                                      "Bumpmap" 100 NORMAL-MODE)))
         )
 
     (gimp-context-push)

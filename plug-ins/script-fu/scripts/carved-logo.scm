@@ -158,22 +158,20 @@
 )
 
 (script-fu-register "script-fu-carved-logo"
-    _"Carved..."
-    _"Create a logo with text raised above or carved in to the specified background image"
-    "Spencer Kimball"
-    "Spencer Kimball"
-    "1997"
-    ""
-    SF-STRING     _"Text" "Marble"
-    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
-    SF-FONT       _"Font" "Engraver"
-    SF-FILENAME   _"Background Image"
-        (string-append gimp-data-directory DIR-SEPARATOR
-                       "scripts" DIR-SEPARATOR
-                       "images" DIR-SEPARATOR
-                       "texture3.jpg")
-    SF-TOGGLE     _"Carve raised text" FALSE
-    SF-ADJUSTMENT _"Padding around text" '(10 0 1000 1 10 0 1)
+  _"Carved..."
+  _"Create a logo with text raised above or carved in to the specified background image"
+  "Spencer Kimball"
+  "Spencer Kimball"
+  "1997"
+  ""
+  SF-STRING     _"Text" "Marble"
+  SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
+  SF-FONT       _"Font" "Engraver"
+  SF-FILENAME   _"Background Image"
+      (string-append gimp-data-directory
+                     "/scripts/images/texture3.jpg")
+  SF-TOGGLE     _"Carve raised text" FALSE
+  SF-ADJUSTMENT _"Padding around text" '(10 0 1000 1 10 0 1)
 )
 
 (script-fu-menu-register "script-fu-carved-logo"

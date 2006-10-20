@@ -49,15 +49,13 @@
 
   (gimp-image-add-layer theImage theLayer 0)
 
-  (if (= TRUE (car (gimp-selection-is-empty theImage)))
-      ()
+  (if (= FALSE (car (gimp-selection-is-empty theImage)))
       (gimp-edit-fill theLayer BACKGROUND-FILL)
   )
 
   (gimp-selection-invert theImage)
 
-  (if (= TRUE (car (gimp-selection-is-empty theImage)))
-      ()
+  (if (= FALSE (car (gimp-selection-is-empty theImage)))
       (gimp-edit-clear theLayer)
   )
 
@@ -89,8 +87,6 @@
 )
 
 
-; Register the function with the GIMP:
-
 (script-fu-register "script-fu-distress-selection"
   _"_Distort..."
   _"Distress the selection"
@@ -100,7 +96,7 @@
   "RGB*"
   SF-IMAGE       "The image"              0
   SF-DRAWABLE    "The layer"              0
-  SF-ADJUSTMENT _"Threshold"              '(127 1 255 1 10 0 0)
+  SF-ADJUSTMENT _"Threshold (bigger 1<-->255 smaller)" '(127 1 255 1 10 0 0)
   SF-ADJUSTMENT _"Spread"                 '(8 0 1000 1 10 0 1)
   SF-ADJUSTMENT _"Granularity (1 is low)" '(4 1 25 1 10 0 1)
   SF-ADJUSTMENT _"Smooth"                 '(2 1 150 1 10 0 1)

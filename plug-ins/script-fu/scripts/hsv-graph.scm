@@ -272,6 +272,7 @@
          (index 0))
 
     (gimp-context-push)
+
     (gimp-image-undo-disable gimg)
     (gimp-image-add-layer gimg bglayer -1)
     (gimp-selection-all gimg)
@@ -328,14 +329,13 @@
     (let ((text-layer (car (gimp-text-fontname gimg -1 0 0
                             "Red: Hue, Green: Sat, Blue: Val"
                             1 1 12 PIXELS
-                            "-*-helvetica-*-r-*-*-12-*-*-*-p-*-*-*")))
+                            "Sans")))
           (offset-y (- y-base (car (gimp-drawable-height clayer)))))
       (gimp-layer-set-mode text-layer DIFFERENCE-MODE)
       (gimp-layer-translate clayer 0 offset-y)
       (gimp-layer-translate text-layer border-size (+ offset-y 15)))
     (gimp-image-set-active-layer gimg bglayer)
     (gimp-image-clean-all gimg)
-    ;; return back the state
     (gimp-image-undo-enable gimg)
 
     (set! script-fu-hsv-graph-scale scale)
@@ -370,8 +370,6 @@
   SF-ADJUSTMENT _"End X"               '(1 0 5000 1 10 0 1)
   SF-ADJUSTMENT _"End Y"               '(1 0 5000 1 10 0 1)
 )
-
-;;; hsv-graph.scm ends here
 
 (script-fu-menu-register "script-fu-hsv-graph"
                          "<Image>/Colors/Info")

@@ -20,6 +20,7 @@
         )
 
     (gimp-context-push)
+
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
@@ -42,35 +43,40 @@
                      GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
                      FALSE 0 0 TRUE
                      0 0 1 1)
+
     (gimp-context-pop)
   )
 )
+
 
 (define (script-fu-alien-glow-logo-alpha img
                                          logo-layer
                                          size
                                          glow-color)
-  (gimp-image-undo-group-start img)
-  (apply-alien-glow-logo-effect img logo-layer size glow-color)
-  (gimp-image-undo-group-end img)
-  (gimp-displays-flush)
+  (begin
+    (gimp-image-undo-group-start img)
+    (apply-alien-glow-logo-effect img logo-layer size glow-color)
+    (gimp-image-undo-group-end img)
+    (gimp-displays-flush)
+  )
 )
 
 (script-fu-register "script-fu-alien-glow-logo-alpha"
-    _"Alien _Glow..."
-    _"Add an eerie glow around the selected region (or alpha)"
-    "Spencer Kimball"
-    "Spencer Kimball"
-    "1997"
-    "RGBA"
-    SF-IMAGE       "Image"                  0
-    SF-DRAWABLE    "Drawable"               0
-    SF-ADJUSTMENT _"Glow size (pixels * 4)" '(150 2 1000 1 10 0 1)
-    SF-COLOR      _"Glow color"             '(63 252 0)
+  _"Alien _Glow..."
+  _"Add an eerie glow around the selected region (or alpha)"
+  "Spencer Kimball"
+  "Spencer Kimball"
+  "1997"
+  "RGBA"
+  SF-IMAGE       "Image"                  0
+  SF-DRAWABLE    "Drawable"               0
+  SF-ADJUSTMENT _"Glow size (pixels * 4)" '(150 2 1000 1 10 0 1)
+  SF-COLOR      _"Glow color"             '(63 252 0)
 )
 
 (script-fu-menu-register "script-fu-alien-glow-logo-alpha"
                          "<Image>/Filters/Alpha to Logo")
+
 
 (define (script-fu-alien-glow-logo text
                                    size
@@ -81,7 +87,9 @@
         (border (/ size 4))
         (grow (/ size 30))
         (feather (/ size 4))
-        (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
+        (text-layer (car (gimp-text-fontname img
+                                             -1 0 0 text border TRUE
+                                             size PIXELS font)))
         (width (car (gimp-drawable-width text-layer)))
         (height (car (gimp-drawable-height text-layer)))
         )
@@ -94,16 +102,16 @@
 )
 
 (script-fu-register "script-fu-alien-glow-logo"
-    _"Alien _Glow..."
-    _"Create a logo with an alien glow around the text"
-    "Spencer Kimball"
-    "Spencer Kimball"
-    "1997"
-    ""
-    SF-STRING     _"Text"               "ALIEN"
-    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
-    SF-FONT       _"Font"               "Sans Bold"
-    SF-COLOR      _"Glow color"         '(63 252 0)
+  _"Alien _Glow..."
+  _"Create a logo with an alien glow around the text"
+  "Spencer Kimball"
+  "Spencer Kimball"
+  "1997"
+  ""
+  SF-STRING     _"Text"               "ALIEN"
+  SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
+  SF-FONT       _"Font"               "Sans Bold"
+  SF-COLOR      _"Glow color"         '(63 252 0)
 )
 
 (script-fu-menu-register "script-fu-alien-glow-logo"

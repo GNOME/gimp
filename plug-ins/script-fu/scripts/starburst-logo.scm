@@ -113,7 +113,7 @@
   SF-ADJUSTMENT _"Font size (pixels)" '(150 0 512 1 10 0 1)
   SF-FONT       _"Font"               "Blippo"
   SF-COLOR      _"Burst color"        '(60 196 33)
-  SF-COLOR      _"Background color"   '(255 255 255)
+  SF-COLOR      _"Background color"   "white"
 )
 
 (script-fu-menu-register "script-fu-starburst-logo"

@@ -75,8 +75,8 @@
   (let ((floating-sel (car (gimp-edit-paste pattern-draw FALSE))))
     (gimp-floating-sel-anchor floating-sel))
 
-  (set! filename2 (string-append gimp-directory DIR-SEPARATOR
-                                 "patterns" DIR-SEPARATOR
+  (set! filename2 (string-append gimp-directory
+                                 "/patterns/"
                                  filename
                                  (number->string image)
                                  ".pat"))

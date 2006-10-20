@@ -181,7 +181,6 @@
         (img (car (gimp-image-new width height RGB)))
         (drawable (car (gimp-layer-new img width height RGB-IMAGE
                                        "Sphere Layer" 100 NORMAL-MODE)))
-        (*pi* (* 4 (atan 1.0)))
         (radians (/ (* light *pi*) 180))
         (cx (/ width 2))
         (cy (/ height 2))
@@ -262,7 +261,7 @@
 )
 
 (script-fu-register "script-fu-test-sphere"
-  _"_Sphere"
+  _"_Sphere..."
   "Simple script to test and show the usage of the new Script-Fu API extensions."
   "Spencer Kimball, Sven Neumann"
   "Spencer Kimball"
@@ -272,7 +271,7 @@
   SF-ADJUSTMENT "Lighting (degrees)" '(45 0 360 1 10 1 SF-SLIDER)
   SF-TOGGLE     "Shadow"             TRUE
   SF-COLOR      "Background color"   "white"
-  SF-COLOR      "Sphere color"       "#FF0000"
+  SF-COLOR      "Sphere color"       "red"
   SF-BRUSH      "Brush"              '("Circle (03)" 1.0 44 0)
   SF-STRING     "Text"               "Tiny-Fu rocks!"
   SF-TEXT       "Multi-line text"    "Hello,\nWorld!"

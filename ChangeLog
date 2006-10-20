@@ -1,3 +1,19 @@
+2006-10-20  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scheme-wrapper.c: Moved the MIN and MAX entries
+	for image size and resolution to script_constants structureas they
+	are not deprecated constants.
+
+	* plug-ins/script-fu/scripts/script-fu.init: Removed CR in line endings.
+
+	* plug-ins/script-fu/scripts/*.scm: Fixed a number of regressions that
+	snuck in during the last big update of the scripts. This update
+	reduces the number of differences to the original scripts (other than
+	formatting). Some additional formatting changes in a few scripts.
+	Updates to use colour names in register block where possible. Fixed a
+	bug in burn-in-anim.scm. Minor cleanup of font-map.scm. Simplified
+	the bug fix in tile-blur.scm.
+
 2006-10-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scheme-wrapper.c (init_constants):

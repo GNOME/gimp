@@ -79,9 +79,9 @@
                                           "fore-layer" 100 NORMAL-MODE)))
        )
 
-    ; Create image
-
     (gimp-context-push)
+
+    ; Create image
 
     (gimp-image-undo-disable img)
     (gimp-image-resize img img-width img-height 0 0)

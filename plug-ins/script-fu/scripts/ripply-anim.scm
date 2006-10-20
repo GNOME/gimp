@@ -15,7 +15,9 @@
     (gimp-selection-all source-image)
     (gimp-edit-copy source-drawable)
     (gimp-selection-none source-image)
-    (gimp-floating-sel-anchor (car (gimp-edit-paste dest-drawable FALSE)))
+    (let ((floating-sel (car (gimp-edit-paste dest-drawable FALSE))))
+      (gimp-floating-sel-anchor (car (gimp-edit-paste dest-drawable FALSE)))
+    )
   )
 
   (let* (
@@ -40,10 +42,10 @@
 
     (gimp-context-push)
 
-; this script generates its own displacement map
+    ; this script generates its own displacement map
 
     (gimp-image-undo-disable ripple-image)
-    (gimp-context-set-background '(127 127 127) )
+    (gimp-context-set-background '(127 127 127))
     (gimp-image-add-layer ripple-image ripple-layer 0)
     (gimp-edit-fill ripple-layer BACKGROUND-FILL)
     (plug-in-noisify 1 ripple-image ripple-layer FALSE 1.0 1.0 1.0 0.0)

@@ -79,6 +79,6 @@
   ""
   SF-IMAGE      "Image"             0
   SF-DRAWABLE   "Drawable to apply" 0
-  SF-ADJUSTMENT "Mask size"         '(5 1 100 1 1 0 1)
-  SF-ADJUSTMENT "Mask opacity"      '(50 0 100 1 1 0 1)
+  SF-ADJUSTMENT _"Mask size"        '(5 1 100 1 1 0 1)
+  SF-ADJUSTMENT _"Mask opacity"     '(50 0 100 1 1 0 1)
 )

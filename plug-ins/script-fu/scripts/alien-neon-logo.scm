@@ -46,6 +46,7 @@
         )
 
     (gimp-context-push)
+
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img bands-layer 1)
@@ -104,6 +105,7 @@
   )
 )
 
+
 (define (script-fu-alien-neon-logo-alpha img
                                          logo-layer
                                          fg-color
@@ -112,12 +114,14 @@
                                          gap-size
                                          num-bands
                                          do-fade)
-    (begin
+ (begin
     (gimp-image-undo-group-start img)
     (apply-alien-neon-logo-effect img logo-layer fg-color bg-color
                                   band-size gap-size num-bands do-fade)
     (gimp-image-undo-group-end img)
-    (gimp-displays-flush)))
+    (gimp-displays-flush)
+  )
+)
 
 (script-fu-register "script-fu-alien-neon-logo-alpha"
     _"Alien _Neon..."
@@ -126,18 +130,19 @@
     "Raphael Quinet"
     "1999-2000"
     "RGBA"
-    SF-IMAGE      "Image" 0
-    SF-DRAWABLE   "Drawable" 0
-    SF-COLOR      _"Glow color" '(0 255 0)
-    SF-COLOR      _"Background color" '(0 0 0)
-    SF-ADJUSTMENT _"Width of bands" '(2 1 60 1 10 0 0)
-    SF-ADJUSTMENT _"Width of gaps" '(2 1 60 1 10 0 0)
-    SF-ADJUSTMENT _"Number of bands" '(7 1 100 1 10 0 1)
-    SF-TOGGLE     _"Fade away" TRUE
+    SF-IMAGE      "Image"             0
+    SF-DRAWABLE   "Drawable"          0
+    SF-COLOR      _"Glow color"       "green"
+    SF-COLOR      _"Background color" "black"
+    SF-ADJUSTMENT _"Width of bands"   '(2 1 60 1 10 0 0)
+    SF-ADJUSTMENT _"Width of gaps"    '(2 1 60 1 10 0 0)
+    SF-ADJUSTMENT _"Number of bands"  '(7 1 100 1 10 0 1)
+    SF-TOGGLE     _"Fade away"        TRUE
 )
 
 (script-fu-menu-register "script-fu-alien-neon-logo-alpha"
                          "<Image>/Filters/Alpha to Logo")
+
 
 (define (script-fu-alien-neon-logo text
                                    size
@@ -162,24 +167,22 @@
 )
 
 (script-fu-register "script-fu-alien-neon-logo"
-    _"Alien _Neon..."
-    _"Create a logo with psychedelic outlines around the text"
-    "Raphael Quinet (quinet@gamers.org)"
-    "Raphael Quinet"
-    "1999-2000"
-    ""
-    SF-STRING     _"Text" "The GIMP"
-    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
-    SF-FONT       _"Font" "Blippo"
-    SF-COLOR      _"Glow color" '(0 255 0)
-    SF-COLOR      _"Background color" '(0 0 0)
-    SF-ADJUSTMENT _"Width of bands" '(2 1 60 1 10 0 0)
-    SF-ADJUSTMENT _"Width of gaps" '(2 1 60 1 10 0 0)
-    SF-ADJUSTMENT _"Number of bands" '(7 1 100 1 10 0 1)
-    SF-TOGGLE     _"Fade away" TRUE
+  _"Alien _Neon..."
+  _"Create a logo with psychedelic outlines around the text"
+  "Raphael Quinet (quinet@gamers.org)"
+  "Raphael Quinet"
+  "1999-2000"
+  ""
+  SF-STRING     _"Text"               "GIMP"
+  SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
+  SF-FONT       _"Font"               "Blippo"
+  SF-COLOR      _"Glow color"         "green"
+  SF-COLOR      _"Background color"   "black"
+  SF-ADJUSTMENT _"Width of bands"     '(2 1 60 1 10 0 0)
+  SF-ADJUSTMENT _"Width of gaps"      '(2 1 60 1 10 0 0)
+  SF-ADJUSTMENT _"Number of bands"    '(7 1 100 1 10 0 1)
+  SF-TOGGLE     _"Fade away" TRUE
 )
 
 (script-fu-menu-register "script-fu-alien-neon-logo"
                          "<Toolbox>/Xtns/Logos")
-
-; end

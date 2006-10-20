@@ -72,7 +72,8 @@
     (if (= use-pattern-text TRUE)
       (begin
         (gimp-context-set-pattern pattern-text)
-        (gimp-edit-bucket-fill logo-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+        (gimp-edit-bucket-fill logo-layer
+                               PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
         (gimp-context-set-pattern old-patterns)
       )
     )
@@ -102,7 +103,9 @@
     (if (= use-pattern-outline TRUE)
       (begin
         (gimp-context-set-pattern pattern-outline)
-        (gimp-edit-bucket-fill grow-me PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+        (gimp-edit-bucket-fill grow-me
+                               PATTERN-BUCKET-FILL NORMAL-MODE 100
+                               0 FALSE 0 0)
         (gimp-context-set-pattern old-patterns)
       )
     )
@@ -121,14 +124,16 @@
 
     (gimp-selection-none img)
 
-    (plug-in-bump-map RUN-NONINTERACTIVE img grow-me logo-layer 110.0 45.0 3 0 0 0 0 TRUE FALSE 0)
+    (plug-in-bump-map RUN-NONINTERACTIVE img grow-me logo-layer
+                      110.0 45.0 3 0 0 0 0 TRUE FALSE 0)
     (gimp-layer-set-mode logo-layer SCREEN-MODE)
 
     (if (= use-pattern-overlay TRUE)
       (begin
         (gimp-selection-layer-alpha grow-me)
         (gimp-context-set-pattern pattern-overlay)
-        (gimp-edit-bucket-fill grow-me PATTERN-BUCKET-FILL OVERLAY-MODE 100 0 FALSE 0 0)
+        (gimp-edit-bucket-fill grow-me PATTERN-BUCKET-FILL
+                               OVERLAY-MODE 100 0 FALSE 0 0)
         (gimp-context-set-pattern old-patterns)
         (gimp-selection-none img)
       )
@@ -137,7 +142,9 @@
     (if (= shadow-toggle TRUE)
       (begin
         (gimp-selection-layer-alpha logo-layer)
-        (set! dont-drop-me (car (script-fu-drop-shadow img logo-layer s-offset-x s-offset-y 15 '(0 0 0) 80 TRUE)))
+        (set! dont-drop-me (car (script-fu-drop-shadow img logo-layer
+                                                       s-offset-x s-offset-y
+                                                       15 '(0 0 0) 80 TRUE)))
         (set! width (car (gimp-image-width img)))
         (set! height (car (gimp-image-height img)))
         (gimp-selection-none img)
@@ -167,7 +174,6 @@
                                      shadow-toggle
                                      s-offset-x
                                      s-offset-y)
-
   (begin
     (gimp-image-undo-group-start img)
     (apply-glossy-logo-effect img logo-layer
@@ -201,7 +207,7 @@
   SF-GRADIENT   _"Blend gradient (outline)" "Shadows 2"
   SF-TOGGLE     _"Outline gradient reverse" FALSE
   SF-ADJUSTMENT _"Outline size"             '(5 0 250 1 10 0 1)
-  SF-COLOR      _"Background color"         '(255 255 255)
+  SF-COLOR      _"Background color"         "white"
   SF-TOGGLE     _"Use pattern for text instead of gradient" FALSE
   SF-PATTERN    _"Pattern (text)"           "Electric Blue"
   SF-TOGGLE     _"Use pattern for outline instead of gradient" FALSE
@@ -273,7 +279,7 @@
   SF-GRADIENT   _"Blend gradient (outline)" "Shadows 2"
   SF-TOGGLE     _"Outline gradient reverse" FALSE
   SF-ADJUSTMENT _"Outline size"             '(5 0 250 1 10 0 1)
-  SF-COLOR      _"Background color"         '(255 255 255)
+  SF-COLOR      _"Background color"         "white"
   SF-TOGGLE     _"Use pattern for text instead of gradient" FALSE
   SF-PATTERN    _"Pattern (text)"           "Electric Blue"
   SF-TOGGLE     _"Use pattern for outline instead of gradient" FALSE

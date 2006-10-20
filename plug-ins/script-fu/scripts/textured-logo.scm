@@ -129,7 +129,7 @@
   SF-OPTION     _"Mosaic tile type"     '(_"Squares"
                                           _"Hexagons"
                                           _"Octagons")
-  SF-COLOR      _"Background color"     '(255 255 255)
+  SF-COLOR      _"Background color"     "white"
   SF-COLOR      _"Starting blend"       '(32 106 0)
   SF-COLOR      _"Ending blend"         '(0 0 106)
 )
@@ -164,14 +164,14 @@
   "Spencer Kimball"
   "1996"
   ""
-  SF-STRING     _"Text"               "The GIMP"
+  SF-STRING     _"Text"               "GIMP"
   SF-ADJUSTMENT _"Font size (pixels)" '(200 1 1000 1 10 0 1)
   SF-FONT       _"Font"               "CuneiFont"
   SF-PATTERN    _"Text pattern"       "Fibers"
   SF-OPTION     _"Mosaic tile type"   '(_"Squares"
                                         _"Hexagons"
                                         _"Octagons")
-  SF-COLOR      _"Background color"   '(255 255 255)
+  SF-COLOR      _"Background color"   "white"
   SF-COLOR      _"Starting blend"     '(32 106 0)
   SF-COLOR      _"Ending blend"       '(0 0 106)
 )

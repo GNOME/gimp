@@ -103,11 +103,12 @@
   SF-ADJUSTMENT _"Border size (pixels)"     '(22 1 300 1 10 0 1)
   SF-ADJUSTMENT _"Bevel height (sharpness)" '(40 1 250 1 10 0 1)
   SF-ADJUSTMENT _"Bevel width"              '(2.5 1 200 1 10 1 1)
-  SF-COLOR      _"Background color"         '(255 255 255)
+  SF-COLOR      _"Background color"         "white"
 )
 
 (script-fu-menu-register "script-fu-gradient-bevel-logo-alpha"
                          "<Image>/Filters/Alpha to Logo")
+
 
 (define (script-fu-gradient-bevel-logo text
                                        size
@@ -141,7 +142,7 @@
   SF-FONT       _"Font"                     "Sans Bold"
   SF-ADJUSTMENT _"Bevel height (sharpness)" '(40 1 250 1 10 0 1)
   SF-ADJUSTMENT _"Bevel width"              '(2.5 1 200 1 10 1 1)
-  SF-COLOR      _"Background color"         '(255 255 255)
+  SF-COLOR      _"Background color"         "white"
 )
 
 (script-fu-menu-register "script-fu-gradient-bevel-logo"

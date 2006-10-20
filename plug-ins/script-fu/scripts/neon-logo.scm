@@ -201,7 +201,7 @@
   SF-IMAGE      "Image"                     0
   SF-DRAWABLE   "Drawable"                  0
   SF-ADJUSTMENT _"Effect size (pixels * 5)" '(150 2 1000 1 10 0 1)
-  SF-COLOR      _"Background color"         '(0 0 0)
+  SF-COLOR      _"Background color"         "black"
   SF-COLOR      _"Glow color"               '(38 211 255)
   SF-TOGGLE     _"Create shadow"            FALSE
 )
@@ -237,7 +237,7 @@
   SF-STRING     _"Text"               "NEON"
   SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
   SF-FONT       _"Font"               "Blippo"
-  SF-COLOR      _"Background color"   '(0 0 0)
+  SF-COLOR      _"Background color"   "black"
   SF-COLOR      _"Glow color"         '(38 211 255)
   SF-TOGGLE     _"Create shadow"      FALSE
 )

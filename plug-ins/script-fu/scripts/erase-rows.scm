@@ -2,8 +2,8 @@
   (let* (
         (width (car (gimp-drawable-width drawable)))
         (height (car (gimp-drawable-height drawable)))
-        (x (car (gimp-drawable-offsets drawable)))
-        (y (cadr (gimp-drawable-offsets drawable)))
+        (position-x (car (gimp-drawable-offsets drawable)))
+        (position-y (cadr (gimp-drawable-offsets drawable)))
         )
 
     (gimp-image-undo-group-start img)
@@ -11,8 +11,8 @@
                      (if (< i max)
                          (begin
                            (if (= orientation 0)
-                               (gimp-rect-select img x (+ i y) width 1 CHANNEL-OP-REPLACE FALSE 0)
-                               (gimp-rect-select img (+ i x) y 1 height CHANNEL-OP-REPLACE FALSE 0))
+                               (gimp-rect-select img position-x (+ i position-y) width 1 CHANNEL-OP-REPLACE FALSE 0)
+                               (gimp-rect-select img (+ i position-x) position-y 1 height CHANNEL-OP-REPLACE FALSE 0))
                            (if (= type 0)
                                (gimp-edit-clear drawable)
                                (gimp-edit-fill drawable BACKGROUND-FILL))
@@ -32,7 +32,7 @@
 )
 
 (script-fu-register "script-fu-erase-rows"
-  _"_Erase every other Row..."
+  _"_Erase Every Other Row..."
   _"Erase every other row/column of pixels of the active drawable"
   "Federico Mena Quintero"
   "Federico Mena Quintero"

@@ -140,21 +140,21 @@
 )
 
 (script-fu-register "script-fu-button00"
-                    _"Simple _Beveled Button..."
-                    _"Create a simple, beveled button graphic for webpages"
-                    "Federico Mena Quintero"
-                    "Federico Mena Quintero"
-                    "June 1997"
-                    ""
-                    SF-STRING     _"Text"               "Hello world!"
-                    SF-ADJUSTMENT _"Font size (pixels)" '(16 2 100 1 1 0 1)
-                    SF-FONT       _"Font"               "Sans"
-                    SF-COLOR      _"Upper-left color"   '(0 255 127)
-                    SF-COLOR      _"Lower-right color"  '(0 127 255)
-                    SF-COLOR      _"Text color"         '(0 0 0)
-                    SF-ADJUSTMENT _"Padding"            '(2 1 100 1 10 0 1)
-                    SF-ADJUSTMENT _"Bevel width"        '(4 1 100 1 10 0 1)
-                    SF-TOGGLE     _"Pressed"            FALSE)
+  _"Simple _Beveled Button..."
+  _"Create a simple, beveled button graphic for webpages"
+  "Federico Mena Quintero"
+  "Federico Mena Quintero"
+  "June 1997"
+  ""
+  SF-STRING     _"Text"               "Hello world!"
+  SF-ADJUSTMENT _"Font size (pixels)" '(16 2 100 1 1 0 1)
+  SF-FONT       _"Font"               "Sans"
+  SF-COLOR      _"Upper-left color"   '(0 255 127)
+  SF-COLOR      _"Lower-right color"  '(0 127 255)
+  SF-COLOR      _"Text color"         "black"
+  SF-ADJUSTMENT _"Padding"            '(2 1 100 1 10 0 1)
+  SF-ADJUSTMENT _"Bevel width"        '(4 1 100 1 10 0 1)
+  SF-TOGGLE     _"Pressed"            FALSE)
 
 (script-fu-menu-register "script-fu-button00"
                          "<Toolbox>/Xtns/Buttons")

@@ -98,8 +98,7 @@
   )
 )
 
-(script-fu-register
-  "script-fu-line-nova"
+(script-fu-register "script-fu-line-nova"
   _"Line _Nova..."
   _"Fill a layer with rays emanating outward from its center using the FG color"
   "Shuji Narazaki <narazaki@gimp.org>"
@@ -113,7 +112,6 @@
   SF-ADJUSTMENT _"Offset radius"       '(100 0 2000 1 1 0 1)
   SF-ADJUSTMENT _"Randomness"          '(30 1 2000 1 1 0 1)
 )
-;;; line-nova.scm ends here
 
 (script-fu-menu-register "script-fu-line-nova"
                          "<Image>/Filters/Render")

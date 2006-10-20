@@ -94,15 +94,13 @@
   "Shuji Narazaki"
   "1997"
   ""
-  SF-STRING     _"Text"               "The GIMP"
-  SF-COLOR      _"Text color"         '(255 0 0)
+  SF-STRING     _"Text"               "GIMP"
+  SF-COLOR      _"Text color"         "red"
   SF-COLOR      _"Frame color"        '(0 34 255)
   SF-FONT       _"Font"               "Becker"
   SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
   SF-ADJUSTMENT _"Frame size"         '(2 1 20 1 5 0 1)
 )
-
-;;; i26-gunya2.scm ends here
 
 (script-fu-menu-register "script-fu-i26-gunya2"
                          "<Toolbox>/Xtns/Logos")

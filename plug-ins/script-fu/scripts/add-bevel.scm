@@ -65,6 +65,7 @@
         (offsets (gimp-drawable-offsets pic-layer))
         (width (car (gimp-drawable-width pic-layer)))
         (height (car (gimp-drawable-height pic-layer)))
+
         ; Bumpmap has a one pixel border on each side
         (bump-layer (car (gimp-layer-new image
                                          (+ width 2)
@@ -73,8 +74,8 @@
                                          "Bumpmap"
                                          100
                                          NORMAL-MODE)))
-        (select)
         (bevelling-whole-image)
+        (select)
         )
 
     (gimp-context-push)
@@ -104,7 +105,7 @@
               (gimp-selection-all image)
           )
         )
-     )
+    )
 
     ; Store it for later.
     (set! select (car (gimp-selection-save image)))
@@ -176,23 +177,24 @@
       (gimp-image-undo-group-end image)
     )
 
-    (gimp-context-pop)
     (gimp-displays-flush)
+
+    (gimp-context-pop)
   )
 )
 
 (script-fu-register "script-fu-add-bevel"
-    _"Add B_evel..."
-    _"Add a bevelled border to an image"
-    "Andrew Donkin <ard@cs.waikato.ac.nz>"
-    "Andrew Donkin"
-    "1997/11/06"
-    "RGB* GRAY*"
-    SF-IMAGE       "Image"           0
-    SF-DRAWABLE    "Drawable"        0
-    SF-ADJUSTMENT _"Thickness"       '(5 0 30 1 2 0 0)
-    SF-TOGGLE     _"Work on copy"    TRUE
-    SF-TOGGLE     _"Keep bump layer" FALSE
+  _"Add B_evel..."
+  _"Add a beveled border to an image"
+  "Andrew Donkin <ard@cs.waikato.ac.nz>"
+  "Andrew Donkin"
+  "1997/11/06"
+  "RGB* GRAY*"
+  SF-IMAGE       "Image"           0
+  SF-DRAWABLE    "Drawable"        0
+  SF-ADJUSTMENT _"Thickness"       '(5 0 30 1 2 0 0)
+  SF-TOGGLE     _"Work on copy"    TRUE
+  SF-TOGGLE     _"Keep bump layer" FALSE
 )
 
 (script-fu-menu-register "script-fu-add-bevel"

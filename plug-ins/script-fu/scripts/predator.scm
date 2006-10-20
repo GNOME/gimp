@@ -88,6 +88,7 @@
           (let ((floating-sel (car (gimp-edit-paste effect-layer FALSE))))
             (gimp-floating-sel-anchor floating-sel)
           )
+          (gimp-image-set-active-layer image effect-layer)
         )
         (set! effect-layer drawable)
     )

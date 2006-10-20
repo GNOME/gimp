@@ -285,8 +285,8 @@
                                      "1280 x 1024")
     SF-FONT    _"Title font"       "Helvetica Bold Italic"
     SF-FONT    _"Legend font"      "Helvetica Bold"
-    SF-COLOR   _"Text color"       '(255 255 255)
-    SF-COLOR   _"Background color" '(0 0 0)
+    SF-COLOR   _"Text color"       "white"
+    SF-COLOR   _"Background color" "black"
 )
 
 (script-fu-menu-register "script-fu-contactsheet"

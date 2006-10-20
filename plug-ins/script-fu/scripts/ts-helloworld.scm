@@ -63,4 +63,4 @@
 )
 
 (script-fu-menu-register "script-fu-helloworld"
-                         "<Toolbox>/Xtns/Test")
+                         "<Toolbox>/Xtns/Languages/Script-Fu/Test")

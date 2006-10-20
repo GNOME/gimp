@@ -52,6 +52,7 @@
         )
 
     (gimp-context-push)
+
     (gimp-image-undo-group-start image)
 
     (gimp-layer-add-alpha drawable)

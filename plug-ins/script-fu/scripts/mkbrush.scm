@@ -76,8 +76,7 @@
                          "<Brushes>")
 
 
-(define (script-fu-make-brush-rectangular-feathered name
-                                                    width height
+(define (script-fu-make-brush-rectangular-feathered name width height
                                                     feathering spacing)
   (let* (
         (widthplus (+ width feathering))

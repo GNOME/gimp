@@ -70,10 +70,12 @@
                                      logo-layer
                                      bg-color
                                      text-color)
-  (gimp-image-undo-group-start img)
-  (apply-basic2-logo-effect img logo-layer bg-color text-color)
-  (gimp-image-undo-group-end img)
-  (gimp-displays-flush)
+  (begin
+    (gimp-image-undo-group-start img)
+    (apply-basic2-logo-effect img logo-layer bg-color text-color)
+    (gimp-image-undo-group-end img)
+    (gimp-displays-flush)
+  )
 )
 
 (script-fu-register "script-fu-basic2-logo-alpha"
@@ -83,10 +85,10 @@
     "Spencer Kimball"
     "1996"
     "RGBA"
-    SF-IMAGE      "Image" 0
-    SF-DRAWABLE   "Drawable" 0
-    SF-COLOR      _"Background color" '(255 255 255)
-    SF-COLOR      _"Text color" '(206 6 50)
+    SF-IMAGE      "Image"             0
+    SF-DRAWABLE   "Drawable"          0
+    SF-COLOR      _"Background color" "white"
+    SF-COLOR      _"Text color"       '(206 6 50)
 )
 
 (define (script-fu-basic2-logo text
@@ -116,10 +118,10 @@
     "Spencer Kimball"
     "1996"
     ""
-    SF-STRING     _"Text"               "TINY-FU"
+    SF-STRING     _"Text"               "SCRIPT-FU"
     SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
     SF-FONT       _"Font"               "Sans Bold"
-    SF-COLOR      _"Background color"   '(255 255 255)
+    SF-COLOR      _"Background color"   "white"
     SF-COLOR      _"Text color"         '(206 6 50)
 )
 

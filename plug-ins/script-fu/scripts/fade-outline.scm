@@ -47,7 +47,7 @@
                                 inClearUnselected)
 
   (let* (
-        (l-idx)
+        (l-idx 0)
         (l-has-selection TRUE)
         (l-from-gray)
         (l-to-gray)
@@ -73,6 +73,7 @@
     ; do nothing if the layer is a layer mask
     (if (= (car (gimp-drawable-is-layer-mask inLayer)) 0)
         (begin
+
           (gimp-image-undo-group-start inImage)
 
           ; if the layer has no alpha add alpha channel

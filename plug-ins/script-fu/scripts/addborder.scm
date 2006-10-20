@@ -102,7 +102,8 @@
          (oheight (car (gimp-image-height img)))
          (width (+ owidth (* 2 xsize)))
          (height (+ oheight (* 2 ysize)))
-         (layer (car (gimp-layer-new img width height
+         (layer (car (gimp-layer-new img
+                                     width height
                                      (car (gimp-drawable-type-with-alpha adraw))
                                      "Border-Layer" 100 NORMAL-MODE))))
 
@@ -166,18 +167,18 @@
 )
 
 (script-fu-register "script-fu-addborder"
-    _"Add _Border..."
-    "Add a border around an image"
-    "Andy Thomas <alt@picnic.demon.co.uk>"
-    "Andy Thomas"
-    "6/10/97"
-    "*"
-    SF-IMAGE       "Input image" 0
-    SF-DRAWABLE    "Input drawable" 0
-    SF-ADJUSTMENT _"Border X size" '(12 1 250 1 10 0 1)
-    SF-ADJUSTMENT _"Border Y size" '(12 1 250 1 10 0 1)
-    SF-COLOR      _"Border color" '(38 31 207)
-    SF-ADJUSTMENT _"Delta value on color" '(25 1 255 1 10 0 1)
+  _"Add _Border..."
+  _"Add a border around an image"
+  "Andy Thomas <alt@picnic.demon.co.uk>"
+  "Andy Thomas"
+  "6/10/97"
+  "*"
+  SF-IMAGE       "Input image" 0
+  SF-DRAWABLE    "Input drawable" 0
+  SF-ADJUSTMENT _"Border X size" '(12 1 250 1 10 0 1)
+  SF-ADJUSTMENT _"Border Y size" '(12 1 250 1 10 0 1)
+  SF-COLOR      _"Border color" '(38 31 207)
+  SF-ADJUSTMENT _"Delta value on color" '(25 1 255 1 10 0 1)
 )
 
 (script-fu-menu-register "script-fu-addborder"

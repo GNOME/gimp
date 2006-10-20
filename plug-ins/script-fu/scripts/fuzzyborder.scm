@@ -135,10 +135,7 @@
   (gimp-selection-none inImage)
 )
 
-; Register the function with the GIMP:
-
-(script-fu-register
-  "script-fu-fuzzy-border"
+(script-fu-register "script-fu-fuzzy-border"
   _"_Fuzzy Border..."
   _"Add a jagged, fuzzy border to an image"
   "Chris Gutteridge"
@@ -147,7 +144,7 @@
   "RGB* GRAY*"
   SF-IMAGE      "The image"               0
   SF-DRAWABLE   "The layer"               0
-  SF-COLOR      _"Color"                  '(255 255 255)
+  SF-COLOR      _"Color"                  "white"
   SF-ADJUSTMENT _"Border size"            '(16 1 300 1 10 0 1)
   SF-TOGGLE     _"Blur border"            TRUE
   SF-ADJUSTMENT _"Granularity (1 is Low)" '(4 1 16 0.25 5 2 0)

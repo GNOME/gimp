@@ -71,6 +71,7 @@
                         -1 -1 -1 -1 -1 -1 -1 -1
     )
   )
+
   (gimp-image-remove-layer theImage theLayer)
   (plug-in-autocrop RUN-NONINTERACTIVE theImage theFrame)
 
@@ -89,8 +90,6 @@
   (gimp-displays-flush)
   )
 )
-
-; Register the function with the GIMP:
 
 (script-fu-register
   "script-fu-spinning-globe"

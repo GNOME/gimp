@@ -12,16 +12,17 @@
 ;; fill angles.
 
 (if (not (symbol-bound? 'script-fu-text-circle-debug? (current-environment)))
-    (define script-fu-text-circle-debug? #f))
+    (define script-fu-text-circle-debug? #f)
+)
 
 (define (script-fu-text-circle text radius start-angle fill-angle
-                   font-size antialias font-name)
+                               font-size antialias font-name)
 
   (define (wrap-string str)
     (string-append "\"" str "\"")
   )
   (define (white-space-string? str)
-    (or (equal? " " str) (equal? "    " str))
+    (or (equal? " " str) (equal? "\t" str))
   )
 
   (let* (
@@ -185,8 +186,8 @@
                 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
         (gimp-drawable-set-name merged-layer
                      (if (< (string-length text) 16)
-                       (wrap-string text)
-                       "Text Circle"
+                         (wrap-string text)
+                         "Text Circle"
                      )
         )
       )
@@ -214,8 +215,6 @@
   SF-TOGGLE     _"Antialias"          TRUE
   SF-FONT       _"Font"               "Sans"
 )
-
-;; text-circle.scm ends here
 
 (script-fu-menu-register "script-fu-text-circle"
                          "<Toolbox>/Xtns/Logos")

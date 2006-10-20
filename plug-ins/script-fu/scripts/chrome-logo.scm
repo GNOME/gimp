@@ -68,6 +68,7 @@
   )
 )
 
+
 (define (script-fu-chrome-logo-alpha img
                                      logo-layer
                                      offsets
@@ -90,11 +91,12 @@
   SF-IMAGE       "Image"                0
   SF-DRAWABLE    "Drawable"             0
   SF-ADJUSTMENT _"Offsets (pixels * 2)" '(10 2 100 1 10 0 1)
-  SF-COLOR      _"Background Color"     '(191 191 191)
+  SF-COLOR      _"Background Color"     "lightgrey"
 )
 
 (script-fu-menu-register "script-fu-chrome-logo-alpha"
                          "<Image>/Filters/Alpha to Logo")
+
 
 (define (script-fu-chrome-logo text
                                size
@@ -119,10 +121,10 @@
   "Spencer Kimball & Peter Mattis"
   "1997"
   ""
-  SF-STRING     _"Text"               "The GIMP"
+  SF-STRING     _"Text"               "GIMP"
   SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
   SF-FONT       _"Font"               "Bodoni"
-  SF-COLOR      _"Background color"   '(191 191 191)
+  SF-COLOR      _"Background color"   "lightgrey"
 )
 
 (script-fu-menu-register "script-fu-chrome-logo"

@@ -54,6 +54,7 @@
   (gimp-help "" "gimp-concepts-paths")
 )
 
+
 ; shortcuts to help topics
 (script-fu-register "gimp-help-2-concepts-paths"
    _"Using _Paths"
@@ -63,8 +64,10 @@
     "2006"
     ""
 )
+
 (script-fu-menu-register "gimp-help-2-concepts-paths"
 			 "<Toolbox>/Help/User Manual")
+
 
 (script-fu-register "gimp-help-2-using-web"
    _"_Preparing your Images for the Web"
@@ -74,8 +77,10 @@
     "2006"
     ""
 )
+
 (script-fu-menu-register "gimp-help-2-using-web"
 			 "<Toolbox>/Help/User Manual")
+
 
 (script-fu-register "gimp-help-2-using-photography"
    _"_Working with Digital Camera Photos"
@@ -85,8 +90,10 @@
     "2006"
     ""
 )
+
 (script-fu-menu-register "gimp-help-2-using-photography"
 			 "<Toolbox>/Help/User Manual")
+
 
 (script-fu-register "gimp-help-2-using-fileformats"
    _"Create, Open and Save _Files"
@@ -96,8 +103,10 @@
     "2006"
     ""
 )
+
 (script-fu-menu-register "gimp-help-2-using-fileformats"
 			 "<Toolbox>/Help/User Manual")
+
 
 (script-fu-register "gimp-help-2-concepts-usage"
    _"_Basic Concepts"
@@ -107,8 +116,10 @@
     "2006"
     ""
 )
+
 (script-fu-menu-register "gimp-help-2-concepts-usage"
 			 "<Toolbox>/Help/User Manual")
+
 
 (script-fu-register "gimp-help-2-using-docks"
    _"How to Use _Dialogs"
@@ -118,8 +129,10 @@
     "2006"
     ""
 )
+
 (script-fu-menu-register "gimp-help-2-using-docks"
 			 "<Toolbox>/Help/User Manual")
+
 
 (script-fu-register "gimp-help-2-using-simpleobjects"
    _"Drawing _Simple Objects"
@@ -129,8 +142,10 @@
     "2006"
     ""
 )
+
 (script-fu-menu-register "gimp-help-2-using-simpleobjects"
 			 "<Toolbox>/Help/User Manual")
+
 
 (script-fu-register "gimp-help-2-using-selections"
    _"Create and Use _Selections"
@@ -140,6 +155,7 @@
     "2006"
     ""
 )
+
 (script-fu-menu-register "gimp-help-2-using-simpleobjects"
 			 "<Toolbox>/Help/User Manual")
 
@@ -158,6 +174,7 @@
   (plug-in-web-browser "http://registry.gimp.org/")
 )
 
+
 (script-fu-register "gimp-online-main-web-site"
    _"_Main Web Site"
    _"Bookmark to the GIMP web site"
@@ -169,6 +186,7 @@
 
 (script-fu-menu-register "gimp-online-main-web-site"
                          "<Toolbox>/Help/GIMP Online")
+
 
 (script-fu-register "gimp-online-developer-web-site"
    _"_Developer Web Site"
@@ -182,6 +200,7 @@
 (script-fu-menu-register "gimp-online-developer-web-site"
                          "<Toolbox>/Help/GIMP Online")
 
+
 (script-fu-register "gimp-online-docs-web-site"
    _"_User Manual Web Site"
    _"Bookmark to the GIMP web site"
@@ -190,6 +209,10 @@
     "2006"
     ""
 )
+
+(script-fu-menu-register "gimp-online-docs-web-site"
+                         "<Toolbox>/Help/GIMP Online")
+
 
 (script-fu-register "gimp-online-plug-in-web-site"
    _"Plug-in _Registry"

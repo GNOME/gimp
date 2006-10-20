@@ -129,6 +129,7 @@
         )
 
     (gimp-context-push)
+
     (gimp-image-undo-disable img)
     ;(gimp-image-resize img (+ length height) (+ height height) 0 0)
     (gimp-image-add-layer img bg-layer 1)
@@ -171,17 +172,17 @@
 )
 
 (script-fu-register "script-fu-alien-glow-right-arrow"
-    _"_Arrow..."
-    _"Create an arrow graphic with an eerie glow for web pages"
-    "Adrian Likins"
-    "Adrian Likins"
-    "1997"
-    ""
-    SF-ADJUSTMENT _"Size"             '(32 5 150 1 10 0 1)
-    SF-OPTION     _"Orientation"      '(_"Right" _"Left" _"Up" _"Down")
-    SF-COLOR      _"Glow color"       '(63 252 0)
-    SF-COLOR      _"Background color" "black"
-    SF-TOGGLE     _"Flatten image"    TRUE
+  _"_Arrow..."
+  _"Create an arrow graphic with an eerie glow for web pages"
+  "Adrian Likins"
+  "Adrian Likins"
+  "1997"
+  ""
+  SF-ADJUSTMENT _"Size"             '(32 5 150 1 10 0 1)
+  SF-OPTION     _"Orientation"      '(_"Right" _"Left" _"Up" _"Down")
+  SF-COLOR      _"Glow color"       '(63 252 0)
+  SF-COLOR      _"Background color" "black"
+  SF-TOGGLE     _"Flatten image"    TRUE
 )
 
 (script-fu-menu-register "script-fu-alien-glow-right-arrow"

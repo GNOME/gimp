@@ -24,10 +24,17 @@
                                      spots-x
                                      spots-y
                                      bg-color)
-  (let* ((width (car (gimp-drawable-width logo-layer)))
-         (height (car (gimp-drawable-height logo-layer)))
-         (bg-layer (car (gimp-layer-new img width height RGBA-IMAGE "Background" 100 NORMAL-MODE)))
-         (blur-layer (car (gimp-layer-new img width height RGBA-IMAGE "Blur" 100 NORMAL-MODE))))
+  (let* (
+        (width (car (gimp-drawable-width logo-layer)))
+        (height (car (gimp-drawable-height logo-layer)))
+        (bg-layer (car (gimp-layer-new img
+                                       width height RGBA-IMAGE
+                                       "Background" 100 NORMAL-MODE)))
+        (blur-layer (car (gimp-layer-new img
+                                         width height RGBA-IMAGE
+                                         "Blur" 100 NORMAL-MODE)))
+        )
+
     (gimp-context-push)
 
     (script-fu-util-image-resize-from-layer img logo-layer)
@@ -82,18 +89,22 @@
 )
 
 (script-fu-register "script-fu-bovinated-logo-alpha"
-    _"Bo_vination..."
-    _"Add 'cow spots' to the selected region (or alpha)"
-    "Brian McFee <keebler@wco.com>"
-    "Brian McFee"
-    "April 1998"
-    "RGBA"
-    SF-IMAGE      "Image"             0
-    SF-DRAWABLE   "Drawable"          0
-    SF-ADJUSTMENT _"Spots density X"  '(16 1 16 1 10 0 1)
-    SF-ADJUSTMENT _"Spots density Y"  '(4 1 16 1 10 0 1)
-    SF-COLOR      _"Background Color" '(255 255 255)
+  _"Bo_vination..."
+  _"Add 'cow spots' to the selected region (or alpha)"
+  "Brian McFee <keebler@wco.com>"
+  "Brian McFee"
+  "April 1998"
+  "RGBA"
+  SF-IMAGE      "Image"             0
+  SF-DRAWABLE   "Drawable"          0
+  SF-ADJUSTMENT _"Spots density X"  '(16 1 16 1 10 0 1)
+  SF-ADJUSTMENT _"Spots density Y"  '(4 1 16 1 10 0 1)
+  SF-COLOR      _"Background Color" "white"
 )
+
+(script-fu-menu-register "script-fu-bovinated-logo-alpha"
+                         "<Image>/Filters/Alpha to Logo")
+
 
 (define (script-fu-bovinated-logo text
                                   size
@@ -107,25 +118,23 @@
     (gimp-image-undo-disable img)
     (apply-bovinated-logo-effect img text-layer spots-x spots-y bg-color)
     (gimp-image-undo-enable img)
-    (gimp-display-new img))
+    (gimp-display-new img)
+  )
 )
 
-(script-fu-menu-register "script-fu-bovinated-logo-alpha"
-                         "<Image>/Filters/Alpha to Logo")
-
 (script-fu-register "script-fu-bovinated-logo"
-    _"Bo_vination..."
-    _"Create a logo with text in the style of 'cow spots'"
-    "Brian McFee <keebler@wco.com>"
-    "Brian McFee"
-    "April 1998"
-    ""
-    SF-STRING     _"Text"               "Fear the Cow"
-    SF-ADJUSTMENT _"Font size (pixels)" '(80 2 1000 1 10 0 1)
-    SF-FONT       _"Font"               "RoostHeavy"
-    SF-ADJUSTMENT _"Spots density X"    '(16 1 16 1 10 0 1)
-    SF-ADJUSTMENT _"Spots density Y"    '(4 1 16 1 10 0 1)
-    SF-COLOR      _"Background color"   '(255 255 255)
+  _"Bo_vination..."
+  _"Create a logo with text in the style of 'cow spots'"
+  "Brian McFee <keebler@wco.com>"
+  "Brian McFee"
+  "April 1998"
+  ""
+  SF-STRING     _"Text"               "Fear the Cow"
+  SF-ADJUSTMENT _"Font size (pixels)" '(80 2 1000 1 10 0 1)
+  SF-FONT       _"Font"               "RoostHeavy"
+  SF-ADJUSTMENT _"Spots density X"    '(16 1 16 1 10 0 1)
+  SF-ADJUSTMENT _"Spots density Y"    '(4 1 16 1 10 0 1)
+  SF-COLOR      _"Background color"   "white"
 )
 
 (script-fu-menu-register "script-fu-bovinated-logo"

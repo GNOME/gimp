@@ -53,9 +53,11 @@
                          work-on-copy)
 
   (define (crop width height ratio)
-    (cond ((>= width (* ratio height)) (* ratio height))
-          ((< width (* ratio height))   width)))
-
+    (if (>= width (* ratio height))
+        (* ratio height)
+        width
+    )
+  )
 
   (let* (
         (type (car (gimp-drawable-type-with-alpha drawable)))
@@ -177,7 +179,7 @@
         (film-mask (car (gimp-layer-create-mask film-layer ADD-WHITE-MASK)))
         (hole hole-start)
         (top-y (* height 0.06))
-        (bottom-y(* height 0.855))
+        (bottom-y (* height 0.855))
         )
 
     (gimp-layer-add-mask film-layer film-mask)
@@ -225,8 +227,9 @@
   (gimp-selection-none image)
   (gimp-image-undo-enable image)
   (if (= work-on-copy TRUE)
-    (gimp-display-new image)
+      (gimp-display-new image)
   )
+
   (gimp-displays-flush)
 
   (gimp-context-pop)
@@ -242,7 +245,7 @@
   "RGB GRAY"
   SF-IMAGE     "Image"         0
   SF-DRAWABLE  "Drawable"      0
-  SF-STRING   _"Text"          "The GIMP"
+  SF-STRING   _"Text"          "GIMP"
   SF-STRING   _"Number"        "32"
   SF-FONT     _"Font"          "Serif"
   SF-COLOR    _"Font color"    '(255 180 0)

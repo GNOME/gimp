@@ -84,8 +84,6 @@
   )
 )
 
-; Register the function with the GIMP:
-
 (script-fu-register "script-fu-old-photo"
   _"_Old Photo..."
   _"Make an image look like an old photo"

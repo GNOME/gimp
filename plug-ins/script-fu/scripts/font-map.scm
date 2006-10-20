@@ -9,10 +9,8 @@
                             border
                             colors)
 
-  (define (max-font-width text use-name font-list font-size)
-    (let* ((list     (cadr font-list))
-           (list-cnt (car font-list))
-           (count    0)
+  (define (max-font-width text use-name list-cnt list font-size)
+    (let* ((count    0)
            (width    0)
            (maxwidth 0)
            (font     "")
@@ -36,10 +34,8 @@
     )
   )
 
-  (define (max-font-height text use-name font-list font-size)
-    (let* ((list      (cadr font-list))
-           (list-cnt  (car font-list))
-           (count     0)
+  (define (max-font-height text use-name list-cnt list font-size)
+    (let* ((count     0)
            (height    0)
            (maxheight 0)
            (font      "")
@@ -66,15 +62,14 @@
   )
 
   (let* (
-        (font       "")
-        (count      0)
-        (font-list  (gimp-fonts-get-list font-filter))
-        (num-fonts  (car font-list))
+        (font-data  (gimp-fonts-get-list font-filter))
+        (font-list  (cadr font-data))
+        (num-fonts  (car font-data))
         (label-size (/ font-size 2))
         (border     (+ border (* labels (/ label-size 2))))
         (y          border)
-        (maxheight  (max-font-height text use-name font-list font-size))
-        (maxwidth   (max-font-width  text use-name font-list font-size))
+        (maxheight  (max-font-height text use-name num-fonts font-list font-size))
+        (maxwidth   (max-font-width  text use-name num-fonts font-list font-size))
         (width      (+ maxwidth (* 2 border)))
         (height     (+ (+ (* maxheight num-fonts) (* 2 border))
                        (* labels (* label-size num-fonts))))
@@ -83,13 +78,13 @@
         (drawable   (car (gimp-layer-new img width height (if (= colors 0)
                                                               GRAY-IMAGE RGB-IMAGE)
                                          "Background" 100 NORMAL-MODE)))
+        (count      0)
+        (font)
         )
 
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
-
-    (set! font-list (cadr font-list))
 
     (if (= colors 0)
         (begin

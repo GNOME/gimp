@@ -116,8 +116,9 @@
                              new-image-width
                              new-image-height
                              image-offset-x
-                             image-offset-y)))
-
+                             image-offset-y)
+        )
+    )
 
     (set! shadow-layer (car (gimp-layer-new image
                                             shadow-width
@@ -175,7 +176,7 @@
   SF-ADJUSTMENT _"Offset X"       '(8 -4096 4096 1 10 0 1)
   SF-ADJUSTMENT _"Offset Y"       '(8 -4096 4096 1 10 0 1)
   SF-ADJUSTMENT _"Blur radius"    '(15 0 1024 1 10 0 1)
-  SF-COLOR      _"Color"          '(0 0 0)
+  SF-COLOR      _"Color"          "black"
   SF-ADJUSTMENT _"Opacity"        '(80 0 100 1 10 0 0)
   SF-TOGGLE     _"Allow resizing" TRUE
 )

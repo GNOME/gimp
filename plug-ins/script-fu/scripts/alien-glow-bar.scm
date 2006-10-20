@@ -33,13 +33,14 @@
                                           RGBA-IMAGE "Ruler" 100 NORMAL-MODE)))
         (glow-layer (car (gimp-layer-new img
                                          (+ length height) (+ height height)
-                                         RGBA-IMAGE "ALien Glow" 100 NORMAL-MODE)))
+                                         RGBA-IMAGE "Alien Glow" 100 NORMAL-MODE)))
         (bg-layer (car (gimp-layer-new img
                                        (+ length height) (+ height height)
-                                       RGB-IMAGE "Backround" 100 NORMAL-MODE)))
+                                       RGB-IMAGE "Background" 100 NORMAL-MODE)))
         )
 
     (gimp-context-push)
+
     (gimp-image-undo-disable img)
     (gimp-image-resize img (+ length height) (+ height height) 0 0)
     (gimp-image-add-layer img bg-layer 1)
@@ -52,7 +53,9 @@
     (gimp-edit-clear glow-layer)
     (gimp-edit-clear ruler-layer)
 
-    (gimp-rect-select img (/ height 2) (/ height 2) length height CHANNEL-OP-REPLACE FALSE 0)
+    (gimp-rect-select img
+                      (/ height 2) (/ height 2)
+                      length height CHANNEL-OP-REPLACE FALSE 0)
     (gimp-context-set-foreground '(79 79 79))
     (gimp-context-set-background '(0 0 0))
 
@@ -72,8 +75,9 @@
     (if (= flatten TRUE)
         (gimp-image-flatten img))
 
-    (gimp-context-pop)
     (gimp-display-new img)
+
+    (gimp-context-pop)
   )
 )
 

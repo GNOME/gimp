@@ -102,8 +102,8 @@
       (gimp-floating-sel-anchor floating-sel)
     )
 
-    (set! filename2 (string-append gimp-directory DIR-SEPARATOR
-                                   "brushes" DIR-SEPARATOR
+    (set! filename2 (string-append gimp-directory
+                                   "/brushes/"
                                    filename
                                    (number->string image)
                                    ".gbr"))

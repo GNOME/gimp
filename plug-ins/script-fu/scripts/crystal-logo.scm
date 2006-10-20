@@ -216,15 +216,11 @@
   SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
   SF-FONT       _"Font"               "Engraver"
   SF-FILENAME   _"Background image"
-                 (string-append gimp-data-directory DIR-SEPARATOR
-                                "scripts" DIR-SEPARATOR
-                                "images" DIR-SEPARATOR
-                                "texture1.jpg")
+                 (string-append gimp-data-directory
+                                "/scripts/images/texture1.jpg")
   SF-FILENAME   _"Environment map"
-                 (string-append gimp-data-directory DIR-SEPARATOR
-                                "scripts" DIR-SEPARATOR
-                                "images" DIR-SEPARATOR
-                                "beavis.jpg")
+                 (string-append gimp-data-directory
+                                "/scripts/images/beavis.jpg")
 )
 
 (script-fu-menu-register "script-fu-crystal-logo"

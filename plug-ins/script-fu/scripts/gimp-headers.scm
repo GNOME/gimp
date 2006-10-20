@@ -158,7 +158,7 @@
   SF-COLOR      _"Text color"         '(82 108 159)
   SF-COLOR      _"Highlight color"    '(190 220 250)
   SF-COLOR      _"Dark color"         '(46 74 92)
-  SF-COLOR      _"Shadow color"       '(0 0 0)
+  SF-COLOR      _"Shadow color"       "black"
   SF-TOGGLE     _"Autocrop"           TRUE
   SF-TOGGLE     _"Remove background"  TRUE
   SF-TOGGLE     _"Index image"        TRUE
@@ -181,7 +181,7 @@
   SF-COLOR      _"Text color"         '(135 220 220)
   SF-COLOR      _"Highlight color"    '(210 240 245)
   SF-COLOR      _"Dark color"         '(46 74 92)
-  SF-COLOR      _"Shadow color"       '(0 0 0)
+  SF-COLOR      _"Shadow color"       "black"
   SF-TOGGLE     _"Autocrop"           TRUE
   SF-TOGGLE     _"Remove background"  TRUE
   SF-TOGGLE     _"Index image"        TRUE

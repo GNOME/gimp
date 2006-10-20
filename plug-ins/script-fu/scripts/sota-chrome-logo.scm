@@ -7,78 +7,78 @@
                                   env-map hc cc)
 
   (define (set-pt a index x y)
-	(begin
-	  (aset a (* index 2) x)
-	  (aset a (+ (* index 2) 1) y)
-	)
+    (begin
+      (aset a (* index 2) x)
+      (aset a (+ (* index 2) 1) y)
+    )
   )
 
   (define (spline1)
-	(let* ((a (cons-array 18 'byte)))
-	  (set-pt a 0 0 0)
-	  (set-pt a 1 31 235)
-	  (set-pt a 2 63 23)
-	  (set-pt a 3 95 230)
-	  (set-pt a 4 127 25)
-	  (set-pt a 5 159 210)
-	  (set-pt a 6 191 20)
-	  (set-pt a 7 223 240)
-	  (set-pt a 8 255 31)
-	  a
-	)
+    (let* ((a (cons-array 18 'byte)))
+      (set-pt a 0 0 0)
+      (set-pt a 1 31 235)
+      (set-pt a 2 63 23)
+      (set-pt a 3 95 230)
+      (set-pt a 4 127 25)
+      (set-pt a 5 159 210)
+      (set-pt a 6 191 20)
+      (set-pt a 7 223 240)
+      (set-pt a 8 255 31)
+      a
+    )
   )
 
   (define (brush brush-size)
-	(cond ((<= brush-size 5) "Circle Fuzzy (05)")
-		  ((<= brush-size 7) "Circle Fuzzy (07)")
-		  ((<= brush-size 9) "Circle Fuzzy (09)")
-		  ((<= brush-size 11) "Circle Fuzzy (11)")
-		  ((<= brush-size 13) "Circle Fuzzy (13)")
-		  ((<= brush-size 15) "Circle Fuzzy (15)")
-		  ((<= brush-size 17) "Circle Fuzzy (17)")
-		  (else "Circle Fuzzy (19)")
-	)
+    (cond ((<= brush-size 5) "Circle Fuzzy (05)")
+          ((<= brush-size 7) "Circle Fuzzy (07)")
+          ((<= brush-size 9) "Circle Fuzzy (09)")
+          ((<= brush-size 11) "Circle Fuzzy (11)")
+          ((<= brush-size 13) "Circle Fuzzy (13)")
+          ((<= brush-size 15) "Circle Fuzzy (15)")
+          ((<= brush-size 17) "Circle Fuzzy (17)")
+          (else "Circle Fuzzy (19)")
+    )
   )
 
   (define (shadows val)
-	(/ (* 0.96 val) 2.55)
+    (/ (* 0.96 val) 2.55)
   )
 
   (define (midtones val)
-	(/ val 2.55)
+    (/ val 2.55)
   )
 
   (define (highlights val)
-	(let ((h (/ (* 1.108 val) 2.55)))
-	  (if (> h 100) 100 h)
-	)
+  (let ((h (/ (* 1.108 val) 2.55)))
+    (if (> h 100) 100 h)
+  )
   )
 
   (define (rval col)
-	(car col)
+    (car col)
   )
 
   (define (gval col)
-	(cadr col)
+    (cadr col)
   )
 
   (define (bval col)
-	(caddr col)
+    (caddr col)
   )
 
   (define (sota-scale val scale chrome-factor)
-	(* (sqrt val) (* scale chrome-factor))
+    (* (sqrt val) (* scale chrome-factor))
   )
 
   (define (copy-layer-sota dest-image dest-drawable source-image source-drawable)
-	  (gimp-selection-all dest-image)
-	  (gimp-edit-clear dest-drawable)
-	  (gimp-selection-none dest-image)
-	  (gimp-selection-all source-image)
-	  (gimp-edit-copy source-drawable)
-	  (let ((floating-sel (car (gimp-edit-paste dest-drawable FALSE))))
-	    (gimp-floating-sel-anchor floating-sel)
-	  )
+    (gimp-selection-all dest-image)
+    (gimp-edit-clear dest-drawable)
+    (gimp-selection-none dest-image)
+    (gimp-selection-all source-image)
+    (gimp-edit-copy source-drawable)
+    (let ((floating-sel (car (gimp-edit-paste dest-drawable FALSE))))
+      (gimp-floating-sel-anchor floating-sel)
+    )
   )
 
   (let* (
@@ -209,16 +209,14 @@
   SF-ADJUSTMENT _"Chrome saturation"  '(-80 -100 100 1 10 0 0)
   SF-ADJUSTMENT _"Chrome lightness"   '(-47 -100 100 1 10 0 0)
   SF-ADJUSTMENT _"Chrome factor"      '(.75 0 1 .1 .01 2 0)
-  SF-STRING     _"Text"               "The GIMP"
+  SF-STRING     _"Text"               "GIMP"
   SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
   SF-FONT       _"Font"               "RoostHeavy"
   SF-FILENAME   _"Environment map"
-      (string-append gimp-data-directory DIR-SEPARATOR
-                     "scripts" DIR-SEPARATOR
-                     "images" DIR-SEPARATOR
-                     "beavis.jpg")
+      (string-append gimp-data-directory
+                     "/scripts/images/beavis.jpg")
   SF-COLOR      _"Highlight balance"  '(211 95 0)
-  SF-COLOR      _"Chrome balance"     '(0 0 0)
+  SF-COLOR      _"Chrome balance"     "black"
 )
 
 (script-fu-menu-register "script-fu-sota-chrome-logo"

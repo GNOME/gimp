@@ -77,11 +77,14 @@
           (gimp-by-color-select text-layer bg-color
                                 color-thresh CHANNEL-OP-REPLACE TRUE FALSE 0 FALSE)
           (gimp-edit-clear text-layer)
-          (gimp-selection-none img)))
+          (gimp-selection-none img)
+        )
+    )
 
     (if (= index TRUE)
-           (gimp-image-convert-indexed img FS-DITHER MAKE-PALETTE num-colors
-                                    FALSE FALSE ""))
+        (gimp-image-convert-indexed img FS-DITHER MAKE-PALETTE num-colors
+                                    FALSE FALSE "")
+    )
 
     (gimp-image-undo-enable img)
     (gimp-display-new img)
@@ -129,6 +132,7 @@
 (script-fu-menu-register "script-fu-tube-button-label-gimp-org"
                          "<Toolbox>/Xtns/Web Page Themes/Classic.Gimp.Org")
 
+
 (script-fu-register "script-fu-tube-subbutton-label-gimp-org"
   _"T_ube Sub-Button Label..."
   _"Create an image of a second level Tube Button Label using the gimp.org webpage theme"
@@ -143,6 +147,7 @@
 
 (script-fu-menu-register "script-fu-tube-subbutton-label-gimp-org"
                          "<Toolbox>/Xtns/Web Page Themes/Classic.Gimp.Org")
+
 
 (script-fu-register "script-fu-tube-subsubbutton-label-gimp-org"
   _"Tub_e Sub-Sub-Button Label..."
@@ -159,6 +164,7 @@
 (script-fu-menu-register "script-fu-tube-subsubbutton-label-gimp-org"
                          "<Toolbox>/Xtns/Web Page Themes/Classic.Gimp.Org")
 
+
 (script-fu-register "script-fu-labels-gimp-org"
   _"_General Tube Labels..."
   _"Create an image of a Tube Button Label Header using the gimp.org webpage theme"
@@ -170,8 +176,8 @@
   SF-FONT       _"Font"               "Sans"
   SF-ADJUSTMENT _"Font size (pixels)" '(18 2 1000 1 10 0 1)
   SF-COLOR      _"Text color"         '(130 165 235)
-  SF-COLOR      _"Shadow color"       '(0 0 0)
-  SF-COLOR      _"Background color"   '(255 255 255)
+  SF-COLOR      _"Shadow color"       "black"
+  SF-COLOR      _"Background color"   "white"
   SF-TOGGLE     _"Remove background"  TRUE
   SF-TOGGLE     _"Index image"        TRUE
   SF-ADJUSTMENT _"Number of colors"   '(15 2 255 1 10 0 1)

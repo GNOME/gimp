@@ -40,7 +40,6 @@
         (shadow-opacity (min shadow-opacity 100))
         (shadow-opacity (max shadow-opacity 0))
         (rel-length (abs rel-length))
-        (*pi* (* 4 (atan 1.0)))
         (alpha (* (/ alpha 180) *pi*))
         (type (car (gimp-drawable-type-with-alpha drawable)))
         (image-width (car (gimp-image-width image)))

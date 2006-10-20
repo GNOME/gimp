@@ -39,14 +39,13 @@
           (how-many (length point-list))
           (a (cons-array (* 2 how-many) 'double))
           (count 0)
-          (point)
           )
-      (while (< count how-many)
-        (set! point (car point-list))
-        (set! point-list (cdr point-list))
-        (aset a (* count 2) (point-x point))
-        (aset a (+ 1 (* count 2)) (point-y point))
-        (set! count (+ 1 count))
+
+      (for-each (lambda (p)
+                  (aset a (* count 2) (point-x p))
+                  (aset a (+ 1 (* count 2)) (point-y p))
+                  (set! count (+ count 1)))
+                point-list
       )
       a
     )
@@ -81,7 +80,6 @@
         (bumpmap (car (gimp-layer-new img size size RGB-IMAGE "Bumpmap" 100 NORMAL-MODE)))
         (big-arrow (point-list->double-array (rotate-points (make-arrow size 6) size orientation)))
         (med-arrow (point-list->double-array (rotate-points (make-arrow size 7) size orientation)))
-(display big-arrow)
         (small-arrow (point-list->double-array (rotate-points (make-arrow size 8) size orientation)))
         )
 
@@ -148,15 +146,15 @@
 
 
 (script-fu-register "script-fu-beveled-pattern-arrow"
-    _"_Arrow..."
-    _"Create a beveled pattern arrow for webpages"
-    "Federico Mena Quintero"
-    "Federico Mena Quintero"
-    "July 1997"
-    ""
-    SF-ADJUSTMENT _"Size"     '(32 5 150 1 10 0 1)
-    SF-OPTION     _"Orientation" '(_"Right" _"Left" _"Up" _"Down")
-    SF-PATTERN    _"Pattern"     "Wood"
+  _"_Arrow..."
+  _"Create a beveled pattern arrow for webpages"
+  "Federico Mena Quintero"
+  "Federico Mena Quintero"
+  "July 1997"
+  ""
+  SF-ADJUSTMENT _"Size"        '(32 5 150 1 10 0 1)
+  SF-OPTION     _"Orientation" '(_"Right" _"Left" _"Up" _"Down")
+  SF-PATTERN    _"Pattern"     "Wood"
 )
 
 (script-fu-menu-register "script-fu-beveled-pattern-arrow"

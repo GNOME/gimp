@@ -27,7 +27,9 @@
   (let* (
         (width (car (gimp-drawable-width logo-layer)))
         (height (car (gimp-drawable-height logo-layer)))
-        (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
+        (bg-layer (car (gimp-layer-new img
+                                       width height RGB-IMAGE
+                                       "Background" 100 NORMAL-MODE)))
         )
 
     (gimp-context-push)
@@ -70,15 +72,15 @@
 )
 
 (script-fu-register "script-fu-chalk-logo-alpha"
-    _"_Chalk..."
-    _"Create a chalk drawing effect for the selected region (or alpha)"
-    "Manish Singh <msingh@uclink4.berkeley.edu>"
-    "Manish Singh"
-    "October 1997"
-    "RGBA"
-    SF-IMAGE     "Image"            0
-    SF-DRAWABLE  "Drawable"         0
-    SF-COLOR    _"Background color" '(0 0 0)
+  _"_Chalk..."
+  _"Create a chalk drawing effect for the selected region (or alpha)"
+  "Manish Singh <msingh@uclink4.berkeley.edu>"
+  "Manish Singh"
+  "October 1997"
+  "RGBA"
+  SF-IMAGE     "Image"            0
+  SF-DRAWABLE  "Drawable"         0
+  SF-COLOR    _"Background color" "black"
 )
 
 (script-fu-menu-register "script-fu-chalk-logo-alpha"
@@ -120,8 +122,8 @@
   SF-STRING     _"Text"               "CHALK"
   SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
   SF-FONT       _"Font"               "Cooper"
-  SF-COLOR      _"Background color"   '(0 0 0)
-  SF-COLOR      _"Chalk color"        '(255 255 255)
+  SF-COLOR      _"Background color"   "black"
+  SF-COLOR      _"Chalk color"        "white"
 )
 
 (script-fu-menu-register "script-fu-chalk-logo"

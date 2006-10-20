@@ -178,6 +178,7 @@
         )
 
     (gimp-context-push)
+
     (gimp-image-undo-disable img)
     (gimp-image-undo-disable tile)
 
@@ -193,6 +194,7 @@
 
     (create-tile tile tiledraw1 tiledraw2 size thickness
                  backcolor begincolor endcolor supersample)
+
 
     (while (<= Xindex xtiles)
       (while (<= Yindex ytiles)
@@ -210,8 +212,9 @@
 
     (gimp-image-delete tile)
     (gimp-image-undo-enable img)
-    (gimp-context-pop)
     (gimp-display-new img)
+
+    (gimp-context-pop)
   )
 )
 

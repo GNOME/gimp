@@ -88,7 +88,9 @@
                  FALSE)
 
   (gimp-image-undo-enable image)
-  (gimp-display-new image)))
+  (gimp-display-new image)
+  )
+)
 
 (script-fu-register "script-fu-waves-anim"
   _"_Waves..."

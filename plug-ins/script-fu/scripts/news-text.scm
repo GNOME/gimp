@@ -86,8 +86,8 @@
   SF-ADJUSTMENT _"Cell size (pixels)" '(7 1 100 1 10 0 1)
   SF-ADJUSTMENT _"Density (%)"        '(60 0 100 1 10 0 0)
   SF-ADJUSTMENT _"Blur radius"        '(0 0 100 1 5 0 0)
-  SF-COLOR      _"Text color"         '(0 0 0)
-  SF-COLOR      _"Background color"   '(255 255 255)
+  SF-COLOR      _"Text color"         "black"
+  SF-COLOR      _"Background color"   "white"
 )
 
 (script-fu-menu-register "script-fu-newsprint-text"

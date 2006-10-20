@@ -68,6 +68,7 @@
   (gimp-selection-none theImage)
   (gimp-context-set-gradient inGrad)
   (plug-in-gradmap TRUE theImage theLayer)
+
   (gimp-display-new theImage)
 
   (gimp-context-pop)

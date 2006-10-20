@@ -184,28 +184,28 @@
 )
 
 (script-fu-register "script-fu-round-button"
-    _"_Round Button..."
-    _"Create images, each containing an oval button graphic"
-    "Arturo Espinosa (stolen from quartic's beveled button)"
-    "Arturo Espinosa & Federico Mena Quintero"
-    "June 1998"
-    ""
-    SF-STRING     _"Text"                 "The GIMP"
-    SF-ADJUSTMENT _"Font size (pixels)"   '(16 2 100 1 1 0 1)
-    SF-FONT       _"Font"                 "Sans"
-    SF-COLOR      _"Upper color"          '(192 192 0)
-    SF-COLOR      _"Lower color"          '(128 108 0)
-    SF-COLOR      _"Text color"           '(0 0 0)
-    SF-COLOR      _"Upper color (active)" '(255 255 0)
-    SF-COLOR      _"Lower color (active)" '(128 108 0)
-    SF-COLOR      _"Text color (active)"  '(0 0 192)
-    SF-ADJUSTMENT _"Padding X"            '(4 0 100 1 10 0 1)
-    SF-ADJUSTMENT _"Padding Y"            '(4 0 100 1 10 0 1)
-    SF-ADJUSTMENT _"Bevel width"          '(2 0 100 1 10 0 1)
-    SF-ADJUSTMENT _"Round ratio"          '(1 0.05 20 0.05 1 2 1)
-    SF-TOGGLE     _"Not pressed"          TRUE
-    SF-TOGGLE     _"Not pressed (active)" TRUE
-    SF-TOGGLE     _"Pressed"              TRUE
+  _"_Round Button..."
+  _"Create images, each containing an oval button graphic"
+  "Arturo Espinosa (stolen from quartic's beveled button)"
+  "Arturo Espinosa & Federico Mena Quintero"
+  "June 1998"
+  ""
+  SF-STRING     _"Text"                 "GIMP"
+  SF-ADJUSTMENT _"Font size (pixels)"   '(16 2 100 1 1 0 1)
+  SF-FONT       _"Font"                 "Sans"
+  SF-COLOR      _"Upper color"          '(192 192 0)
+  SF-COLOR      _"Lower color"          '(128 108 0)
+  SF-COLOR      _"Text color"           "black"
+  SF-COLOR      _"Upper color (active)" '(255 255 0)
+  SF-COLOR      _"Lower color (active)" '(128 108 0)
+  SF-COLOR      _"Text color (active)"  '(0 0 192)
+  SF-ADJUSTMENT _"Padding X"            '(4 0 100 1 10 0 1)
+  SF-ADJUSTMENT _"Padding Y"            '(4 0 100 1 10 0 1)
+  SF-ADJUSTMENT _"Bevel width"          '(2 0 100 1 10 0 1)
+  SF-ADJUSTMENT _"Round ratio"          '(1 0.05 20 0.05 1 2 1)
+  SF-TOGGLE     _"Not pressed"          TRUE
+  SF-TOGGLE     _"Not pressed (active)" TRUE
+  SF-TOGGLE     _"Pressed"              TRUE
 )
 
 (script-fu-menu-register "script-fu-round-button"

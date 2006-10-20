@@ -18,7 +18,6 @@
         (img (car (gimp-image-new width height RGB)))
         (drawable (car (gimp-layer-new img width height RGB-IMAGE
                                        "Sphere Layer" 100 NORMAL-MODE)))
-        (*pi* (* 4 (atan 1.0)))
         (radians (/ (* light *pi*) 180))
         (cx (/ width 2))
         (cy (/ height 2))
@@ -79,8 +78,8 @@
   SF-ADJUSTMENT _"Radius (pixels)"    '(100 5 500 1 10 0 1)
   SF-ADJUSTMENT _"Lighting (degrees)" '(45 0 360 1 10 0 0)
   SF-TOGGLE     _"Shadow"             TRUE
-  SF-COLOR      _"Background color"   '(255 255 255)
-  SF-COLOR      _"Sphere color"       '(255 0 0)
+  SF-COLOR      _"Background color"   "white"
+  SF-COLOR      _"Sphere color"       "red"
 )
 
 (script-fu-menu-register "script-fu-sphere"

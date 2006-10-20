@@ -46,6 +46,7 @@
         )
 
     (gimp-context-push)
+
     (gimp-image-undo-disable img)
     (gimp-image-resize img diameter diameter 0 0)
     (gimp-image-add-layer img bg-layer 1)
@@ -92,16 +93,16 @@
 )
 
 (script-fu-register "script-fu-alien-glow-bullet"
-    _"_Bullet..."
-    _"Create a bullet graphic with an eerie glow for web pages"
-    "Adrian Likins"
-    "Adrian Likins"
-    "1997"
-    ""
-    SF-ADJUSTMENT _"Radius"           '(16 1 100 1 10 0 1)
-    SF-COLOR      _"Glow color"       '(63 252 0)
-    SF-COLOR      _"Background color" '(0 0 0)
-    SF-TOGGLE     _"Flatten image"    TRUE
+  _"_Bullet..."
+  _"Create a bullet graphic with an eerie glow for web pages"
+  "Adrian Likins"
+  "Adrian Likins"
+  "1997"
+  ""
+  SF-ADJUSTMENT _"Radius"           '(16 1 100 1 10 0 1)
+  SF-COLOR      _"Glow color"       '(63 252 0)
+  SF-COLOR      _"Background color" "black"
+  SF-TOGGLE     _"Flatten image"    TRUE
 )
 
 (script-fu-menu-register "script-fu-alien-glow-bullet"
