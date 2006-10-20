@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-15 23:49+0200\n"
-"PO-Revision-Date: 2006-10-15 23:50+0200\n"
+"POT-Creation-Date: 2006-10-20 01:55+0200\n"
+"PO-Revision-Date: 2006-10-20 01:59+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -674,7 +674,7 @@ msgstr "Nuovo colore del canale"
 #: ../app/actions/channels-commands.c:243
 #: ../app/display/gimpdisplayshell-dnd.c:501
 #: ../app/widgets/gimpchanneltreeview.c:247
-#: ../app/widgets/gimplayertreeview.c:807 ../app/widgets/gimptoolbox-dnd.c:310
+#: ../app/widgets/gimplayertreeview.c:808 ../app/widgets/gimptoolbox-dnd.c:310
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s copia canale"
@@ -828,7 +828,7 @@ msgstr "Campionamento diffuso"
 #: ../app/dialogs/file-open-location-dialog.c:216
 #: ../app/dialogs/file-open-location-dialog.c:228
 #: ../app/display/gimpdisplayshell-dnd.c:453
-#: ../app/widgets/gimplayertreeview.c:764 ../app/widgets/gimptoolbox-dnd.c:158
+#: ../app/widgets/gimplayertreeview.c:765 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:916
 #, c-format
 msgid ""
@@ -841,7 +841,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:130
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1330
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1329
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:335 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/pdb/image_cmds.c:1880 ../app/widgets/gimpdnd-xds.c:97
@@ -2280,11 +2280,11 @@ msgstr "Crea un duplicato di questa immagine"
 
 #: ../app/actions/image-actions.c:120
 msgid "Merge Visible _Layers..."
-msgstr "Fondi _livelli visibili..."
+msgstr "Fonde i _livelli visibili..."
 
 #: ../app/actions/image-actions.c:121 ../app/actions/layers-actions.c:135
 msgid "Merge all visible layers into one layer"
-msgstr "Fondi tutti i livelli visibili in un livello"
+msgstr "Fonde tutti i livelli visibili in un livello"
 
 #: ../app/actions/image-actions.c:126 ../app/actions/layers-actions.c:140
 msgid "_Flatten Image"
@@ -2292,7 +2292,7 @@ msgstr "Immagine a_ppiattita"
 
 #: ../app/actions/image-actions.c:127 ../app/actions/layers-actions.c:141
 msgid "Merge all layers into one and remove transparency"
-msgstr "Fondi tutti i livello in uno e rimuovi la trasparenza"
+msgstr "Fonde tutti i livelli in uno e rimuove la trasparenza"
 
 #: ../app/actions/image-actions.c:132
 msgid "Configure G_rid..."
@@ -2779,7 +2779,7 @@ msgstr "Modifica attributi livello"
 #: ../app/actions/layers-commands.c:239 ../app/actions/layers-commands.c:241
 #: ../app/actions/layers-commands.c:298 ../app/actions/layers-commands.c:302
 #: ../app/widgets/gimpdrawabletreeview.c:326
-#: ../app/widgets/gimplayertreeview.c:869
+#: ../app/widgets/gimplayertreeview.c:870
 msgid "New Layer"
 msgstr "Nuovo livello"
 
@@ -5146,7 +5146,7 @@ msgstr "Rimuovi parasite"
 msgid "Import paths"
 msgstr "Importa tracciati"
 
-#: ../app/core/core-enums.c:884 ../app/pdb/drawable_cmds.c:770
+#: ../app/core/core-enums.c:884 ../app/pdb/drawable_cmds.c:773
 msgid "Plug-In"
 msgstr "Plug-in"
 
@@ -5436,7 +5436,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
 
-#: ../app/core/gimpbrush-load.c:258 ../app/core/gimpitem.c:538
+#: ../app/core/gimpbrush-load.c:258 ../app/core/gimpitem.c:504
 #: ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:82
 #: ../app/tools/gimpvectortool.c:295
@@ -5523,20 +5523,24 @@ msgstr "Selezione rettangolare"
 msgid "command|Ellipse Select"
 msgstr "Selezione ellittica"
 
-#: ../app/core/gimpchannel-select.c:374
+#: ../app/core/gimpchannel-select.c:162
+msgid "command|Rounded Rectangle Select"
+msgstr "command|Selezione rettangolare arrotondata"
+
+#: ../app/core/gimpchannel-select.c:431
 msgid "Alpha to Selection"
 msgstr "Alfa a selezione"
 
-#: ../app/core/gimpchannel-select.c:412
+#: ../app/core/gimpchannel-select.c:469
 #, c-format
 msgid "%s Channel to Selection"
 msgstr "%s canale a selezione"
 
-#: ../app/core/gimpchannel-select.c:460 ../app/tools/gimpfuzzyselecttool.c:78
+#: ../app/core/gimpchannel-select.c:517 ../app/tools/gimpfuzzyselecttool.c:78
 msgid "command|Fuzzy Select"
 msgstr "Selezione Fuzzy"
 
-#: ../app/core/gimpchannel-select.c:507
+#: ../app/core/gimpchannel-select.c:564
 #: ../app/tools/gimpbycolorselecttool.c:80
 msgid "command|Select by Color"
 msgstr "Selezione per colore"
@@ -5643,11 +5647,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:484 ../app/core/gimpdatafactory.c:487
-#: ../app/core/gimpitem.c:311 ../app/core/gimpitem.c:314
+#: ../app/core/gimpitem.c:312 ../app/core/gimpitem.c:315
 msgid "copy"
 msgstr "copia"
 
-#: ../app/core/gimpdatafactory.c:496 ../app/core/gimpitem.c:323
+#: ../app/core/gimpdatafactory.c:496 ../app/core/gimpitem.c:324
 #, c-format
 msgid "%s copy"
 msgstr "%s copia"
@@ -5710,7 +5714,7 @@ msgid "Render Stroke"
 msgstr "Disegna il delineato"
 
 #. Start a transform undo group
-#: ../app/core/gimpdrawable-transform.c:1121 ../app/tools/gimpfliptool.c:110
+#: ../app/core/gimpdrawable-transform.c:1121 ../app/tools/gimpfliptool.c:111
 msgid "command|Flip"
 msgstr "Inverti"
 
@@ -5940,23 +5944,23 @@ msgstr "Sposta punto di campionamento"
 msgid "Can't undo %s"
 msgstr "Impossibile annullare %s"
 
-#: ../app/core/gimpimage.c:1404
+#: ../app/core/gimpimage.c:1403
 msgid "Change Image Resolution"
 msgstr "Cambia risoluzione immagine"
 
-#: ../app/core/gimpimage.c:1444
+#: ../app/core/gimpimage.c:1443
 msgid "Change Image Unit"
 msgstr "Cambia unità immagine"
 
-#: ../app/core/gimpimage.c:2279
+#: ../app/core/gimpimage.c:2278
 msgid "Attach Parasite to Image"
 msgstr "Allega parasite all'immagine"
 
-#: ../app/core/gimpimage.c:2314
+#: ../app/core/gimpimage.c:2313
 msgid "Remove Parasite from Image"
 msgstr "Rimuovi parasite dall'immagine"
 
-#: ../app/core/gimpimage.c:2766
+#: ../app/core/gimpimage.c:2765
 msgid "Add Layer"
 msgstr "Aggiungi livello"
 
@@ -5992,79 +5996,79 @@ msgstr "Abbassa il livello fino in fondo"
 msgid "Add Channel"
 msgstr "Aggiungi canale"
 
-#: ../app/core/gimpimage.c:3087 ../app/core/gimpimage.c:3098
+#: ../app/core/gimpimage.c:3088 ../app/core/gimpimage.c:3099
 msgid "Remove Channel"
 msgstr "Rimuovi canale"
 
-#: ../app/core/gimpimage.c:3145
+#: ../app/core/gimpimage.c:3146
 msgid "Channel cannot be raised higher."
 msgstr "Il canale non può essere alzato ulteriormente."
 
-#: ../app/core/gimpimage.c:3150
+#: ../app/core/gimpimage.c:3151
 msgid "Raise Channel"
 msgstr "Alza il canale"
 
-#: ../app/core/gimpimage.c:3167
+#: ../app/core/gimpimage.c:3168
 msgid "Channel is already on top."
 msgstr "Il canale è già in cima."
 
-#: ../app/core/gimpimage.c:3172
+#: ../app/core/gimpimage.c:3173
 msgid "Raise Channel to Top"
 msgstr "Alza il canale fino in cima"
 
-#: ../app/core/gimpimage.c:3189
+#: ../app/core/gimpimage.c:3190
 msgid "Channel cannot be lowered more."
 msgstr "Il canale non può essere abbassato ulteriormente."
 
-#: ../app/core/gimpimage.c:3194
+#: ../app/core/gimpimage.c:3195
 msgid "Lower Channel"
 msgstr "Abbassa il canale"
 
-#: ../app/core/gimpimage.c:3214
+#: ../app/core/gimpimage.c:3215
 msgid "Channel is already on the bottom."
 msgstr "Il canale è già in fondo."
 
-#: ../app/core/gimpimage.c:3219
+#: ../app/core/gimpimage.c:3220
 msgid "Lower Channel to Bottom"
 msgstr "Abbassa il canale fino in fondo"
 
-#: ../app/core/gimpimage.c:3294
+#: ../app/core/gimpimage.c:3295
 msgid "Add Path"
 msgstr "Aggiungi tracciati"
 
-#: ../app/core/gimpimage.c:3339
+#: ../app/core/gimpimage.c:3341
 msgid "Remove Path"
 msgstr "Rimuovi tracciati"
 
-#: ../app/core/gimpimage.c:3383
+#: ../app/core/gimpimage.c:3385
 msgid "Path cannot be raised higher."
 msgstr "Il tracciato non può essere alzato ulteriormente."
 
-#: ../app/core/gimpimage.c:3388
+#: ../app/core/gimpimage.c:3390
 msgid "Raise Path"
 msgstr "Alza il tracciato"
 
-#: ../app/core/gimpimage.c:3405
+#: ../app/core/gimpimage.c:3407
 msgid "Path is already on top."
 msgstr "Il tracciato è già in cima."
 
-#: ../app/core/gimpimage.c:3410
+#: ../app/core/gimpimage.c:3412
 msgid "Raise Path to Top"
 msgstr "Alza il tracciato fino in cima"
 
-#: ../app/core/gimpimage.c:3427
+#: ../app/core/gimpimage.c:3429
 msgid "Path cannot be lowered more."
 msgstr "Il tracciato non può essere abbassato ulteriormente."
 
-#: ../app/core/gimpimage.c:3432
+#: ../app/core/gimpimage.c:3434
 msgid "Lower Path"
 msgstr "Abbassa il tracciato"
 
-#: ../app/core/gimpimage.c:3452
+#: ../app/core/gimpimage.c:3454
 msgid "Path is already on the bottom."
 msgstr "Il tracciato è già in fondo."
 
-#: ../app/core/gimpimage.c:3457
+#: ../app/core/gimpimage.c:3459
 msgid "Lower Path to Bottom"
 msgstr "Abbassa tracciato fino in fondo"
 
@@ -6121,15 +6125,15 @@ msgstr[1] "%d livelli"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Impossibile aprire la miniatura '%s': %s."
 
-#: ../app/core/gimpitem.c:1166
+#: ../app/core/gimpitem.c:1132
 msgid "Attach Parasite"
 msgstr "Allega parasite"
 
-#: ../app/core/gimpitem.c:1176
+#: ../app/core/gimpitem.c:1142
 msgid "Attach Parasite to Item"
 msgstr "Allega parasite all'elemento"
 
-#: ../app/core/gimpitem.c:1219 ../app/core/gimpitem.c:1226
+#: ../app/core/gimpitem.c:1185 ../app/core/gimpitem.c:1192
 msgid "Remove Parasite from Item"
 msgstr "Rimuovi parasite dall'elemento"
 
@@ -6183,7 +6187,7 @@ msgstr "Rifletti livello"
 msgid "Rotate Layer"
 msgstr "Ruota livello"
 
-#: ../app/core/gimplayer.c:401 ../app/core/gimplayer.c:1302
+#: ../app/core/gimplayer.c:401 ../app/core/gimplayer.c:1301
 #: ../app/core/gimplayermask.c:204
 #, c-format
 msgid "%s mask"
@@ -6221,27 +6225,27 @@ msgstr ""
 "Impossibile aggiungere maschera livello con dimensioni diverse dal livello "
 "specificato."
 
-#: ../app/core/gimplayer.c:1356
+#: ../app/core/gimplayer.c:1355
 msgid "Transfer Alpha to Mask"
 msgstr "Trasferimento alfa su maschera"
 
-#: ../app/core/gimplayer.c:1521 ../app/core/gimplayermask.c:231
+#: ../app/core/gimplayer.c:1520 ../app/core/gimplayermask.c:231
 msgid "Apply Layer Mask"
 msgstr "Applica maschera di livello"
 
-#: ../app/core/gimplayer.c:1522
+#: ../app/core/gimplayer.c:1521
 msgid "Delete Layer Mask"
 msgstr "Elimina maschera di livello"
 
-#: ../app/core/gimplayer.c:1623
+#: ../app/core/gimplayer.c:1622
 msgid "Add Alpha Channel"
 msgstr "Aggiunta canale alfa"
 
-#: ../app/core/gimplayer.c:1674
+#: ../app/core/gimplayer.c:1673
 msgid "Remove Alpha Channel"
 msgstr "Rimuovi canale alfa"
 
-#: ../app/core/gimplayer.c:1696
+#: ../app/core/gimplayer.c:1695
 msgid "Layer to Image Size"
 msgstr "Livello a dimensione dell'immagine"
 
@@ -8032,7 +8036,7 @@ msgid "Drop New Path"
 msgstr "Nuovo tracciato"
 
 #: ../app/display/gimpdisplayshell-dnd.c:545
-#: ../app/widgets/gimplayertreeview.c:835 ../app/widgets/gimptoolbox-dnd.c:358
+#: ../app/widgets/gimplayertreeview.c:836 ../app/widgets/gimptoolbox-dnd.c:358
 msgid "Dropped Buffer"
 msgstr "Buffer abbandonato"
 
@@ -8282,7 +8286,7 @@ msgstr "Soglia"
 #: ../app/pdb/drawable_transform_cmds.c:304
 #: ../app/pdb/drawable_transform_cmds.c:388
 #: ../app/pdb/transform_tools_cmds.c:140 ../app/tools/gimpperspectivetool.c:68
-#: ../app/tools/gimpperspectivetool.c:99
+#: ../app/tools/gimpperspectivetool.c:100
 msgid "Perspective"
 msgstr "Prospettiva"
 
@@ -8654,7 +8658,7 @@ msgstr "Variazione:"
 msgid "Shape:"
 msgstr "Forma:"
 
-#: ../app/tools/gimpblendoptions.c:228 ../app/tools/gimppaintoptions-gui.c:487
+#: ../app/tools/gimpblendoptions.c:228 ../app/tools/gimppaintoptions-gui.c:454
 msgid "Repeat:"
 msgstr "Ripeti"
 
@@ -8662,13 +8666,13 @@ msgstr "Ripeti"
 msgid "Adaptive supersampling"
 msgstr "Supercampionamento adattivo"
 
-#: ../app/tools/gimpblendoptions.c:264
+#: ../app/tools/gimpblendoptions.c:254
 msgid "Max depth:"
 msgstr "Definizione max:"
 
-#: ../app/tools/gimpblendoptions.c:271
+#: ../app/tools/gimpblendoptions.c:261
 #: ../app/tools/gimpbucketfilloptions.c:287
-#: ../app/tools/gimpselectionoptions.c:431
+#: ../app/tools/gimpselectionoptions.c:422
 msgid "Threshold:"
 msgstr "Soglia:"
 
@@ -8722,7 +8726,7 @@ msgid "Base filled area on all visible layers"
 msgstr "Area base riempita su tutti i livelli visibili"
 
 #: ../app/tools/gimpbucketfilloptions.c:112
-#: ../app/tools/gimpselectionoptions.c:122
+#: ../app/tools/gimpselectionoptions.c:124
 msgid "Maximum color difference"
 msgstr "Massima differenza di colore"
 
@@ -8747,7 +8751,7 @@ msgid "Fill similar colors"
 msgstr "Riempi i colori simili"
 
 #: ../app/tools/gimpbucketfilloptions.c:253
-#: ../app/tools/gimpselectionoptions.c:403
+#: ../app/tools/gimpselectionoptions.c:394
 msgid "Finding Similar Colors"
 msgstr "Trova colori simili"
 
@@ -8758,8 +8762,8 @@ msgstr "Riempi aree trasparenti"
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160 ../app/tools/gimphealtool.c:103
 #: ../app/tools/gimpperspectiveclonetool.c:896
-#: ../app/tools/gimprectangleoptions.c:521
-#: ../app/tools/gimpselectionoptions.c:419
+#: ../app/tools/gimprectangleoptions.c:510
+#: ../app/tools/gimpselectionoptions.c:410
 msgid "Sample merged"
 msgstr "Campionamento diffuso"
 
@@ -8912,7 +8916,9 @@ msgstr "_Luminosità:"
 msgid "Sample average"
 msgstr "Media di campionamento"
 
-#: ../app/tools/gimpcoloroptions.c:171 ../app/tools/gimpselectionoptions.c:380
+#: ../app/tools/gimpcoloroptions.c:171
+#: ../app/tools/gimprectangleselectoptions.c:167
+#: ../app/tools/gimpselectionoptions.c:371
 #: ../app/widgets/gimpbrusheditor.c:154
 msgid "Radius:"
 msgstr "Raggio:"
@@ -9212,12 +9218,11 @@ msgid "Flip"
 msgstr "Riflessione"
 
 #: ../app/tools/gimpfliptool.c:78
-msgid "Flip Tool: Reverse the layer horizontally or vertically"
-msgstr ""
-"Strumento riflessione: ribalta il livello o la selezione orizzontalmente o "
-"verticalmente"
+msgid ""
+"Flip Tool: Reverse the layer, selection or path horizontally or vertically"
+msgstr "Strumento riflessione: ribalta il livello, la selezione o il tracciato orizzontalmente o verticalmente"
 
-#: ../app/tools/gimpfliptool.c:79
+#: ../app/tools/gimpfliptool.c:80
 msgid "_Flip"
 msgstr "Ri_flessione"
 
@@ -9311,11 +9316,11 @@ msgstr "Aggiungere ancora tratti o premere Invio per accettare la selezione"
 msgid "Mark foreground by painting on the object to extract"
 msgstr "Marca lo sfondo disegnando sull'oggetto da estrarre"
 
-#: ../app/tools/gimpforegroundselecttool.c:321
+#: ../app/tools/gimpforegroundselecttool.c:318
 msgid "Draw a rough circle around the object to extract"
 msgstr "Disegna un cerchio intorno all'oggetto da estrarre"
 
-#: ../app/tools/gimpforegroundselecttool.c:744
+#: ../app/tools/gimpforegroundselecttool.c:737
 msgid "command|Foreground Select"
 msgstr "Selezione primo piano"
 
@@ -9328,7 +9333,7 @@ msgstr ""
 msgid "_Free Select"
 msgstr "A mano _libera"
 
-#: ../app/tools/gimpfreeselecttool.c:307
+#: ../app/tools/gimpfreeselecttool.c:306
 msgid "command|Free Select"
 msgstr "A mano libera"
 
@@ -9460,7 +9465,7 @@ msgid "Size:"
 msgstr "Dimensione:"
 
 #: ../app/tools/gimpinkoptions-gui.c:76 ../app/tools/gimpmeasuretool.c:962
-#: ../app/tools/gimprotatetool.c:144 ../app/widgets/gimpbrusheditor.c:208
+#: ../app/widgets/gimpbrusheditor.c:208
 msgid "Angle:"
 msgstr "Angolo:"
 
@@ -9674,13 +9679,13 @@ msgid "_Paintbrush"
 msgstr "_Pennello"
 
 #: ../app/tools/gimppaintoptions-gui.c:104
-#: ../app/tools/gimpselectionoptions.c:335
-#: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:272
+#: ../app/tools/gimpselectionoptions.c:337
+#: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:273
 msgid "Mode:"
 msgstr "Modalità:"
 
 #: ../app/tools/gimppaintoptions-gui.c:119
-#: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:287
+#: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:288
 msgid "Opacity:"
 msgstr "Opacità:"
 
@@ -9689,7 +9694,7 @@ msgid "Brush:"
 msgstr "Pennello:"
 
 #: ../app/tools/gimppaintoptions-gui.c:141
-#: ../app/tools/gimppaintoptions-gui.c:463
+#: ../app/tools/gimppaintoptions-gui.c:430
 msgid "Gradient:"
 msgstr "Gradiente:"
 
@@ -9726,20 +9731,20 @@ msgstr "Dimensione"
 msgid "Fade out"
 msgstr "Sfumatura in uscita"
 
-#: ../app/tools/gimppaintoptions-gui.c:357
-#: ../app/tools/gimppaintoptions-gui.c:472
+#: ../app/tools/gimppaintoptions-gui.c:346
+#: ../app/tools/gimppaintoptions-gui.c:439
 msgid "Length:"
 msgstr "Lunghezza:"
 
-#: ../app/tools/gimppaintoptions-gui.c:389
+#: ../app/tools/gimppaintoptions-gui.c:378
 msgid "Apply Jitter"
 msgstr "Applica jitter"
 
-#: ../app/tools/gimppaintoptions-gui.c:406
+#: ../app/tools/gimppaintoptions-gui.c:383
 msgid "Amount:"
 msgstr "Ammontare:"
 
-#: ../app/tools/gimppaintoptions-gui.c:434
+#: ../app/tools/gimppaintoptions-gui.c:413
 msgid "Use color from gradient"
 msgstr "Usa colore del gradiente"
 
@@ -9799,23 +9804,22 @@ msgid "Ctrl-Click to set a clone source"
 msgstr "Ctrl-clic per impostare una sorgente per la duplicazione"
 
 #: ../app/tools/gimpperspectivetool.c:69
-msgid "Perspective Tool: Change perspective of the layer or selection"
-msgstr ""
-"Strumento prospettiva: cambia la prospettiva del livello o della selezione"
+msgid "Perspective Tool: Change perspective of the layer, selection or path"
+msgstr "Strumento prospettiva: cambia la prospettiva del livello, della selezione o del tracciato"
 
-#: ../app/tools/gimpperspectivetool.c:70
+#: ../app/tools/gimpperspectivetool.c:71
 msgid "_Perspective"
 msgstr "_Prospettiva"
 
-#: ../app/tools/gimpperspectivetool.c:97
+#: ../app/tools/gimpperspectivetool.c:98
 msgid "command|Perspective"
 msgstr "Prospettiva"
 
-#: ../app/tools/gimpperspectivetool.c:98
+#: ../app/tools/gimpperspectivetool.c:99
 msgid "Perspective Transform Information"
 msgstr "Informazioni trasformazione prospettiva"
 
-#: ../app/tools/gimpperspectivetool.c:114
+#: ../app/tools/gimpperspectivetool.c:115
 msgid "Transformation Matrix"
 msgstr "Matrice di trasformazione"
 
@@ -9839,62 +9843,66 @@ msgstr "Posterizzazione non possibile su livelli indicizzati."
 msgid "Posterize _levels:"
 msgstr "_Livelli di posterizzazione:"
 
-#: ../app/tools/gimprectangleoptions.c:118
+#: ../app/tools/gimprectangleoptions.c:117
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Usa tutti i livelli visibili quando restringi la selezione"
 
-#: ../app/tools/gimprectangleoptions.c:507
+#: ../app/tools/gimprectangleoptions.c:504
 msgid "Auto shrink selection"
 msgstr "Auto riduzione della selezione"
 
-#: ../app/tools/gimprectangleoptions.c:526
+#: ../app/tools/gimprectangleoptions.c:515
 msgid "Expand from center"
 msgstr "Espandi dal centro"
 
-#: ../app/tools/gimprectangleoptions.c:531
+#: ../app/tools/gimprectangleoptions.c:520
 msgid "Highlight"
 msgstr "Evidenzia"
 
-#: ../app/tools/gimprectangleoptions.c:548 ../app/widgets/gimpcursorview.c:136
+#: ../app/tools/gimprectangleoptions.c:537 ../app/widgets/gimpcursorview.c:136
 #: ../app/widgets/gimpcursorview.c:158
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangleoptions.c:560 ../app/widgets/gimpcursorview.c:142
+#: ../app/tools/gimprectangleoptions.c:549 ../app/widgets/gimpcursorview.c:142
 #: ../app/widgets/gimpcursorview.c:164
 msgid "Y"
 msgstr "Y"
 
-#: ../app/tools/gimprectangleoptions.c:572 ../app/widgets/gimpgrideditor.c:257
+#: ../app/tools/gimprectangleoptions.c:561 ../app/widgets/gimpgrideditor.c:257
 #: ../app/widgets/gimpgrideditor.c:289
 msgid "Width"
 msgstr "Larghezza"
 
-#: ../app/tools/gimprectangleoptions.c:580
-#: ../app/tools/gimprectangleoptions.c:597
-#: ../app/tools/gimprectangleoptions.c:618
+#: ../app/tools/gimprectangleoptions.c:569
+#: ../app/tools/gimprectangleoptions.c:586
+#: ../app/tools/gimprectangleoptions.c:607
 msgid "Fix"
 msgstr "Fissa"
 
-#: ../app/tools/gimprectangleoptions.c:587 ../app/widgets/gimpgrideditor.c:259
+#: ../app/tools/gimprectangleoptions.c:576 ../app/widgets/gimpgrideditor.c:259
 #: ../app/widgets/gimpgrideditor.c:291
 msgid "Height"
 msgstr "Altezza"
 
-#: ../app/tools/gimprectangleoptions.c:604
+#: ../app/tools/gimprectangleoptions.c:593
 msgid "Aspect"
 msgstr "Aspetto"
 
-#: ../app/tools/gimprectangleselecttool.c:133
+#: ../app/tools/gimprectangleselectoptions.c:155
+msgid "Rounded corners"
+msgstr "Spigoli arrotondati"
+
+#: ../app/tools/gimprectangleselecttool.c:134
 msgid "Rectangle Select"
 msgstr "Selezione rettangolare"
 
-#: ../app/tools/gimprectangleselecttool.c:134
+#: ../app/tools/gimprectangleselecttool.c:135
 msgid "Rectangle Select Tool: Select a rectangular region"
 msgstr ""
 "Strumento di selezione rettangolare: seleziona aree di forma rettangolare"
 
-#: ../app/tools/gimprectangleselecttool.c:135
+#: ../app/tools/gimprectangleselecttool.c:136
 msgid "_Rectangle Select"
 msgstr "_Rettangolare"
 
@@ -9911,8 +9919,8 @@ msgid "Rotate"
 msgstr "Rotazione"
 
 #: ../app/tools/gimprotatetool.c:87
-msgid "Rotate Tool: Rotate the layer or selection"
-msgstr "Strumento rotazione: ruota il livello o la selezione"
+msgid "Rotate Tool: Rotate the layer, selection or path"
+msgstr "Strumento rotazione: ruota il livello, la selezione o il tracciato"
 
 #: ../app/tools/gimprotatetool.c:88
 msgid "_Rotate"
@@ -9922,21 +9930,25 @@ msgstr "_Rotazione"
 msgid "Rotation Information"
 msgstr "Informazioni sulla rotazione"
 
+#: ../app/tools/gimprotatetool.c:144
+msgid "_Angle:"
+msgstr "_Angolo:"
+
 #: ../app/tools/gimprotatetool.c:159
-msgid "Center X:"
-msgstr "Centro X:"
+msgid "Center _X:"
+msgstr "Centro _X:"
 
 #: ../app/tools/gimprotatetool.c:167
-msgid "Center Y:"
-msgstr "Centro Y:"
+msgid "Center _Y:"
+msgstr "Centro _Y:"
 
 #: ../app/tools/gimpscaletool.c:79
 msgid "Scale"
 msgstr "Scala"
 
 #: ../app/tools/gimpscaletool.c:80
-msgid "Scale Tool: Scale the layer or selection"
-msgstr "Strumento scala: scala il livello o la selezione"
+msgid "Scale Tool: Scale the layer, selection or path"
+msgstr "Strumento scala: scala il livello, la selezione o il tracciato"
 
 #: ../app/tools/gimpscaletool.c:81
 msgid "_Scale"
@@ -9950,19 +9962,19 @@ msgstr "Ridimensionamento"
 msgid "Scaling Information"
 msgstr "Informazioni sul ridimensionamento"
 
-#: ../app/tools/gimpselectionoptions.c:97
+#: ../app/tools/gimpselectionoptions.c:99
 msgid "Smooth edges"
 msgstr "Margini morbidi"
 
-#: ../app/tools/gimpselectionoptions.c:111
+#: ../app/tools/gimpselectionoptions.c:113
 msgid "Allow completely transparent regions to be selected"
 msgstr "Permetti la selezione di aree completamente trasparenti"
 
-#: ../app/tools/gimpselectionoptions.c:117
+#: ../app/tools/gimpselectionoptions.c:119
 msgid "Base selection on all visible layers"
 msgstr "Selezione di base su tutti i livelli visibili"
 
-#: ../app/tools/gimpselectionoptions.c:343 ../app/tools/gimptextoptions.c:457
+#: ../app/tools/gimpselectionoptions.c:345 ../app/tools/gimptextoptions.c:457
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
@@ -9970,51 +9982,51 @@ msgstr "Antialiasing"
 msgid "Feather edges"
 msgstr "Margini sfumati"
 
-#: ../app/tools/gimpselectionoptions.c:389
+#: ../app/tools/gimpselectionoptions.c:380
 msgid "Show interactive boundary"
 msgstr "Mostra contorno interattivo"
 
-#: ../app/tools/gimpselectionoptions.c:413
+#: ../app/tools/gimpselectionoptions.c:404
 msgid "Select transparent areas"
 msgstr "Seleziona aree trasparenti"
 
-#: ../app/tools/gimpselectionoptions.c:438
+#: ../app/tools/gimpselectionoptions.c:429
 msgid "Select by:"
 msgstr "Selezione per:"
 
-#: ../app/tools/gimpselectiontool.c:272
+#: ../app/tools/gimpselectiontool.c:271
 msgid "Click-Drag to replace the current selection"
 msgstr "Fare clic e trascinare per sostituire la selezione corrente"
 
-#: ../app/tools/gimpselectiontool.c:280
+#: ../app/tools/gimpselectiontool.c:279
 msgid "Click-Drag to create a new selection"
 msgstr "Fare clic e trascinare per creare una nuova selezione"
 
-#: ../app/tools/gimpselectiontool.c:285
+#: ../app/tools/gimpselectiontool.c:284
 msgid "Click-Drag to add to the current selection"
 msgstr "Fare clic e trascinare per aggiungere alla selezione corrente"
 
-#: ../app/tools/gimpselectiontool.c:294
+#: ../app/tools/gimpselectiontool.c:293
 msgid "Click-Drag to subtract from the current selection"
 msgstr "Fare clic e trascinare per sottrarre dalla selezione corrente"
 
-#: ../app/tools/gimpselectiontool.c:303
+#: ../app/tools/gimpselectiontool.c:302
 msgid "Click-Drag to intersect with the current selection"
 msgstr "Fare clic e trascinare per intersecare con la selezione corrente"
 
-#: ../app/tools/gimpselectiontool.c:311
+#: ../app/tools/gimpselectiontool.c:312
 msgid "Click-Drag to move the selection mask"
 msgstr "Fare clic e trascinare per spostare la maschera di selezione"
 
-#: ../app/tools/gimpselectiontool.c:319
+#: ../app/tools/gimpselectiontool.c:320
 msgid "Click-Drag to move the selected pixels"
 msgstr "Fare clic e trascinare per spostare i pixel selezionati"
 
-#: ../app/tools/gimpselectiontool.c:323
+#: ../app/tools/gimpselectiontool.c:324
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr "Fare clic e trascinare per spostare una copia dei pixel selezionati"
 
-#: ../app/tools/gimpselectiontool.c:327
+#: ../app/tools/gimpselectiontool.c:328
 msgid "Click to anchor the floating selection"
 msgstr "Fare clic per àncorare la selezione fluttuante"
 
@@ -10023,8 +10035,8 @@ msgid "Shear"
 msgstr "Inclina"
 
 #: ../app/tools/gimpsheartool.c:87
-msgid "Shear Tool: Shear the layer or selection"
-msgstr "Strumento inclina: inclina il livello o la selezione"
+msgid "Shear Tool: Shear the layer, selection or path"
+msgstr "Strumento inclina: inclina il livello, la selezione o il tracciato"
 
 #: ../app/tools/gimpsheartool.c:88
 msgid "S_hear"
@@ -10032,19 +10044,19 @@ msgstr "_Inclina"
 
 #: ../app/tools/gimpsheartool.c:114
 msgid "command|Shear"
-msgstr "Inclina"
+msgstr "command|Inclina"
 
 #: ../app/tools/gimpsheartool.c:115
 msgid "Shearing Information"
 msgstr "Informazioni sull'inclinazione"
 
 #: ../app/tools/gimpsheartool.c:139
-msgid "Shear magnitude X:"
-msgstr "Inclinazione in X:"
+msgid "Shear magnitude _X:"
+msgstr "Inclinazione in _X:"
 
 #: ../app/tools/gimpsheartool.c:149
-msgid "Shear magnitude Y:"
-msgstr "Inclinazione in Y:"
+msgid "Shear magnitude _Y:"
+msgstr "Inclinazione in _Y:"
 
 #: ../app/tools/gimpsmudgetool.c:55
 msgid "Smudge Tool: Smudge selectively using a brush"
@@ -10207,15 +10219,15 @@ msgstr "15 gradi  (%s)"
 msgid "Keep aspect  (%s)"
 msgstr "Mantieni l'aspetto  (%s)"
 
-#: ../app/tools/gimptransformtool.c:228
+#: ../app/tools/gimptransformtool.c:229
 msgid "Transforming"
 msgstr "Trasformazione"
 
-#: ../app/tools/gimptransformtool.c:1047
+#: ../app/tools/gimptransformtool.c:1133
 msgid "There is no layer to transform."
 msgstr "Nessun livello da trasformare."
 
-#: ../app/tools/gimptransformtool.c:1058
+#: ../app/tools/gimptransformtool.c:1144
 msgid "There is no path to transform."
 msgstr "Nessun tracciato da trasformare."
 
@@ -11355,19 +11367,19 @@ msgstr "Imposta voce esclusiva visibile"
 msgid "Set Item Exclusive Linked"
 msgstr "Imposta voce esclusiva collegata"
 
-#: ../app/widgets/gimplayertreeview.c:221
+#: ../app/widgets/gimplayertreeview.c:222
 msgid "Reorder Layer"
 msgstr "Riordina livello"
 
-#: ../app/widgets/gimplayertreeview.c:309
+#: ../app/widgets/gimplayertreeview.c:310
 msgid "Lock alpha channel"
 msgstr "Blocca canale alfa"
 
-#: ../app/widgets/gimplayertreeview.c:321
+#: ../app/widgets/gimplayertreeview.c:322
 msgid "Lock:"
 msgstr "Blocca:"
 
-#: ../app/widgets/gimplayertreeview.c:875
+#: ../app/widgets/gimplayertreeview.c:876
 msgid "Empty Layer"
 msgstr "Livello vuoto"
 
@@ -11676,7 +11688,7 @@ msgstr "%s (provare %s, %s)"
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (provare %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:954
+#: ../app/widgets/gimpwidgets-utils.c:964
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Dato UTF-8 non valido nel file '%s'"
