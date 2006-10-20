@@ -8,7 +8,6 @@ scripts = \
 	palette-offset.py	\
 	palette-sort.py		\
 	palette-to-gradient.py	\
-	pdbbrowse.py		\
 	py-slice.py		\
 	shadow_bevel.py
 
@@ -24,6 +23,6 @@ else
 pluginexec_SCRIPTS = $(scripts)
 endif
 
-pluginexec_DATA = gtkcons.py
+pluginexec_DATA = pyconsole.py
 
 EXTRA_DIST = $(pluginexec_DATA) $(pluginexec_SCRIPTS) $(test_scripts)

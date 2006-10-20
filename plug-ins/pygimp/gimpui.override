@@ -708,3 +708,264 @@ _wrap_gimp_color_scale_new(PyGObject *self, PyObject *args, PyObject *kwargs)
 }
 %%
 new-constructor GIMP_TYPE_COLOR_SCALE
+%%
+override gimp_enum_label_new kwargs
+static int
+_wrap_gimp_enum_label_new(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_enum_type = NULL;
+    gint value;
+    GType enum_type;
+    GimpEnumLabel *label;
+
+    static char *kwlist[] = { "enum_type", "value", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "Oi:gimpui.GimpEnumLabel.__init__",
+                                     kwlist,
+                                     &py_enum_type, &value))
+        return -1;
+
+    if ((enum_type = pyg_type_from_object(py_enum_type)) == 0)
+        return -1;
+
+    if (pygobject_construct(self, NULL))
+        return -1;
+
+    label = GIMP_ENUM_LABEL(self->obj);
+
+    label->enum_class = g_type_class_ref(enum_type);
+
+    gimp_enum_label_set_value (label, value);
+
+    return 0; 
+}
+%%
+new-constructor GIMP_TYPE_ENUM_LABEL
+%%
+override gimp_int_combo_box_new kwargs
+static int
+_wrap_gimp_int_combo_box_new(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_items = NULL;
+    int len, i;
+
+    static char *kwlist[] = { "items", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "|O:gimpui.IntComboBox.__init__",
+                                     kwlist,
+                                     &py_items))
+        return -1; 
+
+    if (py_items == NULL || py_items == Py_None)
+        len = 0;
+    else if (PyTuple_Check(py_items))
+        len = PyTuple_Size(py_items);
+    else {
+        PyErr_SetString(PyExc_TypeError,
+                        "items must be a tuple containing label/value pairs "
+                        "or None");
+        return -1;
+    }
+
+    if (len % 2) {
+        PyErr_SetString(PyExc_RuntimeError,
+                        "items tuple must contain label/value pairs");
+        return -1;
+    }
+
+    if (pygobject_construct(self, NULL))
+        return -1;
+
+    for (i = 0; i < len; i += 2) {
+        PyObject *label = PyTuple_GetItem(py_items, i);
+        PyObject *value = PyTuple_GetItem(py_items, i + 1);
+
+        if (!PyString_Check(label)) {
+            gtk_object_destroy(GTK_OBJECT(self->obj));
+            self->obj = NULL;
+            PyErr_SetString(PyExc_RuntimeError,
+                            "first member of each label/value pair "
+                            "must be a string");
+            return -1;
+        }
+
+        if (!PyInt_Check(value)) {
+            gtk_object_destroy(GTK_OBJECT(self->obj));
+            self->obj = NULL;
+            PyErr_SetString(PyExc_RuntimeError,
+                            "second member of each label/value pair "
+                            "must be a number");
+            return -1;
+        }
+
+        gimp_int_combo_box_append(GIMP_INT_COMBO_BOX(self->obj),
+                                  PyString_AsString(label),
+                                  PyInt_AsLong(value),
+                                  -1);
+    }
+
+    return 0;
+}
+%%
+new-constructor GIMP_TYPE_INT_COMBO_BOX
+%%
+override gimp_browser_add_search_types kwargs
+static PyObject *
+_wrap_gimp_browser_add_search_types(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_types = NULL;
+    int len, i;
+
+    static char *kwlist[] = { "search_types", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O:GimpBrowser.add_search_types",
+                                     kwlist,
+                                     &py_types))
+        return NULL;
+
+    if (PyTuple_Check(py_types))
+        len = PyTuple_Size(py_types);
+    else {
+        PyErr_SetString(PyExc_TypeError,
+                        "search_types must be a tuple containing label/id "
+                        "pairs");
+        return NULL;
+    }
+
+    if (len % 2) {
+        PyErr_SetString(PyExc_RuntimeError,
+                        "search_types tuple must contain label/id pairs");
+        return NULL;
+    }
+
+    for (i = 0; i < len; i += 2) {
+        PyObject *label = PyTuple_GetItem(py_types, i);
+        PyObject *id = PyTuple_GetItem(py_types, i + 1);
+
+        if (!PyString_Check(label)) {
+            PyErr_SetString(PyExc_RuntimeError,
+                            "first member of each label/id pair "
+                            "must be a string");
+            return NULL;
+        }
+
+        if (!PyInt_Check(id)) {
+            PyErr_SetString(PyExc_RuntimeError,
+                            "second member of each label/id pair "
+                            "must be a number");
+            return NULL;
+        }
+
+        gimp_browser_add_search_types(GIMP_BROWSER(self->obj),
+                                      PyString_AsString(label),
+                                      PyInt_AsLong(id),
+                                      NULL);
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
+override gimp_proc_browser_dialog_new kwargs
+static int
+_wrap_gimp_proc_browser_dialog_new(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    gchar *title, *role;
+    PyObject *py_buttons = Py_None;
+    PyObject *help_func = NULL;
+    gchar *help_id = NULL;
+    int len, i;
+    GimpHelpFunc func;
+
+    static char *kwlist[] = { "title", "role", "help_func", "help_id",
+                              "buttons", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "zz|OzO:gimpui.GimpProcBrowserDialog.__init__",
+                                     kwlist,
+                                     &title, &role, &help_func, &help_id,
+                                     &py_buttons))
+        return -1;
+
+    if (help_func) {
+        if (help_func != Py_None) {
+            if (!PyCallable_Check(help_func)) {
+                PyErr_SetString(PyExc_TypeError, "help_func must be callable");
+                return -1;
+            }
+
+            func = pygimp_help_func_marshal;
+
+            g_object_set_data(self->obj, "pygimp-dialog-help-data", self);
+
+            Py_INCREF(help_func);
+            g_object_set_data_full(self->obj, "pygimp-dialog-help-func",
+                                   help_func, pygimp_help_func_destroy);
+        } else {
+            func = gimp_standard_help_func;
+        }
+    } else {
+        func = gimp_standard_help_func;
+    }
+
+    if (py_buttons == Py_None)
+        len = 0;
+    else if (PyTuple_Check(py_buttons))
+        len = PyTuple_Size(py_buttons);
+    else {
+        PyErr_SetString(PyExc_TypeError, "buttons must be a tuple containing text/response pairs or None");
+        return -1;
+    }
+
+    if (len % 2) {
+        PyErr_SetString(PyExc_RuntimeError,
+                        "buttons tuple must contain text/response id pairs");
+        return -1;
+    }
+
+    pygobject_construct(self,
+                        "title",     title,
+                        "role",      role,
+                        "help-func", func,
+                        "help-id",   help_id,
+                        NULL);
+
+    if (!self->obj) {
+        PyErr_SetString(PyExc_RuntimeError,
+                        "could not create GimpProcBrowserDialog object");
+        return -1;
+    }
+
+    for (i = 0; i < len; i += 2) {
+        PyObject *text = PyTuple_GetItem(py_buttons, i);
+        PyObject *id = PyTuple_GetItem(py_buttons, i + 1);
+        if (!PyString_Check(text) && !PyUnicode_Check(text)) {
+            gtk_object_destroy(GTK_OBJECT(self->obj));
+            self->obj = NULL;
+            PyErr_SetString(PyExc_RuntimeError,
+                            "first member of each text/response id pair "
+                            "must be a string");
+            return -1;
+        }
+        if (!PyInt_Check(id)) {
+            gtk_object_destroy(GTK_OBJECT(self->obj));
+            self->obj = NULL;
+            PyErr_SetString(PyExc_RuntimeError,
+                            "second member of each text/response id pair "
+                            "must be a number");
+            return -1;
+        }
+
+        gimp_dialog_add_button(GIMP_DIALOG(self->obj), PyString_AsString(text),
+                               PyInt_AsLong(id));
+    }
+
+    g_signal_emit_by_name(GIMP_PROC_BROWSER_DIALOG(self->obj)->browser,
+                          "search", "", 0, self->obj);
+    return 0;
+}
+%%
+new-constructor GIMP_TYPE_PROC_BROWSER_DIALOG

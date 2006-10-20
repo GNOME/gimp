@@ -1,3 +1,29 @@
+2006-10-20  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpui.defs: clone methods can't be marked as
+	constructors.
+
+	* plug-ins/pygimp/Makefile.am
+	* plug-ins/pygimp/procbrowser.c: Remove one-off GimpProcBrowserDialog
+	wrapper. Nobody but the console should've been using it anyway.
+
+	* plug-ins/pygimp/gimpui.override: overrides for GimpEnumLabel,
+	GimpIntComboBox, and GimpProcBrowserDialog constructors, as well
+	as gimp_browser_add_search_types.
+
+	* plug-ins/pygimp/plug-ins/pyconsole.py: New console widget,
+	taken from GGAP (http://ggap.sourceforge.net)
+
+	* plug-ins/pygimp/plug-ins/gtkcons.py: removed.
+
+	* plug-ins/gimpcons.py: use new console widget, and the 
+	GimpProcBrowserDialog binding directly. Still a little rough in
+	places.
+
+	* plug-ins/pygimp/plug-ins/pdbbrowse.py: removed, it's redundant.
+
+	* plug-ins/pygimp/plug-ins/Makefile.am: reflect above changes.
+
 2006-10-20  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scheme-wrapper.c: Moved the MIN and MAX entries

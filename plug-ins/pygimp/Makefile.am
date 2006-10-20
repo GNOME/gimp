@@ -27,7 +27,7 @@ pygimpbase = python
 pygimpdir = $(gimpplugindir)/$(pygimpbase)
 
 pygimp_LTLIBRARIES = gimp.la _gimpenums.la gimpcolor.la _gimpui.la \
-	gimpthumb.la gimpprocbrowser.la
+	gimpthumb.la
 
 gimp_la_SOURCES = \
 	gimpmodule.c		\
@@ -112,25 +112,6 @@ gimpthumb_la_LIBADD = \
 	$(libgimpthumb)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(PYLINK_LIBS)
-
-gimpprocbrowser_la_SOURCES = \
-	procbrowser.c
-
-gimpprocbrowser_la_LDFLAGS = -module -avoid-version $(no_undefined) \
-	-export-symbols-regex initgimpprocbrowser
-
-gimpprocbrowser_la_LIBADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpconfig)	\
-	$(libgimpmath)		\
-	$(libgimp)		\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(PYLINK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
 
 pygimp_PYTHON = \
 	gimpenums.py	\

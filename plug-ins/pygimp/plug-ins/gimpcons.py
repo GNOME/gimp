@@ -21,13 +21,15 @@ from gimpfu import *
 
 gettext.install("gimp20-python", gimp.locale_directory, unicode=1)
 
+PROC_NAME = 'python-fu-console'
+
+RESPONSE_BROWSE, RESPONSE_CLEAR, RESPONSE_SAVE = range(3)
+
 def console():
     import pygtk
     pygtk.require('2.0')
 
-    import gobject, gtk, gimpenums, gimpshelf
-
-    gtk.rc_parse(gimp.gtkrc())
+    import sys, gobject, gtk, gimpenums, gimpshelf, gimpui
 
     namespace = {'__builtins__': __builtins__,
                  '__name__': '__main__', '__doc__': None,
@@ -38,54 +40,121 @@ def console():
         if s[0] != '_':
             namespace[s] = getattr(gimpenums, s)
 
-    def bye(*args):
-        gtk.main_quit()
+    def response(dialog, response_id, cons):
+        if response_id == RESPONSE_BROWSE:
+            browse(cons)
+        elif response_id == RESPONSE_CLEAR:
+            cons.banner = None
+            cons.clear()
+        elif response_id == RESPONSE_SAVE:
+            save_dialog(dialog, cons)
+        else:
+            gtk.main_quit()
+        
 
-    dialog = gtk.Dialog(title=_("Python Console"),
-                        buttons=(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE))
-    dialog.set_has_separator(False)
-    dialog.connect("response", bye)
+    dialog = gimpui.Dialog(title=_("Python Console"), role=PROC_NAME,
+                           help_id=PROC_NAME,
+                           buttons=(gtk.STOCK_SAVE,  RESPONSE_SAVE,
+                                    gtk.STOCK_CLEAR, RESPONSE_CLEAR,
+                                    _("_Browse..."), RESPONSE_BROWSE,
+                                    gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE))
+    dialog.set_alternative_button_order((gtk.RESPONSE_CLOSE, RESPONSE_BROWSE,
+                                         RESPONSE_CLEAR, RESPONSE_SAVE))
 
-    import gtkcons
-    cons = gtkcons.Console(namespace=namespace, quit_cb=bye, closer=False)
+    banner = 'Gimp %s Python Console\nPython %s\n' % (gimp.pdb.gimp_version(),
+                                                      sys.version)
 
-    def on_apply(proc): 
+    import pyconsole
+    cons = pyconsole.Console(locals=namespace, banner=banner)
+
+    dialog.connect("response", response, cons)
+
+    def browse_response(dlg, response_id, cons):
+        if response_id != gtk.RESPONSE_APPLY:
+            dlg.destroy()
+            return
+
+        proc_name = dlg.get_selected()
+
+        if not proc_name:
+            return
+
+        proc = pdb[proc_name]
+            
         cmd = ''
 
         if len(proc.return_vals) > 0:
-            cmd = ', '.join([x[1] for x in proc.return_vals]) + ' = '
+            cmd = ', '.join([x[1].replace('-', '_') for x in proc.return_vals]) + ' = '
 
-        if '-' in proc.proc_name:
-            cmd = cmd + "pdb['%s']" % proc.proc_name
-        else:
-            cmd = cmd + "pdb.%s" % proc.proc_name
+        cmd = cmd + "pdb.%s" % proc.proc_name.replace('-', '_')
 
-        if len(proc.params) > 0 and proc.params[0][1] == 'run_mode':
+        if len(proc.params) > 0 and proc.params[0][1] == 'run-mode':
             params = proc.params[1:]
         else:
             params = proc.params
 
-        cmd = cmd + "(%s)" % ', '.join([x[1] for x in params])
+        cmd = cmd + "(%s)" % ', '.join([x[1].replace('-', '_') for x in params])
 
-        cons.line.set_text(cmd)
+        cons.buffer.insert_at_cursor(cmd)
 
-    def browse(button, cons):
-        import gimpprocbrowser
-        gimpprocbrowser.dialog_new(on_apply)
+    def browse(cons):
+        dlg = gimpui.ProcBrowserDialog(_("Python Procedure Browser"), PROC_NAME,
+                                       buttons=(gtk.STOCK_APPLY, gtk.RESPONSE_APPLY,
+                                                gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE))
+        dlg.set_default_response(gtk.RESPONSE_APPLY)
+        dlg.set_alternative_button_order((gtk.RESPONSE_CLOSE, gtk.RESPONSE_APPLY))
 
-    button = gtk.Button(_("_Browse..."))
-    button.connect("clicked", browse, cons)
+        dlg.connect("response", browse_response, cons)
+        dlg.connect("row-activated",
+                    lambda dlg: dlg.response(gtk.RESPONSE_APPLY))
 
-    cons.inputbox.pack_end(button, fill=False, expand=False, padding=2)
-    button.show()
+        dlg.show()
 
-    dialog.vbox.pack_start(cons)
-    cons.show()
+    def save_dialog(parent, cons):
+        dlg = gtk.FileChooserDialog(title=_("Save Python-Fu Console Output"),
+                                    parent=parent,
+                                    action=gtk.FILE_CHOOSER_ACTION_SAVE,
+                                    buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                             gtk.STOCK_SAVE,   gtk.RESPONSE_OK))
+        dlg.set_default_response(gtk.RESPONSE_OK)
+        dlg.set_alternative_button_order((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))
+
+        def save_response(dlg, response_id, cons):
+            if response_id == gtk.RESPONSE_OK:
+                filename = dlg.get_filename()
+
+                try:
+                    logfile = open(filename, 'w')
+                except IOError, e:
+                    gimp.message(_("Could not open '%s' for writing: %s") %
+                                 (filename, e.strerror))
+                    return
+
+                start = cons.buffer.get_start_iter()
+                end = cons.buffer.get_end_iter()
+
+                log = cons.buffer.get_text(start, end, False)
+
+                logfile.write(log)
+                logfile.close()
+
+            dlg.destroy()
+
+        dlg.connect("response", save_response, cons)
+        dlg.present()
+
+    vbox = gtk.VBox(False, 12)
+    vbox.set_border_width(12)
+    dialog.vbox.pack_start(vbox)
+
+    scrl_win = gtk.ScrolledWindow()
+    scrl_win.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_ALWAYS)
+    vbox.pack_start(scrl_win)
+
+    scrl_win.add(cons)
 
     dialog.set_default_size(500, 500)
-    dialog.show()
-
-    cons.init()
+    dialog.show_all()
 
     # flush the displays every half second
     def timeout():
@@ -96,7 +165,7 @@ def console():
     gtk.main()
 
 register(
-    "python-fu-console",
+    PROC_NAME,
     N_("Interactive Gimp-Python interpreter"),
     "Type in commands and see results",
     "James Henstridge",

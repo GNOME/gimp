@@ -715,7 +715,6 @@
 (define-method clone
   (of-object "GimpColorDisplay")
   (c-name "gimp_color_display_clone")
-  (is-constructor-of "GimpColorDisplay")
   (return-type "GimpColorDisplay*")
 )
 
@@ -798,7 +797,6 @@
 (define-method clone
   (of-object "GimpColorDisplayStack")
   (c-name "gimp_color_display_stack_clone")
-  (is-constructor-of "GimpColorDisplayStack")
   (return-type "GimpColorDisplayStack*")
 )
 
