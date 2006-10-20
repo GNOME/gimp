@@ -1,3 +1,13 @@
+2006-10-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpdrawableundo.[ch]: new undo class for drawable undos.
+	This was lurking on my disk too long...
+
+	* app/core/gimpimage-undo-push.c (gimp_image_undo_push_drawable):
+	use it instead of implementing it manually.
+
 2006-10-20  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpmodule.c
