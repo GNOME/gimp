@@ -38,6 +38,7 @@
 #include "gimpbuffer.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
+#include "gimpdrawableundo.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
@@ -472,6 +473,52 @@ gimp_edit_fill (GimpImage    *image,
                                   fill_type,
                                   GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
                                   undo_desc);
+}
+
+gboolean
+gimp_edit_fade (GimpImage   *image,
+                GimpContext *context)
+{
+  GimpDrawableUndo *undo;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+
+  undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
+
+  if (undo && undo->src2_tiles)
+    {
+      GimpDrawable     *drawable;
+      TileManager      *src2_tiles;
+      PixelRegion       src2PR;
+
+      drawable = GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item);
+
+      g_object_ref (undo);
+      src2_tiles = tile_manager_ref (undo->src2_tiles);
+
+      gimp_image_undo (image);
+
+      pixel_region_init (&src2PR, src2_tiles,
+                         0, 0, undo->width, undo->height,
+                         FALSE);
+
+      gimp_drawable_apply_region (drawable, &src2PR,
+                                  TRUE,
+                                  gimp_object_get_name (GIMP_OBJECT (undo)),
+                                  gimp_context_get_opacity (context),
+                                  gimp_context_get_paint_mode (context),
+                                  NULL,
+                                  undo->x,
+                                  undo->y);
+
+      tile_manager_unref (src2_tiles);
+      g_object_unref (undo);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 

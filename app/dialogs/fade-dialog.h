@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_WIDGETS_CONSTRUCTORS_H__
-#define __GIMP_WIDGETS_CONSTRUCTORS_H__
+#ifndef __FADE_DIALOG_H__
+#define __FADE_DIALOG_H__
 
 
-GtkWidget * gimp_paint_mode_menu_new (gboolean with_behind_mode,
-                                      gboolean with_replace_modes);
+GtkWidget * fade_dialog_new (GimpImage *image,
+                             GtkWidget *parent);
 
 
-#endif  /*  __GIMP_WIDGETS_CONSTRUCTORS_H__  */
+#endif  /*  __FADE_DIALOG_H__  */

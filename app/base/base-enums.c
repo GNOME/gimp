@@ -100,6 +100,9 @@ gimp_layer_mode_effects_get_type (void)
     { GIMP_GRAIN_EXTRACT_MODE, "GIMP_GRAIN_EXTRACT_MODE", "grain-extract-mode" },
     { GIMP_GRAIN_MERGE_MODE, "GIMP_GRAIN_MERGE_MODE", "grain-merge-mode" },
     { GIMP_COLOR_ERASE_MODE, "GIMP_COLOR_ERASE_MODE", "color-erase-mode" },
+    { GIMP_ERASE_MODE, "GIMP_ERASE_MODE", "erase-mode" },
+    { GIMP_REPLACE_MODE, "GIMP_REPLACE_MODE", "replace-mode" },
+    { GIMP_ANTI_ERASE_MODE, "GIMP_ANTI_ERASE_MODE", "anti-erase-mode" },
     { 0, NULL, NULL }
   };
 
@@ -128,6 +131,9 @@ gimp_layer_mode_effects_get_type (void)
     { GIMP_GRAIN_EXTRACT_MODE, N_("Grain extract"), NULL },
     { GIMP_GRAIN_MERGE_MODE, N_("Grain merge"), NULL },
     { GIMP_COLOR_ERASE_MODE, N_("Color erase"), NULL },
+    { GIMP_ERASE_MODE, N_("Erase"), NULL },
+    { GIMP_REPLACE_MODE, N_("Replace"), NULL },
+    { GIMP_ANTI_ERASE_MODE, N_("Anti Erase"), NULL },
     { 0, NULL, NULL }
   };
 

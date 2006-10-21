@@ -60,5 +60,8 @@ gboolean           gimp_edit_fill               (GimpImage    *image,
                                                  GimpContext  *context,
                                                  GimpFillType  fill_type);
 
+gboolean           gimp_edit_fade               (GimpImage    *image,
+                                                 GimpContext  *context);
+
 
 #endif  /*  __GIMP_EDIT_H__  */

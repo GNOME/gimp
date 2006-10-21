@@ -1,3 +1,44 @@
+2006-10-21  Michael Natterer  <mitch@gimp.org>
+
+	Added "Edit -> Fade" which allows to modify the paint mode and
+	opacity of the last drawable operation (fill, plugins etc.).
+	Started from a patch by Bill Skaggs. Fixes bug #170707.
+
+	* app/base/base-enums.[ch] (enum GimpLayerModeEffects): register
+	the values REPLACE_MODE, ERASE_MODE and ANTI_ERASE_MODE with
+	the type system.
+
+	* app/widgets/gimppropwidgets.[ch]
+	* app/widgets/gimpwidgets-constructors.[ch]: added "gboolean
+	with_replace_modes" to the paint mode menu constructors.
+
+	* app/tools/gimppaintoptions-gui.c
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimplayertreeview.c: pass with_replace_modes = FALSE.
+
+	* app/core/gimpdrawableundo.[ch]: added members which keep tiles,
+	paint mode and opacity of the pasted pixels.
+
+	* app/core/gimpimage-undo.[ch] (gimp_image_undo_get_fadeable):
+	returns a GimpUndo suitable for a fade operation, or NULL.
+
+	* app/core/gimp-edit.[ch] (gimp_edit_fade): implements the actual
+	fade by undoing the last operation and then re-applying the pixels
+	with different paint mode and opacity.
+
+	* app/core/gimpdrawable-combine.c: store the pasted pixels in
+	the GimpDrawableUndo.
+
+	* app/actions/edit-actions.c
+	* app/actions/edit-commands.[ch]: action and callback for fade.
+
+	* app/dialogs/Makefile.am
+	* app/dialogs/fade-dialog.[ch]: the fade dialog.
+
+	* app/widgets/gimphelp-ids.h: the fade help ID.
+
+	* menus/image-menu.xml.in: added a menu entry in "Edit".
+
 2006-10-20  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/stddefs.pdb

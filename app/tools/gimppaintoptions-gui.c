@@ -99,7 +99,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   g_object_set_data (G_OBJECT (vbox), GIMP_PAINT_OPTIONS_TABLE_KEY, table);
 
   /*  the paint mode menu  */
-  menu = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE);
+  menu = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE, FALSE);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
                                      _("Mode:"), 0.0, 0.5,
                                      menu, 2, FALSE);

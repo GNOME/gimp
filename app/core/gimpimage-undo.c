@@ -26,13 +26,12 @@
 
 #include "gimp.h"
 #include "gimp-utils.h"
+#include "gimpdrawableundo.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpitem.h"
-#include "gimpitemundo.h"
 #include "gimplist.h"
 #include "gimpundostack.h"
-#include "gimpundo.h"
 
 
 /*  local function prototypes  */
@@ -357,6 +356,31 @@ gimp_image_undo_can_compress (GimpImage    *image,
           return undo;
         }
     }
+
+  return NULL;
+}
+
+GimpUndo *
+gimp_image_undo_get_fadeable (GimpImage *image)
+{
+  GimpUndo *undo;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  undo = gimp_undo_stack_peek (image->undo_stack);
+
+  if (GIMP_IS_UNDO_STACK (undo) && undo->undo_type == GIMP_UNDO_GROUP_PAINT)
+    {
+      GimpUndoStack *stack = GIMP_UNDO_STACK (undo);
+
+      if (gimp_undo_stack_get_depth (stack) == 2)
+        {
+          undo = gimp_undo_stack_peek (stack);
+        }
+    }
+
+  if (GIMP_IS_DRAWABLE_UNDO (undo))
+    return undo;
 
   return NULL;
 }

@@ -268,7 +268,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 
   /*  Paint mode menu  */
 
-  view->paint_mode_menu = gimp_paint_mode_menu_new (FALSE);
+  view->paint_mode_menu = gimp_paint_mode_menu_new (FALSE, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (view->options_box), 0, 0,
                              _("Mode:"), 0.0, 0.5,
                              view->paint_mode_menu, 2, FALSE);

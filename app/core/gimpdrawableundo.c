@@ -245,4 +245,10 @@ gimp_drawable_undo_free (GimpUndo     *undo,
       tile_manager_unref (drawable_undo->tiles);
       drawable_undo->tiles = NULL;
     }
+
+  if (drawable_undo->src2_tiles)
+    {
+      tile_manager_unref (drawable_undo->src2_tiles);
+      drawable_undo->src2_tiles = NULL;
+    }
 }

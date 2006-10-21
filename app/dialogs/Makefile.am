@@ -30,6 +30,8 @@ libappdialogs_a_sources = \
 	convert-dialog.h		\
 	desaturate-dialog.c		\
 	desaturate-dialog.h		\
+	fade-dialog.c			\
+	fade-dialog.h			\
 	file-open-dialog.c		\
 	file-open-dialog.h		\
 	file-open-location-dialog.c	\

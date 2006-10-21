@@ -125,9 +125,11 @@ static void   gimp_prop_paint_menu_notify   (GObject     *config,
 
 /**
  * gimp_prop_paint_mode_menu_new:
- * @config:           #GimpConfig object to which property is attached.
- * @property_name:    Name of Enum property.
- * @with_behind_mode: Whether to include "Behind" mode in the menu.
+ * @config:             #GimpConfig object to which property is attached.
+ * @property_name:      Name of Enum property.
+ * @with_behind_mode:   Whether to include "Behind" mode in the menu.
+ * @with_replace_modes: Whether to include the "Replace", "Erase" and
+ *                      "Anti Erase" modes in the menu.
  *
  * Creates a #GimpPaintModeMenu widget to display and set the specified
  * Enum property, for which the enum must be #GimpLayerModeEffects.
@@ -139,7 +141,8 @@ static void   gimp_prop_paint_menu_notify   (GObject     *config,
 GtkWidget *
 gimp_prop_paint_mode_menu_new (GObject     *config,
                                const gchar *property_name,
-                               gboolean     with_behind_mode)
+                               gboolean     with_behind_mode,
+                               gboolean     with_replace_modes)
 {
   GParamSpec *param_spec;
   GtkWidget  *menu;
@@ -154,7 +157,7 @@ gimp_prop_paint_mode_menu_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  menu = gimp_paint_mode_menu_new (with_behind_mode);
+  menu = gimp_paint_mode_menu_new (with_behind_mode, with_replace_modes);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (menu),
                               value,

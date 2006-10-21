@@ -43,6 +43,11 @@ struct _GimpDrawableUndo
   gint          y;
   gint          width;
   gint          height;
+
+  /* stuff for "Fade" */
+  TileManager          *src2_tiles;
+  GimpLayerModeEffects  paint_mode;
+  gdouble               opacity;
 };
 
 struct _GimpDrawableUndoClass

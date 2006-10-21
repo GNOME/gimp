@@ -185,7 +185,7 @@ gimp_brush_select_constructor (GType                  type,
                     select);
 
   /*  Create the paint mode option menu  */
-  select->paint_mode_menu = gimp_paint_mode_menu_new (TRUE);
+  select->paint_mode_menu = gimp_paint_mode_menu_new (TRUE, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("Mode:"), 0.0, 0.5,
                              select->paint_mode_menu, 2, FALSE);
