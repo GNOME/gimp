@@ -1,3 +1,8 @@
+2006-10-21  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/pyconsole.py: Windows is dumb, special
+	case out gimp invocation just like we did for gtkcons.py
+
 2006-10-21  Michael Natterer  <mitch@gimp.org>
 
 	Added "Edit -> Fade" which allows to modify the paint mode and
