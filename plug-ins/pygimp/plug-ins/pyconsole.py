@@ -104,8 +104,10 @@ class _ReadLine(object):
             except KeyError:
                 return self.items[self.ptr]
 
-    def __init__(self):
+    def __init__(self, quit_func=None):
         object.__init__(self)
+
+        self.quit_func = quit_func
 
         self.set_wrap_mode(gtk.WRAP_CHAR)
         self.modify_font(pango.FontDescription("Monospace"))
@@ -278,6 +280,9 @@ class _ReadLine(object):
                 start = self.__get_start()
                 end = self.__get_cursor()
                 self.__delete(start, end)
+            elif keyval == _keys.d:
+                if self.quit_func:
+                    self.quit_func()
             else:
                 handled = False
         else:
@@ -447,8 +452,8 @@ class _ReadLine(object):
 class _Console(_ReadLine, code.InteractiveInterpreter):
     def __init__(self, locals=None, banner=None,
                  completer=None, use_rlcompleter=True,
-                 start_script=None):
-        _ReadLine.__init__(self)
+                 start_script=None, quit_func=None):
+        _ReadLine.__init__(self, quit_func)
 
         code.InteractiveInterpreter.__init__(self, locals)
         self.locals["__console__"] = self

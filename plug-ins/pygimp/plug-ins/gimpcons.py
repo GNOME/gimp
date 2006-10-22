@@ -65,7 +65,8 @@ def console():
                                                       sys.version)
 
     import pyconsole
-    cons = pyconsole.Console(locals=namespace, banner=banner)
+    cons = pyconsole.Console(locals=namespace, banner=banner,
+                             quit_func=lambda: gtk.main_quit())
 
     dialog.connect("response", response, cons)
 

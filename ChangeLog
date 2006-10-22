@@ -1,3 +1,9 @@
+2006-10-22  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/pyconsole.py
+	* plug-ins/pygimp/plug-ins/gimpcons.py: Make CTRL-D close the
+	console.
+
 2006-10-21  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/pyconsole.py: Windows is dumb, special
