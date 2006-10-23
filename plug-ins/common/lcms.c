@@ -48,9 +48,6 @@ enum
   PRODUCT_NAME,
   PRODUCT_DESC,
   PRODUCT_INFO,
-  MANUFACTURER,
-  MODEL,
-  COPYRIGHT,
   NUM_RETURN_VALUES
 };
 
@@ -115,10 +112,7 @@ query (void)
   {
     { GIMP_PDB_STRING, "product-name", "Name"         },
     { GIMP_PDB_STRING, "product-desc", "Description"  },
-    { GIMP_PDB_STRING, "product-info", "Info"         },
-    { GIMP_PDB_STRING, "manufacturer", "Manufacturer" },
-    { GIMP_PDB_STRING, "model",        "Model"        },
-    { GIMP_PDB_STRING, "copyright",    "Copyright"    }
+    { GIMP_PDB_STRING, "product-info", "Info"         }
   };
 
   gimp_install_procedure (PLUG_IN_PROC_SET,
@@ -130,7 +124,7 @@ query (void)
                           "Sven Neumann",
                           "2006",
                           N_("Set color profile"),
-                          "RGB*",
+                          "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
@@ -146,7 +140,7 @@ query (void)
                           "Sven Neumann",
                           "2006",
                           N_("Set default RGB profile"),
-                          "RGB*",
+                          "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (base_args), 0,
                           base_args, NULL);
@@ -162,7 +156,7 @@ query (void)
                           "Sven Neumann",
                           "2006",
                           N_("Apply color profile"),
-                          "RGB*",
+                          "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
@@ -180,7 +174,7 @@ query (void)
                           "Sven Neumann",
                           "2006",
                           N_("Apply default RGB profile"),
-                          "RGB*",
+                          "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (base_args), 0,
                           base_args, NULL);
@@ -194,7 +188,7 @@ query (void)
                           "Sven Neumann",
                           "2006",
                           N_("Color Profile Information"),
-                          "RGB*",
+                          "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (base_args),
                           G_N_ELEMENTS (info_return_vals),
@@ -403,27 +397,6 @@ lcms_icc_info (gint32     image,
 
   return_vals[PRODUCT_INFO].data.d_string = g_strdup (info);
 
-  /* manufacturer */
-  info = cmsTakeManufacturer (profile);
-  if (! g_utf8_validate (info, -1, NULL))
-    info = _("(invalid UTF-8 string)");
-
-  return_vals[MANUFACTURER].data.d_string = g_strdup (info);
-
-  /* model */
-  info = cmsTakeModel (profile);
-  if (! g_utf8_validate (info, -1, NULL))
-    info = _("(invalid UTF-8 string)");
-
-  return_vals[MODEL].data.d_string = g_strdup (info);
-
-  /* copyright */
-  info = cmsTakeCopyright (profile);
-  if (! g_utf8_validate (info, -1, NULL))
-    info = _("(invalid UTF-8 string)");
-
-  return_vals[COPYRIGHT].data.d_string = g_strdup (info);
-
   cmsCloseProfile (profile);
 
   *n_return_vals = NUM_RETURN_VALUES;
@@ -437,7 +410,7 @@ lcms_image_get_profile (gint32 image)
   GimpParasite *parasite;
   cmsHPROFILE   profile = NULL;
 
-  g_return_val_if_fail (image != -1, cmsCreateNULLProfile ());
+  g_return_val_if_fail (image != -1, cmsCreate_sRGBProfile ());
 
   parasite = gimp_image_parasite_find (image, "icc-profile");
 
