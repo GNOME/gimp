@@ -164,6 +164,7 @@ gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
                                            GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (rotate->sizeentry),
                              GTK_SPIN_BUTTON (button), NULL);
+  gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (rotate->sizeentry), 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3, _("Center _Y:"),
                              0.0, 0.5, rotate->sizeentry, 1, TRUE);
 
