@@ -1,5 +1,9 @@
 2006-10-23  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: use LIBLCMS instead of LCMS_LIBS.
+
+	* modules/Makefile.am: changed accordingly.
+	
 	* plug-ins/common/mkgen.pl: link plug-ins with the same libraries
 	and in the same order as defined in the gimp.pc and gimpui.pc files.
 

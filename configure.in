@@ -1322,7 +1322,7 @@ if test "x$with_lcms" != xno; then
       ])
   ])
   if test $have_lcms = yes; then
-    LCMS_LIBS="-llcms"
+    LIBLCMS="-llcms"
     LCMS='lcms$(EXEEXT)'
   else
     have_lcms="no (lcms not found or unusable)"
@@ -1332,7 +1332,7 @@ else
 fi
 
 AC_SUBST(LCMS)
-AC_SUBST(LCMS_LIBS)
+AC_SUBST(LIBLCMS)
 AM_CONDITIONAL(HAVE_LCMS, test $have_lcms = yes)
 
 
