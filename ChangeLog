@@ -1,3 +1,8 @@
+2006-10-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/gimp-pdb-compat.c (gimp_pdb_compat_procs_register):
+	it's gimp-layer-set,get-lock-alpha, not gimp-drawable.
+
 2006-10-23  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/lcms.c: removed some fields from the icc-info

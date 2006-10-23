@@ -415,8 +415,8 @@ gimp_pdb_compat_procs_register (GimpPDB           *pdb,
     { "gimp-selection-clear",            "gimp-selection-none"             },
 
     /*  deprecations since 2.2  */
-    { "gimp-layer-get-preserve-trans",   "gimp-drawable-get-lock-alpha"    },
-    { "gimp-layer-set-preserve-trans",   "gimp-drawable-set-lock-alpha"    }
+    { "gimp-layer-get-preserve-trans",   "gimp-layer-get-lock-alpha"       },
+    { "gimp-layer-set-preserve-trans",   "gimp-layer-set-lock-alpha"       }
   };
 
   g_return_if_fail (GIMP_IS_PDB (pdb));
