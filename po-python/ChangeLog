@@ -1,3 +1,7 @@
+2006-10-23  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed files that were removed from CVS.
+
 2006-10-19  Josep Puigdemont i Casamajó  <josep.puigdemont@gmail.com>
 
 	* ca.po: Updated Catalan translation by
