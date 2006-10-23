@@ -53,6 +53,7 @@ libgimpbase = \$(top_builddir)/libgimpbase/libgimpbase-\$(GIMP_API_VERSION).la
 libgimpcolor = \$(top_builddir)/libgimpcolor/libgimpcolor-\$(GIMP_API_VERSION).la
 libgimpconfig = \$(top_builddir)/libgimpconfig/libgimpconfig-\$(GIMP_API_VERSION).la
 libgimpmath = \$(top_builddir)/libgimpmath/libgimpmath-\$(GIMP_API_VERSION).la
+libgimpmodule = \$(top_builddir)/libgimpmodule/libgimpmodule-\$(GIMP_API_VERSION).la
 libgimpui = \$(top_builddir)/libgimp/libgimpui-\$(GIMP_API_VERSION).la
 libgimpwidgets = \$(top_builddir)/libgimpwidgets/libgimpwidgets-\$(GIMP_API_VERSION).la
 
@@ -108,18 +109,16 @@ foreach (sort keys %plugins) {
 
     if (exists $plugins{$_}->{ui}) {
         $libgimp .= "\$(libgimpui)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpconfig)";
-        $libgimp .= "\t\\\n\t\$(libgimpwidgets)";
-        $libgimp .= "\t\\\n\t\$(libgimp)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpcolor)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpmath)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpbase)";
-    } else {
-        $libgimp .= "\$(libgimp)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpcolor)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpmath)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpbase)";
+        $libgimp .= "\t\t\\\n\t\$(libgimpwidgets)";
+	$libgimp .= "\t\\\n\t\$(libgimpmodule)";
+	$libgimp .= "\t\\\n\t";
     }
+
+    $libgimp .= "\$(libgimp)";
+    $libgimp .= "\t\t\\\n\t\$(libgimpmath)";
+    $libgimp .= "\t\t\\\n\t\$(libgimpconfig)";
+    $libgimp .= "\t\\\n\t\$(libgimpcolor)";
+    $libgimp .= "\t\t\\\n\t\$(libgimpbase)";
 
     my $optlib = "";
     if (exists $plugins{$_}->{optional} || exists $plugins{$_}->{extralibs} ) {

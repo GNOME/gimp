@@ -1,5 +1,14 @@
 2006-10-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/mkgen.pl: link plug-ins with the same libraries
+	and in the same order as defined in the gimp.pc and gimpui.pc files.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
+	* plug-ins/common/lcms.c: implemented missing functionality.
+
+2006-10-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/unsharp-mask.scm: reverted Kevin's
 	change. This script should not register a menu entry and it
 	doesn't need to be translated. It only exists for backward
