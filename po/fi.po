@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-22 08:21+0300\n"
-"PO-Revision-Date: 2006-10-22 08:24+0300\n"
+"PO-Revision-Date: 2006-10-23 11:33+0300\n"
 "Last-Translator: Heino Keränen <h2k@nic.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -1672,11 +1672,11 @@ msgstr "Sulje kaikki avatut kuvat"
 
 #: ../app/actions/file-actions.c:122
 msgid "_Quit"
-msgstr "_Poistu"
+msgstr "_Lopeta"
 
 #: ../app/actions/file-actions.c:123
 msgid "Quit the GNU Image Manipulation Program"
-msgstr "Sulje GNU-kuvankäsittelyohjelma"
+msgstr "Lopeta GIMP"
 
 #: ../app/actions/file-commands.c:244
 #, c-format
@@ -7681,7 +7681,7 @@ msgstr "pikseliä/%a"
 
 #: ../app/dialogs/quit-dialog.c:106
 msgid "Quit GIMP"
-msgstr "Suljetaanko GIMP?"
+msgstr "Lopetetaanko GIMP?"
 
 #: ../app/dialogs/quit-dialog.c:106
 msgid "Close All Images"
