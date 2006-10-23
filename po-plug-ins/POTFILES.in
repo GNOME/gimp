@@ -21,6 +21,7 @@ plug-ins/common/aa.c
 plug-ins/common/align_layers.c
 plug-ins/common/animationplay.c
 plug-ins/common/animoptimize.c
+plug-ins/common/antialias.c
 plug-ins/common/apply_lens.c
 plug-ins/common/autocrop.c
 plug-ins/common/autostretch_hsv.c
