@@ -6,6 +6,7 @@
     'align_layers' => { libdep => 'gtk', ui => 1 },
     'animationplay' => { libdep => 'gtk', ui => 1 },
     'animoptimize' => { libdep => 'glib' },
+    'antialias' => { libdep => 'glib' },
     'apply_lens' => { libdep => 'gtk', ui => 1 },
     'autocrop' => { libdep => 'glib' },
     'autostretch_hsv' => { libdep => 'glib' },

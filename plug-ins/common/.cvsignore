@@ -9,6 +9,7 @@ aa
 align_layers
 animationplay
 animoptimize
+antialias
 apply_lens
 autocrop
 autostretch_hsv

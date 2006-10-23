@@ -1,5 +1,13 @@
 2006-10-23  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/antialias.c: added "Auntie Alias" by Adam
+	D. Moss, a plug-in which does nice antialiasing on lineart using
+	the Scale3X edge-extrapolation algorithm.
+
+2006-10-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/gimp-pdb-compat.c (gimp_pdb_compat_procs_register):
 	it's gimp-layer-set,get-lock-alpha, not gimp-drawable.
 

@@ -43,6 +43,7 @@ libexec_PROGRAMS = \
 	align_layers \
 	animationplay \
 	animoptimize \
+	antialias \
 	apply_lens \
 	autocrop \
 	autostretch_hsv \
@@ -308,6 +309,19 @@ animoptimize_SOURCES = \
 	animoptimize.c
 
 animoptimize_LDADD = \
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GLIB_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+antialias_SOURCES = \
+	antialias.c
+
+antialias_LDADD = \
 	$(libgimp)		\
 	$(libgimpmath)		\
 	$(libgimpconfig)	\
