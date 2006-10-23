@@ -133,7 +133,7 @@ gimp_layer_mode_effects_get_type (void)
     { GIMP_COLOR_ERASE_MODE, N_("Color erase"), NULL },
     { GIMP_ERASE_MODE, N_("Erase"), NULL },
     { GIMP_REPLACE_MODE, N_("Replace"), NULL },
-    { GIMP_ANTI_ERASE_MODE, N_("Anti Erase"), NULL },
+    { GIMP_ANTI_ERASE_MODE, N_("Anti erase"), NULL },
     { 0, NULL, NULL }
   };
 
