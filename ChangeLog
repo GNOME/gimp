@@ -1,5 +1,12 @@
 2006-10-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/gimppluginmanager.c (gimp_plug_in_manager_restore):
+	if plug_in_rc_parse() returns an empty list it's not neccessarily
+	an eror, so check the "error" variable before accessing it.
+	Fixes bug #363345.
+
+2006-10-23  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/plugin-defs.pl
 	* plug-ins/common/Makefile.am
 	* plug-ins/common/antialias.c: added "Auntie Alias" by Adam

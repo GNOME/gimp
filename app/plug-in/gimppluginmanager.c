@@ -303,7 +303,7 @@ gimp_plug_in_manager_initialize (GimpPlugInManager  *manager,
   gimp_environ_table_load (manager->environ_table, path);
   g_free (path);
 
-  /* allocate a piece of shared memory for use in transporting tiles
+  /*  allocate a piece of shared memory for use in transporting tiles
    *  to plug-ins. if we can't allocate a piece of shared memory then
    *  we'll fall back on sending the data over the pipe.
    */
@@ -382,7 +382,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
 
       g_slist_free (rc_defs);
     }
-  else
+  else if (error)
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
