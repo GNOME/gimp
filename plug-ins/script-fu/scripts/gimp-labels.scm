@@ -172,7 +172,7 @@
   "Adrian Likins & Jens Lautenbacher"
   "1997"
   ""
-  SF-STRING     _"Text" "             Gimp.Org"
+  SF-STRING     _"Text"               "Gimp.Org"
   SF-FONT       _"Font"               "Sans"
   SF-ADJUSTMENT _"Font size (pixels)" '(18 2 1000 1 10 0 1)
   SF-COLOR      _"Text color"         '(130 165 235)

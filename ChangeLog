@@ -1,3 +1,24 @@
+2006-10-23  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* Makefile.am: Moved an out of order entry.
+
+	* plug-ins/script-fu/scripts/beveled-button.scm
+	* plug-ins/script-fu/scripts/fuzzyborder.scm
+	* plug-ins/script-fu/scripts/paste-as-pattern.scm: Formatting changes.
+
+	* plug-ins/script-fu/scripts/coolmetal-logo.scm: Changed two colours
+	to named colour.
+
+	* plug-ins/script-fu/scripts/gimp-labels.scm: Moved a double quote.
+
+	* plug-ins/script-fu/scripts/spinning-globe.scm: Fixed duplicate
+	variable reference in let block.
+
+	* plug-ins/script-fu/scripts/tileblur.scm: Wrong version got commited.
+
+	* plug-ins/script-fu/scripts/unsharp-mask.scm: Added missing menu
+	register block.
+
 2006-10-22  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/pyconsole.py

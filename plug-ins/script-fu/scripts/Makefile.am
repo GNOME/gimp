@@ -68,10 +68,10 @@ scripts = \
 	land.scm			\
 	lava.scm			\
 	line-nova.scm			\
-	old-photo.scm			\
 	mkbrush.scm			\
 	neon-logo.scm			\
 	news-text.scm			\
+	old-photo.scm			\
 	paste-as-brush.scm		\
 	paste-as-pattern.scm		\
 	perspective-shadow.scm		\

@@ -154,7 +154,8 @@
   SF-COLOR      _"Text color"         "black"
   SF-ADJUSTMENT _"Padding"            '(2 1 100 1 10 0 1)
   SF-ADJUSTMENT _"Bevel width"        '(4 1 100 1 10 0 1)
-  SF-TOGGLE     _"Pressed"            FALSE)
+  SF-TOGGLE     _"Pressed"            FALSE
+)
 
 (script-fu-menu-register "script-fu-button00"
                          "<Toolbox>/Xtns/Buttons")

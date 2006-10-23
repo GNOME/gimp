@@ -137,7 +137,7 @@
   SF-IMAGE      "Image"                 0
   SF-DRAWABLE   "Drawable"              0
   SF-ADJUSTMENT _"Effect size (pixels)" '(100 2 1000 1 10 0 1)
-  SF-COLOR      _"Background color"     '(255 255 255)
+  SF-COLOR      _"Background color"     "white"
   SF-GRADIENT   _"Gradient"             "Horizon 1"
   SF-TOGGLE     _"Gradient reverse"     FALSE
 )
@@ -175,7 +175,7 @@
   SF-STRING     _"Text"               "Cool Metal"
   SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
   SF-FONT       _"Font"               "Crillee"
-  SF-COLOR      _"Background color"   '(255 255 255)
+  SF-COLOR      _"Background color"   "white"
   SF-GRADIENT   _"Gradient"           "Horizon 1"
   SF-TOGGLE     _"Gradient reverse"   FALSE
 )

@@ -44,8 +44,10 @@
 
     (gimp-selection-all inImage)
     (set! theImage (if (= inCopy TRUE)
-                     (car (gimp-image-duplicate inImage)) inImage
-                   ))
+                     (car (gimp-image-duplicate inImage))
+                     inImage
+                   )
+    )
     (if (> (car (gimp-drawable-type inLayer)) 1)
         (gimp-image-convert-rgb theImage)
     )
@@ -95,7 +97,8 @@
           (gimp-selection-none inImage)
           (gimp-image-add-layer theImage
                                 (car (gimp-layer-copy theLayer FALSE)) 0)
-          (gimp-layer-scale theLayer (- theWidth inSize) (- theHeight inSize) TRUE)
+          (gimp-layer-scale theLayer
+                            (- theWidth inSize) (- theHeight inSize) TRUE)
           (gimp-desaturate theLayer)
           (gimp-brightness-contrast theLayer 127 127)
           (gimp-invert theLayer)
