@@ -406,7 +406,7 @@ gimp_vectors_get_strokes (gint32  vectors_ID,
  * gimp_vectors_stroke_get_length:
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
- * @prescision: The prescision used for the approximation.
+ * @precision: The precision used for the approximation.
  *
  * Measure the length of the given stroke.
  *
@@ -419,7 +419,7 @@ gimp_vectors_get_strokes (gint32  vectors_ID,
 gdouble
 gimp_vectors_stroke_get_length (gint32  vectors_ID,
                                 gint    stroke_id,
-                                gdouble prescision)
+                                gdouble precision)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -429,7 +429,7 @@ gimp_vectors_stroke_get_length (gint32  vectors_ID,
                                     &nreturn_vals,
                                     GIMP_PDB_VECTORS, vectors_ID,
                                     GIMP_PDB_INT32, stroke_id,
-                                    GIMP_PDB_FLOAT, prescision,
+                                    GIMP_PDB_FLOAT, precision,
                                     GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
@@ -445,7 +445,8 @@ gimp_vectors_stroke_get_length (gint32  vectors_ID,
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
  * @dist: The given distance.
- * @prescision: The prescision used for the approximation.
+ * @precision: The precision used for the approximation.
+ * @x_point: The x position of the point.
  * @y_point: The y position of the point.
  * @slope: The slope (dy / dx) at the specified point.
  * @valid: Indicator for the validity of the returned data.
@@ -459,34 +460,42 @@ gimp_vectors_stroke_get_length (gint32  vectors_ID,
  * created. This might not be obvious. If the stroke is not long
  * enough, a \"valid\" flag will be FALSE.
  *
- * Returns: The x position of the point.
+ * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
  */
-gdouble
+gboolean
 gimp_vectors_stroke_get_point_at_dist (gint32    vectors_ID,
                                        gint      stroke_id,
                                        gdouble   dist,
-                                       gdouble   prescision,
+                                       gdouble   precision,
+                                       gdouble  *x_point,
                                        gdouble  *y_point,
                                        gdouble  *slope,
                                        gboolean *valid)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble x_point = 0.0;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-vectors-stroke-get-point-at-dist",
                                     &nreturn_vals,
                                     GIMP_PDB_VECTORS, vectors_ID,
                                     GIMP_PDB_INT32, stroke_id,
                                     GIMP_PDB_FLOAT, dist,
-                                    GIMP_PDB_FLOAT, prescision,
+                                    GIMP_PDB_FLOAT, precision,
                                     GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  *x_point = 0.0;
+  *y_point = 0.0;
+  *slope = 0.0;
+  *valid = FALSE;
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
-      x_point = return_vals[1].data.d_float;
+      *x_point = return_vals[1].data.d_float;
       *y_point = return_vals[2].data.d_float;
       *slope = return_vals[3].data.d_float;
       *valid = return_vals[4].data.d_int32;
@@ -494,7 +503,7 @@ gimp_vectors_stroke_get_point_at_dist (gint32    vectors_ID,
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return x_point;
+  return success;
 }
 
 /**
@@ -649,51 +658,51 @@ gimp_vectors_stroke_scale (gint32  vectors_ID,
  * gimp_vectors_stroke_interpolate:
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
- * @prescision: The prescision used for the approximation.
+ * @precision: The precision used for the approximation.
  * @num_coords: The number of floats returned.
- * @coords: List of the coords along the path (x0, y0, x1, y1, ...).
+ * @closed: Whether the stroke is closed or not.
  *
  * returns polygonal approximation of the stroke.
  *
  * returns polygonal approximation of the stroke.
  *
- * Returns: List of the strokes belonging to the path.
+ * Returns: List of the coords along the path (x0, y0, x1, y1, ...).
  *
  * Since: GIMP 2.4
  */
-gboolean
+gdouble *
 gimp_vectors_stroke_interpolate (gint32    vectors_ID,
                                  gint      stroke_id,
-                                 gdouble   prescision,
+                                 gdouble   precision,
                                  gint     *num_coords,
-                                 gdouble **coords)
+                                 gboolean *closed)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gboolean closed = FALSE;
+  gdouble *coords = NULL;
 
   return_vals = gimp_run_procedure ("gimp-vectors-stroke-interpolate",
                                     &nreturn_vals,
                                     GIMP_PDB_VECTORS, vectors_ID,
                                     GIMP_PDB_INT32, stroke_id,
-                                    GIMP_PDB_FLOAT, prescision,
+                                    GIMP_PDB_FLOAT, precision,
                                     GIMP_PDB_END);
 
   *num_coords = 0;
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
-      closed = return_vals[1].data.d_int32;
-      *num_coords = return_vals[2].data.d_int32;
-      *coords = g_new (gdouble, *num_coords);
-      memcpy (*coords,
-              return_vals[3].data.d_floatarray,
+      *num_coords = return_vals[1].data.d_int32;
+      coords = g_new (gdouble, *num_coords);
+      memcpy (coords,
+              return_vals[2].data.d_floatarray,
               *num_coords * sizeof (gdouble));
+      *closed = return_vals[3].data.d_int32;
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return closed;
+  return coords;
 }
 
 /**

@@ -349,19 +349,19 @@ vectors_stroke_get_length_invoker (GimpProcedure     *procedure,
   GValueArray *return_vals;
   GimpVectors *vectors;
   gint32 stroke_id;
-  gdouble prescision;
+  gdouble precision;
   gdouble length = 0.0;
 
   vectors = gimp_value_get_vectors (&args->values[0], gimp);
   stroke_id = g_value_get_int (&args->values[1]);
-  prescision = g_value_get_double (&args->values[2]);
+  precision = g_value_get_double (&args->values[2]);
 
   if (success)
     {
       GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
 
       if (stroke)
-        length = gimp_stroke_get_length (stroke, prescision);
+        length = gimp_stroke_get_length (stroke, precision);
       else
         success = FALSE;
     }
@@ -386,7 +386,7 @@ vectors_stroke_get_point_at_dist_invoker (GimpProcedure     *procedure,
   GimpVectors *vectors;
   gint32 stroke_id;
   gdouble dist;
-  gdouble prescision;
+  gdouble precision;
   gdouble x_point = 0.0;
   gdouble y_point = 0.0;
   gdouble slope = 0.0;
@@ -395,7 +395,7 @@ vectors_stroke_get_point_at_dist_invoker (GimpProcedure     *procedure,
   vectors = gimp_value_get_vectors (&args->values[0], gimp);
   stroke_id = g_value_get_int (&args->values[1]);
   dist = g_value_get_double (&args->values[2]);
-  prescision = g_value_get_double (&args->values[3]);
+  precision = g_value_get_double (&args->values[3]);
 
   if (success)
     {
@@ -405,7 +405,7 @@ vectors_stroke_get_point_at_dist_invoker (GimpProcedure     *procedure,
         {
           GimpCoords coord;
 
-          valid = gimp_stroke_get_point_at_dist (stroke, dist, prescision,
+          valid = gimp_stroke_get_point_at_dist (stroke, dist, precision,
                                                  &coord, &slope);
           x_point = valid ? coord.x : 0;
           y_point = valid ? coord.y : 0;
@@ -554,14 +554,14 @@ vectors_stroke_interpolate_invoker (GimpProcedure     *procedure,
   GValueArray *return_vals;
   GimpVectors *vectors;
   gint32 stroke_id;
-  gdouble prescision;
-  gboolean closed = FALSE;
+  gdouble precision;
   gint32 num_coords = 0;
   gdouble *coords = NULL;
+  gboolean closed = FALSE;
 
   vectors = gimp_value_get_vectors (&args->values[0], gimp);
   stroke_id = g_value_get_int (&args->values[1]);
-  prescision = g_value_get_double (&args->values[2]);
+  precision = g_value_get_double (&args->values[2]);
 
   if (success)
     {
@@ -572,7 +572,7 @@ vectors_stroke_interpolate_invoker (GimpProcedure     *procedure,
           GArray *coords_array;
           gint    i;
 
-          coords_array = gimp_stroke_interpolate (stroke, prescision, &closed);
+          coords_array = gimp_stroke_interpolate (stroke, precision, &closed);
 
           if (coords_array)
             {
@@ -598,9 +598,9 @@ vectors_stroke_interpolate_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      g_value_set_boolean (&return_vals->values[1], closed);
-      g_value_set_int (&return_vals->values[2], num_coords);
-      gimp_value_take_floatarray (&return_vals->values[3], coords, num_coords);
+      g_value_set_int (&return_vals->values[1], num_coords);
+      gimp_value_take_floatarray (&return_vals->values[2], coords, num_coords);
+      g_value_set_boolean (&return_vals->values[3], closed);
     }
 
   return return_vals;
@@ -1226,9 +1226,9 @@ register_vectors_procs (GimpPDB *pdb)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("prescision",
-                                                    "prescision",
-                                                    "The prescision used for the approximation",
+                               g_param_spec_double ("precision",
+                                                    "precision",
+                                                    "The precision used for the approximation",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1272,9 +1272,9 @@ register_vectors_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("prescision",
-                                                    "prescision",
-                                                    "The prescision used for the approximation",
+                               g_param_spec_double ("precision",
+                                                    "precision",
+                                                    "The precision used for the approximation",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1466,17 +1466,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("prescision",
-                                                    "prescision",
-                                                    "The prescision used for the approximation",
+                               g_param_spec_double ("precision",
+                                                    "precision",
+                                                    "The precision used for the approximation",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("closed",
-                                                         "closed",
-                                                         "List of the strokes belonging to the path.",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("num-coords",
                                                           "num coords",
@@ -1488,6 +1482,12 @@ register_vectors_procs (GimpPDB *pdb)
                                                                 "coords",
                                                                 "List of the coords along the path (x0, y0, x1, y1, ...).",
                                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("closed",
+                                                         "closed",
+                                                         "Whether the stroke is closed or not.",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
