@@ -28,7 +28,7 @@
 typedef struct {
     PyObject_HEAD
     gint32 vectors_ID;
-    gint stroke;
+    int stroke;
 } PyGimpVectorsStroke;
 
 static PyObject *
@@ -78,14 +78,6 @@ vs_get_point_at_dist(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs
     PyTuple_SetItem(ret, 3, PyBool_FromLong(valid));
 
     return ret;
-}
-
-static PyObject *
-vs_remove(PyGimpVectorsStroke *self)
-{
-    gimp_vectors_remove_stroke(self->vectors_ID, self->stroke);
-    Py_INCREF(Py_None);
-    return Py_None;
 }
 
 static PyObject *
@@ -171,12 +163,60 @@ vs_interpolate(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs)
 static PyMethodDef vs_methods[] = {
     { "get_length", (PyCFunction)vs_get_length, METH_VARARGS | METH_KEYWORDS },
     { "get_point_at_dist", (PyCFunction)vs_get_point_at_dist, METH_VARARGS | METH_KEYWORDS },
-    { "remove", (PyCFunction)vs_remove, METH_NOARGS },
     { "close", (PyCFunction)vs_close, METH_NOARGS },
     { "translate", (PyCFunction)vs_translate, METH_VARARGS | METH_KEYWORDS },
     { "scale", (PyCFunction)vs_scale, METH_VARARGS | METH_KEYWORDS },
     { "interpolate", (PyCFunction)vs_interpolate, METH_VARARGS | METH_KEYWORDS },
     { NULL, NULL, 0 }
+};
+
+static PyObject *
+vs_get_ID(PyGimpVectorsStroke *self, void *closure)
+{
+    return PyInt_FromLong(self->stroke);
+}
+
+static PyObject *
+vs_get_vectors_ID(PyGimpVectorsStroke *self, void *closure)
+{
+    return PyInt_FromLong(self->vectors_ID);
+}
+
+static PyObject *
+vs_get_points(PyGimpVectorsStroke *self, void *closure)
+{
+    double *controlpoints;
+    int i, num_points;
+    gboolean closed;
+    PyObject *ret, *ret_points;
+
+    gimp_vectors_stroke_get_points(self->vectors_ID, self->stroke,
+                                   &num_points, &controlpoints, &closed);
+
+    ret = PyTuple_New(2);
+    if (ret == NULL)
+        return NULL;
+
+    ret_points = PyList_New(num_points);
+    if (ret_points == NULL) {
+        Py_DECREF(ret);
+        return NULL;
+    }
+
+    for (i = 0; i < num_points; i++)
+        PyList_SetItem(ret_points, i, PyFloat_FromDouble(controlpoints[i]));
+
+    PyTuple_SetItem(ret, 0, ret_points);
+    PyTuple_SetItem(ret, 1, PyBool_FromLong(closed));
+
+    return ret;
+}
+
+static PyGetSetDef vs_getsets[] = {
+    { "ID", (getter)vs_get_ID, (setter)0 },
+    { "vectors_ID", (getter)vs_get_vectors_ID, (setter)0 },
+    { "points", (getter)vs_get_points, (setter)0 },
+    { NULL, (getter)0, (setter)0 }
 };
 
 static void
@@ -246,7 +286,7 @@ PyTypeObject PyGimpVectorsStroke_Type = {
     (iternextfunc)0,                    /* tp_iternext */
     vs_methods,                         /* tp_methods */
     0,                                  /* tp_members */
-    0,                                  /* tp_getset */
+    vs_getsets,                         /* tp_getset */
     (PyTypeObject *)0,                  /* tp_base */
     (PyObject *)0,                      /* tp_dict */
     0,                                  /* tp_descr_get */
@@ -256,22 +296,6 @@ PyTypeObject PyGimpVectorsStroke_Type = {
     (allocfunc)0,                       /* tp_alloc */
     (newfunc)0,                         /* tp_new */
 };
-
-static PyObject *
-vectors_stroke_new(PyGimpVectors *vectors, gint stroke)
-{
-    PyGimpVectorsStroke *self;
-
-    self = PyObject_NEW(PyGimpVectorsStroke, &PyGimpVectorsStroke_Type);
-
-    if (self == NULL)
-        return NULL;
-
-    self->vectors_ID = vectors->ID;
-    self->stroke = stroke;
-
-    return (PyObject *)self;
-}
 
 
 static PyObject *
@@ -395,7 +419,7 @@ PyTypeObject PyGimpVectorsBezierStroke_Type = {
 };
 
 static PyObject *
-vectors_bezier_stroke_new(PyGimpVectors *vectors, gint stroke)
+vectors_bezier_stroke_new(PyGimpVectors *vectors, int stroke)
 {
     PyGimpVectorsStroke *self;
 
@@ -412,10 +436,28 @@ vectors_bezier_stroke_new(PyGimpVectors *vectors, gint stroke)
 
 
 static PyObject *
+vectors_remove_stroke(PyGimpVectors *self, PyObject *args, PyObject *kwargs)
+{
+    int stroke;
+
+    static char *kwlist[] = { "stroke", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "i:remove_stroke", kwlist,
+                                     &stroke))
+        return NULL;
+
+
+    gimp_vectors_remove_stroke(self->ID, stroke);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
 vectors_bezier_stroke_new_moveto(PyGimpVectors *self, PyObject *args, PyObject *kwargs)
 {
     double x0, y0;
-    gint stroke;
+    int stroke;
 
     static char *kwlist[] = { "x0", "y0", NULL };
 
@@ -433,7 +475,7 @@ static PyObject *
 vectors_bezier_stroke_new_ellipse(PyGimpVectors *self, PyObject *args, PyObject *kwargs)
 {
     double x0, y0, radius_x, radius_y, angle;
-    gint stroke;
+    int stroke;
 
     static char *kwlist[] = { "x0", "y0", "radius_x", "radius_y", "angle", NULL };
 
@@ -548,6 +590,9 @@ vectors_parasite_list(PyGimpVectors *self)
 }
 
 static PyMethodDef vectors_methods[] = {
+    { "remove_stroke",
+      (PyCFunction)vectors_remove_stroke,
+      METH_VARARGS | METH_KEYWORDS },
     { "bezier_stroke_new_moveto",
       (PyCFunction)vectors_bezier_stroke_new_moveto,
       METH_VARARGS | METH_KEYWORDS },
