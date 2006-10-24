@@ -1,3 +1,8 @@
+2006-10-24  Michael Natterer  <mitch@gimp.org>
+
+	* tools/gimp-mkenums (parse_trigraph): quote "true" to fix warning
+	about reserved word.
+
 2006-10-24  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-vectors.c: Vector object wrapper API.

@@ -27,10 +27,10 @@ sub parse_trigraph {
     my $opts = shift;
     my @opts;
 
-    for $opt (quotewords(",", true, $opts)) {
+    for $opt (quotewords(",", "true", $opts)) {
 	$opt =~ s/^\s*//;
 	$opt =~ s/\s*$//;
-        my ($key,$val) = $opt =~ /(\w+)(?:=(.+))?/;
+	my ($key,$val) = $opt =~ /(\w+)(?:=(.+))?/;
 	defined $val or $val = 1;
 	push @opts, $key, $val;
     }
