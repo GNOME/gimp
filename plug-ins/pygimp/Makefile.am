@@ -37,6 +37,7 @@ gimp_la_SOURCES = \
 	pygimp-parasite.c	\
 	pygimp-pdb.c		\
 	pygimp-tile.c		\
+	pygimp-vectors.c	\
 	pygimp.h		\
 	pygimp-api.h		\
 	pygimp-intl.h		\

@@ -1495,6 +1495,21 @@ id2display(PyObject *self, PyObject *args)
     return Py_None;
 }
 
+static PyObject *
+id2vectors(PyObject *self, PyObject *args)
+{
+    int id;
+
+    if (!PyArg_ParseTuple(args, "i:_id2vectors", &id))
+	return NULL;
+
+    if (id >= 0)
+	return pygimp_vectors_new(id);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
 /* List of methods defined in the module */
 
 static struct PyMethodDef gimp_methods[] = {
@@ -1564,6 +1579,7 @@ static struct PyMethodDef gimp_methods[] = {
     {"_id2image", (PyCFunction)id2image, METH_VARARGS},
     {"_id2drawable", (PyCFunction)id2drawable, METH_VARARGS},
     {"_id2display", (PyCFunction)id2display, METH_VARARGS},
+    {"_id2vectors", (PyCFunction)id2vectors, METH_VARARGS},
     {NULL,	 (PyCFunction)NULL, 0, NULL}		/* sentinel */
 };
 
@@ -1647,6 +1663,24 @@ initgimp(void)
     if (PyType_Ready(&PyGimpParasite_Type) < 0)
 	return;
 
+    PyGimpVectorsStroke_Type.ob_type = &PyType_Type;
+    PyGimpVectorsStroke_Type.tp_alloc = PyType_GenericAlloc;
+    PyGimpVectorsStroke_Type.tp_new = PyType_GenericNew;
+    if (PyType_Ready(&PyGimpVectorsStroke_Type) < 0)
+	return;
+
+    PyGimpVectorsBezierStroke_Type.ob_type = &PyType_Type;
+    PyGimpVectorsBezierStroke_Type.tp_alloc = PyType_GenericAlloc;
+    PyGimpVectorsBezierStroke_Type.tp_new = PyType_GenericNew;
+    if (PyType_Ready(&PyGimpVectorsBezierStroke_Type) < 0)
+	return;
+
+    PyGimpVectors_Type.ob_type = &PyType_Type;
+    PyGimpVectors_Type.tp_alloc = PyType_GenericAlloc;
+    PyGimpVectors_Type.tp_new = PyType_GenericNew;
+    if (PyType_Ready(&PyGimpVectors_Type) < 0)
+	return;
+
     pygimp_init_pygobject();
     init_pygimpcolor();
 
@@ -1680,6 +1714,7 @@ initgimp(void)
     PyDict_SetItemString(d, "Tile", (PyObject *)&PyGimpTile_Type);
     PyDict_SetItemString(d, "PixelRgn", (PyObject *)&PyGimpPixelRgn_Type);
     PyDict_SetItemString(d, "Parasite", (PyObject *)&PyGimpParasite_Type);
+    PyDict_SetItemString(d, "Vectors", (PyObject *)&PyGimpVectors_Type);
 
     /* for other modules */
     PyDict_SetItemString(d, "_PyGimp_API",

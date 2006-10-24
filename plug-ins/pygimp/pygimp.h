@@ -115,8 +115,20 @@ typedef struct {
 } PyGimpParasite;
 
 extern PyTypeObject PyGimpParasite_Type;
-#define pygimp_parasite_check(v) (PyObject_TypeCheck(v, &Paratype))
+#define pygimp_parasite_check(v) (PyObject_TypeCheck(v, &PyGimpParasite_Type))
 PyObject *pygimp_parasite_new(GimpParasite *para);
+
+typedef struct {
+    PyObject_HEAD
+    gint32 ID;
+} PyGimpVectors;
+
+extern PyTypeObject PyGimpVectors_Type;
+#define pygimp_vectors_check(v) (PyObject_TypeCheck(v, &PyGimpVectors_Type))
+PyObject *pygimp_vectors_new(gint32 vectors_ID);
+
+extern PyTypeObject PyGimpVectorsStroke_Type;
+extern PyTypeObject PyGimpVectorsBezierStroke_Type;
 
 G_END_DECLS
 

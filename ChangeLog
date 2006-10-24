@@ -1,5 +1,17 @@
 2006-10-24  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/pygimp-vectors.c: Vector object wrapper API.
+
+	* plug-ins/pygimp/Makefile.am: add above file.
+
+	* plug-ins/pygimp/gimpshelf.py
+	* plug-ins/pygimp/pygimp.h
+	* plug-ins/pygimp/gimpmodule.c: hook the new objects in.
+
+	* plug-ins/pygimp/pygimp-image.c: get_vectors accessor.
+
+2006-10-24  Manish Singh  <yosh@gimp.org>
+
 	* tools/pdbgen/pdb/vectors.pdb: fix spelling of "precision", and
 	tweak some outargs around to the libgimp api is a bit friendlier.
 
