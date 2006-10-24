@@ -507,7 +507,7 @@ gimp_vectors_stroke_get_point_at_dist (gint32    vectors_ID,
 }
 
 /**
- * gimp_vectors_stroke_remove:
+ * gimp_vectors_remove_stroke:
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
  *
@@ -520,14 +520,14 @@ gimp_vectors_stroke_get_point_at_dist (gint32    vectors_ID,
  * Since: GIMP 2.4
  */
 gboolean
-gimp_vectors_stroke_remove (gint32 vectors_ID,
+gimp_vectors_remove_stroke (gint32 vectors_ID,
                             gint   stroke_id)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-vectors-stroke-remove",
+  return_vals = gimp_run_procedure ("gimp-vectors-remove-stroke",
                                     &nreturn_vals,
                                     GIMP_PDB_VECTORS, vectors_ID,
                                     GIMP_PDB_INT32, stroke_id,
@@ -652,6 +652,60 @@ gimp_vectors_stroke_scale (gint32  vectors_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return success;
+}
+
+/**
+ * gimp_vectors_stroke_get_points:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @num_points: The number of floats returned.
+ * @controlpoints: List of the control points for the stroke (x0, y0, x1, y1, ...).
+ * @closed: Whether the stroke is closed or not.
+ *
+ * returns the control points of a stroke.
+ *
+ * returns the control points of a stroke. The interpretation of the
+ * coordinates returned depends on the type of the stroke. For Gimp 2.4
+ * this is always a bezier stroke, where the coordinates are the
+ * control points.
+ *
+ * Returns: type of the stroke (always bezier for now).
+ *
+ * Since: GIMP 2.4
+ */
+gint
+gimp_vectors_stroke_get_points (gint32     vectors_ID,
+                                gint       stroke_id,
+                                gint      *num_points,
+                                gdouble  **controlpoints,
+                                gboolean  *closed)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint type = 0;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-get-points",
+                                    &nreturn_vals,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_INT32, stroke_id,
+                                    GIMP_PDB_END);
+
+  *num_points = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      type = return_vals[1].data.d_int32;
+      *num_points = return_vals[2].data.d_int32;
+      *controlpoints = g_new (gdouble, *num_points);
+      memcpy (*controlpoints,
+              return_vals[3].data.d_floatarray,
+              *num_points * sizeof (gdouble));
+      *closed = return_vals[4].data.d_int32;
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return type;
 }
 
 /**

@@ -428,7 +428,7 @@ vectors_stroke_get_point_at_dist_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_stroke_remove_invoker (GimpProcedure     *procedure,
+vectors_remove_stroke_invoker (GimpProcedure     *procedure,
                                Gimp              *gimp,
                                GimpContext       *context,
                                GimpProgress      *progress,
@@ -541,6 +541,72 @@ vectors_stroke_scale_invoker (GimpProcedure     *procedure,
     }
 
   return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+vectors_stroke_get_points_invoker (GimpProcedure     *procedure,
+                                   Gimp              *gimp,
+                                   GimpContext       *context,
+                                   GimpProgress      *progress,
+                                   const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpVectors *vectors;
+  gint32 stroke_id;
+  gint32 type = 0;
+  gint32 num_points = 0;
+  gdouble *controlpoints = NULL;
+  gboolean closed = FALSE;
+
+  vectors = gimp_value_get_vectors (&args->values[0], gimp);
+  stroke_id = g_value_get_int (&args->values[1]);
+
+  if (success)
+    {
+      GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+
+      if (stroke && GIMP_IS_BEZIER_STROKE (stroke))
+        {
+          GArray *points_array;
+          gint    i;
+
+          points_array = gimp_stroke_control_points_get (stroke, &closed);
+
+          if (points_array)
+            {
+              num_points = points_array->len;
+              controlpoints = g_new (gdouble, num_points * 2);
+
+              type = GIMP_VECTORS_STROKE_TYPE_BEZIER;
+              for (i = 0; i < num_points; i++)
+                {
+                  controlpoints[2*i]   = g_array_index (points_array,
+                                                        GimpAnchor, i).position.x;
+                  controlpoints[2*i+1] = g_array_index (points_array,
+                                                        GimpAnchor, i).position.y;
+                }
+              g_array_free (points_array, TRUE);
+              num_points *= 2;
+            }
+          else
+            success = FALSE;
+        }
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    {
+      g_value_set_int (&return_vals->values[1], type);
+      g_value_set_int (&return_vals->values[2], num_points);
+      gimp_value_take_floatarray (&return_vals->values[3], controlpoints, num_points);
+      g_value_set_boolean (&return_vals->values[4], closed);
+    }
+
+  return return_vals;
 }
 
 static GValueArray *
@@ -1305,12 +1371,12 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-stroke-remove
+   * gimp-vectors-remove-stroke
    */
-  procedure = gimp_procedure_new (vectors_stroke_remove_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-stroke-remove");
+  procedure = gimp_procedure_new (vectors_remove_stroke_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-remove-stroke");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-remove",
+                                     "gimp-vectors-remove-stroke",
                                      "remove the stroke from a vectors object.",
                                      "Remove the stroke from a vectors object.",
                                      "Simon Budig",
@@ -1437,6 +1503,57 @@ register_vectors_procs (GimpPDB *pdb)
                                                     "Scale factor in y direction",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vectors-stroke-get-points
+   */
+  procedure = gimp_procedure_new (vectors_stroke_get_points_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-stroke-get-points");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-vectors-stroke-get-points",
+                                     "returns the control points of a stroke.",
+                                     "returns the control points of a stroke. The interpretation of the coordinates returned depends on the type of the stroke. For Gimp 2.4 this is always a bezier stroke, where the coordinates are the control points.",
+                                     "Simon Budig",
+                                     "Simon Budig",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("vectors",
+                                                           "vectors",
+                                                           "The vectors object",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("stroke-id",
+                                                      "stroke id",
+                                                      "The stroke ID",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("type",
+                                                          "type",
+                                                          "type of the stroke (always bezier for now).",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("num-points",
+                                                          "num points",
+                                                          "The number of floats returned.",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_float_array ("controlpoints",
+                                                                "controlpoints",
+                                                                "List of the control points for the stroke (x0, y0, x1, y1, ...).",
+                                                                GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("closed",
+                                                         "closed",
+                                                         "Whether the stroke is closed or not.",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

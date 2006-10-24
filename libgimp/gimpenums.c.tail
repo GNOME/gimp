@@ -4,6 +4,8 @@ typedef GType (* GimpGetTypeFunc) (void);
 static const GimpGetTypeFunc get_type_funcs[] =
 {
   gimp_add_mask_type_get_type,
+  gimp_anchor_feature_type_get_type,
+  gimp_anchor_type_get_type,
   gimp_blend_mode_get_type,
   gimp_brush_application_mode_get_type,
   gimp_brush_generated_shape_get_type,
@@ -47,12 +49,16 @@ static const GimpGetTypeFunc get_type_funcs[] =
   gimp_size_type_get_type,
   gimp_stack_trace_mode_get_type,
   gimp_transfer_mode_get_type,
-  gimp_transform_direction_get_type
+  gimp_transform_direction_get_type,
+  gimp_vector_extend_mode_get_type,
+  gimp_vectors_stroke_type_get_type
 };
 
 static const gchar * const type_names[] =
 {
   "GimpAddMaskType",
+  "GimpAnchorFeatureType",
+  "GimpAnchorType",
   "GimpBlendMode",
   "GimpBrushApplicationMode",
   "GimpBrushGeneratedShape",
@@ -96,7 +102,9 @@ static const gchar * const type_names[] =
   "GimpSizeType",
   "GimpStackTraceMode",
   "GimpTransferMode",
-  "GimpTransformDirection"
+  "GimpTransformDirection",
+  "GimpVectorExtendMode",
+  "GimpVectorsStrokeType"
 };
 
 static gboolean enums_initialized = FALSE;

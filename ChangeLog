@@ -1,3 +1,40 @@
+2006-10-24  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/Makefile.am
+	* app/vectors/vectors-enums.h
+	* app/vectors/vectors-types.h: added new file for the vectors enums,
+	adjusted Makefile.am for the generation of vectors-enums.c
+
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/pdb/vectors.pdb: Added implementation for
+	gimp-vectors-stroke-get-points which returns the control points for
+	the stroke.
+	Renamed gimp-vectors-stroke-remove to gimp-vectors-remove-stroke.
+
+	ATTENTION: this breaks scripts using this function, a simple name
+	change is enough to make it work again.
+	Also please note that yosh reordered the return values of
+	gimp-vectors-stroke-interpolate, so your scripts need adjustment
+	there as well.
+
+        * tools/pdbgen/pdb/paths.pdb: deprecate gimp-path-get-points. Yay!
+
+	* libgimp/gimp.def: added new symbol
+
+	* plug-ins/pygimp/pygimp-vectors.c: reflect name change of
+	gimp_vectors_remove_stroke ().
+
+	* app/vectors/vectors-enums.c
+	* app/pdb/internal_procs.c
+	* app/pdb/paths_cmds.c
+	* app/pdb/vectors_cmds.c
+	* devel-docs/libgimp/tmpl/gimpvectors.sgml
+	* libgimp/gimpenums.c.tail
+	* libgimp/gimpenums.h
+	* libgimp/gimppaths_pdb.[ch]
+	* libgimp/gimpvectors_pdb.[ch]
+	* tools/pdbgen/enums.pl: regenerated.
+
 2006-10-24  Michael Natterer  <mitch@gimp.org>
 
 	* tools/gimp-mkenums (parse_trigraph): quote "true" to fix warning

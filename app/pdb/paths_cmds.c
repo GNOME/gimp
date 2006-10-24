@@ -807,12 +807,12 @@ register_paths_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-get-points");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-get-points",
-                                     "List the points associated with the named path.",
-                                     "List the points associated with the named path.",
-                                     "Andy Thomas",
-                                     "Andy Thomas",
-                                     "1999",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-vectors-stroke-get-points' instead.",
+                                     "This procedure is deprecated! Use 'gimp-vectors-stroke-get-points' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-vectors-stroke-get-points");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",

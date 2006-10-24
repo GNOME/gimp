@@ -396,7 +396,7 @@ CODE
     );
 }
 
-sub vectors_stroke_remove {
+sub vectors_remove_stroke {
     $blurb = 'remove the stroke from a vectors object.';
 
     $help = <<'HELP';
@@ -524,6 +524,74 @@ HELP
 CODE
     );
 }
+
+sub vectors_stroke_get_points {
+    $blurb = 'returns the control points of a stroke.';
+
+    $help = <<'HELP';
+returns the control points of a stroke. The interpretation of the coordinates
+returned depends on the type of the stroke. For Gimp 2.4 this is always a
+bezier stroke, where the coordinates are the control points.
+HELP
+
+    &simon_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object' },
+	{ name => 'stroke_id', type => 'int32',
+	  desc => 'The stroke ID' }
+    );
+
+    @outargs = (
+        { name => 'type', type => 'int32',
+          desc => 'type of the stroke (always bezier for now).' },
+        { name => 'controlpoints', type => 'floatarray',
+          desc => 'List of the control points for the stroke (x0, y0, x1, y1, ...).',
+          array => { name => 'num_points',
+                     desc => 'The number of floats returned.' } },
+        { name => 'closed', type => 'boolean',
+          desc => 'Whether the stroke is closed or not.' }
+    );
+
+    %invoke = (
+        code => <<"CODE"
+{
+  GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+  
+  if (stroke && GIMP_IS_BEZIER_STROKE (stroke))
+    {
+      GArray *points_array;
+      gint    i;
+
+      points_array = gimp_stroke_control_points_get (stroke, &closed);
+
+      if (points_array)
+        {
+          num_points = points_array->len;
+          controlpoints = g_new (gdouble, num_points * 2);
+
+          type = GIMP_VECTORS_STROKE_TYPE_BEZIER;
+          for (i = 0; i < num_points; i++)
+            {
+              controlpoints[2*i]   = g_array_index (points_array,
+	                                            GimpAnchor, i).position.x;
+              controlpoints[2*i+1] = g_array_index (points_array,
+	                                            GimpAnchor, i).position.y;
+            }
+          g_array_free (points_array, TRUE);
+          num_points *= 2;
+        }
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 
 sub vectors_stroke_interpolate {
     $blurb = 'returns polygonal approximation of the stroke.';
@@ -888,10 +956,11 @@ CODE
             vectors_get_strokes 
             vectors_stroke_get_length
             vectors_stroke_get_point_at_dist
-            vectors_stroke_remove
+            vectors_remove_stroke
             vectors_stroke_close
             vectors_stroke_translate
             vectors_stroke_scale
+	    vectors_stroke_get_points
             vectors_stroke_interpolate
             vectors_bezier_stroke_new_moveto
             vectors_bezier_stroke_lineto

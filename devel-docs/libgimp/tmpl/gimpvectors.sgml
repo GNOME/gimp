@@ -187,16 +187,6 @@ gimpvectors
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_vectors_stroke_remove ##### -->
-<para>
-
-</para>
-
-@vectors_ID: 
-@stroke_id: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_vectors_stroke_get_length ##### -->
 <para>
 
@@ -204,7 +194,7 @@ gimpvectors
 
 @vectors_ID: 
 @stroke_id: 
-@prescision: 
+@precision: 
 @Returns: 
 
 
@@ -216,7 +206,8 @@ gimpvectors
 @vectors_ID: 
 @stroke_id: 
 @dist: 
-@prescision: 
+@precision: 
+@x_point: 
 @y_point: 
 @slope: 
 @valid: 
@@ -230,9 +221,9 @@ gimpvectors
 
 @vectors_ID: 
 @stroke_id: 
-@prescision: 
+@precision: 
 @num_coords: 
-@coords: 
+@closed: 
 @Returns: 
 
 

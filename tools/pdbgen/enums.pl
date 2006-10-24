@@ -546,6 +546,37 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_BLUR_CONVOLVE GIMP_SHARPEN_CONVOLVE) ],
 	  mapping => { GIMP_BLUR_CONVOLVE => '0',
 		       GIMP_SHARPEN_CONVOLVE => '1' }
+	},
+    GimpVectorsStrokeType =>
+	{ contig => 1,
+	  header => 'vectors/vectors-enums.h',
+	  symbols => [ qw(GIMP_VECTORS_STROKE_TYPE_BEZIER) ],
+	  mapping => { GIMP_VECTORS_STROKE_TYPE_BEZIER => '0' }
+	},
+    GimpAnchorType =>
+	{ contig => 1,
+	  header => 'vectors/vectors-enums.h',
+	  symbols => [ qw(GIMP_ANCHOR_ANCHOR GIMP_ANCHOR_CONTROL) ],
+	  mapping => { GIMP_ANCHOR_ANCHOR => '0',
+		       GIMP_ANCHOR_CONTROL => '1' }
+	},
+    GimpAnchorFeatureType =>
+	{ contig => 1,
+	  header => 'vectors/vectors-enums.h',
+	  symbols => [ qw(GIMP_ANCHOR_FEATURE_NONE GIMP_ANCHOR_FEATURE_EDGE
+			  GIMP_ANCHOR_FEATURE_ALIGNED
+			  GIMP_ANCHOR_FEATURE_SYMMETRIC) ],
+	  mapping => { GIMP_ANCHOR_FEATURE_NONE => '0',
+		       GIMP_ANCHOR_FEATURE_EDGE => '1',
+		       GIMP_ANCHOR_FEATURE_ALIGNED => '2',
+		       GIMP_ANCHOR_FEATURE_SYMMETRIC => '3' }
+	},
+    GimpVectorExtendMode =>
+	{ contig => 1,
+	  header => 'vectors/vectors-enums.h',
+	  symbols => [ qw(EXTEND_SIMPLE EXTEND_EDITABLE) ],
+	  mapping => { EXTEND_SIMPLE => '0',
+		       EXTEND_EDITABLE => '1' }
 	}
 );
 

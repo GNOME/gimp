@@ -1,8 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * vectors-types.h
- * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
+ * vectors-enums.h
+ * Copyright (C) 2006 Simon Budig  <simon@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,18 +19,36 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __VECTORS_TYPES_H__
-#define __VECTORS_TYPES_H__
+#ifndef __VECTORS_ENUMS_H__
+#define __VECTORS_ENUMS_H__
 
-#include "core/core-types.h"
+#define GIMP_TYPE_VECTORS_STROKE_TYPE (gimp_vectors_stroke_type_get_type ())
 
-#include "vectors/vectors-enums.h"
+GType gimp_vectors_stroke_type_get_type (void) G_GNUC_CONST;
 
-typedef struct _GimpAnchor       GimpAnchor;
+typedef enum
+{
+  GIMP_VECTORS_STROKE_TYPE_BEZIER
+} GimpVectorsStrokeType;
 
-typedef struct _GimpVectors      GimpVectors;
-typedef struct _GimpStroke       GimpStroke;
-typedef struct _GimpBezierStroke GimpBezierStroke;
+typedef enum /*< skip >*/
+{
+  GIMP_ANCHOR_ANCHOR,
+  GIMP_ANCHOR_CONTROL
+} GimpAnchorType;
 
+typedef enum /*< skip >*/
+{
+  GIMP_ANCHOR_FEATURE_NONE,
+  GIMP_ANCHOR_FEATURE_EDGE,
+  GIMP_ANCHOR_FEATURE_ALIGNED,
+  GIMP_ANCHOR_FEATURE_SYMMETRIC
+} GimpAnchorFeatureType;
 
-#endif /* __VECTORS_TYPES_H__ */
+typedef enum  /*< skip >*/
+{
+  EXTEND_SIMPLE,
+  EXTEND_EDITABLE
+} GimpVectorExtendMode;
+
+#endif /* __VECTORS_ENUMS_H__ */

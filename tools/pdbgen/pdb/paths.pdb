@@ -42,10 +42,7 @@ CODE
 }
 
 sub path_get_points {
-    $blurb = 'List the points associated with the named path.';
-    $help  = 'List the points associated with the named path.';
-
-    &andy_pdb_misc('1999');
+    &std_pdb_deprecated('gimp-vectors-stroke-get-points');
 
     @inargs = (
 	{ name => 'image', type => 'image',

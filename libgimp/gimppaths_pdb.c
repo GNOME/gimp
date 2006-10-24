@@ -164,9 +164,8 @@ gimp_path_delete (gint32       image_ID,
  * @num_path_point_details: The number of points returned. Each point is made up of (x, y, pnt_type) of floats.
  * @points_pairs: The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points are returned in pixel resolution.
  *
- * List the points associated with the named path.
- *
- * List the points associated with the named path.
+ * This procedure is deprecated! Use gimp_vectors_stroke_get_points()
+ * instead.
  *
  * Returns: The type of the path. Currently only one type (1 = Bezier) is supported.
  */

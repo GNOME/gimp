@@ -630,6 +630,7 @@ EXPORTS
 	gimp_vectors_stroke_remove
 	gimp_vectors_stroke_scale
 	gimp_vectors_stroke_translate
+	gimp_vectors_stroke_type_get_type
 	gimp_vectors_to_selection
 	gimp_version
 	gimp_wm_class
