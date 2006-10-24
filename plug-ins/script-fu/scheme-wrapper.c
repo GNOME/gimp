@@ -749,7 +749,7 @@ fprintf (stderr, "  Invalid number of arguments (expected %d but received %d)",
                  nparams, (sc->vptr->list_length (sc, a) - 1));
 #endif
       g_snprintf (error_str, sizeof (error_str),
-                  "Invalid number of arguments supplied to %s (expected %d but received %d)",
+                  "Invalid number of arguments for %s (expected %d but received %d)",
                   proc_name, nparams, (sc->vptr->list_length (sc, a) - 1));
       return my_err (error_str, sc->NIL);
     }
@@ -762,7 +762,7 @@ fprintf (stderr, "  Invalid number of arguments (expected %d but received %d)",
 
   /* The checks on 'if (success)' below stop some code execution */
   /* when the first error in the argument list is encountered.   */
-  for (i = 0; i < nparams && success; i++)
+  for (i = 0; i < nparams; i++)
     {
       a = sc->vptr->pair_cdr (a);
 
@@ -1181,6 +1181,10 @@ fprintf (stderr, "      data '%s'\n", (char *)args[i].data.d_parasite.data);
                       i+1, proc_name);
           return my_err (error_str, sc->NIL);
         }
+
+      /* Break out of loop before i gets updated when error was detected */
+      if (! success)
+        break;
     }
 
   if (success)
@@ -1199,7 +1203,7 @@ fprintf (stderr, "  done.\n");
 fprintf (stderr, "  Invalid type for argument %d\n", i+1);
 #endif
     g_snprintf (error_str, sizeof (error_str),
-                "Invalid types specified for argument %d to %s",
+                "Invalid type for argument %d to %s",
                 i+1, proc_name);
     return my_err (error_str, sc->NIL);
   }
