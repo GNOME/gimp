@@ -615,6 +615,8 @@ EXPORTS
 	gimp_vectors_get_tattoo
 	gimp_vectors_get_visible
 	gimp_vectors_new
+	gimp_vectors_new_from_file
+	gimp_vectors_new_from_string
 	gimp_vectors_parasite_attach
 	gimp_vectors_parasite_detach
 	gimp_vectors_parasite_find

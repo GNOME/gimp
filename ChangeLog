@@ -19,6 +19,8 @@
 
 	* tools/pdbgen/pdb/paths.pdb: deprecated the previous functions.
 
+	* libgimp/gimp.def: added new symbols
+
 	* app/pdb/internal_procs.c
 	* app/pdb/paths_cmds.c
 	* app/pdb/vectors_cmds.c
