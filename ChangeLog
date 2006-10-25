@@ -1,5 +1,11 @@
 2006-10-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable-transform.c
+	(gimp_drawable_transform_tiles_affine): fix indentation and
+	spacing in the lanczos code. Removed trailing whitespace.
+
+2006-10-25  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/paths.pdb: removed gimp-paths-import-string, it
 	didn't exist in 2.2 and therefore doesn't need to be deprecated.
 
