@@ -1379,7 +1379,7 @@ draw_frame_column (GdkPixbuf *frame_image,
     }
 }
 
-GdkPixbuf *
+static GdkPixbuf *
 stretch_frame_image (GdkPixbuf *frame_image,
                      gint       left_offset,
                      gint       top_offset,

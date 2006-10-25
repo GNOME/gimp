@@ -28,6 +28,10 @@ GimpFontSelectButton
 
 </para>
 
+@: 
+@: 
+@:
+
 @gimpfontselectbutton: the object which received the signal.
 @arg1: 
 @arg2: 
@@ -37,9 +41,9 @@ GimpFontSelectButton
 
 </para>
 
-@: 
-@: 
-@: 
+@gimpfontselectbutton: the object which received the signal.
+@arg1: 
+@arg2: 
 
 <!-- ##### ARG GimpFontSelectButton:font-name ##### -->
 <para>

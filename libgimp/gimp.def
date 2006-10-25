@@ -276,6 +276,8 @@ EXPORTS
 	gimp_gradients_sample_uniform
 	gimp_gradients_set_gradient
 	gimp_gradients_set_popup
+	gimp_heal
+	gimp_heal_default
 	gimp_help
 	gimp_histogram
 	gimp_histogram_channel_get_type
@@ -292,6 +294,7 @@ EXPORTS
 	gimp_image_convert_grayscale
 	gimp_image_convert_indexed
 	gimp_image_convert_rgb
+	gimp_image_convert_set_dither_matrix
 	gimp_image_crop
 	gimp_image_delete
 	gimp_image_delete_guide
@@ -621,6 +624,7 @@ EXPORTS
 	gimp_vectors_parasite_detach
 	gimp_vectors_parasite_find
 	gimp_vectors_parasite_list
+	gimp_vectors_remove_stroke
 	gimp_vectors_set_linked
 	gimp_vectors_set_name
 	gimp_vectors_set_tattoo
@@ -628,8 +632,8 @@ EXPORTS
 	gimp_vectors_stroke_close
 	gimp_vectors_stroke_get_length
 	gimp_vectors_stroke_get_point_at_dist
+	gimp_vectors_stroke_get_points
 	gimp_vectors_stroke_interpolate
-	gimp_vectors_stroke_remove
 	gimp_vectors_stroke_scale
 	gimp_vectors_stroke_translate
 	gimp_vectors_to_selection

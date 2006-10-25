@@ -17,7 +17,6 @@ EXPORTS
 	gimp_config_interface_get_type
 	gimp_config_is_equal_to
 	gimp_config_path_expand
-	gimp_config_path_expand
 	gimp_config_path_get_type
 	gimp_config_reset
 	gimp_config_reset_properties

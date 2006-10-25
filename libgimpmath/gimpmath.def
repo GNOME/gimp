@@ -20,7 +20,7 @@ EXPORTS
 	gimp_matrix4_to_deg
 	gimp_md5_get_digest
 	gimp_param_matrix2_get_type
-	gimp_param_spec_matrix2	
+	gimp_param_spec_matrix2
 	gimp_vector2_add
 	gimp_vector2_add_val
 	gimp_vector2_cross_product
@@ -64,4 +64,3 @@ EXPORTS
 	gimp_vector_2d_to_3d
 	gimp_vector_2d_to_3d_val
 	gimp_vector_3d_to_2d
-

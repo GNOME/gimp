@@ -25,30 +25,6 @@
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_ANCHOR_FEATURE_TYPE (gimp_anchor_feature_type_get_type ())
-
-GType gimp_anchor_feature_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_ANCHOR_FEATURE_NONE,
-  GIMP_ANCHOR_FEATURE_EDGE,
-  GIMP_ANCHOR_FEATURE_ALIGNED,
-  GIMP_ANCHOR_FEATURE_SYMMETRIC
-} GimpAnchorFeatureType;
-
-
-#define GIMP_TYPE_ANCHOR_TYPE (gimp_anchor_type_get_type ())
-
-GType gimp_anchor_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_ANCHOR_ANCHOR,
-  GIMP_ANCHOR_CONTROL
-} GimpAnchorType;
-
-
 #define GIMP_TYPE_BRUSH_APPLICATION_MODE (gimp_brush_application_mode_get_type ())
 
 GType gimp_brush_application_mode_get_type (void) G_GNUC_CONST;
@@ -297,17 +273,6 @@ typedef enum
   GIMP_SELECT_CRITERION_S,
   GIMP_SELECT_CRITERION_V
 } GimpSelectCriterion;
-
-
-#define GIMP_TYPE_VECTOR_EXTEND_MODE (gimp_vector_extend_mode_get_type ())
-
-GType gimp_vector_extend_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  EXTEND_SIMPLE,
-  EXTEND_EDITABLE
-} GimpVectorExtendMode;
 
 
 void           gimp_enums_init           (void);
