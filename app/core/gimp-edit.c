@@ -606,28 +606,30 @@ gimp_edit_fill_internal (GimpImage            *image,
                          GimpLayerModeEffects  paint_mode,
                          const gchar          *undo_desc)
 {
-  TileManager *buf_tiles;
-  PixelRegion  bufPR;
-  gint         x, y, width, height;
-  gint         tiles_bytes;
-  guchar       col[MAX_CHANNELS];
-  TempBuf     *pat_buf = NULL;
-  gboolean     new_buf;
+  TileManager   *buf_tiles;
+  PixelRegion    bufPR;
+  gint           x, y, width, height;
+  GimpImageType  drawable_type;
+  gint           tiles_bytes;
+  guchar         col[MAX_CHANNELS];
+  TempBuf       *pat_buf = NULL;
+  gboolean       new_buf;
 
   if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     return TRUE;  /*  nothing to do, but the fill succeded  */
 
-  tiles_bytes = gimp_drawable_bytes (drawable);
+  drawable_type = gimp_drawable_type (drawable);
+  tiles_bytes   = gimp_drawable_bytes (drawable);
 
   switch (fill_type)
     {
     case GIMP_FOREGROUND_FILL:
-      gimp_image_get_foreground (image, drawable, context, col);
+      gimp_image_get_foreground (image, context, drawable_type, col);
       break;
 
     case GIMP_BACKGROUND_FILL:
     case GIMP_TRANSPARENT_FILL:
-      gimp_image_get_background (image, drawable, context, col);
+      gimp_image_get_background (image, context, drawable_type, col);
       break;
 
     case GIMP_WHITE_FILL:
@@ -637,7 +639,8 @@ gimp_edit_fill_internal (GimpImage            *image,
         tmp_col[RED_PIX]   = 255;
         tmp_col[GREEN_PIX] = 255;
         tmp_col[BLUE_PIX]  = 255;
-        gimp_image_transform_color (image, drawable, col, GIMP_RGB, tmp_col);
+        gimp_image_transform_color (image, drawable_type, col,
+                                    GIMP_RGB, tmp_col);
       }
       break;
 
@@ -645,7 +648,7 @@ gimp_edit_fill_internal (GimpImage            *image,
       {
         GimpPattern *pattern = gimp_context_get_pattern (context);
 
-        pat_buf = gimp_image_transform_temp_buf (image, drawable,
+        pat_buf = gimp_image_transform_temp_buf (image, drawable_type,
                                                  pattern->mask, &new_buf);
 
         if (! gimp_drawable_has_alpha (drawable) &&

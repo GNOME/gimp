@@ -155,12 +155,14 @@ gimp_drawable_bucket_fill_full (GimpDrawable        *drawable,
                           &tmp_col[GREEN_PIX],
                           &tmp_col[BLUE_PIX]);
 
-      gimp_image_transform_color (image, drawable, col, GIMP_RGB, tmp_col);
+      gimp_image_transform_color (image, gimp_drawable_type (drawable), col,
+                                  GIMP_RGB, tmp_col);
       col[gimp_drawable_bytes_with_alpha (drawable) - 1] = OPAQUE_OPACITY;
     }
   else if (fill_mode == GIMP_PATTERN_BUCKET_FILL)
     {
-      pat_buf = gimp_image_transform_temp_buf (image, drawable,
+      pat_buf = gimp_image_transform_temp_buf (image,
+                                               gimp_drawable_type (drawable),
                                                pattern->mask, &new_buf);
     }
   else

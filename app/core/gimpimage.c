@@ -1938,16 +1938,15 @@ gimp_image_flush (GimpImage *image)
 /*  color transforms / utilities  */
 
 void
-gimp_image_get_foreground (const GimpImage    *image,
-                           const GimpDrawable *drawable,
-                           GimpContext        *context,
-                           guchar             *fg)
+gimp_image_get_foreground (const GimpImage *image,
+                           GimpContext     *context,
+                           GimpImageType    dest_type,
+                           guchar          *fg)
 {
   GimpRGB  color;
   guchar   pfg[3];
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (! drawable || GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (fg != NULL);
 
@@ -1955,20 +1954,19 @@ gimp_image_get_foreground (const GimpImage    *image,
 
   gimp_rgb_get_uchar (&color, &pfg[0], &pfg[1], &pfg[2]);
 
-  gimp_image_transform_color (image, drawable, fg, GIMP_RGB, pfg);
+  gimp_image_transform_color (image, dest_type, fg, GIMP_RGB, pfg);
 }
 
 void
-gimp_image_get_background (const GimpImage    *image,
-                           const GimpDrawable *drawable,
-                           GimpContext        *context,
-                           guchar             *bg)
+gimp_image_get_background (const GimpImage *image,
+                           GimpContext     *context,
+                           GimpImageType    dest_type,
+                           guchar          *bg)
 {
   GimpRGB  color;
   guchar   pbg[3];
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (! drawable || GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (bg != NULL);
 
@@ -1976,7 +1974,7 @@ gimp_image_get_background (const GimpImage    *image,
 
   gimp_rgb_get_uchar (&color, &pbg[0], &pbg[1], &pbg[2]);
 
-  gimp_image_transform_color (image, drawable, bg, GIMP_RGB, pbg);
+  gimp_image_transform_color (image, dest_type, bg, GIMP_RGB, pbg);
 }
 
 void
@@ -2034,37 +2032,30 @@ gimp_image_get_color (const GimpImage *src_image,
 
 void
 gimp_image_transform_rgb (const GimpImage    *dest_image,
-                          const GimpDrawable *dest_drawable,
+                          GimpImageType       dest_type,
                           const GimpRGB      *rgb,
                           guchar             *color)
 {
   guchar col[3];
 
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
-  g_return_if_fail (! dest_drawable || GIMP_IS_DRAWABLE (dest_drawable));
   g_return_if_fail (rgb != NULL);
   g_return_if_fail (color != NULL);
 
   gimp_rgb_get_uchar (rgb, &col[0], &col[1], &col[2]);
 
-  gimp_image_transform_color (dest_image, dest_drawable, color, GIMP_RGB, col);
+  gimp_image_transform_color (dest_image, dest_type, color, GIMP_RGB, col);
 }
 
 void
 gimp_image_transform_color (const GimpImage    *dest_image,
-                            const GimpDrawable *dest_drawable,
+                            GimpImageType       dest_type,
                             guchar             *dest,
                             GimpImageBaseType   src_type,
                             const guchar       *src)
 {
-  GimpImageType dest_type;
-
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (src_type != GIMP_INDEXED);
-
-  dest_type = (dest_drawable ?
-               gimp_drawable_type (dest_drawable) :
-               gimp_image_base_type_with_alpha (dest_image));
 
   switch (src_type)
     {
@@ -2132,10 +2123,10 @@ gimp_image_transform_color (const GimpImage    *dest_image,
 }
 
 TempBuf *
-gimp_image_transform_temp_buf (const GimpImage    *dest_image,
-                               const GimpDrawable *dest_drawable,
-                               TempBuf            *temp_buf,
-                               gboolean           *new_buf)
+gimp_image_transform_temp_buf (const GimpImage *dest_image,
+                               GimpImageType    dest_type,
+                               TempBuf         *temp_buf,
+                               gboolean        *new_buf)
 {
   TempBuf       *ret_buf;
   GimpImageType  ret_buf_type;
@@ -2145,7 +2136,6 @@ gimp_image_transform_temp_buf (const GimpImage    *dest_image,
   gint           out_bytes;
 
   g_return_val_if_fail (GIMP_IMAGE (dest_image), NULL);
-  g_return_val_if_fail (GIMP_DRAWABLE (dest_drawable), NULL);
   g_return_val_if_fail (temp_buf != NULL, NULL);
   g_return_val_if_fail (new_buf != NULL, NULL);
 
@@ -2155,16 +2145,16 @@ gimp_image_transform_temp_buf (const GimpImage    *dest_image,
   is_rgb    = (in_bytes == 3 || in_bytes == 4);
 
   if (has_alpha)
-    ret_buf_type = gimp_drawable_type_with_alpha (dest_drawable);
+    ret_buf_type = GIMP_IMAGE_TYPE_WITH_ALPHA (dest_type);
   else
-    ret_buf_type = gimp_drawable_type_without_alpha (dest_drawable);
+    ret_buf_type = GIMP_IMAGE_TYPE_WITHOUT_ALPHA (dest_type);
 
   out_bytes = GIMP_IMAGE_TYPE_BYTES (ret_buf_type);
 
   /*  If the pattern doesn't match the image in terms of color type,
    *  transform it.  (ie  pattern is RGB, image is indexed)
    */
-  if (in_bytes != out_bytes || gimp_drawable_is_indexed (dest_drawable))
+  if (in_bytes != out_bytes || GIMP_IMAGE_TYPE_IS_INDEXED (dest_type))
     {
       guchar *src;
       guchar *dest;
@@ -2180,7 +2170,7 @@ gimp_image_transform_temp_buf (const GimpImage    *dest_image,
 
       while (size--)
         {
-          gimp_image_transform_color (dest_image, dest_drawable, dest,
+          gimp_image_transform_color (dest_image, dest_type, dest,
                                       is_rgb ? GIMP_RGB : GIMP_GRAY, src);
 
           /* Handle alpha */

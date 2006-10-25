@@ -343,28 +343,28 @@ void            gimp_image_flush                 (GimpImage          *image);
 /*  color transforms / utilities  */
 
 void            gimp_image_get_foreground        (const GimpImage    *image,
-                                                  const GimpDrawable *drawable,
                                                   GimpContext        *context,
+                                                  GimpImageType       dest_type,
                                                   guchar             *fg);
 void            gimp_image_get_background        (const GimpImage    *image,
-                                                  const GimpDrawable *drawable,
                                                   GimpContext        *context,
+                                                  GimpImageType       dest_type,
                                                   guchar             *bg);
 void            gimp_image_get_color             (const GimpImage    *src_image,
                                                   GimpImageType       src_type,
                                                   const guchar       *src,
                                                   guchar             *rgba);
 void            gimp_image_transform_rgb         (const GimpImage    *dest_image,
-                                                  const GimpDrawable *dest_drawable,
+                                                  GimpImageType       dest_type,
                                                   const GimpRGB      *rgb,
                                                   guchar             *color);
 void            gimp_image_transform_color       (const GimpImage    *dest_image,
-                                                  const GimpDrawable *dest_drawable,
+                                                  GimpImageType       dest_type,
                                                   guchar             *dest,
                                                   GimpImageBaseType   src_type,
                                                   const guchar       *src);
 TempBuf       * gimp_image_transform_temp_buf    (const GimpImage    *dest_image,
-                                                  const GimpDrawable *dest_drawable,
+                                                  GimpImageType       dest_type,
                                                   TempBuf            *temp_buf,
                                                   gboolean           *new_buf);
 

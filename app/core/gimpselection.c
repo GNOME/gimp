@@ -671,7 +671,8 @@ gimp_selection_extract (GimpChannel  *selection,
       break;
     }
 
-  gimp_image_get_background (image, drawable, context, bg_color);
+  gimp_image_get_background (image, context, gimp_drawable_type (drawable),
+                             bg_color);
 
   /*  If a cut was specified, and the selection mask is not empty,
    *  push an undo

@@ -195,7 +195,8 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
     interpolation_type = GIMP_INTERPOLATION_NONE;
 
   /*  Get the background color  */
-  gimp_image_get_background (image, drawable, context, bg_color);
+  gimp_image_get_background (image, context, gimp_drawable_type (drawable),
+                             bg_color);
 
   switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
     {
@@ -323,12 +324,6 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
     }
 
   dest = g_new (guchar, tile_manager_width (new_tiles) * bytes);
-
-  uinc = m.coeff[0][0];
-  vinc = m.coeff[1][0];
-  winc = m.coeff[2][0];
-
-  coords = (interpolation_type != GIMP_INTERPOLATION_NONE) ? 5 : 1;
 
   /* these loops could be rearranged, depending on which bit of code
    * you'd most like to write more than once.
@@ -473,10 +468,15 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
         }
 
       g_free (lanczos);
-      g_free (dest);
 
-      return new_tiles;
+      goto done;
     }
+
+  uinc = m.coeff[0][0];
+  vinc = m.coeff[1][0];
+  winc = m.coeff[2][0];
+
+  coords = (interpolation_type != GIMP_INTERPOLATION_NONE) ? 5 : 1;
 
   for (y = y1; y < y2; y++)
     {
@@ -637,6 +637,11 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       pixel_region_set_row (&destPR, 0, (y - y1), width, dest);
     }
 
+ done:
+
+  if (progress)
+    gimp_progress_set_value (progress, 1.0);
+
   switch (interpolation_type)
     {
     case GIMP_INTERPOLATION_NONE:
@@ -715,7 +720,8 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
 
       tile_manager_set_offsets (new_tiles, orig_x, orig_y);
 
-      gimp_image_get_background (image, drawable, context, bg_color);
+      gimp_image_get_background (image, context, gimp_drawable_type (drawable),
+                                 bg_color);
 
       /*  "Outside" a channel is transparency, not the bg color  */
       if (GIMP_IS_CHANNEL (drawable))
@@ -892,7 +898,8 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
 
       tile_manager_set_offsets (new_tiles, orig_x, orig_y);
 
-      gimp_image_get_background (image, drawable, context, bg_color);
+      gimp_image_get_background (image, context, gimp_drawable_type (drawable),
+                                 bg_color);
 
       /*  "Outside" a channel is transparency, not the bg color  */
       if (GIMP_IS_CHANNEL (drawable))
@@ -1831,4 +1838,3 @@ sample_cubic (PixelSurround *surround,
 
   pixel_surround_release (surround);
 }
-

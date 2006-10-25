@@ -66,7 +66,7 @@ static void     gimp_clone_motion       (GimpSourceCore   *source_core,
                                          gint              paint_area_height);
 
 static void     gimp_clone_line_image   (GimpImage        *dest_image,
-                                         GimpDrawable     *dest_drawable,
+                                         GimpImageType     dest_type,
                                          GimpImage        *src_image,
                                          GimpImageType     src_type,
                                          guchar           *s,
@@ -75,7 +75,7 @@ static void     gimp_clone_line_image   (GimpImage        *dest_image,
                                          gint              dest_bytes,
                                          gint              width);
 static void     gimp_clone_line_pattern (GimpImage        *dest_image,
-                                         GimpDrawable     *dest_drawable,
+                                         GimpImageType     dest_type,
                                          GimpPattern      *pattern,
                                          guchar           *d,
                                          gint              x,
@@ -167,6 +167,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
   GimpContext       *context        = GIMP_CONTEXT (paint_options);
   GimpImage         *src_image      = NULL;
   GimpImageType      src_type       = 0;
+  GimpImageType      dest_type;
   GimpImage         *image;
   gpointer           pr = NULL;
   gint               y;
@@ -203,6 +204,8 @@ gimp_clone_motion (GimpSourceCore   *source_core,
       break;
     }
 
+  dest_type = gimp_drawable_type (drawable);
+
   for (; pr != NULL; pr = pixel_regions_process (pr))
     {
       guchar *s = srcPR->data;
@@ -213,7 +216,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
           switch (options->clone_type)
             {
             case GIMP_IMAGE_CLONE:
-              gimp_clone_line_image (image, drawable,
+              gimp_clone_line_image (image, dest_type,
                                      src_image, src_type,
                                      s, d,
                                      srcPR->bytes, destPR.bytes, destPR.w);
@@ -221,7 +224,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
               break;
 
             case GIMP_PATTERN_CLONE:
-              gimp_clone_line_pattern (image, drawable,
+              gimp_clone_line_pattern (image, dest_type,
                                        pattern, d,
                                        paint_area->x     + src_offset_x,
                                        paint_area->y + y + src_offset_y,
@@ -255,7 +258,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
 
 static void
 gimp_clone_line_image (GimpImage     *dest_image,
-                       GimpDrawable  *dest_drawable,
+                       GimpImageType  dest_type,
                        GimpImage     *src_image,
                        GimpImageType  src_type,
                        guchar        *s,
@@ -272,7 +275,7 @@ gimp_clone_line_image (GimpImage     *dest_image,
   while (width--)
     {
       gimp_image_get_color (src_image, src_type, s, rgba);
-      gimp_image_transform_color (dest_image, dest_drawable, d,
+      gimp_image_transform_color (dest_image, dest_type, d,
                                   GIMP_RGB, rgba);
 
       d[alpha] = rgba[ALPHA_PIX];
@@ -283,14 +286,14 @@ gimp_clone_line_image (GimpImage     *dest_image,
 }
 
 static void
-gimp_clone_line_pattern (GimpImage    *dest_image,
-                         GimpDrawable *dest_drawable,
-                         GimpPattern  *pattern,
-                         guchar       *d,
-                         gint          x,
-                         gint          y,
-                         gint          dest_bytes,
-                         gint          width)
+gimp_clone_line_pattern (GimpImage     *dest_image,
+                         GimpImageType  dest_type,
+                         GimpPattern   *pattern,
+                         guchar        *d,
+                         gint           x,
+                         gint           y,
+                         gint           dest_bytes,
+                         gint           width)
 {
   guchar            *pat, *p;
   GimpImageBaseType  color_type;
@@ -319,7 +322,7 @@ gimp_clone_line_pattern (GimpImage    *dest_image,
     {
       p = pat + ((i + x) % pattern->mask->width) * pat_bytes;
 
-      gimp_image_transform_color (dest_image, dest_drawable, d,
+      gimp_image_transform_color (dest_image, dest_type, d,
                                   color_type, p);
 
       if (pat_bytes == 2 || pat_bytes == 4)

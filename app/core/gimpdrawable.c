@@ -457,8 +457,8 @@ gimp_drawable_resize (GimpItem    *item,
                          TRUE);
 
       if (! gimp_drawable_has_alpha (drawable) && ! GIMP_IS_CHANNEL (drawable))
-        gimp_image_get_background (gimp_item_get_image (item), drawable,
-                                   context, bg);
+        gimp_image_get_background (gimp_item_get_image (item), context,
+                                   gimp_drawable_type (drawable), bg);
 
       color_region (&destPR, bg);
     }
@@ -1121,7 +1121,7 @@ gimp_drawable_fill (GimpDrawable      *drawable,
                            &tmp[BLUE_PIX],
                            &tmp[ALPHA_PIX]);
 
-      gimp_image_transform_color (image, drawable, c, GIMP_RGB, tmp);
+      gimp_image_transform_color (image, drawable_type, c, GIMP_RGB, tmp);
 
       if (GIMP_IMAGE_TYPE_HAS_ALPHA (drawable_type))
         c[GIMP_IMAGE_TYPE_BYTES (drawable_type) - 1] = tmp[ALPHA_PIX];
@@ -1135,7 +1135,7 @@ gimp_drawable_fill (GimpDrawable      *drawable,
       TempBuf  *pat_buf;
       gboolean  new_buf;
 
-      pat_buf = gimp_image_transform_temp_buf (image, drawable,
+      pat_buf = gimp_image_transform_temp_buf (image, drawable_type,
                                                pattern->mask, &new_buf);
 
       pattern_region (&destPR, NULL, pat_buf, 0, 0);

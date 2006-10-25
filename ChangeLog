@@ -1,3 +1,33 @@
+2006-10-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage.[ch]
+	(gimp_image_transform_rgb)
+	(gimp_image_transform_color)
+	(gimp_image_transform_temp_buf): changed GimpDrawable parameter to
+	"GimpImageType dest_type".
+
+	(gimp_image_get_foreground)
+	(gimp_image_get_background): ditto and reordered parameters.
+
+	* app/core/gimp-edit.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable-stroke.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimplayer.c
+	* app/core/gimpselection.c
+	* app/paint/gimpbrushcore.c
+	* app/paint/gimpclone.c
+	* app/paint/gimperaser.c
+	* app/paint/gimpheal.c
+	* app/paint/gimpink.c
+	* app/paint/gimppaintbrush.c: changed accordingly.
+
+	* app/core/gimpdrawable-transform.c
+	(gimp_drawable_transform_tiles_affine): set the progress to 1.0
+	when done, some tiny cleanups around lanczos.
+
 2006-10-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-transform.c

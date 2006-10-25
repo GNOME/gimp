@@ -1460,7 +1460,8 @@ paint_line_pixmap_mask (GimpImage                *dest,
             for (byte_loop = 0; byte_loop < bytes - 1; byte_loop++)
               d[byte_loop] *= alpha;
 
-          gimp_image_transform_color (dest, drawable, d, GIMP_RGB, p);
+          gimp_image_transform_color (dest, gimp_drawable_type (drawable), d,
+                                      GIMP_RGB, p);
           d += bytes;
         }
     }
@@ -1477,7 +1478,8 @@ paint_line_pixmap_mask (GimpImage                *dest,
            * maybe we could do this at tool creation or brush switch time?
            * and compute it for the whole brush at once and cache it?
            */
-          gimp_image_transform_color (dest, drawable, d, GIMP_RGB, p);
+          gimp_image_transform_color (dest, gimp_drawable_type (drawable), d,
+                                      GIMP_RGB, p);
           d += bytes;
         }
     }

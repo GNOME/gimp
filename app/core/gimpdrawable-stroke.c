@@ -287,8 +287,8 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
                             &tmp_col[GREEN_PIX],
                             &tmp_col[BLUE_PIX]);
 
-        gimp_image_transform_color (image, drawable,
-                                    col, GIMP_RGB, tmp_col);
+        gimp_image_transform_color (image, gimp_drawable_type (drawable), col,
+                                    GIMP_RGB, tmp_col);
         col[bytes - 1] = OPAQUE_OPACITY;
 
         color_region_mask (&basePR, &maskPR, col);
@@ -302,7 +302,8 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
         gboolean     new_buf;
 
         pattern = gimp_context_get_pattern (context);
-        pat_buf = gimp_image_transform_temp_buf (image, drawable,
+        pat_buf = gimp_image_transform_temp_buf (image,
+                                                 gimp_drawable_type (drawable),
                                                  pattern->mask, &new_buf);
 
         pattern_region (&basePR, &maskPR, pat_buf, x, y);

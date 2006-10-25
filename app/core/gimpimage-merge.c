@@ -423,8 +423,9 @@ gimp_image_merge_layers (GimpImage     *image,
       GIMP_ITEM (merge_layer)->offset_y = y1;
 
       /*  get the background for compositing  */
-      gimp_image_get_background (image, GIMP_DRAWABLE (merge_layer),
-                                 context, bg);
+      gimp_image_get_background (image, context,
+                                 gimp_drawable_type (GIMP_DRAWABLE (merge_layer)),
+                                 bg);
 
       /*  init the pixel region  */
       pixel_region_init (&src1PR,

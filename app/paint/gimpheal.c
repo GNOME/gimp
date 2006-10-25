@@ -456,7 +456,8 @@ gimp_heal_motion (GimpSourceCore   *source_core,
       TempBuf   *temp2;
       gboolean   new_buf;
 
-      temp2 = gimp_image_transform_temp_buf (image, drawable,
+      temp2 = gimp_image_transform_temp_buf (image,
+                                             gimp_drawable_type (drawable),
                                              temp, &new_buf);
 
       if (new_buf)
