@@ -44,6 +44,7 @@ scripts = \
 	coolmetal-logo.scm		\
 	copy-visible.scm		\
 	crystal-logo.scm		\
+	difference-clouds.scm		\
 	distress-selection.scm		\
 	drop-shadow.scm			\
 	erase-rows.scm			\

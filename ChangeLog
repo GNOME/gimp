@@ -1,5 +1,11 @@
 2006-10-25  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/Makefile.am
+	* plug-ins/script-fu/scripts/difference-clouds.scm: added new script
+	"Difference Clouds" written by Martin Nordholts (bug #363458).
+
+2006-10-25  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/erase-rows.scm
 	* plug-ins/script-fu/scripts/hsv-graph.scm: don't ever use the term
 	"drawable" in user-visible strings.
