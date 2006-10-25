@@ -8,7 +8,6 @@
 	* app/pdb/edit_cmds.c
 	* app/pdb/internal_procs.c
 	* app/pdb/paths_cmds.c
-	* devel-docs/libgimp/tmpl/gimppaths.sgml
 	* libgimp/gimpedit_pdb.[ch]
 	* libgimp/gimppaths_pdb.[ch]: regenerated.
 
@@ -83,9 +82,6 @@
 	* libgimp/gimpenums.h
 	* tools/pdbgen/enums.pl: regenerated.
 
-	* devel-docs/libgimp/tmpl/gimpfontselectbutton.sgml: this changed
-	again. WTF?
-
 2006-10-25  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpvectors-import.[ch]: extended gimp_vectors_import()
@@ -119,8 +115,6 @@
 	* libgimp/gimppaths_pdb.[ch]
 	* libgimp/gimpvectors_pdb.[ch]
 	* libgimpbase/gimpbaseenums.c
-	* devel-docs/libgimp/tmpl/gimpfontselectbutton.sgml
-	* devel-docs/libgimp/tmpl/gimptools.sgml: regenerated.
 
 2006-10-25  Sven Neumann  <sven@gimp.org>
 
@@ -216,7 +210,6 @@
 	* app/pdb/internal_procs.c
 	* app/pdb/paths_cmds.c
 	* app/pdb/vectors_cmds.c
-	* devel-docs/libgimp/tmpl/gimpvectors.sgml
 	* libgimp/gimpenums.c.tail
 	* libgimp/gimpenums.h
 	* libgimp/gimppaths_pdb.[ch]

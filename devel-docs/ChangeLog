@@ -1,3 +1,10 @@
+2006-10-26  Simon Budig  <simon@gimp.org>
+
+        * devel-docs/libgimp/tmpl/gimppaths.sgml
+	* devel-docs/libgimp/tmpl/gimpfontselectbutton.sgml
+	* devel-docs/libgimp/tmpl/gimptools.sgml
+	* devel-docs/libgimp/tmpl/gimpvectors.sgml: regenerated.
+
 2006-10-18  Sven Neumann  <sven@gimp.org>
 
 	* tools/Makefile.am (doc_shooter_LDADD): added -lXext (bug #362877).
