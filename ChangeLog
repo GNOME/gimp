@@ -1,3 +1,17 @@
+2006-10-26  Simon Budig  <simon@gimp.org>
+
+	* tools/pdbgen/pdb/edit.pdb: added gimp_edit_stroke_vectors ()
+	* tools/pdbgen/pdb/paths.pdb: deprecated gimp_path_stroke_current ()
+
+	* libgimp/gimp.def: updated.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/paths_cmds.c
+	* devel-docs/libgimp/tmpl/gimppaths.sgml
+	* libgimp/gimpedit_pdb.[ch]
+	* libgimp/gimppaths_pdb.[ch]: regenerated.
+
 2006-10-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.[ch]

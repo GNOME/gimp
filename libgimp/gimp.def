@@ -191,6 +191,7 @@ EXPORTS
 	gimp_edit_paste
 	gimp_edit_paste_as_new
 	gimp_edit_stroke
+	gimp_edit_stroke_vectors
 	gimp_ellipse_select
 	gimp_enums_get_type_names
 	gimp_enums_init

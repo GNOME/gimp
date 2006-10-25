@@ -804,6 +804,45 @@ CODE
     );
 }
 
+sub edit_stroke_vectors {
+    $blurb = 'Stroke the specified vectors object';
+
+    $help = <<'HELP';
+This procedure strokes the specified vectors object, painting along the
+path with the active brush and foreground color.
+HELP
+
+    &simon_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable to stroke to' },
+	{ name => 'vectors', type => 'vectors',
+          desc => 'The vectors object' }
+    );
+
+    %invoke = (
+	headers => [ qw("core/gimpstrokedesc.h") ],
+	code => <<'CODE'
+{
+  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+    {
+      GimpStrokeDesc *desc  = gimp_stroke_desc_new (gimp, context);
+
+      g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
+
+      success = gimp_item_stroke (GIMP_ITEM (vectors),
+                                  drawable, context, desc, TRUE);
+
+      g_object_unref (desc);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 
 @headers = qw(<string.h>
               "core/gimp.h"
@@ -818,7 +857,7 @@ CODE
             edit_named_cut edit_named_copy edit_named_copy_visible
             edit_named_paste edit_named_paste_as_new
             edit_clear edit_fill edit_bucket_fill edit_bucket_fill_full
-	    edit_blend edit_stroke);
+	    edit_blend edit_stroke edit_stroke_vectors);
 
 %exports = (app => [@procs], lib => [@procs]);
 

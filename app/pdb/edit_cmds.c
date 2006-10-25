@@ -41,6 +41,7 @@
 #include "core/gimpprogress.h"
 #include "core/gimpstrokedesc.h"
 #include "gimp-intl.h"
+#include "vectors/gimpvectors.h"
 
 
 static GValueArray *
@@ -672,6 +673,40 @@ edit_stroke_invoker (GimpProcedure     *procedure,
           g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
 
           success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
+                                      drawable, context, desc, TRUE);
+
+          g_object_unref (desc);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+edit_stroke_vectors_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  GimpVectors *vectors;
+
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  vectors = gimp_value_get_vectors (&args->values[1], gimp);
+
+  if (success)
+    {
+      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+        {
+          GimpStrokeDesc *desc  = gimp_stroke_desc_new (gimp, context);
+
+          g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
+
+          success = gimp_item_stroke (GIMP_ITEM (vectors),
                                       drawable, context, desc, TRUE);
 
           g_object_unref (desc);
@@ -1337,6 +1372,34 @@ register_edit_procs (GimpPDB *pdb)
                                                             "The drawable to stroke to",
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-edit-stroke-vectors
+   */
+  procedure = gimp_procedure_new (edit_stroke_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-stroke-vectors");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-edit-stroke-vectors",
+                                     "Stroke the specified vectors object",
+                                     "This procedure strokes the specified vectors object, painting along the path with the active brush and foreground color.",
+                                     "Simon Budig",
+                                     "Simon Budig",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The drawable to stroke to",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("vectors",
+                                                           "vectors",
+                                                           "The vectors object",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

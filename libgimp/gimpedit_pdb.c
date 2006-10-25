@@ -710,3 +710,38 @@ gimp_edit_stroke (gint32 drawable_ID)
 
   return success;
 }
+
+/**
+ * gimp_edit_stroke_vectors:
+ * @drawable_ID: The drawable to stroke to.
+ * @vectors_ID: The vectors object.
+ *
+ * Stroke the specified vectors object
+ *
+ * This procedure strokes the specified vectors object, painting along
+ * the path with the active brush and foreground color.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_edit_stroke_vectors (gint32 drawable_ID,
+                          gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-edit-stroke-vectors",
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}

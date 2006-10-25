@@ -255,10 +255,7 @@ CODE
 }
 
 sub path_stroke_current {
-    $blurb = 'Stroke the current path in the passed image.';
-    $help  = 'Stroke the current path in the passed image.';
-
-    &andy_pdb_misc('1999');
+    &std_pdb_deprecated('gimp-edit-stroke-vectors');
 
     @inargs = (
 	{ name => 'image', type => 'image',

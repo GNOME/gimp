@@ -249,9 +249,8 @@ gimp_path_set_points (gint32         image_ID,
  * gimp_path_stroke_current:
  * @image_ID: The image which contains the path to stroke.
  *
- * Stroke the current path in the passed image.
- *
- * Stroke the current path in the passed image.
+ * This procedure is deprecated! Use gimp_edit_stroke_vectors()
+ * instead.
  *
  * Returns: TRUE on success.
  */

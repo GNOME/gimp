@@ -83,6 +83,8 @@ gboolean gimp_edit_blend              (gint32                drawable_ID,
                                        gdouble               x2,
                                        gdouble               y2);
 gboolean gimp_edit_stroke             (gint32                drawable_ID);
+gboolean gimp_edit_stroke_vectors     (gint32                drawable_ID,
+                                       gint32                vectors_ID);
 
 
 G_END_DECLS

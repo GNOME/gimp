@@ -877,12 +877,12 @@ register_paths_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-stroke-current");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-stroke-current",
-                                     "Stroke the current path in the passed image.",
-                                     "Stroke the current path in the passed image.",
-                                     "Andy Thomas",
-                                     "Andy Thomas",
-                                     "1999",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-edit-stroke-vectors' instead.",
+                                     "This procedure is deprecated! Use 'gimp-edit-stroke-vectors' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-edit-stroke-vectors");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
