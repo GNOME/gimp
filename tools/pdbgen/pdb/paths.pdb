@@ -574,14 +574,7 @@ CODE
 }
 
 sub path_import {
-    $blurb = 'Import paths from an SVG file.';
-
-    $help = <<'HELP';
-This procedure imports paths from an SVG file. SVG elements other than
-paths and basic shapes are ignored.
-HELP
-
-    &neo_pdb_misc('2003');
+    &std_pdb_deprecated('vectors_new_from_file');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -598,22 +591,15 @@ HELP
         headers => [ qw("vectors/gimpvectors-import.h") ],
 	code    => <<'CODE'
 {
-  success = gimp_vectors_import_file (image, filename, merge, scale, -1, NULL);
+  success = gimp_vectors_import_file (image, filename,
+                                      merge, scale, -1, NULL, NULL);
 }
 CODE
     );
 }
 
 sub path_import_string {
-    $blurb = 'Import paths from an SVG string.';
-
-    $help = <<'HELP';
-This procedure works like gimp_path_import() but takes a string rather
-than reading the SVG from a file. This allows you to write scripts that
-generate SVG and feed it to GIMP.
-HELP
-
-    &neo_pdb_misc('2005', '2.4');
+    &std_pdb_deprecated('vectors_new_from_string');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -634,7 +620,7 @@ HELP
 	code    => <<'CODE'
 {
   success = gimp_vectors_import_buffer (image, string, length,
-                                        merge, scale, -1, NULL);
+                                        merge, scale, -1, NULL, NULL);
 }
 CODE
     );

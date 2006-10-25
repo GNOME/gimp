@@ -36,6 +36,7 @@
 #include "gimp-intl.h"
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
+#include "vectors/gimpvectors-import.h"
 #include "vectors/gimpvectors.h"
 
 
@@ -560,7 +561,7 @@ vectors_stroke_get_points_invoker (GimpProcedure     *procedure,
   gboolean closed = FALSE;
 
   vectors = gimp_value_get_vectors (&args->values[0], gimp);
-  stroke_id = g_value_get_int (&args->values[1]);
+  stroke_id = g_value_get_enum (&args->values[1]);
 
   if (success)
     {
@@ -937,6 +938,124 @@ vectors_to_selection_invoker (GimpProcedure     *procedure,
     }
 
   return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+vectors_new_from_file_invoker (GimpProcedure     *procedure,
+                               Gimp              *gimp,
+                               GimpContext       *context,
+                               GimpProgress      *progress,
+                               const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  const gchar *filename;
+  gboolean merge;
+  gboolean scale;
+  gint32 num_vectors = 0;
+  gint32 *vectors_ids = NULL;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  filename = g_value_get_string (&args->values[1]);
+  merge = g_value_get_boolean (&args->values[2]);
+  scale = g_value_get_boolean (&args->values[3]);
+
+  if (success)
+    {
+      GList *list, *vectors_list = NULL;
+
+      success = gimp_vectors_import_file (image, filename,
+                                          merge, scale, -1, &vectors_list, NULL);
+
+      if (success)
+        {
+          num_vectors = g_list_length (vectors_list);
+
+          if (num_vectors)
+            {
+              gint i;
+
+              vectors_ids = g_new (gint32, num_vectors);
+
+              list = vectors_list;
+              for (i = 0; i < num_vectors; i++, list = g_list_next (list))
+                vectors_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+
+              g_list_free (vectors_list);
+            }
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    {
+      g_value_set_int (&return_vals->values[1], num_vectors);
+      gimp_value_take_int32array (&return_vals->values[2], vectors_ids, num_vectors);
+    }
+
+  return return_vals;
+}
+
+static GValueArray *
+vectors_new_from_string_invoker (GimpProcedure     *procedure,
+                                 Gimp              *gimp,
+                                 GimpContext       *context,
+                                 GimpProgress      *progress,
+                                 const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  const gchar *string;
+  gint32 length;
+  gboolean merge;
+  gboolean scale;
+  gint32 num_vectors = 0;
+  gint32 *vectors_ids = NULL;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  string = g_value_get_string (&args->values[1]);
+  length = g_value_get_int (&args->values[2]);
+  merge = g_value_get_boolean (&args->values[3]);
+  scale = g_value_get_boolean (&args->values[4]);
+
+  if (success)
+    {
+      GList *list, *vectors_list = NULL;
+
+      success = gimp_vectors_import_buffer (image, string, length,
+                                            merge, scale, -1, &vectors_list, NULL);
+
+      if (success)
+        {
+          num_vectors = g_list_length (vectors_list);
+
+          if (num_vectors)
+            {
+              gint i;
+
+              vectors_ids = g_new (gint32, num_vectors);
+
+              list = vectors_list;
+              for (i = 0; i < num_vectors; i++, list = g_list_next (list))
+                vectors_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+
+              g_list_free (vectors_list);
+            }
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    {
+      g_value_set_int (&return_vals->values[1], num_vectors);
+      gimp_value_take_int32array (&return_vals->values[2], vectors_ids, num_vectors);
+    }
+
+  return return_vals;
 }
 
 void
@@ -1526,11 +1645,12 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("stroke-id",
-                                                      "stroke id",
-                                                      "The stroke ID",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_enum ("stroke-id",
+                                                  "stroke id",
+                                                  "The stroke ID",
+                                                  GIMP_TYPE_VECTORS_STROKE_TYPE,
+                                                  GIMP_VECTORS_STROKE_TYPE_BEZIER,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("type",
                                                           "type",
@@ -1912,6 +2032,116 @@ register_vectors_procs (GimpPDB *pdb)
                                                     "Feather radius y.",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vectors-new-from-file
+   */
+  procedure = gimp_procedure_new (vectors_new_from_file_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-new-from-file");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-vectors-new-from-file",
+                                     "Import paths from an SVG file.",
+                                     "This procedure imports paths from an SVG file. SVG elements other than paths and basic shapes are ignored.",
+                                     "Simon Budig",
+                                     "Simon Budig",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("filename",
+                                                       "filename",
+                                                       "The name of the SVG file to import.",
+                                                       TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("merge",
+                                                     "merge",
+                                                     "Merge paths into a single vectors object.",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("scale",
+                                                     "scale",
+                                                     "Scale the SVG to image dimensions.",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("num-vectors",
+                                                          "num vectors",
+                                                          "The number of newly created vectors",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32_array ("vectors-ids",
+                                                                "vectors ids",
+                                                                "The list of newly created vectors",
+                                                                GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vectors-new-from-string
+   */
+  procedure = gimp_procedure_new (vectors_new_from_string_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-new-from-string");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-vectors-new-from-string",
+                                     "Import paths from an SVG string.",
+                                     "This procedure works like 'gimp-vectors-new-from-file' but takes a string rather than reading the SVG from a file. This allows you to write scripts that generate SVG and feed it to GIMP.",
+                                     "Simon Budig",
+                                     "Simon Budig",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("string",
+                                                       "string",
+                                                       "A string that must be a complete and valid SVG document.",
+                                                       TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("length",
+                                                      "length",
+                                                      "Number of bytes in string or -1 if the string is NULL terminated.",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("merge",
+                                                     "merge",
+                                                     "Merge paths into a single vectors object.",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("scale",
+                                                     "scale",
+                                                     "Scale the SVG to image dimensions.",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("num-vectors",
+                                                          "num vectors",
+                                                          "The number of newly created vectors",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32_array ("vectors-ids",
+                                                                "vectors ids",
+                                                                "The list of newly created vectors",
+                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

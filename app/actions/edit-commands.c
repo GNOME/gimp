@@ -408,7 +408,7 @@ edit_paste (GimpDisplay *display,
   if (svg)
     {
       if (gimp_vectors_import_buffer (display->image, svg, svg_size,
-                                      TRUE, TRUE, -1, NULL))
+                                      TRUE, TRUE, -1, NULL, NULL))
         {
           gimp_image_flush (display->image);
         }

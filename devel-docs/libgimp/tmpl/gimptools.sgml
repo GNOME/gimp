@@ -68,7 +68,8 @@ Functions giving access to common toolbox tools.
 @operation: 
 @antialias: 
 @feather: 
-@feather_radius: 
+@feather_radius_x: 
+@feather_radius_y: 
 @sample_merged: 
 @select_transparent: 
 @select_criterion: 
@@ -263,7 +264,8 @@ Functions giving access to common toolbox tools.
 @operation: 
 @antialias: 
 @feather: 
-@feather_radius: 
+@feather_radius_x: 
+@feather_radius_y: 
 @sample_merged: 
 @select_transparent: 
 @select_criterion: 

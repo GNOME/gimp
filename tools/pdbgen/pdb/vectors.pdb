@@ -539,7 +539,7 @@ HELP
     @inargs = (
 	{ name => 'vectors', type => 'vectors',
 	  desc => 'The vectors object' },
-	{ name => 'stroke_id', type => 'int32',
+	{ name => 'stroke_id', type => 'enum GimpVectorsStrokeType',
 	  desc => 'The stroke ID' }
     );
 
@@ -942,6 +942,129 @@ CODE
 
 }
 
+sub vectors_new_from_file {
+    $blurb = 'Import paths from an SVG file.';
+
+    $help = <<'HELP';
+This procedure imports paths from an SVG file. SVG elements other than
+paths and basic shapes are ignored.
+HELP
+
+    &simon_pdb_misc('2006', '2.4');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'filename', type => 'string', no_validate => 1,
+          desc => 'The name of the SVG file to import.' },
+        { name => 'merge', type => 'boolean',
+          desc => 'Merge paths into a single vectors object.' },
+        { name => 'scale', type => 'boolean',
+          desc => 'Scale the SVG to image dimensions.' }
+    );
+
+    @outargs = (
+        { name => 'vectors_ids', type => 'int32array',
+          desc => 'The list of newly created vectors',
+          array => { name => 'num_vectors',
+                     desc => 'The number of newly created vectors' } }
+    );
+
+    %invoke = (
+        headers => [ qw("vectors/gimpvectors-import.h") ],
+        code    => <<'CODE'
+{
+  GList *list, *vectors_list = NULL;
+
+  success = gimp_vectors_import_file (image, filename,
+                                      merge, scale, -1, &vectors_list, NULL);
+
+  if (success)
+    {
+      num_vectors = g_list_length (vectors_list);
+
+      if (num_vectors)
+        {
+          gint i;
+      
+          vectors_ids = g_new (gint32, num_vectors);
+      
+	  list = vectors_list;
+          for (i = 0; i < num_vectors; i++, list = g_list_next (list))
+            vectors_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+
+          g_list_free (vectors_list);
+        }
+    }
+}
+CODE
+    );
+}
+
+sub vectors_new_from_string {
+    $blurb = 'Import paths from an SVG string.';
+
+    $help = <<'HELP';
+This procedure works like gimp_vectors_new_from_file() but takes a string
+rather than reading the SVG from a file. This allows you to write scripts that
+generate SVG and feed it to GIMP.
+HELP
+
+    &simon_pdb_misc('2006', '2.4');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'string', type => 'string', no_validate => 1,
+          desc => 'A string that must be a complete and valid SVG document.' },
+        { name => 'length', type => 'int32',
+          desc => 'Number of bytes in string or -1 if the string is NULL
+                   terminated.' },
+        { name => 'merge', type => 'boolean',
+          desc => 'Merge paths into a single vectors object.' },
+        { name => 'scale', type => 'boolean',
+          desc => 'Scale the SVG to image dimensions.' }
+    );
+
+    @outargs = (
+        { name => 'vectors_ids', type => 'int32array',
+          desc => 'The list of newly created vectors',
+          array => { name => 'num_vectors',
+                     desc => 'The number of newly created vectors' } }
+    );
+
+    %invoke = (
+        headers => [ qw("vectors/gimpvectors-import.h") ],
+        code    => <<'CODE'
+{
+  GList *list, *vectors_list = NULL;
+
+  success = gimp_vectors_import_buffer (image, string, length,
+                                        merge, scale, -1, &vectors_list, NULL);
+
+  if (success)
+    {
+      num_vectors = g_list_length (vectors_list);
+
+      if (num_vectors)
+        {
+          gint i;
+      
+          vectors_ids = g_new (gint32, num_vectors);
+      
+	  list = vectors_list;
+          for (i = 0; i < num_vectors; i++, list = g_list_next (list))
+            vectors_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+
+          g_list_free (vectors_list);
+        }
+    }
+}
+CODE
+    );
+}
+
+
 @headers = qw(<string.h> "core/gimp.h" "core/gimplist.h" "core/gimpimage.h"
               "core/gimpchannel-select.h" "vectors/gimpanchor.h" "vectors/gimpbezierstroke.h"
               "vectors/gimpvectors.h"
@@ -967,10 +1090,12 @@ CODE
             vectors_bezier_stroke_conicto
             vectors_bezier_stroke_cubicto
             vectors_bezier_stroke_new_ellipse
-            vectors_to_selection);
+            vectors_to_selection
+            vectors_new_from_file
+            vectors_new_from_string);
 
 %exports = (app => [@procs], lib => [@procs]);
 
-$desc = 'Paths';
+$desc = 'Vectors';
 
 1;

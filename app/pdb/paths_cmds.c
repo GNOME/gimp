@@ -640,7 +640,8 @@ path_import_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      success = gimp_vectors_import_file (image, filename, merge, scale, -1, NULL);
+      success = gimp_vectors_import_file (image, filename,
+                                          merge, scale, -1, NULL, NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -669,7 +670,7 @@ path_import_string_invoker (GimpProcedure     *procedure,
   if (success)
     {
       success = gimp_vectors_import_buffer (image, string, length,
-                                            merge, scale, -1, NULL);
+                                            merge, scale, -1, NULL, NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -1208,12 +1209,12 @@ register_paths_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-import");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-import",
-                                     "Import paths from an SVG file.",
-                                     "This procedure imports paths from an SVG file. SVG elements other than paths and basic shapes are ignored.",
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2003",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'vectors_new_from_file' instead.",
+                                     "This procedure is deprecated! Use 'vectors_new_from_file' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "vectors_new_from_file");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -1249,12 +1250,12 @@ register_paths_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-import-string");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-import-string",
-                                     "Import paths from an SVG string.",
-                                     "This procedure works like 'gimp-path-import' but takes a string rather than reading the SVG from a file. This allows you to write scripts that generate SVG and feed it to GIMP.",
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2005",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'vectors_new_from_string' instead.",
+                                     "This procedure is deprecated! Use 'vectors_new_from_string' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "vectors_new_from_string");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",

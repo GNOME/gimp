@@ -436,6 +436,15 @@ typedef enum
 } GimpProgressCommand;
 
 
+#define GIMP_TYPE_VECTORS_STROKE_TYPE (gimp_vectors_stroke_type_get_type ())
+
+GType gimp_vectors_stroke_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_VECTORS_STROKE_TYPE_BEZIER
+} GimpVectorsStrokeType;
+
 G_END_DECLS
 
 #endif  /* __GIMP_BASE_ENUMS_H__ */

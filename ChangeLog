@@ -1,3 +1,36 @@
+2006-10-25  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpvectors-import.[ch]: extended gimp_vectors_import()
+	and friends with a parameter for returning the newly generated vectors.
+
+	* app/actions/edit-commands.c
+	* app/actions/vectors-commands.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/widgets/gimpvectorstreeview.c: Changed accordingly.
+
+	* app/vectors/vectors-enums.h: moved the GimpVectorsStrokeType to...
+	* libgimpbase/gimpbaseenums.h: ... this file.
+
+	* app/vectors/Makefile.am: Changed accordingly
+	* app/vectors/vectors-enums.c: removed accordingly.
+
+	* tools/pdbgen/pdb/vectors.pdb: new functions
+	gimp_vectors_new_from_file() and gimp_vectors_new_from_string().
+
+	* tools/pdbgen/pdb/paths.pdb: deprecated the previous functions.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/paths_cmds.c
+	* app/pdb/vectors_cmds.c
+	* app/vectors/vectors-enums.c
+	* libgimp/gimpenums.h
+	* tools/pdbgen/enums.pl
+	* libgimp/gimppaths_pdb.[ch]
+	* libgimp/gimpvectors_pdb.[ch]
+	* libgimpbase/gimpbaseenums.c
+	* devel-docs/libgimp/tmpl/gimpfontselectbutton.sgml
+	* devel-docs/libgimp/tmpl/gimptools.sgml: regenerated.
+
 2006-10-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/Makefile.am

@@ -28,6 +28,7 @@ gboolean  gimp_vectors_import_file   (GimpImage    *image,
                                       gboolean      merge,
                                       gboolean      scale,
                                       gint          position,
+                                      GList       **ret_vectors,
                                       GError      **error);
 gboolean  gimp_vectors_import_buffer (GimpImage    *image,
                                       const gchar  *buffer,
@@ -35,6 +36,7 @@ gboolean  gimp_vectors_import_buffer (GimpImage    *image,
                                       gboolean      merge,
                                       gboolean      scale,
                                       gint          position,
+                                      GList       **ret_vectors,
                                       GError      **error);
 
 

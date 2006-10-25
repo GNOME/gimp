@@ -336,6 +336,12 @@ package Gimp::CodeGen::enums;
 		       GIMP_PROGRESS_COMMAND_PULSE => '4',
 		       GIMP_PROGRESS_COMMAND_GET_WINDOW => '5' }
 	},
+    GimpVectorsStrokeType =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_VECTORS_STROKE_TYPE_BEZIER) ],
+	  mapping => { GIMP_VECTORS_STROKE_TYPE_BEZIER => '0' }
+	},
     GimpHistogramChannel =>
 	{ contig => 1,
 	  header => 'base/base-enums.h',
@@ -546,12 +552,6 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_BLUR_CONVOLVE GIMP_SHARPEN_CONVOLVE) ],
 	  mapping => { GIMP_BLUR_CONVOLVE => '0',
 		       GIMP_SHARPEN_CONVOLVE => '1' }
-	},
-    GimpVectorsStrokeType =>
-	{ contig => 1,
-	  header => 'vectors/vectors-enums.h',
-	  symbols => [ qw(GIMP_VECTORS_STROKE_TYPE_BEZIER) ],
-	  mapping => { GIMP_VECTORS_STROKE_TYPE_BEZIER => '0' }
 	},
     GimpAnchorType =>
 	{ contig => 1,

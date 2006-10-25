@@ -275,7 +275,7 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
 
   if (! gimp_vectors_import_buffer (image,
                                     (const gchar *) svg_data, svg_data_len,
-                                    TRUE, TRUE, -1, &error))
+                                    TRUE, TRUE, -1, NULL, &error))
     {
       gimp_message (image->gimp, G_OBJECT (shell->display), GIMP_MESSAGE_ERROR,
                     "%s", error->message);

@@ -527,10 +527,7 @@ gimp_path_to_selection (gint32          image_ID,
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
  *
- * Import paths from an SVG file.
- *
- * This procedure imports paths from an SVG file. SVG elements other
- * than paths and basic shapes are ignored.
+ * This procedure is deprecated! Use vectors_new_from_file() instead.
  *
  * Returns: TRUE on success.
  */
@@ -567,15 +564,9 @@ gimp_path_import (gint32       image_ID,
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
  *
- * Import paths from an SVG string.
- *
- * This procedure works like gimp_path_import() but takes a string
- * rather than reading the SVG from a file. This allows you to write
- * scripts that generate SVG and feed it to GIMP.
+ * This procedure is deprecated! Use vectors_new_from_string() instead.
  *
  * Returns: TRUE on success.
- *
- * Since: GIMP 2.4
  */
 gboolean
 gimp_path_import_string (gint32       image_ID,

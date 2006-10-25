@@ -310,16 +310,6 @@ typedef enum
 } GimpVectorExtendMode;
 
 
-#define GIMP_TYPE_VECTORS_STROKE_TYPE (gimp_vectors_stroke_type_get_type ())
-
-GType gimp_vectors_stroke_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_VECTORS_STROKE_TYPE_BEZIER
-} GimpVectorsStrokeType;
-
-
 void           gimp_enums_init           (void);
 
 const gchar ** gimp_enums_get_type_names (gint *n_type_names);

@@ -447,7 +447,7 @@ vectors_paste_cmd_callback (GtkAction *action,
       GError *error = NULL;
 
       if (! gimp_vectors_import_buffer (image, svg, svg_size,
-                                        TRUE, TRUE, -1, &error))
+                                        TRUE, TRUE, -1, NULL, &error))
         {
           gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_ERROR,
                         "%s", error->message);
@@ -625,7 +625,7 @@ vectors_import_response (GtkWidget           *widget,
 
       if (gimp_vectors_import_file (dialog->image, filename,
                                     vectors_import_merge, vectors_import_scale,
-                                    -1, &error))
+                                    -1, NULL, &error))
         {
           gimp_image_flush (dialog->image);
         }
