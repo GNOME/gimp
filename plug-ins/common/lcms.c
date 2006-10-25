@@ -621,7 +621,7 @@ lcms_drawable_transform (GimpDrawable  *drawable,
 
       for (y = 0; y < rgn.h; y++)
         {
-          cmsDoTransform (transform, data, data, rgn.w * rgn.bpp);
+          cmsDoTransform (transform, data, data, rgn.w);
 
           data += rgn.rowstride;
         }
