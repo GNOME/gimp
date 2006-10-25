@@ -476,7 +476,6 @@ EXPORTS
 	gimp_path_get_points
 	gimp_path_get_tattoo
 	gimp_path_import
-	gimp_path_import_string
 	gimp_path_list
 	gimp_path_set_current
 	gimp_path_set_locked

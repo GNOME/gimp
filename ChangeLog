@@ -1,3 +1,14 @@
+2006-10-25  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/paths.pdb: removed gimp-paths-import-string, it
+	didn't exist in 2.2 and therefore doesn't need to be deprecated.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/paths_cmds.c
+	* libgimp/gimppaths_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: changed accordingly.
+
 2006-10-25  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/vectors-enums.h: Oops. Need to specify both

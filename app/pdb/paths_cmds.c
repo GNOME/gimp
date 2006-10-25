@@ -647,35 +647,6 @@ path_import_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GValueArray *
-path_import_string_invoker (GimpProcedure     *procedure,
-                            Gimp              *gimp,
-                            GimpContext       *context,
-                            GimpProgress      *progress,
-                            const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  const gchar *string;
-  gint32 length;
-  gboolean merge;
-  gboolean scale;
-
-  image = gimp_value_get_image (&args->values[0], gimp);
-  string = g_value_get_string (&args->values[1]);
-  length = g_value_get_int (&args->values[2]);
-  merge = g_value_get_boolean (&args->values[3]);
-  scale = g_value_get_boolean (&args->values[4]);
-
-  if (success)
-    {
-      success = gimp_vectors_import_buffer (image, string, length,
-                                            merge, scale, -1, NULL, NULL);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
 void
 register_paths_procs (GimpPDB *pdb)
 {
@@ -1228,53 +1199,6 @@ register_paths_procs (GimpPDB *pdb)
                                                        TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("merge",
-                                                     "merge",
-                                                     "Merge paths into a single vectors object.",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("scale",
-                                                     "scale",
-                                                     "Scale the SVG to image dimensions.",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-path-import-string
-   */
-  procedure = gimp_procedure_new (path_import_string_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-import-string");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-path-import-string",
-                                     "This procedure is deprecated! Use 'vectors_new_from_string' instead.",
-                                     "This procedure is deprecated! Use 'vectors_new_from_string' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "vectors_new_from_string");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("string",
-                                                       "string",
-                                                       "A string that must be a complete and valid SVG document.",
-                                                       TRUE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("length",
-                                                      "length",
-                                                      "Number of bytes in string or -1 if the string is NULL terminated.",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("merge",
                                                      "merge",

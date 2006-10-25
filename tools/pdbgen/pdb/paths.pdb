@@ -598,34 +598,6 @@ CODE
     );
 }
 
-sub path_import_string {
-    &std_pdb_deprecated('vectors_new_from_string');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'string', type => 'string', no_validate => 1,
-	  desc => 'A string that must be a complete and valid SVG document.' },
-	{ name => 'length', type => 'int32',
-	  desc => 'Number of bytes in string or -1 if the string is NULL
-                   terminated.' },
-	{ name => 'merge', type => 'boolean',
-	  desc => 'Merge paths into a single vectors object.' },
-	{ name => 'scale', type => 'boolean',
-	  desc => 'Scale the SVG to image dimensions.' }
-    );
-
-    %invoke = (
-        headers => [ qw("vectors/gimpvectors-import.h") ],
-	code    => <<'CODE'
-{
-  success = gimp_vectors_import_buffer (image, string, length,
-                                        merge, scale, -1, NULL, NULL);
-}
-CODE
-    );
-}
-
 
 @headers = qw(<string.h> "core/gimp.h" "core/gimplist.h"
               "core/gimpchannel-select.h"
@@ -638,7 +610,7 @@ CODE
             path_stroke_current path_get_point_at_dist
 	    path_get_tattoo path_set_tattoo get_path_by_tattoo
             path_get_locked path_set_locked
-            path_to_selection path_import path_import_string);
+            path_to_selection path_import);
 
 %exports = (app => [@procs], lib => [@procs]);
 
