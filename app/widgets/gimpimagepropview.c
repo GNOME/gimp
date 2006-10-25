@@ -3,6 +3,7 @@
  *
  * GimpImagePropView
  * Copyright (C) 2005  Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2006  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,27 +60,27 @@ enum
 };
 
 
-static GObject  * gimp_image_prop_view_constructor  (GType              type,
-                                                     guint              n_params,
-                                                     GObjectConstructParam *params);
-static void       gimp_image_prop_view_set_property (GObject           *object,
-                                                     guint              property_id,
-                                                     const GValue      *value,
-                                                     GParamSpec        *pspec);
-static void       gimp_image_prop_view_get_property (GObject           *object,
-                                                     guint              property_id,
-                                                     GValue            *value,
-                                                     GParamSpec        *pspec);
+static GObject   * gimp_image_prop_view_constructor  (GType              type,
+                                                      guint              n_params,
+                                                      GObjectConstructParam *params);
+static void        gimp_image_prop_view_set_property (GObject           *object,
+                                                      guint              property_id,
+                                                      const GValue      *value,
+                                                      GParamSpec        *pspec);
+static void        gimp_image_prop_view_get_property (GObject           *object,
+                                                      guint              property_id,
+                                                      GValue            *value,
+                                                      GParamSpec        *pspec);
 
-static GtkWidget * gimp_image_prop_view_add_label   (GtkTable          *table,
-                                                     gint               row,
-                                                     const gchar       *text);
-static void        gimp_image_prop_view_undo_event  (GimpImage         *image,
-                                                     GimpUndoEvent      event,
-                                                     GimpUndo          *undo,
-                                                     GimpImagePropView *view);
-static void        gimp_image_prop_view_update      (GimpImagePropView *view);
-static void        gimp_image_prop_view_file_update (GimpImagePropView *view);
+static GtkWidget * gimp_image_prop_view_add_label    (GtkTable          *table,
+                                                      gint               row,
+                                                      const gchar       *text);
+static void        gimp_image_prop_view_undo_event   (GimpImage         *image,
+                                                      GimpUndoEvent      event,
+                                                      GimpUndo          *undo,
+                                                      GimpImagePropView *view);
+static void        gimp_image_prop_view_update       (GimpImagePropView *view);
+static void        gimp_image_prop_view_file_update  (GimpImagePropView *view);
 
 
 G_DEFINE_TYPE (GimpImagePropView, gimp_image_prop_view, GTK_TYPE_TABLE)
@@ -106,66 +107,13 @@ gimp_image_prop_view_class_init (GimpImagePropViewClass *klass)
 static void
 gimp_image_prop_view_init (GimpImagePropView *view)
 {
-  gtk_table_resize (GTK_TABLE (view), 14, 2);
+  GtkTable *table = GTK_TABLE (view);
+  gint      row = 0;
 
-  gtk_table_set_col_spacings (GTK_TABLE (view), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (view), 3);
-}
+  gtk_table_resize (table, 14, 2);
 
-static void
-gimp_image_prop_view_set_property (GObject      *object,
-                                   guint         property_id,
-                                   const GValue *value,
-                                   GParamSpec   *pspec)
-{
-  GimpImagePropView *view = GIMP_IMAGE_PROP_VIEW (object);
-
-  switch (property_id)
-    {
-    case PROP_IMAGE:
-      view->image = GIMP_IMAGE (g_value_get_object (value));
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_image_prop_view_get_property (GObject    *object,
-                                   guint       property_id,
-                                   GValue     *value,
-                                   GParamSpec *pspec)
-{
-  GimpImagePropView *view = GIMP_IMAGE_PROP_VIEW (object);
-
-  switch (property_id)
-    {
-    case PROP_IMAGE:
-      g_value_set_object (value, view->image);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static GObject *
-gimp_image_prop_view_constructor (GType                  type,
-                                  guint                  n_params,
-                                  GObjectConstructParam *params)
-{
-  GimpImagePropView *view;
-  GtkTable          *table;
-  GObject           *object;
-  gint               row = 0;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  view = GIMP_IMAGE_PROP_VIEW (object);
-  table = GTK_TABLE (view);
-
-  g_assert (view->image != NULL);
+  gtk_table_set_col_spacings (table, 6);
+  gtk_table_set_row_spacings (table, 3);
 
   view->pixel_size_label =
     gimp_image_prop_view_add_label (table, row++, _("Pixel dimensions:"));
@@ -214,6 +162,60 @@ gimp_image_prop_view_constructor (GType                  type,
 
   view->vectors_label =
     gimp_image_prop_view_add_label (table, row++, _("Number of paths:"));
+
+}
+
+static void
+gimp_image_prop_view_set_property (GObject      *object,
+                                   guint         property_id,
+                                   const GValue *value,
+                                   GParamSpec   *pspec)
+{
+  GimpImagePropView *view = GIMP_IMAGE_PROP_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_IMAGE:
+      view->image = GIMP_IMAGE (g_value_get_object (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_image_prop_view_get_property (GObject    *object,
+                                   guint       property_id,
+                                   GValue     *value,
+                                   GParamSpec *pspec)
+{
+  GimpImagePropView *view = GIMP_IMAGE_PROP_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_IMAGE:
+      g_value_set_object (value, view->image);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static GObject *
+gimp_image_prop_view_constructor (GType                  type,
+                                  guint                  n_params,
+                                  GObjectConstructParam *params)
+{
+  GimpImagePropView *view;
+  GObject           *object;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  view = GIMP_IMAGE_PROP_VIEW (object);
+
+  g_assert (view->image != NULL);
 
   g_signal_connect_object (view->image, "name-changed",
                            G_CALLBACK (gimp_image_prop_view_file_update),
@@ -367,8 +369,11 @@ gimp_image_prop_view_label_set_filetype (GtkWidget *label,
     {
       gchar *filename = gimp_image_get_filename (image);
 
-      proc = file_utils_find_proc (manager->load_procs, filename, NULL);
-      g_free (filename);
+      if (filename)
+        {
+          proc = file_utils_find_proc (manager->load_procs, filename, NULL);
+          g_free (filename);
+        }
     }
 
   text = proc ? gimp_plug_in_manager_get_label (manager, proc) : NULL;

@@ -1,3 +1,20 @@
+2006-10-25  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage.[ch]: added signals "parasite-attached" and
+	"parasite-detached".
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpimageprofileview.[ch]: draft of a new widget that
+	displays color profile information.
+
+	* app/widgets/gimpimagepropview.c: minor cleanup and bug fix.
+
+	* app/dialogs/image-properties-dialog.c: added Color Profile
+	information.
+
+	* plug-ins/common/lcms.c: bug fixes.
+
 2006-10-24  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-vectors.c: remove_stroke is now a Vectors

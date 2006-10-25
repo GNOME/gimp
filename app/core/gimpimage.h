@@ -214,6 +214,10 @@ struct _GimpImageClass
                                          GimpSamplePoint      *sample_point);
   void (* sample_point_removed)         (GimpImage            *image,
                                          GimpSamplePoint      *sample_point);
+  void (* parasite_attached)            (GimpImage            *image,
+                                         const gchar          *name);
+  void (* parasite_detached)            (GimpImage            *image,
+                                         const gchar          *name);
   void (* colormap_changed)             (GimpImage            *image,
                                          gint                  color_index);
   void (* undo_event)                   (GimpImage            *image,

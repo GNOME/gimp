@@ -100,6 +100,8 @@ enum
   UPDATE_SAMPLE_POINT,
   SAMPLE_POINT_ADDED,
   SAMPLE_POINT_REMOVED,
+  PARASITE_ATTACHED,
+  PARASITE_DETACHED,
   COLORMAP_CHANGED,
   UNDO_EVENT,
   FLUSH,
@@ -406,6 +408,26 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
+  gimp_image_signals[PARASITE_ATTACHED] =
+    g_signal_new ("parasite-attached",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, parasite_attached),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__STRING,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_STRING);
+
+  gimp_image_signals[PARASITE_DETACHED] =
+    g_signal_new ("parasite-detached",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, parasite_detached),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__STRING,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_STRING);
+
   gimp_image_signals[COLORMAP_CHANGED] =
     g_signal_new ("colormap-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -472,6 +494,8 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->update_sample_point          = NULL;
   klass->sample_point_added           = NULL;
   klass->sample_point_removed         = NULL;
+  klass->parasite_attached            = NULL;
+  klass->parasite_detached            = NULL;
   klass->colormap_changed             = gimp_image_real_colormap_changed;
   klass->undo_event                   = NULL;
   klass->flush                        = gimp_image_real_flush;
@@ -2294,6 +2318,9 @@ gimp_image_parasite_attach (GimpImage          *image,
     }
 
   g_free (copy);
+
+  g_signal_emit (image, gimp_image_signals[PARASITE_ATTACHED], 0,
+                 parasite->name);
 }
 
 void
@@ -2314,6 +2341,9 @@ gimp_image_parasite_detach (GimpImage   *image,
                                                 name);
 
   gimp_parasite_list_remove (image->parasites, name);
+
+  g_signal_emit (image, gimp_image_signals[PARASITE_DETACHED], 0,
+                 name);
 }
 
 

@@ -33,13 +33,13 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_PROC_SET        "plug-in-icc-set"
-#define PLUG_IN_PROC_SET_RGB    "plug-in-icc-set-rgb"
+#define PLUG_IN_PROC_SET        "plug-in-icc-profile-set"
+#define PLUG_IN_PROC_SET_RGB    "plug-in-icc-profile-set-rgb"
 
-#define PLUG_IN_PROC_APPLY      "plug-in-icc-apply"
-#define PLUG_IN_PROC_APPLY_RGB  "plug-in-icc-apply-rgb"
+#define PLUG_IN_PROC_APPLY      "plug-in-icc-profile-apply"
+#define PLUG_IN_PROC_APPLY_RGB  "plug-in-icc-profile-apply-rgb"
 
-#define PLUG_IN_PROC_INFO       "plug-in-icc-info"
+#define PLUG_IN_PROC_INFO       "plug-in-icc-profile-info"
 
 
 enum
@@ -48,7 +48,7 @@ enum
   PRODUCT_NAME,
   PRODUCT_DESC,
   PRODUCT_INFO,
-  NUM_RETURN_VALUES
+  NUM_RETURN_VALS
 };
 
 static void  query (void);
@@ -58,13 +58,14 @@ static void  run   (const gchar      *name,
                     gint             *nreturn_vals,
                     GimpParam       **return_vals);
 
-static GimpPDBStatusType  lcms_icc_set   (gint32       image,
-                                          const gchar *filename);
-static GimpPDBStatusType  lcms_icc_apply (gint32       image,
-                                          const gchar *filename);
-static GimpPDBStatusType  lcms_icc_info  (gint32       image,
-                                          GimpParam   *return_vals,
-                                          gint        *n_return_vals);
+static GimpPDBStatusType  lcms_icc_set   (gint32        image,
+                                          const gchar  *filename);
+static GimpPDBStatusType  lcms_icc_apply (gint32        image,
+                                          const gchar  *filename);
+static GimpPDBStatusType  lcms_icc_info  (gint32        image,
+                                          gchar       **name,
+                                          gchar       **desc,
+                                          gchar       **info);
 
 static cmsHPROFILE  lcms_image_get_profile      (gint32          image);
 static gboolean     lcms_image_set_profile      (gint32          image,
@@ -252,10 +253,28 @@ run (const gchar      *name,
     }
   else if (strcmp (name, PLUG_IN_PROC_INFO) == 0)
     {
+      gchar *name;
+      gchar *desc;
+      gchar *info;
+
       if (nparams < 2)
         status = GIMP_PDB_CALLING_ERROR;
       else
-        status = lcms_icc_info (param[1].data.d_image, values, nreturn_vals);
+        status = lcms_icc_info (param[1].data.d_image, &name, &desc, &info);
+
+      if (status == GIMP_PDB_SUCCESS)
+        {
+          *nreturn_vals = NUM_RETURN_VALS;
+
+          values[PRODUCT_NAME].type          = GIMP_PDB_STRING;
+          values[PRODUCT_NAME].data.d_string = name;
+
+          values[PRODUCT_DESC].type          = GIMP_PDB_STRING;
+          values[PRODUCT_DESC].data.d_string = desc;
+
+          values[PRODUCT_DESC].type          = GIMP_PDB_STRING;
+          values[PRODUCT_INFO].data.d_string = info;
+        }
     }
   else
     {
@@ -324,18 +343,19 @@ lcms_icc_apply (gint32       image,
     dest_profile = cmsCreate_sRGBProfile ();
 
   {
-    const gchar *src_name  = cmsTakeProductName (src_profile);
-    const gchar *dest_name = cmsTakeProductName (dest_profile);
+    const gchar *src  = cmsTakeProductDesc (src_profile);
+    const gchar *dest = cmsTakeProductDesc (dest_profile);
 
-    if (! g_utf8_validate (src_name, -1, NULL))
-      src_name = _("(invalid UTF-8 string)");
+    if (! g_utf8_validate (src, -1, NULL))
+      src = _("(invalid UTF-8 string)");
 
-    if (! g_utf8_validate (dest_name, -1, NULL))
-      src_name = _("(invalid UTF-8 string)");
+    if (! g_utf8_validate (dest, -1, NULL))
+      dest = _("(invalid UTF-8 string)");
 
     /* ICC color profile conversion */
-    gimp_progress_init_printf (_("Converting from '%s' to '%s'"),
-                                 src_name, dest_name);
+    gimp_progress_init_printf (_("Converting from '%s' to '%s'"), src, dest);
+
+    g_printerr ("lcms: converting from '%s' to '%s'\n", src, dest);
   }
 
   switch (gimp_image_base_type (image))
@@ -364,12 +384,13 @@ lcms_icc_apply (gint32       image,
 }
 
 static GimpPDBStatusType
-lcms_icc_info (gint32     image,
-               GimpParam *return_vals,
-               gint      *n_return_vals)
+lcms_icc_info (gint32   image,
+               gchar  **name,
+               gchar  **desc,
+               gchar  **info)
 {
   cmsHPROFILE  profile;
-  const gchar *info;
+  const gchar *str;
 
   profile = lcms_image_get_profile (image);
 
@@ -377,29 +398,27 @@ lcms_icc_info (gint32     image,
     profile = cmsCreate_sRGBProfile ();
 
   /* product name */
-  info = cmsTakeProductName (profile);
-  if (! g_utf8_validate (info, -1, NULL))
-    info = _("(invalid UTF-8 string)");
+  str = cmsTakeProductName (profile);
+  if (! g_utf8_validate (str, -1, NULL))
+    str = _("(invalid UTF-8 string)");
 
-  return_vals[PRODUCT_NAME].data.d_string = g_strdup (info);
+  *name = g_strdup (str);
 
   /* product desc */
-  info = cmsTakeProductDesc (profile);
-  if (! g_utf8_validate (info, -1, NULL))
-    info = _("(invalid UTF-8 string)");
+  str = cmsTakeProductDesc (profile);
+  if (! g_utf8_validate (str, -1, NULL))
+    str = _("(invalid UTF-8 string)");
 
-  return_vals[PRODUCT_DESC].data.d_string = g_strdup (info);
+  *desc = g_strdup (str);
 
   /* product info */
-  info = cmsTakeProductInfo (profile);
-  if (! g_utf8_validate (info, -1, NULL))
-    info = _("(invalid UTF-8 string)");
+  str = cmsTakeProductInfo (profile);
+  if (! g_utf8_validate (str, -1, NULL))
+    str = _("(invalid UTF-8 string)");
 
-  return_vals[PRODUCT_INFO].data.d_string = g_strdup (info);
+  *info = g_strdup (str);
 
   cmsCloseProfile (profile);
-
-  *n_return_vals = NUM_RETURN_VALUES;
 
   return GIMP_PDB_SUCCESS;
 }

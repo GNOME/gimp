@@ -32,6 +32,7 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpimagepropview.h"
+#include "widgets/gimpimageprofileview.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "image-properties-dialog.h"
@@ -47,6 +48,7 @@ image_properties_dialog_new (GimpImage   *image,
                              GtkWidget   *parent)
 {
   GtkWidget *dialog;
+  GtkWidget *notebook;
   GtkWidget *view;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
@@ -72,10 +74,21 @@ image_properties_dialog_new (GimpImage   *image,
                     G_CALLBACK (gtk_widget_destroy),
                     NULL);
 
+  notebook = gtk_notebook_new ();
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), notebook,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (notebook);
+
   view = gimp_image_prop_view_new (image);
   gtk_container_set_border_width (GTK_CONTAINER (view), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), view,
-                      FALSE, FALSE, 0);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                            view, gtk_label_new (_("Properties")));
+  gtk_widget_show (view);
+
+  view = gimp_image_profile_view_new (image);
+  gtk_container_set_border_width (GTK_CONTAINER (view), 12);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                            view, gtk_label_new (_("Color Profile")));
   gtk_widget_show (view);
 
   return dialog;
