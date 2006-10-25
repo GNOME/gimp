@@ -30,11 +30,12 @@
 #include "core/gimpprogress.h"
 
 #include "gimpplugin.h"
+#include "gimpplugin-cleanup.h"
 #include "gimpplugin-progress.h"
 #include "gimppluginprocedure.h"
 
 
-/*  publuc functions  */
+/*  public functions  */
 
 GimpPlugInProcFrame *
 gimp_plug_in_proc_frame_new (GimpContext         *context,
@@ -120,6 +121,9 @@ gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
       g_main_loop_unref (proc_frame->main_loop);
       proc_frame->main_loop = NULL;
     }
+
+  if (proc_frame->cleanups)
+    gimp_plug_in_cleanup (plug_in, proc_frame);
 }
 
 GimpPlugInProcFrame *

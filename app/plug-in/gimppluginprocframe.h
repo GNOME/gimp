@@ -37,6 +37,9 @@ struct _GimpPlugInProcFrame
   GimpProgress  *progress;
   gboolean       progress_created;
   gulong         progress_cancel_id;
+
+  /*  lists of things to clean up on dispose  */
+  GList         *cleanups;
 };
 
 

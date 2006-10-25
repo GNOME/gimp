@@ -1,3 +1,26 @@
+2006-10-25  Michael Natterer  <mitch@gimp.org>
+
+	Added mechanism that should prevent undo corruption by
+	broken plug-ins and scripts. Work in progress.
+
+	* app/plug-in/Makefile.am
+	* app/plug-in/gimpplugin-cleanup.[ch]: new files that (for now)
+	keep track of the undo groups plug-in procedures open and close,
+	and can fix an image's undo group state after a plug-in messed.
+
+	* app/plug-in/gimppluginprocframe.h (struct GimpPlugInProcFrame):
+	keep a list of plug-in cleanup structs.
+
+	* app/plug-in/gimppluginprocframe.c
+	(gimp_plug_in_proc_frame_dispose): call gimp_plug_in_cleanup() if
+	the list is not empty.
+
+	* tools/pdbgen/pdb/undo.pdb: keep track of undo groups using
+	the new gimp_plug_in_cleanup_undo_group_start() and _end()
+	functions. Fail if any of the functions returns FALSE.
+
+	* app/pdb/undo_cmds.c: regenerated.
+
 2006-10-25  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage.[ch]: added signals "parasite-attached" and

@@ -31,6 +31,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
+#include "plug-in/gimpplugin-cleanup.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
 
@@ -49,13 +50,19 @@ image_undo_group_start_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      GimpPlugIn *plug_in  = gimp->plug_in_manager->current_plug_in;
+      GimpPlugIn *plug_in   = gimp->plug_in_manager->current_plug_in;
       gchar      *undo_desc = NULL;
 
       if (plug_in)
-        undo_desc = gimp_plug_in_get_undo_desc (plug_in);
+        {
+          success = gimp_plug_in_cleanup_undo_group_start (plug_in, image);
 
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC, undo_desc);
+          if (success)
+            undo_desc = gimp_plug_in_get_undo_desc (plug_in);
+        }
+
+      if (success)
+        gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC, undo_desc);
 
       if (undo_desc)
         g_free (undo_desc);
@@ -78,7 +85,13 @@ image_undo_group_end_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      gimp_image_undo_group_end (image);
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in)
+        success = gimp_plug_in_cleanup_undo_group_end (plug_in, image);
+
+      if (success)
+        gimp_image_undo_group_end (image);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -127,7 +140,15 @@ image_undo_disable_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      disabled = gimp_image_undo_disable (image);
+    #if 0
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in)
+        success = gimp_plug_in_cleanup_undo_disable (plug_in, image);
+    #endif
+
+      if (success)
+        disabled = gimp_image_undo_disable (image);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -154,7 +175,15 @@ image_undo_enable_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      enabled = gimp_image_undo_enable (image);
+    #if 0
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in)
+        success = gimp_plug_in_cleanup_undo_enable (plug_in, image);
+    #endif
+
+      if (success)
+        enabled = gimp_image_undo_enable (image);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -181,7 +210,15 @@ image_undo_freeze_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      frozen = gimp_image_undo_freeze (image);
+    #if 0
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in)
+        success = gimp_plug_in_cleanup_undo_freeze (plug_in, image);
+    #endif
+
+      if (success)
+        frozen = gimp_image_undo_freeze (image);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -208,7 +245,15 @@ image_undo_thaw_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      thawed = gimp_image_undo_thaw (image);
+    #if 0
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in)
+        success = gimp_plug_in_cleanup_undo_thaw (plug_in, image);
+    #endif
+
+      if (success)
+        thawed = gimp_image_undo_thaw (image);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);

@@ -27,6 +27,8 @@ libappplug_in_a_SOURCES = \
 	gimpplugindebug.h			\
 	gimpplugin.c				\
 	gimpplugin.h				\
+	gimpplugin-cleanup.c			\
+	gimpplugin-cleanup.h			\
 	gimpplugin-context.c			\
 	gimpplugin-context.h			\
 	gimpplugin-message.c			\
