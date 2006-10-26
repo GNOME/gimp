@@ -831,12 +831,12 @@ register_paths_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-set-points");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-set-points",
-                                     "This procedure is deprecated! Use 'vectors_stroke_new_from_points' instead.",
-                                     "This procedure is deprecated! Use 'vectors_stroke_new_from_points' instead.",
+                                     "This procedure is deprecated! Use 'vectors-stroke-new-from-points' instead.",
+                                     "This procedure is deprecated! Use 'vectors-stroke-new-from-points' instead.",
                                      "",
                                      "",
                                      "",
-                                     "vectors_stroke_new_from_points");
+                                     "vectors-stroke-new-from-points");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -1180,12 +1180,12 @@ register_paths_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-import");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-import",
-                                     "This procedure is deprecated! Use 'vectors_new_from_file' instead.",
-                                     "This procedure is deprecated! Use 'vectors_new_from_file' instead.",
+                                     "This procedure is deprecated! Use 'vectors-new-from-file' instead.",
+                                     "This procedure is deprecated! Use 'vectors-new-from-file' instead.",
                                      "",
                                      "",
                                      "",
-                                     "vectors_new_from_file");
+                                     "vectors-new-from-file");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",

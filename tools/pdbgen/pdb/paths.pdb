@@ -167,7 +167,7 @@ CODE
 }
 
 sub path_set_points {
-    &std_pdb_deprecated('vectors_stroke_new_from_points');
+    &std_pdb_deprecated('vectors-stroke-new-from-points');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -568,7 +568,7 @@ CODE
 }
 
 sub path_import {
-    &std_pdb_deprecated('vectors_new_from_file');
+    &std_pdb_deprecated('vectors-new-from-file');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -593,10 +593,14 @@ CODE
 }
 
 
-@headers = qw(<string.h> "core/gimp.h" "core/gimplist.h"
+@headers = qw(<string.h>
+              "core/gimp.h"
+              "core/gimplist.h"
               "core/gimpchannel-select.h"
-              "vectors/gimpanchor.h" "vectors/gimpbezierstroke.h"
-              "vectors/gimpvectors.h" "vectors/gimpvectors-compat.h"
+              "vectors/gimpanchor.h"
+              "vectors/gimpbezierstroke.h"
+              "vectors/gimpvectors.h"
+              "vectors/gimpvectors-compat.h"
               "gimp-intl.h");
 
 @procs = qw(path_list path_get_current path_set_current path_delete
