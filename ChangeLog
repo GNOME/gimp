@@ -1,3 +1,12 @@
+2006-10-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-transform.c
+	(gimp_drawable_transform_tiles_affine): factored out new function
+	gimp_transform_region() that contains all the actual transform
+	magic, doesn't use a GimpDrawable, and transforms into a passed
+	PixelRegion. Will be used for perspective clone after some more
+	changes.
+
 2006-10-26  Mukund Sivaraman  <muks@mukund.org>
 
 	* configure.in: Removed spaces from enable_python assignment

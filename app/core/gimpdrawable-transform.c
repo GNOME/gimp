@@ -45,6 +45,7 @@
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
+#include "gimppickable.h"
 #include "gimpprogress.h"
 #include "gimpselection.h"
 
@@ -112,7 +113,7 @@ sinc (gdouble x)
   return sin (y) / y;
 }
 
-gdouble *
+static gdouble *
 create_lanczos_lookup_transform (void)
 {
   const gdouble dx = (gdouble) LANCZOS_WIDTH / (gdouble) (LANCZOS_SAMPLES - 1);
@@ -133,6 +134,22 @@ create_lanczos_lookup_transform (void)
 
 /*  public functions  */
 
+static void
+gimp_transform_region (GimpPickable           *pickable,
+                       GimpContext            *context,
+                       TileManager            *orig_tiles,
+                       PixelRegion            *destPR,
+                       gint                    x1,
+                       gint                    y1,
+                       gint                    x2,
+                       gint                    y2,
+                       const GimpMatrix3      *matrix,
+                       GimpInterpolationType   interpolation_type,
+                       gboolean                supersample,
+                       gint                    recursion_level,
+                       GimpProgress           *progress);
+
+
 TileManager *
 gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                       GimpContext            *context,
@@ -145,36 +162,13 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                       gboolean                clip_result,
                                       GimpProgress           *progress)
 {
-  GimpImage     *image;
-  PixelRegion    destPR;
-  TileManager   *new_tiles;
-  GimpMatrix3    m;
-  GimpMatrix3    inv;
-  PixelSurround  surround;
-
-  gint         x1, y1, x2, y2;        /* target bounding box */
-  gint         x, y;                  /* target coordinates */
-  gint         u1, v1, u2, v2;        /* source bounding box */
-  gdouble      uinc, vinc, winc;      /* increments in source coordinates
-                                         pr horizontal target coordinate */
-
-  gdouble      u[5],v[5];             /* source coordinates,
-                                  2
-                                 / \    0 is sample in the centre of pixel
-                                1 0 3   1..4 is offset 1 pixel in each
-                                 \ /    direction (in target space)
-                                  4
-                                       */
-
-  gdouble      tu[5],tv[5],tw[5];     /* undivided source coordinates and
-                                         divisor */
-
-  gint         coords;
-  gint         width;
-  gint         alpha;
-  gint         bytes;
-  guchar      *dest, *d;
-  guchar       bg_color[MAX_CHANNELS];
+  GimpImage   *image;
+  PixelRegion  destPR;
+  TileManager *new_tiles;
+  GimpMatrix3  m;
+  GimpMatrix3  inv;
+  gint         u1, v1, u2, v2;  /* source bounding box */
+  gint         x1, y1, x2, y2;  /* target bounding box */
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
@@ -187,47 +181,6 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 
   m   = *matrix;
   inv = *matrix;
-
-  alpha = 0;
-
-  /*  turn interpolation off for simple transformations (e.g. rot90)  */
-  if (gimp_matrix3_is_simple (matrix))
-    interpolation_type = GIMP_INTERPOLATION_NONE;
-
-  /*  Get the background color  */
-  gimp_image_get_background (image, context, gimp_drawable_type (drawable),
-                             bg_color);
-
-  switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
-    {
-    case GIMP_RGB:
-      bg_color[ALPHA_PIX] = TRANSPARENT_OPACITY;
-      alpha = ALPHA_PIX;
-      break;
-    case GIMP_GRAY:
-      bg_color[ALPHA_G_PIX] = TRANSPARENT_OPACITY;
-      alpha = ALPHA_G_PIX;
-      break;
-    case GIMP_INDEXED:
-      bg_color[ALPHA_I_PIX] = TRANSPARENT_OPACITY;
-      alpha = ALPHA_I_PIX;
-      /*  If the image is indexed color, ignore interpolation value  */
-      interpolation_type = GIMP_INTERPOLATION_NONE;
-      break;
-    default:
-      g_assert_not_reached ();
-      break;
-    }
-
-  /*  "Outside" a channel is transparency, not the bg color  */
-  if (GIMP_IS_CHANNEL (drawable))
-    bg_color[0] = TRANSPARENT_OPACITY;
-
-  /*  setting alpha = 0 will cause the channel's value to be treated
-   *  as alpha and the color channel loops never to be entered
-   */
-  if (tile_manager_bpp (orig_tiles) == 1)
-    alpha = 0;
 
   if (direction == GIMP_TRANSFORM_BACKWARD)
     {
@@ -247,7 +200,8 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   v2 = v1 + tile_manager_height (orig_tiles);
 
   /*  Always clip unfloated tiles since they must keep their size  */
-  if (G_TYPE_FROM_INSTANCE (drawable) == GIMP_TYPE_CHANNEL && alpha == 0)
+  if (G_TYPE_FROM_INSTANCE (drawable) == GIMP_TYPE_CHANNEL &&
+      tile_manager_bpp (orig_tiles)   == 1)
     clip_result = TRUE;
 
   /*  Find the bounding coordinates of target */
@@ -305,8 +259,116 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                      0, 0, x2 - x1, y2 - y1, TRUE);
   tile_manager_set_offsets (new_tiles, x1, y1);
 
-  width  = tile_manager_width (new_tiles);
-  bytes  = tile_manager_bpp (new_tiles);
+  gimp_transform_region (GIMP_PICKABLE (drawable),
+                         context,
+                         orig_tiles,
+                         &destPR,
+                         x1,
+                         y1,
+                         x2,
+                         y2,
+                         &inv,
+                         interpolation_type,
+                         supersample,
+                         recursion_level,
+                         progress);
+
+  return new_tiles;
+}
+
+static void
+gimp_transform_region (GimpPickable          *pickable,
+                       GimpContext           *context,
+                       TileManager           *orig_tiles,
+                       PixelRegion           *destPR,
+                       gint                   x1,
+                       gint                   y1,
+                       gint                   x2,
+                       gint                   y2,
+                       const GimpMatrix3     *matrix,
+                       GimpInterpolationType  interpolation_type,
+                       gboolean               supersample,
+                       gint                   recursion_level,
+                       GimpProgress          *progress)
+{
+  PixelSurround  surround;
+  GimpImageType  pickable_type;
+  GimpMatrix3    m;
+
+  gint           x, y;                 /* target coordinates */
+  gint           u1, v1, u2, v2;       /* source bounding box */
+  gdouble        uinc, vinc, winc;     /* increments in source coordinates
+                                        * per horizontal target coordinate
+                                        */
+  gdouble        u[5], v[5];           /* source coordinates,
+                                        *
+                                        *   2     0    is sample in the center
+                                        *  / \         of pixel
+                                        * 1 0 3   1..4 is offset 1 pixel in
+                                        *  \ /         each direction
+                                        *   4          (in target space)
+                                        */
+  gdouble        tu[5], tv[5], tw[5];  /* undivided source coordinates and
+                                        * divisor
+                                        */
+  gint           coords;
+  gint           alpha;
+  gint           width;
+  gint           bytes;
+  guchar        *dest, *d;
+  guchar         bg_color[MAX_CHANNELS];
+
+  tile_manager_get_offsets (orig_tiles, &u1, &v1);
+  u2 = u1 + tile_manager_width (orig_tiles);
+  v2 = v1 + tile_manager_height (orig_tiles);
+
+  m = *matrix;
+  gimp_matrix3_invert (&m);
+
+  alpha = 0;
+  width = x2 - x1;
+  bytes = destPR->bytes;
+
+  /*  turn interpolation off for simple transformations (e.g. rot90)  */
+  if (gimp_matrix3_is_simple (matrix))
+    interpolation_type = GIMP_INTERPOLATION_NONE;
+
+  pickable_type = gimp_pickable_get_image_type (pickable);
+
+  /*  Get the background color  */
+  gimp_image_get_background (gimp_pickable_get_image (pickable), context,
+                             pickable_type, bg_color);
+
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (pickable_type))
+    {
+    case GIMP_RGB:
+      bg_color[ALPHA_PIX] = TRANSPARENT_OPACITY;
+      alpha = ALPHA_PIX;
+      break;
+    case GIMP_GRAY:
+      bg_color[ALPHA_G_PIX] = TRANSPARENT_OPACITY;
+      alpha = ALPHA_G_PIX;
+      break;
+    case GIMP_INDEXED:
+      bg_color[ALPHA_I_PIX] = TRANSPARENT_OPACITY;
+      alpha = ALPHA_I_PIX;
+      /*  If the image is indexed color, ignore interpolation value  */
+      interpolation_type = GIMP_INTERPOLATION_NONE;
+      break;
+    default:
+      g_assert_not_reached ();
+      break;
+    }
+
+  /*  "Outside" a channel is transparency, not the bg color  */
+  if (GIMP_IS_CHANNEL (pickable))
+    bg_color[0] = TRANSPARENT_OPACITY;
+
+  /*  setting alpha = 0 will cause the channel's value to be treated
+   *  as alpha and the color channel loops never to be entered
+   */
+  if (tile_manager_bpp (orig_tiles) == 1)
+    alpha = 0;
 
   /* initialise the pixel_surround and pixel_cache accessors */
   switch (interpolation_type)
@@ -323,7 +385,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       break;
     }
 
-  dest = g_new (guchar, tile_manager_width (new_tiles) * bytes);
+  dest = g_new (guchar, width * bytes);
 
   /* these loops could be rearranged, depending on which bit of code
    * you'd most like to write more than once.
@@ -359,7 +421,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
             gimp_progress_set_value (progress,
                                      (gdouble) (y - y1) / (gdouble) (y2 - y1));
 
-          pixel_region_get_row (&destPR, 0, (y - y1), width, dest, 1);
+          pixel_region_get_row (destPR, 0, (y - y1), width, dest, 1);
 
           d = dest;
 
@@ -390,7 +452,8 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
               su = (gint) ((du - u) * LANCZOS_SPP);
               sv = (gint) ((dv - v) * LANCZOS_SPP);
 
-              if (u <  u1 || v <  v1 || u >= u2 || v >= v2 )
+              if (u <  u1 || v <  v1 ||
+                  u >= u2 || v >= v2)
                 {
                   /* not in source range */
                   /* increment the destination pointers  */
@@ -464,7 +527,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
             }
 
           /*  set the pixel region row  */
-          pixel_region_set_row (&destPR, 0, (y - y1), width, dest);
+          pixel_region_set_row (destPR, 0, (y - y1), width, dest);
         }
 
       g_free (lanczos);
@@ -634,7 +697,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
         }
 
       /*  set the pixel region row  */
-      pixel_region_set_row (&destPR, 0, (y - y1), width, dest);
+      pixel_region_set_row (destPR, 0, (y - y1), width, dest);
     }
 
  done:
@@ -655,8 +718,6 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
     }
 
   g_free (dest);
-
-  return new_tiles;
 }
 
 TileManager *
