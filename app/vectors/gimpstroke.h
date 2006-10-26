@@ -172,6 +172,11 @@ struct _GimpStrokeClass
 
 GType        gimp_stroke_get_type             (void) G_GNUC_CONST;
 
+GimpStroke * gimp_stroke_new_from_coords      (GimpVectorsStrokeType  type,
+                                               const GimpCoords      *coords,
+                                               gint                   n_coords,
+                                               gboolean               closed);
+
 void         gimp_stroke_set_ID               (GimpStroke            *stroke,
                                                gint                   id);
 gint         gimp_stroke_get_ID               (const GimpStroke      *stroke);

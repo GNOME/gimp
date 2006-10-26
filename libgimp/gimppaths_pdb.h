@@ -42,13 +42,11 @@ gint     gimp_path_get_points        (gint32           image_ID,
                                       gint            *path_closed,
                                       gint            *num_path_point_details,
                                       gdouble        **points_pairs);
-#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean gimp_path_set_points        (gint32           image_ID,
                                       const gchar     *name,
                                       gint             ptype,
                                       gint             num_path_points,
                                       const gdouble   *points_pairs);
-#ifndef GIMP_DISABLE_DEPRECATED
 gboolean gimp_path_stroke_current    (gint32           image_ID);
 gint     gimp_path_get_point_at_dist (gint32           image_ID,
                                       gdouble          distance,

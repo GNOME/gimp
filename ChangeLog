@@ -1,3 +1,22 @@
+2006-10-26  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/Makefile.am
+	* app/vectors/gimpstroke.h
+	* app/vectors/gimpstroke-new.c: new factory for GimpStrokes.
+
+	* tools/pdbgen/pdb/vectors.pdb: use it for
+	gimp_vectors_stroke_new_from_points()
+
+	* libgimp/gimp.def: added new symbol
+
+	* tools/pdbgen/pdb/paths.pdb: deprecated completely! Yay!
+
+	* app/pdb/internal_procs.c
+	* app/pdb/paths_cmds.c
+	* app/pdb/vectors_cmds.c
+	* libgimp/gimppaths_pdb.[ch]
+	* libgimp/gimpvectors_pdb.[ch]: regenerated.
+
 2006-10-26  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpimageprofileview.[ch]: update the profile

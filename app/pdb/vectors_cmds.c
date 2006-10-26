@@ -561,7 +561,7 @@ vectors_stroke_get_points_invoker (GimpProcedure     *procedure,
   gboolean closed = FALSE;
 
   vectors = gimp_value_get_vectors (&args->values[0], gimp);
-  stroke_id = g_value_get_enum (&args->values[1]);
+  stroke_id = g_value_get_int (&args->values[1]);
 
   if (success)
     {
@@ -601,11 +601,72 @@ vectors_stroke_get_points_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      g_value_set_int (&return_vals->values[1], type);
+      g_value_set_enum (&return_vals->values[1], type);
       g_value_set_int (&return_vals->values[2], num_points);
       gimp_value_take_floatarray (&return_vals->values[3], controlpoints, num_points);
       g_value_set_boolean (&return_vals->values[4], closed);
     }
+
+  return return_vals;
+}
+
+static GValueArray *
+vectors_stroke_new_from_points_invoker (GimpProcedure     *procedure,
+                                        Gimp              *gimp,
+                                        GimpContext       *context,
+                                        GimpProgress      *progress,
+                                        const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpVectors *vectors;
+  gint32 type;
+  gint32 num_points;
+  const gdouble *controlpoints;
+  gboolean closed;
+  gint32 stroke_id = 0;
+
+  vectors = gimp_value_get_vectors (&args->values[0], gimp);
+  type = g_value_get_enum (&args->values[1]);
+  num_points = g_value_get_int (&args->values[2]);
+  controlpoints = gimp_value_get_floatarray (&args->values[3]);
+  closed = g_value_get_boolean (&args->values[4]);
+
+  if (success)
+    {
+      GimpStroke *stroke;
+      GimpCoords *coords;
+      GimpCoords  default_coords = GIMP_COORDS_DEFAULT_VALUES;
+      gint i;
+
+      success = FALSE;
+
+      if (type == GIMP_VECTORS_STROKE_TYPE_BEZIER &&
+          num_points % 6 == 0)
+        {
+          coords = g_new (GimpCoords, num_points);
+          for (i = 0; i < num_points; i++)
+            {
+              coords[i] = default_coords;
+              coords[i].x = controlpoints[i*2];
+              coords[i].y = controlpoints[i*2+1];
+            }
+
+          stroke = gimp_stroke_new_from_coords (type, coords, num_points/2, closed);
+          if (stroke)
+            {
+              gimp_vectors_stroke_add (vectors, stroke);
+              stroke_id = gimp_stroke_get_ID (stroke);
+            }
+
+          g_free (coords);
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_int (&return_vals->values[1], stroke_id);
 
   return return_vals;
 }
@@ -1645,18 +1706,18 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("stroke-id",
-                                                  "stroke id",
-                                                  "The stroke ID",
-                                                  GIMP_TYPE_VECTORS_STROKE_TYPE,
-                                                  GIMP_VECTORS_STROKE_TYPE_BEZIER,
-                                                  GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("stroke-id",
+                                                      "stroke id",
+                                                      "The stroke ID",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("type",
-                                                          "type",
-                                                          "type of the stroke (always bezier for now).",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_enum ("type",
+                                                      "type",
+                                                      "type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).",
+                                                      GIMP_TYPE_VECTORS_STROKE_TYPE,
+                                                      GIMP_VECTORS_STROKE_TYPE_BEZIER,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("num-points",
                                                           "num points",
@@ -1674,6 +1735,58 @@ register_vectors_procs (GimpPDB *pdb)
                                                          "Whether the stroke is closed or not.",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vectors-stroke-new-from-points
+   */
+  procedure = gimp_procedure_new (vectors_stroke_new_from_points_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-stroke-new-from-points");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-vectors-stroke-new-from-points",
+                                     "Adds a stroke of a given type to the vectors object.",
+                                     "Adds a stroke of a given type to the vectors object. The coordinates of the control points can be specified. For now only strokes of the type GIMP_VECTORS_STROKE_TYPE_BEZIER are supported. The control points are specified as a pair of float values for the x- and y-coordinate. The Bezier stroke type needs a multiple of three control points. Each Bezier segment endpoint (anchor, A) has two additional control points (C) associated. They are specified in the order CACCACCAC...",
+                                     "Simon Budig",
+                                     "Simon Budig",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("vectors",
+                                                           "vectors",
+                                                           "The vectors object",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("type",
+                                                  "type",
+                                                  "type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).",
+                                                  GIMP_TYPE_VECTORS_STROKE_TYPE,
+                                                  GIMP_VECTORS_STROKE_TYPE_BEZIER,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-points",
+                                                      "num points",
+                                                      "The number of elements in the array, i.e. the number of controlpoints in the stroke * 2 (x- and y-coordinate).",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("controlpoints",
+                                                            "controlpoints",
+                                                            "List of the x- and y-coordinates of the control points.",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("closed",
+                                                     "closed",
+                                                     "Whether the stroke is to be closed or not.",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("stroke-id",
+                                                          "stroke id",
+                                                          "The stroke ID of the newly created stroke.",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

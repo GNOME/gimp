@@ -634,6 +634,7 @@ EXPORTS
 	gimp_vectors_stroke_get_point_at_dist
 	gimp_vectors_stroke_get_points
 	gimp_vectors_stroke_interpolate
+	gimp_vectors_stroke_new_from_points
 	gimp_vectors_stroke_scale
 	gimp_vectors_stroke_translate
 	gimp_vectors_to_selection

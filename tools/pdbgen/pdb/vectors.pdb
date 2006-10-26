@@ -539,13 +539,13 @@ HELP
     @inargs = (
 	{ name => 'vectors', type => 'vectors',
 	  desc => 'The vectors object' },
-	{ name => 'stroke_id', type => 'enum GimpVectorsStrokeType',
+	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' }
     );
 
     @outargs = (
-        { name => 'type', type => 'int32',
-          desc => 'type of the stroke (always bezier for now).' },
+        { name => 'type', type => 'enum GimpVectorsStrokeType',
+          desc => 'type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).' },
         { name => 'controlpoints', type => 'floatarray',
           desc => 'List of the control points for the stroke (x0, y0, x1, y1, ...).',
           array => { name => 'num_points',
@@ -655,6 +655,77 @@ CODE
     );
 }
 
+
+sub vectors_stroke_new_from_points {
+    $blurb = 'Adds a stroke of a given type to the vectors object.';
+
+    $help = <<'HELP';
+Adds a stroke of a given type to the vectors object. The coordinates of the
+control points can be specified.
+For now only strokes of the type GIMP_VECTORS_STROKE_TYPE_BEZIER are supported.
+The control points are specified as a pair of float values for the x- and
+y-coordinate.
+The Bezier stroke type needs a multiple of three control points. Each Bezier
+segment endpoint (anchor, A) has two additional control points (C) associated.
+They are specified in the order CACCACCAC...
+HELP
+
+    &simon_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object' },
+	{ name => 'type', type => 'enum GimpVectorsStrokeType',
+	  desc => 'type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).' },
+	{ name => 'controlpoints', type => 'floatarray',
+	  desc => 'List of the x- and y-coordinates of the control points.',
+          array => { name => 'num_points',
+                     desc => 'The number of elements in the array, i.e. the
+                              number of controlpoints in the stroke * 2
+                              (x- and y-coordinate).' } },
+        { name => 'closed', type => 'boolean',
+          desc => 'Whether the stroke is to be closed or not.' }
+    );
+
+    @outargs = (
+        { name => 'stroke_id', type => 'int32',
+          desc => 'The stroke ID of the newly created stroke.' }
+    );
+
+    %invoke = (
+        code => <<"CODE"
+{
+  GimpStroke *stroke;
+  GimpCoords *coords;
+  GimpCoords  default_coords = GIMP_COORDS_DEFAULT_VALUES;
+  gint i;
+
+  success = FALSE;
+
+  if (type == GIMP_VECTORS_STROKE_TYPE_BEZIER &&
+      num_points % 6 == 0)
+    {
+      coords = g_new (GimpCoords, num_points);
+      for (i = 0; i < num_points; i++)
+        {
+	  coords[i] = default_coords;
+	  coords[i].x = controlpoints[i*2];
+	  coords[i].y = controlpoints[i*2+1];
+	}
+
+      stroke = gimp_stroke_new_from_coords (type, coords, num_points/2, closed);
+      if (stroke)
+        {
+	  gimp_vectors_stroke_add (vectors, stroke);
+	  stroke_id = gimp_stroke_get_ID (stroke);
+	}
+
+      g_free (coords);
+    }
+}
+CODE
+    );
+}
 
 sub vectors_bezier_stroke_new_moveto {
     $blurb = 'Adds a bezier stroke with a single moveto to the vectors object.';
@@ -1083,7 +1154,8 @@ CODE
             vectors_stroke_close
             vectors_stroke_translate
             vectors_stroke_scale
-	    vectors_stroke_get_points
+            vectors_stroke_get_points
+            vectors_stroke_new_from_points
             vectors_stroke_interpolate
             vectors_bezier_stroke_new_moveto
             vectors_bezier_stroke_lineto
