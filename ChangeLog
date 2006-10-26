@@ -1,3 +1,9 @@
+2006-10-26  Jakub Steiner <jimmac@ximian.com>
+
+	* stock-display-filter-proof:
+	* stock-controller-keyboard:
+	* stock-controller-linux-input: ruin more of Michael's artwork
+
 2006-10-26  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/paths.pdb: use canonical procedure names.
