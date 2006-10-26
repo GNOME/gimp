@@ -1,5 +1,13 @@
 2006-10-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/gimp-transform-region.[ch]: new files containing
+	gimp_transform_region() and all its voodoo utility functions.
+
+	* app/core/gimpdrawable-transform.c: removed the stuff here.
+
+2006-10-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable-transform.c
 	(gimp_drawable_transform_tiles_affine): factored out new function
 	gimp_transform_region() that contains all the actual transform
