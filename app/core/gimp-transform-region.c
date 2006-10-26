@@ -271,7 +271,9 @@ gimp_transform_region (GimpPickable          *pickable,
                       {
                         pu = CLAMP (u + i - LANCZOS_WIDTH, u1, u2 - 1);
                         pv = CLAMP (v + j - LANCZOS_WIDTH, v1, v2 - 1);
-                        read_pixel_data_1 (orig_tiles, pu, pv, &lwin[pos][0]);
+
+                        read_pixel_data_1 (orig_tiles, pu - u1, pv - v1,
+                                           &lwin[pos][0]);
                       }
 
                   /* fill 1D kernels */

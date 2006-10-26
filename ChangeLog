@@ -1,5 +1,12 @@
 2006-10-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp-transform-region.c (gimp_transform_region): make
+	lanczos work for orig_tiles that don't start at 0,0. Please folks,
+	some basic testing of anything but the most simple use case next
+	time.
+
+2006-10-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/gimp-transform-region.[ch]: new files containing
 	gimp_transform_region() and all its voodoo utility functions.
