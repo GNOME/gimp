@@ -1,3 +1,10 @@
+2006-10-26  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpimageprofileview.[ch]: update the profile
+	information from an idle handler.
+
+	* plug-ins/common/lcms.c: bug fixes and robustness.
+
 2006-10-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp-transform-region.c (gimp_transform_region): make

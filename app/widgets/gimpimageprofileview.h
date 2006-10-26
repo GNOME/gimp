@@ -48,6 +48,8 @@ struct _GimpImageProfileView
   GtkWidget *info_label;
 
   GtkWidget *message;
+
+  guint      idle_id;
 };
 
 struct _GimpImageProfileViewClass

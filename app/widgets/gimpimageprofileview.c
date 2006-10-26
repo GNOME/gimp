@@ -62,6 +62,7 @@ static void      gimp_image_profile_view_get_property (GObject           *object
                                                        guint              property_id,
                                                        GValue            *value,
                                                        GParamSpec        *pspec);
+static void      gimp_image_profile_view_dispose      (GObject           *object);
 
 static GtkWidget * gimp_image_profile_view_add_label      (GtkTable    *table,
                                                            gint         row,
@@ -80,11 +81,12 @@ G_DEFINE_TYPE (GimpImageProfileView, gimp_image_profile_view, GTK_TYPE_VBOX)
 static void
 gimp_image_profile_view_class_init (GimpImageProfileViewClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
 
   object_class->constructor  = gimp_image_profile_view_constructor;
   object_class->set_property = gimp_image_profile_view_set_property;
   object_class->get_property = gimp_image_profile_view_get_property;
+  object_class->dispose      = gimp_image_profile_view_dispose;
 
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image", NULL, NULL,
@@ -118,6 +120,8 @@ gimp_image_profile_view_init (GimpImageProfileView *view)
                                 "yalign", 0.5,
                                 NULL);
   gtk_container_add (GTK_CONTAINER (view), view->message);
+
+  view->idle_id = 0;
 }
 
 static void
@@ -186,6 +190,20 @@ gimp_image_profile_view_constructor (GType                  type,
   return object;
 }
 
+static void
+gimp_image_profile_view_dispose (GObject *object)
+{
+  GimpImageProfileView *view = GIMP_IMAGE_PROFILE_VIEW (object);
+
+  if (view->idle_id)
+    {
+      g_source_remove (view->idle_id);
+      view->idle_id = 0;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
 
 /*  public functions  */
 
@@ -213,7 +231,7 @@ gimp_image_profile_view_add_label (GtkTable    *table,
   desc = g_object_new (GTK_TYPE_LABEL,
                        "label",  text,
                        "xalign", 1.0,
-                       "yalign", 0.5,
+                       "yalign", 0.0,
                        NULL);
   gimp_label_set_attributes (GTK_LABEL (desc),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
@@ -224,7 +242,7 @@ gimp_image_profile_view_add_label (GtkTable    *table,
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "xalign",     0.0,
-                        "yalign",     0.5,
+                        "yalign",     0.0,
                         "selectable", TRUE,
                         NULL);
   gtk_table_attach (table, label,
@@ -261,6 +279,52 @@ gimp_image_profile_view_set_value (GtkLabel    *label,
   gtk_label_set_text (label, NULL);
 }
 
+
+static gboolean
+gimp_image_profile_view_query (GimpImageProfileView *view)
+{
+  Gimp              *gimp = view->image->gimp;
+  GValueArray       *return_vals;
+  GimpPDBStatusType  status;
+
+  return_vals =
+    gimp_pdb_execute_procedure_by_name (gimp->pdb,
+                                        gimp_get_user_context (gimp),
+                                        NULL,
+                                        ICC_PROFILE_INFO_PROC,
+                                        GIMP_TYPE_INT32,
+                                        GIMP_RUN_NONINTERACTIVE,
+                                        GIMP_TYPE_IMAGE_ID,
+                                        gimp_image_get_ID (view->image),
+                                        G_TYPE_NONE);
+
+  status = g_value_get_enum (return_vals->values);
+
+  switch (status)
+    {
+    case GIMP_PDB_SUCCESS:
+      gtk_label_set_text (GTK_LABEL (view->message), NULL);
+      gtk_widget_hide (view->message);
+
+      gimp_image_profile_view_set_value (GTK_LABEL (view->name_label),
+                                         return_vals, 1);
+      gimp_image_profile_view_set_value (GTK_LABEL (view->desc_label),
+                                         return_vals, 2);
+      gimp_image_profile_view_set_value (GTK_LABEL (view->info_label),
+                                         return_vals, 3);
+      gtk_widget_show (view->table);
+      break;
+
+    default:
+      gtk_label_set_text (GTK_LABEL (view->message), "Query failed.");
+      break;
+    }
+
+  g_value_array_free (return_vals);
+
+  return FALSE;
+}
+
 static void
 gimp_image_profile_view_update (GimpImageProfileView *view)
 {
@@ -278,46 +342,14 @@ gimp_image_profile_view_update (GimpImageProfileView *view)
 
   if (procedure)
     {
-      GValueArray       *return_vals;
-      GimpPDBStatusType  status;
-
       gtk_label_set_text (GTK_LABEL (view->message), "Querying...");
       gtk_widget_show (view->message);
 
-      return_vals =
-        gimp_pdb_execute_procedure_by_name (gimp->pdb,
-                                            gimp_get_user_context (gimp),
-                                            NULL,
-                                            ICC_PROFILE_INFO_PROC,
-                                            GIMP_TYPE_INT32,
-                                            GIMP_RUN_NONINTERACTIVE,
-                                            GIMP_TYPE_IMAGE_ID,
-                                            gimp_image_get_ID (view->image),
-                                            G_TYPE_NONE);
+      if (view->idle_id)
+        g_source_remove (view->idle_id);
 
-      status = g_value_get_enum (return_vals->values);
-
-      switch (status)
-        {
-        case GIMP_PDB_SUCCESS:
-          gtk_label_set_text (GTK_LABEL (view->message), NULL);
-          gtk_widget_hide (view->message);
-
-          gimp_image_profile_view_set_value (GTK_LABEL (view->name_label),
-                                             return_vals, 1);
-          gimp_image_profile_view_set_value (GTK_LABEL (view->desc_label),
-                                             return_vals, 2);
-          gimp_image_profile_view_set_value (GTK_LABEL (view->info_label),
-                                             return_vals, 3);
-          gtk_widget_show (view->table);
-          break;
-
-        default:
-          gtk_label_set_text (GTK_LABEL (view->message), "Query failed.");
-          break;
-        }
-
-      g_value_array_free (return_vals);
+      view->idle_id = g_idle_add ((GSourceFunc) gimp_image_profile_view_query,
+                                  view);
     }
   else
     {

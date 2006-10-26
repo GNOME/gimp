@@ -82,7 +82,7 @@ static void         lcms_drawable_transform     (GimpDrawable   *drawable,
                                                  gdouble         progress_start,
                                                  gdouble         progress_end);
 
-static cmsHPROFILE  lcms_config_get_profile     (gchar         **filename);
+static cmsHPROFILE  lcms_config_get_profile     (void);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -272,7 +272,7 @@ run (const gchar      *name,
           values[PRODUCT_DESC].type          = GIMP_PDB_STRING;
           values[PRODUCT_DESC].data.d_string = desc;
 
-          values[PRODUCT_DESC].type          = GIMP_PDB_STRING;
+          values[PRODUCT_INFO].type          = GIMP_PDB_STRING;
           values[PRODUCT_INFO].data.d_string = info;
         }
     }
@@ -306,13 +306,59 @@ lcms_icc_set (gint32       image,
   return success ? GIMP_PDB_SUCCESS : GIMP_PDB_EXECUTION_ERROR;
 }
 
+static gchar *
+lcms_icc_profile_get_name (cmsHPROFILE profile)
+{
+  const gchar *str = cmsTakeProductName (profile);
+
+  if (! g_utf8_validate (str, -1, NULL))
+    return g_strdup (_("(invalid UTF-8 string)"));
+
+  return g_strdup (str);
+}
+
+static gchar *
+lcms_icc_profile_get_desc (cmsHPROFILE profile)
+{
+  const gchar *str = cmsTakeProductDesc (profile);
+
+  if (! g_utf8_validate (str, -1, NULL))
+    return g_strdup (_("(invalid UTF-8 string)"));
+
+  return g_strdup (str);
+}
+
+static gchar *
+lcms_icc_profile_get_info (cmsHPROFILE profile)
+{
+  const gchar *str = cmsTakeProductInfo (profile);
+
+  if (! g_utf8_validate (str, -1, NULL))
+    return g_strdup (_("(invalid UTF-8 string)"));
+
+  return g_strdup (str);
+}
+
+static gboolean
+lcms_icc_profile_is_rgb (cmsHPROFILE profile)
+{
+  return (cmsGetColorSpace (profile) == icSigRgbData);
+}
+
 static GimpPDBStatusType
 lcms_icc_apply (gint32       image,
                 const gchar *filename)
 {
-  cmsHPROFILE  src_profile  = NULL;
-  cmsHPROFILE  dest_profile = NULL;
-  gchar       *name         = NULL;
+  GimpColorConfig *config       = gimp_get_color_configuration ();
+  cmsHPROFILE      src_profile  = NULL;
+  cmsHPROFILE      dest_profile = NULL;
+
+  g_return_val_if_fail (image != -1, GIMP_PDB_CALLING_ERROR);
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config),
+                        GIMP_PDB_EXECUTION_ERROR);
+
+  if (! filename)
+    filename = config->rgb_profile;
 
   if (filename)
     {
@@ -320,15 +366,22 @@ lcms_icc_apply (gint32       image,
 
       if (! dest_profile)
         {
-          g_message (_("Could not open ICC profile from '%s'"),
+          g_message (_("Could not open color profile from '%s'"),
                      gimp_filename_to_utf8 (filename));
 
+          g_object_unref (config);
           return GIMP_PDB_EXECUTION_ERROR;
         }
-    }
-  else
-    {
-      dest_profile = lcms_config_get_profile (&name);
+
+      if (! lcms_icc_profile_is_rgb (dest_profile))
+        {
+          g_message (_("Color profile '%s' is not for RGB color space."),
+                     gimp_filename_to_utf8 (filename));
+
+          cmsCloseProfile (dest_profile);
+          g_object_unref (config);
+          return GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   src_profile = lcms_image_get_profile (image);
@@ -336,49 +389,52 @@ lcms_icc_apply (gint32       image,
   if (! src_profile && ! dest_profile)
     return GIMP_PDB_SUCCESS;
 
+  if (! lcms_icc_profile_is_rgb (src_profile))
+    {
+      g_warning ("Attached color profile is not for RGB color space.");
+
+      cmsCloseProfile (src_profile);
+      src_profile = NULL;
+    }
+
   if (! src_profile)
     src_profile = cmsCreate_sRGBProfile ();
 
   if (! dest_profile)
     dest_profile = cmsCreate_sRGBProfile ();
 
-  {
-    const gchar *src  = cmsTakeProductDesc (src_profile);
-    const gchar *dest = cmsTakeProductDesc (dest_profile);
-
-    if (! g_utf8_validate (src, -1, NULL))
-      src = _("(invalid UTF-8 string)");
-
-    if (! g_utf8_validate (dest, -1, NULL))
-      dest = _("(invalid UTF-8 string)");
-
-    /* ICC color profile conversion */
-    gimp_progress_init_printf (_("Converting from '%s' to '%s'"), src, dest);
-
-    g_printerr ("lcms: converting from '%s' to '%s'\n", src, dest);
-  }
-
-  switch (gimp_image_base_type (image))
+  if (lcms_image_set_profile (image, filename))
     {
-    case GIMP_RGB:
-    case GIMP_GRAY:
-      lcms_image_transform_pixels (image, src_profile, dest_profile);
-      break;
+      gchar *src  = lcms_icc_profile_get_desc (src_profile);
+      gchar *dest = lcms_icc_profile_get_desc (dest_profile);
 
-    case GIMP_INDEXED:
-      lcms_image_transform_cmap (image, src_profile, dest_profile);
-      break;
-    }
+      /* ICC color profile conversion */
+      gimp_progress_init_printf (_("Converting from '%s' to '%s'"), src, dest);
+
+      g_printerr ("lcms: converting from '%s' to '%s'\n", src, dest);
+
+      g_free (dest);
+      g_free (src);
+
+      switch (gimp_image_base_type (image))
+        {
+        case GIMP_RGB:
+        case GIMP_GRAY:
+          lcms_image_transform_pixels (image, src_profile, dest_profile);
+          break;
+
+        case GIMP_INDEXED:
+          lcms_image_transform_cmap (image, src_profile, dest_profile);
+          break;
+        }
+
+      gimp_progress_update (1.0);
+   }
 
   cmsCloseProfile (src_profile);
   cmsCloseProfile (dest_profile);
 
-  lcms_image_set_profile (image, filename ? filename : name);
-
-  if (name)
-    g_free (name);
-
-  gimp_progress_update (1.0);
+  g_object_unref (config);
 
   return GIMP_PDB_SUCCESS;
 }
@@ -389,36 +445,22 @@ lcms_icc_info (gint32   image,
                gchar  **desc,
                gchar  **info)
 {
-  cmsHPROFILE  profile;
-  const gchar *str;
+  cmsHPROFILE  profile = lcms_image_get_profile (image);
 
-  profile = lcms_image_get_profile (image);
+  if (profile)
+    {
+      *name = lcms_icc_profile_get_name (profile);
+      *desc = lcms_icc_profile_get_desc (profile);
+      *info = lcms_icc_profile_get_info (profile);
 
-  if (! profile)
-    profile = cmsCreate_sRGBProfile ();
-
-  /* product name */
-  str = cmsTakeProductName (profile);
-  if (! g_utf8_validate (str, -1, NULL))
-    str = _("(invalid UTF-8 string)");
-
-  *name = g_strdup (str);
-
-  /* product desc */
-  str = cmsTakeProductDesc (profile);
-  if (! g_utf8_validate (str, -1, NULL))
-    str = _("(invalid UTF-8 string)");
-
-  *desc = g_strdup (str);
-
-  /* product info */
-  str = cmsTakeProductInfo (profile);
-  if (! g_utf8_validate (str, -1, NULL))
-    str = _("(invalid UTF-8 string)");
-
-  *info = g_strdup (str);
-
-  cmsCloseProfile (profile);
+      cmsCloseProfile (profile);
+    }
+  else
+    {
+      *name = g_strdup ("sRGB");
+      *desc = g_strdup ("sRGB");
+      *info = g_strdup (_("Default RGB working space"));
+    }
 
   return GIMP_PDB_SUCCESS;
 }
@@ -429,7 +471,7 @@ lcms_image_get_profile (gint32 image)
   GimpParasite *parasite;
   cmsHPROFILE   profile = NULL;
 
-  g_return_val_if_fail (image != -1, cmsCreate_sRGBProfile ());
+  g_return_val_if_fail (image != -1, NULL);
 
   parasite = gimp_image_parasite_find (image, "icc-profile");
 
@@ -442,11 +484,11 @@ lcms_image_get_profile (gint32 image)
 
       if (! profile)
         g_message (_("Data attached as 'icc-profile' does not appear to "
-                     "be an ICC profile"));
+                     "be an ICC color profile"));
     }
   else
     {
-      profile = lcms_config_get_profile (NULL);
+      profile = lcms_config_get_profile ();
     }
 
   return profile;
@@ -483,21 +525,32 @@ lcms_image_set_profile (gint32       image,
 
       if (profile)
         {
-          GimpParasite *parasite;
+          gboolean rgb = lcms_icc_profile_is_rgb (profile);
 
           cmsCloseProfile (profile);
 
-          parasite = gimp_parasite_new ("icc-profile", GIMP_PARASITE_PERSISTENT,
-                                        g_mapped_file_get_length (file),
-                                        g_mapped_file_get_contents (file));
-          gimp_image_parasite_attach (image, parasite);
-          gimp_parasite_free (parasite);
+          if (rgb)
+            {
+              GimpParasite *parasite;
 
-          success = TRUE;
+              parasite =
+                gimp_parasite_new ("icc-profile", GIMP_PARASITE_PERSISTENT,
+                                   g_mapped_file_get_length (file),
+                                   g_mapped_file_get_contents (file));
+              gimp_image_parasite_attach (image, parasite);
+              gimp_parasite_free (parasite);
+
+              success = TRUE;
+            }
+          else
+            {
+              g_message (_("Color profile '%s' is not for RGB color space."),
+                         gimp_filename_to_utf8 (filename));
+            }
         }
       else
         {
-          g_message (_("'%s' does not appear to be an ICC profile"),
+          g_message (_("'%s' does not appear to be an ICC color profile"),
                      gimp_filename_to_utf8 (filename));
         }
 
@@ -642,14 +695,10 @@ lcms_drawable_transform (GimpDrawable  *drawable,
 }
 
 static cmsHPROFILE
-lcms_config_get_profile (gchar **filename)
+lcms_config_get_profile (void)
 {
-  GimpColorConfig *config;
+  GimpColorConfig *config  = gimp_get_color_configuration ();
   cmsHPROFILE      profile = NULL;
-
-  g_return_val_if_fail (filename == NULL || *filename == NULL, NULL);
-
-  config = gimp_get_color_configuration ();
 
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
 
@@ -658,14 +707,8 @@ lcms_config_get_profile (gchar **filename)
       profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
 
       if (! profile)
-        {
-          g_message (_("Could not open ICC profile from '%s'"),
-                     gimp_filename_to_utf8 (config->rgb_profile));
-        }
-      else if (filename)
-        {
-          *filename = g_strdup (config->rgb_profile);
-        }
+        g_message (_("Could not open ICC profile from '%s'"),
+                   gimp_filename_to_utf8 (config->rgb_profile));
     }
 
   g_object_unref (config);
