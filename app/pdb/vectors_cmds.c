@@ -36,6 +36,7 @@
 #include "gimp-intl.h"
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
+#include "vectors/gimpstroke-new.h"
 #include "vectors/gimpvectors-import.h"
 #include "vectors/gimpvectors.h"
 
@@ -657,6 +658,8 @@ vectors_stroke_new_from_points_invoker (GimpProcedure     *procedure,
             {
               gimp_vectors_stroke_add (vectors, stroke);
               stroke_id = gimp_stroke_get_ID (stroke);
+
+              success = TRUE;
             }
 
           g_free (coords);

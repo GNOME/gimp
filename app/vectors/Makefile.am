@@ -24,6 +24,7 @@ libappvectors_a_SOURCES = \
 	gimpbezierstroke.c	\
 	gimpstroke.h		\
 	gimpstroke.c		\
+	gimpstroke-new.h	\
 	gimpstroke-new.c	\
 	gimpvectors.c		\
 	gimpvectors.h		\

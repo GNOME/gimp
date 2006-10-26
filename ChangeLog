@@ -1,5 +1,16 @@
 2006-10-26  Simon Budig  <simon@gimp.org>
 
+	* app/vectors/gimpstroke-new.h: New header file for the
+	GimpStroke factory.
+
+	* app/vectors/Makefile.am
+	* app/vectors/gimpstroke.h: changed accordingly.
+	* tools/pdbgen/pdb/vectors.pdb: changed accordingly plus a bugfix.
+
+	* app/pdb/vectors_cmds.c: regenerated.
+
+2006-10-26  Simon Budig  <simon@gimp.org>
+
 	* app/vectors/Makefile.am
 	* app/vectors/gimpstroke.h
 	* app/vectors/gimpstroke-new.c: new factory for GimpStrokes.

@@ -718,6 +718,8 @@ HELP
         {
 	  gimp_vectors_stroke_add (vectors, stroke);
 	  stroke_id = gimp_stroke_get_ID (stroke);
+
+	  success = TRUE;
 	}
 
       g_free (coords);
@@ -1137,7 +1139,9 @@ CODE
 
 
 @headers = qw(<string.h> "core/gimp.h" "core/gimplist.h" "core/gimpimage.h"
-              "core/gimpchannel-select.h" "vectors/gimpanchor.h" "vectors/gimpbezierstroke.h"
+              "core/gimpchannel-select.h" "vectors/gimpanchor.h"
+              "vectors/gimpstroke-new.h"
+              "vectors/gimpbezierstroke.h"
               "vectors/gimpvectors.h"
               "gimp-intl.h");
 
