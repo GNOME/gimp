@@ -145,7 +145,7 @@ libexec_PROGRAMS = \
 	rotate \
 	sample_colorize \
 	scatter_hsv \
-	screenshot \
+	$(SCREENSHOT) \
 	sel_gauss \
 	semiflatten \
 	sharpen \
@@ -191,6 +191,7 @@ EXTRA_PROGRAMS = \
 	png \
 	poppler \
 	psp \
+	screenshot \
 	svg \
 	tiff \
 	wmf \

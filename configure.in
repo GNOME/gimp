@@ -1501,9 +1501,11 @@ AM_CONDITIONAL(BUILD_SCRIPT_FU, test "x$have_script_fu" == "xyes")
 
 if test x"$os_win32" = xno; then
   MAIL='mail$(EXEEXT)'
+  SCREENSHOT='screenshot$(EXEEXT)'
 fi
 
 AC_SUBST(MAIL)
+AC_SUBST(SCREENSHOT)
 
 
 ############################################################
@@ -1891,7 +1893,6 @@ Optional Plug-Ins:
   TWAIN (MacOS X):   $mac_twain_ok
   TWAIN (Win32):     $os_win32
   URI:               $uri_plugin
-  Win Snap:          $os_win32
   Windows ICO        $have_libpng
   WMF:               $have_libwmf
   XJT:               $have_xjt

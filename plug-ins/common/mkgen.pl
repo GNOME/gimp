@@ -121,7 +121,7 @@ foreach (sort keys %plugins) {
     $libgimp .= "\t\t\\\n\t\$(libgimpbase)";
 
     my $optlib = "";
-    if (exists $plugins{$_}->{optional} || exists $plugins{$_}->{extralibs} ) {
+    if (exists $plugins{$_}->{optional}) {
 	my $name = exists $plugins{$_}->{libopt} ? $plugins{$_}->{libopt} : $_;
 	$optlib = "\n\t\$(LIB\U$name\E)\t\t\\";
     }

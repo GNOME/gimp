@@ -1,3 +1,13 @@
+2006-10-27  Sven Neumann  <sven@gimp.org>
+
+	* configure.in
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am: reverted changes from 2006-04-06
+	and build screenshot plug-in optionally again. Fixes bug #364852.
+
+	* plug-ins/common/mkgen.pl: reverted addition of 'extralibs'
+	parameter that was introduced for the screenshot plug-in only.
+
 2006-10-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp-transform-region.c (gimp_transform_region):
