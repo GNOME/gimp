@@ -1,3 +1,11 @@
+2006-10-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp-transform-region.c (gimp_transform_region):
+	prefix parameters x1, y1, x2, y2 with "dest_".
+
+	* app/core/gimpdrawable-combine.c
+	(gimp_drawable_real_replace_region): cosmetic.
+
 2006-10-27  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-vectors.c: wrap

@@ -84,10 +84,10 @@ gimp_transform_region (GimpPickable          *pickable,
                        GimpContext           *context,
                        TileManager           *orig_tiles,
                        PixelRegion           *destPR,
-                       gint                   x1,
-                       gint                   y1,
-                       gint                   x2,
-                       gint                   y2,
+                       gint                   dest_x1,
+                       gint                   dest_y1,
+                       gint                   dest_x2,
+                       gint                   dest_y2,
                        const GimpMatrix3     *matrix,
                        GimpInterpolationType  interpolation_type,
                        gboolean               supersample,
@@ -129,7 +129,7 @@ gimp_transform_region (GimpPickable          *pickable,
   gimp_matrix3_invert (&m);
 
   alpha = 0;
-  width = x2 - x1;
+  width = dest_x2 - dest_x1;
   bytes = destPR->bytes;
 
   /*  turn interpolation off for simple transformations (e.g. rot90)  */
@@ -218,17 +218,18 @@ gimp_transform_region (GimpPickable          *pickable,
       /* allocate and fill lanczos lookup table */
       lanczos = create_lanczos_lookup_transform ();
 
-      for (y = y1; y < y2; y++)
+      for (y = dest_y1; y < dest_y2; y++)
         {
           if (progress && !(y & 0xf))
             gimp_progress_set_value (progress,
-                                     (gdouble) (y - y1) / (gdouble) (y2 - y1));
+                                     (gdouble) (y - dest_y1) /
+                                     (gdouble) (dest_y2 - dest_y1));
 
-          pixel_region_get_row (destPR, 0, (y - y1), width, dest, 1);
+          pixel_region_get_row (destPR, 0, (y - dest_y1), width, dest, 1);
 
           d = dest;
 
-          for (x = x1; x < x2; x++)
+          for (x = dest_x1; x < dest_x2; x++)
             {
               du = uw = m.coeff[0][0] * x + m.coeff[0][1] * y + m.coeff[0][2];
               dv = vw = m.coeff[1][0] * x + m.coeff[1][1] * y + m.coeff[1][2];
@@ -332,7 +333,7 @@ gimp_transform_region (GimpPickable          *pickable,
             }
 
           /*  set the pixel region row  */
-          pixel_region_set_row (destPR, 0, (y - y1), width, dest);
+          pixel_region_set_row (destPR, 0, (y - dest_y1), width, dest);
         }
 
       g_free (lanczos);
@@ -346,20 +347,21 @@ gimp_transform_region (GimpPickable          *pickable,
 
   coords = (interpolation_type != GIMP_INTERPOLATION_NONE) ? 5 : 1;
 
-  for (y = y1; y < y2; y++)
+  for (y = dest_y1; y < dest_y2; y++)
     {
       if (progress && !(y & 0xf))
         gimp_progress_set_value (progress,
-                                 (gdouble) (y - y1) / (gdouble) (y2 - y1));
+                                 (gdouble) (y - dest_y1) /
+                                 (gdouble) (dest_y2 - dest_y1));
 
       /* set up inverse transform steps */
-      tu[0] = uinc * x1 + m.coeff[0][1] * y + m.coeff[0][2];
-      tv[0] = vinc * x1 + m.coeff[1][1] * y + m.coeff[1][2];
-      tw[0] = winc * x1 + m.coeff[2][1] * y + m.coeff[2][2];
+      tu[0] = uinc * dest_x1 + m.coeff[0][1] * y + m.coeff[0][2];
+      tv[0] = vinc * dest_x1 + m.coeff[1][1] * y + m.coeff[1][2];
+      tw[0] = winc * dest_x1 + m.coeff[2][1] * y + m.coeff[2][2];
 
       if (interpolation_type != GIMP_INTERPOLATION_NONE)
         {
-          gdouble xx = x1;
+          gdouble xx = dest_x1;
           gdouble yy = y;
 
           tu[1] = uinc * (xx - 1) + m.coeff[0][1] * (yy    ) + m.coeff[0][2];
@@ -381,7 +383,7 @@ gimp_transform_region (GimpPickable          *pickable,
 
       d = dest;
 
-      for (x = x1; x < x2; x++)
+      for (x = dest_x1; x < dest_x2; x++)
         {
           gint i;     /*  normalize homogeneous coords  */
 
@@ -502,7 +504,7 @@ gimp_transform_region (GimpPickable          *pickable,
         }
 
       /*  set the pixel region row  */
-      pixel_region_set_row (destPR, 0, (y - y1), width, dest);
+      pixel_region_set_row (destPR, 0, (y - dest_y1), width, dest);
     }
 
  done:

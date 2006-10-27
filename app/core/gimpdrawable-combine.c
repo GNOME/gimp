@@ -242,10 +242,10 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      x1 = CLAMP (x1, -offset_x, gimp_item_width (GIMP_ITEM (mask))-offset_x);
-      y1 = CLAMP (y1, -offset_y, gimp_item_height(GIMP_ITEM (mask))-offset_y);
-      x2 = CLAMP (x2, -offset_x, gimp_item_width (GIMP_ITEM (mask))-offset_x);
-      y2 = CLAMP (y2, -offset_y, gimp_item_height(GIMP_ITEM (mask))-offset_y);
+      x1 = CLAMP (x1, -offset_x, gimp_item_width  (GIMP_ITEM (mask))-offset_x);
+      y1 = CLAMP (y1, -offset_y, gimp_item_height (GIMP_ITEM (mask))-offset_y);
+      x2 = CLAMP (x2, -offset_x, gimp_item_width  (GIMP_ITEM (mask))-offset_x);
+      y2 = CLAMP (y2, -offset_y, gimp_item_height (GIMP_ITEM (mask))-offset_y);
     }
 
   /*  If the calling procedure specified an undo step...  */
