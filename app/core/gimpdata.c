@@ -157,7 +157,7 @@ gimp_data_class_init (GimpDataClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
 
-  g_object_class_install_property (object_class, PROP_WRITABLE,
+  g_object_class_install_property (object_class, PROP_DELETABLE,
                                    g_param_spec_boolean ("deletable", NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));

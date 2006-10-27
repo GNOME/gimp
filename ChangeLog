@@ -1,3 +1,8 @@
+2006-10-27  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpdata.c (gimp_data_class_init): fix typo
+	in property construction code.
+
 2006-10-27  Hans Breuer  <hans@breuer.org>
 
 	* **/makefile.msc app/gimpcore.def : updated
