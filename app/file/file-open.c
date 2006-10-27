@@ -41,6 +41,8 @@
 #define R_OK 4
 #endif
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "core/core-types.h"
 
 #include "config/gimpcoreconfig.h"
@@ -60,6 +62,8 @@
 
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginprocedure.h"
+#include "plug-in/plug-in-icc-profile.h"
+
 
 #include "file-open.h"
 #include "file-utils.h"
@@ -68,7 +72,11 @@
 #include "gimp-intl.h"
 
 
-static void  file_open_sanitize_image (GimpImage *image);
+static void  file_open_sanitize_image       (GimpImage    *image);
+static void  file_open_handle_color_profile (GimpImage    *image,
+                                             GimpContext  *context,
+                                             GimpProgress *progress,
+                                             GimpRunMode   run_mode);
 
 
 /*  public functions  */
@@ -172,6 +180,9 @@ file_open_image (Gimp                *gimp,
     }
 
   g_value_array_free (return_vals);
+
+  if (image)
+    file_open_handle_color_profile (image, context, progress, run_mode);
 
   return image;
 }
@@ -423,6 +434,7 @@ file_open_layer (Gimp                *gimp,
 
 /*  private functions  */
 
+
 static void
 file_open_sanitize_image (GimpImage *image)
 {
@@ -439,4 +451,51 @@ file_open_sanitize_image (GimpImage *image)
   gimp_image_invalidate_layer_previews (image);
   gimp_image_invalidate_channel_previews (image);
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
+}
+
+static void
+file_open_profile_apply_rgb (GimpImage    *image,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             GimpRunMode   run_mode)
+{
+  GError *error = NULL;
+
+  if (! plug_in_icc_profile_apply_rgb (image, context, progress,
+                                       run_mode, &error))
+    {
+      gimp_message (image->gimp, G_OBJECT (progress),
+                    GIMP_MESSAGE_WARNING, error->message);
+      g_error_free (error);
+    }
+}
+
+static void
+file_open_handle_color_profile (GimpImage    *image,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                GimpRunMode   run_mode)
+{
+  if (image->gimp->config->color_management->mode == GIMP_COLOR_MANAGEMENT_OFF)
+    return;
+
+  if (gimp_image_parasite_find (image, "icc-profile"))
+    {
+      switch (image->gimp->config->color_profile_policy)
+        {
+        case GIMP_COLOR_PROFILE_POLICY_ASK:
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            file_open_profile_apply_rgb (image, context, progress,
+                                         GIMP_RUN_INTERACTIVE);
+          break;
+
+        case GIMP_COLOR_PROFILE_POLICY_KEEP:
+          break;
+
+        case GIMP_COLOR_PROFILE_POLICY_CONVERT:
+          file_open_profile_apply_rgb (image, context, progress,
+                                       GIMP_RUN_NONINTERACTIVE);
+          break;
+        }
+    }
 }

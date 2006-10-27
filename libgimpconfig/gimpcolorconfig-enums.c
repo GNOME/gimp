@@ -72,37 +72,6 @@ gimp_color_rendering_intent_get_type (void)
   return type;
 }
 
-GType
-gimp_color_file_open_behaviour_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_COLOR_FILE_OPEN_ASK, "GIMP_COLOR_FILE_OPEN_ASK", "ask" },
-    { GIMP_COLOR_FILE_OPEN_LEAVE, "GIMP_COLOR_FILE_OPEN_LEAVE", "leave" },
-    { GIMP_COLOR_FILE_OPEN_CONVERT_RGB, "GIMP_COLOR_FILE_OPEN_CONVERT_RGB", "convert-rgb" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_COLOR_FILE_OPEN_ASK, N_("Ask"), NULL },
-    { GIMP_COLOR_FILE_OPEN_LEAVE, N_("Use embedded profile"), NULL },
-    { GIMP_COLOR_FILE_OPEN_CONVERT_RGB, N_("Convert to RGB workspace"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpColorFileOpenBehaviour", values);
-      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
 
 /* Generated data ends here */
 

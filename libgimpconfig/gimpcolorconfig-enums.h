@@ -50,17 +50,5 @@ typedef enum
 } GimpColorRenderingIntent;
 
 
-#define GIMP_TYPE_COLOR_FILE_OPEN_BEHAVIOUR \
-  (gimp_color_file_open_behaviour_get_type ())
-
-GType gimp_color_file_open_behaviour_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_COLOR_FILE_OPEN_ASK,         /*< desc="Ask"                       >*/
-  GIMP_COLOR_FILE_OPEN_LEAVE,       /*< desc="Use embedded profile"      >*/
-  GIMP_COLOR_FILE_OPEN_CONVERT_RGB  /*< desc="Convert to RGB workspace"  >*/
-} GimpColorFileOpenBehaviour;
-
 
 #endif /* GIMP_COLOR_CONFIG_ENUMS_H__ */

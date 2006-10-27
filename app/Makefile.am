@@ -18,8 +18,8 @@ SUBDIRS = \
 	paint		\
 	text		\
 	vectors		\
-	file		\
 	plug-in		\
+	file		\
 	xcf		\
 	pdb		\
 	widgets		\
@@ -103,13 +103,13 @@ gimp_2_3_LDADD = \
 	widgets/libappwidgets.a		\
 	pdb/libappinternal-procs.a	\
 	xcf/libappxcf.a			\
+	file/libappfile.a		\
 	plug-in/libappplug-in.a		\
 	pdb/libapppdb.a			\
 	vectors/libappvectors.a		\
 	core/libappcore.a		\
 	paint/libapppaint.a		\
 	text/libapptext.a		\
-	file/libappfile.a		\
 	config/libappconfig.a		\
 	paint-funcs/libapppaint-funcs.a	\
 	composite/libappcomposite.a	\
@@ -149,13 +149,13 @@ gimp_console_2_3_LDADD = \
 	display/gimpdisplayoptions.o	\
 	pdb/libappinternal-procs.a	\
 	xcf/libappxcf.a			\
+	file/libappfile.a		\
 	plug-in/libappplug-in.a		\
 	pdb/libapppdb.a			\
 	vectors/libappvectors.a		\
 	core/libappcore.a		\
 	paint/libapppaint.a		\
 	text/libapptext.a		\
-	file/libappfile.a		\
 	config/libappconfig.a		\
 	paint-funcs/libapppaint-funcs.a	\
 	composite/libappcomposite.a	\

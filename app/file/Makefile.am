@@ -2,18 +2,6 @@
 
 noinst_LIBRARIES = libappfile.a
 
-libappfile_a_SOURCES = \
-	file-open.c		\
-	file-open.h		\
-	file-save.c		\
-	file-save.h		\
-	file-utils.c		\
-	file-utils.h		\
-	gimprecentitem.c	\
-	gimprecentitem.h	\
-	gimprecentlist.c	\
-	gimprecentlist.h
-
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-File\"	\
 	@GTHREAD_CFLAGS@
@@ -25,5 +13,17 @@ INCLUDES = \
 	-I$(top_srcdir)/app	\
 	$(GDK_PIXBUF_CFLAGS)	\
 	-I$(includedir)
+
+libappfile_a_SOURCES = \
+	file-open.c		\
+	file-open.h		\
+	file-save.c		\
+	file-save.h		\
+	file-utils.c		\
+	file-utils.h		\
+	gimprecentitem.c	\
+	gimprecentitem.h	\
+	gimprecentlist.c	\
+	gimprecentlist.h
 
 EXTRA_DIST = makefile.msc

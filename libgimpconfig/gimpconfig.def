@@ -1,6 +1,5 @@
 EXPORTS
 	gimp_color_config_get_type
-	gimp_color_file_open_behaviour_get_type
 	gimp_color_management_mode_get_type
 	gimp_color_rendering_intent_get_type
 	gimp_config_build_data_path

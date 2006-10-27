@@ -88,6 +88,7 @@ enum
   PROP_INSTALL_COLORMAP,
   PROP_MIN_COLORS,
   PROP_COLOR_MANAGEMENT,
+  PROP_COLOR_PROFILE_POLICY,
   PROP_SAVE_DOCUMENT_HISTORY
 };
 
@@ -346,6 +347,12 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                    GIMP_TYPE_COLOR_CONFIG,
                                    GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_AGGREGATE);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_COLOR_PROFILE_POLICY,
+                                 "color-profile-policy",
+                                 COLOR_PROFILE_POLICY_BLURB,
+                                 GIMP_TYPE_COLOR_PROFILE_POLICY,
+                                 GIMP_COLOR_PROFILE_POLICY_ASK,
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_DOCUMENT_HISTORY,
                                     "save-document-history",
                                     SAVE_DOCUMENT_HISTORY_BLURB,
@@ -565,6 +572,9 @@ gimp_core_config_set_property (GObject      *object,
         gimp_config_sync (g_value_get_object (value),
                           G_OBJECT (core_config->color_management), 0);
       break;
+    case PROP_COLOR_PROFILE_POLICY:
+      core_config->color_profile_policy = g_value_get_enum (value);
+      break;
     case PROP_SAVE_DOCUMENT_HISTORY:
       core_config->save_document_history = g_value_get_boolean (value);
       break;
@@ -701,6 +711,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_COLOR_MANAGEMENT:
       g_value_set_object (value, core_config->color_management);
+      break;
+    case PROP_COLOR_PROFILE_POLICY:
+      g_value_set_enum (value, core_config->color_profile_policy);
       break;
     case PROP_SAVE_DOCUMENT_HISTORY:
       g_value_set_boolean (value, core_config->save_document_history);

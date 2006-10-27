@@ -573,6 +573,18 @@ typedef enum  /*< pdb-skip >*/
 } GimpMessageSeverity;
 
 
+#define GIMP_TYPE_COLOR_PROFILE_POLICY (gimp_color_profile_policy_get_type ())
+
+GType gimp_color_profile_policy_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_COLOR_PROFILE_POLICY_ASK,    /*< desc="Ask"                      >*/
+  GIMP_COLOR_PROFILE_POLICY_KEEP,   /*< desc="Keep embedded profile"    >*/
+  GIMP_COLOR_PROFILE_POLICY_CONVERT /*< desc="Convert to RGB workspace" >*/
+} GimpColorProfilePolicy;
+
+
 /*
  * non-registered enums; register them if needed
  */

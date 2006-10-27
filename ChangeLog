@@ -1,5 +1,35 @@
 2006-10-27  Sven Neumann  <sven@gimp.org>
 
+	* libgimpconfig/gimpcolorconfig-enums.[ch]
+	* libgimpconfig/gimpcolorconfig.c
+	* libgimpconfig/gimpconfig.def: removed unused enum
+	GimpColorFileOpenBehaviour.
+
+	* app/core/core-enums.[ch]: added enum GimpColorProfilePolicy.
+
+	* app/config/gimpcoreconfig.[ch]
+	* app/config/gimprc-blurbs.h: added property "color-profile-policy".
+
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-in-icc-profile.[ch]: new files that wrap usage
+	of the lcms plug-in.
+
+	* app/file/file-open.c: implement the user-configured policy for
+	embedded color profiles.
+
+	* app/widgets/gimpimageprofileview.c: use the wrapper to call the
+	plug-in-icc-profile-info procedure.
+
+	* app/widgets/gimptoolbox-dnd.c: pass TRUE for "attach_comment"
+	parameter to gimp_create_image().
+
+	* app/core/gimptemplate.c
+	* app/file/Makefile.am: cosmetic changes.
+
+	* app/Makefile.am: some resorting to make the beast link again.
+
+2006-10-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-console.c: don't hardcode font sizes,
 	moved newlines out of translatable strings.
 

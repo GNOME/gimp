@@ -32,16 +32,12 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
-#include "core/gimpparamspecs.h"
 
-#include "pdb/gimppdb.h"
+#include "plug-in/plug-in-icc-profile.h"
 
 #include "gimpimageprofileview.h"
 
 #include "gimp-intl.h"
-
-
-#define ICC_PROFILE_INFO_PROC  "plug-in-icc-profile-info"
 
 
 enum
@@ -260,67 +256,37 @@ gimp_image_profile_view_parasite_changed (GimpImageProfileView *view,
     gimp_image_profile_view_update (view);
 }
 
-static void
-gimp_image_profile_view_set_value (GtkLabel    *label,
-                                   GValueArray *values,
-                                   gint         index)
-{
-  if (values->n_values > index)
-    {
-      GValue *value = g_value_array_get_nth (values, index);
-
-      if (G_VALUE_HOLDS_STRING (value))
-        {
-          gtk_label_set_text (label, g_value_get_string (value));
-          return;
-        }
-    }
-
-  gtk_label_set_text (label, NULL);
-}
-
-
 static gboolean
 gimp_image_profile_view_query (GimpImageProfileView *view)
 {
-  Gimp              *gimp = view->image->gimp;
-  GValueArray       *return_vals;
-  GimpPDBStatusType  status;
+  gchar  *name  = NULL;
+  gchar  *desc  = NULL;
+  gchar  *info  = NULL;
+  GError *error = NULL;
 
-  return_vals =
-    gimp_pdb_execute_procedure_by_name (gimp->pdb,
-                                        gimp_get_user_context (gimp),
-                                        NULL,
-                                        ICC_PROFILE_INFO_PROC,
-                                        GIMP_TYPE_INT32,
-                                        GIMP_RUN_NONINTERACTIVE,
-                                        GIMP_TYPE_IMAGE_ID,
-                                        gimp_image_get_ID (view->image),
-                                        G_TYPE_NONE);
-
-  status = g_value_get_enum (return_vals->values);
-
-  switch (status)
+  if (plug_in_icc_profile_info (view->image,
+                                gimp_get_user_context (view->image->gimp),
+                                NULL,
+                                &name, &desc, &info,
+                                &error))
     {
-    case GIMP_PDB_SUCCESS:
       gtk_label_set_text (GTK_LABEL (view->message), NULL);
       gtk_widget_hide (view->message);
 
-      gimp_image_profile_view_set_value (GTK_LABEL (view->name_label),
-                                         return_vals, 1);
-      gimp_image_profile_view_set_value (GTK_LABEL (view->desc_label),
-                                         return_vals, 2);
-      gimp_image_profile_view_set_value (GTK_LABEL (view->info_label),
-                                         return_vals, 3);
+      gtk_label_set_text (GTK_LABEL (view->name_label), name);
+      gtk_label_set_text (GTK_LABEL (view->desc_label), desc);
+      gtk_label_set_text (GTK_LABEL (view->info_label), info);
       gtk_widget_show (view->table);
-      break;
-
-    default:
-      gtk_label_set_text (GTK_LABEL (view->message), "Query failed.");
-      break;
+    }
+  else
+    {
+      gtk_label_set_text (GTK_LABEL (view->message), error->message);
+      g_error_free (error);
     }
 
-  g_value_array_free (return_vals);
+  g_free (name);
+  g_free (desc);
+  g_free (info);
 
   return FALSE;
 }
@@ -328,32 +294,17 @@ gimp_image_profile_view_query (GimpImageProfileView *view)
 static void
 gimp_image_profile_view_update (GimpImageProfileView *view)
 {
-  Gimp          *gimp = view->image->gimp;
-  GimpProcedure *procedure;
-
   gtk_label_set_text (GTK_LABEL (view->name_label), NULL);
   gtk_label_set_text (GTK_LABEL (view->desc_label), NULL);
   gtk_label_set_text (GTK_LABEL (view->info_label), NULL);
   gtk_widget_hide (view->table);
 
-  /* FIXME: do this from an idle handler, or even asynchronously */
+  gtk_label_set_text (GTK_LABEL (view->message), _("Querying..."));
+  gtk_widget_show (view->message);
 
-  procedure = gimp_pdb_lookup_procedure (gimp->pdb, ICC_PROFILE_INFO_PROC);
+  if (view->idle_id)
+    g_source_remove (view->idle_id);
 
-  if (procedure)
-    {
-      gtk_label_set_text (GTK_LABEL (view->message), "Querying...");
-      gtk_widget_show (view->message);
-
-      if (view->idle_id)
-        g_source_remove (view->idle_id);
-
-      view->idle_id = g_idle_add ((GSourceFunc) gimp_image_profile_view_query,
-                                  view);
-    }
-  else
-    {
-      gtk_label_set_text (GTK_LABEL (view->message), "Plug-In is missing.");
-      gtk_widget_show (view->message);
-    }
+  view->idle_id = g_idle_add ((GSourceFunc) gimp_image_profile_view_query,
+                              view);
 }
