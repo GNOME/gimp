@@ -1,5 +1,10 @@
 2006-10-26  Kevin Cozens  <kcozens@cvs.gnome.org>
 
+	* plug-ins/script-fu/scripts/script-fu-compat.init: Return empty
+	string if sep is at end of string in strbreakup.
+
+2006-10-26  Kevin Cozens  <kcozens@cvs.gnome.org>
+
 	* plug-ins/script-fu/scripts/script-fu-compat.init: Added strbreakup,
 	strcat, strcmp, string-trim, string-trim-left, string-trim-right, and 
 	unstrbreakup.

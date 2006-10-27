@@ -155,9 +155,7 @@
           (set! i (+ i 1))
         )
 
-        (if (< start end)
-          (set! l (append l (list (substring str start end))))
-        )
+        (set! l (append l (list (substring str start end))))
       )
     )
 
