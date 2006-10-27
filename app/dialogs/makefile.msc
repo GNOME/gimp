@@ -30,6 +30,7 @@ OBJECTS = \
 	desaturate-dialog.obj \
 	dialogs-constructors.obj \
 	dialogs.obj \
+	fade-dialog.obj \
 	file-open-dialog.obj \
 	file-open-location-dialog.obj \
 	file-save-dialog.obj \

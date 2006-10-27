@@ -31,33 +31,42 @@ PKG_LINK = \
 #	..\xcf\xcf.lib \
 
 OBJECTS = \
-#	..\undo.obj \
 	core-enums.obj \
-	gimp.obj \
 	gimp-contexts.obj \
+	gimp-documents.obj \
 	gimp-edit.obj \
+	gimp-gradients.obj \
 	gimp-gui.obj \
+	gimp-modules.obj \
+	gimp-parasites.obj \
+	gimp-templates.obj \
+	gimp-transform-region.obj \
+	gimp-transform-utils.obj \
 	gimp-units.obj \
+	gimp-user-install.obj \
+	gimp-utils.obj \
+	gimp.obj \
 	gimparea.obj \
-	gimpbrush.obj \
 	gimpbrush-load.obj \
+	gimpbrush.obj \
 	gimpbrushclipboard.obj \
+	gimpbrushgenerated-load.obj \
+	gimpbrushgenerated-save.obj \
 	gimpbrushgenerated.obj \
+	gimpbrushpipe-load.obj \
 	gimpbrushpipe.obj \
 	gimpbuffer.obj \
-	gimpchannel.obj \
 	gimpchannel-combine.obj \
 	gimpchannel-select.obj \
-	gimpcoords.obj \
-	gimpcontainer.obj \
+	gimpchannel.obj \
 	gimpcontainer-filter.obj \
+	gimpcontainer.obj \
 	gimpcontext.obj \
+	gimpcoords.obj \
 	gimpdashpattern.obj \
 	gimpdata.obj \
 	gimpdatafactory.obj \
-	gimp-documents.obj \
 	gimpdocumentlist.obj \
-	gimpdrawable.obj \
 	gimpdrawable-blend.obj \
 	gimpdrawable-bucket-fill.obj \
 	gimpdrawable-combine.obj \
@@ -72,14 +81,13 @@ OBJECTS = \
 	gimpdrawable-preview.obj \
 	gimpdrawable-stroke.obj \
 	gimpdrawable-transform.obj \
-	gimpgradient.obj \
+	gimpdrawable.obj \
+	gimpdrawableundo.obj \
 	gimpgradient-load.obj \
 	gimpgradient-save.obj \
+	gimpgradient.obj \
 	gimpgrid.obj \
 	gimpguide.obj \
-	gimp-gradients.obj \
-	gimpimage.obj \
-	gimpimagemap.obj \
 	gimpimage-arrange.obj \
 	gimpimage-colorhash.obj \
 	gimpimage-colormap.obj \
@@ -99,54 +107,51 @@ OBJECTS = \
 	gimpimage-resize.obj \
 	gimpimage-rotate.obj \
 	gimpimage-sample-points.obj \
-	gimpimage-snap.obj \
 	gimpimage-scale.obj \
-	gimpimage-undo.obj \
+	gimpimage-snap.obj \
 	gimpimage-undo-push.obj \
+	gimpimage-undo.obj \
+	gimpimage.obj \
 	gimpimagefile.obj \
-	gimpitem.obj \
+	gimpimagemap.obj \
 	gimpitem-linked.obj \
 	gimpitem-preview.obj \
+	gimpitem.obj \
 	gimpitemundo.obj \
-	gimplayer.obj \
 	gimplayer-floating-sel.obj \
+	gimplayer.obj \
 	gimplayermask.obj \
 	gimplist.obj \
-	gimpparamspecs.obj \
-	gimpparamspecs-desc.obj \
-	gimpprojection.obj \
-	gimpprojection-construct.obj \
 	gimpmarshal.obj \
-	gimp-modules.obj \
 	gimpobject.obj \
 	gimppaintinfo.obj \
-	gimppalette.obj \
 	gimppalette-import.obj \
-	gimp-parasites.obj \
+	gimppalette-load.obj \
+	gimppalette-save.obj \
+	gimppalette.obj \
+	gimpparamspecs-desc.obj \
+	gimpparamspecs.obj \
 	gimpparasitelist.obj \
+	gimppattern-load.obj \
 	gimppattern.obj \
 	gimppatternclipboard.obj \
-	gimppickable.obj \
 	gimppdbprogress.obj \
+	gimppickable.obj \
 	gimppreviewcache.obj \
 	gimpprogress.obj \
+	gimpprojection-construct.obj \
+	gimpprojection.obj \
 	gimpscanconvert.obj \
 	gimpselection.obj \
 	gimpstrokedesc.obj \
 	gimpstrokeoptions.obj \
 	gimptemplate.obj \
-	gimptooloptions.obj \
-#	gimp-transform-resize.obj \
-	gimp-transform-utils.obj \
-	gimp-templates.obj \
 	gimptoolinfo.obj \
+	gimptooloptions.obj \
 	gimpundo.obj \
 	gimpundostack.obj \
 	gimpunit.obj \
-#	gimpunits.obj \
 	gimpviewable.obj \
-	gimp-utils.obj \
-	gimp-user-install.obj
 
 OTHER_FILES = \
 	\

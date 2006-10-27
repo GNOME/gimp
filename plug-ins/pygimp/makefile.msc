@@ -1,6 +1,6 @@
 !IFNDEF MODULE
 
-MODULES = gimp _gimpenums gimpcolor gimpprocbrowser
+MODULES = gimp _gimpenums gimpcolor _gimpui
 
 all : sub-all
 
@@ -24,7 +24,8 @@ OBJECTS = \
   pygimp-tile.obj \
   pygimp-display.obj \
   pygimp-parasite.obj \
-  pygimp-pdb.obj
+  pygimp-pdb.obj \
+  pygimp-vectors.obj
 !ENDIF
 
 !IFDEF OBJ__gimpenums
@@ -35,13 +36,31 @@ OBJECTS = \
 !IFDEF OBJ_gimpcolor
 OBJECTS = \
 	gimpcolormodule.obj \
-	pygimp-rgb.obj
+	pygimp-colors.obj
 !ENDIF
 
-!IFDEF OBJ_gimpprocbrowser
+!IFDEF OBJ__gimpui
 OBJECTS = \
-	procbrowser.obj
+  gimpuimodule.obj \
+  gimpui.obj
 !ENDIF
+
+.SUFFIXES: .defs .c .exe
+
+gimpui.c: gimpui.defs gimpui.override gimpcolor-types.defs gimpenums-types.defs makefile.msc
+
+.defs.c :
+	$(PYGTK_CODEGEN) \
+	   $(PYGTK_CODEGEN_DEFINES) \
+	    --override $*.override \
+	    --register $(PYGTK_DEFSDIR)/gdk-types.defs \
+	    --register $(PYGTK_DEFSDIR)/gtk-types.defs \
+	    --register gimpcolor-types.defs \
+	    --register gimpenums-types.defs \
+	    --prefix $* $*.defs > gen-$*.c
+	echo #pragma warning(disable:4049) > $*.c
+	type gen-$*.c >> $*.c
+	del gen-$*.c
 
 PYTHON = ..\..\..\..\python23
 !IFNDEF DEBUG
@@ -50,7 +69,7 @@ EXTRALIBS = $(PYTHON)\libs\python23.lib user32.lib
 EXTRALIBS = $(PYTHON)\libs\python23_d.lib user32.lib
 !ENDIF
 
-EXTRACFLAGS = -I$(PYTHON)\include -I $(TOP)\gnome-python\pygtk\gobject
+EXTRACFLAGS = -I$(PYTHON)\include $(PYGOBJECT_CFLAGS) $(PYGTK_CFLAGS)
 GIMPTOP=..\.. 
 
 # Lib Extension is
@@ -59,3 +78,10 @@ MODULE_EXT = pyd
 !include ..\makefile.msc
 
 !ENDIF
+
+clean::
+	del *.obj *.pyd *.lib *.ilk *.pdb *.exp
+	del gimpui.c
+
+	
+	

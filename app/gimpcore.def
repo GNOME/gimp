@@ -235,7 +235,6 @@ EXPORTS
 	gimp_gradient_get_segment_at
 	gimp_gradient_get_standard
 	gimp_gradient_get_type
-	gimp_gradient_save_as_pov
 	gimp_gradient_segment_get_first
 	gimp_gradient_segment_get_last
 	gimp_gradient_segment_get_left_color
@@ -855,3 +854,28 @@ gimp_source_options_get_type
 gimp_perspective_clone_get_source_point
 gimp_perspective_clone_get_type
 gimp_perspective_clone_options_get_type
+
+gimp_brush_generated_load
+gimp_brush_generated_save
+gimp_brush_pipe_load
+gimp_palette_load
+gimp_palette_load_act
+gimp_palette_load_detect_format
+gimp_palette_load_psp
+gimp_palette_load_riff
+gimp_palette_save
+gimp_pattern_load
+gimp_pattern_load_pixbuf
+gimp_get_tool_info
+gimp_gradient_save_pov
+gimp_message_valist
+gimp_plug_in_manager_get_label
+gimp_viewable_set_stock_id
+
+gimp_channel_select_round_rect
+gimp_drawable_undo_get_type
+gimp_edit_fade
+gimp_image_undo_get_fadeable
+gimp_message_severity_get_type
+gimp_progress_message
+plug_in_icc_profile_info

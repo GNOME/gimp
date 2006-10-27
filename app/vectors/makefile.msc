@@ -31,6 +31,7 @@ OBJECTS = \
 	gimpvectors-export.obj \
 	gimpvectors-import.obj \
 	gimpbezierstroke.obj \
+	gimpstroke-new.obj \
 	gimpvectors.obj \
 	gimpvectors-compat.obj \
 	gimpvectors-preview.obj \

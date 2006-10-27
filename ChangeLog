@@ -1,3 +1,7 @@
+2006-10-27  Hans Breuer  <hans@breuer.org>
+
+	* **/makefile.msc app/gimpcore.def : updated
+
 2006-10-27  Sven Neumann  <sven@gimp.org>
 
 	* libgimpconfig/gimpcolorconfig-enums.[ch]

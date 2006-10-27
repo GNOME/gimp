@@ -33,12 +33,13 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 
 # The COMMON* ones are in the common subdirectory
 COMMON0 = plugin_browser procedure_browser #gnomeprint
-COMMON1 = AlienMap2 ccanalyze CEL channel_mixer CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch cartoon checkerboard color_enhance colorify colortoalpha compose compressor convmatrix csource cubism curve_bend
+COMMON1 = antialias AlienMap2 ccanalyze CEL channel_mixer CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch cartoon checkerboard color_enhance colorify colormap_remap colortoalpha compose compressor convmatrix csource cubism curve_bend
 COMMON2 = decompose deinterlace depthmerge despeckle destripe dicom diffraction displace dog edge emboss engrave exchange film flarefx fp fractaltrace
-COMMON3 = gauss gbr gee gee_zoom gif gifload gih glasstile glob gqbist gradmap grid gtm guillotine header hot illusion iwarp jigsaw laplace lic
+COMMON3 = gauss gbr gee gee_zoom gif gifload gih glasstile glob gqbist gradmap grid gtm guillotine header hot illusion iwarp jigsaw laplace lcms lens lic
 COMMON4 = mapcolor max_rgb mblur mosaic neon newsprint nlfilt noisify normalize nova oilify papertile pat pcx photocopy pix pixelize plasma png pnm polar postscript psd psd_save psp randomize raw redeye retinex ripple rotate
-COMMON5 = sample_colorize scatter_hsv screenshot sel_gauss semiflatten sharpen shift sinus smooth_palette snoise sobel softglow sparkle spheredesigner spread struc sunras tga threshold_alpha tiff tile tileit tiler uniteditor unsharp video vinvert vpropagate 
-COMMON6 = warp waves webbrowser whirlpinch winclipboard wind winprint wiredebug xbm xwd zealouscrop
+COMMON5 = sample_colorize scatter_hsv screenshot sel_gauss semiflatten sharpen shift sinus smooth_palette snoise sobel softglow sparkle spheredesigner spread struc sunras tga threshold_alpha tiff 
+COMMON6 = tile tileit tiler uniteditor unsharp video vinvert vpropagate warp waves webbrowser whirlpinch wind wiredebug xbm xwd zealouscrop
+COMMON7 = winprint winclipboard 
 
 NOTNOW = wmf svg
 
@@ -76,10 +77,19 @@ libs-clean :
 	@nmake -nologo -f makefile.msc sub-libs TARGET=clean
 
 sub-libs:
-	cd script-fu\siod
-	nmake -nologo -f ..\..\makefile.msc GIMPTOP=..\..\.. LIBRARY=siod OBJECTS="trace.obj slib.obj sliba.obj regex.obj" $(TARGET)
+	cd script-fu\tinyscheme
+	nmake -nologo -f ..\..\makefile.msc GIMPTOP=..\..\.. EXTRACFLAGS="-DWIN32 -DUSE_MATH -DUSE_INTERFACE" \
+		MODULE=tinyscheme OBJECTS="dynload.obj scheme.obj" $(TARGET)
 	cd ..\..
-
+	cd script-fu\re
+	nmake -nologo -f ..\..\makefile.msc GIMPTOP=..\..\.. EXTRACFLAGS="-DWIN32 -I.. -DUSE_INTERFACE" \
+		MODULE=re OBJECTS="debug.obj regcomp.obj regerror.obj regexec.obj re.obj regfree.obj" \
+		$(TARGET)
+	cd ..\..
+	cd script-fu\ftx
+	nmake -nologo -f ..\..\makefile.msc GIMPTOP=..\..\.. EXTRACFLAGS="-DWIN32 -I.. -DUSE_INTERFACE" \
+		MODULE=ftx OBJECTS="ftx.obj" EXTRA_EXPORT=/export:init_ftx $(TARGET)
+	cd ..\..
 
 common-plugins-all :
 	@nmake -nologo -f makefile.msc sub-common-plugins TARGET=all
@@ -88,7 +98,7 @@ common-plugins-install :
 	@nmake -nologo -f makefile.msc sub-common-plugins TARGET=install
 
 common-plugins-clean :
-	@nmake -nologo -f makefile.msc sub-common-plugins TARGET=clean
+	@nmake -nologo -f makefile.msc sub-one-common TARGET=clean
 
 
 
@@ -100,6 +110,7 @@ sub-common-plugins :
 	for %d in ($(COMMON4)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
 	for %d in ($(COMMON5)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
 	for %d in ($(COMMON6)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
+#	for %d in ($(COMMON7)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
 
 sub-one-common :
 	@cd common
@@ -227,6 +238,11 @@ OBJECTS = \
 	bmp.obj \
 	bmpread.obj \
 	bmpwrite.obj
+!ENDIF
+
+!IFDEF EXTRA_colormap_remap 
+OBJECTS = \
+	colormap-remap.obj
 !ENDIF
 
 !IFDEF EXTRA_plugin_browser
@@ -462,6 +478,11 @@ OBJECTS = \
 	jpeg-save.obj
 !ENDIF
 
+!IFDEF EXTRA_lcms 
+EXTRACFLAGS = $(LCMS_CFLAGS)
+EXTRALIBS = $(LCMS_LIBS)
+!ENDIF
+
 !IFDEF EXTRA_maze
 OBJECTS = \
 	algorithms.obj \
@@ -568,7 +589,7 @@ OPTIMIZE =
 
 !IFDEF EXTRA_script_fu
 OBJECTS = \
-	siod-wrapper.obj \
+	scheme-wrapper.obj \
 	script-fu.obj \
 	script-fu-console.obj \
 	script-fu-scripts.obj \
@@ -576,8 +597,8 @@ OBJECTS = \
 	script-fu-interface.obj \
 	script-fu-server.obj
 
-EXTRALIBS = ..\..\regexrepl\regexrepl.lib siod\siod.lib kernel32.lib wsock32.lib
-EXTRACFLAGS = -DREGEX_MALLOC
+EXTRALIBS = tinyscheme\tinyscheme.lib re\re.lib ftx\ftx.lib kernel32.lib wsock32.lib
+EXTRACFLAGS = -DREGEX_MALLOC -DUSE_INTERFACE
 HAVE_RESOURCE = YES
 !ENDIF
 
@@ -606,8 +627,8 @@ EXTRALIBS = $(RSVG_LIBS)
 !ENDIF
 
 !IFDEF EXTRA_tiff
-EXTRACFLAGS = -I$(TIFF)
-EXTRALIBS = $(TIFF)\libtiff.lib $(JPEG)\libjpeg.lib $(ZLIB_LIBS) user32.lib
+EXTRACFLAGS = $(TIFF_CFLAGS)
+EXTRALIBS = $(TIFF_LIBS) $(JPEG)\libjpeg.lib $(ZLIB_LIBS) user32.lib
 !ENDIF
 
 !IFDEF EXTRA_gimp_ace
@@ -735,6 +756,8 @@ EXTRALIBS = user32.lib
 !ENDIF
 
 !IFDEF EXTRA_winicon
+EXTRACFLAGS = $(PNG_CFLAGS)
+EXTRALIBS = $(PNG_LIBS)
 OBJECTS = \
 	icodialog.obj \
 	icoload.obj \
@@ -782,7 +805,7 @@ CFLAGS = -FImsvc_recommended_pragmas.h \
 	$(EXTRACFLAGS) \
 	$(GTK2_CFLAGS) $(INTL_CFLAGS)
 
-LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG)
+LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG) /NODEFAULTLIB:LIBC
 
 !IFDEF PLUGIN
 
@@ -845,6 +868,8 @@ $(LIBRARY).lib : $(OBJECTS)
 # Allow building libraries with specific extensions
 !IFNDEF MODULE_EXT
 MODULE_EXT = dll
+!ELSE
+EXTRA_EXPORT = /export:init$(MODULE)
 !ENDIF
 
 all : $(MODULE).$(MODULE_EXT)
@@ -857,10 +882,12 @@ OBJECTS = $(MODULE).obj
 
 $(MODULE).$(MODULE_EXT) : $(OBJECTS)
 	$(CC) $(CFLAGS) -LD -Fe$@ $(OBJECTS) $(LDFLAGS) $(EXTRALIBS) \
-	..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib \
-	..\..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
-	..\..\libgimpbase\gimpbase-$(GIMP_VER).lib \
-	$(GLIB_LIBS) $(GTK2_LIBS) /export:init$(MODULE)
+	$(GIMPTOP)\libgimp\gimp-$(GIMP_VER).lib \
+	$(GIMPTOP)\libgimp\gimpui-$(GIMP_VER).lib \
+	$(GIMPTOP)\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
+	$(GIMPTOP)\libgimpbase\gimpbase-$(GIMP_VER).lib \
+	$(GIMPTOP)\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
+	$(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS) $(EXTRA_EXPORT)
 !ENDIF
 
 .c.obj :

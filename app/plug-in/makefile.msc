@@ -20,6 +20,7 @@ OBJECTS = \
 	gimpenvirontable.obj \
 	gimpinterpreterdb.obj \
 	gimpplugin.obj \
+	gimpplugin-cleanup.obj \
 	gimpplugin-context.obj \
 	gimpplugindebug.obj \
 	gimppluginmanager.obj \
@@ -40,6 +41,7 @@ OBJECTS = \
 	\
 	plug-in-def.obj \
 	plug-in-enums.obj \
+	plug-in-icc-profile.obj \
 	plug-in-params.obj \
 	plug-in-rc.obj
 

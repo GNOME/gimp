@@ -47,6 +47,16 @@ STOCK_VARIABLES = \
 	stock_color_triangle_16		stock-color-triangle-16.png	\
 	stock_colormap_16	stock-colormap-16.png \
 	stock_colormap_24	stock-colormap-24.png \
+	stock_controller_16	stock-controller-16.png \
+	stock_controller_24	stock-controller-24.png \
+	stock_controller_linux_input_16	stock-controller-linux-input-16.png \
+	stock_controller_linux_input_24	stock-controller-linux-input-24.png \
+	stock_controller_keyboard_16	stock-controller-keyboard-16.png \
+	stock_controller_keyboard_24	stock-controller-keyboard-24.png \
+	stock_controller_midi_16	stock-controller-midi-16.png \
+	stock_controller_midi_24	stock-controller-midi-24.png \
+	stock_controller_wheel_16	stock-controller-wheel-16.png \
+	stock_controller_wheel_24	stock-controller-wheel-24.png \
 	stock_convert_grayscale_16		stock-convert-grayscale-16.png	\
 	stock_convert_indexed_16		stock-convert-indexed-16.png	\
 	stock_convert_rgb_16		stock-convert-rgb-16.png	\
@@ -59,6 +69,16 @@ STOCK_VARIABLES = \
 	stock_device_status_24		stock-device-status-24.png	\
 	stock_display_filter_16	stock-display-filter-16.png \
 	stock_display_filter_24	stock-display-filter-24.png \
+	stock_display_filter_colorblind_16	stock-display-filter-colorblind-16.png \
+	stock_display_filter_colorblind_24	stock-display-filter-colorblind-24.png \
+	stock_display_filter_contrast_16	stock-display-filter-contrast-16.png \
+	stock_display_filter_contrast_24	stock-display-filter-contrast-24.png \
+	stock_display_filter_gamma_16	stock-display-filter-gamma-16.png \
+	stock_display_filter_gamma_24	stock-display-filter-gamma-24.png \
+	stock_display_filter_lcms_16	stock-display-filter-lcms-16.png \
+	stock_display_filter_lcms_24	stock-display-filter-lcms-24.png \
+	stock_display_filter_proof_16	stock-display-filter-proof-16.png \
+	stock_display_filter_proof_24	stock-display-filter-proof-24.png \
 	stock_duplicate_16		stock-duplicate-16.png	\
 	stock_edit_16		stock-edit-16.png	\
 	stock_error_64		stock-error-64.png	\
