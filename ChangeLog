@@ -1,3 +1,9 @@
+2006-10-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_proc_run):
+	don't send a return value if executing the procedure closed the
+	plug-in (as is the case with gimp-quit). Fixes bug #332608.
+
 2006-10-27  Sven Neumann  <sven@gimp.org>
 
 	* configure.in

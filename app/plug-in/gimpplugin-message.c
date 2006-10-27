@@ -355,7 +355,6 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
   GimpProcedure       *procedure;
   GValueArray         *args          = NULL;
   GValueArray         *return_vals   = NULL;
-  GPProcReturn         proc_return;
 
   canonical = gimp_canonicalize_identifier (proc_run->name);
 
@@ -434,26 +433,35 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
                                                          args);
   gimp_plug_in_manager_plug_in_pop (plug_in->manager);
 
+  g_value_array_free (args);
   g_free (canonical);
 
-  /*  Return the name we got called with, *not* proc_name or canonical,
-   *  since proc_name may have been remapped by gimp->procedural_compat_ht
-   *  and canonical may be different too.
+  /*  Don't bother to send with the return value if executing the
+   *  procedure closed the plug-in (e.g. if the procedure is gimp-quit)
    */
-  proc_return.name    = proc_run->name;
-  proc_return.nparams = return_vals->n_values;
-  proc_return.params  = plug_in_args_to_params (return_vals, FALSE);
-
-  if (! gp_proc_return_write (plug_in->my_write, &proc_return, plug_in))
+  if (plug_in->open)
     {
-      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "plug_in_handle_proc_run: ERROR");
-      gimp_plug_in_close (plug_in, TRUE);
+      GPProcReturn proc_return;
+
+      /*  Return the name we got called with, *not* proc_name or canonical,
+       *  since proc_name may have been remapped by gimp->procedural_compat_ht
+       *  and canonical may be different too.
+       */
+      proc_return.name    = proc_run->name;
+      proc_return.nparams = return_vals->n_values;
+      proc_return.params  = plug_in_args_to_params (return_vals, FALSE);
+
+      if (! gp_proc_return_write (plug_in->my_write, &proc_return, plug_in))
+        {
+          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                        "plug_in_handle_proc_run: ERROR");
+          gimp_plug_in_close (plug_in, TRUE);
+        }
+
+      g_free (proc_return.params);
     }
 
-  g_value_array_free (args);
   g_value_array_free (return_vals);
-  g_free (proc_return.params);
 }
 
 static void
