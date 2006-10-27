@@ -1451,6 +1451,110 @@ pygimp_fonts_get_list(PyObject *self, PyObject *args, PyObject *kwargs)
 }
 
 static PyObject *
+vectors_to_objects(int num_vectors, int *vectors)
+{
+    PyObject *ret;
+    int i;
+
+    ret = PyList_New(num_vectors);
+    if (ret == NULL)
+        goto done;
+
+    for (i = 0; i < num_vectors; i++)
+        PyList_SetItem(ret, i, pygimp_vectors_new(vectors[i]));
+
+done:
+    g_free(vectors);
+    return ret;
+}
+
+static PyObject *
+pygimp_vectors_new_from_file(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpImage *img;
+    PyObject *py_file;
+    gboolean merge = FALSE, scale = FALSE;
+    int *vectors, num_vectors;
+
+    static char *kwlist[] = { "image", "svg_file", "merge", "scale", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "O!O|ii:vectors_new_from_file", kwlist,
+				     &PyGimpImage_Type, &img, &py_file,
+				     &merge, &scale))
+	return NULL;
+
+    if (PyString_Check(py_file)) {
+	vectors = gimp_vectors_new_from_file(img->ID,
+	                                     PyString_AsString(py_file),
+					     merge, scale, &num_vectors);
+    } else {
+	PyObject *chunk_size = PyInt_FromLong(16 * 1024);
+	PyObject *buffer = PyString_FromString("");
+	PyObject *read_method = PyString_FromString("read");
+
+	while (1) {
+	    PyObject *chunk;
+	    chunk = PyObject_CallMethodObjArgs(py_file, read_method,
+		                               chunk_size, NULL);
+
+	    if (!chunk || !PyString_Check(chunk)) {
+	        Py_XDECREF(chunk);
+	        Py_DECREF(chunk_size);
+        	Py_DECREF(buffer);
+        	Py_DECREF(read_method);
+		return NULL;
+	    }
+
+	    if (PyString_GET_SIZE(chunk) != 0) {
+		PyObject *newbuffer;
+		PyString_ConcatAndDel(&newbuffer, chunk);
+		Py_DECREF(buffer);
+		buffer = newbuffer;
+	    } else {
+		Py_DECREF(chunk);
+		break;
+	    }
+	}
+
+	vectors = gimp_vectors_new_from_string(img->ID,
+					       PyString_AsString(buffer),
+					       PyString_Size(buffer),
+					       merge, scale, &num_vectors);
+
+	Py_DECREF(chunk_size);
+	Py_DECREF(buffer);
+	Py_DECREF(read_method);
+    }
+
+    return vectors_to_objects(num_vectors, vectors);
+}
+
+static PyObject *
+pygimp_vectors_new_from_string(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpImage *img;
+    const char *svg_string;
+    int length;
+    gboolean merge = FALSE, scale = FALSE;
+    int *vectors, num_vectors;
+
+    static char *kwlist[] = { "image", "svg_string", "merge", "scale", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "O!s#|ii:vectors_new_from_file", kwlist,
+				     &PyGimpImage_Type, &img,
+				     &svg_string, &length,
+				     &merge, &scale))
+	return NULL;
+
+    vectors = gimp_vectors_new_from_string(img->ID, svg_string, length,
+					   merge, scale, &num_vectors);
+
+    return vectors_to_objects(num_vectors, vectors);
+}
+
+static PyObject *
 id2image(PyObject *self, PyObject *args)
 {
     int id;
@@ -1576,6 +1680,8 @@ static struct PyMethodDef gimp_methods[] = {
     {"fonts_refresh", (PyCFunction)pygimp_fonts_refresh,	METH_NOARGS},
     {"fonts_get_list", (PyCFunction)pygimp_fonts_get_list,	METH_VARARGS | METH_KEYWORDS},
     {"checks_get_shades", (PyCFunction)pygimp_checks_get_shades, METH_VARARGS | METH_KEYWORDS},
+    {"vectors_new_from_file", (PyCFunction)pygimp_vectors_new_from_file, METH_VARARGS | METH_KEYWORDS},
+    {"vectors_new_from_string", (PyCFunction)pygimp_vectors_new_from_string, METH_VARARGS | METH_KEYWORDS},
     {"_id2image", (PyCFunction)id2image, METH_VARARGS},
     {"_id2drawable", (PyCFunction)id2drawable, METH_VARARGS},
     {"_id2display", (PyCFunction)id2display, METH_VARARGS},

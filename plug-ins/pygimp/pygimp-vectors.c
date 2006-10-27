@@ -375,6 +375,57 @@ vbs_repr(PyGimpVectorsStroke *self)
     return s;
 }
 
+static int
+vbs_init(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpVectors *vectors;
+    double *controlpoints;
+    gboolean closed = FALSE;
+    PyObject *py_controlpoints, *item;
+    int i, num_points;
+
+    static char *kwlist[] = { "vectors", "controlpoints", "closed", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O!O|i:gimp.Vectors.__init__",
+                                     kwlist,
+                                     &PyGimpVectors_Type, &vectors,
+                                     &py_controlpoints, &closed));
+        return -1;
+
+    if (!PySequence_Check(py_controlpoints)) {
+        PyErr_SetString(PyExc_TypeError,
+                        "controlpoints must be a sequence");
+        return -1;
+    }
+
+    num_points = PySequence_Length(py_controlpoints);
+    controlpoints = g_new(gdouble, num_points);
+
+    for (i = 0; i < num_points; i++) {
+        item = PySequence_GetItem(py_controlpoints, i);
+
+        if (!PyFloat_Check(item)) {
+            PyErr_SetString(PyExc_TypeError,
+                            "controlpoints must be a sequence of floats");
+            g_free(controlpoints);
+            return -1;
+        }
+
+        controlpoints[i] = PyFloat_AsDouble(item);
+    }
+
+    self->vectors_ID = vectors->ID;
+    self->stroke =
+        gimp_vectors_stroke_new_from_points(self->vectors_ID,
+                                            GIMP_VECTORS_STROKE_TYPE_BEZIER,
+                                            num_points, controlpoints, closed);
+
+    g_free(controlpoints);
+
+    return 0;
+}
+
 PyTypeObject PyGimpVectorsBezierStroke_Type = {
     PyObject_HEAD_INIT(NULL)
     0,                                  /* ob_size */
@@ -413,7 +464,7 @@ PyTypeObject PyGimpVectorsBezierStroke_Type = {
     0,                                  /* tp_descr_get */
     0,                                  /* tp_descr_set */
     0,                                  /* tp_dictoffset */
-    (initproc)0,                        /* tp_init */
+    (initproc)vbs_init,                 /* tp_init */
     (allocfunc)0,                       /* tp_alloc */
     (newfunc)0,                         /* tp_new */
 };

@@ -1,3 +1,15 @@
+2006-10-27  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-vectors.c: wrap
+	gimp_vectors_stroke_new_from_points in the form of a
+	VectorsBezierStroke constructor.
+
+	* plug-ins/pygimp/gimpmodule.c: wrap gimp_vectors_new_from_file
+	and gimp_vectors_new_from_string.
+
+	* plug-ins/pygimp/pygimp-pdb.c: PDB_VECTORS should be translated
+	into Vectors objects.
+
 2006-10-26  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/script-fu-compat.init: Return empty
