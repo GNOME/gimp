@@ -1,3 +1,9 @@
+2006-10-26  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/script-fu-compat.init: Added strbreakup,
+	strcat, strcmp, string-trim, string-trim-left, string-trim-right, and 
+	unstrbreakup.
+
 2006-10-26  Jakub Steiner <jimmac@ximian.com>
 
 	* stock-display-filter-proof:
@@ -253,9 +259,10 @@
 
 2006-10-24  Kevin Cozens  <kcozens@cvs.gnome.org>
 
-	* plug-ins/script-fu/scheme-wrapper.c: Reworded two error messages.
+	* plug-ins/script-fu/scheme-wrapper.c (marshall_proc_db_call):
 	Break out of for loop before i gets updated when error was detected
 	to make sure error message reports correct parameter number.
+	Reworded two error messages.
 
 2006-10-24  Simon Budig  <simon@gimp.org>
 

@@ -128,8 +128,90 @@
 ;Items below this line are for compatability with Script-Fu but
 ;may be useful enough to keep around
 
+(define (strbreakup str sep)
+  (let* (
+        (seplen (string-length sep))
+        (start 0)
+        (end (string-length str))
+        (i start)
+        (l)
+        )
+
+    (if (= seplen 0)
+      (set! l (list str))
+      (begin
+        (while (<= i (- end seplen))
+          (if (substring-equal? sep str i (+ i seplen))
+            (begin
+               (if (= start 0)
+                 (set! l (list (substring str start i)))
+                 (set! l (append l (list (substring str start i))))
+               )
+               (set! start (+ i seplen))
+               (set! i (+ i seplen -1))
+            )
+          )
+
+          (set! i (+ i 1))
+        )
+
+        (if (< start end)
+          (set! l (append l (list (substring str start end))))
+        )
+      )
+    )
+
+    l
+  )
+)
+
 (define (substring-equal? str str2 start end)
   (string=? str (substring str2 start end))
+)
+
+(define (string-trim str)
+  (string-trim-right (string-trim-left str))
+)
+
+(define (string-trim-left str)
+  (let (
+       (strlen string-length str)
+       (i 0)
+       )
+
+    (while (and (< i strlen)
+                (char-whitespace? (string-ref str i))
+           )
+      (set! i (+ i 1))
+    )
+
+    (substring str i (string-length str))
+  )
+)
+
+(define (string-trim-right str)
+  (let ((i (- (string-length str) 1)))
+
+    (while (and (>= i 0)
+                (char-whitespace? (string-ref str i))
+           )
+      (set! i (- i 1))
+    )
+
+    (substring str 0 (+ i 1))
+  )
+)
+
+(define (unstrbreakup stringlist sep)
+  (let ((str (car stringlist)))
+
+    (while (not (null? stringlist))
+      (set! str (string-append str sep (car stringlist)))
+      (set! stringlist (cdr stringlist))
+    )
+
+    str
+  )
 )
 
 
@@ -142,6 +224,7 @@
 (define nil '())
 (define nreverse reverse)
 (define pow expt)
+(define strcat string-append)
 (define string-lessp string<?)
 (define symbol-bound? defined?)
 (define the-environment current-environment)
@@ -227,6 +310,16 @@
   (if (null? modulus)
     (msrg-rand)
     (apply random modulus)
+  )
+)
+
+(define (strcmp str1 str2)
+  (if (string<? str1 str2)
+      -1
+      (if (string>? str1 str2)
+          1
+          0
+      )
   )
 )
 
