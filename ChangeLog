@@ -1,3 +1,8 @@
+2006-10-27  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-console.c: don't hardcode font sizes,
+	moved newlines out of translatable strings.
+
 2006-10-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_proc_run):

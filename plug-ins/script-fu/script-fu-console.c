@@ -186,32 +186,31 @@ script_fu_console_interface (void)
   output = console->text_view;
 
   gtk_text_view_set_editable (GTK_TEXT_VIEW (console->text_view), FALSE);
-  gtk_text_view_set_left_margin (GTK_TEXT_VIEW (console->text_view), 12);
-  gtk_text_view_set_right_margin (GTK_TEXT_VIEW (console->text_view), 12);
+  gtk_text_view_set_left_margin (GTK_TEXT_VIEW (console->text_view), 6);
+  gtk_text_view_set_right_margin (GTK_TEXT_VIEW (console->text_view), 6);
   gtk_widget_set_size_request (console->text_view, TEXT_WIDTH, TEXT_HEIGHT);
   gtk_container_add (GTK_CONTAINER (scrolled_window), console->text_view);
   gtk_widget_show (console->text_view);
 
   gtk_text_buffer_create_tag (console->console, "strong",
                               "weight", PANGO_WEIGHT_BOLD,
-                              "size",   12 * PANGO_SCALE,
+                              "scale",  PANGO_SCALE_LARGE,
                               NULL);
   gtk_text_buffer_create_tag (console->console, "emphasis",
                               "style",  PANGO_STYLE_OBLIQUE,
-                              "size",   10 * PANGO_SCALE,
-                              NULL);
-  gtk_text_buffer_create_tag (console->console, "weak",
-                              "size",   10 * PANGO_SCALE,
                               NULL);
 
   {
-    const gchar *greeting_texts[] =
+    const gchar * const greetings[] =
     {
-      "strong",   _("Welcome to TinyScheme\n"),
-      "weak",     _("Copyright (c) Dimitrios Souflis\n\n"),
-      "strong",   _("Script-Fu Console - "),
+      "strong",   _("Welcome to TinyScheme"),
+      NULL,       "\n",
+      NULL,       "Copyright (c) Dimitrios Souflis",
+      NULL,       "\n",
+      "strong",   _("Script-Fu Console"),
+      NULL,       " - ",
       "emphasis", _("Interactive Scheme Development"),
-      NULL
+      NULL,       "\n"
     };
 
     GtkTextIter cursor;
@@ -219,12 +218,16 @@ script_fu_console_interface (void)
 
     gtk_text_buffer_get_end_iter (console->console, &cursor);
 
-    for (i = 0; greeting_texts[i]; i += 2)
+    for (i = 0; i < G_N_ELEMENTS (greetings); i += 2)
       {
-        gtk_text_buffer_insert_with_tags_by_name (console->console, &cursor,
-                                                  greeting_texts[i + 1], -1,
-                                                  greeting_texts[i],
-                                                  NULL);
+        if (greetings[i])
+          gtk_text_buffer_insert_with_tags_by_name (console->console, &cursor,
+                                                    greetings[i + 1], -1,
+                                                    greetings[i],
+                                                    NULL);
+        else
+          gtk_text_buffer_insert (console->console, &cursor,
+                                  greetings[i + 1], -1);
       }
   }
 
@@ -515,10 +518,7 @@ script_fu_output_to_console (const gchar *text,
       GtkTextIter    cursor;
 
       gtk_text_buffer_get_end_iter (buffer, &cursor);
-      gtk_text_buffer_insert_with_tags_by_name (buffer, &cursor,
-                                                text, len,
-                                                "weak",
-                                                NULL);
+      gtk_text_buffer_insert (buffer, &cursor, text, len);
 
       script_fu_console_scroll_end (output);
     }
@@ -571,15 +571,10 @@ script_fu_cc_key_function (GtkWidget        *widget,
                                                 "strong",
                                                 NULL);
 
-      gtk_text_buffer_insert_with_tags_by_name (console->console, &cursor,
-                                                gtk_entry_get_text (GTK_ENTRY (console->cc)), -1,
-                                                "weak",
-                                                NULL);
+      gtk_text_buffer_insert (console->console, &cursor,
+                              gtk_entry_get_text (GTK_ENTRY (console->cc)), -1);
 
-      gtk_text_buffer_insert_with_tags_by_name (console->console, &cursor,
-                                                "\n", -1,
-                                                "weak",
-                                                NULL);
+      gtk_text_buffer_insert (console->console, &cursor, "\n", -1);
 
       script_fu_console_scroll_end (console->text_view);
 
