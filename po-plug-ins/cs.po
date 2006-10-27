@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-18 10:57+0200\n"
-"PO-Revision-Date: 2006-10-18 11:06+0200\n"
+"POT-Creation-Date: 2006-10-27 20:08+0200\n"
+"PO-Revision-Date: 2006-10-27 20:09+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2034,6 +2034,18 @@ msgstr "Hledám pozadí animace"
 msgid "Optimizing animation"
 msgstr "Optimalizuji animaci"
 
+#: ../plug-ins/common/antialias.c:81
+msgid "Antialias using the Scale3X edge-extrapolation algorithm"
+msgstr "Vyhlazování pomocí extrapolačního algoritmu Scale3X"
+
+#: ../plug-ins/common/antialias.c:87
+msgid "_Antialias"
+msgstr "_Vyhlazování"
+
+#: ../plug-ins/common/antialias.c:144
+msgid "Antialiasing..."
+msgstr "Vyhlazování..."
+
 #: ../plug-ins/common/apply_lens.c:108
 msgid "Simulate an elliptical lens over the image"
 msgstr "Simulovat eliptickou čočku nad obrázkem"
@@ -3356,7 +3368,7 @@ msgstr "_Rekurzivní"
 
 #: ../plug-ins/common/despeckle.c:460 ../plug-ins/common/neon.c:739
 #: ../plug-ins/common/nlfilt.c:1090 ../plug-ins/common/nova.c:365
-#: ../plug-ins/common/unsharp.c:681 ../plug-ins/common/whirlpinch.c:588
+#: ../plug-ins/common/unsharp.c:681 ../plug-ins/common/whirlpinch.c:587
 #: ../plug-ins/gflare/gflare.c:2684 ../plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
 msgstr "_Poloměr:"
@@ -4217,16 +4229,16 @@ msgid ""
 "The image you are trying to save as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr ""
-"Obrázek, který se pokoušíte zapsat jako GIF obsahuje vrstvy, "
-"které přesahují přes aktuální hranice obrázku."
+"Obrázek, který se pokoušíte zapsat jako GIF obsahuje vrstvy, které přesahují "
+"přes aktuální hranice obrázku."
 
 #: ../plug-ins/common/gif.c:1192
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this save."
 msgstr ""
-"Formát GIF to nepovoluje. Můžete oříznout všechny vrstvy podle "
-"hranic obrázku nebo ukládání zrušit."
+"Formát GIF to nepovoluje. Můžete oříznout všechny vrstvy podle hranic "
+"obrázku nebo ukládání zrušit."
 
 #: ../plug-ins/common/gif.c:1233
 msgid "Save as GIF"
@@ -8381,31 +8393,31 @@ msgstr ""
 "Nemohu spustit určený WWW prohlížeč:\n"
 "%s"
 
-#: ../plug-ins/common/whirlpinch.c:139
+#: ../plug-ins/common/whirlpinch.c:138
 msgid "Distort an image by whirling and pinching"
 msgstr "Zkreslit obrázek vířením a zaškrcováním"
 
-#: ../plug-ins/common/whirlpinch.c:150
+#: ../plug-ins/common/whirlpinch.c:149
 msgid "W_hirl and Pinch..."
 msgstr "_Vír a zaškrcení..."
 
-#: ../plug-ins/common/whirlpinch.c:193
+#: ../plug-ins/common/whirlpinch.c:192
 msgid "Region affected by plug-in is empty"
 msgstr "Oblast ovlivněná zásuvným modulem je prázdná"
 
-#: ../plug-ins/common/whirlpinch.c:341
+#: ../plug-ins/common/whirlpinch.c:340
 msgid "Whirling and pinching"
 msgstr "Vířím a zaškrcuji"
 
-#: ../plug-ins/common/whirlpinch.c:528
+#: ../plug-ins/common/whirlpinch.c:527
 msgid "Whirl and Pinch"
 msgstr "Vír a zaškrcení"
 
-#: ../plug-ins/common/whirlpinch.c:564
+#: ../plug-ins/common/whirlpinch.c:563
 msgid "_Whirl angle:"
 msgstr "Úhel _víru:"
 
-#: ../plug-ins/common/whirlpinch.c:576
+#: ../plug-ins/common/whirlpinch.c:575
 msgid "_Pinch amount:"
 msgstr "_Míra zaškrcení:"
 
