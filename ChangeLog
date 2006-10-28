@@ -1,5 +1,12 @@
 2006-10-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/gimppdb-query.c: include deprecated procedures in the
+	output of gimp-pdb-dump. Added #define DEBUG_OUTPUT which allows
+	to dump to a format that works as input for "diff" and allows to
+	easily compare two gimp version's PDB API.
+
+2006-10-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp-transform-utils.[ch]
 	(gimp_transform_matrix_flip_free): removed unused x,y,width,height
 	parameters.

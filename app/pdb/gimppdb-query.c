@@ -49,6 +49,16 @@
 #define COMPAT_BLURB       "This procedure is deprecated! Use '%s' instead."
 
 
+typedef struct _PDBDump PDBDump;
+
+struct _PDBDump
+{
+  GimpPDB  *pdb;
+  FILE     *file;
+
+  gboolean  dumping_compat;
+};
+
 typedef struct _PDBQuery PDBQuery;
 
 struct _PDBQuery
@@ -101,20 +111,30 @@ gboolean
 gimp_pdb_dump (GimpPDB     *pdb,
                const gchar *filename)
 {
-  FILE *file;
+  PDBDump pdb_dump;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
 
-  file = g_fopen (filename, "w");
+  pdb_dump.pdb  = pdb;
+  pdb_dump.file = g_fopen (filename, "w");
 
-  if (! file)
+  if (! pdb_dump.file)
     return FALSE;
+
+  pdb_dump.dumping_compat = FALSE;
 
   g_hash_table_foreach (pdb->procedures,
                         gimp_pdb_print_entry,
-                        file);
-  fclose (file);
+                        &pdb_dump);
+
+  pdb_dump.dumping_compat = TRUE;
+
+  g_hash_table_foreach (pdb->compat_proc_names,
+                        gimp_pdb_print_entry,
+                        &pdb_dump);
+
+  fclose (pdb_dump.file);
 
   return TRUE;
 }
@@ -323,12 +343,16 @@ gimp_pdb_query_entry (gpointer key,
     }
 }
 
+/* #define DEBUG_OUTPUT 1 */
+
 static gboolean
 output_string (FILE        *file,
                const gchar *string)
 {
+#ifndef DEBUG_OUTPUT
   if (fprintf (file, "\"") < 0)
     return FALSE;
+#endif
 
   if (string)
     while (*string)
@@ -348,8 +372,10 @@ output_string (FILE        *file,
         string++;
       }
 
+#ifndef DEBUG_OUTPUT
   if (fprintf (file, "\"\n") < 0)
     return FALSE;
+#endif
 
   return TRUE;
 }
@@ -359,19 +385,28 @@ gimp_pdb_print_entry (gpointer key,
                       gpointer value,
                       gpointer user_data)
 {
-  FILE       *file = user_data;
-  GEnumClass *arg_class;
-  GEnumClass *proc_class;
-  GList      *list;
-  GString    *buf;
-  gint        num = 0;
+  PDBDump     *pdb_dump = user_data;
+  FILE        *file     = pdb_dump->file;
+  const gchar *proc_name;
+  GList       *list;
+  GEnumClass  *arg_class;
+  GEnumClass  *proc_class;
+  GString     *buf;
+  gint         num = 0;
+
+  proc_name = key;
+
+  if (pdb_dump->dumping_compat)
+    list = g_hash_table_lookup (pdb_dump->pdb->procedures, value);
+  else
+    list = value;
 
   arg_class  = g_type_class_ref (GIMP_TYPE_PDB_ARG_TYPE);
   proc_class = g_type_class_ref (GIMP_TYPE_PDB_PROC_TYPE);
 
   buf = g_string_new ("");
 
-  for (list = (GList *) value; list; list = list->next)
+  for (; list; list = list->next)
     {
       GimpProcedure *procedure = list->data;
       GEnumValue    *arg_value;
@@ -380,19 +415,62 @@ gimp_pdb_print_entry (gpointer key,
 
       num++;
 
+#ifdef DEBUG_OUTPUT
+      fprintf (file, "(");
+#else
       fprintf (file, "(register-procedure ");
+#endif
 
-      if (list || num != 1)
+      if (num != 1)
         {
-          g_string_printf (buf, "%s <%d>", GIMP_OBJECT (procedure)->name, num);
+          g_string_printf (buf, "%s <%d>", proc_name, num);
           output_string (file, buf->str);
         }
       else
         {
-          output_string (file, GIMP_OBJECT (procedure)->name);
+          output_string (file, proc_name);
         }
 
       type_desc = gimp_enum_get_desc (proc_class, procedure->proc_type);
+
+#ifdef DEBUG_OUTPUT
+
+      fprintf (file, " (");
+
+      for (i = 0; i < procedure->num_args; i++)
+        {
+          GParamSpec     *pspec = procedure->args[i];
+          GimpPDBArgType  arg_type;
+
+          arg_type = gimp_pdb_compat_arg_type_from_gtype (pspec->value_type);
+
+          arg_value = g_enum_get_value (arg_class, arg_type);
+
+          if (i > 0)
+            fprintf (file, " ");
+
+          output_string (file, arg_value->value_name);
+        }
+
+      fprintf (file, ") (");
+
+      for (i = 0; i < procedure->num_values; i++)
+        {
+          GParamSpec     *pspec = procedure->values[i];
+          GimpPDBArgType  arg_type;
+
+          arg_type = gimp_pdb_compat_arg_type_from_gtype (pspec->value_type);
+
+          arg_value = g_enum_get_value (arg_class, arg_type);
+
+          if (i > 0)
+            fprintf (file, " ");
+
+          output_string (file, arg_value->value_name);
+        }
+      fprintf (file, "))\n");
+
+#else /* ! DEBUG_OUTPUT */
 
       fprintf (file, "  ");
       output_string (file, procedure->blurb);
@@ -457,6 +535,9 @@ gimp_pdb_print_entry (gpointer key,
         }
       fprintf (file, "\n  )");
       fprintf (file, "\n)\n");
+
+#endif /* DEBUG_OUTPUT */
+
     }
 
   g_string_free (buf, TRUE);
