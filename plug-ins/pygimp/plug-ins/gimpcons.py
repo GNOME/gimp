@@ -96,6 +96,10 @@ def console():
 
         cmd = cmd + "(%s)" % ', '.join([x[1].replace('-', '_') for x in params])
 
+        lines = cons.buffer.get_line_count()
+        iter = cons.buffer.get_iter_at_line_offset(lines - 1, 4)
+        cons.buffer.delete(iter, cons.buffer.get_end_iter())
+        cons.buffer.place_cursor(cons.buffer.get_end_iter())
         cons.buffer.insert_at_cursor(cmd)
 
     def browse(cons):
