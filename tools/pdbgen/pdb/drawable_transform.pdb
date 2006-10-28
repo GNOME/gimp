@@ -235,7 +235,6 @@ HELP
     transform_invoke ("Flipping", <<CODE);
       gimp_matrix3_identity (&matrix);
       gimp_transform_matrix_flip_free (&matrix,
-                                       x, y, width, height,
                                        x0, y0, x1, y1);
 CODE
 }
@@ -279,7 +278,6 @@ HELP
     transform_default_invoke ("Flipping", <<CODE);
       gimp_matrix3_identity (&matrix);
       gimp_transform_matrix_flip_free (&matrix,
-                                       x, y, width, height,
                                        x0, y0, x1, y1);
 CODE
 }

@@ -1,3 +1,13 @@
+2006-10-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp-transform-utils.[ch]
+	(gimp_transform_matrix_flip_free): removed unused x,y,width,height
+	parameters.
+
+	* tools/pdbgen/pdb/drawable_transform.pdb: changed accordingly.
+
+	* app/pdb/drawable_transform_cmds.c: regenerated.
+
 2006-10-27  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpdata.c (gimp_data_class_init): fix typo

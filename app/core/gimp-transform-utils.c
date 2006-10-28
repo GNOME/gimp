@@ -55,10 +55,6 @@ gimp_transform_matrix_flip (GimpMatrix3         *matrix,
 
 void
 gimp_transform_matrix_flip_free (GimpMatrix3 *matrix,
-                                 gint         x,
-                                 gint         y,
-                                 gint         width,
-                                 gint         height,
                                  gdouble      x1,
                                  gdouble      y1,
                                  gdouble      x2,
