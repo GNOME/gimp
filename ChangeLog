@@ -1,5 +1,10 @@
 2006-10-29  Michael Natterer  <mitch@gimp.org>
 
+	* modules/colorsel_cmyk_lcms.c: added hackish flag to prevent it
+	from emitting signals during destruction.
+
+2006-10-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimprc.[ch]: added gimp_rc_migrate() which resets
 	all GimpParamConfigPath properties to default values.
 

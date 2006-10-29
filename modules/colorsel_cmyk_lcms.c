@@ -59,6 +59,8 @@ struct _ColorselCmyk
   GimpCMYK           cmyk;
   GtkAdjustment     *adj[4];
   GtkWidget         *name_label;
+
+  gboolean           in_destruction;
 };
 
 struct _ColorselCmykClass
@@ -230,6 +232,10 @@ colorsel_cmyk_init (ColorselCmyk *module)
 static void
 colorsel_cmyk_dispose (GObject *object)
 {
+  ColorselCmyk *module = COLORSEL_CMYK (object);
+
+  module->in_destruction = TRUE;
+
   colorsel_cmyk_set_config (GIMP_COLOR_SELECTOR (object), NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -419,5 +425,6 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   cmsCloseProfile (cmyk_profile);
 
  out:
-  gimp_color_selector_set_color (selector, &selector->rgb, &selector->hsv);
+  if (! module->in_destruction)
+    gimp_color_selector_set_color (selector, &selector->rgb, &selector->hsv);
 }
