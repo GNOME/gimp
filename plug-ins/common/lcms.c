@@ -67,22 +67,22 @@ static GimpPDBStatusType  lcms_icc_info  (gint32        image,
                                           gchar       **desc,
                                           gchar       **info);
 
-static cmsHPROFILE  lcms_image_get_profile      (gint32          image);
-static gboolean     lcms_image_set_profile      (gint32          image,
-                                                 const gchar    *filename);
-static void         lcms_image_transform_pixels (gint32          image,
-                                                 cmsHPROFILE     src_profile,
-                                                 cmsHPROFILE     dest_profile);
-static void         lcms_image_transform_cmap   (gint32          image,
-                                                 cmsHPROFILE     src_profile,
-                                                 cmsHPROFILE     dest_profile);
+static cmsHPROFILE  lcms_image_get_profile       (gint32          image);
+static gboolean     lcms_image_set_profile       (gint32          image,
+                                                  const gchar    *filename);
+static void         lcms_image_transform_rgb     (gint32          image,
+                                                  cmsHPROFILE     src_profile,
+                                                  cmsHPROFILE     dest_profile);
+static void         lcms_image_transform_indexed (gint32          image,
+                                                  cmsHPROFILE     src_profile,
+                                                  cmsHPROFILE     dest_profile);
 
-static void         lcms_drawable_transform     (GimpDrawable   *drawable,
-                                                 cmsHTRANSFORM   transform,
-                                                 gdouble         progress_start,
-                                                 gdouble         progress_end);
+static void         lcms_drawable_transform      (GimpDrawable   *drawable,
+                                                  cmsHTRANSFORM   transform,
+                                                  gdouble         progress_start,
+                                                  gdouble         progress_end);
 
-static cmsHPROFILE  lcms_config_get_profile     (void);
+static cmsHPROFILE  lcms_config_get_profile      (void);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -125,7 +125,7 @@ query (void)
                           "Sven Neumann",
                           "2006",
                           N_("Set color profile"),
-                          "*",
+                          "RGB*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
@@ -141,7 +141,7 @@ query (void)
                           "Sven Neumann",
                           "2006",
                           N_("Set default RGB profile"),
-                          "*",
+                          "RGB*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (base_args), 0,
                           base_args, NULL);
@@ -157,7 +157,7 @@ query (void)
                           "Sven Neumann",
                           "2006",
                           N_("Apply color profile"),
-                          "*",
+                          "RGB*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
@@ -175,7 +175,7 @@ query (void)
                           "Sven Neumann",
                           "2006",
                           N_("Apply default RGB profile"),
-                          "*",
+                          "RGB*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (base_args), 0,
                           base_args, NULL);
@@ -389,7 +389,7 @@ lcms_icc_apply (gint32       image,
   if (! src_profile && ! dest_profile)
     return GIMP_PDB_SUCCESS;
 
-  if (! lcms_icc_profile_is_rgb (src_profile))
+  if (src_profile && ! lcms_icc_profile_is_rgb (src_profile))
     {
       g_warning ("Attached color profile is not for RGB color space.");
 
@@ -419,12 +419,16 @@ lcms_icc_apply (gint32       image,
       switch (gimp_image_base_type (image))
         {
         case GIMP_RGB:
+          lcms_image_transform_rgb (image, src_profile, dest_profile);
+          break;
+
         case GIMP_GRAY:
-          lcms_image_transform_pixels (image, src_profile, dest_profile);
+          g_warning ("colorspace conversion not implemented "
+                     "for grayscale images");
           break;
 
         case GIMP_INDEXED:
-          lcms_image_transform_cmap (image, src_profile, dest_profile);
+          lcms_image_transform_indexed (image, src_profile, dest_profile);
           break;
         }
 
@@ -435,6 +439,8 @@ lcms_icc_apply (gint32       image,
   cmsCloseProfile (dest_profile);
 
   g_object_unref (config);
+
+  gimp_displays_flush ();
 
   return GIMP_PDB_SUCCESS;
 }
@@ -567,9 +573,9 @@ lcms_image_set_profile (gint32       image,
 }
 
 static void
-lcms_image_transform_pixels (gint32       image,
-                             cmsHPROFILE  src_profile,
-                             cmsHPROFILE  dest_profile)
+lcms_image_transform_rgb (gint32       image,
+                          cmsHPROFILE  src_profile,
+                          cmsHPROFILE  dest_profile)
 {
   cmsHTRANSFORM  transform   = NULL;
   DWORD          last_format = 0;
@@ -586,12 +592,6 @@ lcms_image_transform_pixels (gint32       image,
 
       switch (drawable->bpp)
         {
-        case 1:
-          format = TYPE_GRAY_8;
-          break;
-        case 2:
-          format = TYPE_GRAYA_8;
-          break;
         case 3:
           format = TYPE_RGB_8;
           break;
@@ -629,9 +629,9 @@ lcms_image_transform_pixels (gint32       image,
 }
 
 static void
-lcms_image_transform_cmap (gint32       image,
-                           cmsHPROFILE  src_profile,
-                           cmsHPROFILE  dest_profile)
+lcms_image_transform_indexed (gint32       image,
+                              cmsHPROFILE  src_profile,
+                              cmsHPROFILE  dest_profile)
 {
   cmsHTRANSFORM   transform;
   guchar         *cmap;
@@ -643,7 +643,7 @@ lcms_image_transform_cmap (gint32       image,
                                   dest_profile, TYPE_RGB_8,
                                   INTENT_PERCEPTUAL, 0);
 
-  cmsDoTransform (transform, cmap, cmap, num_colors * 3);
+  cmsDoTransform (transform, cmap, cmap, num_colors);
 
   cmsDeleteTransform(transform);
 
