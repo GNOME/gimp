@@ -26,107 +26,133 @@ PROC_NAME = 'python-fu-console'
 
 RESPONSE_BROWSE, RESPONSE_CLEAR, RESPONSE_SAVE = range(3)
 
-def console():
+def do_console():
     import pygtk
     pygtk.require('2.0')
 
-    import sys, gobject, gtk, gimpenums, gimpshelf, gimpui
+    import sys, gobject, gtk, gimpenums, gimpshelf, gimpui, pyconsole
 
     namespace = {'__builtins__': __builtins__,
                  '__name__': '__main__', '__doc__': None,
                  'gimp': gimp, 'pdb': gimp.pdb,
                  'shelf': gimpshelf.shelf}
-
+    
     for s in gimpenums.__dict__.keys():
         if s[0] != '_':
             namespace[s] = getattr(gimpenums, s)
 
-    def response(dialog, response_id, cons):
-        if response_id == RESPONSE_BROWSE:
-            browse(cons)
-        elif response_id == RESPONSE_CLEAR:
-            cons.banner = None
-            cons.clear()
-        elif response_id == RESPONSE_SAVE:
-            save_dialog(dialog, cons)
-        else:
-            gtk.main_quit()
-        
+    class Console(gimpui.Dialog):
+        def __init__(self):
+            gimpui.Dialog.__init__(self, title=_("Python Console"),
+                                   role=PROC_NAME, help_id=PROC_NAME,
+                                   buttons=(gtk.STOCK_SAVE,  RESPONSE_SAVE,
+                                            gtk.STOCK_CLEAR, RESPONSE_CLEAR,
+                                            _("_Browse..."), RESPONSE_BROWSE,
+                                            gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE))
 
-    dialog = gimpui.Dialog(title=_("Python Console"), role=PROC_NAME,
-                           help_id=PROC_NAME,
-                           buttons=(gtk.STOCK_SAVE,  RESPONSE_SAVE,
-                                    gtk.STOCK_CLEAR, RESPONSE_CLEAR,
-                                    _("_Browse..."), RESPONSE_BROWSE,
-                                    gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE))
-    dialog.set_alternative_button_order((gtk.RESPONSE_CLOSE, RESPONSE_BROWSE,
-                                         RESPONSE_CLEAR, RESPONSE_SAVE))
+            self.set_alternative_button_order((gtk.RESPONSE_CLOSE,
+                                               RESPONSE_BROWSE,
+                                               RESPONSE_CLEAR,
+                                               RESPONSE_SAVE))
 
-    banner = 'Gimp %s Python Console\nPython %s\n' % (gimp.pdb.gimp_version(),
-                                                      sys.version)
+            banner = ('Gimp %s Python Console\nPython %s\n' %
+                      (gimp.pdb.gimp_version(), sys.version))
 
-    import pyconsole
-    cons = pyconsole.Console(locals=namespace, banner=banner,
-                             quit_func=lambda: gtk.main_quit())
+            self.cons = pyconsole.Console(locals=namespace, banner=banner,
+                                          quit_func=lambda: gtk.main_quit())
 
-    dialog.connect("response", response, cons)
+            self.connect('response', self.response)
 
-    def browse_response(dlg, response_id, cons):
-        if response_id != gtk.RESPONSE_APPLY:
-            dlg.destroy()
-            return
+            self.browse_dlg = None
+            self.save_dlg = None
 
-        proc_name = dlg.get_selected()
+            vbox = gtk.VBox(False, 12)
+            vbox.set_border_width(12)
+            self.vbox.pack_start(vbox)
 
-        if not proc_name:
-            return
+            scrl_win = gtk.ScrolledWindow()
+            scrl_win.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_ALWAYS)
+            vbox.pack_start(scrl_win)
 
-        proc = pdb[proc_name]
+            scrl_win.add(self.cons)
+
+            self.set_default_size(500, 500)
+
+        def response(self, dialog, response_id):
+            if response_id == RESPONSE_BROWSE:
+                self.browse()
+            elif response_id == RESPONSE_CLEAR:
+                self.cons.banner = None
+                self.cons.clear()
+            elif response_id == RESPONSE_SAVE:
+                self.save_dialog()
+            else:
+                gtk.main_quit()
+
+            self.cons.grab_focus()
+
+        def browse_response(self, dlg, response_id):
+            if response_id != gtk.RESPONSE_APPLY:
+                dlg.hide()
+                return
+
+            proc_name = dlg.get_selected()
+
+            if not proc_name:
+                return
+
+            proc = pdb[proc_name]
             
-        cmd = ''
+            cmd = ''
 
-        if len(proc.return_vals) > 0:
-            cmd = ', '.join([x[1].replace('-', '_') for x in proc.return_vals]) + ' = '
+            if len(proc.return_vals) > 0:
+                cmd = ', '.join([x[1].replace('-', '_')
+                                for x in proc.return_vals]) + ' = '
 
-        cmd = cmd + "pdb.%s" % proc.proc_name.replace('-', '_')
+            cmd = cmd + 'pdb.%s' % proc.proc_name.replace('-', '_')
 
-        if len(proc.params) > 0 and proc.params[0][1] == 'run-mode':
-            params = proc.params[1:]
-        else:
-            params = proc.params
+            if len(proc.params) > 0 and proc.params[0][1] == 'run-mode':
+                params = proc.params[1:]
+            else:
+                params = proc.params
 
-        cmd = cmd + "(%s)" % ', '.join([x[1].replace('-', '_') for x in params])
+            cmd = cmd + '(%s)' % ', '.join([x[1].replace('-', '_')
+                                           for x in params])
 
-        lines = cons.buffer.get_line_count()
-        iter = cons.buffer.get_iter_at_line_offset(lines - 1, 4)
-        cons.buffer.delete(iter, cons.buffer.get_end_iter())
-        cons.buffer.place_cursor(cons.buffer.get_end_iter())
-        cons.buffer.insert_at_cursor(cmd)
+            buffer = self.cons.buffer
 
-    def browse(cons):
-        dlg = gimpui.ProcBrowserDialog(_("Python Procedure Browser"), PROC_NAME,
-                                       buttons=(gtk.STOCK_APPLY, gtk.RESPONSE_APPLY,
-                                                gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE))
-        dlg.set_default_response(gtk.RESPONSE_APPLY)
-        dlg.set_alternative_button_order((gtk.RESPONSE_CLOSE, gtk.RESPONSE_APPLY))
+            lines = buffer.get_line_count()
+            iter = buffer.get_iter_at_line_offset(lines - 1, 4)
+            buffer.delete(iter, buffer.get_end_iter())
+            buffer.place_cursor(buffer.get_end_iter())
+            buffer.insert_at_cursor(cmd)
 
-        dlg.connect("response", browse_response, cons)
-        dlg.connect("row-activated",
-                    lambda dlg: dlg.response(gtk.RESPONSE_APPLY))
+        def browse(self):
+            if not self.browse_dlg:
+                dlg = gimpui.ProcBrowserDialog(_("Python Procedure Browser"),
+                                               role=PROC_NAME,
+                                               buttons=(gtk.STOCK_APPLY,
+                                                        gtk.RESPONSE_APPLY,
+                                                        gtk.STOCK_CLOSE,
+                                                        gtk.RESPONSE_CLOSE))
 
-        dlg.show()
+                dlg.set_default_response(gtk.RESPONSE_APPLY)
+                dlg.set_alternative_button_order((gtk.RESPONSE_CLOSE,
+                                                  gtk.RESPONSE_APPLY))
 
-    def save_dialog(parent, cons):
-        dlg = gtk.FileChooserDialog(title=_("Save Python-Fu Console Output"),
-                                    parent=parent,
-                                    action=gtk.FILE_CHOOSER_ACTION_SAVE,
-                                    buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-                                             gtk.STOCK_SAVE,   gtk.RESPONSE_OK))
-        dlg.set_default_response(gtk.RESPONSE_OK)
-        dlg.set_alternative_button_order((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))
+                dlg.connect('response', self.browse_response)
+                dlg.connect('row-activated',
+                            lambda dlg: dlg.response(gtk.RESPONSE_APPLY))
 
-        def save_response(dlg, response_id, cons):
-            if response_id == gtk.RESPONSE_OK:
+                self.browse_dlg = dlg
+
+            self.browse_dlg.present()
+
+        def save_response(self, dlg, response_id):
+            if response_id == gtk.RESPONSE_DELETE_EVENT:
+                self.save_dlg = None
+                return
+            elif response_id == gtk.RESPONSE_OK:
                 filename = dlg.get_filename()
 
                 try:
@@ -136,39 +162,56 @@ def console():
                                  (filename, e.strerror))
                     return
 
-                start = cons.buffer.get_start_iter()
-                end = cons.buffer.get_end_iter()
+                buffer = self.cons.buffer
 
-                log = cons.buffer.get_text(start, end, False)
+                start = buffer.get_start_iter()
+                end = buffer.get_end_iter()
 
-                logfile.write(log)
-                logfile.close()
+                log = buffer.get_text(start, end, False)
 
-            dlg.destroy()
+                try:
+                    logfile.write(log)
+                    logfile.close()
+                except IOError, e:
+                    gimp.message(_("Could not write to '%s': %s") %
+                                 (filename, e.strerror))
+                    return
 
-        dlg.connect("response", save_response, cons)
-        dlg.present()
+            dlg.hide()
 
-    vbox = gtk.VBox(False, 12)
-    vbox.set_border_width(12)
-    dialog.vbox.pack_start(vbox)
+        def save_dialog(self):
+            if not self.save_dlg:
+                dlg = gtk.FileChooserDialog(_("Save Python-Fu Console Output"),
+                                            parent=self,
+                                            action=gtk.FILE_CHOOSER_ACTION_SAVE,
+                                            buttons=(gtk.STOCK_CANCEL,
+                                                     gtk.RESPONSE_CANCEL,
+                                                     gtk.STOCK_SAVE,
+                                                     gtk.RESPONSE_OK))
 
-    scrl_win = gtk.ScrolledWindow()
-    scrl_win.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_ALWAYS)
-    vbox.pack_start(scrl_win)
+                dlg.set_default_response(gtk.RESPONSE_OK)
+                dlg.set_alternative_button_order((gtk.RESPONSE_OK,
+                                                  gtk.RESPONSE_CANCEL))
 
-    scrl_win.add(cons)
+                dlg.connect('response', self.save_response)
 
-    dialog.set_default_size(500, 500)
-    dialog.show_all()
+                self.save_dlg = dlg
 
-    # flush the displays every half second
-    def timeout():
-        gimp.displays_flush()
-        return True
+            self.save_dlg.present()
 
-    gobject.timeout_add(500, timeout)
-    gtk.main()
+        def run(self):
+            self.show_all()
+
+            # flush the displays every half second
+            def timeout():
+                gimp.displays_flush()
+                return True
+
+            gobject.timeout_add(500, timeout)
+            gtk.main()
+
+    console = Console()
+    console.run()
 
 register(
     PROC_NAME,
@@ -181,7 +224,7 @@ register(
     "",
     [],
     [],
-    console,
+    do_console,
     menu="<Toolbox>/Xtns/Languages/Python-Fu",
     domain=("gimp20-python", gimp.locale_directory))
 

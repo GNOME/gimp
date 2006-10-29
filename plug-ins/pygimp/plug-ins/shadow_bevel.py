@@ -19,7 +19,7 @@
 
 from gimpfu import *
 
-gettext.install("gimp20-python", gimp.locale_directory, unicode=1)
+gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
 
 def shadow_bevel(img, drawable, blur, bevel, do_shadow, drop_x, drop_y):
     # disable undo for the image

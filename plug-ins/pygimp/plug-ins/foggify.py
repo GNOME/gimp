@@ -20,7 +20,7 @@
 from gimpfu import *
 import time
 
-gettext.install("gimp20-python", gimp.locale_directory, unicode=1)
+gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
 
 def foggify(img, layer, name, colour, turbulence, opacity):
     img.undo_group_start()

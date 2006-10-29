@@ -25,7 +25,7 @@ import os.path
 import gimp
 from gimpfu import *
 
-gettext.install("gimp20-python", gimp.locale_directory, unicode=1)
+gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
 
 (CHARS_SOURCE, CHARS_FILE, CHARS_PARAMETER) = range(3)
 

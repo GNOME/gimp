@@ -14,10 +14,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
-
 from gimpfu import *
 
-gettext.install("gimp20-python", gimp.locale_directory, unicode=1)
+gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
 
 def make_gradient(palette, num_segments, num_colors):
     gradient = pdb.gimp_gradient_new(palette)

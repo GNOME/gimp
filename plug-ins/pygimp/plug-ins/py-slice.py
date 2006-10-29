@@ -31,7 +31,7 @@ import os
 from gimpfu import *
 import os.path
 
-gettext.install("gimp20-python", gimp.locale_directory, unicode=1)
+gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
 
 def pyslice(image, drawable, save_path, html_filename,
             image_basename, image_extension, separate,

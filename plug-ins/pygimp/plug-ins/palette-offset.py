@@ -16,7 +16,7 @@
 
 from gimpfu import *
 
-gettext.install("gimp20-python", gimp.locale_directory, unicode=1)
+gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
 
 def palette_offset(palette, amount):
     #If palette is read only, work on a copy:
