@@ -1,3 +1,9 @@
+2006-10-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/gimppdb-query.c (gimp_pdb_print_entry): use
+	gimp_pdb_get_strings() so we dump the right blurb and help for
+	deprecated procedures.
+
 2006-10-28  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/gimpcons.py: refactored, some UI polish.

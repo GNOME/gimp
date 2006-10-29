@@ -94,15 +94,16 @@ struct _PDBStrings
 
 /*  local function prototypes  */
 
-static void   gimp_pdb_query_entry (gpointer       key,
-                                    gpointer       value,
-                                    gpointer       user_data);
-static void   gimp_pdb_print_entry (gpointer       key,
-                                    gpointer       value,
-                                    gpointer       user_data);
-static void   gimp_pdb_get_strings (PDBStrings    *strings,
-                                    GimpProcedure *procedure,
-                                    gboolean       compat);
+static void   gimp_pdb_query_entry  (gpointer       key,
+                                     gpointer       value,
+                                     gpointer       user_data);
+static void   gimp_pdb_print_entry  (gpointer       key,
+                                     gpointer       value,
+                                     gpointer       user_data);
+static void   gimp_pdb_get_strings  (PDBStrings    *strings,
+                                     GimpProcedure *procedure,
+                                     gboolean       compat);
+static void   gimp_pdb_free_strings (PDBStrings    *strings);
 
 
 /*  public functions  */
@@ -336,11 +337,7 @@ gimp_pdb_query_entry (gpointer key,
       pdb_query->list_of_procs[pdb_query->num_procs - 1] = g_strdup (proc_name);
     }
 
-  if (strings.compat)
-    {
-      g_free (strings.blurb);
-      g_free (strings.help);
-    }
+  gimp_pdb_free_strings (&strings);
 }
 
 /* #define DEBUG_OUTPUT 1 */
@@ -409,11 +406,14 @@ gimp_pdb_print_entry (gpointer key,
   for (; list; list = list->next)
     {
       GimpProcedure *procedure = list->data;
+      PDBStrings     strings;
       GEnumValue    *arg_value;
       GimpEnumDesc  *type_desc;
       gint           i;
 
       num++;
+
+      gimp_pdb_get_strings (&strings, procedure, pdb_dump->dumping_compat);
 
 #ifdef DEBUG_OUTPUT
       fprintf (file, "(");
@@ -473,15 +473,15 @@ gimp_pdb_print_entry (gpointer key,
 #else /* ! DEBUG_OUTPUT */
 
       fprintf (file, "  ");
-      output_string (file, procedure->blurb);
+      output_string (file, strings.blurb);
       fprintf (file, "  ");
-      output_string (file, procedure->help);
+      output_string (file, strings.help);
       fprintf (file, "  ");
-      output_string (file, procedure->author);
+      output_string (file, strings.author);
       fprintf (file, "  ");
-      output_string (file, procedure->copyright);
+      output_string (file, strings.copyright);
       fprintf (file, "  ");
-      output_string (file, procedure->date);
+      output_string (file, strings.date);
       fprintf (file, "  ");
       output_string (file, type_desc->value_desc);
 
@@ -538,6 +538,7 @@ gimp_pdb_print_entry (gpointer key,
 
 #endif /* DEBUG_OUTPUT */
 
+      gimp_pdb_free_strings (&strings);
     }
 
   g_string_free (buf, TRUE);
@@ -569,5 +570,15 @@ gimp_pdb_get_strings (PDBStrings    *strings,
       strings->author    = procedure->author;
       strings->copyright = procedure->copyright;
       strings->date      = procedure->date;
+    }
+}
+
+static void
+gimp_pdb_free_strings (PDBStrings *strings)
+{
+  if (strings->compat)
+    {
+      g_free (strings->blurb);
+      g_free (strings->help);
     }
 }
