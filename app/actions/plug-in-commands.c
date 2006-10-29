@@ -221,6 +221,29 @@ plug_in_repeat_cmd_callback (GtkAction *action,
 }
 
 void
+plug_in_history_cmd_callback (GtkAction           *action,
+                              GimpPlugInProcedure *procedure,
+                              gpointer             data)
+{
+  Gimp        *gimp;
+  GimpDisplay *display;
+  GValueArray *args;
+  gint         n_args;
+  return_if_no_gimp (gimp, data);
+  return_if_no_display (display, data);
+
+  args = gimp_procedure_get_arguments (GIMP_PROCEDURE (procedure));
+
+  g_value_set_int (&args->values[0], GIMP_RUN_INTERACTIVE);
+
+  n_args = plug_in_collect_drawable_args (action, display->image, args, 1);
+
+  plug_in_procedure_execute (procedure, gimp, display, args, n_args);
+
+  g_value_array_free (args);
+}
+
+void
 plug_in_reset_all_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {

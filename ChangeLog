@@ -1,5 +1,17 @@
 2006-10-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/plug-in-actions.c: use GimpPlugInActions instead of
+	GimpEnumActions so the menu items show any kind of icons (not only
+	stock-id icons). Now if any plug-in that shows up in the history
+	registered non-stock-id icons, this change would be actually
+	useful ;) Fixes bug #338525.
+
+	* app/actions/plug-in-commands.[ch] (plug_in_history_cmd_callback):
+	new callback for the history, much simpler than
+	plug_in_repeat_cmd_callback().
+
+2006-10-29  Michael Natterer  <mitch@gimp.org>
+
 	* modules/colorsel_cmyk_lcms.c: added hackish flag to prevent it
 	from emitting signals during destruction.
 
