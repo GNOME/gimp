@@ -1,5 +1,16 @@
 2006-10-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/plug-in-actions.c (plug_in_repeat_action): use the
+	"value" field for the GimpRunMode, it used to be "0" to reference
+	the first plug-in in the history.
+
+	* app/actions/plug-in-commands.[ch] (plug_in_repeat_cmd_callback):
+	always pick the first item from the history and use the passed
+	value as GimpRunMode instead of determining it from the action's
+	name.
+
+2006-10-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/plug-in-actions.c: use GimpPlugInActions instead of
 	GimpEnumActions so the menu items show any kind of icons (not only
 	stock-id icons). Now if any plug-in that shows up in the history

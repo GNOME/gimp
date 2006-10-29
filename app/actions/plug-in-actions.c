@@ -111,13 +111,13 @@ static const GimpEnumActionEntry plug_in_repeat_actions[] =
   { "plug-in-repeat", GTK_STOCK_EXECUTE,
     N_("Re_peat Last"), "<control>F",
     N_("Rerun the last used plug-in using the same settings"),
-    0, FALSE,
+    GIMP_RUN_WITH_LAST_VALS, FALSE,
     GIMP_HELP_FILTER_REPEAT },
 
   { "plug-in-reshow", GIMP_STOCK_RESHOW_FILTER,
     N_("R_e-Show Last"), "<control><shift>F",
     N_("Show the last used plug-in dialog again"),
-    0, FALSE,
+    GIMP_RUN_INTERACTIVE, FALSE,
     GIMP_HELP_FILTER_RESHOW }
 };
 

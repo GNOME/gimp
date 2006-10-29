@@ -192,14 +192,13 @@ plug_in_repeat_cmd_callback (GtkAction *action,
   GimpPlugInProcedure *procedure;
   Gimp                *gimp;
   GimpDisplay         *display;
-  gboolean             interactive = TRUE;
+  GimpRunMode          run_mode;
   return_if_no_gimp (gimp, data);
   return_if_no_display (display, data);
 
-  if (strcmp (gtk_action_get_name (action), "plug-in-repeat") == 0)
-    interactive = FALSE;
+  run_mode = (GimpRunMode) value;
 
-  procedure = gimp_plug_in_manager_history_nth (gimp->plug_in_manager, value);
+  procedure = gimp_plug_in_manager_history_nth (gimp->plug_in_manager, 0);
 
   if (procedure)
     {
@@ -208,9 +207,7 @@ plug_in_repeat_cmd_callback (GtkAction *action,
 
       args = gimp_procedure_get_arguments (GIMP_PROCEDURE (procedure));
 
-      g_value_set_int (&args->values[0],
-                       interactive ?
-                       GIMP_RUN_INTERACTIVE : GIMP_RUN_WITH_LAST_VALS);
+      g_value_set_int (&args->values[0], run_mode);
 
       n_args = plug_in_collect_drawable_args (action, display->image, args, 1);
 
