@@ -530,3 +530,42 @@ gimp_rc_save (GimpRc *rc)
   g_free (header);
   g_object_unref (global);
 }
+
+/**
+ * gimp_rc_migrate:
+ * @rc: a #GimpRc object.
+ *
+ * Resets all GimpParamConfigPath properties of the passed rc object
+ * to their default values, in order to prevent paths in a migrated
+ * gimprc to refer to folders in the old GIMP's user directory.
+ **/
+void
+gimp_rc_migrate (GimpRc *rc)
+{
+  GParamSpec **pspecs;
+  guint        n_pspecs;
+  gint         i;
+
+  g_return_if_fail (GIMP_IS_RC (rc));
+
+  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (rc), &n_pspecs);
+
+  for (i = 0; i < n_pspecs; i++)
+    {
+      GParamSpec *pspec = pspecs[i];
+
+      if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (pspec))
+        {
+          GValue value = { 0, };
+
+          g_value_init (&value, pspec->value_type);
+
+          g_param_value_set_default (pspec, &value);
+          g_object_set_property (G_OBJECT (rc), pspec->name, &value);
+
+          g_value_unset (&value);
+        }
+    }
+
+  g_free (pspecs);
+}

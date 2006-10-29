@@ -1,7 +1,15 @@
+2006-10-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimprc.[ch]: added gimp_rc_migrate() which resets
+	all GimpParamConfigPath properties to default values.
+
+	* app/core/gimp-user-install.c (user_install_migrate_files): use
+	the function. Fixes bug #332620.
+
 2006-10-29  Sven Neumann  <sven@gimp.org>
 
-	*  app/plug-in/plug-in-icc-profile.c
-	*  plug-ins/common/lcms.c: the plug-in doesn't handle GRAY* images.
+	* app/plug-in/plug-in-icc-profile.c
+	* plug-ins/common/lcms.c: the plug-in doesn't handle GRAY* images.
 
 2006-10-29  Michael Natterer  <mitch@gimp.org>
 

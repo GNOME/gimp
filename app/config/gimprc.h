@@ -64,5 +64,7 @@ void      gimp_rc_set_unknown_token (GimpRc      *rc,
                                      const gchar *token,
                                      const gchar *value);
 
+void      gimp_rc_migrate           (GimpRc      *rc);
+
 
 #endif /* GIMP_RC_H__ */

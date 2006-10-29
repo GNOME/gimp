@@ -44,6 +44,7 @@
 #include "core-types.h"
 
 #include "config/gimpconfig-file.h"
+#include "config/gimprc.h"
 
 #include "gimp-templates.h"
 #include "gimp-user-install.h"
@@ -442,6 +443,7 @@ user_install_migrate_files (GimpUserInstall *install)
   GDir        *dir;
   const gchar *basename;
   gchar        dest[1024];
+  GimpRc      *gimprc;
   GError      *error = NULL;
 
   dir = g_dir_open (install->old_dir, 0, &error);
@@ -503,6 +505,11 @@ user_install_migrate_files (GimpUserInstall *install)
   g_dir_close (dir);
 
   gimp_templates_migrate (install->old_dir);
+
+  gimprc = gimp_rc_new (NULL, NULL, FALSE);
+  gimp_rc_migrate (gimprc);
+  gimp_rc_save (gimprc);
+  g_object_unref (gimprc);
 
   return TRUE;
 }
