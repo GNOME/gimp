@@ -1,3 +1,9 @@
+2006-10-28  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/paste-as-brush.scm
+	* plug-ins/script-fu/scripts/paste-as-pattern.scm: Some variables
+	were not being declared before first use. Spotted by Saul Goode.
+
 2006-10-28  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/gimpcons.py: can't use gettext.install

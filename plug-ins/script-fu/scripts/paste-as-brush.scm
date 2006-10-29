@@ -25,6 +25,12 @@
         (brush-image (car (gimp-edit-paste-as-new)))
         (brush-draw (car (gimp-image-get-active-drawable brush-image)))
         (type (car (gimp-drawable-type brush-draw)))
+        (path (string-append gimp-directory
+                             "/brushes/"
+                             filename
+                             (number->string brush-image)
+                             ".gbr"))
+
         )
 
     (if (= type GRAYA-IMAGE)
@@ -35,12 +41,6 @@
             (gimp-context-pop)
         )
     )
-
-    (set! path (string-append gimp-directory
-                              "/brushes/"
-                              filename
-                              (number->string brush-image)
-                              ".gbr"))
 
     (file-gbr-save RUN-NONINTERACTIVE
                    brush-image brush-draw path path

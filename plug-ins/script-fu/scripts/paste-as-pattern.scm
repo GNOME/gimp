@@ -20,24 +20,25 @@
 
 
 (define (script-fu-paste-as-pattern name filename)
-
-  (set! pattern-image (car (gimp-edit-paste-as-new)))
-  (set! pattern-draw (car (gimp-image-get-active-drawable pattern-image)))
-
-  (set! path (string-append gimp-directory
+  (let* (
+        (pattern-image (car (gimp-edit-paste-as-new)))
+        (pattern-draw (car (gimp-image-get-active-drawable pattern-image)))
+        (path (string-append gimp-directory
                             "/patterns/"
                             filename
                             (number->string pattern-image)
                             ".pat"))
+        )
 
-  (file-pat-save RUN-NONINTERACTIVE
-                 pattern-image pattern-draw path path
-                 name)
+    (file-pat-save RUN-NONINTERACTIVE
+                   pattern-image pattern-draw path path
+                   name)
 
-  (gimp-image-delete pattern-image)
+    (gimp-image-delete pattern-image)
 
-  (gimp-patterns-refresh)
-  (gimp-context-set-pattern name)
+    (gimp-patterns-refresh)
+    (gimp-context-set-pattern name)
+  )
 )
 
 (script-fu-register "script-fu-paste-as-pattern"
