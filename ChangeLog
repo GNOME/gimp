@@ -1,5 +1,11 @@
 2006-10-28  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/gimpcons.py: can't use gettext.install
+	here because sys.displayhook fills __builtins__._ too and it'd
+	be best to maintain that behavior.
+
+2006-10-28  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/plug-ins/gimpcons.py: "Apply" output from the
 	procedure browser windows now replaces the current line, to maintain
 	semantics of the old console.

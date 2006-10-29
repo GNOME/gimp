@@ -19,7 +19,8 @@
 
 from gimpfu import *
 
-gettext.install("gimp20-python", gimp.locale_directory, unicode=1)
+t = gettext.translation('gimp20-python', gimp.locale_directory, fallback=True)
+_ = t.ugettext
 
 PROC_NAME = 'python-fu-console'
 
