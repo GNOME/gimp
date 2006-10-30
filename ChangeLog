@@ -1,3 +1,8 @@
+2006-10-30  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/script-fu-text-console.c: include our own
+	header file. Minor cosmetics.
+
 2006-10-30  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpcoreconfig.c: changed default for

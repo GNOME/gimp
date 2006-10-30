@@ -28,19 +28,20 @@
 #include "libgimp/gimp.h"
 
 #include "scheme-wrapper.h"
+#include "script-fu-text-console.h"
 
 #include "script-fu-intl.h"
 
 
-static void script_fu_text_console_interface (void);
+static void   script_fu_text_console_interface (void);
 
 
 void
 script_fu_text_console_run (const gchar      *name,
-                gint              nparams,
-                const GimpParam  *params,
-                gint             *nreturn_vals,
-                GimpParam       **return_vals)
+                            gint              nparams,
+                            const GimpParam  *params,
+                            gint             *nreturn_vals,
+                            GimpParam       **return_vals)
 {
   static GimpParam  values[1];
 
@@ -62,15 +63,14 @@ script_fu_text_console_run (const gchar      *name,
 static gboolean
 read_command (GString *command)
 {
-  guchar c;
-  gint   next;
-  gint   level = 0;
+  gint next;
+  gint level = 0;
 
   g_string_truncate (command, 0);
 
   while ((next = fgetc (stdin)) != EOF)
     {
-      c = (guchar) next;
+      guchar c = (guchar) next;
 
       switch (c)
         {
