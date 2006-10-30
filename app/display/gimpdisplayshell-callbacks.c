@@ -1455,7 +1455,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   return return_val;
 }
 
-gboolean
+static gboolean
 gimp_display_shell_ruler_button_press (GtkWidget        *widget,
                                        GdkEventButton   *event,
                                        GimpDisplayShell *shell,

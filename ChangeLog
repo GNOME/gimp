@@ -1,3 +1,8 @@
+2006-10-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c: made
+	gimp_display_shell_ruler_button_press() static.
+
 2006-10-31  Simon Budig  <simon@gimp.org>
 
 	* libgimp/gimp.def: Added missing gimp-version symbols.
