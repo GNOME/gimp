@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-15 20:25+0300\n"
-"PO-Revision-Date: 2006-10-15 20:25+0300\n"
+"PO-Revision-Date: 2006-10-30 08:51+0300\n"
 "Last-Translator: Mikko Paananen <mikko at ipi.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -77,7 +77,7 @@ msgstr "%s käsittelee ainoastaan harmaasävykuvia"
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
 msgid "Convert to Grayscale"
-msgstr "Muunna harmaasävyihin"
+msgstr "Muunna harmaasävyiksi"
 
 #: ../libgimp/gimpexport.c:298
 #, c-format
@@ -1601,43 +1601,3 @@ msgstr "Ohjain %03d"
 msgid "MIDI Events"
 msgstr "MIDI-tapahtumat"
 
-#~ msgid "None (Fastest)"
-#~ msgstr "Ei mitään (Nopein)"
-
-#~ msgid "All %d page selected"
-#~ msgid_plural "All %d pages selected"
-#~ msgstr[0] "Kaikki %d sivu valittu"
-#~ msgstr[1] "Kaikki %d sivua valittu"
-
-#~ msgid "Brush Selection"
-#~ msgstr "Siveltimen valinta"
-
-#~ msgid "_Browse..."
-#~ msgstr "Selaa..."
-
-#~ msgid "Gradient Selection"
-#~ msgstr "Väriliu'un valinta"
-
-#~ msgid "Palette Selection"
-#~ msgstr "Paletin valinta"
-
-#~ msgid "Pattern Selection"
-#~ msgstr "Kuvion valinta"
-
-#~ msgid "Linear"
-#~ msgstr "Lineaarinen"
-
-#~ msgid "Forward (traditional)"
-#~ msgstr "Normaali (perinteinen)"
-
-#~ msgid "Backward (corrective)"
-#~ msgstr "Käänteinen (korjaava)"
-
-#~ msgid "Could not open '%s' for reading: %s"
-#~ msgstr "Tiedoston \"%s\" avaaminen luettavaksi epäonnistui: %s"
-
-#~ msgid "Loading module: '%s'\n"
-#~ msgstr "Ladataan moduli: '%s'\n"
-
-#~ msgid "Skipping module: '%s'\n"
-#~ msgstr "Ohitetaan moduli '%s'\n"

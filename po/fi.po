@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-30 07:04+0300\n"
-"PO-Revision-Date: 2006-10-30 07:05+0300\n"
+"PO-Revision-Date: 2006-10-30 08:51+0300\n"
 "Last-Translator: Heino Keränen <h2k@nic.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -541,7 +541,7 @@ msgstr "Luo uusi kanava viimeksi käytetyillä arvoilla"
 
 #: ../app/actions/channels-actions.c:66
 msgid "D_uplicate Channel"
-msgstr "_Tee kopio kanavasta"
+msgstr "_Kahdenna kanavasta"
 
 #: ../app/actions/channels-actions.c:67
 msgid "Create a duplicate of this channel and add it to the image"
@@ -850,7 +850,7 @@ msgstr "_Ikkunat"
 
 #: ../app/actions/dialogs-actions.c:39
 msgid "Create New Doc_k"
-msgstr "Tee uusi telakka"
+msgstr "Luo uusi _telakka"
 
 #: ../app/actions/dialogs-actions.c:42
 msgid "_Layers, Channels & Paths"
@@ -1379,7 +1379,7 @@ msgstr "Vahva uudelleen"
 
 #: ../app/actions/edit-actions.c:91
 msgid "Redo the last operation that was undone, skipping visibility changes"
-msgstr "Tee uudelleen viimeisin peruttu toimenpide, ohittaen näkyvyysmuutokset"
+msgstr "Tee uudestaan viimeisin peruttu toimenpide, ohittaen näkyvyysmuutokset"
 
 #: ../app/actions/edit-actions.c:96
 msgid "_Clear Undo History"
@@ -1503,7 +1503,7 @@ msgstr "K_umoa %s"
 #: ../app/actions/edit-actions.c:275
 #, c-format
 msgid "_Redo %s"
-msgstr "Tee uudelleen %s"
+msgstr "Tee _uudestaan %s"
 
 #: ../app/actions/edit-actions.c:286
 #, c-format
@@ -6853,7 +6853,7 @@ msgstr "Täytä taustavärillä"
 
 #: ../app/dialogs/offset-dialog.c:229
 msgid "Make _transparent"
-msgstr "Tee läpinäkyväksi"
+msgstr "Muuta _läpinäkyväksi"
 
 #: ../app/dialogs/palette-import-dialog.c:157
 msgid "Import a New Palette"
@@ -11765,183 +11765,3 @@ msgstr "Varmista että työkalulaatikko on näkyvillä!"
 msgid "Couldn't start '%s': %s"
 msgstr "Komentoa '%s' ei voitu käynnistää: %s"
 
-#~ msgid "Invalid width or height. Both must be positive."
-#~ msgstr "Epäkelpo leveys tai korkeus. Molempien täytyy olla positiivinen."
-
-#~ msgid "Corrupt segment %d in gradient file '%s'."
-#~ msgstr "Rikkoutunut lohko %d liukuväritiedostossa '%s'."
-
-#~ msgid ""
-#~ "Fatal parse error in palette file '%s': Missing magic header.\n"
-#~ "Does this file need converting from DOS?"
-#~ msgstr ""
-#~ "Ladataan palettia '%s': Otsikkotieto puuttuu.\n"
-#~ "Pitääkö tämä tiedosto kääntää DOS:ista?"
-
-#~ msgid "No selection to stroke."
-#~ msgstr "Ei valintaa piirrettäväksi."
-
-#~ msgid "Transform Direction"
-#~ msgstr "Kääntösuunta"
-
-#~ msgid "Transform layer"
-#~ msgstr "Käännä tasoa"
-
-#~ msgid "Transform selection"
-#~ msgstr "Käännä valintaa"
-
-#~ msgid "Transform path"
-#~ msgstr "Käännä polkua"
-
-#~ msgid "Indexed images are not currently supported."
-#~ msgstr "Työkalu ei vielä tue indeksoituja kuvia."
-
-#~ msgid "Blend: Invalid for indexed images."
-#~ msgstr "Sekoittaminen ei toimi indeksoiduilla kuvilla."
-
-#~ msgid "Con_volve"
-#~ msgstr "Konvoluutio"
-
-#~ msgid "Curves for indexed layers cannot be adjusted."
-#~ msgstr "Indeksoitujen tasojen käyriä ei voi säätää."
-
-#~ msgid "Dod_ge-Burn"
-#~ msgstr "_Varjosta/lisävalota"
-
-#~ msgid "Levels for indexed layers cannot be adjusted."
-#~ msgstr "Indeksoitujen tasojen säätöarvoja ei voi säätää."
-
-#~ msgid "Alignment Tool"
-#~ msgstr "Tasaustyökalu"
-
-#~ msgid "Select regions by color"
-#~ msgstr "Valitse alueita värien mukaan"
-
-#~ msgid "Paint using Patterns or Image Regions"
-#~ msgstr "Maalaa käyttäen kuviota tai kuvan osia"
-
-#~ msgid "Adjust color balance"
-#~ msgstr "Säädä väritasapainoa"
-
-#~ msgid "Crop an image"
-#~ msgstr "Rajaa kuva"
-
-#~ msgid "Dodge or Burn strokes"
-#~ msgstr "Varjosta tai lisävalota"
-
-#~ msgid "Flip the layer or selection"
-#~ msgstr "Peilaa taso tai valinta"
-
-#~ msgid "Extract foreground objects"
-#~ msgstr "Poimi edustakohteita"
-
-#~ msgid "Select contiguous regions"
-#~ msgstr "Valitse yhtenäisiä alueita"
-
-#~ msgid "Adjust hue and saturation"
-#~ msgstr "Säädä sävyä ja värikylläisyyttä"
-
-#~ msgid "Draw in ink"
-#~ msgstr "Piirrä mustekynällä"
-
-#~ msgid "Select shapes from image"
-#~ msgstr "Valitse muotoja kuvasta"
-
-#~ msgid "Zoom in & out"
-#~ msgstr "Suurenna & pienennä"
-
-#~ msgid "Move layers & selections"
-#~ msgstr "Siirrä tasoja ja valintoja"
-
-#~ msgid "Paint fuzzy brush strokes"
-#~ msgstr "Maalaa pehmeitä sivellinvetoja"
-
-#~ msgid "Paint hard edged pixels"
-#~ msgstr "Piirrä kovareunaisella työkalulla"
-
-#~ msgid "Reduce image to a fixed number of colors"
-#~ msgstr "Muunna kuvan värien määrä kiinteäksi"
-
-#~ msgid "Make square"
-#~ msgstr "Muunna neliöksi"
-
-#~ msgid "Rectangle Controls"
-#~ msgstr "Suorakulmio-ohjaimet"
-
-#~ msgid "1 "
-#~ msgstr "1"
-
-#~ msgid "2 "
-#~ msgstr "2"
-
-#~ msgid "Select a Rectangular part of an image"
-#~ msgstr "Valitse suorakulmion muotoinen osa kuvasta"
-
-#~ msgid "Smudge image"
-#~ msgstr "Tuhri kuvaa"
-
-#~ msgid "Add text to the image"
-#~ msgstr "Lisää teksti kuvaan"
-
-#~ msgid "Ma_p"
-#~ msgstr "Kuvaukset"
-
-#~ msgid "Cr_op Layer"
-#~ msgstr "Rajaa taso"
-
-#~ msgid "Solid"
-#~ msgstr "Jatkuva"
-
-#~ msgid "Click to clone."
-#~ msgstr "Kloonaa napsauttamalla."
-
-#~ msgid "Crop & Resize"
-#~ msgstr "Rajaa ja muuta kokoa"
-
-#~ msgid "Crop or Resize an image"
-#~ msgstr "Rajaa tai muuta kuvan kokoa"
-
-#~ msgid "_Crop & Resize"
-#~ msgstr "_Rajaa ja muuta kokoa"
-
-#~ msgid "_All"
-#~ msgstr "K_aikki"
-
-#~ msgid "_None"
-#~ msgstr "_Ei mitään"
-
-#~ msgid "Change current layer or path"
-#~ msgstr "Vaihda nykyistä tasoa tai polkua"
-
-#~ msgid "Click or press enter to resize."
-#~ msgstr "Klikkaa tai paina enter kun muutat kokoa."
-
-#~ msgid "Move the current path"
-#~ msgstr "Siirrä valittua polkua"
-
-#~ msgid "Resize"
-#~ msgstr "Muuta kokoa"
-
-#~ msgid "Click to create a new anchor. (try SHIFT)"
-#~ msgstr "Luo uusi ankkuri napsauttamalla. (koeta Shiftiä)"
-
-#~ msgid "Click-Drag to move the component around. (try SHIFT)"
-#~ msgstr "Siirrä komponenttia napsauttamalla ja vetämällä. (koeta Shiftiä)"
-
-#~ msgid "Click-Drag to move the handle around. (try SHIFT)"
-#~ msgstr "Siirrä kahvaa napsauttamalla ja vetämällä. (koeta Shiftiä)"
-
-#~ msgid "Move the selection mask"
-#~ msgstr "Siirrä valintamaskia"
-
-#~ msgid ""
-#~ "The tile cache is used to make sure the GIMP doesn't thrash tiles between "
-#~ "memory and disk. Setting this value higher will cause the GIMP to use "
-#~ "less swap space, but will also cause the GIMP to use more memory. "
-#~ "Conversely, a smaller cache size causes the GIMP to use more swap space "
-#~ "and less memory."
-#~ msgstr ""
-#~ "Kuvavälimuisti varmistaa että GIMP ei jatkuvasti lataa ja tallenna "
-#~ "kuvalohkoja levylle. Asettamalla tämän arvon suureksi GIMP käyttää "
-#~ "vähemmän sivutustilaa, mutta enemmän muistia. Vastaavasti pieni arvo "
-#~ "aiheuttaa että GIMP käyttää enemmän sivutustilaa ja vähemmän muistia."

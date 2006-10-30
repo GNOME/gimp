@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.26\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-27 13:17+0300\n"
-"PO-Revision-Date: 2006-10-27 13:58+0300\n"
+"PO-Revision-Date: 2006-10-30 08:50+0300\n"
 "Last-Translator: Mikko Paananen <mikko at ipi.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4018,11 +4018,11 @@ msgstr ""
 
 #: ../plug-ins/common/fp.c:1422
 msgid "Preview as You Drag"
-msgstr ""
+msgstr "Esikatsele raahattaessa"
 
 #: ../plug-ins/common/fp.c:1426
 msgid "Preview Size"
-msgstr ""
+msgstr "Esikatselun koko"
 
 #: ../plug-ins/common/fractaltrace.c:116
 msgid "Transform image with the Mandelbrot Fractal"
@@ -4156,7 +4156,7 @@ msgstr "Kuvaus:"
 
 #: ../plug-ins/common/gee.c:101 ../plug-ins/common/gee_zoom.c:121
 msgid "A big hello from the GIMP team!"
-msgstr ""
+msgstr "Iso hali Gimp-tiimiltä!"
 
 #: ../plug-ins/common/gee.c:106 ../plug-ins/common/gee.c:162
 msgid "Gee Slime"
@@ -4330,19 +4330,19 @@ msgstr "Tasolla %s ei ole alfa-kanavaa."
 
 #: ../plug-ins/common/gih.c:492
 msgid "Error in GIMP brush pipe file."
-msgstr ""
+msgstr "Virhe Gimpin sivellinputken tiedostossa."
 
 #: ../plug-ins/common/gih.c:558
 msgid "GIMP brush file appears to be corrupted."
-msgstr ""
+msgstr "Gimpin sivellintiedosto näyttää olevan vaurioitunut."
 
 #: ../plug-ins/common/gih.c:703
 msgid "Couldn't load one brush in the pipe, giving up."
-msgstr ""
+msgstr "Yhtä sivellintä ei voitu ladata putkesta, luovutetaan."
 
 #: ../plug-ins/common/gih.c:866
 msgid "Save as Brush Pipe"
-msgstr ""
+msgstr "Tallenna sivellinputkena"
 
 #: ../plug-ins/common/gih.c:896
 msgid "Spacing (percent):"
@@ -4366,15 +4366,15 @@ msgstr ""
 
 #: ../plug-ins/common/gih.c:1017
 msgid " Columns on each layer"
-msgstr ""
+msgstr " Sarakkeita kussakin tasossa"
 
 #: ../plug-ins/common/gih.c:1021
 msgid " (Width Mismatch!) "
-msgstr ""
+msgstr " (leveys ei täsmää!) "
 
 #: ../plug-ins/common/gih.c:1025
 msgid " (Height Mismatch!) "
-msgstr ""
+msgstr " (korkeus ei täsmää!) "
 
 #: ../plug-ins/common/gih.c:1030
 msgid "Display as:"
@@ -4996,7 +4996,7 @@ msgstr "_Maksimiarvo:"
 
 #: ../plug-ins/common/lic.c:809
 msgid "Special effects that nobody understands"
-msgstr ""
+msgstr "Erikoisefektit, joita kukaan ei ymmärrä"
 
 #: ../plug-ins/common/lic.c:814
 msgid "_Van Gogh (LIC)..."
@@ -5307,7 +5307,7 @@ msgstr "MNG animaatio"
 
 #: ../plug-ins/common/mosaic.c:361
 msgid "Convert the image into irregular tiles"
-msgstr ""
+msgstr "Muunna kuva epäsäännöllisiksi paloiksi"
 
 #: ../plug-ins/common/mosaic.c:366
 msgid "_Mosaic..."
@@ -5528,7 +5528,7 @@ msgstr "Ylinäytteistys:"
 
 #: ../plug-ins/common/nlfilt.c:120
 msgid "Nonlinear swiss army knife filter"
-msgstr ""
+msgstr "Epälineaarinen yleiskäyttöinen suodatin"
 
 #: ../plug-ins/common/nlfilt.c:126
 msgid "_NL Filter..."
@@ -5601,7 +5601,7 @@ msgstr "Normalisoidaan"
 
 #: ../plug-ins/common/nova.c:168
 msgid "Add a starburst to the image"
-msgstr ""
+msgstr "Lisää kuvaan tähden räjähdys"
 
 #: ../plug-ins/common/nova.c:177
 msgid "Su_pernova..."
@@ -5681,11 +5681,11 @@ msgstr "_Pakota"
 
 #: ../plug-ins/common/papertile.c:315
 msgid "C_entering"
-msgstr ""
+msgstr "_Keskitys"
 
 #: ../plug-ins/common/papertile.c:330
 msgid "Movement"
-msgstr ""
+msgstr "Liike"
 
 #: ../plug-ins/common/papertile.c:343
 msgid "_Max (%):"
@@ -10667,7 +10667,7 @@ msgstr "_Kumoa %s"
 #: ../plug-ins/imagemap/imap_menu.c:152
 #, c-format
 msgid "_Redo %s"
-msgstr "Tee uudelleen %s"
+msgstr "Tee _uudestaan %s"
 
 #: ../plug-ins/imagemap/imap_polygon.c:72
 msgid "_Polygon"
@@ -12476,7 +12476,7 @@ msgstr ""
 #~ msgstr "Valikoiva Gauss-sumennus..."
 
 #~ msgid "Do _Preview"
-#~ msgstr "Tee esikatselu"
+#~ msgstr "Tee _esikatselu"
 
 #~ msgid "Sobel Edge Detecting..."
 #~ msgstr "Sobel reunantunnistus..."
@@ -12689,7 +12689,7 @@ msgstr ""
 #~ msgstr "Kumoa"
 
 #~ msgid "Redo"
-#~ msgstr "Tee uudelleen"
+#~ msgstr "Tee uudestaan"
 
 #~ msgid "Zoom in"
 #~ msgstr "Suurenna"
