@@ -31,6 +31,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpbrusheditor.h"
 
+#include "brush-editor-actions.h"
 #include "data-editor-commands.h"
 
 #include "gimp-intl.h"

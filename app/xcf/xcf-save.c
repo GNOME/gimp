@@ -60,6 +60,7 @@
 
 #include "xcf-private.h"
 #include "xcf-read.h"
+#include "xcf-save.h"
 #include "xcf-seek.h"
 #include "xcf-write.h"
 

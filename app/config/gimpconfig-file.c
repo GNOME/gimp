@@ -36,6 +36,8 @@
 
 #include "config-types.h"
 
+#include "gimpconfig-file.h"
+
 #include "gimp-intl.h"
 
 

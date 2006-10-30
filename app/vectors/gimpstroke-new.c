@@ -27,7 +27,7 @@
 
 #include "core/gimpcoords.h"
 
-#include "gimpstroke.h"
+#include "gimpstroke-new.h"
 #include "gimpbezierstroke.h"
 
 

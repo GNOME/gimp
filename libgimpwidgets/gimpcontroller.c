@@ -68,7 +68,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpController, gimp_controller, G_TYPE_OBJECT,
 static guint controller_signals[LAST_SIGNAL] = { 0 };
 
 
-gboolean
+static gboolean
 gimp_controller_boolean_handled_accumulator (GSignalInvocationHint *ihint,
                                              GValue                *return_accu,
                                              const GValue          *handler_return,

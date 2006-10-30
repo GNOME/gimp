@@ -26,6 +26,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimp-gradients.h"
 #include "gimpcontext.h"
 #include "gimpcontainer.h"
 #include "gimpdatafactory.h"

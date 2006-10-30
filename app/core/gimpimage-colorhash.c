@@ -23,6 +23,7 @@
 #include "core-types.h"
 
 #include "gimpimage.h"
+#include "gimpimage-colorhash.h"
 
 
 #define MAXDIFF         195076

@@ -39,6 +39,8 @@
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "convert-dialog.h"
+
 #include "gimp-intl.h"
 
 

@@ -65,6 +65,7 @@
 #include "menus/menus.h"
 
 #include "gui-message.h"
+#include "gui-vtable.h"
 #include "themes.h"
 
 

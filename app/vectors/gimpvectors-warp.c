@@ -31,9 +31,12 @@
 #include "gimpanchor.h"
 #include "gimpstroke.h"
 #include "gimpvectors.h"
+#include "gimpvectors-warp.h"
+
 
 #define EPSILON 0.2
 #define DX      2.0
+
 
 static void gimp_stroke_warp_point   (const GimpStroke  *stroke,
                                       gdouble            x,
@@ -44,6 +47,7 @@ static void gimp_stroke_warp_point   (const GimpStroke  *stroke,
 static void gimp_vectors_warp_stroke (const GimpVectors *vectors,
                                       GimpStroke        *stroke,
                                       gdouble            y_offset);
+
 
 void
 gimp_vectors_warp_point (const GimpVectors *vectors,
@@ -78,7 +82,6 @@ gimp_vectors_warp_point (const GimpVectors *vectors,
 
   gimp_stroke_warp_point (stroke, x, y, point_warped, y_offset);
 }
-
 
 static void
 gimp_stroke_warp_point (const GimpStroke *stroke,
@@ -159,4 +162,3 @@ gimp_vectors_warp_vectors (const GimpVectors *vectors,
       gimp_vectors_warp_stroke (vectors, stroke, y_offset);
     }
 }
-

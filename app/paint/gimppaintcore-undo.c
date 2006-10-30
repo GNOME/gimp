@@ -27,6 +27,7 @@
 #include "core/gimpundo.h"
 
 #include "gimppaintcore.h"
+#include "gimppaintcore-undo.h"
 
 
 /****************/

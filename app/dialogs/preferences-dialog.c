@@ -57,6 +57,7 @@
 #include "gui/session.h"
 #include "gui/themes.h"
 
+#include "preferences-dialog.h"
 #include "resolution-calibrate-dialog.h"
 
 #include "gimp-intl.h"

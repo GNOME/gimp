@@ -43,6 +43,7 @@
 #include "gimpimage-guides.h"
 #include "gimpimage-sample-points.h"
 #include "gimpimage-undo.h"
+#include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
@@ -755,7 +756,7 @@ struct _DrawableModUndo
   TileManager   *tiles;
   GimpImageType  type;
   gint           offset_x;
-  gint                 offset_y;
+  gint           offset_y;
 };
 
 static gboolean undo_pop_drawable_mod  (GimpUndo            *undo,

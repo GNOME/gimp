@@ -179,7 +179,7 @@ gimp_prop_pattern_box_new (GimpContainer *container,
 
 /*  gradient boxes  */
 
-GtkWidget *
+static GtkWidget *
 gradient_box_new (GimpContainer *container,
                   GimpContext   *context,
                   gint           spacing,

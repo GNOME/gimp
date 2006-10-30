@@ -1,6 +1,32 @@
+2006-10-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/brush-editor-actions.c
+	* app/base/tile-manager-crop.c
+	* app/config/gimpconfig-file.c
+	* app/core/gimp-gradients.c
+	* app/core/gimpdrawable-histogram.c
+	* app/core/gimpimage-colorhash.c
+	* app/core/gimpimage-undo-push.c
+	* app/dialogs/convert-dialog.c
+	* app/dialogs/preferences-dialog.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/gui/gui-vtable.c
+	* app/paint/gimpheal.c
+	* app/paint/gimppaintcore-undo.c
+	* app/plug-in/plug-in-enums.h
+	* app/vectors/gimpstroke-new.c
+	* app/vectors/gimpvectors-warp.c
+	* app/widgets/gimpviewablebox.c
+	* app/widgets/gimpviewrenderer-frame.c
+	* app/widgets/gimpviewrenderer-utils.c
+	* app/xcf/xcf-save.c
+	* libgimpwidgets/gimpcontroller.c: all .c files should include
+	their headers and all private functions should be static.
+	(-Wmissing-declarations -Wmissing-prototypes rocks!)
+
 2006-10-29  Michael Natterer  <mitch@gimp.org>
 
-	* app/actions/plug-in-actions.c (plug_in_repeat_action): use the
+	* app/actions/plug-in-actions.c (plug_in_repeat_actions): use the
 	"value" field for the GimpRunMode, it used to be "0" to reference
 	the first plug-in in the history.
 

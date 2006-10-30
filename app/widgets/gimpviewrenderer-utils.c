@@ -33,8 +33,10 @@
 #include "core/gimpimagefile.h"
 #include "core/gimplayer.h"
 #include "core/gimppalette.h"
+
 #include "vectors/gimpvectors.h"
 
+#include "gimpviewrenderer-utils.h"
 #include "gimpviewrendererbrush.h"
 #include "gimpviewrendererbuffer.h"
 #include "gimpviewrendererlayer.h"

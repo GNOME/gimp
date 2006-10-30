@@ -257,7 +257,7 @@ gimp_heal_multiply (gdouble     *first,
  * Perform one iteration of the laplace solver for matrix.  Store the result in
  * solution and return the cummulative error of the solution.
  */
-gdouble
+static gdouble
 gimp_heal_laplace_iteration (gdouble *matrix,
                              gint     height,
                              gint     depth,
@@ -311,7 +311,7 @@ gimp_heal_laplace_iteration (gdouble *matrix,
 /*
  * Solve the laplace equation for matrix and store the result in solution.
  */
-void
+static void
 gimp_heal_laplace_loop (gdouble *matrix,
                         gint     height,
                         gint     depth,
@@ -349,7 +349,7 @@ gimp_heal_laplace_loop (gdouble *matrix,
  * T. Georgiev, "Image Reconstruction Invariant to Relighting", EUROGRAPHICS
  * 2005, http://www.tgeorgiev.net/
  */
-PixelRegion *
+static PixelRegion *
 gimp_heal_region (PixelRegion *tempPR,
                   PixelRegion *srcPR)
 {
