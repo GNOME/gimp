@@ -117,17 +117,19 @@ gboolean              gimp_vectors_to_selection              (gint32            
                                                               gboolean                feather,
                                                               gdouble                 feather_radius_x,
                                                               gdouble                 feather_radius_y);
-gint*                 gimp_vectors_new_from_file             (gint32                  image_ID,
+gboolean              gimp_vectors_new_from_file             (gint32                  image_ID,
                                                               const gchar            *filename,
                                                               gboolean                merge,
                                                               gboolean                scale,
-                                                              gint                   *num_vectors);
-gint*                 gimp_vectors_new_from_string           (gint32                  image_ID,
+                                                              gint                   *num_vectors,
+                                                              gint32                **vectors_ids);
+gboolean              gimp_vectors_new_from_string           (gint32                  image_ID,
                                                               const gchar            *string,
                                                               gint                    length,
                                                               gboolean                merge,
                                                               gboolean                scale,
-                                                              gint                   *num_vectors);
+                                                              gint                   *num_vectors,
+                                                              gint32                **vectors_ids);
 
 
 G_END_DECLS

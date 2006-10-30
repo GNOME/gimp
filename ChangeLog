@@ -1,3 +1,16 @@
+2006-10-31  Simon Budig  <simon@gimp.org>
+
+	* libgimp/gimp.def: Added missing gimp-version symbols.
+
+	* tools/pdbgen/pdb/vectors.pdb: force the libgimp-API to return
+	success values for the gimp_vectors_new_from_*  functions.
+
+	* libgimp/gimpvectors_pdb.[ch]: regenerated
+
+	* plug-ins/pygimp/gimpmodule.c: changed accordingly, untabbified.
+
+	* plug-ins/common/svg.c: Don't use deprecated API, untabbified.
+
 2006-10-30  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/Lighting/lighting_apply.c

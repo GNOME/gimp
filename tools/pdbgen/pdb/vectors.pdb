@@ -1037,7 +1037,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'vectors_ids', type => 'int32array',
+        { name => 'vectors_ids', type => 'int32array', void_ret => 1,
           desc => 'The list of newly created vectors',
           array => { name => 'num_vectors',
                      desc => 'The number of newly created vectors' } }
@@ -1100,7 +1100,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'vectors_ids', type => 'int32array',
+        { name => 'vectors_ids', type => 'int32array', void_ret => 1,
           desc => 'The list of newly created vectors',
           array => { name => 'num_vectors',
                      desc => 'The number of newly created vectors' } }

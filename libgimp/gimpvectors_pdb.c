@@ -1089,26 +1089,28 @@ gimp_vectors_to_selection (gint32         vectors_ID,
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
  * @num_vectors: The number of newly created vectors.
+ * @vectors_ids: The list of newly created vectors.
  *
  * Import paths from an SVG file.
  *
  * This procedure imports paths from an SVG file. SVG elements other
  * than paths and basic shapes are ignored.
  *
- * Returns: The list of newly created vectors.
+ * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
  */
-gint *
-gimp_vectors_new_from_file (gint32       image_ID,
-                            const gchar *filename,
-                            gboolean     merge,
-                            gboolean     scale,
-                            gint        *num_vectors)
+gboolean
+gimp_vectors_new_from_file (gint32        image_ID,
+                            const gchar  *filename,
+                            gboolean      merge,
+                            gboolean      scale,
+                            gint         *num_vectors,
+                            gint32      **vectors_ids)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gint *vectors_ids = NULL;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-vectors-new-from-file",
                                     &nreturn_vals,
@@ -1119,19 +1121,22 @@ gimp_vectors_new_from_file (gint32       image_ID,
                                     GIMP_PDB_END);
 
   *num_vectors = 0;
+  *vectors_ids = NULL;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *num_vectors = return_vals[1].data.d_int32;
-      vectors_ids = g_new (gint32, *num_vectors);
-      memcpy (vectors_ids,
+      *vectors_ids = g_new (gint32, *num_vectors);
+      memcpy (*vectors_ids,
               return_vals[2].data.d_int32array,
               *num_vectors * sizeof (gint32));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return vectors_ids;
+  return success;
 }
 
 /**
@@ -1142,6 +1147,7 @@ gimp_vectors_new_from_file (gint32       image_ID,
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
  * @num_vectors: The number of newly created vectors.
+ * @vectors_ids: The list of newly created vectors.
  *
  * Import paths from an SVG string.
  *
@@ -1149,21 +1155,22 @@ gimp_vectors_new_from_file (gint32       image_ID,
  * string rather than reading the SVG from a file. This allows you to
  * write scripts that generate SVG and feed it to GIMP.
  *
- * Returns: The list of newly created vectors.
+ * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
  */
-gint *
-gimp_vectors_new_from_string (gint32       image_ID,
-                              const gchar *string,
-                              gint         length,
-                              gboolean     merge,
-                              gboolean     scale,
-                              gint        *num_vectors)
+gboolean
+gimp_vectors_new_from_string (gint32        image_ID,
+                              const gchar  *string,
+                              gint          length,
+                              gboolean      merge,
+                              gboolean      scale,
+                              gint         *num_vectors,
+                              gint32      **vectors_ids)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gint *vectors_ids = NULL;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-vectors-new-from-string",
                                     &nreturn_vals,
@@ -1175,17 +1182,20 @@ gimp_vectors_new_from_string (gint32       image_ID,
                                     GIMP_PDB_END);
 
   *num_vectors = 0;
+  *vectors_ids = NULL;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
       *num_vectors = return_vals[1].data.d_int32;
-      vectors_ids = g_new (gint32, *num_vectors);
-      memcpy (vectors_ids,
+      *vectors_ids = g_new (gint32, *num_vectors);
+      memcpy (*vectors_ids,
               return_vals[2].data.d_int32array,
               *num_vectors * sizeof (gint32));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return vectors_ids;
+  return success;
 }
