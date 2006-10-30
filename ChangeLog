@@ -1,5 +1,10 @@
 2006-10-30  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpcoreconfig.c: changed default for
+	"interpolation-type" to Cubic (bug #367532).
+
+2006-10-30  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpsessioninfo.c (gimp_session_info_save):
 	eliminate compiler warning.
 

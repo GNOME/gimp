@@ -132,7 +132,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  "interpolation-type",
                                  INTERPOLATION_TYPE_BLURB,
                                  GIMP_TYPE_INTERPOLATION_TYPE,
-                                 GIMP_INTERPOLATION_LINEAR,
+                                 GIMP_INTERPOLATION_CUBIC,
                                  GIMP_PARAM_STATIC_STRINGS);
   path = gimp_config_build_plug_in_path ("plug-ins");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PLUG_IN_PATH,
