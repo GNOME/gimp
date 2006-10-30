@@ -7,6 +7,22 @@ This is the development branch of GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.3.13
+======================
+
+- show information about embedded color profiles
+- optionally apply color profiles on load
+- new vectors PDB API to replaces the old path API
+- added "Auntie Alias" plug-in for antialiasing on lineart
+- added Edit->Fade operation
+- added Rounded Corners option to Rectangle Select tool
+- improved WinIcon plug-in (now loads and saves 24 bit and Vista icons)
+- merged tiny-fu; replaces Script-Fu Scheme interpreter with TinyScheme
+- remember unit and interpolation type in scale and resize dialogs
+- changed default interpolation type to Cubic
+- bug fixes and code cleanup
+
+
 Changes in GIMP 2.3.12
 ======================
 
