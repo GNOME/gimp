@@ -31,6 +31,7 @@
 #include "gfig.h"
 #include "gfig-dobject.h"
 #include "gfig-poly.h"
+#include "gfig-circle.h"
 
 #include "libgimp/stdplugins-intl.h"
 

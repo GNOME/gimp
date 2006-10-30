@@ -204,13 +204,14 @@ void mult_matrix(s1, s2, d)
    d[1][1] = s1[0][1] * s2[1][0] + s1[1][1] * s2[1][1];
 }
 
-double det_matrix(s)
+static double det_matrix(s)
    double s[2][2];
 {
    return s[0][0] * s[1][1] - s[0][1] * s[1][0];
 }
 
-void flip_matrix(m, h)
+#if 0
+static void flip_matrix(m, h)
    double m[2][2];
    int h;
 {
@@ -234,7 +235,7 @@ void flip_matrix(m, h)
    }
 }
 
-void transpose_matrix(m)
+static void transpose_matrix(m)
    double m[2][2];
 {
    double t;
@@ -242,8 +243,10 @@ void transpose_matrix(m)
    m[0][1] = m[1][0];
    m[1][0] = t;
 }
+#endif
 
-void choose_evector(m, r, v)
+#if 0
+static void choose_evector(m, r, v)
    double m[3][2], r;
    double v[2];
 {
@@ -270,7 +273,7 @@ void choose_evector(m, r, v)
    transforms.
    */
 
-void diagonalize_matrix(m, r, v)
+static void diagonalize_matrix(m, r, v)
    double m[3][2];
    double r[2][2];
    double v[2][2];
@@ -351,7 +354,7 @@ void diagonalize_matrix(m, r, v)
 }
 
 
-void undiagonalize_matrix(r, v, m)
+static void undiagonalize_matrix(r, v, m)
    double r[2][2];
    double v[2][2];
    double m[3][2];
@@ -385,8 +388,9 @@ void undiagonalize_matrix(r, v, m)
    m[1][0] = t2[1][0];
    m[1][1] = t2[1][1];
 }
+#endif
 
-void interpolate_angle(t, s, v1, v2, v3, tie, cross)
+static void interpolate_angle(t, s, v1, v2, v3, tie, cross)
    double t, s;
    double *v1, *v2, *v3;
    int tie;
@@ -425,7 +429,7 @@ void interpolate_angle(t, s, v1, v2, v3, tie, cross)
    *v3 = s * x + t * y;
 }
 
-void interpolate_complex(t, s, r1, r2, r3, flip, tie, cross)
+static void interpolate_complex(t, s, r1, r2, r3, flip, tie, cross)
    double t, s;
    double r1[2], r2[2], r3[2];
    int flip, tie, cross;
@@ -471,7 +475,7 @@ void interpolate_complex(t, s, r1, r2, r3, flip, tie, cross)
 }
 
 
-void interpolate_matrix(t, m1, m2, m3)
+static void interpolate_matrix(t, m1, m2, m3)
    double m1[3][2], m2[3][2], m3[3][2];
    double t;
 {
@@ -688,7 +692,7 @@ void tokenize(ss, argv, argc)
    *argc = i;
 }
 
-int compare_xforms(a, b)
+static int compare_xforms(a, b)
    xform *a, *b;
 {
    double aa[2][2];
@@ -1094,7 +1098,8 @@ double standard_metric(cp1, cp2)
    return dist;
 }
 
-void
+#if 0
+static void
 stat_matrix(f, m)
    FILE *f;
    double m[3][2];
@@ -1116,6 +1121,7 @@ stat_matrix(f, m)
    fprintf(f, "theta = %g det = %g\n", a,
 	   m[0][0] * m[1][1] - m[0][1] * m[1][0]);
 }
+#endif
 
 
 #if 0

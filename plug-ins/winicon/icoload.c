@@ -138,7 +138,7 @@ ico_read_init (FILE *fp)
 }
 
 
-gboolean
+static gboolean
 ico_read_size (FILE        *fp,
                IcoLoadInfo *info)
 {
@@ -577,7 +577,7 @@ ico_read_icon (FILE    *fp,
   return TRUE;
 }
 
-gint32
+static gint32
 ico_load_layer (FILE        *fp,
                 gint32       image,
                 gint32       icon_num,

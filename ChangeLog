@@ -1,5 +1,33 @@
 2006-10-30  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/Lighting/lighting_apply.c
+	* plug-ins/Lighting/lighting_preview.c
+	* plug-ins/MapObject/mapobject_apply.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/flame/libifs.c
+	* plug-ins/gfig/gfig-arc.c
+	* plug-ins/gfig/gfig-bezier.c
+	* plug-ins/gfig/gfig-circle.c
+	* plug-ins/gfig/gfig-ellipse.c
+	* plug-ins/gfig/gfig-line.c
+	* plug-ins/gfig/gfig-poly.c
+	* plug-ins/gfig/gfig-spiral.c
+	* plug-ins/gfig/gfig-star.c
+	* plug-ins/gimpressionist/general.c
+	* plug-ins/gimpressionist/ppmtool.c
+	* plug-ins/gimpressionist/preview.c
+	* plug-ins/gimpressionist/preview.h
+	* plug-ins/gimpressionist/size.h
+	* plug-ins/jpeg/jpeg-save.c
+	* plug-ins/uri/uri-backend-gnomevfs.c
+	* plug-ins/uri/uri-backend-libcurl.c
+	* plug-ins/uri/uri-backend-wget.c
+	* plug-ins/winicon/icoload.c
+	* plug-ins/winicon/icosave.c: another bunch of missing includes,
+	missing "static" and wrong declarations found by -Wmissing-foo
+
+2006-10-30  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/script-fu-text-console.c: include our own
 	header file. Minor cosmetics.
 

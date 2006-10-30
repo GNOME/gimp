@@ -11,6 +11,7 @@
 #include "lighting_main.h"
 #include "lighting_image.h"
 #include "lighting_shade.h"
+#include "lighting_apply.h"
 
 #include "libgimp/stdplugins-intl.h"
 

@@ -18,6 +18,6 @@ void size_restore (void);
 void create_sizepage (GtkNotebook *);
 
 int size_type_input (int in);
-void size_map_free_resources ();
+void size_map_free_resources (void);
 
 #endif /* #ifndef __SIZE_H */

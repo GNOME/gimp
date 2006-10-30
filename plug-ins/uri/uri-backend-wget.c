@@ -34,6 +34,8 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "uri-backend.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 

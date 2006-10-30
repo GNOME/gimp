@@ -2525,7 +2525,7 @@ sphere_response (GtkWidget *widget,
     }
 }
 
-GtkWidget *
+static GtkWidget *
 makewindow (void)
 {
   GtkListStore      *store;

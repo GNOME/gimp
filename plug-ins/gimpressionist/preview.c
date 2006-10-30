@@ -10,6 +10,7 @@
 #include "gimpressionist.h"
 #include "ppmtool.h"
 #include "infile.h"
+#include "preview.h"
 
 #include "libgimp/stdplugins-intl.h"
 

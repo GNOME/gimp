@@ -35,6 +35,7 @@
 
 #include "main.h"
 #include "icoload.h"
+#include "icosave.h"
 #include "icodialog.h"
 
 #include "libgimp/stdplugins-intl.h"

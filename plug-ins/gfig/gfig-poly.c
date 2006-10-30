@@ -32,6 +32,7 @@
 #include "gfig-dobject.h"
 #include "gfig-line.h"
 #include "gfig-dialog.h"
+#include "gfig-poly.h"
 
 #include "libgimp/stdplugins-intl.h"
 
