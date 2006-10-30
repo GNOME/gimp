@@ -1,3 +1,8 @@
+2006-10-30  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpsessioninfo.c (gimp_session_info_save):
+	eliminate compiler warning.
+
 2006-10-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/brush-editor-actions.c
