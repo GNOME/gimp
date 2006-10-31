@@ -1,5 +1,11 @@
 2006-10-31  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/gradient.pdb: made private functions static.
+
+	* app/pdb/gradient_cmds.c: regenerated.
+
+2006-10-31  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/faxg3/Makefile.am
 	* plug-ins/faxg3/run_tbl.c: removed this file. Apparently it
 	was never needed.
