@@ -24,6 +24,9 @@
 #include "config.h"
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_PALETTES_PDB_H__
+#include "gimppalettes_pdb.h"
 
 /**
  * gimp_palettes_refresh:

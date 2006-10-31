@@ -1,3 +1,20 @@
+2006-10-31  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/lib.pl: if a generated file in libgimp contains
+	deprecated procedures, #undef GIMP_DISABLE_DEPRECATED and include
+	its header explicitly, to make sure all deprecated procedures are
+	declared properly. Removed $privatevars cruft.
+
+	* libgimp/gimpbrushes_pdb.c
+	* libgimp/gimpcolor_pdb.c
+	* libgimp/gimpdrawable_pdb.c
+	* libgimp/gimpgradients_pdb.c
+	* libgimp/gimppalettes_pdb.c
+	* libgimp/gimppaths_pdb.c
+	* libgimp/gimppatterns_pdb.c
+	* libgimp/gimptexttool_pdb.c
+	* libgimp/gimptransformtools_pdb.c: regenerated.
+
 2006-10-31  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/py-slice.py: string fixes.

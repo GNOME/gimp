@@ -26,6 +26,9 @@
 #include <string.h>
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_DRAWABLE_PDB_H__
+#include "gimpdrawable_pdb.h"
 
 /**
  * gimp_drawable_delete:

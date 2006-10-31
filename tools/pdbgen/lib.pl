@@ -88,6 +88,7 @@ sub generate {
 	if ($proc->{deprecated} && !$out->{deprecated}) {
 	    push @{$out->{protos}}, "#ifndef GIMP_DISABLE_DEPRECATED\n";
 	    $out->{deprecated} = 1;
+	    $out->{seen_deprecated} = 1;
 	}
 	elsif (!$proc->{deprecated} && $out->{deprecated}) {
 	    push @{$out->{protos}}, "#endif /* GIMP_DISABLE_DEPRECATED */\n";
@@ -125,7 +126,7 @@ sub generate {
 	}
 
 	# The parameters to the function
-	my $arglist = ""; my $argpass = ""; my $privatevars = 0; 
+	my $arglist = ""; my $argpass = "";
 	my $argdesc = ""; my $sincedesc = "";
 	foreach (@inargs) {
 	    my ($type) = &arg_parse($_->{type});
@@ -651,7 +652,11 @@ HEADER
         print CFILE qq/#include "config.h"\n\n/;
 	print CFILE $out->{headers}, "\n" if exists $out->{headers};
 	print CFILE qq/#include "gimp.h"\n/;
-	print CFILE qq/#include "gimpprivate.h"\n/ if $privatevars;
+	if ($out->{seen_deprecated}) {
+	    print CFILE "#undef GIMP_DISABLE_DEPRECATED\n";
+	    print CFILE "#undef __GIMP_\U$group\E_PDB_H__\n";
+	    print CFILE qq/#include "${hname}"\n/;
+	}
 	print CFILE "\n", $extra->{code} if exists $extra->{code};
 	print CFILE $out->{code};
 	close CFILE;

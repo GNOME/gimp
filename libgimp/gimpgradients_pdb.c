@@ -26,6 +26,9 @@
 #include <string.h>
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_GRADIENTS_PDB_H__
+#include "gimpgradients_pdb.h"
 
 /**
  * gimp_gradients_refresh:

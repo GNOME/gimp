@@ -26,6 +26,9 @@
 #include <string.h>
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_BRUSHES_PDB_H__
+#include "gimpbrushes_pdb.h"
 
 /**
  * gimp_brushes_refresh:
