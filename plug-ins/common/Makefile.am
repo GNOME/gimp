@@ -1263,13 +1263,16 @@ lcms_SOURCES = \
 	lcms.c
 
 lcms_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
 	$(libgimp)		\
 	$(libgimpmath)		\
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(LIBLCMS)		\
-	$(GLIB_LIBS)		\
+	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 

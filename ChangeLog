@@ -1,5 +1,13 @@
 2006-10-31  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am: link lcms with libgimpui.
+
+	* plug-ins/common/lcms.c: added a confirmation dialog, work in
+	progress...
+
+2006-10-31  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mkgen.pl: add GTK_LIBS if ui is set, otherwise
 	add GLIB_LIBS.
 

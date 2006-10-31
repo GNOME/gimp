@@ -67,7 +67,7 @@
     'iwarp' => { ui => 1 },
     'jigsaw' => { ui => 1 },
     'laplace' => {},
-    'lcms' => { optional => 1 },
+    'lcms' => { ui => 1, optional => 1 },
     'lens' => { ui => 1 },
     'lic' => { ui => 1 },
     'mail' => { ui => 1, optional => 1 },
