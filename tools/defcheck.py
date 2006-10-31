@@ -35,8 +35,6 @@ for df in glob.glob ("lib*/*.def"):
    libname = directory + "/.libs/lib" + basename + "-*.so"
 
    defsymbols = file (df).read ().split ()[1:]
-   sortdefsyms = defsymbols[:]
-   sortdefsyms.sort()
 
    doublesymbols = []
    for i in range (len (defsymbols)-1, 0, -1):
@@ -44,9 +42,9 @@ for df in glob.glob ("lib*/*.def"):
          doublesymbols.append ((defsymbols[i], i+2))
 
    unsortindex = -1
-   for i in range (len (defsymbols)):
-      if defsymbols[i] != sortdefsyms[i]:
-         unsortindex = i
+   for i in range (len (defsymbols)-1):
+      if defsymbols[i] > defsymbols[i+1]:
+         unsortindex = i+1
          break;
 
    status, nm = commands.getstatusoutput ("nm --defined-only --extern-only " +
