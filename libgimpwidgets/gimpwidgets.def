@@ -89,7 +89,6 @@ EXPORTS
 	gimp_color_selector_set_toggles_sensitive
 	gimp_color_selector_set_toggles_visible
 	gimp_context_help
-	gimp_controller_boolean_handled_accumulator
 	gimp_controller_event
 	gimp_controller_get_event_blurb
 	gimp_controller_get_event_name

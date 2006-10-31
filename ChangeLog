@@ -1,3 +1,10 @@
+2006-10-31  Simon Budig  <simon@gimp.org>
+
+	* tools/defcheck.py: hack to check the consistency of the .def files
+	for the libraries. Invoke after building GIMP, needs "nm" to work.
+
+	* libgimpwidgets/gimpwidgets.def: removed obsolete symbol.
+
 2006-10-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c: made
