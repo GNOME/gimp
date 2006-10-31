@@ -1,3 +1,7 @@
+2006-10-31  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/py-slice.py: string fixes.
+
 2006-10-31  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/gradient.pdb: made private functions static.
@@ -1290,7 +1294,7 @@
 
 2006-10-11  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* app/paint-funcs/scale-funcs.[ch]:  apply patch from GG
+	* app/paint-funcs/scale-funcs.[ch]: apply patch from GG
 	to improve accuracy of Lanczos, from bug #358481.
 
 2006-10-11  Sven Neumann  <sven@gimp.org>
