@@ -43,6 +43,8 @@
 #include "gimp-intl.h"
 #include "vectors/gimpvectors.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 edit_cut_invoker (GimpProcedure     *procedure,

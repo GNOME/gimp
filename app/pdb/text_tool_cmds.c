@@ -35,6 +35,8 @@
 #include "core/gimplayer.h"
 #include "text/gimptext-compat.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 text_fontname_invoker (GimpProcedure     *procedure,

@@ -35,6 +35,8 @@
 #include "core/gimpcontainer.h"
 #include "gimp-intl.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 buffers_get_list_invoker (GimpProcedure     *procedure,

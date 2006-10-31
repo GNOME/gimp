@@ -33,6 +33,8 @@
 #include "plug-in/gimppluginmanager-help-domain.h"
 #include "plug-in/gimppluginmanager.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 help_invoker (GimpProcedure     *procedure,

@@ -38,6 +38,8 @@
 #include "core/gimpgradient.h"
 #include "core/gimplist.h"
 
+#include "internal_procs.h"
+
 
 static GimpGradient *
 gradient_get (Gimp                 *gimp,

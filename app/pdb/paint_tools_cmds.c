@@ -38,6 +38,8 @@
 #include "paint/gimppaintcore.h"
 #include "paint/gimppaintoptions.h"
 
+#include "internal_procs.h"
+
 
 static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
 

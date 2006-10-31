@@ -32,6 +32,8 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 gradients_popup_invoker (GimpProcedure     *procedure,

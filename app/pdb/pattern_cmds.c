@@ -36,6 +36,8 @@
 #include "core/gimplist.h"
 #include "core/gimppattern.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 pattern_get_info_invoker (GimpProcedure     *procedure,

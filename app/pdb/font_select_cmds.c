@@ -30,6 +30,8 @@
 
 #include "core/gimp.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 fonts_popup_invoker (GimpProcedure     *procedure,

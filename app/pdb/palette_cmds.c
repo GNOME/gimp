@@ -37,6 +37,8 @@
 #include "core/gimplist.h"
 #include "core/gimppalette.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 palette_new_invoker (GimpProcedure     *procedure,

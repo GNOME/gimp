@@ -38,6 +38,8 @@
 #include "core/gimplist.h"
 #include "core/gimppalette.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 palettes_refresh_invoker (GimpProcedure     *procedure,

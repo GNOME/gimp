@@ -32,6 +32,8 @@
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayer.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 floating_sel_remove_invoker (GimpProcedure     *procedure,

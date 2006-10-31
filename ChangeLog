@@ -1,5 +1,14 @@
 2006-10-31  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/app.pl: declare all register_foo_procs() functions
+	in internal_procs.h instead of internal_procs.c and include
+	internal_procs.h from all foo_cmds.c files.
+
+	* app/pdb/*_cmds.c
+	* app/pdb/internal_procs.[ch]: regenerated.
+
+2006-10-31  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/lib.pl: if a generated file in libgimp contains
 	deprecated procedures, #undef GIMP_DISABLE_DEPRECATED and include
 	its header explicitly, to make sure all deprecated procedures are

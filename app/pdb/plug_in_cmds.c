@@ -40,6 +40,8 @@
 #include "plug-in/gimppluginprocedure.h"
 #include "plug-in/plug-in-def.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 plugins_query_invoker (GimpProcedure     *procedure,

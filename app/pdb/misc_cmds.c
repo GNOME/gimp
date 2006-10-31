@@ -44,6 +44,8 @@
 
 #include "core/gimp.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 version_invoker (GimpProcedure     *procedure,

@@ -35,6 +35,8 @@
 #include "core/gimpimage.h"
 #include "gimp-intl.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 by_color_select_invoker (GimpProcedure     *procedure,

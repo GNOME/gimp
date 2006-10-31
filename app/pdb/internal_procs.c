@@ -26,54 +26,8 @@
 
 #include "gimppdb.h"
 
-/* Forward declarations for registering PDB procs */
+#include "internal_procs.h"
 
-void register_brush_procs              (GimpPDB *pdb);
-void register_brush_select_procs       (GimpPDB *pdb);
-void register_brushes_procs            (GimpPDB *pdb);
-void register_buffer_procs             (GimpPDB *pdb);
-void register_channel_procs            (GimpPDB *pdb);
-void register_color_procs              (GimpPDB *pdb);
-void register_context_procs            (GimpPDB *pdb);
-void register_convert_procs            (GimpPDB *pdb);
-void register_display_procs            (GimpPDB *pdb);
-void register_drawable_procs           (GimpPDB *pdb);
-void register_drawable_transform_procs (GimpPDB *pdb);
-void register_edit_procs               (GimpPDB *pdb);
-void register_fileops_procs            (GimpPDB *pdb);
-void register_floating_sel_procs       (GimpPDB *pdb);
-void register_font_select_procs        (GimpPDB *pdb);
-void register_fonts_procs              (GimpPDB *pdb);
-void register_gimprc_procs             (GimpPDB *pdb);
-void register_gradient_procs           (GimpPDB *pdb);
-void register_gradient_select_procs    (GimpPDB *pdb);
-void register_gradients_procs          (GimpPDB *pdb);
-void register_grid_procs               (GimpPDB *pdb);
-void register_guides_procs             (GimpPDB *pdb);
-void register_help_procs               (GimpPDB *pdb);
-void register_image_procs              (GimpPDB *pdb);
-void register_layer_procs              (GimpPDB *pdb);
-void register_message_procs            (GimpPDB *pdb);
-void register_misc_procs               (GimpPDB *pdb);
-void register_paint_tools_procs        (GimpPDB *pdb);
-void register_palette_procs            (GimpPDB *pdb);
-void register_palette_select_procs     (GimpPDB *pdb);
-void register_palettes_procs           (GimpPDB *pdb);
-void register_parasite_procs           (GimpPDB *pdb);
-void register_paths_procs              (GimpPDB *pdb);
-void register_pattern_procs            (GimpPDB *pdb);
-void register_pattern_select_procs     (GimpPDB *pdb);
-void register_patterns_procs           (GimpPDB *pdb);
-void register_plug_in_procs            (GimpPDB *pdb);
-void register_procedural_db_procs      (GimpPDB *pdb);
-void register_progress_procs           (GimpPDB *pdb);
-void register_selection_procs          (GimpPDB *pdb);
-void register_selection_tools_procs    (GimpPDB *pdb);
-void register_text_tool_procs          (GimpPDB *pdb);
-void register_transform_tools_procs    (GimpPDB *pdb);
-void register_undo_procs               (GimpPDB *pdb);
-void register_unit_procs               (GimpPDB *pdb);
-void register_vectors_procs            (GimpPDB *pdb);
 
 /* 537 procedures registered total */
 

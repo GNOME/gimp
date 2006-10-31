@@ -34,6 +34,8 @@
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 message_invoker (GimpProcedure     *procedure,

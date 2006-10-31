@@ -41,6 +41,8 @@
 #include "vectors/gimpvectors-import.h"
 #include "vectors/gimpvectors.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 path_list_invoker (GimpProcedure     *procedure,

@@ -35,6 +35,8 @@
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 image_undo_group_start_invoker (GimpProcedure     *procedure,

@@ -36,6 +36,8 @@
 #include "gimppdb-query.h"
 #include "plug-in/gimppluginmanager-data.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 procedural_db_temp_name_invoker (GimpProcedure     *procedure,

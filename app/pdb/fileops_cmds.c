@@ -41,6 +41,8 @@
 #include "plug-in/gimppluginmanager-file.h"
 #include "plug-in/gimppluginmanager.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 file_load_invoker (GimpProcedure     *procedure,

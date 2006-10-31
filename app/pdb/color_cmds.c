@@ -49,6 +49,8 @@
 #include "core/gimpimage.h"
 #include "gimp-intl.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 brightness_contrast_invoker (GimpProcedure     *procedure,

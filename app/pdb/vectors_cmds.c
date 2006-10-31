@@ -40,6 +40,8 @@
 #include "vectors/gimpvectors-import.h"
 #include "vectors/gimpvectors.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 vectors_new_invoker (GimpProcedure     *procedure,

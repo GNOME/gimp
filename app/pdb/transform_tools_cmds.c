@@ -39,6 +39,8 @@
 #include "core/gimpprogress.h"
 #include "gimp-intl.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 flip_invoker (GimpProcedure     *procedure,

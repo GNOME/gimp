@@ -38,6 +38,8 @@
 #include "core/gimplayermask.h"
 #include "gimp-intl.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 layer_new_invoker (GimpProcedure     *procedure,

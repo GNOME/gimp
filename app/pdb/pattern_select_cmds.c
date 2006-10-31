@@ -31,6 +31,8 @@
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 patterns_popup_invoker (GimpProcedure     *procedure,

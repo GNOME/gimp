@@ -56,6 +56,8 @@
 #include "gimp-intl.h"
 #include "vectors/gimpvectors.h"
 
+#include "internal_procs.h"
+
 
 #if defined (HAVE_FINITE)
 #define FINITE(x) finite(x)

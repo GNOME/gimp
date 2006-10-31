@@ -757,6 +757,8 @@ GPL
 	    $headers .= "\n" if $_ eq '"config.h"';
 	}
 
+	$headers .= "\n#include \"internal_procs.h\"\n";
+
 	my $extra = {};
 	if (exists $main::grp{$group}->{extra}->{app}) {
 	    $extra = $main::grp{$group}->{extra}->{app}
@@ -792,7 +794,16 @@ GPL
 #ifndef $guard
 #define $guard
 
-void internal_procs_init (GimpPDB *pdb);
+HEADER
+
+        print IFILE "void   internal_procs_init" . ' ' x ($longest - length "internal_procs_init") . " (GimpPDB *pdb);\n\n";
+
+	print IFILE "/* Forward declarations for registering PDB procs */\n\n";
+	foreach (@group_decls) {
+	    print IFILE "void   $_" . ' ' x ($longest - length $_) . " (GimpPDB *pdb);\n";
+	}
+
+	print IFILE <<HEADER;
 
 #endif /* $guard */
 HEADER
@@ -806,10 +817,7 @@ HEADER
 	print IFILE qq@#include <glib-object.h>\n\n@;
 	print IFILE qq@#include "pdb-types.h"\n\n@;
 	print IFILE qq@#include "gimppdb.h"\n\n@;
-	print IFILE "/* Forward declarations for registering PDB procs */\n\n";
-	foreach (@group_decls) {
-	    print IFILE "void $_" . ' ' x ($longest - length $_) . " (GimpPDB *pdb);\n";
-	}
+	print IFILE qq@#include "internal_procs.h"\n\n@;
 	chop $group_procs;
 	print IFILE "\n/* $total procedures registered total */\n\n";
 	print IFILE <<BODY;

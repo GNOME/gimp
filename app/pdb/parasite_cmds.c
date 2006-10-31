@@ -35,6 +35,8 @@
 #include "core/gimpimage.h"
 #include "vectors/gimpvectors.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 parasite_find_invoker (GimpProcedure     *procedure,

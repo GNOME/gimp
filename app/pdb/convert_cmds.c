@@ -35,6 +35,8 @@
 #include "core/gimpimage.h"
 #include "core/gimppalette.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 image_convert_rgb_invoker (GimpProcedure     *procedure,
