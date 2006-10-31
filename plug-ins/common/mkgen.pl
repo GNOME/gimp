@@ -137,6 +137,11 @@ EOT
     }
 
     my $deplib = "\$(RT_LIBS)\t\t\\\n\t\$(INTLLIBS)";
+    if (exists $plugins{$_}->{ui}) {
+	$deplib = "\$(GTK_LIBS)\t\t\\\n\t$deplib";
+    } else {
+	$deplib = "\$(GLIB_LIBS)\t\t\\\n\t$deplib";
+    }
     if (exists $plugins{$_}->{libdep}) {
 	my @lib = split(/:/, $plugins{$_}->{libdep});
 	foreach $lib (@lib) {

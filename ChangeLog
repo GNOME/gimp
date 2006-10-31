@@ -1,3 +1,14 @@
+2006-10-31  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/mkgen.pl: add GTK_LIBS if ui is set, otherwise
+	add GLIB_LIBS.
+
+	* plug-ins/common/plugin-defs.pl: no need to define libdep any
+	longer.
+
+	* plug-ins/common/Makefile.am: regenerated. Identical except for
+	two plug-ins that incorrectly linked with libgimpui.
+
 2006-10-31  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: add -Wmissing-declarations and -Wmissing-prototypes

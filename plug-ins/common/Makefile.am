@@ -1112,9 +1112,6 @@ gradmap_SOURCES = \
 	gradmap.c
 
 gradmap_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
 	$(libgimp)		\
 	$(libgimpmath)		\
 	$(libgimpconfig)	\
@@ -1253,9 +1250,6 @@ laplace_SOURCES = \
 	laplace.c
 
 laplace_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
 	$(libgimp)		\
 	$(libgimpmath)		\
 	$(libgimpconfig)	\
