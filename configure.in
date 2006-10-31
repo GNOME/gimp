@@ -311,8 +311,15 @@ if eval "test x$GCC = xyes"; then
 fi
 changequote([,])dnl
 
+
 # If possible, warn if C99isms are used 
 GIMP_DETECT_CFLAGS(extra_warnings, '-Wdeclaration-after-statement')
+CFLAGS="$CFLAGS $extra_warnings"
+
+GIMP_DETECT_CFLAGS(extra_warnings, '-Wmissing-prototypes')
+CFLAGS="$CFLAGS $extra_warnings"
+
+GIMP_DETECT_CFLAGS(extra_warnings, '-Wmissing-declarations')
 CFLAGS="$CFLAGS $extra_warnings"
 
 

@@ -1,5 +1,11 @@
 2006-10-31  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: add -Wmissing-declarations and -Wmissing-prototypes
+	to CFLAGS if the compiler supports them. Still warns in some files
+	but most stuff compiles cleanly after all the cleanups below.
+
+2006-10-31  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/app.pl: declare all register_foo_procs() functions
 	in internal_procs.h instead of internal_procs.c and include
 	internal_procs.h from all foo_cmds.c files.
