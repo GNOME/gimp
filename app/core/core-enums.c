@@ -1253,7 +1253,7 @@ gimp_color_profile_policy_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_COLOR_PROFILE_POLICY_ASK, N_("Ask"), NULL },
+    { GIMP_COLOR_PROFILE_POLICY_ASK, N_("Ask what to do"), NULL },
     { GIMP_COLOR_PROFILE_POLICY_KEEP, N_("Keep embedded profile"), NULL },
     { GIMP_COLOR_PROFILE_POLICY_CONVERT, N_("Convert to RGB workspace"), NULL },
     { 0, NULL, NULL }

@@ -1,7 +1,14 @@
 2006-11-01  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-enums.[ch]: string change.
+
+	* app/dialogs/preferences-dialog.c: added a combo box for the
+	color-profile-policy.
+
+2006-11-01  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/lcms.c: in interactive mode, return an extra
-	boolean indicating the choide for the "Don't ask me again" toggle.
+	boolean indicating the choice for the "Don't ask me again" toggle.
 
 	* app/plug-in/plug-in-icc-profile.c: look for the extra return
 	value and update the "color-profile-policy" in gimprc.

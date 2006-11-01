@@ -2366,7 +2366,12 @@ prefs_dialog_new (Gimp       *gimp,
       }
 
     g_object_unref (color_config);
+
+    button = prefs_enum_combo_box_add (object, "color-profile-policy", 0, 0,
+                                       _("File Open behaviour:"),
+                                       GTK_TABLE (table), row++, NULL);
   }
+
 
   /*******************/
   /*  Input Devices  */
