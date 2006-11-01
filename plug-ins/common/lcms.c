@@ -301,6 +301,8 @@ run (const gchar      *name,
 
           values[1].type         = GIMP_PDB_INT32;
           values[1].data.d_int32 = dont_ask;
+
+          g_printerr ("dont-ask: %d\n", dont_ask);
         }
       break;
 
@@ -812,6 +814,7 @@ lcms_icc_apply_dialog (cmsHPROFILE  src_profile,
   GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *label;
+  GtkWidget *toggle = NULL;
   gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
@@ -847,20 +850,15 @@ lcms_icc_apply_dialog (cmsHPROFILE  src_profile,
 
   if (dont_ask)
     {
-      GtkWidget *toggle;
-
       toggle = gtk_check_button_new_with_mnemonic (_("_Don't ask me again"));
       gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
       gtk_widget_show (toggle);
-
-      g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &dont_ask);
-
     }
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  *dont_ask = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
 
   gtk_widget_destroy (dialog);
 

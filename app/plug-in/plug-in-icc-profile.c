@@ -63,8 +63,10 @@ plug_in_icc_profile_apply_rgb (GimpImage     *image,
       GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]) &&
       GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[1]))
     {
-      GValueArray       *return_vals;
-      GimpPDBStatusType  status;
+      GValueArray            *return_vals;
+      GimpPDBStatusType       status;
+      GimpColorProfilePolicy  policy = GIMP_COLOR_PROFILE_POLICY_ASK;
+      gboolean                success;
 
       return_vals =
         gimp_pdb_execute_procedure_by_name (gimp->pdb, context, progress,
@@ -75,18 +77,47 @@ plug_in_icc_profile_apply_rgb (GimpImage     *image,
                                             G_TYPE_NONE);
 
       status = g_value_get_enum (return_vals->values);
-      g_value_array_free (return_vals);
 
       switch (status)
         {
         case GIMP_PDB_SUCCESS:
-          return TRUE;
+          policy = GIMP_COLOR_PROFILE_POLICY_CONVERT;
+          success = TRUE;
+          break;
+
+        case GIMP_PDB_CANCEL:
+          policy = GIMP_COLOR_PROFILE_POLICY_KEEP;
+          success = TRUE;
+          break;
 
         default:
           g_set_error (error, 0, 0,
                        _("Error running '%s'"), ICC_PROFILE_APPLY_RGB_PROC);
-          return FALSE;
+          success = FALSE;
+          break;
         }
+
+      g_printerr ("%d\n", return_vals->n_values);
+
+      if (success && return_vals->n_values > 1)
+        {
+          GValue *value = g_value_array_get_nth (return_vals, 1);
+
+          g_printerr ("%s\n", G_VALUE_TYPE_NAME (value));
+
+          if (GIMP_VALUE_HOLDS_INT32 (value) && g_value_get_int (value))
+            {
+              g_printerr ("setting policy to %d\n", policy);
+
+              g_object_set (G_OBJECT (gimp->config),
+                            "color-profile-policy", policy,
+                            NULL);
+            }
+        }
+
+      g_value_array_free (return_vals);
+
+      return success;
     }
 
   g_set_error (error, 0, 0,
