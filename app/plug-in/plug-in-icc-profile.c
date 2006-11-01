@@ -97,18 +97,12 @@ plug_in_icc_profile_apply_rgb (GimpImage     *image,
           break;
         }
 
-      g_printerr ("%d\n", return_vals->n_values);
-
       if (success && return_vals->n_values > 1)
         {
           GValue *value = g_value_array_get_nth (return_vals, 1);
 
-          g_printerr ("%s\n", G_VALUE_TYPE_NAME (value));
-
           if (GIMP_VALUE_HOLDS_INT32 (value) && g_value_get_int (value))
             {
-              g_printerr ("setting policy to %d\n", policy);
-
               g_object_set (G_OBJECT (gimp->config),
                             "color-profile-policy", policy,
                             NULL);

@@ -301,8 +301,6 @@ run (const gchar      *name,
 
           values[1].type         = GIMP_PDB_INT32;
           values[1].data.d_int32 = dont_ask;
-
-          g_printerr ("dont-ask: %d\n", dont_ask);
         }
       break;
 
