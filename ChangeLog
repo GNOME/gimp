@@ -1,5 +1,16 @@
 2006-11-01  Sven Neumann  <sven@gimp.org>
 
+	* app/file/file-open.c: always deal with embedded color profiles.
+
+	* app/dialogs/preferences-dialog.c: reordered items in Color
+	Management section, added some spacing.
+
+	* app/config/gimprc-blurbs.h
+	* libgimpconfig/gimpcolorconfig.c
+	* plug-ins/common/lcms.c: string changes for consistency.
+
+2006-11-01  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/lcms.c: redid the dialog without using markup.
 
 2006-11-01  Michael Natterer  <mitch@gimp.org>

@@ -42,10 +42,10 @@
   N_("The color profile of your (primary) monitor.")
 #define DISPLAY_PROFILE_FROM_GDK_BLURB \
   N_("When enabled, the GIMP will try to use the display color profile " \
-     "from the windowing system. The configured monitor profile is then " \
+     "from the windowing system.  The configured monitor profile is then " \
      "only used as a fallback.")
 #define RGB_PROFILE_BLURB \
-  N_("The default RGB workspace color profile.")
+  N_("The default RGB working space color profile.")
 #define CMYK_PROFILE_BLURB \
   N_("The CMYK color profile used to convert between RGB and CMYK.")
 #define PRINTER_PROFILE_BLURB \
@@ -53,8 +53,8 @@
 #define DISPLAY_RENDERING_INTENT_BLURB \
   N_("Sets how colors are mapped for your display.")
 #define SIMULATION_RENDERING_INTENT_BLURB \
-  N_("Sets how colors are converted from workspace to the print simulation " \
-     "device.")
+  N_("Sets how colors are converted from RGB working space to the " \
+     "print simulation device.")
 
 
 enum

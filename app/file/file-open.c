@@ -41,8 +41,6 @@
 #define R_OK 4
 #endif
 
-#include "libgimpconfig/gimpconfig.h"
-
 #include "core/core-types.h"
 
 #include "config/gimpcoreconfig.h"
@@ -476,9 +474,6 @@ file_open_handle_color_profile (GimpImage    *image,
                                 GimpProgress *progress,
                                 GimpRunMode   run_mode)
 {
-  if (image->gimp->config->color_management->mode == GIMP_COLOR_MANAGEMENT_OFF)
-    return;
-
   if (gimp_image_parasite_find (image, "icc-profile"))
     {
       switch (image->gimp->config->color_profile_policy)

@@ -532,7 +532,7 @@ lcms_icc_info (GimpColorConfig *config,
   else
     {
       *name = g_strdup ("sRGB");
-      *desc = g_strdup ("sRGB");
+      *desc = g_strdup ("sRGB built-in");
       *info = g_strdup (_("Default RGB working space"));
     }
 
@@ -836,7 +836,7 @@ lcms_icc_profile_dest_label_new (cmsHPROFILE  profile)
   gchar     *text;
 
   desc = lcms_icc_profile_get_desc (profile);
-  text = g_strdup_printf (_("Convert it to the RGB workspace (%s)?"), desc);
+  text = g_strdup_printf (_("Convert it to the RGB working space (%s)?"), desc);
   g_free (desc);
 
   label = g_object_new (GTK_TYPE_LABEL,
@@ -866,7 +866,7 @@ lcms_icc_apply_dialog (gint32       image,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Convert to RGB workspace?"),
+  dialog = gimp_dialog_new (_("Convert to RGB working space?"),
                             PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC_APPLY,

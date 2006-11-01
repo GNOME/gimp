@@ -2299,7 +2299,7 @@ prefs_dialog_new (Gimp       *gimp,
                                      &top_iter,
                                      page_index++);
 
-  table = prefs_table_new (8, GTK_CONTAINER (vbox));
+  table = prefs_table_new (9, GTK_CONTAINER (vbox));
 
   {
     static const struct
@@ -2321,21 +2321,16 @@ prefs_dialog_new (Gimp       *gimp,
     };
 
     GObject *color_config;
-    gint     row;
+    gint     row = 0;
 
     g_object_get (object, "color-management", &color_config, NULL);
 
     prefs_enum_combo_box_add (color_config, "mode", 0, 0,
                               _("_Mode of operation:"),
-                              GTK_TABLE (table), 0, NULL);
-    prefs_enum_combo_box_add (color_config, "display-rendering-intent", 0, 0,
-                              _("_Display rendering intent:"),
-                              GTK_TABLE (table), 1, NULL);
-    prefs_enum_combo_box_add (color_config, "simulation-rendering-intent", 0, 0,
-                              _("_Softproof rendering intent:"),
-                              GTK_TABLE (table), 2, NULL);
+                              GTK_TABLE (table), row++, NULL);
+    gtk_table_set_row_spacing (GTK_TABLE (table), row - 1, 12);
 
-    for (i = 0, row = 3; i < G_N_ELEMENTS (profiles); i++, row++)
+    for (i = 0; i < G_N_ELEMENTS (profiles); i++)
       {
         button =
           gimp_prop_file_chooser_button_new (color_config,
@@ -2343,26 +2338,41 @@ prefs_dialog_new (Gimp       *gimp,
                                              gettext (profiles[i].fs_label),
                                              GTK_FILE_CHOOSER_ACTION_OPEN);
 
-        gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
+        gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                                    gettext (profiles[i].label), 0.0, 0.5,
                                    button, 1, FALSE);
 
 
-#if defined (GDK_WINDOWING_X11)
         if (i == 2) /* display profile */
           {
+#if defined (GDK_WINDOWING_X11)
             button =
               gimp_prop_check_button_new (color_config,
                                           "display-profile-from-gdk",
                                           _("_Try to obtain the monitor "
                                             "profile from the X server"));
 
-            row++;
             gtk_table_attach_defaults (GTK_TABLE (table),
                                        button, 0, 2, row, row + 1);
+            row++;
             gtk_widget_show (button);
-          }
 #endif
+
+            prefs_enum_combo_box_add (color_config,
+                                      "display-rendering-intent", 0, 0,
+                                      _("_Display rendering intent:"),
+                                      GTK_TABLE (table), row++, NULL);
+          }
+
+        if (i == 3) /* printer profile */
+          {
+            prefs_enum_combo_box_add (color_config,
+                                      "simulation-rendering-intent", 0, 0,
+                                      _("_Softproof rendering intent:"),
+                                      GTK_TABLE (table), row++, NULL);
+          }
+
+        gtk_table_set_row_spacing (GTK_TABLE (table), row - 1, 12);
       }
 
     g_object_unref (color_config);

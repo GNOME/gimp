@@ -30,7 +30,7 @@ N_("Sets the canvas padding color used if the padding mode is set to " \
 "Defines the color management behavior."
 
 #define COLOR_PROFILE_POLICY_BLURB \
-N_("How to handle color profiles when opening a file.")
+N_("How to handle embedded color profiles when opening a file.")
 
 #define CONFIRM_ON_CLOSE_BLURB \
 N_("Ask for confirmation before closing an image without saving.")
