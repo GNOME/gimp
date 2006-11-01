@@ -253,7 +253,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   editor->color_name = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), editor->color_name, TRUE, TRUE, 0);
   gtk_entry_set_text (GTK_ENTRY (editor->color_name), _("Undefined"));
-  gtk_widget_set_sensitive (editor->color_name, FALSE);
+  gtk_editable_set_editable (GTK_EDITABLE (editor->color_name), FALSE);
   gtk_widget_show (editor->color_name);
 
   g_signal_connect (editor->color_name, "changed",
@@ -794,8 +794,8 @@ palette_editor_entry_selected (GimpPaletteView   *view,
                                          palette_editor_color_name_changed,
                                          editor);
 
-      gtk_widget_set_sensitive (editor->color_name,
-                                entry && data_editor->data_editable);
+      gtk_editable_set_editable (GTK_EDITABLE (editor->color_name),
+                                 entry && data_editor->data_editable);
 
       gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
                               GIMP_EDITOR (editor)->popup_data);

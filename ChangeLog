@@ -1,5 +1,11 @@
 2006-11-01  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdataeditor.c
+	* app/widgets/gimppaletteeditor.c: set the editable state, not the
+	sensitivity of the entries according to the data's editable state.
+
+2006-11-01  Sven Neumann  <sven@gimp.org>
+
 	* app/core/core-enums.[ch]: string change.
 
 	* app/dialogs/preferences-dialog.c: added a combo box for the

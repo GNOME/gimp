@@ -154,7 +154,7 @@ gimp_data_editor_init (GimpDataEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), editor->name_entry, FALSE, FALSE, 0);
   gtk_widget_show (editor->name_entry);
 
-  gtk_widget_set_sensitive (editor->name_entry, FALSE);
+  gtk_editable_set_editable (GTK_EDITABLE (editor->name_entry), FALSE);
 
   g_signal_connect (editor->name_entry, "key-press-event",
                     G_CALLBACK (gimp_data_editor_name_key_press),
@@ -449,7 +449,7 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
     {
       editor->data_editable = editable;
 
-      gtk_widget_set_sensitive (editor->name_entry, editable);
+      gtk_editable_set_editable (GTK_EDITABLE (editor->name_entry), editable);
       gimp_docked_title_changed (GIMP_DOCKED (editor));
     }
 }
