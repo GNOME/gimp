@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-30 12:56+0100\n"
-"PO-Revision-Date: 2006-10-30 13:00+0100\n"
+"POT-Creation-Date: 2006-11-01 10:21+0100\n"
+"PO-Revision-Date: 2006-11-01 10:24+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -231,7 +231,7 @@ msgstr "Editor stop"
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:102 ../app/actions/dialogs-actions.c:130
 #: ../app/core/gimp.c:817 ../app/dialogs/dialogs.c:148
-#: ../app/dialogs/preferences-dialog.c:2569
+#: ../app/dialogs/preferences-dialog.c:2574
 msgid "Brushes"
 msgstr "Stopy"
 
@@ -300,7 +300,7 @@ msgstr "Soubor"
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:147 ../app/actions/dialogs-actions.c:150
 #: ../app/core/gimp.c:833 ../app/dialogs/dialogs.c:156
-#: ../app/dialogs/preferences-dialog.c:2585
+#: ../app/dialogs/preferences-dialog.c:2590
 msgid "Fonts"
 msgstr "Písma"
 
@@ -312,7 +312,7 @@ msgstr "Editor přechodů"
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:153 ../app/actions/dialogs-actions.c:140
 #: ../app/core/gimp.c:829 ../app/dialogs/dialogs.c:152
-#: ../app/dialogs/preferences-dialog.c:2581
+#: ../app/dialogs/preferences-dialog.c:2586
 msgid "Gradients"
 msgstr "Přechody"
 
@@ -344,18 +344,18 @@ msgstr "Editor palety"
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:171 ../app/actions/dialogs-actions.c:145
 #: ../app/core/gimp.c:825 ../app/dialogs/dialogs.c:154
-#: ../app/dialogs/preferences-dialog.c:2577
+#: ../app/dialogs/preferences-dialog.c:2582
 msgid "Palettes"
 msgstr "Palety"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:174 ../app/actions/dialogs-actions.c:135
 #: ../app/core/gimp.c:821 ../app/dialogs/dialogs.c:150
-#: ../app/dialogs/preferences-dialog.c:2573
+#: ../app/dialogs/preferences-dialog.c:2578
 msgid "Patterns"
 msgstr "Vzorky"
 
-#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2589
+#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2594
 msgid "Plug-Ins"
 msgstr "Zásuvné moduly"
 
@@ -663,7 +663,7 @@ msgid "%s Channel Copy"
 msgstr "Kopie kanálu %s"
 
 #: ../app/actions/channels-commands.c:308 ../app/core/gimpselection.c:557
-#: ../app/pdb/selection_cmds.c:421 ../app/pdb/selection_cmds.c:484
+#: ../app/pdb/selection_cmds.c:423 ../app/pdb/selection_cmds.c:486
 msgid "Channel to Selection"
 msgstr "Kanál do výběru"
 
@@ -827,7 +827,7 @@ msgstr ""
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1353
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:335 ../app/dialogs/palette-import-dialog.c:771
-#: ../app/pdb/image_cmds.c:1880 ../app/widgets/gimpdnd-xds.c:97
+#: ../app/pdb/image_cmds.c:1882 ../app/widgets/gimpdnd-xds.c:97
 msgid "Untitled"
 msgstr "Bez názvu"
 
@@ -2351,15 +2351,15 @@ msgid "Set Image Print Resolution"
 msgstr "Nastavit rozlišení tisku obrázku"
 
 #: ../app/actions/image-commands.c:351
-#: ../app/pdb/drawable_transform_cmds.c:142
-#: ../app/pdb/drawable_transform_cmds.c:216
+#: ../app/pdb/drawable_transform_cmds.c:144
+#: ../app/pdb/drawable_transform_cmds.c:218
 msgid "Flipping"
 msgstr "Překlápím..."
 
 #: ../app/actions/image-commands.c:372
-#: ../app/pdb/drawable_transform_cmds.c:513
-#: ../app/pdb/drawable_transform_cmds.c:591
-#: ../app/pdb/transform_tools_cmds.c:207 ../app/tools/gimprotatetool.c:116
+#: ../app/pdb/drawable_transform_cmds.c:515
+#: ../app/pdb/drawable_transform_cmds.c:593
+#: ../app/pdb/transform_tools_cmds.c:209 ../app/tools/gimprotatetool.c:116
 msgid "Rotating"
 msgstr "Rotuji..."
 
@@ -2378,9 +2378,9 @@ msgstr "Velikost obrázku"
 #. Scaling
 #: ../app/actions/image-commands.c:632 ../app/actions/layers-commands.c:1051
 #: ../app/dialogs/preferences-dialog.c:1797
-#: ../app/pdb/drawable_transform_cmds.c:668
-#: ../app/pdb/drawable_transform_cmds.c:743
-#: ../app/pdb/transform_tools_cmds.c:281 ../app/tools/gimpscaletool.c:109
+#: ../app/pdb/drawable_transform_cmds.c:670
+#: ../app/pdb/drawable_transform_cmds.c:745
+#: ../app/pdb/transform_tools_cmds.c:283 ../app/tools/gimpscaletool.c:109
 msgid "Scaling"
 msgstr "Změna velikosti"
 
@@ -3744,8 +3744,8 @@ msgstr "Nová cesta"
 msgid "New Path Options"
 msgstr "Volby nové cesty"
 
-#: ../app/actions/vectors-commands.c:297 ../app/pdb/paths_cmds.c:608
-#: ../app/pdb/vectors_cmds.c:992
+#: ../app/actions/vectors-commands.c:297 ../app/pdb/paths_cmds.c:610
+#: ../app/pdb/vectors_cmds.c:994
 msgid "Path to Selection"
 msgstr "Cesta do výběru"
 
@@ -4331,12 +4331,12 @@ msgstr "Je-li povoleno, bude GIMP v menu zobrazovat mnemoniky."
 #: ../app/config/gimprc-blurbs.h:188
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
-"system colors allocated for the GIMP."
+"system colors allocated for GIMP."
 msgstr ""
-"Nastavuje minimální počet barev systému alokovaných pro GIMP, obecně "
+"Nastavuje minimální počet systémových barev alokovaných pro GIMP, obecně "
 "důležité jen pro osmibitové displeje."
 
-#: ../app/config/gimprc-blurbs.h:199
+#: ../app/config/gimprc-blurbs.h:198
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -4345,7 +4345,7 @@ msgstr ""
 "Nastaví vodorovné rozlišení monitoru v bodech na palec. Je-li nastaveno na "
 "0, vynutí získání informací o vodorovném a svislém rozlišení z X serveru."
 
-#: ../app/config/gimprc-blurbs.h:204
+#: ../app/config/gimprc-blurbs.h:203
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -4354,7 +4354,7 @@ msgstr ""
 "Nastaví svislé rozlišení monitoru v bodech na palec. Je-li nastaveno na 0, "
 "vynutí získání informací o vodorovném a svislém rozlišení z X serveru."
 
-#: ../app/config/gimprc-blurbs.h:209
+#: ../app/config/gimprc-blurbs.h:208
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
@@ -4362,7 +4362,7 @@ msgstr ""
 "Je-li povoleno, nástroj přesunu aktivuje upravovanou vrstvu či cestu. To "
 "bylo ve starších verzích implicitní chování."
 
-#: ../app/config/gimprc-blurbs.h:213
+#: ../app/config/gimprc-blurbs.h:212
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
@@ -4370,11 +4370,11 @@ msgstr ""
 "Nastavuje velikost navigačního náhledu dostupného v pravém dolním rohu okna "
 "obrázku."
 
-#: ../app/config/gimprc-blurbs.h:217
+#: ../app/config/gimprc-blurbs.h:216
 msgid "Sets how many processors GIMP should try to use simultaneously."
 msgstr "Určuje, kolik procesorů se má GIMP snažit používat současně."
 
-#: ../app/config/gimprc-blurbs.h:230
+#: ../app/config/gimprc-blurbs.h:229
 msgid ""
 "When enabled, the X server is queried for the mouse's current position on "
 "each motion event, rather than relying on the position hint.  This means "
@@ -4388,7 +4388,7 @@ msgstr ""
 "některých X serverech zapnutí této volby zvráceně vede k rychlejšímu "
 "kreslení."
 
-#: ../app/config/gimprc-blurbs.h:246
+#: ../app/config/gimprc-blurbs.h:245
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
@@ -4398,13 +4398,13 @@ msgstr ""
 "náhledy v dialogu vrstev a kanálů, ale mohou program při práci s velkými "
 "obrázky zpomalovat."
 
-#: ../app/config/gimprc-blurbs.h:251
+#: ../app/config/gimprc-blurbs.h:250
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
 msgstr "Nastavuje velikost náhledu pro vrstvy a kanály v nově vytvářených dialozích."
 
-#: ../app/config/gimprc-blurbs.h:255
+#: ../app/config/gimprc-blurbs.h:254
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes."
@@ -4412,7 +4412,7 @@ msgstr ""
 "Je-li povoleno, bude okno obrázku automaticky měnit svou velikost, kdykoli "
 "se změní fyzická velikost obrázku."
 
-#: ../app/config/gimprc-blurbs.h:259
+#: ../app/config/gimprc-blurbs.h:258
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images."
@@ -4420,29 +4420,29 @@ msgstr ""
 "Je-li povoleno, bude okno obrázku automaticky měnit svou velikost při "
 "přibližování či vzdalování obrázků."
 
-#: ../app/config/gimprc-blurbs.h:263
+#: ../app/config/gimprc-blurbs.h:262
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 "Nechat GIMP pokusit se obnovit vaše poslední uložené sezení při každém "
 "spuštění."
 
-#: ../app/config/gimprc-blurbs.h:266
+#: ../app/config/gimprc-blurbs.h:265
 msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr "Zapamatovat si aktuální nástroj, vzorek, barvu a stopu mezi sezeními GIMP."
 
-#: ../app/config/gimprc-blurbs.h:270
+#: ../app/config/gimprc-blurbs.h:269
 msgid "Add all opened and saved files to the document history on disk."
 msgstr "Přidat všechny otevřené a uložené soubory do historie dokumentů na disku."
 
-#: ../app/config/gimprc-blurbs.h:273
-msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
+#: ../app/config/gimprc-blurbs.h:272
+msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr "Uložit pozice a velikosti hlavních dialogů při ukončení GIMP."
 
-#: ../app/config/gimprc-blurbs.h:276
-msgid "Save the tool options when the GIMP exits."
+#: ../app/config/gimprc-blurbs.h:275
+msgid "Save the tool options when GIMP exits."
 msgstr "Uložit volby nástrojů při ukončení GIMPu."
 
-#: ../app/config/gimprc-blurbs.h:282
+#: ../app/config/gimprc-blurbs.h:281
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
@@ -4450,7 +4450,7 @@ msgstr ""
 "Je-li povoleno, budou všechny nástroje kreslení zobrazovat náhled obrysu "
 "aktuální stopy."
 
-#: ../app/config/gimprc-blurbs.h:286
+#: ../app/config/gimprc-blurbs.h:285
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
@@ -4460,7 +4460,7 @@ msgstr ""
 "přistup k odpovídající stránce nápovědy. Bez tohoto tlačítka se stránka "
 "nápovědy dá otevřít stisknutím F1."
 
-#: ../app/config/gimprc-blurbs.h:291
+#: ../app/config/gimprc-blurbs.h:290
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
@@ -4468,7 +4468,7 @@ msgstr ""
 "Je-li povoleno, bude nad obrázkem zobrazován kurzor při používání kreslicího "
 "nástroje."
 
-#: ../app/config/gimprc-blurbs.h:295
+#: ../app/config/gimprc-blurbs.h:294
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
@@ -4476,7 +4476,7 @@ msgstr ""
 "Je-li povoleno, je lišta s menu implicitně viditelná. Může být také přepnuto "
 "příkazem \"Zobrazení->Zobrazovat lištu s menu\"."
 
-#: ../app/config/gimprc-blurbs.h:299
+#: ../app/config/gimprc-blurbs.h:298
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
@@ -4484,7 +4484,7 @@ msgstr ""
 "Je-li povoleno, jsou pravítka implicitně viditelná. Může být také přepnuto "
 "příkazem \"Zobrazení->Zobrazovat pravítka\"."
 
-#: ../app/config/gimprc-blurbs.h:303
+#: ../app/config/gimprc-blurbs.h:302
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
@@ -4492,7 +4492,7 @@ msgstr ""
 "Je-li povoleno, jsou posuvné pruhy implicitně viditelné. Může být také "
 "přepnuto příkazem \"Zobrazení->Zobrazovat posuvné pruhy\"."
 
-#: ../app/config/gimprc-blurbs.h:307
+#: ../app/config/gimprc-blurbs.h:306
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
@@ -4500,7 +4500,7 @@ msgstr ""
 "Je-li povoleno, je stavová lišta implicitně viditelná. Může být také "
 "přepnuto příkazem \"Zobrazení->Zobrazovat stavovou lištu\"."
 
-#: ../app/config/gimprc-blurbs.h:311
+#: ../app/config/gimprc-blurbs.h:310
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
@@ -4508,7 +4508,7 @@ msgstr ""
 "Je-li povoleno, je výběr implicitně viditelný. Může být také přepnuto "
 "příkazem \"Zobrazení->Zobrazovat výběr\"."
 
-#: ../app/config/gimprc-blurbs.h:315
+#: ../app/config/gimprc-blurbs.h:314
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
@@ -4516,7 +4516,7 @@ msgstr ""
 "Je-li povoleno, je hranice vrstvy implicitně viditelná. Může být také "
 "přepnuto příkazem \"Zobrazení->Zobrazovat hranici vrstvy\"."
 
-#: ../app/config/gimprc-blurbs.h:319
+#: ../app/config/gimprc-blurbs.h:318
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
@@ -4524,7 +4524,7 @@ msgstr ""
 "Je-li povoleno, jsou vodítka implicitně viditelná. Může být také přepnuto "
 "příkazem \"Zobrazení->Zobrazovat vodítka\"."
 
-#: ../app/config/gimprc-blurbs.h:323
+#: ../app/config/gimprc-blurbs.h:322
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
@@ -4532,7 +4532,7 @@ msgstr ""
 "Je-li povoleno, je mřížka implicitně viditelná. Může být také přepnuto "
 "příkazem \"Zobrazení->Zobrazovat mřížku\"."
 
-#: ../app/config/gimprc-blurbs.h:327
+#: ../app/config/gimprc-blurbs.h:326
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
@@ -4540,19 +4540,19 @@ msgstr ""
 "Je-li povoleno, jsou vzorkovací body implicitně viditelné. Může být také "
 "přepnuto příkazem \"Zobrazení->Zobrazovat vzorkovací body\"."
 
-#: ../app/config/gimprc-blurbs.h:331
+#: ../app/config/gimprc-blurbs.h:330
 msgid "Enable displaying a handy GIMP tip on startup."
 msgstr "Povolit zobrazování užitečného tipu GIMPu po spuštění."
 
-#: ../app/config/gimprc-blurbs.h:334
+#: ../app/config/gimprc-blurbs.h:333
 msgid "Show a tooltip when the pointer hovers over an item."
 msgstr "Zobrazit nástrojový tip, pokud ukazatel spočívá nad položkou"
 
-#: ../app/config/gimprc-blurbs.h:337
+#: ../app/config/gimprc-blurbs.h:336
 msgid "What to do when the space bar is pressed in the image window."
 msgstr "Co udělat, je-li v okně obrázku stisknut mezerník."
 
-#: ../app/config/gimprc-blurbs.h:340
+#: ../app/config/gimprc-blurbs.h:339
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -4568,11 +4568,11 @@ msgstr ""
 "v adresáři připojeném přes NFS, může dojít k výraznému zpomalení. Z těchto "
 "důvodů může být vhodné umístit váš odkládací soubor do \"/tmp\"."
 
-#: ../app/config/gimprc-blurbs.h:349
+#: ../app/config/gimprc-blurbs.h:348
 msgid "When enabled, menus can be torn off."
 msgstr "Je-li povoleno, mohou být menu oddělena."
 
-#: ../app/config/gimprc-blurbs.h:352
+#: ../app/config/gimprc-blurbs.h:351
 msgid ""
 "When enabled, dock windows (the toolbox and palettes) are set to be "
 "transient to the active image window. Most window managers will keep the "
@@ -4582,7 +4582,7 @@ msgstr ""
 "oknu aktivního obrázku. Většina správců oken v tom případě bude udržovat "
 "okna doku nad oknem obrázku, ale může to mít také jiné efekty."
 
-#: ../app/config/gimprc-blurbs.h:358
+#: ../app/config/gimprc-blurbs.h:357
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
@@ -4590,27 +4590,27 @@ msgstr ""
 "Je-li povoleno, můžete měnit klávesové zkratky položek menu stisknutím "
 "kombinace kláves, když je položka menu zvýrazněna."
 
-#: ../app/config/gimprc-blurbs.h:362
-msgid "Save changed keyboard shortcuts when the GIMP exits."
+#: ../app/config/gimprc-blurbs.h:361
+msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr "Uložit změněné klávesové zkratky při ukončení GIMPu."
 
-#: ../app/config/gimprc-blurbs.h:365
+#: ../app/config/gimprc-blurbs.h:364
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "Obnovit uložené klávesové zkratky při každém spuštění GIMP."
 
-#: ../app/config/gimprc-blurbs.h:368
+#: ../app/config/gimprc-blurbs.h:367
 msgid ""
 "Sets the folder for temporary storage. Files will appear here during the "
-"course of running the GIMP.  Most files will disappear when the GIMP exits, "
-"but some files are likely to remain, so it is best if this folder not be one "
-"that is shared by other users."
+"course of running GIMP.  Most files will disappear when GIMP exits, but some "
+"files are likely to remain, so it is best if this folder not be one that is "
+"shared by other users."
 msgstr ""
 "Nastavuje adresář dočasného úložného prostoru. Při běhu GIMPu se zde budou "
 "objevovat soubory. Většina souborů zmizí, když GIMP skončí, ale některé "
 "soubory pravděpodobně zůstanou. Je proto dobré, aby tento adresář nebyl "
 "sdílen jinými uživateli."
 
-#: ../app/config/gimprc-blurbs.h:380
+#: ../app/config/gimprc-blurbs.h:379
 msgid ""
 "Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can "
 "not create thumbnails if layer previews are disabled."
@@ -4618,7 +4618,7 @@ msgstr ""
 "Nastavuje velikost miniatury zobrazované v dialogu Otevřít. Všimněte si, že "
 "GIMP nemůže vytvářet miniatury, jsou-li zakázány náhledy vrstev."
 
-#: ../app/config/gimprc-blurbs.h:384
+#: ../app/config/gimprc-blurbs.h:383
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -4626,7 +4626,7 @@ msgstr ""
 "Miniatura v dialogu Otevřít bude automaticky aktualizována, pokud soubor, "
 "jehož miniatura se tvoří, je menší než zde nastavená velikost."
 
-#: ../app/config/gimprc-blurbs.h:388
+#: ../app/config/gimprc-blurbs.h:387
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -4638,7 +4638,7 @@ msgstr ""
 "obrázky, které by se jinak nevešly do paměti. Máte-li hodně RAM, můžete tuto "
 "hodnotu zvýšit."
 
-#: ../app/config/gimprc-blurbs.h:398
+#: ../app/config/gimprc-blurbs.h:397
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
@@ -4646,23 +4646,23 @@ msgstr ""
 "Nápověda typu okna, která je nastavena na nástrojích. Může to mít vliv na "
 "to, jak váš správce oken dekoruje okno nástrojů a jak s ním pracuje."
 
-#: ../app/config/gimprc-blurbs.h:402
+#: ../app/config/gimprc-blurbs.h:401
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Nastavuje způsob, kterým se v obrázcích zobrazuje průhlednost."
 
-#: ../app/config/gimprc-blurbs.h:405
+#: ../app/config/gimprc-blurbs.h:404
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "Nastavuje velikost šachovnice používané pro zobrazení průhlednosti."
 
-#: ../app/config/gimprc-blurbs.h:408
+#: ../app/config/gimprc-blurbs.h:407
 msgid ""
-"When enabled, the GIMP will not save an image if it has not been changed "
-"since it was opened."
+"When enabled, GIMP will not save an image if it has not been changed since "
+"it was opened."
 msgstr ""
-"Je-li povoleno, nebude GIMP ukládat obrázek, pokud nebyl od svého otevření "
+"Je-li povoleno, nebude GIMP ukládat obrázek, pokud obrázek nebyl od svého otevření "
 "změněn."
 
-#: ../app/config/gimprc-blurbs.h:412
+#: ../app/config/gimprc-blurbs.h:411
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -4670,7 +4670,7 @@ msgstr ""
 "Nastavuje minimální počet operací, které lze vzít zpět. Více úrovní zpětných "
 "úprav se udržuje, dokud není překročen limit undo-size."
 
-#: ../app/config/gimprc-blurbs.h:416
+#: ../app/config/gimprc-blurbs.h:415
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -4680,15 +4680,15 @@ msgstr ""
 "zpětných úprav jednoho obrázku. Bez ohledu na toto nastavení je možné vrátit "
 "zpět alespoň tolik operací, kolik je nastaveno."
 
-#: ../app/config/gimprc-blurbs.h:421
+#: ../app/config/gimprc-blurbs.h:420
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Nastavuje velikost náhledů v historii změn."
 
-#: ../app/config/gimprc-blurbs.h:424
+#: ../app/config/gimprc-blurbs.h:423
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Je-li povoleno, stisknutí F1 otevře prohlížeč nápovědy."
 
-#: ../app/config/gimprc-blurbs.h:427
+#: ../app/config/gimprc-blurbs.h:426
 #, c-format
 msgid ""
 "Sets the external web browser to be used.  This can be an absolute path or "
@@ -5106,7 +5106,7 @@ msgstr "Odstranit parazita"
 msgid "Import paths"
 msgstr "Importovat cesty"
 
-#: ../app/core/core-enums.c:884 ../app/pdb/drawable_cmds.c:773
+#: ../app/core/core-enums.c:884 ../app/pdb/drawable_cmds.c:775
 msgid "Plug-In"
 msgstr "Zásuvný modul"
 
@@ -5236,8 +5236,8 @@ msgid "Error"
 msgstr "Chyba"
 
 #: ../app/core/core-enums.c:1256
-msgid "Ask"
-msgstr "Zeptat se"
+msgid "Ask what to do"
+msgstr "Zeptat se, co dělat"
 
 #: ../app/core/core-enums.c:1257
 msgid "Keep embedded profile"
@@ -5359,7 +5359,7 @@ msgid "Documents"
 msgstr "Dokumenty"
 
 #. initialize the module list
-#: ../app/core/gimp.c:846 ../app/dialogs/preferences-dialog.c:2597
+#: ../app/core/gimp.c:846 ../app/dialogs/preferences-dialog.c:2602
 msgid "Modules"
 msgstr "Moduly"
 
@@ -6120,8 +6120,8 @@ msgstr "Vrstva"
 msgid "Rename Layer"
 msgstr "Přejmenovat vrstvu"
 
-#: ../app/core/gimplayer.c:247 ../app/pdb/layer_cmds.c:290
-#: ../app/pdb/layer_cmds.c:324
+#: ../app/core/gimplayer.c:247 ../app/pdb/layer_cmds.c:292
+#: ../app/pdb/layer_cmds.c:326
 msgid "Move Layer"
 msgstr "Přemístit vrstvu"
 
@@ -7020,7 +7020,7 @@ msgid "Preferences"
 msgstr "Předvolby"
 
 #: ../app/dialogs/preferences-dialog.c:1443
-#: ../app/dialogs/preferences-dialog.c:2605
+#: ../app/dialogs/preferences-dialog.c:2610
 msgid "Environment"
 msgstr "Prostředí"
 
@@ -7462,201 +7462,205 @@ msgstr "_Softproof úmysl vykreslování:"
 msgid "_Try to obtain the monitor profile from the X server"
 msgstr "_Zkusit získat profil monitoru z X serveru"
 
-#: ../app/dialogs/preferences-dialog.c:2376
+#: ../app/dialogs/preferences-dialog.c:2371
+msgid "File Open behaviour:"
+msgstr "Chování při otvírání souborů:"
+
+#: ../app/dialogs/preferences-dialog.c:2381
 msgid "Input Devices"
 msgstr "Vstupní zařízení"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2386
+#: ../app/dialogs/preferences-dialog.c:2391
 msgid "Extended Input Devices"
 msgstr "Rozšířená vstupní zařízení"
 
-#: ../app/dialogs/preferences-dialog.c:2390
+#: ../app/dialogs/preferences-dialog.c:2395
 msgid "Configure E_xtended Input Devices..."
 msgstr "Nastavit _rozšířená vstupní zařízení..."
 
-#: ../app/dialogs/preferences-dialog.c:2397
+#: ../app/dialogs/preferences-dialog.c:2402
 msgid "_Save input device settings on exit"
 msgstr "_Uložit nastavení vstupních zařízení při skončení"
 
-#: ../app/dialogs/preferences-dialog.c:2401
+#: ../app/dialogs/preferences-dialog.c:2406
 msgid "Save Input Device Settings _Now"
 msgstr "Uložit nastavení vstupních zařízení _nyní"
 
-#: ../app/dialogs/preferences-dialog.c:2408
+#: ../app/dialogs/preferences-dialog.c:2413
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Obnovit uložené nastavení vstupních zařízení na implicitní hodnoty"
 
-#: ../app/dialogs/preferences-dialog.c:2423
+#: ../app/dialogs/preferences-dialog.c:2428
 msgid "Additional Input Controllers"
 msgstr "Další vstupní ovladače"
 
-#: ../app/dialogs/preferences-dialog.c:2426
+#: ../app/dialogs/preferences-dialog.c:2431
 msgid "Input Controllers"
 msgstr "Vstupní ovladače"
 
-#: ../app/dialogs/preferences-dialog.c:2442
+#: ../app/dialogs/preferences-dialog.c:2447
 msgid "Window Management"
 msgstr "Správa oken"
 
-#: ../app/dialogs/preferences-dialog.c:2451
+#: ../app/dialogs/preferences-dialog.c:2456
 msgid "Window Manager Hints"
 msgstr "Nápovědy správce oken"
 
-#: ../app/dialogs/preferences-dialog.c:2457
+#: ../app/dialogs/preferences-dialog.c:2462
 msgid "Hint for the _toolbox:"
 msgstr "Nápověda pro _nástroje:"
 
-#: ../app/dialogs/preferences-dialog.c:2461
+#: ../app/dialogs/preferences-dialog.c:2466
 msgid "Hint for other _docks:"
 msgstr "Nápověda pro ostatní _doky:"
 
-#: ../app/dialogs/preferences-dialog.c:2466
+#: ../app/dialogs/preferences-dialog.c:2471
 msgid "Toolbox and other docks are transient to the active image window"
 msgstr "Nástroje a ostatní doky jsou tranzientní k aktivnímu oknu obrázku"
 
-#: ../app/dialogs/preferences-dialog.c:2471
+#: ../app/dialogs/preferences-dialog.c:2476
 msgid "Focus"
 msgstr "Aktivace"
 
-#: ../app/dialogs/preferences-dialog.c:2475
+#: ../app/dialogs/preferences-dialog.c:2480
 msgid "Activate the _focused image"
 msgstr "Aktivovat obrázek podle _okna"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2479
+#: ../app/dialogs/preferences-dialog.c:2484
 msgid "Window Positions"
 msgstr "Polohy oken"
 
-#: ../app/dialogs/preferences-dialog.c:2482
+#: ../app/dialogs/preferences-dialog.c:2487
 msgid "_Save window positions on exit"
 msgstr "Ukládat polohy oken při _skončení"
 
-#: ../app/dialogs/preferences-dialog.c:2486
+#: ../app/dialogs/preferences-dialog.c:2491
 msgid "Save Window Positions _Now"
 msgstr "Uložit polohy oken _okamžitě"
 
-#: ../app/dialogs/preferences-dialog.c:2493
+#: ../app/dialogs/preferences-dialog.c:2498
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Obnovit uložené polohy oken na implicitní hodnoty"
 
-#: ../app/dialogs/preferences-dialog.c:2508
+#: ../app/dialogs/preferences-dialog.c:2513
 msgid "Folders"
 msgstr "Adresáře"
 
-#: ../app/dialogs/preferences-dialog.c:2528
+#: ../app/dialogs/preferences-dialog.c:2533
 msgid "Temporary folder:"
 msgstr "Dočasný adresář:"
 
-#: ../app/dialogs/preferences-dialog.c:2529
+#: ../app/dialogs/preferences-dialog.c:2534
 msgid "Select Folder for Temporary Files"
 msgstr "Vyberte adresář pro dočasné soubory"
 
-#: ../app/dialogs/preferences-dialog.c:2533
+#: ../app/dialogs/preferences-dialog.c:2538
 msgid "Swap folder:"
 msgstr "Odkládací adresář:"
 
-#: ../app/dialogs/preferences-dialog.c:2534
+#: ../app/dialogs/preferences-dialog.c:2539
 msgid "Select Swap Folder"
 msgstr "Zvolte odkládací adresář"
 
-#: ../app/dialogs/preferences-dialog.c:2569
+#: ../app/dialogs/preferences-dialog.c:2574
 msgid "Brush Folders"
 msgstr "Adresáře se stopami"
 
-#: ../app/dialogs/preferences-dialog.c:2571
+#: ../app/dialogs/preferences-dialog.c:2576
 msgid "Select Brush Folders"
 msgstr "Zvolte adresář stop"
 
-#: ../app/dialogs/preferences-dialog.c:2573
+#: ../app/dialogs/preferences-dialog.c:2578
 msgid "Pattern Folders"
 msgstr "Adresáře se vzorky"
 
-#: ../app/dialogs/preferences-dialog.c:2575
+#: ../app/dialogs/preferences-dialog.c:2580
 msgid "Select Pattern Folders"
 msgstr "Zvolte adresář vzorků"
 
-#: ../app/dialogs/preferences-dialog.c:2577
+#: ../app/dialogs/preferences-dialog.c:2582
 msgid "Palette Folders"
 msgstr "Adresáře s paletami"
 
-#: ../app/dialogs/preferences-dialog.c:2579
+#: ../app/dialogs/preferences-dialog.c:2584
 msgid "Select Palette Folders"
 msgstr "Zvolte adresář palet"
 
-#: ../app/dialogs/preferences-dialog.c:2581
+#: ../app/dialogs/preferences-dialog.c:2586
 msgid "Gradient Folders"
 msgstr "Adresáře s přechody"
 
-#: ../app/dialogs/preferences-dialog.c:2583
+#: ../app/dialogs/preferences-dialog.c:2588
 msgid "Select Gradient Folders"
 msgstr "Zvolte adresář přechodů"
 
-#: ../app/dialogs/preferences-dialog.c:2585
+#: ../app/dialogs/preferences-dialog.c:2590
 msgid "Font Folders"
 msgstr "Adresáře písem"
 
-#: ../app/dialogs/preferences-dialog.c:2587
+#: ../app/dialogs/preferences-dialog.c:2592
 msgid "Select Font Folders"
 msgstr "Zvolte adresáře písem"
 
-#: ../app/dialogs/preferences-dialog.c:2589
+#: ../app/dialogs/preferences-dialog.c:2594
 msgid "Plug-In Folders"
 msgstr "Adresáře se zásuvnými moduly"
 
-#: ../app/dialogs/preferences-dialog.c:2591
+#: ../app/dialogs/preferences-dialog.c:2596
 msgid "Select Plug-In Folders"
 msgstr "Zvolte adresář zásuvných modulů"
 
-#: ../app/dialogs/preferences-dialog.c:2593
+#: ../app/dialogs/preferences-dialog.c:2598
 msgid "Scripts"
 msgstr "Skripty"
 
-#: ../app/dialogs/preferences-dialog.c:2593
+#: ../app/dialogs/preferences-dialog.c:2598
 msgid "Script-Fu Folders"
 msgstr "Adresáře Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2595
+#: ../app/dialogs/preferences-dialog.c:2600
 msgid "Select Script-Fu Folders"
 msgstr "Zvolte adresáře Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2597
+#: ../app/dialogs/preferences-dialog.c:2602
 msgid "Module Folders"
 msgstr "Adresáře s moduly"
 
-#: ../app/dialogs/preferences-dialog.c:2599
+#: ../app/dialogs/preferences-dialog.c:2604
 msgid "Select Module Folders"
 msgstr "Zvolte adresář modulů"
 
-#: ../app/dialogs/preferences-dialog.c:2601
+#: ../app/dialogs/preferences-dialog.c:2606
 msgid "Interpreters"
 msgstr "Interpretry"
 
-#: ../app/dialogs/preferences-dialog.c:2601
+#: ../app/dialogs/preferences-dialog.c:2606
 msgid "Interpreter Folders"
 msgstr "Adresáře interpretrů"
 
-#: ../app/dialogs/preferences-dialog.c:2603
+#: ../app/dialogs/preferences-dialog.c:2608
 msgid "Select Interpreter Folders"
 msgstr "Zvolte adresáře interpretrů"
 
-#: ../app/dialogs/preferences-dialog.c:2605
+#: ../app/dialogs/preferences-dialog.c:2610
 msgid "Environment Folders"
 msgstr "Adresáře s prostředím"
 
-#: ../app/dialogs/preferences-dialog.c:2607
+#: ../app/dialogs/preferences-dialog.c:2612
 msgid "Select Environment Folders"
 msgstr "Zvolte adresáře prostředí"
 
-#: ../app/dialogs/preferences-dialog.c:2609
+#: ../app/dialogs/preferences-dialog.c:2614
 msgid "Themes"
 msgstr "Témata"
 
-#: ../app/dialogs/preferences-dialog.c:2609
+#: ../app/dialogs/preferences-dialog.c:2614
 msgid "Theme Folders"
 msgstr "Adresáře s tématy"
 
-#: ../app/dialogs/preferences-dialog.c:2611
+#: ../app/dialogs/preferences-dialog.c:2616
 msgid "Select Theme Folders"
 msgstr "Zvolte adresář témat"
 
@@ -8180,64 +8184,64 @@ msgstr "Rozostření"
 msgid "Sharpen"
 msgstr "Zaostření"
 
-#: ../app/pdb/channel_cmds.c:173
+#: ../app/pdb/channel_cmds.c:175
 msgid "Combine Masks"
 msgstr "Kombinovat masky"
 
-#: ../app/pdb/color_cmds.c:100 ../app/tools/gimpbrightnesscontrasttool.c:100
+#: ../app/pdb/color_cmds.c:102 ../app/tools/gimpbrightnesscontrasttool.c:100
 msgid "Brightness-Contrast"
 msgstr "Jas-kontrast"
 
-#: ../app/pdb/color_cmds.c:247 ../app/tools/gimpposterizetool.c:77
+#: ../app/pdb/color_cmds.c:249 ../app/tools/gimpposterizetool.c:77
 msgid "Posterize"
 msgstr "Posterizace"
 
-#: ../app/pdb/color_cmds.c:437 ../app/pdb/color_cmds.c:514
+#: ../app/pdb/color_cmds.c:439 ../app/pdb/color_cmds.c:516
 #: ../app/tools/gimpcurvestool.c:148
 msgid "Curves"
 msgstr "Křivky"
 
-#: ../app/pdb/color_cmds.c:579 ../app/tools/gimpcolorbalancetool.c:94
+#: ../app/pdb/color_cmds.c:581 ../app/tools/gimpcolorbalancetool.c:94
 msgid "Color Balance"
 msgstr "Vyvážení barev"
 
-#: ../app/pdb/color_cmds.c:638 ../app/tools/gimpcolorizetool.c:92
+#: ../app/pdb/color_cmds.c:640 ../app/tools/gimpcolorizetool.c:92
 msgid "Colorize"
 msgstr "Obarvit"
 
-#: ../app/pdb/color_cmds.c:771 ../app/tools/gimphuesaturationtool.c:113
+#: ../app/pdb/color_cmds.c:773 ../app/tools/gimphuesaturationtool.c:113
 msgid "Hue-Saturation"
 msgstr "Odstín-sytost"
 
-#: ../app/pdb/color_cmds.c:825 ../app/tools/gimpthresholdtool.c:82
+#: ../app/pdb/color_cmds.c:827 ../app/tools/gimpthresholdtool.c:82
 msgid "Threshold"
 msgstr "Práh"
 
-#: ../app/pdb/drawable_transform_cmds.c:302
-#: ../app/pdb/drawable_transform_cmds.c:386
-#: ../app/pdb/transform_tools_cmds.c:140 ../app/tools/gimpperspectivetool.c:68
+#: ../app/pdb/drawable_transform_cmds.c:304
+#: ../app/pdb/drawable_transform_cmds.c:388
+#: ../app/pdb/transform_tools_cmds.c:142 ../app/tools/gimpperspectivetool.c:68
 #: ../app/tools/gimpperspectivetool.c:100
 msgid "Perspective"
 msgstr "Perspektiva"
 
-#: ../app/pdb/drawable_transform_cmds.c:816
-#: ../app/pdb/drawable_transform_cmds.c:887
-#: ../app/pdb/transform_tools_cmds.c:350 ../app/tools/gimpsheartool.c:116
+#: ../app/pdb/drawable_transform_cmds.c:818
+#: ../app/pdb/drawable_transform_cmds.c:889
+#: ../app/pdb/transform_tools_cmds.c:352 ../app/tools/gimpsheartool.c:116
 msgid "Shearing"
 msgstr "Naklánění"
 
-#: ../app/pdb/drawable_transform_cmds.c:971
-#: ../app/pdb/transform_tools_cmds.c:424
+#: ../app/pdb/drawable_transform_cmds.c:973
+#: ../app/pdb/transform_tools_cmds.c:426
 msgid "2D Transform"
 msgstr "2D transformace"
 
-#: ../app/pdb/drawable_transform_cmds.c:1053
-#: ../app/pdb/drawable_transform_cmds.c:1145
-#: ../app/pdb/drawable_transform_cmds.c:1235
+#: ../app/pdb/drawable_transform_cmds.c:1055
+#: ../app/pdb/drawable_transform_cmds.c:1147
+#: ../app/pdb/drawable_transform_cmds.c:1237
 msgid "2D Transforming"
 msgstr "2D transformace"
 
-#: ../app/pdb/edit_cmds.c:632 ../app/tools/gimpblendtool.c:225
+#: ../app/pdb/edit_cmds.c:634 ../app/tools/gimpblendtool.c:225
 msgid "Blending"
 msgstr "Mísení"
 
@@ -8277,11 +8281,11 @@ msgstr ""
 "Chyba volání PDB pro proceduru '%s':\n"
 "Argument '%s' (#%d, typ %s) mimo rozsah (validace změnila '%s' na '%s')"
 
-#: ../app/pdb/image_cmds.c:1946
+#: ../app/pdb/image_cmds.c:1948
 msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr "Rozlišení obrázku je mimo rozsah, používám místo něj implicitní rozlišení."
 
-#: ../app/pdb/selection_tools_cmds.c:208 ../app/tools/gimpfreeselecttool.c:95
+#: ../app/pdb/selection_tools_cmds.c:210 ../app/tools/gimpfreeselecttool.c:95
 msgid "Free Select"
 msgstr "Volný výběr"
 
