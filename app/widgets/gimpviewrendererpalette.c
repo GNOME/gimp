@@ -84,6 +84,7 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
   guchar                  *row;
   guchar                  *dest_row;
   GList                   *list;
+  gdouble                  cell_width;
   gint                     y;
 
   palette = GIMP_PALETTE (renderer->viewable);
@@ -97,22 +98,23 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
   if (renderpal->cell_size > 0)
     {
       if (palette->n_columns > 1)
-        renderpal->cell_width = MAX (renderpal->cell_size,
-                                     renderer->width / palette->n_columns);
+        cell_width = MAX ((gdouble) renderpal->cell_size,
+                          (gdouble) renderer->width /
+                          (gdouble) palette->n_columns);
       else
-        renderpal->cell_width = renderpal->cell_size;
+        cell_width = renderpal->cell_size;
     }
   else
     {
       if (palette->n_columns > 1)
-        renderpal->cell_width = renderer->width / palette->n_columns;
+        cell_width = (gdouble) renderer->width / (gdouble) palette->n_columns;
       else
-        renderpal->cell_width = renderer->width / 16;
+        cell_width = (gdouble) renderer->width / 16.0;
     }
 
-  renderpal->cell_width = MAX (4, renderpal->cell_width);
+  renderpal->cell_width = MAX (4.0, cell_width);
 
-  renderpal->columns = renderer->width / renderpal->cell_width;
+  renderpal->columns = (gdouble) renderer->width / cell_width;
 
   renderpal->rows = palette->n_colors / renderpal->columns;
   if (palette->n_colors % renderpal->columns)
@@ -140,6 +142,7 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
         {
           guchar  r, g, b;
           gint    x;
+          gint    n = 0;
           guchar *p = row;
 
           memset (row,
@@ -152,11 +155,13 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
             {
               if ((x % renderpal->cell_width) == 0)
                 {
-                  if (list && renderer->width - x >= renderpal->cell_width)
+                  if (list && n < renderpal->columns &&
+                      renderer->width - x >= renderpal->cell_width)
                     {
                       GimpPaletteEntry *entry = list->data;
 
                       list = g_list_next (list);
+                      n++;
 
                       gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
                     }

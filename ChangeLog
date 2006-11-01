@@ -1,3 +1,10 @@
+2006-11-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpviewrendererpalette.c
+	(gimp_view_renderer_palette_render): make sure we calculate the
+	right number of columns and don't render more cells than columns
+	in one row.
+
 2006-11-01  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/lcms.c: improved dialog.
