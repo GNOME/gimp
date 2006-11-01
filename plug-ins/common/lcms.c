@@ -110,9 +110,14 @@ static void         lcms_drawable_transform      (GimpDrawable    *drawable,
 
 static cmsHPROFILE  lcms_config_get_profile      (GimpColorConfig *config);
 
-static gboolean     lcms_icc_apply_dialog        (cmsHPROFILE      src_profile,
+static gboolean     lcms_icc_apply_dialog        (gint32           image,
+                                                  cmsHPROFILE      src_profile,
                                                   cmsHPROFILE      dest_profile,
                                                   gboolean        *dont_ask);
+
+static GtkWidget  * lcms_icc_profile_label_new   (const gchar     *format,
+                                                  ...) G_GNUC_PRINTF(1,2);
+
 
 
 static const GimpParamDef base_args[] =
@@ -454,7 +459,7 @@ lcms_icc_apply (GimpColorConfig *config,
     dest_profile = cmsCreate_sRGBProfile ();
 
   if (run_mode == GIMP_RUN_INTERACTIVE &&
-      ! lcms_icc_apply_dialog (src_profile, dest_profile, dont_ask))
+      ! lcms_icc_apply_dialog (image, src_profile, dest_profile, dont_ask))
     {
       status = GIMP_PDB_CANCEL;
     }
@@ -780,24 +785,57 @@ lcms_config_get_profile (GimpColorConfig *config)
 }
 
 static GtkWidget *
-lcms_icc_profile_label_new (cmsHPROFILE  src_profile)
+lcms_icc_profile_label_new (const gchar *format,
+                            ...)
+{
+  GtkWidget *label;
+  gchar     *text;
+  va_list    args;
+
+  va_start (args, format);
+  text = g_strdup_vprintf (format, args);
+  va_end (args);
+
+  label = g_object_new (GTK_TYPE_LABEL,
+                        "label",      text,
+                        "use-markup", TRUE,
+                        "wrap",       TRUE,
+                        "justify",    GTK_JUSTIFY_LEFT,
+                        "xalign",     0.0,
+                        "yalign",     0.0,
+                        NULL);
+  g_free (text);
+
+  return label;
+}
+
+static GtkWidget *
+lcms_icc_profile_src_label_new (gint32       image,
+                                cmsHPROFILE  profile)
+{
+  GtkWidget *label;
+  gchar     *name = gimp_image_get_name (image);
+  gchar     *desc = lcms_icc_profile_get_desc (profile);
+
+  label = lcms_icc_profile_label_new (_("The image '%s' has an embedded "
+                                        "color profile: <b>%s</b>."),
+                                      name, desc);
+  g_free (desc);
+  g_free (name);
+
+  return label;
+}
+
+static GtkWidget *
+lcms_icc_profile_dest_label_new (cmsHPROFILE  profile)
 {
   GtkWidget *label;
   gchar     *desc;
 
-  desc = lcms_icc_profile_get_desc (src_profile);
+  desc = lcms_icc_profile_get_desc (profile);
 
-  label = g_object_new (GTK_TYPE_LABEL,
-                        "label",   desc,
-                        "wrap",    TRUE,
-                        "justify", GTK_JUSTIFY_LEFT,
-                        "xalign",  0.0,
-                        "yalign",  0.0,
-                        NULL);
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                             -1);
-
+  label = lcms_icc_profile_label_new (_("Convert it to the default RGB "
+                                        "workspace: <b>%s</b> ?"), desc);
   g_free (desc);
 
   return label;
@@ -805,7 +843,8 @@ lcms_icc_profile_label_new (cmsHPROFILE  src_profile)
 
 
 static gboolean
-lcms_icc_apply_dialog (cmsHPROFILE  src_profile,
+lcms_icc_apply_dialog (gint32       image,
+                       cmsHPROFILE  src_profile,
                        cmsHPROFILE  dest_profile,
                        gboolean    *dont_ask)
 {
@@ -817,12 +856,13 @@ lcms_icc_apply_dialog (cmsHPROFILE  src_profile,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Apply Color Profile?"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Convert to RGB workspace profile?"),
+                            PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC_APPLY,
 
-                            _("_Keep"),      GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_APPLY, GTK_RESPONSE_OK,
+                            _("_Keep"),    GTK_RESPONSE_CANCEL,
+                            _("_Convert"), GTK_RESPONSE_OK,
 
                             NULL);
 
@@ -838,11 +878,11 @@ lcms_icc_apply_dialog (cmsHPROFILE  src_profile,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  label = lcms_icc_profile_label_new (src_profile);
+  label = lcms_icc_profile_src_label_new (image, src_profile);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  label = lcms_icc_profile_label_new (dest_profile);
+  label = lcms_icc_profile_dest_label_new (dest_profile);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
