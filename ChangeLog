@@ -1,3 +1,10 @@
+2006-11-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/gimppluginprocframe.c
+	(gimp_plug_in_proc_frame_get_return_vals): no need to truncate the
+	GValueArray if the plug-in returned too much values, simply return
+	all values instead.
+
 2006-10-31  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/plugin-defs.pl

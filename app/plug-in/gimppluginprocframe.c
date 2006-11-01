@@ -159,28 +159,26 @@ gimp_plug_in_proc_frame_get_return_vals (GimpPlugInProcFrame *proc_frame)
 
   g_return_val_if_fail (proc_frame != NULL, NULL);
 
-  if (proc_frame->return_vals &&
-      proc_frame->return_vals->n_values ==
-      proc_frame->procedure->num_values + 1)
+  if (proc_frame->return_vals)
     {
-      return_vals = proc_frame->return_vals;
-    }
-  else if (proc_frame->return_vals)
-    {
-      /* Allocate new return values of the correct size. */
-      return_vals = gimp_procedure_get_return_values (proc_frame->procedure,
-                                                      FALSE);
+      if (proc_frame->return_vals->n_values >=
+          proc_frame->procedure->num_values + 1)
+        {
+          return_vals = proc_frame->return_vals;
+        }
+      else
+        {
+          /* Allocate new return values of the correct size. */
+          return_vals = gimp_procedure_get_return_values (proc_frame->procedure,
+                                                          FALSE);
 
-      /* Copy all of the arguments we can. */
-      memcpy (return_vals->values, proc_frame->return_vals->values,
-              sizeof (GValue) * MIN (proc_frame->return_vals->n_values,
-                                     proc_frame->procedure->num_values + 1));
+          /* Copy all of the arguments we can. */
+          memcpy (return_vals->values, proc_frame->return_vals->values,
+                  sizeof (GValue) * proc_frame->return_vals->n_values);
 
-      /* Free the old argument pointer.  This will cause a memory leak
-       * only if there were more values returned than we need (which
-       * shouldn't ever happen).
-       */
-      g_free (proc_frame->return_vals);
+          /* Free the old argument pointer. */
+          g_free (proc_frame->return_vals);
+        }
     }
   else
     {
