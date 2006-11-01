@@ -112,7 +112,9 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
         cell_width = (gdouble) renderer->width / 16.0;
     }
 
-  renderpal->cell_width = MAX (4.0, cell_width);
+  cell_width = MAX (4.0, cell_width);
+
+  renderpal->cell_width = cell_width;
 
   renderpal->columns = (gdouble) renderer->width / cell_width;
 
@@ -188,8 +190,7 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
 
       if (renderpal->draw_grid && (y % renderpal->cell_height) == 0)
         {
-          memset (dest_row, 0,
-                  renderpal->cell_width * renderpal->columns * 3 + 3);
+          memset (dest_row, 0, renderer->rowstride);
         }
       else
         {
