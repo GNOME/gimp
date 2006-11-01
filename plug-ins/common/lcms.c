@@ -115,10 +115,6 @@ static gboolean     lcms_icc_apply_dialog        (gint32           image,
                                                   cmsHPROFILE      dest_profile,
                                                   gboolean        *dont_ask);
 
-static GtkWidget  * lcms_icc_profile_label_new   (const gchar     *format,
-                                                  ...) G_GNUC_PRINTF(1,2);
-
-
 
 static const GimpParamDef base_args[] =
 {
@@ -785,45 +781,51 @@ lcms_config_get_profile (GimpColorConfig *config)
 }
 
 static GtkWidget *
-lcms_icc_profile_label_new (const gchar *format,
-                            ...)
-{
-  GtkWidget *label;
-  gchar     *text;
-  va_list    args;
-
-  va_start (args, format);
-  text = g_strdup_vprintf (format, args);
-  va_end (args);
-
-  label = g_object_new (GTK_TYPE_LABEL,
-                        "label",      text,
-                        "use-markup", TRUE,
-                        "wrap",       TRUE,
-                        "justify",    GTK_JUSTIFY_LEFT,
-                        "xalign",     0.0,
-                        "yalign",     0.0,
-                        NULL);
-  g_free (text);
-
-  return label;
-}
-
-static GtkWidget *
 lcms_icc_profile_src_label_new (gint32       image,
                                 cmsHPROFILE  profile)
 {
+  GtkWidget *vbox;
   GtkWidget *label;
-  gchar     *name = gimp_image_get_name (image);
-  gchar     *desc = lcms_icc_profile_get_desc (profile);
+  gchar     *name;
+  gchar     *desc;
+  gchar     *text;
 
-  label = lcms_icc_profile_label_new (_("The image '%s' has an embedded "
-                                        "color profile: <b>%s</b>."),
-                                      name, desc);
-  g_free (desc);
+  vbox = gtk_vbox_new (6, FALSE);
+
+  name = gimp_image_get_name (image);
+  text = g_strdup_printf (_("The image '%s' has an embedded color profile:"),
+                          name);
   g_free (name);
 
-  return label;
+  label = g_object_new (GTK_TYPE_LABEL,
+                        "label",   text,
+                        "wrap",    TRUE,
+                        "justify", GTK_JUSTIFY_LEFT,
+                        "xalign",  0.0,
+                        "yalign",  0.0,
+                        NULL);
+  g_free (text);
+
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  desc = lcms_icc_profile_get_desc (profile);
+  label = g_object_new (GTK_TYPE_LABEL,
+                        "label",   desc,
+                        "wrap",    TRUE,
+                        "justify", GTK_JUSTIFY_LEFT,
+                        "xalign",  0.0,
+                        "yalign",  0.0,
+                        NULL);
+  g_free (desc);
+
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  return vbox;
 }
 
 static GtkWidget *
@@ -831,12 +833,20 @@ lcms_icc_profile_dest_label_new (cmsHPROFILE  profile)
 {
   GtkWidget *label;
   gchar     *desc;
+  gchar     *text;
 
   desc = lcms_icc_profile_get_desc (profile);
-
-  label = lcms_icc_profile_label_new (_("Convert it to the default RGB "
-                                        "workspace: <b>%s</b> ?"), desc);
+  text = g_strdup_printf (_("Convert it to the RGB workspace (%s)?"), desc);
   g_free (desc);
+
+  label = g_object_new (GTK_TYPE_LABEL,
+                        "label",   text,
+                        "wrap",    TRUE,
+                        "justify", GTK_JUSTIFY_LEFT,
+                        "xalign",  0.0,
+                        "yalign",  0.0,
+                        NULL);
+  g_free (text);
 
   return label;
 }
@@ -856,7 +866,7 @@ lcms_icc_apply_dialog (gint32       image,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Convert to RGB workspace profile?"),
+  dialog = gimp_dialog_new (_("Convert to RGB workspace?"),
                             PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC_APPLY,

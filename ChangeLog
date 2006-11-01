@@ -1,3 +1,7 @@
+2006-11-01  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/lcms.c: redid the dialog without using markup.
+
 2006-11-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpviewrendererpalette.c
