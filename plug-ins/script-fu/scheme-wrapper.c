@@ -71,7 +71,7 @@ struct named_constant const script_constants[] =
   { "TRUE",           TRUE  },
   { "FALSE",          FALSE },
 
-  /* Tiny-Fu types */
+  /* Script-Fu types */
   { "SF-IMAGE",       SF_IMAGE      },
   { "SF-DRAWABLE",    SF_DRAWABLE   },
   { "SF-LAYER",       SF_LAYER      },
@@ -92,7 +92,7 @@ struct named_constant const script_constants[] =
   { "SF-TEXT",        SF_TEXT       },
   { "SF-ENUM",        SF_ENUM       },
 
-  /* for SF_ADJUSTMENT */
+  /* For SF-ADJUSTMENT */
   { "SF-SLIDER",      SF_SLIDER     },
   { "SF-SPINNER",     SF_SPINNER    },
 
@@ -124,9 +124,11 @@ struct named_constant const old_constants[] =
   { "BLUR",         GIMP_BLUR_CONVOLVE     },
   { "SHARPEN",      GIMP_SHARPEN_CONVOLVE  },
 
-  { "WHITE-MASK",   GIMP_ADD_WHITE_MASK    },
-  { "BLACK-MASK",   GIMP_ADD_BLACK_MASK    },
-  { "ALPHA-MASK",   GIMP_ADD_ALPHA_MASK    },
+  { "WHITE-MASK",     GIMP_ADD_WHITE_MASK     },
+  { "BLACK-MASK",     GIMP_ADD_BLACK_MASK     },
+  { "ALPHA-MASK",     GIMP_ADD_ALPHA_MASK     },
+  { "SELECTION-MASK", GIMP_ADD_SELECTION_MASK },
+  { "COPY-MASK",      GIMP_ADD_COPY_MASK      },
 
   { "ADD",          GIMP_CHANNEL_OP_ADD       },
   { "SUB",          GIMP_CHANNEL_OP_SUBTRACT  },
@@ -760,8 +762,6 @@ fprintf (stderr, "  Invalid number of arguments (expected %d but received %d)",
   else
     args = NULL;
 
-  /* The checks on 'if (success)' below stop some code execution */
-  /* when the first error in the argument list is encountered.   */
   for (i = 0; i < nparams; i++)
     {
       a = sc->vptr->pair_cdr (a);

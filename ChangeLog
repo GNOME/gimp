@@ -1,3 +1,11 @@
+2006-11-01  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scheme-wrapper.c: Added two missing deprecated
+	constants. Updated some comments and removed one obsolete comment.
+
+	* plug-ins/script-fu/scripts/test-sphere.scm: Fixed example of how
+	to use named constants in a list by using the 'list' function.
+
 2006-11-01  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpstatusbar.c: removed frames. Saves a few pixels

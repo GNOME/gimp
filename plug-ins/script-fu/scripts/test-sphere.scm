@@ -267,8 +267,8 @@
   "Spencer Kimball"
   "1996, 1998"
   ""
-  SF-ADJUSTMENT "Radius (in pixels)" '(100 1 5000 1 10 0 SF-SPINNER)
-  SF-ADJUSTMENT "Lighting (degrees)" '(45 0 360 1 10 1 SF-SLIDER)
+  SF-ADJUSTMENT "Radius (in pixels)" (list 100 1 5000 1 10 0 SF-SPINNER)
+  SF-ADJUSTMENT "Lighting (degrees)" (list 45 0 360 1 10 1 SF-SLIDER)
   SF-TOGGLE     "Shadow"             TRUE
   SF-COLOR      "Background color"   "white"
   SF-COLOR      "Sphere color"       "red"
@@ -279,7 +279,7 @@
   SF-GRADIENT   "Gradient"           "Deep Sea"
   SF-TOGGLE     "Gradient reverse"   FALSE
   SF-FONT       "Font"               "Agate"
-  SF-ADJUSTMENT "Font size (pixels)" '(50 1 1000 1 10 0 SF-SPINNER)
+  SF-ADJUSTMENT "Font size (pixels)" '(50 1 1000 1 10 0 1)
   SF-PALETTE    "Palette"            "Default"
   SF-FILENAME   "Environment map"
                 (string-append gimp-data-directory
