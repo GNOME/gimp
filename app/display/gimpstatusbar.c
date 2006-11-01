@@ -118,19 +118,10 @@ gimp_statusbar_class_init (GimpStatusbarClass *klass)
 {
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
 
   object_class->finalize    = gimp_statusbar_finalize;
 
   gtk_object_class->destroy = gimp_statusbar_destroy;
-
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_enum ("shadow-type",
-                                           _("Shadow type"),
-                                           _("Style of bevel around the statusbar text"),
-                                           GTK_TYPE_SHADOW_TYPE,
-                                           GTK_SHADOW_IN,
-                                           GIMP_PARAM_READABLE));
 }
 
 static void
@@ -150,10 +141,7 @@ static void
 gimp_statusbar_init (GimpStatusbar *statusbar)
 {
   GtkBox        *box = GTK_BOX (statusbar);
-  GtkWidget     *hbox;
-  GtkWidget     *frame;
   GimpUnitStore *store;
-  GtkShadowType  shadow_type;
 
   statusbar->shell          = NULL;
   statusbar->messages       = NULL;
@@ -169,26 +157,18 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   statusbar->progress_active      = FALSE;
 
-  box->spacing     = 1;
+  box->spacing     = 2;
   box->homogeneous = FALSE;
 
-  gtk_widget_style_get (GTK_WIDGET (statusbar),
-                        "shadow-type", &shadow_type,
-                        NULL);
-
-  statusbar->cursor_frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (statusbar->cursor_frame), shadow_type);
+  statusbar->cursor_frame = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (box, statusbar->cursor_frame, FALSE, FALSE, 0);
   gtk_box_reorder_child (box, statusbar->cursor_frame, 0);
   gtk_widget_show (statusbar->cursor_frame);
 
-  hbox = gtk_hbox_new (FALSE, 1);
-  gtk_container_add (GTK_CONTAINER (statusbar->cursor_frame), hbox);
-  gtk_widget_show (hbox);
-
   statusbar->cursor_label = gtk_label_new ("0, 0");
   gtk_misc_set_alignment (GTK_MISC (statusbar->cursor_label), 0.5, 0.5);
-  gtk_container_add (GTK_CONTAINER (hbox), statusbar->cursor_label);
+  gtk_container_add (GTK_CONTAINER (statusbar->cursor_frame),
+                     statusbar->cursor_label);
   gtk_widget_show (statusbar->cursor_label);
 
   store = gimp_unit_store_new (2);
@@ -197,22 +177,18 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   GTK_WIDGET_UNSET_FLAGS (statusbar->unit_combo, GTK_CAN_FOCUS);
   g_object_set (statusbar->unit_combo, "focus-on-click", FALSE, NULL);
-  gtk_container_add (GTK_CONTAINER (hbox), statusbar->unit_combo);
+  gtk_container_add (GTK_CONTAINER (statusbar->cursor_frame),
+                     statusbar->unit_combo);
   gtk_widget_show (statusbar->unit_combo);
 
   g_signal_connect (statusbar->unit_combo, "changed",
                     G_CALLBACK (gimp_statusbar_unit_changed),
                     statusbar);
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), shadow_type);
-  gtk_box_pack_start (box, frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   statusbar->scale_combo = gimp_scale_combo_box_new ();
   GTK_WIDGET_UNSET_FLAGS (statusbar->scale_combo, GTK_CAN_FOCUS);
   g_object_set (statusbar->scale_combo, "focus-on-click", FALSE, NULL);
-  gtk_container_add (GTK_CONTAINER (frame), statusbar->scale_combo);
+  gtk_box_pack_start (box, statusbar->scale_combo, FALSE, FALSE, 0);
   gtk_widget_show (statusbar->scale_combo);
 
   g_signal_connect (statusbar->scale_combo, "changed",
@@ -921,8 +897,7 @@ gimp_statusbar_progress_style_set (GtkWidget     *widget,
     {
       n_spaces++;
 
-      statusbar->temp_spaces = g_realloc (statusbar->temp_spaces,
-                                          n_spaces + 1);
+      statusbar->temp_spaces = g_realloc (statusbar->temp_spaces, n_spaces + 1);
 
       memset (statusbar->temp_spaces, ' ', n_spaces);
       statusbar->temp_spaces[n_spaces] = '\0';

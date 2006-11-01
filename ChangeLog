@@ -1,5 +1,10 @@
 2006-11-01  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpstatusbar.c: removed frames. Saves a few pixels
+	and reduces visual clutter.
+
+2006-11-01  Sven Neumann  <sven@gimp.org>
+
 	* app/file/file-open.c: always deal with embedded color profiles.
 
 	* app/dialogs/preferences-dialog.c: reordered items in Color
