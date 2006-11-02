@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-18 10:51+0200\n"
-"PO-Revision-Date: 2006-10-18 10:51+0200\n"
+"POT-Creation-Date: 2006-11-02 21:01+0100\n"
+"PO-Revision-Date: 2006-11-02 21:02+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -739,14 +739,14 @@ msgstr "Profil barev vašeho (primárního) monitoru."
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid ""
 "When enabled, the GIMP will try to use the display color profile from the "
-"windowing system. The configured monitor profile is then only used as a "
+"windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
 "Je-li povoleno, GIMP se pokusí použít profil barev displeje ze systému oken. "
 "Nastavený profil monitoru se pak používá jen jako záloha."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
-msgid "The default RGB workspace color profile."
+msgid "The default RGB working space color profile."
 msgstr "Implicitní profil barev pracovního prostředí RGB."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
@@ -762,9 +762,11 @@ msgid "Sets how colors are mapped for your display."
 msgstr "Nastaví, jak se barvy mapují na vašem displeji."
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
-msgid "Sets how colors are converted from workspace to the print simulation device."
+msgid ""
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
 msgstr ""
-"Nastaví, jak se barvy převádí z pracovního prostředí na zařízení simulace "
+"Nastaví, jak se barvy převádí z RGB pracovního prostředí na zařízení simulace "
 "tisku."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
@@ -794,18 +796,6 @@ msgstr "Sytost"
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
 msgstr "Absolutní kolorimetrický"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:88
-msgid "Ask"
-msgstr "Ptát se"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:89
-msgid "Use embedded profile"
-msgstr "Použít vložený profil"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:90
-msgid "Convert to RGB workspace"
-msgstr "Převést do pracovního prostředí RGB"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:95
 #, c-format

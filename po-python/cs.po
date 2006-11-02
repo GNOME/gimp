@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-18 11:16+0200\n"
-"PO-Revision-Date: 2006-10-18 13:01+0200\n"
+"POT-Creation-Date: 2006-11-02 21:07+0100\n"
+"PO-Revision-Date: 2006-11-02 21:07+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -61,10 +61,6 @@ msgstr "Neplatný vstup pro '%s'"
 msgid "Python-Fu Color Selection"
 msgstr "Výběr barev Python-Fu"
 
-#: ../plug-ins/pygimp/procbrowser.c:174
-msgid "Python Procedure Browser"
-msgstr "Prohlížeč procedur Pythonu"
-
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
 msgid "Saving as colored XHTML"
 msgstr "Ukládání jako barevné XHTML"
@@ -105,29 +101,39 @@ msgstr "Velikost písma v pixelech"
 msgid "Write a separate CSS file"
 msgstr "Zapsat oddělený CSS soubor"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:44
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
 msgstr "Konzole skript-fu"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:76
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
 msgid "_Browse..."
 msgstr "_Procházet..."
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:100
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
+msgid "Python Procedure Browser"
+msgstr "Prohlížeč procedur Pythonu"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Nelze otevřít '%s' pro zápis: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Nelze zapisovat do '%s': %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
+msgid "Save Python-Fu Console Output"
+msgstr "Uložit výstup konzoly Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
 msgid "Interactive Gimp-Python interpreter"
 msgstr "Interaktivní interpretr Gimp-Pythonu"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:105
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
 msgid "_Console"
 msgstr "_Konzole"
-
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:221
-msgid "Gimp-Python Console"
-msgstr "Konzole Gimp-Python"
-
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:222
-msgid "Interactive Python Development"
-msgstr "Interaktivní vývoj v Pythonu"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:51
 msgid "Add a layer of fog"
@@ -167,8 +173,8 @@ msgstr "P_osunout paletu..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:58
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:80
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette"
 msgstr "Paleta"
 
@@ -216,29 +222,21 @@ msgstr "Modrá nebo hodnota"
 msgid "Ascending"
 msgstr "Klesající"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:51
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Vytvořit opakující se přechod z barev palety"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:56
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
 msgid "Palette to _Repeating Gradient"
 msgstr "Paleta do _opakujícího se přechodu"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:73
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
 msgid "Create a gradient using colors from the palette"
 msgstr "Vytvořit přechod pomocí barev z palety"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:78
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
 msgid "Palette to _Gradient"
 msgstr "Paleta do _přechodu"
-
-#: ../plug-ins/pygimp/plug-ins/pdbbrowse.py:37
-msgid "Browse the Procedural Database"
-msgstr "Procházet databázi procedur"
-
-#: ../plug-ins/pygimp/plug-ins/pdbbrowse.py:42
-msgid "_Procedure Browser"
-msgstr "Prohlížeč _procedur"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:57
 msgid "Slice"
@@ -268,23 +266,23 @@ msgstr "Předpona jména obrázku"
 msgid "Image format"
 msgstr "Formát obrázku"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 msgid "Separate image folder"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Folder for image export"
 msgstr "Složka pro export obrázku"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Space between table elements"
 msgstr "Prostor mezi prvky tabulky"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
-msgid "Javascript for onmouseover and clicked)"
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript při přejetí myší a kliknutí"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Skip animation for table caps"
 msgstr ""
 
@@ -294,7 +292,7 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
 msgid "_Drop Shadow and Bevel..."
-msgstr ""
+msgstr "_Vržený stín a zkosení..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
 msgid "Shadow blur"
@@ -306,13 +304,12 @@ msgstr "Zkosení"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "Drop shadow"
-msgstr ""
+msgstr "Vržený stín"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "Drop shadow X displacement"
-msgstr ""
+msgstr "X posun vrženého stínu"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow Y displacement"
-msgstr ""
-
+msgstr "Y posun vrženého stínu"
