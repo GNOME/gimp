@@ -426,6 +426,7 @@ nova_center_create (GimpDrawable *drawable,
 {
   NovaCenter *center;
   GtkWidget  *frame;
+  GtkWidget  *hbox;
   GtkWidget  *check;
   gint32      image_ID;
   gdouble     res_x;
@@ -442,6 +443,10 @@ nova_center_create (GimpDrawable *drawable,
   center->oldy         = 0;
 
   frame = gimp_frame_new (_("Center of Nova"));
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
 
   g_signal_connect_swapped (frame, "destroy",
                             G_CALLBACK (g_free),
@@ -465,7 +470,7 @@ nova_center_create (GimpDrawable *drawable,
                                          0, drawable->height);
 
   gtk_table_set_row_spacing (GTK_TABLE (center->coords), 1, 12);
-  gtk_container_add (GTK_CONTAINER (frame), center->coords);
+  gtk_box_pack_start (GTK_BOX (hbox), center->coords, FALSE, FALSE, 0);
   gtk_widget_show (center->coords);
 
   g_signal_connect (center->coords, "value-changed",

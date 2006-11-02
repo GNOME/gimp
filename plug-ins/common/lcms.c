@@ -816,6 +816,7 @@ lcms_icc_profile_src_label_new (gint32       image,
                         "justify", GTK_JUSTIFY_LEFT,
                         "xalign",  0.0,
                         "yalign",  0.0,
+                        "xpad",    24,
                         NULL);
   g_free (desc);
 

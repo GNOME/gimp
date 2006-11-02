@@ -1,3 +1,11 @@
+2006-11-02  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/flarefx.c (flare_center_create)
+	* plug-ins/common/nova.c (nova_center_create): don't expand the
+	coordinates widget horizontally.
+
+	* plug-ins/common/lcms.c: added padding.
+
 2006-11-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpviewrendererpalette.c
