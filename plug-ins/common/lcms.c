@@ -836,7 +836,8 @@ lcms_icc_profile_dest_label_new (cmsHPROFILE  profile)
   gchar     *text;
 
   desc = lcms_icc_profile_get_desc (profile);
-  text = g_strdup_printf (_("Convert it to the RGB working space (%s)?"), desc);
+  text = g_strdup_printf (_("Convert the image to the RGB working space (%s)?"),
+                          desc);
   g_free (desc);
 
   label = g_object_new (GTK_TYPE_LABEL,
