@@ -72,10 +72,9 @@
 # include <malloc.h>
 #endif /* macintosh */
 
-#ifndef USE_STRCASECMP
-#define stricmp g_utf8_collate
-#else
-static int stricmp(const char *s1, const char *s2)
+#define stricmp utf8_stricmp
+
+static int utf8_stricmp(const char *s1, const char *s2)
 {
   char *s1a, *s2a;
   int result;
@@ -89,7 +88,6 @@ static int stricmp(const char *s1, const char *s2)
   g_free(s2a);
   return result;
 }
-#endif
 
 #define min(a, b)  ((a <= b) ? a : b)
 
@@ -4718,7 +4716,7 @@ int scheme_init_custom_alloc(scheme *sc, func_alloc malloc, func_dealloc free) {
   return !sc->no_memory;
 }
 
-void scheme_set_input_port_file(scheme *sc, FILE *fin) {
+SCHEME_EXPORT void scheme_set_input_port_file(scheme *sc, FILE *fin) {
   sc->inport=port_from_file(sc,fin,port_input);
 }
 
@@ -4726,7 +4724,7 @@ void scheme_set_input_port_string(scheme *sc, char *start, char *past_the_end) {
   sc->inport=port_from_string(sc,start,past_the_end,port_input);
 }
 
-void scheme_set_output_port_file(scheme *sc, FILE *fout) {
+SCHEME_EXPORT void scheme_set_output_port_file(scheme *sc, FILE *fout) {
   sc->outport=port_from_file(sc,fout,port_output);
 }
 

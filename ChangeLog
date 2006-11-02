@@ -1,3 +1,18 @@
+2006-11-02  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/Makefile.am: Removed USE_STRCASECMP. Use the
+	setting for USE_STRLWR that is used in TinyScheme.
+
+	* plug-ins/script-fu/tinyscheme/Makefile.am: Removed USE_STRCASECMP.
+
+	* plug-ins/script-fu/tinyscheme/scheme.c
+	* plug-ins/script-fu/tinyscheme/scheme.h: Added missing SCHEME_EXPORT
+	to a couple of function declarations. Eliminated USE_STRCASECMP by
+	using internal UTF8 string comparison routine.
+
+	* plug-ins/script-fu/tinyscheme/scheme-private.h: Stop some compiler
+	warnings.
+
 2006-11-02  Michael Natterer  <mitch@gimp.org>
 
 	Don't let each terminating plug-in procedure end its progress,

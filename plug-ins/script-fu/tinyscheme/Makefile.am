@@ -6,7 +6,6 @@ AM_CFLAGS = \
     -DUSE_MATH=1        \
     -DUSE_ASCII_NAMES=0 \
     -DUSE_STRLWR=0      \
-    -DUSE_STRCASECMP=1  \
     -I$(top_srcdir)     \
     $(GLIB_CFLAGS)        
 

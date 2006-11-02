@@ -16,7 +16,6 @@
 #ifndef _MSC_VER
 # define SCHEME_EXPORT
 #else
-# define USE_STRCASECMP 0
 # define USE_STRLWR 0
 # ifdef _SCHEME_SOURCE
 #  define SCHEME_EXPORT __declspec(dllexport)
@@ -81,10 +80,6 @@
 # define USE_COLON_HOOK 1
 #endif
 
-#ifndef USE_STRCASECMP   /* stricmp for Unix */
-# define USE_STRCASECMP 0
-#endif
-
 #ifndef USE_STRLWR
 # define USE_STRLWR 1
 #endif
@@ -121,7 +116,7 @@ SCHEME_EXPORT scheme *scheme_init_new_custom_alloc(func_alloc malloc, func_deall
 SCHEME_EXPORT int scheme_init(scheme *sc);
 SCHEME_EXPORT int scheme_init_custom_alloc(scheme *sc, func_alloc, func_dealloc);
 SCHEME_EXPORT void scheme_deinit(scheme *sc);
-void scheme_set_input_port_file(scheme *sc, FILE *fin);
+SCHEME_EXPORT void scheme_set_input_port_file(scheme *sc, FILE *fin);
 void scheme_set_input_port_string(scheme *sc, char *start, char *past_the_end);
 SCHEME_EXPORT void scheme_set_output_port_file(scheme *sc, FILE *fin);
 void scheme_set_output_port_string(scheme *sc, char *start, char *past_the_end);
