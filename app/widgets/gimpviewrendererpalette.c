@@ -97,7 +97,7 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
 
   if (renderpal->cell_size > 0)
     {
-      if (palette->n_columns > 1)
+      if (palette->n_columns > 0)
         cell_width = MAX ((gdouble) renderpal->cell_size,
                           (gdouble) renderer->width /
                           (gdouble) palette->n_columns);
@@ -106,7 +106,7 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
     }
   else
     {
-      if (palette->n_columns > 1)
+      if (palette->n_columns > 0)
         cell_width = (gdouble) renderer->width / (gdouble) palette->n_columns;
       else
         cell_width = (gdouble) renderer->width / 16.0;
