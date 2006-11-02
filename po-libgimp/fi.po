@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-15 20:25+0300\n"
-"PO-Revision-Date: 2006-10-30 08:51+0300\n"
+"POT-Creation-Date: 2006-11-02 16:52+0300\n"
+"PO-Revision-Date: 2006-11-02 16:53+0300\n"
 "Last-Translator: Mikko Paananen <mikko at ipi.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -728,15 +728,15 @@ msgstr "Ensisijaisen näytön väriprofiili."
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid ""
 "When enabled, the GIMP will try to use the display color profile from the "
-"windowing system. The configured monitor profile is then only used as a "
+"windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
 "Jos käytössä, GIMP yrittää käyttää näytön väriprofiilia "
-"ikkunointijärjestelmästä. Määritelty näyttöprofiili on tämän jälkeen "
-"käytetty varavaihtoehtona."
+"ikkunointijärjestelmästä. Määriteltyä näyttöprofiilia käytetään tällöin "
+"vain varavaihtoehtona."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
-msgid "The default RGB workspace color profile."
+msgid "The default RGB working space color profile."
 msgstr "Oletuksena käytettävä RGB-työtilan väriprofiili."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
@@ -753,9 +753,10 @@ msgstr "Määrittää, kuinka värit valitaan näytölläsi."
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
 msgid ""
-"Sets how colors are converted from workspace to the print simulation device."
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
 msgstr ""
-"Määrittää kuinka värit muunnetaan työtilasta tulostuksen "
+"Määrittää, kuinka värit muunnetaan työtilasta tulostuksen "
 "simulointilaitteelle."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
@@ -785,18 +786,6 @@ msgstr "Kylläisyys"
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
 msgstr "Absoluuttinen värimetriikka"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:88
-msgid "Ask"
-msgstr "Kysy"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:89
-msgid "Use embedded profile"
-msgstr "Käytä upotettua profiilia"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:90
-msgid "Convert to RGB workspace"
-msgstr "Muunna RGB-työalueeksi"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:95
 #, c-format
@@ -1601,3 +1590,11 @@ msgstr "Ohjain %03d"
 msgid "MIDI Events"
 msgstr "MIDI-tapahtumat"
 
+#~ msgid "Ask"
+#~ msgstr "Kysy"
+
+#~ msgid "Use embedded profile"
+#~ msgstr "Käytä upotettua profiilia"
+
+#~ msgid "Convert to RGB workspace"
+#~ msgstr "Muunna RGB-työalueeksi"

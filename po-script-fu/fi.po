@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tiny-fu \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-22 08:09+0300\n"
-"PO-Revision-Date: 2006-10-22 08:15+0300\n"
+"POT-Creation-Date: 2006-11-02 17:03+0300\n"
+"PO-Revision-Date: 2006-11-02 17:05+0300\n"
 "Last-Translator: Mikko Paananen <mikko@ipi.fi>\n"
 "Language-Team: fi\n"
 "MIME-Version: 1.0\n"
@@ -16,48 +16,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8-bit\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:143
+#: ../plug-ins/script-fu/script-fu-console.c:210
 msgid "Script-Fu Console"
 msgstr "Script-Fu-konsoli"
 
-#: ../plug-ins/script-fu/script-fu-console.c:210
-msgid "Welcome to TinyScheme\n"
-msgstr ""
-
-#: ../plug-ins/script-fu/script-fu-console.c:211
-msgid ""
-"Copyright (c) Dimitrios Souflis\n"
-"\n"
-msgstr ""
-"Tekijänoikeudet (©) Dimitrios Souflis\n"
-"\n"
-
+#: ../plug-ins/script-fu/script-fu-console.c:206
+msgid "Welcome to TinyScheme"
+msgstr "Tervetuloa TinySchemeen"
 
 #: ../plug-ins/script-fu/script-fu-console.c:212
-msgid "Script-Fu Console - "
-msgstr "Script-Fu-konsoli - "
-
-#: ../plug-ins/script-fu/script-fu-console.c:213
 msgid "Interactive Scheme Development"
 msgstr "Interaktiivinen Scheme-kehitys"
 
-#: ../plug-ins/script-fu/script-fu-console.c:245
+#: ../plug-ins/script-fu/script-fu-console.c:248
 msgid "_Browse..."
 msgstr "_Selaa..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:307
+#: ../plug-ins/script-fu/script-fu-console.c:310
 msgid "Save Script-Fu Console Output"
 msgstr "Tallenna Script-Fu-konsolin tuloste"
 
-#: ../plug-ins/script-fu/script-fu-console.c:351
+#: ../plug-ins/script-fu/script-fu-console.c:354
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "\"%s\" ei voitu avata kirjoitettavaksi: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:380
+#: ../plug-ins/script-fu/script-fu-console.c:383
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu:n proseduuriselain"
 
-#: ../plug-ins/script-fu/script-fu-console.c:716
+#: ../plug-ins/script-fu/script-fu-console.c:711
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu:n evaluointitila sallii ainoastaan ei-interaktiivisen käytön"
 
@@ -121,6 +109,7 @@ msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu sivellinselain"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:655
+#, c-format
 msgid ""
 "Error while executing\n"
 "%s\n"
@@ -226,15 +215,15 @@ msgstr "Alphakanava _logoksi"
 
 #: ../plug-ins/script-fu/script-fu.c:329
 msgid "An_imation"
-msgstr ""
+msgstr "An_imaatio"
 
 #: ../plug-ins/script-fu/script-fu.c:331
 msgid "_Animators"
-msgstr ""
+msgstr "_Animaattorit"
 
 #: ../plug-ins/script-fu/script-fu.c:333
 msgid "_Artistic"
-msgstr ""
+msgstr "T_aiteellinen"
 
 #: ../plug-ins/script-fu/script-fu.c:335
 msgid "_Blur"
@@ -1329,6 +1318,14 @@ msgstr ""
 msgid "Crystal..."
 msgstr "Kristalli..."
 
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
+msgid "Difference Clouds..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
+msgid "Solid noise applied with Difference layer mode"
+msgstr ""
+
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
 msgstr ""
@@ -1359,7 +1356,7 @@ msgstr "_Väännä..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 msgid "Add a drop-shadow to the selected region (or alpha)"
-msgstr ""
+msgstr "Lisää varjo valitulle alueelle (tai alfalle)"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
@@ -1409,8 +1406,8 @@ msgid "Erase"
 msgstr "Poista"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
-msgid "Erase every other row/column of pixels of the active drawable"
-msgstr ""
+msgid "Erase every other row or column"
+msgstr "Poista joka toinen rivi tai sarake"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
@@ -1570,8 +1567,7 @@ msgstr "_Teksti"
 msgid ""
 "Add a frost effect to the selected region (or alpha) with an added drop "
 "shadow"
-msgstr ""
-"Lisää huuruefekti valitulle alueelle (tai alfalle) varjon kera"
+msgstr "Lisää huuruefekti valitulle alueelle (tai alfalle) varjon kera"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
@@ -1879,9 +1875,7 @@ msgid "BG opacity"
 msgstr "Taustan peitto"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid ""
-"Create a graph of the Hue, Saturation, and Value distributions of the "
-"current drawable"
+msgid "Create a graph of the Hue, Saturation, and Value distributions"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
@@ -2912,6 +2906,16 @@ msgstr "Korostuksen peitto"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-efekti"
+
+#~ msgid ""
+#~ "Copyright (c) Dimitrios Souflis\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Tekijänoikeudet (©) Dimitrios Souflis\n"
+#~ "\n"
+
+#~ msgid "Script-Fu Console - "
+#~ msgstr "Script-Fu-konsoli - "
 
 #~ msgid "<Image>/Filters/Decor"
 #~ msgstr "<Kuva>/Suotimet/Koristeelliset"
