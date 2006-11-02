@@ -1,3 +1,19 @@
+2006-11-02  Michael Natterer  <mitch@gimp.org>
+
+	Don't let each terminating plug-in procedure end its progress,
+	because that progress may still be in use by another plug-in.
+
+	* app/plug-in/gimpplugin-progress.[ch]
+	(gimp_plug_in_progress_attach)
+	(gimp_plug_in_progress_detach): new functions which maintain
+	a simple attach count for a GimpProgress
+
+	* app/plug-in/gimpplugin-progress.c
+	* app/plug-in/gimppluginprocframe.c: call attach() when setting
+	proc_frame->progress. Call detach() in gimp_plug_in_progress_end()
+	and only call gimp_progress_end() if detaching lowered the attach
+	count to 0.
+
 2006-11-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/flarefx.c (flare_center_create)

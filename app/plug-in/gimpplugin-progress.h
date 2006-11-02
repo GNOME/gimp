@@ -22,23 +22,26 @@
 #define __GIMP_PLUG_IN_PROGRESS_H__
 
 
-void       gimp_plug_in_progress_start      (GimpPlugIn  *plug_in,
-                                             const gchar *message,
-                                             GimpObject  *display);
-void       gimp_plug_in_progress_end        (GimpPlugIn  *plug_in);
-void       gimp_plug_in_progress_set_text   (GimpPlugIn  *plug_in,
-                                             const gchar *message);
-void       gimp_plug_in_progress_set_value  (GimpPlugIn  *plug_in,
-                                             gdouble      percentage);
-void       gimp_plug_in_progress_pulse      (GimpPlugIn  *plug_in);
-guint32    gimp_plug_in_progress_get_window (GimpPlugIn  *plug_in);
+gint       gimp_plug_in_progress_attach     (GimpProgress *progress);
+gint       gimp_plug_in_progress_detach     (GimpProgress *progress);
 
-gboolean   gimp_plug_in_progress_install    (GimpPlugIn  *plug_in,
-                                             const gchar *progress_callback);
-gboolean   gimp_plug_in_progress_uninstall  (GimpPlugIn  *plug_in,
-                                             const gchar *progress_callback);
-gboolean   gimp_plug_in_progress_cancel     (GimpPlugIn  *plug_in,
-                                             const gchar *progress_callback);
+void       gimp_plug_in_progress_start      (GimpPlugIn   *plug_in,
+                                             const gchar  *message,
+                                             GimpObject   *display);
+void       gimp_plug_in_progress_end        (GimpPlugIn   *plug_in);
+void       gimp_plug_in_progress_set_text   (GimpPlugIn   *plug_in,
+                                             const gchar  *message);
+void       gimp_plug_in_progress_set_value  (GimpPlugIn   *plug_in,
+                                             gdouble       percentage);
+void       gimp_plug_in_progress_pulse      (GimpPlugIn   *plug_in);
+guint32    gimp_plug_in_progress_get_window (GimpPlugIn   *plug_in);
+
+gboolean   gimp_plug_in_progress_install    (GimpPlugIn   *plug_in,
+                                             const gchar  *progress_callback);
+gboolean   gimp_plug_in_progress_uninstall  (GimpPlugIn   *plug_in,
+                                             const gchar  *progress_callback);
+gboolean   gimp_plug_in_progress_cancel     (GimpPlugIn   *plug_in,
+                                             const gchar  *progress_callback);
 
 
 #endif /* __GIMP_PLUG_IN_PROGRESS_H__ */
