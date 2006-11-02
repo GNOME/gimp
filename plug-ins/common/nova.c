@@ -444,13 +444,13 @@ nova_center_create (GimpDrawable *drawable,
 
   frame = gimp_frame_new (_("Center of Nova"));
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
-
   g_signal_connect_swapped (frame, "destroy",
                             G_CALLBACK (g_free),
                             center);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
 
   image_ID = gimp_drawable_get_image (drawable->drawable_id);
   gimp_image_get_resolution (image_ID, &res_x, &res_y);
