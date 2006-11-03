@@ -144,4 +144,28 @@ gimp_color_selector_palette_set_color (GimpColorSelector *selector,
                                        const GimpHSV     *hsv)
 {
   GimpColorSelectorPalette *select = GIMP_COLOR_SELECTOR_PALETTE (selector);
+
+  if (select->context)
+    {
+      GimpPalette *palette = gimp_context_get_palette (select->context);
+
+      if (palette)
+        {
+          GList *list;
+
+          for (list = palette->colors; list; list = g_list_next (list))
+            {
+              GimpPaletteEntry *entry = list->data;
+
+#define EPSILON 1e-10
+
+              if (gimp_rgb_distance (&entry->color, rgb) < EPSILON)
+                {
+                  gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (select->view),
+                                                  entry);
+                  break;
+                }
+            }
+        }
+    }
 }

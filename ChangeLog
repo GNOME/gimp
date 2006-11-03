@@ -1,5 +1,11 @@
 2006-11-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcolorselectorpalette.c
+	(gimp_color_selector_palette_set_color): select a matching color
+	in the palette if possible.
+
+2006-11-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/gimpcolorselectorpalette.[ch]: new widget featuring
 	a proof-of-concept palette color selector. It always shows the
