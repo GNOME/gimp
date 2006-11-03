@@ -40,8 +40,8 @@ struct _GimpImageParasiteView
 {
   GtkVBox    parent_instance;
 
-  gchar     *parasite;
   GimpImage *image;
+  gchar     *parasite;
 };
 
 struct _GimpImageParasiteViewClass
@@ -53,9 +53,12 @@ struct _GimpImageParasiteViewClass
 };
 
 
-GType       gimp_image_parasite_view_get_type  (void) G_GNUC_CONST;
+GType                gimp_image_parasite_view_get_type     (void) G_GNUC_CONST;
 
-GimpImage * gimp_image_parasite_view_get_image (GimpImageParasiteView *view);
+GtkWidget          * gimp_image_parasite_view_new          (GimpImage   *image,
+                                                            const gchar *parasite);
+GimpImage          * gimp_image_parasite_view_get_image    (GimpImageParasiteView *view);
+const GimpParasite * gimp_image_parasite_view_get_parasite (GimpImageParasiteView *view);
 
 
 #endif /*  __GIMP_IMAGE_PARASITE_VIEW_H__  */

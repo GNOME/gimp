@@ -40,8 +40,8 @@
 enum
 {
   PROP_0,
-  PROP_PARASITE,
-  PROP_IMAGE
+  PROP_IMAGE,
+  PROP_PARASITE
 };
 
 enum
@@ -97,14 +97,14 @@ gimp_image_parasite_view_class_init (GimpImageParasiteViewClass *klass)
 
   klass->update              = NULL;
 
-  g_object_class_install_property (object_class, PROP_PARASITE,
-                                   g_param_spec_string ("parasite", NULL, NULL,
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image", NULL, NULL,
                                                         GIMP_TYPE_IMAGE,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_PARASITE,
+                                   g_param_spec_string ("parasite", NULL, NULL,
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
@@ -125,11 +125,11 @@ gimp_image_parasite_view_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_PARASITE:
-      view->parasite = g_value_dup_string (value);
-      break;
     case PROP_IMAGE:
       view->image = GIMP_IMAGE (g_value_get_object (value));
+      break;
+    case PROP_PARASITE:
+      view->parasite = g_value_dup_string (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -147,11 +147,11 @@ gimp_image_parasite_view_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_PARASITE:
-      g_value_set_string (value, view->parasite);
-      break;
     case PROP_IMAGE:
       g_value_set_object (value, view->image);
+      break;
+    case PROP_PARASITE:
+      g_value_set_string (value, view->parasite);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -203,12 +203,34 @@ gimp_image_parasite_view_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+GtkWidget *
+gimp_image_parasite_view_new (GimpImage   *image,
+                              const gchar *parasite)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (parasite != NULL, NULL);
+
+  return g_object_new (GIMP_TYPE_IMAGE_PARASITE_VIEW,
+                       "image",    image,
+                       "parasite", parasite,
+                       NULL);
+}
+
+
 GimpImage *
 gimp_image_parasite_view_get_image (GimpImageParasiteView *view)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE_PARASITE_VIEW (view), NULL);
 
   return view->image;
+}
+
+const GimpParasite *
+gimp_image_parasite_view_get_parasite (GimpImageParasiteView *view)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE_PARASITE_VIEW (view), NULL);
+
+  return gimp_image_parasite_find (view->image, view->parasite);
 }
 
 

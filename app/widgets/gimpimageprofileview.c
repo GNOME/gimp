@@ -120,8 +120,8 @@ gimp_image_profile_view_new (GimpImage *image)
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   return g_object_new (GIMP_TYPE_IMAGE_PROFILE_VIEW,
-                       "parasite", "icc-profile",
                        "image",    image,
+                       "parasite", "icc-profile",
                        NULL);
 }
 

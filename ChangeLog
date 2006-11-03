@@ -1,5 +1,12 @@
 2006-11-03  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpimageparasiteview.[ch]: made non-abstract.
+
+	* app/dialogs/image-properties-dialog.c: show a "Comment" tab if
+	the image contains a "gimp-comment" parasite.
+
+2006-11-03  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpimageparasiteview.[ch]: new abstract base class.
