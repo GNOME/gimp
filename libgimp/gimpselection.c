@@ -22,6 +22,9 @@
 #include "config.h"
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_SELECTION_H__
+#include "gimpselection.h"
 
 /**
  * gimp_selection_float:
