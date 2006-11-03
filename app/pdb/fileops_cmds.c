@@ -37,6 +37,7 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "file/file-open.h"
+#include "file/file-save.h"
 #include "file/file-utils.h"
 #include "plug-in/gimppluginmanager-file.h"
 #include "plug-in/gimppluginmanager.h"
@@ -119,12 +120,19 @@ file_load_layer_invoker (GimpProcedure     *procedure,
 
       if (uri)
         {
-          GimpPDBStatusType status;
+          GList             *layers;
+          GimpPDBStatusType  status;
 
-          layer = file_open_layer (gimp, context, progress,
-                                   image, uri, run_mode, NULL, &status, NULL);
+          layers = file_open_layers (gimp, context, progress,
+                                     image, FALSE,
+                                     uri, run_mode, NULL, &status, NULL);
 
-          if (! layer)
+          if (layers)
+            {
+              layer = layers->data;
+              g_list_free (layers);
+            }
+          else
             success = FALSE;
         }
       else
@@ -135,6 +143,73 @@ file_load_layer_invoker (GimpProcedure     *procedure,
 
   if (success)
     gimp_value_set_layer (&return_vals->values[1], layer);
+
+  return return_vals;
+}
+
+static GValueArray *
+file_load_layers_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  gint32 run_mode;
+  GimpImage *image;
+  const gchar *filename;
+  gint32 num_layers = 0;
+  gint32 *layer_ids = NULL;
+
+  run_mode = g_value_get_enum (&args->values[0]);
+  image = gimp_value_get_image (&args->values[1], gimp);
+  filename = g_value_get_string (&args->values[2]);
+
+  if (success)
+    {
+      gchar *uri = file_utils_filename_to_uri (gimp->plug_in_manager->load_procs,
+                                               filename, NULL);
+
+      if (uri)
+        {
+          GList             *layers;
+          GimpPDBStatusType  status;
+
+          layers = file_open_layers (gimp, context, progress,
+                                     image, FALSE,
+                                     uri, run_mode, NULL, &status, NULL);
+
+          if (layers)
+            {
+              GList *list;
+              gint i;
+
+              num_layers = g_list_length (layers);
+
+              layer_ids = g_new (gint32, num_layers);
+
+              for (i = 0, list = layers;
+                   i < num_layers;
+                   i++, list = g_list_next (list))
+                layer_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+
+              g_list_free (layers);
+            }
+          else
+            success = FALSE;
+        }
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    {
+      g_value_set_int (&return_vals->values[1], num_layers);
+      gimp_value_take_int32array (&return_vals->values[2], layer_ids, num_layers);
+    }
 
   return return_vals;
 }
@@ -489,8 +564,8 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-file-load-layer");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-file-load-layer",
-                                     "Loads an image file as a layer into an already opened image.",
-                                     "This procedure behaves like the file-load procedure but opens the specified image as a layer into an already opened image.",
+                                     "Loads an image file as a layer for an existing image.",
+                                     "This procedure behaves like the file-load procedure but opens the specified image as a layer for an existing image. The returned layer needs to be added to the existing image with 'gimp-image-add-layer'.",
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
                                      "2005",
@@ -523,6 +598,55 @@ register_fileops_procs (GimpPDB *pdb)
                                                              "The layer created when loading the image file",
                                                              pdb->gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-file-load-layers
+   */
+  procedure = gimp_procedure_new (file_load_layers_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-file-load-layers");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-file-load-layers",
+                                     "Loads an image file as layers for an existing image.",
+                                     "This procedure behaves like the file-load procedure but opens the specified image as layers for an existing image. The returned layers needs to be added to the existing image with 'gimp-image-add-layer'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_enum ("run-mode",
+                                                     "run mode",
+                                                     "The run mode",
+                                                     GIMP_TYPE_RUN_MODE,
+                                                     GIMP_RUN_INTERACTIVE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[0]),
+                                      GIMP_RUN_WITH_LAST_VALS);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Destination image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("filename",
+                                                       "filename",
+                                                       "The name of the file to load",
+                                                       TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("num-layers",
+                                                          "num layers",
+                                                          "The number of loaded layers",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32_array ("layer-ids",
+                                                                "layer ids",
+                                                                "The list of loaded layers",
+                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

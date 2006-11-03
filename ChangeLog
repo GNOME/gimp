@@ -1,3 +1,27 @@
+2006-11-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.[ch] (enum GimpUndoType): added value
+	GIMP_UNDO_GROUP_LAYER_ADD.
+
+	* app/file/file-open.[ch]: changed file_open_layer() to
+	file_open_layers(), added parameter "gboolean merge_visible",
+	return a GList of layers.
+
+	* app/dialogs/file-open-dialog.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/widgets/gimplayertreeview.c: pass merge_visible = FALSE and
+	add all returned layers to the image. Fixes bug #358082.
+	(contains lots of duplicated code, will factor that out later).
+
+	* tools/pdbgen/pdb/fileops.pdb (load_layer): pass merge_visible = TRUE
+	(load_layers): new wrapper which returns all the image's layers.
+
+	* app/pdb/fileops_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpfileops_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: changed accordingly.
+
 2006-11-03  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/lcms.c: use gimp_any_to_utf8().

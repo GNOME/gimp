@@ -342,19 +342,20 @@ file_open_with_proc_and_display (Gimp                *gimp,
   return image;
 }
 
-GimpLayer *
-file_open_layer (Gimp                *gimp,
-                 GimpContext         *context,
-                 GimpProgress        *progress,
-                 GimpImage           *dest_image,
-                 const gchar         *uri,
-                 GimpRunMode          run_mode,
-                 GimpPlugInProcedure *file_proc,
-                 GimpPDBStatusType   *status,
-                 GError             **error)
+GList *
+file_open_layers (Gimp                *gimp,
+                  GimpContext         *context,
+                  GimpProgress        *progress,
+                  GimpImage           *dest_image,
+                  gboolean             merge_visible,
+                  const gchar         *uri,
+                  GimpRunMode          run_mode,
+                  GimpPlugInProcedure *file_proc,
+                  GimpPDBStatusType   *status,
+                  GError             **error)
 {
-  GimpLayer   *new_layer = NULL;
   GimpImage   *new_image;
+  GList       *layers    = NULL;
   const gchar *mime_type = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -373,9 +374,8 @@ file_open_layer (Gimp                *gimp,
 
   if (new_image)
     {
-      GList     *list;
-      GimpLayer *layer     = NULL;
-      gint       n_visible = 0;
+      GList *list;
+      gint   n_visible = 0;
 
       gimp_image_undo_disable (new_image);
 
@@ -383,50 +383,65 @@ file_open_layer (Gimp                *gimp,
            list;
            list = g_list_next (list))
         {
+          if (! merge_visible)
+            layers = g_list_prepend (layers, list->data);
+
           if (gimp_item_get_visible (list->data))
             {
               n_visible++;
 
-              if (! layer)
-                layer = list->data;
+              if (! layers)
+                layers = g_list_prepend (layers, list->data);
             }
         }
 
-      if (n_visible > 1)
-        layer = gimp_image_merge_visible_layers (new_image, context,
-                                                 GIMP_CLIP_TO_IMAGE, FALSE);
-
-      if (layer)
+      if (merge_visible && n_visible > 1)
         {
-          GimpItem *item = gimp_item_convert (GIMP_ITEM (layer), dest_image,
-                                              G_TYPE_FROM_INSTANCE (layer),
-                                              TRUE);
+          GimpLayer *layer;
 
-          if (item)
+          g_list_free (layers);
+
+          layer = gimp_image_merge_visible_layers (new_image, context,
+                                                   GIMP_CLIP_TO_IMAGE, FALSE);
+
+          layers = g_list_prepend (NULL, layer);
+        }
+
+      if (layers)
+        {
+          for (list = layers; list; list = g_list_next (list))
             {
-              new_layer = GIMP_LAYER (item);
+              GimpLayer *layer = list->data;
+              GimpItem  *item;
 
-              gimp_object_take_name (GIMP_OBJECT (new_layer),
-                                     file_utils_uri_display_basename (uri));
+              item = gimp_item_convert (GIMP_ITEM (layer), dest_image,
+                                        G_TYPE_FROM_INSTANCE (layer),
+                                        TRUE);
 
-              gimp_document_list_add_uri (GIMP_DOCUMENT_LIST (gimp->documents),
-                                          uri, mime_type);
+              if (merge_visible)
+                gimp_object_take_name (GIMP_OBJECT (item),
+                                       file_utils_uri_display_basename (uri));
 
-              if (gimp->config->save_document_history)
-                gimp_recent_list_add_uri (uri, mime_type);
+              list->data = item;
             }
+
+          gimp_document_list_add_uri (GIMP_DOCUMENT_LIST (gimp->documents),
+                                      uri, mime_type);
+
+          if (gimp->config->save_document_history)
+            gimp_recent_list_add_uri (uri, mime_type);
         }
       else
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Image doesn't contain any visible layers"));
+                       _("Image doesn't contain any layers"));
           *status = GIMP_PDB_EXECUTION_ERROR;
        }
 
       g_object_unref (new_image);
     }
 
-  return new_layer;
+  return g_list_reverse (layers);
 }
 
 

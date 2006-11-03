@@ -57,10 +57,11 @@ GimpImage * file_open_with_proc_and_display (Gimp                *gimp,
                                              GimpPDBStatusType   *status,
                                              GError             **error);
 
-GimpLayer * file_open_layer                 (Gimp                *gimp,
+GList     * file_open_layers                (Gimp                *gimp,
                                              GimpContext         *context,
                                              GimpProgress        *progress,
                                              GimpImage           *dest_image,
+                                             gboolean             merge_visible,
                                              const gchar         *uri,
                                              GimpRunMode          run_mode,
                                              GimpPlugInProcedure *file_proc,

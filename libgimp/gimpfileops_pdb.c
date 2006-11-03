@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include "gimp.h"
 
 /**
@@ -73,10 +75,11 @@ gimp_file_load (GimpRunMode  run_mode,
  * @image_ID: Destination image.
  * @filename: The name of the file to load.
  *
- * Loads an image file as a layer into an already opened image.
+ * Loads an image file as a layer for an existing image.
  *
  * This procedure behaves like the file-load procedure but opens the
- * specified image as a layer into an already opened image.
+ * specified image as a layer for an existing image. The returned layer
+ * needs to be added to the existing image with gimp_image_add_layer().
  *
  * Returns: The layer created when loading the image file.
  *
@@ -104,6 +107,56 @@ gimp_file_load_layer (GimpRunMode  run_mode,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return layer_ID;
+}
+
+/**
+ * gimp_file_load_layers:
+ * @run_mode: The run mode.
+ * @image_ID: Destination image.
+ * @filename: The name of the file to load.
+ * @num_layers: The number of loaded layers.
+ *
+ * Loads an image file as layers for an existing image.
+ *
+ * This procedure behaves like the file-load procedure but opens the
+ * specified image as layers for an existing image. The returned layers
+ * needs to be added to the existing image with gimp_image_add_layer().
+ *
+ * Returns: The list of loaded layers.
+ *
+ * Since: GIMP 2.4
+ */
+gint *
+gimp_file_load_layers (GimpRunMode  run_mode,
+                       gint32       image_ID,
+                       const gchar *filename,
+                       gint        *num_layers)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint *layer_ids = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-file-load-layers",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, run_mode,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, filename,
+                                    GIMP_PDB_END);
+
+  *num_layers = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      *num_layers = return_vals[1].data.d_int32;
+      layer_ids = g_new (gint32, *num_layers);
+      memcpy (layer_ids,
+              return_vals[2].data.d_int32array,
+              *num_layers * sizeof (gint32));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return layer_ids;
 }
 
 /**

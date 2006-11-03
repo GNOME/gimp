@@ -98,11 +98,12 @@ CODE
 }
 
 sub file_load_layer {
-    $blurb = 'Loads an image file as a layer into an already opened image.';
+    $blurb = 'Loads an image file as a layer for an existing image.';
 
     $help = <<'HELP';
 This procedure behaves like the file-load procedure but opens the specified
-image as a layer into an already opened image.
+image as a layer for an existing image. The returned layer needs to be
+added to the existing image with gimp_image_add_layer().
 HELP
 
     &neo_pdb_misc('2005', '2.4');
@@ -123,20 +124,95 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("file/file-open.h") ],
-	code    => <<'CODE'
+	code => <<'CODE'
 {
   gchar *uri = file_utils_filename_to_uri (gimp->plug_in_manager->load_procs,
                                            filename, NULL);
 
   if (uri)
     {
-      GimpPDBStatusType status;
+      GList             *layers;
+      GimpPDBStatusType  status;
 
-      layer = file_open_layer (gimp, context, progress,
-                               image, uri, run_mode, NULL, &status, NULL);
+      layers = file_open_layers (gimp, context, progress,
+                                 image, FALSE,
+                                 uri, run_mode, NULL, &status, NULL);
 
-      if (! layer)
+      if (layers)
+        {
+          layer = layers->data;
+          g_list_free (layers);
+        }
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub file_load_layers {
+    $blurb = 'Loads an image file as layers for an existing image.';
+
+    $help = <<'HELP';
+This procedure behaves like the file-load procedure but opens the specified
+image as layers for an existing image. The returned layers needs to be
+added to the existing image with gimp_image_add_layer().
+HELP
+
+    &mitch_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'run_mode',
+	  type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image',
+	  desc => 'Destination image' },
+	{ name => 'filename', type => 'string', no_validate => 1,
+	  desc => 'The name of the file to load' }
+    );
+
+    @outargs = (
+	{ name => 'layer_ids', type => 'int32array',
+	  desc => 'The list of loaded layers',
+	  array => { name => 'num_layers',
+		     desc => 'The number of loaded layers' } }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gchar *uri = file_utils_filename_to_uri (gimp->plug_in_manager->load_procs,
+                                           filename, NULL);
+
+  if (uri)
+    {
+      GList             *layers;
+      GimpPDBStatusType  status;
+
+      layers = file_open_layers (gimp, context, progress,
+                                 image, FALSE,
+                                 uri, run_mode, NULL, &status, NULL);
+
+      if (layers)
+        {
+          GList *list;
+          gint i;
+
+          num_layers = g_list_length (layers);
+
+          layer_ids = g_new (gint32, num_layers);
+
+          for (i = 0, list = layers;
+               i < num_layers;
+               i++, list = g_list_next (list))
+            layer_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+
+          g_list_free (layers);
+        }
+      else
         success = FALSE;
     }
   else
@@ -327,7 +403,6 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimp-utils.h") ],
 	code => <<'CODE'
 {
   name = gimp_get_temp_filename (gimp, extension);
@@ -518,17 +593,23 @@ CODE
 @headers = qw("libgimpbase/gimpbase.h"
               "libgimpconfig/gimpconfig.h"
               "core/gimp.h"
+              "core/gimp-utils.h"
               "plug-in/gimppluginmanager.h"
               "plug-in/gimppluginmanager-file.h"
+              "file/file-open.h"
+              "file/file-save.h"
               "file/file-utils.h");
 
-@procs = qw(file_load file_load_layer file_save
+@procs = qw(file_load file_load_layer file_load_layers
+            file_save
             file_load_thumbnail file_save_thumbnail
-	    temp_name register_magic_load_handler register_load_handler
-	    register_save_handler register_file_handler_mime
+	    temp_name
+            register_magic_load_handler register_load_handler
+	    register_save_handler
+            register_file_handler_mime
             register_thumbnail_loader);
 
-%exports = (app => [@procs], lib => [@procs[0..2,5..10]]);
+%exports = (app => [@procs], lib => [@procs[0..3,6..11]]);
 
 $desc = 'File Operations';
 

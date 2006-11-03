@@ -203,6 +203,7 @@ EXPORTS
 	gimp_extension_process
 	gimp_file_load
 	gimp_file_load_layer
+	gimp_file_load_layers
 	gimp_file_save
 	gimp_fill_type_get_type
 	gimp_flip

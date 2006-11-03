@@ -380,6 +380,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_ITEM_DISPLACE,      /*< desc="Move item"                   >*/
   GIMP_UNDO_GROUP_ITEM_SCALE,         /*< desc="Scale item"                  >*/
   GIMP_UNDO_GROUP_ITEM_RESIZE,        /*< desc="Resize item"                 >*/
+  GIMP_UNDO_GROUP_LAYER_ADD,          /*< desc="Add layer"                   >*/
   GIMP_UNDO_GROUP_LAYER_ADD_MASK,     /*< desc="Add layer mask"              >*/
   GIMP_UNDO_GROUP_LAYER_APPLY_MASK,   /*< desc="Apply layer mask"            >*/
   GIMP_UNDO_GROUP_FS_TO_LAYER,        /*< desc="Floating selection to layer" >*/

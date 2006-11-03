@@ -29,7 +29,8 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
-#include "core/gimpitem.h"
+#include "core/gimpimage-undo.h"
+#include "core/gimplayer.h"
 #include "core/gimpprogress.h"
 
 #include "file/file-open.h"
@@ -45,19 +46,19 @@
 
 /*  local function prototypes  */
 
-static void       file_open_dialog_response   (GtkWidget           *open_dialog,
-                                               gint                 response_id,
-                                               Gimp                *gimp);
-static gboolean   file_open_dialog_open_image (GtkWidget           *open_dialog,
-                                               Gimp                *gimp,
-                                               const gchar         *uri,
-                                               const gchar         *entered_filename,
-                                               GimpPlugInProcedure *load_proc);
-static gboolean   file_open_dialog_open_layer (GtkWidget           *open_dialog,
-                                               GimpImage           *image,
-                                               const gchar         *uri,
-                                               const gchar         *entered_filename,
-                                               GimpPlugInProcedure *load_proc);
+static void       file_open_dialog_response    (GtkWidget           *open_dialog,
+                                                gint                 response_id,
+                                                Gimp                *gimp);
+static gboolean   file_open_dialog_open_image  (GtkWidget           *open_dialog,
+                                                Gimp                *gimp,
+                                                const gchar         *uri,
+                                                const gchar         *entered_filename,
+                                                GimpPlugInProcedure *load_proc);
+static gboolean   file_open_dialog_open_layers (GtkWidget           *open_dialog,
+                                                GimpImage           *image,
+                                                const gchar         *uri,
+                                                const gchar         *entered_filename,
+                                                GimpPlugInProcedure *load_proc);
 
 
 /*  public functions  */
@@ -131,11 +132,11 @@ file_open_dialog_response (GtkWidget *open_dialog,
 
       if (dialog->image)
         {
-          if (file_open_dialog_open_layer (open_dialog,
-                                           dialog->image,
-                                           list->data,
-                                           list->data,
-                                           dialog->file_proc))
+          if (file_open_dialog_open_layers (open_dialog,
+                                            dialog->image,
+                                            list->data,
+                                            list->data,
+                                            dialog->file_proc))
             {
               success = TRUE;
             }
@@ -211,39 +212,69 @@ file_open_dialog_open_image (GtkWidget           *open_dialog,
 }
 
 static gboolean
-file_open_dialog_open_layer (GtkWidget           *open_dialog,
-                             GimpImage           *image,
-                             const gchar         *uri,
-                             const gchar         *entered_filename,
-                             GimpPlugInProcedure *load_proc)
+file_open_dialog_open_layers (GtkWidget           *open_dialog,
+                              GimpImage           *image,
+                              const gchar         *uri,
+                              const gchar         *entered_filename,
+                              GimpPlugInProcedure *load_proc)
 {
-  GimpLayer         *new_layer;
+  GList             *new_layers;
   GimpPDBStatusType  status;
   GError            *error = NULL;
 
-  new_layer = file_open_layer (image->gimp,
-                               gimp_get_user_context (image->gimp),
-                               GIMP_PROGRESS (open_dialog),
-                               image, uri, GIMP_RUN_INTERACTIVE, load_proc,
-                               &status, &error);
+  new_layers = file_open_layers (image->gimp,
+                                 gimp_get_user_context (image->gimp),
+                                 GIMP_PROGRESS (open_dialog),
+                                 image, FALSE,
+                                 uri, GIMP_RUN_INTERACTIVE, load_proc,
+                                 &status, &error);
 
-  if (new_layer)
+  if (new_layers)
     {
-      GimpItem *new_item = GIMP_ITEM (new_layer);
-      gint      width, height;
-      gint      off_x, off_y;
+      GList *list;
+      gint   image_width   = gimp_image_get_width (image);
+      gint   image_height  = gimp_image_get_height (image);
+      gint   layers_x      = G_MAXINT;
+      gint   layers_y      = G_MAXINT;
+      gint   layers_width  = 0;
+      gint   layers_height = 0;
+      gint   offset_x;
+      gint   offset_y;
 
-      width  = gimp_image_get_width (image);
-      height = gimp_image_get_height (image);
+      for (list = new_layers; list; list = g_list_next (list))
+        {
+          GimpItem *item = GIMP_ITEM (list->data);
+          gint      off_x, off_y;
 
-      gimp_item_offsets (new_item, &off_x, &off_y);
+          gimp_item_offsets (item, &off_x, &off_y);
 
-      off_x = (width  - gimp_item_width  (new_item)) / 2 - off_x;
-      off_y = (height - gimp_item_height (new_item)) / 2 - off_y;
+          layers_x = MIN (layers_x, off_x);
+          layers_y = MIN (layers_y, off_y);
 
-      gimp_item_translate (new_item, off_x, off_y, FALSE);
+          layers_width  = MAX (layers_width,
+                               off_x + gimp_item_width (item)  - layers_x);
+          layers_height = MAX (layers_height,
+                               off_y + gimp_item_height (item) - layers_y);
+        }
 
-      gimp_image_add_layer (image, new_layer, -1);
+      offset_x = (image_width  - layers_width)  / 2 - layers_x;
+      offset_y = (image_height - layers_height) / 2 - layers_y;
+
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_ADD,
+                                   _("Open layers"));
+
+      for (list = new_layers; list; list = g_list_next (list))
+        {
+          GimpItem *item = GIMP_ITEM (list->data);
+
+          gimp_item_translate (item, offset_x, offset_y, FALSE);
+
+          gimp_image_add_layer (image, GIMP_LAYER (item), -1);
+        }
+
+      gimp_image_undo_group_end (image);
+
+      g_list_free (new_layers);
 
       return TRUE;
     }
