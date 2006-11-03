@@ -523,10 +523,8 @@ create_image (const GdkPixbuf *pixbuf)
     {
       GimpParasite *parasite;
 
-      parasite = gimp_parasite_new ("gimp-comment",
-                                    GIMP_PARASITE_PERSISTENT,
-                                    g_utf8_strlen (comment, -1) + 1,
-                                    comment);
+      parasite = gimp_parasite_new ("gimp-comment", GIMP_PARASITE_PERSISTENT,
+                                    strlen (comment) + 1, comment);
 
       gimp_image_parasite_attach (image_ID, parasite);
       gimp_parasite_free (parasite);
