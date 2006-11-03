@@ -1,5 +1,16 @@
 2006-11-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcoloreditor.c
+	* app/widgets/gimpcolordialog.c: temporarily attach the context to
+	the GimpColorConfig object while calling the color selector's
+	set_config().
+
+	* app/widgets/gimpcolorselectorpalette.c: moved widget creation
+	and signal connecting to GimpColorSelector::set_config() and
+	use the context attached to the passed GimpColorConfig object.
+
+2006-11-03  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpbrushes.c
 	* libgimp/gimpgradients.c
 	* libgimp/gimpimage.c
@@ -13,7 +24,7 @@
 2006-11-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.[ch]: added gimp_image_add_layers() which
-	takes a list of layers and vierport coordinates to center the
+	takes a list of layers and viewport coordinates to center the
 	layers in.
 
 	* app/dialogs/file-open-dialog.c

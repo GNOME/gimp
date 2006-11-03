@@ -449,8 +449,14 @@ gimp_color_editor_set_context (GimpDocked  *docked,
           gimp_color_editor_fg_changed (editor->context, &rgb, editor);
         }
 
+      g_object_set_data (G_OBJECT (context->gimp->config->color_management),
+                         "gimp-context", editor->context);
+
       gimp_color_selector_set_config (GIMP_COLOR_SELECTOR (editor->notebook),
                                       context->gimp->config->color_management);
+
+      g_object_set_data (G_OBJECT (context->gimp->config->color_management),
+                         "gimp-context", NULL);
     }
 
   gimp_fg_bg_editor_set_context (GIMP_FG_BG_EDITOR (editor->fg_bg), context);

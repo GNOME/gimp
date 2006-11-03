@@ -294,9 +294,14 @@ gimp_color_dialog_new (GimpViewable      *viewable,
 
   if (context)
     {
+      g_object_set_data (G_OBJECT (context->gimp->config->color_management),
+                         "gimp-context", context);
+
       gimp_color_selection_set_config (GIMP_COLOR_SELECTION (dialog->selection),
                                        context->gimp->config->color_management);
-      g_object_set_data (G_OBJECT (dialog), "gimp-context", context);
+
+      g_object_set_data (G_OBJECT (context->gimp->config->color_management),
+                         "gimp-context", NULL);
     }
 
   gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
