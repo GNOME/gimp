@@ -448,6 +448,15 @@ gboolean        gimp_image_add_layer             (GimpImage          *image,
 void            gimp_image_remove_layer          (GimpImage          *image,
                                                   GimpLayer          *layer);
 
+void            gimp_image_add_layers            (GimpImage          *image,
+                                                  GList              *layers,
+                                                  gint                position,
+                                                  gint                x,
+                                                  gint                y,
+                                                  gint                width,
+                                                  gint                height,
+                                                  const gchar        *undo_desc);
+
 gboolean        gimp_image_raise_layer           (GimpImage          *image,
                                                   GimpLayer          *layer);
 gboolean        gimp_image_lower_layer           (GimpImage          *image,

@@ -2920,6 +2920,63 @@ gimp_image_remove_layer (GimpImage *image,
     gimp_image_undo_group_end (image);
 }
 
+void
+gimp_image_add_layers (GimpImage   *image,
+                       GList       *layers,
+                       gint         position,
+                       gint         x,
+                       gint         y,
+                       gint         width,
+                       gint         height,
+                       const gchar *undo_desc)
+{
+  GList *list;
+  gint   layers_x      = G_MAXINT;
+  gint   layers_y      = G_MAXINT;
+  gint   layers_width  = 0;
+  gint   layers_height = 0;
+  gint   offset_x;
+  gint   offset_y;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (layers != NULL);
+
+  for (list = layers; list; list = g_list_next (list))
+    {
+      GimpItem *item = GIMP_ITEM (list->data);
+      gint      off_x, off_y;
+
+      gimp_item_offsets (item, &off_x, &off_y);
+
+      layers_x = MIN (layers_x, off_x);
+      layers_y = MIN (layers_y, off_y);
+
+      layers_width  = MAX (layers_width,
+                           off_x + gimp_item_width (item)  - layers_x);
+      layers_height = MAX (layers_height,
+                           off_y + gimp_item_height (item) - layers_y);
+    }
+
+  offset_x = x + (width  - layers_width)  / 2 - layers_x;
+  offset_y = y + (height - layers_height) / 2 - layers_y;
+
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_ADD, undo_desc);
+
+  for (list = layers; list; list = g_list_next (list))
+    {
+      GimpItem *new_item = GIMP_ITEM (list->data);
+
+      gimp_item_translate (new_item, offset_x, offset_y, FALSE);
+
+      gimp_image_add_layer (image, GIMP_LAYER (new_item), position);
+
+      if (position != -1)
+        position++;
+    }
+
+  gimp_image_undo_group_end (image);
+}
+
 gboolean
 gimp_image_raise_layer (GimpImage *image,
                         GimpLayer *layer)

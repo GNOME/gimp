@@ -1,5 +1,16 @@
 2006-11-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.[ch]: added gimp_image_add_layers() which
+	takes a list of layers and vierport coordinates to center the
+	layers in.
+
+	* app/dialogs/file-open-dialog.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/widgets/gimplayertreeview.c: use it instead of having the
+	same code three times.
+
+2006-11-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcolorselectorpalette.c
 	(gimp_color_selector_palette_set_color): select a matching color
 	in the palette if possible.

@@ -428,51 +428,15 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
 
       if (new_layers)
         {
-          GList *list;
-          gint   x, y;
-          gint   width, height;
-          gint   layers_x      = G_MAXINT;
-          gint   layers_y      = G_MAXINT;
-          gint   layers_width  = 0;
-          gint   layers_height = 0;
-          gint   offset_x;
-          gint   offset_y;
+          gint x, y;
+          gint width, height;
 
           gimp_display_shell_untransform_viewport (shell, &x, &y,
                                                    &width, &height);
 
-          for (list = new_layers; list; list = g_list_next (list))
-            {
-              GimpItem *item = GIMP_ITEM (list->data);
-              gint      off_x, off_y;
-
-              gimp_item_offsets (item, &off_x, &off_y);
-
-              layers_x = MIN (layers_x, off_x);
-              layers_y = MIN (layers_y, off_y);
-
-              layers_width  = MAX (layers_width,
-                                   off_x + gimp_item_width (item)  - layers_x);
-              layers_height = MAX (layers_height,
-                                   off_y + gimp_item_height (item) - layers_y);
-            }
-
-          offset_x = x + (width  - layers_width)  / 2 - layers_x;
-          offset_y = y + (height - layers_height) / 2 - layers_y;
-
-          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_ADD,
-                                       _("Drop layers"));
-
-          for (list = new_layers; list; list = g_list_next (list))
-            {
-              GimpItem *new_item = GIMP_ITEM (list->data);
-
-              gimp_item_translate (new_item, offset_x, offset_y, FALSE);
-
-              gimp_image_add_layer (image, GIMP_LAYER (new_item), -1);
-            }
-
-          gimp_image_undo_group_end (image);
+          gimp_image_add_layers (image, new_layers, -1,
+                                 x, y, width, height,
+                                 _("Drop layers"));
 
           g_list_free (new_layers);
        }

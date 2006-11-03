@@ -231,50 +231,15 @@ file_open_dialog_open_layers (GtkWidget           *open_dialog,
 
   if (new_layers)
     {
-      GList *list;
-      gint   image_width   = gimp_image_get_width (image);
-      gint   image_height  = gimp_image_get_height (image);
-      gint   layers_x      = G_MAXINT;
-      gint   layers_y      = G_MAXINT;
-      gint   layers_width  = 0;
-      gint   layers_height = 0;
-      gint   offset_x;
-      gint   offset_y;
-
-      for (list = new_layers; list; list = g_list_next (list))
-        {
-          GimpItem *item = GIMP_ITEM (list->data);
-          gint      off_x, off_y;
-
-          gimp_item_offsets (item, &off_x, &off_y);
-
-          layers_x = MIN (layers_x, off_x);
-          layers_y = MIN (layers_y, off_y);
-
-          layers_width  = MAX (layers_width,
-                               off_x + gimp_item_width (item)  - layers_x);
-          layers_height = MAX (layers_height,
-                               off_y + gimp_item_height (item) - layers_y);
-        }
-
-      offset_x = (image_width  - layers_width)  / 2 - layers_x;
-      offset_y = (image_height - layers_height) / 2 - layers_y;
-
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_ADD,
-                                   _("Open layers"));
-
-      for (list = new_layers; list; list = g_list_next (list))
-        {
-          GimpItem *item = GIMP_ITEM (list->data);
-
-          gimp_item_translate (item, offset_x, offset_y, FALSE);
-
-          gimp_image_add_layer (image, GIMP_LAYER (item), -1);
-        }
-
-      gimp_image_undo_group_end (image);
+      gimp_image_add_layers (image, new_layers, -1,
+                             0, 0,
+                             gimp_image_get_width (image),
+                             gimp_image_get_height (image),
+                             _("Open layers"));
 
       g_list_free (new_layers);
+
+      gimp_image_flush (image);
 
       return TRUE;
     }

@@ -742,48 +742,13 @@ gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
 
       if (new_layers)
         {
-          GList *list;
-          gint   image_width   = gimp_image_get_width (image);
-          gint   image_height  = gimp_image_get_height (image);
-          gint   layers_x      = G_MAXINT;
-          gint   layers_y      = G_MAXINT;
-          gint   layers_width  = 0;
-          gint   layers_height = 0;
-          gint   offset_x;
-          gint   offset_y;
+          gimp_image_add_layers (image, new_layers, index,
+                                 0, 0,
+                                 gimp_image_get_width (image),
+                                 gimp_image_get_height (image),
+                                 _("Drop layers"));
 
-          for (list = new_layers; list; list = g_list_next (list))
-            {
-              GimpItem *item = GIMP_ITEM (list->data);
-              gint      off_x, off_y;
-
-              gimp_item_offsets (item, &off_x, &off_y);
-
-              layers_x = MIN (layers_x, off_x);
-              layers_y = MIN (layers_y, off_y);
-
-              layers_width  = MAX (layers_width,
-                                   off_x + gimp_item_width (item)  - layers_x);
-              layers_height = MAX (layers_height,
-                                   off_y + gimp_item_height (item) - layers_y);
-            }
-
-          offset_x = (image_width  - layers_width)  / 2 - layers_x;
-          offset_y = (image_height - layers_height) / 2 - layers_y;
-
-          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_ADD,
-                                       _("Drop layers"));
-
-          for (list = new_layers; list; list = g_list_next (list))
-            {
-              GimpItem *new_item = GIMP_ITEM (list->data);
-
-              gimp_item_translate (new_item, offset_x, offset_y, FALSE);
-
-              gimp_image_add_layer (image, GIMP_LAYER (new_item), index++);
-            }
-
-          gimp_image_undo_group_end (image);
+          index += g_list_length (new_layers);
 
           g_list_free (new_layers);
         }
