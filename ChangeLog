@@ -1,5 +1,22 @@
 2006-11-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/gimpcolorselectorpalette.[ch]: new widget featuring
+	a proof-of-concept palette color selector. It always shows the
+	current palette and doesn't bother to have any features yet. If I
+	don't get around finishing this I will disable it for the 2.4
+	release, but it's better kept in CVS than on my disk...
+	Addresses bug #132146.
+
+	* app/widgets/gimpcolordialog.c (gimp_color_dialog_new): attach
+	the passed context to the dialog so the palette selector can find
+	it (puke).
+
+	* app/gui/gui.c (gui_restore_callback): register the new object
+	with the GType system.
+
+2006-11-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-enums.[ch] (enum GimpUndoType): added value
 	GIMP_UNDO_GROUP_LAYER_ADD.
 
