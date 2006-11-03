@@ -1,5 +1,10 @@
 2006-11-03  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/screenshot.c: pass the number of bytes to
+	gimp_parasite_new(), not the number of characters.
+
+2006-11-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/tinyscheme/scheme.c (utf8_stricmp): use
 	g_utf8_casefold() to implement case insensitive sorting.
 
