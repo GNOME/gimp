@@ -206,7 +206,9 @@ long ivalue(pointer p);
 double rvalue(pointer p);
 int is_integer(pointer p);
 int is_real(pointer p);
+int is_array(pointer p);
 int is_character(pointer p);
+int string_length(pointer p);
 gunichar charvalue(pointer p);
 int is_vector(pointer p);
 
@@ -227,9 +229,7 @@ int is_proc(pointer p);
 int is_foreign(pointer p);
 char *syntaxname(pointer p);
 int is_closure(pointer p);
-#ifdef USE_MACRO
 int is_macro(pointer p);
-#endif
 pointer closure_code(pointer p);
 pointer closure_env(pointer p);
 
