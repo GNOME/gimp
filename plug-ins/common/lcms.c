@@ -669,9 +669,16 @@ lcms_image_transform_rgb (gint32       image,
           last_format = format;
         }
 
-      lcms_drawable_transform (drawable, transform,
-                               (gdouble) i / num_layers,
-                               (gdouble) (i + 1) / num_layers);
+      if (transform)
+        {
+          lcms_drawable_transform (drawable, transform,
+                                   (gdouble) i / num_layers,
+                                   (gdouble) (i + 1) / num_layers);
+        }
+      else
+        {
+          g_warning ("cmsCreateTransform() failed!");
+        }
 
       gimp_drawable_detach (drawable);
     }
@@ -697,9 +704,15 @@ lcms_image_transform_indexed (gint32       image,
                                   dest_profile, TYPE_RGB_8,
                                   INTENT_PERCEPTUAL, 0);
 
-  cmsDoTransform (transform, cmap, cmap, num_colors);
-
-  cmsDeleteTransform(transform);
+  if (transform)
+    {
+      cmsDoTransform (transform, cmap, cmap, num_colors);
+      cmsDeleteTransform(transform);
+    }
+  else
+    {
+      g_warning ("cmsCreateTransform() failed!");
+    }
 
   gimp_image_set_colormap (image, cmap, num_colors);
 }
