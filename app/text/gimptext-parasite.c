@@ -36,8 +36,6 @@
 #include "gimptext-parasite.h"
 #include "gimptext-xlfd.h"
 
-#include "gimp-intl.h"
-
 
 /****************************************/
 /*  The native GimpTextLayer parasite.  */
@@ -155,16 +153,10 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
 
   if (! g_utf8_validate (text, -1, NULL))
     {
-      gchar *utf8_str;
-
-      utf8_str = g_locale_to_utf8 (text, -1, NULL, NULL, NULL);
+      gchar *tmp = gimp_any_to_utf8 (text, -1, NULL);
 
       g_free (text);
-
-      if (utf8_str)
-        text = utf8_str;
-      else
-        text = g_strdup (_("(invalid UTF-8 string)"));
+      text = tmp;
     }
 
   antialias = atoi (params[ANTIALIAS]) ? TRUE : FALSE;

@@ -135,15 +135,15 @@ image_comment_update (GtkWidget *page,
       gchar *text = g_strndup (gimp_parasite_data (parasite),
                                gimp_parasite_data_size (parasite));
 
-      if (g_utf8_validate (text, -1, NULL))
+      if (! g_utf8_validate (text, -1, NULL))
         {
-          gtk_label_set_text (GTK_LABEL (label), text);
-        }
-      else
-        {
-          gtk_label_set_text (GTK_LABEL (label), _("(invalid UTF-8 string)"));
+          gchar *tmp = gimp_any_to_utf8 (text, -1, NULL);
+
+          g_free (text);
+          text = tmp;
         }
 
+      gtk_label_set_text (GTK_LABEL (label), text);
       g_free (text);
 
       gtk_widget_show (page);

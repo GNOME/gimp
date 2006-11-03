@@ -154,6 +154,7 @@ app/dialogs/convert-dialog.c
 app/dialogs/desaturate-dialog.c
 app/dialogs/dialogs-constructors.c
 app/dialogs/dialogs.c
+app/dialogs/fade-dialog.c
 app/dialogs/file-open-dialog.c
 app/dialogs/file-open-location-dialog.c
 app/dialogs/file-save-dialog.c
@@ -252,12 +253,12 @@ app/plug-in/gimppluginmanager.c
 app/plug-in/gimppluginprocedure.c
 app/plug-in/gimptemporaryprocedure.c
 app/plug-in/plug-in-enums.c
+app/plug-in/plug-in-icc-profile.c
 app/plug-in/plug-in-rc.c
 
 app/text/text-enums.c
 app/text/gimpfont.c
 app/text/gimptext-compat.c
-app/text/gimptext-parasite.c
 app/text/gimptextlayer.c
 app/text/gimptextlayer-transform.c
 app/text/gimptextlayer-xcf.c
@@ -379,6 +380,7 @@ app/widgets/gimpgrideditor.c
 app/widgets/gimphelp.c
 app/widgets/gimphistogrameditor.c
 app/widgets/gimpimagedock.c
+app/widgets/gimpimageprofileview.c
 app/widgets/gimpimagepropview.c
 app/widgets/gimpitemtreeview.c
 app/widgets/gimplayertreeview.c
@@ -387,6 +389,7 @@ app/widgets/gimpmessagebox.c
 app/widgets/gimppaletteeditor.c
 app/widgets/gimppdbdialog.c
 app/widgets/gimpprogressdialog.c
+app/widgets/gimppropwidgets.c
 app/widgets/gimpselectiondata.c
 app/widgets/gimpselectioneditor.c
 app/widgets/gimpsizebox.c
