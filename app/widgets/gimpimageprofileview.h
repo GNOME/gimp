@@ -23,7 +23,7 @@
 #define __GIMP_IMAGE_PROFILE_VIEW_H__
 
 
-#include <gtk/gtkvbox.h>
+#include "gimpimageparasiteview.h"
 
 
 #define GIMP_TYPE_IMAGE_PROFILE_VIEW            (gimp_image_profile_view_get_type ())
@@ -38,23 +38,21 @@ typedef struct _GimpImageProfileViewClass GimpImageProfileViewClass;
 
 struct _GimpImageProfileView
 {
-  GtkVBox    parent_instance;
+  GimpImageParasiteView  parent_instance;
 
-  GimpImage *image;
+  GtkWidget             *table;
+  GtkWidget             *name_label;
+  GtkWidget             *desc_label;
+  GtkWidget             *info_label;
 
-  GtkWidget *table;
-  GtkWidget *name_label;
-  GtkWidget *desc_label;
-  GtkWidget *info_label;
+  GtkWidget             *message;
 
-  GtkWidget *message;
-
-  guint      idle_id;
+  guint                  idle_id;
 };
 
 struct _GimpImageProfileViewClass
 {
-  GtkVBoxClass  parent_class;
+  GimpImageParasiteViewClass  parent_class;
 };
 
 

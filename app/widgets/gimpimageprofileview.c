@@ -40,36 +40,17 @@
 #include "gimp-intl.h"
 
 
-enum
-{
-  PROP_0,
-  PROP_IMAGE
-};
+static void        gimp_image_profile_view_dispose   (GObject     *object);
+
+static GtkWidget * gimp_image_profile_view_add_label (GtkTable    *table,
+                                                      gint         row,
+                                                      const gchar *text);
+
+static void        gimp_image_profile_view_update    (GimpImageParasiteView *view);
 
 
-static GObject * gimp_image_profile_view_constructor  (GType              type,
-                                                       guint              n_params,
-                                                       GObjectConstructParam *params);
-static void      gimp_image_profile_view_set_property (GObject           *object,
-                                                       guint              property_id,
-                                                       const GValue      *value,
-                                                       GParamSpec        *pspec);
-static void      gimp_image_profile_view_get_property (GObject           *object,
-                                                       guint              property_id,
-                                                       GValue            *value,
-                                                       GParamSpec        *pspec);
-static void      gimp_image_profile_view_dispose      (GObject           *object);
-
-static GtkWidget * gimp_image_profile_view_add_label      (GtkTable    *table,
-                                                           gint         row,
-                                                           const gchar *text);
-
-static void      gimp_image_profile_view_parasite_changed (GimpImageProfileView *view,
-                                                           const gchar          *name);
-static void      gimp_image_profile_view_update            (GimpImageProfileView *view);
-
-
-G_DEFINE_TYPE (GimpImageProfileView, gimp_image_profile_view, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GimpImageProfileView,
+               gimp_image_profile_view, GIMP_TYPE_IMAGE_PARASITE_VIEW)
 
 #define parent_class gimp_image_profile_view_parent_class
 
@@ -77,18 +58,14 @@ G_DEFINE_TYPE (GimpImageProfileView, gimp_image_profile_view, GTK_TYPE_VBOX)
 static void
 gimp_image_profile_view_class_init (GimpImageProfileViewClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
+  GObjectClass               *object_class = G_OBJECT_CLASS (klass);
+  GimpImageParasiteViewClass *view_class;
 
-  object_class->constructor  = gimp_image_profile_view_constructor;
-  object_class->set_property = gimp_image_profile_view_set_property;
-  object_class->get_property = gimp_image_profile_view_get_property;
-  object_class->dispose      = gimp_image_profile_view_dispose;
+  view_class = GIMP_IMAGE_PARASITE_VIEW_CLASS (klass);
 
-  g_object_class_install_property (object_class, PROP_IMAGE,
-                                   g_param_spec_object ("image", NULL, NULL,
-                                                        GIMP_TYPE_IMAGE,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+  object_class->dispose = gimp_image_profile_view_dispose;
+
+  view_class->update    = gimp_image_profile_view_update;
 }
 
 static void
@@ -121,72 +98,6 @@ gimp_image_profile_view_init (GimpImageProfileView *view)
 }
 
 static void
-gimp_image_profile_view_set_property (GObject      *object,
-                                      guint         property_id,
-                                      const GValue *value,
-                                      GParamSpec   *pspec)
-{
-  GimpImageProfileView *view = GIMP_IMAGE_PROFILE_VIEW (object);
-
-  switch (property_id)
-    {
-    case PROP_IMAGE:
-      view->image = GIMP_IMAGE (g_value_get_object (value));
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_image_profile_view_get_property (GObject    *object,
-                                      guint       property_id,
-                                      GValue     *value,
-                                      GParamSpec *pspec)
-{
-  GimpImageProfileView *view = GIMP_IMAGE_PROFILE_VIEW (object);
-
-  switch (property_id)
-    {
-    case PROP_IMAGE:
-      g_value_set_object (value, view->image);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static GObject *
-gimp_image_profile_view_constructor (GType                  type,
-                                     guint                  n_params,
-                                     GObjectConstructParam *params)
-{
-  GimpImageProfileView *view;
-  GObject              *object;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  view = GIMP_IMAGE_PROFILE_VIEW (object);
-
-  g_assert (view->image != NULL);
-
-  g_signal_connect_object (view->image, "parasite-attached",
-                           G_CALLBACK (gimp_image_profile_view_parasite_changed),
-                           G_OBJECT (view),
-                           G_CONNECT_SWAPPED);
-  g_signal_connect_object (view->image, "parasite-detached",
-                           G_CALLBACK (gimp_image_profile_view_parasite_changed),
-                           G_OBJECT (view),
-                           G_CONNECT_SWAPPED);
-
-  gimp_image_profile_view_update (view);
-
-  return object;
-}
-
-static void
 gimp_image_profile_view_dispose (GObject *object)
 {
   GimpImageProfileView *view = GIMP_IMAGE_PROFILE_VIEW (object);
@@ -209,7 +120,8 @@ gimp_image_profile_view_new (GimpImage *image)
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   return g_object_new (GIMP_TYPE_IMAGE_PROFILE_VIEW,
-                       "image", image,
+                       "parasite", "icc-profile",
+                       "image",    image,
                        NULL);
 }
 
@@ -248,24 +160,19 @@ gimp_image_profile_view_add_label (GtkTable    *table,
   return label;
 }
 
-static void
-gimp_image_profile_view_parasite_changed (GimpImageProfileView *view,
-                                          const gchar          *name)
-{
-  if (name && strcmp (name, "icc-profile") == 0)
-    gimp_image_profile_view_update (view);
-}
-
 static gboolean
 gimp_image_profile_view_query (GimpImageProfileView *view)
 {
-  gchar  *name  = NULL;
-  gchar  *desc  = NULL;
-  gchar  *info  = NULL;
-  GError *error = NULL;
+  GimpImage *image;
+  gchar     *name  = NULL;
+  gchar     *desc  = NULL;
+  gchar     *info  = NULL;
+  GError    *error = NULL;
 
-  if (plug_in_icc_profile_info (view->image,
-                                gimp_get_user_context (view->image->gimp),
+  image = gimp_image_parasite_view_get_image (GIMP_IMAGE_PARASITE_VIEW (view));
+
+  if (plug_in_icc_profile_info (image,
+                                gimp_get_user_context (image->gimp),
                                 NULL,
                                 &name, &desc, &info,
                                 &error))
@@ -292,19 +199,21 @@ gimp_image_profile_view_query (GimpImageProfileView *view)
 }
 
 static void
-gimp_image_profile_view_update (GimpImageProfileView *view)
+gimp_image_profile_view_update (GimpImageParasiteView *view)
 {
-  gtk_label_set_text (GTK_LABEL (view->name_label), NULL);
-  gtk_label_set_text (GTK_LABEL (view->desc_label), NULL);
-  gtk_label_set_text (GTK_LABEL (view->info_label), NULL);
-  gtk_widget_hide (view->table);
+  GimpImageProfileView *profile_view = GIMP_IMAGE_PROFILE_VIEW (view);
 
-  gtk_label_set_text (GTK_LABEL (view->message), _("Querying..."));
-  gtk_widget_show (view->message);
+  gtk_label_set_text (GTK_LABEL (profile_view->name_label), NULL);
+  gtk_label_set_text (GTK_LABEL (profile_view->desc_label), NULL);
+  gtk_label_set_text (GTK_LABEL (profile_view->info_label), NULL);
+  gtk_widget_hide (profile_view->table);
 
-  if (view->idle_id)
-    g_source_remove (view->idle_id);
+  gtk_label_set_text (GTK_LABEL (profile_view->message), _("Querying..."));
+  gtk_widget_show (profile_view->message);
 
-  view->idle_id = g_idle_add ((GSourceFunc) gimp_image_profile_view_query,
-                              view);
+  if (profile_view->idle_id)
+    g_source_remove (profile_view->idle_id);
+
+  profile_view->idle_id =
+    g_idle_add ((GSourceFunc) gimp_image_profile_view_query, profile_view);
 }

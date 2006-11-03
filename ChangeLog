@@ -1,5 +1,14 @@
 2006-11-03  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpimageparasiteview.[ch]: new abstract base class.
+
+	* app/widgets/gimpimageprofileview.[ch]: derive from
+	GimpImageParasiteView.
+
+2006-11-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/screenshot.c: pass the number of bytes to
 	gimp_parasite_new(), not the number of characters.
 

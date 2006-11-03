@@ -1,0 +1,229 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * GimpImageParasiteView
+ * Copyright (C) 2006  Sven Neumann <sven@gimp.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <string.h>
+
+#include <gtk/gtk.h>
+
+#include "libgimpbase/gimpbase.h"
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "widgets-types.h"
+
+#include "core/gimp.h"
+#include "core/gimpimage.h"
+#include "core/gimpmarshal.h"
+
+#include "gimpimageparasiteview.h"
+
+
+enum
+{
+  PROP_0,
+  PROP_PARASITE,
+  PROP_IMAGE
+};
+
+enum
+{
+  UPDATE,
+  LAST_SIGNAL
+};
+
+
+static GObject * gimp_image_parasite_view_constructor  (GType        type,
+                                                       guint         n_params,
+                                                       GObjectConstructParam *params);
+static void      gimp_image_parasite_view_set_property (GObject     *object,
+                                                       guint         property_id,
+                                                       const GValue *value,
+                                                       GParamSpec   *pspec);
+static void      gimp_image_parasite_view_get_property (GObject     *object,
+                                                       guint         property_id,
+                                                       GValue       *value,
+                                                       GParamSpec   *pspec);
+static void      gimp_image_parasite_view_finalize    (GObject      *object);
+
+static void      gimp_image_parasite_view_parasite_changed (GimpImageParasiteView *view,
+                                                            const gchar          *name);
+static void      gimp_image_parasite_view_update           (GimpImageParasiteView *view);
+
+
+G_DEFINE_TYPE (GimpImageParasiteView, gimp_image_parasite_view, GTK_TYPE_VBOX)
+
+#define parent_class gimp_image_parasite_view_parent_class
+
+static guint view_signals[LAST_SIGNAL] = { 0 };
+
+
+static void
+gimp_image_parasite_view_class_init (GimpImageParasiteViewClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  view_signals[UPDATE] =
+    g_signal_new ("update",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageParasiteViewClass, update),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  object_class->constructor  = gimp_image_parasite_view_constructor;
+  object_class->set_property = gimp_image_parasite_view_set_property;
+  object_class->get_property = gimp_image_parasite_view_get_property;
+  object_class->finalize     = gimp_image_parasite_view_finalize;
+
+  klass->update              = NULL;
+
+  g_object_class_install_property (object_class, PROP_PARASITE,
+                                   g_param_spec_string ("parasite", NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_IMAGE,
+                                   g_param_spec_object ("image", NULL, NULL,
+                                                        GIMP_TYPE_IMAGE,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+}
+
+static void
+gimp_image_parasite_view_init (GimpImageParasiteView *view)
+{
+  view->parasite = NULL;
+}
+
+static void
+gimp_image_parasite_view_set_property (GObject      *object,
+                                      guint         property_id,
+                                      const GValue *value,
+                                      GParamSpec   *pspec)
+{
+  GimpImageParasiteView *view = GIMP_IMAGE_PARASITE_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_PARASITE:
+      view->parasite = g_value_dup_string (value);
+      break;
+    case PROP_IMAGE:
+      view->image = GIMP_IMAGE (g_value_get_object (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_image_parasite_view_get_property (GObject    *object,
+                                      guint       property_id,
+                                      GValue     *value,
+                                      GParamSpec *pspec)
+{
+  GimpImageParasiteView *view = GIMP_IMAGE_PARASITE_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_PARASITE:
+      g_value_set_string (value, view->parasite);
+      break;
+    case PROP_IMAGE:
+      g_value_set_object (value, view->image);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static GObject *
+gimp_image_parasite_view_constructor (GType                  type,
+                                     guint                  n_params,
+                                     GObjectConstructParam *params)
+{
+  GimpImageParasiteView *view;
+  GObject              *object;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  view = GIMP_IMAGE_PARASITE_VIEW (object);
+
+  g_assert (view->parasite != NULL);
+  g_assert (view->image != NULL);
+
+  g_signal_connect_object (view->image, "parasite-attached",
+                           G_CALLBACK (gimp_image_parasite_view_parasite_changed),
+                           G_OBJECT (view),
+                           G_CONNECT_SWAPPED);
+  g_signal_connect_object (view->image, "parasite-detached",
+                           G_CALLBACK (gimp_image_parasite_view_parasite_changed),
+                           G_OBJECT (view),
+                           G_CONNECT_SWAPPED);
+
+  gimp_image_parasite_view_update (view);
+
+  return object;
+}
+
+static void
+gimp_image_parasite_view_finalize (GObject *object)
+{
+  GimpImageParasiteView *view = GIMP_IMAGE_PARASITE_VIEW (object);
+
+  if (view->parasite)
+    {
+      g_free (view->parasite);
+      view->parasite = NULL;
+
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+GimpImage *
+gimp_image_parasite_view_get_image (GimpImageParasiteView *view)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE_PARASITE_VIEW (view), NULL);
+
+  return view->image;
+}
+
+
+/*  private functions  */
+
+static void
+gimp_image_parasite_view_parasite_changed (GimpImageParasiteView *view,
+                                           const gchar           *name)
+{
+  if (name && view->parasite && strcmp (name, view->parasite) == 0)
+    gimp_image_parasite_view_update (view);
+}
+
+static void
+gimp_image_parasite_view_update (GimpImageParasiteView *view)
+{
+  g_signal_emit (view, view_signals[UPDATE], 0);
+}
