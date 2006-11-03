@@ -338,34 +338,19 @@ run (const gchar      *name,
 static gchar *
 lcms_icc_profile_get_name (cmsHPROFILE profile)
 {
-  const gchar *str = cmsTakeProductName (profile);
-
-  if (! g_utf8_validate (str, -1, NULL))
-    return g_strdup (_("(invalid UTF-8 string)"));
-
-  return g_strdup (str);
+  return gimp_any_to_utf8 (cmsTakeProductName (profile), -1, NULL);
 }
 
 static gchar *
 lcms_icc_profile_get_desc (cmsHPROFILE profile)
 {
-  const gchar *str = cmsTakeProductDesc (profile);
-
-  if (! g_utf8_validate (str, -1, NULL))
-    return g_strdup (_("(invalid UTF-8 string)"));
-
-  return g_strdup (str);
+  return gimp_any_to_utf8 (cmsTakeProductDesc (profile), -1, NULL);
 }
 
 static gchar *
 lcms_icc_profile_get_info (cmsHPROFILE profile)
 {
-  const gchar *str = cmsTakeProductInfo (profile);
-
-  if (! g_utf8_validate (str, -1, NULL))
-    return g_strdup (_("(invalid UTF-8 string)"));
-
-  return g_strdup (str);
+  return gimp_any_to_utf8 (cmsTakeProductInfo (profile), -1, NULL);
 }
 
 static gboolean
