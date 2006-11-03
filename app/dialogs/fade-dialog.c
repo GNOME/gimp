@@ -97,7 +97,8 @@ fade_dialog_new (GimpImage *image,
 
   private->image           = image;
   private->drawable        = drawable;
-  private->context         = gimp_context_new (image->gimp, "fade-dialog", NULL);
+  private->context         = gimp_context_new (image->gimp,
+                                               "fade-dialog", NULL);
   private->applied         = FALSE;
   private->orig_paint_mode = undo->paint_mode;
   private->orig_opacity    = undo->opacity;
@@ -120,7 +121,7 @@ fade_dialog_new (GimpImage *image,
                                      GIMP_HELP_EDIT_FADE,
 
                                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                     _("_Fade"),       GTK_RESPONSE_OK,
 
                                      NULL);
 
@@ -153,13 +154,13 @@ fade_dialog_new (GimpImage *image,
   menu = gimp_prop_paint_mode_menu_new (G_OBJECT (private->context),
                                         "paint-mode", TRUE, TRUE);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                     _("Mode:"), 0.0, 0.5,
+                                     _("_Mode:"), 0.0, 0.5,
                                      menu, 2, FALSE);
 
   /*  the opacity scale  */
   gimp_prop_opacity_entry_new (G_OBJECT (private->context), "opacity",
                                GTK_TABLE (table), 0, table_row++,
-                               _("Opacity:"));
+                               _("_Opacity:"));
 
   g_signal_connect_swapped (private->context, "paint-mode-changed",
                             G_CALLBACK (fade_dialog_context_changed),

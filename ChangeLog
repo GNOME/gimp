@@ -1,5 +1,10 @@
 2006-11-03  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/fade-dialog.c (fade_dialog_new): use "Fade" instead
+	of "OK" in action button, added mnemonics.
+
+2006-11-03  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/image-properties-dialog.c (image_comment_update)
 	* app/text/gimptext-parasite.c (gimp_text_from_gdyntext_parasite):
 	use gimp_any_to_utf8() to deal with invalid UTF-8 strings.
