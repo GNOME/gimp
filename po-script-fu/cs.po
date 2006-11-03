@@ -12,10 +12,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-30 13:05+0100\n"
-"PO-Revision-Date: 2006-10-30 13:40+0100\n"
+"POT-Creation-Date: 2006-11-03 08:39+0100\n"
+"PO-Revision-Date: 2006-11-03 08:39+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -382,7 +382,8 @@ msgid "Outline blur radius"
 msgstr "Poloměr rozostření obrysu"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
-msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
+msgid ""
+"Outline the selected region (or alpha) with a pattern and add a drop shadow"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
@@ -708,7 +709,7 @@ msgstr "Mimozemská _záře..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 msgid "Create a logo with an alien glow around the text"
-msgstr ""
+msgstr "Vytvořit logo s mimozemskou září kolem textu"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
 msgid "Glow size (pixels * 4)"
@@ -716,7 +717,7 @@ msgstr "Velikost záře (pixely * 4)"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
 msgid "Add psychedelic outlines to the selected region (or alpha)"
-msgstr ""
+msgstr "Přidat psychedelické obrysy do vybrané oblasti (či alfy)"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "Alien _Neon..."
@@ -724,7 +725,7 @@ msgstr "Mimozemský _neon..."
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Create a logo with psychedelic outlines around the text"
-msgstr ""
+msgstr "Vytvořit logo s psychedelickými obrysy kolem textu"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
 msgid "Fade away"
@@ -746,13 +747,13 @@ msgstr "Šířka mezer"
 msgid ""
 "Add a gradient effect, a drop shadow, and a background to the selected "
 "region (or alpha)"
-msgstr ""
+msgstr "Přidat efekt přechodu, stín a pozadí do vybrané oblasti (nebo alfy)"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 msgid ""
 "Create a plain text logo with a gradient effect, a drop shadow, and a "
 "background"
-msgstr ""
+msgstr "Vytvořit jednoduché textové logo s přechodem, stínem a pozadím"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -932,7 +933,7 @@ msgstr "Posun (pixely)"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 msgid "Add 'cow spots' to the selected region (or alpha)"
-msgstr ""
+msgstr "Přidat 'kraví skvrny' do vybrané oblasti (nebo alfy)"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
@@ -945,7 +946,7 @@ msgstr "_Fleky..."
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Create a logo with text in the style of 'cow spots'"
-msgstr ""
+msgstr "Vytvořit logo s textem ve stylu 'kravích skvrn'"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 msgid "Spots density X"
@@ -1187,7 +1188,8 @@ msgid "Circuit seed"
 msgstr "Hnízdo okruhu"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
+msgid ""
+"Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr "Vyplnit vybranou oblast (nebo alfu) vzorem plošného spoje"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
@@ -1462,7 +1464,8 @@ msgid "Clear unselected maskarea"
 msgstr "Vymazat nevybranou oblast masky"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid "Create a layermask that fades the edges of the selected region (or alpha)"
+msgid ""
+"Create a layermask that fades the edges of the selected region (or alpha)"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:6
@@ -1530,7 +1533,8 @@ msgid "Black on white"
 msgstr "Černá na bílé"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
-msgid "Create an image filled with previews of fonts matching a fontname filter"
+msgid ""
+"Create an image filled with previews of fonts matching a fontname filter"
 msgstr "Vytvořit obrázek s náhledy fontů odpovídajících filtru jména fontu"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
@@ -1701,6 +1705,7 @@ msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
 "alpha)"
 msgstr ""
+"Přidat přechody, vzorky, stíny a mapy vyvýšení do vybrané oblasti (nebo alfy)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1712,7 +1717,7 @@ msgstr "Přechod mísení (text)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Create a logo with gradients, patterns, shadows, and bump maps"
-msgstr ""
+msgstr "Vytvořit logo s přechody, vzorky, stíny a mapami vyvýšení"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Glo_ssy..."
@@ -1966,7 +1971,8 @@ msgid "_Lava..."
 msgstr "_Láva..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
-msgid "Fill a layer with rays emanating outward from its center using the FG color"
+msgid ""
+"Fill a layer with rays emanating outward from its center using the FG color"
 msgstr "Vyplnit vrstvu paprsky v barvě popředí vycházejícími ze středu"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
@@ -2224,7 +2230,7 @@ msgstr "Chování"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Create an image filled with an Earth-like map pattern"
-msgstr ""
+msgstr "Vytvořit obrázek vyplněný vzorkem podobným Zemi"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
 msgid "Detail in Middle"
@@ -2243,7 +2249,8 @@ msgid "Black"
 msgstr "Černá"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
-msgid "Create a multi-layer image by adding a ripple effect to the current image"
+msgid ""
+"Create a multi-layer image by adding a ripple effect to the current image"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
@@ -2284,8 +2291,9 @@ msgid "Edge radius"
 msgstr "Poloměr hran"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
-msgid "Round the corners of an image and optionally add a drop-shadow and background"
-msgstr ""
+msgid ""
+"Round the corners of an image and optionally add a drop-shadow and background"
+msgstr "Zaoblit rohy obrázku a volitelně přidat stín a pozadí"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
@@ -2411,7 +2419,8 @@ msgid "_Spinning Globe..."
 msgstr "_Rotující glóbus..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgid ""
+"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr ""
 "Vykresluje hypotrochoidy, epitrochoidy a Lissajousovy křivky v aktuální "
 "vrstvě"
@@ -2638,7 +2647,8 @@ msgid "Antialias"
 msgstr "Vyhlazování"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
-msgid "Create a logo by rendering the specified text along the perimeter of a circle"
+msgid ""
+"Create a logo by rendering the specified text along the perimeter of a circle"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
@@ -2650,7 +2660,8 @@ msgid "Text C_ircle..."
 msgstr "Textový _kruh..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
-msgid "Create a textured logo with highlights, shadows, and a mosaic background"
+msgid ""
+"Create a textured logo with highlights, shadows, and a mosaic background"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
@@ -2865,7 +2876,7 @@ msgstr "_Práce s digitálními fotografiemi"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Přidat jemný průsvitný 3D efekt do vybrané oblasti (či alfy)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
@@ -2902,4 +2913,3 @@ msgstr "Krytí světel"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Efekt _Xach..."
-
