@@ -1,3 +1,9 @@
+2006-11-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimprectangletool.c: fixed snapping. Replaced lots of
+	g_object_get() by simply accessing private->member. Misc small
+	cleanups.
+
 2006-11-04  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagemap.c (gimp_image_map_do): moved call to
