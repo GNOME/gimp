@@ -811,15 +811,17 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   curx += snap_x;
   cury += snap_y;
 
+  /*  If there have been no changes... return  */
+  if (private->lastx == curx && private->lasty == cury)
+    return;
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
   /* fix function, startx, starty if user has "flipped" the rectangle */
   gimp_rectangle_tool_check_function (rectangle, curx, cury);
 
   inc_x = curx - private->startx;
   inc_y = cury - private->starty;
-
-  /*  If there have been no changes... return  */
-  if (private->lastx == curx && private->lasty == cury)
-    return;
 
   g_object_get (options,
                 "fixed-width",  &fixed_width,
@@ -939,8 +941,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       switch (private->function)
         {
         case RECT_RESIZING_UPPER_LEFT:
-          /*
-           * The same basically happens for each corner, just with a
+          /* The same basically happens for each corner, just with a
            * different fixed corner. To keep within aspect ratio and
            * at the same time keep the cursor on one edge if not the
            * corner itself: - calculate the two positions of the
@@ -1048,12 +1049,12 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   private->lastx = curx;
   private->lasty = cury;
 
-  /*
-   * Check to see whether the new rectangle obeys the boundary constraints, if any.
-   * If not, see whether we can downscale the mouse movement and call this
-   * motion handler again recursively.  The reason for the recursive call is
-   * to avoid leaving the rectangle edge hanging some pixels away from the
-   * constraining boundary if the user moves the pointer quickly.
+  /* Check to see whether the new rectangle obeys the boundary
+   * constraints, if any.  If not, see whether we can downscale the
+   * mouse movement and call this motion handler again recursively.
+   * The reason for the recursive call is to avoid leaving the
+   * rectangle edge hanging some pixels away from the constraining
+   * boundary if the user moves the pointer quickly.
    */
   if (gimp_rectangle_tool_constraint_violated (rectangle, x1, y1, x2, y2,
                                                &alpha, &beta))
@@ -1070,6 +1071,9 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
 
           gimp_rectangle_tool_motion (tool, &new_coords, time, state, display);
         }
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+
       return;
     }
 
@@ -1124,8 +1128,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
     default:
       break;
     }
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   /*  make sure that the coords are in bounds  */
   g_object_set (rectangle,
@@ -1519,19 +1521,19 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
     {
       function = RECT_RESIZING_LOWER_LEFT;
     }
-  else if ( (fabs (coords->x - private->x1) < handle_w) && inside_y)
+  else if ((fabs (coords->x - private->x1) < handle_w) && inside_x)
     {
       function = RECT_RESIZING_LEFT;
     }
-  else if ( (fabs (coords->x - private->x2) < handle_w) && inside_y)
+  else if ((fabs (coords->x - private->x2) < handle_w) && inside_x)
     {
       function = RECT_RESIZING_RIGHT;
     }
-  else if ( (fabs (coords->y - private->y1) < handle_h) && inside_x)
+  else if ((fabs (coords->y - private->y1) < handle_h) && inside_y)
     {
       function = RECT_RESIZING_TOP;
     }
-  else if ( (fabs (coords->y - private->y2) < handle_h) && inside_x)
+  else if ((fabs (coords->y - private->y2) < handle_h) && inside_y)
     {
       function = RECT_RESIZING_BOTTOM;
     }
@@ -1618,7 +1620,6 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpTool                 *tool;
   GimpRectangleToolPrivate *private;
-  gint                      x1, x2, y1, y2;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (draw_tool));
 
@@ -1628,23 +1629,22 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
   if (private->function == RECT_INACTIVE)
     return;
 
-  x1 = private->x1;
-  x2 = private->x2;
-  y1 = private->y1;
-  y2 = private->y2;
-
   gimp_draw_tool_draw_rectangle (draw_tool, FALSE,
-                                 x1, y1, x2 - x1, y2 - y1, FALSE);
+                                 private->x1,
+                                 private->y1,
+                                 private->x2 - private->x1,
+                                 private->y2 - private->y1,
+                                 FALSE);
 
   if (gimp_tool_control_is_active (tool->control))
     {
       GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (tool->display->shell);
       gdouble           handle_w;
       gdouble           handle_h;
-      gint              X1 = x1;
-      gint              Y1 = y1;
-      gint              X2 = x2;
-      gint              Y2 = y2;
+      gint              X1 = private->x1;
+      gint              Y1 = private->y1;
+      gint              X2 = private->x2;
+      gint              Y2 = private->y2;
       gboolean          do_it    = TRUE;
 
       handle_w = private->dcw / SCALEFACTOR_X (shell);
@@ -1653,19 +1653,19 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
       switch (private->function)
         {
         case RECT_RESIZING_LEFT:
-          X2 = x1 + handle_w / 3;
+          X2 = private->x1 + handle_w / 3;
           break;
 
         case RECT_RESIZING_RIGHT:
-          X1 = x2 - handle_w / 3;
+          X1 = private->x2 - handle_w / 3;
           break;
 
         case RECT_RESIZING_TOP:
-          Y2 = y1 + handle_h / 3;
+          Y2 = private->y1 + handle_h / 3;
           break;
 
         case RECT_RESIZING_BOTTOM:
-          Y1 = y2 - handle_h / 3;
+          Y1 = private->y2 - handle_h / 3;
           break;
 
         default:
@@ -1688,39 +1688,39 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
           switch (private->function)
             {
             case RECT_RESIZING_UPPER_LEFT:
-              coords[0].x = x1;
-              coords[0].y = y1;
-              coords[1].x = x1;
-              coords[1].y = y1 + handle_h;
-              coords[2].x = x1 + handle_w;
-              coords[2].y = y1;
+              coords[0].x = private->x1;
+              coords[0].y = private->y1;
+              coords[1].x = private->x1;
+              coords[1].y = private->y1 + handle_h;
+              coords[2].x = private->x1 + handle_w;
+              coords[2].y = private->y1;
               break;
 
             case RECT_RESIZING_UPPER_RIGHT:
-              coords[0].x = x2;
-              coords[0].y = y1;
-              coords[1].x = x2;
-              coords[1].y = y1 + handle_h;
-              coords[2].x = x2 - handle_w;
-              coords[2].y = y1;
+              coords[0].x = private->x2;
+              coords[0].y = private->y1;
+              coords[1].x = private->x2;
+              coords[1].y = private->y1 + handle_h;
+              coords[2].x = private->x2 - handle_w;
+              coords[2].y = private->y1;
               break;
 
             case RECT_RESIZING_LOWER_LEFT:
-              coords[0].x = x1;
-              coords[0].y = y2;
-              coords[1].x = x1;
-              coords[1].y = y2 - handle_h;
-              coords[2].x = x1 + handle_w;
-              coords[2].y = y2;
+              coords[0].x = private->x1;
+              coords[0].y = private->y2;
+              coords[1].x = private->x1;
+              coords[1].y = private->y2 - handle_h;
+              coords[2].x = private->x1 + handle_w;
+              coords[2].y = private->y2;
               break;
 
             case RECT_RESIZING_LOWER_RIGHT:
-              coords[0].x = x2;
-              coords[0].y = y2;
-              coords[1].x = x2;
-              coords[1].y = y2 - handle_h;
-              coords[2].x = x2 - handle_w;
-              coords[2].y = y2;
+              coords[0].x = private->x2;
+              coords[0].y = private->y2;
+              coords[1].x = private->x2;
+              coords[1].y = private->y2 - handle_h;
+              coords[2].x = private->x2 - handle_w;
+              coords[2].y = private->y2;
               break;
 
             default:
@@ -1737,16 +1737,20 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
   else
     {
       gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                  x1, y1, ANCHOR_SIZE, ANCHOR_SIZE,
+                                  private->x1, private->y1,
+                                  ANCHOR_SIZE, ANCHOR_SIZE,
                                   GTK_ANCHOR_NORTH_WEST, FALSE);
       gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                  x2, y1, ANCHOR_SIZE, ANCHOR_SIZE,
+                                  private->x2, private->y1,
+                                  ANCHOR_SIZE, ANCHOR_SIZE,
                                   GTK_ANCHOR_NORTH_EAST, FALSE);
       gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                  x1, y2, ANCHOR_SIZE, ANCHOR_SIZE,
+                                  private->x1, private->y2,
+                                  ANCHOR_SIZE, ANCHOR_SIZE,
                                   GTK_ANCHOR_SOUTH_WEST, FALSE);
       gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                  x2, y2, ANCHOR_SIZE, ANCHOR_SIZE,
+                                  private->x2, private->y2,
+                                  ANCHOR_SIZE, ANCHOR_SIZE,
                                   GTK_ANCHOR_SOUTH_EAST, FALSE);
     }
 
