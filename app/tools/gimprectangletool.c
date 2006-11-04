@@ -1035,8 +1035,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
 
       if (inc_x != 0 || inc_y != 0)
         {
-          new_coords.x = private->startx + inc_x;
-          new_coords.y = private->starty + inc_y;
+          new_coords.x = private->startx - snap_x + inc_x;
+          new_coords.y = private->starty - snap_y + inc_y;
 
           gimp_rectangle_tool_motion (tool, &new_coords, time, state, display);
         }

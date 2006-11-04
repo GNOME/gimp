@@ -1,5 +1,12 @@
 2006-11-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_motion): need
+	to subtract the snap_x and snap_y values from the coords before
+	calling ourselves recursively, otherwise we run into an infinite
+	recursion.
+
+2006-11-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimprectangletool.c: removed
 	gimp_rectangle_tool_get_function() and set_function().
 
