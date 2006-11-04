@@ -475,7 +475,8 @@ gimp_image_map_abort (GimpImageMap *image_map)
 static gboolean
 gimp_image_map_do (GimpImageMap *image_map)
 {
-  gint i;
+  GimpImage *image;
+  gint       i;
 
   if (! gimp_item_is_attached (GIMP_ITEM (image_map->drawable)))
     {
@@ -484,18 +485,17 @@ gimp_image_map_do (GimpImageMap *image_map)
       return FALSE;
     }
 
+  image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
+
   /*  Process up to 16 tiles in one go. This reduces the overhead
    *  caused by updating the display while the imagemap is being
    *  applied and gives us a tiny speedup.
    */
   for (i = 0; i < 16; i++)
     {
-      GimpImage   *image;
       PixelRegion  srcPR;
       PixelRegion  destPR;
       gint         x, y, w, h;
-
-      image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
 
       x = image_map->destPR.x;
       y = image_map->destPR.y;
@@ -514,6 +514,7 @@ gimp_image_map_do (GimpImageMap *image_map)
       image_map->apply_func (image_map->user_data,
                              &image_map->srcPR,
                              &image_map->destPR);
+
 
       pixel_region_init (&srcPR, image->shadow, x, y, w, h, FALSE);
 

@@ -671,7 +671,7 @@ gimp_item_translate (GimpItem *item,
   g_return_if_fail (GIMP_IS_ITEM (item));
 
   item_class = GIMP_ITEM_GET_CLASS (item);
-  image     = gimp_item_get_image (item);
+  image = gimp_item_get_image (item);
 
   if (! gimp_item_is_attached (item))
     push_undo = FALSE;
@@ -739,7 +739,7 @@ gimp_item_scale (GimpItem              *item,
     return;
 
   item_class = GIMP_ITEM_GET_CLASS (item);
-  image     = gimp_item_get_image (item);
+  image = gimp_item_get_image (item);
 
   if (gimp_item_is_attached (item))
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_SCALE,
@@ -904,7 +904,7 @@ gimp_item_resize (GimpItem    *item,
     return;
 
   item_class = GIMP_ITEM_GET_CLASS (item);
-  image     = gimp_item_get_image (item);
+  image = gimp_item_get_image (item);
 
   if (gimp_item_is_attached (item))
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
@@ -931,7 +931,7 @@ gimp_item_flip (GimpItem            *item,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   item_class = GIMP_ITEM_GET_CLASS (item);
-  image     = gimp_item_get_image (item);
+  image = gimp_item_get_image (item);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
                                item_class->flip_desc);
@@ -957,7 +957,7 @@ gimp_item_rotate (GimpItem         *item,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   item_class = GIMP_ITEM_GET_CLASS (item);
-  image     = gimp_item_get_image (item);
+  image = gimp_item_get_image (item);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
                                item_class->rotate_desc);
@@ -989,7 +989,7 @@ gimp_item_transform (GimpItem               *item,
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   item_class = GIMP_ITEM_GET_CLASS (item);
-  image     = gimp_item_get_image (item);
+  image = gimp_item_get_image (item);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
                                item_class->transform_desc);

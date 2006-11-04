@@ -281,6 +281,7 @@ pixel_regions_register (gint num_regions,
   va_start (ap, num_regions);
 
   found = FALSE;
+
   while (num_regions --)
     {
       PixelRegionHolder *PRH;
@@ -302,10 +303,11 @@ pixel_regions_register (gint num_regions,
           PRH->starty            = PR->y;
           PRH->PR->process_count = 0;
 
-          if (!found)
+          if (! found)
             {
               found = TRUE;
-              PRI->region_width = PR->w;
+
+              PRI->region_width  = PR->w;
               PRI->region_height = PR->h;
             }
         }
@@ -502,8 +504,7 @@ pixel_regions_configure (PixelRegionIterator *PRI)
   PRI->portion_width  = get_portion_width (PRI);
   PRI->portion_height = get_portion_height (PRI);
 
-  if (PRI->portion_width  == 0 ||
-      PRI->portion_height == 0)
+  if (PRI->portion_width  == 0 || PRI->portion_height == 0)
     {
       /*  free the pixel regions list  */
       if (PRI->pixel_regions)

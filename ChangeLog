@@ -1,3 +1,11 @@
+2006-11-04  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagemap.c (gimp_image_map_do): moved call to
+	gimp_item_get_image() out of the loop.
+
+	* app/base/pixel-region.c
+	* app/core/gimpitem.c: formatting.
+
 2006-11-03  Sven Neumann  <sven@gimp.org>
 
 	* modules/cdisplay_lcms.c: update the configuration dialog when
