@@ -1,5 +1,10 @@
 2006-11-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimprectangletool.c: removed
+	gimp_rectangle_tool_get_function() and set_function().
+
+2006-11-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimprectangletool.c: pause the draw tool earlier in
 	motion() so we don't get artifacts when the function changes.
 	Fixed inside_x and inside_y usage in oper_update(). Get rid of

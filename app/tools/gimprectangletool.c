@@ -101,10 +101,6 @@ static void gimp_rectangle_tool_iface_base_init     (GimpRectangleToolInterface 
 static GimpRectangleToolPrivate *
             gimp_rectangle_tool_get_private         (GimpRectangleTool *tool);
 
-void        gimp_rectangle_tool_set_function        (GimpRectangleTool *tool,
-                                                     guint              function);
-guint       gimp_rectangle_tool_get_function        (GimpRectangleTool *tool);
-
 GimpRectangleConstraint
             gimp_rectangle_tool_get_constraint      (GimpRectangleTool *tool);
 
@@ -317,33 +313,6 @@ gimp_rectangle_tool_install_properties (GObjectClass *klass)
 }
 
 void
-gimp_rectangle_tool_set_function (GimpRectangleTool *tool,
-                                  guint              function)
-{
-  GimpRectangleToolPrivate *private;
-
-  g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-
-  private->function = function;
-
-  g_object_notify (G_OBJECT (tool), "function");
-}
-
-guint
-gimp_rectangle_tool_get_function (GimpRectangleTool *tool)
-{
-  GimpRectangleToolPrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (tool), 0);
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-
-  return private->function;
-}
-
-void
 gimp_rectangle_tool_set_constraint (GimpRectangleTool       *tool,
                                     GimpRectangleConstraint  constraint)
 {
@@ -409,7 +378,7 @@ gimp_rectangle_tool_set_property (GObject      *object,
       private->y2 = g_value_get_int (value);
       break;
     case GIMP_RECTANGLE_TOOL_PROP_FUNCTION:
-      gimp_rectangle_tool_set_function (rectangle, g_value_get_uint (value));
+      private->function = g_value_get_uint (value);
       break;
     case GIMP_RECTANGLE_TOOL_PROP_CONSTRAINT:
       gimp_rectangle_tool_set_constraint (rectangle, g_value_get_uint (value));
@@ -446,7 +415,7 @@ gimp_rectangle_tool_get_property (GObject      *object,
       g_value_set_int (value, private->y2);
       break;
     case GIMP_RECTANGLE_TOOL_PROP_FUNCTION:
-      g_value_set_uint (value, gimp_rectangle_tool_get_function (rectangle));
+      g_value_set_uint (value, private->function);
       break;
     case GIMP_RECTANGLE_TOOL_PROP_CONSTRAINT:
       g_value_set_uint (value, gimp_rectangle_tool_get_constraint (rectangle));
