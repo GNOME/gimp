@@ -1,3 +1,15 @@
+2006-11-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimpbase/libgimpbase-sections.txt: updated.
+
+	* libgimp/tmpl/gimpedit.sgml
+	* libgimp/tmpl/gimpfileops.sgml
+	* libgimp/tmpl/gimpfontselectbutton.sgml
+	* libgimp/tmpl/gimpvectors.sgml
+	* libgimpbase/tmpl/gimpbaseenums.sgml
+	* libgimpconfig/tmpl/gimpcolorconfig.sgml: regenerated.
+
 2006-10-26  Simon Budig  <simon@gimp.org>
 
         * devel-docs/libgimp/tmpl/gimppaths.sgml

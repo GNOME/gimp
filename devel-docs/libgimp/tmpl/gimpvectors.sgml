@@ -17,6 +17,55 @@ gimpvectors
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### FUNCTION gimp_vectors_new ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_new_from_file ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@filename: 
+@merge: 
+@scale: 
+@num_vectors: 
+@vectors_ids: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_new_from_string ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@string: 
+@length: 
+@merge: 
+@scale: 
+@num_vectors: 
+@vectors_ids: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_get_strokes ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@num_strokes: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_vectors_get_image ##### -->
 <para>
 
@@ -62,16 +111,6 @@ gimpvectors
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_vectors_new ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@name: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_vectors_set_linked ##### -->
 <para>
 
@@ -112,13 +151,13 @@ gimpvectors
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_vectors_get_strokes ##### -->
+<!-- ##### FUNCTION gimp_vectors_remove_stroke ##### -->
 <para>
 
 </para>
 
 @vectors_ID: 
-@num_strokes: 
+@stroke_id: 
 @Returns: 
 
 
@@ -177,6 +216,19 @@ gimpvectors
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_vectors_stroke_new_from_points ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@type: 
+@num_points: 
+@controlpoints: 
+@closed: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_vectors_stroke_close ##### -->
 <para>
 
@@ -195,6 +247,19 @@ gimpvectors
 @vectors_ID: 
 @stroke_id: 
 @precision: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_stroke_get_points ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@num_points: 
+@controlpoints: 
+@closed: 
 @Returns: 
 
 

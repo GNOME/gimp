@@ -360,6 +360,7 @@ gimp_edit_fill
 gimp_edit_bucket_fill
 gimp_edit_blend
 gimp_edit_stroke
+gimp_edit_stroke_vectors
 </SECTION>
 
 <SECTION>
@@ -367,6 +368,7 @@ gimp_edit_stroke
 gimp_temp_name
 gimp_file_load
 gimp_file_load_layer
+gimp_file_load_layers
 gimp_file_save
 gimp_register_magic_load_handler
 gimp_register_load_handler
@@ -676,7 +678,6 @@ gimp_path_set_locked
 gimp_path_set_tattoo
 gimp_path_to_selection
 gimp_path_import
-gimp_path_import_string
 </SECTION>
 
 <SECTION>
@@ -882,25 +883,29 @@ gimp_image_undo_thaw
 
 <SECTION>
 <FILE>gimpvectors</FILE>
+gimp_vectors_new
+gimp_vectors_new_from_file
+gimp_vectors_new_from_string
+gimp_vectors_get_strokes
 gimp_vectors_get_image
 gimp_vectors_get_linked
 gimp_vectors_get_name
 gimp_vectors_get_tattoo
 gimp_vectors_get_visible
-gimp_vectors_new
 gimp_vectors_set_linked
 gimp_vectors_set_name
 gimp_vectors_set_tattoo
 gimp_vectors_set_visible
-gimp_vectors_get_strokes
+gimp_vectors_remove_stroke
 gimp_vectors_to_selection
 gimp_vectors_parasite_attach
 gimp_vectors_parasite_detach
 gimp_vectors_parasite_find
 gimp_vectors_parasite_list
+gimp_vectors_stroke_new_from_points
 gimp_vectors_stroke_close
-gimp_vectors_stroke_remove
 gimp_vectors_stroke_get_length
+gimp_vectors_stroke_get_points
 gimp_vectors_stroke_get_point_at_dist
 gimp_vectors_stroke_interpolate
 gimp_vectors_stroke_scale

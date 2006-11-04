@@ -324,3 +324,10 @@ Basic GIMP enumeration data types.
 @GIMP_TRANSFORM_FORWARD: 
 @GIMP_TRANSFORM_BACKWARD: 
 
+<!-- ##### ENUM GimpVectorsStrokeType ##### -->
+<para>
+
+</para>
+
+@GIMP_VECTORS_STROKE_TYPE_BEZIER: 
+
