@@ -1,5 +1,12 @@
 2006-11-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimprectangleoptions.c
+	(gimp_rectangle_options_iface_base_init): remove
+	GIMP_CONFIG_PARAM_SERIALIZE from the x0, y0, width, height,
+	center-x and center-y properties. Fixes bug #346683.
+
+2006-11-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpcroptool.c
 	* app/tools/gimprectangleselecttool.c
 	* app/tools/gimprectangletool.[ch]: moved stuff from
