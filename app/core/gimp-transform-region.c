@@ -74,7 +74,6 @@ static void     sample_linear     (PixelSurround *surround,
                                    guchar        *color,
                                    gint           bytes,
                                    gint           alpha);
-static gdouble *create_lanczos_lookup_transform (void);
 
 
 /*  public functions  */
@@ -195,28 +194,28 @@ gimp_transform_region (GimpPickable          *pickable,
    */
   if (interpolation_type == GIMP_INTERPOLATION_LANCZOS)
     {
-      gdouble *lanczos  = NULL;          /* Lanczos lookup table                */
-      gdouble  x_kernel[LANCZOS_WIDTH2]; /* 1-D kernels of Lanczos window coeffs */
+      gfloat  *lanczos;                  /* Lanczos lookup table         */
+      gdouble  x_kernel[LANCZOS_WIDTH2]; /* 1-D kernels of window coeffs */
       gdouble  y_kernel[LANCZOS_WIDTH2];
-      gdouble  x_sum, y_sum;             /* sum of Lanczos weights              */
+      gdouble  x_sum, y_sum;             /* sum of Lanczos weights       */
 
-      gdouble uw;
-      gdouble ww;
-      gdouble vw;
-      gdouble du;
-      gdouble dv;
+      gdouble  uw;
+      gdouble  ww;
+      gdouble  vw;
+      gdouble  du;
+      gdouble  dv;
 
-      gint    pos;
-      gdouble newval;
-      gdouble arecip;
-      gdouble aval;
+      gint     pos;
+      gdouble  newval;
+      gdouble  arecip;
+      gdouble  aval;
 
-      guchar  lwin[LANCZOS_WIDTH2 * LANCZOS_WIDTH2][MAX_CHANNELS + 1];
-      gint    b, u, v, i, j;
-      gint    pu, pv, su, sv;
+      guchar   lwin[LANCZOS_WIDTH2 * LANCZOS_WIDTH2][MAX_CHANNELS + 1];
+      gint     b, u, v, i, j;
+      gint     pu, pv, su, sv;
 
       /* allocate and fill lanczos lookup table */
-      lanczos = create_lanczos_lookup_transform ();
+      lanczos = create_lanczos_lookup ();
 
       for (y = dest_y1; y < dest_y2; y++)
         {
@@ -991,32 +990,3 @@ sample_cubic (PixelSurround *surround,
   pixel_surround_release (surround);
 }
 
-static inline gdouble
-sinc (gdouble x)
-{
-  gdouble y = x * G_PI;
-
-  if (ABS (x) < EPSILON)
-    return 1.0;
-
-  return sin (y) / y;
-}
-
-static gdouble *
-create_lanczos_lookup_transform (void)
-{
-  const gdouble dx = (gdouble) LANCZOS_WIDTH / (gdouble) (LANCZOS_SAMPLES - 1);
-
-  gdouble *lanczos = g_new (gdouble, LANCZOS_SAMPLES);
-  gdouble  x      = 0.0;
-  gint     i;
-
-  for (i = 0; i < LANCZOS_SAMPLES; i++)
-    {
-      lanczos[i] = ((ABS (x) < LANCZOS_WIDTH) ?
-                   (sinc (x) * sinc (x / LANCZOS_WIDTH)) : 0.0);
-      x += dx;
-    }
-
-  return lanczos;
-}
