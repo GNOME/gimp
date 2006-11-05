@@ -1,3 +1,8 @@
+2006-11-05  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/tileit.c: applied patch from Saul Goode to fix
+	confusion with flip direction (bug #365436).
+
 2006-11-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpcroptool.[ch]
