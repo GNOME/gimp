@@ -83,11 +83,8 @@ gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass)
 {
-  GimpDrawToolClass       *draw_tool_class;
-  GimpRectSelectToolClass *rect_tool_class;
-
-  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
-  rect_tool_class = GIMP_RECT_SELECT_TOOL_CLASS (klass);
+  GimpDrawToolClass       *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GimpRectSelectToolClass *rect_tool_class = GIMP_RECT_SELECT_TOOL_CLASS (klass);
 
   draw_tool_class->draw   = gimp_ellipse_select_tool_draw;
 
@@ -97,7 +94,7 @@ gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass)
 static void
 gimp_ellipse_select_tool_init (GimpEllipseSelectTool *ellipse_select)
 {
-  GimpTool          *tool      = GIMP_TOOL (ellipse_select);
+  GimpTool *tool = GIMP_TOOL (ellipse_select);
 
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_ELLIPSE_SELECT);
@@ -107,8 +104,8 @@ static void
 gimp_ellipse_select_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpRectSelectTool *rect_sel = GIMP_RECT_SELECT_TOOL (draw_tool);
-  gint x1, y1;
-  gint x2, y2;
+  gint                x1, y1;
+  gint                x2, y2;
 
   g_object_get (rect_sel,
                 "x1", &x1,

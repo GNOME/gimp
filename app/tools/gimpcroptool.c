@@ -42,12 +42,9 @@
 
 static void     gimp_crop_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface);
 
-static GObject *
-                gimp_crop_tool_constructor         (GType              type,
+static GObject *gimp_crop_tool_constructor         (GType              type,
                                                     guint              n_params,
                                                     GObjectConstructParam *params);
-static void     gimp_crop_tool_dispose             (GObject           *object);
-static void     gimp_crop_tool_finalize            (GObject           *object);
 static gboolean gimp_crop_tool_initialize          (GimpTool          *tool,
                                                     GimpDisplay       *display,
                                                     GError           **error);
@@ -117,11 +114,10 @@ gimp_crop_tool_class_init (GimpCropToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  object_class->constructor  = gimp_crop_tool_constructor;
-  object_class->dispose      = gimp_crop_tool_dispose;
-  object_class->finalize     = gimp_crop_tool_finalize;
-  object_class->set_property = gimp_rectangle_tool_set_property;
-  object_class->get_property = gimp_rectangle_tool_get_property;
+  object_class->constructor       = gimp_crop_tool_constructor;
+  object_class->set_property      = gimp_rectangle_tool_set_property;
+  object_class->get_property      = gimp_rectangle_tool_get_property;
+
   gimp_rectangle_tool_install_properties (object_class);
 
   tool_class->initialize          = gimp_crop_tool_initialize;
@@ -138,6 +134,12 @@ gimp_crop_tool_class_init (GimpCropToolClass *klass)
 }
 
 static void
+gimp_crop_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface)
+{
+  iface->execute = gimp_crop_tool_execute;
+}
+
+static void
 gimp_crop_tool_init (GimpCropTool *crop_tool)
 {
   GimpTool           *tool      = GIMP_TOOL (crop_tool);
@@ -145,12 +147,6 @@ gimp_crop_tool_init (GimpCropTool *crop_tool)
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_CROP);
   gimp_rectangle_tool_set_constraint (rect_tool, TRUE);
-}
-
-static void
-gimp_crop_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface)
-{
-  iface->execute = gimp_crop_tool_execute;
 }
 
 static GObject *
@@ -190,25 +186,6 @@ gimp_crop_tool_initialize (GimpTool     *tool,
     gimp_rectangle_tool_set_constraint (rectangle, GIMP_RECTANGLE_CONSTRAIN_IMAGE);
 
   return gimp_rectangle_tool_initialize (tool, display, error);
-}
-
-static void
-gimp_crop_tool_finalize (GObject *object)
-{
-  G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gimp_crop_tool_dispose (GObject *object)
-{
-  GimpTool          *tool      = GIMP_TOOL (object);
-  GObject           *options   = G_OBJECT (gimp_tool_get_options (tool));
-
-  gimp_rectangle_tool_dispose (object);
-
-  g_signal_handlers_disconnect_by_func (options,
-                                        G_CALLBACK (gimp_crop_tool_notify_layer_only),
-                                        tool);
 }
 
 static void
@@ -341,7 +318,9 @@ gimp_crop_tool_notify_layer_only (GimpCropOptions *options,
                 NULL);
 
   if (layer_only)
-    gimp_rectangle_tool_set_constraint (rectangle, GIMP_RECTANGLE_CONSTRAIN_DRAWABLE);
+    gimp_rectangle_tool_set_constraint (rectangle,
+                                        GIMP_RECTANGLE_CONSTRAIN_DRAWABLE);
   else
-    gimp_rectangle_tool_set_constraint (rectangle, GIMP_RECTANGLE_CONSTRAIN_IMAGE);
+    gimp_rectangle_tool_set_constraint (rectangle,
+                                        GIMP_RECTANGLE_CONSTRAIN_IMAGE);
 }

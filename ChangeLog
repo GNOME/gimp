@@ -1,3 +1,14 @@
+2006-11-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpcroptool.[ch]
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimprectangleselecttool.[ch]
+	* app/tools/gimprectangletool.[ch]: removed dispose() and
+	finalize() implementations. The finalize() ones did nothing and
+	dispose() was only redundantly disconnecting from signals that
+	were connected using connect_object() anyway. Some cosmetic
+	cleanups all over the place.
+
 2006-11-05  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/file-actions.c

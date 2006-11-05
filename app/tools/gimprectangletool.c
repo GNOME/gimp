@@ -224,6 +224,8 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface)
                                                               GIMP_RECTANGLE_CONSTRAIN_NONE,
                                                               GIMP_PARAM_READWRITE));
 
+      iface->execute           = NULL;
+      iface->cancel            = NULL;
       iface->rectangle_changed = NULL;
 
       initialized = TRUE;
@@ -415,8 +417,6 @@ gimp_rectangle_tool_constructor (GObject *object)
   GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (object);
   GObject           *options;
 
-  tool->display = NULL;
-
   options = G_OBJECT (gimp_tool_get_options (tool));
 
   g_signal_connect_object (options, "notify",
@@ -425,17 +425,6 @@ gimp_rectangle_tool_constructor (GObject *object)
 
   gimp_rectangle_tool_set_constraint (rectangle,
                                       GIMP_RECTANGLE_CONSTRAIN_NONE);
-}
-
-void
-gimp_rectangle_tool_dispose (GObject *object)
-{
-  GimpTool          *tool      = GIMP_TOOL (object);
-  GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (object);
-  GObject           *options   = G_OBJECT (gimp_tool_get_options (tool));
-
-  g_signal_handlers_disconnect_matched (options, G_SIGNAL_MATCH_DATA,
-                                        0, 0, NULL, NULL, rectangle);
 }
 
 gboolean

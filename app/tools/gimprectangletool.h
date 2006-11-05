@@ -36,14 +36,6 @@ typedef enum
 } GimpRectangleToolProp;
 
 
-#define GIMP_TYPE_RECTANGLE_TOOL               (gimp_rectangle_tool_interface_get_type ())
-#define GIMP_IS_RECTANGLE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_RECTANGLE_TOOL))
-#define GIMP_RECTANGLE_TOOL(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RECTANGLE_TOOL, GimpRectangleTool))
-#define GIMP_RECTANGLE_TOOL_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_RECTANGLE_TOOL, GimpRectangleToolInterface))
-
-#define GIMP_RECTANGLE_TOOL_GET_OPTIONS(t)     (GIMP_RECTANGLE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
-
-
 /*  possible functions  */
 enum
 {
@@ -62,6 +54,14 @@ enum
 };
 
 
+#define GIMP_TYPE_RECTANGLE_TOOL               (gimp_rectangle_tool_interface_get_type ())
+#define GIMP_IS_RECTANGLE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_RECTANGLE_TOOL))
+#define GIMP_RECTANGLE_TOOL(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RECTANGLE_TOOL, GimpRectangleTool))
+#define GIMP_RECTANGLE_TOOL_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_RECTANGLE_TOOL, GimpRectangleToolInterface))
+
+#define GIMP_RECTANGLE_TOOL_GET_OPTIONS(t)     (GIMP_RECTANGLE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
+
 typedef struct _GimpRectangleTool          GimpRectangleTool;
 typedef struct _GimpRectangleToolInterface GimpRectangleToolInterface;
 
@@ -69,6 +69,7 @@ struct _GimpRectangleToolInterface
 {
   GTypeInterface base_iface;
 
+  /*  virtual functions  */
   gboolean (* execute)           (GimpRectangleTool *rect_tool,
                                   gint               x,
                                   gint               y,
@@ -76,6 +77,7 @@ struct _GimpRectangleToolInterface
                                   gint               h);
   void     (* cancel)            (GimpRectangleTool *rect_tool);
 
+  /*  signals  */
   gboolean (* rectangle_changed) (GimpRectangleTool *rect_tool);
 };
 
@@ -84,7 +86,6 @@ GType       gimp_rectangle_tool_interface_get_type  (void) G_GNUC_CONST;
 
 
 void        gimp_rectangle_tool_constructor         (GObject                 *object);
-void        gimp_rectangle_tool_dispose             (GObject                 *object);
 gboolean    gimp_rectangle_tool_initialize          (GimpTool                *tool,
                                                      GimpDisplay             *display,
                                                      GError                 **error);

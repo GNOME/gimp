@@ -19,6 +19,7 @@
 #ifndef  __GIMP_RECT_SELECT_TOOL_H__
 #define  __GIMP_RECT_SELECT_TOOL_H__
 
+
 #include "gimpselectiontool.h"
 
 

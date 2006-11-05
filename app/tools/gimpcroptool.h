@@ -19,6 +19,7 @@
 #ifndef  __GIMP_CROP_TOOL_H__
 #define  __GIMP_CROP_TOOL_H__
 
+
 #include "gimpdrawtool.h"
 
 
