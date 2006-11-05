@@ -20,9 +20,6 @@
 #define  __GIMP_RECTANGLE_TOOL_H__
 
 
-#include "gimptool.h"
-
-
 typedef enum
 {
   GIMP_RECTANGLE_TOOL_PROP_0,
@@ -84,7 +81,6 @@ struct _GimpRectangleToolInterface
 
 GType       gimp_rectangle_tool_interface_get_type  (void) G_GNUC_CONST;
 
-
 void        gimp_rectangle_tool_constructor         (GObject                 *object);
 
 void        gimp_rectangle_tool_control             (GimpTool                *tool,
@@ -125,7 +121,6 @@ void        gimp_rectangle_tool_cursor_update       (GimpTool                *to
 void        gimp_rectangle_tool_draw                (GimpDrawTool            *draw);
 gboolean    gimp_rectangle_tool_execute             (GimpRectangleTool       *rect_tool);
 void        gimp_rectangle_tool_cancel              (GimpRectangleTool       *rect_tool);
-void        gimp_rectangle_tool_halt                (GimpRectangleTool       *rectangle);
 void        gimp_rectangle_tool_configure           (GimpRectangleTool       *rectangle);
 void        gimp_rectangle_tool_set_constraint      (GimpRectangleTool       *rectangle,
                                                      GimpRectangleConstraint  constraint);
@@ -133,6 +128,7 @@ gboolean    gimp_rectangle_tool_no_movement         (GimpRectangleTool       *re
 void        gimp_rectangle_tool_get_press_coords    (GimpRectangleTool       *rectangle,
                                                      gint                    *pressx_ptr,
                                                      gint                    *pressy_ptr);
+
 
 /*  convenience functions  */
 
