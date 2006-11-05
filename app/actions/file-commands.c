@@ -66,7 +66,7 @@
 static void   file_open_dialog_show        (GtkWidget   *parent,
                                             GimpImage   *image,
                                             const gchar *uri,
-                                            gboolean     open_as_layer);
+                                            gboolean     open_as_layers);
 static void   file_save_dialog_show        (GimpImage   *image,
                                             GtkWidget   *parent,
                                             const gchar *title,
@@ -111,8 +111,8 @@ file_open_from_image_cmd_callback (GtkAction *action,
 }
 
 void
-file_open_as_layer_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+file_open_as_layers_cmd_callback (GtkAction *action,
+                                  gpointer   data)
 {
   GimpDisplay *display;
   GtkWidget   *widget;
@@ -443,7 +443,7 @@ static void
 file_open_dialog_show (GtkWidget   *parent,
                        GimpImage   *image,
                        const gchar *uri,
-                       gboolean     open_as_layer)
+                       gboolean     open_as_layers)
 {
   GtkWidget *dialog;
 
@@ -456,9 +456,9 @@ file_open_dialog_show (GtkWidget   *parent,
       if (uri)
         gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);
 
-      if (open_as_layer)
+      if (open_as_layers)
         {
-          gtk_window_set_title (GTK_WINDOW (dialog), _("Open Image as Layer"));
+          gtk_window_set_title (GTK_WINDOW (dialog), _("Open Image as Layers"));
           GIMP_FILE_DIALOG (dialog)->image = image;
         }
       else

@@ -10,7 +10,7 @@
       </placeholder>
       <placeholder name="Open">
         <menuitem action="file-open-from-image" />
-        <menuitem action="file-open-as-layer" />
+        <menuitem action="file-open-as-layers" />
         <menuitem action="file-open-location" />
       </placeholder>
       <menu action="file-open-recent-menu" name="Open Recent">

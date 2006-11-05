@@ -1,5 +1,12 @@
 2006-11-05  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/file-actions.c
+	* app/actions/file-commands.[ch]
+	* menus/image-menu.xml.in: renamed file-open-as-layer to
+	file-open-as-layers to complete the changes done to fix bug #358082.
+
+2006-11-05  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-transform-region.c: applied patch from gg that
 	removes duplicated code (bug #358481).
 
@@ -6725,10 +6732,8 @@
 
 	* data/images/gimp2_2_logo.png: the old logo, as a reference.
 
-	* app/dialogs/about-dialog.c: let GtkAboutDialog deal with the logo.
-	Moved the text animation below the copyright notice and draw it on
-in <Layers>, <Channels>, <Vectors> and
-	<ColormapEditor>:
+	* app/dialogs/about-dialog.c: let GtkAboutDialog deal with the
+	logo.  Moved the text animation below the copyright notice.
 
 	* app/pdb/gimppluginprocedure.c
 	(gimp_plug_in_procedure_add_menu_path): added the argument type
