@@ -1,5 +1,12 @@
 2006-11-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpviewrendererpalette.c
+	(gimp_view_renderer_palette_render): take the additional row/column
+	of pixels the grid line takes at the bottom/right side into account.
+	Fixes bug #369656.
+
+2006-11-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimprectangletool.[ch]: made gimp_rectangle_tool_halt()
 	private. Get rid of some more local variables (use private->foo
 	instead). Fixed statusbar rectangle size display. Some indentation
