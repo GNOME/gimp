@@ -110,6 +110,9 @@ static void     gimp_rect_select_tool_real_select         (GimpRectSelectTool *r
                                                            gint                w,
                                                            gint                h);
 
+static void    gimp_rect_select_tool_round_corners_notify (GimpRectSelectOptions *options,
+                                                           GParamSpec            *pspec,
+                                                           GimpRectSelectTool    *rect_sel);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpRectSelectTool, gimp_rect_select_tool,
@@ -193,14 +196,26 @@ gimp_rect_select_tool_constructor (GType                  type,
                                    guint                  n_params,
                                    GObjectConstructParam *params)
 {
-  GObject  *object;
-  GimpTool *tool;
+  GObject               *object;
+  GimpRectSelectTool    *rect_sel;
+  GimpRectSelectOptions *options;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
-  gimp_rectangle_tool_constructor (object);
+  rect_sel = GIMP_RECT_SELECT_TOOL (object);
+  options  = GIMP_RECT_SELECT_TOOL_GET_OPTIONS (rect_sel);
 
-  tool    = GIMP_TOOL (object);
+  rect_sel->round_corners = options->round_corners;
+  rect_sel->corner_radius = options->corner_radius;
+
+  g_signal_connect_object (options, "notify::round-corners",
+                           G_CALLBACK (gimp_rect_select_tool_round_corners_notify),
+                           object, 0);
+  g_signal_connect_object (options, "notify::corner-radius",
+                           G_CALLBACK (gimp_rect_select_tool_round_corners_notify),
+                           object, 0);
+
+  gimp_rectangle_tool_constructor (object);
 
   return object;
 }
@@ -218,24 +233,24 @@ gimp_rect_select_tool_control (GimpTool       *tool,
 static void
 gimp_rect_select_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpRectSelectTool    *rect_sel = GIMP_RECT_SELECT_TOOL (draw_tool);
-  GimpRectSelectOptions *options  = GIMP_RECT_SELECT_TOOL_GET_OPTIONS (rect_sel);
-  gint                   x1, y1;
-  gint                   x2, y2;
+  GimpRectSelectTool *rect_sel = GIMP_RECT_SELECT_TOOL (draw_tool);
 
-  g_object_get (rect_sel,
-                "x1", &x1,
-                "y1", &y1,
-                "x2", &x2,
-                "y2", &y2,
-                NULL);
+  gimp_rectangle_tool_draw (draw_tool);
 
-  if (options->round_corners)
+  if (rect_sel->round_corners)
     {
+      gint    x1, y1, x2, y2;
       gdouble radius;
       gint    square_size;
 
-      radius = MIN (options->corner_radius,
+      g_object_get (rect_sel,
+                    "x1", &x1,
+                    "y1", &y1,
+                    "x2", &x2,
+                    "y2", &y2,
+                    NULL);
+
+      radius = MIN (rect_sel->corner_radius,
                     MIN ((x2 - x1) / 2.0, (y2 - y1) / 2.0));
 
       square_size = (int) (radius * 2);
@@ -264,8 +279,6 @@ gimp_rect_select_tool_draw (GimpDrawTool *draw_tool)
                                180 * 64, 90 * 64,
                                FALSE);
     }
-
-  gimp_rectangle_tool_draw (draw_tool);
 }
 
 static void
@@ -751,4 +764,17 @@ gimp_rect_select_tool_rectangle_changed (GimpRectangleTool *rectangle)
   gimp_tool_control_set_preserve (tool->control, FALSE);
 
   return TRUE;
+}
+
+static void
+gimp_rect_select_tool_round_corners_notify (GimpRectSelectOptions *options,
+                                            GParamSpec            *pspec,
+                                            GimpRectSelectTool    *rect_sel)
+{
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (rect_sel));
+
+  rect_sel->round_corners = options->round_corners;
+  rect_sel->corner_radius = options->corner_radius;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (rect_sel));
 }

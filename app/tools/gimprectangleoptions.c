@@ -36,42 +36,43 @@
 #include "gimp-intl.h"
 
 
-#define GIMP_RECTANGLE_OPTIONS_GET_PRIVATE(obj) (gimp_rectangle_options_get_private ((GimpRectangleOptions *) (obj)))
+#define GIMP_RECTANGLE_OPTIONS_GET_PRIVATE(obj) \
+  (gimp_rectangle_options_get_private (GIMP_RECTANGLE_OPTIONS (obj)))
 
 typedef struct _GimpRectangleOptionsPrivate GimpRectangleOptionsPrivate;
 
 struct _GimpRectangleOptionsPrivate
 {
-  gboolean auto_shrink;
-  gboolean shrink_merged;
+  gboolean           auto_shrink;
+  gboolean           shrink_merged;
 
-  gboolean highlight;
+  gboolean           highlight;
   GimpRectangleGuide guide;
 
-  gdouble  x0;
-  gdouble  y0;
+  gdouble            x0;
+  gdouble            y0;
 
-  gboolean fixed_width;
-  gdouble  width;
+  gboolean           fixed_width;
+  gdouble            width;
 
-  gboolean fixed_height;
-  gdouble  height;
+  gboolean           fixed_height;
+  gdouble            height;
 
-  gboolean fixed_aspect;
-  gdouble  aspect_numerator;
-  gdouble  aspect_denominator;
+  gboolean           fixed_aspect;
+  gdouble            aspect_numerator;
+  gdouble            aspect_denominator;
 
-  gboolean fixed_center;
-  gdouble  center_x;
-  gdouble  center_y;
+  gboolean           fixed_center;
+  gdouble            center_x;
+  gdouble            center_y;
 
-  GimpUnit unit;
+  GimpUnit           unit;
 };
 
-static void gimp_rectangle_options_iface_base_init     (GimpRectangleOptionsInterface *rectangle_options_iface);
+static void gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *rectangle_options_iface);
 
 static GimpRectangleOptionsPrivate *
-            gimp_rectangle_options_get_private         (GimpRectangleOptions *options);
+            gimp_rectangle_options_get_private     (GimpRectangleOptions *options);
 
 
 GType

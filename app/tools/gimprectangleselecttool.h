@@ -45,6 +45,9 @@ struct _GimpRectSelectTool
   gboolean           saved_show_selection; /* used to remember existing value   */
   GimpUndo          *undo;
   GimpUndo          *redo;
+
+  gboolean           round_corners;
+  gdouble            corner_radius;
 };
 
 struct _GimpRectSelectToolClass

@@ -1,3 +1,13 @@
+2006-11-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimprectangleselecttool.[ch]: cache the round-corners
+	and corner-radius properties in the GimpRectSelectTool struct,
+	connect to "notify" of GimpRectSelectOptions and update display
+	drawing when the options change.
+
+	* app/tools/gimpcroptool.c
+	* app/tools/gimprectangleoptions.c: whitespace stuff.
+
 2006-11-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/tileit.c: applied patch from Saul Goode to fix

@@ -169,7 +169,7 @@ gimp_crop_tool_initialize (GimpTool     *tool,
                            GError      **error)
 {
   GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
-  GObject           *options    = G_OBJECT (gimp_tool_get_options (tool));
+  GObject           *options   = G_OBJECT (gimp_tool_get_options (tool));
   gboolean           layer_only;
 
   g_object_get (options,
@@ -181,9 +181,11 @@ gimp_crop_tool_initialize (GimpTool     *tool,
                            tool, 0);
 
   if (layer_only)
-    gimp_rectangle_tool_set_constraint (rectangle, GIMP_RECTANGLE_CONSTRAIN_DRAWABLE);
+    gimp_rectangle_tool_set_constraint (rectangle,
+                                        GIMP_RECTANGLE_CONSTRAIN_DRAWABLE);
   else
-    gimp_rectangle_tool_set_constraint (rectangle, GIMP_RECTANGLE_CONSTRAIN_IMAGE);
+    gimp_rectangle_tool_set_constraint (rectangle,
+                                        GIMP_RECTANGLE_CONSTRAIN_IMAGE);
 
   return gimp_rectangle_tool_initialize (tool, display, error);
 }
@@ -310,7 +312,7 @@ gimp_crop_tool_notify_layer_only (GimpCropOptions *options,
                                   GParamSpec      *pspec,
                                   GimpTool        *tool)
 {
-  GimpRectangleTool *rectangle   = GIMP_RECTANGLE_TOOL (tool);
+  GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
   gboolean           layer_only;
 
   g_object_get (options,
