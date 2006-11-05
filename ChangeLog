@@ -1,5 +1,16 @@
 2006-11-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpcroptool.c
+	* app/tools/gimprectangleselecttool.c
+	* app/tools/gimprectangletool.[ch]: moved stuff from
+	GimpTool::initialize() to GObject::constructor() and removed all
+	initialize functions entirely. initialize() only needs to be
+	implemented if the tool has a dialog or if initialization() can
+	fail. Also moved some type-checking casts after the
+	g_return_if_fail()s
+
+2006-11-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimprectangleselecttool.[ch]: cache the round-corners
 	and corner-radius properties in the GimpRectSelectTool struct,
 	connect to "notify" of GimpRectSelectOptions and update display

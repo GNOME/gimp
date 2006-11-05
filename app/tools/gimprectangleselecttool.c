@@ -153,7 +153,6 @@ gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass)
 
   gimp_rectangle_tool_install_properties (object_class);
 
-  tool_class->initialize          = gimp_rectangle_tool_initialize;
   tool_class->control             = gimp_rect_select_tool_control;
   tool_class->button_press        = gimp_rect_select_tool_button_press;
   tool_class->button_release      = gimp_rect_select_tool_button_release;
@@ -202,6 +201,8 @@ gimp_rect_select_tool_constructor (GType                  type,
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
+  gimp_rectangle_tool_constructor (object);
+
   rect_sel = GIMP_RECT_SELECT_TOOL (object);
   options  = GIMP_RECT_SELECT_TOOL_GET_OPTIONS (rect_sel);
 
@@ -214,8 +215,6 @@ gimp_rect_select_tool_constructor (GType                  type,
   g_signal_connect_object (options, "notify::corner-radius",
                            G_CALLBACK (gimp_rect_select_tool_round_corners_notify),
                            object, 0);
-
-  gimp_rectangle_tool_constructor (object);
 
   return object;
 }
