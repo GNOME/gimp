@@ -443,9 +443,9 @@ xcf_save_image (XcfInfo   *info,
 }
 
 static gboolean
-xcf_save_image_props (XcfInfo   *info,
-                      GimpImage *image,
-                      GError   **error)
+xcf_save_image_props (XcfInfo    *info,
+                      GimpImage  *image,
+                      GError    **error)
 {
   GimpParasite *parasite = NULL;
   GimpUnit      unit     = gimp_image_get_unit (image);
@@ -514,10 +514,10 @@ xcf_save_image_props (XcfInfo   *info,
 }
 
 static gboolean
-xcf_save_layer_props (XcfInfo   *info,
-                      GimpImage *image,
-                      GimpLayer *layer,
-                      GError   **error)
+xcf_save_layer_props (XcfInfo    *info,
+                      GimpImage  *image,
+                      GimpLayer  *layer,
+                      GError    **error)
 {
   GimpParasite *parasite = NULL;
 
@@ -599,10 +599,10 @@ xcf_save_layer_props (XcfInfo   *info,
 }
 
 static gboolean
-xcf_save_channel_props (XcfInfo     *info,
-                        GimpImage   *image,
-                        GimpChannel *channel,
-                        GError     **error)
+xcf_save_channel_props (XcfInfo      *info,
+                        GimpImage    *image,
+                        GimpChannel  *channel,
+                        GError      **error)
 {
   guchar col[3];
 
@@ -637,10 +637,10 @@ xcf_save_channel_props (XcfInfo     *info,
 }
 
 static gboolean
-xcf_save_prop (XcfInfo   *info,
-               GimpImage *image,
-               PropType   prop_type,
-               GError   **error,
+xcf_save_prop (XcfInfo    *info,
+               GimpImage  *image,
+               PropType    prop_type,
+               GError    **error,
                ...)
 {
   guint32 size;
@@ -1127,10 +1127,10 @@ xcf_save_prop (XcfInfo   *info,
 }
 
 static gboolean
-xcf_save_layer (XcfInfo   *info,
-                GimpImage *image,
-                GimpLayer *layer,
-                GError   **error)
+xcf_save_layer (XcfInfo    *info,
+                GimpImage  *image,
+                GimpLayer  *layer,
+                GError    **error)
 {
   guint32 saved_pos;
   guint32 offset;
@@ -1268,9 +1268,9 @@ xcf_calc_levels (gint size,
 
 
 static gboolean
-xcf_save_hierarchy (XcfInfo     *info,
-                    TileManager *tiles,
-                    GError     **error)
+xcf_save_hierarchy (XcfInfo      *info,
+                    TileManager  *tiles,
+                    GError      **error)
 {
   guint32 saved_pos;
   guint32 offset;
@@ -1347,9 +1347,9 @@ xcf_save_hierarchy (XcfInfo     *info,
 }
 
 static gboolean
-xcf_save_level (XcfInfo     *info,
-                TileManager *level,
-                GError     **error)
+xcf_save_level (XcfInfo      *info,
+                TileManager  *level,
+                GError      **error)
 {
   guint32  saved_pos;
   guint32  offset;

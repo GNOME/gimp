@@ -82,13 +82,14 @@ file_load_invoker (GimpProcedure     *procedure,
     g_value_transform (&args->values[i], &new_args->values[i]);
 
   for (i = 3; i < proc->num_args; i++)
-    if (G_IS_PARAM_SPEC_STRING (proc->args[i]))        
+    if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
       g_value_set_static_string (&new_args->values[i], "");
 
-  return_vals = gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
-                                                         context, progress,
-                                                         GIMP_OBJECT (proc)->name,
-                                                         new_args);
+  return_vals =
+    gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
+                                             context, progress,
+                                             GIMP_OBJECT (proc)->name,
+                                             new_args);
 
   g_value_array_free (new_args);
 
