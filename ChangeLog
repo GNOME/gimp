@@ -1,5 +1,11 @@
 2006-11-06  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpdrawtool.[ch] (gimp_draw_tool_draw_corner)
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_draw):
+	highlight the handles on mouse-over.
+
+2006-11-06  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpdrawtool.[ch]: let gimp_draw_tool_draw_corner()
 	also handle north, south, east and west corners and allow for
 	filled corners.

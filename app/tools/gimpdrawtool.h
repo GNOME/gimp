@@ -161,7 +161,7 @@ void       gimp_draw_tool_draw_handle              (GimpDrawTool     *draw_tool,
                                                     GtkAnchorType     anchor,
                                                     gboolean          use_offsets);
 void       gimp_draw_tool_draw_corner              (GimpDrawTool     *draw_tool,
-                                                    gboolean          filled,
+                                                    gboolean          highlight,
                                                     gdouble           x1,
                                                     gdouble           y1,
                                                     gdouble           x2,

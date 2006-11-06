@@ -1464,7 +1464,12 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
       function = RECT_CREATING;
     }
 
-  g_object_set (rectangle, "function", function, NULL);
+  if (function != private->function)
+    {
+      gimp_draw_tool_pause (draw_tool);
+      g_object_set (rectangle, "function", function, NULL);
+      gimp_draw_tool_resume (draw_tool);
+    }
 }
 
 void
@@ -1549,19 +1554,10 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
                                  private->y2 - private->y1,
                                  FALSE);
 
-  gimp_rectangle_tool_draw_guides (draw_tool);
-
-  if (gimp_tool_control_is_active (tool->control))
+  switch (private->function)
     {
-      gimp_draw_tool_draw_corner (draw_tool, FALSE,
-                                  private->x1, private->y1,
-                                  private->x2, private->y2,
-                                  private->dcw, private->dch,
-                                  gimp_rectangle_tool_get_anchor (private),
-                                  FALSE);
-    }
-  else
-    {
+    case RECT_CREATING:
+    case RECT_MOVING:
       gimp_draw_tool_draw_corner (draw_tool, FALSE,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
@@ -1582,7 +1578,20 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
                                   private->x2, private->y2,
                                   private->dcw, private->dch,
                                   GTK_ANCHOR_SOUTH_EAST, FALSE);
+      break;
+
+    default:
+      gimp_draw_tool_draw_corner (draw_tool,
+                                  ! gimp_tool_control_is_active (tool->control),
+                                  private->x1, private->y1,
+                                  private->x2, private->y2,
+                                  private->dcw, private->dch,
+                                  gimp_rectangle_tool_get_anchor (private),
+                                  FALSE);
+      break;
     }
+
+  gimp_rectangle_tool_draw_guides (draw_tool);
 }
 
 static void
