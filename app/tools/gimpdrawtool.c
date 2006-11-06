@@ -812,6 +812,71 @@ gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
     }
 }
 
+void
+gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
+                            gdouble         x,
+                            gdouble         y,
+                            gint            width,
+                            gint            height,
+                            GtkAnchorType   anchor,
+                            gboolean        use_offsets)
+{
+  GimpDisplayShell *shell;
+  gint              tx, ty;
+
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_if_fail (width > 2 && height > 2);
+
+  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+
+  gimp_display_shell_transform_xy (shell,
+                                   x, y,
+                                   &tx, &ty,
+                                   use_offsets);
+
+  switch (anchor)
+    {
+    case GTK_ANCHOR_NORTH_WEST:
+      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                             tx + 1,         ty + height - 1,
+                             tx + width - 1, ty + height - 1);
+      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                             tx + width - 1, ty + 1,
+                             tx + width - 1, ty + height);
+      break;
+
+    case GTK_ANCHOR_NORTH_EAST:
+      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                             tx - 2,         ty + height - 1,
+                             tx - width,     ty + height - 1);
+      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                             tx - width, ty + 1,
+                             tx - width, ty + height);
+      break;
+
+    case GTK_ANCHOR_SOUTH_WEST:
+      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                             tx + 1,         ty - height,
+                             tx + width - 1, ty - height);
+      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                             tx + width - 1, ty - height,
+                             tx + width - 1, ty - 1);
+      break;
+
+    case GTK_ANCHOR_SOUTH_EAST:
+      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                             tx - 2,         ty - height,
+                             tx - width,     ty - height);
+      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                             tx - width,     ty - height,
+                             tx - width,     ty - 1);
+      break;
+
+    default:
+      break;
+    }
+}
+
 gboolean
 gimp_draw_tool_on_handle (GimpDrawTool   *draw_tool,
                           GimpDisplay    *display,

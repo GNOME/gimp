@@ -1,5 +1,11 @@
 2006-11-05  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpdrawtool.[ch]
+	* app/tools/gimprectangletool.c: changed the way that the handles
+	are drawn. This is still work in progress.
+
+2006-11-05  Sven Neumann  <sven@gimp.org>
+
 	* app/xcf-save.c: formatting.
 
 2006-11-05  Sven Neumann  <sven@gimp.org>

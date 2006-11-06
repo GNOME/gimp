@@ -54,7 +54,10 @@ enum
 };
 
 /*  speed of key movement  */
-#define ARROW_VELOCITY 25
+#define ARROW_VELOCITY   25
+
+#define HANDLE_SIZE      50
+#define MIN_HANDLE_SIZE   6
 
 
 #define GIMP_RECTANGLE_TOOL_GET_PRIVATE(obj) \
@@ -81,9 +84,6 @@ struct _GimpRectangleToolPrivate
 
   gint                    lastx;      /*  previous x coord               */
   gint                    lasty;      /*  previous y coord               */
-
-  gint                    dx1, dy1;   /*  display coords                 */
-  gint                    dx2, dy2;   /*                                 */
 
   gint                    dcw, dch;   /*  width and height of edges      */
 
@@ -1370,7 +1370,8 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
   GimpDisplayShell         *shell;
   gboolean                  inside_x;
   gboolean                  inside_y;
-  gdouble                   handle_w, handle_h;
+  gdouble                   handle_w;
+  gdouble                   handle_h;
   gint                      function;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
@@ -1525,8 +1526,6 @@ gimp_rectangle_tool_cursor_update (GimpTool        *tool,
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 }
 
-#define ANCHOR_SIZE 14
-
 void
 gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
 {
@@ -1551,118 +1550,81 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
   if (gimp_tool_control_is_active (tool->control))
     {
       GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (tool->display->shell);
-      gdouble           handle_w;
-      gdouble           handle_h;
-      gint              X1 = private->x1;
-      gint              Y1 = private->y1;
-      gint              X2 = private->x2;
-      gint              Y2 = private->y2;
-      gboolean          do_it    = TRUE;
-
-      handle_w = private->dcw / SCALEFACTOR_X (shell);
-      handle_h = private->dch / SCALEFACTOR_Y (shell);
+      gdouble           handle_w = private->dcw / SCALEFACTOR_X (shell);
+      gdouble           handle_h = private->dch / SCALEFACTOR_Y (shell);
+      gdouble           x1       = private->x1;
+      gdouble           x2       = private->x2;
+      gdouble           y1       = private->y1;
+      gdouble           y2       = private->y2;
 
       switch (private->function)
         {
+        case RECT_RESIZING_UPPER_LEFT:
+          gimp_draw_tool_draw_corner (draw_tool,
+                                      private->x1, private->y1,
+                                      private->dcw, private->dch,
+                                      GTK_ANCHOR_NORTH_WEST, FALSE);
+          break;
+
+        case RECT_RESIZING_UPPER_RIGHT:
+          gimp_draw_tool_draw_corner (draw_tool,
+                                      private->x2, private->y1,
+                                      private->dcw, private->dch,
+                                      GTK_ANCHOR_NORTH_EAST, FALSE);
+          break;
+
+        case RECT_RESIZING_LOWER_LEFT:
+          gimp_draw_tool_draw_corner (draw_tool,
+                                      private->x1, private->y2,
+                                      private->dcw, private->dch,
+                                      GTK_ANCHOR_SOUTH_WEST, FALSE);
+          break;
+
+        case RECT_RESIZING_LOWER_RIGHT:
+          gimp_draw_tool_draw_corner (draw_tool,
+                                      private->x2, private->y2,
+                                      private->dcw, private->dch,
+                                      GTK_ANCHOR_SOUTH_EAST, FALSE);
+          break;
+
         case RECT_RESIZING_LEFT:
-          X2 = private->x1 + handle_w / 3;
+          x1 = x2 = private->x1 + handle_w;
+          gimp_draw_tool_draw_line (draw_tool, x1, y1, x2, y2, FALSE);
           break;
 
         case RECT_RESIZING_RIGHT:
-          X1 = private->x2 - handle_w / 3;
+          x1 = x2 = private->x2 - handle_w;
+          gimp_draw_tool_draw_line (draw_tool, x1, y1, x2, y2, FALSE);
           break;
 
         case RECT_RESIZING_TOP:
-          Y2 = private->y1 + handle_h / 3;
+          y1 = y2 = private->y1 + handle_h;
+          gimp_draw_tool_draw_line (draw_tool, x1, y1, x2, y2, FALSE);
           break;
 
         case RECT_RESIZING_BOTTOM:
-          Y1 = private->y2 - handle_h / 3;
+          y1 = y2 = private->y2 - handle_h;
+          gimp_draw_tool_draw_line (draw_tool, x1, y1, x2, y2, FALSE);
           break;
-
-        default:
-          do_it = FALSE;
-          break;
-        }
-
-      if (do_it)
-        {
-          gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
-                                         X1, Y1, X2 - X1, Y2 - Y1,
-                                         FALSE);
-        }
-      else
-        {
-          GimpCoords coords[3];
-
-          do_it = TRUE;
-
-          switch (private->function)
-            {
-            case RECT_RESIZING_UPPER_LEFT:
-              coords[0].x = private->x1;
-              coords[0].y = private->y1;
-              coords[1].x = private->x1;
-              coords[1].y = private->y1 + handle_h;
-              coords[2].x = private->x1 + handle_w;
-              coords[2].y = private->y1;
-              break;
-
-            case RECT_RESIZING_UPPER_RIGHT:
-              coords[0].x = private->x2;
-              coords[0].y = private->y1;
-              coords[1].x = private->x2;
-              coords[1].y = private->y1 + handle_h;
-              coords[2].x = private->x2 - handle_w;
-              coords[2].y = private->y1;
-              break;
-
-            case RECT_RESIZING_LOWER_LEFT:
-              coords[0].x = private->x1;
-              coords[0].y = private->y2;
-              coords[1].x = private->x1;
-              coords[1].y = private->y2 - handle_h;
-              coords[2].x = private->x1 + handle_w;
-              coords[2].y = private->y2;
-              break;
-
-            case RECT_RESIZING_LOWER_RIGHT:
-              coords[0].x = private->x2;
-              coords[0].y = private->y2;
-              coords[1].x = private->x2;
-              coords[1].y = private->y2 - handle_h;
-              coords[2].x = private->x2 - handle_w;
-              coords[2].y = private->y2;
-              break;
-
-            default:
-              do_it = FALSE;
-              break;
-            }
-
-          if (do_it)
-            {
-              gimp_draw_tool_draw_strokes (draw_tool, coords, 3, TRUE, FALSE);
-            }
         }
     }
   else
     {
-      gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+      gimp_draw_tool_draw_corner (draw_tool,
                                   private->x1, private->y1,
-                                  ANCHOR_SIZE, ANCHOR_SIZE,
+                                  private->dcw, private->dch,
                                   GTK_ANCHOR_NORTH_WEST, FALSE);
-      gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+      gimp_draw_tool_draw_corner (draw_tool,
                                   private->x2, private->y1,
-                                  ANCHOR_SIZE, ANCHOR_SIZE,
+                                  private->dcw, private->dch,
                                   GTK_ANCHOR_NORTH_EAST, FALSE);
-      gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+      gimp_draw_tool_draw_corner (draw_tool,
                                   private->x1, private->y2,
-                                  ANCHOR_SIZE, ANCHOR_SIZE,
+                                  private->dcw, private->dch,
                                   GTK_ANCHOR_SOUTH_WEST, FALSE);
-      gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+      gimp_draw_tool_draw_corner (draw_tool,
                                   private->x2, private->y2,
-                                  ANCHOR_SIZE, ANCHOR_SIZE,
+                                  private->dcw, private->dch,
                                   GTK_ANCHOR_SOUTH_EAST, FALSE);
     }
 
@@ -1748,10 +1710,9 @@ gimp_rectangle_tool_configure (GimpRectangleTool *rectangle)
   GimpRectangleToolPrivate *private;
   GimpRectangleOptions     *options;
   GimpDisplayShell         *shell;
-  gboolean                  highlight;
   gint                      dx1, dx2;
   gint                      dy1, dy2;
-  gint                      dcw, dch;
+  gboolean                  highlight;
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
   options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
@@ -1784,21 +1745,8 @@ gimp_rectangle_tool_configure (GimpRectangleTool *rectangle)
                                    &dx2, &dy2,
                                    FALSE);
 
-#define SRW 20
-#define SRH 20
-
-  dcw = ((dx2 - dx1) < SRW) ? (dx2 - dx1) : SRW;
-  dch = ((dy2 - dy1) < SRH) ? (dy2 - dy1) : SRH;
-
-#undef SRW
-#undef SRH
-
-  private->dx1 = dx1;
-  private->dx2 = dx2;
-  private->dy1 = dy1;
-  private->dy2 = dy2;
-  private->dcw = dcw;
-  private->dch = dch;
+  private->dcw = CLAMP ((dx2 - dx1) / 3, MIN_HANDLE_SIZE, HANDLE_SIZE);
+  private->dch = CLAMP ((dy2 - dy1) / 3, MIN_HANDLE_SIZE, HANDLE_SIZE);
 }
 
 static void
