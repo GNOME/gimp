@@ -48,6 +48,9 @@
 #include "gimp-intl.h"
 
 
+#define DEBUG_SPEW 1
+
+
 /*  local function prototypes  */
 
 static void       file_save_dialog_response      (GtkWidget            *save_dialog,
@@ -169,7 +172,7 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
   if (! (uri && strlen (uri)))
     return FALSE;
 
-  basename = g_path_get_basename (uri);
+  basename = file_utils_uri_display_basename(uri);
 
   save_proc     = dialog->file_proc;
   uri_proc      = file_utils_find_proc (gimp->plug_in_manager->save_procs,
