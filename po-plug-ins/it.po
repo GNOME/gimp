@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-16 18:22+0200\n"
-"PO-Revision-Date: 2006-10-16 18:22+0200\n"
+"POT-Creation-Date: 2006-11-06 18:26+0100\n"
+"PO-Revision-Date: 2006-11-06 18:20+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr "Anteprima in tempo reale"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:646
 msgid "If enabled the preview will be redrawn automatically"
-msgstr "Se abilitata l'anteprima si aggiornerà automaticamente"
+msgstr "Se attivata, l'anteprima si aggiornerà automaticamente"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:649
 msgid "R_edraw preview"
@@ -353,8 +353,8 @@ msgstr "_Frattali"
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:715
 #: ../plug-ins/ifscompose/ifscompose.c:2377 ../plug-ins/jpeg/jpeg-save.c:268
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:268
-#: ../plug-ins/winicon/icosave.c:1019 ../plug-ins/xjt/xjt.c:1277
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:270
+#: ../plug-ins/winicon/icosave.c:1020 ../plug-ins/xjt/xjt.c:1277
 #: ../plug-ins/xjt/xjt.c:1711
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -389,16 +389,16 @@ msgstr "Salva parametri frattali"
 #: ../plug-ins/common/postscript.c:2993 ../plug-ins/common/psd.c:1880
 #: ../plug-ins/common/psp.c:1460 ../plug-ins/common/raw.c:243
 #: ../plug-ins/common/raw.c:645 ../plug-ins/common/spheredesigner.c:2009
-#: ../plug-ins/common/sunras.c:379 ../plug-ins/common/svg.c:307
-#: ../plug-ins/common/svg.c:677 ../plug-ins/common/tga.c:411
+#: ../plug-ins/common/sunras.c:379 ../plug-ins/common/svg.c:316
+#: ../plug-ins/common/svg.c:686 ../plug-ins/common/tga.c:411
 #: ../plug-ins/common/tiff.c:535 ../plug-ins/common/xbm.c:720
 #: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
 #: ../plug-ins/fits/fits.c:342 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:429
 #: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/domain.c:426
 #: ../plug-ins/jpeg/jpeg-load.c:88 ../plug-ins/jpeg/jpeg-load.c:874
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:257
-#: ../plug-ins/uri/uri-backend-libcurl.c:170 ../plug-ins/winicon/icoload.c:651
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:259
+#: ../plug-ins/uri/uri-backend-libcurl.c:172 ../plug-ins/winicon/icoload.c:651
 #: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2535
 #: ../plug-ins/xjt/xjt.c:2543
 #, c-format
@@ -475,7 +475,7 @@ msgstr "Ripeti scansione frattali"
 msgid "Add FractalExplorer Path"
 msgstr "Aggiungi percorso di FractalExplorer"
 
-#: ../plug-ins/Lighting/lighting_apply.c:103
+#: ../plug-ins/Lighting/lighting_apply.c:104
 #: ../plug-ins/Lighting/lighting_ui.c:978
 msgid "Lighting Effects"
 msgstr "Effetti luce"
@@ -600,8 +600,8 @@ msgstr "Intensità della luce"
 msgid "Position"
 msgstr "Posizione"
 
-#: ../plug-ins/Lighting/lighting_ui.c:464 ../plug-ins/common/flarefx.c:760
-#: ../plug-ins/common/mblur.c:992 ../plug-ins/common/nova.c:457
+#: ../plug-ins/Lighting/lighting_ui.c:464 ../plug-ins/common/flarefx.c:765
+#: ../plug-ins/common/mblur.c:992 ../plug-ins/common/nova.c:462
 #: ../plug-ins/common/papertile.c:273 ../plug-ins/flame/flame.c:1223
 #: ../plug-ins/gflare/gflare.c:2651
 msgid "_X:"
@@ -612,8 +612,8 @@ msgstr "_X:"
 msgid "Light source X position in XYZ space"
 msgstr "Posizione X della sorgente di luce nello spazio XYZ"
 
-#: ../plug-ins/Lighting/lighting_ui.c:477 ../plug-ins/common/flarefx.c:765
-#: ../plug-ins/common/mblur.c:997 ../plug-ins/common/nova.c:462
+#: ../plug-ins/Lighting/lighting_ui.c:477 ../plug-ins/common/flarefx.c:770
+#: ../plug-ins/common/mblur.c:997 ../plug-ins/common/nova.c:467
 #: ../plug-ins/common/papertile.c:282 ../plug-ins/flame/flame.c:1237
 #: ../plug-ins/gflare/gflare.c:2655
 msgid "_Y:"
@@ -692,7 +692,7 @@ msgstr "I_solata"
 
 #: ../plug-ins/Lighting/lighting_ui.c:550
 msgid "Lighting preset:"
-msgstr "Impostazione luce:"
+msgstr "Preimpostazione luce:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:596
 msgid "Material Properties"
@@ -720,7 +720,7 @@ msgstr ""
 
 #: ../plug-ins/Lighting/lighting_ui.c:672
 msgid "_Shiny:"
-msgstr "L_uccicante:"
+msgstr "Rifles_so:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:688
 #: ../plug-ins/MapObject/mapobject_ui.c:937
@@ -743,7 +743,7 @@ msgstr "_Metallica"
 
 #: ../plug-ins/Lighting/lighting_ui.c:761
 msgid "E_nable bump mapping"
-msgstr "Usa u_na mappatura a sbalzo"
+msgstr "Attiva mappatura a sbal_zo"
 
 #: ../plug-ins/Lighting/lighting_ui.c:775
 msgid "Enable/disable bump-mapping (image depth)"
@@ -775,7 +775,7 @@ msgstr "Sferica"
 
 #: ../plug-ins/Lighting/lighting_ui.c:809
 msgid "Cu_rve:"
-msgstr "Cu_rva:"
+msgstr "Cu_rvatura:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:814
 msgid "Ma_ximum height:"
@@ -787,7 +787,7 @@ msgstr "Altezza massima per gli sbalzi"
 
 #: ../plug-ins/Lighting/lighting_ui.c:849
 msgid "E_nable environment mapping"
-msgstr "Abilita la ma_ppatura ambiente"
+msgstr "Attiva la ma_ppatura ambiente"
 
 #: ../plug-ins/Lighting/lighting_ui.c:863
 msgid "Enable/disable environment-mapping (reflection)"
@@ -824,7 +824,7 @@ msgid "_Environment Map"
 msgstr "Mappa di ambient_e"
 
 #: ../plug-ins/Lighting/lighting_ui.c:1034
-#: ../plug-ins/gimpressionist/preview.c:185
+#: ../plug-ins/gimpressionist/preview.c:186
 #: ../plug-ins/gimpressionist/repaint.c:1166
 #: ../plug-ins/imagemap/imap_polygon.c:515
 msgid "_Update"
@@ -851,19 +851,19 @@ msgstr "Salva impostazione luce"
 msgid "Load Lighting Preset"
 msgstr "Carica impostazione luce"
 
-#: ../plug-ins/MapObject/mapobject_apply.c:274
+#: ../plug-ins/MapObject/mapobject_apply.c:275
 msgid "Map to plane"
 msgstr "Mappa su piano"
 
-#: ../plug-ins/MapObject/mapobject_apply.c:277
+#: ../plug-ins/MapObject/mapobject_apply.c:278
 msgid "Map to sphere"
 msgstr "Mappa su sfera"
 
-#: ../plug-ins/MapObject/mapobject_apply.c:280
+#: ../plug-ins/MapObject/mapobject_apply.c:281
 msgid "Map to box"
 msgstr "Mappa su cubo"
 
-#: ../plug-ins/MapObject/mapobject_apply.c:283
+#: ../plug-ins/MapObject/mapobject_apply.c:284
 msgid "Map to cylinder"
 msgstr "Mappa su cilindro"
 
@@ -1193,7 +1193,7 @@ msgstr "Profondità di colore (in bit) non supportata o non valida."
 #: ../plug-ins/common/tile.c:265 ../plug-ins/common/xbm.c:866
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:508
 #: ../plug-ins/gfig/gfig-dialog.c:1282
-#: ../plug-ins/gimpressionist/general.c:121 ../plug-ins/jpeg/jpeg-load.c:239
+#: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:239
 #: ../plug-ins/jpeg/jpeg-load.c:741 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:574 ../plug-ins/winsnap/winsnap.c:1155
 msgid "Background"
@@ -1227,7 +1227,7 @@ msgstr "Il canale alfa verrà ignorato."
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
 #: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:226
-#: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:1014
+#: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:1015
 #: ../plug-ins/xjt/xjt.c:1694
 #, c-format
 msgid "Saving '%s'"
@@ -2041,6 +2041,18 @@ msgstr "Rilevamento sfondo animazione"
 #: ../plug-ins/common/animoptimize.c:437
 msgid "Optimizing animation"
 msgstr "Ottimizzazione animazione"
+
+#: ../plug-ins/common/antialias.c:81
+msgid "Antialias using the Scale3X edge-extrapolation algorithm"
+msgstr "L'antialias usa l'algoritmo Scale3X di estrapolazione-bordi"
+
+#: ../plug-ins/common/antialias.c:87
+msgid "_Antialias"
+msgstr "_Antialias"
+
+#: ../plug-ins/common/antialias.c:144
+msgid "Antialiasing..."
+msgstr "Antialias in corso..."
 
 #: ../plug-ins/common/apply_lens.c:108
 msgid "Simulate an elliptical lens over the image"
@@ -3370,7 +3382,7 @@ msgstr "_Ricorsivo"
 
 #: ../plug-ins/common/despeckle.c:460 ../plug-ins/common/neon.c:739
 #: ../plug-ins/common/nlfilt.c:1090 ../plug-ins/common/nova.c:365
-#: ../plug-ins/common/unsharp.c:681 ../plug-ins/common/whirlpinch.c:588
+#: ../plug-ins/common/unsharp.c:681 ../plug-ins/common/whirlpinch.c:587
 #: ../plug-ins/gflare/gflare.c:2684 ../plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
 msgstr "_Raggio:"
@@ -3873,11 +3885,11 @@ msgstr "Render riflesso lenti"
 msgid "Lens Flare"
 msgstr "Riflesso lenti"
 
-#: ../plug-ins/common/flarefx.c:745
+#: ../plug-ins/common/flarefx.c:746
 msgid "Center of Flare Effect"
 msgstr "Centro dell'effetto chiarore"
 
-#: ../plug-ins/common/flarefx.c:781 ../plug-ins/common/nova.c:478
+#: ../plug-ins/common/flarefx.c:786 ../plug-ins/common/nova.c:483
 msgid "Show _position"
 msgstr "Mostra _posizione"
 
@@ -4363,7 +4375,7 @@ msgstr "Il livello %s non ha un canale alfa, saltato"
 
 #: ../plug-ins/common/gih.c:492
 msgid "Error in GIMP brush pipe file."
-msgstr "Errore nel file pennelli di GIMP."
+msgstr "Errore nel file pennello animato di GIMP."
 
 #: ../plug-ins/common/gih.c:558
 msgid "GIMP brush file appears to be corrupted."
@@ -4371,11 +4383,11 @@ msgstr "Il file pennello di GIMP sembra essere danneggiato."
 
 #: ../plug-ins/common/gih.c:703
 msgid "Couldn't load one brush in the pipe, giving up."
-msgstr "Impossibile caricare un pennello dal mazzo, rinuncio."
+msgstr "Impossibile caricare un pennello dal pennello animato, rinuncio."
 
 #: ../plug-ins/common/gih.c:866
 msgid "Save as Brush Pipe"
-msgstr "Salva come mazzo pennelli"
+msgstr "Salva come pennello animato"
 
 #: ../plug-ins/common/gih.c:896
 msgid "Spacing (percent):"
@@ -4519,7 +4531,7 @@ msgid "Intersection"
 msgstr "Intersezione"
 
 #. Width and Height
-#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:750
+#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:759
 #: ../plug-ins/common/wmf.c:549
 msgid "Width:"
 msgstr "Larghezza:"
@@ -4824,7 +4836,7 @@ msgstr "_Bilineare"
 
 #: ../plug-ins/common/iwarp.c:1176
 msgid "Adaptive s_upersample"
-msgstr "S_upercampionamento adattivo"
+msgstr "S_ovracampionamento adattivo"
 
 #: ../plug-ins/common/iwarp.c:1196
 msgid "Ma_x depth:"
@@ -5666,7 +5678,7 @@ msgstr "Ra_ggi:"
 msgid "R_andom hue:"
 msgstr "Ton_alità casuale:"
 
-#: ../plug-ins/common/nova.c:444
+#: ../plug-ins/common/nova.c:445
 msgid "Center of Nova"
 msgstr "Centro della nova"
 
@@ -6246,7 +6258,7 @@ msgid "Rendering"
 msgstr "Rendering"
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:3100 ../plug-ins/common/svg.c:871
+#: ../plug-ins/common/postscript.c:3100 ../plug-ins/common/svg.c:880
 #: ../plug-ins/common/wmf.c:670
 msgid "Resolution:"
 msgstr "Risoluzione:"
@@ -6291,7 +6303,7 @@ msgstr "Grigio"
 
 #: ../plug-ins/common/postscript.c:3169 ../plug-ins/common/xpm.c:468
 #: ../plug-ins/gimpressionist/color.c:48
-#: ../plug-ins/gimpressionist/general.c:151
+#: ../plug-ins/gimpressionist/general.c:152
 msgid "Color"
 msgstr "Colore"
 
@@ -6842,66 +6854,66 @@ msgstr "Errore di cattura del puntatore"
 msgid "Importing screenshot"
 msgstr "Importazione schermata"
 
-#: ../plug-ins/common/screenshot.c:650 ../plug-ins/common/screenshot.c:781
+#: ../plug-ins/common/screenshot.c:650 ../plug-ins/common/screenshot.c:779
 msgid "Screenshot"
 msgstr "Schermata"
 
-#: ../plug-ins/common/screenshot.c:722
+#: ../plug-ins/common/screenshot.c:720
 msgid "Specified window not found"
 msgstr "La finestra specificata non è stata trovata"
 
-#: ../plug-ins/common/screenshot.c:749
+#: ../plug-ins/common/screenshot.c:747
 msgid "There was an error taking the screenshot."
 msgstr "Si è verificato un errore durante la cattura della schermata."
 
-#: ../plug-ins/common/screenshot.c:790
+#: ../plug-ins/common/screenshot.c:788
 msgid "_Grab"
 msgstr "_Cattura"
 
-#: ../plug-ins/common/screenshot.c:811
+#: ../plug-ins/common/screenshot.c:809
 msgid "Area"
 msgstr "Area"
 
-#: ../plug-ins/common/screenshot.c:822
+#: ../plug-ins/common/screenshot.c:820
 msgid "Take a screenshot of a single _window"
 msgstr "Cattura una schermata di una _finestra singola"
 
-#: ../plug-ins/common/screenshot.c:843
+#: ../plug-ins/common/screenshot.c:841
 msgid "Include window _decoration"
 msgstr "Includi _decorazioni della finestra"
 
-#: ../plug-ins/common/screenshot.c:859
+#: ../plug-ins/common/screenshot.c:857
 msgid "Take a screenshot of the entire _screen"
 msgstr "Cattura l'immagine di tutto lo _schermo"
 
-#: ../plug-ins/common/screenshot.c:877
+#: ../plug-ins/common/screenshot.c:875
 msgid "Select a _region to grab"
 msgstr "Seleziona la _regione da catturare"
 
-#: ../plug-ins/common/screenshot.c:884
+#: ../plug-ins/common/screenshot.c:882
 msgid ""
 "If enabled, you can use the mouse to select a rectangular region of the "
 "screen."
 msgstr ""
-"Se abilitata è possibile usare il mouse per selezionare una regione "
+"Se attivata è possibile usare il mouse per selezionare una regione "
 "rettangolare dello schermo."
 
 #. grab delay
-#: ../plug-ins/common/screenshot.c:897
+#: ../plug-ins/common/screenshot.c:895
 msgid "Delay"
 msgstr "Ritardo"
 
 #. this string is part of "Wait [spinbutton] seconds before grabbing"
-#: ../plug-ins/common/screenshot.c:910
+#: ../plug-ins/common/screenshot.c:908
 msgid "W_ait"
 msgstr "_Attendi"
 
 #. this string is part of "Wait [spinbutton] seconds before grabbing"
-#: ../plug-ins/common/screenshot.c:926
+#: ../plug-ins/common/screenshot.c:924
 msgid "seconds before grabbing"
 msgstr "secondi prima della cattura"
 
-#: ../plug-ins/common/screenshot.c:930
+#: ../plug-ins/common/screenshot.c:928
 msgid ""
 "The number of seconds to wait after selecting the window or region and "
 "actually taking the screenshot."
@@ -7225,11 +7237,11 @@ msgstr "La regione selezionata per il filtro è vuota"
 
 #: ../plug-ins/common/sparkle.c:301
 msgid "Sparkling"
-msgstr "Scintillio"
+msgstr "Scintillio in corso"
 
 #: ../plug-ins/common/sparkle.c:339
 msgid "Sparkle"
-msgstr "Scintilla"
+msgstr "Scintillio"
 
 #: ../plug-ins/common/sparkle.c:375
 msgid "Luminosity _threshold:"
@@ -7241,43 +7253,44 @@ msgstr "Imposta la soglia luminosità"
 
 #: ../plug-ins/common/sparkle.c:388
 msgid "F_lare intensity:"
-msgstr "Intensità _fiamma:"
+msgstr "Intensità scintil_lio:"
 
 #: ../plug-ins/common/sparkle.c:391
 msgid "Adjust the flare intensity"
-msgstr "Imposta l'intensità fiamma"
+msgstr "Imposta l'intensità scintillio"
 
 #: ../plug-ins/common/sparkle.c:401
 msgid "_Spike length:"
-msgstr "Lunghezza _picchi:"
+msgstr "Lunghezza _scintille:"
 
 #: ../plug-ins/common/sparkle.c:404
 msgid "Adjust the spike length"
-msgstr "Imposta la lunghezza picchi"
+msgstr "Imposta la lunghezza scintille"
 
 #: ../plug-ins/common/sparkle.c:414
 msgid "Sp_ike points:"
-msgstr "Punti di p_icco:"
+msgstr "Punte delle sc_intille:"
 
 #: ../plug-ins/common/sparkle.c:417
 msgid "Adjust the number of spikes"
-msgstr "Imposta il numero di picchi"
+msgstr "Imposta il numero di punte"
 
 #: ../plug-ins/common/sparkle.c:427
 msgid "Spi_ke angle (-1: random):"
-msgstr "Angolo dei picchi (-1: casuale):"
+msgstr "Angolo delle punte (-1: casuale):"
 
 #: ../plug-ins/common/sparkle.c:430
 msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
-msgstr "Imposta l'angolo dei picchi (-1 indica la scelta casuale di un angolo)"
+msgstr ""
+"Imposta l'angolo delle punte (-1 indica la scelta casuale di un angolo)"
 
 #: ../plug-ins/common/sparkle.c:441
 msgid "Spik_e density:"
-msgstr "D_ensità picchi:"
+msgstr "D_ensità scintillio:"
 
 #: ../plug-ins/common/sparkle.c:444
 msgid "Adjust the spike density"
-msgstr "Imposta la densità picchi"
+msgstr "Imposta la densità scintillio"
 
 #: ../plug-ins/common/sparkle.c:454
 msgid "Tr_ansparency:"
@@ -7285,7 +7298,7 @@ msgstr "Tr_asparenza:"
 
 #: ../plug-ins/common/sparkle.c:457
 msgid "Adjust the opacity of the spikes"
-msgstr "Imposta l'opacità dei picchi"
+msgstr "Imposta l'opacità scintillio"
 
 #: ../plug-ins/common/sparkle.c:467
 msgid "_Random hue:"
@@ -7313,11 +7326,11 @@ msgstr "Preservare la luminosità?"
 
 #: ../plug-ins/common/sparkle.c:516
 msgid "In_verse"
-msgstr "In_verso"
+msgstr "In_vertito"
 
 #: ../plug-ins/common/sparkle.c:522
 msgid "Should the effect be inversed?"
-msgstr "Eseguire un effetto inverso?"
+msgstr "Eseguire un effetto invertito?"
 
 #: ../plug-ins/common/sparkle.c:531
 msgid "A_dd border"
@@ -7325,7 +7338,7 @@ msgstr "Aggiungi _bordo"
 
 #: ../plug-ins/common/sparkle.c:537
 msgid "Draw a border of spikes around the image"
-msgstr "Disegna un bordo di picchi attorno all'immagine"
+msgstr "Disegna uno scintillio attorno all'immagine"
 
 #: ../plug-ins/common/sparkle.c:551
 msgid "_Natural color"
@@ -7352,7 +7365,7 @@ msgid "Use the background color"
 msgstr "Usa colore di sfondo"
 
 #: ../plug-ins/common/spheredesigner.c:291
-#: ../plug-ins/gimpressionist/general.c:147
+#: ../plug-ins/gimpressionist/general.c:148
 msgid "Solid"
 msgstr "Solido"
 
@@ -7622,19 +7635,19 @@ msgstr "RLE"
 msgid "SVG image"
 msgstr "Immagine SVG"
 
-#: ../plug-ins/common/svg.c:309 ../plug-ins/common/svg.c:679
+#: ../plug-ins/common/svg.c:318 ../plug-ins/common/svg.c:688
 msgid "Unknown reason"
 msgstr "Motivo sconosciuto"
 
-#: ../plug-ins/common/svg.c:313
+#: ../plug-ins/common/svg.c:322
 msgid "Rendering SVG"
 msgstr "Rendering SVG"
 
-#: ../plug-ins/common/svg.c:325
+#: ../plug-ins/common/svg.c:334
 msgid "Rendered SVG"
 msgstr "SVG renderizzato"
 
-#: ../plug-ins/common/svg.c:475
+#: ../plug-ins/common/svg.c:484
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -7642,50 +7655,50 @@ msgstr ""
 "Il file SVG non\n"
 "specifica l'ampiezza!"
 
-#: ../plug-ins/common/svg.c:481 ../plug-ins/common/wmf.c:338
+#: ../plug-ins/common/svg.c:490 ../plug-ins/common/wmf.c:338
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: ../plug-ins/common/svg.c:686
+#: ../plug-ins/common/svg.c:695
 msgid "Render Scalable Vector Graphics"
 msgstr "Renderizza Grafica Vettoriale Scalabile (SVG)"
 
-#: ../plug-ins/common/svg.c:756 ../plug-ins/common/wmf.c:555
+#: ../plug-ins/common/svg.c:765 ../plug-ins/common/wmf.c:555
 msgid "Height:"
 msgstr "Altezza:"
 
-#: ../plug-ins/common/svg.c:830 ../plug-ins/common/wmf.c:629
+#: ../plug-ins/common/svg.c:839 ../plug-ins/common/wmf.c:629
 msgid "_X ratio:"
 msgstr "Rapporto _X:"
 
-#: ../plug-ins/common/svg.c:852 ../plug-ins/common/wmf.c:651
+#: ../plug-ins/common/svg.c:861 ../plug-ins/common/wmf.c:651
 msgid "_Y ratio:"
 msgstr "Rapporto _Y:"
 
-#: ../plug-ins/common/svg.c:866 ../plug-ins/common/wmf.c:665
+#: ../plug-ins/common/svg.c:875 ../plug-ins/common/wmf.c:665
 msgid "Constrain aspect ratio"
 msgstr "Mantieni rapporto dimensioni"
 
-#: ../plug-ins/common/svg.c:877 ../plug-ins/common/wmf.c:676
+#: ../plug-ins/common/svg.c:886 ../plug-ins/common/wmf.c:676
 #, c-format
 msgid "pixels/%a"
 msgstr "Punti/%a"
 
 #. Path Import
-#: ../plug-ins/common/svg.c:897
+#: ../plug-ins/common/svg.c:906
 msgid "Import _paths"
 msgstr "Importa _tracciati"
 
-#: ../plug-ins/common/svg.c:903
+#: ../plug-ins/common/svg.c:912
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importa i tracciati dal file SVG in modo da poterli usare con lo strumento "
 "tracciati di GIMP"
 
-#: ../plug-ins/common/svg.c:916
+#: ../plug-ins/common/svg.c:925
 msgid "Merge imported paths"
 msgstr "Fondi tracciati importati"
 
@@ -8413,31 +8426,31 @@ msgstr ""
 "Impossibile eseguire il navigatore web specificato:\n"
 "%s"
 
-#: ../plug-ins/common/whirlpinch.c:139
+#: ../plug-ins/common/whirlpinch.c:138
 msgid "Distort an image by whirling and pinching"
 msgstr "Distorci un'immagine con vortici e punte"
 
-#: ../plug-ins/common/whirlpinch.c:150
+#: ../plug-ins/common/whirlpinch.c:149
 msgid "W_hirl and Pinch..."
 msgstr "_Vortice e punta..."
 
-#: ../plug-ins/common/whirlpinch.c:193
+#: ../plug-ins/common/whirlpinch.c:192
 msgid "Region affected by plug-in is empty"
 msgstr "La regione soggetta al plug-in è vuota"
 
-#: ../plug-ins/common/whirlpinch.c:341
+#: ../plug-ins/common/whirlpinch.c:340
 msgid "Whirling and pinching"
 msgstr "Vortice e punta"
 
-#: ../plug-ins/common/whirlpinch.c:528
+#: ../plug-ins/common/whirlpinch.c:527
 msgid "Whirl and Pinch"
 msgstr "Vortice e punta"
 
-#: ../plug-ins/common/whirlpinch.c:564
+#: ../plug-ins/common/whirlpinch.c:563
 msgid "_Whirl angle:"
 msgstr "Angolo _vortice:"
 
-#: ../plug-ins/common/whirlpinch.c:576
+#: ../plug-ins/common/whirlpinch.c:575
 msgid "_Pinch amount:"
 msgstr "Ammontare _punta:"
 
@@ -8882,19 +8895,19 @@ msgstr "Gradiente personale"
 msgid "C_amera"
 msgstr "C_amera"
 
-#: ../plug-ins/gfig/gfig-bezier.c:442
+#: ../plug-ins/gfig/gfig-bezier.c:443
 msgid "Closed"
 msgstr "Chiuso"
 
-#: ../plug-ins/gfig/gfig-bezier.c:447
+#: ../plug-ins/gfig/gfig-bezier.c:448
 msgid "Close curve on completion"
 msgstr "Chiudi curva al completamento"
 
-#: ../plug-ins/gfig/gfig-bezier.c:452
+#: ../plug-ins/gfig/gfig-bezier.c:453
 msgid "Show Line Frame"
 msgstr "Mostra linea fotogrammi"
 
-#: ../plug-ins/gfig/gfig-bezier.c:457
+#: ../plug-ins/gfig/gfig-bezier.c:458
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr ""
 "Disegna linee tra punti di controllo. Solo durante la creazione della curva"
@@ -9084,7 +9097,7 @@ msgid "Max undo:"
 msgstr "Numero max di ripristini:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1281
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/gimpressionist/general.c:167
 msgid "Transparent"
 msgstr "Trasparente"
 
@@ -9194,7 +9207,7 @@ msgstr "Errore nella lettura del file"
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Modifica di oggetto in sola lettura - non sarà possibile salvarlo"
 
-#: ../plug-ins/gfig/gfig-poly.c:50
+#: ../plug-ins/gfig/gfig-poly.c:51
 msgid "Regular Polygon Number of Sides"
 msgstr "Numero di lati del poligono regolare"
 
@@ -9207,11 +9220,11 @@ msgstr "Dettagli oggetto"
 msgid "XY position:"
 msgstr "Posizione XY:"
 
-#: ../plug-ins/gfig/gfig-spiral.c:54
+#: ../plug-ins/gfig/gfig-spiral.c:55
 msgid "Spiral Number of Turns"
 msgstr "Numeri di giri di spirale"
 
-#: ../plug-ins/gfig/gfig-star.c:51
+#: ../plug-ins/gfig/gfig-star.c:52
 msgid "Star Number of Points"
 msgstr "Numeri di punti stella"
 
@@ -9338,7 +9351,7 @@ msgstr "_Lunghezza vettore:"
 
 #: ../plug-ins/gflare/gflare.c:2754
 msgid "A_daptive supersampling"
-msgstr "Supercampionamento a_dattivo"
+msgstr "Sovrampionamento a_dattivo"
 
 #: ../plug-ins/gflare/gflare.c:2773
 msgid "_Max depth:"
@@ -9402,7 +9415,7 @@ msgstr "Aggiorna gradienti"
 #. Glow
 #: ../plug-ins/gflare/gflare.c:3372
 msgid "Glow Paint Options"
-msgstr "Opzioni pittura luminescente"
+msgstr "Opzioni disegno alone"
 
 #: ../plug-ins/gflare/gflare.c:3383 ../plug-ins/gflare/gflare.c:3411
 #: ../plug-ins/gflare/gflare.c:3439
@@ -9417,14 +9430,14 @@ msgstr "Modalità disegno:"
 #. Rays
 #: ../plug-ins/gflare/gflare.c:3400
 msgid "Rays Paint Options"
-msgstr "Opzioni pittura a raggi"
+msgstr "Opzioni disegno a raggi"
 
 #. Rays
 #: ../plug-ins/gflare/gflare.c:3428
 msgid "Second Flares Paint Options"
-msgstr "Opzioni pittura seconde fiammate"
+msgstr "Opzioni disegno riverberi secondari"
 
-#: ../plug-ins/gflare/gflare.c:3455 ../plug-ins/gimpressionist/general.c:115
+#: ../plug-ins/gflare/gflare.c:3455 ../plug-ins/gimpressionist/general.c:116
 msgid "_General"
 msgstr "_Generale"
 
@@ -9447,7 +9460,7 @@ msgstr "Gradiente angolare:"
 
 #: ../plug-ins/gflare/gflare.c:3500 ../plug-ins/gflare/gflare.c:3605
 msgid "Angular size gradient:"
-msgstr "Gradiente a dimensione angolare:"
+msgstr "Dimensione angolare gradiente:"
 
 #: ../plug-ins/gflare/gflare.c:3520 ../plug-ins/gflare/gflare.c:3625
 #: ../plug-ins/gflare/gflare.c:3762
@@ -9466,15 +9479,15 @@ msgstr "Rotazione tonalità:"
 
 #: ../plug-ins/gflare/gflare.c:3558
 msgid "G_low"
-msgstr "Scintil_lio"
+msgstr "A_lone"
 
 #: ../plug-ins/gflare/gflare.c:3662
 msgid "# of Spikes:"
-msgstr "n° di picchi:"
+msgstr "n° di scintillii:"
 
 #: ../plug-ins/gflare/gflare.c:3674
 msgid "Spike thickness:"
-msgstr "Spessore picco:"
+msgstr "Spessore scintillii:"
 
 #: ../plug-ins/gflare/gflare.c:3688
 msgid "_Rays"
@@ -9493,7 +9506,7 @@ msgstr "Gradiente a probabilità:"
 #.
 #: ../plug-ins/gflare/gflare.c:3804
 msgid "Shape of Second Flares"
-msgstr "Forma delle fiamme secondarie"
+msgstr "Forma dei riverberi secondari"
 
 #: ../plug-ins/gflare/gflare.c:3812
 msgid "Circle"
@@ -9509,7 +9522,7 @@ msgstr "Seme casuale:"
 
 #: ../plug-ins/gflare/gflare.c:3876
 msgid "_Second Flares"
-msgstr "_Seconde fiammate"
+msgstr "Riverberi _secondari"
 
 #: ../plug-ins/gfli/gfli.c:163 ../plug-ins/gfli/gfli.c:183
 msgid "AutoDesk FLIC animation"
@@ -9605,98 +9618,98 @@ msgstr "Colore del dist_urbo:"
 msgid "Adds random noise to the color"
 msgstr "Aggiungi disturbo casuale al colore"
 
-#: ../plug-ins/gimpressionist/general.c:131
+#: ../plug-ins/gimpressionist/general.c:132
 msgid "Keep original"
 msgstr "Mantieni originale"
 
-#: ../plug-ins/gimpressionist/general.c:132
+#: ../plug-ins/gimpressionist/general.c:133
 msgid "Preserve the original image as a background"
 msgstr "Preserva l'immagine originale come sfondo"
 
-#: ../plug-ins/gimpressionist/general.c:137
+#: ../plug-ins/gimpressionist/general.c:138
 msgid "From paper"
 msgstr "Dalla carta"
 
-#: ../plug-ins/gimpressionist/general.c:138
+#: ../plug-ins/gimpressionist/general.c:139
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Copia la trama della carta selezionata come sfondo"
 
-#: ../plug-ins/gimpressionist/general.c:148
+#: ../plug-ins/gimpressionist/general.c:149
 msgid "Solid colored background"
 msgstr "Sfondo con colore solido"
 
-#: ../plug-ins/gimpressionist/general.c:167
+#: ../plug-ins/gimpressionist/general.c:168
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr ""
 "Usa uno sfondo trasparente; solo i tratteggi disegnati saranno visibili"
 
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/gimpressionist/general.c:185
 msgid "Paint edges"
 msgstr "Disegna gli spigoli"
 
-#: ../plug-ins/gimpressionist/general.c:189
+#: ../plug-ins/gimpressionist/general.c:190
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Imposta se piazzare i tratti sino fuori ai bordi dell'immagine"
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:194 ../plug-ins/maze/maze_face.c:316
+#: ../plug-ins/gimpressionist/general.c:195 ../plug-ins/maze/maze_face.c:316
 msgid "Tileable"
 msgstr "Piastrellabile"
 
-#: ../plug-ins/gimpressionist/general.c:198
+#: ../plug-ins/gimpressionist/general.c:199
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr ""
 "Imposta se l'immagine risultante deve risultare piastrellabile senza "
 "soluzione di continuità"
 
-#: ../plug-ins/gimpressionist/general.c:203
+#: ../plug-ins/gimpressionist/general.c:204
 msgid "Drop shadow"
 msgstr "Ombra"
 
-#: ../plug-ins/gimpressionist/general.c:208
+#: ../plug-ins/gimpressionist/general.c:209
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Aggiungi un effetto ombra ad ogni tratto di pennello"
 
-#: ../plug-ins/gimpressionist/general.c:221
+#: ../plug-ins/gimpressionist/general.c:222
 msgid "Edge darken:"
 msgstr "Scurisci i bordi:"
 
-#: ../plug-ins/gimpressionist/general.c:225
+#: ../plug-ins/gimpressionist/general.c:226
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "Quanto \"scurire\" i bordi di ogni tratto di pennello"
 
-#: ../plug-ins/gimpressionist/general.c:230
+#: ../plug-ins/gimpressionist/general.c:231
 msgid "Shadow darken:"
 msgstr "Inscurisci ombra:"
 
-#: ../plug-ins/gimpressionist/general.c:234
+#: ../plug-ins/gimpressionist/general.c:235
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Quanto \"scurire\" l'ombra applicata"
 
-#: ../plug-ins/gimpressionist/general.c:239
+#: ../plug-ins/gimpressionist/general.c:240
 msgid "Shadow depth:"
 msgstr "Profondità ombra:"
 
-#: ../plug-ins/gimpressionist/general.c:243
+#: ../plug-ins/gimpressionist/general.c:244
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 "La profondità dell'ombra applicata, cioè di quanto questa deve scostarsi "
 "dall'oggetto"
 
-#: ../plug-ins/gimpressionist/general.c:248
+#: ../plug-ins/gimpressionist/general.c:249
 msgid "Shadow blur:"
 msgstr "Sfoca ombra:"
 
-#: ../plug-ins/gimpressionist/general.c:252
+#: ../plug-ins/gimpressionist/general.c:253
 msgid "How much to blur the drop shadow"
 msgstr "Quanto deve essere sfuocata l'ombra applicata"
 
-#: ../plug-ins/gimpressionist/general.c:257
+#: ../plug-ins/gimpressionist/general.c:258
 msgid "Deviation threshold:"
 msgstr "Soglia di deviazione:"
 
-#: ../plug-ins/gimpressionist/general.c:261
+#: ../plug-ins/gimpressionist/general.c:262
 msgid "A bailout-value for adaptive selections"
 msgstr "Un valore di salvataggio per selezioni adattive"
 
@@ -10022,11 +10035,11 @@ msgstr "Cancella le impostazioni selezionate"
 msgid "Reread the folder of Presets"
 msgstr "Rileggi la cartella delle preimpostazioni"
 
-#: ../plug-ins/gimpressionist/preview.c:191
+#: ../plug-ins/gimpressionist/preview.c:192
 msgid "Refresh the Preview window"
 msgstr "Aggiorna le finestra di anteprima"
 
-#: ../plug-ins/gimpressionist/preview.c:199
+#: ../plug-ins/gimpressionist/preview.c:200
 msgid "Revert to the original image"
 msgstr "Ricarica immagine originale"
 
@@ -10705,7 +10718,7 @@ msgstr "Impostazioni griglia"
 
 #: ../plug-ins/imagemap/imap_grid.c:201
 msgid "_Snap-to grid enabled"
-msgstr "Abilita griglia _magnetica"
+msgstr "Attiva griglia _magnetica"
 
 #: ../plug-ins/imagemap/imap_grid.c:207
 msgid "Grid Visibility and Type"
@@ -11029,7 +11042,7 @@ msgstr "Parametri JPEG"
 
 #: ../plug-ins/jpeg/jpeg-save.c:769
 msgid "Enable preview to obtain the file size."
-msgstr "Abilitare l'anteprima per ottenere la dimensione del file."
+msgstr "Attivare l'anteprima per ottenere la dimensione del file."
 
 #: ../plug-ins/jpeg/jpeg-save.c:780
 msgid "Show _preview in image window"
@@ -11562,70 +11575,70 @@ msgstr "_Scanner/M. fotografica...."
 msgid "Transferring data from scanner/camera"
 msgstr "Trasferimento dati da scanner/m. fotografica"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:148
-#: ../plug-ins/uri/uri-backend-libcurl.c:110
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:150
+#: ../plug-ins/uri/uri-backend-libcurl.c:112
 #, c-format
 msgid "Downloading %s of image data..."
 msgstr "Scaricamento %s di dati immagine..."
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:149
-#: ../plug-ins/uri/uri-backend-libcurl.c:117
-#: ../plug-ins/uri/uri-backend-wget.c:334
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:151
+#: ../plug-ins/uri/uri-backend-libcurl.c:119
+#: ../plug-ins/uri/uri-backend-wget.c:336
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "Scaricato %s di dati immagine"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:167
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:169
 #, c-format
 msgid "Uploading %s of image data..."
 msgstr "Caricamento %s di dati immagine..."
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:168
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:170
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "Caricato %s di dati immagine"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:238
-#: ../plug-ins/uri/uri-backend-libcurl.c:139
-#: ../plug-ins/uri/uri-backend-wget.c:183
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:240
+#: ../plug-ins/uri/uri-backend-libcurl.c:141
+#: ../plug-ins/uri/uri-backend-wget.c:185
 msgid "Connecting to server"
 msgstr "Connessione al server"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:297
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:299
 #, c-format
 msgid "Failed to read %s from '%s': %s"
 msgstr "Fallita la lettura di %s da '%s': %s"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:346
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:348
 #, c-format
 msgid "Failed to write %s to '%s': %s"
 msgstr "Fallita la scrittura di %s su '%s': %s"
 
-#: ../plug-ins/uri/uri-backend-libcurl.c:55
+#: ../plug-ins/uri/uri-backend-libcurl.c:57
 msgid "Could not initialize libcurl"
 msgstr "Impossibile inizializzare libcurl"
 
-#: ../plug-ins/uri/uri-backend-libcurl.c:144
+#: ../plug-ins/uri/uri-backend-libcurl.c:146
 msgid "Could not open output file for writing"
 msgstr "Impossibile aprire il file di uscita in scrittura"
 
-#: ../plug-ins/uri/uri-backend-libcurl.c:182
+#: ../plug-ins/uri/uri-backend-libcurl.c:184
 #, c-format
 msgid "Opening '%s' for reading resulted in HTTP response code: %d"
 msgstr ""
 "L'apertura di \"%s\" in lettura ha ottenuto il codice di risposta HTTP: %d"
 
-#: ../plug-ins/uri/uri-backend-wget.c:150
-#: ../plug-ins/uri/uri-backend-wget.c:170
-#: ../plug-ins/uri/uri-backend-wget.c:189
-#: ../plug-ins/uri/uri-backend-wget.c:212
-#: ../plug-ins/uri/uri-backend-wget.c:241
+#: ../plug-ins/uri/uri-backend-wget.c:152
+#: ../plug-ins/uri/uri-backend-wget.c:172
+#: ../plug-ins/uri/uri-backend-wget.c:191
+#: ../plug-ins/uri/uri-backend-wget.c:214
+#: ../plug-ins/uri/uri-backend-wget.c:243
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
 msgstr "wget è uscito in modo inatteso dall'URI '%s'"
 
 #. The third line is "Connecting to..."
-#: ../plug-ins/uri/uri-backend-wget.c:178
+#: ../plug-ins/uri/uri-backend-wget.c:180
 #, c-format
 msgid "(timeout is %d second)"
 msgid_plural "(timeout is %d seconds)"
@@ -11633,22 +11646,22 @@ msgstr[0] "(la scadenza è di %d secondo)"
 msgstr[1] "(la scadenza è di %d secondi)"
 
 #. The fourth line is either the network request or an error
-#: ../plug-ins/uri/uri-backend-wget.c:207
+#: ../plug-ins/uri/uri-backend-wget.c:209
 msgid "Opening URI"
 msgstr "Apertura URI"
 
-#: ../plug-ins/uri/uri-backend-wget.c:218
-#: ../plug-ins/uri/uri-backend-wget.c:251
+#: ../plug-ins/uri/uri-backend-wget.c:220
+#: ../plug-ins/uri/uri-backend-wget.c:253
 #, c-format
 msgid "A network error occurred: %s"
 msgstr "Si è verificato un errore di rete: %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:291
+#: ../plug-ins/uri/uri-backend-wget.c:293
 #, c-format
 msgid "Downloading %s of image data"
 msgstr "Scaricamento %s di dati immagine"
 
-#: ../plug-ins/uri/uri-backend-wget.c:296
+#: ../plug-ins/uri/uri-backend-wget.c:298
 msgid "Downloading unknown amount of image data"
 msgstr "Scaricamento quantità sconosciuta di dati immagine"
 

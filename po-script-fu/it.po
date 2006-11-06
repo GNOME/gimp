@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-20 02:03+0200\n"
-"PO-Revision-Date: 2006-10-20 02:05+0200\n"
+"POT-Creation-Date: 2006-11-06 17:38+0100\n"
+"PO-Revision-Date: 2006-11-06 17:44+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -15,45 +15,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:143
+#: ../plug-ins/script-fu/script-fu-console.c:210
 msgid "Script-Fu Console"
 msgstr "Console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:210
-msgid "Welcome to TinyScheme\n"
-msgstr "Benvenuti a TinyScheme\n"
-
-#: ../plug-ins/script-fu/script-fu-console.c:211
-msgid ""
-"Copyright (c) Dimitrios Souflis\n"
-"\n"
-msgstr "Copyright (c) Dimitrios Souflis\n"
+#: ../plug-ins/script-fu/script-fu-console.c:206
+msgid "Welcome to TinyScheme"
+msgstr "Benvenuti a TinyScheme"
 
 #: ../plug-ins/script-fu/script-fu-console.c:212
-msgid "Script-Fu Console - "
-msgstr "Console Script-Fu - "
-
-#: ../plug-ins/script-fu/script-fu-console.c:213
 msgid "Interactive Scheme Development"
 msgstr "Sviluppo interattivo in Scheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:245
+#: ../plug-ins/script-fu/script-fu-console.c:248
 msgid "_Browse..."
 msgstr "_Naviga..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:307
+#: ../plug-ins/script-fu/script-fu-console.c:310
 msgid "Save Script-Fu Console Output"
 msgstr "Salva il risultato della console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:351
+#: ../plug-ins/script-fu/script-fu-console.c:354
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossibile aprire \"%s\" in scrittura: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:380
+#: ../plug-ins/script-fu/script-fu-console.c:383
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigatore delle procedure script-fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:716
+#: ../plug-ins/script-fu/script-fu-console.c:711
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "La modalità di valutazione Script-Fu permette solo invocazioni non "
@@ -118,7 +109,7 @@ msgstr "Selezione gradiente Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Selezione pennello Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:649
+#: ../plug-ins/script-fu/script-fu-scripts.c:655
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -392,22 +383,33 @@ msgstr ""
 "un'ombra"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:13
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
+msgid "Pattern"
+msgstr "Motivo"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:10
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:16
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:6
 msgid "Shadow X offset"
 msgstr "Spostamento X ombra"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:11
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:17
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:7
 msgid "Shadow Y offset"
 msgstr "Spostamento Y ombra"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:12
 msgid "Shadow blur radius"
 msgstr "Raggio sfocatura ombra"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:12
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:13
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
@@ -513,7 +515,7 @@ msgstr "Inizio sfumatura"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:9
 msgid "Supersample"
-msgstr "Supercampionamento"
+msgstr "Sovracampionamento"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:10
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
@@ -526,7 +528,7 @@ msgid "Add B_evel..."
 msgstr "Aggiungi rili_evo..."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
-msgid "Add a bevelled border to an image"
+msgid "Add a beveled border to an image"
 msgstr "Aggiunge un bordo in rilievo ad un'immagine"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
@@ -548,18 +550,22 @@ msgid "Add _Border..."
 msgstr "Aggiungi _bordo..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
+msgid "Add a border around an image"
+msgstr "Aggiunge un bordo in rilievo ad un'immagine"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border X size"
 msgstr "Dimensione bordo X"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:3
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border Y size"
 msgstr "Dimensione bordo Y"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Border color"
 msgstr "Colore bordo"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:6
 msgid "Delta value on color"
 msgstr "Valore delta su colore"
 
@@ -805,16 +811,6 @@ msgstr "Colore in alto a sinistra"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "Create a beveled pattern arrow for webpages"
 msgstr "Crea una freccia con motivo in rilievo per pagine web"
-
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:13
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
-msgid "Pattern"
-msgstr "Motivo"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "Create a beveled pattern bullet for webpages"
@@ -1370,6 +1366,14 @@ msgstr ""
 msgid "Crystal..."
 msgstr "Cristallo..."
 
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
+msgid "Difference Clouds..."
+msgstr "Nuvole a differenza..."
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
+msgid "Solid noise applied with Difference layer mode"
+msgstr "Disturbo solido applicato con modalità livello differenza"
+
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
 msgstr "Distorci la selezione"
@@ -1391,8 +1395,8 @@ msgid "Spread"
 msgstr "Diffuso"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
-msgid "Threshold"
-msgstr "Soglia"
+msgid "Threshold (bigger 1<-->255 smaller)"
+msgstr "Soglia (maggiore 1<-->255 minore)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
 msgid "_Distort..."
@@ -1450,8 +1454,8 @@ msgid "Erase"
 msgstr "Cancella"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
-msgid "Erase every other row/column of pixels of the active drawable"
-msgstr "Cancella ogni altra riga/colonna di pixel del piano di disegno attivo"
+msgid "Erase every other row or column"
+msgstr "Cancella ogni altra riga o colonna"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
@@ -1482,7 +1486,7 @@ msgid "Rows/cols"
 msgstr "Righe/Colonne"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:11
-msgid "_Erase every other Row..."
+msgid "_Erase Every Other Row..."
 msgstr "Canc_ella ogni altra riga..."
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:1
@@ -1946,12 +1950,8 @@ msgid "BG opacity"
 msgstr "Opacità sfondo"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid ""
-"Create a graph of the Hue, Saturation, and Value distributions of the "
-"current drawable"
-msgstr ""
-"Crea un grafico della distribuzione della tonalità, saturazione e valore del "
-"disegnabile corrente"
+msgid "Create a graph of the Hue, Saturation, and Value distributions"
+msgstr "Crea un grafico della distribuzione di tonalità, saturazione e valore"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
 msgid "Draw _HSV Graph..."
@@ -2841,6 +2841,14 @@ msgstr "Colore primo piano"
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:7
 msgid "T_ruchet..."
 msgstr "T_ruchet..."
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
+msgid "Mask opacity"
+msgstr "Opacità maschera"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
+msgid "Mask size"
+msgstr "Dimensione maschera"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:1
 msgid "Amplitude"

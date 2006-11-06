@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-16 00:26+0200\n"
-"PO-Revision-Date: 2006-10-11 16:25+0200\n"
+"POT-Creation-Date: 2006-11-06 18:27+0100\n"
+"PO-Revision-Date: 2006-11-06 18:29+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -53,10 +53,6 @@ msgstr "Ingresso non valido per \"%s\""
 msgid "Python-Fu Color Selection"
 msgstr "Selezione colore Python-Fu"
 
-#: ../plug-ins/pygimp/procbrowser.c:174
-msgid "Python Procedure Browser"
-msgstr "Navigatore di procedure Python"
-
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
 msgid "Saving as colored XHTML"
 msgstr "Salvataggio come XHTML colorato"
@@ -97,29 +93,39 @@ msgstr "Dimensione carattere in pixel"
 msgid "Write a separate CSS file"
 msgstr "Scrivi un file CSS separato"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:44
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
 msgstr "Console Python"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:76
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
 msgid "_Browse..."
 msgstr "_Naviga..."
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:100
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
+msgid "Python Procedure Browser"
+msgstr "Navigatore di procedure Python"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Impossibile aprire \"%s\" alla scrittura: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Impossibile scrivere su \"%s\": %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
+msgid "Save Python-Fu Console Output"
+msgstr "Salva il risultato della console Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
 msgid "Interactive Gimp-Python interpreter"
 msgstr "Interprete interattivo Gimp-Python"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:105
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
 msgid "_Console"
 msgstr "_Console"
-
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:221
-msgid "Gimp-Python Console"
-msgstr "Console Gimp-Python"
-
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:222
-msgid "Interactive Python Development"
-msgstr "Sviluppo Python interattivo"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:51
 msgid "Add a layer of fog"
@@ -159,8 +165,8 @@ msgstr "Sp_ostamento tavolozza..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:58
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:80
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette"
 msgstr "Tavolozza"
 
@@ -208,29 +214,21 @@ msgstr "Blu o valore"
 msgid "Ascending"
 msgstr "Ascendente"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:51
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Crea un gradiente ripetitivo usando i colori della tavolozza"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:56
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
 msgid "Palette to _Repeating Gradient"
 msgstr "Tavolozza a gradiente _ripetitivo"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:73
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
 msgid "Create a gradient using colors from the palette"
 msgstr "Crea un gradiente usando i colori della tavolozza"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:78
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
 msgid "Palette to _Gradient"
 msgstr "Tavolozza a _gradiente"
-
-#: ../plug-ins/pygimp/plug-ins/pdbbrowse.py:37
-msgid "Browse the Procedural Database"
-msgstr "Naviga il database delle procedure"
-
-#: ../plug-ins/pygimp/plug-ins/pdbbrowse.py:42
-msgid "_Procedure Browser"
-msgstr "_Navigatore delle procedure"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:57
 msgid "Slice"
@@ -262,23 +260,23 @@ msgstr "Prefisso nome immagine"
 msgid "Image format"
 msgstr "Formato immagine"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 msgid "Separate image folder"
 msgstr "Cartella separata immagine"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Folder for image export"
 msgstr "Cartella per l'esportazione dell'immagine"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Space between table elements"
 msgstr "Spazio tra elementi tabella"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
-msgid "Javascript for onmouseover and clicked)"
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript per onmouseover e clicked)"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Skip animation for table caps"
 msgstr "Salta l'animazione per le tabelle"
 

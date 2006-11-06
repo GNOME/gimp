@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-15 23:50+0200\n"
-"PO-Revision-Date: 2006-10-16 00:22+0200\n"
+"POT-Creation-Date: 2006-11-06 18:23+0100\n"
+"PO-Revision-Date: 2006-11-06 18:25+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -602,7 +602,7 @@ msgstr "Costante"
 msgid "Incremental"
 msgstr "Incrementale"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:258
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
 msgid "None"
 msgstr "Nessuno"
 
@@ -723,7 +723,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:250
+#: ../modules/cdisplay_lcms.c:259
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
 
@@ -738,15 +738,12 @@ msgstr "Profilo colore per il monitor (principale)."
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid ""
 "When enabled, the GIMP will try to use the display color profile from the "
-"windowing system. The configured monitor profile is then only used as a "
+"windowing system.  The configured monitor profile is then only used as a "
 "fallback."
-msgstr ""
-"Se abilitato GIMP tenterà di usare il profilo di colore dello schermo "
-"dall'ambiente grafico. Il profilo del monitor configurato verrà usato solo "
-"in caso di fallimento dell'operazione."
+msgstr "Se attivata, GIMP tenterà di usare il profilo di colore dello schermo dall'ambiente grafico. Il profilo del monitor configurato verrà usato solo in caso di fallimento dell'operazione."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
-msgid "The default RGB workspace color profile."
+msgid "The default RGB working space color profile."
 msgstr "Il profilo di colore RGB predefinito dello spazio di lavoro."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
@@ -765,10 +762,9 @@ msgstr "Imposta come verranno mappati i colori per il display."
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
 msgid ""
-"Sets how colors are converted from workspace to the print simulation device."
-msgstr ""
-"Imposta come i colori saranno convertiti dallo spazio di lavoro al "
-"dispositivo di simulazione di stampa."
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
+msgstr "Imposta come i colori saranno convertiti dallo spazio di lavoro RGB al dispositivo di simulazione di stampa."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -797,18 +793,6 @@ msgstr "Saturazione"
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
 msgstr "Colorimetrico assoluto"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:88
-msgid "Ask"
-msgstr "Chiedi"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:89
-msgid "Use embedded profile"
-msgstr "Usa profilo incorporato"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:90
-msgid "Convert to RGB workspace"
-msgstr "Conversione allo spazio colore RGB"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:95
 #, c-format
@@ -1309,15 +1293,15 @@ msgstr "Contrasto"
 msgid "Contrast c_ycles:"
 msgstr "_Cicli di contrasto:"
 
-#: ../modules/cdisplay_lcms.c:107
+#: ../modules/cdisplay_lcms.c:116
 msgid "Color management display filter using ICC color profiles"
 msgstr "Il filtro di gestione colore del display usa i profili di colore ICC"
 
-#: ../modules/cdisplay_lcms.c:175
+#: ../modules/cdisplay_lcms.c:184
 msgid "Color Management"
 msgstr "Gestione del colore"
 
-#: ../modules/cdisplay_lcms.c:281
+#: ../modules/cdisplay_lcms.c:288
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1325,19 +1309,19 @@ msgstr ""
 "Questo filtro prende la sua configurazione dalla sezione gestione colore "
 "nella finestra delle preferenze."
 
-#: ../modules/cdisplay_lcms.c:295
+#: ../modules/cdisplay_lcms.c:302
 msgid "Mode of operation:"
 msgstr "Modalità di operazione:"
 
-#: ../modules/cdisplay_lcms.c:306
-msgid "RGB workspace profile:"
-msgstr "Profilo di colore RGB:"
+#: ../modules/cdisplay_lcms.c:309
+msgid "RGB working space profile:"
+msgstr "Profilo RGB dello spazio di lavoro:"
 
 #: ../modules/cdisplay_lcms.c:316
 msgid "Monitor profile:"
 msgstr "Profilo del monitor:"
 
-#: ../modules/cdisplay_lcms.c:326
+#: ../modules/cdisplay_lcms.c:323
 msgid "Print simulation profile:"
 msgstr "Profilo di simulazione di stampa:"
 
