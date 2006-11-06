@@ -42,6 +42,25 @@
 
 2006-11-05  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/file-save-dialog.c (file_save_dialog_check_uri): use
+	file_utils_uri_display_basename() instead of g_path_get_basename()
+	to get an uri's basename.
+
+2006-11-05  Sven Neumann  <sven@gimp.org>
+
+	* app/file/file-save.c (file_save): only save a thumbnail if we
+	are saving as XCF.  Fixes bug #25272.
+
+	* tools/pdbgen/pdb/fileops.pdb: create a libgimp wrapper for the
+	"gimp-file-save-thumbnail" procedure.
+
+	* libgimp/gimpfileops_pdb.[ch]: regenerated.
+
+	* plug-ins/common/compressor.c (save_image): ask the core to save
+	a thumbnail for compressed XCF files.
+
+2006-11-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/tileit.c: applied patch from Saul Goode to fix
 	confusion with flip direction (bug #365436).
 

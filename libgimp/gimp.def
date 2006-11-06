@@ -205,6 +205,7 @@ EXPORTS
 	gimp_file_load_layer
 	gimp_file_load_layers
 	gimp_file_save
+	gimp_file_save_thumbnail
 	gimp_fill_type_get_type
 	gimp_flip
 	gimp_floating_sel_anchor

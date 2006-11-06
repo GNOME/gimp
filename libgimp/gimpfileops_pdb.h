@@ -44,6 +44,8 @@ gboolean gimp_file_save                   (GimpRunMode  run_mode,
                                            gint32       drawable_ID,
                                            const gchar *filename,
                                            const gchar *raw_filename);
+gboolean gimp_file_save_thumbnail         (gint32       image_ID,
+                                           const gchar *filename);
 gchar*   gimp_temp_name                   (const gchar *extension);
 gboolean gimp_register_magic_load_handler (const gchar *procedure_name,
                                            const gchar *extensions,

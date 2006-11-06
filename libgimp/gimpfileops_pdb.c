@@ -206,6 +206,43 @@ gimp_file_save (GimpRunMode  run_mode,
 }
 
 /**
+ * gimp_file_save_thumbnail:
+ * @image_ID: The image.
+ * @filename: The name of the file the thumbnail belongs to.
+ *
+ * Saves a thumbnail for the given image
+ *
+ * This procedure saves a thumbnail for the given image according to
+ * the Free Desktop Thumbnail Managing Standard. The thumbnail is saved
+ * so that it belongs to the file with the given filename. This means
+ * you have to save the image under this name first, otherwise this
+ * procedure will fail. This procedure may become useful if you want to
+ * explicitely save a thumbnail with a file.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_file_save_thumbnail (gint32       image_ID,
+                          const gchar *filename)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-file-save-thumbnail",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, filename,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_temp_name:
  * @extension: The extension the file will have.
  *

@@ -33,23 +33,23 @@ HELP
     &josh_pdb_misc('1997');
 
     @inargs = (
-	{ name => 'run_mode',
-	  type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
-	  desc => 'The run mode' },
-	{ name => 'filename', type => 'string', no_validate => 1,
-	  desc => 'The name of the file to load' },
-	{ name => 'raw_filename', type => 'string', no_validate => 1,
-	  desc => 'The name as entered by the user' }
+        { name => 'run_mode',
+          type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
+          desc => 'The run mode' },
+        { name => 'filename', type => 'string', no_validate => 1,
+          desc => 'The name of the file to load' },
+        { name => 'raw_filename', type => 'string', no_validate => 1,
+          desc => 'The name as entered by the user' }
     );
 
     @outargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The output image' }
+        { name => 'image', type => 'image',
+          desc => 'The output image' }
     );
 
     %invoke = (
-	no_marshalling => 1,
-	code => <<'CODE'
+        no_marshalling => 1,
+        code => <<'CODE'
 {
   GValueArray         *new_args;
   GValueArray         *return_vals;
@@ -81,13 +81,14 @@ HELP
     g_value_transform (&args->values[i], &new_args->values[i]);
 
   for (i = 3; i < proc->num_args; i++)
-    if (G_IS_PARAM_SPEC_STRING (proc->args[i]))	
+    if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
       g_value_set_static_string (&new_args->values[i], "");
 
-  return_vals = gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
-                                                         context, progress,
-                                                         GIMP_OBJECT (proc)->name,
-                                                         new_args);
+  return_vals =
+    gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
+                                             context, progress,
+                                             GIMP_OBJECT (proc)->name,
+                                             new_args);
 
   g_value_array_free (new_args);
 
@@ -109,22 +110,22 @@ HELP
     &neo_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'run_mode',
-	  type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
-	  desc => 'The run mode' },
-	{ name => 'image', type => 'image',
-	  desc => 'Destination image' },
-	{ name => 'filename', type => 'string', no_validate => 1,
-	  desc => 'The name of the file to load' }
+        { name => 'run_mode',
+          type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
+          desc => 'The run mode' },
+        { name => 'image', type => 'image',
+          desc => 'Destination image' },
+        { name => 'filename', type => 'string', no_validate => 1,
+          desc => 'The name of the file to load' }
     );
 
     @outargs = (
-	{ name => 'layer', type => 'layer',
-	  desc => 'The layer created when loading the image file' }
+        { name => 'layer', type => 'layer',
+          desc => 'The layer created when loading the image file' }
     );
 
     %invoke = (
-	code => <<'CODE'
+        code => <<'CODE'
 {
   gchar *uri = file_utils_filename_to_uri (gimp->plug_in_manager->load_procs,
                                            filename, NULL);
@@ -165,24 +166,24 @@ HELP
     &mitch_pdb_misc('2006', '2.4');
 
     @inargs = (
-	{ name => 'run_mode',
-	  type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
-	  desc => 'The run mode' },
-	{ name => 'image', type => 'image',
-	  desc => 'Destination image' },
-	{ name => 'filename', type => 'string', no_validate => 1,
-	  desc => 'The name of the file to load' }
+        { name => 'run_mode',
+          type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
+          desc => 'The run mode' },
+        { name => 'image', type => 'image',
+          desc => 'Destination image' },
+        { name => 'filename', type => 'string', no_validate => 1,
+          desc => 'The name of the file to load' }
     );
 
     @outargs = (
-	{ name => 'layer_ids', type => 'int32array',
-	  desc => 'The list of loaded layers',
-	  array => { name => 'num_layers',
-		     desc => 'The number of loaded layers' } }
+        { name => 'layer_ids', type => 'int32array',
+          desc => 'The list of loaded layers',
+          array => { name => 'num_layers',
+                     desc => 'The number of loaded layers' } }
     );
 
     %invoke = (
-	code => <<'CODE'
+        code => <<'CODE'
 {
   gchar *uri = file_utils_filename_to_uri (gimp->plug_in_manager->load_procs,
                                            filename, NULL);
@@ -237,22 +238,22 @@ HELP
     &josh_pdb_misc('1997');
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode',
-	  desc => 'The run mode' },
-	{ name => 'image', type => 'image',
-	  desc => 'Input image' },
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'Drawable to save' },
-	{ name => 'filename', type => 'string', no_validate => 1,
-	  desc => 'The name of the file to save the image in' },
-	{ name => 'raw_filename', type => 'string', no_validate => 1,
-	  desc => 'The name as entered by the user' }
+        { name => 'run_mode', type => 'enum GimpRunMode',
+          desc => 'The run mode' },
+        { name => 'image', type => 'image',
+          desc => 'Input image' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Drawable to save' },
+        { name => 'filename', type => 'string', no_validate => 1,
+          desc => 'The name of the file to save the image in' },
+        { name => 'raw_filename', type => 'string', no_validate => 1,
+          desc => 'The name as entered by the user' }
     );
 
     %invoke = (
-	headers => [ qw(<string.h>) ],
-	no_marshalling => 1,
-	code => <<'CODE'
+        headers => [ qw(<string.h>) ],
+        no_marshalling => 1,
+        code => <<'CODE'
 {
   GValueArray         *new_args;
   GValueArray         *return_vals;
@@ -316,23 +317,23 @@ HELP
     $date = '1999-2003';
 
     @inargs = (
-	{ name => 'filename', type => 'string', no_validate => 1,
-	  desc => 'The name of the file that owns the thumbnail to load' }
+        { name => 'filename', type => 'string', no_validate => 1,
+          desc => 'The name of the file that owns the thumbnail to load' }
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32',
-	  desc => 'The width of the thumbnail' },
-	{ name => 'height', type => 'int32',
-	  desc => 'The height of the thumbnail' },
-	{ name => 'thumb_data', type => 'int8array',
-	  desc => 'The thumbnail data',
+        { name => 'width', type => 'int32',
+          desc => 'The width of the thumbnail' },
+        { name => 'height', type => 'int32',
+          desc => 'The height of the thumbnail' },
+        { name => 'thumb_data', type => 'int8array',
+          desc => 'The thumbnail data',
           array =>  { name => 'thumb_data_count',
-		      desc => 'The number of bytes in thumbnail data' } }
+                      desc => 'The number of bytes in thumbnail data' } }
     );
 
     %invoke = (
-	code => <<'CODE'
+        code => <<'CODE'
 {
   GdkPixbuf *pixbuf = file_utils_load_thumbnail (filename);
 
@@ -368,14 +369,14 @@ HELP
     &josh_pdb_misc('1997');
 
     @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'filename', type => 'string', no_validate => 1,
-	  desc => 'The name of the file the thumbnail belongs to' },
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'filename', type => 'string', no_validate => 1,
+          desc => 'The name of the file the thumbnail belongs to' },
     );
 
     %invoke = (
-	code => <<'CODE'
+        code => <<'CODE'
 {
   success = file_utils_save_thumbnail (image, filename);
 }
@@ -393,17 +394,17 @@ HELP
     &josh_pdb_misc('1997');
 
     @inargs = (
-	{ name => 'extension', type => 'string', no_validate => 1,
-	  desc => 'The extension the file will have' }
+        { name => 'extension', type => 'string', no_validate => 1,
+          desc => 'The extension the file will have' }
     );
 
     @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The new temp filename' }
+        { name => 'name', type => 'string',
+          desc => 'The new temp filename' }
     );
 
     %invoke = (
-	code => <<'CODE'
+        code => <<'CODE'
 {
   name = gimp_get_temp_filename (gimp, extension);
 }
@@ -422,21 +423,21 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	{ name => 'procedure_name', type => 'string',
-	  desc => 'The name of the procedure to be used for loading' },
-	{ name => 'extensions', type => 'string', no_success => 1,
-	  desc => 'comma separated list of extensions this handler
-		   can load (i.e. "jpg,jpeg")' },
-	{ name => 'prefixes', type => 'string', no_success => 1,
-	  desc => 'comma separated list of prefixes this handler
-		   can load (i.e. "http:,ftp:")' },
-	{ name => 'magics', type => 'string', no_success => 1,
-	  desc => 'comma separated list of magic file information
+        { name => 'procedure_name', type => 'string',
+          desc => 'The name of the procedure to be used for loading' },
+        { name => 'extensions', type => 'string', no_success => 1,
+          desc => 'comma separated list of extensions this handler
+                   can load (i.e. "jpg,jpeg")' },
+        { name => 'prefixes', type => 'string', no_success => 1,
+          desc => 'comma separated list of prefixes this handler
+                   can load (i.e. "http:,ftp:")' },
+        { name => 'magics', type => 'string', no_success => 1,
+          desc => 'comma separated list of magic file information
                    this handler can load (i.e. "0,string,GIF")' }
     );
 
     %invoke = (
-	code => <<'CODE'
+        code => <<'CODE'
 {
   gchar *canonical = gimp_canonicalize_identifier (procedure_name);
 
@@ -461,19 +462,19 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	{ name => 'procedure_name', type => 'string',
-	  desc => 'The name of the procedure to be used for loading' },
-	{ name => 'extensions', type => 'string', no_success => 1,
-	  desc => 'comma separated list of extensions this handler
-		   can load (i.e. "jpg,jpeg")' },
-	{ name => 'prefixes', type => 'string', no_success => 1,
-	  desc => 'comma separated list of prefixes this handler
-		   can load (i.e. "http:,ftp:")' }
+        { name => 'procedure_name', type => 'string',
+          desc => 'The name of the procedure to be used for loading' },
+        { name => 'extensions', type => 'string', no_success => 1,
+          desc => 'comma separated list of extensions this handler
+                   can load (i.e. "jpg,jpeg")' },
+        { name => 'prefixes', type => 'string', no_success => 1,
+          desc => 'comma separated list of prefixes this handler
+                   can load (i.e. "http:,ftp:")' }
     );
 
 
     %invoke = (
-	code => <<'CODE'
+        code => <<'CODE'
 {
   gchar *canonical = gimp_canonicalize_identifier (procedure_name);
 
@@ -498,18 +499,18 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	{ name => 'procedure_name', type => 'string',
-	  desc => 'The name of the procedure to be used for saving' },
-	{ name => 'extensions', type => 'string', no_success => 1,
-	  desc => 'comma separated list of extensions this handler
-		   can save (i.e. "jpg,jpeg")' },
-	{ name => 'prefixes', type => 'string', no_success => 1,
-	  desc => 'comma separated list of prefixes this handler
-		   can save (i.e. "http:,ftp:")' }
+        { name => 'procedure_name', type => 'string',
+          desc => 'The name of the procedure to be used for saving' },
+        { name => 'extensions', type => 'string', no_success => 1,
+          desc => 'comma separated list of extensions this handler
+                   can save (i.e. "jpg,jpeg")' },
+        { name => 'prefixes', type => 'string', no_success => 1,
+          desc => 'comma separated list of prefixes this handler
+                   can save (i.e. "http:,ftp:")' }
     );
 
     %invoke = (
-	code => <<'CODE'
+        code => <<'CODE'
 {
   gchar *canonical = gimp_canonicalize_identifier (procedure_name);
 
@@ -535,14 +536,14 @@ HELP
     &neo_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'procedure_name', type => 'string',
-	  desc => "The name of the procedure to associate a MIME type with." },
-	{ name => 'mime_type', type => 'string',
-	  desc => "A single MIME type, like for example \"image/jpeg\"."     }
+        { name => 'procedure_name', type => 'string',
+          desc => "The name of the procedure to associate a MIME type with." },
+        { name => 'mime_type', type => 'string',
+          desc => "A single MIME type, like for example \"image/jpeg\"."     }
     );
 
     %invoke = (
-	code => <<'CODE'
+        code => <<'CODE'
 {
   gchar *canonical = gimp_canonicalize_identifier (procedure_name);
 
@@ -570,13 +571,13 @@ HELP
     &neo_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'load_proc', type => 'string',
-	  desc => "The name of the procedure the thumbnail loader with." },
-	{ name => 'thumb_proc', type => 'string',
-	  desc => "The name of the thumbnail load procedure." }
+        { name => 'load_proc', type => 'string',
+          desc => "The name of the procedure the thumbnail loader with." },
+        { name => 'thumb_proc', type => 'string',
+          desc => "The name of the thumbnail load procedure." }
     );
     %invoke = (
-	code => <<'CODE'
+        code => <<'CODE'
 {
   gchar *canonical = gimp_canonicalize_identifier (load_proc);
 
@@ -603,13 +604,13 @@ CODE
 @procs = qw(file_load file_load_layer file_load_layers
             file_save
             file_load_thumbnail file_save_thumbnail
-	    temp_name
+            temp_name
             register_magic_load_handler register_load_handler
-	    register_save_handler
+            register_save_handler
             register_file_handler_mime
             register_thumbnail_loader);
 
-%exports = (app => [@procs], lib => [@procs[0..3,6..11]]);
+%exports = (app => [@procs], lib => [@procs[0..3,5..11]]);
 
 $desc = 'File Operations';
 
