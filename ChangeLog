@@ -1,3 +1,11 @@
+2006-11-06  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpdrawtool.[ch]: let gimp_draw_tool_draw_corner()
+	also handle north, south, east and west corners and allow for
+	filled corners.
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_draw): simplified.
+
 2006-11-05  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpdrawtool.[ch]

@@ -1547,88 +1547,79 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
                                  private->y2 - private->y1,
                                  FALSE);
 
+  gimp_rectangle_tool_draw_guides (draw_tool);
+
   if (gimp_tool_control_is_active (tool->control))
     {
-      GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (tool->display->shell);
-      gdouble           handle_w = private->dcw / SCALEFACTOR_X (shell);
-      gdouble           handle_h = private->dch / SCALEFACTOR_Y (shell);
-      gdouble           x1       = private->x1;
-      gdouble           x2       = private->x2;
-      gdouble           y1       = private->y1;
-      gdouble           y2       = private->y2;
+      GtkAnchorType anchor;
 
       switch (private->function)
         {
         case RECT_RESIZING_UPPER_LEFT:
-          gimp_draw_tool_draw_corner (draw_tool,
-                                      private->x1, private->y1,
-                                      private->dcw, private->dch,
-                                      GTK_ANCHOR_NORTH_WEST, FALSE);
+          anchor = GTK_ANCHOR_NORTH_WEST;
           break;
 
         case RECT_RESIZING_UPPER_RIGHT:
-          gimp_draw_tool_draw_corner (draw_tool,
-                                      private->x2, private->y1,
-                                      private->dcw, private->dch,
-                                      GTK_ANCHOR_NORTH_EAST, FALSE);
+          anchor = GTK_ANCHOR_NORTH_EAST;
           break;
 
         case RECT_RESIZING_LOWER_LEFT:
-          gimp_draw_tool_draw_corner (draw_tool,
-                                      private->x1, private->y2,
-                                      private->dcw, private->dch,
-                                      GTK_ANCHOR_SOUTH_WEST, FALSE);
+          anchor = GTK_ANCHOR_SOUTH_WEST;
           break;
 
         case RECT_RESIZING_LOWER_RIGHT:
-          gimp_draw_tool_draw_corner (draw_tool,
-                                      private->x2, private->y2,
-                                      private->dcw, private->dch,
-                                      GTK_ANCHOR_SOUTH_EAST, FALSE);
+          anchor = GTK_ANCHOR_SOUTH_EAST;
           break;
 
         case RECT_RESIZING_LEFT:
-          x1 = x2 = private->x1 + handle_w;
-          gimp_draw_tool_draw_line (draw_tool, x1, y1, x2, y2, FALSE);
+          anchor = GTK_ANCHOR_WEST;
           break;
 
         case RECT_RESIZING_RIGHT:
-          x1 = x2 = private->x2 - handle_w;
-          gimp_draw_tool_draw_line (draw_tool, x1, y1, x2, y2, FALSE);
+          anchor = GTK_ANCHOR_EAST;
           break;
 
         case RECT_RESIZING_TOP:
-          y1 = y2 = private->y1 + handle_h;
-          gimp_draw_tool_draw_line (draw_tool, x1, y1, x2, y2, FALSE);
+          anchor = GTK_ANCHOR_NORTH;
           break;
 
         case RECT_RESIZING_BOTTOM:
-          y1 = y2 = private->y2 - handle_h;
-          gimp_draw_tool_draw_line (draw_tool, x1, y1, x2, y2, FALSE);
+          anchor = GTK_ANCHOR_SOUTH;
           break;
+
+        default:
+          return;
         }
+
+      gimp_draw_tool_draw_corner (draw_tool, FALSE,
+                                  private->x1, private->y1,
+                                  private->x2, private->y2,
+                                  private->dcw, private->dch,
+                                  anchor, FALSE);
     }
   else
     {
-      gimp_draw_tool_draw_corner (draw_tool,
+      gimp_draw_tool_draw_corner (draw_tool, FALSE,
                                   private->x1, private->y1,
+                                  private->x2, private->y2,
                                   private->dcw, private->dch,
                                   GTK_ANCHOR_NORTH_WEST, FALSE);
-      gimp_draw_tool_draw_corner (draw_tool,
-                                  private->x2, private->y1,
+      gimp_draw_tool_draw_corner (draw_tool, FALSE,
+                                  private->x1, private->y1,
+                                  private->x2, private->y2,
                                   private->dcw, private->dch,
                                   GTK_ANCHOR_NORTH_EAST, FALSE);
-      gimp_draw_tool_draw_corner (draw_tool,
-                                  private->x1, private->y2,
+      gimp_draw_tool_draw_corner (draw_tool, FALSE,
+                                  private->x1, private->y1,
+                                  private->x2, private->y2,
                                   private->dcw, private->dch,
                                   GTK_ANCHOR_SOUTH_WEST, FALSE);
-      gimp_draw_tool_draw_corner (draw_tool,
+      gimp_draw_tool_draw_corner (draw_tool, FALSE,
+                                  private->x1, private->y1,
                                   private->x2, private->y2,
                                   private->dcw, private->dch,
                                   GTK_ANCHOR_SOUTH_EAST, FALSE);
     }
-
-  gimp_rectangle_tool_draw_guides (draw_tool);
 }
 
 static void

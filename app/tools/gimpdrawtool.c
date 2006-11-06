@@ -351,8 +351,8 @@ gimp_draw_tool_set_transform (GimpDrawTool *draw_tool,
  * @display:   a #GimpDisplay
  * @x1:        start point X in image coordinates
  * @y1:        start point Y in image coordinates
- * @x1:        end point X in image coordinates
- * @y1:        end point Y in image coordinates
+ * @x2:        end point X in image coordinates
+ * @y2:        end point Y in image coordinates
  *
  * Returns: the distance between the given points in display coordinates
  **/
@@ -385,8 +385,8 @@ gimp_draw_tool_calc_distance (GimpDrawTool *draw_tool,
  * @display:   a #GimpDisplay
  * @x1:        start point X in image coordinates
  * @y1:        start point Y in image coordinates
- * @x1:        end point X in image coordinates
- * @y1:        end point Y in image coordinates
+ * @x2:        end point X in image coordinates
+ * @y2:        end point Y in image coordinates
  * @radius:    distance in screen coordinates, not image coordinates
  *
  * The points are in image space coordinates.
@@ -423,8 +423,8 @@ gimp_draw_tool_in_radius (GimpDrawTool *draw_tool,
  * @draw_tool:   the #GimpDrawTool
  * @x1:          start point X in image coordinates
  * @y1:          start point Y in image coordinates
- * @x1:          end point X in image coordinates
- * @y1:          end point Y in image coordinates
+ * @x2:          end point X in image coordinates
+ * @y2:          end point Y in image coordinates
  * @use_offsets: whether to use the image pixel offsets of the tool's display
  *
  * This function takes image space coordinates and transforms them to
@@ -466,8 +466,8 @@ gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
  * @draw_tool:   the #GimpDrawTool
  * @x1:          start point X in image coordinates
  * @y1:          start point Y in image coordinates
- * @x1:          end point X in image coordinates
- * @y1:          end point Y in image coordinates
+ * @x2:          end point X in image coordinates
+ * @y2:          end point Y in image coordinates
  * @use_offsets: whether to use the image pixel offsets of the tool's display
  *
  * This function takes image space coordinates and transforms them to
@@ -812,68 +812,168 @@ gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
     }
 }
 
+/**
+ * gimp_draw_tool_draw_corner:
+ * @draw_tool:   the #GimpDrawTool
+ * @filled:      whether to fill the rectangle
+ * @x1:
+ * @y1:
+ * @x2:
+ * @y2:
+ * @width:       corner width
+ * @height:      corner height
+ * @anchor:      which corner to draw
+ * @use_offsets: whether to use the image pixel offsets of the tool's display
+ *
+ * This function takes image space coordinates and transforms them to
+ * screen window coordinates. It draws a corner into an already drawn
+ * rectangle outline, taking care of not drawing over an already drawn line.
+ **/
 void
 gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
-                            gdouble         x,
-                            gdouble         y,
+                            gboolean        filled,
+                            gdouble         x1,
+                            gdouble         y1,
+                            gdouble         x2,
+                            gdouble         y2,
                             gint            width,
                             gint            height,
                             GtkAnchorType   anchor,
                             gboolean        use_offsets)
 {
   GimpDisplayShell *shell;
-  gint              tx, ty;
+  GimpCanvas       *canvas;
+  gint              tx1, ty1;
+  gint              tx2, ty2;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
   g_return_if_fail (width > 2 && height > 2);
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  canvas = GIMP_CANVAS (shell->canvas);
 
-  gimp_display_shell_transform_xy (shell,
-                                   x, y,
-                                   &tx, &ty,
-                                   use_offsets);
+  gimp_display_shell_transform_xy (shell, x1, y1, &tx1, &ty1, use_offsets);
+  gimp_display_shell_transform_xy (shell, x2, y2, &tx2, &ty2, use_offsets);
 
-  switch (anchor)
+  if (filled)
     {
-    case GTK_ANCHOR_NORTH_WEST:
-      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                             tx + 1,         ty + height - 1,
-                             tx + width - 1, ty + height - 1);
-      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                             tx + width - 1, ty + 1,
-                             tx + width - 1, ty + height);
-      break;
+      switch (anchor)
+        {
+        case GTK_ANCHOR_CENTER:
+          break;
 
-    case GTK_ANCHOR_NORTH_EAST:
-      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                             tx - 2,         ty + height - 1,
-                             tx - width,     ty + height - 1);
-      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                             tx - width, ty + 1,
-                             tx - width, ty + height);
-      break;
+        case GTK_ANCHOR_NORTH_WEST:
+          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, TRUE,
+                                      tx1 + 1,       ty1 + 1,
+                                      width - 1,     height - 1);
+          break;
 
-    case GTK_ANCHOR_SOUTH_WEST:
-      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                             tx + 1,         ty - height,
-                             tx + width - 1, ty - height);
-      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                             tx + width - 1, ty - height,
-                             tx + width - 1, ty - 1);
-      break;
+        case GTK_ANCHOR_NORTH_EAST:
+          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, TRUE,
+                                      tx2 - width,   ty1 + 1,
+                                      width - 1,     height - 1);
+          break;
 
-    case GTK_ANCHOR_SOUTH_EAST:
-      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                             tx - 2,         ty - height,
-                             tx - width,     ty - height);
-      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                             tx - width,     ty - height,
-                             tx - width,     ty - 1);
-      break;
+        case GTK_ANCHOR_SOUTH_WEST:
+          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, TRUE,
+                                      tx1 + 1,       ty2 - height,
+                                      width - 1,     height - 1);
+          break;
 
-    default:
-      break;
+        case GTK_ANCHOR_SOUTH_EAST:
+          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, TRUE,
+                                      tx2 - width,   ty2 - height,
+                                      width - 1,     height - 1);
+          break;
+
+        case GTK_ANCHOR_NORTH:
+          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, TRUE,
+                                      tx1 + 1,       ty1 + 1,
+                                      tx2 - tx1 - 2, height - 1);
+          break;
+
+        case GTK_ANCHOR_SOUTH:
+          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, TRUE,
+                                      tx1 + 1,       ty2 - height,
+                                      tx2 - tx1 - 2, height - 1);
+          break;
+
+        case GTK_ANCHOR_WEST:
+          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, TRUE,
+                                      tx1 + 1,       ty1 + 1,
+                                      width - 1,     ty2 - ty1 - 2);
+          break;
+
+        case GTK_ANCHOR_EAST:
+          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, TRUE,
+                                      tx2 + width,   ty1 + 1,
+                                      width - 1,     ty2 - ty1 - 2);
+          break;
+        }
+    }
+  else
+    {
+      switch (anchor)
+        {
+        case GTK_ANCHOR_CENTER:
+          break;
+
+        case GTK_ANCHOR_NORTH_WEST:
+          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                                 tx1 + 1,         ty1 + height - 1,
+                                 tx1 + width - 1, ty1 + height - 1);
+          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                                 tx1 + width - 1, ty1 + 1,
+                                 tx1 + width - 1, ty1 + height);
+          break;
+
+        case GTK_ANCHOR_NORTH_EAST:
+          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                                 tx2 - 2,         ty1 + height - 1,
+                                 tx2 - width,     ty1 + height - 1);
+          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                                 tx2 - width,     ty1 + 1,
+                                 tx2 - width,     ty1 + height);
+          break;
+
+        case GTK_ANCHOR_SOUTH_WEST:
+          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                                 tx1 + 1,         ty2 - height,
+                                 tx1 + width - 1, ty2 - height);
+          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                                 tx1 + width - 1, ty2 - height,
+                                 tx1 + width - 1, ty2 - 1);
+          break;
+
+        case GTK_ANCHOR_SOUTH_EAST:
+          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                                 tx2 - 2,         ty2 - height,
+                                 tx2 - width,     ty2 - height);
+          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                                 tx2 - width,     ty2 - height,
+                                 tx2 - width,     ty2 - 1);
+          break;
+
+        case GTK_ANCHOR_NORTH:
+          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                                 tx1 + 1, ty1 + height, tx2 - 1, ty1 + height);
+          break;
+
+        case GTK_ANCHOR_SOUTH:
+          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                                 tx1 + 1, ty2 - height, tx2 - 1, ty2 - height);
+          break;
+
+        case GTK_ANCHOR_WEST:
+          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                                 tx1 + width, ty1 + 1, tx1 + width, ty2 - 1);
+          break;
+
+        case GTK_ANCHOR_EAST:
+          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                                 tx2 - width, ty1 + 1, tx2 - width, ty2 - 1);
+          break;
+        }
     }
 }
 
