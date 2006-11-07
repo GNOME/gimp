@@ -27,7 +27,7 @@ Needs the tool "nm" to work.
 
 """
 
-import commands, glob
+import sys, commands, glob
 
 for df in glob.glob ("lib*/*.def"):
    directory, rest = df.split ("/")
@@ -86,5 +86,9 @@ for df in glob.glob ("lib*/*.def"):
       if unsortindex >= 0:
          print "  the .def-file is not properly sorted (line %d)" % (unsortindex + 2)
          print
+
+      sys.exit (1)
+
+   sys.exit (0)
 
 
