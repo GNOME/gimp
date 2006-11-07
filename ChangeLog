@@ -1,3 +1,38 @@
+2006-11-07  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/ts-helloworld.scm: test scripts
+	aren't localized, but should still follow the menu guidelines.
+
+2006-11-07  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpdrawtool.[ch] (gimp_draw_tool_draw_corner):
+	improved highlighting.
+	(gimp_draw_tool_draw_arc_by_anchor): take width and height
+	arguments instead of radius_x and radius_y.
+
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpvectortool.c: slightly increased handle sizes.
+
+	* app/tools/gimpmeasuretool.c: increased size of the end points.
+
+	* app/tools/gimpperspectiveclonetool.c: increased handle size.
+
+	* app/tools/gimprectangletool.c: renamed variables.
+
+	* app/tools/gimpsourcetool.c: use a single define for the target size.
+
+	* app/tools/gimptransformtool.[ch]: increased handle size. Made
+	the area that can be grabbed identical to the displayed handle.
+	Replaced filled circle with a circle outline and a cross.
+
+	* app/tools/gimptransformtool-undo.c: follow renaming of define in
+	gimptransformtool.h.
+
+2006-11-07  Sven Neumann  <sven@gimp.org>
+
+	* app/file/file-utils.c (file_utils_find_proc): improved error
+	reporting.
+
 2006-11-06  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpdrawtool.[ch] (gimp_draw_tool_draw_corner)
@@ -752,7 +787,7 @@
 2006-10-26  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/script-fu-compat.init: Added strbreakup,
-	strcat, strcmp, string-trim, string-trim-left, string-trim-right, and 
+	strcat, strcmp, string-trim, string-trim-left, string-trim-right, and
 	unstrbreakup.
 
 2006-10-26  Jakub Steiner <jimmac@ximian.com>
@@ -903,7 +938,7 @@
 	* libgimpthumb/gimpthumb.def
 	* libgimpwidgets/gimpwidgets.def: .def-file maintenance. Hope my
 	changes are correct...
-	
+
 	With the help from
 	   nm .libs/libgimpfoo-2.0.so |\
 	   sed -ne "s/.* T \([a-zA-Z0-9][a-zA-Z0-9_]*\)/\t\1/p" |\
@@ -1117,7 +1152,7 @@
 	* configure.in: use LIBLCMS instead of LCMS_LIBS.
 
 	* modules/Makefile.am: changed accordingly.
-	
+
 	* plug-ins/common/mkgen.pl: link plug-ins with the same libraries
 	and in the same order as defined in the gimp.pc and gimpui.pc files.
 
@@ -1236,7 +1271,7 @@
 
 	* plug-ins/pygimp/plug-ins/gtkcons.py: removed.
 
-	* plug-ins/gimpcons.py: use new console widget, and the 
+	* plug-ins/gimpcons.py: use new console widget, and the
 	GimpProcBrowserDialog binding directly. Still a little rough in
 	places.
 
@@ -1525,7 +1560,7 @@
 2006-10-16  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* configure.in: Set enable_python to yes if it wasn't set to no.
-	Fixes display of Python status in "Optional Plug-Ins" section. 
+	Fixes display of Python status in "Optional Plug-Ins" section.
 
 	* plug-ins/script-fu/scripts/script-fu-compat.init: Added
 	'the-environment'.
@@ -1750,7 +1785,7 @@
 	* plug-ins/common/gif.c (bad_bounds_dialog): improved warning dialog.
 
 2006-10-11  Michael Schumacher  <schumaml@cvs.gnome.org>
-	
+
 	* libgimpthumb/gimpthumb.def: added gimp_thumb_file_type_get_type
 
 2006-10-11  Bill Skaggs  <weskaggs@primate.ucdavis.edu>

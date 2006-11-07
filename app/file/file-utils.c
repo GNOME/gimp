@@ -295,7 +295,15 @@ file_utils_find_proc (GSList       *procs,
         }
 
       if (ifp)
-        fclose (ifp);
+        {
+          if (ferror (ifp))
+            g_set_error (error,
+                         G_FILE_ERROR,
+                         g_file_error_from_errno (errno),
+                         g_strerror (errno));
+
+          fclose (ifp);
+        }
 
       g_free (filename);
 
