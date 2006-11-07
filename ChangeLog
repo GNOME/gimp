@@ -1,3 +1,13 @@
+2006-11-07  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* configure.in: Remove no from ALL_LINGUAS.
+	* po-libgimp/no.po:
+	* po-plug-ins/no.po:
+	* po-script-fu/no.po:
+	* po/no.po:
+	* tips/no.po: Remove the old obsolete translation from
+	the branch as well.
+
 2006-11-03  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
