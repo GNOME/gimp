@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-06 18:26+0100\n"
-"PO-Revision-Date: 2006-11-06 18:20+0100\n"
+"POT-Creation-Date: 2006-11-07 21:06+0100\n"
+"PO-Revision-Date: 2006-11-07 21:09+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -338,7 +338,7 @@ msgstr "_Frattali"
 #: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:294
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2008
 #: ../plug-ins/common/channel_mixer.c:1062 ../plug-ins/common/compressor.c:410
-#: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:836
+#: ../plug-ins/common/compressor.c:545 ../plug-ins/common/curve_bend.c:836
 #: ../plug-ins/common/dicom.c:691 ../plug-ins/common/gbr.c:616
 #: ../plug-ins/common/gif.c:986 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
@@ -2799,12 +2799,12 @@ msgid "bzip archive"
 msgstr "archivio bzip"
 
 #: ../plug-ins/common/compressor.c:373
-msgid "No sensible extension, saving as compressed XCF."
-msgstr "Nessuna estensione sensibile, salvamento come XCF compresso."
+msgid "No sensible file extension, saving as compressed XCF."
+msgstr "Nessuna estensione plausibile, salvataggio come XCF compresso."
 
-#: ../plug-ins/common/compressor.c:514
-msgid "No sensible extension, attempting to load with file magic."
-msgstr "Nessuna estensione sensibile, provo a salvare con il magic del file."
+#: ../plug-ins/common/compressor.c:518
+msgid "No sensible file extension, attempting to load with file magic."
+msgstr "Nessuna estensione plausibile, tentativo di salvataggio tramite il magic del file."
 
 #: ../plug-ins/common/convmatrix.c:101
 msgid "Gr_ey"
@@ -9460,7 +9460,7 @@ msgstr "Gradiente angolare:"
 
 #: ../plug-ins/gflare/gflare.c:3500 ../plug-ins/gflare/gflare.c:3605
 msgid "Angular size gradient:"
-msgstr "Dimensione angolare gradiente:"
+msgstr "Gradiente angolare della dimensione:"
 
 #: ../plug-ins/gflare/gflare.c:3520 ../plug-ins/gflare/gflare.c:3625
 #: ../plug-ins/gflare/gflare.c:3762
