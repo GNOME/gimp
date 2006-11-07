@@ -799,6 +799,20 @@ pygimp_personal_rc_file(PyObject *self, PyObject *args, PyObject *kwargs)
 }
 
 static PyObject *
+pygimp_context_push(PyObject *self)
+{
+    gimp_context_push();
+    return Py_None;
+}
+
+static PyObject *
+pygimp_context_pop(PyObject *self)
+{
+    gimp_context_pop();
+    return Py_None;
+}
+
+static PyObject *
 pygimp_get_background(PyObject *self)
 {
     GimpRGB rgb;
@@ -1643,6 +1657,9 @@ static struct PyMethodDef gimp_methods[] = {
     {"min_colors",      (PyCFunction)pygimp_min_colors, METH_NOARGS},
     {"gtkrc",   (PyCFunction)pygimp_gtkrc,      METH_NOARGS},
     {"personal_rc_file",        (PyCFunction)pygimp_personal_rc_file, METH_VARARGS | METH_KEYWORDS},
+    {"context_push", (PyCFunction)pygimp_context_push, METH_NOARGS},
+    {"context_pop", (PyCFunction)pygimp_context_pop, METH_NOARGS},
+    {"get_foreground",  (PyCFunction)pygimp_get_foreground,     METH_NOARGS},
     {"get_background",  (PyCFunction)pygimp_get_background,     METH_NOARGS},
     {"get_foreground",  (PyCFunction)pygimp_get_foreground,     METH_NOARGS},
     {"set_background",  (PyCFunction)pygimp_set_background,     METH_VARARGS},

@@ -27,6 +27,8 @@ def sphere(radius, light, shadow, bg_colour, sphere_colour):
     width = int(radius * 3.75)
     height = int(radius * 2.5)
 
+    gimp.context_push()
+
     img = gimp.Image(width, height, RGB)
 
     drawable = gimp.Layer(img, "Sphere Layer", width, height,
@@ -44,9 +46,6 @@ def sphere(radius, light, shadow, bg_colour, sphere_colour):
     light_end_y = cy - radius * math.sin(math.pi + radians)
 
     offset = radius * 0.1
-
-    old_fg = gimp.get_foreground()
-    old_bg = gimp.get_background()
 
     img.disable_undo()
     img.add_layer(drawable, 0)
@@ -82,12 +81,12 @@ def sphere(radius, light, shadow, bg_colour, sphere_colour):
 
     pdb.gimp_selection_none(img)
 
-    gimp.set_background(old_bg)
-    gimp.set_foreground(old_fg)
-
     img.enable_undo()
 
     disp = gimp.Display(img)
+
+    gimp.context_pop()
+
 
 register(
     "python-fu-sphere",
