@@ -61,11 +61,11 @@
 #include "gimp-intl.h"
 
 
-#define TARGET 9
+#define TARGET       12
 
-#define TOGGLE_MASK GDK_SHIFT_MASK
-#define MOVE_MASK   GDK_MOD1_MASK
-#define INSDEL_MASK GDK_CONTROL_MASK
+#define TOGGLE_MASK  GDK_SHIFT_MASK
+#define MOVE_MASK    GDK_MOD1_MASK
+#define INSDEL_MASK  GDK_CONTROL_MASK
 
 
 /*  local function prototypes  */

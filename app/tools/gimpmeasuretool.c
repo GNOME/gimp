@@ -52,9 +52,8 @@
 #include "gimp-intl.h"
 
 
-/*  definitions  */
-#define  TARGET         8
-#define  ARC_RADIUS     30
+#define  TARGET       12
+#define  ARC_RADIUS   30
 
 
 /*  local function prototypes  */
@@ -210,7 +209,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
                                         GIMP_HANDLE_CIRCLE,
                                         measure->x[i],
                                         measure->y[i],
-                                        TARGET, TARGET,
+                                        TARGET * 2, TARGET * 2,
                                         GTK_ANCHOR_CENTER,
                                         FALSE))
             {
@@ -537,7 +536,7 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
                                         GIMP_HANDLE_CIRCLE,
                                         measure->x[i],
                                         measure->y[i],
-                                        TARGET, TARGET,
+                                        TARGET * 2, TARGET * 2,
                                         GTK_ANCHOR_CENTER,
                                         FALSE))
             {
@@ -651,8 +650,8 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
                                              FALSE,
                                              measure->x[0],
                                              measure->y[0],
-                                             ARC_RADIUS,
-                                             ARC_RADIUS,
+                                             ARC_RADIUS * 2,
+                                             ARC_RADIUS * 2,
                                              angle1, angle2,
                                              GTK_ANCHOR_CENTER,
                                              FALSE);

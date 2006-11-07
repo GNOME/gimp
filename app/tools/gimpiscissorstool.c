@@ -81,17 +81,16 @@
 #include "gimp-intl.h"
 
 
-/*  Other defines...  */
+/*  defines  */
 #define  MAX_GRADIENT      179.606  /* == sqrt (127^2 + 127^2) */
 #define  GRADIENT_SEARCH   32  /* how far to look when snapping to an edge */
-#define  TARGET_SIZE      25
-#define  POINT_WIDTH       9   /* size (in pixels) of seed handles */
-#define  POINT_HALFWIDTH   (POINT_WIDTH / 2)
+#define  TARGET_SIZE       25
+#define  POINT_WIDTH       12  /* size (in pixels) of seed handles */
 #define  EXTEND_BY         0.2 /* proportion to expand cost map by */
 #define  FIXED             5   /* additional fixed size to expand cost map */
 #define  MIN_GRADIENT      63  /* gradients < this are directionless */
 
-#define  COST_WIDTH         2  /* number of bytes for each pixel in cost map  */
+#define  COST_WIDTH        2   /* number of bytes for each pixel in cost map  */
 
 /* weight to give between gradient (_G) and direction (_D) */
 #define  OMEGA_D           0.2
@@ -203,7 +202,7 @@ G_DEFINE_TYPE (GimpIscissorsTool, gimp_iscissors_tool,
 /*  static variables  */
 
 /*  where to move on a given link direction  */
-static gint move[8][2] =
+static const gint move[8][2] =
 {
   {  1,  0 },
   {  0,  1 },
@@ -1184,7 +1183,7 @@ mouse_over_curve (GimpIscissorsTool *iscissors,
                                         GIMP_TOOL (iscissors)->display,
                                         tx, ty,
                                         x, y,
-                                        POINT_HALFWIDTH))
+                                        POINT_WIDTH / 2))
             {
               return list;
             }
@@ -1420,13 +1419,15 @@ calculate_link (TileManager *gradient_map,
   /*  calculate the contribution of the gradient direction  */
   x += (gint8)(pixel & 0xff);
   y += (gint8)((pixel & 0xff00) >> 8);
+
   if (!gradient_map_value (gradient_map, x, y, &grad2, &dir2))
     {
       grad2 = 0;
       dir2 = 255;
     }
-  value += (direction_value[dir1][link] + direction_value[dir2][link]) *
-    OMEGA_D;
+
+  value +=
+    (direction_value[dir1][link] + direction_value[dir2][link]) * OMEGA_D;
 
   return value;
 }
@@ -1459,7 +1460,7 @@ plot_pixels (GimpIscissorsTool *iscissors,
 
   list = g_ptr_array_new ();
 
-  while (1)
+  while (TRUE)
     {
       coords = (y << 16) + x;
       g_ptr_array_add (list, GINT_TO_POINTER (coords));

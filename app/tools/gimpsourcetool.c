@@ -39,8 +39,7 @@
 #include "gimp-intl.h"
 
 
-#define TARGET_WIDTH  15
-#define TARGET_HEIGHT 15
+#define TARGET_SIZE  15
 
 
 static gboolean      gimp_source_tool_has_display   (GimpTool        *tool,
@@ -373,7 +372,7 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
                                   GIMP_HANDLE_CROSS,
                                   source_tool->src_x + off_x,
                                   source_tool->src_y + off_y,
-                                  TARGET_WIDTH, TARGET_WIDTH,
+                                  TARGET_SIZE, TARGET_SIZE,
                                   GTK_ANCHOR_CENTER,
                                   FALSE);
 

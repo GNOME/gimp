@@ -23,12 +23,10 @@
 #include "gimpdrawtool.h"
 
 
-/* buffer sizes for scaling information strings (for the info dialog) */
-#define MAX_INFO_BUF   40
-#define TRAN_INFO_SIZE  8
+#define TRANS_INFO_SIZE  8
 
 
-typedef gdouble TransInfo[TRAN_INFO_SIZE];
+typedef gdouble TransInfo[TRANS_INFO_SIZE];
 
 
 #define GIMP_TYPE_TRANSFORM_TOOL            (gimp_transform_tool_get_type ())
@@ -81,6 +79,9 @@ struct _GimpTransformTool
   gboolean        use_handles;     /*  uses the corner handles           */
   gboolean        use_center;      /*  uses the center handle            */
   gboolean        use_mid_handles; /*  use handles at midpoints of edges */
+
+  gint            handle_w;        /*  handle width                      */
+  gint            handle_h;        /*  handle height                     */
 
   gint            ngx, ngy;        /*  number of grid lines in original
                                     *  x and y directions

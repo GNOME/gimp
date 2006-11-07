@@ -666,8 +666,8 @@ gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
                                    gboolean       filled,
                                    gdouble        x,
                                    gdouble        y,
-                                   gint           radius_x,
-                                   gint           radius_y,
+                                   gint           width,
+                                   gint           height,
                                    gint           angle1,
                                    gint           angle2,
                                    GtkAnchorType  anchor,
@@ -685,25 +685,21 @@ gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
                                      &tx, &ty,
                                      use_offsets);
 
-  /* well... */
-  radius_x *= 2;
-  radius_y *= 2;
-
   gimp_draw_tool_shift_to_north_west (tx, ty,
-                                      radius_x, radius_y,
+                                      width, height,
                                       anchor,
                                       &tx, &ty);
 
   if (! filled)
     {
-      radius_x -= 1;
-      radius_y -= 1;
+      width  -= 1;
+      height -= 1;
     }
 
   gimp_canvas_draw_arc (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
                         filled,
                         PROJ_ROUND (tx), PROJ_ROUND (ty),
-                        radius_x, radius_y,
+                        width, height,
                         angle1, angle2);
 }
 
@@ -779,8 +775,8 @@ gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
       gimp_draw_tool_draw_arc_by_anchor (draw_tool,
                                          FALSE,
                                          x, y,
-                                         width >> 1,
-                                         height >> 1,
+                                         width,
+                                         height,
                                          0, 360 * 64,
                                          anchor,
                                          use_offsets);
@@ -790,8 +786,8 @@ gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
       gimp_draw_tool_draw_arc_by_anchor (draw_tool,
                                          TRUE,
                                          x, y,
-                                         width >> 1,
-                                         height >> 1,
+                                         width,
+                                         height,
                                          0, 360 * 64,
                                          anchor,
                                          use_offsets);
@@ -855,6 +851,9 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
   gimp_display_shell_transform_xy (shell, x1, y1, &tx1, &ty1, use_offsets);
   gimp_display_shell_transform_xy (shell, x2, y2, &tx2, &ty2, use_offsets);
 
+  if (tx2 - tx1 <= width || ty2 - ty1 <= height)
+    return;
+
   switch (anchor)
     {
     case GTK_ANCHOR_CENTER:
@@ -917,37 +916,61 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
       break;
     }
 
-  if (highlight)
+  if (! highlight)
+    return;
+
+  switch (anchor)
     {
-      switch (anchor)
-        {
-        case GTK_ANCHOR_NORTH_WEST:
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx1 + 1,         ty1 + 1,
-                                      width - 3,       height - 3);
-          break;
+    case GTK_ANCHOR_NORTH_WEST:
+      gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
+                                  tx1 + 1,         ty1 + 1,
+                                  width - 3,       height - 3);
+      break;
 
-        case GTK_ANCHOR_NORTH_EAST:
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx2 - width + 1, ty1 + 1,
-                                      width - 3,       height - 3);
-          break;
+    case GTK_ANCHOR_NORTH_EAST:
+      gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
+                                  tx2 - width + 1, ty1 + 1,
+                                  width - 3,       height - 3);
+      break;
 
-        case GTK_ANCHOR_SOUTH_WEST:
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx1 + 1,         ty2 - height + 1,
-                                      width - 3,       height - 3);
-          break;
+    case GTK_ANCHOR_SOUTH_WEST:
+      gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
+                                  tx1 + 1,         ty2 - height + 1,
+                                  width - 3,       height - 3);
+      break;
 
-        case GTK_ANCHOR_SOUTH_EAST:
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx2 - width + 1, ty2 - height + 1,
-                                      width - 3,       height - 3);
-          break;
+    case GTK_ANCHOR_SOUTH_EAST:
+      gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
+                                  tx2 - width + 1, ty2 - height + 1,
+                                  width - 3,       height - 3);
+      break;
 
-        default:
-          break;
-        }
+    case GTK_ANCHOR_NORTH:
+      gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
+                                  tx1 + 1,         ty1 + 1,
+                                  tx2 - tx1 - 3,   height - 2);
+      break;
+
+    case GTK_ANCHOR_SOUTH:
+      gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
+                                  tx1 + 1,         ty2 - height + 1,
+                                  tx2 - tx1 - 3,   height - 3);
+      break;
+
+    case GTK_ANCHOR_WEST:
+      gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
+                                  tx1 + 1,         ty1 + 1,
+                                  width - 2,       ty2 - ty1 - 3);
+      break;
+
+    case GTK_ANCHOR_EAST:
+      gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
+                                  tx2 - width + 1, ty1 + 1,
+                                  width - 3,       ty2 - ty1 - 3);
+      break;
+
+    default:
+      break;
     }
 }
 

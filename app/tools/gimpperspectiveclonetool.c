@@ -45,10 +45,9 @@
 #include "gimp-intl.h"
 
 
-#define HANDLE_SIZE 10
+#define HANDLE_SIZE  25
 
-#define TARGET_WIDTH  15
-#define TARGET_HEIGHT 15
+#define TARGET_SIZE  15
 
 
 static GObject *     gimp_perspective_clone_tool_constructor   (GType                type,
@@ -157,7 +156,7 @@ gimp_perspective_clone_tool_init (GimpPerspectiveCloneTool *perspective_clone_to
   gimp_tool_control_set_action_object_2 (tool->control,
                                          "context/context-pattern-select-set");
 
-  for (i = 0; i < TRAN_INFO_SIZE; i++)
+  for (i = 0; i < TRANS_INFO_SIZE; i++)
     {
       perspective_clone_tool->trans_info[i]     = 0.0;
       perspective_clone_tool->old_trans_info[i] = 0.0;
@@ -235,7 +234,7 @@ gimp_perspective_clone_tool_initialize (GimpTool     *tool,
       perspective_clone_tool->function = TRANSFORM_CREATING;
 
       /*  Save the current transformation info  */
-      for (i = 0; i < TRAN_INFO_SIZE; i++)
+      for (i = 0; i < TRANS_INFO_SIZE; i++)
         perspective_clone_tool->old_trans_info[i] =
           perspective_clone_tool->trans_info[i];
     }
@@ -746,7 +745,7 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
                                   GIMP_HANDLE_CROSS,
                                   clone_tool->src_x,
                                   clone_tool->src_y,
-                                  TARGET_WIDTH, TARGET_WIDTH,
+                                  TARGET_SIZE, TARGET_SIZE,
                                   GTK_ANCHOR_CENTER,
                                   FALSE);
 
