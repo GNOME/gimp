@@ -50,16 +50,16 @@
 )
 
 (script-fu-register "script-fu-helloworld"
-    _"Hello World"
+    "_Hello World..."
     "Creates an image with a user specified text string."
     "Kevin Cozens <kcozens@interlog.com>"
     "Kevin Cozens"
     "February 29, 2004"
     ""
-    SF-STRING     _"Text string"         "Hello, World!"
-    SF-FONT       _"Font"                "Sans"
-    SF-ADJUSTMENT _"Font size (pixels)"  '(100 2 1000 1 10 0 1)
-    SF-COLOR      _"Color"               '(0 0 0)
+    SF-STRING     "Text string"         "Hello, World!"
+    SF-FONT       "Font"                "Sans"
+    SF-ADJUSTMENT "Font size (pixels)"  '(100 2 1000 1 10 0 1)
+    SF-COLOR      "Color"               '(0 0 0)
 )
 
 (script-fu-menu-register "script-fu-helloworld"
