@@ -1371,10 +1371,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
   GimpRectangleToolPrivate *private;
   GimpDrawTool             *draw_tool;
   GimpDisplayShell         *shell;
-  gboolean                  inside_x;
-  gboolean                  inside_y;
-  gdouble                   handle_w;
-  gdouble                   handle_h;
+  gboolean                  inside;
   gint                      function;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
@@ -1389,73 +1386,75 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
       return;
     }
 
-  inside_x = coords->x > private->x1 && coords->x < private->x2;
-  inside_y = coords->y > private->y1 && coords->y < private->y2;
+  inside = (coords->x > private->x1 && coords->x < private->x2 &&
+            coords->y > private->y1 && coords->y < private->y2);
 
-  shell = GIMP_DISPLAY_SHELL (tool->display->shell);
+  if (inside)
+    {
+      GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (tool->display->shell);
+      gdouble           handle_w = private->handle_w / SCALEFACTOR_X (shell);
+      gdouble           handle_h = private->handle_h / SCALEFACTOR_Y (shell);
 
-  handle_w = private->handle_w / SCALEFACTOR_X (shell);
-  handle_h = private->handle_h / SCALEFACTOR_Y (shell);
-
-  if (gimp_draw_tool_on_handle (draw_tool, display,
-                                coords->x, coords->y,
-                                GIMP_HANDLE_SQUARE,
-                                private->x1, private->y1,
-                                private->handle_w, private->handle_h,
-                                GTK_ANCHOR_NORTH_WEST,
-                                FALSE))
-    {
-      function = RECT_RESIZING_UPPER_LEFT;
-    }
-  else if (gimp_draw_tool_on_handle (draw_tool, display,
-                                     coords->x, coords->y,
-                                     GIMP_HANDLE_SQUARE,
-                                     private->x2, private->y2,
-                                     private->handle_w, private->handle_h,
-                                     GTK_ANCHOR_SOUTH_EAST,
-                                     FALSE))
-    {
-      function = RECT_RESIZING_LOWER_RIGHT;
-    }
-  else if  (gimp_draw_tool_on_handle (draw_tool, display,
-                                      coords->x, coords->y,
-                                      GIMP_HANDLE_SQUARE,
-                                      private->x2, private->y1,
-                                      private->handle_w, private->handle_h,
-                                      GTK_ANCHOR_NORTH_EAST,
-                                      FALSE))
-    {
-      function = RECT_RESIZING_UPPER_RIGHT;
-    }
-  else if (gimp_draw_tool_on_handle (draw_tool, display,
-                                     coords->x, coords->y,
-                                     GIMP_HANDLE_SQUARE,
-                                     private->x1, private->y2,
-                                     private->handle_w, private->handle_h,
-                                     GTK_ANCHOR_SOUTH_WEST,
-                                     FALSE))
-    {
-      function = RECT_RESIZING_LOWER_LEFT;
-    }
-  else if ((fabs (coords->x - private->x1) < handle_w) && inside_x && inside_y)
-    {
-      function = RECT_RESIZING_LEFT;
-    }
-  else if ((fabs (coords->x - private->x2) < handle_w) && inside_x && inside_y)
-    {
-      function = RECT_RESIZING_RIGHT;
-    }
-  else if ((fabs (coords->y - private->y1) < handle_h) && inside_x && inside_y)
-    {
-      function = RECT_RESIZING_TOP;
-    }
-  else if ((fabs (coords->y - private->y2) < handle_h) && inside_x && inside_y)
-    {
-      function = RECT_RESIZING_BOTTOM;
-    }
-  else if (inside_x && inside_y)
-    {
-      function = RECT_MOVING;
+      if (gimp_draw_tool_on_handle (draw_tool, display,
+                                    coords->x, coords->y,
+                                    GIMP_HANDLE_SQUARE,
+                                    private->x1, private->y1,
+                                    private->handle_w, private->handle_h,
+                                    GTK_ANCHOR_NORTH_WEST,
+                                    FALSE))
+        {
+          function = RECT_RESIZING_UPPER_LEFT;
+        }
+      else if (gimp_draw_tool_on_handle (draw_tool, display,
+                                         coords->x, coords->y,
+                                         GIMP_HANDLE_SQUARE,
+                                         private->x2, private->y2,
+                                         private->handle_w, private->handle_h,
+                                         GTK_ANCHOR_SOUTH_EAST,
+                                         FALSE))
+        {
+          function = RECT_RESIZING_LOWER_RIGHT;
+        }
+      else if  (gimp_draw_tool_on_handle (draw_tool, display,
+                                          coords->x, coords->y,
+                                          GIMP_HANDLE_SQUARE,
+                                          private->x2, private->y1,
+                                          private->handle_w, private->handle_h,
+                                          GTK_ANCHOR_NORTH_EAST,
+                                          FALSE))
+        {
+          function = RECT_RESIZING_UPPER_RIGHT;
+        }
+      else if (gimp_draw_tool_on_handle (draw_tool, display,
+                                         coords->x, coords->y,
+                                         GIMP_HANDLE_SQUARE,
+                                         private->x1, private->y2,
+                                         private->handle_w, private->handle_h,
+                                         GTK_ANCHOR_SOUTH_WEST,
+                                         FALSE))
+        {
+          function = RECT_RESIZING_LOWER_LEFT;
+        }
+      else if (fabs (coords->x - private->x1) < handle_w)
+        {
+          function = RECT_RESIZING_LEFT;
+        }
+      else if ((fabs (coords->x - private->x2) < handle_w))
+        {
+          function = RECT_RESIZING_RIGHT;
+        }
+      else if ((fabs (coords->y - private->y1) < handle_h))
+        {
+          function = RECT_RESIZING_TOP;
+        }
+      else if ((fabs (coords->y - private->y2) < handle_h))
+        {
+          function = RECT_RESIZING_BOTTOM;
+        }
+      else
+        {
+          function = RECT_MOVING;
+        }
     }
   else
     {

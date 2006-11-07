@@ -10,16 +10,21 @@ new stuff is being done that will one day be released as GIMP 2.4.
 Changes in GIMP 2.3.13
 ======================
 
-- show information about embedded color profiles
-- optionally apply color profiles on load
+- show information about embedded color profiles in Image Properties dialog
+- allow to apply color profiles on load (still work in progress)
 - new vectors PDB API to replaces the old path API
 - added "Auntie Alias" plug-in for antialiasing on lineart
 - added Edit->Fade operation
 - added Rounded Corners option to Rectangle Select tool
 - improved WinIcon plug-in (now loads and saves 24 bit and Vista icons)
-- merged tiny-fu; replaces Script-Fu Scheme interpreter with TinyScheme
+- merged gimp-tiny-fu; replaces Script-Fu Scheme interpreter with TinyScheme
 - remember unit and interpolation type in scale and resize dialogs
 - changed default interpolation type to Cubic
+- show comment in Image Properties dialog
+- when loading in image as layers, don't merge the layers
+- added experimental palette color selector module
+- don't save thumbnails that don't match the image
+- increased tool handle sizes for better usability
 - bug fixes and code cleanup
 
 
