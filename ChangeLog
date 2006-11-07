@@ -1,5 +1,12 @@
 2006-11-07  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/file-save-dialog.c: undef DEBUG_SPEW again.
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_draw):
+	don't draw the handles while the rectangle is being moved.
+
+2006-11-07  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/ts-helloworld.scm: test scripts
 	aren't localized, but should still follow the menu guidelines.
 

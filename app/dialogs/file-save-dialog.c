@@ -48,9 +48,6 @@
 #include "gimp-intl.h"
 
 
-#define DEBUG_SPEW 1
-
-
 /*  local function prototypes  */
 
 static void       file_save_dialog_response      (GtkWidget            *save_dialog,

@@ -1557,8 +1557,12 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
 
   switch (private->function)
     {
-    case RECT_CREATING:
     case RECT_MOVING:
+      if (gimp_tool_control_is_active (tool->control))
+        break;
+      /* else fallthrough */
+
+    case RECT_CREATING:
       gimp_draw_tool_draw_corner (draw_tool, FALSE,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
