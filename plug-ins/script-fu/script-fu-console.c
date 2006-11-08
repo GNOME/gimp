@@ -664,8 +664,6 @@ script_fu_open_ts_console (void)
 {
   ts_set_print_flag (1);
   ts_set_console_mode (1);
-  ts_set_verbose_level (2);
-  ts_print_welcome ();
 }
 
 static void
@@ -700,7 +698,6 @@ script_fu_eval_run (const gchar      *name,
     case GIMP_RUN_NONINTERACTIVE:
       /*  Disable Script-Fu output  */
       ts_set_output_file (stdout);
-      ts_set_verbose_level (0);
       if (ts_interpret_string (params[1].data.d_string) != 0)
           status = GIMP_PDB_EXECUTION_ERROR;
       break;

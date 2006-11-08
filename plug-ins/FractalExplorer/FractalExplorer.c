@@ -134,6 +134,7 @@ explorer_vals_t wvals =
   0,
   1,
   256,
+  0,
   0
 };                              /* wvals */
 

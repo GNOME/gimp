@@ -47,7 +47,6 @@ script_fu_text_console_run (const gchar      *name,
 
   /*  Enable Script-Fu output  */
   ts_set_output_file (stdout);
-  ts_set_verbose_level (2);
   ts_print_welcome ();
 
   /*  Run the interface  */

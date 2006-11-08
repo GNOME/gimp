@@ -1,3 +1,14 @@
+2006-11-08  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scheme-wrapper.c
+	* plug-ins/script-fu/scheme-wrapper.h
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu-text-console.c: Removed obsolete
+	verbose level code.
+
+	* plug-ins/FractalExplorer/FractalExplorer.c: Added missing default
+	value to wvals structure.
+
 2006-11-07  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprectangletool.c: removed dead code.

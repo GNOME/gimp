@@ -24,9 +24,6 @@ void          ts_set_output_file   (FILE *file);
 
 void          ts_set_console_mode  (int flag);
 
-gint          ts_get_verbose_level (void);
-void          ts_set_verbose_level (gint);
-
 void          ts_set_print_flag    (gint);
 void          ts_print_welcome     (void);
 

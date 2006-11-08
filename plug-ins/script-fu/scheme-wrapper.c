@@ -182,7 +182,6 @@ struct named_constant const old_constants[] =
 
 static scheme sc;
 static FILE  *ts_output;
-static int    ts_verbose_level;
 
 
 /* wrapper functions */
@@ -205,18 +204,6 @@ ts_set_console_mode (int flag)
   ts_console_mode = flag;
 }
 
-int
-ts_get_verbose_level (void)
-{
-  return ts_verbose_level;
-}
-
-void
-ts_set_verbose_level (gint verbose_level)
-{
-  ts_verbose_level = verbose_level;
-}
-
 void
 ts_set_print_flag (gint print_flag)
 {
@@ -226,11 +213,8 @@ ts_set_print_flag (gint print_flag)
 void
 ts_print_welcome (void)
 {
-  if (ts_verbose_level >= 2)
-  {
-     fprintf (ts_output, "Welcome to TinyScheme, Version 1.38\n");
-     fprintf (ts_output, "Copyright (c) Dimitrios Souflis\n");
-  }
+  fprintf (ts_output, "Welcome to TinyScheme, Version 1.38\n");
+  fprintf (ts_output, "Copyright (c) Dimitrios Souflis\n");
 }
 
 gint
