@@ -1286,9 +1286,8 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
 {
   GimpRectangleTool        *rectangle;
   GimpRectangleToolPrivate *private;
-  gint                      inc_x, inc_y;
-  gint                      min_x, min_y;
-  gint                      max_x, max_y;
+  gint                      inc_x = 0;
+  gint                      inc_y = 0;
 
   g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (tool), FALSE);
 
@@ -1297,8 +1296,6 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
 
   if (display != tool->display)
     return FALSE;
-
-  inc_x = inc_y = 0;
 
   switch (kevent->keyval)
     {
@@ -1340,10 +1337,6 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  min_x = min_y = 0;
-  max_x = display->image->width;
-  max_y = display->image->height;
-
   g_object_set (rectangle,
                 "x1", private->x1 + inc_x,
                 "y1", private->y1 + inc_y,
@@ -1367,29 +1360,23 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                  gboolean         proximity,
                                  GimpDisplay     *display)
 {
-  GimpRectangleTool        *rectangle;
   GimpRectangleToolPrivate *private;
   GimpDrawTool             *draw_tool;
-  GimpDisplayShell         *shell;
-  gboolean                  inside;
   gint                      function;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
-  rectangle = GIMP_RECTANGLE_TOOL (tool);
   private   = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
   draw_tool = GIMP_DRAW_TOOL (tool);
 
   if (tool->display != display)
     {
-      g_object_set (rectangle, "function", RECT_CREATING, NULL);
+      g_object_set (tool, "function", RECT_CREATING, NULL);
       return;
     }
 
-  inside = (coords->x > private->x1 && coords->x < private->x2 &&
-            coords->y > private->y1 && coords->y < private->y2);
-
-  if (inside)
+  if (coords->x > private->x1 && coords->x < private->x2 &&
+      coords->y > private->y1 && coords->y < private->y2)
     {
       GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (tool->display->shell);
       gdouble           handle_w = private->handle_w / SCALEFACTOR_X (shell);
@@ -1467,7 +1454,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
   if (function != private->function)
     {
       gimp_draw_tool_pause (draw_tool);
-      g_object_set (rectangle, "function", function, NULL);
+      g_object_set (tool, "function", function, NULL);
       gimp_draw_tool_resume (draw_tool);
     }
 }

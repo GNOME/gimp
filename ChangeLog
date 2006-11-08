@@ -1,3 +1,7 @@
+2006-11-07  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c: removed dead code.
+
 2006-11-07  Simon Budig  <simon@gimp.org>
 
 	* tools/defcheck.py: provide an exit code indicating if the
