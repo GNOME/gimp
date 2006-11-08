@@ -1,3 +1,8 @@
+2006-11-08  Jakub Steiner <jimmac@ximian.com>
+
+	* stock-tool-foreground-select: update SIOX icon based on feedback
+		on the mailing list
+
 2006-11-08  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scheme-wrapper.c
