@@ -1,3 +1,9 @@
+2006-11-08  Simon Budig  <simon@gimp.org>
+
+	* tools/defcheck.py: don't bail out successfully after the first test,
+	don't bail out prematurely on a failed test and actually spot double
+	symbols in .def-files if they follow immediately each other...
+
 2006-11-08  Sven Neumann  <sven@gimp.org>
 
 	* tools/Makefile.am (EXTRA_DIST): added defcheck.py.

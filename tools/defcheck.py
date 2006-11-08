@@ -41,6 +41,8 @@ def_files = (
    "libgimpwidgets/gimpwidgets.def"
 )
 
+have_errors = 0
+
 for df in def_files:
    directory, rest = df.split ("/")
    basename, extension = rest.split (".")
@@ -55,7 +57,7 @@ for df in def_files:
 
    doublesymbols = []
    for i in range (len (defsymbols)-1, 0, -1):
-      if defsymbols[i] in defsymbols[:i-1]:
+      if defsymbols[i] in defsymbols[:i]:
          doublesymbols.append ((defsymbols[i], i+2))
 
    unsortindex = -1
@@ -104,6 +106,6 @@ for df in def_files:
          print "  the .def-file is not properly sorted (line %d)" % (unsortindex + 2)
          print
 
-      sys.exit (1)
+      have_errors = -1
 
-   sys.exit (0)
+sys.exit (have_errors)
