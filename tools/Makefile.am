@@ -39,6 +39,7 @@ INCLUDES = \
 	-I$(includedir)
 
 EXTRA_DIST = \
+	defcheck.py	\
 	gimp-mkenums	\
 	gimppath2svg.py	\
 	rmshm

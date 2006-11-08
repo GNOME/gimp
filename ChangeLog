@@ -1,7 +1,17 @@
+2006-11-08  Sven Neumann  <sven@gimp.org>
+
+	* tools/Makefile.am (EXTRA_DIST): added defcheck.py.
+
+	* tools/defcheck.py: keep a list of .def files, glob didn't work
+	for me. Also bail out with a reasonable message if not being
+	called from the toplevel source directory.
+
+	* Makefile.am (dist-hook): check .def files for consistency.
+
 2006-11-08  Jakub Steiner <jimmac@ximian.com>
 
 	* stock-tool-foreground-select: update SIOX icon based on feedback
-		on the mailing list
+	on the mailing list.
 
 2006-11-08  Kevin Cozens  <kcozens@cvs.gnome.org>
 

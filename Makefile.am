@@ -90,6 +90,9 @@ DISTCLEANFILES = \
 gimpinstall-@GIMP_TOOL_VERSION@:
 	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall-@GIMP_TOOL_VERSION@
 
+check-defs:
+	@$(PYTHON) tools/defcheck.py || \
+	  ( echo "* .def files inconsistent *"; exit 1; )
 
 validate-authors:
 if HAVE_XMLLINT
@@ -99,4 +102,4 @@ endif
 
 all-local: AUTHORS
 
-dist-hook: validate-authors
+dist-hook: check-defs validate-authors

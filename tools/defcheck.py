@@ -27,14 +27,31 @@ Needs the tool "nm" to work.
 
 """
 
-import sys, commands, glob
+import sys, commands
 
-for df in glob.glob ("lib*/*.def"):
+def_files = (
+   "libgimpbase/gimpbase.def",
+   "libgimpcolor/gimpcolor.def",
+   "libgimpconfig/gimpconfig.def",
+   "libgimp/gimp.def",
+   "libgimp/gimpui.def",
+   "libgimpmath/gimpmath.def",
+   "libgimpmodule/gimpmodule.def",
+   "libgimpthumb/gimpthumb.def",
+   "libgimpwidgets/gimpwidgets.def"
+)
+
+for df in def_files:
    directory, rest = df.split ("/")
    basename, extension = rest.split (".")
    libname = directory + "/.libs/lib" + basename + "-*.so"
 
-   defsymbols = file (df).read ().split ()[1:]
+   try:
+      defsymbols = file (df).read ().split ()[1:]
+   except IOError, message:
+      print message
+      print "You need to run this script from the toplevel source directory."
+      sys.exit (-1)
 
    doublesymbols = []
    for i in range (len (defsymbols)-1, 0, -1):
@@ -90,5 +107,3 @@ for df in glob.glob ("lib*/*.def"):
       sys.exit (1)
 
    sys.exit (0)
-
-
