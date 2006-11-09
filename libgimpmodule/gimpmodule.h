@@ -156,4 +156,4 @@ void             gimp_module_info_free (GimpModuleInfo       *info);
 
 G_END_DECLS
 
-#endif  /* __GIMP_MODULE_INFO_H__ */
+#endif  /* __GIMP_MODULE_H__ */

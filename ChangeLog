@@ -1,5 +1,9 @@
 2006-11-09  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpmodule/gimpmodule.h: fixed wrong include guard comment.
+
+2006-11-09  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/tinyscheme/scheme.c: don't include <malloc.h>
 	Fixes the build on OSX (or maybe BSD in general).
 
