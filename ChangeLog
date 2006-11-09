@@ -1,5 +1,22 @@
 2006-11-09  Michael Natterer  <mitch@gimp.org>
 
+	Properly abstract brush scaling:
+
+	* app/core/gimpbrush.[ch]: added virtual functions
+	GimpBrush::scale_mask() and ::scale_pixmap() and default
+	implementations which call the functions in base/brush-scale.c.
+
+	* app/core/gimpbrushgenerated.c: factored out brush calculation to
+	an internal utility function and call that function from ::dirty()
+	and from the new ::scale_mask().
+
+	* app/core/gimpbrushcore.c: use gimp_brush_scale_mask/pixmap()
+	instead of using the lowlevel scale functions directly. Fixes the
+	uglyness that we were scaling generated brushes instead of simply
+	recalculating them in the right size.
+
+2006-11-09  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpmodule/gimpmodule.h: fixed wrong include guard comment.
 
 2006-11-09  Michael Natterer  <mitch@gimp.org>

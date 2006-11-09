@@ -64,6 +64,10 @@ static GimpBrush * gimp_brush_real_select_brush     (GimpBrush     *brush,
 static gboolean    gimp_brush_real_want_null_motion (GimpBrush     *brush,
                                                      GimpCoords    *last_coords,
                                                      GimpCoords    *cur_coords);
+static TempBuf   * gimp_brush_real_scale_mask       (GimpBrush     *brush,
+                                                     gdouble        scale);
+static TempBuf   * gimp_brush_real_scale_pixmap     (GimpBrush     *brush,
+                                                     gdouble        scale);
 
 
 G_DEFINE_TYPE (GimpBrush, gimp_brush, GIMP_TYPE_DATA)
@@ -103,6 +107,8 @@ gimp_brush_class_init (GimpBrushClass *klass)
 
   klass->select_brush              = gimp_brush_real_select_brush;
   klass->want_null_motion          = gimp_brush_real_want_null_motion;
+  klass->scale_mask                = gimp_brush_real_scale_mask;
+  klass->scale_pixmap              = gimp_brush_real_scale_pixmap;
   klass->spacing_changed           = NULL;
 }
 
@@ -281,6 +287,51 @@ gimp_brush_get_extension (GimpData *data)
   return GIMP_BRUSH_FILE_EXTENSION;
 }
 
+static GimpBrush *
+gimp_brush_real_select_brush (GimpBrush  *brush,
+                              GimpCoords *last_coords,
+                              GimpCoords *cur_coords)
+{
+  return brush;
+}
+
+static gboolean
+gimp_brush_real_want_null_motion (GimpBrush  *brush,
+                                  GimpCoords *last_coords,
+                                  GimpCoords *cur_coords)
+{
+  return TRUE;
+}
+
+static TempBuf *
+gimp_brush_real_scale_mask (GimpBrush *brush,
+                            gdouble    scale)
+{
+  gint width;
+  gint height;
+
+  width  = (gint) (brush->mask->width  * scale + 0.5);
+  height = (gint) (brush->mask->height * scale + 0.5);
+
+  return brush_scale_mask (brush->mask, width, height);
+}
+
+static TempBuf *
+gimp_brush_real_scale_pixmap (GimpBrush *brush,
+                              gdouble    scale)
+{
+  gint width;
+  gint height;
+
+  width  = (gint) (brush->pixmap->width  * scale + 0.5);
+  height = (gint) (brush->pixmap->height * scale + 0.5);
+
+  return brush_scale_mask (brush->pixmap, width, height);
+}
+
+
+/*  public functions  */
+
 GimpData *
 gimp_brush_new (const gchar *name)
 {
@@ -338,20 +389,25 @@ gimp_brush_want_null_motion (GimpBrush  *brush,
                                                          cur_coords);
 }
 
-static GimpBrush *
-gimp_brush_real_select_brush (GimpBrush  *brush,
-                              GimpCoords *last_coords,
-                              GimpCoords *cur_coords)
+TempBuf *
+gimp_brush_scale_mask (GimpBrush *brush,
+                       gdouble    scale)
 {
-  return brush;
+  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+  g_return_val_if_fail (scale > 0.0, NULL);
+
+  return GIMP_BRUSH_GET_CLASS (brush)->scale_mask (brush, scale);
 }
 
-static gboolean
-gimp_brush_real_want_null_motion (GimpBrush  *brush,
-                                  GimpCoords *last_coords,
-                                  GimpCoords *cur_coords)
+TempBuf *
+gimp_brush_scale_pixmap (GimpBrush *brush,
+                         gdouble    scale)
 {
-  return TRUE;
+  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+  g_return_val_if_fail (brush->pixmap != NULL, NULL);
+  g_return_val_if_fail (scale > 0.0, NULL);
+
+  return GIMP_BRUSH_GET_CLASS (brush)->scale_pixmap (brush, scale);
 }
 
 TempBuf *

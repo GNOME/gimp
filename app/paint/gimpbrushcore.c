@@ -24,7 +24,6 @@
 
 #include "paint-types.h"
 
-#include "base/brush-scale.h"
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
@@ -81,7 +80,7 @@ static TempBuf *gimp_brush_core_get_paint_area    (GimpPaintCore    *paint_core,
 static void     gimp_brush_core_real_set_brush    (GimpBrushCore    *core,
                                                    GimpBrush        *brush);
 
-static void   gimp_brush_core_calc_brush_size     (GimpBrushCore    *core,
+static gdouble  gimp_brush_core_calc_brush_size   (GimpBrushCore    *core,
                                                    MaskBuf          *mask,
                                                    gdouble           scale,
                                                    gint             *width,
@@ -102,10 +101,10 @@ static MaskBuf * gimp_brush_core_solidify_mask    (GimpBrushCore    *core,
                                                    gdouble           x,
                                                    gdouble           y);
 static MaskBuf * gimp_brush_core_scale_mask       (GimpBrushCore    *core,
-                                                   MaskBuf          *brush_mask,
+                                                   GimpBrush        *brush,
                                                    gdouble           scale);
 static MaskBuf * gimp_brush_core_scale_pixmap     (GimpBrushCore    *core,
-                                                   MaskBuf          *brush_mask,
+                                                   GimpBrush        *brush,
                                                    gdouble           scale);
 
 static MaskBuf * gimp_brush_core_get_brush_mask   (GimpBrushCore    *core,
@@ -833,13 +832,15 @@ gimp_brush_core_invalidate_cache (GimpBrush     *brush,
  *             LOCAL FUNCTION DEFINITIONS                   *
  ************************************************************/
 
-static void
+static gdouble
 gimp_brush_core_calc_brush_size (GimpBrushCore *core,
                                  MaskBuf       *mask,
                                  gdouble        scale,
                                  gint          *width,
                                  gint          *height)
 {
+  gdouble ratio = 1.0;
+
   scale = CLAMP (scale, 0.0, 1.0);
 
   if (! GIMP_PAINT_CORE (core)->use_pressure)
@@ -849,8 +850,6 @@ gimp_brush_core_calc_brush_size (GimpBrushCore *core,
     }
   else
     {
-      gdouble ratio;
-
       if (scale < 1 / 256)
         ratio = 1 / 16;
       else
@@ -859,6 +858,8 @@ gimp_brush_core_calc_brush_size (GimpBrushCore *core,
       *width  = MAX ((gint) (mask->width  * ratio + 0.5), 1);
       *height = MAX ((gint) (mask->height * ratio + 0.5), 1);
     }
+
+  return ratio;
 }
 
 static inline void
@@ -1192,7 +1193,7 @@ gimp_brush_core_solidify_mask (GimpBrushCore *core,
 
 static MaskBuf *
 gimp_brush_core_scale_mask (GimpBrushCore *core,
-                            MaskBuf       *brush_mask,
+                            GimpBrush     *brush,
                             gdouble        scale)
 {
   gint dest_width;
@@ -1204,13 +1205,13 @@ gimp_brush_core_scale_mask (GimpBrushCore *core,
     return NULL;
 
   if (scale == 1.0)
-    return brush_mask;
+    return brush->mask;
 
-  gimp_brush_core_calc_brush_size (core, brush_mask, scale,
-                                   &dest_width, &dest_height);
+  scale = gimp_brush_core_calc_brush_size (core, brush->mask, scale,
+                                           &dest_width, &dest_height);
 
   if (! core->cache_invalid                 &&
-      brush_mask == core->last_scale_brush  &&
+      brush->mask == core->last_scale_brush &&
       core->scale_brush                     &&
       dest_width  == core->last_scale_width &&
       dest_height == core->last_scale_height)
@@ -1218,15 +1219,14 @@ gimp_brush_core_scale_mask (GimpBrushCore *core,
       return core->scale_brush;
     }
 
-  core->last_scale_brush  = brush_mask;
+  core->last_scale_brush  = brush->mask;
   core->last_scale_width  = dest_width;
   core->last_scale_height = dest_height;
 
   if (core->scale_brush)
     mask_buf_free (core->scale_brush);
 
-  core->scale_brush = brush_scale_mask (brush_mask,
-                                        dest_width, dest_height);
+  core->scale_brush = gimp_brush_scale_mask (brush, scale);
 
   core->cache_invalid       = TRUE;
   core->solid_cache_invalid = TRUE;
@@ -1236,7 +1236,7 @@ gimp_brush_core_scale_mask (GimpBrushCore *core,
 
 static MaskBuf *
 gimp_brush_core_scale_pixmap (GimpBrushCore *core,
-                              MaskBuf       *brush_mask,
+                              GimpBrush     *brush,
                               gdouble        scale)
 {
   gint dest_width;
@@ -1248,13 +1248,13 @@ gimp_brush_core_scale_pixmap (GimpBrushCore *core,
     return NULL;
 
   if (scale == 1.0)
-    return brush_mask;
+    return brush->pixmap;
 
-  gimp_brush_core_calc_brush_size (core, brush_mask, scale,
-                                   &dest_width, &dest_height);
+  scale = gimp_brush_core_calc_brush_size (core, brush->pixmap, scale,
+                                           &dest_width, &dest_height);
 
   if (! core->cache_invalid                        &&
-      brush_mask == core->last_scale_pixmap        &&
+      brush->pixmap == core->last_scale_pixmap     &&
       core->scale_pixmap                           &&
       dest_width  == core->last_scale_pixmap_width &&
       dest_height == core->last_scale_pixmap_height)
@@ -1262,15 +1262,14 @@ gimp_brush_core_scale_pixmap (GimpBrushCore *core,
       return core->scale_pixmap;
     }
 
-  core->last_scale_pixmap        = brush_mask;
+  core->last_scale_pixmap        = brush->pixmap;
   core->last_scale_pixmap_width  = dest_width;
   core->last_scale_pixmap_height = dest_height;
 
   if (core->scale_pixmap)
     mask_buf_free (core->scale_pixmap);
 
-  core->scale_pixmap = brush_scale_pixmap (brush_mask,
-                                           dest_width, dest_height);
+  core->scale_pixmap = gimp_brush_scale_pixmap (brush, scale);
 
   core->cache_invalid = TRUE;
 
@@ -1286,7 +1285,7 @@ gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
   MaskBuf       *mask;
 
   if (paint_core->use_pressure)
-    mask = gimp_brush_core_scale_mask (core, core->brush->mask, scale);
+    mask = gimp_brush_core_scale_mask (core, core->brush, scale);
   else
     mask = core->brush->mask;
 
@@ -1357,16 +1356,13 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   g_return_if_fail (core->brush->pixmap != NULL);
 
   /*  scale the brushes  */
-  pixmap_mask = gimp_brush_core_scale_pixmap (core,
-                                              core->brush->pixmap,
-                                              scale);
+  pixmap_mask = gimp_brush_core_scale_pixmap (core, core->brush, scale);
+
   if (! pixmap_mask)
     return;
 
   if (mode != GIMP_BRUSH_HARD)
-    brush_mask = gimp_brush_core_scale_mask (core,
-                                             core->brush->mask,
-                                             scale);
+    brush_mask = gimp_brush_core_scale_mask (core, core->brush, scale);
   else
     brush_mask = NULL;
 

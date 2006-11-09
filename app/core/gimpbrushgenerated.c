@@ -62,6 +62,8 @@ static void       gimp_brush_generated_get_property  (GObject      *object,
 static void       gimp_brush_generated_dirty         (GimpData     *data);
 static gchar    * gimp_brush_generated_get_extension (GimpData     *data);
 static GimpData * gimp_brush_generated_duplicate     (GimpData     *data);
+static TempBuf  * gimp_brush_generated_scale_mask    (GimpBrush    *gbrush,
+                                                      gdouble       scale);
 
 
 G_DEFINE_TYPE (GimpBrushGenerated, gimp_brush_generated, GIMP_TYPE_BRUSH)
@@ -72,8 +74,9 @@ G_DEFINE_TYPE (GimpBrushGenerated, gimp_brush_generated, GIMP_TYPE_BRUSH)
 static void
 gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
 {
-  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpDataClass *data_class   = GIMP_DATA_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GimpDataClass  *data_class   = GIMP_DATA_CLASS (klass);
+  GimpBrushClass *brush_class  = GIMP_BRUSH_CLASS (klass);
 
   object_class->set_property = gimp_brush_generated_set_property;
   object_class->get_property = gimp_brush_generated_get_property;
@@ -82,6 +85,8 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
   data_class->dirty          = gimp_brush_generated_dirty;
   data_class->get_extension  = gimp_brush_generated_get_extension;
   data_class->duplicate      = gimp_brush_generated_duplicate;
+
+  brush_class->scale_mask    = gimp_brush_generated_scale_mask;
 
   g_object_class_install_property (object_class, PROP_SHAPE,
                                    g_param_spec_enum ("shape", NULL, NULL,
@@ -232,85 +237,89 @@ gauss (gdouble f)
   return (2.0 * f*f);
 }
 
-static void
-gimp_brush_generated_dirty (GimpData *data)
+static TempBuf *
+gimp_brush_generated_calc (GimpBrushGenerated      *brush,
+                           GimpBrushGeneratedShape  shape,
+                           gfloat                   radius,
+                           gint                     spikes,
+                           gfloat                   hardness,
+                           gfloat                   aspect_ratio,
+                           gfloat                   angle,
+                           GimpVector2             *xaxis,
+                           GimpVector2             *yaxis)
 {
-  GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (data);
-  GimpBrush          *gbrush = GIMP_BRUSH (brush);
-  gint                x, y;
-  guchar             *centerp;
-  gdouble             d;
-  gdouble             exponent;
-  guchar              a;
-  gint                length;
-  gint                width  = 0;
-  gint                height = 0;
-  guchar             *lookup;
-  gdouble             sum;
-  gdouble             c, s, cs, ss;
-  gdouble             short_radius;
-  gdouble             buffer[OVERSAMPLING];
+  gint         x, y;
+  guchar      *centerp;
+  gdouble      d;
+  gdouble      exponent;
+  guchar       a;
+  gint         length;
+  gint         width  = 0;
+  gint         height = 0;
+  guchar      *lookup;
+  gdouble      sum;
+  gdouble      c, s, cs, ss;
+  gdouble      short_radius;
+  gdouble      buffer[OVERSAMPLING];
+  GimpVector2  x_axis;
+  GimpVector2  y_axis;
+  TempBuf     *mask;
 
-  if (gbrush->mask)
-    temp_buf_free (gbrush->mask);
+  s = sin (gimp_deg_to_rad (angle));
+  c = cos (gimp_deg_to_rad (angle));
 
-  s = sin (gimp_deg_to_rad (brush->angle));
-  c = cos (gimp_deg_to_rad (brush->angle));
+  short_radius = radius / aspect_ratio;
 
-  short_radius = brush->radius / brush->aspect_ratio;
+  x_axis.x =        c * radius;
+  x_axis.y = -1.0 * s * radius;
+  y_axis.x =        s * short_radius;
+  y_axis.y =        c * short_radius;
 
-  gbrush->x_axis.x =        c * brush->radius;
-  gbrush->x_axis.y = -1.0 * s * brush->radius;
-  gbrush->y_axis.x =        s * short_radius;
-  gbrush->y_axis.y =        c * short_radius;
-
-  switch (brush->shape)
+  switch (shape)
     {
     case GIMP_BRUSH_GENERATED_CIRCLE:
-      width  = ceil (sqrt (gbrush->x_axis.x * gbrush->x_axis.x +
-                           gbrush->y_axis.x * gbrush->y_axis.x));
-      height = ceil (sqrt (gbrush->x_axis.y * gbrush->x_axis.y +
-                           gbrush->y_axis.y * gbrush->y_axis.y));
+      width  = ceil (sqrt (x_axis.x * x_axis.x + y_axis.x * y_axis.x));
+      height = ceil (sqrt (x_axis.y * x_axis.y + y_axis.y * y_axis.y));
       break;
 
     case GIMP_BRUSH_GENERATED_SQUARE:
-      width  = ceil (fabs (gbrush->x_axis.x) + fabs (gbrush->y_axis.x));
-      height = ceil (fabs (gbrush->x_axis.y) + fabs (gbrush->y_axis.y));
+      width  = ceil (fabs (x_axis.x) + fabs (y_axis.x));
+      height = ceil (fabs (x_axis.y) + fabs (y_axis.y));
       break;
 
     case GIMP_BRUSH_GENERATED_DIAMOND:
-      width  = ceil (MAX (fabs (gbrush->x_axis.x), fabs (gbrush->y_axis.x)));
-      height = ceil (MAX (fabs (gbrush->x_axis.y), fabs (gbrush->y_axis.y)));
+      width  = ceil (MAX (fabs (x_axis.x), fabs (y_axis.x)));
+      height = ceil (MAX (fabs (x_axis.y), fabs (y_axis.y)));
       break;
 
     default:
-      g_return_if_reached ();
+      g_return_val_if_reached (NULL);
     }
 
-  if (brush->spikes > 2)
+  if (spikes > 2)
     {
       /* could be optimized by respecting the angle */
-      width = height = ceil (sqrt (brush->radius * brush->radius +
+      width = height = ceil (sqrt (radius * radius +
                                    short_radius * short_radius));
-      gbrush->y_axis.x =        s * brush->radius;
-      gbrush->y_axis.y =        c * brush->radius;
+      y_axis.x = s * radius;
+      y_axis.y = c * radius;
     }
 
-  gbrush->mask = temp_buf_new (width  * 2 + 1,
-                               height * 2 + 1,
-                               1, width, height, NULL);
+  mask = temp_buf_new (width  * 2 + 1,
+                       height * 2 + 1,
+                       1, width, height, NULL);
 
-  centerp = temp_buf_data (gbrush->mask) + height * gbrush->mask->width + width;
+  centerp = temp_buf_data (mask) + height * mask->width + width;
 
   /* set up lookup table */
   length = OVERSAMPLING * ceil (1 + sqrt (2 *
-                                          ceil (brush->radius + 1.0) *
-                                          ceil (brush->radius + 1.0)));
+                                          ceil (radius + 1.0) *
+                                          ceil (radius + 1.0)));
 
-  if ((1.0 - brush->hardness) < 0.0000004)
+  if ((1.0 - hardness) < 0.0000004)
     exponent = 1000000.0;
   else
-    exponent = 0.4 / (1.0 - brush->hardness);
+    exponent = 0.4 / (1.0 - hardness);
 
   lookup = g_malloc (length);
   sum = 0.0;
@@ -319,22 +328,22 @@ gimp_brush_generated_dirty (GimpData *data)
     {
       d = fabs ((x + 0.5) / OVERSAMPLING - 0.5);
 
-      if (d > brush->radius)
+      if (d > radius)
         buffer[x] = 0.0;
       else
-        buffer[x] = gauss (pow (d / brush->radius, exponent));
+        buffer[x] = gauss (pow (d / radius, exponent));
 
       sum += buffer[x];
     }
 
-  for (x = 0; d < brush->radius || sum > 0.00001; d += 1.0 / OVERSAMPLING)
+  for (x = 0; d < radius || sum > 0.00001; d += 1.0 / OVERSAMPLING)
     {
       sum -= buffer[x % OVERSAMPLING];
 
-      if (d > brush->radius)
+      if (d > radius)
         buffer[x % OVERSAMPLING] = 0.0;
       else
-        buffer[x % OVERSAMPLING] = gauss (pow (d / brush->radius, exponent));
+        buffer[x % OVERSAMPLING] = gauss (pow (d / radius, exponent));
 
       sum += buffer[x % OVERSAMPLING];
       lookup[x++] = RINT (sum * (255.0 / OVERSAMPLING));
@@ -345,11 +354,11 @@ gimp_brush_generated_dirty (GimpData *data)
       lookup[x++] = 0;
     }
 
-  cs = cos (- 2 * G_PI / brush->spikes);
-  ss = sin (- 2 * G_PI / brush->spikes);
+  cs = cos (- 2 * G_PI / spikes);
+  ss = sin (- 2 * G_PI / spikes);
 
   /* for an even number of spikes compute one half and mirror it */
-  for (y = (brush->spikes % 2 ? -height : 0); y <= height; y++)
+  for (y = (spikes % 2 ? -height : 0); y <= height; y++)
     {
       for (x = -width; x <= width; x++)
         {
@@ -358,23 +367,23 @@ gimp_brush_generated_dirty (GimpData *data)
           tx = c*x - s*y;
           ty = fabs (s*x + c*y);
 
-          if (brush->spikes > 2)
+          if (spikes > 2)
             {
               angle = atan2 (ty, tx);
 
-              while (angle > G_PI / brush->spikes)
+              while (angle > G_PI / spikes)
                 {
                   gdouble sx = tx, sy = ty;
 
                   tx = cs * sx - ss * sy;
                   ty = ss * sx + cs * sy;
 
-                  angle -= 2 * G_PI / brush->spikes;
+                  angle -= 2 * G_PI / spikes;
                 }
             }
 
-          ty *= brush->aspect_ratio;
-          switch (brush->shape)
+          ty *= aspect_ratio;
+          switch (shape)
             {
             case GIMP_BRUSH_GENERATED_CIRCLE:
               d = sqrt (tx*tx + ty*ty);
@@ -387,21 +396,62 @@ gimp_brush_generated_dirty (GimpData *data)
               break;
             }
 
-          if (d < brush->radius + 1)
+          if (d < radius + 1)
             a = lookup[(gint) RINT (d * OVERSAMPLING)];
           else
             a = 0;
 
-          centerp[ y * gbrush->mask->width + x] = a;
+          centerp[ y * mask->width + x] = a;
 
-          if (brush->spikes % 2 == 0)
-            centerp[-1 * y * gbrush->mask->width - x] = a;
+          if (spikes % 2 == 0)
+            centerp[-1 * y * mask->width - x] = a;
         }
     }
 
   g_free (lookup);
 
+  if (xaxis) *xaxis = x_axis;
+  if (yaxis) *yaxis = y_axis;
+
+  return mask;
+}
+
+static void
+gimp_brush_generated_dirty (GimpData *data)
+{
+  GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (data);
+  GimpBrush          *gbrush = GIMP_BRUSH (brush);
+
+  if (gbrush->mask)
+    temp_buf_free (gbrush->mask);
+
+  gbrush->mask = gimp_brush_generated_calc (brush,
+                                            brush->shape,
+                                            brush->radius,
+                                            brush->spikes,
+                                            brush->hardness,
+                                            brush->aspect_ratio,
+                                            brush->angle,
+                                            &gbrush->x_axis,
+                                            &gbrush->y_axis);
+
   GIMP_DATA_CLASS (parent_class)->dirty (data);
+}
+
+static TempBuf *
+gimp_brush_generated_scale_mask (GimpBrush *gbrush,
+                                 gdouble    scale)
+{
+  GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (gbrush);
+
+  return gimp_brush_generated_calc (brush,
+                                    brush->shape,
+                                    brush->radius * scale,
+                                    brush->spikes,
+                                    brush->hardness,
+                                    brush->aspect_ratio,
+                                    brush->angle,
+                                    NULL, NULL);
 }
 
 GimpData *
