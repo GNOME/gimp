@@ -1,3 +1,8 @@
+2006-11-09  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: don't include <malloc.h>
+	Fixes the build on OSX (or maybe BSD in general).
+
 2006-11-09  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: added missing quotes in test for libcurl.

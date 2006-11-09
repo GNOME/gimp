@@ -68,9 +68,6 @@
 
 #include <string.h>
 #include <stdlib.h>
-#ifndef macintosh
-# include <malloc.h>
-#endif /* macintosh */
 
 #define stricmp utf8_stricmp
 
