@@ -141,14 +141,6 @@ enum scheme_types {
 #define MARK         32768    /* 1000000000000000 */
 #define UNMARK       32767    /* 0111111111111111 */
 
-enum array_type {
-  array_int32=0,
-  array_int16=1,
-  array_int8=2,
-  array_float=3,
-  array_string=4
-};
-
 void (*ts_output_routine) (FILE *, char *, int);
 
 static num num_add(num a, num b);
@@ -175,10 +167,6 @@ static num num_one;
 /* macros for cell operations */
 #define typeflag(p)      ((p)->_flag)
 #define type(p)          (typeflag(p)&T_MASKTYPE)
-
-#define arrayvalue(p)    ((p)->_object._array._avalue)
-#define arraylength(p)   ((p)->_object._array._length)
-#define arraytype(p)     ((p)->_object._array._type)
 
 INTERFACE INLINE int is_string(pointer p)     { return (type(p)==T_STRING); }
 #define strvalue(p)      ((p)->_object._string._svalue)

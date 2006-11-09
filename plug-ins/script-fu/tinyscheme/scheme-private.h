@@ -7,6 +7,19 @@
 /*------------------ Ugly internals -----------------------------------*/
 /*------------------ Of interest only to FFI users --------------------*/
 
+/* macros for cell operations */
+#define arrayvalue(p)    ((p)->_object._array._avalue)
+#define arraylength(p)   ((p)->_object._array._length)
+#define arraytype(p)     ((p)->_object._array._type)
+
+enum array_type {
+  array_int32=0,
+  array_int16=1,
+  array_int8=2,
+  array_float=3,
+  array_string=4
+};
+
 enum scheme_port_kind {
   port_free=0,
   port_file=1,

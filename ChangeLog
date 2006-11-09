@@ -1,5 +1,12 @@
 2006-11-09  Kevin Cozens  <kcozens@cvs.gnome.org>
 
+	* plug-ins/script-fu/tinyscheme/scheme.c: Moved too much. Move some
+	array declarations out of here...
+
+	* plug-ins/script-fu/tinyscheme/scheme-private.h: and back to here.
+
+2006-11-09  Kevin Cozens  <kcozens@cvs.gnome.org>
+
 	* plug-ins/script-fu/tinyscheme/scheme-private.h: Moved various
 	declarations and defines out of here...
 
