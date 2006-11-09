@@ -28,6 +28,10 @@
 #if HAVE_UNISTD_H
 # include <unistd.h>
 #endif
+#ifdef WIN32
+# include <io.h>
+# define access(f,a) _access(f,a)
+#endif
 #if USE_DL
 # include "dynload.h"
 #endif
@@ -126,8 +130,7 @@ enum scheme_types {
   T_MACRO=12,
   T_PROMISE=13,
   T_ENVIRONMENT=14,
-  T_ARRAY=15,
-  T_LAST_SYSTEM_TYPE=15
+  T_LAST_SYSTEM_TYPE=14
 };
 
 /* ADJ is enough slack to align cells in a TYPE_BITS-bit boundary */
@@ -184,10 +187,6 @@ INTERFACE INLINE int is_integer(pointer p) {
 INTERFACE INLINE int is_real(pointer p) {
   return (!(p)->_object._number.is_fixnum);
 }
-
-INTERFACE INLINE int is_array(pointer p)    { return (type(p)==T_ARRAY); }
-INTERFACE static pointer array_elem(scheme *sc, pointer ary, int ielem);
-INTERFACE static pointer set_array_elem(scheme *sc, pointer ary, int ielem, pointer a);
 
 INTERFACE INLINE int is_character(pointer p) { return (type(p)==T_CHARACTER); }
 INTERFACE INLINE int string_length(pointer p) { return strlength(p); }
@@ -354,7 +353,6 @@ static pointer mk_number(scheme *sc, num n);
 static pointer mk_empty_string(scheme *sc, int len, gunichar fill);
 static char *store_string(scheme *sc, int len, const char *str, gunichar fill);
 static pointer mk_vector(scheme *sc, int len);
-static pointer mk_array(scheme *sc, int len, int type);
 static pointer mk_atom(scheme *sc, char *q);
 static pointer mk_sharp_const(scheme *sc, char *name);
 static pointer mk_port(scheme *sc, port *p);
@@ -1022,100 +1020,6 @@ INTERFACE static pointer set_vector_elem(pointer vec, int ielem, pointer a) {
      }
 }
 
-INTERFACE static pointer mk_array(scheme *sc, int len, int type) {
-     pointer x = get_cell(sc, sc->NIL, sc->NIL);
-     long size = 0;
-     void *q;
-
-     switch (type)
-     {
-     case array_int32:
-       size = len * sizeof(gint32);
-       break;
-     case array_int16:
-       size = len * sizeof(gint16);
-       break;
-     case array_int8:
-       size = len * sizeof(guint8);
-       break;
-     case array_float:
-       size = len * sizeof(gdouble);
-       break;
-     case array_string:
-       size = len * sizeof(gchar *);
-       break;
-     }
-
-     q=sc->malloc(size);
-     if (q==NULL) {
-          sc->no_memory=1;
-          return sc->NIL;
-     }
-     memset(q, 0, size);
-
-     typeflag(x) = (T_ARRAY | T_ATOM);
-     arrayvalue(x) = q;
-     arraylength(x) = len;
-     arraytype(x) = type;
-     return (x);
-}
-
-INTERFACE static pointer array_elem(scheme *sc, pointer a, int ielem) {
-    void *elem = arrayvalue(a);
-    int   type = arraytype(a);
-    pointer x  = sc->NIL;
-
-    switch (type)
-    {
-    case array_int32:
-      x = sc->vptr->mk_integer (sc, ((gint32 *)elem)[ielem]);
-      break;
-    case array_int16:
-      x = sc->vptr->mk_integer (sc, ((gint16 *)elem)[ielem]);
-      break;
-    case array_int8:
-      x = sc->vptr->mk_integer (sc, ((guint8 *)elem)[ielem] & 0x255);
-      break;
-    case array_float:
-      x = sc->vptr->mk_real (sc, ((gdouble *)elem)[ielem]);
-      break;
-    case array_string:
-      x = sc->vptr->mk_string (sc, ((gchar **)elem)[ielem]);
-      break;
-    }
-
-    return x;
-}
-
-INTERFACE static pointer set_array_elem(scheme *sc, pointer a,
-                                        int ielem, pointer v) {
-    void *elem = arrayvalue(a);
-    int   type = arraytype(a);
-
-    switch (type)
-    {
-    case array_int32:
-      ((gint32 *)elem)[ielem] = sc->vptr->ivalue(v);
-      break;
-    case array_int16:
-      ((gint16 *)elem)[ielem] = sc->vptr->ivalue(v);
-      break;
-    case array_int8:
-      ((guint8 *)elem)[ielem] = sc->vptr->ivalue(v);
-      break;
-    case array_float:
-      ((gdouble *)elem)[ielem] = sc->vptr->rvalue(v);
-      break;
-    case array_string:
-      if ( ((gchar **)elem)[ielem] != NULL )
-          sc->free ( ((gchar **)elem)[ielem] );
-      ((gchar **)elem)[ielem] = strdup (sc->vptr->string_value(v));
-      break;
-    }
-
-    return a;
-}
-
 /* get new symbol */
 INTERFACE pointer mk_symbol(scheme *sc, const char *name) {
      pointer x;
@@ -1394,21 +1298,6 @@ static void gc(scheme *sc, pointer a, pointer b) {
 static void finalize_cell(scheme *sc, pointer a) {
   if(is_string(a)) {
     sc->free(strvalue(a));
-  } else if(is_array(a)) {
-    int i, len;
-    char **s;
-
-    if (arraytype(a) == array_string)
-    {
-      len = arraylength(a);
-      s = (char **)arrayvalue(a);
-      for (i = 0; i < len; ++i)
-      {
-        if (s[i])
-           sc->free(s[i]);
-      }
-    }
-    sc->free(arrayvalue(a));
   } else if(is_port(a)) {
     if(a->_object._port->kind&port_file
        && a->_object._port->rep.stdio.closeit) {
@@ -2007,26 +1896,6 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
                printslashstring(sc, strvalue(l),
                                 g_utf8_strlen(strvalue(l), -1));
                return;
-          }
-     } else if (is_array(l)) {
-          p = sc->strbuff;
-          switch (arraytype(l))
-          {
-          case 0:
-            strcpy(p, "#<INT32ARRAY>");
-            break;
-          case 1:
-            strcpy(p, "#<INT16ARRAY>");
-            break;
-          case 2:
-            strcpy(p, "#<INT8ARRAY>");
-            break;
-          case 3:
-            strcpy(p, "#<FLOATARRAY>");
-            break;
-          case 4:
-            strcpy(p, "#<STRINGARRAY>");
-            break;
           }
      } else if (is_character(l)) {
           gunichar c=charvalue(l);
@@ -3527,69 +3396,6 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
           s_return(sc,car(sc->args));
      }
 
-     case OP_MKARRAY: { /* make-array */
-          int type;
-          int len;
-          char *s;
-          pointer a;
-
-          len=ivalue(car(sc->args));
-          if (len<0)
-             Error_1(sc,"make-array: size must be >= 0:",car(sc->args));
-
-          s = strvalue(cadr(sc->args));
-
-          if (strcmp(s, "int32") == 0) {
-               type = array_int32;
-          } else if (strcmp(s, "int16") == 0) {
-               type = array_int16;
-          } else if (strcmp(s, "int8") == 0) {
-               type = array_int8;
-          } else if (strcmp(s, "float") == 0) {
-               type = array_float;
-          } else if (strcmp(s, "string") == 0) {
-               type = array_string;
-          } else {
-             Error_1(sc,"make-array: unknown array type:",cadr(sc->args));
-          }
-
-          a=mk_array(sc,len,type);
-          s_return(sc,a);
-     }
-
-     case OP_ARRAYLEN:  /* array-length */
-          s_return(sc,mk_integer(sc,arraylength(car(sc->args))));
-
-     case OP_ARRAYTYPE:  /* array-type */
-          s_return(sc,mk_integer(sc,arraytype(car(sc->args))));
-
-     case OP_ARRAYREF: { /* array-ref */
-          int index;
-
-          index=ivalue(cadr(sc->args));
-          if(index>=arraylength(car(sc->args))) {
-               Error_1(sc,"array-ref: out of bounds:",cadr(sc->args));
-          }
-
-          s_return(sc,array_elem(sc,car(sc->args),index));
-     }
-
-     case OP_ARRAYSET: {   /* array-set! */
-          int index;
-
-          if(is_immutable(car(sc->args))) {
-               Error_1(sc,"array-set!: unable to alter immutable array:",car(sc->args));
-          }
-
-          index=ivalue(cadr(sc->args));
-          if(index>=arraylength(car(sc->args))) {
-               Error_1(sc,"array-set!: out of bounds:",cadr(sc->args));
-          }
-
-          set_array_elem(sc,car(sc->args),index,caddr(sc->args));
-          s_return(sc,car(sc->args));
-     }
-
      default:
           sprintf(sc->strbuff, "%d: illegal operator", sc->op);
           Error_0(sc,sc->strbuff);
@@ -3740,8 +3546,6 @@ static pointer opexe_3(scheme *sc, enum scheme_opcodes op) {
           s_retbool(is_environment(car(sc->args)));
      case OP_VECTORP:     /* vector? */
           s_retbool(is_vector(car(sc->args)));
-     case OP_ARRAYP:     /* array? */
-          s_retbool(is_array(car(sc->args)));
      case OP_EQ:         /* eq? */
           s_retbool(car(sc->args) == cadr(sc->args));
      case OP_EQV:        /* eqv? */
@@ -4251,7 +4055,7 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
           pointer vec=car(sc->args);
           int len=ivalue_unchecked(vec);
           if(i==len) {
-               putstr(sc,")");
+               putstr(sc," )");
                s_return(sc,sc->T);
           } else {
                pointer elem=vector_elem(vec,i);
@@ -4356,7 +4160,6 @@ static struct {
   {is_number, "number"},
   {is_num_integer, "integer"},
   {is_nonneg, "non-negative integer"},
-  {is_array, "array"}
 };
 
 #define TST_NONE 0
@@ -4374,7 +4177,6 @@ static struct {
 #define TST_NUMBER "\014"
 #define TST_INTEGER "\015"
 #define TST_NATURAL "\016"
-#define TST_ARRAY "\017"
 
 typedef struct {
   dispatch_func func;
@@ -4566,7 +4368,6 @@ static struct scheme_interface vtbl ={
   mk_counted_string,
   mk_character,
   mk_vector,
-  mk_array,
   mk_foreign_func,
   mk_closure,
   putstr,
@@ -4590,10 +4391,6 @@ static struct scheme_interface vtbl ={
   fill_vector,
   vector_elem,
   set_vector_elem,
-
-  is_array,
-  array_elem,
-  set_array_elem,
 
   is_port,
 

@@ -155,7 +155,6 @@ struct scheme_interface {
   pointer (*mk_counted_string)(scheme *sc, const char *str, int len);
   pointer (*mk_character)(scheme *sc, gunichar c);
   pointer (*mk_vector)(scheme *sc, int len);
-  pointer (*mk_array)(scheme *sc, int len, int type);
   pointer (*mk_foreign_func)(scheme *sc, foreign_func f);
   pointer (*mk_closure)(scheme *sc, pointer c, pointer e);
   void (*putstr)(scheme *sc, const char *s);
@@ -179,10 +178,6 @@ struct scheme_interface {
   void (*fill_vector)(pointer vec, pointer elem);
   pointer (*vector_elem)(pointer vec, int ielem);
   pointer (*set_vector_elem)(pointer vec, int ielem, pointer newel);
-
-  int (*is_array)(pointer a);
-  pointer (*array_elem)(scheme *sc, pointer a, int ielem);
-  pointer (*set_array_elem)(scheme *sc, pointer a, int ielem, pointer newel);
 
   int (*is_port)(pointer p);
 

@@ -1,3 +1,19 @@
+2006-11-09  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scheme-wrapper.c (marshall_proc_db_call): Use
+	vectors instead of the non-standard array structure. Also made some
+	minor coding style changes in the file.
+
+	* plug-ins/script-fu/tinyscheme/opdefines.h
+	* plug-ins/script-fu/tinyscheme/scheme-private.h
+	* plug-ins/script-fu/tinyscheme/scheme.h
+	* plug-ins/script-fu/tinyscheme/scheme.c: Removed all code related
+	to the handling of the non-standard array structure. Added one small
+	change to scheme.c to fix problems compiling with MSVC in Windows.
+
+	* plug-ins/script-fu/scripts/script-fu-compat.init: Changed array
+	references to use vector references.
+
 2006-11-09  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/rcm/rcm.c
@@ -6,7 +22,7 @@
 
 2006-11-09  Kevin Cozens  <kcozens@cvs.gnome.org>
 
-	* plug-ins/script-fu/tinyscheme/scheme.c: Moved too much. Move some
+	* plug-ins/script-fu/tinyscheme/scheme.c: Moved too much. Moved some
 	array declarations out of here...
 
 	* plug-ins/script-fu/tinyscheme/scheme-private.h: and back to here.

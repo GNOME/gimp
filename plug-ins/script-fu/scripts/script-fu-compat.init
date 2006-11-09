@@ -215,8 +215,8 @@
 
 ;Items below this line are deprecated and should not be used in new scripts.
 
-(define aset array-set!)
-(define aref array-ref)
+(define aset vector-set!)
+(define aref vector-ref)
 (define fopen open-input-file)
 (define mapcar map)
 (define nil '())
@@ -237,11 +237,11 @@
 
 (define (cons-array count type)
   (case type
-    ((long)   (make-array count "int32"))
-    ((short)  (make-array count "int16"))
-    ((byte)   (make-array count "int8"))
-    ((double) (make-array count "float"))
-    ((string) (make-array count "string"))
+    ((long)   (make-vector count 0))
+    ((short)  (make-vector count 0))
+    ((byte)   (make-vector count 0))
+    ((double) (make-vector count 0.0))
+    ((string) (make-vector count ""))
     (else type)
   )
 )
