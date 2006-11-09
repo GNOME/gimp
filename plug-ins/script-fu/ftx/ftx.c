@@ -6,8 +6,12 @@
  * LICENSE file.
  */
 
+#include "config.h"
+
 #include <sys/stat.h>
+#if HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <time.h>
 
 #include <glib.h>

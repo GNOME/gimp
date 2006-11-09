@@ -22,8 +22,10 @@
 /* UTF-8 modifications made by Kevin Cozens (kcozens@interlog.com)  */
 /* **************************************************************** */
 
+#include "config.h"
+
 #define _SCHEME_SOURCE
-#ifndef WIN32
+#if HAVE_UNISTD_H
 # include <unistd.h>
 #endif
 #if USE_DL
@@ -109,6 +111,44 @@ static int utf8_stricmp(const char *s1, const char *s2)
 # define FIRST_CELLSEGS 3
 #endif
 
+enum scheme_types {
+  T_STRING=1,
+  T_NUMBER=2,
+  T_SYMBOL=3,
+  T_PROC=4,
+  T_PAIR=5,
+  T_CLOSURE=6,
+  T_CONTINUATION=7,
+  T_FOREIGN=8,
+  T_CHARACTER=9,
+  T_PORT=10,
+  T_VECTOR=11,
+  T_MACRO=12,
+  T_PROMISE=13,
+  T_ENVIRONMENT=14,
+  T_ARRAY=15,
+  T_LAST_SYSTEM_TYPE=15
+};
+
+/* ADJ is enough slack to align cells in a TYPE_BITS-bit boundary */
+#define ADJ 32
+#define TYPE_BITS 5
+#define T_MASKTYPE      31    /* 0000000000011111 */
+#define T_SYNTAX      4096    /* 0001000000000000 */
+#define T_IMMUTABLE   8192    /* 0010000000000000 */
+#define T_ATOM       16384    /* 0100000000000000 */   /* only for gc */
+#define CLRATOM      49151    /* 1011111111111111 */   /* only for gc */
+#define MARK         32768    /* 1000000000000000 */
+#define UNMARK       32767    /* 0111111111111111 */
+
+enum array_type {
+  array_int32=0,
+  array_int16=1,
+  array_int8=2,
+  array_float=3,
+  array_string=4
+};
+
 void (*ts_output_routine) (FILE *, char *, int);
 
 static num num_add(num a, num b);
@@ -133,6 +173,13 @@ static num num_zero;
 static num num_one;
 
 /* macros for cell operations */
+#define typeflag(p)      ((p)->_flag)
+#define type(p)          (typeflag(p)&T_MASKTYPE)
+
+#define arrayvalue(p)    ((p)->_object._array._avalue)
+#define arraylength(p)   ((p)->_object._array._length)
+#define arraytype(p)     ((p)->_object._array._type)
+
 INTERFACE INLINE int is_string(pointer p)     { return (type(p)==T_STRING); }
 #define strvalue(p)      ((p)->_object._string._svalue)
 #define strlength(p)     ((p)->_object._string._length)

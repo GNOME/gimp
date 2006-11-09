@@ -7,58 +7,12 @@
 /*------------------ Ugly internals -----------------------------------*/
 /*------------------ Of interest only to FFI users --------------------*/
 
-enum scheme_types {
-  T_STRING=1,
-  T_NUMBER=2,
-  T_SYMBOL=3,
-  T_PROC=4,
-  T_PAIR=5,
-  T_CLOSURE=6,
-  T_CONTINUATION=7,
-  T_FOREIGN=8,
-  T_CHARACTER=9,
-  T_PORT=10,
-  T_VECTOR=11,
-  T_MACRO=12,
-  T_PROMISE=13,
-  T_ENVIRONMENT=14,
-  T_ARRAY=15,
-  T_LAST_SYSTEM_TYPE=15
-};
-
-/* ADJ is enough slack to align cells in a TYPE_BITS-bit boundary */
-#define ADJ 32
-#define TYPE_BITS 5
-#define T_MASKTYPE      31    /* 0000000000011111 */
-#define T_SYNTAX      4096    /* 0001000000000000 */
-#define T_IMMUTABLE   8192    /* 0010000000000000 */
-#define T_ATOM       16384    /* 0100000000000000 */   /* only for gc */
-#define CLRATOM      49151    /* 1011111111111111 */   /* only for gc */
-#define MARK         32768    /* 1000000000000000 */
-#define UNMARK       32767    /* 0111111111111111 */
-
-/* macros for cell operations */
-#define typeflag(p)      ((p)->_flag)
-#define type(p)          (typeflag(p)&T_MASKTYPE)
-
-#define arrayvalue(p)    ((p)->_object._array._avalue)
-#define arraylength(p)   ((p)->_object._array._length)
-#define arraytype(p)     ((p)->_object._array._type)
-
-enum array_type { 
-  array_int32=0, 
-  array_int16=1, 
-  array_int8=2, 
-  array_float=3, 
-  array_string=4 
-};
-
-enum scheme_port_kind { 
-  port_free=0, 
-  port_file=1, 
-  port_string=2, 
-  port_input=16, 
-  port_output=32 
+enum scheme_port_kind {
+  port_free=0,
+  port_file=1,
+  port_string=2,
+  port_input=16,
+  port_output=32
 };
 
 typedef struct port {
@@ -180,19 +134,19 @@ void *ext_data;     /* For the benefit of foreign functions */
 long gensym_cnt;
 
 struct scheme_interface *vptr;
-void *dump_base;	 /* pointer to base of allocated dump stack */
-int dump_size;		 /* number of frames allocated for dump stack */
+void *dump_base;     /* pointer to base of allocated dump stack */
+int dump_size;       /* number of frames allocated for dump stack */
 
 gunichar backchar;
 int bc_flag;
 };
 
 /* operator code */
-enum scheme_opcodes { 
-#define _OP_DEF(A,B,C,D,E,OP) OP, 
-#include "opdefines.h" 
-  OP_MAXDEFINED 
-}; 
+enum scheme_opcodes {
+#define _OP_DEF(A,B,C,D,E,OP) OP,
+#include "opdefines.h"
+  OP_MAXDEFINED
+};
 
 
 #define cons(sc,a,b) _cons(sc,a,b,0)

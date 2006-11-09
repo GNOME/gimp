@@ -1,3 +1,14 @@
+2006-11-09  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme-private.h: Moved various
+	declarations and defines out of here...
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: and added them here in
+	keeping with the original 1.38 version of TinyScheme. Only include
+	unistd.h if it exists.
+
+	* plug-ins/script-fu/ftx/ftx.c: Only include unistd.h if it exists.
+
 2006-11-09  Michael Natterer  <mitch@gimp.org>
 
 	Properly abstract brush scaling:
