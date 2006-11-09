@@ -295,7 +295,6 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
 {
   GimpProcedure *procedure;
   gchar         *basename = NULL;
-  gchar         *prefix;
   const gchar   *required = NULL;
   gchar         *p;
 
@@ -305,14 +304,25 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
 
   procedure = GIMP_PROCEDURE (proc);
 
-  prefix = g_strdup (menu_path);
+  p = strchr (menu_path, '>');
+  if (p == NULL || (*(++p) && *p != '/'))
+    {
+      basename = g_filename_display_basename (proc->prog);
 
-  p = strchr (prefix, '>') + 1;
-  if (p)
-    *p = '\0';
+      g_set_error (error, 0, 0,
+                   "Plug-In \"%s\"\n(%s)\n"
+                   "attempted to install procedure \"%s\"\n"
+                   "in the invalid menu location \"%s\".\n"
+                   "The menu path must look like either \"<Prefix>\" "
+                   "or \"<Prefix>/path/to/item\".",
+                   basename, gimp_filename_to_utf8 (proc->prog),
+                   GIMP_OBJECT (proc)->name,
+                   menu_path);
+      goto failure;
+    }
 
-  if (strcmp (prefix, "<Toolbox>") == 0 ||
-      strcmp (prefix, "<Image>")   == 0)
+  if (g_str_has_prefix (menu_path, "<Toolbox>") ||
+      g_str_has_prefix (menu_path, "<Image>"))
     {
       if ((procedure->num_args < 1) ||
           ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]))
@@ -321,8 +331,8 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           goto failure;
         }
     }
-  else if (strcmp (prefix, "<Layers>")   == 0 ||
-           strcmp (prefix, "<Channels>") == 0)
+  else if (g_str_has_prefix (menu_path, "<Layers>") ||
+           g_str_has_prefix (menu_path, "<Channels>"))
     {
       if ((procedure->num_args < 3)                             ||
           ! GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) ||
@@ -333,7 +343,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           goto failure;
         }
     }
-  else if (strcmp (prefix, "<Vectors>") == 0)
+  else if (g_str_has_prefix (menu_path, "<Vectors>"))
     {
       if ((procedure->num_args < 3)                            ||
           ! GIMP_IS_PARAM_SPEC_INT32      (procedure->args[0]) ||
@@ -344,7 +354,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           goto failure;
         }
     }
-  else if (strcmp (prefix, "<ColormapEditor>") == 0)
+  else if (g_str_has_prefix (menu_path, "<ColormapEditor>"))
     {
       if ((procedure->num_args < 2)                            ||
           ! GIMP_IS_PARAM_SPEC_INT32      (procedure->args[0]) ||
@@ -354,7 +364,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           goto failure;
         }
     }
-  else if (strcmp (prefix, "<Load>") == 0)
+  else if (g_str_has_prefix (menu_path, "<Load>"))
     {
       if ((procedure->num_args < 3)                       ||
           ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]) ||
@@ -372,7 +382,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           goto failure;
         }
     }
-  else if (strcmp (prefix, "<Save>") == 0)
+  else if (g_str_has_prefix (menu_path, "<Save>"))
     {
       if ((procedure->num_args < 5)                             ||
           ! GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) ||
@@ -385,12 +395,12 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           goto failure;
         }
     }
-  else if (strcmp (prefix, "<Brushes>")   == 0 ||
-           strcmp (prefix, "<Gradients>") == 0 ||
-           strcmp (prefix, "<Palettes>")  == 0 ||
-           strcmp (prefix, "<Patterns>")  == 0 ||
-           strcmp (prefix, "<Fonts>")     == 0 ||
-           strcmp (prefix, "<Buffers>")   == 0)
+  else if (g_str_has_prefix (menu_path, "<Brushes>")   ||
+           g_str_has_prefix (menu_path, "<Gradients>") ||
+           g_str_has_prefix (menu_path, "<Palettes>")  ||
+           g_str_has_prefix (menu_path, "<Patterns>")  ||
+           g_str_has_prefix (menu_path, "<Fonts>")     ||
+           g_str_has_prefix (menu_path, "<Buffers>"))
     {
       if ((procedure->num_args < 1) ||
           ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]))
@@ -418,25 +428,6 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
       goto failure;
     }
 
-  p = strchr (menu_path, '>') + 1;
-
-  if (*p != '/' && *p != '\0')
-    {
-      basename = g_filename_display_basename (proc->prog);
-
-      g_set_error (error, 0, 0,
-                   "Plug-In \"%s\"\n(%s)\n"
-                   "attempted to install procedure \"%s\"\n"
-                   "in the invalid menu location \"%s\".\n"
-                   "The menu path must look like either \"<Prefix>\" "
-                   "or \"<Prefix>/path/to/item\".",
-                   basename, gimp_filename_to_utf8 (proc->prog),
-                   GIMP_OBJECT (proc)->name,
-                   menu_path);
-      goto failure;
-    }
-
-  g_free (prefix);
   g_free (basename);
 
   proc->menu_paths = g_list_append (proc->menu_paths, g_strdup (menu_path));
@@ -449,20 +440,25 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
  failure:
   if (required)
     {
+      gchar *prefix = g_strdup (menu_path);
+
+      p = strchr (prefix, '>') + 1;
+      *p = '\0';
+
       basename = g_filename_display_basename (proc->prog);
 
       g_set_error (error, 0, 0,
                    "Plug-In \"%s\"\n(%s)\n\n"
                    "attempted to install %s procedure \"%s\" "
                    "which does not take the standard %s Plug-In "
-                   "arguments.\n"
-                   "(%s)",
+                   "arguments: (%s).",
                    basename, gimp_filename_to_utf8 (proc->prog),
                    prefix, GIMP_OBJECT (proc)->name, prefix,
                    required);
+
+      g_free (prefix);
     }
 
-  g_free (prefix);
   g_free (basename);
 
   return FALSE;

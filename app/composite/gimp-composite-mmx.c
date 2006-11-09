@@ -45,7 +45,8 @@
 #define pmaxub(a,b,tmp)      "\tmovq %%" #a ", %%" #tmp ";" "psubusb %%" #b ", %%" #tmp ";" "paddb %%" #tmp ", %%" #b "\n"
 
 
-void
+#if 0
+static void
 debug_display_mmx(void)
 {
 #define mask32(x) ((x)& (unsigned long long) 0xFFFFFFFF)
@@ -57,6 +58,7 @@ debug_display_mmx(void)
   print64(mm6); printf("  "); print64(mm7); printf("\n");
   printf("--------------------------------------------\n");
 }
+#endif
 
 const guint32 rgba8_alpha_mask_64[2] = { 0xFF000000, 0xFF000000 };
 const guint32 rgba8_b1_64[2] =         { 0x01010101, 0x01010101 };
@@ -828,6 +830,7 @@ gimp_composite_multiply_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
   asm("emms");
 }
 
+#if 0
 static void
 mmx_op_overlay(void)
 {
@@ -877,6 +880,7 @@ mmx_op_overlay(void)
                 : "m" (*rgba8_w2_64), "m" (*rgba8_alpha_mask_64)
                 );
 }
+#endif
 
 #if 0
 void

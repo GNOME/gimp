@@ -1266,7 +1266,7 @@ PKG_CHECK_MODULES(URI_LIBCURL, $libcurl_modules,
   have_libcurl=yes,
   have_libcurl="no (libcurl not found)")
 
-AM_CONDITIONAL(HAVE_LIBCURL, test x$have_libcurl = xyes)
+AM_CONDITIONAL(HAVE_LIBCURL, test "x$have_libcurl" = xyes)
 
 if test "x$have_gnomevfs" = xyes; then
   uri_plugin="yes (using gnome-vfs)" 

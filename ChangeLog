@@ -1,3 +1,13 @@
+2006-11-09  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: added missing quotes in test for libcurl.
+
+	* app/plug-in/gimppluginprocedure.c
+	(gimp_plug_in_procedure_add_menu_path): try not to crash on
+	invalid menu paths and avoid a string copy for the common case.
+
+	* app/composite/gimp-composite-mmx.c: commented out unused code.
+
 2006-11-08  Simon Budig  <simon@gimp.org>
 
 	* tools/defcheck.py: don't bail out successfully after the first test,
