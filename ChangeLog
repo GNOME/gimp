@@ -1,3 +1,9 @@
+2006-11-09  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/rcm/rcm.c
+	* plug-ins/rcm/rcm_misc.c: fix warning about missing declaration
+	and did some code shuffling and cleanup.
+
 2006-11-09  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.c: Moved too much. Move some
