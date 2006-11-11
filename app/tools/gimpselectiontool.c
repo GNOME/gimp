@@ -124,43 +124,47 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
     {
       GimpChannelOps button_op = options->operation;
 
-      if (state & GDK_MOD1_MASK)
+      if (press)
         {
-          button_op = selection_tool->saved_operation;
+          if (key == (state & (GDK_SHIFT_MASK   |
+                               GDK_CONTROL_MASK |
+                               GDK_MOD1_MASK)))
+            {
+              /*  first modifier pressed  */
+
+              selection_tool->saved_operation = options->operation;
+            }
         }
       else
         {
-          if (press)
+          if (! (state & (GDK_SHIFT_MASK   |
+                          GDK_CONTROL_MASK |
+                          GDK_MOD1_MASK)))
             {
-              if (key == (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)))
-                {
-                  /*  first modifier pressed  */
+              /*  last modifier released  */
 
-                  selection_tool->saved_operation = options->operation;
-                }
+              button_op = selection_tool->saved_operation;
             }
-          else
-            {
-              if (! (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)))
-                {
-                  /*  last modifier released  */
+        }
 
-                  button_op = selection_tool->saved_operation;
-                }
-            }
-
-          if ((state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK))
-            {
-              button_op = GIMP_CHANNEL_OP_INTERSECT;
-            }
-          else if (state & GDK_SHIFT_MASK)
-            {
-              button_op = GIMP_CHANNEL_OP_ADD;
-            }
-          else if (state & GDK_CONTROL_MASK)
-            {
-              button_op = GIMP_CHANNEL_OP_SUBTRACT;
-            }
+      if (state & GDK_MOD1_MASK)
+        {
+          /*  if alt is down, pretend that neither
+           *  shift nor control are down
+           */
+          button_op = selection_tool->saved_operation;
+        }
+      else if ((state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK))
+        {
+          button_op = GIMP_CHANNEL_OP_INTERSECT;
+        }
+      else if (state & GDK_SHIFT_MASK)
+        {
+          button_op = GIMP_CHANNEL_OP_ADD;
+        }
+      else if (state & GDK_CONTROL_MASK)
+        {
+          button_op = GIMP_CHANNEL_OP_SUBTRACT;
         }
 
       if (button_op != options->operation)

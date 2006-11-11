@@ -1,3 +1,10 @@
+2006-11-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpselectiontool.c
+	(gimp_selection_tool_modifier_key): Fix behavior so that when Alt
+	is down, it appears as if no other modifier was pressed.
+	Fixes bug #349338.
+
 2006-11-09  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scheme-wrapper.c (marshall_proc_db_call): Use
