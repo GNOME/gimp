@@ -322,6 +322,12 @@ CFLAGS="$CFLAGS $extra_warnings"
 GIMP_DETECT_CFLAGS(extra_warnings, '-Wmissing-declarations')
 CFLAGS="$CFLAGS $extra_warnings"
 
+GIMP_DETECT_CFLAGS(extra_warnings, '-Winit-self')
+CFLAGS="$CFLAGS $extra_warnings"
+
+GIMP_DETECT_CFLAGS(extra_warnings, '-Wpointer-arith')
+CFLAGS="$CFLAGS $extra_warnings"
+
 
 # Ensure MSVC-compatible struct packing convention is used when
 # compiling for Win32 with gcc.

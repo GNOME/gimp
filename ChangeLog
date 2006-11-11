@@ -1,5 +1,9 @@
 2006-11-11  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: added -Winit-self and -Wpointer-arith to CFLAGS.
+
+2006-11-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpselectiontool.c
 	(gimp_selection_tool_modifier_key): Fix behavior so that when Alt
 	is down, it appears as if no other modifier was pressed.
