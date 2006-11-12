@@ -204,11 +204,11 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
 
           const gchar *start = dnd_crap;
 
-          if (! strncmp (dnd_crap, "file://", strlen ("file://")))
+          if (g_str_has_prefix (dnd_crap, "file://"))
             {
               start += strlen ("file://");
             }
-          else if (! strncmp (dnd_crap, "file:", strlen ("file:")))
+          else if (g_str_has_prefix (dnd_crap, "file:"))
             {
               start += strlen ("file:");
             }

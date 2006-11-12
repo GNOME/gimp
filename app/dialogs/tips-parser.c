@@ -190,9 +190,10 @@ gimp_tips_from_file (const gchar  *filename,
    */
   tips_locale = _("tips-locale:C");
 
-  if (strncmp (tips_locale, "tips-locale:", 12) == 0)
+  if (g_str_has_prefix (tips_locale, "tips-locale:"))
     {
-      tips_locale += 12;
+      tips_locale += strlen ("tips-locale:");
+
       if (*tips_locale && *tips_locale != 'C')
         parser->locale = tips_locale;
     }

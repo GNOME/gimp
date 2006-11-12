@@ -134,7 +134,7 @@ gimp_param_spec_enum_desc (GParamSpec *pspec)
       if (n > 0)
         g_string_append (str, ", ");
 
-      if (G_LIKELY (strncmp ("GIMP_", enum_value->value_name, 5) == 0))
+      if (G_LIKELY (g_str_has_prefix (enum_value->value_name, "GIMP_")))
         name = gimp_canonicalize_identifier (enum_value->value_name + 5);
       else
         name = gimp_canonicalize_identifier (enum_value->value_name);

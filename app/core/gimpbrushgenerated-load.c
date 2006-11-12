@@ -81,7 +81,7 @@ gimp_brush_generated_load (const gchar  *filename,
   if (! fgets (string, sizeof (string), file))
     goto failed;
 
-  if (strncmp (string, "GIMP-VBR", strlen ("GIMP-VBR")))
+  if (! g_str_has_prefix (string, "GIMP-VBR"))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
@@ -96,9 +96,9 @@ gimp_brush_generated_load (const gchar  *filename,
   if (! fgets (string, sizeof (string), file))
     goto failed;
 
-  if (strncmp (string, "1.0", 3))
+  if (! g_str_has_prefix (string, "1.0"))
     {
-      if (strncmp (string, "1.5", 3))
+      if (! g_str_has_prefix (string, "1.5"))
         {
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in brush file '%s': "

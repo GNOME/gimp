@@ -655,57 +655,57 @@ image_types_parse (const gchar *name,
 
       if (*image_types)
         {
-          if (strncmp (image_types, "RGBA", 4) == 0)
+          if (g_str_has_prefix (image_types, "RGBA"))
             {
               types |= GIMP_PLUG_IN_RGBA_IMAGE;
-              image_types += 4;
+              image_types += strlen ("RGBA");
             }
-          else if (strncmp (image_types, "RGB*", 4) == 0)
+          else if (g_str_has_prefix (image_types, "RGB*"))
             {
               types |= GIMP_PLUG_IN_RGB_IMAGE | GIMP_PLUG_IN_RGBA_IMAGE;
-              image_types += 4;
+              image_types += strlen ("RGB*");
             }
-          else if (strncmp (image_types, "RGB", 3) == 0)
+          else if (g_str_has_prefix (image_types, "RGB"))
             {
               types |= GIMP_PLUG_IN_RGB_IMAGE;
-              image_types += 3;
+              image_types += strlen ("RGB");
             }
-          else if (strncmp (image_types, "GRAYA", 5) == 0)
+          else if (g_str_has_prefix (image_types, "GRAYA"))
             {
               types |= GIMP_PLUG_IN_GRAYA_IMAGE;
-              image_types += 5;
+              image_types += strlen ("GRAYA");
             }
-          else if (strncmp (image_types, "GRAY*", 5) == 0)
+          else if (g_str_has_prefix (image_types, "GRAY*"))
             {
               types |= GIMP_PLUG_IN_GRAY_IMAGE | GIMP_PLUG_IN_GRAYA_IMAGE;
-              image_types += 5;
+              image_types += strlen ("GRAY*");
             }
-          else if (strncmp (image_types, "GRAY", 4) == 0)
+          else if (g_str_has_prefix (image_types, "GRAY"))
             {
               types |= GIMP_PLUG_IN_GRAY_IMAGE;
-              image_types += 4;
+              image_types += strlen ("GRAY");
             }
-          else if (strncmp (image_types, "INDEXEDA", 8) == 0)
+          else if (g_str_has_prefix (image_types, "INDEXEDA"))
             {
               types |= GIMP_PLUG_IN_INDEXEDA_IMAGE;
-              image_types += 8;
+              image_types += strlen ("INDEXEDA");
             }
-          else if (strncmp (image_types, "INDEXED*", 8) == 0)
+          else if (g_str_has_prefix (image_types, "INDEXED*"))
             {
               types |= GIMP_PLUG_IN_INDEXED_IMAGE | GIMP_PLUG_IN_INDEXEDA_IMAGE;
-              image_types += 8;
+              image_types += strlen ("INDEXED*");
             }
-          else if (strncmp (image_types, "INDEXED", 7) == 0)
+          else if (g_str_has_prefix (image_types, "INDEXED"))
             {
               types |= GIMP_PLUG_IN_INDEXED_IMAGE;
-              image_types += 7;
+              image_types += strlen ("INDEXED");
             }
-          else if (strncmp (image_types, "*", 1) == 0)
+          else if (g_str_has_prefix (image_types, "*"))
             {
               types |= (GIMP_PLUG_IN_RGB_IMAGE     | GIMP_PLUG_IN_RGBA_IMAGE  |
                         GIMP_PLUG_IN_GRAY_IMAGE    | GIMP_PLUG_IN_GRAYA_IMAGE |
                         GIMP_PLUG_IN_INDEXED_IMAGE | GIMP_PLUG_IN_INDEXEDA_IMAGE);
-              image_types += 1;
+              image_types += strlen ("*");
             }
           else
             {

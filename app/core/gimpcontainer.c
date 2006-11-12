@@ -864,7 +864,7 @@ gimp_container_add_handler (GimpContainer *container,
   g_return_val_if_fail (signame != NULL, 0);
   g_return_val_if_fail (callback != NULL, 0);
 
-  if (strncmp (signame, "notify::", 8))
+  if (! g_str_has_prefix (signame, "notify::"))
     g_return_val_if_fail (g_signal_lookup (signame,
                                            container->children_type), 0);
 

@@ -840,7 +840,7 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
     {
       refinement = SIOX_REFINEMENT_CHANGE_MULTIBLOB;
     }
-  else if (strncmp (pspec->name, "sensitivity", strlen ("sensitivity")) == 0)
+  else if (g_str_has_prefix (pspec->name, "sensitivity"))
     {
       refinement = SIOX_REFINEMENT_CHANGE_SENSITIVITY;
     }
@@ -858,7 +858,7 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
                          fg_select, NULL);
     }
 
-  if (strncmp (pspec->name, "mask-color", strlen ("mask-color")) == 0)
+  if (g_str_has_prefix (pspec->name, "mask-color"))
     {
       GimpTool *tool = GIMP_TOOL (fg_select);
 

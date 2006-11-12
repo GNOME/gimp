@@ -139,10 +139,10 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
   str = gimp_parasite_data (parasite);
   g_return_val_if_fail (str != NULL, NULL);
 
-  if (strncmp (str, "GDT10{", 6) != 0)  /*  magic value  */
+  if (! g_str_has_prefix (str, "GDT10{"))  /*  magic value  */
     return NULL;
 
-  params = g_strsplit (str + 6, "}{", -1);
+  params = g_strsplit (str + strlen ("GDT10{"), "}{", -1);
 
   /*  first check that we have the required number of parameters  */
   for (i = 0; i < NUM_PARAMS; i++)

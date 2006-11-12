@@ -75,7 +75,7 @@ gimp_gradient_load (const gchar  *filename,
       return NULL;
     }
 
-  if (strncmp (line, "GIMP Gradient", strlen ("GIMP Gradient")))
+  if (! g_str_has_prefix (line, "GIMP Gradient"))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in gradient file '%s': "
@@ -101,7 +101,7 @@ gimp_gradient_load (const gchar  *filename,
       return NULL;
     }
 
-  if (! strncmp (line, "Name: ", strlen ("Name: ")))
+  if (g_str_has_prefix (line, "Name: "))
     {
       gchar *utf8;
 

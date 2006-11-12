@@ -89,7 +89,7 @@ gimp_palette_load (const gchar  *filename,
       return NULL;
     }
 
-  if (strncmp (str, "GIMP Palette", strlen ("GIMP Palette")))
+  if (! g_str_has_prefix (str, "GIMP Palette"))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in palette file '%s': "
@@ -115,7 +115,7 @@ gimp_palette_load (const gchar  *filename,
       return NULL;
     }
 
-  if (! strncmp (str, "Name: ", strlen ("Name: ")))
+  if (g_str_has_prefix (str, "Name: "))
     {
       gchar *utf8;
 
@@ -136,7 +136,7 @@ gimp_palette_load (const gchar  *filename,
           return NULL;
         }
 
-      if (! strncmp (str, "Columns: ", strlen ("Columns: ")))
+      if (g_str_has_prefix (str, "Columns: "))
         {
           gint columns;
 
@@ -443,16 +443,16 @@ gimp_palette_load_detect_format (const gchar *filename)
     {
       if (read (fd, header, sizeof (header)) == sizeof (header))
         {
-          if (strncmp (header + 0, "RIFF",     4) == 0 &&
-              strncmp (header + 8, "PAL data", 8) == 0)
+          if (g_str_has_prefix (header + 0, "RIFF") &&
+              g_str_has_prefix (header + 8, "PAL data"))
              {
               format = GIMP_PALETTE_FILE_FORMAT_RIFF_PAL;
             }
-          else if (strncmp (header, "GIMP Palette", 12) == 0)
+          else if (g_str_has_prefix (header, "GIMP Palette"))
             {
               format = GIMP_PALETTE_FILE_FORMAT_GPL;
             }
-          else if (strncmp (header, "JASC-PAL", 8) == 0)
+          else if (g_str_has_prefix (header, "JASC-PAL"))
             {
               format = GIMP_PALETTE_FILE_FORMAT_PSP_PAL;
             }

@@ -272,7 +272,7 @@ xcf_load_invoker (GimpProcedure     *procedure,
 
       info.cp += xcf_read_int8 (info.fp, (guint8 *) id, 14);
 
-      if (strncmp (id, "gimp xcf ", 9) != 0)
+      if (g_str_has_prefix (id, "gimp xcf "))
         {
           success = FALSE;
         }

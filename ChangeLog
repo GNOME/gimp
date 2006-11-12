@@ -1,3 +1,21 @@
+2006-11-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/base.c
+	* app/core/gimp-user-install.c
+	* app/core/gimpbrushgenerated-load.c
+	* app/core/gimpcontainer.c
+	* app/core/gimpgradient-load.c
+	* app/core/gimppalette-load.c
+	* app/core/gimpparamspecs-desc.c
+	* app/dialogs/tips-parser.c
+	* app/menus/plug-in-menus.c
+	* app/plug-in/gimppluginmanager.c
+	* app/plug-in/gimppluginprocedure.c
+	* app/text/gimptext-parasite.c
+	* app/tools/gimpforegroundselecttool.c
+	* app/widgets/gimpselectiondata.c
+	* app/xcf/xcf.c: use g_str_has_prefix() instead of strncmp().
+
 2006-11-11  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: added -Winit-self and -Wpointer-arith to CFLAGS.

@@ -461,16 +461,16 @@ user_install_migrate_files (GimpUserInstall *install)
       if (g_file_test (source, G_FILE_TEST_IS_REGULAR))
         {
           /*  skip these files for all old versions  */
-          if ((strncmp (basename, "gimpswap.", 9) == 0) ||
-              (strcmp (basename, "pluginrc") == 0)      ||
-              (strcmp (basename, "themerc") == 0)       ||
-              (strcmp (basename, "toolrc") == 0))
+          if (g_str_has_prefix (basename, "gimpswap.") ||
+              g_str_has_prefix (basename, "pluginrc")  ||
+              g_str_has_prefix (basename, "themerc")   ||
+              g_str_has_prefix (basename, "toolrc"))
             {
               goto next_file;
             }
 
           /*  skip menurc for gimp 2.0 since the format has changed  */
-          if (install->old_minor == 0 && (strncmp (basename, "menurc", 6) == 0))
+          if (install->old_minor == 0 && g_str_has_prefix (basename, "menurc"))
             {
               goto next_file;
             }
