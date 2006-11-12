@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-07 11:48+0200\n"
-"PO-Revision-Date: 2005-05-15 17:33+0200\n"
+"POT-Creation-Date: 2006-11-12 16:16+0100\n"
+"PO-Revision-Date: 2006-11-12 16:17+0100\n"
 "Last-Translator: Xavier Beà <xbea@pie.xtec.es>\n"
 "Language-Team: Softcatalà <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,7 @@ msgstr "%s no pot gestionar desplaçaments de capa, mida o opacitat"
 #: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
 #, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "%s només pot gestionar les capes com a marcs d'animació"
+msgstr "%s només pot gestionar les capes com a fotogrames de l'animació"
 
 #: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:243
 msgid "Save as Animation"
@@ -141,7 +141,7 @@ msgstr "Afegeix un canal alfa"
 
 #: ../libgimp/gimpexport.c:381
 msgid "Confirm Save"
-msgstr "Comfirmeu que voleu desar"
+msgstr "Confirmeu que voleu desar"
 
 #: ../libgimp/gimpexport.c:387
 msgid "Confirm"
@@ -198,7 +198,7 @@ msgstr "Selecció de tipus de lletra"
 
 #: ../libgimp/gimpgradientmenu.c:104
 msgid "Gradient Selection"
-msgstr "Selecció de gradient"
+msgstr "Selecció de degradat"
 
 #: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:167
 msgid "(Empty)"
@@ -577,7 +577,7 @@ msgstr "Enganxa-ho a dins"
 
 #: ../libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
-msgstr "_Redefineix"
+msgstr "_Recupera"
 
 #: ../libgimpwidgets/gimpstock.c:121
 msgid "Visible"
@@ -585,7 +585,7 @@ msgstr "Visible"
 
 #: ../libgimpwidgets/gimpstock.c:154 ../libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
-msgstr "_Traça"
+msgstr "_Pinta el traçat"
 
 #: ../libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
@@ -641,7 +641,7 @@ msgid ""
 "a given \"random\" operation"
 msgstr ""
 "Utilitzeu aquest valor com a generador de nombres aleatoris. Això us "
-"permetrà repetir una operació \"aleatòria\" ja feta"
+"permetrà repetir una operació «aleatòria» ja feta"
 
 #: ../libgimpwidgets/gimpwidgets.c:1005
 msgid "_New Seed"
@@ -657,9 +657,8 @@ msgid "_Randomize"
 msgstr "Aleato_ritza"
 
 #: ../modules/cdisplay_colorblind.c:57 ../modules/cdisplay_colorblind.c:545
-#, fuzzy
 msgid "Protanopia (insensitivity to red)"
-msgstr "Protanòpia (insensible al vermell)"
+msgstr "Protanòpsia (insensible al vermell)"
 
 #: ../modules/cdisplay_colorblind.c:59 ../modules/cdisplay_colorblind.c:547
 msgid "Deuteranopia (insensitivity to green)"
@@ -720,7 +719,7 @@ msgstr "Mètrica de color absoluta"
 
 #: ../modules/cdisplay_proof.c:138
 msgid "Color proof filter using ICC color profile"
-msgstr "Filtre de prova de color que usa un perfil de color ICC"
+msgstr "Filtre de prova de color que empra un perfil de color ICC"
 
 #: ../modules/cdisplay_proof.c:238
 msgid "Color Proof"
