@@ -1,3 +1,8 @@
+2006-11-13  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c: reduced the size of the side
+	handles to two third the size of the corner handles.
+
 2006-11-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/xcf/xcf.c (xcf_load_invoker): fix g_str_has_prefix() change

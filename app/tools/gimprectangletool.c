@@ -134,7 +134,9 @@ static gboolean
 
 static void     gimp_rectangle_tool_auto_shrink     (GimpRectangleTool *rectangle);
 
-static GtkAnchorType gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private);
+static GtkAnchorType gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private,
+                                                     gint                     *w,
+                                                     gint                     *h);
 
 
 static guint gimp_rectangle_tool_signals[LAST_SIGNAL] = { 0 };
@@ -1422,19 +1424,19 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
         {
           function = RECT_RESIZING_LOWER_LEFT;
         }
-      else if (fabs (coords->x - private->x1) < handle_w)
+      else if ((fabs (coords->x - private->x1) < (handle_w * 2) / 3))
         {
           function = RECT_RESIZING_LEFT;
         }
-      else if ((fabs (coords->x - private->x2) < handle_w))
+      else if ((fabs (coords->x - private->x2) < (handle_w * 2) / 3))
         {
           function = RECT_RESIZING_RIGHT;
         }
-      else if ((fabs (coords->y - private->y1) < handle_h))
+      else if ((fabs (coords->y - private->y1) < (handle_h * 2) / 3))
         {
           function = RECT_RESIZING_TOP;
         }
-      else if ((fabs (coords->y - private->y2) < handle_h))
+      else if ((fabs (coords->y - private->y2) < (handle_h * 2) / 3))
         {
           function = RECT_RESIZING_BOTTOM;
         }
@@ -1572,13 +1574,18 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
       break;
 
     default:
-      gimp_draw_tool_draw_corner (draw_tool,
-                                  ! gimp_tool_control_is_active (tool->control),
-                                  private->x1, private->y1,
-                                  private->x2, private->y2,
-                                  private->handle_w, private->handle_h,
-                                  gimp_rectangle_tool_get_anchor (private),
-                                  FALSE);
+      {
+        GtkAnchorType anchor;
+        gint          w, h;
+
+        anchor = gimp_rectangle_tool_get_anchor (private, &w, &h);
+        gimp_draw_tool_draw_corner (draw_tool,
+                                    ! gimp_tool_control_is_active (tool->control),
+                                    private->x1, private->y1,
+                                    private->x2, private->y2,
+                                    w, h,
+                                    anchor, FALSE);
+      }
       break;
     }
 
@@ -2160,8 +2167,13 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rectangle)
 }
 
 static GtkAnchorType
-gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private)
+gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private,
+                                gint                     *w,
+                                gint                     *h)
 {
+  *w = private->handle_w;
+  *h = private->handle_h;
+
   switch (private->function)
     {
     case RECT_RESIZING_UPPER_LEFT:
@@ -2177,15 +2189,19 @@ gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private)
       return GTK_ANCHOR_SOUTH_EAST;
 
     case RECT_RESIZING_LEFT:
+      *w = (*w * 2) / 3;
       return GTK_ANCHOR_WEST;
 
     case RECT_RESIZING_RIGHT:
+      *w = (*w * 2) / 3;
       return GTK_ANCHOR_EAST;
 
     case RECT_RESIZING_TOP:
+      *h = (*h * 2) / 3;
       return GTK_ANCHOR_NORTH;
 
     case RECT_RESIZING_BOTTOM:
+      *h = (*h * 2) / 3;
       return GTK_ANCHOR_SOUTH;
 
     default:
