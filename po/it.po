@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-06 17:20+0100\n"
-"PO-Revision-Date: 2006-11-06 18:22+0100\n"
+"POT-Creation-Date: 2006-11-13 22:01+0100\n"
+"PO-Revision-Date: 2006-11-13 22:01+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1490,15 +1490,15 @@ msgstr "Cancella i pixel selezionati"
 
 #: ../app/actions/edit-actions.c:178
 msgid "Fill with _FG Color"
-msgstr "Riempi con colore di _primo piano"
+msgstr "Riempi con il colore di _primo piano"
 
 #: ../app/actions/edit-actions.c:179
 msgid "Fill the selection using the foreground color"
-msgstr "Riempi la selezione usando il colore di sfondo"
+msgstr "Riempi la selezione usando il colore di primo piano"
 
 #: ../app/actions/edit-actions.c:184
 msgid "Fill with B_G Color"
-msgstr "Riempi con colore di _sfondo"
+msgstr "Riempi con il colore di _sfondo"
 
 #: ../app/actions/edit-actions.c:185
 msgid "Fill the selection using the background color"
@@ -4374,7 +4374,9 @@ msgstr "Se abilitata, GIMP mostrerà gli mnemonici nei menu."
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for GIMP."
-msgstr "Riguarda solitamente solo schermi a 8 bit; imposta il numero minimo di colori di sistema allocati per GIMP."
+msgstr ""
+"Riguarda solitamente solo schermi a 8 bit; imposta il numero minimo di "
+"colori di sistema allocati per GIMP."
 
 #: ../app/config/gimprc-blurbs.h:198
 msgid ""
@@ -4486,7 +4488,9 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:272
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
-msgstr "Salva le posizioni e l'ampiezza delle finestre di dialogo principali all'uscita di GIMP."
+msgstr ""
+"Salva le posizioni e l'ampiezza delle finestre di dialogo principali "
+"all'uscita di GIMP."
 
 #: ../app/config/gimprc-blurbs.h:275
 msgid "Save the tool options when GIMP exits."
@@ -4660,7 +4664,11 @@ msgid ""
 "course of running GIMP.  Most files will disappear when GIMP exits, but some "
 "files are likely to remain, so it is best if this folder not be one that is "
 "shared by other users."
-msgstr "Imposta la cartella per la memorizzazione temporanea. Durante una sessione di GIMP, qui appariranno i file. Alcuni verranno cancellati alla chiusura di GIMP ma altri potrebbero restare, perciò è meglio che questa cartella non venga condivisa con altri utenti. "
+msgstr ""
+"Imposta la cartella per la memorizzazione temporanea. Durante una sessione "
+"di GIMP, qui appariranno i file. Alcuni verranno cancellati alla chiusura di "
+"GIMP ma altri potrebbero restare, perciò è meglio che questa cartella non "
+"venga condivisa con altri utenti. "
 
 #: ../app/config/gimprc-blurbs.h:379
 msgid ""
@@ -6462,9 +6470,9 @@ msgstr "Sfondo"
 msgid "pixel"
 msgstr "pixel"
 
-#: ../app/core/gimpunit.c:55 ../app/tools/gimpmeasuretool.c:805
-#: ../app/tools/gimpmeasuretool.c:946 ../app/tools/gimpmeasuretool.c:998
-#: ../app/tools/gimpmeasuretool.c:1024 ../app/tools/gimppainttool.c:600
+#: ../app/core/gimpunit.c:55 ../app/tools/gimpmeasuretool.c:804
+#: ../app/tools/gimpmeasuretool.c:945 ../app/tools/gimpmeasuretool.c:997
+#: ../app/tools/gimpmeasuretool.c:1023 ../app/tools/gimppainttool.c:600
 msgid "pixels"
 msgstr "pixel"
 
@@ -6836,12 +6844,12 @@ msgstr "_Nome livello:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:133
-#: ../app/tools/gimpmeasuretool.c:988
+#: ../app/tools/gimpmeasuretool.c:987
 msgid "Width:"
 msgstr "Larghezza:"
 
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1014
+#: ../app/tools/gimpmeasuretool.c:1013
 msgid "Height:"
 msgstr "Altezza:"
 
@@ -8204,7 +8212,7 @@ msgstr "Il plug-in non può aprire l'immagine"
 msgid "Image doesn't contain any layers"
 msgstr "L'immagine non contiene nessun livello"
 
-#: ../app/file/file-save.c:189
+#: ../app/file/file-save.c:191
 msgid "Plug-In could not save image"
 msgstr "Il plug-in non può salvare l'immagine"
 
@@ -8217,7 +8225,7 @@ msgstr "Carattere non valido in sequenza URI"
 msgid "URI scheme '%s:' is not supported"
 msgstr "Lo schema URI \"%s:\" non è supportato"
 
-#: ../app/file/file-utils.c:319
+#: ../app/file/file-utils.c:327
 msgid "Unknown file type"
 msgstr "Tipo di file sconosciuto"
 
@@ -8239,7 +8247,7 @@ msgstr "Aggiunta tema '%s' (%s)\n"
 msgid "Airbrush"
 msgstr "Aerografo"
 
-#: ../app/paint/gimpbrushcore.c:341
+#: ../app/paint/gimpbrushcore.c:340
 msgid "No brushes available for use with this tool."
 msgstr "Nessun pennello disponibile da usare con questo strumento."
 
@@ -8280,7 +8288,7 @@ msgid "Pencil"
 msgstr "Matita"
 
 #: ../app/paint/gimpperspectiveclone.c:95 ../app/paint/paint-enums.c:52
-#: ../app/tools/gimpperspectiveclonetool.c:121
+#: ../app/tools/gimpperspectiveclonetool.c:120
 msgid "Perspective Clone"
 msgstr "Clona prospettiva"
 
@@ -8839,7 +8847,7 @@ msgstr "Riempi aree trasparenti"
 
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160 ../app/tools/gimphealtool.c:103
-#: ../app/tools/gimpperspectiveclonetool.c:896
+#: ../app/tools/gimpperspectiveclonetool.c:895
 #: ../app/tools/gimprectangleoptions.c:515
 #: ../app/tools/gimpselectionoptions.c:410
 msgid "Sample merged"
@@ -8898,12 +8906,12 @@ msgid "Click to set a new clone source"
 msgstr "Fare clic per impostare una nuova sorgente per la duplicazione"
 
 #: ../app/tools/gimpclonetool.c:109
-#: ../app/tools/gimpperspectiveclonetool.c:891
+#: ../app/tools/gimpperspectiveclonetool.c:890
 msgid "Source"
 msgstr "Sorgente"
 
 #: ../app/tools/gimpclonetool.c:128 ../app/tools/gimphealtool.c:115
-#: ../app/tools/gimpperspectiveclonetool.c:910
+#: ../app/tools/gimpperspectiveclonetool.c:909
 msgid "Alignment:"
 msgstr "Allineamento:"
 
@@ -9222,7 +9230,7 @@ msgid "Type  (%s)"
 msgstr "Tipo  (%s)"
 
 #: ../app/tools/gimpdodgeburntool.c:214
-#: ../app/tools/gimpperspectiveclonetool.c:883
+#: ../app/tools/gimpperspectiveclonetool.c:882
 msgid "Mode"
 msgstr "Modalità"
 
@@ -9544,7 +9552,7 @@ msgstr "Regolazione"
 msgid "Size:"
 msgstr "Dimensione:"
 
-#: ../app/tools/gimpinkoptions-gui.c:76 ../app/tools/gimpmeasuretool.c:962
+#: ../app/tools/gimpinkoptions-gui.c:76 ../app/tools/gimpmeasuretool.c:961
 #: ../app/widgets/gimpbrusheditor.c:208
 msgid "Angle:"
 msgstr "Angolo:"
@@ -9579,17 +9587,17 @@ msgstr "Strumento stilo: disegna con stile amanuense"
 msgid "In_k"
 msgstr "_Stilo"
 
-#: ../app/tools/gimpiscissorstool.c:272
+#: ../app/tools/gimpiscissorstool.c:271
 msgid "Scissors"
 msgstr "Forbici"
 
-#: ../app/tools/gimpiscissorstool.c:273
+#: ../app/tools/gimpiscissorstool.c:272
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
 msgstr ""
 "Strumento forbici intelligenti: seleziona aree usando un intelligente "
 "algoritmo di rilevamento bordi"
 
-#: ../app/tools/gimpiscissorstool.c:274
+#: ../app/tools/gimpiscissorstool.c:273
 msgid "Intelligent _Scissors"
 msgstr "Forbici _intelligenti"
 
@@ -9677,28 +9685,28 @@ msgstr "_Zoom"
 msgid "Use info window"
 msgstr "Utilizza finestra informazioni"
 
-#: ../app/tools/gimpmeasuretool.c:121
+#: ../app/tools/gimpmeasuretool.c:120
 msgid "Measure"
 msgstr "Misurino"
 
-#: ../app/tools/gimpmeasuretool.c:122
+#: ../app/tools/gimpmeasuretool.c:121
 msgid "Measure Tool: Measure distances and angles"
 msgstr "Strumento misurino: misura distanze ed angoli"
 
-#: ../app/tools/gimpmeasuretool.c:123
+#: ../app/tools/gimpmeasuretool.c:122
 msgid "_Measure"
 msgstr "_Misurino"
 
-#: ../app/tools/gimpmeasuretool.c:238
+#: ../app/tools/gimpmeasuretool.c:237
 msgid "Add Guides"
 msgstr "Aggiungi righelli"
 
 #. tool->display->shell
-#: ../app/tools/gimpmeasuretool.c:916
+#: ../app/tools/gimpmeasuretool.c:915
 msgid "Measure Distances and Angles"
 msgstr "Misura distanze e angoli"
 
-#: ../app/tools/gimpmeasuretool.c:936
+#: ../app/tools/gimpmeasuretool.c:935
 msgid "Distance:"
 msgstr "Distanza:"
 
@@ -9867,7 +9875,7 @@ msgstr "Strumento matita: dipinge a tratti secchi con un effetto a matita"
 msgid "Pe_ncil"
 msgstr "_Matita"
 
-#: ../app/tools/gimpperspectiveclonetool.c:122
+#: ../app/tools/gimpperspectiveclonetool.c:121
 msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
@@ -9875,11 +9883,11 @@ msgstr ""
 "Strumento clona in prospettiva: duplica un'immagine proveniente da una "
 "sorgente dopo aver applicato una trasformazione in prospettiva"
 
-#: ../app/tools/gimpperspectiveclonetool.c:124
+#: ../app/tools/gimpperspectiveclonetool.c:123
 msgid "_Perspective Clone"
 msgstr "Clona in _prospettiva"
 
-#: ../app/tools/gimpperspectiveclonetool.c:641
+#: ../app/tools/gimpperspectiveclonetool.c:640
 msgid "Ctrl-Click to set a clone source"
 msgstr "Ctrl-clic per impostare una sorgente per la duplicazione"
 
@@ -9988,7 +9996,7 @@ msgstr ""
 msgid "_Rectangle Select"
 msgstr "_Rettangolare"
 
-#: ../app/tools/gimprectangletool.c:1064 ../app/tools/gimprectangletool.c:1813
+#: ../app/tools/gimprectangletool.c:1069 ../app/tools/gimprectangletool.c:1725
 msgid "Rectangle: "
 msgstr "Rettangolo: "
 
@@ -10076,39 +10084,39 @@ msgstr "Seleziona aree trasparenti"
 msgid "Select by:"
 msgstr "Selezione per:"
 
-#: ../app/tools/gimpselectiontool.c:271
+#: ../app/tools/gimpselectiontool.c:275
 msgid "Click-Drag to replace the current selection"
 msgstr "Fare clic e trascinare per sostituire la selezione corrente"
 
-#: ../app/tools/gimpselectiontool.c:279
+#: ../app/tools/gimpselectiontool.c:283
 msgid "Click-Drag to create a new selection"
 msgstr "Fare clic e trascinare per creare una nuova selezione"
 
-#: ../app/tools/gimpselectiontool.c:284
+#: ../app/tools/gimpselectiontool.c:288
 msgid "Click-Drag to add to the current selection"
 msgstr "Fare clic e trascinare per aggiungere alla selezione corrente"
 
-#: ../app/tools/gimpselectiontool.c:293
+#: ../app/tools/gimpselectiontool.c:297
 msgid "Click-Drag to subtract from the current selection"
 msgstr "Fare clic e trascinare per sottrarre dalla selezione corrente"
 
-#: ../app/tools/gimpselectiontool.c:302
+#: ../app/tools/gimpselectiontool.c:306
 msgid "Click-Drag to intersect with the current selection"
 msgstr "Fare clic e trascinare per intersecare con la selezione corrente"
 
-#: ../app/tools/gimpselectiontool.c:312
+#: ../app/tools/gimpselectiontool.c:316
 msgid "Click-Drag to move the selection mask"
 msgstr "Fare clic e trascinare per spostare la maschera di selezione"
 
-#: ../app/tools/gimpselectiontool.c:320
+#: ../app/tools/gimpselectiontool.c:324
 msgid "Click-Drag to move the selected pixels"
 msgstr "Fare clic e trascinare per spostare i pixel selezionati"
 
-#: ../app/tools/gimpselectiontool.c:324
+#: ../app/tools/gimpselectiontool.c:328
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr "Fare clic e trascinare per spostare una copia dei pixel selezionati"
 
-#: ../app/tools/gimpselectiontool.c:328
+#: ../app/tools/gimpselectiontool.c:332
 msgid "Click to anchor the floating selection"
 msgstr "Fare clic per àncorare la selezione fluttuante"
 
@@ -10301,15 +10309,15 @@ msgstr "15 gradi  (%s)"
 msgid "Keep aspect  (%s)"
 msgstr "Mantieni l'aspetto  (%s)"
 
-#: ../app/tools/gimptransformtool.c:229
+#: ../app/tools/gimptransformtool.c:236
 msgid "Transforming"
 msgstr "Trasformazione"
 
-#: ../app/tools/gimptransformtool.c:1133
+#: ../app/tools/gimptransformtool.c:1159
 msgid "There is no layer to transform."
 msgstr "Nessun livello da trasformare."
 
-#: ../app/tools/gimptransformtool.c:1144
+#: ../app/tools/gimptransformtool.c:1170
 msgid "There is no path to transform."
 msgstr "Nessun tracciato da trasformare."
 
