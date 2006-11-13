@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-02 21:01+0100\n"
-"PO-Revision-Date: 2006-11-02 21:02+0100\n"
+"POT-Creation-Date: 2006-11-13 11:46+0100\n"
+"PO-Revision-Date: 2006-11-13 11:58+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -602,7 +602,7 @@ msgstr "Pevný"
 msgid "Incremental"
 msgstr "Postupný"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:258
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
 msgid "None"
 msgstr "Nic"
 
@@ -724,7 +724,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:250
+#: ../modules/cdisplay_lcms.c:259
 msgid "(invalid UTF-8 string)"
 msgstr "(neplatný řetězec v UTF-8)"
 
@@ -766,8 +766,8 @@ msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr ""
-"Nastaví, jak se barvy převádí z RGB pracovního prostředí na zařízení simulace "
-"tisku."
+"Nastaví, jak se barvy převádí z RGB pracovního prostředí na zařízení "
+"simulace tisku."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -1292,33 +1292,33 @@ msgstr "Kontrast"
 msgid "Contrast c_ycles:"
 msgstr "_Cykly kontrastu:"
 
-#: ../modules/cdisplay_lcms.c:107
+#: ../modules/cdisplay_lcms.c:116
 msgid "Color management display filter using ICC color profiles"
 msgstr "Displej se správou barev používající profily barev ICC"
 
-#: ../modules/cdisplay_lcms.c:175
+#: ../modules/cdisplay_lcms.c:184
 msgid "Color Management"
 msgstr "Správa barev"
 
-#: ../modules/cdisplay_lcms.c:281
+#: ../modules/cdisplay_lcms.c:288
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr "Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
 
-#: ../modules/cdisplay_lcms.c:295
+#: ../modules/cdisplay_lcms.c:302
 msgid "Mode of operation:"
 msgstr "Režim práce:"
 
-#: ../modules/cdisplay_lcms.c:306
-msgid "RGB workspace profile:"
+#: ../modules/cdisplay_lcms.c:309
+msgid "RGB working space profile:"
 msgstr "Profil pracovního prostředí RGB:"
 
 #: ../modules/cdisplay_lcms.c:316
 msgid "Monitor profile:"
 msgstr "Profil monitoru:"
 
-#: ../modules/cdisplay_lcms.c:326
+#: ../modules/cdisplay_lcms.c:323
 msgid "Print simulation profile:"
 msgstr "Profil simulace tisku:"
 
