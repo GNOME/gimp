@@ -1,3 +1,8 @@
+2006-11-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/xcf/xcf.c (xcf_load_invoker): fix g_str_has_prefix() change
+	below. Now we can open XCF files again. Fixes bug #374657.
+
 2006-11-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/base.c
