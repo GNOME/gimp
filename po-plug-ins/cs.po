@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-27 20:08+0200\n"
-"PO-Revision-Date: 2006-10-27 20:09+0200\n"
+"POT-Creation-Date: 2006-11-13 12:22+0100\n"
+"PO-Revision-Date: 2006-11-13 12:24+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -342,7 +342,7 @@ msgstr "_Fraktály"
 #: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:294
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2008
 #: ../plug-ins/common/channel_mixer.c:1062 ../plug-ins/common/compressor.c:410
-#: ../plug-ins/common/compressor.c:541 ../plug-ins/common/curve_bend.c:836
+#: ../plug-ins/common/compressor.c:545 ../plug-ins/common/curve_bend.c:836
 #: ../plug-ins/common/dicom.c:691 ../plug-ins/common/gbr.c:616
 #: ../plug-ins/common/gif.c:986 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
@@ -357,8 +357,8 @@ msgstr "_Fraktály"
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:715
 #: ../plug-ins/ifscompose/ifscompose.c:2377 ../plug-ins/jpeg/jpeg-save.c:268
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:268
-#: ../plug-ins/winicon/icosave.c:1019 ../plug-ins/xjt/xjt.c:1277
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:270
+#: ../plug-ins/winicon/icosave.c:1020 ../plug-ins/xjt/xjt.c:1277
 #: ../plug-ins/xjt/xjt.c:1711
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -380,7 +380,7 @@ msgstr "Zapsat parametry fraktálu"
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
 #: ../plug-ins/FractalExplorer/Dialogs.c:2049
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:930
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:931
 #: ../plug-ins/Lighting/lighting_ui.c:1312 ../plug-ins/bmp/bmpread.c:149
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2228
 #: ../plug-ins/common/channel_mixer.c:979 ../plug-ins/common/curve_bend.c:888
@@ -393,16 +393,16 @@ msgstr "Zapsat parametry fraktálu"
 #: ../plug-ins/common/postscript.c:2993 ../plug-ins/common/psd.c:1880
 #: ../plug-ins/common/psp.c:1460 ../plug-ins/common/raw.c:243
 #: ../plug-ins/common/raw.c:645 ../plug-ins/common/spheredesigner.c:2009
-#: ../plug-ins/common/sunras.c:379 ../plug-ins/common/svg.c:307
-#: ../plug-ins/common/svg.c:677 ../plug-ins/common/tga.c:411
+#: ../plug-ins/common/sunras.c:379 ../plug-ins/common/svg.c:316
+#: ../plug-ins/common/svg.c:686 ../plug-ins/common/tga.c:411
 #: ../plug-ins/common/tiff.c:535 ../plug-ins/common/xbm.c:720
 #: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
 #: ../plug-ins/fits/fits.c:342 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:429
 #: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/domain.c:426
 #: ../plug-ins/jpeg/jpeg-load.c:88 ../plug-ins/jpeg/jpeg-load.c:874
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:257
-#: ../plug-ins/uri/uri-backend-libcurl.c:170 ../plug-ins/winicon/icoload.c:651
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:259
+#: ../plug-ins/uri/uri-backend-libcurl.c:172 ../plug-ins/winicon/icoload.c:651
 #: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2535
 #: ../plug-ins/xjt/xjt.c:2543
 #, c-format
@@ -419,34 +419,34 @@ msgstr "'%s' není soubor badatele fraktálů"
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "'%s' je poškozen. Řádek %d Nesprávná sekce voleb"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:247
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:248
 msgid "Render fractal art"
 msgstr "Vykreslit fraktální obrazec"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:252
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:253
 msgid "_Fractal Explorer..."
 msgstr "Badatel _fraktálů..."
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:382
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:383
 msgid "Rendering fractal"
 msgstr "Počítá se fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:757
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:758
 #: ../plug-ins/gflare/gflare.c:3126
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Opravdu chcete odstranit \"%s\" ze seznamu a z disku?"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:761
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:762
 msgid "Delete Fractal"
 msgstr "Odstranit fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:951
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:952
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Soubor '%s' není souborem pro badatele fraktálů"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:960
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:961
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -455,31 +455,31 @@ msgstr ""
 "Soubor '%s' je poškozený.\n"
 "Řádek %d Nesprávná sekce voleb"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1004
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1005
 msgid "My first fractal"
 msgstr "Můj první fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1068
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1069
 msgid "Select folder and rescan collection"
 msgstr "Výběr adresáře a aktualizace souhrnu"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1080
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1081
 msgid "Apply currently selected fractal"
 msgstr "Použít právě zvolený fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1092
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1093
 msgid "Delete currently selected fractal"
 msgstr "Odstranit právě zvolený fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1115
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1116
 msgid "Rescan for Fractals"
 msgstr "Zaktualizovat fraktály"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1134
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1135
 msgid "Add FractalExplorer Path"
 msgstr "Přidat cestu pro badatele fraktálů"
 
-#: ../plug-ins/Lighting/lighting_apply.c:103
+#: ../plug-ins/Lighting/lighting_apply.c:104
 #: ../plug-ins/Lighting/lighting_ui.c:978
 msgid "Lighting Effects"
 msgstr "Světelné efekty"
@@ -603,8 +603,8 @@ msgstr "Intenzita světla"
 msgid "Position"
 msgstr "Poloha"
 
-#: ../plug-ins/Lighting/lighting_ui.c:464 ../plug-ins/common/flarefx.c:760
-#: ../plug-ins/common/mblur.c:992 ../plug-ins/common/nova.c:457
+#: ../plug-ins/Lighting/lighting_ui.c:464 ../plug-ins/common/flarefx.c:765
+#: ../plug-ins/common/mblur.c:992 ../plug-ins/common/nova.c:462
 #: ../plug-ins/common/papertile.c:273 ../plug-ins/flame/flame.c:1223
 #: ../plug-ins/gflare/gflare.c:2651
 msgid "_X:"
@@ -615,8 +615,8 @@ msgstr "_X:"
 msgid "Light source X position in XYZ space"
 msgstr "Poloha X světelného zdroje v prostoru XYZ"
 
-#: ../plug-ins/Lighting/lighting_ui.c:477 ../plug-ins/common/flarefx.c:765
-#: ../plug-ins/common/mblur.c:997 ../plug-ins/common/nova.c:462
+#: ../plug-ins/Lighting/lighting_ui.c:477 ../plug-ins/common/flarefx.c:770
+#: ../plug-ins/common/mblur.c:997 ../plug-ins/common/nova.c:467
 #: ../plug-ins/common/papertile.c:282 ../plug-ins/flame/flame.c:1237
 #: ../plug-ins/gflare/gflare.c:2655
 msgid "_Y:"
@@ -825,7 +825,7 @@ msgid "_Environment Map"
 msgstr "Mapování prostř_edí"
 
 #: ../plug-ins/Lighting/lighting_ui.c:1034
-#: ../plug-ins/gimpressionist/preview.c:185
+#: ../plug-ins/gimpressionist/preview.c:186
 #: ../plug-ins/gimpressionist/repaint.c:1166
 #: ../plug-ins/imagemap/imap_polygon.c:515
 msgid "_Update"
@@ -852,19 +852,19 @@ msgstr "Uložit nastavení osvětlení"
 msgid "Load Lighting Preset"
 msgstr "Načíst nastavení osvětlení"
 
-#: ../plug-ins/MapObject/mapobject_apply.c:274
+#: ../plug-ins/MapObject/mapobject_apply.c:275
 msgid "Map to plane"
 msgstr "Mapovat na rovinu"
 
-#: ../plug-ins/MapObject/mapobject_apply.c:277
+#: ../plug-ins/MapObject/mapobject_apply.c:278
 msgid "Map to sphere"
 msgstr "Mapovat na kouli"
 
-#: ../plug-ins/MapObject/mapobject_apply.c:280
+#: ../plug-ins/MapObject/mapobject_apply.c:281
 msgid "Map to box"
 msgstr "Mapovat na kvádr"
 
-#: ../plug-ins/MapObject/mapobject_apply.c:283
+#: ../plug-ins/MapObject/mapobject_apply.c:284
 msgid "Map to cylinder"
 msgstr "Mapovat na válec"
 
@@ -1192,7 +1192,7 @@ msgstr "Nepodporovaná nebo neplatná bitová hloubka"
 #: ../plug-ins/common/tile.c:265 ../plug-ins/common/xbm.c:866
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:508
 #: ../plug-ins/gfig/gfig-dialog.c:1282
-#: ../plug-ins/gimpressionist/general.c:121 ../plug-ins/jpeg/jpeg-load.c:239
+#: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:239
 #: ../plug-ins/jpeg/jpeg-load.c:741 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:574 ../plug-ins/winsnap/winsnap.c:1155
 msgid "Background"
@@ -1224,7 +1224,7 @@ msgstr "Alfa kanál bude ignorován."
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
 #: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:226
-#: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:1014
+#: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:1015
 #: ../plug-ins/xjt/xjt.c:1694
 #, c-format
 msgid "Saving '%s'"
@@ -2788,12 +2788,12 @@ msgid "bzip archive"
 msgstr "archiv bzip"
 
 #: ../plug-ins/common/compressor.c:373
-msgid "No sensible extension, saving as compressed XCF."
-msgstr "Žádná rozumná přípona, ukládám jako gzipovaný XCF."
+msgid "No sensible file extension, saving as compressed XCF."
+msgstr "Žádná rozumná přípona, ukládám jako komprimovaný XCF."
 
-#: ../plug-ins/common/compressor.c:514
-msgid "No sensible extension, attempting to load with file magic."
-msgstr "Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel."
+#: ../plug-ins/common/compressor.c:518
+msgid "No sensible file extension, attempting to load with file magic."
+msgstr "Žádná rozumná přípona, pokouším se načíst pomocí souborové magie."
 
 #: ../plug-ins/common/convmatrix.c:101
 msgid "Gr_ey"
@@ -3870,11 +3870,11 @@ msgstr "Vykreslit odlesk objektivu"
 msgid "Lens Flare"
 msgstr "Odlesk objektivu"
 
-#: ../plug-ins/common/flarefx.c:745
+#: ../plug-ins/common/flarefx.c:746
 msgid "Center of Flare Effect"
 msgstr "Střed odlesku objektivu"
 
-#: ../plug-ins/common/flarefx.c:781 ../plug-ins/common/nova.c:478
+#: ../plug-ins/common/flarefx.c:786 ../plug-ins/common/nova.c:483
 msgid "Show _position"
 msgstr "Zobrazit _polohu"
 
@@ -4513,7 +4513,7 @@ msgid "Intersection"
 msgstr "Průnik"
 
 #. Width and Height
-#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:750
+#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:759
 #: ../plug-ins/common/wmf.c:549
 msgid "Width:"
 msgstr "Šířka:"
@@ -5657,7 +5657,7 @@ msgstr "Papr_sky:"
 msgid "R_andom hue:"
 msgstr "_Náhodný odstín:"
 
-#: ../plug-ins/common/nova.c:444
+#: ../plug-ins/common/nova.c:445
 msgid "Center of Nova"
 msgstr "Střed supernovy"
 
@@ -6237,7 +6237,7 @@ msgid "Rendering"
 msgstr "Vyobrazení"
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:3100 ../plug-ins/common/svg.c:871
+#: ../plug-ins/common/postscript.c:3100 ../plug-ins/common/svg.c:880
 #: ../plug-ins/common/wmf.c:670
 msgid "Resolution:"
 msgstr "Rozlišení:"
@@ -6282,7 +6282,7 @@ msgstr "Šedá"
 
 #: ../plug-ins/common/postscript.c:3169 ../plug-ins/common/xpm.c:468
 #: ../plug-ins/gimpressionist/color.c:48
-#: ../plug-ins/gimpressionist/general.c:151
+#: ../plug-ins/gimpressionist/general.c:152
 msgid "Color"
 msgstr "Barva"
 
@@ -6829,65 +6829,65 @@ msgstr "Chyba při zachytávání ukazatele"
 msgid "Importing screenshot"
 msgstr "Načítá se snímek obrazovky"
 
-#: ../plug-ins/common/screenshot.c:650 ../plug-ins/common/screenshot.c:781
+#: ../plug-ins/common/screenshot.c:650 ../plug-ins/common/screenshot.c:779
 msgid "Screenshot"
 msgstr "Snímek obrazovky"
 
-#: ../plug-ins/common/screenshot.c:722
+#: ../plug-ins/common/screenshot.c:720
 msgid "Specified window not found"
 msgstr "Určené okno nenalezeno"
 
-#: ../plug-ins/common/screenshot.c:749
+#: ../plug-ins/common/screenshot.c:747
 msgid "There was an error taking the screenshot."
 msgstr "Pří získávání snímku obrazovky došlo k chybě."
 
-#: ../plug-ins/common/screenshot.c:790
+#: ../plug-ins/common/screenshot.c:788
 msgid "_Grab"
 msgstr "_Zachytit"
 
-#: ../plug-ins/common/screenshot.c:811
+#: ../plug-ins/common/screenshot.c:809
 msgid "Area"
 msgstr "Oblast"
 
-#: ../plug-ins/common/screenshot.c:822
+#: ../plug-ins/common/screenshot.c:820
 msgid "Take a screenshot of a single _window"
 msgstr "Získat snímek jednoho _okna"
 
-#: ../plug-ins/common/screenshot.c:843
+#: ../plug-ins/common/screenshot.c:841
 msgid "Include window _decoration"
 msgstr "Včetně _dekorace okna"
 
-#: ../plug-ins/common/screenshot.c:859
+#: ../plug-ins/common/screenshot.c:857
 msgid "Take a screenshot of the entire _screen"
 msgstr "Získat snímek celé _obrazovky"
 
-#: ../plug-ins/common/screenshot.c:877
+#: ../plug-ins/common/screenshot.c:875
 msgid "Select a _region to grab"
 msgstr "Vyberte oblast k sejmutí"
 
-#: ../plug-ins/common/screenshot.c:884
+#: ../plug-ins/common/screenshot.c:882
 msgid ""
 "If enabled, you can use the mouse to select a rectangular region of the "
 "screen."
 msgstr "Je-li povoleno, můžete myší vybrat obdélnikovou oblast obrazovky"
 
 #. grab delay
-#: ../plug-ins/common/screenshot.c:897
+#: ../plug-ins/common/screenshot.c:895
 msgid "Delay"
 msgstr "Zpoždění"
 
 #. this string is part of "Wait [spinbutton] seconds before grabbing"
-#: ../plug-ins/common/screenshot.c:910
+#: ../plug-ins/common/screenshot.c:908
 msgid "W_ait"
 msgstr "_Čekat"
 
 #. this string is part of "Wait [spinbutton] seconds before grabbing"
-#: ../plug-ins/common/screenshot.c:926
+#: ../plug-ins/common/screenshot.c:924
 msgid "seconds before grabbing"
 msgstr "sekund před zachycením"
 
 # FIXME: s/after/between/
-#: ../plug-ins/common/screenshot.c:930
+#: ../plug-ins/common/screenshot.c:928
 msgid ""
 "The number of seconds to wait after selecting the window or region and "
 "actually taking the screenshot."
@@ -7338,7 +7338,7 @@ msgid "Use the background color"
 msgstr "Použít barvu pozadí"
 
 #: ../plug-ins/common/spheredesigner.c:291
-#: ../plug-ins/gimpressionist/general.c:147
+#: ../plug-ins/gimpressionist/general.c:148
 msgid "Solid"
 msgstr "Barevná plocha"
 
@@ -7608,19 +7608,19 @@ msgstr "Kódované RunLength"
 msgid "SVG image"
 msgstr "SVG obrázek"
 
-#: ../plug-ins/common/svg.c:309 ../plug-ins/common/svg.c:679
+#: ../plug-ins/common/svg.c:318 ../plug-ins/common/svg.c:688
 msgid "Unknown reason"
 msgstr "Neznámý důvod"
 
-#: ../plug-ins/common/svg.c:313
+#: ../plug-ins/common/svg.c:322
 msgid "Rendering SVG"
 msgstr "Vykresluje se SVG"
 
-#: ../plug-ins/common/svg.c:325
+#: ../plug-ins/common/svg.c:334
 msgid "Rendered SVG"
 msgstr "Vykreslené SVG"
 
-#: ../plug-ins/common/svg.c:475
+#: ../plug-ins/common/svg.c:484
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -7628,49 +7628,49 @@ msgstr ""
 "Soubor SVG neurčuje\n"
 "velikost!"
 
-#: ../plug-ins/common/svg.c:481 ../plug-ins/common/wmf.c:338
+#: ../plug-ins/common/svg.c:490 ../plug-ins/common/wmf.c:338
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: ../plug-ins/common/svg.c:686
+#: ../plug-ins/common/svg.c:695
 msgid "Render Scalable Vector Graphics"
 msgstr "Vykreslit Scalable Vector Graphics"
 
-#: ../plug-ins/common/svg.c:756 ../plug-ins/common/wmf.c:555
+#: ../plug-ins/common/svg.c:765 ../plug-ins/common/wmf.c:555
 msgid "Height:"
 msgstr "Výška:"
 
-#: ../plug-ins/common/svg.c:830 ../plug-ins/common/wmf.c:629
+#: ../plug-ins/common/svg.c:839 ../plug-ins/common/wmf.c:629
 msgid "_X ratio:"
 msgstr "Poměr _X:"
 
-#: ../plug-ins/common/svg.c:852 ../plug-ins/common/wmf.c:651
+#: ../plug-ins/common/svg.c:861 ../plug-ins/common/wmf.c:651
 msgid "_Y ratio:"
 msgstr "Poměr _Y:"
 
-#: ../plug-ins/common/svg.c:866 ../plug-ins/common/wmf.c:665
+#: ../plug-ins/common/svg.c:875 ../plug-ins/common/wmf.c:665
 msgid "Constrain aspect ratio"
 msgstr "Omezit poměr stran:"
 
-#: ../plug-ins/common/svg.c:877 ../plug-ins/common/wmf.c:676
+#: ../plug-ins/common/svg.c:886 ../plug-ins/common/wmf.c:676
 #, c-format
 msgid "pixels/%a"
 msgstr "pixely/%a"
 
 #. Path Import
-#: ../plug-ins/common/svg.c:897
+#: ../plug-ins/common/svg.c:906
 msgid "Import _paths"
 msgstr "Importovat _cesty"
 
-#: ../plug-ins/common/svg.c:903
+#: ../plug-ins/common/svg.c:912
 msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importovat elementy cesty z SVG, aby mohly být použity s nástrojem GIMPu pro "
 "cesty"
 
-#: ../plug-ins/common/svg.c:916
+#: ../plug-ins/common/svg.c:925
 msgid "Merge imported paths"
 msgstr "Sloučit importované cesty"
 
@@ -8859,19 +8859,19 @@ msgstr "Vlastní přechod"
 msgid "C_amera"
 msgstr "K_amera"
 
-#: ../plug-ins/gfig/gfig-bezier.c:442
+#: ../plug-ins/gfig/gfig-bezier.c:443
 msgid "Closed"
 msgstr "Zavřeno"
 
-#: ../plug-ins/gfig/gfig-bezier.c:447
+#: ../plug-ins/gfig/gfig-bezier.c:448
 msgid "Close curve on completion"
 msgstr "Uzavření křivky při dokončení"
 
-#: ../plug-ins/gfig/gfig-bezier.c:452
+#: ../plug-ins/gfig/gfig-bezier.c:453
 msgid "Show Line Frame"
 msgstr "Ukázat čárový model"
 
-#: ../plug-ins/gfig/gfig-bezier.c:457
+#: ../plug-ins/gfig/gfig-bezier.c:458
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr "Kreslí čáry mezi řídicími body. Pouze během vytváření křivky"
 
@@ -9061,7 +9061,7 @@ msgid "Max undo:"
 msgstr "Nejvíce vracení:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1281
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/gimpressionist/general.c:167
 msgid "Transparent"
 msgstr "Průhledné"
 
@@ -9169,7 +9169,7 @@ msgstr "Chyba při čtení souboru"
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Úpravy objektu pouze pro čtení - nebude možné je zapsat"
 
-#: ../plug-ins/gfig/gfig-poly.c:50
+#: ../plug-ins/gfig/gfig-poly.c:51
 msgid "Regular Polygon Number of Sides"
 msgstr "Počet stran pravidelného mnohoúhelníku"
 
@@ -9182,11 +9182,11 @@ msgstr "Podrobnosti objektů"
 msgid "XY position:"
 msgstr "Poloha XY:"
 
-#: ../plug-ins/gfig/gfig-spiral.c:54
+#: ../plug-ins/gfig/gfig-spiral.c:55
 msgid "Spiral Number of Turns"
 msgstr "Počet otočení spirály"
 
-#: ../plug-ins/gfig/gfig-star.c:51
+#: ../plug-ins/gfig/gfig-star.c:52
 msgid "Star Number of Points"
 msgstr "Počet bodů hvězdy"
 
@@ -9395,7 +9395,7 @@ msgstr "Volby kreslení paprsků"
 msgid "Second Flares Paint Options"
 msgstr "Volby kreslení druhé záře"
 
-#: ../plug-ins/gflare/gflare.c:3455 ../plug-ins/gimpressionist/general.c:115
+#: ../plug-ins/gflare/gflare.c:3455 ../plug-ins/gimpressionist/general.c:116
 msgid "_General"
 msgstr "Všeobe_cné"
 
@@ -9573,92 +9573,92 @@ msgstr "_Barevný šum:"
 msgid "Adds random noise to the color"
 msgstr "Přidává do obrázku náhodný šum"
 
-#: ../plug-ins/gimpressionist/general.c:131
+#: ../plug-ins/gimpressionist/general.c:132
 msgid "Keep original"
 msgstr "Zachovat původní"
 
-#: ../plug-ins/gimpressionist/general.c:132
+#: ../plug-ins/gimpressionist/general.c:133
 msgid "Preserve the original image as a background"
 msgstr "Zachová původní obrázek jako pozadí"
 
-#: ../plug-ins/gimpressionist/general.c:137
+#: ../plug-ins/gimpressionist/general.c:138
 msgid "From paper"
 msgstr "Z papíru"
 
-#: ../plug-ins/gimpressionist/general.c:138
+#: ../plug-ins/gimpressionist/general.c:139
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Kopíruje texturu zvoleného papíru jako pozadí"
 
-#: ../plug-ins/gimpressionist/general.c:148
+#: ../plug-ins/gimpressionist/general.c:149
 msgid "Solid colored background"
 msgstr "Pozadí z barevné plochy"
 
-#: ../plug-ins/gimpressionist/general.c:167
+#: ../plug-ins/gimpressionist/general.c:168
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "Použít průhledné pozadí; Pouze kreslené tahy budou viditelné"
 
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/gimpressionist/general.c:185
 msgid "Paint edges"
 msgstr "Kreslit okraje"
 
-#: ../plug-ins/gimpressionist/general.c:189
+#: ../plug-ins/gimpressionist/general.c:190
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Volí, zda lze štětcem přetahovat přes okraje obrázku"
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:194 ../plug-ins/maze/maze_face.c:316
+#: ../plug-ins/gimpressionist/general.c:195 ../plug-ins/maze/maze_face.c:316
 msgid "Tileable"
 msgstr "Dlaždicovatelné"
 
-#: ../plug-ins/gimpressionist/general.c:198
+#: ../plug-ins/gimpressionist/general.c:199
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "Určí, zda bude výsledek dlaždicovatelný beze švů"
 
-#: ../plug-ins/gimpressionist/general.c:203
+#: ../plug-ins/gimpressionist/general.c:204
 msgid "Drop shadow"
 msgstr "Vrhat stín"
 
-#: ../plug-ins/gimpressionist/general.c:208
+#: ../plug-ins/gimpressionist/general.c:209
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Přidává stínové efekty ke každé stopě štětce"
 
-#: ../plug-ins/gimpressionist/general.c:221
+#: ../plug-ins/gimpressionist/general.c:222
 msgid "Edge darken:"
 msgstr "Ztmavení hran:"
 
-#: ../plug-ins/gimpressionist/general.c:225
+#: ../plug-ins/gimpressionist/general.c:226
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "Míra ztmavnutí hrany každé stopy štětce"
 
-#: ../plug-ins/gimpressionist/general.c:230
+#: ../plug-ins/gimpressionist/general.c:231
 msgid "Shadow darken:"
 msgstr "Ztmavení stínu:"
 
-#: ../plug-ins/gimpressionist/general.c:234
+#: ../plug-ins/gimpressionist/general.c:235
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Míra ztmavnutí vržených stínů"
 
-#: ../plug-ins/gimpressionist/general.c:239
+#: ../plug-ins/gimpressionist/general.c:240
 msgid "Shadow depth:"
 msgstr "Hloubka stínu:"
 
-#: ../plug-ins/gimpressionist/general.c:243
+#: ../plug-ins/gimpressionist/general.c:244
 msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Hloubka vrženého stínu, tj. jak daleko od objektu budou"
 
-#: ../plug-ins/gimpressionist/general.c:248
+#: ../plug-ins/gimpressionist/general.c:249
 msgid "Shadow blur:"
 msgstr "Neostrost stínu:"
 
-#: ../plug-ins/gimpressionist/general.c:252
+#: ../plug-ins/gimpressionist/general.c:253
 msgid "How much to blur the drop shadow"
 msgstr "Míra rozostření stínů"
 
-#: ../plug-ins/gimpressionist/general.c:257
+#: ../plug-ins/gimpressionist/general.c:258
 msgid "Deviation threshold:"
 msgstr "Práh odchylky:"
 
-#: ../plug-ins/gimpressionist/general.c:261
+#: ../plug-ins/gimpressionist/general.c:262
 msgid "A bailout-value for adaptive selections"
 msgstr "Pomocná hodnota pro adaptivní výběry"
 
@@ -9980,11 +9980,11 @@ msgstr "Smaže zvolenou předvolbu"
 msgid "Reread the folder of Presets"
 msgstr "Znovu načte adresář předvoleb"
 
-#: ../plug-ins/gimpressionist/preview.c:191
+#: ../plug-ins/gimpressionist/preview.c:192
 msgid "Refresh the Preview window"
 msgstr "Zaktualizovat náhledové okno"
 
-#: ../plug-ins/gimpressionist/preview.c:199
+#: ../plug-ins/gimpressionist/preview.c:200
 msgid "Revert to the original image"
 msgstr "Navrácení původního obrázku"
 
@@ -11350,15 +11350,15 @@ msgstr "Zkroucení vrstvy"
 msgid "Page Curl"
 msgstr "Zkroucení stránky"
 
-#: ../plug-ins/rcm/rcm.c:96
+#: ../plug-ins/rcm/rcm.c:99
 msgid "Replace a range of colors with another"
 msgstr "Nahradit rozsah barev jiným rozsahem"
 
-#: ../plug-ins/rcm/rcm.c:103
+#: ../plug-ins/rcm/rcm.c:106
 msgid "_Rotate Colors..."
 msgstr "_Rotovat barvy..."
 
-#: ../plug-ins/rcm/rcm.c:266
+#: ../plug-ins/rcm/rcm.c:140
 msgid "Rotating the colors"
 msgstr "Rotují se barvy"
 
@@ -11512,69 +11512,69 @@ msgstr "_Skener/Fotoaparát..."
 msgid "Transferring data from scanner/camera"
 msgstr "Přenos dat ze skeneru/fotoaparátu"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:148
-#: ../plug-ins/uri/uri-backend-libcurl.c:110
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:150
+#: ../plug-ins/uri/uri-backend-libcurl.c:112
 #, c-format
 msgid "Downloading %s of image data..."
 msgstr "Stahuji %s dat obrázku..."
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:149
-#: ../plug-ins/uri/uri-backend-libcurl.c:117
-#: ../plug-ins/uri/uri-backend-wget.c:334
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:151
+#: ../plug-ins/uri/uri-backend-libcurl.c:119
+#: ../plug-ins/uri/uri-backend-wget.c:336
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "Staženo %s dat obrázku"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:167
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:169
 #, c-format
 msgid "Uploading %s of image data..."
 msgstr "Odesílám %s dat obrázku..."
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:168
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:170
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "Odesláno %s dat obrázku"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:238
-#: ../plug-ins/uri/uri-backend-libcurl.c:139
-#: ../plug-ins/uri/uri-backend-wget.c:183
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:240
+#: ../plug-ins/uri/uri-backend-libcurl.c:141
+#: ../plug-ins/uri/uri-backend-wget.c:185
 msgid "Connecting to server"
 msgstr "Připojování k serveru"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:297
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:299
 #, c-format
 msgid "Failed to read %s from '%s': %s"
 msgstr "Nemohu číst %s z '%s': %s"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:346
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:348
 #, c-format
 msgid "Failed to write %s to '%s': %s"
 msgstr "Nemohu zapsat %s do '%s': %s"
 
-#: ../plug-ins/uri/uri-backend-libcurl.c:55
+#: ../plug-ins/uri/uri-backend-libcurl.c:57
 msgid "Could not initialize libcurl"
 msgstr "Nelze inicializovat libcurl"
 
-#: ../plug-ins/uri/uri-backend-libcurl.c:144
+#: ../plug-ins/uri/uri-backend-libcurl.c:146
 msgid "Could not open output file for writing"
 msgstr "Nelze otevřít výstupní soubor pro zápis."
 
-#: ../plug-ins/uri/uri-backend-libcurl.c:182
+#: ../plug-ins/uri/uri-backend-libcurl.c:184
 #, c-format
 msgid "Opening '%s' for reading resulted in HTTP response code: %d"
 msgstr "Otevírání '%s' ke čtení vedlo k návratovému kódu HTTP: %d"
 
-#: ../plug-ins/uri/uri-backend-wget.c:150
-#: ../plug-ins/uri/uri-backend-wget.c:170
-#: ../plug-ins/uri/uri-backend-wget.c:189
-#: ../plug-ins/uri/uri-backend-wget.c:212
-#: ../plug-ins/uri/uri-backend-wget.c:241
+#: ../plug-ins/uri/uri-backend-wget.c:152
+#: ../plug-ins/uri/uri-backend-wget.c:172
+#: ../plug-ins/uri/uri-backend-wget.c:191
+#: ../plug-ins/uri/uri-backend-wget.c:214
+#: ../plug-ins/uri/uri-backend-wget.c:243
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
 msgstr "wget skončil nenormálně na URI '%s'"
 
 #. The third line is "Connecting to..."
-#: ../plug-ins/uri/uri-backend-wget.c:178
+#: ../plug-ins/uri/uri-backend-wget.c:180
 #, c-format
 msgid "(timeout is %d second)"
 msgid_plural "(timeout is %d seconds)"
@@ -11583,22 +11583,22 @@ msgstr[1] "(časový limit jsou %d sekundy)"
 msgstr[2] "(časový limit je %d sekund)"
 
 #. The fourth line is either the network request or an error
-#: ../plug-ins/uri/uri-backend-wget.c:207
+#: ../plug-ins/uri/uri-backend-wget.c:209
 msgid "Opening URI"
 msgstr "Otvírání URI"
 
-#: ../plug-ins/uri/uri-backend-wget.c:218
-#: ../plug-ins/uri/uri-backend-wget.c:251
+#: ../plug-ins/uri/uri-backend-wget.c:220
+#: ../plug-ins/uri/uri-backend-wget.c:253
 #, c-format
 msgid "A network error occurred: %s"
 msgstr "Došlo k síťové chybě: %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:291
+#: ../plug-ins/uri/uri-backend-wget.c:293
 #, c-format
 msgid "Downloading %s of image data"
 msgstr "Stahuje se %s obrazových dat"
 
-#: ../plug-ins/uri/uri-backend-wget.c:296
+#: ../plug-ins/uri/uri-backend-wget.c:298
 msgid "Downloading unknown amount of image data"
 msgstr "Stahuje se neznámý objem obrazových dat"
 
