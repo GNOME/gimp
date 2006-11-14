@@ -93,5 +93,3 @@
   SF-VALUE    _"Y divisions"           script-fu-grid-system-y-divides
 )
 
-(script-fu-menu-register "script-fu-grid-system"
-                         "<Image>/Filters/Render/Pattern")

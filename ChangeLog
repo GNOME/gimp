@@ -1,3 +1,9 @@
+2006-11-14  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/script-fu/scripts/grid-system.scm: don't register in the
+	menus. The script duplicates functionality of the better plugin,
+	has a very obscure UI and registers under the same name as the plugin.
+
 2006-11-14  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/file-open-location-dialog.c: don't use
