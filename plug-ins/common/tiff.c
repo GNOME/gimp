@@ -104,6 +104,8 @@ static void   load_tiles    (TIFF         *tif,
                              gboolean      alpha,
                              gboolean      is_bw,
                              gint          extra);
+static void   load_paths    (TIFF         *tif,
+                             gint          image);
 
 static void   read_separate (const guchar *source,
                              channel_data *channel,
@@ -215,7 +217,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },\
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },\
     { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },\
-    { GIMP_PDB_INT32,    "compression",  "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4)" }
+    { GIMP_PDB_INT32,    "compression",  "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4) }" }
 
   static const GimpParamDef save_args_old[] =
   {
@@ -871,6 +873,8 @@ load_image (const gchar *filename)
           gimp_image_set_colormap (image, cmap, (1 << bps));
         }
 
+      load_paths (tif, image);
+
       /* Allocate channel_data for all channels, even the background layer */
       channel = g_new0 (channel_data, extra + 1);
 
@@ -1061,6 +1065,180 @@ load_rgba (TIFF         *tif,
       gimp_progress_update ((gdouble) row / (gdouble) imageLength);
     }
 }
+
+static void
+load_paths (TIFF *tif, gint image)
+{
+  guint16 id;
+  guint32 len, n_bytes, pos;
+  gchar *bytes, *name;
+  guint32 *val32;
+  guint16 *val16;
+
+  gint width, height;
+
+  width = gimp_image_width (image);
+  height = gimp_image_height (image);
+
+  /*
+  if (TIFFGetField (tif, TIFFTAG_CLIPPATH, &bytes))
+    g_printerr ("Tiff clipping path\n");
+   */
+
+  if (!TIFFGetField (tif, TIFFTAG_PHOTOSHOP, &n_bytes, &bytes))
+    return;
+
+  pos = 0;
+
+  while (pos < n_bytes)
+    {
+      if (n_bytes-pos < 7 ||
+          strncmp (bytes + pos, "8BIM", 4) != 0)
+        break;
+      pos += 4;
+
+      val16 = (guint16 *) (bytes + pos);
+      id = GUINT16_FROM_BE (*val16);
+      pos += 2;
+
+      len = (guchar) bytes[pos];
+
+      if (n_bytes - pos < len + 1)
+        break;   /* block not big enough */
+
+      name = g_strndup (bytes + pos + 1, len);
+      if (!g_utf8_validate (name, -1, NULL))
+        name = g_strdup ("imported path");
+      pos += len + 1;
+
+      if (pos % 2)  /* padding */
+        pos++;
+
+      if (n_bytes - pos < 4)
+        break;   /* block not big enough */
+
+      val32 = (guint32 *) (bytes + pos);
+      len = GUINT32_FROM_BE (*val32);
+      pos += 4;
+
+      if (n_bytes - pos < len)
+        break;   /* block not big enough */
+
+      if (id >= 2000 && id <= 2998)
+        {
+          /* path information */
+          guint16 type;
+          gint rec = pos;
+          gint32   vectors;
+          gdouble *points = NULL;
+          gint     expected_points = 0;
+          gint     pointcount = 0;
+          gboolean closed;
+
+          vectors = gimp_vectors_new (image, name);
+          gimp_image_add_vectors (image, vectors, -1);
+
+          while (rec < pos + len)
+            {
+              /* path records */
+              val16 = (guint16 *) (bytes + rec);
+              type = GUINT16_FROM_BE (*val16);
+
+              switch (type)
+              {
+                case 0:  /* new closed subpath */
+                case 3:  /* new open subpath */
+                  val16 = (guint16 *) (bytes + rec + 2);
+                  expected_points = GUINT16_FROM_BE (*val16);
+                  pointcount = 0;
+                  closed = (type == 0);
+
+                  if (n_bytes - rec < (expected_points + 1) * 26)
+                    {
+                      g_printerr ("not enough point records\n");
+                      rec = pos + len;
+                      continue;
+                    }
+
+                  if (points)
+                    g_free (points);
+                  points = g_new (gdouble, expected_points * 6);
+                  break;
+
+                case 1:  /* closed subpath bezier knot, linked */
+                case 2:  /* closed subpath bezier knot, unlinked */
+                case 4:  /* open subpath bezier knot, linked */
+                case 5:  /* open subpath bezier knot, unlinked */
+                  /* since we already know if the subpath is open
+                   * or closed and since we don't differenciate between
+                   * linked and unlinked, just treat all the same...  */
+
+                  if (pointcount < expected_points)
+                    {
+                      gint    j;
+                      gdouble f;
+                      guint32 coord;
+
+                      for (j = 0; j < 6; j++)
+                        {
+                          val32 = (guint32 *) (bytes + rec + 2 + j * 4);
+                          coord = GUINT32_FROM_BE (*val32);
+
+                          f = (double) ((coord >> 24) & 0x7F) +
+                                 (double) (coord & 0x00FFFFFF) /
+                                 (double) 0xFFFFFF;
+                          if (coord & 0x80000000)
+                            f *= -1;
+
+                          /* coords are stored with vertical component
+                           * first, gimp expects the horizontal component
+                           * first. Sigh.  */
+                          points[pointcount * 6 + (j ^ 1)] = f * (j % 2 ? height : width);
+                        }
+
+                      pointcount ++;
+
+                      if (pointcount == expected_points)
+                        {
+                          gimp_vectors_stroke_new_from_points (vectors,
+                                                               GIMP_VECTORS_STROKE_TYPE_BEZIER,
+                                                               pointcount * 6,
+                                                               points,
+                                                               closed);
+                        }
+                    }
+                  else
+                    {
+                      g_printerr ("Oops - unexpected point record\n");
+                    }
+
+                  break;
+
+                case 6:  /* path fill rule record */
+                case 7:  /* clipboard record (?) */
+                case 8:  /* initial fill rule record (?) */
+                  /* we cannot use this information */
+
+                default:
+                  break;
+              }
+
+              rec += 26;
+            }
+
+          if (points)
+            g_free (points);
+        }
+
+      pos += len;
+
+      if (pos % 2)  /* padding */
+        pos++;
+
+      g_free (name);
+    }
+}
+
 
 static void
 load_tiles (TIFF         *tif,
