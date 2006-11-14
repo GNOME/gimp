@@ -39,7 +39,6 @@
 #include "widgets/gimpcontainerentry.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpprogressbox.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "file-open-location-dialog.h"
 
@@ -162,9 +161,10 @@ file_open_location_response (GtkDialog *dialog,
       return;
     }
 
-  gimp_dialog_set_sensitive (dialog, FALSE);
-
   entry = g_object_get_data (G_OBJECT (dialog), "location-entry");
+
+  gtk_editable_set_editable (GTK_EDITABLE (entry), FALSE);
+  gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, FALSE);
 
   text = gtk_entry_get_text (GTK_ENTRY (entry));
 
@@ -229,7 +229,9 @@ file_open_location_response (GtkDialog *dialog,
                         text, error->message);
           g_clear_error (&error);
 
-          gimp_dialog_set_sensitive (dialog, TRUE);
+          gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, TRUE);
+          gtk_editable_set_editable (GTK_EDITABLE (entry), TRUE);
+
           return;
         }
     }

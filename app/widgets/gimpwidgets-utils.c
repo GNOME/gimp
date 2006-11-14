@@ -885,34 +885,6 @@ gimp_window_set_transient_for (GtkWindow *window,
 #endif
 }
 
-void
-gimp_dialog_set_sensitive (GtkDialog *dialog,
-                           gboolean   sensitive)
-{
-  GList *children;
-  GList *list;
-
-  g_return_if_fail (GTK_IS_DIALOG (dialog));
-
-  children = gtk_container_get_children (GTK_CONTAINER (dialog->vbox));
-
-  for (list = children; list; list = g_list_next (list))
-    {
-      /*  skip the last item (the action area) */
-      if (! g_list_next (list))
-        break;
-
-      gtk_widget_set_sensitive (list->data, sensitive);
-    }
-
-  g_list_free (children);
-
-  if (sensitive)
-    gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_CANCEL, sensitive);
-
-  gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, sensitive);
-}
-
 gboolean
 gimp_text_buffer_load (GtkTextBuffer  *buffer,
                        const gchar    *filename,

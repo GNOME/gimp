@@ -76,9 +76,6 @@ GdkNativeWindow   gimp_window_get_native     (GtkWindow       *window);
 void              gimp_window_set_transient_for (GtkWindow    *window,
                                                  guint32       parent_ID);
 
-void              gimp_dialog_set_sensitive  (GtkDialog       *dialog,
-                                              gboolean         sensitive);
-
 gboolean          gimp_text_buffer_load      (GtkTextBuffer   *buffer,
                                               const gchar     *filename,
                                               GError         **error);

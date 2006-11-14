@@ -1,3 +1,13 @@
+2006-11-14  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/file-open-location-dialog.c: don't use
+	gimp_dialog_set_sensitive(); just make the entry not editable and
+	the dialog's OK button insensitive.
+	
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpwidgets-utils.[ch]: moved gimp_dialog_set_sensitive()
+	implementation into gimp_file_dialog_set_sensitive().
+
 2006-11-13  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprectangletool.c: reduced the size of the side
