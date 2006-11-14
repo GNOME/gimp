@@ -296,7 +296,6 @@ run (const gchar      *name,
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;        /* assume the best! */
   gchar             *rndm_type_str = "";
-  gchar              prog_label[32];
   static GimpParam   values[1];
   GRand             *gr; /* The GRand object which generates the
                           * random numbers */
@@ -390,6 +389,8 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
 	{
+          gchar *text;
+
 	  /*
 	   *  JUST DO IT!
 	   */
@@ -400,10 +401,12 @@ run (const gchar      *name,
 	    case RNDM_SLUR: rndm_type_str = "slur"; break;
             }
 
-	  sprintf (prog_label, "%s (%s)...",
-                   gettext (RNDM_VERSION[rndm_type - 1]),
-		   gettext (rndm_type_str));
-	  gimp_progress_init (prog_label);
+	  text= g_strdup_printf ("%s (%s)...",
+                                 gettext (RNDM_VERSION[rndm_type - 1]),
+                                 gettext (rndm_type_str));
+	  gimp_progress_init (text);
+          g_free (text);
+
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 	  /*
 	   *  Initialize the g_rand() function seed

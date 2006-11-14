@@ -1,3 +1,8 @@
+2006-11-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/randomize.c: fixed possible buffer overflow
+	(bug #375295).
+
 2006-11-07  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* configure.in: Remove no from ALL_LINGUAS.
