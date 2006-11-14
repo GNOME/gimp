@@ -1080,10 +1080,18 @@ load_paths (TIFF *tif, gint image)
   width = gimp_image_width (image);
   height = gimp_image_height (image);
 
-  /*
-  if (TIFFGetField (tif, TIFFTAG_CLIPPATH, &bytes))
-    g_printerr ("Tiff clipping path\n");
-   */
+#if 0
+  /* TIFFTAG_CLIPPATH seems to be basically unused */
+
+  if (TIFFGetField (tif, TIFFTAG_CLIPPATH, &n_bytes, &bytes) &&
+      TIFFGetField (tif, TIFFTAG_XCLIPPATHUNITS, &xclipunits) &&
+      TIFFGetField (tif, TIFFTAG_YCLIPPATHUNITS, &yclipunits))
+    {
+      /* Tiff clipping path */
+
+      g_printerr ("Tiff clipping path, %d - %d\n", xclipunits, yclipunits);
+    }
+#endif
 
   if (!TIFFGetField (tif, TIFFTAG_PHOTOSHOP, &n_bytes, &bytes))
     return;
@@ -1101,6 +1109,7 @@ load_paths (TIFF *tif, gint image)
       id = GUINT16_FROM_BE (*val16);
       pos += 2;
 
+      /* g_printerr ("id: %x\n", id); */
       len = (guchar) bytes[pos];
 
       if (n_bytes - pos < len + 1)
@@ -1193,7 +1202,7 @@ load_paths (TIFF *tif, gint image)
                           /* coords are stored with vertical component
                            * first, gimp expects the horizontal component
                            * first. Sigh.  */
-                          points[pointcount * 6 + (j ^ 1)] = f * (j % 2 ? height : width);
+                          points[pointcount * 6 + (j ^ 1)] = f * (j % 2 ? width : height);
                         }
 
                       pointcount ++;
