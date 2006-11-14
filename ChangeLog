@@ -1,3 +1,9 @@
+2006-11-15  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/FractalExplorer/Dialogs.c: Fixed bug #372671 and made
+	loglog smoothing work again.
+
 2006-11-14  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/script-fu/scripts/grid-system.scm: don't register in the

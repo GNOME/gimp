@@ -1254,6 +1254,7 @@ dialog_update_preview (void)
   gint     counter;
   gint     color;
   gint     useloglog;
+  gdouble  log2;
 
   if (NULL == wint.preview)
     return;
@@ -1283,6 +1284,8 @@ dialog_update_preview (void)
       p_ul = wint.wimage;
       iteration = MAX (1, (int) wvals.iter);
       useloglog = wvals.useloglog;
+      log2 = log (2.0);
+
       for (ycoord = 0; ycoord < preview_height; ycoord++)
         {
           px = 0;
@@ -1302,9 +1305,8 @@ dialog_update_preview (void)
                   x = 0;
                   y = 0;
                 }
-              for (counter = 0;
-                   (counter < iteration) && ((x * x + y * y) < 4);
-                   counter++)
+
+              for (counter = 0; counter < iteration; counter++)
                 {
                   oldx = x;
                   oldy = y;
@@ -1414,11 +1416,19 @@ dialog_update_preview (void)
                     }
 
                   x = xx;
+
+                  if (((x * x) + (y * y)) >= 4.0)
+                    break;
                 }
 
               if (useloglog)
                 {
-                  adjust = log (log (x * x + y * y) / 2) / log (2);
+                  gdouble modulus_square = (x * x) + (y * y);
+
+                  if (modulus_square > (G_E * G_E))
+                      adjust = log (log (modulus_square) / 2.0) / log2;
+                  else
+                      adjust = 0.0;
                 }
               else
                 {
