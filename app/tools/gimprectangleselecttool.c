@@ -287,13 +287,14 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
                                     GdkModifierType  state,
                                     GimpDisplay     *display)
 {
-  GimpRectSelectTool *rect_select = GIMP_RECT_SELECT_TOOL (tool);
-  guint               function;
+  GimpRectangleTool     *rectangle   = GIMP_RECTANGLE_TOOL (tool);
+  GimpRectSelectTool    *rect_select = GIMP_RECT_SELECT_TOOL (tool);
+  GimpRectangleFunction  function;
 
   if (tool->display && display != tool->display)
     gimp_rectangle_tool_cancel (GIMP_RECTANGLE_TOOL (tool));
 
-  g_object_get (tool, "function", &function, NULL);
+  function = gimp_rectangle_tool_get_function (rectangle);
 
   rect_select->saved_show_selection
     = gimp_display_shell_get_show_selection (GIMP_DISPLAY_SHELL (display->shell));
@@ -321,7 +322,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
   /* if the shift or ctrl keys are down, we don't want to adjust, we
    * want to create a new rectangle, regardless of pointer loc */
   if (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK))
-    g_object_set (tool, "function", RECT_CREATING, NULL);
+    gimp_rectangle_tool_set_function (rectangle, RECT_CREATING);
 
   gimp_rectangle_tool_button_press (tool, coords, time, state, display);
 
@@ -329,7 +330,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
    * we have already "executed", and need to undo at this point,
    * unless the user has done something in the meantime
    */
-  g_object_get (tool, "function", &function, NULL);
+  function = gimp_rectangle_tool_get_function (rectangle);
 
   if (function == RECT_CREATING)
     {
@@ -451,11 +452,11 @@ gimp_rect_select_tool_oper_update (GimpTool        *tool,
                                    gboolean         proximity,
                                    GimpDisplay     *display)
 {
-  guint function;
+  GimpRectangleFunction function;
 
   gimp_rectangle_tool_oper_update (tool, coords, state, proximity, display);
 
-  g_object_get (tool, "function", &function, NULL);
+  function = gimp_rectangle_tool_get_function (GIMP_RECTANGLE_TOOL (tool));
 
   if (function == RECT_INACTIVE)
     GIMP_SELECTION_TOOL (tool)->allow_move = TRUE;
@@ -653,7 +654,7 @@ gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
                             NULL);
             }
 
-          g_object_set (rectangle, "function", RECT_MOVING, NULL);
+          gimp_rectangle_tool_set_function (rectangle, RECT_MOVING);
 
           return FALSE;
         }

@@ -1,3 +1,10 @@
+2006-11-15  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.[ch]
+	* app/tools/gimprectangleselecttool.c: removed function from the
+	properties. Added getter and setter functions instead. Redraw the
+	tool whenever the function changes.
+
 2006-11-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpbrush.c (gimp_brush_real_scale_pixmap): use

@@ -27,14 +27,13 @@ typedef enum
   GIMP_RECTANGLE_TOOL_PROP_Y1,
   GIMP_RECTANGLE_TOOL_PROP_X2,
   GIMP_RECTANGLE_TOOL_PROP_Y2,
-  GIMP_RECTANGLE_TOOL_PROP_FUNCTION,
   GIMP_RECTANGLE_TOOL_PROP_CONSTRAINT,
   GIMP_RECTANGLE_TOOL_PROP_LAST = GIMP_RECTANGLE_TOOL_PROP_CONSTRAINT
 } GimpRectangleToolProp;
 
 
 /*  possible functions  */
-enum
+typedef enum
 {
   RECT_INACTIVE,
   RECT_CREATING,
@@ -48,7 +47,7 @@ enum
   RECT_RESIZING_TOP,
   RECT_RESIZING_BOTTOM,
   RECT_EXECUTING
-};
+} GimpRectangleFunction;
 
 
 #define GIMP_TYPE_RECTANGLE_TOOL               (gimp_rectangle_tool_interface_get_type ())
@@ -124,6 +123,9 @@ void        gimp_rectangle_tool_cancel              (GimpRectangleTool       *re
 void        gimp_rectangle_tool_configure           (GimpRectangleTool       *rectangle);
 void        gimp_rectangle_tool_set_constraint      (GimpRectangleTool       *rectangle,
                                                      GimpRectangleConstraint  constraint);
+GimpRectangleFunction gimp_rectangle_tool_get_function (GimpRectangleTool    *rectangle);
+void        gimp_rectangle_tool_set_function        (GimpRectangleTool       *rectangle,
+                                                     GimpRectangleFunction    function);
 gboolean    gimp_rectangle_tool_no_movement         (GimpRectangleTool       *rectangle);
 void        gimp_rectangle_tool_get_press_coords    (GimpRectangleTool       *rectangle,
                                                      gint                    *pressx_ptr,
