@@ -460,7 +460,15 @@ tiff_warning(const gchar *module,
 
   /* Workaround for: http://bugzilla.gnome.org/show_bug.cgi?id=131975 */
   /* Ignore the warnings about unregistered private tags (>= 32768) */
-  if (! strcmp (fmt, "unknown field with tag %d (0x%x) ignored"))
+  if (! strcmp (fmt, "%s: unknown field with tag %d (0x%x) encountered"))
+    {
+      G_VA_COPY (ap_test, ap);
+      if (va_arg (ap_test, char *));  /* ignore first argument */
+      if (va_arg (ap_test, int) >= 32768)
+        return;
+    }
+  /* for older versions of libtiff? */
+  else if (! strcmp (fmt, "unknown field with tag %d (0x%x) ignored"))
     {
       G_VA_COPY (ap_test, ap);
       if (va_arg (ap_test, int) >= 32768)

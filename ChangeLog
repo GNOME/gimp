@@ -1,3 +1,9 @@
+2006-11-15  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/tiff.c: adapt the special casing for libtiff
+	warning messages about unknown tags for the apparently newer
+	message text.
+
 2006-11-14  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/tiff.c: Import paths embedded into the
