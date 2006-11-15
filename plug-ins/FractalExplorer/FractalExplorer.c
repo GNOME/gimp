@@ -531,11 +531,13 @@ explorer_render_row (const guchar *src_row,
   gint    color;
   gint    iteration;
   gint    useloglog;
+  gdouble log2;
 
   cx = wvals.cx;
   cy = wvals.cy;
   useloglog = wvals.useloglog;
   iteration = wvals.iter;
+  log2 = log (2.0);
 
   for (col = 0; col < row_width; col++)
     {
@@ -665,11 +667,19 @@ explorer_render_row (const guchar *src_row,
                 xx = xx - 1;
             }
           x = xx;
+          
+          if (((x * x) + (y * y)) >= 4.0)
+            break;
         }
 
       if (useloglog)
         {
-          adjust = log (log (x * x + y * y) / 2) / log (2);
+          gdouble modulus_square = (x * x) + (y * y);
+
+          if (modulus_square > (G_E * G_E))
+              adjust = log (log (modulus_square) / 2.0) / log2;
+          else
+              adjust = 0.0;
         }
       else
         {

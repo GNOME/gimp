@@ -1,3 +1,11 @@
+2006-11-15  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch (fix by Mukund Sivaraman):
+
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/FractalExplorer/Dialogs.c: Fixed bug #372671 and made
+	loglog smoothing work again.
+
 2006-11-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/randomize.c: fixed possible buffer overflow
