@@ -74,6 +74,16 @@ File operations (load, save, etc.)
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_file_save_thumbnail ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@filename: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_register_magic_load_handler ##### -->
 <para>
 

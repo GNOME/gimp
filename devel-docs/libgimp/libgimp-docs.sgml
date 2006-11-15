@@ -110,7 +110,7 @@
     <xi:include href="xml/gimpdrawablepreview.xml" />
     <xi:include href="xml/gimpaspectpreview.xml" />
     <xi:include href="xml/gimpzoompreview.xml" />
-    <xi:include href="xml/gimpdrawablecombobox.xml" />
+    <xi:include href="xml/gimpitemcombobox.xml" />
     <xi:include href="xml/gimpimagecombobox.xml" />
     <xi:include href="xml/gimppixbuf.xml" />
     <xi:include href="xml/gimpprogressbar.xml" />

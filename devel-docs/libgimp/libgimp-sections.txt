@@ -370,6 +370,7 @@ gimp_file_load
 gimp_file_load_layer
 gimp_file_load_layers
 gimp_file_save
+gimp_file_save_thumbnail
 gimp_register_magic_load_handler
 gimp_register_load_handler
 gimp_register_save_handler
@@ -982,8 +983,9 @@ GIMP_ZOOM_PREVIEW_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimpdrawablecombobox</FILE>
-<TITLE>GimpDrawableComboBox</TITLE>
+<FILE>gimpitemcombobox</FILE>
+<TITLE>GimpItemComboBox</TITLE>
+GimpItemConstraintFunc
 GimpDrawableComboBox
 GimpDrawableConstraintFunc
 gimp_drawable_combo_box_new
@@ -991,6 +993,9 @@ GimpChannelComboBox
 gimp_channel_combo_box_new
 GimpLayerComboBox
 gimp_layer_combo_box_new
+GimpVectorsComboBox
+GimpVectorsConstraintFunc
+gimp_vectors_combo_box_new
 <SUBSECTION Standard>
 GIMP_TYPE_LAYER_COMBO_BOX
 GIMP_TYPE_CHANNEL_COMBO_BOX
@@ -1004,6 +1009,10 @@ GIMP_IS_DRAWABLE_COMBO_BOX
 GIMP_TYPE_DRAWABLE_COMBO_BOX
 GIMP_IS_CHANNEL_COMBO_BOX
 gimp_channel_combo_box_get_type
+GIMP_IS_VECTORS_COMBO_BOX
+GIMP_TYPE_VECTORS_COMBO_BOX
+GIMP_VECTORS_COMBO_BOX
+gimp_vectors_combo_box_get_type
 </SECTION>
 
 <SECTION>

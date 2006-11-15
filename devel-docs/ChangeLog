@@ -1,5 +1,18 @@
 2006-11-04  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/libgimp.types: follow gimpdrawablecombobox ->
+	gimpitemcombobox move.
+
+	* libgimp/tmpl/gimpdrawablecombobox.sgml: removed.
+
+	* libgimp/tmpl/gimpitemcombobox.sgml: and readded as this file.
+
+	* libgimp/tmpl/gimpfileops.sgml: regenerated.
+
+2006-11-04  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/libgimp-sections.txt
 	* libgimpbase/libgimpbase-sections.txt: updated.
 
