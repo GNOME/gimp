@@ -1,3 +1,13 @@
+2006-11-15  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/FractalExplorer/FractalExplorer.h
+	* plug-ins/FractalExplorer/FractalExplorer.c (explorer_render_row):
+	Removed 'static' from the routines declaration. Changed routine to
+	use a switch instead of a series of if statements.
+
+	* plug-ins/FractalExplorer/Dialogs.c: Removed duplicate code by
+	using call to explorer_render_row().
+
 2006-11-15  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/tiff.c: adapt the special casing for libtiff

@@ -1221,230 +1221,33 @@ explorer_dialog (void)
 void
 dialog_update_preview (void)
 {
-  gdouble  left;
-  gdouble  right;
-  gdouble  bottom;
-  gdouble  top;
-  gdouble  dx;
-  gdouble  dy;
-  gdouble  cx;
-  gdouble  cy;
-  gint     px;
-  gint     py;
-  gint     xcoord;
   gint     ycoord;
-  gint     iteration;
   guchar  *p_ul;
-  gdouble  a;
-  gdouble  b;
-  gdouble  x;
-  gdouble  y;
-  gdouble  oldx;
-  gdouble  oldy;
-  gdouble  foldxinitx;
-  gdouble  foldxinity;
-  gdouble  tempsqrx;
-  gdouble  tempsqry;
-  gdouble  tmpx = 0;
-  gdouble  tmpy = 0;
-  gdouble  foldyinitx;
-  gdouble  foldyinity;
-  gdouble  adjust;
-  gdouble  xx = 0;
-  gint     counter;
-  gint     color;
-  gint     useloglog;
-  gdouble  log2;
 
   if (NULL == wint.preview)
     return;
 
   if (ready_now && wvals.alwayspreview)
     {
-      left = sel_x1;
-      right = sel_x2 - 1;
-      bottom = sel_y2 - 1;
-      top = sel_y1;
-      dx = (right - left) / (preview_width - 1);
-      dy = (bottom - top) / (preview_height - 1);
-
       xmin = wvals.xmin;
       xmax = wvals.xmax;
       ymin = wvals.ymin;
       ymax = wvals.ymax;
-      cx = wvals.cx;
-      cy = wvals.cy;
       xbild = preview_width;
       ybild = preview_height;
       xdiff = (xmax - xmin) / xbild;
       ydiff = (ymax - ymin) / ybild;
 
-      py = 0;
-
       p_ul = wint.wimage;
-      iteration = MAX (1, (int) wvals.iter);
-      useloglog = wvals.useloglog;
-      log2 = log (2.0);
 
       for (ycoord = 0; ycoord < preview_height; ycoord++)
         {
-          px = 0;
-
-          for (xcoord = 0; xcoord < preview_width; xcoord++)
-            {
-              a = (double) xmin + (double) xcoord * xdiff;
-              b = (double) ymin + (double) ycoord * ydiff;
-
-              if (wvals.fractaltype != TYPE_MANDELBROT)
-                {
-                  tmpx = x = a;
-                  tmpy = y = b;
-                }
-              else
-                {
-                  x = 0;
-                  y = 0;
-                }
-
-              for (counter = 0; counter < iteration; counter++)
-                {
-                  oldx = x;
-                  oldy = y;
-
-                  switch (wvals.fractaltype)
-                    {
-                    case TYPE_MANDELBROT:
-                      xx = x * x - y * y + a;
-                      y = 2.0 * x * y + b;
-                      break;
-
-                    case TYPE_JULIA:
-                      xx = x * x - y * y + cx;
-                      y = 2.0 * x * y + cy;
-                      break;
-
-                    case TYPE_BARNSLEY_1:
-                      foldxinitx = oldx * cx;
-                      foldyinity = oldy * cy;
-                      foldxinity = oldx * cy;
-                      foldyinitx = oldy * cx;
-                      /* orbit calculation */
-                      if (oldx >= 0)
-                        {
-                          xx = (foldxinitx - cx - foldyinity);
-                          y  = (foldyinitx - cy + foldxinity);
-                        }
-                      else
-                        {
-                          xx = (foldxinitx + cx - foldyinity);
-                          y  = (foldyinitx + cy + foldxinity);
-                        }
-                      break;
-
-                    case TYPE_BARNSLEY_2:
-                      foldxinitx = oldx * cx;
-                      foldyinity = oldy * cy;
-                      foldxinity = oldx * cy;
-                      foldyinitx = oldy * cx;
-                      /* orbit calculation */
-                      if (foldxinity + foldyinitx >= 0)
-                        {
-                          xx = foldxinitx - cx - foldyinity;
-                          y  = foldyinitx - cy + foldxinity;
-                        }
-                      else
-                        {
-                          xx = foldxinitx + cx - foldyinity;
-                          y  = foldyinitx + cy + foldxinity;
-                        }
-                      break;
-
-                    case TYPE_BARNSLEY_3:
-                      foldxinitx  = oldx * oldx;
-                      foldyinity  = oldy * oldy;
-                      foldxinity  = oldx * oldy;
-                      /* orbit calculation */
-                      if (oldx > 0)
-                        {
-                          xx = foldxinitx - foldyinity - 1.0;
-                          y  = foldxinity * 2;
-                        }
-                      else
-                        {
-                          xx = foldxinitx - foldyinity -1.0 + cx * oldx;
-                          y  = foldxinity * 2;
-                          y += cy * oldx;
-                        }
-                      break;
-
-                    case TYPE_SPIDER:
-                      /* { c=z=pixel: z=z*z+c; c=c/2+z, |z|<=4 } */
-                      xx = x*x - y*y + tmpx + cx;
-                      y = 2 * oldx * oldy + tmpy +cy;
-                      tmpx = tmpx/2 + xx;
-                      tmpy = tmpy/2 + y;
-                      break;
-
-                    case TYPE_MAN_O_WAR:
-                      xx = x*x - y*y + tmpx + cx;
-                      y = 2.0 * x * y + tmpy + cy;
-                      tmpx = oldx;
-                      tmpy = oldy;
-                      break;
-
-                    case TYPE_LAMBDA:
-                      tempsqrx = x * x;
-                      tempsqry = y * y;
-                      tempsqrx = oldx - tempsqrx + tempsqry;
-                      tempsqry = -(oldy * oldx);
-                      tempsqry += tempsqry + oldy;
-                      xx = cx * tempsqrx - cy * tempsqry;
-                      y = cx * tempsqry + cy * tempsqrx;
-                      break;
-
-                    case TYPE_SIERPINSKI:
-                      xx = oldx + oldx;
-                      y = oldy + oldy;
-                      if (oldy > .5)
-                        y = y - 1;
-                      else if (oldx > .5)
-                        xx = xx - 1;
-                      break;
-
-                    default:
-                      break;
-                    }
-
-                  x = xx;
-
-                  if (((x * x) + (y * y)) >= 4.0)
-                    break;
-                }
-
-              if (useloglog)
-                {
-                  gdouble modulus_square = (x * x) + (y * y);
-
-                  if (modulus_square > (G_E * G_E))
-                      adjust = log (log (modulus_square) / 2.0) / log2;
-                  else
-                      adjust = 0.0;
-                }
-              else
-                {
-                  adjust = 0.0;
-                }
-
-              color = (int) (((counter - adjust) *
-                              (wvals.ncolors - 1)) / iteration);
-              p_ul[0] = colormap[color].r;
-              p_ul[1] = colormap[color].g;
-              p_ul[2] = colormap[color].b;
-              p_ul += 3;
-              px += 1;
-            }
-
-          py += 1;
+          explorer_render_row (NULL,
+                               p_ul,
+                               ycoord,
+                               preview_width,
+                               3);
+          p_ul += preview_width * 3;
         }
 
       preview_redraw ();

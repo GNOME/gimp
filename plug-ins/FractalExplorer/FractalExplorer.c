@@ -149,11 +149,6 @@ static void run   (const gchar      *name,
                    GimpParam       **return_vals);
 
 static void explorer            (GimpDrawable *drawable);
-static void explorer_render_row (const guchar *src_row,
-                                 guchar       *dest_row,
-                                 gint          row,
-                                 gint          row_width,
-                                 gint          bytes);
 
 /**********************************************************************
  Declare local functions
@@ -493,7 +488,7 @@ explorer (GimpDrawable * drawable)
  FUNCTION: explorer_render_row
  *********************************************************************/
 
-static void
+void
 explorer_render_row (const guchar *src_row,
                      guchar       *dest_row,
                      gint          row,
@@ -550,22 +545,20 @@ explorer_render_row (const guchar *src_row,
         {
           oldx=x;
           oldy=y;
-          if (wvals.fractaltype == 0)
+
+          switch (wvals.fractaltype)
             {
-              /*Mandelbrot*/
+            case TYPE_MANDELBROT:
               xx = x * x - y * y + a;
               y = 2.0 * x * y + b;
-            }
-          else if (wvals.fractaltype == 1)
-            {
-              /* Julia */
+              break;
+
+            case TYPE_JULIA:
               xx = x * x - y * y + cx;
               y = 2.0 * x * y + cy;
-            }
-          else if (wvals.fractaltype == 2)
-            {
-              /* Some code taken from X-Fractint */
-              /* Barnsley M1 */
+              break;
+
+            case TYPE_BARNSLEY_1:
               foldxinitx = oldx * cx;
               foldyinity = oldy * cy;
               foldxinity = oldx * cy;
@@ -574,17 +567,16 @@ explorer_render_row (const guchar *src_row,
               if (oldx >= 0)
                 {
                   xx = (foldxinitx - cx - foldyinity);
-                  y = (foldyinitx - cy + foldxinity);
+                  y  = (foldyinitx - cy + foldxinity);
                 }
               else
                 {
                   xx = (foldxinitx + cx - foldyinity);
-                  y = (foldyinitx + cy + foldxinity);
+                  y  = (foldyinitx + cy + foldxinity);
                 }
-            }
-          else if (wvals.fractaltype == 3)
-            {
-              /* Barnsley Unnamed */
+              break;
+
+            case TYPE_BARNSLEY_2:
               foldxinitx = oldx * cx;
               foldyinity = oldy * cy;
               foldxinity = oldx * cy;
@@ -593,17 +585,16 @@ explorer_render_row (const guchar *src_row,
               if (foldxinity + foldyinitx >= 0)
                 {
                   xx = foldxinitx - cx - foldyinity;
-                  y = foldyinitx - cy + foldxinity;
+                  y  = foldyinitx - cy + foldxinity;
                 }
               else
                 {
                   xx = foldxinitx + cx - foldyinity;
-                  y = foldyinitx + cy + foldxinity;
+                  y  = foldyinitx + cy + foldxinity;
                 }
-            }
-          else if (wvals.fractaltype == 4)
-            {
-              /*Barnsley 1*/
+              break;
+
+            case TYPE_BARNSLEY_3:
               foldxinitx  = oldx * oldx;
               foldyinity  = oldy * oldy;
               foldxinity  = oldx * oldy;
@@ -611,54 +602,56 @@ explorer_render_row (const guchar *src_row,
               if (oldx > 0)
                 {
                   xx = foldxinitx - foldyinity - 1.0;
-                  y = foldxinity * 2;
+                  y  = foldxinity * 2;
                 }
               else
                 {
                   xx = foldxinitx - foldyinity -1.0 + cx * oldx;
-                  y = foldxinity * 2;
+                  y  = foldxinity * 2;
                   y += cy * oldx;
                 }
-            }
-          else if (wvals.fractaltype == 5)
-            {
-              /* Spider(XAXIS) { c=z=pixel: z=z*z+c; c=c/2+z, |z|<=4 } */
+              break;
+
+            case TYPE_SPIDER:
+              /* { c=z=pixel: z=z*z+c; c=c/2+z, |z|<=4 } */
               xx = x*x - y*y + tmpx + cx;
               y = 2 * oldx * oldy + tmpy +cy;
               tmpx = tmpx/2 + xx;
               tmpy = tmpy/2 + y;
-            }
-          else if (wvals.fractaltype == 6)
-            {
-              /* ManOWarfpFractal() */
+              break;
+
+            case TYPE_MAN_O_WAR:
               xx = x*x - y*y + tmpx + cx;
               y = 2.0 * x * y + tmpy + cy;
               tmpx = oldx;
               tmpy = oldy;
-            }
-          else if (wvals.fractaltype == 7)
-            {
-              /* Lambda */
-              tempsqrx=x*x;
-              tempsqry=y*y;
+              break;
+
+            case TYPE_LAMBDA:
+              tempsqrx = x * x;
+              tempsqry = y * y;
               tempsqrx = oldx - tempsqrx + tempsqry;
               tempsqry = -(oldy * oldx);
               tempsqry += tempsqry + oldy;
               xx = cx * tempsqrx - cy * tempsqry;
               y = cx * tempsqry + cy * tempsqrx;
-            }
-          else if (wvals.fractaltype == 8)
-            {
-              /* Sierpinski */
+              break;
+
+            case TYPE_SIERPINSKI:
               xx = oldx + oldx;
               y = oldy + oldy;
-              if(oldy > .5)
+              if (oldy > .5)
                 y = y - 1;
               else if (oldx > .5)
                 xx = xx - 1;
+              break;
+
+            default:
+              break;
             }
+
           x = xx;
-          
+
           if (((x * x) + (y * y)) >= 4.0)
             break;
         }
