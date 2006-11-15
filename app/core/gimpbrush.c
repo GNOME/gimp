@@ -326,7 +326,7 @@ gimp_brush_real_scale_pixmap (GimpBrush *brush,
   width  = (gint) (brush->pixmap->width  * scale + 0.5);
   height = (gint) (brush->pixmap->height * scale + 0.5);
 
-  return brush_scale_mask (brush->pixmap, width, height);
+  return brush_scale_pixmap (brush->pixmap, width, height);
 }
 
 

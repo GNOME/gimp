@@ -1,3 +1,8 @@
+2006-11-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpbrush.c (gimp_brush_real_scale_pixmap): use
+	brush_scale_pixmap(), not brush_scale_mask().
+
 2006-11-15  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/FractalExplorer/FractalExplorer.h
