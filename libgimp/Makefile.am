@@ -327,7 +327,6 @@ gimpinclude_HEADERS = \
 	gimpaspectpreview.h		\
 	gimpbrushmenu.h			\
 	gimpbrushselectbutton.h		\
-	gimpdrawablecombobox.h		\
 	gimpdrawablepreview.h   	\
 	gimpexport.h			\
 	gimpfontmenu.h			\
@@ -335,6 +334,7 @@ gimpinclude_HEADERS = \
 	gimpgradientmenu.h		\
 	gimpgradientselectbutton.h	\
 	gimpimagecombobox.h		\
+	gimpitemcombobox.h		\
 	gimpmenu.h			\
 	gimppalettemenu.h		\
 	gimppaletteselectbutton.h	\
