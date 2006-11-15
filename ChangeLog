@@ -1,3 +1,14 @@
+2006-11-16  Simon Budig  <simon@gimp.org>
+
+	* libgimp/gimpdrawablecombobox.[ch]: removed...
+
+	* libgimp/gimpitemcombobox.[ch]: and added here. Factored out
+	a lot of common code and added a combo box for vectors objects.
+
+	* libgimp/Makefile.am
+	* libgimp/gimpui.h
+	* libgimp/gimpuitypes.h: changed accordingly.
+
 2006-11-15  Sven Neumann  <sven@gimp.org>
 
 	* cursors/Makefile.am
