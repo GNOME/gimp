@@ -10,6 +10,7 @@ CURSOR_IMAGES = \
 	cursor-crosshair.png		\
 	cursor-crosshair-small.png	\
 	cursor-mouse.png		\
+	cursor-move.png			\
 	cursor-none.png			\
 	cursor-side-top.png		\
 	cursor-side-left.png		\
@@ -75,6 +76,7 @@ EXTRA_DIST = \
 	xbm/cursor-none.xbm			\
 	xbm/cursor-mouse.xbm			\
 	xbm/cursor-mouse-mask.xbm		\
+	xbm/cursor-move.xbm			\
 	xbm/cursor-crosshair.xbm		\
 	xbm/cursor-crosshair-mask.xbm		\
 	xbm/cursor-crosshair-small.xbm		\

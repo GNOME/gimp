@@ -1,5 +1,18 @@
 2006-11-15  Sven Neumann  <sven@gimp.org>
 
+	* cursors/Makefile.am
+	* cursors/cursor-move.png
+	* cursors/gimp-tool-cursors.xcf
+	* cursors/xbm/cursor-move-mask.xbm
+	* cursors/xbm/cursor-move.xbm: added new cursor.
+
+	* app/widgets/gimpcursor.c
+	* app/widgets/widgets-enums.h: added as GIMP_CURSOR_MOVE.
+
+	* app/tools/gimprectangletool.c: use instead of a cursor modifier.
+
+2006-11-15  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.[ch]
 	* app/tools/gimprectangleselecttool.c: removed function from the
 	properties. Added getter and setter functions instead. Redraw the

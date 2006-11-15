@@ -30,6 +30,8 @@
 #include "cursors/xbm/cursor-none.xbm"
 #include "cursors/xbm/cursor-mouse.xbm"
 #include "cursors/xbm/cursor-mouse-mask.xbm"
+#include "cursors/xbm/cursor-move.xbm"
+#include "cursors/xbm/cursor-move-mask.xbm"
 #include "cursors/xbm/cursor-crosshair.xbm"
 #include "cursors/xbm/cursor-crosshair-mask.xbm"
 #include "cursors/xbm/cursor-crosshair-small.xbm"
@@ -205,6 +207,12 @@ static GimpCursor gimp_cursors[] =
     cursor_bad_width, cursor_bad_height,
     cursor_bad_x_hot, cursor_bad_y_hot,
     cursor_bad, NULL, NULL, NULL
+  },
+  {
+    cursor_move_bits, cursor_move_mask_bits,
+    cursor_move_width, cursor_move_height,
+    cursor_move_x_hot, cursor_move_y_hot,
+    cursor_move, NULL, NULL, NULL
   },
   {
     cursor_zoom_bits, cursor_zoom_mask_bits,
