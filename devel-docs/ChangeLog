@@ -1,4 +1,11 @@
-2006-11-04  Sven Neumann  <sven@gimp.org>
+2006-11-16  Simon Budig  <simon@gimp.org>
+
+	* libgimp/libgimp.types: removed double entry for
+	gimp_font_select_button_get_type.
+
+	* libgimp/tmpl/gimpfontselectbutton.sgml: regenerated.
+
+2006-11-16  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-docs.sgml
 	* libgimp/libgimp-sections.txt
