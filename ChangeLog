@@ -1,3 +1,24 @@
+2006-11-16  Michael Natterer  <mitch@gimp.org>
+
+	Made all brushes scalable from the tool options. So far only
+	downscaling is supported since we lack an algorithm for bitmap
+	brush upscaling. Addresses bug #65030.
+
+	* app/paint/gimppaintoptions.[ch]: added "brush-scale" property.
+
+	* app/paint/gimpbrushcore.[ch]: separate pressure logic from brush
+	scaling logic and take paint_options->brush_scale into account.
+	Added gimp_brush_core_create_bound_segs() which returns BoundSegs
+	of the correctly scaled brush mask for the brush preview on the
+	canvas.
+
+	* app/tools/gimpbrushtool.c: use gimp_brush_core_create_bound_segs()
+	instead of doing this here (also removes all knowledge about lowlevel
+	stuff from this file). Connect to notify::brush-scale of the
+	paint options and invalidate the brush core's brush accordingly.
+
+	* app/tools/gimppaintoptions-gui.c: added brush scale slider.
+
 2006-11-16  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/script-fu/script-fu-enums.h

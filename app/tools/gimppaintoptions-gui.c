@@ -128,6 +128,12 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
                                  _("Brush:"), 0.0, 0.5,
                                  button, 2, FALSE);
+
+      gimp_prop_scale_entry_new (config, "brush-scale",
+                                 GTK_TABLE (table), 0, table_row++,
+                                 _("Scale:"),
+                                 0.01, 0.1, 2,
+                                 FALSE, 0.0, 0.0);
     }
 
   /*  the gradient  */

@@ -24,10 +24,6 @@
 
 #include "config/gimpdisplayconfig.h"
 
-#include "base/boundary.h"
-#include "base/pixel-region.h"
-#include "base/temp-buf.h"
-
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpimage.h"
@@ -65,6 +61,9 @@ static void   gimp_brush_tool_draw           (GimpDrawTool        *draw_tool);
 
 static void   gimp_brush_tool_brush_changed  (GimpContext         *context,
                                               GimpBrush           *brush,
+                                              GimpBrushTool       *brush_tool);
+static void   gimp_brush_tool_brush_scaled   (GimpPaintOptions    *options,
+                                              GParamSpec          *pspec,
                                               GimpBrushTool       *brush_tool);
 static void   gimp_brush_tool_set_brush      (GimpBrushCore       *brush_core,
                                               GimpBrush           *brush,
@@ -152,6 +151,9 @@ gimp_brush_tool_constructor (GType                  type,
 
   g_signal_connect_object (gimp_tool_get_options (tool), "brush-changed",
                            G_CALLBACK (gimp_brush_tool_brush_changed),
+                           brush_tool, 0);
+  g_signal_connect_object (gimp_tool_get_options (tool), "notify::brush-scale",
+                           G_CALLBACK (gimp_brush_tool_brush_scaled),
                            brush_tool, 0);
 
   g_signal_connect (paint_tool->core, "set-brush",
@@ -263,29 +265,7 @@ gimp_brush_tool_draw (GimpDrawTool *draw_tool)
 
       if (! brush_core->brush_bound_segs && brush_core->main_brush)
         {
-          TempBuf     *mask = gimp_brush_get_mask (brush_core->main_brush);
-          PixelRegion  PR   = { 0, };
-          BoundSeg    *boundary;
-          gint         num_groups;
-
-          pixel_region_init_temp_buf (&PR, mask,
-                                      0, 0, mask->width, mask->height);
-
-          boundary = boundary_find (&PR, BOUNDARY_WITHIN_BOUNDS,
-                                    0, 0, PR.w, PR.h,
-                                    0,
-                                    &brush_core->n_brush_bound_segs);
-
-          brush_core->brush_bound_segs =
-            boundary_sort (boundary, brush_core->n_brush_bound_segs,
-                           &num_groups);
-
-          brush_core->n_brush_bound_segs += num_groups;
-
-          g_free (boundary);
-
-          brush_core->brush_bound_width  = mask->width;
-          brush_core->brush_bound_height = mask->height;
+          gimp_brush_core_create_bound_segs (brush_core, paint_options);
         }
 
       if (brush_core->brush_bound_segs)
@@ -332,6 +312,17 @@ gimp_brush_tool_brush_changed (GimpContext   *context,
 
   if (brush_core->main_brush != brush)
     gimp_brush_core_set_brush (brush_core, brush);
+}
+
+static void
+gimp_brush_tool_brush_scaled (GimpPaintOptions *options,
+                              GParamSpec       *pspec,
+                              GimpBrushTool    *brush_tool)
+{
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (brush_tool);
+  GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
+
+  gimp_brush_core_set_brush (brush_core, brush_core->main_brush);
 }
 
 static void

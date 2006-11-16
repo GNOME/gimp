@@ -33,6 +33,7 @@
 #include "gimppaintoptions.h"
 
 
+#define DEFAULT_BRUSH_SCALE           1.0
 #define DEFAULT_APPLICATION_MODE      GIMP_PAINT_CONSTANT
 #define DEFAULT_HARD                  FALSE
 
@@ -62,6 +63,7 @@ enum
 {
   PROP_0,
   PROP_PAINT_INFO,
+  PROP_BRUSH_SCALE,
   PROP_APPLICATION_MODE,
   PROP_HARD,
   PROP_PRESSURE_EXPANDED,
@@ -127,6 +129,10 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SCALE,
+                                   "brush-scale", NULL,
+                                   0.0, 1.0, DEFAULT_BRUSH_SCALE,
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
                                  "application-mode", NULL,
                                  GIMP_TYPE_PAINT_APPLICATION_MODE,
@@ -297,6 +303,9 @@ gimp_paint_options_set_property (GObject      *object,
       options->paint_info = (GimpPaintInfo *) g_value_dup_object (value);
       break;
 
+    case PROP_BRUSH_SCALE:
+      options->brush_scale = g_value_get_double (value);
+      break;
     case PROP_APPLICATION_MODE:
       options->application_mode = g_value_get_enum (value);
       break;
@@ -409,6 +418,9 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_object (value, options->paint_info);
       break;
 
+    case PROP_BRUSH_SCALE:
+      g_value_set_double (value, options->brush_scale);
+      break;
     case PROP_APPLICATION_MODE:
       g_value_set_enum (value, options->application_mode);
       break;

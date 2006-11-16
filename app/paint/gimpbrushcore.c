@@ -24,6 +24,7 @@
 
 #include "paint-types.h"
 
+#include "base/boundary.h"
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
@@ -653,12 +654,17 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
     {
       GimpPressureOptions *pressure_options = paint_options->pressure_options;
 
-      if (pressure_options->inverse_size)
-        core->scale = 1.0 - 0.9 * paint_core->cur_coords.pressure;
-      else if (pressure_options->size)
-        core->scale = paint_core->cur_coords.pressure;
-      else
-        core->scale = 1.0;
+      core->scale = 1.0;
+
+      if (paint_core->use_pressure)
+        {
+          if (pressure_options->inverse_size)
+            core->scale = 1.0 - 0.9 * paint_core->cur_coords.pressure;
+          else if (pressure_options->size)
+            core->scale = paint_core->cur_coords.pressure;
+        }
+
+      core->scale *= paint_options->brush_scale;
     }
 
   gimp_brush_core_calc_brush_size (core, core->brush->mask, core->scale,
@@ -728,6 +734,57 @@ gimp_brush_core_set_brush (GimpBrushCore *core,
   g_return_if_fail (brush == NULL || GIMP_IS_BRUSH (brush));
 
   g_signal_emit (core, core_signals[SET_BRUSH], 0, brush);
+}
+
+void
+gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
+                                   GimpPaintOptions *paint_options)
+{
+  TempBuf *mask  = NULL;
+  gdouble  scale = 1.0;
+  gint     brush_width;
+  gint     brush_height;
+
+  g_return_if_fail (GIMP_IS_BRUSH_CORE (core));
+  g_return_if_fail (core->main_brush != NULL);
+  g_return_if_fail (core->brush_bound_segs == NULL);
+
+  if (GIMP_BRUSH_CORE_GET_CLASS (core)->use_scale)
+    scale *= paint_options->brush_scale;
+
+  scale = gimp_brush_core_calc_brush_size (core, core->main_brush->mask, scale,
+                                           &brush_width, &brush_height);
+
+  if (scale > 0.0)
+    mask = gimp_brush_scale_mask (core->main_brush, scale);
+
+  if (mask)
+    {
+      PixelRegion  PR = { 0, };
+      BoundSeg    *boundary;
+      gint         num_groups;
+
+      pixel_region_init_temp_buf (&PR, mask,
+                              0, 0, mask->width, mask->height);
+
+      boundary = boundary_find (&PR, BOUNDARY_WITHIN_BOUNDS,
+                                0, 0, PR.w, PR.h,
+                                0,
+                                &core->n_brush_bound_segs);
+
+      core->brush_bound_segs = boundary_sort (boundary,
+                                              core->n_brush_bound_segs,
+                                              &num_groups);
+
+      core->n_brush_bound_segs += num_groups;
+
+      g_free (boundary);
+
+      core->brush_bound_width  = mask->width;
+      core->brush_bound_height = mask->height;
+
+      temp_buf_free (mask);
+    }
 }
 
 void
@@ -843,8 +900,10 @@ gimp_brush_core_calc_brush_size (GimpBrushCore *core,
 
   scale = CLAMP (scale, 0.0, 1.0);
 
-  if (! GIMP_PAINT_CORE (core)->use_pressure)
+  if (scale == 1.0)
     {
+      ratio = scale;
+
       *width  = mask->width;
       *height = mask->height;
     }
@@ -1199,7 +1258,7 @@ gimp_brush_core_scale_mask (GimpBrushCore *core,
   gint dest_width;
   gint dest_height;
 
-  scale = CLAMP (scale, 0.0, 1.0);
+  scale = MAX (scale, 0.0);
 
   if (scale == 0.0)
     return NULL;
@@ -1242,7 +1301,7 @@ gimp_brush_core_scale_pixmap (GimpBrushCore *core,
   gint dest_width;
   gint dest_height;
 
-  scale = CLAMP (scale, 0.0, 1.0);
+  scale = MAX (scale, 0.0);
 
   if (scale == 0.0)
     return NULL;
@@ -1284,10 +1343,7 @@ gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
   GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
   MaskBuf       *mask;
 
-  if (paint_core->use_pressure)
-    mask = gimp_brush_core_scale_mask (core, core->brush, scale);
-  else
-    mask = core->brush->mask;
+  mask = gimp_brush_core_scale_mask (core, core->brush, scale);
 
   if (! mask)
     return NULL;
