@@ -330,6 +330,97 @@ _wrap_gimp_layer_combo_box_new(PyGObject *self, PyObject *args,
     return 0;
 }
 %%
+override gimp_vectors_combo_box_new kwargs
+static gboolean
+pygimp_vectors_constraint_marshal(gint32 image_id, gint32 vectors_id,
+                                  gpointer user_data)
+{
+    PyObject *img, *vect, *ret;
+    gboolean res;
+    PyGimpConstraintData *data = user_data;
+
+    img = pygimp_image_new(image_id);
+    if (!img) {
+        PyErr_Print();
+        return FALSE;
+    }
+
+    vect = pygimp_vectors_new(vectors_id);
+    if (!vect) {
+        PyErr_Print();
+        Py_DECREF(img);
+        return FALSE;
+    }
+
+    if (data->user_data && data->user_data != Py_None)
+        ret = PyObject_CallFunctionObjArgs(data->constraint, img, vect,
+                                           data->user_data, NULL);
+    else
+        ret = PyObject_CallFunctionObjArgs(data->constraint, img, vect, NULL);
+
+    if (!ret) {
+        PyErr_Print();
+        res = FALSE;
+    } else {
+        res = PyObject_IsTrue(ret);
+        Py_DECREF(ret);
+    }
+
+    Py_DECREF(vect);
+    Py_DECREF(img);
+
+    return res;
+}
+
+static int
+_wrap_gimp_vectors_combo_box_new(PyGObject *self, PyObject *args,
+                                 PyObject *kwargs)
+{
+    PyObject *constraint = NULL, *user_data = NULL;
+    GimpVectorsConstraintFunc func = NULL;
+    PyGimpConstraintData *data = NULL;
+
+    static char *kwlist[] = { "constraint", "data", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "|OO:gimpui.VectorsComboBox.__init__",
+                                     kwlist,
+                                     &constraint, &user_data))
+        return -1;
+
+    if (constraint && constraint != Py_None) {
+        if (!PyCallable_Check(constraint)) {
+            PyErr_SetString(PyExc_TypeError, "first arg must be callable");
+            return -1;
+        }
+
+        data = g_new(PyGimpConstraintData, 1);
+
+        data->constraint = constraint;
+        Py_INCREF(constraint);
+
+        data->user_data = user_data;
+        Py_XINCREF(user_data);
+
+        func = pygimp_vectors_constraint_marshal;
+    }
+
+    self->obj = (GObject *)gimp_vectors_combo_box_new(func, data);
+
+    Py_XDECREF(constraint);
+    Py_XDECREF(user_data);
+    g_free(data);
+
+    if (pyg_type_from_object((PyObject *)self) != GIMP_TYPE_VECTORS_COMBO_BOX) {
+        PyErr_SetString(PyExc_RuntimeError, "__gobject_init__ must be used "
+                        "when subclassing gimpui.VectorsComboBox");
+        return -1;
+    }
+
+    pygobject_register_wrapper((PyObject *)self);
+    return 0;
+}
+%%
 override gimp_image_combo_box_new kwargs
 static gboolean
 pygimp_image_constraint_marshal(gint32 image_id, gpointer user_data)

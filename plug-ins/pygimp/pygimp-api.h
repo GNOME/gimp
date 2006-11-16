@@ -31,6 +31,7 @@ struct _PyGimp_Functions {
     PyObject *(* drawable_new)(GimpDrawable *drawable, gint32 ID);
     PyObject *(* layer_new)(gint32 ID);
     PyObject *(* channel_new)(gint32 ID);
+    PyObject *(* vectors_new)(gint32 ID);
 
     PyTypeObject *PDBFunction_Type;
     PyObject *(* pdb_function_new)(const char *name, const char *blurb,
@@ -55,25 +56,26 @@ struct _PyGimp_Functions *_PyGimp_API;
 #define pygimp_drawable_new     (_PyGimp_API->drawable_new)
 #define pygimp_layer_new        (_PyGimp_API->layer_new)
 #define pygimp_channel_new      (_PyGimp_API->channel_new)
+#define pygimp_vectors_new      (_PyGimp_API->vectors_new)
 #define PyGimpPDBFunction_Type  (_PyGimp_API->PDBFunction_Type)
 #define pygimp_pdb_function_new (_PyGimp_API->pdb_function_new)
 
 #define init_pygimp() G_STMT_START { \
     PyObject *gimpmodule = PyImport_ImportModule("gimp"); \
     if (gimpmodule != NULL) { \
-	PyObject *mdict = PyModule_GetDict(gimpmodule); \
-	PyObject *cobject = PyDict_GetItemString(mdict, "_PyGimp_API"); \
-	if (PyCObject_Check(cobject)) \
-	    _PyGimp_API = PyCObject_AsVoidPtr(cobject); \
-	else { \
-	    PyErr_SetString(PyExc_RuntimeError, \
-		            "could not find _PyGimp_API object"); \
-	    return; \
-	} \
+        PyObject *mdict = PyModule_GetDict(gimpmodule); \
+        PyObject *cobject = PyDict_GetItemString(mdict, "_PyGimp_API"); \
+        if (PyCObject_Check(cobject)) \
+            _PyGimp_API = PyCObject_AsVoidPtr(cobject); \
+        else { \
+            PyErr_SetString(PyExc_RuntimeError, \
+                            "could not find _PyGimp_API object"); \
+            return; \
+        } \
     } else { \
-	PyErr_SetString(PyExc_ImportError, \
-	                "could not import gimp"); \
-	return; \
+        PyErr_SetString(PyExc_ImportError, \
+                        "could not import gimp"); \
+        return; \
     } \
 } G_STMT_END
 

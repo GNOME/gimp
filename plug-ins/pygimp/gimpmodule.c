@@ -1716,6 +1716,7 @@ static struct _PyGimp_Functions pygimp_api_functions = {
     pygimp_drawable_new,
     pygimp_layer_new,
     pygimp_channel_new,
+    pygimp_vectors_new,
 
     &PyGimpPDBFunction_Type,
     pygimp_pdb_function_new

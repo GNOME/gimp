@@ -101,6 +101,7 @@ PF_IMAGE       = PDB_IMAGE
 PF_LAYER       = PDB_LAYER
 PF_CHANNEL     = PDB_CHANNEL
 PF_DRAWABLE    = PDB_DRAWABLE
+PF_VECTORS     = PDB_VECTORS
 #PF_SELECTION   = PDB_SELECTION
 #PF_BOUNDARY    = PDB_BOUNDARY
 #PF_PATH        = PDB_PATH
@@ -140,6 +141,7 @@ _type_mapping = {
     PF_LAYER       : PDB_LAYER,
     PF_CHANNEL     : PDB_CHANNEL,
     PF_DRAWABLE    : PDB_DRAWABLE,
+    PF_VECTORS     : PDB_VECTORS,
 
     PF_TOGGLE      : PDB_INT32,
     PF_SLIDER      : PDB_FLOAT,
@@ -548,6 +550,7 @@ def _interact(proc_name, start_params):
             PF_LAYER       : gimpui.LayerSelector,
             PF_CHANNEL     : gimpui.ChannelSelector,
             PF_DRAWABLE    : gimpui.DrawableSelector,
+            PF_VECTORS     : gimpui.VectorsSelector,
 
             PF_TOGGLE      : ToggleEntry,
             PF_SLIDER      : SliderEntry,

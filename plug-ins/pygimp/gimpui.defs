@@ -336,6 +336,13 @@
   (gtype-id "GIMP_TYPE_LAYER_COMBO_BOX")
 )
 
+(define-object VectorsComboBox
+  (in-module "Gimp")
+  (parent "GimpIntComboBox")
+  (c-name "GimpVectorsComboBox")
+  (gtype-id "GIMP_TYPE_VECTORS_COMBO_BOX")
+)
+
 (define-object ImageComboBox
   (in-module "Gimp")
   (parent "GimpIntComboBox")
@@ -3660,6 +3667,11 @@
   (return-type "GType")
 )
 
+(define-function gimp_vectors_combo_box_get_type
+  (c-name "gimp_vectors_combo_box_get_type")
+  (return-type "GType")
+)
+
 (define-function gimp_drawable_combo_box_new
   (c-name "gimp_drawable_combo_box_new")
   (is-constructor-of "GimpDrawableComboBox")
@@ -3686,6 +3698,16 @@
   (return-type "GtkWidget*")
   (parameters
     '("GimpDrawableConstraintFunc" "constraint")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_vectors_combo_box_new
+  (c-name "gimp_vectors_combo_box_new")
+  (is-constructor-of "GimpVectorsComboBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GimpVectorsConstraintFunc" "constraint")
     '("gpointer" "data")
   )
 )

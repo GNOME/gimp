@@ -112,6 +112,20 @@ def DrawableMenu(constraint=None, callback=None, data=None):
     items.sort()
     return _createMenu(items, callback, data)
 
+def VectorsMenu(constraint=None, callback=None, data=None):
+    items = []
+    for img in gimp.image_list():
+        filename = img.filename
+        if not filename:
+            filename = img.name
+        for vectors in img.vectors:
+            if constraint and not constraint(img, vectors):
+                continue
+            name = filename + "/" + vectors.name
+            items.append((name, vectors))
+    items.sort()
+    return _createMenu(items, callback, data)
+
 class ImageSelector(ImageComboBox):
     def __init__(self, default=None):
         ImageComboBox.__init__(self)
@@ -139,6 +153,14 @@ class ChannelSelector(ChannelComboBox):
 class DrawableSelector(DrawableComboBox):
     def __init__(self, default=None):
         DrawableComboBox.__init__(self)
+        if default is not None:
+            self.set_active(default)
+    def get_value(self):
+        return self.get_active()
+
+class VectorsSelector(VectorsComboBox):
+    def __init__(self, default=None):
+        VectorsComboBox.__init__(self)
         if default is not None:
             self.set_active(default)
     def get_value(self):
