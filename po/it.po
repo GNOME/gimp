@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-11-13 00:44+0100\n"
-"PO-Revision-Date: 2006-11-16 17:56+0100\n"
+"PO-Revision-Date: 2006-11-16 19:11+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -10535,7 +10535,7 @@ msgstr "Stile _linea"
 
 #: ../app/widgets/gimpstrokeeditor.c:228
 msgid "_Cap style:"
-msgstr "Stile _pennino:"
+msgstr "Stile _capo:"
 
 #: ../app/widgets/gimpstrokeeditor.c:234
 msgid "_Join style:"
