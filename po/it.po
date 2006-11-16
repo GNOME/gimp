@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-11-13 00:44+0100\n"
-"PO-Revision-Date: 2006-11-16 19:11+0100\n"
+"PO-Revision-Date: 2006-11-16 19:36+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -4100,7 +4100,7 @@ msgstr "Radiale"
 #: ../app/core/core-enums.c:373 ../app/core/core-enums.c:530
 #: ../app/core/core-enums.c:635
 msgid "Square"
-msgstr "Quadrato"
+msgstr "Quadro"
 
 #: ../app/core/core-enums.c:374
 msgid "Conical (sym)"
@@ -4160,7 +4160,7 @@ msgstr "Disegno con uno strumento"
 
 #: ../app/core/core-enums.c:498
 msgid "Miter"
-msgstr "Angolo"
+msgstr "Retto"
 
 #: ../app/core/core-enums.c:499 ../app/core/core-enums.c:529
 msgid "Round"
@@ -4168,11 +4168,11 @@ msgstr "Tondo"
 
 #: ../app/core/core-enums.c:500
 msgid "Bevel"
-msgstr "Spigolo"
+msgstr "Smussato"
 
 #: ../app/core/core-enums.c:528
 msgid "Butt"
-msgstr "Estremità"
+msgstr "Tronco"
 
 #: ../app/core/core-enums.c:566 ../app/dialogs/preferences-dialog.c:1804
 msgid "Custom"
