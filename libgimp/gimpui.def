@@ -68,6 +68,8 @@ EXPORTS
 	gimp_ui_get_display_window
 	gimp_ui_get_progress_window
 	gimp_ui_init
+	gimp_vectors_combo_box_get_type
+	gimp_vectors_combo_box_new
 	gimp_window_set_transient
 	gimp_window_set_transient_for_display
 	gimp_zoom_preview_get_drawable

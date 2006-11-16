@@ -1,5 +1,9 @@
 2006-11-16  Simon Budig  <simon@gimp.org>
 
+	* libgimp/gimpui.def: added new symbols.
+
+2006-11-16  Simon Budig  <simon@gimp.org>
+
 	* libgimp/gimpdrawablecombobox.[ch]: removed...
 
 	* libgimp/gimpitemcombobox.[ch]: and added here. Factored out
