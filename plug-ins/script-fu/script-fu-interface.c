@@ -292,6 +292,7 @@ script_fu_interface (SFScript *script,
       case SF_DRAWABLE:
       case SF_LAYER:
       case SF_CHANNEL:
+      case SF_VECTORS:
         switch (script->arg_types[i])
           {
           case SF_IMAGE:
@@ -312,6 +313,11 @@ script_fu_interface (SFScript *script,
           case SF_CHANNEL:
             widget = gimp_channel_combo_box_new (NULL, NULL);
             ID_ptr = &script->arg_values[i].sfa_channel;
+            break;
+
+          case SF_VECTORS:
+            widget = gimp_vectors_combo_box_new (NULL, NULL);
+            ID_ptr = &script->arg_values[i].sfa_vectors;
             break;
 
           default:
@@ -761,6 +767,7 @@ script_fu_ok (SFScript *script)
         case SF_DRAWABLE:
         case SF_LAYER:
         case SF_CHANNEL:
+        case SF_VECTORS:
           g_string_append_printf (s, "%d", arg_value->sfa_image);
           break;
 
@@ -895,6 +902,7 @@ script_fu_reset (SFScript *script)
         case SF_DRAWABLE:
         case SF_LAYER:
         case SF_CHANNEL:
+        case SF_VECTORS:
           break;
 
         case SF_COLOR:

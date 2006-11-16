@@ -248,6 +248,7 @@ script_fu_add_script (scheme *sc, pointer a)
                 case SF_DRAWABLE:
                 case SF_LAYER:
                 case SF_CHANNEL:
+                case SF_VECTORS:
                   if (!sc->vptr->is_integer (sc->vptr->pair_car (a)))
                     return my_err (sc, "script-fu-register: drawable defaults must be integer values");
                   script->arg_defaults[i].sfa_image =
@@ -275,6 +276,11 @@ script_fu_add_script (scheme *sc, pointer a)
                     case SF_CHANNEL:
                       args[i + 1].type = GIMP_PDB_CHANNEL;
                       args[i + 1].name = "channel";
+                      break;
+
+                    case SF_VECTORS:
+                      args[i + 1].type = GIMP_PDB_VECTORS;
+                      args[i + 1].name = "vectors";
                       break;
 
                     default:
@@ -798,6 +804,13 @@ script_fu_script_proc (const gchar      *name,
               min_args++;
             }
 
+          if (nparams > 2 && params[2].type == GIMP_PDB_VECTORS &&
+              script->num_args > 1 && script->arg_types[1] == SF_VECTORS)
+            {
+              script->arg_values[1].sfa_vectors = params[2].data.d_vectors;
+              min_args++;
+            }
+
           /*  First acquire information with a dialog  */
           /*  Skip this part if the script takes no parameters */
           if (script->num_args > min_args)
@@ -834,6 +847,7 @@ script_fu_script_proc (const gchar      *name,
                     case SF_DRAWABLE:
                     case SF_LAYER:
                     case SF_CHANNEL:
+                    case SF_VECTORS:
                       g_string_append_printf (s, "%d", param->data.d_int32);
                       break;
 
@@ -982,6 +996,7 @@ script_fu_free_script (SFScript *script)
         case SF_DRAWABLE:
         case SF_LAYER:
         case SF_CHANNEL:
+        case SF_VECTORS:
         case SF_COLOR:
           break;
 

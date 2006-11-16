@@ -76,6 +76,7 @@ struct named_constant const script_constants[] =
   { "SF-DRAWABLE",    SF_DRAWABLE   },
   { "SF-LAYER",       SF_LAYER      },
   { "SF-CHANNEL",     SF_CHANNEL    },
+  { "SF-VECTORS",     SF_VECTORS    },
   { "SF-COLOR",       SF_COLOR      },
   { "SF-TOGGLE",      SF_TOGGLE     },
   { "SF-VALUE",       SF_VALUE      },

@@ -292,6 +292,7 @@
   SF-LAYER      "Layer"              -1
   SF-CHANNEL    "Channel"            -1
   SF-DRAWABLE   "Drawable"           -1
+  SF-VECTORS    "Vectors"            -1
 )
 
 (script-fu-menu-register "script-fu-test-sphere"

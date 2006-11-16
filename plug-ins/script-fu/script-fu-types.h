@@ -66,6 +66,7 @@ typedef union
   gint32         sfa_drawable;
   gint32         sfa_layer;
   gint32         sfa_channel;
+  gint32         sfa_vectors;
   GimpRGB        sfa_color;
   gint32         sfa_toggle;
   gchar         *sfa_value;

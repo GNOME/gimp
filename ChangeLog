@@ -1,5 +1,18 @@
 2006-11-16  Simon Budig  <simon@gimp.org>
 
+	* plug-ins/script-fu/script-fu-enums.h
+	* plug-ins/script-fu/scheme-wrapper.c
+	* plug-ins/script-fu/script-fu-types.h
+	* plug-ins/script-fu/script-fu-scripts.c: add a SF-VECTORS type for
+	script-fu.
+
+	* plug-ins/script-fu/script-fu-interface.c: use a vectors
+	combobox for the GUI.
+
+	* plug-ins/script-fu/scripts/test-sphere.scm: test it as well.
+
+2006-11-16  Simon Budig  <simon@gimp.org>
+
 	* libgimp/gimpui.def: added new symbols.
 
 2006-11-16  Simon Budig  <simon@gimp.org>

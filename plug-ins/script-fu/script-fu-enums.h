@@ -27,6 +27,7 @@ typedef enum
   SF_DRAWABLE,
   SF_LAYER,
   SF_CHANNEL,
+  SF_VECTORS,
   SF_COLOR,
   SF_TOGGLE,
   SF_VALUE,
