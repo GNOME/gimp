@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-13 22:01+0100\n"
-"PO-Revision-Date: 2006-11-13 22:01+0100\n"
+"POT-Creation-Date: 2006-11-16 19:12+0100\n"
+"PO-Revision-Date: 2006-11-16 19:33+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -4870,7 +4870,7 @@ msgstr "Colore pieno"
 
 #: ../app/core/core-enums.c:336
 msgid "Miter"
-msgstr "Spigolo"
+msgstr "Retto"
 
 #: ../app/core/core-enums.c:337 ../app/core/core-enums.c:367
 msgid "Round"
@@ -4878,15 +4878,15 @@ msgstr "Tondo"
 
 #: ../app/core/core-enums.c:338
 msgid "Bevel"
-msgstr "Spigolo"
+msgstr "Smussato"
 
 #: ../app/core/core-enums.c:366
 msgid "Butt"
-msgstr "Estremità"
+msgstr "Tronco"
 
 #: ../app/core/core-enums.c:368 ../app/core/core-enums.c:443
 msgid "Square"
-msgstr "Quadrato"
+msgstr "Quadro"
 
 #: ../app/core/core-enums.c:404
 msgid "Custom"
@@ -6654,11 +6654,11 @@ msgstr "_Opacità:"
 msgid "Open layers"
 msgstr "Apri livelli"
 
-#: ../app/dialogs/file-open-location-dialog.c:75
+#: ../app/dialogs/file-open-location-dialog.c:74
 msgid "Open Location"
 msgstr "Apri indirizzo"
 
-#: ../app/dialogs/file-open-location-dialog.c:113
+#: ../app/dialogs/file-open-location-dialog.c:112
 msgid "Enter location (URI):"
 msgstr "Inserisci indirizzo (URI):"
 
@@ -9996,7 +9996,7 @@ msgstr ""
 msgid "_Rectangle Select"
 msgstr "_Rettangolare"
 
-#: ../app/tools/gimprectangletool.c:1069 ../app/tools/gimprectangletool.c:1725
+#: ../app/tools/gimprectangletool.c:1053 ../app/tools/gimprectangletool.c:1697
 msgid "Rectangle: "
 msgstr "Rettangolo: "
 
@@ -11181,23 +11181,23 @@ msgstr "I messaggi sono rediretti su stderr."
 msgid "%s Message"
 msgstr "Messaggio %s"
 
-#: ../app/widgets/gimpfiledialog.c:267
+#: ../app/widgets/gimpfiledialog.c:266
 msgid "Automatically Detected"
 msgstr "Rilevato automaticamente"
 
-#: ../app/widgets/gimpfiledialog.c:277
+#: ../app/widgets/gimpfiledialog.c:276
 msgid "By Extension"
 msgstr "Per estensione"
 
-#: ../app/widgets/gimpfiledialog.c:454
+#: ../app/widgets/gimpfiledialog.c:475
 msgid "All files"
 msgstr "Tutti i file"
 
-#: ../app/widgets/gimpfiledialog.c:459
+#: ../app/widgets/gimpfiledialog.c:480
 msgid "All images"
 msgstr "Tutte le immagini"
 
-#: ../app/widgets/gimpfiledialog.c:595
+#: ../app/widgets/gimpfiledialog.c:616
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleziona _tipo di file (%s)"
@@ -11562,11 +11562,11 @@ msgstr "Stile _linea"
 
 #: ../app/widgets/gimpstrokeeditor.c:215
 msgid "_Cap style:"
-msgstr "Stile _pennino:"
+msgstr "Stile _capo:"
 
 #: ../app/widgets/gimpstrokeeditor.c:221
 msgid "_Join style:"
-msgstr "Stile _unione:"
+msgstr "Stile _giunzione:"
 
 #: ../app/widgets/gimpstrokeeditor.c:226
 msgid "_Miter limit:"
@@ -11799,7 +11799,7 @@ msgstr "%s (provare %s, %s)"
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (provare %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:964
+#: ../app/widgets/gimpwidgets-utils.c:936
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Dato UTF-8 non valido nel file '%s'"
