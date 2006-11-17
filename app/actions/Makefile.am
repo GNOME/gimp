@@ -19,10 +19,10 @@ libappactions_a_SOURCES = \
 	channels-actions.h		\
 	channels-commands.c		\
 	channels-commands.h		\
-	colormap-editor-actions.c	\
-	colormap-editor-actions.h	\
-	colormap-editor-commands.c	\
-	colormap-editor-commands.h	\
+	colormap-actions.c		\
+	colormap-actions.h		\
+	colormap-commands.c		\
+	colormap-commands.h		\
 	context-actions.c		\
 	context-actions.h		\
 	context-commands.c		\
@@ -117,10 +117,10 @@ libappactions_a_SOURCES = \
 	quick-mask-actions.h		\
 	quick-mask-commands.c		\
 	quick-mask-commands.h		\
-	sample-point-editor-actions.c	\
-	sample-point-editor-actions.h	\
-	sample-point-editor-commands.c	\
-	sample-point-editor-commands.h	\
+	sample-points-actions.c		\
+	sample-points-actions.h		\
+	sample-points-commands.c	\
+	sample-points-commands.h	\
 	select-actions.c		\
 	select-actions.h		\
 	select-commands.c		\

@@ -242,8 +242,8 @@ gimp_undo_editor_new (GimpCoreConfig  *config,
 
   return g_object_new (GIMP_TYPE_UNDO_EDITOR,
                        "menu-factory",    menu_factory,
-                       "menu-identifier", "<UndoEditor>",
-                       "ui-path",         "/undo-editor-popup",
+                       "menu-identifier", "<Undo>",
+                       "ui-path",         "/undo-popup",
                        "view-size",       config->undo_preview_size,
                        NULL);
 }

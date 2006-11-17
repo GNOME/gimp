@@ -31,34 +31,34 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "actions.h"
-#include "colormap-editor-actions.h"
-#include "colormap-editor-commands.h"
+#include "colormap-actions.h"
+#include "colormap-commands.h"
 
 #include "gimp-intl.h"
 
 
-static const GimpActionEntry colormap_editor_actions[] =
+static const GimpActionEntry colormap_actions[] =
 {
-  { "colormap-editor-popup", GIMP_STOCK_COLORMAP,
+  { "colormap-popup", GIMP_STOCK_COLORMAP,
     N_("Colormap Menu"), NULL, NULL, NULL,
     GIMP_HELP_INDEXED_PALETTE_DIALOG },
 
-  { "colormap-editor-edit-color", GTK_STOCK_EDIT,
+  { "colormap-edit-color", GTK_STOCK_EDIT,
     N_("_Edit Color..."), NULL,
     N_("Edit color"),
-    G_CALLBACK (colormap_editor_edit_color_cmd_callback),
+    G_CALLBACK (colormap_edit_color_cmd_callback),
     GIMP_HELP_INDEXED_PALETTE_EDIT }
 };
 
-static const GimpEnumActionEntry colormap_editor_add_color_actions[] =
+static const GimpEnumActionEntry colormap_add_color_actions[] =
 {
-  { "colormap-editor-add-color-from-fg", GTK_STOCK_ADD,
+  { "colormap-add-color-from-fg", GTK_STOCK_ADD,
     N_("_Add Color from FG"), "",
     N_("Add current foreground color"),
     FALSE, FALSE,
     GIMP_HELP_INDEXED_PALETTE_ADD },
 
-  { "colormap-editor-add-color-from-bg", GTK_STOCK_ADD,
+  { "colormap-add-color-from-bg", GTK_STOCK_ADD,
     N_("_Add Color from BG"), "",
     N_("Add current background color"),
     TRUE, FALSE,
@@ -67,23 +67,23 @@ static const GimpEnumActionEntry colormap_editor_add_color_actions[] =
 
 
 void
-colormap_editor_actions_setup (GimpActionGroup *group)
+colormap_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
-                                 colormap_editor_actions,
-                                 G_N_ELEMENTS (colormap_editor_actions));
+                                 colormap_actions,
+                                 G_N_ELEMENTS (colormap_actions));
 
   gimp_action_group_add_enum_actions (group,
-                                      colormap_editor_add_color_actions,
-                                      G_N_ELEMENTS (colormap_editor_add_color_actions),
-                                      G_CALLBACK (colormap_editor_add_color_cmd_callback));
+                                      colormap_add_color_actions,
+                                      G_N_ELEMENTS (colormap_add_color_actions),
+                                      G_CALLBACK (colormap_add_color_cmd_callback));
 }
 
 void
-colormap_editor_actions_update (GimpActionGroup *group,
-                                gpointer         data)
+colormap_actions_update (GimpActionGroup *group,
+                         gpointer         data)
 {
-  GimpImage   *image     = action_data_get_image (data);
+  GimpImage   *image      = action_data_get_image (data);
   GimpContext *context    = action_data_get_context (data);
   gboolean     indexed    = FALSE;
   gint         num_colors = 0;
@@ -107,15 +107,15 @@ colormap_editor_actions_update (GimpActionGroup *group,
 #define SET_COLOR(action,color) \
         gimp_action_group_set_action_color (group, action, color, FALSE);
 
-  SET_SENSITIVE ("colormap-editor-edit-color",
+  SET_SENSITIVE ("colormap-edit-color",
                  image && indexed);
-  SET_SENSITIVE ("colormap-editor-add-color-from-fg",
+  SET_SENSITIVE ("colormap-add-color-from-fg",
                  image && indexed && num_colors < 256);
-  SET_SENSITIVE ("colormap-editor-add-color-from-bg",
+  SET_SENSITIVE ("colormap-add-color-from-bg",
                  image && indexed && num_colors < 256);
 
-  SET_COLOR ("colormap-editor-add-color-from-fg", context ? &fg : NULL);
-  SET_COLOR ("colormap-editor-add-color-from-bg", context ? &bg : NULL);
+  SET_COLOR ("colormap-add-color-from-fg", context ? &fg : NULL);
+  SET_COLOR ("colormap-add-color-from-bg", context ? &bg : NULL);
 
 #undef SET_SENSITIVE
 #undef SET_COLOR

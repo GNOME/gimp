@@ -51,7 +51,7 @@
 #include "brushes-actions.h"
 #include "buffers-actions.h"
 #include "channels-actions.h"
-#include "colormap-editor-actions.h"
+#include "colormap-actions.h"
 #include "context-actions.h"
 #include "cursor-info-actions.h"
 #include "debug-actions.h"
@@ -75,7 +75,7 @@
 #include "patterns-actions.h"
 #include "plug-in-actions.h"
 #include "quick-mask-actions.h"
-#include "sample-point-editor-actions.h"
+#include "sample-points-actions.h"
 #include "select-actions.h"
 #include "templates-actions.h"
 #include "text-editor-actions.h"
@@ -108,9 +108,9 @@ static GimpActionFactoryEntry action_groups[] =
   { "channels", N_("Channels"), GIMP_STOCK_CHANNEL,
     channels_actions_setup,
     channels_actions_update },
-  { "colormap-editor", N_("Colormap Editor"), GIMP_STOCK_COLORMAP,
-    colormap_editor_actions_setup,
-    colormap_editor_actions_update },
+  { "colormap", N_("Colormap"), GIMP_STOCK_COLORMAP,
+    colormap_actions_setup,
+    colormap_actions_update },
   { "context", N_("Context"), NULL,
     context_actions_setup,
     context_actions_update },
@@ -180,9 +180,9 @@ static GimpActionFactoryEntry action_groups[] =
   { "quick-mask", N_("Quick Mask"), GIMP_STOCK_QUICK_MASK_ON,
     quick_mask_actions_setup,
     quick_mask_actions_update },
-  { "sample-point-editor", N_("Sample Points"), GIMP_STOCK_SAMPLE_POINT,
-    sample_point_editor_actions_setup,
-    sample_point_editor_actions_update },
+  { "sample-points", N_("Sample Points"), GIMP_STOCK_SAMPLE_POINT,
+    sample_points_actions_setup,
+    sample_points_actions_update },
   { "select", N_("Select"), GIMP_STOCK_SELECTION,
     select_actions_setup,
     select_actions_update },

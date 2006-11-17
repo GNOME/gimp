@@ -16,12 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SAMPLE_POINT_EDITOR_COMMANDS_H__
-#define __SAMPLE_POINT_EDITOR_COMMANDS_H__
+#ifndef __SAMPLE_POINTS_COMMANDS_H__
+#define __SAMPLE_POINTS_COMMANDS_H__
 
 
-void   sample_point_editor_sample_merged_cmd_callback (GtkAction *action,
-                                                       gpointer   data);
+void   sample_points_sample_merged_cmd_callback (GtkAction *action,
+                                                 gpointer   data);
 
 
-#endif /* __SAMPLE_POINT_EDITOR_COMMANDS_H__ */
+#endif /* __SAMPLE_POINTS_COMMANDS_H__ */

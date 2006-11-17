@@ -241,8 +241,8 @@ gimp_selection_editor_new (GimpMenuFactory *menu_factory)
 
   return g_object_new (GIMP_TYPE_SELECTION_EDITOR,
                        "menu-factory",    menu_factory,
-                       "menu-identifier", "<SelectionEditor>",
-                       "ui-path",         "/selection-editor-popup",
+                       "menu-identifier", "<Selection>",
+                       "ui-path",         "/selection-popup",
                        NULL);
 }
 

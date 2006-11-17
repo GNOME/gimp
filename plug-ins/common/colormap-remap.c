@@ -108,7 +108,7 @@ query (void)
                           remap_args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC_REMAP, "<Image>/Colors/Map/Colormap");
-  gimp_plugin_menu_register (PLUG_IN_PROC_REMAP, "<ColormapEditor>");
+  gimp_plugin_menu_register (PLUG_IN_PROC_REMAP, "<Colormap>");
   gimp_plugin_icon_register (PLUG_IN_PROC_REMAP, GIMP_ICON_TYPE_STOCK_ID,
                              (const guint8 *) GIMP_STOCK_COLORMAP);
 

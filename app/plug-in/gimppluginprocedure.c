@@ -370,7 +370,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           goto failure;
         }
     }
-  else if (g_str_has_prefix (menu_path, "<ColormapEditor>"))
+  else if (g_str_has_prefix (menu_path, "<Colormap>"))
     {
       if ((procedure->num_args < 2)                            ||
           ! GIMP_IS_PARAM_SPEC_INT32      (procedure->args[0]) ||
@@ -435,7 +435,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
                    "in the invalid menu location \"%s\".\n"
                    "Use either \"<Toolbox>\", \"<Image>\", "
                    "\"<Layers>\", \"<Channels>\", \"<Vectors>\", "
-                   "\"<ColormapEditor>\", \"<Load>\", \"<Save>\", "
+                   "\"<Colormap>\", \"<Load>\", \"<Save>\", "
                    "\"<Brushes>\", \"<Gradients>\", \"<Palettes>\", "
                    "\"<Patterns>\" or \"<Buffers>\".",
                    basename, gimp_filename_to_utf8 (proc->prog),

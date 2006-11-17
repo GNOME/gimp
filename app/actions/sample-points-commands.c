@@ -28,7 +28,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpsamplepointeditor.h"
 
-#include "sample-point-editor-commands.h"
+#include "sample-points-commands.h"
 
 #include "gimp-intl.h"
 
@@ -36,8 +36,8 @@
 /*  public functions  */
 
 void
-sample_point_editor_sample_merged_cmd_callback (GtkAction *action,
-                                                gpointer   data)
+sample_points_sample_merged_cmd_callback (GtkAction *action,
+                                          gpointer   data)
 {
   GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (data);
   gboolean               active;

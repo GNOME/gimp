@@ -1,5 +1,41 @@
 2006-11-17  Michael Natterer  <mitch@gimp.org>
 
+	Got rid of the word "editor" were it was good for nothing but
+	exposing an implementation detail in public API and installed
+	files.  Fixes bug #345251:
+
+	* app/actions/colormap-editor-actions.[ch]
+	* app/actions/colormap-editor-commands.[ch]
+	* app/actions/sample-point-editor-actions.[ch]
+	* app/actions/sample-point-editor-commands.[ch]
+	* menus/colormap-editor-menu.xml
+	* menus/sample-point-editor-menu.xml
+	* menus/selection-editor-menu.xml
+	* menus/undo-editor-menu.xml: removed.
+
+	* app/actions/colormap-actions.[ch]
+	* app/actions/colormap-commands.[ch]
+	* app/actions/sample-points-actions.[ch]
+	* app/actions/sample-points-commands.[ch]
+	* menus/colormap-menu.xml
+	* menus/sample-points-menu.xml
+	* menus/selection-menu.xml
+	* menus/undo-menu.xml: added.
+
+	* app/actions/Makefile.am
+	* menus/Makefile.am
+	* app/actions/actions.c
+	* app/menus/menus.c
+	* app/menus/plug-in-menus.c
+	* app/plug-in/gimppluginprocedure.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpsamplepointeditor.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimpundoeditor.c
+	* plug-ins/common/colormap-remap.c: changed accordingly.
+
+2006-11-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/file/file-open.c (file_open_profile_apply_rgb): don't pass
 	GRAY images to plug_in_icc_profile_apply_rgb().
 
