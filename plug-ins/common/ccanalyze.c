@@ -68,7 +68,6 @@ static void doLabel     (GtkWidget  *table,
                          ...) G_GNUC_PRINTF (2, 3);
 
 /* some global variables */
-static gchar     *filename = NULL;
 static gint       width, height, bpp;
 static gdouble    hist_red[256], hist_green[256], hist_blue[256];
 static gdouble    maxred = 0.0, maxgreen = 0.0, maxblue = 0.0;
@@ -158,9 +157,8 @@ run (const gchar      *name,
           memset (hist_green, 0, sizeof (hist_green));
           memset (hist_blue, 0, sizeof (hist_blue));
 
-          filename = gimp_image_get_filename (imageID);
-
-          gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
+          gimp_tile_cache_ntiles (2 *
+                                  (drawable->width / gimp_tile_width () + 1));
 
           analyze (drawable);
 
@@ -347,13 +345,11 @@ histogram (guchar  r,
 static void
 doDialog (void)
 {
-  GtkWidget   *dialog;
-  GtkWidget   *vbox;
-  GtkWidget   *hbox;
-  GtkWidget   *frame;
-  GtkWidget   *preview;
-  gchar       *memsize;
-  struct stat  st;
+  GtkWidget *dialog;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *frame;
+  GtkWidget *preview;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -393,22 +389,6 @@ doDialog (void)
     doLabel (vbox, _("Only one unique color"));
   else
     doLabel (vbox, _("Number of unique colors: %d"), uniques);
-
-  memsize = gimp_memsize_to_string (width * height * bpp);
-  doLabel (vbox, _("Uncompressed size: %s"), memsize);
-  g_free (memsize);
-
-  if (filename && !g_stat (filename, &st) && !gimp_image_is_dirty (imageID))
-    {
-      gchar *memsize = gimp_memsize_to_string (st.st_size);
-
-      doLabel (vbox, _("Filename: %s"), filename);
-      doLabel (vbox, _("Compressed size: %s"), memsize);
-      doLabel (vbox, _("Compression ratio (approx.): %d to 1"),
-                      (gint) RINT ((gdouble) (width * height * bpp) / st.st_size));
-
-      g_free (memsize);
-    }
 
   /* show stuff */
   gtk_widget_show_all (dialog);
