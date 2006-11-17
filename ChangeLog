@@ -1,5 +1,10 @@
 2006-11-17  Simon Budig  <simon@gimp.org>
 
+	* app/plug-in/gimppluginprocedure.c: Fix the registration to
+	properly test for the parameter types.
+
+2006-11-17  Simon Budig  <simon@gimp.org>
+
 	* app/core/gimpparamspecs.c: Hack up gimp_value_set_item() to do
 	the correct thing for subtypes of GimpItems.
 

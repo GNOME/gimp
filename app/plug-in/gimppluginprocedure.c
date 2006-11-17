@@ -331,15 +331,31 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           goto failure;
         }
     }
-  else if (g_str_has_prefix (menu_path, "<Layers>") ||
-           g_str_has_prefix (menu_path, "<Channels>"))
+  else if (g_str_has_prefix (menu_path, "<Layers>"))
     {
       if ((procedure->num_args < 3)                             ||
           ! GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) ||
           ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) ||
-          ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]))
+          ! (G_TYPE_FROM_INSTANCE (procedure->args[2])
+                               == GIMP_TYPE_PARAM_LAYER_ID ||
+             G_TYPE_FROM_INSTANCE (procedure->args[2])
+                               == GIMP_TYPE_PARAM_DRAWABLE_ID))
         {
-          required = "INT32, IMAGE, DRAWABLE";
+          required = "INT32, IMAGE, (LAYER | DRAWABLE)";
+          goto failure;
+        }
+    }
+  else if (g_str_has_prefix (menu_path, "<Channels>"))
+    {
+      if ((procedure->num_args < 3)                             ||
+          ! GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) ||
+          ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) ||
+          ! (G_TYPE_FROM_INSTANCE (procedure->args[2])
+                               == GIMP_TYPE_PARAM_CHANNEL_ID ||
+             G_TYPE_FROM_INSTANCE (procedure->args[2])
+                               == GIMP_TYPE_PARAM_DRAWABLE_ID))
+        {
+          required = "INT32, IMAGE, (CHANNEL | DRAWABLE)";
           goto failure;
         }
     }
