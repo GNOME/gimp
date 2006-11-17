@@ -1,3 +1,8 @@
+2006-11-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/file/file-open.c (file_open_profile_apply_rgb): don't pass
+	GRAY images to plug_in_icc_profile_apply_rgb().
+
 2006-11-17  Simon Budig  <simon@gimp.org>
 
 	* app/plug-in/gimppluginprocedure.c: Fix the registration to
