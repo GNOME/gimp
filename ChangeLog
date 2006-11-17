@@ -1,3 +1,20 @@
+2006-11-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/tools-actions.c
+	* app/actions/tools-commands.[ch]: added actions and callbacks for
+	the new paint options brush scale property. Assigned new
+	shortcuts: '<' and '>' are now changing tool-value-1 and '[' and
+	']' are changing tool-value-2
+
+	* app/actions/context-actions.c: removed the shortcuts from the
+	brush size actions.
+
+	* app/tools/gimpbrushtool.c
+	* app/tools/gimpcolortool.c: set tool-value-2 to brush-scale and
+	to color-average-radius, so '[' and ']' always affect the size of
+	the tip of the active tool. tool-value-1 is connected to
+	context-opacity so that is changeable using '<' and '>' now.
+
 2006-11-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/gimpui.override: override the wrapper for

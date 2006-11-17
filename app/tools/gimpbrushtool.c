@@ -102,8 +102,8 @@ gimp_brush_tool_init (GimpBrushTool *brush_tool)
 {
   GimpTool *tool = GIMP_TOOL (brush_tool);
 
-  gimp_tool_control_set_action_value_2  (tool->control,
-                                         "context/context-brush-radius-set");
+  gimp_tool_control_set_action_value_2 (tool->control,
+                                        "tools/tools-paint-brush-scale-set");
   gimp_tool_control_set_action_value_3  (tool->control,
                                          "context/context-brush-aspect-set");
   gimp_tool_control_set_action_value_4  (tool->control,
