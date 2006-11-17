@@ -902,6 +902,23 @@ _wrap_gimp_int_combo_box_new(PyGObject *self, PyObject *args, PyObject *kwargs)
 %%
 new-constructor GIMP_TYPE_INT_COMBO_BOX
 %%
+override gimp_int_combo_box_get_active
+static PyObject *
+_wrap_gimp_int_combo_box_get_active(PyGObject *self, PyObject *args)
+{
+    int value;
+
+    if (!PyArg_ParseTuple(args, ""))
+        return NULL;
+
+    if (gimp_int_combo_box_get_active(GIMP_INT_COMBO_BOX(self->obj), &value))
+        return PyLong_FromLong(value);
+
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
 override gimp_browser_add_search_types kwargs
 static PyObject *
 _wrap_gimp_browser_add_search_types(PyGObject *self, PyObject *args, PyObject *kwargs)
