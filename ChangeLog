@@ -1,3 +1,12 @@
+2006-11-17  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpparamspecs.c: Hack up gimp_value_set_item() to do
+	the correct thing for subtypes of GimpItems.
+
+	* app/actions/plug-in-commands.c: Don't rely on the GimpValues for
+	type checking, pass the param specs to the _collect functions and
+	use them for typechecking.
+
 2006-11-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/tools-actions.c
