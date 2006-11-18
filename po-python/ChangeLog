@@ -1,3 +1,8 @@
+2006-11-18  Djihed Afifi <djihed@gmail.com> 
+
+	* ar.po: Added Arabic Translation.
+	* LINGUAS: Added ar.
+
 2006-11-06  Marco Ciampa  <ciampix@libero.it>
 
 	* it.po: updated italian translation.
