@@ -1,3 +1,8 @@
+2006-11-18  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c: Properly handle PDB_LAYERs
+	and PDB_CHANNELs when passed by the menus in the resp. dialogs
+
 2006-11-17  Michael Natterer  <mitch@gimp.org>
 
 	Got rid of the word "editor" were it was good for nothing but

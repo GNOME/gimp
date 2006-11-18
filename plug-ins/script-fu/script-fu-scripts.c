@@ -804,6 +804,20 @@ script_fu_script_proc (const gchar      *name,
               min_args++;
             }
 
+          if (nparams > 2 && params[2].type == GIMP_PDB_LAYER &&
+              script->num_args > 1 && script->arg_types[1] == SF_LAYER)
+            {
+              script->arg_values[1].sfa_layer = params[2].data.d_layer;
+              min_args++;
+            }
+
+          if (nparams > 2 && params[2].type == GIMP_PDB_CHANNEL &&
+              script->num_args > 1 && script->arg_types[1] == SF_CHANNEL)
+            {
+              script->arg_values[1].sfa_channel = params[2].data.d_channel;
+              min_args++;
+            }
+
           if (nparams > 2 && params[2].type == GIMP_PDB_VECTORS &&
               script->num_args > 1 && script->arg_types[1] == SF_VECTORS)
             {
