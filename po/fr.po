@@ -12,10 +12,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.2.13\n"
+"Project-Id-Version: gimp 2.2.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-25 22:27+0200\n"
-"PO-Revision-Date: 2006-07-25 22:27+0200\n"
+"POT-Creation-Date: 2006-11-18 15:58+0100\n"
+"PO-Revision-Date: 2006-11-18 15:21+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -1196,11 +1196,11 @@ msgstr "Coller en tant que _nouveau"
 
 #: ../app/actions/edit-actions.c:113
 msgid "Cu_t Named..."
-msgstr "Cou_per (nommé)"
+msgstr "Cou_per (nommé)..."
 
 #: ../app/actions/edit-actions.c:118
 msgid "_Copy Named..."
-msgstr "_Copier (nommé)"
+msgstr "_Copier (nommé)..."
 
 #: ../app/actions/edit-actions.c:123
 msgid "_Paste Named..."
@@ -1331,7 +1331,7 @@ msgstr "_Ouvrir comme un calque..."
 
 #: ../app/actions/file-actions.c:81
 msgid "Open _Location..."
-msgstr "Ouvrir suivant l'_emplacement :"
+msgstr "Ouvrir un emp_lacement..."
 
 #: ../app/actions/file-actions.c:86
 msgid "_Save"
@@ -1357,7 +1357,7 @@ msgstr "_Revenir..."
 msgid "_Quit"
 msgstr "_Quitter"
 
-#: ../app/actions/file-commands.c:215 ../app/dialogs/file-save-dialog.c:292
+#: ../app/actions/file-commands.c:215 ../app/dialogs/file-save-dialog.c:291
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1583,7 +1583,7 @@ msgstr "_Retourner le segment"
 
 #: ../app/actions/gradient-editor-actions.c:596
 msgid "_Replicate Segment..."
-msgstr "_Dupliquer le segment"
+msgstr "_Dupliquer le segment..."
 
 #: ../app/actions/gradient-editor-actions.c:598
 msgid "Split Segment at _Midpoint"
@@ -1619,7 +1619,7 @@ msgstr "_Retourner la sélection"
 
 #: ../app/actions/gradient-editor-actions.c:618
 msgid "_Replicate Selection..."
-msgstr "_Dupliquer la sélection"
+msgstr "_Dupliquer la sélection..."
 
 #: ../app/actions/gradient-editor-actions.c:620
 msgid "Split Segments at _Midpoints"
@@ -1864,11 +1864,11 @@ msgstr "Configurer la g_rille..."
 
 #: ../app/actions/image-actions.c:128
 msgid "_Grayscale"
-msgstr "Niveaux de _gris"
+msgstr "_Niveaux de gris"
 
 #: ../app/actions/image-actions.c:133
 msgid "_Indexed..."
-msgstr "Couleurs _indexées"
+msgstr "_Indexée..."
 
 #: ../app/actions/image-commands.c:192
 msgid "Set Image Canvas Size"
@@ -2623,7 +2623,7 @@ msgstr "Border la sélection de"
 #: ../app/actions/vectors-commands.c:365 ../app/actions/vectors-commands.c:392
 #: ../app/dialogs/stroke-dialog.c:275
 msgid "There is no active layer or channel to stroke to."
-msgstr "Il n'y a pas de calque ou de canal actif sur lequel tracer"
+msgstr "Il n'y a pas de calque ou de canal actif sur lequel tracer."
 
 #: ../app/actions/select-commands.c:280 ../app/core/gimpselection.c:184
 msgid "Stroke Selection"
@@ -3498,19 +3498,19 @@ msgstr ""
 msgid "When enabled, the selected brush will be used for all tools."
 msgstr ""
 "Si cette option est activée, la brosse sélectionnée sera utilisée pour tous "
-"les outils"
+"les outils."
 
 #: ../app/config/gimprc-blurbs.h:127
 msgid "When enabled, the selected gradient will be used for all tools."
 msgstr ""
 "Si cette option est activée, le dégradé sélectionné sera utilisé pour tous "
-"les outils"
+"les outils."
 
 #: ../app/config/gimprc-blurbs.h:130
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr ""
 "Si cette option est activée, le motif sélectionné sera utilisé pour tous les "
-"outils"
+"outils."
 
 #: ../app/config/gimprc-blurbs.h:146
 msgid "Sets the browser used by the help system."
@@ -3948,7 +3948,7 @@ msgid ""
 msgstr ""
 "Fixe une limite supérieure à la mémoire utilisée par limage pour conserver "
 "les opérations de la pile d'annulations. En regard de ce réglage au moins "
-"autant de niveaux d'annulations que configurés pourront être annulés"
+"autant de niveaux d'annulations que configurés pourront être annulés."
 
 #: ../app/config/gimprc-blurbs.h:407
 msgid "Sets the size of the previews in the Undo History."
@@ -4679,7 +4679,7 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
 msgstr ""
-"Erreur fatale d'interprétation dans le fichier de brosse « %s » : Octets = 0"
+"Erreur fatale d'interprétation dans le fichier de brosse « %s » : Octets = 0."
 
 #: ../app/core/gimpbrush.c:596
 #, c-format
@@ -4706,7 +4706,8 @@ msgstr ""
 #: ../app/core/gimpbrushpipe.c:354
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Chaîne de caractères UTF-8 non valide dans le fichier de brosse « %s »"
+msgstr ""
+"Chaîne de caractères UTF-8 non valide dans le fichier de brosse « %s »."
 
 #: ../app/core/gimpbrush.c:640 ../app/core/gimpcontext.c:1299
 #: ../app/core/gimpitem.c:475 ../app/core/gimppattern.c:400
@@ -4737,7 +4738,7 @@ msgstr ""
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
 msgstr ""
 "Erreur fatale d'interprétation dans le fichier de brosse « %s » : version de "
-"brosse GIMP inconnue"
+"brosse GIMP inconnue."
 
 #: ../app/core/gimpbrushgenerated.c:669
 #, c-format
@@ -4996,24 +4997,24 @@ msgstr ""
 "Erreur fatale d'interprétation du fichier de dégradé « %s » : le fichier de "
 "dégradé est corrompu."
 
-#: ../app/core/gimpgradient-load.c:172
+#: ../app/core/gimpgradient-load.c:173
 #, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "Segment corrompu %d dans le fichier de dégradé « %s »."
 
-#: ../app/core/gimpgradient-load.c:183 ../app/core/gimpgradient-load.c:197
+#: ../app/core/gimpgradient-load.c:184 ../app/core/gimpgradient-load.c:198
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 msgstr ""
 "Le fichier de dégragé « %s » est corrompu : les segments ne suivent pas "
 "l'intervalle 0-1."
 
-#: ../app/core/gimpgradient-load.c:281
+#: ../app/core/gimpgradient-load.c:282
 #, c-format
 msgid "No linear gradients found in '%s'"
 msgstr "Aucun dégradé linéaire trouvé dans « %s »"
 
-#: ../app/core/gimpgradient-load.c:291
+#: ../app/core/gimpgradient-load.c:292
 #, c-format
 msgid "Failed to import gradients from '%s': %s"
 msgstr "L'importation des dégradés depuis « %s » a échoué : %s"
@@ -5035,11 +5036,11 @@ msgstr ""
 
 #: ../app/core/gimpgrid.c:145
 msgid "Horizontal spacing of grid lines."
-msgstr "Espacement horizontal des lignes de la grille"
+msgstr "Espacement horizontal des lignes de la grille."
 
 #: ../app/core/gimpgrid.c:150
 msgid "Vertical spacing of grid lines."
-msgstr "Espacement vertical des lignes de la grille"
+msgstr "Espacement vertical des lignes de la grille."
 
 #: ../app/core/gimpgrid.c:159
 msgid ""
@@ -5052,7 +5053,7 @@ msgstr ""
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr ""
 "Décalage vertical de la première ligne de la grille ; ça peut être un nombre "
-"négatif"
+"négatif."
 
 #: ../app/core/gimpimage-colormap.c:63
 msgid "Set Colormap"
@@ -5201,7 +5202,7 @@ msgstr "Descendre le calque"
 
 #: ../app/core/gimpimage.c:2881
 msgid "Layer is already on top."
-msgstr "Le calque est déjà en haut"
+msgstr "Le calque est déjà tout en haut."
 
 #: ../app/core/gimpimage.c:2892
 msgid "Raise Layer to Top"
@@ -5213,7 +5214,7 @@ msgstr "Le calque est déjà tout en bas."
 
 #: ../app/core/gimpimage.c:2917
 msgid "Lower Layer to Bottom"
-msgstr "Envoyer le Calque tout en bas"
+msgstr "Envoyer le calque tout en bas"
 
 #: ../app/core/gimpimage.c:2956
 #, c-format
@@ -5239,7 +5240,7 @@ msgstr "Remonter le canal"
 
 #: ../app/core/gimpimage.c:3132
 msgid "Channel is already on top."
-msgstr "Le calque est déjà en haut."
+msgstr "Le calque est déjà tout en haut."
 
 #: ../app/core/gimpimage.c:3137
 msgid "Raise Channel to Top"
@@ -5431,26 +5432,21 @@ msgstr ""
 #: ../app/core/gimplayer.c:1035
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
-"Impossible d'ajouter un masque à un\n"
-"calque qui ne fait pas partie d'une image."
+"Impossible d'ajouter un masque à un calque qui ne fait pas partie d'une "
+"image."
 
 #: ../app/core/gimplayer.c:1042
 msgid "Unable to add a layer mask since the layer already has one."
-msgstr ""
-"Impossible d'ajouter un masque au\n"
-"calque car il en a déjà un."
+msgstr "Impossible d'ajouter un masque au calque car il en a déjà un."
 
 #: ../app/core/gimplayer.c:1049
 msgid "Cannot add layer mask to a layer with no alpha channel."
-msgstr ""
-"Impossible d'ajouter un masque\n"
-"dans un calque sans canal alpha."
+msgstr "Impossible d'ajouter un masque dans un calque sans canal alpha."
 
 #: ../app/core/gimplayer.c:1059
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
-"Impossible d'ajouter un masque de\n"
-"dimensions différentes de celles du calque."
+"Impossible d'ajouter un masque de dimensions différentes de celles du calque."
 
 #: ../app/core/gimplayer.c:1163
 msgid "Transfer Alpha to Mask"
@@ -5639,11 +5635,11 @@ msgstr ""
 
 #: ../app/core/gimptemplate.c:165
 msgid "The horizontal image resolution."
-msgstr "La résolution horizontale de l'image"
+msgstr "La résolution horizontale de l'image."
 
 #: ../app/core/gimptemplate.c:170
 msgid "The vertical image resolution."
-msgstr "La résolution verticale de l'image"
+msgstr "La résolution verticale de l'image."
 
 #: ../app/core/gimptemplate.c:450 ../app/widgets/widgets-enums.c:24
 msgid "Background"
@@ -5757,7 +5753,7 @@ msgstr "Tramage"
 
 #: ../app/dialogs/convert-dialog.c:233
 msgid "Color _dithering:"
-msgstr "Aucun _tramage de couleur"
+msgstr "Aucun _tramage de couleur :"
 
 #: ../app/dialogs/convert-dialog.c:248
 msgid "Enable dithering of _transparency"
@@ -5839,20 +5835,20 @@ msgstr "Ouvrir suivant l'emplacement"
 msgid "Enter location (URI):"
 msgstr "Indiquer l'emplacement (URI) :"
 
-#: ../app/dialogs/file-save-dialog.c:195
+#: ../app/dialogs/file-save-dialog.c:194
 msgid "File exists"
 msgstr "Le fichier existe"
 
-#: ../app/dialogs/file-save-dialog.c:200
+#: ../app/dialogs/file-save-dialog.c:199
 msgid "_Replace"
 msgstr "_Remplacer"
 
-#: ../app/dialogs/file-save-dialog.c:210
+#: ../app/dialogs/file-save-dialog.c:209
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "Un fichier appelé « %s » existe déjà."
 
-#: ../app/dialogs/file-save-dialog.c:215
+#: ../app/dialogs/file-save-dialog.c:214
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Voulez vous le remplacer avec l'image que vous enregistrez ?"
 
@@ -5905,7 +5901,7 @@ msgstr "Confirmer la taille de l'image"
 #: ../app/dialogs/image-scale-dialog.c:193
 #, c-format
 msgid "You are trying to create an image with a size of %s."
-msgstr "Vous essayez de créer une image avec une taille de %s"
+msgstr "Vous essayez de créer une image avec une taille de %s."
 
 #: ../app/dialogs/image-new-dialog.c:289
 #, c-format
@@ -5913,8 +5909,8 @@ msgid ""
 "An image of the choosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
 msgstr ""
-"Une image à la taille demandée conduira à utiliser plus de mémoire que la « "
-"taille maximum de nouvelle image » dans le dialogue des préférences "
+"Une image à la taille demandée conduira à utiliser plus de mémoire que la "
+"« taille maximum de nouvelle image » dans le dialogue des préférences "
 "(actuellement %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:164
@@ -6310,7 +6306,7 @@ msgstr "Aperçu"
 
 #: ../app/dialogs/preferences-dialog.c:294
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr "Vous devez relancer GIMP pour que ces changements prennent effet."
+msgstr "Vous devez relancer GIMP pour que ces changements prennent effet :"
 
 #: ../app/dialogs/preferences-dialog.c:501
 msgid "Configure Keyboard Shortcuts"
@@ -6726,7 +6722,7 @@ msgstr "Périphériques d'entrée étendus"
 
 #: ../app/dialogs/preferences-dialog.c:2042
 msgid "Configure E_xtended Input Devices..."
-msgstr "Configurer les périphériques d'entrée _étendus"
+msgstr "Configurer les périphériques d'entrée é_tendus..."
 
 #: ../app/dialogs/preferences-dialog.c:2049
 msgid "_Save input device settings on exit"
@@ -7276,15 +7272,13 @@ msgstr ""
 
 #: ../app/dialogs/user-install-dialog.c:265
 msgid "This folder is searched for image templates."
-msgstr ""
-"Il s'agit d'un dossier utilisé pour rechercher des\n"
-"modèles d'images."
+msgstr "Il s'agit d'un dossier utilisé pour rechercher des modèles d'images."
 
 #: ../app/dialogs/user-install-dialog.c:270
 msgid "This folder is searched for user-installed themes."
 msgstr ""
-"Il s'agit d'un dossier utilisé pour rechercher des\n"
-"thèmes installés par l'utilisateur."
+"Il s'agit d'un dossier utilisé pour rechercher des thèmes installés par "
+"l'utilisateur."
 
 #: ../app/dialogs/user-install-dialog.c:275
 msgid ""
@@ -7301,9 +7295,7 @@ msgstr ""
 
 #: ../app/dialogs/user-install-dialog.c:284
 msgid "This folder is used to store tool options."
-msgstr ""
-"Il s'agit d'un dossier utilisé pour stocker les\n"
-"options des outils."
+msgstr "Il s'agit d'un dossier utilisé pour stocker les options des outils."
 
 #: ../app/dialogs/user-install-dialog.c:289
 msgid "This folder is used to store parameter files for the Curves tool."
@@ -7418,9 +7410,7 @@ msgstr "Dossier GIMP personnel"
 
 #: ../app/dialogs/user-install-dialog.c:850
 msgid "Click \"Continue\" to create your personal GIMP folder."
-msgstr ""
-"Cliquez sur « Continuer » pour créer votre dossier\n"
-"GIMP personnel."
+msgstr "Cliquez sur « Continuer » pour créer votre dossier GIMP personnel."
 
 #: ../app/dialogs/user-install-dialog.c:894
 #, c-format
@@ -7454,15 +7444,13 @@ msgstr "Affinage des performances de GIMP"
 
 #: ../app/dialogs/user-install-dialog.c:998
 msgid "Click \"Continue\" to accept the settings above."
-msgstr ""
-"Cliquez sur « Continuer » pour accepter les\n"
-"paramètres ci-dessus."
+msgstr "Cliquez sur « Continuer » pour accepter les paramètres ci-dessus."
 
 #: ../app/dialogs/user-install-dialog.c:1003
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
-"<b>Pour des performances optimales de GIMP, certains paramètres devront\n"
+"<b>Pour des performances optimales de GIMP, certains paramètres pourront "
 "être ajustés.</b>"
 
 #: ../app/dialogs/user-install-dialog.c:1063
@@ -7592,19 +7580,19 @@ msgstr "Fermer %s"
 
 #: ../app/display/gimpdisplayshell-close.c:131
 msgid "Do_n't save"
-msgstr "_Ne pas enregistrer"
+msgstr "Ne _pas enregistrer"
 
 #: ../app/display/gimpdisplayshell-close.c:192
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr "Enregistrer mes modifications de l'image « %s » avant fermeture ?"
+msgstr "Enregistrer les modifications de l'image « %s » avant fermeture ?"
 
 #: ../app/display/gimpdisplayshell-close.c:209
 #, c-format
 msgid "If you don't save the image, changes from the last %s will be lost."
 msgstr ""
-"Si vous n'enregistrez pas l'image, les modifications depuis les dernières %s "
-"seront perdues."
+"Si vous n'enregistrez pas l'image, les modifications faites il y a %s seront "
+"perdues."
 
 #. one second, the time period
 #: ../app/display/gimpdisplayshell-close.c:266
@@ -8098,7 +8086,7 @@ msgstr ""
 #: ../app/plug-in/plug-in-rc.c:176
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr "Ignore « %s » : version de protocole GIMP erronée"
+msgstr "Ignore « %s » : version de protocole GIMP erronée."
 
 #: ../app/plug-in/plug-in-rc.c:432
 #, c-format
@@ -8824,7 +8812,7 @@ msgstr "Ajuste la teinte et la saturation"
 
 #: ../app/tools/gimphuesaturationtool.c:112
 msgid "Hue-_Saturation..."
-msgstr "_Teinte-Saturation"
+msgstr "_Teinte-Saturation..."
 
 #: ../app/tools/gimphuesaturationtool.c:166
 msgid "Adjust hue / lightness / saturation"
@@ -9085,7 +9073,7 @@ msgstr "_Déplacer"
 
 #: ../app/tools/gimpmovetool.c:298 ../app/tools/gimpmovetool.c:576
 msgid "Move Guide: "
-msgstr "Déplacer un guide :"
+msgstr "Déplacer un guide : "
 
 #: ../app/tools/gimpmovetool.c:570
 msgid "Cancel Guide"
@@ -9093,7 +9081,7 @@ msgstr "Annuler un guide"
 
 #: ../app/tools/gimpmovetool.c:576
 msgid "Add Guide: "
-msgstr "Ajouter un guide :"
+msgstr "Ajouter un guide : "
 
 #: ../app/tools/gimppaintbrushtool.c:52
 msgid "Paint fuzzy brush strokes"
@@ -10477,7 +10465,7 @@ msgstr "Le navigateur d'aide ne démarre pas"
 
 #: ../app/widgets/gimphelp.c:214
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "Impossible de démarrrer le greffon du navigateur d'aide de GIMP"
+msgstr "Impossible de démarrrer le greffon du navigateur d'aide de GIMP."
 
 #: ../app/widgets/gimphelp.c:240
 msgid "Use _web browser instead"
@@ -10743,7 +10731,7 @@ msgstr "Supprimer les options enregistrées..."
 
 #: ../app/widgets/gimpuimanager.c:495
 msgid "Your GIMP installation is incomplete:"
-msgstr "Votre installation GIMP est incomplète."
+msgstr "Votre installation GIMP est incomplète :"
 
 #: ../app/widgets/gimpuimanager.c:497
 msgid "Plase make sure the menu XML files are correctly installed."

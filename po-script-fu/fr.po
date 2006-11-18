@@ -10,10 +10,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 2.2.13\n"
+"Project-Id-Version: gimp-script-fu 2.2.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-25 23:16+0200\n"
-"PO-Revision-Date: 2006-07-25 23:14+0200\n"
+"POT-Creation-Date: 2006-11-18 15:59+0100\n"
+"PO-Revision-Date: 2006-11-18 15:58+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu-interface.c:177
 msgid "Script-Fu cannot process two scripts at the same time."
-msgstr "Script-fu ne peut exécuter deux scripts simultanément"
+msgstr "Script-Fu ne peut pas exécuter deux scripts simultanément."
 
 #: ../plug-ins/script-fu/script-fu-interface.c:179
 #, c-format
@@ -1625,7 +1625,7 @@ msgstr "_Grille..."
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
 msgid "Creates four Guides around the bounding box of the current selection."
 msgstr ""
-"Créé quatre guides autour du rectangle englobant la sélection courante. "
+"Créé quatre guides autour du rectangle englobant la sélection courante."
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"

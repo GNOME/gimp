@@ -12,10 +12,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 2.2.13\n"
+"Project-Id-Version: gimp-libgimp 2.2.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-25 23:01+0200\n"
-"PO-Revision-Date: 2006-07-25 22:57+0200\n"
+"POT-Creation-Date: 2006-11-18 15:58+0100\n"
+"PO-Revision-Date: 2006-11-18 15:22+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr "_Parcourir..."
 #: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
 #, c-format
 msgid "%s can't handle layers"
-msgstr "%s ne peut gérer les calques"
+msgstr "%s ne peut pas gérer les calques"
 
 #: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
 #: ../libgimp/gimpexport.c:234
@@ -43,7 +43,7 @@ msgstr "Fusionner les calques visibles"
 #: ../libgimp/gimpexport.c:224
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s ne peut gérer les décalages de calque, la taille ou l'opacité"
+msgstr "%s ne peut pas gérer les décalages de calque, la taille ou l'opacité"
 
 #: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
 #, c-format
@@ -62,12 +62,12 @@ msgstr "Aplatir l'image"
 #: ../libgimp/gimpexport.c:260
 #, c-format
 msgid "%s can't handle transparency"
-msgstr "%s ne peut gérer la transparence"
+msgstr "%s ne peut pas gérer la transparence"
 
 #: ../libgimp/gimpexport.c:269
 #, c-format
 msgid "%s can't handle layer masks"
-msgstr "%s ne peut manipuler les masques de calque"
+msgstr "%s ne peut pas manipuler les masques de calque"
 
 #: ../libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
@@ -187,7 +187,7 @@ msgid ""
 "This will not save the visible layers."
 msgstr ""
 "Vous êtes sur le point d'enregistrer un masque de calque comme %s.\n"
-"Cela ne sauvegardera pas les calques visibles."
+"Cela n'enregistrera pas les calques visibles."
 
 #: ../libgimp/gimpexport.c:659
 #, c-format

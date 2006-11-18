@@ -11,10 +11,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins 2.2.13\n"
+"Project-Id-Version: gimp-plug-ins 2.2.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-25 23:14+0200\n"
-"PO-Revision-Date: 2006-07-25 23:03+0200\n"
+"POT-Creation-Date: 2006-11-18 15:58+0100\n"
+"PO-Revision-Date: 2006-11-18 15:35+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team:  GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr ""
 "à votre fichier %s."
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:543
-#: ../plug-ins/FractalExplorer/Dialogs.c:1647
+#: ../plug-ins/FractalExplorer/Dialogs.c:1656
 #: ../plug-ins/imagemap/imap_about.c:39
 #: ../plug-ins/print/gimp_main_window.c:367
 msgid "About"
@@ -291,8 +291,8 @@ msgstr "Cosinus"
 #: ../plug-ins/FractalExplorer/Dialogs.c:1056
 #: ../plug-ins/Lighting/lighting_ui.c:369
 #: ../plug-ins/common/CML_explorer.c:168 ../plug-ins/common/align_layers.c:416
-#: ../plug-ins/common/align_layers.c:447 ../plug-ins/common/postscript.c:3028
-#: ../plug-ins/common/postscript.c:3040 ../plug-ins/common/psp.c:416
+#: ../plug-ins/common/align_layers.c:447 ../plug-ins/common/postscript.c:3044
+#: ../plug-ins/common/postscript.c:3056 ../plug-ins/common/psp.c:416
 #: ../plug-ins/fits/fits.c:1012
 msgid "None"
 msgstr "Aucun"
@@ -382,7 +382,7 @@ msgstr "Dégradé FractalExplorer"
 msgid "_Fractals"
 msgstr "_Fractales"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1796
+#: ../plug-ins/FractalExplorer/Dialogs.c:1828
 #: ../plug-ins/Lighting/lighting_ui.c:1109 ../plug-ins/bmp/bmpwrite.c:198
 #: ../plug-ins/common/CEL.c:577 ../plug-ins/common/CML_explorer.c:2001
 #: ../plug-ins/common/channel_mixer.c:1044 ../plug-ins/common/compressor.c:404
@@ -407,22 +407,22 @@ msgstr "_Fractales"
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossible d'ouvrir « %s » en écriture : %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1810
+#: ../plug-ins/FractalExplorer/Dialogs.c:1842
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Impossible d'écrire « %s » : %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1863
+#: ../plug-ins/FractalExplorer/Dialogs.c:1917
 msgid "Load Fractal Parameters"
 msgstr "Charger les paramètres de la fractale"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1894
+#: ../plug-ins/FractalExplorer/Dialogs.c:1950
 msgid "Save Fractal Parameters"
 msgstr "Enregistrer les paramètres de la fractale"
 
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
-#: ../plug-ins/FractalExplorer/Dialogs.c:2094
+#: ../plug-ins/FractalExplorer/Dialogs.c:2133
 #: ../plug-ins/Lighting/lighting_ui.c:1247 ../plug-ins/bmp/bmpread.c:153
 #: ../plug-ins/common/CEL.c:305 ../plug-ins/common/CML_explorer.c:2216
 #: ../plug-ins/common/channel_mixer.c:966 ../plug-ins/common/curve_bend.c:913
@@ -448,12 +448,12 @@ msgstr "Enregistrer les paramètres de la fractale"
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossible d'ouvrir « %s » en lecture : %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2102
+#: ../plug-ins/FractalExplorer/Dialogs.c:2141
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "« %s » n'est pas un fichier FractalExplorer."
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2108
+#: ../plug-ins/FractalExplorer/Dialogs.c:2147
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "« %s » est endommagé. Ligne option %d section incorrecte"
@@ -466,35 +466,35 @@ msgstr "Explorateur de _fractales..."
 msgid "Rendering Fractal..."
 msgstr "Calcul de la fractale..."
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:772
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:782
 #: ../plug-ins/gflare/gflare.c:3128
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Êtes vous sûr de vouloir effacer « %s » de la liste et du disque ?"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:776
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:786
 msgid "Delete Fractal"
 msgstr "Effacer la fractale"
 
 #. the dialog
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:853
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:863
 msgid "Edit fractal name"
 msgstr "Éditer le nom de la fractale"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:879
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:889
 msgid "Fractal name:"
 msgstr "Nom de la fractale :"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:901
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:911
 msgid "New Fractal"
 msgstr "Nouvelle fractale"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1181
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1191
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Le fichier « %s » n'est pas un fichier FractalExplorer."
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1190
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1200
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -503,27 +503,27 @@ msgstr ""
 "Le fichier « %s » est endommagé.\n"
 "Ligne %d : section d'option incorrecte."
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1240
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1250
 msgid "My first fractal"
 msgstr "Ma première fractale"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1256
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1266
 msgid "Choose Fractal by double-clicking on it"
 msgstr "Choisissez la fractale en double-cliquant dessus"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1293
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1303
 msgid "Select folder and rescan collection"
 msgstr "Sélectionne un dossier et rescrute la collection"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1305
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1315
 msgid "Delete currently selected fractal"
 msgstr "Supprime la fractale actuellement sélectionnée."
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1356
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1366
 msgid "Rescan for Fractals"
 msgstr "Actualisez la liste de fractales"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1373
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1383
 msgid "Add FractalExplorer Path"
 msgstr "Ajoutez un chemin FractalExplorer"
 
@@ -643,7 +643,7 @@ msgid "Position"
 msgstr "Position"
 
 #: ../plug-ins/Lighting/lighting_ui.c:426 ../plug-ins/common/flarefx.c:756
-#: ../plug-ins/common/mblur.c:1001 ../plug-ins/common/nova.c:451
+#: ../plug-ins/common/mblur.c:1001 ../plug-ins/common/nova.c:452
 #: ../plug-ins/common/papertile.c:267 ../plug-ins/flame/flame.c:1207
 #: ../plug-ins/gflare/gflare.c:2653
 msgid "_X:"
@@ -655,7 +655,7 @@ msgid "Light source X position in XYZ space"
 msgstr "Position X de la source en espace XYZ"
 
 #: ../plug-ins/Lighting/lighting_ui.c:439 ../plug-ins/common/flarefx.c:761
-#: ../plug-ins/common/mblur.c:1007 ../plug-ins/common/nova.c:456
+#: ../plug-ins/common/mblur.c:1007 ../plug-ins/common/nova.c:457
 #: ../plug-ins/common/papertile.c:276 ../plug-ins/flame/flame.c:1221
 #: ../plug-ins/gflare/gflare.c:2657
 msgid "_Y:"
@@ -1075,7 +1075,7 @@ msgstr "Position Z de la source en espace XYZ"
 
 #. Rotation
 #: ../plug-ins/MapObject/mapobject_ui.c:1070
-#: ../plug-ins/common/postscript.c:3192
+#: ../plug-ins/common/postscript.c:3208
 msgid "Rotation"
 msgstr "Rotation"
 
@@ -1232,7 +1232,7 @@ msgstr "Mauvaise palette de couleurs"
 #: ../plug-ins/common/wmf.c:952 ../plug-ins/common/xbm.c:724
 #: ../plug-ins/common/xpm.c:342 ../plug-ins/common/xwd.c:475
 #: ../plug-ins/faxg3/faxg3.c:203 ../plug-ins/gfli/gfli.c:465
-#: ../plug-ins/sgi/sgi.c:323 ../plug-ins/winicon/icoload.c:505
+#: ../plug-ins/sgi/sgi.c:323 ../plug-ins/winicon/icoload.c:509
 #: ../plug-ins/xjt/xjt.c:3312
 #, c-format
 msgid "Opening '%s'..."
@@ -1305,7 +1305,7 @@ msgstr "Impossible d'opérer sur des types d'images inconnus."
 #: ../plug-ins/common/tiff.c:1830 ../plug-ins/common/xbm.c:1001
 #: ../plug-ins/common/xpm.c:628 ../plug-ins/common/xwd.c:582
 #: ../plug-ins/fits/fits.c:455 ../plug-ins/gfli/gfli.c:682
-#: ../plug-ins/sgi/sgi.c:545 ../plug-ins/winicon/icosave.c:977
+#: ../plug-ins/sgi/sgi.c:545 ../plug-ins/winicon/icosave.c:987
 #: ../plug-ins/xjt/xjt.c:1682
 #, c-format
 msgid "Saving '%s'..."
@@ -2001,11 +2001,11 @@ msgstr "_Rejouer l'animation..."
 
 #: ../plug-ins/common/animationplay.c:413
 msgid "Animation Playback:"
-msgstr "Rejouer une animation : "
+msgstr "Rejouer une animation :"
 
 #: ../plug-ins/common/animationplay.c:431
 msgid "Playback:"
-msgstr "Rejouer : "
+msgstr "Rejouer :"
 
 #: ../plug-ins/common/animationplay.c:457
 msgid "Play/Stop"
@@ -2129,16 +2129,16 @@ msgid "Blinds"
 msgstr "Fenêtre avec store"
 
 #. Orientation toggle box
-#: ../plug-ins/common/blinds.c:255 ../plug-ins/common/ripple.c:535
+#: ../plug-ins/common/blinds.c:255 ../plug-ins/common/ripple.c:541
 msgid "Orientation"
 msgstr "Orientation"
 
-#: ../plug-ins/common/blinds.c:259 ../plug-ins/common/ripple.c:539
+#: ../plug-ins/common/blinds.c:259 ../plug-ins/common/ripple.c:545
 #: ../plug-ins/common/tileit.c:418 ../plug-ins/pagecurl/pagecurl.c:530
 msgid "_Horizontal"
 msgstr "_Horizontal"
 
-#: ../plug-ins/common/blinds.c:260 ../plug-ins/common/ripple.c:540
+#: ../plug-ins/common/blinds.c:260 ../plug-ins/common/ripple.c:546
 #: ../plug-ins/common/tileit.c:428 ../plug-ins/pagecurl/pagecurl.c:529
 msgid "_Vertical"
 msgstr "_Vertical"
@@ -2234,7 +2234,7 @@ msgstr "_Azimut :"
 msgid "_Elevation:"
 msgstr "_Élévation :"
 
-#: ../plug-ins/common/bumpmap.c:993 ../plug-ins/common/postscript.c:3146
+#: ../plug-ins/common/bumpmap.c:993 ../plug-ins/common/postscript.c:3162
 msgid "_X offset:"
 msgstr "Décalage _X :"
 
@@ -2246,7 +2246,7 @@ msgstr ""
 "Le décalage peut être ajusté en glissant l'aperçu avec le bouton du milieu "
 "de la souris."
 
-#: ../plug-ins/common/bumpmap.c:1007 ../plug-ins/common/postscript.c:3155
+#: ../plug-ins/common/bumpmap.c:1007 ../plug-ins/common/postscript.c:3171
 msgid "_Y offset:"
 msgstr "Décalage _Y :"
 
@@ -2540,7 +2540,7 @@ msgstr "LAB"
 
 #: ../plug-ins/common/compose.c:176
 msgid "Luma_y470:"
-msgstr "Luminance_y470"
+msgstr "Luminance_y470 :"
 
 #: ../plug-ins/common/compose.c:177
 msgid "Blueness_cb470:"
@@ -2588,7 +2588,7 @@ msgstr "Chrominance rouge_cr709f :"
 
 #: ../plug-ins/common/compose.c:294
 msgid "C_ompose..."
-msgstr "C_omposer..."
+msgstr "_Composer..."
 
 #: ../plug-ins/common/compose.c:360
 #, c-format
@@ -2623,7 +2623,7 @@ msgstr "Composer"
 #. The left frame keeps the compose type toggles
 #: ../plug-ins/common/compose.c:1119
 msgid "Compose Channels"
-msgstr "Composer canaux"
+msgstr "Composer les canaux"
 
 #. The right frame keeps the selection menues for images.
 #. Because the labels within this frame will change when a toggle
@@ -2631,7 +2631,7 @@ msgstr "Composer canaux"
 #. Otherwise it can occur, that a non-existing label might be changed.
 #: ../plug-ins/common/compose.c:1130
 msgid "Channel Representations"
-msgstr "Représentations de canaux"
+msgstr "Représentation des canaux"
 
 #: ../plug-ins/common/compressor.c:153
 msgid "gzip archive"
@@ -2643,12 +2643,12 @@ msgstr "archive bzip"
 
 #: ../plug-ins/common/compressor.c:367
 msgid "No sensible extension, saving as compressed XCF."
-msgstr "Pas d'extension raisonnable, sauvegarde en tant que XCF"
+msgstr "Aucune extension raisonnable, enregistrement en tant que XCF."
 
 #: ../plug-ins/common/compressor.c:508
 msgid "No sensible extension, attempting to load with file magic."
 msgstr ""
-"Pas d'extension raisonnable, essai de chargement avec détection magique"
+"Aucune extension raisonnable, essai de chargement avec détection magique."
 
 #: ../plug-ins/common/convmatrix.c:87
 msgid "Gr_ey"
@@ -2675,7 +2675,7 @@ msgid "E_xtend"
 msgstr "É_tendre"
 
 #: ../plug-ins/common/convmatrix.c:97 ../plug-ins/common/displace.c:394
-#: ../plug-ins/common/edge.c:716 ../plug-ins/common/ripple.c:560
+#: ../plug-ins/common/edge.c:716 ../plug-ins/common/ripple.c:566
 msgid "_Wrap"
 msgstr "Enro_uler"
 
@@ -2812,7 +2812,7 @@ msgstr "_Courber..."
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
 "Ne peut opérer que sur des calques (mais a été lancé depuis un canal ou un "
-"masque). "
+"masque)."
 
 #: ../plug-ins/common/curve_bend.c:721
 msgid "Cannot operate on layers with masks."
@@ -2849,7 +2849,7 @@ msgstr "Aperçu automati_que"
 #. the vertical box and its toggle buttons
 #. Options section
 #: ../plug-ins/common/curve_bend.c:1316 ../plug-ins/common/mosaic.c:529
-#: ../plug-ins/common/ripple.c:501 ../plug-ins/gfig/gfig-dialog.c:1209
+#: ../plug-ins/common/ripple.c:507 ../plug-ins/gfig/gfig-dialog.c:1209
 msgid "Options"
 msgstr "Options"
 
@@ -2865,7 +2865,7 @@ msgstr "_Adoucissement"
 
 #. The antialiasing toggle
 #: ../plug-ins/common/curve_bend.c:1358 ../plug-ins/common/gqbist.c:821
-#: ../plug-ins/common/mosaic.c:535 ../plug-ins/common/ripple.c:510
+#: ../plug-ins/common/mosaic.c:535 ../plug-ins/common/ripple.c:516
 msgid "_Antialiasing"
 msgstr "_Lissage"
 
@@ -3223,7 +3223,7 @@ msgid "Destripe"
 msgstr "Anti-traînées"
 
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/gtm.c:578
-#: ../plug-ins/common/postscript.c:2967 ../plug-ins/common/postscript.c:3128
+#: ../plug-ins/common/postscript.c:2983 ../plug-ins/common/postscript.c:3144
 #: ../plug-ins/common/raw.c:985 ../plug-ins/common/smooth_palette.c:429
 #: ../plug-ins/common/tile.c:417 ../plug-ins/imagemap/imap_cmd_guides.c:167
 #: ../plug-ins/imagemap/imap_rectangle.c:403
@@ -3316,13 +3316,13 @@ msgid "On Edges:"
 msgstr "Sur les côtés :"
 
 #: ../plug-ins/common/displace.c:396 ../plug-ins/common/edge.c:729
-#: ../plug-ins/common/ripple.c:561 ../plug-ins/common/waves.c:274
+#: ../plug-ins/common/ripple.c:567 ../plug-ins/common/waves.c:274
 msgid "_Smear"
 msgstr "É_taler"
 
 #: ../plug-ins/common/displace.c:398 ../plug-ins/common/edge.c:742
 #: ../plug-ins/common/fractaltrace.c:735 ../plug-ins/common/newsprint.c:405
-#: ../plug-ins/common/ripple.c:562
+#: ../plug-ins/common/ripple.c:568
 msgid "_Black"
 msgstr "_Noir"
 
@@ -3436,8 +3436,8 @@ msgid "Engrave"
 msgstr "Gravure"
 
 #: ../plug-ins/common/engrave.c:238 ../plug-ins/common/film.c:1203
-#: ../plug-ins/common/gtm.c:594 ../plug-ins/common/postscript.c:2976
-#: ../plug-ins/common/postscript.c:3137 ../plug-ins/common/raw.c:998
+#: ../plug-ins/common/gtm.c:594 ../plug-ins/common/postscript.c:2992
+#: ../plug-ins/common/postscript.c:3153 ../plug-ins/common/raw.c:998
 #: ../plug-ins/common/smooth_palette.c:434 ../plug-ins/common/tile.c:421
 #: ../plug-ins/imagemap/imap_cmd_guides.c:177
 #: ../plug-ins/imagemap/imap_rectangle.c:410
@@ -4042,7 +4042,7 @@ msgstr "millisecondes"
 
 #: ../plug-ins/common/gif.c:1390
 msgid "Frame disposal where unspecified: "
-msgstr "Disposition des images lorsque non spécifié :"
+msgstr "Disposition des images lorsque non spécifié : "
 
 #: ../plug-ins/common/gif.c:1394
 msgid "I don't care"
@@ -4109,7 +4109,7 @@ msgstr "Le calque %s n'a pas de canal alpha (transparence), je l'ignore."
 
 #: ../plug-ins/common/gih.c:490
 msgid "Error in GIMP brush pipe file."
-msgstr "Erreur dans le fichier de brosse animée GIMP"
+msgstr "Erreur dans le fichier de brosse animée GIMP."
 
 #: ../plug-ins/common/gih.c:556
 msgid "GIMP brush file appears to be corrupted."
@@ -4344,7 +4344,7 @@ msgstr "L_égende"
 
 #: ../plug-ins/common/gtm.c:510
 msgid "Check if you would like to have the table captioned."
-msgstr "Cochez ici pour que la table ait une légende"
+msgstr "Cochez ici pour que la table ait une légende."
 
 #: ../plug-ins/common/gtm.c:525
 msgid "The text for the table caption."
@@ -4352,7 +4352,7 @@ msgstr "Le texte pour la légende de la table."
 
 #: ../plug-ins/common/gtm.c:538
 msgid "C_ell content:"
-msgstr "Contenu de la c_ellule"
+msgstr "Contenu de la c_ellule :"
 
 #: ../plug-ins/common/gtm.c:542
 msgid "The text to go into each cell."
@@ -4390,7 +4390,7 @@ msgstr "_Bourrage des cellules :"
 # vérifier
 #: ../plug-ins/common/gtm.c:613
 msgid "The amount of cellpadding."
-msgstr "La quantité de bourrage de cellule"
+msgstr "La quantité de bourrage de cellule."
 
 #: ../plug-ins/common/gtm.c:622
 msgid "Cell-_spacing:"
@@ -5403,11 +5403,11 @@ msgstr "Ra_yonnement :"
 msgid "R_andom hue:"
 msgstr "Teinte _aléatoire :"
 
-#: ../plug-ins/common/nova.c:438
+#: ../plug-ins/common/nova.c:439
 msgid "Center of SuperNova"
 msgstr "Centre de la Supernova"
 
-#: ../plug-ins/common/nova.c:472
+#: ../plug-ins/common/nova.c:473
 msgid "S_how cursor"
 msgstr "A_fficher le réticule"
 
@@ -5712,7 +5712,7 @@ msgstr "PNM : Fin de fichier prématurée."
 
 #: ../plug-ins/common/pnm.c:467
 msgid "PNM: Invalid file."
-msgstr "PNM : Fichier invalide."
+msgstr "PNM : Fichier non valide."
 
 #: ../plug-ins/common/pnm.c:480
 msgid "File not in a supported format."
@@ -5720,19 +5720,19 @@ msgstr "Le fichier est dans un format non supporté."
 
 #: ../plug-ins/common/pnm.c:489
 msgid "PNM: Invalid X resolution."
-msgstr "PNM : résolution X invalide."
+msgstr "PNM : résolution X non valide."
 
 #: ../plug-ins/common/pnm.c:496
 msgid "PNM: Invalid Y resolution."
-msgstr "PNM : résolution Y invalide."
+msgstr "PNM : résolution Y non valide."
 
 #: ../plug-ins/common/pnm.c:508
 msgid "PNM: Invalid maximum value."
-msgstr "PNM : valeur d'intensité maximale invalide."
+msgstr "PNM : valeur d'intensité maximale non valide."
 
 #: ../plug-ins/common/pnm.c:684
 msgid "PNM: Error reading file."
-msgstr "PNM : Erreur lors de la lecture du fichier"
+msgstr "PNM : Erreur lors de la lecture du fichier."
 
 #: ../plug-ins/common/pnm.c:800
 msgid "PNM save cannot handle images with alpha channels."
@@ -5844,54 +5844,54 @@ msgstr "Erreur au lancement de Ghostscript (%s)"
 msgid "Error starting ghostscript: %s"
 msgstr "Erreur au lancement de Ghostscript : (%s)"
 
-#: ../plug-ins/common/postscript.c:2481 ../plug-ins/common/postscript.c:2614
-#: ../plug-ins/common/postscript.c:2766 ../plug-ins/common/postscript.c:2895
+#: ../plug-ins/common/postscript.c:2497 ../plug-ins/common/postscript.c:2630
+#: ../plug-ins/common/postscript.c:2782 ../plug-ins/common/postscript.c:2911
 #: ../plug-ins/common/sunras.c:1454 ../plug-ins/common/sunras.c:1562
 #: ../plug-ins/fits/fits.c:826 ../plug-ins/fits/fits.c:950
 msgid "Write error occurred"
 msgstr "Une erreur d'écriture est survenue"
 
-#: ../plug-ins/common/postscript.c:2922
+#: ../plug-ins/common/postscript.c:2938
 msgid "Load PostScript"
 msgstr "Charger PostScript"
 
 #. Rendering
-#: ../plug-ins/common/postscript.c:2942
+#: ../plug-ins/common/postscript.c:2958
 msgid "Rendering"
 msgstr "Interprétation"
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:2958 ../plug-ins/common/svg.c:900
+#: ../plug-ins/common/postscript.c:2974 ../plug-ins/common/svg.c:900
 #: ../plug-ins/common/wmf.c:669 ../plug-ins/print/gimp_main_window.c:1087
 msgid "Resolution:"
 msgstr "Résolution :"
 
-#: ../plug-ins/common/postscript.c:2986
+#: ../plug-ins/common/postscript.c:3002
 msgid "Pages:"
 msgstr "Pages :"
 
-#: ../plug-ins/common/postscript.c:2992
+#: ../plug-ins/common/postscript.c:3008
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Pages à charger (ex. : 1-4 ou 1,3,5-7)"
 
-#: ../plug-ins/common/postscript.c:2994
+#: ../plug-ins/common/postscript.c:3010
 msgid "Try Bounding Box"
 msgstr "Essayer la BoundingBox"
 
 #. Colouring
-#: ../plug-ins/common/postscript.c:3007
+#: ../plug-ins/common/postscript.c:3023
 msgid "Coloring"
 msgstr "Coloration"
 
-#: ../plug-ins/common/postscript.c:3011
+#: ../plug-ins/common/postscript.c:3027
 msgid "B/W"
 msgstr "N/B"
 
-#: ../plug-ins/common/postscript.c:3012 ../plug-ins/rcm/rcm_dialog.c:422
+#: ../plug-ins/common/postscript.c:3028 ../plug-ins/rcm/rcm_dialog.c:422
 msgid "Gray"
 msgstr "Gris"
 
-#: ../plug-ins/common/postscript.c:3013 ../plug-ins/common/xpm.c:469
+#: ../plug-ins/common/postscript.c:3029 ../plug-ins/common/xpm.c:469
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:151
 #: ../plug-ins/imagemap/imap_menu.c:306
@@ -5899,40 +5899,40 @@ msgstr "Gris"
 msgid "Color"
 msgstr "Couleur"
 
-#: ../plug-ins/common/postscript.c:3014 ../plug-ins/fits/fits.c:1000
+#: ../plug-ins/common/postscript.c:3030 ../plug-ins/fits/fits.c:1000
 msgid "Automatic"
 msgstr "Automatique"
 
-#: ../plug-ins/common/postscript.c:3024
+#: ../plug-ins/common/postscript.c:3040
 msgid "Text antialiasing"
 msgstr "Lissage du texte"
 
-#: ../plug-ins/common/postscript.c:3029 ../plug-ins/common/postscript.c:3041
+#: ../plug-ins/common/postscript.c:3045 ../plug-ins/common/postscript.c:3057
 msgid "Weak"
 msgstr "Faible"
 
-#: ../plug-ins/common/postscript.c:3030 ../plug-ins/common/postscript.c:3042
+#: ../plug-ins/common/postscript.c:3046 ../plug-ins/common/postscript.c:3058
 msgid "Strong"
 msgstr "Fort"
 
-#: ../plug-ins/common/postscript.c:3036
+#: ../plug-ins/common/postscript.c:3052
 msgid "Graphic antialiasing"
 msgstr "Lissage Graphique"
 
-#: ../plug-ins/common/postscript.c:3088
+#: ../plug-ins/common/postscript.c:3104
 msgid "Save as PostScript"
 msgstr "Enregistrer en PostScript"
 
 #. Image Size
-#: ../plug-ins/common/postscript.c:3112
+#: ../plug-ins/common/postscript.c:3128
 msgid "Image Size"
 msgstr "Taille de l'image"
 
-#: ../plug-ins/common/postscript.c:3161
+#: ../plug-ins/common/postscript.c:3177
 msgid "_Keep aspect ratio"
 msgstr "Ratio d'aspect _fixe"
 
-#: ../plug-ins/common/postscript.c:3167
+#: ../plug-ins/common/postscript.c:3183
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5941,36 +5941,36 @@ msgstr ""
 "taille donnée sans changer les proportions."
 
 #. Unit
-#: ../plug-ins/common/postscript.c:3176
+#: ../plug-ins/common/postscript.c:3192
 msgid "Unit"
 msgstr "Unité"
 
-#: ../plug-ins/common/postscript.c:3180
+#: ../plug-ins/common/postscript.c:3196
 msgid "_Inch"
 msgstr "_Pouce"
 
-#: ../plug-ins/common/postscript.c:3181
+#: ../plug-ins/common/postscript.c:3197
 msgid "_Millimeter"
 msgstr "_Millimètre"
 
 #. Format
-#: ../plug-ins/common/postscript.c:3207
+#: ../plug-ins/common/postscript.c:3223
 msgid "Output"
 msgstr "Sortie"
 
-#: ../plug-ins/common/postscript.c:3213
+#: ../plug-ins/common/postscript.c:3229
 msgid "_PostScript level 2"
 msgstr "_PostScript niveau 2"
 
-#: ../plug-ins/common/postscript.c:3222
+#: ../plug-ins/common/postscript.c:3238
 msgid "_Encapsulated PostScript"
 msgstr "PostScript _encapsulé"
 
-#: ../plug-ins/common/postscript.c:3231
+#: ../plug-ins/common/postscript.c:3247
 msgid "P_review"
 msgstr "_Aperçu"
 
-#: ../plug-ins/common/postscript.c:3252
+#: ../plug-ins/common/postscript.c:3268
 msgid "Preview _size:"
 msgstr "_Taille de l'aperçu :"
 
@@ -6045,23 +6045,23 @@ msgstr "_Piquer..."
 msgid "_Slur..."
 msgstr "_Mélanger..."
 
-#: ../plug-ins/common/randomize.c:756 ../plug-ins/common/snoise.c:614
+#: ../plug-ins/common/randomize.c:759 ../plug-ins/common/snoise.c:614
 msgid "_Random seed:"
 msgstr "_Graine aléatoire :"
 
-#: ../plug-ins/common/randomize.c:765
+#: ../plug-ins/common/randomize.c:768
 msgid "R_andomization (%):"
 msgstr "_Aléa (%) :"
 
-#: ../plug-ins/common/randomize.c:768
+#: ../plug-ins/common/randomize.c:771
 msgid "Percentage of pixels to be filtered"
 msgstr "Pourcentage des pixels à filtrer"
 
-#: ../plug-ins/common/randomize.c:777
+#: ../plug-ins/common/randomize.c:780
 msgid "R_epeat:"
 msgstr "Ré_pétition :"
 
-#: ../plug-ins/common/randomize.c:780
+#: ../plug-ins/common/randomize.c:783
 msgid "Number of times to apply filter"
 msgstr "Combien de fois appliquer le filtre"
 
@@ -6189,41 +6189,41 @@ msgstr "Retinex: filtrage..."
 msgid "_Ripple..."
 msgstr "Ond_uler..."
 
-#: ../plug-ins/common/ripple.c:222
+#: ../plug-ins/common/ripple.c:228
 msgid "Rippling..."
 msgstr "Ondulation en cours..."
 
-#: ../plug-ins/common/ripple.c:472
+#: ../plug-ins/common/ripple.c:478
 msgid "Ripple"
 msgstr "Onduler"
 
-#: ../plug-ins/common/ripple.c:522
+#: ../plug-ins/common/ripple.c:528
 msgid "_Retain tilability"
 msgstr "Garder la _raccordabilité"
 
 #. Edges toggle box
-#: ../plug-ins/common/ripple.c:556
+#: ../plug-ins/common/ripple.c:562
 msgid "Edges"
 msgstr "Bordures"
 
 #. Wave toggle box
-#: ../plug-ins/common/ripple.c:584
+#: ../plug-ins/common/ripple.c:590
 msgid "Wave Type"
 msgstr "Type d'onde"
 
-#: ../plug-ins/common/ripple.c:588
+#: ../plug-ins/common/ripple.c:594
 msgid "Saw_tooth"
 msgstr "_Dent de scie"
 
-#: ../plug-ins/common/ripple.c:589
+#: ../plug-ins/common/ripple.c:595
 msgid "S_ine"
 msgstr "S_inus"
 
-#: ../plug-ins/common/ripple.c:612
+#: ../plug-ins/common/ripple.c:618
 msgid "_Period:"
 msgstr "_Période :"
 
-#: ../plug-ins/common/ripple.c:625
+#: ../plug-ins/common/ripple.c:631
 msgid "A_mplitude:"
 msgstr "A_mplitude :"
 
@@ -6239,7 +6239,7 @@ msgstr ""
 
 #: ../plug-ins/common/rotate.c:439
 msgid "Sorry, channels and masks can not be rotated."
-msgstr "Désolé, les canaux et les masques ne peuvent pas être tournés"
+msgstr "Désolé, les canaux et les masques ne peuvent pas être tournés."
 
 #: ../plug-ins/common/rotate.c:445
 msgid "Rotating..."
@@ -6325,7 +6325,7 @@ msgstr "Lisser l'échantillon"
 
 #: ../plug-ins/common/sample_colorize.c:2632
 msgid "Sample Analyze..."
-msgstr "Analise de l'échantillon"
+msgstr "Analyse de l'échantillon..."
 
 #: ../plug-ins/common/sample_colorize.c:3002
 msgid "Remap Colorized..."
@@ -6371,41 +6371,41 @@ msgstr "Erreur de capture du pointeur"
 msgid "Loading Screen Shot..."
 msgstr "Chargement de la capture d'écran..."
 
-#: ../plug-ins/common/screenshot.c:478 ../plug-ins/common/screenshot.c:638
+#: ../plug-ins/common/screenshot.c:478 ../plug-ins/common/screenshot.c:636
 msgid "Screen Shot"
 msgstr "Capture d'écran"
 
-#: ../plug-ins/common/screenshot.c:586
+#: ../plug-ins/common/screenshot.c:584
 msgid "Specified window not found"
 msgstr "Fenêtre spécifiée non trouvée"
 
-#: ../plug-ins/common/screenshot.c:609
+#: ../plug-ins/common/screenshot.c:607
 msgid "Error obtaining Screen Shot"
 msgstr "Erreur d'obtention de la capture d'écran"
 
 #. single window
-#: ../plug-ins/common/screenshot.c:643 ../plug-ins/common/screenshot.c:673
+#: ../plug-ins/common/screenshot.c:641 ../plug-ins/common/screenshot.c:671
 #: ../plug-ins/winsnap/winsnap.c:866
 msgid "Grab"
 msgstr "Capturer"
 
-#: ../plug-ins/common/screenshot.c:680
+#: ../plug-ins/common/screenshot.c:678
 msgid "a _Single Window"
 msgstr "Fenêtre _seule"
 
-#: ../plug-ins/common/screenshot.c:698
+#: ../plug-ins/common/screenshot.c:696
 msgid "S_elect Window After"
 msgstr "Sél_ectionner la fenêtre après"
 
-#: ../plug-ins/common/screenshot.c:713 ../plug-ins/common/screenshot.c:755
+#: ../plug-ins/common/screenshot.c:711 ../plug-ins/common/screenshot.c:753
 msgid "Seconds Delay"
 msgstr "secondes de délai"
 
-#: ../plug-ins/common/screenshot.c:719
+#: ../plug-ins/common/screenshot.c:717
 msgid "the _Whole Screen"
 msgstr "Écran _entier"
 
-#: ../plug-ins/common/screenshot.c:740
+#: ../plug-ins/common/screenshot.c:738
 msgid "Grab _After"
 msgstr "Capturer _après"
 
@@ -6562,7 +6562,7 @@ msgstr "Canaux alpha"
 
 #: ../plug-ins/common/sinus.c:848
 msgid "F_irst Color:"
-msgstr "P_remière couleur : "
+msgstr "P_remière couleur :"
 
 #: ../plug-ins/common/sinus.c:863
 msgid "S_econd Color:"
@@ -6738,7 +6738,7 @@ msgstr ""
 
 #: ../plug-ins/common/sparkle.c:417
 msgid "Spik_e density:"
-msgstr "Densité des point_es"
+msgstr "Densité des point_es :"
 
 #: ../plug-ins/common/sparkle.c:420
 msgid "Adjust the Spike Density"
@@ -7291,7 +7291,7 @@ msgstr "C_réer une nouvelle image"
 
 #: ../plug-ins/common/tileit.c:224
 msgid "_Small Tiles..."
-msgstr "Petits ra_ccords"
+msgstr "Petits ra_ccords..."
 
 #. Get the preview image
 #: ../plug-ins/common/tileit.c:363
@@ -7622,11 +7622,11 @@ msgstr "Propagation"
 
 #: ../plug-ins/common/vpropagate.c:1129
 msgid "Lower t_hreshold:"
-msgstr "_Seuil bas"
+msgstr "_Seuil bas :"
 
 #: ../plug-ins/common/vpropagate.c:1141
 msgid "_Upper threshold:"
-msgstr "Se_uil haut"
+msgstr "Se_uil haut :"
 
 #: ../plug-ins/common/vpropagate.c:1153
 msgid "_Propagating rate:"
@@ -8001,9 +8001,8 @@ msgid ""
 "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
 "error = %d, y = %d"
 msgstr ""
-"Erreur interne :\n"
-"StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY)\n"
-"a échoué, erreur = %d, y=%d"
+"StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) a échoué, "
+"erreur = %d, y=%d"
 
 #: ../plug-ins/common/winprint.c:587
 msgid "EndPage failed"
@@ -8857,7 +8856,7 @@ msgid ""
 "drawable.\n"
 msgstr ""
 "Erreur lors de l'enregistrement de la figure en tant que parasite : ne peut "
-"rattacher le parasite au drawable.\n"
+"pas rattacher le parasite au drawable.\n"
 
 #: ../plug-ins/gfig/gfig.c:752
 #, c-format
@@ -9453,9 +9452,9 @@ msgid ""
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
 "Le champ de vecteurs :\n"
-"* <bouton gauche> pour bouger le vecteur sélectionné\n"
-"* <bouton droit> pour le diriger vers la souris\n"
-"* <bouton du milieu> pour ajouter un nouveau vecteur"
+"* <bouton gauche> pour bouger le vecteur sélectionné.\n"
+"* <bouton droit> pour le diriger vers la souris.\n"
+"* <bouton du milieu> pour ajouter un nouveau vecteur."
 
 #: ../plug-ins/gimpressionist/orientmap.c:565
 #: ../plug-ins/gimpressionist/sizemap.c:435
@@ -9740,9 +9739,9 @@ msgid ""
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
 "Le champ de vecteurs paramétrant les tracés de brosse\n"
-"* <Bouton gauche> pour bouger le vecteur sélectionné\n"
-"* <bouton droit> pour le pointer vers la souris\n"
-"* <bouton du milieu> pour ajouter un nouveau vecteur"
+"* <Bouton gauche> pour bouger le vecteur sélectionné.\n"
+"* <bouton droit> pour le pointer vers la souris.\n"
+"* <bouton du milieu> pour ajouter un nouveau vecteur."
 
 #: ../plug-ins/gimpressionist/sizemap.c:457
 msgid "Select previous smvector"
@@ -10122,11 +10121,11 @@ msgstr ""
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:172
 msgid "_Left Start at:"
-msgstr "Départ _Gauche à"
+msgstr "Départ _Gauche à :"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:182
 msgid "_Top Start at:"
-msgstr "Départ Hau_t à"
+msgstr "Départ Hau_t à :"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:187
 msgid "_Horz. Spacing:"
@@ -10134,7 +10133,7 @@ msgstr "Espacement _Hor :"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:193
 msgid "_No. Across:"
-msgstr "_Nb. d'un coté à l'autre"
+msgstr "_Nb. d'un coté à l'autre :"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:199
 msgid "_Vert. Spacing:"
@@ -10142,7 +10141,7 @@ msgstr "Espacement _Vert :"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:205
 msgid "No. _Down:"
-msgstr "Nb. B_as"
+msgstr "Nb. B_as :"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:214
 msgid "Base _URL:"
@@ -10783,7 +10782,7 @@ msgstr "Construction d'un labyrinthe raccordable par l'algorithme de Prim..."
 
 #: ../plug-ins/maze/maze.c:163
 msgid "_Maze..."
-msgstr "_Labyrinthe"
+msgstr "_Labyrinthe..."
 
 #: ../plug-ins/maze/maze.c:450
 msgid "Drawing Maze..."
@@ -11709,7 +11708,7 @@ msgstr "Détails de l'icône"
 msgid "Icon #%i"
 msgstr "Icône n° %i"
 
-#: ../plug-ins/winicon/icosave.c:969
+#: ../plug-ins/winicon/icosave.c:979
 msgid "Windows icons cannot be higher or wider than 255 pixels."
 msgstr "Les icônes Windows ne peuvent être plus large ou haute que 255 pixels."
 
