@@ -1,3 +1,8 @@
+2006-11-18  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scheme-wrapper.c (marshall_proc_db_call): Set
+	return_val before destroying values[] as it may still be needed.
+
 2006-11-18  Michael Natterer  <mitch@gimp.org>
 
 	* etc/gtkrc: remove example about adding a help keybinding

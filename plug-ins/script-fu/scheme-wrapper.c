@@ -1524,6 +1524,16 @@ fprintf (stderr, "      data '%.*s'\n",
       break;
     }
 
+  /* If we have no return value(s) from PDB call, return */
+  /* either TRUE or FALSE to indicate if call succeeded. */
+  if (return_val == sc->NIL)
+    {
+      if (values[0].data.d_status == GIMP_PDB_SUCCESS)
+         return_val = sc->vptr->cons (sc, sc->T, sc->NIL);
+      else
+         return_val = sc->vptr->cons (sc, sc->F, sc->NIL);
+    }
+
   /*  free the proc name  */
   g_free (proc_name);
 
@@ -1551,16 +1561,6 @@ fprintf (stderr, "      data '%.*s'\n",
   while (gtk_events_pending ())
     gtk_main_iteration ();
 #endif
-
-  /* If we have no return value(s) from PDB call, return */
-  /* either TRUE or FALSE to indicate if call succeeded. */
-  if (return_val == sc->NIL)
-    {
-      if (values[0].data.d_status == GIMP_PDB_SUCCESS)
-         return_val = sc->vptr->cons (sc, sc->T, sc->NIL);
-      else
-         return_val = sc->vptr->cons (sc, sc->F, sc->NIL);
-    }
 
   return return_val;
 }
