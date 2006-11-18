@@ -14,22 +14,6 @@
 
 
 #
-# Example keybinding to remap Help to F2:
-#
-binding "gimp-help-binding"
-{
-  bind "F2"           { "show-help" (255)        }
-  bind "KP_F2"        { "show-help" (255)        }
-  bind "<shift>F2"    { "show-help" (whats-this) }
-  bind "<shift>KP_F2" { "show-help" (whats-this) }
-  bind "<ctrl>F2"     { "show-help" (tooltip)    }
-  bind "<ctrl>KP_F2"  { "show-help" (tooltip)    }
-}
-
-# class "GtkWidget" binding "gimp-help-binding"
-
-
-#
 # Adjust the size of previews in plug-in dialogs:
 #
 style "gimp-large-preview"

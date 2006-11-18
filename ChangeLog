@@ -1,5 +1,10 @@
 2006-11-18  Michael Natterer  <mitch@gimp.org>
 
+	* etc/gtkrc: remove example about adding a help keybinding
+	(bug #375952).
+
+2006-11-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in-rc.c (plug_in_def_deserialize): applied
 	patch from Jernej Simoncic which enables environment variables and
 	${gimp_foo} variables in plug-in filename and converts them to
