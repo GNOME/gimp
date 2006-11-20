@@ -29,9 +29,7 @@
 #include "libgimpbase/gimpversion.h"
 #include "libgimpbase/gimpenv.h"
 
-#include "domain.h"
-#include "help.h"
-#include "locales.h"
+#include "gimphelp.h"
 
 
 static void    show_version (void) G_GNUC_NORETURN;
@@ -99,7 +97,7 @@ main (gint   argc,
   else
     uri = g_filename_to_uri (help_root, NULL, NULL);
 
-  domain_register (GIMP_HELP_DEFAULT_DOMAIN, uri, help_root);
+  gimp_help_register_domain (GIMP_HELP_DEFAULT_DOMAIN, uri, help_root);
   g_free (uri);
 
   uri = lookup (GIMP_HELP_DEFAULT_DOMAIN,
@@ -118,23 +116,17 @@ main (gint   argc,
   return uri ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
-void
-help_exit (void)
-{
-  /* nothing */
-}
-
 static gchar *
 lookup (const gchar *help_domain,
         const gchar *help_locales,
         const gchar *help_id)
 {
-  HelpDomain *domain = domain_lookup (help_domain);
+  GimpHelpDomain *domain = gimp_help_lookup_domain (help_domain);
 
   if (domain)
     {
-      GList *locales  = locales_parse (help_locales);
-      gchar *full_uri = domain_map (domain, locales, help_id);
+      GList *locales  = gimp_help_parse_locales (help_locales);
+      gchar *full_uri = gimp_help_domain_map (domain, locales, help_id, NULL);
 
       g_list_foreach (locales, (GFunc) g_free, NULL);
       g_list_free (locales);

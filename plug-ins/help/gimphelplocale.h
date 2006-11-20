@@ -21,21 +21,28 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __HELP_H__
-#define __HELP_H__
+#ifndef __GIMP_HELP_LOCALE_H__
+#define __GIMP_HELP_LOCALE_H__
 
 
-#define GIMP_HELP_DEFAULT_DOMAIN  "http://www.gimp.org/help"
-#define GIMP_HELP_DEFAULT_ID      "gimp-main"
-#define GIMP_HELP_DEFAULT_LOCALE  "en"
-
-#define GIMP_HELP_PREFIX          "help"
-#define GIMP_HELP_ENV_URI         "GIMP2_HELP_URI"
-
-/*  #define GIMP_HELP_DEBUG  */
+struct _GimpHelpLocale
+{
+  gchar      *locale_id;
+  GHashTable *help_id_mapping;
+  gchar      *help_missing;
+};
 
 
-void  help_exit (void);
+GimpHelpLocale * gimp_help_locale_new        (const gchar     *locale_id);
+void             gimp_help_locale_free       (GimpHelpLocale  *locale);
+
+const gchar    * gimp_help_locale_map        (GimpHelpLocale  *locale,
+                                              const gchar     *help_id);
+
+gboolean         gimp_help_locale_parse      (GimpHelpLocale  *locale,
+                                              const gchar     *filename,
+                                              const gchar     *help_domain,
+                                              GError         **error);
 
 
-#endif /* ! __HELP_H__ */
+#endif /* __GIMP_HELP_LOCALE_H__ */

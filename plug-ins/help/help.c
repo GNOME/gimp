@@ -29,9 +29,7 @@
 
 #include "libgimp/gimp.h"
 
-#include "domain.h"
-#include "help.h"
-#include "locales.h"
+#include "gimphelp.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -89,14 +87,6 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 MAIN ()
 
-void
-help_exit (void)
-{
-  if (main_loop)
-    g_main_loop_quit (main_loop);
-}
-
-
 static void
 query (void)
 {
@@ -130,54 +120,19 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam   values[1];
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  const gchar       *default_env_domain_uri;
-  gchar             *default_domain_uri;
+  static GimpParam  values[1];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   INIT_I18N ();
-
-  /*  set default values  */
-  default_env_domain_uri = g_getenv (GIMP_HELP_ENV_URI);
-
-  if (default_env_domain_uri)
-    {
-      default_domain_uri = g_strdup (default_env_domain_uri);
-    }
-  else
-    {
-      gchar *help_root = g_build_filename (gimp_data_directory (),
-                                           GIMP_HELP_PREFIX,
-                                           NULL);
-
-      default_domain_uri = g_filename_to_uri (help_root, NULL, NULL);
-
-      g_free (help_root);
-    }
 
   /*  make sure all the arguments are there  */
   if (nparams == 4)
     {
-      gint    num_domain_names = param[0].data.d_int32;
-      gchar **domain_names     = param[1].data.d_stringarray;
-      gint    num_domain_uris  = param[2].data.d_int32;
-      gchar **domain_uris      = param[3].data.d_stringarray;
-
-      if (num_domain_names == num_domain_uris)
+      if (! gimp_help_init (param[0].data.d_int32,
+                            param[1].data.d_stringarray,
+                            param[2].data.d_int32,
+                            param[3].data.d_stringarray))
         {
-          gint i;
-
-          domain_register (GIMP_HELP_DEFAULT_DOMAIN, default_domain_uri, NULL);
-
-          for (i = 0; i < num_domain_names; i++)
-            {
-              domain_register (domain_names[i], domain_uris[i], NULL);
-            }
-        }
-      else
-        {
-          g_printerr ("help: number of names doesn't match number of URIs.\n");
-
           status = GIMP_PDB_CALLING_ERROR;
         }
     }
@@ -187,8 +142,6 @@ run (const gchar      *name,
 
       status = GIMP_PDB_CALLING_ERROR;
     }
-
-  g_free (default_domain_uri);
 
   if (status == GIMP_PDB_SUCCESS)
     {
@@ -305,17 +258,19 @@ load_help (const gchar *procedure,
 static gboolean
 load_help_idle (gpointer data)
 {
-  IdleHelp   *idle_help = data;
-  HelpDomain *domain;
+  IdleHelp       *idle_help = data;
+  GimpHelpDomain *domain;
 
-  domain = domain_lookup (idle_help->help_domain);
+  domain = gimp_help_lookup_domain (idle_help->help_domain);
 
   if (domain)
     {
-      GList *locales = locales_parse (idle_help->help_locales);
-      gchar *full_uri;
+      GList    *locales = gimp_help_parse_locales (idle_help->help_locales);
+      gchar    *full_uri;
+      gboolean  fatal_error;
 
-      full_uri = domain_map (domain, locales, idle_help->help_id);
+      full_uri = gimp_help_domain_map (domain, locales, idle_help->help_id,
+                                       &fatal_error);
 
       g_list_foreach (locales, (GFunc) g_free, NULL);
       g_list_free (locales);
@@ -338,6 +293,10 @@ load_help_idle (gpointer data)
           gimp_destroy_params (return_vals, n_return_vals);
 
           g_free (full_uri);
+        }
+      else if (fatal_error)
+        {
+          g_main_loop_quit (main_loop);
         }
     }
 

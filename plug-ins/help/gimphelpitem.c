@@ -21,22 +21,48 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __DOMAIN_H__
-#define __DOMAIN_H__
+/*  This code is written so that it can also be compiled standalone.
+ *  It shouldn't depend on libgimp.
+ */
+
+#include "config.h"
+
+#include <string.h>
+
+#include <glib.h>
+
+#include "gimphelptypes.h"
+
+#include "gimphelpitem.h"
+
+#ifdef DISABLE_NLS
+#define _(String)  (String)
+#else
+#include "libgimp/stdplugins-intl.h"
+#endif
 
 
-typedef struct _HelpDomain HelpDomain;
+/*  public functions  */
 
+GimpHelpItem *
+gimp_help_item_new (const gchar *ref,
+                    const gchar *title,
+                    const gchar *parent)
+{
+  GimpHelpItem *item = g_new0 (GimpHelpItem, 1);
 
-void         domain_register (const gchar  *domain_name,
-                              const gchar  *domain_uri,
-                              const gchar  *domain_root);
-HelpDomain * domain_lookup   (const gchar  *domain_name);
+  item->ref    = g_strdup (ref);
+  item->title  = g_strdup (title);
+  item->parent = g_strdup (parent);
 
-gchar      * domain_map      (HelpDomain   *domain,
-                              GList        *help_locales,
-                              const gchar  *help_id);
-void         domain_exit     (void);
+  return item;
+}
 
-
-#endif /* ! __DOMAIN_H__ */
+void
+gimp_help_item_free (GimpHelpItem *item)
+{
+  g_free (item->ref);
+  g_free (item->title);
+  g_free (item->parent);
+  g_free (item);
+}

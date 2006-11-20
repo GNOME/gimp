@@ -1,3 +1,20 @@
+2006-11-20  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/help/domain.[ch]
+	* plug-ins/help/help.h: removed these files...
+
+	* plug-ins/help/gimphelptypes.h
+	* plug-ins/help/gimphelp.[ch]
+	* plug-ins/help/gimphelpdomain.[ch]
+	* plug-ins/help/gimphelpitem.[ch]
+	* plug-ins/help/gimphelplocale.[ch]: ...completely chopped and
+	added as new private utility library. Soon to be used by the
+	helpbrowser too.
+
+	* plug-ins/help/Makefile.am
+	* plug-ins/help/gimp-help-lookup.c
+	* plug-ins/help/help.c: changed accordingly.
+
 2006-11-20  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpstroke.[ch]

@@ -1,5 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimphelp = libgimphelp-$(GIMP_API_VERSION).la
 libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
@@ -13,17 +14,25 @@ AM_CPPFLAGS = -DDATADIR=\""$(gimpdatadir)"\"
 
 AM_LDFLAGS = $(mwindows)
 
+lib_LTLIBRARIES = libgimphelp-2.0.la
+
+libgimphelp_2_0_la_SOURCES = \
+	gimphelptypes.h		\
+	gimphelp.c		\
+	gimphelp.h		\
+	gimphelpdomain.c	\
+	gimphelpdomain.h	\
+	gimphelpitem.c		\
+	gimphelpitem.h		\
+	gimphelplocale.c	\
+	gimphelplocale.h	\
+	help.h
+
 libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = help
 
-help_SOURCES = \
-	domain.c	\
-	domain.h	\
-	locales.c	\
-	locales.h	\
-	help.c		\
-	help.h
+help_SOURCES = help.c
 
 INCLUDES = \
 	-I$(top_srcdir)	\
@@ -31,6 +40,7 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
+	$(libgimphelp)	\
 	$(libgimp)	\
 	$(libgimpcolor)	\
 	$(libgimpbase)	\
@@ -42,14 +52,9 @@ LDADD = \
 
 noinst_PROGRAMS = gimp-help-lookup
 
-gimp_help_lookup_SOURCES = \
-	domain.c	\
-	domain.h	\
-	locales.c	\
-	locales.h	\
-	help.h		\
-	gimp-help-lookup.c
+gimp_help_lookup_SOURCES = gimp-help-lookup.c
 
 gimp_help_lookup_LDADD = \
+	$(libgimphelp)	\
 	$(libgimpbase)	\
 	$(GLIB_LIBS)
