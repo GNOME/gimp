@@ -655,6 +655,137 @@ gimp_vectors_stroke_scale (gint32  vectors_ID,
 }
 
 /**
+ * gimp_vectors_stroke_rotate:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @center_x: X coordinate of the rotation center.
+ * @center_y: Y coordinate of the rotation center.
+ * @angle: angle to rotate about.
+ *
+ * rotates the given stroke.
+ *
+ * Rotates the given stroke around given center by angle (in degrees).
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_stroke_rotate (gint32  vectors_ID,
+                            gint    stroke_id,
+                            gdouble center_x,
+                            gdouble center_y,
+                            gdouble angle)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-rotate",
+                                    &nreturn_vals,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_INT32, stroke_id,
+                                    GIMP_PDB_FLOAT, center_x,
+                                    GIMP_PDB_FLOAT, center_y,
+                                    GIMP_PDB_FLOAT, angle,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_stroke_flip:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @flip_type: Flip orientation, either vertical or horizontal.
+ * @axis: axis coordinate about which to flip, in pixels.
+ *
+ * flips the given stroke.
+ *
+ * Rotates the given stroke around given center by angle (in degrees).
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_stroke_flip (gint32              vectors_ID,
+                          gint                stroke_id,
+                          GimpOrientationType flip_type,
+                          gdouble             axis)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-flip",
+                                    &nreturn_vals,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_INT32, stroke_id,
+                                    GIMP_PDB_INT32, flip_type,
+                                    GIMP_PDB_FLOAT, axis,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_stroke_flip_free:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @x1: X coordinate of the first point of the flipping axis.
+ * @y1: Y coordinate of the first point of the flipping axis.
+ * @x2: X coordinate of the second point of the flipping axis.
+ * @y2: Y coordinate of the second point of the flipping axis.
+ *
+ * flips the given stroke about an arbitrary axis.
+ *
+ * Flips the given stroke about an arbitrary axis. Axis is defined by
+ * two coordinates in the image (in pixels), through which the flipping
+ * axis passes.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_stroke_flip_free (gint32  vectors_ID,
+                               gint    stroke_id,
+                               gdouble x1,
+                               gdouble y1,
+                               gdouble x2,
+                               gdouble y2)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-flip-free",
+                                    &nreturn_vals,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_INT32, stroke_id,
+                                    GIMP_PDB_FLOAT, x1,
+                                    GIMP_PDB_FLOAT, y1,
+                                    GIMP_PDB_FLOAT, x2,
+                                    GIMP_PDB_FLOAT, y2,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_vectors_stroke_get_points:
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.

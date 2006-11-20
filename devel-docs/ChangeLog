@@ -1,3 +1,12 @@
+2006-11-20  Simon Budig  <simon@gimp.org>
+
+        * devel-docs/libgimp/libgimp-sections.txt: moved new symbols
+        to their resp. sections.
+
+        * devel-docs/libgimp/tmpl/gimpfontselectbutton.sgml
+        * devel-docs/libgimp/tmpl/gimptools.sgml
+        * devel-docs/libgimp/tmpl/gimpvectors.sgml: regenerated
+
 2006-11-16  Simon Budig  <simon@gimp.org>
 
 	* libgimp/libgimp.types: removed double entry for

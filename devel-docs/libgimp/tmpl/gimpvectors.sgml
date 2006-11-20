@@ -316,6 +316,45 @@ gimpvectors
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_vectors_stroke_flip ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@flip_type: 
+@axis: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_stroke_flip_free ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@x1: 
+@y1: 
+@x2: 
+@y2: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_stroke_rotate ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@center_x: 
+@center_y: 
+@angle: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_vectors_bezier_stroke_conicto ##### -->
 <para>
 

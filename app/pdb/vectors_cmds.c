@@ -548,6 +548,105 @@ vectors_stroke_scale_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
+vectors_stroke_rotate_invoker (GimpProcedure     *procedure,
+                               Gimp              *gimp,
+                               GimpContext       *context,
+                               GimpProgress      *progress,
+                               const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpVectors *vectors;
+  gint32 stroke_id;
+  gdouble center_x;
+  gdouble center_y;
+  gdouble angle;
+
+  vectors = gimp_value_get_vectors (&args->values[0], gimp);
+  stroke_id = g_value_get_int (&args->values[1]);
+  center_x = g_value_get_double (&args->values[2]);
+  center_y = g_value_get_double (&args->values[3]);
+  angle = g_value_get_double (&args->values[4]);
+
+  if (success)
+    {
+      GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+
+      if (stroke)
+        gimp_stroke_rotate (stroke, center_x, center_y, angle);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+vectors_stroke_flip_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpVectors *vectors;
+  gint32 stroke_id;
+  gint32 flip_type;
+  gdouble axis;
+
+  vectors = gimp_value_get_vectors (&args->values[0], gimp);
+  stroke_id = g_value_get_int (&args->values[1]);
+  flip_type = g_value_get_enum (&args->values[2]);
+  axis = g_value_get_double (&args->values[3]);
+
+  if (success)
+    {
+      GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+
+      if (stroke)
+        gimp_stroke_flip (stroke, flip_type, axis);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+vectors_stroke_flip_free_invoker (GimpProcedure     *procedure,
+                                  Gimp              *gimp,
+                                  GimpContext       *context,
+                                  GimpProgress      *progress,
+                                  const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpVectors *vectors;
+  gint32 stroke_id;
+  gdouble x1;
+  gdouble y1;
+  gdouble x2;
+  gdouble y2;
+
+  vectors = gimp_value_get_vectors (&args->values[0], gimp);
+  stroke_id = g_value_get_int (&args->values[1]);
+  x1 = g_value_get_double (&args->values[2]);
+  y1 = g_value_get_double (&args->values[3]);
+  x2 = g_value_get_double (&args->values[4]);
+  y2 = g_value_get_double (&args->values[5]);
+
+  if (success)
+    {
+      GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+
+      if (stroke)
+        gimp_stroke_flip_free (stroke, x1, y1, x2, y2);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
 vectors_stroke_get_points_invoker (GimpProcedure     *procedure,
                                    Gimp              *gimp,
                                    GimpContext       *context,
@@ -1686,6 +1785,147 @@ register_vectors_procs (GimpPDB *pdb)
                                g_param_spec_double ("scale-y",
                                                     "scale y",
                                                     "Scale factor in y direction",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vectors-stroke-rotate
+   */
+  procedure = gimp_procedure_new (vectors_stroke_rotate_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-stroke-rotate");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-vectors-stroke-rotate",
+                                     "rotates the given stroke.",
+                                     "Rotates the given stroke around given center by angle (in degrees).",
+                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
+                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("vectors",
+                                                           "vectors",
+                                                           "The vectors object",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("stroke-id",
+                                                      "stroke id",
+                                                      "The stroke ID",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("center-x",
+                                                    "center x",
+                                                    "X coordinate of the rotation center",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("center-y",
+                                                    "center y",
+                                                    "Y coordinate of the rotation center",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("angle",
+                                                    "angle",
+                                                    "angle to rotate about",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vectors-stroke-flip
+   */
+  procedure = gimp_procedure_new (vectors_stroke_flip_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-stroke-flip");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-vectors-stroke-flip",
+                                     "flips the given stroke.",
+                                     "Rotates the given stroke around given center by angle (in degrees).",
+                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
+                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("vectors",
+                                                           "vectors",
+                                                           "The vectors object",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("stroke-id",
+                                                      "stroke id",
+                                                      "The stroke ID",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_enum ("flip-type",
+                                                     "flip type",
+                                                     "Flip orientation, either vertical or horizontal",
+                                                     GIMP_TYPE_ORIENTATION_TYPE,
+                                                     GIMP_ORIENTATION_HORIZONTAL,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[2]),
+                                      GIMP_ORIENTATION_UNKNOWN);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("axis",
+                                                    "axis",
+                                                    "axis coordinate about which to flip, in pixels",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vectors-stroke-flip-free
+   */
+  procedure = gimp_procedure_new (vectors_stroke_flip_free_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-stroke-flip-free");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-vectors-stroke-flip-free",
+                                     "flips the given stroke about an arbitrary axis.",
+                                     "Flips the given stroke about an arbitrary axis. Axis is defined by two coordinates in the image (in pixels), through which the flipping axis passes.",
+                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
+                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("vectors",
+                                                           "vectors",
+                                                           "The vectors object",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("stroke-id",
+                                                      "stroke id",
+                                                      "The stroke ID",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("x1",
+                                                    "x1",
+                                                    "X coordinate of the first point of the flipping axis",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("y1",
+                                                    "y1",
+                                                    "Y coordinate of the first point of the flipping axis",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("x2",
+                                                    "x2",
+                                                    "X coordinate of the second point of the flipping axis",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("y2",
+                                                    "y2",
+                                                    "Y coordinate of the second point of the flipping axis",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

@@ -1,3 +1,15 @@
+2006-11-20  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpstroke.[ch]
+	* tools/pdbgen/pdb/vectors.pdb
+	* plug-ins/pygimp/pygimp-vectors.c: Applied patch from
+	Joao S. O. Bueno Calligaris that adds some missing transformations
+	to the PDB-API for strokes. Fixes bug #129598.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/vectors_cmds.c
+	* libgimp/gimpvectors_pdb.[ch]: regenerated.
+
 2006-11-18  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scheme-wrapper.c (marshall_proc_db_call): Set

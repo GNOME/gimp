@@ -367,6 +367,26 @@ Functions giving access to common toolbox tools.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_round_rect_select ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@x: 
+@y: 
+@width: 
+@height: 
+@corner_radius_x: 
+@corner_radius_y: 
+@operation: 
+@antialias: 
+@feather: 
+@feather_radius_x: 
+@feather_radius_y: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_rotate ##### -->
 <para>
 

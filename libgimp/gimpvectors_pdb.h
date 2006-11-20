@@ -69,6 +69,21 @@ gboolean              gimp_vectors_stroke_scale              (gint32            
                                                               gint                    stroke_id,
                                                               gdouble                 scale_x,
                                                               gdouble                 scale_y);
+gboolean              gimp_vectors_stroke_rotate             (gint32                  vectors_ID,
+                                                              gint                    stroke_id,
+                                                              gdouble                 center_x,
+                                                              gdouble                 center_y,
+                                                              gdouble                 angle);
+gboolean              gimp_vectors_stroke_flip               (gint32                  vectors_ID,
+                                                              gint                    stroke_id,
+                                                              GimpOrientationType     flip_type,
+                                                              gdouble                 axis);
+gboolean              gimp_vectors_stroke_flip_free          (gint32                  vectors_ID,
+                                                              gint                    stroke_id,
+                                                              gdouble                 x1,
+                                                              gdouble                 y1,
+                                                              gdouble                 x2,
+                                                              gdouble                 y2);
 GimpVectorsStrokeType gimp_vectors_stroke_get_points         (gint32                  vectors_ID,
                                                               gint                    stroke_id,
                                                               gint                   *num_points,

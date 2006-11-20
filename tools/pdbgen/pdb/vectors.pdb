@@ -525,6 +525,114 @@ CODE
     );
 }
 
+sub vectors_stroke_rotate {
+    $blurb = 'rotates the given stroke.';
+
+    $help = <<'HELP';
+Rotates the given stroke around given center by angle (in degrees).
+HELP
+
+    &joao_pdb_misc('2006', '2.4');
+    @inargs = (
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object' },
+	{ name => 'stroke_id', type => 'int32',
+	  desc => 'The stroke ID' },
+	{ name => "center_x", type => 'float',
+	  desc => "X coordinate of the rotation center" },
+	{ name => "center_y", type => 'float',
+	  desc => "Y coordinate of the rotation center" },
+        { name => "angle", type => 'float',
+	  desc => "angle to rotate about" }
+    );
+
+    %invoke = (
+        code => <<"CODE"
+{
+  GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+  
+  if (stroke)
+    gimp_stroke_rotate (stroke, center_x, center_y, angle);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub vectors_stroke_flip {
+    $blurb = 'flips the given stroke.';
+
+    $help = <<'HELP';
+Rotates the given stroke around given center by angle (in degrees).
+HELP
+
+    &joao_pdb_misc('2006', '2.4');
+    @inargs = (
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object' },
+	{ name => 'stroke_id', type => 'int32',
+	  desc => 'The stroke ID' },
+	{ name => "flip_type",
+	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
+	  desc => "Flip orientation, either vertical or horizontal" },
+	{ name => "axis", type => 'float',
+	  desc => "axis coordinate about which to flip, in pixels" }
+    );
+
+    %invoke = (
+        code => <<"CODE"
+{
+  GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+  
+  if (stroke)
+    gimp_stroke_flip (stroke, flip_type, axis);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub vectors_stroke_flip_free {
+    $blurb = 'flips the given stroke about an arbitrary axis.';
+
+    $help = <<'HELP';
+Flips the given stroke about an arbitrary axis. Axis is defined by two coordinates
+in the image (in pixels), through which the flipping axis passes.
+HELP
+
+    &joao_pdb_misc('2006', '2.4');
+    @inargs = (
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object' },
+	{ name => 'stroke_id', type => 'int32',
+	  desc => 'The stroke ID' },
+	{ name => "x1", type => 'float',
+	  desc => "X coordinate of the first point of the flipping axis" },
+	{ name => "y1", type => 'float',
+	  desc => "Y coordinate of the first point of the flipping axis" },
+	{ name => "x2", type => 'float',
+	  desc => "X coordinate of the second point of the flipping axis" },
+	{ name => "y2", type => 'float',
+	  desc => "Y coordinate of the second point of the flipping axis" },
+
+    );
+
+    %invoke = (
+        code => <<"CODE"
+{
+  GimpStroke *stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+  
+  if (stroke)
+    gimp_stroke_flip_free (stroke, x1, y1, x2, y2);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub vectors_stroke_get_points {
     $blurb = 'returns the control points of a stroke.';
 
@@ -1158,6 +1266,9 @@ CODE
             vectors_stroke_close
             vectors_stroke_translate
             vectors_stroke_scale
+            vectors_stroke_rotate
+            vectors_stroke_flip
+            vectors_stroke_flip_free
             vectors_stroke_get_points
             vectors_stroke_new_from_points
             vectors_stroke_interpolate

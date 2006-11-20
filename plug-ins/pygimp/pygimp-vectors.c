@@ -124,6 +124,61 @@ vs_scale(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs)
 }
 
 static PyObject *
+vs_rotate(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs)
+{
+    double center_x, center_y, angle;
+
+    static char *kwlist[] = { "center_x", "center_y", "angle", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "ddd:rotate", kwlist,
+                                     &center_x, &center_y, &angle))
+        return NULL;
+
+    gimp_vectors_stroke_rotate(self->vectors_ID, self->stroke, center_x,
+                               center_y, angle);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
+vs_flip(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs)
+{
+    int    flip_type;
+    double axis;
+
+    static char *kwlist[] = { "flip_type", "axis", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "id:rotate", kwlist,
+                                     &flip_type, &axis))
+        return NULL;
+
+    gimp_vectors_stroke_flip(self->vectors_ID, self->stroke, flip_type, axis);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
+vs_flip_free(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs)
+{
+    double x1,y1,x2,y2;
+
+    static char *kwlist[] = { "x1", "y1", "x2", "y2", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "dddd:rotate", kwlist,
+                                     &x1, &y1, &x2, &y2))
+        return NULL;
+
+    gimp_vectors_stroke_flip_free(self->vectors_ID, self->stroke,
+                                  x1, y1, x2, y2);
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+
+
+static PyObject *
 vs_interpolate(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs)
 {
     double precision;
@@ -166,6 +221,9 @@ static PyMethodDef vs_methods[] = {
     { "close", (PyCFunction)vs_close, METH_NOARGS },
     { "translate", (PyCFunction)vs_translate, METH_VARARGS | METH_KEYWORDS },
     { "scale", (PyCFunction)vs_scale, METH_VARARGS | METH_KEYWORDS },
+    { "rotate", (PyCFunction)vs_rotate, METH_VARARGS | METH_KEYWORDS },
+    { "flip", (PyCFunction)vs_flip, METH_VARARGS | METH_KEYWORDS },
+    { "flip_free", (PyCFunction)vs_flip_free, METH_VARARGS | METH_KEYWORDS },
     { "interpolate", (PyCFunction)vs_interpolate, METH_VARARGS | METH_KEYWORDS },
     { NULL, NULL, 0 }
 };

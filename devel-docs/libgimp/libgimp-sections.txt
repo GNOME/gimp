@@ -863,6 +863,7 @@ gimp_paintbrush_default
 gimp_pencil
 gimp_perspective
 gimp_rect_select
+gimp_round_rect_select
 gimp_rotate
 gimp_scale
 gimp_shear
@@ -911,6 +912,9 @@ gimp_vectors_stroke_get_point_at_dist
 gimp_vectors_stroke_interpolate
 gimp_vectors_stroke_scale
 gimp_vectors_stroke_translate
+gimp_vectors_stroke_flip
+gimp_vectors_stroke_flip_free
+gimp_vectors_stroke_rotate
 gimp_vectors_bezier_stroke_conicto
 gimp_vectors_bezier_stroke_cubicto
 gimp_vectors_bezier_stroke_lineto
