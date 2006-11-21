@@ -1,3 +1,10 @@
+2006-11-21  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/brush.pdb (brush_get_pixels): the pixmap's size
+	is width * height * bpp, not just width * height.
+
+	* app/pdb/brush_cmds.c: regenerated.
+
 2006-11-21  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/metadata/metadata.h: fixed typo spotted by John Marshall
@@ -23,8 +30,8 @@
 	* plug-ins/help/gimphelp.[ch]
 	* plug-ins/help/gimphelpdomain.[ch]
 	* plug-ins/help/gimphelpitem.[ch]
-	* plug-ins/help/gimphelplocale.[ch]: ...completely chopped and
-	added as new private utility library. Soon to be used by the
+	* plug-ins/help/gimphelplocale.[ch]: ...completely chopped them
+	and added a new private utility library. Soon to be used by the
 	helpbrowser too.
 
 	* plug-ins/help/Makefile.am

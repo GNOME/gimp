@@ -318,13 +318,15 @@ HELP
       width          = brush->mask->width;
       height         = brush->mask->height;
       mask_bpp       = brush->mask->bytes;
-      num_mask_bytes = brush->mask->height * brush->mask->width;
+      num_mask_bytes = brush->mask->height * brush->mask->width *
+                       brush->mask->bytes;
       mask_bytes     = g_memdup (temp_buf_data (brush->mask), num_mask_bytes);
 
       if (brush->pixmap)
         {
           color_bpp       = brush->pixmap->bytes;
-          num_color_bytes = brush->pixmap->height * brush->pixmap->width;
+          num_color_bytes = brush->pixmap->height * brush->pixmap->width *
+                            brush->pixmap->bytes;
           color_bytes     = g_memdup (temp_buf_data (brush->pixmap),
                                       num_color_bytes);
         }
