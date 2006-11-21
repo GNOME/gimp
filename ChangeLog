@@ -1,3 +1,14 @@
+2006-11-21  Sven Neumann  <sven@gimp.org>
+
+	* app/batch.c (batch_run_cmd): check argument types before
+	assigning them. Allows to use a batch processor processor without
+	a run-mode parameter.
+
+2006-11-21  Sven Neumann  <sven@gimp.org>
+
+	* etc/templaterc: applied patch from Michael Schumacher that
+	replaces 'dpi' with the more correct 'ppi' (bug #376990).
+
 2006-11-20  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/help/domain.[ch]

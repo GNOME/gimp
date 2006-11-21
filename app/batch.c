@@ -28,6 +28,7 @@
 #include "base/base.h"
 
 #include "core/gimp.h"
+#include "core/gimpparamspecs.h"
 
 #include "batch.h"
 
@@ -139,13 +140,15 @@ batch_run_cmd (Gimp          *gimp,
 {
   GValueArray *args;
   GValueArray *return_vals;
+  gint         i = 0;
 
   args = gimp_procedure_get_arguments (procedure);
 
-  g_value_set_int (&args->values[0], run_mode);
+  if (procedure->num_args > i && GIMP_IS_PARAM_SPEC_INT32 (procedure->args[i]))
+    g_value_set_int (&args->values[i++], run_mode);
 
-  if (procedure->num_args > 1)
-    g_value_set_static_string (&args->values[1], cmd);
+  if (procedure->num_args > i && GIMP_IS_PARAM_SPEC_STRING (procedure->args[i]))
+    g_value_set_static_string (&args->values[i++], cmd);
 
   return_vals =
     gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
