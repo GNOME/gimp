@@ -15,8 +15,8 @@ app/actions/brushes-actions.c
 app/actions/buffers-actions.c
 app/actions/channels-actions.c
 app/actions/channels-commands.c
-app/actions/colormap-editor-actions.c
-app/actions/colormap-editor-commands.c
+app/actions/colormap-actions.c
+app/actions/colormap-commands.c
 app/actions/context-actions.c
 app/actions/cursor-info-actions.c
 app/actions/data-commands.c
@@ -54,7 +54,7 @@ app/actions/plug-in-actions.c
 app/actions/plug-in-commands.c
 app/actions/quick-mask-actions.c
 app/actions/quick-mask-commands.c
-app/actions/sample-point-editor-actions.c
+app/actions/sample-points-actions.c
 app/actions/select-actions.c
 app/actions/select-commands.c
 app/actions/templates-actions.c

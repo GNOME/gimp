@@ -1,3 +1,8 @@
+2006-11-22  Nickolay V. Shmyrev  <nshmyrev@yandex.ru>
+
+	* POTFILES.in: Updated to reflect new filenames
+	due to the fix of the bug #345251.
+
 2006-11-18  Djihed Afifi <djihed@gmail.com> 
 
 	* ar.po: Added Arabic Translation.
