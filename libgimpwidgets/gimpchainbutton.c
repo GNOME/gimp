@@ -401,6 +401,6 @@ gimp_chain_button_update_image (GimpChainButton *button)
   i = ((button->position & GIMP_CHAIN_LEFT) << 1) + (button->active ? 0 : 1);
 
   gtk_image_set_from_stock (GTK_IMAGE (button->image),
-                            gimp_chain_stock_items[num],
+                            gimp_chain_stock_items[i],
                             GTK_ICON_SIZE_BUTTON);
 }
