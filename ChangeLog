@@ -1,3 +1,8 @@
+2006-11-22  Simon Budig  <simon@gimp.org>
+
+	* app/xcf/xcf-load.c: load the channels in the proper order.
+	fixes bug #378003. Thanks to Chris Mohler for spotting this.
+
 2006-11-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpchainbutton.c: code cleanup, seems to fix bug
