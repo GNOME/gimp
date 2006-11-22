@@ -1,3 +1,9 @@
+2006-11-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpbrushcore.[ch]: applied modified patch from Adrian
+	Likins which adds a GRand to the GimpBrushCore struct and uses it
+	instead of using g_random_foo() functions. Fixes bug #377981.
+
 2006-11-22  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/gui-message.c (gui_message_error_console): don't raise

@@ -202,6 +202,8 @@ gimp_brush_core_init (GimpBrushCore *core)
   core->last_brush_mask          = NULL;
   core->cache_invalid            = FALSE;
 
+  core->rand                     = g_rand_new ();
+
   core->brush_bound_segs         = NULL;
   core->n_brush_bound_segs       = 0;
   core->brush_bound_width        = 0;
@@ -238,6 +240,12 @@ gimp_brush_core_finalize (GObject *object)
     {
       temp_buf_free (core->scale_pixmap);
       core->scale_pixmap = NULL;
+    }
+
+  if (core->rand)
+    {
+      g_rand_free (core->rand);
+      core->rand = NULL;
     }
 
   for (i = 0; i < KERNEL_SUBSAMPLE + 1; i++)
@@ -609,8 +617,10 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
           gdouble jitter_x;
           gdouble jitter_y;
 
-          jitter_x = g_random_double_range (-core->jitter, core->jitter);
-          jitter_y = g_random_double_range (-core->jitter, core->jitter);
+          jitter_x = g_rand_double_range (core->rand,
+                                          -core->jitter, core->jitter);
+          jitter_y = g_rand_double_range (core->rand,
+                                          -core->jitter, core->jitter);
 
           paint_core->cur_coords.x += jitter_x * core->brush->x_axis.x;
           paint_core->cur_coords.y += jitter_y * core->brush->y_axis.y;
@@ -765,7 +775,7 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
       gint         num_groups;
 
       pixel_region_init_temp_buf (&PR, mask,
-                              0, 0, mask->width, mask->height);
+                                  0, 0, mask->width, mask->height);
 
       boundary = boundary_find (&PR, BOUNDARY_WITHIN_BOUNDS,
                                 0, 0, PR.w, PR.h,

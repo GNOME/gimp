@@ -72,6 +72,8 @@ struct _GimpBrushCore
 
   gdouble        jitter;
 
+  GRand         *rand;
+
   /*  don't use these...  */
   BoundSeg      *brush_bound_segs;
   gint           n_brush_bound_segs;
