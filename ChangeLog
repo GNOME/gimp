@@ -1,3 +1,12 @@
+2006-11-22  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/gui-message.c (gui_message_error_console): don't raise
+	and focus the error console for not so severe error messages. Fixes
+	bug #322210 and bug #373254.
+
+	* app/widgets/gimperrorconsole.c (gimp_error_console_init): reduced
+	font sizes in error console.
+
 2006-11-22  Simon Budig  <simon@gimp.org>
 
 	* app/xcf/xcf-load.c: load the channels in the proper order.
@@ -5,8 +14,8 @@
 
 2006-11-22  Sven Neumann  <sven@gimp.org>
 
-	* libgimpwidgets/gimpchainbutton.c: code cleanup, seems to fix bug
-	#376668.
+	* libgimpwidgets/gimpchainbutton.c: code cleanup, seems to fix
+	bug #376668.
 
 2006-11-21  Michael Natterer  <mitch@gimp.org>
 

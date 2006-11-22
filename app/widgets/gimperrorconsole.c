@@ -78,9 +78,9 @@ gimp_error_console_init (GimpErrorConsole *console)
 
   gtk_text_buffer_create_tag (console->text_buffer, "title",
                               "weight", PANGO_WEIGHT_BOLD,
-                              "scale",  PANGO_SCALE_LARGE,
                               NULL);
   gtk_text_buffer_create_tag (console->text_buffer, "message",
+                              "scale",  PANGO_SCALE_SMALL,
                               NULL);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);

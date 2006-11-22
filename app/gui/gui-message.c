@@ -39,6 +39,7 @@
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimperrordialog.h"
 #include "widgets/gimpprogressdialog.h"
+#include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "dialogs/dialogs.h"
@@ -95,11 +96,24 @@ gui_message_error_console (GimpMessageSeverity  severity,
                            const gchar         *domain,
                            const gchar         *message)
 {
-  GtkWidget *dockable;
+  GtkWidget *dockable = NULL;
 
-  dockable = gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                               gdk_screen_get_default (),
-                                               "gimp-error-console", -1);
+  /* try to avoid raising the error console for not so severe messages */
+  if (severity < GIMP_MESSAGE_ERROR)
+    {
+      GimpSessionInfo *info;
+
+      info = gimp_dialog_factory_find_session_info (global_dock_factory,
+                                                    "gimp-error-console");
+
+      if (info && GIMP_IS_DOCKABLE (info->widget))
+        dockable = info->widget;
+    }
+
+  if (! dockable)
+    dockable = gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                                 gdk_screen_get_default (),
+                                                 "gimp-error-console", -1);
 
   if (dockable)
     {
