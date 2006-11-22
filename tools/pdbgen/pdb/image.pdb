@@ -649,6 +649,41 @@ CODE
     );
 }
 
+sub image_get_layer_position {
+    $blurb = 'Returns the position of the layer in the layer stack.';
+
+    $help = <<'HELP';
+This procedure determines the positioin of the specified layer in the images
+layer stack. If the layer doesn't exist in the image, an error is returned.
+HELP
+
+    &simon_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'position', type => 'int32',
+	  desc => "The position of the layer in the layer stack" }
+    );
+
+
+    %invoke = (
+	code => <<'CODE'
+{
+  position = gimp_container_get_child_index (GIMP_CONTAINER (image->layers),
+                                             GIMP_OBJECT (layer));
+  if (position < 0)
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub image_raise_layer {
     $blurb = "Raise the specified layer in the image's layer stack";
 
@@ -941,41 +976,6 @@ CODE
     );
 }
 
-sub image_get_layer_position {
-    $blurb = 'Returns the position of the layer in the layer stack.';
-
-    $help = <<'HELP';
-This procedure determines the positioin of the specified layer in the images
-layer stack. If the layer doesn't exist in the image, an error is returned.
-HELP
-
-    &simon_pdb_misc;
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'layer', type => 'layer',
-	  desc => 'The layer' }
-    );
-
-    @outargs = (
-	{ name => 'position', type => 'int32',
-	  desc => "The position of the layer in the layer stack" }
-    );
-
-
-    %invoke = (
-	code => <<'CODE'
-{
-  position = gimp_container_get_child_index (GIMP_CONTAINER (image->layers),
-                                             GIMP_OBJECT (layer));
-  if (position < 0)
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub image_add_layer_mask {
     &std_pdb_deprecated ('gimp-layer-add-mask');
 
@@ -1014,6 +1014,41 @@ sub image_remove_layer_mask {
 	code => <<'CODE'
 {
   gimp_layer_apply_mask (layer, mode, TRUE);
+}
+CODE
+    );
+}
+
+sub image_get_channel_position {
+    $blurb = 'Returns the position of the channel in the channel stack.';
+
+    $help = <<'HELP';
+This procedure determines the positioin of the specified channel in the images
+channel stack. If the channel doesn't exist in the image, an error is returned.
+HELP
+
+    &simon_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel' }
+    );
+
+    @outargs = (
+	{ name => 'position', type => 'int32',
+	  desc => "The position of the channel in the channel stack" }
+    );
+
+
+    %invoke = (
+	code => <<'CODE'
+{
+  position = gimp_container_get_child_index (GIMP_CONTAINER (image->channels),
+                                             GIMP_OBJECT (channel));
+  if (position < 0)
+    success = FALSE;
 }
 CODE
     );
@@ -1131,41 +1166,6 @@ CODE
     );
 }
 
-sub image_get_channel_position {
-    $blurb = 'Returns the position of the channel in the channel stack.';
-
-    $help = <<'HELP';
-This procedure determines the positioin of the specified channel in the images
-channel stack. If the channel doesn't exist in the image, an error is returned.
-HELP
-
-    &simon_pdb_misc;
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'channel', type => 'channel',
-	  desc => 'The channel' }
-    );
-
-    @outargs = (
-	{ name => 'position', type => 'int32',
-	  desc => "The position of the channel in the channel stack" }
-    );
-
-
-    %invoke = (
-	code => <<'CODE'
-{
-  position = gimp_container_get_child_index (GIMP_CONTAINER (image->channels),
-                                             GIMP_OBJECT (channel));
-  if (position < 0)
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub image_add_vectors {
     $blurb = 'Add the specified vectors object to the image.';
 
@@ -1217,6 +1217,42 @@ HELP
 	code => <<'CODE'
 {
   gimp_image_remove_vectors (image, vectors);
+}
+CODE
+    );
+}
+
+sub image_get_vectors_position {
+    $blurb = 'Returns the position of the vectors object in the vectors objects stack.';
+
+    $help = <<'HELP';
+This procedure determines the positioin of the specified vectors object in the
+images vectors object stack. If the vectors object doesn't exist in the image,
+an error is returned.
+HELP
+
+    &simon_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object' }
+    );
+
+    @outargs = (
+	{ name => 'position', type => 'int32',
+	  desc => "The position of the vectors object in the vectors stack" }
+    );
+
+
+    %invoke = (
+	code => <<'CODE'
+{
+  position = gimp_container_get_child_index (GIMP_CONTAINER (image->vectors),
+                                             GIMP_OBJECT (vectors));
+  if (position < 0)
+    success = FALSE;
 }
 CODE
     );
@@ -1329,42 +1365,6 @@ HELP
 	code => <<'CODE'
 {
   success = gimp_image_lower_vectors_to_bottom (image, vectors);
-}
-CODE
-    );
-}
-
-sub image_get_vectors_position {
-    $blurb = 'Returns the position of the vectors object in the vectors objects stack.';
-
-    $help = <<'HELP';
-This procedure determines the positioin of the specified vectors object in the
-images vectors object stack. If the vectors object doesn't exist in the image,
-an error is returned.
-HELP
-
-    &simon_pdb_misc;
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' }
-    );
-
-    @outargs = (
-	{ name => 'position', type => 'int32',
-	  desc => "The position of the vectors object in the vectors stack" }
-    );
-
-
-    %invoke = (
-	code => <<'CODE'
-{
-  position = gimp_container_get_child_index (GIMP_CONTAINER (image->vectors),
-                                             GIMP_OBJECT (vectors));
-  if (position < 0)
-    success = FALSE;
 }
 CODE
     );
@@ -2544,12 +2544,12 @@ CODE
             image_raise_layer image_lower_layer
             image_raise_layer_to_top image_lower_layer_to_bottom
             image_add_channel image_remove_channel
-            image_raise_channel image_lower_channel
 	    image_get_channel_position
+            image_raise_channel image_lower_channel
             image_add_vectors image_remove_vectors
+	    image_get_vectors_position
             image_raise_vectors image_lower_vectors
             image_raise_vectors_to_top image_lower_vectors_to_bottom
-	    image_get_vectors_position
             image_flatten image_merge_visible_layers image_merge_down
             image_add_layer_mask image_remove_layer_mask
             image_get_colormap image_set_colormap
