@@ -119,9 +119,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                _("Opacity:"));
 
   /*  the brush  */
-  if (tool_type != GIMP_TYPE_BUCKET_FILL_TOOL &&
-      tool_type != GIMP_TYPE_BLEND_TOOL       &&
-      tool_type != GIMP_TYPE_INK_TOOL)
+  if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
       button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
                                         "brush-view-type", "brush-view-size");
@@ -129,11 +127,14 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                  _("Brush:"), 0.0, 0.5,
                                  button, 2, FALSE);
 
-      gimp_prop_scale_entry_new (config, "brush-scale",
-                                 GTK_TABLE (table), 0, table_row++,
-                                 _("Scale:"),
-                                 0.01, 0.1, 2,
-                                 FALSE, 0.0, 0.0);
+      if (tool_type != GIMP_TYPE_SMUDGE_TOOL)
+        {
+          gimp_prop_scale_entry_new (config, "brush-scale",
+                                     GTK_TABLE (table), 0, table_row++,
+                                     _("Scale:"),
+                                     0.01, 0.1, 2,
+                                     FALSE, 0.0, 0.0);
+        }
     }
 
   /*  the gradient  */

@@ -268,6 +268,45 @@ static const GimpEnumActionEntry tools_ink_blob_angle_actions[] =
     NULL },
 };
 
+static const GimpEnumActionEntry tools_foreground_select_brush_size_actions[] =
+{
+  { "tools-foreground-select-brush-size-set",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Set Foreground Select Brush Size", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-foreground-select-brush-size-minimum",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Minumum Foreground Select Brush Size", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "tools-foreground-select-brush-size-maximum",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Maximum Foreground Select Brush Size", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "tools-foreground-select-brush-size-decrease",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Decrease Foreground Select Brush Size", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-foreground-select-brush-size-increase",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Increase Foreground Select Brush Size", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "tools-foreground-select-brush-size-decrease-skip",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Decrease Foreground Select Brush Size More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "tools-foreground-select-brush-size-increase-skip",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Increase Foreground Select Brush Size More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL },
+};
+
 static const GimpToggleActionEntry tools_rectangle_toggle_actions[] =
 {
   { "tools-rectangle-toggle-fixed-aspect", GIMP_STOCK_TOOL_RECT_SELECT,
@@ -504,6 +543,11 @@ tools_actions_setup (GimpActionGroup *group)
                                       tools_ink_blob_angle_actions,
                                       G_N_ELEMENTS (tools_ink_blob_angle_actions),
                                       G_CALLBACK (tools_ink_blob_angle_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
+                                      tools_foreground_select_brush_size_actions,
+                                      G_N_ELEMENTS (tools_foreground_select_brush_size_actions),
+                                      G_CALLBACK (tools_fg_select_brush_size_cmd_callback));
 
   gimp_action_group_add_toggle_actions (group,
                                         tools_rectangle_toggle_actions,

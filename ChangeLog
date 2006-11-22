@@ -1,5 +1,20 @@
 2006-11-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/actions.c (action_select_property): add support for
+	G_TYPE_INT properties.
+
+	* app/actions/tools-actions.c
+	* app/actions/tools-commands.[ch]: add actions and callback which
+	affect the foreground select tool's stroke-width property.
+
+	* app/tools/gimpforegroundselecttool.c: map tool-action-value-2
+	(tool tip size) to the new action.
+
+	* app/tools/gimppaintoptions-gui.c: fixed visibility of the brush
+	scale slider.
+
+2006-11-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpbrushcore.[ch]: applied modified patch from Adrian
 	Likins which adds a GRand to the GimpBrushCore struct and uses it
 	instead of using g_random_foo() functions. Fixes bug #377981.

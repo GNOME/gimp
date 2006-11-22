@@ -36,6 +36,7 @@
 
 #include "tools/gimp-tools.h"
 #include "tools/gimpcoloroptions.h"
+#include "tools/gimpforegroundselectoptions.h"
 #include "tools/gimprectangleoptions.h"
 #include "tools/gimpimagemaptool.h"
 #include "tools/gimptoolcontrol.h"
@@ -351,12 +352,31 @@ tools_ink_blob_angle_cmd_callback (GtkAction *action,
 }
 
 void
+tools_fg_select_brush_size_cmd_callback (GtkAction *action,
+                                         gint       value,
+                                         gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_FOREGROUND_SELECT_OPTIONS (tool_info->tool_options))
+    {
+      action_select_property ((GimpActionSelectType) value,
+                              G_OBJECT (tool_info->tool_options),
+                              "stroke-width",
+                              1.0, 4.0, 16.0, FALSE);
+    }
+}
+
+void
 tools_rectangle_toggle_fixed_aspect (GtkAction *action,
                                      gpointer   data)
 {
-  GimpContext     *context;
-  GimpToolInfo    *tool_info;
-
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
   return_if_no_context (context, data);
 
   tool_info = gimp_context_get_tool (context);
@@ -385,9 +405,8 @@ void
 tools_rectangle_toggle_fixed_center (GtkAction *action,
                                      gpointer   data)
 {
-  GimpContext     *context;
-  GimpToolInfo    *tool_info;
-
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
   return_if_no_context (context, data);
 
   tool_info = gimp_context_get_tool (context);

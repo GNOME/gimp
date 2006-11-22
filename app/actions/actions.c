@@ -456,7 +456,6 @@ action_select_property (GimpActionSelectType  select_type,
                         gboolean              wrap)
 {
   GParamSpec *pspec;
-  gdouble     value;
 
   g_return_if_fail (G_IS_OBJECT (object));
   g_return_if_fail (property_name != NULL);
@@ -464,17 +463,38 @@ action_select_property (GimpActionSelectType  select_type,
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (object),
                                         property_name);
 
-  g_return_if_fail (G_IS_PARAM_SPEC_DOUBLE (pspec));
+  if (G_IS_PARAM_SPEC_DOUBLE (pspec))
+    {
+      gdouble value;
 
-  g_object_get (object, property_name, &value, NULL);
+      g_object_get (object, property_name, &value, NULL);
 
-  value = action_select_value (select_type,
-                               value,
-                               G_PARAM_SPEC_DOUBLE (pspec)->minimum,
-                               G_PARAM_SPEC_DOUBLE (pspec)->maximum,
-                               small_inc, inc, skip_inc, 0, wrap);
+      value = action_select_value (select_type,
+                                   value,
+                                   G_PARAM_SPEC_DOUBLE (pspec)->minimum,
+                                   G_PARAM_SPEC_DOUBLE (pspec)->maximum,
+                                   small_inc, inc, skip_inc, 0, wrap);
 
-  g_object_set (object, property_name, value, NULL);
+      g_object_set (object, property_name, value, NULL);
+    }
+  else if (G_IS_PARAM_SPEC_INT (pspec))
+    {
+      gint value;
+
+      g_object_get (object, property_name, &value, NULL);
+
+      value = action_select_value (select_type,
+                                   value,
+                                   G_PARAM_SPEC_INT (pspec)->minimum,
+                                   G_PARAM_SPEC_INT (pspec)->maximum,
+                                   small_inc, inc, skip_inc, 0, wrap);
+
+      g_object_set (object, property_name, value, NULL);
+    }
+  else
+    {
+      g_return_if_reached ();
+    }
 }
 
 GimpObject *
