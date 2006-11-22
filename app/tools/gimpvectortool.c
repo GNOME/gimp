@@ -186,7 +186,7 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
 {
   GimpTool *tool = GIMP_TOOL (vector_tool);
 
-  gimp_tool_control_set_scroll_lock        (tool->control, TRUE);
+  gimp_tool_control_set_scroll_lock        (tool->control, FALSE);
   gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
   gimp_tool_control_set_motion_mode        (tool->control,
                                             GIMP_MOTION_MODE_COMPRESS);
@@ -1719,7 +1719,10 @@ gimp_vector_tool_delete_selected_anchors (GimpVectorTool *vector_tool)
               gimp_stroke_anchor_delete (cur_stroke, cur_anchor);
 
               if (gimp_stroke_is_empty (cur_stroke))
-                gimp_vectors_stroke_remove (vector_tool->vectors, cur_stroke);
+                {
+                  gimp_vectors_stroke_remove (vector_tool->vectors, cur_stroke);
+                  cur_stroke = NULL;
+                }
             }
         }
 

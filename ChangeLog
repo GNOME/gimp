@@ -1,3 +1,9 @@
+2006-11-22  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.c: Enable scrolling while dragging
+	the nodes of a path. Fix warning when deleting the last node
+	of a stroke.
+
 2006-11-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/actions.c (action_select_property): add support for
