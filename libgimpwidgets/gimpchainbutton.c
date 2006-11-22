@@ -59,6 +59,7 @@ static void      gimp_chain_button_clicked_callback (GtkWidget       *widget,
 static gboolean  gimp_chain_button_draw_lines       (GtkWidget       *widget,
                                                      GdkEventExpose  *eevent,
                                                      GimpChainButton *button);
+static void      gimp_chain_button_update_image     (GimpChainButton *button);
 
 
 G_DEFINE_TYPE (GimpChainButton, gimp_chain_button, GTK_TYPE_TABLE)
@@ -125,7 +126,6 @@ gimp_chain_button_init (GimpChainButton *button)
 
   gtk_button_set_relief (GTK_BUTTON (button->button), GTK_RELIEF_NONE);
   gtk_container_add (GTK_CONTAINER (button->button), button->image);
-  gtk_widget_show (button->image);
 
   g_signal_connect (button->button, "clicked",
                     G_CALLBACK (gimp_chain_button_clicked_callback),
@@ -150,11 +150,8 @@ gimp_chain_button_constructor (GType                  type,
 
   button = GIMP_CHAIN_BUTTON (object);
 
-  gtk_image_set_from_stock
-    (GTK_IMAGE (button->image),
-     gimp_chain_stock_items[((button->position & GIMP_CHAIN_LEFT) << 1) +
-                            button->active ? 0 : 1],
-     GTK_ICON_SIZE_BUTTON);
+  gimp_chain_button_update_image (button);
+  gtk_widget_show (button->image);
 
   if (button->position & GIMP_CHAIN_LEFT) /* are we a vertical chainbutton? */
     {
@@ -266,15 +263,9 @@ gimp_chain_button_set_active (GimpChainButton  *button,
 
   if (button->active != active)
     {
-      guint num;
-
       button->active = active ? TRUE : FALSE;
 
-      num = ((button->position & GIMP_CHAIN_LEFT) << 1) + (active ? 0 : 1);
-
-      gtk_image_set_from_stock (GTK_IMAGE (button->image),
-                                gimp_chain_stock_items[num],
-                                GTK_ICON_SIZE_BUTTON);
+      gimp_chain_button_update_image (button);
     }
 }
 
@@ -400,4 +391,16 @@ gimp_chain_button_draw_lines (GtkWidget       *widget,
                      FALSE);
 
   return TRUE;
+}
+
+static void
+gimp_chain_button_update_image (GimpChainButton *button)
+{
+  guint i;
+
+  i = ((button->position & GIMP_CHAIN_LEFT) << 1) + (button->active ? 0 : 1);
+
+  gtk_image_set_from_stock (GTK_IMAGE (button->image),
+                            gimp_chain_stock_items[num],
+                            GTK_ICON_SIZE_BUTTON);
 }
