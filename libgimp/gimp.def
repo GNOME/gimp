@@ -312,6 +312,7 @@ EXPORTS
 	gimp_image_get_active_layer
 	gimp_image_get_active_vectors
 	gimp_image_get_channel_by_tattoo
+	gimp_image_get_channel_position
 	gimp_image_get_channels
 	gimp_image_get_cmap
 	gimp_image_get_colormap
@@ -322,6 +323,7 @@ EXPORTS
 	gimp_image_get_guide_orientation
 	gimp_image_get_guide_position
 	gimp_image_get_layer_by_tattoo
+	gimp_image_get_layer_position
 	gimp_image_get_layers
 	gimp_image_get_name
 	gimp_image_get_resolution
@@ -330,6 +332,7 @@ EXPORTS
 	gimp_image_get_thumbnail_data
 	gimp_image_get_unit
 	gimp_image_get_vectors
+	gimp_image_get_vectors_position
 	gimp_image_grid_get_background_color
 	gimp_image_grid_get_foreground_color
 	gimp_image_grid_get_offset
@@ -635,11 +638,14 @@ EXPORTS
 	gimp_vectors_set_tattoo
 	gimp_vectors_set_visible
 	gimp_vectors_stroke_close
+	gimp_vectors_stroke_flip
+	gimp_vectors_stroke_flip_free
 	gimp_vectors_stroke_get_length
 	gimp_vectors_stroke_get_point_at_dist
 	gimp_vectors_stroke_get_points
 	gimp_vectors_stroke_interpolate
 	gimp_vectors_stroke_new_from_points
+	gimp_vectors_stroke_rotate
 	gimp_vectors_stroke_scale
 	gimp_vectors_stroke_translate
 	gimp_vectors_to_selection

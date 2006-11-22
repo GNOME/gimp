@@ -1,5 +1,17 @@
 2006-11-22  Simon Budig  <simon@gimp.org>
 
+	* tools/pdbgen/pdb/image.pdb: Added functions to easily determine
+	the position of a layer/channel/vectors object in its respective
+	stack.
+
+	* libgimp/gimp.def: added new symbols
+
+	* app/pdb/image_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpimage_pdb.[ch]: regenerated.
+
+2006-11-22  Simon Budig  <simon@gimp.org>
+
 	* app/tools/gimpvectortool.c: Enable scrolling while dragging
 	the nodes of a path. Fix warning when deleting the last node
 	of a stroke.

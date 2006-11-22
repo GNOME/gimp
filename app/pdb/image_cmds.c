@@ -832,6 +832,38 @@ image_remove_layer_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
+image_get_layer_position_invoker (GimpProcedure     *procedure,
+                                  Gimp              *gimp,
+                                  GimpContext       *context,
+                                  GimpProgress      *progress,
+                                  const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  GimpLayer *layer;
+  gint32 position = 0;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  layer = gimp_value_get_layer (&args->values[1], gimp);
+
+  if (success)
+    {
+      position = gimp_container_get_child_index (GIMP_CONTAINER (image->layers),
+                                                 GIMP_OBJECT (layer));
+      if (position < 0)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_int (&return_vals->values[1], position);
+
+  return return_vals;
+}
+
+static GValueArray *
 image_raise_layer_invoker (GimpProcedure     *procedure,
                            Gimp              *gimp,
                            GimpContext       *context,
@@ -1013,6 +1045,38 @@ image_lower_channel_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
+image_get_channel_position_invoker (GimpProcedure     *procedure,
+                                    Gimp              *gimp,
+                                    GimpContext       *context,
+                                    GimpProgress      *progress,
+                                    const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  GimpChannel *channel;
+  gint32 position = 0;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  channel = gimp_value_get_channel (&args->values[1], gimp);
+
+  if (success)
+    {
+      position = gimp_container_get_child_index (GIMP_CONTAINER (image->channels),
+                                                 GIMP_OBJECT (channel));
+      if (position < 0)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_int (&return_vals->values[1], position);
+
+  return return_vals;
+}
+
+static GValueArray *
 image_add_vectors_invoker (GimpProcedure     *procedure,
                            Gimp              *gimp,
                            GimpContext       *context,
@@ -1147,6 +1211,38 @@ image_lower_vectors_to_bottom_invoker (GimpProcedure     *procedure,
     }
 
   return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+image_get_vectors_position_invoker (GimpProcedure     *procedure,
+                                    Gimp              *gimp,
+                                    GimpContext       *context,
+                                    GimpProgress      *progress,
+                                    const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  GimpVectors *vectors;
+  gint32 position = 0;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  vectors = gimp_value_get_vectors (&args->values[1], gimp);
+
+  if (success)
+    {
+      position = gimp_container_get_child_index (GIMP_CONTAINER (image->vectors),
+                                                 GIMP_OBJECT (vectors));
+      if (position < 0)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_int (&return_vals->values[1], position);
+
+  return return_vals;
 }
 
 static GValueArray *
@@ -2954,6 +3050,40 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-image-get-layer-position
+   */
+  procedure = gimp_procedure_new (image_get_layer_position_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-layer-position");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-get-layer-position",
+                                     "Returns the position of the layer in the layer stack.",
+                                     "This procedure determines the positioin of the specified layer in the images layer stack. If the layer doesn't exist in the image, an error is returned.",
+                                     "Simon Budig",
+                                     "Simon Budig",
+                                     "&image_get_layer_position",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("position",
+                                                          "position",
+                                                          "The position of the layer in the layer stack",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-image-raise-layer
    */
   procedure = gimp_procedure_new (image_raise_layer_invoker);
@@ -3184,6 +3314,40 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-image-get-channel-position
+   */
+  procedure = gimp_procedure_new (image_get_channel_position_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-channel-position");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-get-channel-position",
+                                     "Returns the position of the channel in the channel stack.",
+                                     "This procedure determines the positioin of the specified channel in the images channel stack. If the channel doesn't exist in the image, an error is returned.",
+                                     "Simon Budig",
+                                     "Simon Budig",
+                                     "&image_get_channel_position",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_channel_id ("channel",
+                                                           "channel",
+                                                           "The channel",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("position",
+                                                          "position",
+                                                          "The position of the channel in the channel stack",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-image-add-vectors
    */
   procedure = gimp_procedure_new (image_add_vectors_invoker);
@@ -3354,6 +3518,40 @@ register_image_procs (GimpPDB *pdb)
                                                            "The vectors object to lower to bottom",
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-vectors-position
+   */
+  procedure = gimp_procedure_new (image_get_vectors_position_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-vectors-position");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-get-vectors-position",
+                                     "Returns the position of the vectors object in the vectors objects stack.",
+                                     "This procedure determines the positioin of the specified vectors object in the images vectors object stack. If the vectors object doesn't exist in the image, an error is returned.",
+                                     "Simon Budig",
+                                     "Simon Budig",
+                                     "&image_get_vectors_position",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("vectors",
+                                                           "vectors",
+                                                           "The vectors object",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("position",
+                                                          "position",
+                                                          "The position of the vectors object in the vectors stack",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
