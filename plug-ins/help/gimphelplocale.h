@@ -30,6 +30,9 @@ struct _GimpHelpLocale
   gchar      *locale_id;
   GHashTable *help_id_mapping;
   gchar      *help_missing;
+
+  /* eek */
+  GList      *toplevel_items;
 };
 
 

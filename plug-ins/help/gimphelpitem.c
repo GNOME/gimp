@@ -64,5 +64,8 @@ gimp_help_item_free (GimpHelpItem *item)
   g_free (item->ref);
   g_free (item->title);
   g_free (item->parent);
+
+  g_list_free (item->children);
+
   g_free (item);
 }

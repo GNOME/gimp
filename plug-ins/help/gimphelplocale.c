@@ -68,6 +68,8 @@ gimp_help_locale_free (GimpHelpLocale *locale)
   g_free (locale->locale_id);
   g_free (locale->help_missing);
 
+  g_list_free (locale->toplevel_items);
+
   g_free (locale);
 }
 

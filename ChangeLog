@@ -1,3 +1,20 @@
+2006-11-23  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/help/gimphelpitem.[ch]
+	* plug-ins/help/gimphelplocale.[ch]: added some EEKy members to
+	the structs where the browser can store its state.
+
+	* plug-ins/helpbrowser/Makefile.am
+	* plug-ins/helpbrowser/helpbrowser.c: link against libgimphelp.a
+	and implement all the help ID mapping ourselves.
+
+	* plug-ins/helpbrowser/dialog.[ch]: added a tree view with the
+	help IDs of the current help domain. Double click to jump to an
+	item. Very early-stage code and very unusable, please try anyway.
+
+	* app/widgets/gimphelp.c: if the help browser is available, call
+	it directly, not via the help plug-in.
+
 2006-11-23  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/help/Makefile.am (libgimphelp_a_SOURCES): removed help.h.

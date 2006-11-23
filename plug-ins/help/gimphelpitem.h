@@ -31,6 +31,7 @@ struct _GimpHelpItem
   gchar *title;
   gchar *parent;
 
+  /* eek */
   GList *children;
   gint   index;
 };

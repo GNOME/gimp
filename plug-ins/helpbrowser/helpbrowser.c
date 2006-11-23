@@ -31,6 +31,8 @@
 
 #include <libgimp/gimp.h>
 
+#include "plug-ins/help/gimphelp.h"
+
 #include "dialog.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -77,7 +79,11 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run-mode", "Interactive" },
+    { GIMP_PDB_INT32,       "run-mode", "Interactive" },
+    { GIMP_PDB_INT32,       "num-domain-names", ""    },
+    { GIMP_PDB_STRINGARRAY, "domain-names",     ""    },
+    { GIMP_PDB_INT32,       "num-domain-uris",  ""    },
+    { GIMP_PDB_STRINGARRAY, "domain-uris",      ""    }
   };
 
   gimp_install_procedure (GIMP_HELP_BROWSER_EXT_PROC,
@@ -122,19 +128,30 @@ run (const gchar      *name,
     case GIMP_RUN_NONINTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Make sure all the arguments are there!  */
-      if (nparams == 1)
+      if (nparams >= 1)
         {
-          browser_dialog_open ();
+          if (nparams == 5)
+            {
+              if (! gimp_help_init (param[1].data.d_int32,
+                                    param[2].data.d_stringarray,
+                                    param[3].data.d_int32,
+                                    param[4].data.d_stringarray))
+                {
+                  status = GIMP_PDB_CALLING_ERROR;
+                }
+            }
 
-          temp_proc_install ();
+          if (status == GIMP_PDB_SUCCESS)
+            {
+              browser_dialog_open ();
 
-          /*  we have installed our temp_proc and are ready to run  */
-          gimp_extension_ack ();
+              temp_proc_install ();
 
-          /*  enable asynchronous processing of temp_proc_run requests  */
-          gimp_extension_enable ();
+              gimp_extension_ack ();
+              gimp_extension_enable ();
 
-          gtk_main ();
+              gtk_main ();
+            }
         }
       else
         {
@@ -155,7 +172,9 @@ temp_proc_install (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_STRING, "uri", "Full uri of the file to open" }
+    { GIMP_PDB_STRING, "help-domain",  "Help domain to use" },
+    { GIMP_PDB_STRING, "help-locales", "Language to use"    },
+    { GIMP_PDB_STRING, "help-id",      "Help ID to open"    }
   };
 
   gimp_install_temp_proc (GIMP_HELP_BROWSER_TEMP_EXT_PROC,
@@ -188,20 +207,49 @@ temp_proc_run (const gchar      *name,
   *return_vals  = values;
 
   /*  make sure all the arguments are there  */
-  if (nparams == 1)
+  if (nparams == 3)
     {
+      GimpHelpDomain *domain;
+      const gchar    *help_domain  = GIMP_HELP_DEFAULT_DOMAIN;
+      const gchar    *help_locales = NULL;
+      const gchar    *help_id      = GIMP_HELP_DEFAULT_ID;
+
       if (param[0].data.d_string && strlen (param[0].data.d_string))
+        help_domain = param[0].data.d_string;
+
+      if (param[1].data.d_string && strlen (param[1].data.d_string))
+        help_locales = param[1].data.d_string;
+
+      if (param[2].data.d_string && strlen (param[2].data.d_string))
+        help_id = param[2].data.d_string;
+
+      domain = gimp_help_lookup_domain (help_domain);
+
+      if (domain)
         {
-          browser_dialog_load (param[0].data.d_string, TRUE);
+          GList          *locales = gimp_help_parse_locales (help_locales);
+          GimpHelpLocale *locale;
+          gchar          *full_uri;
+          gboolean        fatal_error;
+
+          full_uri = gimp_help_domain_map (domain, locales, help_id,
+                                           &locale, &fatal_error);
+
+          if (full_uri)
+            {
+              browser_dialog_load (full_uri, TRUE);
+              browser_dialog_make_index (domain, locale);
+
+              g_free (full_uri);
+            }
+          else if (fatal_error)
+            {
+              gtk_main_quit ();
+            }
+
+          g_list_foreach (locales, (GFunc) g_free, NULL);
+          g_list_free (locales);
         }
-      else
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-        }
-    }
-  else
-    {
-      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].type          = GIMP_PDB_STATUS;
