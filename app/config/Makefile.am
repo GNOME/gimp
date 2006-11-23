@@ -73,13 +73,13 @@ test_config_LDADD = \
 	../display/gimpdisplayoptions.o		\
 	../pdb/libappinternal-procs.a		\
 	../xcf/libappxcf.a			\
+	../file/libappfile.a			\
 	../plug-in/libappplug-in.a		\
 	../pdb/libapppdb.a			\
 	../vectors/libappvectors.a		\
 	../core/libappcore.a			\
 	../paint/libapppaint.a			\
 	../text/libapptext.a			\
-	../file/libappfile.a			\
 	libappconfig.a				\
 	../paint-funcs/libapppaint-funcs.a	\
 	../composite/libappcomposite.a		\
