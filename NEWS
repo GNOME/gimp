@@ -25,6 +25,10 @@ Changes in GIMP 2.3.13
 - added experimental palette color selector module
 - don't save thumbnails that don't match the image
 - increased tool handle sizes for better usability
+- implemented brush scaling from the tool options (only downscaling yet)
+- import paths embedded into TIFF files
+- support vectors in the Script-Fu and Python-Fu user interfaces
+- added PDB functions to retrieve position of layers/channels/vectors
 - bug fixes and code cleanup
 
 
