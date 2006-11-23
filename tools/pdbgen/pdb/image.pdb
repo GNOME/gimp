@@ -657,7 +657,7 @@ This procedure determines the positioin of the specified layer in the images
 layer stack. If the layer doesn't exist in the image, an error is returned.
 HELP
 
-    &simon_pdb_misc;
+    &simon_pdb_misc('2006', '2.4');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -1027,7 +1027,7 @@ This procedure determines the positioin of the specified channel in the images
 channel stack. If the channel doesn't exist in the image, an error is returned.
 HELP
 
-    &simon_pdb_misc;
+    &simon_pdb_misc('2006', '2.4');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -1231,7 +1231,7 @@ images vectors object stack. If the vectors object doesn't exist in the image,
 an error is returned.
 HELP
 
-    &simon_pdb_misc;
+    &simon_pdb_misc('2006', '2.4');
 
     @inargs = (
 	{ name => 'image', type => 'image',

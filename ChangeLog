@@ -1,3 +1,10 @@
+2006-11-23  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: marked the new functions as new in 2.4.
+
+	* app/pdb/image_cmds.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
 2006-11-22  Simon Budig  <simon@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb: Added functions to easily determine

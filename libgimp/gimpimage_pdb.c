@@ -973,6 +973,8 @@ gimp_image_remove_layer (gint32 image_ID,
  * error is returned.
  *
  * Returns: The position of the layer in the layer stack.
+ *
+ * Since: GIMP 2.4
  */
 gint
 gimp_image_get_layer_position (gint32 image_ID,
@@ -1215,6 +1217,8 @@ gimp_image_remove_channel (gint32 image_ID,
  * an error is returned.
  *
  * Returns: The position of the channel in the channel stack.
+ *
+ * Since: GIMP 2.4
  */
 gint
 gimp_image_get_channel_position (gint32 image_ID,
@@ -1391,6 +1395,8 @@ gimp_image_remove_vectors (gint32 image_ID,
  * doesn't exist in the image, an error is returned.
  *
  * Returns: The position of the vectors object in the vectors stack.
+ *
+ * Since: GIMP 2.4
  */
 gint
 gimp_image_get_vectors_position (gint32 image_ID,

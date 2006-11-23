@@ -3060,7 +3060,7 @@ register_image_procs (GimpPDB *pdb)
                                      "This procedure determines the positioin of the specified layer in the images layer stack. If the layer doesn't exist in the image, an error is returned.",
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "&image_get_layer_position",
+                                     "2006",
                                      NULL);
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
@@ -3268,7 +3268,7 @@ register_image_procs (GimpPDB *pdb)
                                      "This procedure determines the positioin of the specified channel in the images channel stack. If the channel doesn't exist in the image, an error is returned.",
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "&image_get_channel_position",
+                                     "2006",
                                      NULL);
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
@@ -3420,7 +3420,7 @@ register_image_procs (GimpPDB *pdb)
                                      "This procedure determines the positioin of the specified vectors object in the images vectors object stack. If the vectors object doesn't exist in the image, an error is returned.",
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "&image_get_vectors_position",
+                                     "2006",
                                      NULL);
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
