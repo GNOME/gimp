@@ -73,10 +73,7 @@ EXTRA_DIST = \
 	intltool-extract.in	\
 	intltool-merge.in	\
 	intltool-update.in	\
-	makefile.msc		\
-	po-libgimp/update.sh	\
-	po-plug-ins/update.sh	\
-	po-script-fu/update.sh
+	makefile.msc
 
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gimp-console
