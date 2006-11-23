@@ -39,7 +39,7 @@
 #define GIMP_HELP_PREFIX          "help"
 #define GIMP_HELP_ENV_URI         "GIMP2_HELP_URI"
 
-#define GIMP_HELP_DEBUG
+/* #define GIMP_HELP_DEBUG */
 
 
 gboolean         gimp_help_init            (gint            n_domain_names,

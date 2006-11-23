@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimphelp = libgimphelp-$(GIMP_API_VERSION).la
+libgimphelp = libgimphelp.a
 libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
@@ -14,9 +14,9 @@ AM_CPPFLAGS = -DDATADIR=\""$(gimpdatadir)"\"
 
 AM_LDFLAGS = $(mwindows)
 
-lib_LTLIBRARIES = libgimphelp-2.0.la
+noinst_LIBRARIES = libgimphelp.a
 
-libgimphelp_2_0_la_SOURCES = \
+libgimphelp_a_SOURCES = \
 	gimphelptypes.h		\
 	gimphelp.c		\
 	gimphelp.h		\

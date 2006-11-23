@@ -1,3 +1,15 @@
+2006-11-23  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/help/Makefile.am: link libgimphelp as not installed .a
+
+	* plug-ins/help/gimphelpdomain.[ch] (gimp_help_domain_map): return
+	the GimpHelpLocate the ID was found in.
+
+	* plug-ins/help/gimp-help-lookup.c
+	* plug-ins/help/help.c: changed accordingly.
+
+	* plug-ins/help/gimphelp.h: disable debug output.
+
 2006-11-23  Simon Budig  <simon@gimp.org>
 
 	* app/display/gimpcanvas.c: Change the color for XOR drawing. This

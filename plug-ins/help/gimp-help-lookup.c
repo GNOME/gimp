@@ -126,7 +126,8 @@ lookup (const gchar *help_domain,
   if (domain)
     {
       GList *locales  = gimp_help_parse_locales (help_locales);
-      gchar *full_uri = gimp_help_domain_map (domain, locales, help_id, NULL);
+      gchar *full_uri = gimp_help_domain_map (domain, locales, help_id,
+                                              NULL, NULL);
 
       g_list_foreach (locales, (GFunc) g_free, NULL);
       g_list_free (locales);

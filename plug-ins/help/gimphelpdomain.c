@@ -114,10 +114,11 @@ gimp_help_domain_lookup_locale (GimpHelpDomain *domain,
 }
 
 gchar *
-gimp_help_domain_map (GimpHelpDomain *domain,
-                      GList          *help_locales,
-                      const gchar    *help_id,
-                      gboolean       *fatal_error)
+gimp_help_domain_map (GimpHelpDomain  *domain,
+                      GList           *help_locales,
+                      const gchar     *help_id,
+                      GimpHelpLocale **ret_locale,
+                      gboolean        *fatal_error)
 {
   GimpHelpLocale *locale = NULL;
   const gchar    *ref    = NULL;
@@ -145,6 +146,9 @@ gimp_help_domain_map (GimpHelpDomain *domain,
                                                (const gchar *) list->data);
       ref = locale->help_missing;
     }
+
+  if (ret_locale)
+    *ret_locale = locale;
 
   if (ref)
     {

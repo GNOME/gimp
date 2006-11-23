@@ -270,7 +270,7 @@ load_help_idle (gpointer data)
       gboolean  fatal_error;
 
       full_uri = gimp_help_domain_map (domain, locales, idle_help->help_id,
-                                       &fatal_error);
+                                       NULL, &fatal_error);
 
       g_list_foreach (locales, (GFunc) g_free, NULL);
       g_list_free (locales);
