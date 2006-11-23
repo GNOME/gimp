@@ -19,16 +19,16 @@
     <xi:include href="xml/gimpthumb-error.xml" />
   </part>
 
-  <index>
+  <index id="libgimpthumb-index">
     <title>Index</title>
   </index>
-  <index role="GIMP 2.2">
+  <index role="GIMP 2.2" id="libgimpthumb-index-new-in-2-2">
     <title>Index of new symbols in GIMP 2.2</title>
   </index>
-  <index role="GIMP 2.4">
+  <index role="GIMP 2.4" id="libgimpthumb-index-new-in-2-4">
     <title>Index of new symbols in GIMP 2.4</title>
   </index>
-  <index role="deprecated">
+  <index role="deprecated" id="libgimpthumb-index-deprecated">
     <title>Index of deprecated symbols</title>
   </index>
 

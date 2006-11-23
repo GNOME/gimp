@@ -188,15 +188,6 @@ and operations involving multiple layers.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_image_unset_active_channel ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_image_get_floating_sel ##### -->
 <para>
 
@@ -303,6 +294,16 @@ and operations involving multiple layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_get_layer_position ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@layer_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_add_channel ##### -->
 <para>
 
@@ -335,6 +336,16 @@ and operations involving multiple layers.
 
 
 <!-- ##### FUNCTION gimp_image_lower_channel ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@channel_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_get_channel_position ##### -->
 <para>
 
 </para>
@@ -427,6 +438,15 @@ and operations involving multiple layers.
 
 @image_ID: 
 @active_channel_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_unset_active_channel ##### -->
+<para>
+
+</para>
+
+@image_ID: 
 @Returns: 
 
 
@@ -778,6 +798,16 @@ and operations involving multiple layers.
 
 
 <!-- ##### FUNCTION gimp_image_raise_vectors_to_top ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@vectors_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_get_vectors_position ##### -->
 <para>
 
 </para>

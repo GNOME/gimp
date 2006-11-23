@@ -96,16 +96,16 @@
     <xi:include href="xml/gimpoldwidgets.xml" />
   </part>
 
-  <index>
+  <index id="libgimpwidgets-index">
     <title>Index</title>
   </index>
-  <index role="GIMP 2.2">
+  <index role="GIMP 2.2" id="libgimpwidgets-index-new-in-2-2">
     <title>Index of new symbols in GIMP 2.2</title>
   </index>
-  <index role="GIMP 2.4">
+  <index role="GIMP 2.4" id="libgimpwidgets-index-new-in-2-4">
     <title>Index of new symbols in GIMP 2.4</title>
   </index>
-  <index role="deprecated">
+  <index role="deprecated" id="libgimpwidgets-index-deprecated">
     <title>Index of deprecated symbols</title>
   </index>
 

@@ -518,7 +518,6 @@ gimp_image_crop
 gimp_image_get_layers
 gimp_image_get_channels
 gimp_image_get_active_drawable
-gimp_image_unset_active_channel
 gimp_image_get_floating_sel
 gimp_image_floating_sel_attached_to
 gimp_image_pick_color
@@ -529,10 +528,12 @@ gimp_image_raise_layer
 gimp_image_lower_layer
 gimp_image_raise_layer_to_top
 gimp_image_lower_layer_to_bottom
+gimp_image_get_layer_position
 gimp_image_add_channel
 gimp_image_remove_channel
 gimp_image_raise_channel
 gimp_image_lower_channel
+gimp_image_get_channel_position
 gimp_image_flatten
 gimp_image_merge_visible_layers
 gimp_image_merge_down
@@ -542,6 +543,7 @@ gimp_image_get_active_layer
 gimp_image_set_active_layer
 gimp_image_get_active_channel
 gimp_image_set_active_channel
+gimp_image_unset_active_channel
 gimp_image_get_selection
 gimp_image_get_component_active
 gimp_image_set_component_active
@@ -577,6 +579,7 @@ gimp_image_lower_vectors
 gimp_image_raise_vectors
 gimp_image_lower_vectors_to_bottom
 gimp_image_raise_vectors_to_top
+gimp_image_get_vectors_position
 </SECTION>
 
 <SECTION>

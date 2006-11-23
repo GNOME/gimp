@@ -1,11 +1,27 @@
+2006-11-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt: added new symbols.
+
+	* libgimp/tmpl/gimpimage.sgml: regenerated
+
+	* libgimp/libgimp-docs.sgml
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpcolor/libgimpcolor-docs.sgml
+	* libgimpconfig/libgimpconfig-docs.sgml
+	* libgimpmath/libgimpmath-docs.sgml
+	* libgimpmodule/libgimpmodule-docs.sgml
+	* libgimpthumb/libgimpthumb-docs.sgml
+	* libgimpwidgets/libgimpwidgets-docs.sgml: added id attributes for
+	the index pages.
+
 2006-11-20  Simon Budig  <simon@gimp.org>
 
-        * devel-docs/libgimp/libgimp-sections.txt: moved new symbols
-        to their resp. sections.
+        * libgimp/libgimp-sections.txt: moved new symbols to their
+	resp. sections.
 
-        * devel-docs/libgimp/tmpl/gimpfontselectbutton.sgml
-        * devel-docs/libgimp/tmpl/gimptools.sgml
-        * devel-docs/libgimp/tmpl/gimpvectors.sgml: regenerated
+        * libgimp/tmpl/gimpfontselectbutton.sgml
+        * libgimp/tmpl/gimptools.sgml
+        * libgimp/tmpl/gimpvectors.sgml: regenerated
 
 2006-11-16  Simon Budig  <simon@gimp.org>
 

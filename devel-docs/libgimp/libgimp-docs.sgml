@@ -19,7 +19,7 @@
   <part id="libgimp">
     <title>GIMP Library</title>
 
-    <partintro>
+    <partintro id="libgimp-introduction">
       <para>
 	GIMP's Procedural Database (PDB) offers an interface to core
 	functions and to functionality provided by plug-ins. The role
@@ -124,16 +124,16 @@
     <xi:include href="xml/gimpprocview.xml" />
   </part>
 
-  <index>
+  <index id="libgimp-index">
     <title>Index</title>
   </index>
-  <index role="GIMP 2.2">
+  <index role="GIMP 2.2" id="libgimp-index-new-in-2-2">
     <title>Index of new symbols in GIMP 2.2</title>
   </index>
-  <index role="GIMP 2.4">
+  <index role="GIMP 2.4" id="libgimp-index-new-in-2-4">
     <title>Index of new symbols in GIMP 2.4</title>
   </index>
-  <index role="deprecated">
+  <index role="deprecated" id="libgimp-index-deprecated">
     <title>Index of deprecated symbols</title>
   </index>
 
