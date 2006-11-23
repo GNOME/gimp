@@ -82,6 +82,7 @@ plug-ins/common/illusion.c
 plug-ins/common/iwarp.c
 plug-ins/common/jigsaw.c
 plug-ins/common/laplace.c
+plug-ins/common/lcms.c
 plug-ins/common/lens.c
 plug-ins/common/lic.c
 plug-ins/common/mail.c
@@ -190,7 +191,8 @@ plug-ins/gimpressionist/repaint.c
 plug-ins/gimpressionist/size.c
 plug-ins/gimpressionist/sizemap.c
 plug-ins/gimpressionist/utils.c
-plug-ins/help/domain.c
+plug-ins/help/gimphelpdomain.c
+plug-ins/help/gimphelplocale.c
 plug-ins/helpbrowser/dialog.c
 plug-ins/helpbrowser/helpbrowser.c
 plug-ins/ifscompose/ifscompose.c
@@ -251,6 +253,9 @@ plug-ins/metadata/interface.c
 plug-ins/metadata/metadata.c
 plug-ins/metadata/xmp-parse.c
 plug-ins/pagecurl/pagecurl.c
+plug-ins/print/print-draw-page.c
+plug-ins/print/print-page-layout.c
+plug-ins/print/print.c
 plug-ins/rcm/rcm.c
 plug-ins/rcm/rcm_dialog.c
 plug-ins/rcm/rcm_stock.c
