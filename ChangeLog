@@ -1,5 +1,10 @@
 2006-11-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/gimpplugin-cleanup.c: remove useless newlines from
+	debugging output.
+
+2006-11-23  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/help/Makefile.am: link libgimphelp as not installed .a
 
 	* plug-ins/help/gimphelpdomain.[ch] (gimp_help_domain_map): return

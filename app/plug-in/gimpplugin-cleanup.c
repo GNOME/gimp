@@ -69,7 +69,7 @@ gimp_plug_in_cleanup_undo_group_start (GimpPlugIn *plug_in,
   proc_frame = gimp_plug_in_get_proc_frame (plug_in);
   cleanup    = gimp_plug_in_cleanup_get_image (proc_frame, image);
 
-  g_printerr ("\n%s: procedure %s starts undo group on\n"
+  g_printerr ("\n%s: procedure %s starts undo group on "
               "image with group count %d\n",
               G_STRFUNC, GIMP_OBJECT (proc_frame->procedure)->name,
               image->group_count);
@@ -106,7 +106,7 @@ gimp_plug_in_cleanup_undo_group_end (GimpPlugIn *plug_in,
   proc_frame = gimp_plug_in_get_proc_frame (plug_in);
   cleanup    = gimp_plug_in_cleanup_get_image (proc_frame, image);
 
-  g_printerr ("\n%s: procedure %s ends undo group on\n"
+  g_printerr ("\n%s: procedure %s ends undo group on "
               "image with group count %d\n",
               G_STRFUNC, GIMP_OBJECT (proc_frame->procedure)->name,
               image->group_count);
