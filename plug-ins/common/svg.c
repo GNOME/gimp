@@ -231,9 +231,9 @@ run (const gchar      *name,
                   gint num_vectors;
                   gint32 *vectors;
 
-                  gimp_vectors_new_from_file (image_ID, filename,
-                                              load_vals.merge, TRUE,
-                                              &num_vectors, &vectors);
+                  gimp_vectors_import_from_file (image_ID, filename,
+                                                 load_vals.merge, TRUE,
+                                                 &num_vectors, &vectors);
                   if (num_vectors)
                     g_free (vectors);
                 }

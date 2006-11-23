@@ -132,13 +132,13 @@ gboolean              gimp_vectors_to_selection              (gint32            
                                                               gboolean                feather,
                                                               gdouble                 feather_radius_x,
                                                               gdouble                 feather_radius_y);
-gboolean              gimp_vectors_new_from_file             (gint32                  image_ID,
+gboolean              gimp_vectors_import_from_file          (gint32                  image_ID,
                                                               const gchar            *filename,
                                                               gboolean                merge,
                                                               gboolean                scale,
                                                               gint                   *num_vectors,
                                                               gint32                **vectors_ids);
-gboolean              gimp_vectors_new_from_string           (gint32                  image_ID,
+gboolean              gimp_vectors_import_from_string        (gint32                  image_ID,
                                                               const gchar            *string,
                                                               gint                    length,
                                                               gboolean                merge,

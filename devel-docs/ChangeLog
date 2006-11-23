@@ -1,3 +1,9 @@
+2006-11-23  Simon Budig  <simon@gimp.org>
+
+	* libgimp/libgimp-sections.txt: follow name change.
+
+	* libgimp/tmpl/gimpvectors.sgml: regenerated.
+
 2006-11-23  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added new symbols.

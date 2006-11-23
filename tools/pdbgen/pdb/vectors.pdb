@@ -1123,7 +1123,7 @@ CODE
 
 }
 
-sub vectors_new_from_file {
+sub vectors_import_from_file {
     $blurb = 'Import paths from an SVG file.';
 
     $help = <<'HELP';
@@ -1182,7 +1182,7 @@ CODE
     );
 }
 
-sub vectors_new_from_string {
+sub vectors_import_from_string {
     $blurb = 'Import paths from an SVG string.';
 
     $help = <<'HELP';
@@ -1278,8 +1278,8 @@ CODE
             vectors_bezier_stroke_cubicto
             vectors_bezier_stroke_new_ellipse
             vectors_to_selection
-            vectors_new_from_file
-            vectors_new_from_string);
+            vectors_import_from_file
+            vectors_import_from_string);
 
 %exports = (app => [@procs], lib => [@procs]);
 

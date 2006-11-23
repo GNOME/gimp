@@ -889,8 +889,8 @@ gimp_image_undo_thaw
 <SECTION>
 <FILE>gimpvectors</FILE>
 gimp_vectors_new
-gimp_vectors_new_from_file
-gimp_vectors_new_from_string
+gimp_vectors_import_from_file
+gimp_vectors_import_from_string
 gimp_vectors_get_strokes
 gimp_vectors_get_image
 gimp_vectors_get_linked

@@ -1106,11 +1106,11 @@ vectors_to_selection_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_new_from_file_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
+vectors_import_from_file_invoker (GimpProcedure     *procedure,
+                                  Gimp              *gimp,
+                                  GimpContext       *context,
+                                  GimpProgress      *progress,
+                                  const GValueArray *args)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -1164,11 +1164,11 @@ vectors_new_from_file_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_new_from_string_invoker (GimpProcedure     *procedure,
-                                 Gimp              *gimp,
-                                 GimpContext       *context,
-                                 GimpProgress      *progress,
-                                 const GValueArray *args)
+vectors_import_from_string_invoker (GimpProcedure     *procedure,
+                                    Gimp              *gimp,
+                                    GimpContext       *context,
+                                    GimpProgress      *progress,
+                                    const GValueArray *args)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -2394,12 +2394,12 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-new-from-file
+   * gimp-vectors-import-from-file
    */
-  procedure = gimp_procedure_new (vectors_new_from_file_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-new-from-file");
+  procedure = gimp_procedure_new (vectors_import_from_file_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-import-from-file");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-new-from-file",
+                                     "gimp-vectors-import-from-file",
                                      "Import paths from an SVG file.",
                                      "This procedure imports paths from an SVG file. SVG elements other than paths and basic shapes are ignored.",
                                      "Simon Budig",
@@ -2446,12 +2446,12 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-new-from-string
+   * gimp-vectors-import-from-string
    */
-  procedure = gimp_procedure_new (vectors_new_from_string_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-new-from-string");
+  procedure = gimp_procedure_new (vectors_import_from_string_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-import-from-string");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-new-from-string",
+                                     "gimp-vectors-import-from-string",
                                      "Import paths from an SVG string.",
                                      "This procedure works like 'gimp-vectors-new-from-file' but takes a string rather than reading the SVG from a file. This allows you to write scripts that generate SVG and feed it to GIMP.",
                                      "Simon Budig",

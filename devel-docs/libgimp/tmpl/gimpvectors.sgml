@@ -27,7 +27,7 @@ gimpvectors
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_vectors_new_from_file ##### -->
+<!-- ##### FUNCTION gimp_vectors_import_from_file ##### -->
 <para>
 
 </para>
@@ -41,7 +41,7 @@ gimpvectors
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_vectors_new_from_string ##### -->
+<!-- ##### FUNCTION gimp_vectors_import_from_string ##### -->
 <para>
 
 </para>

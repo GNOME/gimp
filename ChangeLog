@@ -1,5 +1,16 @@
 2006-11-23  Simon Budig  <simon@gimp.org>
 
+	* tools/pdbgen/pdb/vectors.pdb: renamed gimp_vectors_new_from_*
+	to gimp_vectors_import_from_*, as discussed in bug #378394.
+
+	* plug-ins/common/svg.c
+	* libgimp/gimp.def: changed accordingly.
+
+	* libgimp/gimpvectors_pdb.[ch]
+	* app/pdb/vectors_cmds.c: regenerated.
+
+2006-11-23  Simon Budig  <simon@gimp.org>
+
 	* plug-ins/script-fu/tinyscheme/scheme-private.h
 	* plug-ins/script-fu/tinyscheme/scheme.[ch]: Changed tinyscheme
 	to provide a safe spot to protect intermediate values from the

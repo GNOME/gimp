@@ -1214,7 +1214,7 @@ gimp_vectors_to_selection (gint32         vectors_ID,
 }
 
 /**
- * gimp_vectors_new_from_file:
+ * gimp_vectors_import_from_file:
  * @image_ID: The image.
  * @filename: The name of the SVG file to import.
  * @merge: Merge paths into a single vectors object.
@@ -1232,18 +1232,18 @@ gimp_vectors_to_selection (gint32         vectors_ID,
  * Since: GIMP 2.4
  */
 gboolean
-gimp_vectors_new_from_file (gint32        image_ID,
-                            const gchar  *filename,
-                            gboolean      merge,
-                            gboolean      scale,
-                            gint         *num_vectors,
-                            gint32      **vectors_ids)
+gimp_vectors_import_from_file (gint32        image_ID,
+                               const gchar  *filename,
+                               gboolean      merge,
+                               gboolean      scale,
+                               gint         *num_vectors,
+                               gint32      **vectors_ids)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-vectors-new-from-file",
+  return_vals = gimp_run_procedure ("gimp-vectors-import-from-file",
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
                                     GIMP_PDB_STRING, filename,
@@ -1271,7 +1271,7 @@ gimp_vectors_new_from_file (gint32        image_ID,
 }
 
 /**
- * gimp_vectors_new_from_string:
+ * gimp_vectors_import_from_string:
  * @image_ID: The image.
  * @string: A string that must be a complete and valid SVG document.
  * @length: Number of bytes in string or -1 if the string is NULL terminated.
@@ -1291,19 +1291,19 @@ gimp_vectors_new_from_file (gint32        image_ID,
  * Since: GIMP 2.4
  */
 gboolean
-gimp_vectors_new_from_string (gint32        image_ID,
-                              const gchar  *string,
-                              gint          length,
-                              gboolean      merge,
-                              gboolean      scale,
-                              gint         *num_vectors,
-                              gint32      **vectors_ids)
+gimp_vectors_import_from_string (gint32        image_ID,
+                                 const gchar  *string,
+                                 gint          length,
+                                 gboolean      merge,
+                                 gboolean      scale,
+                                 gint         *num_vectors,
+                                 gint32      **vectors_ids)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-vectors-new-from-string",
+  return_vals = gimp_run_procedure ("gimp-vectors-import-from-string",
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
                                     GIMP_PDB_STRING, string,
