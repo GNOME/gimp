@@ -1182,12 +1182,12 @@ register_paths_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-import");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-import",
-                                     "This procedure is deprecated! Use 'vectors-new-from-file' instead.",
-                                     "This procedure is deprecated! Use 'vectors-new-from-file' instead.",
+                                     "This procedure is deprecated! Use 'vectors-import-from-file' instead.",
+                                     "This procedure is deprecated! Use 'vectors-import-from-file' instead.",
                                      "",
                                      "",
                                      "",
-                                     "vectors-new-from-file");
+                                     "vectors-import-from-file");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",

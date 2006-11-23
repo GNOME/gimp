@@ -1,5 +1,16 @@
 2006-11-23  Simon Budig  <simon@gimp.org>
 
+	* tools/pdbgen/pdb/paths.pdb
+	* tools/pdbgen/pdb/vectors.pdb: minor documentation fixes,
+	following the renaming.
+
+	* app/pdb/paths_cmds.c
+	* app/pdb/vectors_cmds.c
+	* libgimp/gimppaths_pdb.c
+	* libgimp/gimpvectors_pdb.c: regenerated.
+
+2006-11-23  Simon Budig  <simon@gimp.org>
+
 	* plug-ins/pygimp/gimpmodule.c: follow the function renaming
 	as well. Why didn't this complain when I compiled earlier?
 

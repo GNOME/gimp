@@ -528,7 +528,8 @@ gimp_path_to_selection (gint32          image_ID,
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
  *
- * This procedure is deprecated! Use vectors_new_from_file() instead.
+ * This procedure is deprecated! Use vectors_import_from_file()
+ * instead.
  *
  * Returns: TRUE on success.
  */

@@ -1282,8 +1282,8 @@ gimp_vectors_import_from_file (gint32        image_ID,
  *
  * Import paths from an SVG string.
  *
- * This procedure works like gimp_vectors_new_from_file() but takes a
- * string rather than reading the SVG from a file. This allows you to
+ * This procedure works like gimp_vectors_import_from_file() but takes
+ * a string rather than reading the SVG from a file. This allows you to
  * write scripts that generate SVG and feed it to GIMP.
  *
  * Returns: TRUE on success.

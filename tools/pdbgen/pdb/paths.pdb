@@ -568,7 +568,7 @@ CODE
 }
 
 sub path_import {
-    &std_pdb_deprecated('vectors-new-from-file');
+    &std_pdb_deprecated('vectors-import-from-file');
 
     @inargs = (
 	{ name => 'image', type => 'image',

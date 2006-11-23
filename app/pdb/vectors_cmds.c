@@ -2453,7 +2453,7 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-import-from-string",
                                      "Import paths from an SVG string.",
-                                     "This procedure works like 'gimp-vectors-new-from-file' but takes a string rather than reading the SVG from a file. This allows you to write scripts that generate SVG and feed it to GIMP.",
+                                     "This procedure works like 'gimp-vectors-import-from-file' but takes a string rather than reading the SVG from a file. This allows you to write scripts that generate SVG and feed it to GIMP.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2006",
