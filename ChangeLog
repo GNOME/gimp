@@ -1,3 +1,16 @@
+2006-11-23  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme-private.h
+	* plug-ins/script-fu/tinyscheme/scheme.[ch]: Changed tinyscheme
+	to provide a safe spot to protect intermediate values from the
+	garbage collector. Fixes some really ugly problems with arrays.
+
+	Most likely not the best solution, we need to discuss this with
+	the tinyscheme maintainers.
+
+	* plug-ins/script-fu/scheme-wrapper.c: changed accordingly, plus
+	reordering some stuff to protect it from the eager GC.
+
 2006-11-23  Sven Neumann  <sven@gimp.org>
 
 	* cursors/Makefile.am (EXTRA_DIST): added xbm/cursor-mouse-mask.xbm.

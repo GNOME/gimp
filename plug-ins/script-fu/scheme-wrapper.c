@@ -978,7 +978,7 @@ if (count > 0)
   {
     fprintf (stderr, "     ");
     for (j = 0; j < count; ++j)
-      fprintf (stderr, " %u",
+      fprintf (stderr, " %ld",
                sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
     fprintf (stderr, "\n");
   }
@@ -1310,6 +1310,7 @@ fprintf (stderr, "      value %d is type %s (%d)\n",
                              sc->vptr->mk_integer (sc,
                                                    values[i + 1].data.d_int32),
                                                    return_val);
+              set_safe_foreign (sc, return_val);
               break;
 
             case GIMP_PDB_INT16:
@@ -1317,6 +1318,7 @@ fprintf (stderr, "      value %d is type %s (%d)\n",
                              sc->vptr->mk_integer (sc,
                                                    values[i + 1].data.d_int16),
                                                    return_val);
+              set_safe_foreign (sc, return_val);
               break;
 
             case GIMP_PDB_INT8:
@@ -1324,6 +1326,7 @@ fprintf (stderr, "      value %d is type %s (%d)\n",
                              sc->vptr->mk_integer (sc,
                                                    values[i + 1].data.d_int8),
                                                    return_val);
+              set_safe_foreign (sc, return_val);
               break;
 
             case GIMP_PDB_FLOAT:
@@ -1331,6 +1334,7 @@ fprintf (stderr, "      value %d is type %s (%d)\n",
                              sc->vptr->mk_real (sc,
                                                 values[i + 1].data.d_float),
                                                 return_val);
+              set_safe_foreign (sc, return_val);
               break;
 
             case GIMP_PDB_STRING:
@@ -1340,6 +1344,7 @@ fprintf (stderr, "      value %d is type %s (%d)\n",
               return_val = sc->vptr->cons (sc,
                                            sc->vptr->mk_string (sc, string),
                                            return_val);
+              set_safe_foreign (sc, return_val);
               break;
 
             case GIMP_PDB_INT32ARRAY:
@@ -1351,14 +1356,15 @@ fprintf (stderr, "      value %d is type %s (%d)\n",
                 gint32 *array      = (gint32 *) values[i + 1].data.d_int32array;
                 pointer vector     = sc->vptr->mk_vector (sc, num_int32s);
 
+                return_val = sc->vptr->cons (sc, vector, return_val);
+                set_safe_foreign (sc, return_val);
+
                 for (j = 0; j < num_int32s; j++)
                   {
                     sc->vptr->set_vector_elem (vector, j,
                                                sc->vptr->mk_integer (sc,
                                                                      array[j]));
                   }
-
-                return_val = sc->vptr->cons (sc, vector, return_val);
               }
               break;
 
@@ -1371,13 +1377,15 @@ fprintf (stderr, "      value %d is type %s (%d)\n",
                 gint16 *array      = (gint16 *) values[i + 1].data.d_int16array;
                 pointer vector     = sc->vptr->mk_vector (sc, num_int16s);
 
+                return_val = sc->vptr->cons (sc, vector, return_val);
+                set_safe_foreign (sc, return_val);
+
                 for (j = 0; j < num_int16s; j++)
                   {
                     sc->vptr->set_vector_elem (vector, j,
                                                sc->vptr->mk_integer (sc,
                                                                      array[j]));
                   }
-                return_val = sc->vptr->cons (sc, vector, return_val);
               }
               break;
 
@@ -1390,14 +1398,15 @@ fprintf (stderr, "      value %d is type %s (%d)\n",
                 guint8 *array      = (guint8 *) values[i + 1].data.d_int8array;
                 pointer vector     = sc->vptr->mk_vector (sc, num_int8s);
 
+                return_val = sc->vptr->cons (sc, vector, return_val);
+                set_safe_foreign (sc, return_val);
+
                 for (j = 0; j < num_int8s; j++)
                   {
                     sc->vptr->set_vector_elem (vector, j,
                                                sc->vptr->mk_integer (sc,
                                                                      array[j]));
                   }
-
-                return_val = sc->vptr->cons (sc, vector, return_val);
               }
               break;
 
@@ -1410,14 +1419,15 @@ fprintf (stderr, "      value %d is type %s (%d)\n",
                 gdouble *array  = (gdouble *) values[i + 1].data.d_floatarray;
                 pointer  vector = sc->vptr->mk_vector (sc, num_floats);
 
+                return_val = sc->vptr->cons (sc, vector, return_val);
+                set_safe_foreign (sc, return_val);
+
                 for (j = 0; j < num_floats; j++)
                   {
                     sc->vptr->set_vector_elem (vector, j,
                                                sc->vptr->mk_real (sc,
                                                                   array[j]));
                   }
-
-                return_val = sc->vptr->cons (sc, vector, return_val);
               }
               break;
 
@@ -1430,14 +1440,15 @@ fprintf (stderr, "      value %d is type %s (%d)\n",
                 gchar **array  = (gchar **) values[i + 1].data.d_stringarray;
                 pointer vector = sc->vptr->mk_vector (sc, num_strings);
 
+                return_val = sc->vptr->cons (sc, vector, return_val);
+                set_safe_foreign (sc, return_val);
+
                 for (j = 0; j < num_strings; j++)
                   {
                     sc->vptr->set_vector_elem (vector, j,
                                                sc->vptr->mk_string (sc,
                                                                     array[j]));
                   }
-
-                return_val = sc->vptr->cons (sc, vector, return_val);
               }
               break;
 
@@ -1447,11 +1458,17 @@ fprintf (stderr, "      value %d is type %s (%d)\n",
 
                 gimp_rgb_get_uchar (&values[i + 1].data.d_color, &r, &g, &b);
 
-                intermediate_val = sc->vptr->cons (sc, sc->vptr->mk_integer (sc, r),
-                                                   sc->vptr->cons (sc, sc->vptr->mk_integer (sc, g),
-                                                   sc->vptr->cons (sc, sc->vptr->mk_integer (sc, b),
-                                                   sc->NIL)));
-                return_val = sc->vptr->cons (sc, intermediate_val, return_val);
+                intermediate_val = sc->vptr->cons (sc,
+                    sc->vptr->mk_integer (sc, r),
+                    sc->vptr->cons (sc,
+                        sc->vptr->mk_integer (sc, g),
+                        sc->vptr->cons (sc,
+                            sc->vptr->mk_integer (sc, b),
+                            sc->NIL)));
+                return_val = sc->vptr->cons (sc,
+                                             intermediate_val,
+                                             return_val);
+                set_safe_foreign (sc, return_val);
                 break;
               }
 
@@ -1465,39 +1482,46 @@ fprintf (stderr, "      value %d is type %s (%d)\n",
                 h = values[i + 1].data.d_region.height;
 
                 intermediate_val = sc->vptr->cons (sc,
-                                                   sc->vptr->mk_integer (sc, x),
-                                                   sc->vptr->cons (sc, sc->vptr->mk_integer (sc, y),
-                                                   sc->vptr->cons (sc, sc->vptr->mk_integer (sc, w),
-                                                   sc->vptr->cons (sc, sc->vptr->mk_integer (sc, h),
-                                                   sc->NIL))));
-                return_val = sc->vptr->cons (sc, intermediate_val, return_val);
+                    sc->vptr->mk_integer (sc, x),
+                    sc->vptr->cons (sc,
+                        sc->vptr->mk_integer (sc, y),
+                        sc->vptr->cons (sc,
+                            sc->vptr->mk_integer (sc, w),
+                            sc->vptr->cons (sc,
+                                sc->vptr->mk_integer (sc, h),
+                                sc->NIL))));
+                return_val = sc->vptr->cons (sc,
+                                             intermediate_val,
+                                             return_val);
+                set_safe_foreign (sc, return_val);
                 break;
               }
               break;
 
             case GIMP_PDB_PARASITE:
               {
-                pointer name, flags, data;
-
                 if (values[i + 1].data.d_parasite.name == NULL)
                     return_val = my_err ("Error: null parasite", sc->NIL);
                 else
                   {
-                    name    = sc->vptr->mk_string (sc,
-                                       values[i + 1].data.d_parasite.name);
+                    /* don't move the mk_foo() calls outside this function call,
+                     * otherwise they might be garbage collected away!  */
+                    intermediate_val = sc->vptr->cons (sc,
+                        sc->vptr->mk_string (sc,
+                                             values[i + 1].data.d_parasite.name),
+                        sc->vptr->cons (sc,
+                            sc->vptr->mk_integer (sc,
+                                                  values[i + 1].data.d_parasite.flags),
+                            sc->vptr->cons (sc,
+                                sc->vptr->mk_counted_string (sc,
+                                                             values[i + 1].data.d_parasite.data,
+                                                             values[i + 1].data.d_parasite.size),
+                                 sc->NIL)));
+                    return_val = sc->vptr->cons (sc,
+                                                 intermediate_val,
+                                                 return_val);
+                    set_safe_foreign (sc, return_val);
 
-                    flags   = sc->vptr->mk_integer (sc,
-                                       values[i + 1].data.d_parasite.flags);
-
-                    data    = sc->vptr->mk_counted_string (sc,
-                                       values[i + 1].data.d_parasite.data,
-                                       values[i + 1].data.d_parasite.size);
-
-                    intermediate_val = sc->vptr->cons (sc, name,
-                                             sc->vptr->cons (sc, flags,
-                                             sc->vptr->cons (sc, data,
-                                                            sc->NIL)));
-                    return_val = sc->vptr->cons (sc, intermediate_val, return_val);
 #if DEBUG_MARSHALL
 fprintf (stderr, "      name '%s'\n", values[i+1].data.d_parasite.name);
 fprintf (stderr, "      flags %d", values[i+1].data.d_parasite.flags);

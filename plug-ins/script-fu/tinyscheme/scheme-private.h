@@ -63,11 +63,12 @@ char *alloc_seg[CELL_NSEGMENT];
 pointer cell_seg[CELL_NSEGMENT];
 int     last_cell_seg;
 
-/* We use 4 registers. */
+/* We use 5 registers. */
 pointer args;            /* register for arguments of function */
 pointer envir;           /* stack register for current environment */
 pointer code;            /* register for current code */
 pointer dump;            /* stack register for next evaluation */
+pointer safe_foreign;    /* register to avoid gc problems */
 
 int interactive_repl;    /* are we in an interactive REPL? */
 int print_output;        /* set to 1 to print results and error messages */

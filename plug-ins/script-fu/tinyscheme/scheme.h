@@ -140,6 +140,7 @@ pointer mk_character(scheme *sc, gunichar c);
 pointer mk_foreign_func(scheme *sc, foreign_func f);
 void putstr(scheme *sc, const char *s);
 
+void set_safe_foreign (scheme *sc, pointer data);
 
 #if USE_INTERFACE
 struct scheme_interface {

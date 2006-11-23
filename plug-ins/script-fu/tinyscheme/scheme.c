@@ -912,6 +912,15 @@ static pointer mk_number(scheme *sc, num n) {
  }
 }
 
+void set_safe_foreign (scheme *sc, pointer data) {
+  if (sc->safe_foreign == sc->NIL) {
+    fprintf (stderr, "get_safe_foreign called outside a foreign function\n");
+  } else {
+    car (sc->safe_foreign) = data;
+  }
+}
+
+
 /* char_cnt is length of string in chars. */
 /* str points to a NUL terminated string. */
 /* Only uses fill_char if str is NULL.    */
@@ -1248,6 +1257,7 @@ static void gc(scheme *sc, pointer a, pointer b) {
   mark(sc->code);
   dump_stack_mark(sc);
   mark(sc->value);
+  mark(sc->safe_foreign);
   mark(sc->inport);
   mark(sc->save_inport);
   mark(sc->outport);
@@ -2524,7 +2534,9 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
           if (is_proc(sc->code)) {
                s_goto(sc,procnum(sc->code));   /* PROCEDURE */
           } else if (is_foreign(sc->code)) {
+               sc->safe_foreign = cons (sc, sc->NIL, sc->safe_foreign);
                x=sc->code->_object._ff(sc,sc->args);
+               sc->safe_foreign = cdr (sc->safe_foreign);
                s_return(sc,x);
           } else if (is_closure(sc->code) || is_macro(sc->code)
                      || is_promise(sc->code)) { /* CLOSURE */
@@ -4487,6 +4499,7 @@ int scheme_init_custom_alloc(scheme *sc, func_alloc malloc, func_dealloc free) {
   sc->code = sc->NIL;
   sc->tracing=0;
   sc->bc_flag = 0;
+  sc->safe_foreign = sc->NIL;
 
   /* init sc->NIL */
   typeflag(sc->NIL) = (T_ATOM | MARK);
