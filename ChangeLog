@@ -1,5 +1,10 @@
 2006-11-23  Michael Natterer  <mitch@gimp.org>
 
+	* data/images/gimp-splash.png: new splash. Image taken by Kristian
+	Rietveld; Retouching by Simon Budig and myself.
+
+2006-11-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/gimpprocedure.c (gimp_procedure_validate_args): made
 	validation error messages more human-readable and prepared the
 	code for validating return values.
