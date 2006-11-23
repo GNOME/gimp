@@ -77,6 +77,7 @@ EXTRA_DIST = \
 	xbm/cursor-mouse.xbm			\
 	xbm/cursor-mouse-mask.xbm		\
 	xbm/cursor-move.xbm			\
+	xbm/cursor-move-mask.xbm		\
 	xbm/cursor-crosshair.xbm		\
 	xbm/cursor-crosshair-mask.xbm		\
 	xbm/cursor-crosshair-small.xbm		\
