@@ -12,7 +12,7 @@ Changes in GIMP 2.3.13
 
 - show information about embedded color profiles in Image Properties dialog
 - allow to apply color profiles on load (still work in progress)
-- new vectors PDB API to replaces the old path API
+- new vectors PDB API to replace the old path API
 - added "Auntie Alias" plug-in for antialiasing on lineart
 - added Edit->Fade operation
 - added Rounded Corners option to Rectangle Select tool
@@ -29,6 +29,7 @@ Changes in GIMP 2.3.13
 - import paths embedded into TIFF files
 - support vectors in the Script-Fu and Python-Fu user interfaces
 - added PDB functions to retrieve position of layers/channels/vectors
+- added side pane with table of contents to the Help Browser
 - bug fixes and code cleanup
 
 
