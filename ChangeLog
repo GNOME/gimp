@@ -1,3 +1,10 @@
+2006-11-23  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch (fix by Simon Budig):
+
+	* app/xcf/xcf-load.c: load the channels in the proper order;
+	fixes bug #378003.
+
 2006-11-15  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch (fix by Mukund Sivaraman):

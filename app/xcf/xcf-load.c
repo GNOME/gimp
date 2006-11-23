@@ -229,7 +229,8 @@ xcf_load_image (Gimp    *gimp,
 
       /* add the channel to the image if its not the selection */
       if (channel != gimage->selection_mask)
-        gimp_image_add_channel (gimage, channel, -1);
+        gimp_image_add_channel (gimage, channel,
+                                gimp_container_num_children (gimage->channels));
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.
