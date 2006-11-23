@@ -1,5 +1,11 @@
 2006-11-23  Sven Neumann  <sven@gimp.org>
 
+	* app/pdb/gimpprocedure.c (gimp_procedure_validate_args): special
+	case invalid drawable and image IDs and try to give a somewhat
+	more helpful error message (addresses bug #378334).
+
+2006-11-23  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/image.pdb: marked the new functions as new in 2.4.
 
 	* app/pdb/image_cmds.c

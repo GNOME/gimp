@@ -521,32 +521,58 @@ gimp_procedure_validate_args (GimpProcedure *procedure,
 
           if (g_param_value_validate (pspec, arg))
             {
-              const gchar *type_name = g_type_name (spec_type);
-              gchar       *old_value;
-              gchar       *new_value;
 
-              old_value = g_value_dup_string (&string_value);
-
-              if (g_value_type_transformable (arg_type, G_TYPE_STRING))
-                g_value_transform (arg, &string_value);
+              if (GIMP_IS_PARAM_SPEC_DRAWABLE_ID (pspec) &&
+                  g_value_get_int (arg) == -1)
+                {
+                  gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                                _("Procedure '%s' has been called with an "
+                                  "invalid ID for argument '%s'. Most likely "
+                                  "a plug-in is trying to work on a layer "
+                                  "that doesn't exist any longer."),
+                                gimp_object_get_name (GIMP_OBJECT (procedure)),
+                                g_param_spec_get_name (pspec));
+                }
+              else if (GIMP_IS_PARAM_SPEC_IMAGE_ID (pspec) &&
+                       g_value_get_int (arg) == -1)
+                {
+                  gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                                _("Procedure '%s' has been called with an "
+                                  "invalid ID for argument '%s'.  Most likely "
+                                  "a plug-in is trying to work on an image "
+                                  "that doesn't exist any longer."),
+                                gimp_object_get_name (GIMP_OBJECT (procedure)),
+                                g_param_spec_get_name (pspec));
+                }
               else
-                g_value_set_static_string (&string_value,
-                                           "<not transformable to string>");
+                {
+                  const gchar *type_name = g_type_name (spec_type);
+                  gchar       *old_value;
+                  gchar       *new_value;
 
-              new_value = g_value_dup_string (&string_value);
-              g_value_unset (&string_value);
+                  old_value = g_value_dup_string (&string_value);
 
-              gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
-                            _("PDB calling error for procedure '%s':\n"
-                              "Argument '%s' (#%d, type %s) out of bounds "
-                              "(validation changed '%s' to '%s')"),
-                            gimp_object_get_name (GIMP_OBJECT (procedure)),
-                            g_param_spec_get_name (pspec),
-                            i + 1, type_name,
-                            old_value, new_value);
+                  if (g_value_type_transformable (arg_type, G_TYPE_STRING))
+                    g_value_transform (arg, &string_value);
+                  else
+                    g_value_set_static_string (&string_value,
+                                               "<not transformable to string>");
 
-              g_free (old_value);
-              g_free (new_value);
+                  new_value = g_value_dup_string (&string_value);
+                  g_value_unset (&string_value);
+
+                  gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                                _("PDB calling error for procedure '%s':\n"
+                                  "Argument '%s' (#%d, type %s) out of bounds "
+                                  "(validation changed '%s' to '%s')"),
+                                gimp_object_get_name (GIMP_OBJECT (procedure)),
+                                g_param_spec_get_name (pspec),
+                                i + 1, type_name,
+                                old_value, new_value);
+
+                  g_free (old_value);
+                  g_free (new_value);
+                }
 
               return FALSE;
             }
