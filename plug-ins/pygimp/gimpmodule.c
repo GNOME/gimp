@@ -1483,7 +1483,7 @@ done:
 }
 
 static PyObject *
-pygimp_vectors_new_from_file(PyObject *self, PyObject *args, PyObject *kwargs)
+pygimp_vectors_import_from_file(PyObject *self, PyObject *args, PyObject *kwargs)
 {
     PyGimpImage *img;
     PyObject *py_file;
@@ -1493,16 +1493,16 @@ pygimp_vectors_new_from_file(PyObject *self, PyObject *args, PyObject *kwargs)
     static char *kwlist[] = { "image", "svg_file", "merge", "scale", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-                                     "O!O|ii:vectors_new_from_file", kwlist,
+                                     "O!O|ii:vectors_import_from_file", kwlist,
                                      &PyGimpImage_Type, &img, &py_file,
                                      &merge, &scale))
         return NULL;
 
     if (PyString_Check(py_file)) {
-        gimp_vectors_new_from_file(img->ID,
-                                   PyString_AsString(py_file),
-                                   merge, scale,
-                                   &num_vectors, &vectors);
+        gimp_vectors_import_from_file(img->ID,
+                                      PyString_AsString(py_file),
+                                      merge, scale,
+                                      &num_vectors, &vectors);
     } else {
         PyObject *chunk_size = PyInt_FromLong(16 * 1024);
         PyObject *buffer = PyString_FromString("");
@@ -1532,11 +1532,11 @@ pygimp_vectors_new_from_file(PyObject *self, PyObject *args, PyObject *kwargs)
             }
         }
 
-        gimp_vectors_new_from_string(img->ID,
-                                     PyString_AsString(buffer),
-                                     PyString_Size(buffer),
-                                     merge, scale,
-                                     &num_vectors, &vectors);
+        gimp_vectors_import_from_string(img->ID,
+                                        PyString_AsString(buffer),
+                                        PyString_Size(buffer),
+                                        merge, scale,
+                                        &num_vectors, &vectors);
 
         Py_DECREF(chunk_size);
         Py_DECREF(buffer);
@@ -1547,7 +1547,7 @@ pygimp_vectors_new_from_file(PyObject *self, PyObject *args, PyObject *kwargs)
 }
 
 static PyObject *
-pygimp_vectors_new_from_string(PyObject *self, PyObject *args, PyObject *kwargs)
+pygimp_vectors_import_from_string(PyObject *self, PyObject *args, PyObject *kwargs)
 {
     PyGimpImage *img;
     const char *svg_string;
@@ -1558,15 +1558,15 @@ pygimp_vectors_new_from_string(PyObject *self, PyObject *args, PyObject *kwargs)
     static char *kwlist[] = { "image", "svg_string", "merge", "scale", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-                                     "O!s#|ii:vectors_new_from_file", kwlist,
+                                     "O!s#|ii:vectors_import_from_string", kwlist,
                                      &PyGimpImage_Type, &img,
                                      &svg_string, &length,
                                      &merge, &scale))
         return NULL;
 
-    gimp_vectors_new_from_string(img->ID, svg_string, length,
-                                 merge, scale,
-                                 &num_vectors, &vectors);
+    gimp_vectors_import_from_string(img->ID, svg_string, length,
+                                    merge, scale,
+                                    &num_vectors, &vectors);
 
     return vectors_to_objects(num_vectors, vectors);
 }
@@ -1700,8 +1700,8 @@ static struct PyMethodDef gimp_methods[] = {
     {"fonts_refresh", (PyCFunction)pygimp_fonts_refresh,        METH_NOARGS},
     {"fonts_get_list", (PyCFunction)pygimp_fonts_get_list,      METH_VARARGS | METH_KEYWORDS},
     {"checks_get_shades", (PyCFunction)pygimp_checks_get_shades, METH_VARARGS | METH_KEYWORDS},
-    {"vectors_new_from_file", (PyCFunction)pygimp_vectors_new_from_file, METH_VARARGS | METH_KEYWORDS},
-    {"vectors_new_from_string", (PyCFunction)pygimp_vectors_new_from_string, METH_VARARGS | METH_KEYWORDS},
+    {"vectors_import_from_file", (PyCFunction)pygimp_vectors_import_from_file, METH_VARARGS | METH_KEYWORDS},
+    {"vectors_import_from_string", (PyCFunction)pygimp_vectors_import_from_string, METH_VARARGS | METH_KEYWORDS},
     {"_id2image", (PyCFunction)id2image, METH_VARARGS},
     {"_id2drawable", (PyCFunction)id2drawable, METH_VARARGS},
     {"_id2display", (PyCFunction)id2display, METH_VARARGS},

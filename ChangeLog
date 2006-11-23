@@ -1,3 +1,8 @@
+2006-11-23  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/pygimp/gimpmodule.c: follow the function renaming
+	as well. Why didn't this complain when I compiled earlier?
+
 2006-11-23  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/ftx/Makefile.am
