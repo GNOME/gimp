@@ -1150,7 +1150,7 @@ load_paths (TIFF *tif, gint image)
           gdouble *points = NULL;
           gint     expected_points = 0;
           gint     pointcount = 0;
-          gboolean closed;
+          gboolean closed = FALSE;
 
           vectors = gimp_vectors_new (image, name);
           gimp_image_add_vectors (image, vectors, -1);

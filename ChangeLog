@@ -1,3 +1,7 @@
+2006-11-24  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/tiff.c: fix warning about uninitialized variable
+
 2006-11-23  Sven Neumann  <sven@gimp.org>
 
 	* app/config/Makefile.am (test_config_LDADD): reordered to make
