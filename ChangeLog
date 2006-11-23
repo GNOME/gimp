@@ -1,3 +1,9 @@
+2006-11-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/gimpprocedure.c (gimp_procedure_validate_args): made
+	validation error messages more human-readable and prepared the
+	code for validating return values.
+
 2006-11-23  Sven Neumann  <sven@gimp.org>
 
 	* app/pdb/gimpprocedure.c (gimp_procedure_validate_args): special
