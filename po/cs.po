@@ -11,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-13 11:03+0100\n"
-"PO-Revision-Date: 2006-11-13 11:05+0100\n"
+"POT-Creation-Date: 2006-11-23 11:36+0100\n"
+"PO-Revision-Date: 2006-11-23 11:38+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team:  <cs@li.org>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -87,12 +87,12 @@ msgstr ""
 msgid "Opening '%s' failed: %s"
 msgstr "Otevírání '%s' selhalo: %s"
 
-#: ../app/batch.c:74
+#: ../app/batch.c:75
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
 msgstr "Nebyl specifikován dávkový interpretr, používá se výchozí '%s'.\n"
 
-#: ../app/batch.c:92 ../app/batch.c:110
+#: ../app/batch.c:93 ../app/batch.c:111
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "Dávkový interpretr '%s' není k dispozici. Dávkový režim zakázán."
@@ -245,9 +245,10 @@ msgstr "Buffery"
 msgid "Channels"
 msgstr "Kanály"
 
-#: ../app/actions/actions.c:111
-msgid "Colormap Editor"
-msgstr "Editor barevné mapy"
+#: ../app/actions/actions.c:111 ../app/actions/dialogs-actions.c:90
+#: ../app/dialogs/convert-dialog.c:173 ../app/dialogs/dialogs.c:181
+msgid "Colormap"
+msgstr "Mapa barev"
 
 #: ../app/actions/actions.c:114
 msgid "Context"
@@ -667,42 +668,42 @@ msgstr "Kopie kanálu %s"
 msgid "Channel to Selection"
 msgstr "Kanál do výběru"
 
-#: ../app/actions/colormap-editor-actions.c:43
+#: ../app/actions/colormap-actions.c:43
 msgid "Colormap Menu"
 msgstr "Menu Mapa barev"
 
-#: ../app/actions/colormap-editor-actions.c:47
+#: ../app/actions/colormap-actions.c:47
 #: ../app/actions/palette-editor-actions.c:48
 msgid "_Edit Color..."
 msgstr "_Upravit barvu..."
 
-#: ../app/actions/colormap-editor-actions.c:48
+#: ../app/actions/colormap-actions.c:48
 #: ../app/actions/palette-editor-actions.c:49
 msgid "Edit color"
 msgstr "Upravit barvu"
 
-#: ../app/actions/colormap-editor-actions.c:56
+#: ../app/actions/colormap-actions.c:56
 msgid "_Add Color from FG"
 msgstr "_Přidat barvu z popředí"
 
-#: ../app/actions/colormap-editor-actions.c:57
+#: ../app/actions/colormap-actions.c:57
 msgid "Add current foreground color"
 msgstr "Přidat aktuální barvu popředí"
 
-#: ../app/actions/colormap-editor-actions.c:62
+#: ../app/actions/colormap-actions.c:62
 msgid "_Add Color from BG"
 msgstr "_Přidat barvu z pozadí"
 
-#: ../app/actions/colormap-editor-actions.c:63
+#: ../app/actions/colormap-actions.c:63
 msgid "Add current background color"
 msgstr "Přidat aktuální barvu z pozadí"
 
-#: ../app/actions/colormap-editor-commands.c:70
+#: ../app/actions/colormap-commands.c:70
 #, c-format
 msgid "Edit colormap entry #%d"
 msgstr "Upravit položku mapy barev č. %d"
 
-#: ../app/actions/colormap-editor-commands.c:77
+#: ../app/actions/colormap-commands.c:77
 msgid "Edit Colormap Entry"
 msgstr "Upravit položku mapy barev"
 
@@ -795,13 +796,13 @@ msgid "Pointer Information Menu"
 msgstr "Nabídka informace o ukazateli"
 
 #: ../app/actions/cursor-info-actions.c:47
-#: ../app/actions/sample-point-editor-actions.c:47
+#: ../app/actions/sample-points-actions.c:47
 #: ../app/widgets/gimpcursorview.c:191
 msgid "_Sample Merged"
 msgstr "_Sloučený vzorek"
 
 #: ../app/actions/cursor-info-actions.c:48
-#: ../app/actions/sample-point-editor-actions.c:48
+#: ../app/actions/sample-points-actions.c:48
 msgid "Sample Merged"
 msgstr "Sloučený vzorek"
 
@@ -827,7 +828,7 @@ msgstr ""
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1353
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:335 ../app/dialogs/palette-import-dialog.c:771
-#: ../app/pdb/image_cmds.c:1882 ../app/widgets/gimpdnd-xds.c:97
+#: ../app/pdb/image_cmds.c:1978 ../app/widgets/gimpdnd-xds.c:97
 msgid "Untitled"
 msgstr "Bez názvu"
 
@@ -891,11 +892,6 @@ msgstr "_Cesty"
 #: ../app/actions/dialogs-actions.c:90
 msgid "Color_map"
 msgstr "_Mapa barev"
-
-#: ../app/actions/dialogs-actions.c:90 ../app/dialogs/convert-dialog.c:173
-#: ../app/dialogs/dialogs.c:181
-msgid "Colormap"
-msgstr "Mapa barev"
 
 #: ../app/actions/dialogs-actions.c:95
 msgid "Histogra_m"
@@ -3092,11 +3088,11 @@ msgstr "Opakovat poslední"
 msgid "Re-Show Last"
 msgstr "Znovu zobrazit poslední"
 
-#: ../app/actions/plug-in-commands.c:251
+#: ../app/actions/plug-in-commands.c:263
 msgid "Reset all Filters"
 msgstr "Přenastavit všechny filtry"
 
-#: ../app/actions/plug-in-commands.c:270
+#: ../app/actions/plug-in-commands.c:282
 msgid "Do you really want to reset all filters to default values?"
 msgstr "Opravdu chcete přenastavit všechny filtry na implicitní hodnoty?"
 
@@ -3141,7 +3137,7 @@ msgstr "Upravit barvu Rychlé masky"
 msgid "_Mask opacity:"
 msgstr "_Krytí masky:"
 
-#: ../app/actions/sample-point-editor-actions.c:40
+#: ../app/actions/sample-points-actions.c:40
 msgid "Sample Point Menu"
 msgstr "Menu Vzorkovací bod"
 
@@ -3559,11 +3555,11 @@ msgstr "Podle _barvy"
 msgid "_Arbitrary Rotation..."
 msgstr "_Volná rotace..."
 
-#: ../app/actions/tools-actions.c:242
+#: ../app/actions/tools-actions.c:313
 msgid "Toggle Fixed-Aspect Option for Rectangle"
 msgstr "Přepnout volbu pevného poměru obdélníku"
 
-#: ../app/actions/tools-actions.c:247
+#: ../app/actions/tools-actions.c:318
 msgid "Toggle Expand-From-Center Option for Rectangle"
 msgstr "Přepnout volbu Rozšiřovat ze středu pro obdélník"
 
@@ -3687,7 +3683,7 @@ msgstr "_Importovat cestu..."
 msgid "Path to Sele_ction"
 msgstr "Cesta do _výběru"
 
-#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1858
+#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1861
 msgid "Path to selection"
 msgstr "Cesta do výběru"
 
@@ -3745,12 +3741,12 @@ msgid "New Path Options"
 msgstr "Volby nové cesty"
 
 #: ../app/actions/vectors-commands.c:297 ../app/pdb/paths_cmds.c:610
-#: ../app/pdb/vectors_cmds.c:994
+#: ../app/pdb/vectors_cmds.c:1093
 msgid "Path to Selection"
 msgstr "Cesta do výběru"
 
 #: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:174
-#: ../app/tools/gimpvectortool.c:1891 ../app/vectors/gimpvectors.c:199
+#: ../app/tools/gimpvectortool.c:1894 ../app/vectors/gimpvectors.c:199
 msgid "Stroke Path"
 msgstr "Vykreslit cestu"
 
@@ -4077,7 +4073,7 @@ msgstr "Odstín"
 msgid "Saturation"
 msgstr "Sytost"
 
-#: ../app/base/base-enums.c:124 ../app/tools/gimppaintoptions-gui.c:311
+#: ../app/base/base-enums.c:124 ../app/tools/gimppaintoptions-gui.c:318
 msgid "Color"
 msgstr "Barva"
 
@@ -6496,7 +6492,7 @@ msgid "Choose shade of gray based on:"
 msgstr "Zvolit odstín šedi podle:"
 
 #: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:156
-#: ../app/gui/gui-message.c:132
+#: ../app/gui/gui-message.c:146
 msgid "GIMP Message"
 msgstr "Zpráva GIMPu"
 
@@ -6545,11 +6541,11 @@ msgstr "_Krytí:"
 msgid "Open layers"
 msgstr "Otevřít vrstvy"
 
-#: ../app/dialogs/file-open-location-dialog.c:75
+#: ../app/dialogs/file-open-location-dialog.c:74
 msgid "Open Location"
 msgstr "Otevřít umístění"
 
-#: ../app/dialogs/file-open-location-dialog.c:113
+#: ../app/dialogs/file-open-location-dialog.c:112
 msgid "Enter location (URI):"
 msgstr "Zadejte umístění (URI):"
 
@@ -8129,7 +8125,7 @@ msgstr "Přidávám téma '%s' (%s)\n"
 msgid "Airbrush"
 msgstr "Rozprašovač"
 
-#: ../app/paint/gimpbrushcore.c:340
+#: ../app/paint/gimpbrushcore.c:349
 msgid "No brushes available for use with this tool."
 msgstr "Nejsou dostupné žádné stopy pro použití s tímto nástrojem."
 
@@ -8298,7 +8294,25 @@ msgstr ""
 "Chyba volání PDB pro proceduru '%s':\n"
 "Nesouhlasí typ argumentu '%s' (#%d, typ %s) (dostal jsem %s)"
 
+#: ../app/pdb/gimpprocedure.c:529
+#, c-format
+msgid ""
+"Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
+"likely a plug-in is trying to work on a layer that doesn't exist any longer."
+msgstr ""
+"Procedura'%s' byla zavolána s neplatným ID argumentu '%s'. "
+"Zásuvný modul se pravděpodobně snaží pracovat s neexistující vrstvou."
+
 #: ../app/pdb/gimpprocedure.c:540
+#, c-format
+msgid ""
+"Procedure '%s' has been called with an invalid ID for argument '%s'.  Most "
+"likely a plug-in is trying to work on an image that doesn't exist any longer."
+msgstr ""
+"Procedura'%s' byla zavolána s neplatným ID argumentu '%s'. "
+"Zásuvný modul se pravděpodobně snaží pracovat s neexistujícím obrázkem. "
+
+#: ../app/pdb/gimpprocedure.c:565
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -8307,7 +8321,7 @@ msgstr ""
 "Chyba volání PDB pro proceduru '%s':\n"
 "Argument '%s' (#%d, typ %s) mimo rozsah (validace změnila '%s' na '%s')"
 
-#: ../app/pdb/image_cmds.c:1948
+#: ../app/pdb/image_cmds.c:2044
 msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr "Rozlišení obrázku je mimo rozsah, používám místo něj implicitní rozlišení."
 
@@ -8419,12 +8433,12 @@ msgstr "Chybí zásuvný modul (%s)"
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Přeskakuji '%s': špatná verze protokolu GIMP."
 
-#: ../app/plug-in/plug-in-rc.c:472
+#: ../app/plug-in/plug-in-rc.c:479
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "neplatná hodnota '%s' pro typ ikony"
 
-#: ../app/plug-in/plug-in-rc.c:487
+#: ../app/plug-in/plug-in-rc.c:494
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "neplatná hodnota '%ld' pro typ ikony"
@@ -8619,7 +8633,7 @@ msgstr "Posun:"
 msgid "Shape:"
 msgstr "Tvar:"
 
-#: ../app/tools/gimpblendoptions.c:228 ../app/tools/gimppaintoptions-gui.c:454
+#: ../app/tools/gimpblendoptions.c:228 ../app/tools/gimppaintoptions-gui.c:461
 msgid "Repeat:"
 msgstr "Opakování:"
 
@@ -9252,19 +9266,19 @@ msgstr "Výběr popředí: výběr oblasti obsahující objekty v popředí"
 msgid "F_oreground Select"
 msgstr "Výběr _popředí"
 
-#: ../app/tools/gimpforegroundselecttool.c:305
+#: ../app/tools/gimpforegroundselecttool.c:308
 msgid "Add more strokes or press Enter to accept the selection"
 msgstr "Přidejte více tahů nebo stiskněte Enter pro přijetí výběru"
 
-#: ../app/tools/gimpforegroundselecttool.c:307
+#: ../app/tools/gimpforegroundselecttool.c:310
 msgid "Mark foreground by painting on the object to extract"
 msgstr "Popředí označte malbou přes extrahovaný objekt"
 
-#: ../app/tools/gimpforegroundselecttool.c:318
+#: ../app/tools/gimpforegroundselecttool.c:321
 msgid "Draw a rough circle around the object to extract"
 msgstr "Nakreslete hrubý obrys kolem objektu, který extrahovat"
 
-#: ../app/tools/gimpforegroundselecttool.c:737
+#: ../app/tools/gimpforegroundselecttool.c:740
 msgid "command|Foreground Select"
 msgstr "Výběr popředí"
 
@@ -9626,62 +9640,66 @@ msgstr "Režim:"
 msgid "Opacity:"
 msgstr "Krytí:"
 
-#: ../app/tools/gimppaintoptions-gui.c:129
+#: ../app/tools/gimppaintoptions-gui.c:127
 msgid "Brush:"
 msgstr "Stopa:"
 
-#: ../app/tools/gimppaintoptions-gui.c:141
-#: ../app/tools/gimppaintoptions-gui.c:430
+#: ../app/tools/gimppaintoptions-gui.c:134
+msgid "Scale:"
+msgstr "Škála:"
+
+#: ../app/tools/gimppaintoptions-gui.c:148
+#: ../app/tools/gimppaintoptions-gui.c:437
 msgid "Gradient:"
 msgstr "Přechod:"
 
-#: ../app/tools/gimppaintoptions-gui.c:177
+#: ../app/tools/gimppaintoptions-gui.c:184
 msgid "Incremental"
 msgstr "Postupný"
 
-#: ../app/tools/gimppaintoptions-gui.c:193
+#: ../app/tools/gimppaintoptions-gui.c:200
 msgid "Hard edge"
 msgstr "Ostré hrany"
 
-#: ../app/tools/gimppaintoptions-gui.c:229
+#: ../app/tools/gimppaintoptions-gui.c:236
 msgid "Pressure sensitivity"
 msgstr "Citlivost na tlak"
 
-#: ../app/tools/gimppaintoptions-gui.c:250
+#: ../app/tools/gimppaintoptions-gui.c:257
 msgid "Opacity"
 msgstr "Krytí"
 
-#: ../app/tools/gimppaintoptions-gui.c:266
+#: ../app/tools/gimppaintoptions-gui.c:273
 msgid "Hardness"
 msgstr "Tvrdost"
 
-#: ../app/tools/gimppaintoptions-gui.c:277
+#: ../app/tools/gimppaintoptions-gui.c:284
 msgid "Rate"
 msgstr "Přeběh"
 
-#: ../app/tools/gimppaintoptions-gui.c:293
-#: ../app/tools/gimppaintoptions-gui.c:302
+#: ../app/tools/gimppaintoptions-gui.c:300
+#: ../app/tools/gimppaintoptions-gui.c:309
 msgid "Size"
 msgstr "Velikost"
 
-#: ../app/tools/gimppaintoptions-gui.c:337
+#: ../app/tools/gimppaintoptions-gui.c:344
 msgid "Fade out"
 msgstr "Doběh"
 
-#: ../app/tools/gimppaintoptions-gui.c:346
-#: ../app/tools/gimppaintoptions-gui.c:439
+#: ../app/tools/gimppaintoptions-gui.c:353
+#: ../app/tools/gimppaintoptions-gui.c:446
 msgid "Length:"
 msgstr "Délka:"
 
-#: ../app/tools/gimppaintoptions-gui.c:378
+#: ../app/tools/gimppaintoptions-gui.c:385
 msgid "Apply Jitter"
 msgstr "Aplikovat chvění"
 
-#: ../app/tools/gimppaintoptions-gui.c:383
+#: ../app/tools/gimppaintoptions-gui.c:390
 msgid "Amount:"
 msgstr "Množství:"
 
-#: ../app/tools/gimppaintoptions-gui.c:413
+#: ../app/tools/gimppaintoptions-gui.c:420
 msgid "Use color from gradient"
 msgstr "Použít barvu z přechodu"
 
@@ -9842,7 +9860,7 @@ msgstr "Výběr obdélníku: výběr obdélníkové oblasti"
 msgid "_Rectangle Select"
 msgstr "Výběr _obdélníku"
 
-#: ../app/tools/gimprectangletool.c:1067 ../app/tools/gimprectangletool.c:1718
+#: ../app/tools/gimprectangletool.c:1053 ../app/tools/gimprectangletool.c:1697
 msgid "Rectangle: "
 msgstr "Obdélník: "
 
@@ -10321,7 +10339,7 @@ msgstr "Kliknutím změníte tento uzel na úhlový"
 msgid "Delete Anchors"
 msgstr "Odstranit ukotvení"
 
-#: ../app/tools/gimpvectortool.c:1885
+#: ../app/tools/gimpvectortool.c:1888
 msgid "There is no active layer or channel to stroke to"
 msgstr "Není žádná aktivní vrstva nebo kanál, kam vykreslovat"
 
@@ -11014,23 +11032,23 @@ msgstr "Zprávy jsou přesměrovány na stderr."
 msgid "%s Message"
 msgstr "Zpráva %s"
 
-#: ../app/widgets/gimpfiledialog.c:267
+#: ../app/widgets/gimpfiledialog.c:266
 msgid "Automatically Detected"
 msgstr "Automaticky detekováno"
 
-#: ../app/widgets/gimpfiledialog.c:277
+#: ../app/widgets/gimpfiledialog.c:276
 msgid "By Extension"
 msgstr "Podle přípony"
 
-#: ../app/widgets/gimpfiledialog.c:454
+#: ../app/widgets/gimpfiledialog.c:475
 msgid "All files"
 msgstr "Všechny soubory"
 
-#: ../app/widgets/gimpfiledialog.c:459
+#: ../app/widgets/gimpfiledialog.c:480
 msgid "All images"
 msgstr "Všechny obrázky"
 
-#: ../app/widgets/gimpfiledialog.c:595
+#: ../app/widgets/gimpfiledialog.c:616
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Zvolte _typ souboru (%s)"
@@ -11625,7 +11643,7 @@ msgstr "%s (zkuste %s, %s)"
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (zkuste %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:964
+#: ../app/widgets/gimpwidgets-utils.c:936
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Neplatná data v kódování UTF-8 v souboru '%s'."
@@ -11718,7 +11736,7 @@ msgstr "Okno nástrojů"
 msgid "Keep above"
 msgstr "Udržovat nahoře"
 
-#: ../app/xcf/xcf-load.c:321
+#: ../app/xcf/xcf-load.c:322
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
