@@ -39,9 +39,9 @@ Valid properties and their default values are:
 (temp-path "${gimp_dir}/tmp")
 
 Sets the folder for temporary storage. Files will appear here during the
-course of running the GIMP.  Most files will disappear when the GIMP exits,
-but some files are likely to remain, so it is best if this folder not be one
-that is shared by other users.  This is a single folder.
+course of running GIMP.  Most files will disappear when GIMP exits, but some
+files are likely to remain, so it is best if this folder not be one that is
+shared by other users.  This is a single folder.
 
 .TP
 (swap-path "${gimp_dir}")
@@ -71,7 +71,7 @@ in bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 size defaults to being specified in kilobytes.
 
 .TP
-(interpolation-type linear)
+(interpolation-type cubic)
 
 Sets the level of interpolation used for scaling and other transformations. 
 Possible values are none, linear, cubic and lanczos.
@@ -308,7 +308,7 @@ Possible values are yes and no.
 (min-colors 144)
 
 Generally only a concern for 8-bit displays, this sets the minimum number of
-system colors allocated for the GIMP.  This is an integer value.
+system colors allocated for GIMP.  This is an integer value.
 
 .TP
 (color-management
@@ -319,6 +319,12 @@ system colors allocated for the GIMP.  This is an integer value.
     (display-module "CdisplayLcms"))
 
 Defines the color management behavior.  This is a parameter list.
+
+.TP
+(color-profile-policy ask)
+
+How to handle embedded color profiles when opening a file.  Possible values
+are ask, keep and convert.
 
 .TP
 (save-document-history yes)
@@ -551,8 +557,8 @@ information.  This is a float value.
 .TP
 (monitor-resolution-from-windowing-system yes)
 
-When enabled, the GIMP will use the monitor resolution from the windowing
-system.  Possible values are yes and no.
+When enabled, GIMP will use the monitor resolution from the windowing system. 
+Possible values are yes and no.
 
 .TP
 (navigation-preview-size medium)
@@ -626,8 +632,8 @@ no.
 .TP
 (trust-dirty-flag no)
 
-When enabled, the GIMP will not save an image if it has not been changed since
-it was opened.  Possible values are yes and no.
+When enabled, GIMP will not save an image if it has not been changed since it
+was opened.  Possible values are yes and no.
 
 .TP
 (save-device-status no)
@@ -638,8 +644,8 @@ Possible values are yes and no.
 .TP
 (save-session-info yes)
 
-Save the positions and sizes of the main dialogs when the GIMP exits. 
-Possible values are yes and no.
+Save the positions and sizes of the main dialogs when GIMP exits.  Possible
+values are yes and no.
 
 .TP
 (restore-session yes)
@@ -650,7 +656,7 @@ values are yes and no.
 .TP
 (save-tool-options no)
 
-Save the tool options when the GIMP exits.  Possible values are yes and no.
+Save the tool options when GIMP exits.  Possible values are yes and no.
 
 .TP
 (show-tips yes)
@@ -679,8 +685,8 @@ and no.
 .TP
 (save-accels yes)
 
-Save changed keyboard shortcuts when the GIMP exits.  Possible values are yes
-and no.
+Save changed keyboard shortcuts when GIMP exits.  Possible values are yes and
+no.
 
 .TP
 (restore-accels yes)

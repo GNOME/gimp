@@ -1,4 +1,8 @@
-2006-11-24  Simon Budig  <simon@gimp.org>
+2006-11-23  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.3.13 development release.
+
+2006-11-23  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/tiff.c: fix warning about uninitialized variable
 
