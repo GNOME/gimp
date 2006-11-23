@@ -225,7 +225,7 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
 
     case GIMP_CANVAS_STYLE_XOR:
       mask |= GDK_GC_FUNCTION | GDK_GC_CAP_STYLE | GDK_GC_JOIN_STYLE;
-      values.function   = GDK_INVERT;
+      values.function   = GDK_XOR;
       values.cap_style  = GDK_CAP_NOT_LAST;
       values.join_style = GDK_JOIN_MITER;
       break;
@@ -258,6 +258,18 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
     {
     default:
       return gc;
+
+    case GIMP_CANVAS_STYLE_XOR_DOTTED:
+    case GIMP_CANVAS_STYLE_XOR_DASHED:
+    case GIMP_CANVAS_STYLE_XOR:
+      fg.red   = 0x8080;
+      fg.green = 0xffff;
+      fg.blue  = 0x8080;
+
+      bg.red   = 0x0;
+      bg.green = 0x0;
+      bg.blue  = 0x0;
+      break;
 
     case GIMP_CANVAS_STYLE_WHITE:
       fg.red   = 0xffff;

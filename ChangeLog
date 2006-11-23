@@ -1,3 +1,9 @@
+2006-11-23  Simon Budig  <simon@gimp.org>
+
+	* app/display/gimpcanvas.c: Change the color for XOR drawing. This
+	guarantees that there is always a contrast between the original
+	image pixels and the stuff drawn on top of it.
+
 2006-11-23  Michael Natterer  <mitch@gimp.org>
 
 	* data/images/gimp-splash.png: new splash. Image taken by Kristian
