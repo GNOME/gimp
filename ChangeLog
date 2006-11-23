@@ -1,5 +1,7 @@
 2006-11-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help/Makefile.am (libgimphelp_a_SOURCES): removed help.h.
+
 	* Makefile.am (EXTRA_DIST): removed po-*/update.sh.
 
 2006-11-23  Michael Natterer  <mitch@gimp.org>
