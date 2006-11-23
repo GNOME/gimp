@@ -1,3 +1,10 @@
+2006-11-23  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/ftx/Makefile.am
+	* plug-ins/script-fu/re/Makefile.am
+	* plug-ins/script-fu/tinyscheme/Makefile.am: cleaned up Makefiles.
+	Fixed for srcdir != builddir.
+
 2006-11-23  Simon Budig  <simon@gimp.org>
 
 	* tools/pdbgen/pdb/vectors.pdb: renamed gimp_vectors_new_from_*
