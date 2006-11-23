@@ -1,5 +1,9 @@
 2006-11-23  Sven Neumann  <sven@gimp.org>
 
+	* tips/Makefile.am (tips_POFILES): removed no.po.
+
+2006-11-23  Sven Neumann  <sven@gimp.org>
+
 	Merged from HEAD branch (fix by Simon Budig):
 
 	* app/xcf/xcf-load.c: load the channels in the proper order;

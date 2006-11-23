@@ -28,7 +28,6 @@ tips_POFILES = \
 	ms.po		\
 	nb.po		\
 	nl.po		\
-	no.po		\
 	pa.po		\
 	pl.po		\
 	pt.po		\
