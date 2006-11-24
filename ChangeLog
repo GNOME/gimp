@@ -1,3 +1,13 @@
+2006-11-24  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-vectors.c: bezier_stroke_new_moveto and
+	bezier_stroke_new_ellipse are now class methods of
+	VectorsBezierStroke.
+
+	* plug-ins/pygimp/gimpmodule.c: vectors import now has better
+	error handling and cleanup. Also stick VectorsBezierStroke in
+	the gimp namespace so the class is available for constructing.
+
 2006-11-24  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.3.14.

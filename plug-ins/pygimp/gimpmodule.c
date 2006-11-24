@@ -1489,6 +1489,7 @@ pygimp_vectors_import_from_file(PyObject *self, PyObject *args, PyObject *kwargs
     PyObject *py_file;
     gboolean merge = FALSE, scale = FALSE;
     int *vectors, num_vectors;
+    gboolean success;
 
     static char *kwlist[] = { "image", "svg_file", "merge", "scale", NULL };
 
@@ -1499,14 +1500,31 @@ pygimp_vectors_import_from_file(PyObject *self, PyObject *args, PyObject *kwargs
         return NULL;
 
     if (PyString_Check(py_file)) {
-        gimp_vectors_import_from_file(img->ID,
-                                      PyString_AsString(py_file),
-                                      merge, scale,
-                                      &num_vectors, &vectors);
+        success = gimp_vectors_import_from_file(img->ID,
+                                                PyString_AsString(py_file),
+                                                merge, scale,
+                                                &num_vectors, &vectors);
     } else {
-        PyObject *chunk_size = PyInt_FromLong(16 * 1024);
-        PyObject *buffer = PyString_FromString("");
-        PyObject *read_method = PyString_FromString("read");
+        PyObject *chunk_size, *buffer, *read_method;
+
+        chunk_size = PyInt_FromLong(16 * 1024);
+        if (chunk_size == NULL)
+            return NULL;
+
+        buffer = PyString_FromString("");
+        if (buffer == NULL) {
+            Py_DECREF(chunk_size);
+            return NULL;
+        }
+
+        read_method = PyString_FromString("read");
+        if (read_method == NULL || !PyCallable_Check(read_method)) {
+            Py_XDECREF(read_method);
+            PyErr_SetString(PyExc_TypeError,
+                            "svg_file must be an object that has a \"read\" "
+                            "method, or a filename (str)");   
+            return NULL;
+        }
 
         while (1) {
             PyObject *chunk;
@@ -1522,25 +1540,32 @@ pygimp_vectors_import_from_file(PyObject *self, PyObject *args, PyObject *kwargs
             }
 
             if (PyString_GET_SIZE(chunk) != 0) {
-                PyObject *newbuffer;
-                PyString_ConcatAndDel(&newbuffer, chunk);
-                Py_DECREF(buffer);
-                buffer = newbuffer;
+                PyString_ConcatAndDel(&buffer, chunk);
+                if (buffer == NULL) {
+                    Py_DECREF(chunk_size);
+                    Py_DECREF(read_method);
+                    return NULL;
+                }
             } else {
                 Py_DECREF(chunk);
                 break;
             }
         }
 
-        gimp_vectors_import_from_string(img->ID,
-                                        PyString_AsString(buffer),
-                                        PyString_Size(buffer),
-                                        merge, scale,
-                                        &num_vectors, &vectors);
+        success = gimp_vectors_import_from_string(img->ID,
+                                                  PyString_AsString(buffer),
+                                                  PyString_Size(buffer),
+                                                  merge, scale,
+                                                  &num_vectors, &vectors);
 
         Py_DECREF(chunk_size);
         Py_DECREF(buffer);
         Py_DECREF(read_method);
+    }
+
+    if (!success) {
+        PyErr_SetString(pygimp_error, "Vectors import failed");
+        return NULL;
     }
 
     return vectors_to_objects(num_vectors, vectors);
@@ -1554,6 +1579,7 @@ pygimp_vectors_import_from_string(PyObject *self, PyObject *args, PyObject *kwar
     int length;
     gboolean merge = FALSE, scale = FALSE;
     int *vectors, num_vectors;
+    gboolean success;
 
     static char *kwlist[] = { "image", "svg_string", "merge", "scale", NULL };
 
@@ -1564,9 +1590,14 @@ pygimp_vectors_import_from_string(PyObject *self, PyObject *args, PyObject *kwar
                                      &merge, &scale))
         return NULL;
 
-    gimp_vectors_import_from_string(img->ID, svg_string, length,
-                                    merge, scale,
-                                    &num_vectors, &vectors);
+    success = gimp_vectors_import_from_string(img->ID, svg_string, length,
+                                              merge, scale,
+                                              &num_vectors, &vectors);
+
+    if (!success) {
+        PyErr_SetString(pygimp_error, "Vectors import failed");
+        return NULL;
+    }
 
     return vectors_to_objects(num_vectors, vectors);
 }
@@ -1841,6 +1872,7 @@ initgimp(void)
     PyDict_SetItemString(d, "Tile", (PyObject *)&PyGimpTile_Type);
     PyDict_SetItemString(d, "PixelRgn", (PyObject *)&PyGimpPixelRgn_Type);
     PyDict_SetItemString(d, "Parasite", (PyObject *)&PyGimpParasite_Type);
+    PyDict_SetItemString(d, "VectorsBezierStroke", (PyObject *)&PyGimpVectorsBezierStroke_Type);
     PyDict_SetItemString(d, "Vectors", (PyObject *)&PyGimpVectors_Type);
 
     /* for other modules */

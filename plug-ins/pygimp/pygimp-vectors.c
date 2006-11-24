@@ -25,6 +25,9 @@
 #include "pygimp.h"
 
 
+static PyObject *vectors_bezier_stroke_new(PyGimpVectors *vectors, int stroke);
+
+
 typedef struct {
     PyObject_HEAD
     gint32 vectors_ID;
@@ -357,6 +360,48 @@ PyTypeObject PyGimpVectorsStroke_Type = {
 
 
 static PyObject *
+vbs_new_moveto(PyTypeObject *type, PyObject *args, PyObject *kwargs)
+{
+    PyGimpVectors *vectors;
+    double x0, y0;
+    int stroke;
+
+    static char *kwlist[] = { "vectors", "x0", "y0", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O!dd:new_moveto", kwlist,
+                                     &PyGimpVectors_Type, &vectors,
+                                     &x0, &y0))
+        return NULL;
+
+    stroke = gimp_vectors_bezier_stroke_new_moveto(vectors->ID, x0, y0);
+
+    return vectors_bezier_stroke_new(vectors, stroke);
+}
+
+static PyObject *
+vbs_new_ellipse(PyTypeObject *type, PyObject *args, PyObject *kwargs)
+{
+    PyGimpVectors *vectors;
+    double x0, y0, radius_x, radius_y, angle;
+    int stroke;
+
+    static char *kwlist[] = { "vectors", "x0", "y0", "radius_x", "radius_y",
+                              "angle", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O!ddddd:new_ellipse", kwlist,
+                                     &PyGimpVectors_Type, &vectors,
+                                     &x0, &y0, &radius_x, &radius_y, &angle))
+        return NULL;
+
+    stroke = gimp_vectors_bezier_stroke_new_ellipse(vectors->ID, x0, y0,
+                                                    radius_x, radius_y, angle);
+
+    return vectors_bezier_stroke_new(vectors, stroke);
+}
+
+static PyObject *
 vbs_lineto(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs)
 {
     double x0, y0;
@@ -413,6 +458,8 @@ vbs_cubicto(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs)
 }
 
 static PyMethodDef vbs_methods[] = {
+    { "new_moveto", (PyCFunction)vbs_new_moveto, METH_VARARGS | METH_KEYWORDS | METH_CLASS },
+    { "new_ellipse", (PyCFunction)vbs_new_ellipse, METH_VARARGS | METH_KEYWORDS | METH_CLASS },
     { "lineto", (PyCFunction)vbs_lineto, METH_VARARGS | METH_KEYWORDS },
     { "conicto", (PyCFunction)vbs_conicto, METH_VARARGS | METH_KEYWORDS },
     { "cubicto", (PyCFunction)vbs_cubicto, METH_VARARGS | METH_KEYWORDS },
@@ -445,7 +492,7 @@ vbs_init(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs)
     static char *kwlist[] = { "vectors", "controlpoints", "closed", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-                                     "O!O|i:gimp.Vectors.__init__",
+                                     "O!O|i:gimp.VectorsBezierStroke.__init__",
                                      kwlist,
                                      &PyGimpVectors_Type, &vectors,
                                      &py_controlpoints, &closed));
@@ -563,43 +610,6 @@ vectors_remove_stroke(PyGimpVectors *self, PyObject *args, PyObject *kwargs)
 }
 
 static PyObject *
-vectors_bezier_stroke_new_moveto(PyGimpVectors *self, PyObject *args, PyObject *kwargs)
-{
-    double x0, y0;
-    int stroke;
-
-    static char *kwlist[] = { "x0", "y0", NULL };
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-                                     "dd:bezier_stroke_new_moveto", kwlist,
-                                     &x0, &y0))
-        return NULL;
-
-    stroke = gimp_vectors_bezier_stroke_new_moveto(self->ID, x0, y0);
-
-    return vectors_bezier_stroke_new(self, stroke);
-}
-
-static PyObject *
-vectors_bezier_stroke_new_ellipse(PyGimpVectors *self, PyObject *args, PyObject *kwargs)
-{
-    double x0, y0, radius_x, radius_y, angle;
-    int stroke;
-
-    static char *kwlist[] = { "x0", "y0", "radius_x", "radius_y", "angle", NULL };
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-                                     "ddddd:bezier_stroke_new_ellipse", kwlist,
-                                     &x0, &y0, &radius_x, &radius_y, &angle))
-        return NULL;
-
-    stroke = gimp_vectors_bezier_stroke_new_ellipse(self->ID, x0, y0,
-                                                    radius_x, radius_y, angle);
-
-    return vectors_bezier_stroke_new(self, stroke);
-}
-
-static PyObject *
 vectors_to_selection(PyGimpVectors *self, PyObject *args, PyObject *kwargs)
 {
     GimpChannelOps operation = GIMP_CHANNEL_OP_REPLACE;
@@ -701,12 +711,6 @@ vectors_parasite_list(PyGimpVectors *self)
 static PyMethodDef vectors_methods[] = {
     { "remove_stroke",
       (PyCFunction)vectors_remove_stroke,
-      METH_VARARGS | METH_KEYWORDS },
-    { "bezier_stroke_new_moveto",
-      (PyCFunction)vectors_bezier_stroke_new_moveto,
-      METH_VARARGS | METH_KEYWORDS },
-    { "bezier_stroke_new_ellipse",
-      (PyCFunction)vectors_bezier_stroke_new_ellipse,
       METH_VARARGS | METH_KEYWORDS },
     { "to_selection",
       (PyCFunction)vectors_to_selection,
