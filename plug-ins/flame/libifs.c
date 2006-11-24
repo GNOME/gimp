@@ -873,17 +873,17 @@ void print_control_point(f, cp, quote)
 }
 
 /* returns a uniform variable from 0 to 1 */
-double random_uniform01() {
+double random_uniform01(void) {
    return g_random_double ();
 }
 
-double random_uniform11() {
+double random_uniform11(void) {
    return g_random_double_range (-1, 1);
 }
 
 /* returns a mean 0 variance 1 random variable
    see numerical recipies p 217 */
-double random_gaussian() {
+double random_gaussian(void) {
    static int iset = 0;
    static double gset;
    double fac, r, v1, v2;

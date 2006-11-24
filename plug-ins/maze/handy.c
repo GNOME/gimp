@@ -29,6 +29,9 @@
 
 #include "libgimp/gimp.h"
 
+#include "maze.h"
+
+
 /* get_colors Returns the current foreground and background colors in
    nice little arrays.  It works nicely for RGB and grayscale images,
    however handling of indexed images is somewhat broken.  Patches
@@ -102,6 +105,15 @@ get_colors (GimpDrawable *drawable,
  *  for the most part, have rows of the same size with every call.
  *  We could keep a row of each color on hand so we wouldn't have to
  *  re-fill it every time...  */
+
+#include "config.h"
+
+#include <stdlib.h>
+
+#include "libgimp/gimp.h"
+
+#include "maze.h"
+
 
 void
 drawbox( GimpPixelRgn *dest_rgn,

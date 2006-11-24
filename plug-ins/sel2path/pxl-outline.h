@@ -43,9 +43,7 @@ typedef struct
    after the last is the first, and the previous coordinate before the
    first is the last.  */
 #define O_NEXT(p_o, n) (((n) + 1) % O_LENGTH (p_o))
-#define O_PREV(p_o, n) ((n) == 0				\
-                         ? O_LENGTH (p_o) - 1			\
-                         : (n) - 1)
+#define O_PREV(p_o, n) ((n) == 0 ? O_LENGTH (p_o) - 1 : (n) - 1)
 
 /* And the character turns into a list of such lists.  */
 typedef struct
@@ -62,7 +60,7 @@ typedef struct
 
 
 /* Find all pixels on the outline in the character C.  */
-extern pixel_outline_list_type find_outline_pixels ();
+extern pixel_outline_list_type find_outline_pixels (void);
 
 /* Free the memory in the list.  */
 extern void free_pixel_outline_list (pixel_outline_list_type *);

@@ -68,7 +68,7 @@ typedef accum_t abucket[4];
 }
 
 /* sum of entries of vector to 1 */
-void normalize_vector(v, n)
+static void normalize_vector(v, n)
    double *v;
    int n;
 {

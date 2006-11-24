@@ -1,3 +1,13 @@
+2006-11-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/flame/libifs.[ch]
+	* plug-ins/flame/rect.c
+	* plug-ins/maze/algorithms.c
+	* plug-ins/maze/handy.c
+	* plug-ins/maze/maze.h
+	* plug-ins/sel2path/fit.c
+	* plug-ins/sel2path/pxl-outline.h: fixed prototypes.
+
 2006-11-24  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-vectors.c: bezier_stroke_new_moveto and
