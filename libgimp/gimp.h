@@ -190,6 +190,13 @@ struct _GimpParam
 
 #  define MAIN()                                        \
    struct HINSTANCE__;                                  \
+                                                        \
+   int _stdcall                                         \
+   WinMain (struct HINSTANCE__ *hInstance,              \
+            struct HINSTANCE__ *hPrevInstance,          \
+            char *lpszCmdLine,                          \
+            int   nCmdShow);                            \
+                                                        \
    int _stdcall                                         \
    WinMain (struct HINSTANCE__ *hInstance,              \
             struct HINSTANCE__ *hPrevInstance,          \
