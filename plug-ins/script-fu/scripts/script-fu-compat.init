@@ -207,7 +207,7 @@
 (define (unbreakupstr stringlist sep)
   (let ((str (car stringlist)))
 
-    (set! (stringlist (cdr stringlist)))
+    (set! stringlist (cdr stringlist))
     (while (not (null? stringlist))
       (set! str (string-append str sep (car stringlist)))
       (set! stringlist (cdr stringlist))
