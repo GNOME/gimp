@@ -1,5 +1,10 @@
 2006-11-24  Simon Budig  <simon@gimp.org>
 
+	* plug-ins/sel2path/sel2path_adv_dialog.c
+	* plug-ins/xjt/xjt.c: more warning fixes, untabbified.
+
+2006-11-24  Simon Budig  <simon@gimp.org>
+
 	Fixing include/declaration issues in the application:
 
 	* app/composite/gimp-composite-sse2.c: disable unused debugging code
