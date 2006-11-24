@@ -69,9 +69,6 @@ struct _ColorselCmykClass
 };
 
 
-G_MODULE_EXPORT const GimpModuleInfo * gimp_module_query    (GTypeModule *module);
-G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module);
-
 static GType  colorsel_cmyk_get_type       (GTypeModule       *module);
 static void   colorsel_cmyk_class_init     (ColorselCmykClass *klass);
 static void   colorsel_cmyk_init           (ColorselCmyk      *cmyk);

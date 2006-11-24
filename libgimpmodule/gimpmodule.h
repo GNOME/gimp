@@ -71,6 +71,10 @@ struct _GimpModuleInfo
 typedef const GimpModuleInfo * (* GimpModuleQueryFunc)    (GTypeModule *module);
 typedef gboolean               (* GimpModuleRegisterFunc) (GTypeModule *module);
 
+/* GimpModules have to implement these */
+G_MODULE_EXPORT const GimpModuleInfo * gimp_module_query    (GTypeModule *module);
+G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module);
+
 
 #define GIMP_TYPE_MODULE            (gimp_module_get_type ())
 #define GIMP_MODULE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MODULE, GimpModule))

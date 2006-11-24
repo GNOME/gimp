@@ -1,3 +1,20 @@
+2006-11-24  Simon Budig  <simon@gimp.org>
+
+	* libgimpmodule/gimpmodule.[ch]: put the module prototypes into a
+	proper place.
+
+	* modules/cdisplay_colorblind.c
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* modules/cdisplay_lcms.c
+	* modules/cdisplay_proof.c
+	* modules/colorsel_cmyk.c
+	* modules/colorsel_cmyk_lcms.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c
+	* modules/controller_linux_input.c
+	* modules/controller_midi.c: reverted.
+
 2006-11-24  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/script-fu-compat.init: Fixed cut and

@@ -67,9 +67,6 @@ enum
 };
 
 
-G_MODULE_EXPORT const GimpModuleInfo * gimp_module_query    (GTypeModule *module);
-G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module);
-
 static GType     cdisplay_lcms_get_type     (GTypeModule       *module);
 static void      cdisplay_lcms_class_init   (CdisplayLcmsClass *klass);
 static void      cdisplay_lcms_init         (CdisplayLcms      *lcms);

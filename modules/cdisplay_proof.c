@@ -71,9 +71,6 @@ enum
 };
 
 
-G_MODULE_EXPORT const GimpModuleInfo * gimp_module_query    (GTypeModule *module);
-G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module);
-
 static GType       cdisplay_proof_get_type     (GTypeModule        *module);
 static void        cdisplay_proof_class_init   (CdisplayProofClass *klass);
 static void        cdisplay_proof_init         (CdisplayProof      *proof);

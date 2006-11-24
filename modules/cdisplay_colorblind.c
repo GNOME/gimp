@@ -113,9 +113,6 @@ enum
 };
 
 
-G_MODULE_EXPORT const GimpModuleInfo * gimp_module_query    (GTypeModule *module);
-G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module);
-
 static GType       cdisplay_colorblind_get_type   (GTypeModule              *module);
 static void        cdisplay_colorblind_class_init (CdisplayColorblindClass  *klass);
 static void        cdisplay_colorblind_init       (CdisplayColorblind       *colorblind);
