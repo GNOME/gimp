@@ -227,13 +227,15 @@ gimp_drawable_init (GimpDrawable *drawable)
   drawable->preview_valid = FALSE;
 }
 
+/* sorry for the evil casts */
+
 static void
 gimp_drawable_pickable_iface_init (GimpPickableInterface *iface)
 {
-  iface->get_image      = gimp_item_get_image;
-  iface->get_image_type = gimp_drawable_type;
-  iface->get_bytes      = gimp_drawable_bytes;
-  iface->get_tiles      = gimp_drawable_get_tiles;
+  iface->get_image      = (GimpImage     * (*) (GimpPickable *pickable)) gimp_item_get_image;
+  iface->get_image_type = (GimpImageType   (*) (GimpPickable *pickable)) gimp_drawable_type;
+  iface->get_bytes      = (gint            (*) (GimpPickable *pickable)) gimp_drawable_bytes;
+  iface->get_tiles      = (TileManager   * (*) (GimpPickable *pickable)) gimp_drawable_get_tiles;
   iface->get_color_at   = gimp_drawable_get_color_at;
 }
 

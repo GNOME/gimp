@@ -1,5 +1,11 @@
 2006-11-24  Simon Budig  <simon@gimp.org>
 
+	* app/core/gimpdrawable.c
+	* app/core/gimpprojection.c: fix the warnings about the interface
+	initialization.
+
+2006-11-24  Simon Budig  <simon@gimp.org>
+
 	* libgimpmodule/gimpmodule.[ch]: put the module prototypes into a
 	proper place.
 
