@@ -69,6 +69,9 @@ struct _ColorselCmykClass
 };
 
 
+G_MODULE_EXPORT const GimpModuleInfo * gimp_module_query    (GTypeModule *module);
+G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module);
+
 static GType  colorsel_cmyk_get_type       (GTypeModule       *module);
 static void   colorsel_cmyk_class_init     (ColorselCmykClass *klass);
 static void   colorsel_cmyk_init           (ColorselCmyk      *cmyk);
@@ -121,14 +124,14 @@ colorsel_cmyk_get_type (GTypeModule *module)
       const GTypeInfo select_info =
       {
         sizeof (ColorselCmykClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) colorsel_cmyk_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (ColorselCmyk),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) colorsel_cmyk_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) colorsel_cmyk_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (ColorselCmyk),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) colorsel_cmyk_init,
       };
 
       colorsel_cmyk_type =
@@ -202,19 +205,19 @@ colorsel_cmyk_init (ColorselCmyk *module)
   for (i = 0; i < 4; i++)
     {
       adj = gimp_scale_entry_new (GTK_TABLE (table), 1, i,
-				  gettext (cmyk_labels[i]),
-				  -1, -1,
-				  0.0,
-				  0.0, 100.0,
-				  1.0, 10.0,
-				  0,
-				  TRUE, 0.0, 0.0,
-				  gettext (cmyk_tips[i]),
-				  NULL);
+                                  gettext (cmyk_labels[i]),
+                                  -1, -1,
+                                  0.0,
+                                  0.0, 100.0,
+                                  1.0, 10.0,
+                                  0,
+                                  TRUE, 0.0, 0.0,
+                                  gettext (cmyk_tips[i]),
+                                  NULL);
 
       g_signal_connect (adj, "value-changed",
-			G_CALLBACK (colorsel_cmyk_adj_update),
-			module);
+                        G_CALLBACK (colorsel_cmyk_adj_update),
+                        module);
 
       module->adj[i] = GTK_ADJUSTMENT (adj);
     }
@@ -243,8 +246,8 @@ colorsel_cmyk_dispose (GObject *object)
 
 static void
 colorsel_cmyk_set_color (GimpColorSelector *selector,
-			 const GimpRGB     *rgb,
-			 const GimpHSV     *hsv)
+                         const GimpRGB     *rgb,
+                         const GimpHSV     *hsv)
 {
   ColorselCmyk *module = COLORSEL_CMYK (selector);
 
@@ -307,7 +310,7 @@ colorsel_cmyk_set_config (GimpColorSelector *selector,
 
 static void
 colorsel_cmyk_adj_update (GtkAdjustment *adj,
-			  ColorselCmyk  *module)
+                          ColorselCmyk  *module)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (module);
   gint               i;

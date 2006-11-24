@@ -62,6 +62,9 @@ enum
 };
 
 
+G_MODULE_EXPORT const GimpModuleInfo * gimp_module_query    (GTypeModule *module);
+G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module);
+
 static GType       cdisplay_contrast_get_type     (GTypeModule           *module);
 static void        cdisplay_contrast_class_init   (CdisplayContrastClass *klass);
 
@@ -121,14 +124,14 @@ cdisplay_contrast_get_type (GTypeModule *module)
       const GTypeInfo display_info =
       {
         sizeof (CdisplayContrastClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) cdisplay_contrast_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (CdisplayContrast),
-	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) cdisplay_contrast_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (CdisplayContrast),
+        0,              /* n_preallocs    */
+        NULL            /* instance_init  */
       };
 
       cdisplay_contrast_type =
@@ -232,10 +235,10 @@ cdisplay_contrast_convert (GimpColorDisplay *display,
     {
       i = width;
       while (i--)
-	{
-	  *buf = contrast->lookup[*buf];
-	  buf++;
-	}
+        {
+          *buf = contrast->lookup[*buf];
+          buf++;
+        }
       buf += bpl;
     }
 }

@@ -67,6 +67,9 @@ enum
 };
 
 
+G_MODULE_EXPORT const GimpModuleInfo * gimp_module_query    (GTypeModule *module);
+G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module);
+
 static GType     cdisplay_lcms_get_type     (GTypeModule       *module);
 static void      cdisplay_lcms_class_init   (CdisplayLcmsClass *klass);
 static void      cdisplay_lcms_init         (CdisplayLcms      *lcms);
@@ -149,16 +152,16 @@ cdisplay_lcms_get_type (GTypeModule *module)
         (GBaseInitFunc)     NULL,
         (GBaseFinalizeFunc) NULL,
         (GClassInitFunc) cdisplay_lcms_class_init,
-        NULL,			/* class_finalize */
-        NULL,			/* class_data     */
+        NULL,                   /* class_finalize */
+        NULL,                   /* class_data     */
         sizeof (CdisplayLcms),
-        0,			/* n_preallocs    */
+        0,                      /* n_preallocs    */
         (GInstanceInitFunc) cdisplay_lcms_init,
       };
 
        cdisplay_lcms_type =
-	g_type_module_register_type (module, GIMP_TYPE_COLOR_DISPLAY,
-				     "CdisplayLcms", &display_info, 0);
+        g_type_module_register_type (module, GIMP_TYPE_COLOR_DISPLAY,
+                                     "CdisplayLcms", &display_info, 0);
     }
 
   return cdisplay_lcms_type;

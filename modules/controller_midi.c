@@ -105,6 +105,9 @@ struct _ControllerMidiClass
 };
 
 
+G_MODULE_EXPORT const GimpModuleInfo * gimp_module_query    (GTypeModule *module);
+G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module);
+
 GType                midi_get_type        (GTypeModule    *module);
 
 static void          midi_class_init      (ControllerMidiClass *klass);

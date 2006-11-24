@@ -1,5 +1,19 @@
 2006-11-24  Simon Budig  <simon@gimp.org>
 
+	* modules/cdisplay_colorblind.c
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* modules/cdisplay_lcms.c
+	* modules/cdisplay_proof.c
+	* modules/colorsel_cmyk.c
+	* modules/colorsel_cmyk_lcms.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c
+	* modules/controller_linux_input.c
+	* modules/controller_midi.c: fixed prototype warning, untabbified.
+
+2006-11-24  Simon Budig  <simon@gimp.org>
+
 	* plug-ins/sel2path/sel2path_adv_dialog.c
 	* plug-ins/xjt/xjt.c: more warning fixes, untabbified.
 

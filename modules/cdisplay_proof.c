@@ -71,6 +71,9 @@ enum
 };
 
 
+G_MODULE_EXPORT const GimpModuleInfo * gimp_module_query    (GTypeModule *module);
+G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module);
+
 static GType       cdisplay_proof_get_type     (GTypeModule        *module);
 static void        cdisplay_proof_class_init   (CdisplayProofClass *klass);
 static void        cdisplay_proof_init         (CdisplayProof      *proof);
@@ -135,16 +138,16 @@ cdisplay_proof_get_type (GTypeModule *module)
         (GBaseInitFunc)     NULL,
         (GBaseFinalizeFunc) NULL,
         (GClassInitFunc) cdisplay_proof_class_init,
-        NULL,			/* class_finalize */
-        NULL,			/* class_data     */
+        NULL,                   /* class_finalize */
+        NULL,                   /* class_data     */
         sizeof (CdisplayProof),
-        0,			/* n_preallocs    */
+        0,                      /* n_preallocs    */
         (GInstanceInitFunc) cdisplay_proof_init,
       };
 
        cdisplay_proof_type =
-	g_type_module_register_type (module, GIMP_TYPE_COLOR_DISPLAY,
-				     "CdisplayProof", &display_info, 0);
+        g_type_module_register_type (module, GIMP_TYPE_COLOR_DISPLAY,
+                                     "CdisplayProof", &display_info, 0);
     }
 
   return cdisplay_proof_type;
@@ -268,8 +271,8 @@ cdisplay_proof_set_property (GObject      *object,
 
 static void
 cdisplay_proof_convert (GimpColorDisplay *display,
-			guchar           *buf,
-			gint              width,
+                        guchar           *buf,
+                        gint              width,
                         gint              height,
                         gint              bpp,
                         gint              bpl)

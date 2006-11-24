@@ -70,6 +70,9 @@ struct _ColorselTriangleClass
 };
 
 
+G_MODULE_EXPORT const GimpModuleInfo * gimp_module_query    (GTypeModule *module);
+G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module);
+
 static GType      colorsel_triangle_get_type   (GTypeModule           *module);
 static void       colorsel_triangle_class_init (ColorselTriangleClass *klass);
 static void       colorsel_triangle_init       (ColorselTriangle      *triangle);
