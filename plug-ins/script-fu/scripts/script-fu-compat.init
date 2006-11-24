@@ -128,6 +128,10 @@
 ;Items below this line are for compatability with Script-Fu but
 ;may be useful enough to keep around
 
+(define (make-list count fill)
+  (vector->list (make-vector count fill))
+)
+
 (define (strbreakup str sep)
   (let* (
         (seplen (string-length sep))
@@ -200,9 +204,10 @@
   )
 )
 
-(define (unstrbreakup stringlist sep)
+(define (unbreakupstr stringlist sep)
   (let ((str (car stringlist)))
 
+    (set! (stringlist (cdr stringlist)))
     (while (not (null? stringlist))
       (set! str (string-append str sep (car stringlist)))
       (set! stringlist (cdr stringlist))
@@ -232,7 +237,10 @@
 )
 
 (define (butlast x)
-  (reverse (cdr (reverse x)))
+  (if (= (length x) 1)
+    '()
+    (reverse (cdr (reverse x)))
+  )
 )
 
 (define (cons-array count type)

@@ -1,3 +1,9 @@
+2006-11-24  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/script-fu-compat.init: Added make-list.
+	Corrected name of unstrbreakup to unbreakupstr and fixed bug in it.
+	Fixed butlast to handle lists with one entry.
+
 2006-11-23  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.3.13 development release.
