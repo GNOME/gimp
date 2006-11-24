@@ -20,7 +20,6 @@
 #define __SCALE_FUNCS_H__
 
 
-#define EPSILON          (0.0001)  /* arbitary small number for avoiding zero */
 #define LANCZOS_SPP      (4000)    /* number of data pts per unit x in lookup table */
 #define LANCZOS_MIN      (1.0/LANCZOS_SPP)
 #define LANCZOS_WIDTH    (3)                    /* 3 for Lanczos3 code, for L4 prefer DUAL_LANCZOS below */
@@ -28,13 +27,17 @@
 #define LANCZOS_SAMPLES  (LANCZOS_SPP * (LANCZOS_WIDTH + 1))
 
 
-void  scale_region (PixelRegion           *srcPR,
-                    PixelRegion           *destPR,
-                    GimpInterpolationType  interpolation,
-                    GimpProgressFunc       progress_callback,
-                    gpointer               progress_data);
+void     scale_region          (PixelRegion           *srcPR,
+                                PixelRegion           *destPR,
+                                GimpInterpolationType  interpolation,
+                                GimpProgressFunc       progress_callback,
+                                gpointer               progress_data);
 
-gfloat *   create_lanczos_lookup (void);
+void     subsample_region      (PixelRegion           *srcPR,
+                                PixelRegion           *destPR,
+                                gint                   subsample);
+
+gfloat * create_lanczos_lookup (void);
 
 #endif  /*  __SCALE_FUNCS_H__  */
 

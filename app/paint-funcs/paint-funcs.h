@@ -32,6 +32,20 @@ void  color_pixels          (guchar       *dest,
                              guint         w,
                              guint         bytes);
 
+void  color_pixels_mask     (guchar       *dest,
+                             const guchar *mask,
+                             const guchar *color,
+                             guint         w,
+                             guint         bytes);
+
+void  pattern_pixels_mask   (guchar       *dest,
+                             const guchar *mask,
+                             TempBuf      *pattern,
+                             guint         w,
+                             guint         bytes,
+                             gint          x,
+                             gint          y);
+
 void  blend_pixels          (const guchar *src1,
                              const guchar *src2,
                              guchar       *dest,
@@ -204,6 +218,15 @@ void  combine_indexed_a_and_indexed_a_pixels(const guchar   *src1,
                                              const guchar   *mask,
                                              guint           opacity,
                                              const gboolean *affect,
+                                             guint           length,
+                                             guint           bytes);
+
+void combine_inten_a_and_indexed_pixels     (const guchar   *src1,
+                                             const guchar   *src2,
+                                             guchar         *dest,
+                                             const guchar   *mask,
+                                             const guchar   *cmap,
+                                             guint           opacity,
                                              guint           length,
                                              guint           bytes);
 
@@ -383,10 +406,6 @@ void  border_region                       (PixelRegion *src,
                                            gint16       xradius,
                                            gint16       yradius,
                                            gboolean     feather);
-
-void  subsample_region                    (PixelRegion *srcPR,
-                                           PixelRegion *destPR,
-                                           gint         subsample);
 
 gfloat shapeburst_region                  (PixelRegion      *srcPR,
                                            PixelRegion      *distPR,

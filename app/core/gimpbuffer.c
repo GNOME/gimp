@@ -29,6 +29,7 @@
 #include "base/temp-buf.h"
 
 #include "paint-funcs/paint-funcs.h"
+#include "paint-funcs/scale-funcs.h"
 
 #include "gimpbuffer.h"
 

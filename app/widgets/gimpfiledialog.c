@@ -49,6 +49,7 @@
 #include "gimpview.h"
 #include "gimpviewrendererimagefile.h"
 #include "gimpthumbbox.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 

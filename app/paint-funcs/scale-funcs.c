@@ -31,6 +31,8 @@
 #include "scale-funcs.h"
 
 
+#define EPSILON          (0.0001)  /* arbitary small number for avoiding zero */
+
 static void  scale_region_no_resample (PixelRegion           *srcPR,
                                        PixelRegion           *destPR);
 static void  scale_region_lanczos     (PixelRegion           *srcPR,

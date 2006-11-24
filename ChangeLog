@@ -1,3 +1,20 @@
+2006-11-24  Simon Budig  <simon@gimp.org>
+
+	Fixing include/declaration issues in the application:
+
+	* app/composite/gimp-composite-sse2.c: disable unused debugging code
+
+	* app/paint-funcs/paint-funcs.[ch]
+	* app/paint-funcs/scale-funcs.[ch]: fix include files, add some
+	prototypes, make some other functions static.
+
+	* app/core/gimpbuffer.c
+	* app/core/gimpdrawable-preview.c: changed accordingly.
+
+	* app/tools/gimpeditselectiontool.[ch]: untangle .c and .h file.
+
+	* app/widgets/gimpfiledialog.c: add missing #include.
+
 2006-11-24  Tor Lillqvist  <tml@novell.com>
 
 	* libgimp/gimp.h (MAIN): Add prototype for WinMain to avoid gcc

@@ -1733,7 +1733,7 @@ erase_indexed_pixels (const guchar   *src1,
     }
 }
 
-void
+static inline void
 anti_erase_inten_pixels (const guchar   *src1,
                          const guchar   *src2,
                          guchar         *dest,
@@ -1768,7 +1768,7 @@ anti_erase_inten_pixels (const guchar   *src1,
 }
 
 
-void
+static inline void
 anti_erase_indexed_pixels (const guchar   *src1,
                            const guchar   *src2,
                            guchar         *dest,
@@ -1802,7 +1802,7 @@ anti_erase_indexed_pixels (const guchar   *src1,
 }
 
 
-static void
+static inline void
 color_erase_helper (GimpRGB       *src,
                     const GimpRGB *color)
 {
@@ -1867,7 +1867,7 @@ color_erase_helper (GimpRGB       *src,
 }
 
 
-void
+static inline void
 color_erase_inten_pixels (const guchar   *src1,
                           const guchar   *src2,
                           guchar         *dest,
@@ -4093,7 +4093,7 @@ struct initial_regions_struct
   guchar               *data;
 };
 
-void
+static void
 initial_sub_region (struct initial_regions_struct *st,
                     PixelRegion                   *src,
                     PixelRegion                   *dest,

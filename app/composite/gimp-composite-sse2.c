@@ -62,6 +62,7 @@ static const guint32 va8_b255_64[2] =         { 0xFFFFFFFF, 0xFFFFFFFF };
 static const guint32 va8_w1_64[2] =           { 0x00010001, 0x00010001 };
 static const guint32 va8_w255_64[2] =         { 0x00FF00FF, 0x00FF00FF };
 
+#if 0
 void
 debug_display_sse (void)
 {
@@ -79,6 +80,7 @@ debug_display_sse (void)
   print128(xmm6); printf("  "); print128(xmm7); printf("\n");
   printf("--------------------------------------------\n");
 }
+#endif
 
 void
 gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
