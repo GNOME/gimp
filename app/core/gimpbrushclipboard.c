@@ -135,7 +135,7 @@ gimp_brush_clipboard_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_GIMP:
-      brush->gimp = GIMP (g_value_get_object (value));
+      brush->gimp = g_value_get_object (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

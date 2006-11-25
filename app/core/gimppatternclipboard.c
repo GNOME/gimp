@@ -106,7 +106,7 @@ gimp_pattern_clipboard_constructor (GType                  type,
                                     guint                  n_params,
                                     GObjectConstructParam *params)
 {
-  GObject            *object;
+  GObject              *object;
   GimpPatternClipboard *pattern;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
@@ -135,7 +135,7 @@ gimp_pattern_clipboard_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_GIMP:
-      pattern->gimp = GIMP (g_value_get_object (value));
+      pattern->gimp = g_value_get_object (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

@@ -88,7 +88,7 @@ gimp_tool_options_set_property (GObject      *object,
     {
     case PROP_TOOL_INFO:
       {
-        GimpToolInfo *tool_info = GIMP_TOOL_INFO (g_value_get_object (value));
+        GimpToolInfo *tool_info = g_value_get_object (value);
 
         g_return_if_fail (options->tool_info == NULL ||
                           options->tool_info == tool_info);

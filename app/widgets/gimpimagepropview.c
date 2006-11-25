@@ -176,7 +176,7 @@ gimp_image_prop_view_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_IMAGE:
-      view->image = GIMP_IMAGE (g_value_get_object (value));
+      view->image = g_value_get_object (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

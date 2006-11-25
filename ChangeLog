@@ -1,3 +1,15 @@
+2006-11-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpbrushclipboard.c
+	* app/core/gimppatternclipboard.c
+	* app/core/gimptooloptions.c
+	* app/core/gimpundo.c
+	* app/widgets/gimpdevicestatus.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpimageparasiteview.c
+	* app/widgets/gimpimagepropview.c: no need to cast the return
+	value of g_value_get_object(), it's a gpointer.
+
 2006-11-24  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* app/pdb/gimpprocedure.c: Fix for minor typo in error message.
