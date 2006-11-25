@@ -520,15 +520,19 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
 
   switch (zoom_type)
     {
+    case GIMP_ZOOM_IN_MAX:
+    case GIMP_ZOOM_IN_MORE:
     case GIMP_ZOOM_IN:
       zoom_factor += 0.1;
       break;
 
+    case GIMP_ZOOM_OUT_MORE:
     case GIMP_ZOOM_OUT:
       zoom_factor -= 0.1;
       break;
 
-    case GIMP_ZOOM_TO: /* used as ZOOM_ALL */
+    case GIMP_ZOOM_OUT_MAX:
+    case GIMP_ZOOM_TO: /* abused as ZOOM_ALL */
       {
         gint height  = editor->view->parent->parent->parent->allocation.height;
         gint columns = palette->n_columns ? palette->n_columns : COLUMNS;

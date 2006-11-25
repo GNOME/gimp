@@ -281,8 +281,8 @@ EXPORTS
 	gimp_resolution_entry_grab_focus
 	gimp_resolution_entry_new
 	gimp_resolution_entry_set_activates_default
+	gimp_resolution_entry_set_height
 	gimp_resolution_entry_set_height_boundaries
-	gimp_resolution_entry_set_height_value
 	gimp_resolution_entry_set_pixel_digits
 	gimp_resolution_entry_set_unit
 	gimp_resolution_entry_set_width

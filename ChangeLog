@@ -1,3 +1,16 @@
+2006-11-25  Simon Budig  <simon@gimp.org>
+
+	* libgimpwidgets/gimpresolutionentry.c
+	* libgimpwidgets/gimpwidgets.def: fix typo in a function name.
+
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimppaletteeditor.c
+	* app/actions/gradient-editor-actions.c
+	* app/actions/palette-editor-actions.c: handle all enum values
+	and use sane ones.
+
+	* app/widgets/gimpcontrollerinfo.c: fix a warning.
+
 2006-11-24  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpdrawable.c

@@ -381,7 +381,7 @@ static const GimpEnumActionEntry gradient_editor_zoom_actions[] =
   { "gradient-editor-zoom-all", GTK_STOCK_ZOOM_FIT,
     N_("Zoom All"), NULL,
     N_("Zoom all"),
-    GIMP_ZOOM_TO /* abused */, FALSE,
+    GIMP_ZOOM_OUT_MAX, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_ZOOM_ALL }
 };
 

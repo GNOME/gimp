@@ -584,6 +584,8 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
 
   switch (zoom_type)
     {
+    case GIMP_ZOOM_IN_MAX:
+    case GIMP_ZOOM_IN_MORE:
     case GIMP_ZOOM_IN:
       editor->zoom_factor++;
 
@@ -591,6 +593,7 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
       value     = old_value + (old_page_size - page_size) / 2.0;
       break;
 
+    case GIMP_ZOOM_OUT_MORE:
     case GIMP_ZOOM_OUT:
       if (editor->zoom_factor <= 1)
         return;
@@ -606,6 +609,7 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
         value = 1.0 - page_size;
       break;
 
+    case GIMP_ZOOM_OUT_MAX:
     case GIMP_ZOOM_TO: /* abused as ZOOM_ALL */
       editor->zoom_factor = 1;
 

@@ -201,7 +201,7 @@ gimp_controller_info_set_property (GObject      *object,
           g_object_unref (info->controller);
         }
 
-      info->controller = g_value_dup_object (value);
+      info->controller = GIMP_CONTROLLER (g_value_dup_object (value));
 
       if (info->controller)
         {
