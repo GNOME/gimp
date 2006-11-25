@@ -1,3 +1,13 @@
+2006-11-24  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* app/pdb/gimpprocedure.c: Fix for minor typo in error message.
+
+	* plug-ins/Lighting/lighting_main.c (check_drawables): Only validate
+	ID's for drawables that will be used. Disable use of env map (and not
+	bump map) if env drawable is of wrong type.
+
+	* plug-ins/script-fu/ftx/ftx.c: Eliminated some compiler warnings.
+
 2006-11-25  Simon Budig  <simon@gimp.org>
 
 	* libgimpwidgets/gimpresolutionentry.c
