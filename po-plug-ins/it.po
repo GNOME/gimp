@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-07 21:06+0100\n"
-"PO-Revision-Date: 2006-11-07 21:09+0100\n"
+"POT-Creation-Date: 2006-11-25 12:41+0100\n"
+"PO-Revision-Date: 2006-11-25 14:59+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -334,7 +334,7 @@ msgstr "Gradiente FractalExplorer"
 msgid "_Fractals"
 msgstr "_Frattali"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1733
+#: ../plug-ins/FractalExplorer/Dialogs.c:1546
 #: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:294
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2008
 #: ../plug-ins/common/channel_mixer.c:1062 ../plug-ins/common/compressor.c:410
@@ -348,101 +348,101 @@ msgstr "_Frattali"
 #: ../plug-ins/common/postscript.c:1185 ../plug-ins/common/psd_save.c:1448
 #: ../plug-ins/common/raw.c:528 ../plug-ins/common/raw.c:555
 #: ../plug-ins/common/spheredesigner.c:2119 ../plug-ins/common/sunras.c:507
-#: ../plug-ins/common/tga.c:1027 ../plug-ins/common/tiff.c:1938
+#: ../plug-ins/common/tga.c:1027 ../plug-ins/common/tiff.c:2133
 #: ../plug-ins/common/xbm.c:1002 ../plug-ins/common/xwd.c:565
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:715
 #: ../plug-ins/ifscompose/ifscompose.c:2377 ../plug-ins/jpeg/jpeg-save.c:268
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:270
-#: ../plug-ins/winicon/icosave.c:1020 ../plug-ins/xjt/xjt.c:1277
-#: ../plug-ins/xjt/xjt.c:1711
+#: ../plug-ins/winicon/icosave.c:1020 ../plug-ins/xjt/xjt.c:1278
+#: ../plug-ins/xjt/xjt.c:1712
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossibile aprire '%s' in scrittura: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1747
+#: ../plug-ins/FractalExplorer/Dialogs.c:1560
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Errore di scrittura '%s': %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1822
+#: ../plug-ins/FractalExplorer/Dialogs.c:1635
 msgid "Load Fractal Parameters"
 msgstr "Carica parametri frattali"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1860
+#: ../plug-ins/FractalExplorer/Dialogs.c:1673
 msgid "Save Fractal Parameters"
 msgstr "Salva parametri frattali"
 
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
-#: ../plug-ins/FractalExplorer/Dialogs.c:2049
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:930
+#: ../plug-ins/FractalExplorer/Dialogs.c:1862
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:933
 #: ../plug-ins/Lighting/lighting_ui.c:1312 ../plug-ins/bmp/bmpread.c:149
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2228
 #: ../plug-ins/common/channel_mixer.c:979 ../plug-ins/common/curve_bend.c:888
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:309 ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:317
-#: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
-#: ../plug-ins/common/png.c:650 ../plug-ins/common/pnm.c:480
-#: ../plug-ins/common/poppler.c:368 ../plug-ins/common/postscript.c:1012
-#: ../plug-ins/common/postscript.c:2993 ../plug-ins/common/psd.c:1880
-#: ../plug-ins/common/psp.c:1460 ../plug-ins/common/raw.c:243
-#: ../plug-ins/common/raw.c:645 ../plug-ins/common/spheredesigner.c:2009
-#: ../plug-ins/common/sunras.c:379 ../plug-ins/common/svg.c:316
-#: ../plug-ins/common/svg.c:686 ../plug-ins/common/tga.c:411
-#: ../plug-ins/common/tiff.c:535 ../plug-ins/common/xbm.c:720
-#: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
-#: ../plug-ins/fits/fits.c:342 ../plug-ins/flame/flame.c:411
-#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:429
-#: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/domain.c:426
-#: ../plug-ins/jpeg/jpeg-load.c:88 ../plug-ins/jpeg/jpeg-load.c:874
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:259
+#: ../plug-ins/common/lcms.c:575 ../plug-ins/common/mng.c:1124
+#: ../plug-ins/common/pat.c:317 ../plug-ins/common/pcx.c:309
+#: ../plug-ins/common/pix.c:329 ../plug-ins/common/png.c:650
+#: ../plug-ins/common/pnm.c:480 ../plug-ins/common/poppler.c:368
+#: ../plug-ins/common/postscript.c:1012 ../plug-ins/common/postscript.c:2993
+#: ../plug-ins/common/psd.c:1880 ../plug-ins/common/psp.c:1460
+#: ../plug-ins/common/raw.c:243 ../plug-ins/common/raw.c:645
+#: ../plug-ins/common/spheredesigner.c:2009 ../plug-ins/common/sunras.c:379
+#: ../plug-ins/common/svg.c:316 ../plug-ins/common/svg.c:686
+#: ../plug-ins/common/tga.c:411 ../plug-ins/common/tiff.c:545
+#: ../plug-ins/common/xbm.c:720 ../plug-ins/common/xwd.c:420
+#: ../plug-ins/faxg3/faxg3.c:219 ../plug-ins/fits/fits.c:342
+#: ../plug-ins/flame/flame.c:411 ../plug-ins/gfig/gfig.c:434
+#: ../plug-ins/gfli/gfli.c:429 ../plug-ins/gfli/gfli.c:464
+#: ../plug-ins/help/gimphelplocale.c:193 ../plug-ins/jpeg/jpeg-load.c:88
+#: ../plug-ins/jpeg/jpeg-load.c:874 ../plug-ins/uri/uri-backend-gnomevfs.c:259
 #: ../plug-ins/uri/uri-backend-libcurl.c:172 ../plug-ins/winicon/icoload.c:651
-#: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2535
-#: ../plug-ins/xjt/xjt.c:2543
+#: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2543
+#: ../plug-ins/xjt/xjt.c:2551
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossibile aprire '%s' in lettura: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2057
+#: ../plug-ins/FractalExplorer/Dialogs.c:1870
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "'%s' non è un file FractalExplorer"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2063
+#: ../plug-ins/FractalExplorer/Dialogs.c:1876
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "Il file '%s' è corrotto. Sezione opzione non corretta alla linea %d"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:247
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:243
 msgid "Render fractal art"
 msgstr "Render di arte frattale"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:252
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:248
 msgid "_Fractal Explorer..."
 msgstr "Esploratore _frattali..."
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:382
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:378
 msgid "Rendering fractal"
 msgstr "Rendering frattale"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:757
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:760
 #: ../plug-ins/gflare/gflare.c:3126
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Siete sicuri di voler cancellare \"%s\" dalla lista e dal disco?"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:761
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:764
 msgid "Delete Fractal"
 msgstr "Elimina frattale"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:951
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:954
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Il File '%s' non è un file di FractalExplorer"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:960
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:963
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -451,27 +451,27 @@ msgstr ""
 "File '%s' è corrotto.\n"
 "Sezione opzione non corretta alla linea %d"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1004
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1007
 msgid "My first fractal"
 msgstr "Primo frattale"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1068
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1071
 msgid "Select folder and rescan collection"
 msgstr "Seleziona la cartella e ripeti la scansione della collezione"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1080
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1083
 msgid "Apply currently selected fractal"
 msgstr "Applica il frattale attualmente selezionato"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1092
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1095
 msgid "Delete currently selected fractal"
 msgstr "Cancella il frattale attualmente selezionato"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1115
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1118
 msgid "Rescan for Fractals"
 msgstr "Ripeti scansione frattali"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1134
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1137
 msgid "Add FractalExplorer Path"
 msgstr "Aggiungi percorso di FractalExplorer"
 
@@ -1144,12 +1144,12 @@ msgstr "Mappa colore non valida"
 #: ../plug-ins/common/pnm.c:485 ../plug-ins/common/poppler.c:414
 #: ../plug-ins/common/postscript.c:1018 ../plug-ins/common/psd.c:1885
 #: ../plug-ins/common/raw.c:650 ../plug-ins/common/sunras.c:433
-#: ../plug-ins/common/tga.c:416 ../plug-ins/common/tiff.c:540
+#: ../plug-ins/common/tga.c:416 ../plug-ins/common/tiff.c:550
 #: ../plug-ins/common/wmf.c:954 ../plug-ins/common/xbm.c:725
 #: ../plug-ins/common/xpm.c:343 ../plug-ins/common/xwd.c:473
 #: ../plug-ins/faxg3/faxg3.c:204 ../plug-ins/gfli/gfli.c:469
 #: ../plug-ins/jpeg/jpeg-load.c:94 ../plug-ins/sgi/sgi.c:318
-#: ../plug-ins/winicon/icoload.c:645 ../plug-ins/xjt/xjt.c:3319
+#: ../plug-ins/winicon/icoload.c:645 ../plug-ins/xjt/xjt.c:3337
 #, c-format
 msgid "Opening '%s'"
 msgstr "Apertura di '%s'"
@@ -1189,7 +1189,7 @@ msgstr "Profondità di colore (in bit) non supportata o non valida."
 #: ../plug-ins/common/png.c:778 ../plug-ins/common/pnm.c:564
 #: ../plug-ins/common/psd.c:2310 ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:917
-#: ../plug-ins/common/tga.c:928 ../plug-ins/common/tiff.c:893
+#: ../plug-ins/common/tga.c:928 ../plug-ins/common/tiff.c:905
 #: ../plug-ins/common/tile.c:265 ../plug-ins/common/xbm.c:866
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:508
 #: ../plug-ins/gfig/gfig-dialog.c:1282
@@ -1223,12 +1223,12 @@ msgstr "Il canale alfa verrà ignorato."
 #: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1173
 #: ../plug-ins/common/pnm.c:934 ../plug-ins/common/postscript.c:1190
 #: ../plug-ins/common/psd_save.c:1453 ../plug-ins/common/sunras.c:512
-#: ../plug-ins/common/tga.c:1032 ../plug-ins/common/tiff.c:1943
+#: ../plug-ins/common/tga.c:1032 ../plug-ins/common/tiff.c:2138
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
 #: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:226
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:1015
-#: ../plug-ins/xjt/xjt.c:1694
+#: ../plug-ins/xjt/xjt.c:1695
 #, c-format
 msgid "Saving '%s'"
 msgstr "Salvataggio di '%s'"
@@ -2132,7 +2132,7 @@ msgstr "Simula un'immagine dipinta su veneziane"
 
 #: ../plug-ins/common/blinds.c:121
 msgid "_Blinds..."
-msgstr "_Striscia..."
+msgstr "_Strisce..."
 
 #: ../plug-ins/common/blinds.c:188
 msgid "Adding blinds"
@@ -2140,7 +2140,7 @@ msgstr "Aggiunta strisce"
 
 #: ../plug-ins/common/blinds.c:226
 msgid "Blinds"
-msgstr "Striscie"
+msgstr "Strisce"
 
 #. Orientation toggle box
 #: ../plug-ins/common/blinds.c:259 ../plug-ins/common/ripple.c:538
@@ -2310,7 +2310,7 @@ msgstr "_Fumetto..."
 #: ../plug-ins/common/gauss.c:445 ../plug-ins/common/neon.c:225
 #: ../plug-ins/common/photocopy.c:243 ../plug-ins/common/sel_gauss.c:213
 #: ../plug-ins/common/softglow.c:221 ../plug-ins/gflare/gflare.c:965
-#: ../plug-ins/sgi/sgi.c:520 ../plug-ins/xjt/xjt.c:1685
+#: ../plug-ins/sgi/sgi.c:520 ../plug-ins/xjt/xjt.c:1686
 msgid "Cannot operate on indexed color images."
 msgstr "Impossibile operare su immagini a colori indicizzati."
 
@@ -2326,57 +2326,37 @@ msgstr "Raggio di _mascheratura:"
 msgid "_Percent black:"
 msgstr "_Percentuale del nero:"
 
-#: ../plug-ins/common/ccanalyze.c:107
+#: ../plug-ins/common/ccanalyze.c:106
 msgid "Analyze the set of colors in the image"
 msgstr "Analizza l'insieme dei colori nell'immagine"
 
-#: ../plug-ins/common/ccanalyze.c:113
+#: ../plug-ins/common/ccanalyze.c:112
 msgid "Colorcube A_nalysis..."
 msgstr "A_nalisi cubocolori..."
 
-#: ../plug-ins/common/ccanalyze.c:202 ../plug-ins/common/ccanalyze.c:360
+#: ../plug-ins/common/ccanalyze.c:200 ../plug-ins/common/ccanalyze.c:356
 msgid "Colorcube Analysis"
 msgstr "Analisi cubocolori"
 
 #. output results
-#: ../plug-ins/common/ccanalyze.c:388
+#: ../plug-ins/common/ccanalyze.c:384
 #: ../plug-ins/imagemap/imap_cmd_guides.c:233
 #, c-format
 msgid "Image dimensions: %d × %d"
 msgstr "Dimensioni immagine: %d × %d"
 
-#: ../plug-ins/common/ccanalyze.c:391
+#: ../plug-ins/common/ccanalyze.c:387
 msgid "No colors"
 msgstr "Nessun colore"
 
-#: ../plug-ins/common/ccanalyze.c:393
+#: ../plug-ins/common/ccanalyze.c:389
 msgid "Only one unique color"
 msgstr "Solo un colore unico"
 
-#: ../plug-ins/common/ccanalyze.c:395
+#: ../plug-ins/common/ccanalyze.c:391
 #, c-format
 msgid "Number of unique colors: %d"
 msgstr "Numero di colori unici: %d"
-
-#: ../plug-ins/common/ccanalyze.c:398
-#, c-format
-msgid "Uncompressed size: %s"
-msgstr "Dimensione file non compresso: %s"
-
-#: ../plug-ins/common/ccanalyze.c:405
-#, c-format
-msgid "Filename: %s"
-msgstr "Nome file: %s"
-
-#: ../plug-ins/common/ccanalyze.c:406
-#, c-format
-msgid "Compressed size: %s"
-msgstr "Dimensione file compresso: %s"
-
-#: ../plug-ins/common/ccanalyze.c:407
-#, c-format
-msgid "Compression ratio (approx.): %d to 1"
-msgstr "Rapporto di compressione (approssim.): %d a 1"
 
 #: ../plug-ins/common/channel_mixer.c:178
 msgid "Alter colors by mixing RGB Channels"
@@ -2804,7 +2784,9 @@ msgstr "Nessuna estensione plausibile, salvataggio come XCF compresso."
 
 #: ../plug-ins/common/compressor.c:518
 msgid "No sensible file extension, attempting to load with file magic."
-msgstr "Nessuna estensione plausibile, tentativo di salvataggio tramite il magic del file."
+msgstr ""
+"Nessuna estensione plausibile, tentativo di salvataggio tramite il magic del "
+"file."
 
 #: ../plug-ins/common/convmatrix.c:101
 msgid "Gr_ey"
@@ -3004,7 +2986,7 @@ msgstr "Anteprima"
 #. The preview button
 #: ../plug-ins/common/curve_bend.c:1279
 msgid "_Preview Once"
-msgstr "Ante_prima unica"
+msgstr "Ante_prima"
 
 #. The preview toggle
 #: ../plug-ins/common/curve_bend.c:1288
@@ -3046,7 +3028,7 @@ msgstr "Modifica curve"
 
 #: ../plug-ins/common/curve_bend.c:1388
 msgid "Curve for Border"
-msgstr "Curve per bordi"
+msgstr "Curva del bordo"
 
 #: ../plug-ins/common/curve_bend.c:1392
 msgid "_Upper"
@@ -3443,7 +3425,7 @@ msgstr "Impossibile salvare immagini con canali alfa."
 
 #: ../plug-ins/common/dicom.c:676 ../plug-ins/common/postscript.c:1176
 #: ../plug-ins/common/xwd.c:556 ../plug-ins/fits/fits.c:445
-#: ../plug-ins/xjt/xjt.c:1689
+#: ../plug-ins/xjt/xjt.c:1690
 msgid "Cannot operate on unknown image types."
 msgstr "Impossibile operare su immagini di tipo sconosciuto."
 
@@ -3759,7 +3741,7 @@ msgid "Composing images"
 msgstr "Composizione immagini"
 
 #: ../plug-ins/common/film.c:436 ../plug-ins/common/guillotine.c:185
-#: ../plug-ins/helpbrowser/dialog.c:863
+#: ../plug-ins/helpbrowser/dialog.c:1048
 msgid "Untitled"
 msgstr "Senza nome"
 
@@ -4532,7 +4514,7 @@ msgstr "Intersezione"
 
 #. Width and Height
 #: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:759
-#: ../plug-ins/common/wmf.c:549
+#: ../plug-ins/common/wmf.c:549 ../plug-ins/print/print-page-layout.c:218
 msgid "Width:"
 msgstr "Larghezza:"
 
@@ -4943,6 +4925,87 @@ msgstr "_Laplace..."
 #: ../plug-ins/common/laplace.c:321
 msgid "Cleanup"
 msgstr "Pulizia"
+
+#: ../plug-ins/common/lcms.c:168
+msgid "Set color profile"
+msgstr "Imposta il profilo di colore"
+
+#: ../plug-ins/common/lcms.c:184
+msgid "Set default RGB profile"
+msgstr "Imposta il profilo RGB predefinito"
+
+#: ../plug-ins/common/lcms.c:200
+msgid "Apply color profile"
+msgstr "Applica il profilo di colore"
+
+#: ../plug-ins/common/lcms.c:218
+msgid "Apply default RGB profile"
+msgstr "Applica il profilo di colore RGB predefinito"
+
+#: ../plug-ins/common/lcms.c:232
+msgid "Color Profile Information"
+msgstr "Informazioni sul profilo di colore"
+
+#: ../plug-ins/common/lcms.c:407
+#, c-format
+msgid "Could not open color profile from '%s'"
+msgstr "Impossibile aprire il profilo di colore da \"%s\""
+
+#: ../plug-ins/common/lcms.c:415 ../plug-ins/common/lcms.c:607
+#, c-format
+msgid "Color profile '%s' is not for RGB color space."
+msgstr "Il profilo di colore \"%s\" non è adatto allo spazio colore RGB."
+
+#. ICC color profile conversion
+#: ../plug-ins/common/lcms.c:462
+#, c-format
+msgid "Converting from '%s' to '%s'"
+msgstr "Conversione da \"%s\" a \"%s\""
+
+#: ../plug-ins/common/lcms.c:521
+msgid "Default RGB working space"
+msgstr "Spazio di lavoro RGB predefinito"
+
+#: ../plug-ins/common/lcms.c:546
+msgid ""
+"Data attached as 'icc-profile' does not appear to be an ICC color profile"
+msgstr "I dati allegato come \"icc-profile\" non sembrano essere un profilo di colore ICC"
+
+#: ../plug-ins/common/lcms.c:613
+#, c-format
+msgid "'%s' does not appear to be an ICC color profile"
+msgstr "\"%s\" non sembra essere un profilo di colore ICC"
+
+#: ../plug-ins/common/lcms.c:772
+#, c-format
+msgid "Could not open ICC profile from '%s'"
+msgstr "Impossibile aprire il profilo ICC da \"%s\""
+
+#: ../plug-ins/common/lcms.c:794
+#, c-format
+msgid "The image '%s' has an embedded color profile:"
+msgstr "L'immagine \"%s\" possiedr un profilo di colore incorporato:"
+
+#: ../plug-ins/common/lcms.c:838
+#, c-format
+msgid "Convert the image to the RGB working space (%s)?"
+msgstr "Convertire l'immagine allo spazio di lavoro RGB (%s)?"
+
+#: ../plug-ins/common/lcms.c:869
+msgid "Convert to RGB working space?"
+msgstr "Conversione nello spazio di lavoro RGB?"
+
+#: ../plug-ins/common/lcms.c:874
+msgid "_Keep"
+msgstr "_Mantieni"
+
+#: ../plug-ins/common/lcms.c:875
+msgid "_Convert"
+msgstr "_Converti"
+
+#: ../plug-ins/common/lcms.c:901
+msgid "_Don't ask me again"
+msgstr "_Non chiedermelo più"
 
 #: ../plug-ins/common/lens.c:142
 msgid "Corrects lens distortion"
@@ -6236,7 +6299,7 @@ msgstr ""
 "comunicare a GIMP la sua posizione.\n"
 "(%s)"
 
-#: ../plug-ins/common/postscript.c:1886 ../plug-ins/common/tiff.c:895
+#: ../plug-ins/common/postscript.c:1886 ../plug-ins/common/tiff.c:907
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
@@ -7666,6 +7729,7 @@ msgid "Render Scalable Vector Graphics"
 msgstr "Renderizza Grafica Vettoriale Scalabile (SVG)"
 
 #: ../plug-ins/common/svg.c:765 ../plug-ins/common/wmf.c:555
+#: ../plug-ins/print/print-page-layout.c:224
 msgid "Height:"
 msgstr "Altezza:"
 
@@ -7682,6 +7746,7 @@ msgid "Constrain aspect ratio"
 msgstr "Mantieni rapporto dimensioni"
 
 #: ../plug-ins/common/svg.c:886 ../plug-ins/common/wmf.c:676
+#: ../plug-ins/print/print-page-layout.c:288
 #, c-format
 msgid "pixels/%a"
 msgstr "Punti/%a"
@@ -7758,16 +7823,16 @@ msgstr "Soglia alfa"
 msgid "Threshold:"
 msgstr "Soglia:"
 
-#: ../plug-ins/common/tiff.c:237 ../plug-ins/common/tiff.c:258
-#: ../plug-ins/common/tiff.c:275
+#: ../plug-ins/common/tiff.c:239 ../plug-ins/common/tiff.c:260
+#: ../plug-ins/common/tiff.c:277
 msgid "TIFF image"
 msgstr "Immagine TIFF"
 
-#: ../plug-ins/common/tiff.c:911
+#: ../plug-ins/common/tiff.c:923
 msgid "TIFF Channel"
 msgstr "Canale TIFF"
 
-#: ../plug-ins/common/tiff.c:920
+#: ../plug-ins/common/tiff.c:932
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -7779,7 +7844,7 @@ msgstr ""
 "bit, perciò convertirà l'immagine per voi. A causa della conversione alcune "
 "informazioni andranno perse."
 
-#: ../plug-ins/common/tiff.c:2105
+#: ../plug-ins/common/tiff.c:2300
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7787,40 +7852,40 @@ msgstr ""
 "Il formato TIFF supporta solo commenti nella\n"
 "codifica ASCII a 7bit. Nessun commento salvato."
 
-#: ../plug-ins/common/tiff.c:2268
+#: ../plug-ins/common/tiff.c:2463
 msgid "Save as TIFF"
 msgstr "Salva come TIFF"
 
 #. compression
-#: ../plug-ins/common/tiff.c:2290
+#: ../plug-ins/common/tiff.c:2485
 msgid "Compression"
 msgstr "Compressione"
 
-#: ../plug-ins/common/tiff.c:2294
+#: ../plug-ins/common/tiff.c:2489
 msgid "_None"
 msgstr "_Nessuna"
 
-#: ../plug-ins/common/tiff.c:2295
+#: ../plug-ins/common/tiff.c:2490
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/tiff.c:2296
+#: ../plug-ins/common/tiff.c:2491
 msgid "_Pack Bits"
 msgstr "_Pack bits"
 
-#: ../plug-ins/common/tiff.c:2297
+#: ../plug-ins/common/tiff.c:2492
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/common/tiff.c:2298
+#: ../plug-ins/common/tiff.c:2493
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/tiff.c:2307
+#: ../plug-ins/common/tiff.c:2502
 msgid "Save _color values from transparent pixels"
 msgstr "Salva valori _colore dai punti trasparenti"
 
-#: ../plug-ins/common/tiff.c:2323 ../plug-ins/common/xbm.c:1213
+#: ../plug-ins/common/tiff.c:2518 ../plug-ins/common/xbm.c:1213
 msgid "Comment:"
 msgstr "Commento:"
 
@@ -10168,11 +10233,11 @@ msgstr ""
 "La modalità Voronoi fa in modo che solo il vettore sm più vicino ad un punto "
 "dato abbia influenza"
 
-#: ../plug-ins/help/domain.c:177
+#: ../plug-ins/help/gimphelpdomain.c:177
 msgid "The GIMP help files are not found."
 msgstr "Non trovo i file della guida di GIMP."
 
-#: ../plug-ins/help/domain.c:178
+#: ../plug-ins/help/gimphelpdomain.c:178
 msgid ""
 "Please install the additional help package or use the online user manual at "
 "http://docs.gimp.org/."
@@ -10180,20 +10245,20 @@ msgstr ""
 "Installare il pacchetto aggiuntivo di aiuto o usare il manuale utente in "
 "linea che si trova su http://docs.gimp.org/."
 
-#: ../plug-ins/help/domain.c:184
+#: ../plug-ins/help/gimphelpdomain.c:184
 msgid "There is a problem with the GIMP help files."
 msgstr "C'è un problema con i file della guida di GIMP."
 
-#: ../plug-ins/help/domain.c:186
+#: ../plug-ins/help/gimphelpdomain.c:186
 msgid "Please check your installation."
 msgstr "Controllare la correttezza dell'installazione."
 
-#: ../plug-ins/help/domain.c:195
+#: ../plug-ins/help/gimphelpdomain.c:196
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "ID dell'aiuto '%s' sconosciuto"
 
-#: ../plug-ins/help/domain.c:452
+#: ../plug-ins/help/gimphelplocale.c:218
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10202,35 +10267,35 @@ msgstr ""
 "Errore di analisi in '%s':\n"
 "%s"
 
-#: ../plug-ins/helpbrowser/dialog.c:192
+#: ../plug-ins/helpbrowser/dialog.c:227
 msgid "GIMP Help Browser"
 msgstr "Navigatore della guida di Gimp"
 
-#: ../plug-ins/helpbrowser/dialog.c:256
+#: ../plug-ins/helpbrowser/dialog.c:322
 msgid "Drag and drop this icon to a web browser"
 msgstr "Trascina questa icona su di un navigatore internet"
 
-#: ../plug-ins/helpbrowser/dialog.c:472
+#: ../plug-ins/helpbrowser/dialog.c:657
 msgid "Go back one page"
 msgstr "Indietro di una pagina"
 
-#: ../plug-ins/helpbrowser/dialog.c:477
+#: ../plug-ins/helpbrowser/dialog.c:662
 msgid "Go forward one page"
 msgstr "Avanti di una pagina"
 
-#: ../plug-ins/helpbrowser/dialog.c:482
+#: ../plug-ins/helpbrowser/dialog.c:667
 msgid "Go to the index page"
 msgstr "Vai all'indice"
 
-#: ../plug-ins/helpbrowser/dialog.c:517
+#: ../plug-ins/helpbrowser/dialog.c:702
 msgid "Visit the GIMP documentation website"
 msgstr "Visita il sito di documentazione di GIMP"
 
-#: ../plug-ins/helpbrowser/dialog.c:593
+#: ../plug-ins/helpbrowser/dialog.c:778
 msgid "Document not found"
 msgstr "Documento non trovato"
 
-#: ../plug-ins/helpbrowser/dialog.c:595
+#: ../plug-ins/helpbrowser/dialog.c:780
 msgid "The requested URL could not be loaded:"
 msgstr "L'URL richiesto non può essere caricato:"
 
@@ -11060,7 +11125,7 @@ msgstr "Frequenza (righe):"
 msgid "Use restart markers"
 msgstr "Riavvia marcatori"
 
-#: ../plug-ins/jpeg/jpeg-save.c:863 ../plug-ins/xjt/xjt.c:874
+#: ../plug-ins/jpeg/jpeg-save.c:863 ../plug-ins/xjt/xjt.c:875
 msgid "Optimize"
 msgstr "Ottimizza"
 
@@ -11123,11 +11188,11 @@ msgstr "Esporta anteprima"
 msgid "EXIF data will be ignored."
 msgstr "I dati EXIF verranno ignorati."
 
-#: ../plug-ins/maze/algorithms.c:287
+#: ../plug-ins/maze/algorithms.c:289
 msgid "Constructing maze using Prim's Algorithm"
 msgstr "Creazione labirinto con l'algoritmo di Prim"
 
-#: ../plug-ins/maze/algorithms.c:463
+#: ../plug-ins/maze/algorithms.c:465
 msgid "Constructing tileable maze using Prim's Algorithm"
 msgstr "Creazione labirinto affiancabile con l'algoritmo di Prim"
 
@@ -11143,7 +11208,7 @@ msgstr "_Labirinto..."
 msgid "Drawing maze"
 msgstr "Disegno labirinto"
 
-#: ../plug-ins/maze/maze.h:2
+#: ../plug-ins/maze/maze.h:22
 msgid "Maze"
 msgstr "Labirinto"
 
@@ -11413,15 +11478,65 @@ msgstr "Livello ricciolo"
 msgid "Page Curl"
 msgstr "Pagine arricciate"
 
-#: ../plug-ins/rcm/rcm.c:96
+#: ../plug-ins/print/print-draw-page.c:84
+#, c-format
+msgid "Image width (%lg in) is larger than printable width (%lg in)."
+msgstr "La larghezza immagine (%lg in) è maggiore della larghezza stampabile (%lg in)."
+
+#: ../plug-ins/print/print-draw-page.c:92
+#, c-format
+msgid "Image height (%lg in) is larger than printable height (%lg in)."
+msgstr "L'altezza immagine (%lg in) è maggiore dell'altezza stampabile (%lg in)."
+
+#: ../plug-ins/print/print-page-layout.c:80
+msgid "Page Setup"
+msgstr "Impostazione pagina"
+
+#: ../plug-ins/print/print-page-layout.c:87
+msgid "Show image info header"
+msgstr "Mostra le informazioni di intestazione immagine"
+
+#: ../plug-ins/print/print-page-layout.c:115
+msgid "Caption"
+msgstr "Intestazione"
+
+#: ../plug-ins/print/print-page-layout.c:193
+msgid "Print Size"
+msgstr "Dimensione di stampa"
+
+#: ../plug-ins/print/print-page-layout.c:271
+msgid "X resolution:"
+msgstr "Risoluzione X:"
+
+#: ../plug-ins/print/print-page-layout.c:278
+msgid "Y resolution:"
+msgstr "Risoluzione Y:"
+
+#: ../plug-ins/print/print.c:97
+msgid "Print the image"
+msgstr "Stampa l'immagine"
+
+#: ../plug-ins/print/print.c:102
+msgid "_Print..."
+msgstr "Stam_pa..."
+
+#: ../plug-ins/print/print.c:192
+msgid "Layout"
+msgstr "Disposizione"
+
+#: ../plug-ins/print/print.c:378
+msgid "Print Preview"
+msgstr "Anteprima di stampa"
+
+#: ../plug-ins/rcm/rcm.c:99
 msgid "Replace a range of colors with another"
 msgstr "Scambia un insieme di colori con un altro"
 
-#: ../plug-ins/rcm/rcm.c:103
+#: ../plug-ins/rcm/rcm.c:106
 msgid "_Rotate Colors..."
 msgstr "_Ruota colori..."
 
-#: ../plug-ins/rcm/rcm.c:266
+#: ../plug-ins/rcm/rcm.c:140
 msgid "Rotating the colors"
 msgstr "Rotazione colori"
 
@@ -11747,67 +11862,67 @@ msgstr "Immagine _schermo..."
 msgid "No data captured"
 msgstr "Nessun dato catturato"
 
-#: ../plug-ins/xjt/xjt.c:484 ../plug-ins/xjt/xjt.c:502
+#: ../plug-ins/xjt/xjt.c:485 ../plug-ins/xjt/xjt.c:503
 msgid "GIMP compressed XJT image"
 msgstr "Immagine XJT Gimp compressa"
 
-#: ../plug-ins/xjt/xjt.c:723
+#: ../plug-ins/xjt/xjt.c:724
 #, c-format
 msgid "XJT file contains unknown layermode %d"
 msgstr "Il file XJT contiene una modalità livello sconosciuta %d"
 
-#: ../plug-ins/xjt/xjt.c:760
+#: ../plug-ins/xjt/xjt.c:761
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr "Attenzione: modalità livello non supportata %d salvata sul file XJT"
 
-#: ../plug-ins/xjt/xjt.c:776
+#: ../plug-ins/xjt/xjt.c:777
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
 msgstr "Il file XJT contiene un tipo percorso sconosciuto %d"
 
-#: ../plug-ins/xjt/xjt.c:792
+#: ../plug-ins/xjt/xjt.c:793
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr "Attenzione: un tipo percorso sconosciuto %d salvato sul file XJT"
 
-#: ../plug-ins/xjt/xjt.c:811
+#: ../plug-ins/xjt/xjt.c:812
 #, c-format
 msgid "XJT file contains unknown unittype %d"
 msgstr "Il file XJT contiene il tipo unità sconosciuta %d"
 
-#: ../plug-ins/xjt/xjt.c:832
+#: ../plug-ins/xjt/xjt.c:833
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr "Attenzione: tipo unità sconosciuta %d salvata nel file XJT"
 
-#: ../plug-ins/xjt/xjt.c:853
+#: ../plug-ins/xjt/xjt.c:854
 msgid "Save as XJT"
 msgstr "Salva come XJT"
 
-#: ../plug-ins/xjt/xjt.c:884
+#: ../plug-ins/xjt/xjt.c:885
 msgid "Clear transparent"
 msgstr "Cancella trasparenza"
 
-#: ../plug-ins/xjt/xjt.c:896
+#: ../plug-ins/xjt/xjt.c:897
 msgid "Quality:"
 msgstr "Qualità:"
 
-#: ../plug-ins/xjt/xjt.c:905
+#: ../plug-ins/xjt/xjt.c:906
 msgid "Smoothing:"
 msgstr "Smussamento:"
 
-#: ../plug-ins/xjt/xjt.c:1702 ../plug-ins/xjt/xjt.c:3328
+#: ../plug-ins/xjt/xjt.c:1703 ../plug-ins/xjt/xjt.c:3346
 #, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr "Impossibile creare la cartella di lavoro '%s': %s"
 
-#: ../plug-ins/xjt/xjt.c:3198
+#: ../plug-ins/xjt/xjt.c:3216
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr "Errore: impossibile leggere il file delle proprietà XJT '%s'."
 
-#: ../plug-ins/xjt/xjt.c:3204
+#: ../plug-ins/xjt/xjt.c:3222
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Errore: il file delle proprietà XJT '%s' è vuoto."
