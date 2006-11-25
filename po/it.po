@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-16 19:12+0100\n"
-"PO-Revision-Date: 2006-11-16 19:33+0100\n"
+"POT-Creation-Date: 2006-11-25 10:56+0100\n"
+"PO-Revision-Date: 2006-11-25 10:57+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -103,12 +103,12 @@ msgstr ""
 msgid "Opening '%s' failed: %s"
 msgstr "L'apertura di \"%s\" è fallita: %s"
 
-#: ../app/batch.c:74
+#: ../app/batch.c:75
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
 msgstr "Nessun interprete batch specificato, uso il predefinito \"%s\".\n"
 
-#: ../app/batch.c:92 ../app/batch.c:110
+#: ../app/batch.c:93 ../app/batch.c:111
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
@@ -264,9 +264,10 @@ msgstr "Buffer"
 msgid "Channels"
 msgstr "Canali"
 
-#: ../app/actions/actions.c:111
-msgid "Colormap Editor"
-msgstr "Editor della mappa colore"
+#: ../app/actions/actions.c:111 ../app/actions/dialogs-actions.c:90
+#: ../app/dialogs/convert-dialog.c:173 ../app/dialogs/dialogs.c:181
+msgid "Colormap"
+msgstr "Mappa colore"
 
 #: ../app/actions/actions.c:114
 msgid "Context"
@@ -686,42 +687,42 @@ msgstr "%s copia canale"
 msgid "Channel to Selection"
 msgstr "Canale a selezione"
 
-#: ../app/actions/colormap-editor-actions.c:43
+#: ../app/actions/colormap-actions.c:43
 msgid "Colormap Menu"
 msgstr "Menu mappa colore"
 
-#: ../app/actions/colormap-editor-actions.c:47
+#: ../app/actions/colormap-actions.c:47
 #: ../app/actions/palette-editor-actions.c:48
 msgid "_Edit Color..."
 msgstr "_Modifica colore..."
 
-#: ../app/actions/colormap-editor-actions.c:48
+#: ../app/actions/colormap-actions.c:48
 #: ../app/actions/palette-editor-actions.c:49
 msgid "Edit color"
 msgstr "Modifica colore"
 
-#: ../app/actions/colormap-editor-actions.c:56
+#: ../app/actions/colormap-actions.c:56
 msgid "_Add Color from FG"
 msgstr "_Aggiungi colore dal PP"
 
-#: ../app/actions/colormap-editor-actions.c:57
+#: ../app/actions/colormap-actions.c:57
 msgid "Add current foreground color"
 msgstr "Aggiungi il colore del primo piano corrente"
 
-#: ../app/actions/colormap-editor-actions.c:62
+#: ../app/actions/colormap-actions.c:62
 msgid "_Add Color from BG"
 msgstr "_Aggiungi colore dallo SF"
 
-#: ../app/actions/colormap-editor-actions.c:63
+#: ../app/actions/colormap-actions.c:63
 msgid "Add current background color"
 msgstr "Aggiungi il colore dello sfondo corrente"
 
-#: ../app/actions/colormap-editor-commands.c:70
+#: ../app/actions/colormap-commands.c:70
 #, c-format
 msgid "Edit colormap entry #%d"
 msgstr "Modifica voce mappa colore #%d"
 
-#: ../app/actions/colormap-editor-commands.c:77
+#: ../app/actions/colormap-commands.c:77
 msgid "Edit Colormap Entry"
 msgstr "Modifica voce mappa colore"
 
@@ -814,13 +815,13 @@ msgid "Pointer Information Menu"
 msgstr "Menu informazioni sul puntatore"
 
 #: ../app/actions/cursor-info-actions.c:47
-#: ../app/actions/sample-point-editor-actions.c:47
+#: ../app/actions/sample-points-actions.c:47
 #: ../app/widgets/gimpcursorview.c:191
 msgid "_Sample Merged"
 msgstr "Campionamento diffu_so"
 
 #: ../app/actions/cursor-info-actions.c:48
-#: ../app/actions/sample-point-editor-actions.c:48
+#: ../app/actions/sample-points-actions.c:48
 msgid "Sample Merged"
 msgstr "Campionamento diffuso"
 
@@ -846,7 +847,7 @@ msgstr ""
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1353
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:335 ../app/dialogs/palette-import-dialog.c:771
-#: ../app/pdb/image_cmds.c:1882 ../app/widgets/gimpdnd-xds.c:97
+#: ../app/pdb/image_cmds.c:1978 ../app/widgets/gimpdnd-xds.c:97
 msgid "Untitled"
 msgstr "Immagine"
 
@@ -910,11 +911,6 @@ msgstr "_Tracciati"
 #: ../app/actions/dialogs-actions.c:90
 msgid "Color_map"
 msgstr "_Mappa colore"
-
-#: ../app/actions/dialogs-actions.c:90 ../app/dialogs/convert-dialog.c:173
-#: ../app/dialogs/dialogs.c:181
-msgid "Colormap"
-msgstr "Mappa colore"
 
 #: ../app/actions/dialogs-actions.c:95
 msgid "Histogra_m"
@@ -3119,11 +3115,11 @@ msgstr "Ripeti l'ultimo"
 msgid "Re-Show Last"
 msgstr "Ri-mostra l'ultimo"
 
-#: ../app/actions/plug-in-commands.c:251
+#: ../app/actions/plug-in-commands.c:263
 msgid "Reset all Filters"
 msgstr "Reimposta tutti i filtri"
 
-#: ../app/actions/plug-in-commands.c:270
+#: ../app/actions/plug-in-commands.c:282
 msgid "Do you really want to reset all filters to default values?"
 msgstr "Sicuri di voler reimpostare tutti i filtri ai valori predefiniti?"
 
@@ -3168,7 +3164,7 @@ msgstr "Modifica colore maschera veloce"
 msgid "_Mask opacity:"
 msgstr "Opacità _maschera:"
 
-#: ../app/actions/sample-point-editor-actions.c:40
+#: ../app/actions/sample-points-actions.c:40
 msgid "Sample Point Menu"
 msgstr "Menu punto di campionamento"
 
@@ -3589,11 +3585,11 @@ msgstr "Per _colore"
 msgid "_Arbitrary Rotation..."
 msgstr "Rotazione _arbitraria..."
 
-#: ../app/actions/tools-actions.c:242
+#: ../app/actions/tools-actions.c:313
 msgid "Toggle Fixed-Aspect Option for Rectangle"
 msgstr "Commuta l'opzione aspetto bloccato per il rettangolo"
 
-#: ../app/actions/tools-actions.c:247
+#: ../app/actions/tools-actions.c:318
 msgid "Toggle Expand-From-Center Option for Rectangle"
 msgstr "Commuta l'opzione espandi-dal-centro per il rettangolo"
 
@@ -3717,7 +3713,7 @@ msgstr "I_mporta tracciato..."
 msgid "Path to Sele_ction"
 msgstr "Tracciato a sele_zione"
 
-#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1858
+#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1861
 msgid "Path to selection"
 msgstr "Tracciato a selezione"
 
@@ -3775,12 +3771,12 @@ msgid "New Path Options"
 msgstr "Nuove opzioni tracciato"
 
 #: ../app/actions/vectors-commands.c:297 ../app/pdb/paths_cmds.c:610
-#: ../app/pdb/vectors_cmds.c:994
+#: ../app/pdb/vectors_cmds.c:1093
 msgid "Path to Selection"
 msgstr "Tracciato a selezione"
 
 #: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:174
-#: ../app/tools/gimpvectortool.c:1891 ../app/vectors/gimpvectors.c:199
+#: ../app/tools/gimpvectortool.c:1894 ../app/vectors/gimpvectors.c:199
 msgid "Stroke Path"
 msgstr "Delinea tracciato"
 
@@ -4108,7 +4104,7 @@ msgstr "Tonalità"
 msgid "Saturation"
 msgstr "Saturazione"
 
-#: ../app/base/base-enums.c:124 ../app/tools/gimppaintoptions-gui.c:311
+#: ../app/base/base-enums.c:124 ../app/tools/gimppaintoptions-gui.c:318
 msgid "Color"
 msgstr "Colore"
 
@@ -6401,7 +6397,7 @@ msgstr ""
 msgid "Please wait"
 msgstr "Attendere"
 
-#: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:233
+#: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:195
 msgid "Move Selection"
 msgstr "Sposta selezione"
 
@@ -6605,7 +6601,7 @@ msgid "Choose shade of gray based on:"
 msgstr "Scegliere le sfumature i grigio basate su:"
 
 #: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:156
-#: ../app/gui/gui-message.c:132
+#: ../app/gui/gui-message.c:146
 msgid "GIMP Message"
 msgstr "Messaggio GIMP"
 
@@ -7967,7 +7963,7 @@ msgstr "tips-locale:it"
 
 #: ../app/dialogs/user-install-dialog.c:85
 msgid "GIMP User Installation"
-msgstr "GIMP Installazione Utente"
+msgstr "Installazione utente GIMP"
 
 #: ../app/dialogs/user-install-dialog.c:94
 msgid "User installation failed!"
@@ -8247,7 +8243,7 @@ msgstr "Aggiunta tema '%s' (%s)\n"
 msgid "Airbrush"
 msgstr "Aerografo"
 
-#: ../app/paint/gimpbrushcore.c:340
+#: ../app/paint/gimpbrushcore.c:349
 msgid "No brushes available for use with this tool."
 msgstr "Nessun pennello disponibile da usare con questo strumento."
 
@@ -8405,28 +8401,85 @@ msgid ""
 "Argument #%d type mismatch (expected %s, got %s)"
 msgstr ""
 "Errore di chiamata PDB per la procedura '%s':\n"
-"Argomento #%d di tipo sbagliato (aspettato %s, ottenuto %s)"
+"Argomento #%d di tipo sbagliato (era previsto %s, ottenuto invece %s)"
 
-#: ../app/pdb/gimpprocedure.c:501
+#: ../app/pdb/gimpprocedure.c:512
 #, c-format
 msgid ""
-"PDB calling error for procedure '%s':\n"
-"Argument '%s' (#%d, type %s) type mismatch (got %s)."
+"Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
+"Expected %s, got %s."
 msgstr ""
-"Errore di chiamata PDB per la procedura \"%s\":\n"
-"Argomento\"%s\" (#%d, tipo %s) di tipo non corrispondente (ottenuto %s)"
+"La procedura \"%s\" ha restituito un tipo errato per il valore di ritorno \"%"
+"s\" (#%d). Era previsto %s, ottenuto invece %s."
 
-#: ../app/pdb/gimpprocedure.c:540
+#: ../app/pdb/gimpprocedure.c:523
 #, c-format
 msgid ""
-"PDB calling error for procedure '%s':\n"
-"Argument '%s' (#%d, type %s) out of bounds (validation changed '%s' to '%s')"
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
+"d). Expected %s, got %s."
 msgstr ""
-"Errore di chiamata PDB per la procedura \"%s\":\n"
-"Argomento \"%s\" (#%d, tipo %s) fuori dai limiti (validazione cambiata da \"%"
-"s\" a \"%s\")"
+"La procedura \"%s\" è stata chiamata con tipo di valore errato per "
+"l'argomento \"%s\" (#%d). Era previsto %s, ottenuto invece %s. "
 
-#: ../app/pdb/image_cmds.c:1948
+#: ../app/pdb/gimpprocedure.c:554
+#, c-format
+msgid ""
+"Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
+"in is trying to work on a layer that doesn't exist any longer."
+msgstr ""
+"La procedura \"%s\" ha restituito un ID non valido per l'argomento \"%s\". "
+"Molto probabilmente un plugin sta tentando di lavorare su un livello che non "
+"esiste più."
+
+#: ../app/pdb/gimpprocedure.c:565
+#, c-format
+msgid ""
+"Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
+"likely a plug-in is trying to work on a layer that doesn't exist any longer."
+msgstr ""
+"La procedura \"%s\" è stata chiamata con un ID non valido per l'argomento \"%"
+"s\". Molto probabilmente un plugin sta tentando di lavorare su un livello "
+"che non esiste più."
+
+#: ../app/pdb/gimpprocedure.c:580
+#, c-format
+msgid ""
+"Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
+"in is trying to work on an image that doesn't exist any longer."
+msgstr ""
+"La procedura \"%s\" ha restituito un ID non valido per l'argomento \"%s\". "
+"Molto probabilmente un plugin sta tentando di lavorare su un'immagine che "
+"non esiste più."
+
+#: ../app/pdb/gimpprocedure.c:591
+#, c-format
+msgid ""
+"Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
+"likely a plug-in is trying to work on an image that doesn't exist any longer."
+msgstr ""
+"La procedura \"%s\" è stata chiamata con un ID non valido per l'argomento \"%"
+"s\". Molto probabilmente un plugin sta tentando di lavorare su un'immagine "
+"che non esiste più."
+
+#: ../app/pdb/gimpprocedure.c:605
+#, c-format
+msgid ""
+"Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
+"is out of range."
+msgstr ""
+"La procedura \"%s\" ha restituito \"%s\" come valore di ritorno \"%s\" (#%d, "
+"tipo %s). Questo valore è fuori limite."
+
+#: ../app/pdb/gimpprocedure.c:617
+#, c-format
+msgid ""
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
+"s). This value is out of range."
+msgstr ""
+"La procedura \"%s\" è stata chiamata con il valore \"%s\" l'argomento \"%s"
+"\" (#%d, tipo %s). Questo valore è fuori limite."
+
+#: ../app/pdb/image_cmds.c:2044
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -8541,12 +8594,12 @@ msgstr "Plug-in mancante (%s)"
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Salto di '%s': versione protocollo GIMP errata."
 
-#: ../app/plug-in/plug-in-rc.c:472
+#: ../app/plug-in/plug-in-rc.c:479
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "valore non valido '%s' per il tipo icona"
 
-#: ../app/plug-in/plug-in-rc.c:487
+#: ../app/plug-in/plug-in-rc.c:494
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "valore non valido '%ld' per il tipo icona"
@@ -8744,7 +8797,7 @@ msgstr "Variazione:"
 msgid "Shape:"
 msgstr "Forma:"
 
-#: ../app/tools/gimpblendoptions.c:228 ../app/tools/gimppaintoptions-gui.c:454
+#: ../app/tools/gimpblendoptions.c:228 ../app/tools/gimppaintoptions-gui.c:461
 msgid "Repeat:"
 msgstr "Ripeti"
 
@@ -9238,13 +9291,13 @@ msgstr "Modalità"
 msgid "Exposure:"
 msgstr "Esposizione:"
 
-#: ../app/tools/gimpeditselectiontool.c:237
-#: ../app/tools/gimpeditselectiontool.c:1184
+#: ../app/tools/gimpeditselectiontool.c:199
+#: ../app/tools/gimpeditselectiontool.c:1146
 msgid "Move Floating Selection"
 msgstr "Sposta selezione fluttuante"
 
-#: ../app/tools/gimpeditselectiontool.c:439
-#: ../app/tools/gimpeditselectiontool.c:708
+#: ../app/tools/gimpeditselectiontool.c:401
+#: ../app/tools/gimpeditselectiontool.c:670
 msgid "Move: "
 msgstr "Sposta: "
 
@@ -9396,19 +9449,19 @@ msgstr ""
 msgid "F_oreground Select"
 msgstr "Prim_o piano"
 
-#: ../app/tools/gimpforegroundselecttool.c:305
+#: ../app/tools/gimpforegroundselecttool.c:308
 msgid "Add more strokes or press Enter to accept the selection"
 msgstr "Aggiungere ancora tratti o premere Invio per accettare la selezione"
 
-#: ../app/tools/gimpforegroundselecttool.c:307
+#: ../app/tools/gimpforegroundselecttool.c:310
 msgid "Mark foreground by painting on the object to extract"
 msgstr "Marca lo sfondo disegnando sull'oggetto da estrarre"
 
-#: ../app/tools/gimpforegroundselecttool.c:318
+#: ../app/tools/gimpforegroundselecttool.c:321
 msgid "Draw a rough circle around the object to extract"
 msgstr "Disegna un cerchio intorno all'oggetto da estrarre"
 
-#: ../app/tools/gimpforegroundselecttool.c:737
+#: ../app/tools/gimpforegroundselecttool.c:740
 msgid "command|Foreground Select"
 msgstr "Selezione primo piano"
 
@@ -9777,62 +9830,66 @@ msgstr "Modalità:"
 msgid "Opacity:"
 msgstr "Opacità:"
 
-#: ../app/tools/gimppaintoptions-gui.c:129
+#: ../app/tools/gimppaintoptions-gui.c:127
 msgid "Brush:"
 msgstr "Pennello:"
 
-#: ../app/tools/gimppaintoptions-gui.c:141
-#: ../app/tools/gimppaintoptions-gui.c:430
+#: ../app/tools/gimppaintoptions-gui.c:134
+msgid "Scale:"
+msgstr "Scala:"
+
+#: ../app/tools/gimppaintoptions-gui.c:148
+#: ../app/tools/gimppaintoptions-gui.c:437
 msgid "Gradient:"
 msgstr "Gradiente:"
 
-#: ../app/tools/gimppaintoptions-gui.c:177
+#: ../app/tools/gimppaintoptions-gui.c:184
 msgid "Incremental"
 msgstr "Incrementale"
 
-#: ../app/tools/gimppaintoptions-gui.c:193
+#: ../app/tools/gimppaintoptions-gui.c:200
 msgid "Hard edge"
 msgstr "Margine netto"
 
-#: ../app/tools/gimppaintoptions-gui.c:229
+#: ../app/tools/gimppaintoptions-gui.c:236
 msgid "Pressure sensitivity"
 msgstr "Sensibilità pressione"
 
-#: ../app/tools/gimppaintoptions-gui.c:250
+#: ../app/tools/gimppaintoptions-gui.c:257
 msgid "Opacity"
 msgstr "Opacità"
 
-#: ../app/tools/gimppaintoptions-gui.c:266
+#: ../app/tools/gimppaintoptions-gui.c:273
 msgid "Hardness"
 msgstr "Durezza"
 
-#: ../app/tools/gimppaintoptions-gui.c:277
+#: ../app/tools/gimppaintoptions-gui.c:284
 msgid "Rate"
 msgstr "Ammontare"
 
-#: ../app/tools/gimppaintoptions-gui.c:293
-#: ../app/tools/gimppaintoptions-gui.c:302
+#: ../app/tools/gimppaintoptions-gui.c:300
+#: ../app/tools/gimppaintoptions-gui.c:309
 msgid "Size"
 msgstr "Dimensione"
 
-#: ../app/tools/gimppaintoptions-gui.c:337
+#: ../app/tools/gimppaintoptions-gui.c:344
 msgid "Fade out"
 msgstr "Sfumatura in uscita"
 
-#: ../app/tools/gimppaintoptions-gui.c:346
-#: ../app/tools/gimppaintoptions-gui.c:439
+#: ../app/tools/gimppaintoptions-gui.c:353
+#: ../app/tools/gimppaintoptions-gui.c:446
 msgid "Length:"
 msgstr "Lunghezza:"
 
-#: ../app/tools/gimppaintoptions-gui.c:378
+#: ../app/tools/gimppaintoptions-gui.c:385
 msgid "Apply Jitter"
 msgstr "Applica jitter"
 
-#: ../app/tools/gimppaintoptions-gui.c:383
+#: ../app/tools/gimppaintoptions-gui.c:390
 msgid "Amount:"
 msgstr "Ammontare:"
 
-#: ../app/tools/gimppaintoptions-gui.c:413
+#: ../app/tools/gimppaintoptions-gui.c:420
 msgid "Use color from gradient"
 msgstr "Usa colore del gradiente"
 
@@ -10479,7 +10536,7 @@ msgstr "Fare clic per rendere angolare questo nodo"
 msgid "Delete Anchors"
 msgstr "Elimina àncora"
 
-#: ../app/tools/gimpvectortool.c:1885
+#: ../app/tools/gimpvectortool.c:1888
 msgid "There is no active layer or channel to stroke to"
 msgstr "Non c'è un livello o un canale attivo da disegnare"
 
@@ -11181,23 +11238,23 @@ msgstr "I messaggi sono rediretti su stderr."
 msgid "%s Message"
 msgstr "Messaggio %s"
 
-#: ../app/widgets/gimpfiledialog.c:266
+#: ../app/widgets/gimpfiledialog.c:267
 msgid "Automatically Detected"
 msgstr "Rilevato automaticamente"
 
-#: ../app/widgets/gimpfiledialog.c:276
+#: ../app/widgets/gimpfiledialog.c:277
 msgid "By Extension"
 msgstr "Per estensione"
 
-#: ../app/widgets/gimpfiledialog.c:475
+#: ../app/widgets/gimpfiledialog.c:476
 msgid "All files"
 msgstr "Tutti i file"
 
-#: ../app/widgets/gimpfiledialog.c:480
+#: ../app/widgets/gimpfiledialog.c:481
 msgid "All images"
 msgstr "Tutte le immagini"
 
-#: ../app/widgets/gimpfiledialog.c:616
+#: ../app/widgets/gimpfiledialog.c:617
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleziona _tipo di file (%s)"
@@ -11214,90 +11271,90 @@ msgstr "Estensioni"
 msgid "Instant update"
 msgstr "Aggiornamento istantaneo"
 
-#: ../app/widgets/gimpgradienteditor.c:763
+#: ../app/widgets/gimpgradienteditor.c:767
 #, c-format
 msgid "Zoom factor: %d:1"
 msgstr "Fattore di zoom: %d:1"
 
-#: ../app/widgets/gimpgradienteditor.c:766
+#: ../app/widgets/gimpgradienteditor.c:770
 #, c-format
 msgid "Displaying [%0.6f, %0.6f]"
 msgstr "Visualizzazione [%0.6f, %0.6f]"
 
-#: ../app/widgets/gimpgradienteditor.c:979
+#: ../app/widgets/gimpgradienteditor.c:983
 #, c-format
 msgid "Position: %0.6f"
 msgstr "Posizione: %0.6f"
 
-#: ../app/widgets/gimpgradienteditor.c:980
+#: ../app/widgets/gimpgradienteditor.c:984
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:982
+#: ../app/widgets/gimpgradienteditor.c:986
 #, c-format
 msgid "HSV (%0.3f, %0.3f, %0.3f)"
 msgstr "HSV (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:984
+#: ../app/widgets/gimpgradienteditor.c:988
 #, c-format
 msgid "Luminance: %0.3f    Opacity: %0.3f"
 msgstr "Luminosità: %0.3f   Opacità: %0.3f"
 
-#: ../app/widgets/gimpgradienteditor.c:1016
-#: ../app/widgets/gimpgradienteditor.c:1050
+#: ../app/widgets/gimpgradienteditor.c:1020
+#: ../app/widgets/gimpgradienteditor.c:1054
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: ../app/widgets/gimpgradienteditor.c:1024
+#: ../app/widgets/gimpgradienteditor.c:1028
 msgid "Foreground color set to:"
 msgstr "Colore di primo piano impostato a:"
 
-#: ../app/widgets/gimpgradienteditor.c:1055
+#: ../app/widgets/gimpgradienteditor.c:1059
 #, c-format
 msgid "(%0.3f, %0.3f, %0.3f)"
 msgstr "(%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:1059
+#: ../app/widgets/gimpgradienteditor.c:1063
 msgid "Background color set to:"
 msgstr "Colore di sfondo impostato a:"
 
-#: ../app/widgets/gimpgradienteditor.c:1268
-#: ../app/widgets/gimpgradienteditor.c:1334
+#: ../app/widgets/gimpgradienteditor.c:1272
+#: ../app/widgets/gimpgradienteditor.c:1338
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr "%s%sTrascina: sposta e comprime"
 
-#: ../app/widgets/gimpgradienteditor.c:1274
+#: ../app/widgets/gimpgradienteditor.c:1278
 msgid "Drag: move"
 msgstr "Trascina: sposta"
 
-#: ../app/widgets/gimpgradienteditor.c:1281
-#: ../app/widgets/gimpgradienteditor.c:1295
-#: ../app/widgets/gimpgradienteditor.c:1309
-#: ../app/widgets/gimpgradienteditor.c:1331
+#: ../app/widgets/gimpgradienteditor.c:1285
+#: ../app/widgets/gimpgradienteditor.c:1299
+#: ../app/widgets/gimpgradienteditor.c:1313
+#: ../app/widgets/gimpgradienteditor.c:1335
 #, c-format
 msgid "%s%sClick: extend selection"
 msgstr "%s%sClic: estende la selezione"
 
-#: ../app/widgets/gimpgradienteditor.c:1287
-#: ../app/widgets/gimpgradienteditor.c:1301
+#: ../app/widgets/gimpgradienteditor.c:1291
+#: ../app/widgets/gimpgradienteditor.c:1305
 msgid "Click: select"
 msgstr "Clic: selezione"
 
-#: ../app/widgets/gimpgradienteditor.c:1315
-#: ../app/widgets/gimpgradienteditor.c:1339
+#: ../app/widgets/gimpgradienteditor.c:1319
+#: ../app/widgets/gimpgradienteditor.c:1343
 msgid "Click: select    Drag: move"
 msgstr "Clic: selezione   Trascina: sposta"
 
-#: ../app/widgets/gimpgradienteditor.c:1554
-#: ../app/widgets/gimpgradienteditor.c:1562
+#: ../app/widgets/gimpgradienteditor.c:1558
+#: ../app/widgets/gimpgradienteditor.c:1566
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Posizione attiva: %0.6f"
 
-#: ../app/widgets/gimpgradienteditor.c:1579
+#: ../app/widgets/gimpgradienteditor.c:1583
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Distanza: %0.6f"
@@ -11326,29 +11383,29 @@ msgstr "Colore di _sfondo:"
 msgid "Spacing"
 msgstr "Spaziatura"
 
-#: ../app/widgets/gimphelp.c:190
+#: ../app/widgets/gimphelp.c:193
 msgid "Help browser not found"
 msgstr "Visualizzatore dell'aiuto non trovato"
 
-#: ../app/widgets/gimphelp.c:191
+#: ../app/widgets/gimphelp.c:194
 msgid "Could not find GIMP help browser."
 msgstr "Impossibile trovare il visualizzatore dell'aiuto di GIMP."
 
-#: ../app/widgets/gimphelp.c:192
+#: ../app/widgets/gimphelp.c:195
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation."
 msgstr ""
 "Manca dall'installazione il plug-in di visualizzazione dell'aiuto di GIMP."
 
-#: ../app/widgets/gimphelp.c:218
+#: ../app/widgets/gimphelp.c:229
 msgid "Help browser doesn't start"
 msgstr "Visualizzatore dell'aiuto non parte"
 
-#: ../app/widgets/gimphelp.c:219
+#: ../app/widgets/gimphelp.c:230
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Impossibile eseguire il plug-in visualizzatore dell'aiuto di GIMP."
 
-#: ../app/widgets/gimphelp.c:245
+#: ../app/widgets/gimphelp.c:256
 msgid "Use _web browser instead"
 msgstr "Usa in alternativa il navigatore _web"
 
@@ -11507,7 +11564,7 @@ msgid "Message repeated once."
 msgstr "Messaggio ripetuto una volta."
 
 #: ../app/widgets/gimppaletteeditor.c:255
-#: ../app/widgets/gimppaletteeditor.c:791
+#: ../app/widgets/gimppaletteeditor.c:795
 msgid "Undefined"
 msgstr "Non definito"
 
@@ -11892,7 +11949,7 @@ msgstr "Finestra utilità"
 msgid "Keep above"
 msgstr "Mantieni sopra"
 
-#: ../app/xcf/xcf-load.c:321
+#: ../app/xcf/xcf-load.c:322
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
