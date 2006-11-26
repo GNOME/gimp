@@ -1,5 +1,11 @@
 2006-11-26  Kevin Cozens  <kcozens@cvs.gnome.org>
 
+	* plug-ins/script-fu/tinyscheme/scheme.c (is_integer): Fix revealed
+	bug in TinyScheme initialization which results in a seg fault.
+	Removing fix for now.
+
+2006-11-26  Kevin Cozens  <kcozens@cvs.gnome.org>
+
 	* plug-ins/script-fu/tinyscheme/scheme.c (is_integer): Check cell
 	type for T_NUMBER in addition to checking if it is an integer.
 	Fixes TinyScheme bug #1593861 reported on SourceForge. Fixed

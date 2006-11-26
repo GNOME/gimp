@@ -182,7 +182,7 @@ INTERFACE static pointer vector_elem(pointer vec, int ielem);
 INTERFACE static pointer set_vector_elem(pointer vec, int ielem, pointer a);
 INTERFACE INLINE int is_number(pointer p)    { return (type(p)==T_NUMBER); }
 INTERFACE INLINE int is_integer(pointer p) {
-  return (type(p)==T_NUMBER && (p)->_object._number.is_fixnum);
+  return ((p)->_object._number.is_fixnum);
 }
 INTERFACE INLINE int is_real(pointer p) {
   return (!(p)->_object._number.is_fixnum);
