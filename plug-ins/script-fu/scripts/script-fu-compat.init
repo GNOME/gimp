@@ -128,6 +128,26 @@
 ;Items below this line are for compatability with Script-Fu but
 ;may be useful enough to keep around
 
+(define (delq item lis)
+  (let ((l))
+    (if (null? lis)
+      (set! l '())
+      (begin
+        (set! l (car lis))
+        (set! lis (cdr lis))
+        (while (not (null? lis))
+          (if (not (= item (car lis)))
+            (set! l (append l (list (car lis))))
+          )
+          (set! lis (cdr lis))
+        )
+      )
+    )
+
+    l
+  )
+)
+
 (define (make-list count fill)
   (vector->list (make-vector count fill))
 )
@@ -227,6 +247,13 @@
 (define nil '())
 (define nreverse reverse)
 (define pow expt)
+(define prin1 write)
+
+(define (print obj . port)
+  (apply write obj port)
+  (newline)
+)
+
 (define strcat string-append)
 (define string-lessp string<?)
 (define symbol-bound? defined?)

@@ -182,7 +182,7 @@ INTERFACE static pointer vector_elem(pointer vec, int ielem);
 INTERFACE static pointer set_vector_elem(pointer vec, int ielem, pointer a);
 INTERFACE INLINE int is_number(pointer p)    { return (type(p)==T_NUMBER); }
 INTERFACE INLINE int is_integer(pointer p) {
-  return ((p)->_object._number.is_fixnum);
+  return (type(p)==T_NUMBER && (p)->_object._number.is_fixnum);
 }
 INTERFACE INLINE int is_real(pointer p) {
   return (!(p)->_object._number.is_fixnum);
@@ -382,7 +382,7 @@ static pointer reverse_in_place(scheme *sc, pointer term, pointer list);
 static pointer append(scheme *sc, pointer a, pointer b);
 static int list_length(scheme *sc, pointer a);
 static int eqv(pointer a, pointer b);
-static void dump_stack_mark(scheme *);
+static INLINE void dump_stack_mark(scheme *);
 static pointer opexe_0(scheme *sc, enum scheme_opcodes op);
 static pointer opexe_1(scheme *sc, enum scheme_opcodes op);
 static pointer opexe_2(scheme *sc, enum scheme_opcodes op);
@@ -394,6 +394,10 @@ static void Eval_Cycle(scheme *sc, enum scheme_opcodes op);
 static void assign_syntax(scheme *sc, char *name);
 static int syntaxnum(pointer p);
 static void assign_proc(scheme *sc, enum scheme_opcodes, char *name);
+scheme *scheme_init_new(void);
+#if !STANDALONE
+void scheme_call(scheme *sc, pointer func, pointer args);
+#endif
 
 #define num_ivalue(n)       (n.is_fixnum?(n).value.ivalue:(long)(n).value.rvalue)
 #define num_rvalue(n)       (!n.is_fixnum?(n).value.rvalue:(double)(n).value.ivalue)
@@ -4432,7 +4436,7 @@ static struct scheme_interface vtbl ={
 };
 #endif
 
-scheme *scheme_init_new() {
+scheme *scheme_init_new(void) {
   scheme *sc=(scheme*)malloc(sizeof(scheme));
   if(!scheme_init(sc)) {
     free(sc);
@@ -4684,7 +4688,7 @@ void scheme_call(scheme *sc, pointer func, pointer args) {
 #if STANDALONE
 
 #if defined(macintosh) && !defined (OSX)
-int main()
+int main(int argc, char **argv)
 {
      extern MacTS_main(int argc, char **argv);
      char**    argv;
