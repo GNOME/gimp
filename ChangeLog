@@ -1,3 +1,8 @@
+2006-11-27  Sven Neumann  <sven@gimp.org>
+
+	* app/base/color-balance.c (color_balance_transfer_init): applied
+	patch from Saul Goode (bug #379611), then cleaned up further.
+
 2006-11-26  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.c (is_integer): Fix revealed
