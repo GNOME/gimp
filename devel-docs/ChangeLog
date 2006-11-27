@@ -1,5 +1,9 @@
 2006-11-27  Sven Neumann  <sven@gimp.org>
 
+	* app/Makefile.am (GTKDOC_LIBS): made app-scan link again.
+
+2006-11-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/Makefile.am
 	* libgimpcolor/Makefile.am
 	* libgimpmodule/Makefile.am: pass deprecation guards to gtkdoc-scan.

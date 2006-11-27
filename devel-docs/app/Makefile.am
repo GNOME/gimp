@@ -61,10 +61,14 @@ GTKDOC_CFLAGS = \
 	$(GTK_CFLAGS)	\
 	-I$(includedir)
 
+GTKDOC_LDFLAGS = -u $(SYMPREFIX)xcf_init -u $(SYMPREFIX)internal_procs_init
+
 GTKDOC_LIBS = \
-        $(top_builddir)/app/app_procs.o					     \
+	-u $(SYMPREFIX)xcf_init -u $(SYMPREFIX)internal_procs_init	     \
+	$(top_builddir)/app/app_procs.o					     \
         $(top_builddir)/app/batch.o					     \
         $(top_builddir)/app/errors.o					     \
+        $(top_builddir)/app/sanity.o					     \
         $(top_builddir)/app/units.o					     \
         $(top_builddir)/app/gui/libappgui.a				     \
 	$(top_builddir)/app/actions/libappactions.a			     \
@@ -73,33 +77,35 @@ GTKDOC_LIBS = \
         $(top_builddir)/app/display/libappdisplay.a			     \
         $(top_builddir)/app/tools/libapptools.a				     \
         $(top_builddir)/app/widgets/libappwidgets.a			     \
+	$(top_builddir)/app/pdb/libappinternal-procs.a			     \
+        $(top_builddir)/app/xcf/libappxcf.a				     \
+        $(top_builddir)/app/file/libappfile.a				     \
+        $(top_builddir)/app/plug-in/libappplug-in.a			     \
         $(top_builddir)/app/pdb/libapppdb.a				     \
         $(top_builddir)/app/vectors/libappvectors.a			     \
-        $(top_builddir)/app/plug-in/libappplug-in.a			     \
         $(top_builddir)/app/core/libappcore.a				     \
         $(top_builddir)/app/paint/libapppaint.a				     \
-        $(top_builddir)/app/xcf/libappxcf.a				     \
         $(top_builddir)/app/text/libapptext.a				     \
-        $(top_builddir)/app/file/libappfile.a				     \
         $(top_builddir)/app/config/libappconfig.a			     \
         $(top_builddir)/app/paint-funcs/libapppaint-funcs.a		     \
         $(top_builddir)/app/composite/libappcomposite.a			     \
         $(top_builddir)/app/base/libappbase.a				     \
-        $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la     \
-        $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la       \
-        $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la       \
-        $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la   \
-        $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la     \
-        $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la   \
         $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la \
+        $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la   \
+        $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la     \
+        $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la     \
+        $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la       \
+        $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la   \
+        $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la       \
+        $(REGEXREPL)							     \
         $(GTK_LIBS)                                                          \
         $(LIBART_LIBS)                                                       \
         $(PANGOFT2_LIBS)                                                     \
         $(FONTCONFIG_LIBS)                                                   \
         $(FREETYPE_LIBS)                                                     \
         $(GTHREAD_LIBS)                                                      \
-        $(INTLLIBS)                                                          \
-        $(REGEXREPL)
+	$(RT_LIBS)							     \
+        $(INTLLIBS)
 
 
 include $(top_srcdir)/gtk-doc.make
