@@ -22,14 +22,10 @@
       </para>
     </partintro>
 
-    <part id="libgimp-constants">
-      <title>Constants</title>
-      <xi:include href="xml/gimpenums.xml" />
-    </part>
-
     <chapter id="libgimp-general">
       <title>Functions not Related to Specific Images</title>
       <xi:include href="xml/gimp.xml" />
+      <xi:include href="xml/gimpenums.xml" />
       <xi:include href="xml/gimpbuffer.xml" />
       <xi:include href="xml/gimpcontext.xml" />
       <xi:include href="xml/gimpgimprc.xml" />
@@ -41,7 +37,7 @@
     </chapter>
 
     <chapter id="libgimp-image">
-      <title>Manupulating Images and all their Properties</title>
+      <title>Manupulating Images and their Properties</title>
       <xi:include href="xml/gimpchannel.xml" />
       <xi:include href="xml/gimpcolor.xml" />
       <xi:include href="xml/gimpconvert.xml" />
