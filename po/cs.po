@@ -11,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-23 11:36+0100\n"
-"PO-Revision-Date: 2006-11-23 11:38+0100\n"
+"POT-Creation-Date: 2006-11-27 12:01+0100\n"
+"PO-Revision-Date: 2006-11-27 13:13+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -6294,7 +6294,7 @@ msgstr "Nemohu spustit zpětné volání %s. Příslušný zásuvný modul možn
 msgid "Please wait"
 msgstr "Prosím čekejte"
 
-#: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:233
+#: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:195
 msgid "Move Selection"
 msgstr "Přesunout výběr"
 
@@ -8285,41 +8285,75 @@ msgstr ""
 "Chyba volání PDB pro proceduru '%s':\n"
 "Nesouhlasí typ argumentu #%d (očekávám %s, dostal jsem %s)"
 
-#: ../app/pdb/gimpprocedure.c:501
+#: ../app/pdb/gimpprocedure.c:512
 #, c-format
 msgid ""
-"PDB calling error for procedure '%s':\n"
-"Argument '%s' (#%d, type %s) type mismatch (got %s)."
+"Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
+"Expected %s, got %s."
 msgstr ""
-"Chyba volání PDB pro proceduru '%s':\n"
-"Nesouhlasí typ argumentu '%s' (#%d, typ %s) (dostal jsem %s)"
+"Procedura '%s' vrátila špatný typ návratové hodnoty '%s' (#%d). "
+"Očekáváno %s, obdrženo %s."
 
-#: ../app/pdb/gimpprocedure.c:529
+#: ../app/pdb/gimpprocedure.c:523
+#, c-format
+msgid ""
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
+"d). Expected %s, got %s."
+msgstr ""
+"Procedura'%s' byla zavolána s nesprávným typem hodnoty argumentu '%s' (#%"
+"d). Očekáváno %s, obdrženo %s."
+
+#: ../app/pdb/gimpprocedure.c:554
+#, c-format
+msgid ""
+"Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
+"in is trying to work on a layer that doesn't exist any longer."
+msgstr ""
+"Procedura'%s' vrátila neplatné ID argumentu '%s'. Zásuvný modul se "
+"pravděpodobně snaží pracovat s neexistující vrstvou."
+
+#: ../app/pdb/gimpprocedure.c:565
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"Procedura'%s' byla zavolána s neplatným ID argumentu '%s'. "
-"Zásuvný modul se pravděpodobně snaží pracovat s neexistující vrstvou."
+"Procedura'%s' byla zavolána s neplatným ID argumentu '%s'. Zásuvný modul se "
+"pravděpodobně snaží pracovat s neexistující vrstvou."
 
-#: ../app/pdb/gimpprocedure.c:540
+#: ../app/pdb/gimpprocedure.c:580
 #, c-format
 msgid ""
-"Procedure '%s' has been called with an invalid ID for argument '%s'.  Most "
+"Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
+"in is trying to work on an image that doesn't exist any longer."
+msgstr ""
+"Procedura'%s' vrátila neplatné ID argumentu '%s'. Zásuvný modul se "
+"pravděpodobně snaží pracovat s neexistujícím obrázkem. "
+
+#: ../app/pdb/gimpprocedure.c:591
+#, c-format
+msgid ""
+"Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"Procedura'%s' byla zavolána s neplatným ID argumentu '%s'. "
-"Zásuvný modul se pravděpodobně snaží pracovat s neexistujícím obrázkem. "
+"Procedura'%s' byla zavolána s neplatným ID argumentu '%s'. Zásuvný modul se "
+"pravděpodobně snaží pracovat s neexistujícím obrázkem. "
 
-#: ../app/pdb/gimpprocedure.c:565
+#: ../app/pdb/gimpprocedure.c:605
 #, c-format
 msgid ""
-"PDB calling error for procedure '%s':\n"
-"Argument '%s' (#%d, type %s) out of bounds (validation changed '%s' to '%s')"
+"Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
+"is out of range."
+msgstr "Procedura '%s' vrátila '%s' jako návratovou hodnotu '%s' (#%d, typ %s). Tato hodnota je mimo rozsah."
+
+#: ../app/pdb/gimpprocedure.c:617
+#, c-format
+msgid ""
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
+"s). This value is out of range."
 msgstr ""
-"Chyba volání PDB pro proceduru '%s':\n"
-"Argument '%s' (#%d, typ %s) mimo rozsah (validace změnila '%s' na '%s')"
+"Procedura'%s' byla zavolána s s hodnotou '%s' argumentu '%s' (#%d, typ %"
+"s). Tato hodnota je mimo rozsah."
 
 #: ../app/pdb/image_cmds.c:2044
 msgid "Image resolution is out of bounds, using the default resolution instead."
@@ -9117,13 +9151,13 @@ msgstr "Režim"
 msgid "Exposure:"
 msgstr "Míra:"
 
-#: ../app/tools/gimpeditselectiontool.c:237
-#: ../app/tools/gimpeditselectiontool.c:1184
+#: ../app/tools/gimpeditselectiontool.c:199
+#: ../app/tools/gimpeditselectiontool.c:1146
 msgid "Move Floating Selection"
 msgstr "Odstranit plovoucí výběr"
 
-#: ../app/tools/gimpeditselectiontool.c:439
-#: ../app/tools/gimpeditselectiontool.c:708
+#: ../app/tools/gimpeditselectiontool.c:401
+#: ../app/tools/gimpeditselectiontool.c:670
 msgid "Move: "
 msgstr "Přesun: "
 
@@ -11032,23 +11066,23 @@ msgstr "Zprávy jsou přesměrovány na stderr."
 msgid "%s Message"
 msgstr "Zpráva %s"
 
-#: ../app/widgets/gimpfiledialog.c:266
+#: ../app/widgets/gimpfiledialog.c:267
 msgid "Automatically Detected"
 msgstr "Automaticky detekováno"
 
-#: ../app/widgets/gimpfiledialog.c:276
+#: ../app/widgets/gimpfiledialog.c:277
 msgid "By Extension"
 msgstr "Podle přípony"
 
-#: ../app/widgets/gimpfiledialog.c:475
+#: ../app/widgets/gimpfiledialog.c:476
 msgid "All files"
 msgstr "Všechny soubory"
 
-#: ../app/widgets/gimpfiledialog.c:480
+#: ../app/widgets/gimpfiledialog.c:481
 msgid "All images"
 msgstr "Všechny obrázky"
 
-#: ../app/widgets/gimpfiledialog.c:616
+#: ../app/widgets/gimpfiledialog.c:617
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Zvolte _typ souboru (%s)"
@@ -11065,90 +11099,90 @@ msgstr "Přípony"
 msgid "Instant update"
 msgstr "Rychlá aktualizace"
 
-#: ../app/widgets/gimpgradienteditor.c:763
+#: ../app/widgets/gimpgradienteditor.c:767
 #, c-format
 msgid "Zoom factor: %d:1"
 msgstr "Poměr přiblížení: %d:1"
 
-#: ../app/widgets/gimpgradienteditor.c:766
+#: ../app/widgets/gimpgradienteditor.c:770
 #, c-format
 msgid "Displaying [%0.6f, %0.6f]"
 msgstr "Zobrazuji [%0.6f, %0.6f]"
 
-#: ../app/widgets/gimpgradienteditor.c:979
+#: ../app/widgets/gimpgradienteditor.c:983
 #, c-format
 msgid "Position: %0.6f"
 msgstr "Poloha: %0.6f"
 
-#: ../app/widgets/gimpgradienteditor.c:980
+#: ../app/widgets/gimpgradienteditor.c:984
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:982
+#: ../app/widgets/gimpgradienteditor.c:986
 #, c-format
 msgid "HSV (%0.3f, %0.3f, %0.3f)"
 msgstr "HSV (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:984
+#: ../app/widgets/gimpgradienteditor.c:988
 #, c-format
 msgid "Luminance: %0.3f    Opacity: %0.3f"
 msgstr "Jas: %0.3f    Krytí: %0.3f"
 
-#: ../app/widgets/gimpgradienteditor.c:1016
-#: ../app/widgets/gimpgradienteditor.c:1050
+#: ../app/widgets/gimpgradienteditor.c:1020
+#: ../app/widgets/gimpgradienteditor.c:1054
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: ../app/widgets/gimpgradienteditor.c:1024
+#: ../app/widgets/gimpgradienteditor.c:1028
 msgid "Foreground color set to:"
 msgstr "Barva popředí nastavena na:"
 
-#: ../app/widgets/gimpgradienteditor.c:1055
+#: ../app/widgets/gimpgradienteditor.c:1059
 #, c-format
 msgid "(%0.3f, %0.3f, %0.3f)"
 msgstr "(%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:1059
+#: ../app/widgets/gimpgradienteditor.c:1063
 msgid "Background color set to:"
 msgstr "Barva pozadí nastavena na:"
 
-#: ../app/widgets/gimpgradienteditor.c:1268
-#: ../app/widgets/gimpgradienteditor.c:1334
+#: ../app/widgets/gimpgradienteditor.c:1272
+#: ../app/widgets/gimpgradienteditor.c:1338
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr "%s%sTáhnutí: posun a komprese"
 
-#: ../app/widgets/gimpgradienteditor.c:1274
+#: ../app/widgets/gimpgradienteditor.c:1278
 msgid "Drag: move"
 msgstr "Táhnutí: posun"
 
-#: ../app/widgets/gimpgradienteditor.c:1281
-#: ../app/widgets/gimpgradienteditor.c:1295
-#: ../app/widgets/gimpgradienteditor.c:1309
-#: ../app/widgets/gimpgradienteditor.c:1331
+#: ../app/widgets/gimpgradienteditor.c:1285
+#: ../app/widgets/gimpgradienteditor.c:1299
+#: ../app/widgets/gimpgradienteditor.c:1313
+#: ../app/widgets/gimpgradienteditor.c:1335
 #, c-format
 msgid "%s%sClick: extend selection"
 msgstr "%s%sKlepnutí: rozšířit výběr"
 
-#: ../app/widgets/gimpgradienteditor.c:1287
-#: ../app/widgets/gimpgradienteditor.c:1301
+#: ../app/widgets/gimpgradienteditor.c:1291
+#: ../app/widgets/gimpgradienteditor.c:1305
 msgid "Click: select"
 msgstr "Klepnutí: vybrat"
 
-#: ../app/widgets/gimpgradienteditor.c:1315
-#: ../app/widgets/gimpgradienteditor.c:1339
+#: ../app/widgets/gimpgradienteditor.c:1319
+#: ../app/widgets/gimpgradienteditor.c:1343
 msgid "Click: select    Drag: move"
 msgstr "Klepnutí: vybrat    Táhnutí: posun"
 
-#: ../app/widgets/gimpgradienteditor.c:1554
-#: ../app/widgets/gimpgradienteditor.c:1562
+#: ../app/widgets/gimpgradienteditor.c:1558
+#: ../app/widgets/gimpgradienteditor.c:1566
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Poloha řídicího bodu: %0.6f"
 
-#: ../app/widgets/gimpgradienteditor.c:1579
+#: ../app/widgets/gimpgradienteditor.c:1583
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Vzdálenost: %0.6f"
@@ -11177,27 +11211,27 @@ msgstr "Barva po_zadí:"
 msgid "Spacing"
 msgstr "Rozestup"
 
-#: ../app/widgets/gimphelp.c:190
+#: ../app/widgets/gimphelp.c:193
 msgid "Help browser not found"
 msgstr "Prohlížeč nápovědy nenalezen"
 
-#: ../app/widgets/gimphelp.c:191
+#: ../app/widgets/gimphelp.c:194
 msgid "Could not find GIMP help browser."
 msgstr "Nemohu najít prohlížeč nápovědy GIMPu"
 
-#: ../app/widgets/gimphelp.c:192
+#: ../app/widgets/gimphelp.c:195
 msgid "The GIMP help browser plug-in appears to be missing from your installation."
 msgstr "Zásuvný modul prohlížeče nápovědy GIMPu zřejmě ve vaší instalaci chybí."
 
-#: ../app/widgets/gimphelp.c:218
+#: ../app/widgets/gimphelp.c:229
 msgid "Help browser doesn't start"
 msgstr "Prohlížeč nápovědy se nespouští"
 
-#: ../app/widgets/gimphelp.c:219
+#: ../app/widgets/gimphelp.c:230
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Nemohu spustit zásuvný modul prohlížeče nápovědy GIMPu."
 
-#: ../app/widgets/gimphelp.c:245
+#: ../app/widgets/gimphelp.c:256
 msgid "Use _web browser instead"
 msgstr "Použít místo toho _WWW prohlížeč"
 
@@ -11353,7 +11387,7 @@ msgid "Message repeated once."
 msgstr "Zpráva se opakuje jednou."
 
 #: ../app/widgets/gimppaletteeditor.c:255
-#: ../app/widgets/gimppaletteeditor.c:791
+#: ../app/widgets/gimppaletteeditor.c:795
 msgid "Undefined"
 msgstr "Nedefinováno"
 
