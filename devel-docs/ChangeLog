@@ -2,6 +2,8 @@
 
 	* app/Makefile.am (GTKDOC_LIBS): made app-scan link again.
 
+	* app/app.types: updated.
+
 2006-11-27  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/Makefile.am
