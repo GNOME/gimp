@@ -1,5 +1,10 @@
 2006-11-27  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-convert.c: applied patch from Aurimas Juška
+	that fixes conversion with dithering of transparency (bug #358851).
+
+2006-11-27  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimppropwidgets.c (gimp_prop_color_button_new): typo.
 
 2006-11-27  Sven Neumann  <sven@gimp.org>

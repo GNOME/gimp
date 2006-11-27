@@ -1217,9 +1217,14 @@ generate_histogram_rgb (CFHistogram   histogram,
 
               while (size--)
                 {
-                  if ((has_alpha && ((data[ALPHA_PIX]) >
-                                     (DM[col&DM_WIDTHMASK][row&DM_HEIGHTMASK])))
-                      || (!has_alpha))
+                  gboolean transparent = FALSE;
+
+                  if (has_alpha &&
+                      data[ALPHA_PIX] <
+                      DM[col & DM_WIDTHMASK][row & DM_HEIGHTMASK])
+                    transparent = TRUE;
+
+                  if (! transparent)
                     {
                       colfreq = HIST_RGB (histogram,
                                           data[RED_PIX],
@@ -1264,9 +1269,22 @@ generate_histogram_rgb (CFHistogram   histogram,
 
           while (size--)
             {
-              if ((has_alpha && (alpha_dither ?
-                                 ((data[ALPHA_PIX]) > (DM[col&DM_WIDTHMASK][row&DM_HEIGHTMASK])) :
-                                 (data[ALPHA_PIX] > 127))) || (!has_alpha))
+	      gboolean transparent = FALSE;
+	      if (has_alpha)
+	        {
+		  if (alpha_dither)
+		    {
+		      if (data[ALPHA_PIX] <
+                          DM[col & DM_WIDTHMASK][row & DM_HEIGHTMASK])
+		  	transparent = TRUE;
+		    }
+		  else
+		    {
+		      if (data[ALPHA_PIX] <= 127)
+			transparent = TRUE;
+		    }
+		}
+	      if (! transparent)
                 {
                   colfreq = HIST_RGB (histogram,
                                       data[RED_PIX],
@@ -2792,13 +2810,31 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 
               if (has_alpha)
                 {
-                  if ((dest[ALPHA_I_PIX] =
-                       (
-                        (alpha_dither ?
-                         ((src[ALPHA_G_PIX]) > (DM[(col+offsetx+srcPR.x)&DM_WIDTHMASK][(row+offsety+srcPR.y)&DM_HEIGHTMASK])) :
-                         (src[ALPHA_G_PIX] > 127)
-                         ) ? 255 : 0)))
-                    index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;
+                  gboolean transparent = FALSE;
+
+                  if (alpha_dither)
+                    {
+                      gint dither_x = (col+offsetx+srcPR.x) & DM_WIDTHMASK;
+                      gint dither_y = (row+offsety+srcPR.y) & DM_HEIGHTMASK;
+
+                      if ((src[ALPHA_G_PIX]) < DM[dither_x][dither_y])
+                        transparent = TRUE;
+                    }
+                  else
+                    {
+                      if (src[ALPHA_G_PIX] <= 127)
+                        transparent = TRUE;
+                    }
+
+                  if (transparent)
+                    {
+                      dest[ALPHA_I_PIX] = 0;
+                    }
+                  else
+                    {
+                      dest[ALPHA_I_PIX] = 255;
+                      index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;
+                    }
                 }
               else
                 {
@@ -2862,8 +2898,8 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
           for (col = 0; col < srcPR.w; col++)
             {
               const int dmval =
-                DM[(col+offsetx+srcPR.x)&DM_WIDTHMASK]
-                [(row+offsety+srcPR.y)&DM_HEIGHTMASK];
+                DM[(col+offsetx+srcPR.x) & DM_WIDTHMASK]
+                [(row+offsety+srcPR.y) & DM_HEIGHTMASK];
 
               /* get pixel value and index into the cache */
               pixel = src[GRAY_PIX];
@@ -2923,12 +2959,28 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 
               if (has_alpha)
                 {
-                  if ((dest[ALPHA_I_PIX] =
-                      ((alpha_dither ?
-                        ((src[ALPHA_G_PIX] << 6) > (255 * dmval)) :
-                        (src[ALPHA_G_PIX] > 127)
-                        ) ? 255 : 0)))
-                    index_used_count[dest[INDEXED_PIX] = pixval1]++;
+                  gboolean transparent = FALSE;
+
+                  if (alpha_dither)
+                    {
+                      if ((src[ALPHA_G_PIX] << 6) < (255 * dmval))
+                        transparent = TRUE;
+                    }
+                  else
+                    {
+                      if (src[ALPHA_G_PIX] <= 127)
+                        transparent = TRUE;
+                    }
+
+                  if (transparent)
+                    {
+                      dest[ALPHA_I_PIX] = 0;
+                    }
+                  else
+                    {
+                      dest[ALPHA_I_PIX] = 255;
+                      index_used_count[dest[INDEXED_PIX] = pixval1]++;
+                    }
                 }
               else
                 {
@@ -3010,14 +3062,29 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
             {
               if (has_alpha)
                 {
-                  if ((dest[ALPHA_I_PIX] =
-                       (alpha_dither ?
-                        ((src[alpha_pix]) > (DM[(col+offsetx+srcPR.x)&DM_WIDTHMASK][(row+offsety+srcPR.y)&DM_HEIGHTMASK])) :
-                        (src[alpha_pix] > 127)
-                        ) ? 255 : 0)
-                      == 0)
+                  gboolean transparent = FALSE;
+
+                  if (alpha_dither)
                     {
+                      gint dither_x = (col+offsetx+srcPR.x) & DM_WIDTHMASK;
+                      gint dither_y = (row+offsety+srcPR.y) & DM_HEIGHTMASK;
+                      if ((src[alpha_pix]) < DM[dither_x][dither_y])
+                        transparent = TRUE;
+                    }
+                  else
+                    {
+                      if (src[alpha_pix] <= 127)
+                        transparent = TRUE;
+                    }
+
+                  if (transparent)
+                    {
+                      dest[ALPHA_I_PIX] = 0;
                       goto next_pixel;
+                    }
+                  else
+                    {
+                      dest[ALPHA_I_PIX] = 255;
                     }
                 }
 
@@ -3117,19 +3184,32 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
           for (col = 0; col < srcPR.w; col++)
             {
               const int dmval =
-                DM[(col+offsetx+srcPR.x)&DM_WIDTHMASK]
-                [(row+offsety+srcPR.y)&DM_HEIGHTMASK];
+                DM[(col+offsetx+srcPR.x) & DM_WIDTHMASK]
+                [(row+offsety+srcPR.y) & DM_HEIGHTMASK];
 
               if (has_alpha)
                 {
-                  if ((dest[ALPHA_I_PIX] =
-                       (alpha_dither ?
-                        ((src[alpha_pix] << 6) > (255 * dmval)) :
-                        (src[alpha_pix] > 127)
-                        ) ? 255 : 0)
-                      == 0)
+                  gboolean transparent = FALSE;
+
+                  if (alpha_dither)
                     {
+                      if ((src[alpha_pix] << 6) < (255*dmval))
+                        transparent = TRUE;
+                    }
+                  else
+                    {
+                      if (src[alpha_pix] <= 127)
+                        transparent = TRUE;
+                    }
+
+                  if (transparent)
+                    {
+                      dest[ALPHA_I_PIX] = 0;
                       goto next_pixel;
+                    }
+                  else
+                    {
+                      dest[ALPHA_I_PIX] = 255;
                     }
                 }
 
@@ -3560,34 +3640,64 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
 
           if (has_alpha)
             {
+              gboolean transparent = FALSE;
+
               if (odd_row)
                 {
-                  if ((dest[ALPHA_I_PIX] =
-                       (alpha_dither ?
-                        ((src[ALPHA_G_PIX]) > (DM[((width-col)+offsetx-1)&DM_WIDTHMASK][(row+offsety)&DM_HEIGHTMASK])) :
-                        (src[ALPHA_G_PIX] > 127)
-                        ) ? 255 : 0)
-                      == 0)
+                  if (alpha_dither)
                     {
+                      gint dither_x = ((width-col)+offsetx-1) & DM_WIDTHMASK;
+                      gint dither_y = (row+offsety) & DM_HEIGHTMASK;
+
+                      if ((src[ALPHA_G_PIX]) < DM[dither_x][dither_y])
+                        transparent = TRUE;
+                    }
+                  else
+                    {
+                      if (src[ALPHA_G_PIX] <= 127)
+                        transparent = TRUE;
+                    }
+
+                  if (transparent)
+                    {
+                      dest[ALPHA_I_PIX] = 0;
                       pr--;
                       nr--;
                       *(nr - 1) = 0;
                       goto next_pixel;
                     }
+                  else
+                    {
+                      dest[ALPHA_I_PIX] = 255;
+                    }
                 }
               else
                 {
-                  if ((dest[ALPHA_I_PIX] =
-                       (alpha_dither ?
-                        ((src[ALPHA_G_PIX]) > (DM[(col+offsetx)&DM_WIDTHMASK][(row+offsety)&DM_HEIGHTMASK])) :
-                        (src[ALPHA_G_PIX] > 127)
-                        ) ? 255 : 0)
-                      == 0)
+                  if (alpha_dither)
                     {
+                      gint dither_x = (col+offsetx) & DM_WIDTHMASK;
+                      gint dither_y = (row+offsety) & DM_HEIGHTMASK;
+
+                      if ((src[ALPHA_G_PIX]) < DM[dither_x][dither_y])
+                        transparent = TRUE;
+                    }
+                  else
+                    {
+                      if (src[ALPHA_G_PIX] <= 127)
+                        transparent = TRUE;
+                    }
+
+                  if (transparent)
+                    {
+                      dest[ALPHA_I_PIX] = 0;
                       pr++;
                       nr++;
                       *(nr + 1) = 0;
                       goto next_pixel;
+                    }
+                  else
+                    {
+                      dest[ALPHA_I_PIX] = 255;
                     }
                 }
             }
@@ -3817,35 +3927,64 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
         {
           if (has_alpha)
             {
+              gboolean transparent = FALSE;
+
               if (odd_row)
                 {
-                  /* I get goosebumps over this expression. */
-                  if ((dest[ALPHA_I_PIX] =
-                       (alpha_dither ?
-                        ((src[alpha_pix]) > (DM[((width-col)+offsetx-1)&DM_WIDTHMASK][(row+offsety)&DM_HEIGHTMASK])) :
-                        (src[alpha_pix] > 127)
-                        ) ? 255 : 0)
-                      == 0)
+                  if (alpha_dither)
                     {
+                      gint dither_x = ((width-col)+offsetx-1) & DM_WIDTHMASK;
+                      gint dither_y = (row+offsety) & DM_HEIGHTMASK;
+
+                      if ((src[alpha_pix]) < DM[dither_x][dither_y])
+                        transparent = TRUE;
+                    }
+                  else
+                    {
+                      if (src[alpha_pix] <= 127)
+                        transparent = TRUE;
+                    }
+
+                  if (transparent)
+                    {
+                      dest[ALPHA_I_PIX] = 0;
                       rpr--; gpr--; bpr--;
                       rnr--; gnr--; bnr--;
                       *(rnr - 1) = *(gnr - 1) = *(bnr - 1) = 0;
                       goto next_pixel;
                     }
+                  else
+                    {
+                      dest[ALPHA_I_PIX] = 255;
+                    }
                 }
               else
                 {
-                  if ((dest[ALPHA_I_PIX] =
-                       (alpha_dither ?
-                        ((src[alpha_pix]) > (DM[(col+offsetx)&DM_WIDTHMASK][(row+offsety)&DM_HEIGHTMASK])) :
-                        (src[alpha_pix] > 127)
-                        ) ? 255 : 0)
-                      == 0)
+                  if (alpha_dither)
                     {
+                      gint dither_x = (col+offsetx) & DM_WIDTHMASK;
+                      gint dither_y = (row+offsety) & DM_HEIGHTMASK;
+
+                      if ((src[alpha_pix]) < DM[dither_x][dither_y])
+                        transparent = TRUE;
+                    }
+                  else
+                    {
+                      if (src[alpha_pix] <= 127)
+                        transparent = TRUE;
+                    }
+
+                  if (transparent)
+                    {
+                      dest[ALPHA_I_PIX] = 0;
                       rpr++; gpr++; bpr++;
                       rnr++; gnr++; bnr++;
                       *(rnr + 1) = *(gnr + 1) = *(bnr + 1) = 0;
                       goto next_pixel;
+                    }
+                  else
+                    {
+                      dest[ALPHA_I_PIX] = 255;
                     }
                 }
             }
