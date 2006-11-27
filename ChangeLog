@@ -1,5 +1,9 @@
 2006-11-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimppropwidgets.c (gimp_prop_color_button_new): typo.
+
+2006-11-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/tiff.c (load_image) (save_image): set the
 	warning and error handlers after opening the file. We get two
 	errors otherwise.
