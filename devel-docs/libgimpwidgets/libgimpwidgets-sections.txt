@@ -290,7 +290,6 @@ GIMP_FRAME_GET_CLASS
 <TITLE>GimpHintBox</TITLE>
 gimp_hint_box_new
 <SUBSECTION Standard>
-GimpHintBoxClass
 GIMP_TYPE_HINT_BOX
 gimp_hint_box_get_type
 </SECTION>

@@ -139,7 +139,6 @@ gimp_scanner_parse_matrix2
 GimpColorConfig
 GimpColorManagementMode
 GimpColorRenderingIntent
-GimpColorFileOpenBehaviour
 <SUBSECTION Standard>
 GimpColorConfigClass
 GIMP_COLOR_CONFIG
@@ -152,6 +151,4 @@ GIMP_TYPE_COLOR_MANAGEMENT_MODE
 gimp_color_management_mode_get_type
 GIMP_TYPE_COLOR_RENDERING_INTENT
 gimp_color_rendering_intent_get_type
-GIMP_TYPE_COLOR_FILE_OPEN_BEHAVIOUR
-gimp_color_file_open_behaviour_get_type
 </SECTION>
