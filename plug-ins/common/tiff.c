@@ -474,6 +474,7 @@ tiff_warning(const gchar *module,
       if (va_arg (ap_test, int) >= 32768)
         return;
     }
+
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
 }
 
@@ -536,16 +537,16 @@ load_image (const gchar *filename)
 
   gimp_rgb_set (&color, 0.0, 0.0, 0.0);
 
-  TIFFSetWarningHandler (tiff_warning);
-  TIFFSetErrorHandler (tiff_error);
-
   tif = TIFFOpen (filename, "r");
-  if (!tif)
+  if (! tif)
     {
       g_message (_("Could not open '%s' for reading: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
       gimp_quit ();
     }
+
+  TIFFSetWarningHandler (tiff_warning);
+  TIFFSetErrorHandler (tiff_error);
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -2124,16 +2125,16 @@ save_image (const gchar *filename,
   tile_height = gimp_tile_height ();
   rowsperstrip = tile_height;
 
-  TIFFSetWarningHandler (tiff_warning);
-  TIFFSetErrorHandler (tiff_error);
-
   tif = TIFFOpen (filename, "w");
-  if (!tif)
+  if (! tif)
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
+
+  TIFFSetWarningHandler (tiff_warning);
+  TIFFSetErrorHandler (tiff_error);
 
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));

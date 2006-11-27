@@ -1,5 +1,11 @@
 2006-11-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/tiff.c (load_image) (save_image): set the
+	warning and error handlers after opening the file. We get two
+	errors otherwise.
+
+2006-11-27  Sven Neumann  <sven@gimp.org>
+
 	* app/base/color-balance.c (color_balance_transfer_init): applied
 	patch from Saul Goode (bug #379611), then cleaned up further.
 
