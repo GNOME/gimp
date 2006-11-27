@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-13 12:22+0100\n"
-"PO-Revision-Date: 2006-11-13 12:24+0100\n"
+"POT-Creation-Date: 2006-11-27 13:20+0100\n"
+"PO-Revision-Date: 2006-11-27 15:09+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -338,7 +338,7 @@ msgstr "Přechod badatele fraktálů"
 msgid "_Fractals"
 msgstr "_Fraktály"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1733
+#: ../plug-ins/FractalExplorer/Dialogs.c:1546
 #: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:294
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2008
 #: ../plug-ins/common/channel_mixer.c:1062 ../plug-ins/common/compressor.c:410
@@ -352,101 +352,101 @@ msgstr "_Fraktály"
 #: ../plug-ins/common/postscript.c:1185 ../plug-ins/common/psd_save.c:1448
 #: ../plug-ins/common/raw.c:528 ../plug-ins/common/raw.c:555
 #: ../plug-ins/common/spheredesigner.c:2119 ../plug-ins/common/sunras.c:507
-#: ../plug-ins/common/tga.c:1027 ../plug-ins/common/tiff.c:1938
+#: ../plug-ins/common/tga.c:1027 ../plug-ins/common/tiff.c:2131
 #: ../plug-ins/common/xbm.c:1002 ../plug-ins/common/xwd.c:565
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:715
 #: ../plug-ins/ifscompose/ifscompose.c:2377 ../plug-ins/jpeg/jpeg-save.c:268
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:270
-#: ../plug-ins/winicon/icosave.c:1020 ../plug-ins/xjt/xjt.c:1277
-#: ../plug-ins/xjt/xjt.c:1711
+#: ../plug-ins/winicon/icosave.c:1020 ../plug-ins/xjt/xjt.c:1278
+#: ../plug-ins/xjt/xjt.c:1712
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nemohu otevřít '%s' pro zápis: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1747
+#: ../plug-ins/FractalExplorer/Dialogs.c:1560
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Nemohu zapsat '%s': %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1822
+#: ../plug-ins/FractalExplorer/Dialogs.c:1635
 msgid "Load Fractal Parameters"
 msgstr "Načíst parametry fraktálu"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:1860
+#: ../plug-ins/FractalExplorer/Dialogs.c:1673
 msgid "Save Fractal Parameters"
 msgstr "Zapsat parametry fraktálu"
 
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
-#: ../plug-ins/FractalExplorer/Dialogs.c:2049
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:931
+#: ../plug-ins/FractalExplorer/Dialogs.c:1862
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:933
 #: ../plug-ins/Lighting/lighting_ui.c:1312 ../plug-ins/bmp/bmpread.c:149
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2228
 #: ../plug-ins/common/channel_mixer.c:979 ../plug-ins/common/curve_bend.c:888
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:309 ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/mng.c:1124 ../plug-ins/common/pat.c:317
-#: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
-#: ../plug-ins/common/png.c:650 ../plug-ins/common/pnm.c:480
-#: ../plug-ins/common/poppler.c:368 ../plug-ins/common/postscript.c:1012
-#: ../plug-ins/common/postscript.c:2993 ../plug-ins/common/psd.c:1880
-#: ../plug-ins/common/psp.c:1460 ../plug-ins/common/raw.c:243
-#: ../plug-ins/common/raw.c:645 ../plug-ins/common/spheredesigner.c:2009
-#: ../plug-ins/common/sunras.c:379 ../plug-ins/common/svg.c:316
-#: ../plug-ins/common/svg.c:686 ../plug-ins/common/tga.c:411
-#: ../plug-ins/common/tiff.c:535 ../plug-ins/common/xbm.c:720
-#: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
-#: ../plug-ins/fits/fits.c:342 ../plug-ins/flame/flame.c:411
-#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:429
-#: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/domain.c:426
-#: ../plug-ins/jpeg/jpeg-load.c:88 ../plug-ins/jpeg/jpeg-load.c:874
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:259
+#: ../plug-ins/common/lcms.c:575 ../plug-ins/common/mng.c:1124
+#: ../plug-ins/common/pat.c:317 ../plug-ins/common/pcx.c:309
+#: ../plug-ins/common/pix.c:329 ../plug-ins/common/png.c:650
+#: ../plug-ins/common/pnm.c:480 ../plug-ins/common/poppler.c:368
+#: ../plug-ins/common/postscript.c:1012 ../plug-ins/common/postscript.c:2993
+#: ../plug-ins/common/psd.c:1880 ../plug-ins/common/psp.c:1460
+#: ../plug-ins/common/raw.c:243 ../plug-ins/common/raw.c:645
+#: ../plug-ins/common/spheredesigner.c:2009 ../plug-ins/common/sunras.c:379
+#: ../plug-ins/common/svg.c:316 ../plug-ins/common/svg.c:686
+#: ../plug-ins/common/tga.c:411 ../plug-ins/common/tiff.c:543
+#: ../plug-ins/common/xbm.c:720 ../plug-ins/common/xwd.c:420
+#: ../plug-ins/faxg3/faxg3.c:219 ../plug-ins/fits/fits.c:342
+#: ../plug-ins/flame/flame.c:411 ../plug-ins/gfig/gfig.c:434
+#: ../plug-ins/gfli/gfli.c:429 ../plug-ins/gfli/gfli.c:464
+#: ../plug-ins/help/gimphelplocale.c:193 ../plug-ins/jpeg/jpeg-load.c:88
+#: ../plug-ins/jpeg/jpeg-load.c:874 ../plug-ins/uri/uri-backend-gnomevfs.c:259
 #: ../plug-ins/uri/uri-backend-libcurl.c:172 ../plug-ins/winicon/icoload.c:651
-#: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2535
-#: ../plug-ins/xjt/xjt.c:2543
+#: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2543
+#: ../plug-ins/xjt/xjt.c:2551
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nemohu otevřít '%s' pro čtení: %s"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2057
+#: ../plug-ins/FractalExplorer/Dialogs.c:1870
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "'%s' není soubor badatele fraktálů"
 
-#: ../plug-ins/FractalExplorer/Dialogs.c:2063
+#: ../plug-ins/FractalExplorer/Dialogs.c:1876
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "'%s' je poškozen. Řádek %d Nesprávná sekce voleb"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:248
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:243
 msgid "Render fractal art"
 msgstr "Vykreslit fraktální obrazec"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:253
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:248
 msgid "_Fractal Explorer..."
 msgstr "Badatel _fraktálů..."
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:383
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:378
 msgid "Rendering fractal"
 msgstr "Počítá se fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:758
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:760
 #: ../plug-ins/gflare/gflare.c:3126
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Opravdu chcete odstranit \"%s\" ze seznamu a z disku?"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:762
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:764
 msgid "Delete Fractal"
 msgstr "Odstranit fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:952
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:954
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Soubor '%s' není souborem pro badatele fraktálů"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:961
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:963
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -455,27 +455,27 @@ msgstr ""
 "Soubor '%s' je poškozený.\n"
 "Řádek %d Nesprávná sekce voleb"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1005
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1007
 msgid "My first fractal"
 msgstr "Můj první fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1069
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1071
 msgid "Select folder and rescan collection"
 msgstr "Výběr adresáře a aktualizace souhrnu"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1081
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1083
 msgid "Apply currently selected fractal"
 msgstr "Použít právě zvolený fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1093
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1095
 msgid "Delete currently selected fractal"
 msgstr "Odstranit právě zvolený fraktál"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1116
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1118
 msgid "Rescan for Fractals"
 msgstr "Zaktualizovat fraktály"
 
-#: ../plug-ins/FractalExplorer/FractalExplorer.c:1135
+#: ../plug-ins/FractalExplorer/FractalExplorer.c:1137
 msgid "Add FractalExplorer Path"
 msgstr "Přidat cestu pro badatele fraktálů"
 
@@ -1143,12 +1143,12 @@ msgstr "Špatná barevná mapa"
 #: ../plug-ins/common/pnm.c:485 ../plug-ins/common/poppler.c:414
 #: ../plug-ins/common/postscript.c:1018 ../plug-ins/common/psd.c:1885
 #: ../plug-ins/common/raw.c:650 ../plug-ins/common/sunras.c:433
-#: ../plug-ins/common/tga.c:416 ../plug-ins/common/tiff.c:540
+#: ../plug-ins/common/tga.c:416 ../plug-ins/common/tiff.c:551
 #: ../plug-ins/common/wmf.c:954 ../plug-ins/common/xbm.c:725
 #: ../plug-ins/common/xpm.c:343 ../plug-ins/common/xwd.c:473
 #: ../plug-ins/faxg3/faxg3.c:204 ../plug-ins/gfli/gfli.c:469
 #: ../plug-ins/jpeg/jpeg-load.c:94 ../plug-ins/sgi/sgi.c:318
-#: ../plug-ins/winicon/icoload.c:645 ../plug-ins/xjt/xjt.c:3319
+#: ../plug-ins/winicon/icoload.c:645 ../plug-ins/xjt/xjt.c:3337
 #, c-format
 msgid "Opening '%s'"
 msgstr "Otvírá se '%s'"
@@ -1188,7 +1188,7 @@ msgstr "Nepodporovaná nebo neplatná bitová hloubka"
 #: ../plug-ins/common/png.c:778 ../plug-ins/common/pnm.c:564
 #: ../plug-ins/common/psd.c:2310 ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:917
-#: ../plug-ins/common/tga.c:928 ../plug-ins/common/tiff.c:893
+#: ../plug-ins/common/tga.c:928 ../plug-ins/common/tiff.c:906
 #: ../plug-ins/common/tile.c:265 ../plug-ins/common/xbm.c:866
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:508
 #: ../plug-ins/gfig/gfig-dialog.c:1282
@@ -1220,12 +1220,12 @@ msgstr "Alfa kanál bude ignorován."
 #: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1173
 #: ../plug-ins/common/pnm.c:934 ../plug-ins/common/postscript.c:1190
 #: ../plug-ins/common/psd_save.c:1453 ../plug-ins/common/sunras.c:512
-#: ../plug-ins/common/tga.c:1032 ../plug-ins/common/tiff.c:1943
+#: ../plug-ins/common/tga.c:1032 ../plug-ins/common/tiff.c:2139
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
 #: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:226
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:1015
-#: ../plug-ins/xjt/xjt.c:1694
+#: ../plug-ins/xjt/xjt.c:1695
 #, c-format
 msgid "Saving '%s'"
 msgstr "Ukládá se '%s'"
@@ -2299,7 +2299,7 @@ msgstr "_Komiks..."
 #: ../plug-ins/common/gauss.c:445 ../plug-ins/common/neon.c:225
 #: ../plug-ins/common/photocopy.c:243 ../plug-ins/common/sel_gauss.c:213
 #: ../plug-ins/common/softglow.c:221 ../plug-ins/gflare/gflare.c:965
-#: ../plug-ins/sgi/sgi.c:520 ../plug-ins/xjt/xjt.c:1685
+#: ../plug-ins/sgi/sgi.c:520 ../plug-ins/xjt/xjt.c:1686
 msgid "Cannot operate on indexed color images."
 msgstr "Nemohu pracovat s indexovanými barevnými obrázky."
 
@@ -2315,57 +2315,37 @@ msgstr "Poloměr _masky:"
 msgid "_Percent black:"
 msgstr "_Procenta černé:"
 
-#: ../plug-ins/common/ccanalyze.c:107
+#: ../plug-ins/common/ccanalyze.c:106
 msgid "Analyze the set of colors in the image"
 msgstr "Analyzovat barvy v obrázku"
 
-#: ../plug-ins/common/ccanalyze.c:113
+#: ../plug-ins/common/ccanalyze.c:112
 msgid "Colorcube A_nalysis..."
 msgstr "_Analýza barevné krychle..."
 
-#: ../plug-ins/common/ccanalyze.c:202 ../plug-ins/common/ccanalyze.c:360
+#: ../plug-ins/common/ccanalyze.c:200 ../plug-ins/common/ccanalyze.c:356
 msgid "Colorcube Analysis"
 msgstr "Analýza barevné krychle"
 
 #. output results
-#: ../plug-ins/common/ccanalyze.c:388
+#: ../plug-ins/common/ccanalyze.c:384
 #: ../plug-ins/imagemap/imap_cmd_guides.c:233
 #, c-format
 msgid "Image dimensions: %d × %d"
 msgstr "Rozměry obrázku: %d × %d"
 
-#: ../plug-ins/common/ccanalyze.c:391
+#: ../plug-ins/common/ccanalyze.c:387
 msgid "No colors"
 msgstr "Žádné barvy"
 
-#: ../plug-ins/common/ccanalyze.c:393
+#: ../plug-ins/common/ccanalyze.c:389
 msgid "Only one unique color"
 msgstr "Jen jedna jedinečná barva"
 
-#: ../plug-ins/common/ccanalyze.c:395
+#: ../plug-ins/common/ccanalyze.c:391
 #, c-format
 msgid "Number of unique colors: %d"
 msgstr "Počet jedinečných barev: %d"
-
-#: ../plug-ins/common/ccanalyze.c:398
-#, c-format
-msgid "Uncompressed size: %s"
-msgstr "Nekomprimovaná velikost: %s"
-
-#: ../plug-ins/common/ccanalyze.c:405
-#, c-format
-msgid "Filename: %s"
-msgstr "Název souboru: %s"
-
-#: ../plug-ins/common/ccanalyze.c:406
-#, c-format
-msgid "Compressed size: %s"
-msgstr "Komprimovaná velikost: %s"
-
-#: ../plug-ins/common/ccanalyze.c:407
-#, c-format
-msgid "Compression ratio (approx.): %d to 1"
-msgstr "Poměr komprese (přibližně): %d k 1"
 
 #: ../plug-ins/common/channel_mixer.c:178
 msgid "Alter colors by mixing RGB Channels"
@@ -3429,7 +3409,7 @@ msgstr "Nemohu uložit obrázky s alfa kanálem."
 
 #: ../plug-ins/common/dicom.c:676 ../plug-ins/common/postscript.c:1176
 #: ../plug-ins/common/xwd.c:556 ../plug-ins/fits/fits.c:445
-#: ../plug-ins/xjt/xjt.c:1689
+#: ../plug-ins/xjt/xjt.c:1690
 msgid "Cannot operate on unknown image types."
 msgstr "Nemohu pracovat s neznámými typy obrázků."
 
@@ -3744,7 +3724,7 @@ msgid "Composing images"
 msgstr "Spojuji obrázky"
 
 #: ../plug-ins/common/film.c:436 ../plug-ins/common/guillotine.c:185
-#: ../plug-ins/helpbrowser/dialog.c:863
+#: ../plug-ins/helpbrowser/dialog.c:1048
 msgid "Untitled"
 msgstr "Bez názvu"
 
@@ -4514,7 +4494,7 @@ msgstr "Průnik"
 
 #. Width and Height
 #: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:759
-#: ../plug-ins/common/wmf.c:549
+#: ../plug-ins/common/wmf.c:549 ../plug-ins/print/print-page-layout.c:218
 msgid "Width:"
 msgstr "Šířka:"
 
@@ -4923,6 +4903,86 @@ msgstr "_Laplaceův"
 #: ../plug-ins/common/laplace.c:321
 msgid "Cleanup"
 msgstr "Úklid"
+
+#: ../plug-ins/common/lcms.c:168
+msgid "Set color profile"
+msgstr "Nastavit barevný profil"
+
+#: ../plug-ins/common/lcms.c:184
+msgid "Set default RGB profile"
+msgstr "Nastavit výchozí barevný profil"
+
+#: ../plug-ins/common/lcms.c:200
+msgid "Apply color profile"
+msgstr "Použít barevný profil"
+
+#: ../plug-ins/common/lcms.c:218
+msgid "Apply default RGB profile"
+msgstr "Použít výchozí RGB profil"
+
+#: ../plug-ins/common/lcms.c:232
+msgid "Color Profile Information"
+msgstr "Informace o profilu barev"
+
+#: ../plug-ins/common/lcms.c:407
+#, c-format
+msgid "Could not open color profile from '%s'"
+msgstr "Nelze otevřít barevný profil z '%s'"
+
+#: ../plug-ins/common/lcms.c:415 ../plug-ins/common/lcms.c:607
+#, c-format
+msgid "Color profile '%s' is not for RGB color space."
+msgstr "Barevný profil '%s' není určen pro prostor RGB."
+
+#. ICC color profile conversion
+#: ../plug-ins/common/lcms.c:462
+#, c-format
+msgid "Converting from '%s' to '%s'"
+msgstr "Konvertuji z '%s' do '%s'"
+
+#: ../plug-ins/common/lcms.c:521
+msgid "Default RGB working space"
+msgstr "Výchozí pracovní prostor RGB"
+
+#: ../plug-ins/common/lcms.c:546
+msgid "Data attached as 'icc-profile' does not appear to be an ICC color profile"
+msgstr "Data připojená jako 'icc-profile' zřejmě nejsou barevným profilem ICC"
+
+#: ../plug-ins/common/lcms.c:613
+#, c-format
+msgid "'%s' does not appear to be an ICC color profile"
+msgstr "'%s' zřejmě není barevným profilem ICC"
+
+#: ../plug-ins/common/lcms.c:772
+#, c-format
+msgid "Could not open ICC profile from '%s'"
+msgstr "Nelze otevřít barevný ICC profil z '%s'"
+
+#: ../plug-ins/common/lcms.c:794
+#, c-format
+msgid "The image '%s' has an embedded color profile:"
+msgstr "Obrázek '%s' obsahuje vložený barevný profil:"
+
+#: ../plug-ins/common/lcms.c:838
+#, c-format
+msgid "Convert the image to the RGB working space (%s)?"
+msgstr "Převest obrázek do pracovního prostoru RGB (%s)?"
+
+#: ../plug-ins/common/lcms.c:869
+msgid "Convert to RGB working space?"
+msgstr "Konvertovat do pracovního prostoru RGB?"
+
+#: ../plug-ins/common/lcms.c:874
+msgid "_Keep"
+msgstr "_Ponechat"
+
+#: ../plug-ins/common/lcms.c:875
+msgid "_Convert"
+msgstr "_Konvertovat"
+
+#: ../plug-ins/common/lcms.c:901
+msgid "_Don't ask me again"
+msgstr "_Neptat se znovu"
 
 #: ../plug-ins/common/lens.c:142
 msgid "Corrects lens distortion"
@@ -6215,7 +6275,7 @@ msgstr ""
 "oznámení jeho umístění GIMPu.\n"
 "(%s)"
 
-#: ../plug-ins/common/postscript.c:1886 ../plug-ins/common/tiff.c:895
+#: ../plug-ins/common/postscript.c:1886 ../plug-ins/common/tiff.c:908
 #, c-format
 msgid "Page %d"
 msgstr "Strana %d"
@@ -7639,6 +7699,7 @@ msgid "Render Scalable Vector Graphics"
 msgstr "Vykreslit Scalable Vector Graphics"
 
 #: ../plug-ins/common/svg.c:765 ../plug-ins/common/wmf.c:555
+#: ../plug-ins/print/print-page-layout.c:224
 msgid "Height:"
 msgstr "Výška:"
 
@@ -7655,6 +7716,7 @@ msgid "Constrain aspect ratio"
 msgstr "Omezit poměr stran:"
 
 #: ../plug-ins/common/svg.c:886 ../plug-ins/common/wmf.c:676
+#: ../plug-ins/print/print-page-layout.c:288
 #, c-format
 msgid "pixels/%a"
 msgstr "pixely/%a"
@@ -7730,16 +7792,16 @@ msgstr "Práh alfy"
 msgid "Threshold:"
 msgstr "Práh:"
 
-#: ../plug-ins/common/tiff.c:237 ../plug-ins/common/tiff.c:258
-#: ../plug-ins/common/tiff.c:275
+#: ../plug-ins/common/tiff.c:239 ../plug-ins/common/tiff.c:260
+#: ../plug-ins/common/tiff.c:277
 msgid "TIFF image"
 msgstr "Obrázek TIFF"
 
-#: ../plug-ins/common/tiff.c:911
+#: ../plug-ins/common/tiff.c:924
 msgid "TIFF Channel"
 msgstr "TIFF kanál"
 
-#: ../plug-ins/common/tiff.c:920
+#: ../plug-ins/common/tiff.c:933
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -7750,7 +7812,7 @@ msgstr ""
 "Obrázek, který načítáte, má 16 bitů na kanál. GIMP umí zpracovat jen 8 bitů, "
 "takže jej převede. Při tomto převodu se ztratí informace."
 
-#: ../plug-ins/common/tiff.c:2105
+#: ../plug-ins/common/tiff.c:2301
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7758,40 +7820,40 @@ msgstr ""
 "Formát TIFF podporuje komentáře jen v sedmibitovém\n"
 "kódování ASCII. Komentář nebyl uložen."
 
-#: ../plug-ins/common/tiff.c:2268
+#: ../plug-ins/common/tiff.c:2464
 msgid "Save as TIFF"
 msgstr "Zapsat jako TIFF"
 
 #. compression
-#: ../plug-ins/common/tiff.c:2290
+#: ../plug-ins/common/tiff.c:2486
 msgid "Compression"
 msgstr "Komprese"
 
-#: ../plug-ins/common/tiff.c:2294
+#: ../plug-ins/common/tiff.c:2490
 msgid "_None"
 msgstr "_Nic"
 
-#: ../plug-ins/common/tiff.c:2295
+#: ../plug-ins/common/tiff.c:2491
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/tiff.c:2296
+#: ../plug-ins/common/tiff.c:2492
 msgid "_Pack Bits"
 msgstr "_Pakování bitů"
 
-#: ../plug-ins/common/tiff.c:2297
+#: ../plug-ins/common/tiff.c:2493
 msgid "_Deflate"
 msgstr "_Deflační"
 
-#: ../plug-ins/common/tiff.c:2298
+#: ../plug-ins/common/tiff.c:2494
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/tiff.c:2307
+#: ../plug-ins/common/tiff.c:2503
 msgid "Save _color values from transparent pixels"
 msgstr "Uložit _hodnoty barvy průhledných pixelů"
 
-#: ../plug-ins/common/tiff.c:2323 ../plug-ins/common/xbm.c:1213
+#: ../plug-ins/common/tiff.c:2519 ../plug-ins/common/xbm.c:1213
 msgid "Comment:"
 msgstr "Komentář:"
 
@@ -10106,11 +10168,11 @@ msgid ""
 "influence"
 msgstr "Režim Voronoi bere v úvahu pouze vliv bodu nejbližšího vektor mv"
 
-#: ../plug-ins/help/domain.c:177
+#: ../plug-ins/help/gimphelpdomain.c:177
 msgid "The GIMP help files are not found."
 msgstr "Soubory nápovědy GIMPu nebyly nalezeny."
 
-#: ../plug-ins/help/domain.c:178
+#: ../plug-ins/help/gimphelpdomain.c:178
 msgid ""
 "Please install the additional help package or use the online user manual at "
 "http://docs.gimp.org/."
@@ -10118,20 +10180,20 @@ msgstr ""
 "Nainstalujte prosím dodatečný balík nápovědy nebo použijte online příručku "
 "na adrese http://docs.gimp.org/."
 
-#: ../plug-ins/help/domain.c:184
+#: ../plug-ins/help/gimphelpdomain.c:184
 msgid "There is a problem with the GIMP help files."
 msgstr "Se soubory nápovědy GIMPu je problém."
 
-#: ../plug-ins/help/domain.c:186
+#: ../plug-ins/help/gimphelpdomain.c:186
 msgid "Please check your installation."
 msgstr "Zkontrolujte prosím svou instalaci."
 
-#: ../plug-ins/help/domain.c:195
+#: ../plug-ins/help/gimphelpdomain.c:196
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "ID nápovědy '%s' není známo"
 
-#: ../plug-ins/help/domain.c:452
+#: ../plug-ins/help/gimphelplocale.c:218
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10140,35 +10202,35 @@ msgstr ""
 "Chyba při zpracovávání '%s':\n"
 "%s"
 
-#: ../plug-ins/helpbrowser/dialog.c:192
+#: ../plug-ins/helpbrowser/dialog.c:227
 msgid "GIMP Help Browser"
 msgstr "Prohlížeč nápovědy GIMPu"
 
-#: ../plug-ins/helpbrowser/dialog.c:256
+#: ../plug-ins/helpbrowser/dialog.c:322
 msgid "Drag and drop this icon to a web browser"
 msgstr "Přetáhněte tuto ikonu do prohlížeče WWW"
 
-#: ../plug-ins/helpbrowser/dialog.c:472
+#: ../plug-ins/helpbrowser/dialog.c:657
 msgid "Go back one page"
 msgstr "Jít o jednu stranu zpět"
 
-#: ../plug-ins/helpbrowser/dialog.c:477
+#: ../plug-ins/helpbrowser/dialog.c:662
 msgid "Go forward one page"
 msgstr "Jít o jednu stranu vpřed"
 
-#: ../plug-ins/helpbrowser/dialog.c:482
+#: ../plug-ins/helpbrowser/dialog.c:667
 msgid "Go to the index page"
 msgstr "Jít na stranu rejstříku"
 
-#: ../plug-ins/helpbrowser/dialog.c:517
+#: ../plug-ins/helpbrowser/dialog.c:702
 msgid "Visit the GIMP documentation website"
 msgstr "Navštívit WWW server dokumentace GIMPu"
 
-#: ../plug-ins/helpbrowser/dialog.c:593
+#: ../plug-ins/helpbrowser/dialog.c:778
 msgid "Document not found"
 msgstr "Dokument nenalezen"
 
-#: ../plug-ins/helpbrowser/dialog.c:595
+#: ../plug-ins/helpbrowser/dialog.c:780
 msgid "The requested URL could not be loaded:"
 msgstr "Požadované URL nelze načíst:"
 
@@ -10997,7 +11059,7 @@ msgstr "Frekvence (řádky):"
 msgid "Use restart markers"
 msgstr "Používat restartovací značky"
 
-#: ../plug-ins/jpeg/jpeg-save.c:863 ../plug-ins/xjt/xjt.c:874
+#: ../plug-ins/jpeg/jpeg-save.c:863 ../plug-ins/xjt/xjt.c:875
 msgid "Optimize"
 msgstr "Optimalizovat"
 
@@ -11060,11 +11122,11 @@ msgstr "Náhled exportu"
 msgid "EXIF data will be ignored."
 msgstr "Data EXIF budou ignorována."
 
-#: ../plug-ins/maze/algorithms.c:287
+#: ../plug-ins/maze/algorithms.c:289
 msgid "Constructing maze using Prim's Algorithm"
 msgstr "Vytváří se bludiště užitím Primova algoritmu"
 
-#: ../plug-ins/maze/algorithms.c:463
+#: ../plug-ins/maze/algorithms.c:465
 msgid "Constructing tileable maze using Prim's Algorithm"
 msgstr "Vytváří se dlaždicovatelné bludiště užitím Primova algoritmu"
 
@@ -11080,7 +11142,7 @@ msgstr "_Bludiště..."
 msgid "Drawing maze"
 msgstr "Kreslí se bludiště"
 
-#: ../plug-ins/maze/maze.h:2
+#: ../plug-ins/maze/maze.h:22
 msgid "Maze"
 msgstr "Bludiště"
 
@@ -11349,6 +11411,56 @@ msgstr "Zkroucení vrstvy"
 #: ../plug-ins/pagecurl/pagecurl.c:1022
 msgid "Page Curl"
 msgstr "Zkroucení stránky"
+
+#: ../plug-ins/print/print-draw-page.c:84
+#, c-format
+msgid "Image width (%lg in) is larger than printable width (%lg in)."
+msgstr "Šířka obrázku (%lg palců) je větší než tisknutelná šířka (%lg palců)."
+
+#: ../plug-ins/print/print-draw-page.c:92
+#, c-format
+msgid "Image height (%lg in) is larger than printable height (%lg in)."
+msgstr "Výška obrázku (%lg palců) je větší než tisknutelná výška (%lg palců)."
+
+#: ../plug-ins/print/print-page-layout.c:80
+msgid "Page Setup"
+msgstr "Vzhled stránky"
+
+#: ../plug-ins/print/print-page-layout.c:87
+msgid "Show image info header"
+msgstr "Zobrazit informační hlavičku obrázku"
+
+#: ../plug-ins/print/print-page-layout.c:115
+msgid "Caption"
+msgstr "Titulek"
+
+#: ../plug-ins/print/print-page-layout.c:193
+msgid "Print Size"
+msgstr "Velikost tisku"
+
+#: ../plug-ins/print/print-page-layout.c:271
+msgid "X resolution:"
+msgstr "Rozlišení X:"
+
+#: ../plug-ins/print/print-page-layout.c:278
+msgid "Y resolution:"
+msgstr "Rozlišení Y:"
+
+#: ../plug-ins/print/print.c:97
+msgid "Print the image"
+msgstr "Vytisknout obrázek"
+
+#: ../plug-ins/print/print.c:102
+msgid "_Print..."
+msgstr "_Tisk..."
+
+#: ../plug-ins/print/print.c:192
+msgid "Layout"
+msgstr "Úprava"
+
+#: ../plug-ins/print/print.c:378
+msgid "Print Preview"
+msgstr "Náhled tisku"
 
 #: ../plug-ins/rcm/rcm.c:99
 msgid "Replace a range of colors with another"
@@ -11684,67 +11796,67 @@ msgstr "_Snímek obrazovky..."
 msgid "No data captured"
 msgstr "Žádná data nebyla získána"
 
-#: ../plug-ins/xjt/xjt.c:484 ../plug-ins/xjt/xjt.c:502
+#: ../plug-ins/xjt/xjt.c:485 ../plug-ins/xjt/xjt.c:503
 msgid "GIMP compressed XJT image"
 msgstr "Obrázek XJT komprimovaný GIMPem"
 
-#: ../plug-ins/xjt/xjt.c:723
+#: ../plug-ins/xjt/xjt.c:724
 #, c-format
 msgid "XJT file contains unknown layermode %d"
 msgstr "XJT soubor obsahuje neznámý režim vrstvy %d"
 
-#: ../plug-ins/xjt/xjt.c:760
+#: ../plug-ins/xjt/xjt.c:761
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr "Varování: nepodporovaný režim vrstvy %d uložen do XJT"
 
-#: ../plug-ins/xjt/xjt.c:776
+#: ../plug-ins/xjt/xjt.c:777
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
 msgstr "XJT soubor obsahuje neznámý typ cesty %d"
 
-#: ../plug-ins/xjt/xjt.c:792
+#: ../plug-ins/xjt/xjt.c:793
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr "Varování: nepodporovaný typ cesty %d uložen do XJT"
 
-#: ../plug-ins/xjt/xjt.c:811
+#: ../plug-ins/xjt/xjt.c:812
 #, c-format
 msgid "XJT file contains unknown unittype %d"
 msgstr "XJT soubor obsahuje neznámý druh jednotek %d"
 
-#: ../plug-ins/xjt/xjt.c:832
+#: ../plug-ins/xjt/xjt.c:833
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr "Varování: nepodporovaný druh jednotek %d uložen do XJT"
 
-#: ../plug-ins/xjt/xjt.c:853
+#: ../plug-ins/xjt/xjt.c:854
 msgid "Save as XJT"
 msgstr "Zapsat jako XJT"
 
-#: ../plug-ins/xjt/xjt.c:884
+#: ../plug-ins/xjt/xjt.c:885
 msgid "Clear transparent"
 msgstr "Vymazat průhledné"
 
-#: ../plug-ins/xjt/xjt.c:896
+#: ../plug-ins/xjt/xjt.c:897
 msgid "Quality:"
 msgstr "Kvalita:"
 
-#: ../plug-ins/xjt/xjt.c:905
+#: ../plug-ins/xjt/xjt.c:906
 msgid "Smoothing:"
 msgstr "Vyhlazování:"
 
-#: ../plug-ins/xjt/xjt.c:1702 ../plug-ins/xjt/xjt.c:3328
+#: ../plug-ins/xjt/xjt.c:1703 ../plug-ins/xjt/xjt.c:3346
 #, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr "Nemohu vytvořit pracovní adresář '%s': %s"
 
-#: ../plug-ins/xjt/xjt.c:3198
+#: ../plug-ins/xjt/xjt.c:3216
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr "Chyba: Nemohu načíst soubor XJT vlastností '%s'."
 
-#: ../plug-ins/xjt/xjt.c:3204
+#: ../plug-ins/xjt/xjt.c:3222
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Chyba: Soubor XJT vlastností '%s' je prázdný."
