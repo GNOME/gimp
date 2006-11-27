@@ -1,5 +1,10 @@
 2006-11-27  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/images/gimp-chain-button.png: replaced with an
+	image that doesn't show bug #376668.
+
+2006-11-27  Sven Neumann  <sven@gimp.org>
+
 	* app/app-docs.sgml: added id attributes for the index page.
 
 	* libgimp/libgimp-docs.sgml: merged the GIMP Constants chapter into
