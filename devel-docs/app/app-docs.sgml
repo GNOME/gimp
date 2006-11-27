@@ -1044,7 +1044,7 @@
     </chapter>
   </part>
 
-  <index>
+  <index id="app-index">
     <title>Index</title>
   </index>
 

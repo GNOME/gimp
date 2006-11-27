@@ -1,5 +1,10 @@
 2006-11-27  Sven Neumann  <sven@gimp.org>
 
+	* app/app-docs.sgml: added id attributes for the index page.
+
+	* libgimp/libgimp-docs.sgml: merged the GIMP Constants chapter into
+	the GIMP Library chapter.
+
 	* app/Makefile.am (GTKDOC_LIBS): made app-scan link again.
 
 	* app/app.types: updated.

@@ -11,11 +11,6 @@
     </releaseinfo>
   </bookinfo>
 
-  <part id="gimpdefinitions">
-    <title>GIMP Constants</title>
-    <xi:include href="xml/gimpenums.xml" />
-  </part>
-
   <part id="libgimp">
     <title>GIMP Library</title>
 
@@ -26,6 +21,11 @@
 	of libgimp is to provide C bindings for this interface.
       </para>
     </partintro>
+
+    <part id="libgimp-constants">
+      <title>Constants</title>
+      <xi:include href="xml/gimpenums.xml" />
+    </part>
 
     <chapter id="libgimp-general">
       <title>Functions not Related to Specific Images</title>
