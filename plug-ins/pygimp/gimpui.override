@@ -148,6 +148,44 @@ _wrap_gimp_drawable_combo_box_new(PyGObject *self, PyObject *args,
     return 0;
 }
 %%
+define GimpDrawableComboBox.set_active_drawable kwargs
+static PyObject *
+_wrap_gimp_drawable_combo_box_set_active_drawable(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpDrawable *drw;
+
+    static char *kwlist[] = { "drawable", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, 
+                                     "O!:GimpDrawableComboBox.set_active_drawable",
+                                     kwlist,
+                                     PyGimpDrawable_Type, &drw))
+        return NULL;
+
+    if (!gimp_int_combo_box_set_active(GIMP_INT_COMBO_BOX(self->obj), drw->ID)) {
+        PyErr_Format(pygimp_error,
+                     "Drawable (ID %d) does not exist in GimpDrawableComboBox",
+                     drw->ID);
+        return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
+define GimpDrawableComboBox.get_active_drawable noargs
+static PyObject *
+_wrap_gimp_drawable_combo_box_get_active_drawable(PyGObject *self)
+{
+    int value;
+
+    if (gimp_int_combo_box_get_active(GIMP_INT_COMBO_BOX(self->obj), &value))
+        return pygimp_drawable_new(NULL, value);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
 override gimp_channel_combo_box_new kwargs
 static gboolean
 pygimp_channel_constraint_marshal(gint32 image_id, gint32 channel_id,
@@ -237,6 +275,44 @@ _wrap_gimp_channel_combo_box_new(PyGObject *self, PyObject *args,
 
     pygobject_register_wrapper((PyObject *)self);
     return 0;
+}
+%%
+define GimpChannelComboBox.set_active_channel kwargs
+static PyObject *
+_wrap_gimp_channel_combo_box_set_active_channel(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpChannel *chn;
+
+    static char *kwlist[] = { "channel", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, 
+                                     "O!:GimpChannelComboBox.set_active_channel",
+                                     kwlist,
+                                     PyGimpChannel_Type, &chn))
+        return NULL;
+
+    if (!gimp_int_combo_box_set_active(GIMP_INT_COMBO_BOX(self->obj), chn->ID)) {
+        PyErr_Format(pygimp_error,
+                     "Channel (ID %d) does not exist in GimpChannelComboBox",
+                     chn->ID);
+        return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
+define GimpChannelComboBox.get_active_channel noargs
+static PyObject *
+_wrap_gimp_channel_combo_box_get_active_channel(PyGObject *self)
+{
+    int value;
+
+    if (gimp_int_combo_box_get_active(GIMP_INT_COMBO_BOX(self->obj), &value))
+        return pygimp_channel_new(value);
+
+    Py_INCREF(Py_None);
+    return Py_None;
 }
 %%
 override gimp_layer_combo_box_new kwargs
@@ -330,6 +406,44 @@ _wrap_gimp_layer_combo_box_new(PyGObject *self, PyObject *args,
     return 0;
 }
 %%
+define GimpLayerComboBox.set_active_layer kwargs
+static PyObject *
+_wrap_gimp_layer_combo_box_set_active_layer(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpLayer *lay;
+
+    static char *kwlist[] = { "layer", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, 
+                                     "O!:GimpLayerComboBox.set_active_layer",
+                                     kwlist,
+                                     PyGimpLayer_Type, &lay))
+        return NULL;
+
+    if (!gimp_int_combo_box_set_active(GIMP_INT_COMBO_BOX(self->obj), lay->ID)) {
+        PyErr_Format(pygimp_error,
+                     "Layer (ID %d) does not exist in GimpLayerComboBox",
+                     lay->ID);
+        return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
+define GimpLayerComboBox.get_active_layer noargs
+static PyObject *
+_wrap_gimp_layer_combo_box_get_active_layer(PyGObject *self)
+{
+    int value;
+
+    if (gimp_int_combo_box_get_active(GIMP_INT_COMBO_BOX(self->obj), &value))
+        return pygimp_layer_new(value);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
 override gimp_vectors_combo_box_new kwargs
 static gboolean
 pygimp_vectors_constraint_marshal(gint32 image_id, gint32 vectors_id,
@@ -421,6 +535,44 @@ _wrap_gimp_vectors_combo_box_new(PyGObject *self, PyObject *args,
     return 0;
 }
 %%
+define GimpVectorsComboBox.set_active_vectors kwargs
+static PyObject *
+_wrap_gimp_vectors_combo_box_set_active_vectors(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpVectors *vect;
+
+    static char *kwlist[] = { "vectors", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, 
+                                     "O!:GimpVectorsComboBox.set_active_vectors",
+                                     kwlist,
+                                     PyGimpVectors_Type, &vect))
+        return NULL;
+
+    if (!gimp_int_combo_box_set_active(GIMP_INT_COMBO_BOX(self->obj), vect->ID)) {
+        PyErr_Format(pygimp_error,
+                     "Vectors (ID %d) does not exist in GimpVectorsComboBox",
+                     vect->ID);
+        return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
+define GimpVectorsComboBox.get_active_vectors noargs
+static PyObject *
+_wrap_gimp_vectors_combo_box_get_active_vectors(PyGObject *self)
+{
+    int value;
+
+    if (gimp_int_combo_box_get_active(GIMP_INT_COMBO_BOX(self->obj), &value))
+        return pygimp_vectors_new(value);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
 override gimp_image_combo_box_new kwargs
 static gboolean
 pygimp_image_constraint_marshal(gint32 image_id, gpointer user_data)
@@ -501,6 +653,44 @@ _wrap_gimp_image_combo_box_new(PyGObject *self, PyObject *args,
 
     pygobject_register_wrapper((PyObject *)self);
     return 0;
+}
+%%
+define GimpImageComboBox.set_active_image kwargs
+static PyObject *
+_wrap_gimp_image_combo_box_set_active_image(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpImage *img;
+
+    static char *kwlist[] = { "image", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, 
+                                     "O!:GimpImageComboBox.set_active_image",
+                                     kwlist,
+                                     PyGimpImage_Type, &img))
+        return NULL;
+
+    if (!gimp_int_combo_box_set_active(GIMP_INT_COMBO_BOX(self->obj), img->ID)) {
+        PyErr_Format(pygimp_error,
+                     "Image (ID %d) does not exist in GimpImageComboBox",
+                     img->ID);
+        return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
+define GimpImageComboBox.get_active_image noargs
+static PyObject *
+_wrap_gimp_image_combo_box_get_active_image(PyGObject *self)
+{
+    int value;
+
+    if (gimp_int_combo_box_get_active(GIMP_INT_COMBO_BOX(self->obj), &value))
+        return pygimp_image_new(value);
+
+    Py_INCREF(Py_None);
+    return Py_None;
 }
 %%
 override gimp_dialog_new kwargs
@@ -694,12 +884,12 @@ _wrap_gimp_brush_select_button_get_brush(PyGObject *self)
     GimpLayerModeEffects paint_mode;
 
     brush_name =
-	gimp_brush_select_button_get_brush(GIMP_BRUSH_SELECT_BUTTON(self->obj),
-					   &opacity, &spacing, &paint_mode);
+        gimp_brush_select_button_get_brush(GIMP_BRUSH_SELECT_BUTTON(self->obj),
+                                           &opacity, &spacing, &paint_mode);
 
     return Py_BuildValue("(sdiN)", brush_name, opacity, spacing,
-			 pyg_enum_from_gtype(GIMP_TYPE_LAYER_MODE_EFFECTS,
-					     paint_mode));
+                         pyg_enum_from_gtype(GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                             paint_mode));
 }
 %%
 override gimp_window_set_transient
@@ -902,18 +1092,38 @@ _wrap_gimp_int_combo_box_new(PyGObject *self, PyObject *args, PyObject *kwargs)
 %%
 new-constructor GIMP_TYPE_INT_COMBO_BOX
 %%
-override gimp_int_combo_box_get_active
+override gimp_int_combo_box_get_active noargs
 static PyObject *
-_wrap_gimp_int_combo_box_get_active(PyGObject *self, PyObject *args)
+_wrap_gimp_int_combo_box_get_active(PyGObject *self)
 {
     int value;
-
-    if (!PyArg_ParseTuple(args, ""))
-        return NULL;
 
     if (gimp_int_combo_box_get_active(GIMP_INT_COMBO_BOX(self->obj), &value))
         return PyLong_FromLong(value);
 
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
+override gimp_int_combo_box_set_active kwargs
+static PyObject *
+_wrap_gimp_int_combo_box_set_active(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    int value;
+
+    static char *kwlist[] = { "value", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, 
+                                     "i:GimpIntComboBox.set_active", kwlist,
+                                     &value))
+        return NULL;
+
+    if (!gimp_int_combo_box_set_active(GIMP_INT_COMBO_BOX(self->obj), value)) {
+        PyErr_Format(pygimp_error,
+                     "Value %d does not exist in GimpIntComboBox",
+                     value);
+        return NULL;
+    }
 
     Py_INCREF(Py_None);
     return Py_None;

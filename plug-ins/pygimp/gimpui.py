@@ -130,41 +130,41 @@ class ImageSelector(ImageComboBox):
     def __init__(self, default=None):
         ImageComboBox.__init__(self)
         if default is not None:
-            self.set_active(default)
+            self.set_active_image(default)
     def get_value(self):
-        return self.get_active()
+        return self.get_active_image()
 
 class LayerSelector(LayerComboBox):
     def __init__(self, default=None):
         LayerComboBox.__init__(self)
         if default is not None:
-            self.set_active(default)
+            self.set_active_layer(default)
     def get_value(self):
-        return self.get_active()
+        return self.get_active_layer()
 
 class ChannelSelector(ChannelComboBox):
     def __init__(self, default=None):
         ChannelComboBox.__init__(self)
         if default is not None:
-            self.set_active(default)
+            self.set_active_channel(default)
     def get_value(self):
-        return self.get_active()
+        return self.get_active_channel()
 
 class DrawableSelector(DrawableComboBox):
     def __init__(self, default=None):
         DrawableComboBox.__init__(self)
         if default is not None:
-            self.set_active(default)
+            self.set_active_drawable(default)
     def get_value(self):
-        return self.get_active()
+        return self.get_active_drawable()
 
 class VectorsSelector(VectorsComboBox):
     def __init__(self, default=None):
         VectorsComboBox.__init__(self)
         if default is not None:
-            self.set_active(default)
+            self.set_active_vectors(default)
     def get_value(self):
-        return self.get_active()
+        return self.get_active_vectors()
 
 class ColorSelector(ColorButton):
     def __init__(self, default=gimpcolor.RGB(1.0, 0, 0)):

@@ -22,11 +22,10 @@
 
 #include <Python.h>
 
-#if PY_VERSION_HEX < 0x020300F0
-#define PyBool_FromLong(v) PyInt_FromLong((v) ? 1L : 0L);
-#endif
-
 #include <libgimp/gimp.h>
+
+#define _INSIDE_PYGIMP_
+#include "pygimp-api.h"
 
 G_BEGIN_DECLS
 
@@ -51,30 +50,13 @@ PyObject *pygimp_pdb_function_new(const char *name, const char *blurb,
                                   GimpParamDef *params,
                                   GimpParamDef *return_vals);
 
-typedef struct {
-    PyObject_HEAD
-    gint32 ID;
-} PyGimpImage;
-
 extern PyTypeObject PyGimpImage_Type;
 #define pygimp_image_check(v) (PyObject_TypeCheck(v, &PyGimpImage_Type))
 PyObject *pygimp_image_new(gint32 ID);
 
-typedef struct {
-    PyObject_HEAD
-    gint32 ID;
-} PyGimpDisplay;
-
 extern PyTypeObject PyGimpDisplay_Type;
 #define pygimp_display_check(v) (PyObject_TypeCheck(v, &PyGimpDisplay_Type))
 PyObject *pygimp_display_new(gint32 ID);
-
-
-typedef struct {
-    PyObject_HEAD
-    gint32 ID;
-    GimpDrawable *drawable;
-} PyGimpDrawable, PyGimpLayer, PyGimpChannel;
 
 extern PyTypeObject PyGimpDrawable_Type;
 #define pygimp_drawable_check(v) (PyObject_TypeCheck(v, &PyGimpDrawable_Type))
@@ -117,11 +99,6 @@ typedef struct {
 extern PyTypeObject PyGimpParasite_Type;
 #define pygimp_parasite_check(v) (PyObject_TypeCheck(v, &PyGimpParasite_Type))
 PyObject *pygimp_parasite_new(GimpParasite *para);
-
-typedef struct {
-    PyObject_HEAD
-    gint32 ID;
-} PyGimpVectors;
 
 extern PyTypeObject PyGimpVectors_Type;
 #define pygimp_vectors_check(v) (PyObject_TypeCheck(v, &PyGimpVectors_Type))

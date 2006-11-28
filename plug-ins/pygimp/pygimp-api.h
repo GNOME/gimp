@@ -25,22 +25,47 @@
 
 #include <libgimp/gimp.h>
 
+typedef struct {
+    PyObject_HEAD
+    gint32 ID;
+} PyGimpImage;
+
+typedef struct {
+    PyObject_HEAD
+    gint32 ID;
+} PyGimpDisplay;
+
+typedef struct {
+    PyObject_HEAD
+    gint32 ID;
+    GimpDrawable *drawable;
+} PyGimpDrawable, PyGimpLayer, PyGimpChannel;
+
+typedef struct {
+    PyObject_HEAD
+    gint32 ID;
+} PyGimpVectors;
+
 struct _PyGimp_Functions {
+    PyTypeObject *Image_Type;
     PyObject *(* image_new)(gint32 ID);
+
+    PyTypeObject *Display_Type;
     PyObject *(* display_new)(gint32 ID);
+
+    PyTypeObject *Drawable_Type;
     PyObject *(* drawable_new)(GimpDrawable *drawable, gint32 ID);
+
+    PyTypeObject *Layer_Type;
     PyObject *(* layer_new)(gint32 ID);
+
+    PyTypeObject *Channel_Type;
     PyObject *(* channel_new)(gint32 ID);
+
+    PyTypeObject *Vectors_Type;
     PyObject *(* vectors_new)(gint32 ID);
 
-    PyTypeObject *PDBFunction_Type;
-    PyObject *(* pdb_function_new)(const char *name, const char *blurb,
-                                   const char *help, const char *author,
-                                   const char *copyright, const char *date,
-                                   GimpPDBProcType proc_type,
-                                   int n_params, int n_return_vals,
-                                   GimpParamDef *params,
-                                   GimpParamDef *return_vals);
+    PyObject *pygimp_error;
 };
 
 #ifndef _INSIDE_PYGIMP_
@@ -51,14 +76,19 @@ extern struct _PyGimp_Functions *_PyGimp_API;
 struct _PyGimp_Functions *_PyGimp_API;
 #endif
 
+#define PyGimpImage_Type        (_PyGimp_API->Image_Type)
 #define pygimp_image_new        (_PyGimp_API->image_new)
+#define PyGimpDisplay_Type      (_PyGimp_API->Display_Type)
 #define pygimp_display_new      (_PyGimp_API->display_new)
+#define PyGimpDrawable_Type     (_PyGimp_API->Drawable_Type)
 #define pygimp_drawable_new     (_PyGimp_API->drawable_new)
+#define PyGimpLayer_Type        (_PyGimp_API->Layer_Type)
 #define pygimp_layer_new        (_PyGimp_API->layer_new)
+#define PyGimpChannel_Type      (_PyGimp_API->Channel_Type)
 #define pygimp_channel_new      (_PyGimp_API->channel_new)
+#define PyGimpVectors_Type      (_PyGimp_API->Vectors_Type)
 #define pygimp_vectors_new      (_PyGimp_API->vectors_new)
-#define PyGimpPDBFunction_Type  (_PyGimp_API->PDBFunction_Type)
-#define pygimp_pdb_function_new (_PyGimp_API->pdb_function_new)
+#define pygimp_error            (_PyGimp_API->pygimp_error)
 
 #define init_pygimp() G_STMT_START { \
     PyObject *gimpmodule = PyImport_ImportModule("gimp"); \

@@ -25,9 +25,6 @@
 
 #include "pygimpcolor-api.h"
 
-#define _INSIDE_PYGIMP_
-#include "pygimp-api.h"
-
 #include <sysmodule.h>
 
 #include <glib-object.h>
@@ -1742,15 +1739,18 @@ static struct PyMethodDef gimp_methods[] = {
 
 
 static struct _PyGimp_Functions pygimp_api_functions = {
+    &PyGimpImage_Type,
     pygimp_image_new,
+    &PyGimpDisplay_Type,
     pygimp_display_new,
+    &PyGimpDrawable_Type,
     pygimp_drawable_new,
+    &PyGimpLayer_Type,
     pygimp_layer_new,
+    &PyGimpChannel_Type,
     pygimp_channel_new,
+    &PyGimpVectors_Type,
     pygimp_vectors_new,
-
-    &PyGimpPDBFunction_Type,
-    pygimp_pdb_function_new
 };
 
 
@@ -1876,6 +1876,7 @@ initgimp(void)
     PyDict_SetItemString(d, "Vectors", (PyObject *)&PyGimpVectors_Type);
 
     /* for other modules */
+    pygimp_api_functions.pygimp_error = pygimp_error;
     PyDict_SetItemString(d, "_PyGimp_API",
                          i=PyCObject_FromVoidPtr(&pygimp_api_functions, NULL));
     Py_DECREF(i);

@@ -1,3 +1,19 @@
+2006-11-28  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-api.h
+	* plug-ins/pygimp/pygimp.h
+	* plug-ins/pygimp/gimpmodule.c: export common object types via
+	_PyGimp_API, and remove the PDBFunction_Type hack. Also define
+	the common object structures here.
+
+	* plug-ins/pygimp/pygimp.h: remove hack for Python < 2.3, since
+	we require Python 2.3 now.
+
+	* plug-ins/pygimp/gimpui.override
+	* plug-ins/pygimp/gimpui.py: create and use specialized wrappers
+	for get/set_active methods for GimpIntComboBox and derived types.
+	Fixes #376102.
+
 2006-11-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-convert.c: applied patch from Aurimas Juška
