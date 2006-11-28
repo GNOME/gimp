@@ -22,13 +22,14 @@
 #include <fontconfig/fontconfig.h>
 #include <pango/pangoft2.h>
 
-#include "libgimpbase/gimpenv.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "sanity.h"
 
 #include "gimp-intl.h"
 
 
+static gchar * sanity_check_gimp              (void);
 static gchar * sanity_check_glib              (void);
 static gchar * sanity_check_fontconfig        (void);
 static gchar * sanity_check_freetype          (void);
@@ -40,7 +41,10 @@ static gchar * sanity_check_filename_encoding (void);
 const gchar *
 sanity_check (void)
 {
-  gchar *abort_message = sanity_check_glib ();
+  gchar *abort_message = sanity_check_gimp ();
+
+  if (! abort_message)
+    abort_message = sanity_check_glib ();
 
   if (! abort_message)
     abort_message = sanity_check_fontconfig ();
@@ -56,6 +60,26 @@ sanity_check (void)
 
 
 /*  private functions  */
+
+static gchar *
+sanity_check_gimp (void)
+{
+  if (GIMP_MAJOR_VERSION != gimp_major_version ||
+      GIMP_MINOR_VERSION != gimp_minor_version ||
+      GIMP_MICRO_VERSION != gimp_micro_version)
+    {
+      return g_strdup_printf
+        ("Libgimp version mismatch!\n\n"
+         "The GIMP binary cannot run with a libgimp version\n"
+         "other than its own. This is GIMP %d.%d.%d, but the\n"
+         "libgimp version is %d.%d.%d.\n\n"
+         "Maybe you have GIMP versions in both /usr and /usr/local ?",
+         GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION, GIMP_MICRO_VERSION,
+         gimp_major_version, gimp_minor_version, gimp_micro_version);
+    }
+
+  return NULL;
+}
 
 static gchar *
 sanity_check_glib (void)

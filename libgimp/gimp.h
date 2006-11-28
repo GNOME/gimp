@@ -59,15 +59,9 @@
 #include <libgimp/gimp_pdb.h>
 
 #ifdef G_OS_WIN32
-#  include <stdlib.h>           /* For __argc and __argv */
-#  ifdef LIBGIMP_COMPILATION
-#    define GIMPVAR __declspec(dllexport)
-#  else  /* !LIBGIMP_COMPILATION */
-#    define GIMPVAR extern __declspec(dllimport)
-#  endif /* !LIBGIMP_COMPILATION */
-#else  /* !G_OS_WIN32 */
-#  define GIMPVAR extern
+#include <stdlib.h> /* For __argc and __argv */
 #endif
+
 
 G_BEGIN_DECLS
 
@@ -75,11 +69,6 @@ G_BEGIN_DECLS
 #define gimp_get_data         gimp_procedural_db_get_data
 #define gimp_get_data_size    gimp_procedural_db_get_data_size
 #define gimp_set_data         gimp_procedural_db_set_data
-
-
-GIMPVAR const guint gimp_major_version;
-GIMPVAR const guint gimp_minor_version;
-GIMPVAR const guint gimp_micro_version;
 
 
 typedef void (* GimpInitProc)  (void);

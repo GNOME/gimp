@@ -93,10 +93,6 @@
 #include <libintl.h>
 #include <locale.h>
 
-#ifndef LIBGIMP_COMPILATION
-#define LIBGIMP_COMPILATION
-#endif
-
 #include "libgimpbase/gimpbasetypes.h"
 
 #include "libgimpbase/gimpbase-private.h"
@@ -162,10 +158,6 @@ static gboolean   gimp_extension_read          (GIOChannel      *channel,
 
 static GIOChannel *_readchannel  = NULL;
 GIOChannel *_writechannel = NULL;
-
-const guint gimp_major_version = GIMP_MAJOR_VERSION;
-const guint gimp_minor_version = GIMP_MINOR_VERSION;
-const guint gimp_micro_version = GIMP_MICRO_VERSION;
 
 #ifdef USE_WIN32_SHM
 static HANDLE shm_handle;
