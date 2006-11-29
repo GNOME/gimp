@@ -56,7 +56,6 @@
     <chapter id="app-base-glue">
       <title>Initialization &amp; Glue Code</title>
       <xi:include href="xml/base.xml" />
-      <xi:include href="xml/cpu-accel.xml" />
     </chapter>
 
     <chapter id="app-base-utils">
@@ -261,6 +260,7 @@
       <xi:include href="xml/gimpbuffer.xml" />
       <xi:include href="xml/gimpenvirontable.xml" />
       <xi:include href="xml/gimpgrid.xml" />
+      <xi:include href="xml/gimpguide.xml" />
       <xi:include href="xml/gimpimagefile.xml" />
       <xi:include href="xml/gimpimagemap.xml" />
       <xi:include href="xml/gimpparasitelist.xml" />
@@ -379,7 +379,6 @@
       <title>Plug-In Execution</title>
       <xi:include href="xml/plug-in.xml" />   
       <xi:include href="xml/plug-in-context.xml" />
-      <xi:include href="xml/plug-in-debug.xml" />
       <xi:include href="xml/plug-in-message.xml" />
       <xi:include href="xml/plug-in-params.xml" />
       <xi:include href="xml/plug-in-progress.xml" />
@@ -931,8 +930,6 @@
       <title>Data Editor Actions &amp; Callbacks</title>
       <xi:include href="xml/data-editor-commands.xml" />
       <xi:include href="xml/brush-editor-actions.xml" />
-      <xi:include href="xml/colormap-editor-actions.xml" />
-      <xi:include href="xml/colormap-editor-commands.xml" />
       <xi:include href="xml/gradient-editor-actions.xml" />
       <xi:include href="xml/gradient-editor-commands.xml" />
       <xi:include href="xml/palette-editor-actions.xml" />
@@ -941,6 +938,8 @@
 
     <chapter id="app-actions-misc-actions">
       <title>Other Actions &amp; Callbacks</title>
+      <xi:include href="xml/colormap-actions.xml" />
+      <xi:include href="xml/colormap-commands.xml" />
       <xi:include href="xml/cursor-info-actions.xml" />
       <xi:include href="xml/cursor-info-commands.xml" />
       <xi:include href="xml/dock-actions.xml" />
@@ -949,8 +948,8 @@
       <xi:include href="xml/dockable-commands.xml" />
       <xi:include href="xml/error-console-actions.xml" />
       <xi:include href="xml/error-console-commands.xml" />
-      <xi:include href="xml/sample-point-editor-actions.xml" />
-      <xi:include href="xml/sample-point-editor-commands.xml" />
+      <xi:include href="xml/sample-points-actions.xml" />
+      <xi:include href="xml/sample-points-commands.xml" />
       <xi:include href="xml/text-editor-actions.xml" />
       <xi:include href="xml/text-editor-commands.xml" />
       <xi:include href="xml/tool-options-actions.xml" />

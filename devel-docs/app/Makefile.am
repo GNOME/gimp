@@ -61,8 +61,6 @@ GTKDOC_CFLAGS = \
 	$(GTK_CFLAGS)	\
 	-I$(includedir)
 
-GTKDOC_LDFLAGS = -u $(SYMPREFIX)xcf_init -u $(SYMPREFIX)internal_procs_init
-
 GTKDOC_LIBS = \
 	-u $(SYMPREFIX)xcf_init -u $(SYMPREFIX)internal_procs_init	     \
 	$(top_builddir)/app/app_procs.o					     \
@@ -106,6 +104,8 @@ GTKDOC_LIBS = \
         $(GTHREAD_LIBS)                                                      \
 	$(RT_LIBS)							     \
         $(INTLLIBS)
+
+LDFLAGS = -u $(SYMPREFIX)xcf_init -u $(SYMPREFIX)internal_procs_init
 
 
 include $(top_srcdir)/gtk-doc.make

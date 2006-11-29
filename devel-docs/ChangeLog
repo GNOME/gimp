@@ -1,3 +1,10 @@
+2006-11-29  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am: use LDFLAGS instead of GTKDOC_LDFLAGS.
+
+	* app/app-docs.sgml
+	* app/app-sections.txt: some minor updates.
+
 2006-11-27  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/images/gimp-chain-button.png: replaced with an

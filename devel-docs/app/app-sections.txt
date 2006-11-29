@@ -125,7 +125,6 @@ gimp_get_default_context
 gimp_set_user_context
 gimp_get_user_context
 gimp_set_global_buffer
-gimp_set_last_plug_in
 <SUBSECTION Standard>
 GimpClass
 GIMP
@@ -165,14 +164,9 @@ gimp_get_display_ID
 gimp_create_display
 gimp_delete_display
 gimp_reconnect_displays
-gimp_menus_init
-gimp_menus_create_item
-gimp_menus_delete_item
-gimp_menus_create_branch
 gimp_pdb_dialog_new
 gimp_pdb_dialog_set
 gimp_pdb_dialog_close
-gimp_pdb_dialogs_check
 gimp_get_program_class
 gimp_get_display_name
 gimp_get_theme_dir
@@ -247,7 +241,6 @@ gimp_unitrc_save
 
 <SECTION>
 <FILE>gimp-utils</FILE>
-gimp_rectangle_intersect
 gimp_g_list_get_memsize
 gimp_g_slist_get_memsize
 gimp_g_hash_table_get_memsize
@@ -808,7 +801,6 @@ gimp_gradient_load_svg
 <FILE>gimpgradient-save</FILE>
 <TITLE>GimpGradient-save</TITLE>
 gimp_gradient_save
-gimp_gradient_save_as_pov
 </SECTION>
 
 <SECTION>
@@ -953,7 +945,6 @@ gimp_image_lower_vectors_to_bottom
 gimp_image_position_vectors
 gimp_image_layer_boundary
 gimp_image_pick_correlate_layer
-gimp_image_coords_in_active_drawable
 gimp_image_invalidate_layer_previews
 gimp_image_invalidate_channel_previews
 <SUBSECTION Standard>
@@ -1033,9 +1024,7 @@ GIMP_INTERPRETER_DB_GET_CLASS
 <FILE>gimpitem</FILE>
 <TITLE>GimpItem</TITLE>
 GimpItem
-gimp_item_sink
 gimp_item_is_attached
-gimp_item_is_floating
 gimp_item_is_removed
 gimp_item_removed
 gimp_item_configure
@@ -1408,7 +1397,6 @@ GIMP_TEMPLATE_GET_CLASS
 <TITLE>GimpStrokeDesc</TITLE>
 GimpStrokeDesc
 gimp_stroke_desc_new
-gimp_stroke_desc_duplicate
 gimp_stroke_desc_prepare
 gimp_stroke_desc_finish
 <SUBSECTION Standard>
@@ -1918,7 +1906,6 @@ gimp_display_shell_pause
 gimp_display_shell_resume
 gimp_display_shell_update_icon
 gimp_display_shell_shrink_wrap
-gimp_display_shell_selection_visibility
 gimp_display_shell_set_highlight
 gimp_display_shell_set_mask
 <SUBSECTION Standard>
@@ -2106,13 +2093,7 @@ gimp_display_shell_autoscroll_stop
 <FILE>gimpdisplayshell-selection</FILE>
 <TITLE>GimpDisplayShell-selection</TITLE>
 Selection
-gimp_display_shell_selection_new
 gimp_display_shell_selection_free
-gimp_display_shell_selection_pause
-gimp_display_shell_selection_resume
-gimp_display_shell_selection_start
-gimp_display_shell_selection_invis
-gimp_display_shell_selection_layer_invis
 gimp_display_shell_selection_set_hidden
 gimp_display_shell_selection_layer_set_hidden
 </SECTION>
@@ -2128,7 +2109,6 @@ gimp_display_shell_title_update
 <FILE>gimpdisplayshell-transform</FILE>
 <TITLE>GimpDisplayShell-transform</TITLE>
 gimp_display_shell_transform_coords
-gimp_display_shell_untransform_coords
 gimp_display_shell_transform_xy
 gimp_display_shell_untransform_xy
 gimp_display_shell_transform_xy_f
@@ -3541,15 +3521,11 @@ gimp_rectangle_tool_button_release
 gimp_rectangle_tool_configure
 gimp_rectangle_tool_constructor
 gimp_rectangle_tool_cursor_update
-gimp_rectangle_tool_dispose
 gimp_rectangle_tool_draw
 gimp_rectangle_tool_execute
-gimp_rectangle_tool_initialize
 gimp_rectangle_tool_key_press
-gimp_rectangle_tool_modifier_key
 gimp_rectangle_tool_motion
 gimp_rectangle_tool_oper_update
-gimp_rectangle_tool_response
 <SUBSECTION Standard>
 GIMP_RECTANGLE_TOOL
 GIMP_IS_RECTANGLE_TOOL
@@ -3562,7 +3538,6 @@ gimp_rectangle_tool_interface_get_type
 <TITLE>GimpRectSelectTool</TITLE>
 GimpRectSelectTool
 gimp_rect_select_tool_register
-gimp_rect_select_tool_rect_select
 <SUBSECTION Standard>
 GimpRectSelectToolClass
 GIMP_RECT_SELECT_TOOL
@@ -4342,8 +4317,6 @@ GIMP_COLOR_EDITOR_GET_CLASS
 <TITLE>GimpColormapEditor</TITLE>
 GimpColormapEditor
 gimp_colormap_editor_new
-gimp_colormap_editor_selected
-gimp_colormap_editor_col_index
 <SUBSECTION Standard>
 GimpColormapEditorClass
 GIMP_COLORMAP_EDITOR
@@ -5502,7 +5475,6 @@ GIMP_PATTERN_FACTORY_VIEW_GET_CLASS
 GimpPdbDialog
 gimp_pdb_dialog_run_callback
 gimp_pdb_dialog_get_by_callback
-gimp_pdb_dialogs_check_callback
 <SUBSECTION Standard>
 GimpPdbDialogClass
 GIMP_PDB_DIALOG
@@ -6300,10 +6272,6 @@ batch_run
 
 <SECTION>
 <FILE>errors</FILE>
-gimp_errors_init
-gimp_message_log_func
-gimp_error_log_func
-gimp_fatal_error
 gimp_terminate
 </SECTION>
 
@@ -6405,19 +6373,6 @@ cpercep_space_to_rgb
 </SECTION>
 
 <SECTION>
-<FILE>cpu-accel</FILE>
-CPU_ACCEL_X86_MMX
-CPU_ACCEL_X86_3DNOW
-CPU_ACCEL_X86_MMXEXT
-CPU_ACCEL_X86_SSE
-CPU_ACCEL_X86_SSE2
-CPU_ACCEL_X86_SSE3
-CPU_ACCEL_PPC_ALTIVEC
-cpu_accel
-cpu_accel_print_results
-</SECTION>
-
-<SECTION>
 <FILE>curves</FILE>
 Curves
 curves_init
@@ -6510,7 +6465,6 @@ pixel_region_init
 pixel_region_init_temp_buf
 pixel_region_init_data
 pixel_region_resize
-pixel_region_get_async
 pixel_region_get_row
 pixel_region_set_row
 pixel_region_get_col
@@ -6601,7 +6555,6 @@ tile_manager_unref
 tile_manager_set_validate_proc
 tile_manager_get_tile
 tile_manager_get
-tile_manager_get_async
 tile_manager_map_tile
 tile_manager_map
 tile_manager_validate
@@ -6630,8 +6583,6 @@ write_pixel_data_1
 <FILE>tile-private</FILE>
 TileLink
 Tile
-TILE_MUTEX_LOCK
-TILE_MUTEX_UNLOCK
 </SECTION>
 
 <SECTION>
@@ -6643,10 +6594,8 @@ tile_swap_exit
 tile_swap_add
 tile_swap_remove
 tile_swap_in
-tile_swap_in_async
 tile_swap_out
 tile_swap_delete
-tile_swap_compress
 tile_swap_test
 </SECTION>
 
@@ -6797,8 +6746,6 @@ GIMP_TYPE_GRAVITY_TYPE
 GimpGravityType
 GIMP_TYPE_JOIN_STYLE
 GimpJoinStyle
-GIMP_TYPE_IMAGE_RESIZE_LAYERS
-GimpImageResizeLayers
 GIMP_TYPE_ORIENTATION_TYPE
 GimpOrientationType
 GIMP_TYPE_ROTATION_TYPE
@@ -6843,7 +6790,6 @@ gimp_dirty_mask_get_type
 gimp_offset_type_get_type
 gimp_fill_type_get_type
 gimp_gravity_type_get_type
-gimp_image_resize_layers_get_type
 gimp_join_style_get_type
 gimp_orientation_type_get_type
 gimp_rotation_type_get_type
@@ -6979,6 +6925,27 @@ gimp_drawable_transform_paste
 </SECTION>
 
 <SECTION>
+<FILE>gimpguide</FILE>
+<TITLE>GimpGuide</TITLE>
+GimpGuide
+gimp_guide_new
+gimp_guide_get_ID
+gimp_guide_get_orientation
+gimp_guide_set_orientation
+gimp_guide_get_position
+gimp_guide_set_position
+gimp_guide_removed
+<SUBSECTION Standard>
+GIMP_GUIDE
+GIMP_IS_GUIDE
+GIMP_TYPE_GUIDE
+gimp_guide_get_type
+GIMP_GUIDE_CLASS
+GIMP_IS_GUIDE_CLASS
+GIMP_GUIDE_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpimage-colorhash</FILE>
 <TITLE>GimpImage-colorhash</TITLE>
 gimp_image_color_hash_init
@@ -7044,12 +7011,9 @@ gimp_grid_from_parasite
 
 <SECTION>
 <FILE>gimpimage-guides</FILE>
-GimpGuide
 <TITLE>GimpImage-guides</TITLE>
 gimp_image_add_hguide
 gimp_image_add_vguide
-gimp_image_guide_ref
-gimp_image_guide_unref
 gimp_image_add_guide
 gimp_image_remove_guide
 gimp_image_move_guide
@@ -7078,7 +7042,6 @@ gimp_image_find_sample_point
 gimp_image_merge_visible_layers
 gimp_image_merge_down
 gimp_image_flatten
-gimp_image_merge_layers
 gimp_image_merge_visible_vectors
 </SECTION>
 
@@ -7207,8 +7170,6 @@ gimp_image_undo_push
 <SECTION>
 <FILE>gimpitem-linked</FILE>
 <TITLE>GimpItem-linked</TITLE>
-GimpItemLinkedMask
-gimp_item_linked_get_list
 gimp_item_linked_translate
 gimp_item_linked_flip
 gimp_item_linked_rotate
@@ -7363,7 +7324,7 @@ gimp_canvas_padding_mode_get_type
 file_open_image
 file_open_with_display
 file_open_with_proc_and_display
-file_open_layer
+file_open_layers
 file_open_thumbnail
 </SECTION>
 
@@ -7434,6 +7395,11 @@ color_history_get
 <SECTION>
 <FILE>convert-dialog</FILE>
 convert_dialog_new
+</SECTION>
+
+<SECTION>
+<FILE>dialogs-types</FILE>
+GimpScaleCallback
 </SECTION>
 
 <SECTION>
@@ -7581,8 +7547,6 @@ themes_apply_theme
 
 <SECTION>
 <FILE>image-scale-dialog</FILE>
-ImageScaleDialog
-ImageScaleDialogCallback
 image_scale_dialog_new
 </SECTION>
 
@@ -7598,8 +7562,7 @@ offset_dialog_new
 
 <SECTION>
 <FILE>palette-import-dialog</FILE>
-palette_import_dialog_show
-palette_import_dialog_destroy
+palette_import_dialog_new
 </SECTION>
 
 <SECTION>
@@ -7718,18 +7681,18 @@ vectors_import_dialog_new
 <FILE>paint-enums</FILE>
 GIMP_TYPE_BRUSH_APPLICATION_MODE
 GimpBrushApplicationMode
-GIMP_TYPE_CLONE_ALIGN_MODE
-GimpCloneAlignMode
 GIMP_TYPE_CONVOLVE_TYPE
 GimpConvolveType
 GIMP_TYPE_INK_BLOB_TYPE
 GimpInkBlobType
 GimpPaintState
+GIMP_TYPE_SOURCE_ALIGN_MODE
+GimpSourceAlignMode
 <SUBSECTION Standard>
 gimp_brush_application_mode_get_type
-gimp_clone_align_mode_get_type
 gimp_convolve_type_get_type
 gimp_ink_blob_type_get_type
+gimp_source_align_mode_get_type
 </SECTION>
 
 <SECTION>
@@ -7766,7 +7729,6 @@ scale_pixels
 add_alpha_pixels
 flatten_pixels
 gray_to_rgb_pixels
-component_pixels
 apply_mask_to_alpha_channel
 combine_mask_and_alpha_channel_stipple
 combine_mask_and_alpha_channel_stroke
@@ -7823,7 +7785,6 @@ combine_regions_replace
 
 <SECTION>
 <FILE>scale-funcs</FILE>
-EPSILON
 LANCZOS_SPP
 LANCZOS_WIDTH
 LANCZOS_SAMPLES
@@ -7834,15 +7795,6 @@ scale_region
 <SECTION>
 <FILE>internal_procs</FILE>
 internal_procs_init
-</SECTION>
-
-<SECTION>
-<FILE>plug-in-debug</FILE>
-GimpPlugInDebug 
-GimpDebugWrapFlag
-plug_in_debug_init
-plug_in_debug_exit
-plug_in_debug_argv
 </SECTION>
 
 <SECTION>
@@ -8176,13 +8128,8 @@ tool_manager_cursor_update_active
 <FILE>tools-enums</FILE>
 GIMP_TYPE_COLOR_PICK_MODE
 GimpColorPickMode
-GIMP_TYPE_CROP_MODE
-GimpCropMode
-SelectOps
 GimpToolAction
 GimpMotionMode
-GIMP_TYPE_RECTANGLE_MODE
-GimpRectangleMode
 GIMP_TYPE_RECT_SELECT_MODE
 GimpRectSelectMode
 GIMP_TYPE_TRANSFORM_TYPE
@@ -8442,7 +8389,6 @@ gimp_rgb_get_gdk_color
 gimp_rgb_set_gdk_color
 gimp_window_set_hint
 gimp_window_get_native
-gimp_dialog_set_sensitive
 gimp_text_buffer_load
 gimp_text_buffer_save
 gimp_toggle_button_set_visible
@@ -8604,9 +8550,9 @@ channels_actions_update
 </SECTION>
 
 <SECTION>
-<FILE>colormap-editor-actions</FILE>
-colormap_editor_actions_setup
-colormap_editor_actions_update
+<FILE>colormap-actions</FILE>
+colormap_actions_setup
+colormap_actions_update
 </SECTION>
 
 <SECTION>
@@ -8747,9 +8693,9 @@ quick_mask_actions_update
 </SECTION>
 
 <SECTION>
-<FILE>sample-point-editor-actions</FILE>
-sample_point_editor_actions_setup
-sample_point_editor_actions_update
+<FILE>sample-points-actions</FILE>
+sample_points_actions_setup
+sample_points_actions_update
 </SECTION>
 
 <SECTION>
@@ -8861,9 +8807,9 @@ context_brush_spikes_cmd_callback
 </SECTION>
 
 <SECTION>
-<FILE>colormap-editor-commands</FILE>
-colormap_editor_edit_color_cmd_callback
-colormap_editor_add_color_cmd_callback
+<FILE>colormap-commands</FILE>
+colormap_edit_color_cmd_callback
+colormap_add_color_cmd_callback
 </SECTION>
 
 <SECTION>
@@ -8976,7 +8922,7 @@ error_console_clear_cmd_callback
 <SECTION>
 <FILE>file-commands</FILE>
 file_open_cmd_callback
-file_open_as_layer_cmd_callback
+file_open_as_layers_cmd_callback
 file_open_from_image_cmd_callback
 file_open_location_cmd_callback
 file_last_opened_cmd_callback
@@ -9117,8 +9063,8 @@ quick_mask_configure_cmd_callback
 </SECTION>
 
 <SECTION>
-<FILE>sample-point-editor-commands</FILE>
-sample_point_editor_sample_merged_cmd_callback
+<FILE>sample-points-commands</FILE>
+sample_points_sample_merged_cmd_callback
 </SECTION>
 
 <SECTION>
