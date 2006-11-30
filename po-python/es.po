@@ -7,55 +7,55 @@
 # Oscar Cebellán Ramos <cebaman@bigfoot.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: pan2\n"
+"Project-Id-Version: gimp-python-2-4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-02 20:45+0100\n"
-"PO-Revision-Date: 2006-11-02 20:54+0100\n"
-"Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
+"POT-Creation-Date: 2006-11-30 10:56+0100\n"
+"PO-Revision-Date: 2006-11-29 13:35+0100\n"
+"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: gettext po mode for emacs\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:333
+#: ../plug-ins/pygimp/gimpfu.py:335
 msgid "Missing exception information"
 msgstr "Se ha perdido la información de la excepción"
 
-#: ../plug-ins/pygimp/gimpfu.py:342
+#: ../plug-ins/pygimp/gimpfu.py:344
 #, python-format
 msgid "An error occured running %s"
 msgstr "Ocurrió un error al ejecutar %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:353
+#: ../plug-ins/pygimp/gimpfu.py:355
 msgid "_More Information"
 msgstr "_Más información"
 
-#: ../plug-ins/pygimp/gimpfu.py:459 ../plug-ins/pygimp/gimpfu.py:471
-#: ../plug-ins/pygimp/gimpfu.py:477
+#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
+#: ../plug-ins/pygimp/gimpfu.py:479
 msgid "No"
 msgstr "No"
 
-#: ../plug-ins/pygimp/gimpfu.py:469 ../plug-ins/pygimp/gimpfu.py:477
+#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
 msgid "Yes"
 msgstr "Sí"
 
-#: ../plug-ins/pygimp/gimpfu.py:515 ../plug-ins/pygimp/gimpui.py:200
+#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
 msgstr "Selección de archivos Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:526
+#: ../plug-ins/pygimp/gimpfu.py:528
 msgid "Python-Fu Folder Selection"
 msgstr "Selección de carpeta Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:615
+#: ../plug-ins/pygimp/gimpfu.py:618
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Entrada inválida para «%s»"
 
-#: ../plug-ins/pygimp/gimpui.py:153
+#: ../plug-ins/pygimp/gimpui.py:175
 msgid "Python-Fu Color Selection"
 msgstr "Selección de color Python-Fu"
 
@@ -73,11 +73,11 @@ msgstr "XHTML coloreado"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
 msgid "Character source"
-msgstr ""
+msgstr "Fuente del carácter"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
 msgid "Source code"
-msgstr ""
+msgstr "Código fuente"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:194
 msgid "Text file"
@@ -163,18 +163,18 @@ msgstr "Opacidad"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
 msgid "Offset the colors in a palette"
-msgstr ""
+msgstr "Desplazar los colores de una paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
 msgid "_Offset Palette..."
-msgstr ""
+msgstr "_Desplazar paleta..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette"
-msgstr ""
+msgstr "Paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
 msgid "Offset"
@@ -222,7 +222,7 @@ msgstr "Ascendente"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
-msgstr ""
+msgstr "Crear un degradado que se repite, utilizando los colores de la paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
 msgid "Palette to _Repeating Gradient"
@@ -242,7 +242,9 @@ msgstr "Rodaja"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Corta una imagen a lo largo de sus guías, crea imágenes y un recorte de table HTML"
+msgstr ""
+"Corta una imagen a lo largo de sus guías, crea imágenes y un recorte de "
+"table HTML"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
@@ -270,31 +272,31 @@ msgstr "Separar carpeta de la imagen"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Folder for image export"
-msgstr ""
+msgstr "Carpeta para la exportación de imágenes"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Space between table elements"
-msgstr ""
+msgstr "Espacio entre los elementos de la tabla"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Javascript for onmouseover and clicked"
-msgstr ""
+msgstr "Código Javascript para «onmouseover» y «clicked»"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Skip animation for table caps"
-msgstr ""
+msgstr "Saltar animación para capacidades de la tabla"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr ""
+msgstr "Aplicar sombra arrojada a una capa, y opcionalmente biselarla"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
 msgid "_Drop Shadow and Bevel..."
-msgstr ""
+msgstr "_Sombra arrojada y bisel..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
 msgid "Shadow blur"
-msgstr ""
+msgstr "Difuminado de la sombra"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 msgid "Bevel"
@@ -302,13 +304,12 @@ msgstr "Bisel"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "Drop shadow"
-msgstr ""
+msgstr "Sombra arrojada"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "Drop shadow X displacement"
-msgstr ""
+msgstr "Desplazamiento X de la sombra arrojada"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow Y displacement"
-msgstr ""
-
+msgstr "Desplazamiento Y de la sombra arrojada"
