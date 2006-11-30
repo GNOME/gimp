@@ -1,5 +1,14 @@
 2006-11-29  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/libgimp-sections.txt
+	* libgimpbase/libgimpbase-sections.txt: version symbols moved from
+	libgimp to libgimpbase.
+
+	* libgimp/tmpl/gimp.sgml
+	* libgimpbase/tmpl/gimpversion.sgml: regenerated.
+
+2006-11-29  Sven Neumann  <sven@gimp.org>
+
 	* app/Makefile.am: use LDFLAGS instead of GTKDOC_LDFLAGS.
 
 	* app/app-docs.sgml

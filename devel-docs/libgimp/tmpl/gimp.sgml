@@ -20,13 +20,6 @@ all other GIMP Library headers.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
-<!-- ##### MACRO GIMPVAR ##### -->
-<para>
-
-</para>
-
-
-
 <!-- ##### FUNCTION gimp_version ##### -->
 <para>
 
@@ -41,24 +34,6 @@ all other GIMP Library headers.
 </para>
 
 @Returns: 
-
-
-<!-- ##### VARIABLE gimp_major_version ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### VARIABLE gimp_minor_version ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### VARIABLE gimp_micro_version ##### -->
-<para>
-
-</para>
 
 
 <!-- ##### MACRO gimp_get_data ##### -->

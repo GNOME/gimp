@@ -1,11 +1,7 @@
 <SECTION>
 <FILE>gimp</FILE>
-GIMPVAR
 gimp_version
 gimp_getpid
-gimp_major_version
-gimp_minor_version
-gimp_micro_version
 gimp_get_data
 gimp_get_data_size
 gimp_set_data

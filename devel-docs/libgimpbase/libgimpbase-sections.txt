@@ -272,6 +272,10 @@ GIMP_MICRO_VERSION
 GIMP_VERSION
 GIMP_API_VERSION
 GIMP_CHECK_VERSION
+GIMPVAR
+gimp_major_version
+gimp_minor_version
+gimp_micro_version
 </SECTION>
 
 <SECTION>
