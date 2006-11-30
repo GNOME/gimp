@@ -1,3 +1,9 @@
+2006-11-30  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimp.def
+	* libgimpbase/gimpbase.def: move around version number symbols
+	here too. Fixes bug #380658.
+
 2006-11-28  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimp.[ch]: removed gimp_foo_version variables.

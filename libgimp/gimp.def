@@ -430,15 +430,12 @@ EXPORTS
 	gimp_levels_auto
 	gimp_levels_stretch
 	gimp_main
-	gimp_major_version
 	gimp_mask_apply_mode_get_type
 	gimp_merge_type_get_type
 	gimp_message
 	gimp_message_get_handler
 	gimp_message_set_handler
-	gimp_micro_version
 	gimp_min_colors
-	gimp_minor_version
 	gimp_monitor_number
 	gimp_offset_type_get_type
 	gimp_orientation_type_get_type
