@@ -27,6 +27,30 @@ GIMP_PLUGIN_DEBUG=name<,options>
     on:             shorthand for run:fatal-warnings. This is also the default
                     in the absence of an options string.
 
+
+The steps to debug a plug-in are as follows:
+
+  0. Make sure GIMP is built with debugging information (gcc -g)
+
+  1. Start GIMP with the appropriate debugging environment variables
+
+  2. Load the standalone plug-in program in the debugger (gdb or
+     the ddd frontend to gdb)
+
+  3. Invoke the plug-in procedure in GIMP. GIMP will start the plug-in
+     process, then send a STOP signal to it and then print a message with
+     the pid of the plug-in process to the terminal.
+
+  4. Attach to the pid of the plug-in process in the debugger
+
+  5. Set breakpoints where you want the plug-in to stop in the debugger
+
+  6. Send the CONT signal (kill -CONT <pid>) to the plug-in process
+
+  7. Enter "continue" in the debugger. The plug-in will then continue
+     and break at the breakpoints.
+
+
 Examples:
 
 GIMP_PLUGIN_DEBUG=blur

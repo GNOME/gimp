@@ -1,5 +1,10 @@
 2006-12-02  Mukund Sivaraman  <muks@mukund.org>
 
+	* devel-docs/debug-plug-ins.txt: added a recipe for debugging
+	plug-ins
+
+2006-12-02  Mukund Sivaraman  <muks@mukund.org>
+
 	* configure.in: dropped the required libcurl version to 7.15.1
 	* plug-ins/Makefile.am: made uri build on win32 if libcurl is
 	detected
