@@ -31,6 +31,9 @@ endif
 if OS_WIN32
 twain = twain
 winsnap = winsnap
+if HAVE_LIBCURL
+uri = uri
+endif
 else
 uri = uri
 endif
