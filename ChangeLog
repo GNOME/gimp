@@ -1,3 +1,7 @@
+2006-12-04  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpperspectiveclonetool.h: removed unused defines.
+
 2006-12-03  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimppainttool.c (gimp_paint_tool_init): don't

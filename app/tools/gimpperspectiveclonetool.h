@@ -21,12 +21,7 @@
 
 
 #include "gimpbrushtool.h"
-#include "gimptransformtool.h"  /* Quit, but define TransInfo */
-
-
-/* buffer sizes for scaling information strings (for the info dialog) */
-#define MAX_INFO_BUF   40
-#define TRAN_INFO_SIZE  8
+#include "gimptransformtool.h"  /* for TransInfo */
 
 
 #define GIMP_TYPE_PERSPECTIVE_CLONE_TOOL            (gimp_perspective_clone_tool_get_type ())
