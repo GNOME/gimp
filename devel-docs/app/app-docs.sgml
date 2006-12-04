@@ -19,7 +19,7 @@
   <part id="app-glue-part">
     <title>Application Glue</title>
 
-    <partintro>
+    <partintro id="app-glue-part-intro">
       <para>
         The stuff in the toplevel source directory. Initializes and shuts
         down the application, parses the command line. It's the "glue"
@@ -294,7 +294,7 @@
   <part id="app-file-part">
     <title>File</title>
 
-    <partintro>
+    <partintro id="app-file-part-intro">
       <para>
         Functions to open and save images in any registered file format
         as well as various image file related utility functions.
@@ -325,7 +325,7 @@
   <part id="app-xcf-part">
     <title>XCF</title>
 
-    <partintro>
+    <partintro id="app-xcf-part-intro">
       <para>
         Functions to open and save images in GIMP's native "XCF" format.
       </para>
@@ -349,9 +349,9 @@
 
   <part id="app-pdb-part">
     <title>Procedural Database</title>
-    <xi:include href="xml/gimp-pdb.xml" />
+    <xi:include href="xml/gimppdb.xml" />
+    <xi:include href="xml/gimppdb-query.xml" />
     <xi:include href="xml/gimp-pdb-compat.xml" />
-    <xi:include href="xml/gimp-pdb-query.xml" />
     <xi:include href="xml/gimpprocedure.xml" />
     <xi:include href="xml/gimppluginprocedure.xml" />
     <xi:include href="xml/gimptemporaryprocedure.xml" />
@@ -361,29 +361,32 @@
   <part id="app-plug-in-part">
     <title>Plug-Ins</title>
     <xi:include href="xml/plug-in-types.xml" />
+    <xi:include href="xml/plug-in-params.xml" />
 
     <chapter id="app-plug-in-management">
       <title>Initialization &amp; Plug-In Management</title>
-      <xi:include href="xml/plug-ins.xml" />
-      <xi:include href="xml/plug-ins-query.xml" />
       <xi:include href="xml/plug-in-def.xml" />
-      <xi:include href="xml/plug-in-proc-frame.xml" />
       <xi:include href="xml/plug-in-rc.xml" />
-      <xi:include href="xml/plug-in-data.xml" />
-      <xi:include href="xml/plug-in-menu-branch.xml" />
-      <xi:include href="xml/plug-in-help-domain.xml" />
-      <xi:include href="xml/plug-in-locale-domain.xml" />
+      <xi:include href="xml/gimppluginmanager.xml" />
+      <xi:include href="xml/gimppluginmanager-call.xml" />
+      <xi:include href="xml/gimppluginmanager-history.xml" />
+      <xi:include href="xml/gimppluginmanager-data.xml" />
+      <xi:include href="xml/gimppluginmanager-file.xml" />
+      <xi:include href="xml/gimppluginmanager-help-domain.xml" />
+      <xi:include href="xml/gimppluginmanager-locale-domain.xml" />
+      <xi:include href="xml/gimppluginmanager-menu-branch.xml" />
+      <xi:include href="xml/gimppluginmanager-query.xml" />
     </chapter>
 
     <chapter id="app-plug-in-execution">
       <title>Plug-In Execution</title>
-      <xi:include href="xml/plug-in.xml" />   
-      <xi:include href="xml/plug-in-context.xml" />
-      <xi:include href="xml/plug-in-message.xml" />
-      <xi:include href="xml/plug-in-params.xml" />
-      <xi:include href="xml/plug-in-progress.xml" />
-      <xi:include href="xml/plug-in-run.xml" />
-      <xi:include href="xml/plug-in-shm.xml" />
+      <xi:include href="xml/gimpplugin.xml" />
+      <xi:include href="xml/gimpplugin-context.xml" />
+      <xi:include href="xml/gimpplugin-cleanup.xml" />
+      <xi:include href="xml/gimpplugin-message.xml" />
+      <xi:include href="xml/gimpplugin-progress.xml" />
+      <xi:include href="xml/gimppluginprocframe.xml" />
+      <xi:include href="xml/gimppluginshm.xml" />
     </chapter>
   </part>
 
@@ -401,6 +404,7 @@
       <xi:include href="xml/gimppaintoptions.xml" />
       <xi:include href="xml/gimpbrushcore.xml" />
       <xi:include href="xml/gimpbrushcore-kernels.xml" />
+      <xi:include href="xml/gimpsourcecore.xml" />
     </chapter>
 
     <chapter id="app-paint-implementations">
@@ -415,6 +419,7 @@
       <xi:include href="xml/gimpdodgeburnoptions.xml" />
       <xi:include href="xml/gimperaser.xml" />
       <xi:include href="xml/gimperaseroptions.xml" />
+      <xi:include href="xml/gimpheal.xml" />
       <xi:include href="xml/gimpink.xml" />
       <xi:include href="xml/gimpink-blob.xml" />
       <xi:include href="xml/gimpinkoptions.xml" />
@@ -562,9 +567,11 @@
       <xi:include href="xml/gimpconvolvetool.xml" />
       <xi:include href="xml/gimpdodgeburntool.xml" />
       <xi:include href="xml/gimperasertool.xml" />
+      <xi:include href="xml/gimphealtool.xml" />
       <xi:include href="xml/gimpinktool.xml" />
       <xi:include href="xml/gimppaintbrushtool.xml" />
       <xi:include href="xml/gimppenciltool.xml" />
+      <xi:include href="xml/gimpperspectiveclonetool.xml" />
       <xi:include href="xml/gimpsmudgetool.xml" />
     </chapter>
 
