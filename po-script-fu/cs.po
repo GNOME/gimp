@@ -12,10 +12,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-03 08:39+0100\n"
-"PO-Revision-Date: 2006-11-03 08:39+0100\n"
+"POT-Creation-Date: 2006-12-04 10:49+0100\n"
+"PO-Revision-Date: 2006-12-04 13:17+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team: Czech <cs@li.org>\n"
+"Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -52,7 +52,7 @@ msgstr "Nelze otevřít '%s' pro zápis: %s"
 msgid "Script-Fu Procedure Browser"
 msgstr "Prohlížeč procedur Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:711
+#: ../plug-ins/script-fu/script-fu-console.c:708
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Evaluační režim Script-fu umožňuje pouze neinteraktivní spuštění"
 
@@ -83,39 +83,39 @@ msgstr "Script-Fu: %s"
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:329
+#: ../plug-ins/script-fu/script-fu-interface.c:335
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu výběr barvy"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:441
+#: ../plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu výběr souboru"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:444
+#: ../plug-ins/script-fu/script-fu-interface.c:450
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu výběr adresáře"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:456
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu výběr písma"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:464
+#: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu výběr palety"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:473
+#: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu výběr vzorku"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:482
+#: ../plug-ins/script-fu/script-fu-interface.c:488
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu výběr přechodu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:491
+#: ../plug-ins/script-fu/script-fu-interface.c:497
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu výběr stopy"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:655
+#: ../plug-ins/script-fu/script-fu-scripts.c:661
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -382,8 +382,7 @@ msgid "Outline blur radius"
 msgstr "Poloměr rozostření obrysu"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
-msgid ""
-"Outline the selected region (or alpha) with a pattern and add a drop shadow"
+msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
@@ -495,7 +494,7 @@ msgstr "Velikost bloku"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:4
 msgid "Create an image filled with a 3D Truchet pattern"
-msgstr ""
+msgstr "Vytvořit obrázek vyplněný 3D klikaticí"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
@@ -1188,8 +1187,7 @@ msgid "Circuit seed"
 msgstr "Hnízdo okruhu"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-msgid ""
-"Fill the selected region (or alpha) with traces like those on a circuit board"
+msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr "Vyplnit vybranou oblast (nebo alfu) vzorem plošného spoje"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
@@ -1219,7 +1217,7 @@ msgstr "_Okruh..."
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:1
 msgid "Add a cloth-like texture to the selected region (or alpha)"
-msgstr ""
+msgstr "Přidat do vybrané oblasti (nebo alfy) texturu podobnou tkanině"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:2
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
@@ -1272,7 +1270,7 @@ msgstr "Skvrny od kávy..."
 msgid ""
 "Add a comic-book effect to the selected region (or alpha) by outlining and "
 "filling with a gradient"
-msgstr ""
+msgstr "Přidat do vybrané oblasti (nebo alfy) komiksový efekt vytvořením obrysu a vyplněním přechodem"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
@@ -1280,7 +1278,7 @@ msgstr "_Kniha komiksů..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
 msgid "Create a comic-book style logo by outlining and filling with a gradient"
-msgstr ""
+msgstr "Vytvořit logo ve stylu komiksu vytvořením obrysu a vyplněním přechodem"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 msgid "Outline color"
@@ -1295,7 +1293,7 @@ msgstr "Velikost obrysu"
 msgid ""
 "Add a metallic effect to the selected region (or alpha) with reflections and "
 "perspective shadows"
-msgstr ""
+msgstr "Přidat do vybrané oblasti (nebo alfy) metalický efekt s odrazy a perspektivními stíny"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
@@ -1320,7 +1318,7 @@ msgstr "Obrázek na pozadí"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 msgid "Create a logo with a crystal/gel effect displacing the image underneath"
-msgstr ""
+msgstr "Vytvořit efekt s krystalickým/gelovým efektem přemisťujícím spodní obrázek"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
@@ -1332,7 +1330,7 @@ msgstr "Odečíst mraky..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
 msgid "Solid noise applied with Difference layer mode"
-msgstr ""
+msgstr "Šum aplikovaný režimem vrstvy rozdíl"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
@@ -1464,9 +1462,8 @@ msgid "Clear unselected maskarea"
 msgstr "Vymazat nevybranou oblast masky"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid ""
-"Create a layermask that fades the edges of the selected region (or alpha)"
-msgstr ""
+msgid "Create a layermask that fades the edges of the selected region (or alpha)"
+msgstr "Vytvořit masku vrstvy prolínající okraje vybrané oblasti (nebo alfy)"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:6
 #, no-c-format
@@ -1533,8 +1530,7 @@ msgid "Black on white"
 msgstr "Černá na bílé"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
-msgid ""
-"Create an image filled with previews of fonts matching a fontname filter"
+msgid "Create an image filled with previews of fonts matching a fontname filter"
 msgstr "Vytvořit obrázek s náhledy fontů odpovídajících filtru jména fontu"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
@@ -1573,7 +1569,7 @@ msgstr "_Text"
 msgid ""
 "Add a frost effect to the selected region (or alpha) with an added drop "
 "shadow"
-msgstr ""
+msgstr "Přidat mrazivý efekt s vrženým stínem do vybrané oblasti (nebo alfy)"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
@@ -1704,8 +1700,7 @@ msgstr "Popisek _tlačítka na trubici"
 msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
 "alpha)"
-msgstr ""
-"Přidat přechody, vzorky, stíny a mapy vyvýšení do vybrané oblasti (nebo alfy)"
+msgstr "Přidat přechody, vzorky, stíny a mapy vyvýšení do vybrané oblasti (nebo alfy)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1971,8 +1966,7 @@ msgid "_Lava..."
 msgstr "_Láva..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
-msgid ""
-"Fill a layer with rays emanating outward from its center using the FG color"
+msgid "Fill a layer with rays emanating outward from its center using the FG color"
 msgstr "Vyplnit vrstvu paprsky v barvě popředí vycházejícími ze středu"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
@@ -2249,8 +2243,7 @@ msgid "Black"
 msgstr "Černá"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
-msgid ""
-"Create a multi-layer image by adding a ripple effect to the current image"
+msgid "Create a multi-layer image by adding a ripple effect to the current image"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
@@ -2291,8 +2284,7 @@ msgid "Edge radius"
 msgstr "Poloměr hran"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
-msgid ""
-"Round the corners of an image and optionally add a drop-shadow and background"
+msgid "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr "Zaoblit rohy obrázku a volitelně přidat stín a pozadí"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
@@ -2419,8 +2411,7 @@ msgid "_Spinning Globe..."
 msgstr "_Rotující glóbus..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-msgid ""
-"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr ""
 "Vykresluje hypotrochoidy, epitrochoidy a Lissajousovy křivky v aktuální "
 "vrstvě"
@@ -2596,7 +2587,7 @@ msgstr "Míra víření"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 msgid "Create an image filled with a swirly pattern"
-msgstr ""
+msgstr "Vytvořit obrázek vyplněný vířivým vzorem"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of times to whirl"
@@ -2616,7 +2607,7 @@ msgstr "_Vířivé..."
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "Add a Trace of Particles effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Přidat do vybrané oblasti (nebo alfy) efekt stopa částic"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 msgid "Base color"
@@ -2624,7 +2615,7 @@ msgstr "Barva základny"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 msgid "Create a logo using a Trace Of Particles effect"
-msgstr ""
+msgstr "Vytvořit logo pomocí efektu stopa částic"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
 msgid "Edge only"
@@ -2647,9 +2638,8 @@ msgid "Antialias"
 msgstr "Vyhlazování"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
-msgid ""
-"Create a logo by rendering the specified text along the perimeter of a circle"
-msgstr ""
+msgid "Create a logo by rendering the specified text along the perimeter of a circle"
+msgstr "Vytvořit logo vykreslením zadaného textu podél kružnice"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 msgid "Fill angle"
@@ -2660,9 +2650,8 @@ msgid "Text C_ircle..."
 msgstr "Textový _kruh..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
-msgid ""
-"Create a textured logo with highlights, shadows, and a mosaic background"
-msgstr ""
+msgid "Create a textured logo with highlights, shadows, and a mosaic background"
+msgstr "Vytvořit texturované logo se světly, stíny a mozaikovitým pozadím"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"
@@ -2740,7 +2729,7 @@ msgstr "Hlavička nadpisu na WWW..."
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:3
 msgid "Create an image filled with a Truchet pattern"
-msgstr ""
+msgstr "Vytvořit obrázek vyplněný klikaticí"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground color"
@@ -2766,7 +2755,7 @@ msgstr "Rozkmit"
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
-msgstr ""
+msgstr "Vytvořit vícevrstevný obrázek s efektem kamene hozeného do aktuálního obrázku"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
@@ -2784,7 +2773,7 @@ msgstr "_Vlny..."
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
-msgstr ""
+msgstr "Vytvořit novou vrstvu vyplněnou tkaným efektem pro použití jako překryv nebo mapa vyvýšení"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
@@ -2913,3 +2902,4 @@ msgstr "Krytí světel"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Efekt _Xach..."
+
