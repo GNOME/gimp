@@ -315,6 +315,22 @@ gimp_brush_load_abr
 </SECTION>
 
 <SECTION>
+<FILE>gimpbrushclipboard</FILE>
+<TITLE>GimpBrushClipboard</TITLE>
+GimpBrushClipboard
+gimp_brush_clipboard_new
+<SUBSECTION Standard>
+GimpBrushClipboardClass
+GIMP_BRUSH_CLIPBOARD
+GIMP_IS_BRUSH_CLIPBOARD
+GIMP_TYPE_BRUSH_CLIPBOARD
+gimp_brush_clipboard_get_type
+GIMP_BRUSH_CLIPBOARD_CLASS
+GIMP_IS_BRUSH_CLIPBOARD_CLASS
+GIMP_BRUSH_CLIPBOARD_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpbrushgenerated</FILE>
 GIMP_BRUSH_GENERATED_FILE_EXTENSION
 <TITLE>GimpBrushGenerated</TITLE>
@@ -711,6 +727,21 @@ gimp_drawable_get_type
 GIMP_DRAWABLE_CLASS
 GIMP_IS_DRAWABLE_CLASS
 GIMP_DRAWABLE_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpdrawableundo</FILE>
+<TITLE>GimpDrawableUndo</TITLE>
+GimpDrawableUndo
+<SUBSECTION Standard>
+GimpDrawableUndoClass
+GIMP_DRAWABLE_UNDO
+GIMP_IS_DRAWABLE_UNDO
+GIMP_TYPE_DRAWABLE_UNDO
+gimp_drawable_undo_get_type
+GIMP_DRAWABLE_UNDO_CLASS
+GIMP_IS_DRAWABLE_UNDO_CLASS
+GIMP_DRAWABLE_UNDO_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -1300,6 +1331,22 @@ PatternHeader
 </SECTION>
 
 <SECTION>
+<FILE>gimppatternclipboard</FILE>
+<TITLE>GimpPatternClipboard</TITLE>
+GimpPatternClipboard
+gimp_pattern_clipboard_new
+<SUBSECTION Standard>
+GimpPatternClipboardClass
+GIMP_PATTERN_CLIPBOARD
+GIMP_IS_PATTERN_CLIPBOARD
+GIMP_TYPE_PATTERN_CLIPBOARD
+gimp_pattern_clipboard_get_type
+GIMP_PATTERN_CLIPBOARD_CLASS
+GIMP_IS_PATTERN_CLIPBOARD_CLASS
+GIMP_PATTERN_CLIPBOARD_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimppdbprogress</FILE>
 <TITLE>GimpPdbProgress</TITLE>
 GimpPdbProgress
@@ -1477,14 +1524,15 @@ GIMP_TOOL_OPTIONS_GET_CLASS
 
 <SECTION>
 <FILE>gimpundo</FILE>
-GimpUndoAccumulator
 <TITLE>GimpUndo</TITLE>
 GimpUndo
+GimpUndoAccumulator
 gimp_undo_pop
 gimp_undo_free
 gimp_undo_create_preview
 gimp_undo_refresh_preview
 gimp_undo_type_to_name
+gimp_undo_is_weak
 <SUBSECTION Standard>
 GimpUndoClass
 GIMP_UNDO
@@ -2509,6 +2557,21 @@ GIMP_PAINT_OPTIONS_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpsourceoptions</FILE>
+<TITLE>GimpSourceOptions</TITLE>
+GimpSourceOptions
+<SUBSECTION Standard>
+GimpSourceOptionsClass
+GIMP_SOURCE_OPTIONS
+GIMP_IS_SOURCE_OPTIONS
+GIMP_TYPE_SOURCE_OPTIONS
+gimp_source_options_get_type
+GIMP_SOURCE_OPTIONS_CLASS
+GIMP_IS_SOURCE_OPTIONS_CLASS
+GIMP_SOURCE_OPTIONS_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimppencil</FILE>
 <TITLE>GimpPencil</TITLE>
 GimpPencil
@@ -2537,6 +2600,38 @@ gimp_pencil_options_get_type
 GIMP_PENCIL_OPTIONS_CLASS
 GIMP_IS_PENCIL_OPTIONS_CLASS
 GIMP_PENCIL_OPTIONS_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpperspectiveclone</FILE>
+<TITLE>GimpPerspectiveClone</TITLE>
+GimpPerspectiveClone
+gimp_perspective_clone_register
+gimp_perspective_clone_get_source_point
+<SUBSECTION Standard>
+GimpPerspectiveCloneClass
+GIMP_PERSPECTIVE_CLONE
+GIMP_IS_PERSPECTIVE_CLONE
+GIMP_TYPE_PERSPECTIVE_CLONE
+gimp_perspective_clone_get_type
+GIMP_PERSPECTIVE_CLONE_CLASS
+GIMP_IS_PERSPECTIVE_CLONE_CLASS
+GIMP_PERSPECTIVE_CLONE_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpperspectivecloneoptions</FILE>
+<TITLE>GimpPerspectiveCloneOptions</TITLE>
+GimpPerspectiveCloneOptions
+<SUBSECTION Standard>
+GimpPerspectiveCloneOptionsClass
+GIMP_PERSPECTIVE_CLONE_OPTIONS
+GIMP_IS_PERSPECTIVE_CLONE_OPTIONS
+GIMP_TYPE_PERSPECTIVE_CLONE_OPTIONS
+gimp_perspective_clone_options_get_type
+GIMP_PERSPECTIVE_CLONE_OPTIONS_CLASS
+GIMP_IS_PERSPECTIVE_CLONE_OPTIONS_CLASS
+GIMP_PERSPECTIVE_CLONE_OPTIONS_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -2762,10 +2857,43 @@ GIMP_AIRBRUSH_TOOL_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpalignoptions</FILE>
+GimpAlignOptions
+gimp_align_options_gui
+<SUBSECTION Standard>
+GimpAlignOptionsClass
+GIMP_ALIGN_OPTIONS
+GIMP_IS_ALIGN_OPTIONS
+GIMP_TYPE_ALIGN_OPTIONS
+gimp_align_options_get_type
+GIMP_ALIGN_OPTIONS_CLASS
+GIMP_IS_ALIGN_OPTIONS_CLASS
+GIMP_ALIGN_OPTIONS_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpaligntool</FILE>
+<TITLE>GimpAlignTool</TITLE>
+GimpAlignTool
+gimp_align_tool_register
+ALIGN_TOOL_NUM_BUTTONS
+<SUBSECTION Standard>
+GimpAlignToolClass
+GIMP_ALIGN_TOOL
+GIMP_IS_ALIGN_TOOL
+GIMP_TYPE_ALIGN_TOOL
+gimp_align_tool_get_type
+GIMP_ALIGN_TOOL_CLASS
+GIMP_IS_ALIGN_TOOL_CLASS
+GIMP_ALIGN_TOOL_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpblendoptions</FILE>
 <TITLE>GimpBlendOptions</TITLE>
 GimpBlendOptions
 gimp_blend_options_gui
+GIMP_BLEND_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpBlendOptionsClass
 GIMP_BLEND_OPTIONS
@@ -2791,6 +2919,21 @@ gimp_blend_tool_get_type
 GIMP_BLEND_TOOL_CLASS
 GIMP_IS_BLEND_TOOL_CLASS
 GIMP_BLEND_TOOL_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpbrushtool</FILE>
+<TITLE>GimpBrushTool</TITLE>
+GimpBrushTool
+<SUBSECTION Standard>
+GimpBrushToolClass
+GIMP_BRUSH_TOOL
+GIMP_IS_BRUSH_TOOL
+GIMP_TYPE_BRUSH_TOOL
+gimp_brush_tool_get_type
+GIMP_BRUSH_TOOL_CLASS
+GIMP_IS_BRUSH_TOOL_CLASS
+GIMP_BRUSH_TOOL_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -2830,6 +2973,7 @@ GIMP_BUCKET_FILL_OPTIONS_GET_CLASS
 <TITLE>GimpBucketFillTool</TITLE>
 GimpBucketFillTool
 gimp_bucket_fill_tool_register
+GIMP_BUCKET_FILL_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpBucketFillToolClass
 GIMP_BUCKET_FILL_TOOL
@@ -2942,6 +3086,7 @@ GIMP_COLOR_PICKER_OPTIONS_GET_CLASS
 <TITLE>GimpColorPickerTool</TITLE>
 GimpColorPickerTool
 gimp_color_picker_tool_register
+GIMP_COLOR_PICKER_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpColorPickerToolClass
 GIMP_COLOR_PICKER_TOOL
@@ -2961,6 +3106,7 @@ gimp_color_tool_enable
 gimp_color_tool_disable
 gimp_color_tool_is_enabled
 gimp_color_tool_start_sample_point
+GIMP_COLOR_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpColorToolClass
 GIMP_COLOR_TOOL
@@ -2977,6 +3123,7 @@ GIMP_COLOR_TOOL_GET_CLASS
 <TITLE>GimpConvolveTool</TITLE>
 GimpConvolveTool
 gimp_convolve_tool_register
+GIMP_CONVOLVE_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpConvolveToolClass
 GIMP_CONVOLVE_TOOL
@@ -3009,6 +3156,7 @@ GIMP_CROP_OPTIONS_GET_CLASS
 <TITLE>GimpCropTool</TITLE>
 GimpCropTool
 gimp_crop_tool_register
+GIMP_CROP_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpCropToolClass
 GIMP_CROP_TOOL
@@ -3040,6 +3188,7 @@ GIMP_IS_CURVES_TOOL_CLASS
 <TITLE>GimpDodgeBurnTool</TITLE>
 GimpDodgeBurnTool
 gimp_dodge_burn_tool_register
+GIMP_DODGE_BURN_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpDodgeBurnToolClass
 GIMP_DODGE_BURN_TOOL
@@ -3111,6 +3260,7 @@ GIMP_ELLIPSE_SELECT_TOOL_GET_CLASS
 <TITLE>GimpEraserTool</TITLE>
 GimpEraserTool
 gimp_eraser_tool_register
+GIMP_ERASER_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpEraserToolClass
 GIMP_ERASER_TOOL
@@ -3143,6 +3293,7 @@ GIMP_FLIP_OPTIONS_GET_CLASS
 <TITLE>GimpFlipTool</TITLE>
 GimpFlipTool
 gimp_flip_tool_register
+GIMP_FLIP_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpFlipToolClass
 GIMP_FLIP_TOOL
@@ -3159,6 +3310,7 @@ GIMP_FLIP_TOOL_GET_CLASS
 <TITLE>GimpForegroundSelectTool</TITLE>
 GimpForegroundSelectTool
 gimp_foreground_select_tool_register
+GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpForegroundSelectToolClass
 GIMP_FOREGROUND_SELECT_TOOL
@@ -3288,6 +3440,7 @@ GIMP_IMAGE_MAP_OPTIONS_GET_CLASS
 <TITLE>GimpImageMapTool</TITLE>
 GimpImageMapTool
 gimp_image_map_tool_preview
+GIMP_IMAGE_MAP_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpImageMapToolClass
 GIMP_IMAGE_MAP_TOOL
@@ -3378,6 +3531,7 @@ GIMP_MAGNIFY_OPTIONS_GET_CLASS
 <TITLE>GimpMagnifyTool</TITLE>
 GimpMagnifyTool
 gimp_magnify_tool_register
+GIMP_MAGNIFY_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpMagnifyToolClass
 GIMP_MAGNIFY_TOOL
@@ -3411,6 +3565,7 @@ MeasureFunction
 <TITLE>GimpMeasureTool</TITLE>
 GimpMeasureTool
 gimp_measure_tool_register
+GIMP_MEASURE_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpMeasureToolClass
 GIMP_MEASURE_TOOL
@@ -3445,6 +3600,7 @@ GimpMoveTool
 gimp_move_tool_register
 gimp_move_tool_start_hguide
 gimp_move_tool_start_vguide
+GIMP_MOVE_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpMoveToolClass
 GIMP_MOVE_TOOL
@@ -3477,6 +3633,7 @@ GIMP_PAINTBRUSH_TOOL_GET_CLASS
 <TITLE>GimpPaintTool</TITLE>
 GimpPaintTool
 gimp_paint_tool_enable_color_picker
+GIMP_PAINT_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpPaintToolClass
 GIMP_PAINT_TOOL
@@ -3573,24 +3730,33 @@ gimp_rectangle_options_interface_get_type
 
 <SECTION>
 <FILE>gimprectangletool</FILE>
-GimpRectangleToolProp
 <TITLE>GimpRectangleTool</TITLE>
 GimpRectangleTool
 GimpRectangleToolInterface
+GimpRectangleToolProp
 GIMP_RECTANGLE_TOOL_GET_INTERFACE
-gimp_rectangle_tool_install_properties
-gimp_rectangle_tool_get_property
-gimp_rectangle_tool_set_property
+GIMP_RECTANGLE_TOOL_GET_OPTIONS
+gimp_rectangle_tool_constructor
+gimp_rectangle_tool_control
 gimp_rectangle_tool_button_press
 gimp_rectangle_tool_button_release
-gimp_rectangle_tool_configure
-gimp_rectangle_tool_constructor
+gimp_rectangle_tool_motion
+gimp_rectangle_tool_key_press
+gimp_rectangle_tool_active_modifier_key
+gimp_rectangle_tool_oper_update
 gimp_rectangle_tool_cursor_update
 gimp_rectangle_tool_draw
 gimp_rectangle_tool_execute
-gimp_rectangle_tool_key_press
-gimp_rectangle_tool_motion
-gimp_rectangle_tool_oper_update
+gimp_rectangle_tool_cancel
+gimp_rectangle_tool_configure
+gimp_rectangle_tool_set_constraint
+gimp_rectangle_tool_get_function
+gimp_rectangle_tool_set_function
+gimp_rectangle_tool_no_movement
+gimp_rectangle_tool_get_press_coords
+gimp_rectangle_tool_install_properties
+gimp_rectangle_tool_set_property
+gimp_rectangle_tool_get_property
 <SUBSECTION Standard>
 GIMP_RECTANGLE_TOOL
 GIMP_IS_RECTANGLE_TOOL
@@ -3599,10 +3765,26 @@ gimp_rectangle_tool_interface_get_type
 </SECTION>
 
 <SECTION>
+<FILE>gimprectselectoptions</FILE>
+GimpRectSelectOptions
+GimpRectSelectOptionsClass
+gimp_rect_select_options_gui
+<SUBSECTION Standard>
+GIMP_RECT_SELECT_OPTIONS
+GIMP_IS_RECT_SELECT_OPTIONS
+GIMP_TYPE_RECT_SELECT_OPTIONS
+gimp_rect_select_options_get_type
+GIMP_RECT_SELECT_OPTIONS_CLASS
+GIMP_IS_RECT_SELECT_OPTIONS_CLASS
+GIMP_RECT_SELECT_OPTIONS_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimprectselecttool</FILE>
 <TITLE>GimpRectSelectTool</TITLE>
 GimpRectSelectTool
 gimp_rect_select_tool_register
+GIMP_RECT_SELECT_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpRectSelectToolClass
 GIMP_RECT_SELECT_TOOL
@@ -3612,6 +3794,21 @@ gimp_rect_select_tool_get_type
 GIMP_RECT_SELECT_TOOL_CLASS
 GIMP_IS_RECT_SELECT_TOOL_CLASS
 GIMP_RECT_SELECT_TOOL_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpregionselecttool</FILE>
+<TITLE>GimpRegionSelectTool</TITLE>
+GimpRegionSelectTool
+<SUBSECTION Standard>
+GimpRegionSelectToolClass
+GIMP_REGION_SELECT_TOOL
+GIMP_IS_REGION_SELECT_TOOL
+GIMP_TYPE_REGION_SELECT_TOOL
+gimp_region_select_tool_get_type
+GIMP_REGION_SELECT_TOOL_CLASS
+GIMP_IS_REGION_SELECT_TOOL_CLASS
+GIMP_REGION_SELECT_TOOL_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -3667,6 +3864,7 @@ GIMP_SELECTION_OPTIONS_GET_CLASS
 GimpSelectionTool
 GimpSelectionToolClass
 gimp_selection_tool_start_edit
+GIMP_SELECTION_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GIMP_SELECTION_TOOL
 GIMP_IS_SELECTION_TOOL
@@ -3675,6 +3873,22 @@ gimp_selection_tool_get_type
 GIMP_SELECTION_TOOL_CLASS
 GIMP_IS_SELECTION_TOOL_CLASS
 GIMP_SELECTION_TOOL_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpsourcetool</FILE>
+<TITLE>GimpSourceTool</TITLE>
+GimpSourceTool
+GIMP_SOURCE_TOOL_GET_OPTIONS
+<SUBSECTION Standard>
+GimpSourceToolClass
+GIMP_SOURCE_TOOL
+GIMP_IS_SOURCE_TOOL
+GIMP_TYPE_SOURCE_TOOL
+gimp_source_tool_get_type
+GIMP_SOURCE_TOOL_CLASS
+GIMP_IS_SOURCE_TOOL_CLASS
+GIMP_SOURCE_TOOL_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -3733,6 +3947,7 @@ GIMP_TEXT_OPTIONS_GET_CLASS
 GimpTextTool
 gimp_text_tool_register
 gimp_text_tool_set_layer
+GIMP_TEXT_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpTextToolClass
 GIMP_TEXT_TOOL
@@ -3780,6 +3995,7 @@ gimp_tool_push_status_length
 gimp_tool_replace_status
 gimp_tool_pop_status
 gimp_tool_set_cursor
+GIMP_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GIMP_TOOL
 GIMP_IS_TOOL
@@ -3871,6 +4087,7 @@ TransInfo
 GimpTransformTool
 gimp_transform_tool_recalc
 gimp_transform_tool_expose_preview
+GIMP_TRANSFORM_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpTransformToolClass
 GIMP_TRANSFORM_TOOL
@@ -3908,9 +4125,10 @@ GIMP_VECTOR_OPTIONS_GET_CLASS
 <FILE>gimpvectortool</FILE>
 <TITLE>GimpVectorTool</TITLE>
 GimpVectorTool
+GimpVectorFunction
 gimp_vector_tool_register
 gimp_vector_tool_set_vectors
-GimpVectorFunction
+GIMP_VECTOR_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpVectorToolClass
 GIMP_VECTOR_TOOL
@@ -5496,6 +5714,40 @@ gimp_image_prop_view_get_type
 GIMP_IMAGE_PROP_VIEW_CLASS
 GIMP_IS_IMAGE_PROP_VIEW_CLASS
 GIMP_IMAGE_PROP_VIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpimageparasiteview</FILE>
+<TITLE>GimpImageParasiteView</TITLE>
+GimpImageParasiteView
+gimp_image_parasite_view_new
+gimp_image_parasite_view_get_image
+gimp_image_parasite_view_get_parasite
+<SUBSECTION Standard>
+GimpImageParasiteViewClass
+GIMP_IMAGE_PARASITE_VIEW
+GIMP_IS_IMAGE_PARASITE_VIEW
+GIMP_TYPE_IMAGE_PARASITE_VIEW
+gimp_image_parasite_view_get_type
+GIMP_IMAGE_PARASITE_VIEW_CLASS
+GIMP_IS_IMAGE_PARASITE_VIEW_CLASS
+GIMP_IMAGE_PARASITE_VIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpimageprofileview</FILE>
+<TITLE>GimpImageProfileView</TITLE>
+GimpImageProfileView
+gimp_image_profile_view_new
+<SUBSECTION Standard>
+GimpImageProfileViewClass
+GIMP_IMAGE_PROFILE_VIEW
+GIMP_IS_IMAGE_PROFILE_VIEW
+GIMP_TYPE_IMAGE_PROFILE_VIEW
+gimp_image_profile_view_get_type
+GIMP_IMAGE_PROFILE_VIEW_CLASS
+GIMP_IS_IMAGE_PROFILE_VIEW_CLASS
+GIMP_IMAGE_PROFILE_VIEW_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -7539,6 +7791,11 @@ desaturate_dialog_new
 </SECTION>
 
 <SECTION>
+<FILE>fade-dialog</FILE>
+fade_dialog_new
+</SECTION>
+
+<SECTION>
 <FILE>image-new-dialog</FILE>
 image_new_dialog_new
 image_new_dialog_set
@@ -7858,6 +8115,52 @@ scale_region
 <SECTION>
 <FILE>internal_procs</FILE>
 internal_procs_init
+register_brush_procs
+register_brush_select_procs
+register_brushes_procs
+register_buffer_procs
+register_channel_procs
+register_color_procs
+register_context_procs
+register_convert_procs
+register_display_procs
+register_drawable_procs
+register_drawable_transform_procs
+register_edit_procs
+register_fileops_procs
+register_floating_sel_procs
+register_font_select_procs
+register_fonts_procs
+register_gimprc_procs
+register_gradient_procs
+register_gradient_select_procs
+register_gradients_procs
+register_grid_procs
+register_guides_procs
+register_help_procs
+register_image_procs
+register_layer_procs
+register_message_procs
+register_misc_procs
+register_paint_tools_procs
+register_palette_procs
+register_palette_select_procs
+register_palettes_procs
+register_parasite_procs
+register_paths_procs
+register_pattern_procs
+register_pattern_select_procs
+register_patterns_procs
+register_plug_in_procs
+register_procedural_db_procs
+register_progress_procs
+register_selection_procs
+register_selection_tools_procs
+register_text_tool_procs
+register_transform_tools_procs
+register_undo_procs
+register_unit_procs
+register_vectors_procs
 </SECTION>
 
 <SECTION>
@@ -8199,9 +8502,17 @@ gimp_text_outline_get_type
 <SECTION>
 <FILE>gimpeditselectiontool</FILE>
 <TITLE>GimpEditSelectionTool</TITLE>
-GimpTranslateMode
-gimp_edit_selection_tool_key_press
+GimpEditSelectionTool
 gimp_edit_selection_tool_start
+gimp_edit_selection_tool_key_press
+<SUBSECTION Standard>
+GimpEditSelectionToolClass
+GIMP_EDIT_SELECTION_TOOL
+GIMP_IS_EDIT_SELECTION_TOOL
+GIMP_TYPE_EDIT_SELECTION_TOOL
+gimp_edit_selection_tool_get_type
+GIMP_EDIT_SELECTION_TOOL_CLASS
+GIMP_IS_EDIT_SELECTION_TOOL_CLASS
 </SECTION>
 
 <SECTION>

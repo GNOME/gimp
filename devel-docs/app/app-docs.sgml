@@ -187,6 +187,7 @@
       <xi:include href="xml/gimpdata.xml" />
       <xi:include href="xml/gimpbrush.xml" />
       <xi:include href="xml/gimpbrush-header.xml" />
+      <xi:include href="xml/gimpbrushclipboard.xml" />
       <xi:include href="xml/gimpbrushgenerated.xml" />
       <xi:include href="xml/gimpbrushpipe.xml" />
       <xi:include href="xml/gimpgradient.xml" />
@@ -196,6 +197,7 @@
       <xi:include href="xml/gimppalette-import.xml" />
       <xi:include href="xml/gimppattern.xml" />
       <xi:include href="xml/gimppattern-header.xml" />
+      <xi:include href="xml/gimppatternclipboard.xml" />
     </chapter>
 
     <chapter id="app-core-drawable">
@@ -253,6 +255,7 @@
       <xi:include href="xml/gimpundo.xml" />
       <xi:include href="xml/gimpundostack.xml" />
       <xi:include href="xml/gimpitemundo.xml" />
+      <xi:include href="xml/gimpdrawableundo.xml" />
     </chapter>
 
     <chapter id="app-core-misc-objects">
@@ -405,6 +408,7 @@
       <xi:include href="xml/gimpbrushcore.xml" />
       <xi:include href="xml/gimpbrushcore-kernels.xml" />
       <xi:include href="xml/gimpsourcecore.xml" />
+      <xi:include href="xml/gimpsourceoptions.xml" />
     </chapter>
 
     <chapter id="app-paint-implementations">
@@ -426,6 +430,8 @@
       <xi:include href="xml/gimppaintbrush.xml" />
       <xi:include href="xml/gimppencil.xml" />
       <xi:include href="xml/gimppenciloptions.xml" />
+      <xi:include href="xml/gimpperspectiveclone.xml" />
+      <xi:include href="xml/gimpperspectivecloneoptions.xml" />
       <xi:include href="xml/gimpsmudge.xml" />
       <xi:include href="xml/gimpsmudgeoptions.xml" />
     </chapter>
@@ -549,19 +555,23 @@
       <title>Selection Tools</title>
       <xi:include href="xml/gimpselectionoptions.xml" />
       <xi:include href="xml/gimpselectiontool.xml" />
+      <xi:include href="xml/gimpregionselecttool.xml" />
+      <xi:include href="xml/gimprectselectoptions.xml" />
       <xi:include href="xml/gimprectselecttool.xml" />
       <xi:include href="xml/gimpellipseselecttool.xml" />
       <xi:include href="xml/gimpfreeselecttool.xml" />
       <xi:include href="xml/gimpfuzzyselecttool.xml" />
       <xi:include href="xml/gimpbycolorselecttool.xml" />
       <xi:include href="xml/gimpiscissorstool.xml" />
-      <xi:include href="xml/gimpforegroundselecttool.xml" />
       <xi:include href="xml/gimpforegroundselectoptions.xml" />
+      <xi:include href="xml/gimpforegroundselecttool.xml" />
     </chapter>
 
     <chapter id="app-tools-paint">
       <title>Paint Tools</title>
       <xi:include href="xml/gimppainttool.xml" />
+      <xi:include href="xml/gimpbrushtool.xml" />
+      <xi:include href="xml/gimpsourcetool.xml" />
       <xi:include href="xml/gimpairbrushtool.xml" />
       <xi:include href="xml/gimpclonetool.xml" />
       <xi:include href="xml/gimpconvolvetool.xml" />
@@ -617,6 +627,8 @@
 
     <chapter id="app-tools-misc">
       <title>Text and Vector Tools</title>
+      <xi:include href="xml/gimpaligntool.xml" />
+      <xi:include href="xml/gimpalignoptions.xml" />
       <xi:include href="xml/gimprectangletool.xml" />
       <xi:include href="xml/gimprectangleoptions.xml" />
       <xi:include href="xml/gimptexttool.xml" />
@@ -793,6 +805,8 @@
       <xi:include href="xml/gimpgrideditor.xml" />
       <xi:include href="xml/gimphistogrambox.xml" />
       <xi:include href="xml/gimphistogramview.xml" />
+      <xi:include href="xml/gimpimageparasiteview.xml" />
+      <xi:include href="xml/gimpimageprofileview.xml" />
       <xi:include href="xml/gimpimagepropview.xml" />
       <xi:include href="xml/gimpmessagebox.xml" />
       <xi:include href="xml/gimpprogressbox.xml" />
@@ -1002,6 +1016,7 @@
       <xi:include href="xml/channel-options-dialog.xml" />
       <xi:include href="xml/convert-dialog.xml" />
       <xi:include href="xml/desaturate-dialog.xml" />
+      <xi:include href="xml/fade-dialog.xml" />
       <xi:include href="xml/file-open-dialog.xml" />
       <xi:include href="xml/file-open-location-dialog.xml" />
       <xi:include href="xml/file-save-dialog.xml" />
