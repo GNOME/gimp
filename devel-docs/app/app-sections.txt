@@ -79,6 +79,7 @@ gimp_rc_set_autosave
 gimp_rc_set_unknown_token
 gimp_rc_save
 gimp_rc_query
+gimp_rc_migrate
 <SUBSECTION Standard>
 GimpRcClass
 GIMP_RC
@@ -245,6 +246,8 @@ gimp_g_list_get_memsize
 gimp_g_slist_get_memsize
 gimp_g_hash_table_get_memsize
 gimp_g_object_get_memsize
+gimp_g_param_spec_get_memsize
+gimp_g_type_instance_get_memsize
 gimp_g_value_get_memsize
 gimp_get_default_language
 gimp_get_default_unit
@@ -2429,6 +2432,7 @@ gimp_brush_core_set_brush
 gimp_brush_core_paste_canvas
 gimp_brush_core_replace_canvas
 gimp_brush_core_color_area_with_pixmap
+gimp_brush_core_create_bound_segs
 <SUBSECTION Standard>
 GimpBrushCoreClass
 GIMP_BRUSH_CORE
@@ -3219,6 +3223,7 @@ gimp_draw_tool_draw_rectangle_by_anchor
 gimp_draw_tool_draw_arc_by_anchor
 gimp_draw_tool_draw_cross_by_anchor
 gimp_draw_tool_draw_handle
+gimp_draw_tool_draw_corner
 gimp_draw_tool_on_handle
 gimp_draw_tool_on_vectors
 gimp_draw_tool_on_vectors_curve
@@ -4083,8 +4088,9 @@ GIMP_TRANSFORM_OPTIONS_GET_CLASS
 <SECTION>
 <FILE>gimptransformtool</FILE>
 <TITLE>GimpTransformTool</TITLE>
-TransInfo
 GimpTransformTool
+TransInfo
+TRANS_INFO_SIZE
 gimp_transform_tool_recalc
 gimp_transform_tool_expose_preview
 GIMP_TRANSFORM_TOOL_GET_OPTIONS
@@ -5755,6 +5761,9 @@ GIMP_IMAGE_PROFILE_VIEW_GET_CLASS
 <TITLE>GimpPaletteEditor</TITLE>
 GimpPaletteEditor
 gimp_palette_editor_new
+gimp_palette_editor_get_index
+gimp_palette_editor_set_index
+gimp_palette_editor_max_index
 gimp_palette_editor_pick_color
 gimp_palette_editor_zoom
 <SUBSECTION Standard>
@@ -6710,6 +6719,7 @@ gimp_histogram_get_median
 gimp_histogram_get_std_dev
 gimp_histogram_get_value
 gimp_histogram_get_channel
+gimp_histogram_get_threshold
 gimp_histogram_n_channels
 </SECTION>
 
@@ -6998,6 +7008,7 @@ gimp_composite_init
 gimp_composite_context_print
 gimp_composite_pixelformat_astext
 gimp_composite_mode_astext
+gimp_composite_use_cpu_accel
 GIMP_COMPOSITE_OPTION_NOEXTENSIONS
 GIMP_COMPOSITE_OPTION_USE
 GIMP_COMPOSITE_OPTION_VERBOSE
@@ -7620,6 +7631,7 @@ gimp_marshal_VOID__POINTER_ENUM
 gimp_marshal_VOID__STRING
 gimp_marshal_VOID__STRING_BOOLEAN_UINT_FLAGS
 gimp_marshal_VOID__STRING_FLAGS
+gimp_marshal_VOID__STRING_STRING_STRING
 gimp_marshal_VOID__VOID
 </SECTION>
 
@@ -7938,6 +7950,7 @@ tips_dialog_create
 <FILE>tips-parser</FILE>
 GimpTip
 gimp_tip_new
+gimp_tip_set
 gimp_tip_free
 gimp_tips_from_file
 gimp_tips_free
@@ -8061,6 +8074,7 @@ initial_inten_a_pixels
 combine_indexed_and_indexed_pixels
 combine_indexed_and_indexed_a_pixels
 combine_indexed_a_and_indexed_a_pixels
+combine_inten_a_and_indexed_pixels
 combine_inten_a_and_indexed_a_pixels
 combine_inten_and_inten_pixels
 combine_inten_and_inten_a_pixels
@@ -8105,11 +8119,13 @@ combine_regions_replace
 
 <SECTION>
 <FILE>scale-funcs</FILE>
+LANCZOS_MIN
 LANCZOS_SPP
 LANCZOS_WIDTH
 LANCZOS_SAMPLES
 LANCZOS_WIDTH2
 scale_region
+create_lanczos_lookup
 </SECTION>
 
 <SECTION>
@@ -8783,7 +8799,9 @@ gimp_help_show
 
 <SECTION>
 <FILE>gimppropwidgets</FILE>
+gimp_prop_aspect_ratio_new
 gimp_prop_color_button_new
+gimp_prop_expanding_frame_new
 gimp_prop_paint_mode_menu_new
 gimp_prop_view_new
 </SECTION>
@@ -9208,12 +9226,18 @@ context_background_blue_cmd_callback
 context_background_hue_cmd_callback
 context_background_saturation_cmd_callback
 context_background_value_cmd_callback
+context_colormap_background_cmd_callback
+context_colormap_foreground_cmd_callback
+context_swatch_background_cmd_callback
+context_swatch_foreground_cmd_callback
 context_opacity_cmd_callback
 context_paint_mode_cmd_callback
 context_tool_select_cmd_callback
 context_brush_select_cmd_callback
 context_pattern_select_cmd_callback
 context_palette_select_cmd_callback
+context_palette_background_cmd_callback
+context_palette_foreground_cmd_callback
 context_gradient_select_cmd_callback
 context_font_select_cmd_callback
 context_brush_angle_cmd_callback
