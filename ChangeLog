@@ -1,3 +1,7 @@
+2006-12-05  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/antialias.c: trivial fix for bug #382445
+
 2006-12-04  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpperspectiveclonetool.h: removed unused defines.
