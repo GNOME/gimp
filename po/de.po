@@ -7,15 +7,15 @@
 # Roman Joost <roman@bromeco.de>
 # Hendrik Brandt <heb@gnome-de.org>, 2004.
 # Sven Neumann <sven@gimp.org>, 2004.
-# Hendrik Richter <hendi@gnome-de.org>, 2005.
+# Hendrik Richter <hendrikr@gnome.org>, 2005.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-20 15:49+0200\n"
-"PO-Revision-Date: 2005-12-26 15:44+0100\n"
-"Last-Translator: Hendrik Richter <hendi@gnome-de.org>\n"
+"POT-Creation-Date: 2006-12-05 17:10+0100\n"
+"PO-Revision-Date: 2006-12-05 17:11+0100\n"
+"Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,7 +49,7 @@ msgstr ""
 "Zugriffsrechte des Auslagerungsverzeichnis welches in Ihren Einstellungen "
 "angegeben ist .(derzeit »%s«)"
 
-#: ../app/app_procs.c:349 ../app/core/gimppalette-import.c:441
+#: ../app/app_procs.c:349 ../app/core/gimppalette-import.c:444
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "»%s« konnte nicht geöffnet werden: %s"
@@ -363,9 +363,10 @@ msgstr "Muster"
 msgid "Plug-Ins"
 msgstr "Plugins"
 
-#: ../app/actions/actions.c:166
-msgid "QuickMask"
-msgstr "QuickMask"
+#: ../app/actions/actions.c:166 ../app/core/core-enums.c:1040
+#: ../app/core/gimpchannel.c:383
+msgid "Quick Mask"
+msgstr "Schnelle Maske"
 
 #: ../app/actions/actions.c:169
 msgid "Select"
@@ -756,7 +757,7 @@ msgstr "Farben _vertauschen"
 #: ../app/actions/data-commands.c:79 ../app/core/gimpimage.c:1285
 #: ../app/core/gimppalette-import.c:219 ../app/core/gimppalette.c:523
 #: ../app/core/gimppalette.c:634 ../app/dialogs/palette-import-dialog.c:684
-#: ../app/pdb/image_cmds.c:3762
+#: ../app/pdb/image_cmds.c:3771
 msgid "Untitled"
 msgstr "Namenlos"
 
@@ -1362,7 +1363,7 @@ msgstr "_Zurücksetzen..."
 msgid "_Quit"
 msgstr "_Beenden"
 
-#: ../app/actions/file-commands.c:215 ../app/dialogs/file-save-dialog.c:282
+#: ../app/actions/file-commands.c:215 ../app/dialogs/file-save-dialog.c:291
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1894,9 +1895,9 @@ msgid "Flipping..."
 msgstr "Spiegeln..."
 
 #: ../app/actions/image-commands.c:310
-#: ../app/pdb/drawable_transform_cmds.c:1035
-#: ../app/pdb/drawable_transform_cmds.c:1193
-#: ../app/pdb/transform_tools_cmds.c:339 ../app/tools/gimprotatetool.c:159
+#: ../app/pdb/drawable_transform_cmds.c:1065
+#: ../app/pdb/drawable_transform_cmds.c:1229
+#: ../app/pdb/transform_tools_cmds.c:351 ../app/tools/gimprotatetool.c:159
 msgid "Rotating..."
 msgstr "Drehe..."
 
@@ -1916,9 +1917,9 @@ msgid "Scale Image"
 msgstr "Bild skalieren"
 
 #: ../app/actions/image-commands.c:521 ../app/actions/layers-commands.c:959
-#: ../app/pdb/drawable_transform_cmds.c:1346
-#: ../app/pdb/drawable_transform_cmds.c:1503
-#: ../app/pdb/transform_tools_cmds.c:458 ../app/tools/gimpscaletool.c:153
+#: ../app/pdb/drawable_transform_cmds.c:1388
+#: ../app/pdb/drawable_transform_cmds.c:1551
+#: ../app/pdb/transform_tools_cmds.c:476 ../app/tools/gimpscaletool.c:153
 msgid "Scaling..."
 msgstr "Skalierung"
 
@@ -1962,7 +1963,7 @@ msgstr "_Ebene"
 msgid "Stac_k"
 msgstr "_Stapel"
 
-#: ../app/actions/layers-actions.c:54 ../app/tools/gimplevelstool.c:665
+#: ../app/actions/layers-actions.c:54 ../app/tools/gimplevelstool.c:669
 msgid "_Auto"
 msgstr "_Automatisch"
 
@@ -2715,7 +2716,7 @@ msgstr "Öffnen"
 msgid "Load text from file"
 msgstr "Text aus Datei laden"
 
-#: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:350
+#: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:353
 msgid "Clear"
 msgstr "Löschen"
 
@@ -4382,10 +4383,6 @@ msgstr "Ebenen vereinen"
 msgid "Merge vectors"
 msgstr "Pfade vereinen"
 
-#: ../app/core/core-enums.c:1040 ../app/core/gimpchannel.c:383
-msgid "Quick Mask"
-msgstr "Schnelle Maske"
-
 #: ../app/core/core-enums.c:1041 ../app/core/core-enums.c:1070
 #: ../app/core/gimpimage-grid.c:59 ../app/dialogs/grid-dialog.c:144
 #: ../app/tools/tools-enums.c:175
@@ -4452,11 +4449,11 @@ msgstr "Schwebende Auswahl verankern"
 msgid "Remove floating selection"
 msgstr "Schwebende Auswahl"
 
-#: ../app/core/core-enums.c:1058 ../app/core/gimp-edit.c:267
+#: ../app/core/core-enums.c:1058 ../app/core/gimp-edit.c:270
 msgid "Paste"
 msgstr "Einfügen"
 
-#: ../app/core/core-enums.c:1059 ../app/core/gimp-edit.c:418
+#: ../app/core/core-enums.c:1059 ../app/core/gimp-edit.c:421
 msgid "Cut"
 msgstr "Ausschneiden"
 
@@ -4598,27 +4595,27 @@ msgstr ""
 "Ausschneiden oder Kopieren fehlgeschlagen, da der ausgewählte Bereich leer "
 "ist."
 
-#: ../app/core/gimp-edit.c:195 ../app/core/gimp-edit.c:319
+#: ../app/core/gimp-edit.c:198 ../app/core/gimp-edit.c:322
 msgid "Pasted Layer"
 msgstr "Eingefügte Ebene"
 
-#: ../app/core/gimp-edit.c:369
+#: ../app/core/gimp-edit.c:372
 msgid "Fill with FG Color"
 msgstr "Mit VG-Farbe füllen"
 
-#: ../app/core/gimp-edit.c:373 ../app/core/gimp-edit.c:394
+#: ../app/core/gimp-edit.c:376 ../app/core/gimp-edit.c:397
 msgid "Fill with BG Color"
 msgstr "Mit HG-Farbe füllen"
 
-#: ../app/core/gimp-edit.c:377
+#: ../app/core/gimp-edit.c:380
 msgid "Fill with White"
 msgstr "Mit weiß füllen"
 
-#: ../app/core/gimp-edit.c:381
+#: ../app/core/gimp-edit.c:384
 msgid "Fill with Transparency"
 msgstr "Mit Transparenz füllen"
 
-#: ../app/core/gimp-edit.c:385
+#: ../app/core/gimp-edit.c:388
 msgid "Fill with Pattern"
 msgstr "Mit Muster füllen"
 
@@ -4851,15 +4848,15 @@ msgstr "Kanal verkleinern"
 msgid "Cannot stroke empty channel."
 msgstr "Leere Kanäle können nicht nachgezogen werden."
 
-#: ../app/core/gimpchannel.c:1527
+#: ../app/core/gimpchannel.c:1530
 msgid "Set Channel Color"
 msgstr "Farbe für Kanal setzen"
 
-#: ../app/core/gimpchannel.c:1575
+#: ../app/core/gimpchannel.c:1578
 msgid "Set Channel Opacity"
 msgstr "Transparenz des Kanals setzen"
 
-#: ../app/core/gimpchannel.c:1644 ../app/core/gimpselection.c:563
+#: ../app/core/gimpchannel.c:1647 ../app/core/gimpselection.c:563
 msgid "Selection Mask"
 msgstr "Auswahlmaske"
 
@@ -5010,22 +5007,22 @@ msgstr ""
 "Schwerwiegender Fehler beim Verarbeiten der Syntax der Farbverlaufsdatei »%"
 "s«: Datei ist fehlerhaft."
 
-#: ../app/core/gimpgradient-load.c:172
+#: ../app/core/gimpgradient-load.c:173
 #, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "Fehlerhaftes Segment %d in Farbverlaufsdatei »%s«."
 
-#: ../app/core/gimpgradient-load.c:183 ../app/core/gimpgradient-load.c:197
+#: ../app/core/gimpgradient-load.c:184 ../app/core/gimpgradient-load.c:198
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 msgstr "Farbverlauf '%s' ist fehlerhaft: Segmente reichen nicht von 0 bis 1."
 
-#: ../app/core/gimpgradient-load.c:281
+#: ../app/core/gimpgradient-load.c:282
 #, c-format
 msgid "No linear gradients found in '%s'"
 msgstr "Keinen linearen Farbverlauf in »%s« gefunden"
 
-#: ../app/core/gimpgradient-load.c:291
+#: ../app/core/gimpgradient-load.c:292
 #, c-format
 msgid "Failed to import gradients from '%s': %s"
 msgstr "Fehler beim Farbverlauf-Import aus »%s«: %s"
@@ -5097,11 +5094,11 @@ msgstr "Bild in indizierte Farben konvertieren (Stufe 2)..."
 msgid "Converting to indexed (stage 3)..."
 msgstr "Bild in indizierte Farben konvertieren (Stufe 3)..."
 
-#: ../app/core/gimpimage-crop.c:123
+#: ../app/core/gimpimage-crop.c:124
 msgid "Crop Image"
 msgstr "Bild zuschneiden"
 
-#: ../app/core/gimpimage-crop.c:126 ../app/core/gimpimage-resize.c:67
+#: ../app/core/gimpimage-crop.c:127 ../app/core/gimpimage-resize.c:67
 msgid "Resize Image"
 msgstr "Bildgröße ändern"
 
@@ -5485,7 +5482,7 @@ msgstr "Ebene auf Bildgröße"
 msgid "Move Layer Mask"
 msgstr "Ebenenmaske bewegen"
 
-#: ../app/core/gimppalette-import.c:490
+#: ../app/core/gimppalette-import.c:493
 #, c-format
 msgid ""
 "Unknown type of palette file:\n"
@@ -5845,20 +5842,20 @@ msgstr "Bild von Ort öffnen"
 msgid "Enter location (URI):"
 msgstr "Verweis(URI) zum Bild eingeben:"
 
-#: ../app/dialogs/file-save-dialog.c:185
+#: ../app/dialogs/file-save-dialog.c:194
 msgid "File exists"
 msgstr "Datei bereits vorhanden"
 
-#: ../app/dialogs/file-save-dialog.c:190
+#: ../app/dialogs/file-save-dialog.c:199
 msgid "_Replace"
 msgstr "_Ersetzen"
 
-#: ../app/dialogs/file-save-dialog.c:200
+#: ../app/dialogs/file-save-dialog.c:209
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "Eine Datei mit dem Namen »%s« ist bereits vorhanden."
 
-#: ../app/dialogs/file-save-dialog.c:205
+#: ../app/dialogs/file-save-dialog.c:214
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Möchten Sie dieses durch das zu speichernden Bild ersetzen?"
 
@@ -6059,11 +6056,11 @@ msgstr "Anzeigeart:"
 
 #: ../app/dialogs/info-window.c:308
 msgid "Visual class:"
-msgstr "Visuelle Klasse:"
+msgstr "Farbmodus:"
 
 #: ../app/dialogs/info-window.c:310
 msgid "Visual depth:"
-msgstr "Visuelle Tiefe:"
+msgstr "Farbtiefe:"
 
 #: ../app/dialogs/info-window.c:575
 #, c-format
@@ -6862,7 +6859,7 @@ msgid "Select Temp Folder"
 msgstr "Wählen Sie den Temporären Ordner"
 
 #: ../app/dialogs/preferences-dialog.c:2264
-#: ../app/dialogs/user-install-dialog.c:1403
+#: ../app/dialogs/user-install-dialog.c:1401
 msgid "Swap folder:"
 msgstr "Auslagerungsordner:"
 
@@ -7330,7 +7327,7 @@ msgstr "Weiter"
 
 #. GPL_PAGE
 #. version number
-#: ../app/dialogs/user-install-dialog.c:765
+#: ../app/dialogs/user-install-dialog.c:763
 #, c-format
 msgid ""
 "Welcome to\n"
@@ -7339,13 +7336,13 @@ msgstr ""
 "Willkommen zur\n"
 "GIMP %d.%d Benutzerinstallation"
 
-#: ../app/dialogs/user-install-dialog.c:771
+#: ../app/dialogs/user-install-dialog.c:769
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr ""
 "Drücken Sie »Weiter«, um die\n"
 "GIMP Benutzerinstallation zu starten."
 
-#: ../app/dialogs/user-install-dialog.c:778
+#: ../app/dialogs/user-install-dialog.c:776
 msgid ""
 "<b>The GIMP - GNU Image Manipulation Program</b>\n"
 "Copyright (C) 1995-2004\n"
@@ -7355,7 +7352,7 @@ msgstr ""
 "Copyright © 1995-2004\n"
 "Spencer Kimball, Peter Mattis und das GIMP-Entwicklerteam."
 
-#: ../app/dialogs/user-install-dialog.c:788
+#: ../app/dialogs/user-install-dialog.c:786
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -7367,7 +7364,7 @@ msgstr ""
 "herausgegeben, weitergeben und/oder modifizieren, entweder unter Version 2 "
 "der Lizenz oder (wenn Sie es wünschen) jeder späteren Version."
 
-#: ../app/dialogs/user-install-dialog.c:794
+#: ../app/dialogs/user-install-dialog.c:792
 msgid ""
 "This program is distributed in the hope that it will be useful, but WITHOUT "
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
@@ -7379,7 +7376,7 @@ msgstr ""
 "implizite Gewährleistung der MARKTREIFE oder der EIGNUNG FÜR EINEN "
 "BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License."
 
-#: ../app/dialogs/user-install-dialog.c:800
+#: ../app/dialogs/user-install-dialog.c:798
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
@@ -7389,38 +7386,38 @@ msgstr ""
 "Programm erhalten haben. Falls nicht, schreiben Sie an die Free Software "
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
-#: ../app/dialogs/user-install-dialog.c:810
+#: ../app/dialogs/user-install-dialog.c:808
 msgid "Migrate User Settings"
 msgstr "Benutzereinstellungen übernehmen"
 
-#: ../app/dialogs/user-install-dialog.c:811
+#: ../app/dialogs/user-install-dialog.c:809
 msgid "Click \"Continue\" to proceed with the user installation."
 msgstr ""
 "Klicken Sie auf »Weiter«, um mit der Benutzerinstallation fortzufahren."
 
-#: ../app/dialogs/user-install-dialog.c:816
+#: ../app/dialogs/user-install-dialog.c:814
 msgid "It seems you have used GIMP 2.0 before."
 msgstr "Scheinbar haben Sie bereits The Gimp in der Version 2.0 benutzt."
 
-#: ../app/dialogs/user-install-dialog.c:820
+#: ../app/dialogs/user-install-dialog.c:818
 msgid "_Migrate GIMP 2.0 user settings"
 msgstr "_Benutzereinstellunge aus The Gimp 2.0 übernehmen"
 
-#: ../app/dialogs/user-install-dialog.c:823
+#: ../app/dialogs/user-install-dialog.c:821
 msgid "Do a _fresh user installation"
 msgstr "Eine _neue Benutzerinstallation erstellen"
 
-#: ../app/dialogs/user-install-dialog.c:851
+#: ../app/dialogs/user-install-dialog.c:849
 msgid "Personal GIMP Folder"
 msgstr "Persönlicher GIMP-Ordner"
 
-#: ../app/dialogs/user-install-dialog.c:852
+#: ../app/dialogs/user-install-dialog.c:850
 msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr ""
 "Drücken Sie »Weiter« um Ihren\n"
 "persönlichen GIMP-Ordner anzulegen."
 
-#: ../app/dialogs/user-install-dialog.c:896
+#: ../app/dialogs/user-install-dialog.c:894
 #, c-format
 msgid ""
 "For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
@@ -7429,7 +7426,7 @@ msgstr ""
 "Für die GIMP Benutzerinstallation muss ein Ordner namens <b>»%s«</b> "
 "angelegt werden."
 
-#: ../app/dialogs/user-install-dialog.c:903
+#: ../app/dialogs/user-install-dialog.c:901
 msgid ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
@@ -7438,23 +7435,23 @@ msgstr ""
 "eine der Dateien oder Ordner aus der Liste aus, um weitere Informationen zu "
 "erhalten."
 
-#: ../app/dialogs/user-install-dialog.c:991
+#: ../app/dialogs/user-install-dialog.c:989
 msgid "User Installation Log"
 msgstr "Benutzerinstallation Logbuch"
 
-#: ../app/dialogs/user-install-dialog.c:992
+#: ../app/dialogs/user-install-dialog.c:990
 msgid "Please wait while your personal GIMP folder is being created..."
 msgstr "Bitte warten. Ihr persönlicher GIMP-Ordner wird angelegt..."
 
-#: ../app/dialogs/user-install-dialog.c:999
+#: ../app/dialogs/user-install-dialog.c:997
 msgid "GIMP Performance Tuning"
 msgstr "Leistungsfähigkeit von GIMP"
 
-#: ../app/dialogs/user-install-dialog.c:1000
+#: ../app/dialogs/user-install-dialog.c:998
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Drücken Sie »Weiter«, um die Einstellungen zu übernehmen."
 
-#: ../app/dialogs/user-install-dialog.c:1005
+#: ../app/dialogs/user-install-dialog.c:1003
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
@@ -7462,22 +7459,22 @@ msgstr ""
 "einige\n"
 "Einstellungen anzupassen.</b>"
 
-#: ../app/dialogs/user-install-dialog.c:1065
+#: ../app/dialogs/user-install-dialog.c:1063
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Datei »%s« wird von »%s« kopiert..."
 
-#: ../app/dialogs/user-install-dialog.c:1084
+#: ../app/dialogs/user-install-dialog.c:1082
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Ordner »%s« wird angelegt..."
 
-#: ../app/dialogs/user-install-dialog.c:1098
+#: ../app/dialogs/user-install-dialog.c:1096
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Ordner »%s« konnte nicht angelegt werden: %s"
 
-#: ../app/dialogs/user-install-dialog.c:1362
+#: ../app/dialogs/user-install-dialog.c:1360
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called "
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
@@ -7488,11 +7485,11 @@ msgstr ""
 "Arbeitsspeicher passt. Bedenken Sie dabei die Menge an Arbeitsspeicher, die "
 "bereits von anderen Programmen belegt wird."
 
-#: ../app/dialogs/user-install-dialog.c:1375
+#: ../app/dialogs/user-install-dialog.c:1373
 msgid "Tile cache size:"
 msgstr "Größe des Datenspeichers:"
 
-#: ../app/dialogs/user-install-dialog.c:1387
+#: ../app/dialogs/user-install-dialog.c:1385
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be "
 "written to a swap file.  This file should be located on a local filesystem "
@@ -7505,7 +7502,7 @@ msgstr ""
 "UNIX ist das systemweite temporäre Ordner eine gute Wahl (meist »/tmp« oder "
 "»/var/tmp«)."
 
-#: ../app/dialogs/user-install-dialog.c:1398
+#: ../app/dialogs/user-install-dialog.c:1396
 msgid "Select swap dir"
 msgstr "Wählen Sie den Auslagerungsordner"
 
@@ -7573,11 +7570,11 @@ msgstr "Dunkle Schachbrett-Farbe"
 msgid "Custom color"
 msgstr "Benutzerdefinierte Farbe"
 
-#: ../app/display/gimpdisplayshell.c:943
+#: ../app/display/gimpdisplayshell.c:948
 msgid "Zoom image when window size changes"
 msgstr "Bild zoomen, wenn die Fenstergröße sich ändert"
 
-#: ../app/display/gimpdisplayshell.c:963
+#: ../app/display/gimpdisplayshell.c:968
 msgid "Toggle Quick Mask"
 msgstr "Schnelle Maske aktivieren/deaktivieren"
 
@@ -7866,29 +7863,29 @@ msgstr "Farbton-Sättigung"
 msgid "Threshold"
 msgstr "Schwellwert"
 
-#: ../app/pdb/drawable_transform_cmds.c:249
-#: ../app/pdb/drawable_transform_cmds.c:404
+#: ../app/pdb/drawable_transform_cmds.c:255
+#: ../app/pdb/drawable_transform_cmds.c:416
 msgid "Flip..."
 msgstr "Spiegeln..."
 
-#: ../app/pdb/drawable_transform_cmds.c:563
-#: ../app/pdb/drawable_transform_cmds.c:746
-#: ../app/pdb/transform_tools_cmds.c:197
+#: ../app/pdb/drawable_transform_cmds.c:581
+#: ../app/pdb/drawable_transform_cmds.c:770
+#: ../app/pdb/transform_tools_cmds.c:203
 #: ../app/tools/gimpperspectivetool.c:141
 msgid "Perspective..."
 msgstr "Perspektive..."
 
-#: ../app/pdb/drawable_transform_cmds.c:1650
-#: ../app/pdb/drawable_transform_cmds.c:1791
-#: ../app/pdb/transform_tools_cmds.c:586 ../app/tools/gimpsheartool.c:158
+#: ../app/pdb/drawable_transform_cmds.c:1704
+#: ../app/pdb/drawable_transform_cmds.c:1851
+#: ../app/pdb/transform_tools_cmds.c:610 ../app/tools/gimpsheartool.c:158
 msgid "Shearing..."
 msgstr "Scheren..."
 
-#: ../app/pdb/drawable_transform_cmds.c:1943
-#: ../app/pdb/drawable_transform_cmds.c:2124
-#: ../app/pdb/drawable_transform_cmds.c:2311
-#: ../app/pdb/drawable_transform_cmds.c:2512
-#: ../app/pdb/transform_tools_cmds.c:719
+#: ../app/pdb/drawable_transform_cmds.c:2009
+#: ../app/pdb/drawable_transform_cmds.c:2196
+#: ../app/pdb/drawable_transform_cmds.c:2389
+#: ../app/pdb/drawable_transform_cmds.c:2596
+#: ../app/pdb/transform_tools_cmds.c:743
 msgid "2D Transform..."
 msgstr "2D Transformation..."
 
@@ -7896,11 +7893,11 @@ msgstr "2D Transformation..."
 msgid "Blending..."
 msgstr "Farbverlauf..."
 
-#: ../app/pdb/image_cmds.c:3758 ../app/text/gimptext-parasite.c:168
+#: ../app/pdb/image_cmds.c:3767 ../app/text/gimptext-parasite.c:168
 msgid "(invalid UTF-8 string)"
 msgstr "(ungültige UTF-8-Zeichenkette)"
 
-#: ../app/pdb/image_cmds.c:3900
+#: ../app/pdb/image_cmds.c:3909
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -8445,15 +8442,15 @@ msgstr "Mit einer Farbe oder einem Muster füllen"
 msgid "_Bucket Fill"
 msgstr "_Füllen"
 
-#: ../app/tools/gimpbycolorselecttool.c:82
+#: ../app/tools/gimpbycolorselecttool.c:83
 msgid "Select By Color"
 msgstr "Nach Farbe auswählen"
 
-#: ../app/tools/gimpbycolorselecttool.c:83
+#: ../app/tools/gimpbycolorselecttool.c:84
 msgid "Select regions by color"
 msgstr "Bereiche nach Farbe wählen"
 
-#: ../app/tools/gimpbycolorselecttool.c:84
+#: ../app/tools/gimpbycolorselecttool.c:85
 msgid "_By Color Select"
 msgstr "_Nach Farbe auswählen"
 
@@ -8700,17 +8697,17 @@ msgstr "Aktuelle Einstellungen in Datei speichern"
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Kurven können bei indizierten Ebenen nicht angepaßt werden."
 
-#: ../app/tools/gimpcurvestool.c:479 ../app/tools/gimplevelstool.c:415
+#: ../app/tools/gimpcurvestool.c:479 ../app/tools/gimplevelstool.c:419
 #: ../app/widgets/gimphistogrameditor.c:161
 msgid "Channel:"
 msgstr "Kanal:"
 
-#: ../app/tools/gimpcurvestool.c:494 ../app/tools/gimplevelstool.c:430
+#: ../app/tools/gimpcurvestool.c:494 ../app/tools/gimplevelstool.c:434
 msgid "R_eset channel"
 msgstr "Kanal _zurücksetzen"
 
 #. Horizontal button box for load / save
-#: ../app/tools/gimpcurvestool.c:596 ../app/tools/gimplevelstool.c:640
+#: ../app/tools/gimpcurvestool.c:596 ../app/tools/gimplevelstool.c:644
 msgid "All Channels"
 msgstr "Alle Kanäle"
 
@@ -8973,33 +8970,33 @@ msgstr "Aktuelle Werte in Datei speichern"
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Werte für indizierte Ebenen können nicht geändert werden. "
 
-#: ../app/tools/gimplevelstool.c:355
+#: ../app/tools/gimplevelstool.c:356
 msgid "Pick black point"
 msgstr "Schwarz-Punkt wählen"
 
-#: ../app/tools/gimplevelstool.c:359
+#: ../app/tools/gimplevelstool.c:360
 msgid "Pick gray point"
 msgstr "Grau-Punkt wählen"
 
-#: ../app/tools/gimplevelstool.c:363
+#: ../app/tools/gimplevelstool.c:364
 msgid "Pick white point"
 msgstr "Weiß-Punkt wählen"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:445
+#: ../app/tools/gimplevelstool.c:449
 msgid "Input Levels"
 msgstr "Quellwerte"
 
-#: ../app/tools/gimplevelstool.c:539
+#: ../app/tools/gimplevelstool.c:543
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:569
+#: ../app/tools/gimplevelstool.c:573
 msgid "Output Levels"
 msgstr "Zielwerte"
 
-#: ../app/tools/gimplevelstool.c:667
+#: ../app/tools/gimplevelstool.c:671
 msgid "Adjust levels automatically"
 msgstr "Werte automatisch anpassen"
 
@@ -10283,7 +10280,7 @@ msgstr ""
 "Dieses Fenster hat %d offene Reiter. Das Schließen dieses Fensters wird auch "
 "diese schließen."
 
-#: ../app/widgets/gimpdock.c:474
+#: ../app/widgets/gimpdock.c:479
 msgid "You can drop dockable dialogs here."
 msgstr "Hier können Dialoge angedockt werden."
 
@@ -10312,11 +10309,11 @@ msgstr "Automatisch bestimmt"
 msgid "By Extension"
 msgstr "Nach Endung"
 
-#: ../app/widgets/gimpfiledialog.c:469
+#: ../app/widgets/gimpfiledialog.c:466
 msgid "All Files"
 msgstr "Alle Dateien"
 
-#: ../app/widgets/gimpfiledialog.c:608
+#: ../app/widgets/gimpfiledialog.c:605
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Datei_typ: %s"
@@ -10977,7 +10974,7 @@ msgstr "Werkzeug Fenster"
 msgid "Keep above"
 msgstr "Oben behalten"
 
-#: ../app/xcf/xcf-load.c:297
+#: ../app/xcf/xcf-load.c:298
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -11024,3 +11021,6 @@ msgstr "Bilder und Photos erstellen und bearbeiten"
 #: ../data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Bildeditor"
+
+#~ msgid "QuickMask"
+#~ msgstr "QuickMask"
