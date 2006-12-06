@@ -98,7 +98,7 @@ gimp_brush_generated_save (GimpData  *data,
   /* write brush spacing */
   fprintf (file, "%s\n",
            g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                            GIMP_BRUSH (brush)->spacing));
+                            gimp_brush_get_spacing (GIMP_BRUSH (brush))));
 
   /* write brush radius */
   fprintf (file, "%s\n",

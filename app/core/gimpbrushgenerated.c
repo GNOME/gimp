@@ -471,6 +471,7 @@ gimp_brush_generated_new (const gchar             *name,
   brush = g_object_new (GIMP_TYPE_BRUSH_GENERATED,
                         "name",         name,
                         "mime-type",    "application/x-gimp-brush-generated",
+                        "spacing",      20,
                         "shape",        shape,
                         "radius",       radius,
                         "spikes",       spikes,
@@ -478,8 +479,6 @@ gimp_brush_generated_new (const gchar             *name,
                         "aspect-ratio", aspect_ratio,
                         "angle",        angle,
                         NULL);
-
-  GIMP_BRUSH (brush)->spacing = 20;
 
   return GIMP_DATA (brush);
 }

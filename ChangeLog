@@ -1,3 +1,12 @@
+2006-12-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpbrush.c: made "spacing" a property.
+
+	* app/core/gimpbrushgenerated-save.c
+	* app/core/gimpbrushgenerated.c
+	* app/core/gimpbrushpipe.c: use it. Don't access brush->spacing
+	manually, always use accessors.
+
 2006-12-05  Sven Neumann  <sven@gimp.org>
 
 	* tools/Makefile.am
