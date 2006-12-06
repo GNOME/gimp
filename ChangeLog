@@ -1,5 +1,10 @@
 2006-12-06  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpconfig/gimpconfig-utils.c: don't cast the return value of
+	g_value_get_object(), it's a gpointer.
+
+2006-12-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpbrush.c: made "spacing" a property.
 
 	* app/core/gimpbrushgenerated-save.c
