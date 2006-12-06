@@ -378,7 +378,8 @@ gimp_tools_save (Gimp     *gimp,
       if (save_tool_options && (! tool_options_deleted || always_save))
         gimp_tool_options_serialize (tool_info->tool_options, NULL, NULL);
 
-      if (tool_info->options_presets)
+      if (tool_info->options_presets &&
+          gimp_container_num_children (tool_info->options_presets) > 0)
         {
           gchar *header;
           gchar *footer;
