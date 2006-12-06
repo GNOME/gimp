@@ -49,7 +49,7 @@ Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 
 #include <gdkconfig.h>		/* For GDK_WINDOWING_WIN32 */
 
-#ifdef GDK_WINDOWING_WIN32
+#ifndef GDK_WINDOWING_X11
 #ifndef XPM_NO_X
 #define XPM_NO_X
 #endif
