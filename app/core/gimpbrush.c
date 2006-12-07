@@ -108,6 +108,8 @@ gimp_brush_class_init (GimpBrushClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  object_class->get_property       = gimp_brush_get_property;
+  object_class->set_property       = gimp_brush_set_property;
   object_class->finalize           = gimp_brush_finalize;
 
   gimp_object_class->get_memsize   = gimp_brush_get_memsize;

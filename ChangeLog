@@ -1,3 +1,10 @@
+2006-12-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpbrush.c (gimp_brush_class_init)
+	* app/core/gimpbrushgenerated.c (gimp_brush_generated_new): gah,
+	should use the right binary for testing. Fixes the new spacing
+	property.
+
 2006-12-07  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-user-install.c: when creating the user directory,
