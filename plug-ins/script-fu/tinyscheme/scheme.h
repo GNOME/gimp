@@ -14,6 +14,9 @@
 #endif
 
 #ifndef _MSC_VER
+# ifndef USE_STRLWR
+#   define USE_STRLWR 1
+# endif
 # define SCHEME_EXPORT
 #else
 # define USE_STRLWR 0
@@ -138,7 +141,8 @@ pointer mk_string(scheme *sc, const char *str);
 pointer mk_counted_string(scheme *sc, const char *str, int len);
 pointer mk_character(scheme *sc, gunichar c);
 pointer mk_foreign_func(scheme *sc, foreign_func f);
-void putstr(scheme *sc, const char *s);
+void    putcharacter(scheme *sc, gunichar c);
+void    putstr(scheme *sc, const char *s);
 
 void set_safe_foreign (scheme *sc, pointer data);
 

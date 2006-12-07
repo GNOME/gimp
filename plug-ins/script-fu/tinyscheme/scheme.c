@@ -74,6 +74,9 @@
 
 #include <string.h>
 #include <stdlib.h>
+#ifndef __APPLE__
+# include <malloc.h>
+#endif
 
 #define stricmp utf8_stricmp
 
@@ -1497,6 +1500,8 @@ static gunichar inchar(scheme *sc) {
     file_pop(sc);
     if(sc->nesting!=0) {
       return EOF;
+    } else {
+      return '\n';
     }
     goto again;
   }
@@ -4687,7 +4692,7 @@ void scheme_call(scheme *sc, pointer func, pointer args) {
 
 #if STANDALONE
 
-#if defined(macintosh) && !defined (OSX)
+#if defined(__APPLE__) && !defined (OSX)
 int main(int argc, char **argv)
 {
      extern MacTS_main(int argc, char **argv);

@@ -1,12 +1,16 @@
      Change Log
      ----------
+     Version 1.38
+          Interim release until the rewrite, mostly incorporating modifications from 
+          Kevin Cozens. Small addition for Cygwin in the makefile, and modifications
+          by Andrew Guenther for Apple platforms.
      Version 1.37
-      Joe Buehler submitted reserve_cells.
+          Joe Buehler submitted reserve_cells.
      Version 1.36
 	  Joe Buehler fixed a patch in the allocator.
 	  Alexander Shendi moved the comment handling in the scanner, which 
 	  fixed an obscure bug for which Mike E had provided a patch as well.
-	  Kevin Kozens has submitted some fixes and modifications which have not
+	  Kevin Cozens has submitted some fixes and modifications which have not
 	  been incorporated yet in their entirety.
      Version 1.35
 	  Todd Showalter discovered that the number of free cells reported 

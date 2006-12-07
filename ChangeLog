@@ -1,3 +1,17 @@
+2006-12-07  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/re/re.c: Minor changes to quiet the compiler.
+
+	* plug-ins/script-fu/tinyscheme/CHANGES: Updated to version from
+	the 1.38 version of TinyScheme.
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: Added some changes from the
+	1.38 version of TinyScheme. Added fix for bug #1589701 (reported on
+	SourceForge.net).
+
+	* plug-ins/script-fu/tinyscheme/scheme.h: Added a prototype to quiet
+	the compiler. Added one change from the 1.38 version of TinyScheme.
+
 2006-12-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpbrush.c (gimp_brush_class_init)
