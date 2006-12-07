@@ -1,5 +1,10 @@
 2006-12-07  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp-user-install.c: when creating the user directory,
+	create parent directories if they don't exist.
+
+2006-12-07  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: require bind_textdomain_codeset(). Fixes bug #362983.
 
 2006-12-07  Sven Neumann  <sven@gimp.org>

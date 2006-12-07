@@ -104,24 +104,26 @@ gimp_user_install_items[] =
 };
 
 
-static void      user_install_log           (GimpUserInstall  *install,
-                                             const gchar      *format,
-                                             ...) G_GNUC_PRINTF (2, 3);
-static void      user_install_log_newline   (GimpUserInstall  *install);
-static void      user_install_log_error     (GimpUserInstall  *install,
-                                             GError          **error);
+static void      user_install_log                (GimpUserInstall  *install,
+                                                  const gchar      *format,
+                                                  ...) G_GNUC_PRINTF (2, 3);
+static void      user_install_log_newline        (GimpUserInstall  *install);
+static void      user_install_log_error          (GimpUserInstall  *install,
+                                                  GError          **error);
 
-static gboolean  user_install_mkdir         (GimpUserInstall  *install,
-                                             const gchar      *dirname);
-static gboolean  user_install_file_copy     (GimpUserInstall  *install,
-                                             const gchar      *source,
-                                             const gchar      *dest);
-static gboolean  user_install_dir_copy      (GimpUserInstall  *install,
-                                             const gchar      *source,
-                                             const gchar      *base);
+static gboolean  user_install_mkdir              (GimpUserInstall  *install,
+                                                  const gchar      *dirname);
+static gboolean  user_install_mkdir_with_parents (GimpUserInstall  *install,
+                                                  const gchar      *dirname);
+static gboolean  user_install_file_copy          (GimpUserInstall  *install,
+                                                  const gchar      *source,
+                                                  const gchar      *dest);
+static gboolean  user_install_dir_copy           (GimpUserInstall  *install,
+                                                  const gchar      *source,
+                                                  const gchar      *base);
 
-static gboolean  user_install_create_files  (GimpUserInstall  *install);
-static gboolean  user_install_migrate_files (GimpUserInstall  *install);
+static gboolean  user_install_create_files       (GimpUserInstall  *install);
+static gboolean  user_install_migrate_files      (GimpUserInstall  *install);
 
 
 
@@ -206,7 +208,7 @@ gimp_user_install_run (GimpUserInstall *install)
 
   user_install_log_newline (install);
 
-  if (! user_install_mkdir (install, gimp_directory ()))
+  if (! user_install_mkdir_with_parents (install, gimp_directory ()))
     return FALSE;
 
   if (install->migrate)
@@ -337,6 +339,32 @@ user_install_mkdir (GimpUserInstall *install,
 }
 
 static gboolean
+user_install_mkdir_with_parents (GimpUserInstall *install,
+                                 const gchar     *dirname)
+{
+  user_install_log (install, _("Creating folder '%s'..."),
+                    gimp_filename_to_utf8 (dirname));
+
+  if (g_mkdir_with_parents (dirname,
+                            S_IRUSR | S_IWUSR | S_IXUSR |
+                            S_IRGRP | S_IXGRP |
+                            S_IROTH | S_IXOTH) == -1)
+    {
+      GError *error = NULL;
+
+      g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Cannot create folder '%s': %s"),
+                   gimp_filename_to_utf8 (dirname), g_strerror (errno));
+
+      user_install_log_error (install, &error);
+
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+static gboolean
 user_install_dir_copy (GimpUserInstall *install,
                        const gchar *source,
                        const gchar *base)
@@ -356,8 +384,7 @@ user_install_dir_copy (GimpUserInstall *install,
     g_free (basename);
   }
 
-  success =
-    user_install_mkdir (install, dirname);
+  success = user_install_mkdir (install, dirname);
   if (! success)
     goto error;
 
