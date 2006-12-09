@@ -1,8 +1,8 @@
-/* Depth Merge -- Combine two image layers via corresponding depth maps
- * Copyright (C) 1997, 1998 Sean Cier (scier@PostHorizon.com)
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * A plug-in for The GIMP
- * The GIMP is Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * Depth Merge -- Combine two image layers via corresponding depth maps
+ * Copyright (C) 1997, 1998 Sean Cier (scier@PostHorizon.com)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

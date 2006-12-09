@@ -1,4 +1,7 @@
-/* Auntie Alias 0.92 --- image filter plug-in for The GIMP
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * Auntie Alias 0.92 --- image filter plug-in
  *
  * Copyright (C) 2005 Adam D. Moss (adam@gimp.org)
  *

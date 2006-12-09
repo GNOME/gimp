@@ -1,8 +1,7 @@
-/*
- * "$Id$"
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- *   Portable Network Graphics (PNG) plug-in for The GIMP -- an image
- *   manipulation program
+ *   Portable Network Graphics (PNG) plug-in
  *
  *   Copyright 1997-1998 Michael Sweet (mike@easysw.com) and
  *   Daniel Skarda (0rfelyus@atrey.karlin.mff.cuni.cz).

@@ -663,7 +663,7 @@ bitTransferCallback(pTW_IMAGEINFO imageInfo,
  * the image type is Grayscale or RGB.  This transfer
  * mode is quicker than the modes that require translation
  * from a greater number of bits per sample down to the
- * 8 bits per sample understood by The GIMP.
+ * 8 bits per sample understood by GIMP.
  */
 static int
 oneBytePerSampleTransferCallback(pTW_IMAGEINFO imageInfo,
@@ -682,12 +682,12 @@ oneBytePerSampleTransferCallback(pTW_IMAGEINFO imageInfo,
     destBuf = g_new (char, rows * cols * bytesPerPixel);
 
   /* The bytes coming from the source may not be padded in
-   * a way that The GIMP is terribly happy with.  It is
+   * a way that GIMP is terribly happy with.  It is
    * possible to transfer row by row, but that is particularly
    * expensive in terms of performance.  It is much cheaper
    * to rearrange the data and transfer it in one large chunk.
    * The next chunk of code rearranges the incoming data into
-   * a non-padded chunk for The GIMP.
+   * a non-padded chunk for GIMP.
    */
   srcBuf = (char *) imageMemXfer->Memory.TheMem;
   for (row = 0; row < rows; row++) {
@@ -738,12 +738,12 @@ twoBytesPerSampleTransferCallback(pTW_IMAGEINFO imageInfo,
     destBuf = g_new (char, rows * cols * imageInfo->SamplesPerPixel);
 
   /* The bytes coming from the source may not be padded in
-   * a way that The GIMP is terribly happy with.  It is
+   * a way that GIMP is terribly happy with.  It is
    * possible to transfer row by row, but that is particularly
    * expensive in terms of performance.  It is much cheaper
    * to rearrange the data and transfer it in one large chunk.
    * The next chunk of code rearranges the incoming data into
-   * a non-padded chunk for The GIMP.  This function must also
+   * a non-padded chunk for GIMP.  This function must also
    * reduce from multiple bytes per sample down to single byte
    * per sample.
    */
@@ -793,7 +793,7 @@ twoBytesPerSampleTransferCallback(pTW_IMAGEINFO imageInfo,
  * The following function is called for each memory
  * block that is transferred from the data source if
  * the image type is paletted.  This does not create
- * an indexed image type in The GIMP because for some
+ * an indexed image type in GIMP because for some
  * reason it does not allow creation of a specific
  * palette.  This function will create an RGB or Gray
  * image and use the palette to set the details of

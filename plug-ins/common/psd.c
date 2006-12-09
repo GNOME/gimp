@@ -2265,7 +2265,7 @@ load_image (const gchar *name)
 
       if ((PSDheader.bpp != 8) && (PSDheader.bpp != 1))
 	{
-	  printf("PSD: The GIMP only supports 8-bit or 1-bit deep PSD images "
+	  printf("PSD: GIMP only supports 8-bit or 1-bit deep PSD images "
 		 "at this time.\n");
 	  return -1;
 	}

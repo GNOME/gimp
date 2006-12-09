@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * CML_explorer.c -- This is a plug-in for The GIMP 1.0
+ * CML_explorer.c
  * Time-stamp: <2000-02-13 18:18:37 yasuhiro>
  * Copyright (C) 1997 Shuji Narazaki <narazaki@InetQ.or.jp>
  * Version: 1.0.11

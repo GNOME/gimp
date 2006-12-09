@@ -1,8 +1,8 @@
-/* cel.c -- KISS CEL file format plug-in for The GIMP
- * (copyright) 1997,1998 Nick Lamb (njl195@zepler.org.uk)
- *
- * GIMP - The GNU Image Manipulation Program
+/* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * cel.c -- KISS CEL file format plug-in
+ * (copyright) 1997,1998 Nick Lamb (njl195@zepler.org.uk)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -267,7 +267,7 @@ need_palette (const gchar *file)
   return (header[5] < 32);
 }
 
-/* Load CEL image into The GIMP */
+/* Load CEL image into GIMP */
 
 static gint32
 load_image (const gchar *file,

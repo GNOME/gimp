@@ -1,3 +1,20 @@
+2006-12-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/CEL.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/antialias.c
+	* plug-ins/common/depthmerge.c
+	* plug-ins/common/mng.c
+	* plug-ins/common/normalize.c
+	* plug-ins/common/png.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/psd.c
+	* plug-ins/common/svg.c
+	* plug-ins/common/tga.c
+	* plug-ins/twain/twain.c
+	* plug-ins/winsnap/winsnap.c: unified copyright notices, got rid of
+	"The GIMP" in a few more places.
+
 2006-12-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcolorselectorpalette.[ch]

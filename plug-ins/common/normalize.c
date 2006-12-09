@@ -1,4 +1,7 @@
-/* Normalize 1.00 --- image filter plug-in for The GIMP
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+/* Normalize 1.00 --- image filter plug-in
  *
  * Copyright (C) 1997 Adam D. Moss (adam@foxbox.org)
  * Very largely based on Quartic's "Contrast Autostretch"

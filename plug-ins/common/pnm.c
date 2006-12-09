@@ -117,7 +117,7 @@ typedef struct
                                  * by the spec anyways so this shouldn't
                                  * be an issue. */
 
-#define SAVE_COMMENT_STRING "# CREATOR: The GIMP's PNM Filter Version 1.1\n"
+#define SAVE_COMMENT_STRING "# CREATOR: GIMP PNM Filter Version 1.1\n"
 
 /* Declare some local functions.
  */

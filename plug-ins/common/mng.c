@@ -1,6 +1,7 @@
-/*
- * Multiple-image Network Graphics (MNG) plug-in for The GIMP -- an image
- * manipulation program
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * Multiple-image Network Graphics (MNG) plug-in
  *
  * Copyright (C) 2002 S. Mukund <muks@mukund.org>
  * Portions are copyright of the authors of the file-gif-save, file-png-save
@@ -644,7 +645,7 @@ mng_save_image (const gchar *filename,
 
   if ((ret =
        mng_putchunk_text (handle, strlen (MNG_TEXT_TITLE), MNG_TEXT_TITLE, 22,
-                          "Created using The GIMP")) != MNG_NOERROR)
+                          "Created using GIMP")) != MNG_NOERROR)
     {
       g_warning ("Unable to mng_putchunk_text() in mng_save_image()");
       mng_cleanup (&handle);

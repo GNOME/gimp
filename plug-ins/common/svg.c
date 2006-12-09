@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* SVG loader for The GIMP
+/* SVG loader plug-in
  * (C) Copyright 2003  Dom Lachowicz <cinamod@hotmail.com>
  *
  * Largely rewritten in September 2003 by Sven Neumann <sven@gimp.org>

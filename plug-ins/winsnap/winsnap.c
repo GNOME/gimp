@@ -144,7 +144,7 @@ const GimpPlugInInfo PLUG_IN_INFO =
  * DIB sections are aligned ona LONG (four byte) boundary. Its pixel
  * data is in RGB (BGR actually) format, three bytes per pixel.
  *
- * The GIMP uses no alignment for its pixel regions. The GIMP image we
+ * GIMP uses no alignment for its pixel regions. The GIMP image we
  * create is of type RGB, i.e. three bytes per pixel, too. Thus in
  * order to be able to quickly transfer all of the image at a time, we
  * must use a DIB section and pixel region the scanline width in
