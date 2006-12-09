@@ -74,7 +74,6 @@
                                          "Bumpmap"
                                          100
                                          NORMAL-MODE)))
-        (bevelling-whole-image)
         (select)
         )
 
