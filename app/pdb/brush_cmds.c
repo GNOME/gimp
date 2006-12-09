@@ -37,6 +37,8 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 brush_new_invoker (GimpProcedure     *procedure,
@@ -215,7 +217,8 @@ brush_delete_invoker (GimpProcedure     *procedure,
 
           if (! success)
             {
-              g_message (error->message);
+              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                            "%s", error->message);
               g_clear_error (&error);
             }
         }
@@ -336,13 +339,15 @@ brush_get_pixels_invoker (GimpProcedure     *procedure,
           width          = brush->mask->width;
           height         = brush->mask->height;
           mask_bpp       = brush->mask->bytes;
-          num_mask_bytes = brush->mask->height * brush->mask->width;
+          num_mask_bytes = brush->mask->height * brush->mask->width *
+                           brush->mask->bytes;
           mask_bytes     = g_memdup (temp_buf_data (brush->mask), num_mask_bytes);
 
           if (brush->pixmap)
             {
               color_bpp       = brush->pixmap->bytes;
-              num_color_bytes = brush->pixmap->height * brush->pixmap->width;
+              num_color_bytes = brush->pixmap->height * brush->pixmap->width *
+                                brush->pixmap->bytes;
               color_bytes     = g_memdup (temp_buf_data (brush->pixmap),
                                           num_color_bytes);
             }

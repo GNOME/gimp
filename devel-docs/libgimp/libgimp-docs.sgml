@@ -11,15 +11,10 @@
     </releaseinfo>
   </bookinfo>
 
-  <part id="gimpdefinitions">
-    <title>GIMP Constants</title>
-    <xi:include href="xml/gimpenums.xml" />
-  </part>
-
   <part id="libgimp">
     <title>GIMP Library</title>
 
-    <partintro>
+    <partintro id="libgimp-introduction">
       <para>
 	GIMP's Procedural Database (PDB) offers an interface to core
 	functions and to functionality provided by plug-ins. The role
@@ -30,6 +25,7 @@
     <chapter id="libgimp-general">
       <title>Functions not Related to Specific Images</title>
       <xi:include href="xml/gimp.xml" />
+      <xi:include href="xml/gimpenums.xml" />
       <xi:include href="xml/gimpbuffer.xml" />
       <xi:include href="xml/gimpcontext.xml" />
       <xi:include href="xml/gimpgimprc.xml" />
@@ -41,7 +37,7 @@
     </chapter>
 
     <chapter id="libgimp-image">
-      <title>Manupulating Images and all their Properties</title>
+      <title>Manupulating Images and their Properties</title>
       <xi:include href="xml/gimpchannel.xml" />
       <xi:include href="xml/gimpcolor.xml" />
       <xi:include href="xml/gimpconvert.xml" />
@@ -110,7 +106,7 @@
     <xi:include href="xml/gimpdrawablepreview.xml" />
     <xi:include href="xml/gimpaspectpreview.xml" />
     <xi:include href="xml/gimpzoompreview.xml" />
-    <xi:include href="xml/gimpdrawablecombobox.xml" />
+    <xi:include href="xml/gimpitemcombobox.xml" />
     <xi:include href="xml/gimpimagecombobox.xml" />
     <xi:include href="xml/gimppixbuf.xml" />
     <xi:include href="xml/gimpprogressbar.xml" />
@@ -124,16 +120,16 @@
     <xi:include href="xml/gimpprocview.xml" />
   </part>
 
-  <index>
+  <index id="libgimp-index">
     <title>Index</title>
   </index>
-  <index role="GIMP 2.2">
+  <index role="GIMP 2.2" id="libgimp-index-new-in-2-2">
     <title>Index of new symbols in GIMP 2.2</title>
   </index>
-  <index role="GIMP 2.4">
+  <index role="GIMP 2.4" id="libgimp-index-new-in-2-4">
     <title>Index of new symbols in GIMP 2.4</title>
   </index>
-  <index role="deprecated">
+  <index role="deprecated" id="libgimp-index-deprecated">
     <title>Index of deprecated symbols</title>
   </index>
 

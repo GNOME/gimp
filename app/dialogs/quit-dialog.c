@@ -29,6 +29,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimplist.h"
 
 #include "display/gimpdisplay.h"
@@ -79,6 +80,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
                            gboolean  do_quit)
 {
   GimpContainer  *images;
+  GimpContext    *context;
   GimpMessageBox *box;
   GtkWidget      *dialog;
   GtkWidget      *label;
@@ -94,7 +96,9 @@ quit_close_all_dialog_new (Gimp     *gimp,
 #warning FIXME: need container of dirty images
 #endif
 
-  images = gimp_displays_get_dirty_images (gimp);
+  images  = gimp_displays_get_dirty_images (gimp);
+  context = gimp_context_new (gimp, "close-all-dialog",
+                              gimp_get_user_context (gimp));
 
   g_return_val_if_fail (images != NULL, NULL);
 
@@ -112,6 +116,8 @@ quit_close_all_dialog_new (Gimp     *gimp,
 
   g_object_set_data_full (G_OBJECT (dialog), "dirty-images",
                           images, (GDestroyNotify) g_object_unref);
+  g_object_set_data_full (G_OBJECT (dialog), "dirty-images-context",
+                          context, (GDestroyNotify) g_object_unref);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (quit_close_all_dialog_response),
@@ -139,7 +145,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
   view_size = gimp->config->layer_preview_size;
   rows      = CLAMP (gimp_container_num_children (images), 3, 6);
 
-  view = gimp_container_tree_view_new (images, NULL, view_size, 1);
+  view = gimp_container_tree_view_new (images, context, view_size, 1);
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (view),
                                        -1,
                                        rows * (view_size + 2));

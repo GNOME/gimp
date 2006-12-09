@@ -35,6 +35,8 @@
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 image_grid_get_spacing_invoker (GimpProcedure     *procedure,

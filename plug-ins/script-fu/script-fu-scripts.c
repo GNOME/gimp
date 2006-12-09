@@ -30,13 +30,14 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "siod/siod.h"
+#include "tinyscheme/scheme-private.h"
+
+#include "scheme-wrapper.h"
 
 #include "script-fu-types.h"
 
 #include "script-fu-interface.h"
 #include "script-fu-scripts.h"
-#include "siod-wrapper.h"
 
 #include "script-fu-intl.h"
 
@@ -48,34 +49,30 @@ typedef struct
 } SFMenu;
 
 
-/* External functions
- */
-extern long  nlength (LISP obj);
-
 /*
  *  Local Functions
  */
 
-static void       script_fu_load_script    (const GimpDatafileData *file_data,
-                                            gpointer                user_data);
-static gboolean   script_fu_install_script (gpointer                foo,
-                                            GList                  *scripts,
-                                            gpointer                bar);
-static void       script_fu_install_menu   (SFMenu                 *menu);
-static gboolean   script_fu_remove_script  (gpointer                foo,
-                                            GList                  *scripts,
-                                            gpointer                bar);
-static void       script_fu_script_proc    (const gchar            *name,
-                                            gint                    nparams,
-                                            const GimpParam        *params,
-                                            gint                   *nreturn_vals,
-                                            GimpParam             **return_vals);
+static void      script_fu_load_script    (const GimpDatafileData *file_data,
+                                           gpointer                user_data);
+static gboolean  script_fu_install_script (gpointer                foo,
+                                           GList                  *scripts,
+                                           gpointer                bar);
+static void      script_fu_install_menu   (SFMenu                 *menu);
+static gboolean  script_fu_remove_script  (gpointer                foo,
+                                           GList                  *scripts,
+                                           gpointer                bar);
+static void      script_fu_script_proc    (const gchar            *name,
+                                           gint                    nparams,
+                                           const GimpParam        *params,
+                                           gint                   *nreturn_vals,
+                                           GimpParam             **return_vals);
 
-static SFScript * script_fu_find_script    (const gchar            *name);
-static void       script_fu_free_script    (SFScript               *script);
+static SFScript *script_fu_find_script    (const gchar            *name);
+static void      script_fu_free_script    (SFScript               *script);
 
-static gint       script_fu_menu_compare   (gconstpointer           a,
-                                            gconstpointer           b);
+static gint      script_fu_menu_compare   (gconstpointer           a,
+                                           gconstpointer           b);
 
 
 /*
@@ -91,12 +88,8 @@ static GList *script_menu_list = NULL;
  */
 
 void
-script_fu_find_scripts (void)
+script_fu_find_scripts (const gchar *path)
 {
-  gchar  *path_str;
-  gchar  *path;
-  GError *error = NULL;
-
   /*  Make sure to clear any existing scripts  */
   if (script_tree != NULL)
     {
@@ -106,28 +99,14 @@ script_fu_find_scripts (void)
       g_tree_destroy (script_tree);
     }
 
-  script_tree = g_tree_new ((GCompareFunc) g_utf8_collate);
-
-  path_str = gimp_gimprc_query ("script-fu-path");
-
-  if (! path_str)
+  if (! path)
     return;
 
-  path = g_filename_from_utf8 (path_str, -1, NULL, NULL, &error);
-  g_free (path_str);
-
-  if (! path)
-    {
-      g_warning ("Can't convert script-fu-path to filesystem encoding: %s",
-                 error->message);
-      g_error_free (error);
-      return;
-    }
+  script_tree = g_tree_new ((GCompareFunc) g_utf8_collate);
 
   gimp_datafiles_read_directories (path, G_FILE_TEST_IS_REGULAR,
                                    script_fu_load_script,
                                    NULL);
-  g_free (path);
 
   /*  Now that all scripts are read in and sorted, tell gimp about them  */
   g_tree_foreach (script_tree,
@@ -146,8 +125,17 @@ script_fu_find_scripts (void)
   script_menu_list = NULL;
 }
 
-LISP
-script_fu_add_script (LISP a)
+#if 1   /* ~~~~~ */
+static pointer
+my_err(scheme *sc, char *msg)
+{
+    fprintf(stderr, msg);
+    return sc->F;
+}
+#endif
+
+pointer
+script_fu_add_script (scheme *sc, pointer a)
 {
   GimpParamDef *args;
   SFScript     *script;
@@ -156,63 +144,66 @@ script_fu_add_script (LISP a)
   gchar        *val;
   gint          i;
   guchar        r, g, b;
-  LISP          color_list;
-  LISP          adj_list;
-  LISP          brush_list;
-  LISP          option_list;
+  pointer       color_list;
+  pointer       adj_list;
+  pointer       brush_list;
+  pointer       option_list;
 
   /*  Check the length of a  */
-  if (nlength (a) < 7)
-    return my_err ("Too few arguments to script-fu-register", NIL);
+  if (sc->vptr->list_length (sc, a) < 7)
+  {
+    g_message ("Too few arguments to script-fu-register");
+    return sc->NIL;
+  }
 
   /*  Create a new script  */
   script = g_new0 (SFScript, 1);
 
   /*  Find the script name  */
-  val = get_c_string (car (a));
+  val = sc->vptr->string_value (sc->vptr->pair_car (a));
   script->name = g_strdup (val);
-  a = cdr (a);
+  a = sc->vptr->pair_cdr (a);
 
   /*  Find the script menu_path  */
-  val = get_c_string (car (a));
+  val = sc->vptr->string_value (sc->vptr->pair_car (a));
   script->menu_path = g_strdup (val);
-  a = cdr (a);
+  a = sc->vptr->pair_cdr (a);
 
   /*  Find the script blurb  */
-  val = get_c_string (car (a));
+  val = sc->vptr->string_value (sc->vptr->pair_car (a));
   script->blurb = g_strdup (val);
-  a = cdr (a);
+  a = sc->vptr->pair_cdr (a);
 
   /*  Find the script author  */
-  val = get_c_string (car (a));
+  val = sc->vptr->string_value (sc->vptr->pair_car (a));
   script->author = g_strdup (val);
-  a = cdr (a);
+  a = sc->vptr->pair_cdr (a);
 
   /*  Find the script copyright  */
-  val = get_c_string (car (a));
+  val = sc->vptr->string_value (sc->vptr->pair_car (a));
   script->copyright = g_strdup (val);
-  a = cdr (a);
+  a = sc->vptr->pair_cdr (a);
 
   /*  Find the script date  */
-  val = get_c_string (car (a));
+  val = sc->vptr->string_value (sc->vptr->pair_car (a));
   script->date = g_strdup (val);
-  a = cdr (a);
+  a = sc->vptr->pair_cdr (a);
 
   /*  Find the script image types  */
-  if (TYPEP (a, tc_cons))
+  if (sc->vptr->is_pair (a))
     {
-      val = get_c_string (car (a));
-      a = cdr (a);
+      val = sc->vptr->string_value (sc->vptr->pair_car (a));
+      a = sc->vptr->pair_cdr (a);
     }
   else
     {
-      val = get_c_string (a);
-      a = NIL;
+      val = sc->vptr->string_value (a);
+      a = sc->NIL;
     }
   script->img_types = g_strdup (val);
 
   /*  Check the supplied number of arguments  */
-  script->num_args = nlength (a) / 3;
+  script->num_args = sc->vptr->list_length (sc, a) / 3;
 
   args = g_new0 (GimpParamDef, script->num_args + 1);
 
@@ -229,27 +220,27 @@ script_fu_add_script (LISP a)
     {
       for (i = 0; i < script->num_args; i++)
         {
-          if (a != NIL)
+          if (a != sc->NIL)
             {
-              if (!TYPEP (car (a), tc_flonum))
-                return my_err ("script-fu-register: argument types must be integer values", NIL);
-              script->arg_types[i] = get_c_long (car (a));
-              a = cdr (a);
+              if (!sc->vptr->is_integer (sc->vptr->pair_car (a)))
+                return my_err (sc, "script-fu-register: argument types must be integer values");
+              script->arg_types[i] = sc->vptr->ivalue (sc->vptr->pair_car (a));
+              a = sc->vptr->pair_cdr (a);
             }
           else
-            return my_err ("script-fu-register: missing type specifier", NIL);
+            return my_err (sc, "script-fu-register: missing type specifier");
 
-          if (a != NIL)
+          if (a != sc->NIL)
             {
-              if (!TYPEP (car (a), tc_string))
-                return my_err ("script-fu-register: argument labels must be strings", NIL);
-              script->arg_labels[i] = g_strdup (get_c_string (car (a)));
-              a = cdr (a);
+              if (!sc->vptr->is_string (sc->vptr->pair_car (a)))
+                return my_err (sc, "script-fu-register: argument labels must be strings");
+              script->arg_labels[i] = g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
+              a = sc->vptr->pair_cdr (a);
             }
           else
-            return my_err ("script-fu-register: missing arguments label", NIL);
+            return my_err (sc, "script-fu-register: missing arguments label");
 
-          if (a != NIL)
+          if (a != sc->NIL)
             {
               switch (script->arg_types[i])
                 {
@@ -257,11 +248,11 @@ script_fu_add_script (LISP a)
                 case SF_DRAWABLE:
                 case SF_LAYER:
                 case SF_CHANNEL:
-                  if (!TYPEP (car (a), tc_flonum))
-                    return my_err ("script-fu-register: drawable defaults must be integer values", NIL);
-
+                case SF_VECTORS:
+                  if (!sc->vptr->is_integer (sc->vptr->pair_car (a)))
+                    return my_err (sc, "script-fu-register: drawable defaults must be integer values");
                   script->arg_defaults[i].sfa_image =
-                    get_c_long (car (a));
+                      sc->vptr->ivalue (sc->vptr->pair_car (a));
                   script->arg_values[i].sfa_image =
                     script->arg_defaults[i].sfa_image;
 
@@ -287,6 +278,11 @@ script_fu_add_script (LISP a)
                       args[i + 1].name = "channel";
                       break;
 
+                    case SF_VECTORS:
+                      args[i + 1].type = GIMP_PDB_VECTORS;
+                      args[i + 1].name = "vectors";
+                      break;
+
                     default:
                       break;
                     }
@@ -295,33 +291,33 @@ script_fu_add_script (LISP a)
                   break;
 
                 case SF_COLOR:
-                  if (TYPEP (car (a), tc_string))
+                  if (sc->vptr->is_string (sc->vptr->pair_car (a)))
                     {
                       if (! gimp_rgb_parse_css (&script->arg_defaults[i].sfa_color,
-                                                get_c_string (car (a)), -1))
-                        return my_err ("script-fu-register: invalid default color name", NIL);
+                                                sc->vptr->string_value (sc->vptr->pair_car (a)),
+                                                -1))
+                        return my_err (sc, "script-fu-register: invalid default color name");
                       gimp_rgb_set_alpha (&script->arg_defaults[i].sfa_color,
                                           1.0);
                     }
-                  else if (TYPEP (car (a), tc_cons))
+                  else if (sc->vptr->is_list (sc, sc->vptr->pair_car (a)) &&
+                           sc->vptr->list_length(sc, sc->vptr->pair_car (a)) == 3)
                     {
-                      color_list = car (a);
-                      r = CLAMP (get_c_long (car (color_list)), 0, 255);
-                      color_list = cdr (color_list);
-                      g = CLAMP (get_c_long (car (color_list)), 0, 255);
-                      color_list = cdr (color_list);
-                      b = CLAMP (get_c_long (car (color_list)), 0, 255);
+                      color_list = sc->vptr->pair_car (a);
+                      r = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)), 0, 255);
+                      color_list = sc->vptr->pair_cdr (color_list);
+                      g = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)), 0, 255);
+                      color_list = sc->vptr->pair_cdr (color_list);
+                      b = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)), 0, 255);
 
-                      gimp_rgb_set_uchar (&script->arg_defaults[i].sfa_color,
-                                          r, g, b);
+                      gimp_rgb_set_uchar (&script->arg_defaults[i].sfa_color, r, g, b);
                     }
                   else
                     {
-                      return my_err ("script-fu-register: color defaults must be a list of 3 integers or a color name", NIL);
+                      return my_err (sc, "script-fu-register: color defaults must be a list of 3 integers or a color name");
                     }
 
-                  script->arg_values[i].sfa_color =
-                    script->arg_defaults[i].sfa_color;
+                  script->arg_values[i].sfa_color = script->arg_defaults[i].sfa_color;
 
                   args[i + 1].type        = GIMP_PDB_COLOR;
                   args[i + 1].name        = "color";
@@ -329,11 +325,11 @@ script_fu_add_script (LISP a)
                   break;
 
                 case SF_TOGGLE:
-                  if (!TYPEP (car (a), tc_flonum))
-                    return my_err ("script-fu-register: toggle default must be an integer value", NIL);
+                  if (!sc->vptr->is_integer (sc->vptr->pair_car (a)))
+                    return my_err (sc, "script-fu-register: toggle default must be an integer value");
 
                   script->arg_defaults[i].sfa_toggle =
-                    (get_c_long (car (a))) ? TRUE : FALSE;
+                    (sc->vptr->ivalue (sc->vptr->pair_car (a))) ? TRUE : FALSE;
                   script->arg_values[i].sfa_toggle =
                     script->arg_defaults[i].sfa_toggle;
 
@@ -343,11 +339,11 @@ script_fu_add_script (LISP a)
                   break;
 
                 case SF_VALUE:
-                  if (!TYPEP (car (a), tc_string))
-                    return my_err ("script-fu-register: value defaults must be string values", NIL);
+                  if (!sc->vptr->is_string (sc->vptr->pair_car (a)))
+                    return my_err (sc, "script-fu-register: value defaults must be string values");
 
                   script->arg_defaults[i].sfa_value =
-                    g_strdup (get_c_string (car (a)));
+                    g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
                   script->arg_values[i].sfa_value =
                     g_strdup (script->arg_defaults[i].sfa_value);
 
@@ -358,11 +354,11 @@ script_fu_add_script (LISP a)
 
                 case SF_STRING:
                 case SF_TEXT:
-                  if (!TYPEP (car (a), tc_string))
-                    return my_err ("script-fu-register: string defaults must be string values", NIL);
+                  if (!sc->vptr->is_string (sc->vptr->pair_car (a)))
+                    return my_err (sc, "script-fu-register: string defaults must be string values");
 
                   script->arg_defaults[i].sfa_value =
-                    g_strdup (get_c_string (car (a)));
+                    g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
                   script->arg_values[i].sfa_value =
                     g_strdup (script->arg_defaults[i].sfa_value);
 
@@ -372,32 +368,38 @@ script_fu_add_script (LISP a)
                   break;
 
                 case SF_ADJUSTMENT:
-                  if (!TYPEP (car (a), tc_cons))
-                    return my_err ("script-fu-register: adjustment defaults must be a list", NIL);
+                  if (!sc->vptr->is_list (sc, a))
+                    return my_err (sc, "script-fu-register: adjustment defaults must be a list");
 
-                  adj_list = car (a);
+                  adj_list = sc->vptr->pair_car (a);
                   script->arg_defaults[i].sfa_adjustment.value =
-                    get_c_double (car (adj_list));
-                  adj_list = cdr (adj_list);
-                  script->arg_defaults[i].sfa_adjustment.lower =
-                    get_c_double (car (adj_list));
-                  adj_list = cdr (adj_list);
-                  script->arg_defaults[i].sfa_adjustment.upper =
-                    get_c_double (car (adj_list));
-                  adj_list = cdr (adj_list);
-                  script->arg_defaults[i].sfa_adjustment.step =
-                    get_c_double (car (adj_list));
-                  adj_list = cdr (adj_list);
-                  script->arg_defaults[i].sfa_adjustment.page =
-                    get_c_double (car (adj_list));
-                  adj_list = cdr (adj_list);
-                  script->arg_defaults[i].sfa_adjustment.digits =
-                    get_c_long (car (adj_list));
-                  adj_list = cdr (adj_list);
-                  script->arg_defaults[i].sfa_adjustment.type =
-                    get_c_long (car (adj_list));
-                  script->arg_values[i].sfa_adjustment.adj = NULL;
+                    sc->vptr->rvalue (sc->vptr->pair_car (adj_list));
 
+                  adj_list = sc->vptr->pair_cdr (adj_list);
+                  script->arg_defaults[i].sfa_adjustment.lower =
+                    sc->vptr->rvalue (sc->vptr->pair_car (adj_list));
+
+                  adj_list = sc->vptr->pair_cdr (adj_list);
+                  script->arg_defaults[i].sfa_adjustment.upper =
+                    sc->vptr->rvalue (sc->vptr->pair_car (adj_list));
+
+                  adj_list = sc->vptr->pair_cdr (adj_list);
+                  script->arg_defaults[i].sfa_adjustment.step =
+                    sc->vptr->rvalue (sc->vptr->pair_car (adj_list));
+
+                  adj_list = sc->vptr->pair_cdr (adj_list);
+                  script->arg_defaults[i].sfa_adjustment.page =
+                    sc->vptr->rvalue (sc->vptr->pair_car (adj_list));
+
+                  adj_list = sc->vptr->pair_cdr (adj_list);
+                  script->arg_defaults[i].sfa_adjustment.digits =
+                    sc->vptr->ivalue (sc->vptr->pair_car (adj_list));
+
+                  adj_list = sc->vptr->pair_cdr (adj_list);
+                  script->arg_defaults[i].sfa_adjustment.type =
+                    sc->vptr->ivalue (sc->vptr->pair_car (adj_list));
+
+                  script->arg_values[i].sfa_adjustment.adj = NULL;
                   script->arg_values[i].sfa_adjustment.value =
                     script->arg_defaults[i].sfa_adjustment.value;
 
@@ -407,16 +409,16 @@ script_fu_add_script (LISP a)
                   break;
 
                 case SF_FILENAME:
-                  if (!TYPEP (car (a), tc_string))
-                    return my_err ("script-fu-register: filename defaults must be string values", NIL);
+                  if (!sc->vptr->is_string (sc->vptr->pair_car (a)))
+                    return my_err (sc, "script-fu-register: filename defaults must be string values");
                   /* fallthrough */
 
                 case SF_DIRNAME:
-                  if (!TYPEP (car (a), tc_string))
-                    return my_err ("script-fu-register: dirname defaults must be string values", NIL);
+                  if (!sc->vptr->is_string (sc->vptr->pair_car (a)))
+                    return my_err (sc, "script-fu-register: dirname defaults must be string values");
 
                   script->arg_defaults[i].sfa_file.filename =
-                    g_strdup (get_c_string (car (a)));
+                    g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
 
 #ifdef G_OS_WIN32
                   /* Replace POSIX slashes with Win32 backslashes. This
@@ -441,11 +443,11 @@ script_fu_add_script (LISP a)
                  break;
 
                 case SF_FONT:
-                  if (!TYPEP (car (a), tc_string))
-                    return my_err ("script-fu-register: font defaults must be string values", NIL);
+                  if (!sc->vptr->is_string (sc->vptr->pair_car (a)))
+                    return my_err (sc, "script-fu-register: font defaults must be string values");
 
                   script->arg_defaults[i].sfa_font =
-                    g_strdup (get_c_string (car (a)));
+                    g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
                   script->arg_values[i].sfa_font =
                     g_strdup (script->arg_defaults[i].sfa_font);
 
@@ -455,13 +457,13 @@ script_fu_add_script (LISP a)
                   break;
 
                 case SF_PALETTE:
-                  if (!TYPEP (car (a), tc_string))
-                    return my_err ("script-fu-register: palette defaults must be string values", NIL);
+                  if (!sc->vptr->is_string (sc->vptr->pair_car (a)))
+                    return my_err (sc, "script-fu-register: palette defaults must be string values");
 
                   script->arg_defaults[i].sfa_palette =
-                    g_strdup (get_c_string (car (a)));
+                    g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
                   script->arg_values[i].sfa_palette =
-                    g_strdup (script->arg_defaults[i].sfa_palette);
+                    g_strdup (script->arg_defaults[i].sfa_pattern);
 
                   args[i + 1].type        = GIMP_PDB_STRING;
                   args[i + 1].name        = "palette";
@@ -469,11 +471,11 @@ script_fu_add_script (LISP a)
                   break;
 
                 case SF_PATTERN:
-                  if (!TYPEP (car (a), tc_string))
-                    return my_err ("script-fu-register: pattern defaults must be string values", NIL);
+                  if (!sc->vptr->is_string (sc->vptr->pair_car (a)))
+                    return my_err (sc, "script-fu-register: pattern defaults must be string values");
 
                   script->arg_defaults[i].sfa_pattern =
-                    g_strdup (get_c_string (car (a)));
+                    g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
                   script->arg_values[i].sfa_pattern =
                     g_strdup (script->arg_defaults[i].sfa_pattern);
 
@@ -483,30 +485,30 @@ script_fu_add_script (LISP a)
                   break;
 
                 case SF_BRUSH:
-                  if (!TYPEP (car (a), tc_cons))
-                    return my_err ("script-fu-register: brush defaults must be a list", NIL);
+                  if (!sc->vptr->is_list (sc, a))
+                    return my_err (sc, "script-fu-register: brush defaults must be a list");
 
-                  brush_list = car (a);
+                  brush_list = sc->vptr->pair_car (a);
                   script->arg_defaults[i].sfa_brush.name =
-                    g_strdup (get_c_string (car (brush_list)));
+                    g_strdup (sc->vptr->string_value (sc->vptr->pair_car (brush_list)));
                   script->arg_values[i].sfa_brush.name =
                     g_strdup (script->arg_defaults[i].sfa_brush.name);
 
-                  brush_list = cdr (brush_list);
+                  brush_list = sc->vptr->pair_cdr (brush_list);
                   script->arg_defaults[i].sfa_brush.opacity =
-                    get_c_double (car (brush_list));
+                    sc->vptr->rvalue (sc->vptr->pair_car (brush_list));
                   script->arg_values[i].sfa_brush.opacity =
                     script->arg_defaults[i].sfa_brush.opacity;
 
-                  brush_list = cdr (brush_list);
+                  brush_list = sc->vptr->pair_cdr (brush_list);
                   script->arg_defaults[i].sfa_brush.spacing =
-                    get_c_long (car (brush_list));
+                    sc->vptr->ivalue (sc->vptr->pair_car (brush_list));
                   script->arg_values[i].sfa_brush.spacing =
                     script->arg_defaults[i].sfa_brush.spacing;
 
-                  brush_list = cdr (brush_list);
+                  brush_list = sc->vptr->pair_cdr (brush_list);
                   script->arg_defaults[i].sfa_brush.paint_mode =
-                    get_c_long (car (brush_list));
+                    sc->vptr->ivalue (sc->vptr->pair_car (brush_list));
                   script->arg_values[i].sfa_brush.paint_mode =
                     script->arg_defaults[i].sfa_brush.paint_mode;
 
@@ -516,11 +518,11 @@ script_fu_add_script (LISP a)
                   break;
 
                 case SF_GRADIENT:
-                  if (!TYPEP (car (a), tc_string))
-                    return my_err ("script-fu-register: gradient defaults must be string values", NIL);
+                  if (!sc->vptr->is_string (sc->vptr->pair_car (a)))
+                    return my_err (sc, "script-fu-register: gradient defaults must be string values");
 
                   script->arg_defaults[i].sfa_gradient =
-                    g_strdup (get_c_string (car (a)));
+                    g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
                   script->arg_values[i].sfa_gradient =
                     g_strdup (script->arg_defaults[i].sfa_gradient);
 
@@ -530,16 +532,17 @@ script_fu_add_script (LISP a)
                   break;
 
                 case SF_OPTION:
-                  if (!TYPEP (car (a), tc_cons))
-                    return my_err ("script-fu-register: option defaults must be a list", NIL);
+                  if (!sc->vptr->is_list (sc, a))
+                    return my_err (sc, "script-fu-register: option defaults must be a list");
 
-                  for (option_list = car (a);
-                       option_list;
-                       option_list = cdr (option_list))
+                  for (option_list = sc->vptr->pair_car (a);
+                       option_list != sc->NIL;
+                       option_list = sc->vptr->pair_cdr (option_list))
                     {
                       script->arg_defaults[i].sfa_option.list =
                         g_slist_append (script->arg_defaults[i].sfa_option.list,
-                                        g_strdup (get_c_string (car (option_list))));
+                                        g_strdup (sc->vptr->string_value
+                                           (sc->vptr->pair_car (option_list))));
                     }
 
                   script->arg_defaults[i].sfa_option.history = 0;
@@ -551,14 +554,15 @@ script_fu_add_script (LISP a)
                   break;
 
                 case SF_ENUM:
-                  if (!TYPEP (car (a),  tc_cons))
-                    return my_err ("script-fu-register: enum defaults must be a list", NIL);
+                  if (!sc->vptr->is_list (sc, a))
+                    return my_err (sc, "script-fu-register: enum defaults must be a list");
 
-                  option_list = car (a);
-                  if (!TYPEP (car (option_list), tc_string))
-                    return my_err ("script-fu-register: first element in enum defaults must be a type-name", NIL);
+                  option_list = sc->vptr->pair_car (a);
+                  if (!sc->vptr->is_string (sc->vptr->pair_car (option_list)))
+                    return my_err (sc, "script-fu-register: first element in enum defaults must be a type-name");
 
-                  val = get_c_string (car (option_list));
+                  val =
+                    sc->vptr->string_value (sc->vptr->pair_car (option_list));
                   if (g_str_has_prefix (val, "Gimp"))
                     val = g_strdup (val);
                   else
@@ -568,18 +572,18 @@ script_fu_add_script (LISP a)
                   if (! G_TYPE_IS_ENUM (enum_type))
                     {
                       g_free (val);
-                      return my_err ("script-fu-register: first element in enum defaults must be the name of a registered type", NIL);
+                      return my_err (sc, "script-fu-register: first element in enum defaults must be the name of a registered type");
                     }
 
                   script->arg_defaults[i].sfa_enum.type_name = val;
 
-                  option_list = cdr (option_list);
-                  if (!TYPEP (car (option_list), tc_string))
-                    return my_err ("script-fu-register: second element in enum defaults must be a string", NIL);
+                  option_list = sc->vptr->pair_cdr (option_list);
+                  if (!sc->vptr->is_string (sc->vptr->pair_car (option_list)))
+                    return my_err (sc, "script-fu-register: second element in enum defaults must be a string");
 
                   enum_value =
                     g_enum_get_value_by_nick (g_type_class_peek (enum_type),
-                                              get_c_string (car (option_list)));
+                      sc->vptr->string_value (sc->vptr->pair_car (option_list)));
                   if (enum_value)
                     script->arg_defaults[i].sfa_enum.history =
                       script->arg_values[i].sfa_enum.history = enum_value->value;
@@ -593,12 +597,12 @@ script_fu_add_script (LISP a)
                   break;
                 }
 
-              a = cdr (a);
+              a = sc->vptr->pair_cdr (a);
             }
           else
             {
-              return my_err ("script-fu-register: missing default argument",
-                             NIL);
+              return my_err (sc,
+                             "script-fu-register: missing default argument");
             }
         }
     }
@@ -612,30 +616,31 @@ script_fu_add_script (LISP a)
     g_tree_insert (script_tree, (gpointer) key, g_list_append (list, script));
   }
 
-  return NIL;
+  return sc->NIL;
 }
 
-LISP
-script_fu_add_menu (LISP a)
+pointer
+script_fu_add_menu (scheme *sc, pointer a)
 {
   SFScript    *script;
   SFMenu      *menu;
   const gchar *name;
 
   /*  Check the length of a  */
-  if (nlength (a) != 2)
-    return my_err ("Incorrect number of arguments for script-fu-menu-register",
-                   NIL);
+  if (sc->vptr->list_length (sc, a) != 2)
+    return my_err (sc, "Incorrect number of arguments for script-fu-menu-register");
 
   /*  Find the script PDB entry name  */
-  name = get_c_string (car (a));
-  a = cdr (a);
+  name = sc->vptr->string_value (sc->vptr->pair_car (a));
+  a = sc->vptr->pair_cdr (a);
 
   script = script_fu_find_script (name);
 
   if (! script)
-    return my_err ("Nonexisting procedure name in script-fu-menu-register",
-                   NIL);
+  {
+    g_message ("Procedure %s in script-fu-menu-register does not exist", name);
+    return sc->NIL;
+  }
 
   /*  Create a new list of menus  */
   menu = g_new0 (SFMenu, 1);
@@ -643,18 +648,18 @@ script_fu_add_menu (LISP a)
   menu->script = script;
 
   /*  Find the script menu path  */
-  menu->menu_path = g_strdup (get_c_string (car (a)));
+  menu->menu_path = g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
 
   script_menu_list = g_list_prepend (script_menu_list, menu);
 
-  return NIL;
+  return sc->NIL;
 }
 
 void
 script_fu_error_msg (const gchar *command)
 {
-  g_message (_("Error while executing\n%s\n%s"),
-             command, siod_get_error_msg ());
+  g_message (_("Error while executing\n%s\n\n%s"),
+             command, ts_get_error_msg ());
 }
 
 
@@ -672,7 +677,7 @@ script_fu_load_script (const GimpDatafileData *file_data,
       command = g_strdup_printf ("(load \"%s\")", escaped);
       g_free (escaped);
 
-      if (repl_c_string (command, 0, 0, 1) != 0)
+      if (ts_interpret_string (command))
         script_fu_error_msg (command);
 
 #ifdef G_OS_WIN32
@@ -768,7 +773,7 @@ script_fu_script_proc (const gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
   SFScript          *script;
-  gint               min_args;
+  gint               min_args = 0;
 
   run_mode = params[0].data.d_int32;
 
@@ -785,26 +790,46 @@ script_fu_script_proc (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
-          /*  Determine whether the script is image based (runs on an image).
-           *  When being called from an image, nparams is 3, otherwise it's 1.
-           */
-          if (nparams == 3 && script->num_args >= 2)
+          if (nparams > 1 && params[1].type == GIMP_PDB_IMAGE &&
+              script->num_args > 0 && script->arg_types[0] == SF_IMAGE)
             {
-              script->arg_values[0].sfa_image    = params[1].data.d_image;
-              script->arg_values[1].sfa_drawable = params[2].data.d_drawable;
-              script->image_based = TRUE;
+              script->arg_values[0].sfa_image = params[1].data.d_image;
+              min_args++;
             }
-          else
+
+          if (nparams > 2 && params[2].type == GIMP_PDB_DRAWABLE &&
+              script->num_args > 1 && script->arg_types[1] == SF_DRAWABLE)
             {
-              script->image_based = FALSE;
+              script->arg_values[1].sfa_drawable = params[2].data.d_drawable;
+              min_args++;
+            }
+
+          if (nparams > 2 && params[2].type == GIMP_PDB_LAYER &&
+              script->num_args > 1 && script->arg_types[1] == SF_LAYER)
+            {
+              script->arg_values[1].sfa_layer = params[2].data.d_layer;
+              min_args++;
+            }
+
+          if (nparams > 2 && params[2].type == GIMP_PDB_CHANNEL &&
+              script->num_args > 1 && script->arg_types[1] == SF_CHANNEL)
+            {
+              script->arg_values[1].sfa_channel = params[2].data.d_channel;
+              min_args++;
+            }
+
+          if (nparams > 2 && params[2].type == GIMP_PDB_VECTORS &&
+              script->num_args > 1 && script->arg_types[1] == SF_VECTORS)
+            {
+              script->arg_values[1].sfa_vectors = params[2].data.d_vectors;
+              min_args++;
             }
 
           /*  First acquire information with a dialog  */
           /*  Skip this part if the script takes no parameters */
-          min_args = (script->image_based) ? 2 : 0;
           if (script->num_args > min_args)
             {
-              script_fu_interface (script);
+              script_fu_interface (script, min_args);
               break;
             }
           /*  else fallthrough  */
@@ -836,6 +861,7 @@ script_fu_script_proc (const gchar      *name,
                     case SF_DRAWABLE:
                     case SF_LAYER:
                     case SF_CHANNEL:
+                    case SF_VECTORS:
                       g_string_append_printf (s, "%d", param->data.d_int32);
                       break;
 
@@ -900,7 +926,7 @@ script_fu_script_proc (const gchar      *name,
               command = g_string_free (s, FALSE);
 
               /*  run the command through the interpreter  */
-              if (repl_c_string (command, 0, 0, 1) != 0)
+              if (ts_interpret_string (command))
                 script_fu_error_msg (command);
 
               g_free (command);
@@ -984,6 +1010,7 @@ script_fu_free_script (SFScript *script)
         case SF_DRAWABLE:
         case SF_LAYER:
         case SF_CHANNEL:
+        case SF_VECTORS:
         case SF_COLOR:
           break;
 

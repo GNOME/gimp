@@ -93,10 +93,6 @@
 #endif
 #define GRAY50              128
 
-
-/* drawable coord to preview coord */
-#define DX2PX(DX)  ((double) PREVIEW_WIDTH * ((DX) - dinfo->win.x0) / (dinfo->win.x1 - dinfo->win.x0))
-#define DY2PY(DY)  ((double) PREVIEW_HEIGHT * ((DY) - dinfo->win.y0) / (dinfo->win.y1 - dinfo->win.y0))
 #define GRADIENT_CACHE_SIZE 32
 
 #define CALC_GLOW   0x01

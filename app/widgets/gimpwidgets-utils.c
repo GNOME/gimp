@@ -519,6 +519,8 @@ gimp_substitute_underscores (gchar *str)
       *p = ' ';
 }
 
+
+/* pretty much straight copy of _gtk_accel_label_class_get_accelerator_label */
 gchar *
 gimp_get_accel_string (guint           key,
                        GdkModifierType modifiers)
@@ -542,10 +544,12 @@ gimp_get_accel_string (guint           key,
       switch (ch)
         {
         case ' ':
-          g_string_append (gstring, "Space");
+          /* do not translate the part before the | */
+          g_string_append (gstring, Q_("keyboard label|Space"));
           break;
         case '\\':
-          g_string_append (gstring, "Backslash");
+          /* do not translate the part before the | */
+          g_string_append (gstring, Q_("keyboard label|Backslash"));
           break;
         default:
           g_string_append_unichar (gstring, g_unichar_toupper (ch));
@@ -569,6 +573,107 @@ gimp_get_accel_string (guint           key,
   return g_string_free (gstring, FALSE);
 }
 
+#define BUF_SIZE 100
+/**
+ * gimp_suggest_modifiers:
+ * @message: initial text for the message
+ * @modifiers: bit mask of modifiers that should be suggested
+ * @shift_format: optional format string for the Shift modifier
+ * @control_format: optional format string for the Ctrl modifier
+ * @alt_format: optional format string for the Alt modifier
+ *
+ * Utility function to build a message suggesting to use some
+ * modifiers for performing different actions (only Shift, Ctrl and
+ * Alt are currently supported).  If some of these modifiers are
+ * already active, they will not be suggested.  The optional format
+ * strings #shift_format, #control_format and #alt_format may be used
+ * to describe what the modifier will do.  They must contain a single
+ * '%%s' which will be replaced by the name of the modifier.  They
+ * can also be %NULL if the modifier name should be left alone.
+ *
+ * Return value: a newly allocated string containing the message.
+ **/
+gchar *
+gimp_suggest_modifiers (const gchar     *message,
+                        GdkModifierType  modifiers,
+                        const gchar     *shift_format,
+                        const gchar     *control_format,
+                        const gchar     *alt_format)
+{
+  gchar     msg_buf[3][BUF_SIZE];
+  gint      num_msgs = 0;
+  gboolean  try      = FALSE;
+
+  if (modifiers & GDK_SHIFT_MASK)
+    {
+      if (shift_format && *shift_format)
+        {
+          g_snprintf (msg_buf[num_msgs], BUF_SIZE, shift_format,
+                      gimp_get_mod_name_shift ());
+        }
+      else
+        {
+          g_strlcpy (msg_buf[num_msgs], gimp_get_mod_name_shift (), BUF_SIZE);
+          try = TRUE;
+        }
+
+      num_msgs++;
+    }
+
+  if (modifiers & GDK_CONTROL_MASK)
+    {
+      if (control_format && *control_format)
+        {
+          g_snprintf (msg_buf[num_msgs], BUF_SIZE, control_format,
+                      gimp_get_mod_name_control ());
+        }
+      else
+        {
+          g_strlcpy (msg_buf[num_msgs], gimp_get_mod_name_control (), BUF_SIZE);
+          try = TRUE;
+        }
+
+      num_msgs++;
+    }
+
+  if (modifiers & GDK_MOD1_MASK)
+    {
+      if (alt_format && *alt_format)
+        {
+          g_snprintf (msg_buf[num_msgs], BUF_SIZE, alt_format,
+                      gimp_get_mod_name_alt ());
+        }
+      else
+        {
+          g_strlcpy (msg_buf[num_msgs], gimp_get_mod_name_alt (), BUF_SIZE);
+          try = TRUE;
+        }
+
+      num_msgs++;
+    }
+
+  /* This convoluted way to build the message using multiple format strings
+   * tries to make the messages easier to translate to other languages.
+   */
+
+  switch (num_msgs)
+    {
+    case 1:
+      return g_strdup_printf (try ? _("%s (try %s)") : _("%s (%s)"),
+                              message, msg_buf[0]);
+
+    case 2:
+      return g_strdup_printf (_("%s (try %s, %s)"),
+                              message, msg_buf[0], msg_buf[1]);
+
+    case 3:
+      return g_strdup_printf (_("%s (try %s, %s, %s)"),
+                              message, msg_buf[0], msg_buf[1], msg_buf[2]);
+    }
+
+  return g_strdup (message);
+}
+#undef BUF_SIZE
 
 /**
  * gimp_get_screen_resolution:
@@ -724,6 +829,7 @@ gimp_window_get_native (GtkWindow *window)
 #ifdef __GNUC__
 #warning gimp_window_get_native() unimplementable for the target windowing system
 #endif
+  return (GdkNativeWindow)0;
 #endif
 
 #ifdef GDK_WINDOWING_WIN32
@@ -739,32 +845,44 @@ gimp_window_get_native (GtkWindow *window)
   return (GdkNativeWindow)0;
 }
 
-void
-gimp_dialog_set_sensitive (GtkDialog *dialog,
-                           gboolean   sensitive)
+static void
+gimp_window_transient_realized (GtkWidget *window,
+                                GdkWindow *parent)
 {
-  GList *children;
-  GList *list;
+  if (GTK_WIDGET_REALIZED (window))
+    gdk_window_set_transient_for (window->window, parent);
+}
 
-  g_return_if_fail (GTK_IS_DIALOG (dialog));
+/* similar to what we have in libgimp/gimpui.c */
+void
+gimp_window_set_transient_for (GtkWindow *window,
+                               guint32    parent_ID)
+{
+  /* Cross-process transient-for is broken in gdk/win32 <= 2.10.6. It
+   * causes hangs, at least when used as by the gimp and script-fu
+   * processes. In some newer GTK+ version it will be fixed to be a
+   * no-op. If it eventually is fixed to actually work, change this to
+   * a run-time check of GTK+ version. Remember to change also the
+   * function with the same name in libgimp/gimpui.c
+   */
+#ifndef GDK_WINDOWING_WIN32
+  GdkWindow *parent;
 
-  children = gtk_container_get_children (GTK_CONTAINER (dialog->vbox));
+  parent = gdk_window_foreign_new_for_display (gdk_display_get_default (),
+                                               parent_ID);
 
-  for (list = children; list; list = g_list_next (list))
-    {
-      /*  skip the last item (the action area) */
-      if (! g_list_next (list))
-        break;
+  if (! parent)
+    return;
 
-      gtk_widget_set_sensitive (list->data, sensitive);
-    }
+  if (GTK_WIDGET_REALIZED (window))
+    gdk_window_set_transient_for (GTK_WIDGET (window)->window, parent);
 
-  g_list_free (children);
+  g_signal_connect_object (window, "realize",
+                           G_CALLBACK (gimp_window_transient_realized),
+                           parent, 0);
 
-  if (sensitive)
-    gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_CANCEL, sensitive);
-
-  gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, sensitive);
+  g_object_unref (parent);
+#endif
 }
 
 gboolean
@@ -830,7 +948,7 @@ gimp_text_buffer_save (GtkTextBuffer  *buffer,
   GtkTextIter  start_iter;
   GtkTextIter  end_iter;
   gint         fd;
-  gchar              *text_contents;
+  gchar       *text_contents;
 
   g_return_val_if_fail (GTK_IS_TEXT_BUFFER (buffer), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
@@ -993,4 +1111,22 @@ gimp_widget_set_accel_help (GtkWidget *widget,
 
       g_free (tooltip);
     }
+}
+
+const gchar *
+gimp_get_message_stock_id (GimpMessageSeverity severity)
+{
+  switch (severity)
+    {
+    case GIMP_MESSAGE_INFO:
+      return GIMP_STOCK_INFO;
+
+    case GIMP_MESSAGE_WARNING:
+      return GIMP_STOCK_WARNING;
+
+    case GIMP_MESSAGE_ERROR:
+      return GIMP_STOCK_ERROR;
+    }
+
+  g_return_val_if_reached (GIMP_STOCK_WARNING);
 }

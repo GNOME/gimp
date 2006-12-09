@@ -35,7 +35,7 @@
 #include "gimp-intl.h"
 
 
-G_DEFINE_TYPE (GimpPaintbrushTool, gimp_paintbrush_tool, GIMP_TYPE_PAINT_TOOL)
+G_DEFINE_TYPE (GimpPaintbrushTool, gimp_paintbrush_tool, GIMP_TYPE_BRUSH_TOOL)
 
 
 void
@@ -49,7 +49,7 @@ gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_CONTEXT_GRADIENT_MASK,
                 "gimp-paintbrush-tool",
                 _("Paintbrush"),
-                _("Paint fuzzy brush strokes"),
+                _("Paintbrush Tool: Paint smooth strokes using a brush"),
                 N_("_Paintbrush"), "P",
                 NULL, GIMP_HELP_TOOL_PAINTBRUSH,
                 GIMP_STOCK_TOOL_PAINTBRUSH,

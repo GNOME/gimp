@@ -39,7 +39,7 @@
 #include <libgimp/gimpprocbrowserdialog.h>
 #include <libgimp/gimpprocview.h>
 #include <libgimp/gimpprogressbar.h>
-#include <libgimp/gimpdrawablecombobox.h>
+#include <libgimp/gimpitemcombobox.h>
 #include <libgimp/gimpimagecombobox.h>
 #include <libgimp/gimpselectbutton.h>
 #include <libgimp/gimpbrushselectbutton.h>

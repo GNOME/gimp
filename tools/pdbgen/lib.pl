@@ -81,13 +81,14 @@ sub generate {
 	my @inargs = @{$proc->{inargs}} if exists $proc->{inargs};
 	my @outargs = @{$proc->{outargs}} if exists $proc->{outargs};
 
-	my $funcname = "gimp_$name"; my $wrapped = ""; my $attribute = "";
+	my $funcname = "gimp_$name"; my $wrapped = "";
 	my %usednames;
 	my $retdesc = "";
 
 	if ($proc->{deprecated} && !$out->{deprecated}) {
 	    push @{$out->{protos}}, "#ifndef GIMP_DISABLE_DEPRECATED\n";
 	    $out->{deprecated} = 1;
+	    $out->{seen_deprecated} = 1;
 	}
 	elsif (!$proc->{deprecated} && $out->{deprecated}) {
 	    push @{$out->{protos}}, "#endif /* GIMP_DISABLE_DEPRECATED */\n";
@@ -125,7 +126,7 @@ sub generate {
 	}
 
 	# The parameters to the function
-	my $arglist = ""; my $argpass = ""; my $privatevars = 0; 
+	my $arglist = ""; my $argpass = "";
 	my $argdesc = ""; my $sincedesc = "";
 	foreach (@inargs) {
 	    my ($type) = &arg_parse($_->{type});
@@ -133,7 +134,6 @@ sub generate {
 	    my $arg = $arg_types{$type};
 
 	    $wrapped = "_" if exists $_->{wrap};
-	    $attribute = " G_GNUC_INTERNAL" if exists $_->{wrap};
 
 	    $usednames{$_->{name}}++;
 
@@ -183,7 +183,6 @@ sub generate {
 		$return_marshal = "" unless $once++;
 
 		$wrapped = "_" if exists $_->{wrap};
-		$attribute = " G_GNUC_INTERNAL" if exists $_->{wrap};
 
 		$_->{libname} = exists $usednames{$_->{name}} ? "ret_$_->{name}"
 							      : $_->{name};
@@ -417,7 +416,7 @@ CODE
 	# Our function prototype for the headers
 	(my $hrettype = $rettype) =~ s/ //g;
 
-	my $proto = "$hrettype $wrapped$funcname ($arglist)$attribute;\n";
+	my $proto = "$hrettype $wrapped$funcname ($arglist);\n";
 	$proto =~ s/ +/ /g;
 
         push @{$out->{protos}}, $proto;
@@ -549,6 +548,10 @@ LGPL
 
 		$arglist = [ split(' ', $_, 3) ];
 
+		if ($arglist->[1] =~ /^_/) {
+		    $arglist->[0] = "G_GNUC_INTERNAL ".$arglist->[0];
+		}
+
 		for (0..1) {
 		    $len = length($arglist->[$_]);
 		    $longest[$_] = $len if $longest[$_] < $len;
@@ -649,7 +652,11 @@ HEADER
         print CFILE qq/#include "config.h"\n\n/;
 	print CFILE $out->{headers}, "\n" if exists $out->{headers};
 	print CFILE qq/#include "gimp.h"\n/;
-	print CFILE qq/#include "gimpprivate.h"\n/ if $privatevars;
+	if ($out->{seen_deprecated}) {
+	    print CFILE "#undef GIMP_DISABLE_DEPRECATED\n";
+	    print CFILE "#undef __GIMP_\U$group\E_PDB_H__\n";
+	    print CFILE qq/#include "${hname}"\n/;
+	}
 	print CFILE "\n", $extra->{code} if exists $extra->{code};
 	print CFILE $out->{code};
 	close CFILE;

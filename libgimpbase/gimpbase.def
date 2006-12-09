@@ -43,11 +43,14 @@ EXPORTS
 	gimp_image_type_get_type
 	gimp_interpolation_type_get_type
 	gimp_locale_directory
+	gimp_major_version
 	gimp_memsize_deserialize
 	gimp_memsize_get_type
 	gimp_memsize_serialize
 	gimp_memsize_to_string
 	gimp_message_handler_type_get_type
+	gimp_micro_version
+	gimp_minor_version
 	gimp_paint_application_mode_get_type
 	gimp_param_memsize_get_type
 	gimp_param_parasite_get_type
@@ -81,6 +84,7 @@ EXPORTS
 	gimp_pixpipe_params_parse
 	gimp_plug_in_directory
 	gimp_progress_command_get_type
+	gimp_rectangle_intersect
 	gimp_repeat_mode_get_type
 	gimp_run_mode_get_type
 	gimp_signal_private
@@ -106,6 +110,7 @@ EXPORTS
 	gimp_unit_new
 	gimp_unit_set_deletion_flag
 	gimp_utf8_strtrim
+	gimp_vectors_stroke_type_get_type
 	gimp_wire_clear_error
 	gimp_wire_destroy
 	gimp_wire_error

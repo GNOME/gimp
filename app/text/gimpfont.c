@@ -88,6 +88,7 @@ static gboolean  gimp_font_get_popup_size   (GimpViewable  *viewable,
                                              gint          *popup_width,
                                              gint          *popup_height);
 static TempBuf * gimp_font_get_new_preview  (GimpViewable  *viewable,
+                                             GimpContext   *context,
                                              gint           width,
                                              gint           height);
 
@@ -227,6 +228,7 @@ gimp_font_get_popup_size (GimpViewable *viewable,
 
 static TempBuf *
 gimp_font_get_new_preview (GimpViewable *viewable,
+                           GimpContext  *context,
                            gint          width,
                            gint          height)
 {

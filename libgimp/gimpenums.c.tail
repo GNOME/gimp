@@ -43,10 +43,12 @@ static const GimpGetTypeFunc get_type_funcs[] =
   gimp_repeat_mode_get_type,
   gimp_rotation_type_get_type,
   gimp_run_mode_get_type,
+  gimp_select_criterion_get_type,
   gimp_size_type_get_type,
   gimp_stack_trace_mode_get_type,
   gimp_transfer_mode_get_type,
-  gimp_transform_direction_get_type
+  gimp_transform_direction_get_type,
+  gimp_vectors_stroke_type_get_type
 };
 
 static const gchar * const type_names[] =
@@ -91,10 +93,12 @@ static const gchar * const type_names[] =
   "GimpRepeatMode",
   "GimpRotationType",
   "GimpRunMode",
+  "GimpSelectCriterion",
   "GimpSizeType",
   "GimpStackTraceMode",
   "GimpTransferMode",
-  "GimpTransformDirection"
+  "GimpTransformDirection",
+  "GimpVectorsStrokeType"
 };
 
 static gboolean enums_initialized = FALSE;

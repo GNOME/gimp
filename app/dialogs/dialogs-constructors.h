@@ -43,6 +43,9 @@ GtkWidget * dialogs_keyboard_shortcuts_get (GimpDialogFactory *factory,
 GtkWidget * dialogs_module_get             (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               view_size);
+GtkWidget * dialogs_palette_import_get     (GimpDialogFactory *factory,
+                                            GimpContext       *context,
+                                            gint               view_size);
 GtkWidget * dialogs_tips_get               (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               view_size);

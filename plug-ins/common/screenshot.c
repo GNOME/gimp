@@ -181,14 +181,14 @@ static void      run   (const gchar      *name,
 			gint             *nreturn_vals,
 			GimpParam       **return_vals);
 
-static GdkNativeWindow select_window  (GdkScreen        *screen);
-static gint32          create_image   (const GdkPixbuf  *pixbuf);
+static GdkNativeWindow select_window  (GdkScreen  *screen);
+static gint32          create_image   (GdkPixbuf  *pixbuf);
 
-static gint32    shoot                (GdkScreen        *screen);
-static gboolean  shoot_dialog         (GdkScreen       **screen);
-static void      shoot_delay          (gint32            delay);
-static gboolean  shoot_delay_callback (gpointer          data);
-static gboolean  shoot_quit_timeout   (gpointer          data);
+static gint32    shoot                (GdkScreen  *screen);
+static gboolean  shoot_dialog         (GdkScreen **screen);
+static void      shoot_delay          (gint32      delay);
+static gboolean  shoot_delay_callback (gpointer    data);
+static gboolean  shoot_quit_timeout   (gpointer    data);
 
 
 /* Global Variables */
@@ -630,20 +630,14 @@ select_window (GdkScreen *screen)
 /* Create a GimpImage from a GdkPixbuf */
 
 static gint32
-create_image (const GdkPixbuf *pixbuf)
+create_image (GdkPixbuf *pixbuf)
 {
-  GimpPixelRgn	rgn;
-  GimpDrawable *drawable;
   gint32        image;
   gint32        layer;
   gdouble       xres, yres;
   gchar        *comment;
   gint          width, height;
-  gint          rowstride;
-  gint          bpp;
   gboolean      status;
-  guchar       *pixels;
-  gpointer      pr;
 
   status = gimp_progress_init (_("Importing screenshot"));
 
@@ -652,45 +646,10 @@ create_image (const GdkPixbuf *pixbuf)
 
   image = gimp_image_new (width, height, GIMP_RGB);
   gimp_image_undo_disable (image);
-  layer = gimp_layer_new (image, _("Screenshot"),
-                          width, height,
-                          GIMP_RGB_IMAGE, 100, GIMP_NORMAL_MODE);
 
+  layer = gimp_layer_new_from_pixbuf (image, _("Screenshot"), pixbuf,
+                                      100, GIMP_NORMAL_MODE, 0.0, 1.0);
   gimp_image_add_layer (image, layer, 0);
-
-  drawable = gimp_drawable_get (layer);
-
-  gimp_pixel_rgn_init (&rgn, drawable, 0, 0, width, height, TRUE, FALSE);
-
-  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
-  bpp       = gdk_pixbuf_get_n_channels (pixbuf);
-  pixels    = gdk_pixbuf_get_pixels (pixbuf);
-
-  g_assert (bpp == rgn.bpp);
-
-  for (pr = gimp_pixel_rgns_register (1, &rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      const guchar *src;
-      guchar       *dest;
-      gint          y;
-
-      src  = pixels + rgn.y * rowstride + rgn.x * bpp;
-      dest = rgn.data;
-
-      for (y = 0; y < rgn.h; y++)
-        {
-          memcpy (dest, src, rgn.w * rgn.bpp);
-
-          src  += rowstride;
-          dest += rgn.rowstride;
-        }
-    }
-
-  gimp_drawable_detach (drawable);
-
-  gimp_progress_update (1.0);
 
   gimp_get_monitor_resolution (&xres, &yres);
   gimp_image_set_resolution (image, xres, yres);
@@ -700,10 +659,8 @@ create_image (const GdkPixbuf *pixbuf)
     {
       GimpParasite *parasite;
 
-      parasite = gimp_parasite_new ("gimp-comment",
-                                    GIMP_PARASITE_PERSISTENT,
-                                    g_utf8_strlen (comment, -1) + 1,
-                                    comment);
+      parasite = gimp_parasite_new ("gimp-comment", GIMP_PARASITE_PERSISTENT,
+                                    strlen (comment) + 1, comment);
 
       gimp_image_parasite_attach (image, parasite);
       gimp_parasite_free (parasite);

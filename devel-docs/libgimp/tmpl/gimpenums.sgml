@@ -208,6 +208,19 @@ Enums and definitions.
 @GIMP_ROTATE_180: 
 @GIMP_ROTATE_270: 
 
+<!-- ##### ENUM GimpSelectCriterion ##### -->
+<para>
+
+</para>
+
+@GIMP_SELECT_CRITERION_COMPOSITE: 
+@GIMP_SELECT_CRITERION_R: 
+@GIMP_SELECT_CRITERION_G: 
+@GIMP_SELECT_CRITERION_B: 
+@GIMP_SELECT_CRITERION_H: 
+@GIMP_SELECT_CRITERION_S: 
+@GIMP_SELECT_CRITERION_V: 
+
 <!-- ##### FUNCTION gimp_enums_get_type_names ##### -->
 <para>
 

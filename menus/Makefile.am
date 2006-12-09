@@ -15,7 +15,7 @@ menudata_DATA = \
 	brushes-menu.xml		\
 	buffers-menu.xml		\
 	channels-menu.xml		\
-	colormap-editor-menu.xml	\
+	colormap-menu.xml		\
 	cursor-info-menu.xml		\
 	documents-menu.xml		\
 	error-console-menu.xml		\
@@ -28,13 +28,13 @@ menudata_DATA = \
 	palettes-menu.xml		\
 	patterns-menu.xml		\
 	quick-mask-menu.xml		\
-	sample-point-editor-menu.xml	\
-	selection-editor-menu.xml	\
+	sample-points-menu.xml		\
+	selection-menu.xml		\
 	templates-menu.xml		\
 	text-editor-toolbar.xml		\
 	tool-options-menu.xml		\
 	tools-menu.xml			\
-	undo-editor-menu.xml		\
+	undo-menu.xml			\
 	vectors-menu.xml
 
 EXTRA_DIST = \

@@ -97,9 +97,8 @@ quick_mask_configure_cmd_callback (GtkAction *action,
 
   gimp_image_get_quick_mask_color (image, &color);
 
-  options = channel_options_dialog_new (image,
+  options = channel_options_dialog_new (image, NULL,
                                         action_data_get_context (data),
-                                        NULL,
                                         widget,
                                         &color,
                                         NULL,

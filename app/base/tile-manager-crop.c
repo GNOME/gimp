@@ -22,10 +22,11 @@
 
 #include "base-types.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "pixel-region.h"
 #include "tile-manager.h"
-
-#include "paint-funcs/paint-funcs.h"
+#include "tile-manager-crop.h"
 
 
 /*  Crop the buffer to the size of pixels with non-zero transparency */

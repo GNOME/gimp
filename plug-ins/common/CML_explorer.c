@@ -921,12 +921,9 @@ CML_compute_next_step (gint      size,
 #undef  SWAP
 }
 
-#define AVE_DIST(x, y)  (((x) * (x) + (y) * (y))/ 2.0)
 #define LOGISTICS(x)    logistic_function (param, x, power)
 #define ENV_FACTOR(x)   (param->env_sensitivity * LOGISTICS (x))
-#define C_ENV_FACTOR(x) (param->mod_rate * ENV_FACTOR (x))
 #define CHN_FACTOR(x)   (param->ch_sensitivity * LOGISTICS (x))
-#define C_CHN_FACTOR(x) (param->mod_rate * CHN_FACTOR (x))
 
 static gdouble
 CML_next_value (gdouble   *vec,
@@ -1034,12 +1031,10 @@ CML_next_value (gdouble   *vec,
 
   return val;
 }
-#undef AVE_DIST
 #undef LOGISTICS
 #undef ENV_FACTOR
-#undef C_ENV_FACTOR
 #undef CHN_FACTOR
-#undef C_CHN_FACTOR
+
 
 static gdouble
 logistic_function (CML_PARAM *param,

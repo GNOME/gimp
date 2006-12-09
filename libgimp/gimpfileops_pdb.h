@@ -35,11 +35,17 @@ gint32   gimp_file_load                   (GimpRunMode  run_mode,
 gint32   gimp_file_load_layer             (GimpRunMode  run_mode,
                                            gint32       image_ID,
                                            const gchar *filename);
+gint*    gimp_file_load_layers            (GimpRunMode  run_mode,
+                                           gint32       image_ID,
+                                           const gchar *filename,
+                                           gint        *num_layers);
 gboolean gimp_file_save                   (GimpRunMode  run_mode,
                                            gint32       image_ID,
                                            gint32       drawable_ID,
                                            const gchar *filename,
                                            const gchar *raw_filename);
+gboolean gimp_file_save_thumbnail         (gint32       image_ID,
+                                           const gchar *filename);
 gchar*   gimp_temp_name                   (const gchar *extension);
 gboolean gimp_register_magic_load_handler (const gchar *procedure_name,
                                            const gchar *extensions,

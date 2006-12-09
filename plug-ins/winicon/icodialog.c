@@ -19,22 +19,25 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+
 #include <config.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#define ICO_DBG
+/* #define ICO_DBG */
 
-#include "icodialog.h"
 #include "main.h"
+#include "icodialog.h"
+#include "icosave.h"
 
 #include "libgimp/stdplugins-intl.h"
 
+static void   ico_bpp_changed (GtkWidget *combo,
+                               GObject   *hbox);
+static void   ico_toggle_compress (GtkWidget *checkbox,
+                                   GObject   *hbox);
 
-static GtkWidget * ico_preview_new   (gint32     layer);
-static void        combo_bpp_changed (GtkWidget *combo,
-                                      GObject   *hbox);
 
 
 static GtkWidget *
@@ -55,75 +58,13 @@ ico_preview_new (gint32 layer)
 }
 
 
-/* This function creates and returns an hbox for an icon,
-   which then gets added to the dialog's main vbox. */
-static GtkWidget *
-ico_create_icon_hbox (GtkWidget *icon_preview,
-                      gint32     layer,
-                      gint       layer_num)
-{
-  static GtkSizeGroup *size = NULL;
-
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *alignment;
-  GtkWidget *combo;
-
-  hbox = gtk_hbox_new (FALSE, 6);
-
-  alignment = gtk_alignment_new (1.0, 0.5, 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), alignment, FALSE, FALSE, 0);
-  gtk_widget_show (alignment);
-
-  /* To make life easier for the callbacks, we store the
-     layer's ID and stacking number with the hbox. */
-
-  g_object_set_data (G_OBJECT (hbox),
-                     "icon_layer", GINT_TO_POINTER (layer));
-  g_object_set_data (G_OBJECT (hbox),
-                     "icon_layer_num", GINT_TO_POINTER (layer_num));
-
-  g_object_set_data (G_OBJECT (hbox), "icon_preview", icon_preview);
-  gtk_container_add (GTK_CONTAINER (alignment), icon_preview);
-  gtk_widget_show (icon_preview);
-
-  if (! size)
-    size = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-
-  gtk_size_group_add_widget (size, alignment);
-
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  combo = gimp_int_combo_box_new (_("1 bpp, 1-bit alpha, 2-slot palette"),   1,
-                                  _("4 bpp, 1-bit alpha, 16-slot palette"),  4,
-                                  _("8 bpp, 1-bit alpha, 256-slot palette"), 8,
-                                  _("32 bpp, 8-bit alpha, no palette"),      32,
-                                  NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 32);
-
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (combo_bpp_changed),
-                    hbox);
-
-  g_object_set_data (G_OBJECT (hbox), "icon_menu", combo);
-
-  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
-
-  return hbox;
-}
-
-
 GtkWidget *
-ico_specs_dialog_new (gint num_layers)
+ico_dialog_new (IcoSaveInfo *info)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *scrolledwindow;
-  gint      *icon_depths, i;
 
   dialog = gimp_dialog_new (_("Save as Windows Icon"), "winicon",
                             NULL, 0,
@@ -149,11 +90,7 @@ ico_specs_dialog_new (gint num_layers)
      for later comparison.
   */
 
-  icon_depths = g_new (gint, 2 * num_layers);
-  for (i = 0; i < 2 * num_layers; i++)
-    icon_depths[i] = 32;
-
-  g_object_set_data (G_OBJECT (dialog), "icon_depths", icon_depths);
+  g_object_set_data (G_OBJECT (dialog), "save_info", info);
 
   frame = gimp_frame_new (_("Icon Details"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
@@ -177,13 +114,85 @@ ico_specs_dialog_new (gint num_layers)
   return dialog;
 }
 
+/* This function creates and returns an hbox for an icon,
+   which then gets added to the dialog's main vbox. */
 static GtkWidget *
-ico_specs_dialog_get_layer_preview (GtkWidget *dialog,
-                                    gint32     layer)
+ico_create_icon_hbox (GtkWidget   *icon_preview,
+                      gint32       layer,
+                      gint         layer_num,
+                      IcoSaveInfo *info)
+{
+  static GtkSizeGroup *size = NULL;
+
+  GtkWidget *hbox;
+  GtkWidget *vbox;
+  GtkWidget *alignment;
+  GtkWidget *combo;
+  GtkWidget *checkbox;
+
+  hbox = gtk_hbox_new (FALSE, 6);
+
+  alignment = gtk_alignment_new (1.0, 0.5, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), alignment, FALSE, FALSE, 0);
+  gtk_widget_show (alignment);
+
+  /* To make life easier for the callbacks, we store the
+     layer's ID and stacking number with the hbox. */
+
+  g_object_set_data (G_OBJECT (hbox),
+                     "icon_layer", GINT_TO_POINTER (layer));
+  g_object_set_data (G_OBJECT (hbox),
+                     "icon_layer_num", GINT_TO_POINTER (layer_num));
+
+  g_object_set_data (G_OBJECT (hbox), "icon_preview", icon_preview);
+  gtk_container_add (GTK_CONTAINER (alignment), icon_preview);
+  gtk_widget_show (icon_preview);
+
+  if (! size)
+    size = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
+  gtk_size_group_add_widget (size, alignment);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  combo = gimp_int_combo_box_new (_("1 bpp, 1-bit alpha, 2-slot palette"),   1,
+                                  _("4 bpp, 1-bit alpha, 16-slot palette"),  4,
+                                  _("8 bpp, 1-bit alpha, 256-slot palette"), 8,
+                                  _("24 bpp, 1-bit alpha, no palette"),     24,
+                                  _("32 bpp, 8-bit alpha, no palette"),     32,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                 info->depths[layer_num]);
+
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (ico_bpp_changed),
+                    hbox);
+
+  g_object_set_data (G_OBJECT (hbox), "icon_menu", combo);
+
+  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
+
+  checkbox = gtk_check_button_new_with_label (_("Compressed (PNG)"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbox),
+                                info->compress[layer_num]);
+  g_signal_connect (checkbox, "toggled",
+                    G_CALLBACK (ico_toggle_compress), hbox);
+  gtk_box_pack_start (GTK_BOX (vbox), checkbox, FALSE, FALSE, 0);
+  gtk_widget_show (checkbox);
+
+  return hbox;
+}
+
+static GtkWidget *
+ico_dialog_get_layer_preview (GtkWidget *dialog,
+                              gint32     layer)
 {
   GtkWidget *preview;
   GtkWidget *icon_hbox;
-  gchar      key[MAXLEN];
+  gchar      key[ICO_MAXBUF];
 
   g_snprintf (key, sizeof (key), "layer_%i_hbox", layer);
   icon_hbox = g_object_get_data (G_OBJECT (dialog), key);
@@ -205,42 +214,18 @@ ico_specs_dialog_get_layer_preview (GtkWidget *dialog,
   return preview;
 }
 
-void
-ico_specs_dialog_add_icon (GtkWidget *dialog,
-                           gint32     layer,
-                           gint       layer_num)
+static void
+ico_dialog_update_icon_preview (GtkWidget *dialog,
+                                gint32     layer,
+                                gint       bpp)
 {
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *preview;
-  gchar      key[MAXLEN];
-
-  vbox = g_object_get_data (G_OBJECT (dialog), "icons_vbox");
-
-  preview = ico_preview_new (layer);
-  hbox = ico_create_icon_hbox (preview, layer, layer_num);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  /* Let's make the hbox accessible through the layer ID */
-  g_snprintf (key, sizeof (key), "layer_%i_hbox", layer);
-  g_object_set_data (G_OBJECT (dialog), key, hbox);
-}
-
-void
-ico_specs_dialog_update_icon_preview (GtkWidget *dialog,
-                                      gint32     layer,
-                                      gint       bpp)
-{
-  GtkWidget *preview = ico_specs_dialog_get_layer_preview (dialog, layer);
+  GtkWidget *preview = ico_dialog_get_layer_preview (dialog, layer);
   GdkPixbuf *pixbuf;
   gint       w       = gimp_drawable_width (layer);
   gint       h       = gimp_drawable_height (layer);
 
   if (! preview)
     return;
-
-  g_printerr ("ico_specs_dialog_update_icon_preview: %d\n", bpp);
 
   if (bpp <= 8)
     {
@@ -251,9 +236,117 @@ ico_specs_dialog_update_icon_preview (GtkWidget *dialog,
       gint32        tmp_image;
       gint32        tmp_layer;
       guchar       *buffer;
+      guchar       *cmap;
+      gint          num_colors;
 
       image = gimp_drawable_get_image (layer);
+
       tmp_image = gimp_image_new (w, h, gimp_image_base_type (image));
+      gimp_image_undo_disable (tmp_image);
+
+      if (gimp_drawable_is_indexed (layer))
+        {
+          cmap = gimp_image_get_colormap (image, &num_colors);
+          gimp_image_set_colormap (tmp_image, cmap, num_colors);
+          g_free (cmap);
+        }
+
+      tmp_layer = gimp_layer_new (tmp_image, "temporary", w, h,
+                                  gimp_drawable_type (layer),
+                                  100, GIMP_NORMAL_MODE);
+      gimp_image_add_layer (tmp_image, tmp_layer, 0);
+
+      drawable = gimp_drawable_get (layer);
+      tmp      = gimp_drawable_get (tmp_layer);
+
+      gimp_pixel_rgn_init (&src_pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
+      gimp_pixel_rgn_init (&dst_pixel_rgn, tmp,      0, 0, w, h, TRUE, FALSE);
+
+      buffer = g_malloc (w * h * 4);
+      gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
+      gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
+
+      gimp_drawable_detach (tmp);
+      gimp_drawable_detach (drawable);
+
+      if (gimp_drawable_is_indexed (layer))
+        gimp_image_convert_rgb (tmp_image);
+
+      gimp_image_convert_indexed (tmp_image,
+                                  GIMP_FS_DITHER, GIMP_MAKE_PALETTE,
+                                  1 <<bpp, TRUE, FALSE, "dummy");
+
+      cmap = gimp_image_get_colormap (tmp_image, &num_colors);
+      if ( num_colors == (1 << bpp) &&
+           !ico_cmap_contains_black (cmap, num_colors))
+        {
+          /* Windows icons with color maps need the color black.
+           * We need to eliminate one more color to make room for black.
+           */
+          if (gimp_drawable_is_indexed (layer))
+            {
+              g_free (cmap);
+              cmap = gimp_image_get_colormap (image, &num_colors);
+              gimp_image_set_colormap (tmp_image, cmap, num_colors);
+            }
+          else if (gimp_drawable_is_gray (layer))
+            {
+              gimp_image_convert_grayscale (tmp_image);
+            }
+          else
+            {
+              gimp_image_convert_rgb (tmp_image);
+            }
+
+          tmp = gimp_drawable_get (tmp_layer);
+          gimp_pixel_rgn_init (&dst_pixel_rgn,
+                               tmp, 0, 0, w, h, TRUE, FALSE);
+          gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
+          gimp_drawable_detach (tmp);
+
+          if (!gimp_drawable_is_rgb (layer))
+            gimp_image_convert_rgb (tmp_image);
+
+          gimp_image_convert_indexed (tmp_image,
+                                      GIMP_FS_DITHER, GIMP_MAKE_PALETTE,
+                                      (1<<bpp) - 1, TRUE, FALSE, "dummy");
+        }
+      g_free (cmap);
+      g_free (buffer);
+
+      pixbuf = gimp_drawable_get_thumbnail (tmp_layer,
+                                            MIN (w, 128), MIN (h, 128),
+                                            GIMP_PIXBUF_SMALL_CHECKS);
+
+      gimp_image_delete (tmp_image);
+    }
+  else if (bpp == 24)
+    {
+      GimpDrawable *drawable;
+      GimpDrawable *tmp;
+      GimpPixelRgn  src_pixel_rgn, dst_pixel_rgn;
+      gint32        image;
+      gint32        tmp_image;
+      gint32        tmp_layer;
+      guchar       *buffer;
+      GimpParam    *return_vals;
+      gint          n_return_vals;
+
+      image = gimp_drawable_get_image (layer);
+
+      tmp_image = gimp_image_new (w, h, gimp_image_base_type (image));
+      gimp_image_undo_disable (tmp_image);
+
+      if (gimp_drawable_is_indexed (layer))
+        {
+          guchar *cmap;
+          gint    num_colors;
+
+          cmap = gimp_image_get_colormap (image, &num_colors);
+          gimp_image_set_colormap (tmp_image, cmap, num_colors);
+          g_free (cmap);
+        }
+
       tmp_layer = gimp_layer_new (tmp_image, "temporary", w, h,
                                   gimp_drawable_type (layer),
                                   100, GIMP_NORMAL_MODE);
@@ -276,9 +369,14 @@ ico_specs_dialog_update_icon_preview (GtkWidget *dialog,
       if (gimp_drawable_is_indexed (layer))
         gimp_image_convert_rgb (tmp_image);
 
-      gimp_image_convert_indexed (tmp_image,
-                                  GIMP_FS_DITHER, GIMP_MAKE_PALETTE,
-                                  1 << bpp, TRUE, FALSE, "dummy");
+      return_vals =
+        gimp_run_procedure ("plug-in-threshold-alpha", &n_return_vals,
+                            GIMP_PDB_INT32, GIMP_RUN_NONINTERACTIVE,
+                            GIMP_PDB_IMAGE, tmp_image,
+                            GIMP_PDB_DRAWABLE, tmp_layer,
+                            GIMP_PDB_INT32, ICO_ALPHA_THRESHOLD,
+                            GIMP_PDB_END);
+      gimp_destroy_params (return_vals, n_return_vals);
 
       pixbuf = gimp_drawable_get_thumbnail (tmp_layer,
                                             MIN (w, 128), MIN (h, 128),
@@ -297,30 +395,75 @@ ico_specs_dialog_update_icon_preview (GtkWidget *dialog,
   g_object_unref (pixbuf);
 }
 
-static void
-combo_bpp_changed (GtkWidget *combo,
-                   GObject   *hbox)
+void
+ico_dialog_add_icon (GtkWidget *dialog,
+                     gint32     layer,
+                     gint       layer_num)
 {
-  GtkWidget *dialog = gtk_widget_get_toplevel (combo);
-  gint32     layer;
-  gint       layer_num;
-  gint       bpp;
-  gint      *icon_depths;
+  GtkWidget   *vbox;
+  GtkWidget   *hbox;
+  GtkWidget   *preview;
+  gchar        key[ICO_MAXBUF];
+  IcoSaveInfo *info;
+
+  vbox = g_object_get_data (G_OBJECT (dialog), "icons_vbox");
+  info = g_object_get_data (G_OBJECT (dialog), "save_info");
+
+  preview = ico_preview_new (layer);
+  hbox = ico_create_icon_hbox (preview, layer, layer_num, info);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  /* Let's make the hbox accessible through the layer ID */
+  g_snprintf (key, sizeof (key), "layer_%i_hbox", layer);
+  g_object_set_data (G_OBJECT (dialog), key, hbox);
+
+  ico_dialog_update_icon_preview (dialog, layer, info->depths[layer_num]);
+}
+
+static void
+ico_bpp_changed (GtkWidget *combo,
+                 GObject   *hbox)
+{
+  GtkWidget   *dialog;
+  gint32       layer;
+  gint         layer_num;
+  gint         bpp;
+  IcoSaveInfo *info;
+
+
+  dialog = gtk_widget_get_toplevel (combo);
+
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &bpp);
 
-  icon_depths = g_object_get_data (G_OBJECT (dialog), "icon_depths");
-  if (! icon_depths)
-    {
-      D(("Something's wrong -- can't get icon_depths array from dialog\n"));
-      return;
-    }
+  info = g_object_get_data (G_OBJECT (dialog), "save_info");
+  g_assert (info);
 
   layer     = GPOINTER_TO_INT (g_object_get_data (hbox, "icon_layer"));
   layer_num = GPOINTER_TO_INT (g_object_get_data (hbox, "icon_layer_num"));
 
   /* Update vector entry for later when we're actually saving,
      and update the preview right away ... */
-  icon_depths[layer_num] = bpp;
-  ico_specs_dialog_update_icon_preview (dialog, layer, bpp);
+  info->depths[layer_num] = bpp;
+  ico_dialog_update_icon_preview (dialog, layer, bpp);
+}
+
+static void
+ico_toggle_compress (GtkWidget *checkbox,
+                     GObject   *hbox)
+{
+  GtkWidget   *dialog;
+  gint         layer_num;
+  IcoSaveInfo *info;
+
+  dialog = gtk_widget_get_toplevel (checkbox);
+
+  info = g_object_get_data (G_OBJECT (dialog), "save_info");
+  g_assert (info);
+  layer_num = GPOINTER_TO_INT (g_object_get_data (hbox, "icon_layer_num"));
+
+  /* Update vector entry for later when we're actually saving */
+  info->compress[layer_num] =
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkbox));
 }

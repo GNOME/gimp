@@ -66,7 +66,7 @@
 static void   file_open_dialog_show        (GtkWidget   *parent,
                                             GimpImage   *image,
                                             const gchar *uri,
-                                            gboolean     open_as_layer);
+                                            gboolean     open_as_layers);
 static void   file_save_dialog_show        (GimpImage   *image,
                                             GtkWidget   *parent,
                                             const gchar *title,
@@ -111,8 +111,8 @@ file_open_from_image_cmd_callback (GtkAction *action,
 }
 
 void
-file_open_as_layer_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+file_open_as_layers_cmd_callback (GtkAction *action,
+                                  gpointer   data)
 {
   GimpDisplay *display;
   GtkWidget   *widget;
@@ -173,8 +173,9 @@ file_last_opened_cmd_callback (GtkAction *action,
           gchar *filename =
             file_utils_uri_display_name (GIMP_OBJECT (imagefile)->name);
 
-          g_message (_("Opening '%s' failed:\n\n%s"),
-                     filename, error->message);
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                        _("Opening '%s' failed:\n\n%s"),
+                        filename, error->message);
           g_clear_error (&error);
 
           g_free (filename);
@@ -206,8 +207,9 @@ file_save_cmd_callback (GtkAction *action,
       save_proc = gimp_image_get_save_proc (image);
 
       if (uri && ! save_proc)
-        save_proc = file_utils_find_proc (image->gimp->plug_in_manager->save_procs,
-                                          uri);
+        save_proc =
+          file_utils_find_proc (image->gimp->plug_in_manager->save_procs,
+                                uri, NULL);
 
       if (! (uri && save_proc))
         {
@@ -218,6 +220,7 @@ file_save_cmd_callback (GtkAction *action,
           GimpPDBStatusType  status;
           GError            *error = NULL;
           GList             *list;
+          gchar             *filename;
 
           for (list = gimp_action_groups_from_name ("file");
                list;
@@ -232,17 +235,30 @@ file_save_cmd_callback (GtkAction *action,
                               uri, save_proc,
                               GIMP_RUN_WITH_LAST_VALS, FALSE, &error);
 
-          if (status != GIMP_PDB_SUCCESS &&
-              status != GIMP_PDB_CANCEL)
+          filename = file_utils_uri_display_name (uri);
+
+          switch (status)
             {
-              gchar *filename = file_utils_uri_display_name (uri);
+            case GIMP_PDB_SUCCESS:
+              gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_INFO,
+                            _("Image saved to '%s'"),
+                            filename);
+              break;
 
-              g_message (_("Saving '%s' failed:\n\n%s"),
-                         filename, error->message);
+            case GIMP_PDB_CANCEL:
+              gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_INFO,
+                            _("Saving canceled"));
+              break;
+
+            default:
+              gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
+                            _("Saving '%s' failed:\n\n%s"),
+                            filename, error->message);
               g_clear_error (&error);
-
-              g_free (filename);
+              break;
             }
+
+          g_free (filename);
 
           for (list = gimp_action_groups_from_name ("file");
                list;
@@ -311,17 +327,22 @@ file_revert_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
   GimpDisplay *display;
+  GimpImage   *image;
   GtkWidget   *dialog;
   const gchar *uri;
   return_if_no_display (display, data);
 
-  uri = gimp_object_get_name (GIMP_OBJECT (display->image));
+  image = display->image;
 
-  dialog = g_object_get_data (G_OBJECT (display->image), REVERT_DATA_KEY);
+  uri = gimp_object_get_name (GIMP_OBJECT (image));
+
+  dialog = g_object_get_data (G_OBJECT (image), REVERT_DATA_KEY);
 
   if (! uri)
     {
-      g_message (_("Revert failed. No file name associated with this image."));
+      gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
+                    _("Revert failed. "
+                      "No file name associated with this image."));
     }
   else if (dialog)
     {
@@ -369,7 +390,7 @@ file_revert_cmd_callback (GtkAction *action,
                                    "on disk, you will lose all changes, "
                                    "including all undo information."));
 
-      g_object_set_data (G_OBJECT (display->image), REVERT_DATA_KEY, dialog);
+      g_object_set_data (G_OBJECT (image), REVERT_DATA_KEY, dialog);
 
       gtk_widget_show (dialog);
     }
@@ -422,7 +443,7 @@ static void
 file_open_dialog_show (GtkWidget   *parent,
                        GimpImage   *image,
                        const gchar *uri,
-                       gboolean     open_as_layer)
+                       gboolean     open_as_layers)
 {
   GtkWidget *dialog;
 
@@ -435,9 +456,9 @@ file_open_dialog_show (GtkWidget   *parent,
       if (uri)
         gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);
 
-      if (open_as_layer)
+      if (open_as_layers)
         {
-          gtk_window_set_title (GTK_WINDOW (dialog), _("Open Image as Layer"));
+          gtk_window_set_title (GTK_WINDOW (dialog), _("Open Image as Layers"));
           GIMP_FILE_DIALOG (dialog)->image = image;
         }
       else
@@ -560,8 +581,9 @@ file_revert_confirm_response (GtkWidget   *dialog,
         {
           gchar *filename = file_utils_uri_display_name (uri);
 
-          g_message (_("Reverting to '%s' failed:\n\n%s"),
-                     filename, error->message);
+          gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
+                        _("Reverting to '%s' failed:\n\n%s"),
+                        filename, error->message);
           g_clear_error (&error);
 
           g_free (filename);

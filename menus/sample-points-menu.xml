@@ -2,7 +2,7 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <popup action="sample-point-editor-popup">
-    <menuitem action="sample-point-editor-sample-merged" />
+  <popup action="sample-points-popup">
+    <menuitem action="sample-points-sample-merged" />
   </popup>
 </ui>

@@ -179,6 +179,14 @@ menus_init (Gimp              *gimp,
                                       "vectors-menu.xml", plug_in_menus_setup,
                                       NULL);
 
+  gimp_menu_factory_manager_register (global_menu_factory, "<Colormap>",
+                                      "colormap",
+                                      "plug-in",
+                                      NULL,
+                                      "/colormap-popup",
+                                      "colormap-menu.xml", plug_in_menus_setup,
+                                      NULL);
+
   gimp_menu_factory_manager_register (global_menu_factory, "<Dockable>",
                                       "dockable",
                                       "dock",
@@ -284,20 +292,12 @@ menus_init (Gimp              *gimp,
                                       "palette-editor-menu.xml", NULL,
                                       NULL);
 
-  gimp_menu_factory_manager_register (global_menu_factory, "<ColormapEditor>",
-                                      "colormap-editor",
-                                      "plug-in",
-                                      NULL,
-                                      "/colormap-editor-popup",
-                                      "colormap-editor-menu.xml", plug_in_menus_setup,
-                                      NULL);
-
-  gimp_menu_factory_manager_register (global_menu_factory, "<SelectionEditor>",
+  gimp_menu_factory_manager_register (global_menu_factory, "<Selection>",
                                       "select",
                                       "vectors",
                                       NULL,
-                                      "/selection-editor-popup",
-                                      "selection-editor-menu.xml", NULL,
+                                      "/selection-popup",
+                                      "selection-menu.xml", NULL,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<NavigationEditor>",
@@ -305,11 +305,11 @@ menus_init (Gimp              *gimp,
                                       NULL,
                                       NULL);
 
-  gimp_menu_factory_manager_register (global_menu_factory, "<UndoEditor>",
+  gimp_menu_factory_manager_register (global_menu_factory, "<Undo>",
                                       "edit",
                                       NULL,
-                                      "/undo-editor-popup",
-                                      "undo-editor-menu.xml", NULL,
+                                      "/undo-popup",
+                                      "undo-menu.xml", NULL,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<ErrorConsole>",
@@ -343,11 +343,11 @@ menus_init (Gimp              *gimp,
                                       NULL,
                                       NULL);
 
-  gimp_menu_factory_manager_register (global_menu_factory, "<SamplePointEditor>",
-                                      "sample-point-editor",
+  gimp_menu_factory_manager_register (global_menu_factory, "<SamplePoints>",
+                                      "sample-points",
                                       NULL,
-                                      "/sample-point-editor-popup",
-                                      "sample-point-editor-menu.xml",
+                                      "/sample-points-popup",
+                                      "sample-points-menu.xml",
                                       NULL,
                                       NULL);
 }

@@ -962,6 +962,43 @@ gimp_image_remove_layer (gint32 image_ID,
 }
 
 /**
+ * gimp_image_get_layer_position:
+ * @image_ID: The image.
+ * @layer_ID: The layer.
+ *
+ * Returns the position of the layer in the layer stack.
+ *
+ * This procedure determines the positioin of the specified layer in
+ * the images layer stack. If the layer doesn't exist in the image, an
+ * error is returned.
+ *
+ * Returns: The position of the layer in the layer stack.
+ *
+ * Since: GIMP 2.4
+ */
+gint
+gimp_image_get_layer_position (gint32 image_ID,
+                               gint32 layer_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint position = 0;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-layer-position",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    position = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return position;
+}
+
+/**
  * gimp_image_raise_layer:
  * @image_ID: The image.
  * @layer_ID: The layer to raise.
@@ -1169,6 +1206,43 @@ gimp_image_remove_channel (gint32 image_ID,
 }
 
 /**
+ * gimp_image_get_channel_position:
+ * @image_ID: The image.
+ * @channel_ID: The channel.
+ *
+ * Returns the position of the channel in the channel stack.
+ *
+ * This procedure determines the positioin of the specified channel in
+ * the images channel stack. If the channel doesn't exist in the image,
+ * an error is returned.
+ *
+ * Returns: The position of the channel in the channel stack.
+ *
+ * Since: GIMP 2.4
+ */
+gint
+gimp_image_get_channel_position (gint32 image_ID,
+                                 gint32 channel_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint position = 0;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-channel-position",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_CHANNEL, channel_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    position = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return position;
+}
+
+/**
  * gimp_image_raise_channel:
  * @image_ID: The image.
  * @channel_ID: The channel to raise.
@@ -1306,6 +1380,44 @@ gimp_image_remove_vectors (gint32 image_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return success;
+}
+
+/**
+ * gimp_image_get_vectors_position:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object.
+ *
+ * Returns the position of the vectors object in the vectors objects
+ * stack.
+ *
+ * This procedure determines the positioin of the specified vectors
+ * object in the images vectors object stack. If the vectors object
+ * doesn't exist in the image, an error is returned.
+ *
+ * Returns: The position of the vectors object in the vectors stack.
+ *
+ * Since: GIMP 2.4
+ */
+gint
+gimp_image_get_vectors_position (gint32 image_ID,
+                                 gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint position = 0;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-vectors-position",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    position = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return position;
 }
 
 /**
@@ -1576,7 +1688,7 @@ gimp_image_merge_down (gint32        image_ID,
  *
  * This procedure returns an actual pointer to the image's colormap, as
  * well as the number of bytes contained in the colormap. The actual
- * number of colors in the transmitted colormap will be \"num_bytes\" /
+ * number of colors in the transmitted colormap will be 'num-bytes' /
  * 3. If the image is not in Indexed color mode, no colormap is
  * returned.
  *
@@ -1620,10 +1732,10 @@ _gimp_image_get_colormap (gint32  image_ID,
  * Sets the entries in the image's colormap.
  *
  * This procedure sets the entries in the specified image's colormap.
- * The number of entries is specified by the \"num_bytes\" parameter
- * and corresponds to the number of INT8 triples that must be contained
- * in the \"colormap\" array. The actual number of colors in the
- * transmitted colormap is \"num_bytes\" / 3.
+ * The number of entries is specified by the 'num-bytes' parameter and
+ * corresponds to the number of INT8 triples that must be contained in
+ * the 'colormap' array. The actual number of colors in the transmitted
+ * colormap is 'num-bytes' / 3.
  *
  * Returns: TRUE on success.
  */

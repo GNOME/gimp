@@ -451,6 +451,7 @@ gimp_dialog_add_button (GimpDialog  *dialog,
 }
 
 /**
+ * gimp_dialog_add_buttons:
  * @dialog: The @dialog to add buttons to.
  * @Varargs: button_text-response_id pairs.
  *

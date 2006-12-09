@@ -262,7 +262,8 @@ gimp_strip_uline (const gchar *str)
           if (str[1] == '_')
             {
              *p++ = *str++;
-             *p++ = *str++;
+             str++;
+             continue;
             }
 
           /*  find the "(_X)" construct and remove it entirely  */

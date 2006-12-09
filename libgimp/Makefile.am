@@ -243,8 +243,6 @@ libgimpui_2_0_la_sources = \
 	gimpbrushmenu.h			\
 	gimpbrushselectbutton.c		\
 	gimpbrushselectbutton.h		\
-	gimpdrawablecombobox.c		\
-	gimpdrawablecombobox.h		\
 	gimpdrawablepreview.c		\
 	gimpdrawablepreview.h		\
 	gimpexport.c			\
@@ -259,6 +257,8 @@ libgimpui_2_0_la_sources = \
 	gimpgradientselectbutton.h	\
 	gimpimagecombobox.c		\
 	gimpimagecombobox.h		\
+	gimpitemcombobox.c		\
+	gimpitemcombobox.h		\
 	gimpmenu.c			\
 	gimpmenu.h			\
 	gimppalettemenu.c		\
@@ -327,7 +327,6 @@ gimpinclude_HEADERS = \
 	gimpaspectpreview.h		\
 	gimpbrushmenu.h			\
 	gimpbrushselectbutton.h		\
-	gimpdrawablecombobox.h		\
 	gimpdrawablepreview.h   	\
 	gimpexport.h			\
 	gimpfontmenu.h			\
@@ -335,6 +334,7 @@ gimpinclude_HEADERS = \
 	gimpgradientmenu.h		\
 	gimpgradientselectbutton.h	\
 	gimpimagecombobox.h		\
+	gimpitemcombobox.h		\
 	gimpmenu.h			\
 	gimppalettemenu.h		\
 	gimppaletteselectbutton.h	\

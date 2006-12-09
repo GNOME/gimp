@@ -30,9 +30,6 @@
  * V 1.03,neo, 22-May-00: Fixed divide by zero in preview code.
  */
 
-#define VERSIO                                     1.03
-static char dversio[] =                          "v1.03  22-May-00";
-
 #include "config.h"
 
 #include <string.h>
@@ -41,6 +38,9 @@ static char dversio[] =                          "v1.03  22-May-00";
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
+
+static const gchar dversio[] = "v1.03  22-May-00";
 
 
 #define COLOR_MAP_PROC    "plug-in-color-map"

@@ -36,6 +36,8 @@
 
 #include "config-types.h"
 
+#include "gimpconfig-file.h"
+
 #include "gimp-intl.h"
 
 
@@ -74,7 +76,7 @@ gimp_config_file_copy (const gchar  *source,
       if (fwrite (buffer, 1, nbytes, dfile) < nbytes)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Error while writing '%s': %s"),
+                       _("Error writing '%s': %s"),
                        gimp_filename_to_utf8 (dest), g_strerror (errno));
           fclose (sfile);
           fclose (dfile);
@@ -85,7 +87,7 @@ gimp_config_file_copy (const gchar  *source,
   if (ferror (sfile))
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Error while reading '%s': %s"),
+                   _("Error reading '%s': %s"),
                    gimp_filename_to_utf8 (source), g_strerror (errno));
       fclose (sfile);
       fclose (dfile);
@@ -97,7 +99,7 @@ gimp_config_file_copy (const gchar  *source,
   if (fclose (dfile) == EOF)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Error while writing '%s': %s"),
+                   _("Error writing '%s': %s"),
                    gimp_filename_to_utf8 (dest), g_strerror (errno));
       return FALSE;
     }

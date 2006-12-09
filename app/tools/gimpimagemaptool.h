@@ -30,6 +30,8 @@
 #define GIMP_IS_IMAGE_MAP_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE_MAP_TOOL))
 #define GIMP_IMAGE_MAP_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE_MAP_TOOL, GimpImageMapToolClass))
 
+#define GIMP_IMAGE_MAP_TOOL_GET_OPTIONS(t)  (GIMP_IMAGE_MAP_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
 
 typedef struct _GimpImageMapToolClass GimpImageMapToolClass;
 
@@ -62,14 +64,15 @@ struct _GimpImageMapToolClass
   const gchar        *save_dialog_title;
 
   /* virtual functions */
-  void     (* map)           (GimpImageMapTool *image_map_tool);
-  void     (* dialog)        (GimpImageMapTool *image_map_tool);
-  void     (* reset)         (GimpImageMapTool *image_map_tool);
+  void     (* map)           (GimpImageMapTool  *image_map_tool);
+  void     (* dialog)        (GimpImageMapTool  *image_map_tool);
+  void     (* reset)         (GimpImageMapTool  *image_map_tool);
 
-  gboolean (* settings_load) (GimpImageMapTool *image_map_tool,
-                              gpointer          file);
-  gboolean (* settings_save) (GimpImageMapTool *image_map_tool,
-                              gpointer          file);
+  gboolean (* settings_load) (GimpImageMapTool  *image_map_tool,
+                              gpointer           file,
+                              GError           **error);
+  gboolean (* settings_save) (GimpImageMapTool  *image_map_tool,
+                              gpointer           file);
 };
 
 

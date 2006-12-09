@@ -20,22 +20,24 @@
 #define __GIMP_IMAGE_CONTIGUOUS_REGION_H__
 
 
-GimpChannel * gimp_image_contiguous_region_by_seed  (GimpImage     *image,
-                                                     GimpDrawable  *drawable,
-                                                     gboolean       sample_merged,
-                                                     gboolean       antialias,
-                                                     gint           threshold,
-                                                     gboolean       select_transparent,
-                                                     gint           x,
-                                                     gint           y);
+GimpChannel * gimp_image_contiguous_region_by_seed  (GimpImage           *image,
+                                                     GimpDrawable        *drawable,
+                                                     gboolean             sample_merged,
+                                                     gboolean             antialias,
+                                                     gint                 threshold,
+                                                     gboolean             select_transparent,
+                                                     GimpSelectCriterion  select_criterion,
+                                                     gint                 x,
+                                                     gint                 y);
 
-GimpChannel * gimp_image_contiguous_region_by_color (GimpImage     *image,
-                                                     GimpDrawable  *drawable,
-                                                     gboolean       sample_merged,
-                                                     gboolean       antialias,
-                                                     gint           threshold,
-                                                     gboolean       select_transparent,
-                                                     const GimpRGB *color);
+GimpChannel * gimp_image_contiguous_region_by_color (GimpImage           *image,
+                                                     GimpDrawable        *drawable,
+                                                     gboolean             sample_merged,
+                                                     gboolean             antialias,
+                                                     gint                 threshold,
+                                                     gboolean             select_transparent,
+                                                     GimpSelectCriterion  select_criterion,
+                                                     const GimpRGB       *color);
 
 
 #endif  /*  __GIMP_IMAGE_CONTIGUOUS_REGION_H__ */

@@ -7,72 +7,58 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-19 21:49-0400\n"
-"PO-Revision-Date: 2005-04-19 21:51-0400\n"
+"POT-Creation-Date: 2006-09-14 07:28+0100\n"
+"PO-Revision-Date: 2006-09-14 07:28-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: English, British\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:119
-#: ../plug-ins/script-fu/script-fu-text-console.c:67
-msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "Script-Fu console mode allows only interactive invocation"
-
-#: ../plug-ins/script-fu/script-fu-console.c:146
+#: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
 msgstr "Script-Fu Console"
 
-#: ../plug-ins/script-fu/script-fu-console.c:173
-msgid "SIOD Output"
-msgstr "SIOD Output"
-
-#: ../plug-ins/script-fu/script-fu-console.c:239
-msgid "Current Command"
-msgstr "Current Command"
-
-#: ../plug-ins/script-fu/script-fu-console.c:257
+#: ../plug-ins/script-fu/script-fu-console.c:237
 msgid "_Browse..."
 msgstr "_Browse..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:538
-msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "Script-Fu evaluate mode allows only noninteractive invocation"
+#: ../plug-ins/script-fu/script-fu-console.c:275
+msgid "Script-Fu Procedure Browser"
+msgstr "Script-Fu Procedure Browser"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:175
+#: ../plug-ins/script-fu/script-fu-console.c:591
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "Script-Fu evaluation mode only allows non-interactive invocation"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:177
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu cannot process two scripts at the same time."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:177
+#: ../plug-ins/script-fu/script-fu-interface.c:179
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "You are already running the \"%s\" script."
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:200
 #: ../plug-ins/script-fu/script-fu-interface.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:204
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:215
+#: ../plug-ins/script-fu/script-fu-interface.c:222
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#. the script arguments frame
-#: ../plug-ins/script-fu/script-fu-interface.c:259
-msgid "Script Arguments"
-msgstr "Script Arguments"
-
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:291
+#: ../plug-ins/script-fu/script-fu-interface.c:288
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:334
+#: ../plug-ins/script-fu/script-fu-interface.c:331
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu Colour Selection"
 
@@ -80,11 +66,11 @@ msgstr "Script-Fu Colour Selection"
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu File Selection"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:442
+#: ../plug-ins/script-fu/script-fu-interface.c:441
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu Folder Selection"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:454
+#: ../plug-ins/script-fu/script-fu-interface.c:453
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu Font Selection"
 
@@ -92,47 +78,19 @@ msgstr "Script-Fu Font Selection"
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu Palette Selection"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:469
+#: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-fu Pattern Selection"
 msgstr "Script-fu Pattern Selection"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:476
+#: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu Gradient Selection"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:484
+#: ../plug-ins/script-fu/script-fu-interface.c:488
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu Brush Selection"
 
-#. the script progress frame
-#: ../plug-ins/script-fu/script-fu-interface.c:551
-msgid "Script Progress"
-msgstr "Script Progress"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:559
-msgid "(none)"
-msgstr "(none)"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1085
-#: ../plug-ins/dbbrowser/gimpprocview.c:199
-msgid "Author:"
-msgstr "Author:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1092
-#: ../plug-ins/dbbrowser/gimpprocview.c:221
-msgid "Copyright:"
-msgstr "Copyright:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1099
-#: ../plug-ins/dbbrowser/gimpprocview.c:210
-msgid "Date:"
-msgstr "Date:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1108
-msgid "Image Types:"
-msgstr "Image Types:"
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:660
+#: ../plug-ins/script-fu/script-fu-scripts.c:656
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -143,30 +101,52 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:648
+#: ../plug-ins/script-fu/script-fu-server.c:710
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu Server Options"
 
-#: ../plug-ins/script-fu/script-fu-server.c:676
-msgid "Server Port:"
-msgstr "Server Port:"
+#: ../plug-ins/script-fu/script-fu-server.c:715
+msgid "_Start Server"
+msgstr "_Start Server"
 
-#: ../plug-ins/script-fu/script-fu-server.c:682
-msgid "Server Logfile:"
-msgstr "Server Logfile:"
+#: ../plug-ins/script-fu/script-fu-server.c:743
+msgid "Server port:"
+msgstr "Server port:"
 
-#: ../plug-ins/script-fu/script-fu.c:116
+#: ../plug-ins/script-fu/script-fu-server.c:749
+msgid "Server logfile:"
+msgstr "Server logfile:"
+
+#: ../plug-ins/script-fu/script-fu.c:109
+msgid "Interactive console for Script-Fu development"
+msgstr "Interactive console for Script-Fu development"
+
+#: ../plug-ins/script-fu/script-fu.c:115
 msgid "Script-Fu _Console"
 msgstr "Script-Fu _Console"
 
-#: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:330
-msgid "<Toolbox>/Xtns/Script-Fu"
-msgstr "<Toolbox>/Xtns/Script-Fu"
+#: ../plug-ins/script-fu/script-fu.c:122
+#: ../plug-ins/script-fu/script-fu.c:151
+#: ../plug-ins/script-fu/script-fu.c:314
+msgid "<Toolbox>/Xtns/Languages/Script-Fu"
+msgstr "<Toolbox>/Xtns/Languages/Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:145
+#: ../plug-ins/script-fu/script-fu.c:139
+msgid "Server for remote Script-Fu operation"
+msgstr "Server for remote Script-Fu operation"
+
+#: ../plug-ins/script-fu/script-fu.c:144
 msgid "_Start Server..."
 msgstr "_Start Server..."
+
+#: ../plug-ins/script-fu/script-fu.c:267
+msgid "_GIMP Online"
+msgstr "_GIMP Online"
+
+#: ../plug-ins/script-fu/script-fu.c:268
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
+msgid "_User Manual"
+msgstr "_User Manual"
 
 #: ../plug-ins/script-fu/script-fu.c:271
 msgid "_Script-Fu"
@@ -181,149 +161,60 @@ msgid "_Logos"
 msgstr "_Logos"
 
 #: ../plug-ins/script-fu/script-fu.c:277
-msgid "Make Br_ush"
-msgstr "Make Br_ush"
-
-#: ../plug-ins/script-fu/script-fu.c:279
 msgid "_Misc"
 msgstr "_Misc"
 
-#: ../plug-ins/script-fu/script-fu.c:281
+#: ../plug-ins/script-fu/script-fu.c:279
 msgid "_Patterns"
 msgstr "_Patterns"
 
-#: ../plug-ins/script-fu/script-fu.c:283
+#: ../plug-ins/script-fu/script-fu.c:281
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:285 ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:283
 msgid "_Utils"
 msgstr "_Utils"
 
-#: ../plug-ins/script-fu/script-fu.c:287
+#: ../plug-ins/script-fu/script-fu.c:285
 msgid "_Web Page Themes"
 msgstr "_Web Page Themes"
 
-#: ../plug-ins/script-fu/script-fu.c:289
+#: ../plug-ins/script-fu/script-fu.c:287
 msgid "_Alien Glow"
 msgstr "_Alien Glow"
 
-#: ../plug-ins/script-fu/script-fu.c:291
+#: ../plug-ins/script-fu/script-fu.c:289
 msgid "_Beveled Pattern"
 msgstr "_Beveled Pattern"
 
-#: ../plug-ins/script-fu/script-fu.c:293
+#: ../plug-ins/script-fu/script-fu.c:291
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:296
-msgid "S_cript-Fu"
-msgstr "S_cript-Fu"
-
-#: ../plug-ins/script-fu/script-fu.c:298
-msgid "_Alchemy"
-msgstr "_Alchemy"
-
-#: ../plug-ins/script-fu/script-fu.c:300
+#: ../plug-ins/script-fu/script-fu.c:294
 msgid "Alpha to _Logo"
 msgstr "Alpha to _Logo"
 
-#: ../plug-ins/script-fu/script-fu.c:302
-msgid "A_nimators"
-msgstr "A_nimators"
-
-#: ../plug-ins/script-fu/script-fu.c:304
+#: ../plug-ins/script-fu/script-fu.c:296
 msgid "_Decor"
 msgstr "_Decor"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:298
 msgid "_Render"
 msgstr "_Render"
 
-#: ../plug-ins/script-fu/script-fu.c:308
-msgid "_Selection"
-msgstr "_Selection"
+#: ../plug-ins/script-fu/script-fu.c:301
+msgid "Re-read all available Script-Fu scripts"
+msgstr "Re-read all available Script-Fu scripts"
 
-#: ../plug-ins/script-fu/script-fu.c:310
-msgid "S_hadow"
-msgstr "S_hadow"
-
-#: ../plug-ins/script-fu/script-fu.c:312
-msgid "Stencil _Ops"
-msgstr "Stencil _Ops"
-
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Refresh Scripts"
 msgstr "_Refresh Scripts"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:126
-msgid "Procedure Browser"
-msgstr "Procedure Browser"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:130
-msgid "Search by _Name"
-msgstr "Search by _Name"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
-msgid "Search by _Description"
-msgstr "Search by _Description"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:213
-msgid "_Search:"
-msgstr "_Search:"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:375
-msgid "Searching by name - please wait"
-msgstr "Searching by name - please wait"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:399
-msgid "Searching by blurb - please wait"
-msgstr "Searching by blurb - please wait"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
-msgid "Searching - please wait"
-msgstr "Searching - please wait"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:417
-msgid "1 Procedure"
-msgstr "1 Procedure"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:419
-#, c-format
-msgid "%d Procedures"
-msgstr "%d Procedures"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:465
-msgid "No matches"
-msgstr "No matches"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:134
-msgid "Parameters"
-msgstr "Parameters"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:147
-msgid "Return Values"
-msgstr "Return Values"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:160
-msgid "Additional Information"
-msgstr "Additional Information"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:320
-msgid "Internal GIMP procedure"
-msgstr "Internal GIMP procedure"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:321
-msgid "GIMP Plug-In"
-msgstr "GIMP Plug-In"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:322
-msgid "GIMP Extension"
-msgstr "GIMP Extension"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:323
-msgid "Temporary Procedure"
-msgstr "Temporary Procedure"
+#: ../plug-ins/script-fu/script-fu.c:329
+msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
+msgstr "You can not use \"Refresh Scripts\" while a Script-Fu dialogue box is open.  Please close all Script-Fu windows and try again."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -334,7 +225,7 @@ msgid "Bumpmap (alpha layer) blur radius"
 msgstr "Bumpmap (alpha layer) blur radius"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:5
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Default bumpmap settings"
 msgstr "Default bumpmap settings"
 
@@ -348,20 +239,20 @@ msgstr "Default bumpmap settings"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:3
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:6
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:5
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
@@ -388,20 +279,20 @@ msgstr "Font"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:7
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:7
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:6
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:7
@@ -433,13 +324,13 @@ msgid "Pattern"
 msgstr "Pattern"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:15
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:14
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid "Shadow X offset"
 msgstr "Shadow X offset"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:16
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:15
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:6
 msgid "Shadow Y offset"
 msgstr "Shadow Y offset"
@@ -458,20 +349,20 @@ msgstr "Shadow blur radius"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:5
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:17
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:16
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:9
@@ -501,9 +392,9 @@ msgstr "3_D Truchet..."
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:1
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
@@ -511,7 +402,6 @@ msgstr "3_D Truchet..."
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:2
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
@@ -744,7 +634,7 @@ msgid "B_asic II..."
 msgstr "B_asic II..."
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "Bevel width"
 msgstr "Bevel width"
@@ -783,15 +673,15 @@ msgstr "H_eading..."
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:3
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:6
 msgid "Height"
 msgstr "Height"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Width"
 msgstr "Width"
@@ -849,7 +739,7 @@ msgstr "Gradient"
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:12
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:3
 msgid "Gradient reverse"
@@ -859,20 +749,15 @@ msgstr "Gradient reverse"
 msgid "Offset (pixels)"
 msgstr "Offset (pixels)"
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
-msgid "Background Color"
-msgstr "Background Colour"
-
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 msgid "Bo_vination..."
 msgstr "Bo_vination..."
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Spots density X"
 msgstr "Spots density X"
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
 msgid "Spots density Y"
 msgstr "Spots density Y"
 
@@ -944,20 +829,21 @@ msgid "_Camouflage..."
 msgstr "_Camouflage..."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
-msgid "C_arve-It..."
-msgstr "C_arve-It..."
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "Carve white areas"
 msgstr "Carve white areas"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "Image to carve"
 msgstr "Image to carve"
 
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
+msgid "Stencil C_arve..."
+msgstr "Stencil C_arve..."
+
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
-msgid "Background Image"
-msgstr "Background Image"
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+msgid "Background image"
+msgstr "Background image"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
 msgid "Carve raised text"
@@ -1008,50 +894,50 @@ msgid "Keep background"
 msgstr "Keep background"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:1
-msgid "C_hrome-It..."
-msgstr "C_hrome-It..."
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "Chrome balance"
 msgstr "Chrome balance"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome factor"
 msgstr "Chrome factor"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
 msgid "Chrome lightness"
 msgstr "Chrome lightness"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome saturation"
 msgstr "Chrome saturation"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
 msgid "Chrome white areas"
 msgstr "Chrome white areas"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Environment map"
 msgstr "Environment map"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
 msgid "Highlight balance"
 msgstr "Highlight balance"
 
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
+msgid "Stencil C_hrome..."
+msgstr "Stencil C_hrome..."
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
 msgid "C_hrome..."
 msgstr "C_hrome..."
 
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 msgid "Offsets (pixels * 2)"
 msgstr "Offsets (pixels * 2)"
 
@@ -1114,10 +1000,10 @@ msgstr "_Clothify..."
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:1
 msgid ""
 "Darken only\n"
-"(Better, but only for images with alot of white)"
+"(Better, but only for images with a lot of white)"
 msgstr ""
 "Darken only\n"
-"(Better, but only for images with alot of white)"
+"(Better, but only for images with a lot of white)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid "Stains"
@@ -1136,7 +1022,7 @@ msgid "Outline color"
 msgstr "Outline colour"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:10
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Outline size"
 msgstr "Outline size"
 
@@ -1148,10 +1034,6 @@ msgstr "Cool _Metal..."
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
 msgid "Effect size (pixels)"
 msgstr "Effect size (pixels)"
-
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
-msgid "Background image"
-msgstr "Background image"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 msgid "Crystal..."
@@ -1178,8 +1060,8 @@ msgid "Threshold (bigger 1<-->255 smaller)"
 msgstr "Threshold (bigger 1<-->255 smaller)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
-msgid "_Distress Selection..."
-msgstr "_Distress Selection..."
+msgid "_Distort..."
+msgstr "_Distort..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
@@ -1257,8 +1139,8 @@ msgid "Rows/cols"
 msgstr "Rows/cols"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:10
-msgid "_Erase every other Row..."
-msgstr "_Erase every other Row..."
+msgid "_Erase Every Other Row..."
+msgstr "_Erase Every Other Row..."
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:1
 msgid "Apply generated layermask"
@@ -1281,16 +1163,16 @@ msgstr "Fade from %"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:7
 #, no-c-format
-msgid "Fade to   %"
-msgstr "Fade to   %"
+msgid "Fade to %"
+msgstr "Fade to %"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:8
 msgid "Use growing selection"
 msgstr "Use growing selection"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:9
-msgid "_Fade Outline..."
-msgstr "_Fade Outline..."
+msgid "_Fade to Layer Mask..."
+msgstr "_Fade to Layer Mask..."
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 #: ../plug-ins/script-fu/scripts/land.scm.h:1
@@ -1339,24 +1221,24 @@ msgid "Font _size (pixels)"
 msgstr "Font _size (pixels)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
+msgid "Render _Font Map..."
+msgstr "Render _Font Map..."
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "Use font _name as text"
 msgstr "Use font _name as text"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:5
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "_Border (pixels)"
 msgstr "_Border (pixels)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:6
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:7
 msgid "_Color scheme"
 msgstr "_Colour scheme"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:7
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Filter (regexp)"
 msgstr "_Filter (regexp)"
-
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:8
-msgid "_Font Map..."
-msgstr "_Font Map..."
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:9
 msgid "_Labels"
@@ -1454,55 +1336,51 @@ msgid "_Tube Button Label..."
 msgstr "_Tube Button Label..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:2
-msgid "Blend gradient (Text)"
-msgstr "Blend gradient (Text)"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
 msgstr "Blend gradient (outline)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:4
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (text)"
 msgstr "Blend gradient (text)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:8
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:7
 msgid "Glo_ssy..."
 msgstr "Glo_ssy..."
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:9
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:8
 msgid "Outline gradient reverse"
 msgstr "Outline gradient reverse"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:11
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Pattern (outline)"
 msgstr "Pattern (outline)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:12
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (overlay)"
 msgstr "Pattern (overlay)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:13
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (text)"
 msgstr "Pattern (text)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:14
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:13
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:4
 msgid "Shadow"
 msgstr "Shadow"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:18
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:17
 msgid "Text gradient reverse"
 msgstr "Text gradient reverse"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:19
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:18
 msgid "Use pattern for outline instead of gradient"
 msgstr "Use pattern for outline instead of gradient"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:20
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use pattern for text instead of gradient"
 msgstr "Use pattern for text instead of gradient"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:21
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use pattern overlay"
 msgstr "Use pattern overlay"
 
@@ -1515,26 +1393,22 @@ msgid "Glo_wing Hot..."
 msgstr "Glo_wing Hot..."
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
-msgid "Bevel height (Sharpness)"
-msgstr "Bevel height (Sharpness)"
-
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
 msgstr "Bevel height (sharpness)"
 
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
 msgid "Border size (pixels)"
 msgstr "Border size (pixels)"
 
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
 msgid "Gradient Beve_l..."
 msgstr "Gradient Beve_l..."
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
-msgid "Custom _Gradient..."
-msgstr "Custom _Gradient..."
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:3
+msgid "Render _Image..."
+msgstr "Render _Image..."
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
 msgid "X divisions"
@@ -1545,8 +1419,8 @@ msgid "Y divisions"
 msgstr "Y divisions"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:3
-msgid "_Grid..."
-msgstr "_Grid..."
+msgid "_Divisions..."
+msgstr "_Divisions..."
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
 msgid "Creates four Guides around the bounding box of the current selection."
@@ -1576,13 +1450,17 @@ msgid "Position (in %)"
 msgstr "Position (in %)"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
 msgid "Vertical"
 msgstr "Vertical"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:3
 msgid "New _Guide..."
 msgstr "New _Guide..."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+msgid "Position"
+msgstr "Position"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "_Remove all Guides"
@@ -1636,50 +1514,6 @@ msgstr "Frame size"
 msgid "Imigre-_26..."
 msgstr "Imigre-_26..."
 
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:1
-msgid "Apply layer mask (or discard)"
-msgstr "Apply layer mask (or discard)"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:3
-msgid "Create new image"
-msgstr "Create new image"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:4
-msgid "Insert layer names"
-msgstr "Insert layer names"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:5
-msgid "Make new background"
-msgstr "Make new background"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:6
-msgid "Outer border"
-msgstr "Outer border"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:7
-msgid "Pad color"
-msgstr "Pad colour"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:8
-msgid "Pad opacity"
-msgstr "Pad opacity"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:9
-msgid "Padding for transparent regions"
-msgstr "Padding for transparent regions"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:10
-msgid "Shear length"
-msgstr "Shear length"
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:11
-msgid "Show Image _Structure..."
-msgstr "Show Image _Structure..."
-
-#: ../plug-ins/script-fu/scripts/image-structure.scm.h:12
-msgid "Space between layers"
-msgstr "Space between layers"
-
 #: ../plug-ins/script-fu/scripts/land.scm.h:5
 msgid "Land height"
 msgstr "Land height"
@@ -1730,33 +1564,34 @@ msgid "Sharpness (degrees)"
 msgstr "Sharpness (degrees)"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
-msgid "Elli_ptical, Feathered..."
-msgstr "Elli_ptical, Feathered..."
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "Feathering"
 msgstr "Feathering"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "Name"
 msgstr "Name"
 
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
+msgid "New Elli_ptical..."
+msgstr "New Elli_ptical..."
+
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
-msgid "Re_ctangular, Feathered..."
-msgstr "Re_ctangular, Feathered..."
+msgid "New Elliptical, Feathered..."
+msgstr "New Elliptical, Feathered..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
+msgid "New Re_ctangular..."
+msgstr "New Re_ctangular..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
+msgid "New Rectangular, Feathered..."
+msgstr "New Rectangular, Feathered..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 msgid "Spacing"
 msgstr "Spacing"
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
-msgid "_Elliptical..."
-msgstr "_Elliptical..."
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
-msgid "_Rectangular..."
-msgstr "_Rectangular..."
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "Create shadow"
@@ -1799,6 +1634,31 @@ msgstr "Sepia"
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
 msgid "_Old Photo..."
 msgstr "_Old Photo..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
+msgid "Brush name"
+msgstr "Brush name"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:2
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:1
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+msgid "File name"
+msgstr "File name"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:3
+msgid "New _Brush..."
+msgstr "New _Brush..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
+msgid "New _Pattern..."
+msgstr "New _Pattern..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+msgid "Pattern name"
+msgstr "Pattern name"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
 msgid "Angle"
@@ -1885,8 +1745,8 @@ msgid "Behavior"
 msgstr "Behaviour"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
-msgid "Detail in Middle"
-msgstr "Detail in Middle"
+msgid "Detail in middle"
+msgstr "Detail in middle"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:7
 msgid "Render _Map..."
@@ -1941,14 +1801,6 @@ msgstr "Edge radius"
 msgid "_Round Corners..."
 msgstr "_Round Corners..."
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
-msgid "Brush name"
-msgstr "Brush name"
-
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
-msgid "File name"
-msgstr "File name"
-
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "To _Brush..."
 msgstr "To _Brush..."
@@ -1956,14 +1808,6 @@ msgstr "To _Brush..."
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "To _Image"
 msgstr "To _Image"
-
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-msgid "Filename"
-msgstr "Filename"
-
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
-msgid "Pattern name"
-msgstr "Pattern name"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 msgid "To _Pattern..."
@@ -2051,12 +1895,8 @@ msgid "Color method"
 msgstr "Colour method"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:6
-msgid ""
-"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
-"netword.com/*spyrogimp"
-msgstr ""
-"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
-"netword.com/*spyrogimp"
+msgid "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://www.wisdom.weizmann.ac.il/~elad/spyrogimp/"
+msgstr "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://www.wisdom.weizmann.ac.il/~elad/spyrogimp/"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid "Epitrochoid"
@@ -2067,12 +1907,12 @@ msgid "Frame"
 msgstr "Frame"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
-msgid "Gradient: Loop Sawtooth"
-msgstr "Gradient: Loop Sawtooth"
+msgid "Gradient: loop sawtooth"
+msgstr "Gradient: loop sawtooth"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:11
-msgid "Gradient: Loop Triangle"
-msgstr "Gradient: Loop Triangle"
+msgid "Gradient: loop triangle"
+msgstr "Gradient: loop triangle"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Hexagon"
@@ -2311,10 +2151,6 @@ msgstr "Mask opacity"
 msgid "Mask size"
 msgstr "Mask size"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
-msgid "_Unsharp Mask..."
-msgstr "_Unsharp Mask..."
-
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:1
 msgid "Amplitude"
 msgstr "Amplitude"
@@ -2364,16 +2200,48 @@ msgid "_Weave..."
 msgstr "_Weave..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
+msgid "Create and Use _Selections"
+msgstr "Create and Use _Selections"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "Create, Open and Save _Files"
+msgstr "Create, Open and Save _Files"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "Drawing _Simple Objects"
+msgstr "Drawing _Simple Objects"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
+msgid "How to Use _Dialogs"
+msgstr "How to Use _Dialogues"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
 msgid "Plug-in _Registry"
 msgstr "Plug-in _Registry"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
+msgid "Using _Paths"
+msgstr "Using _Paths"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
+msgid "_Basic Concepts"
+msgstr "_Basic Concepts"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
 msgid "_Developer Web Site"
 msgstr "_Developer Web Site"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
 msgid "_Main Web Site"
 msgstr "_Main Web Site"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
+msgid "_Preparing your Images for the Web"
+msgstr "_Preparing your Images for the Web"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
+msgid "_Working with Digital Camera Photos"
+msgstr "_Working with Digital Camera Photos"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Drop shadow X offset"
@@ -2411,83 +2279,166 @@ msgstr "Highlight opacity"
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effect..."
 
+#~ msgid "Script-Fu console mode allows only interactive invocation"
+#~ msgstr "Script-Fu console mode allows only interactive invocation"
+#~ msgid "SIOD Output"
+#~ msgstr "SIOD Output"
+#~ msgid "Current Command"
+#~ msgstr "Current Command"
+#~ msgid "Script Arguments"
+#~ msgstr "Script Arguments"
+#~ msgid "Script Progress"
+#~ msgstr "Script Progress"
+#~ msgid "(none)"
+#~ msgstr "(none)"
+#~ msgid "Author:"
+#~ msgstr "Author:"
+#~ msgid "Copyright:"
+#~ msgstr "Copyright:"
+#~ msgid "Date:"
+#~ msgstr "Date:"
+#~ msgid "Image Types:"
+#~ msgstr "Image Types:"
+#~ msgid "Make Br_ush"
+#~ msgstr "Make Br_ush"
+#~ msgid "S_cript-Fu"
+#~ msgstr "S_cript-Fu"
+#~ msgid "_Alchemy"
+#~ msgstr "_Alchemy"
+#~ msgid "A_nimators"
+#~ msgstr "A_nimators"
+#~ msgid "_Selection"
+#~ msgstr "_Selection"
+#~ msgid "S_hadow"
+#~ msgstr "S_hadow"
+#~ msgid "Search by _Name"
+#~ msgstr "Search by _Name"
+#~ msgid "Search by _Description"
+#~ msgstr "Search by _Description"
+#~ msgid "_Search:"
+#~ msgstr "_Search:"
+#~ msgid "Searching by name - please wait"
+#~ msgstr "Searching by name - please wait"
+#~ msgid "Searching by blurb - please wait"
+#~ msgstr "Searching by blurb - please wait"
+#~ msgid "Searching - please wait"
+#~ msgstr "Searching - please wait"
+#~ msgid "1 Procedure"
+#~ msgstr "1 Procedure"
+#~ msgid "%d Procedures"
+#~ msgstr "%d Procedures"
+#~ msgid "No matches"
+#~ msgstr "No matches"
+#~ msgid "Parameters"
+#~ msgstr "Parameters"
+#~ msgid "Return Values"
+#~ msgstr "Return Values"
+#~ msgid "Additional Information"
+#~ msgstr "Additional Information"
+#~ msgid "Internal GIMP procedure"
+#~ msgstr "Internal GIMP procedure"
+#~ msgid "GIMP Plug-In"
+#~ msgstr "GIMP Plug-In"
+#~ msgid "Temporary Procedure"
+#~ msgstr "Temporary Procedure"
+#~ msgid "Background Color"
+#~ msgstr "Background Colour"
+#~ msgid "C_arve-It..."
+#~ msgstr "C_arve-It..."
+#~ msgid "Background Image"
+#~ msgstr "Background Image"
+#~ msgid "C_hrome-It..."
+#~ msgstr "C_hrome-It..."
+#~ msgid "_Distress Selection..."
+#~ msgstr "_Distress Selection..."
+#~ msgid "_Fade Outline..."
+#~ msgstr "_Fade Outline..."
+#~ msgid "_Font Map..."
+#~ msgstr "_Font Map..."
+#~ msgid "Blend gradient (Text)"
+#~ msgstr "Blend gradient (Text)"
+#~ msgid "Bevel height (Sharpness)"
+#~ msgstr "Bevel height (Sharpness)"
+#~ msgid "Custom _Gradient..."
+#~ msgstr "Custom _Gradient..."
+#~ msgid "_Grid..."
+#~ msgstr "_Grid..."
+#~ msgid "Apply layer mask (or discard)"
+#~ msgstr "Apply layer mask (or discard)"
+#~ msgid "Create new image"
+#~ msgstr "Create new image"
+#~ msgid "Insert layer names"
+#~ msgstr "Insert layer names"
+#~ msgid "Make new background"
+#~ msgstr "Make new background"
+#~ msgid "Outer border"
+#~ msgstr "Outer border"
+#~ msgid "Pad color"
+#~ msgstr "Pad colour"
+#~ msgid "Pad opacity"
+#~ msgstr "Pad opacity"
+#~ msgid "Padding for transparent regions"
+#~ msgstr "Padding for transparent regions"
+#~ msgid "Shear length"
+#~ msgstr "Shear length"
+#~ msgid "Show Image _Structure..."
+#~ msgstr "Show Image _Structure..."
+#~ msgid "Space between layers"
+#~ msgstr "Space between layers"
+#~ msgid "Filename"
+#~ msgstr "Filename"
+#~ msgid "_Unsharp Mask..."
+#~ msgstr "_Unsharp Mask..."
 #~ msgid "Search by _Blurb"
 #~ msgstr "Search by _Blurb"
-
 #~ msgid "<Image>/Script-Fu/Alpha to Logo"
 #~ msgstr "<Image>/Script-Fu/Alpha to Logo"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Logos"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/Logos"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/Patterns"
-
 #~ msgid "<Image>/Script-Fu/Decor"
 #~ msgstr "<Image>/Script-Fu/Decor"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Buttons"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/Buttons"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern"
-
 #~ msgid "<Image>/Script-Fu/Animators"
 #~ msgstr "<Image>/Script-Fu/Animators"
-
 #~ msgid "<Image>/Script-Fu/Stencil Ops"
 #~ msgstr "<Image>/Script-Fu/Stencil Ops"
-
 #~ msgid "<Image>/Script-Fu/Render"
 #~ msgstr "<Image>/Script-Fu/Render"
-
 #~ msgid "<Image>/Script-Fu/Alchemy"
 #~ msgstr "<Image>/Script-Fu/Alchemy"
-
 #~ msgid "<Image>/Script-Fu/Selection"
 #~ msgstr "<Image>/Script-Fu/Selection"
-
 #~ msgid "<Image>/Script-Fu/Shadow"
 #~ msgstr "<Image>/Script-Fu/Shadow"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Utils"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/Utils"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
-
 #~ msgid "<Image>/Script-Fu/Utils"
 #~ msgstr "<Image>/Script-Fu/Utils"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/Make Brush"
-
 #~ msgid "Cubic"
 #~ msgstr "Cubic"
-
 #~ msgid "Linear"
 #~ msgstr "Linear"
-
 #~ msgid "None"
 #~ msgstr "None"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Misc"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/Misc"
-
 #~ msgid "<Toolbox>/Help/The GIMP Online"
 #~ msgstr "<Toolbox>/Help/The GIMP Online"
-
 #~ msgid "Buffer amount (% height of text)"
 #~ msgstr "Buffer amount (% height of text)"
-
 #~ msgid "_ASCII to Image..."
 #~ msgstr "_ASCII to Image..."
-
-#~ msgid "_ASCII to Layer..."
-#~ msgstr "_ASCII to Layer..."
-
 #~ msgid "Copy _Visible"
 #~ msgstr "Copy _Visible"
+

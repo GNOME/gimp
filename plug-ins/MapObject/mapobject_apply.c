@@ -14,6 +14,7 @@
 #include "mapobject_main.h"
 #include "mapobject_image.h"
 #include "mapobject_shade.h"
+#include "mapobject_apply.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -188,7 +189,7 @@ init_compute (void)
   max_depth = (gint) mapvals.maxdepth;
 }
 
-void
+static void
 render (gdouble   x,
 	gdouble   y,
 	GimpRGB  *col,
@@ -203,7 +204,7 @@ render (gdouble   x,
   *col = get_ray_color (&pos);
 }
 
-void
+static void
 show_progress (gint     min,
 	       gint     max,
 	       gint     curr,

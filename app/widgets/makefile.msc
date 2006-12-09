@@ -101,6 +101,7 @@ OBJECTS = \
 	gimphistogramview.obj \
 	gimpimagedock.obj \
 	gimpimageeditor.obj \
+	gimpimageprofileview.obj \
 	gimpimagepropview.obj \
 	gimpimageview.obj \
 	gimpitemtreeview.obj \

@@ -42,10 +42,7 @@ CODE
 }
 
 sub path_get_points {
-    $blurb = 'List the points associated with the named path.';
-    $help  = 'List the points associated with the named path.';
-
-    &andy_pdb_misc('1999');
+    &std_pdb_deprecated('gimp-vectors-stroke-get-points');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -170,10 +167,7 @@ CODE
 }
 
 sub path_set_points {
-    $blurb = 'Set the points associated with the named path.';
-    $help  = 'Set the points associated with the named path.';
-
-    &andy_pdb_misc('1999');
+    &std_pdb_deprecated('vectors-stroke-new-from-points');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -258,10 +252,7 @@ CODE
 }
 
 sub path_stroke_current {
-    $blurb = 'Stroke the current path in the passed image.';
-    $help  = 'Stroke the current path in the passed image.';
-
-    &andy_pdb_misc('1999');
+    &std_pdb_deprecated('gimp-edit-stroke-vectors');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -535,13 +526,7 @@ CODE
 }
 
 sub path_to_selection {
-    $blurb = 'Transforms the active path into a selection';
-
-    $help = <<'HELP';
-This procedure renders the desired path into the current selection.
-HELP
-
-    &joao_pdb_misc('2003');
+    &std_pdb_deprecated('gimp-vectors-to-selection');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -573,7 +558,8 @@ HELP
                                  antialias,
                                  feather,
                                  feather_radius_x,
-                                 feather_radius_y);
+                                 feather_radius_y,
+                                 TRUE);
   else
     success = FALSE;
 }
@@ -582,14 +568,7 @@ CODE
 }
 
 sub path_import {
-    $blurb = 'Import paths from an SVG file.';
-
-    $help = <<'HELP';
-This procedure imports paths from an SVG file. SVG elements other than
-paths and basic shapes are ignored.
-HELP
-
-    &neo_pdb_misc('2003');
+    &std_pdb_deprecated('vectors-import-from-file');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -606,53 +585,22 @@ HELP
         headers => [ qw("vectors/gimpvectors-import.h") ],
 	code    => <<'CODE'
 {
-  success = gimp_vectors_import_file (image, filename, merge, scale, -1, NULL);
-}
-CODE
-    );
-}
-
-sub path_import_string {
-    $blurb = 'Import paths from an SVG string.';
-
-    $help = <<'HELP';
-This procedure works like gimp_path_import() but takes a string rather
-than reading the SVG from a file. This allows you to write scripts that
-generate SVG and feed it to GIMP.
-HELP
-
-    &neo_pdb_misc('2005', '2.4');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'string', type => 'string', no_validate => 1,
-	  desc => 'A string that must be a complete and valid SVG document.' },
-	{ name => 'length', type => 'int32',
-	  desc => 'Number of bytes in string or -1 if the string is NULL
-                   terminated.' },
-	{ name => 'merge', type => 'boolean',
-	  desc => 'Merge paths into a single vectors object.' },
-	{ name => 'scale', type => 'boolean',
-	  desc => 'Scale the SVG to image dimensions.' }
-    );
-
-    %invoke = (
-        headers => [ qw("vectors/gimpvectors-import.h") ],
-	code    => <<'CODE'
-{
-  success = gimp_vectors_import_buffer (image, string, length,
-                                        merge, scale, -1, NULL);
+  success = gimp_vectors_import_file (image, filename,
+                                      merge, scale, -1, NULL, NULL);
 }
 CODE
     );
 }
 
 
-@headers = qw(<string.h> "core/gimp.h" "core/gimplist.h"
+@headers = qw(<string.h>
+              "core/gimp.h"
+              "core/gimplist.h"
               "core/gimpchannel-select.h"
-              "vectors/gimpanchor.h" "vectors/gimpbezierstroke.h"
-              "vectors/gimpvectors.h" "vectors/gimpvectors-compat.h"
+              "vectors/gimpanchor.h"
+              "vectors/gimpbezierstroke.h"
+              "vectors/gimpvectors.h"
+              "vectors/gimpvectors-compat.h"
               "gimp-intl.h");
 
 @procs = qw(path_list path_get_current path_set_current path_delete
@@ -660,7 +608,7 @@ CODE
             path_stroke_current path_get_point_at_dist
 	    path_get_tattoo path_set_tattoo get_path_by_tattoo
             path_get_locked path_set_locked
-            path_to_selection path_import path_import_string);
+            path_to_selection path_import);
 
 %exports = (app => [@procs], lib => [@procs]);
 

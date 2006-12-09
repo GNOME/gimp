@@ -30,6 +30,7 @@
 #include "base/tile.h"
 #include "base/tile-manager.h"
 
+#include "gimp.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
@@ -270,7 +271,9 @@ gimp_selection_stroke (GimpItem       *item,
                                &num_dummy_in, &num_dummy_out,
                                0, 0, 0, 0))
     {
-      g_message (_("No selection to stroke."));
+      gimp_message (gimp_item_get_image (item)->gimp, NULL,
+                    GIMP_MESSAGE_WARNING,
+                    _("There is no selection to stroke."));
       return FALSE;
     }
 
@@ -626,8 +629,9 @@ gimp_selection_extract (GimpChannel  *selection,
   non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   if (non_empty && ((x1 == x2) || (y1 == y2)))
     {
-      g_message (_("Unable to cut or copy because the "
-                   "selected region is empty."));
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("Unable to cut or copy because the "
+                      "selected region is empty."));
       return NULL;
     }
 
@@ -669,7 +673,8 @@ gimp_selection_extract (GimpChannel  *selection,
       break;
     }
 
-  gimp_image_get_background (image, drawable, context, bg_color);
+  gimp_image_get_background (image, context, gimp_drawable_type (drawable),
+                             bg_color);
 
   /*  If a cut was specified, and the selection mask is not empty,
    *  push an undo
@@ -779,8 +784,9 @@ gimp_selection_float (GimpChannel  *selection,
   non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   if (! non_empty || (x1 == x2) || (y1 == y2))
     {
-      g_message (_("Cannot float selection because the "
-                   "selected region is empty."));
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("Cannot float selection because the "
+                      "selected region is empty."));
       return NULL;
     }
 

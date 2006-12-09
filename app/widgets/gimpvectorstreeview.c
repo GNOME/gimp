@@ -111,16 +111,16 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
 }
 
 static void
-gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
-{
-}
-
-static void
 gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
   iface->set_container = gimp_vectors_tree_view_set_container;
+}
+
+static void
+gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
+{
 }
 
 static GObject *
@@ -233,9 +233,10 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
     }
 
   if (! gimp_vectors_import_buffer (image, svg_data, svg_data_len,
-                                    TRUE, TRUE, index, &error))
+                                    TRUE, TRUE, index, NULL, &error))
     {
-      g_message (error->message);
+      gimp_message (image->gimp, G_OBJECT (tree_view), GIMP_MESSAGE_ERROR,
+                    "%s", error->message);
       g_clear_error (&error);
     }
   else

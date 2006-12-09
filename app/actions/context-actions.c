@@ -876,22 +876,38 @@ static const GimpEnumActionEntry context_brush_radius_actions[] =
     "Maximum Radius", NULL, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     NULL },
+  { "context-brush-radius-decrease-less", GIMP_STOCK_BRUSH,
+    "Decrease Radius Less", NULL, NULL,
+    GIMP_ACTION_SELECT_SMALL_PREVIOUS, FALSE,
+    NULL },
+  { "context-brush-radius-increase-less", GIMP_STOCK_BRUSH,
+    "Increase Radius Less", NULL, NULL,
+    GIMP_ACTION_SELECT_SMALL_NEXT, FALSE,
+    NULL },
   { "context-brush-radius-decrease", GIMP_STOCK_BRUSH,
-    "Decrease Radius", "bracketleft", NULL,
+    "Decrease Radius", NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     NULL },
   { "context-brush-radius-increase", GIMP_STOCK_BRUSH,
-    "Increase Radius", "bracketright", NULL,
+    "Increase Radius", NULL, NULL,
     GIMP_ACTION_SELECT_NEXT, FALSE,
     NULL },
   { "context-brush-radius-decrease-skip", GIMP_STOCK_BRUSH,
-    "Decrease Radius More", "<shift>bracketleft", NULL,
+    "Decrease Radius More", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     NULL },
   { "context-brush-radius-increase-skip", GIMP_STOCK_BRUSH,
-    "Increase Radius More", "<shift>bracketright", NULL,
+    "Increase Radius More", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL },
+  { "context-brush-radius-decrease-percent", GIMP_STOCK_BRUSH,
+    "Decrease Radius Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_PREVIOUS, FALSE,
+    NULL },
+  { "context-brush-radius-increase-percent", GIMP_STOCK_BRUSH,
+    "Increase Radius Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_NEXT, FALSE,
+    NULL }
 };
 
 static const GimpEnumActionEntry context_brush_spikes_actions[] =
@@ -923,7 +939,7 @@ static const GimpEnumActionEntry context_brush_spikes_actions[] =
   { "context-brush-spikes-increase-skip", GIMP_STOCK_BRUSH,
     "Increase Spikes More", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
-    NULL },
+    NULL }
 };
 
 static const GimpEnumActionEntry context_brush_hardness_actions[] =
@@ -955,7 +971,7 @@ static const GimpEnumActionEntry context_brush_hardness_actions[] =
   { "context-brush-hardness-increase-skip", GIMP_STOCK_BRUSH,
     "Increase Hardness More", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
-    NULL },
+    NULL }
 };
 
 static const GimpEnumActionEntry context_brush_aspect_actions[] =
@@ -987,7 +1003,7 @@ static const GimpEnumActionEntry context_brush_aspect_actions[] =
   { "context-brush-aspect-increase-skip", GIMP_STOCK_BRUSH,
     "Increase Aspect More", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
-    NULL },
+    NULL }
 };
 
 static const GimpEnumActionEntry context_brush_angle_actions[] =
@@ -1019,7 +1035,7 @@ static const GimpEnumActionEntry context_brush_angle_actions[] =
   { "context-brush-angle-increase-skip", GIMP_STOCK_BRUSH,
     "Rotate Left 15 degrees", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
-    NULL },
+    NULL }
 };
 
 
@@ -1208,9 +1224,9 @@ context_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("brush-radius-decrease",      generated && radius > 1.0);
   SET_SENSITIVE ("brush-radius-decrease-skip", generated && radius > 1.0);
 
-  SET_SENSITIVE ("brush-radius-maximum",       generated && radius < 4096.0);
-  SET_SENSITIVE ("brush-radius-increase",      generated && radius < 4096.0);
-  SET_SENSITIVE ("brush-radius-increase-skip", generated && radius < 4096.0);
+  SET_SENSITIVE ("brush-radius-maximum",       generated && radius < 4000.0);
+  SET_SENSITIVE ("brush-radius-increase",      generated && radius < 4000.0);
+  SET_SENSITIVE ("brush-radius-increase-skip", generated && radius < 4000.0);
 
   SET_SENSITIVE ("brush-angle-minimum",       generated);
   SET_SENSITIVE ("brush-angle-decrease",      generated);

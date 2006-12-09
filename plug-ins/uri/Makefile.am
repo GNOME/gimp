@@ -20,8 +20,18 @@ libexec_PROGRAMS = uri
 
 if HAVE_GNOMEVFS
 backend_sources = uri-backend-gnomevfs.c
+backend_cflags = $(URI_GNOME_VFS_CFLAGS)
+backend_libs = $(URI_GNOME_VFS_LIBS)
+else
+if HAVE_LIBCURL
+backend_sources = uri-backend-libcurl.c
+backend_cflags = $(URI_LIBCURL_CFLAGS)
+backend_libs = $(URI_LIBCURL_LIBS)
 else
 backend_sources = uri-backend-wget.c
+backend_cflags = 
+backend_libs = 
+endif
 endif
 
 uri_SOURCES = \
@@ -31,7 +41,7 @@ uri_SOURCES = \
 
 INCLUDES = \
 	-I$(top_srcdir)		\
-	$(URI_CFLAGS)		\
+	$(backend_cflags)	\
 	$(GTK_CFLAGS)		\
 	-I$(includedir)
 
@@ -43,7 +53,7 @@ LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(URI_LIBS)		\
+	$(backend_libs)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)

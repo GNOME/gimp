@@ -20,6 +20,10 @@
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
+
+#define NO_IMPORT_PYGOBJECT
+#include <pygobject.h>
+
 #include "pygimp.h"
 
 #define NO_IMPORT_PYGIMPCOLOR
@@ -28,8 +32,6 @@
 #include <structmember.h>
 
 #include <glib-object.h>
-
-#include <pygobject.h>
 
 #ifndef PG_DEBUG
 # define PG_DEBUG 0
@@ -289,7 +291,7 @@ pygimp_param_to_tuple(int nparams, const GimpParam *params)
 	    value = PyInt_FromLong(params[i].data.d_boundary);
 	    break;
 	case GIMP_PDB_VECTORS:
-	    value = PyInt_FromLong(params[i].data.d_vectors);
+	    value = pygimp_vectors_new(params[i].data.d_vectors);
 	    break;
 	case GIMP_PDB_PARASITE:
 	    value = pygimp_parasite_new(gimp_parasite_copy(
@@ -486,7 +488,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    break;
 	case GIMP_PDB_DISPLAY:
 	    check(!pygimp_display_check(item));
-	    ret[i].data.d_display=((PyGimpDisplay *)item)->ID;
+	    ret[i].data.d_display = ((PyGimpDisplay *)item)->ID;
 	    break;
 	case GIMP_PDB_IMAGE:
 	    if (item == Py_None) {
@@ -494,7 +496,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 		break;
 	    }
 	    check(!pygimp_image_check(item));
-	    ret[i].data.d_image=((PyGimpImage *)item)->ID;
+	    ret[i].data.d_image = ((PyGimpImage *)item)->ID;
 	    break;
 	case GIMP_PDB_LAYER:
 	    if (item == Py_None) {
@@ -502,7 +504,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 		break;
 	    }
 	    check(!pygimp_layer_check(item));
-	    ret[i].data.d_layer=((PyGimpLayer *)item)->ID;
+	    ret[i].data.d_layer = ((PyGimpLayer *)item)->ID;
 	    break;
 	case GIMP_PDB_CHANNEL:
 	    if (item == Py_None) {
@@ -510,7 +512,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 		break;
 	    }
 	    check(!pygimp_channel_check(item));
-	    ret[i].data.d_channel=((PyGimpChannel *)item)->ID;
+	    ret[i].data.d_channel = ((PyGimpChannel *)item)->ID;
 	    break;
 	case GIMP_PDB_DRAWABLE:
 	    if (item == Py_None) {
@@ -518,19 +520,19 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 		break;
 	    }
 	    check(!pygimp_drawable_check(item));
-	    ret[i].data.d_channel=((PyGimpDrawable *)item)->ID;
+	    ret[i].data.d_channel = ((PyGimpDrawable *)item)->ID;
 	    break;
 	case GIMP_PDB_SELECTION:
 	    check(!pygimp_layer_check(item));
-	    ret[i].data.d_selection=((PyGimpLayer *)item)->ID;
+	    ret[i].data.d_selection = ((PyGimpLayer *)item)->ID;
 	    break;
 	case GIMP_PDB_BOUNDARY:
 	    check(!PyInt_Check(item));
 	    ret[i].data.d_boundary = PyInt_AsLong(item);
 	    break;
 	case GIMP_PDB_VECTORS:
-	    check(!PyInt_Check(item));
-	    ret[i].data.d_vectors = PyInt_AsLong(item);
+	    check(!pygimp_vectors_check(item));
+	    ret[i].data.d_vectors = ((PyGimpVectors *)item)->ID;
 	    break;
 	case GIMP_PDB_PARASITE:
 	    /* can't do anything, since size of GimpParasite is not known */

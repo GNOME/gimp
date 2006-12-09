@@ -179,7 +179,10 @@ gimp_help_browser (Gimp *gimp)
 
   if (! procedure)
     {
-      GValueArray *args = NULL;
+      GValueArray *args          = NULL;
+      gint          n_domains    = 0;
+      gchar       **help_domains = NULL;
+      gchar       **help_uris    = NULL;
 
       procedure = gimp_pdb_lookup_procedure (gimp->pdb,
                                              "extension-gimp-help-browser");
@@ -196,10 +199,18 @@ gimp_help_browser (Gimp *gimp)
           return FALSE;
         }
 
-      args = gimp_procedure_get_arguments (procedure);
-      gimp_value_array_truncate (args, 1);
+      n_domains = gimp_plug_in_manager_get_help_domains (gimp->plug_in_manager,
+                                                         &help_domains,
+                                                         &help_uris);
 
-      g_value_set_int (&args->values[0], GIMP_RUN_INTERACTIVE);
+      args = gimp_procedure_get_arguments (procedure);
+      gimp_value_array_truncate (args, 5);
+
+      g_value_set_int             (&args->values[0], GIMP_RUN_INTERACTIVE);
+      g_value_set_int             (&args->values[1], n_domains);
+      gimp_value_take_stringarray (&args->values[2], help_domains, n_domains);
+      g_value_set_int             (&args->values[3], n_domains);
+      gimp_value_take_stringarray (&args->values[4], help_uris, n_domains);
 
       gimp_procedure_execute_async (procedure, gimp,
                                     gimp_get_user_context (gimp),
@@ -265,6 +276,25 @@ gimp_help_call (Gimp        *gimp,
                 const gchar *help_id)
 {
   GimpProcedure *procedure;
+
+  /*  Special case the help browser  */
+  if (! strcmp (procedure_name, "extension-gimp-help-browser-temp"))
+    {
+      GValueArray *return_vals;
+
+      return_vals = gimp_pdb_execute_procedure_by_name (gimp->pdb,
+                                                        gimp_get_user_context (gimp),
+                                                        NULL,
+                                                        procedure_name,
+                                                        G_TYPE_STRING, help_domain,
+                                                        G_TYPE_STRING, help_locales,
+                                                        G_TYPE_STRING, help_id,
+                                                        G_TYPE_NONE);
+
+      g_value_array_free (return_vals);
+
+      return;
+    }
 
   /*  Check if a help parser is already running  */
   procedure = gimp_pdb_lookup_procedure (gimp->pdb, "extension-gimp-help-temp");

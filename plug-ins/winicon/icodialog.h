@@ -23,13 +23,9 @@
 #define __ICO_DIALOG_H__
 
 
-GtkWidget * ico_specs_dialog_new                 (gint       num_layers);
-void        ico_specs_dialog_add_icon            (GtkWidget *dialog,
-                                                  gint32     layer,
-                                                  gint       layer_num);
-void        ico_specs_dialog_update_icon_preview (GtkWidget *dialog,
-                                                  gint32     layer,
-                                                  gint       bpp);
-
+GtkWidget * ico_dialog_new                 (IcoSaveInfo *info);
+void        ico_dialog_add_icon            (GtkWidget *dialog,
+                                            gint32     layer,
+                                            gint       layer_num);
 
 #endif /* __ICO_DIALOG_H__ */

@@ -9,6 +9,7 @@ SUBDIRS = \
 	po		\
 	po-libgimp	\
 	po-plug-ins	\
+	po-python	\
 	po-script-fu	\
 	po-tips		\
 	data		\
@@ -72,10 +73,7 @@ EXTRA_DIST = \
 	intltool-extract.in	\
 	intltool-merge.in	\
 	intltool-update.in	\
-	makefile.msc		\
-	po-libgimp/update.sh	\
-	po-plug-ins/update.sh	\
-	po-script-fu/update.sh
+	makefile.msc
 
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gimp-console
@@ -89,6 +87,9 @@ DISTCLEANFILES = \
 gimpinstall-@GIMP_TOOL_VERSION@:
 	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall-@GIMP_TOOL_VERSION@
 
+check-defs:
+	@$(PYTHON) tools/defcheck.py || \
+	  ( echo "* .def files inconsistent *"; exit 1; )
 
 validate-authors:
 if HAVE_XMLLINT
@@ -98,4 +99,4 @@ endif
 
 all-local: AUTHORS
 
-dist-hook: validate-authors
+dist-hook: check-defs validate-authors

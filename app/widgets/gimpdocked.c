@@ -59,7 +59,7 @@ gimp_docked_interface_get_type (void)
 
   if (!docked_iface_type)
     {
-      static const GTypeInfo docked_iface_info =
+      const GTypeInfo docked_iface_info =
       {
         sizeof (GimpDockedInterface),
         (GBaseInitFunc)     gimp_docked_iface_base_init,

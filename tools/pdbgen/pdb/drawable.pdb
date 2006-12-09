@@ -22,10 +22,9 @@ sub drawable_merge_shadow {
 
     $help = <<'HELP';
 This procedure combines the contents of the image's shadow buffer (for
-temporary processing) with the specified drawable. The "undo"
-parameter specifies whether to add an undo step for the
-operation. Requesting no undo is useful for such applications as
-'auto-apply'.
+temporary processing) with the specified drawable. The 'undo'
+parameter specifies whether to add an undo step for the operation.
+Requesting no undo is useful for such applications as 'auto-apply'.
 HELP
 
     &std_pdb_misc;
@@ -973,7 +972,7 @@ sub drawable_thumbnail {
 
     $help = <<'HELP';
 This function gets data from which a thumbnail of a drawable preview
-can be created. Maximum x or y dimension is 512 pixels. The pixels are
+can be created. Maximum x or y dimension is 1024 pixels. The pixels are
 returned in RGB[A] or GRAY[A] format. The bpp return value gives the
 number of bytes in the image.
 HELP
@@ -983,9 +982,9 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'width', type => '1 <= int32 <= 512',
+	{ name => 'width', type => '1 <= int32 <= 1024',
 	  desc => 'The requested thumbnail width' },
-	{ name => 'height', type => '1 <= int32 <= 512',
+	{ name => 'height', type => '1 <= int32 <= 1024',
 	  desc => 'The requested thumbnail height' }
     );
 
@@ -1009,6 +1008,8 @@ HELP
   TempBuf   *buf;
   gint       dwidth, dheight;
 
+  g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
+
   /* Adjust the width/height ratio */
   dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
   dheight = gimp_item_height (GIMP_ITEM (drawable));
@@ -1019,7 +1020,7 @@ HELP
     width  = MAX (1, (height * dwidth) / dheight);
 
   if (image->gimp->config->layer_previews)
-    buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable),
+    buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable), context,
                                          width, height);
   else
     buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
@@ -1050,7 +1051,7 @@ sub drawable_sub_thumbnail {
 
     $help = <<'HELP';
 This function gets data from which a thumbnail of a drawable preview
-can be created. Maximum x or y dimension is 512 pixels. The pixels are
+can be created. Maximum x or y dimension is 1024 pixels. The pixels are
 returned in RGB[A] or GRAY[A] format. The bpp return value gives the
 number of bytes in the image.
 HELP
@@ -1068,9 +1069,9 @@ HELP
           desc => 'The width of the area' },
         { name => 'src_height', type => '1 <= int32',
           desc => 'The height of the area' },
-	{ name => 'dest_width', type => '1 <= int32 <= 512',
+	{ name => 'dest_width', type => '1 <= int32 <= 1024',
 	  desc => 'The thumbnail width' },
-	{ name => 'dest_height', type => '1 <= int32 <= 512',
+	{ name => 'dest_height', type => '1 <= int32 <= 1024',
 	  desc => 'The thumbnail height' }
     );
 
@@ -1139,7 +1140,7 @@ This procedure offsets the specified drawable by the amounts specified by
 'offset_x' and 'offset_y'. If 'wrap_around' is set to TRUE, then portions of
 the drawable which are offset out of bounds are wrapped around. Alternatively,
 the undefined regions of the drawable can be filled with transparency or the
-background color, as specified by the 'fill_type' parameter.
+background color, as specified by the 'fill-type' parameter.
 HELP
 
     &std_pdb_misc;
@@ -1193,8 +1194,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_item_is_floating (GIMP_ITEM (drawable)))
-    gimp_item_sink (GIMP_ITEM (drawable));
+  if (g_object_is_floating (drawable))
+    {
+      g_object_ref_sink (drawable);
+      g_object_unref (drawable);
+    }
   else
     success = FALSE;
 }

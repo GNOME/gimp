@@ -31,6 +31,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimagefile.h"
 #include "core/gimpprogress.h"
 
@@ -68,8 +69,9 @@ static void     gimp_thumb_box_progress_set_value (GimpProgress      *progress,
 static gdouble  gimp_thumb_box_progress_get_value (GimpProgress      *progress);
 static void     gimp_thumb_box_progress_pulse     (GimpProgress      *progress);
 
-static void     gimp_thumb_box_progress_message   (GimpProgress      *progress,
+static gboolean gimp_thumb_box_progress_message   (GimpProgress      *progress,
                                                    Gimp              *gimp,
+                                                   GimpMessageSeverity  severity,
                                                    const gchar       *domain,
                                                    const gchar       *message);
 
@@ -270,20 +272,23 @@ gimp_thumb_box_progress_pulse (GimpProgress *progress)
     }
 }
 
-static void
-gimp_thumb_box_progress_message (GimpProgress      *progress,
-                                 Gimp              *gimp,
-                                 const gchar       *domain,
-                                 const gchar       *message)
+static gboolean
+gimp_thumb_box_progress_message (GimpProgress        *progress,
+                                 Gimp                *gimp,
+                                 GimpMessageSeverity  severity,
+                                 const gchar         *domain,
+                                 const gchar         *message)
 {
   /*  GimpThumbBox never shows any messages  */
+
+  return TRUE;
 }
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_thumb_box_new (Gimp *gimp)
+gimp_thumb_box_new (GimpContext *context)
 {
   GimpThumbBox   *box;
   GtkWidget      *vbox;
@@ -298,9 +303,11 @@ gimp_thumb_box_new (Gimp *gimp)
   GtkRequisition  thumb_progress_requisition;
   GtkRequisition  progress_requisition;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   box = g_object_new (GIMP_TYPE_THUMB_BOX, NULL);
+
+  box->context = context;
 
   ebox = gtk_event_box_new ();
   gtk_container_add (GTK_CONTAINER (box), ebox);
@@ -355,7 +362,7 @@ gimp_thumb_box_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  box->imagefile = gimp_imagefile_new (gimp, NULL);
+  box->imagefile = gimp_imagefile_new (context->gimp, NULL);
 
   g_signal_connect (box->imagefile, "info-changed",
                     G_CALLBACK (gimp_thumb_box_imagefile_info_changed),
@@ -367,9 +374,11 @@ gimp_thumb_box_new (Gimp *gimp)
 
   gimp_view_renderer_get_frame_size (&h, &v);
 
-  box->preview = gimp_view_new (GIMP_VIEWABLE (box->imagefile),
+  box->preview = gimp_view_new (context,
+                                GIMP_VIEWABLE (box->imagefile),
                                 /* add padding for the shadow frame */
-                                gimp->config->thumbnail_size + MAX (h, v),
+                                context->gimp->config->thumbnail_size +
+                                MAX (h, v),
                                 0, FALSE);
 
   gtk_box_pack_start (GTK_BOX (hbox), box->preview, TRUE, FALSE, 2);
@@ -684,10 +693,7 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
       (gimp_thumbnail_peek_thumb (thumb, size) < GIMP_THUMB_STATE_FAILED &&
        ! gimp_thumbnail_has_failed (thumb)))
     {
-      Gimp *gimp = box->imagefile->gimp;
-
-      gimp_imagefile_create_thumbnail (box->imagefile,
-                                       gimp_get_user_context (gimp),
+      gimp_imagefile_create_thumbnail (box->imagefile, box->context,
                                        GIMP_PROGRESS (box),
                                        size,
                                        !force);
@@ -735,8 +741,7 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
                                   _("Creating preview..."));
             }
 
-          gimp_imagefile_create_thumbnail_weak (box->imagefile,
-                                                gimp_get_user_context (gimp),
+          gimp_imagefile_create_thumbnail_weak (box->imagefile, box->context,
                                                 GIMP_PROGRESS (box),
                                                 gimp->config->thumbnail_size,
                                                 TRUE);

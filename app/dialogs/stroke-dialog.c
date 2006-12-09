@@ -63,12 +63,12 @@ static void  stroke_dialog_paint_info_selected (GimpContainerView *view,
 
 GtkWidget *
 stroke_dialog_new (GimpItem    *item,
+                   GimpContext *context,
                    const gchar *title,
                    const gchar *stock_id,
                    const gchar *help_id,
                    GtkWidget   *parent)
 {
-  GimpContext    *context;
   GimpStrokeDesc *desc;
   GimpStrokeDesc *saved_desc;
   GimpImage      *image;
@@ -81,21 +81,22 @@ stroke_dialog_new (GimpItem    *item,
   GtkWidget      *frame;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
-  image   = gimp_item_get_image (item);
-  context = gimp_get_user_context (image->gimp);
+  image = gimp_item_get_image (item);
 
   desc = gimp_stroke_desc_new (context->gimp, context);
 
-  saved_desc = g_object_get_data (G_OBJECT (context), "saved-stroke-desc");
+  saved_desc = g_object_get_data (G_OBJECT (context->gimp),
+                                  "saved-stroke-desc");
 
   if (saved_desc)
     gimp_config_sync (G_OBJECT (saved_desc), G_OBJECT (desc), 0);
 
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item),
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item), context,
                                      title, "gimp-stroke-options",
                                      stock_id,
                                      _("Choose Stroke Style"),
@@ -214,7 +215,8 @@ stroke_dialog_new (GimpItem    *item,
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
 
-    combo = gimp_container_combo_box_new (image->gimp->paint_info_list, NULL,
+    combo = gimp_container_combo_box_new (image->gimp->paint_info_list,
+                                          context,
                                           16, 0);
     gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo),
                                      GIMP_VIEWABLE (desc->paint_info));
@@ -249,7 +251,7 @@ stroke_dialog_response (GtkWidget  *widget,
   desc = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-desc");
 
   image   = gimp_item_get_image (item);
-  context = gimp_get_user_context (image->gimp);
+  context = GIMP_VIEWABLE_DIALOG (dialog)->context;
 
   switch (response_id)
     {
@@ -276,11 +278,14 @@ stroke_dialog_response (GtkWidget  *widget,
 
         if (! drawable)
           {
-            g_message (_("There is no active layer or channel to stroke to."));
+            gimp_message (context->gimp, G_OBJECT (widget),
+                          GIMP_MESSAGE_WARNING,
+                          _("There is no active layer or channel "
+                            "to stroke to."));
             return;
           }
 
-        saved_desc = g_object_get_data (G_OBJECT (context),
+        saved_desc = g_object_get_data (G_OBJECT (context->gimp),
                                         "saved-stroke-desc");
 
         if (saved_desc)
@@ -290,7 +295,7 @@ stroke_dialog_response (GtkWidget  *widget,
 
         gimp_config_sync (G_OBJECT (desc), G_OBJECT (saved_desc), 0);
 
-        g_object_set_data_full (G_OBJECT (context), "saved-stroke-desc",
+        g_object_set_data_full (G_OBJECT (context->gimp), "saved-stroke-desc",
                                 saved_desc,
                                 (GDestroyNotify) g_object_unref);
 

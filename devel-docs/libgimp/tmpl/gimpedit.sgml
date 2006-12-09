@@ -181,3 +181,13 @@ Edit menu functions (cut, copy, paste, clear, etc.)
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_edit_stroke_vectors ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@vectors_ID: 
+@Returns: 
+
+

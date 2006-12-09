@@ -61,6 +61,7 @@ static void  vectorlayer_options_dialog_response            (GtkWidget         *
 
 GtkWidget *
 vectorlayer_options_dialog_new (GimpItem    *item,
+                                GimpContext *context,
                                 const gchar *title,
                                 const gchar *stock_id,
                                 const gchar *help_id,
@@ -71,6 +72,7 @@ vectorlayer_options_dialog_new (GimpItem    *item,
   GimpVectorLayerOptions *vector_layer_options;
   
   g_return_val_if_fail (GIMP_IS_VECTOR_LAYER (item), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
   /*g_return_val_if_fail (help_id != NULL, NULL);*/
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
@@ -78,6 +80,7 @@ vectorlayer_options_dialog_new (GimpItem    *item,
   g_object_get (item, "vector-layer-options", &vector_layer_options, NULL);
   
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item),
+                                     context,
                                      title, "gimp-vectorlayer-options",
                                      stock_id,
                                      _("Choose vector layer options"),

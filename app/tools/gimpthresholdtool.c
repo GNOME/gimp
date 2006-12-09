@@ -27,12 +27,10 @@
 #include "base/gimphistogram.h"
 #include "base/threshold.h"
 
-#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogrambox.h"
@@ -51,7 +49,8 @@
 static void     gimp_threshold_tool_finalize        (GObject           *object);
 
 static gboolean gimp_threshold_tool_initialize      (GimpTool          *tool,
-                                                     GimpDisplay       *display);
+                                                     GimpDisplay       *display,
+                                                     GError           **error);
 
 static void     gimp_threshold_tool_map             (GimpImageMapTool  *im_tool);
 static void     gimp_threshold_tool_dialog          (GimpImageMapTool  *im_tool);
@@ -81,7 +80,7 @@ gimp_threshold_tool_register (GimpToolRegisterCallback  callback,
                 0,
                 "gimp-threshold-tool",
                 _("Threshold"),
-                _("Reduce image to two colors using a threshold"),
+                _("Threshold Tool: Reduce image to two colors using a threshold"),
                 N_("_Threshold..."), NULL,
                 NULL, GIMP_HELP_TOOL_THRESHOLD,
                 GIMP_STOCK_TOOL_THRESHOLD,
@@ -137,8 +136,9 @@ gimp_threshold_tool_finalize (GObject *object)
 }
 
 static gboolean
-gimp_threshold_tool_initialize (GimpTool    *tool,
-                                GimpDisplay *display)
+gimp_threshold_tool_initialize (GimpTool     *tool,
+                                GimpDisplay  *display,
+                                GError      **error)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (tool);
   GimpDrawable      *drawable;
@@ -150,7 +150,8 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
 
   if (gimp_drawable_is_indexed (drawable))
     {
-      g_message (_("Threshold does not operate on indexed layers."));
+      g_set_error (error, 0, 0,
+                   _("Threshold does not operate on indexed layers."));
       return FALSE;
     }
 
@@ -161,7 +162,7 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
   t_tool->threshold->low_threshold  = 127;
   t_tool->threshold->high_threshold = 255;
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
   gimp_drawable_calculate_histogram (drawable, t_tool->hist);
 
@@ -200,15 +201,13 @@ gimp_threshold_tool_map (GimpImageMapTool *image_map_tool)
 static void
 gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
-  GimpToolOptions   *tool_options;
+  GimpThresholdTool *t_tool       = GIMP_THRESHOLD_TOOL (image_map_tool);
+  GimpToolOptions   *tool_options = GIMP_TOOL_GET_OPTIONS (image_map_tool);
   GtkWidget         *vbox;
   GtkWidget         *hbox;
   GtkWidget         *menu;
   GtkWidget         *box;
   GtkWidget         *button;
-
-  tool_options = GIMP_TOOL (t_tool)->tool_info->tool_options;
 
   vbox = image_map_tool->main_vbox;
 

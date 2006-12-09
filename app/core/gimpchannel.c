@@ -685,7 +685,9 @@ gimp_channel_stroke (GimpItem       *item,
                                &n_segs_in, &n_segs_out,
                                0, 0, 0, 0))
     {
-      g_message (_("Cannot stroke empty channel."));
+      gimp_message (gimp_item_get_image (item)->gimp, NULL,
+                    GIMP_MESSAGE_WARNING,
+                    _("Cannot stroke empty channel."));
       return FALSE;
     }
 
@@ -1742,13 +1744,21 @@ gimp_channel_bounds (GimpChannel *channel,
                      gint        *x2,
                      gint        *y2)
 {
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
-  g_return_val_if_fail (x1 != NULL, FALSE);
-  g_return_val_if_fail (y1 != NULL, FALSE);
-  g_return_val_if_fail (x2 != NULL, FALSE);
-  g_return_val_if_fail (y2 != NULL, FALSE);
+  gint     tmp_x1, tmp_y1, tmp_x2, tmp_y2;
+  gboolean retval;
 
-  return GIMP_CHANNEL_GET_CLASS (channel)->bounds (channel, x1, y1, x2, y2);
+  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
+
+  retval = GIMP_CHANNEL_GET_CLASS (channel)->bounds (channel,
+                                                     &tmp_x1, &tmp_y1,
+                                                     &tmp_x2, &tmp_y2);
+
+  if (x1) *x1 = tmp_x1;
+  if (y1) *y1 = tmp_y1;
+  if (x2) *x2 = tmp_x2;
+  if (y2) *y2 = tmp_y2;
+
+  return retval;
 }
 
 gboolean

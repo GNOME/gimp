@@ -35,6 +35,8 @@
 #include "core/gimpimage.h"
 #include "core/gimppalette.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 image_convert_rgb_invoker (GimpProcedure     *procedure,
@@ -138,6 +140,32 @@ image_convert_indexed_invoker (GimpProcedure     *procedure,
         gimp_image_convert (image, GIMP_INDEXED, num_cols, dither_type,
                             alpha_dither, remove_unused, palette_type, pal,
                             NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+image_convert_set_dither_matrix_invoker (GimpProcedure     *procedure,
+                                         Gimp              *gimp,
+                                         GimpContext       *context,
+                                         GimpProgress      *progress,
+                                         const GValueArray *args)
+{
+  gboolean success = TRUE;
+  gint32 width;
+  gint32 height;
+  gint32 matrix_length;
+  const guint8 *matrix;
+
+  width = g_value_get_int (&args->values[0]);
+  height = g_value_get_int (&args->values[1]);
+  matrix_length = g_value_get_int (&args->values[2]);
+  matrix = gimp_value_get_int8array (&args->values[3]);
+
+  if (success)
+    {
+        gimp_image_convert_set_dither_matrix (width, height, (guchar *) matrix);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -250,6 +278,45 @@ register_convert_procs (GimpPDB *pdb)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-convert-set-dither-matrix
+   */
+  procedure = gimp_procedure_new (image_convert_set_dither_matrix_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-convert-set-dither-matrix");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-convert-set-dither-matrix",
+                                     "Set dither matrix for conversion to indexed",
+                                     "This procedure sets the dither matrix used when converting images to INDEXED mode with positional dithering.",
+                                     "David Gowers",
+                                     "David Gowers",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("width",
+                                                      "width",
+                                                      "Width of the matrix (0 to reset to default matrix)",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("height",
+                                                      "height",
+                                                      "Height of the matrix (0 to reset to default matrix)",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("matrix-length",
+                                                      "matrix length",
+                                                      "The length of 'matrix'",
+                                                      1, 1024, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8_array ("matrix",
+                                                           "matrix",
+                                                           "The matrix -- all values must be >= 1",
+                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

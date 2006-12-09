@@ -18,12 +18,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 #include "config.h"
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimplimits.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -32,6 +31,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-undo.h"
@@ -48,7 +48,6 @@
 
 
 #define GRID_RESPONSE_RESET 1
-#define GRID_COLOR_SIZE     20
 
 
 /*  local functions  */
@@ -62,8 +61,9 @@ static void  grid_dialog_response (GtkWidget *widget,
 
 
 GtkWidget *
-grid_dialog_new (GimpImage *image,
-                 GtkWidget *parent)
+grid_dialog_new (GimpImage   *image,
+                 GimpContext *context,
+                 GtkWidget   *parent)
 {
   GimpGrid  *grid;
   GimpGrid  *grid_backup;
@@ -71,12 +71,13 @@ grid_dialog_new (GimpImage *image,
   GtkWidget *editor;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
   grid = gimp_image_get_grid (GIMP_IMAGE (image));
   grid_backup = gimp_config_duplicate (GIMP_CONFIG (grid));
 
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
                                      _("Configure Grid"), "gimp-grid-configure",
                                      GIMP_STOCK_GRID, _("Configure Image Grid"),
                                      parent,
@@ -101,9 +102,8 @@ grid_dialog_new (GimpImage *image,
                     G_CALLBACK (grid_dialog_response),
                     dialog);
 
-  editor = gimp_grid_editor_new (grid,
-                                 image->xresolution,
-                                 image->yresolution);
+  editor = gimp_grid_editor_new (grid, context,
+                                 image->xresolution, image->yresolution);
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox),
                      editor);
@@ -131,7 +131,7 @@ grid_dialog_response (GtkWidget  *widget,
   GimpImage *grid;
   GimpGrid  *grid_backup;
 
-  image      = g_object_get_data (G_OBJECT (dialog), "image");
+  image       = g_object_get_data (G_OBJECT (dialog), "image");
   grid        = g_object_get_data (G_OBJECT (dialog), "grid");
   grid_backup = g_object_get_data (G_OBJECT (dialog), "grid-backup");
 

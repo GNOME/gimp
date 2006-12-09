@@ -41,6 +41,7 @@ struct _GimpControllerEditor
   GtkVBox             parent_instance;
 
   GimpControllerInfo *info;
+  GimpContext        *context;
 
   GtkTreeSelection   *sel;
 
@@ -60,7 +61,8 @@ struct _GimpControllerEditorClass
 
 GType       gimp_controller_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_controller_editor_new      (GimpControllerInfo *info);
+GtkWidget * gimp_controller_editor_new      (GimpControllerInfo *info,
+                                             GimpContext        *context);
 
 
 #endif  /*  __GIMP_CONTROLLER_EDITOR_H__  */

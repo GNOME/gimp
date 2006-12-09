@@ -17,6 +17,55 @@ gimpvectors
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### FUNCTION gimp_vectors_new ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_import_from_file ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@filename: 
+@merge: 
+@scale: 
+@num_vectors: 
+@vectors_ids: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_import_from_string ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@string: 
+@length: 
+@merge: 
+@scale: 
+@num_vectors: 
+@vectors_ids: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_get_strokes ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@num_strokes: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_vectors_get_image ##### -->
 <para>
 
@@ -62,16 +111,6 @@ gimpvectors
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_vectors_new ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@name: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_vectors_set_linked ##### -->
 <para>
 
@@ -112,13 +151,27 @@ gimpvectors
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_vectors_get_strokes ##### -->
+<!-- ##### FUNCTION gimp_vectors_remove_stroke ##### -->
 <para>
 
 </para>
 
 @vectors_ID: 
-@num_strokes: 
+@stroke_id: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_to_selection ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@operation: 
+@antialias: 
+@feather: 
+@feather_radius_x: 
+@feather_radius_y: 
 @Returns: 
 
 
@@ -163,17 +216,20 @@ gimpvectors
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_vectors_stroke_close ##### -->
+<!-- ##### FUNCTION gimp_vectors_stroke_new_from_points ##### -->
 <para>
 
 </para>
 
 @vectors_ID: 
-@stroke_id: 
+@type: 
+@num_points: 
+@controlpoints: 
+@closed: 
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_vectors_stroke_remove ##### -->
+<!-- ##### FUNCTION gimp_vectors_stroke_close ##### -->
 <para>
 
 </para>
@@ -190,7 +246,20 @@ gimpvectors
 
 @vectors_ID: 
 @stroke_id: 
-@prescision: 
+@precision: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_stroke_get_points ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@num_points: 
+@controlpoints: 
+@closed: 
 @Returns: 
 
 
@@ -202,7 +271,8 @@ gimpvectors
 @vectors_ID: 
 @stroke_id: 
 @dist: 
-@prescision: 
+@precision: 
+@x_point: 
 @y_point: 
 @slope: 
 @valid: 
@@ -216,9 +286,9 @@ gimpvectors
 
 @vectors_ID: 
 @stroke_id: 
-@prescision: 
+@precision: 
 @num_coords: 
-@coords: 
+@closed: 
 @Returns: 
 
 
@@ -243,6 +313,45 @@ gimpvectors
 @stroke_id: 
 @off_x: 
 @off_y: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_stroke_flip ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@flip_type: 
+@axis: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_stroke_flip_free ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@x1: 
+@y1: 
+@x2: 
+@y2: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_stroke_rotate ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@center_x: 
+@center_y: 
+@angle: 
 @Returns: 
 
 

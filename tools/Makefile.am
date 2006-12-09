@@ -39,9 +39,10 @@ INCLUDES = \
 	-I$(includedir)
 
 EXTRA_DIST = \
+	defcheck.py	\
 	gimp-mkenums	\
-	gimppath2svg.py	\
-	rmshm
+	gimppath2svg.py
+
 
 install-exec-hook:
 if DEFAULT_BINARY

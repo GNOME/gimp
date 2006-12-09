@@ -25,6 +25,7 @@ gimp_enum_label_get_type
 gimp_enum_store_get_type
 gimp_file_entry_get_type
 gimp_frame_get_type
+gimp_hint_box_get_type
 gimp_int_combo_box_get_type
 gimp_int_store_get_type
 gimp_memsize_entry_get_type

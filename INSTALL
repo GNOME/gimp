@@ -51,14 +51,18 @@ header files installed.
      to check that the following libraries are installed: libpng,
      libjpeg, libpoppler, libtiff, gtkhtml-2, libmng, librsvg, libwmf.
 
-  6. Configure GIMP by running the `configure' script. You may want
+  6. The Python extension requires Python development headers to be
+     present. You will also need PyGTK and the respective development
+     headers.
+
+  7. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
-  7. Build GIMP by running `make'. The use of GNU make is recommened.
+  8. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
-  8. Install GIMP by running `make install'. In order to avoid clashes
+  9. Install GIMP by running `make install'. In order to avoid clashes
      with other versions of GIMP, we install a binary called gimp-2.3.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-2.3.
@@ -168,12 +172,8 @@ These are:
      their API references so that the libgimp reference can link to
      them.
 
-  --enable-mp. This options control whether to build GIMP with or without
-     support for multiple processors. This option is off by default. If
-     you do have multiply processors and run GIMP with an OS supporting
-     them you will like to enable this features to use all of your
-     horsepower. Enabling it on singleprocessor systems won't harm but
-     cause a bit processing overhead.
+  --disable-mp. This option allows you to disable support for multiple
+     processors. It is enabled by default.
 
   --with-sendmail=[PATH]. This option is used to tell GIMP where to find
      the sendmail command. Normally this options don't have to be used
@@ -197,8 +197,8 @@ These are:
   --disable-python.  If for some reason you don't want to build the
      Python based pygimp plug-in, you can use --disable-python.
 
-  --disable-script-fu.  If for some reason you don't want to build the
-     Script-Fu plug-in, you can use --disable-script-fu.
+  --without-script-fu.  If for some reason you don't want to build the
+     Script-Fu plug-in, you can use --without-script-fu.
 
 The `make' command builds several things:
  - A bunch of public libraries in the directories starting with 'libgimp'.
@@ -271,7 +271,7 @@ There are some GIMP plug-ins that need additional third-party libraries
 installed on your system. For example to compile the plug-ins that load 
 and save JPEG, PNG or TIFF files you need the related libraries and header 
 files installed, otherwise you'll get a message that plugin xyz will not 
-be build. 
+be built.
 
 If you are sure that those libraries are correctly installed, but configure
 fails to detect them, the following might help:

@@ -30,6 +30,7 @@
 
 #include "gfig.h"
 #include "gfig-dobject.h"
+#include "gfig-line.h"
 
 #include "libgimp/stdplugins-intl.h"
 

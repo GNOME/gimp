@@ -278,6 +278,7 @@ gimp_window_set_transient_for (GtkWindow *window,
 {
   gtk_window_set_transient_for (window, NULL);
 
+#ifndef GDK_WINDOWING_WIN32
   g_signal_handlers_disconnect_matched (window, G_SIGNAL_MATCH_FUNC,
                                         0, 0, NULL,
                                         gimp_window_transient_realized,
@@ -293,4 +294,5 @@ gimp_window_set_transient_for (GtkWindow *window,
                            G_CALLBACK (gimp_window_transient_realized),
                            parent, 0);
   g_object_unref (parent);
+#endif
 }

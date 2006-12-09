@@ -39,6 +39,8 @@
 #include "core/gimpprogress.h"
 #include "gimp-intl.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 drawable_transform_flip_simple_invoker (GimpProcedure     *procedure,
@@ -136,7 +138,6 @@ drawable_transform_flip_invoker (GimpProcedure     *procedure,
           /* Assemble the transformation matrix */
           gimp_matrix3_identity (&matrix);
           gimp_transform_matrix_flip_free (&matrix,
-                                           x, y, width, height,
                                            x0, y0, x1, y1);
 
           if (progress)
@@ -208,7 +209,6 @@ drawable_transform_flip_default_invoker (GimpProcedure     *procedure,
           /* Assemble the transformation matrix */
           gimp_matrix3_identity (&matrix);
           gimp_transform_matrix_flip_free (&matrix,
-                                           x, y, width, height,
                                            x0, y0, x1, y1);
 
           if (interpolate)

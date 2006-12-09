@@ -34,6 +34,7 @@ struct _GimpThumbBox
 {
   GtkFrame       parent_instance;
 
+  GimpContext   *context;
   GimpImagefile *imagefile;
   GSList        *uris;
 
@@ -56,7 +57,7 @@ struct _GimpThumbBoxClass
 
 GType       gimp_thumb_box_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_thumb_box_new       (Gimp         *gimp);
+GtkWidget * gimp_thumb_box_new       (GimpContext  *context);
 
 void        gimp_thumb_box_set_uri   (GimpThumbBox *box,
                                       const gchar  *uri);

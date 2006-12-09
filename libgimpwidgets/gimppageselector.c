@@ -1180,7 +1180,7 @@ gimp_page_selector_selection_changed (GtkIconView      *icon_view,
       gchar *text;
 
       if (n_selected == priv->n_pages)
-        text = g_strdup_printf (ngettext ("All %d page selected",
+        text = g_strdup_printf (ngettext ("%d page selected",
                                           "All %d pages selected", n_selected),
                                 n_selected);
       else
@@ -1379,7 +1379,7 @@ draw_frame_column (GdkPixbuf *frame_image,
     }
 }
 
-GdkPixbuf *
+static GdkPixbuf *
 stretch_frame_image (GdkPixbuf *frame_image,
                      gint       left_offset,
                      gint       top_offset,

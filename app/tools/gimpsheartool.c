@@ -30,7 +30,6 @@
 #include "core/gimp-transform-utils.h"
 #include "core/gimpimage.h"
 #include "core/gimpdrawable-transform.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -85,7 +84,7 @@ gimp_shear_tool_register (GimpToolRegisterCallback  callback,
                 0,
                 "gimp-shear-tool",
                 _("Shear"),
-                _("Shear the layer or selection"),
+                _("Shear Tool: Shear the layer, selection or path"),
                 N_("S_hear"), "<shift>S",
                 NULL, GIMP_HELP_TOOL_SHEAR,
                 GIMP_STOCK_TOOL_SHEAR,
@@ -137,7 +136,7 @@ gimp_shear_tool_dialog (GimpTransformTool *tr_tool)
   button = gimp_spin_button_new (&shear->x_adj,
                                  0, -65536, 65536, 1, 15, 1, 1, 0);
   gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0, _("Shear magnitude X:"),
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0, _("Shear magnitude _X:"),
                              0.0, 0.5, button, 1, TRUE);
 
   g_signal_connect (shear->x_adj, "value-changed",
@@ -147,7 +146,7 @@ gimp_shear_tool_dialog (GimpTransformTool *tr_tool)
   button = gimp_spin_button_new (&shear->y_adj,
                                  0, -65536, 65536, 1, 15, 1, 1, 0);
   gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1, _("Shear magnitude Y:"),
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1, _("Shear magnitude _Y:"),
                              0.0, 0.5, button, 1, TRUE);
 
   g_signal_connect (shear->y_adj, "value-changed",

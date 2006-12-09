@@ -400,127 +400,79 @@ sel_valid_pixel (gint row,
           && 0 <= (col) && (col) < sel_get_width ());
 }
 
-static void
-gen_anchor (gdouble  *p,
-            gdouble   x,
-            gdouble   y,
-            gboolean  is_newcurve)
-{
-/*   printf("TYPE: %s X: %d Y: %d\n",  */
-/*       (is_newcurve)?"3":"1",  */
-/*       sel_x1+(int)RINT(x),  */
-/*       sel_y1 + sel_height - (int)RINT(y)+1); */
-
-  *p++ = (sel_x1 + (gint)RINT(x));
-  *p++ = sel_y1 + sel_height - (gint)RINT(y) + 1;
-  *p++ = (is_newcurve) ? 3.0 : 1.0;
-}
-
-
-static void
-gen_control (gdouble *p,
-             gdouble  x,
-             gdouble  y)
-{
-/*   printf("TYPE: 2 X: %d Y: %d\n",  */
-/*       sel_x1+(int)RINT(x),  */
-/*       sel_y1 + sel_height - (int)RINT(y)+1);  */
-
-  *p++ = sel_x1 + (gint)RINT(x);
-  *p++ = sel_y1 + sel_height - (gint)RINT(y) + 1;
-  *p++ = 2.0;
-
-}
 
 static void
 do_points (spline_list_array_type in_splines,
            gint32                 image_ID)
 {
-  unsigned this_list;
-  gint seg_count = 0;
-  gint point_count = 0;
-  gdouble last_x,last_y;
-  gdouble *parray;
-  gdouble *cur_parray;
-  gint path_point_count;
+  gint32   vectors;
+  gint32   stroke;
+  gint     i, j;
+  gboolean have_points = FALSE;
+  spline_list_type spline_list;
 
-  for (this_list = 0; this_list < SPLINE_LIST_ARRAY_LENGTH (in_splines);
-       this_list++)
+  /* check if there really is something to do... */
+  for (i = 0; i < SPLINE_LIST_ARRAY_LENGTH (in_splines); i++)
     {
-      spline_list_type in_list = SPLINE_LIST_ARRAY_ELT (in_splines, this_list);
+      spline_list = SPLINE_LIST_ARRAY_ELT (in_splines, i);
       /* Ignore single points that are on their own */
-      if(SPLINE_LIST_LENGTH (in_list) < 2)
+      if (SPLINE_LIST_LENGTH (spline_list) < 2)
         continue;
-      point_count += SPLINE_LIST_LENGTH (in_list);
+      have_points = TRUE;
+      break;
     }
 
-/*   printf("Name SEL2PATH\n"); */
-/*   printf("#POINTS: %d\n",point_count*3); */
-/*   printf("CLOSED: 1\n"); */
-/*   printf("DRAW: 0\n"); */
-/*   printf("STATE: 4\n"); */
+  if (!have_points)
+    return;
 
-  path_point_count = point_count * 9;
-  cur_parray = g_new0 (gdouble, path_point_count);
-  parray = cur_parray;
+  vectors = gimp_vectors_new (image_ID, _("Selection"));
 
-  point_count = 0;
-
-  for (this_list = 0; this_list < SPLINE_LIST_ARRAY_LENGTH (in_splines);
-       this_list++)
+  for (j = 0; j < SPLINE_LIST_ARRAY_LENGTH (in_splines); j++)
     {
-      unsigned this_spline;
-      spline_list_type in_list = SPLINE_LIST_ARRAY_ELT (in_splines, this_list);
+      spline_type seg;
 
-/*       if(seg_count > 0 && point_count > 0)   */
-/*      gen_anchor(last_x,last_y,0);   */
-
-      point_count = 0;
+      spline_list = SPLINE_LIST_ARRAY_ELT (in_splines, j);
 
       /* Ignore single points that are on their own */
-      if(SPLINE_LIST_LENGTH (in_list) < 2)
-          continue;
+      if (SPLINE_LIST_LENGTH (spline_list) < 2)
+        continue;
 
-      for (this_spline = 0; this_spline < SPLINE_LIST_LENGTH (in_list);
-           this_spline++)
+      seg = SPLINE_LIST_ELT (spline_list, 0);
+      stroke = gimp_vectors_bezier_stroke_new_moveto (vectors,
+                                                      START_POINT (seg).x,
+                                                      START_POINT (seg).y);
+
+      for (i = 0; i < SPLINE_LIST_LENGTH (spline_list); i++)
         {
-          spline_type s = SPLINE_LIST_ELT (in_list, this_spline);
+          seg = SPLINE_LIST_ELT (spline_list, i);
 
-          if (SPLINE_DEGREE (s) == LINEAR)
-            {
-              gen_anchor (cur_parray,
-                          START_POINT (s).x, START_POINT (s).y,
-                          seg_count && !point_count);
-              cur_parray += 3;
-              gen_control (cur_parray, START_POINT (s).x, START_POINT (s).y);
-              cur_parray += 3;
-              gen_control (cur_parray,END_POINT (s).x, END_POINT (s).y);
-              cur_parray += 3;
-              last_x = END_POINT (s).x;
-              last_y = END_POINT (s).y;
-            }
-          else if (SPLINE_DEGREE (s) == CUBIC)
-            {
-              gen_anchor (cur_parray,
-                          START_POINT (s).x, START_POINT (s).y,
-                          seg_count && !point_count);
-              cur_parray += 3;
-              gen_control (cur_parray,CONTROL1 (s).x, CONTROL1 (s).y);
-              cur_parray += 3;
-              gen_control (cur_parray,CONTROL2 (s).x, CONTROL2 (s).y);
-              cur_parray += 3;
-              last_x = END_POINT (s).x;
-              last_y = END_POINT (s).y;
-            }
+          if (SPLINE_DEGREE (seg) == LINEAR)
+            gimp_vectors_bezier_stroke_lineto (vectors, stroke,
+                                               END_POINT (seg).x,
+                                               END_POINT (seg).y);
+          else if (SPLINE_DEGREE (seg) == CUBIC)
+            gimp_vectors_bezier_stroke_cubicto (vectors, stroke,
+                                                CONTROL1 (seg).x,
+                                                CONTROL1 (seg).y,
+                                                CONTROL2 (seg).x,
+                                                CONTROL2 (seg).y,
+                                                END_POINT (seg).x,
+                                                END_POINT (seg).y);
           else
-            g_warning ("print_spline: strange degree (%d)", SPLINE_DEGREE (s));
-
-          point_count++;
+            g_warning ("print_spline: strange degree (%d)",
+                       SPLINE_DEGREE (seg));
         }
-      seg_count++;
+
+      gimp_vectors_stroke_close (vectors, stroke);
+
+      /* transform to the GIMPs coordinate system, taking the selections
+       * bounding box into account  */
+      gimp_vectors_stroke_scale (vectors, stroke, 1.0, -1.0);
+      gimp_vectors_stroke_translate (vectors, stroke,
+                                     sel_x1, sel_y1 + sel_height + 1);
     }
 
-   gimp_path_set_points (image_ID, _("Selection"), 1, path_point_count, parray);
+   gimp_image_add_vectors (image_ID, vectors, -1);
 }
 
 

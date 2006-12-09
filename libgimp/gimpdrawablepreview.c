@@ -380,45 +380,67 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
     }
   else
     {
-      GimpPixelRgn  drawable_rgn;
-      GimpPixelRgn  selection_rgn;
-      guchar       *src;
-      guchar       *sel;
-      gint          offset_x;
-      gint          offset_y;
-      gint          selection_id;
-
-      selection_id = gimp_image_get_selection (image_id);
+      gint offset_x, offset_y;
+      gint mask_x, mask_y;
+      gint mask_width, mask_height;
+      gint draw_x, draw_y;
+      gint draw_width, draw_height;
 
       gimp_drawable_offsets (drawable->drawable_id, &offset_x, &offset_y);
 
-      gimp_pixel_rgn_init (&drawable_rgn, drawable,
-                           x, y, width, height,
-                           FALSE, FALSE);
-      gimp_pixel_rgn_init (&selection_rgn, gimp_drawable_get (selection_id),
-                           x + offset_x, y + offset_y, width, height,
-                           FALSE, FALSE);
+      if (gimp_drawable_mask_intersect (drawable->drawable_id,
+                                        &mask_x, &mask_y,
+                                        &mask_width, &mask_height) &&
+          gimp_rectangle_intersect (mask_x, mask_y,
+                                    mask_width, mask_height,
+                                    x, y, width, height,
+                                    &draw_x, &draw_y,
+                                    &draw_width, &draw_height))
+        {
+          GimpDrawable *selection;
+          GimpPixelRgn  drawable_rgn;
+          GimpPixelRgn  selection_rgn;
+          guchar       *src;
+          guchar       *sel;
 
-      src = g_new (guchar, width * height * drawable->bpp);
-      sel = g_new (guchar, width * height);
+          selection = gimp_drawable_get (gimp_image_get_selection (image_id));
 
-      gimp_pixel_rgn_get_rect (&drawable_rgn,
-                               src, x, y, width, height);
-      gimp_pixel_rgn_get_rect (&selection_rgn,
-                               sel, x + offset_x, y + offset_y, width, height);
+          gimp_pixel_rgn_init (&drawable_rgn, drawable,
+                               draw_x, draw_y, draw_width, draw_height,
+                               FALSE, FALSE);
+          gimp_pixel_rgn_init (&selection_rgn, selection,
+                               draw_x + offset_x, draw_y + offset_y,
+                               draw_width, draw_height,
+                               FALSE, FALSE);
 
-      gimp_preview_area_mask (GIMP_PREVIEW_AREA (gimp_preview->area),
-                              x - gimp_preview->xoff - gimp_preview->xmin,
-                              y - gimp_preview->yoff - gimp_preview->ymin,
-                              width,
-                              height,
-                              gimp_drawable_type (drawable->drawable_id),
-                              src, width * drawable->bpp,
-                              buf, rowstride,
-                              sel, width);
+          src = g_new (guchar, draw_width * draw_height * drawable->bpp);
+          sel = g_new (guchar, draw_width * draw_height);
 
-      g_free (sel);
-      g_free (src);
+          gimp_pixel_rgn_get_rect (&drawable_rgn, src,
+                                   draw_x, draw_y,
+                                   draw_width, draw_height);
+          gimp_pixel_rgn_get_rect (&selection_rgn, sel,
+                                   draw_x + offset_x, draw_y + offset_y,
+                                   draw_width, draw_height);
+
+          gimp_preview_area_mask (GIMP_PREVIEW_AREA (gimp_preview->area),
+                                  draw_x - gimp_preview->xoff - gimp_preview->xmin,
+                                  draw_y - gimp_preview->yoff - gimp_preview->ymin,
+                                  draw_width,
+                                  draw_height,
+                                  gimp_drawable_type (drawable->drawable_id),
+                                  src, draw_width * drawable->bpp,
+                                  (buf +
+                                   (draw_x - x) * drawable->bpp +
+                                   (draw_y - y) * rowstride),
+                                  rowstride,
+                                  sel, draw_width);
+
+          g_free (sel);
+          g_free (src);
+
+          gimp_drawable_detach (selection);
+        }
     }
 }
 

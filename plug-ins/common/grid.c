@@ -408,12 +408,12 @@ grid (gint32        image_ID,
     {
       gimp_pixel_rgn_get_row (&srcPR, dest, sx1, y, (sx2 - sx1));
 
-      y_offset = y - grid_cfg.hoffset;
+      y_offset = y - grid_cfg.voffset;
       while (y_offset < 0)
-        y_offset += grid_cfg.hspace;
+        y_offset += grid_cfg.vspace;
 
       if ((y_offset +
-           (grid_cfg.hwidth / 2)) % grid_cfg.hspace < grid_cfg.hwidth)
+           (grid_cfg.hwidth / 2)) % grid_cfg.vspace < grid_cfg.hwidth)
         {
           for (x = sx1; x < sx2; x++)
             {
@@ -424,29 +424,29 @@ grid (gint32        image_ID,
 
       for (x = sx1; x < sx2; x++)
         {
-          x_offset = grid_cfg.vspace + x - grid_cfg.voffset;
+          x_offset = grid_cfg.hspace + x - grid_cfg.hoffset;
           while (x_offset < 0)
-            x_offset += grid_cfg.vspace;
+            x_offset += grid_cfg.hspace;
 
           if ((x_offset +
-               (grid_cfg.vwidth / 2)) % grid_cfg.vspace < grid_cfg.vwidth)
+               (grid_cfg.vwidth / 2)) % grid_cfg.hspace < grid_cfg.vwidth)
             {
               pix_composite (&dest[(x-sx1) * bytes],
                              vcolor, bytes, blend, alpha);
             }
 
           if ((x_offset +
-               (grid_cfg.iwidth / 2)) % grid_cfg.vspace < grid_cfg.iwidth
+               (grid_cfg.iwidth / 2)) % grid_cfg.hspace < grid_cfg.iwidth
               &&
-              ((y_offset % grid_cfg.hspace >= grid_cfg.ispace
+              ((y_offset % grid_cfg.vspace >= grid_cfg.ispace
                 &&
-                y_offset % grid_cfg.hspace < grid_cfg.ioffset)
+                y_offset % grid_cfg.vspace < grid_cfg.ioffset)
                ||
-               (grid_cfg.hspace -
-                (y_offset % grid_cfg.hspace) >= grid_cfg.ispace
+               (grid_cfg.vspace -
+                (y_offset % grid_cfg.vspace) >= grid_cfg.ispace
                 &&
-                grid_cfg.hspace -
-                (y_offset % grid_cfg.hspace) < grid_cfg.ioffset)))
+                grid_cfg.vspace -
+                (y_offset % grid_cfg.vspace) < grid_cfg.ioffset)))
             {
               pix_composite (&dest[(x-sx1) * bytes],
                              icolor, bytes, blend, alpha);
@@ -454,23 +454,23 @@ grid (gint32        image_ID,
         }
 
       if ((y_offset +
-           (grid_cfg.iwidth / 2)) % grid_cfg.hspace < grid_cfg.iwidth)
+           (grid_cfg.iwidth / 2)) % grid_cfg.vspace < grid_cfg.iwidth)
         {
           for (x = sx1; x < sx2; x++)
             {
-              x_offset = grid_cfg.vspace + x - grid_cfg.voffset;
+              x_offset = grid_cfg.hspace + x - grid_cfg.hoffset;
               while (x_offset < 0)
-                x_offset += grid_cfg.vspace;
+                x_offset += grid_cfg.hspace;
 
-              if ((x_offset % grid_cfg.vspace >= grid_cfg.ispace
+              if ((x_offset % grid_cfg.hspace >= grid_cfg.ispace
                    &&
-                   x_offset % grid_cfg.vspace < grid_cfg.ioffset)
+                   x_offset % grid_cfg.hspace < grid_cfg.ioffset)
                   ||
-                  (grid_cfg.vspace -
-                   (x_offset % grid_cfg.vspace) >= grid_cfg.ispace
+                  (grid_cfg.hspace -
+                   (x_offset % grid_cfg.hspace) >= grid_cfg.ispace
                    &&
-                   grid_cfg.vspace -
-                   (x_offset % grid_cfg.vspace) < grid_cfg.ioffset))
+                   grid_cfg.hspace -
+                   (x_offset % grid_cfg.hspace) < grid_cfg.ioffset))
                 {
                   pix_composite (&dest[(x-sx1) * bytes],
                                  icolor, bytes, blend, alpha);
@@ -766,15 +766,15 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (space), 2, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 0, 0.0, drawable->height);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 1, 0.0, drawable->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 0, 0.0, drawable->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 1, 0.0, drawable->height);
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 2, 0.0, drawable->width);
 
   /*  set upper and lower limits (in pixels)  */
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 0, 1.0,
-                                         drawable->height);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 1, 1.0,
                                          drawable->width);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 1, 1.0,
+                                         drawable->height);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 2, 0.0,
                                          MAX (drawable->width,
                                               drawable->height));
@@ -833,15 +833,15 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (offset), 2, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 0, 0.0, drawable->height);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 1, 0.0, drawable->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 0, 0.0, drawable->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 1, 0.0, drawable->height);
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 2, 0.0, drawable->width);
 
   /*  set upper and lower limits (in pixels)  */
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 0, 0.0,
-                                         drawable->height);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 1, 0.0,
                                          drawable->width);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 1, 0.0,
+                                         drawable->height);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 2, 0.0,
                                          MAX (drawable->width,
                                               drawable->height));

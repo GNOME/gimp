@@ -48,6 +48,7 @@
 #include "widgets/gimpmessagedialog.h"
 
 #include "dialogs/dialogs.h"
+#include "dialogs/fade-dialog.h"
 
 #include "actions.h"
 #include "edit-commands.h"
@@ -263,6 +264,11 @@ edit_paste_as_new_cmd_callback (GtkAction *action,
 
       g_object_unref (buffer);
     }
+  else
+    {
+      gimp_message (gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("There is no image data in the clipboard to paste."));
+    }
 }
 
 void
@@ -283,6 +289,27 @@ edit_named_cut_cmd_callback (GtkAction *action,
                                   G_OBJECT (image), "disconnect",
                                   cut_named_buffer_callback, image);
   gtk_widget_show (dialog);
+}
+
+void
+edit_fade_cmd_callback (GtkAction *action,
+                        gpointer   data)
+{
+  GimpImage *image;
+  GtkWidget *widget;
+  GtkWidget *dialog;
+  return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
+
+  dialog = fade_dialog_new (image, widget);
+
+  if (dialog)
+    {
+      g_signal_connect_object (image, "disconnect",
+                               G_CALLBACK (gtk_widget_destroy),
+                               dialog, G_CONNECT_SWAPPED);
+      gtk_widget_show (dialog);
+    }
 }
 
 void
@@ -381,7 +408,7 @@ edit_paste (GimpDisplay *display,
   if (svg)
     {
       if (gimp_vectors_import_buffer (display->image, svg, svg_size,
-                                      TRUE, TRUE, -1, NULL))
+                                      TRUE, TRUE, -1, NULL, NULL))
         {
           gimp_image_flush (display->image);
         }
@@ -412,6 +439,12 @@ edit_paste (GimpDisplay *display,
 
           g_object_unref (buffer);
         }
+      else
+        {
+          gimp_message (display->image->gimp, G_OBJECT (display),
+                        GIMP_MESSAGE_WARNING,
+                        _("There is no image data in the clipboard to paste."));
+        }
     }
 }
 
@@ -427,7 +460,8 @@ cut_named_buffer_callback (GtkWidget   *widget,
 
   if (! drawable)
     {
-      g_message (_("There is no active layer or channel to cut from."));
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("There is no active layer or channel to cut from."));
       return;
     }
 
@@ -453,7 +487,8 @@ copy_named_buffer_callback (GtkWidget   *widget,
 
   if (! drawable)
     {
-      g_message (_("There is no active layer or channel to copy from."));
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("There is no active layer or channel to copy from."));
       return;
     }
 

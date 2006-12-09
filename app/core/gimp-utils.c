@@ -54,36 +54,6 @@
 #include "gimpparamspecs.h"
 
 
-gboolean
-gimp_rectangle_intersect (gint  x1,
-                          gint  y1,
-                          gint  width1,
-                          gint  height1,
-                          gint  x2,
-                          gint  y2,
-                          gint  width2,
-                          gint  height2,
-                          gint *dest_x,
-                          gint *dest_y,
-                          gint *dest_width,
-                          gint *dest_height)
-{
-  gint d_x, d_y;
-  gint d_w, d_h;
-
-  d_x = MAX (x1, x2);
-  d_y = MAX (y1, y2);
-  d_w = MIN (x1 + width1,  x2 + width2)  - d_x;
-  d_h = MIN (y1 + height1, y2 + height2) - d_y;
-
-  if (dest_x)      *dest_x      = d_x;
-  if (dest_y)      *dest_y      = d_y;
-  if (dest_width)  *dest_width  = d_w;
-  if (dest_height) *dest_height = d_h;
-
-  return (d_w > 0 && d_h > 0);
-}
-
 gint64
 gimp_g_type_instance_get_memsize (GTypeInstance *instance)
 {

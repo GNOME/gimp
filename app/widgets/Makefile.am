@@ -60,6 +60,8 @@ libappwidgets_a_sources = \
 	gimpcolormapeditor.h		\
 	gimpcolorpanel.c		\
 	gimpcolorpanel.h		\
+	gimpcolorselectorpalette.c	\
+	gimpcolorselectorpalette.h	\
 	gimpcomponenteditor.c		\
 	gimpcomponenteditor.h		\
 	gimpcontainerbox.c		\
@@ -169,6 +171,10 @@ libappwidgets_a_sources = \
 	gimpimagedock.h			\
 	gimpimageeditor.c		\
 	gimpimageeditor.h		\
+	gimpimageparasiteview.c		\
+	gimpimageparasiteview.h		\
+	gimpimageprofileview.c		\
+	gimpimageprofileview.h		\
 	gimpimagepropview.c		\
 	gimpimagepropview.h		\
 	gimpimageview.c			\

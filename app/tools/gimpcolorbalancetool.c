@@ -54,7 +54,8 @@
 static void     gimp_color_balance_tool_finalize   (GObject          *object);
 
 static gboolean gimp_color_balance_tool_initialize (GimpTool         *tool,
-                                                    GimpDisplay      *display);
+                                                    GimpDisplay      *display,
+                                                    GError          **error);
 
 static void     gimp_color_balance_tool_map        (GimpImageMapTool *im_tool);
 static void     gimp_color_balance_tool_dialog     (GimpImageMapTool *im_tool);
@@ -91,7 +92,7 @@ gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
                 0,
                 "gimp-color-balance-tool",
                 _("Color Balance"),
-                _("Adjust color balance"),
+                _("Color Balance Tool: Adjust color distribution"),
                 N_("Color _Balance..."), NULL,
                 NULL, GIMP_HELP_TOOL_COLOR_BALANCE,
                 GIMP_STOCK_TOOL_COLOR_BALANCE,
@@ -140,8 +141,9 @@ gimp_color_balance_tool_finalize (GObject *object)
 }
 
 static gboolean
-gimp_color_balance_tool_initialize (GimpTool    *tool,
-                                    GimpDisplay *display)
+gimp_color_balance_tool_initialize (GimpTool     *tool,
+                                    GimpDisplay  *display,
+                                    GError      **error)
 {
   GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (tool);
   GimpDrawable         *drawable;
@@ -153,7 +155,8 @@ gimp_color_balance_tool_initialize (GimpTool    *tool,
 
   if (! gimp_drawable_is_rgb (drawable))
     {
-      g_message (_("Color balance operates only on RGB color layers."));
+      g_set_error (error, 0, 0,
+                   _("Color Balance operates only on RGB color layers."));
       return FALSE;
     }
 
@@ -161,7 +164,7 @@ gimp_color_balance_tool_initialize (GimpTool    *tool,
 
   cb_tool->transfer_mode = GIMP_MIDTONES;
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
   color_balance_update (cb_tool, ALL);
 

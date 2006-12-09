@@ -56,7 +56,7 @@ gimp_progress_interface_get_type (void)
 
   if (! progress_iface_type)
     {
-      static const GTypeInfo progress_iface_info =
+      const GTypeInfo progress_iface_info =
       {
         sizeof (GimpProgressInterface),
         (GBaseInitFunc)     gimp_progress_iface_base_init,
@@ -219,23 +219,23 @@ gimp_progress_get_window (GimpProgress *progress)
 }
 
 gboolean
-gimp_progress_message (GimpProgress *progress,
-                       Gimp         *gimp,
-                       const gchar  *domain,
-                       const gchar  *message)
+gimp_progress_message (GimpProgress        *progress,
+                       Gimp                *gimp,
+                       GimpMessageSeverity  severity,
+                       const gchar         *domain,
+                       const gchar         *message)
 {
   GimpProgressInterface *progress_iface;
 
-  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+  g_return_val_if_fail (GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (domain != NULL, FALSE);
+  g_return_val_if_fail (message != NULL, FALSE);
 
   progress_iface = GIMP_PROGRESS_GET_INTERFACE (progress);
 
   if (progress_iface->message)
-    {
-      progress_iface->message (progress, gimp, domain, message);
-
-      return TRUE;
-    }
+    return progress_iface->message (progress, gimp, severity, domain, message);
 
   return FALSE;
 }

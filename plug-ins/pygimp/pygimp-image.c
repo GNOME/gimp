@@ -1155,6 +1155,25 @@ img_set_unit(PyGimpImage *self, PyObject *value, void *closure)
     return 0;
 }
 
+static PyObject *
+img_get_vectors(PyGimpImage *self, void *closure)
+{
+    int *vectors;
+    int i, num_vectors;
+    PyObject *ret;
+
+    vectors = gimp_image_get_vectors(self->ID, &num_vectors);
+
+    ret = PyList_New(num_vectors);
+
+    for (i = 0; i < num_vectors; i++)
+        PyList_SetItem(ret, i, pygimp_vectors_new(vectors[i]));
+
+    g_free(vectors);
+
+    return ret;
+}
+
 static PyGetSetDef img_getsets[] = {
     { "ID", (getter)img_get_ID, (setter)0 },
     { "active_channel", (getter)img_get_active_channel,
@@ -1178,6 +1197,7 @@ static PyGetSetDef img_getsets[] = {
     { "tattoo_state", (getter)img_get_tattoo_state,
       (setter)img_set_tattoo_state },
     { "unit", (getter)img_get_unit, (setter)img_set_unit },
+    { "vectors", (getter)img_get_vectors, (setter)0 },
     { "width", (getter)img_get_width, (setter)0 },
     { NULL, (getter)0, (setter)0 }
 };

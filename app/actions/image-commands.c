@@ -24,6 +24,8 @@
 
 #include "actions-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/core-enums.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
@@ -89,7 +91,16 @@ static void   image_print_size_callback    (GtkWidget              *dialog,
                                             gdouble                 yresolution,
                                             GimpUnit                resolution_unit,
                                             gpointer                data);
-static void   image_scale_callback         (ImageScaleDialog       *dialog);
+static void   image_scale_callback         (GtkWidget              *dialog,
+                                            GimpViewable           *viewable,
+                                            gint                    width,
+                                            gint                    height,
+                                            GimpUnit                unit,
+                                            GimpInterpolationType   interpolation,
+                                            gdouble                 xresolution,
+                                            gdouble                 yresolution,
+                                            GimpUnit                resolution_unit,
+                                            gpointer                user_data);
 
 static void   image_merge_layers_response  (GtkWidget              *widget,
                                             gint                    response_id,
@@ -98,8 +109,11 @@ static void   image_merge_layers_response  (GtkWidget              *widget,
 
 /*  private variables  */
 
-static GimpMergeType image_merge_layers_type = GIMP_EXPAND_AS_NECESSARY;
-static gboolean      image_merge_layers_discard_invisible = FALSE;
+static GimpMergeType         image_merge_layers_type = GIMP_EXPAND_AS_NECESSARY;
+static gboolean              image_merge_layers_discard_invisible = FALSE;
+static GimpUnit              image_resize_unit       = GIMP_UNIT_PIXEL;
+static GimpUnit              image_scale_unit        = GIMP_UNIT_PIXEL;
+static GimpInterpolationType image_scale_interp      = -1;
 
 
 /*  public functions  */
@@ -185,7 +199,9 @@ image_convert_cmd_callback (GtkAction *action,
 
         if (! dialog)
           {
-            dialog = convert_dialog_new (image, widget,
+            dialog = convert_dialog_new (image,
+                                         action_data_get_context (data),
+                                         widget,
                                          GIMP_PROGRESS (display));
 
             g_object_set_data (G_OBJECT (widget),
@@ -213,7 +229,6 @@ image_resize_cmd_callback (GtkAction *action,
   GtkWidget          *widget;
   GimpDisplay        *display;
   GtkWidget          *dialog;
-  GimpUnit            unit;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
   return_if_no_display (display, data);
@@ -223,16 +238,15 @@ image_resize_cmd_callback (GtkAction *action,
   options->display = display;
   options->context = action_data_get_context (data);
 
-  unit = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (image),
-                                             "scale-dialog-unit"));
-  if (! unit)
-    unit = GIMP_DISPLAY_SHELL (display->shell)->unit;
+  if (image_resize_unit != GIMP_UNIT_PERCENT)
+    image_resize_unit = GIMP_DISPLAY_SHELL (display->shell)->unit;
 
   dialog = resize_dialog_new (GIMP_VIEWABLE (image),
+                              action_data_get_context (data),
                               _("Set Image Canvas Size"), "gimp-image-resize",
                               widget,
                               gimp_standard_help_func, GIMP_HELP_IMAGE_RESIZE,
-                              unit,
+                              image_resize_unit,
                               image_resize_callback,
                               options);
 
@@ -240,8 +254,7 @@ image_resize_cmd_callback (GtkAction *action,
                            G_CALLBACK (gtk_widget_destroy),
                            dialog, G_CONNECT_SWAPPED);
 
-  g_object_weak_ref (G_OBJECT (dialog),
-                     (GWeakNotify) g_free, options);
+  g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_free, options);
 
   gtk_widget_show (dialog);
 }
@@ -278,6 +291,7 @@ image_print_size_cmd_callback (GtkAction *action,
   return_if_no_widget (widget, data);
 
   dialog = print_size_dialog_new (display->image,
+                                  action_data_get_context (data),
                                   _("Set Image Print Resolution"),
                                   "gimp-image-print-size",
                                   widget,
@@ -297,22 +311,31 @@ void
 image_scale_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
-  ImageScaleDialog *dialog;
-  GimpDisplay      *display;
-  GtkWidget        *widget;
+  GimpDisplay *display;
+  GtkWidget   *widget;
+  GtkWidget   *dialog;
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-  dialog = image_scale_dialog_new (display->image, display,
+  if (image_scale_unit != GIMP_UNIT_PERCENT)
+    image_scale_unit = GIMP_DISPLAY_SHELL (display->shell)->unit;
+
+  if (image_scale_interp == -1)
+    image_scale_interp = display->image->gimp->config->interpolation_type;
+
+  dialog = image_scale_dialog_new (display->image,
                                    action_data_get_context (data),
                                    widget,
-                                   image_scale_callback);
+                                   image_scale_unit,
+                                   image_scale_interp,
+                                   image_scale_callback,
+                                   display);
 
   g_signal_connect_object (display, "disconnect",
                            G_CALLBACK (gtk_widget_destroy),
-                           dialog->dialog, G_CONNECT_SWAPPED);
+                           dialog, G_CONNECT_SWAPPED);
 
-  gtk_widget_show (dialog->dialog);
+  gtk_widget_show (dialog);
 }
 
 void
@@ -362,13 +385,16 @@ image_crop_cmd_callback (GtkAction *action,
                          gpointer   data)
 {
   GimpImage *image;
+  GtkWidget *widget;
   gint       x1, y1, x2, y2;
   return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
 
   if (! gimp_channel_bounds (gimp_image_get_mask (image),
                              &x1, &y1, &x2, &y2))
     {
-      g_message (_("Cannot crop because the current selection is empty."));
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                    _("Cannot crop because the current selection is empty."));
       return;
     }
 
@@ -446,7 +472,9 @@ image_configure_grid_cmd_callback (GtkAction *action,
 
   if (! shell->grid_dialog)
     {
-      shell->grid_dialog = grid_dialog_new (display->image, display->shell);
+      shell->grid_dialog = grid_dialog_new (display->image,
+                                            action_data_get_context (data),
+                                            display->shell);
 
       gtk_window_set_transient_for (GTK_WINDOW (shell->grid_dialog),
                                     GTK_WINDOW (display->shell));
@@ -473,7 +501,9 @@ image_properties_cmd_callback (GtkAction *action,
   shell = GIMP_DISPLAY_SHELL (display->shell);
   image = display->image;
 
-  dialog = image_properties_dialog_new (display->image, display->shell);
+  dialog = image_properties_dialog_new (display->image,
+                                        action_data_get_context (data),
+                                        display->shell);
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog),
                                 GTK_WINDOW (display->shell));
@@ -499,6 +529,8 @@ image_resize_callback (GtkWidget    *dialog,
 {
   ImageResizeOptions *options = data;
 
+  image_resize_unit = unit;
+
   if (width > 0 && height > 0)
     {
       GimpImage    *image   = GIMP_IMAGE (viewable);
@@ -508,11 +540,8 @@ image_resize_callback (GtkWidget    *dialog,
 
       gtk_widget_destroy (dialog);
 
-      /* remember the last used unit */
-      g_object_set_data (G_OBJECT (image),
-                         "scale-dialog-unit", GINT_TO_POINTER (unit));
-
-      if (width == image->width && height == image->height)
+      if (width  == image->width &&
+          height == image->height)
         return;
 
       progress = gimp_progress_start (GIMP_PROGRESS (display),
@@ -562,54 +591,62 @@ image_print_size_callback (GtkWidget *dialog,
   gimp_image_flush (image);
 }
 
-
 static void
-image_scale_callback (ImageScaleDialog  *dialog)
+image_scale_callback (GtkWidget              *dialog,
+                      GimpViewable           *viewable,
+                      gint                    width,
+                      gint                    height,
+                      GimpUnit                unit,
+                      GimpInterpolationType   interpolation,
+                      gdouble                 xresolution,
+                      gdouble                 yresolution,
+                      GimpUnit                resolution_unit,
+                      gpointer                user_data)
 {
-  GimpImage *image = dialog->image;
+  GimpImage *image = GIMP_IMAGE (viewable);
 
-  if (dialog->width           == image->width           &&
-      dialog->height          == image->height          &&
-      dialog->xresolution     == image->xresolution     &&
-      dialog->yresolution     == image->yresolution     &&
-      dialog->resolution_unit == image->resolution_unit)
-    return;
+  image_scale_unit   = unit;
+  image_scale_interp = interpolation;
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_SCALE,
-                               _("Scale Image"));
-
-  gimp_image_set_resolution (image,
-                             dialog->xresolution, dialog->yresolution);
-  gimp_image_set_unit (image, dialog->resolution_unit);
-
-  if (dialog->width != image->width || dialog->height != image->height)
+  if (width > 0 && height > 0)
     {
-      if (dialog->width > 0 && dialog->height > 0)
+      if (width           == image->width           &&
+          height          == image->height          &&
+          xresolution     == image->xresolution     &&
+          yresolution     == image->yresolution     &&
+          resolution_unit == image->resolution_unit)
+        return;
+
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_SCALE,
+                                   _("Scale Image"));
+
+      gimp_image_set_resolution (image, xresolution, yresolution);
+      gimp_image_set_unit (image, resolution_unit);
+
+      if (width  != image->width ||
+          height != image->height)
         {
           GimpProgress *progress;
 
-          progress = gimp_progress_start (GIMP_PROGRESS (dialog->display),
+          progress = gimp_progress_start (GIMP_PROGRESS (user_data),
                                           _("Scaling"), FALSE);
 
-          gimp_image_scale (image,
-                            dialog->width,
-                            dialog->height,
-                            dialog->interpolation,
+          gimp_image_scale (image, width, height, interpolation,
                             progress);
 
           if (progress)
             gimp_progress_end (progress);
         }
-      else
-        {
-          g_warning ("Scale Error: "
-                     "Both width and height must be greater than zero.");
-        }
+
+      gimp_image_undo_group_end (image);
+
+      gimp_image_flush (image);
     }
-
-  gimp_image_undo_group_end (image);
-
-  gimp_image_flush (image);
+  else
+    {
+      g_warning ("Scale Error: "
+                 "Both width and height must be greater than zero.");
+    }
 }
 
 static void

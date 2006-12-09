@@ -70,23 +70,27 @@ struct _GimpViewClass
 
 GType          gimp_view_get_type          (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_view_new               (GimpViewable  *viewable,
+GtkWidget    * gimp_view_new               (GimpContext   *context,
+                                            GimpViewable  *viewable,
                                             gint           size,
                                             gint           border_width,
                                             gboolean       is_popup);
-GtkWidget    * gimp_view_new_full          (GimpViewable  *viewable,
+GtkWidget    * gimp_view_new_full          (GimpContext   *context,
+                                            GimpViewable  *viewable,
                                             gint           width,
                                             gint           height,
                                             gint           border_width,
                                             gboolean       is_popup,
                                             gboolean       clickable,
                                             gboolean       show_popup);
-GtkWidget    * gimp_view_new_by_types      (GType          view_type,
+GtkWidget    * gimp_view_new_by_types      (GimpContext   *context,
+                                            GType          view_type,
                                             GType          viewable_type,
                                             gint           size,
                                             gint           border_width,
                                             gboolean       is_popup);
-GtkWidget    * gimp_view_new_full_by_types (GType          view_type,
+GtkWidget    * gimp_view_new_full_by_types (GimpContext   *context,
+                                            GType          view_type,
                                             GType          viewable_type,
                                             gint           width,
                                             gint           height,

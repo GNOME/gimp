@@ -55,7 +55,8 @@
 #include "core/gimpprogress.h"
 
 #include "pdb/gimppdb.h"
-#include "pdb/gimppluginprocedure.h"
+
+#include "plug-in/gimppluginprocedure.h"
 
 #include "file-save.h"
 #include "file-utils.h"
@@ -177,7 +178,9 @@ file_save (GimpImage           *image,
                                               uri,
                                               file_proc->mime_type);
 
-      gimp_imagefile_save_thumbnail (imagefile, file_proc->mime_type, image);
+      /* only save a thumbnail if we are saving as XCF, see bug #25272 */
+      if (GIMP_PROCEDURE (file_proc)->proc_type == GIMP_INTERNAL)
+        gimp_imagefile_save_thumbnail (imagefile, file_proc->mime_type, image);
 
       if (image->gimp->config->save_document_history)
         gimp_recent_list_add_uri (uri, file_proc->mime_type);

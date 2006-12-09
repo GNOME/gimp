@@ -2,7 +2,7 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <popup action="undo-editor-popup">
+  <popup action="undo-popup">
     <menuitem action="edit-undo" />
     <menuitem action="edit-redo" />
     <menuitem action="edit-undo-clear" />

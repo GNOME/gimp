@@ -27,6 +27,8 @@ libappplug_in_a_SOURCES = \
 	gimpplugindebug.h			\
 	gimpplugin.c				\
 	gimpplugin.h				\
+	gimpplugin-cleanup.c			\
+	gimpplugin-cleanup.h			\
 	gimpplugin-context.c			\
 	gimpplugin-context.h			\
 	gimpplugin-message.c			\
@@ -43,23 +45,32 @@ libappplug_in_a_SOURCES = \
 	gimppluginmanager-file.h		\
 	gimppluginmanager-help-domain.c		\
 	gimppluginmanager-help-domain.h		\
+	gimppluginmanager-history.c		\
+	gimppluginmanager-history.h		\
 	gimppluginmanager-locale-domain.c	\
 	gimppluginmanager-locale-domain.h	\
 	gimppluginmanager-menu-branch.c		\
 	gimppluginmanager-menu-branch.h		\
 	gimppluginmanager-query.c		\
 	gimppluginmanager-query.h		\
+	gimppluginprocedure.c			\
+	gimppluginprocedure.h			\
 	gimppluginprocframe.c			\
 	gimppluginprocframe.h			\
 	gimppluginshm.c				\
 	gimppluginshm.h				\
+	gimptemporaryprocedure.c		\
+	gimptemporaryprocedure.h		\
 	\
 	plug-in-def.c				\
 	plug-in-def.h				\
 	plug-in-params.c			\
 	plug-in-params.h			\
 	plug-in-rc.c				\
-	plug-in-rc.h
+	plug-in-rc.h				\
+	\
+	plug-in-icc-profile.c			\
+	plug-in-icc-profile.h
 
 EXTRA_DIST = makefile.msc
 

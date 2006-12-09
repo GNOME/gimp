@@ -212,13 +212,16 @@ color_balance_transfer_init (void)
 
   for (i = 0; i < 256; i++)
     {
-      highlights_add[i] =
-        shadows_sub[255 - i] = (1.075 - 1 / ((gdouble) i / 16.0 + 1));
+      gdouble low = (1.075 - 1 / ((gdouble) i / 16.0 + 1));
+      gdouble mid = 0.667 * (1 - SQR (((gdouble) i - 127.0) / 127.0));
 
-      midtones_add[i] =
-        midtones_sub[i] = 0.667 * (1 - SQR (((gdouble) i - 127.0) / 127.0));
+      shadows_add[i]          = low;
+      shadows_sub[255 - i]    = low;
 
-      shadows_add[i] =
-        highlights_sub[i] = 0.667 * (1 - SQR (((gdouble) i - 127.0) / 127.0));
+      midtones_add[i]         = mid;
+      midtones_sub[i]         = mid;
+
+      highlights_add[255 - i] = low;
+      highlights_sub[i]       = low;
     }
 }

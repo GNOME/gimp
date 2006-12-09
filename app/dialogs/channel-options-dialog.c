@@ -49,8 +49,8 @@ static void   channel_options_color_changed  (GimpColorButton *button,
 
 ChannelOptionsDialog *
 channel_options_dialog_new (GimpImage     *image,
-                            GimpContext   *context,
                             GimpChannel   *channel,
+                            GimpContext   *context,
                             GtkWidget     *parent,
                             const GimpRGB *channel_color,
                             const gchar   *channel_name,
@@ -71,8 +71,8 @@ channel_options_dialog_new (GimpImage     *image,
   GtkObject            *opacity_adj;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (channel == NULL || GIMP_IS_CHANNEL (channel), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (channel_color != NULL, NULL);
   g_return_val_if_fail (title != NULL, NULL);
@@ -102,7 +102,7 @@ channel_options_dialog_new (GimpImage     *image,
     viewable = GIMP_VIEWABLE (image);
 
   options->dialog =
-    gimp_viewable_dialog_new (viewable,
+    gimp_viewable_dialog_new (viewable, context,
                               title, role, stock_id, desc,
                               parent,
                               gimp_standard_help_func, help_id,

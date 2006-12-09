@@ -118,17 +118,17 @@ cdisplay_contrast_get_type (GTypeModule *module)
 {
   if (! cdisplay_contrast_type)
     {
-      static const GTypeInfo display_info =
+      const GTypeInfo display_info =
       {
         sizeof (CdisplayContrastClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) cdisplay_contrast_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (CdisplayContrast),
-	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) cdisplay_contrast_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (CdisplayContrast),
+        0,              /* n_preallocs    */
+        NULL            /* instance_init  */
       };
 
       cdisplay_contrast_type =
@@ -159,6 +159,8 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
 
   display_class->name        = _("Contrast");
   display_class->help_id     = "gimp-colordisplay-contrast";
+  display_class->stock_id    = GIMP_STOCK_DISPLAY_FILTER_CONTRAST;
+
   display_class->convert     = cdisplay_contrast_convert;
   display_class->configure   = cdisplay_contrast_configure;
 }
@@ -230,10 +232,10 @@ cdisplay_contrast_convert (GimpColorDisplay *display,
     {
       i = width;
       while (i--)
-	{
-	  *buf = contrast->lookup[*buf];
-	  buf++;
-	}
+        {
+          *buf = contrast->lookup[*buf];
+          buf++;
+        }
       buf += bpl;
     }
 }

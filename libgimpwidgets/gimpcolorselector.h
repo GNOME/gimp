@@ -88,8 +88,11 @@ struct _GimpColorSelectorClass
   void (* channel_changed)       (GimpColorSelector        *selector,
                                   GimpColorSelectorChannel  channel);
 
+  /*  another virtual function  */
+  void (* set_config)            (GimpColorSelector        *selector,
+                                  GimpColorConfig          *config);
+
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
@@ -116,6 +119,9 @@ void   gimp_color_selector_set_channel           (GimpColorSelector *selector,
 
 void   gimp_color_selector_color_changed         (GimpColorSelector *selector);
 void   gimp_color_selector_channel_changed       (GimpColorSelector *selector);
+
+void   gimp_color_selector_set_config            (GimpColorSelector *selector,
+                                                  GimpColorConfig   *config);
 
 
 G_END_DECLS

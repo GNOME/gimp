@@ -22,7 +22,9 @@
 #include "config.h"
 
 #include "gimp.h"
-
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_LAYER_H__
+#include "gimplayer.h"
 
 /**
  * gimp_layer_new:

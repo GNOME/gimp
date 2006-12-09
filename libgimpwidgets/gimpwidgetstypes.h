@@ -22,7 +22,7 @@
 #ifndef __GIMP_WIDGETS_TYPES_H__
 #define __GIMP_WIDGETS_TYPES_H__
 
-#include <libgimpbase/gimpbasetypes.h>
+#include <libgimpconfig/gimpconfigtypes.h>
 
 #include <libgimpwidgets/gimpwidgetsenums.h>
 

@@ -45,6 +45,8 @@
 #include "libgimpbase/gimpwin32-io.h"
 #endif
 
+#include "plug-ins/help/gimphelp.h"
+
 #include "gimpthrobber.h"
 #include "gimpthrobberaction.h"
 
@@ -143,6 +145,7 @@ static Queue        *queue        = NULL;
 static gchar        *current_uri  = NULL;
 
 static GtkWidget    *html         = NULL;
+static GtkWidget    *tree_view    = NULL;
 static GtkUIManager *ui_manager   = NULL;
 static GtkWidget    *button_prev  = NULL;
 static GtkWidget    *button_next  = NULL;
@@ -157,12 +160,44 @@ static GtkTargetEntry help_dnd_target_table[] =
 
 /*  public functions  */
 
+static void
+row_activated (GtkTreeView       *tree_view,
+               GtkTreePath       *path,
+               GtkTreeViewColumn *column)
+{
+  GtkTreeModel   *model = gtk_tree_view_get_model (tree_view);
+  GtkTreeIter     iter;
+  GimpHelpDomain *domain;
+  GimpHelpLocale *locale;
+  GimpHelpItem   *item;
+  gchar          *uri;
+
+  gtk_tree_model_get_iter (model, &iter, path);
+
+  gtk_tree_model_get (model, &iter,
+                      0, &item,
+                      -1);
+
+  domain = g_object_get_data (G_OBJECT (model), "domain");
+  locale = g_object_get_data (G_OBJECT (model), "locale");
+
+  uri = g_strconcat (domain->help_uri,  "/",
+                     locale->locale_id, "/",
+                     item->ref,
+                     NULL);
+
+  browser_dialog_load (uri, TRUE);
+
+  g_free (uri);
+}
+
 void
 browser_dialog_open (void)
 {
   GtkWidget       *window;
   GtkWidget       *vbox;
   GtkWidget       *toolbar;
+  GtkWidget       *paned;
   GtkWidget       *hbox;
   GtkWidget       *scroll;
   GtkWidget       *drag_source;
@@ -242,6 +277,37 @@ browser_dialog_open (void)
                                       "/help-browser-toolbar/online");
   gimp_throbber_set_image (GIMP_THROBBER (button),
                            gtk_image_new_from_pixbuf (pixbuf));
+
+
+
+  paned = gtk_hpaned_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), paned, TRUE, TRUE, 0);
+  gtk_widget_show (paned);
+
+  scroll = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
+                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+  gtk_paned_add1 (GTK_PANED (paned), scroll);
+  gtk_widget_show (scroll);
+
+  tree_view = gtk_tree_view_new ();
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tree_view), FALSE);
+  gtk_container_add (GTK_CONTAINER (scroll), tree_view);
+  gtk_widget_show (tree_view);
+
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tree_view), -1,
+                                               NULL,
+                                               gtk_cell_renderer_text_new (),
+                                               "text", 1,
+                                               NULL);
+
+  g_signal_connect (tree_view, "row-activated",
+                    G_CALLBACK (row_activated),
+                    NULL);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_paned_add2 (GTK_PANED (paned), vbox);
+  gtk_widget_show (vbox);
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -457,6 +523,125 @@ browser_dialog_load (const gchar *uri,
   update_toolbar ();
 
   gtk_window_present (GTK_WINDOW (gtk_widget_get_toplevel (html)));
+}
+
+static void
+browser_dialog_make_index_foreach (const gchar    *help_id,
+                                   GimpHelpItem   *item,
+                                   GimpHelpLocale *locale)
+{
+  gchar **indices;
+  gint    i;
+
+#if 0
+  g_printerr ("%s: processing %s (parent %s)\n",
+              G_STRFUNC, item->title, item->parent ? item->parent : "NULL");
+#endif
+
+  indices = g_strsplit (item->title, ".", -1);
+
+  for (i = 0; i < 5; i++)
+    {
+      if (! indices[i])
+        break;
+
+      item->index += atoi (indices[i]) << (8 * (5 - i));
+    }
+
+  g_strfreev (indices);
+
+  if (item->parent && strlen (item->parent))
+    {
+      GimpHelpItem *parent;
+
+      parent = g_hash_table_lookup (locale->help_id_mapping,
+                                    item->parent);
+
+      if (parent)
+        parent->children = g_list_prepend (parent->children, item);
+    }
+  else
+    {
+      locale->toplevel_items = g_list_prepend (locale->toplevel_items, item);
+    }
+}
+
+static gint
+help_item_compare (gconstpointer a,
+                   gconstpointer b)
+{
+  GimpHelpItem *item_a = (GimpHelpItem *) a;
+  GimpHelpItem *item_b = (GimpHelpItem *) b;
+
+  if (item_a->index > item_b->index)
+    return 1;
+  else if (item_a->index < item_b->index)
+    return -1;
+
+  return 0;
+}
+
+static void
+add_child (GtkTreeStore *store,
+           GtkTreeIter  *parent,
+           GimpHelpItem *item)
+{
+  GtkTreeIter  iter;
+  GList       *list;
+
+  gtk_tree_store_append (store, &iter, parent);
+
+  gtk_tree_store_set (store, &iter,
+                      0, item,
+                      1, item->title,
+                      -1);
+
+  item->children = g_list_sort (item->children, help_item_compare);
+
+  for (list = item->children; list; list = g_list_next (list))
+    {
+      GimpHelpItem *item = list->data;
+
+      add_child (store, &iter, item);
+    }
+}
+
+void
+browser_dialog_make_index (GimpHelpDomain *domain,
+                           GimpHelpLocale *locale)
+{
+  GtkTreeStore *store;
+  GList        *list;
+
+  g_printerr ("%s\n", G_STRFUNC);
+
+  if (! locale->toplevel_items)
+    {
+      g_hash_table_foreach (locale->help_id_mapping,
+                            (GHFunc) browser_dialog_make_index_foreach,
+                            locale);
+
+      locale->toplevel_items = g_list_sort (locale->toplevel_items,
+                                            help_item_compare);
+    }
+
+  store = gtk_tree_store_new (2,
+                              G_TYPE_POINTER,
+                              G_TYPE_STRING);
+
+  g_object_set_data (G_OBJECT (store), "domain", domain);
+  g_object_set_data (G_OBJECT (store), "locale", locale);
+
+  for (list = locale->toplevel_items; list; list = g_list_next (list))
+    {
+      GimpHelpItem *item = list->data;
+
+      add_child (store, NULL, item);
+    }
+
+  gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view),
+                           GTK_TREE_MODEL (store));
+  g_object_unref (store);
 }
 
 

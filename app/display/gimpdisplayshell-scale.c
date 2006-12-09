@@ -444,6 +444,7 @@ void
 gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 {
   ScaleDialogData *data;
+  GimpImage       *image;
   GtkWidget       *hbox;
   GtkWidget       *table;
   GtkWidget       *spin;
@@ -464,6 +465,8 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
       shell->other_scale = gimp_zoom_model_get_factor (shell->zoom);
     }
 
+  image = shell->display->image;
+
   data = g_new (ScaleDialogData, 1);
 
   data->shell = shell;
@@ -472,7 +475,8 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                               NULL);
 
   shell->scale_dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->display->image),
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
+                              gimp_get_user_context (image->gimp),
                               _("Zoom Ratio"), "display_scale",
                               GTK_STOCK_ZOOM_100,
                               _("Select Zoom Ratio"),

@@ -31,6 +31,8 @@
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 patterns_popup_invoker (GimpProcedure     *procedure,
@@ -52,7 +54,8 @@ patterns_popup_invoker (GimpProcedure     *procedure,
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, pattern_callback) ||
-          ! gimp_pdb_dialog_new (gimp, context, gimp->pattern_factory->container,
+          ! gimp_pdb_dialog_new (gimp, context, progress,
+                                 gimp->pattern_factory->container,
                                  popup_title, pattern_callback, initial_pattern,
                                  NULL))
         success = FALSE;

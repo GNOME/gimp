@@ -40,11 +40,15 @@ struct _GimpStatusbar
 {
   GtkHBox           parent_instance;
 
+  GimpDisplayShell *shell;
+
   GSList           *messages;
-  GSList           *keys;
+  GHashTable       *context_ids;
   guint             seq_context_id;
 
-  GimpDisplayShell *shell;
+  guint             temp_context_id;
+  guint             temp_timeout_id;
+  gchar            *temp_spaces;
 
   gchar             cursor_format_str[CURSOR_FORMAT_LENGTH];
   gchar             length_format_str[CURSOR_FORMAT_LENGTH];
@@ -65,33 +69,53 @@ struct _GimpStatusbarClass
 };
 
 
-GType       gimp_statusbar_get_type     (void) G_GNUC_CONST;
-GtkWidget * gimp_statusbar_new          (GimpDisplayShell    *shell);
+GType       gimp_statusbar_get_type         (void) G_GNUC_CONST;
+GtkWidget * gimp_statusbar_new              (GimpDisplayShell    *shell);
 
-void        gimp_statusbar_push         (GimpStatusbar       *statusbar,
-                                         const gchar         *context,
-                                         const gchar         *message);
-void        gimp_statusbar_push_coords  (GimpStatusbar       *statusbar,
-                                         const gchar         *context,
-                                         const gchar         *title,
-                                         gdouble              x,
-                                         const gchar         *separator,
-                                         gdouble              y);
-void        gimp_statusbar_push_length  (GimpStatusbar       *statusbar,
-                                         const gchar         *context,
-                                         const gchar         *title,
-                                         GimpOrientationType  axis,
-                                         gdouble              value);
-void        gimp_statusbar_replace      (GimpStatusbar       *statusbar,
-                                         const gchar         *context,
-                                         const gchar         *message);
-void        gimp_statusbar_pop          (GimpStatusbar       *statusbar,
-                                         const gchar         *context);
+void        gimp_statusbar_push             (GimpStatusbar       *statusbar,
+                                             const gchar         *context,
+                                             const gchar         *format,
+                                             ...) G_GNUC_PRINTF(3,4);
+void        gimp_statusbar_push_valist      (GimpStatusbar       *statusbar,
+                                             const gchar         *context,
+                                             const gchar         *format,
+                                             va_list              args);
+void        gimp_statusbar_push_coords      (GimpStatusbar       *statusbar,
+                                             const gchar         *context,
+                                             const gchar         *title,
+                                             gdouble              x,
+                                             const gchar         *separator,
+                                             gdouble              y);
+void        gimp_statusbar_push_length      (GimpStatusbar       *statusbar,
+                                             const gchar         *context,
+                                             const gchar         *title,
+                                             GimpOrientationType  axis,
+                                             gdouble              value);
+void        gimp_statusbar_replace          (GimpStatusbar       *statusbar,
+                                             const gchar         *context,
+                                             const gchar         *format,
+                                             ...) G_GNUC_PRINTF(3,4);
+void        gimp_statusbar_replace_valist   (GimpStatusbar       *statusbar,
+                                             const gchar         *context,
+                                             const gchar         *format,
+                                             va_list              args);
+void        gimp_statusbar_pop              (GimpStatusbar       *statusbar,
+                                             const gchar         *context);
 
-void        gimp_statusbar_set_cursor   (GimpStatusbar       *statusbar,
-                                         gdouble              x,
-                                         gdouble              y);
-void        gimp_statusbar_clear_cursor (GimpStatusbar       *statusbar);
+void        gimp_statusbar_push_temp        (GimpStatusbar       *statusbar,
+                                             const gchar         *stock_id,
+                                             const gchar         *format,
+                                             ...) G_GNUC_PRINTF(3,4);
+void        gimp_statusbar_push_temp_valist (GimpStatusbar       *statusbar,
+                                             const gchar         *stock_id,
+                                             const gchar         *format,
+                                             va_list              args);
+void        gimp_statusbar_pop_temp         (GimpStatusbar       *statusbar);
+
+void        gimp_statusbar_set_cursor       (GimpStatusbar       *statusbar,
+                                             gdouble              x,
+                                             gdouble              y);
+void        gimp_statusbar_clear_cursor     (GimpStatusbar       *statusbar);
 
 
 G_END_DECLS

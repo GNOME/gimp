@@ -265,7 +265,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
 {
   GObject              *config  = G_OBJECT (tool_options);
   GimpTransformOptions *options = GIMP_TRANSFORM_OPTIONS (tool_options);
-  GtkWidget            *vbox;
+  GtkWidget            *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget            *hbox;
   GtkWidget            *label;
   GtkWidget            *frame;
@@ -274,19 +274,17 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   GtkWidget            *button;
   const gchar          *constrain = NULL;
 
-  vbox = gimp_tool_options_gui (tool_options);
-
   hbox = gimp_prop_enum_stock_box_new (config, "type", "gimp", 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Affect:"));
+  label = gtk_label_new (_("Transform:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (hbox), label, 0);
   gtk_widget_show (label);
 
   frame = gimp_prop_enum_radio_frame_new (config, "direction",
-                                          _("Transform Direction"), 0, 0);
+                                          _("Direction"), 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

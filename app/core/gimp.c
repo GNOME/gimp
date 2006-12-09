@@ -29,7 +29,9 @@
 
 #include "config/gimprc.h"
 
-#include "pdb/gimp-pdb.h"
+#include "pdb/gimppdb.h"
+#include "pdb/gimp-pdb-compat.h"
+#include "pdb/internal_procs.h"
 
 #include "plug-in/gimppluginmanager.h"
 
@@ -50,9 +52,9 @@
 #include "gimp-utils.h"
 #include "gimpbrush.h"
 #include "gimpbrush-load.h"
-#include "gimpbrushgenerated.h"
+#include "gimpbrushgenerated-load.h"
 #include "gimpbrushclipboard.h"
-#include "gimpbrushpipe.h"
+#include "gimpbrushpipe-load.h"
 #include "gimpbuffer.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
@@ -64,9 +66,12 @@
 #include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimppalette.h"
+#include "gimppalette-load.h"
 #include "gimppattern.h"
+#include "gimppattern-load.h"
 #include "gimppatternclipboard.h"
 #include "gimpparasitelist.h"
+#include "gimpprogress.h"
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
 
@@ -221,7 +226,7 @@ gimp_init (Gimp *gimp)
   gimp->gradient_factory    = NULL;
   gimp->palette_factory     = NULL;
 
-  gimp_pdb_initialize (gimp);
+  gimp->pdb                 = gimp_pdb_new (gimp);
 
   xcf_init (gimp);
 
@@ -304,7 +309,11 @@ gimp_finalize (GObject *object)
 
   xcf_exit (gimp);
 
-  gimp_pdb_exit (gimp);
+  if (gimp->pdb)
+    {
+      g_object_unref (gimp->pdb);
+      gimp->pdb = NULL;
+    }
 
   if (gimp->brush_factory)
     {
@@ -585,7 +594,8 @@ gimp_real_initialize (Gimp               *gimp,
 
   /*  register all internal procedures  */
   status_callback (NULL, _("Internal Procedures"), 0.2);
-  gimp_pdb_init_procs (gimp);
+  internal_procs_init (gimp->pdb);
+  gimp_pdb_compat_procs_register (gimp->pdb, gimp->pdb_compat_mode);
 
   gimp_plug_in_manager_initialize (gimp->plug_in_manager, status_callback);
 
@@ -647,7 +657,7 @@ gimp_new (const gchar       *name,
   g_return_val_if_fail (name != NULL, NULL);
 
   gimp = g_object_new (GIMP_TYPE_GIMP,
-                       "name",    name,
+                       "name", name,
                        NULL);
 
   gimp->session_name     = g_strdup (session_name);
@@ -967,4 +977,54 @@ gimp_get_user_context (Gimp *gimp)
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   return gimp->user_context;
+}
+
+GimpToolInfo *
+gimp_get_tool_info (Gimp        *gimp,
+                    const gchar *tool_id)
+{
+  gpointer info;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (tool_id != NULL, NULL);
+
+  info = gimp_container_get_child_by_name (gimp->tool_info_list, tool_id);
+
+  return (GimpToolInfo *) info;
+}
+
+void
+gimp_message (Gimp                *gimp,
+              GObject             *handler,
+              GimpMessageSeverity  severity,
+              const gchar         *format,
+              ...)
+{
+  va_list args;
+
+  va_start (args, format);
+
+  gimp_message_valist (gimp, handler, severity, format, args);
+
+  va_end (args);
+}
+
+void
+gimp_message_valist (Gimp                *gimp,
+                     GObject             *handler,
+                     GimpMessageSeverity  severity,
+                     const gchar         *format,
+                     va_list              args)
+{
+  gchar *message;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (handler == NULL || G_IS_OBJECT (handler));
+  g_return_if_fail (format != NULL);
+
+  message = g_strdup_vprintf (format, args);
+
+  gimp_show_message (gimp, handler, severity, NULL, message);
+
+  g_free (message);
 }

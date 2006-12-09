@@ -23,6 +23,7 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
@@ -34,7 +35,6 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "gimp-utils.h"
 #include "gimpcontext.h"
 #include "gimpcontainer.h"
 #include "gimpdrawable-convert.h"
@@ -154,7 +154,7 @@ static gint    gimp_layer_get_opacity_at        (GimpPickable       *pickable,
 static void       gimp_layer_transform_color    (GimpImage          *image,
                                                  PixelRegion        *layerPR,
                                                  PixelRegion        *bufPR,
-                                                 GimpDrawable       *drawable,
+                                                 GimpImageType       dest_type,
                                                  GimpImageType       src_type);
 
 static void       gimp_layer_layer_mask_update  (GimpDrawable       *layer_mask,
@@ -601,7 +601,7 @@ gimp_layer_convert (GimpItem  *item,
 
             gimp_layer_transform_color (dest_image,
                                         &newPR, &layerPR,
-                                        NULL,
+                                        new_type,
                                         gimp_drawable_type (drawable));
           }
           break;
@@ -883,7 +883,7 @@ static void
 gimp_layer_transform_color (GimpImage     *image,
                             PixelRegion   *layerPR,
                             PixelRegion   *bufPR,
-                            GimpDrawable  *drawable,
+                            GimpImageType  dest_type,
                             GimpImageType  src_type)
 {
   GimpImageBaseType base_type = GIMP_IMAGE_TYPE_BASE_TYPE (src_type);
@@ -906,7 +906,7 @@ gimp_layer_transform_color (GimpImage     *image,
 
           for (i = 0; i < layerPR->w; i++)
             {
-              gimp_image_transform_color (image, drawable, d, base_type, s);
+              gimp_image_transform_color (image, dest_type, d, base_type, s);
 
               /*  alpha channel  */
               d[layerPR->bytes - 1] = (alpha ?
@@ -1104,7 +1104,7 @@ gimp_layer_new_from_region (PixelRegion          *region,
 
   if (! new_layer)
     {
-      g_message ("gimp_layer_new_from_region: could not allocate new layer");
+      g_warning ("%s: could not allocate new layer", G_STRFUNC);
       return NULL;
     }
 
@@ -1138,7 +1138,7 @@ gimp_layer_new_from_region (PixelRegion          *region,
         case GIMP_GRAY_IMAGE:
         case GIMP_GRAYA_IMAGE:
           gimp_layer_transform_color (dest_image, &layerPR, region,
-                                      GIMP_DRAWABLE (new_layer), src_type);
+                                      type, src_type);
           break;
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
@@ -1164,7 +1164,7 @@ gimp_layer_new_from_region (PixelRegion          *region,
         case GIMP_RGB_IMAGE:
         case GIMP_RGBA_IMAGE:
           gimp_layer_transform_color (dest_image, &layerPR, region,
-                                      GIMP_DRAWABLE (new_layer), src_type);
+                                      type, src_type);
           break;
         case GIMP_GRAYA_IMAGE:
           copy_region (region, &layerPR);
@@ -1188,12 +1188,12 @@ gimp_layer_new_from_region (PixelRegion          *region,
         case GIMP_RGB_IMAGE:
         case GIMP_RGBA_IMAGE:
           gimp_layer_transform_color (dest_image, &layerPR, region,
-                                      GIMP_DRAWABLE (new_layer), src_type);
+                                      type, src_type);
           break;
         case GIMP_GRAY_IMAGE:
         case GIMP_GRAYA_IMAGE:
           gimp_layer_transform_color (dest_image, &layerPR, region,
-                                      GIMP_DRAWABLE (new_layer), src_type);
+                                      type, src_type);
           break;
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
@@ -1255,8 +1255,7 @@ gimp_layer_add_mask (GimpLayer     *layer,
     gimp_image_undo_push_layer_mask_add (image, _("Add Layer Mask"),
                                          layer, mask);
 
-  layer->mask = g_object_ref (mask);
-  gimp_item_sink (GIMP_ITEM (layer->mask));
+  layer->mask = g_object_ref_sink (mask);
 
   gimp_layer_mask_set_layer (mask, layer);
 
@@ -1644,9 +1643,9 @@ gimp_layer_flatten (GimpLayer   *layer,
 
   new_type = gimp_drawable_type_without_alpha (GIMP_DRAWABLE (layer));
 
-  gimp_image_get_background (gimp_item_get_image (GIMP_ITEM (layer)),
-                             GIMP_DRAWABLE (layer),
-                             context, bg);
+  gimp_image_get_background (gimp_item_get_image (GIMP_ITEM (layer)), context,
+                             gimp_drawable_type (GIMP_DRAWABLE (layer)),
+                             bg);
 
   /*  Allocate the new tiles  */
   new_tiles = tile_manager_new (GIMP_ITEM (layer)->width,

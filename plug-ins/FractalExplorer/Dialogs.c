@@ -246,7 +246,24 @@ static void
 explorer_radio_update  (GtkWidget *widget,
                         gpointer   data)
 {
+  gboolean c_sensitive;
+
   gimp_radio_button_update (widget, data);
+
+  switch (wvals.fractaltype)
+    {
+    case TYPE_MANDELBROT:
+    case TYPE_SIERPINSKI:
+      c_sensitive = FALSE;
+      break;
+
+    default:
+      c_sensitive = TRUE;
+      break;
+    }
+
+  gimp_scale_entry_set_sensitive (elements->cx, c_sensitive);
+  gimp_scale_entry_set_sensitive (elements->cy, c_sensitive);
 
   set_cmap_preview ();
   dialog_update_preview ();
@@ -714,56 +731,47 @@ explorer_dialog (void)
 
   elements->xmin =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                          _("XMIN:"), SCALE_WIDTH, 10,
+                          _("Left:"), SCALE_WIDTH, 10,
                           wvals.xmin, -3, 3, 0.001, 0.01, 5,
-                          TRUE, 0, 0,
-                          _("Change the first (minimal) x-coordinate "
-                            "delimitation"), NULL);
+                          TRUE, 0, 0, NULL, NULL);
   g_signal_connect (elements->xmin, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmin);
 
   elements->xmax =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                          _("XMAX:"), SCALE_WIDTH, 10,
+                          _("Right:"), SCALE_WIDTH, 10,
                           wvals.xmax, -3, 3, 0.001, 0.01, 5,
-                          TRUE, 0, 0,
-                          _("Change the second (maximal) x-coordinate "
-                            "delimitation"), NULL);
+                          TRUE, 0, 0, NULL, NULL);
   g_signal_connect (elements->xmax, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmax);
 
   elements->ymin =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                          _("YMIN:"), SCALE_WIDTH, 10,
+                          _("Top:"), SCALE_WIDTH, 10,
                           wvals.ymin, -3, 3, 0.001, 0.01, 5,
-                          TRUE, 0, 0,
-                          _("Change the first (minimal) y-coordinate "
-                            "delimitation"), NULL);
+                          TRUE, 0, 0, NULL, NULL);
   g_signal_connect (elements->ymin, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymin);
 
   elements->ymax =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-                          _("YMAX:"), SCALE_WIDTH, 10,
+                          _("Bottom:"), SCALE_WIDTH, 10,
                           wvals.ymax, -3, 3, 0.001, 0.01, 5,
-                          TRUE, 0, 0,
-                          _("Change the second (maximal) y-coordinate "
-                            "delimitation"), NULL);
+                          TRUE, 0, 0, NULL, NULL);
   g_signal_connect (elements->ymax, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymax);
 
   elements->iter =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-                          _("ITER:"), SCALE_WIDTH, 10,
-                          wvals.iter, 0, 1000, 1, 10, 5,
+                          _("Iterations:"), SCALE_WIDTH, 10,
+                          wvals.iter, 1, 1000, 1, 10, 0,
                           TRUE, 0, 0,
-                          _("Change the iteration value. The higher it "
-                            "is, the more details will be calculated, "
-                            "which will take more time"), NULL);
+                          _("The higher the number of iterations, "
+                            "the more details will be calculated"), NULL);
   g_signal_connect (elements->iter, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.iter);
@@ -773,9 +781,7 @@ explorer_dialog (void)
                           _("CX:"), SCALE_WIDTH, 10,
                           wvals.cx, -2.5, 2.5, 0.001, 0.01, 5,
                           TRUE, 0, 0,
-                          _("Change the CX value (changes aspect of "
-                            "fractal, active with every fractal but "
-                            "Mandelbrot and Sierpinski)"), NULL);
+                          _("Changes aspect of fractal"), NULL);
   g_signal_connect (elements->cx, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.cx);
@@ -785,9 +791,7 @@ explorer_dialog (void)
                           _("CY:"), SCALE_WIDTH, 10,
                           wvals.cy, -2.5, 2.5, 0.001, 0.01, 5,
                           TRUE, 0, 0,
-                          _("Change the CY value (changes aspect of "
-                            "fractal, active with every fractal but "
-                            "Mandelbrot and Sierpinski)"), NULL);
+                          _("Changes aspect of fractal"), NULL);
   g_signal_connect (elements->cy, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.cy);
@@ -1194,7 +1198,7 @@ explorer_dialog (void)
                             gtk_label_new_with_mnemonic (_("_Fractals")));
   gtk_widget_show (frame);
 
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 1);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 0);
 
   gtk_widget_show (dialog);
   ready_now = TRUE;
@@ -1203,7 +1207,6 @@ explorer_dialog (void)
   dialog_update_preview ();
 
   gtk_main ();
-  gdk_flush ();
 
   g_free (wint.wimage);
 
@@ -1218,222 +1221,36 @@ explorer_dialog (void)
 void
 dialog_update_preview (void)
 {
-  gdouble  left;
-  gdouble  right;
-  gdouble  bottom;
-  gdouble  top;
-  gdouble  dx;
-  gdouble  dy;
-  gdouble  cx;
-  gdouble  cy;
-  gint     px;
-  gint     py;
-  gint     xcoord;
   gint     ycoord;
-  gint     iteration;
   guchar  *p_ul;
-  gdouble  a;
-  gdouble  b;
-  gdouble  x;
-  gdouble  y;
-  gdouble  oldx;
-  gdouble  oldy;
-  gdouble  foldxinitx;
-  gdouble  foldxinity;
-  gdouble  tempsqrx;
-  gdouble  tempsqry;
-  gdouble  tmpx = 0;
-  gdouble  tmpy = 0;
-  gdouble  foldyinitx;
-  gdouble  foldyinity;
-  gdouble  adjust;
-  gdouble  xx = 0;
-  gint     zaehler;
-  gint     color;
-  gint     useloglog;
 
   if (NULL == wint.preview)
     return;
 
   if (ready_now && wvals.alwayspreview)
     {
-      left = sel_x1;
-      right = sel_x2 - 1;
-      bottom = sel_y2 - 1;
-      top = sel_y1;
-      dx = (right - left) / (preview_width - 1);
-      dy = (bottom - top) / (preview_height - 1);
-
       xmin = wvals.xmin;
       xmax = wvals.xmax;
       ymin = wvals.ymin;
       ymax = wvals.ymax;
-      cx = wvals.cx;
-      cy = wvals.cy;
       xbild = preview_width;
       ybild = preview_height;
       xdiff = (xmax - xmin) / xbild;
       ydiff = (ymax - ymin) / ybild;
 
-      py = 0;
-
       p_ul = wint.wimage;
-      iteration = (int) wvals.iter;
-      useloglog = wvals.useloglog;
+
       for (ycoord = 0; ycoord < preview_height; ycoord++)
         {
-          px = 0;
-
-          for (xcoord = 0; xcoord < preview_width; xcoord++)
-            {
-              a = (double) xmin + (double) xcoord *xdiff;
-              b = (double) ymin + (double) ycoord *ydiff;
-
-              if (wvals.fractaltype != TYPE_MANDELBROT)
-                {
-                  tmpx = x = a;
-                  tmpy = y = b;
-                }
-              else
-                {
-                  x = 0;
-                  y = 0;
-                }
-              for (zaehler = 0;
-                   (zaehler < iteration) && ((x * x + y * y) < 4);
-                   zaehler++)
-                {
-                  oldx = x;
-                  oldy = y;
-
-                  switch (wvals.fractaltype)
-                    {
-                    case TYPE_MANDELBROT:
-                      xx = x * x - y * y + a;
-                      y = 2.0 * x * y + b;
-                      break;
-
-                    case TYPE_JULIA:
-                      xx = x * x - y * y + cx;
-                      y = 2.0 * x * y + cy;
-                      break;
-
-                    case TYPE_BARNSLEY_1:
-                      foldxinitx = oldx * cx;
-                      foldyinity = oldy * cy;
-                      foldxinity = oldx * cy;
-                      foldyinitx = oldy * cx;
-                      /* orbit calculation */
-                      if (oldx >= 0)
-                        {
-                          xx = (foldxinitx - cx - foldyinity);
-                          y  = (foldyinitx - cy + foldxinity);
-                        }
-                      else
-                        {
-                          xx = (foldxinitx + cx - foldyinity);
-                          y  = (foldyinitx + cy + foldxinity);
-                        }
-                      break;
-
-                    case TYPE_BARNSLEY_2:
-                      foldxinitx = oldx * cx;
-                      foldyinity = oldy * cy;
-                      foldxinity = oldx * cy;
-                      foldyinitx = oldy * cx;
-                      /* orbit calculation */
-                      if (foldxinity + foldyinitx >= 0)
-                        {
-                          xx = foldxinitx - cx - foldyinity;
-                          y  = foldyinitx - cy + foldxinity;
-                        }
-                      else
-                        {
-                          xx = foldxinitx + cx - foldyinity;
-                          y  = foldyinitx + cy + foldxinity;
-                        }
-                      break;
-
-                    case TYPE_BARNSLEY_3:
-                      foldxinitx  = oldx * oldx;
-                      foldyinity  = oldy * oldy;
-                      foldxinity  = oldx * oldy;
-                      /* orbit calculation */
-                      if(oldx > 0)
-                        {
-                          xx = foldxinitx - foldyinity - 1.0;
-                          y  = foldxinity * 2;
-                        }
-                      else
-                        {
-                          xx = foldxinitx - foldyinity -1.0 + cx * oldx;
-                          y  = foldxinity * 2;
-                          y += cy * oldx;
-                        }
-                      break;
-
-                    case TYPE_SPIDER:
-                      /* { c=z=pixel: z=z*z+c; c=c/2+z, |z|<=4 } */
-                      xx = x*x - y*y + tmpx + cx;
-                      y = 2 * oldx * oldy + tmpy +cy;
-                      tmpx = tmpx/2 + xx;
-                      tmpy = tmpy/2 + y;
-                      break;
-
-                    case TYPE_MAN_O_WAR:
-                      xx = x*x - y*y + tmpx + cx;
-                      y = 2.0 * x * y + tmpy + cy;
-                      tmpx = oldx;
-                      tmpy = oldy;
-                      break;
-
-                    case TYPE_LAMBDA:
-                      tempsqrx = x * x;
-                      tempsqry = y * y;
-                      tempsqrx = oldx - tempsqrx + tempsqry;
-                      tempsqry = -(oldy * oldx);
-                      tempsqry += tempsqry + oldy;
-                      xx = cx * tempsqrx - cy * tempsqry;
-                      y = cx * tempsqry + cy * tempsqrx;
-                      break;
-
-                    case TYPE_SIERPINSKI:
-                      xx = oldx + oldx;
-                      y = oldy + oldy;
-                      if (oldy > .5)
-                        y = y - 1;
-                      else if (oldx > .5)
-                        xx = xx - 1;
-                      break;
-
-                    default:
-                      break;
-                    }
-
-                  x = xx;
-                }
-
-              if (useloglog)
-                {
-                  adjust = log (log (x * x + y * y) / 2) / log (2);
-                }
-              else
-                {
-                  adjust = 0.0;
-                }
-              color = (int) (((zaehler - adjust) *
-                              (wvals.ncolors - 1)) / iteration);
-              p_ul[0] = colormap[color].r;
-              p_ul[1] = colormap[color].g;
-              p_ul[2] = colormap[color].b;
-              p_ul += 3;
-              px += 1;
-            } /* for */
-          py += 1;
-        } /* for */
+          explorer_render_row (NULL,
+                               p_ul,
+                               ycoord,
+                               preview_width,
+                               3);
+          p_ul += preview_width * 3;
+        }
 
       preview_redraw ();
-      gdk_flush ();
     }
 }
 
@@ -1668,19 +1485,42 @@ dialog_change_scale (void)
 static void
 save_options (FILE * fp)
 {
+  gchar buf[64];
+
   /* Save options */
 
   fprintf (fp, "fractaltype: %i\n", wvals.fractaltype);
-  fprintf (fp, "xmin: %0.15f\n", wvals.xmin);
-  fprintf (fp, "xmax: %0.15f\n", wvals.xmax);
-  fprintf (fp, "ymin: %0.15f\n", wvals.ymin);
-  fprintf (fp, "ymax: %0.15f\n", wvals.ymax);
-  fprintf (fp, "iter: %0.15f\n", wvals.iter);
-  fprintf (fp, "cx: %0.15f\n", wvals.cx);
-  fprintf (fp, "cy: %0.15f\n", wvals.cy);
-  fprintf (fp, "redstretch: %0.15f\n", wvals.redstretch * 128.0);
-  fprintf (fp, "greenstretch: %0.15f\n", wvals.greenstretch * 128.0);
-  fprintf (fp, "bluestretch: %0.15f\n", wvals.bluestretch * 128.0);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.xmin);
+  fprintf (fp, "xmin: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.xmax);
+  fprintf (fp, "xmax: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.ymin);
+  fprintf (fp, "ymin: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.ymax);
+  fprintf (fp, "ymax: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.iter);
+  fprintf (fp, "iter: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.cx);
+  fprintf (fp, "cx: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.cy);
+  fprintf (fp, "cy: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.redstretch * 128.0);
+  fprintf (fp, "redstretch: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.greenstretch * 128.0);
+  fprintf (fp, "greenstretch: %s\n", buf);
+
+  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.bluestretch * 128.0);
+  fprintf (fp, "bluestretch: %s\n", buf);
+
   fprintf (fp, "redmode: %i\n", wvals.redmode);
   fprintf (fp, "greenmode: %i\n", wvals.greenmode);
   fprintf (fp, "bluemode: %i\n", wvals.bluemode);
@@ -1739,6 +1579,28 @@ save_file_chooser_response (GtkFileChooser *chooser,
 }
 
 static void
+file_chooser_set_default_folder (GtkFileChooser *chooser)
+{
+  GList *path_list;
+  gchar *dir;
+
+  if (! fractalexplorer_path)
+    return;
+
+  path_list = gimp_path_parse (fractalexplorer_path, 16, FALSE, NULL);
+
+  dir = gimp_path_get_user_writable_dir (path_list);
+
+  if (! dir)
+    dir = g_strdup (gimp_directory ());
+
+  gtk_file_chooser_set_current_folder (chooser, dir);
+
+  g_free (dir);
+  gimp_path_free (path_list);
+}
+
+static void
 load_file_chooser_response (GtkFileChooser *chooser,
                             gint            response_id,
                             gpointer        data)
@@ -1785,6 +1647,8 @@ create_load_file_chooser (GtkWidget *widget,
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
+
+      file_chooser_set_default_folder (GTK_FILE_CHOOSER (window));
 
       g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
@@ -1834,26 +1698,9 @@ create_save_file_chooser (GtkWidget *widget,
     {
       gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (window), tpath);
     }
-  else if (fractalexplorer_path)
-    {
-      GList *path_list;
-      gchar *dir;
-
-      path_list = gimp_path_parse (fractalexplorer_path, 16, FALSE, NULL);
-
-      dir = gimp_path_get_user_writable_dir (path_list);
-
-      if (!dir)
-        dir = g_strdup (gimp_directory ());
-
-      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), dir);
-
-      g_free (dir);
-      gimp_path_free (path_list);
-    }
   else
     {
-      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), "/tmp");
+      file_chooser_set_default_folder (GTK_FILE_CHOOSER (window));
     }
 
   gtk_window_present (GTK_WINDOW (window));

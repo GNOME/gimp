@@ -29,10 +29,25 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#ifdef G_OS_WIN32
+#  ifdef LIBGIMP_COMPILATION
+#    define GIMPVAR __declspec(dllexport)
+#  else  /* !LIBGIMP_COMPILATION */
+#    define GIMPVAR extern __declspec(dllimport)
+#  endif /* !LIBGIMP_COMPILATION */
+#else  /* !G_OS_WIN32 */
+#  define GIMPVAR extern
+#endif
+
+GIMPVAR const guint gimp_major_version;
+GIMPVAR const guint gimp_minor_version;
+GIMPVAR const guint gimp_micro_version;
+
+
 const gchar * gimp_directory                  (void) G_GNUC_CONST;
 const gchar * gimp_data_directory             (void) G_GNUC_CONST;
-const gchar * gimp_locale_directory              (void) G_GNUC_CONST;
-const gchar * gimp_sysconf_directory              (void) G_GNUC_CONST;
+const gchar * gimp_locale_directory           (void) G_GNUC_CONST;
+const gchar * gimp_sysconf_directory          (void) G_GNUC_CONST;
 const gchar * gimp_plug_in_directory          (void) G_GNUC_CONST;
 const gchar * gimp_gtkrc                      (void) G_GNUC_CONST;
 gchar       * gimp_personal_rc_file           (const gchar  *basename) G_GNUC_MALLOC;

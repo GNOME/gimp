@@ -28,8 +28,6 @@
 
 #include "tools-types.h"
 
-#include "core/gimptoolinfo.h"
-
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -137,12 +135,10 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
 {
   GObject           *config  = G_OBJECT (tool_options);
   GimpVectorOptions *options = GIMP_VECTOR_OPTIONS (tool_options);
-  GtkWidget         *vbox;
+  GtkWidget         *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget         *frame;
   GtkWidget         *button;
   gchar             *str;
-
-  vbox = gimp_tool_options_gui (tool_options);
 
   /*  tool toggle  */
   frame = gimp_prop_enum_radio_frame_new (config, "vectors-edit-mode",

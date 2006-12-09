@@ -41,6 +41,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-sample-points.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
@@ -246,7 +247,8 @@ xcf_load_image (Gimp    *gimp,
 
       /* add the channel to the image if its not the selection */
       if (channel != image->selection_mask)
-        gimp_image_add_channel (image, channel, -1);
+        gimp_image_add_channel (image, channel,
+                                gimp_container_num_children (image->channels));
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.
@@ -277,16 +279,18 @@ xcf_load_image (Gimp    *gimp,
   if (num_successful_elements == 0)
     goto hard_error;
 
-  g_message ("XCF: This file is corrupt!  I have loaded as much\n"
-             "of it as I can, but it is incomplete.");
+  gimp_message (gimp, G_OBJECT (info->progress), GIMP_MESSAGE_WARNING,
+                "XCF: This file is corrupt!  I have loaded as much\n"
+                "of it as I can, but it is incomplete.");
 
   gimp_image_undo_enable (image);
 
   return image;
 
  hard_error:
-  g_message ("XCF: This file is corrupt!  I could not even\n"
-             "salvage any partial image data from it.");
+  gimp_message (gimp, G_OBJECT (info->progress), GIMP_MESSAGE_ERROR,
+                "XCF: This file is corrupt!  I could not even\n"
+                "salvage any partial image data from it.");
 
   g_object_unref (image);
 
@@ -315,9 +319,11 @@ xcf_load_image_props (XcfInfo   *info,
             {
               gint i;
 
-              g_message (_("XCF warning: version 0 of XCF file format\n"
-                           "did not save indexed colormaps correctly.\n"
-                           "Substituting grayscale map."));
+              gimp_message (info->gimp, G_OBJECT (info->progress),
+                            GIMP_MESSAGE_WARNING,
+                            _("XCF warning: version 0 of XCF file format\n"
+                              "did not save indexed colormaps correctly.\n"
+                              "Substituting grayscale map."));
               info->cp +=
                 xcf_read_int32 (info->fp, (guint32 *) &image->num_cols, 1);
               image->cmap = g_new (guchar, image->num_cols * 3);
@@ -364,7 +370,10 @@ xcf_load_image_props (XcfInfo   *info,
                 (compression != COMPRESS_ZLIB) &&
                 (compression != COMPRESS_FRACTAL))
               {
-                g_message ("unknown compression type: %d", (int) compression);
+                gimp_message (info->gimp, G_OBJECT (info->progress),
+                              GIMP_MESSAGE_ERROR,
+                              "unknown compression type: %d",
+                              (int) compression);
                 return FALSE;
               }
 
@@ -399,7 +408,9 @@ xcf_load_image_props (XcfInfo   *info,
                     break;
 
                   default:
-                    g_message ("guide orientation out of range in XCF file");
+                    gimp_message (info->gimp, G_OBJECT (info->progress),
+                                  GIMP_MESSAGE_WARNING,
+                                  "guide orientation out of range in XCF file");
                     continue;
                   }
               }
@@ -412,6 +423,22 @@ xcf_load_image_props (XcfInfo   *info,
           }
           break;
 
+        case PROP_SAMPLE_POINTS:
+          {
+            gint32 x, y;
+            gint   i, n_sample_points;
+
+            n_sample_points = prop_size / (4 + 4);
+            for (i = 0; i < n_sample_points; i++)
+              {
+                info->cp += xcf_read_int32 (info->fp, (guint32 *) &x, 1);
+                info->cp += xcf_read_int32 (info->fp, (guint32 *) &y, 1);
+
+                gimp_image_add_sample_point_at_pos (image, x, y, FALSE);
+              }
+          }
+          break;
+
         case PROP_RESOLUTION:
           {
             gfloat xres, yres;
@@ -421,7 +448,9 @@ xcf_load_image_props (XcfInfo   *info,
             if (xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
                 yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
               {
-                g_message ("Warning, resolution out of range in XCF file");
+                gimp_message (info->gimp, G_OBJECT (info->progress),
+                              GIMP_MESSAGE_WARNING,
+                              "Warning, resolution out of range in XCF file");
                 xres = image->gimp->config->default_image->xresolution;
                 yres = image->gimp->config->default_image->yresolution;
               }
@@ -448,7 +477,9 @@ xcf_load_image_props (XcfInfo   *info,
                 gimp_parasite_free (p);
               }
             if (info->cp - base != prop_size)
-              g_message ("Error while loading an image's parasites");
+              gimp_message (info->gimp, G_OBJECT (info->progress),
+                            GIMP_MESSAGE_WARNING,
+                            "Error while loading an image's parasites");
           }
           break;
 
@@ -461,8 +492,10 @@ xcf_load_image_props (XcfInfo   *info,
             if ((unit <= GIMP_UNIT_PIXEL) ||
                 (unit >= _gimp_unit_get_number_of_built_in_units (image->gimp)))
               {
-                g_message ("Warning, unit out of range in XCF file, "
-                           "falling back to inches");
+                gimp_message (info->gimp, G_OBJECT (info->progress),
+                              GIMP_MESSAGE_WARNING,
+                              "Warning, unit out of range in XCF file, "
+                              "falling back to inches");
                 unit = GIMP_UNIT_INCH;
               }
 
@@ -690,7 +723,9 @@ xcf_load_layer_props (XcfInfo   *info,
                 gimp_parasite_free (p);
               }
             if (info->cp - base != prop_size)
-              g_message ("Error while loading a layer's parasites");
+              gimp_message (info->gimp, G_OBJECT (info->progress),
+                            GIMP_MESSAGE_WARNING,
+                            "Error while loading a layer's parasites");
           }
           break;
 
@@ -753,8 +788,7 @@ xcf_load_channel_props (XcfInfo      *info,
             gimp_selection_new (image,
                                 gimp_item_width (GIMP_ITEM (*channel)),
                                 gimp_item_height (GIMP_ITEM (*channel)));
-          g_object_ref (image->selection_mask);
-          gimp_item_sink (GIMP_ITEM (image->selection_mask));
+          g_object_ref_sink (image->selection_mask);
 
           tile_manager_unref (GIMP_DRAWABLE (image->selection_mask)->tiles);
           GIMP_DRAWABLE (image->selection_mask)->tiles =
@@ -831,7 +865,9 @@ xcf_load_channel_props (XcfInfo      *info,
                 gimp_parasite_free (p);
               }
             if (info->cp - base != prop_size)
-              g_message ("Error while loading a channel's parasites");
+              gimp_message (info->gimp, G_OBJECT (info->progress),
+                            GIMP_MESSAGE_WARNING,
+                            "Error while loading a channel's parasites");
           }
           break;
 
@@ -1166,10 +1202,10 @@ xcf_load_level (XcfInfo     *info,
   guint32 saved_pos;
   guint32 offset, offset2;
   guint ntiles;
-  gint width;
-  gint height;
-  gint i;
-  gint fail;
+  gint  width;
+  gint  height;
+  gint  i;
+  gint  fail;
   Tile *previous;
   Tile *tile;
 
@@ -1199,7 +1235,9 @@ xcf_load_level (XcfInfo     *info,
 
       if (offset == 0)
         {
-          g_message ("not enough tiles found in level");
+          gimp_message (info->gimp, G_OBJECT (info->progress),
+                        GIMP_MESSAGE_ERROR,
+                        "not enough tiles found in level");
           return FALSE;
         }
 
@@ -1285,7 +1323,8 @@ xcf_load_level (XcfInfo     *info,
 
   if (offset != 0)
     {
-      g_message ("encountered garbage after reading level: %d", offset);
+      gimp_message (info->gimp, G_OBJECT (info->progress), GIMP_MESSAGE_ERROR,
+                    "encountered garbage after reading level: %d", offset);
       return FALSE;
     }
 
@@ -1334,6 +1373,15 @@ xcf_load_tile_rle (XcfInfo *info,
   gint i, j;
   gint nmemb_read_successfully;
   guchar *xcfdata, *xcfodata, *xcfdatalimit;
+
+  /* Workaround for bug #357809: avoid crashing on g_malloc() and skip
+   * this tile (return TRUE without storing data) as if it did not
+   * contain any data.  It is better than returning FALSE, which would
+   * skip the whole hierarchy while there may still be some valid
+   * tiles in the file.
+   */
+  if (data_length <= 0)
+    return TRUE;
 
   data = tile_data_pointer (tile, 0, 0);
   bpp = tile_bpp (tile);
@@ -1595,7 +1643,9 @@ xcf_load_vectors (XcfInfo   *info,
 
   if (version != 1)
     {
-      g_message ("Unknown vectors version: %d (skipping)", version);
+      gimp_message (info->gimp, G_OBJECT (info->progress),
+                    GIMP_MESSAGE_WARNING,
+                    "Unknown vectors version: %d (skipping)", version);
       return FALSE;
     }
 
@@ -1770,9 +1820,9 @@ xcf_swap_func (gint      fd,
                gint      cmd,
                gpointer  user_data)
 {
-  gint bytes;
-  gint err;
-  gint nleft;
+  gint  bytes;
+  gint  err;
+  gint  nleft;
   gint *ref_count;
 
   switch (cmd)
@@ -1792,7 +1842,7 @@ xcf_swap_func (gint      fd,
 
           if (err <= 0)
             {
-              g_message ("unable to read tile data from xcf file: "
+              g_message ("unable to read tile data from XCF file: "
                          "%d ( %d ) bytes read", err, nleft);
               return FALSE;
             }

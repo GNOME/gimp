@@ -214,6 +214,10 @@ struct _GimpImageClass
                                          GimpSamplePoint      *sample_point);
   void (* sample_point_removed)         (GimpImage            *image,
                                          GimpSamplePoint      *sample_point);
+  void (* parasite_attached)            (GimpImage            *image,
+                                         const gchar          *name);
+  void (* parasite_detached)            (GimpImage            *image,
+                                         const gchar          *name);
   void (* colormap_changed)             (GimpImage            *image,
                                          gint                  color_index);
   void (* undo_event)                   (GimpImage            *image,
@@ -339,28 +343,28 @@ void            gimp_image_flush                 (GimpImage          *image);
 /*  color transforms / utilities  */
 
 void            gimp_image_get_foreground        (const GimpImage    *image,
-                                                  const GimpDrawable *drawable,
                                                   GimpContext        *context,
+                                                  GimpImageType       dest_type,
                                                   guchar             *fg);
 void            gimp_image_get_background        (const GimpImage    *image,
-                                                  const GimpDrawable *drawable,
                                                   GimpContext        *context,
+                                                  GimpImageType       dest_type,
                                                   guchar             *bg);
 void            gimp_image_get_color             (const GimpImage    *src_image,
                                                   GimpImageType       src_type,
                                                   const guchar       *src,
                                                   guchar             *rgba);
 void            gimp_image_transform_rgb         (const GimpImage    *dest_image,
-                                                  const GimpDrawable *dest_drawable,
+                                                  GimpImageType       dest_type,
                                                   const GimpRGB      *rgb,
                                                   guchar             *color);
 void            gimp_image_transform_color       (const GimpImage    *dest_image,
-                                                  const GimpDrawable *dest_drawable,
+                                                  GimpImageType       dest_type,
                                                   guchar             *dest,
                                                   GimpImageBaseType   src_type,
                                                   const guchar       *src);
 TempBuf       * gimp_image_transform_temp_buf    (const GimpImage    *dest_image,
-                                                  const GimpDrawable *dest_drawable,
+                                                  GimpImageType       dest_type,
                                                   TempBuf            *temp_buf,
                                                   gboolean           *new_buf);
 
@@ -443,6 +447,15 @@ gboolean        gimp_image_add_layer             (GimpImage          *image,
                                                   gint                position);
 void            gimp_image_remove_layer          (GimpImage          *image,
                                                   GimpLayer          *layer);
+
+void            gimp_image_add_layers            (GimpImage          *image,
+                                                  GList              *layers,
+                                                  gint                position,
+                                                  gint                x,
+                                                  gint                y,
+                                                  gint                width,
+                                                  gint                height,
+                                                  const gchar        *undo_desc);
 
 gboolean        gimp_image_raise_layer           (GimpImage          *image,
                                                   GimpLayer          *layer);

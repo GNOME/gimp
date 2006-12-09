@@ -35,6 +35,10 @@ import gtk, gobject, gimp, gimpcolor
 
 from _gimpui import *
 
+import gettext
+t = gettext.translation('gimp20-python', gimp.locale_directory, fallback=True)
+_ = t.ugettext
+
 def _callbackWrapper(menu_item, callback, data):
     callback(menu_item.get_data("Gimp-ID"), data)
 
@@ -108,37 +112,59 @@ def DrawableMenu(constraint=None, callback=None, data=None):
     items.sort()
     return _createMenu(items, callback, data)
 
+def VectorsMenu(constraint=None, callback=None, data=None):
+    items = []
+    for img in gimp.image_list():
+        filename = img.filename
+        if not filename:
+            filename = img.name
+        for vectors in img.vectors:
+            if constraint and not constraint(img, vectors):
+                continue
+            name = filename + "/" + vectors.name
+            items.append((name, vectors))
+    items.sort()
+    return _createMenu(items, callback, data)
+
 class ImageSelector(ImageComboBox):
     def __init__(self, default=None):
         ImageComboBox.__init__(self)
         if default is not None:
-            self.set_active(default)
+            self.set_active_image(default)
     def get_value(self):
-        return self.get_active()
+        return self.get_active_image()
 
 class LayerSelector(LayerComboBox):
     def __init__(self, default=None):
         LayerComboBox.__init__(self)
         if default is not None:
-            self.set_active(default)
+            self.set_active_layer(default)
     def get_value(self):
-        return self.get_active()
+        return self.get_active_layer()
 
 class ChannelSelector(ChannelComboBox):
     def __init__(self, default=None):
         ChannelComboBox.__init__(self)
         if default is not None:
-            self.set_active(default)
+            self.set_active_channel(default)
     def get_value(self):
-        return self.get_active()
+        return self.get_active_channel()
 
 class DrawableSelector(DrawableComboBox):
     def __init__(self, default=None):
         DrawableComboBox.__init__(self)
         if default is not None:
-            self.set_active(default)
+            self.set_active_drawable(default)
     def get_value(self):
-        return self.get_active()
+        return self.get_active_drawable()
+
+class VectorsSelector(VectorsComboBox):
+    def __init__(self, default=None):
+        VectorsComboBox.__init__(self)
+        if default is not None:
+            self.set_active_vectors(default)
+    def get_value(self):
+        return self.get_active_vectors()
 
 class ColorSelector(ColorButton):
     def __init__(self, default=gimpcolor.RGB(1.0, 0, 0)):
@@ -146,7 +172,7 @@ class ColorSelector(ColorButton):
             color = default
         elif isinstance(default, tuple):
             color = apply(gimpcolor.RGB, default)
-        ColorButton.__init__(self, "Python-Fu Color Selection", 100, 20,
+        ColorButton.__init__(self, _("Python-Fu Color Selection"), 100, 20,
                              color, COLOR_AREA_FLAT)
     def get_value(self):
         return self.get_color();
@@ -193,7 +219,7 @@ class FontSelector(FontSelectButton):
                 
 class FileSelector(gtk.FileChooserButton):
     def __init__(self, default=""):
-        gtk.FileChooserButton.__init__(self, "Python-Fu File Selection")
+        gtk.FileChooserButton.__init__(self, _("Python-Fu File Selection"))
         if default:
             self.set_filename(default)
     def get_value(self):

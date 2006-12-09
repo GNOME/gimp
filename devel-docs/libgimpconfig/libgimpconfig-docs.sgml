@@ -31,13 +31,13 @@
     <xi:include href="xml/gimpcolorconfig.xml" />
   </part>
 
-  <index>
+  <index id="libgimpconfig-index">
     <title>Index</title>
   </index>
-  <index role="GIMP 2.4">
+  <index role="GIMP 2.4" id="libgimpconfig-index-new-in-2-4">
     <title>Index of new symbols in GIMP 2.4</title>
   </index>
-  <index role="deprecated">
+  <index role="deprecated" id="libgimpconfig-index-deprecated">
     <title>Index of deprecated symbols</title>
   </index>
 

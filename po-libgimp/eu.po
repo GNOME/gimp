@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-18 16:10+0000\n"
+"POT-Creation-Date: 2006-08-08 19:04+0000\n"
 "PO-Revision-Date: 2006-07-18 16:19+0000\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.10.2\n"
-"Plural-Forms: Plural-Forms: Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "\n"
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
@@ -32,7 +32,8 @@ msgstr "Batu ikusgai dauden geruzak"
 #: ../libgimp/gimpexport.c:226
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s(e)k ezin ditu geruzen desplazamenduak, tamaina edo opakutasuna kudeatu"
+msgstr ""
+"%s(e)k ezin ditu geruzen desplazamenduak, tamaina edo opakutasuna kudeatu"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
@@ -750,14 +751,16 @@ msgstr "Erabiliko den CMYK kolore-profila RGBtik CMYKra bihurtzeko."
 
 #: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The color profile used for simulating a printed version (softproof)."
-msgstr "Inprimatutako bertsioa (soft-proba) simulatzeko erabiliko den kolore-profila."
+msgstr ""
+"Inprimatutako bertsioa (soft-proba) simulatzeko erabiliko den kolore-profila."
 
 #: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "Sets how colors are mapped for your display."
 msgstr "Pantailako zenbat kolore mapatzen diren ezartzen du."
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
-msgid "Sets how colors are converted from workspace to the print simulation device."
+msgid ""
+"Sets how colors are converted from workspace to the print simulation device."
 msgstr ""
 "Laneko areatik inprimatze-simulazio gailura zenbat kolore bihurtzen diren "
 "ezartzen du."
@@ -808,22 +811,23 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s tokenarentzako balioa ez da baliozko UTF-8 katea"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:423
+#: ../libgimpconfig/gimpconfig-deserialize.c:426
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "'yes' edo 'no' espero zen %s token boolearrarentzat, baina '%s' jaso da"
+msgstr ""
+"'yes' edo 'no' espero zen %s token boolearrarentzat, baina '%s' jaso da"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:497
+#: ../libgimpconfig/gimpconfig-deserialize.c:500
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "baliogabeko '%s' balioa %s tokenarentzat"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:512
+#: ../libgimpconfig/gimpconfig-deserialize.c:515
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "Baliogabeko '%ld' balioa %s tokenarentzat"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:581
+#: ../libgimpconfig/gimpconfig-deserialize.c:584
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "'%s' tokena analizatzen zen bitartean: %s"
@@ -964,7 +968,9 @@ msgstr "Zaharra:"
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
-msgstr "Kolore hamaseitarraren notazioa HTMLn eta CCSn bezala. Sarrera honek CSSko kolore-izenak ere onartzen ditu."
+msgstr ""
+"Kolore hamaseitarraren notazioa HTMLn eta CCSn bezala. Sarrera honek CSSko "
+"kolore-izenak ere onartzen ditu."
 
 #: ../libgimpwidgets/gimpcolorselection.c:269
 msgid "HTML _notation:"
@@ -1263,7 +1269,8 @@ msgstr "Tritanopia (urdinarekiko sentikortasunik ez)"
 
 #: ../modules/cdisplay_colorblind.c:200
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Kolorearen defizita simulatzeko iragazkia (Brettel-Vienot-Mollon algoritmoa)"
+msgstr ""
+"Kolorearen defizita simulatzeko iragazkia (Brettel-Vienot-Mollon algoritmoa)"
 
 #: ../modules/cdisplay_colorblind.c:290
 msgid "Color Deficient Vision"
@@ -1609,4 +1616,3 @@ msgstr "%03d kontroladorea"
 #: ../modules/controller_midi.c:436
 msgid "MIDI Events"
 msgstr "MIDIko gertaerak"
-

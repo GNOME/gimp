@@ -233,14 +233,14 @@ gimp_colormap_editor_constructor (GType                  type,
   editor = GIMP_COLORMAP_EDITOR (object);
 
   editor->edit_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor), "colormap-editor",
-                                   "colormap-editor-edit-color",
+    gimp_editor_add_action_button (GIMP_EDITOR (editor), "colormap",
+                                   "colormap-edit-color",
                                    NULL);
 
   editor->add_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor), "colormap-editor",
-                                   "colormap-editor-add-color-from-fg",
-                                   "colormap-editor-add-color-from-bg",
+    gimp_editor_add_action_button (GIMP_EDITOR (editor), "colormap",
+                                   "colormap-add-color-from-fg",
+                                   "colormap-add-color-from-bg",
                                    GDK_CONTROL_MASK,
                                    NULL);
 
@@ -338,8 +338,8 @@ gimp_colormap_editor_new (GimpMenuFactory *menu_factory)
 
   return g_object_new (GIMP_TYPE_COLORMAP_EDITOR,
                        "menu-factory",    menu_factory,
-                       "menu-identifier", "<ColormapEditor>",
-                       "ui-path",         "/colormap-editor-popup",
+                       "menu-identifier", "<Colormap>",
+                       "ui-path",         "/colormap-popup",
                        NULL);
 }
 
@@ -719,8 +719,8 @@ gimp_colormap_preview_button_press (GtkWidget          *widget,
           GtkAction *action;
 
           action = gimp_ui_manager_find_action (GIMP_EDITOR (editor)->ui_manager,
-                                                "colormap-editor",
-                                                "colormap-editor-edit-color");
+                                                "colormap",
+                                                "colormap-edit-color");
 
           if (action)
             gtk_action_activate (action);

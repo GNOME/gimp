@@ -66,15 +66,17 @@ static GObject * gimp_palette_editor_constructor   (GType              type,
                                                     guint              n_params,
                                                     GObjectConstructParam *params);
 
-static void   gimp_palette_editor_set_aux_info     (GimpDocked        *docked,
-                                                    GList             *aux_info);
-static GList *gimp_palette_editor_get_aux_info     (GimpDocked        *docked);
-
 static void   gimp_palette_editor_destroy          (GtkObject         *object);
 static void   gimp_palette_editor_unmap            (GtkWidget         *widget);
 
 static void   gimp_palette_editor_set_data         (GimpDataEditor    *editor,
                                                     GimpData          *data);
+
+static void   gimp_palette_editor_set_context      (GimpDocked        *docked,
+                                                    GimpContext       *context);
+static void   gimp_palette_editor_set_aux_info     (GimpDocked        *docked,
+                                                    GList             *aux_info);
+static GList *gimp_palette_editor_get_aux_info     (GimpDocked        *docked);
 
 static void   palette_editor_invalidate_preview    (GimpPalette       *palette,
                                                     GimpPaletteEditor *editor);
@@ -155,6 +157,19 @@ gimp_palette_editor_class_init (GimpPaletteEditorClass *klass)
 }
 
 static void
+gimp_palette_editor_docked_iface_init (GimpDockedInterface *iface)
+{
+  parent_docked_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
+  iface->set_context  = gimp_palette_editor_set_context;
+  iface->set_aux_info = gimp_palette_editor_set_aux_info;
+  iface->get_aux_info = gimp_palette_editor_get_aux_info;
+}
+
+static void
 gimp_palette_editor_init (GimpPaletteEditor *editor)
 {
   GtkWidget *scrolled_win;
@@ -198,7 +213,8 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_container_add (GTK_CONTAINER (eventbox), alignment);
   gtk_widget_show (alignment);
 
-  editor->view = gimp_view_new_full_by_types (GIMP_TYPE_PALETTE_VIEW,
+  editor->view = gimp_view_new_full_by_types (NULL,
+                                              GIMP_TYPE_PALETTE_VIEW,
                                               GIMP_TYPE_PALETTE,
                                               PREVIEW_WIDTH, PREVIEW_HEIGHT, 0,
                                               FALSE, TRUE, FALSE);
@@ -237,7 +253,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   editor->color_name = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), editor->color_name, TRUE, TRUE, 0);
   gtk_entry_set_text (GTK_ENTRY (editor->color_name), _("Undefined"));
-  gtk_widget_set_sensitive (editor->color_name, FALSE);
+  gtk_editable_set_editable (GTK_EDITABLE (editor->color_name), FALSE);
   gtk_widget_show (editor->color_name);
 
   g_signal_connect (editor->color_name, "changed",
@@ -256,18 +272,6 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   g_signal_connect (editor->columns_data, "value-changed",
                     G_CALLBACK (palette_editor_columns_changed),
                     editor);
-}
-
-static void
-gimp_palette_editor_docked_iface_init (GimpDockedInterface *iface)
-{
-  parent_docked_iface = g_type_interface_peek_parent (iface);
-
-  if (! parent_docked_iface)
-    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
-
-  iface->set_aux_info = gimp_palette_editor_set_aux_info;
-  iface->get_aux_info = gimp_palette_editor_get_aux_info;
 }
 
 static GObject *
@@ -304,54 +308,6 @@ gimp_palette_editor_constructor (GType                  type,
                                  "palette-editor-zoom-all", NULL);
 
   return object;
-}
-
-#define AUX_INFO_ZOOM_FACTOR "zoom-factor"
-
-static void
-gimp_palette_editor_set_aux_info (GimpDocked *docked,
-                                  GList      *aux_info)
-{
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (docked);
-  GList             *list;
-
-  parent_docked_iface->set_aux_info (docked, aux_info);
-
-  for (list = aux_info; list; list = g_list_next (list))
-    {
-      GimpSessionInfoAux *aux = list->data;
-
-      if (! strcmp (aux->name, AUX_INFO_ZOOM_FACTOR))
-        {
-          gdouble zoom_factor;
-
-          zoom_factor = g_ascii_strtod (aux->value, NULL);
-
-          editor->zoom_factor = CLAMP (zoom_factor, 0.1, 4.0);
-        }
-    }
-}
-
-static GList *
-gimp_palette_editor_get_aux_info (GimpDocked *docked)
-{
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (docked);
-  GList             *aux_info;
-
-  aux_info = parent_docked_iface->get_aux_info (docked);
-
-  if (editor->zoom_factor != 1.0)
-    {
-      GimpSessionInfoAux *aux;
-      gchar               value[G_ASCII_DTOSTR_BUF_SIZE];
-
-      g_ascii_formatd (value, sizeof (value), "%.2f", editor->zoom_factor);
-
-      aux = gimp_session_info_aux_new (AUX_INFO_ZOOM_FACTOR, value);
-      aux_info = g_list_append (aux_info, aux);
-    }
-
-  return aux_info;
 }
 
 static void
@@ -431,24 +387,82 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
                                      editor);
 }
 
+static void
+gimp_palette_editor_set_context (GimpDocked  *docked,
+                                 GimpContext *context)
+{
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (docked);
+
+  parent_docked_iface->set_context (docked, context);
+
+  gimp_view_renderer_set_context (GIMP_VIEW (editor->view)->renderer,
+                                  context);
+}
+
+#define AUX_INFO_ZOOM_FACTOR "zoom-factor"
+
+static void
+gimp_palette_editor_set_aux_info (GimpDocked *docked,
+                                  GList      *aux_info)
+{
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (docked);
+  GList             *list;
+
+  parent_docked_iface->set_aux_info (docked, aux_info);
+
+  for (list = aux_info; list; list = g_list_next (list))
+    {
+      GimpSessionInfoAux *aux = list->data;
+
+      if (! strcmp (aux->name, AUX_INFO_ZOOM_FACTOR))
+        {
+          gdouble zoom_factor;
+
+          zoom_factor = g_ascii_strtod (aux->value, NULL);
+
+          editor->zoom_factor = CLAMP (zoom_factor, 0.1, 4.0);
+        }
+    }
+}
+
+static GList *
+gimp_palette_editor_get_aux_info (GimpDocked *docked)
+{
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (docked);
+  GList             *aux_info;
+
+  aux_info = parent_docked_iface->get_aux_info (docked);
+
+  if (editor->zoom_factor != 1.0)
+    {
+      GimpSessionInfoAux *aux;
+      gchar               value[G_ASCII_DTOSTR_BUF_SIZE];
+
+      g_ascii_formatd (value, sizeof (value), "%.2f", editor->zoom_factor);
+
+      aux = gimp_session_info_aux_new (AUX_INFO_ZOOM_FACTOR, value);
+      aux_info = g_list_append (aux_info, aux);
+    }
+
+  return aux_info;
+}
+
+
 /*  public functions  */
 
 GtkWidget *
-gimp_palette_editor_new (Gimp            *gimp,
+gimp_palette_editor_new (GimpContext     *context,
                          GimpMenuFactory *menu_factory)
 {
-  GimpPalette *palette;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  palette = gimp_context_get_palette (gimp_get_user_context (gimp));
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return g_object_new (GIMP_TYPE_PALETTE_EDITOR,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<PaletteEditor>",
                        "ui-path",         "/palette-editor-popup",
-                       "data-factory",    gimp->palette_factory,
-                       "data",            palette,
+                       "data-factory",    context->gimp->palette_factory,
+                       "context",         context,
+                       "data",            gimp_context_get_palette (context),
                        NULL);
 }
 
@@ -506,15 +520,19 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
 
   switch (zoom_type)
     {
+    case GIMP_ZOOM_IN_MAX:
+    case GIMP_ZOOM_IN_MORE:
     case GIMP_ZOOM_IN:
       zoom_factor += 0.1;
       break;
 
+    case GIMP_ZOOM_OUT_MORE:
     case GIMP_ZOOM_OUT:
       zoom_factor -= 0.1;
       break;
 
-    case GIMP_ZOOM_TO: /* used as ZOOM_ALL */
+    case GIMP_ZOOM_OUT_MAX:
+    case GIMP_ZOOM_TO: /* abused as ZOOM_ALL */
       {
         gint height  = editor->view->parent->parent->parent->allocation.height;
         gint columns = palette->n_columns ? palette->n_columns : COLUMNS;
@@ -564,10 +582,11 @@ gimp_palette_editor_get_index (GimpPaletteEditor *editor,
 
   if (search)
     {
-      if (! editor->color ||
-          gimp_rgb_distance (&editor->color->color, search) > EPSILON)
+      if (! editor->color)
         {
           GList *list;
+
+          /* search from the start */
 
           for (list = palette->colors; list; list = g_list_next (list))
             {
@@ -577,6 +596,43 @@ gimp_palette_editor_get_index (GimpPaletteEditor *editor,
                 {
                   index = entry->position;
                   break;
+                }
+            }
+        }
+      else if (gimp_rgb_distance (&editor->color->color, search) > EPSILON)
+        {
+          GList *old  = g_list_nth (palette->colors, editor->color->position);
+          GList *next = old->next;
+          GList *prev = old->prev;
+
+          /* proximity-based search */
+
+          while (next || prev)
+            {
+              if (next)
+                {
+                  GimpPaletteEntry *entry = next->data;
+
+                  if (gimp_rgb_distance (&entry->color, search) < EPSILON)
+                    {
+                      index = entry->position;
+                      break;
+                    }
+
+                  next = next->next;
+                }
+
+              if (prev)
+                {
+                  GimpPaletteEntry *entry = prev->data;
+
+                  if (gimp_rgb_distance (&entry->color, search) < EPSILON)
+                    {
+                      index = entry->position;
+                      break;
+                    }
+
+                  prev = prev->prev;
                 }
             }
         }
@@ -708,16 +764,12 @@ palette_editor_entry_clicked (GimpPaletteView   *view,
 {
   if (entry)
     {
-      Gimp        *gimp;
-      GimpContext *user_context;
-
-      gimp         = GIMP_DATA_EDITOR (editor)->data_factory->gimp;
-      user_context = gimp_get_user_context (gimp);
+      GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
 
       if (state & GDK_CONTROL_MASK)
-        gimp_context_set_background (user_context, &entry->color);
+        gimp_context_set_background (data_editor->context, &entry->color);
       else
-        gimp_context_set_foreground (user_context, &entry->color);
+        gimp_context_set_foreground (data_editor->context, &entry->color);
     }
 }
 
@@ -746,8 +798,8 @@ palette_editor_entry_selected (GimpPaletteView   *view,
                                          palette_editor_color_name_changed,
                                          editor);
 
-      gtk_widget_set_sensitive (editor->color_name,
-                                entry && data_editor->data_editable);
+      gtk_editable_set_editable (GTK_EDITABLE (editor->color_name),
+                                 entry && data_editor->data_editable);
 
       gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
                               GIMP_EDITOR (editor)->popup_data);

@@ -72,6 +72,8 @@ struct _GimpBrushCore
 
   gdouble        jitter;
 
+  GRand         *rand;
+
   /*  don't use these...  */
   BoundSeg      *brush_bound_segs;
   gint           n_brush_bound_segs;
@@ -98,6 +100,9 @@ GType   gimp_brush_core_get_type       (void) G_GNUC_CONST;
 
 void    gimp_brush_core_set_brush      (GimpBrushCore            *core,
                                         GimpBrush                *brush);
+void    gimp_brush_core_create_bound_segs (GimpBrushCore         *core,
+                                           GimpPaintOptions      *options);
+
 void    gimp_brush_core_paste_canvas   (GimpBrushCore            *core,
                                         GimpDrawable             *drawable,
                                         gdouble                   brush_opacity,

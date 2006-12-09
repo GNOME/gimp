@@ -29,13 +29,13 @@
 #include "core/gimpcontext.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimppluginprocedure.h"
-
 #include "gimpplugin.h"
+#include "gimpplugin-cleanup.h"
 #include "gimpplugin-progress.h"
+#include "gimppluginprocedure.h"
 
 
-/*  publuc functions  */
+/*  public functions  */
 
 GimpPlugInProcFrame *
 gimp_plug_in_proc_frame_new (GimpContext         *context,
@@ -77,6 +77,9 @@ gimp_plug_in_proc_frame_init (GimpPlugInProcFrame *proc_frame,
   proc_frame->progress           = progress ? g_object_ref (progress) : NULL;
   proc_frame->progress_created   = FALSE;
   proc_frame->progress_cancel_id = 0;
+
+  if (progress)
+    gimp_plug_in_progress_attach (progress);
 }
 
 void
@@ -121,6 +124,9 @@ gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
       g_main_loop_unref (proc_frame->main_loop);
       proc_frame->main_loop = NULL;
     }
+
+  if (proc_frame->cleanups)
+    gimp_plug_in_cleanup (plug_in, proc_frame);
 }
 
 GimpPlugInProcFrame *
@@ -156,28 +162,26 @@ gimp_plug_in_proc_frame_get_return_vals (GimpPlugInProcFrame *proc_frame)
 
   g_return_val_if_fail (proc_frame != NULL, NULL);
 
-  if (proc_frame->return_vals &&
-      proc_frame->return_vals->n_values ==
-      proc_frame->procedure->num_values + 1)
+  if (proc_frame->return_vals)
     {
-      return_vals = proc_frame->return_vals;
-    }
-  else if (proc_frame->return_vals)
-    {
-      /* Allocate new return values of the correct size. */
-      return_vals = gimp_procedure_get_return_values (proc_frame->procedure,
-                                                      FALSE);
+      if (proc_frame->return_vals->n_values >=
+          proc_frame->procedure->num_values + 1)
+        {
+          return_vals = proc_frame->return_vals;
+        }
+      else
+        {
+          /* Allocate new return values of the correct size. */
+          return_vals = gimp_procedure_get_return_values (proc_frame->procedure,
+                                                          FALSE);
 
-      /* Copy all of the arguments we can. */
-      memcpy (return_vals->values, proc_frame->return_vals->values,
-              sizeof (GValue) * MIN (proc_frame->return_vals->n_values,
-                                     proc_frame->procedure->num_values + 1));
+          /* Copy all of the arguments we can. */
+          memcpy (return_vals->values, proc_frame->return_vals->values,
+                  sizeof (GValue) * proc_frame->return_vals->n_values);
 
-      /* Free the old argument pointer.  This will cause a memory leak
-       * only if there were more values returned than we need (which
-       * shouldn't ever happen).
-       */
-      g_free (proc_frame->return_vals);
+          /* Free the old argument pointer. */
+          g_free (proc_frame->return_vals);
+        }
     }
   else
     {

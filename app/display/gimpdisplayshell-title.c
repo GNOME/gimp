@@ -71,7 +71,8 @@ gimp_display_shell_title_init (GimpDisplayShell *shell)
   gimp_display_shell_format_title (shell, title, sizeof (title),
                                    config->image_status_format);
 
-  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "title", title);
+  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "title",
+                       "%s", title);
 }
 
 void
@@ -113,7 +114,8 @@ gimp_display_shell_update_title_idle (gpointer data)
                                        config->image_status_format);
     }
 
-  gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar), "title", title);
+  gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar), "title",
+                          "%s", title);
 
   return FALSE;
 }

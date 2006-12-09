@@ -1,106 +1,98 @@
 # translation of es.po to Spanish
 # Spanish translation for gimp-libgimp 1.3.X.
-# Copyright © 1998-2000,2003 Free Software Foundation, Inc.
+# Copyright © 1998-2000,2003, 2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
+#
 # Francisco Javier Fernandez <serrador@cvs.gnome.org>, 2003, 2004.
 # Pablo G. del Campo <pablodc@par001001-703>, 2003, 2004.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2005, 2006.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2006.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: es\n"
+"Project-Id-Version: pan2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-28 17:31+0200\n"
-"PO-Revision-Date: 2006-04-03 18:36+0200\n"
+"POT-Creation-Date: 2006-11-01 22:02+0100\n"
+"PO-Revision-Date: 2006-11-01 22:05+0100\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: KBabel 1.9.1\n"
+"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../libgimp/gimpbrushmenu.c:140
-msgid "Brush Selection"
-msgstr "Selección de pincel"
-
-#: ../libgimp/gimpbrushmenu.c:180 ../libgimp/gimppatternmenu.c:165
-msgid "_Browse..."
-msgstr "_Examinar..."
-
-#: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
+#: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
 msgid "%s can't handle layers"
 msgstr "%s no puede manejar capas"
 
-#: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
-#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:252
+#: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
+#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
 msgid "Merge Visible Layers"
 msgstr "Combinar las capas visibles"
 
-#: ../libgimp/gimpexport.c:224
+#: ../libgimp/gimpexport.c:226
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr "%s no puede manejar desplazamientos de capas, tamaño u opacidad"
 
-#: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
+#: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr "%s sólo puede manejar capas como fotogramas de animación"
 
-#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:243
+#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
 msgstr "Guardar como animación"
 
-#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:252
-#: ../libgimp/gimpexport.c:261
+#: ../libgimp/gimpexport.c:245 ../libgimp/gimpexport.c:254
+#: ../libgimp/gimpexport.c:263
 msgid "Flatten Image"
 msgstr "Aplanar imagen"
 
-#: ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:262
 #, c-format
 msgid "%s can't handle transparency"
 msgstr "%s no puede manejar transparencia"
 
-#: ../libgimp/gimpexport.c:269
+#: ../libgimp/gimpexport.c:271
 #, c-format
 msgid "%s can't handle layer masks"
 msgstr "%s no puede manejar máscaras de capas"
 
-#: ../libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
 msgstr "Aplicar las máscaras de capa"
 
-#: ../libgimp/gimpexport.c:278
+#: ../libgimp/gimpexport.c:280
 #, c-format
 msgid "%s can only handle RGB images"
 msgstr "%s sólo puede manejar imágenes RGB"
 
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:328
 msgid "Convert to RGB"
 msgstr "Convertir a RGB"
 
-#: ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:289
 #, c-format
 msgid "%s can only handle grayscale images"
 msgstr "%s sólo puede manejar imágenes en tonos de gris"
 
-#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:338
+#: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:340
 msgid "Convert to Grayscale"
 msgstr "Convertir a tonos de gris"
 
-#: ../libgimp/gimpexport.c:296
+#: ../libgimp/gimpexport.c:298
 #, c-format
 msgid "%s can only handle indexed images"
 msgstr "%s sólo puede manejar imágenes indexadas"
 
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
-#: ../libgimp/gimpexport.c:336
+#: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
+#: ../libgimp/gimpexport.c:338
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -108,12 +100,12 @@ msgstr ""
 "Convertir a indexada usando ajustes predefinidos\n"
 "(Hágalo manualmente para afinar el resultado)"
 
-#: ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
 msgstr "%s sólo puede manejar imágenes de mapas de bits (de dos colores) indexados"
 
-#: ../libgimp/gimpexport.c:307
+#: ../libgimp/gimpexport.c:309
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -121,52 +113,52 @@ msgstr ""
 "Convertir a indexada usando ajustes predefinidos de mapa de bits\n"
 "(Hágalo manualmente para afinar el resultado)"
 
-#: ../libgimp/gimpexport.c:316
+#: ../libgimp/gimpexport.c:318
 #, c-format
 msgid "%s can only handle RGB or grayscale images"
 msgstr "%s sólo puede manejar imágenes RGB o tonos de gris"
 
-#: ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:327
 #, c-format
 msgid "%s can only handle RGB or indexed images"
 msgstr "%s sólo puede manejar imágenes RGB o indexadas"
 
-#: ../libgimp/gimpexport.c:335
+#: ../libgimp/gimpexport.c:337
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
 msgstr "%s sólo puede manejar imágenes indexadas o tonos de gris"
 
-#: ../libgimp/gimpexport.c:346
+#: ../libgimp/gimpexport.c:348
 #, c-format
 msgid "%s needs an alpha channel"
 msgstr "%s necesita un canal alfa"
 
-#: ../libgimp/gimpexport.c:347
+#: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
 msgstr "Añadir canal alfa"
 
-#: ../libgimp/gimpexport.c:381
+#: ../libgimp/gimpexport.c:383
 msgid "Confirm Save"
 msgstr "Confirmar guardar"
 
-#: ../libgimp/gimpexport.c:387
+#: ../libgimp/gimpexport.c:389
 msgid "Confirm"
 msgstr "Confirmar"
 
-#: ../libgimp/gimpexport.c:462
+#: ../libgimp/gimpexport.c:464
 msgid "Export File"
 msgstr "Exportar archivo"
 
-#: ../libgimp/gimpexport.c:466
+#: ../libgimp/gimpexport.c:468
 msgid "_Ignore"
 msgstr "_Ignorar"
 
-#: ../libgimp/gimpexport.c:468
+#: ../libgimp/gimpexport.c:470
 msgid "_Export"
 msgstr "_Exportar"
 
 #. the headline
-#: ../libgimp/gimpexport.c:497
+#: ../libgimp/gimpexport.c:499
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -176,11 +168,11 @@ msgstr ""
 "siguientes razones:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:571
+#: ../libgimp/gimpexport.c:573
 msgid "The export conversion won't modify your original image."
 msgstr "La conversión de exportación no modificará su imagen original."
 
-#: ../libgimp/gimpexport.c:671
+#: ../libgimp/gimpexport.c:673
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -189,7 +181,7 @@ msgstr ""
 "Va a guardar una máscara de capa como %s.\n"
 "Esto no guardará las capas visibles."
 
-#: ../libgimp/gimpexport.c:677
+#: ../libgimp/gimpexport.c:679
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -198,33 +190,17 @@ msgstr ""
 "Va a guardar un canal (selección guardada) como %s.\n"
 "Esto no guardará las capas visibles."
 
-#: ../libgimp/gimpfontselectbutton.c:126 ../libgimp/gimpfontselectbutton.c:177
+#: ../libgimp/gimpfontselectbutton.c:130
 msgid "Font Selection"
 msgstr "Selección de tipografía"
 
-#: ../libgimp/gimpfontselectbutton.c:139 ../libgimp/gimpfontselectbutton.c:178
+#: ../libgimp/gimpfontselectbutton.c:145
 msgid "Sans"
 msgstr "Sans"
-
-# La traducción de gradient en degradado, no gradiente (serrador)
-# Vale, OK. FVD
-#: ../libgimp/gimpgradientmenu.c:115
-msgid "Gradient Selection"
-msgstr "Selección de degradado"
 
 #: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
 msgid "(Empty)"
 msgstr "(Vacío)"
-
-#: ../libgimp/gimppalettemenu.c:102
-msgid "Palette Selection"
-msgstr "Selección de paleta"
-
-# ¡Por favor! FVD
-# OK (Serrador)
-#: ../libgimp/gimppatternmenu.c:125
-msgid "Pattern Selection"
-msgstr "Selección de patrón"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
@@ -337,344 +313,363 @@ msgstr "Copyright:"
 msgid "percent"
 msgstr "porcentaje"
 
-#: ../libgimpbase/gimpbaseenums.c:26
+#: ../libgimpbase/gimpbaseenums.c:27
 msgid "_White (full opacity)"
 msgstr "B_lanco (Opacidad total)"
 
-#: ../libgimpbase/gimpbaseenums.c:27
+#: ../libgimpbase/gimpbaseenums.c:28
 msgid "_Black (full transparency)"
 msgstr "N_egro (Transparencia total)"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: ../libgimpbase/gimpbaseenums.c:29
 msgid "Layer's _alpha channel"
 msgstr "Canal _alfa de la capa"
 
-#: ../libgimpbase/gimpbaseenums.c:29
+#: ../libgimpbase/gimpbaseenums.c:30
 msgid "_Transfer layer's alpha channel"
 msgstr "_Transferir el canal alfa de la capa"
 
-#: ../libgimpbase/gimpbaseenums.c:30
+#: ../libgimpbase/gimpbaseenums.c:31
 msgid "_Selection"
 msgstr "_Selección"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: ../libgimpbase/gimpbaseenums.c:32
 msgid "_Grayscale copy of layer"
 msgstr "Copia en escala de _grises de la capa"
 
-#: ../libgimpbase/gimpbaseenums.c:61
+#: ../libgimpbase/gimpbaseenums.c:33
+msgid "C_hannel"
+msgstr "Ca_nal:"
+
+#: ../libgimpbase/gimpbaseenums.c:63
 msgid "FG to BG (RGB)"
 msgstr "Frente a fondo (RGB)"
 
-#: ../libgimpbase/gimpbaseenums.c:62
+#: ../libgimpbase/gimpbaseenums.c:64
 msgid "FG to BG (HSV)"
 msgstr "Frente a fondo (HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:63
+#: ../libgimpbase/gimpbaseenums.c:65
 msgid "FG to transparent"
 msgstr "Frente a transparente"
 
-#: ../libgimpbase/gimpbaseenums.c:64
+#: ../libgimpbase/gimpbaseenums.c:66
 msgid "Custom gradient"
 msgstr "Degradado personalizado"
 
-#: ../libgimpbase/gimpbaseenums.c:93
+#: ../libgimpbase/gimpbaseenums.c:95
 msgid "FG color fill"
 msgstr "Relleno con color de frente"
 
-#: ../libgimpbase/gimpbaseenums.c:94
+#: ../libgimpbase/gimpbaseenums.c:96
 msgid "BG color fill"
 msgstr "Relleno con color de fondo"
 
-#: ../libgimpbase/gimpbaseenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:97
 msgid "Pattern fill"
 msgstr "Relleno con patrón"
 
-#: ../libgimpbase/gimpbaseenums.c:125
+#: ../libgimpbase/gimpbaseenums.c:127
 msgid "Add to the current selection"
 msgstr "Añadir a la selección actual"
 
-#: ../libgimpbase/gimpbaseenums.c:126
+#: ../libgimpbase/gimpbaseenums.c:128
 msgid "Subtract from the current selection"
 msgstr "Extraer de la selección actual"
 
-#: ../libgimpbase/gimpbaseenums.c:127
+#: ../libgimpbase/gimpbaseenums.c:129
 msgid "Replace the current selection"
 msgstr "Reemplazar la selección actual"
 
-#: ../libgimpbase/gimpbaseenums.c:128
+#: ../libgimpbase/gimpbaseenums.c:130
 msgid "Intersect with the current selection"
 msgstr "Intersectar con la selección actual"
 
-#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:95
 msgid "Red"
 msgstr "Rojo"
 
-#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:96
 msgid "Green"
 msgstr "Verde"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:97
 msgid "Blue"
 msgstr "Azul"
 
-#: ../libgimpbase/gimpbaseenums.c:163
+#: ../libgimpbase/gimpbaseenums.c:165
 msgid "Gray"
 msgstr "Gris"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:529
+#: ../libgimpbase/gimpbaseenums.c:166 ../libgimpbase/gimpbaseenums.c:531
 msgid "Indexed"
 msgstr "Indexado"
 
-#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:98
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:194
+#: ../libgimpbase/gimpbaseenums.c:196
 msgid "Small"
 msgstr "Pequeño"
 
-#: ../libgimpbase/gimpbaseenums.c:195
+#: ../libgimpbase/gimpbaseenums.c:197
 msgid "Medium"
 msgstr "Mediano"
 
-#: ../libgimpbase/gimpbaseenums.c:196
+#: ../libgimpbase/gimpbaseenums.c:198
 msgid "Large"
 msgstr "Grande"
 
-#: ../libgimpbase/gimpbaseenums.c:228
+#: ../libgimpbase/gimpbaseenums.c:230
 msgid "Light checks"
 msgstr "Cuadros claros"
 
-#: ../libgimpbase/gimpbaseenums.c:229
+#: ../libgimpbase/gimpbaseenums.c:231
 msgid "Mid-tone checks"
 msgstr "Cuadros de tonos medios"
 
-#: ../libgimpbase/gimpbaseenums.c:230
+#: ../libgimpbase/gimpbaseenums.c:232
 msgid "Dark checks"
 msgstr "Cuadros oscuros"
 
-#: ../libgimpbase/gimpbaseenums.c:231
+#: ../libgimpbase/gimpbaseenums.c:233
 msgid "White only"
 msgstr "Sólo blanco"
 
-#: ../libgimpbase/gimpbaseenums.c:232
+#: ../libgimpbase/gimpbaseenums.c:234
 msgid "Gray only"
 msgstr "Sólo gris"
 
-#: ../libgimpbase/gimpbaseenums.c:233
+#: ../libgimpbase/gimpbaseenums.c:235
 msgid "Black only"
 msgstr "Sólo negro"
 
-#: ../libgimpbase/gimpbaseenums.c:261
+#: ../libgimpbase/gimpbaseenums.c:263
 msgid "Image source"
 msgstr "Imagen origen"
 
-#: ../libgimpbase/gimpbaseenums.c:262
+#: ../libgimpbase/gimpbaseenums.c:264
 msgid "Pattern source"
 msgstr "Patrón origen"
 
-#: ../libgimpbase/gimpbaseenums.c:291
+#: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
 msgstr "Claridad"
 
-#: ../libgimpbase/gimpbaseenums.c:292
+#: ../libgimpbase/gimpbaseenums.c:294
 msgid "Luminosity"
 msgstr "Luminosidad"
 
-#: ../libgimpbase/gimpbaseenums.c:293
+#: ../libgimpbase/gimpbaseenums.c:295
 msgid "Average"
 msgstr "Media"
 
-#: ../libgimpbase/gimpbaseenums.c:321
+#: ../libgimpbase/gimpbaseenums.c:323
 msgid "Dodge"
 msgstr "Blanquear"
 
-#: ../libgimpbase/gimpbaseenums.c:322
+#: ../libgimpbase/gimpbaseenums.c:324
 msgid "Burn"
 msgstr "Ennegrecer"
 
-#: ../libgimpbase/gimpbaseenums.c:386 ../libgimpbase/gimpbaseenums.c:561
-msgid "Linear"
+#: ../libgimpbase/gimpbaseenums.c:388
+msgid "gradient|Linear"
 msgstr "Lineal"
 
-#: ../libgimpbase/gimpbaseenums.c:387
+#: ../libgimpbase/gimpbaseenums.c:389
 msgid "Bi-linear"
 msgstr "Bilineal"
 
-#: ../libgimpbase/gimpbaseenums.c:388
+#: ../libgimpbase/gimpbaseenums.c:390
 msgid "Radial"
 msgstr "Radial"
 
-#: ../libgimpbase/gimpbaseenums.c:389
+#: ../libgimpbase/gimpbaseenums.c:391
 msgid "Square"
 msgstr "Cuadrado"
 
 # ¿por qué en femenino ? FVD
-#: ../libgimpbase/gimpbaseenums.c:390
+#: ../libgimpbase/gimpbaseenums.c:392
 msgid "Conical (sym)"
 msgstr "Cónico (simétrico)"
 
 # ¿por qué en femenino? FVD
-#: ../libgimpbase/gimpbaseenums.c:391
+#: ../libgimpbase/gimpbaseenums.c:393
 msgid "Conical (asym)"
 msgstr "Cónico (asimétrico)"
 
-#: ../libgimpbase/gimpbaseenums.c:392
+#: ../libgimpbase/gimpbaseenums.c:394
 msgid "Shaped (angular)"
 msgstr "Contorno (angular)"
 
-#: ../libgimpbase/gimpbaseenums.c:393
+#: ../libgimpbase/gimpbaseenums.c:395
 msgid "Shaped (spherical)"
 msgstr "Contorno (esférica)"
 
 # //R ¿Qué es esto de DIMPLED?
-#: ../libgimpbase/gimpbaseenums.c:394
+#: ../libgimpbase/gimpbaseenums.c:396
 msgid "Shaped (dimpled)"
 msgstr "Contorno (con hoyuelos)"
 
-#: ../libgimpbase/gimpbaseenums.c:395
+#: ../libgimpbase/gimpbaseenums.c:397
 msgid "Spiral (cw)"
 msgstr "Espiral (sentido horario)"
 
-#: ../libgimpbase/gimpbaseenums.c:396
+#: ../libgimpbase/gimpbaseenums.c:398
 msgid "Spiral (ccw)"
 msgstr "Espiral (sentido horario)"
 
-#: ../libgimpbase/gimpbaseenums.c:427
+#: ../libgimpbase/gimpbaseenums.c:429
 msgid "Intersections (dots)"
 msgstr "Intersecciones (puntos)"
 
-#: ../libgimpbase/gimpbaseenums.c:428
+#: ../libgimpbase/gimpbaseenums.c:430
 msgid "Intersections (crosshairs)"
 msgstr "Intersecciones (cruces)"
 
-#: ../libgimpbase/gimpbaseenums.c:429
+#: ../libgimpbase/gimpbaseenums.c:431
 msgid "Dashed"
 msgstr "Punteado"
 
-#: ../libgimpbase/gimpbaseenums.c:430
+#: ../libgimpbase/gimpbaseenums.c:432
 msgid "Double dashed"
 msgstr "Punteado doble"
 
-#: ../libgimpbase/gimpbaseenums.c:431
+#: ../libgimpbase/gimpbaseenums.c:433
 msgid "Solid"
 msgstr "Continuo"
 
-#: ../libgimpbase/gimpbaseenums.c:460
+#: ../libgimpbase/gimpbaseenums.c:462
 msgid "Stock ID"
 msgstr "ID de fábrica"
 
-#: ../libgimpbase/gimpbaseenums.c:461
+#: ../libgimpbase/gimpbaseenums.c:463
 msgid "Inline pixbuf"
 msgstr "Pixbuf en línea"
 
-#: ../libgimpbase/gimpbaseenums.c:462
+#: ../libgimpbase/gimpbaseenums.c:464
 msgid "Image file"
 msgstr "Archivo de imagen"
 
-#: ../libgimpbase/gimpbaseenums.c:491
+#: ../libgimpbase/gimpbaseenums.c:493
 msgid "RGB color"
 msgstr "Color RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:492 ../libgimpbase/gimpbaseenums.c:527
+#: ../libgimpbase/gimpbaseenums.c:494 ../libgimpbase/gimpbaseenums.c:529
 msgid "Grayscale"
 msgstr "Escala de grises"
 
-#: ../libgimpbase/gimpbaseenums.c:493
+#: ../libgimpbase/gimpbaseenums.c:495
 msgid "Indexed color"
 msgstr "Color indexado"
 
-#: ../libgimpbase/gimpbaseenums.c:525
+#: ../libgimpbase/gimpbaseenums.c:527
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:526
+#: ../libgimpbase/gimpbaseenums.c:528
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:528
+#: ../libgimpbase/gimpbaseenums.c:530
 msgid "Grayscale-alpha"
 msgstr "Escala de grises-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:530
+#: ../libgimpbase/gimpbaseenums.c:532
 msgid "Indexed-alpha"
 msgstr "Indexado-alfa"
 
-# el sustantivo es 'interpolación' en femenino. FVD
-#: ../libgimpbase/gimpbaseenums.c:560
-msgid "None (Fastest)"
-msgstr "Ninguna (la más rápida)"
-
 #: ../libgimpbase/gimpbaseenums.c:562
+msgid "interpolation|None"
+msgstr "Ninguna"
+
+#: ../libgimpbase/gimpbaseenums.c:563
+msgid "interpolation|Linear"
+msgstr "Lineal"
+
+#: ../libgimpbase/gimpbaseenums.c:564
 msgid "Cubic"
 msgstr "Cúbica"
 
-#: ../libgimpbase/gimpbaseenums.c:563
-msgid "Lanczos (Best)"
-msgstr "Lanczos (la mejor)"
+#: ../libgimpbase/gimpbaseenums.c:565
+msgid "Lanczos"
+msgstr "Lanczos"
 
-#: ../libgimpbase/gimpbaseenums.c:591
+#: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
 msgstr "Constante"
 
-#: ../libgimpbase/gimpbaseenums.c:592
+#: ../libgimpbase/gimpbaseenums.c:594
 msgid "Incremental"
 msgstr "Incremental"
 
-#: ../libgimpbase/gimpbaseenums.c:621 ../modules/cdisplay_lcms.c:254
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:258
 msgid "None"
 msgstr "Ninguno"
 
-#: ../libgimpbase/gimpbaseenums.c:622
+#: ../libgimpbase/gimpbaseenums.c:624
 msgid "Sawtooth wave"
 msgstr "Onda de diente de sierra"
 
-#: ../libgimpbase/gimpbaseenums.c:623
+#: ../libgimpbase/gimpbaseenums.c:625
 msgid "Triangular wave"
 msgstr "Onda triangular"
 
+#: ../libgimpbase/gimpbaseenums.c:654
+msgid "Run interactively"
+msgstr "Ejecutar de forma interactiva"
+
+#: ../libgimpbase/gimpbaseenums.c:655
+msgid "Run non-interactively"
+msgstr "Ejecutar de forma no interactiva"
+
+#: ../libgimpbase/gimpbaseenums.c:656
+msgid "Run with last used values"
+msgstr "Ejecutar con los últimos valores utilizados"
+
 # Debe ir en minúsculas por las reglas de estilo
-#: ../libgimpbase/gimpbaseenums.c:651
+#: ../libgimpbase/gimpbaseenums.c:684
 msgid "Pixels"
 msgstr "píxeles"
 
-#: ../libgimpbase/gimpbaseenums.c:652
+#: ../libgimpbase/gimpbaseenums.c:685
 msgid "Points"
 msgstr "Puntos"
 
-#: ../libgimpbase/gimpbaseenums.c:681
+#: ../libgimpbase/gimpbaseenums.c:714
 msgid "Shadows"
 msgstr "Sombras"
 
-#: ../libgimpbase/gimpbaseenums.c:682
+#: ../libgimpbase/gimpbaseenums.c:715
 msgid "Midtones"
 msgstr "Tonos medios"
 
-#: ../libgimpbase/gimpbaseenums.c:683
+#: ../libgimpbase/gimpbaseenums.c:716
 msgid "Highlights"
 msgstr "Puntos de luz"
 
-#: ../libgimpbase/gimpbaseenums.c:711
+#: ../libgimpbase/gimpbaseenums.c:744
 msgid "Forward"
 msgstr "Hacia adelante"
 
-#: ../libgimpbase/gimpbaseenums.c:712
+#: ../libgimpbase/gimpbaseenums.c:745
 msgid "Backward"
 msgstr "Hacia atrás"
 
-#: ../libgimpbase/gimpbaseenums.c:815
+#: ../libgimpbase/gimpbaseenums.c:848
 msgid "Internal GIMP procedure"
 msgstr "Procedimiento interno de GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:816
+#: ../libgimpbase/gimpbaseenums.c:849
 msgid "GIMP Plug-In"
 msgstr "Complemento de GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:817
+#: ../libgimpbase/gimpbaseenums.c:850
 msgid "GIMP Extension"
 msgstr "Extensión de GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:818
+#: ../libgimpbase/gimpbaseenums.c:851
 msgid "Temporary Procedure"
 msgstr "Procedimiento temporal"
 
@@ -730,8 +725,8 @@ msgstr "%.1f GiB"
 msgid "%d GB"
 msgstr "%d GiB"
 
-#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
-#: ../modules/cdisplay_lcms.c:246
+#: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
+#: ../modules/cdisplay_lcms.c:250
 msgid "(invalid UTF-8 string)"
 msgstr "(cadena UTF-8 inválida)"
 
@@ -746,16 +741,16 @@ msgstr "Perfil de color para su monitor (principal)."
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid ""
 "When enabled, the GIMP will try to use the display color profile from the "
-"windowing system. The configured monitor profile is then only used as a "
+"windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Cuando se encuentre activado, GIMP tratará de utilizar el perfil de color "
-"de pantalla a partir del sistema de ventanas. En ese caso, el perfil "
-"configurado del monitor se utilizará sólo como reserva."
+"Cuando se encuentre activado, GIMP tratará de utilizar el perfil de color de "
+"pantalla a partir del sistema de ventanas. En ese caso, el perfil "
+"configurado del monitor se utilizará sólo como reserva en caso de error."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
-msgid "The default RGB workspace color profile."
-msgstr "El perfil de color predeterminado para el espacio de trabajo RGB."
+msgid "The default RGB working space color profile."
+msgstr "El perfil de color predeterminado del espacio de color RGB."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The CMYK color profile used to convert between RGB and CMYK."
@@ -772,9 +767,11 @@ msgid "Sets how colors are mapped for your display."
 msgstr "Establece cómo se asignan los colores para su pantalla."
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
-msgid "Sets how colors are converted from workspace to the print simulation device."
+msgid ""
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
 msgstr ""
-"Establece cómo se convierten los colores del espacio de trabajo al "
+"Establece cómo se convierten los colores del espacio de trabajo RGB al "
 "dispositivo de simulación de impresión."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
@@ -789,34 +786,21 @@ msgstr "Pantalla de color gestionado"
 msgid "Print simulation"
 msgstr "Simulación de impresión"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:56 ../modules/cdisplay_proof.c:55
+#: ../libgimpconfig/gimpcolorconfig-enums.c:56
 msgid "Perceptual"
 msgstr "Perceptible"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:56
+#: ../libgimpconfig/gimpcolorconfig-enums.c:57
 msgid "Relative colorimetric"
 msgstr "Colorimétrica relativa"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#: ../libgimpwidgets/gimpwidgetsenums.c:93 ../modules/cdisplay_proof.c:57
-msgid "Saturation"
+msgid "intent|Saturation"
 msgstr "Saturación"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59 ../modules/cdisplay_proof.c:58
+#: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
 msgstr "Colorimétrica absoluta"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:88
-msgid "Ask"
-msgstr "Preguntar"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:89
-msgid "Use embedded profile"
-msgstr "Utilizar perfil empotrado"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:90
-msgid "Convert to RGB workspace"
-msgstr "Convertir al espacio de trabajo RGB"
 
 # Pero un TOKEN no es una señal, es un elemento. Esto hay que pensarlo. FVD
 #: ../libgimpconfig/gimpconfig-deserialize.c:95
@@ -825,22 +809,22 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "el valor para la señal %s no es una cadena UTF-8 válida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:423
+#: ../libgimpconfig/gimpconfig-deserialize.c:426
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "se esperaba «yes» o «no» para la señal booleana %s, se obtuvo «%s»"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:497
+#: ../libgimpconfig/gimpconfig-deserialize.c:500
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "valor inválido «%s» para la señal %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:512
+#: ../libgimpconfig/gimpconfig-deserialize.c:515
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "valor inválido «%ld» para la señal %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:581
+#: ../libgimpconfig/gimpconfig-deserialize.c:584
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "mientras se analizaba la señal «%s»: %s"
@@ -970,39 +954,51 @@ msgstr "_Blanco"
 msgid "Scales"
 msgstr "Escalas"
 
-#: ../libgimpwidgets/gimpcolorselection.c:187
+#: ../libgimpwidgets/gimpcolorselection.c:210
 msgid "Current:"
 msgstr "Actual:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:209
+#: ../libgimpwidgets/gimpcolorselection.c:232
 msgid "Old:"
 msgstr "Anterior:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:263
-msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Notación hexadecimal del color como la usada en HTML y CSS"
+#: ../libgimpwidgets/gimpcolorselection.c:286
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr ""
+"Notación hexadecimal del color como la usada en HTML y CSS. También se "
+"admiten nombres de colores CSS."
 
-#: ../libgimpwidgets/gimpcolorselection.c:268
+#: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
 msgstr "_Notación HTML:"
 
-#: ../libgimpwidgets/gimpfileentry.c:320
+#: ../libgimpwidgets/gimpfileentry.c:174
+msgid "Open a file selector to browse your folders"
+msgstr "Abrir un selector de archivos para explorar las carpetas"
+
+#: ../libgimpwidgets/gimpfileentry.c:175
+msgid "Open a file selector to browse your files"
+msgstr "Abrir un selector de archivos para explorar los archivos"
+
+#: ../libgimpwidgets/gimpfileentry.c:335
 msgid "Select Folder"
 msgstr "Seleccione carpeta"
 
-#: ../libgimpwidgets/gimpfileentry.c:322
+#: ../libgimpwidgets/gimpfileentry.c:337
 msgid "Select File"
 msgstr "Seleccione archivo"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:203
+#: ../libgimpwidgets/gimpmemsizeentry.c:202
 msgid "Kilobytes"
 msgstr "Kilobytes"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:203
 msgid "Megabytes"
 msgstr "Megabytes"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:205
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Gigabytes"
 msgstr "Gigabytes"
 
@@ -1040,20 +1036,18 @@ msgid "One page selected"
 msgstr "Una página seleccionada"
 
 #: ../libgimpwidgets/gimppageselector.c:1183
+#: ../libgimpwidgets/gimppageselector.c:1187
 #, c-format
-msgid "All %d pages selected"
-msgstr "Seleccionadas todas las %d páginas"
+msgid "%d page selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "Seleccionada la página %d"
+msgstr[1] "Seleccionadas %d páginas"
 
-#: ../libgimpwidgets/gimppageselector.c:1185
-#, c-format
-msgid "%d pages selected"
-msgstr "Seleccionadas %d páginas"
-
-#: ../libgimpwidgets/gimppatheditor.c:212
+#: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
 msgstr "Editable"
 
-#: ../libgimpwidgets/gimppatheditor.c:221
+#: ../libgimpwidgets/gimppatheditor.c:223
 msgid "Folder"
 msgstr "Carpeta"
 
@@ -1078,7 +1072,7 @@ msgstr "Estilo de cuadrícula"
 msgid "_Preview"
 msgstr "Vista _previa"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1872
+#: ../libgimpwidgets/gimppropwidgets.c:1869
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1144,23 +1138,23 @@ msgstr "Espaciado de la l_ínea"
 msgid "_Resize"
 msgstr "_Redimensionar"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:300
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:319
 msgid "_Scale"
 msgstr "_Escala"
 
-#: ../libgimpwidgets/gimpstock.c:278
-msgid "Crop"
-msgstr "Recortar"
+#: ../libgimpwidgets/gimpstock.c:295
+msgid "Cr_op"
+msgstr "_Recortar"
 
-#: ../libgimpwidgets/gimpstock.c:296
+#: ../libgimpwidgets/gimpstock.c:314
 msgid "_Transform"
 msgstr "_Transformar"
 
-#: ../libgimpwidgets/gimpstock.c:299
+#: ../libgimpwidgets/gimpstock.c:318
 msgid "_Rotate"
 msgstr "_Rotar"
 
-#: ../libgimpwidgets/gimpstock.c:301
+#: ../libgimpwidgets/gimpstock.c:320
 msgid "_Shear"
 msgstr "_Cizallar"
 
@@ -1180,7 +1174,7 @@ msgstr "Unidad"
 msgid "Factor"
 msgstr "Factor"
 
-#: ../libgimpwidgets/gimpwidgets.c:1003
+#: ../libgimpwidgets/gimpwidgets.c:1005
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -1188,17 +1182,17 @@ msgstr ""
 "Use este valor como semilla para el generador de números aleatorios (permite "
 "que una operación «aleatoria» dada se pueda repetir)"
 
-#: ../libgimpwidgets/gimpwidgets.c:1007
+#: ../libgimpwidgets/gimpwidgets.c:1009
 msgid "_New Seed"
 msgstr "_Nueva semilla"
 
-#: ../libgimpwidgets/gimpwidgets.c:1020
+#: ../libgimpwidgets/gimpwidgets.c:1022
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Tomar semilla para generador de números aleatorios con un número aleatorio "
 "generado"
 
-#: ../libgimpwidgets/gimpwidgets.c:1024
+#: ../libgimpwidgets/gimpwidgets.c:1026
 msgid "_Randomize"
 msgstr "A_leatorizar"
 
@@ -1213,6 +1207,10 @@ msgstr "Tono"
 #: ../libgimpwidgets/gimpwidgetsenums.c:93
 msgid "_S"
 msgstr "_S"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:93
+msgid "Saturation"
+msgstr "Saturación"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:94
 msgid "_V"
@@ -1255,7 +1253,7 @@ msgid "Zoom out"
 msgstr "Reducir"
 
 #: ../modules/cdisplay_colorblind.c:67
-msgid "Protanopia (insensitivity to red"
+msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopía (insensibilidad al rojo)"
 
 #: ../modules/cdisplay_colorblind.c:69
@@ -1276,7 +1274,7 @@ msgstr ""
 msgid "Color Deficient Vision"
 msgstr "Color de visión deficiente"
 
-#: ../modules/cdisplay_colorblind.c:503
+#: ../modules/cdisplay_colorblind.c:505
 msgid "Color _deficiency type:"
 msgstr "Tipo de _deficiencia del color:"
 
@@ -1288,7 +1286,7 @@ msgstr "Filtro gamma de visualización del color "
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/cdisplay_gamma.c:251
+#: ../modules/cdisplay_gamma.c:253
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
@@ -1300,19 +1298,19 @@ msgstr "Filtro del color de alto contraste"
 msgid "Contrast"
 msgstr "Contraste"
 
-#: ../modules/cdisplay_highcontrast.c:251
+#: ../modules/cdisplay_highcontrast.c:253
 msgid "Contrast c_ycles:"
 msgstr "C_iclos de contraste:"
 
-#: ../modules/cdisplay_lcms.c:105
+#: ../modules/cdisplay_lcms.c:107
 msgid "Color management display filter using ICC color profiles"
 msgstr "Filtro de gestión del color de la pantalla que utiliza perfiles de color ICC"
 
-#: ../modules/cdisplay_lcms.c:173
+#: ../modules/cdisplay_lcms.c:175
 msgid "Color Management"
 msgstr "Gestión del color"
 
-#: ../modules/cdisplay_lcms.c:288
+#: ../modules/cdisplay_lcms.c:281
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1320,43 +1318,43 @@ msgstr ""
 "Este filtro toma su configuración de la sección de gestión del color en el "
 "diálogo de preferencias."
 
-#: ../modules/cdisplay_lcms.c:311
+#: ../modules/cdisplay_lcms.c:295
 msgid "Mode of operation:"
 msgstr "Modo de funcionamiento:"
 
-#: ../modules/cdisplay_lcms.c:322
+#: ../modules/cdisplay_lcms.c:306
 msgid "RGB workspace profile:"
 msgstr "Perfil del espacio de trabajo RGB:"
 
-#: ../modules/cdisplay_lcms.c:332
+#: ../modules/cdisplay_lcms.c:316
 msgid "Monitor profile:"
 msgstr "Perfil del monitor:"
 
-#: ../modules/cdisplay_lcms.c:342
+#: ../modules/cdisplay_lcms.c:326
 msgid "Print simulation profile:"
 msgstr "Perfil de la simulación de impresión:"
 
-#: ../modules/cdisplay_proof.c:127
+#: ../modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
 msgstr "Filtro de color seguro usando el perfil de color ICC"
 
-#: ../modules/cdisplay_proof.c:221
+#: ../modules/cdisplay_proof.c:179
 msgid "Color Proof"
 msgstr "Color seguro"
 
-#: ../modules/cdisplay_proof.c:346
+#: ../modules/cdisplay_proof.c:306
 msgid "_Intent:"
 msgstr "_Objetivo:"
 
-#: ../modules/cdisplay_proof.c:350
+#: ../modules/cdisplay_proof.c:310
 msgid "Choose an ICC Color Profile"
 msgstr "Seleccione un perfil de color ICC"
 
-#: ../modules/cdisplay_proof.c:353
+#: ../modules/cdisplay_proof.c:313
 msgid "_Profile:"
 msgstr "_Perfil:"
 
-#: ../modules/cdisplay_proof.c:358
+#: ../modules/cdisplay_proof.c:318
 msgid "_Black Point Compensation"
 msgstr "Compensación de punto _negro:"
 
@@ -1388,8 +1386,6 @@ msgstr "_Y"
 msgid "_K"
 msgstr "_K"
 
-# Qué manía con acentuar Cían en la í. ¡Qué manía! FVD
-# No lleva tilde (serrador)
 #: ../modules/colorsel_cmyk.c:158
 msgid "Cyan"
 msgstr "Cian"
@@ -1536,7 +1532,7 @@ msgstr "Selector giratorio derecha"
 msgid "Linux input event controller"
 msgstr "Controlador de eventos de entrada de Linux"
 
-#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:244
+#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:246
 msgid "Device:"
 msgstr "Dispositivo:"
 
@@ -1548,48 +1544,48 @@ msgstr "Nombre del dispositivo desde el que leer los eventos de entrada de Linux
 msgid "Linux Input"
 msgstr "Entrada de Linux"
 
-#: ../modules/controller_linux_input.c:351
+#: ../modules/controller_linux_input.c:352
 msgid "Linux Input Events"
 msgstr "Eventos de entrada de Linux"
 
-#: ../modules/controller_linux_input.c:372 ../modules/controller_midi.c:480
-#: ../modules/controller_midi.c:506
+#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:483
+#: ../modules/controller_midi.c:509
 #, c-format
 msgid "Reading from %s"
 msgstr "Lectura desde %s"
 
-#: ../modules/controller_linux_input.c:388
-#: ../modules/controller_linux_input.c:431 ../modules/controller_midi.c:462
-#: ../modules/controller_midi.c:523 ../modules/controller_midi.c:594
+#: ../modules/controller_linux_input.c:389
+#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:465
+#: ../modules/controller_midi.c:526 ../modules/controller_midi.c:597
 #, c-format
 msgid "Device not available: %s"
 msgstr "Dispositivo no disponible: %s"
 
-#: ../modules/controller_linux_input.c:396 ../modules/controller_midi.c:531
+#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:534
 msgid "No device configured"
 msgstr "No se ha configurado ningún dispositivo"
 
-#: ../modules/controller_linux_input.c:440 ../modules/controller_midi.c:603
+#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:606
 msgid "End of file"
 msgstr "Fin del archivo"
 
-#: ../modules/controller_midi.c:166
+#: ../modules/controller_midi.c:168
 msgid "MIDI event controller"
 msgstr "Controlador de eventos MIDI"
 
-#: ../modules/controller_midi.c:235
+#: ../modules/controller_midi.c:237
 msgid "The name of the device to read MIDI events from."
 msgstr "Nombre del dispositivo desde el que leer eventos MIDI."
 
-#: ../modules/controller_midi.c:238
+#: ../modules/controller_midi.c:240
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Introduzca 'alsa' para utilizar el secuenciador ALSA."
 
-#: ../modules/controller_midi.c:253
+#: ../modules/controller_midi.c:255
 msgid "Channel:"
 msgstr "Canal:"
 
-#: ../modules/controller_midi.c:254
+#: ../modules/controller_midi.c:256
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
@@ -1597,11 +1593,28 @@ msgstr ""
 "El canal MIDI desde el que leer los eventos. Establezca a -1 para leer desde "
 "todos los canales MIDI."
 
-#: ../modules/controller_midi.c:258
+#: ../modules/controller_midi.c:260
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:434
+# Los mensajes de MIDI no se traducen. FVD
+#: ../modules/controller_midi.c:384
+#, c-format
+msgid "Note %02x on"
+msgstr "Note %02x on"
+
+# Los mensajes de MIDI no se traducen. FVD
+#: ../modules/controller_midi.c:387
+#, c-format
+msgid "Note %02x off"
+msgstr "Note %02x off"
+
+#: ../modules/controller_midi.c:390
+#, c-format
+msgid "Controller %03d"
+msgstr "Controlador %03d"
+
+#: ../modules/controller_midi.c:437
 msgid "MIDI Events"
 msgstr "Eventos MIDI"
 

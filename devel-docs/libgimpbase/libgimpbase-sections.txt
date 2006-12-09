@@ -41,6 +41,7 @@ GimpSizeType
 GimpStackTraceMode
 GimpTransferMode
 GimpTransformDirection
+GimpVectorsStrokeType
 <SUBSECTION Standard>
 GIMP_TYPE_ADD_MASK_TYPE
 GIMP_TYPE_BLEND_MODE
@@ -71,6 +72,7 @@ GIMP_TYPE_SIZE_TYPE
 GIMP_TYPE_STACK_TRACE_MODE
 GIMP_TYPE_TRANSFER_MODE
 GIMP_TYPE_TRANSFORM_DIRECTION
+GIMP_TYPE_VECTORS_STROKE_TYPE
 gimp_add_mask_type_get_type
 gimp_blend_mode_get_type
 gimp_bucket_fill_mode_get_type
@@ -100,6 +102,7 @@ gimp_size_type_get_type
 gimp_stack_trace_mode_get_type
 gimp_transfer_mode_get_type
 gimp_transform_direction_get_type
+gimp_vectors_stroke_type_get_type
 </SECTION>
 
 <SECTION>
@@ -156,6 +159,11 @@ GIMP_VALUE_HOLDS_MEMSIZE
 <SUBSECTION Standard>
 gimp_memsize_get_type
 gimp_param_memsize_get_type
+</SECTION>
+
+<SECTION>
+<FILE>gimprectangle</FILE>
+gimp_rectangle_intersect
 </SECTION>
 
 <SECTION>
@@ -264,6 +272,10 @@ GIMP_MICRO_VERSION
 GIMP_VERSION
 GIMP_API_VERSION
 GIMP_CHECK_VERSION
+GIMPVAR
+gimp_major_version
+gimp_minor_version
+gimp_micro_version
 </SECTION>
 
 <SECTION>

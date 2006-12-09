@@ -25,6 +25,7 @@
 
 #include "dialogs-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
@@ -78,6 +79,7 @@ static void   offset_center_clicked  (GtkWidget    *widget,
 
 GtkWidget *
 resize_dialog_new (GimpViewable       *viewable,
+                   GimpContext        *context,
                    const gchar        *title,
                    const gchar        *role,
                    GtkWidget          *parent,
@@ -104,6 +106,7 @@ resize_dialog_new (GimpViewable       *viewable,
   gdouble       xres, yres;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (callback != NULL, NULL);
 
   if (GIMP_IS_IMAGE (viewable))
@@ -131,7 +134,7 @@ resize_dialog_new (GimpViewable       *viewable,
       g_return_val_if_reached (NULL);
     }
 
-  dialog = gimp_viewable_dialog_new (viewable,
+  dialog = gimp_viewable_dialog_new (viewable, context,
                                      title, role, GIMP_STOCK_RESIZE, title,
                                      parent,
                                      help_func, help_id,
@@ -259,7 +262,8 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_widget_show (private->area);
 
   gimp_viewable_get_preview_size (viewable, 200, FALSE, TRUE, &width, &height);
-  pixbuf = gimp_viewable_get_pixbuf (viewable, width, height);
+  pixbuf = gimp_viewable_get_pixbuf (viewable, context,
+                                     width, height);
 
   if (pixbuf)
     gimp_offset_area_set_pixbuf (GIMP_OFFSET_AREA (private->area), pixbuf);

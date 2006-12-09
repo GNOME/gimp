@@ -100,6 +100,8 @@ enum
   UPDATE_SAMPLE_POINT,
   SAMPLE_POINT_ADDED,
   SAMPLE_POINT_REMOVED,
+  PARASITE_ATTACHED,
+  PARASITE_DETACHED,
   COLORMAP_CHANGED,
   UNDO_EVENT,
   FLUSH,
@@ -406,6 +408,26 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
+  gimp_image_signals[PARASITE_ATTACHED] =
+    g_signal_new ("parasite-attached",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, parasite_attached),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__STRING,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_STRING);
+
+  gimp_image_signals[PARASITE_DETACHED] =
+    g_signal_new ("parasite-detached",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, parasite_detached),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__STRING,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_STRING);
+
   gimp_image_signals[COLORMAP_CHANGED] =
     g_signal_new ("colormap-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -472,6 +494,8 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->update_sample_point          = NULL;
   klass->sample_point_added           = NULL;
   klass->sample_point_removed         = NULL;
+  klass->parasite_attached            = NULL;
+  klass->parasite_detached            = NULL;
   klass->colormap_changed             = gimp_image_real_colormap_changed;
   klass->undo_event                   = NULL;
   klass->flush                        = gimp_image_real_flush;
@@ -680,8 +704,7 @@ gimp_image_constructor (GType                  type,
   image->selection_mask = gimp_selection_new (image,
                                               image->width,
                                               image->height);
-  g_object_ref (image->selection_mask);
-  gimp_item_sink (GIMP_ITEM (image->selection_mask));
+  g_object_ref_sink (image->selection_mask);
 
   g_signal_connect (image->selection_mask, "update",
                     G_CALLBACK (gimp_image_mask_update),
@@ -1915,16 +1938,15 @@ gimp_image_flush (GimpImage *image)
 /*  color transforms / utilities  */
 
 void
-gimp_image_get_foreground (const GimpImage    *image,
-                           const GimpDrawable *drawable,
-                           GimpContext        *context,
-                           guchar             *fg)
+gimp_image_get_foreground (const GimpImage *image,
+                           GimpContext     *context,
+                           GimpImageType    dest_type,
+                           guchar          *fg)
 {
   GimpRGB  color;
   guchar   pfg[3];
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (! drawable || GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (fg != NULL);
 
@@ -1932,20 +1954,19 @@ gimp_image_get_foreground (const GimpImage    *image,
 
   gimp_rgb_get_uchar (&color, &pfg[0], &pfg[1], &pfg[2]);
 
-  gimp_image_transform_color (image, drawable, fg, GIMP_RGB, pfg);
+  gimp_image_transform_color (image, dest_type, fg, GIMP_RGB, pfg);
 }
 
 void
-gimp_image_get_background (const GimpImage    *image,
-                           const GimpDrawable *drawable,
-                           GimpContext        *context,
-                           guchar             *bg)
+gimp_image_get_background (const GimpImage *image,
+                           GimpContext     *context,
+                           GimpImageType    dest_type,
+                           guchar          *bg)
 {
   GimpRGB  color;
   guchar   pbg[3];
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (! drawable || GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (bg != NULL);
 
@@ -1953,7 +1974,7 @@ gimp_image_get_background (const GimpImage    *image,
 
   gimp_rgb_get_uchar (&color, &pbg[0], &pbg[1], &pbg[2]);
 
-  gimp_image_transform_color (image, drawable, bg, GIMP_RGB, pbg);
+  gimp_image_transform_color (image, dest_type, bg, GIMP_RGB, pbg);
 }
 
 void
@@ -2011,37 +2032,30 @@ gimp_image_get_color (const GimpImage *src_image,
 
 void
 gimp_image_transform_rgb (const GimpImage    *dest_image,
-                          const GimpDrawable *dest_drawable,
+                          GimpImageType       dest_type,
                           const GimpRGB      *rgb,
                           guchar             *color)
 {
   guchar col[3];
 
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
-  g_return_if_fail (! dest_drawable || GIMP_IS_DRAWABLE (dest_drawable));
   g_return_if_fail (rgb != NULL);
   g_return_if_fail (color != NULL);
 
   gimp_rgb_get_uchar (rgb, &col[0], &col[1], &col[2]);
 
-  gimp_image_transform_color (dest_image, dest_drawable, color, GIMP_RGB, col);
+  gimp_image_transform_color (dest_image, dest_type, color, GIMP_RGB, col);
 }
 
 void
 gimp_image_transform_color (const GimpImage    *dest_image,
-                            const GimpDrawable *dest_drawable,
+                            GimpImageType       dest_type,
                             guchar             *dest,
                             GimpImageBaseType   src_type,
                             const guchar       *src)
 {
-  GimpImageType dest_type;
-
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (src_type != GIMP_INDEXED);
-
-  dest_type = (dest_drawable ?
-               gimp_drawable_type (dest_drawable) :
-               gimp_image_base_type_with_alpha (dest_image));
 
   switch (src_type)
     {
@@ -2109,10 +2123,10 @@ gimp_image_transform_color (const GimpImage    *dest_image,
 }
 
 TempBuf *
-gimp_image_transform_temp_buf (const GimpImage    *dest_image,
-                               const GimpDrawable *dest_drawable,
-                               TempBuf            *temp_buf,
-                               gboolean           *new_buf)
+gimp_image_transform_temp_buf (const GimpImage *dest_image,
+                               GimpImageType    dest_type,
+                               TempBuf         *temp_buf,
+                               gboolean        *new_buf)
 {
   TempBuf       *ret_buf;
   GimpImageType  ret_buf_type;
@@ -2122,7 +2136,6 @@ gimp_image_transform_temp_buf (const GimpImage    *dest_image,
   gint           out_bytes;
 
   g_return_val_if_fail (GIMP_IMAGE (dest_image), NULL);
-  g_return_val_if_fail (GIMP_DRAWABLE (dest_drawable), NULL);
   g_return_val_if_fail (temp_buf != NULL, NULL);
   g_return_val_if_fail (new_buf != NULL, NULL);
 
@@ -2132,16 +2145,16 @@ gimp_image_transform_temp_buf (const GimpImage    *dest_image,
   is_rgb    = (in_bytes == 3 || in_bytes == 4);
 
   if (has_alpha)
-    ret_buf_type = gimp_drawable_type_with_alpha (dest_drawable);
+    ret_buf_type = GIMP_IMAGE_TYPE_WITH_ALPHA (dest_type);
   else
-    ret_buf_type = gimp_drawable_type_without_alpha (dest_drawable);
+    ret_buf_type = GIMP_IMAGE_TYPE_WITHOUT_ALPHA (dest_type);
 
   out_bytes = GIMP_IMAGE_TYPE_BYTES (ret_buf_type);
 
   /*  If the pattern doesn't match the image in terms of color type,
    *  transform it.  (ie  pattern is RGB, image is indexed)
    */
-  if (in_bytes != out_bytes || gimp_drawable_is_indexed (dest_drawable))
+  if (in_bytes != out_bytes || GIMP_IMAGE_TYPE_IS_INDEXED (dest_type))
     {
       guchar *src;
       guchar *dest;
@@ -2157,7 +2170,7 @@ gimp_image_transform_temp_buf (const GimpImage    *dest_image,
 
       while (size--)
         {
-          gimp_image_transform_color (dest_image, dest_drawable, dest,
+          gimp_image_transform_color (dest_image, dest_type, dest,
                                       is_rgb ? GIMP_RGB : GIMP_GRAY, src);
 
           /* Handle alpha */
@@ -2295,6 +2308,9 @@ gimp_image_parasite_attach (GimpImage          *image,
     }
 
   g_free (copy);
+
+  g_signal_emit (image, gimp_image_signals[PARASITE_ATTACHED], 0,
+                 parasite->name);
 }
 
 void
@@ -2315,6 +2331,9 @@ gimp_image_parasite_detach (GimpImage   *image,
                                                 name);
 
   gimp_parasite_list_remove (image->parasites, name);
+
+  g_signal_emit (image, gimp_image_signals[PARASITE_DETACHED], 0,
+                 name);
 }
 
 
@@ -2648,67 +2667,51 @@ gimp_image_get_vectors_index (const GimpImage   *image,
                                          GIMP_OBJECT (vectors));
 }
 
+static GimpItem *
+gimp_image_get_item_by_tattoo (GimpContainer *items,
+                               GimpTattoo     tattoo)
+{
+  GList *list;
+
+  for (list = GIMP_LIST (items)->list; list; list = g_list_next (list))
+    {
+      GimpItem *item = list->data;
+
+      if (gimp_item_get_tattoo (item) == tattoo)
+        return item;
+    }
+
+  return NULL;
+}
+
 GimpLayer *
 gimp_image_get_layer_by_tattoo (const GimpImage *image,
                                 GimpTattoo       tattoo)
 {
-  GList *list;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  for (list = GIMP_LIST (image->layers)->list;
-       list;
-       list = g_list_next (list))
-    {
-      GimpLayer *layer = list->data;
-
-      if (gimp_item_get_tattoo (GIMP_ITEM (layer)) == tattoo)
-        return layer;
-    }
-
-  return NULL;
+  return GIMP_LAYER (gimp_image_get_item_by_tattoo (image->layers,
+                                                    tattoo));
 }
 
 GimpChannel *
 gimp_image_get_channel_by_tattoo (const GimpImage *image,
                                   GimpTattoo       tattoo)
 {
-  GList *list;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  for (list = GIMP_LIST (image->channels)->list;
-       list;
-       list = g_list_next (list))
-    {
-      GimpChannel *channel = list->data;
-
-      if (gimp_item_get_tattoo (GIMP_ITEM (channel)) == tattoo)
-        return channel;
-    }
-
-  return NULL;
+  return GIMP_CHANNEL (gimp_image_get_item_by_tattoo (image->channels,
+                                                      tattoo));
 }
 
 GimpVectors *
 gimp_image_get_vectors_by_tattoo (const GimpImage *image,
                                   GimpTattoo       tattoo)
 {
-  GList *list;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  for (list = GIMP_LIST (image->vectors)->list;
-       list;
-       list = g_list_next (list))
-    {
-      GimpVectors *vectors = list->data;
-
-      if (gimp_item_get_tattoo (GIMP_ITEM (vectors)) == tattoo)
-        return vectors;
-    }
-
-  return NULL;
+  return GIMP_VECTORS (gimp_image_get_item_by_tattoo (image->vectors,
+                                                      tattoo));
 }
 
 GimpLayer *
@@ -2717,8 +2720,8 @@ gimp_image_get_layer_by_name (const GimpImage *image,
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return (GimpLayer *) gimp_container_get_child_by_name (image->layers,
-                                                         name);
+  return GIMP_LAYER (gimp_container_get_child_by_name (image->layers,
+                                                       name));
 }
 
 GimpChannel *
@@ -2727,8 +2730,8 @@ gimp_image_get_channel_by_name (const GimpImage *image,
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return (GimpChannel *) gimp_container_get_child_by_name (image->channels,
-                                                           name);
+  return GIMP_CHANNEL (gimp_container_get_child_by_name (image->channels,
+                                                         name));
 }
 
 GimpVectors *
@@ -2737,8 +2740,8 @@ gimp_image_get_vectors_by_name (const GimpImage *image,
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return (GimpVectors *) gimp_container_get_child_by_name (image->vectors,
-                                                           name);
+  return GIMP_VECTORS (gimp_container_get_child_by_name (image->vectors,
+                                                         name));
 }
 
 gboolean
@@ -2811,8 +2814,9 @@ gimp_image_add_layer (GimpImage *image,
   if (position > gimp_container_num_children (image->layers))
     position = gimp_container_num_children (image->layers);
 
+  g_object_ref_sink (layer);
   gimp_container_insert (image->layers, GIMP_OBJECT (layer), position);
-  gimp_item_sink (GIMP_ITEM (layer));
+  g_object_unref (layer);
 
   /*  notify the layers dialog of the currently active layer  */
   gimp_image_set_active_layer (image, layer);
@@ -2914,6 +2918,63 @@ gimp_image_remove_layer (GimpImage *image,
 
   if (undo_group)
     gimp_image_undo_group_end (image);
+}
+
+void
+gimp_image_add_layers (GimpImage   *image,
+                       GList       *layers,
+                       gint         position,
+                       gint         x,
+                       gint         y,
+                       gint         width,
+                       gint         height,
+                       const gchar *undo_desc)
+{
+  GList *list;
+  gint   layers_x      = G_MAXINT;
+  gint   layers_y      = G_MAXINT;
+  gint   layers_width  = 0;
+  gint   layers_height = 0;
+  gint   offset_x;
+  gint   offset_y;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (layers != NULL);
+
+  for (list = layers; list; list = g_list_next (list))
+    {
+      GimpItem *item = GIMP_ITEM (list->data);
+      gint      off_x, off_y;
+
+      gimp_item_offsets (item, &off_x, &off_y);
+
+      layers_x = MIN (layers_x, off_x);
+      layers_y = MIN (layers_y, off_y);
+
+      layers_width  = MAX (layers_width,
+                           off_x + gimp_item_width (item)  - layers_x);
+      layers_height = MAX (layers_height,
+                           off_y + gimp_item_height (item) - layers_y);
+    }
+
+  offset_x = x + (width  - layers_width)  / 2 - layers_x;
+  offset_y = y + (height - layers_height) / 2 - layers_y;
+
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_ADD, undo_desc);
+
+  for (list = layers; list; list = g_list_next (list))
+    {
+      GimpItem *new_item = GIMP_ITEM (list->data);
+
+      gimp_item_translate (new_item, offset_x, offset_y, FALSE);
+
+      gimp_image_add_layer (image, GIMP_LAYER (new_item), position);
+
+      if (position != -1)
+        position++;
+    }
+
+  gimp_image_undo_group_end (image);
 }
 
 gboolean
@@ -3075,8 +3136,9 @@ gimp_image_add_channel (GimpImage   *image,
   if (position > gimp_container_num_children (image->channels))
     position = gimp_container_num_children (image->channels);
 
+  g_object_ref_sink (channel);
   gimp_container_insert (image->channels, GIMP_OBJECT (channel), position);
-  gimp_item_sink (GIMP_ITEM (channel));
+  g_object_unref (channel);
 
   /*  notify this image of the currently active channel  */
   gimp_image_set_active_channel (image, channel);
@@ -3326,8 +3388,9 @@ gimp_image_add_vectors (GimpImage   *image,
   if (position > gimp_container_num_children (image->vectors))
     position = gimp_container_num_children (image->vectors);
 
+  g_object_ref_sink (vectors);
   gimp_container_insert (image->vectors, GIMP_OBJECT (vectors), position);
-  gimp_item_sink (GIMP_ITEM (vectors));
+  g_object_unref (vectors);
 
   /*  notify this image of the currently active vectors  */
   gimp_image_set_active_vectors (image, vectors);

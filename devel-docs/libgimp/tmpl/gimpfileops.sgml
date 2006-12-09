@@ -49,6 +49,18 @@ File operations (load, save, etc.)
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_file_load_layers ##### -->
+<para>
+
+</para>
+
+@run_mode: 
+@image_ID: 
+@filename: 
+@num_layers: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_file_save ##### -->
 <para>
 
@@ -59,6 +71,16 @@ File operations (load, save, etc.)
 @drawable_ID: 
 @filename: 
 @raw_filename: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_file_save_thumbnail ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@filename: 
 @Returns: 
 
 

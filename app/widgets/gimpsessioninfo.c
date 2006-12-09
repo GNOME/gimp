@@ -422,7 +422,7 @@ gimp_session_info_save (GimpSessionInfo  *info,
                 {
                   GimpContainerView *view;
                   GEnumValue        *enum_value;
-                  gchar             *tab_style = "icon";
+                  const gchar       *tab_style = "icon";
                   gint               view_size = -1;
                   GList             *aux_info;
 

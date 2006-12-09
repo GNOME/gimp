@@ -71,6 +71,10 @@ struct _GimpModuleInfo
 typedef const GimpModuleInfo * (* GimpModuleQueryFunc)    (GTypeModule *module);
 typedef gboolean               (* GimpModuleRegisterFunc) (GTypeModule *module);
 
+/* GimpModules have to implement these */
+G_MODULE_EXPORT const GimpModuleInfo * gimp_module_query    (GTypeModule *module);
+G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module);
+
 
 #define GIMP_TYPE_MODULE            (gimp_module_get_type ())
 #define GIMP_MODULE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MODULE, GimpModule))
@@ -137,7 +141,7 @@ const gchar * gimp_module_state_name       (GimpModuleState  state);
 
 #ifndef GIMP_DISABLE_DEPRECATED
 GType         gimp_module_register_enum    (GTypeModule      *module,
-                                            const gchar             *name,
+                                            const gchar      *name,
                                             const GEnumValue *const_static_values);
 #endif /* GIMP_DISABLE_DEPRECATED */
 
@@ -156,4 +160,4 @@ void             gimp_module_info_free (GimpModuleInfo       *info);
 
 G_END_DECLS
 
-#endif  /* __GIMP_MODULE_INFO_H__ */
+#endif  /* __GIMP_MODULE_H__ */

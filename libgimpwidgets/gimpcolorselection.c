@@ -25,6 +25,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "gimpwidgetstypes.h"
 
@@ -65,6 +66,17 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_CONFIG
+};
+
+
+static void   gimp_color_selection_set_property      (GObject            *object,
+                                                      guint               property_id,
+                                                      const GValue       *value,
+                                                      GParamSpec         *pspec);
 
 static void   gimp_color_selection_switch_page       (GtkWidget          *widget,
                                                       GtkNotebookPage    *page,
@@ -103,6 +115,18 @@ static guint selection_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_color_selection_class_init (GimpColorSelectionClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->set_property = gimp_color_selection_set_property;
+
+  klass->color_changed       = NULL;
+
+  g_object_class_install_property (object_class, PROP_CONFIG,
+                                   g_param_spec_object ("config",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_COLOR_CONFIG,
+                                                        G_PARAM_WRITABLE));
+
   selection_signals[COLOR_CHANGED] =
     g_signal_new ("color-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -112,7 +136,6 @@ gimp_color_selection_class_init (GimpColorSelectionClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  klass->color_changed = NULL;
 }
 
 static void
@@ -277,6 +300,27 @@ gimp_color_selection_init (GimpColorSelection *selection)
                     G_CALLBACK (gimp_color_selection_entry_changed),
                     selection);
 }
+
+static void
+gimp_color_selection_set_property (GObject      *object,
+                                   guint         property_id,
+                                   const GValue *value,
+                                   GParamSpec   *pspec)
+{
+  GimpColorSelection *selection = GIMP_COLOR_SELECTION (object);
+
+  switch (property_id)
+    {
+    case PROP_CONFIG:
+      gimp_color_selection_set_config (selection, g_value_get_object (value));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
 
 /**
  * gimp_color_selection_new:
@@ -444,6 +488,27 @@ gimp_color_selection_color_changed (GimpColorSelection *selection)
   g_signal_emit (selection, selection_signals[COLOR_CHANGED], 0);
 }
 
+/**
+ * gimp_color_selection_set_config:
+ * @selection:
+ * @config:
+ *
+ * Sets the color management configuration to use with this color selection.
+ *
+ * Since: GIMP 2.4
+ */
+void
+gimp_color_selection_set_config (GimpColorSelection *selection,
+                                 GimpColorConfig    *config)
+{
+  g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
+  g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
+
+  gimp_color_selector_set_config (GIMP_COLOR_SELECTOR (selection->notebook),
+                                  config);
+  gimp_color_selector_set_config (GIMP_COLOR_SELECTOR (selection->scales),
+                                  config);
+}
 
 /*  private functions  */
 

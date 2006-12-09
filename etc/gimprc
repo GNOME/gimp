@@ -13,9 +13,9 @@
 # relative to your home directory.
 
 # Sets the folder for temporary storage. Files will appear here during the
-# course of running the GIMP.  Most files will disappear when the GIMP exits,
-# but some files are likely to remain, so it is best if this folder not be
-# one that is shared by other users.  This is a single folder.
+# course of running GIMP.  Most files will disappear when GIMP exits, but
+# some files are likely to remain, so it is best if this folder not be one
+# that is shared by other users.  This is a single folder.
 # 
 # (temp-path "${gimp_dir}/tmp")
 
@@ -34,21 +34,20 @@
 # 
 # (num-processors 2)
 
-# The tile cache is used to make sure the GIMP doesn't thrash tiles between
-# memory and disk. Setting this value higher will cause the GIMP to use less
-# swap space, but will also cause the GIMP to use more memory. Conversely, a
-# smaller cache size causes the GIMP to use more swap space and less memory. 
-# The integer size can contain a suffix of 'B', 'K', 'M' or 'G' which makes
-# GIMP interpret the size as being specified in bytes, kilobytes, megabytes
-# or gigabytes. If no suffix is specified the size defaults to being
-# specified in kilobytes.
+# When the amount of pixel data exceeds this limit, GIMP will start to swap
+# tiles to disk.  This is a lot slower but it makes it possible to work on
+# images that wouldn't fit into memory otherwise.  If you have a lot of RAM,
+# you may want to set this to a higher value.  The integer size can contain a
+# suffix of 'B', 'K', 'M' or 'G' which makes GIMP interpret the size as being
+# specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
+# specified the size defaults to being specified in kilobytes.
 # 
-# (tile-cache-size 256M)
+# (tile-cache-size 1024M)
 
 # Sets the level of interpolation used for scaling and other transformations.
 #  Possible values are none, linear, cubic and lanczos.
 # 
-# (interpolation-type linear)
+# (interpolation-type cubic)
 
 # Sets the plug-in search path.  This is a colon-separated list of folders to
 # search.
@@ -196,7 +195,7 @@
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 # size defaults to being specified in kilobytes.
 # 
-# (undo-size 16M)
+# (undo-size 32M)
 
 # Sets the size of the previews in the Undo History.  Possible values are
 # tiny, extra-small, small, medium, large, extra-large, huge, enormous and
@@ -245,7 +244,7 @@
 # (install-colormap no)
 
 # Generally only a concern for 8-bit displays, this sets the minimum number
-# of system colors allocated for the GIMP.  This is an integer value.
+# of system colors allocated for GIMP.  This is an integer value.
 # 
 # (min-colors 144)
 
@@ -257,6 +256,11 @@
 #     (display-rendering-intent perceptual)
 #     (simulation-rendering-intent perceptual)
 #     (display-module "CdisplayLcms"))
+
+# How to handle embedded color profiles when opening a file.  Possible values
+# are ask, keep and convert.
+# 
+# (color-profile-policy ask)
 
 # Add all opened and saved files to the document history on disk.  Possible
 # values are yes and no.
@@ -283,7 +287,7 @@
 # milliseconds (less time indicates faster marching).  This is an integer
 # value.
 # 
-# (marching-ants-speed 300)
+# (marching-ants-speed 100)
 
 # When enabled, the image window will automatically resize itself when
 # zooming into and out of images.  Possible values are yes and no.
@@ -415,7 +419,7 @@
 # 
 # (monitor-yresolution 72.000000)
 
-# When enabled, the GIMP will use the monitor resolution from the windowing
+# When enabled, GIMP will use the monitor resolution from the windowing
 # system.  Possible values are yes and no.
 # 
 # (monitor-resolution-from-windowing-system yes)
@@ -463,6 +467,11 @@
 # 
 # (activate-on-focus yes)
 
+# What to do when the space bar is pressed in the image window.  Possible
+# values are none, pan and move.
+# 
+# (space-bar-action pan)
+
 # Tools such as fuzzy-select and bucket fill find regions based on a
 # seed-fill algorithm.  The seed fill starts at the initially selected pixel
 # and progresses in all directions until the difference of pixel intensity
@@ -471,14 +480,14 @@
 # 
 # (default-threshold 15)
 
-# If enabled, the move tool changes the active layer or path when a layer or
-# path is being picked. This used to be the default behaviour in older
-# versions.  Possible values are yes and no.
+# If enabled, the move tool sets the edited layer or path as active.  This
+# used to be the default behaviour in older versions.  Possible values are
+# yes and no.
 # 
 # (move-tool-changes-active no)
 
-# When enabled, the GIMP will not save an image if it has not been changed
-# since it was opened.  Possible values are yes and no.
+# When enabled, GIMP will not save an image if it has not been changed since
+# it was opened.  Possible values are yes and no.
 # 
 # (trust-dirty-flag no)
 
@@ -487,8 +496,8 @@
 # 
 # (save-device-status no)
 
-# Save the positions and sizes of the main dialogs when the GIMP exits. 
-# Possible values are yes and no.
+# Save the positions and sizes of the main dialogs when GIMP exits.  Possible
+# values are yes and no.
 # 
 # (save-session-info yes)
 
@@ -497,7 +506,7 @@
 # 
 # (restore-session yes)
 
-# Save the tool options when the GIMP exits.  Possible values are yes and no.
+# Save the tool options when GIMP exits.  Possible values are yes and no.
 # 
 # (save-tool-options no)
 
@@ -521,8 +530,8 @@
 # 
 # (can-change-accels no)
 
-# Save changed keyboard shortcuts when the GIMP exits.  Possible values are
-# yes and no.
+# Save changed keyboard shortcuts when GIMP exits.  Possible values are yes
+# and no.
 # 
 # (save-accels yes)
 

@@ -27,15 +27,14 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "pdb-types.h"
+#include "plug-in-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpparamspecs.h"
 
 #define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
-#include "plug-in/gimppluginmanager-call.h"
-
+#include "gimppluginmanager-call.h"
 #include "gimppluginprocedure.h"
 
 #include "gimp-intl.h"
@@ -296,7 +295,6 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
 {
   GimpProcedure *procedure;
   gchar         *basename = NULL;
-  gchar         *prefix;
   const gchar   *required = NULL;
   gchar         *p;
 
@@ -306,14 +304,25 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
 
   procedure = GIMP_PROCEDURE (proc);
 
-  prefix = g_strdup (menu_path);
+  p = strchr (menu_path, '>');
+  if (p == NULL || (*(++p) && *p != '/'))
+    {
+      basename = g_filename_display_basename (proc->prog);
 
-  p = strchr (prefix, '>') + 1;
-  if (p)
-    *p = '\0';
+      g_set_error (error, 0, 0,
+                   "Plug-In \"%s\"\n(%s)\n"
+                   "attempted to install procedure \"%s\"\n"
+                   "in the invalid menu location \"%s\".\n"
+                   "The menu path must look like either \"<Prefix>\" "
+                   "or \"<Prefix>/path/to/item\".",
+                   basename, gimp_filename_to_utf8 (proc->prog),
+                   GIMP_OBJECT (proc)->name,
+                   menu_path);
+      goto failure;
+    }
 
-  if (strcmp (prefix, "<Toolbox>") == 0 ||
-      strcmp (prefix, "<Image>")   == 0)
+  if (g_str_has_prefix (menu_path, "<Toolbox>") ||
+      g_str_has_prefix (menu_path, "<Image>"))
     {
       if ((procedure->num_args < 1) ||
           ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]))
@@ -322,19 +331,35 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           goto failure;
         }
     }
-  else if (strcmp (prefix, "<Layers>")   == 0 ||
-           strcmp (prefix, "<Channels>") == 0)
+  else if (g_str_has_prefix (menu_path, "<Layers>"))
     {
       if ((procedure->num_args < 3)                             ||
           ! GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) ||
           ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) ||
-          ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]))
+          ! (G_TYPE_FROM_INSTANCE (procedure->args[2])
+                               == GIMP_TYPE_PARAM_LAYER_ID ||
+             G_TYPE_FROM_INSTANCE (procedure->args[2])
+                               == GIMP_TYPE_PARAM_DRAWABLE_ID))
         {
-          required = "INT32, IMAGE, DRAWABLE";
+          required = "INT32, IMAGE, (LAYER | DRAWABLE)";
           goto failure;
         }
     }
-  else if (strcmp (prefix, "<Vectors>") == 0)
+  else if (g_str_has_prefix (menu_path, "<Channels>"))
+    {
+      if ((procedure->num_args < 3)                             ||
+          ! GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) ||
+          ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) ||
+          ! (G_TYPE_FROM_INSTANCE (procedure->args[2])
+                               == GIMP_TYPE_PARAM_CHANNEL_ID ||
+             G_TYPE_FROM_INSTANCE (procedure->args[2])
+                               == GIMP_TYPE_PARAM_DRAWABLE_ID))
+        {
+          required = "INT32, IMAGE, (CHANNEL | DRAWABLE)";
+          goto failure;
+        }
+    }
+  else if (g_str_has_prefix (menu_path, "<Vectors>"))
     {
       if ((procedure->num_args < 3)                            ||
           ! GIMP_IS_PARAM_SPEC_INT32      (procedure->args[0]) ||
@@ -345,7 +370,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           goto failure;
         }
     }
-  else if (strcmp (prefix, "<ColormapEditor>") == 0)
+  else if (g_str_has_prefix (menu_path, "<Colormap>"))
     {
       if ((procedure->num_args < 2)                            ||
           ! GIMP_IS_PARAM_SPEC_INT32      (procedure->args[0]) ||
@@ -355,7 +380,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           goto failure;
         }
     }
-  else if (strcmp (prefix, "<Load>") == 0)
+  else if (g_str_has_prefix (menu_path, "<Load>"))
     {
       if ((procedure->num_args < 3)                       ||
           ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]) ||
@@ -373,7 +398,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           goto failure;
         }
     }
-  else if (strcmp (prefix, "<Save>") == 0)
+  else if (g_str_has_prefix (menu_path, "<Save>"))
     {
       if ((procedure->num_args < 5)                             ||
           ! GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) ||
@@ -386,12 +411,12 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           goto failure;
         }
     }
-  else if (strcmp (prefix, "<Brushes>")   == 0 ||
-           strcmp (prefix, "<Gradients>") == 0 ||
-           strcmp (prefix, "<Palettes>")  == 0 ||
-           strcmp (prefix, "<Patterns>")  == 0 ||
-           strcmp (prefix, "<Fonts>")     == 0 ||
-           strcmp (prefix, "<Buffers>")   == 0)
+  else if (g_str_has_prefix (menu_path, "<Brushes>")   ||
+           g_str_has_prefix (menu_path, "<Gradients>") ||
+           g_str_has_prefix (menu_path, "<Palettes>")  ||
+           g_str_has_prefix (menu_path, "<Patterns>")  ||
+           g_str_has_prefix (menu_path, "<Fonts>")     ||
+           g_str_has_prefix (menu_path, "<Buffers>"))
     {
       if ((procedure->num_args < 1) ||
           ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]))
@@ -410,7 +435,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
                    "in the invalid menu location \"%s\".\n"
                    "Use either \"<Toolbox>\", \"<Image>\", "
                    "\"<Layers>\", \"<Channels>\", \"<Vectors>\", "
-                   "\"<ColormapEditor>\", \"<Load>\", \"<Save>\", "
+                   "\"<Colormap>\", \"<Load>\", \"<Save>\", "
                    "\"<Brushes>\", \"<Gradients>\", \"<Palettes>\", "
                    "\"<Patterns>\" or \"<Buffers>\".",
                    basename, gimp_filename_to_utf8 (proc->prog),
@@ -419,25 +444,6 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
       goto failure;
     }
 
-  p = strchr (menu_path, '>') + 1;
-
-  if (*p != '/' && *p != '\0')
-    {
-      basename = g_filename_display_basename (proc->prog);
-
-      g_set_error (error, 0, 0,
-                   "Plug-In \"%s\"\n(%s)\n"
-                   "attempted to install procedure \"%s\"\n"
-                   "in the invalid menu location \"%s\".\n"
-                   "The menu path must look like either \"<Prefix>\" "
-                   "or \"<Prefix>/path/to/item\".",
-                   basename, gimp_filename_to_utf8 (proc->prog),
-                   GIMP_OBJECT (proc)->name,
-                   menu_path);
-      goto failure;
-    }
-
-  g_free (prefix);
   g_free (basename);
 
   proc->menu_paths = g_list_append (proc->menu_paths, g_strdup (menu_path));
@@ -450,20 +456,25 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
  failure:
   if (required)
     {
+      gchar *prefix = g_strdup (menu_path);
+
+      p = strchr (prefix, '>') + 1;
+      *p = '\0';
+
       basename = g_filename_display_basename (proc->prog);
 
       g_set_error (error, 0, 0,
                    "Plug-In \"%s\"\n(%s)\n\n"
                    "attempted to install %s procedure \"%s\" "
                    "which does not take the standard %s Plug-In "
-                   "arguments.\n"
-                   "(%s)",
+                   "arguments: (%s).",
                    basename, gimp_filename_to_utf8 (proc->prog),
                    prefix, GIMP_OBJECT (proc)->name, prefix,
                    required);
+
+      g_free (prefix);
     }
 
-  g_free (prefix);
   g_free (basename);
 
   return FALSE;
@@ -638,7 +649,8 @@ gimp_plug_in_procedure_get_sensitive (const GimpPlugInProcedure *proc,
 }
 
 static GimpPlugInImageType
-image_types_parse (const gchar *image_types)
+image_types_parse (const gchar *name,
+                   const gchar *image_types)
 {
   const gchar         *type_spec = image_types;
   GimpPlugInImageType  types     = 0;
@@ -659,68 +671,70 @@ image_types_parse (const gchar *image_types)
 
       if (*image_types)
         {
-          if (strncmp (image_types, "RGBA", 4) == 0)
+          if (g_str_has_prefix (image_types, "RGBA"))
             {
               types |= GIMP_PLUG_IN_RGBA_IMAGE;
-              image_types += 4;
+              image_types += strlen ("RGBA");
             }
-          else if (strncmp (image_types, "RGB*", 4) == 0)
+          else if (g_str_has_prefix (image_types, "RGB*"))
             {
               types |= GIMP_PLUG_IN_RGB_IMAGE | GIMP_PLUG_IN_RGBA_IMAGE;
-              image_types += 4;
+              image_types += strlen ("RGB*");
             }
-          else if (strncmp (image_types, "RGB", 3) == 0)
+          else if (g_str_has_prefix (image_types, "RGB"))
             {
               types |= GIMP_PLUG_IN_RGB_IMAGE;
-              image_types += 3;
+              image_types += strlen ("RGB");
             }
-          else if (strncmp (image_types, "GRAYA", 5) == 0)
+          else if (g_str_has_prefix (image_types, "GRAYA"))
             {
               types |= GIMP_PLUG_IN_GRAYA_IMAGE;
-              image_types += 5;
+              image_types += strlen ("GRAYA");
             }
-          else if (strncmp (image_types, "GRAY*", 5) == 0)
+          else if (g_str_has_prefix (image_types, "GRAY*"))
             {
               types |= GIMP_PLUG_IN_GRAY_IMAGE | GIMP_PLUG_IN_GRAYA_IMAGE;
-              image_types += 5;
+              image_types += strlen ("GRAY*");
             }
-          else if (strncmp (image_types, "GRAY", 4) == 0)
+          else if (g_str_has_prefix (image_types, "GRAY"))
             {
               types |= GIMP_PLUG_IN_GRAY_IMAGE;
-              image_types += 4;
+              image_types += strlen ("GRAY");
             }
-          else if (strncmp (image_types, "INDEXEDA", 8) == 0)
+          else if (g_str_has_prefix (image_types, "INDEXEDA"))
             {
               types |= GIMP_PLUG_IN_INDEXEDA_IMAGE;
-              image_types += 8;
+              image_types += strlen ("INDEXEDA");
             }
-          else if (strncmp (image_types, "INDEXED*", 8) == 0)
+          else if (g_str_has_prefix (image_types, "INDEXED*"))
             {
               types |= GIMP_PLUG_IN_INDEXED_IMAGE | GIMP_PLUG_IN_INDEXEDA_IMAGE;
-              image_types += 8;
+              image_types += strlen ("INDEXED*");
             }
-          else if (strncmp (image_types, "INDEXED", 7) == 0)
+          else if (g_str_has_prefix (image_types, "INDEXED"))
             {
               types |= GIMP_PLUG_IN_INDEXED_IMAGE;
-              image_types += 7;
+              image_types += strlen ("INDEXED");
             }
-          else if (strncmp (image_types, "*", 1) == 0)
+          else if (g_str_has_prefix (image_types, "*"))
             {
               types |= (GIMP_PLUG_IN_RGB_IMAGE     | GIMP_PLUG_IN_RGBA_IMAGE  |
                         GIMP_PLUG_IN_GRAY_IMAGE    | GIMP_PLUG_IN_GRAYA_IMAGE |
                         GIMP_PLUG_IN_INDEXED_IMAGE | GIMP_PLUG_IN_INDEXEDA_IMAGE);
-              image_types += 1;
+              image_types += strlen ("*");
             }
           else
             {
-              g_printerr ("image_type contains unrecognizable parts: '%s'\n",
-                          type_spec);
+              g_printerr ("%s: image-type contains unrecognizable parts:"
+                          "'%s'\n", name, type_spec);
 
               while (*image_types &&
                      ((*image_types != ' ') ||
                       (*image_types != '\t') ||
                       (*image_types != ',')))
-                image_types++;
+                {
+                  image_types++;
+                }
             }
         }
     }
@@ -737,9 +751,9 @@ gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure *proc,
   if (proc->image_types)
     g_free (proc->image_types);
 
-  proc->image_types = g_strdup (image_types);
-
-  proc->image_types_val = image_types_parse (proc->image_types);
+  proc->image_types     = g_strdup (image_types);
+  proc->image_types_val = image_types_parse (gimp_object_get_name (GIMP_OBJECT (proc)),
+                                             proc->image_types);
 }
 
 static GSList *

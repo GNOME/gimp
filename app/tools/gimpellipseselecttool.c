@@ -29,7 +29,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -46,7 +45,7 @@
 static void   gimp_ellipse_select_tool_draw   (GimpDrawTool       *draw_tool);
 
 static void   gimp_ellipse_select_tool_select (GimpRectSelectTool *rect_tool,
-                                               SelectOps           operation,
+                                               GimpChannelOps      operation,
                                                gint                x,
                                                gint                y,
                                                gint                w,
@@ -71,7 +70,7 @@ gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
                 0,
                 "gimp-ellipse-select-tool",
                 _("Ellipse Select"),
-                _("Select elliptical regions"),
+                _("Ellipse Select Tool: Select an elliptical region"),
                 N_("_Ellipse Select"), "E",
                 NULL, GIMP_HELP_TOOL_ELLIPSE_SELECT,
                 GIMP_STOCK_TOOL_ELLIPSE_SELECT,
@@ -84,11 +83,8 @@ gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass)
 {
-  GimpDrawToolClass       *draw_tool_class;
-  GimpRectSelectToolClass *rect_tool_class;
-
-  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
-  rect_tool_class = GIMP_RECT_SELECT_TOOL_CLASS (klass);
+  GimpDrawToolClass       *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GimpRectSelectToolClass *rect_tool_class = GIMP_RECT_SELECT_TOOL_CLASS (klass);
 
   draw_tool_class->draw   = gimp_ellipse_select_tool_draw;
 
@@ -98,20 +94,18 @@ gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass)
 static void
 gimp_ellipse_select_tool_init (GimpEllipseSelectTool *ellipse_select)
 {
-  GimpTool          *tool      = GIMP_TOOL (ellipse_select);
-  GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (ellipse_select);
+  GimpTool *tool = GIMP_TOOL (ellipse_select);
 
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_ELLIPSE_SELECT);
-  gimp_rectangle_tool_set_constrain (rect_tool, FALSE);
 }
 
 static void
 gimp_ellipse_select_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpRectSelectTool *rect_sel = GIMP_RECT_SELECT_TOOL (draw_tool);
-  gint x1, y1;
-  gint x2, y2;
+  gint                x1, y1;
+  gint                x2, y2;
 
   g_object_get (rect_sel,
                 "x1", &x1,
@@ -124,7 +118,7 @@ gimp_ellipse_select_tool_draw (GimpDrawTool *draw_tool)
                            FALSE,
                            x1, y1,
                            x2 - x1, y2 - y1,
-                           0, 23040,
+                           0, 360 * 64,
                            FALSE);
 
   gimp_rectangle_tool_draw (draw_tool);
@@ -132,17 +126,14 @@ gimp_ellipse_select_tool_draw (GimpDrawTool *draw_tool)
 
 static void
 gimp_ellipse_select_tool_select (GimpRectSelectTool *rect_tool,
-                                 SelectOps           operation,
+                                 GimpChannelOps      operation,
                                  gint                x,
                                  gint                y,
                                  gint                w,
                                  gint                h)
 {
-  GimpTool             *tool;
-  GimpSelectionOptions *options;
-
-  tool     = GIMP_TOOL (rect_tool);
-  options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  GimpTool             *tool    = GIMP_TOOL (rect_tool);
+  GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (rect_tool);
 
   gimp_channel_select_ellipse (gimp_image_get_mask (tool->display->image),
                                x, y, w, h,
@@ -150,5 +141,6 @@ gimp_ellipse_select_tool_select (GimpRectSelectTool *rect_tool,
                                options->antialias,
                                options->feather,
                                options->feather_radius,
-                               options->feather_radius);
+                               options->feather_radius,
+                               TRUE);
 }

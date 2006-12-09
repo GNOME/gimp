@@ -157,6 +157,18 @@ struct _GimpStrokeClass
   void          (* scale)                (GimpStroke            *stroke,
                                           gdouble                scale_x,
                                           gdouble                scale_y);
+  void          (* rotate)               (GimpStroke            *stroke,
+                                          gdouble                center_x,
+                                          gdouble                center_y,
+                                          gdouble                angle);
+  void          (* flip)                 (GimpStroke             *stroke,
+                                          GimpOrientationType    flip_type,
+                                          gdouble                axis);
+  void          (* flip_free)            (GimpStroke            *stroke,
+                                          gdouble                x1,
+                                          gdouble                y1,
+                                          gdouble                x2,
+                                          gdouble                y2);
   void          (* transform)            (GimpStroke            *stroke,
                                           const GimpMatrix3     *matrix);
 
@@ -308,6 +320,18 @@ void         gimp_stroke_translate            (GimpStroke            *stroke,
 void         gimp_stroke_scale                (GimpStroke            *stroke,
                                                gdouble                scale_x,
                                                gdouble                scale_y);
+void         gimp_stroke_rotate               (GimpStroke            *stroke,
+                                               gdouble                center_x,
+                                               gdouble                center_y,
+                                               gdouble                angle);
+void         gimp_stroke_flip                 (GimpStroke             *stroke,
+                                               GimpOrientationType    flip_type,
+                                               gdouble                axis);
+void         gimp_stroke_flip_free            (GimpStroke            *stroke,
+                                               gdouble                x1,
+                                               gdouble                y1,
+                                               gdouble                x2,
+                                               gdouble                y2);
 void         gimp_stroke_transform            (GimpStroke            *stroke,
                                                const GimpMatrix3     *matrix);
 

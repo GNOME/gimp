@@ -24,8 +24,6 @@
 
 #include "tools-types.h"
 
-#include "core/gimptoolinfo.h"
-
 #include "paint/gimperaseroptions.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -51,7 +49,7 @@ static void   gimp_eraser_tool_cursor_update (GimpTool        *tool,
 static GtkWidget * gimp_eraser_options_gui   (GimpToolOptions *tool_options);
 
 
-G_DEFINE_TYPE (GimpEraserTool, gimp_eraser_tool, GIMP_TYPE_PAINT_TOOL)
+G_DEFINE_TYPE (GimpEraserTool, gimp_eraser_tool, GIMP_TYPE_BRUSH_TOOL)
 
 #define parent_class gimp_eraser_tool_parent_class
 
@@ -66,7 +64,7 @@ gimp_eraser_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_PAINT_OPTIONS_CONTEXT_MASK,
                 "gimp-eraser-tool",
                 _("Eraser"),
-                _("Erase to background or transparency"),
+                _("Eraser Tool: Erase to background or transparency using a brush"),
                 N_("_Eraser"), "<shift>E",
                 NULL, GIMP_HELP_TOOL_ERASER,
                 GIMP_STOCK_TOOL_ERASER,
@@ -85,15 +83,20 @@ gimp_eraser_tool_class_init (GimpEraserToolClass *klass)
 static void
 gimp_eraser_tool_init (GimpEraserTool *eraser)
 {
-  GimpTool *tool = GIMP_TOOL (eraser);
+  GimpTool      *tool       = GIMP_TOOL (eraser);
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (eraser);
 
   gimp_tool_control_set_tool_cursor            (tool->control,
                                                 GIMP_TOOL_CURSOR_ERASER);
   gimp_tool_control_set_toggle_cursor_modifier (tool->control,
                                                 GIMP_CURSOR_MODIFIER_MINUS);
 
-  gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (eraser),
+  gimp_paint_tool_enable_color_picker (paint_tool,
                                        GIMP_COLOR_PICK_MODE_BACKGROUND);
+
+  paint_tool->status      = _("Click to erase");
+  paint_tool->status_line = _("Click to erase the line");
+  paint_tool->status_ctrl = _("%s to pick a background color");
 }
 
 static void
@@ -105,9 +108,7 @@ gimp_eraser_tool_modifier_key (GimpTool        *tool,
 {
   if (key == GDK_MOD1_MASK)
     {
-      GimpEraserOptions *options;
-
-      options = GIMP_ERASER_OPTIONS (tool->tool_info->tool_options);
+      GimpEraserOptions *options = GIMP_ERASER_TOOL_GET_OPTIONS (tool);
 
       g_object_set (options,
                     "anti-erase", ! options->anti_erase,
@@ -123,9 +124,7 @@ gimp_eraser_tool_cursor_update (GimpTool        *tool,
                                 GdkModifierType  state,
                                 GimpDisplay     *display)
 {
-  GimpEraserOptions *options;
-
-  options = GIMP_ERASER_OPTIONS (tool->tool_info->tool_options);
+  GimpEraserOptions *options = GIMP_ERASER_TOOL_GET_OPTIONS (tool);
 
   gimp_tool_control_set_toggled (tool->control, options->anti_erase);
 
@@ -138,14 +137,10 @@ gimp_eraser_tool_cursor_update (GimpTool        *tool,
 static GtkWidget *
 gimp_eraser_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
-  GtkWidget *vbox;
+  GObject   *config = G_OBJECT (tool_options);
+  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *button;
   gchar     *str;
-
-  config = G_OBJECT (tool_options);
-
-  vbox = gimp_paint_options_gui (tool_options);
 
   /* the anti_erase toggle */
   str = g_strdup_printf (_("Anti erase  (%s)"),

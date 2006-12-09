@@ -20,7 +20,7 @@
 #define __GIMP_CLONE_OPTIONS_H__
 
 
-#include "gimppaintoptions.h"
+#include "gimpsourceoptions.h"
 
 
 #define GIMP_TYPE_CLONE_OPTIONS            (gimp_clone_options_get_type ())
@@ -32,15 +32,18 @@
 
 
 typedef struct _GimpCloneOptions      GimpCloneOptions;
-typedef struct _GimpPaintOptionsClass GimpCloneOptionsClass;
+typedef struct _GimpCloneOptionsClass GimpCloneOptionsClass;
 
 struct _GimpCloneOptions
 {
-  GimpPaintOptions    paint_options;
+  GimpSourceOptions  parent_instance;
 
-  GimpCloneType       clone_type;
-  GimpCloneAlignMode  align_mode;
-  gboolean            sample_merged;
+  GimpCloneType      clone_type;
+};
+
+struct _GimpCloneOptionsClass
+{
+  GimpSourceOptionsClass  parent_class;
 };
 
 

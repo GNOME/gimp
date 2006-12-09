@@ -19,6 +19,8 @@
 
 from gimpfu import *
 
+gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
+
 def shadow_bevel(img, drawable, blur, bevel, do_shadow, drop_x, drop_y):
     # disable undo for the image
     img.undo_group_start()
@@ -53,23 +55,27 @@ def shadow_bevel(img, drawable, blur, bevel, do_shadow, drop_x, drop_y):
     # enable undo again
     img.undo_group_end()
 
+
 register(
-    "shadow_bevel",
-    "Add a drop shadow to a layer, and optionally bevel it.",
-    "Add a drop shadow to a layer, and optionally bevel it.",
+    "python-fu-shadow-bevel",
+    N_("Add a drop shadow to a layer, and optionally bevel it"),
+    "Add a drop shadow to a layer, and optionally bevel it",
     "James Henstridge",
     "James Henstridge",
     "1999",
-    "<Image>/Filters/Light and Shadow/Shadow/_Drop Shadow and Bevel...",
+    N_("_Drop Shadow and Bevel..."),
     "RGBA, GRAYA",
     [
-        (PF_SLIDER, "blur",   "Shadow blur", 6, (1, 30, 1)),
-        (PF_BOOL,   "bevel",  "Bevel the image", True),
-        (PF_BOOL,   "shadow", "Make a drop shadow", True),
-        (PF_INT,    "drop_x", "Drop shadow X displacement", 3),
-        (PF_INT,    "drop_y", "Drop shadow Y displacement", 6)
+        (PF_SLIDER, "blur",   _("Shadow blur"), 6, (1, 30, 1)),
+        (PF_BOOL,   "bevel",  _("Bevel"),       True),
+        (PF_BOOL,   "shadow", _("Drop shadow"), True),
+        (PF_INT,    "drop-x", _("Drop shadow X displacement"), 3),
+        (PF_INT,    "drop-y", _("Drop shadow Y displacement"), 6)
     ],
     [],
-    shadow_bevel)
+    shadow_bevel,
+    menu="<Image>/Filters/Light and Shadow/Shadow",
+    domain=("gimp20-python", gimp.locale_directory)
+    )
 
 main()

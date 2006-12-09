@@ -33,9 +33,6 @@
 /* set to the level of debugging output you want, 0 for none */
 #define PSP_DEBUG 0
 
-/* the max number of layers that this plugin should try to load */
-#define MAX_LAYERS 64
-
 #define IFDBG(level) if (PSP_DEBUG >= level)
 
 #include "config.h"

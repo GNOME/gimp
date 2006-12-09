@@ -46,7 +46,6 @@
 #define ENTRY_WIDTH      7
 #define MAX_CHANNELS     4
 #define PSV              2  /* point spread value */
-#define EPSILON          0.001
 
 #define NATURAL          0
 #define FOREGROUND       1

@@ -46,11 +46,12 @@
 
 #include "dialogs/dialogs.h"
 
+#include "actions.h"
 #include "brush-editor-actions.h"
 #include "brushes-actions.h"
 #include "buffers-actions.h"
 #include "channels-actions.h"
-#include "colormap-editor-actions.h"
+#include "colormap-actions.h"
 #include "context-actions.h"
 #include "cursor-info-actions.h"
 #include "debug-actions.h"
@@ -74,7 +75,7 @@
 #include "patterns-actions.h"
 #include "plug-in-actions.h"
 #include "quick-mask-actions.h"
-#include "sample-point-editor-actions.h"
+#include "sample-points-actions.h"
 #include "select-actions.h"
 #include "templates-actions.h"
 #include "text-editor-actions.h"
@@ -107,9 +108,9 @@ static GimpActionFactoryEntry action_groups[] =
   { "channels", N_("Channels"), GIMP_STOCK_CHANNEL,
     channels_actions_setup,
     channels_actions_update },
-  { "colormap-editor", N_("Colormap Editor"), GIMP_STOCK_COLORMAP,
-    colormap_editor_actions_setup,
-    colormap_editor_actions_update },
+  { "colormap", N_("Colormap"), GIMP_STOCK_COLORMAP,
+    colormap_actions_setup,
+    colormap_actions_update },
   { "context", N_("Context"), NULL,
     context_actions_setup,
     context_actions_update },
@@ -179,9 +180,9 @@ static GimpActionFactoryEntry action_groups[] =
   { "quick-mask", N_("Quick Mask"), GIMP_STOCK_QUICK_MASK_ON,
     quick_mask_actions_setup,
     quick_mask_actions_update },
-  { "sample-point-editor", N_("Sample Points"), GIMP_STOCK_SAMPLE_POINT,
-    sample_point_editor_actions_setup,
-    sample_point_editor_actions_update },
+  { "sample-points", N_("Sample Points"), GIMP_STOCK_SAMPLE_POINT,
+    sample_points_actions_setup,
+    sample_points_actions_update },
   { "select", N_("Select"), GIMP_STOCK_SELECTION,
     select_actions_setup,
     select_actions_update },
@@ -256,8 +257,6 @@ action_data_get_gimp (gpointer data)
     return data;
   else if (GIMP_IS_DOCK (data))
     context = ((GimpDock *) data)->context;
-  else if (GIMP_IS_ITEM_TREE_VIEW (data))
-    context = ((GimpItemTreeView *) data)->context;
   else if (GIMP_IS_CONTAINER_VIEW (data))
     context = gimp_container_view_get_context ((GimpContainerView *) data);
   else if (GIMP_IS_CONTAINER_EDITOR (data))
@@ -285,8 +284,6 @@ action_data_get_context (gpointer data)
     return gimp_get_user_context (data);
   else if (GIMP_IS_DOCK (data))
     return ((GimpDock *) data)->context;
-  else if (GIMP_IS_ITEM_TREE_VIEW (data))
-    return ((GimpItemTreeView *) data)->context;
   else if (GIMP_IS_CONTAINER_VIEW (data))
     return gimp_container_view_get_context ((GimpContainerView *) data);
   else if (GIMP_IS_CONTAINER_EDITOR (data))
@@ -375,8 +372,10 @@ action_select_value (GimpActionSelectType  select_type,
                      gdouble               value,
                      gdouble               min,
                      gdouble               max,
+                     gdouble               small_inc,
                      gdouble               inc,
                      gdouble               skip_inc,
+                     gdouble               delta_factor,
                      gboolean              wrap)
 {
   switch (select_type)
@@ -387,6 +386,14 @@ action_select_value (GimpActionSelectType  select_type,
 
     case GIMP_ACTION_SELECT_LAST:
       value = max;
+      break;
+
+    case GIMP_ACTION_SELECT_SMALL_PREVIOUS:
+      value -= small_inc;
+      break;
+
+    case GIMP_ACTION_SELECT_SMALL_NEXT:
+      value += small_inc;
       break;
 
     case GIMP_ACTION_SELECT_PREVIOUS:
@@ -403,6 +410,16 @@ action_select_value (GimpActionSelectType  select_type,
 
     case GIMP_ACTION_SELECT_SKIP_NEXT:
       value += skip_inc;
+      break;
+
+    case GIMP_ACTION_SELECT_PERCENT_PREVIOUS:
+      g_return_val_if_fail (delta_factor >= 0.0, value);
+      value /= (1.0 + delta_factor);
+      break;
+
+    case GIMP_ACTION_SELECT_PERCENT_NEXT:
+      g_return_val_if_fail (delta_factor >= 0.0, value);
+      value *= (1.0 + delta_factor);
       break;
 
     default:
@@ -433,12 +450,12 @@ void
 action_select_property (GimpActionSelectType  select_type,
                         GObject              *object,
                         const gchar          *property_name,
+                        gdouble               small_inc,
                         gdouble               inc,
                         gdouble               skip_inc,
                         gboolean              wrap)
 {
   GParamSpec *pspec;
-  gdouble     value;
 
   g_return_if_fail (G_IS_OBJECT (object));
   g_return_if_fail (property_name != NULL);
@@ -446,17 +463,38 @@ action_select_property (GimpActionSelectType  select_type,
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (object),
                                         property_name);
 
-  g_return_if_fail (G_IS_PARAM_SPEC_DOUBLE (pspec));
+  if (G_IS_PARAM_SPEC_DOUBLE (pspec))
+    {
+      gdouble value;
 
-  g_object_get (object, property_name, &value, NULL);
+      g_object_get (object, property_name, &value, NULL);
 
-  value = action_select_value (select_type,
-                               value,
-                               G_PARAM_SPEC_DOUBLE (pspec)->minimum,
-                               G_PARAM_SPEC_DOUBLE (pspec)->maximum,
-                               inc, skip_inc, wrap);
+      value = action_select_value (select_type,
+                                   value,
+                                   G_PARAM_SPEC_DOUBLE (pspec)->minimum,
+                                   G_PARAM_SPEC_DOUBLE (pspec)->maximum,
+                                   small_inc, inc, skip_inc, 0, wrap);
 
-  g_object_set (object, property_name, value, NULL);
+      g_object_set (object, property_name, value, NULL);
+    }
+  else if (G_IS_PARAM_SPEC_INT (pspec))
+    {
+      gint value;
+
+      g_object_get (object, property_name, &value, NULL);
+
+      value = action_select_value (select_type,
+                                   value,
+                                   G_PARAM_SPEC_INT (pspec)->minimum,
+                                   G_PARAM_SPEC_INT (pspec)->maximum,
+                                   small_inc, inc, skip_inc, 0, wrap);
+
+      g_object_set (object, property_name, value, NULL);
+    }
+  else
+    {
+      g_return_if_reached ();
+    }
 }
 
 GimpObject *

@@ -34,24 +34,24 @@
 #include "widgets/gimpdialogfactory.h"
 
 #include "actions.h"
-#include "colormap-editor-commands.h"
+#include "colormap-commands.h"
 
 #include "gimp-intl.h"
 
 
 /*  local function prototypes  */
 
-static void   colormap_editor_edit_color_update (GimpColorDialog      *dialog,
-                                                 const GimpRGB        *color,
-                                                 GimpColorDialogState  state,
-                                                 GimpColormapEditor   *editor);
+static void   colormap_edit_color_update (GimpColorDialog      *dialog,
+                                          const GimpRGB        *color,
+                                          GimpColorDialogState  state,
+                                          GimpColormapEditor   *editor);
 
 
 /*  public functions  */
 
 void
-colormap_editor_edit_color_cmd_callback (GtkAction *action,
-                                         gpointer   data)
+colormap_edit_color_cmd_callback (GtkAction *action,
+                                  gpointer   data)
 {
   GimpColormapEditor *editor;
   GimpImage          *image;
@@ -73,6 +73,7 @@ colormap_editor_edit_color_cmd_callback (GtkAction *action,
     {
       editor->color_dialog =
         gimp_color_dialog_new (GIMP_VIEWABLE (image),
+                               action_data_get_context (data),
                                _("Edit Colormap Entry"),
                                GIMP_STOCK_COLORMAP,
                                desc,
@@ -87,13 +88,14 @@ colormap_editor_edit_color_cmd_callback (GtkAction *action,
                         &editor->color_dialog);
 
       g_signal_connect (editor->color_dialog, "update",
-                        G_CALLBACK (colormap_editor_edit_color_update),
+                        G_CALLBACK (colormap_edit_color_update),
                         editor);
     }
   else
     {
       gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (editor->color_dialog),
-                                         GIMP_VIEWABLE (image));
+                                         GIMP_VIEWABLE (image),
+                                         action_data_get_context (data));
       g_object_set (editor->color_dialog, "description", desc, NULL);
       gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
                                    &color);
@@ -105,9 +107,9 @@ colormap_editor_edit_color_cmd_callback (GtkAction *action,
 }
 
 void
-colormap_editor_add_color_cmd_callback (GtkAction *action,
-                                        gint       value,
-                                        gpointer   data)
+colormap_add_color_cmd_callback (GtkAction *action,
+                                 gint       value,
+                                 gpointer   data)
 {
   GimpContext *context;
   GimpImage   *image;
@@ -132,10 +134,10 @@ colormap_editor_add_color_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
-colormap_editor_edit_color_update (GimpColorDialog      *dialog,
-                                   const GimpRGB        *color,
-                                   GimpColorDialogState  state,
-                                   GimpColormapEditor   *editor)
+colormap_edit_color_update (GimpColorDialog      *dialog,
+                            const GimpRGB        *color,
+                            GimpColorDialogState  state,
+                            GimpColormapEditor   *editor)
 {
   GimpImage *image = GIMP_IMAGE_EDITOR (editor)->image;
 

@@ -32,11 +32,9 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
-#include "core/gimppaintinfo.h"
 #include "core/gimppickable.h"
 
 #include "gimppaintcore.h"
@@ -48,14 +46,30 @@
 #include "gimp-intl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_UNDO_DESC
+};
+
+
 /*  local function prototypes  */
 
 static void      gimp_paint_core_finalize            (GObject          *object);
+static void      gimp_paint_core_set_property        (GObject          *object,
+                                                      guint             property_id,
+                                                      const GValue     *value,
+                                                      GParamSpec       *pspec);
+static void      gimp_paint_core_get_property        (GObject          *object,
+                                                      guint             property_id,
+                                                      GValue           *value,
+                                                      GParamSpec       *pspec);
 
 static gboolean  gimp_paint_core_real_start          (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
                                                       GimpPaintOptions *paint_options,
-                                                      GimpCoords       *coords);
+                                                      GimpCoords       *coords,
+                                                      GError          **error);
 static gboolean  gimp_paint_core_real_pre_paint      (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
                                                       GimpPaintOptions *options,
@@ -100,21 +114,31 @@ gimp_paint_core_class_init (GimpPaintCoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize  = gimp_paint_core_finalize;
+  object_class->finalize     = gimp_paint_core_finalize;
+  object_class->set_property = gimp_paint_core_set_property;
+  object_class->get_property = gimp_paint_core_get_property;
 
-  klass->start            = gimp_paint_core_real_start;
-  klass->pre_paint        = gimp_paint_core_real_pre_paint;
-  klass->paint            = gimp_paint_core_real_paint;
-  klass->post_paint       = gimp_paint_core_real_post_paint;
-  klass->interpolate      = gimp_paint_core_real_interpolate;
-  klass->get_paint_area   = gimp_paint_core_real_get_paint_area;
-  klass->push_undo        = gimp_paint_core_real_push_undo;
+  klass->start               = gimp_paint_core_real_start;
+  klass->pre_paint           = gimp_paint_core_real_pre_paint;
+  klass->paint               = gimp_paint_core_real_paint;
+  klass->post_paint          = gimp_paint_core_real_post_paint;
+  klass->interpolate         = gimp_paint_core_real_interpolate;
+  klass->get_paint_area      = gimp_paint_core_real_get_paint_area;
+  klass->push_undo           = gimp_paint_core_real_push_undo;
+
+  g_object_class_install_property (object_class, PROP_UNDO_DESC,
+                                   g_param_spec_string ("undo-desc", NULL, NULL,
+                                                        _("Paint"),
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
 gimp_paint_core_init (GimpPaintCore *core)
 {
   core->ID               = global_core_ID++;
+
+  core->undo_desc        = NULL;
 
   core->distance         = 0.0;
   core->pixel_dist       = 0.0;
@@ -142,14 +166,59 @@ gimp_paint_core_finalize (GObject *object)
 
   gimp_paint_core_cleanup (core);
 
+  g_free (core->undo_desc);
+  core->undo_desc = NULL;
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_paint_core_set_property (GObject      *object,
+                              guint         property_id,
+                              const GValue *value,
+                              GParamSpec   *pspec)
+{
+  GimpPaintCore *core = GIMP_PAINT_CORE (object);
+
+  switch (property_id)
+    {
+    case PROP_UNDO_DESC:
+      g_free (core->undo_desc);
+      core->undo_desc = g_value_dup_string (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_paint_core_get_property (GObject    *object,
+                              guint       property_id,
+                              GValue     *value,
+                              GParamSpec *pspec)
+{
+  GimpPaintCore *core = GIMP_PAINT_CORE (object);
+
+  switch (property_id)
+    {
+    case PROP_UNDO_DESC:
+      g_value_set_string (value, core->undo_desc);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static gboolean
 gimp_paint_core_real_start (GimpPaintCore    *core,
                             GimpDrawable     *drawable,
                             GimpPaintOptions *paint_options,
-                            GimpCoords       *coords)
+                            GimpCoords       *coords,
+                            GError          **error)
 {
   return TRUE;
 }
@@ -240,10 +309,11 @@ gimp_paint_core_paint (GimpPaintCore    *core,
 }
 
 gboolean
-gimp_paint_core_start (GimpPaintCore    *core,
-                       GimpDrawable     *drawable,
-                       GimpPaintOptions *paint_options,
-                       GimpCoords       *coords)
+gimp_paint_core_start (GimpPaintCore     *core,
+                       GimpDrawable      *drawable,
+                       GimpPaintOptions  *paint_options,
+                       GimpCoords        *coords,
+                       GError           **error)
 {
   GimpItem *item;
 
@@ -252,6 +322,7 @@ gimp_paint_core_start (GimpPaintCore    *core,
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   item = GIMP_ITEM (drawable);
 
@@ -259,7 +330,7 @@ gimp_paint_core_start (GimpPaintCore    *core,
 
   if (! GIMP_PAINT_CORE_GET_CLASS (core)->start (core, drawable,
                                                  paint_options,
-                                                 coords))
+                                                 coords, error))
     {
       return FALSE;
     }
@@ -313,8 +384,7 @@ gimp_paint_core_finish (GimpPaintCore *core,
                         GimpDrawable  *drawable,
                         gboolean       push_undo)
 {
-  GimpPaintInfo *paint_info;
-  GimpImage     *image;
+  GimpImage *image;
 
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -328,14 +398,10 @@ gimp_paint_core_finish (GimpPaintCore *core,
   if ((core->x2 == core->x1) || (core->y2 == core->y1))
     return;
 
-  paint_info = (GimpPaintInfo *)
-    gimp_container_get_child_by_name (image->gimp->paint_info_list,
-                                      g_type_name (G_TYPE_FROM_INSTANCE (core)));
-  
   if (push_undo)
     {
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
-                                   paint_info ? paint_info->blurb : _("Paint"));
+                                   core->undo_desc);
 
       GIMP_PAINT_CORE_GET_CLASS (core)->push_undo (core, image, NULL);
 
@@ -347,7 +413,7 @@ gimp_paint_core_finish (GimpPaintCore *core,
 
       gimp_image_undo_group_end (image);
     }
-  
+
   tile_manager_unref (core->undo_tiles);
   core->undo_tiles = NULL;
 
@@ -523,6 +589,10 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
   guchar      *d;
   gpointer     pr;
 
+  g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (core->undo_tiles != NULL, NULL);
+
   core->orig_buf = temp_buf_resize (core->orig_buf,
                                     gimp_drawable_bytes (drawable),
                                     x1, y1,
@@ -616,12 +686,16 @@ gimp_paint_core_get_orig_proj (GimpPaintCore *core,
   guchar      *d;
   gpointer     pr;
 
-  src_tiles = gimp_pickable_get_tiles (pickable);
+  g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+  g_return_val_if_fail (core->saved_proj_tiles != NULL, NULL);
 
   core->orig_proj_buf = temp_buf_resize (core->orig_proj_buf,
-                                         tile_manager_bpp (src_tiles),
+                                         gimp_pickable_get_bytes (pickable),
                                          x1, y1,
                                          (x2 - x1), (y2 - y1));
+
+  src_tiles = gimp_pickable_get_tiles (pickable);
 
   pickable_width  = tile_manager_width  (src_tiles);
   pickable_height = tile_manager_height (src_tiles);
@@ -962,27 +1036,22 @@ gimp_paint_core_validate_undo_tiles (GimpPaintCore *core,
                                      gint           w,
                                      gint           h)
 {
-  gint  i;
-  gint  j;
-  Tile *src_tile;
-  Tile *dest_tile;
+  gint i, j;
 
-  if (! core->undo_tiles)
-    {
-      g_warning ("set_undo_tiles: undo_tiles is null");
-      return;
-    }
+  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (core->undo_tiles != NULL);
 
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
         {
-          dest_tile = tile_manager_get_tile (core->undo_tiles, j, i,
-                                             FALSE, FALSE);
+          Tile *dest_tile = tile_manager_get_tile (core->undo_tiles,
+                                                   j, i, FALSE, FALSE);
 
           if (! tile_is_valid (dest_tile))
             {
-              src_tile =
+              Tile *src_tile =
                 tile_manager_get_tile (gimp_drawable_get_tiles (drawable),
                                        j, i, TRUE, FALSE);
               tile_manager_map_tile (core->undo_tiles, j, i, src_tile);
@@ -1000,33 +1069,30 @@ gimp_paint_core_validate_saved_proj_tiles (GimpPaintCore *core,
                                            gint           w,
                                            gint           h)
 {
-  gint  i;
-  gint  j;
-  Tile *src_tile;
-  Tile *dest_tile;
+  gint i, j;
 
-  if (! core->saved_proj_tiles)
-    {
-      g_warning ("set_saved_proj_tiles: saved_proj_tiles is null");
-      return;
-    }
+  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
+  g_return_if_fail (GIMP_IS_PICKABLE (pickable));
+  g_return_if_fail (core->saved_proj_tiles != NULL);
 
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
         {
-          dest_tile = tile_manager_get_tile (core->saved_proj_tiles, j, i,
-                                             FALSE, FALSE);
+          Tile *dest_tile = tile_manager_get_tile (core->saved_proj_tiles,
+                                                   j, i, FALSE, FALSE);
 
           if (! tile_is_valid (dest_tile))
             {
-              dest_tile = tile_manager_get_tile (core->saved_proj_tiles, j, i,
-                                                 TRUE, TRUE);
-              src_tile = tile_manager_get_tile (gimp_pickable_get_tiles (pickable),
-                                                j, i, TRUE, FALSE);
+              Tile *src_tile =
+                tile_manager_get_tile (gimp_pickable_get_tiles (pickable),
+                                       j, i, TRUE, FALSE);
+
               /* copy the pixels instead of mapping the tile because
                * copy-on-write from the projection is broken
                */
+              dest_tile = tile_manager_get_tile (core->saved_proj_tiles,
+                                                 j, i, TRUE, TRUE);
               memcpy (tile_data_pointer (dest_tile, 0, 0),
                       tile_data_pointer (src_tile, 0, 0),
                       tile_size (src_tile));
@@ -1044,16 +1110,17 @@ gimp_paint_core_validate_canvas_tiles (GimpPaintCore *core,
                                        gint           w,
                                        gint           h)
 {
-  gint  i;
-  gint  j;
-  Tile *tile;
+  gint i, j;
+
+  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
+  g_return_if_fail (core->canvas_tiles != NULL);
 
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
         {
-          tile = tile_manager_get_tile (core->canvas_tiles, j, i,
-                                        FALSE, FALSE);
+          Tile *tile = tile_manager_get_tile (core->canvas_tiles, j, i,
+                                              FALSE, FALSE);
 
           if (! tile_is_valid (tile))
             {

@@ -57,7 +57,6 @@ struct _GimpItemTreeView
 {
   GimpContainerTreeView  parent_instance;
 
-  GimpContext           *context;
   GimpImage             *image;
 
   GtkWidget             *edit_button;

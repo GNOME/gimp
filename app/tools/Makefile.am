@@ -24,6 +24,8 @@ libapptools_a_sources = \
 	gimpblendtool.h			\
 	gimpbrightnesscontrasttool.c	\
 	gimpbrightnesscontrasttool.h	\
+	gimpbrushtool.c			\
+	gimpbrushtool.h			\
 	gimpbucketfilloptions.c		\
 	gimpbucketfilloptions.h		\
 	gimpbucketfilltool.c		\
@@ -76,6 +78,8 @@ libapptools_a_sources = \
 	gimpforegroundselecttool-undo.h	\
 	gimpfuzzyselecttool.c		\
 	gimpfuzzyselecttool.h		\
+	gimphealtool.c			\
+	gimphealtool.h			\
 	gimphistogramoptions.c		\
 	gimphistogramoptions.h		\
 	gimphuesaturationtool.c		\
@@ -112,6 +116,8 @@ libapptools_a_sources = \
 	gimppainttool.h			\
 	gimppenciltool.c		\
 	gimppenciltool.h		\
+	gimpperspectiveclonetool.c	\
+	gimpperspectiveclonetool.h	\
 	gimpperspectivetool.c		\
 	gimpperspectivetool.h		\
 	gimpposterizetool.c		\
@@ -124,6 +130,8 @@ libapptools_a_sources = \
 	gimprectangletool.h		\
 	gimprectangleoptions.c		\
 	gimprectangleoptions.h		\
+	gimpregionselecttool.c		\
+	gimpregionselecttool.h		\
 	gimprotatetool.c		\
 	gimprotatetool.h		\
 	gimpscaletool.c			\
@@ -136,6 +144,8 @@ libapptools_a_sources = \
 	gimpsheartool.h			\
 	gimpsmudgetool.c		\
 	gimpsmudgetool.h		\
+	gimpsourcetool.c		\
+	gimpsourcetool.h		\
 	gimptextoptions.c		\
 	gimptextoptions.h		\
 	gimptexttool.c			\

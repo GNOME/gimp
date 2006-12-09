@@ -32,6 +32,7 @@
 #include "gfig-line.h"
 #include "gfig-dobject.h"
 #include "gfig-dialog.h"
+#include "gfig-bezier.h"
 
 #include "libgimp/stdplugins-intl.h"
 

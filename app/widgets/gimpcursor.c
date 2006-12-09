@@ -30,6 +30,8 @@
 #include "cursors/xbm/cursor-none.xbm"
 #include "cursors/xbm/cursor-mouse.xbm"
 #include "cursors/xbm/cursor-mouse-mask.xbm"
+#include "cursors/xbm/cursor-move.xbm"
+#include "cursors/xbm/cursor-move-mask.xbm"
 #include "cursors/xbm/cursor-crosshair.xbm"
 #include "cursors/xbm/cursor-crosshair-mask.xbm"
 #include "cursors/xbm/cursor-crosshair-small.xbm"
@@ -112,6 +114,8 @@
 #include "cursors/xbm/tool-airbrush-mask.xbm"
 #include "cursors/xbm/tool-clone.xbm"
 #include "cursors/xbm/tool-clone-mask.xbm"
+#include "cursors/xbm/tool-heal.xbm"
+#include "cursors/xbm/tool-heal-mask.xbm"
 #include "cursors/xbm/tool-blur.xbm"
 #include "cursors/xbm/tool-blur-mask.xbm"
 #include "cursors/xbm/tool-ink.xbm"
@@ -203,6 +207,12 @@ static GimpCursor gimp_cursors[] =
     cursor_bad_width, cursor_bad_height,
     cursor_bad_x_hot, cursor_bad_y_hot,
     cursor_bad, NULL, NULL, NULL
+  },
+  {
+    cursor_move_bits, cursor_move_mask_bits,
+    cursor_move_width, cursor_move_height,
+    cursor_move_x_hot, cursor_move_y_hot,
+    cursor_move, NULL, NULL, NULL
   },
   {
     cursor_zoom_bits, cursor_zoom_mask_bits,
@@ -437,6 +447,12 @@ static GimpCursor gimp_tool_cursors[] =
     tool_clone_width, tool_clone_height,
     0, 0,
     tool_clone, NULL, NULL, NULL
+  },
+  {
+    tool_heal_bits, tool_heal_mask_bits,
+    tool_heal_width, tool_heal_height,
+    0, 0,
+    tool_heal, NULL, NULL, NULL
   },
   {
     tool_eraser_bits, tool_eraser_mask_bits,

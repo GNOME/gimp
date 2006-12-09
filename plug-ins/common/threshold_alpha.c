@@ -30,10 +30,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_PROC        "plug-in-threshold-alpha"
-#define PLUG_IN_BINARY      "threshold_alpha"
-#define PROGRESS_UPDATE_NUM 100
-#define SCALE_WIDTH         120
+#define PLUG_IN_PROC    "plug-in-threshold-alpha"
+#define PLUG_IN_BINARY  "threshold_alpha"
+
+#define SCALE_WIDTH     120
 
 
 static void              query (void);

@@ -28,7 +28,6 @@
 #include "core/gimp-transform-utils.h"
 #include "core/gimpimage.h"
 #include "core/gimpdrawable-transform.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -67,7 +66,8 @@ gimp_perspective_tool_register (GimpToolRegisterCallback  callback,
                 0,
                 "gimp-perspective-tool",
                 _("Perspective"),
-                _("Change perspective of the layer or selection"),
+                _("Perspective Tool: "
+                  "Change perspective of the layer, selection or path"),
                 N_("_Perspective"), "<shift>P",
                 NULL, GIMP_HELP_TOOL_PERSPECTIVE,
                 GIMP_STOCK_TOOL_PERSPECTIVE,

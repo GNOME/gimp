@@ -26,7 +26,8 @@
 
 #include "actions-types.h"
 
-#include "core/gimpobject.h"
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
 
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
@@ -41,9 +42,13 @@
 
 /*  local function prototypes  */
 
-static void   debug_dump_menus_recurse_menu (GtkWidget *menu,
-                                             gint       depth,
-                                             gchar     *path);
+static void   debug_dump_menus_recurse_menu (GtkWidget  *menu,
+                                             gint        depth,
+                                             gchar      *path);
+static void   debug_print_qdata             (GimpObject *object);
+static void   debug_print_qdata_foreach     (GQuark      key_id,
+                                             gpointer    data,
+                                             gpointer    user_data);
 
 
 /*  public functions  */
@@ -130,6 +135,17 @@ debug_dump_managers_cmd_callback (GtkAction *action,
     }
 }
 
+void
+debug_dump_attached_data_cmd_callback (GtkAction *action,
+                                       gpointer   data)
+{
+  Gimp        *gimp         = action_data_get_gimp (data);
+  GimpContext *user_context = gimp_get_user_context (gimp);
+
+  debug_print_qdata (GIMP_OBJECT (gimp));
+  debug_print_qdata (GIMP_OBJECT (user_context));
+}
+
 
 /*  private functions  */
 
@@ -171,6 +187,24 @@ debug_dump_menus_recurse_menu (GtkWidget *menu,
           g_free (full_path);
         }
     }
+}
+
+static void
+debug_print_qdata (GimpObject *object)
+{
+  g_print ("\nData attached to '%s':\n\n", gimp_object_get_name (object));
+  g_datalist_foreach (&G_OBJECT (object)->qdata,
+                      debug_print_qdata_foreach,
+                      NULL);
+  g_print ("\n");
+}
+
+static void
+debug_print_qdata_foreach (GQuark   key_id,
+                           gpointer data,
+                           gpointer user_data)
+{
+  g_print ("%s: %p\n", g_quark_to_string (key_id), data);
 }
 
 #endif /* ENABLE_DEBUG_MENU */

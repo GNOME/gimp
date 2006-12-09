@@ -165,12 +165,10 @@ GtkWidget *
 gimp_magnify_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
+  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *frame;
   GtkWidget *button;
   gchar     *str;
-
-  vbox = gimp_tool_options_gui (tool_options);
 
   /*  the auto_resize toggle button  */
   button = gimp_prop_check_button_new (config, "auto-resize",

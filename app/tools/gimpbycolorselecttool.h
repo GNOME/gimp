@@ -1,6 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpbycolorselectool.h
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -20,7 +22,7 @@
 #define __GIMP_BY_COLOR_SELECT_TOOL_H__
 
 
-#include "gimpselectiontool.h"
+#include "gimpregionselecttool.h"
 
 
 #define GIMP_TYPE_BY_COLOR_SELECT_TOOL            (gimp_by_color_select_tool_get_type ())
@@ -36,17 +38,12 @@ typedef struct _GimpByColorSelectToolClass GimpByColorSelectToolClass;
 
 struct _GimpByColorSelectTool
 {
-  GimpSelectionTool  parent_instance;
-
-  gint               x, y;  /*  Point from which to execute seed fill  */
-
-  GimpUndo          *undo;
-  SelectOps          op;
+  GimpRegionSelectTool  parent_instance;
 };
 
 struct _GimpByColorSelectToolClass
 {
-  GimpSelectionToolClass parent_class;
+  GimpRegionSelectToolClass  parent_class;
 };
 
 

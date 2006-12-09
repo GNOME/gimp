@@ -64,6 +64,26 @@ dialog-related stuff.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_dialog_add_button ##### -->
+<para>
+
+</para>
+
+@dialog: 
+@button_text: 
+@response_id: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_dialog_add_buttons ##### -->
+<para>
+
+</para>
+
+@dialog: 
+@Varargs: 
+
+
 <!-- ##### FUNCTION gimp_dialog_add_buttons_valist ##### -->
 <para>
 

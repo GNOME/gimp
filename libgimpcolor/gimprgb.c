@@ -533,9 +533,9 @@ gimp_param_rgb_get_type (void)
 {
   static GType spec_type = 0;
 
-  if (!spec_type)
+  if (! spec_type)
     {
-      static const GTypeInfo type_info =
+      const GTypeInfo type_info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -690,7 +690,7 @@ gimp_param_spec_rgb (const gchar   *name,
 }
 
 /**
- * gimp_param_spec_rgb:
+ * gimp_param_spec_rgb_has_alpha:
  * @pspec: a #GParamSpec to hold an #GimpRGB value.
  *
  * Returns: %TRUE if the alpha channel is relevant.

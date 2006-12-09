@@ -39,20 +39,7 @@
 #include "gimppdb.h"
 #include "gimpprocedure.h"
 
-#include "gimptemporaryprocedure.h" /* eek */
-#include "gimp-pdb.h" /* eek */
-
 #include "gimp-intl.h"
-
-
-void
-gimp_pdb_eek (void)
-{
-  volatile GType eek;
-
-  eek = gimp_temporary_procedure_get_type ();
-  gimp_pdb_exit (NULL);
-}
 
 
 enum
@@ -233,8 +220,12 @@ gimp_pdb_register_procedure (GimpPDB       *pdb,
   g_return_if_fail (GIMP_IS_PDB (pdb));
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  g_signal_emit (pdb, gimp_pdb_signals[REGISTER_PROCEDURE], 0,
-                 procedure);
+  if (! procedure->deprecated ||
+      pdb->gimp->pdb_compat_mode != GIMP_PDB_COMPAT_OFF)
+    {
+      g_signal_emit (pdb, gimp_pdb_signals[REGISTER_PROCEDURE], 0,
+                     procedure);
+    }
 }
 
 void
@@ -308,8 +299,9 @@ gimp_pdb_execute_procedure_by_name_args (GimpPDB      *pdb,
 
   if (list == NULL)
     {
-      g_message (_("PDB calling error:\n"
-                   "Procedure '%s' not found"), name);
+      gimp_message (pdb->gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                    _("PDB calling error:\n"
+                      "Procedure '%s' not found"), name);
 
       return_vals = gimp_procedure_get_return_values (NULL, FALSE);
       g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
@@ -372,8 +364,9 @@ gimp_pdb_execute_procedure_by_name (GimpPDB      *pdb,
 
   if (procedure == NULL)
     {
-      g_message (_("PDB calling error:\n"
-                   "Procedure '%s' not found"), name);
+      gimp_message (pdb->gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                    _("PDB calling error:\n"
+                      "Procedure '%s' not found"), name);
 
       return_vals = gimp_procedure_get_return_values (NULL, FALSE);
       g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
@@ -405,10 +398,11 @@ gimp_pdb_execute_procedure_by_name (GimpPDB      *pdb,
 
           g_value_array_free (args);
 
-          g_message (_("PDB calling error for procedure '%s':\n"
-                       "Argument #%d type mismatch (expected %s, got %s)"),
-                     gimp_object_get_name (GIMP_OBJECT (procedure)),
-                     i + 1, expected, got);
+          gimp_message (pdb->gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                        _("PDB calling error for procedure '%s':\n"
+                          "Argument #%d type mismatch (expected %s, got %s)"),
+                        gimp_object_get_name (GIMP_OBJECT (procedure)),
+                        i + 1, expected, got);
 
           return_vals = gimp_procedure_get_return_values (procedure, FALSE);
           g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);

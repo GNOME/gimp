@@ -25,8 +25,6 @@
 
 #include "tools-types.h"
 
-#include "core/gimptoolinfo.h"
-
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpmoveoptions.h"
@@ -140,7 +138,7 @@ gimp_move_options_notify_type (GimpMoveOptions *move_options,
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
       false_label = _("Pick a layer or guide");
-      true_label  = _("Move the current layer");
+      true_label  = _("Move the active layer");
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
@@ -149,7 +147,7 @@ gimp_move_options_notify_type (GimpMoveOptions *move_options,
 
     case GIMP_TRANSFORM_TYPE_PATH:
       false_label = _("Pick a path");
-      true_label  = _("Move the current path");
+      true_label  = _("Move the active path");
      break;
     }
 
@@ -167,19 +165,17 @@ GtkWidget *
 gimp_move_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
+  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *frame;
   gchar     *title;
 
-  vbox = gimp_tool_options_gui (tool_options);
-
   hbox = gimp_prop_enum_stock_box_new (config, "move-type", "gimp", 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Affect:"));
+  label = gtk_label_new (_("Move:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (hbox), label, 0);
   gtk_widget_show (label);

@@ -27,7 +27,7 @@
 
 #include "core/gimpmarshal.h"
 
-#include "pdb/gimppluginprocedure.h"
+#include "plug-in/gimppluginprocedure.h"
 
 #include "gimppluginaction.h"
 
@@ -92,9 +92,9 @@ gimp_plug_in_action_class_init (GimpPlugInActionClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpPlugInActionClass, selected),
                   NULL, NULL,
-                  gimp_marshal_VOID__POINTER,
+                  gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
-                  G_TYPE_POINTER);
+                  GIMP_TYPE_PLUG_IN_PROCEDURE);
 }
 
 static void

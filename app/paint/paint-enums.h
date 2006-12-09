@@ -47,17 +47,28 @@ typedef enum
 } GimpBrushApplicationMode;
 
 
-#define GIMP_TYPE_CLONE_ALIGN_MODE (gimp_clone_align_mode_get_type ())
+#define GIMP_TYPE_PERSPECTIVE_CLONE_MODE (gimp_perspective_clone_mode_get_type ())
 
-GType gimp_clone_align_mode_get_type (void) G_GNUC_CONST;
+GType gimp_perspective_clone_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_PERSPECTIVE_CLONE_MODE_ADJUST,  /*< desc="Modify Perspective Plane" >*/
+  GIMP_PERSPECTIVE_CLONE_MODE_PAINT    /*< desc="Perspective Clone"        >*/
+} GimpPerspectiveCloneMode;
+
+
+#define GIMP_TYPE_SOURCE_ALIGN_MODE (gimp_source_align_mode_get_type ())
+
+GType gimp_source_align_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum /*< pdb-skip >*/
 {
-  GIMP_CLONE_ALIGN_NO,          /*< desc="None"        >*/
-  GIMP_CLONE_ALIGN_YES,         /*< desc="Aligned"     >*/
-  GIMP_CLONE_ALIGN_REGISTERED,  /*< desc="Registered"  >*/
-  GIMP_CLONE_ALIGN_FIXED        /*< desc="Fixed"       >*/
-} GimpCloneAlignMode;
+  GIMP_SOURCE_ALIGN_NO,          /*< desc="None"        >*/
+  GIMP_SOURCE_ALIGN_YES,         /*< desc="Aligned"     >*/
+  GIMP_SOURCE_ALIGN_REGISTERED,  /*< desc="Registered"  >*/
+  GIMP_SOURCE_ALIGN_FIXED        /*< desc="Fixed"       >*/
+} GimpSourceAlignMode;
 
 
 #define GIMP_TYPE_CONVOLVE_TYPE (gimp_convolve_type_get_type ())

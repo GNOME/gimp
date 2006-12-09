@@ -163,19 +163,13 @@ this one may not necessarily fit.
 
    po/gimp20.po                       --  the core
    po-libgimp/gimp20-libgimp.pot      --  the libgimp library
-   po-plugins/gimp20-std-plugins.pot  --  most of the plug-ins
+   po-python/gimp20-python.pot        --  the pygimp plug-ins
+   po-plugins/gimp20-std-plugins.pot  --  the C plug-ins
    po-script-fu/gimp20-script-fu.pot  --  the script-fu scripts
    po-tips/gimp20-tips.pot            --  the startup tips
 
  If you are looking for the translations of gimp-perl, please note that
  gimp-perl has been moved into it's own CVS module called gimp-perl.
-
- When translating menu paths in Script-Fu, please do not translate the
- name of the item factory (that is the one in brackets at the front),
- e.g. <Image>/Script-Fu/Selection should _not_ be translated to
- <Bild>/Skript-Fu/Kopieren, but to <Image>/Skript-Fu/Kopieren. If you
- get this wrong, Gimp will warn you at startup about bad translations.
- So do always test your translations and watch the console for output.
 
  The version of GIMP you are holding in your hand uses GTK+-2.0.
  GTK+-2.0 requires that all strings are UTF-8 encoded. Therefore to make

@@ -142,7 +142,7 @@ move_sash_command_execute(Command_t *parent)
                     G_CALLBACK (sash_end), command);
    g_signal_connect(command->widget, "motion-notify-event",
                     G_CALLBACK (sash_move), command);
-   gdk_gc_set_function(get_preferences()->selected_gc, GDK_EQUIV);
+   gdk_gc_set_function(get_preferences()->selected_gc, GDK_XOR);
 
    return CMD_APPEND;
 }

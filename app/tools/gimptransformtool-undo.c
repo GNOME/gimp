@@ -82,7 +82,7 @@ gimp_transform_tool_push_undo (GimpImage   *image,
       tu->tool_ID   = tool_ID;
       tu->tool_type = tool_type;
 
-      for (i = 0; i < TRAN_INFO_SIZE; i++)
+      for (i = 0; i < TRANS_INFO_SIZE; i++)
         tu->trans_info[i] = trans_info[i];
 
       if (original)
@@ -116,7 +116,7 @@ undo_pop_transform (GimpUndo            *undo,
           gint         i;
 
           /*  swap the transformation information arrays  */
-          for (i = 0; i < TRAN_INFO_SIZE; i++)
+          for (i = 0; i < TRANS_INFO_SIZE; i++)
             {
               d                 = tu->trans_info[i];
               tu->trans_info[i] = tt->trans_info[i];

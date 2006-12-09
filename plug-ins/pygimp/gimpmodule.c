@@ -25,17 +25,16 @@
 
 #include "pygimpcolor-api.h"
 
-#define _INSIDE_PYGIMP_
-#include "pygimp-api.h"
-
 #include <sysmodule.h>
 
 #include <glib-object.h>
 
 #include <pygobject.h>
 
-/* maximum bits per pixel ... */
-#define MAX_BPP 4
+#include "pygimp-util.h"
+
+#include "pygimp-intl.h"
+
 
 PyObject *pygimp_error;
 
@@ -75,9 +74,9 @@ pygimp_init_proc(void)
     r = PyObject_CallFunction(callbacks[0], "()");
 
     if (!r) {
-	PyErr_Print();
-	PyErr_Clear();
-	return;
+        PyErr_Print();
+        PyErr_Clear();
+        return;
     }
 
     Py_DECREF(r);
@@ -91,9 +90,9 @@ pygimp_quit_proc(void)
     r = PyObject_CallFunction(callbacks[1], "()");
 
     if (!r) {
-	PyErr_Print();
-	PyErr_Clear();
-	return;
+        PyErr_Print();
+        PyErr_Clear();
+        return;
     }
 
     Py_DECREF(r);
@@ -107,9 +106,9 @@ pygimp_query_proc(void)
     r = PyObject_CallFunction(callbacks[2], "()");
 
     if (!r) {
-	PyErr_Print();
-	PyErr_Clear();
-	return;
+        PyErr_Print();
+        PyErr_Clear();
+        return;
     }
 
     Py_DECREF(r);
@@ -117,7 +116,7 @@ pygimp_query_proc(void)
 
 static void
 pygimp_run_proc(const char *name, int nparams, const GimpParam *params,
-		int *nreturn_vals, GimpParam **return_vals)
+                int *nreturn_vals, GimpParam **return_vals)
 {
     PyObject *args, *ret;
     GimpParamDef *pd, *rv;
@@ -126,7 +125,7 @@ pygimp_run_proc(const char *name, int nparams, const GimpParam *params,
     int np, nrv;
 
     gimp_procedural_db_proc_info(name, &b, &h, &a, &c, &d, &t, &np, &nrv,
-				 &pd, &rv);
+                                 &pd, &rv);
     g_free(b); g_free(h); g_free(a); g_free(c); g_free(d); g_free(pd);
 
 #if PG_DEBUG > 0
@@ -137,43 +136,43 @@ pygimp_run_proc(const char *name, int nparams, const GimpParam *params,
     args = pygimp_param_to_tuple(nparams, params);
 
     if (args == NULL) {
-	PyErr_Clear();
+        PyErr_Clear();
 
-	*nreturn_vals = 1;
-	*return_vals = g_new(GimpParam, 1);
-	(*return_vals)[0].type = GIMP_PDB_STATUS;
-	(*return_vals)[0].data.d_status = GIMP_PDB_CALLING_ERROR;
+        *nreturn_vals = 1;
+        *return_vals = g_new(GimpParam, 1);
+        (*return_vals)[0].type = GIMP_PDB_STATUS;
+        (*return_vals)[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
-	return;
+        return;
     }
 
     ret = PyObject_CallFunction(callbacks[3], "(sO)", name, args);
     Py_DECREF(args);
 
     if (ret == NULL) {
-	PyErr_Print();
-	PyErr_Clear();
+        PyErr_Print();
+        PyErr_Clear();
 
-	*nreturn_vals = 1;
-	*return_vals = g_new(GimpParam, 1);
-	(*return_vals)[0].type = GIMP_PDB_STATUS;
-	(*return_vals)[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+        *nreturn_vals = 1;
+        *return_vals = g_new(GimpParam, 1);
+        (*return_vals)[0].type = GIMP_PDB_STATUS;
+        (*return_vals)[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-	return;
+        return;
     }
 
     *return_vals = pygimp_param_from_tuple(ret, rv, nrv);
     g_free(rv);
 
     if (*return_vals == NULL) {
-	PyErr_Clear();
+        PyErr_Clear();
 
-	*nreturn_vals = 1;
-	*return_vals = g_new(GimpParam, 1);
-	(*return_vals)[0].type = GIMP_PDB_STATUS;
-	(*return_vals)[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+        *nreturn_vals = 1;
+        *return_vals = g_new(GimpParam, 1);
+        (*return_vals)[0].type = GIMP_PDB_STATUS;
+        (*return_vals)[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-	return;
+        return;
     }
 
     Py_DECREF(ret);
@@ -190,43 +189,43 @@ pygimp_main(PyObject *self, PyObject *args)
     int argc, i;
     char **argv;
     PyObject *ip, *qp, *query, *rp;
-	
+
     if (!PyArg_ParseTuple(args, "OOOO:main", &ip, &qp, &query, &rp))
-	return NULL;
+        return NULL;
 
 #define Arg_Check(v) (PyCallable_Check(v) || (v) == Py_None)
 
     if (!Arg_Check(ip) || !Arg_Check(qp) || !Arg_Check(query) ||
-	!Arg_Check(rp)) {
-	PyErr_SetString(pygimp_error, "arguments must be callable");
-	return NULL;
+        !Arg_Check(rp)) {
+        PyErr_SetString(pygimp_error, "arguments must be callable");
+        return NULL;
     }
 
 #undef Arg_Check
 
     if (query == Py_None) {
-	PyErr_SetString(pygimp_error, "a query procedure must be provided");
-	return NULL;
+        PyErr_SetString(pygimp_error, "a query procedure must be provided");
+        return NULL;
     }
 
     if (ip != Py_None) {
-	callbacks[0] = ip;
-	PLUG_IN_INFO.init_proc = pygimp_init_proc;
+        callbacks[0] = ip;
+        PLUG_IN_INFO.init_proc = pygimp_init_proc;
     }
 
     if (qp != Py_None) {
-	callbacks[1] = qp;
-	PLUG_IN_INFO.quit_proc = pygimp_quit_proc;
+        callbacks[1] = qp;
+        PLUG_IN_INFO.quit_proc = pygimp_quit_proc;
     }
 
     if (query != Py_None) {
-	callbacks[2] = query;
-	PLUG_IN_INFO.query_proc = pygimp_query_proc;
+        callbacks[2] = query;
+        PLUG_IN_INFO.query_proc = pygimp_query_proc;
     }
 
     if (rp != Py_None) {
-	callbacks[3] = rp;
-	PLUG_IN_INFO.run_proc = pygimp_run_proc;
+        callbacks[3] = rp;
+        PLUG_IN_INFO.run_proc = pygimp_run_proc;
     }
 
     av = PySys_GetObject("argv");
@@ -235,16 +234,16 @@ pygimp_main(PyObject *self, PyObject *args)
     argv = g_new(char *, argc);
 
     for (i = 0; i < argc; i++)
-	argv[i] = g_strdup(PyString_AsString(PyList_GetItem(av, i)));
+        argv[i] = g_strdup(PyString_AsString(PyList_GetItem(av, i)));
 
     gimp_main(&PLUG_IN_INFO, argc, argv);
 
     if (argv != NULL) {
-	for (i = 0; i < argc; i++)
-	    if (argv[i] != NULL)
-		g_free(argv[i]);
+        for (i = 0; i < argc; i++)
+            if (argv[i] != NULL)
+                g_free(argv[i]);
 
-	g_free(argv);
+        g_free(argv);
     }
 
     Py_INCREF(Py_None);
@@ -282,18 +281,18 @@ pygimp_set_data(PyObject *self, PyObject *args)
     GimpParam *return_vals;
 
     if (!PyArg_ParseTuple(args, "ss#:set_data", &id, &data, &bytes))
-	return NULL;
+        return NULL;
 
     return_vals = gimp_run_procedure("gimp-procedural-db-set-data",
-				     &nreturn_vals,
-				     GIMP_PDB_STRING, id,
-				     GIMP_PDB_INT32, bytes,
-				     GIMP_PDB_INT8ARRAY, data,
-				     GIMP_PDB_END);
+                                     &nreturn_vals,
+                                     GIMP_PDB_STRING, id,
+                                     GIMP_PDB_INT32, bytes,
+                                     GIMP_PDB_INT8ARRAY, data,
+                                     GIMP_PDB_END);
 
     if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS) {
-	PyErr_SetString(pygimp_error, "error occurred while storing");
-	return NULL;
+        PyErr_SetString(pygimp_error, "error occurred while storing");
+        return NULL;
     }
 
     gimp_destroy_params(return_vals, nreturn_vals);
@@ -311,20 +310,20 @@ pygimp_get_data(PyObject *self, PyObject *args)
     PyObject *s;
 
     if (!PyArg_ParseTuple(args, "s:get_data", &id))
-	return NULL;
+        return NULL;
 
     return_vals = gimp_run_procedure("gimp-procedural-db-get-data",
-				     &nreturn_vals,
-				     GIMP_PDB_STRING, id,
-				     GIMP_PDB_END);
+                                     &nreturn_vals,
+                                     GIMP_PDB_STRING, id,
+                                     GIMP_PDB_END);
 
     if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS) {
-	PyErr_SetString(pygimp_error, "no data for id");
-	return NULL;
+        PyErr_SetString(pygimp_error, "no data for id");
+        return NULL;
     }
 
     s = PyString_FromStringAndSize((char *)return_vals[2].data.d_int8array,
-				   return_vals[1].data.d_int32);
+                                   return_vals[1].data.d_int32);
     gimp_destroy_params(return_vals, nreturn_vals);
 
     return s;
@@ -336,7 +335,7 @@ pygimp_progress_init(PyObject *self, PyObject *args)
     char *msg = NULL;
 
     if (!PyArg_ParseTuple(args, "|s:progress_init", &msg))
-	return NULL;
+        return NULL;
 
     gimp_progress_init(msg);
 
@@ -350,7 +349,7 @@ pygimp_progress_update(PyObject *self, PyObject *args)
     double p;
 
     if (!PyArg_ParseTuple(args, "d:progress_update", &p))
-	return NULL;
+        return NULL;
 
     gimp_progress_update(p);
 
@@ -365,16 +364,16 @@ pygimp_progress_start(const gchar *message, gboolean cancelable, gpointer data)
     PyObject *r;
 
     if (pdata->user_data) {
-	r = PyObject_CallFunction(pdata->start, "siO", message, cancelable,
-				  pdata->user_data);
-	Py_DECREF(pdata->user_data);
+        r = PyObject_CallFunction(pdata->start, "siO", message, cancelable,
+                                  pdata->user_data);
+        Py_DECREF(pdata->user_data);
     } else
-	r = PyObject_CallFunction(pdata->start, "si", message, cancelable);
+        r = PyObject_CallFunction(pdata->start, "si", message, cancelable);
 
     if (!r) {
-	PyErr_Print();
-	PyErr_Clear();
-	return;
+        PyErr_Print();
+        PyErr_Clear();
+        return;
     }
 
     Py_DECREF(r);
@@ -387,15 +386,15 @@ pygimp_progress_end(gpointer data)
     PyObject *r;
 
     if (pdata->user_data) {
-	r = PyObject_CallFunction(pdata->end, "O", pdata->user_data);
-	Py_DECREF(pdata->user_data);
+        r = PyObject_CallFunction(pdata->end, "O", pdata->user_data);
+        Py_DECREF(pdata->user_data);
     } else
-	r = PyObject_CallFunction(pdata->end, NULL);
+        r = PyObject_CallFunction(pdata->end, NULL);
 
     if (!r) {
-	PyErr_Print();
-	PyErr_Clear();
-	return;
+        PyErr_Print();
+        PyErr_Clear();
+        return;
     }
 
     Py_DECREF(r);
@@ -408,15 +407,15 @@ pygimp_progress_text(const gchar *message, gpointer data)
     PyObject *r;
 
     if (pdata->user_data) {
-	r = PyObject_CallFunction(pdata->text, "sO", message, pdata->user_data);
-	Py_DECREF(pdata->user_data);
+        r = PyObject_CallFunction(pdata->text, "sO", message, pdata->user_data);
+        Py_DECREF(pdata->user_data);
     } else
-	r = PyObject_CallFunction(pdata->text, "s", message);
+        r = PyObject_CallFunction(pdata->text, "s", message);
 
     if (!r) {
-	PyErr_Print();
-	PyErr_Clear();
-	return;
+        PyErr_Print();
+        PyErr_Clear();
+        return;
     }
 
     Py_DECREF(r);
@@ -429,16 +428,16 @@ pygimp_progress_value(gdouble percentage, gpointer data)
     PyObject *r;
 
     if (pdata->user_data) {
-	r = PyObject_CallFunction(pdata->value, "dO", percentage,
-				  pdata->user_data);
-	Py_DECREF(pdata->user_data);
+        r = PyObject_CallFunction(pdata->value, "dO", percentage,
+                                  pdata->user_data);
+        Py_DECREF(pdata->user_data);
     } else
-	r = PyObject_CallFunction(pdata->value, "d", percentage);
+        r = PyObject_CallFunction(pdata->value, "d", percentage);
 
     if (!r) {
-	PyErr_Print();
-	PyErr_Clear();
-	return;
+        PyErr_Print();
+        PyErr_Clear();
+        return;
     }
 
     Py_DECREF(r);
@@ -455,18 +454,18 @@ pygimp_progress_install(PyObject *self, PyObject *args, PyObject *kwargs)
     pdata = g_new0(ProgressData, 1);
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOOO|O:progress_install",
-				     kwlist,
-				     &pdata->start, &pdata->end,
-				     &pdata->text, &pdata->value,
-				     &pdata->user_data))
-	goto cleanup;
+                                     kwlist,
+                                     &pdata->start, &pdata->end,
+                                     &pdata->text, &pdata->value,
+                                     &pdata->user_data))
+        goto cleanup;
 
-#define PROCESS_FUNC(n) G_STMT_START {					\
-    if (!PyCallable_Check(pdata->n)) {					\
-	PyErr_SetString(pygimp_error, #n "argument must be callable");	\
-	goto cleanup;							\
-    }									\
-    Py_INCREF(pdata->n);						\
+#define PROCESS_FUNC(n) G_STMT_START {                                  \
+    if (!PyCallable_Check(pdata->n)) {                                  \
+        PyErr_SetString(pygimp_error, #n "argument must be callable");  \
+        goto cleanup;                                                   \
+    }                                                                   \
+    Py_INCREF(pdata->n);                                                \
 } G_STMT_END
 
     PROCESS_FUNC(start);
@@ -486,15 +485,15 @@ pygimp_progress_install(PyObject *self, PyObject *args, PyObject *kwargs)
     ret = gimp_progress_install_vtable(&vtable, pdata);
 
     if (!ret) {
-	PyErr_SetString(pygimp_error,
-			"error occurred while installing progress functions");
+        PyErr_SetString(pygimp_error,
+                        "error occurred while installing progress functions");
 
-	Py_DECREF(pdata->start);
-	Py_DECREF(pdata->end);
-	Py_DECREF(pdata->text);
-	Py_DECREF(pdata->value);
+        Py_DECREF(pdata->start);
+        Py_DECREF(pdata->end);
+        Py_DECREF(pdata->text);
+        Py_DECREF(pdata->value);
 
-	goto cleanup;
+        goto cleanup;
     }
 
     return PyString_FromString(ret);
@@ -511,14 +510,14 @@ pygimp_progress_uninstall(PyObject *self, PyObject *args)
     gchar *callback;
 
     if (!PyArg_ParseTuple(args, "s:progress_uninstall", &callback))
-	return NULL;
+        return NULL;
 
     pdata = gimp_progress_uninstall(callback);
 
     if (!pdata) {
-	PyErr_SetString(pygimp_error,
-			"error occurred while uninstalling progress functions");
-	return NULL;
+        PyErr_SetString(pygimp_error,
+                        "error occurred while uninstalling progress functions");
+        return NULL;
     }
 
     Py_DECREF(pdata->start);
@@ -545,7 +544,7 @@ pygimp_image_list(PyObject *self)
     ret = PyList_New(nimgs);
 
     for (i = 0; i < nimgs; i++)
-	PyList_SetItem(ret, i, (PyObject *)pygimp_image_new(imgs[i]));
+        PyList_SetItem(ret, i, (PyObject *)pygimp_image_new(imgs[i]));
 
     g_free(imgs);
 
@@ -556,20 +555,20 @@ static PyObject *
 pygimp_install_procedure(PyObject *self, PyObject *args)
 {
     char *name, *blurb, *help, *author, *copyright, *date, *menu_path,
-	 *image_types, *n, *d;
+         *image_types, *n, *d;
     GimpParamDef *params, *return_vals;
     int type, nparams, nreturn_vals, i;
     PyObject *pars, *rets;
 
     if (!PyArg_ParseTuple(args, "sssssszziOO:install_procedure",
-			  &name, &blurb, &help,
-			  &author, &copyright, &date, &menu_path, &image_types,
-			  &type, &pars, &rets))
-	return NULL;
+                          &name, &blurb, &help,
+                          &author, &copyright, &date, &menu_path, &image_types,
+                          &type, &pars, &rets))
+        return NULL;
 
     if (!PySequence_Check(pars) || !PySequence_Check(rets)) {
-	PyErr_SetString(PyExc_TypeError, "last two args must be sequences");
-	return NULL;
+        PyErr_SetString(PyExc_TypeError, "last two args must be sequences");
+        return NULL;
     }
 
     nparams = PySequence_Length(pars);
@@ -577,32 +576,32 @@ pygimp_install_procedure(PyObject *self, PyObject *args)
     params = g_new(GimpParamDef, nparams);
 
     for (i = 0; i < nparams; i++) {
-	if (!PyArg_ParseTuple(PySequence_GetItem(pars, i), "iss",
-			      &(params[i].type), &n, &d)) {
-	    g_free(params);
-	    return NULL;
-	}
+        if (!PyArg_ParseTuple(PySequence_GetItem(pars, i), "iss",
+                              &(params[i].type), &n, &d)) {
+            g_free(params);
+            return NULL;
+        }
 
-	params[i].name = g_strdup(n);
-	params[i].description = g_strdup(d);
+        params[i].name = g_strdup(n);
+        params[i].description = g_strdup(d);
     }
 
     return_vals = g_new(GimpParamDef, nreturn_vals);
 
     for (i = 0; i < nreturn_vals; i++) {
-	if (!PyArg_ParseTuple(PySequence_GetItem(rets, i), "iss",
-			      &(return_vals[i].type), &n, &d)) {
-	    g_free(params); g_free(return_vals);
-	    return NULL;
-	}
+        if (!PyArg_ParseTuple(PySequence_GetItem(rets, i), "iss",
+                              &(return_vals[i].type), &n, &d)) {
+            g_free(params); g_free(return_vals);
+            return NULL;
+        }
 
-	return_vals[i].name = g_strdup(n);
-	return_vals[i].description = g_strdup(d);
+        return_vals[i].name = g_strdup(n);
+        return_vals[i].description = g_strdup(d);
     }
 
     gimp_install_procedure(name, blurb, help, author, copyright, date,
-			   menu_path, image_types, type, nparams, nreturn_vals,
-			   params, return_vals);
+                           menu_path, image_types, type, nparams, nreturn_vals,
+                           params, return_vals);
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -612,20 +611,20 @@ static PyObject *
 pygimp_install_temp_proc(PyObject *self, PyObject *args)
 {
     char *name, *blurb, *help, *author, *copyright, *date, *menu_path,
-	*image_types, *n, *d;
+        *image_types, *n, *d;
     GimpParamDef *params, *return_vals;
     int type, nparams, nreturn_vals, i;
     PyObject *pars, *rets;
 
     if (!PyArg_ParseTuple(args, "sssssszziOO:install_temp_proc",
-			  &name, &blurb, &help,
-			  &author, &copyright, &date, &menu_path, &image_types,
-			  &type, &pars, &rets))
-	return NULL;
+                          &name, &blurb, &help,
+                          &author, &copyright, &date, &menu_path, &image_types,
+                          &type, &pars, &rets))
+        return NULL;
 
     if (!PySequence_Check(pars) || !PySequence_Check(rets)) {
-	PyErr_SetString(PyExc_TypeError, "last two args must be sequences");
-	return NULL;
+        PyErr_SetString(PyExc_TypeError, "last two args must be sequences");
+        return NULL;
     }
 
     nparams = PySequence_Length(pars);
@@ -633,33 +632,33 @@ pygimp_install_temp_proc(PyObject *self, PyObject *args)
     params = g_new(GimpParamDef, nparams);
 
     for (i = 0; i < nparams; i++) {
-	if (!PyArg_ParseTuple(PySequence_GetItem(pars, i), "iss",
-			      &(params[i].type), &n, &d)) {
-	    g_free(params);
-	    return NULL;
-	}
+        if (!PyArg_ParseTuple(PySequence_GetItem(pars, i), "iss",
+                              &(params[i].type), &n, &d)) {
+            g_free(params);
+            return NULL;
+        }
 
-	params[i].name = g_strdup(n);
-	params[i].description = g_strdup(d);
+        params[i].name = g_strdup(n);
+        params[i].description = g_strdup(d);
     }
 
     return_vals = g_new(GimpParamDef, nreturn_vals);
 
     for (i = 0; i < nreturn_vals; i++) {
-	if (!PyArg_ParseTuple(PySequence_GetItem(rets, i), "iss",
-			      &(return_vals[i].type), &n, &d)) {
-	    g_free(params); g_free(return_vals);
-	    return NULL;
-	}
+        if (!PyArg_ParseTuple(PySequence_GetItem(rets, i), "iss",
+                              &(return_vals[i].type), &n, &d)) {
+            g_free(params); g_free(return_vals);
+            return NULL;
+        }
 
-	return_vals[i].name = g_strdup(n);
-	return_vals[i].description = g_strdup(d);
+        return_vals[i].name = g_strdup(n);
+        return_vals[i].description = g_strdup(d);
     }
 
     gimp_install_temp_proc(name, blurb, help, author, copyright, date,
-			   menu_path, image_types, type,
-			   nparams, nreturn_vals, params, return_vals,
-			   pygimp_run_proc);
+                           menu_path, image_types, type,
+                           nparams, nreturn_vals, params, return_vals,
+                           pygimp_run_proc);
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -671,7 +670,7 @@ pygimp_uninstall_temp_proc(PyObject *self, PyObject *args)
     char *name;
 
     if (!PyArg_ParseTuple(args, "s:uninstall_temp_proc", &name))
-	return NULL;
+        return NULL;
 
     gimp_uninstall_temp_proc(name);
 
@@ -685,8 +684,8 @@ pygimp_register_magic_load_handler(PyObject *self, PyObject *args)
     char *name, *extensions, *prefixes, *magics;
 
     if (!PyArg_ParseTuple(args, "ssss:register_magic_load_handler",
-			  &name, &extensions, &prefixes, &magics))
-	return NULL;
+                          &name, &extensions, &prefixes, &magics))
+        return NULL;
 
     gimp_register_magic_load_handler(name, extensions, prefixes, magics);
 
@@ -700,8 +699,8 @@ pygimp_register_load_handler(PyObject *self, PyObject *args)
     char *name, *extensions, *prefixes;
 
     if (!PyArg_ParseTuple(args, "sss:register_load_handler",
-			  &name, &extensions, &prefixes))
-	return NULL;
+                          &name, &extensions, &prefixes))
+        return NULL;
 
     gimp_register_load_handler(name, extensions, prefixes);
 
@@ -715,10 +714,38 @@ pygimp_register_save_handler(PyObject *self, PyObject *args)
     char *name, *extensions, *prefixes;
 
     if (!PyArg_ParseTuple(args, "sss:register_save_handler",
-			  &name, &extensions, &prefixes))
-	return NULL;
+                          &name, &extensions, &prefixes))
+        return NULL;
 
     gimp_register_save_handler(name, extensions, prefixes);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
+pygimp_domain_register(PyObject *self, PyObject *args)
+{
+    char *name, *path = NULL;
+
+    if (!PyArg_ParseTuple(args, "s|s:domain_register", &name, &path))
+        return NULL;
+
+    gimp_plugin_domain_register(name, path);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
+pygimp_menu_register(PyObject *self, PyObject *args)
+{
+    char *name, *path;
+
+    if (!PyArg_ParseTuple(args, "ss:menu_register", &name, &path))
+        return NULL;
+
+    gimp_plugin_menu_register(name, path);
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -757,15 +784,29 @@ pygimp_personal_rc_file(PyObject *self, PyObject *args, PyObject *kwargs)
     static char *kwlist[] = { "basename", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-				     "s:personal_rc_file", kwlist,
-				     &basename))
-	return NULL;
+                                     "s:personal_rc_file", kwlist,
+                                     &basename))
+        return NULL;
 
     filename = gimp_personal_rc_file(basename);
     ret = PyString_FromString(filename);
     g_free(filename);
 
     return ret;
+}
+
+static PyObject *
+pygimp_context_push(PyObject *self)
+{
+    gimp_context_push();
+    return Py_None;
+}
+
+static PyObject *
+pygimp_context_pop(PyObject *self)
+{
+    gimp_context_pop();
+    return Py_None;
 }
 
 static PyObject *
@@ -795,29 +836,29 @@ pygimp_set_background(PyObject *self, PyObject *args)
     gboolean compat = FALSE;
 
     if (!PyArg_ParseTuple(args, "O!:set_background",
-			  PyGimpRGB_Type, &color)) {
-	PyErr_Clear();
-	compat = TRUE;
-	if (!PyArg_ParseTuple(args, "(iii):set_background", &r, &g, &b)) {
-	    PyErr_Clear();
-	    if (!PyArg_ParseTuple(args, "iii:set_background", &r, &g, &b)) {
-		PyErr_Clear();
-		PyArg_ParseTuple(args, "O!:set_background",
-				 PyGimpRGB_Type, &color);
-		return NULL;
-	    }
-	}
+                          PyGimpRGB_Type, &color)) {
+        PyErr_Clear();
+        compat = TRUE;
+        if (!PyArg_ParseTuple(args, "(iii):set_background", &r, &g, &b)) {
+            PyErr_Clear();
+            if (!PyArg_ParseTuple(args, "iii:set_background", &r, &g, &b)) {
+                PyErr_Clear();
+                PyArg_ParseTuple(args, "O!:set_background",
+                                 PyGimpRGB_Type, &color);
+                return NULL;
+            }
+        }
     }
 
     if (compat) {
-	r = CLAMP(r, 0, 255);
-	g = CLAMP(g, 0, 255);
-	b = CLAMP(b, 0, 255);
+        r = CLAMP(r, 0, 255);
+        g = CLAMP(g, 0, 255);
+        b = CLAMP(b, 0, 255);
 
-	gimp_rgb_set_uchar(&tmprgb, r, g, b);
-	rgb = &tmprgb;
+        gimp_rgb_set_uchar(&tmprgb, r, g, b);
+        rgb = &tmprgb;
     } else {
-	rgb = pyg_boxed_get(color, GimpRGB);
+        rgb = pyg_boxed_get(color, GimpRGB);
     }
 
     gimp_context_set_background(rgb);
@@ -835,29 +876,29 @@ pygimp_set_foreground(PyObject *self, PyObject *args)
     gboolean compat = FALSE;
 
     if (!PyArg_ParseTuple(args, "O!:set_foreground",
-			  PyGimpRGB_Type, &color)) {
-	PyErr_Clear();
-	compat = TRUE;
-	if (!PyArg_ParseTuple(args, "(iii):set_foreground", &r, &g, &b)) {
-	    PyErr_Clear();
-	    if (!PyArg_ParseTuple(args, "iii:set_foreground", &r, &g, &b)) {
-		PyErr_Clear();
-		PyArg_ParseTuple(args, "O!:set_foreground",
-				 PyGimpRGB_Type, &color);
-		return NULL;
-	    }
-	}
+                          PyGimpRGB_Type, &color)) {
+        PyErr_Clear();
+        compat = TRUE;
+        if (!PyArg_ParseTuple(args, "(iii):set_foreground", &r, &g, &b)) {
+            PyErr_Clear();
+            if (!PyArg_ParseTuple(args, "iii:set_foreground", &r, &g, &b)) {
+                PyErr_Clear();
+                PyArg_ParseTuple(args, "O!:set_foreground",
+                                 PyGimpRGB_Type, &color);
+                return NULL;
+            }
+        }
     }
 
     if (compat) {
-	r = CLAMP(r, 0, 255);
-	g = CLAMP(g, 0, 255);
-	b = CLAMP(b, 0, 255);
+        r = CLAMP(r, 0, 255);
+        g = CLAMP(g, 0, 255);
+        b = CLAMP(b, 0, 255);
 
-	gimp_rgb_set_uchar(&tmprgb, r, g, b);
-	rgb = &tmprgb;
+        gimp_rgb_set_uchar(&tmprgb, r, g, b);
+        rgb = &tmprgb;
     } else {
-	rgb = pyg_boxed_get(color, GimpRGB);
+        rgb = pyg_boxed_get(color, GimpRGB);
     }
 
     gimp_context_set_foreground(rgb);
@@ -876,17 +917,17 @@ pygimp_gradients_get_list(PyObject *self, PyObject *args, PyObject *kwargs)
     static char *kwlist[] = { "filter", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-				     "|s:gradients_get_list", kwlist,
-				     &filter))
-	return NULL;
+                                     "|s:gradients_get_list", kwlist,
+                                     &filter))
+        return NULL;
 
     list = gimp_gradients_get_list(filter, &num);
 
     ret = PyList_New(num);
 
     for (i = 0; i < num; i++) {
-	PyList_SetItem(ret, i, PyString_FromString(list[i]));
-	g_free(list[i]);
+        PyList_SetItem(ret, i, PyString_FromString(list[i]));
+        g_free(list[i]);
     }
 
     g_free(list);
@@ -922,7 +963,7 @@ pygimp_context_set_gradient(PyObject *self, PyObject *args)
     char *actv;
 
     if (!PyArg_ParseTuple(args, "s:gradients_set_gradient", &actv))
-	return NULL;
+        return NULL;
 
     gimp_context_set_gradient(actv);
 
@@ -950,18 +991,18 @@ pygimp_gradient_get_uniform_samples(PyObject *self, PyObject *args)
     PyObject *ret;
 
     if (!PyArg_ParseTuple(args, "si|i:gradient_get_uniform_samples",
-			  &name, &num, &reverse))
-	return NULL;
+                          &name, &num, &reverse))
+        return NULL;
 
     if (!gimp_gradient_get_uniform_samples(name, num, reverse, &nsamp, &samp)) {
-	PyErr_SetString(pygimp_error, "gradient_get_uniform_samples failed");
-	return NULL;
+        PyErr_SetString(pygimp_error, "gradient_get_uniform_samples failed");
+        return NULL;
     }
 
     ret = PyList_New(num);
     for (i = 0, j = 0; i < num; i++, j += 4)
-	PyList_SetItem(ret, i, Py_BuildValue("(dddd)", samp[j],
-					     samp[j+1], samp[j+2], samp[j+3]));
+        PyList_SetItem(ret, i, Py_BuildValue("(dddd)", samp[j],
+                                             samp[j+1], samp[j+2], samp[j+3]));
 
     g_free(samp);
 
@@ -980,44 +1021,44 @@ pygimp_gradient_get_custom_samples(PyObject *self, PyObject *args)
     gboolean success;
 
     if (!PyArg_ParseTuple(args, "sO|i:gradient_get_custom_samples",
-			  &name, &ret, &reverse))
-	return NULL;
+                          &name, &ret, &reverse))
+        return NULL;
 
     if (!PySequence_Check(ret)) {
-	PyErr_SetString(PyExc_TypeError,
-			"second arg must be a sequence");
-	return NULL;
+        PyErr_SetString(PyExc_TypeError,
+                        "second arg must be a sequence");
+        return NULL;
     }
 
     num = PySequence_Length(ret);
     pos = g_new(gdouble, num);
 
     for (i = 0; i < num; i++) {
-	item = PySequence_GetItem(ret, i);
+        item = PySequence_GetItem(ret, i);
 
-	if (!PyFloat_Check(item)) {
-	    PyErr_SetString(PyExc_TypeError,
-			    "second arg must be a sequence of floats");
-	    g_free(pos);
-	    return NULL;
-	}
+        if (!PyFloat_Check(item)) {
+            PyErr_SetString(PyExc_TypeError,
+                            "second arg must be a sequence of floats");
+            g_free(pos);
+            return NULL;
+        }
 
-	pos[i] = PyFloat_AsDouble(item);
+        pos[i] = PyFloat_AsDouble(item);
     }
 
     success = gimp_gradient_get_custom_samples(name, num, pos, reverse,
-					       &nsamp, &samp);
+                                               &nsamp, &samp);
     g_free(pos);
 
     if (!success) {
-	PyErr_SetString(pygimp_error, "gradient_get_custom_samples failed");
-	return NULL;
+        PyErr_SetString(pygimp_error, "gradient_get_custom_samples failed");
+        return NULL;
     }
 
     ret = PyList_New(num);
     for (i = 0, j = 0; i < num; i++, j += 4)
-	PyList_SetItem(ret, i, Py_BuildValue("(dddd)", samp[j],
-					     samp[j+1], samp[j+2], samp[j+3]));
+        PyList_SetItem(ret, i, Py_BuildValue("(dddd)", samp[j],
+                                             samp[j+1], samp[j+2], samp[j+3]));
 
     g_free(samp);
 
@@ -1031,7 +1072,7 @@ pygimp_gradients_sample_uniform(PyObject *self, PyObject *args)
     PyObject *arg_list, *str, *new_args, *ret;
 
     if (PyErr_Warn(PyExc_DeprecationWarning,
-		   "use gimp.gradient_get_uniform_samples") < 0)
+                   "use gimp.gradient_get_uniform_samples") < 0)
         return NULL;
 
     arg_list = PySequence_List(args);
@@ -1060,7 +1101,7 @@ pygimp_gradients_sample_custom(PyObject *self, PyObject *args)
     PyObject *arg_list, *str, *new_args, *ret;
 
     if (PyErr_Warn(PyExc_DeprecationWarning,
-		   "use gimp.gradient_get_custom_samples") < 0)
+                   "use gimp.gradient_get_custom_samples") < 0)
         return NULL;
 
     arg_list = PySequence_List(args);
@@ -1087,7 +1128,7 @@ pygimp_delete(PyObject *self, PyObject *args)
     PyGimpImage *img;
 
     if (!PyArg_ParseTuple(args, "O:delete", &img))
-	return NULL;
+        return NULL;
 
     if (pygimp_image_check(img))
         gimp_image_delete(img->ID);
@@ -1116,16 +1157,16 @@ pygimp_displays_reconnect(PyObject *self, PyObject *args)
     PyGimpImage *old_img, *new_img;
 
     if (!PyArg_ParseTuple(args, "O!O!:displays_reconnect",
-			  &PyGimpImage_Type, &old_img,
-			  &PyGimpImage_Type, &new_img))
-	return NULL;
+                          &PyGimpImage_Type, &old_img,
+                          &PyGimpImage_Type, &new_img))
+        return NULL;
 
     if (!gimp_displays_reconnect (old_img->ID, new_img->ID)) {
-	PyErr_Format(pygimp_error,
-		     "could not reconnect the displays of image (ID %d) "
-		     "to image (ID %d)",
-		     old_img->ID, new_img->ID);
-	return NULL;
+        PyErr_Format(pygimp_error,
+                     "could not reconnect the displays of image (ID %d) "
+                     "to image (ID %d)",
+                     old_img->ID, new_img->ID);
+        return NULL;
     }
 
     Py_INCREF(Py_None);
@@ -1138,7 +1179,7 @@ pygimp_tile_cache_size(PyObject *self, PyObject *args)
     unsigned long k;
 
     if (!PyArg_ParseTuple(args, "l:tile_cache_size", &k))
-	return NULL;
+        return NULL;
 
     gimp_tile_cache_size(k);
 
@@ -1153,7 +1194,7 @@ pygimp_tile_cache_ntiles(PyObject *self, PyObject *args)
     unsigned long n;
 
     if (!PyArg_ParseTuple(args, "l:tile_cache_ntiles", &n))
-	return NULL;
+        return NULL;
 
     gimp_tile_cache_ntiles(n);
 
@@ -1199,7 +1240,7 @@ pygimp_extension_process(PyObject *self, PyObject *args)
     guint timeout;
 
     if (!PyArg_ParseTuple(args, "I:extension_process", &timeout))
-	return NULL;
+        return NULL;
 
     gimp_extension_process(timeout);
 
@@ -1213,7 +1254,7 @@ pygimp_parasite_find(PyObject *self, PyObject *args)
     char *name;
 
     if (!PyArg_ParseTuple(args, "s:parasite_find", &name))
-	return NULL;
+        return NULL;
 
     return pygimp_parasite_new(gimp_parasite_find(name));
 }
@@ -1224,13 +1265,13 @@ pygimp_parasite_attach(PyObject *self, PyObject *args)
     PyGimpParasite *parasite;
 
     if (!PyArg_ParseTuple(args, "O!:parasite_attach",
-			  &PyGimpParasite_Type, &parasite))
-	return NULL;
+                          &PyGimpParasite_Type, &parasite))
+        return NULL;
 
     if (!gimp_parasite_attach(parasite->para)) {
-	PyErr_Format(pygimp_error, "could not attach parasite '%s'",
-		     gimp_parasite_name(parasite->para));
-	return NULL;
+        PyErr_Format(pygimp_error, "could not attach parasite '%s'",
+                     gimp_parasite_name(parasite->para));
+        return NULL;
     }
 
     Py_INCREF(Py_None);
@@ -1244,12 +1285,12 @@ pygimp_attach_new_parasite(PyObject *self, PyObject *args)
     int flags, size;
 
     if (!PyArg_ParseTuple(args, "sis#:attach_new_parasite", &name, &flags,
-			  &data, &size))
-	return NULL;
+                          &data, &size))
+        return NULL;
 
     if (!gimp_attach_new_parasite(name, flags, size, data)) {
-	PyErr_Format(pygimp_error, "could not attach new parasite '%s'", name);
-	return NULL;
+        PyErr_Format(pygimp_error, "could not attach new parasite '%s'", name);
+        return NULL;
     }
 
     Py_INCREF(Py_None);
@@ -1262,11 +1303,11 @@ pygimp_parasite_detach(PyObject *self, PyObject *args)
     char *name;
 
     if (!PyArg_ParseTuple(args, "s:parasite_detach", &name))
-	return NULL;
+        return NULL;
 
     if (!gimp_parasite_detach(name)) {
-	PyErr_Format(pygimp_error, "could not detach parasite '%s'", name);
-	return NULL;
+        PyErr_Format(pygimp_error, "could not detach parasite '%s'", name);
+        return NULL;
     }
 
     Py_INCREF(Py_None);
@@ -1280,18 +1321,18 @@ pygimp_parasite_list(PyObject *self)
     gchar **parasites;
 
     if (gimp_parasite_list(&num_parasites, &parasites)) {
-	PyObject *ret;
-	gint i;
+        PyObject *ret;
+        gint i;
 
-	ret = PyTuple_New(num_parasites);
+        ret = PyTuple_New(num_parasites);
 
-	for (i = 0; i < num_parasites; i++) {
-	    PyTuple_SetItem(ret, i, PyString_FromString(parasites[i]));
-	    g_free(parasites[i]);
-	}
+        for (i = 0; i < num_parasites; i++) {
+            PyTuple_SetItem(ret, i, PyString_FromString(parasites[i]));
+            g_free(parasites[i]);
+        }
 
-	g_free(parasites);
-	return ret;
+        g_free(parasites);
+        return ret;
     }
 
     PyErr_SetString(pygimp_error, "could not list parasites");
@@ -1356,8 +1397,8 @@ static PyObject *
 pygimp_fonts_refresh(PyObject *self)
 {
     if (!gimp_fonts_refresh()) {
-	PyErr_SetString(pygimp_error, "could not refresh fonts");
-	return NULL;
+        PyErr_SetString(pygimp_error, "could not refresh fonts");
+        return NULL;
     }
 
     Py_INCREF(Py_None);
@@ -1372,14 +1413,14 @@ pygimp_checks_get_shades(PyObject *self, PyObject *args, PyObject *kwargs)
     static char *kwlist[] = { "type", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-				     "i:checks_get_shades", kwlist,
-				     &type))
+                                     "i:checks_get_shades", kwlist,
+                                     &type))
         return NULL;
 
     if (type < GIMP_CHECK_TYPE_LIGHT_CHECKS ||
-	type > GIMP_CHECK_TYPE_BLACK_ONLY) {
+        type > GIMP_CHECK_TYPE_BLACK_ONLY) {
         PyErr_SetString(PyExc_ValueError, "Invalid check type");
-	return NULL;
+        return NULL;
     }
 
     gimp_checks_get_shades(type, &light, &dark);
@@ -1397,22 +1438,22 @@ pygimp_fonts_get_list(PyObject *self, PyObject *args, PyObject *kwargs)
     static char *kwlist[] = { "filter", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-				     "|s:fonts_get_list", kwlist,
-				     &filter))
+                                     "|s:fonts_get_list", kwlist,
+                                     &filter))
         return NULL;
 
     list = gimp_fonts_get_list(filter, &num);
 
     if (num == 0) {
-	PyErr_SetString(pygimp_error, "could not get font list");
-	return NULL;
+        PyErr_SetString(pygimp_error, "could not get font list");
+        return NULL;
     }
 
     ret = PyList_New(num);
 
     for (i = 0; i < num; i++) {
-	PyList_SetItem(ret, i, PyString_FromString(list[i]));
-	g_free(list[i]);
+        PyList_SetItem(ret, i, PyString_FromString(list[i]));
+        g_free(list[i]);
     }
 
     g_free(list);
@@ -1421,15 +1462,153 @@ pygimp_fonts_get_list(PyObject *self, PyObject *args, PyObject *kwargs)
 }
 
 static PyObject *
+vectors_to_objects(int num_vectors, int *vectors)
+{
+    PyObject *ret;
+    int i;
+
+    ret = PyList_New(num_vectors);
+    if (ret == NULL)
+        goto done;
+
+    for (i = 0; i < num_vectors; i++)
+        PyList_SetItem(ret, i, pygimp_vectors_new(vectors[i]));
+
+done:
+    g_free(vectors);
+    return ret;
+}
+
+static PyObject *
+pygimp_vectors_import_from_file(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpImage *img;
+    PyObject *py_file;
+    gboolean merge = FALSE, scale = FALSE;
+    int *vectors, num_vectors;
+    gboolean success;
+
+    static char *kwlist[] = { "image", "svg_file", "merge", "scale", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O!O|ii:vectors_import_from_file", kwlist,
+                                     &PyGimpImage_Type, &img, &py_file,
+                                     &merge, &scale))
+        return NULL;
+
+    if (PyString_Check(py_file)) {
+        success = gimp_vectors_import_from_file(img->ID,
+                                                PyString_AsString(py_file),
+                                                merge, scale,
+                                                &num_vectors, &vectors);
+    } else {
+        PyObject *chunk_size, *buffer, *read_method;
+
+        chunk_size = PyInt_FromLong(16 * 1024);
+        if (chunk_size == NULL)
+            return NULL;
+
+        buffer = PyString_FromString("");
+        if (buffer == NULL) {
+            Py_DECREF(chunk_size);
+            return NULL;
+        }
+
+        read_method = PyString_FromString("read");
+        if (read_method == NULL || !PyCallable_Check(read_method)) {
+            Py_XDECREF(read_method);
+            PyErr_SetString(PyExc_TypeError,
+                            "svg_file must be an object that has a \"read\" "
+                            "method, or a filename (str)");   
+            return NULL;
+        }
+
+        while (1) {
+            PyObject *chunk;
+            chunk = PyObject_CallMethodObjArgs(py_file, read_method,
+                                               chunk_size, NULL);
+
+            if (!chunk || !PyString_Check(chunk)) {
+                Py_XDECREF(chunk);
+                Py_DECREF(chunk_size);
+                Py_DECREF(buffer);
+                Py_DECREF(read_method);
+                return NULL;
+            }
+
+            if (PyString_GET_SIZE(chunk) != 0) {
+                PyString_ConcatAndDel(&buffer, chunk);
+                if (buffer == NULL) {
+                    Py_DECREF(chunk_size);
+                    Py_DECREF(read_method);
+                    return NULL;
+                }
+            } else {
+                Py_DECREF(chunk);
+                break;
+            }
+        }
+
+        success = gimp_vectors_import_from_string(img->ID,
+                                                  PyString_AsString(buffer),
+                                                  PyString_Size(buffer),
+                                                  merge, scale,
+                                                  &num_vectors, &vectors);
+
+        Py_DECREF(chunk_size);
+        Py_DECREF(buffer);
+        Py_DECREF(read_method);
+    }
+
+    if (!success) {
+        PyErr_SetString(pygimp_error, "Vectors import failed");
+        return NULL;
+    }
+
+    return vectors_to_objects(num_vectors, vectors);
+}
+
+static PyObject *
+pygimp_vectors_import_from_string(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpImage *img;
+    const char *svg_string;
+    int length;
+    gboolean merge = FALSE, scale = FALSE;
+    int *vectors, num_vectors;
+    gboolean success;
+
+    static char *kwlist[] = { "image", "svg_string", "merge", "scale", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O!s#|ii:vectors_import_from_string", kwlist,
+                                     &PyGimpImage_Type, &img,
+                                     &svg_string, &length,
+                                     &merge, &scale))
+        return NULL;
+
+    success = gimp_vectors_import_from_string(img->ID, svg_string, length,
+                                              merge, scale,
+                                              &num_vectors, &vectors);
+
+    if (!success) {
+        PyErr_SetString(pygimp_error, "Vectors import failed");
+        return NULL;
+    }
+
+    return vectors_to_objects(num_vectors, vectors);
+}
+
+static PyObject *
 id2image(PyObject *self, PyObject *args)
 {
     int id;
 
     if (!PyArg_ParseTuple(args, "i:_id2image", &id))
-	return NULL;
+        return NULL;
 
     if (id >= 0)
-	return pygimp_image_new(id);
+        return pygimp_image_new(id);
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -1441,10 +1620,10 @@ id2drawable(PyObject *self, PyObject *args)
     int id;
 
     if (!PyArg_ParseTuple(args, "i:_id2drawable", &id))
-	return NULL;
+        return NULL;
 
     if (id >= 0)
-	return pygimp_drawable_new(NULL, id);
+        return pygimp_drawable_new(NULL, id);
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -1456,10 +1635,25 @@ id2display(PyObject *self, PyObject *args)
     int id;
 
     if (!PyArg_ParseTuple(args, "i:_id2display", &id))
-	return NULL;
+        return NULL;
 
     if (id >= 0)
-	return pygimp_display_new(id);
+        return pygimp_display_new(id);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
+id2vectors(PyObject *self, PyObject *args)
+{
+    int id;
+
+    if (!PyArg_ParseTuple(args, "i:_id2vectors", &id))
+        return NULL;
+
+    if (id >= 0)
+        return pygimp_vectors_new(id);
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -1468,40 +1662,45 @@ id2display(PyObject *self, PyObject *args)
 /* List of methods defined in the module */
 
 static struct PyMethodDef gimp_methods[] = {
-    {"main",	(PyCFunction)pygimp_main,	METH_VARARGS},
-    {"quit",	(PyCFunction)pygimp_quit,	METH_NOARGS},
-    {"message",	(PyCFunction)pygimp_message,	METH_VARARGS},
-    {"set_data",	(PyCFunction)pygimp_set_data,	METH_VARARGS},
-    {"get_data",	(PyCFunction)pygimp_get_data,	METH_VARARGS},
-    {"progress_init",	(PyCFunction)pygimp_progress_init,	METH_VARARGS},
-    {"progress_update",	(PyCFunction)pygimp_progress_update,	METH_VARARGS},
-    {"progress_install",	(PyCFunction)pygimp_progress_install,	METH_VARARGS | METH_KEYWORDS},
-    {"progress_uninstall",	(PyCFunction)pygimp_progress_uninstall,	METH_VARARGS},
-    {"image_list",	(PyCFunction)pygimp_image_list,	METH_NOARGS},
-    {"install_procedure",	(PyCFunction)pygimp_install_procedure,	METH_VARARGS},
-    {"install_temp_proc",	(PyCFunction)pygimp_install_temp_proc,	METH_VARARGS},
-    {"uninstall_temp_proc",	(PyCFunction)pygimp_uninstall_temp_proc,	METH_VARARGS},
-    {"register_magic_load_handler",	(PyCFunction)pygimp_register_magic_load_handler,	METH_VARARGS},
-    {"register_load_handler",	(PyCFunction)pygimp_register_load_handler,	METH_VARARGS},
-    {"register_save_handler",	(PyCFunction)pygimp_register_save_handler,	METH_VARARGS},
-    {"gamma",	(PyCFunction)pygimp_gamma,	METH_NOARGS},
-    {"install_cmap",	(PyCFunction)pygimp_install_cmap,	METH_NOARGS},
-    {"min_colors",	(PyCFunction)pygimp_min_colors,	METH_NOARGS},
-    {"gtkrc",	(PyCFunction)pygimp_gtkrc,	METH_NOARGS},
-    {"personal_rc_file",	(PyCFunction)pygimp_personal_rc_file, METH_VARARGS | METH_KEYWORDS},
-    {"get_background",	(PyCFunction)pygimp_get_background,	METH_NOARGS},
-    {"get_foreground",	(PyCFunction)pygimp_get_foreground,	METH_NOARGS},
-    {"set_background",	(PyCFunction)pygimp_set_background,	METH_VARARGS},
-    {"set_foreground",	(PyCFunction)pygimp_set_foreground,	METH_VARARGS},
-    {"gradients_get_list",	(PyCFunction)pygimp_gradients_get_list,	METH_VARARGS | METH_KEYWORDS},
-    {"context_get_gradient",	(PyCFunction)pygimp_context_get_gradient,	METH_NOARGS},
-    {"context_set_gradient",	(PyCFunction)pygimp_context_set_gradient,	METH_VARARGS},
-    {"gradients_get_gradient",	(PyCFunction)pygimp_gradients_get_gradient,	METH_NOARGS},
-    {"gradients_set_gradient",	(PyCFunction)pygimp_gradients_set_gradient,	METH_VARARGS},
-    {"gradient_get_uniform_samples",	(PyCFunction)pygimp_gradient_get_uniform_samples,	METH_VARARGS},
-    {"gradient_get_custom_samples",	(PyCFunction)pygimp_gradient_get_custom_samples,	METH_VARARGS},
-    {"gradients_sample_uniform",	(PyCFunction)pygimp_gradients_sample_uniform,	METH_VARARGS},
-    {"gradients_sample_custom",	(PyCFunction)pygimp_gradients_sample_custom,	METH_VARARGS},
+    {"main",    (PyCFunction)pygimp_main,       METH_VARARGS},
+    {"quit",    (PyCFunction)pygimp_quit,       METH_NOARGS},
+    {"message", (PyCFunction)pygimp_message,    METH_VARARGS},
+    {"set_data",        (PyCFunction)pygimp_set_data,   METH_VARARGS},
+    {"get_data",        (PyCFunction)pygimp_get_data,   METH_VARARGS},
+    {"progress_init",   (PyCFunction)pygimp_progress_init,      METH_VARARGS},
+    {"progress_update", (PyCFunction)pygimp_progress_update,    METH_VARARGS},
+    {"progress_install",        (PyCFunction)pygimp_progress_install,   METH_VARARGS | METH_KEYWORDS},
+    {"progress_uninstall",      (PyCFunction)pygimp_progress_uninstall, METH_VARARGS},
+    {"image_list",      (PyCFunction)pygimp_image_list, METH_NOARGS},
+    {"install_procedure",       (PyCFunction)pygimp_install_procedure,  METH_VARARGS},
+    {"install_temp_proc",       (PyCFunction)pygimp_install_temp_proc,  METH_VARARGS},
+    {"uninstall_temp_proc",     (PyCFunction)pygimp_uninstall_temp_proc,        METH_VARARGS},
+    {"register_magic_load_handler",     (PyCFunction)pygimp_register_magic_load_handler,        METH_VARARGS},
+    {"register_load_handler",   (PyCFunction)pygimp_register_load_handler,      METH_VARARGS},
+    {"register_save_handler",   (PyCFunction)pygimp_register_save_handler,      METH_VARARGS},
+    {"domain_register",         (PyCFunction)pygimp_domain_register,    METH_VARARGS},
+    {"menu_register",           (PyCFunction)pygimp_menu_register,      METH_VARARGS},
+    {"gamma",   (PyCFunction)pygimp_gamma,      METH_NOARGS},
+    {"install_cmap",    (PyCFunction)pygimp_install_cmap,       METH_NOARGS},
+    {"min_colors",      (PyCFunction)pygimp_min_colors, METH_NOARGS},
+    {"gtkrc",   (PyCFunction)pygimp_gtkrc,      METH_NOARGS},
+    {"personal_rc_file",        (PyCFunction)pygimp_personal_rc_file, METH_VARARGS | METH_KEYWORDS},
+    {"context_push", (PyCFunction)pygimp_context_push, METH_NOARGS},
+    {"context_pop", (PyCFunction)pygimp_context_pop, METH_NOARGS},
+    {"get_foreground",  (PyCFunction)pygimp_get_foreground,     METH_NOARGS},
+    {"get_background",  (PyCFunction)pygimp_get_background,     METH_NOARGS},
+    {"get_foreground",  (PyCFunction)pygimp_get_foreground,     METH_NOARGS},
+    {"set_background",  (PyCFunction)pygimp_set_background,     METH_VARARGS},
+    {"set_foreground",  (PyCFunction)pygimp_set_foreground,     METH_VARARGS},
+    {"gradients_get_list",      (PyCFunction)pygimp_gradients_get_list, METH_VARARGS | METH_KEYWORDS},
+    {"context_get_gradient",    (PyCFunction)pygimp_context_get_gradient,       METH_NOARGS},
+    {"context_set_gradient",    (PyCFunction)pygimp_context_set_gradient,       METH_VARARGS},
+    {"gradients_get_gradient",  (PyCFunction)pygimp_gradients_get_gradient,     METH_NOARGS},
+    {"gradients_set_gradient",  (PyCFunction)pygimp_gradients_set_gradient,     METH_VARARGS},
+    {"gradient_get_uniform_samples",    (PyCFunction)pygimp_gradient_get_uniform_samples,       METH_VARARGS},
+    {"gradient_get_custom_samples",     (PyCFunction)pygimp_gradient_get_custom_samples,        METH_VARARGS},
+    {"gradients_sample_uniform",        (PyCFunction)pygimp_gradients_sample_uniform,   METH_VARARGS},
+    {"gradients_sample_custom", (PyCFunction)pygimp_gradients_sample_custom,    METH_VARARGS},
     {"delete", (PyCFunction)pygimp_delete, METH_VARARGS},
     {"displays_flush", (PyCFunction)pygimp_displays_flush, METH_NOARGS},
     {"displays_reconnect", (PyCFunction)pygimp_displays_reconnect, METH_VARARGS},
@@ -1522,29 +1721,36 @@ static struct PyMethodDef gimp_methods[] = {
     {"check_size",  (PyCFunction)pygimp_check_size,  METH_NOARGS},
     {"check_type",  (PyCFunction)pygimp_check_type,  METH_NOARGS},
     {"default_display",  (PyCFunction)pygimp_default_display,  METH_NOARGS},
-    {"wm_class", (PyCFunction)pygimp_wm_class,	METH_NOARGS},
-    {"display_name", (PyCFunction)pygimp_display_name,	METH_NOARGS},
-    {"monitor_number", (PyCFunction)pygimp_monitor_number,	METH_NOARGS},
-    {"get_progname", (PyCFunction)pygimp_get_progname,	METH_NOARGS},
-    {"fonts_refresh", (PyCFunction)pygimp_fonts_refresh,	METH_NOARGS},
-    {"fonts_get_list", (PyCFunction)pygimp_fonts_get_list,	METH_VARARGS | METH_KEYWORDS},
+    {"wm_class", (PyCFunction)pygimp_wm_class,  METH_NOARGS},
+    {"display_name", (PyCFunction)pygimp_display_name,  METH_NOARGS},
+    {"monitor_number", (PyCFunction)pygimp_monitor_number,      METH_NOARGS},
+    {"get_progname", (PyCFunction)pygimp_get_progname,  METH_NOARGS},
+    {"fonts_refresh", (PyCFunction)pygimp_fonts_refresh,        METH_NOARGS},
+    {"fonts_get_list", (PyCFunction)pygimp_fonts_get_list,      METH_VARARGS | METH_KEYWORDS},
     {"checks_get_shades", (PyCFunction)pygimp_checks_get_shades, METH_VARARGS | METH_KEYWORDS},
+    {"vectors_import_from_file", (PyCFunction)pygimp_vectors_import_from_file, METH_VARARGS | METH_KEYWORDS},
+    {"vectors_import_from_string", (PyCFunction)pygimp_vectors_import_from_string, METH_VARARGS | METH_KEYWORDS},
     {"_id2image", (PyCFunction)id2image, METH_VARARGS},
     {"_id2drawable", (PyCFunction)id2drawable, METH_VARARGS},
     {"_id2display", (PyCFunction)id2display, METH_VARARGS},
-    {NULL,	 (PyCFunction)NULL, 0, NULL}		/* sentinel */
+    {"_id2vectors", (PyCFunction)id2vectors, METH_VARARGS},
+    {NULL,       (PyCFunction)NULL, 0, NULL}            /* sentinel */
 };
 
 
 static struct _PyGimp_Functions pygimp_api_functions = {
+    &PyGimpImage_Type,
     pygimp_image_new,
+    &PyGimpDisplay_Type,
     pygimp_display_new,
+    &PyGimpDrawable_Type,
     pygimp_drawable_new,
+    &PyGimpLayer_Type,
     pygimp_layer_new,
+    &PyGimpChannel_Type,
     pygimp_channel_new,
-
-    &PyGimpPDBFunction_Type,
-    pygimp_pdb_function_new
+    &PyGimpVectors_Type,
+    pygimp_vectors_new,
 };
 
 
@@ -1564,67 +1770,91 @@ initgimp(void)
     PyGimpPDB_Type.tp_alloc = PyType_GenericAlloc;
     PyGimpPDB_Type.tp_new = PyType_GenericNew;
     if (PyType_Ready(&PyGimpPDB_Type) < 0)
-	return;
+        return;
 
     PyGimpPDBFunction_Type.ob_type = &PyType_Type;
     PyGimpPDBFunction_Type.tp_alloc = PyType_GenericAlloc;
     PyGimpPDBFunction_Type.tp_new = PyType_GenericNew;
     if (PyType_Ready(&PyGimpPDBFunction_Type) < 0)
-	return;
+        return;
 
     PyGimpImage_Type.ob_type = &PyType_Type;
     PyGimpImage_Type.tp_alloc = PyType_GenericAlloc;
     PyGimpImage_Type.tp_new = PyType_GenericNew;
     if (PyType_Ready(&PyGimpImage_Type) < 0)
-	return;
+        return;
 
     PyGimpDisplay_Type.ob_type = &PyType_Type;
     PyGimpDisplay_Type.ob_type = &PyType_Type;
     PyGimpDisplay_Type.tp_alloc = PyType_GenericAlloc;
     PyGimpDisplay_Type.tp_new = PyType_GenericNew;
     if (PyType_Ready(&PyGimpDisplay_Type) < 0)
-	return;
+        return;
 
     PyGimpLayer_Type.ob_type = &PyType_Type;
     PyGimpLayer_Type.tp_alloc = PyType_GenericAlloc;
     PyGimpLayer_Type.tp_new = PyType_GenericNew;
     if (PyType_Ready(&PyGimpLayer_Type) < 0)
-	return;
+        return;
 
     PyGimpChannel_Type.ob_type = &PyType_Type;
     PyGimpChannel_Type.tp_alloc = PyType_GenericAlloc;
     PyGimpChannel_Type.tp_new = PyType_GenericNew;
     if (PyType_Ready(&PyGimpChannel_Type) < 0)
-	return;
+        return;
 
     PyGimpTile_Type.ob_type = &PyType_Type;
     PyGimpTile_Type.tp_alloc = PyType_GenericAlloc;
     PyGimpTile_Type.tp_new = PyType_GenericNew;
     if (PyType_Ready(&PyGimpTile_Type) < 0)
-	return;
+        return;
 
     PyGimpPixelRgn_Type.ob_type = &PyType_Type;
     PyGimpPixelRgn_Type.tp_alloc = PyType_GenericAlloc;
     PyGimpPixelRgn_Type.tp_new = PyType_GenericNew;
     if (PyType_Ready(&PyGimpPixelRgn_Type) < 0)
-	return;
+        return;
 
     PyGimpParasite_Type.ob_type = &PyType_Type;
     PyGimpParasite_Type.tp_alloc = PyType_GenericAlloc;
     PyGimpParasite_Type.tp_new = PyType_GenericNew;
     if (PyType_Ready(&PyGimpParasite_Type) < 0)
-	return;
+        return;
 
-    init_pygobject();
+    PyGimpVectorsStroke_Type.ob_type = &PyType_Type;
+    PyGimpVectorsStroke_Type.tp_alloc = PyType_GenericAlloc;
+    PyGimpVectorsStroke_Type.tp_new = PyType_GenericNew;
+    if (PyType_Ready(&PyGimpVectorsStroke_Type) < 0)
+        return;
+
+    PyGimpVectorsBezierStroke_Type.ob_type = &PyType_Type;
+    PyGimpVectorsBezierStroke_Type.tp_alloc = PyType_GenericAlloc;
+    PyGimpVectorsBezierStroke_Type.tp_new = PyType_GenericNew;
+    if (PyType_Ready(&PyGimpVectorsBezierStroke_Type) < 0)
+        return;
+
+    PyGimpVectors_Type.ob_type = &PyType_Type;
+    PyGimpVectors_Type.tp_alloc = PyType_GenericAlloc;
+    PyGimpVectors_Type.tp_new = PyType_GenericNew;
+    if (PyType_Ready(&PyGimpVectors_Type) < 0)
+        return;
+
+    pygimp_init_pygobject();
     init_pygimpcolor();
+
+    /* initialize i18n support */
+    bindtextdomain (GETTEXT_PACKAGE "-python", gimp_locale_directory ());
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
+    bind_textdomain_codeset (GETTEXT_PACKAGE "-python", "UTF-8");
+#endif
 
     /* set the default python encoding to utf-8 */
     PyUnicode_SetDefaultEncoding("utf-8");
 
     /* Create the module and add the functions */
     m = Py_InitModule4("gimp", gimp_methods,
-		       gimp_module_documentation,
-		       NULL, PYTHON_API_VERSION);
+                       gimp_module_documentation,
+                       NULL, PYTHON_API_VERSION);
 
     /* Add some symbolic constants to the module */
     d = PyModule_GetDict(m);
@@ -1642,32 +1872,35 @@ initgimp(void)
     PyDict_SetItemString(d, "Tile", (PyObject *)&PyGimpTile_Type);
     PyDict_SetItemString(d, "PixelRgn", (PyObject *)&PyGimpPixelRgn_Type);
     PyDict_SetItemString(d, "Parasite", (PyObject *)&PyGimpParasite_Type);
+    PyDict_SetItemString(d, "VectorsBezierStroke", (PyObject *)&PyGimpVectorsBezierStroke_Type);
+    PyDict_SetItemString(d, "Vectors", (PyObject *)&PyGimpVectors_Type);
 
     /* for other modules */
+    pygimp_api_functions.pygimp_error = pygimp_error;
     PyDict_SetItemString(d, "_PyGimp_API",
-			 i=PyCObject_FromVoidPtr(&pygimp_api_functions, NULL));
+                         i=PyCObject_FromVoidPtr(&pygimp_api_functions, NULL));
     Py_DECREF(i);
 
     PyDict_SetItemString(d, "version",
-			 i=Py_BuildValue("(iii)",
-					 gimp_major_version,
-					 gimp_minor_version,
-					 gimp_micro_version));
+                         i=Py_BuildValue("(iii)",
+                                         gimp_major_version,
+                                         gimp_minor_version,
+                                         gimp_micro_version));
     Py_DECREF(i);
 
     /* Some environment constants */
     PyDict_SetItemString(d, "directory",
-			 PyString_FromString(gimp_directory()));
+                         PyString_FromString(gimp_directory()));
     PyDict_SetItemString(d, "data_directory",
-			 PyString_FromString(gimp_data_directory()));
+                         PyString_FromString(gimp_data_directory()));
     PyDict_SetItemString(d, "locale_directory",
-			 PyString_FromString(gimp_locale_directory()));
+                         PyString_FromString(gimp_locale_directory()));
     PyDict_SetItemString(d, "sysconf_directory",
-			 PyString_FromString(gimp_sysconf_directory()));
+                         PyString_FromString(gimp_sysconf_directory()));
     PyDict_SetItemString(d, "plug_in_directory",
-			 PyString_FromString(gimp_plug_in_directory()));
+                         PyString_FromString(gimp_plug_in_directory()));
 
     /* Check for errors */
     if (PyErr_Occurred())
-	Py_FatalError("can't initialize module gimp");
+        Py_FatalError("can't initialize module gimp");
 }

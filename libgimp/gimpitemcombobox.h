@@ -1,8 +1,9 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpdrawablecombobox.h
+ * gimpitemcombobox.h
  * Copyright (C) 2004 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2006 Simon Budig <simon@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,8 +21,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DRAWABLE_COMBO_BOX_H__
-#define __GIMP_DRAWABLE_COMBO_BOX_H__
+#ifndef __GIMP_ITEM_COMBO_BOX_H__
+#define __GIMP_ITEM_COMBO_BOX_H__
 
 
 G_BEGIN_DECLS
@@ -41,15 +42,23 @@ G_BEGIN_DECLS
 #define GIMP_LAYER_COMBO_BOX(obj)       (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LAYER_COMBO_BOX, GimpLayerComboBox))
 #define GIMP_IS_LAYER_COMBO_BOX(obj)    (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LAYER_COMBO_BOX)
 
+#define GIMP_TYPE_VECTORS_COMBO_BOX     (gimp_vectors_combo_box_get_type ())
+#define GIMP_VECTORS_COMBO_BOX(obj)     (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VECTORS_COMBO_BOX, GimpVectorsComboBox))
+#define GIMP_IS_VECTORS_COMBO_BOX(obj)  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_VECTORS_COMBO_BOX)
 
-typedef gboolean (* GimpDrawableConstraintFunc) (gint32   image_id,
-                                                 gint32   drawable_id,
-                                                 gpointer data);
+
+typedef gboolean (* GimpItemConstraintFunc) (gint32   image_id,
+                                             gint32   item_id,
+                                             gpointer data);
+
+typedef GimpItemConstraintFunc GimpVectorsConstraintFunc;
+typedef GimpItemConstraintFunc GimpDrawableConstraintFunc;
 
 
 GType       gimp_drawable_combo_box_get_type (void) G_GNUC_CONST;
 GType       gimp_channel_combo_box_get_type  (void) G_GNUC_CONST;
 GType       gimp_layer_combo_box_get_type    (void) G_GNUC_CONST;
+GType       gimp_vectors_combo_box_get_type  (void) G_GNUC_CONST;
 
 GtkWidget * gimp_drawable_combo_box_new (GimpDrawableConstraintFunc constraint,
                                          gpointer                   data);
@@ -57,8 +66,10 @@ GtkWidget * gimp_channel_combo_box_new  (GimpDrawableConstraintFunc constraint,
                                          gpointer                   data);
 GtkWidget * gimp_layer_combo_box_new    (GimpDrawableConstraintFunc constraint,
                                          gpointer                   data);
+GtkWidget * gimp_vectors_combo_box_new  (GimpVectorsConstraintFunc  constraint,
+                                         gpointer                   data);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_DRAWABLE_COMBO_BOX_H__ */
+#endif /* __GIMP_ITEM_COMBO_BOX_H__ */

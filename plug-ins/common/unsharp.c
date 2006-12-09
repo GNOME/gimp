@@ -30,7 +30,6 @@
 
 #define PLUG_IN_PROC    "plug-in-unsharp-mask"
 #define PLUG_IN_BINARY  "unsharp"
-#define PLUG_IN_VERSION "0.10"
 
 #define SCALE_WIDTH   120
 #define ENTRY_WIDTH     5
@@ -227,8 +226,9 @@ run (const gchar      *name,
       gimp_displays_flush ();
 
       /* set data for next use of filter */
-      gimp_set_data (PLUG_IN_PROC, &unsharp_params,
-                     sizeof (UnsharpMaskParams));
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        gimp_set_data (PLUG_IN_PROC,
+                       &unsharp_params, sizeof (UnsharpMaskParams));
 
       gimp_drawable_detach(drawable);
       values[0].data.d_status = status;

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpview-popup.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2003-2006 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpviewable.h"
 
 #include "gimpview.h"
@@ -42,6 +43,7 @@ typedef struct _GimpViewPopup GimpViewPopup;
 struct _GimpViewPopup
 {
   GtkWidget    *widget;
+  GimpContext  *context;
   GimpViewable *viewable;
 
   gint          popup_width;
@@ -64,6 +66,9 @@ static gboolean   gimp_view_popup_button_release (GtkWidget      *widget,
                                                   GimpViewPopup  *popup);
 static void       gimp_view_popup_unmap          (GtkWidget      *widget,
                                                   GimpViewPopup  *popup);
+static void       gimp_view_popup_drag_begin     (GtkWidget      *widget,
+                                                  GdkDragContext *context,
+                                                  GimpViewPopup  *popup);
 static gboolean   gimp_view_popup_timeout        (GimpViewPopup  *popup);
 
 
@@ -72,6 +77,7 @@ static gboolean   gimp_view_popup_timeout        (GimpViewPopup  *popup);
 gboolean
 gimp_view_popup_show (GtkWidget      *widget,
                       GdkEventButton *bevent,
+                      GimpContext    *context,
                       GimpViewable   *viewable,
                       gint            view_width,
                       gint            view_height,
@@ -83,6 +89,7 @@ gimp_view_popup_show (GtkWidget      *widget,
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
   g_return_val_if_fail (bevent != NULL, FALSE);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), FALSE);
 
   if (! gimp_viewable_get_popup_size (viewable,
@@ -96,6 +103,7 @@ gimp_view_popup_show (GtkWidget      *widget,
   popup = g_new0 (GimpViewPopup, 1);
 
   popup->widget       = widget;
+  popup->context      = context;
   popup->viewable     = viewable;
   popup->popup_width  = popup_width;
   popup->popup_height = popup_height;
@@ -115,6 +123,9 @@ gimp_view_popup_show (GtkWidget      *widget,
                     popup);
   g_signal_connect (widget, "unmap",
                     G_CALLBACK (gimp_view_popup_unmap),
+                    popup);
+  g_signal_connect (widget, "drag-begin",
+                    G_CALLBACK (gimp_view_popup_drag_begin),
                     popup);
 
   popup->timeout_id = g_timeout_add (VIEW_POPUP_DELAY,
@@ -147,6 +158,9 @@ gimp_view_popup_hide (GimpViewPopup *popup)
   g_signal_handlers_disconnect_by_func (popup->widget,
                                         gimp_view_popup_unmap,
                                         popup);
+  g_signal_handlers_disconnect_by_func (popup->widget,
+                                        gimp_view_popup_drag_begin,
+                                        popup);
 
   gtk_grab_remove (popup->widget);
 
@@ -167,6 +181,14 @@ gimp_view_popup_button_release (GtkWidget      *widget,
 static void
 gimp_view_popup_unmap (GtkWidget     *widget,
                        GimpViewPopup *popup)
+{
+  g_object_set_data (G_OBJECT (popup->widget), "gimp-view-popup", NULL);
+}
+
+static void
+gimp_view_popup_drag_begin (GtkWidget      *widget,
+                            GdkDragContext *context,
+                            GimpViewPopup  *popup)
 {
   g_object_set_data (G_OBJECT (popup->widget), "gimp-view-popup", NULL);
 }
@@ -197,7 +219,8 @@ gimp_view_popup_timeout (GimpViewPopup *popup)
   gtk_container_add (GTK_CONTAINER (window), frame);
   gtk_widget_show (frame);
 
-  view = gimp_view_new_full (popup->viewable,
+  view = gimp_view_new_full (popup->context,
+                             popup->viewable,
                              popup->popup_width,
                              popup->popup_height,
                              0, TRUE, FALSE, FALSE);

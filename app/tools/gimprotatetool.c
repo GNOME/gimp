@@ -28,7 +28,6 @@
 #include "core/gimp-transform-utils.h"
 #include "core/gimpimage.h"
 #include "core/gimpdrawable-transform.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -85,7 +84,7 @@ gimp_rotate_tool_register (GimpToolRegisterCallback  callback,
                 0,
                 "gimp-rotate-tool",
                 _("Rotate"),
-                _("Rotate the layer or selection"),
+                _("Rotate Tool: Rotate the layer, selection or path"),
                 N_("_Rotate"), "<shift>R",
                 NULL, GIMP_HELP_TOOL_ROTATE,
                 GIMP_STOCK_TOOL_ROTATE,
@@ -142,7 +141,7 @@ gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
                                  0, -180, 180, 0.1, 15, 0, 2, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (button), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0, _("Angle:"),
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0, _("_Angle:"),
                              0.0, 0.5, button, 1, TRUE);
 
   g_signal_connect (rotate->angle_adj, "value-changed",
@@ -157,7 +156,7 @@ gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
 
   button = gimp_spin_button_new (&adj, 0, -1, 1, 1, 10, 1, 1, 2);
   gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2, _("Center X:"),
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2, _("Center _X:"),
                              0.0, 0.5, button, 1, TRUE);
 
   rotate->sizeentry = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
@@ -165,7 +164,8 @@ gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
                                            GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (rotate->sizeentry),
                              GTK_SPIN_BUTTON (button), NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3, _("Center Y:"),
+  gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (rotate->sizeentry), 2);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3, _("Center _Y:"),
                              0.0, 0.5, rotate->sizeentry, 1, TRUE);
 
   g_signal_connect (rotate->sizeentry, "value-changed",
@@ -239,7 +239,7 @@ static void
 gimp_rotate_tool_motion (GimpTransformTool *tr_tool,
                          GimpDisplay       *display)
 {
-  GimpTransformOptions *options;
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
   gdouble               angle1, angle2, angle;
   gdouble               cx, cy;
   gdouble               x1, y1, x2, y2;
@@ -253,9 +253,6 @@ gimp_rotate_tool_motion (GimpTransformTool *tr_tool,
 
       return;
     }
-
-  options =
-    GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
 
   cx = tr_tool->trans_info[CENTER_X];
   cy = tr_tool->trans_info[CENTER_Y];
@@ -279,21 +276,24 @@ gimp_rotate_tool_motion (GimpTransformTool *tr_tool,
   /*  increment the transform tool's angle  */
   tr_tool->trans_info[REAL_ANGLE] += angle;
 
-  /*  limit the angle to between 0 and 360 degrees  */
+  /*  limit the angle to between -180 and 180 degrees  */
   if (tr_tool->trans_info[REAL_ANGLE] < - G_PI)
-    tr_tool->trans_info[REAL_ANGLE] =
-      2.0 * G_PI - tr_tool->trans_info[REAL_ANGLE];
+    {
+      tr_tool->trans_info[REAL_ANGLE] =
+        2.0 * G_PI + tr_tool->trans_info[REAL_ANGLE];
+    }
   else if (tr_tool->trans_info[REAL_ANGLE] > G_PI)
-    tr_tool->trans_info[REAL_ANGLE] =
-      tr_tool->trans_info[REAL_ANGLE] - 2.0 * G_PI;
+    {
+      tr_tool->trans_info[REAL_ANGLE] =
+        tr_tool->trans_info[REAL_ANGLE] - 2.0 * G_PI;
+    }
 
   /*  constrain the angle to 15-degree multiples if ctrl is held down  */
   if (options->constrain)
     {
       tr_tool->trans_info[ANGLE] =
         FIFTEEN_DEG * (int) ((tr_tool->trans_info[REAL_ANGLE] +
-                              FIFTEEN_DEG / 2.0) /
-                             FIFTEEN_DEG);
+                              FIFTEEN_DEG / 2.0) / FIFTEEN_DEG);
     }
   else
     {

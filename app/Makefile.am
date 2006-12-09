@@ -18,8 +18,8 @@ SUBDIRS = \
 	paint		\
 	text		\
 	vectors		\
-	file		\
 	plug-in		\
+	file		\
 	xcf		\
 	pdb		\
 	widgets		\
@@ -71,6 +71,7 @@ endif
 if OS_WIN32
 mwindows = -mwindows
 endif
+
 if USE_BINRELOC
 munix = -Wl,-rpath '-Wl,$$ORIGIN/../lib'
 endif
@@ -90,7 +91,7 @@ INCLUDES = \
 	$(PANGOFT2_CFLAGS)	\
 	-I$(includedir)
 
-gimp_2_3_LDFLAGS = $(mwindows) $(munix) -u gimp_vector_layer_xcf_load_hack -u gimp_vector_layer_xcf_save_prepare
+gimp_2_3_LDFLAGS = $(mwindows) $(munix) -u $(SYMPREFIX)xcf_init -u $(SYMPREFIX)internal_procs_init
 
 gimp_2_3_LDADD = \
 	gui/libappgui.a			\
@@ -100,14 +101,15 @@ gimp_2_3_LDADD = \
 	display/libappdisplay.a		\
 	tools/libapptools.a		\
 	widgets/libappwidgets.a		\
+	pdb/libappinternal-procs.a	\
+	xcf/libappxcf.a			\
+	file/libappfile.a		\
+	plug-in/libappplug-in.a		\
 	pdb/libapppdb.a			\
 	vectors/libappvectors.a		\
-	plug-in/libappplug-in.a		\
 	core/libappcore.a		\
 	paint/libapppaint.a		\
-	xcf/libappxcf.a			\
 	text/libapptext.a		\
-	file/libappfile.a		\
 	config/libappconfig.a		\
 	paint-funcs/libapppaint-funcs.a	\
 	composite/libappcomposite.a	\
@@ -139,20 +141,21 @@ gimp_console_2_3_CPPFLAGS = \
 	$(AM_CPPFLAGS)			\
 	-DGIMP_CONSOLE_COMPILATION
 
-gimp_console_2_3_LDFLAGS = -u gimp_vector_layer_xcf_load_hack
+gimp_console_2_3_LDFLAGS = $(mwindows) $(munix) -u $(SYMPREFIX)xcf_init -u $(SYMPREFIX)internal_procs_init
 
 gimp_console_2_3_LDADD = \
 	widgets/widgets-enums.o		\
 	display/display-enums.o		\
 	display/gimpdisplayoptions.o	\
+	pdb/libappinternal-procs.a	\
+	xcf/libappxcf.a			\
+	file/libappfile.a		\
+	plug-in/libappplug-in.a		\
 	pdb/libapppdb.a			\
 	vectors/libappvectors.a		\
-	plug-in/libappplug-in.a		\
 	core/libappcore.a		\
 	paint/libapppaint.a		\
-	xcf/libappxcf.a			\
 	text/libapptext.a		\
-	file/libappfile.a		\
 	config/libappconfig.a		\
 	paint-funcs/libapppaint-funcs.a	\
 	composite/libappcomposite.a	\

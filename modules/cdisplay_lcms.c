@@ -99,7 +99,16 @@ static void         cdisplay_lcms_attach_labelled (GtkTable    *table,
                                                    gint         row,
                                                    const gchar *text,
                                                    GtkWidget   *widget,
+                                                   gboolean     tooltip);
+static void         cdisplay_lcms_label_set_text  (GtkLabel    *label,
+                                                   const gchar *text,
                                                    const gchar *tooltip);
+static void         cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
+                                                        const gchar  *name);
+static void         cdisplay_lcms_notify_profile       (GObject      *config,
+                                                        GParamSpec   *pspec,
+                                                        CdisplayLcms *lcms);
+
 
 static const GimpModuleInfo cdisplay_lcms_info =
 {
@@ -134,22 +143,22 @@ cdisplay_lcms_get_type (GTypeModule *module)
 {
   if (! cdisplay_lcms_type)
     {
-      static const GTypeInfo display_info =
+      const GTypeInfo display_info =
       {
         sizeof (CdisplayLcmsClass),
         (GBaseInitFunc)     NULL,
         (GBaseFinalizeFunc) NULL,
         (GClassInitFunc) cdisplay_lcms_class_init,
-        NULL,			/* class_finalize */
-        NULL,			/* class_data     */
+        NULL,                   /* class_finalize */
+        NULL,                   /* class_data     */
         sizeof (CdisplayLcms),
-        0,			/* n_preallocs    */
+        0,                      /* n_preallocs    */
         (GInstanceInitFunc) cdisplay_lcms_init,
       };
 
        cdisplay_lcms_type =
-	g_type_module_register_type (module, GIMP_TYPE_COLOR_DISPLAY,
-				     "CdisplayLcms", &display_info, 0);
+        g_type_module_register_type (module, GIMP_TYPE_COLOR_DISPLAY,
+                                     "CdisplayLcms", &display_info, 0);
     }
 
   return cdisplay_lcms_type;
@@ -174,6 +183,8 @@ cdisplay_lcms_class_init (CdisplayLcmsClass *klass)
 
   display_class->name        = _("Color Management");
   display_class->help_id     = "gimp-colordisplay-lcms";
+  display_class->stock_id    = GIMP_STOCK_DISPLAY_FILTER_LCMS;
+
   display_class->configure   = cdisplay_lcms_configure;
   display_class->convert     = cdisplay_lcms_convert;
   display_class->changed     = cdisplay_lcms_changed;
@@ -264,13 +275,9 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   CdisplayLcms *lcms   = CDISPLAY_LCMS (display);
   GObject      *config = G_OBJECT (lcms->config);
   GtkWidget    *vbox;
-  GtkWidget    *hbox;
-  GtkWidget    *label;
-  GtkWidget    *image;
+  GtkWidget    *hint;
   GtkWidget    *table;
-  cmsHPROFILE   profile;
-  const gchar  *name;
-  const gchar  *info;
+  GtkWidget    *label;
   gint          row = 0;
 
   if (! config)
@@ -278,29 +285,11 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
 
   vbox = gtk_vbox_new (FALSE, 12);
 
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  image = gtk_image_new_from_stock (GIMP_STOCK_INFO, GTK_ICON_SIZE_DIALOG);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
-
-  label = g_object_new (GTK_TYPE_LABEL,
-                        "label",   _("This filter takes its configuration "
-                                     "from the Color Management section "
-                                     "in the Preferences dialog."),
-                        "wrap",    TRUE,
-                        "justify", GTK_JUSTIFY_LEFT,
-                        "xalign",  0.0,
-                        "yalign",  0.5,
-                        NULL);
-
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  hint = gimp_hint_box_new (_("This filter takes its configuration "
+                              "from the Color Management section "
+                              "in the Preferences dialog."));
+  gtk_box_pack_start (GTK_BOX (vbox), hint, FALSE, FALSE, 0);
+  gtk_widget_show (hint);
 
   table = gtk_table_new (5, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
@@ -312,37 +301,32 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
                                  _("Mode of operation:"),
                                  gimp_prop_enum_label_new (config, "mode"),
-                                 NULL);
+                                 FALSE);
 
-  /*  FIXME: need to update label with config changes  */
-  profile = cdisplay_lcms_get_rgb_profile (lcms);
-  cdisplay_lcms_profile_get_info (profile, &name, &info);
-  if (profile)
-    cmsCloseProfile (profile);
-
+  label = gtk_label_new (NULL);
+  g_object_set_data (G_OBJECT (lcms), "rgb-profile", label);
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
-                                 _("RGB workspace profile:"),
-                                 gtk_label_new (name), info);
+                                 _("RGB working space profile:"),
+                                 label, TRUE);
+  cdisplay_lcms_update_profile_label (lcms, "rgb-profile");
 
-  /*  FIXME: need to update label with config changes  */
-  profile = cdisplay_lcms_get_display_profile (lcms);
-  cdisplay_lcms_profile_get_info (profile, &name, &info);
-  if (profile)
-    cmsCloseProfile (profile);
-
+  label = gtk_label_new (NULL);
+  g_object_set_data (G_OBJECT (lcms), "display-profile", label);
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
                                  _("Monitor profile:"),
-                                 gtk_label_new (name), info);
+                                 label, TRUE);
+  cdisplay_lcms_update_profile_label (lcms, "display-profile");
 
-  /*  FIXME: need to update label with config changes  */
-  profile = cdisplay_lcms_get_printer_profile (lcms);
-  cdisplay_lcms_profile_get_info (profile, &name, &info);
-  if (profile)
-    cmsCloseProfile (profile);
-
+  label = gtk_label_new (NULL);
+  g_object_set_data (G_OBJECT (lcms), "printer-profile", label);
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
                                  _("Print simulation profile:"),
-                                 gtk_label_new (name), info);
+                                 label, TRUE);
+  cdisplay_lcms_update_profile_label (lcms, "printer-profile");
+
+  g_signal_connect_object (config, "notify",
+                           G_CALLBACK (cdisplay_lcms_notify_profile),
+                           lcms, 0);
 
   return vbox;
 }
@@ -460,14 +444,15 @@ cdisplay_lcms_set_config (CdisplayLcms    *lcms,
 static cmsHPROFILE
 cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
 {
-  GimpColorConfig *config = lcms->config;
+  GimpColorConfig *config  = lcms->config;
+  cmsHPROFILE      profile = NULL;
 
   /*  this should be taken from the image  */
 
   if (config->rgb_profile)
-    return cmsOpenProfileFromFile (config->rgb_profile, "r");
+    profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
 
-  return cmsCreate_sRGBProfile ();
+  return profile ? profile : cmsCreate_sRGBProfile ();
 }
 
 static cmsHPROFILE
@@ -524,36 +509,33 @@ cdisplay_lcms_attach_labelled (GtkTable    *table,
                                gint         row,
                                const gchar *text,
                                GtkWidget   *widget,
-                               const gchar *tooltip)
+                               gboolean     tooltip)
 {
+  GtkWidget *label;
   GtkWidget *ebox = NULL;
   GtkWidget *hbox;
 
-  if (text)
-    {
-      GtkWidget *label;
+  label = g_object_new (GTK_TYPE_LABEL,
+                        "label",  text,
+                        "xalign", 1.0,
+                        "yalign", 0.5,
+                        NULL);
 
-      label = g_object_new (GTK_TYPE_LABEL,
-                            "label",  text,
-                            "xalign", 1.0,
-                            "yalign", 0.5,
-                            NULL);
-
-      gimp_label_set_attributes (GTK_LABEL (label),
-                                 PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                                 -1);
-      gtk_table_attach (table, label, 0, 1, row, row + 1,
-                        GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (label);
-    }
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+  gtk_table_attach (table, label, 0, 1, row, row + 1,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
   if (tooltip)
     {
       ebox = gtk_event_box_new ();
       gtk_table_attach (table, ebox, 1, 2, row, row + 1,
                         GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-      gimp_help_set_help_data (ebox, tooltip, NULL);
       gtk_widget_show (ebox);
+
+      g_object_set_data (G_OBJECT (label), "tooltip-widget", ebox);
     }
 
   hbox = gtk_hbox_new (FALSE, 0);
@@ -568,4 +550,65 @@ cdisplay_lcms_attach_labelled (GtkTable    *table,
 
   gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
   gtk_widget_show (widget);
+}
+
+static void
+cdisplay_lcms_label_set_text (GtkLabel    *label,
+                              const gchar *text,
+                              const gchar *tooltip)
+{
+  GtkWidget *tooltip_widget;
+
+  gtk_label_set_text (label, text);
+
+  tooltip_widget = g_object_get_data (G_OBJECT (label), "tooltip-widget");
+
+  if (tooltip_widget)
+    gimp_help_set_help_data (tooltip_widget, tooltip, NULL);
+}
+
+static void
+cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
+                                    const gchar  *name)
+{
+  GtkWidget   *label;
+  cmsHPROFILE  profile = NULL;
+  const gchar *text;
+  const gchar *tooltip;
+
+  label = g_object_get_data (G_OBJECT (lcms), name);
+
+  if (! label)
+    return;
+
+  if (strcmp (name, "rgb-profile") == 0)
+    {
+      profile = cdisplay_lcms_get_rgb_profile (lcms);
+    }
+  else if (g_str_has_prefix (name, "display-profile"))
+    {
+      profile = cdisplay_lcms_get_display_profile (lcms);
+    }
+  else if (strcmp (name, "printer-profile") == 0)
+    {
+      profile = cdisplay_lcms_get_printer_profile (lcms);
+    }
+  else
+    {
+      g_return_if_reached ();
+    }
+
+  cdisplay_lcms_profile_get_info (profile, &text, &tooltip);
+  cdisplay_lcms_label_set_text (GTK_LABEL (label), text, tooltip);
+
+  if (profile)
+    cmsCloseProfile (profile);
+}
+
+static void
+cdisplay_lcms_notify_profile (GObject      *config,
+                              GParamSpec   *pspec,
+                              CdisplayLcms *lcms)
+{
+  cdisplay_lcms_update_profile_label (lcms, pspec->name);
 }

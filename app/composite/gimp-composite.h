@@ -126,7 +126,7 @@ typedef struct
   guchar *A;             /* Source A    */
   guchar *B;             /* Source B    */
   guchar *D;             /* Destination */
-  guchar *M;             /* Mask        */
+  const guchar *M;             /* Mask        */
   gulong  n_pixels;
 
   GimpPixelFormat pixelformat_A;

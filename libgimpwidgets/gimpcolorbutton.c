@@ -142,9 +142,9 @@ gimp_color_button_get_type (void)
 {
   static GType button_type = 0;
 
-  if (!button_type)
+  if (! button_type)
     {
-      static const GTypeInfo button_info =
+      const GTypeInfo button_info =
       {
         sizeof (GimpColorButtonClass),
         (GBaseInitFunc) NULL,

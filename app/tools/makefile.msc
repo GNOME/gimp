@@ -32,6 +32,7 @@ OBJECTS = \
 	gimpblendoptions.obj \
 	gimpblendtool.obj \
 	gimpbrightnesscontrasttool.obj \
+	gimpbrushtool.obj \
 	gimpbucketfilloptions.obj \
 	gimpbucketfilltool.obj \
 	gimpbycolorselecttool.obj \
@@ -55,8 +56,10 @@ OBJECTS = \
 	gimpfliptool.obj \
 	gimpforegroundselectoptions.obj \
 	gimpforegroundselecttool.obj \
+	gimpforegroundselecttool-undo.obj \
 	gimpfreeselecttool.obj \
 	gimpfuzzyselecttool.obj \
+	gimphealtool.obj \
 	gimphistogramoptions.obj \
 	gimphuesaturationtool.obj \
 	gimpimagemapoptions.obj \
@@ -71,22 +74,24 @@ OBJECTS = \
 	gimpmeasuretool.obj \
 	gimpmoveoptions.obj \
 	gimpmovetool.obj \
-	gimpnewrectselectoptions.obj \
-	gimpnewrectselecttool.obj \
 	gimppaintbrushtool.obj \
 	gimppaintoptions-gui.obj \
 	gimppainttool.obj \
 	gimppenciltool.obj \
 	gimpperspectivetool.obj \
+	gimpperspectiveclonetool.obj \
 	gimpposterizetool.obj \
 	gimprectangleoptions.obj \
 	gimprectangletool.obj \
-	gimprectselecttool.obj \
+	gimprectangleselectoptions.obj \
+	gimprectangleselecttool.obj \
+	gimpregionselecttool.obj \
 	gimprotatetool.obj \
 	gimpscaletool.obj \
 	gimpselectionoptions.obj \
 	gimpselectiontool.obj \
 	gimpsheartool.obj \
+	gimpsourcetool.obj \
 	gimpsmudgetool.obj \
 	gimptextoptions.obj \
 	gimptexttool.obj \

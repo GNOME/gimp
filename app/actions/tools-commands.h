@@ -42,6 +42,10 @@ void   tools_color_average_radius_cmd_callback (GtkAction   *action,
                                                 gint         value,
                                                 gpointer     data);
 
+void   tools_paint_brush_scale_cmd_callback    (GtkAction   *action,
+                                                gint         value,
+                                                gpointer     data);
+
 void   tools_ink_blob_size_cmd_callback        (GtkAction   *action,
                                                 gint         value,
                                                 gpointer     data);
@@ -50,6 +54,15 @@ void   tools_ink_blob_aspect_cmd_callback      (GtkAction   *action,
                                                 gpointer     data);
 void   tools_ink_blob_angle_cmd_callback       (GtkAction   *action,
                                                 gint         value,
+                                                gpointer     data);
+
+void   tools_fg_select_brush_size_cmd_callback (GtkAction   *action,
+                                                gint         value,
+                                                gpointer     data);
+
+void   tools_rectangle_toggle_fixed_aspect     (GtkAction   *action,
+                                                gpointer     data);
+void   tools_rectangle_toggle_fixed_center     (GtkAction   *action,
                                                 gpointer     data);
 
 void   tools_value_1_cmd_callback              (GtkAction   *action,

@@ -204,11 +204,11 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
 
           const gchar *start = dnd_crap;
 
-          if (! strncmp (dnd_crap, "file://", strlen ("file://")))
+          if (g_str_has_prefix (dnd_crap, "file://"))
             {
               start += strlen ("file://");
             }
-          else if (! strncmp (dnd_crap, "file:", strlen ("file:")))
+          else if (g_str_has_prefix (dnd_crap, "file:"))
             {
               start += strlen ("file:");
             }
@@ -672,7 +672,7 @@ gimp_selection_data_get_name (GtkSelectionData *selection)
       return NULL;
     }
 
-  g_printerr ("%s: name = '%s'\n", G_STRFUNC, name);
+  D (g_printerr ("%s: name = '%s'\n", G_STRFUNC, name));
 
   return name;
 }
@@ -697,8 +697,8 @@ gimp_selection_data_get_object (GtkSelectionData *selection,
     {
       gchar *name = str + name_offset;
 
-      g_printerr ("%s: pid = %d, addr = %p, name = '%s'\n",
-                  G_STRFUNC, pid, object_addr, name);
+      D (g_printerr ("%s: pid = %d, addr = %p, name = '%s'\n",
+                     G_STRFUNC, pid, object_addr, name));
 
       if (additional &&
           strcmp (name, gimp_object_get_name (additional)) == 0 &&

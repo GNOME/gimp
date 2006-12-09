@@ -137,7 +137,7 @@ colorsel_triangle_get_type (GTypeModule *module)
 {
   if (! colorsel_triangle_type)
     {
-      static const GTypeInfo select_info =
+      const GTypeInfo select_info =
       {
         sizeof (ColorselTriangleClass),
         (GBaseInitFunc) NULL,

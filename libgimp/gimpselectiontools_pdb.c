@@ -47,8 +47,8 @@
  * selection. The antialiasing parameter allows the final selection
  * mask to contain intermediate values based on close misses to the
  * threshold bar. Feathering can be enabled optionally and is
- * controlled with the \"feather_radius\" parameter. If the
- * sample_merged parameter is TRUE, the data of the composite image
+ * controlled with the 'feather-radius' parameter. If the
+ * 'sample-merged' parameter is TRUE, the data of the composite image
  * will be used instead of that for the specified drawable. This is
  * equivalent to sampling for colors after merging all visible layers.
  * In the case of a merged sampling, the supplied drawable is ignored.
@@ -79,6 +79,81 @@ gimp_by_color_select (gint32          drawable_ID,
                                     GIMP_PDB_INT32, feather,
                                     GIMP_PDB_FLOAT, feather_radius,
                                     GIMP_PDB_INT32, sample_merged,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_by_color_select_full:
+ * @drawable_ID: The affected drawable.
+ * @color: The color to select.
+ * @threshold: Threshold in intensity levels.
+ * @operation: The selection operation.
+ * @antialias: Antialiasing.
+ * @feather: Feather option for selections.
+ * @feather_radius_x: Radius for feather operation in X direction.
+ * @feather_radius_y: Radius for feather operation in Y direction.
+ * @sample_merged: Use the composite image, not the drawable.
+ * @select_transparent: Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.
+ * @select_criterion: The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.
+ *
+ * Create a selection by selecting all pixels (in the specified
+ * drawable) with the same (or similar) color to that specified.
+ *
+ * This tool creates a selection over the specified image. A by-color
+ * selection is determined by the supplied color under the constraints
+ * of the specified threshold. Essentially, all pixels (in the
+ * drawable) that have color sufficiently close to the specified color
+ * (as determined by the threshold value) are included in the
+ * selection. To select transparent regions, the color specified must
+ * also have minimum alpha. The antialiasing parameter allows the final
+ * selection mask to contain intermediate values based on close misses
+ * to the threshold bar. Feathering can be enabled optionally and is
+ * controlled with the 'feather-radius' parameter. If the
+ * 'sample-merged' parameter is TRUE, the data of the composite image
+ * will be used instead of that for the specified drawable. This is
+ * equivalent to sampling for colors after merging all visible layers.
+ * In the case of a merged sampling, the supplied drawable is ignored.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_by_color_select_full (gint32               drawable_ID,
+                           const GimpRGB       *color,
+                           gint                 threshold,
+                           GimpChannelOps       operation,
+                           gboolean             antialias,
+                           gboolean             feather,
+                           gdouble              feather_radius_x,
+                           gdouble              feather_radius_y,
+                           gboolean             sample_merged,
+                           gboolean             select_transparent,
+                           GimpSelectCriterion  select_criterion)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-by-color-select-full",
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_COLOR, color,
+                                    GIMP_PDB_INT32, threshold,
+                                    GIMP_PDB_INT32, operation,
+                                    GIMP_PDB_INT32, antialias,
+                                    GIMP_PDB_INT32, feather,
+                                    GIMP_PDB_FLOAT, feather_radius_x,
+                                    GIMP_PDB_FLOAT, feather_radius_y,
+                                    GIMP_PDB_INT32, sample_merged,
+                                    GIMP_PDB_INT32, select_transparent,
+                                    GIMP_PDB_INT32, select_criterion,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -231,8 +306,8 @@ gimp_free_select (gint32          image_ID,
  * antialiasing parameter allows the final selection mask to contain
  * intermediate values based on close misses to the threshold bar at
  * pixels along the seed fill boundary. Feathering can be enabled
- * optionally and is controlled with the \"feather_radius\" paramter.
- * If the sample_merged parameter is TRUE, the data of the composite
+ * optionally and is controlled with the 'feather-radius' paramter. If
+ * the 'sample-merged' parameter is TRUE, the data of the composite
  * image will be used instead of that for the specified drawable. This
  * is equivalent to sampling for colors after merging all visible
  * layers. In the case of a merged sampling, the supplied drawable is
@@ -268,6 +343,88 @@ gimp_fuzzy_select (gint32         drawable_ID,
                                     GIMP_PDB_INT32, feather,
                                     GIMP_PDB_FLOAT, feather_radius,
                                     GIMP_PDB_INT32, sample_merged,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_fuzzy_select_full:
+ * @drawable_ID: The affected drawable.
+ * @x: x coordinate of initial seed fill point: (image coordinates).
+ * @y: y coordinate of initial seed fill point: (image coordinates).
+ * @threshold: Threshold in intensity levels.
+ * @operation: The selection operation.
+ * @antialias: Antialiasing.
+ * @feather: Feather option for selections.
+ * @feather_radius_x: Radius for feather operation in X direction.
+ * @feather_radius_y: Radius for feather operation in Y direction.
+ * @sample_merged: Use the composite image, not the drawable.
+ * @select_transparent: Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.
+ * @select_criterion: The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.
+ *
+ * Create a fuzzy selection starting at the specified coordinates on
+ * the specified drawable.
+ *
+ * This tool creates a fuzzy selection over the specified image. A
+ * fuzzy selection is determined by a seed fill under the constraints
+ * of the specified threshold. Essentially, the color at the specified
+ * coordinates (in the drawable) is measured and the selection expands
+ * outwards from that point to any adjacent pixels which are not
+ * significantly different (as determined by the threshold value). This
+ * process continues until no more expansion is possible. The
+ * antialiasing parameter allows the final selection mask to contain
+ * intermediate values based on close misses to the threshold bar at
+ * pixels along the seed fill boundary. Feathering can be enabled
+ * optionally and is controlled with the 'feather-radius' paramter. If
+ * the 'sample-merged' parameter is TRUE, the data of the composite
+ * image will be used instead of that for the specified drawable. This
+ * is equivalent to sampling for colors after merging all visible
+ * layers. In the case of a merged sampling, the supplied drawable is
+ * ignored. If the sample is merged, the specified coordinates are
+ * relative to the image origin; otherwise, they are relative to the
+ * drawable's origin.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_fuzzy_select_full (gint32              drawable_ID,
+                        gdouble             x,
+                        gdouble             y,
+                        gint                threshold,
+                        GimpChannelOps      operation,
+                        gboolean            antialias,
+                        gboolean            feather,
+                        gdouble             feather_radius_x,
+                        gdouble             feather_radius_y,
+                        gboolean            sample_merged,
+                        gboolean            select_transparent,
+                        GimpSelectCriterion select_criterion)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-fuzzy-select-full",
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, x,
+                                    GIMP_PDB_FLOAT, y,
+                                    GIMP_PDB_INT32, threshold,
+                                    GIMP_PDB_INT32, operation,
+                                    GIMP_PDB_INT32, antialias,
+                                    GIMP_PDB_INT32, feather,
+                                    GIMP_PDB_FLOAT, feather_radius_x,
+                                    GIMP_PDB_FLOAT, feather_radius_y,
+                                    GIMP_PDB_INT32, sample_merged,
+                                    GIMP_PDB_INT32, select_transparent,
+                                    GIMP_PDB_INT32, select_criterion,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -323,6 +480,76 @@ gimp_rect_select (gint32         image_ID,
                                     GIMP_PDB_INT32, operation,
                                     GIMP_PDB_INT32, feather,
                                     GIMP_PDB_FLOAT, feather_radius,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_round_rect_select:
+ * @image_ID: The image.
+ * @x: x coordinate of upper-left corner of rectangle.
+ * @y: y coordinate of upper-left corner of rectangle.
+ * @width: The width of the rectangle.
+ * @height: The height of the rectangle.
+ * @corner_radius_x: The corner radius in X direction.
+ * @corner_radius_y: The corner radius in Y direction.
+ * @operation: The selection operation.
+ * @antialias: Antialiasing.
+ * @feather: Feather option for selections.
+ * @feather_radius_x: Radius for feather operation in X direction.
+ * @feather_radius_y: Radius for feather operation in Y direction.
+ *
+ * Create a rectangular selection with round corners over the specified
+ * image;
+ *
+ * This tool creates a rectangular selection with round corners over
+ * the specified image. The rectangular region can be either added to,
+ * subtracted from, or replace the contents of the previous selection
+ * mask. If the feather option is enabled, the resulting selection is
+ * blurred before combining. The blur is a gaussian blur with the
+ * specified feather radius.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_round_rect_select (gint32         image_ID,
+                        gdouble        x,
+                        gdouble        y,
+                        gdouble        width,
+                        gdouble        height,
+                        gdouble        corner_radius_x,
+                        gdouble        corner_radius_y,
+                        GimpChannelOps operation,
+                        gboolean       antialias,
+                        gboolean       feather,
+                        gdouble        feather_radius_x,
+                        gdouble        feather_radius_y)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-round-rect-select",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_FLOAT, x,
+                                    GIMP_PDB_FLOAT, y,
+                                    GIMP_PDB_FLOAT, width,
+                                    GIMP_PDB_FLOAT, height,
+                                    GIMP_PDB_FLOAT, corner_radius_x,
+                                    GIMP_PDB_FLOAT, corner_radius_y,
+                                    GIMP_PDB_INT32, operation,
+                                    GIMP_PDB_INT32, antialias,
+                                    GIMP_PDB_INT32, feather,
+                                    GIMP_PDB_FLOAT, feather_radius_x,
+                                    GIMP_PDB_FLOAT, feather_radius_y,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

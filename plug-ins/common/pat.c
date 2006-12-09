@@ -69,8 +69,6 @@ static gboolean   save_image     (const gchar      *filename,
 				  gint32            drawable_ID);
 
 static gboolean   save_dialog    (void);
-static void       entry_callback (GtkWidget        *widget,
-				  gpointer          data);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -538,29 +536,24 @@ save_dialog (void)
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), description);
+  gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Description:"), 1.0, 0.5,
 			     entry, 1, FALSE);
   gtk_widget_show (entry);
 
-  g_signal_connect (entry, "changed",
-                    G_CALLBACK (entry_callback),
-                    description);
-
   gtk_widget_show (dialog);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
+  if (run)
+    {
+      strncpy (description, gtk_entry_get_text (GTK_ENTRY (entry)),
+               sizeof (description));
+      description[sizeof (description) - 1] = '\0';
+    }
+
   gtk_widget_destroy (dialog);
 
   return run;
-}
-
-static void
-entry_callback (GtkWidget *widget,
-		gpointer   data)
-{
-  strncpy (description, gtk_entry_get_text (GTK_ENTRY (widget)),
-           sizeof (description));
-  description[sizeof (description) - 1] = '\0';
 }

@@ -63,7 +63,9 @@ gimp_select_button_close_popup (GimpSelectButton *button)
 
   if (button->temp_callback)
     {
-      GIMP_SELECT_BUTTON_GET_CLASS (button)->select_destroy (button->temp_callback);
+      GimpSelectButtonClass *klass = GIMP_SELECT_BUTTON_GET_CLASS (button);
+
+      klass->select_destroy (button->temp_callback);
 
       button->temp_callback = NULL;
     }

@@ -7,6 +7,7 @@ EXPORTS
 	gimp_bilinear_pixels_8
 	gimp_bilinear_rgb
 	gimp_bilinear_rgba
+	gimp_cmyk_get_type
 	gimp_cmyk_get_uchar
 	gimp_cmyk_set
 	gimp_cmyk_set_uchar
@@ -15,9 +16,11 @@ EXPORTS
 	gimp_cmyka_get_uchar
 	gimp_cmyka_set
 	gimp_cmyka_set_uchar
+	gimp_hsl_get_type
 	gimp_hsl_to_rgb
 	gimp_hsl_to_rgb_int
 	gimp_hsv_clamp
+	gimp_hsv_get_type
 	gimp_hsv_set
 	gimp_hsv_to_rgb
 	gimp_hsv_to_rgb4

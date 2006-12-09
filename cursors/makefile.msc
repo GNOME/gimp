@@ -1,6 +1,16 @@
 CURSOR_LIST = \
 	cursor_bad		cursor-bad.png \
 	cursor_color_picker		cursor-color-picker.png \
+	\
+	cursor_corner_top_left cursor-corner-top-left.png \
+	cursor_corner_top_right cursor-corner-top-right.png \
+	cursor_corner_bottom_left cursor-corner-bottom-left.png \
+	cursor_corner_bottom_right cursor-corner-bottom-right.png \
+	cursor_side_top cursor-side-top.png \
+	cursor_side_bottom cursor-side-bottom.png \
+	cursor_side_left cursor-side-left.png \
+	cursor_side_right cursor-side-right.png \
+	\
 	cursor_crosshair		cursor-crosshair.png \
 	cursor_crosshair_small	cursor-crosshair-small.png \
 	cursor_mouse		cursor-mouse.png \
@@ -9,6 +19,7 @@ CURSOR_LIST = \
 	\
 	modifier_anchor		modifier-anchor.png \
 	modifier_background		modifier-background.png \
+	modifier_bad		modifier-bad.png \
 	modifier_control		modifier-control.png \
 	modifier_foreground		modifier-foreground.png \
 	modifier_intersect		modifier-intersect.png \
@@ -35,6 +46,7 @@ CURSOR_LIST = \
 	tool_free_select		tool-free-select.png \
 	tool_fuzzy_select		tool-fuzzy-select.png \
 	tool_hand		tool-hand.png \
+	tool_heal		tool-heal.png \
 	tool_ink		tool-ink.png \
 	tool_iscissors		tool-iscissors.png \
 	tool_measure		tool-measure.png \

@@ -20,7 +20,7 @@
 #define __GIMP_CLONE_TOOL_H__
 
 
-#include "gimppainttool.h"
+#include "gimpsourcetool.h"
 
 
 #define GIMP_TYPE_CLONE_TOOL            (gimp_clone_tool_get_type ())
@@ -36,16 +36,12 @@ typedef struct _GimpCloneToolClass GimpCloneToolClass;
 
 struct _GimpCloneTool
 {
-  GimpPaintTool  parent_instance;
-
-  GimpDisplay   *src_display;
-  gint           src_x;
-  gint           src_y;
+  GimpSourceTool parent_instance;
 };
 
 struct _GimpCloneToolClass
 {
-  GimpPaintToolClass parent_class;
+  GimpSourceToolClass parent_class;
 };
 
 

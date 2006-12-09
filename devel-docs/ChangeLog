@@ -1,3 +1,191 @@
+2006-12-04  Sven Neumann  <sven@gimp.org>
+
+	* app/app-docs.sgml
+	* app/app-sections.txt: some updates.
+
+2006-11-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimpbase/libgimpbase-sections.txt: version symbols moved from
+	libgimp to libgimpbase.
+
+	* libgimp/tmpl/gimp.sgml
+	* libgimpbase/tmpl/gimpversion.sgml: regenerated.
+
+2006-11-29  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am: use LDFLAGS instead of GTKDOC_LDFLAGS.
+
+	* app/app-docs.sgml
+	* app/app-sections.txt: some minor updates.
+
+2006-11-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/images/gimp-chain-button.png: replaced with an
+	image that doesn't show bug #376668.
+
+2006-11-27  Sven Neumann  <sven@gimp.org>
+
+	* app/app-docs.sgml: added id attributes for the index page.
+
+	* libgimp/libgimp-docs.sgml: merged the GIMP Constants chapter into
+	the GIMP Library chapter.
+
+	* app/Makefile.am (GTKDOC_LIBS): made app-scan link again.
+
+	* app/app.types: updated.
+
+2006-11-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/Makefile.am
+	* libgimpcolor/Makefile.am
+	* libgimpmodule/Makefile.am: pass deprecation guards to gtkdoc-scan.
+
+	* libgimpconfig/libgimpconfig-sections.txt
+	* libgimpwidgets/libgimpwidgets-sections.txt: removed unused symbols.
+
+2006-11-23  Simon Budig  <simon@gimp.org>
+
+	* libgimp/libgimp-sections.txt: follow name change.
+
+	* libgimp/tmpl/gimpvectors.sgml: regenerated.
+
+2006-11-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt: added new symbols.
+
+	* libgimp/tmpl/gimpimage.sgml: regenerated
+
+	* libgimp/libgimp-docs.sgml
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpcolor/libgimpcolor-docs.sgml
+	* libgimpconfig/libgimpconfig-docs.sgml
+	* libgimpmath/libgimpmath-docs.sgml
+	* libgimpmodule/libgimpmodule-docs.sgml
+	* libgimpthumb/libgimpthumb-docs.sgml
+	* libgimpwidgets/libgimpwidgets-docs.sgml: added id attributes for
+	the index pages.
+
+2006-11-20  Simon Budig  <simon@gimp.org>
+
+        * libgimp/libgimp-sections.txt: moved new symbols to their
+	resp. sections.
+
+        * libgimp/tmpl/gimpfontselectbutton.sgml
+        * libgimp/tmpl/gimptools.sgml
+        * libgimp/tmpl/gimpvectors.sgml: regenerated
+
+2006-11-16  Simon Budig  <simon@gimp.org>
+
+	* libgimp/libgimp.types: removed double entry for
+	gimp_font_select_button_get_type.
+
+	* libgimp/tmpl/gimpfontselectbutton.sgml: regenerated.
+
+2006-11-16  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/libgimp.types: follow gimpdrawablecombobox ->
+	gimpitemcombobox move.
+
+	* libgimp/tmpl/gimpdrawablecombobox.sgml: removed.
+
+	* libgimp/tmpl/gimpitemcombobox.sgml: and readded as this file.
+
+	* libgimp/tmpl/gimpfileops.sgml: regenerated.
+
+2006-11-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimpbase/libgimpbase-sections.txt: updated.
+
+	* libgimp/tmpl/gimpedit.sgml
+	* libgimp/tmpl/gimpfileops.sgml
+	* libgimp/tmpl/gimpfontselectbutton.sgml
+	* libgimp/tmpl/gimpvectors.sgml
+	* libgimpbase/tmpl/gimpbaseenums.sgml
+	* libgimpconfig/tmpl/gimpcolorconfig.sgml: regenerated.
+
+2006-10-26  Simon Budig  <simon@gimp.org>
+
+        * devel-docs/libgimp/tmpl/gimppaths.sgml
+	* devel-docs/libgimp/tmpl/gimpfontselectbutton.sgml
+	* devel-docs/libgimp/tmpl/gimptools.sgml
+	* devel-docs/libgimp/tmpl/gimpvectors.sgml: regenerated.
+
+2006-10-18  Sven Neumann  <sven@gimp.org>
+
+	* tools/Makefile.am (doc_shooter_LDADD): added -lXext (bug #362877).
+
+2006-10-11  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimpconfig/libgimpconfig-sections.txt
+	* libgimpwidgets/libgimpwidgets-sections.txt: added new API.
+
+	* libgimpwidgets/tmpl/gimpstock.sgml: added new icons.
+
+	* libgimp/tmpl/gimpfontselectbutton.sgml
+	* libgimp/tmpl/gimptools.sgml
+	* libgimpconfig/tmpl/gimpconfig-params.sgml
+	* libgimpwidgets/tmpl/gimpcolorselection.sgml
+	* libgimpwidgets/tmpl/gimpcolorselector.sgml: regenerated.
+
+2006-09-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* vbr.txt: fix an error concerning version numbers.
+
+2006-09-07  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* tools/widgets.c: added GimpHintBox and GIMP_STOCK_HEAL_TOOL.
+
+	* libgimpwidgets/images/*.png: updated screenshots.
+
+	* libgimpwidgets/tmpl/gimphintbox.sgml: new file.
+
+	* libgimpwidgets/tmpl/gimpstock.sgml: added GIMP_STOCK_HEAL_TOOL.
+
+2006-09-01  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpbase/libgimpbase-sections.txt: updated.
+
+	* libgimpbase/tmpl/gimprectangle.sgml: added.
+
+	* libgimp/tmpl/gimpenums.sgml
+	* libgimp/tmpl/gimppixbuf.sgml
+	* libgimp/tmpl/gimptools.sgml: regenerated.
+
+2006-09-01  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (EXTRA_DIST): added vbr.txt.
+
+2006-09-01  Michael Natterer  <mitch@gimp.org>
+
+	* ggr.txt: updated for the new fields in the gradient files.
+
+2006-08-31  Dave Neary  <bolsh@gimp.org>
+
+	* Makefile.am (EXTRA_DIST)
+	* xcf.txt: added draft for XCF spec contributed by Henning Makholm.
+
+2006-08-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* vbr.txt: added new description of the VBR file format.
+
+2006-08-09  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimpcolor/libgimpcolor-sections.txt
+	* libgimpwidgets/libgimpwidgets-sections.txt: added new symbols.
+
+	* tools/widgets.c: undef GIMP_DISABLE_DEPRECATED.
+
 2006-06-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp.types: added missing type.

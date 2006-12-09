@@ -28,6 +28,7 @@
 #include "dialogs-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpprogress.h"
 
 #include "plug-in/gimppluginmanager.h"
@@ -38,7 +39,6 @@
 #include "widgets/gimpcontainerentry.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpprogressbox.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "file-open-location-dialog.h"
 
@@ -60,6 +60,7 @@ static gboolean  file_open_location_completion (GtkEntryCompletion *completion,
 GtkWidget *
 file_open_location_dialog_new (Gimp *gimp)
 {
+  GimpContext        *context;
   GtkWidget          *dialog;
   GtkWidget          *hbox;
   GtkWidget          *vbox;
@@ -113,8 +114,13 @@ file_open_location_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  entry = gimp_container_entry_new (gimp->documents, NULL,
+  /* we don't want the context to affect the entry, so create
+   * a scratch one instead of using e.g. the user context
+   */
+  context = gimp_context_new (gimp, "file-open-location-dialog", NULL);
+  entry = gimp_container_entry_new (gimp->documents, context,
                                     GIMP_VIEW_SIZE_SMALL, 0);
+  g_object_unref (context);
 
   completion = gtk_entry_get_completion (GTK_ENTRY (entry));
   gtk_entry_completion_set_match_func (completion,
@@ -155,9 +161,10 @@ file_open_location_response (GtkDialog *dialog,
       return;
     }
 
-  gimp_dialog_set_sensitive (dialog, FALSE);
-
   entry = g_object_get_data (G_OBJECT (dialog), "location-entry");
+
+  gtk_editable_set_editable (GTK_EDITABLE (entry), FALSE);
+  gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, FALSE);
 
   text = gtk_entry_get_text (GTK_ENTRY (entry));
 
@@ -167,48 +174,66 @@ file_open_location_response (GtkDialog *dialog,
       gchar             *uri;
       gchar             *filename;
       gchar             *hostname;
-      GError            *error = NULL;
+      GError            *error  = NULL;
       GimpPDBStatusType  status;
 
       filename = g_filename_from_uri (text, &hostname, NULL);
 
       if (filename)
         {
-          uri = g_filename_to_uri (filename, hostname, NULL);
+          uri = g_filename_to_uri (filename, hostname, &error);
+
           g_free (hostname);
           g_free (filename);
         }
       else
         {
           uri = file_utils_filename_to_uri (gimp->plug_in_manager->load_procs,
-                                            text, NULL);
+                                            text, &error);
         }
 
       box = gimp_progress_box_new ();
       gtk_container_set_border_width (GTK_CONTAINER (box), 12);
       gtk_box_pack_end (GTK_BOX (dialog->vbox), box, FALSE, FALSE, 0);
-      gtk_widget_show (box);
 
       g_object_set_data (G_OBJECT (dialog), "progress-box", box);
 
-      image = file_open_with_proc_and_display (gimp,
-                                               gimp_get_user_context (gimp),
-                                               GIMP_PROGRESS (box),
-                                               uri, text, NULL,
-                                               &status, &error);
-
-      if (image == NULL && status != GIMP_PDB_CANCEL)
+      if (uri)
         {
-          gchar *filename = file_utils_uri_display_name (uri);
+          gtk_widget_show (box);
 
-          g_message (_("Opening '%s' failed:\n\n%s"),
-                     filename, error->message);
+          image = file_open_with_proc_and_display (gimp,
+                                                   gimp_get_user_context (gimp),
+                                                   GIMP_PROGRESS (box),
+                                                   uri, text, NULL,
+                                                   &status, &error);
+
+          if (image == NULL && status != GIMP_PDB_CANCEL)
+            {
+              gchar *filename = file_utils_uri_display_name (uri);
+
+              gimp_message (gimp, G_OBJECT (box), GIMP_MESSAGE_ERROR,
+                            _("Opening '%s' failed:\n\n%s"),
+                            filename, error->message);
+              g_clear_error (&error);
+
+              g_free (filename);
+            }
+
+          g_free (uri);
+        }
+      else
+        {
+          gimp_message (gimp, G_OBJECT (box), GIMP_MESSAGE_ERROR,
+                        _("Opening '%s' failed:\n\n%s"),
+                        text, error->message);
           g_clear_error (&error);
 
-          g_free (filename);
-        }
+          gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, TRUE);
+          gtk_editable_set_editable (GTK_EDITABLE (entry), TRUE);
 
-      g_free (uri);
+          return;
+        }
     }
 
   gtk_widget_destroy (GTK_WIDGET (dialog));

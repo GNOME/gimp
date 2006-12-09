@@ -79,22 +79,23 @@ tips_dialog_create (Gimp *gimp)
 
       tips = gimp_tips_from_file (filename, &error);
 
-      if (!tips)
+      if (! tips)
         {
           GimpTip *tip;
 
           if (error->code == G_FILE_ERROR_NOENT)
             {
-              tip = gimp_tip_new (_("<b>Your GIMP tips file appears to be missing!</b>"),
-                                  NULL);
-              tip->thetip = g_strdup_printf (_("There should be a file called '%s'. "
-                                               "Please check your installation."),
-                                             filename);
+              tip = gimp_tip_new ("<b>%s</b>",
+                                  _("Your GIMP tips file appears to be missing!"));
+              gimp_tip_set (tip,
+                            _("There should be a file called '%s'. "
+                              "Please check your installation."), filename);
             }
           else
             {
-              tip = gimp_tip_new (_("<b>The GIMP tips file could not be parsed!</b>"),
-                                  error->message);
+              tip = gimp_tip_new ("<b>%s</b>",
+                                  _("The GIMP tips file could not be parsed!"));
+              gimp_tip_set (tip, "%s", error->message);
             }
 
           tips = g_list_prepend (tips, tip);

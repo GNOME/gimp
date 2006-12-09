@@ -18,6 +18,8 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = winicon
 
+winicon_CFLAGS = $(PNG_CFLAGS)
+
 winicon_SOURCES = \
 	icodialog.c	\
 	icodialog.h	\
@@ -41,6 +43,7 @@ LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpmath)		\
 	$(libgimpbase)		\
+	$(LIBPNG)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)

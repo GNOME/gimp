@@ -49,7 +49,8 @@ enum
   PROP_FILL_SELECTION,
   PROP_FILL_TRANSPARENT,
   PROP_SAMPLE_MERGED,
-  PROP_THRESHOLD
+  PROP_THRESHOLD,
+  PROP_FILL_CRITERION
 };
 
 
@@ -111,6 +112,11 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                                    N_("Maximum color difference"),
                                    0.0, 255.0, 15.0,
                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_CRITERION,
+                                 "fill-criterion", NULL,
+                                 GIMP_TYPE_SELECT_CRITERION,
+                                 GIMP_SELECT_CRITERION_COMPOSITE,
+                                 GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -143,6 +149,10 @@ gimp_bucket_fill_options_set_property (GObject      *object,
     case PROP_THRESHOLD:
       options->threshold = g_value_get_double (value);
       break;
+    case PROP_FILL_CRITERION:
+      options->fill_criterion = g_value_get_enum (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -174,6 +184,10 @@ gimp_bucket_fill_options_get_property (GObject    *object,
     case PROP_THRESHOLD:
       g_value_set_double (value, options->threshold);
       break;
+    case PROP_FILL_CRITERION:
+      g_value_set_enum (value, options->fill_criterion);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -199,15 +213,14 @@ GtkWidget *
 gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
+  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *vbox2;
   GtkWidget *table;
   GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *button;
+  GtkWidget *combo;
   gchar     *str;
-
-  vbox = gimp_paint_options_gui (tool_options);
 
   /*  fill type  */
   str = g_strdup_printf (_("Fill Type  (%s)"),
@@ -264,7 +277,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   /*  the threshold scale  */
-  table = gtk_table_new (1, 3, FALSE);
+  table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
@@ -274,6 +287,12 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
                              _("Threshold:"),
                              1.0, 16.0, 1,
                              FALSE, 0.0, 0.0);
+
+  /*  the fill criterion combo  */
+  combo = gimp_prop_enum_combo_box_new (config, "fill-criterion", 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             _("Fill by:"), 0.0, 0.5,
+                             combo, 2, FALSE);
 
   return vbox;
 }

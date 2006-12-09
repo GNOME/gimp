@@ -197,6 +197,12 @@ run (const gchar      *name,
           rvals.antialias = (param[8].data.d_int32) ? TRUE : FALSE;
           rvals.tile = (param[9].data.d_int32) ? TRUE : FALSE;
 
+          if (rvals.period < 1)
+            {
+              gimp_message ("Ripple: period must be at least 1.\n");
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+
           if (rvals.edges < SMEAR || rvals.edges > BLANK)
             status = GIMP_PDB_CALLING_ERROR;
         }
@@ -607,7 +613,7 @@ ripple_dialog (GimpDrawable *drawable)
   /*  Period  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                                      _("_Period:"), SCALE_WIDTH, 0,
-                                     rvals.period, 0, 200, 1, 10, 0,
+                                     rvals.period, 1, 200, 1, 10, 0,
                                      TRUE, 0, 0,
                                      NULL, NULL);
   g_signal_connect (scale_data, "value-changed",

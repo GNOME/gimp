@@ -29,8 +29,7 @@
 
 #include "config/gimpconfig-utils.h"
 
-#include "core/gimp.h"
-#include "core/gimptoolinfo.h"
+#include "core/gimpviewable.h"
 
 #include "text/gimptext.h"
 
@@ -408,7 +407,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 {
   GObject         *config  = G_OBJECT (tool_options);
   GimpTextOptions *options = GIMP_TEXT_OPTIONS (tool_options);
-  GtkWidget       *vbox;
+  GtkWidget       *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget       *table;
   GtkWidget       *hbox;
   GtkWidget       *button;
@@ -417,8 +416,6 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkWidget       *box;
   GtkWidget       *spinbutton;
   gint             row = 0;
-
-  vbox = gimp_tool_options_gui (tool_options);
 
   table = gtk_table_new (10, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
@@ -545,7 +542,8 @@ gimp_text_options_editor_notify_font (GimpTextOptions *options,
 }
 
 GtkWidget *
-gimp_text_options_editor_new (GimpTextOptions *options,
+gimp_text_options_editor_new (GtkWindow       *parent,
+                              GimpTextOptions *options,
                               GimpMenuFactory *menu_factory,
                               const gchar     *title)
 {
@@ -556,7 +554,7 @@ gimp_text_options_editor_new (GimpTextOptions *options,
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (title != NULL, NULL);
 
-  editor = gimp_text_editor_new (title, menu_factory);
+  editor = gimp_text_editor_new (title, parent, menu_factory);
 
   font_name = gimp_context_get_font_name (GIMP_CONTEXT (options));
 

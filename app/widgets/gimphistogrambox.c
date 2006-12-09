@@ -61,16 +61,18 @@ static void   gimp_histogram_box_channel_notify  (GimpHistogramView *view,
 static void   gimp_histogram_box_border_notify   (GimpHistogramView *view,
                                                   GParamSpec        *pspec,
                                                   GimpColorBar      *bar);
+
 static gboolean gimp_histogram_slider_area_event (GtkWidget         *widget,
                                                   GdkEvent          *event,
                                                   GimpHistogramBox  *box);
 static gboolean gimp_histogram_slider_area_expose (GtkWidget        *widget,
                                                   GdkEvent          *event,
                                                   GimpHistogramBox  *box);
-static void gimp_histogram_draw_slider           (GtkWidget *widget,
-                                                  GdkGC     *border_gc,
-                                                  GdkGC     *fill_gc,
-                                                  gint       xpos);
+
+static void   gimp_histogram_draw_slider         (GtkWidget         *widget,
+                                                  GdkGC             *border_gc,
+                                                  GdkGC             *fill_gc,
+                                                  gint               xpos);
 
 
 G_DEFINE_TYPE (GimpHistogramBox, gimp_histogram_box, GTK_TYPE_VBOX)
@@ -333,12 +335,9 @@ gimp_histogram_slider_area_event (GtkWidget         *widget,
 
   if (update)
     {
-      gint  width;
-      gint  border;
-
-      g_object_get (box->view, "border-width", &border, NULL);
-
-      width = widget->allocation.width - 2 * border;
+      gdouble value;
+      gint    border = box->view->border_width;
+      gint    width  = widget->allocation.width - 2 * border;
 
       if (width < 1)
         return FALSE;
@@ -346,23 +345,15 @@ gimp_histogram_slider_area_event (GtkWidget         *widget,
       switch (box->active_slider)
         {
         case 0:  /*  low output  */
-          box->low_adj->value =
-            ((gdouble) (x - border) / (gdouble) width) * 255.0;
+          value = (gdouble) (x - border) / (gdouble) width * 256.0;
 
-          box->low_adj->value =
-            CLAMP (box->low_adj->value, 0, 255);
-
-          gimp_histogram_box_low_adj_update (box->low_adj, box);
+          gtk_adjustment_set_value (box->low_adj, CLAMP (value, 0, 255));
           break;
 
         case 1:  /*  high output  */
-          box->high_adj->value =
-            ((gdouble) (x - border) / (gdouble) width) * 255.0;
+          value = (gdouble) (x - border) / (gdouble) width * 256.0;
 
-          box->high_adj->value =
-            CLAMP (box->high_adj->value, 0, 255);
-
-          gimp_histogram_box_high_adj_update (box->high_adj, box);
+          gtk_adjustment_set_value (box->high_adj, CLAMP (value, 0, 255));
           break;
         }
 
@@ -373,23 +364,17 @@ gimp_histogram_slider_area_event (GtkWidget         *widget,
 
 static gboolean
 gimp_histogram_slider_area_expose (GtkWidget        *widget,
-                                   GdkEvent          *event,
-                                   GimpHistogramBox  *box)
+                                   GdkEvent         *event,
+                                   GimpHistogramBox *box)
 {
-  gint     width  = widget->allocation.width;
-  gint     border;
+  gint border = box->view->border_width;
+  gint width  = widget->allocation.width - 2 * border;
 
-  g_object_get (box->view, "border-width", &border, NULL);
+  box->slider_pos[0] = border + ROUND ((gdouble) width *
+                                       box->high_adj->lower / 256.0);
 
-  width -= 2 * border;
-
-  box->slider_pos[0] = ROUND ((gdouble) width *
-                               box->high_adj->lower /
-                               256.0) + border;
-
-  box->slider_pos[1] = ROUND ((gdouble) width *
-                               box->low_adj->upper /
-                               256.0) + border;
+  box->slider_pos[1] = border + ROUND ((gdouble) width *
+                                       (box->low_adj->upper + 1.0) / 256.0);
 
   gimp_histogram_draw_slider (widget,
                               widget->style->black_gc,
@@ -405,9 +390,9 @@ gimp_histogram_slider_area_expose (GtkWidget        *widget,
 
 static void
 gimp_histogram_draw_slider (GtkWidget *widget,
-                    GdkGC     *border_gc,
-                    GdkGC     *fill_gc,
-                    gint       xpos)
+                            GdkGC     *border_gc,
+                            GdkGC     *fill_gc,
+                            gint       xpos)
 {
   gint y;
 
@@ -434,4 +419,3 @@ gimp_histogram_draw_slider (GtkWidget *widget,
                  xpos + (CONTROL_HEIGHT - 1) / 2,
                  GRADIENT_HEIGHT + CONTROL_HEIGHT - 1);
 }
-

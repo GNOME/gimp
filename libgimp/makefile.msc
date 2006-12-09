@@ -148,6 +148,7 @@ gimp.obj : gimp.c
 gimpui_OBJECTS = \
 	gimpaspectpreview.obj \
 	gimpbrushmenu.obj \
+	gimpbrushselectbutton.obj \
 	gimpdrawablecombobox.obj \
 	gimpdrawablepreview.obj \
 	gimpexport.obj \
@@ -155,14 +156,18 @@ gimpui_OBJECTS = \
 	gimpfontselect_pdb.obj \
 	gimpfontselectbutton.obj \
 	gimpgradientmenu.obj \
+	gimpgradientselectbutton.obj \
 	gimpimagecombobox.obj \
 	gimpmenu.obj \
 	gimppalettemenu.obj \
+	gimppaletteselectbutton.obj \
 	gimppatternmenu.obj \
+	gimppatternselectbutton.obj \
 	gimppixbuf.obj \
 	gimpprocbrowserdialog.obj \
 	gimpprocview.obj \
 	gimpprogressbar.obj \
+	gimpselectbutton.obj \
 	gimpui.obj \
 	gimpuimarshal.obj \
 	gimpzoompreview.obj \

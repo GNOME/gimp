@@ -49,6 +49,11 @@ static const GimpActionEntry debug_actions[] =
   { "debug-dump-managers", NULL,
     "Dump _UI Managers", NULL, NULL,
     G_CALLBACK (debug_dump_managers_cmd_callback),
+    NULL },
+
+  { "debug-dump-attached-data", NULL,
+    "Dump Attached Data", NULL, NULL,
+    G_CALLBACK (debug_dump_attached_data_cmd_callback),
     NULL }
 };
 

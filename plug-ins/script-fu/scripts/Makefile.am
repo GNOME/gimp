@@ -5,6 +5,8 @@ SUBDIRS = images
 scriptdatadir = $(gimpdatadir)/scripts
 
 scripts = \
+	script-fu.init			\
+	script-fu-compat.init		\
 	3d-outline.scm			\
 	3dTruchet.scm			\
 	add-bevel.scm			\
@@ -38,9 +40,11 @@ scripts = \
 	clothify.scm			\
 	coffee.scm			\
 	comic-logo.scm			\
+	contactsheet.scm		\
 	coolmetal-logo.scm		\
 	copy-visible.scm		\
 	crystal-logo.scm		\
+	difference-clouds.scm		\
 	distress-selection.scm		\
 	drop-shadow.scm			\
 	erase-rows.scm			\
@@ -65,10 +69,10 @@ scripts = \
 	land.scm			\
 	lava.scm			\
 	line-nova.scm			\
-	old-photo.scm			\
 	mkbrush.scm			\
 	neon-logo.scm			\
 	news-text.scm			\
+	old-photo.scm			\
 	paste-as-brush.scm		\
 	paste-as-pattern.scm		\
 	perspective-shadow.scm		\
@@ -78,6 +82,7 @@ scripts = \
 	reverse-layers.scm		\
 	ripply-anim.scm			\
 	round-corners.scm		\
+	script-fu-set-cmap.scm		\
 	script-fu-util.scm		\
 	select-to-brush.scm		\
 	select-to-image.scm		\
@@ -106,7 +111,8 @@ scripts = \
 	xach-effect.scm
 
 test_scripts = \
-	test-sphere.scm
+	test-sphere.scm		\
+	ts-helloworld.scm
 
 
 if GIMP_UNSTABLE

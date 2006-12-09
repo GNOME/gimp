@@ -46,4 +46,16 @@ typedef enum
 } GimpCanvasPaddingMode;
 
 
+#define GIMP_TYPE_SPACE_BAR_ACTION (gimp_space_bar_action_get_type ())
+
+GType gimp_space_bar_action_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_SPACE_BAR_ACTION_NONE,  /*< desc="No action"           >*/
+  GIMP_SPACE_BAR_ACTION_PAN,   /*< desc="Pan view"            >*/
+  GIMP_SPACE_BAR_ACTION_MOVE   /*< desc="Switch to Move tool" >*/
+} GimpSpaceBarAction;
+
+
 #endif /* __DISPLAY_ENUMS_H__ */

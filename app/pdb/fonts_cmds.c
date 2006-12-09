@@ -33,6 +33,8 @@
 #include "core/gimpcontainer.h"
 #include "text/gimp-fonts.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 fonts_refresh_invoker (GimpProcedure     *procedure,

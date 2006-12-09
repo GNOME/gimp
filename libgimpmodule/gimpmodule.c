@@ -28,6 +28,7 @@
 
 #include "libgimpbase/gimpbase.h"
 
+#undef GIMP_DISABLE_DEPRECATED
 #include "gimpmodule.h"
 
 #include "libgimp/libgimp-intl.h"

@@ -259,6 +259,22 @@ typedef enum
 } GimpRotationType;
 
 
+#define GIMP_TYPE_SELECT_CRITERION (gimp_select_criterion_get_type ())
+
+GType gimp_select_criterion_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_SELECT_CRITERION_COMPOSITE,
+  GIMP_SELECT_CRITERION_R,
+  GIMP_SELECT_CRITERION_G,
+  GIMP_SELECT_CRITERION_B,
+  GIMP_SELECT_CRITERION_H,
+  GIMP_SELECT_CRITERION_S,
+  GIMP_SELECT_CRITERION_V
+} GimpSelectCriterion;
+
+
 void           gimp_enums_init           (void);
 
 const gchar ** gimp_enums_get_type_names (gint *n_type_names);

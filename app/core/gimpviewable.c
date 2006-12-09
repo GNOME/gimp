@@ -32,6 +32,7 @@
 #include "base/temp-buf.h"
 
 #include "gimp-utils.h"
+#include "gimpcontext.h"
 #include "gimpmarshal.h"
 #include "gimpviewable.h"
 
@@ -70,6 +71,7 @@ static gint64  gimp_viewable_get_memsize             (GimpObject    *object,
 static void    gimp_viewable_real_invalidate_preview (GimpViewable  *viewable);
 
 static GdkPixbuf * gimp_viewable_real_get_new_pixbuf (GimpViewable  *viewable,
+                                                      GimpContext   *context,
                                                       gint           width,
                                                       gint           height);
 static void    gimp_viewable_real_get_preview_size   (GimpViewable  *viewable,
@@ -102,6 +104,8 @@ G_DEFINE_TYPE_WITH_CODE (GimpViewable, gimp_viewable, GIMP_TYPE_OBJECT,
 static guint  viewable_signals[LAST_SIGNAL] = { 0 };
 static GQuark quark_preview_temp_buf        = 0;
 static GQuark quark_preview_pixbuf          = 0;
+
+static gboolean debug_context = TRUE;
 
 
 static void
@@ -298,13 +302,14 @@ gimp_viewable_real_get_popup_size (GimpViewable *viewable,
 
 static GdkPixbuf *
 gimp_viewable_real_get_new_pixbuf (GimpViewable *viewable,
+                                   GimpContext  *context,
                                    gint          width,
                                    gint          height)
 {
   TempBuf   *temp_buf;
   GdkPixbuf *pixbuf = NULL;
 
-  temp_buf = gimp_viewable_get_preview (viewable, width, height);
+  temp_buf = gimp_viewable_get_preview (viewable, context, width, height);
 
   if (temp_buf)
     {
@@ -624,6 +629,7 @@ gimp_viewable_get_popup_size (GimpViewable *viewable,
 /**
  * gimp_viewable_get_preview:
  * @viewable: The viewable object to get a preview for.
+ * @context:  The context to render the preview for.
  * @width:    desired width for the preview
  * @height:   desired height for the preview
  *
@@ -642,6 +648,7 @@ gimp_viewable_get_popup_size (GimpViewable *viewable,
  **/
 TempBuf *
 gimp_viewable_get_preview (GimpViewable *viewable,
+                           GimpContext  *context,
                            gint          width,
                            gint          height)
 {
@@ -649,13 +656,17 @@ gimp_viewable_get_preview (GimpViewable *viewable,
   TempBuf           *temp_buf = NULL;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
+
+  if (debug_context && context == NULL)
+    g_warning ("%s: context is NULL", G_STRFUNC);
 
   viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
 
   if (viewable_class->get_preview)
-    temp_buf = viewable_class->get_preview (viewable, width, height);
+    temp_buf = viewable_class->get_preview (viewable, context, width, height);
 
   if (temp_buf)
     return temp_buf;
@@ -670,7 +681,8 @@ gimp_viewable_get_preview (GimpViewable *viewable,
   temp_buf = NULL;
 
   if (viewable_class->get_new_preview)
-    temp_buf = viewable_class->get_new_preview (viewable, width, height);
+    temp_buf = viewable_class->get_new_preview (viewable, context,
+                                                width, height);
 
   g_object_set_qdata_full (G_OBJECT (viewable), quark_preview_temp_buf,
                            temp_buf,
@@ -696,6 +708,7 @@ gimp_viewable_get_preview (GimpViewable *viewable,
  **/
 TempBuf *
 gimp_viewable_get_new_preview (GimpViewable *viewable,
+                               GimpContext  *context,
                                gint          width,
                                gint          height)
 {
@@ -703,19 +716,25 @@ gimp_viewable_get_new_preview (GimpViewable *viewable,
   TempBuf           *temp_buf = NULL;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
+
+  if (debug_context && context == NULL)
+    g_warning ("%s: context is NULL", G_STRFUNC);
 
   viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
 
   if (viewable_class->get_new_preview)
-    temp_buf = viewable_class->get_new_preview (viewable, width, height);
+    temp_buf = viewable_class->get_new_preview (viewable, context,
+                                                width, height);
 
   if (temp_buf)
     return temp_buf;
 
   if (viewable_class->get_preview)
-    temp_buf = viewable_class->get_preview (viewable, width, height);
+    temp_buf = viewable_class->get_preview (viewable, context,
+                                            width, height);
 
   if (temp_buf)
     return temp_buf_copy (temp_buf, NULL);
@@ -776,6 +795,7 @@ gimp_viewable_get_dummy_preview (GimpViewable  *viewable,
 /**
  * gimp_viewable_get_pixbuf:
  * @viewable: The viewable object to get a pixbuf preview for.
+ * @context:  The context to render the preview for.
  * @width:    desired width for the preview
  * @height:   desired height for the preview
  *
@@ -794,6 +814,7 @@ gimp_viewable_get_dummy_preview (GimpViewable  *viewable,
  **/
 GdkPixbuf *
 gimp_viewable_get_pixbuf (GimpViewable *viewable,
+                          GimpContext  *context,
                           gint          width,
                           gint          height)
 {
@@ -801,13 +822,17 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
   GdkPixbuf         *pixbuf = NULL;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
+
+  if (debug_context && context == NULL)
+    g_warning ("%s: context is NULL", G_STRFUNC);
 
   viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
 
   if (viewable_class->get_pixbuf)
-    pixbuf = viewable_class->get_pixbuf (viewable, width, height);
+    pixbuf = viewable_class->get_pixbuf (viewable, context, width, height);
 
   if (pixbuf)
     return pixbuf;
@@ -822,7 +847,7 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
   pixbuf = NULL;
 
   if (viewable_class->get_new_pixbuf)
-    pixbuf = viewable_class->get_new_pixbuf (viewable, width, height);
+    pixbuf = viewable_class->get_new_pixbuf (viewable, context, width, height);
 
   g_object_set_qdata_full (G_OBJECT (viewable), quark_preview_pixbuf,
                            pixbuf,
@@ -834,6 +859,7 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
 /**
  * gimp_viewable_get_new_pixbuf:
  * @viewable: The viewable object to get a new pixbuf preview for.
+ * @context:  The context to render the preview for.
  * @width:    desired width for the pixbuf
  * @height:   desired height for the pixbuf
  *
@@ -848,6 +874,7 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
  **/
 GdkPixbuf *
 gimp_viewable_get_new_pixbuf (GimpViewable *viewable,
+                              GimpContext  *context,
                               gint          width,
                               gint          height)
 {
@@ -855,19 +882,23 @@ gimp_viewable_get_new_pixbuf (GimpViewable *viewable,
   GdkPixbuf         *pixbuf = NULL;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
+
+  if (debug_context && context == NULL)
+    g_warning ("%s: context is NULL", G_STRFUNC);
 
   viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
 
   if (viewable_class->get_new_pixbuf)
-    pixbuf = viewable_class->get_new_pixbuf (viewable, width, height);
+    pixbuf = viewable_class->get_new_pixbuf (viewable, context, width, height);
 
   if (pixbuf)
     return pixbuf;
 
   if (viewable_class->get_pixbuf)
-    pixbuf = viewable_class->get_pixbuf (viewable, width, height);
+    pixbuf = viewable_class->get_pixbuf (viewable, context, width, height);
 
   if (pixbuf)
     return gdk_pixbuf_copy (pixbuf);

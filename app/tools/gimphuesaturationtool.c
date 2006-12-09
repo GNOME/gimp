@@ -63,7 +63,8 @@
 static void     gimp_hue_saturation_tool_finalize   (GObject          *object);
 
 static gboolean gimp_hue_saturation_tool_initialize (GimpTool         *tool,
-                                                     GimpDisplay      *display);
+                                                     GimpDisplay      *display,
+                                                     GError          **error);
 
 static void     gimp_hue_saturation_tool_map        (GimpImageMapTool *im_tool);
 static void     gimp_hue_saturation_tool_dialog     (GimpImageMapTool *im_tool);
@@ -110,7 +111,7 @@ gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
                 0,
                 "gimp-hue-saturation-tool",
                 _("Hue-Saturation"),
-                _("Adjust hue and saturation"),
+                _("Hue-Saturation Tool: Adjust hue, saturation, and lightness"),
                 N_("Hue-_Saturation..."), NULL,
                 NULL, GIMP_HELP_TOOL_HUE_SATURATION,
                 GIMP_STOCK_TOOL_HUE_SATURATION,
@@ -159,8 +160,9 @@ gimp_hue_saturation_tool_finalize (GObject *object)
 }
 
 static gboolean
-gimp_hue_saturation_tool_initialize (GimpTool    *tool,
-                                     GimpDisplay *display)
+gimp_hue_saturation_tool_initialize (GimpTool     *tool,
+                                     GimpDisplay  *display,
+                                     GError      **error)
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (tool);
   GimpDrawable          *drawable;
@@ -172,13 +174,14 @@ gimp_hue_saturation_tool_initialize (GimpTool    *tool,
 
   if (! gimp_drawable_is_rgb (drawable))
     {
-      g_message (_("Hue-Saturation operates only on RGB color layers."));
+      g_set_error (error, 0, 0,
+                   _("Hue-Saturation operates only on RGB color layers."));
       return FALSE;
     }
 
   hue_saturation_init (hs_tool->hue_saturation);
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
   hue_saturation_update (hs_tool, ALL);
 

@@ -48,13 +48,15 @@ print MK <<EOT;
 ## plug-ins you should only need to modify plugin-defs.pl.
 
 
+libgimp = \$(top_builddir)/libgimp/libgimp-\$(GIMP_API_VERSION).la
+libgimpbase = \$(top_builddir)/libgimpbase/libgimpbase-\$(GIMP_API_VERSION).la
+libgimpcolor = \$(top_builddir)/libgimpcolor/libgimpcolor-\$(GIMP_API_VERSION).la
+libgimpconfig = \$(top_builddir)/libgimpconfig/libgimpconfig-\$(GIMP_API_VERSION).la
+libgimpmath = \$(top_builddir)/libgimpmath/libgimpmath-\$(GIMP_API_VERSION).la
+libgimpmodule = \$(top_builddir)/libgimpmodule/libgimpmodule-\$(GIMP_API_VERSION).la
 libgimpui = \$(top_builddir)/libgimp/libgimpui-\$(GIMP_API_VERSION).la
 libgimpwidgets = \$(top_builddir)/libgimpwidgets/libgimpwidgets-\$(GIMP_API_VERSION).la
-libgimpconfig = \$(top_builddir)/libgimpconfig/libgimpconfig-\$(GIMP_API_VERSION).la
-libgimp = \$(top_builddir)/libgimp/libgimp-\$(GIMP_API_VERSION).la
-libgimpcolor = \$(top_builddir)/libgimpcolor/libgimpcolor-\$(GIMP_API_VERSION).la
-libgimpbase = \$(top_builddir)/libgimpbase/libgimpbase-\$(GIMP_API_VERSION).la
-libgimpmath = \$(top_builddir)/libgimpmath/libgimpmath-\$(GIMP_API_VERSION).la
+
 
 if OS_WIN32
 mwindows = -mwindows
@@ -107,21 +109,19 @@ foreach (sort keys %plugins) {
 
     if (exists $plugins{$_}->{ui}) {
         $libgimp .= "\$(libgimpui)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpconfig)";
-        $libgimp .= "\t\\\n\t\$(libgimpwidgets)";
-        $libgimp .= "\t\\\n\t\$(libgimp)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpcolor)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpmath)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpbase)";
-    } else {
-        $libgimp .= "\$(libgimp)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpcolor)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpmath)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpbase)";
+        $libgimp .= "\t\t\\\n\t\$(libgimpwidgets)";
+	$libgimp .= "\t\\\n\t\$(libgimpmodule)";
+	$libgimp .= "\t\\\n\t";
     }
 
+    $libgimp .= "\$(libgimp)";
+    $libgimp .= "\t\t\\\n\t\$(libgimpmath)";
+    $libgimp .= "\t\t\\\n\t\$(libgimpconfig)";
+    $libgimp .= "\t\\\n\t\$(libgimpcolor)";
+    $libgimp .= "\t\t\\\n\t\$(libgimpbase)";
+
     my $optlib = "";
-    if (exists $plugins{$_}->{optional} || exists $plugins{$_}->{extralibs} ) {
+    if (exists $plugins{$_}->{optional}) {
 	my $name = exists $plugins{$_}->{libopt} ? $plugins{$_}->{libopt} : $_;
 	$optlib = "\n\t\$(LIB\U$name\E)\t\t\\";
     }
@@ -137,6 +137,11 @@ EOT
     }
 
     my $deplib = "\$(RT_LIBS)\t\t\\\n\t\$(INTLLIBS)";
+    if (exists $plugins{$_}->{ui}) {
+	$deplib = "\$(GTK_LIBS)\t\t\\\n\t$deplib";
+    } else {
+	$deplib = "\$(GLIB_LIBS)\t\t\\\n\t$deplib";
+    }
     if (exists $plugins{$_}->{libdep}) {
 	my @lib = split(/:/, $plugins{$_}->{libdep});
 	foreach $lib (@lib) {

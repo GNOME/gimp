@@ -27,27 +27,29 @@
 
 #include "libgimp/gimp.h"
 
-#include "siod-wrapper.h"
+#include "scheme-wrapper.h"
+#include "script-fu-text-console.h"
 
 #include "script-fu-intl.h"
 
 
-static void script_fu_text_console_interface (void);
+static void   script_fu_text_console_interface (void);
 
 
 void
 script_fu_text_console_run (const gchar      *name,
-			    gint              nparams,
-			    const GimpParam  *params,
-			    gint             *nreturn_vals,
-			    GimpParam       **return_vals)
+                            gint              nparams,
+                            const GimpParam  *params,
+                            gint             *nreturn_vals,
+                            GimpParam       **return_vals)
 {
   static GimpParam  values[1];
 
-  siod_set_output_file (stdout);
-  siod_set_verbose_level (2);
-  siod_print_welcome ();
+  /*  Enable Script-Fu output  */
+  ts_set_output_file (stdout);
+  ts_print_welcome ();
 
+  /*  Run the interface  */
   script_fu_text_console_interface ();
 
   values[0].type          = GIMP_PDB_STATUS;
@@ -60,15 +62,14 @@ script_fu_text_console_run (const gchar      *name,
 static gboolean
 read_command (GString *command)
 {
-  guchar c;
-  gint   next;
-  gint   level = 0;
+  gint next;
+  gint level = 0;
 
   g_string_truncate (command, 0);
 
   while ((next = fgetc (stdin)) != EOF)
     {
-      c = (guchar) next;
+      guchar c = (guchar) next;
 
       switch (c)
         {
@@ -107,7 +108,7 @@ script_fu_text_console_interface (void)
   while (read_command (command))
     {
       if (command->len > 0)
-        siod_interpret_string (command->str);
+        ts_interpret_string (command->str);
     }
 
   g_string_free (command, TRUE);

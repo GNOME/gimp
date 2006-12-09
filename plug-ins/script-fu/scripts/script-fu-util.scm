@@ -19,11 +19,15 @@
 ; The resulting image has the selected layer size.
 ; Copyright (C) 2002 Chauk-Mean PROUM
 ;
-(define (script-fu-util-image-resize-from-layer image
-						layer)
-  (let*
-      ((width (car (gimp-drawable-width layer)))
-       (height (car (gimp-drawable-height layer)))
-       (posx (- (car (gimp-drawable-offsets layer))))
-       (posy (- (cadr (gimp-drawable-offsets layer)))))
-    (gimp-image-resize image width height posx posy)))
+(define (script-fu-util-image-resize-from-layer image layer)
+  (let* (
+        (width (car (gimp-drawable-width layer)))
+        (height (car (gimp-drawable-height layer)))
+        (posx (- (car (gimp-drawable-offsets layer))))
+        (posy (- (cadr (gimp-drawable-offsets layer))))
+        )
+
+    (gimp-image-resize image width height posx posy)
+  )
+)
+

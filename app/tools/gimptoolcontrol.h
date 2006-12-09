@@ -134,22 +134,22 @@ void gimp_tool_control_set_cursor                 (GimpToolControl    *control,
 void gimp_tool_control_set_tool_cursor            (GimpToolControl    *control,
                                                    GimpToolCursorType  cursor);
 void gimp_tool_control_set_cursor_modifier        (GimpToolControl    *control,
-                                                   GimpCursorModifier cmodifier);
+                                                   GimpCursorModifier  modifier);
 void gimp_tool_control_set_toggle_cursor          (GimpToolControl    *control,
                                                    GimpCursorType      cursor);
 void gimp_tool_control_set_toggle_tool_cursor     (GimpToolControl    *control,
                                                    GimpToolCursorType  cursor);
 void gimp_tool_control_set_toggle_cursor_modifier (GimpToolControl    *control,
-                                                   GimpCursorModifier  cmodifier);
+                                                   GimpCursorModifier  modifier);
 
 GimpCursorType
-     gimp_tool_control_get_cursor                 (GimpToolControl *control);
+              gimp_tool_control_get_cursor          (GimpToolControl *control);
 
 GimpToolCursorType
-     gimp_tool_control_get_tool_cursor            (GimpToolControl *control);
+              gimp_tool_control_get_tool_cursor     (GimpToolControl *control);
 
 GimpCursorModifier
-     gimp_tool_control_get_cursor_modifier        (GimpToolControl *control);
+              gimp_tool_control_get_cursor_modifier (GimpToolControl *control);
 
 void          gimp_tool_control_set_action_value_1  (GimpToolControl *control,
                                                      const gchar     *action);

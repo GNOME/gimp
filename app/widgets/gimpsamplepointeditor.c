@@ -305,8 +305,8 @@ gimp_sample_point_editor_new (GimpMenuFactory *menu_factory)
 
   return g_object_new (GIMP_TYPE_SAMPLE_POINT_EDITOR,
                        "menu-factory",    menu_factory,
-                       "menu-identifier", "<SamplePointEditor>",
-                       "ui-path",         "/sample-point-editor-popup",
+                       "menu-identifier", "<SamplePoints>",
+                       "ui-path",         "/sample-points-popup",
                        NULL);
 }
 

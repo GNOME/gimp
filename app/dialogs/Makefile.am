@@ -30,6 +30,8 @@ libappdialogs_a_sources = \
 	convert-dialog.h		\
 	desaturate-dialog.c		\
 	desaturate-dialog.h		\
+	fade-dialog.c			\
+	fade-dialog.h			\
 	file-open-dialog.c		\
 	file-open-dialog.h		\
 	file-open-location-dialog.c	\
@@ -80,7 +82,7 @@ libappdialogs_a_sources = \
 	tips-parser.h			\
 	user-install-dialog.c		\
 	user-install-dialog.h		\
-        vectorlayer-options-dialog.c	\
+	vectorlayer-options-dialog.c	\
 	vectorlayer-options-dialog.h	\
 	vectors-export-dialog.c		\
 	vectors-export-dialog.h		\

@@ -29,6 +29,9 @@ N_("Sets the canvas padding color used if the padding mode is set to " \
 #define COLOR_MANAGEMENT_BLURB \
 "Defines the color management behavior."
 
+#define COLOR_PROFILE_POLICY_BLURB \
+N_("How to handle embedded color profiles when opening a file.")
+
 #define CONFIRM_ON_CLOSE_BLURB \
 N_("Ask for confirmation before closing an image without saving.")
 
@@ -103,7 +106,7 @@ N_("The window type hint that is set on dock windows. This may affect " \
 "to between 2.0 and 2.6. One important thing to keep in mind: Many images " \
 "that you might get from outside sources will in all likelihood already " \
 "be gamma-corrected.  In these cases, the image will look washed-out if " \
-"the GIMP has gamma-correction turned on.  If you are going to work with " \
+"GIMP has gamma-correction turned on.  If you are going to work with " \
 "images of this sort, turn gamma correction off by setting the value to 1.0."
 #endif
 
@@ -183,14 +186,13 @@ N_("When enabled, GIMP will show mnemonics in menus.")
 
 #define MIN_COLORS_BLURB  \
 N_("Generally only a concern for 8-bit displays, this sets the minimum " \
-   "number of system colors allocated for the GIMP.")
+   "number of system colors allocated for GIMP.")
 
 #define MODULE_PATH_BLURB \
 "Sets the module search path."
 
 #define MONITOR_RES_FROM_GDK_BLURB \
-"When enabled, the GIMP will use the monitor resolution from the " \
-"windowing system."
+"When enabled, GIMP will use the monitor resolution from the windowing system."
 
 #define MONITOR_XRESOLUTION_BLURB \
 N_("Sets the monitor's horizontal resolution, in dots per inch.  If set to " \
@@ -203,9 +205,8 @@ N_("Sets the monitor's vertical resolution, in dots per inch.  If set to " \
    "resolution information.")
 
 #define MOVE_TOOL_CHANGES_ACTIVE_BLURB \
-N_("If enabled, the move tool changes the active layer or path when a layer " \
-   "or path is being picked. This used to be the default behaviour in older " \
-   "versions.")
+N_("If enabled, the move tool sets the edited layer or path as active.  " \
+   "This used to be the default behaviour in older versions.")
 
 #define NAVIGATION_PREVIEW_SIZE_BLURB \
 N_("Sets the size of the navigation preview available in the lower right " \
@@ -268,10 +269,10 @@ N_("Remember the current tool, pattern, color, and brush across GIMP " \
 N_("Add all opened and saved files to the document history on disk.")
 
 #define SAVE_SESSION_INFO_BLURB \
-N_("Save the positions and sizes of the main dialogs when the GIMP exits.")
+N_("Save the positions and sizes of the main dialogs when GIMP exits.")
 
 #define SAVE_TOOL_OPTIONS_BLURB \
-N_("Save the tool options when the GIMP exits.")
+N_("Save the tool options when GIMP exits.")
 
 #define SCRIPT_FU_PATH_BLURB \
 "This path will be searched for scripts when the Script-Fu plug-in is run."
@@ -331,6 +332,9 @@ N_("Enable displaying a handy GIMP tip on startup.")
 #define SHOW_TOOLTIPS_BLURB \
 N_("Show a tooltip when the pointer hovers over an item.")
 
+#define SPACE_BAR_ACTION_BLURB \
+N_("What to do when the space bar is pressed in the image window.")
+
 #define SWAP_PATH_BLURB \
 N_("Sets the swap file location. GIMP uses a tile based memory allocation " \
    "scheme. The swap file is used to quickly and easily swap tiles out to " \
@@ -354,16 +358,16 @@ N_("When enabled, you can change keyboard shortcuts for menu items " \
    "by hitting a key combination while the menu item is highlighted.")
 
 #define SAVE_ACCELS_BLURB \
-N_("Save changed keyboard shortcuts when the GIMP exits.")
+N_("Save changed keyboard shortcuts when GIMP exits.")
 
 #define RESTORE_ACCELS_BLURB \
 N_("Restore saved keyboard shortcuts on each GIMP startup.")
 
 #define TEMP_PATH_BLURB \
 N_("Sets the folder for temporary storage. Files will appear here " \
-   "during the course of running the GIMP.  Most files will disappear " \
-   "when the GIMP exits, but some files are likely to remain, so it is " \
-   "best if this folder not be one that is shared by other users.")
+   "during the course of running GIMP.  Most files will disappear " \
+   "when GIMP exits, but some files are likely to remain, so it " \
+   "is best if this folder not be one that is shared by other users.")
 
 #define THEME_BLURB \
 "The name of the theme to use."
@@ -400,7 +404,7 @@ N_("Sets the manner in which transparency is displayed in images.")
 N_("Sets the size of the checkerboard used to display transparency.")
 
 #define TRUST_DIRTY_FLAG_BLURB \
-N_("When enabled, the GIMP will not save an image if it has not been changed " \
+N_("When enabled, GIMP will not save an image if it has not been changed " \
    "since it was opened.")
 
 #define UNDO_LEVELS_BLURB \

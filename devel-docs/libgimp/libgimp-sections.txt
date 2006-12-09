@@ -1,11 +1,7 @@
 <SECTION>
 <FILE>gimp</FILE>
-GIMPVAR
 gimp_version
 gimp_getpid
-gimp_major_version
-gimp_minor_version
-gimp_micro_version
 gimp_get_data
 gimp_get_data_size
 gimp_set_data
@@ -74,6 +70,7 @@ GimpMergeType
 GimpOffsetType
 GimpOrientationType
 GimpRotationType
+GimpSelectCriterion
 gimp_enums_get_type_names
 <SUBSECTION Standard>
 GIMP_TYPE_BRUSH_APPLICATION_MODE
@@ -93,6 +90,7 @@ GIMP_TYPE_MERGE_TYPE
 GIMP_TYPE_OFFSET_TYPE
 GIMP_TYPE_ORIENTATION_TYPE
 GIMP_TYPE_ROTATION_TYPE
+GIMP_TYPE_SELECT_CRITERION
 gimp_brush_application_mode_get_type
 gimp_brush_generated_shape_get_type
 gimp_convert_dither_type_get_type
@@ -110,6 +108,7 @@ gimp_merge_type_get_type
 gimp_offset_type_get_type
 gimp_orientation_type_get_type
 gimp_rotation_type_get_type
+gimp_select_criterion_get_type
 </SECTION>
 
 <SECTION>
@@ -257,6 +256,7 @@ gimp_context_set_paint_method
 gimp_image_convert_rgb
 gimp_image_convert_grayscale
 gimp_image_convert_indexed
+gimp_image_convert_set_dither_matrix
 </SECTION>
 
 <SECTION>
@@ -356,6 +356,7 @@ gimp_edit_fill
 gimp_edit_bucket_fill
 gimp_edit_blend
 gimp_edit_stroke
+gimp_edit_stroke_vectors
 </SECTION>
 
 <SECTION>
@@ -363,7 +364,9 @@ gimp_edit_stroke
 gimp_temp_name
 gimp_file_load
 gimp_file_load_layer
+gimp_file_load_layers
 gimp_file_save
+gimp_file_save_thumbnail
 gimp_register_magic_load_handler
 gimp_register_load_handler
 gimp_register_save_handler
@@ -511,7 +514,6 @@ gimp_image_crop
 gimp_image_get_layers
 gimp_image_get_channels
 gimp_image_get_active_drawable
-gimp_image_unset_active_channel
 gimp_image_get_floating_sel
 gimp_image_floating_sel_attached_to
 gimp_image_pick_color
@@ -522,10 +524,12 @@ gimp_image_raise_layer
 gimp_image_lower_layer
 gimp_image_raise_layer_to_top
 gimp_image_lower_layer_to_bottom
+gimp_image_get_layer_position
 gimp_image_add_channel
 gimp_image_remove_channel
 gimp_image_raise_channel
 gimp_image_lower_channel
+gimp_image_get_channel_position
 gimp_image_flatten
 gimp_image_merge_visible_layers
 gimp_image_merge_down
@@ -535,6 +539,7 @@ gimp_image_get_active_layer
 gimp_image_set_active_layer
 gimp_image_get_active_channel
 gimp_image_set_active_channel
+gimp_image_unset_active_channel
 gimp_image_get_selection
 gimp_image_get_component_active
 gimp_image_set_component_active
@@ -570,6 +575,7 @@ gimp_image_lower_vectors
 gimp_image_raise_vectors
 gimp_image_lower_vectors_to_bottom
 gimp_image_raise_vectors_to_top
+gimp_image_get_vectors_position
 </SECTION>
 
 <SECTION>
@@ -672,7 +678,6 @@ gimp_path_set_locked
 gimp_path_set_tattoo
 gimp_path_to_selection
 gimp_path_import
-gimp_path_import_string
 </SECTION>
 
 <SECTION>
@@ -835,23 +840,29 @@ gimp_tile_cache_ntiles
 gimp_airbrush
 gimp_airbrush_default
 gimp_by_color_select
+gimp_by_color_select_full
 gimp_clone
 gimp_clone_default
 gimp_convolve
 gimp_convolve_default
 gimp_dodgeburn
 gimp_dodgeburn_default
+gimp_edit_bucket_fill_full
 gimp_ellipse_select
 gimp_eraser
 gimp_eraser_default
 gimp_flip
 gimp_free_select
 gimp_fuzzy_select
+gimp_fuzzy_select_full
+gimp_heal
+gimp_heal_default
 gimp_paintbrush
 gimp_paintbrush_default
 gimp_pencil
 gimp_perspective
 gimp_rect_select
+gimp_round_rect_select
 gimp_rotate
 gimp_scale
 gimp_shear
@@ -873,28 +884,36 @@ gimp_image_undo_thaw
 
 <SECTION>
 <FILE>gimpvectors</FILE>
+gimp_vectors_new
+gimp_vectors_import_from_file
+gimp_vectors_import_from_string
+gimp_vectors_get_strokes
 gimp_vectors_get_image
 gimp_vectors_get_linked
 gimp_vectors_get_name
 gimp_vectors_get_tattoo
 gimp_vectors_get_visible
-gimp_vectors_new
 gimp_vectors_set_linked
 gimp_vectors_set_name
 gimp_vectors_set_tattoo
 gimp_vectors_set_visible
-gimp_vectors_get_strokes
+gimp_vectors_remove_stroke
+gimp_vectors_to_selection
 gimp_vectors_parasite_attach
 gimp_vectors_parasite_detach
 gimp_vectors_parasite_find
 gimp_vectors_parasite_list
+gimp_vectors_stroke_new_from_points
 gimp_vectors_stroke_close
-gimp_vectors_stroke_remove
 gimp_vectors_stroke_get_length
+gimp_vectors_stroke_get_points
 gimp_vectors_stroke_get_point_at_dist
 gimp_vectors_stroke_interpolate
 gimp_vectors_stroke_scale
 gimp_vectors_stroke_translate
+gimp_vectors_stroke_flip
+gimp_vectors_stroke_flip_free
+gimp_vectors_stroke_rotate
 gimp_vectors_bezier_stroke_conicto
 gimp_vectors_bezier_stroke_cubicto
 gimp_vectors_bezier_stroke_lineto
@@ -908,6 +927,7 @@ GimpPixbufTransparency
 gimp_image_get_thumbnail
 gimp_drawable_get_thumbnail
 gimp_drawable_get_sub_thumbnail
+gimp_layer_new_from_pixbuf
 </SECTION>
 
 <SECTION>
@@ -949,9 +969,11 @@ GIMP_DRAWABLE_PREVIEW_GET_CLASS
 <TITLE>GimpZoomPreview</TITLE>
 GimpZoomPreview
 gimp_zoom_preview_new
+gimp_zoom_preview_new_with_model
 gimp_zoom_preview_get_source
 gimp_zoom_preview_get_drawable
 gimp_zoom_preview_get_factor
+gimp_zoom_preview_get_model
 <SUBSECTION Standard>
 GimpZoomPreviewClass
 GIMP_ZOOM_PREVIEW
@@ -964,8 +986,9 @@ GIMP_ZOOM_PREVIEW_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimpdrawablecombobox</FILE>
-<TITLE>GimpDrawableComboBox</TITLE>
+<FILE>gimpitemcombobox</FILE>
+<TITLE>GimpItemComboBox</TITLE>
+GimpItemConstraintFunc
 GimpDrawableComboBox
 GimpDrawableConstraintFunc
 gimp_drawable_combo_box_new
@@ -973,6 +996,9 @@ GimpChannelComboBox
 gimp_channel_combo_box_new
 GimpLayerComboBox
 gimp_layer_combo_box_new
+GimpVectorsComboBox
+GimpVectorsConstraintFunc
+gimp_vectors_combo_box_new
 <SUBSECTION Standard>
 GIMP_TYPE_LAYER_COMBO_BOX
 GIMP_TYPE_CHANNEL_COMBO_BOX
@@ -986,6 +1012,10 @@ GIMP_IS_DRAWABLE_COMBO_BOX
 GIMP_TYPE_DRAWABLE_COMBO_BOX
 GIMP_IS_CHANNEL_COMBO_BOX
 gimp_channel_combo_box_get_type
+GIMP_IS_VECTORS_COMBO_BOX
+GIMP_TYPE_VECTORS_COMBO_BOX
+GIMP_VECTORS_COMBO_BOX
+gimp_vectors_combo_box_get_type
 </SECTION>
 
 <SECTION>

@@ -81,9 +81,9 @@ extern void parse_control_point(char **ss, control_point *cp);
 extern void estimate_bounding_box(control_point *cp, double eps, double *bmin, double *bmax);
 extern void sort_control_points(control_point *cps, int ncps, double (*metric)());
 extern double standard_metric(control_point *cp1, control_point *cp2);
-extern double random_uniform01();
-extern double random_uniform11();
-extern double random_gaussian();
+extern double random_uniform01(void);
+extern double random_uniform11(void);
+extern double random_gaussian(void);
 extern void mult_matrix(double s1[2][2], double s2[2][2], double d[2][2]);
 void copy_variation(control_point *cp0, control_point *cp1);
 #endif

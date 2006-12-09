@@ -20,19 +20,8 @@
 #define __SCALE_DIALOG_H__
 
 
-typedef void (* GimpScaleCallback) (GtkWidget             *dialog,
-                                    GimpViewable          *viewable,
-                                    gint                   width,
-                                    gint                   height,
-                                    GimpUnit               unit,
-                                    GimpInterpolationType  interpolation,
-                                    gdouble                xresolution,
-                                    gdouble                yresolution,
-                                    GimpUnit               resolution_unit,
-                                    gpointer               user_data);
-
-
 GtkWidget * scale_dialog_new (GimpViewable          *viewable,
+                              GimpContext           *context,
                               const gchar           *title,
                               const gchar           *role,
                               GtkWidget             *parent,

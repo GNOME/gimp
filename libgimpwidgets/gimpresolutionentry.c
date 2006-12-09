@@ -99,7 +99,7 @@ gimp_resolution_entry_get_type (void)
 
   if (! gre_type)
     {
-      static const GTypeInfo gre_info =
+      const GTypeInfo gre_info =
       {
         sizeof (GimpResolutionEntryClass),
         (GBaseInitFunc) NULL,
@@ -826,8 +826,8 @@ gimp_resolution_entry_set_width (GimpResolutionEntry *gre,
  * Since: GIMP 2.4
  **/
 void
-gimp_resolution_entry_set_height_value (GimpResolutionEntry *gre,
-                                        gdouble              value)
+gimp_resolution_entry_set_height (GimpResolutionEntry *gre,
+                                  gdouble              value)
 {
   g_return_if_fail (GIMP_IS_RESOLUTION_ENTRY (gre));
 

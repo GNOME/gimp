@@ -58,6 +58,8 @@ static void  run   (const gchar      *name,
 		    gint             *nreturn_vals,
 		    GimpParam       **return_vals);
 
+static void  rcm   (GimpDrawable     *drawable);
+
 
 /* Global variables */
 
@@ -77,6 +79,7 @@ const GimpPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
+
 MAIN()
 
 
@@ -87,9 +90,9 @@ query (void)
 {
   GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive"          },
     { GIMP_PDB_IMAGE,    "image",    "Input image (used for indexed images)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"                        },
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
@@ -109,23 +112,71 @@ query (void)
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors/Map");
 }
 
+static void
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
+{
+  GimpParam         values[1];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+
+  *nreturn_vals = 1;
+  *return_vals  = values;
+
+  INIT_I18N ();
+
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = status;
+
+  Current.drawable = gimp_drawable_get (param[2].data.d_drawable);
+  Current.mask = gimp_drawable_get (gimp_image_get_selection (param[1].data.d_image));
+
+  if (gimp_drawable_is_rgb (Current.drawable->drawable_id))
+    {
+      if (rcm_dialog ())
+        {
+          gimp_progress_init (_("Rotating the colors"));
+
+          gimp_tile_cache_ntiles (2 * (Current.drawable->width /
+                                       gimp_tile_width () + 1));
+          rcm (Current.drawable);
+          gimp_displays_flush ();
+        }
+      else
+        {
+          status = GIMP_PDB_CANCEL;
+        }
+    }
+  else
+    {
+      status = GIMP_PDB_EXECUTION_ERROR;
+    }
+
+  values[0].data.d_status = status;
+
+  if (status == GIMP_PDB_SUCCESS)
+    gimp_drawable_detach (Current.drawable);
+}
+
 
 /* Rotate colors of a single row */
 
-void
+static void
 rcm_row (const guchar *src_row,
 	 guchar       *dest_row,
 	 gint          row,
 	 gint          row_width,
 	 gint          bytes)
 {
-  gint    col, bytenum, skip;
-  gdouble H, S, V;
-  guchar  rgb[3];
+  gint     col, bytenum;
+  gdouble  H, S, V;
+  guchar   rgb[3];
 
   for (col = 0; col < row_width; col++)
     {
-      skip = 0;
+      gboolean skip = FALSE;
 
       rgb[0] = src_row[col * bytes + 0];
       rgb[1] = src_row[col * bytes + 1];
@@ -145,12 +196,12 @@ rcm_row (const guchar *src_row,
                 }
               else
                 {
-                  skip = 1;
+                  skip = TRUE;
                 }
             }
           else
             {
-              skip = 1;
+              skip = TRUE;
               gimp_hsv_to_rgb4 (rgb, Current.Gray->hue / TP,
                                 Current.Gray->satur, V);
             }
@@ -183,7 +234,7 @@ rcm_row (const guchar *src_row,
 
 /* Rotate colors row by row ... */
 
-void
+static void
 rcm (GimpDrawable *drawable)
 {
   GimpPixelRgn srcPR, destPR;
@@ -225,57 +276,4 @@ rcm (GimpDrawable *drawable)
 
   g_free (src_row);
   g_free (dest_row);
-}
-
-
-/* STANDARD RUN */
-
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
-{
-  GimpParam         values[1];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  INIT_I18N ();
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  Current.drawable = gimp_drawable_get (param[2].data.d_drawable);
-  Current.mask = gimp_drawable_get (gimp_image_get_selection (param[1].data.d_image));
-
-  /* works not on INDEXED images */
-
-  if (gimp_drawable_is_indexed (Current.drawable->drawable_id) ||
-      gimp_drawable_is_gray (Current.drawable->drawable_id) )
-    {
-      status = GIMP_PDB_EXECUTION_ERROR;
-    }
-  else
-    {
-      /* call dialog and rotate the colors */
-      if (gimp_drawable_is_rgb (Current.drawable->drawable_id) && rcm_dialog ())
-        {
-          gimp_progress_init (_("Rotating the colors"));
-
-          gimp_tile_cache_ntiles (2 * (Current.drawable->width /
-                                       gimp_tile_width () + 1));
-          rcm (Current.drawable);
-          gimp_displays_flush ();
-        }
-      else
-        status = GIMP_PDB_EXECUTION_ERROR;
-    }
-
-  values[0].data.d_status = status;
-
-  if (status == GIMP_PDB_SUCCESS)
-    gimp_drawable_detach (Current.drawable);
 }

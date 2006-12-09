@@ -162,7 +162,7 @@ session_init (Gimp *gimp)
 
   if (error)
     {
-      g_message (error->message);
+      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
       g_clear_error (&error);
 
       gimp_config_file_backup_on_error (filename, "sessionrc", NULL);
@@ -192,6 +192,7 @@ session_save (Gimp     *gimp,
 {
   GimpConfigWriter *writer;
   gchar            *filename;
+  GError           *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -230,7 +231,11 @@ session_save (Gimp     *gimp,
                              GIMP_GUI_CONFIG (gimp->config)->last_tip + 1);
   gimp_config_writer_close (writer);
 
-  gimp_config_writer_finish (writer, "end of sessionrc", NULL);
+  if (! gimp_config_writer_finish (writer, "end of sessionrc", &error))
+    {
+      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
+      g_clear_error (&error);
+    }
 
   sessionrc_deleted = FALSE;
 }

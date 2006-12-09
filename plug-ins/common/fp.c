@@ -37,7 +37,6 @@
 #define MAX_ROUGHNESS      128
 #define RANGE_HEIGHT       15
 #define PR_BX_BRDR         4
-#define ALL                255
 #define MARGIN             4
 
 #define RANGE_ADJUST_MASK GDK_EXPOSURE_MASK | \

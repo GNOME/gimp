@@ -41,6 +41,9 @@
 #include "core/gimpprogress.h"
 #include "core/gimpstrokedesc.h"
 #include "gimp-intl.h"
+#include "vectors/gimpvectors.h"
+
+#include "internal_procs.h"
 
 
 static GValueArray *
@@ -507,6 +510,60 @@ edit_bucket_fill_invoker (GimpProcedure     *procedure,
                                      paint_mode, opacity / 100.0,
                                      do_seed_fill,
                                      FALSE /* don't fill transparent */,
+                                     GIMP_SELECT_CRITERION_COMPOSITE,
+                                     threshold, sample_merged, x, y);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+edit_bucket_fill_full_invoker (GimpProcedure     *procedure,
+                               Gimp              *gimp,
+                               GimpContext       *context,
+                               GimpProgress      *progress,
+                               const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 fill_mode;
+  gint32 paint_mode;
+  gdouble opacity;
+  gdouble threshold;
+  gboolean sample_merged;
+  gboolean fill_transparent;
+  gint32 select_criterion;
+  gdouble x;
+  gdouble y;
+
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  fill_mode = g_value_get_enum (&args->values[1]);
+  paint_mode = g_value_get_enum (&args->values[2]);
+  opacity = g_value_get_double (&args->values[3]);
+  threshold = g_value_get_double (&args->values[4]);
+  sample_merged = g_value_get_boolean (&args->values[5]);
+  fill_transparent = g_value_get_boolean (&args->values[6]);
+  select_criterion = g_value_get_enum (&args->values[7]);
+  x = g_value_get_double (&args->values[8]);
+  y = g_value_get_double (&args->values[9]);
+
+  if (success)
+    {
+      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+        {
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          gboolean   do_seed_fill;
+
+          do_seed_fill = gimp_channel_is_empty (gimp_image_get_mask (image));
+
+          gimp_drawable_bucket_fill (drawable, context, fill_mode,
+                                     paint_mode, opacity / 100.0,
+                                     do_seed_fill,
+                                     fill_transparent,
+                                     select_criterion,
                                      threshold, sample_merged, x, y);
         }
       else
@@ -618,6 +675,40 @@ edit_stroke_invoker (GimpProcedure     *procedure,
           g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
 
           success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
+                                      drawable, context, desc, TRUE, TRUE);
+
+          g_object_unref (desc);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+edit_stroke_vectors_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  GimpVectors *vectors;
+
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  vectors = gimp_value_get_vectors (&args->values[1], gimp);
+
+  if (success)
+    {
+      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+        {
+          GimpStrokeDesc *desc  = gimp_stroke_desc_new (gimp, context);
+
+          g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
+
+          success = gimp_item_stroke (GIMP_ITEM (vectors),
                                       drawable, context, desc, TRUE, TRUE);
 
           g_object_unref (desc);
@@ -1070,6 +1161,85 @@ register_edit_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-edit-bucket-fill-full
+   */
+  procedure = gimp_procedure_new (edit_bucket_fill_full_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-bucket-fill-full");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-edit-bucket-fill-full",
+                                     "Fill the area specified either by the current selection if there is one, or by a seed fill starting at the specified coordinates.",
+                                     "This tool requires information on the paint application mode, and the fill mode, which can either be in the foreground color, or in the currently active pattern. If there is no selection, a seed fill is executed at the specified coordinates and extends outward in keeping with the threshold parameter. If there is a selection in the target image, the threshold, sample merged, x, and y arguments are unused. If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of merged sampling, the x and y coordinates are relative to the image's origin; otherwise, they are relative to the drawable's origin.",
+                                     "David Gowers",
+                                     "David Gowers",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("fill-mode",
+                                                  "fill mode",
+                                                  "The type of fill",
+                                                  GIMP_TYPE_BUCKET_FILL_MODE,
+                                                  GIMP_FG_BUCKET_FILL,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("paint-mode",
+                                                  "paint mode",
+                                                  "The paint application mode",
+                                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                                  GIMP_NORMAL_MODE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("opacity",
+                                                    "opacity",
+                                                    "The opacity of the final bucket fill",
+                                                    0, 100, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("threshold",
+                                                    "threshold",
+                                                    "The threshold determines how extensive the seed fill will be. It's value is specified in terms of intensity levels. This parameter is only valid when there is no selection in the specified image.",
+                                                    0, 255, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("sample-merged",
+                                                     "sample merged",
+                                                     "Use the composite image, not the drawable",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("fill-transparent",
+                                                     "fill transparent",
+                                                     "Whether to consider transparent pixels for filling. If TRUE, transparency is considered as a unique fillable color.",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("select-criterion",
+                                                  "select criterion",
+                                                  "The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.",
+                                                  GIMP_TYPE_SELECT_CRITERION,
+                                                  GIMP_SELECT_CRITERION_COMPOSITE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("x",
+                                                    "x",
+                                                    "The x coordinate of this bucket fill's application. This parameter is only valid when there is no selection in the specified image.",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("y",
+                                                    "y",
+                                                    "The y coordinate of this bucket fill's application. This parameter is only valid when there is no selection in the specified image.",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-edit-blend
    */
   procedure = gimp_procedure_new (edit_blend_invoker);
@@ -1204,6 +1374,34 @@ register_edit_procs (GimpPDB *pdb)
                                                             "The drawable to stroke to",
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-edit-stroke-vectors
+   */
+  procedure = gimp_procedure_new (edit_stroke_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-stroke-vectors");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-edit-stroke-vectors",
+                                     "Stroke the specified vectors object",
+                                     "This procedure strokes the specified vectors object, painting along the path with the active brush and foreground color.",
+                                     "Simon Budig",
+                                     "Simon Budig",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The drawable to stroke to",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("vectors",
+                                                           "vectors",
+                                                           "The vectors object",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

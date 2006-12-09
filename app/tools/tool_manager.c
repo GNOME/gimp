@@ -39,8 +39,6 @@
 #include "gimptoolcontrol.h"
 #include "tool_manager.h"
 
-#include "gimp-intl.h"
-
 
 typedef struct _GimpToolManager GimpToolManager;
 
@@ -169,6 +167,7 @@ tool_manager_push_tool (Gimp     *gimp,
                         GimpTool *tool)
 {
   GimpToolManager *tool_manager;
+  GimpDisplay     *focus_display = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_TOOL (tool));
@@ -177,6 +176,8 @@ tool_manager_push_tool (Gimp     *gimp,
 
   if (tool_manager->active_tool)
     {
+      focus_display = tool_manager->active_tool->focus_display;
+
       tool_manager->tool_stack = g_slist_prepend (tool_manager->tool_stack,
                                                   tool_manager->active_tool);
 
@@ -184,6 +185,9 @@ tool_manager_push_tool (Gimp     *gimp,
     }
 
   tool_manager_select_tool (gimp, tool);
+
+  if (focus_display)
+    tool_manager_focus_display_active (gimp, focus_display);
 }
 
 void
@@ -197,14 +201,20 @@ tool_manager_pop_tool (Gimp *gimp)
 
   if (tool_manager->tool_stack)
     {
-      GimpTool *tool = tool_manager->tool_stack->data;
+      GimpTool    *tool          = tool_manager->tool_stack->data;
+      GimpDisplay *focus_display = NULL;
+
+      if (tool_manager->active_tool)
+        focus_display = tool_manager->active_tool->focus_display;
 
       tool_manager->tool_stack = g_slist_remove (tool_manager->tool_stack,
                                                  tool);
 
       tool_manager_select_tool (gimp, tool);
-
       g_object_unref (tool);
+
+      if (focus_display)
+        tool_manager_focus_display_active (gimp, focus_display);
     }
 }
 
@@ -382,6 +392,25 @@ tool_manager_modifier_state_active (Gimp            *gimp,
 }
 
 void
+tool_manager_active_modifier_state_active (Gimp            *gimp,
+                                           GdkModifierType  state,
+                                           GimpDisplay     *display)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      gimp_tool_set_active_modifier_state (tool_manager->active_tool,
+                                           state,
+                                           display);
+    }
+}
+
+void
 tool_manager_oper_update_active (Gimp            *gimp,
                                  GimpCoords      *coords,
                                  GdkModifierType  state,
@@ -504,7 +533,8 @@ tool_manager_tool_changed (GimpContext  *user_context,
     {
       GimpToolInfo *old_tool_info = tool_manager->active_tool->tool_info;
 
-      gimp_context_set_parent (GIMP_CONTEXT (old_tool_info->tool_options), NULL);
+      gimp_context_set_parent (GIMP_CONTEXT (old_tool_info->tool_options),
+                               NULL);
     }
 
   /*  connect the new tool's context  */
@@ -551,9 +581,7 @@ tool_manager_image_clean_dirty (GimpImage       *image,
       ! gimp_tool_control_get_preserve (tool->control) &&
       (gimp_tool_control_get_dirty_mask (tool->control) & dirty_mask))
     {
-      GimpDisplay *display;
-
-      display = gimp_tool_has_image (tool, image);
+      GimpDisplay *display = gimp_tool_has_image (tool, image);
 
       if (display)
         tool_manager_control_active (image->gimp, GIMP_TOOL_ACTION_HALT,

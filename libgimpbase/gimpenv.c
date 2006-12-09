@@ -32,6 +32,10 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 
+#ifndef LIBGIMP_COMPILATION
+#define LIBGIMP_COMPILATION
+#endif
+
 #include "gimpenv.h"
 #include "gimpversion.h"
 #include "gimpreloc.h"
@@ -59,8 +63,14 @@
 #define getegid() 0
 #endif
 
+
 static gchar * gimp_env_get_dir (const gchar *gimp_env_name,
                                  const gchar *env_dir);
+
+
+const guint gimp_major_version = GIMP_MAJOR_VERSION;
+const guint gimp_minor_version = GIMP_MINOR_VERSION;
+const guint gimp_micro_version = GIMP_MICRO_VERSION;
 
 
 /**

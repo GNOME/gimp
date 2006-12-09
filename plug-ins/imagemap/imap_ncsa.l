@@ -38,7 +38,7 @@ DIGIT	[0-9]
 ID	[a-zA-Z_][a-zA-Z0-9_\-]*
 WS	[ \t\n]+
 
-%x link
+%x imap_link
 %x comment
 
 %%
@@ -70,26 +70,26 @@ WS	[ \t\n]+
 				}
 
 RECT				{
-				   BEGIN(link);
+				   BEGIN(imap_link);
    				   return RECTANGLE;
 				}
 
 CIRCLE				{
-				   BEGIN(link);
+				   BEGIN(imap_link);
 				   return CIRCLE;
 				}
 
 POLY				{
-				   BEGIN(link);
+				   BEGIN(imap_link);
 				   return POLYGON;
 				}
 
 DEFAULT				{
-				   BEGIN(link);
+				   BEGIN(imap_link);
 				   return DEFAULT;
 				}
 
-<link>[^ ,\t\n]+		{
+<imap_link>[^ ,\t\n]+		{
    				   BEGIN(INITIAL);
    				   strcpy(ncsa_lval.id, yytext);
 				   ncsa_lval.id[yyleng - 1] = '\0';

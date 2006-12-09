@@ -23,10 +23,15 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
@@ -234,6 +239,7 @@ gimp_color_dialog_response (GtkDialog *gtk_dialog,
 
 GtkWidget *
 gimp_color_dialog_new (GimpViewable      *viewable,
+                       GimpContext       *context,
                        const gchar       *title,
                        const gchar       *stock_id,
                        const gchar       *desc,
@@ -248,12 +254,16 @@ gimp_color_dialog_new (GimpViewable      *viewable,
   const gchar     *role;
 
   g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (dialog_factory == NULL ||
                         GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
   g_return_val_if_fail (dialog_factory == NULL || dialog_identifier != NULL,
                         NULL);
   g_return_val_if_fail (color != NULL, NULL);
+
+  if (! context)
+    g_warning ("gimp_color_dialog_new() called with a NULL context");
 
   role = dialog_identifier ? dialog_identifier : "gimp-color-selector";
 
@@ -269,7 +279,7 @@ gimp_color_dialog_new (GimpViewable      *viewable,
 
   if (viewable)
     gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (dialog),
-                                       viewable);
+                                       viewable, context);
   else
     gtk_widget_hide (GIMP_VIEWABLE_DIALOG (dialog)->icon->parent->parent);
 
@@ -281,6 +291,19 @@ gimp_color_dialog_new (GimpViewable      *viewable,
 
   gimp_color_selection_set_show_alpha (GIMP_COLOR_SELECTION (dialog->selection),
                                        show_alpha);
+
+  if (context)
+    {
+      g_object_set_data (G_OBJECT (context->gimp->config->color_management),
+                         "gimp-context", context);
+
+      gimp_color_selection_set_config (GIMP_COLOR_SELECTION (dialog->selection),
+                                       context->gimp->config->color_management);
+
+      g_object_set_data (G_OBJECT (context->gimp->config->color_management),
+                         "gimp-context", NULL);
+    }
+
   gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
                                   color);
   gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (dialog->selection),

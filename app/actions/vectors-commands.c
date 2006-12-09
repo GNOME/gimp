@@ -30,7 +30,6 @@
 #include "core/gimp-utils.h"
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
@@ -109,11 +108,8 @@ vectors_vectors_tool_cmd_callback (GtkAction *action,
 
   if (! GIMP_IS_VECTOR_TOOL (active_tool))
     {
-      GimpToolInfo  *tool_info;
-
-      tool_info = (GimpToolInfo *)
-        gimp_container_get_child_by_name (image->gimp->tool_info_list,
-                                          "gimp-vector-tool");
+      GimpToolInfo  *tool_info = gimp_get_tool_info (image->gimp,
+                                                     "gimp-vector-tool");
 
       if (GIMP_IS_TOOL_INFO (tool_info))
         {
@@ -137,8 +133,8 @@ vectors_edit_attributes_cmd_callback (GtkAction *action,
   return_if_no_vectors (image, vectors, data);
   return_if_no_widget (widget, data);
 
-  options = vectors_options_dialog_new (image,
-                                        vectors,
+  options = vectors_options_dialog_new (image, vectors,
+                                        action_data_get_context (data),
                                         widget,
                                         gimp_object_get_name (GIMP_OBJECT (vectors)),
                                         _("Path Attributes"),
@@ -164,8 +160,8 @@ vectors_new_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  options = vectors_options_dialog_new (image,
-                                        NULL,
+  options = vectors_options_dialog_new (image, NULL,
+                                        action_data_get_context (data),
                                         widget,
                                         vectors_name ? vectors_name :
                                         _("New Path"),
@@ -321,7 +317,7 @@ vectors_to_selection_cmd_callback (GtkAction *action,
   gimp_channel_select_vectors (gimp_image_get_mask (image),
                                _("Path to Selection"),
                                vectors,
-                               op, TRUE, FALSE, 0, 0);
+                               op, TRUE, FALSE, 0, 0, TRUE);
   gimp_image_flush (image);
 }
 
@@ -331,10 +327,12 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
                                            gpointer   data)
 {
   GimpImage     *image;
+  GtkWidget     *widget;
   GimpProcedure *procedure;
   GValueArray   *args;
   GimpDisplay   *display;
   return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
 
   if (value)
     procedure = gimp_pdb_lookup_procedure (image->gimp->pdb,
@@ -345,7 +343,8 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
 
   if (! procedure)
     {
-      g_message ("Selection to path procedure lookup failed.");
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_ERROR,
+                    "Selection to path procedure lookup failed.");
       return;
     }
 
@@ -381,11 +380,13 @@ vectors_stroke_cmd_callback (GtkAction *action,
 
   if (! drawable)
     {
-      g_message (_("There is no active layer or channel to stroke to."));
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                    _("There is no active layer or channel to stroke to."));
       return;
     }
 
   dialog = stroke_dialog_new (GIMP_ITEM (vectors),
+                              action_data_get_context (data),
                               _("Stroke Path"),
                               GIMP_STOCK_PATH_STROKE,
                               GIMP_HELP_PATH_STROKE,
@@ -401,20 +402,23 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
   GimpVectors    *vectors;
   GimpDrawable   *drawable;
   GimpContext    *context;
+  GtkWidget      *widget;
   GimpStrokeDesc *desc;
   return_if_no_vectors (image, vectors, data);
+  return_if_no_context (context, data);
+  return_if_no_widget (widget, data);
 
   drawable = gimp_image_active_drawable (image);
 
   if (! drawable)
     {
-      g_message (_("There is no active layer or channel to stroke to."));
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                    _("There is no active layer or channel to stroke to."));
       return;
     }
 
-  context = gimp_get_user_context (image->gimp);
 
-  desc = g_object_get_data (G_OBJECT (context), "saved-stroke-desc");
+  desc = g_object_get_data (G_OBJECT (image->gimp), "saved-stroke-desc");
 
   if (desc)
     g_object_ref (desc);
@@ -451,9 +455,11 @@ vectors_paste_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
   GimpImage *image;
+  GtkWidget *widget;
   gchar     *svg;
   gsize      svg_size;
   return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
 
   svg = gimp_clipboard_get_svg (image->gimp, &svg_size);
 
@@ -462,9 +468,10 @@ vectors_paste_cmd_callback (GtkAction *action,
       GError *error = NULL;
 
       if (! gimp_vectors_import_buffer (image, svg, svg_size,
-                                        TRUE, TRUE, -1, &error))
+                                        TRUE, TRUE, -1, NULL, &error))
         {
-          g_message (error->message);
+          gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
           g_clear_error (&error);
         }
       else
@@ -639,14 +646,17 @@ vectors_import_response (GtkWidget           *widget,
 
       if (gimp_vectors_import_file (dialog->image, filename,
                                     vectors_import_merge, vectors_import_scale,
-                                    -1, &error))
+                                    -1, NULL, &error))
         {
           gimp_image_flush (dialog->image);
         }
       else
         {
-          g_message (error->message);
+          gimp_message (dialog->image->gimp, G_OBJECT (widget),
+                        GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
           g_error_free (error);
+          return;
         }
 
       g_free (filename);
@@ -675,8 +685,11 @@ vectors_export_response (GtkWidget           *widget,
 
       if (! gimp_vectors_export_file (dialog->image, vectors, filename, &error))
         {
-          g_message (error->message);
+          gimp_message (dialog->image->gimp, G_OBJECT (widget),
+                        GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
           g_error_free (error);
+          return;
         }
 
       g_free (filename);

@@ -30,6 +30,8 @@
 
 #include "core/gimp.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 fonts_popup_invoker (GimpProcedure     *procedure,
@@ -51,7 +53,7 @@ fonts_popup_invoker (GimpProcedure     *procedure,
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
-          ! gimp_pdb_dialog_new (gimp, context, gimp->fonts,
+          ! gimp_pdb_dialog_new (gimp, context, progress, gimp->fonts,
                                  popup_title, font_callback, initial_font,
                                  NULL))
         success = FALSE;

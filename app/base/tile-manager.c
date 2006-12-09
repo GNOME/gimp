@@ -96,10 +96,7 @@ tile_manager_unref (TileManager *tm)
           gint i;
 
           for (i = 0; i < ntiles; i++)
-            {
-              TILE_MUTEX_LOCK (tm->tiles[i]);
-              tile_detach (tm->tiles[i], tm, i);
-            }
+            tile_detach (tm->tiles[i], tm, i);
 
           g_free (tm->tiles);
         }
@@ -198,8 +195,6 @@ tile_manager_get (TileManager *tm,
 
   if (wantread)
     {
-      TILE_MUTEX_LOCK (*tile_ptr);
-
       if (wantwrite)
         {
           if ((*tile_ptr)->share_count > 1)
@@ -234,8 +229,6 @@ tile_manager_get (TileManager *tm,
 
               tile_detach (*tile_ptr, tm, tile_num);
 
-              TILE_MUTEX_LOCK (new);
-
               tile_attach (new, tm, tile_num);
               *tile_ptr = new;
             }
@@ -252,28 +245,10 @@ tile_manager_get (TileManager *tm,
         }
 #endif
 
-      TILE_MUTEX_UNLOCK (*tile_ptr);
-
       tile_lock (*tile_ptr);
     }
 
   return *tile_ptr;
-}
-
-void
-tile_manager_get_async (TileManager *tm,
-                        gint         xpixel,
-                        gint         ypixel)
-{
-  gint  num;
-
-  g_return_if_fail (tm != NULL);
-
-  num = tile_manager_get_tile_num (tm, xpixel, ypixel);
-  if (num < 0)
-    return;
-
-  tile_swap_in_async (tm->tiles[num]);
 }
 
 void
@@ -350,10 +325,8 @@ tile_invalidate (Tile        **tile_ptr,
   g_return_if_fail (tile_ptr != NULL);
   g_return_if_fail (tm != NULL);
 
-  TILE_MUTEX_LOCK (tile);
-
   if (! tile->valid)
-    goto leave;
+    return;
 
   if (G_UNLIKELY (tile->share_count > 1))
     {
@@ -369,8 +342,6 @@ tile_invalidate (Tile        **tile_ptr,
       new->size    = tile->size;
 
       tile_detach (tile, tm, tile_num);
-
-      TILE_MUTEX_LOCK (new);
 
       tile_attach (new, tm, tile_num);
       tile = *tile_ptr = new;
@@ -394,9 +365,6 @@ tile_invalidate (Tile        **tile_ptr,
        */
       tile_swap_delete (tile);
     }
-
-leave:
-  TILE_MUTEX_UNLOCK (tile);
 }
 
 void
@@ -492,8 +460,6 @@ tile_manager_map (TileManager *tm,
   if (G_UNLIKELY (! srctile->valid))
     g_warning("%s: srctile not validated yet!  please report", G_GNUC_FUNCTION);
 
-  TILE_MUTEX_LOCK (*tile_ptr);
-
   if (G_UNLIKELY ((*tile_ptr)->ewidth  != srctile->ewidth  ||
                   (*tile_ptr)->eheight != srctile->eheight ||
                   (*tile_ptr)->bpp     != srctile->bpp))
@@ -508,16 +474,12 @@ tile_manager_map (TileManager *tm,
   g_printerr (">");
 #endif
 
-  TILE_MUTEX_LOCK (srctile);
-
 #ifdef DEBUG_TILE_MANAGER
   g_printerr (" [src:%p tm:%p tn:%d] ", srctile, tm, tile_num);
 #endif
 
   tile_attach (srctile, tm, tile_num);
   *tile_ptr = srctile;
-
-  TILE_MUTEX_UNLOCK (srctile);
 
 #ifdef DEBUG_TILE_MANAGER
   g_printerr ("}\n");
@@ -866,9 +828,7 @@ read_pixel_data_1 (TileManager *tm,
            switch (tm->bpp)
              {
              case 4:
-               *(guint32 *) buffer = *(const guint32 *) src;
-               break;
-
+               *buffer++ = *src++;
              case 3:
                *buffer++ = *src++;
              case 2:
@@ -886,18 +846,13 @@ write_pixel_data_1 (TileManager  *tm,
                     gint          y,
                     const guchar *buffer)
 {
-  Tile   *tile;
-  guchar *dest;
-
-  tile = tile_manager_get_tile (tm, x, y, TRUE, TRUE);
-  dest = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+  Tile   *tile = tile_manager_get_tile (tm, x, y, TRUE, TRUE);
+  guchar *dest = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 
   switch (tm->bpp)
     {
     case 4:
-      *(guint32 *) dest = *(const guint32 *) buffer;
-      break;
-
+      *dest++ = *buffer++;
     case 3:
       *dest++ = *buffer++;
     case 2:

@@ -32,7 +32,6 @@
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -87,7 +86,7 @@ gimp_bucket_fill_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_CONTEXT_PATTERN_MASK,
                 "gimp-bucket-fill-tool",
                 _("Bucket Fill"),
-                _("Fill with a color or pattern"),
+                _("Bucket Fill Tool: Fill selected area with a color or pattern"),
                 N_("_Bucket Fill"), "<shift>B",
                 NULL, GIMP_HELP_TOOL_BUCKET_FILL,
                 GIMP_STOCK_TOOL_BUCKET_FILL,
@@ -127,9 +126,7 @@ gimp_bucket_fill_tool_button_press (GimpTool        *tool,
                                     GimpDisplay     *display)
 {
   GimpBucketFillTool    *bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
-  GimpBucketFillOptions *options;
-
-  options = GIMP_BUCKET_FILL_OPTIONS (tool->tool_info->tool_options);
+  GimpBucketFillOptions *options     = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
 
   bucket_tool->target_x = coords->x;
   bucket_tool->target_y = coords->y;
@@ -157,11 +154,8 @@ gimp_bucket_fill_tool_button_release (GimpTool        *tool,
                                       GimpDisplay     *display)
 {
   GimpBucketFillTool    *bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
-  GimpBucketFillOptions *options;
-  GimpContext           *context;
-
-  options = GIMP_BUCKET_FILL_OPTIONS (tool->tool_info->tool_options);
-  context = GIMP_CONTEXT (options);
+  GimpBucketFillOptions *options     = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+  GimpContext           *context     = GIMP_CONTEXT (options);
 
   /*  if the 3rd button isn't pressed, fill the selected region  */
   if (! (state & GDK_BUTTON3_MASK))
@@ -173,6 +167,7 @@ gimp_bucket_fill_tool_button_release (GimpTool        *tool,
                                  gimp_context_get_opacity (context),
                                  ! options->fill_selection,
                                  options->fill_transparent,
+                                 options->fill_criterion,
                                  options->threshold,
                                  options->sample_merged,
                                  bucket_tool->target_x,
@@ -191,9 +186,7 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
                                     GdkModifierType  state,
                                     GimpDisplay     *display)
 {
-  GimpBucketFillOptions *options;
-
-  options = GIMP_BUCKET_FILL_OPTIONS (tool->tool_info->tool_options);
+  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
 
   if (key == GDK_CONTROL_MASK)
     {
@@ -223,10 +216,8 @@ gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
                                      GdkModifierType  state,
                                      GimpDisplay     *display)
 {
-  GimpBucketFillOptions *options;
+  GimpBucketFillOptions *options  = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
   GimpCursorModifier     modifier = GIMP_CURSOR_MODIFIER_BAD;
-
-  options = GIMP_BUCKET_FILL_OPTIONS (tool->tool_info->tool_options);
 
   if (gimp_image_coords_in_active_pickable (display->image, coords,
                                             options->sample_merged, TRUE))

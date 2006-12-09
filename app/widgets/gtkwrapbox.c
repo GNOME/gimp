@@ -95,9 +95,9 @@ gtk_wrap_box_get_type (void)
 {
   static GType wrap_box_type = 0;
 
-  if (!wrap_box_type)
+  if (! wrap_box_type)
     {
-      static const GTypeInfo wrap_box_info =
+      const GTypeInfo wrap_box_info =
       {
         sizeof (GtkWrapBoxClass),
         NULL,                /* base_init */

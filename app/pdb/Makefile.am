@@ -1,12 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 
-noinst_LIBRARIES = libapppdb.a
+noinst_LIBRARIES = libapppdb.a libappinternal-procs.a
 
 libapppdb_a_SOURCES = \
 	pdb-types.h			\
 	\
-	gimp-pdb.c			\
-	gimp-pdb.h			\
 	gimp-pdb-compat.c		\
 	gimp-pdb-compat.h		\
 	gimppdb.c			\
@@ -14,12 +12,9 @@ libapppdb_a_SOURCES = \
 	gimppdb-query.c			\
 	gimppdb-query.h			\
 	gimpprocedure.c			\
-	gimpprocedure.h			\
-	gimppluginprocedure.c		\
-	gimppluginprocedure.h		\
-	gimptemporaryprocedure.c	\
-	gimptemporaryprocedure.h	\
-	\
+	gimpprocedure.h
+
+libappinternal_procs_a_SOURCES = \
 	internal_procs.c		\
 	internal_procs.h		\
 	brush_cmds.c			\

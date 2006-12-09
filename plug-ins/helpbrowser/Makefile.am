@@ -1,5 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimphelp = $(top_builddir)/plug-ins/help/libgimphelp.a
 libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
 libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
@@ -24,6 +25,7 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
+	$(libgimphelp)		\
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpconfig)	\

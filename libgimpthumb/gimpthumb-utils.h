@@ -58,9 +58,9 @@ void                gimp_thumbs_delete_for_uri_local  (const gchar    *uri);
 
 
 /*  for internal use only   */
-void                _gimp_thumbs_delete_others        (const gchar    *uri,
-                                                       GimpThumbSize   size) G_GNUC_INTERNAL;
-gchar *             _gimp_thumb_filename_from_uri     (const gchar    *uri) G_GNUC_INTERNAL;
+G_GNUC_INTERNAL void    _gimp_thumbs_delete_others    (const gchar    *uri,
+                                                       GimpThumbSize   size);
+G_GNUC_INTERNAL gchar * _gimp_thumb_filename_from_uri (const gchar    *uri);
 
 
 G_END_DECLS

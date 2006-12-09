@@ -57,6 +57,9 @@ static void   gimp_color_notebook_set_color       (GimpColorSelector *selector,
                                                    const GimpHSV     *hsv);
 static void   gimp_color_notebook_set_channel     (GimpColorSelector *selector,
                                                    GimpColorSelectorChannel channel);
+static void   gimp_color_notebook_set_config      (GimpColorSelector *selector,
+                                                   GimpColorConfig   *config);
+
 
 static void   gimp_color_notebook_switch_page     (GtkNotebook       *gtk_notebook,
                                                    GtkNotebookPage   *page,
@@ -99,16 +102,17 @@ gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
   selector_class->set_show_alpha        = gimp_color_notebook_set_show_alpha;
   selector_class->set_color             = gimp_color_notebook_set_color;
   selector_class->set_channel           = gimp_color_notebook_set_channel;
+  selector_class->set_config            = gimp_color_notebook_set_config;
 
   gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("tab_border",
+                                           g_param_spec_int ("tab-border",
                                                              NULL,
                                                              "Width of the border around the tab contents",
                                                              0, G_MAXINT,
                                                              DEFAULT_TAB_BORDER,
                                                              G_PARAM_READABLE));
   gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_enum ("tab_icon_size",
+                                           g_param_spec_enum ("tab-icon-size",
                                                               NULL,
                                                               "Size for icons displayed in the tab",
                                                               GTK_TYPE_ICON_SIZE,
@@ -185,12 +189,12 @@ gimp_color_notebook_style_set (GtkWidget *widget,
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_style_get (widget,
-                        "tab_border",    &tab_border,
-                        "tab_icon_size", &icon_size,
+                        "tab-border",    &tab_border,
+                        "tab-icon_size", &icon_size,
                         NULL);
 
   g_object_set (notebook->notebook,
-                "tab_border", tab_border,
+                "tab-border", tab_border,
                 NULL);
 
   for (list = notebook->selectors; list; list = g_list_next (list))
@@ -286,6 +290,21 @@ gimp_color_notebook_set_channel (GimpColorSelector        *selector,
   g_signal_handlers_unblock_by_func (notebook->cur_page,
                                      gimp_color_notebook_channel_changed,
                                      notebook);
+}
+
+static void
+gimp_color_notebook_set_config (GimpColorSelector *selector,
+                                GimpColorConfig   *config)
+{
+  GimpColorNotebook *notebook = GIMP_COLOR_NOTEBOOK (selector);
+  GList             *list;
+
+  for (list = notebook->selectors; list; list = g_list_next (list))
+    {
+      GimpColorSelector *child = list->data;
+
+      gimp_color_selector_set_config (child, config);
+    }
 }
 
 static void

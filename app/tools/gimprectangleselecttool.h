@@ -19,6 +19,7 @@
 #ifndef  __GIMP_RECT_SELECT_TOOL_H__
 #define  __GIMP_RECT_SELECT_TOOL_H__
 
+
 #include "gimpselectiontool.h"
 
 
@@ -29,6 +30,8 @@
 #define GIMP_IS_RECT_SELECT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_RECT_SELECT_TOOL))
 #define GIMP_RECT_SELECT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_RECT_SELECT_TOOL, GimpRectSelectToolClass))
 
+#define GIMP_RECT_SELECT_TOOL_GET_OPTIONS(t)  (GIMP_RECT_SELECT_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
 
 typedef struct _GimpRectSelectTool      GimpRectSelectTool;
 typedef struct _GimpRectSelectToolClass GimpRectSelectToolClass;
@@ -37,10 +40,14 @@ struct _GimpRectSelectTool
 {
   GimpSelectionTool  parent_instance;
 
-  SelectOps          operation;    /* remember for use when modifying   */
-  gboolean           use_saved_op; /* use operation or get from options */
+  GimpChannelOps     operation;            /* remember for use when modifying   */
+  gboolean           use_saved_op;         /* use operation or get from options */
+  gboolean           saved_show_selection; /* used to remember existing value   */
   GimpUndo          *undo;
   GimpUndo          *redo;
+
+  gboolean           round_corners;
+  gdouble            corner_radius;
 };
 
 struct _GimpRectSelectToolClass
@@ -48,7 +55,7 @@ struct _GimpRectSelectToolClass
   GimpSelectionToolClass parent_class;
 
   void (* select) (GimpRectSelectTool *rect_select,
-                   SelectOps           operation,
+                   GimpChannelOps      operation,
                    gint                x,
                    gint                y,
                    gint                w,
@@ -57,7 +64,7 @@ struct _GimpRectSelectToolClass
 
 
 void    gimp_rect_select_tool_register (GimpToolRegisterCallback  callback,
-                                            gpointer                  data);
+                                        gpointer                  data);
 
 GType   gimp_rect_select_tool_get_type (void) G_GNUC_CONST;
 

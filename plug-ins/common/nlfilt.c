@@ -298,19 +298,18 @@ gint (*atfuncs[6])(gint *) =
   atfilt5
 };
 
-gint noisevariance;      /* global so that pixel processing code can get at it quickly */
+static gint noisevariance;
 
-#define MXIVAL 255    /* maximum input value */
-#define NOIVAL (MXIVAL + 1)             /* number of possible input values */
+#define MXIVAL 255                /* maximum input value */
+#define NOIVAL (MXIVAL + 1)       /* number of possible input values */
 
-#define SCALEB 8                                /* scale bits */
-#define SCALE (1 << SCALEB)     /* scale factor */
-#define MXSVAL (MXIVAL * SCALE) /* maximum scaled values */
+#define SCALEB 8                  /* scale bits */
+#define SCALE (1 << SCALEB)       /* scale factor */
 
-#define CSCALEB 2                               /* coarse scale bits */
-#define CSCALE (1 << CSCALEB)   /* coarse scale factor */
-#define MXCSVAL (MXIVAL * CSCALE)       /* maximum coarse scaled values */
-#define NOCSVAL (MXCSVAL + 1)   /* number of coarse scaled values */
+#define CSCALEB 2                 /* coarse scale bits */
+#define CSCALE (1 << CSCALEB)     /* coarse scale factor */
+#define MXCSVAL (MXIVAL * CSCALE) /* maximum coarse scaled values */
+#define NOCSVAL (MXCSVAL + 1)     /* number of coarse scaled values */
 #define SCTOCSC(x) ((x) >> (SCALEB - CSCALEB))  /* convert from scaled to coarse scaled */
 #define CSCTOSC(x) ((x) << (SCALEB - CSCALEB))  /* convert from course scaled to scaled */
 

@@ -20,8 +20,7 @@
 import math
 from gimpfu import *
 
-def python_clothify(timg, tdrawable, bx=9, by=9,
-                    azimuth=135, elevation=45, depth=3):
+def clothify(timg, tdrawable, bx=9, by=9, azimuth=135, elevation=45, depth=3):
     width = tdrawable.width
     height = tdrawable.height
 
@@ -55,22 +54,22 @@ def python_clothify(timg, tdrawable, bx=9, by=9,
     gimp.delete(img)
 
 register(
-        "python_fu_clothify",
-        "Make the specified layer look like it is printed on cloth",
+        "python-fu-clothify",
+        "Make the image look like it is printed on cloth",
         "Make the specified layer look like it is printed on cloth",
         "James Henstridge",
         "James Henstridge",
         "1997-1999",
-        "<Image>/Filters/Artistic/_Clothify...",
+        "_Clothify...",
         "RGB*, GRAY*",
         [
-                (PF_INT, "x_blur", "X blur", 9),
-                (PF_INT, "y_blur", "Y blur", 9),
+                (PF_INT, "x-blur", "X blur", 9),
+                (PF_INT, "y-blur", "Y blur", 9),
                 (PF_INT, "azimuth", "Azimuth", 135),
                 (PF_INT, "elevation", "Elevation", 45),
                 (PF_INT, "depth", "Depth", 3)
         ],
         [],
-        python_clothify)
+        clothify, menu="<Image>/Filters/Artistic")
 
 main()

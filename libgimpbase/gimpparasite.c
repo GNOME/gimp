@@ -85,7 +85,7 @@ gimp_param_parasite_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo type_info =
+      const GTypeInfo type_info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,

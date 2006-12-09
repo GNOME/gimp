@@ -37,7 +37,8 @@
 enum
 {
   PROP_0,
-  PROP_DRAWABLE
+  PROP_DRAWABLE,
+  PROP_MODEL
 };
 
 typedef struct GimpZoomPreviewPrivate
@@ -63,6 +64,8 @@ static void     gimp_zoom_preview_set_property    (GObject         *object,
                                                    guint            property_id,
                                                    const GValue    *value,
                                                    GParamSpec      *pspec);
+static void     gimp_zoom_preview_finalize        (GObject         *object);
+
 static void     gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
                                                    gdouble          old_factor,
                                                    gdouble          new_factor);
@@ -86,6 +89,8 @@ static void     gimp_zoom_preview_set_cursor      (GimpPreview     *preview);
 
 static void     gimp_zoom_preview_set_drawable    (GimpZoomPreview *preview,
                                                    GimpDrawable    *drawable);
+static void     gimp_zoom_preview_set_model       (GimpZoomPreview *preview,
+                                                   GimpZoomModel   *model);
 
 
 G_DEFINE_TYPE (GimpZoomPreview, gimp_zoom_preview, GIMP_TYPE_SCROLLED_PREVIEW)
@@ -103,6 +108,7 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
   object_class->constructor  = gimp_zoom_preview_constructor;
   object_class->get_property = gimp_zoom_preview_get_property;
   object_class->set_property = gimp_zoom_preview_set_property;
+  object_class->finalize     = gimp_zoom_preview_finalize;
 
   widget_class->style_set    = gimp_zoom_preview_style_set;
 
@@ -116,7 +122,7 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
   /**
    * GimpZoomPreview:drawable:
    *
-   * The drawable the #GimpZoomPreview is currently attached to.
+   * The drawable the #GimpZoomPreview is attached to.
    *
    * Since: GIMP 2.4
    */
@@ -124,46 +130,27 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
                                    g_param_spec_pointer ("drawable", NULL, NULL,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
+
+  /**
+   * GimpZoomPreview:model:
+   *
+   * The #GimpZoomModel used by this #GimpZoomPreview.
+   *
+   * Since: GIMP 2.4
+   */
+  g_object_class_install_property (object_class, PROP_MODEL,
+                                   g_param_spec_object ("model", NULL, NULL,
+                                                        GIMP_TYPE_ZOOM_MODEL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
 gimp_zoom_preview_init (GimpZoomPreview *preview)
 {
-  GimpZoomPreviewPrivate *priv;
-  GtkWidget              *button_bar;
-  GtkWidget              *button;
-  GtkWidget              *box;
-
   preview->priv = G_TYPE_INSTANCE_GET_PRIVATE (preview,
                                                GIMP_TYPE_ZOOM_PREVIEW,
                                                GimpZoomPreviewPrivate);
-
-  priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
-
-  priv->model = gimp_zoom_model_new ();
-  gimp_zoom_model_set_range (GIMP_ZOOM_MODEL (priv->model), 1.0, 256.0);
-  g_signal_connect_swapped (priv->model, "zoomed",
-                            G_CALLBACK (gimp_zoom_preview_set_adjustments),
-                            preview);
-
-  box = gimp_preview_get_controls (GIMP_PREVIEW (preview));
-  g_return_if_fail (GTK_IS_BOX (box));
-
-  button_bar = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_end (GTK_BOX (box), button_bar, FALSE, FALSE, 0);
-  gtk_widget_show (button_bar);
-
-  /* zoom out */
-  button = gimp_zoom_button_new (priv->model,
-                                 GIMP_ZOOM_OUT, GTK_ICON_SIZE_SMALL_TOOLBAR);
-  gtk_box_pack_start (GTK_BOX (button_bar), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  /* zoom in */
-  button = gimp_zoom_button_new (priv->model,
-                                 GIMP_ZOOM_IN, GTK_ICON_SIZE_SMALL_TOOLBAR);
-  gtk_box_pack_start (GTK_BOX (button_bar), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   g_signal_connect (GIMP_PREVIEW (preview)->area, "size-allocate",
                     G_CALLBACK (gimp_zoom_preview_size_allocate),
@@ -186,9 +173,22 @@ gimp_zoom_preview_constructor (GType                  type,
                                guint                  n_params,
                                GObjectConstructParam *params)
 {
-  GObject *object;
+  GimpZoomPreviewPrivate *priv;
+  GObject                *object;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (object);
+
+  if (! priv->model)
+    {
+      GimpZoomModel *model = gimp_zoom_model_new ();
+
+      gimp_zoom_model_set_range (model, 1.0, 256.0);
+      gimp_zoom_preview_set_model (GIMP_ZOOM_PREVIEW (object), model);
+
+      g_object_unref (model);
+    }
 
   gimp_zoom_preview_set_adjustments (GIMP_ZOOM_PREVIEW (object), 1.0, 1.0);
 
@@ -209,6 +209,10 @@ gimp_zoom_preview_get_property (GObject    *object,
       g_value_set_pointer (value, gimp_zoom_preview_get_drawable (preview));
       break;
 
+    case PROP_MODEL:
+      g_value_set_object (value, gimp_zoom_preview_get_model (preview));
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -226,14 +230,31 @@ gimp_zoom_preview_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_DRAWABLE:
-      gimp_zoom_preview_set_drawable (preview,
-                                      g_value_get_pointer (value));
+      gimp_zoom_preview_set_drawable (preview, g_value_get_pointer (value));
+      break;
+
+    case PROP_MODEL:
+      gimp_zoom_preview_set_model (preview, g_value_get_object (value));
       break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_zoom_preview_finalize (GObject *object)
+{
+  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (object);
+
+  if (priv->model)
+    {
+      g_object_unref (priv->model);
+      priv->model = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -390,8 +411,11 @@ gimp_zoom_preview_draw (GimpPreview *preview)
 
   g_return_if_fail (GIMP_IS_ZOOM_PREVIEW (preview));
 
+  if (! priv->model)
+    return;
+
   drawable = priv->drawable;
-  if (!drawable)
+  if (! drawable)
     return;
 
   zoom_factor = gimp_zoom_model_get_factor (priv->model);
@@ -526,6 +550,8 @@ gimp_zoom_preview_set_drawable (GimpZoomPreview *preview,
   gint                    x1, y1;
   gint                    x2, y2;
 
+  g_return_if_fail (priv->drawable == NULL);
+
   priv->drawable = drawable;
 
   if (_gimp_drawable_preview_get_bounds (drawable, &x1, &y1, &x2, &y2))
@@ -567,6 +593,47 @@ gimp_zoom_preview_set_drawable (GimpZoomPreview *preview,
                 NULL);
 }
 
+static void
+gimp_zoom_preview_set_model (GimpZoomPreview *preview,
+                             GimpZoomModel   *model)
+{
+  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
+  GtkWidget              *button_bar;
+  GtkWidget              *button;
+  GtkWidget              *box;
+
+  g_return_if_fail (priv->model == NULL);
+
+  if (! model)
+    return;
+
+  priv->model = g_object_ref (model);
+
+  g_signal_connect_swapped (priv->model, "zoomed",
+                            G_CALLBACK (gimp_zoom_preview_set_adjustments),
+                            preview);
+
+  box = gimp_preview_get_controls (GIMP_PREVIEW (preview));
+  g_return_if_fail (GTK_IS_BOX (box));
+
+  button_bar = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_end (GTK_BOX (box), button_bar, FALSE, FALSE, 0);
+  gtk_widget_show (button_bar);
+
+  /* zoom out */
+  button = gimp_zoom_button_new (priv->model,
+                                 GIMP_ZOOM_OUT, GTK_ICON_SIZE_SMALL_TOOLBAR);
+  gtk_box_pack_start (GTK_BOX (button_bar), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  /* zoom in */
+  button = gimp_zoom_button_new (priv->model,
+                                 GIMP_ZOOM_IN, GTK_ICON_SIZE_SMALL_TOOLBAR);
+  gtk_box_pack_start (GTK_BOX (button_bar), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+}
+
+
 /**
  * gimp_zoom_preview_new:
  * @drawable: a #GimpDrawable
@@ -578,17 +645,49 @@ gimp_zoom_preview_set_drawable (GimpZoomPreview *preview,
 GtkWidget *
 gimp_zoom_preview_new (GimpDrawable *drawable)
 {
+  g_return_val_if_fail (drawable != NULL, NULL);
+
   return g_object_new (GIMP_TYPE_ZOOM_PREVIEW,
                        "drawable", drawable,
                        NULL);
 }
 
 /**
- * gimp_zoom_get_drawable:
+ * gimp_zoom_preview_new_with_model:
+ * @drawable: a #GimpDrawable
+ * @model:    a #GimpZoomModel
+ *
+ * Creates a new #GimpZoomPreview widget for @drawable using the
+ * given @model.
+ *
+ * This variant of gimp_zoom_preview_new() allows you to create a
+ * preview using an existing zoom model. This may be useful if for
+ * example you want to have two zoom previews that keep their zoom
+ * factor in sync.
+ *
+ * Since: GIMP 2.4
+ **/
+GtkWidget *
+gimp_zoom_preview_new_with_model (GimpDrawable  *drawable,
+                                  GimpZoomModel *model)
+
+{
+  g_return_val_if_fail (drawable != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (model), NULL);
+
+  return g_object_new (GIMP_TYPE_ZOOM_PREVIEW,
+                       "drawable", drawable,
+                       "model",    model,
+                       NULL);
+}
+
+
+/**
+ * gimp_zoom_preview_get_drawable:
  * @preview: a #GimpZoomPreview widget
  *
  * Returns the #GimpDrawable the #GimpZoomPreview is attached to.
- * 
+ *
  * Return Value: the #GimpDrawable that was passed to gimp_zoom_preview_new().
  *
  * Since: GIMP 2.4
@@ -602,10 +701,28 @@ gimp_zoom_preview_get_drawable (GimpZoomPreview *preview)
 }
 
 /**
- * gimp_zoom_get_factor:
+ * gimp_zoom_preview_get_model:
  * @preview: a #GimpZoomPreview widget
  *
- * Returns the zoom factor of the zoom model the preview is currently using.
+ * Returns the #GimpZoomModel the preview is using.
+ *
+ * Return Value: a pointer to the #GimpZoomModel owned by the @preview
+ *
+ * Since: GIMP 2.4
+ **/
+GimpZoomModel *
+gimp_zoom_preview_get_model (GimpZoomPreview *preview)
+{
+  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
+
+  return priv->model;
+}
+
+/**
+ * gimp_zoom_preview_get_factor:
+ * @preview: a #GimpZoomPreview widget
+ *
+ * Returns the zoom factor the preview is currently using.
  *
  * Return Value: the current zoom factor
  *
@@ -616,7 +733,7 @@ gimp_zoom_preview_get_factor (GimpZoomPreview *preview)
 {
   GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
 
-  return gimp_zoom_model_get_factor (priv->model);
+  return priv->model ? gimp_zoom_model_get_factor (priv->model) : 1.0;
 }
 
 /**

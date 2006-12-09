@@ -51,7 +51,7 @@ gimp_config_diff_property (GObject    *a,
   if (g_param_values_cmp (prop_spec, &a_value, &b_value))
     {
       if ((prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE) &&
-          G_IS_PARAM_SPEC_OBJECT (prop_spec)        &&
+          G_IS_PARAM_SPEC_OBJECT (prop_spec)               &&
           g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
                                  GIMP_TYPE_CONFIG))
         {
@@ -288,7 +288,7 @@ gimp_config_reset_properties (GObject *object)
 
                   g_object_get_property (object, prop_spec->name, &value);
 
-                  gimp_config_reset (GIMP_CONFIG (g_value_get_object (&value)));
+                  gimp_config_reset (g_value_get_object (&value));
 
                   g_value_unset (&value);
                 }
@@ -354,7 +354,7 @@ gimp_config_reset_property (GObject     *object,
 
               g_object_get_property (object, prop_spec->name, &value);
 
-              gimp_config_reset (GIMP_CONFIG (g_value_get_object (&value)));
+              gimp_config_reset (g_value_get_object (&value));
 
               g_value_unset (&value);
             }

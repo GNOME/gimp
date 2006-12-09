@@ -84,8 +84,10 @@ void          gimp_undo_free            (GimpUndo            *undo,
                                          GimpUndoMode         undo_mode);
 
 void          gimp_undo_create_preview  (GimpUndo            *undo,
+                                         GimpContext         *context,
                                          gboolean             create_now);
-void          gimp_undo_refresh_preview (GimpUndo            *undo);
+void          gimp_undo_refresh_preview (GimpUndo            *undo,
+                                         GimpContext         *context);
 
 const gchar * gimp_undo_type_to_name    (GimpUndoType         type);
 

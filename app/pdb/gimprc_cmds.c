@@ -36,6 +36,8 @@
 #include "core/gimp.h"
 #include "core/gimptemplate.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 gimprc_query_invoker (GimpProcedure     *procedure,

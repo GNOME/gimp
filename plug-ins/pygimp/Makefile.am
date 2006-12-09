@@ -7,6 +7,7 @@ libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
+libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
 SUBDIRS = plug-ins
 
@@ -26,7 +27,7 @@ pygimpbase = python
 pygimpdir = $(gimpplugindir)/$(pygimpbase)
 
 pygimp_LTLIBRARIES = gimp.la _gimpenums.la gimpcolor.la _gimpui.la \
-	gimpprocbrowser.la
+	gimpthumb.la
 
 gimp_la_SOURCES = \
 	gimpmodule.c		\
@@ -36,8 +37,10 @@ gimp_la_SOURCES = \
 	pygimp-parasite.c	\
 	pygimp-pdb.c		\
 	pygimp-tile.c		\
+	pygimp-vectors.c	\
 	pygimp.h		\
 	pygimp-api.h		\
+	pygimp-intl.h		\
 	pygimp-util.h
 
 gimp_la_LDFLAGS = -module -avoid-version $(no_undefined) \
@@ -99,24 +102,17 @@ _gimpui_la_LIBADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-gimpprocbrowser_la_SOURCES = \
-	procbrowser.c
+gimpthumb_la_SOURCES = \
+	gimpthumbmodule.c \
+	gimpthumb.c
 
-gimpprocbrowser_la_LDFLAGS = -module -avoid-version $(no_undefined) \
-	-export-symbols-regex initgimpprocbrowser
+gimpthumb_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+	-export-symbols-regex initgimpthumb
 
-gimpprocbrowser_la_LIBADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpconfig)	\
-	$(libgimpmath)		\
-	$(libgimp)		\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(PYLINK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
+gimpthumb_la_LIBADD = \
+	$(libgimpthumb)		\
+	$(GDK_PIXBUF_LIBS)	\
+	$(PYLINK_LIBS)
 
 pygimp_PYTHON = \
 	gimpenums.py	\
@@ -127,8 +123,13 @@ pygimp_PYTHON = \
 
 pygimp_DATA = pygimp-logo.png
 
-codegen_files = gimpcolor-types.defs gimpenums-types.defs \
-	gimpui.defs gimpui.override
+codegen_files = \
+	gimpcolor-types.defs	\
+	gimpenums-types.defs	\
+	gimpthumb.defs		\
+	gimpthumb.override	\
+	gimpui.defs		\
+	gimpui.override
 
 pyenvdir = $(gimpplugindir)/environ
 pyinterpdir = $(gimpplugindir)/interpreters
@@ -158,7 +159,9 @@ EXTRA_DIST = \
 
 gimpui.c: gimpui.defs gimpui.override gimpcolor-types.defs gimpenums-types.defs
 
-CLEANFILES = gimpui.c
+gimpthumb.c: gimpthumb.defs gimpthumb.override
+
+CLEANFILES = gimpui.c gimpthumb.c
 
 .defs.c:
 	(cd $(srcdir) \

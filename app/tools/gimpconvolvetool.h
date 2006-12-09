@@ -20,7 +20,7 @@
 #define __GIMP_CONVOLVE_TOOL_H__
 
 
-#include "gimppainttool.h"
+#include "gimpbrushtool.h"
 
 
 #define GIMP_TYPE_CONVOLVE_TOOL            (gimp_convolve_tool_get_type ())
@@ -30,18 +30,20 @@
 #define GIMP_IS_CONVOLVE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONVOLVE_TOOL))
 #define GIMP_CONVOLVE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONVOLVE_TOOL, GimpConvolveToolClass))
 
+#define GIMP_CONVOLVE_TOOL_GET_OPTIONS(t)  (GIMP_CONVOLVE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
 
 typedef struct _GimpConvolveTool      GimpConvolveTool;
 typedef struct _GimpConvolveToolClass GimpConvolveToolClass;
 
 struct _GimpConvolveTool
 {
-  GimpPaintTool parent_instance;
+  GimpBrushTool parent_instance;
 };
 
 struct _GimpConvolveToolClass
 {
-  GimpPaintToolClass parent_class;
+  GimpBrushToolClass parent_class;
 };
 
 

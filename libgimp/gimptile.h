@@ -53,7 +53,7 @@ void    gimp_tile_cache_ntiles (gulong     ntiles);
 
 /*  private function  */
 
-void    _gimp_tile_cache_flush_drawable (GimpDrawable *drawable) G_GNUC_INTERNAL;
+G_GNUC_INTERNAL void _gimp_tile_cache_flush_drawable (GimpDrawable *drawable);
 
 
 G_END_DECLS

@@ -65,6 +65,7 @@ palette_editor_edit_color_cmd_callback (GtkAction *action,
     {
       editor->color_dialog =
         gimp_color_dialog_new (GIMP_VIEWABLE (palette),
+                               data_editor->context,
                                _("Edit Palette Color"),
                                GIMP_STOCK_PALETTE,
                                _("Edit Color Palette Entry"),
@@ -85,7 +86,8 @@ palette_editor_edit_color_cmd_callback (GtkAction *action,
   else
     {
       gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (editor->color_dialog),
-                                         GIMP_VIEWABLE (palette));
+                                         GIMP_VIEWABLE (palette),
+                                         data_editor->context);
       gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
                                    &editor->color->color);
     }
@@ -104,15 +106,12 @@ palette_editor_new_color_cmd_callback (GtkAction *action,
   if (data_editor->data_editable)
     {
       GimpPalette *palette = GIMP_PALETTE (data_editor->data);
-      GimpContext *context;
       GimpRGB      color;
 
-      context = gimp_get_user_context (data_editor->data_factory->gimp);
-
       if (value)
-        gimp_context_get_background (context, &color);
+        gimp_context_get_background (data_editor->context, &color);
       else
-        gimp_context_get_foreground (context, &color);
+        gimp_context_get_foreground (data_editor->context, &color);
 
       editor->color = gimp_palette_add_entry (palette, -1, NULL, &color);
     }

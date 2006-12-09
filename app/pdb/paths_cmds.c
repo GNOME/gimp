@@ -41,6 +41,8 @@
 #include "vectors/gimpvectors-import.h"
 #include "vectors/gimpvectors.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 path_list_invoker (GimpProcedure     *procedure,
@@ -611,7 +613,8 @@ path_to_selection_invoker (GimpProcedure     *procedure,
                                      antialias,
                                      feather,
                                      feather_radius_x,
-                                     feather_radius_y);
+                                     feather_radius_y,
+                                     TRUE);
       else
         success = FALSE;
     }
@@ -639,36 +642,8 @@ path_import_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      success = gimp_vectors_import_file (image, filename, merge, scale, -1, NULL);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GValueArray *
-path_import_string_invoker (GimpProcedure     *procedure,
-                            Gimp              *gimp,
-                            GimpContext       *context,
-                            GimpProgress      *progress,
-                            const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  const gchar *string;
-  gint32 length;
-  gboolean merge;
-  gboolean scale;
-
-  image = gimp_value_get_image (&args->values[0], gimp);
-  string = g_value_get_string (&args->values[1]);
-  length = g_value_get_int (&args->values[2]);
-  merge = g_value_get_boolean (&args->values[3]);
-  scale = g_value_get_boolean (&args->values[4]);
-
-  if (success)
-    {
-      success = gimp_vectors_import_buffer (image, string, length,
-                                            merge, scale, -1, NULL);
+      success = gimp_vectors_import_file (image, filename,
+                                          merge, scale, -1, NULL, NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -806,12 +781,12 @@ register_paths_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-get-points");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-get-points",
-                                     "List the points associated with the named path.",
-                                     "List the points associated with the named path.",
-                                     "Andy Thomas",
-                                     "Andy Thomas",
-                                     "1999",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-vectors-stroke-get-points' instead.",
+                                     "This procedure is deprecated! Use 'gimp-vectors-stroke-get-points' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-vectors-stroke-get-points");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -858,12 +833,12 @@ register_paths_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-set-points");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-set-points",
-                                     "Set the points associated with the named path.",
-                                     "Set the points associated with the named path.",
-                                     "Andy Thomas",
-                                     "Andy Thomas",
-                                     "1999",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'vectors-stroke-new-from-points' instead.",
+                                     "This procedure is deprecated! Use 'vectors-stroke-new-from-points' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "vectors-stroke-new-from-points");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -904,12 +879,12 @@ register_paths_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-stroke-current");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-stroke-current",
-                                     "Stroke the current path in the passed image.",
-                                     "Stroke the current path in the passed image.",
-                                     "Andy Thomas",
-                                     "Andy Thomas",
-                                     "1999",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-edit-stroke-vectors' instead.",
+                                     "This procedure is deprecated! Use 'gimp-edit-stroke-vectors' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-edit-stroke-vectors");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -1147,12 +1122,12 @@ register_paths_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-to-selection");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-to-selection",
-                                     "Transforms the active path into a selection",
-                                     "This procedure renders the desired path into the current selection.",
-                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
-                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
-                                     "2003",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-vectors-to-selection' instead.",
+                                     "This procedure is deprecated! Use 'gimp-vectors-to-selection' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-vectors-to-selection");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -1207,12 +1182,12 @@ register_paths_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-import");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-import",
-                                     "Import paths from an SVG file.",
-                                     "This procedure imports paths from an SVG file. SVG elements other than paths and basic shapes are ignored.",
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2003",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'vectors-import-from-file' instead.",
+                                     "This procedure is deprecated! Use 'vectors-import-from-file' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "vectors-import-from-file");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -1226,53 +1201,6 @@ register_paths_procs (GimpPDB *pdb)
                                                        TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("merge",
-                                                     "merge",
-                                                     "Merge paths into a single vectors object.",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("scale",
-                                                     "scale",
-                                                     "Scale the SVG to image dimensions.",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-path-import-string
-   */
-  procedure = gimp_procedure_new (path_import_string_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-import-string");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-path-import-string",
-                                     "Import paths from an SVG string.",
-                                     "This procedure works like 'gimp-path-import' but takes a string rather than reading the SVG from a file. This allows you to write scripts that generate SVG and feed it to GIMP.",
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2005",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("string",
-                                                       "string",
-                                                       "A string that must be a complete and valid SVG document.",
-                                                       TRUE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("length",
-                                                      "length",
-                                                      "Number of bytes in string or -1 if the string is NULL terminated.",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("merge",
                                                      "merge",

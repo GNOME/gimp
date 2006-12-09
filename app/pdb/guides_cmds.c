@@ -33,6 +33,8 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 image_add_hguide_invoker (GimpProcedure     *procedure,

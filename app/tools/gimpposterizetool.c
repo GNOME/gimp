@@ -49,7 +49,8 @@
 static void     gimp_posterize_tool_finalize       (GObject           *object);
 
 static gboolean gimp_posterize_tool_initialize     (GimpTool          *tool,
-                                                    GimpDisplay       *display);
+                                                    GimpDisplay       *display,
+                                                    GError           **error);
 
 static void     gimp_posterize_tool_map            (GimpImageMapTool  *im_tool);
 static void     gimp_posterize_tool_dialog         (GimpImageMapTool  *im_tool);
@@ -74,7 +75,7 @@ gimp_posterize_tool_register (GimpToolRegisterCallback  callback,
                 0,
                 "gimp-posterize-tool",
                 _("Posterize"),
-                _("Reduce image to a fixed number of colors"),
+                _("Posterize Tool: Reduce to a limited set of colors"),
                 N_("_Posterize..."), NULL,
                 NULL, GIMP_HELP_TOOL_POSTERIZE,
                 GIMP_STOCK_TOOL_POSTERIZE,
@@ -121,8 +122,9 @@ gimp_posterize_tool_finalize (GObject *object)
 }
 
 static gboolean
-gimp_posterize_tool_initialize (GimpTool    *tool,
-                                GimpDisplay *display)
+gimp_posterize_tool_initialize (GimpTool     *tool,
+                                GimpDisplay  *display,
+                                GError      **error)
 {
   GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (tool);
   GimpDrawable      *drawable;
@@ -134,13 +136,14 @@ gimp_posterize_tool_initialize (GimpTool    *tool,
 
   if (gimp_drawable_is_indexed (drawable))
     {
-      g_message (_("Posterize does not operate on indexed layers."));
+      g_set_error (error, 0, 0,
+                   _("Posterize does not operate on indexed layers."));
       return FALSE;
     }
 
   posterize_tool->levels = POSTERIZE_DEFAULT_LEVELS;
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (posterize_tool->levels_data),
                             posterize_tool->levels);

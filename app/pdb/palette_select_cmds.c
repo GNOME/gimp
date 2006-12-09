@@ -31,6 +31,8 @@
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 palettes_popup_invoker (GimpProcedure     *procedure,
@@ -52,7 +54,8 @@ palettes_popup_invoker (GimpProcedure     *procedure,
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
-          ! gimp_pdb_dialog_new (gimp, context, gimp->palette_factory->container,
+          ! gimp_pdb_dialog_new (gimp, context, progress,
+                                 gimp->palette_factory->container,
                                  popup_title, palette_callback, initial_palette,
                                  NULL))
         success = FALSE;

@@ -513,10 +513,6 @@ view_actions_update (GimpActionGroup *group,
 
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
-#define SET_VISIBLE(action,condition) \
-        gimp_action_group_set_action_visible (group, action, (condition) != 0)
-#define SET_LABEL(action,label) \
-        gimp_action_group_set_action_label (group, action, (label))
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 #define SET_COLOR(action,color) \
@@ -600,8 +596,6 @@ view_actions_update (GimpActionGroup *group,
     }
 
 #undef SET_ACTIVE
-#undef SET_VISIBLE
-#undef SET_LABEL
 #undef SET_SENSITIVE
 #undef SET_COLOR
 }

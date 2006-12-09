@@ -44,6 +44,7 @@
 #include "core-types.h"
 
 #include "config/gimpconfig-file.h"
+#include "config/gimprc.h"
 
 #include "gimp-templates.h"
 #include "gimp-user-install.h"
@@ -103,24 +104,26 @@ gimp_user_install_items[] =
 };
 
 
-static void      user_install_log           (GimpUserInstall  *install,
-                                             const gchar      *format,
-                                             ...) G_GNUC_PRINTF (2, 3);
-static void      user_install_log_newline   (GimpUserInstall  *install);
-static void      user_install_log_error     (GimpUserInstall  *install,
-                                             GError          **error);
+static void      user_install_log                (GimpUserInstall  *install,
+                                                  const gchar      *format,
+                                                  ...) G_GNUC_PRINTF (2, 3);
+static void      user_install_log_newline        (GimpUserInstall  *install);
+static void      user_install_log_error          (GimpUserInstall  *install,
+                                                  GError          **error);
 
-static gboolean  user_install_mkdir         (GimpUserInstall  *install,
-                                             const gchar      *dirname);
-static gboolean  user_install_file_copy     (GimpUserInstall  *install,
-                                             const gchar      *source,
-                                             const gchar      *dest);
-static gboolean  user_install_dir_copy      (GimpUserInstall  *install,
-                                             const gchar      *source,
-                                             const gchar      *base);
+static gboolean  user_install_mkdir              (GimpUserInstall  *install,
+                                                  const gchar      *dirname);
+static gboolean  user_install_mkdir_with_parents (GimpUserInstall  *install,
+                                                  const gchar      *dirname);
+static gboolean  user_install_file_copy          (GimpUserInstall  *install,
+                                                  const gchar      *source,
+                                                  const gchar      *dest);
+static gboolean  user_install_dir_copy           (GimpUserInstall  *install,
+                                                  const gchar      *source,
+                                                  const gchar      *base);
 
-static gboolean  user_install_create_files  (GimpUserInstall  *install);
-static gboolean  user_install_migrate_files (GimpUserInstall  *install);
+static gboolean  user_install_create_files       (GimpUserInstall  *install);
+static gboolean  user_install_migrate_files      (GimpUserInstall  *install);
 
 
 
@@ -205,7 +208,7 @@ gimp_user_install_run (GimpUserInstall *install)
 
   user_install_log_newline (install);
 
-  if (! user_install_mkdir (install, gimp_directory ()))
+  if (! user_install_mkdir_with_parents (install, gimp_directory ()))
     return FALSE;
 
   if (install->migrate)
@@ -336,6 +339,32 @@ user_install_mkdir (GimpUserInstall *install,
 }
 
 static gboolean
+user_install_mkdir_with_parents (GimpUserInstall *install,
+                                 const gchar     *dirname)
+{
+  user_install_log (install, _("Creating folder '%s'..."),
+                    gimp_filename_to_utf8 (dirname));
+
+  if (g_mkdir_with_parents (dirname,
+                            S_IRUSR | S_IWUSR | S_IXUSR |
+                            S_IRGRP | S_IXGRP |
+                            S_IROTH | S_IXOTH) == -1)
+    {
+      GError *error = NULL;
+
+      g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Cannot create folder '%s': %s"),
+                   gimp_filename_to_utf8 (dirname), g_strerror (errno));
+
+      user_install_log_error (install, &error);
+
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+static gboolean
 user_install_dir_copy (GimpUserInstall *install,
                        const gchar *source,
                        const gchar *base)
@@ -355,8 +384,7 @@ user_install_dir_copy (GimpUserInstall *install,
     g_free (basename);
   }
 
-  success =
-    user_install_mkdir (install, dirname);
+  success = user_install_mkdir (install, dirname);
   if (! success)
     goto error;
 
@@ -442,6 +470,7 @@ user_install_migrate_files (GimpUserInstall *install)
   GDir        *dir;
   const gchar *basename;
   gchar        dest[1024];
+  GimpRc      *gimprc;
   GError      *error = NULL;
 
   dir = g_dir_open (install->old_dir, 0, &error);
@@ -458,16 +487,17 @@ user_install_migrate_files (GimpUserInstall *install)
 
       if (g_file_test (source, G_FILE_TEST_IS_REGULAR))
         {
-          /*  skip these for all old versions  */
-          if ((strncmp (basename, "gimpswap.", 9) == 0) ||
-              (strncmp (basename, "pluginrc",  8) == 0) ||
-              (strncmp (basename, "themerc",   7) == 0))
+          /*  skip these files for all old versions  */
+          if (g_str_has_prefix (basename, "gimpswap.") ||
+              g_str_has_prefix (basename, "pluginrc")  ||
+              g_str_has_prefix (basename, "themerc")   ||
+              g_str_has_prefix (basename, "toolrc"))
             {
               goto next_file;
             }
 
           /*  skip menurc for gimp 2.0 since the format has changed  */
-          if (install->old_minor == 0 && (strncmp (basename, "menurc", 6) == 0))
+          if (install->old_minor == 0 && g_str_has_prefix (basename, "menurc"))
             {
               goto next_file;
             }
@@ -477,9 +507,15 @@ user_install_migrate_files (GimpUserInstall *install)
 
           user_install_file_copy (install, source, dest);
         }
-      else if (g_file_test (source, G_FILE_TEST_IS_DIR) &&
-               strcmp (basename, "tmp") != 0)
+      else if (g_file_test (source, G_FILE_TEST_IS_DIR))
         {
+          /*  skip these directories for all old versions  */
+          if (strcmp (basename, "tmp") == 0 ||
+              strcmp (basename, "tool-options") == 0)
+            {
+              goto next_file;
+            }
+
           user_install_dir_copy (install, source, gimp_directory ());
         }
 
@@ -496,6 +532,11 @@ user_install_migrate_files (GimpUserInstall *install)
   g_dir_close (dir);
 
   gimp_templates_migrate (install->old_dir);
+
+  gimprc = gimp_rc_new (NULL, NULL, FALSE);
+  gimp_rc_migrate (gimprc);
+  gimp_rc_save (gimprc);
+  g_object_unref (gimprc);
 
   return TRUE;
 }

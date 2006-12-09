@@ -26,6 +26,9 @@
 #include <string.h>
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_PATHS_PDB_H__
+#include "gimppaths_pdb.h"
 
 /**
  * gimp_path_list:
@@ -164,9 +167,8 @@ gimp_path_delete (gint32       image_ID,
  * @num_path_point_details: The number of points returned. Each point is made up of (x, y, pnt_type) of floats.
  * @points_pairs: The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points are returned in pixel resolution.
  *
- * List the points associated with the named path.
- *
- * List the points associated with the named path.
+ * This procedure is deprecated! Use gimp_vectors_stroke_get_points()
+ * instead.
  *
  * Returns: The type of the path. Currently only one type (1 = Bezier) is supported.
  */
@@ -213,9 +215,8 @@ gimp_path_get_points (gint32        image_ID,
  * @num_path_points: The number of elements in the array, i.e. the number of points in the path * 3. Each point is made up of (x, y, type) of floats. Currently only the creation of bezier curves is allowed. The type parameter must be set to (1) to indicate a BEZIER type curve. Note that for BEZIER curves, points must be given in the following order: ACCACCAC... If the path is not closed the last control point is missed off. Points consist of three control points (control/anchor/control) so for a curve that is not closed there must be at least two points passed (2 x,y pairs). If (num_path_points/3) % 3 = 0 then the path is assumed to be closed and the points are ACCACCACCACC.
  * @points_pairs: The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0= BEZIER_MOVE). Note all points are returned in pixel resolution.
  *
- * Set the points associated with the named path.
- *
- * Set the points associated with the named path.
+ * This procedure is deprecated! Use vectors_stroke_new_from_points()
+ * instead.
  *
  * Returns: TRUE on success.
  */
@@ -250,9 +251,8 @@ gimp_path_set_points (gint32         image_ID,
  * gimp_path_stroke_current:
  * @image_ID: The image which contains the path to stroke.
  *
- * Stroke the current path in the passed image.
- *
- * Stroke the current path in the passed image.
+ * This procedure is deprecated! Use gimp_edit_stroke_vectors()
+ * instead.
  *
  * Returns: TRUE on success.
  */
@@ -485,9 +485,8 @@ gimp_path_set_locked (gint32       image_ID,
  * @feather_radius_x: Feather radius x.
  * @feather_radius_y: Feather radius y.
  *
- * Transforms the active path into a selection
- *
- * This procedure renders the desired path into the current selection.
+ * This procedure is deprecated! Use gimp_vectors_to_selection()
+ * instead.
  *
  * Returns: TRUE on success.
  */
@@ -529,10 +528,8 @@ gimp_path_to_selection (gint32          image_ID,
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
  *
- * Import paths from an SVG file.
- *
- * This procedure imports paths from an SVG file. SVG elements other
- * than paths and basic shapes are ignored.
+ * This procedure is deprecated! Use vectors_import_from_file()
+ * instead.
  *
  * Returns: TRUE on success.
  */
@@ -550,51 +547,6 @@ gimp_path_import (gint32       image_ID,
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
                                     GIMP_PDB_STRING, filename,
-                                    GIMP_PDB_INT32, merge,
-                                    GIMP_PDB_INT32, scale,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_path_import_string:
- * @image_ID: The image.
- * @string: A string that must be a complete and valid SVG document.
- * @length: Number of bytes in string or -1 if the string is NULL terminated.
- * @merge: Merge paths into a single vectors object.
- * @scale: Scale the SVG to image dimensions.
- *
- * Import paths from an SVG string.
- *
- * This procedure works like gimp_path_import() but takes a string
- * rather than reading the SVG from a file. This allows you to write
- * scripts that generate SVG and feed it to GIMP.
- *
- * Returns: TRUE on success.
- *
- * Since: GIMP 2.4
- */
-gboolean
-gimp_path_import_string (gint32       image_ID,
-                         const gchar *string,
-                         gint         length,
-                         gboolean     merge,
-                         gboolean     scale)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-path-import-string",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_STRING, string,
-                                    GIMP_PDB_INT32, length,
                                     GIMP_PDB_INT32, merge,
                                     GIMP_PDB_INT32, scale,
                                     GIMP_PDB_END);

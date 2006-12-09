@@ -259,7 +259,7 @@ static void   save_ps_setup    (FILE              *ofp,
 static void   save_ps_trailer  (FILE              *ofp);
 static void   save_ps_preview  (FILE              *ofp,
                                 gint32             drawable_ID);
-static void   dither_grey      (guchar            *grey,
+static void   dither_grey      (const guchar      *grey,
                                 guchar            *bw,
                                 gint               npix,
                                 gint               linecount);
@@ -510,7 +510,7 @@ ps_end_data (FILE *ofp)
    end_data = ftell (ofp);
    if (end_data > 0)
    {
-     sprintf (s, "%ld ASCII Bytes", end_data-ps_data_pos.begin_data);
+     sprintf (s, "%ld ASCII Bytes", end_data - ps_data_pos.begin_data);
      if (fseek (ofp, ps_data_pos.eol - strlen (s), SEEK_SET) == 0)
      {
        fprintf (ofp, "%s", s);
@@ -639,8 +639,8 @@ query (void)
 #endif
 
   gimp_install_procedure (LOAD_PS_SETARGS_PROC,
-                          "set additional parameters for procedure file_ps_load",
-                          "set additional parameters for procedure file_ps_load",
+                          "set additional parameters for procedure file-ps-load",
+                          "set additional parameters for procedure file-ps-load",
                           "Peter Kirchgessner <peter@kirchgessner.net>",
                           "Peter Kirchgessner",
                           dversio,
@@ -651,7 +651,7 @@ query (void)
                           set_load_args, NULL);
 
   gimp_install_procedure (LOAD_PS_THUMB_PROC,
-                          "Loads a small preview from a Postscript or PDF document",
+                          "Loads a small preview from a PostScript or PDF document",
                           "",
                           "Peter Kirchgessner <peter@kirchgessner.net>",
                           "Peter Kirchgessner",
@@ -2246,59 +2246,74 @@ save_ps_trailer (FILE *ofp)
 /* If linecount is less than zero, all used memory is freed. */
 
 static void
-dither_grey (guchar *grey,
-             guchar *bw,
-             gint    npix,
-             gint    linecount)
+dither_grey (const guchar *grey,
+             guchar       *bw,
+             gint          npix,
+             gint          linecount)
 {
-  register guchar *greyptr, *bwptr, mask;
-  register int *fse;
-  int x, greyval, fse_inline;
-  static int *fs_error = NULL;
-  static int do_init_arrays = 1;
-  static int limit_array[1278];
-  static int east_error[256],seast_error[256],south_error[256],swest_error[256];
-  int *limit = &(limit_array[512]);
+  static gboolean do_init_arrays = TRUE;
+  static gint *fs_error = NULL;
+  static gint  limit[1278];
+  static gint  east_error[256];
+  static gint  seast_error[256];
+  static gint  south_error[256];
+  static gint  swest_error[256];
+
+  register const guchar *greyptr;
+  register guchar *bwptr, mask;
+  register gint *fse;
+  gint x, greyval, fse_inline;
 
   if (linecount <= 0)
     {
-      if (fs_error) g_free (fs_error-1);
-      if (linecount < 0) return;
-      fs_error = g_new (int, npix+2);
-      memset ((char *)fs_error, 0, (npix+2)*sizeof (int));
-      fs_error++;
+      g_free (fs_error);
+
+      if (linecount < 0)
+        return;
+
+      fs_error = g_new0 (gint, npix + 2);
 
       /* Initialize some arrays that speed up dithering */
       if (do_init_arrays)
         {
-          do_init_arrays = 0;
-          for (x = -511; x <= 766; x++)
-            limit[x] = (x < 0) ? 0 : ((x > 255) ? 255 : x);
+          gint i;
+
+          do_init_arrays = FALSE;
+
+          for (i = 0, x = -511; x <= 766; i++, x++)
+            limit[i] = (x < 0) ? 0 : ((x > 255) ? 255 : x);
+
           for (greyval = 0; greyval < 256; greyval++)
             {
-              east_error[greyval] = (greyval < 128) ? ((greyval * 79) >> 8)
-                : (((greyval-255)*79) >> 8);
-              seast_error[greyval] = (greyval < 128) ? ((greyval * 34) >> 8)
-                : (((greyval-255)*34) >> 8);
-              south_error[greyval] = (greyval < 128) ? ((greyval * 56) >> 8)
-                : (((greyval-255)*56) >> 8);
-              swest_error[greyval] = (greyval < 128) ? ((greyval * 12) >> 8)
-                : (((greyval-255)*12) >> 8);
+              east_error[greyval] = (greyval < 128) ?
+                ((greyval * 79) >> 8) : (((greyval - 255) * 79) >> 8);
+              seast_error[greyval] = (greyval < 128) ?
+                ((greyval * 34) >> 8) : (((greyval - 255) * 34) >> 8);
+              south_error[greyval] = (greyval < 128) ?
+                ((greyval * 56) >> 8) : (((greyval - 255) * 56) >> 8);
+              swest_error[greyval] = (greyval < 128) ?
+                ((greyval * 12) >> 8) : (((greyval - 255) * 12) >> 8);
             }
         }
     }
-  if (fs_error == NULL) return;
 
-  memset (bw, 0, (npix+7)/8); /* Initialize with white */
+  g_return_if_fail (fs_error != NULL);
+
+  memset (bw, 0, (npix + 7) / 8); /* Initialize with white */
 
   greyptr = grey;
   bwptr = bw;
   mask = 0x80;
-  fse_inline = fs_error[0];
-  for (x = 0, fse = fs_error; x < npix; x++, fse++)
+
+  fse_inline = fs_error[1];
+
+  for (x = 0, fse = fs_error + 1; x < npix; x++, fse++)
     {
-      greyval = limit[*(greyptr++) + fse_inline];  /* 0 <= greyval <= 255 */
-      if (greyval < 128) *bwptr |= mask;  /* Set a black pixel */
+      greyval =
+        limit[*(greyptr++) + fse_inline + 512];  /* 0 <= greyval <= 255 */
+
+      if (greyval < 128)
+        *bwptr |= mask;  /* Set a black pixel */
 
       /* Error distribution */
       fse_inline = east_error[greyval] + fse[1];
@@ -2307,6 +2322,7 @@ dither_grey (guchar *grey,
       fse[-1] += swest_error[greyval];
 
       mask >>= 1;   /* Get mask for next b/w-pixel */
+
       if (!mask)
         {
           mask = 0x80;
@@ -3337,8 +3353,9 @@ save_dialog (void)
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
-                           _("When toggled, the resulting image will be scaled to fit "
-                             "into the given size without changing the aspect ratio."),
+                           _("When toggled, the resulting image will be "
+                             "scaled to fit into the given size without "
+                             "changing the aspect ratio."),
                            "#keep_aspect_ratio"),
 
   g_signal_connect (toggle, "toggled",
@@ -3474,7 +3491,8 @@ save_unit_toggle_update (GtkWidget *widget,
         {
           value = GTK_ADJUSTMENT (vals->adjustment[i])->value * factor;
 
-          gtk_adjustment_set_value (GTK_ADJUSTMENT (vals->adjustment[i]), value);
+          gtk_adjustment_set_value (GTK_ADJUSTMENT (vals->adjustment[i]),
+                                    value);
         }
     }
 }

@@ -19,7 +19,7 @@
  */
 
 #ifndef __METADATA_H__
-#define __HATADATA_H__
+#define __METADATA_H__
 
 
 #define EDITOR_PROC         "plug-in-metadata-editor"

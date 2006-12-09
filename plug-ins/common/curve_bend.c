@@ -70,13 +70,11 @@
 #define MIX_CHANNEL(a, b, m)  (((a * m) + (b * (255 - m))) / 255)
 
 #define UP_GRAPH              0x1
-#define UP_XRANGE_TOP         0x2
 #define UP_PREVIEW_EXPOSE     0x4
 #define UP_PREVIEW            0x8
 #define UP_DRAW               0x10
 #define UP_ALL                0xFF
 
-#define ENTRY_WIDTH      50
 #define GRAPH_WIDTH      256
 #define GRAPH_HEIGHT     256
 #define PREVIEW_SIZE_X   256

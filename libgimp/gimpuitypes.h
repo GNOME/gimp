@@ -38,6 +38,7 @@ typedef struct _GimpZoomPreview          GimpZoomPreview;
 typedef struct _GimpDrawableComboBox     GimpDrawableComboBox;
 typedef struct _GimpChannelComboBox      GimpChannelComboBox;
 typedef struct _GimpLayerComboBox        GimpLayerComboBox;
+typedef struct _GimpVectorsComboBox      GimpVectorsComboBox;
 typedef struct _GimpImageComboBox        GimpImageComboBox;
 
 typedef struct _GimpSelectButton         GimpSelectButton;

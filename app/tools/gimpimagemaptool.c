@@ -36,6 +36,7 @@
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimagemap.h"
 #include "core/gimppickable.h"
+#include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
 
@@ -57,7 +58,8 @@
 static void     gimp_image_map_tool_finalize   (GObject          *object);
 
 static gboolean gimp_image_map_tool_initialize (GimpTool         *tool,
-                                                GimpDisplay      *display);
+                                                GimpDisplay      *display,
+                                                GError          **error);
 static void     gimp_image_map_tool_control    (GimpTool         *tool,
                                                 GimpToolAction    action,
                                                 GimpDisplay      *display);
@@ -96,7 +98,6 @@ static void     gimp_image_map_tool_save_ext_clicked (GtkWidget        *widget,
 static void     gimp_image_map_tool_settings_dialog  (GimpImageMapTool *im_tool,
                                                       const gchar      *title,
                                                       gboolean          save);
-
 static void     gimp_image_map_tool_notify_preview   (GObject          *config,
                                                       GParamSpec       *pspec,
                                                       GimpImageMapTool *im_tool);
@@ -178,14 +179,13 @@ gimp_image_map_tool_finalize (GObject *object)
 #define RESPONSE_RESET 1
 
 static gboolean
-gimp_image_map_tool_initialize (GimpTool    *tool,
-                                GimpDisplay *display)
+gimp_image_map_tool_initialize (GimpTool     *tool,
+                                GimpDisplay  *display,
+                                GError      **error)
 {
   GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
-  GimpToolInfo     *tool_info;
+  GimpToolInfo     *tool_info      = tool->tool_info;
   GimpDrawable     *drawable;
-
-  tool_info = tool->tool_info;
 
   /*  set display so the dialog can be hidden on display destruction  */
   tool->display = display;
@@ -307,7 +307,8 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
   drawable = gimp_image_active_drawable (display->image);
 
   gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (image_map_tool->shell),
-                                     GIMP_VIEWABLE (drawable));
+                                     GIMP_VIEWABLE (drawable),
+                                     GIMP_CONTEXT (tool_info->tool_options));
 
   gtk_widget_show (image_map_tool->shell);
 
@@ -386,12 +387,12 @@ gimp_image_map_tool_pick_color (GimpColorTool *color_tool,
   gint              off_x, off_y;
 
   gimp_item_offsets (GIMP_ITEM (tool->drawable), &off_x, &off_y);
-  x -= off_x;
-  y -= off_y;
 
   *sample_type = gimp_drawable_type (tool->drawable);
 
-  return gimp_pickable_pick_color (GIMP_PICKABLE (tool->image_map), x, y,
+  return gimp_pickable_pick_color (GIMP_PICKABLE (tool->image_map),
+                                   x - off_x,
+                                   y - off_y,
                                    color_tool->options->sample_average,
                                    color_tool->options->average_radius,
                                    color, color_index);
@@ -416,14 +417,15 @@ gimp_image_map_tool_reset (GimpImageMapTool *tool)
 }
 
 static gboolean
-gimp_image_map_tool_settings_load (GimpImageMapTool *tool,
-                                   gpointer          file)
+gimp_image_map_tool_settings_load (GimpImageMapTool  *tool,
+                                   gpointer           file,
+                                   GError           **error)
 {
   GimpImageMapToolClass *tool_class = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool);
 
   g_return_val_if_fail (tool_class->settings_load != NULL, FALSE);
 
-  if (tool_class->settings_load (tool, file))
+  if (tool_class->settings_load (tool, file, error))
     {
       gimp_image_map_tool_preview (tool);
       return TRUE;
@@ -472,9 +474,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 
       if (image_map_tool->image_map)
         {
-          GimpImageMapOptions *options;
-
-          options = GIMP_IMAGE_MAP_OPTIONS (tool->tool_info->tool_options);
+          GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
 
           gimp_tool_control_set_preserve (tool->control, TRUE);
 
@@ -482,6 +482,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
             gimp_image_map_tool_map (image_map_tool);
 
           gimp_image_map_commit (image_map_tool->image_map);
+          g_object_unref (image_map_tool->image_map);
           image_map_tool->image_map = NULL;
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
@@ -501,6 +502,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
           gimp_tool_control_set_preserve (tool->control, TRUE);
 
           gimp_image_map_abort (image_map_tool->image_map);
+          g_object_unref (image_map_tool->image_map);
           image_map_tool->image_map = NULL;
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
@@ -553,9 +555,8 @@ gimp_image_map_tool_preview (GimpImageMapTool *image_map_tool)
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (image_map_tool));
 
-  tool = GIMP_TOOL (image_map_tool);
-
-  options = GIMP_IMAGE_MAP_OPTIONS (tool->tool_info->tool_options);
+  tool    = GIMP_TOOL (image_map_tool);
+  options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
 
   if (options->preview)
     {
@@ -572,19 +573,26 @@ gimp_image_map_tool_load_save (GimpImageMapTool *tool,
                                const gchar      *filename,
                                gboolean          save)
 {
-  FILE *file = g_fopen (filename, save ? "wt" : "rt");
+  FILE   *file;
+  GError *error = NULL;
+
+  file = g_fopen (filename, save ? "wt" : "rt");
 
   if (! file)
     {
-      g_message (save ?
-                 _("Could not open '%s' for writing: %s") :
-                 _("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename),
-                 g_strerror (errno));
+      const gchar *format = save ?
+        _("Could not open '%s' for writing: %s") :
+        _("Could not open '%s' for reading: %s");
+
+      gimp_message (GIMP_TOOL (tool)->tool_info->gimp, G_OBJECT (tool->shell),
+                    GIMP_MESSAGE_ERROR,
+                    format,
+                    gimp_filename_to_utf8 (filename),
+                    g_strerror (errno));
       return;
     }
 
-  g_object_set (GIMP_TOOL (tool)->tool_info->tool_options,
+  g_object_set (GIMP_TOOL_GET_OPTIONS (tool),
                 "settings", filename,
                 NULL);
 
@@ -592,10 +600,14 @@ gimp_image_map_tool_load_save (GimpImageMapTool *tool,
     {
       gimp_image_map_tool_settings_save (tool, file);
     }
-  else if (! gimp_image_map_tool_settings_load (tool, file))
+  else if (! gimp_image_map_tool_settings_load (tool, file, &error))
     {
-      g_message ("Error in reading file '%s'.",
-                 gimp_filename_to_utf8 (filename));
+      gimp_message (GIMP_TOOL (tool)->tool_info->gimp, G_OBJECT (tool->shell),
+                    GIMP_MESSAGE_ERROR,
+                    _("Error reading '%s': %s"),
+                    gimp_filename_to_utf8 (filename),
+                    error->message);
+      g_error_free (error);
     }
 
   fclose (file);
@@ -647,7 +659,7 @@ gimp_image_map_tool_load_ext_clicked (GtkWidget        *widget,
     {
       gchar *filename;
 
-      g_object_get (GIMP_TOOL (tool)->tool_info->tool_options,
+      g_object_get (GIMP_TOOL_GET_OPTIONS (tool),
                     "settings", &filename,
                     NULL);
 
@@ -681,7 +693,7 @@ gimp_image_map_tool_save_ext_clicked (GtkWidget        *widget,
     {
       gchar *filename;
 
-      g_object_get (GIMP_TOOL (tool)->tool_info->tool_options,
+      g_object_get (GIMP_TOOL_GET_OPTIONS (tool),
                     "settings", &filename,
                     NULL);
 
@@ -702,14 +714,13 @@ gimp_image_map_tool_settings_dialog (GimpImageMapTool *tool,
                                      const gchar      *title,
                                      gboolean          save)
 {
-  GimpImageMapOptions *options;
+  GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
   GtkFileChooser      *chooser;
   const gchar         *settings_name;
   gchar               *folder;
 
-  g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool));
-
   settings_name = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name;
+
   g_return_if_fail (settings_name != NULL);
 
   if (tool->settings_dialog)
@@ -756,8 +767,6 @@ gimp_image_map_tool_settings_dialog (GimpImageMapTool *tool,
 
   folder = g_build_filename (gimp_directory (), settings_name, NULL);
   gtk_file_chooser_add_shortcut_folder (chooser, folder, NULL);
-
-  options = GIMP_IMAGE_MAP_OPTIONS (GIMP_TOOL (tool)->tool_info->tool_options);
 
   if (options->settings)
     gtk_file_chooser_set_filename (chooser, options->settings);

@@ -182,16 +182,3 @@ Operations related to paths.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_path_import_string ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@string: 
-@length: 
-@merge: 
-@scale: 
-@Returns: 
-
-

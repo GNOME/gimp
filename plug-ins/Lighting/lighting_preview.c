@@ -220,7 +220,7 @@ compute_preview_rectangle (gint * xp, gint * yp, gint * wid, gint * heig)
 /* light marker. Return TRUE if so, FALSE if not */
 /*************************************************/
 
-gboolean
+static gboolean
 check_handle_hit (gint xpos, gint ypos)
 {
   gint dx,dy,r;

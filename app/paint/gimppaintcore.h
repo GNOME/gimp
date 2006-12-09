@@ -39,6 +39,8 @@ struct _GimpPaintCore
 
   gint         ID;               /*  unique instance ID                  */
 
+  gchar       *undo_desc;        /*  undo description                    */
+
   GimpCoords   start_coords;     /*  starting coords (for undo only)     */
 
   GimpCoords   cur_coords;       /*  current coords                      */
@@ -72,7 +74,8 @@ struct _GimpPaintCoreClass
   gboolean  (* start)          (GimpPaintCore    *core,
                                 GimpDrawable     *drawable,
                                 GimpPaintOptions *paint_options,
-                                GimpCoords       *coords);
+                                GimpCoords       *coords,
+                                GError          **error);
 
   gboolean  (* pre_paint)      (GimpPaintCore    *core,
                                 GimpDrawable     *drawable,
@@ -116,7 +119,8 @@ void      gimp_paint_core_paint                     (GimpPaintCore    *core,
 gboolean  gimp_paint_core_start                     (GimpPaintCore    *core,
                                                      GimpDrawable     *drawable,
                                                      GimpPaintOptions *paint_options,
-                                                     GimpCoords       *coords);
+                                                     GimpCoords       *coords,
+                                                     GError          **error);
 void      gimp_paint_core_finish                    (GimpPaintCore    *core,
                                                      GimpDrawable     *drawable,
                                                      gboolean          push_undo);

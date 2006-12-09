@@ -30,6 +30,8 @@
 #define GIMP_IS_PAINT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINT_TOOL))
 #define GIMP_PAINT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAINT_TOOL, GimpPaintToolClass))
 
+#define GIMP_PAINT_TOOL_GET_OPTIONS(t)  (GIMP_PAINT_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
 
 typedef struct _GimpPaintToolClass GimpPaintToolClass;
 
@@ -40,10 +42,9 @@ struct _GimpPaintTool
   gboolean         pick_colors;  /*  pick color if ctrl is pressed   */
   gboolean         draw_line;
 
-  gboolean         show_cursor;
-  gboolean         draw_brush;
-  gdouble          brush_x;
-  gdouble          brush_y;
+  const gchar     *status;       /* status message */
+  const gchar     *status_line;  /* status message when drawing a line */
+  const gchar     *status_ctrl;  /* additional message for the ctrl modifier */
 
   GimpPaintCore   *core;
 };

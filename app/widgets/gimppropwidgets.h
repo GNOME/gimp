@@ -23,11 +23,21 @@
 #define __GIMP_APP_PROP_WIDGETS_H__
 
 
+/*  GParamBoolean  */
+
+GtkWidget * gimp_prop_expanding_frame_new (GObject     *config,
+                                           const gchar *property_name,
+                                           const gchar *button_label,
+                                           GtkWidget   *child,
+                                           GtkWidget  **button);
+
+
 /*  GParamEnum  */
 
 GtkWidget * gimp_prop_paint_mode_menu_new (GObject     *config,
                                            const gchar *property_name,
-                                           gboolean     with_behind_mode);
+                                           gboolean     with_behind_mode,
+                                           gboolean     with_replace_modes);
 
 
 /*  GimpParamColor  */
@@ -44,7 +54,18 @@ GtkWidget * gimp_prop_color_button_new    (GObject     *config,
 
 GtkWidget * gimp_prop_view_new            (GObject     *config,
                                            const gchar *property_name,
+                                           GimpContext *context,
                                            gint         size);
 
 
+void        gimp_prop_aspect_ratio_new    (GObject     *config,
+                                           const gchar *numerator_property,
+                                           const gchar *denominator_property,
+                                           const gchar *fixed_aspect_property,
+                                           const gchar *width_property,
+                                           const gchar *height_property,
+                                           gint         digits,
+                                           GtkTable    *table,
+                                           gint         row0,
+                                           gint         col0);
 #endif /* __GIMP_APP_PROP_WIDGETS_H__ */

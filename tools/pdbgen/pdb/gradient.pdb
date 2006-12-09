@@ -184,7 +184,8 @@ sub gradient_delete {
 
       if (! success)
         {
-          g_message (error->message);
+          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
           g_clear_error (&error);
         }
     }
@@ -246,7 +247,8 @@ HELP
         {
           GimpRGB color;
 
-	  seg = gimp_gradient_get_color_at (gradient, seg, pos, reverse, &color);
+	  seg = gimp_gradient_get_color_at (gradient, context, seg,
+                                            pos, reverse, &color);
 
           *sample++ = color.r;
           *sample++ = color.g;
@@ -314,7 +316,8 @@ HELP
         {
           GimpRGB color;
 
-          seg = gimp_gradient_get_color_at (gradient, seg, *positions,
+          seg = gimp_gradient_get_color_at (gradient, context,
+                                            seg, *positions,
                                             reverse, &color);
 
           *sample++ = color.r;
@@ -421,10 +424,10 @@ CODE
 }
 
 sub gradient_segment_set_left_color {
-    $blurb = 'Retrieves the left endpoint color of the specified segment';
+    $blurb = 'Sets the left endpoint color of the specified segment';
 
     $help = <<'HELP';
-This procedure retrieves the left endpoint color of the specified segment of
+This procedure sets the left endpoint color of the specified segment of
 the specified gradient.
 HELP
 
@@ -462,10 +465,10 @@ CODE
 }
 
 sub gradient_segment_set_right_color {
-    $blurb = 'Retrieves the right endpoint color of the specified segment';
+    $blurb = 'Sets the right endpoint color of the specified segment';
 
     $help = <<'HELP';
-This procedure retrieves the right endpoint color of the specified segment of
+This procedure sets the right endpoint color of the specified segment of
 the specified gradient.
 HELP
 
@@ -1058,7 +1061,7 @@ HELP
 
   if (start_seg && GIMP_DATA (gradient)->writable)
     {
-      gimp_gradient_segment_range_split_midpoint (gradient,
+      gimp_gradient_segment_range_split_midpoint (gradient, context,
                                                   start_seg, end_seg,
                                                   NULL, NULL);
     }
@@ -1103,7 +1106,7 @@ HELP
 
   if (start_seg && GIMP_DATA (gradient)->writable)
     {
-      gimp_gradient_segment_range_split_uniform (gradient,
+      gimp_gradient_segment_range_split_uniform (gradient, context,
                                                  start_seg, end_seg,
                                                  split_parts,
                                                  NULL, NULL);
@@ -1343,7 +1346,7 @@ CODE
 }
 
 $extra{app}->{code} = <<'CODE';
-GimpGradient *
+static GimpGradient *
 gradient_get (Gimp                 *gimp,
               const gchar          *name,
               gint                  segment,
@@ -1360,7 +1363,7 @@ gradient_get (Gimp                 *gimp,
   return gradient;
 }
 
-GimpGradient *
+static GimpGradient *
 gradient_get_range (Gimp                 *gimp,
                     const gchar          *name,
                     gint                  start_segment,

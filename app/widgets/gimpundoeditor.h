@@ -37,6 +37,7 @@ struct _GimpUndoEditor
 {
   GimpImageEditor  parent_instance;
 
+  GimpContext     *context;
   GimpContainer   *container;
   GtkWidget       *view;
   GimpViewSize     view_size;

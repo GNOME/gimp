@@ -275,9 +275,10 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
 
   if (! gimp_vectors_import_buffer (image,
                                     (const gchar *) svg_data, svg_data_len,
-                                    TRUE, TRUE, -1, &error))
+                                    TRUE, TRUE, -1, NULL, &error))
     {
-      g_message (error->message);
+      gimp_message (image->gimp, G_OBJECT (shell->display), GIMP_MESSAGE_ERROR,
+                    "%s", error->message);
       g_clear_error (&error);
     }
   else
@@ -321,7 +322,9 @@ gimp_display_shell_bucket_fill (GimpDisplayShell   *shell,
                                       fill_mode,
                                       GIMP_NORMAL_MODE, GIMP_OPACITY_OPAQUE,
                                       FALSE,             /* no seed fill */
-                                      FALSE, 0.0, FALSE, /* fill params  */
+                                      FALSE,             /* don't fill transp */
+                                      GIMP_SELECT_CRITERION_COMPOSITE,
+                                      0.0, FALSE,        /* fill params  */
                                       0.0, 0.0,          /* ignored      */
                                       color, pattern);
     }
@@ -413,40 +416,38 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
   for (list = uri_list; list; list = g_list_next (list))
     {
       const gchar       *uri   = list->data;
-      GimpLayer         *new_layer;
+      GList             *new_layers;
       GimpPDBStatusType  status;
       GError            *error = NULL;
 
-      new_layer = file_open_layer (image->gimp, context,
-                                   GIMP_PROGRESS (shell->statusbar),
-                                   image, uri, GIMP_RUN_INTERACTIVE, NULL,
-                                   &status, &error);
+      new_layers = file_open_layers (image->gimp, context,
+                                     GIMP_PROGRESS (shell->display),
+                                     image, FALSE,
+                                     uri, GIMP_RUN_INTERACTIVE, NULL,
+                                     &status, &error);
 
-      if (new_layer)
+      if (new_layers)
         {
-          GimpItem *new_item = GIMP_ITEM (new_layer);
-          gint      x, y;
-          gint      width, height;
-          gint      off_x, off_y;
+          gint x, y;
+          gint width, height;
 
           gimp_display_shell_untransform_viewport (shell, &x, &y,
                                                    &width, &height);
 
-          gimp_item_offsets (new_item, &off_x, &off_y);
+          gimp_image_add_layers (image, new_layers, -1,
+                                 x, y, width, height,
+                                 _("Drop layers"));
 
-          off_x = x + (width  - gimp_item_width  (new_item)) / 2 - off_x;
-          off_y = y + (height - gimp_item_height (new_item)) / 2 - off_y;
-
-          gimp_item_translate (new_item, off_x, off_y, FALSE);
-
-          gimp_image_add_layer (image, new_layer, -1);
-        }
+          g_list_free (new_layers);
+       }
       else if (status != GIMP_PDB_CANCEL)
         {
           gchar *filename = file_utils_uri_display_name (uri);
 
-          g_message (_("Opening '%s' failed:\n\n%s"),
-                     filename, error->message);
+          gimp_message (image->gimp, G_OBJECT (shell->display),
+                        GIMP_MESSAGE_ERROR,
+                        _("Opening '%s' failed:\n\n%s"),
+                        filename, error->message);
 
           g_clear_error (&error);
           g_free (filename);

@@ -100,11 +100,14 @@ static guint info_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_controller_info_class_init (GimpControllerInfoClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->finalize     = gimp_controller_info_finalize;
-  object_class->set_property = gimp_controller_info_set_property;
-  object_class->get_property = gimp_controller_info_get_property;
+  object_class->finalize           = gimp_controller_info_finalize;
+  object_class->set_property       = gimp_controller_info_set_property;
+  object_class->get_property       = gimp_controller_info_get_property;
+
+  viewable_class->default_stock_id = GIMP_STOCK_CONTROLLER;
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ENABLED,
                                     "enabled", NULL,
@@ -118,9 +121,10 @@ gimp_controller_info_class_init (GimpControllerInfoClass *klass)
                                    "controller", NULL,
                                    GIMP_TYPE_CONTROLLER,
                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_POINTER (object_class, PROP_MAPPING,
-                                    "mapping", NULL,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOXED (object_class, PROP_MAPPING,
+                                  "mapping", NULL,
+                                  G_TYPE_HASH_TABLE,
+                                  GIMP_PARAM_STATIC_STRINGS);
 
   info_signals[EVENT_MAPPED] =
     g_signal_new ("event-mapped",
@@ -158,10 +162,16 @@ gimp_controller_info_finalize (GObject *object)
   GimpControllerInfo *info = GIMP_CONTROLLER_INFO (object);
 
   if (info->controller)
-    g_object_unref (info->controller);
+    {
+      g_object_unref (info->controller);
+      info->controller = NULL;
+    }
 
   if (info->mapping)
-    g_hash_table_destroy (info->mapping);
+    {
+      g_hash_table_unref (info->mapping);
+      info->mapping = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -191,7 +201,7 @@ gimp_controller_info_set_property (GObject      *object,
           g_object_unref (info->controller);
         }
 
-      info->controller = (GimpController *) g_value_dup_object (value);
+      info->controller = GIMP_CONTROLLER (g_value_dup_object (value));
 
       if (info->controller)
         {
@@ -199,12 +209,15 @@ gimp_controller_info_set_property (GObject      *object,
                                    G_CALLBACK (gimp_controller_info_event),
                                    G_OBJECT (info),
                                    0);
+
+          gimp_viewable_set_stock_id (GIMP_VIEWABLE (info),
+                                      GIMP_CONTROLLER_GET_CLASS (info->controller)->stock_id);
         }
       break;
     case PROP_MAPPING:
       if (info->mapping)
-        g_hash_table_destroy (info->mapping);
-      info->mapping = g_value_get_pointer (value);
+        g_hash_table_unref (info->mapping);
+      info->mapping = g_value_dup_boxed (value);
       break;
 
     default:
@@ -233,7 +246,7 @@ gimp_controller_info_get_property (GObject    *object,
       g_value_set_object (value, info->controller);
       break;
     case PROP_MAPPING:
-      g_value_set_pointer (value, info->mapping);
+      g_value_set_boxed (value, info->mapping);
       break;
 
     default:
@@ -269,7 +282,7 @@ gimp_controller_info_serialize_property (GimpConfig       *config,
   if (property_id != PROP_MAPPING)
     return FALSE;
 
-  mapping = g_value_get_pointer (value);
+  mapping = g_value_get_boxed (value);
 
   if (mapping)
     {
@@ -350,7 +363,7 @@ gimp_controller_info_deserialize_property (GimpConfig *config,
 
       if (g_scanner_peek_next_token (scanner) == token)
         {
-          g_value_set_pointer (value, mapping);
+          g_value_take_boxed (value, mapping);
         }
       else
         {
@@ -360,7 +373,7 @@ gimp_controller_info_deserialize_property (GimpConfig *config,
   else
     {
     error:
-      g_hash_table_destroy (mapping);
+      g_hash_table_unref (mapping);
 
       *expected = token;
     }

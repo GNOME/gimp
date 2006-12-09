@@ -16,13 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SAMPLE_POINT_EDITOR_ACIONS_H__
-#define __SAMPLE_POINT_EDITOR_ACIONS_H__
+#ifndef __SAMPLE_POINTS_ACIONS_H__
+#define __SAMPLE_POINTS_ACIONS_H__
 
 
-void   sample_point_editor_actions_setup  (GimpActionGroup *group);
-void   sample_point_editor_actions_update (GimpActionGroup *group,
-                                           gpointer         data);
+void   sample_points_actions_setup  (GimpActionGroup *group);
+void   sample_points_actions_update (GimpActionGroup *group,
+                                     gpointer         data);
 
 
-#endif /* __SAMPLE_POINT_EDITOR_ACTIONS_H__ */
+#endif /* __SAMPLE_POINTS_ACTIONS_H__ */

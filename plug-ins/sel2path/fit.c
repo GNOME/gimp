@@ -147,7 +147,7 @@ typedef struct index_list
 
 static void append_index (index_list_type *, unsigned);
 static void free_index_list (index_list_type *);
-static index_list_type new_index_list ();
+static index_list_type new_index_list (void);
 static void remove_adjacent_corners (index_list_type *, unsigned);
 
 static void align (spline_list_type *);

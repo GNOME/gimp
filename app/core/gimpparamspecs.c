@@ -45,7 +45,7 @@ gimp_int32_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info = { 0, };
+      const GTypeInfo info = { 0, };
 
       type = g_type_register_static (G_TYPE_INT, "GimpInt32", &info, 0);
     }
@@ -68,7 +68,7 @@ gimp_param_int32_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -135,7 +135,7 @@ gimp_int16_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info = { 0, };
+      const GTypeInfo info = { 0, };
 
       type = g_type_register_static (G_TYPE_INT, "GimpInt16", &info, 0);
     }
@@ -158,7 +158,7 @@ gimp_param_int16_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -225,7 +225,7 @@ gimp_int8_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info = { 0, };
+      const GTypeInfo info = { 0, };
 
       type = g_type_register_static (G_TYPE_UINT, "GimpInt8", &info, 0);
     }
@@ -248,7 +248,7 @@ gimp_param_int8_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -319,7 +319,7 @@ gimp_param_string_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -427,7 +427,7 @@ gimp_param_enum_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -551,7 +551,7 @@ gimp_image_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info = { 0, };
+      const GTypeInfo info = { 0, };
 
       type = g_type_register_static (G_TYPE_INT, "GimpImageID", &info, 0);
     }
@@ -581,7 +581,7 @@ gimp_param_image_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -717,7 +717,7 @@ gimp_item_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info = { 0, };
+      const GTypeInfo info = { 0, };
 
       type = g_type_register_static (G_TYPE_INT, "GimpItemID", &info, 0);
     }
@@ -747,7 +747,7 @@ gimp_param_item_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -883,10 +883,40 @@ void
 gimp_value_set_item (GValue   *value,
                      GimpItem *item)
 {
-  g_return_if_fail (GIMP_VALUE_HOLDS_ITEM_ID (value));
   g_return_if_fail (item == NULL || GIMP_IS_ITEM (item));
 
-  value->data[0].v_int = item ? gimp_item_get_ID (item) : -1;
+#ifdef __GNUC__
+#warning FIXME remove hack as soon as bug #375864 is fixed */
+#endif
+
+  if (GIMP_VALUE_HOLDS_ITEM_ID (value))
+    value->data[0].v_int = item ? gimp_item_get_ID (item) : -1;
+
+  else if (GIMP_VALUE_HOLDS_DRAWABLE_ID (value) &&
+           GIMP_IS_DRAWABLE (item))
+    gimp_value_set_drawable (value, GIMP_DRAWABLE (item));
+
+  else if (GIMP_VALUE_HOLDS_LAYER_ID (value) &&
+           GIMP_IS_LAYER (item))
+    gimp_value_set_layer (value, GIMP_LAYER (item));
+
+  else if (GIMP_VALUE_HOLDS_CHANNEL_ID (value) &&
+           GIMP_IS_CHANNEL (item))
+    gimp_value_set_channel (value, GIMP_CHANNEL (item));
+
+  else if (GIMP_VALUE_HOLDS_LAYER_MASK_ID (value) &&
+           GIMP_IS_LAYER_MASK (item))
+    gimp_value_set_layer_mask (value, GIMP_LAYER_MASK (item));
+
+  else if (GIMP_VALUE_HOLDS_SELECTION_ID (value) &&
+           GIMP_IS_SELECTION (item))
+    gimp_value_set_selection (value, GIMP_SELECTION (item));
+
+  else if (GIMP_VALUE_HOLDS_VECTORS_ID (value) &&
+           GIMP_IS_VECTORS (item))
+    gimp_value_set_vectors (value, GIMP_VECTORS (item));
+  else
+    g_return_if_reached ();
 }
 
 
@@ -901,7 +931,7 @@ gimp_drawable_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info = { 0, };
+      const GTypeInfo info = { 0, };
 
       type = g_type_register_static (G_TYPE_INT, "GimpDrawableID", &info, 0);
     }
@@ -924,7 +954,7 @@ gimp_param_drawable_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -1016,7 +1046,7 @@ gimp_layer_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info = { 0, };
+      const GTypeInfo info = { 0, };
 
       type = g_type_register_static (G_TYPE_INT, "GimpLayerID", &info, 0);
     }
@@ -1039,7 +1069,7 @@ gimp_param_layer_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -1131,7 +1161,7 @@ gimp_channel_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info = { 0, };
+      const GTypeInfo info = { 0, };
 
       type = g_type_register_static (G_TYPE_INT, "GimpChannelID", &info, 0);
     }
@@ -1154,7 +1184,7 @@ gimp_param_channel_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -1246,7 +1276,7 @@ gimp_layer_mask_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info = { 0, };
+      const GTypeInfo info = { 0, };
 
       type = g_type_register_static (G_TYPE_INT, "GimpLayerMaskID", &info, 0);
     }
@@ -1269,7 +1299,7 @@ gimp_param_layer_mask_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -1361,7 +1391,7 @@ gimp_selection_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info = { 0, };
+      const GTypeInfo info = { 0, };
 
       type = g_type_register_static (G_TYPE_INT, "GimpSelectionID", &info, 0);
     }
@@ -1384,7 +1414,7 @@ gimp_param_selection_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -1476,7 +1506,7 @@ gimp_vectors_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info = { 0, };
+      const GTypeInfo info = { 0, };
 
       type = g_type_register_static (G_TYPE_INT, "GimpVectorsID", &info, 0);
     }
@@ -1499,7 +1529,7 @@ gimp_param_vectors_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -1591,7 +1621,7 @@ gimp_display_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info = { 0, };
+      const GTypeInfo info = { 0, };
 
       type = g_type_register_static (G_TYPE_INT, "GimpDisplayID", &info, 0);
     }
@@ -1621,7 +1651,7 @@ gimp_param_display_id_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -1828,7 +1858,7 @@ gimp_param_array_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -2001,7 +2031,7 @@ gimp_param_int8_array_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -2123,7 +2153,7 @@ gimp_param_int16_array_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -2248,7 +2278,7 @@ gimp_param_int32_array_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -2373,7 +2403,7 @@ gimp_param_float_array_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
@@ -2566,7 +2596,7 @@ gimp_param_string_array_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GParamSpecClass),
         NULL, NULL,

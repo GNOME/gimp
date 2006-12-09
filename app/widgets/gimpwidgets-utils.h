@@ -55,6 +55,11 @@ const gchar     * gimp_get_mod_separator     (void);
 const gchar     * gimp_get_mod_string        (GdkModifierType  modifiers);
 gchar           * gimp_get_accel_string      (guint            key,
                                               GdkModifierType  modifiers);
+gchar           * gimp_suggest_modifiers     (const gchar     *message,
+                                              GdkModifierType  modifiers,
+                                              const gchar     *shift_format,
+                                              const gchar     *control_format,
+                                              const gchar     *alt_format);
 
 void              gimp_get_screen_resolution (GdkScreen       *screen,
                                               gdouble         *xres,
@@ -68,9 +73,8 @@ void              gimp_rgb_set_gdk_color     (GimpRGB         *rgb,
 void              gimp_window_set_hint       (GtkWindow       *window,
                                               GimpWindowHint   hint);
 GdkNativeWindow   gimp_window_get_native     (GtkWindow       *window);
-
-void              gimp_dialog_set_sensitive  (GtkDialog       *dialog,
-                                              gboolean         sensitive);
+void              gimp_window_set_transient_for (GtkWindow    *window,
+                                                 guint32       parent_ID);
 
 gboolean          gimp_text_buffer_load      (GtkTextBuffer   *buffer,
                                               const gchar     *filename,
@@ -85,6 +89,8 @@ void          gimp_toggle_button_set_visible (GtkToggleButton *toggle,
 
 void              gimp_widget_set_accel_help (GtkWidget       *widget,
                                               GtkAction       *action);
+
+const gchar     * gimp_get_message_stock_id  (GimpMessageSeverity  severity);
 
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

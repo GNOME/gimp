@@ -22,6 +22,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "gimp.h"
@@ -39,8 +41,8 @@ static GdkPixbuf * gimp_pixbuf_from_data (guchar                 *data,
 /**
  * gimp_image_get_thumbnail:
  * @image_ID: the image ID
- * @width:    the requested thumbnail width  (<= 512 pixels)
- * @height:   the requested thumbnail height (<= 512 pixels)
+ * @width:    the requested thumbnail width  (<= 1024 pixels)
+ * @height:   the requested thumbnail height (<= 1024 pixels)
  * @alpha:    how to handle an alpha channel
  *
  * Retrieves a thumbnail pixbuf for the image identified by @image_ID.
@@ -61,8 +63,8 @@ gimp_image_get_thumbnail (gint32                  image_ID,
   gint    thumb_bpp;
   guchar *data;
 
-  g_return_val_if_fail (width  > 0 && width  <= 512, NULL);
-  g_return_val_if_fail (height > 0 && height <= 512, NULL);
+  g_return_val_if_fail (width  > 0 && width  <= 1024, NULL);
+  g_return_val_if_fail (height > 0 && height <= 1024, NULL);
 
   data = gimp_image_get_thumbnail_data (image_ID,
                                         &thumb_width,
@@ -79,8 +81,8 @@ gimp_image_get_thumbnail (gint32                  image_ID,
 /**
  * gimp_drawable_get_thumbnail:
  * @drawable_ID: the drawable ID
- * @width:       the requested thumbnail width  (<= 512 pixels)
- * @height:      the requested thumbnail height (<= 512 pixels)
+ * @width:       the requested thumbnail width  (<= 1024 pixels)
+ * @height:      the requested thumbnail height (<= 1024 pixels)
  * @alpha:       how to handle an alpha channel
  *
  * Retrieves a thumbnail pixbuf for the drawable identified by
@@ -102,8 +104,8 @@ gimp_drawable_get_thumbnail (gint32                  drawable_ID,
   gint    thumb_bpp;
   guchar *data;
 
-  g_return_val_if_fail (width  > 0 && width  <= 512, NULL);
-  g_return_val_if_fail (height > 0 && height <= 512, NULL);
+  g_return_val_if_fail (width  > 0 && width  <= 1024, NULL);
+  g_return_val_if_fail (height > 0 && height <= 1024, NULL);
 
   data = gimp_drawable_get_thumbnail_data (drawable_ID,
                                            &thumb_width,
@@ -125,8 +127,8 @@ gimp_drawable_get_thumbnail (gint32                  drawable_ID,
  * @src_y:       the y coordinate of the area
  * @src_width:   the width of the area
  * @src_height:  the height of the area
- * @dest_width:  the requested thumbnail width  (<= 512 pixels)
- * @dest_height: the requested thumbnail height (<= 512 pixels)
+ * @dest_width:  the requested thumbnail width  (<= 1024 pixels)
+ * @dest_height: the requested thumbnail height (<= 1024 pixels)
  * @alpha:       how to handle an alpha channel
  *
  * Retrieves a thumbnail pixbuf for the drawable identified by
@@ -156,8 +158,8 @@ gimp_drawable_get_sub_thumbnail (gint32                  drawable_ID,
   g_return_val_if_fail (src_y >= 0, NULL);
   g_return_val_if_fail (src_width  > 0, NULL);
   g_return_val_if_fail (src_height > 0, NULL);
-  g_return_val_if_fail (dest_width  > 0 && dest_width  <= 512, NULL);
-  g_return_val_if_fail (dest_height > 0 && dest_height <= 512, NULL);
+  g_return_val_if_fail (dest_width  > 0 && dest_width  <= 1024, NULL);
+  g_return_val_if_fail (dest_height > 0 && dest_height <= 1024, NULL);
 
   data = gimp_drawable_get_sub_thumbnail_data (drawable_ID,
                                                src_x, src_y,
@@ -282,4 +284,118 @@ gimp_pixbuf_from_data (guchar                 *data,
     }
 
   return pixbuf;
+}
+
+/**
+ * gimp_layer_new_from_pixbuf:
+ * @image_ID: The RGB image to which to add the layer.
+ * @name: The layer name.
+ * @pixbuf: A GdkPixbuf.
+ * @opacity: The layer opacity.
+ * @mode: The layer combination mode.
+ * @progress_start: start of progress
+ * @progress_end: end of progress
+ *
+ * Create a new layer from a %GdkPixbuf.
+ *
+ * This procedure creates a new layer from the given %GdkPixbuf.  The
+ * image has to be an RGB image and just like with gimp_layer_new()
+ * you will still need to add the layer to it.
+ *
+ * If you pass @progress_end > @progress_start to this function,
+ * @gimp_progress_update() will be called for. You have to call
+ * @gimp_progress_init() beforehand.
+ *
+ * Returns: The newly created layer.
+ *
+ * Since: GIMP 2.4
+ */
+gint32
+gimp_layer_new_from_pixbuf (gint32                image_ID,
+                            const gchar          *name,
+                            GdkPixbuf            *pixbuf,
+                            gdouble               opacity,
+                            GimpLayerModeEffects  mode,
+                            gdouble               progress_start,
+                            gdouble               progress_end)
+{
+  GimpDrawable *drawable;
+  GimpPixelRgn	rgn;
+  const guchar *pixels;
+  gpointer      pr;
+  gint32        layer;
+  gint          width;
+  gint          height;
+  gint          rowstride;
+  gint          bpp;
+  gdouble       range = progress_end - progress_start;
+  guint         count = 0;
+  guint         done  = 0;
+
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), -1);
+
+  if (gimp_image_base_type (image_ID) != GIMP_RGB)
+    {
+      g_warning ("gimp_layer_new_from_pixbuf() needs an RGB image");
+      return -1;
+    }
+
+  if (gdk_pixbuf_get_colorspace (pixbuf) != GDK_COLORSPACE_RGB)
+    {
+      g_warning ("gimp_layer_new_from_pixbuf() assumes that GdkPixbuf is RGB");
+      return -1;
+    }
+
+  width  = gdk_pixbuf_get_width (pixbuf);
+  height = gdk_pixbuf_get_height (pixbuf);
+  bpp    = gdk_pixbuf_get_n_channels (pixbuf);
+
+  layer = gimp_layer_new (image_ID, name, width, height,
+                          bpp == 3 ? GIMP_RGB_IMAGE : GIMP_RGBA_IMAGE,
+                          opacity, mode);
+
+  if (layer == -1)
+    return -1;
+
+  drawable = gimp_drawable_get (layer);
+
+  gimp_pixel_rgn_init (&rgn, drawable, 0, 0, width, height, TRUE, FALSE);
+
+  g_assert (bpp == rgn.bpp);
+
+  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+  pixels    = gdk_pixbuf_get_pixels (pixbuf);
+
+  for (pr = gimp_pixel_rgns_register (1, &rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
+    {
+      const guchar *src  = pixels + rgn.y * rowstride + rgn.x * bpp;
+      guchar       *dest = rgn.data;
+      gint          y;
+
+      for (y = 0; y < rgn.h; y++)
+        {
+          memcpy (dest, src, rgn.w * rgn.bpp);
+
+          src  += rowstride;
+          dest += rgn.rowstride;
+        }
+
+      if (range > 0.0)
+        {
+          done += rgn.h * rgn.w;
+
+          if (count++ % 16 == 0)
+            gimp_progress_update (progress_start +
+                                  (gdouble) done / (width * height) * range);
+        }
+    }
+
+  if (range > 0.0)
+    gimp_progress_update (progress_end);
+
+  gimp_drawable_detach (drawable);
+
+  return layer;
 }

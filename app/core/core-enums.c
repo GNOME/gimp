@@ -304,7 +304,7 @@ gimp_stroke_style_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_STROKE_STYLE_SOLID, N_("Solid"), NULL },
+    { GIMP_STROKE_STYLE_SOLID, N_("Solid color"), NULL },
     { GIMP_STROKE_STYLE_PATTERN, N_("Pattern"), NULL },
     { 0, NULL, NULL }
   };
@@ -780,6 +780,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_GROUP_ITEM_DISPLACE, "GIMP_UNDO_GROUP_ITEM_DISPLACE", "group-item-displace" },
     { GIMP_UNDO_GROUP_ITEM_SCALE, "GIMP_UNDO_GROUP_ITEM_SCALE", "group-item-scale" },
     { GIMP_UNDO_GROUP_ITEM_RESIZE, "GIMP_UNDO_GROUP_ITEM_RESIZE", "group-item-resize" },
+    { GIMP_UNDO_GROUP_LAYER_ADD, "GIMP_UNDO_GROUP_LAYER_ADD", "group-layer-add" },
     { GIMP_UNDO_GROUP_LAYER_ADD_MASK, "GIMP_UNDO_GROUP_LAYER_ADD_MASK", "group-layer-add-mask" },
     { GIMP_UNDO_GROUP_LAYER_APPLY_MASK, "GIMP_UNDO_GROUP_LAYER_APPLY_MASK", "group-layer-apply-mask" },
     { GIMP_UNDO_GROUP_FS_TO_LAYER, "GIMP_UNDO_GROUP_FS_TO_LAYER", "group-fs-to-layer" },
@@ -867,6 +868,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_GROUP_ITEM_DISPLACE, N_("Move item"), NULL },
     { GIMP_UNDO_GROUP_ITEM_SCALE, N_("Scale item"), NULL },
     { GIMP_UNDO_GROUP_ITEM_RESIZE, N_("Resize item"), NULL },
+    { GIMP_UNDO_GROUP_LAYER_ADD, N_("Add layer"), NULL },
     { GIMP_UNDO_GROUP_LAYER_ADD_MASK, N_("Add layer mask"), NULL },
     { GIMP_UNDO_GROUP_LAYER_APPLY_MASK, N_("Apply layer mask"), NULL },
     { GIMP_UNDO_GROUP_FS_TO_LAYER, N_("Floating selection to layer"), NULL },
@@ -1015,6 +1017,40 @@ gimp_offset_type_get_type (void)
 }
 
 GType
+gimp_gradient_color_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_GRADIENT_COLOR_FIXED, "GIMP_GRADIENT_COLOR_FIXED", "fixed" },
+    { GIMP_GRADIENT_COLOR_FOREGROUND, "GIMP_GRADIENT_COLOR_FOREGROUND", "foreground" },
+    { GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, "GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT", "foreground-transparent" },
+    { GIMP_GRADIENT_COLOR_BACKGROUND, "GIMP_GRADIENT_COLOR_BACKGROUND", "background" },
+    { GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT, "GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT", "background-transparent" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_GRADIENT_COLOR_FIXED, "GIMP_GRADIENT_COLOR_FIXED", NULL },
+    { GIMP_GRADIENT_COLOR_FOREGROUND, "GIMP_GRADIENT_COLOR_FOREGROUND", NULL },
+    { GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, "GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT", NULL },
+    { GIMP_GRADIENT_COLOR_BACKGROUND, "GIMP_GRADIENT_COLOR_BACKGROUND", NULL },
+    { GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT, "GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpGradientColor", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_gradient_segment_type_get_type (void)
 {
   static const GEnumValue values[] =
@@ -1132,6 +1168,104 @@ gimp_merge_type_get_type (void)
   if (! type)
     {
       type = g_enum_register_static ("GimpMergeType", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_select_criterion_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_SELECT_CRITERION_COMPOSITE, "GIMP_SELECT_CRITERION_COMPOSITE", "composite" },
+    { GIMP_SELECT_CRITERION_R, "GIMP_SELECT_CRITERION_R", "r" },
+    { GIMP_SELECT_CRITERION_G, "GIMP_SELECT_CRITERION_G", "g" },
+    { GIMP_SELECT_CRITERION_B, "GIMP_SELECT_CRITERION_B", "b" },
+    { GIMP_SELECT_CRITERION_H, "GIMP_SELECT_CRITERION_H", "h" },
+    { GIMP_SELECT_CRITERION_S, "GIMP_SELECT_CRITERION_S", "s" },
+    { GIMP_SELECT_CRITERION_V, "GIMP_SELECT_CRITERION_V", "v" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_SELECT_CRITERION_COMPOSITE, N_("Composite"), NULL },
+    { GIMP_SELECT_CRITERION_R, N_("Red"), NULL },
+    { GIMP_SELECT_CRITERION_G, N_("Green"), NULL },
+    { GIMP_SELECT_CRITERION_B, N_("Blue"), NULL },
+    { GIMP_SELECT_CRITERION_H, N_("Hue"), NULL },
+    { GIMP_SELECT_CRITERION_S, N_("Saturation"), NULL },
+    { GIMP_SELECT_CRITERION_V, N_("Value"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpSelectCriterion", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_message_severity_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_MESSAGE_INFO, "GIMP_MESSAGE_INFO", "info" },
+    { GIMP_MESSAGE_WARNING, "GIMP_MESSAGE_WARNING", "warning" },
+    { GIMP_MESSAGE_ERROR, "GIMP_MESSAGE_ERROR", "error" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_MESSAGE_INFO, N_("Message"), NULL },
+    { GIMP_MESSAGE_WARNING, N_("Warning"), NULL },
+    { GIMP_MESSAGE_ERROR, N_("Error"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpMessageSeverity", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_color_profile_policy_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_COLOR_PROFILE_POLICY_ASK, "GIMP_COLOR_PROFILE_POLICY_ASK", "ask" },
+    { GIMP_COLOR_PROFILE_POLICY_KEEP, "GIMP_COLOR_PROFILE_POLICY_KEEP", "keep" },
+    { GIMP_COLOR_PROFILE_POLICY_CONVERT, "GIMP_COLOR_PROFILE_POLICY_CONVERT", "convert" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_COLOR_PROFILE_POLICY_ASK, N_("Ask what to do"), NULL },
+    { GIMP_COLOR_PROFILE_POLICY_KEEP, N_("Keep embedded profile"), NULL },
+    { GIMP_COLOR_PROFILE_POLICY_CONVERT, N_("Convert to RGB workspace"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpColorProfilePolicy", values);
       gimp_enum_set_value_descriptions (type, descs);
     }
 

@@ -292,8 +292,7 @@ gimp_dockable_size_allocate (GtkWidget     *widget,
                                  container->border_width -
                                  button_requisition.width);
       else
-        child_allocation.x    = (allocation->x + container->border_width +
-                                 button_requisition.width);
+        child_allocation.x    = allocation->x + container->border_width;
 
       child_allocation.y      = allocation->y + container->border_width;
       child_allocation.width  = button_requisition.width;

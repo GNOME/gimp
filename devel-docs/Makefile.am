@@ -26,6 +26,7 @@ EXTRA_DIST = \
 	pat.txt			\
 	structure.xml		\
 	undo.txt		\
+	vbr.txt			\
 	xcf.txt
 
 

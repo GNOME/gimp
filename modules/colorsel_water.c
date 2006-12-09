@@ -117,7 +117,7 @@ colorsel_water_get_type (GTypeModule *module)
 {
   if (! colorsel_water_type)
     {
-      static const GTypeInfo select_info =
+      const GTypeInfo select_info =
       {
         sizeof (ColorselWaterClass),
         (GBaseInitFunc) NULL,

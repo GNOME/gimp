@@ -77,6 +77,7 @@
 #include "image-new-dialog.h"
 #include "keyboard-shortcuts-dialog.h"
 #include "module-dialog.h"
+#include "palette-import-dialog.h"
 #include "preferences-dialog.h"
 #include "quit-dialog.h"
 #include "tips-dialog.h"
@@ -100,7 +101,7 @@ dialogs_image_new_new (GimpDialogFactory *factory,
                        GimpContext       *context,
                        gint               view_size)
 {
-  return image_new_dialog_new (context->gimp);
+  return image_new_dialog_new (context);
 }
 
 GtkWidget *
@@ -149,6 +150,14 @@ dialogs_module_get (GimpDialogFactory *factory,
                     gint               view_size)
 {
   return module_dialog_new (context->gimp);
+}
+
+GtkWidget *
+dialogs_palette_import_get (GimpDialogFactory *factory,
+                            GimpContext       *context,
+                            gint               view_size)
+{
+  return palette_import_dialog_new (context);
 }
 
 GtkWidget *
@@ -205,7 +214,7 @@ dialogs_toolbox_get (GimpDialogFactory *factory,
    *  the toolbox constructor, because the global_toolbox_factory has no
    *  dockables registered
    */
-  return gimp_toolbox_new (global_dock_factory, context->gimp);
+  return gimp_toolbox_new (global_dock_factory, context);
 }
 
 GtkWidget *
@@ -673,7 +682,7 @@ dialogs_brush_editor_get (GimpDialogFactory *factory,
                           GimpContext       *context,
                           gint               view_size)
 {
-  return gimp_brush_editor_new (context->gimp,
+  return gimp_brush_editor_new (context,
                                 factory->menu_factory);
 }
 
@@ -682,7 +691,7 @@ dialogs_gradient_editor_get (GimpDialogFactory *factory,
                              GimpContext       *context,
                              gint               view_size)
 {
-  return gimp_gradient_editor_new (context->gimp,
+  return gimp_gradient_editor_new (context,
                                    factory->menu_factory);
 }
 
@@ -691,7 +700,7 @@ dialogs_palette_editor_get (GimpDialogFactory *factory,
                             GimpContext       *context,
                             gint               view_size)
 {
-  return gimp_palette_editor_new (context->gimp,
+  return gimp_palette_editor_new (context,
                                   factory->menu_factory);
 }
 

@@ -21,12 +21,12 @@
 
 
 /*  don't call this function directly, use gimp_data_save() instead  */
-gboolean   gimp_gradient_save        (GimpData      *data,
-                                      GError       **error);
+gboolean   gimp_gradient_save     (GimpData      *data,
+                                   GError       **error);
 
-gboolean   gimp_gradient_save_as_pov (GimpGradient  *gradient,
-                                      const gchar   *filename,
-                                      GError       **error);
+gboolean   gimp_gradient_save_pov (GimpGradient  *gradient,
+                                   const gchar   *filename,
+                                   GError       **error);
 
 
 #endif /* __GIMP_GRADIENT_SAVE_H__ */

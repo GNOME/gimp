@@ -41,25 +41,25 @@
 #include "gimp-intl.h"
 
 
-static void       gimp_smudge_finalize   (GObject          *object);
+static void       gimp_smudge_finalize     (GObject          *object);
 
-static void       gimp_smudge_paint      (GimpPaintCore    *paint_core,
-                                          GimpDrawable     *drawable,
-                                          GimpPaintOptions *paint_options,
-                                          GimpPaintState    paint_state,
-                                          guint32           time);
-static gboolean   gimp_smudge_start      (GimpPaintCore    *paint_core,
-                                          GimpDrawable     *drawable,
-                                          GimpPaintOptions *paint_options);
-static void       gimp_smudge_motion     (GimpPaintCore    *paint_core,
-                                          GimpDrawable     *drawable,
-                                          GimpPaintOptions *paint_options);
+static void       gimp_smudge_paint        (GimpPaintCore    *paint_core,
+                                            GimpDrawable     *drawable,
+                                            GimpPaintOptions *paint_options,
+                                            GimpPaintState    paint_state,
+                                            guint32           time);
+static gboolean   gimp_smudge_start        (GimpPaintCore    *paint_core,
+                                            GimpDrawable     *drawable,
+                                            GimpPaintOptions *paint_options);
+static void       gimp_smudge_motion       (GimpPaintCore    *paint_core,
+                                            GimpDrawable     *drawable,
+                                            GimpPaintOptions *paint_options);
 
-static void  gimp_smudge_nonclipped_painthit_coords (GimpPaintCore *paint_core,
-                                                     gint          *x,
-                                                     gint          *y,
-                                                     gint          *w,
-                                                     gint          *h);
+static void       gimp_smudge_brush_coords (GimpPaintCore    *paint_core,
+                                            gint             *x,
+                                            gint             *y,
+                                            gint             *w,
+                                            gint             *h);
 
 
 G_DEFINE_TYPE (GimpSmudge, gimp_smudge, GIMP_TYPE_BRUSH_CORE)
@@ -147,8 +147,6 @@ gimp_smudge_paint (GimpPaintCore    *paint_core,
     default:
       break;
     }
-
-  return;
 }
 
 static gboolean
@@ -173,15 +171,15 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
     return FALSE;
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
-  gimp_smudge_nonclipped_painthit_coords (paint_core, &x, &y, &w, &h);
-
+  gimp_smudge_brush_coords (paint_core, &x, &y, &w, &h);
 
   /*  Allocate the accumulation buffer */
   bytes = gimp_drawable_bytes (drawable);
   smudge->accum_data = g_malloc (w * h * bytes);
 
-  /*  If clipped, prefill the smudge buffer
-      with the color at the brush position.  */
+  /*  If clipped, prefill the smudge buffer with the color at the
+   *  brush position.
+   */
   if (x != area->x || y != area->y || w != area->width || h != area->height)
     {
       guchar *fill;
@@ -191,6 +189,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                                                 0, gimp_item_width (GIMP_ITEM (drawable)) - 1),
                                          CLAMP ((gint) paint_core->cur_coords.y,
                                                 0, gimp_item_height (GIMP_ITEM (drawable)) - 1));
+
       g_return_val_if_fail (fill != NULL, FALSE);
 
       pixel_region_init_data (&srcPR, smudge->accum_data,
@@ -250,7 +249,8 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  gimp_smudge_nonclipped_painthit_coords (paint_core, &x, &y, &w, &h);
+  /*  Get the unclipped brush coordinates  */
+  gimp_smudge_brush_coords (paint_core, &x, &y, &w, &h);
 
   /*  Get the paint area (Smudge won't scale!)  */
   area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
@@ -316,11 +316,11 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
 }
 
 static void
-gimp_smudge_nonclipped_painthit_coords (GimpPaintCore *paint_core,
-                                        gint          *x,
-                                        gint          *y,
-                                        gint          *w,
-                                        gint          *h)
+gimp_smudge_brush_coords (GimpPaintCore *paint_core,
+                          gint          *x,
+                          gint          *y,
+                          gint          *w,
+                          gint          *h)
 {
   GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_core);
 

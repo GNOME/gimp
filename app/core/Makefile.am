@@ -37,6 +37,8 @@ libappcore_a_sources = \
 	gimp-parasites.h		\
 	gimp-templates.c		\
 	gimp-templates.h		\
+	gimp-transform-region.c		\
+	gimp-transform-region.h		\
 	gimp-transform-utils.c		\
 	gimp-transform-utils.h		\
 	gimp-units.c			\
@@ -56,8 +58,14 @@ libappcore_a_sources = \
 	gimpbrushclipboard.h		\
 	gimpbrushgenerated.c		\
 	gimpbrushgenerated.h		\
+	gimpbrushgenerated-load.c	\
+	gimpbrushgenerated-load.h	\
+	gimpbrushgenerated-save.c	\
+	gimpbrushgenerated-save.h	\
 	gimpbrushpipe.c			\
 	gimpbrushpipe.h			\
+	gimpbrushpipe-load.c		\
+	gimpbrushpipe-load.h		\
 	gimpbuffer.c			\
 	gimpbuffer.h			\
 	gimpchannel.c			\
@@ -112,8 +120,10 @@ libappcore_a_sources = \
 	gimpdrawable-stroke.h		\
 	gimpdrawable-transform.c	\
 	gimpdrawable-transform.h	\
-        gimpfilloptions.c               \
-        gimpfilloptions.h               \
+	gimpdrawableundo.c		\
+	gimpdrawableundo.h		\
+	gimpfilloptions.c		\
+	gimpfilloptions.h		\
 	gimpgradient.c			\
 	gimpgradient.h			\
 	gimpgradient-load.c		\
@@ -201,12 +211,18 @@ libappcore_a_sources = \
 	gimppattern.c			\
 	gimppattern.h			\
 	gimppattern-header.h		\
+	gimppattern-load.c		\
+	gimppattern-load.h		\
 	gimppatternclipboard.c		\
 	gimppatternclipboard.h		\
 	gimppalette.c			\
 	gimppalette.h			\
 	gimppalette-import.c		\
 	gimppalette-import.h		\
+	gimppalette-load.c		\
+	gimppalette-load.h		\
+	gimppalette-save.c		\
+	gimppalette-save.h		\
 	gimpparamspecs.c		\
 	gimpparamspecs.h		\
 	gimpparamspecs-desc.c		\

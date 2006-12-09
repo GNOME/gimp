@@ -16,15 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __COLORMAP_EDITOR_COMMANDS_H__
-#define __COLORMAP_EDITOR_COMMANDS_H__
+#ifndef __COLORMAP_COMMANDS_H__
+#define __COLORMAP_COMMANDS_H__
 
 
-void   colormap_editor_edit_color_cmd_callback (GtkAction *action,
-                                                gpointer   data);
-void   colormap_editor_add_color_cmd_callback  (GtkAction *action,
-                                                gint       value,
-                                                gpointer   data);
+void   colormap_edit_color_cmd_callback (GtkAction *action,
+                                         gpointer   data);
+void   colormap_add_color_cmd_callback  (GtkAction *action,
+                                         gint       value,
+                                         gpointer   data);
 
 
-#endif /* __COLORMAP_EDITOR_COMMANDS_H__ */
+#endif /* __COLORMAP_COMMANDS_H__ */

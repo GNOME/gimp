@@ -444,7 +444,7 @@ run (const gchar      *name,
   run_mode = param[0].data.d_int32;
   compose_by_drawable = (strcmp (name, DRAWABLE_COMPOSE_PROC) == 0);
 
-  *nreturn_vals = 2;
+  *nreturn_vals = 1;
   *return_vals  = values;
 
   values[0].type          = GIMP_PDB_STATUS;
@@ -504,6 +504,8 @@ run (const gchar      *name,
           /*  Possibly retrieve data  */
           gimp_get_data (name, &composevals);
 
+          compose_by_drawable = TRUE;
+
           /* The dialog is now drawable based. Get a drawable-ID of the image */
           if (strcmp (name, COMPOSE_PROC) == 0)
             {
@@ -518,6 +520,7 @@ run (const gchar      *name,
                              (gint) param[1].data.d_int32);
                   return;
                 }
+
               drawable_ID = layer_list[0];
               g_free (layer_list);
             }
@@ -525,8 +528,6 @@ run (const gchar      *name,
             {
               drawable_ID = param[2].data.d_int32;
             }
-
-          compose_by_drawable = TRUE;
 
           /*  First acquire information with a dialog  */
           if (! compose_dialog (composevals.compose_type, drawable_ID))
@@ -562,6 +563,7 @@ run (const gchar      *name,
                           status = GIMP_PDB_CALLING_ERROR;
                           break;
                         }
+
                       composevals.inputs[i].is_ID    = FALSE;
                       composevals.inputs[i].comp.val = param[7 + i].data.d_int8;
                     }
@@ -576,6 +578,8 @@ run (const gchar      *name,
         case GIMP_RUN_WITH_LAST_VALS:
           /*  Possibly retrieve data  */
           gimp_get_data (name, &composevals);
+
+          compose_by_drawable = TRUE;
           break;
 
         default:
@@ -607,6 +611,7 @@ run (const gchar      *name,
             {
               gimp_image_undo_enable (image_ID);
               gimp_image_clean_all (image_ID);
+
               if (run_mode != GIMP_RUN_NONINTERACTIVE)
                 gimp_display_new (image_ID);
             }
@@ -616,6 +621,8 @@ run (const gchar      *name,
       if (run_mode == GIMP_RUN_INTERACTIVE)
         gimp_set_data (name, &composevals, sizeof (ComposeVals));
     }
+
+  *nreturn_vals = composevals.do_recompose ? 1 : 2;
 
   values[0].data.d_status = status;
 }

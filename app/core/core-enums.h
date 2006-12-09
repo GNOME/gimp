@@ -33,7 +33,7 @@
 
 
 /*
- * these enums that are registered with the type system
+ * these enums are registered with the type system
  */
 
 
@@ -163,8 +163,8 @@ GType gimp_stroke_style_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_STROKE_STYLE_SOLID,  /*< desc="Solid"   >*/
-  GIMP_STROKE_STYLE_PATTERN /*< desc="Pattern" >*/
+  GIMP_STROKE_STYLE_SOLID,  /*< desc="Solid color" >*/
+  GIMP_STROKE_STYLE_PATTERN /*< desc="Pattern"     >*/
 } GimpStrokeStyle;
 
 
@@ -380,6 +380,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_ITEM_DISPLACE,      /*< desc="Move item"                   >*/
   GIMP_UNDO_GROUP_ITEM_SCALE,         /*< desc="Scale item"                  >*/
   GIMP_UNDO_GROUP_ITEM_RESIZE,        /*< desc="Resize item"                 >*/
+  GIMP_UNDO_GROUP_LAYER_ADD,          /*< desc="Add layer"                   >*/
   GIMP_UNDO_GROUP_LAYER_ADD_MASK,     /*< desc="Add layer mask"              >*/
   GIMP_UNDO_GROUP_LAYER_APPLY_MASK,   /*< desc="Apply layer mask"            >*/
   GIMP_UNDO_GROUP_FS_TO_LAYER,        /*< desc="Floating selection to layer" >*/
@@ -481,6 +482,20 @@ typedef enum
 } GimpOffsetType;
 
 
+#define GIMP_TYPE_GRADIENT_COLOR (gimp_gradient_color_get_type ())
+
+GType gimp_gradient_color_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_GRADIENT_COLOR_FIXED,
+  GIMP_GRADIENT_COLOR_FOREGROUND,
+  GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT,
+  GIMP_GRADIENT_COLOR_BACKGROUND,
+  GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT
+} GimpGradientColor;
+
+
 #define GIMP_TYPE_GRADIENT_SEGMENT_TYPE (gimp_gradient_segment_type_get_type ())
 
 GType gimp_gradient_segment_type_get_type (void) G_GNUC_CONST;
@@ -529,6 +544,46 @@ typedef enum
   GIMP_CLIP_TO_BOTTOM_LAYER,
   GIMP_FLATTEN_IMAGE
 } GimpMergeType;
+
+
+#define GIMP_TYPE_SELECT_CRITERION (gimp_select_criterion_get_type ())
+
+GType gimp_select_criterion_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_SELECT_CRITERION_COMPOSITE,  /*< desc="Composite"  >*/
+  GIMP_SELECT_CRITERION_R,          /*< desc="Red"        >*/
+  GIMP_SELECT_CRITERION_G,          /*< desc="Green"      >*/
+  GIMP_SELECT_CRITERION_B,          /*< desc="Blue"       >*/
+  GIMP_SELECT_CRITERION_H,          /*< desc="Hue"        >*/
+  GIMP_SELECT_CRITERION_S,          /*< desc="Saturation" >*/
+  GIMP_SELECT_CRITERION_V           /*< desc="Value"      >*/
+} GimpSelectCriterion;
+
+
+#define GIMP_TYPE_MESSAGE_SEVERITY (gimp_message_severity_get_type ())
+
+GType gimp_message_severity_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_MESSAGE_INFO,     /*< desc="Message" >*/
+  GIMP_MESSAGE_WARNING,  /*< desc="Warning" >*/
+  GIMP_MESSAGE_ERROR     /*< desc="Error"   >*/
+} GimpMessageSeverity;
+
+
+#define GIMP_TYPE_COLOR_PROFILE_POLICY (gimp_color_profile_policy_get_type ())
+
+GType gimp_color_profile_policy_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_COLOR_PROFILE_POLICY_ASK,    /*< desc="Ask what to do"           >*/
+  GIMP_COLOR_PROFILE_POLICY_KEEP,   /*< desc="Keep embedded profile"    >*/
+  GIMP_COLOR_PROFILE_POLICY_CONVERT /*< desc="Convert to RGB workspace" >*/
+} GimpColorProfilePolicy;
 
 
 /*

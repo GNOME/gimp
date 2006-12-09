@@ -20,6 +20,10 @@
 #define __PLUG_IN_ENUMS_H__
 
 
+#define GIMP_TYPE_PLUG_IN_IMAGE_TYPE (gimp_plug_in_image_type_get_type ())
+
+GType gimp_plug_in_image_type_get_type (void) G_GNUC_CONST;
+
 typedef enum /*< pdb-skip >*/
 {
   GIMP_PLUG_IN_RGB_IMAGE      = 1 << 0,
@@ -29,6 +33,11 @@ typedef enum /*< pdb-skip >*/
   GIMP_PLUG_IN_GRAYA_IMAGE    = 1 << 4,
   GIMP_PLUG_IN_INDEXEDA_IMAGE = 1 << 5
 } GimpPlugInImageType;
+
+
+#define GIMP_TYPE_PLUG_CALL_MODE (gimp_plug_in_call_mode_get_type ())
+
+GType gimp_plug_in_call_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum /*< pdb-skip >*/
 {

@@ -81,54 +81,57 @@ gboolean  gimp_wire_write_msg     (GIOChannel          *channel,
 
 void      gimp_wire_destroy       (GimpWireMessage *msg);
 
-gboolean  _gimp_wire_read_int32   (GIOChannel      *channel,
-                                   guint32         *data,
-                                   gint             count,
-                                   gpointer         user_data) G_GNUC_INTERNAL;
-gboolean  _gimp_wire_read_int16   (GIOChannel           *channel,
-                                   guint16         *data,
-                                   gint             count,
-                                   gpointer         user_data) G_GNUC_INTERNAL;
-gboolean  _gimp_wire_read_int8    (GIOChannel      *channel,
-                                   guint8          *data,
-                                   gint             count,
-                                   gpointer         user_data) G_GNUC_INTERNAL;
-gboolean  _gimp_wire_read_double  (GIOChannel      *channel,
-                                   gdouble         *data,
-                                   gint             count,
-                                   gpointer         user_data) G_GNUC_INTERNAL;
-gboolean  _gimp_wire_read_string  (GIOChannel      *channel,
-                                   gchar          **data,
-                                   gint             count,
-                                   gpointer         user_data) G_GNUC_INTERNAL;
-gboolean  _gimp_wire_read_color   (GIOChannel      *channel,
-                                   GimpRGB         *data,
-                                   gint             count,
-                                   gpointer         user_data) G_GNUC_INTERNAL;
-gboolean  _gimp_wire_write_int32  (GIOChannel      *channel,
-                                   const guint32   *data,
-                                   gint             count,
-                                   gpointer         user_data) G_GNUC_INTERNAL;
-gboolean  _gimp_wire_write_int16  (GIOChannel      *channel,
-                                   const guint16   *data,
-                                   gint             count,
-                                   gpointer         user_data) G_GNUC_INTERNAL;
-gboolean  _gimp_wire_write_int8   (GIOChannel      *channel,
-                                   const guint8    *data,
-                                   gint             count,
-                                   gpointer         user_data) G_GNUC_INTERNAL;
-gboolean  _gimp_wire_write_double (GIOChannel      *channel,
-                                   const gdouble   *data,
-                                   gint             count,
-                                   gpointer         user_data) G_GNUC_INTERNAL;
-gboolean  _gimp_wire_write_string (GIOChannel      *channel,
-                                   gchar          **data,
-                                   gint             count,
-                                   gpointer         user_data) G_GNUC_INTERNAL;
-gboolean  _gimp_wire_write_color  (GIOChannel      *channel,
-                                   const GimpRGB   *data,
-                                   gint             count,
-                                   gpointer         user_data) G_GNUC_INTERNAL;
+
+/*  for internal use in libgimpbase  */
+
+G_GNUC_INTERNAL gboolean  _gimp_wire_read_int32   (GIOChannel     *channel,
+                                                   guint32        *data,
+                                                   gint            count,
+                                                   gpointer        user_data);
+G_GNUC_INTERNAL gboolean  _gimp_wire_read_int16   (GIOChannel     *channel,
+                                                   guint16        *data,
+                                                   gint            count,
+                                                   gpointer        user_data);
+G_GNUC_INTERNAL gboolean  _gimp_wire_read_int8    (GIOChannel     *channel,
+                                                   guint8         *data,
+                                                   gint            count,
+                                                   gpointer        user_data);
+G_GNUC_INTERNAL gboolean  _gimp_wire_read_double  (GIOChannel     *channel,
+                                                   gdouble        *data,
+                                                   gint            count,
+                                                   gpointer        user_data);
+G_GNUC_INTERNAL gboolean  _gimp_wire_read_string  (GIOChannel     *channel,
+                                                   gchar         **data,
+                                                   gint            count,
+                                                   gpointer        user_data);
+G_GNUC_INTERNAL gboolean  _gimp_wire_read_color   (GIOChannel     *channel,
+                                                   GimpRGB        *data,
+                                                   gint            count,
+                                                   gpointer        user_data);
+G_GNUC_INTERNAL gboolean  _gimp_wire_write_int32  (GIOChannel     *channel,
+                                                   const guint32  *data,
+                                                   gint            count,
+                                                   gpointer        user_data);
+G_GNUC_INTERNAL gboolean  _gimp_wire_write_int16  (GIOChannel     *channel,
+                                                   const guint16  *data,
+                                                   gint            count,
+                                                   gpointer        user_data);
+G_GNUC_INTERNAL gboolean  _gimp_wire_write_int8   (GIOChannel     *channel,
+                                                   const guint8   *data,
+                                                   gint            count,
+                                                   gpointer        user_data);
+G_GNUC_INTERNAL gboolean  _gimp_wire_write_double (GIOChannel     *channel,
+                                                   const gdouble  *data,
+                                                   gint            count,
+                                                   gpointer        user_data);
+G_GNUC_INTERNAL gboolean  _gimp_wire_write_string (GIOChannel     *channel,
+                                                   gchar         **data,
+                                                   gint            count,
+                                                   gpointer        user_data);
+G_GNUC_INTERNAL gboolean  _gimp_wire_write_color  (GIOChannel     *channel,
+                                                   const GimpRGB  *data,
+                                                   gint            count,
+                                                   gpointer        user_data);
 
 
 G_END_DECLS

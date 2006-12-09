@@ -71,8 +71,9 @@
 
 #define PLUG_IN_PROC   "plug-in-nova"
 #define PLUG_IN_BINARY "nova"
-#define ENTRY_WIDTH     50
+
 #define SCALE_WIDTH    125
+
 
 typedef struct
 {
@@ -425,6 +426,7 @@ nova_center_create (GimpDrawable *drawable,
 {
   NovaCenter *center;
   GtkWidget  *frame;
+  GtkWidget  *hbox;
   GtkWidget  *check;
   gint32      image_ID;
   gdouble     res_x;
@@ -446,6 +448,10 @@ nova_center_create (GimpDrawable *drawable,
                             G_CALLBACK (g_free),
                             center);
 
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
   image_ID = gimp_drawable_get_image (drawable->drawable_id);
   gimp_image_get_resolution (image_ID, &res_x, &res_y);
 
@@ -464,7 +470,7 @@ nova_center_create (GimpDrawable *drawable,
                                          0, drawable->height);
 
   gtk_table_set_row_spacing (GTK_TABLE (center->coords), 1, 12);
-  gtk_container_add (GTK_CONTAINER (frame), center->coords);
+  gtk_box_pack_start (GTK_BOX (hbox), center->coords, FALSE, FALSE, 0);
   gtk_widget_show (center->coords);
 
   g_signal_connect (center->coords, "value-changed",
@@ -798,9 +804,11 @@ nova (GimpDrawable *drawable,
            for (col = 0, x = 0; col < x2; col++, x++)
              {
                u = (gdouble) (x - xc) /
-                          (pvals.radius * width / drawable->width * zoom);
+                          ((gdouble) pvals.radius * width /
+                              drawable->width * zoom);
                v = (gdouble) (y - yc) /
-                          (pvals.radius * height / drawable->height * zoom);
+                          ((gdouble) pvals.radius * height /
+                              drawable->height * zoom);
                l = sqrt (u * u + v * v);
 
                /* This algorithm is still under construction. */

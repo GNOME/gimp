@@ -30,6 +30,8 @@
 #define GIMP_IS_MAGNIFY_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MAGNIFY_TOOL))
 #define GIMP_MAGNIFY_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MAGNIFY_TOOL, GimpMagnifyToolClass))
 
+#define GIMP_MAGNIFY_TOOL_GET_OPTIONS(t)  (GIMP_MAGNIFY_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
 
 typedef struct _GimpMagnifyTool      GimpMagnifyTool;
 typedef struct _GimpMagnifyToolClass GimpMagnifyToolClass;

@@ -20,7 +20,9 @@
 from gimpfu import *
 import time
 
-def python_foggify(img, layer, name, colour, turbulence, opacity):
+gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
+
+def foggify(img, layer, name, colour, turbulence, opacity):
     img.undo_group_start()
 
     fog = gimp.Layer(img, name, layer.width, layer.height, RGBA_IMAGE,
@@ -45,21 +47,24 @@ def python_foggify(img, layer, name, colour, turbulence, opacity):
     img.undo_group_end()
 
 register(
-    "python_fu_foggify",
-    "Add a layer of fog to the image",
-    "Add a layer of fog to the image",
+    "python-fu-foggify",
+    N_("Add a layer of fog"),
+    "Adds a layer of fog to the image.",
     "James Henstridge",
     "James Henstridge",
     "1999",
-    "<Image>/Filters/Render/Clouds/Add _Fog...",
+    N_("_Fog..."),
     "RGB*, GRAY*",
     [
-        (PF_STRING, "name", "The new layer name", "Clouds"),
-        (PF_COLOUR, "colour", "The colour of the fog", (240,180,70)),
-        (PF_SLIDER, "turbulence", "The turbulence", 1.0, (0, 10, 0.1)),
-        (PF_SLIDER, "opacity", "The opacity", 100, (0, 100, 1)),
+        (PF_STRING, "name",       _("Layer name"), _("Clouds")),
+        (PF_COLOUR, "colour",     _("Fog color"),  (240, 180, 70)),
+        (PF_SLIDER, "turbulence", _("Turbulence"), 1.0, (0, 10, 0.1)),
+        (PF_SLIDER, "opacity",    _("Opacity"),    100, (0, 100, 1)),
     ],
     [],
-    python_foggify)
+    foggify,
+    menu="<Image>/Filters/Render/Clouds",
+    domain=("gimp20-python", gimp.locale_directory)
+    )
 
 main()

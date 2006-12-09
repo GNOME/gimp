@@ -44,6 +44,8 @@
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 drawable_delete_invoker (GimpProcedure     *procedure,
@@ -59,8 +61,11 @@ drawable_delete_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      if (gimp_item_is_floating (GIMP_ITEM (drawable)))
-        gimp_item_sink (GIMP_ITEM (drawable));
+      if (g_object_is_floating (drawable))
+        {
+          g_object_ref_sink (drawable);
+          g_object_unref (drawable);
+        }
       else
         success = FALSE;
     }
@@ -999,6 +1004,8 @@ drawable_thumbnail_invoker (GimpProcedure     *procedure,
       TempBuf   *buf;
       gint       dwidth, dheight;
 
+      g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
+
       /* Adjust the width/height ratio */
       dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
       dheight = gimp_item_height (GIMP_ITEM (drawable));
@@ -1009,7 +1016,7 @@ drawable_thumbnail_invoker (GimpProcedure     *procedure,
         width  = MAX (1, (height * dwidth) / dheight);
 
       if (image->gimp->config->layer_previews)
-        buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable),
+        buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable), context,
                                              width, height);
       else
         buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
@@ -1953,7 +1960,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-merge-shadow",
                                      "Merge the shadow buffer with the specified drawable.",
-                                     "This procedure combines the contents of the image's shadow buffer (for temporary processing) with the specified drawable. The \"undo\" parameter specifies whether to add an undo step for the operation. Requesting no undo is useful for such applications as 'auto-apply'.",
+                                     "This procedure combines the contents of the image's shadow buffer (for temporary processing) with the specified drawable. The 'undo' parameter specifies whether to add an undo step for the operation. Requesting no undo is useful for such applications as 'auto-apply'.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -2146,7 +2153,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-offset",
                                      "Offset the drawable by the specified amounts in the X and Y directions",
-                                     "This procedure offsets the specified drawable by the amounts specified by 'offset_x' and 'offset_y'. If 'wrap_around' is set to TRUE, then portions of the drawable which are offset out of bounds are wrapped around. Alternatively, the undefined regions of the drawable can be filled with transparency or the background color, as specified by the 'fill_type' parameter.",
+                                     "This procedure offsets the specified drawable by the amounts specified by 'offset_x' and 'offset_y'. If 'wrap_around' is set to TRUE, then portions of the drawable which are offset out of bounds are wrapped around. Alternatively, the undefined regions of the drawable can be filled with transparency or the background color, as specified by the 'fill-type' parameter.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1997",
@@ -2193,7 +2200,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-thumbnail",
                                      "Get a thumbnail of a drawable.",
-                                     "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 512 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
+                                     "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 1024 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
                                      "Andy Thomas",
                                      "Andy Thomas",
                                      "1999",
@@ -2208,13 +2215,13 @@ register_drawable_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("width",
                                                       "width",
                                                       "The requested thumbnail width",
-                                                      1, 512, 1,
+                                                      1, 1024, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("height",
                                                       "height",
                                                       "The requested thumbnail height",
-                                                      1, 512, 1,
+                                                      1, 1024, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("actual-width",
@@ -2256,7 +2263,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-sub-thumbnail",
                                      "Get a thumbnail of a sub-area of a drawable drawable.",
-                                     "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 512 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
+                                     "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 1024 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2004",
@@ -2295,13 +2302,13 @@ register_drawable_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("dest-width",
                                                       "dest width",
                                                       "The thumbnail width",
-                                                      1, 512, 1,
+                                                      1, 1024, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("dest-height",
                                                       "dest height",
                                                       "The thumbnail height",
-                                                      1, 512, 1,
+                                                      1, 1024, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("width",

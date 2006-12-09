@@ -119,6 +119,13 @@
   (gtype-id "GIMP_TYPE_FRAME")
 )
 
+(define-object HintBox
+  (in-module "Gimp")
+  (parent "GtkHBox")
+  (c-name "GimpHintBox")
+  (gtype-id "GIMP_TYPE_HINT_BOX")
+)
+
 (define-object IntComboBox
   (in-module "Gimp")
   (parent "GtkComboBox")
@@ -329,6 +336,13 @@
   (gtype-id "GIMP_TYPE_LAYER_COMBO_BOX")
 )
 
+(define-object VectorsComboBox
+  (in-module "Gimp")
+  (parent "GimpIntComboBox")
+  (c-name "GimpVectorsComboBox")
+  (gtype-id "GIMP_TYPE_VECTORS_COMBO_BOX")
+)
+
 (define-object ImageComboBox
   (in-module "Gimp")
   (parent "GimpIntComboBox")
@@ -535,8 +549,8 @@
   (c-name "gimp_chain_button_new")
   (is-constructor-of "GimpChainButton")
   (return-type "GtkWidget*")
-  (parameters
-    '("GimpChainPosition" "position")
+  (properties
+    '("position")
   )
 )
 
@@ -630,12 +644,12 @@
   (c-name "gimp_color_button_new")
   (is-constructor-of "GimpColorButton")
   (return-type "GtkWidget*")
-  (parameters
-    '("const-gchar*" "title")
-    '("gint" "width")
-    '("gint" "height")
-    '("const-GimpRGB*" "color")
-    '("GimpColorAreaType" "type")
+  (properties
+    '("title" (optional))
+    '("width" (optional))
+    '("height" (optional))
+    '("color" (optional))
+    '("type" (optional))
   )
 )
 
@@ -708,7 +722,6 @@
 (define-method clone
   (of-object "GimpColorDisplay")
   (c-name "gimp_color_display_clone")
-  (is-constructor-of "GimpColorDisplay")
   (return-type "GimpColorDisplay*")
 )
 
@@ -791,7 +804,6 @@
 (define-method clone
   (of-object "GimpColorDisplayStack")
   (c-name "gimp_color_display_stack_clone")
-  (is-constructor-of "GimpColorDisplayStack")
   (return-type "GimpColorDisplayStack*")
 )
 
@@ -915,9 +927,9 @@
   (c-name "gimp_color_scale_new")
   (is-constructor-of "GimpColorScale")
   (return-type "GtkWidget*")
-  (parameters
-    '("GtkOrientation" "orientation")
-    '("GimpColorSelectorChannel" "channel")
+  (properties
+    '("orientation")
+    '("channel")
   )
 )
 
@@ -1525,6 +1537,24 @@
     '("GimpIntSensitivityFunc" "func")
     '("gpointer" "data")
     '("GDestroyNotify" "destroy")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimphintbox.h
+
+(define-function gimp_hint_box_get_type
+  (c-name "gimp_hint_box_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_hint_box_new
+  (c-name "gimp_hint_box_new")
+  (is-constructor-of "GimpHintBox")
+  (return-type "GtkWidget*")
+  (properties
+    '("hint") ("stock-id" (optional))
   )
 )
 
@@ -3513,9 +3543,8 @@
   (c-name "gimp_aspect_preview_new")
   (is-constructor-of "GimpAspectPreview")
   (return-type "GtkWidget*")
-  (parameters
-    '("GimpDrawable*" "drawable")
-    '("gboolean*" "toggle")
+  (properties
+    '("drawable")
   )
 )
 
@@ -3528,12 +3557,12 @@
   (return-type "GType")
 )
 
-(define-method preview_new
-  (of-object "GimpDrawable")
+(define-function gimp_drawable_preview_new
   (c-name "gimp_drawable_preview_new")
+  (is-constructor-of "GimpDrawablePreview")
   (return-type "GtkWidget*")
-  (parameters
-    '("gboolean*" "toggle")
+  (properties
+    '("drawable")
   )
 )
 
@@ -3638,6 +3667,11 @@
   (return-type "GType")
 )
 
+(define-function gimp_vectors_combo_box_get_type
+  (c-name "gimp_vectors_combo_box_get_type")
+  (return-type "GType")
+)
+
 (define-function gimp_drawable_combo_box_new
   (c-name "gimp_drawable_combo_box_new")
   (is-constructor-of "GimpDrawableComboBox")
@@ -3664,6 +3698,16 @@
   (return-type "GtkWidget*")
   (parameters
     '("GimpDrawableConstraintFunc" "constraint")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_vectors_combo_box_new
+  (c-name "gimp_vectors_combo_box_new")
+  (is-constructor-of "GimpVectorsComboBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GimpVectorsConstraintFunc" "constraint")
     '("gpointer" "data")
   )
 )
@@ -3885,6 +3929,16 @@
 
 
 
+;; From ../../libgimp/gimpui.h
+
+(define-method set_transient
+  (of-object "GimpDialog")
+  (c-name "gimp_window_set_transient")
+  (return-type "none")
+)
+
+
+
 ;; From ../../libgimp/gimpzoompreview.h
 
 (define-function gimp_zoom_preview_get_type
@@ -3896,8 +3950,8 @@
   (c-name "gimp_zoom_preview_new")
   (is-constructor-of "GimpZoomPreview")
   (return-type "GtkWidget*")
-  (parameters
-    '("GimpDrawable*" "drawable")
+  (properties
+    '("drawable")
   )
 )
 

@@ -89,9 +89,6 @@
 #define PLUG_IN_BINARY "tga"
 
 
-/* Round up a division to the nearest integer. */
-#define ROUNDUP_DIVIDE(n,d) (((n) + (d - 1)) / (d))
-
 typedef struct _TgaSaveVals
 {
   gint rle;

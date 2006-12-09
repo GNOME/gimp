@@ -37,6 +37,8 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 brushes_refresh_invoker (GimpProcedure     *procedure,

@@ -333,6 +333,7 @@ gimp_cell_renderer_viewable_clicked (GimpCellRendererViewable *cell,
         {
           gimp_view_popup_show (gtk_get_event_widget (event),
                                 bevent,
+                                cell->renderer->context,
                                 cell->renderer->viewable,
                                 cell->renderer->width,
                                 cell->renderer->height,

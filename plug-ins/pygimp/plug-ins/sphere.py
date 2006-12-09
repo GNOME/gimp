@@ -20,12 +20,14 @@
 import math
 from gimpfu import *
 
-def python_sphere(radius, light, shadow, bg_colour, sphere_colour):
+def sphere(radius, light, shadow, bg_colour, sphere_colour):
     if radius < 1:
         radius = 1
 
     width = int(radius * 3.75)
     height = int(radius * 2.5)
+
+    gimp.context_push()
 
     img = gimp.Image(width, height, RGB)
 
@@ -44,9 +46,6 @@ def python_sphere(radius, light, shadow, bg_colour, sphere_colour):
     light_end_y = cy - radius * math.sin(math.pi + radians)
 
     offset = radius * 0.1
-
-    old_fg = gimp.get_foreground()
-    old_bg = gimp.get_background()
 
     img.disable_undo()
     img.add_layer(drawable, 0)
@@ -82,15 +81,15 @@ def python_sphere(radius, light, shadow, bg_colour, sphere_colour):
 
     pdb.gimp_selection_none(img)
 
-    gimp.set_background(old_bg)
-    gimp.set_foreground(old_fg)
-
     img.enable_undo()
 
     disp = gimp.Display(img)
 
+    gimp.context_pop()
+
+
 register(
-    "python_fu_sphere",
+    "python-fu-sphere",
     "Simple spheres with drop shadows",
     "Simple spheres with drop shadows (based on script-fu version)",
     "James Henstridge",
@@ -102,10 +101,10 @@ register(
         (PF_INT, "radius", "Radius for sphere", 100),
         (PF_SLIDER, "light", "Light angle", 45, (0,360,1)),
         (PF_TOGGLE, "shadow", "Shadow?", 1),
-        (PF_COLOR, "bg_colour", "Background", (255,255,255)),
-        (PF_COLOR, "sphere_colour", "Sphere", (255,0,0))
+        (PF_COLOR, "bg-color", "Background", (255,255,255)),
+        (PF_COLOR, "sphere-color", "Sphere", (255,0,0))
     ],
     [],
-    python_sphere)
+    sphere)
 
 main()

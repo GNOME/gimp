@@ -21,6 +21,7 @@
 
 
 GimpPalette * gimp_palette_import_from_gradient      (GimpGradient *gradient,
+                                                      GimpContext  *context,
                                                       gboolean      reverse,
                                                       const gchar  *palette_name,
                                                       gint          n_colors);

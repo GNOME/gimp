@@ -14,7 +14,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-int
+static int
 readline (FILE *f, char *buffer, int len)
 {
   do
@@ -212,7 +212,7 @@ struct _BrushHeader
   unsigned int   spacing;     /*  brush spacing  */
 };
 
-void
+static void
 msb2lsb (unsigned int *i)
 {
   guchar *p = (guchar *)i, c;
@@ -237,7 +237,7 @@ fopen_from_search_path (const gchar * fn, const char * mode)
   return f;
 }
 
-void
+static void
 load_gimp_brush (const gchar *fn, ppm_t *p)
 {
   FILE                *f;

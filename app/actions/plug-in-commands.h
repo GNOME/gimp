@@ -26,6 +26,9 @@ void   plug_in_run_cmd_callback       (GtkAction           *action,
 void   plug_in_repeat_cmd_callback    (GtkAction           *action,
                                        gint                 value,
                                        gpointer             data);
+void   plug_in_history_cmd_callback   (GtkAction           *action,
+                                       GimpPlugInProcedure *proc,
+                                       gpointer             data);
 
 void   plug_in_reset_all_cmd_callback (GtkAction           *action,
                                        gpointer             data);

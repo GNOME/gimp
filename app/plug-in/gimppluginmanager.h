@@ -55,7 +55,7 @@ struct _GimpPlugInManager
   GimpPlugIn        *current_plug_in;
   GSList            *open_plug_ins;
   GSList            *plug_in_stack;
-  GSList            *last_plug_ins;
+  GSList            *history;
 
   GimpPlugInShm     *shm;
   GimpInterpreterDB *interpreter_db;
@@ -68,16 +68,16 @@ struct _GimpPlugInManagerClass
 {
   GimpObjectClass  parent_class;
 
-  void (* plug_in_opened)        (GimpPlugInManager *manager,
-                                  GimpPlugIn        *plug_in);
-  void (* plug_in_closed)        (GimpPlugInManager *manager,
-                                  GimpPlugIn        *plug_in);
+  void (* plug_in_opened)    (GimpPlugInManager *manager,
+                              GimpPlugIn        *plug_in);
+  void (* plug_in_closed)    (GimpPlugInManager *manager,
+                              GimpPlugIn        *plug_in);
 
-  void (* menu_branch_added)     (GimpPlugInManager *manager,
-                                  const gchar       *prog_name,
-                                  const gchar       *menu_path,
-                                  const gchar       *menu_label);
-  void (* last_plug_ins_changed) (GimpPlugInManager *manager);
+  void (* menu_branch_added) (GimpPlugInManager *manager,
+                              const gchar       *prog_name,
+                              const gchar       *menu_path,
+                              const gchar       *menu_label);
+  void (* history_changed)   (GimpPlugInManager *manager);
 };
 
 
@@ -85,36 +85,38 @@ GType               gimp_plug_in_manager_get_type (void) G_GNUC_CONST;
 
 GimpPlugInManager * gimp_plug_in_manager_new      (Gimp *gimp);
 
-void   gimp_plug_in_manager_initialize       (GimpPlugInManager      *manager,
-                                              GimpInitStatusFunc      status_callback);
-void   gimp_plug_in_manager_restore          (GimpPlugInManager      *manager,
-                                              GimpContext            *context,
-                                              GimpInitStatusFunc      status_callback);
-void   gimp_plug_in_manager_exit             (GimpPlugInManager      *manager);
+void    gimp_plug_in_manager_initialize       (GimpPlugInManager      *manager,
+                                               GimpInitStatusFunc      status_callback);
+void    gimp_plug_in_manager_restore          (GimpPlugInManager      *manager,
+                                               GimpContext            *context,
+                                               GimpInitStatusFunc      status_callback);
+void    gimp_plug_in_manager_exit             (GimpPlugInManager      *manager);
 
 /* Register a plug-in. This function is public for file load-save
  * handlers, which are organized around the plug-in data structure.
  * This could all be done a little better, but oh well.  -josh
  */
-void   gimp_plug_in_manager_add_procedure       (GimpPlugInManager   *manager,
-                                                 GimpPlugInProcedure *procedure);
+void    gimp_plug_in_manager_add_procedure       (GimpPlugInManager   *manager,
+                                                  GimpPlugInProcedure *procedure);
 
-void   gimp_plug_in_manager_add_temp_proc       (GimpPlugInManager      *manager,
-                                                 GimpTemporaryProcedure *procedure);
-void   gimp_plug_in_manager_remove_temp_proc    (GimpPlugInManager      *manager,
-                                                 GimpTemporaryProcedure *procedure);
+void    gimp_plug_in_manager_add_temp_proc       (GimpPlugInManager      *manager,
+                                                  GimpTemporaryProcedure *procedure);
+void    gimp_plug_in_manager_remove_temp_proc    (GimpPlugInManager      *manager,
+                                                  GimpTemporaryProcedure *procedure);
 
-void   gimp_plug_in_manager_add_open_plug_in    (GimpPlugInManager   *manager,
-                                                 GimpPlugIn          *plug_in);
-void   gimp_plug_in_manager_remove_open_plug_in (GimpPlugInManager   *manager,
-                                                 GimpPlugIn          *plug_in);
+void    gimp_plug_in_manager_add_open_plug_in    (GimpPlugInManager   *manager,
+                                                  GimpPlugIn          *plug_in);
+void    gimp_plug_in_manager_remove_open_plug_in (GimpPlugInManager   *manager,
+                                                  GimpPlugIn          *plug_in);
 
-void   gimp_plug_in_manager_set_last_plug_in    (GimpPlugInManager   *manager,
-                                                 GimpPlugInProcedure *procedure);
+void    gimp_plug_in_manager_plug_in_push        (GimpPlugInManager   *manager,
+                                                  GimpPlugIn          *plug_in);
+void    gimp_plug_in_manager_plug_in_pop         (GimpPlugInManager   *manager);
 
-void   gimp_plug_in_manager_plug_in_push        (GimpPlugInManager   *manager,
-                                                 GimpPlugIn          *plug_in);
-void   gimp_plug_in_manager_plug_in_pop         (GimpPlugInManager   *manager);
+void    gimp_plug_in_manager_history_changed     (GimpPlugInManager   *manager);
+
+gchar * gimp_plug_in_manager_get_label           (GimpPlugInManager   *manager,
+                                                  GimpPlugInProcedure *proc);
 
 
 #endif  /* __GIMP_PLUG_IN_MANAGER_H__ */

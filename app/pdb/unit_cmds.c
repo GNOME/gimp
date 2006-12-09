@@ -32,6 +32,8 @@
 
 #include "core/gimpunit.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 unit_get_number_of_units_invoker (GimpProcedure     *procedure,

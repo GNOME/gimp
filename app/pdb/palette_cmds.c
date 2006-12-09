@@ -37,6 +37,8 @@
 #include "core/gimplist.h"
 #include "core/gimppalette.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 palette_new_invoker (GimpProcedure     *procedure,
@@ -182,7 +184,8 @@ palette_delete_invoker (GimpProcedure     *procedure,
 
           if (! success)
             {
-              g_message (error->message);
+              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                                   "%s", error->message);
               g_clear_error (&error);
             }
         }

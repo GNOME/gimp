@@ -163,7 +163,7 @@ base_toast_old_swap_files (const gchar *swap_path)
     }
 
   while ((entry = g_dir_read_name (dir)) != NULL)
-    if (! strncmp (entry, "gimpswap.", 9))
+    if (g_str_has_prefix (entry, "gimpswap."))
       {
         /* don't try to kill swap files of running processes
          * yes, I know they might not all be gimp processes, and when you

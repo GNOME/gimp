@@ -7,14 +7,80 @@ This is the development branch of GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.3.13
+======================
+
+- show information about embedded color profiles in Image Properties dialog
+- allow to apply color profiles on load (still work in progress)
+- new vectors PDB API to replace the old path API
+- added "Auntie Alias" plug-in for antialiasing on lineart
+- added Edit->Fade operation
+- added Rounded Corners option to Rectangle Select tool
+- improved WinIcon plug-in (now loads and saves 24 bit and Vista icons)
+- merged gimp-tiny-fu; replaces Script-Fu Scheme interpreter with TinyScheme
+- remember unit and interpolation type in scale and resize dialogs
+- changed default interpolation type to Cubic
+- show comment in Image Properties dialog
+- when loading in image as layers, don't merge the layers
+- added experimental palette color selector module
+- don't save thumbnails that don't match the image
+- increased tool handle sizes for better usability
+- implemented brush scaling from the tool options (only downscaling yet)
+- import paths embedded into TIFF files
+- support vectors in the Script-Fu and Python-Fu user interfaces
+- added PDB functions to retrieve position of layers/channels/vectors
+- added side pane with table of contents to the Help Browser
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.12
+======================
+
+- merged the Perspective Clone tool
+- allow to pan the image view using the Space bar
+- show a thumbnail in the "Rotate JPEG?" query dialog
+- added file information to the Image Properties dialog
+- more work on the new selection tools
+- give immidiate feedback when tool modifier keys are pressed
+- added Lens Distortion plug-in
+- internationalize Python binding and Python plug-ins
+- improved internal message infrastructure, use the statusbar for warnings
+- added an URL loader backend based on libcurl
+- build a color-managed CMYK color selector if lcms is available
+- localize Script-Fu procedure descriptions
+- lots of user interface polishing
+- bug fixes and code cleanup
+
+
 Changes in GIMP 2.3.11
 ======================
 
-- depend on newer versions of glib, gtk+ and pango and use some of the
-  new features in these libraries
+- depend on newer versions of glib, gtk+ and pango and use some of the new
+  features in these libraries
 - made Ctrl-P the default shortcut for Print
 - show progress when loading/saving XCF files
 - added support for 16/32 bit bitmaps and alpha channel to the BMP plug-in
+- if possible, detect the number of CPUs
+- allow to disable the build of the Script-Fu extension
+- many improvements to the Python bindings and the pygimp user interface
+- made message dialogs transient for the progress window
+- added PDB API for creating a selection from vectors
+- further improved status bar messages for tools
+- derive ByColorSelect and FuzzySelect tools from a common base class
+- finer control over select-by-color functionality
+- minor optimizations in the drawing code
+- abstract brush outline drawing into the common base class GimpBrushTool
+- store sample points in XCF files
+- added extended PDB API for selection procedures
+- added convenience API to libgimp that creates a layer from a GdkPixbuf
+- added midpoint handles to Scale tool for scaling with fixed width or height
+- let color picker tools select a matching color in the Palette Editor
+- allow to use foreground and background color in gradients
+- added first draft of a new Healing Brush tool
+- abstract clone tool functionality into the common base class GimpSourceTool
+- improvements to the new selection tools
+- don't wake up the gimp every so often
+- added GimpHintBox widget to libgimpwidgets
 - bug fixes and code cleanup
 
 

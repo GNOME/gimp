@@ -34,6 +34,8 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "uri-backend.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -81,6 +83,9 @@ uri_backend_load_image (const gchar  *uri,
       g_set_error (error, 0, 0, "pipe() failed: %s", g_strerror (errno));
       return FALSE;
     }
+
+  /*  open a process group, so killing the plug-in will kill wget too  */
+  setpgid (0, 0);
 
   if ((pid = fork()) < 0)
     {

@@ -13,7 +13,7 @@ DOC_SOURCE_DIR = $(top_srcdir)/$(DOC_MODULE)
 SCANGOBJ_OPTIONS =
 
 # Extra options to supply to gtkdoc-scan
-SCAN_OPTIONS =
+SCAN_OPTIONS = --deprecated-guards="GIMP_DISABLE_DEPRECATED"
 
 # Extra options to supply to gtkdoc-mkdb
 MKDB_OPTIONS = --sgml-mode --output-format=xml

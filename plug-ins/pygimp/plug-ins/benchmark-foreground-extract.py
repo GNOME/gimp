@@ -181,18 +181,18 @@ def misclassified_pixels (mask, truth):
 
 
 register (
-    "benchmark_foreground_extract",
-    "Foreground Extraction Benchmark",
-    "Foreground Extraction Benchmark",
+    "python-fu-benchmark-foreground-extract",
+    "Benchmark and regression test for the SIOX algorithm",
+    "",
     "Sven Neumann",
     "Sven Neumann",
     "2005",
-    "<Toolbox>/Xtns/Benchmark/Foreground Extraction",
+    "Foreground Extraction",
     "",
-    [ (PF_FILE,   "image_folder", "Image folder",
+    [ (PF_FILE,   "image-folder", "Image folder",
                   "~/segmentation/msbench/imagedata"),
-      (PF_TOGGLE, "save_output",  "Save output images", False) ],
+      (PF_TOGGLE, "save-output",  "Save output images", False) ],
     [],
-    benchmark)
+    benchmark, menu="<Toolbox>/Xtns/Benchmark")
 
 main ()

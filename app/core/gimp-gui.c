@@ -41,11 +41,12 @@ gimp_gui_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
+  gimp->gui.ungrab              = NULL;
   gimp->gui.threads_enter       = NULL;
   gimp->gui.threads_leave       = NULL;
   gimp->gui.set_busy            = NULL;
   gimp->gui.unset_busy          = NULL;
-  gimp->gui.message             = NULL;
+  gimp->gui.show_message        = NULL;
   gimp->gui.help                = NULL;
   gimp->gui.get_program_class   = NULL;
   gimp->gui.get_display_name    = NULL;
@@ -60,6 +61,15 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.progress_free       = NULL;
   gimp->gui.pdb_dialog_set      = NULL;
   gimp->gui.pdb_dialog_close    = NULL;
+}
+
+void
+gimp_gui_ungrab (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->gui.ungrab)
+    gimp->gui.ungrab (gimp);
 }
 
 void
@@ -139,30 +149,41 @@ gimp_unset_busy (Gimp *gimp)
 }
 
 void
-gimp_message (Gimp         *gimp,
-              GimpProgress *progress,
-              const gchar  *domain,
-              const gchar  *message)
+gimp_show_message (Gimp                *gimp,
+                   GObject             *handler,
+                   GimpMessageSeverity  severity,
+                   const gchar         *domain,
+                   const gchar         *message)
 {
+  const gchar *desc = "Message";
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (handler == NULL || G_IS_OBJECT (handler));
   g_return_if_fail (message != NULL);
 
   if (! domain)
     domain = GIMP_ACRONYM;
 
-  if (progress && gimp_progress_message (progress, gimp, domain, message))
+  if (! gimp->console_messages)
     {
-      /* message has already been handled by GimpProgress */
+      if (gimp->gui.show_message)
+        {
+          gimp->gui.show_message (gimp, handler,
+                                  severity, domain, message);
+          return;
+        }
+      else if (GIMP_IS_PROGRESS (handler) &&
+               gimp_progress_message (GIMP_PROGRESS (handler), gimp,
+                                      severity, domain, message))
+        {
+          /* message has been handled by GimpProgress */
+          return;
+        }
     }
-  else if (gimp->gui.message && ! gimp->console_messages)
-    {
-      gimp->gui.message (gimp, progress, domain, message);
-    }
-  else
-    {
-      g_printerr ("%s: %s\n\n", domain, message);
-    }
+
+  gimp_enum_get_value (GIMP_TYPE_MESSAGE_SEVERITY, severity,
+                       NULL, NULL, &desc, NULL);
+  g_printerr ("%s-%s: %s\n\n", domain, desc, message);
 }
 
 void
@@ -318,6 +339,7 @@ gimp_free_progress (Gimp         *gimp,
 gboolean
 gimp_pdb_dialog_new (Gimp          *gimp,
                      GimpContext   *context,
+                     GimpProgress  *progress,
                      GimpContainer *container,
                      const gchar   *title,
                      const gchar   *callback_name,
@@ -328,17 +350,19 @@ gimp_pdb_dialog_new (Gimp          *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (title != NULL, FALSE);
   g_return_val_if_fail (callback_name != NULL, FALSE);
 
   if (gimp->gui.pdb_dialog_new)
     {
-      va_list  args;
+      va_list args;
 
       va_start (args, object_name);
 
-      retval = gimp->gui.pdb_dialog_new (gimp, context, container, title,
+      retval = gimp->gui.pdb_dialog_new (gimp, context, progress,
+                                         container, title,
                                          callback_name, object_name,
                                          args);
 
@@ -364,7 +388,7 @@ gimp_pdb_dialog_set (Gimp          *gimp,
 
   if (gimp->gui.pdb_dialog_set)
     {
-      va_list  args;
+      va_list args;
 
       va_start (args, object_name);
 

@@ -23,13 +23,12 @@
 
 #include <glib-object.h>
 
-#include "libgimpcolor/gimpcolor.h"
-
 #include "core-types.h"
 
 #include "gimp.h"
-#include "gimpcontainer.h"
+#include "gimp-gradients.h"
 #include "gimpcontext.h"
+#include "gimpcontainer.h"
 #include "gimpdatafactory.h"
 #include "gimpgradient.h"
 
@@ -44,15 +43,9 @@
 
 /*  local function prototypes  */
 
-static GimpGradient * gimp_gradients_add_gradient       (Gimp          *gimp,
-                                                         const gchar   *name,
-                                                         const gchar   *id);
-static void           gimp_gradients_foreground_changed (GimpContext   *context,
-                                                         const GimpRGB *fg,
-                                                         Gimp          *gimp);
-static void           gimp_gradients_background_changed (GimpContext   *context,
-                                                         const GimpRGB *bg,
-                                                         Gimp          *gimp);
+static GimpGradient * gimp_gradients_add_gradient (Gimp        *gimp,
+                                                   const gchar *name,
+                                                   const gchar *id);
 
 
 /*  public functions  */
@@ -82,18 +75,7 @@ gimp_gradients_init (Gimp *gimp)
   gradient = gimp_gradients_add_gradient (gimp,
                                           _("FG to Transparent"),
                                           FG_TRANSPARENT_KEY);
-  gimp_rgba_set (&gradient->segments->right_color,
-                 gradient->segments->left_color.r,
-                 gradient->segments->left_color.g,
-                 gradient->segments->left_color.b,
-                 0.0);
-
-  g_signal_connect (gimp->user_context, "foreground-changed",
-                    G_CALLBACK (gimp_gradients_foreground_changed),
-                    gimp);
-  g_signal_connect (gimp->user_context, "background-changed",
-                    G_CALLBACK (gimp_gradients_background_changed),
-                    gimp);
+  gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT;
 }
 
 
@@ -104,16 +86,12 @@ gimp_gradients_add_gradient (Gimp        *gimp,
                              const gchar *name,
                              const gchar *id)
 {
-  GimpGradient *gradient;
-
-  gradient = GIMP_GRADIENT (gimp_gradient_new (name));
+  GimpGradient *gradient = GIMP_GRADIENT (gimp_gradient_new (name));
 
   gimp_data_make_internal (GIMP_DATA (gradient));
 
-  gimp_context_get_foreground (gimp->user_context,
-                               &gradient->segments->left_color);
-  gimp_context_get_background (gimp->user_context,
-                               &gradient->segments->right_color);
+  gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
+  gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_BACKGROUND;
 
   gimp_container_add (gimp->gradient_factory->container,
                       GIMP_OBJECT (gradient));
@@ -122,78 +100,4 @@ gimp_gradients_add_gradient (Gimp        *gimp,
   g_object_set_data (G_OBJECT (gimp), id, gradient);
 
   return gradient;
-}
-
-static void
-gimp_gradients_foreground_changed (GimpContext   *context,
-                                   const GimpRGB *fg,
-                                   Gimp          *gimp)
-{
-  GimpGradient *gradient;
-
-  gradient = g_object_get_data (G_OBJECT (gimp), FG_BG_RGB_KEY);
-
-  if (gradient)
-    {
-      gradient->segments->left_color = *fg;
-      gimp_data_dirty (GIMP_DATA (gradient));
-    }
-
-  gradient = g_object_get_data (G_OBJECT (gimp), FG_BG_HSV_CCW_KEY);
-
-  if (gradient)
-    {
-      gradient->segments->left_color = *fg;
-      gimp_data_dirty (GIMP_DATA (gradient));
-    }
-
-  gradient = g_object_get_data (G_OBJECT (gimp), FG_BG_HSV_CW_KEY);
-
-  if (gradient)
-    {
-      gradient->segments->left_color = *fg;
-      gimp_data_dirty (GIMP_DATA (gradient));
-    }
-
-  gradient = g_object_get_data (G_OBJECT (gimp), FG_TRANSPARENT_KEY);
-
-  if (gradient)
-    {
-      gradient->segments->left_color    = *fg;
-      gradient->segments->right_color   = *fg;
-      gradient->segments->right_color.a = 0.0;
-      gimp_data_dirty (GIMP_DATA (gradient));
-    }
-}
-
-static void
-gimp_gradients_background_changed (GimpContext   *context,
-                                   const GimpRGB *bg,
-                                   Gimp          *gimp)
-{
-  GimpGradient *gradient;
-
-  gradient = g_object_get_data (G_OBJECT (gimp), FG_BG_RGB_KEY);
-
-  if (gradient)
-    {
-      gradient->segments->right_color = *bg;
-      gimp_data_dirty (GIMP_DATA (gradient));
-    }
-
-  gradient = g_object_get_data (G_OBJECT (gimp), FG_BG_HSV_CCW_KEY);
-
-  if (gradient)
-    {
-      gradient->segments->right_color = *bg;
-      gimp_data_dirty (GIMP_DATA (gradient));
-    }
-
-  gradient = g_object_get_data (G_OBJECT (gimp), FG_BG_HSV_CW_KEY);
-
-  if (gradient)
-    {
-      gradient->segments->right_color = *bg;
-      gimp_data_dirty (GIMP_DATA (gradient));
-    }
 }

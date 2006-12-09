@@ -32,6 +32,7 @@
 
 #include "gfig.h"
 #include "gfig-dobject.h"
+#include "gfig-ellipse.h"
 
 #include "libgimp/stdplugins-intl.h"
 

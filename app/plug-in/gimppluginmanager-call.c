@@ -38,14 +38,13 @@
 #include "core/gimpcontext.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimptemporaryprocedure.h"
-
 #include "gimpplugin.h"
 #include "gimpplugin-message.h"
 #include "gimppluginmanager.h"
 #define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
 #include "gimppluginmanager-call.h"
 #include "gimppluginshm.h"
+#include "gimptemporaryprocedure.h"
 #include "plug-in-def.h"
 #include "plug-in-params.h"
 

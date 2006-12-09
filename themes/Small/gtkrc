@@ -84,9 +84,9 @@ widget "*GimpContainerGridView*GtkViewport*" style "gimp-grid-view-style"
 
 style "gimp-dockable-style" = "gimp-default-style"
 {
-  GimpFrame::label_bold         = 0
-  GtkButton::focus_line_width   = 0
-  GtkButton::focus_line_padding = 0
+  GimpFrame::label_bold       = 0
+  GtkButton::focus_line_width = 1
+  GtkButton::focus_padding    = 0
 }
 
 widget "*GimpDockable.*" style "gimp-dockable-style"

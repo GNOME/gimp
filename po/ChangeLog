@@ -1,3 +1,421 @@
+2006-11-30  Francisco Javier F. Serrador  <serrador@openshine.com>
+
+	* es.po: Updated Spanish translation.
+
+2006-11-27  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-11-25  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation.
+
+2006-11-23  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-11-22  Nickolay V. Shmyrev  <nshmyrev@yandex.ru>
+	
+	* ru.po: Updated Russian translation.
+
+2006-11-22  Nickolay V. Shmyrev  <nshmyrev@yandex.ru>
+
+	* POTFILES.in: Updated to reflect new filenames
+	due to the fix of the bug #345251.
+
+2006-11-18  Djihed Afifi <djihed@gmail.com> 
+
+	* ar.po: Added Arabic Translation.
+	* LINGUAS: Added ar.
+
+2006-11-16  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation.
+
+2006-11-15  Pawan Chitrakar  <pchitrakar@gmail.com>
+
+	* ne.po: Updated Nepali Translation
+
+2006-11-13  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation.
+
+2006-11-13  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-11-06  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation.
+
+2006-11-06  Priit Laes  <plaes@cvs.gnome.org>
+
+	* et.po: Translation updated by Olle Niit.
+
+2006-11-03  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-11-03  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: updated.
+
+2006-11-02  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-11-02  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2006-11-01  Francisco Javier F. Serrador  <serrador@openshine.com>
+
+	* es.po: Updated Spanish translation.
+
+2006-11-01  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-10-30  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-10-30  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2006-10-28  Alexander Shopov  <ash@contact.bg>
+
+	* bg.po: Updated Bulgarian translation by
+	Victor Dachev <vdachev@gmail.com>
+
+2006-10-27  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-10-24  Francisco Javier F. Serrador  <serrador@openshine.com>
+
+	* es.po: Updated Spanish translation.
+
+2006-10-23  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2006-10-22  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2006-10-22  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2006-10-20  Pema Geyleg  <pgeyleg@gmail.com>
+
+	* dz.po: Updated Dzongkha Translation
+
+2006-10-20  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation
+
+2006-10-18  Josep Puigdemont i Casamajó  <josep.puigdemont@gmail.com>
+
+	* ca.po: Updated Catalan translation by
+	Joaquim Perez <noguer@gmail.com>, et al.
+
+2006-10-18  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-10-16  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2006-10-15  Yair Hershkovitz  <yairhr@gmail.com>
+
+	* he.po: Updated Hebrew translation (by Huy Ruthenberg).
+
+2006-10-14  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2006-10-12  Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
+	
+	* ru.po: Updated Russian translation by
+
+2006-10-11  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation
+
+2006-10-10  Žygimantas Beručka  <zygis@gnome.org>
+
+	* lt.po: Updated Lithuanian translation.
+
+2006-10-05  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-10-04  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation
+
+2006-10-04  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-10-04  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added new files.
+
+2006-10-03  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-10-03  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2006-10-02  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-09-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* th.po: Added Thai translation by 
+	Arnon Namsanit <arnon.namsanit@nectec.or.th>, 
+	Supranee Thirawatthanasuk <supranee@opentle.org>, 
+	Kamthorn Krairaksa <kamthorn@gmail.com>.
+
+2006-09-25  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2006-09-25  Pawan Chitrakar  <pchitrakar@gmail.com>
+
+	* ne.po: Updated Nepali Translation
+
+2006-09-22  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-09-22  David Lodge <dave@cirt.net>
+
+	* en_GB.po: Updated English (British) translation
+
+2006-09-21  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-09-20  Francisco Javier F. Serrador  <serrador@openshine.com>
+
+	* es.po: Updated Spanish translation.
+
+2006-09-20  Žygimantas Beručka  <zygis@gnome.org>
+
+	* lt.po: Updated Lithuanian translation.
+
+2006-09-20  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-09-18  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-09-15  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2006-09-14  David Lodge <dave@cirt.net>
+
+	* en_GB.po: Updated English (British) translation
+
+2006-09-14  David Lodge <dave@cirt.net>
+
+	* en_GB.po: Updated English (British) translation
+
+2006-09-13  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation
+
+2006-09-12  David Lodge <dave@cirt.net>
+
+	* en_GB.po: Updated English (British) translation
+
+2006-09-12  Kostas Papadimas <pkst@gnome.org>
+
+	* el.po: Fixed typos by Dimitris Glezos <dimitris@glezos.com>
+
+2006-09-12  Pema Geyleg  <pgeyleg@gmail.com>
+
+	* dz.po: Added Dzongkha Translation.
+
+2006-09-10  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2006-09-09  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation
+
+2006-09-08  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation
+
+2006-09-08  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation
+
+2006-09-07  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation
+
+2006-09-05  Josep Puigdemont i Casamajó  <josep.puigdemont@gmail.com>
+
+	* ca.po: Updated Catalan translation by
+	Joaquim Perez <noguer@gmail.com>, et al.
+
+2006-09-04  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added files for the new heal tool.
+
+2006-09-03  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation
+
+2006-09-02  Clytie Siddall <clytie@riverland.net.au>
+
+	* vi.po: Updated Vietnamese translation.
+
+2006-08-30  Nickolay V. Shmyrev  <nshmyrev@yandex.ru>
+	
+	* ru.po: Updated Russian translation by
+	Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
+
+2006-08-29  Jovan Naumovski  <jovan@lugola.net>
+
+	* mk.po: Updated Macedonian translation.
+
+2006-08-27  Clytie Siddall <clytie@riverland.net.au>
+
+	* vi.po: Updated Vietnamese translation.
+
+2006-08-22  Clytie Siddall <clytie@riverland.net.au>
+
+	* vi.po: Updated Vietnamese translation.
+
+2006-08-21  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2006-08-20  Roman Joost  <romanofski@gimp.org>
+
+	* de.po: fix for an incorrect translation, spotted by Sally C.
+	Barry
+
+2006-08-20  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: small fix in italian translation
+
+2006-08-18  Jovan Naumovski  <jovan@lugola.net>
+
+	* mk.po: Updated Macedonian translation.
+
+2006-08-15  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2006-08-15  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: small fix in italian translation
+
+2006-08-14  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation
+
+2006-08-11  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation
+
+2006-08-09  Sven Neumann  <sven@gimp.org>
+
+	* de.po: fixed wrong translation.
+
+2006-08-08  Inaki Larranaga  <dooteo@euskalgnu.org>
+
+	* eu.po: Fixed some typos.
+
+2006-08-08  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation
+
+2006-08-08  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added missing file.
+
+2006-08-06  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: updated after pdb -> plug-in file moving.
+
+2006-08-05  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation
+
+2006-08-04  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Fixed Czech translation.
+
+2006-08-04  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Fixed wrong Czech strings
+
+2006-08-04  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation
+
+2006-08-03  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation
+
+2006-08-02  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation
+
+2006-08-01  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Fixes in Czech translation
+
+2006-08-01  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation
+
+2006-07-31  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Fixes in Czech translation
+
+2006-07-31  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation
+
+2006-07-30  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: small fix in italian translation
+	
+2006-07-29  Francisco Javier F. Serrador  <serrador@openshine.com>
+
+	* es.po: Updated Spanish translation.
+
+2006-07-27  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Fixed Czech translation
+
+2006-07-27  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: small fix in italian translation
+
+2006-07-26  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation
+
 2006-07-21  Francisco Javier F. Serrador  <serrador@openshine.com>
 
 	* es.po: Updated Spanish translation.

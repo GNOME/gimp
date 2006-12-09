@@ -101,7 +101,7 @@ static const GimpStringActionEntry tools_alternative_actions[] =
     GIMP_HELP_TOOL_BY_COLOR_SELECT },
 
   { "tools-rotate-arbitrary", GIMP_STOCK_TOOL_ROTATE,
-    N_("_Arbitrary Rotation..."), NULL, NULL,
+    N_("_Arbitrary Rotation..."), "", NULL,
     "gimp-rotate-layer",
     GIMP_HELP_TOOL_ROTATE }
 };
@@ -136,6 +136,38 @@ static const GimpEnumActionEntry tools_color_average_radius_actions[] =
   { "tools-color-average-radius-increase-skip",
     GIMP_STOCK_TOOL_COLOR_PICKER,
     "Increase Color Picker Radius More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL },
+};
+
+static const GimpEnumActionEntry tools_paint_brush_scale_actions[] =
+{
+  { "tools-paint-brush-scale-set", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Set Brush Scale", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-paint-brush-scale-minimum", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Minumum Brush Scale", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "tools-paint-brush-scale-maximum", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Maximum Brush Scale", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "tools-paint-brush-scale-decrease", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Decrease Brush Scale", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-paint-brush-scale-increase", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Increase Brush Scale", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "tools-paint-brush-scale-decrease-skip", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Decrease Brush Scale More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "tools-paint-brush-scale-increase-skip", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Increase Brush Scale More", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL },
 };
@@ -236,6 +268,59 @@ static const GimpEnumActionEntry tools_ink_blob_angle_actions[] =
     NULL },
 };
 
+static const GimpEnumActionEntry tools_foreground_select_brush_size_actions[] =
+{
+  { "tools-foreground-select-brush-size-set",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Set Foreground Select Brush Size", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-foreground-select-brush-size-minimum",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Minumum Foreground Select Brush Size", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "tools-foreground-select-brush-size-maximum",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Maximum Foreground Select Brush Size", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "tools-foreground-select-brush-size-decrease",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Decrease Foreground Select Brush Size", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-foreground-select-brush-size-increase",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Increase Foreground Select Brush Size", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "tools-foreground-select-brush-size-decrease-skip",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Decrease Foreground Select Brush Size More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "tools-foreground-select-brush-size-increase-skip",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Increase Foreground Select Brush Size More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL },
+};
+
+static const GimpToggleActionEntry tools_rectangle_toggle_actions[] =
+{
+  { "tools-rectangle-toggle-fixed-aspect", GIMP_STOCK_TOOL_RECT_SELECT,
+    N_("Toggle Fixed-Aspect Option for Rectangle"), NULL, NULL,
+    G_CALLBACK (tools_rectangle_toggle_fixed_aspect),
+    TRUE,
+    NULL},
+  { "tools-rectangle-toggle-fixed-center", GIMP_STOCK_TOOL_RECT_SELECT,
+    N_("Toggle Expand-From-Center Option for Rectangle"), NULL, NULL,
+    G_CALLBACK (tools_rectangle_toggle_fixed_center),
+    TRUE,
+    NULL}
+};
+
 static const GimpEnumActionEntry tools_value_1_actions[] =
 {
   { "tools-value-1-set", GIMP_STOCK_TOOL_OPTIONS,
@@ -251,19 +336,19 @@ static const GimpEnumActionEntry tools_value_1_actions[] =
     GIMP_ACTION_SELECT_LAST, FALSE,
     NULL },
   { "tools-value-1-decrease", GIMP_STOCK_TOOL_OPTIONS,
-    "Decrease Value 1", NULL, NULL,
+    "Decrease Value 1", "less", NULL,
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     NULL },
   { "tools-value-1-increase", GIMP_STOCK_TOOL_OPTIONS,
-    "Increase Value 1", NULL, NULL,
+    "Increase Value 1", "greater", NULL,
     GIMP_ACTION_SELECT_NEXT, FALSE,
     NULL },
   { "tools-value-1-decrease-skip", GIMP_STOCK_TOOL_OPTIONS,
-    "Decrease Value 1 More", NULL, NULL,
+    "Decrease Value 1 More", "<control>less", NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     NULL },
   { "tools-value-1-increase-skip", GIMP_STOCK_TOOL_OPTIONS,
-    "Increase Value 1 More", NULL, NULL,
+    "Increase Value 1 More", "<control>greater", NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL },
 };
@@ -283,19 +368,19 @@ static const GimpEnumActionEntry tools_value_2_actions[] =
     GIMP_ACTION_SELECT_LAST, FALSE,
     NULL },
   { "tools-value-2-decrease", GIMP_STOCK_TOOL_OPTIONS,
-    "Decrease Value 2", NULL, NULL,
+    "Decrease Value 2", "bracketleft", NULL,
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     NULL },
   { "tools-value-2-increase", GIMP_STOCK_TOOL_OPTIONS,
-    "Increase Value 2", NULL, NULL,
+    "Increase Value 2", "bracketright", NULL,
     GIMP_ACTION_SELECT_NEXT, FALSE,
     NULL },
   { "tools-value-2-decrease-skip", GIMP_STOCK_TOOL_OPTIONS,
-    "Decrease Value 2 More", NULL, NULL,
+    "Decrease Value 2 More", "<shift>bracketleft", NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     NULL },
   { "tools-value-2-increase-skip", GIMP_STOCK_TOOL_OPTIONS,
-    "Increase Value 2 More", NULL, NULL,
+    "Increase Value 2 More", "<shift>bracketright", NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL },
 };
@@ -436,14 +521,15 @@ tools_actions_setup (GimpActionGroup *group)
                                         "tools-by-color-select-short");
   gtk_action_set_accel_path (action, "<Actions>/tools/tools-by-color-select");
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        "tools-rotate-arbitrary");
-  gtk_action_set_accel_path (action, "<Actions>/tools/tools-rotate");
-
   gimp_action_group_add_enum_actions (group,
                                       tools_color_average_radius_actions,
                                       G_N_ELEMENTS (tools_color_average_radius_actions),
                                       G_CALLBACK (tools_color_average_radius_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
+                                      tools_paint_brush_scale_actions,
+                                      G_N_ELEMENTS (tools_paint_brush_scale_actions),
+                                      G_CALLBACK (tools_paint_brush_scale_cmd_callback));
 
   gimp_action_group_add_enum_actions (group,
                                       tools_ink_blob_size_actions,
@@ -457,6 +543,15 @@ tools_actions_setup (GimpActionGroup *group)
                                       tools_ink_blob_angle_actions,
                                       G_N_ELEMENTS (tools_ink_blob_angle_actions),
                                       G_CALLBACK (tools_ink_blob_angle_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
+                                      tools_foreground_select_brush_size_actions,
+                                      G_N_ELEMENTS (tools_foreground_select_brush_size_actions),
+                                      G_CALLBACK (tools_fg_select_brush_size_cmd_callback));
+
+  gimp_action_group_add_toggle_actions (group,
+                                        tools_rectangle_toggle_actions,
+                                        G_N_ELEMENTS (tools_rectangle_toggle_actions));
 
   gimp_action_group_add_enum_actions (group,
                                       tools_value_1_actions,

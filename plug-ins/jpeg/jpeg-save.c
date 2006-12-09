@@ -1085,12 +1085,12 @@ typedef struct
 
 typedef my_destination_mgr *my_dest_ptr;
 
-void
+static void
 init_destination (j_compress_ptr cinfo)
 {
 }
 
-gboolean
+static gboolean
 empty_output_buffer (j_compress_ptr cinfo)
 {
   my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
@@ -1105,7 +1105,7 @@ empty_output_buffer (j_compress_ptr cinfo)
   return TRUE;
 }
 
-void
+static void
 term_destination (j_compress_ptr cinfo)
 {
   my_dest_ptr dest = (my_dest_ptr) cinfo->dest;

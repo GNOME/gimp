@@ -109,7 +109,7 @@ gchar *RNDM_NAME[] =
 #define RNDM_SLUR      3
 
 #define SEED_DEFAULT  10
-#define SEED_USER     11
+
 #define SCALE_WIDTH  100
 
 gint rndm_type = RNDM_HURL;  /* hurl, pick, etc. */

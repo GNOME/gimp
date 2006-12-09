@@ -35,12 +35,14 @@ OBJECTS = \
 	gimpbase-private.obj \
 	gimpbasetypes.obj \
 	gimpchecks.obj \
+	gimpcpuaccel.obj \
 	gimpdatafiles.obj \
 	gimpenv.obj \
 	gimpmemsize.obj \
 	gimpparasite.obj \
 	gimpparasiteio.obj \
 	gimpprotocol.obj \
+	gimprectangle.obj \
 	gimpreloc.obj \
 	gimpsignal.obj \
 	gimpunit.obj \

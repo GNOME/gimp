@@ -30,6 +30,8 @@
 #define GIMP_IS_BLEND_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BLEND_TOOL))
 #define GIMP_BLEND_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BLEND_TOOL, GimpBlendToolClass))
 
+#define GIMP_BLEND_TOOL_GET_OPTIONS(t)  (GIMP_BLEND_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
 
 typedef struct _GimpBlendTool      GimpBlendTool;
 typedef struct _GimpBlendToolClass GimpBlendToolClass;
@@ -38,10 +40,13 @@ struct _GimpBlendTool
 {
   GimpDrawTool  parent_instance;
 
-  gdouble       startx;      /*  starting x coord     */
-  gdouble       starty;      /*  starting y coord     */
-  gdouble       endx;        /*  ending x coord       */
-  gdouble       endy;        /*  ending y coord       */
+  gdouble       startx;      /*  starting x coord  */
+  gdouble       starty;      /*  starting y coord  */
+  gdouble       endx;        /*  ending x coord    */
+  gdouble       endy;        /*  ending y coord    */
+
+  gdouble       mousex;      /*  pointer x coord   */
+  gdouble       mousey;      /*  pointer y coord   */
 };
 
 struct _GimpBlendToolClass

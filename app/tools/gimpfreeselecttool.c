@@ -28,7 +28,6 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer-floating-sel.h"
-#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -94,7 +93,7 @@ gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
                 0,
                 "gimp-free-select-tool",
                 _("Free Select"),
-                _("Select hand-drawn regions"),
+                _("Free Select Tool: Select a hand-drawn region"),
                 N_("_Free Select"), "F",
                 NULL, GIMP_HELP_TOOL_FREE_SELECT,
                 GIMP_STOCK_TOOL_FREE_SELECT,
@@ -125,7 +124,7 @@ gimp_free_select_tool_init (GimpFreeSelectTool *free_select)
 {
   GimpTool *tool = GIMP_TOOL (free_select);
 
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+  gimp_tool_control_set_scroll_lock (tool->control, FALSE);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_FREE_SELECT);
 
@@ -197,10 +196,7 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
                                       GdkModifierType  state,
                                       GimpDisplay     *display)
 {
-  GimpFreeSelectTool   *free_sel = GIMP_FREE_SELECT_TOOL (tool);
-  GimpSelectionOptions *options;
-
-  options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  GimpFreeSelectTool *free_sel = GIMP_FREE_SELECT_TOOL (tool);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
@@ -241,9 +237,9 @@ gimp_free_select_tool_motion (GimpTool        *tool,
   GimpFreeSelectTool *free_sel = GIMP_FREE_SELECT_TOOL (tool);
   GimpSelectionTool  *sel_tool = GIMP_SELECTION_TOOL (tool);
 
-  if (sel_tool->op == SELECTION_ANCHOR)
+  if (sel_tool->function == SELECTION_ANCHOR)
     {
-      sel_tool->op = SELECTION_REPLACE;
+      sel_tool->function = SELECTION_SELECT;
 
       gimp_tool_cursor_update (tool, coords, state, display);
     }
@@ -277,17 +273,11 @@ static void
 gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpFreeSelectTool *free_sel = GIMP_FREE_SELECT_TOOL (draw_tool);
-  gint                i;
 
-  for (i = 1; i < free_sel->num_points; i++)
-    {
-      gimp_draw_tool_draw_line (draw_tool,
-                                free_sel->points[i - 1].x,
-                                free_sel->points[i - 1].y,
-                                free_sel->points[i].x,
-                                free_sel->points[i].y,
-                                FALSE);
-    }
+  gimp_draw_tool_draw_lines (draw_tool,
+                             (const gdouble *) free_sel->points,
+                             free_sel->num_points,
+                             FALSE, FALSE);
 }
 
 
@@ -310,20 +300,18 @@ static void
 gimp_free_select_tool_real_select (GimpFreeSelectTool *free_sel,
                                    GimpDisplay        *display)
 {
-  GimpTool             *tool = GIMP_TOOL (free_sel);
-  GimpSelectionOptions *options;
-
-  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (free_sel);
 
   gimp_channel_select_polygon (gimp_image_get_mask (display->image),
                                Q_("command|Free Select"),
                                free_sel->num_points,
                                free_sel->points,
-                               GIMP_SELECTION_TOOL (tool)->op,
+                               options->operation,
                                options->antialias,
                                options->feather,
                                options->feather_radius,
-                               options->feather_radius);
+                               options->feather_radius,
+                               TRUE);
 }
 
 static void

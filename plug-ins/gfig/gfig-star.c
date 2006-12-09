@@ -31,6 +31,7 @@
 #include "gfig.h"
 #include "gfig-line.h"
 #include "gfig-dobject.h"
+#include "gfig-star.h"
 #include "gfig-dialog.h"
 
 #include "libgimp/stdplugins-intl.h"

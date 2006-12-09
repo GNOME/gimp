@@ -35,6 +35,8 @@
 #include "core/gimpimage.h"
 #include "gimp-intl.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 by_color_select_invoker (GimpProcedure     *procedure,
@@ -71,11 +73,64 @@ by_color_select_invoker (GimpProcedure     *procedure,
                                     &color,
                                     threshold,
                                     FALSE /* don't select transparent */,
+                                    GIMP_SELECT_CRITERION_COMPOSITE,
                                     operation,
                                     antialias,
                                     feather,
                                     feather_radius,
                                     feather_radius);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+by_color_select_full_invoker (GimpProcedure     *procedure,
+                              Gimp              *gimp,
+                              GimpContext       *context,
+                              GimpProgress      *progress,
+                              const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  GimpRGB color;
+  gint32 threshold;
+  gint32 operation;
+  gboolean antialias;
+  gboolean feather;
+  gdouble feather_radius_x;
+  gdouble feather_radius_y;
+  gboolean sample_merged;
+  gboolean select_transparent;
+  gint32 select_criterion;
+
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  gimp_value_get_rgb (&args->values[1], &color);
+  threshold = g_value_get_int (&args->values[2]);
+  operation = g_value_get_enum (&args->values[3]);
+  antialias = g_value_get_boolean (&args->values[4]);
+  feather = g_value_get_boolean (&args->values[5]);
+  feather_radius_x = g_value_get_double (&args->values[6]);
+  feather_radius_y = g_value_get_double (&args->values[7]);
+  sample_merged = g_value_get_boolean (&args->values[8]);
+  select_transparent = g_value_get_boolean (&args->values[9]);
+  select_criterion = g_value_get_enum (&args->values[10]);
+
+  if (success)
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+      gimp_channel_select_by_color (gimp_image_get_mask (image), drawable,
+                                    sample_merged,
+                                    &color,
+                                    threshold,
+                                    select_transparent,
+                                    select_criterion,
+                                    operation,
+                                    antialias,
+                                    feather,
+                                    feather_radius_x,
+                                    feather_radius_y);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -118,7 +173,8 @@ ellipse_select_invoker (GimpProcedure     *procedure,
                                    antialias,
                                    feather,
                                    feather_radius,
-                                   feather_radius);
+                                   feather_radius,
+                                   TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -158,7 +214,8 @@ free_select_invoker (GimpProcedure     *procedure,
                                    antialias,
                                    feather,
                                    feather_radius,
-                                   feather_radius);
+                                   feather_radius,
+                                   TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -202,11 +259,67 @@ fuzzy_select_invoker (GimpProcedure     *procedure,
                                  x, y,
                                  threshold,
                                  FALSE /* don't select transparent */,
+                                 GIMP_SELECT_CRITERION_COMPOSITE,
                                  operation,
                                  antialias,
                                  feather,
                                  feather_radius,
                                  feather_radius);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+fuzzy_select_full_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble x;
+  gdouble y;
+  gint32 threshold;
+  gint32 operation;
+  gboolean antialias;
+  gboolean feather;
+  gdouble feather_radius_x;
+  gdouble feather_radius_y;
+  gboolean sample_merged;
+  gboolean select_transparent;
+  gint32 select_criterion;
+
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  x = g_value_get_double (&args->values[1]);
+  y = g_value_get_double (&args->values[2]);
+  threshold = g_value_get_int (&args->values[3]);
+  operation = g_value_get_enum (&args->values[4]);
+  antialias = g_value_get_boolean (&args->values[5]);
+  feather = g_value_get_boolean (&args->values[6]);
+  feather_radius_x = g_value_get_double (&args->values[7]);
+  feather_radius_y = g_value_get_double (&args->values[8]);
+  sample_merged = g_value_get_boolean (&args->values[9]);
+  select_transparent = g_value_get_boolean (&args->values[10]);
+  select_criterion = g_value_get_enum (&args->values[11]);
+
+  if (success)
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+      gimp_channel_select_fuzzy (gimp_image_get_mask (image),
+                                 drawable,
+                                 sample_merged,
+                                 x, y,
+                                 threshold,
+                                 select_transparent,
+                                 select_criterion,
+                                 operation,
+                                 antialias,
+                                 feather,
+                                 feather_radius_x,
+                                 feather_radius_y);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -246,7 +359,60 @@ rect_select_invoker (GimpProcedure     *procedure,
                                      operation,
                                      feather,
                                      feather_radius,
-                                     feather_radius);
+                                     feather_radius,
+                                     TRUE);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+round_rect_select_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gdouble x;
+  gdouble y;
+  gdouble width;
+  gdouble height;
+  gdouble corner_radius_x;
+  gdouble corner_radius_y;
+  gint32 operation;
+  gboolean antialias;
+  gboolean feather;
+  gdouble feather_radius_x;
+  gdouble feather_radius_y;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  x = g_value_get_double (&args->values[1]);
+  y = g_value_get_double (&args->values[2]);
+  width = g_value_get_double (&args->values[3]);
+  height = g_value_get_double (&args->values[4]);
+  corner_radius_x = g_value_get_double (&args->values[5]);
+  corner_radius_y = g_value_get_double (&args->values[6]);
+  operation = g_value_get_enum (&args->values[7]);
+  antialias = g_value_get_boolean (&args->values[8]);
+  feather = g_value_get_boolean (&args->values[9]);
+  feather_radius_x = g_value_get_double (&args->values[10]);
+  feather_radius_y = g_value_get_double (&args->values[11]);
+
+  if (success)
+    {
+      gimp_channel_select_round_rect (gimp_image_get_mask (image),
+                                      (gint) x, (gint) y,
+                                      (gint) width, (gint) height,
+                                      corner_radius_x,
+                                      corner_radius_y,
+                                      operation,
+                                      antialias,
+                                      feather,
+                                      feather_radius_x,
+                                      feather_radius_y,
+                                      TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -265,7 +431,7 @@ register_selection_tools_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-by-color-select",
                                      "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
-                                     "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the specified threshold. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection. The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar. Feathering can be enabled optionally and is controlled with the \"feather_radius\" parameter. If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored.",
+                                     "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the specified threshold. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection. The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar. Feathering can be enabled optionally and is controlled with the 'feather-radius' parameter. If the 'sample-merged' parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -320,6 +486,91 @@ register_selection_tools_procs (GimpPDB *pdb)
                                                      "Use the composite image, not the drawable",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-by-color-select-full
+   */
+  procedure = gimp_procedure_new (by_color_select_full_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-by-color-select-full");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-by-color-select-full",
+                                     "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
+                                     "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the specified threshold. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection. To select transparent regions, the color specified must also have minimum alpha. The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar. Feathering can be enabled optionally and is controlled with the 'feather-radius' parameter. If the 'sample-merged' parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored.",
+                                     "David Gowers",
+                                     "David Gowers",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_rgb ("color",
+                                                    "color",
+                                                    "The color to select",
+                                                    FALSE,
+                                                    NULL,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("threshold",
+                                                      "threshold",
+                                                      "Threshold in intensity levels",
+                                                      0, 255, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("antialias",
+                                                     "antialias",
+                                                     "Antialiasing",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("feather",
+                                                     "feather",
+                                                     "Feather option for selections",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("feather-radius-x",
+                                                    "feather radius x",
+                                                    "Radius for feather operation in X direction",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("feather-radius-y",
+                                                    "feather radius y",
+                                                    "Radius for feather operation in Y direction",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("sample-merged",
+                                                     "sample merged",
+                                                     "Use the composite image, not the drawable",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("select-transparent",
+                                                     "select transparent",
+                                                     "Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("select-criterion",
+                                                  "select criterion",
+                                                  "The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.",
+                                                  GIMP_TYPE_SELECT_CRITERION,
+                                                  GIMP_SELECT_CRITERION_COMPOSITE,
+                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -460,7 +711,7 @@ register_selection_tools_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-fuzzy-select",
                                      "Create a fuzzy selection starting at the specified coordinates on the specified drawable.",
-                                     "This tool creates a fuzzy selection over the specified image. A fuzzy selection is determined by a seed fill under the constraints of the specified threshold. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold value). This process continues until no more expansion is possible. The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary. Feathering can be enabled optionally and is controlled with the \"feather_radius\" paramter. If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored. If"
+                                     "This tool creates a fuzzy selection over the specified image. A fuzzy selection is determined by a seed fill under the constraints of the specified threshold. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold value). This process continues until no more expansion is possible. The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary. Feathering can be enabled optionally and is controlled with the 'feather-radius' paramter. If the 'sample-merged' parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored. If"
   "the sample is merged, the specified coordinates are relative to the image origin; otherwise, they are relative to the drawable's origin.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
@@ -525,6 +776,97 @@ register_selection_tools_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-fuzzy-select-full
+   */
+  procedure = gimp_procedure_new (fuzzy_select_full_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-fuzzy-select-full");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-fuzzy-select-full",
+                                     "Create a fuzzy selection starting at the specified coordinates on the specified drawable.",
+                                     "This tool creates a fuzzy selection over the specified image. A fuzzy selection is determined by a seed fill under the constraints of the specified threshold. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold value). This process continues until no more expansion is possible. The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary. Feathering can be enabled optionally and is controlled with the 'feather-radius' paramter. If the 'sample-merged' parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored. If"
+  "the sample is merged, the specified coordinates are relative to the image origin; otherwise, they are relative to the drawable's origin.",
+                                     "David Gowers",
+                                     "David Gowers",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("x",
+                                                    "x",
+                                                    "x coordinate of initial seed fill point: (image coordinates)",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("y",
+                                                    "y",
+                                                    "y coordinate of initial seed fill point: (image coordinates)",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("threshold",
+                                                      "threshold",
+                                                      "Threshold in intensity levels",
+                                                      0, 255, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("antialias",
+                                                     "antialias",
+                                                     "Antialiasing",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("feather",
+                                                     "feather",
+                                                     "Feather option for selections",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("feather-radius-x",
+                                                    "feather radius x",
+                                                    "Radius for feather operation in X direction",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("feather-radius-y",
+                                                    "feather radius y",
+                                                    "Radius for feather operation in Y direction",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("sample-merged",
+                                                     "sample merged",
+                                                     "Use the composite image, not the drawable",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("select-transparent",
+                                                     "select transparent",
+                                                     "Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("select-criterion",
+                                                  "select criterion",
+                                                  "The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.",
+                                                  GIMP_TYPE_SELECT_CRITERION,
+                                                  GIMP_SELECT_CRITERION_COMPOSITE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-rect-select
    */
   procedure = gimp_procedure_new (rect_select_invoker);
@@ -584,6 +926,95 @@ register_selection_tools_procs (GimpPDB *pdb)
                                g_param_spec_double ("feather-radius",
                                                     "feather radius",
                                                     "Radius for feather operation",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-round-rect-select
+   */
+  procedure = gimp_procedure_new (round_rect_select_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-round-rect-select");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-round-rect-select",
+                                     "Create a rectangular selection with round corners over the specified image;",
+                                     "This tool creates a rectangular selection with round corners over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask. If the feather option is enabled, the resulting selection is blurred before combining. The blur is a gaussian blur with the specified feather radius.",
+                                     "Martin Nordholts",
+                                     "Martin Nordholts",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("x",
+                                                    "x",
+                                                    "x coordinate of upper-left corner of rectangle",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("y",
+                                                    "y",
+                                                    "y coordinate of upper-left corner of rectangle",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("width",
+                                                    "width",
+                                                    "The width of the rectangle",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("height",
+                                                    "height",
+                                                    "The height of the rectangle",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("corner-radius-x",
+                                                    "corner radius x",
+                                                    "The corner radius in X direction",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("corner-radius-y",
+                                                    "corner radius y",
+                                                    "The corner radius in Y direction",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("antialias",
+                                                     "antialias",
+                                                     "Antialiasing",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("feather",
+                                                     "feather",
+                                                     "Feather option for selections",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("feather-radius-x",
+                                                    "feather radius x",
+                                                    "Radius for feather operation in X direction",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("feather-radius-y",
+                                                    "feather radius y",
+                                                    "Radius for feather operation in Y direction",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

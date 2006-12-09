@@ -57,9 +57,11 @@
 #include "core/gimpprogress.h"
 
 #include "pdb/gimppdb.h"
-#include "pdb/gimppluginprocedure.h"
 
 #include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginprocedure.h"
+#include "plug-in/plug-in-icc-profile.h"
+
 
 #include "file-open.h"
 #include "file-utils.h"
@@ -68,7 +70,11 @@
 #include "gimp-intl.h"
 
 
-static void  file_open_sanitize_image (GimpImage *image);
+static void  file_open_sanitize_image       (GimpImage    *image);
+static void  file_open_handle_color_profile (GimpImage    *image,
+                                             GimpContext  *context,
+                                             GimpProgress *progress,
+                                             GimpRunMode   run_mode);
 
 
 /*  public functions  */
@@ -98,14 +104,11 @@ file_open_image (Gimp                *gimp,
   *status = GIMP_PDB_EXECUTION_ERROR;
 
   if (! file_proc)
-    file_proc = file_utils_find_proc (gimp->plug_in_manager->load_procs, uri);
+    file_proc = file_utils_find_proc (gimp->plug_in_manager->load_procs,
+                                      uri, error);
 
   if (! file_proc)
-    {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Unknown file type"));
-      return NULL;
-    }
+    return NULL;
 
   filename = file_utils_filename_from_uri (uri);
 
@@ -176,6 +179,9 @@ file_open_image (Gimp                *gimp,
 
   g_value_array_free (return_vals);
 
+  if (image)
+    file_open_handle_color_profile (image, context, progress, run_mode);
+
   return image;
 }
 
@@ -203,7 +209,8 @@ file_open_thumbnail (Gimp          *gimp,
   *image_width  = 0;
   *image_height = 0;
 
-  file_proc = file_utils_find_proc (gimp->plug_in_manager->load_procs, uri);
+  file_proc = file_utils_find_proc (gimp->plug_in_manager->load_procs,
+                                    uri, NULL);
 
   if (! file_proc || ! file_proc->thumb_loader)
     return NULL;
@@ -335,19 +342,20 @@ file_open_with_proc_and_display (Gimp                *gimp,
   return image;
 }
 
-GimpLayer *
-file_open_layer (Gimp                *gimp,
-                 GimpContext         *context,
-                 GimpProgress        *progress,
-                 GimpImage           *dest_image,
-                 const gchar         *uri,
-                 GimpRunMode          run_mode,
-                 GimpPlugInProcedure *file_proc,
-                 GimpPDBStatusType   *status,
-                 GError             **error)
+GList *
+file_open_layers (Gimp                *gimp,
+                  GimpContext         *context,
+                  GimpProgress        *progress,
+                  GimpImage           *dest_image,
+                  gboolean             merge_visible,
+                  const gchar         *uri,
+                  GimpRunMode          run_mode,
+                  GimpPlugInProcedure *file_proc,
+                  GimpPDBStatusType   *status,
+                  GError             **error)
 {
-  GimpLayer   *new_layer = NULL;
   GimpImage   *new_image;
+  GList       *layers    = NULL;
   const gchar *mime_type = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -366,9 +374,8 @@ file_open_layer (Gimp                *gimp,
 
   if (new_image)
     {
-      GList     *list;
-      GimpLayer *layer     = NULL;
-      gint       n_visible = 0;
+      GList *list;
+      gint   n_visible = 0;
 
       gimp_image_undo_disable (new_image);
 
@@ -376,54 +383,70 @@ file_open_layer (Gimp                *gimp,
            list;
            list = g_list_next (list))
         {
+          if (! merge_visible)
+            layers = g_list_prepend (layers, list->data);
+
           if (gimp_item_get_visible (list->data))
             {
               n_visible++;
 
-              if (! layer)
-                layer = list->data;
+              if (! layers)
+                layers = g_list_prepend (layers, list->data);
             }
         }
 
-      if (n_visible > 1)
-        layer = gimp_image_merge_visible_layers (new_image, context,
-                                                 GIMP_CLIP_TO_IMAGE, FALSE);
-
-      if (layer)
+      if (merge_visible && n_visible > 1)
         {
-          GimpItem *item = gimp_item_convert (GIMP_ITEM (layer), dest_image,
-                                              G_TYPE_FROM_INSTANCE (layer),
-                                              TRUE);
+          GimpLayer *layer;
 
-          if (item)
+          g_list_free (layers);
+
+          layer = gimp_image_merge_visible_layers (new_image, context,
+                                                   GIMP_CLIP_TO_IMAGE, FALSE);
+
+          layers = g_list_prepend (NULL, layer);
+        }
+
+      if (layers)
+        {
+          for (list = layers; list; list = g_list_next (list))
             {
-              new_layer = GIMP_LAYER (item);
+              GimpLayer *layer = list->data;
+              GimpItem  *item;
 
-              gimp_object_take_name (GIMP_OBJECT (new_layer),
-                                     file_utils_uri_display_basename (uri));
+              item = gimp_item_convert (GIMP_ITEM (layer), dest_image,
+                                        G_TYPE_FROM_INSTANCE (layer),
+                                        TRUE);
 
-              gimp_document_list_add_uri (GIMP_DOCUMENT_LIST (gimp->documents),
-                                          uri, mime_type);
+              if (merge_visible)
+                gimp_object_take_name (GIMP_OBJECT (item),
+                                       file_utils_uri_display_basename (uri));
 
-              if (gimp->config->save_document_history)
-                gimp_recent_list_add_uri (uri, mime_type);
+              list->data = item;
             }
+
+          gimp_document_list_add_uri (GIMP_DOCUMENT_LIST (gimp->documents),
+                                      uri, mime_type);
+
+          if (gimp->config->save_document_history)
+            gimp_recent_list_add_uri (uri, mime_type);
         }
       else
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Image doesn't contain any visible layers"));
+                       _("Image doesn't contain any layers"));
           *status = GIMP_PDB_EXECUTION_ERROR;
        }
 
       g_object_unref (new_image);
     }
 
-  return new_layer;
+  return g_list_reverse (layers);
 }
 
 
 /*  private functions  */
+
 
 static void
 file_open_sanitize_image (GimpImage *image)
@@ -441,4 +464,49 @@ file_open_sanitize_image (GimpImage *image)
   gimp_image_invalidate_layer_previews (image);
   gimp_image_invalidate_channel_previews (image);
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
+}
+
+static void
+file_open_profile_apply_rgb (GimpImage    *image,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             GimpRunMode   run_mode)
+{
+  GError *error = NULL;
+
+  if (gimp_image_base_type (image) != GIMP_GRAY &&
+      ! plug_in_icc_profile_apply_rgb (image, context, progress,
+                                       run_mode, &error))
+    {
+      gimp_message (image->gimp, G_OBJECT (progress),
+                    GIMP_MESSAGE_WARNING, error->message);
+      g_error_free (error);
+    }
+}
+
+static void
+file_open_handle_color_profile (GimpImage    *image,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                GimpRunMode   run_mode)
+{
+  if (gimp_image_parasite_find (image, "icc-profile"))
+    {
+      switch (image->gimp->config->color_profile_policy)
+        {
+        case GIMP_COLOR_PROFILE_POLICY_ASK:
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            file_open_profile_apply_rgb (image, context, progress,
+                                         GIMP_RUN_INTERACTIVE);
+          break;
+
+        case GIMP_COLOR_PROFILE_POLICY_KEEP:
+          break;
+
+        case GIMP_COLOR_PROFILE_POLICY_CONVERT:
+          file_open_profile_apply_rgb (image, context, progress,
+                                       GIMP_RUN_NONINTERACTIVE);
+          break;
+        }
+    }
 }

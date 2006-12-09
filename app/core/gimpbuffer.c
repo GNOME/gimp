@@ -29,6 +29,7 @@
 #include "base/temp-buf.h"
 
 #include "paint-funcs/paint-funcs.h"
+#include "paint-funcs/scale-funcs.h"
 
 #include "gimpbuffer.h"
 
@@ -54,6 +55,7 @@ static gboolean  gimp_buffer_get_popup_size   (GimpViewable  *viewable,
                                                gint          *popup_width,
                                                gint          *popup_height);
 static TempBuf * gimp_buffer_get_new_preview  (GimpViewable  *viewable,
+                                               GimpContext   *context,
                                                gint           width,
                                                gint           height);
 static gchar   * gimp_buffer_get_description  (GimpViewable  *viewable,
@@ -194,6 +196,7 @@ gimp_buffer_get_popup_size (GimpViewable *viewable,
 
 static TempBuf *
 gimp_buffer_get_new_preview (GimpViewable *viewable,
+                             GimpContext  *context,
                              gint          width,
                              gint          height)
 {

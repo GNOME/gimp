@@ -52,23 +52,21 @@
 #include "gimp-intl.h"
 
 
-#define MAX_SCALE_BUF 20
+static void   gimp_navigation_editor_docked_iface_init (GimpDockedInterface  *iface);
 
+static void   gimp_navigation_editor_destroy           (GtkObject            *object);
 
-static void   gimp_navigation_editor_docked_iface_init (GimpDockedInterface *iface);
-static void   gimp_navigation_editor_set_context       (GimpDocked       *docked,
-                                                        GimpContext      *context);
+static void   gimp_navigation_editor_set_context       (GimpDocked           *docked,
+                                                        GimpContext          *context);
 
-static void   gimp_navigation_editor_destroy           (GtkObject          *object);
-
-static GtkWidget * gimp_navigation_editor_new_private  (GimpMenuFactory    *menu_factory,
-                                                        GimpDisplayShell   *shell);
+static GtkWidget * gimp_navigation_editor_new_private  (GimpMenuFactory      *menu_factory,
+                                                        GimpDisplayShell     *shell);
 
 static void     gimp_navigation_editor_set_shell       (GimpNavigationEditor *view,
                                                         GimpDisplayShell     *shell);
-static gboolean gimp_navigation_editor_button_release  (GtkWidget          *widget,
-                                                        GdkEventButton     *bevent,
-                                                        GimpDisplayShell   *shell);
+static gboolean gimp_navigation_editor_button_release  (GtkWidget            *widget,
+                                                        GdkEventButton       *bevent,
+                                                        GimpDisplayShell     *shell);
 static void   gimp_navigation_editor_marker_changed    (GimpNavigationView   *view,
                                                         gdouble               x,
                                                         gdouble               y,
@@ -109,18 +107,26 @@ gimp_navigation_editor_class_init (GimpNavigationEditorClass *klass)
 }
 
 static void
+gimp_navigation_editor_docked_iface_init (GimpDockedInterface *iface)
+{
+  iface->set_context = gimp_navigation_editor_set_context;
+}
+
+static void
 gimp_navigation_editor_init (GimpNavigationEditor *editor)
 {
   GtkWidget *frame;
 
-  editor->shell = NULL;
+  editor->context = NULL;
+  editor->shell   = NULL;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  editor->view = gimp_view_new_by_types (GIMP_TYPE_NAVIGATION_VIEW,
+  editor->view = gimp_view_new_by_types (NULL,
+                                         GIMP_TYPE_NAVIGATION_VIEW,
                                          GIMP_TYPE_IMAGE,
                                          GIMP_VIEW_SIZE_MEDIUM, 0, TRUE);
   gtk_container_add (GTK_CONTAINER (frame), editor->view);
@@ -140,9 +146,14 @@ gimp_navigation_editor_init (GimpNavigationEditor *editor)
 }
 
 static void
-gimp_navigation_editor_docked_iface_init (GimpDockedInterface *iface)
+gimp_navigation_editor_destroy (GtkObject *object)
 {
-  iface->set_context = gimp_navigation_editor_set_context;
+  GimpNavigationEditor *editor = GIMP_NAVIGATION_EDITOR (object);
+
+  if (editor->shell)
+    gimp_navigation_editor_set_shell (editor, NULL);
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -184,21 +195,13 @@ gimp_navigation_editor_set_context (GimpDocked  *docked,
       display = gimp_context_get_display (context);
     }
 
+  gimp_view_renderer_set_context (GIMP_VIEW (editor->view)->renderer,
+                                  context);
+
   if (display)
     shell = GIMP_DISPLAY_SHELL (display->shell);
 
   gimp_navigation_editor_set_shell (editor, shell);
-}
-
-static void
-gimp_navigation_editor_destroy (GtkObject *object)
-{
-  GimpNavigationEditor *editor = GIMP_NAVIGATION_EDITOR (object);
-
-  if (editor->shell)
-    gimp_navigation_editor_set_shell (editor, NULL);
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 
@@ -330,12 +333,16 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
       gimp_view_renderer_set_size (view->renderer,
                                    config->nav_preview_size * 3,
                                    view->renderer->border_width);
+      gimp_view_renderer_set_context (view->renderer,
+                                      gimp_get_user_context (shell->display->image->gimp));
 
       gimp_navigation_editor_set_shell (editor, shell);
+
     }
   else
     {
       GtkWidget *hscale;
+      GtkWidget *hbox;
 
       editor = g_object_new (GIMP_TYPE_NAVIGATION_EDITOR,
                              "menu-factory",    menu_factory,
@@ -375,6 +382,10 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
 
       /* the zoom scale */
 
+      hbox = gtk_hbox_new (FALSE, 6);
+      gtk_box_pack_end (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
       editor->zoom_adjustment =
         GTK_ADJUSTMENT (gtk_adjustment_new (0.0, -8.0, 8.0, 0.5, 1.0, 0.0));
 
@@ -385,25 +396,15 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
       hscale = gtk_hscale_new (GTK_ADJUSTMENT (editor->zoom_adjustment));
       gtk_range_set_update_policy (GTK_RANGE (hscale), GTK_UPDATE_DELAYED);
       gtk_scale_set_draw_value (GTK_SCALE (hscale), FALSE);
-      gtk_scale_set_digits (GTK_SCALE (hscale), 2);
-      gtk_box_pack_end (GTK_BOX (editor), hscale, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), hscale, TRUE, TRUE, 0);
       gtk_widget_show (hscale);
 
       /* the zoom label */
 
       editor->zoom_label = gtk_label_new ("100%");
-      gtk_box_pack_end (GTK_BOX (editor), editor->zoom_label, FALSE, FALSE, 0);
+      gtk_label_set_width_chars (GTK_LABEL (editor->zoom_label), 7);
+      gtk_box_pack_start (GTK_BOX (hbox), editor->zoom_label, FALSE, FALSE, 0);
       gtk_widget_show (editor->zoom_label);
-
-      /* eek */
-      {
-        GtkRequisition requisition;
-
-        gtk_widget_size_request (editor->zoom_label, &requisition);
-        gtk_widget_set_size_request (editor->zoom_label,
-                                     4 * requisition.width,
-                                     requisition.height);
-      }
     }
 
   gimp_view_renderer_set_background (GIMP_VIEW (editor->view)->renderer,

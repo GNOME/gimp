@@ -21,14 +21,15 @@
 #  include <config.h>
 #endif
 
+#define NO_IMPORT_PYGOBJECT
+#include <pygobject.h>
+
 #include "pygimp.h"
 
 #define NO_IMPORT_PYGIMPCOLOR
 #include "pygimpcolor-api.h"
 
 #include <glib-object.h>
-
-#include <pygobject.h>
 
 static void
 ensure_drawable(PyGimpDrawable *self)
@@ -930,7 +931,7 @@ drw_set_name(PyGimpDrawable *self, PyObject *value, void *closure)
         return -1;
     }
 
-    if (!PyString_Check(value)) {
+    if (!PyString_Check(value) && !PyUnicode_Check(value)) {
         PyErr_SetString(PyExc_TypeError, "type mismatch");
         return -1;
     }
@@ -993,11 +994,7 @@ drw_get_mask_bounds(PyGimpDrawable *self, void *closure)
 {
     gint x1, y1, x2, y2;
 
-    if (!gimp_drawable_mask_bounds(self->ID, &x1, &y1, &x2, &y2)) {
-	Py_INCREF(Py_None);
-	return Py_None;
-    }
-
+    gimp_drawable_mask_bounds(self->ID, &x1, &y1, &x2, &y2);
     return Py_BuildValue("(iiii)", x1, y1, x2, y2);
 }
 

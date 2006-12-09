@@ -406,7 +406,7 @@ gimp_vectors_get_strokes (gint32  vectors_ID,
  * gimp_vectors_stroke_get_length:
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
- * @prescision: The prescision used for the approximation.
+ * @precision: The precision used for the approximation.
  *
  * Measure the length of the given stroke.
  *
@@ -419,7 +419,7 @@ gimp_vectors_get_strokes (gint32  vectors_ID,
 gdouble
 gimp_vectors_stroke_get_length (gint32  vectors_ID,
                                 gint    stroke_id,
-                                gdouble prescision)
+                                gdouble precision)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -429,7 +429,7 @@ gimp_vectors_stroke_get_length (gint32  vectors_ID,
                                     &nreturn_vals,
                                     GIMP_PDB_VECTORS, vectors_ID,
                                     GIMP_PDB_INT32, stroke_id,
-                                    GIMP_PDB_FLOAT, prescision,
+                                    GIMP_PDB_FLOAT, precision,
                                     GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
@@ -445,7 +445,8 @@ gimp_vectors_stroke_get_length (gint32  vectors_ID,
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
  * @dist: The given distance.
- * @prescision: The prescision used for the approximation.
+ * @precision: The precision used for the approximation.
+ * @x_point: The x position of the point.
  * @y_point: The y position of the point.
  * @slope: The slope (dy / dx) at the specified point.
  * @valid: Indicator for the validity of the returned data.
@@ -459,34 +460,42 @@ gimp_vectors_stroke_get_length (gint32  vectors_ID,
  * created. This might not be obvious. If the stroke is not long
  * enough, a \"valid\" flag will be FALSE.
  *
- * Returns: The x position of the point.
+ * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
  */
-gdouble
+gboolean
 gimp_vectors_stroke_get_point_at_dist (gint32    vectors_ID,
                                        gint      stroke_id,
                                        gdouble   dist,
-                                       gdouble   prescision,
+                                       gdouble   precision,
+                                       gdouble  *x_point,
                                        gdouble  *y_point,
                                        gdouble  *slope,
                                        gboolean *valid)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble x_point = 0.0;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-vectors-stroke-get-point-at-dist",
                                     &nreturn_vals,
                                     GIMP_PDB_VECTORS, vectors_ID,
                                     GIMP_PDB_INT32, stroke_id,
                                     GIMP_PDB_FLOAT, dist,
-                                    GIMP_PDB_FLOAT, prescision,
+                                    GIMP_PDB_FLOAT, precision,
                                     GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  *x_point = 0.0;
+  *y_point = 0.0;
+  *slope = 0.0;
+  *valid = FALSE;
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     {
-      x_point = return_vals[1].data.d_float;
+      *x_point = return_vals[1].data.d_float;
       *y_point = return_vals[2].data.d_float;
       *slope = return_vals[3].data.d_float;
       *valid = return_vals[4].data.d_int32;
@@ -494,11 +503,11 @@ gimp_vectors_stroke_get_point_at_dist (gint32    vectors_ID,
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return x_point;
+  return success;
 }
 
 /**
- * gimp_vectors_stroke_remove:
+ * gimp_vectors_remove_stroke:
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
  *
@@ -511,14 +520,14 @@ gimp_vectors_stroke_get_point_at_dist (gint32    vectors_ID,
  * Since: GIMP 2.4
  */
 gboolean
-gimp_vectors_stroke_remove (gint32 vectors_ID,
+gimp_vectors_remove_stroke (gint32 vectors_ID,
                             gint   stroke_id)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-vectors-stroke-remove",
+  return_vals = gimp_run_procedure ("gimp-vectors-remove-stroke",
                                     &nreturn_vals,
                                     GIMP_PDB_VECTORS, vectors_ID,
                                     GIMP_PDB_INT32, stroke_id,
@@ -646,54 +655,290 @@ gimp_vectors_stroke_scale (gint32  vectors_ID,
 }
 
 /**
- * gimp_vectors_stroke_interpolate:
+ * gimp_vectors_stroke_rotate:
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
- * @prescision: The prescision used for the approximation.
- * @num_coords: The number of floats returned.
- * @coords: List of the coords along the path (x0, y0, x1, y1, ...).
+ * @center_x: X coordinate of the rotation center.
+ * @center_y: Y coordinate of the rotation center.
+ * @angle: angle to rotate about.
  *
- * returns polygonal approximation of the stroke.
+ * rotates the given stroke.
  *
- * returns polygonal approximation of the stroke.
+ * Rotates the given stroke around given center by angle (in degrees).
  *
- * Returns: List of the strokes belonging to the path.
+ * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
  */
 gboolean
-gimp_vectors_stroke_interpolate (gint32    vectors_ID,
-                                 gint      stroke_id,
-                                 gdouble   prescision,
-                                 gint     *num_coords,
-                                 gdouble **coords)
+gimp_vectors_stroke_rotate (gint32  vectors_ID,
+                            gint    stroke_id,
+                            gdouble center_x,
+                            gdouble center_y,
+                            gdouble angle)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gboolean closed = FALSE;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-rotate",
+                                    &nreturn_vals,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_INT32, stroke_id,
+                                    GIMP_PDB_FLOAT, center_x,
+                                    GIMP_PDB_FLOAT, center_y,
+                                    GIMP_PDB_FLOAT, angle,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_stroke_flip:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @flip_type: Flip orientation, either vertical or horizontal.
+ * @axis: axis coordinate about which to flip, in pixels.
+ *
+ * flips the given stroke.
+ *
+ * Rotates the given stroke around given center by angle (in degrees).
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_stroke_flip (gint32              vectors_ID,
+                          gint                stroke_id,
+                          GimpOrientationType flip_type,
+                          gdouble             axis)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-flip",
+                                    &nreturn_vals,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_INT32, stroke_id,
+                                    GIMP_PDB_INT32, flip_type,
+                                    GIMP_PDB_FLOAT, axis,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_stroke_flip_free:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @x1: X coordinate of the first point of the flipping axis.
+ * @y1: Y coordinate of the first point of the flipping axis.
+ * @x2: X coordinate of the second point of the flipping axis.
+ * @y2: Y coordinate of the second point of the flipping axis.
+ *
+ * flips the given stroke about an arbitrary axis.
+ *
+ * Flips the given stroke about an arbitrary axis. Axis is defined by
+ * two coordinates in the image (in pixels), through which the flipping
+ * axis passes.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_stroke_flip_free (gint32  vectors_ID,
+                               gint    stroke_id,
+                               gdouble x1,
+                               gdouble y1,
+                               gdouble x2,
+                               gdouble y2)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-flip-free",
+                                    &nreturn_vals,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_INT32, stroke_id,
+                                    GIMP_PDB_FLOAT, x1,
+                                    GIMP_PDB_FLOAT, y1,
+                                    GIMP_PDB_FLOAT, x2,
+                                    GIMP_PDB_FLOAT, y2,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_stroke_get_points:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @num_points: The number of floats returned.
+ * @controlpoints: List of the control points for the stroke (x0, y0, x1, y1, ...).
+ * @closed: Whether the stroke is closed or not.
+ *
+ * returns the control points of a stroke.
+ *
+ * returns the control points of a stroke. The interpretation of the
+ * coordinates returned depends on the type of the stroke. For Gimp 2.4
+ * this is always a bezier stroke, where the coordinates are the
+ * control points.
+ *
+ * Returns: type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).
+ *
+ * Since: GIMP 2.4
+ */
+GimpVectorsStrokeType
+gimp_vectors_stroke_get_points (gint32     vectors_ID,
+                                gint       stroke_id,
+                                gint      *num_points,
+                                gdouble  **controlpoints,
+                                gboolean  *closed)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpVectorsStrokeType type = 0;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-get-points",
+                                    &nreturn_vals,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_INT32, stroke_id,
+                                    GIMP_PDB_END);
+
+  *num_points = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      type = return_vals[1].data.d_int32;
+      *num_points = return_vals[2].data.d_int32;
+      *controlpoints = g_new (gdouble, *num_points);
+      memcpy (*controlpoints,
+              return_vals[3].data.d_floatarray,
+              *num_points * sizeof (gdouble));
+      *closed = return_vals[4].data.d_int32;
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return type;
+}
+
+/**
+ * gimp_vectors_stroke_new_from_points:
+ * @vectors_ID: The vectors object.
+ * @type: type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).
+ * @num_points: The number of elements in the array, i.e. the number of controlpoints in the stroke * 2 (x- and y-coordinate).
+ * @controlpoints: List of the x- and y-coordinates of the control points.
+ * @closed: Whether the stroke is to be closed or not.
+ *
+ * Adds a stroke of a given type to the vectors object.
+ *
+ * Adds a stroke of a given type to the vectors object. The coordinates
+ * of the control points can be specified. For now only strokes of the
+ * type GIMP_VECTORS_STROKE_TYPE_BEZIER are supported. The control
+ * points are specified as a pair of float values for the x- and
+ * y-coordinate. The Bezier stroke type needs a multiple of three
+ * control points. Each Bezier segment endpoint (anchor, A) has two
+ * additional control points (C) associated. They are specified in the
+ * order CACCACCAC...
+ *
+ * Returns: The stroke ID of the newly created stroke.
+ *
+ * Since: GIMP 2.4
+ */
+gint
+gimp_vectors_stroke_new_from_points (gint32                 vectors_ID,
+                                     GimpVectorsStrokeType  type,
+                                     gint                   num_points,
+                                     const gdouble         *controlpoints,
+                                     gboolean               closed)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint stroke_id = 0;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-stroke-new-from-points",
+                                    &nreturn_vals,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_INT32, type,
+                                    GIMP_PDB_INT32, num_points,
+                                    GIMP_PDB_FLOATARRAY, controlpoints,
+                                    GIMP_PDB_INT32, closed,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    stroke_id = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return stroke_id;
+}
+
+/**
+ * gimp_vectors_stroke_interpolate:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @precision: The precision used for the approximation.
+ * @num_coords: The number of floats returned.
+ * @closed: Whether the stroke is closed or not.
+ *
+ * returns polygonal approximation of the stroke.
+ *
+ * returns polygonal approximation of the stroke.
+ *
+ * Returns: List of the coords along the path (x0, y0, x1, y1, ...).
+ *
+ * Since: GIMP 2.4
+ */
+gdouble *
+gimp_vectors_stroke_interpolate (gint32    vectors_ID,
+                                 gint      stroke_id,
+                                 gdouble   precision,
+                                 gint     *num_coords,
+                                 gboolean *closed)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble *coords = NULL;
 
   return_vals = gimp_run_procedure ("gimp-vectors-stroke-interpolate",
                                     &nreturn_vals,
                                     GIMP_PDB_VECTORS, vectors_ID,
                                     GIMP_PDB_INT32, stroke_id,
-                                    GIMP_PDB_FLOAT, prescision,
+                                    GIMP_PDB_FLOAT, precision,
                                     GIMP_PDB_END);
 
   *num_coords = 0;
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
-      closed = return_vals[1].data.d_int32;
-      *num_coords = return_vals[2].data.d_int32;
-      *coords = g_new (gdouble, *num_coords);
-      memcpy (*coords,
-              return_vals[3].data.d_floatarray,
+      *num_coords = return_vals[1].data.d_int32;
+      coords = g_new (gdouble, *num_coords);
+      memcpy (coords,
+              return_vals[2].data.d_floatarray,
               *num_coords * sizeof (gdouble));
+      *closed = return_vals[3].data.d_int32;
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return closed;
+  return coords;
 }
 
 /**
@@ -919,4 +1164,169 @@ gimp_vectors_bezier_stroke_new_ellipse (gint32  vectors_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return stroke_id;
+}
+
+/**
+ * gimp_vectors_to_selection:
+ * @vectors_ID: The vectors object to render to the selection.
+ * @operation: The desired operation with current selection.
+ * @antialias: Antialias selection.
+ * @feather: Feather selection.
+ * @feather_radius_x: Feather radius x.
+ * @feather_radius_y: Feather radius y.
+ *
+ * Transforms the specified vectors object into a selection
+ *
+ * This procedure renders the desired vectors object into the current
+ * selection of the image the vectors object belongs to.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_to_selection (gint32         vectors_ID,
+                           GimpChannelOps operation,
+                           gboolean       antialias,
+                           gboolean       feather,
+                           gdouble        feather_radius_x,
+                           gdouble        feather_radius_y)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-to-selection",
+                                    &nreturn_vals,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_INT32, operation,
+                                    GIMP_PDB_INT32, antialias,
+                                    GIMP_PDB_INT32, feather,
+                                    GIMP_PDB_FLOAT, feather_radius_x,
+                                    GIMP_PDB_FLOAT, feather_radius_y,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_import_from_file:
+ * @image_ID: The image.
+ * @filename: The name of the SVG file to import.
+ * @merge: Merge paths into a single vectors object.
+ * @scale: Scale the SVG to image dimensions.
+ * @num_vectors: The number of newly created vectors.
+ * @vectors_ids: The list of newly created vectors.
+ *
+ * Import paths from an SVG file.
+ *
+ * This procedure imports paths from an SVG file. SVG elements other
+ * than paths and basic shapes are ignored.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_import_from_file (gint32        image_ID,
+                               const gchar  *filename,
+                               gboolean      merge,
+                               gboolean      scale,
+                               gint         *num_vectors,
+                               gint32      **vectors_ids)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-import-from-file",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, filename,
+                                    GIMP_PDB_INT32, merge,
+                                    GIMP_PDB_INT32, scale,
+                                    GIMP_PDB_END);
+
+  *num_vectors = 0;
+  *vectors_ids = NULL;
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *num_vectors = return_vals[1].data.d_int32;
+      *vectors_ids = g_new (gint32, *num_vectors);
+      memcpy (*vectors_ids,
+              return_vals[2].data.d_int32array,
+              *num_vectors * sizeof (gint32));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_import_from_string:
+ * @image_ID: The image.
+ * @string: A string that must be a complete and valid SVG document.
+ * @length: Number of bytes in string or -1 if the string is NULL terminated.
+ * @merge: Merge paths into a single vectors object.
+ * @scale: Scale the SVG to image dimensions.
+ * @num_vectors: The number of newly created vectors.
+ * @vectors_ids: The list of newly created vectors.
+ *
+ * Import paths from an SVG string.
+ *
+ * This procedure works like gimp_vectors_import_from_file() but takes
+ * a string rather than reading the SVG from a file. This allows you to
+ * write scripts that generate SVG and feed it to GIMP.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_import_from_string (gint32        image_ID,
+                                 const gchar  *string,
+                                 gint          length,
+                                 gboolean      merge,
+                                 gboolean      scale,
+                                 gint         *num_vectors,
+                                 gint32      **vectors_ids)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-import-from-string",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, string,
+                                    GIMP_PDB_INT32, length,
+                                    GIMP_PDB_INT32, merge,
+                                    GIMP_PDB_INT32, scale,
+                                    GIMP_PDB_END);
+
+  *num_vectors = 0;
+  *vectors_ids = NULL;
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *num_vectors = return_vals[1].data.d_int32;
+      *vectors_ids = g_new (gint32, *num_vectors);
+      memcpy (*vectors_ids,
+              return_vals[2].data.d_int32array,
+              *num_vectors * sizeof (gint32));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }

@@ -10,6 +10,7 @@ CURSOR_IMAGES = \
 	cursor-crosshair.png		\
 	cursor-crosshair-small.png	\
 	cursor-mouse.png		\
+	cursor-move.png			\
 	cursor-none.png			\
 	cursor-side-top.png		\
 	cursor-side-left.png		\
@@ -46,6 +47,7 @@ CURSOR_IMAGES = \
 	tool-free-select.png		\
 	tool-fuzzy-select.png		\
 	tool-hand.png			\
+	tool-heal.png			\
 	tool-ink.png			\
 	tool-iscissors.png		\
 	tool-measure.png		\
@@ -74,6 +76,8 @@ EXTRA_DIST = \
 	xbm/cursor-none.xbm			\
 	xbm/cursor-mouse.xbm			\
 	xbm/cursor-mouse-mask.xbm		\
+	xbm/cursor-move.xbm			\
+	xbm/cursor-move-mask.xbm		\
 	xbm/cursor-crosshair.xbm		\
 	xbm/cursor-crosshair-mask.xbm		\
 	xbm/cursor-crosshair-small.xbm		\
@@ -193,7 +197,9 @@ EXTRA_DIST = \
 	xbm/tool-measure.xbm			\
 	xbm/tool-measure-mask.xbm		\
 	xbm/tool-hand.xbm			\
-	xbm/tool-hand-mask.xbm
+	xbm/tool-hand-mask.xbm			\
+	xbm/tool-heal.xbm			\
+	xbm/tool-heal-mask.xbm
 
 noinst_DATA = gimp-tool-cursors.h
 

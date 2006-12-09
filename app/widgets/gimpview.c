@@ -32,6 +32,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
@@ -80,6 +81,7 @@ static void        gimp_view_update_callback      (GimpViewRenderer *renderer,
                                                    GimpView         *view);
 
 static GimpViewable * gimp_view_drag_viewable     (GtkWidget        *widget,
+                                                   GimpContext     **context,
                                                    gpointer          data);
 static GdkPixbuf    * gimp_view_drag_pixbuf       (GtkWidget        *widget,
                                                    gpointer          data);
@@ -439,6 +441,7 @@ gimp_view_button_press_event (GtkWidget      *widget,
           if (view->show_popup && view->viewable)
             {
               gimp_view_popup_show (widget, bevent,
+                                    view->renderer->context,
                                     view->viewable,
                                     view->renderer->width,
                                     view->renderer->height,
@@ -451,6 +454,7 @@ gimp_view_button_press_event (GtkWidget      *widget,
 
           if (bevent->button == 2)
             gimp_view_popup_show (widget, bevent,
+                                  view->renderer->context,
                                   view->viewable,
                                   view->renderer->width,
                                   view->renderer->height,
@@ -598,16 +602,19 @@ gimp_view_real_set_viewable (GimpView     *view,
 /*  public functions  */
 
 GtkWidget *
-gimp_view_new (GimpViewable *viewable,
+gimp_view_new (GimpContext  *context,
+               GimpViewable *viewable,
                gint          size,
                gint          border_width,
                gboolean      is_popup)
 {
   GtkWidget *view;
 
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
 
-  view = gimp_view_new_by_types (GIMP_TYPE_VIEW,
+  view = gimp_view_new_by_types (context,
+                                 GIMP_TYPE_VIEW,
                                  G_TYPE_FROM_INSTANCE (viewable),
                                  size, border_width, is_popup);
 
@@ -620,7 +627,8 @@ gimp_view_new (GimpViewable *viewable,
 }
 
 GtkWidget *
-gimp_view_new_full (GimpViewable *viewable,
+gimp_view_new_full (GimpContext  *context,
+                    GimpViewable *viewable,
                     gint          width,
                     gint          height,
                     gint          border_width,
@@ -630,9 +638,11 @@ gimp_view_new_full (GimpViewable *viewable,
 {
   GtkWidget *view;
 
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
 
-  view = gimp_view_new_full_by_types (GIMP_TYPE_VIEW,
+  view = gimp_view_new_full_by_types (context,
+                                      GIMP_TYPE_VIEW,
                                       G_TYPE_FROM_INSTANCE (viewable),
                                       width, height, border_width,
                                       is_popup, clickable, show_popup);
@@ -646,15 +656,17 @@ gimp_view_new_full (GimpViewable *viewable,
 }
 
 GtkWidget *
-gimp_view_new_by_types (GType    view_type,
-                        GType    viewable_type,
-                        gint     size,
-                        gint     border_width,
-                        gboolean is_popup)
+gimp_view_new_by_types (GimpContext *context,
+                        GType        view_type,
+                        GType        viewable_type,
+                        gint         size,
+                        gint         border_width,
+                        gboolean     is_popup)
 {
   GimpViewRenderer *renderer;
   GimpView         *view;
 
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (g_type_is_a (view_type, GIMP_TYPE_VIEW), NULL);
   g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE), NULL);
   g_return_val_if_fail (size >  0 &&
@@ -662,7 +674,7 @@ gimp_view_new_by_types (GType    view_type,
   g_return_val_if_fail (border_width >= 0 &&
                         border_width <= GIMP_VIEW_MAX_BORDER_WIDTH, NULL);
 
-  renderer = gimp_view_renderer_new (viewable_type, size,
+  renderer = gimp_view_renderer_new (context, viewable_type, size,
                                      border_width, is_popup);
 
   g_return_val_if_fail (renderer != NULL, NULL);
@@ -679,18 +691,20 @@ gimp_view_new_by_types (GType    view_type,
 }
 
 GtkWidget *
-gimp_view_new_full_by_types (GType    view_type,
-                             GType    viewable_type,
-                             gint     width,
-                             gint     height,
-                             gint     border_width,
-                             gboolean is_popup,
-                             gboolean clickable,
-                             gboolean show_popup)
+gimp_view_new_full_by_types (GimpContext *context,
+                             GType        view_type,
+                             GType        viewable_type,
+                             gint         width,
+                             gint         height,
+                             gint         border_width,
+                             gboolean     is_popup,
+                             gboolean     clickable,
+                             gboolean     show_popup)
 {
   GimpViewRenderer *renderer;
   GimpView         *view;
 
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (g_type_is_a (view_type, GIMP_TYPE_VIEW), NULL);
   g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE), NULL);
   g_return_val_if_fail (width >  0 &&
@@ -700,8 +714,9 @@ gimp_view_new_full_by_types (GType    view_type,
   g_return_val_if_fail (border_width >= 0 &&
                         border_width <= GIMP_VIEW_MAX_BORDER_WIDTH, NULL);
 
-  renderer = gimp_view_renderer_new_full (viewable_type, width, height,
-                                          border_width, is_popup);
+  renderer = gimp_view_renderer_new_full (context, viewable_type,
+                                          width, height, border_width,
+                                          is_popup);
 
   g_return_val_if_fail (renderer != NULL, NULL);
 
@@ -781,9 +796,13 @@ gimp_view_update_callback (GimpViewRenderer *renderer,
 }
 
 static GimpViewable *
-gimp_view_drag_viewable (GtkWidget *widget,
-                         gpointer   data)
+gimp_view_drag_viewable (GtkWidget    *widget,
+                         GimpContext **context,
+                         gpointer      data)
 {
+  if (context)
+    *context = GIMP_VIEW (widget)->renderer->context;
+
   return GIMP_VIEW (widget)->viewable;
 }
 
@@ -791,12 +810,14 @@ static GdkPixbuf *
 gimp_view_drag_pixbuf (GtkWidget *widget,
                        gpointer   data)
 {
-  GimpViewable *viewable = GIMP_VIEW (widget)->viewable;
+  GimpView     *view     = GIMP_VIEW (widget);
+  GimpViewable *viewable = view->viewable;
   gint          width;
   gint          height;
 
   if (viewable && gimp_viewable_get_size (viewable, &width, &height))
-    return gimp_viewable_get_new_pixbuf (viewable, width, height);
+    return gimp_viewable_get_new_pixbuf (viewable, view->renderer->context,
+                                         width, height);
 
   return NULL;
 }

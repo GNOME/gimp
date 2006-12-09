@@ -583,14 +583,13 @@ typedef long int count_int;
 
 
 
-static gint find_unused_ia_colour         (guchar *pixels,
-                                           gint    numpixels,
-                                           gint    num_indices,
-                                           gint   *colors);
+static gint find_unused_ia_colour   (const guchar *pixels,
+                                     gint          numpixels,
+                                     gint          num_indices,
+                                     gint         *colors);
 
 static void special_flatten_indexed_alpha (guchar *pixels,
-                                           gint   *transparent,
-                                           gint   *colors,
+                                           gint   transparent,
                                            gint    numpixels);
 static int colors_to_bpp  (int);
 static int bpp_to_colors  (int);
@@ -635,33 +634,31 @@ static void flush_char (void);
 
 
 static gint
-find_unused_ia_colour (guchar *pixels,
-                       gint    numpixels,
-                       gint    num_indices,
-                       gint   *colors)
+find_unused_ia_colour (const guchar *pixels,
+                       gint          numpixels,
+                       gint          num_indices,
+                       gint         *colors)
 {
-  int i;
   gboolean ix_used[256];
+  gint i;
 
 #ifdef GIFDEBUG
   g_printerr ("GIF: fuiac: Image claims to use %d/%d indices - finding free "
-              "index...\n", (int)(*colors),(int)num_indices);
+              "index...\n", *colors, num_indices);
 #endif
 
   for (i = 0; i < 256; i++)
-    {
-      ix_used[i] = (gboolean) FALSE;
-    }
+    ix_used[i] = FALSE;
 
   for (i = 0; i < numpixels; i++)
     {
       if (pixels[i * 2 + 1])
-        ix_used[pixels[i * 2]] = (gboolean) TRUE;
+        ix_used[pixels[i * 2]] = TRUE;
     }
 
   for (i = num_indices - 1; i >= 0; i--)
     {
-      if (ix_used[i] == (gboolean) FALSE)
+      if (! ix_used[i])
         {
 #ifdef GIFDEBUG
           g_printerr ("GIF: Found unused colour index %d.\n", (int) i);
@@ -673,32 +670,33 @@ find_unused_ia_colour (guchar *pixels,
   /* Couldn't find an unused colour index within the number of
      bits per pixel we wanted.  Will have to increment the number
      of colours in the image and assign a transparent pixel there. */
-  if ((*colors) < 256)
+  if (*colors < 256)
     {
       (*colors)++;
+
       g_printerr ("GIF: 2nd pass "
                   "- Increasing bounds and using colour index %d.\n",
-                  (int) (*colors) - 1);
+                  *colors - 1);
       return ((*colors) - 1);
     }
 
   g_message (_("Couldn't simply reduce colors further. Saving as opaque."));
-  return (-1);
+
+  return -1;
 }
 
 
 static void
 special_flatten_indexed_alpha (guchar *pixels,
-                               int *transparent,
-                               int *colors,
-                               int numpixels)
+                               gint    transparent,
+                               gint    numpixels)
 {
   guint32 i;
 
   /* Each transparent pixel in the image is mapped to a uniform value for
      encoding, if image already has <=255 colours */
 
-  if ((*transparent) == -1) /* tough, no indices left for the trans. index */
+  if (transparent == -1) /* tough, no indices left for the trans. index */
     {
       for (i = 0; i < numpixels; i++)
         pixels[i] = pixels[i * 2];
@@ -709,7 +707,7 @@ special_flatten_indexed_alpha (guchar *pixels,
         {
           if (! (pixels[i * 2 + 1] & 128))
             {
-              pixels[i] = (guchar) (*transparent);
+              pixels[i] = (guchar) transparent;
             }
           else
             {
@@ -717,16 +715,11 @@ special_flatten_indexed_alpha (guchar *pixels,
             }
         }
     }
-
-
-  /* Pixel data now takes half as much space (the alpha data has been
-     discarded) */
-  /*  pixels = g_realloc (pixels, numpixels);*/
 }
 
 
-static int
-parse_ms_tag (char *str)
+static gint
+parse_ms_tag (const gchar *str)
 {
   gint sum = 0;
   gint offset = 0;
@@ -764,8 +757,8 @@ find_another_bra:
 }
 
 
-static int
-parse_disposal_tag (char *str)
+static gint
+parse_disposal_tag (const gchar *str)
 {
   gint offset = 0;
   gint length;
@@ -1075,14 +1068,13 @@ save_image (const gchar *filename,
              image, for a transparency index. */
 
           transparent =
-            find_unused_ia_colour(pixels,
-                                  drawable->width * drawable->height,
-                                  bpp_to_colors (colors_to_bpp (colors)),
-                                  &colors);
+            find_unused_ia_colour (pixels,
+                                   drawable->width * drawable->height,
+                                   bpp_to_colors (colors_to_bpp (colors)),
+                                   &colors);
 
           special_flatten_indexed_alpha (pixels,
-                                         &transparent,
-                                         &colors,
+                                         transparent,
                                          drawable->width * drawable->height);
         }
       else
@@ -1176,46 +1168,36 @@ static gboolean
 bad_bounds_dialog (void)
 {
   GtkWidget *dialog;
-  GtkWidget *label;
-  GtkWidget *vbox;
   gboolean   crop;
 
-  dialog = gimp_dialog_new (_("GIF Warning"), "gif_warning",
-                            NULL, 0,
-                            gimp_standard_help_func, "file-gif-save",
+  dialog = gtk_message_dialog_new (NULL, 0,
+                                   GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
+                                   _("The image you are trying to save as a "
+                                     "GIF contains layers which extend beyond "
+                                     "the actual borders of the image."));
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                            NULL);
+  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                          GTK_STOCK_CANCEL,     GTK_RESPONSE_CANCEL,
+                          GIMP_STOCK_TOOL_CROP, GTK_RESPONSE_OK,
+                          NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  /*  the warning message  */
-
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  label= gtk_label_new (_("The image which you are trying to save as a GIF\n"
-                          "contains layers which extend beyond the actual\n"
-                          "borders of the image.  This isn't allowed in GIFs,\n"
-                          "I'm afraid.\n\n"
-                          "You may choose whether to crop all of the layers to\n"
-                          "the image borders, or cancel this save."));
-  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
-  gtk_widget_show (label);
+  gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                            _("The GIF file format does not "
+                                              "allow this.  You may choose "
+                                              "whether to crop all of the "
+                                              "layers to the image borders, "
+                                              "or cancel this save."));
 
   gtk_widget_show (dialog);
 
-  crop = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  crop = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
@@ -2020,8 +2002,6 @@ typedef unsigned char char_type;
  *
  */
 
-#define ARGVAL() (*++(*argv) || (--argc && *++argv))
-
 static int n_bits;                /* number of bits/code */
 static int maxbits = GIF_BITS;        /* user settable max # bits/code */
 static code_int maxcode;        /* maximum code, given n_bits */
@@ -2037,23 +2017,10 @@ static unsigned short codetab[HSIZE];
 #define HashTabOf(i)       htab[i]
 #define CodeTabOf(i)    codetab[i]
 
-static const code_int hsize = HSIZE;        /* the original reason for this being
-                                   variable was "for dynamic table sizing",
-                                   but since it was never actually changed
-                                   I made it const   --Adam. */
-
-/*
- * To save much memory, we overlay the table used by compress() with those
- * used by decompress().  The tab_prefix table is the same size and type
- * as the codetab.  The tab_suffix table needs 2**GIF_BITS characters.  We
- * get this from the beginning of htab.  The output stack uses the rest
- * of htab, and contains characters.  There is plenty of room for any
- * possible stack (stack used to be 8000 characters).
- */
-
-#define tab_prefixof(i) CodeTabOf(i)
-#define tab_suffixof(i)        ((char_type*)(htab))[i]
-#define de_stack               ((char_type*)&tab_suffixof((code_int)1<<GIF_BITS))
+static const code_int hsize = HSIZE; /* the original reason for this being
+                                        variable was "for dynamic table sizing",
+                                        but since it was never actually changed
+                                        I made it const   --Adam. */
 
 static code_int free_ent = 0;        /* first unused entry */
 
@@ -2504,7 +2471,6 @@ output (code_int code)
    */
   if (free_ent > maxcode || clear_flg)
     {
-
       if (clear_flg)
         {
 

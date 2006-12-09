@@ -64,9 +64,9 @@ gimp_config_interface_get_type (void)
 {
   static GType config_iface_type = 0;
 
-  if (!config_iface_type)
+  if (! config_iface_type)
     {
-      static const GTypeInfo config_iface_info =
+      const GTypeInfo config_iface_info =
       {
         sizeof (GimpConfigInterface),
         (GBaseInitFunc)     gimp_config_iface_base_init,

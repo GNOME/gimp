@@ -31,15 +31,15 @@
 #include "core/gimp.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "gimpbycolorselecttool.h"
-#include "gimpellipseselecttool.h"
 #include "gimpforegroundselecttool.h"
 #include "gimprectangleselecttool.h"
-#include "gimpfuzzyselecttool.h"
+#include "gimpregionselecttool.h"
 #include "gimpiscissorstool.h"
 #include "gimpselectionoptions.h"
+#include "gimprectangleselectoptions.h"
 #include "gimptooloptions-gui.h"
 
 #include "gimp-intl.h"
@@ -55,12 +55,7 @@ enum
   PROP_SELECT_TRANSPARENT,
   PROP_SAMPLE_MERGED,
   PROP_THRESHOLD,
-  PROP_AUTO_SHRINK,
-  PROP_SHRINK_MERGED,
-  PROP_FIXED_MODE,
-  PROP_FIXED_WIDTH,
-  PROP_FIXED_HEIGHT,
-  PROP_FIXED_UNIT,
+  PROP_SELECT_CRITERION,
   PROP_INTERACTIVE
 };
 
@@ -129,34 +124,10 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
                                    N_("Maximum color difference"),
                                    0.0, 255.0, 15.0,
                                    GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTO_SHRINK,
-                                    "auto-shrink", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHRINK_MERGED,
-                                    "shrink-merged",
-                                    N_("Use all visible layers when shrinking "
-                                       "the selection"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FIXED_MODE,
-                                 "fixed-mode", NULL,
-                                 GIMP_TYPE_RECT_SELECT_MODE,
-                                 GIMP_RECT_SELECT_MODE_FREE,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FIXED_WIDTH,
-                                   "fixed-width", NULL,
-                                   0.0, GIMP_MAX_IMAGE_SIZE, 1.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FIXED_HEIGHT,
-                                   "fixed-height", NULL,
-                                   0.0, GIMP_MAX_IMAGE_SIZE, 1.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FIXED_UNIT,
-                                 "fixed-unit", NULL,
-                                 TRUE, TRUE, GIMP_UNIT_PIXEL,
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SELECT_CRITERION,
+                                 "select-criterion", NULL,
+                                 GIMP_TYPE_SELECT_CRITERION,
+                                 GIMP_SELECT_CRITERION_COMPOSITE,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INTERACTIVE,
@@ -202,25 +173,8 @@ gimp_selection_options_set_property (GObject      *object,
     case PROP_THRESHOLD:
       options->threshold = g_value_get_double (value);
       break;
-
-    case PROP_AUTO_SHRINK:
-      options->auto_shrink = g_value_get_boolean (value);
-      break;
-    case PROP_SHRINK_MERGED:
-      options->shrink_merged = g_value_get_boolean (value);
-      break;
-
-    case PROP_FIXED_MODE:
-      options->fixed_mode = g_value_get_enum (value);
-      break;
-    case PROP_FIXED_WIDTH:
-      options->fixed_width = g_value_get_double (value);
-      break;
-    case PROP_FIXED_HEIGHT:
-      options->fixed_height = g_value_get_double (value);
-      break;
-    case PROP_FIXED_UNIT:
-      options->fixed_unit = g_value_get_int (value);
+    case PROP_SELECT_CRITERION:
+      options->select_criterion = g_value_get_enum (value);
       break;
 
     case PROP_INTERACTIVE:
@@ -265,25 +219,8 @@ gimp_selection_options_get_property (GObject    *object,
     case PROP_THRESHOLD:
       g_value_set_double (value, options->threshold);
       break;
-
-    case PROP_AUTO_SHRINK:
-      g_value_set_boolean (value, options->auto_shrink);
-      break;
-    case PROP_SHRINK_MERGED:
-      g_value_set_boolean (value, options->shrink_merged);
-      break;
-
-    case PROP_FIXED_MODE:
-      g_value_set_enum (value, options->fixed_mode);
-      break;
-    case PROP_FIXED_WIDTH:
-      g_value_set_double (value, options->fixed_width);
-      break;
-    case PROP_FIXED_HEIGHT:
-      g_value_set_double (value, options->fixed_height);
-      break;
-    case PROP_FIXED_UNIT:
-      g_value_set_int (value, options->fixed_unit);
+    case PROP_SELECT_CRITERION:
+      g_value_set_enum (value, options->select_criterion);
       break;
 
     case PROP_INTERACTIVE:
@@ -306,7 +243,7 @@ gimp_selection_options_reset (GimpToolOptions *tool_options)
 
   if (pspec)
     G_PARAM_SPEC_BOOLEAN (pspec)->default_value =
-      (tool_options->tool_info->tool_type != GIMP_TYPE_RECT_SELECT_TOOL);
+      (tool_options->tool_info->tool_type != GIMP_TYPE_FOREGROUND_SELECT_TOOL);
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
                                         "threshold");
@@ -409,35 +346,24 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL ||
-      tool_options->tool_info->tool_type == GIMP_TYPE_FOREGROUND_SELECT_TOOL)
-    {
-      gtk_widget_set_sensitive (button, FALSE);
-    }
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_FOREGROUND_SELECT_TOOL)
+    gtk_widget_set_sensitive (button, FALSE);
+
+  options->antialias_toggle = button;
 
   /*  the feather frame  */
   {
     GtkWidget *frame;
     GtkWidget *table;
 
-    frame = gimp_frame_new (NULL);
-    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-    gtk_widget_show (frame);
-
-    button = gimp_prop_check_button_new (config, "feather",
-                                         _("Feather edges"));
-    gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-    gtk_widget_show (button);
-
     table = gtk_table_new (1, 3, FALSE);
     gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-    gtk_container_add (GTK_CONTAINER (frame), table);
-    if (options->feather)
-      gtk_widget_show (table);
 
-    g_signal_connect_object (button, "toggled",
-                             G_CALLBACK (gimp_toggle_button_set_visible),
-                             table, 0);
+    frame = gimp_prop_expanding_frame_new (config, "feather",
+                                           _("Feather edges"),
+                                           table, NULL);
+    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+    gtk_widget_show (frame);
 
     /*  the feather radius scale  */
     gimp_prop_scale_entry_new (config, "feather-radius",
@@ -457,12 +383,13 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     }
 
   /*  selection tools which operate on colors or contiguous regions  */
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL ||
-      tool_options->tool_info->tool_type == GIMP_TYPE_BY_COLOR_SELECT_TOOL)
+  if (g_type_is_a (tool_options->tool_info->tool_type,
+                   GIMP_TYPE_REGION_SELECT_TOOL))
     {
       GtkWidget *frame;
       GtkWidget *vbox2;
       GtkWidget *table;
+      GtkWidget *combo;
 
       frame = gimp_frame_new (_("Finding Similar Colors"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -485,7 +412,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (button);
 
       /*  the threshold scale  */
-      table = gtk_table_new (1, 3, FALSE);
+      table = gtk_table_new (2, 3, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table), 2);
       gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
       gtk_widget_show (table);
@@ -495,38 +422,12 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
                                  _("Threshold:"),
                                  1.0, 16.0, 1,
                                  FALSE, 0.0, 0.0);
-    }
 
-  /*  widgets for fixed size select  */
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL ||
-      tool_options->tool_info->tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL)
-    {
-      GtkWidget *frame;
-      GtkWidget *vbox2;
-
-      frame = gimp_frame_new (NULL);
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
-
-      button = gimp_prop_check_button_new (config, "auto-shrink",
-                                           _("Auto shrink selection"));
-      gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-      gtk_widget_show (button);
-
-      vbox2 = gtk_vbox_new (FALSE, 0);
-      gtk_container_add (GTK_CONTAINER (frame), vbox2);
-      if (options->auto_shrink)
-        gtk_widget_show (vbox2);
-
-      g_signal_connect_object (button, "toggled",
-                               G_CALLBACK (gimp_toggle_button_set_visible),
-                               vbox2, 0);
-
-      button = gimp_prop_check_button_new (config, "shrink-merged",
-                                           _("Sample merged"));
-      gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-
+      /*  the select criterion combo  */
+      combo = gimp_prop_enum_combo_box_new (config, "select-criterion", 0, 0);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                                 _("Select by:"), 0.0, 0.5,
+                                 combo, 2, FALSE);
     }
 
   return vbox;

@@ -27,10 +27,14 @@
 #include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
+#include <png.h>
 
 /* #define ICO_DBG */
 
 #include "main.h"
+#include "icoload.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -55,13 +59,6 @@ static gint       ico_read_int16 (FILE        *fp,
 static gint       ico_read_int32 (FILE        *fp,
                                   guint32     *data,
                                   gint         count);
-static gboolean   ico_init       (const gchar *filename,
-                                  MsIcon      *ico);
-static void       ico_read_entry (MsIcon      *ico,
-                                  MsIconEntry *entry);
-static void       ico_read_data  (MsIcon      *ico,
-                                  gint         icon_num);
-
 
 static gint
 ico_read_int32 (FILE    *fp,
@@ -124,128 +121,212 @@ ico_read_int8 (FILE   *fp,
 }
 
 
+static guint32
+ico_read_init (FILE *fp)
+{
+  IcoFileHeader header;
+  /* read and check file header */
+  if (!ico_read_int16 (fp, &header.reserved, 1)
+      || !ico_read_int16 (fp, &header.resource_type, 1)
+      || !ico_read_int16 (fp, &header.icon_count, 1)
+      || header.reserved != 0
+      || header.resource_type != 1)
+    {
+      return 0;
+    }
+  return header.icon_count;
+}
+
+
 static gboolean
-ico_init (const gchar *filename,
-          MsIcon      *ico)
+ico_read_size (FILE        *fp,
+               IcoLoadInfo *info)
 {
-  memset (ico, 0, sizeof (MsIcon));
+  png_structp png_ptr;
+  png_infop   info_ptr;
+  png_uint_32 w, h;
+  gint32      bpp;
+  gint32      color_type;
+  guint32     magic;
 
-  if (! (ico->fp = g_fopen (filename, "r")))
+  if ( fseek (fp, info->offset, SEEK_SET) < 0 )
+    return FALSE;
+
+  ico_read_int32 (fp, &magic, 1);
+  if (magic == ICO_PNG_MAGIC)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      png_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL,
+                                        NULL);
+      if ( !png_ptr )
+        return FALSE;
+      info_ptr = png_create_info_struct (png_ptr);
+      if ( !info_ptr )
+        {
+          png_destroy_read_struct (&png_ptr, NULL, NULL);
+          return FALSE;
+        }
+      if (setjmp (png_jmpbuf (png_ptr)))
+        {
+          png_destroy_read_struct (&png_ptr, NULL, NULL);
+          return FALSE;
+        }
+      png_init_io (png_ptr, fp);
+      png_set_sig_bytes (png_ptr, 4);
+      png_read_info (png_ptr, info_ptr);
+      png_get_IHDR (png_ptr, info_ptr, &w, &h, &bpp, &color_type,
+                    NULL, NULL, NULL);
+      png_destroy_read_struct (&png_ptr, &info_ptr, NULL);
+      info->width = w;
+      info->height = h;
+      D(("ico_read_size: PNG: %ix%i\n", info->width, info->height));
+      return TRUE;
+    }
+  else if (magic == 40)
+    {
+      if (ico_read_int32 (fp, &info->width, 1)
+          && ico_read_int32 (fp, &info->height, 1))
+        {
+          info->height /= 2;
+          D(("ico_read_size: ICO: %ix%i\n", info->width, info->height));
+          return TRUE;
+        }
+      else
+        {
+          info->width = 0;
+          info->height = 0;
+          return FALSE;
+        }
+    }
+  return FALSE;
+}
+
+static IcoLoadInfo*
+ico_read_info (FILE *fp,
+               gint  icon_count)
+{
+  gint            i;
+  IcoFileEntry   *entries;
+  IcoLoadInfo    *info;
+
+  /* read icon entries */
+  entries = g_new (IcoFileEntry, icon_count);
+  if ( fread (entries, sizeof(IcoFileEntry), icon_count, fp) <= 0 )
+    {
+      g_free (entries);
+      return NULL;
+    }
+
+  info = g_new (IcoLoadInfo, icon_count);
+  for (i = 0; i < icon_count; i++)
+    {
+      info[i].width = entries[i].width;
+      info[i].height = entries[i].height;
+      info[i].bpp = GUINT16_FROM_LE (entries[i].bpp);
+      info[i].size = GUINT32_FROM_LE (entries[i].size);
+      info[i].offset = GUINT32_FROM_LE (entries[i].offset);
+
+      if (info[i].width == 0 || info[i].height == 0)
+        {
+          ico_read_size (fp, info+i);
+        }
+
+      D(("ico_read_info: %ix%i (%i bits, size: %i, offset: %i)\n",
+         info[i].width, info[i].height, info[i].bpp,
+         info[i].size, info[i].offset));
+    }
+
+  g_free (entries);
+  return info;
+}
+
+static gboolean
+ico_read_png (FILE    *fp,
+              guint32  header,
+              guchar  *buffer,
+              gint     maxsize,
+              gint    *width,
+              gint    *height)
+{
+  png_structp   png_ptr;
+  png_infop     info;
+  png_uint_32   w;
+  png_uint_32   h;
+  gint32        bit_depth;
+  gint32        color_type;
+  guint32     **rows;
+  gint          i;
+
+  png_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+  if ( !png_ptr )
+    return FALSE;
+  info = png_create_info_struct (png_ptr);
+  if ( !info )
+    {
+      png_destroy_read_struct (&png_ptr, NULL, NULL);
       return FALSE;
     }
 
-  ico->filename = filename;
-
-  ico->cp += ico_read_int16 (ico->fp, &ico->reserved, 1);
-  ico->cp += ico_read_int16 (ico->fp, &ico->resource_type, 1);
-
-  /* Icon files use 1 as resource type, that's  what I wrote this for.
-     From descriptions on the web it seems as if this loader should
-     also be able to handle Win 3.11 - Win 95 cursor files (.cur),
-     which use resource type 2. I haven't tested this though. */
-  if (ico->reserved != 0 ||
-      (ico->resource_type != 1 && ico->resource_type != 2))
+  if (setjmp (png_jmpbuf (png_ptr)))
     {
-      ico_cleanup (ico);
+      png_destroy_read_struct (&png_ptr, &info, NULL);
       return FALSE;
     }
 
+  png_init_io (png_ptr, fp);
+  png_set_sig_bytes (png_ptr, 4);
+  png_read_info (png_ptr, info);
+  png_get_IHDR (png_ptr, info, &w, &h, &bit_depth, &color_type,
+                NULL, NULL, NULL);
+  if (w*h*4 > maxsize)
+    {
+      png_destroy_read_struct (&png_ptr, &info, NULL);
+      return FALSE;
+    }
+  D(("ico_read_png: %ix%i, %i bits, %i type\n", (gint)w, (gint)h,
+     bit_depth, color_type));
+  switch (color_type)
+    {
+    case PNG_COLOR_TYPE_GRAY:
+      png_set_gray_1_2_4_to_8 (png_ptr);
+      if ( bit_depth == 16 )
+        png_set_strip_16 (png_ptr);
+      png_set_gray_to_rgb (png_ptr);
+      png_set_add_alpha (png_ptr, 0xff, PNG_FILLER_AFTER);
+      break;
+    case PNG_COLOR_TYPE_GRAY_ALPHA:
+      png_set_gray_1_2_4_to_8 (png_ptr);
+      if ( bit_depth == 16 )
+        png_set_strip_16 (png_ptr);
+      png_set_gray_to_rgb (png_ptr);
+      break;
+    case PNG_COLOR_TYPE_PALETTE:
+      png_set_palette_to_rgb (png_ptr);
+      if (png_get_valid (png_ptr, info, PNG_INFO_tRNS))
+        png_set_tRNS_to_alpha (png_ptr);
+      else
+        png_set_add_alpha (png_ptr, 0xff, PNG_FILLER_AFTER);
+      break;
+    case PNG_COLOR_TYPE_RGB:
+      if (bit_depth == 16)
+        png_set_strip_16 (png_ptr);
+      png_set_add_alpha (png_ptr, 0xff, PNG_FILLER_AFTER);
+      break;
+    case PNG_COLOR_TYPE_RGB_ALPHA:
+      if (bit_depth == 16)
+        png_set_strip_16 (png_ptr);
+      break;
+    }
+
+  *width = w;
+  *height = h;
+  rows = g_new (guint32*, h);
+  rows[0] = (guint32*) buffer;
+  for (i = 1; i < h; i++)
+    rows[i] = rows[i-1] + w;
+  png_read_image (png_ptr, (png_bytepp) rows);
+  png_destroy_read_struct (&png_ptr, &info, NULL);
+  g_free (rows);
   return TRUE;
-}
-
-
-static void
-ico_read_entry (MsIcon      *ico,
-                MsIconEntry *entry)
-{
-  g_return_if_fail (ico != NULL);
-  g_return_if_fail (entry != NULL);
-
-  ico->cp += ico_read_int8 (ico->fp, &entry->width, 1);
-  ico->cp += ico_read_int8 (ico->fp, &entry->height, 1);
-  ico->cp += ico_read_int8 (ico->fp, &entry->num_colors, 1);
-  ico->cp += ico_read_int8 (ico->fp, &entry->reserved, 1);
-
-  ico->cp += ico_read_int16 (ico->fp, &entry->num_planes, 1);
-  ico->cp += ico_read_int16 (ico->fp, &entry->bpp, 1);
-
-  ico->cp += ico_read_int32 (ico->fp, &entry->size, 1);
-  ico->cp += ico_read_int32 (ico->fp, &entry->offset, 1);
-
-  D(("Read entry with w: "
-     "%i, h: %i, num_colors: %i, bpp: %i, size %i, offset %i\n",
-     entry->width, entry->height, entry->num_colors, entry->bpp,
-     entry->size, entry->offset));
-}
-
-
-static void
-ico_read_data (MsIcon *ico,
-               gint    icon_num)
-{
-  MsIconData *data;
-  MsIconEntry *entry;
-  gint length;
-
-  g_return_if_fail (ico != NULL);
-
-  D(("Reading data for icon %i ------------------------------\n", icon_num));
-
-  entry = &ico->icon_dir[icon_num];
-  data = &ico->icon_data[icon_num];
-
-  ico->cp = entry->offset;
-
-  if (fseek (ico->fp, entry->offset, SEEK_SET) < 0)
-    return;
-
-  D(("  starting at offset %i\n", entry->offset));
-
-  ico->cp += ico_read_int32 (ico->fp, &data->header_size, 1);
-  ico->cp += ico_read_int32 (ico->fp, &data->width, 1);
-  ico->cp += ico_read_int32 (ico->fp, &data->height, 1);
-
-  ico->cp += ico_read_int16 (ico->fp, &data->planes, 1);
-  ico->cp += ico_read_int16 (ico->fp, &data->bpp, 1);
-
-  ico->cp += ico_read_int32 (ico->fp, &data->compression, 1);
-  ico->cp += ico_read_int32 (ico->fp, &data->image_size, 1);
-  ico->cp += ico_read_int32 (ico->fp, &data->x_res, 1);
-  ico->cp += ico_read_int32 (ico->fp, &data->y_res, 1);
-  ico->cp += ico_read_int32 (ico->fp, &data->used_clrs, 1);
-  ico->cp += ico_read_int32 (ico->fp, &data->important_clrs, 1);
-
-  D(("  header size %i, "
-     "w %i, h %i, planes %i, size %i, bpp %i, used %i, imp %i.\n",
-     data->header_size, data->width, data->height,
-     data->planes, data->image_size, data->bpp,
-     data->used_clrs, data->important_clrs));
-
-  if (data->bpp <= 8)
-    {
-      if (data->used_clrs == 0)
-        data->used_clrs = (1 << data->bpp);
-
-      D(("  allocating a %i-slot palette for %i bpp.\n",
-         data->used_clrs, data->bpp));
-
-      data->palette = g_new0 (guint32, data->used_clrs);
-      ico->cp += ico_read_int8 (ico->fp,
-                                (guint8 *) data->palette, data->used_clrs * 4);
-    }
-
-  data->xor_map = ico_alloc_map (entry->width, entry->height,
-                                 data->bpp, &length);
-  ico->cp += ico_read_int8 (ico->fp, data->xor_map, length);
-  D(("  length of xor_map: %i\n", length));
-
-  /* Read in and_map. It's padded out to 32 bits per line: */
-  data->and_map = ico_alloc_map (entry->width, entry->height, 1, &length);
-  ico->cp += ico_read_int8 (ico->fp, data->and_map, length);
-  D(("  length of and_map: %i\n", length));
 }
 
 gint
@@ -294,9 +375,9 @@ ico_get_nibble_from_data (const guint8 *data,
 }
 
 gint
-ico_get_byte_from_data (guint8 *data,
-                        gint    line_width,
-                        gint    byte)
+ico_get_byte_from_data (const guint8 *data,
+                        gint          line_width,
+                        gint          byte)
 {
   gint line;
   gint width32;
@@ -310,44 +391,90 @@ ico_get_byte_from_data (guint8 *data,
   return data[line * width32 * 4 + offset];
 }
 
-static gint32
-ico_load_layer (gint32  image,
-                MsIcon *ico,
-                gint    i)
+static gboolean
+ico_read_icon (FILE    *fp,
+               guint32  header_size,
+               guchar  *buffer,
+               gint     maxsize,
+               gint    *width,
+               gint    *height)
 {
-  GimpDrawable *drawable;
-  GimpPixelRgn  pixel_rgn;
-  MsIconData   *idata;
-  MsIconEntry  *ientry;
-  guint8       *xor_map;
-  guint8       *and_map;
-  guint32      *palette;
-  guint32      *dest_vec;
-  gint32        layer;
-  gchar         buf[MAXLEN];
-  gint          x, y, w, h;
+  IcoFileDataHeader   data;
+  gint                length;
+  gint                x, y, w, h;
+  guchar             *xor_map, *and_map;
+  guint32            *palette;
+  guint32            *dest_vec;
+  guchar             *row;
+  gint                rowstride;
 
-  idata = &ico->icon_data[i];
-  ientry = &ico->icon_dir[i];
-  xor_map = ico->icon_data[i].xor_map;
-  and_map = ico->icon_data[i].and_map;
-  palette = ico->icon_data[i].palette;
-  w = ico->icon_dir[i].width;
-  h = ico->icon_dir[i].height;
+  palette = NULL;
 
-  gimp_progress_update ((gdouble) i / (gdouble) ico->icon_count);
+  data.header_size = header_size;
+  ico_read_int32 (fp, &data.width, 1);
+  ico_read_int32 (fp, &data.height, 1);
+  ico_read_int16 (fp, &data.planes, 1);
+  ico_read_int16 (fp, &data.bpp, 1);
+  ico_read_int32 (fp, &data.compression, 1);
+  ico_read_int32 (fp, &data.image_size, 1);
+  ico_read_int32 (fp, &data.x_res, 1);
+  ico_read_int32 (fp, &data.y_res, 1);
+  ico_read_int32 (fp, &data.used_clrs, 1);
+  ico_read_int32 (fp, &data.important_clrs, 1);
 
-  g_snprintf (buf, sizeof (buf), _("Icon #%i"), i + 1);
+  D(("  header size %i, "
+     "w %i, h %i, planes %i, size %i, bpp %i, used %i, imp %i.\n",
+     data.header_size, data.width, data.height,
+     data.planes, data.image_size, data.bpp,
+     data.used_clrs, data.important_clrs));
 
-  layer = gimp_layer_new (image, buf, w, h,
-                          GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
+  if (data.planes != 1
+      || data.compression != 0)
+    {
+      D(("skipping image: invalid header\n"));
+      return FALSE;
+    }
 
-  gimp_image_add_layer (image, layer, i);
-  drawable = gimp_drawable_get (layer);
+  if (data.bpp != 1 && data.bpp != 4
+      && data.bpp != 8 && data.bpp != 24
+      && data.bpp != 32)
+    {
+      D(("skipping image: invalid depth: %i\n", data.bpp));
+      return FALSE;
+    }
 
-  dest_vec = g_new (guint32, w * h);
+  if (data.width * data.height * 2 > maxsize)
+    {
+      D(("skipping image: too large\n"));
+      return FALSE;
+    }
 
-  switch (idata->bpp)
+  w = data.width;
+  h = data.height / 2;
+
+  if (data.bpp <= 8)
+    {
+      if (data.used_clrs == 0)
+        data.used_clrs = (1 << data.bpp);
+
+      D(("  allocating a %i-slot palette for %i bpp.\n",
+         data.used_clrs, data.bpp));
+
+      palette = g_new0 (guint32, data.used_clrs);
+      ico_read_int8 (fp, (guint8 *) palette, data.used_clrs * 4);
+    }
+
+  xor_map = ico_alloc_map (w, h, data.bpp, &length);
+  ico_read_int8 (fp, xor_map, length);
+  D(("  length of xor_map: %i\n", length));
+
+  /* Read in and_map. It's padded out to 32 bits per line: */
+  and_map = ico_alloc_map (w, h, 1, &length);
+  ico_read_int8 (fp, and_map, length);
+  D(("  length of and_map: %i\n", length));
+
+  dest_vec = (guint32 *) buffer;
+  switch (data.bpp)
     {
     case 1:
       for (y = 0; y < h; y++)
@@ -408,102 +535,170 @@ ico_load_layer (gint32  image,
 
     default:
       {
-        gint bytespp = idata->bpp/8;
+        gint bytespp = data.bpp / 8;
+
+        rowstride = ico_rowstride (w, data.bpp);
 
         for (y = 0; y < h; y++)
-          for (x = 0; x < w; x++)
-            {
-              guint32 *dest = dest_vec + (h - 1 - y) * w + x;
+          {
+            row = xor_map + rowstride * y;
 
-              B_VAL_GIMP (dest) = xor_map[(y * w + x) * bytespp];
-              G_VAL_GIMP (dest) = xor_map[(y * w + x) * bytespp + 1];
-              R_VAL_GIMP (dest) = xor_map[(y * w + x) * bytespp + 2];
+            for (x = 0; x < w; x++)
+              {
+                guint32 *dest = dest_vec + (h - 1 - y) * w + x;
 
-              if (idata->bpp < 32)
-                {
-                  if (ico_get_bit_from_data (and_map, w, y * w + x))
-                    A_VAL_GIMP (dest) = 0;
-                  else
-                    A_VAL_GIMP (dest) = 255;
-                }
-              else
-                {
-                  A_VAL_GIMP (dest) = xor_map[(y * w + x) * bytespp + 3];
-                }
-            }
+                B_VAL_GIMP (dest) = row[0];
+                G_VAL_GIMP (dest) = row[1];
+                R_VAL_GIMP (dest) = row[2];
+
+                if (data.bpp < 32)
+                  {
+                    if (ico_get_bit_from_data (and_map, w, y * w + x))
+                      A_VAL_GIMP (dest) = 0;
+                    else
+                      A_VAL_GIMP (dest) = 255;
+                  }
+                else
+                  {
+                    A_VAL_GIMP (dest) = row[3];
+                  }
+
+                row += bytespp;
+              }
+          }
       }
     }
+  if (palette)
+    g_free (palette);
+  g_free (xor_map);
+  g_free (and_map);
+  *width = w;
+  *height = h;
+  return TRUE;
+}
 
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                       0, 0, drawable->width, drawable->height,
-                       TRUE, FALSE);
-  gimp_pixel_rgn_set_rect (&pixel_rgn, (const guchar *) dest_vec,
-                           0, 0, drawable->width, drawable->height);
+static gint32
+ico_load_layer (FILE        *fp,
+                gint32       image,
+                gint32       icon_num,
+                guchar      *buffer,
+                gint         maxsize,
+                IcoLoadInfo *info)
+{
+  gint          width, height;
+  gint32        layer;
+  guint32       first_bytes;
+  GimpDrawable *drawable;
+  GimpPixelRgn  pixel_rgn;
+  gchar         buf [ICO_MAXBUF];
 
-  g_free (dest_vec);
+  if ( fseek (fp, info->offset, SEEK_SET) < 0
+       || !ico_read_int32 (fp, &first_bytes, 1) )
+    return -1;
 
+  if (first_bytes == ICO_PNG_MAGIC)
+    {
+      if (!ico_read_png (fp, first_bytes, buffer, maxsize, &width, &height))
+        return -1;
+    }
+  else if (first_bytes == 40)
+    {
+      if (!ico_read_icon (fp, first_bytes, buffer, maxsize, &width, &height))
+        return -1;
+    }
+  else
+    {
+      return -1;
+    }
+
+
+  /* read successfully. add to image */
+  g_snprintf (buf, sizeof (buf), _("Icon #%i"), icon_num+1);
+  layer = gimp_layer_new (image, buf, width, height,
+                          GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
+  gimp_image_add_layer (image, layer, icon_num);
+  drawable = gimp_drawable_get (layer);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
+                       drawable->width, drawable->height, TRUE, FALSE);
+  gimp_pixel_rgn_set_rect (&pixel_rgn, (const guchar*) buffer,
+                           0, 0, drawable->width,
+                           drawable->height);
   gimp_drawable_detach (drawable);
 
   return layer;
 }
 
+
 gint32
 ico_load_image (const gchar *filename)
 {
-  MsIcon  ico;
-  gint32  image;
-  gint32  layer;
-  gint    width  = 0;
-  gint    height = 0;
-  gint    i;
+  FILE        *fp;
+  IcoLoadInfo *info;
+  gint         max_width, max_height;
+  gint         i;
+  gint32       image;
+  gint32       layer;
+  guchar      *buffer;
+  guint        icon_count;
+  gint         maxsize;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  if (! ico_init (filename, &ico))
-    return -1;
-
-  ico.cp += ico_read_int16 (ico.fp, &ico.icon_count, 1);
-  ico.icon_dir  = g_new0 (MsIconEntry, ico.icon_count);
-  ico.icon_data = g_new0 (MsIconData, ico.icon_count);
-
-  D(("*** %s: Microsoft icon file, containing %i icon(s)\n",
-         ico.filename, ico.icon_count));
-
-  for (i = 0; i < ico.icon_count; i++)
-    ico_read_entry (&ico, &ico.icon_dir[i]);
-
-  /* Do a quick scan of the icons in the file to find the largest icon */
-  for (i = 0; i < ico.icon_count; i++)
+  fp = g_fopen (filename, "rb");
+  if ( !fp )
     {
-      if (ico.icon_dir[i].width > width)
-        width = ico.icon_dir[i].width;
-
-      if (ico.icon_dir[i].height > height)
-        height = ico.icon_dir[i].height;
+      g_message (_("Could not open '%s' for reading: %s"),
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      return -1;
     }
 
-  if (width < 1 || height < 1)
-    return -1;
+  icon_count = ico_read_init (fp);
+  if (!icon_count)
+    {
+      fclose (fp);
+      return -1;
+    }
 
-  image = gimp_image_new (width, height, GIMP_RGB);
-  gimp_image_set_filename (image, ico.filename);
+  info = ico_read_info (fp, icon_count);
+  if (!info)
+    {
+      fclose (fp);
+      return -1;
+    }
 
-  /* Scan icons again and set up a layer for each icon */
-  for (i = 0; i < ico.icon_count; i++)
-    ico_read_data (&ico, i);
+  /* find width and height of image */
+  max_width = 0;
+  max_height = 0;
+  for (i = 0; i < icon_count; i++)
+    {
+      if ( info[i].width > max_width )
+        max_width = info[i].width;
+      if ( info[i].height > max_height )
+        max_height = info[i].height;
+    }
+  if ( max_width <= 0 || max_height <= 0 )
+    {
+      g_free (info);
+      fclose (fp);
+      return -1;
+    }
+  D(("image size: %ix%i\n", max_width, max_height));
 
-  layer = ico_load_layer (image, &ico, 0);
-  for (i = 1; i < ico.icon_count; i++)
-    ico_load_layer (image, &ico, i);
+  image = gimp_image_new (max_width, max_height, GIMP_RGB);
+  gimp_image_set_filename (image, filename);
 
-  gimp_image_set_active_layer (image, layer);
-
-  D(("*** icon successfully loaded.\n\n"));
+  maxsize = max_width * max_height * 4;
+  buffer = g_new (guchar, max_width * max_height * 4);
+  for (i = 0; i < icon_count; i++)
+    {
+      layer = ico_load_layer (fp, image, i, buffer, maxsize, info+i);
+    }
+  g_free (buffer);
+  g_free (info);
+  fclose (fp);
 
   gimp_progress_update (1.0);
-
-  ico_cleanup (&ico);
 
   return image;
 }
@@ -513,60 +708,74 @@ ico_load_thumbnail_image (const gchar *filename,
                           gint        *width,
                           gint        *height)
 {
-  MsIcon  ico;
-  gint32  image;
-  gint32  layer;
-  gint    w     = 0;
-  gint    h     = 0;
-  gint    match = 0;
-  gint    i;
+  FILE        *fp;
+  IcoLoadInfo *info;
+  gint32       image;
+  gint32       layer;
+  gint         w     = 0;
+  gint         h     = 0;
+  gint         bpp   = 0;
+  gint         match = 0;
+  gint         i, icon_count;
+  guchar      *buffer;
 
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  if (! ico_init (filename, &ico))
-    return -1;
+  fp = g_fopen (filename, "rb");
+  if ( !fp )
+    {
+      g_message (_("Could not open '%s' for reading: %s"),
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      return -1;
+    }
 
-  ico.cp += ico_read_int16 (ico.fp, &ico.icon_count, 1);
-  ico.icon_dir  = g_new0 (MsIconEntry, ico.icon_count);
-  ico.icon_data = g_new0 (MsIconData, ico.icon_count);
+  icon_count = ico_read_init (fp);
+  if ( !icon_count )
+    {
+      fclose (fp);
+      return -1;
+    }
 
   D(("*** %s: Microsoft icon file, containing %i icon(s)\n",
-         ico.filename, ico.icon_count));
+     filename, icon_count));
 
-  for (i = 0; i < ico.icon_count; i++)
-    ico_read_entry (&ico, &ico.icon_dir[i]);
+  info = ico_read_info (fp, icon_count);
+  if ( !info )
+    {
+      fclose (fp);
+      return -1;
+    }
 
   /* Do a quick scan of the icons in the file to find the best match */
-  for (i = 0; i < ico.icon_count; i++)
+  for (i = 0; i < icon_count; i++)
     {
-      if ((ico.icon_dir[i].width  > w && w < *width) ||
-          (ico.icon_dir[i].height > h && h < *height))
+      if ((info[i].width  > w && w < *width) ||
+          (info[i].height > h && h < *height))
         {
-          w = ico.icon_dir[i].width;
-          h = ico.icon_dir[i].height;
+          w = info[i].width;
+          h = info[i].height;
+          bpp = info[i].bpp;
 
+          match = i;
+        }
+      else if ( w == info[i].width
+                && h == info[i].height
+                && info[i].bpp > bpp )
+        {
+          /* better quality */
+          bpp = info[i].bpp;
           match = i;
         }
     }
 
-  if (w < 1 || h < 1)
+  if (w <= 0 || h <= 0)
     return -1;
 
-  ico_read_data (&ico, match);
-
   image = gimp_image_new (w, h, GIMP_RGB);
-  layer = ico_load_layer (image, &ico, match);
-
-  /* Do a quick scan of the icons in the file to find the largest icon */
-  for (i = 0, w = 0, h = 0; i < ico.icon_count; i++)
-    {
-      if (ico.icon_dir[i].width > w)
-        w = ico.icon_dir[i].width;
-
-      if (ico.icon_dir[i].height > h)
-        h = ico.icon_dir[i].height;
-    }
+  buffer = g_new (guchar, w*h*4);
+  layer = ico_load_layer (fp, image, match, buffer, w*h*4, info+match);
+  g_free (buffer);
 
   *width  = w;
   *height = h;
@@ -575,7 +784,8 @@ ico_load_thumbnail_image (const gchar *filename,
 
   gimp_progress_update (1.0);
 
-  ico_cleanup (&ico);
+  g_free (info);
+  fclose (fp);
 
   return image;
 }

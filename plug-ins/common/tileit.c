@@ -517,7 +517,7 @@ tileit_dialog (void)
   gtk_widget_set_sensitive (spinbutton, FALSE);
   g_object_set_data (G_OBJECT (label), "set_sensitive", spinbutton);
 
-  label = gtk_label_new_with_mnemonic ( _("Col_umn:"));
+  label = gtk_label_new_with_mnemonic (_("Col_umn:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 3, 4,
@@ -691,8 +691,7 @@ exp_need_update (gint nx,
   if (nx <= 0 || nx > itvals.numtiles || ny <= 0 || ny > itvals.numtiles)
     return;
 
-  if( nx != exp_call.x ||
-      ny != exp_call.y )
+  if (nx != exp_call.x || ny != exp_call.y)
     {
       draw_explict_sel (); /* Clear old 'un */
       exp_call.x = nx;
@@ -744,7 +743,7 @@ tileit_preview_events (GtkWidget *widget,
       mevent = (GdkEventMotion *) event;
       if ( !mevent->state )
         break;
-      if(mevent->x < 0 || mevent->y < 0)
+      if (mevent->x < 0 || mevent->y < 0)
         break;
       nx = mevent->x/twidth + 1;
       ny = mevent->y/theight + 1;
@@ -1048,7 +1047,7 @@ tiles_xy (gint  width,
 
   if ((actiontype = tileactions[cnum][rnum]))
     {
-      if (actiontype & HORIZONTAL)
+      if (actiontype & VERTICAL)
         {
           gdouble pyr;
 
@@ -1056,7 +1055,7 @@ tiles_xy (gint  width,
           py = ((gint) (pyr * (gdouble) itvals.numtiles)) % height;
         }
 
-      if (actiontype & VERTICAL)
+      if (actiontype & HORIZONTAL)
         {
           gdouble pxr;
 
@@ -1098,16 +1097,16 @@ do_tiles_preview (guchar *dest_row,
       px = (x*itvals.numtiles)%width;
       cnum = x*itvals.numtiles/width;
 
-      if((actiontype = tileactions[cnum][rnum]))
+      if ((actiontype = tileactions[cnum][rnum]))
         {
-          if(actiontype & HORIZONTAL)
+          if (actiontype & VERTICAL)
             {
               gdouble pyr;
               pyr =  height - dh - 1 + rnd;
               py = ((int)(pyr*(gdouble)itvals.numtiles))%height;
             }
 
-          if(actiontype & VERTICAL)
+          if (actiontype & HORIZONTAL)
             {
               gdouble pxr;
               pxr = width - x - 1 + rnd;

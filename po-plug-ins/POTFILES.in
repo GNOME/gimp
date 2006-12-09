@@ -21,6 +21,7 @@ plug-ins/common/aa.c
 plug-ins/common/align_layers.c
 plug-ins/common/animationplay.c
 plug-ins/common/animoptimize.c
+plug-ins/common/antialias.c
 plug-ins/common/apply_lens.c
 plug-ins/common/autocrop.c
 plug-ins/common/autostretch_hsv.c
@@ -81,6 +82,8 @@ plug-ins/common/illusion.c
 plug-ins/common/iwarp.c
 plug-ins/common/jigsaw.c
 plug-ins/common/laplace.c
+plug-ins/common/lcms.c
+plug-ins/common/lens.c
 plug-ins/common/lic.c
 plug-ins/common/mail.c
 plug-ins/common/mapcolor.c
@@ -188,7 +191,8 @@ plug-ins/gimpressionist/repaint.c
 plug-ins/gimpressionist/size.c
 plug-ins/gimpressionist/sizemap.c
 plug-ins/gimpressionist/utils.c
-plug-ins/help/domain.c
+plug-ins/help/gimphelpdomain.c
+plug-ins/help/gimphelplocale.c
 plug-ins/helpbrowser/dialog.c
 plug-ins/helpbrowser/helpbrowser.c
 plug-ins/ifscompose/ifscompose.c
@@ -249,6 +253,9 @@ plug-ins/metadata/interface.c
 plug-ins/metadata/metadata.c
 plug-ins/metadata/xmp-parse.c
 plug-ins/pagecurl/pagecurl.c
+plug-ins/print/print-draw-page.c
+plug-ins/print/print-page-layout.c
+plug-ins/print/print.c
 plug-ins/rcm/rcm.c
 plug-ins/rcm/rcm_dialog.c
 plug-ins/rcm/rcm_stock.c
@@ -257,6 +264,7 @@ plug-ins/sel2path/sel2path.c
 plug-ins/sgi/sgi.c
 plug-ins/twain/twain.c
 plug-ins/uri/uri-backend-gnomevfs.c
+plug-ins/uri/uri-backend-libcurl.c
 plug-ins/uri/uri-backend-wget.c
 plug-ins/uri/uri.c
 plug-ins/winicon/icodialog.c

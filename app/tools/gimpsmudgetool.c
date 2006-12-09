@@ -24,11 +24,10 @@
 
 #include "tools-types.h"
 
-#include "core/gimptoolinfo.h"
-
 #include "paint/gimpsmudgeoptions.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpsmudgetool.h"
 #include "gimppaintoptions-gui.h"
@@ -40,7 +39,7 @@
 static GtkWidget * gimp_smudge_options_gui (GimpToolOptions *tool_options);
 
 
-G_DEFINE_TYPE (GimpSmudgeTool, gimp_smudge_tool, GIMP_TYPE_PAINT_TOOL)
+G_DEFINE_TYPE (GimpSmudgeTool, gimp_smudge_tool, GIMP_TYPE_BRUSH_TOOL)
 
 
 void
@@ -53,7 +52,7 @@ gimp_smudge_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_PAINT_OPTIONS_CONTEXT_MASK,
                 "gimp-smudge-tool",
                 _("Smudge"),
-                _("Smudge image"),
+                _("Smudge Tool: Smudge selectively using a brush"),
                 N_("_Smudge"), "S",
                 NULL, GIMP_HELP_TOOL_SMUDGE,
                 GIMP_STOCK_TOOL_SMUDGE,
@@ -68,12 +67,14 @@ gimp_smudge_tool_class_init (GimpSmudgeToolClass *klass)
 static void
 gimp_smudge_tool_init (GimpSmudgeTool *smudge)
 {
-  GimpTool *tool = GIMP_TOOL (smudge);
+  GimpTool      *tool       = GIMP_TOOL (smudge);
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (smudge);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_SMUDGE);
 
-  gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (smudge),
-                                       GIMP_COLOR_PICK_MODE_FOREGROUND);
+  paint_tool->status      = _("Click to smudge");
+  paint_tool->status_line = _("Click to smudge the line");
+  paint_tool->status_ctrl = NULL;
 }
 
 
@@ -82,13 +83,9 @@ gimp_smudge_tool_init (GimpSmudgeTool *smudge)
 static GtkWidget *
 gimp_smudge_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
-  GtkWidget *vbox;
+  GObject   *config = G_OBJECT (tool_options);
+  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *table;
-
-  config = G_OBJECT (tool_options);
-
-  vbox = gimp_paint_options_gui (tool_options);
 
   /*  the rate scale  */
   table = gtk_table_new (1, 3, FALSE);

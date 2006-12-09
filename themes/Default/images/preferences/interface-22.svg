@@ -16,8 +16,8 @@
    height="22"
    id="svg11300"
    sodipodi:version="0.32"
-   inkscape:version="0.43+devel"
-   sodipodi:docbase="/home/lapo/Desktop/preferences"
+   inkscape:version="0.44"
+   sodipodi:docbase="/home/jimmac/src/cvs/gnome/gimp/themes/Default/images/preferences"
    sodipodi:docname="interface-22.svg"
    version="1.0">
   <defs
@@ -70,14 +70,14 @@
      id="base"
      pagecolor="#ffffff"
      bordercolor="#666"
-     borderopacity="1"
+     borderopacity="0.17254902"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="32"
-     inkscape:cx="9.4629542"
-     inkscape:cy="8.291808"
+     inkscape:zoom="1"
+     inkscape:cx="12.904249"
+     inkscape:cy="11.280545"
      inkscape:current-layer="layer1"
-     showgrid="true"
+     showgrid="false"
      inkscape:grid-bbox="true"
      inkscape:document-units="px"
      inkscape:showpageshadow="false"
@@ -87,7 +87,7 @@
      inkscape:window-y="135"
      width="22px"
      height="22px"
-     showborder="false" />
+     showborder="true" />
   <metadata
      id="metadata4">
     <rdf:RDF>

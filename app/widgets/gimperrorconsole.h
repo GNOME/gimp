@@ -60,13 +60,13 @@ struct _GimpErrorConsoleClass
 
 GType       gimp_error_console_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_error_console_new      (Gimp             *gimp,
-                                         GimpMenuFactory  *menu_factory);
+GtkWidget * gimp_error_console_new      (Gimp                *gimp,
+                                         GimpMenuFactory     *menu_factory);
 
-void        gimp_error_console_add      (GimpErrorConsole *console,
-                                         const gchar      *stock_id,
-                                         const gchar      *domain,
-                                         const gchar      *message);
+void        gimp_error_console_add      (GimpErrorConsole    *console,
+                                         GimpMessageSeverity  severity,
+                                         const gchar         *domain,
+                                         const gchar         *message);
 
 
 #endif  /*  __GIMP_ERROR_CONSOLE_H__  */

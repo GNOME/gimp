@@ -30,10 +30,9 @@
 
 #include "core/gimp.h"
 
-#include "pdb/gimppluginprocedure.h"
-
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginmanager-locale-domain.h"
+#include "plug-in/gimppluginprocedure.h"
 
 #include "widgets/gimpuimanager.h"
 
@@ -141,7 +140,7 @@ plug_in_menus_setup (GimpUIManager *manager,
 
           for (path = plug_in_proc->menu_paths; path; path = g_list_next (path))
             {
-              if (! strncmp (path->data, manager->name, strlen (manager->name)))
+              if (g_str_has_prefix (path->data, manager->name))
                 {
                   PlugInMenuEntry *entry = g_new0 (PlugInMenuEntry, 1);
                   const gchar     *progname;
@@ -255,7 +254,7 @@ plug_in_menus_unregister_procedure (GimpPDB       *pdb,
 
           for (list = plug_in_proc->menu_paths; list; list = g_list_next (list))
             {
-              if (! strncmp (list->data, manager->name, strlen (manager->name)))
+              if (g_str_has_prefix (list->data, manager->name))
                 {
                   gchar *merge_key;
                   guint  merge_id;
@@ -287,7 +286,7 @@ plug_in_menus_menu_path_added (GimpPlugInProcedure *plug_in_proc,
            gimp_object_get_name (GIMP_OBJECT (plug_in_proc)), menu_path);
 #endif
 
-  if (! strncmp (menu_path, manager->name, strlen (manager->name)))
+  if (g_str_has_prefix (menu_path, manager->name))
     {
       if (! strcmp (manager->name, "<Image>"))
         {
@@ -316,9 +315,9 @@ plug_in_menus_menu_path_added (GimpPlugInProcedure *plug_in_proc,
           plug_in_menus_add_proc (manager, "/vectors-popup",
                                   plug_in_proc, menu_path);
         }
-      else if (! strcmp (manager->name, "<ColormapEditor>"))
+      else if (! strcmp (manager->name, "<Colormap>"))
         {
-          plug_in_menus_add_proc (manager, "/colormap-editor-popup",
+          plug_in_menus_add_proc (manager, "/colormap-popup",
                                   plug_in_proc, menu_path);
         }
       else if (! strcmp (manager->name, "<Brushes>"))

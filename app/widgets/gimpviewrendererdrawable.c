@@ -23,13 +23,13 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "widgets-types.h"
 
 #include "base/temp-buf.h"
 
-#include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-preview.h"
 #include "core/gimpimage.h"
@@ -161,6 +161,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
           TempBuf *temp_buf;
 
           temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
+                                                    renderer->context,
                                                     item->width,
                                                     item->height);
 
@@ -175,6 +176,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
   else
     {
       render_buf = gimp_viewable_get_new_preview (renderer->viewable,
+                                                  renderer->context,
                                                   view_width,
                                                   view_height);
     }

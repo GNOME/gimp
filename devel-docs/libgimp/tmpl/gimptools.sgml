@@ -57,6 +57,25 @@ Functions giving access to common toolbox tools.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_by_color_select_full ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@color: 
+@threshold: 
+@operation: 
+@antialias: 
+@feather: 
+@feather_radius_x: 
+@feather_radius_y: 
+@sample_merged: 
+@select_transparent: 
+@select_criterion: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_clone ##### -->
 <para>
 
@@ -129,6 +148,24 @@ Functions giving access to common toolbox tools.
 @drawable_ID: 
 @num_strokes: 
 @strokes: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_edit_bucket_fill_full ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@fill_mode: 
+@paint_mode: 
+@opacity: 
+@threshold: 
+@sample_merged: 
+@fill_transparent: 
+@select_criterion: 
+@x: 
+@y: 
 @Returns: 
 
 
@@ -215,6 +252,51 @@ Functions giving access to common toolbox tools.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_fuzzy_select_full ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@x: 
+@y: 
+@threshold: 
+@operation: 
+@antialias: 
+@feather: 
+@feather_radius_x: 
+@feather_radius_y: 
+@sample_merged: 
+@select_transparent: 
+@select_criterion: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_heal ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@src_drawable_ID: 
+@src_x: 
+@src_y: 
+@num_strokes: 
+@strokes: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_heal_default ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@num_strokes: 
+@strokes: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_paintbrush ##### -->
 <para>
 
@@ -282,6 +364,26 @@ Functions giving access to common toolbox tools.
 @operation: 
 @feather: 
 @feather_radius: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_round_rect_select ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@x: 
+@y: 
+@width: 
+@height: 
+@corner_radius_x: 
+@corner_radius_y: 
+@operation: 
+@antialias: 
+@feather: 
+@feather_radius_x: 
+@feather_radius_y: 
 @Returns: 
 
 

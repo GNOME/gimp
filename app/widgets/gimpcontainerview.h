@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontainerview.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2006 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,6 +61,8 @@ struct _GimpContainerViewInterface
   /*  virtual functions  */
   void     (* set_container) (GimpContainerView *view,
                               GimpContainer     *container);
+  void     (* set_context)   (GimpContainerView *view,
+                              GimpContext       *context);
   gpointer (* insert_item)   (GimpContainerView *view,
                               GimpViewable      *object,
                               gint               index);

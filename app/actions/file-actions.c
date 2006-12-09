@@ -75,9 +75,9 @@ static const GimpActionEntry file_actions[] =
     G_CALLBACK (file_open_from_image_cmd_callback),
     GIMP_HELP_FILE_OPEN },
 
-  { "file-open-as-layer", GIMP_STOCK_LAYER,
-    N_("Op_en as Layer..."), "<control><alt>O", NULL,
-    G_CALLBACK (file_open_as_layer_cmd_callback),
+  { "file-open-as-layers", GIMP_STOCK_LAYER,
+    N_("Op_en as Layers..."), "<control><alt>O", NULL,
+    G_CALLBACK (file_open_as_layers_cmd_callback),
     GIMP_HELP_FILE_OPEN_AS_LAYER },
 
   { "file-open-location", GIMP_STOCK_WEB,
@@ -151,7 +151,7 @@ file_actions_setup (GimpActionGroup *group)
       entries[i].name           = g_strdup_printf ("file-open-recent-%02d",
                                                    i + 1);
       entries[i].stock_id       = GTK_STOCK_OPEN;
-      entries[i].label          = "";
+      entries[i].label          = entries[i].name;
       entries[i].tooltip        = NULL;
       entries[i].value          = i;
       entries[i].value_variable = FALSE;
@@ -170,10 +170,17 @@ file_actions_setup (GimpActionGroup *group)
 
   for (i = 0; i < n_entries; i++)
     {
+      GtkAction *action;
+
       gimp_action_group_set_action_visible (group, entries[i].name, FALSE);
 
-      g_free ((gchar *) entries[i].name);
+      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                            entries[i].name);
+      g_object_set (action,
+                    "context", gimp_get_user_context (group->gimp),
+                    NULL);
 
+      g_free ((gchar *) entries[i].name);
       if (i < 9)
         g_free ((gchar *) entries[i].accelerator);
     }
@@ -206,7 +213,7 @@ void
 file_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpImage    *image   = action_data_get_image (data);
+  GimpImage    *image    = action_data_get_image (data);
   GimpDrawable *drawable = NULL;
 
   if (image)
@@ -215,7 +222,7 @@ file_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("file-open-as-layer",    image);
+  SET_SENSITIVE ("file-open-as-layers",   image);
   SET_SENSITIVE ("file-save",             image && drawable);
   SET_SENSITIVE ("file-save-as",          image && drawable);
   SET_SENSITIVE ("file-save-a-copy",      image && drawable);
@@ -281,6 +288,8 @@ file_actions_last_opened_update (GimpContainer   *container,
       else
         {
           g_object_set (action,
+                        "label",    name,
+                        "tooltip",  NULL,
                         "visible",  FALSE,
                         "viewable", NULL,
                         NULL);

@@ -56,6 +56,16 @@ gboolean gimp_edit_bucket_fill        (gint32                drawable_ID,
                                        gboolean              sample_merged,
                                        gdouble               x,
                                        gdouble               y);
+gboolean gimp_edit_bucket_fill_full   (gint32                drawable_ID,
+                                       GimpBucketFillMode    fill_mode,
+                                       GimpLayerModeEffects  paint_mode,
+                                       gdouble               opacity,
+                                       gdouble               threshold,
+                                       gboolean              sample_merged,
+                                       gboolean              fill_transparent,
+                                       GimpSelectCriterion   select_criterion,
+                                       gdouble               x,
+                                       gdouble               y);
 gboolean gimp_edit_blend              (gint32                drawable_ID,
                                        GimpBlendMode         blend_mode,
                                        GimpLayerModeEffects  paint_mode,
@@ -73,6 +83,8 @@ gboolean gimp_edit_blend              (gint32                drawable_ID,
                                        gdouble               x2,
                                        gdouble               y2);
 gboolean gimp_edit_stroke             (gint32                drawable_ID);
+gboolean gimp_edit_stroke_vectors     (gint32                drawable_ID,
+                                       gint32                vectors_ID);
 
 
 G_END_DECLS

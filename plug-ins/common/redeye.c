@@ -137,9 +137,8 @@ dialog (gint32        image_id,
   GtkWidget *preview;
   GtkWidget *table;
   GtkWidget *main_vbox;
-  GtkWidget *label;
   GtkObject *adj;
-  gboolean  run = FALSE;
+  gboolean   run = FALSE;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -179,19 +178,15 @@ dialog (gint32        image_id,
                              0, 100,
                              _("Threshold for the red eye color to remove."),
                              NULL);
-  label = g_object_new (GTK_TYPE_LABEL,
-                        "label",  _("Manually selecting the eyes may "
-                                    "improve the results."),
-                        "xalign", 0.0,
-                        "wrap",   TRUE,
-                        NULL);
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                             -1);
-  gtk_box_pack_end (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
 
   if (gimp_selection_is_empty (gimp_drawable_get_image (drawable->drawable_id)))
-    gtk_widget_show (label);
+    {
+      GtkWidget *hints = gimp_hint_box_new (_("Manually selecting the eyes may "
+                                              "improve the results."));
+
+      gtk_box_pack_end (GTK_BOX (main_vbox), hints, FALSE, FALSE, 0);
+      gtk_widget_show (hints);
+    }
 
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (remove_redeye_preview),

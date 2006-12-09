@@ -104,8 +104,8 @@ button_motion(GtkWidget *widget, GdkEventMotion *event, gpointer data)
    if (command->moved_first_time) {
       command->moved_first_time = FALSE;
       command->cursor = preview_set_cursor(command->preview, GDK_FLEUR);
-      gdk_gc_set_function(command->preferences->normal_gc, GDK_EQUIV);
-      gdk_gc_set_function(command->preferences->selected_gc, GDK_EQUIV);
+      gdk_gc_set_function(command->preferences->normal_gc, GDK_XOR);
+      gdk_gc_set_function(command->preferences->selected_gc, GDK_XOR);
       hide_url();
    }
 

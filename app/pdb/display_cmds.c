@@ -32,6 +32,8 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 display_new_invoker (GimpProcedure     *procedure,

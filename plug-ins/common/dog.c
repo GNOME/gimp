@@ -135,8 +135,7 @@ query (void)
                           N_("Edge detection with control of edge thickness"),
                           "Applies two Gaussian blurs to the drawable, and "
                           "subtracts the results.  This is robust and widely "
-                          "used method for detecting edges. Uses Gauss IIR "
-                          "algorithm for the Gaussians.",
+                          "used method for detecting edges.",
                           "Spencer Kimball, Peter Mattis, Sven Neumann, William Skaggs",
                           "Spencer Kimball, Peter Mattis, Sven Neumann, William Skaggs",
                           "1995-2004",

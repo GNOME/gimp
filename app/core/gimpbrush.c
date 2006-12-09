@@ -41,7 +41,21 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_SPACING
+};
 
+
+static void        gimp_brush_set_property          (GObject       *object,
+                                                     guint          property_id,
+                                                     const GValue  *value,
+                                                     GParamSpec    *pspec);
+static void        gimp_brush_get_property          (GObject       *object,
+                                                     guint          property_id,
+                                                     GValue        *value,
+                                                     GParamSpec    *pspec);
 static void        gimp_brush_finalize              (GObject       *object);
 
 static gint64      gimp_brush_get_memsize           (GimpObject    *object,
@@ -51,6 +65,7 @@ static gboolean    gimp_brush_get_size              (GimpViewable  *viewable,
                                                      gint          *width,
                                                      gint          *height);
 static TempBuf   * gimp_brush_get_new_preview       (GimpViewable  *viewable,
+                                                     GimpContext   *context,
                                                      gint           width,
                                                      gint           height);
 static gchar     * gimp_brush_get_description       (GimpViewable  *viewable,
@@ -63,6 +78,10 @@ static GimpBrush * gimp_brush_real_select_brush     (GimpBrush     *brush,
 static gboolean    gimp_brush_real_want_null_motion (GimpBrush     *brush,
                                                      GimpCoords    *last_coords,
                                                      GimpCoords    *cur_coords);
+static TempBuf   * gimp_brush_real_scale_mask       (GimpBrush     *brush,
+                                                     gdouble        scale);
+static TempBuf   * gimp_brush_real_scale_pixmap     (GimpBrush     *brush,
+                                                     gdouble        scale);
 
 
 G_DEFINE_TYPE (GimpBrush, gimp_brush, GIMP_TYPE_DATA)
@@ -89,6 +108,8 @@ gimp_brush_class_init (GimpBrushClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  object_class->get_property       = gimp_brush_get_property;
+  object_class->set_property       = gimp_brush_set_property;
   object_class->finalize           = gimp_brush_finalize;
 
   gimp_object_class->get_memsize   = gimp_brush_get_memsize;
@@ -102,7 +123,15 @@ gimp_brush_class_init (GimpBrushClass *klass)
 
   klass->select_brush              = gimp_brush_real_select_brush;
   klass->want_null_motion          = gimp_brush_real_want_null_motion;
+  klass->scale_mask                = gimp_brush_real_scale_mask;
+  klass->scale_pixmap              = gimp_brush_real_scale_pixmap;
   klass->spacing_changed           = NULL;
+
+  g_object_class_install_property (object_class, PROP_SPACING,
+                                   g_param_spec_double ("spacing", NULL, NULL,
+                                                        1.0, 5000.0, 20.0,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -116,6 +145,44 @@ gimp_brush_init (GimpBrush *brush)
   brush->x_axis.y =  0.0;
   brush->y_axis.x =  0.0;
   brush->y_axis.y = 15.0;
+}
+
+static void
+gimp_brush_set_property (GObject      *object,
+                         guint         property_id,
+                         const GValue *value,
+                         GParamSpec   *pspec)
+{
+  GimpBrush *brush = GIMP_BRUSH (object);
+
+  switch (property_id)
+    {
+    case PROP_SPACING:
+      gimp_brush_set_spacing (brush, g_value_get_double (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_brush_get_property (GObject    *object,
+                         guint       property_id,
+                         GValue     *value,
+                         GParamSpec *pspec)
+{
+  GimpBrush *brush = GIMP_BRUSH (object);
+
+  switch (property_id)
+    {
+    case PROP_SPACING:
+      g_value_set_double (value, brush->spacing);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -170,6 +237,7 @@ gimp_brush_get_size (GimpViewable *viewable,
 
 static TempBuf *
 gimp_brush_get_new_preview (GimpViewable *viewable,
+                            GimpContext  *context,
                             gint          width,
                             gint          height)
 {
@@ -279,6 +347,51 @@ gimp_brush_get_extension (GimpData *data)
   return GIMP_BRUSH_FILE_EXTENSION;
 }
 
+static GimpBrush *
+gimp_brush_real_select_brush (GimpBrush  *brush,
+                              GimpCoords *last_coords,
+                              GimpCoords *cur_coords)
+{
+  return brush;
+}
+
+static gboolean
+gimp_brush_real_want_null_motion (GimpBrush  *brush,
+                                  GimpCoords *last_coords,
+                                  GimpCoords *cur_coords)
+{
+  return TRUE;
+}
+
+static TempBuf *
+gimp_brush_real_scale_mask (GimpBrush *brush,
+                            gdouble    scale)
+{
+  gint width;
+  gint height;
+
+  width  = (gint) (brush->mask->width  * scale + 0.5);
+  height = (gint) (brush->mask->height * scale + 0.5);
+
+  return brush_scale_mask (brush->mask, width, height);
+}
+
+static TempBuf *
+gimp_brush_real_scale_pixmap (GimpBrush *brush,
+                              gdouble    scale)
+{
+  gint width;
+  gint height;
+
+  width  = (gint) (brush->pixmap->width  * scale + 0.5);
+  height = (gint) (brush->pixmap->height * scale + 0.5);
+
+  return brush_scale_pixmap (brush->pixmap, width, height);
+}
+
+
+/*  public functions  */
+
 GimpData *
 gimp_brush_new (const gchar *name)
 {
@@ -336,20 +449,25 @@ gimp_brush_want_null_motion (GimpBrush  *brush,
                                                          cur_coords);
 }
 
-static GimpBrush *
-gimp_brush_real_select_brush (GimpBrush  *brush,
-                              GimpCoords *last_coords,
-                              GimpCoords *cur_coords)
+TempBuf *
+gimp_brush_scale_mask (GimpBrush *brush,
+                       gdouble    scale)
 {
-  return brush;
+  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+  g_return_val_if_fail (scale > 0.0, NULL);
+
+  return GIMP_BRUSH_GET_CLASS (brush)->scale_mask (brush, scale);
 }
 
-static gboolean
-gimp_brush_real_want_null_motion (GimpBrush  *brush,
-                                  GimpCoords *last_coords,
-                                  GimpCoords *cur_coords)
+TempBuf *
+gimp_brush_scale_pixmap (GimpBrush *brush,
+                         gdouble    scale)
 {
-  return TRUE;
+  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+  g_return_val_if_fail (brush->pixmap != NULL, NULL);
+  g_return_val_if_fail (scale > 0.0, NULL);
+
+  return GIMP_BRUSH_GET_CLASS (brush)->scale_pixmap (brush, scale);
 }
 
 TempBuf *
@@ -389,6 +507,7 @@ gimp_brush_set_spacing (GimpBrush *brush,
       brush->spacing = spacing;
 
       gimp_brush_spacing_changed (brush);
+      g_object_notify (G_OBJECT (brush), "spacing");
     }
 }
 

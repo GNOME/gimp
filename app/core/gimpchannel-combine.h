@@ -20,34 +20,43 @@
 #define __GIMP_CHANNEL_COMBINE_H__
 
 
-void   gimp_channel_add_segment     (GimpChannel    *mask,
-                                     gint            x,
-                                     gint            y,
-                                     gint            width,
-                                     gint            value);
-void   gimp_channel_sub_segment     (GimpChannel    *mask,
-                                     gint            x,
-                                     gint            y,
-                                     gint            width,
-                                     gint            value);
-void   gimp_channel_combine_rect    (GimpChannel    *mask,
-                                     GimpChannelOps  op,
-                                     gint            x,
-                                     gint            y,
-                                     gint            w,
-                                     gint            h);
-void   gimp_channel_combine_ellipse (GimpChannel    *mask,
-                                     GimpChannelOps  op,
-                                     gint            x,
-                                     gint            y,
-                                     gint            w,
-                                     gint            h,
-                                     gboolean        antialias);
-void   gimp_channel_combine_mask    (GimpChannel    *mask,
-                                     GimpChannel    *add_on,
-                                     GimpChannelOps  op,
-                                     gint            off_x,
-                                     gint            off_y);
+void   gimp_channel_add_segment          (GimpChannel    *mask,
+                                          gint            x,
+                                          gint            y,
+                                          gint            width,
+                                          gint            value);
+void   gimp_channel_sub_segment          (GimpChannel    *mask,
+                                          gint            x,
+                                          gint            y,
+                                          gint            width,
+                                          gint            value);
+void   gimp_channel_combine_rect         (GimpChannel    *mask,
+                                          GimpChannelOps  op,
+                                          gint            x,
+                                          gint            y,
+                                          gint            w,
+                                          gint            h);
+void   gimp_channel_combine_ellipse      (GimpChannel    *mask,
+                                          GimpChannelOps  op,
+                                          gint            x,
+                                          gint            y,
+                                          gint            w,
+                                          gint            h,
+                                          gboolean        antialias);
+void   gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
+                                          GimpChannelOps  op,
+                                          gint            rect_x,
+                                          gint            rect_y,
+                                          gint            rect_w,
+                                          gint            rect_h,
+                                          gdouble         a,
+                                          gdouble         b,
+                                          gboolean        antialias);
+void   gimp_channel_combine_mask         (GimpChannel    *mask,
+                                          GimpChannel    *add_on,
+                                          GimpChannelOps  op,
+                                          gint            off_x,
+                                          gint            off_y);
 
 
 #endif /* __GIMP_CHANNEL_COMBINE_H__ */

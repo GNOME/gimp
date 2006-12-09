@@ -141,7 +141,8 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
   uri = g_strndup ((const gchar *) data, length);
   g_free (data);
 
-  proc = file_utils_find_proc (image->gimp->plug_in_manager->save_procs, uri);
+  proc =
+    file_utils_find_proc (image->gimp->plug_in_manager->save_procs, uri, NULL);
 
   if (proc)
     {
@@ -169,8 +170,9 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
                 {
                   gchar *filename = file_utils_uri_display_name (uri);
 
-                  g_message (_("Saving '%s' failed:\n\n%s"),
-                             filename, error->message);
+                  gimp_message (image->gimp, NULL, GIMP_MESSAGE_ERROR,
+                                _("Saving '%s' failed:\n\n%s"),
+                                filename, error->message);
 
                   g_free (filename);
                   g_error_free (error);
@@ -185,8 +187,9 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
       gtk_selection_data_set (selection, selection->target, 8,
                               (const guchar *) "E", 1);
 
-      g_message (_("The given filename does not have any known "
-                   "file extension."));
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    _("The given filename does not have any known "
+                      "file extension."));
     }
 
   g_free (uri);

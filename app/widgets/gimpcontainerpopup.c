@@ -33,10 +33,9 @@
 #include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
+#include "gimpcontainerbox.h"
 #include "gimpcontainereditor.h"
 #include "gimpcontainerpopup.h"
-#include "gimpcontainergridview.h"
-#include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
 #include "gimpdialogfactory.h"
 #include "gimpviewrenderer.h"

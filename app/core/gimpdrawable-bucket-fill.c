@@ -46,17 +46,18 @@
 /*  public functions  */
 
 void
-gimp_drawable_bucket_fill (GimpDrawable       *drawable,
-                           GimpContext        *context,
-                           GimpBucketFillMode  fill_mode,
-                           gint                paint_mode,
-                           gdouble             opacity,
-                           gboolean            do_seed_fill,
-                           gboolean            fill_transparent,
-                           gdouble             threshold,
-                           gboolean            sample_merged,
-                           gdouble             x,
-                           gdouble             y)
+gimp_drawable_bucket_fill (GimpDrawable        *drawable,
+                           GimpContext         *context,
+                           GimpBucketFillMode   fill_mode,
+                           gint                 paint_mode,
+                           gdouble              opacity,
+                           gboolean             do_seed_fill,
+                           gboolean             fill_transparent,
+                           GimpSelectCriterion  fill_criterion,
+                           gdouble              threshold,
+                           gboolean             sample_merged,
+                           gdouble              x,
+                           gdouble              y)
 {
   GimpImage   *image;
   GimpRGB      color;
@@ -82,7 +83,8 @@ gimp_drawable_bucket_fill (GimpDrawable       *drawable,
 
       if (! pattern)
         {
-          g_message (_("No patterns available for this operation."));
+          gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                        _("No patterns available for this operation."));
           return;
         }
     }
@@ -96,25 +98,26 @@ gimp_drawable_bucket_fill (GimpDrawable       *drawable,
                                   fill_mode,
                                   paint_mode, opacity,
                                   do_seed_fill,
-                                  fill_transparent,
+                                  fill_transparent, fill_criterion,
                                   threshold, sample_merged,
                                   x, y,
                                   &color, pattern);
 }
 
 void
-gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
-                                GimpBucketFillMode  fill_mode,
-                                gint                paint_mode,
-                                gdouble             opacity,
-                                gboolean            do_seed_fill,
-                                gboolean            fill_transparent,
-                                gdouble             threshold,
-                                gboolean            sample_merged,
-                                gdouble             x,
-                                gdouble             y,
-                                const GimpRGB      *color,
-                                GimpPattern        *pattern)
+gimp_drawable_bucket_fill_full (GimpDrawable        *drawable,
+                                GimpBucketFillMode   fill_mode,
+                                gint                 paint_mode,
+                                gdouble              opacity,
+                                gboolean             do_seed_fill,
+                                gboolean             fill_transparent,
+                                GimpSelectCriterion  fill_criterion,
+                                gdouble              threshold,
+                                gboolean             sample_merged,
+                                gdouble              x,
+                                gdouble              y,
+                                const GimpRGB       *color,
+                                GimpPattern         *pattern)
 {
   GimpImage   *image;
   TileManager *buf_tiles;
@@ -152,12 +155,14 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
                           &tmp_col[GREEN_PIX],
                           &tmp_col[BLUE_PIX]);
 
-      gimp_image_transform_color (image, drawable, col, GIMP_RGB, tmp_col);
+      gimp_image_transform_color (image, gimp_drawable_type (drawable), col,
+                                  GIMP_RGB, tmp_col);
       col[gimp_drawable_bytes_with_alpha (drawable) - 1] = OPAQUE_OPACITY;
     }
   else if (fill_mode == GIMP_PATTERN_BUCKET_FILL)
     {
-      pat_buf = gimp_image_transform_temp_buf (image, drawable,
+      pat_buf = gimp_image_transform_temp_buf (image,
+                                               gimp_drawable_type (drawable),
                                                pattern->mask, &new_buf);
     }
   else
@@ -179,6 +184,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
                                                    TRUE,
                                                    (gint) threshold,
                                                    fill_transparent,
+                                                   fill_criterion,
                                                    (gint) x,
                                                    (gint) y);
 

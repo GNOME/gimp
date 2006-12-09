@@ -37,11 +37,10 @@
 
 #include "file/file-utils.h"
 
-#include "plug-in/gimppluginmanager.h"
-#include "plug-in/gimppluginmanager-locale-domain.h"
-
 #include "pdb/gimppdb.h"
-#include "pdb/gimppluginprocedure.h"
+
+#include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginprocedure.h"
 
 #include "gimpfiledialog.h"
 #include "gimpfileprocview.h"
@@ -349,9 +348,31 @@ void
 gimp_file_dialog_set_sensitive (GimpFileDialog *dialog,
                                 gboolean        sensitive)
 {
+  GList *children;
+  GList *list;
+
   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
 
-  gimp_dialog_set_sensitive (GTK_DIALOG (dialog), sensitive);
+  children =
+    gtk_container_get_children (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox));
+
+  for (list = children; list; list = g_list_next (list))
+    {
+      /*  skip the last item (the action area) */
+      if (! g_list_next (list))
+        break;
+
+      gtk_widget_set_sensitive (list->data, sensitive);
+    }
+
+  g_list_free (children);
+
+  if (sensitive)
+    gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+                                       GTK_RESPONSE_CANCEL, sensitive);
+
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+                                     GTK_RESPONSE_OK, sensitive);
 
   dialog->busy     = ! sensitive;
   dialog->canceled = FALSE;
@@ -395,8 +416,17 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
   basename = file_utils_uri_display_basename (uri);
 
   if (dirname && strlen (dirname) && strcmp (dirname, "."))
-    gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog),
-                                             dirname);
+    {
+      gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog),
+                                               dirname);
+    }
+  else if (g_object_get_data (G_OBJECT (image), "gimp-image-dirname"))
+    {
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog),
+                                           g_object_get_data (G_OBJECT (image),
+                                                              "gimp-image-dirname"));
+    }
+
 
   gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
 
@@ -423,7 +453,7 @@ gimp_file_dialog_add_preview (GimpFileDialog *dialog,
                     G_CALLBACK (gimp_file_dialog_update_preview),
                     dialog);
 
-  dialog->thumb_box = gimp_thumb_box_new (gimp);
+  dialog->thumb_box = gimp_thumb_box_new (gimp_get_user_context (gimp));
   gtk_widget_set_sensitive (GTK_WIDGET (dialog->thumb_box), FALSE);
   gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog),
                                        dialog->thumb_box);
@@ -458,18 +488,13 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
       if (file_proc->extensions_list)
         {
           GtkFileFilter *filter = gtk_file_filter_new ();
-          const gchar   *domain;
           gchar         *label;
           GString       *str;
           GSList        *ext;
           gint           i;
 
-          domain = gimp_plug_in_manager_get_locale_domain (gimp->plug_in_manager,
-                                                           file_proc->prog,
-                                                           NULL);
-
-          label = gimp_plug_in_procedure_get_label (file_proc, domain);
-
+          label = gimp_plug_in_manager_get_label (gimp->plug_in_manager,
+                                                  file_proc);
           str = g_string_new (label);
           g_free (label);
 

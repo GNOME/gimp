@@ -28,6 +28,7 @@
 
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-progress.h"
+#include "gimpstatusbar.h"
 
 
 static GimpProgress *
@@ -99,6 +100,22 @@ gimp_display_shell_progress_get_window (GimpProgress *progress)
   return (guint32) gimp_window_get_native (GTK_WINDOW (shell));
 }
 
+static gboolean
+gimp_display_shell_progress_message (GimpProgress        *progress,
+                                     Gimp                *gimp,
+                                     GimpMessageSeverity  severity,
+                                     const gchar         *domain,
+                                     const gchar         *message)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
+
+  if (severity != GIMP_MESSAGE_ERROR && GTK_WIDGET_VISIBLE (shell->statusbar))
+    return gimp_progress_message (GIMP_PROGRESS (shell->statusbar), gimp,
+                                  severity, domain, message);
+
+  return FALSE;
+}
+
 void
 gimp_display_shell_progress_iface_init (GimpProgressInterface *iface)
 {
@@ -110,4 +127,5 @@ gimp_display_shell_progress_iface_init (GimpProgressInterface *iface)
   iface->get_value  = gimp_display_shell_progress_get_value;
   iface->pulse      = gimp_display_shell_progress_pulse;
   iface->get_window = gimp_display_shell_progress_get_window;
+  iface->message    = gimp_display_shell_progress_message;
 }

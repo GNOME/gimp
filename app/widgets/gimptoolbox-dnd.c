@@ -154,8 +154,9 @@ gimp_toolbox_drop_uri_list (GtkWidget *widget,
         {
           gchar *filename = file_utils_uri_display_name (uri);
 
-          g_message (_("Opening '%s' failed:\n\n%s"),
-                     filename, error->message);
+          gimp_message (context->gimp, NULL, GIMP_MESSAGE_ERROR,
+                        _("Opening '%s' failed:\n\n%s"),
+                        filename, error->message);
 
           g_clear_error (&error);
           g_free (filename);
@@ -187,7 +188,7 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
 
   drawable = GIMP_DRAWABLE (viewable);
   item     = GIMP_ITEM (viewable);
-  image   = gimp_item_get_image (item);
+  image    = gimp_item_get_image (item);
 
   width  = gimp_item_width  (item);
   height = gimp_item_height (item);
@@ -195,7 +196,7 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
 
   type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
 
-  new_image = gimp_create_image (image->gimp, width, height, type, FALSE);
+  new_image = gimp_create_image (image->gimp, width, height, type, TRUE);
   gimp_image_undo_disable (new_image);
 
   if (type == GIMP_INDEXED)
@@ -204,10 +205,8 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
                              gimp_image_get_colormap_size (image),
                              FALSE);
 
-  gimp_image_set_resolution (new_image,
-                             image->xresolution, image->yresolution);
-  gimp_image_set_unit (new_image,
-                       gimp_image_get_unit (image));
+  gimp_image_set_resolution (new_image, image->xresolution, image->yresolution);
+  gimp_image_set_unit (new_image, gimp_image_get_unit (image));
 
   if (GIMP_IS_LAYER (drawable))
     new_type = G_TYPE_FROM_INSTANCE (drawable);
@@ -288,12 +287,11 @@ gimp_toolbox_drop_component (GtkWidget       *widget,
   new_image = gimp_create_image (image->gimp,
                                  gimp_image_get_width  (image),
                                  gimp_image_get_height (image),
-                                 GIMP_GRAY, FALSE);
+                                 GIMP_GRAY, TRUE);
 
   gimp_image_undo_disable (new_image);
 
-  gimp_image_set_resolution (new_image,
-                             image->xresolution, image->yresolution);
+  gimp_image_set_resolution (new_image, image->xresolution, image->yresolution);
   gimp_image_set_unit (new_image, gimp_image_get_unit (image));
 
   channel = gimp_channel_new_from_component (image, component, NULL, NULL);

@@ -29,7 +29,7 @@
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
-#include "paint-funcs/paint-funcs.h"
+#include "paint-funcs/scale-funcs.h"
 
 #include "config/gimpcoreconfig.h"
 
@@ -58,6 +58,7 @@ static void      gimp_drawable_preview_scale   (GimpImageType  type,
 
 TempBuf *
 gimp_drawable_get_preview (GimpViewable *viewable,
+                           GimpContext  *context,
                            gint          width,
                            gint          height)
 {

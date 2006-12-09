@@ -24,14 +24,17 @@ typedef struct _GimpGui GimpGui;
 
 struct _GimpGui
 {
+  void           (* ungrab)              (Gimp                *gimp);
+
   void           (* threads_enter)       (Gimp                *gimp);
   void           (* threads_leave)       (Gimp                *gimp);
 
   void           (* set_busy)            (Gimp                *gimp);
   void           (* unset_busy)          (Gimp                *gimp);
 
-  void           (* message)             (Gimp                *gimp,
-                                          GimpProgress        *progress,
+  void           (* show_message)        (Gimp                *gimp,
+                                          GObject             *handler,
+                                          GimpMessageSeverity  severity,
                                           const gchar         *domain,
                                           const gchar         *message);
   void           (* help)                (Gimp                *gimp,
@@ -63,6 +66,7 @@ struct _GimpGui
 
   gboolean       (* pdb_dialog_new)      (Gimp                *gimp,
                                           GimpContext         *context,
+                                          GimpProgress        *progress,
                                           GimpContainer       *container,
                                           const gchar         *title,
                                           const gchar         *callback_name,
@@ -80,6 +84,8 @@ struct _GimpGui
 
 
 void           gimp_gui_init             (Gimp                *gimp);
+
+void           gimp_gui_ungrab           (Gimp                *gimp);
 
 void           gimp_threads_enter        (Gimp                *gimp);
 void           gimp_threads_leave        (Gimp                *gimp);
@@ -104,8 +110,9 @@ void           gimp_set_busy             (Gimp                *gimp);
 void           gimp_set_busy_until_idle  (Gimp                *gimp);
 void           gimp_unset_busy           (Gimp                *gimp);
 
-void           gimp_message              (Gimp                *gimp,
-                                          GimpProgress        *progress,
+void           gimp_show_message         (Gimp                *gimp,
+                                          GObject             *handler,
+                                          GimpMessageSeverity  severity,
                                           const gchar         *domain,
                                           const gchar         *message);
 void           gimp_help                 (Gimp                *gimp,
@@ -125,6 +132,7 @@ const gchar  * gimp_get_theme_dir        (Gimp                *gimp);
 
 gboolean       gimp_pdb_dialog_new       (Gimp                *gimp,
                                           GimpContext         *context,
+                                          GimpProgress        *progress,
                                           GimpContainer       *container,
                                           const gchar         *title,
                                           const gchar         *callback_name,

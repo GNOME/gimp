@@ -61,15 +61,20 @@ struct _GimpZoomPreviewClass
 };
 
 
-GType          gimp_zoom_preview_get_type     (void) G_GNUC_CONST;
+GType           gimp_zoom_preview_get_type       (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_zoom_preview_new          (GimpDrawable    *drawable);
-guchar       * gimp_zoom_preview_get_source   (GimpZoomPreview *preview,
-                                               gint            *width,
-                                               gint            *height,
-                                               gint            *bpp);
-GimpDrawable * gimp_zoom_preview_get_drawable (GimpZoomPreview *preview);
-gdouble        gimp_zoom_preview_get_factor   (GimpZoomPreview *preview);
+GtkWidget     * gimp_zoom_preview_new            (GimpDrawable    *drawable);
+GtkWidget     * gimp_zoom_preview_new_with_model (GimpDrawable    *drawable,
+                                                  GimpZoomModel   *model);
+
+guchar        * gimp_zoom_preview_get_source     (GimpZoomPreview *preview,
+                                                  gint            *width,
+                                                  gint            *height,
+                                                  gint            *bpp);
+
+GimpDrawable  * gimp_zoom_preview_get_drawable   (GimpZoomPreview *preview);
+GimpZoomModel * gimp_zoom_preview_get_model      (GimpZoomPreview *preview);
+gdouble         gimp_zoom_preview_get_factor     (GimpZoomPreview *preview);
 
 G_END_DECLS
 

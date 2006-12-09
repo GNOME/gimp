@@ -26,7 +26,6 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-bucket-fill.h"
@@ -120,6 +119,14 @@ gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass)
 }
 
 static void
+gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *iface)
+{
+  parent_view_iface = g_type_interface_peek_parent (iface);
+
+  iface->select_item = gimp_drawable_tree_view_select_item;
+}
+
+static void
 gimp_drawable_tree_view_init (GimpDrawableTreeView *view)
 {
 }
@@ -153,14 +160,6 @@ gimp_drawable_tree_view_constructor (GType                  type,
   return object;
 }
 
-static void
-gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *iface)
-{
-  parent_view_iface = g_type_interface_peek_parent (iface);
-
-  iface->select_item = gimp_drawable_tree_view_select_item;
-}
-
 
 /*  GimpContainerView methods  */
 
@@ -174,16 +173,15 @@ gimp_drawable_tree_view_select_item (GimpContainerView *view,
 
   if (item_view->image)
     {
-      GimpViewable *floating_sel;
+      GimpLayer *floating_sel = gimp_image_floating_sel (item_view->image);
 
-      floating_sel = (GimpViewable *)
-        gimp_image_floating_sel (item_view->image);
-
-      success = (item == NULL || floating_sel == NULL || item == floating_sel);
+      success = (item         == NULL ||
+                 floating_sel == NULL ||
+                 item         == GIMP_VIEWABLE (floating_sel));
     }
 
   if (success)
-    return parent_view_iface->select_item (view, item, insert_data);
+    success = parent_view_iface->select_item (view, item, insert_data);
 
   return success;
 }
@@ -241,7 +239,9 @@ gimp_drawable_tree_view_drop_viewable (GimpContainerTreeView   *view,
                                       GIMP_PATTERN_BUCKET_FILL,
                                       GIMP_NORMAL_MODE, GIMP_OPACITY_OPAQUE,
                                       FALSE,             /* no seed fill */
-                                      FALSE, 0.0, FALSE, /* fill params  */
+                                      FALSE,             /* don't fill transp */
+                                      GIMP_SELECT_CRITERION_COMPOSITE,
+                                      0.0, FALSE,        /* fill params  */
                                       0.0, 0.0,          /* ignored      */
                                       NULL, GIMP_PATTERN (src_viewable));
       gimp_image_flush (GIMP_ITEM_TREE_VIEW (view)->image);
@@ -266,7 +266,9 @@ gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
                                       GIMP_FG_BUCKET_FILL,
                                       GIMP_NORMAL_MODE, GIMP_OPACITY_OPAQUE,
                                       FALSE,             /* no seed fill */
-                                      FALSE, 0.0, FALSE, /* fill params  */
+                                      FALSE,             /* don't fill transp */
+                                      GIMP_SELECT_CRITERION_COMPOSITE,
+                                      0.0, FALSE,        /* fill params  */
                                       0.0, 0.0,          /* ignored      */
                                       color, NULL);
       gimp_image_flush (GIMP_ITEM_TREE_VIEW (view)->image);
@@ -327,26 +329,24 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
 
   if (item)
     {
-      GimpDrawable *drawable = GIMP_DRAWABLE (item);
-      GimpToolInfo *tool_info;
-      GimpContext  *context;
-
       /*  Get the bucket fill context  */
-      tool_info = (GimpToolInfo *)
-        gimp_container_get_child_by_name (view->image->gimp->tool_info_list,
-                                          "gimp-bucket-fill-tool");
+      GimpContext  *context;
+      GimpToolInfo *tool_info = gimp_get_tool_info (view->image->gimp,
+                                                    "gimp-bucket-fill-tool");
 
       if (tool_info && tool_info->tool_options)
         context = GIMP_CONTEXT (tool_info->tool_options);
       else
-        context = view->context;
+        context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view));
 
-      gimp_drawable_bucket_fill_full (drawable,
+      gimp_drawable_bucket_fill_full (GIMP_DRAWABLE (item),
                                       fill_mode,
                                       gimp_context_get_paint_mode (context),
                                       gimp_context_get_opacity (context),
-                                      FALSE /* no seed fill */,
-                                      FALSE, 0.0, FALSE, 0.0, 0.0 /* fill params */,
+                                      FALSE, /* no seed fill */
+                                      FALSE, /* don't fill transp */
+                                      GIMP_SELECT_CRITERION_COMPOSITE,
+                                      0.0, FALSE, 0.0, 0.0 /* fill params */,
                                       color, pattern);
     }
 

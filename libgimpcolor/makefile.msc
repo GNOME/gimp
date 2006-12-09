@@ -35,6 +35,7 @@ OBJECTS = \
 	gimpbilinear.obj \
 	gimpcmyk.obj \
 	gimpcolorspace.obj \
+	gimphsl.obj \
 	gimphsv.obj \
 	gimprgb.obj \
 	gimprgb-parse.obj \

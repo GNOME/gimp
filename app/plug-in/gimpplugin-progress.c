@@ -30,11 +30,11 @@
 #include "core/gimpprogress.h"
 
 #include "pdb/gimppdb.h"
-#include "pdb/gimptemporaryprocedure.h"
 
 #include "gimpplugin.h"
 #include "gimpplugin-progress.h"
 #include "gimppluginmanager.h"
+#include "gimptemporaryprocedure.h"
 
 
 /*  local function prototypes  */
@@ -44,6 +44,44 @@ static void   gimp_plug_in_progress_cancel_callback (GimpProgress *progress,
 
 
 /*  public functions  */
+
+gint
+gimp_plug_in_progress_attach (GimpProgress *progress)
+{
+  gint attach_count;
+
+  g_return_val_if_fail (GIMP_IS_PROGRESS (progress), 0);
+
+  attach_count =
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (progress),
+                                        "plug-in-progress-attach-count"));
+
+  attach_count++;
+
+  g_object_set_data (G_OBJECT (progress), "plug-in-progress-attach-count",
+                     GINT_TO_POINTER (attach_count));;
+
+  return attach_count;
+}
+
+gint
+gimp_plug_in_progress_detach (GimpProgress *progress)
+{
+  gint attach_count;
+
+  g_return_val_if_fail (GIMP_IS_PROGRESS (progress), 0);
+
+  attach_count =
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (progress),
+                                        "plug-in-progress-attach-count"));
+
+  attach_count--;
+
+  g_object_set_data (G_OBJECT (progress), "plug-in-progress-attach-count",
+                     GINT_TO_POINTER (attach_count));;
+
+  return attach_count;
+}
 
 void
 gimp_plug_in_progress_start (GimpPlugIn  *plug_in,
@@ -67,6 +105,8 @@ gimp_plug_in_progress_start (GimpPlugIn  *plug_in,
           proc_frame->progress_created = TRUE;
 
           g_object_ref (proc_frame->progress);
+
+          gimp_plug_in_progress_attach (proc_frame->progress);
         }
     }
 
@@ -113,7 +153,8 @@ gimp_plug_in_progress_end (GimpPlugIn *plug_in)
           proc_frame->progress_cancel_id = 0;
         }
 
-      if (gimp_progress_is_active (proc_frame->progress))
+      if (gimp_plug_in_progress_detach (proc_frame->progress) < 1 &&
+          gimp_progress_is_active (proc_frame->progress))
         gimp_progress_end (proc_frame->progress);
 
       if (proc_frame->progress_created)
@@ -236,6 +277,8 @@ gimp_plug_in_progress_install (GimpPlugIn  *plug_in,
                                        "context",       proc_frame->main_context,
                                        "callback-name", progress_callback,
                                        NULL);
+
+  gimp_plug_in_progress_attach (proc_frame->progress);
 
   return TRUE;
 }

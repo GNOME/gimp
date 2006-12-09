@@ -45,6 +45,7 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-draw.h"
+#include "display/gimpdisplayshell-selection.h"
 #include "display/gimpdisplayshell-transform.h"
 
 #include "gimpcoloroptions.h"
@@ -159,7 +160,7 @@ gimp_color_tool_init (GimpColorTool *color_tool)
 {
   GimpTool *tool = GIMP_TOOL (color_tool);
 
-  gimp_tool_control_set_action_value_1 (tool->control,
+  gimp_tool_control_set_action_value_2 (tool->control,
                                         "tools/tools-color-average-radius-set");
 
   color_tool->enabled             = FALSE;
@@ -230,10 +231,9 @@ gimp_color_tool_button_press (GimpTool        *tool,
   GimpColorTool    *color_tool = GIMP_COLOR_TOOL (tool);
   GimpDisplayShell *shell      = GIMP_DISPLAY_SHELL (display->shell);
 
-  /*  Make the tool active and set its display & drawable  */
-  tool->display  = display;
-  tool->drawable = gimp_image_active_drawable (display->image);
-  gimp_tool_control_activate (tool->control);
+  /*  Chain up to activate the tool  */
+  GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
+                                                display);
 
   if (! color_tool->enabled)
     return;
@@ -244,7 +244,7 @@ gimp_color_tool_button_press (GimpTool        *tool,
       color_tool->sample_point_x      = color_tool->sample_point->x;
       color_tool->sample_point_y      = color_tool->sample_point->y;
 
-      gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_PAUSE);
+      gimp_display_shell_selection_control (shell, GIMP_SELECTION_PAUSE);
 
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
@@ -281,7 +281,9 @@ gimp_color_tool_button_release (GimpTool        *tool,
   GimpColorTool    *color_tool = GIMP_COLOR_TOOL (tool);
   GimpDisplayShell *shell      = GIMP_DISPLAY_SHELL (display->shell);
 
-  gimp_tool_control_halt (tool->control);
+  /*  Chain up to halt the tool  */
+  GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
+                                                  display);
 
   if (! color_tool->enabled)
     return;
@@ -300,8 +302,7 @@ gimp_color_tool_button_release (GimpTool        *tool,
           color_tool->sample_point_x      = -1;
           color_tool->sample_point_y      = -1;
 
-          gimp_display_shell_selection_visibility (shell,
-                                                   GIMP_SELECTION_RESUME);
+          gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
           return;
         }
 
@@ -339,7 +340,7 @@ gimp_color_tool_button_release (GimpTool        *tool,
             }
         }
 
-      gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_RESUME);
+      gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
       gimp_image_flush (display->image);
 
       if (color_tool->sample_point)
@@ -610,31 +611,49 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
                              GimpRGB            *color,
                              gint                color_index)
 {
-  GimpTool    *tool = GIMP_TOOL (color_tool);
-  GimpContext *user_context;
+  GimpTool          *tool = GIMP_TOOL (color_tool);
+  GimpContext       *context;
+  GimpDialogFactory *dialog_factory;
 
-  user_context = gimp_get_user_context (tool->display->image->gimp);
+  /*  use this tool's own options here (NOT color_tool->options)  */
+  context = GIMP_CONTEXT (gimp_tool_get_options (tool));
 
-  if ((color_tool->pick_mode == GIMP_COLOR_PICK_MODE_FOREGROUND ||
-       color_tool->pick_mode == GIMP_COLOR_PICK_MODE_BACKGROUND) &&
-      GIMP_IMAGE_TYPE_IS_INDEXED (sample_type))
+  dialog_factory = gimp_dialog_factory_from_name ("dock");
+
+  if (color_tool->pick_mode == GIMP_COLOR_PICK_MODE_FOREGROUND ||
+      color_tool->pick_mode == GIMP_COLOR_PICK_MODE_BACKGROUND)
     {
-      GimpDialogFactory *dialog_factory;
-      GimpSessionInfo   *info;
+      GimpSessionInfo *info;
 
-      dialog_factory = gimp_dialog_factory_from_name ("dock");
-      info = gimp_dialog_factory_find_session_info (dialog_factory,
-                                                    "gimp-indexed-palette");
-
-      if (info && info->widget)
+      if (GIMP_IMAGE_TYPE_IS_INDEXED (sample_type))
         {
-          GtkWidget *colormap_editor;
+          info = gimp_dialog_factory_find_session_info (dialog_factory,
+                                                        "gimp-indexed-palette");
+          if (info && info->widget)
+            {
+              GimpColormapEditor *editor;
 
-          colormap_editor = gtk_bin_get_child (GTK_BIN (info->widget));
+              editor = GIMP_COLORMAP_EDITOR (gtk_bin_get_child (GTK_BIN (info->widget)));
 
-          gtk_adjustment_set_value
-            (GIMP_COLORMAP_EDITOR (colormap_editor)->index_adjustment,
-             color_index);
+              gimp_colormap_editor_set_index (editor, color_index, NULL);
+            }
+        }
+
+      if (TRUE)
+        {
+          info = gimp_dialog_factory_find_session_info (dialog_factory,
+                                                        "gimp-palette-editor");
+          if (info && info->widget)
+            {
+              GimpPaletteEditor *editor;
+              gint               index;
+
+              editor = GIMP_PALETTE_EDITOR (gtk_bin_get_child (GTK_BIN (info->widget)));
+
+              index = gimp_palette_editor_get_index (editor, color);
+              if (index != -1)
+                gimp_palette_editor_set_index (editor, index, NULL);
+            }
         }
     }
 
@@ -644,25 +663,22 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
       break;
 
     case GIMP_COLOR_PICK_MODE_FOREGROUND:
-      gimp_context_set_foreground (user_context, color);
+      gimp_context_set_foreground (context, color);
       break;
 
     case GIMP_COLOR_PICK_MODE_BACKGROUND:
-      gimp_context_set_background (user_context, color);
+      gimp_context_set_background (context, color);
       break;
 
     case GIMP_COLOR_PICK_MODE_PALETTE:
       {
-        GimpDialogFactory *dialog_factory;
-        GdkScreen         *screen;
-        GtkWidget         *dockable;
+        GdkScreen *screen;
+        GtkWidget *dockable;
 
-        dialog_factory = gimp_dialog_factory_from_name ("dock");
         screen = gtk_widget_get_screen (tool->display->shell);
         dockable = gimp_dialog_factory_dialog_raise (dialog_factory, screen,
                                                      "gimp-palette-editor",
                                                      -1);
-
         if (dockable)
           {
             GtkWidget *palette_editor;
@@ -678,7 +694,7 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
 
             if (! data)
               {
-                data = GIMP_DATA (gimp_context_get_palette (user_context));
+                data = GIMP_DATA (gimp_context_get_palette (context));
 
                 gimp_data_editor_set_data (GIMP_DATA_EDITOR (palette_editor),
                                            data);
@@ -780,8 +796,8 @@ gimp_color_tool_start_sample_point (GimpTool    *tool,
 
   color_tool = GIMP_COLOR_TOOL (tool);
 
-  gimp_display_shell_selection_visibility (GIMP_DISPLAY_SHELL (display->shell),
-                                           GIMP_SELECTION_PAUSE);
+  gimp_display_shell_selection_control (GIMP_DISPLAY_SHELL (display->shell),
+                                        GIMP_SELECTION_PAUSE);
 
   tool->display = display;
   gimp_tool_control_activate (tool->control);

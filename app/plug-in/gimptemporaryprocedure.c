@@ -22,14 +22,13 @@
 
 #include <glib-object.h>
 
-#include "pdb-types.h"
+#include "plug-in-types.h"
 
 #include "core/gimp.h"
 
-#include "plug-in/gimpplugin.h"
+#include "gimpplugin.h"
 #define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
-#include "plug-in/gimppluginmanager-call.h"
-
+#include "gimppluginmanager-call.h"
 #include "gimptemporaryprocedure.h"
 
 #include "gimp-intl.h"

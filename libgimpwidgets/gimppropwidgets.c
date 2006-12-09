@@ -2065,7 +2065,10 @@ gimp_prop_file_chooser_button_notify (GObject        *config,
                                    gimp_prop_file_chooser_button_callback,
                                    config);
 
-  gtk_file_chooser_set_filename (button, filename);
+  if (filename)
+    gtk_file_chooser_set_filename (button, filename);
+  else
+    gtk_file_chooser_unselect_all (button);
 
   g_signal_handlers_unblock_by_func (button,
                                      gimp_prop_file_chooser_button_callback,

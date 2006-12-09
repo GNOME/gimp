@@ -37,23 +37,19 @@ gimp_brush_application_mode_get_type (void)
 }
 
 GType
-gimp_clone_align_mode_get_type (void)
+gimp_perspective_clone_mode_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_CLONE_ALIGN_NO, "GIMP_CLONE_ALIGN_NO", "no" },
-    { GIMP_CLONE_ALIGN_YES, "GIMP_CLONE_ALIGN_YES", "yes" },
-    { GIMP_CLONE_ALIGN_REGISTERED, "GIMP_CLONE_ALIGN_REGISTERED", "registered" },
-    { GIMP_CLONE_ALIGN_FIXED, "GIMP_CLONE_ALIGN_FIXED", "fixed" },
+    { GIMP_PERSPECTIVE_CLONE_MODE_ADJUST, "GIMP_PERSPECTIVE_CLONE_MODE_ADJUST", "adjust" },
+    { GIMP_PERSPECTIVE_CLONE_MODE_PAINT, "GIMP_PERSPECTIVE_CLONE_MODE_PAINT", "paint" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_CLONE_ALIGN_NO, N_("None"), NULL },
-    { GIMP_CLONE_ALIGN_YES, N_("Aligned"), NULL },
-    { GIMP_CLONE_ALIGN_REGISTERED, N_("Registered"), NULL },
-    { GIMP_CLONE_ALIGN_FIXED, N_("Fixed"), NULL },
+    { GIMP_PERSPECTIVE_CLONE_MODE_ADJUST, N_("Modify Perspective Plane"), NULL },
+    { GIMP_PERSPECTIVE_CLONE_MODE_PAINT, N_("Perspective Clone"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -61,7 +57,39 @@ gimp_clone_align_mode_get_type (void)
 
   if (! type)
     {
-      type = g_enum_register_static ("GimpCloneAlignMode", values);
+      type = g_enum_register_static ("GimpPerspectiveCloneMode", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_source_align_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_SOURCE_ALIGN_NO, "GIMP_SOURCE_ALIGN_NO", "no" },
+    { GIMP_SOURCE_ALIGN_YES, "GIMP_SOURCE_ALIGN_YES", "yes" },
+    { GIMP_SOURCE_ALIGN_REGISTERED, "GIMP_SOURCE_ALIGN_REGISTERED", "registered" },
+    { GIMP_SOURCE_ALIGN_FIXED, "GIMP_SOURCE_ALIGN_FIXED", "fixed" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_SOURCE_ALIGN_NO, N_("None"), NULL },
+    { GIMP_SOURCE_ALIGN_YES, N_("Aligned"), NULL },
+    { GIMP_SOURCE_ALIGN_REGISTERED, N_("Registered"), NULL },
+    { GIMP_SOURCE_ALIGN_FIXED, N_("Fixed"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpSourceAlignMode", values);
       gimp_enum_set_value_descriptions (type, descs);
     }
 

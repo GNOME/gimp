@@ -20,21 +20,27 @@
  */
 
 /*
-** tifftopnm.c - converts a Tagged Image File to a portable anymap
-**
-** Derived by Jef Poskanzer from tif2ras.c, which is:
-**
-** Copyright (c) 1990 by Sun Microsystems, Inc.
-**
-** Author: Patrick J. Naughton
-** naughton@wind.sun.com
-**
-** This file is provided AS IS with no warranties of any kind.  The author
-** shall have no liability with respect to the infringement of copyrights,
-** trade secrets or any patents by this file or any part thereof.  In no
-** event will the author be liable for any lost revenue or profits or
-** other special, indirect and consequential damages.
-*/
+ * tifftopnm.c - converts a Tagged Image File to a portable anymap
+ *
+ * Derived by Jef Poskanzer from tif2ras.c, which is:
+ *
+ * Copyright (c) 1990 by Sun Microsystems, Inc.
+ *
+ * Author: Patrick J. Naughton
+ * naughton@wind.sun.com
+ *
+ * Permission to use, copy, modify, and distribute this software and its
+ * documentation for any purpose and without fee is hereby granted,
+ * provided that the above copyright notice appear in all copies and that
+ * both that copyright notice and this permission notice appear in
+ * supporting documentation.
+ *
+ * This file is provided AS IS with no warranties of any kind.  The author
+ * shall have no liability with respect to the infringement of copyrights,
+ * trade secrets or any patents by this file or any part thereof.  In no
+ * event will the author be liable for any lost revenue or profits or
+ * other special, indirect and consequential damages.
+ */
 
 #include "config.h"
 
@@ -98,6 +104,8 @@ static void   load_tiles    (TIFF         *tif,
                              gboolean      alpha,
                              gboolean      is_bw,
                              gint          extra);
+static void   load_paths    (TIFF         *tif,
+                             gint          image);
 
 static void   read_separate (const guchar *source,
                              channel_data *channel,
@@ -209,7 +217,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },\
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },\
     { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },\
-    { GIMP_PDB_INT32,    "compression",  "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4)" }
+    { GIMP_PDB_INT32,    "compression",  "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4) }" }
 
   static const GimpParamDef save_args_old[] =
   {
@@ -452,12 +460,21 @@ tiff_warning(const gchar *module,
 
   /* Workaround for: http://bugzilla.gnome.org/show_bug.cgi?id=131975 */
   /* Ignore the warnings about unregistered private tags (>= 32768) */
-  if (! strcmp (fmt, "unknown field with tag %d (0x%x) ignored"))
+  if (! strcmp (fmt, "%s: unknown field with tag %d (0x%x) encountered"))
+    {
+      G_VA_COPY (ap_test, ap);
+      if (va_arg (ap_test, char *));  /* ignore first argument */
+      if (va_arg (ap_test, int) >= 32768)
+        return;
+    }
+  /* for older versions of libtiff? */
+  else if (! strcmp (fmt, "unknown field with tag %d (0x%x) ignored"))
     {
       G_VA_COPY (ap_test, ap);
       if (va_arg (ap_test, int) >= 32768)
         return;
     }
+
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
 }
 
@@ -518,19 +535,18 @@ load_image (const gchar *filename)
   guchar       *icc_profile;
 #endif
 
-
   gimp_rgb_set (&color, 0.0, 0.0, 0.0);
 
-  TIFFSetWarningHandler (tiff_warning);
-  TIFFSetErrorHandler (tiff_error);
-
   tif = TIFFOpen (filename, "r");
-  if (!tif)
+  if (! tif)
     {
       g_message (_("Could not open '%s' for reading: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
       gimp_quit ();
     }
+
+  TIFFSetWarningHandler (tiff_warning);
+  TIFFSetErrorHandler (tiff_error);
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -701,7 +717,9 @@ load_image (const gchar *filename)
 
       /* attach a parasite containing the compression */
       if (!TIFFGetField (tif, TIFFTAG_COMPRESSION, &tmp))
-        save_vals.compression = COMPRESSION_NONE;
+        {
+          save_vals.compression = COMPRESSION_NONE;
+        }
       else
         {
           switch (tmp)
@@ -864,6 +882,8 @@ load_image (const gchar *filename)
           gimp_image_set_colormap (image, cmap, (1 << bps));
         }
 
+      load_paths (tif, image);
+
       /* Allocate channel_data for all channels, even the background layer */
       channel = g_new0 (channel_data, extra + 1);
 
@@ -1025,6 +1045,8 @@ load_rgba (TIFF         *tif,
   TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &imageWidth);
   TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &imageLength);
 
+  gimp_tile_cache_ntiles (1 + imageWidth / gimp_tile_width ());
+
   gimp_pixel_rgn_init (&(channel[0].pixel_rgn), channel[0].drawable,
                        0, 0, imageWidth, imageLength, TRUE, FALSE);
 
@@ -1054,6 +1076,189 @@ load_rgba (TIFF         *tif,
 }
 
 static void
+load_paths (TIFF *tif, gint image)
+{
+  guint16 id;
+  guint32 len, n_bytes, pos;
+  gchar *bytes, *name;
+  guint32 *val32;
+  guint16 *val16;
+
+  gint width, height;
+
+  width = gimp_image_width (image);
+  height = gimp_image_height (image);
+
+#if 0
+  /* TIFFTAG_CLIPPATH seems to be basically unused */
+
+  if (TIFFGetField (tif, TIFFTAG_CLIPPATH, &n_bytes, &bytes) &&
+      TIFFGetField (tif, TIFFTAG_XCLIPPATHUNITS, &xclipunits) &&
+      TIFFGetField (tif, TIFFTAG_YCLIPPATHUNITS, &yclipunits))
+    {
+      /* Tiff clipping path */
+
+      g_printerr ("Tiff clipping path, %d - %d\n", xclipunits, yclipunits);
+    }
+#endif
+
+  if (!TIFFGetField (tif, TIFFTAG_PHOTOSHOP, &n_bytes, &bytes))
+    return;
+
+  pos = 0;
+
+  while (pos < n_bytes)
+    {
+      if (n_bytes-pos < 7 ||
+          strncmp (bytes + pos, "8BIM", 4) != 0)
+        break;
+      pos += 4;
+
+      val16 = (guint16 *) (bytes + pos);
+      id = GUINT16_FROM_BE (*val16);
+      pos += 2;
+
+      /* g_printerr ("id: %x\n", id); */
+      len = (guchar) bytes[pos];
+
+      if (n_bytes - pos < len + 1)
+        break;   /* block not big enough */
+
+      name = g_strndup (bytes + pos + 1, len);
+      if (!g_utf8_validate (name, -1, NULL))
+        name = g_strdup ("imported path");
+      pos += len + 1;
+
+      if (pos % 2)  /* padding */
+        pos++;
+
+      if (n_bytes - pos < 4)
+        break;   /* block not big enough */
+
+      val32 = (guint32 *) (bytes + pos);
+      len = GUINT32_FROM_BE (*val32);
+      pos += 4;
+
+      if (n_bytes - pos < len)
+        break;   /* block not big enough */
+
+      if (id >= 2000 && id <= 2998)
+        {
+          /* path information */
+          guint16 type;
+          gint rec = pos;
+          gint32   vectors;
+          gdouble *points = NULL;
+          gint     expected_points = 0;
+          gint     pointcount = 0;
+          gboolean closed = FALSE;
+
+          vectors = gimp_vectors_new (image, name);
+          gimp_image_add_vectors (image, vectors, -1);
+
+          while (rec < pos + len)
+            {
+              /* path records */
+              val16 = (guint16 *) (bytes + rec);
+              type = GUINT16_FROM_BE (*val16);
+
+              switch (type)
+              {
+                case 0:  /* new closed subpath */
+                case 3:  /* new open subpath */
+                  val16 = (guint16 *) (bytes + rec + 2);
+                  expected_points = GUINT16_FROM_BE (*val16);
+                  pointcount = 0;
+                  closed = (type == 0);
+
+                  if (n_bytes - rec < (expected_points + 1) * 26)
+                    {
+                      g_printerr ("not enough point records\n");
+                      rec = pos + len;
+                      continue;
+                    }
+
+                  if (points)
+                    g_free (points);
+                  points = g_new (gdouble, expected_points * 6);
+                  break;
+
+                case 1:  /* closed subpath bezier knot, linked */
+                case 2:  /* closed subpath bezier knot, unlinked */
+                case 4:  /* open subpath bezier knot, linked */
+                case 5:  /* open subpath bezier knot, unlinked */
+                  /* since we already know if the subpath is open
+                   * or closed and since we don't differenciate between
+                   * linked and unlinked, just treat all the same...  */
+
+                  if (pointcount < expected_points)
+                    {
+                      gint    j;
+                      gdouble f;
+                      guint32 coord;
+
+                      for (j = 0; j < 6; j++)
+                        {
+                          val32 = (guint32 *) (bytes + rec + 2 + j * 4);
+                          coord = GUINT32_FROM_BE (*val32);
+
+                          f = (double) ((coord >> 24) & 0x7F) +
+                                 (double) (coord & 0x00FFFFFF) /
+                                 (double) 0xFFFFFF;
+                          if (coord & 0x80000000)
+                            f *= -1;
+
+                          /* coords are stored with vertical component
+                           * first, gimp expects the horizontal component
+                           * first. Sigh.  */
+                          points[pointcount * 6 + (j ^ 1)] = f * (j % 2 ? width : height);
+                        }
+
+                      pointcount ++;
+
+                      if (pointcount == expected_points)
+                        {
+                          gimp_vectors_stroke_new_from_points (vectors,
+                                                               GIMP_VECTORS_STROKE_TYPE_BEZIER,
+                                                               pointcount * 6,
+                                                               points,
+                                                               closed);
+                        }
+                    }
+                  else
+                    {
+                      g_printerr ("Oops - unexpected point record\n");
+                    }
+
+                  break;
+
+                case 6:  /* path fill rule record */
+                case 7:  /* clipboard record (?) */
+                case 8:  /* initial fill rule record (?) */
+                  /* we cannot use this information */
+
+                default:
+                  break;
+              }
+
+              rec += 26;
+            }
+
+          if (points)
+            g_free (points);
+        }
+
+      pos += len;
+
+      if (pos % 2)  /* padding */
+        pos++;
+
+      g_free (name);
+    }
+}
+
+
+static void
 load_tiles (TIFF         *tif,
             channel_data *channel,
             gushort       bps,
@@ -1075,6 +1280,12 @@ load_tiles (TIFF         *tif,
   TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &imageLength);
   TIFFGetField (tif, TIFFTAG_TILEWIDTH, &tileWidth);
   TIFFGetField (tif, TIFFTAG_TILELENGTH, &tileLength);
+
+  if (tileWidth > gimp_tile_width () || tileLength > gimp_tile_height ())
+    {
+      gimp_tile_cache_ntiles ((1 + tileWidth / gimp_tile_width ()) *
+                              (1 + tileLength / gimp_tile_width ()));
+    }
 
   one_row = (gdouble) tileLength / (gdouble) imageLength;
   buffer = g_malloc (TIFFTileSize (tif));
@@ -1118,6 +1329,7 @@ load_tiles (TIFF         *tif,
                             alpha, extra, tileWidth - cols);
             }
         }
+
       progress += one_row;
     }
 
@@ -1153,6 +1365,8 @@ load_lines (TIFF         *tif,
       channel[i].pixels = g_new (guchar,
                                  tile_height * cols * channel[i].drawable->bpp);
     }
+
+  gimp_tile_cache_ntiles (1 + cols / gimp_tile_width ());
 
   buffer = g_malloc (lineSize * tile_height);
 
@@ -1911,16 +2125,16 @@ save_image (const gchar *filename,
   tile_height = gimp_tile_height ();
   rowsperstrip = tile_height;
 
-  TIFFSetWarningHandler (tiff_warning);
-  TIFFSetErrorHandler (tiff_error);
-
   tif = TIFFOpen (filename, "w");
-  if (!tif)
+  if (! tif)
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
+
+  TIFFSetWarningHandler (tiff_warning);
+  TIFFSetErrorHandler (tiff_error);
 
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -1932,6 +2146,8 @@ save_image (const gchar *filename,
 
   cols = drawable->width;
   rows = drawable->height;
+
+  gimp_tile_cache_ntiles (1 + drawable->width / gimp_tile_width ());
 
   switch (drawable_type)
     {

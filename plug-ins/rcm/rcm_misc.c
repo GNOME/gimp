@@ -185,9 +185,9 @@ rcm_reduce_image (GimpDrawable *drawable,
   GimpPixelRgn  srcPR, srcMask;
   ReducedImage *temp;
   guchar       *tempRGB, *src_row, *tempmask, *src_mask_row;
-  gint          i, j, whichcol, whichrow, x1, x2, y1, y2;
+  gint          i, j, x1, x2, y1, y2;
   gint          RH, RW, width, height, bytes;
-  gint          NoSelectionMade;
+  gboolean      NoSelectionMade;
   gint          offx, offy;
   gdouble      *tempHSV, H, S, V;
 
@@ -269,6 +269,8 @@ rcm_reduce_image (GimpDrawable *drawable,
 
   for (i = 0; i < RH; i++)
     {
+      gint whichcol, whichrow;
+
       whichrow = (float)i * (float)height / (float)RH;
       gimp_pixel_rgn_get_row (&srcPR, src_row, x1, y1 + whichrow, width);
       gimp_pixel_rgn_get_row (&srcMask, src_mask_row,
@@ -317,21 +319,19 @@ rcm_render_preview (GtkWidget *preview)
   ReducedImage *reduced;
   gint          version;
   gint          RW, RH, bytes, i, j;
-  gboolean      unchanged, skip;
-  guchar       *rgb_array, *a;
-  gdouble       H, S, V;
+  guchar       *a;
+  guchar       *rgb_array;
   gdouble      *hsv_array;
-  guchar        rgb[3];
   gfloat        degree;
 
   g_return_if_fail (preview != NULL);
 
   version = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (preview), "mode"));
 
-  reduced = Current.reduced;
-  RW = reduced->width;
-  RH = reduced->height;
-  bytes = Current.drawable->bpp;
+  reduced   = Current.reduced;
+  RW        = reduced->width;
+  RH        = reduced->height;
+  bytes     = Current.drawable->bpp;
   hsv_array = reduced->hsv;
   rgb_array = reduced->rgb;
 
@@ -339,12 +339,15 @@ rcm_render_preview (GtkWidget *preview)
 
   if (version == CURRENT)
     {
+      gdouble H, S, V;
+      guchar  rgb[3];
+
       for (i = 0; i < RH; i++)
         {
           for (j = 0; j < RW; j++)
             {
-              unchanged = TRUE;
-              skip = FALSE;
+              gboolean unchanged = FALSE;
+              gboolean skip      = FALSE;
 
               H = hsv_array[i*RW*bytes + j*bytes + 0];
               S = hsv_array[i*RW*bytes + j*bytes + 1];
@@ -476,4 +479,3 @@ rcm_render_circle (GtkWidget *preview,
                           sum * 3);
   g_free (a);
 }
-

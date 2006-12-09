@@ -2,7 +2,7 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <popup action="selection-editor-popup">
+  <popup action="selection-popup">
     <menuitem action="select-all" />
     <menuitem action="select-none" />
     <menuitem action="select-invert" />

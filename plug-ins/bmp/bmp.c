@@ -65,12 +65,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define LOAD_PROC "file-bmp-load"
-#define SAVE_PROC "file-bmp-save"
-
-
 const gchar *filename    = NULL;
 gboolean     interactive = FALSE;
+gboolean     lastvals    = FALSE;
 
 struct Bitmap_File_Head_Struct Bitmap_File_Head;
 struct Bitmap_Head_Struct      Bitmap_Head;
@@ -223,6 +220,7 @@ run (const gchar      *name,
           /* fallthrough */
 
         case GIMP_RUN_WITH_LAST_VALS:
+          if (run_mode == GIMP_RUN_WITH_LAST_VALS) lastvals = TRUE;
           gimp_ui_init ("bmp", FALSE);
           export = gimp_export_image (&image_ID, &drawable_ID, "BMP",
                                       (GIMP_EXPORT_CAN_HANDLE_RGB |

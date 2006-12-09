@@ -112,7 +112,7 @@ do_parallel_regions (PixelProcessor *processor)
 
       g_mutex_unlock (processor->mutex);
 
-      switch(processor->num_regions)
+      switch (processor->num_regions)
         {
         case 1:
           ((p1_func) processor->func) (processor->data,
@@ -279,9 +279,9 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
        *             tasks, tiles);
        */
 
-      processor->first = TRUE;
+      processor->first   = TRUE;
       processor->threads = tasks;
-      processor->mutex = g_mutex_new();
+      processor->mutex   = g_mutex_new();
 
       g_mutex_lock (pool_mutex);
 

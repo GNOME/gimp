@@ -23,12 +23,15 @@
 #include "core-types.h"
 
 #include "base/pixel-region.h"
+#include "base/tile-manager.h"
 
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimpchannel.h"
 #include "gimpdrawable-combine.h"
+#include "gimpdrawableundo.h"
 #include "gimpimage.h"
+#include "gimpimage-undo.h"
 
 
 void
@@ -98,7 +101,34 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
 
   /*  If the calling procedure specified an undo step...  */
   if (push_undo)
-    gimp_drawable_push_undo (drawable, undo_desc, x1, y1, x2, y2, NULL, FALSE);
+    {
+      GimpDrawableUndo *undo;
+
+      gimp_drawable_push_undo (drawable, undo_desc, x1, y1, x2, y2, NULL, FALSE);
+
+      undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
+
+      if (undo)
+        {
+          PixelRegion tmp_srcPR;
+          PixelRegion tmp_destPR;
+
+          undo->paint_mode = mode;
+          undo->opacity    = opacity;
+          undo->src2_tiles = tile_manager_new (x2 - x1, y2 - y1,
+                                               src2PR->bytes);
+
+          tmp_srcPR = *src2PR;
+          pixel_region_resize (&tmp_srcPR,
+                               src2PR->x + (x1 - x), src2PR->y + (y1 - y),
+                               x2 - x1, y2 - y1);
+          pixel_region_init (&tmp_destPR, undo->src2_tiles,
+                             0, 0,
+                             x2 - x1, y2 - y1, TRUE);
+
+          copy_region (&tmp_srcPR, &tmp_destPR);
+        }
+    }
 
   /* configure the pixel regions
    *  If an alternative to using the drawable's data as src1 was provided...
@@ -212,10 +242,10 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      x1 = CLAMP (x1, -offset_x, gimp_item_width (GIMP_ITEM (mask))-offset_x);
-      y1 = CLAMP (y1, -offset_y, gimp_item_height(GIMP_ITEM (mask))-offset_y);
-      x2 = CLAMP (x2, -offset_x, gimp_item_width (GIMP_ITEM (mask))-offset_x);
-      y2 = CLAMP (y2, -offset_y, gimp_item_height(GIMP_ITEM (mask))-offset_y);
+      x1 = CLAMP (x1, -offset_x, gimp_item_width  (GIMP_ITEM (mask))-offset_x);
+      y1 = CLAMP (y1, -offset_y, gimp_item_height (GIMP_ITEM (mask))-offset_y);
+      x2 = CLAMP (x2, -offset_x, gimp_item_width  (GIMP_ITEM (mask))-offset_x);
+      y2 = CLAMP (y2, -offset_y, gimp_item_height (GIMP_ITEM (mask))-offset_y);
     }
 
   /*  If the calling procedure specified an undo step...  */

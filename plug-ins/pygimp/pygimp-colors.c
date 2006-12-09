@@ -520,15 +520,101 @@ rgb_setitem(PyObject *self, int pos, PyObject *value)
     }
 }
 
+static PyObject *
+rgb_slice(PyObject *self, int start, int end)
+{
+    PyTupleObject *ret;
+    int i;
+
+    if (start < 0)
+	start = 0;
+    if (end > 4)
+	end = 4;
+    if (end < start)
+	end = start;
+
+    ret = (PyTupleObject *)PyTuple_New(end - start);
+    if (ret == NULL)
+	return NULL;
+
+    for (i = start; i < end; i++)
+	PyTuple_SET_ITEM(ret, i - start, rgb_getitem(self, i));
+
+    return (PyObject *)ret;
+}
+
 static PySequenceMethods rgb_as_sequence = {
     (inquiry)rgb_length,
     (binaryfunc)0,
     (intargfunc)0,
     (intargfunc)rgb_getitem,
-    (intintargfunc)0,
+    (intintargfunc)rgb_slice,
     (intobjargproc)rgb_setitem,
     (intintobjargproc)0,
     (objobjproc)0,
+};
+
+static PyObject *
+rgb_subscript(PyObject *self, PyObject *item)
+{
+    if (PyInt_Check(item)) {
+	long i = PyInt_AS_LONG(item);
+	return rgb_getitem(self, i);
+    } else if (PyLong_Check(item)) {
+	long i = PyLong_AsLong(item);
+	if (i == -1 && PyErr_Occurred())
+	    return NULL;
+	return rgb_getitem(self, i);
+    } else if (PySlice_Check(item)) {
+	int start, stop, step, slicelength, cur, i;
+	PyObject *ret;
+
+	if (PySlice_GetIndicesEx((PySliceObject*)item, 4,
+				 &start, &stop, &step, &slicelength) < 0)
+	    return NULL;
+
+	if (slicelength <= 0) {
+	    return PyTuple_New(0);
+	} else {
+	    ret = PyTuple_New(slicelength);
+	    if (!ret)
+		return NULL;
+
+	    for (cur = start, i = 0; i < slicelength; cur += step, i++)
+		PyTuple_SET_ITEM(ret, i, rgb_getitem(self, cur));
+
+	    return ret;
+	}
+    } else if (PyString_Check(item)) {
+	char *s = PyString_AsString(item);
+
+	if (g_ascii_strcasecmp(s, "r") == 0 ||
+	    g_ascii_strcasecmp(s, "red") == 0)
+	    return rgb_get_r(self, NULL);
+	else if (g_ascii_strcasecmp(s, "g")  == 0 ||
+		 g_ascii_strcasecmp(s, "green") == 0)
+	    return rgb_get_g(self, NULL);
+	else if (g_ascii_strcasecmp(s, "b")  == 0 ||
+		 g_ascii_strcasecmp(s, "blue") == 0)
+	    return rgb_get_b(self, NULL);
+	else if (g_ascii_strcasecmp(s, "a")  == 0 ||
+		 g_ascii_strcasecmp(s, "alpha") == 0)
+	    return rgb_get_a(self, NULL);
+	else {
+	    PyErr_SetObject(PyExc_KeyError, item);
+	    return NULL;
+	} 
+    } else {
+	PyErr_SetString(PyExc_TypeError,
+			"indices must be integers");
+	return NULL;
+    }
+}
+
+static PyMappingMethods rgb_as_mapping = {
+    (inquiry)rgb_length,
+    (binaryfunc)rgb_subscript,
+    (objobjargproc)0
 };
 
 static long
@@ -632,7 +718,7 @@ rgb_str(PyObject *self)
     return rgb_pretty_print(self, TRUE);
 }
 
-static PyObject *
+static int
 rgb_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
 {
     PyObject *r, *g, *b, *a = NULL;
@@ -642,7 +728,7 @@ rgb_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
 	                             "OOO|O:set", kwlist,
 				     &r, &g, &b, &a))
-        return NULL;
+        return -1;
 
 #define SET_MEMBER(m)	G_STMT_START {				\
     if (PyInt_Check(m))						\
@@ -652,7 +738,7 @@ rgb_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     else {							\
 	PyErr_SetString(PyExc_TypeError,			\
 			#m " must be an int or a float");	\
-	return NULL;						\
+	return -1;						\
     }								\
 } G_STMT_END
 
@@ -671,8 +757,7 @@ rgb_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     self->free_on_dealloc = TRUE;
     self->boxed = g_boxed_copy(GIMP_TYPE_RGB, &rgb);
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    return 0;
 }
 
 PyTypeObject PyGimpRGB_Type = {
@@ -690,7 +775,7 @@ PyTypeObject PyGimpRGB_Type = {
     (reprfunc)rgb_repr,			/* tp_repr */
     (PyNumberMethods*)0,		/* tp_as_number */
     &rgb_as_sequence,			/* tp_as_sequence */
-    (PyMappingMethods*)0,		/* tp_as_mapping */
+    &rgb_as_mapping,			/* tp_as_mapping */
     (hashfunc)rgb_hash,			/* tp_hash */
     (ternaryfunc)0,			/* tp_call */
     (reprfunc)rgb_str,			/* tp_str */
@@ -753,8 +838,10 @@ hsv_set(PyObject *self, PyObject *args, PyObject *kwargs)
     hsv = pyg_boxed_get(self, GimpHSV);
     tmphsv = *hsv;
 
-#define SET_MEMBER(m)	G_STMT_START {				\
-    if (PyFloat_Check(m))					\
+#define SET_MEMBER(m, s)	G_STMT_START {			\
+    if (PyInt_Check(m))						\
+        tmphsv.m = (double) PyInt_AS_LONG(m) / s;		\
+    else if (PyFloat_Check(m))					\
         tmphsv.m = PyFloat_AS_DOUBLE(m);			\
     else {							\
 	PyErr_SetString(PyExc_TypeError,			\
@@ -764,13 +851,13 @@ hsv_set(PyObject *self, PyObject *args, PyObject *kwargs)
 } G_STMT_END
 
     if (h) {
-	SET_MEMBER(h);
-	SET_MEMBER(s);
-	SET_MEMBER(v);
+	SET_MEMBER(h, 360.0);
+	SET_MEMBER(s, 100.0);
+	SET_MEMBER(v, 100.0);
     }
 
     if (a)
-	SET_MEMBER(a);
+	SET_MEMBER(a, 255.0);
 
 #undef SET_MEMBER
 
@@ -794,7 +881,9 @@ hsv_set_alpha(PyObject *self, PyObject *args, PyObject *kwargs)
 
     hsv = pyg_boxed_get(self, GimpHSV);
 
-    if (PyFloat_Check(py_a))
+    if (PyInt_Check(py_a))
+        hsv->a = (double) PyInt_AS_LONG(py_a) / 255.0;
+    else if (PyFloat_Check(py_a))
         hsv->a = PyFloat_AS_DOUBLE(py_a);
     else {
 	PyErr_SetString(PyExc_TypeError, "a must be a float");
@@ -853,7 +942,7 @@ static PyMethodDef hsv_methods[] = {
     { NULL, NULL, 0 }
 };
 
-#define MEMBER_ACCESSOR(m) \
+#define MEMBER_ACCESSOR(m, s) \
 static PyObject *							\
 hsv_get_ ## m(PyObject *self, void *closure)				\
 {									\
@@ -867,7 +956,9 @@ hsv_set_ ## m(PyObject *self, PyObject *value, void *closure)		\
 	PyErr_SetString(PyExc_TypeError, "cannot delete value");	\
 	return -1;							\
     }									\
-    if (PyFloat_Check(value))						\
+    else if (PyInt_Check(value))					\
+        hsv->m = (double) PyInt_AS_LONG(value) / s;			\
+    else if (PyFloat_Check(value))					\
         hsv->m = PyFloat_AS_DOUBLE(value);				\
     else {								\
 	PyErr_SetString(PyExc_TypeError, "type mismatch");		\
@@ -876,10 +967,10 @@ hsv_set_ ## m(PyObject *self, PyObject *value, void *closure)		\
     return 0;								\
 }
 
-MEMBER_ACCESSOR(h);
-MEMBER_ACCESSOR(s);
-MEMBER_ACCESSOR(v);
-MEMBER_ACCESSOR(a);
+MEMBER_ACCESSOR(h, 360.0);
+MEMBER_ACCESSOR(s, 100.0);
+MEMBER_ACCESSOR(v, 100.0);
+MEMBER_ACCESSOR(a, 255.0);
 
 #undef MEMBER_ACCESSOR
 
@@ -905,7 +996,7 @@ static PyObject *
 hsv_getitem(PyObject *self, int pos)
 {
     GimpHSV *hsv;
-    double val;
+    double val, scale_factor;
 
     if (pos < 0)
         pos += 4;
@@ -918,16 +1009,16 @@ hsv_getitem(PyObject *self, int pos)
     hsv = pyg_boxed_get(self, GimpHSV); 
 
     switch (pos) {
-    case 0: val = hsv->h; break;
-    case 1: val = hsv->s; break;
-    case 2: val = hsv->v; break;
-    case 3: val = hsv->a; break;
+    case 0: val = hsv->h; scale_factor = 360.0; break;
+    case 1: val = hsv->s; scale_factor = 100.0; break;
+    case 2: val = hsv->v; scale_factor = 100.0; break;
+    case 3: val = hsv->a; scale_factor = 255.0; break;
     default:
         g_assert_not_reached();
         return NULL;
     }
 
-    return PyFloat_FromDouble(val);
+    return PyInt_FromLong(ROUND(CLAMP(val, 0.0, 1.0) * scale_factor));
 }
 
 static int
@@ -952,15 +1043,101 @@ hsv_setitem(PyObject *self, int pos, PyObject *value)
     }
 }
 
+static PyObject *
+hsv_slice(PyObject *self, int start, int end)
+{
+    PyTupleObject *ret;
+    int i;
+
+    if (start < 0)
+	start = 0;
+    if (end > 4)
+	end = 4;
+    if (end < start)
+	end = start;
+
+    ret = (PyTupleObject *)PyTuple_New(end - start);
+    if (ret == NULL)
+	return NULL;
+
+    for (i = start; i < end; i++)
+	PyTuple_SET_ITEM(ret, i - start, hsv_getitem(self, i));
+
+    return (PyObject *)ret;
+}
+
 static PySequenceMethods hsv_as_sequence = {
     (inquiry)hsv_length,
     (binaryfunc)0,
     (intargfunc)0,
     (intargfunc)hsv_getitem,
-    (intintargfunc)0,
+    (intintargfunc)hsv_slice,
     (intobjargproc)hsv_setitem,
     (intintobjargproc)0,
     (objobjproc)0,
+};
+
+static PyObject *
+hsv_subscript(PyObject *self, PyObject *item)
+{
+    if (PyInt_Check(item)) {
+	long i = PyInt_AS_LONG(item);
+	return hsv_getitem(self, i);
+    } else if (PyLong_Check(item)) {
+	long i = PyLong_AsLong(item);
+	if (i == -1 && PyErr_Occurred())
+	    return NULL;
+	return hsv_getitem(self, i);
+    } else if (PySlice_Check(item)) {
+	int start, stop, step, slicelength, cur, i;
+	PyObject *ret;
+
+	if (PySlice_GetIndicesEx((PySliceObject*)item, 4,
+				 &start, &stop, &step, &slicelength) < 0)
+	    return NULL;
+
+	if (slicelength <= 0) {
+	    return PyTuple_New(0);
+	} else {
+	    ret = PyTuple_New(slicelength);
+	    if (!ret)
+		return NULL;
+
+	    for (cur = start, i = 0; i < slicelength; cur += step, i++)
+		PyTuple_SET_ITEM(ret, i, hsv_getitem(self, cur));
+
+	    return ret;
+	}
+    } else if (PyString_Check(item)) {
+	char *s = PyString_AsString(item);
+
+	if (g_ascii_strcasecmp(s, "h") == 0 ||
+	    g_ascii_strcasecmp(s, "hue") == 0)
+	    return hsv_get_h(self, NULL);
+	else if (g_ascii_strcasecmp(s, "s")  == 0 ||
+		 g_ascii_strcasecmp(s, "saturation") == 0)
+	    return hsv_get_s(self, NULL);
+	else if (g_ascii_strcasecmp(s, "v")  == 0 ||
+		 g_ascii_strcasecmp(s, "value") == 0)
+	    return hsv_get_v(self, NULL);
+	else if (g_ascii_strcasecmp(s, "a")  == 0 ||
+		 g_ascii_strcasecmp(s, "alpha") == 0)
+	    return hsv_get_a(self, NULL);
+	else {
+	    PyErr_SetObject(PyExc_KeyError, item);
+	    return NULL;
+	}
+    } else {
+	PyErr_SetString(PyExc_TypeError,
+			"indices must be integers");
+	return NULL;
+    }
+}
+
+static PyMappingMethods hsv_as_mapping = {
+    (inquiry)hsv_length,
+    (binaryfunc)hsv_subscript,
+    (objobjargproc)0
 };
 
 static long
@@ -1064,7 +1241,7 @@ hsv_str(PyObject *self)
     return hsv_pretty_print(self, TRUE);
 }
 
-static PyObject *
+static int
 hsv_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
 {
     PyObject *h, *s, *v, *a = NULL;
@@ -1074,24 +1251,26 @@ hsv_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
 	                             "OOO|O:set", kwlist,
 				     &h, &s, &v, &a))
-        return NULL;
+        return -1;
 
-#define SET_MEMBER(m)	G_STMT_START {				\
-    if (PyFloat_Check(m))					\
+#define SET_MEMBER(m, s)	G_STMT_START {			\
+    if (PyInt_Check(m))						\
+        hsv.m = (double) PyInt_AS_LONG(m) / s;			\
+    else if (PyFloat_Check(m))					\
         hsv.m = PyFloat_AS_DOUBLE(m);				\
     else {							\
 	PyErr_SetString(PyExc_TypeError,			\
-			#m " must be a float");			\
-	return NULL;						\
+			#m " must be an int or a float");	\
+	return -1;						\
     }								\
 } G_STMT_END
 
-    SET_MEMBER(h);
-    SET_MEMBER(s);
-    SET_MEMBER(v);
+    SET_MEMBER(h, 360.0);
+    SET_MEMBER(s, 100.0);
+    SET_MEMBER(v, 100.0);
 
     if (a)
-	SET_MEMBER(a);
+	SET_MEMBER(a, 255.0);
     else
         hsv.a = 1.0;
 
@@ -1101,8 +1280,7 @@ hsv_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     self->free_on_dealloc = TRUE;
     self->boxed = g_boxed_copy(GIMP_TYPE_HSV, &hsv);
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    return 0;
 }
 
 PyTypeObject PyGimpHSV_Type = {
@@ -1120,7 +1298,7 @@ PyTypeObject PyGimpHSV_Type = {
     (reprfunc)hsv_repr,			/* tp_repr */
     (PyNumberMethods*)0,		/* tp_as_number */
     &hsv_as_sequence,			/* tp_as_sequence */
-    (PyMappingMethods*)0,		/* tp_as_mapping */
+    &hsv_as_mapping,			/* tp_as_mapping */
     (hashfunc)hsv_hash,			/* tp_hash */
     (ternaryfunc)0,			/* tp_call */
     (reprfunc)hsv_str,			/* tp_repr */
@@ -1183,8 +1361,10 @@ hsl_set(PyObject *self, PyObject *args, PyObject *kwargs)
     hsl = pyg_boxed_get(self, GimpHSL);
     tmphsl = *hsl;
 
-#define SET_MEMBER(m)	G_STMT_START {				\
-    if (PyFloat_Check(m))					\
+#define SET_MEMBER(m, s)	G_STMT_START {			\
+    if (PyInt_Check(m))						\
+        tmphsl.m = (double) PyInt_AS_LONG(m) / s;		\
+    else if (PyFloat_Check(m))					\
         tmphsl.m = PyFloat_AS_DOUBLE(m);			\
     else {							\
 	PyErr_SetString(PyExc_TypeError,			\
@@ -1194,13 +1374,13 @@ hsl_set(PyObject *self, PyObject *args, PyObject *kwargs)
 } G_STMT_END
 
     if (h) {
-	SET_MEMBER(h);
-	SET_MEMBER(s);
-	SET_MEMBER(l);
+	SET_MEMBER(h, 360.0);
+	SET_MEMBER(s, 100.0);
+	SET_MEMBER(l, 100.0);
     }
 
     if (a)
-	SET_MEMBER(a);
+	SET_MEMBER(a, 255.0);
 
 #undef SET_MEMBER
 
@@ -1224,7 +1404,9 @@ hsl_set_alpha(PyObject *self, PyObject *args, PyObject *kwargs)
 
     hsl = pyg_boxed_get(self, GimpHSL);
 
-    if (PyFloat_Check(py_a))
+    if (PyInt_Check(py_a))
+        hsl->a = (double) PyInt_AS_LONG(py_a) / 255.0;
+    else if (PyFloat_Check(py_a))
         hsl->a = PyFloat_AS_DOUBLE(py_a);
     else {
 	PyErr_SetString(PyExc_TypeError, "a must be a float");
@@ -1273,7 +1455,7 @@ static PyMethodDef hsl_methods[] = {
     { NULL, NULL, 0 }
 };
 
-#define MEMBER_ACCESSOR(m) \
+#define MEMBER_ACCESSOR(m, s) \
 static PyObject *							\
 hsl_get_ ## m(PyObject *self, void *closure)				\
 {									\
@@ -1287,7 +1469,9 @@ hsl_set_ ## m(PyObject *self, PyObject *value, void *closure)		\
 	PyErr_SetString(PyExc_TypeError, "cannot delete value");	\
 	return -1;							\
     }									\
-    if (PyFloat_Check(value))						\
+    else if (PyInt_Check(value))					\
+        hsl->m = (double) PyInt_AS_LONG(value) / s;			\
+    else if (PyFloat_Check(value))					\
         hsl->m = PyFloat_AS_DOUBLE(value);				\
     else {								\
 	PyErr_SetString(PyExc_TypeError, "type mismatch");		\
@@ -1296,10 +1480,10 @@ hsl_set_ ## m(PyObject *self, PyObject *value, void *closure)		\
     return 0;								\
 }
 
-MEMBER_ACCESSOR(h);
-MEMBER_ACCESSOR(s);
-MEMBER_ACCESSOR(l);
-MEMBER_ACCESSOR(a);
+MEMBER_ACCESSOR(h, 360.0);
+MEMBER_ACCESSOR(s, 100.0);
+MEMBER_ACCESSOR(l, 100.0);
+MEMBER_ACCESSOR(a, 255.0);
 
 #undef MEMBER_ACCESSOR
 
@@ -1325,7 +1509,7 @@ static PyObject *
 hsl_getitem(PyObject *self, int pos)
 {
     GimpHSL *hsl;
-    double val;
+    double val, scale_factor;
 
     if (pos < 0)
         pos += 4;
@@ -1338,16 +1522,16 @@ hsl_getitem(PyObject *self, int pos)
     hsl = pyg_boxed_get(self, GimpHSL); 
 
     switch (pos) {
-    case 0: val = hsl->h; break;
-    case 1: val = hsl->s; break;
-    case 2: val = hsl->l; break;
-    case 3: val = hsl->a; break;
+    case 0: val = hsl->h; scale_factor = 360.0; break;
+    case 1: val = hsl->s; scale_factor = 100.0; break;
+    case 2: val = hsl->l; scale_factor = 100.0; break;
+    case 3: val = hsl->a; scale_factor = 255.0; break;
     default:
         g_assert_not_reached();
         return NULL;
     }
 
-    return PyFloat_FromDouble(val);
+    return PyInt_FromLong(ROUND(CLAMP(val, 0.0, 1.0) * scale_factor));
 }
 
 static int
@@ -1372,15 +1556,101 @@ hsl_setitem(PyObject *self, int pos, PyObject *value)
     }
 }
 
+static PyObject *
+hsl_slice(PyObject *self, int start, int end)
+{
+    PyTupleObject *ret;
+    int i;
+
+    if (start < 0)
+        start = 0;
+    if (end > 4)
+        end = 4;
+    if (end < start)
+        end = start;
+
+    ret = (PyTupleObject *)PyTuple_New(end - start);
+    if (ret == NULL)
+        return NULL;
+
+    for (i = start; i < end; i++)
+        PyTuple_SET_ITEM(ret, i - start, hsl_getitem(self, i));
+
+    return (PyObject *)ret;
+}
+
 static PySequenceMethods hsl_as_sequence = {
     (inquiry)hsl_length,
     (binaryfunc)0,
     (intargfunc)0,
     (intargfunc)hsl_getitem,
-    (intintargfunc)0,
+    (intintargfunc)hsl_slice,
     (intobjargproc)hsl_setitem,
     (intintobjargproc)0,
     (objobjproc)0,
+};
+
+static PyObject *
+hsl_subscript(PyObject *self, PyObject *item)
+{
+    if (PyInt_Check(item)) {
+        long i = PyInt_AS_LONG(item);
+        return hsl_getitem(self, i);
+    } else if (PyLong_Check(item)) {
+        long i = PyLong_AsLong(item);
+        if (i == -1 && PyErr_Occurred())
+            return NULL;
+        return hsl_getitem(self, i);
+    } else if (PySlice_Check(item)) {
+        int start, stop, step, slicelength, cur, i;
+        PyObject *ret;
+
+        if (PySlice_GetIndicesEx((PySliceObject*)item, 4,
+                                 &start, &stop, &step, &slicelength) < 0)
+            return NULL;
+
+        if (slicelength <= 0) {
+            return PyTuple_New(0);
+        } else {
+            ret = PyTuple_New(slicelength);
+            if (!ret)
+                return NULL;
+
+            for (cur = start, i = 0; i < slicelength; cur += step, i++)
+                PyTuple_SET_ITEM(ret, i, hsl_getitem(self, cur));
+
+            return ret;
+        }
+    } else if (PyString_Check(item)) {
+        char *s = PyString_AsString(item);
+
+        if (g_ascii_strcasecmp(s, "h") == 0 ||
+            g_ascii_strcasecmp(s, "hue") == 0)
+            return hsl_get_h(self, NULL);
+        else if (g_ascii_strcasecmp(s, "s")  == 0 ||
+                 g_ascii_strcasecmp(s, "saturation") == 0)
+            return hsl_get_s(self, NULL);
+        else if (g_ascii_strcasecmp(s, "l")  == 0 ||
+                 g_ascii_strcasecmp(s, "lightness") == 0)
+            return hsl_get_l(self, NULL);
+        else if (g_ascii_strcasecmp(s, "a")  == 0 ||
+                 g_ascii_strcasecmp(s, "alpha") == 0)
+            return hsl_get_a(self, NULL);
+        else {
+            PyErr_SetObject(PyExc_KeyError, item);
+            return NULL;
+        }
+    } else {
+        PyErr_SetString(PyExc_TypeError,
+                        "indices must be integers");
+        return NULL;
+    }
+}
+
+static PyMappingMethods hsl_as_mapping = {
+    (inquiry)hsl_length,
+    (binaryfunc)hsl_subscript,
+    (objobjargproc)0
 };
 
 static long
@@ -1484,7 +1754,7 @@ hsl_str(PyObject *self)
     return hsl_pretty_print(self, TRUE);
 }
 
-static PyObject *
+static int
 hsl_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
 {
     PyObject *h, *s, *l, *a = NULL;
@@ -1494,24 +1764,26 @@ hsl_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
 	                             "OOO|O:set", kwlist,
 				     &h, &s, &l, &a))
-        return NULL;
+        return -1;
 
-#define SET_MEMBER(m)	G_STMT_START {				\
-    if (PyFloat_Check(m))					\
+#define SET_MEMBER(m, s)	G_STMT_START {			\
+    if (PyInt_Check(m))						\
+        hsl.m = (double) PyInt_AS_LONG(m) / s;			\
+    else if (PyFloat_Check(m))					\
         hsl.m = PyFloat_AS_DOUBLE(m);				\
     else {							\
 	PyErr_SetString(PyExc_TypeError,			\
 			#m " must be a float");			\
-	return NULL;						\
+	return -1;						\
     }								\
 } G_STMT_END
 
-    SET_MEMBER(h);
-    SET_MEMBER(s);
-    SET_MEMBER(l);
+    SET_MEMBER(h, 360.0);
+    SET_MEMBER(s, 100.0);
+    SET_MEMBER(l, 100.0);
 
     if (a)
-	SET_MEMBER(a);
+	SET_MEMBER(a, 255.0);
     else
         hsl.a = 1.0;
 
@@ -1521,8 +1793,7 @@ hsl_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     self->free_on_dealloc = TRUE;
     self->boxed = g_boxed_copy(GIMP_TYPE_HSL, &hsl);
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    return 0;
 }
 
 PyTypeObject PyGimpHSL_Type = {
@@ -1540,7 +1811,7 @@ PyTypeObject PyGimpHSL_Type = {
     (reprfunc)hsl_repr,			/* tp_repr */
     (PyNumberMethods*)0,		/* tp_as_number */
     &hsl_as_sequence,			/* tp_as_sequence */
-    (PyMappingMethods*)0,		/* tp_as_mapping */
+    &hsl_as_mapping,			/* tp_as_mapping */
     (hashfunc)hsl_hash,			/* tp_hash */
     (ternaryfunc)0,			/* tp_call */
     (reprfunc)hsl_str,			/* tp_repr */
@@ -1791,15 +2062,104 @@ cmyk_setitem(PyObject *self, int pos, PyObject *value)
     }
 }
 
+static PyObject *
+cmyk_slice(PyObject *self, int start, int end)
+{
+    PyTupleObject *ret;
+    int i;
+
+    if (start < 0)
+        start = 0;
+    if (end > 5)
+        end = 5;
+    if (end < start)
+        end = start;
+
+    ret = (PyTupleObject *)PyTuple_New(end - start);
+    if (ret == NULL)
+        return NULL;
+
+    for (i = start; i < end; i++)
+        PyTuple_SET_ITEM(ret, i - start, cmyk_getitem(self, i));
+
+    return (PyObject *)ret;
+}
+
 static PySequenceMethods cmyk_as_sequence = {
     (inquiry)cmyk_length,
     (binaryfunc)0,
     (intargfunc)0,
     (intargfunc)cmyk_getitem,
-    (intintargfunc)0,
+    (intintargfunc)cmyk_slice,
     (intobjargproc)cmyk_setitem,
     (intintobjargproc)0,
     (objobjproc)0,
+};
+
+static PyObject *
+cmyk_subscript(PyObject *self, PyObject *item)
+{
+    if (PyInt_Check(item)) {
+        long i = PyInt_AS_LONG(item);
+        return cmyk_getitem(self, i);
+    } else if (PyLong_Check(item)) {
+        long i = PyLong_AsLong(item);
+        if (i == -1 && PyErr_Occurred())
+            return NULL;
+        return cmyk_getitem(self, i);
+    } else if (PySlice_Check(item)) {
+        int start, stop, step, slicelength, cur, i;
+        PyObject *ret;
+
+        if (PySlice_GetIndicesEx((PySliceObject*)item, 5,
+                                 &start, &stop, &step, &slicelength) < 0)
+            return NULL;
+
+        if (slicelength <= 0) {
+            return PyTuple_New(0);
+        } else {
+            ret = PyTuple_New(slicelength);
+            if (!ret)
+                return NULL;
+
+            for (cur = start, i = 0; i < slicelength; cur += step, i++)
+                PyTuple_SET_ITEM(ret, i, cmyk_getitem(self, cur));
+
+            return ret;
+        }
+    } else if (PyString_Check(item)) {
+        char *s = PyString_AsString(item);
+
+        if (g_ascii_strcasecmp(s, "c") == 0 ||
+            g_ascii_strcasecmp(s, "cyan") == 0)
+            return cmyk_get_c(self, NULL);
+        else if (g_ascii_strcasecmp(s, "m")  == 0 ||
+                 g_ascii_strcasecmp(s, "magenta") == 0)
+            return cmyk_get_m(self, NULL);
+        else if (g_ascii_strcasecmp(s, "y")  == 0 ||
+                 g_ascii_strcasecmp(s, "yellow") == 0)
+            return cmyk_get_y(self, NULL);
+        else if (g_ascii_strcasecmp(s, "k")  == 0 ||
+                 g_ascii_strcasecmp(s, "black") == 0)
+            return cmyk_get_k(self, NULL);
+        else if (g_ascii_strcasecmp(s, "a")  == 0 ||
+                 g_ascii_strcasecmp(s, "alpha") == 0)
+            return cmyk_get_a(self, NULL);
+        else {
+            PyErr_SetObject(PyExc_KeyError, item);
+            return NULL;
+        }
+    } else {
+        PyErr_SetString(PyExc_TypeError,
+                        "indices must be integers");
+        return NULL;
+    }
+}
+
+static PyMappingMethods cmyk_as_mapping = {
+    (inquiry)cmyk_length,
+    (binaryfunc)cmyk_subscript,
+    (objobjargproc)0
 };
 
 static long
@@ -1906,7 +2266,7 @@ cmyk_str(PyObject *self)
     return cmyk_pretty_print(self, TRUE);
 }
 
-static PyObject *
+static int
 cmyk_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
 {
     PyObject *c, *m, *y, *k, *a = NULL;
@@ -1916,7 +2276,7 @@ cmyk_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
 	                             "OOOO|O:set", kwlist,
 				     &c, &m, &y, &k, &a))
-        return NULL;
+        return -1;
 
 #define SET_MEMBER(m)	G_STMT_START {				\
     if (PyInt_Check(m))						\
@@ -1926,7 +2286,7 @@ cmyk_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     else {							\
 	PyErr_SetString(PyExc_TypeError,			\
 			#m " must be an int or a float");	\
-	return NULL;						\
+	return -1;						\
     }								\
 } G_STMT_END
 
@@ -1946,8 +2306,7 @@ cmyk_init(PyGBoxed *self, PyObject *args, PyObject *kwargs)
     self->free_on_dealloc = TRUE;
     self->boxed = g_boxed_copy(GIMP_TYPE_CMYK, &cmyk);
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    return 0;
 }
 
 PyTypeObject PyGimpCMYK_Type = {
@@ -1965,7 +2324,7 @@ PyTypeObject PyGimpCMYK_Type = {
     (reprfunc)cmyk_repr,		/* tp_repr */
     (PyNumberMethods*)0,		/* tp_as_number */
     &cmyk_as_sequence,			/* tp_as_sequence */
-    (PyMappingMethods*)0,		/* tp_as_mapping */
+    &cmyk_as_mapping,			/* tp_as_mapping */
     (hashfunc)cmyk_hash,		/* tp_hash */
     (ternaryfunc)0,			/* tp_call */
     (reprfunc)cmyk_str,			/* tp_repr */

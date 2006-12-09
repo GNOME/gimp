@@ -130,7 +130,7 @@ run (const gchar      *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   gimp_tile_cache_ntiles (2 * drawable->ntile_cols);
 
-  *nreturn_vals = 2;
+  *nreturn_vals = 1;
   *return_vals  = values;
 
   values[0].type          = GIMP_PDB_STATUS;

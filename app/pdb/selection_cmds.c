@@ -37,6 +37,8 @@
 #include "core/gimpselection.h"
 #include "gimp-intl.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 selection_bounds_invoker (GimpProcedure     *procedure,

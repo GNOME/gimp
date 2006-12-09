@@ -39,12 +39,14 @@ typedef struct _GimpViewableDialogClass  GimpViewableDialogClass;
 
 struct _GimpViewableDialog
 {
-  GimpDialog  parent_instance;
+  GimpDialog   parent_instance;
 
-  GtkWidget  *icon;
-  GtkWidget  *view;
-  GtkWidget  *desc_label;
-  GtkWidget  *viewable_label;
+  GimpContext *context;
+
+  GtkWidget   *icon;
+  GtkWidget   *view;
+  GtkWidget   *desc_label;
+  GtkWidget   *viewable_label;
 };
 
 struct _GimpViewableDialogClass
@@ -56,6 +58,7 @@ struct _GimpViewableDialogClass
 GType       gimp_viewable_dialog_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_viewable_dialog_new      (GimpViewable       *viewable,
+                                           GimpContext        *context,
                                            const gchar        *title,
                                            const gchar        *role,
                                            const gchar        *stock_id,
@@ -66,7 +69,8 @@ GtkWidget * gimp_viewable_dialog_new      (GimpViewable       *viewable,
                                            ...) G_GNUC_NULL_TERMINATED;
 
 void    gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
-                                           GimpViewable       *viewable);
+                                           GimpViewable       *viewable,
+                                           GimpContext        *context);
 
 
 G_END_DECLS

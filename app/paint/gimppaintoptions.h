@@ -85,6 +85,8 @@ struct _GimpPaintOptions
 
   GimpPaintInfo            *paint_info;
 
+  gdouble                   brush_scale;
+
   GimpPaintApplicationMode  application_mode;
   GimpPaintApplicationMode  application_mode_save;
 

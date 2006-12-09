@@ -235,8 +235,9 @@ themes_apply_theme (Gimp        *gimp,
 
   if (! file)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (themerc), g_strerror (errno));
+      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                    _("Could not open '%s' for writing: %s"),
+                    gimp_filename_to_utf8 (themerc), g_strerror (errno));
       goto cleanup;
     }
 

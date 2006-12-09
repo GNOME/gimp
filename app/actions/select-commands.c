@@ -286,11 +286,13 @@ select_stroke_cmd_callback (GtkAction *action,
 
   if (! drawable)
     {
-      g_message (_("There is no active layer or channel to stroke to."));
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                    _("There is no active layer or channel to stroke to."));
       return;
     }
 
   dialog = stroke_dialog_new (GIMP_ITEM (gimp_image_get_mask (image)),
+                              action_data_get_context (data),
                               _("Stroke Selection"),
                               GIMP_STOCK_SELECTION_STROKE,
                               GIMP_HELP_SELECTION_STROKE,
@@ -305,20 +307,22 @@ select_stroke_last_vals_cmd_callback (GtkAction *action,
   GimpImage      *image;
   GimpDrawable   *drawable;
   GimpContext    *context;
+  GtkWidget      *widget;
   GimpStrokeDesc *desc;
   return_if_no_image (image, data);
+  return_if_no_context (context, data);
+  return_if_no_widget (widget, data);
 
   drawable = gimp_image_active_drawable (image);
 
   if (! drawable)
     {
-      g_message (_("There is no active layer or channel to stroke to."));
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                    _("There is no active layer or channel to stroke to."));
       return;
     }
 
-  context = gimp_get_user_context (image->gimp);
-
-  desc = g_object_get_data (G_OBJECT (context), "saved-stroke-desc");
+  desc = g_object_get_data (G_OBJECT (image->gimp), "saved-stroke-desc");
 
   if (desc)
     g_object_ref (desc);
@@ -443,7 +447,7 @@ select_shrink_callback (GtkWidget *widget,
   radius_x = radius_y = select_shrink_pixels = ROUND (size);
 
   select_shrink_edge_lock =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
+    ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
 
   if (unit != GIMP_UNIT_PIXEL)
     {

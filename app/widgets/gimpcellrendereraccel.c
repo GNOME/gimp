@@ -333,7 +333,7 @@ pointless_eventbox_subclass_get_type (void)
 
   if (! type)
     {
-      static const GTypeInfo info =
+      const GTypeInfo info =
       {
         sizeof (GtkEventBoxClass),
         NULL,           /* base_init      */
@@ -346,7 +346,7 @@ pointless_eventbox_subclass_get_type (void)
         NULL            /* instance init  */
       };
 
-      static const GInterfaceInfo editable_info =
+      const GInterfaceInfo editable_info =
       {
         (GInterfaceInitFunc) pointless_eventbox_cell_editable_init,
         NULL, NULL

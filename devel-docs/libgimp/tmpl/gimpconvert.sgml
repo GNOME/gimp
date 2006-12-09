@@ -51,3 +51,15 @@ Conversions between RGB, indexed, and grayscale modes.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_convert_set_dither_matrix ##### -->
+<para>
+
+</para>
+
+@width: 
+@height: 
+@matrix_length: 
+@matrix: 
+@Returns: 
+
+

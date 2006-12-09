@@ -34,9 +34,8 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimppluginprocedure.h"
-
 #include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginprocedure.h"
 
 #include "xcf.h"
 #include "xcf-private.h"
@@ -244,6 +243,8 @@ xcf_load_invoker (GimpProcedure     *procedure,
 
   if (info.fp)
     {
+      info.gimp                  = gimp;
+      info.progress              = progress;
       info.cp                    = 0;
       info.filename              = filename;
       info.tattoo_state          = 0;
@@ -255,7 +256,6 @@ xcf_load_invoker (GimpProcedure     *procedure,
       info.swap_num              = 0;
       info.ref_count             = NULL;
       info.compression           = COMPRESS_NONE;
-      info.progress              = progress;
 
       if (progress)
         {
@@ -272,7 +272,7 @@ xcf_load_invoker (GimpProcedure     *procedure,
 
       info.cp += xcf_read_int8 (info.fp, (guint8 *) id, 14);
 
-      if (strncmp (id, "gimp xcf ", 9) != 0)
+      if (! g_str_has_prefix (id, "gimp xcf "))
         {
           success = FALSE;
         }
@@ -301,8 +301,9 @@ xcf_load_invoker (GimpProcedure     *procedure,
             }
           else
             {
-              g_message (_("XCF error: unsupported XCF file version %d "
-                           "encountered"), info.file_version);
+              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                            _("XCF error: unsupported XCF file version %d "
+                              "encountered"), info.file_version);
               success = FALSE;
             }
         }
@@ -314,8 +315,9 @@ xcf_load_invoker (GimpProcedure     *procedure,
     }
   else
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                    _("Could not open '%s' for reading: %s"),
+                    gimp_filename_to_utf8 (filename), g_strerror (errno));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -350,6 +352,8 @@ xcf_save_invoker (GimpProcedure     *procedure,
 
   if (info.fp)
     {
+      info.gimp                  = gimp;
+      info.progress              = progress;
       info.cp                    = 0;
       info.filename              = filename;
       info.active_layer          = NULL;
@@ -360,7 +364,6 @@ xcf_save_invoker (GimpProcedure     *procedure,
       info.swap_num              = 0;
       info.ref_count             = NULL;
       info.compression           = COMPRESS_RLE;
-      info.progress              = progress;
 
       if (progress)
         {
@@ -379,7 +382,8 @@ xcf_save_invoker (GimpProcedure     *procedure,
 
       if (fclose (info.fp) == EOF)
         {
-          g_message (_("Error saving XCF file: %s"), g_strerror (errno));
+          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                        _("Error saving XCF file: %s"), g_strerror (errno));
 
           success = FALSE;
         }
@@ -389,8 +393,9 @@ xcf_save_invoker (GimpProcedure     *procedure,
     }
   else
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                    _("Could not open '%s' for writing: %s"),
+                    gimp_filename_to_utf8 (filename), g_strerror (errno));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);

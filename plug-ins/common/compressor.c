@@ -370,7 +370,7 @@ save_image (const Compressor *compressor,
 
   if (! ext)
     {
-      g_message (_("No sensible extension, saving as compressed XCF."));
+      g_message (_("No sensible file extension, saving as compressed XCF."));
       ext = ".xcf";
     }
 
@@ -494,6 +494,10 @@ save_image (const Compressor *compressor,
   g_unlink (tmpname);
   g_free (tmpname);
 
+  /* ask the core to save a thumbnail for compressed XCF files */
+  if (strcmp (ext, ".xcf") == 0)
+    gimp_file_save_thumbnail (image_ID, filename);
+
   return GIMP_PDB_SUCCESS;
 }
 
@@ -511,8 +515,8 @@ load_image (const Compressor  *compressor,
 
   if (! ext)
     {
-      g_message (_("No sensible extension, attempting to load "
-                   "with file magic."));
+      g_message (_("No sensible file extension, "
+                   "attempting to load with file magic."));
       ext = ".foo";
     }
 

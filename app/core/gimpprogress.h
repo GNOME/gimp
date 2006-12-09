@@ -36,59 +36,61 @@ struct _GimpProgressInterface
   GTypeInterface base_iface;
 
   /*  virtual functions  */
-  GimpProgress * (* start)      (GimpProgress *progress,
-                                 const gchar  *message,
-                                 gboolean      cancelable);
-  void           (* end)        (GimpProgress *progress);
-  gboolean       (* is_active)  (GimpProgress *progress);
+  GimpProgress * (* start)      (GimpProgress        *progress,
+                                 const gchar         *message,
+                                 gboolean             cancelable);
+  void           (* end)        (GimpProgress        *progress);
+  gboolean       (* is_active)  (GimpProgress        *progress);
 
-  void           (* set_text)   (GimpProgress *progress,
-                                 const gchar  *message);
-  void           (* set_value)  (GimpProgress *progress,
-                                 gdouble       percentage);
-  gdouble        (* get_value)  (GimpProgress *progress);
-  void           (* pulse)      (GimpProgress *progress);
+  void           (* set_text)   (GimpProgress        *progress,
+                                 const gchar         *message);
+  void           (* set_value)  (GimpProgress        *progress,
+                                 gdouble              percentage);
+  gdouble        (* get_value)  (GimpProgress        *progress);
+  void           (* pulse)      (GimpProgress        *progress);
 
-  guint32        (* get_window) (GimpProgress *progress);
+  guint32        (* get_window) (GimpProgress        *progress);
 
-  void           (* message)    (GimpProgress *progress,
-                                 Gimp         *gimp,
-                                 const gchar  *domain,
-                                 const gchar  *message);
+  gboolean       (* message)    (GimpProgress        *progress,
+                                 Gimp                *gimp,
+                                 GimpMessageSeverity  severity,
+                                 const gchar         *domain,
+                                 const gchar         *message);
 
   /*  signals  */
-  void           (* cancel)     (GimpProgress *progress);
+  void           (* cancel)     (GimpProgress        *progress);
 };
 
 
 GType          gimp_progress_interface_get_type (void) G_GNUC_CONST;
 
-GimpProgress * gimp_progress_start              (GimpProgress *progress,
-                                                 const gchar  *message,
-                                                 gboolean      cancelable);
-void           gimp_progress_end                (GimpProgress *progress);
-gboolean       gimp_progress_is_active          (GimpProgress *progress);
+GimpProgress * gimp_progress_start              (GimpProgress        *progress,
+                                                 const gchar         *message,
+                                                 gboolean             cancelable);
+void           gimp_progress_end                (GimpProgress        *progress);
+gboolean       gimp_progress_is_active          (GimpProgress        *progress);
 
-void           gimp_progress_set_text           (GimpProgress *progress,
-                                                 const gchar  *message);
-void           gimp_progress_set_value          (GimpProgress *progress,
-                                                 gdouble       percentage);
-gdouble        gimp_progress_get_value          (GimpProgress *progress);
-void           gimp_progress_pulse              (GimpProgress *progress);
+void           gimp_progress_set_text           (GimpProgress        *progress,
+                                                 const gchar         *message);
+void           gimp_progress_set_value          (GimpProgress        *progress,
+                                                 gdouble              percentage);
+gdouble        gimp_progress_get_value          (GimpProgress        *progress);
+void           gimp_progress_pulse              (GimpProgress        *progress);
 
-guint32        gimp_progress_get_window         (GimpProgress *progress);
+guint32        gimp_progress_get_window         (GimpProgress        *progress);
 
-gboolean       gimp_progress_message            (GimpProgress *progress,
-                                                 Gimp         *gimp,
-                                                 const gchar  *domain,
-                                                 const gchar  *message);
+gboolean       gimp_progress_message            (GimpProgress        *progress,
+                                                 Gimp                *gimp,
+                                                 GimpMessageSeverity  severity,
+                                                 const gchar         *domain,
+                                                 const gchar         *message);
 
-void           gimp_progress_cancel             (GimpProgress *progress);
+void           gimp_progress_cancel             (GimpProgress        *progress);
 
-void           gimp_progress_update_and_flush   (gint          min,
-                                                 gint          max,
-                                                 gint          current,
-                                                 gpointer      data);
+void           gimp_progress_update_and_flush   (gint                 min,
+                                                 gint                 max,
+                                                 gint                 current,
+                                                 gpointer             data);
 
 
 #endif /* __GIMP_PROGRESS_H__ */

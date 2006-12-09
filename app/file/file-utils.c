@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -49,11 +50,19 @@
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
 
-#include "pdb/gimppluginprocedure.h"
+#include "plug-in/gimppluginprocedure.h"
 
 #include "file-utils.h"
 
 #include "gimp-intl.h"
+
+
+typedef enum
+{
+  FILE_MATCH_NONE,
+  FILE_MATCH_MAGIC,
+  FILE_MATCH_SIZE
+} FileMatchType;
 
 
 /*  local function prototypes  */
@@ -67,17 +76,23 @@ static GimpPlugInProcedure * file_proc_find_by_extension (GSList       *procs,
 static GimpPlugInProcedure * file_proc_find_by_name      (GSList       *procs,
                                                           const gchar  *uri,
                                                           gboolean      skip_magic);
+
+static gchar *               file_utils_unescape_uri     (const gchar  *escaped,
+                                                          gint          len,
+                                                          const gchar  *illegal_escaped_characters,
+                                                          gboolean      ascii_must_not_be_escaped);
+
 static void                  file_convert_string         (const gchar  *instr,
                                                           gchar        *outmem,
                                                           gint          maxmem,
                                                           gint         *nmem);
-static gint                  file_check_single_magic     (const gchar  *offset,
+static FileMatchType         file_check_single_magic     (const gchar  *offset,
                                                           const gchar  *type,
                                                           const gchar  *value,
                                                           const guchar *file_head,
                                                           gint          headsize,
                                                           FILE         *ifp);
-static gint                  file_check_magic_list       (GSList       *magics_list,
+static FileMatchType         file_check_magic_list       (GSList       *magics_list,
                                                           const guchar *head,
                                                           gint          headsize,
                                                           FILE         *ifp);
@@ -109,6 +124,30 @@ file_utils_filename_to_uri (GSList       *procs,
                        _("Invalid character sequence in URI"));
           return NULL;
         }
+    }
+  else if (strstr (filename, "://"))
+    {
+      gchar *scheme;
+      gchar *canon;
+
+      scheme = g_strndup (filename, (strstr (filename, "://") - filename));
+      canon  = g_strdup (scheme);
+
+      g_strcanon (canon, G_CSET_A_2_Z G_CSET_a_2_z G_CSET_DIGITS "+-.", '-');
+
+      if (! strcmp (scheme, canon) && g_ascii_isgraph (canon[0]))
+        {
+          g_set_error (error, G_FILE_ERROR, 0,
+                       _("URI scheme '%s:' is not supported"), scheme);
+
+          g_free (scheme);
+          g_free (canon);
+
+          return NULL;
+        }
+
+      g_free (scheme);
+      g_free (canon);
     }
 
   if (! g_path_is_absolute (filename))
@@ -180,7 +219,8 @@ file_utils_filename_from_uri (const gchar *uri)
 
 GimpPlugInProcedure *
 file_utils_find_proc (GSList       *procs,
-                      const gchar  *uri)
+                      const gchar  *uri,
+                      GError      **error)
 {
   GimpPlugInProcedure *file_proc;
   GSList              *all_procs = procs;
@@ -188,6 +228,7 @@ file_utils_find_proc (GSList       *procs,
 
   g_return_val_if_fail (procs != NULL, NULL);
   g_return_val_if_fail (uri != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   /* First, check magicless prefixes/suffixes */
   file_proc = file_proc_find_by_name (all_procs, uri, TRUE);
@@ -204,7 +245,7 @@ file_utils_find_proc (GSList       *procs,
       FILE                *ifp               = NULL;
       gint                 head_size         = -2;
       gint                 size_match_count  = 0;
-      gint                 match_val;
+      FileMatchType        match_val;
       guchar               head[256];
 
       while (procs)
@@ -217,8 +258,18 @@ file_utils_find_proc (GSList       *procs,
               if (head_size == -2)
                 {
                   head_size = 0;
+
                   if ((ifp = g_fopen (filename, "rb")) != NULL)
-                    head_size = fread ((gchar *) head, 1, sizeof (head), ifp);
+                    {
+                      head_size = fread ((gchar *) head, 1, sizeof (head), ifp);
+                    }
+                  else
+                    {
+                      g_set_error (error,
+                                   G_FILE_ERROR,
+                                   g_file_error_from_errno (errno),
+                                   g_strerror (errno));
+                    }
                 }
 
               if (head_size >= 4)
@@ -244,7 +295,15 @@ file_utils_find_proc (GSList       *procs,
         }
 
       if (ifp)
-        fclose (ifp);
+        {
+          if (ferror (ifp))
+            g_set_error (error,
+                         G_FILE_ERROR,
+                         g_file_error_from_errno (errno),
+                         g_strerror (errno));
+
+          fclose (ifp);
+        }
 
       g_free (filename);
 
@@ -253,7 +312,22 @@ file_utils_find_proc (GSList       *procs,
     }
 
   /* As a last resort, try matching by name */
-  return file_proc_find_by_name (all_procs, uri, FALSE);
+  file_proc = file_proc_find_by_name (all_procs, uri, FALSE);
+
+  if (file_proc)
+    {
+      /* we found a procedure, clear error that might have been set */
+      g_clear_error (error);
+    }
+  else
+    {
+      /* set an error message unless one was already set */
+      if (error && *error == NULL)
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                     _("Unknown file type"));
+    }
+
+  return file_proc;
 }
 
 GimpPlugInProcedure *
@@ -299,7 +373,7 @@ static gchar *
 file_utils_uri_to_utf8_basename (const gchar *uri)
 {
   gchar *filename;
-  gchar *basename;
+  gchar *basename = NULL;
 
   g_return_val_if_fail (uri != NULL, NULL);
 
@@ -308,19 +382,18 @@ file_utils_uri_to_utf8_basename (const gchar *uri)
   if (strstr (filename, G_DIR_SEPARATOR_S))
     {
       basename = g_path_get_basename (filename);
-
-      g_free (filename);
-
-      return basename;
     }
   else if (strstr (filename, "://"))
     {
       basename = strrchr (uri, '/');
 
-      basename = g_strdup (basename + 1);
+      if (basename)
+        basename = g_strdup (basename + 1);
+    }
 
+  if (basename)
+    {
       g_free (filename);
-
       return basename;
     }
 
@@ -330,6 +403,8 @@ file_utils_uri_to_utf8_basename (const gchar *uri)
 gchar *
 file_utils_uri_display_basename (const gchar *uri)
 {
+  gchar *basename = NULL;
+
   g_return_val_if_fail (uri != NULL, NULL);
 
   if (g_str_has_prefix (uri, "file:"))
@@ -338,20 +413,29 @@ file_utils_uri_display_basename (const gchar *uri)
 
       if (filename)
         {
-          gchar *basename = g_filename_display_basename (filename);
-
+          basename = g_filename_display_basename (filename);
           g_free (filename);
-
-          return basename;
         }
     }
+  else
+    {
+      gchar *name = file_utils_uri_display_name (uri);
 
-  return file_utils_uri_to_utf8_basename (uri);
+      basename = strrchr (name, '/');
+      if (basename)
+        basename = g_strdup (basename + 1);
+
+      g_free (name);
+    }
+
+  return basename ? basename : file_utils_uri_to_utf8_basename (uri);
 }
 
 gchar *
 file_utils_uri_display_name (const gchar *uri)
 {
+  gchar *name = NULL;
+
   g_return_val_if_fail (uri != NULL, NULL);
 
   if (g_str_has_prefix (uri, "file:"))
@@ -360,15 +444,16 @@ file_utils_uri_display_name (const gchar *uri)
 
       if (filename)
         {
-          gchar *name = g_filename_display_name (filename);
-
+          name = g_filename_display_name (filename);
           g_free (filename);
-
-          return name;
         }
     }
+  else
+    {
+      name = file_utils_unescape_uri (uri, -1, "/", FALSE);
+    }
 
-  return g_strdup (uri);
+  return name ? name : g_strdup (uri);
 }
 
 GdkPixbuf *
@@ -441,8 +526,7 @@ file_utils_save_thumbnail (GimpImage   *image,
               GimpImagefile *imagefile;
 
               imagefile = gimp_imagefile_new (image->gimp, uri);
-              success = gimp_imagefile_save_thumbnail (imagefile, NULL,
-                                                       image);
+              success = gimp_imagefile_save_thumbnail (imagefile, NULL, image);
               g_object_unref (imagefile);
             }
 
@@ -475,7 +559,7 @@ file_proc_find_by_prefix (GSList      *procs,
            prefixes;
            prefixes = g_slist_next (prefixes))
         {
-          if (strncmp (uri, prefixes->data, strlen (prefixes->data)) == 0)
+          if (g_str_has_prefix (uri, prefixes->data))
             return proc;
         }
      }
@@ -543,6 +627,87 @@ file_proc_find_by_name (GSList      *procs,
   return proc;
 }
 
+
+/* the following two functions are copied from glib/gconvert.c */
+
+static gint
+unescape_character (const gchar *scanner)
+{
+  gint first_digit;
+  gint second_digit;
+
+  first_digit = g_ascii_xdigit_value (scanner[0]);
+  if (first_digit < 0)
+    return -1;
+
+  second_digit = g_ascii_xdigit_value (scanner[1]);
+  if (second_digit < 0)
+    return -1;
+
+  return (first_digit << 4) | second_digit;
+}
+
+static gchar *
+file_utils_unescape_uri (const gchar *escaped,
+                         gint         len,
+                         const gchar *illegal_escaped_characters,
+                         gboolean     ascii_must_not_be_escaped)
+{
+  const gchar *in, *in_end;
+  gchar *out, *result;
+  gint c;
+
+  if (escaped == NULL)
+    return NULL;
+
+  if (len < 0)
+    len = strlen (escaped);
+
+  result = g_malloc (len + 1);
+
+  out = result;
+  for (in = escaped, in_end = escaped + len; in < in_end; in++)
+    {
+      c = *in;
+
+      if (c == '%')
+	{
+	  /* catch partial escape sequences past the end of the substring */
+	  if (in + 3 > in_end)
+	    break;
+
+	  c = unescape_character (in + 1);
+
+	  /* catch bad escape sequences and NUL characters */
+	  if (c <= 0)
+	    break;
+
+	  /* catch escaped ASCII */
+	  if (ascii_must_not_be_escaped && c <= 0x7F)
+	    break;
+
+	  /* catch other illegal escaped characters */
+	  if (strchr (illegal_escaped_characters, c) != NULL)
+	    break;
+
+	  in += 2;
+	}
+
+      *out++ = c;
+    }
+
+  g_assert (out - result <= len);
+  *out = '\0';
+
+  if (in != in_end)
+    {
+      g_free (result);
+      return NULL;
+    }
+
+  return result;
+}
+
 static void
 file_convert_string (const gchar *instr,
                      gchar       *outmem,
@@ -600,7 +765,7 @@ file_convert_string (const gchar *instr,
   *nmem = ((gchar *) uout) - outmem;
 }
 
-static gint
+static FileMatchType
 file_check_single_magic (const gchar  *offset,
                          const gchar  *type,
                          const gchar  *value,
@@ -609,43 +774,41 @@ file_check_single_magic (const gchar  *offset,
                          FILE         *ifp)
 
 {
-  /* Return values are 0: no match, 1: magic match, 2: size match */
+  FileMatchType found = FILE_MATCH_NONE;
   glong         offs;
-  gulong        num_testval, num_operatorval;
-  gulong        fileval;
+  gulong        num_testval;
+  gulong        num_operatorval;
   gint          numbytes, k;
-  gint          c     = 0;
-  gint          found = 0;
   const gchar  *num_operator_ptr;
   gchar         num_operator;
-  gchar         num_test;
-  gchar         mem_testval[256];
 
   /* Check offset */
-  if (sscanf (offset, "%ld", &offs) != 1) return (0);
-  if (offs < 0) return (0);
+  if (sscanf (offset, "%ld", &offs) != 1)
+    return FILE_MATCH_NONE;
+
+  if (offs < 0)
+    return FILE_MATCH_NONE;
 
   /* Check type of test */
   num_operator_ptr = NULL;
   num_operator     = '\0';
-  num_test         = '=';
 
-  if (strncmp (type, "byte", 4) == 0)
+  if (g_str_has_prefix (type, "byte"))
     {
       numbytes = 1;
-      num_operator_ptr = type + 4;
+      num_operator_ptr = type + strlen ("byte");
     }
-  else if (strncmp (type, "short", 5) == 0)
+  else if (g_str_has_prefix (type, "short"))
     {
       numbytes = 2;
-      num_operator_ptr = type + 5;
+      num_operator_ptr = type + strlen ("short");
     }
-  else if (strncmp (type, "long", 4) == 0)
+  else if (g_str_has_prefix (type, "long"))
     {
       numbytes = 4;
-      num_operator_ptr = type + 4;
+      num_operator_ptr = type + strlen ("long");
     }
-  else if (strncmp (type, "size", 4) == 0)
+  else if (g_str_has_prefix (type, "size"))
     {
       numbytes = 5;
     }
@@ -653,7 +816,10 @@ file_check_single_magic (const gchar  *offset,
     {
       numbytes = 0;
     }
-  else return (0);
+  else
+    {
+      return FILE_MATCH_NONE;
+    }
 
   /* Check numerical operator value if present */
   if (num_operator_ptr && (*num_operator_ptr == '&'))
@@ -666,52 +832,57 @@ file_check_single_magic (const gchar  *offset,
             sscanf (num_operator_ptr+3, "%lx", &num_operatorval);
           else                                 /* octal */
             sscanf (num_operator_ptr+2, "%lo", &num_operatorval);
+
           num_operator = *num_operator_ptr;
         }
     }
 
   if (numbytes > 0)   /* Numerical test ? */
     {
+      gchar   num_test = '=';
+      gulong  fileval  = 0;
+
       /* Check test value */
-      if ((value[0] == '=') || (value[0] == '>') || (value[0] == '<'))
-      {
-        num_test = value[0];
-        value++;
-      }
-      if (!g_ascii_isdigit (value[0])) return (0);
+      if ((value[0] == '>') || (value[0] == '<'))
+        {
+          num_test = value[0];
+          value++;
+        }
 
-      /*
-       * to anybody reading this: is strtol's parsing behaviour
-       * (e.g. "0x" prefix) broken on some systems or why do we
-       * do the base detection ourselves?
-       * */
-      if (value[0] != '0')      /* decimal */
-        num_testval = strtol(value, NULL, 10);
-      else if (value[1] == 'x') /* hexadecimal */
-        num_testval = (unsigned long)strtoul(value+2, NULL, 16);
-      else                      /* octal */
-        num_testval = strtol(value+1, NULL, 8);
+      errno = 0;
+      num_testval = strtol (value, NULL, 0);
 
-      fileval = 0;
+      if (errno != 0)
+        return FILE_MATCH_NONE;
+
       if (numbytes == 5)    /* Check for file size ? */
         {
           struct stat buf;
 
-          if (fstat (fileno (ifp), &buf) < 0) return (0);
+          if (fstat (fileno (ifp), &buf) < 0)
+            return FILE_MATCH_NONE;
+
           fileval = buf.st_size;
         }
       else if (offs + numbytes <= headsize)  /* We have it in memory ? */
         {
           for (k = 0; k < numbytes; k++)
-          fileval = (fileval << 8) | (long)file_head[offs+k];
+            fileval = (fileval << 8) | (glong) file_head[offs+k];
         }
       else   /* Read it from file */
         {
-          if (fseek (ifp, offs, SEEK_SET) < 0) return (0);
+          gint c = 0;
+
+          if (fseek (ifp, offs, SEEK_SET) < 0)
+            return FILE_MATCH_NONE;
+
           for (k = 0; k < numbytes; k++)
             fileval = (fileval << 8) | (c = getc (ifp));
-          if (c == EOF) return (0);
+
+          if (c == EOF)
+            return FILE_MATCH_NONE;
         }
+
       if (num_operator == '&')
         fileval &= num_operatorval;
 
@@ -722,15 +893,19 @@ file_check_single_magic (const gchar  *offset,
       else
         found = (fileval == num_testval);
 
-      if (found && (numbytes == 5)) found = 2;
+      if (found && (numbytes == 5))
+        found = FILE_MATCH_SIZE;
     }
   else if (numbytes == 0) /* String test */
     {
+      gchar mem_testval[256];
+
       file_convert_string (value,
                            mem_testval, sizeof (mem_testval),
                            &numbytes);
 
-      if (numbytes <= 0) return (0);
+      if (numbytes <= 0)
+        return FILE_MATCH_NONE;
 
       if (offs + numbytes <= headsize)  /* We have it in memory ? */
         {
@@ -738,12 +913,16 @@ file_check_single_magic (const gchar  *offset,
         }
       else   /* Read it from file */
         {
-          if (fseek (ifp, offs, SEEK_SET) < 0) return (0);
-          found = 1;
+          if (fseek (ifp, offs, SEEK_SET) < 0)
+            return FILE_MATCH_NONE;
+
+          found = FILE_MATCH_MAGIC;
+
           for (k = 0; found && (k < numbytes); k++)
             {
-              c = getc (ifp);
-              found = (c != EOF) && (c == (int) mem_testval[k]);
+              gint c = getc (ifp);
+
+              found = (c != EOF) && (c == (gint) mem_testval[k]);
             }
         }
     }
@@ -751,22 +930,19 @@ file_check_single_magic (const gchar  *offset,
   return found;
 }
 
-/*
- *  Return values are 0: no match, 1: magic match, 2: size match
- */
-static gint
+static FileMatchType
 file_check_magic_list (GSList       *magics_list,
                        const guchar *head,
                        gint          headsize,
                        FILE         *ifp)
 
 {
-  const gchar *offset;
-  const gchar *type;
-  const gchar *value;
-  gint         and   = 0;
-  gint         found = 0;
-  gint         match_val;
+  const gchar   *offset;
+  const gchar   *type;
+  const gchar   *value;
+  gboolean       and   = FALSE;
+  FileMatchType  found = FILE_MATCH_NONE;
+  FileMatchType  match_val;
 
   while (magics_list)
     {
@@ -788,9 +964,9 @@ file_check_magic_list (GSList       *magics_list,
 
       and = (strchr (offset, '&') != NULL);
 
-      if ((!and) && found)
+      if ((! and) && found)
         return match_val;
     }
 
-  return 0;
+  return FILE_MATCH_NONE;
 }

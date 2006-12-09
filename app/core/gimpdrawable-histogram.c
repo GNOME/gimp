@@ -28,6 +28,7 @@
 #include "base/pixel-region.h"
 
 #include "gimpdrawable.h"
+#include "gimpdrawable-histogram.h"
 #include "gimpimage.h"
 
 

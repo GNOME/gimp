@@ -21,8 +21,7 @@ libexec_PROGRAMS = faxg3
 faxg3_SOURCES = \
 	faxg3.c		\
 	g3.c		\
-	g3.h		\
-	run_tbl.c
+	g3.h
 
 INCLUDES = \
 	-I$(top_srcdir)	\

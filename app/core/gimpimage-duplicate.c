@@ -54,6 +54,7 @@ gimp_image_duplicate (GimpImage *image)
   GimpVectors  *active_vectors            = NULL;
   GimpDrawable *new_floating_sel_drawable = NULL;
   GimpDrawable *floating_sel_drawable     = NULL;
+  gchar        *filename;
   gint          count;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
@@ -62,10 +63,20 @@ gimp_image_duplicate (GimpImage *image)
 
   /*  Create a new image  */
   new_image = gimp_create_image (image->gimp,
-                                  image->width, image->height,
-                                  image->base_type,
-                                  FALSE);
+                                 image->width, image->height,
+                                 image->base_type,
+                                 FALSE);
   gimp_image_undo_disable (new_image);
+
+  /*  Store the folder to be used by the save dialog  */
+  filename = gimp_image_get_filename (image);
+  if (filename)
+    {
+      g_object_set_data_full (G_OBJECT (new_image), "gimp-image-dirname",
+                              g_path_get_dirname (filename),
+                              (GDestroyNotify) g_free);
+      g_free (filename);
+    }
 
   /*  Copy the colormap if necessary  */
   if (new_image->base_type == GIMP_INDEXED)

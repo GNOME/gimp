@@ -118,17 +118,17 @@ cdisplay_gamma_get_type (GTypeModule *module)
 {
   if (! cdisplay_gamma_type)
     {
-      static const GTypeInfo display_info =
+      const GTypeInfo display_info =
       {
         sizeof (CdisplayGammaClass),
-	(GBaseInitFunc)     NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc)    cdisplay_gamma_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (CdisplayGamma),
-	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
+        (GBaseInitFunc)     NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc)    cdisplay_gamma_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (CdisplayGamma),
+        0,              /* n_preallocs    */
+        NULL            /* instance_init  */
       };
 
       cdisplay_gamma_type =
@@ -159,6 +159,8 @@ cdisplay_gamma_class_init (CdisplayGammaClass *klass)
 
   display_class->name        = _("Gamma");
   display_class->help_id     = "gimp-colordisplay-gamma";
+  display_class->stock_id    = GIMP_STOCK_DISPLAY_FILTER_GAMMA;
+
   display_class->convert     = cdisplay_gamma_convert;
   display_class->configure   = cdisplay_gamma_configure;
 }
@@ -230,10 +232,10 @@ cdisplay_gamma_convert (GimpColorDisplay *display,
     {
       i = width;
       while (i--)
-	{
-	  *buf = gamma->lookup[*buf];
-	  buf++;
-	}
+        {
+          *buf = gamma->lookup[*buf];
+          buf++;
+        }
       buf += bpl;
     }
 }

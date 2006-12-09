@@ -43,6 +43,8 @@
 
 static void     gimp_container_entry_view_iface_init (GimpContainerViewInterface *iface);
 
+static void     gimp_container_entry_set_context  (GimpContainerView      *view,
+                                                   GimpContext            *context);
 static gpointer gimp_container_entry_insert_item  (GimpContainerView      *view,
                                                    GimpViewable           *viewable,
                                                    gint                    index);
@@ -63,6 +65,10 @@ static void     gimp_container_entry_clear_items  (GimpContainerView      *view)
 static void    gimp_container_entry_set_view_size (GimpContainerView      *view);
 
 static void     gimp_container_entry_changed      (GtkEntry               *entry,
+                                                   GimpContainerView      *view);
+static void   gimp_container_entry_match_selected (GtkEntryCompletion     *widget,
+                                                   GtkTreeModel           *model,
+                                                   GtkTreeIter            *iter,
                                                    GimpContainerView      *view);
 static void gimp_container_entry_renderer_update  (GimpViewRenderer       *renderer,
                                                    GimpContainerView      *view);
@@ -90,6 +96,26 @@ gimp_container_entry_class_init (GimpContainerEntryClass *klass)
 }
 
 static void
+gimp_container_entry_view_iface_init (GimpContainerViewInterface *iface)
+{
+  parent_view_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_view_iface)
+    parent_view_iface = g_type_default_interface_peek (GIMP_TYPE_CONTAINER_VIEW);
+
+  iface->set_context   = gimp_container_entry_set_context;
+  iface->insert_item   = gimp_container_entry_insert_item;
+  iface->remove_item   = gimp_container_entry_remove_item;
+  iface->reorder_item  = gimp_container_entry_reorder_item;
+  iface->rename_item   = gimp_container_entry_rename_item;
+  iface->select_item   = gimp_container_entry_select_item;
+  iface->clear_items   = gimp_container_entry_clear_items;
+  iface->set_view_size = gimp_container_entry_set_view_size;
+
+  iface->insert_data_free = (GDestroyNotify) g_free;
+}
+
+static void
 gimp_container_entry_init (GimpContainerEntry *entry)
 {
   GtkEntryCompletion *completion;
@@ -97,8 +123,9 @@ gimp_container_entry_init (GimpContainerEntry *entry)
   GtkCellRenderer    *cell;
 
   completion = g_object_new (GTK_TYPE_ENTRY_COMPLETION,
-                             "inline-completion", TRUE,
-                             "popup-set-width",   FALSE,
+                             "inline-completion",  TRUE,
+                             "popup-single-match", FALSE,
+                             "popup-set-width",    FALSE,
                              NULL);
 
   store = gtk_list_store_new (GIMP_CONTAINER_ENTRY_NUM_COLUMNS,
@@ -109,6 +136,11 @@ gimp_container_entry_init (GimpContainerEntry *entry)
   g_object_unref (store);
 
   gtk_entry_set_completion (GTK_ENTRY (entry), completion);
+
+  g_signal_connect (completion, "match-selected",
+                    G_CALLBACK (gimp_container_entry_match_selected),
+                    entry);
+
   g_object_unref (completion);
 
   /*  FIXME: This can be done better with GTK+ 2.6.  */
@@ -126,25 +158,6 @@ gimp_container_entry_init (GimpContainerEntry *entry)
   g_signal_connect (entry, "changed",
                     G_CALLBACK (gimp_container_entry_changed),
                     entry);
-}
-
-static void
-gimp_container_entry_view_iface_init (GimpContainerViewInterface *iface)
-{
-  parent_view_iface = g_type_interface_peek_parent (iface);
-
-  if (! parent_view_iface)
-    parent_view_iface = g_type_default_interface_peek (GIMP_TYPE_CONTAINER_VIEW);
-
-  iface->insert_item   = gimp_container_entry_insert_item;
-  iface->remove_item   = gimp_container_entry_remove_item;
-  iface->reorder_item  = gimp_container_entry_reorder_item;
-  iface->rename_item   = gimp_container_entry_rename_item;
-  iface->select_item   = gimp_container_entry_select_item;
-  iface->clear_items   = gimp_container_entry_clear_items;
-  iface->set_view_size = gimp_container_entry_set_view_size;
-
-  iface->insert_data_free = (GDestroyNotify) g_free;
 }
 
 GtkWidget *
@@ -188,7 +201,8 @@ gimp_container_entry_set (GimpContainerEntry *entry,
 
   view_size = gimp_container_view_get_view_size (view, &border_width);
 
-  renderer = gimp_view_renderer_new (G_TYPE_FROM_INSTANCE (viewable),
+  renderer = gimp_view_renderer_new (gimp_container_view_get_context (view),
+                                     G_TYPE_FROM_INSTANCE (viewable),
                                      view_size, border_width,
                                      FALSE);
   gimp_view_renderer_set_viewable (renderer, viewable);
@@ -208,7 +222,37 @@ gimp_container_entry_set (GimpContainerEntry *entry,
   g_object_unref (renderer);
 }
 
+
 /*  GimpContainerView methods  */
+
+static void
+gimp_container_entry_set_context (GimpContainerView *view,
+                                  GimpContext       *context)
+{
+  GtkTreeModel *model = gimp_container_entry_get_model (view);
+
+  parent_view_iface->set_context (view, context);
+
+  if (model)
+    {
+      GtkTreeIter iter;
+      gboolean    iter_valid;
+
+      for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+           iter_valid;
+           iter_valid = gtk_tree_model_iter_next (model, &iter))
+        {
+          GimpViewRenderer *renderer;
+
+          gtk_tree_model_get (model, &iter,
+                              GIMP_CONTAINER_ENTRY_COLUMN_RENDERER, &renderer,
+                              -1);
+
+          gimp_view_renderer_set_context (renderer, context);
+          g_object_unref (renderer);
+        }
+    }
+}
 
 static gpointer
 gimp_container_entry_insert_item (GimpContainerView *view,
@@ -382,6 +426,22 @@ gimp_container_entry_changed (GtkEntry          *entry,
 
   if (object)
     gimp_container_view_item_selected (view, GIMP_VIEWABLE (object));
+}
+
+static void
+gimp_container_entry_match_selected (GtkEntryCompletion *widget,
+                                     GtkTreeModel       *model,
+                                     GtkTreeIter        *iter,
+                                     GimpContainerView  *view)
+{
+  GimpViewRenderer *renderer;
+
+  gtk_tree_model_get (model, iter,
+                      GIMP_CONTAINER_ENTRY_COLUMN_RENDERER, &renderer,
+                      -1);
+
+  gimp_container_view_item_selected (view, renderer->viewable);
+  g_object_unref (renderer);
 }
 
 static void

@@ -159,12 +159,13 @@ gimp_controllers_restore (Gimp          *gimp,
           if (! gimp_config_deserialize_file (GIMP_CONFIG (manager->controllers),
                                               filename, NULL, &error))
             {
-              g_message (error->message);
+              gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                            "%s", error->message);
             }
         }
       else
         {
-          g_message (error->message);
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
         }
 
       g_clear_error (&error);
@@ -205,7 +206,7 @@ gimp_controllers_save (Gimp *gimp)
                                        header, footer, NULL,
                                        &error))
     {
-      g_message (error->message);
+      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
       g_error_free (error);
     }
 

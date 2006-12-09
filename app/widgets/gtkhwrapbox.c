@@ -51,9 +51,9 @@ gtk_hwrap_box_get_type (void)
 {
   static GType hwrap_box_type = 0;
 
-  if (!hwrap_box_type)
+  if (! hwrap_box_type)
     {
-      static const GTypeInfo hwrap_box_info =
+      const GTypeInfo hwrap_box_info =
       {
         sizeof (GtkHWrapBoxClass),
         NULL,                /* base_init */

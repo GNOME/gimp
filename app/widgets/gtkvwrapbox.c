@@ -51,9 +51,9 @@ gtk_vwrap_box_get_type (void)
 {
   static GType vwrap_box_type = 0;
 
-  if (!vwrap_box_type)
+  if (! vwrap_box_type)
     {
-      static const GTypeInfo vwrap_box_info =
+      const GTypeInfo vwrap_box_info =
       {
         sizeof (GtkVWrapBoxClass),
         NULL,                /* base_init */

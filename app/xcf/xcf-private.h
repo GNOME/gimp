@@ -48,7 +48,8 @@ typedef enum
   PROP_PATHS              = 23,
   PROP_USER_UNIT          = 24,
   PROP_VECTORS            = 25,
-  PROP_TEXT_LAYER_FLAGS   = 26
+  PROP_TEXT_LAYER_FLAGS   = 26,
+  PROP_SAMPLE_POINTS      = 27
 } PropType;
 
 typedef enum
@@ -75,6 +76,8 @@ typedef struct _XcfInfo  XcfInfo;
 
 struct _XcfInfo
 {
+  Gimp               *gimp;
+  GimpProgress       *progress;
   FILE               *fp;
   guint               cp;
   const gchar        *filename;
@@ -88,7 +91,6 @@ struct _XcfInfo
   gint               *ref_count;
   XcfCompressionType  compression;
   gint                file_version;
-  GimpProgress       *progress;
 };
 
 

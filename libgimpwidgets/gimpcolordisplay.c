@@ -33,6 +33,7 @@
 #include "gimpwidgetstypes.h"
 
 #include "gimpcolordisplay.h"
+#include "gimpstock.h"
 
 
 enum
@@ -91,6 +92,7 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
 
   klass->name            = "Unnamed";
   klass->help_id         = NULL;
+  klass->stock_id        = GIMP_STOCK_DISPLAY_FILTER;
 
   klass->clone           = NULL;
   klass->convert         = NULL;

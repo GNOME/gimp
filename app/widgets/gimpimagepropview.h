@@ -46,6 +46,9 @@ struct _GimpImagePropView
   GtkWidget *print_size_label;
   GtkWidget *resolution_label;
   GtkWidget *colorspace_label;
+  GtkWidget *filename_label;
+  GtkWidget *filesize_label;
+  GtkWidget *filetype_label;
   GtkWidget *memsize_label;
   GtkWidget *undo_label;
   GtkWidget *redo_label;

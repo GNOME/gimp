@@ -19,6 +19,7 @@
 #ifndef  __GIMP_CROP_TOOL_H__
 #define  __GIMP_CROP_TOOL_H__
 
+
 #include "gimpdrawtool.h"
 
 
@@ -28,6 +29,8 @@
 #define GIMP_IS_CROP_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CROP_TOOL))
 #define GIMP_IS_CROP_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CROP_TOOL))
 #define GIMP_CROP_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CROP_TOOL, GimpCropToolClass))
+
+#define GIMP_CROP_TOOL_GET_OPTIONS(t)  (GIMP_CROP_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
 
 
 typedef struct _GimpCropTool      GimpCropTool;

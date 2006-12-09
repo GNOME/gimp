@@ -146,3 +146,44 @@ gimp_image_convert_indexed (gint32                  image_ID,
 
   return success;
 }
+
+/**
+ * gimp_image_convert_set_dither_matrix:
+ * @width: Width of the matrix (0 to reset to default matrix).
+ * @height: Height of the matrix (0 to reset to default matrix).
+ * @matrix_length: The length of 'matrix'.
+ * @matrix: The matrix -- all values must be >= 1.
+ *
+ * Set dither matrix for conversion to indexed
+ *
+ * This procedure sets the dither matrix used when converting images to
+ * INDEXED mode with positional dithering.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_image_convert_set_dither_matrix (gint          width,
+                                      gint          height,
+                                      gint          matrix_length,
+                                      const guint8 *matrix)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-convert-set-dither-matrix",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, width,
+                                    GIMP_PDB_INT32, height,
+                                    GIMP_PDB_INT32, matrix_length,
+                                    GIMP_PDB_INT8ARRAY, matrix,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}

@@ -22,7 +22,9 @@
 #include "config.h"
 
 #include "gimp.h"
-
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_IMAGE_H__
+#include "gimpimage.h"
 
 /**
  * gimp_image_get_cmap:

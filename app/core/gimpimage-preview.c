@@ -20,6 +20,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "base/pixel-region.h"
@@ -30,7 +32,6 @@
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
-#include "gimp-utils.h"
 #include "gimpdrawable-preview.h"
 #include "gimpimage.h"
 #include "gimpimage-preview.h"
@@ -108,6 +109,7 @@ gimp_image_get_popup_size (GimpViewable *viewable,
 
 TempBuf *
 gimp_image_get_preview (GimpViewable *viewable,
+                        GimpContext  *context,
                         gint          width,
                         gint          height)
 {
@@ -133,8 +135,8 @@ gimp_image_get_preview (GimpViewable *viewable,
        *  This might seem ridiculous, but it's actually the best way, given
        *  a number of unsavory alternatives.
        */
-      image->comp_preview = gimp_image_get_new_preview (viewable,
-                                                         width, height);
+      image->comp_preview = gimp_image_get_new_preview (viewable, context,
+                                                        width, height);
 
       image->comp_preview_valid = TRUE;
 
@@ -144,6 +146,7 @@ gimp_image_get_preview (GimpViewable *viewable,
 
 TempBuf *
 gimp_image_get_new_preview (GimpViewable *viewable,
+                            GimpContext  *context,
                             gint          width,
                             gint          height)
 {
@@ -283,7 +286,8 @@ gimp_image_get_new_preview (GimpViewable *viewable,
         }
       else
         {
-          layer_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer), w, h);
+          layer_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer),
+                                                 context, w, h);
 
           g_assert (layer_buf);
           g_assert (layer_buf->bytes <= comp->bytes);
@@ -309,7 +313,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
           else
             {
               mask_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer->mask),
-                                                    w, h);
+                                                    context, w, h);
 
               pixel_region_init_temp_buf (&maskPR, mask_buf,
                                           x1 - x, y1 - y, src1PR.w, maskPR.h);

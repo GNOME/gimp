@@ -22,6 +22,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "base/pixel-region.h"
@@ -33,10 +35,10 @@
 
 #include "gimp.h"
 #include "gimp-edit.h"
-#include "gimp-utils.h"
 #include "gimpbuffer.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
+#include "gimpdrawableundo.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
@@ -58,8 +60,7 @@ static GimpBuffer * gimp_edit_extract         (GimpImage            *image,
 static GimpBuffer * gimp_edit_extract_visible (GimpImage            *image,
                                                GimpContext          *context);
 static GimpBuffer * gimp_edit_make_buffer     (Gimp                 *gimp,
-                                               TileManager          *tiles,
-                                               gboolean              mask_empty);
+                                               TileManager          *tiles);
 static gboolean     gimp_edit_fill_internal   (GimpImage            *image,
                                                GimpDrawable         *drawable,
                                                GimpContext          *context,
@@ -474,6 +475,52 @@ gimp_edit_fill (GimpImage    *image,
                                   undo_desc);
 }
 
+gboolean
+gimp_edit_fade (GimpImage   *image,
+                GimpContext *context)
+{
+  GimpDrawableUndo *undo;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+
+  undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
+
+  if (undo && undo->src2_tiles)
+    {
+      GimpDrawable     *drawable;
+      TileManager      *src2_tiles;
+      PixelRegion       src2PR;
+
+      drawable = GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item);
+
+      g_object_ref (undo);
+      src2_tiles = tile_manager_ref (undo->src2_tiles);
+
+      gimp_image_undo (image);
+
+      pixel_region_init (&src2PR, src2_tiles,
+                         0, 0, undo->width, undo->height,
+                         FALSE);
+
+      gimp_drawable_apply_region (drawable, &src2PR,
+                                  TRUE,
+                                  gimp_object_get_name (GIMP_OBJECT (undo)),
+                                  gimp_context_get_opacity (context),
+                                  gimp_context_get_paint_mode (context),
+                                  NULL,
+                                  undo->x,
+                                  undo->y);
+
+      tile_manager_unref (src2_tiles);
+      g_object_unref (undo);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
 
 /*  private functions  */
 
@@ -484,10 +531,6 @@ gimp_edit_extract (GimpImage    *image,
                    gboolean      cut_pixels)
 {
   TileManager *tiles;
-  gboolean     empty;
-
-  /*  See if the image mask is empty  */
-  empty = gimp_channel_is_empty (gimp_image_get_mask (image));
 
   if (cut_pixels)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT, _("Cut"));
@@ -499,7 +542,7 @@ gimp_edit_extract (GimpImage    *image,
   if (cut_pixels)
     gimp_image_undo_group_end (image);
 
-  return gimp_edit_make_buffer (image->gimp, tiles, empty);
+  return gimp_edit_make_buffer (image->gimp, tiles);
 }
 
 static GimpBuffer *
@@ -509,15 +552,15 @@ gimp_edit_extract_visible (GimpImage   *image,
   GimpPickable *pickable;
   TileManager  *tiles;
   PixelRegion   srcPR, destPR;
-  gboolean      non_empty;
   gint          x1, y1, x2, y2;
 
-  non_empty = gimp_channel_bounds (gimp_image_get_mask (image),
-                                   &x1, &y1, &x2, &y2);
+  gimp_channel_bounds (gimp_image_get_mask (image), &x1, &y1, &x2, &y2);
+
   if ((x1 == x2) || (y1 == y2))
     {
-      g_message (_("Unable to cut or copy because the "
-                   "selected region is empty."));
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("Unable to cut or copy because the "
+                      "selected region is empty."));
       return NULL;
     }
 
@@ -544,30 +587,14 @@ gimp_edit_extract_visible (GimpImage   *image,
    */
   copy_region_nocow (&srcPR, &destPR);
 
-  return gimp_edit_make_buffer (image->gimp, tiles, ! non_empty);
+  return gimp_edit_make_buffer (image->gimp, tiles);
 }
 
 static GimpBuffer *
 gimp_edit_make_buffer (Gimp        *gimp,
-                       TileManager *tiles,
-                       gboolean     mask_empty)
+                       TileManager *tiles)
 {
-  /*  Only crop if the image mask wasn't empty  */
-  if (tiles && ! mask_empty)
-    {
-      TileManager *crop = tile_manager_crop (tiles, 0);
-
-      if (crop != tiles)
-        {
-          tile_manager_unref (tiles);
-          tiles = crop;
-        }
-    }
-
-  if (tiles)
-    return gimp_buffer_new (tiles, _("Global Buffer"), FALSE);
-
-  return NULL;
+  return tiles ? gimp_buffer_new (tiles, _("Global Buffer"), FALSE) : NULL;
 }
 
 static gboolean
@@ -579,28 +606,30 @@ gimp_edit_fill_internal (GimpImage            *image,
                          GimpLayerModeEffects  paint_mode,
                          const gchar          *undo_desc)
 {
-  TileManager *buf_tiles;
-  PixelRegion  bufPR;
-  gint         x, y, width, height;
-  gint         tiles_bytes;
-  guchar       col[MAX_CHANNELS];
-  TempBuf     *pat_buf = NULL;
-  gboolean     new_buf;
+  TileManager   *buf_tiles;
+  PixelRegion    bufPR;
+  gint           x, y, width, height;
+  GimpImageType  drawable_type;
+  gint           tiles_bytes;
+  guchar         col[MAX_CHANNELS];
+  TempBuf       *pat_buf = NULL;
+  gboolean       new_buf;
 
   if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     return TRUE;  /*  nothing to do, but the fill succeded  */
 
-  tiles_bytes = gimp_drawable_bytes (drawable);
+  drawable_type = gimp_drawable_type (drawable);
+  tiles_bytes   = gimp_drawable_bytes (drawable);
 
   switch (fill_type)
     {
     case GIMP_FOREGROUND_FILL:
-      gimp_image_get_foreground (image, drawable, context, col);
+      gimp_image_get_foreground (image, context, drawable_type, col);
       break;
 
     case GIMP_BACKGROUND_FILL:
     case GIMP_TRANSPARENT_FILL:
-      gimp_image_get_background (image, drawable, context, col);
+      gimp_image_get_background (image, context, drawable_type, col);
       break;
 
     case GIMP_WHITE_FILL:
@@ -610,7 +639,8 @@ gimp_edit_fill_internal (GimpImage            *image,
         tmp_col[RED_PIX]   = 255;
         tmp_col[GREEN_PIX] = 255;
         tmp_col[BLUE_PIX]  = 255;
-        gimp_image_transform_color (image, drawable, col, GIMP_RGB, tmp_col);
+        gimp_image_transform_color (image, drawable_type, col,
+                                    GIMP_RGB, tmp_col);
       }
       break;
 
@@ -618,7 +648,7 @@ gimp_edit_fill_internal (GimpImage            *image,
       {
         GimpPattern *pattern = gimp_context_get_pattern (context);
 
-        pat_buf = gimp_image_transform_temp_buf (image, drawable,
+        pat_buf = gimp_image_transform_temp_buf (image, drawable_type,
                                                  pattern->mask, &new_buf);
 
         if (! gimp_drawable_has_alpha (drawable) &&

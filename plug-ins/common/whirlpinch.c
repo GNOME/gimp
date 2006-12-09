@@ -60,7 +60,6 @@
 /***** Magic numbers *****/
 
 #define SCALE_WIDTH  200
-#define ENTRY_WIDTH  60
 
 /***** Types *****/
 

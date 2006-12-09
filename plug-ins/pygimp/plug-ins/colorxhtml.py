@@ -25,6 +25,8 @@ import os.path
 import gimp
 from gimpfu import *
 
+gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
+
 (CHARS_SOURCE, CHARS_FILE, CHARS_PARAMETER) = range(3)
 
 escape_table = {
@@ -42,21 +44,22 @@ style_def = """body {
 }
 """
 
-preamble = """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+preamble = """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>css color html by The GIMP</title>
+<title>CSS Color XHTML written by GIMP</title>
 %s
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
 <pre>
 """
 
-postamble = """\n</pre>\n</html>\n"""
+postamble = """\n</pre>\n</body>\n</html>\n"""
 
-def python_colorxhtml(img, drawable, filename, raw_filename,
-                      source_type, characters, size, separate):
+def colorxhtml(img, drawable, filename, raw_filename,
+	       source_type, characters, size, separate):
     width = drawable.width
     height = drawable.height
     bpp = drawable.bpp
@@ -76,7 +79,7 @@ def python_colorxhtml(img, drawable, filename, raw_filename,
         css = file(cssname, 'w')
 
     if source_type == CHARS_SOURCE:
-        chars = file(inspect.getsourcefile(python_colorxhtml)).read()
+        chars = file(inspect.getsourcefile(colorxhtml)).read()
     elif source_type == CHARS_FILE:
         chars = file(characters).read()
     elif source_type == CHARS_PARAMETER:
@@ -101,12 +104,12 @@ def python_colorxhtml(img, drawable, filename, raw_filename,
 
     pr = drawable.get_pixel_rgn(0, 0, width, height, False, False)
 
-    gimp.progress_init("Saving '%s' as COLORXHTML..." % filename)
+    gimp.progress_init(_("Saving as colored XHTML"))
 
     style = style_def % size
 
     if separate:
-        ss = '<link rel="stylesheet" type="text/css" href="%s">' % cssfile
+        ss = '<link rel="stylesheet" type="text/css" href="%s" />' % cssfile
         css.write(style)
     else:
         ss = '<style type="text/css">\n%s</style>' % style
@@ -149,7 +152,7 @@ def python_colorxhtml(img, drawable, filename, raw_filename,
         css.close()
 
 def register_save():
-    gimp.register_save_handler("file_colorxhtml_save", "colorxhtml", "")
+    gimp.register_save_handler("file-colorxhtml-save", "xhtml", "")
 
 class RowIterator:
     def __init__(self, row, bpp):
@@ -177,26 +180,27 @@ class RowIterator:
         return pixel
 
 register(
-    "file_colorxhtml_save",
-    "Saves the image as colored xhtml text",
-    "Saves the image as colored xhtml text (based on perl version by Marc Lehmann)",
+    "file-colorxhtml-save",
+    N_("Save as colored XHTML"),
+    "Saves the image as colored XHTML text (based on Perl version by Marc Lehmann)",
     "Manish Singh and Carol Spears",
     "Manish Singh and Carol Spears",
     "2003",
-    "<Save>/COLORXHTML",
+    N_("Colored XHTML"),
     "RGB",
     [
-        (PF_RADIO, "source", "Where to take the characters from", 0,
-                   (("Source code", CHARS_SOURCE),
-                    ("Text file",   CHARS_FILE),
-                    ("Entry box",   CHARS_PARAMETER))),
-        (PF_FILE, "characters", "The filename to read or the characters to use",
-                  ""),
-        (PF_INT, "font_size", "The font size in pixels", 10),
-        (PF_BOOL, "separate", "Separate CSS file", True)
+        (PF_RADIO, "source", _("Character source"), 0,
+                   ((_("Source code"), CHARS_SOURCE),
+                    (_("Text file"),   CHARS_FILE),
+                    (_("Entry box"),   CHARS_PARAMETER))),
+        (PF_FILE,  "characters", _("File to read or characters to use"),
+                   ""),
+        (PF_INT,   "font-size",  _("Font size in pixels"), 10),
+        (PF_BOOL,  "separate",   _("Write a separate CSS file"),   True)
     ],
     [],
-    python_colorxhtml,
-    on_query=register_save)
+    colorxhtml, on_query=register_save,
+    menu="<Save>", domain=("gimp20-python", gimp.locale_directory)
+    )
 
 main()

@@ -31,6 +31,8 @@
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
 
+#include "internal_procs.h"
+
 
 static GValueArray *
 brushes_popup_invoker (GimpProcedure     *procedure,
@@ -58,7 +60,8 @@ brushes_popup_invoker (GimpProcedure     *procedure,
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
-          ! gimp_pdb_dialog_new (gimp, context, gimp->brush_factory->container,
+          ! gimp_pdb_dialog_new (gimp, context, progress,
+                                 gimp->brush_factory->container,
                                  popup_title, brush_callback, initial_brush,
                                  "opacity",    opacity / 100.0,
                                  "paint-mode", paint_mode,

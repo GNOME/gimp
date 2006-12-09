@@ -259,7 +259,7 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          status = SaveICO (file_name, image_ID);
+          status = ico_save_image (file_name, image_ID, run_mode);
         }
 
       if (export == GIMP_EXPORT_EXPORT)
@@ -275,6 +275,49 @@ run (const gchar      *name,
 }
 
 
+gint
+ico_rowstride (gint width,
+               gint bpp)
+{
+  switch (bpp)
+    {
+    case 1:
+      if ((width % 32) == 0)
+        return width / 8;
+      else
+        return 4 * (width/32 + 1);
+      break;
+
+    case 4:
+      if ((width % 8) == 0)
+        return width / 2;
+      else
+        return 4 * (width/8 + 1);
+      break;
+
+    case 8:
+      if ((width % 4) == 0)
+        return width;
+      else
+        return 4 * (width/4 + 1);
+      break;
+
+    case 24:
+      if (((width*3) % 4) == 0)
+        return width * 3;
+      else
+        return 4 * (width*3/4+1);
+
+    case 32:
+      return width * 4;
+
+    default:
+      g_warning ("invalid bitrate: %d\n", bpp);
+      g_assert_not_reached ();
+      return width * (bpp/8);
+    }
+}
+
 guint8 *
 ico_alloc_map (gint  width,
                gint  height,
@@ -284,32 +327,7 @@ ico_alloc_map (gint  width,
   gint    len = 0;
   guint8 *map = NULL;
 
-  switch (bpp)
-    {
-    case 1:
-      if ((width % 32) == 0)
-        len = (width * height / 8);
-      else
-        len = 4 * ((width/32 + 1) * height);
-      break;
-
-    case 4:
-      if ((width % 8) == 0)
-        len = (width * height / 2);
-      else
-        len = 4 * ((width/8 + 1) * height);
-      break;
-
-    case 8:
-      if ((width % 4) == 0)
-        len = width * height;
-      else
-        len = 4 * ((width/4 + 1) * height);
-      break;
-
-    default:
-      len = width * height * (bpp/8);
-    }
+  len = ico_rowstride (width, bpp) * height;
 
   *length = len;
   map = g_new0 (guint8, len);
@@ -317,28 +335,3 @@ ico_alloc_map (gint  width,
   return map;
 }
 
-void
-ico_cleanup (MsIcon *ico)
-{
-  gint i;
-
-  if (!ico)
-    return;
-
-  if (ico->fp)
-    fclose (ico->fp);
-
-  if (ico->icon_dir)
-    g_free (ico->icon_dir);
-
-  if (ico->icon_data)
-    {
-      for (i = 0; i < ico->icon_count; i++)
-        {
-          g_free (ico->icon_data[i].palette);
-          g_free (ico->icon_data[i].xor_map);
-          g_free (ico->icon_data[i].and_map);
-        }
-      g_free (ico->icon_data);
-    }
-}

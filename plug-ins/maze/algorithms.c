@@ -37,15 +37,17 @@
  *
  */
 
-#ifndef SOLO_COMPILE
 #include "config.h"
-#endif
 
 #include <stdlib.h>
-#include "maze.h"
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
+
+#include "maze.h"
+
 
 extern MazeValues mvals;
 extern GRand     *gr;

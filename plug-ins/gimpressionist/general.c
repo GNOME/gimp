@@ -7,6 +7,7 @@
 
 #include "gimpressionist.h"
 #include "infile.h"
+#include "general.h"
 
 #include "libgimp/stdplugins-intl.h"
 

@@ -41,6 +41,7 @@ struct _GimpDataEditor
   GimpEditor       parent_instance;
 
   GimpDataFactory *data_factory;
+  GimpContext     *context;
   gboolean         edit_active;
 
   GimpData        *data;

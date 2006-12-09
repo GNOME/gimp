@@ -49,6 +49,7 @@
 #include "tools/gimp-tools.h"
 
 #include "widgets/gimpclipboard.h"
+#include "widgets/gimpcolorselectorpalette.h"
 #include "widgets/gimpcontrollers.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdevicestatus.h"
@@ -421,6 +422,8 @@ gui_restore_callback (Gimp               *gimp,
   gimp_controllers_init (gimp);
   session_init (gimp);
 
+  g_type_class_unref (g_type_class_ref (GIMP_TYPE_COLOR_SELECTOR_PALETTE));
+
   (* status_callback) (NULL, _("Tool Options"), 1.0);
   gimp_tools_restore (gimp);
 }
@@ -618,7 +621,7 @@ gui_menu_show_tooltip (GimpUIManager *manager,
       GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
 
       gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "menu-tooltip",
-                           tooltip);
+                           "%s", tooltip);
     }
 }
 

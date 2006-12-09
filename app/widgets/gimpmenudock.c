@@ -34,7 +34,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
-#include "core/gimptoolinfo.h"
 
 #include "gimpdialogfactory.h"
 #include "gimpcontainercombobox.h"

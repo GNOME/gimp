@@ -20,6 +20,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include <time.h>
 
 #ifdef HAVE_UNISTD_H
@@ -36,6 +37,7 @@
 
 #ifdef G_OS_WIN32
 #include <winsock2.h>
+#include <libgimpbase/gimpwin32-io.h>
 #else
 #include <sys/socket.h>
 #ifdef HAVE_SYS_SELECT_H
@@ -44,7 +46,6 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
-#include <errno.h>
 #endif
 
 #include <glib/gstdio.h>
@@ -54,7 +55,7 @@
 
 #include "script-fu-intl.h"
 
-#include "siod-wrapper.h"
+#include "scheme-wrapper.h"
 #include "script-fu-server.h"
 
 #ifdef G_OS_WIN32
@@ -133,18 +134,18 @@ typedef struct
  */
 
 static void      server_start       (gint         port,
-				     const gchar *logfile);
+                                     const gchar *logfile);
 static gboolean  execute_command    (SFCommand   *cmd);
 static gint      read_from_client   (gint         filedes);
 static gint      make_socket        (guint        port);
 static void      server_log         (const gchar *format,
-				     ...) G_GNUC_PRINTF (1, 2);
+                                     ...) G_GNUC_PRINTF (1, 2);
 static void      server_quit        (void);
 
 static gboolean  server_interface   (void);
 static void      response_callback  (GtkWidget   *widget,
                                      gint         response_id,
-				     gpointer     data);
+                                     gpointer     data);
 static void      print_socket_api_error (const gchar *api_name);
 
 /*
@@ -188,10 +189,10 @@ script_fu_server_get_mode (void)
 
 void
 script_fu_server_run (const gchar      *name,
-		      gint              nparams,
-		      const GimpParam  *params,
-		      gint             *nreturn_vals,
-		      GimpParam       **return_vals)
+                      gint              nparams,
+                      const GimpParam  *params,
+                      gint             *nreturn_vals,
+                      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
@@ -203,12 +204,12 @@ script_fu_server_run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       if (server_interface ())
-	{
-	  server_mode = TRUE;
+        {
+          server_mode = TRUE;
 
-	  /*  Start the server  */
-	  server_start (sint.port, sint.logfile);
-	}
+          /*  Start the server  */
+          server_start (sint.port, sint.logfile);
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -221,7 +222,7 @@ script_fu_server_run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       status = GIMP_PDB_CALLING_ERROR;
-      g_warning ("Script-Fu server does handle \"GIMP_RUN_WITH_LAST_VALS\"");
+      g_warning ("Script-Fu server does not handle \"GIMP_RUN_WITH_LAST_VALS\"");
 
     default:
       break;
@@ -387,7 +388,7 @@ server_progress_uninstall (const gchar *progress)
 
 static void
 server_start (gint         port,
-	      const gchar *logfile)
+              const gchar *logfile)
 {
   const gchar *progress;
 
@@ -416,7 +417,7 @@ server_start (gint         port,
 
   progress = server_progress_install ();
 
-  server_log ("Script-fu server initialized and listening...\n");
+  server_log ("Script-Fu server initialized and listening...\n");
 
   /*  Loop until the server is finished  */
   while (! script_fu_done)
@@ -424,20 +425,20 @@ server_start (gint         port,
       script_fu_server_listen (0);
 
       while (command_queue)
-	{
+        {
           SFCommand *cmd = (SFCommand *) command_queue->data;
 
-	  /*  Process the command  */
-	  execute_command (cmd);
+          /*  Process the command  */
+          execute_command (cmd);
 
-	  /*  Remove the command from the list  */
-	  command_queue = g_list_remove (command_queue, cmd);
-	  queue_length--;
+          /*  Remove the command from the list  */
+          command_queue = g_list_remove (command_queue, cmd);
+          queue_length--;
 
-	  /*  Free the request  */
-	  g_free (cmd->command);
-	  g_free (cmd);
-	}
+          /*  Free the request  */
+          g_free (cmd->command);
+          g_free (cmd);
+      }
     }
 
   server_progress_uninstall (progress);
@@ -460,10 +461,10 @@ execute_command (SFCommand *cmd)
   time (&clock1);
 
   /*  run the command  */
-  if (siod_interpret_string (cmd->command) != 0)
+  if (ts_interpret_string (cmd->command) != 0)
     {
       error = TRUE;
-      response = siod_get_error_msg ();
+      response = ts_get_error_msg ();
       response_len = strlen (response);
 
       server_log ("%s\n", response);
@@ -472,12 +473,12 @@ execute_command (SFCommand *cmd)
     {
       error = FALSE;
 
-      response = siod_get_success_msg ();
+      response = ts_get_success_msg ();
       response_len = strlen (response);
 
       time (&clock2);
       server_log ("Request #%d processed in %f seconds, finishing on %s",
-		  cmd->request_no, difftime (clock2, clock1), ctime (&clock2));
+                  cmd->request_no, difftime (clock2, clock1), ctime (&clock2));
     }
 
   buffer[MAGIC_BYTE]     = MAGIC;
@@ -489,17 +490,17 @@ execute_command (SFCommand *cmd)
   for (i = 0; i < RESPONSE_HEADER; i++)
     if (cmd->filedes > 0 && send (cmd->filedes, buffer + i, 1, 0) < 0)
       {
-	/*  Write error  */
-	print_socket_api_error ("send");
-	return FALSE;
+        /*  Write error  */
+        print_socket_api_error ("send");
+        return FALSE;
       }
 
   for (i = 0; i < response_len; i++)
     if (cmd->filedes > 0 && send (cmd->filedes, response + i, 1, 0) < 0)
       {
-	/*  Write error  */
-	print_socket_api_error ("send");
-	return FALSE;
+        /*  Write error  */
+        print_socket_api_error ("send");
+        return FALSE;
       }
 
   return FALSE;
@@ -580,10 +581,10 @@ read_from_client (gint filedes)
   clientaddr = g_hash_table_lookup (clients, GINT_TO_POINTER (cmd->filedes));
   time (&clock);
   server_log ("Received request #%d from IP address %s: %s on %s,"
-	      "[Request queue length: %d]",
-	      cmd->request_no,
-              clientaddr ? clientaddr : "<invalid>",
-              cmd->command, ctime (&clock), queue_length);
+              "[Request queue length: %d]",
+              cmd->request_no,
+                  clientaddr ? clientaddr : "<invalid>",
+                      cmd->command, ctime (&clock), queue_length);
 
   return 0;
 }
@@ -709,12 +710,12 @@ server_interface (void)
 
   dlg = gimp_dialog_new (_("Script-Fu Server Options"), "script-fu",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-script-fu-server",
+                         gimp_standard_help_func, "plug-in-script-fu-server",
 
-			 GTK_STOCK_CANCEL,   GTK_RESPONSE_CANCEL,
-			 _("_Start Server"), GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL,   GTK_RESPONSE_CANCEL,
+                         _("_Start Server"), GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
                                            GTK_RESPONSE_OK,
@@ -740,14 +741,14 @@ server_interface (void)
   sint.port_entry = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (sint.port_entry), "10008");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Server port:"), 0.0, 0.5,
-			     sint.port_entry, 1, FALSE);
+                             _("Server port:"), 0.0, 0.5,
+                             sint.port_entry, 1, FALSE);
 
   /*  The server logfile  */
   sint.log_entry = gtk_entry_new ();
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Server logfile:"), 0.0, 0.5,
-			     sint.log_entry, 1, FALSE);
+                             _("Server logfile:"), 0.0, 0.5,
+                             sint.log_entry, 1, FALSE);
 
   gtk_widget_show (table);
   gtk_widget_show (dlg);

@@ -649,6 +649,41 @@ CODE
     );
 }
 
+sub image_get_layer_position {
+    $blurb = 'Returns the position of the layer in the layer stack.';
+
+    $help = <<'HELP';
+This procedure determines the positioin of the specified layer in the images
+layer stack. If the layer doesn't exist in the image, an error is returned.
+HELP
+
+    &simon_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'position', type => 'int32',
+	  desc => "The position of the layer in the layer stack" }
+    );
+
+
+    %invoke = (
+	code => <<'CODE'
+{
+  position = gimp_container_get_child_index (GIMP_CONTAINER (image->layers),
+                                             GIMP_OBJECT (layer));
+  if (position < 0)
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub image_raise_layer {
     $blurb = "Raise the specified layer in the image's layer stack";
 
@@ -899,7 +934,7 @@ HELP
 
     $invoke{code} = <<'CODE';
 {
-  if (! gimp_item_is_floating (GIMP_ITEM (layer)) ||
+  if (! g_object_is_floating (layer) ||
       GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))) !=
       gimp_image_base_type (image))
     {
@@ -984,6 +1019,41 @@ CODE
     );
 }
 
+sub image_get_channel_position {
+    $blurb = 'Returns the position of the channel in the channel stack.';
+
+    $help = <<'HELP';
+This procedure determines the positioin of the specified channel in the images
+channel stack. If the channel doesn't exist in the image, an error is returned.
+HELP
+
+    &simon_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel' }
+    );
+
+    @outargs = (
+	{ name => 'position', type => 'int32',
+	  desc => "The position of the channel in the channel stack" }
+    );
+
+
+    %invoke = (
+	code => <<'CODE'
+{
+  position = gimp_container_get_child_index (GIMP_CONTAINER (image->channels),
+                                             GIMP_OBJECT (channel));
+  if (position < 0)
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub image_raise_channel {
     $blurb = "Raise the specified channel in the image's channel stack";
 
@@ -1061,7 +1131,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_item_is_floating (GIMP_ITEM (channel)))
+  if (g_object_is_floating (channel))
     success = gimp_image_add_channel (image, channel, MAX (position, -1));
   else
     success = FALSE;
@@ -1118,7 +1188,7 @@ HELP
 
     $invoke{code} = <<'CODE';
 {
-  if (gimp_item_is_floating (GIMP_ITEM (vectors)))
+  if (g_object_is_floating (vectors))
     success = gimp_image_add_vectors (image, vectors, MAX (position, -1));
   else
     success = FALSE;
@@ -1147,6 +1217,42 @@ HELP
 	code => <<'CODE'
 {
   gimp_image_remove_vectors (image, vectors);
+}
+CODE
+    );
+}
+
+sub image_get_vectors_position {
+    $blurb = 'Returns the position of the vectors object in the vectors objects stack.';
+
+    $help = <<'HELP';
+This procedure determines the positioin of the specified vectors object in the
+images vectors object stack. If the vectors object doesn't exist in the image,
+an error is returned.
+HELP
+
+    &simon_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object' }
+    );
+
+    @outargs = (
+	{ name => 'position', type => 'int32',
+	  desc => "The position of the vectors object in the vectors stack" }
+    );
+
+
+    %invoke = (
+	code => <<'CODE'
+{
+  position = gimp_container_get_child_index (GIMP_CONTAINER (image->vectors),
+                                             GIMP_OBJECT (vectors));
+  if (position < 0)
+    success = FALSE;
 }
 CODE
     );
@@ -1331,7 +1437,7 @@ sub image_get_colormap {
     $help = <<'HELP';
 This procedure returns an actual pointer to the image's colormap, as well as
 the number of bytes contained in the colormap. The actual number of colors in
-the transmitted colormap will be "num_bytes" / 3. If the image is not in
+the transmitted colormap will be 'num-bytes' / 3. If the image is not in
 Indexed color mode, no colormap is returned.
 HELP
 
@@ -1365,9 +1471,9 @@ sub image_set_colormap {
 
     $help = <<'HELP';
 This procedure sets the entries in the specified image's colormap. The number
-of entries is specified by the "num_bytes" parameter and corresponds to the
-number of INT8 triples that must be contained in the "colormap" array. The
-actual number of colors in the transmitted colormap is "num_bytes" / 3.
+of entries is specified by the 'num-bytes' parameter and corresponds to the
+number of INT8 triples that must be contained in the 'colormap' array. The
+actual number of colors in the transmitted colormap is 'num-bytes' / 3.
 HELP
 
     &std_pdb_misc;
@@ -2094,8 +2200,9 @@ HELP
       ! FINITE (yresolution) ||
       yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
     {
-      g_message (_("Image resolution is out of bounds, "
-                   "using the default resolution instead."));
+      gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                    _("Image resolution is out of bounds, "
+                      "using the default resolution instead."));
       success = FALSE;
     }
   else
@@ -2373,7 +2480,7 @@ HELP
     width  = MAX (1, (height * dwidth) / dheight);
 
   if (image->gimp->config->layer_previews)
-    buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (image),
+    buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (image), context,
                                          width, height);
   else
     buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (image),
@@ -2433,11 +2540,14 @@ CODE
             image_get_floating_sel image_floating_sel_attached_to
             image_pick_color image_pick_correlate_layer
             image_add_layer image_remove_layer
+	    image_get_layer_position
             image_raise_layer image_lower_layer
             image_raise_layer_to_top image_lower_layer_to_bottom
             image_add_channel image_remove_channel
+	    image_get_channel_position
             image_raise_channel image_lower_channel
             image_add_vectors image_remove_vectors
+	    image_get_vectors_position
             image_raise_vectors image_lower_vectors
             image_raise_vectors_to_top image_lower_vectors_to_bottom
             image_flatten image_merge_visible_layers image_merge_down
@@ -2460,7 +2570,7 @@ CODE
             image_get_channel_by_tattoo
             image_get_vectors_by_tattoo);
 
-%exports = (app => [@procs], lib => [@procs[0..41,44..70]]);
+%exports = (app => [@procs], lib => [@procs[0..44,47..73]]);
 
 $desc = 'Image';
 

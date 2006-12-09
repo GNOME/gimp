@@ -39,6 +39,7 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "base-types.h"
@@ -1095,10 +1096,9 @@ siox_foreground_extract (SioxState          *state,
   siox_progress_update (progress_callback, progress_data, 0.5);
 
   /* Reduce the working area to the region of interest */
-  x      = x1;
-  y      = y1;
-  width  = x2 - x1;
-  height = y2 - y1;
+  gimp_rectangle_intersect (x1, y1, x2 - x1, y2 - y1,
+                            x, y, width, height,
+                            &x, &y, &width, &height);
 
   /* Classify - the cached way....Better: Tree traversation? */
 

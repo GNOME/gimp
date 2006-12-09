@@ -3,6 +3,13 @@
 
 <ui>
   <popup action="gradient-editor-popup">
+    <menu action="gradient-editor-left-color-type">
+      <menuitem action="gradient-editor-left-color-fixed" />
+      <menuitem action="gradient-editor-left-color-foreground" />
+      <menuitem action="gradient-editor-left-color-foreground-transparent" />
+      <menuitem action="gradient-editor-left-color-background" />
+      <menuitem action="gradient-editor-left-color-background-transparent" />
+    </menu>
     <menuitem action="gradient-editor-left-color" />
     <menu action="gradient-editor-load-left-color">
       <menuitem action="gradient-editor-load-left-left-neighbor" />
@@ -34,6 +41,13 @@
       <menuitem action="gradient-editor-save-left-10" />
     </menu>
     <separator />
+    <menu action="gradient-editor-right-color-type">
+      <menuitem action="gradient-editor-right-color-fixed" />
+      <menuitem action="gradient-editor-right-color-foreground" />
+      <menuitem action="gradient-editor-right-color-foreground-transparent" />
+      <menuitem action="gradient-editor-right-color-background" />
+      <menuitem action="gradient-editor-right-color-background-transparent" />
+    </menu>
     <menuitem action="gradient-editor-right-color" />
     <menu action="gradient-editor-load-right-color">
       <menuitem action="gradient-editor-load-right-right-neighbor" />

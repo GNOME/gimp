@@ -30,16 +30,16 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_PROC   "plug-in-cubism"
-#define PLUG_IN_BINARY "cubism"
-#define SCALE_WIDTH       125
-#define BLACK               0
-#define BG                  1
-#define SUPERSAMPLE         4
-#define MAX_POINTS          4
-#define MIN_ANGLE      -36000
-#define MAX_ANGLE       36000
-#define RANDOMNESS          5
+#define PLUG_IN_PROC    "plug-in-cubism"
+#define PLUG_IN_BINARY  "cubism"
+
+#define SCALE_WIDTH     125
+#define BLACK             0
+#define BG                1
+#define SUPERSAMPLE       4
+#define MAX_POINTS        4
+#define RANDOMNESS        5
+
 
 typedef struct
 {

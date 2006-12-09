@@ -121,7 +121,8 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   if (! area)
     return;
 
-  gimp_image_get_background (image, drawable, context, col);
+  gimp_image_get_background (image, context, gimp_drawable_type (drawable),
+                             col);
 
   /*  set the alpha channel  */
   col[area->bytes - 1] = OPAQUE_OPACITY;

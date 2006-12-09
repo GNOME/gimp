@@ -38,9 +38,10 @@ typedef struct _GimpContainerComboBoxClass  GimpContainerComboBoxClass;
 
 struct _GimpContainerComboBox
 {
-  GtkComboBox      parent_instance;
+  GtkComboBox         parent_instance;
 
-  GtkCellRenderer *viewable_renderer;
+  GtkCellRenderer    *text_renderer;
+  GtkCellRenderer    *viewable_renderer;
 };
 
 struct _GimpContainerComboBoxClass

@@ -148,3 +148,12 @@ The suggested width for a color bar in a #GimpColorSelector implementation.
 @selector: 
 
 
+<!-- ##### FUNCTION gimp_color_selector_set_config ##### -->
+<para>
+
+</para>
+
+@selector: 
+@config: 
+
+

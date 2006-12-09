@@ -20,6 +20,7 @@ OBJECTS = \
 	gimpenvirontable.obj \
 	gimpinterpreterdb.obj \
 	gimpplugin.obj \
+	gimpplugin-cleanup.obj \
 	gimpplugin-context.obj \
 	gimpplugindebug.obj \
 	gimppluginmanager.obj \
@@ -27,16 +28,20 @@ OBJECTS = \
 	gimppluginmanager-data.obj \
 	gimppluginmanager-file.obj \
 	gimppluginmanager-help-domain.obj \
+	gimppluginmanager-history.obj \
 	gimppluginmanager-locale-domain.obj \
 	gimppluginmanager-menu-branch.obj \
 	gimppluginmanager-query.obj \
 	gimpplugin-message.obj \
+	gimppluginprocedure.obj \
 	gimppluginprocframe.obj \
 	gimpplugin-progress.obj \
 	gimppluginshm.obj \
+	gimptemporaryprocedure.obj \
 	\
 	plug-in-def.obj \
 	plug-in-enums.obj \
+	plug-in-icc-profile.obj \
 	plug-in-params.obj \
 	plug-in-rc.obj
 

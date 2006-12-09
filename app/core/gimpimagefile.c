@@ -64,6 +64,7 @@ static void        gimp_imagefile_notify_thumbnail (GimpImagefile  *imagefile,
                                                     GParamSpec     *pspec);
 
 static GdkPixbuf * gimp_imagefile_get_new_pixbuf   (GimpViewable   *viewable,
+                                                    GimpContext    *context,
                                                     gint            width,
                                                     gint            height);
 static GdkPixbuf * gimp_imagefile_load_thumb       (GimpImagefile  *imagefile,
@@ -289,8 +290,10 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
 
       if (! success)
         {
-          g_message (error->message);
-          g_error_free (error);
+          gimp_message (imagefile->gimp, G_OBJECT (progress),
+                        GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
+          g_clear_error (&error);
         }
     }
 }
@@ -390,8 +393,9 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
                                            &error);
       if (! success)
         {
-          g_message (error->message);
-          g_error_free (error);
+          gimp_message (imagefile->gimp, NULL, GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
+          g_clear_error (&error);
         }
     }
 
@@ -438,6 +442,7 @@ gimp_imagefile_notify_thumbnail (GimpImagefile *imagefile,
 
 static GdkPixbuf *
 gimp_imagefile_get_new_pixbuf (GimpViewable *viewable,
+                               GimpContext  *context,
                                gint          width,
                                gint          height)
 {
@@ -670,9 +675,10 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
     {
       if (error)
         {
-          g_message (_("Could not open thumbnail '%s': %s"),
-                     thumbnail->thumb_filename, error->message);
-          g_error_free (error);
+          gimp_message (imagefile->gimp, NULL, GIMP_MESSAGE_ERROR,
+                        _("Could not open thumbnail '%s': %s"),
+                        thumbnail->thumb_filename, error->message);
+          g_clear_error (&error);
         }
 
       return NULL;
@@ -758,7 +764,10 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
         }
     }
 
-  pixbuf = gimp_viewable_get_new_pixbuf (GIMP_VIEWABLE (image), width, height);
+  pixbuf = gimp_viewable_get_new_pixbuf (GIMP_VIEWABLE (image),
+                                         /* random context, unused */
+                                         gimp_get_user_context (image->gimp),
+                                         width, height);
 
   /*  when layer previews are disabled, we won't get a pixbuf  */
   if (! pixbuf)

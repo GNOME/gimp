@@ -22,7 +22,6 @@
 #ifndef __ICO_LOAD_H__
 #define __ICO_LOAD_H__
 
-
 gint32 ico_load_image           (const gchar  *filename);
 gint32 ico_load_thumbnail_image (const gchar  *filename,
                                  gint         *width,
@@ -36,7 +35,6 @@ gint   ico_get_nibble_from_data (const guint8 *data,
 gint   ico_get_byte_from_data   (const guint8 *data,
                                  gint          line_width,
                                  gint          byte);
-
 
 
 #endif /* __ICO_LOAD_H__ */

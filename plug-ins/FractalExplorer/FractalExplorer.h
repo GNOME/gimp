@@ -199,5 +199,16 @@ extern gchar       *fractalexplorer_path;
 extern explorer_interface_t wint;
 
 extern explorer_vals_t wvals;
-extern GimpDrawable        *drawable;
+extern GimpDrawable   *drawable;
+
+
+/**********************************************************************
+  Global functions
+ *********************************************************************/
+
+void explorer_render_row (const guchar *src_row,
+                          guchar       *dest_row,
+                          gint          row,
+                          gint          row_width,
+                          gint          bpp);
 #endif

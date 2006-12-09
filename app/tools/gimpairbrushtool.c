@@ -24,8 +24,6 @@
 
 #include "tools-types.h"
 
-#include "core/gimptoolinfo.h"
-
 #include "paint/gimpairbrushoptions.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -54,7 +52,7 @@ gimp_airbrush_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_CONTEXT_GRADIENT_MASK,
                 "gimp-airbrush-tool",
                 _("Airbrush"),
-                _("Airbrush with variable pressure"),
+                _("Airbrush Tool: Paint using a brush, with variable pressure"),
                 N_("_Airbrush"), "A",
                 NULL, GIMP_HELP_TOOL_AIRBRUSH,
                 GIMP_STOCK_TOOL_AIRBRUSH,
@@ -83,13 +81,9 @@ gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
 static GtkWidget *
 gimp_airbrush_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
-  GtkWidget *vbox;
+  GObject   *config = G_OBJECT (tool_options);
+  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *table;
-
-  config = G_OBJECT (tool_options);
-
-  vbox = gimp_paint_options_gui (tool_options);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);

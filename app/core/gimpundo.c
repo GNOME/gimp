@@ -31,6 +31,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
+#include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpmarshal.h"
 #include "gimpundo.h"
@@ -82,6 +83,7 @@ static gboolean  gimp_undo_get_popup_size      (GimpViewable        *viewable,
                                                 gint                *popup_width,
                                                 gint                *popup_height);
 static TempBuf * gimp_undo_get_new_preview     (GimpViewable        *viewable,
+                                                GimpContext         *context,
                                                 gint                 width,
                                                 gint                 height);
 
@@ -92,7 +94,8 @@ static void      gimp_undo_real_free           (GimpUndo            *undo,
                                                 GimpUndoMode         undo_mode);
 
 static gboolean  gimp_undo_create_preview_idle (gpointer             data);
-static void   gimp_undo_create_preview_private (GimpUndo            *undo);
+static void   gimp_undo_create_preview_private (GimpUndo            *undo,
+                                                GimpContext         *context);
 
 
 G_DEFINE_TYPE (GimpUndo, gimp_undo, GIMP_TYPE_VIEWABLE)
@@ -242,7 +245,7 @@ gimp_undo_set_property (GObject      *object,
     {
     case PROP_IMAGE:
       /* don't ref */
-      undo->image = (GimpImage *) g_value_get_object (value);
+      undo->image = g_value_get_object (value);
       break;
     case PROP_UNDO_TYPE:
       undo->undo_type = g_value_get_enum (value);
@@ -343,6 +346,7 @@ gimp_undo_get_popup_size (GimpViewable *viewable,
 
 static TempBuf *
 gimp_undo_get_new_preview (GimpViewable *viewable,
+                           GimpContext  *context,
                            gint          width,
                            gint          height)
 {
@@ -425,38 +429,72 @@ gimp_undo_free (GimpUndo     *undo,
   g_signal_emit (undo, undo_signals[FREE], 0, undo_mode);
 }
 
+typedef struct _GimpUndoIdle GimpUndoIdle;
+
+struct _GimpUndoIdle
+{
+  GimpUndo    *undo;
+  GimpContext *context;
+};
+
+static void
+gimp_undo_idle_free (GimpUndoIdle *idle)
+{
+  if (idle->context)
+    g_object_unref (idle->context);
+
+  g_free (idle);
+}
+
 void
-gimp_undo_create_preview (GimpUndo  *undo,
-                          gboolean   create_now)
+gimp_undo_create_preview (GimpUndo    *undo,
+                          GimpContext *context,
+                          gboolean     create_now)
 {
   g_return_if_fail (GIMP_IS_UNDO (undo));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
   if (undo->preview || undo->preview_idle_id)
     return;
 
   if (create_now)
-    gimp_undo_create_preview_private (undo);
+    {
+      gimp_undo_create_preview_private (undo, context);
+    }
   else
-    undo->preview_idle_id = g_idle_add (gimp_undo_create_preview_idle, undo);
+    {
+      GimpUndoIdle *idle = g_new0 (GimpUndoIdle, 1);
+
+      idle->undo = undo;
+
+      if (context)
+        idle->context = g_object_ref (context);
+
+      undo->preview_idle_id =
+        g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                         gimp_undo_create_preview_idle,
+                         idle, (GDestroyNotify) gimp_undo_idle_free);
+    }
 }
 
 static gboolean
 gimp_undo_create_preview_idle (gpointer data)
 {
-  GimpUndo *undo = GIMP_UNDO (data);
+  GimpUndoIdle *idle = data;
 
-  if (undo == gimp_undo_stack_peek (undo->image->undo_stack))
+  if (idle->undo == gimp_undo_stack_peek (idle->undo->image->undo_stack))
     {
-      gimp_undo_create_preview_private (undo);
+      gimp_undo_create_preview_private (idle->undo, idle->context);
     }
 
-  undo->preview_idle_id = 0;
+  idle->undo->preview_idle_id = 0;
 
   return FALSE;
 }
 
 static void
-gimp_undo_create_preview_private (GimpUndo *undo)
+gimp_undo_create_preview_private (GimpUndo    *undo,
+                                  GimpContext *context)
 {
   GimpImage    *image = undo->image;
   GimpViewable *preview_viewable;
@@ -498,16 +536,18 @@ gimp_undo_create_preview_private (GimpUndo *undo)
         }
     }
 
-  undo->preview = gimp_viewable_get_new_preview (preview_viewable,
+  undo->preview = gimp_viewable_get_new_preview (preview_viewable, context,
                                                  width, height);
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (undo));
 }
 
 void
-gimp_undo_refresh_preview (GimpUndo *undo)
+gimp_undo_refresh_preview (GimpUndo    *undo,
+                           GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_UNDO (undo));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
   if (undo->preview_idle_id)
     return;
@@ -516,7 +556,7 @@ gimp_undo_refresh_preview (GimpUndo *undo)
     {
       temp_buf_free (undo->preview);
       undo->preview = NULL;
-      gimp_undo_create_preview (undo, FALSE);
+      gimp_undo_create_preview (undo, context, FALSE);
     }
 }
 

@@ -47,8 +47,6 @@
 #define RESPONSE_OPEN            2
 #define RESPONSE_SAVE            3
 
-#define SCALE_WIDTH            150
-#define ENTRY_WIDTH             60
 #define DESIGN_AREA_MAX_SIZE   300
 
 #define PREVIEW_RENDER_CHUNK 10000

@@ -335,9 +335,7 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
 
   config = GIMP_GUI_CONFIG (gimp->config);
 
-  tool_info = (GimpToolInfo *)
-    gimp_container_get_child_by_name (gimp->tool_info_list,
-                                      "gimp-rect-select-tool");
+  tool_info = gimp_get_tool_info (gimp, "gimp-rect-select-tool");
   tool_button = g_object_get_data (G_OBJECT (tool_info), TOOL_BUTTON_DATA_KEY);
 
   if (tool_button)
@@ -501,9 +499,7 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
 
   gimp = GIMP_DOCK (toolbox)->context->gimp;
 
-  tool_info = (GimpToolInfo *)
-    gimp_container_get_child_by_name (gimp->tool_info_list,
-                                      "gimp-rect-select-tool");
+  tool_info = gimp_get_tool_info (gimp, "gimp-rect-select-tool");
   tool_button = g_object_get_data (G_OBJECT (tool_info), TOOL_BUTTON_DATA_KEY);
 
   if (tool_button)
@@ -541,16 +537,16 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
 
 GtkWidget *
 gimp_toolbox_new (GimpDialogFactory *dialog_factory,
-                  Gimp              *gimp)
+                  GimpContext       *context)
 {
   GimpToolbox *toolbox;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   toolbox = g_object_new (GIMP_TYPE_TOOLBOX,
                           "title",          GIMP_ACRONYM,
-                          "context",        gimp_get_user_context (gimp),
+                          "context",        context,
                           "dialog-factory", dialog_factory,
                           NULL);
 
@@ -842,8 +838,10 @@ static void
 toolbox_tool_button_toggled (GtkWidget    *widget,
                              GimpToolInfo *tool_info)
 {
+  GtkWidget *toolbox = gtk_widget_get_toplevel (widget);
+
   if (GTK_TOGGLE_BUTTON (widget)->active)
-    gimp_context_set_tool (gimp_get_user_context (tool_info->gimp), tool_info);
+    gimp_context_set_tool (GIMP_DOCK (toolbox)->context, tool_info);
 }
 
 static gboolean
@@ -914,8 +912,9 @@ toolbox_paste_received (GtkClipboard *clipboard,
             {
               gchar *filename = file_utils_uri_display_name (copy);
 
-              g_message (_("Opening '%s' failed:\n\n%s"),
-                         filename, error->message);
+              gimp_message (context->gimp, NULL, GIMP_MESSAGE_ERROR,
+                            _("Opening '%s' failed:\n\n%s"),
+                            filename, error->message);
 
               g_clear_error (&error);
               g_free (filename);

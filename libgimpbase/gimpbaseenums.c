@@ -559,10 +559,10 @@ gimp_interpolation_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_INTERPOLATION_NONE, N_("None (Fastest)"), NULL },
+    { GIMP_INTERPOLATION_NONE, N_("interpolation|None"), NULL },
     { GIMP_INTERPOLATION_LINEAR, N_("interpolation|Linear"), NULL },
     { GIMP_INTERPOLATION_CUBIC, N_("Cubic"), NULL },
-    { GIMP_INTERPOLATION_LANCZOS, N_("Lanczos (Best)"), NULL },
+    { GIMP_INTERPOLATION_LANCZOS, N_("Lanczos"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -991,6 +991,33 @@ gimp_progress_command_get_type (void)
   if (! type)
     {
       type = g_enum_register_static ("GimpProgressCommand", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_vectors_stroke_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_VECTORS_STROKE_TYPE_BEZIER, "GIMP_VECTORS_STROKE_TYPE_BEZIER", "bezier" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_VECTORS_STROKE_TYPE_BEZIER, "GIMP_VECTORS_STROKE_TYPE_BEZIER", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpVectorsStrokeType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
       gimp_enum_set_value_descriptions (type, descs);
     }

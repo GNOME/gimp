@@ -92,7 +92,7 @@ gimp_contexts_load (Gimp *gimp)
                                       NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-        g_message (error->message);
+        gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
       g_error_free (error);
     }
 
@@ -118,7 +118,7 @@ gimp_contexts_save (Gimp *gimp)
                                        "end of user context",
                                        NULL, &error))
     {
-      g_message (error->message);
+      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
       g_error_free (error);
     }
 

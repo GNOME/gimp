@@ -19,10 +19,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#define PANGO_ENABLE_ENGINE 1
+
 #include "config.h"
 
 #include <glib-object.h>
 #include <pango/pangoft2.h>
+#include <pango/pango-font.h>
 
 #include "text-types.h"
 
@@ -153,7 +156,7 @@ gimp_text_layout_render_glyphs (GimpTextLayout     *layout,
 
   for (i = 0, gi = glyphs->glyphs; i < glyphs->num_glyphs; i++, gi++)
     {
-      if (gi->glyph)
+      if (gi->glyph != PANGO_GLYPH_EMPTY)
         {
           pos.x = x + x_position + gi->geometry.x_offset;
           pos.y = y + gi->geometry.y_offset;

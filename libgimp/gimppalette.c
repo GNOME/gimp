@@ -22,6 +22,9 @@
 #include "config.h"
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_PALETTE_H__
+#include "gimppalette.h"
 
 /**
  * gimp_palette_get_foreground:

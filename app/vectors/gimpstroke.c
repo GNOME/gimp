@@ -27,6 +27,7 @@
 
 #include "core/gimp-utils.h"
 #include "core/gimpcoords.h"
+#include "core/gimp-transform-utils.h"
 
 #include "gimpanchor.h"
 #include "gimpstroke.h"
@@ -134,6 +135,18 @@ static void         gimp_stroke_real_translate       (GimpStroke       *stroke,
 static void         gimp_stroke_real_scale           (GimpStroke       *stroke,
                                                       gdouble           scale_x,
                                                       gdouble           scale_y);
+static void         gimp_stroke_real_rotate          (GimpStroke *stroke,
+                                                      gdouble     center_x,
+                                                      gdouble     center_y,
+                                                      gdouble     angle);
+static void         gimp_stroke_real_flip            (GimpStroke          *stroke,
+                                                      GimpOrientationType  flip_type,
+                                                      gdouble              axis);
+static void         gimp_stroke_real_flip_free       (GimpStroke          *stroke,
+                                                      gdouble              x1,
+                                                      gdouble              y1,
+                                                      gdouble              x2,
+                                                      gdouble              y2);
 static void         gimp_stroke_real_transform       (GimpStroke        *stroke,
                                                       const GimpMatrix3 *matrix);
 
@@ -204,7 +217,11 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
 
   klass->translate                = gimp_stroke_real_translate;
   klass->scale                    = gimp_stroke_real_scale;
+  klass->rotate                   = gimp_stroke_real_rotate;
+  klass->flip                     = gimp_stroke_real_flip;
+  klass->flip_free                = gimp_stroke_real_flip_free;
   klass->transform                = gimp_stroke_real_transform;
+
 
   klass->get_draw_anchors         = gimp_stroke_real_get_draw_anchors;
   klass->get_draw_controls        = gimp_stroke_real_get_draw_controls;
@@ -1055,6 +1072,82 @@ gimp_stroke_real_scale (GimpStroke *stroke,
       anchor->position.x *= scale_x;
       anchor->position.y *= scale_y;
     }
+}
+
+void
+gimp_stroke_rotate (GimpStroke *stroke,
+                    gdouble     center_x,
+                    gdouble     center_y,
+                    gdouble     angle)
+{
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  GIMP_STROKE_GET_CLASS (stroke)->rotate (stroke, center_x, center_y, angle);
+}
+
+static void
+gimp_stroke_real_rotate (GimpStroke *stroke,
+                         gdouble     center_x,
+                         gdouble     center_y,
+                         gdouble     angle)
+{
+  GimpMatrix3  matrix;
+
+  angle = angle / 180.0 * G_PI;
+  gimp_matrix3_identity (&matrix);
+  gimp_transform_matrix_rotate_center (&matrix, center_x, center_y, angle);
+
+  gimp_stroke_transform (stroke, &matrix);
+}
+
+void
+gimp_stroke_flip   (GimpStroke          *stroke,
+                    GimpOrientationType  flip_type,
+                    gdouble                axis)
+{
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  GIMP_STROKE_GET_CLASS (stroke)->flip (stroke, flip_type, axis);
+}
+
+static void
+gimp_stroke_real_flip   (GimpStroke          *stroke,
+                         GimpOrientationType  flip_type,
+                         gdouble              axis)
+{
+  GimpMatrix3  matrix;
+
+  gimp_matrix3_identity (&matrix);
+  gimp_transform_matrix_flip (&matrix, flip_type, axis);
+  gimp_stroke_transform (stroke, &matrix);
+}
+
+void
+gimp_stroke_flip_free   (GimpStroke          *stroke,
+                         gdouble              x1,
+                         gdouble              y1,
+                         gdouble              x2,
+                         gdouble              y2)
+{
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  GIMP_STROKE_GET_CLASS (stroke)->flip_free (stroke, x1, y1, x2, y2);
+}
+
+static void
+gimp_stroke_real_flip_free   (GimpStroke          *stroke,
+                              gdouble              x1,
+                              gdouble              y1,
+                              gdouble              x2,
+                              gdouble              y2)
+{
+  /* x, y, width and height parameter in gimp_transform_matrix_flip_free are unused */
+  GimpMatrix3  matrix;
+
+  gimp_matrix3_identity (&matrix);
+  gimp_transform_matrix_flip_free (&matrix, x1, y1, x2, y2);
+
+  gimp_stroke_transform (stroke, &matrix);
 }
 
 void

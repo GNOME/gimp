@@ -122,22 +122,15 @@ set_default_settings (void)
 static void
 check_drawables (void)
 {
-  if (mapvals.bumpmap_id != -1 &&
-      gimp_drawable_get_image (mapvals.bumpmap_id) == -1)
-    {
-      mapvals.bump_mapped = FALSE;
-      mapvals.bumpmap_id  = -1;
-    }
-
-  if (mapvals.envmap_id != -1 &&
-      gimp_drawable_get_image (mapvals.envmap_id) == -1)
-    {
-      mapvals.env_mapped = FALSE;
-      mapvals.envmap_id  = -1;
-    }
-
   if (mapvals.bump_mapped)
     {
+      if (mapvals.bumpmap_id != -1 &&
+          gimp_drawable_get_image (mapvals.bumpmap_id) == -1)
+        {
+          mapvals.bump_mapped = FALSE;
+          mapvals.bumpmap_id  = -1;
+        }
+
       if (gimp_drawable_is_indexed (mapvals.bumpmap_id) ||
           (gimp_drawable_width (mapvals.drawable_id) !=
            gimp_drawable_width (mapvals.bumpmap_id)) ||
@@ -151,11 +144,18 @@ check_drawables (void)
 
   if (mapvals.env_mapped)
     {
+      if (mapvals.envmap_id != -1 &&
+          gimp_drawable_get_image (mapvals.envmap_id) == -1)
+        {
+          mapvals.env_mapped = FALSE;
+          mapvals.envmap_id  = -1;
+        }
+
       if (gimp_drawable_is_gray (mapvals.envmap_id) ||
           gimp_drawable_has_alpha (mapvals.envmap_id))
         {
-          mapvals.bump_mapped = FALSE;
-          mapvals.bumpmap_id  = -1;
+          mapvals.env_mapped = FALSE;
+          mapvals.envmap_id  = -1;
         }
     }
 }
