@@ -1,5 +1,10 @@
 2006-12-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpbrushcore.c: also scale the brush's spacing (by
+	scaling its x_axis and y_axis). Addresses bug #65030.
+
+2006-12-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpbrushpipe.h: fix whitespace.
 
 2006-12-09  Kevin Cozens  <kcozens@cvs.gnome.org>

@@ -350,6 +350,23 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
       return FALSE;
     }
 
+  if (GIMP_BRUSH_CORE_GET_CLASS (core)->use_scale)
+    {
+      GimpPressureOptions *pressure_options = paint_options->pressure_options;
+
+      core->scale = 1.0;
+
+      if (paint_core->use_pressure)
+        {
+          if (pressure_options->inverse_size)
+            core->scale = 1.0 - 0.9 * paint_core->cur_coords.pressure;
+          else if (pressure_options->size)
+            core->scale = paint_core->cur_coords.pressure;
+        }
+
+      core->scale *= paint_options->brush_scale;
+    }
+
   core->spacing = (gdouble) gimp_brush_get_spacing (core->main_brush) / 100.0;
 
   core->brush = core->main_brush;
@@ -394,6 +411,8 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   gdouble        delta_pressure;
   gdouble        delta_xtilt, delta_ytilt;
   gdouble        delta_wheel;
+  gdouble        scale;
+  GimpVector2    temp_vec;
   gint           n, num_points;
   gdouble        t0, dt, tn;
   gdouble        st_factor, st_offset;
@@ -426,14 +445,21 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
       ! delta_wheel)
     return;
 
-  /* calculate the distance traveled in the coordinate space of the brush */
-  mag = gimp_vector2_length (&(core->brush->x_axis));
-  xd  = gimp_vector2_inner_product (&delta_vec,
-                                    &(core->brush->x_axis)) / (mag * mag);
+  scale = gimp_brush_core_calc_brush_size (core, NULL, core->scale,
+                                           NULL, NULL);
 
-  mag = gimp_vector2_length (&(core->brush->y_axis));
-  yd  = gimp_vector2_inner_product (&delta_vec,
-                                    &(core->brush->y_axis)) / (mag * mag);
+  /* calculate the distance traveled in the coordinate space of the brush */
+  temp_vec = core->brush->x_axis;
+  gimp_vector2_mul (&temp_vec, scale);
+
+  mag = gimp_vector2_length (&temp_vec);
+  xd  = gimp_vector2_inner_product (&delta_vec, &temp_vec) / (mag * mag);
+
+  temp_vec = core->brush->y_axis;
+  gimp_vector2_mul (&temp_vec, scale);
+
+  mag = gimp_vector2_length (&temp_vec);
+  yd  = gimp_vector2_inner_product (&delta_vec, &temp_vec) / (mag * mag);
 
   dist    = 0.5 * sqrt (xd * xd + yd * yd);
   total   = dist + paint_core->distance;
@@ -442,11 +468,10 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   pixel_dist    = gimp_vector2_length (&delta_vec);
   pixel_initial = paint_core->pixel_dist;
 
-  /*  FIXME: need to adapt the spacing to the size                       */
-  /*   lastscale = MIN (gimp_paint_tool->lastpressure, 1/256);           */
-  /*   curscale = MIN (gimp_paint_tool->curpressure,  1/256);            */
-  /*   spacing =                                                         */
-  /*     gimp_paint_tool->spacing * sqrt (0.5 * (lastscale + curscale)); */
+  /*  FIXME: need to adapt the spacing to the size                      */
+  /*   lastscale = MIN (paint_core->last_coords.pressure, 1/256);       */
+  /*   curscale = MIN (paint_core->cur_coords.pressure,  1/256);        */
+  /*   spacing = core->spacing * sqrt (0.5 * (lastscale + curscale));   */
 
   /*  Compute spacing parameters such that a brush position will be
    *  made each time the line crosses the *center* of a pixel row or
@@ -622,8 +647,8 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
           jitter_y = g_rand_double_range (core->rand,
                                           -core->jitter, core->jitter);
 
-          paint_core->cur_coords.x += jitter_x * core->brush->x_axis.x;
-          paint_core->cur_coords.y += jitter_y * core->brush->y_axis.y;
+          paint_core->cur_coords.x += jitter_x * core->brush->x_axis.x * scale;
+          paint_core->cur_coords.y += jitter_y * core->brush->y_axis.y * scale;
         }
 
       paint_core->distance   = initial       + t * dist;
@@ -654,11 +679,8 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
   gint           x, y;
   gint           x1, y1, x2, y2;
-  gint           bytes;
   gint           drawable_width, drawable_height;
   gint           brush_width, brush_height;
-
-  bytes = gimp_drawable_bytes_with_alpha (drawable);
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->use_scale)
     {
@@ -694,13 +716,19 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
 
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))
-    paint_core->canvas_buf = temp_buf_resize (paint_core->canvas_buf, bytes,
-                                              x1, y1,
-                                              (x2 - x1), (y2 - y1));
-  else
-    return NULL;
+    {
+      gint bytes;
 
-  return paint_core->canvas_buf;
+      bytes = gimp_drawable_bytes_with_alpha (drawable);
+
+      paint_core->canvas_buf = temp_buf_resize (paint_core->canvas_buf, bytes,
+                                                x1, y1,
+                                                (x2 - x1), (y2 - y1));
+
+      return paint_core->canvas_buf;
+    }
+
+  return NULL;
 }
 
 static void
@@ -914,8 +942,11 @@ gimp_brush_core_calc_brush_size (GimpBrushCore *core,
     {
       ratio = scale;
 
-      *width  = mask->width;
-      *height = mask->height;
+      if (mask)
+        {
+          *width  = mask->width;
+          *height = mask->height;
+        }
     }
   else
     {
@@ -924,8 +955,11 @@ gimp_brush_core_calc_brush_size (GimpBrushCore *core,
       else
         ratio = sqrt (scale);
 
-      *width  = MAX ((gint) (mask->width  * ratio + 0.5), 1);
-      *height = MAX ((gint) (mask->height * ratio + 0.5), 1);
+      if (mask)
+        {
+          *width  = MAX ((gint) (mask->width  * ratio + 0.5), 1);
+          *height = MAX ((gint) (mask->height * ratio + 0.5), 1);
+        }
     }
 
   return ratio;
