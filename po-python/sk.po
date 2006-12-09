@@ -1,0 +1,37 @@
+# translation of gimp-python.HEAD.po to Slovak
+# translation of gimp-python.HEAD.sk.po to Slovak
+# gimp-python sk.po
+# Copyright (C) 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
+# Zdenko Podobný <zdpo@mailbox.sk>, 2002,2003, 2004.
+# Marcel Telka <marcel@telka.sk>, 2005.
+#
+# $Id$
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-python\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2005-10-17 22:08+0200\n"
+"Last-Translator: Marcel Telka <marcel@telka.sk>\n"
+"Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr "Python konzola"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+msgid "_Browse..."
+msgstr "_Prechádzať..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "Python konzola"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""

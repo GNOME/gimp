@@ -1,0 +1,36 @@
+# translation of gimp-python.HEAD.gu.po to Gujarati
+# translation of gimp-python.HEAD.po to Gujarati
+# Ankit Patel <ankit644@yahoo.com>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-python.HEAD.gu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2005-09-26 09:53+0530\n"
+"Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
+"Language-Team: Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"\n"
+"\n"
+"\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr "Python કન્સોલ"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+msgid "_Browse..."
+msgstr "શોધો (_B)..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "Python કન્સોલ"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""

@@ -1,0 +1,309 @@
+# This is the Italian catalog for The GIMP.
+# Copyright (C) 1999 Free Software Foundation, Inc.
+# Daniele Medri <madrid@linux.it>, 2000, 2001, 2002
+# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp 2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-11-06 18:27+0100\n"
+"PO-Revision-Date: 2006-11-06 18:29+0100\n"
+"Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
+"Language-Team: gimp.linux.it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../plug-ins/pygimp/gimpfu.py:333
+msgid "Missing exception information"
+msgstr "Informazioni sull'eccezione mancanti"
+
+#: ../plug-ins/pygimp/gimpfu.py:342
+#, python-format
+msgid "An error occured running %s"
+msgstr "Errore durante l'esecuzione di %s"
+
+#: ../plug-ins/pygimp/gimpfu.py:353
+msgid "_More Information"
+msgstr "_Ulteriori informazioni"
+
+#: ../plug-ins/pygimp/gimpfu.py:459 ../plug-ins/pygimp/gimpfu.py:471
+#: ../plug-ins/pygimp/gimpfu.py:477
+msgid "No"
+msgstr "No"
+
+#: ../plug-ins/pygimp/gimpfu.py:469 ../plug-ins/pygimp/gimpfu.py:477
+msgid "Yes"
+msgstr "Sì"
+
+#: ../plug-ins/pygimp/gimpfu.py:515 ../plug-ins/pygimp/gimpui.py:200
+msgid "Python-Fu File Selection"
+msgstr "Selezione file Python-Fu"
+
+#: ../plug-ins/pygimp/gimpfu.py:526
+msgid "Python-Fu Folder Selection"
+msgstr "Selezione cartelle Python-Fu"
+
+#: ../plug-ins/pygimp/gimpfu.py:615
+#, python-format
+msgid "Invalid input for '%s'"
+msgstr "Ingresso non valido per \"%s\""
+
+#: ../plug-ins/pygimp/gimpui.py:153
+msgid "Python-Fu Color Selection"
+msgstr "Selezione colore Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+msgid "Saving as colored XHTML"
+msgstr "Salvataggio come XHTML colorato"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+msgid "Save as colored XHTML"
+msgstr "Salva come XHTML colorato"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+msgid "Colored XHTML"
+msgstr "XHTML colorato"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
+msgid "Character source"
+msgstr "Sorgente carattere"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
+msgid "Source code"
+msgstr "Sorgente codice"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:194
+msgid "Text file"
+msgstr "File di testo"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+msgid "Entry box"
+msgstr "Casella di immissione testo"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+msgid "File to read or characters to use"
+msgstr "File da leggere o caratteri da usare"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+msgid "Font size in pixels"
+msgstr "Dimensione carattere in pixel"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+msgid "Write a separate CSS file"
+msgstr "Scrivi un file CSS separato"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
+msgid "Python Console"
+msgstr "Console Python"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
+msgid "_Browse..."
+msgstr "_Naviga..."
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
+msgid "Python Procedure Browser"
+msgstr "Navigatore di procedure Python"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Impossibile aprire \"%s\" alla scrittura: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Impossibile scrivere su \"%s\": %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
+msgid "Save Python-Fu Console Output"
+msgstr "Salva il risultato della console Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
+msgid "Interactive Gimp-Python interpreter"
+msgstr "Interprete interattivo Gimp-Python"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
+msgid "_Console"
+msgstr "_Console"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+msgid "Add a layer of fog"
+msgstr "Aggiungi un livello di nebbia"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+msgid "_Fog..."
+msgstr "_Nebbia"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+msgid "Layer name"
+msgstr "Nome livello"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+msgid "Clouds"
+msgstr "Nuvole"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:60
+msgid "Fog color"
+msgstr "Colore nebbia"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "Turbulence"
+msgstr "Turbolenza"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+msgid "Opacity"
+msgstr "Opacità"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+msgid "Offset the colors in a palette"
+msgstr "Spostamento dei colori in una tavolozza"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+msgid "_Offset Palette..."
+msgstr "Sp_ostamento tavolozza..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+msgid "Palette"
+msgstr "Tavolozza"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
+msgid "Offset"
+msgstr "Spostamento"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+msgid "Sort the colors in a palette"
+msgstr "Ordina i colori nella tavolozza"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+msgid "_Sort Palette..."
+msgstr "Ordina tavoloz_za..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "Color model"
+msgstr "Modello di colore"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "RGB"
+msgstr "RGB"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+msgid "HSV"
+msgstr "HSV"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+msgid "Channel to sort"
+msgstr "Canale da ordinare"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Red or Hue"
+msgstr "Rosso o tonalità"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+msgid "Green or Saturation"
+msgstr "Verde o saturazione"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+msgid "Blue or Value"
+msgstr "Blu o valore"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+msgid "Ascending"
+msgstr "Ascendente"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Crea un gradiente ripetitivo usando i colori della tavolozza"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+msgid "Palette to _Repeating Gradient"
+msgstr "Tavolozza a gradiente _ripetitivo"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
+msgid "Create a gradient using colors from the palette"
+msgstr "Crea un gradiente usando i colori della tavolozza"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+msgid "Palette to _Gradient"
+msgstr "Tavolozza a _gradiente"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+msgid "Slice"
+msgstr "Fetta"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr ""
+"Taglia un'immagine lungo le sue guide, crea immagini e un pezzo di tabella "
+"HTML "
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+msgid "_Slice..."
+msgstr "_Fetta..."
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:430
+msgid "Path for HTML export"
+msgstr "Percorso per l'esportazione HTML"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+msgid "Filename for export"
+msgstr "Nome del file da esportare"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+msgid "Image name prefix"
+msgstr "Prefisso nome immagine"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+msgid "Image format"
+msgstr "Formato immagine"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+msgid "Separate image folder"
+msgstr "Cartella separata immagine"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+msgid "Folder for image export"
+msgstr "Cartella per l'esportazione dell'immagine"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+msgid "Space between table elements"
+msgstr "Spazio tra elementi tabella"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Javascript for onmouseover and clicked"
+msgstr "Javascript per onmouseover e clicked)"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+msgid "Skip animation for table caps"
+msgstr "Salta l'animazione per le tabelle"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+msgid "Add a drop shadow to a layer, and optionally bevel it"
+msgstr "Aggiungi un'ombra ad un livello ed, opzionalmente, inclinalo"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+msgid "_Drop Shadow and Bevel..."
+msgstr "Crea un'ombra e un'inclinazione..."
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
+msgid "Shadow blur"
+msgstr "Sfocatura ombra"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
+msgid "Bevel"
+msgstr "Inclinazione"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+msgid "Drop shadow"
+msgstr "Generazione ombra"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+msgid "Drop shadow X displacement"
+msgstr "Spiazzamento X ombra generata"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+msgid "Drop shadow Y displacement"
+msgstr "Spiazzamento Y ombra generata"

@@ -1,0 +1,76 @@
+2006-11-30  Francisco Javier F. Serrador  <serrador@openshine.com>
+
+	* es.po: Updated Spanish translation.
+
+2006-11-18  Djihed Afifi <djihed@gmail.com> 
+
+	* ar.po: Added Arabic Translation.
+	* LINGUAS: Added ar.
+
+2006-11-06  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation.
+
+2006-11-02  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-11-02  Francisco Javier F. Serrador  <serrador@openshine.com>
+
+	* es.po: Updated Spanish translation.
+
+2006-11-02  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed pdbbrowse.py.
+
+2006-10-30  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2006-10-28  Alexander Shopov  <ash@contact.bg>
+
+	* bg.po: Updated Bulgarian translation by
+	Victor Dachev <vdachev@gmail.com>
+
+2006-10-23  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed files that were removed from CVS.
+
+2006-10-19  Josep Puigdemont i Casamajó  <josep.puigdemont@gmail.com>
+
+	* ca.po: Updated Catalan translation by
+	Quim Perez <noguer@gmail.com>.
+
+2006-10-18  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-10-11  Marco Ciampa <ciampix@libero.it>
+
+	* it.po: updated italian translation.
+
+2006-10-04  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-10-02  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
+2006-09-27  Hendrik Brandt  <heb@gnome-de.org>
+
+	* de.po: Updated German translation.
+
+2006-09-20  Žygimantas Beručka  <zygis@gnome.org>
+
+	* lt.po: Updated Lithuanian translation.
+
+2006-09-18  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Czech translation. Thanks for the infrastructure.
+
+2006-09-13  Sven Neumann  <sven@gimp.org>
+
+	* Added basic infrastructure for i18n of gimp-python. The initial
+	po files are based on po-script-fu.
+
