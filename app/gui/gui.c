@@ -266,11 +266,11 @@ gui_sanity_check (void)
   if (mismatch)
     return g_strdup_printf
       ("%s\n\n"
-       "The GIMP requires Gtk+ version %d.%d.%d or later.\n"
-       "Installed Gtk+ version is %d.%d.%d.\n\n"
+       "GIMP requires GTK+ version %d.%d.%d or later.\n"
+       "Installed GTK+ version is %d.%d.%d.\n\n"
        "Somehow you or your software packager managed\n"
-       "to install The GIMP with an older Gtk+ version.\n\n"
-       "Please upgrade to Gtk+ version %d.%d.%d or later.",
+       "to install GIMP with an older GTK+ version.\n\n"
+       "Please upgrade to GTK+ version %d.%d.%d or later.",
        mismatch,
        GTK_REQUIRED_MAJOR, GTK_REQUIRED_MINOR, GTK_REQUIRED_MICRO,
        gtk_major_version, gtk_minor_version, gtk_micro_version,

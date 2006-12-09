@@ -281,7 +281,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
       else
         {
           success = gimp_thumbnail_save_failure (thumbnail,
-                                                 "The GIMP " GIMP_VERSION,
+                                                 "GIMP " GIMP_VERSION,
                                                  &error);
           gimp_imagefile_update (imagefile);
         }
@@ -775,7 +775,7 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
 
   success = gimp_thumbnail_save_thumb (thumbnail,
                                        pixbuf,
-                                       "The GIMP " GIMP_VERSION,
+                                       "GIMP " GIMP_VERSION,
                                        error);
 
   g_object_unref (pixbuf);
