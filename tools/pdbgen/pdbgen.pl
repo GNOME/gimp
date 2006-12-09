@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# The GIMP -- an image manipulation program
+# GIMP - The GNU Image Manipulation Program
 # Copyright (C) 1998-2003 Manish Singh <yosh@gimp.org>
 
 # This program is free software; you can redistribute it and/or modify

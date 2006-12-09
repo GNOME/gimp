@@ -1,4 +1,4 @@
-/* The GIMP -- an image manipulation program
+/* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * Alias|Wavefront pix/matte image reading and writing code
  * Copyright (C) 1997 Mike Taylor

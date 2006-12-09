@@ -1,7 +1,7 @@
 /* Solid Noise plug-in -- creates solid noise textures
  * Copyright (C) 1997, 1998 Marcelo de Gomensoro Malheiros
  *
- * The GIMP -- an image manipulation program
+ * GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify

@@ -5,7 +5,7 @@
  *  The code for this filter is based on "pgmedge", a program
  *  that is part of the netpbm package.
  *
- * The GIMP -- an image manipulation program
+ * GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify

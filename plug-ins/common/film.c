@@ -1,4 +1,4 @@
-/* The GIMP -- an image manipulation program
+/* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * Film plug-in (C) 1997 Peter Kirchgessner
  * e-mail: pkirchg@aol.com, WWW: http://members.aol.com/pkirchg

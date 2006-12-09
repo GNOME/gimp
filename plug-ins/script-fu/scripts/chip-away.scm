@@ -1,4 +1,4 @@
-; The GIMP -- an image manipulation program
+; GIMP - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ;  Supposed to look vaguely like roughly carved wood. Chipped away if you will.

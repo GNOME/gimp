@@ -1,3 +1,8 @@
+2006-12-09  Sven Neumann  <sven@gimp.org>
+
+	* In all files, changed the standard copyright notice to say
+	"GIMP - The GNU Image Manipulation Program".
+
 2006-12-07  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/re/re.c: Minor changes to quiet the compiler.

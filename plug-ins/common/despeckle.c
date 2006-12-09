@@ -1,6 +1,7 @@
-/*
- *   Despeckle (adaptive median) filter for The GIMP -- an image manipulation
- *   program
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ *   Despeckle (adaptive median) filter
  *
  *   Copyright 1997-1998 Michael Sweet (mike@easysw.com)
  *

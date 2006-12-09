@@ -5,7 +5,7 @@
 ; This was the first TinyScheme based script ever created and run for the
 ; 2.x version of the GIMP.
 
-; The GIMP -- an image manipulation program
+; GIMP - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; This program is free software; you can redistribute it and/or modify

@@ -1,6 +1,7 @@
-/*
- *   Destripe filter for The GIMP -- an image manipulation
- *   program
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ *   Destripe filter
  *
  *   Copyright 1997 Marc Lehmann, heavily modified from a filter by
  *   Michael Sweet.

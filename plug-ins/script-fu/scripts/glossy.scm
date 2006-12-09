@@ -2,7 +2,7 @@
 ; creates anything you can create with it :)
 ; (use it wisely, use it in peace...)
 ;
-; The GIMP -- an image manipulation program
+; GIMP - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; glossy gives a glossy outlook to your fonts (unlogical name, isn't it?)

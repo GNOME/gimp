@@ -1,4 +1,4 @@
-/* The GIMP -- an image manipulation program
+/* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GFlare plug-in -- lense flare effect by using custom gradients
@@ -24,7 +24,7 @@
  * Editor copyrighted by Federico Mena Quintero. (See copyright notice
  * below) Thanks for senior GIMP hackers!!
  *
- * The GIMP -- an image manipulation program
+ * GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Gradient editor module copyight (C) 1996-1997 Federico Mena Quintero

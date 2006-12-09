@@ -1,4 +1,4 @@
-# The GIMP -- an image manipulation program
+# GIMP - The GNU Image Manipulation Program
 # Copyright (C) 1998-2003 Manish Singh <yosh@gimp.org>
 
 # This program is free software; you can redistribute it and/or modify
@@ -635,7 +635,7 @@ CODE
     }
 
     my $gpl = <<'GPL';
-/* The GIMP -- an image manipulation program
+/* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify

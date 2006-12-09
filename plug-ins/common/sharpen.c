@@ -1,7 +1,7 @@
 /*
  * "$Id$"
  *
- *   Sharpen filters for The GIMP -- an image manipulation program
+ *   Sharpen filters for GIMP - The GNU Image Manipulation Program
  *
  *   Copyright 1997-1998 Michael Sweet (mike@easysw.com)
  *

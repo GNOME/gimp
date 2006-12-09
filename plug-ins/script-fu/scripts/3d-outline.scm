@@ -1,7 +1,7 @@
 ; 3d-outlined-patterned-shadowed-and-bump-mapped-logo :)
 ; creates outlined border of a text with patterns
 ;
-; The GIMP -- an image manipulation program
+; GIMP - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; 3d-outline creates outlined border of a text with patterns

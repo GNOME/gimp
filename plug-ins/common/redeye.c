@@ -1,4 +1,4 @@
-/* The GIMP -- an image manipulation program
+/* GIMP - The GNU Image Manipulation Program
  * Red Eye Plug-in for the GIMP.
  *
  * Copyright (C) 2004  Robert Merkel <robert.merkel@benambra.org>

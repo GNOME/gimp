@@ -2,7 +2,7 @@
  * pat plug-in version 1.01
  * Loads/saves version 1 GIMP .pat files, by Tim Newsome <drz@frody.bloke.com>
  *
- * The GIMP -- an image manipulation program
+ * GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
