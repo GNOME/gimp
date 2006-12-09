@@ -1,3 +1,10 @@
+2006-12-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcolorselectorpalette.[ch]
+	* app/widgets/gimpcontrollerinfo.[ch]
+	* app/widgets/gimpcontrollerkeyboard.[ch]
+	* app/widgets/gimpcontrollerwheel.[ch]: license is GPL, not LGPL.
+
 2006-12-09  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/gui.c: use "GIMP" instead of "The GIMP".
