@@ -79,8 +79,9 @@ gimp_tool_presets_class_init (GimpToolPresetsClass *klass)
 }
 
 static void
-gimp_tool_presets_init (GimpToolPresets *list)
+gimp_tool_presets_init (GimpToolPresets *presets)
 {
+  presets->tool_info = NULL;
 }
 
 static void
@@ -246,12 +247,11 @@ gimp_tool_presets_load (GimpToolPresets  *presets,
       retval = gimp_config_deserialize_file (GIMP_CONFIG (presets), filename,
                                              presets->tool_info->gimp,
                                              error);
+
       gimp_list_reverse (GIMP_LIST (presets));
 
       for (list = GIMP_LIST (presets)->list; list; list = g_list_next (list))
-        {
-          g_object_set (list->data, "tool-info", presets->tool_info, NULL);
-        }
+        g_object_set (list->data, "tool-info", presets->tool_info, NULL);
     }
 
   g_free (filename);
