@@ -1,5 +1,11 @@
 2006-12-10  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/tool-options-commands.c
+	(tool_options_save_new_cmd_callback): pass the toplevel widget as
+	parent to gimp_query_string_box().
+
+2006-12-10  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimptoolpresets.c: do not create empty presets files.
 
 2006-12-10  Sven Neumann  <sven@gimp.org>

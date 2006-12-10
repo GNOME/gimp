@@ -70,7 +70,7 @@ tool_options_save_new_cmd_callback (GtkAction *action,
   tool_info = gimp_context_get_tool (context);
 
   dialog = gimp_query_string_box (_("Save Tool Options"),
-                                  GTK_WIDGET (editor),
+                                  gtk_widget_get_toplevel (GTK_WIDGET (editor)),
                                   gimp_standard_help_func,
                                   GIMP_HELP_TOOL_OPTIONS_DIALOG,
                                   _("Enter a name for the saved options"),
@@ -137,7 +137,7 @@ tool_options_rename_saved_cmd_callback (GtkAction *action,
       GtkWidget *dialog;
 
       dialog = gimp_query_string_box (_("Rename Saved Tool Options"),
-                                      NULL /* FIXME */,
+                                      gtk_widget_get_toplevel (GTK_WIDGET (editor)),
                                       gimp_standard_help_func,
                                       GIMP_HELP_TOOL_OPTIONS_DIALOG,
                                       _("Enter a new name for the saved options"),
@@ -183,7 +183,8 @@ tool_options_reset_all_cmd_callback (GtkAction *action,
   GimpEditor *editor = GIMP_EDITOR (data);
   GtkWidget  *dialog;
 
-  dialog = gimp_message_dialog_new (_("Reset Tool Options"), GIMP_STOCK_QUESTION,
+  dialog = gimp_message_dialog_new (_("Reset Tool Options"),
+                                    GIMP_STOCK_QUESTION,
                                     GTK_WIDGET (editor),
                                     GTK_DIALOG_MODAL |
                                     GTK_DIALOG_DESTROY_WITH_PARENT,
