@@ -452,9 +452,10 @@ midi_set_device (ControllerMidi *midi,
                               SND_SEQ_OPEN_INPUT, 0);
           if (ret >= 0)
             {
-              snd_seq_set_client_name (midi->sequencer, "The GIMP");
+              snd_seq_set_client_name (midi->sequencer,
+                                       g_get_application_name());
               ret = snd_seq_create_simple_port (midi->sequencer,
-                                                "The GIMP midi controller",
+                                                _("GIMP MIDI controller"),
                                                 SND_SEQ_PORT_CAP_WRITE |
                                                 SND_SEQ_PORT_CAP_SUBS_WRITE,
                                                 SND_SEQ_PORT_TYPE_APPLICATION);

@@ -1,3 +1,9 @@
+2006-12-10  Sven Neumann  <sven@gimp.org>
+
+	* modules/controller_midi.c (midi_set_device): use
+	g_get_application_name() for the client name; made the name of the
+	ALSA port translatable.
+
 2006-12-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcolorselectorpalette.[ch]
