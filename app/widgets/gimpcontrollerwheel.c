@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcontrollerwheel.c
