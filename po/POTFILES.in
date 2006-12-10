@@ -146,6 +146,7 @@ app/core/gimpprogress.c
 app/core/gimpselection.c
 app/core/gimpstrokeoptions.c
 app/core/gimptemplate.c
+app/core/gimptoolpresets.c
 app/core/gimpunit.c
 
 app/dialogs/about-dialog.c

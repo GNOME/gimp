@@ -1,5 +1,10 @@
 2006-12-10  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimptoolpresets.c: do not create empty presets files
+	and don't create any output for presets files that don't exist.
+
+2006-12-10  Sven Neumann  <sven@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/core-types.h
 	* app/core/gimptoolpresets.[ch]: added GimpToolPresets, derived

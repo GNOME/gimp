@@ -21,9 +21,10 @@
 
 #include "config.h"
 
-#include <string.h>
+#include <errno.h>
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -33,6 +34,8 @@
 #include "gimptoolinfo.h"
 #include "gimptooloptions.h"
 #include "gimptoolpresets.h"
+
+#include "gimp-intl.h"
 
 
 enum
@@ -173,8 +176,7 @@ gimp_tool_presets_save (GimpToolPresets  *presets,
 {
   const gchar *name;
   gchar       *filename;
-  gchar       *footer;
-  gboolean     retval;
+  gboolean     retval = TRUE;
 
   g_return_val_if_fail (GIMP_IS_TOOL_PRESETS (presets), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
@@ -183,16 +185,37 @@ gimp_tool_presets_save (GimpToolPresets  *presets,
 
   filename = gimp_tool_options_build_filename (name, "presets");
 
-  if (be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+  if (gimp_container_num_children (GIMP_CONTAINER (presets)) > 0)
+    {
+      gchar *footer;
 
-  footer = g_strdup_printf ("end of %s", GIMP_OBJECT (presets)->name);
+      if (be_verbose)
+        g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
 
-  retval = gimp_config_serialize_to_file (GIMP_CONFIG (presets), filename,
-                                          GIMP_OBJECT (presets)->name, footer,
-                                          NULL, error);
+      footer = g_strdup_printf ("end of %s", GIMP_OBJECT (presets)->name);
 
-  g_free (footer);
+      retval = gimp_config_serialize_to_file (GIMP_CONFIG (presets), filename,
+                                              GIMP_OBJECT (presets)->name,
+                                              footer,
+                                              NULL, error);
+
+      g_free (footer);
+    }
+  else if (g_file_test (filename, G_FILE_TEST_EXISTS))
+    {
+      if (be_verbose)
+        g_print ("Deleting '%s'\n", gimp_filename_to_utf8 (filename));
+
+      if (g_unlink (filename) != 0)
+        {
+          retval = FALSE;
+
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Could not delete '%s': %s"),
+                       gimp_filename_to_utf8 (filename), g_strerror (errno));
+        }
+    }
+
   g_free (filename);
 
   return retval;
@@ -206,7 +229,7 @@ gimp_tool_presets_load (GimpToolPresets  *presets,
   GList       *list;
   const gchar *name;
   gchar       *filename;
-  gboolean     retval;
+  gboolean     retval = TRUE;
 
   g_return_val_if_fail (GIMP_IS_TOOL_PRESETS (presets), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
@@ -215,20 +238,23 @@ gimp_tool_presets_load (GimpToolPresets  *presets,
 
   filename = gimp_tool_options_build_filename (name, "presets");
 
-  if (be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
-
-  retval = gimp_config_deserialize_file (GIMP_CONFIG (presets), filename,
-                                         presets->tool_info->gimp,
-                                         error);
-  g_free (filename);
-
-  gimp_list_reverse (GIMP_LIST (presets));
-
-  for (list = GIMP_LIST (presets)->list; list; list = g_list_next (list))
+  if (g_file_test (filename, G_FILE_TEST_EXISTS))
     {
-      g_object_set (list->data, "tool-info", presets->tool_info, NULL);
+      if (be_verbose)
+        g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+
+      retval = gimp_config_deserialize_file (GIMP_CONFIG (presets), filename,
+                                             presets->tool_info->gimp,
+                                             error);
+      gimp_list_reverse (GIMP_LIST (presets));
+
+      for (list = GIMP_LIST (presets)->list; list; list = g_list_next (list))
+        {
+          g_object_set (list->data, "tool-info", presets->tool_info, NULL);
+        }
     }
+
+  g_free (filename);
 
   return retval;
 }
