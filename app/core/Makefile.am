@@ -253,6 +253,8 @@ libappcore_a_sources = \
 	gimptoolinfo.h			\
 	gimptooloptions.c		\
 	gimptooloptions.h		\
+	gimptoolpresets.c		\
+	gimptoolpresets.h		\
 	gimpunit.c			\
 	gimpunit.h			\
 	gimpundo.c			\

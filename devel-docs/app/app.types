@@ -266,6 +266,7 @@ gimp_tool_get_type
 gimp_tool_info_get_type
 gimp_tool_options_editor_get_type
 gimp_tool_options_get_type
+gimp_tool_presets_get_type
 gimp_tool_view_get_type
 gimp_transform_options_get_type
 gimp_transform_tool_get_type

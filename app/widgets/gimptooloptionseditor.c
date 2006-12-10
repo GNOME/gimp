@@ -363,15 +363,15 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
                                        GimpToolInfo          *tool_info,
                                        GimpToolOptionsEditor *editor)
 {
-  GimpContainer *presets;
-  GtkWidget     *options_gui;
+  GimpToolPresets *presets;
+  GtkWidget       *options_gui;
 
   if (tool_info && tool_info->tool_options == editor->visible_tool_options)
     return;
 
   if (editor->visible_tool_options)
     {
-      presets = editor->visible_tool_options->tool_info->options_presets;
+      presets = editor->visible_tool_options->tool_info->presets;
 
       if (presets)
         g_signal_handlers_disconnect_by_func (presets,
@@ -389,7 +389,7 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
 
   if (tool_info && tool_info->tool_options)
     {
-      presets = tool_info->options_presets;
+      presets = tool_info->presets;
 
       if (presets)
         {
@@ -420,7 +420,8 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
       presets = NULL;
     }
 
-  gimp_tool_options_editor_presets_changed (presets, NULL, editor);
+  gimp_tool_options_editor_presets_changed (GIMP_CONTAINER (presets),
+                                            NULL, editor);
 
   gimp_docked_title_changed (GIMP_DOCKED (editor));
 }
@@ -440,7 +441,7 @@ gimp_tool_options_editor_presets_changed (GimpContainer         *container,
       save_sensitive  = TRUE;
       reset_sensitive = TRUE;
 
-      if (gimp_container_num_children (container))
+      if (gimp_container_num_children (container) > 0)
         {
           restore_sensitive = TRUE;
           delete_sensitive  = TRUE;

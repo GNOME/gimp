@@ -68,6 +68,7 @@ typedef struct _GimpImage           GimpImage;
 typedef struct _GimpContainer       GimpContainer;
 typedef struct _GimpList            GimpList;
 typedef struct _GimpDocumentList    GimpDocumentList;
+typedef struct _GimpToolPresets     GimpToolPresets;
 
 
 /*  context objects  */

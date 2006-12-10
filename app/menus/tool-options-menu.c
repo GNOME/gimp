@@ -101,7 +101,7 @@ tool_options_menu_update_after (GimpUIManager *manager,
   context   = gimp_get_user_context (manager->gimp);
   tool_info = gimp_context_get_tool (context);
 
-  if (! tool_info->options_presets)
+  if (! tool_info->presets)
     return;
 
   merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
@@ -111,19 +111,19 @@ tool_options_menu_update_after (GimpUIManager *manager,
 
   tool_options_menu_update_presets (manager, merge_id, ui_path,
                                     "Save", "save",
-                                    tool_info->options_presets);
+                                    GIMP_CONTAINER (tool_info->presets));
 
   tool_options_menu_update_presets (manager, merge_id, ui_path,
                                     "Restore", "restore",
-                                    tool_info->options_presets);
+                                    GIMP_CONTAINER (tool_info->presets));
 
   tool_options_menu_update_presets (manager, merge_id, ui_path,
                                     "Rename", "rename",
-                                    tool_info->options_presets);
+                                    GIMP_CONTAINER (tool_info->presets));
 
   tool_options_menu_update_presets (manager, merge_id, ui_path,
                                     "Delete", "delete",
-                                    tool_info->options_presets);
+                                    GIMP_CONTAINER (tool_info->presets));
 
   gtk_ui_manager_ensure_update (GTK_UI_MANAGER (manager));
 }

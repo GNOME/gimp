@@ -1,5 +1,29 @@
 2006-12-10  Sven Neumann  <sven@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimptoolpresets.[ch]: added GimpToolPresets, derived
+	from GimpList.
+
+	* app/core/gimptoolinfo.[ch]: use the new type, renamed
+	member "options_presets" to "presets".
+
+	* app/actions/tool-options-actions.c
+	* app/actions/tool-options-commands.c
+	* app/core/gimptooloptions.[ch]
+	* app/menus/tool-options-menu.c
+	* app/widgets/gimptooloptionseditor.c: changed accordingly.
+
+	* app/tools/gimp-tools.c: let the GimpToolPresets object deal with
+	loading and saving the presets from ${gimpdir}/tool-options.
+
+	* app/core/gimpcontainer-filter.c
+	* app/core/gimpdocumentlist.c
+	* app/core/gimplist.c
+	* app/text/gimpfontlist.c: use canonical property names.
+
+2006-12-10  Sven Neumann  <sven@gimp.org>
+
 	* modules/controller_midi.c (midi_set_device): use
 	g_get_application_name() for the client name; made the name of the
 	ALSA port translatable.

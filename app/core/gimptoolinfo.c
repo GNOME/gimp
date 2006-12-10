@@ -35,6 +35,7 @@
 #include "gimppaintinfo.h"
 #include "gimptoolinfo.h"
 #include "gimptooloptions.h"
+#include "gimptoolpresets.h"
 
 
 enum
@@ -146,10 +147,10 @@ gimp_tool_info_finalize (GObject *object)
       tool_info->tool_options = NULL;
     }
 
-  if (tool_info->options_presets)
+  if (tool_info->presets)
     {
-      g_object_unref (tool_info->options_presets);
-      tool_info->options_presets = NULL;
+      g_object_unref (tool_info->presets);
+      tool_info->presets = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -279,8 +280,7 @@ gimp_tool_info_new (Gimp                *gimp,
 
   if (tool_info->tool_options_type != GIMP_TYPE_TOOL_OPTIONS)
     {
-      tool_info->options_presets = gimp_list_new (tool_info->tool_options_type,
-                                                  TRUE);
+      tool_info->presets = gimp_tool_presets_new (tool_info);
     }
 
   return tool_info;

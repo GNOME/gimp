@@ -56,7 +56,7 @@ struct _GimpToolInfo
   GimpToolOptions     *tool_options;
   GimpPaintInfo       *paint_info;
 
-  GimpContainer       *options_presets;
+  GimpToolPresets     *presets;
 };
 
 struct _GimpToolInfoClass

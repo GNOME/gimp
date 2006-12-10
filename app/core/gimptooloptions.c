@@ -138,52 +138,23 @@ gimp_tool_options_reset (GimpToolOptions *tool_options)
   GIMP_TOOL_OPTIONS_GET_CLASS (tool_options)->reset (tool_options);
 }
 
-gchar *
-gimp_tool_options_build_filename (GimpToolOptions *tool_options,
-                                  const gchar     *extension)
-{
-  gchar *filename;
-
-  g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), NULL);
-
-  if (extension)
-    {
-      gchar *basename;
-
-      basename = g_strconcat (GIMP_OBJECT (tool_options->tool_info)->name,
-                              ".", extension, NULL);
-
-      filename = g_build_filename (gimp_directory (),
-                                   "tool-options",
-                                   basename,
-                                   NULL);
-      g_free (basename);
-    }
-  else
-    {
-      filename = g_build_filename (gimp_directory (),
-                                   "tool-options",
-                                   GIMP_OBJECT (tool_options->tool_info)->name,
-                                   NULL);
-    }
-
-  return filename;
-}
-
 gboolean
 gimp_tool_options_serialize (GimpToolOptions  *tool_options,
                              const gchar      *extension,
                              GError          **error)
 {
-  gchar    *filename;
-  gchar    *header;
-  gchar    *footer;
-  gboolean  retval;
+  const gchar *name;
+  gchar       *filename;
+  gchar       *header;
+  gchar       *footer;
+  gboolean     retval;
 
   g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  filename = gimp_tool_options_build_filename (tool_options, extension);
+  name = gimp_object_get_name (GIMP_OBJECT (tool_options->tool_info));
+
+  filename = gimp_tool_options_build_filename (name, extension);
 
   if (tool_options->tool_info->gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
@@ -211,13 +182,16 @@ gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
                                const gchar      *extension,
                                GError          **error)
 {
-  gchar    *filename;
-  gboolean  retval;
+  const gchar *name;
+  gchar       *filename;
+  gboolean     retval;
 
   g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  filename = gimp_tool_options_build_filename (tool_options, extension);
+  name = gimp_object_get_name (GIMP_OBJECT (tool_options->tool_info));
+
+  filename = gimp_tool_options_build_filename (name, extension);
 
   if (tool_options->tool_info->gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
@@ -230,4 +204,33 @@ gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
   g_free (filename);
 
   return retval;
+}
+
+gchar *
+gimp_tool_options_build_filename (const gchar *tool_name,
+                                  const gchar *extension)
+{
+  gchar *filename;
+
+  g_return_val_if_fail (tool_name != NULL, NULL);
+
+  if (extension)
+    {
+      gchar *basename = g_strconcat (tool_name, ".", extension, NULL);
+
+      filename = g_build_filename (gimp_directory (),
+                                   "tool-options",
+                                   basename,
+                                   NULL);
+      g_free (basename);
+    }
+  else
+    {
+      filename = g_build_filename (gimp_directory (),
+                                   "tool-options",
+                                   tool_name,
+                                   NULL);
+    }
+
+  return filename;
 }

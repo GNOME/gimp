@@ -117,34 +117,34 @@ tool_options_actions_update (GimpActionGroup *group,
   GimpContext  *context   = gimp_get_user_context (group->gimp);
   GimpToolInfo *tool_info = gimp_context_get_tool (context);
 
-  SET_VISIBLE ("tool-options-save-menu",    tool_info->options_presets);
-  SET_VISIBLE ("tool-options-restore-menu", tool_info->options_presets);
-  SET_VISIBLE ("tool-options-rename-menu",  tool_info->options_presets);
-  SET_VISIBLE ("tool-options-delete-menu",  tool_info->options_presets);
+  SET_VISIBLE ("tool-options-save-menu",    tool_info->presets);
+  SET_VISIBLE ("tool-options-restore-menu", tool_info->presets);
+  SET_VISIBLE ("tool-options-rename-menu",  tool_info->presets);
+  SET_VISIBLE ("tool-options-delete-menu",  tool_info->presets);
 
   tool_options_actions_update_presets (group, "tool-options-save-",
                                        G_CALLBACK (tool_options_save_to_cmd_callback),
                                        GTK_STOCK_SAVE,
                                        GIMP_HELP_TOOL_OPTIONS_SAVE,
-                                       tool_info->options_presets);
+                                       GIMP_CONTAINER (tool_info->presets));
 
   tool_options_actions_update_presets (group, "tool-options-restore-",
                                        G_CALLBACK (tool_options_restore_from_cmd_callback),
                                        GTK_STOCK_REVERT_TO_SAVED,
                                        GIMP_HELP_TOOL_OPTIONS_RESTORE,
-                                       tool_info->options_presets);
+                                       GIMP_CONTAINER (tool_info->presets));
 
   tool_options_actions_update_presets (group, "tool-options-rename-",
                                        G_CALLBACK (tool_options_rename_saved_cmd_callback),
                                        GTK_STOCK_EDIT,
                                        GIMP_HELP_TOOL_OPTIONS_RENAME,
-                                       tool_info->options_presets);
+                                       GIMP_CONTAINER (tool_info->presets));
 
   tool_options_actions_update_presets (group, "tool-options-delete-",
                                        G_CALLBACK (tool_options_delete_saved_cmd_callback),
                                        GTK_STOCK_DELETE,
                                        GIMP_HELP_TOOL_OPTIONS_DELETE,
-                                       tool_info->options_presets);
+                                       GIMP_CONTAINER (tool_info->presets));
 }
 
 
