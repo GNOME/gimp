@@ -109,11 +109,23 @@ gimp_display_shell_progress_message (GimpProgress        *progress,
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
 
-  if (severity != GIMP_MESSAGE_ERROR && GTK_WIDGET_VISIBLE (shell->statusbar))
-    return gimp_progress_message (GIMP_PROGRESS (shell->statusbar), gimp,
-                                  severity, domain, message);
+  switch (severity)
+    {
+    case GIMP_MESSAGE_ERROR:
+      /* error messages are never handled here */
+      return FALSE;
 
-  return FALSE;
+    case GIMP_MESSAGE_WARNING:
+      /* warning messages go to the statusbar, if it's visible */
+      if (! GTK_WIDGET_VISIBLE (shell->statusbar))
+        return FALSE;
+      /* else fallthrough */
+
+    case GIMP_MESSAGE_INFO:
+      /* info messages go to the statusbar, no matter if it's visible or not */
+      return gimp_progress_message (GIMP_PROGRESS (shell->statusbar), gimp,
+                                    severity, domain, message);
+    }
 }
 
 void

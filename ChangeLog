@@ -1,5 +1,12 @@
 2006-12-11  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-progress.c
+	(gimp_display_shell_progress_message): info messages go to the
+	statusbar, no matter if it's visible or not. We don't want a
+	dialog to pop up.
+
+2006-12-11  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/file-commands.c: don't message "Image saved" from here.
 
 	* app/core/gimpimage.[ch]: introduced new signal "saved".
