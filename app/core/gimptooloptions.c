@@ -18,6 +18,13 @@
 
 #include "config.h"
 
+#include <errno.h>
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#include <glib/gstdio.h>
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -28,6 +35,8 @@
 #include "gimp.h"
 #include "gimptoolinfo.h"
 #include "gimptooloptions.h"
+
+#include "gimp-intl.h"
 
 
 enum
@@ -138,23 +147,30 @@ gimp_tool_options_reset (GimpToolOptions *tool_options)
   GIMP_TOOL_OPTIONS_GET_CLASS (tool_options)->reset (tool_options);
 }
 
-gboolean
-gimp_tool_options_serialize (GimpToolOptions  *tool_options,
-                             const gchar      *extension,
-                             GError          **error)
+
+static gchar *
+gimp_tool_options_build_filename (GimpToolOptions  *tool_options)
 {
   const gchar *name;
-  gchar       *filename;
-  gchar       *header;
-  gchar       *footer;
-  gboolean     retval;
+
+  name = gimp_object_get_name (GIMP_OBJECT (tool_options->tool_info));
+
+  return g_build_filename (gimp_directory (), "tool-options", name, NULL);
+}
+
+gboolean
+gimp_tool_options_serialize (GimpToolOptions  *tool_options,
+                             GError          **error)
+{
+  gchar    *filename;
+  gchar    *header;
+  gchar    *footer;
+  gboolean  retval;
 
   g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  name = gimp_object_get_name (GIMP_OBJECT (tool_options->tool_info));
-
-  filename = gimp_tool_options_build_filename (name, extension);
+  filename = gimp_tool_options_build_filename (tool_options);
 
   if (tool_options->tool_info->gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
@@ -179,19 +195,15 @@ gimp_tool_options_serialize (GimpToolOptions  *tool_options,
 
 gboolean
 gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
-                               const gchar      *extension,
                                GError          **error)
 {
-  const gchar *name;
-  gchar       *filename;
-  gboolean     retval;
+  gchar    *filename;
+  gboolean  retval;
 
   g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  name = gimp_object_get_name (GIMP_OBJECT (tool_options->tool_info));
-
-  filename = gimp_tool_options_build_filename (name, extension);
+  filename = gimp_tool_options_build_filename (tool_options);
 
   if (tool_options->tool_info->gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
@@ -206,31 +218,39 @@ gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
   return retval;
 }
 
-gchar *
-gimp_tool_options_build_filename (const gchar *tool_name,
-                                  const gchar *extension)
+gboolean
+gimp_tool_options_delete (GimpToolOptions  *tool_options,
+                          GError          **error)
 {
-  gchar *filename;
+  gchar    *filename;
+  gboolean  retval = TRUE;
 
-  g_return_val_if_fail (tool_name != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (extension)
+  filename = gimp_tool_options_build_filename (tool_options);
+
+  if (g_unlink (filename) != 0 && errno != ENOENT)
     {
-      gchar *basename = g_strconcat (tool_name, ".", extension, NULL);
-
-      filename = g_build_filename (gimp_directory (),
-                                   "tool-options",
-                                   basename,
-                                   NULL);
-      g_free (basename);
-    }
-  else
-    {
-      filename = g_build_filename (gimp_directory (),
-                                   "tool-options",
-                                   tool_name,
-                                   NULL);
+      retval = FALSE;
+      g_set_error (error, 0, 0, _("Deleting \"%s\" failed: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
     }
 
-  return filename;
+  g_free (filename);
+
+  return retval;
+}
+
+void
+gimp_tool_options_create_folder (void)
+{
+  gchar *filename = g_build_filename (gimp_directory (), "tool-options", NULL);
+
+  g_mkdir (filename,
+           S_IRUSR | S_IWUSR | S_IXUSR |
+           S_IRGRP | S_IXGRP |
+           S_IROTH | S_IXOTH);
+
+  g_free (filename);
 }

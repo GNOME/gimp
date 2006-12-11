@@ -32,12 +32,19 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimpmarshal.h"
 #include "gimptoolinfo.h"
 #include "gimptooloptions.h"
 #include "gimptoolpresets.h"
 
 #include "gimp-intl.h"
 
+
+enum
+{
+  CHANGED,
+  LAST_SIGNAL
+};
 
 enum
 {
@@ -55,21 +62,43 @@ static void   gimp_tool_presets_get_property (GObject         *object,
                                               guint            property_id,
                                               GValue          *value,
                                               GParamSpec      *pspec);
+static void   gimp_tool_presets_add          (GimpContainer   *container,
+                                              GimpObject      *object);
+static void   gimp_tool_presets_remove       (GimpContainer   *container,
+                                              GimpObject      *object);
+static void   gimp_tool_presets_notify       (GimpToolPresets *presets);
 
 
 G_DEFINE_TYPE (GimpToolPresets, gimp_tool_presets, GIMP_TYPE_LIST)
 
 #define parent_class gimp_tool_presets_parent_class
 
+static guint gimp_tool_presets_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 gimp_tool_presets_class_init (GimpToolPresetsClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass       *object_class    = G_OBJECT_CLASS (klass);
+  GimpContainerClass *container_class = GIMP_CONTAINER_CLASS (klass);
+
+  gimp_tool_presets_signals[CHANGED] =
+    g_signal_new ("changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpToolPresetsClass, changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->set_property = gimp_tool_presets_set_property;
   object_class->get_property = gimp_tool_presets_get_property;
   object_class->finalize     = gimp_tool_presets_finalize;
+
+  container_class->add       = gimp_tool_presets_add;
+  container_class->remove    = gimp_tool_presets_remove;
+
+  klass->changed = NULL;
 
   g_object_class_install_property (object_class, PROP_TOOL_INFO,
                                    g_param_spec_object ("tool-info",
@@ -139,6 +168,57 @@ gimp_tool_presets_get_property (GObject    *object,
     }
 }
 
+static void
+gimp_tool_presets_add (GimpContainer *container,
+                       GimpObject    *object)
+{
+  GIMP_CONTAINER_CLASS (parent_class)->add (container, object);
+
+  g_signal_connect_swapped (object, "notify",
+                            G_CALLBACK (gimp_tool_presets_notify),
+                            container);
+
+  g_signal_emit (container, gimp_tool_presets_signals[CHANGED], 0);
+}
+
+static void
+gimp_tool_presets_remove (GimpContainer *container,
+                          GimpObject    *object)
+{
+  g_signal_handlers_disconnect_by_func (object,
+                                        G_CALLBACK (gimp_tool_presets_notify),
+                                        container);
+
+  GIMP_CONTAINER_CLASS (parent_class)->remove (container, object);
+
+  g_signal_emit (container, gimp_tool_presets_signals[CHANGED], 0);
+}
+
+static void
+gimp_tool_presets_notify (GimpToolPresets *presets)
+{
+  g_signal_emit (presets, gimp_tool_presets_signals[CHANGED], 0);
+}
+
+static gchar *
+gimp_tool_presets_build_filename (GimpToolPresets *presets)
+{
+  const gchar *name;
+  gchar       *filename;
+  gchar       *basename;
+
+  name = gimp_object_get_name (GIMP_OBJECT (presets->tool_info));
+
+  basename = g_strconcat (name, ".presets", NULL);
+  filename = g_build_filename (gimp_directory (),
+                               "tool-options",
+                               basename,
+                               NULL);
+  g_free (basename);
+
+  return filename;
+}
+
 GimpToolPresets *
 gimp_tool_presets_new (GimpToolInfo *tool_info)
 {
@@ -175,26 +255,25 @@ gboolean
 gimp_tool_presets_save (GimpToolPresets  *presets,
                         GError          **error)
 {
-  Gimp        *gimp;
-  const gchar *name;
-  gchar       *filename;
-  gboolean     retval = TRUE;
+  Gimp     *gimp;
+  gchar    *filename;
+  gboolean  retval = TRUE;
 
   g_return_val_if_fail (GIMP_IS_TOOL_PRESETS (presets), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   gimp = presets->tool_info->gimp;
 
-  name = gimp_object_get_name (GIMP_OBJECT (presets->tool_info));
+  filename = gimp_tool_presets_build_filename (presets);
 
-  filename = gimp_tool_options_build_filename (name, "presets");
-
-  if (gimp_container_num_children (GIMP_CONTAINER (presets)) > 0)
+  if (! gimp_container_is_empty (GIMP_CONTAINER (presets)))
     {
       gchar *footer;
 
       if (gimp->be_verbose)
         g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+
+      gimp_tool_options_create_folder ();
 
       footer = g_strdup_printf ("end of %s", GIMP_OBJECT (presets)->name);
 
@@ -210,7 +289,7 @@ gimp_tool_presets_save (GimpToolPresets  *presets,
       if (gimp->be_verbose)
         g_print ("Deleting '%s'\n", gimp_filename_to_utf8 (filename));
 
-      if (g_unlink (filename) != 0)
+      if (g_unlink (filename) != 0 && errno != ENOENT)
         {
           retval = FALSE;
 
@@ -229,11 +308,10 @@ gboolean
 gimp_tool_presets_load (GimpToolPresets  *presets,
                         GError          **error)
 {
-  Gimp        *gimp;
-  GList       *list;
-  const gchar *name;
-  gchar       *filename;
-  gboolean     retval = TRUE;
+  Gimp     *gimp;
+  GList    *list;
+  gchar    *filename;
+  gboolean  retval = TRUE;
 
   g_return_val_if_fail (GIMP_IS_TOOL_PRESETS (presets), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
@@ -242,9 +320,7 @@ gimp_tool_presets_load (GimpToolPresets  *presets,
 
   gimp_container_clear (GIMP_CONTAINER (presets));
 
-  name = gimp_object_get_name (GIMP_OBJECT (presets->tool_info));
-
-  filename = gimp_tool_options_build_filename (name, "presets");
+  filename = gimp_tool_presets_build_filename (presets);
 
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));

@@ -32,6 +32,7 @@
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimptooloptions.h"
+#include "core/gimptoolpresets.h"
 
 #include "gimpdnd.h"
 #include "gimpdocked.h"
@@ -76,9 +77,11 @@ static void   gimp_tool_options_editor_tool_changed    (GimpContext           *c
                                                         GimpToolInfo          *tool_info,
                                                         GimpToolOptionsEditor *editor);
 
-static void   gimp_tool_options_editor_presets_changed (GimpContainer         *container,
-                                                        GimpToolOptions       *options,
+static void   gimp_tool_options_editor_presets_changed (GimpToolPresets       *presets,
                                                         GimpToolOptionsEditor *editor);
+static void   gimp_tool_options_editor_presets_update  (GimpToolOptionsEditor *editor,
+                                                        GimpToolPresets       *presets);
+static void   gimp_tool_options_editor_save_presets    (GimpToolOptionsEditor *editor);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpToolOptionsEditor, gimp_tool_options_editor,
@@ -125,6 +128,9 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (sw),
                                          editor->options_vbox);
   gtk_widget_show (editor->options_vbox);
+
+  editor->save_queue   = NULL;
+  editor->save_idle_id = 0;
 }
 
 static void
@@ -203,6 +209,8 @@ gimp_tool_options_editor_destroy (GtkObject *object)
       g_list_free (options);
       editor->options_vbox = NULL;
     }
+
+  gimp_tool_options_editor_save_presets (editor);
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
@@ -392,14 +400,9 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
       presets = tool_info->presets;
 
       if (presets)
-        {
-          g_signal_connect_object (presets, "add",
-                                   G_CALLBACK (gimp_tool_options_editor_presets_changed),
-                                   G_OBJECT (editor), 0);
-          g_signal_connect_object (presets, "remove",
-                                   G_CALLBACK (gimp_tool_options_editor_presets_changed),
-                                   G_OBJECT (editor), 0);
-        }
+        g_signal_connect_object (presets, "changed",
+                                 G_CALLBACK (gimp_tool_options_editor_presets_changed),
+                                 G_OBJECT (editor), 0);
 
       options_gui = g_object_get_data (G_OBJECT (tool_info->tool_options),
                                        "gimp-tool-options-gui");
@@ -420,28 +423,92 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
       presets = NULL;
     }
 
-  gimp_tool_options_editor_presets_changed (GIMP_CONTAINER (presets),
-                                            NULL, editor);
+  gimp_tool_options_editor_presets_update (editor, presets);
 
   gimp_docked_title_changed (GIMP_DOCKED (editor));
 }
 
+static gboolean
+gimp_tool_options_editor_save_presets_idle (GimpToolOptionsEditor *editor)
+{
+  editor->save_idle_id = 0;
+
+  gimp_tool_options_editor_save_presets (editor);
+
+  return FALSE;
+}
+
 static void
-gimp_tool_options_editor_presets_changed (GimpContainer         *container,
-                                          GimpToolOptions       *options,
+gimp_tool_options_editor_queue_save_presets (GimpToolOptionsEditor *editor,
+                                             GimpToolPresets       *presets)
+{
+  if (g_list_find (editor->save_queue, presets))
+    return;
+
+  editor->save_queue = g_list_append (editor->save_queue, presets);
+
+  if (! editor->save_idle_id)
+    {
+      editor->save_idle_id =
+        g_idle_add ((GSourceFunc) gimp_tool_options_editor_save_presets_idle,
+                    editor);
+    }
+}
+
+static void
+gimp_tool_options_editor_save_presets (GimpToolOptionsEditor *editor)
+{
+  GList *list;
+
+  if (editor->save_idle_id)
+    {
+      g_source_remove (editor->save_idle_id);
+      editor->save_idle_id = 0;
+    }
+
+  for (list = editor->save_queue; list; list = list->next)
+    {
+      GimpToolPresets *presets = list->data;
+      GError          *error   = NULL;
+
+      if (! gimp_tool_presets_save (presets, &error))
+        {
+          gimp_message (editor->gimp, G_OBJECT (editor), GIMP_MESSAGE_ERROR,
+                        _("Error saving tool options presets: %s"),
+                        error->message);
+          g_error_free (error);
+        }
+    }
+
+  g_list_free (editor->save_queue);
+
+  editor->save_queue = NULL;
+}
+
+static void
+gimp_tool_options_editor_presets_changed (GimpToolPresets       *presets,
                                           GimpToolOptionsEditor *editor)
+{
+  gimp_tool_options_editor_queue_save_presets (editor, presets);
+
+  gimp_tool_options_editor_presets_update (editor, presets);
+}
+
+static void
+gimp_tool_options_editor_presets_update (GimpToolOptionsEditor *editor,
+                                         GimpToolPresets       *presets)
 {
   gboolean save_sensitive    = FALSE;
   gboolean restore_sensitive = FALSE;
   gboolean delete_sensitive  = FALSE;
   gboolean reset_sensitive   = FALSE;
 
-  if (container)
+  if (presets)
     {
       save_sensitive  = TRUE;
       reset_sensitive = TRUE;
 
-      if (gimp_container_num_children (container) > 0)
+      if (! gimp_container_is_empty (GIMP_CONTAINER (presets)))
         {
           restore_sensitive = TRUE;
           delete_sensitive  = TRUE;

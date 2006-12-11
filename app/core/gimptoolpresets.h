@@ -46,6 +46,8 @@ struct _GimpToolPresets
 struct _GimpToolPresetsClass
 {
   GimpListClass  parent_class;
+
+  void (* changed) (GimpToolPresets *presets);
 };
 
 

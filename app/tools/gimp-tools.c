@@ -18,13 +18,6 @@
 
 #include "config.h"
 
-#include <errno.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <glib/gstdio.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -302,7 +295,7 @@ gimp_tools_restore (Gimp *gimp)
                                     GIMP_CONTEXT (tool_info->tool_options),
                                     GIMP_CONTEXT_ALL_PROPS_MASK);
 
-      gimp_tool_options_deserialize (tool_info->tool_options, NULL, NULL);
+      gimp_tool_options_deserialize (tool_info->tool_options, NULL);
 
       options_gui_func = g_object_get_data (G_OBJECT (tool_info),
                                             "gimp-tool-options-gui-func");
@@ -339,25 +332,26 @@ gimp_tools_save (Gimp     *gimp,
                  gboolean  save_tool_options,
                  gboolean  always_save)
 {
-  GList *list;
   gchar *filename;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (save_tool_options && (! tool_options_deleted || always_save))
-    gimp_contexts_save (gimp);
-
-  for (list = GIMP_LIST (gimp->tool_info_list)->list;
-       list;
-       list = g_list_next (list))
     {
-      GimpToolInfo *tool_info = GIMP_TOOL_INFO (list->data);
+      GList *list;
 
-      if (save_tool_options && (! tool_options_deleted || always_save))
-        gimp_tool_options_serialize (tool_info->tool_options, NULL, NULL);
+      gimp_contexts_save (gimp);
 
-      if (tool_info->presets)
-        gimp_tool_presets_save (tool_info->presets, NULL);
+      gimp_tool_options_create_folder ();
+
+      for (list = GIMP_LIST (gimp->tool_info_list)->list;
+           list;
+           list = g_list_next (list))
+        {
+          GimpToolInfo *tool_info = GIMP_TOOL_INFO (list->data);
+
+          gimp_tool_options_serialize (tool_info->tool_options, NULL);
+        }
     }
 
   filename = gimp_personal_rc_file ("toolrc");
@@ -383,24 +377,12 @@ gimp_tools_clear (Gimp    *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
   for (list = GIMP_LIST (gimp->tool_info_list)->list;
-       list;
+       list && success;
        list = g_list_next (list))
     {
       GimpToolInfo *tool_info = GIMP_TOOL_INFO (list->data);
-      gchar        *filename;
 
-      filename =
-        gimp_tool_options_build_filename (GIMP_OBJECT (tool_info)->name, NULL);
-
-      if (g_unlink (filename) != 0 && errno != ENOENT)
-        {
-          g_set_error (error, 0, 0, _("Deleting \"%s\" failed: %s"),
-                       gimp_filename_to_utf8 (filename), g_strerror (errno));
-          success = FALSE;
-          break;
-        }
-
-      g_free (filename);
+      success = gimp_tool_options_delete (tool_info->tool_options, NULL);
     }
 
   if (success)
