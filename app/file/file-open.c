@@ -409,6 +409,8 @@ file_open_layers (Gimp                *gimp,
 
       if (layers)
         {
+          gchar *basename = file_utils_uri_display_basename (uri);
+
           for (list = layers; list; list = g_list_next (list))
             {
               GimpLayer *layer = list->data;
@@ -418,12 +420,22 @@ file_open_layers (Gimp                *gimp,
                                         G_TYPE_FROM_INSTANCE (layer),
                                         TRUE);
 
-              if (merge_visible)
-                gimp_object_take_name (GIMP_OBJECT (item),
-                                       file_utils_uri_display_basename (uri));
+              if (layers->next == NULL)
+                {
+                  gimp_object_set_name (GIMP_OBJECT (item), basename);
+                }
+              else
+                {
+                  gchar *name = g_strdup_printf ("%s - %s", basename,
+                                                 gimp_object_get_name (GIMP_OBJECT (layer)));
+
+                  gimp_object_take_name (GIMP_OBJECT (item), name);
+                }
 
               list->data = item;
             }
+
+          g_free (basename);
 
           gimp_document_list_add_uri (GIMP_DOCUMENT_LIST (gimp->documents),
                                       uri, mime_type);

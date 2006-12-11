@@ -1,3 +1,10 @@
+2006-12-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/file/file-open.c (file_open_layers): use the image file's
+	basename as layer name if we import only one layer or if
+	merge_visible was requested. Use "basename - layer name"
+	otherwise. Fixes bug #384472.
+
 2006-12-11  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimptooloptions.[ch]: added API to delete saved
