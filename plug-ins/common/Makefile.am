@@ -269,8 +269,8 @@ aa_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(LIBAA)		\
 	$(GTK_LIBS)		\
+	$(LIBAA)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1271,8 +1271,8 @@ lcms_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(LIBLCMS)		\
 	$(GTK_LIBS)		\
+	$(LIBLCMS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1320,8 +1320,8 @@ mail_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(LIBMAIL)		\
 	$(GTK_LIBS)		\
+	$(LIBMAIL)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1385,8 +1385,8 @@ mng_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(LIBMNG)		\
 	$(GTK_LIBS)		\
+	$(LIBMNG)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1657,8 +1657,8 @@ png_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(LIBPNG)		\
 	$(GTK_LIBS)		\
+	$(LIBPNG)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1708,8 +1708,8 @@ poppler_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(LIBPOPPLER)		\
 	$(GTK_LIBS)		\
+	$(LIBPOPPLER)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1786,8 +1786,8 @@ psp_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(LIBZ)		\
 	$(GTK_LIBS)		\
+	$(LIBZ)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1928,8 +1928,8 @@ screenshot_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(LIBSCREENSHOT)		\
 	$(GTK_LIBS)		\
+	$(LIBSCREENSHOT)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -2170,8 +2170,8 @@ svg_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(LIBSVG)		\
 	$(GTK_LIBS)		\
+	$(LIBSVG)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -2219,8 +2219,8 @@ tiff_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(LIBTIFF)		\
 	$(GTK_LIBS)		\
+	$(LIBTIFF)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -2437,8 +2437,8 @@ wmf_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(LIBWMF)		\
 	$(GTK_LIBS)		\
+	$(LIBWMF)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -2470,8 +2470,8 @@ xpm_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(LIBXPM)		\
 	$(GTK_LIBS)		\
+	$(LIBXPM)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 

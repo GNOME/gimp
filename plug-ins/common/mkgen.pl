@@ -120,6 +120,13 @@ foreach (sort keys %plugins) {
     $libgimp .= "\t\\\n\t\$(libgimpcolor)";
     $libgimp .= "\t\t\\\n\t\$(libgimpbase)";
 
+    my $glib;
+    if (exists $plugins{$_}->{ui}) {
+	$glib = "\$(GTK_LIBS)"
+    } else {
+	$glib = "\$(GLIB_LIBS)"
+    }
+
     my $optlib = "";
     if (exists $plugins{$_}->{optional}) {
 	my $name = exists $plugins{$_}->{libopt} ? $plugins{$_}->{libopt} : $_;
@@ -137,11 +144,6 @@ EOT
     }
 
     my $deplib = "\$(RT_LIBS)\t\t\\\n\t\$(INTLLIBS)";
-    if (exists $plugins{$_}->{ui}) {
-	$deplib = "\$(GTK_LIBS)\t\t\\\n\t$deplib";
-    } else {
-	$deplib = "\$(GLIB_LIBS)\t\t\\\n\t$deplib";
-    }
     if (exists $plugins{$_}->{libdep}) {
 	my @lib = split(/:/, $plugins{$_}->{libdep});
 	foreach $lib (@lib) {
@@ -155,7 +157,8 @@ ${makename}_SOURCES = \\
 	$_.c
 
 ${makename}_LDADD = \\
-	$libgimp		\\$optlib
+	$libgimp		\\
+	$glib		\\$optlib
 	$deplib
 EOT
 

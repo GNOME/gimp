@@ -1,3 +1,11 @@
+2006-12-11  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/mkgen.pl: GTK_LIBS and GLIB_LIBS should be
+	listed before optional libs, to make sure any -L args from pkg-config
+	take.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
 2006-12-11  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-progress.c
