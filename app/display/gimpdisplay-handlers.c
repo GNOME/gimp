@@ -30,6 +30,8 @@
 #include "gimpdisplay.h"
 #include "gimpdisplay-handlers.h"
 
+#include "gimp-intl.h"
+
 
 /*  local function prototypes  */
 
@@ -41,6 +43,9 @@ static void   gimp_display_update_handler (GimpProjection *projection,
                                            gint            h,
                                            GimpDisplay    *display);
 static void   gimp_display_flush_handler  (GimpImage      *image,
+                                           GimpDisplay    *display);
+static void   gimp_display_saved_handler  (GimpImage      *image,
+                                           const gchar    *uri,
                                            GimpDisplay    *display);
 
 
@@ -73,6 +78,9 @@ gimp_display_connect (GimpDisplay *display,
   g_signal_connect (image, "flush",
                     G_CALLBACK (gimp_display_flush_handler),
                     display);
+  g_signal_connect (image, "saved",
+                    G_CALLBACK (gimp_display_saved_handler),
+                    display);
 }
 
 void
@@ -83,6 +91,9 @@ gimp_display_disconnect (GimpDisplay *display)
   g_return_if_fail (GIMP_IS_DISPLAY (display));
   g_return_if_fail (GIMP_IS_IMAGE (display->image));
 
+  g_signal_handlers_disconnect_by_func (display->image,
+                                        gimp_display_saved_handler,
+                                        display);
   g_signal_handlers_disconnect_by_func (display->image,
                                         gimp_display_flush_handler,
                                         display);
@@ -127,4 +138,17 @@ gimp_display_flush_handler (GimpImage   *image,
                             GimpDisplay *display)
 {
   gimp_display_flush (display);
+}
+
+static void
+gimp_display_saved_handler (GimpImage   *image,
+                            const gchar *uri,
+                            GimpDisplay *display)
+{
+  gchar *filename = file_utils_uri_display_name (uri);
+
+  gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_INFO,
+                _("Image saved to '%s'"), filename);
+
+  g_free (filename);
 }

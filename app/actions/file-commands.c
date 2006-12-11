@@ -220,7 +220,6 @@ file_save_cmd_callback (GtkAction *action,
           GimpPDBStatusType  status;
           GError            *error = NULL;
           GList             *list;
-          gchar             *filename;
 
           for (list = gimp_action_groups_from_name ("file");
                list;
@@ -235,14 +234,9 @@ file_save_cmd_callback (GtkAction *action,
                               uri, save_proc,
                               GIMP_RUN_WITH_LAST_VALS, FALSE, &error);
 
-          filename = file_utils_uri_display_name (uri);
-
           switch (status)
             {
             case GIMP_PDB_SUCCESS:
-              gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_INFO,
-                            _("Image saved to '%s'"),
-                            filename);
               break;
 
             case GIMP_PDB_CANCEL:
@@ -251,14 +245,22 @@ file_save_cmd_callback (GtkAction *action,
               break;
 
             default:
-              gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
-                            _("Saving '%s' failed:\n\n%s"),
-                            filename, error->message);
-              g_clear_error (&error);
+              {
+                gchar *filename;
+
+                filename = file_utils_uri_display_name (uri);
+
+                gimp_message (image->gimp, G_OBJECT (display),
+                              GIMP_MESSAGE_ERROR,
+                              _("Saving '%s' failed:\n\n%s"),
+                              filename, error->message);
+
+                g_free (filename);
+                g_clear_error (&error);
+              }
               break;
             }
 
-          g_free (filename);
 
           for (list = gimp_action_groups_from_name ("file");
                list;

@@ -1,5 +1,19 @@
 2006-12-11  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/file-commands.c: don't message "Image saved" from here.
+
+	* app/core/gimpimage.[ch]: introduced new signal "saved".
+
+	* app/file/file-save.c (file_save): call gimp_image_saved() from here.
+
+	* app/display/gimpdisplay-handlers.c: connect to GimpImage::saved
+	and show the "Image saved" message. Makes it show up on all displays
+	and regardless of how the file was saved.
+
+	* app/display/gimpdisplay.c: fixed typo in comment.
+
+2006-12-11  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/file-actions.c
 	* app/actions/file-commands.[ch]
 	* app/display/gimpdisplayshell-close.c: introduced new action

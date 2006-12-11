@@ -173,6 +173,8 @@ file_save (GimpImage           *image,
           gimp_image_clean_all (image);
         }
 
+      gimp_image_saved (image, uri);
+
       documents = GIMP_DOCUMENT_LIST (image->gimp->documents);
       imagefile = gimp_document_list_add_uri (documents,
                                               uri,

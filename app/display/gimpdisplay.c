@@ -326,7 +326,7 @@ gimp_display_new (GimpImage       *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  /*  If there isn't an interface, never create a displaylay  */
+  /*  If there isn't an interface, never create a display  */
   if (image->gimp->no_interface)
     return NULL;
 

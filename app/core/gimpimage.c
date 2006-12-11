@@ -95,6 +95,7 @@ enum
   SELECTION_CONTROL,
   CLEAN,
   DIRTY,
+  SAVED,
   UPDATE,
   UPDATE_GUIDE,
   UPDATE_SAMPLE_POINT,
@@ -355,6 +356,16 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DIRTY_MASK);
 
+  gimp_image_signals[SAVED] =
+    g_signal_new ("saved",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, saved),
+                  NULL, NULL,
+                  gimp_marshal_VOID__STRING,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_STRING);
+
   gimp_image_signals[UPDATE] =
     g_signal_new ("update",
                   G_TYPE_FROM_CLASS (klass),
@@ -489,6 +500,7 @@ gimp_image_class_init (GimpImageClass *klass)
 
   klass->clean                        = NULL;
   klass->dirty                        = NULL;
+  klass->saved                        = NULL;
   klass->update                       = NULL;
   klass->update_guide                 = NULL;
   klass->update_sample_point          = NULL;
@@ -1923,6 +1935,23 @@ gimp_image_clean_all (GimpImage *image)
   g_signal_emit (image, gimp_image_signals[CLEAN], 0);
 }
 
+/**
+ * gimp_image_saved:
+ * @image:
+ * @uri:
+ *
+ * Emits the "saved" signal, indicating that @image was saved to the
+ * location specified by @uri.
+ */
+void
+gimp_image_saved (GimpImage   *image,
+                  const gchar *uri)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (uri != NULL);
+
+  g_signal_emit (image, gimp_image_signals[SAVED], 0, uri);
+}
 
 /*  flush this image's displays  */
 
