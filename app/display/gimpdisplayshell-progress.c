@@ -113,12 +113,12 @@ gimp_display_shell_progress_message (GimpProgress        *progress,
     {
     case GIMP_MESSAGE_ERROR:
       /* error messages are never handled here */
-      return FALSE;
+      break;
 
     case GIMP_MESSAGE_WARNING:
       /* warning messages go to the statusbar, if it's visible */
       if (! GTK_WIDGET_VISIBLE (shell->statusbar))
-        return FALSE;
+        break;
       /* else fallthrough */
 
     case GIMP_MESSAGE_INFO:
@@ -126,6 +126,8 @@ gimp_display_shell_progress_message (GimpProgress        *progress,
       return gimp_progress_message (GIMP_PROGRESS (shell->statusbar), gimp,
                                     severity, domain, message);
     }
+
+  return FALSE;
 }
 
 void
