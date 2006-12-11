@@ -1,7 +1,7 @@
 # Ukrainian translation of gimp-plugins.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Yuri Syrota <rasta@renome.rovno.ua>, 2000.
-# Maxim Dziumanenko <mvd@mylinux.com.ua>, 2004
+# Maxim Dziumanenko <dziumanenko@gmail.com>, 2004
 #
 msgid ""
 msgstr ""
@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-02-24 18:28+0200\n"
 "PO-Revision-Date: 2005-02-24 20:58+0200\n"
-"Last-Translator: Maxim Dziumanenko <mvd@mylinux.com.ua>\n"
+"Last-Translator: Maxim Dziumanenko <dziumanenko@gmail.com>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -11246,7 +11246,7 @@ msgstr "Друк у файл"
 
 #: plug-ins/print/print.c:164
 msgid "_Print..."
-msgstr "Д_ук..."
+msgstr "Д_рук..."
 
 #: plug-ins/print/print.c:694 plug-ins/print/print.c:695
 #: plug-ins/print/print.c:785 plug-ins/print/print.c:1124
