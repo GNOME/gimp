@@ -1,3 +1,10 @@
+2006-12-11  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/file-actions.c
+	* app/actions/file-commands.[ch]
+	* app/display/gimpdisplayshell-close.c: introduced new action
+	'file-save-and-close' and moved display deletion there.
+
 2006-12-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/file/file-open.c (file_open_layers): use the image file's

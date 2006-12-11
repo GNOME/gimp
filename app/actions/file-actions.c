@@ -100,6 +100,11 @@ static const GimpActionEntry file_actions[] =
     G_CALLBACK (file_save_a_copy_cmd_callback),
     GIMP_HELP_FILE_SAVE_A_COPY },
 
+  { "file-save-and-close", NULL,
+    N_("Save and Close..."), NULL, NULL,
+    G_CALLBACK (file_save_and_close_cmd_callback),
+    GIMP_HELP_FILE_SAVE },
+
   { "file-save-as-template", NULL,
     N_("Save as _Template..."), NULL,
     N_("Create a new template from this image"),

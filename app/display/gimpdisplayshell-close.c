@@ -267,14 +267,11 @@ gimp_display_shell_close_response (GtkWidget        *widget,
         GtkAction *action;
 
         action = gimp_ui_manager_find_action (shell->menubar_manager,
-                                              "file", "file-save");
+                                              "file", "file-save-and-close");
 
         g_return_if_fail (action != NULL);
 
         gtk_action_activate (action);
-
-        if (! shell->display->image->dirty)
-          gimp_display_delete (shell->display);
       }
       break;
 

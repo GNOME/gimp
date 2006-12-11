@@ -304,6 +304,19 @@ file_save_a_copy_cmd_callback (GtkAction *action,
 }
 
 void
+file_save_and_close_cmd_callback (GtkAction *action,
+                                  gpointer   data)
+{
+  GimpDisplay *display;
+  return_if_no_display (display, data);
+
+  file_save_cmd_callback (action, data);
+
+  if (! display->image->dirty)
+    gimp_display_delete (display);
+}
+
+void
 file_save_template_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
