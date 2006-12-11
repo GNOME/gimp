@@ -330,7 +330,7 @@ gimp_tools_restore (Gimp *gimp)
                          "gimp-tool-options-gui", options_gui);
 
       if (tool_info->presets)
-        gimp_tool_presets_load (tool_info->presets, gimp->be_verbose, NULL);
+        gimp_tool_presets_load (tool_info->presets, NULL);
     }
 }
 
@@ -357,7 +357,7 @@ gimp_tools_save (Gimp     *gimp,
         gimp_tool_options_serialize (tool_info->tool_options, NULL, NULL);
 
       if (tool_info->presets)
-        gimp_tool_presets_save (tool_info->presets, gimp->be_verbose, NULL);
+        gimp_tool_presets_save (tool_info->presets, NULL);
     }
 
   filename = gimp_personal_rc_file ("toolrc");

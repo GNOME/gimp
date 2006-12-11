@@ -57,10 +57,9 @@ GimpToolOptions * gimp_tool_presets_get_options (GimpToolPresets  *presets,
                                                  gint              index);
 
 gboolean          gimp_tool_presets_save        (GimpToolPresets  *presets,
-                                                 gboolean          be_verbose,
                                                  GError          **error);
 gboolean          gimp_tool_presets_load        (GimpToolPresets  *presets,
-                                                 gboolean          be_verbose,
                                                  GError          **error);
+
 
 #endif  /*  __GIMP_TOOL_PRESETS_H__  */

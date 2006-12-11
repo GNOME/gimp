@@ -1,3 +1,9 @@
+2006-12-11  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/tool-options-commands.c
+	* app/core/gimptoolpresets.[ch]
+	* app/tools/gimp-tools.c: code cleanup.
+
 2006-12-10  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/tool-options-commands.c

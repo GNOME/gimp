@@ -90,8 +90,7 @@ tool_options_save_to_cmd_callback (GtkAction *action,
   GimpToolInfo    *tool_info = gimp_context_get_tool (context);
   GimpToolOptions *options;
 
-  options = (GimpToolOptions *)
-    gimp_container_get_child_by_index (tool_info->presets, value);
+  options = gimp_tool_presets_get_options (tool_info->presets, value);
 
   if (options)
     {
@@ -158,11 +157,11 @@ tool_options_delete_saved_cmd_callback (GtkAction *action,
   GimpToolInfo    *tool_info = gimp_context_get_tool (context);
   GimpToolOptions *options;
 
-  options = (GimpToolOptions *)
-    gimp_container_get_child_by_index (tool_info->presets, value);
+  options = gimp_tool_presets_get_options (tool_info->presets, value);
 
   if (options)
-    gimp_container_remove (tool_info->presets, GIMP_OBJECT (options));
+    gimp_container_remove (GIMP_CONTAINER (tool_info->presets),
+                           GIMP_OBJECT (options));
 }
 
 void
@@ -245,7 +244,8 @@ tool_options_save_callback (GtkWidget   *widget,
   else
     gimp_object_set_static_name (GIMP_OBJECT (copy), _("Saved Options"));
 
-  gimp_container_insert (tool_info->presets, GIMP_OBJECT (copy), -1);
+  gimp_container_insert (GIMP_CONTAINER (tool_info->presets),
+                         GIMP_OBJECT (copy), -1);
   g_object_unref (copy);
 }
 

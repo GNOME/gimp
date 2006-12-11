@@ -31,6 +31,7 @@
 
 #include "core-types.h"
 
+#include "gimp.h"
 #include "gimptoolinfo.h"
 #include "gimptooloptions.h"
 #include "gimptoolpresets.h"
@@ -172,15 +173,17 @@ gimp_tool_presets_get_options (GimpToolPresets *presets,
 
 gboolean
 gimp_tool_presets_save (GimpToolPresets  *presets,
-                        gboolean          be_verbose,
                         GError          **error)
 {
+  Gimp        *gimp;
   const gchar *name;
   gchar       *filename;
   gboolean     retval = TRUE;
 
   g_return_val_if_fail (GIMP_IS_TOOL_PRESETS (presets), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  gimp = presets->tool_info->gimp;
 
   name = gimp_object_get_name (GIMP_OBJECT (presets->tool_info));
 
@@ -190,7 +193,7 @@ gimp_tool_presets_save (GimpToolPresets  *presets,
     {
       gchar *footer;
 
-      if (be_verbose)
+      if (gimp->be_verbose)
         g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
 
       footer = g_strdup_printf ("end of %s", GIMP_OBJECT (presets)->name);
@@ -204,7 +207,7 @@ gimp_tool_presets_save (GimpToolPresets  *presets,
     }
   else if (g_file_test (filename, G_FILE_TEST_EXISTS))
     {
-      if (be_verbose)
+      if (gimp->be_verbose)
         g_print ("Deleting '%s'\n", gimp_filename_to_utf8 (filename));
 
       if (g_unlink (filename) != 0)
@@ -224,9 +227,9 @@ gimp_tool_presets_save (GimpToolPresets  *presets,
 
 gboolean
 gimp_tool_presets_load (GimpToolPresets  *presets,
-                        gboolean          be_verbose,
                         GError          **error)
 {
+  Gimp        *gimp;
   GList       *list;
   const gchar *name;
   gchar       *filename;
@@ -235,26 +238,26 @@ gimp_tool_presets_load (GimpToolPresets  *presets,
   g_return_val_if_fail (GIMP_IS_TOOL_PRESETS (presets), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
+  gimp = presets->tool_info->gimp;
+
+  gimp_container_clear (GIMP_CONTAINER (presets));
+
   name = gimp_object_get_name (GIMP_OBJECT (presets->tool_info));
 
   filename = gimp_tool_options_build_filename (name, "presets");
 
-  if (be_verbose)
+  if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
 
-  retval = gimp_config_deserialize_file (GIMP_CONFIG (presets), filename,
-                                         presets->tool_info->gimp,
+  retval = gimp_config_deserialize_file (GIMP_CONFIG (presets), filename, gimp,
                                          error);
 
   g_free (filename);
 
-  if (retval)
-    {
-      gimp_list_reverse (GIMP_LIST (presets));
+  gimp_list_reverse (GIMP_LIST (presets));
 
-      for (list = GIMP_LIST (presets)->list; list; list = g_list_next (list))
-        g_object_set (list->data, "tool-info", presets->tool_info, NULL);
-    }
+  for (list = GIMP_LIST (presets)->list; list; list = g_list_next (list))
+    g_object_set (list->data, "tool-info", presets->tool_info, NULL);
 
   return retval;
 }
