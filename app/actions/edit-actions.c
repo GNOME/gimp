@@ -307,6 +307,7 @@ edit_actions_update (GimpActionGroup *group,
 
   g_free (undo_name);
   g_free (redo_name);
+  g_free (fade_name);
 
   SET_SENSITIVE ("edit-cut",          drawable);
   SET_SENSITIVE ("edit-copy",         drawable);

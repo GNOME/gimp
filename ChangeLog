@@ -1,5 +1,10 @@
 2006-12-12  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/edit-actions.c (edit_actions_update): plugged a tiny
+	memleak.
+
+2006-12-12  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdockbook.c (gimp_dockbook_get_tab_widget): check
 	ui_manager before accessing it. Fixes warnings on destruction.
 
