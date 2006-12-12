@@ -49,7 +49,8 @@
         (set! speed (* -1 speed)) )
 
     ;--- check image and work on a copy
-    (if (= (car (gimp-image-get-layers org-img)) 2)
+    (if (and (= (car (gimp-image-get-layers org-img)) 2)
+             (= (car (gimp-image-get-floating-sel org-img)) -1))
 
         ;--- main program structure starts here, begin of "if-1"
         (begin
