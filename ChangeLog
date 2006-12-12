@@ -1,5 +1,10 @@
 2006-12-12  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdockbook.c (gimp_dockbook_get_tab_widget): check
+	ui_manager before accessing it. Fixes warnings on destruction.
+
+2006-12-12  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_new):
 	slightly increased size of the quick-mask and zoom-mode buttons.
 	Also changed the style to not displace the icon when the buttons

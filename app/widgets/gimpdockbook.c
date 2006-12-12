@@ -407,7 +407,8 @@ gimp_dockbook_get_tab_widget (GimpDockbook *dockbook,
     }
 
   /* EEK */
-  if (GIMP_IS_IMAGE_DOCK (dockbook->dock))
+  if (GIMP_IS_IMAGE_DOCK (dockbook->dock) &&
+      GIMP_IMAGE_DOCK (dockbook->dock)->ui_manager != NULL)
     {
       const gchar *dialog_id;
 
