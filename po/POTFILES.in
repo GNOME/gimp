@@ -146,6 +146,7 @@ app/core/gimpprogress.c
 app/core/gimpselection.c
 app/core/gimpstrokeoptions.c
 app/core/gimptemplate.c
+app/core/gimptooloptions.c
 app/core/gimptoolpresets.c
 app/core/gimpunit.c
 
@@ -187,6 +188,7 @@ app/dialogs/vectors-options-dialog.c
 
 app/display/display-enums.c
 app/display/gimpdisplay.c
+app/display/gimpdisplay-handlers.c
 app/display/gimpdisplayoptions.c
 app/display/gimpdisplayshell.c
 app/display/gimpdisplayshell-callbacks.c
