@@ -137,8 +137,14 @@ static const gchar display_rc_style[] =
   "  GtkMenuBar::shadow-type      = none\n"
   "  GtkMenuBar::internal-padding = 0\n"
   "}\n"
-  "widget \"*.gimp-menubar-fullscreen\" style \"fullscreen-menubar-style\"";
-
+  "widget \"*.gimp-menubar-fullscreen\" style \"fullscreen-menubar-style\"\n"
+  "\n"
+  "style \"check-button-style\"\n"
+  "{\n"
+  "  GtkToggleButton::child-displacement-x = 0\n"
+  "  GtkToggleButton::child-displacement-y = 0\n"
+  "}\n"
+  "widget \"*\" style \"check-button-style\"";
 
 static void
 gimp_display_shell_class_init (GimpDisplayShellClass *klass)
@@ -240,7 +246,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->hrule                  = NULL;
   shell->vrule                  = NULL;
 
-  shell->origin_button          = NULL;
+  shell->origin                 = NULL;
   shell->quick_mask_button      = NULL;
   shell->zoom_button            = NULL;
   shell->nav_ebox               = NULL;
@@ -526,7 +532,7 @@ gimp_display_shell_popup_menu (GtkWidget *widget)
   gimp_ui_manager_ui_popup (shell->popup_manager, "/dummy-menubar/image-popup",
                             GTK_WIDGET (shell),
                             gimp_display_shell_menu_position,
-                            shell->origin_button,
+                            shell->origin,
                             NULL, NULL);
 
   return TRUE;
@@ -828,19 +834,16 @@ gimp_display_shell_new (GimpDisplay     *display,
   /*  create the contents of the inner_table  ********************************/
 
   /*  the menu popup button  */
-  shell->origin_button = gtk_button_new ();
-  GTK_WIDGET_UNSET_FLAGS (shell->origin_button, GTK_CAN_FOCUS);
-
+  shell->origin = gtk_event_box_new ();
   image = gtk_image_new_from_stock (GIMP_STOCK_MENU_RIGHT, GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (shell->origin_button), image);
+  gtk_container_add (GTK_CONTAINER (shell->origin), image);
   gtk_widget_show (image);
 
-  g_signal_connect (shell->origin_button, "button-press-event",
+  g_signal_connect (shell->origin, "button-press-event",
                     G_CALLBACK (gimp_display_shell_origin_button_press),
                     shell);
 
-  gimp_help_set_help_data (shell->origin_button, NULL,
-                           GIMP_HELP_IMAGE_WINDOW_ORIGIN_BUTTON);
+  gimp_help_set_help_data (shell->origin, NULL, GIMP_HELP_IMAGE_WINDOW_ORIGIN);
 
   shell->canvas = gimp_canvas_new ();
 
@@ -934,9 +937,11 @@ gimp_display_shell_new (GimpDisplay     *display,
                     shell);
 
   /*  create the contents of the right_vbox  *********************************/
-  shell->zoom_button = gtk_check_button_new ();
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->zoom_button), FALSE);
-  gtk_widget_set_size_request (GTK_WIDGET (shell->zoom_button), 16, 16);
+  shell->zoom_button = g_object_new (GTK_TYPE_CHECK_BUTTON,
+                                     "draw-indicator", FALSE,
+                                     "width-request",  18,
+                                     "height-request", 18,
+                                     NULL);
   GTK_WIDGET_UNSET_FLAGS (shell->zoom_button, GTK_CAN_FOCUS);
 
   image = gtk_image_new_from_stock (GIMP_STOCK_ZOOM_FOLLOW_WINDOW,
@@ -955,10 +960,11 @@ gimp_display_shell_new (GimpDisplay     *display,
   /*  create the contents of the lower_hbox  *********************************/
 
   /*  the quick mask button  */
-  shell->quick_mask_button = gtk_check_button_new ();
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->quick_mask_button),
-                              FALSE);
-  gtk_widget_set_size_request (GTK_WIDGET (shell->quick_mask_button), 16, 16);
+  shell->quick_mask_button = g_object_new (GTK_TYPE_CHECK_BUTTON,
+                                           "draw-indicator", FALSE,
+                                           "width-request",  18,
+                                           "height-request", 18,
+                                           NULL);
   GTK_WIDGET_UNSET_FLAGS (shell->quick_mask_button, GTK_CAN_FOCUS);
 
   image = gtk_image_new_from_stock (GIMP_STOCK_QUICK_MASK_OFF,
@@ -1006,7 +1012,7 @@ gimp_display_shell_new (GimpDisplay     *display,
   /*  pack all the widgets  **************************************************/
 
   /*  fill the inner_table  */
-  gtk_table_attach (GTK_TABLE (inner_table), shell->origin_button, 0, 1, 0, 1,
+  gtk_table_attach (GTK_TABLE (inner_table), shell->origin, 0, 1, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_table_attach (GTK_TABLE (inner_table), shell->hrule, 1, 2, 0, 1,
                     GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
@@ -1031,7 +1037,7 @@ gimp_display_shell_new (GimpDisplay     *display,
 
   if (shell->options->show_rulers)
     {
-      gtk_widget_show (shell->origin_button);
+      gtk_widget_show (shell->origin);
       gtk_widget_show (shell->hrule);
       gtk_widget_show (shell->vrule);
     }

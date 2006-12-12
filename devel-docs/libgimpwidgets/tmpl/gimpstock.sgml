@@ -158,14 +158,14 @@ RTL variant
 
 <!-- ##### MACRO GIMP_STOCK_QUICK_MASK_OFF ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-quick-mask-off-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-quick-mask-off-12.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_QUICK_MASK_ON ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-quick-mask-on-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-quick-mask-on-12.png" format="png"></inlinegraphic>
 </para>
 
 

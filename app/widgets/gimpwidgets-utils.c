@@ -173,7 +173,8 @@ gimp_button_menu_position (GtkWidget       *button,
 
   gtk_menu_set_screen (menu, screen);
 
-  *x += button->allocation.x;
+  if (GTK_WIDGET_NO_WINDOW (button))
+    *x += button->allocation.x;
 
   switch (position)
     {
@@ -194,10 +195,14 @@ gimp_button_menu_position (GtkWidget       *button,
       break;
     }
 
-  *y += button->allocation.y + button->allocation.height / 2;
+  if (GTK_WIDGET_NO_WINDOW (button))
+    *y += button->allocation.y;
+
+  *y += button->allocation.height / 2;
 
   if (*y + menu_requisition.height > rect.y + rect.height)
     *y -= menu_requisition.height;
+
   if (*y < rect.y)
     *y = rect.y;
 }

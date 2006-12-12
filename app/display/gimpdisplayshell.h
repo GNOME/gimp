@@ -108,7 +108,7 @@ struct _GimpDisplayShell
   GtkWidget        *hrule;             /*  rulers                             */
   GtkWidget        *vrule;
 
-  GtkWidget        *origin_button;     /*  NW: origin button                  */
+  GtkWidget        *origin;            /*  NW: origin                         */
   GtkWidget        *quick_mask_button; /*  SW: quick mask button              */
   GtkWidget        *zoom_button;       /*  NE: zoom toggle button             */
   GtkWidget        *nav_ebox;          /*  SE: navigation event box           */

@@ -99,8 +99,7 @@
 #define GIMP_HELP_VIEW_CHANGE_SCREEN              "gimp-view-change-screen"
 
 #define GIMP_HELP_IMAGE_WINDOW                    "gimp-image-window"
-#define GIMP_HELP_IMAGE_WINDOW_ORIGIN_BUTTON      "gimp-image-window-origin-button"
-#define GIMP_HELP_IMAGE_WINDOW_PADDING_BUTTON     "gimp-image-window-padding-button"
+#define GIMP_HELP_IMAGE_WINDOW_ORIGIN             "gimp-image-window-origin"
 #define GIMP_HELP_IMAGE_WINDOW_ZOOM_FOLLOW_BUTTON "gimp-image-window-zoom-follow-button"
 #define GIMP_HELP_IMAGE_WINDOW_QUICK_MASK_BUTTON  "gimp-image-window-quick-mask-button"
 #define GIMP_HELP_IMAGE_WINDOW_NAV_BUTTON         "gimp-image-window-nav-button"

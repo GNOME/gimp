@@ -1,5 +1,36 @@
 2006-12-12  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new):
+	slightly increased size of the quick-mask and zoom-mode buttons.
+	Also changed the style to not displace the icon when the buttons
+	are pressed.
+
+	* app/display/gimpdisplayshell.[ch]
+	* app/display/gimpdisplayshell-appearance.c: changed "origin_button"
+	to "origin". Don't draw it as a button but use an event box just
+	like we do for the navigation icon in the lower right corner.
+
+	* app/display/gimpdisplayshell-title.c
+	(gimp_display_shell_format_title): use the viewable description
+	for the drawable's name. We don't want to see "Qmask" in the
+	statusbar.
+
+	* app/widgets/gimpwidgets-utils.c (gimp_button_menu_position): fix
+	for the case where button is not really a GtkButton but has it's
+	own window.
+
+	* app/widgets/gimphelp-ids.h: changed help ID, removed unused one.
+
+	* libgimpwidgets/gimpstock.c
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-quick-mask-off-12.png
+	* themes/Default/images/stock-quick-mask-off-16.png
+	* themes/Default/images/stock-quick-mask-on-12.png
+	* themes/Default/images/stock-quick-mask-on-16.png: cropped empty
+	space from the quick-mask icon.
+
+2006-12-12  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpstatusbar.c: only show the Cancel button while
 	we are displaying a cancelable progress. Also removed obsolete
 	workaround for a resize problem that doesn't show up any longer.

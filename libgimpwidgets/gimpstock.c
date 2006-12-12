@@ -562,10 +562,10 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_SELECTION_BORDER,         stock_selection_border_16         },
 
   { GIMP_STOCK_NAVIGATION,               stock_navigation_16               },
-  { GIMP_STOCK_QUICK_MASK_OFF,           stock_quick_mask_off_16           },
-  { GIMP_STOCK_QUICK_MASK_ON,            stock_quick_mask_on_16            },
-  { "gimp-qmask-off", /* compat */       stock_quick_mask_off_16           },
-  { "gimp-qmask-on",  /* compat */       stock_quick_mask_on_16            },
+  { GIMP_STOCK_QUICK_MASK_OFF,           stock_quick_mask_off_12           },
+  { GIMP_STOCK_QUICK_MASK_ON,            stock_quick_mask_on_12            },
+  { "gimp-qmask-off", /* compat */       stock_quick_mask_off_12           },
+  { "gimp-qmask-on",  /* compat */       stock_quick_mask_on_12            },
 
   { GIMP_STOCK_LIST,                     stock_list_16                     },
   { GIMP_STOCK_GRID,                     stock_grid_16                     },

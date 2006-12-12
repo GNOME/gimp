@@ -137,7 +137,7 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
 
   if (show)
     {
-      gtk_widget_show (shell->origin_button);
+      gtk_widget_show (shell->origin);
       gtk_widget_show (shell->hrule);
       gtk_widget_show (shell->vrule);
 
@@ -146,7 +146,7 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
     }
   else
     {
-      gtk_widget_hide (shell->origin_button);
+      gtk_widget_hide (shell->origin);
       gtk_widget_hide (shell->hrule);
       gtk_widget_hide (shell->vrule);
 
