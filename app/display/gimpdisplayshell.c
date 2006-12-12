@@ -812,22 +812,23 @@ gimp_display_shell_new (GimpDisplay     *display,
   gtk_box_pack_start (GTK_BOX (upper_hbox), right_vbox, FALSE, FALSE, 0);
   gtk_widget_show (right_vbox);
 
-  /*  the hbox containing quickmask button, vertical scrollbar and nav button  */
+  /*  the hbox containing the quickmask button, vertical scrollbar and
+      the navigation button  */
   lower_hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (disp_vbox), lower_hbox, FALSE, FALSE, 0);
   gtk_widget_show (lower_hbox);
 
- /*  create the scrollbars  *************************************************/
+  /*  create the scrollbars  *************************************************/
 
   /*  the horizontal scrollbar  */
-  shell->hsbdata =
-    GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_width, 1, 1, image_width));
+  shell->hsbdata = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_width,
+                                                       1, 1, image_width));
   shell->hsb = gtk_hscrollbar_new (shell->hsbdata);
   GTK_WIDGET_UNSET_FLAGS (shell->hsb, GTK_CAN_FOCUS);
 
   /*  the vertical scrollbar  */
-  shell->vsbdata =
-    GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_height, 1, 1, image_height));
+  shell->vsbdata = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_height,
+                                                       1, 1, image_height));
   shell->vsb = gtk_vscrollbar_new (shell->vsbdata);
   GTK_WIDGET_UNSET_FLAGS (shell->vsb, GTK_CAN_FOCUS);
 
@@ -835,6 +836,7 @@ gimp_display_shell_new (GimpDisplay     *display,
 
   /*  the menu popup button  */
   shell->origin = gtk_event_box_new ();
+
   image = gtk_image_new_from_stock (GIMP_STOCK_MENU_RIGHT, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (shell->origin), image);
   gtk_widget_show (image);
@@ -843,7 +845,9 @@ gimp_display_shell_new (GimpDisplay     *display,
                     G_CALLBACK (gimp_display_shell_origin_button_press),
                     shell);
 
-  gimp_help_set_help_data (shell->origin, NULL, GIMP_HELP_IMAGE_WINDOW_ORIGIN);
+  gimp_help_set_help_data (shell->origin,
+                           _("Access the image menu"),
+                           GIMP_HELP_IMAGE_WINDOW_ORIGIN);
 
   shell->canvas = gimp_canvas_new ();
 
@@ -939,6 +943,7 @@ gimp_display_shell_new (GimpDisplay     *display,
   /*  create the contents of the right_vbox  *********************************/
   shell->zoom_button = g_object_new (GTK_TYPE_CHECK_BUTTON,
                                      "draw-indicator", FALSE,
+                                     "relief",         GTK_RELIEF_NONE,
                                      "width-request",  18,
                                      "height-request", 18,
                                      NULL);
@@ -962,6 +967,7 @@ gimp_display_shell_new (GimpDisplay     *display,
   /*  the quick mask button  */
   shell->quick_mask_button = g_object_new (GTK_TYPE_CHECK_BUTTON,
                                            "draw-indicator", FALSE,
+                                           "relief",         GTK_RELIEF_NONE,
                                            "width-request",  18,
                                            "height-request", 18,
                                            NULL);
@@ -990,7 +996,6 @@ gimp_display_shell_new (GimpDisplay     *display,
 
   /*  the navigation window button  */
   shell->nav_ebox = gtk_event_box_new ();
-
   image = gtk_image_new_from_stock (GIMP_STOCK_NAVIGATION, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (shell->nav_ebox), image);
   gtk_widget_show (image);
@@ -999,7 +1004,8 @@ gimp_display_shell_new (GimpDisplay     *display,
                     G_CALLBACK (gimp_display_shell_nav_button_press),
                     shell);
 
-  gimp_help_set_help_data (shell->nav_ebox, NULL,
+  gimp_help_set_help_data (shell->nav_ebox,
+                           _("Navigate the image display"),
                            GIMP_HELP_IMAGE_WINDOW_NAV_BUTTON);
 
   /*  create the contents of the status area *********************************/
