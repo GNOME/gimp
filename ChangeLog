@@ -1,3 +1,9 @@
+2006-12-12  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpstatusbar.c: only show the Cancel button while
+	we are displaying a cancelable progress. Also removed obsolete
+	workaround for a resize problem that doesn't show up any longer.
+
 2006-12-11  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/mkgen.pl: GTK_LIBS and GLIB_LIBS should be

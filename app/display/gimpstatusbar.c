@@ -216,22 +216,10 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_widget_set_sensitive (statusbar->cancel_button, FALSE);
   gtk_box_pack_start (box, statusbar->cancel_button, FALSE, FALSE, 0);
   GTK_WIDGET_UNSET_FLAGS (statusbar->cancel_button, GTK_CAN_FOCUS);
-  gtk_widget_show (statusbar->cancel_button);
 
   g_signal_connect (statusbar->cancel_button, "clicked",
                     G_CALLBACK (gimp_statusbar_progress_canceled),
                     statusbar);
-
-  /* Update the statusbar once to work around a canvas size problem:
-   *
-   *  The first update of the statusbar used to queue a resize which
-   *  in term caused the canvas to be resized. That made it shrink by
-   *  one pixel in height resulting in the last row not being displayed.
-   *  Shrink-wrapping the display used to fix this reliably. With the
-   *  next call the resize doesn't seem to happen any longer.
-   */
-
-  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (statusbar->progressbar), "GIMP");
 }
 
 static void
@@ -281,6 +269,9 @@ gimp_statusbar_progress_start (GimpProgress *progress,
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
       gtk_widget_set_sensitive (statusbar->cancel_button, cancelable);
 
+      if (cancelable)
+        gtk_widget_show (statusbar->cancel_button);
+
       statusbar->progress_active = TRUE;
 
       if (GTK_WIDGET_DRAWABLE (bar))
@@ -304,6 +295,7 @@ gimp_statusbar_progress_end (GimpProgress *progress)
       gimp_statusbar_pop (statusbar, "progress");
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
       gtk_widget_set_sensitive (statusbar->cancel_button, FALSE);
+      gtk_widget_hide (statusbar->cancel_button);
 
       statusbar->progress_active = FALSE;
     }
