@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-25 10:56+0100\n"
-"PO-Revision-Date: 2006-11-25 10:57+0100\n"
+"POT-Creation-Date: 2006-12-13 18:25+0100\n"
+"PO-Revision-Date: 2006-12-13 18:28+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -213,7 +213,7 @@ msgstr ""
 msgid "%s version %s"
 msgstr "%s versione %s"
 
-#: ../app/sanity.c:192
+#: ../app/sanity.c:216
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -225,7 +225,7 @@ msgstr ""
 "\n"
 "Controllare il valore della variabile ambiente G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:211
+#: ../app/sanity.c:235
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -844,7 +844,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:130
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1353
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1365
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:335 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/pdb/image_cmds.c:1978 ../app/widgets/gimpdnd-xds.c:97
@@ -1662,43 +1662,42 @@ msgid "Save a Cop_y..."
 msgstr "Salva _una copia..."
 
 #: ../app/actions/file-actions.c:104
+msgid "Save and Close..."
+msgstr "Salva e chiudi..."
+
+#: ../app/actions/file-actions.c:109
 msgid "Save as _Template..."
 msgstr "Salva come _modello..."
 
-#: ../app/actions/file-actions.c:105
+#: ../app/actions/file-actions.c:110
 msgid "Create a new template from this image"
 msgstr "Crea un nuovo modello da questa immagine"
 
-#: ../app/actions/file-actions.c:110
+#: ../app/actions/file-actions.c:115
 msgid "Re_vert"
 msgstr "_Ricarica"
 
-#: ../app/actions/file-actions.c:111
+#: ../app/actions/file-actions.c:116
 msgid "Reload the image file from disk"
 msgstr "Ricarica l'immagine dal file su disco"
 
-#: ../app/actions/file-actions.c:116
+#: ../app/actions/file-actions.c:121
 msgid "Close all"
 msgstr "Chiudi tutto"
 
-#: ../app/actions/file-actions.c:117
+#: ../app/actions/file-actions.c:122
 msgid "Close all opened images"
 msgstr "Chiudi tutte le immagini aperte"
 
-#: ../app/actions/file-actions.c:122
+#: ../app/actions/file-actions.c:127
 msgid "_Quit"
 msgstr "_Esci"
 
-#: ../app/actions/file-actions.c:123
+#: ../app/actions/file-actions.c:128
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "Esci dal programma di elaborazione immagini GNU GIMP"
 
 #: ../app/actions/file-commands.c:244
-#, c-format
-msgid "Image saved to '%s'"
-msgstr "Immagine salvata su \"%s\""
-
-#: ../app/actions/file-commands.c:250
 msgid "Saving canceled"
 msgstr "Salvataggio annullato"
 
@@ -1714,36 +1713,36 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:287 ../app/dialogs/file-save-dialog.c:82
+#: ../app/actions/file-commands.c:289 ../app/dialogs/file-save-dialog.c:82
 msgid "Save Image"
 msgstr "Salva immagine"
 
-#: ../app/actions/file-commands.c:303
+#: ../app/actions/file-commands.c:305
 msgid "Save a Copy of the Image"
 msgstr "Salva una copia dell'immagine"
 
-#: ../app/actions/file-commands.c:314
+#: ../app/actions/file-commands.c:329
 msgid "Create New Template"
 msgstr "Crea un nuovo modello"
 
-#: ../app/actions/file-commands.c:318
+#: ../app/actions/file-commands.c:333
 msgid "Enter a name for this template"
 msgstr "Inserisci un nome per questo modello"
 
-#: ../app/actions/file-commands.c:344
+#: ../app/actions/file-commands.c:359
 msgid "Revert failed. No file name associated with this image."
 msgstr "Fallita la ricarica. Nessun nome file associato a quest'immagine."
 
-#: ../app/actions/file-commands.c:357
+#: ../app/actions/file-commands.c:372
 msgid "Revert Image"
 msgstr "Ricarica immagine"
 
-#: ../app/actions/file-commands.c:383
+#: ../app/actions/file-commands.c:398
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Ricaricare \"%s\" a \"%s\"?"
 
-#: ../app/actions/file-commands.c:389
+#: ../app/actions/file-commands.c:404
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -1751,19 +1750,19 @@ msgstr ""
 "Ricaricando l'immagine salvata su disco, perderai tutte le modifiche, "
 "incluse tutte le informazioni di annullamento."
 
-#: ../app/actions/file-commands.c:461
+#: ../app/actions/file-commands.c:476
 msgid "Open Image as Layers"
 msgstr "Apri immagine come livelli"
 
-#: ../app/actions/file-commands.c:466 ../app/dialogs/file-open-dialog.c:75
+#: ../app/actions/file-commands.c:481 ../app/dialogs/file-open-dialog.c:75
 msgid "Open Image"
 msgstr "Apri immagine"
 
-#: ../app/actions/file-commands.c:537
+#: ../app/actions/file-commands.c:552
 msgid "(Unnamed Template)"
 msgstr "(modello senza nome)"
 
-#: ../app/actions/file-commands.c:585
+#: ../app/actions/file-commands.c:600
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3136,7 +3135,7 @@ msgid "Toggle _Quick Mask"
 msgstr "Commuta maschera _veloce"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:975
+#: ../app/display/gimpdisplayshell.c:987
 msgid "Toggle Quick Mask"
 msgstr "Commuta maschera veloce"
 
@@ -3478,33 +3477,33 @@ msgstr "Reimpost_a tutte le opzioni strumenti"
 msgid "Reset all tool options"
 msgstr "Reimposta tutte le opzioni strumenti"
 
-#: ../app/actions/tool-options-commands.c:71
+#: ../app/actions/tool-options-commands.c:72
 msgid "Save Tool Options"
 msgstr "Salva le opzioni strumenti"
 
-#: ../app/actions/tool-options-commands.c:75
+#: ../app/actions/tool-options-commands.c:76
 msgid "Enter a name for the saved options"
 msgstr "Inserisci un nome per le opzioni salvate"
 
-#: ../app/actions/tool-options-commands.c:76
-#: ../app/actions/tool-options-commands.c:246
+#: ../app/actions/tool-options-commands.c:77
+#: ../app/actions/tool-options-commands.c:245
 #: ../app/actions/tool-options-commands.c:262
 msgid "Saved Options"
 msgstr "Opzioni salvate"
 
-#: ../app/actions/tool-options-commands.c:140
+#: ../app/actions/tool-options-commands.c:138
 msgid "Rename Saved Tool Options"
 msgstr "Rinomina le opzioni salvate"
 
-#: ../app/actions/tool-options-commands.c:144
+#: ../app/actions/tool-options-commands.c:142
 msgid "Enter a new name for the saved options"
 msgstr "Crea un nuovo nome per le opzioni salvate"
 
-#: ../app/actions/tool-options-commands.c:187
+#: ../app/actions/tool-options-commands.c:185
 msgid "Reset Tool Options"
 msgstr "Reimposta le opzioni strumenti"
 
-#: ../app/actions/tool-options-commands.c:209
+#: ../app/actions/tool-options-commands.c:208
 msgid "Do you really want to reset all tool options to default values?"
 msgstr ""
 "Sicuri di voler reimpostare tutte le opzioni strumenti ai valori predefiniti?"
@@ -5314,8 +5313,8 @@ msgstr "Mantieni il profilo incorporato"
 msgid "Convert to RGB workspace"
 msgstr "Converti in spazio colore RGB"
 
-#: ../app/core/gimp-contexts.c:141 ../app/gui/session.c:257
-#: ../app/menus/menus.c:422 ../app/tools/gimp-tools.c:441
+#: ../app/core/gimp-contexts.c:141 ../app/core/gimptooloptions.c:236
+#: ../app/gui/session.c:257 ../app/menus/menus.c:422
 #: ../app/widgets/gimpdevices.c:258
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -5370,7 +5369,7 @@ msgstr "Da pp a sf (HSV orario)"
 msgid "FG to Transparent"
 msgstr "Da pp a trasparente"
 
-#: ../app/core/gimp-user-install.c:195
+#: ../app/core/gimp-user-install.c:197
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
@@ -5379,7 +5378,7 @@ msgstr ""
 "Sembra sia già stato utilizzato GIMP %s. GIMP migrerà le impostazioni utente "
 "alla versione a \"%s\"."
 
-#: ../app/core/gimp-user-install.c:200
+#: ../app/core/gimp-user-install.c:202
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -5388,17 +5387,17 @@ msgstr ""
 "Sembra che tu stia usando GIMP per la prima volta. GIMP ora creerà una "
 "cartella di nome \"%s\" e vi copiarà alcuni file al suo interno."
 
-#: ../app/core/gimp-user-install.c:302
+#: ../app/core/gimp-user-install.c:304
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Copia del file '%s' da '%s'..."
 
-#: ../app/core/gimp-user-install.c:317
+#: ../app/core/gimp-user-install.c:319 ../app/core/gimp-user-install.c:345
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Creazione cartella '%s'..."
 
-#: ../app/core/gimp-user-install.c:328
+#: ../app/core/gimp-user-install.c:330 ../app/core/gimp-user-install.c:356
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Impossibile creare la cartella '%s': %s"
@@ -5668,7 +5667,7 @@ msgstr "Imposta opacità canale"
 msgid "Selection Mask"
 msgstr "Maschera di selezione"
 
-#: ../app/core/gimpdata.c:446
+#: ../app/core/gimpdata.c:446 ../app/core/gimptoolpresets.c:297
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "Impossibile cancellare '%s': %s"
@@ -5983,131 +5982,131 @@ msgstr "Sposta punto di campionamento"
 msgid "Can't undo %s"
 msgstr "Impossibile annullare %s"
 
-#: ../app/core/gimpimage.c:1427
+#: ../app/core/gimpimage.c:1439
 msgid "Change Image Resolution"
 msgstr "Cambia risoluzione immagine"
 
-#: ../app/core/gimpimage.c:1467
+#: ../app/core/gimpimage.c:1479
 msgid "Change Image Unit"
 msgstr "Cambia unità immagine"
 
-#: ../app/core/gimpimage.c:2292
+#: ../app/core/gimpimage.c:2321
 msgid "Attach Parasite to Image"
 msgstr "Allega parasite all'immagine"
 
-#: ../app/core/gimpimage.c:2330
+#: ../app/core/gimpimage.c:2359
 msgid "Remove Parasite from Image"
 msgstr "Rimuovi parasite dall'immagine"
 
-#: ../app/core/gimpimage.c:2785
+#: ../app/core/gimpimage.c:2814
 msgid "Add Layer"
 msgstr "Aggiungi livello"
 
-#: ../app/core/gimpimage.c:2850 ../app/core/gimpimage.c:2863
+#: ../app/core/gimpimage.c:2879 ../app/core/gimpimage.c:2892
 msgid "Remove Layer"
 msgstr "Rimuovi livello"
 
-#: ../app/core/gimpimage.c:2994
+#: ../app/core/gimpimage.c:3023
 msgid "Layer cannot be raised higher."
 msgstr "Il livello non può essere alzato ulteriormente."
 
-#: ../app/core/gimpimage.c:2999
+#: ../app/core/gimpimage.c:3028
 msgid "Raise Layer"
 msgstr "Alza il livello"
 
-#: ../app/core/gimpimage.c:3016
+#: ../app/core/gimpimage.c:3045
 msgid "Layer cannot be lowered more."
 msgstr "Il livello non può essere abbassato ulteriormente."
 
-#: ../app/core/gimpimage.c:3021
+#: ../app/core/gimpimage.c:3050
 msgid "Lower Layer"
 msgstr "Abbassa il livello"
 
-#: ../app/core/gimpimage.c:3032
+#: ../app/core/gimpimage.c:3061
 msgid "Raise Layer to Top"
 msgstr "Alza il livello fino in cima"
 
-#: ../app/core/gimpimage.c:3047
+#: ../app/core/gimpimage.c:3076
 msgid "Lower Layer to Bottom"
 msgstr "Abbassa il livello fino in fondo"
 
-#: ../app/core/gimpimage.c:3120
+#: ../app/core/gimpimage.c:3149
 msgid "Add Channel"
 msgstr "Aggiungi canale"
 
-#: ../app/core/gimpimage.c:3165 ../app/core/gimpimage.c:3176
+#: ../app/core/gimpimage.c:3194 ../app/core/gimpimage.c:3205
 msgid "Remove Channel"
 msgstr "Rimuovi canale"
 
-#: ../app/core/gimpimage.c:3223
+#: ../app/core/gimpimage.c:3252
 msgid "Channel cannot be raised higher."
 msgstr "Il canale non può essere alzato ulteriormente."
 
-#: ../app/core/gimpimage.c:3228
+#: ../app/core/gimpimage.c:3257
 msgid "Raise Channel"
 msgstr "Alza il canale"
 
-#: ../app/core/gimpimage.c:3245
+#: ../app/core/gimpimage.c:3274
 msgid "Channel is already on top."
 msgstr "Il canale è già in cima."
 
-#: ../app/core/gimpimage.c:3250
+#: ../app/core/gimpimage.c:3279
 msgid "Raise Channel to Top"
 msgstr "Alza il canale fino in cima"
 
-#: ../app/core/gimpimage.c:3267
+#: ../app/core/gimpimage.c:3296
 msgid "Channel cannot be lowered more."
 msgstr "Il canale non può essere abbassato ulteriormente."
 
-#: ../app/core/gimpimage.c:3272
+#: ../app/core/gimpimage.c:3301
 msgid "Lower Channel"
 msgstr "Abbassa il canale"
 
-#: ../app/core/gimpimage.c:3292
+#: ../app/core/gimpimage.c:3321
 msgid "Channel is already on the bottom."
 msgstr "Il canale è già in fondo."
 
-#: ../app/core/gimpimage.c:3297
+#: ../app/core/gimpimage.c:3326
 msgid "Lower Channel to Bottom"
 msgstr "Abbassa il canale fino in fondo"
 
-#: ../app/core/gimpimage.c:3372
+#: ../app/core/gimpimage.c:3401
 msgid "Add Path"
 msgstr "Aggiungi tracciati"
 
-#: ../app/core/gimpimage.c:3418
+#: ../app/core/gimpimage.c:3447
 msgid "Remove Path"
 msgstr "Rimuovi tracciati"
 
-#: ../app/core/gimpimage.c:3462
+#: ../app/core/gimpimage.c:3491
 msgid "Path cannot be raised higher."
 msgstr "Il tracciato non può essere alzato ulteriormente."
 
-#: ../app/core/gimpimage.c:3467
+#: ../app/core/gimpimage.c:3496
 msgid "Raise Path"
 msgstr "Alza il tracciato"
 
-#: ../app/core/gimpimage.c:3484
+#: ../app/core/gimpimage.c:3513
 msgid "Path is already on top."
 msgstr "Il tracciato è già in cima."
 
-#: ../app/core/gimpimage.c:3489
+#: ../app/core/gimpimage.c:3518
 msgid "Raise Path to Top"
 msgstr "Alza il tracciato fino in cima"
 
-#: ../app/core/gimpimage.c:3506
+#: ../app/core/gimpimage.c:3535
 msgid "Path cannot be lowered more."
 msgstr "Il tracciato non può essere abbassato ulteriormente."
 
-#: ../app/core/gimpimage.c:3511
+#: ../app/core/gimpimage.c:3540
 msgid "Lower Path"
 msgstr "Abbassa il tracciato"
 
-#: ../app/core/gimpimage.c:3531
+#: ../app/core/gimpimage.c:3560
 msgid "Path is already on the bottom."
 msgstr "Il tracciato è già in fondo."
 
-#: ../app/core/gimpimage.c:3536
+#: ../app/core/gimpimage.c:3565
 msgid "Lower Path to Bottom"
 msgstr "Abbassa tracciato fino in fondo"
 
@@ -8054,9 +8053,22 @@ msgstr "Anteprima"
 msgid "Switch to Move tool"
 msgstr "Passa allo strumento spostamento"
 
-#: ../app/display/gimpdisplayshell.c:948
+#: ../app/display/gimpdisplay-handlers.c:151
+#, c-format
+msgid "Image saved to '%s'"
+msgstr "Immagine salvata su \"%s\""
+
+#: ../app/display/gimpdisplayshell.c:849
+msgid "Access the image menu"
+msgstr "Accedi al menu immagine"
+
+#: ../app/display/gimpdisplayshell.c:958
 msgid "Zoom image when window size changes"
 msgstr "Zooma l'immagine quando cambia la dimensione della finestra"
+
+#: ../app/display/gimpdisplayshell.c:1008
+msgid "Navigate the image display"
+msgstr "Naviga nella finestra immagine"
 
 #: ../app/display/gimpdisplayshell-close.c:125
 #: ../app/display/gimpdisplayshell-close.c:202
@@ -8088,14 +8100,14 @@ msgstr ""
 "Se non si salva l'immagine, le modifiche effettuate da %s fa ad ora, saranno "
 "perse."
 
-#: ../app/display/gimpdisplayshell-close.c:310
+#: ../app/display/gimpdisplayshell-close.c:307
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d ora"
 msgstr[1] "%d ore"
 
-#: ../app/display/gimpdisplayshell-close.c:316
+#: ../app/display/gimpdisplayshell-close.c:313
 #, c-format
 msgid "minute"
 msgid_plural "%d minutes"
@@ -8178,8 +8190,8 @@ msgstr "(modificato)"
 msgid "(clean)"
 msgstr "(pulito)"
 
-#: ../app/display/gimpdisplayshell-title.c:330
-#: ../app/display/gimpdisplayshell-title.c:342
+#: ../app/display/gimpdisplayshell-title.c:337
+#: ../app/display/gimpdisplayshell-title.c:350
 #: ../app/widgets/gimpactiongroup.c:782
 msgid "(none)"
 msgstr "(nessuno)"
@@ -8188,7 +8200,7 @@ msgstr "(nessuno)"
 msgid "Cancel"
 msgstr "Cancella"
 
-#: ../app/display/gimpstatusbar.c:460
+#: ../app/display/gimpstatusbar.c:452
 msgid "Other..."
 msgstr "Altro..."
 
@@ -8204,11 +8216,11 @@ msgstr "Il plug-in ha risposto successo ma non ha restituito un'immagine"
 msgid "Plug-In could not open image"
 msgstr "Il plug-in non può aprire l'immagine"
 
-#: ../app/file/file-open.c:437
+#: ../app/file/file-open.c:449
 msgid "Image doesn't contain any layers"
 msgstr "L'immagine non contiene nessun livello"
 
-#: ../app/file/file-save.c:191
+#: ../app/file/file-save.c:193
 msgid "Plug-In could not save image"
 msgstr "Il plug-in non può salvare l'immagine"
 
@@ -8696,7 +8708,7 @@ msgstr ""
 "che non si voglia modificare il livello del testo, non\n"
 "preoccupatevi di questo."
 
-#: ../app/tools/gimp-tools.c:320
+#: ../app/tools/gimp-tools.c:313
 msgid ""
 "This tool has\n"
 "no options."
@@ -10940,60 +10952,60 @@ msgstr "Seleziona l'azione per l'evento '%s'"
 msgid "Select Controller Event Action"
 msgstr "Seleziona l'azione evento controller"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:71
-#: ../app/widgets/gimpcontrollerkeyboard.c:74
-#: ../app/widgets/gimpcontrollerkeyboard.c:77
-#: ../app/widgets/gimpcontrollerkeyboard.c:80
-#: ../app/widgets/gimpcontrollerkeyboard.c:83
-#: ../app/widgets/gimpcontrollerkeyboard.c:86
-#: ../app/widgets/gimpcontrollerkeyboard.c:89
-#: ../app/widgets/gimpcontrollerkeyboard.c:92
+#: ../app/widgets/gimpcontrollerkeyboard.c:70
+#: ../app/widgets/gimpcontrollerkeyboard.c:73
+#: ../app/widgets/gimpcontrollerkeyboard.c:76
+#: ../app/widgets/gimpcontrollerkeyboard.c:79
+#: ../app/widgets/gimpcontrollerkeyboard.c:82
+#: ../app/widgets/gimpcontrollerkeyboard.c:85
+#: ../app/widgets/gimpcontrollerkeyboard.c:88
+#: ../app/widgets/gimpcontrollerkeyboard.c:91
 msgid "Cursor Up"
 msgstr "Cursore su"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:96
-#: ../app/widgets/gimpcontrollerkeyboard.c:99
-#: ../app/widgets/gimpcontrollerkeyboard.c:102
-#: ../app/widgets/gimpcontrollerkeyboard.c:105
-#: ../app/widgets/gimpcontrollerkeyboard.c:108
-#: ../app/widgets/gimpcontrollerkeyboard.c:111
-#: ../app/widgets/gimpcontrollerkeyboard.c:114
-#: ../app/widgets/gimpcontrollerkeyboard.c:117
+#: ../app/widgets/gimpcontrollerkeyboard.c:95
+#: ../app/widgets/gimpcontrollerkeyboard.c:98
+#: ../app/widgets/gimpcontrollerkeyboard.c:101
+#: ../app/widgets/gimpcontrollerkeyboard.c:104
+#: ../app/widgets/gimpcontrollerkeyboard.c:107
+#: ../app/widgets/gimpcontrollerkeyboard.c:110
+#: ../app/widgets/gimpcontrollerkeyboard.c:113
+#: ../app/widgets/gimpcontrollerkeyboard.c:116
 msgid "Cursor Down"
 msgstr "Cursore giù"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:121
-#: ../app/widgets/gimpcontrollerkeyboard.c:124
-#: ../app/widgets/gimpcontrollerkeyboard.c:127
-#: ../app/widgets/gimpcontrollerkeyboard.c:130
-#: ../app/widgets/gimpcontrollerkeyboard.c:133
-#: ../app/widgets/gimpcontrollerkeyboard.c:136
-#: ../app/widgets/gimpcontrollerkeyboard.c:139
-#: ../app/widgets/gimpcontrollerkeyboard.c:142
+#: ../app/widgets/gimpcontrollerkeyboard.c:120
+#: ../app/widgets/gimpcontrollerkeyboard.c:123
+#: ../app/widgets/gimpcontrollerkeyboard.c:126
+#: ../app/widgets/gimpcontrollerkeyboard.c:129
+#: ../app/widgets/gimpcontrollerkeyboard.c:132
+#: ../app/widgets/gimpcontrollerkeyboard.c:135
+#: ../app/widgets/gimpcontrollerkeyboard.c:138
+#: ../app/widgets/gimpcontrollerkeyboard.c:141
 msgid "Cursor Left"
 msgstr "Cursore a sinistra"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:146
-#: ../app/widgets/gimpcontrollerkeyboard.c:149
-#: ../app/widgets/gimpcontrollerkeyboard.c:152
-#: ../app/widgets/gimpcontrollerkeyboard.c:155
-#: ../app/widgets/gimpcontrollerkeyboard.c:158
-#: ../app/widgets/gimpcontrollerkeyboard.c:161
-#: ../app/widgets/gimpcontrollerkeyboard.c:164
-#: ../app/widgets/gimpcontrollerkeyboard.c:167
+#: ../app/widgets/gimpcontrollerkeyboard.c:145
+#: ../app/widgets/gimpcontrollerkeyboard.c:148
+#: ../app/widgets/gimpcontrollerkeyboard.c:151
+#: ../app/widgets/gimpcontrollerkeyboard.c:154
+#: ../app/widgets/gimpcontrollerkeyboard.c:157
+#: ../app/widgets/gimpcontrollerkeyboard.c:160
+#: ../app/widgets/gimpcontrollerkeyboard.c:163
+#: ../app/widgets/gimpcontrollerkeyboard.c:166
 msgid "Cursor Right"
 msgstr "Cursore a destra"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:179
+#: ../app/widgets/gimpcontrollerkeyboard.c:178
 msgid "Keyboard"
 msgstr "Tastiera"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:223
+#: ../app/widgets/gimpcontrollerkeyboard.c:222
 msgid "Keyboard Events"
 msgstr "Eventi tastiera"
 
-#: ../app/widgets/gimpcontrollerkeyboard.c:224
-#: ../app/widgets/gimpcontrollerwheel.c:223
+#: ../app/widgets/gimpcontrollerkeyboard.c:223
+#: ../app/widgets/gimpcontrollerwheel.c:222
 msgid "Ready"
 msgstr "Pronto"
 
@@ -11087,55 +11099,55 @@ msgstr "Configura controllore"
 msgid "Configure Input Controller"
 msgstr "Configura controllore di ingresso"
 
-#: ../app/widgets/gimpcontrollerwheel.c:70
-#: ../app/widgets/gimpcontrollerwheel.c:73
-#: ../app/widgets/gimpcontrollerwheel.c:76
-#: ../app/widgets/gimpcontrollerwheel.c:79
-#: ../app/widgets/gimpcontrollerwheel.c:82
-#: ../app/widgets/gimpcontrollerwheel.c:85
-#: ../app/widgets/gimpcontrollerwheel.c:88
-#: ../app/widgets/gimpcontrollerwheel.c:91
+#: ../app/widgets/gimpcontrollerwheel.c:69
+#: ../app/widgets/gimpcontrollerwheel.c:72
+#: ../app/widgets/gimpcontrollerwheel.c:75
+#: ../app/widgets/gimpcontrollerwheel.c:78
+#: ../app/widgets/gimpcontrollerwheel.c:81
+#: ../app/widgets/gimpcontrollerwheel.c:84
+#: ../app/widgets/gimpcontrollerwheel.c:87
+#: ../app/widgets/gimpcontrollerwheel.c:90
 msgid "Scroll Up"
 msgstr "Scorri su"
 
-#: ../app/widgets/gimpcontrollerwheel.c:95
-#: ../app/widgets/gimpcontrollerwheel.c:98
-#: ../app/widgets/gimpcontrollerwheel.c:101
-#: ../app/widgets/gimpcontrollerwheel.c:104
-#: ../app/widgets/gimpcontrollerwheel.c:107
-#: ../app/widgets/gimpcontrollerwheel.c:110
-#: ../app/widgets/gimpcontrollerwheel.c:113
-#: ../app/widgets/gimpcontrollerwheel.c:116
+#: ../app/widgets/gimpcontrollerwheel.c:94
+#: ../app/widgets/gimpcontrollerwheel.c:97
+#: ../app/widgets/gimpcontrollerwheel.c:100
+#: ../app/widgets/gimpcontrollerwheel.c:103
+#: ../app/widgets/gimpcontrollerwheel.c:106
+#: ../app/widgets/gimpcontrollerwheel.c:109
+#: ../app/widgets/gimpcontrollerwheel.c:112
+#: ../app/widgets/gimpcontrollerwheel.c:115
 msgid "Scroll Down"
 msgstr "Scorri giù"
 
-#: ../app/widgets/gimpcontrollerwheel.c:120
-#: ../app/widgets/gimpcontrollerwheel.c:123
-#: ../app/widgets/gimpcontrollerwheel.c:126
-#: ../app/widgets/gimpcontrollerwheel.c:129
-#: ../app/widgets/gimpcontrollerwheel.c:132
-#: ../app/widgets/gimpcontrollerwheel.c:135
-#: ../app/widgets/gimpcontrollerwheel.c:138
-#: ../app/widgets/gimpcontrollerwheel.c:141
+#: ../app/widgets/gimpcontrollerwheel.c:119
+#: ../app/widgets/gimpcontrollerwheel.c:122
+#: ../app/widgets/gimpcontrollerwheel.c:125
+#: ../app/widgets/gimpcontrollerwheel.c:128
+#: ../app/widgets/gimpcontrollerwheel.c:131
+#: ../app/widgets/gimpcontrollerwheel.c:134
+#: ../app/widgets/gimpcontrollerwheel.c:137
+#: ../app/widgets/gimpcontrollerwheel.c:140
 msgid "Scroll Left"
 msgstr "Scorri a sinistra"
 
-#: ../app/widgets/gimpcontrollerwheel.c:145
-#: ../app/widgets/gimpcontrollerwheel.c:148
-#: ../app/widgets/gimpcontrollerwheel.c:151
-#: ../app/widgets/gimpcontrollerwheel.c:154
-#: ../app/widgets/gimpcontrollerwheel.c:157
-#: ../app/widgets/gimpcontrollerwheel.c:160
-#: ../app/widgets/gimpcontrollerwheel.c:163
-#: ../app/widgets/gimpcontrollerwheel.c:166
+#: ../app/widgets/gimpcontrollerwheel.c:144
+#: ../app/widgets/gimpcontrollerwheel.c:147
+#: ../app/widgets/gimpcontrollerwheel.c:150
+#: ../app/widgets/gimpcontrollerwheel.c:153
+#: ../app/widgets/gimpcontrollerwheel.c:156
+#: ../app/widgets/gimpcontrollerwheel.c:159
+#: ../app/widgets/gimpcontrollerwheel.c:162
+#: ../app/widgets/gimpcontrollerwheel.c:165
 msgid "Scroll Right"
 msgstr "Scorri a destra"
 
-#: ../app/widgets/gimpcontrollerwheel.c:178
+#: ../app/widgets/gimpcontrollerwheel.c:177
 msgid "Mouse Wheel"
 msgstr "Rotellina del mouse"
 
-#: ../app/widgets/gimpcontrollerwheel.c:222
+#: ../app/widgets/gimpcontrollerwheel.c:221
 msgid "Mouse Wheel Events"
 msgstr "Eventi rotellina del mouse"
 
@@ -11576,11 +11588,11 @@ msgstr "Colonne:"
 msgid "Progress"
 msgstr "Operazione in corso"
 
-#: ../app/widgets/gimppropwidgets.c:704
+#: ../app/widgets/gimppropwidgets.c:703
 msgid "1:1"
 msgstr "1:1"
 
-#: ../app/widgets/gimppropwidgets.c:711
+#: ../app/widgets/gimppropwidgets.c:710
 msgid "Set"
 msgstr "Imposta"
 
@@ -11764,17 +11776,22 @@ msgstr ""
 "colori. Le frecce scambiano i colori. Fare clic per aprire la finestra di "
 "selezione colore."
 
-#: ../app/widgets/gimptooloptionseditor.c:151
+#: ../app/widgets/gimptooloptionseditor.c:157
 msgid "Save options to..."
 msgstr "Salva le opzioni in..."
 
-#: ../app/widgets/gimptooloptionseditor.c:159
+#: ../app/widgets/gimptooloptionseditor.c:165
 msgid "Restore options from..."
 msgstr "Recupera le opzioni da..."
 
-#: ../app/widgets/gimptooloptionseditor.c:167
+#: ../app/widgets/gimptooloptionseditor.c:173
 msgid "Delete saved options..."
 msgstr "Elimina le opzioni salvate..."
+
+#: ../app/widgets/gimptooloptionseditor.c:477
+#, c-format
+msgid "Error saving tool options presets: %s"
+msgstr "Errore durante il salvataggio delle preimpostazioni delle opzioni degli strumenti: %s"
 
 #: ../app/widgets/gimpuimanager.c:697
 msgid "Your GIMP installation is incomplete:"
@@ -11827,36 +11844,36 @@ msgid "Open the font selection dialog"
 msgstr "Apri la finestra della selezione caratteri"
 
 #. do not translate the part before the |
-#: ../app/widgets/gimpwidgets-utils.c:548
+#: ../app/widgets/gimpwidgets-utils.c:553
 msgid "keyboard label|Space"
 msgstr "Spazio"
 
 #. do not translate the part before the |
-#: ../app/widgets/gimpwidgets-utils.c:552
+#: ../app/widgets/gimpwidgets-utils.c:557
 msgid "keyboard label|Backslash"
 msgstr "Barra retroversa"
 
-#: ../app/widgets/gimpwidgets-utils.c:662
+#: ../app/widgets/gimpwidgets-utils.c:667
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (provare %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:662
+#: ../app/widgets/gimpwidgets-utils.c:667
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:666
+#: ../app/widgets/gimpwidgets-utils.c:671
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (provare %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:670
+#: ../app/widgets/gimpwidgets-utils.c:675
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (provare %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:936
+#: ../app/widgets/gimpwidgets-utils.c:941
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Dato UTF-8 non valido nel file '%s'"

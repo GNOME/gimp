@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-06 18:23+0100\n"
-"PO-Revision-Date: 2006-11-06 18:25+0100\n"
+"POT-Creation-Date: 2006-12-13 18:35+0100\n"
+"PO-Revision-Date: 2006-12-13 18:35+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -740,7 +740,10 @@ msgid ""
 "When enabled, the GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
-msgstr "Se attivata, GIMP tenterà di usare il profilo di colore dello schermo dall'ambiente grafico. Il profilo del monitor configurato verrà usato solo in caso di fallimento dell'operazione."
+msgstr ""
+"Se attivata, GIMP tenterà di usare il profilo di colore dello schermo "
+"dall'ambiente grafico. Il profilo del monitor configurato verrà usato solo "
+"in caso di fallimento dell'operazione."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "The default RGB working space color profile."
@@ -764,7 +767,9 @@ msgstr "Imposta come verranno mappati i colori per il display."
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
-msgstr "Imposta come i colori saranno convertiti dallo spazio di lavoro RGB al dispositivo di simulazione di stampa."
+msgstr ""
+"Imposta come i colori saranno convertiti dallo spazio di lavoro RGB al "
+"dispositivo di simulazione di stampa."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -879,26 +884,26 @@ msgstr "stringa UTF-8 non valida"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Errore durante l'elaborazione di \"%s\" alla riga %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
-#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
-#: ../libgimpmodule/gimpmodule.c:417
+#: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
+#: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
+#: ../libgimpmodule/gimpmodule.c:418
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Errore di caricamento del modulo \"%s\": %s"
 
-#: ../libgimpmodule/gimpmodule.c:374
+#: ../libgimpmodule/gimpmodule.c:375
 msgid "Module error"
 msgstr "Errore modulo"
 
-#: ../libgimpmodule/gimpmodule.c:375
+#: ../libgimpmodule/gimpmodule.c:376
 msgid "Loaded"
 msgstr "Caricato"
 
-#: ../libgimpmodule/gimpmodule.c:376
+#: ../libgimpmodule/gimpmodule.c:377
 msgid "Load failed"
 msgstr "Caricamento fallito"
 
-#: ../libgimpmodule/gimpmodule.c:377
+#: ../libgimpmodule/gimpmodule.c:378
 msgid "Not loaded"
 msgstr "Non caricato"
 
@@ -1538,24 +1543,24 @@ msgstr "Ingresso Linux"
 msgid "Linux Input Events"
 msgstr "Eventi Linux in ingresso"
 
-#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:483
-#: ../modules/controller_midi.c:509
+#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:484
+#: ../modules/controller_midi.c:510
 #, c-format
 msgid "Reading from %s"
 msgstr "Lettura da %s"
 
 #: ../modules/controller_linux_input.c:389
-#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:465
-#: ../modules/controller_midi.c:526 ../modules/controller_midi.c:597
+#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:466
+#: ../modules/controller_midi.c:527 ../modules/controller_midi.c:598
 #, c-format
 msgid "Device not available: %s"
 msgstr "Dispositivo non disponibile: %s"
 
-#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:534
+#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:535
 msgid "No device configured"
 msgstr "Nessun dispositivo configurato"
 
-#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:606
+#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:607
 msgid "End of file"
 msgstr "Fine del file"
 
@@ -1605,3 +1610,7 @@ msgstr "Controllore %03d"
 #: ../modules/controller_midi.c:437
 msgid "MIDI Events"
 msgstr "Eventi MIDI"
+
+#: ../modules/controller_midi.c:458
+msgid "GIMP MIDI controller"
+msgstr "Controllore MIDI GIMP"
