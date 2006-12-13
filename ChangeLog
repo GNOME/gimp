@@ -1,3 +1,10 @@
+2006-12-13  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/tools-enums.[ch]: added missing define
+	GIMP_TYPE_RECTANGLE_CONSTRAINT. Removed unused descriptions.
+
+	* app/tools/gimprectangletool.c: made "constraint" an enum property.
+
 2006-12-13  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/core/gimpprojection.h: indentation fix.

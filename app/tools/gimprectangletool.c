@@ -216,10 +216,9 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface)
                                                              GIMP_PARAM_READWRITE));
 
       g_object_interface_install_property (iface,
-                                           g_param_spec_uint ("constraint",
+                                           g_param_spec_enum ("constraint",
                                                               NULL, NULL,
-                                                              GIMP_RECTANGLE_CONSTRAIN_NONE,
-                                                              GIMP_RECTANGLE_CONSTRAIN_DRAWABLE,
+                                                              GIMP_TYPE_RECTANGLE_CONSTRAINT,
                                                               GIMP_RECTANGLE_CONSTRAIN_NONE,
                                                               GIMP_PARAM_READWRITE));
 
@@ -358,7 +357,7 @@ gimp_rectangle_tool_set_property (GObject      *object,
       private->y2 = g_value_get_int (value);
       break;
     case GIMP_RECTANGLE_TOOL_PROP_CONSTRAINT:
-      gimp_rectangle_tool_set_constraint (rectangle, g_value_get_uint (value));
+      gimp_rectangle_tool_set_constraint (rectangle, g_value_get_enum (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
