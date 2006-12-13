@@ -391,7 +391,7 @@ gimp_rectangle_tool_get_property (GObject      *object,
       g_value_set_int (value, private->y2);
       break;
     case GIMP_RECTANGLE_TOOL_PROP_CONSTRAINT:
-      g_value_set_uint (value, gimp_rectangle_tool_get_constraint (rectangle));
+      g_value_set_enum (value, gimp_rectangle_tool_get_constraint (rectangle));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
