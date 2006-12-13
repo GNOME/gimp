@@ -1,3 +1,10 @@
+2006-12-13  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme-private.h
+	* plug-ins/script-fu/tinyscheme/scheme.c: Optimizations for string
+	comparisons. Time spent in oblist_find_by_name() reduced by ~50%
+	during startup by use of stored collation keys. Fixes bug #374854.
+
 2006-12-13  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/tools-enums.[ch]: added missing define
