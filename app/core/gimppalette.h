@@ -75,5 +75,9 @@ void               gimp_palette_set_columns  (GimpPalette      *palette,
                                               gint              columns);
 gint               gimp_palette_get_columns  (GimpPalette      *palette);
 
+GimpPaletteEntry * gimp_palette_find_entry   (GimpPalette      *palette,
+                                              const GimpRGB    *color,
+                                              GimpPaletteEntry *start_from);
+
 
 #endif /* __GIMP_PALETTE_H__ */

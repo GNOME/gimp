@@ -35,6 +35,7 @@
 
 #include "gimp-intl.h"
 
+#define EPSILON 1e-10
 
 /*  local function prototypes  */
 
@@ -418,6 +419,72 @@ gimp_palette_get_columns  (GimpPalette *palette)
   g_return_val_if_fail (GIMP_IS_PALETTE (palette), 0);
 
   return palette->n_columns;
+}
+
+GimpPaletteEntry *
+gimp_palette_find_entry (GimpPalette      *palette,
+                         const GimpRGB    *color,
+                         GimpPaletteEntry *start_from)
+{
+  GimpPaletteEntry *entry;
+
+  g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
+  g_return_val_if_fail (color != NULL, NULL);
+  g_return_val_if_fail (palette->n_colors > 0, NULL);
+
+  if (! start_from)
+    {
+      GList *list;
+
+      /* search from the start */
+
+      for (list = palette->colors; list; list = g_list_next (list))
+        {
+          entry = (GimpPaletteEntry *) list->data;
+          if (gimp_rgb_distance (&entry->color, color) < EPSILON)
+            return entry;
+        }
+    }
+  else if (gimp_rgb_distance (&start_from->color, color) < EPSILON)
+    {
+      return start_from;
+    }
+  else
+    {
+      GList *old = g_list_find (palette->colors, start_from);
+      GList *next;
+      GList *prev;
+
+      g_return_val_if_fail (old != NULL, NULL);
+
+      next = old->next;
+      prev = old->prev;
+
+      /* proximity-based search */
+
+      while (next || prev)
+        {
+          if (next)
+            {
+              entry = (GimpPaletteEntry *) next->data;
+              if (gimp_rgb_distance (&entry->color, color) < EPSILON)
+                return entry;
+
+              next = next->next;
+            }
+
+          if (prev)
+            {
+              entry = (GimpPaletteEntry *) prev->data;
+              if (gimp_rgb_distance (&entry->color, color) < EPSILON)
+                return entry;
+
+              prev = prev->prev;
+            }
+        }
+    }
+
+  return NULL;
 }
 
 

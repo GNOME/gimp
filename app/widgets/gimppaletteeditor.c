@@ -56,8 +56,6 @@
 #define PREVIEW_WIDTH  ((ENTRY_WIDTH  + SPACING) * COLUMNS + 1)
 #define PREVIEW_HEIGHT ((ENTRY_HEIGHT + SPACING) * ROWS    + 1)
 
-#define EPSILON 1e-10
-
 /*  local function prototypes  */
 
 static void   gimp_palette_editor_docked_iface_init (GimpDockedInterface *face);
@@ -568,77 +566,23 @@ gimp_palette_editor_get_index (GimpPaletteEditor *editor,
                                const GimpRGB     *search)
 {
   GimpPalette *palette;
-  gint         index = 0;
 
   g_return_val_if_fail (GIMP_IS_PALETTE_EDITOR (editor), -1);
+  g_return_val_if_fail (search != NULL, -1);
 
   palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
-  if (! palette || palette->n_colors == 0)
-    return -1;
-
-  if (editor->color)
-    index = editor->color->position;
-
-  if (search)
+  if (palette && palette->n_colors > 0)
     {
-      if (! editor->color)
-        {
-          GList *list;
+      GimpPaletteEntry *entry;
 
-          /* search from the start */
+      entry = gimp_palette_find_entry (palette, search, editor->color);
 
-          for (list = palette->colors; list; list = g_list_next (list))
-            {
-              GimpPaletteEntry *entry = list->data;
-
-              if (gimp_rgb_distance (&entry->color, search) < EPSILON)
-                {
-                  index = entry->position;
-                  break;
-                }
-            }
-        }
-      else if (gimp_rgb_distance (&editor->color->color, search) > EPSILON)
-        {
-          GList *old  = g_list_nth (palette->colors, editor->color->position);
-          GList *next = old->next;
-          GList *prev = old->prev;
-
-          /* proximity-based search */
-
-          while (next || prev)
-            {
-              if (next)
-                {
-                  GimpPaletteEntry *entry = next->data;
-
-                  if (gimp_rgb_distance (&entry->color, search) < EPSILON)
-                    {
-                      index = entry->position;
-                      break;
-                    }
-
-                  next = next->next;
-                }
-
-              if (prev)
-                {
-                  GimpPaletteEntry *entry = prev->data;
-
-                  if (gimp_rgb_distance (&entry->color, search) < EPSILON)
-                    {
-                      index = entry->position;
-                      break;
-                    }
-
-                  prev = prev->prev;
-                }
-            }
-        }
+      if (entry)
+        return entry->position;
     }
 
-  return index;
+  return -1;
 }
 
 gboolean

@@ -1,3 +1,14 @@
+2006-12-14  Michael Natterer  <mitch@gimp.org>
+
+	Applied slightly modified patch from David Gowers which abstracts
+	away and unifies seraching a color in a palette (bug #132146):
+
+	* app/core/gimppalette.[ch]: added gimp_palette_find_entry().
+
+	* app/widgets/gimpcolorselectorpalette.c
+	* app/widgets/gimppaletteeditor.c: use it for selecting matching
+	colors from the active palette.
+
 2006-12-13  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme-private.h

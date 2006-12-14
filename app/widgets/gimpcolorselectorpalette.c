@@ -77,23 +77,16 @@ gimp_color_selector_palette_set_color (GimpColorSelector *selector,
     {
       GimpPalette *palette = gimp_context_get_palette (select->context);
 
-      if (palette)
+      if (palette && palette->n_colors > 0)
         {
-          GList *list;
+          GimpPaletteEntry *entry;
 
-          for (list = palette->colors; list; list = g_list_next (list))
-            {
-              GimpPaletteEntry *entry = list->data;
+          entry = gimp_palette_find_entry (palette, rgb,
+                                           GIMP_PALETTE_VIEW (select->view)->selected);
 
-#define EPSILON 1e-10
-
-              if (gimp_rgb_distance (&entry->color, rgb) < EPSILON)
-                {
-                  gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (select->view),
-                                                  entry);
-                  break;
-                }
-            }
+          if (entry)
+            gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (select->view),
+                                            entry);
         }
     }
 }
