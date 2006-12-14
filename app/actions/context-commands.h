@@ -113,6 +113,9 @@ void   context_font_select_cmd_callback           (GtkAction *action,
                                                    gint       value,
                                                    gpointer   data);
 
+void   context_brush_spacing_cmd_callback         (GtkAction *action,
+                                                   gint       value,
+                                                   gpointer   data);
 void   context_brush_shape_cmd_callback           (GtkAction *action,
                                                    gint       value,
                                                    gpointer   data);

@@ -846,6 +846,38 @@ static const GimpEnumActionEntry context_font_select_actions[] =
     NULL }
 };
 
+static const GimpEnumActionEntry context_brush_spacing_actions[] =
+{
+  { "context-brush-spacing-set", GIMP_STOCK_BRUSH,
+    "Set Brush Spacing", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "context-brush-spacing-minimum", GIMP_STOCK_BRUSH,
+    "Minimum Spacing", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "context-brush-spacing-maximum", GIMP_STOCK_BRUSH,
+    "Maximum Spacing", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "context-brush-spacing-decrease", GIMP_STOCK_BRUSH,
+    "Decrease Spacing", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "context-brush-spacing-increase", GIMP_STOCK_BRUSH,
+    "Increase Spacing", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "context-brush-spacing-decrease-skip", GIMP_STOCK_BRUSH,
+    "Decrease Spacing More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "context-brush-spacing-increase-skip", GIMP_STOCK_BRUSH,
+    "Increase Spacing More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL }
+};
+
 static const GimpEnumActionEntry context_brush_shape_actions[] =
 {
   { "context-brush-shape-circle", GIMP_STOCK_BRUSH,
@@ -1160,6 +1192,10 @@ context_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (context_font_select_actions),
                                       G_CALLBACK (context_font_select_cmd_callback));
 
+  gimp_action_group_add_enum_actions (group,
+                                      context_brush_spacing_actions,
+                                      G_N_ELEMENTS (context_brush_spacing_actions),
+                                      G_CALLBACK (context_brush_spacing_cmd_callback));
   gimp_action_group_add_enum_actions (group,
                                       context_brush_shape_actions,
                                       G_N_ELEMENTS (context_brush_shape_actions),

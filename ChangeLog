@@ -1,5 +1,11 @@
 2006-12-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/context-actions.c
+	* app/actions/context-commands.[ch]: applied modified patch from
+	David Gowers which adds brush spacing actions. Fixes bug #385679.
+
+2006-12-14  Michael Natterer  <mitch@gimp.org>
+
 	Applied slightly modified patch from David Gowers which abstracts
 	away and unifies seraching a color in a palette (bug #132146):
 

@@ -471,6 +471,26 @@ context_font_select_cmd_callback (GtkAction *action,
 }
 
 void
+context_brush_spacing_cmd_callback (GtkAction *action,
+                                    gint       value,
+                                    gpointer   data)
+{
+  GimpContext *context;
+  GimpBrush   *brush;
+  gint         spacing;
+  return_if_no_context (context, data);
+
+  brush = gimp_context_get_brush (context);
+  spacing = gimp_brush_get_spacing (brush);
+  spacing = action_select_value ((GimpActionSelectType) value,
+                                 spacing,
+                                 1.0, 5000.0,
+                                 1.0, 5.0, 20.0, 0.0, FALSE);
+  gimp_brush_set_spacing (brush, spacing);
+
+}
+
+void
 context_brush_shape_cmd_callback (GtkAction *action,
                                   gint       value,
                                   gpointer   data)
