@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-12 14:49+0100\n"
+"POT-Creation-Date: 2006-12-14 21:15+0100\n"
 "PO-Revision-Date: 2006-12-12 14:49+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -348,7 +348,7 @@ msgid "Layers"
 msgstr "Ebenen"
 
 #: ../app/actions/actions.c:168 ../app/dialogs/dialogs.c:223
-#: ../app/widgets/gimppaletteeditor.c:156
+#: ../app/widgets/gimppaletteeditor.c:154
 msgid "Palette Editor"
 msgstr "Farbpaletteneditor"
 
@@ -837,7 +837,7 @@ msgstr ""
 #: ../app/actions/data-commands.c:130
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1365
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
-#: ../app/core/gimppalette.c:335 ../app/dialogs/palette-import-dialog.c:771
+#: ../app/core/gimppalette.c:336 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/pdb/image_cmds.c:1978 ../app/widgets/gimpdnd-xds.c:97
 msgid "Untitled"
 msgstr "Namenlos"
@@ -3161,7 +3161,7 @@ msgid "Toggle _Quick Mask"
 msgstr "_Schnelle Maske aktivieren/deaktivieren"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:981
+#: ../app/display/gimpdisplayshell.c:987
 msgid "Toggle Quick Mask"
 msgstr "Schnelle Maske aktivieren/deaktivieren"
 
@@ -8205,9 +8205,19 @@ msgstr ""
 msgid "Image saved to '%s'"
 msgstr ""
 
-#: ../app/display/gimpdisplayshell.c:953
+#: ../app/display/gimpdisplayshell.c:849
+#, fuzzy
+msgid "Access the image menu"
+msgstr "Bildabmessungen anpassen"
+
+#: ../app/display/gimpdisplayshell.c:958
 msgid "Zoom image when window size changes"
 msgstr "Bild zoomen, wenn die Fenstergröße sich ändert"
+
+#: ../app/display/gimpdisplayshell.c:1008
+#, fuzzy
+msgid "Navigate the image display"
+msgstr "Die Ansichten dieses Bildes anheben"
 
 #: ../app/display/gimpdisplayshell-close.c:125
 #: ../app/display/gimpdisplayshell-close.c:202
@@ -10232,7 +10242,7 @@ msgstr "Einen rechteckigen Bereich wählen"
 msgid "_Rectangle Select"
 msgstr "_Rechteckige Auswahl"
 
-#: ../app/tools/gimprectangletool.c:1053 ../app/tools/gimprectangletool.c:1697
+#: ../app/tools/gimprectangletool.c:1052 ../app/tools/gimprectangletool.c:1696
 msgid "Rectangle: "
 msgstr "Rechteck: "
 
@@ -10805,21 +10815,6 @@ msgstr "Anzahl der Pfade:"
 #, fuzzy
 msgid "Golden sections"
 msgstr "Auswahl verschieben"
-
-#: ../app/tools/tools-enums.c:89
-#, fuzzy
-msgid "No constraint"
-msgstr "Einschränkungen"
-
-#: ../app/tools/tools-enums.c:90
-#, fuzzy
-msgid "Image bounds"
-msgstr "Bildfenster"
-
-#: ../app/tools/tools-enums.c:91
-#, fuzzy
-msgid "Drawable bounds"
-msgstr "Bild"
 
 #: ../app/tools/tools-enums.c:119
 msgid "Free select"
@@ -11792,7 +11787,7 @@ msgstr "Leere Ebene"
 
 #: ../app/widgets/gimpmenudock.c:159
 msgid "Auto"
-msgstr "Automatisch"
+msgstr "Auto"
 
 #: ../app/widgets/gimpmenudock.c:170
 msgid ""
@@ -11810,12 +11805,12 @@ msgstr "Meldung %d mal wiederholt."
 msgid "Message repeated once."
 msgstr "Meldung einmal wiederholt."
 
-#: ../app/widgets/gimppaletteeditor.c:255
-#: ../app/widgets/gimppaletteeditor.c:795
+#: ../app/widgets/gimppaletteeditor.c:253
+#: ../app/widgets/gimppaletteeditor.c:739
 msgid "Undefined"
 msgstr "Nicht definiert"
 
-#: ../app/widgets/gimppaletteeditor.c:263
+#: ../app/widgets/gimppaletteeditor.c:261
 msgid "Columns:"
 msgstr "Spalten:"
 
@@ -12295,6 +12290,18 @@ msgstr "Bitte stellen Sie sicher, dass das Werkzeugefenster sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
+
+#, fuzzy
+#~ msgid "No constraint"
+#~ msgstr "Einschränkungen"
+
+#, fuzzy
+#~ msgid "Image bounds"
+#~ msgstr "Bildfenster"
+
+#, fuzzy
+#~ msgid "Drawable bounds"
+#~ msgstr "Bild"
 
 #~ msgid ""
 #~ "GIMP is not properly installed for the current user.\n"
