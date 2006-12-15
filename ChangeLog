@@ -7,7 +7,7 @@
 2006-12-14  Michael Natterer  <mitch@gimp.org>
 
 	Applied slightly modified patch from David Gowers which abstracts
-	away and unifies seraching a color in a palette (bug #132146):
+	away and unifies searching a color in a palette (bug #132146):
 
 	* app/core/gimppalette.[ch]: added gimp_palette_find_entry().
 
