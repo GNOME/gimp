@@ -1,3 +1,9 @@
+2006-12-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage.c (gimp_image_add_layers): fixed order of
+	layers for the position == -1 (add above avtive layer) case.
+	Fixes bug #386199.
+
 2006-12-15  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpuimanager.[ch]: added new function

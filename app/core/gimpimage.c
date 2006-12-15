@@ -2970,6 +2970,16 @@ gimp_image_add_layers (GimpImage   *image,
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (layers != NULL);
 
+  if (position == -1)
+    {
+      GimpLayer *active_layer = gimp_image_get_active_layer (image);
+
+      if (active_layer)
+        position = gimp_image_get_layer_index (image, active_layer);
+      else
+        position = 0;
+    }
+
   for (list = layers; list; list = g_list_next (list))
     {
       GimpItem *item = GIMP_ITEM (list->data);
@@ -2998,9 +3008,7 @@ gimp_image_add_layers (GimpImage   *image,
       gimp_item_translate (new_item, offset_x, offset_y, FALSE);
 
       gimp_image_add_layer (image, GIMP_LAYER (new_item), position);
-
-      if (position != -1)
-        position++;
+      position++;
     }
 
   gimp_image_undo_group_end (image);
