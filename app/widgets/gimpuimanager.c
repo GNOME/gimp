@@ -498,6 +498,25 @@ gimp_ui_manager_find_action (GimpUIManager *manager,
   return action;
 }
 
+gboolean
+gimp_ui_manager_activate_action (GimpUIManager *manager,
+                                 const gchar   *group_name,
+                                 const gchar   *action_name)
+{
+  GtkAction *action;
+
+  g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager), FALSE);
+  g_return_val_if_fail (action_name != NULL, FALSE);
+
+  action = gimp_ui_manager_find_action (manager, group_name, action_name);
+
+  if (action)
+    gtk_action_activate (action);
+
+  return (action != NULL);
+}
+
+
 void
 gimp_ui_manager_ui_register (GimpUIManager          *manager,
                              const gchar            *ui_path,

@@ -50,21 +50,21 @@
 
 /*  local function prototypes  */
 
-static void       file_save_dialog_response      (GtkWidget            *save_dialog,
-                                                  gint                  response_id,
-                                                  Gimp                 *gimp);
-static gboolean   file_save_dialog_check_uri     (GtkWidget            *save_dialog,
-                                                  Gimp                 *gimp,
-                                                  gchar               **ret_uri,
-                                                  gchar               **ret_basename,
-                                                  GimpPlugInProcedure **ret_save_proc);
-static gboolean   file_save_dialog_use_extension (GtkWidget            *save_dialog,
-                                                  const gchar          *uri);
-static gboolean   file_save_dialog_save_image    (GtkWidget            *save_dialog,
-                                                  GimpImage            *image,
-                                                  const gchar          *uri,
-                                                  GimpPlugInProcedure  *save_proc,
-                                                  gboolean              save_a_copy);
+static void      file_save_dialog_response      (GtkWidget            *save_dialog,
+                                                 gint                  response_id,
+                                                 Gimp                 *gimp);
+static gboolean  file_save_dialog_check_uri     (GtkWidget            *save_dialog,
+                                                 Gimp                 *gimp,
+                                                 gchar               **ret_uri,
+                                                 gchar               **ret_basename,
+                                                 GimpPlugInProcedure **ret_save_proc);
+static gboolean  file_save_dialog_use_extension (GtkWidget            *save_dialog,
+                                                 const gchar          *uri);
+static gboolean  file_save_dialog_save_image    (GtkWidget            *save_dialog,
+                                                 GimpImage            *image,
+                                                 const gchar          *uri,
+                                                 GimpPlugInProcedure  *save_proc,
+                                                 gboolean              save_a_copy);
 
 
 /*  public functions  */
@@ -499,18 +499,24 @@ file_save_dialog_save_image (GtkWidget           *save_dialog,
 
   g_object_unref (image);
 
-  if (status != GIMP_PDB_SUCCESS &&
-      status != GIMP_PDB_CANCEL)
+  switch (status)
     {
-      gchar *filename = file_utils_uri_display_name (uri);
+    case GIMP_PDB_SUCCESS:
+    case GIMP_PDB_CANCEL:
+      break;
 
-      gimp_message (image->gimp, G_OBJECT (save_dialog), GIMP_MESSAGE_ERROR,
-                    _("Saving '%s' failed:\n\n%s"), filename, error->message);
-      g_clear_error (&error);
+    default:
+      {
+        gchar *filename = file_utils_uri_display_name (uri);
 
-      g_free (filename);
+        gimp_message (image->gimp, G_OBJECT (save_dialog), GIMP_MESSAGE_ERROR,
+                      _("Saving '%s' failed:\n\n%s"), filename, error->message);
+        g_clear_error (&error);
+        g_free (filename);
 
-      success = FALSE;
+        success = FALSE;
+      }
+      break;
     }
 
   for (list = gimp_action_groups_from_name ("file");

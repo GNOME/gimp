@@ -1,3 +1,20 @@
+2006-12-15  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpuimanager.[ch]: added new function
+	gimp_ui_manager_activate_action() as a shortcut for looking up the
+	action and activating it.
+
+	* app/actions/dialogs-actions.c
+	* app/display/gimpdisplayshell-close.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimptooloptionseditor.c: use the new function.
+
+	* app/actions/file-commands.c
+	* app/dialogs/file-save-dialog.c: minor code cleanup.
+
 2006-12-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/context-actions.c

@@ -715,16 +715,9 @@ gimp_colormap_preview_button_press (GtkWidget          *widget,
       g_signal_emit (editor, editor_signals[SELECTED], 0, bevent->state);
 
       if (bevent->type == GDK_2BUTTON_PRESS)
-        {
-          GtkAction *action;
-
-          action = gimp_ui_manager_find_action (GIMP_EDITOR (editor)->ui_manager,
-                                                "colormap",
-                                                "colormap-edit-color");
-
-          if (action)
-            gtk_action_activate (action);
-        }
+        gimp_ui_manager_activate_action (GIMP_EDITOR (editor)->ui_manager,
+                                         "colormap",
+                                         "colormap-edit-color");
       return TRUE;
 
     case 2:

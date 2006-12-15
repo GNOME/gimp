@@ -650,14 +650,9 @@ gimp_item_tree_view_activate_item (GimpContainerView *view,
 
   if (item_view_class->activate_action)
     {
-      GtkAction *action;
-
-      action = gimp_ui_manager_find_action (GIMP_EDITOR (view)->ui_manager,
-                                            item_view_class->action_group,
-                                            item_view_class->activate_action);
-
-      if (action)
-        gtk_action_activate (action);
+      gimp_ui_manager_activate_action (GIMP_EDITOR (view)->ui_manager,
+                                       item_view_class->action_group,
+                                       item_view_class->activate_action);
     }
 }
 

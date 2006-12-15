@@ -82,9 +82,12 @@ void            gimp_ui_manager_update      (GimpUIManager          *manager,
 GimpActionGroup * gimp_ui_manager_get_action_group (GimpUIManager   *manager,
                                                     const gchar     *name);
 
-GtkAction     * gimp_ui_manager_find_action (GimpUIManager          *manager,
-                                             const gchar            *group_name,
-                                             const gchar            *action_name);
+GtkAction     * gimp_ui_manager_find_action     (GimpUIManager      *manager,
+                                                 const gchar        *group_name,
+                                                 const gchar        *action_name);
+gboolean        gimp_ui_manager_activate_action (GimpUIManager      *manager,
+                                                 const gchar        *group_name,
+                                                 const gchar        *action_name);
 
 void            gimp_ui_manager_ui_register (GimpUIManager          *manager,
                                              const gchar            *ui_path,

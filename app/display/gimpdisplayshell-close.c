@@ -263,16 +263,8 @@ gimp_display_shell_close_response (GtkWidget        *widget,
       break;
 
     case RESPONSE_SAVE:
-      {
-        GtkAction *action;
-
-        action = gimp_ui_manager_find_action (shell->menubar_manager,
-                                              "file", "file-save-and-close");
-
-        g_return_if_fail (action != NULL);
-
-        gtk_action_activate (action);
-      }
+      gimp_ui_manager_activate_action (shell->menubar_manager,
+                                       "file", "file-save-and-close");
       break;
 
     default:

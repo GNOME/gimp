@@ -757,14 +757,9 @@ palette_editor_entry_activated (GimpPaletteView   *view,
 {
   if (GIMP_DATA_EDITOR (editor)->data_editable && entry == editor->color)
     {
-      GtkAction *action;
-
-      action = gimp_ui_manager_find_action (GIMP_EDITOR (editor)->ui_manager,
-                                            "palette-editor",
-                                            "palette-editor-edit-color");
-
-      if (action)
-        gtk_action_activate (action);
+      gimp_ui_manager_activate_action (GIMP_EDITOR (editor)->ui_manager,
+                                       "palette-editor",
+                                       "palette-editor-edit-color");
     }
 }
 

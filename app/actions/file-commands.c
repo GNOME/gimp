@@ -246,15 +246,12 @@ file_save_cmd_callback (GtkAction *action,
 
             default:
               {
-                gchar *filename;
-
-                filename = file_utils_uri_display_name (uri);
+                gchar *filename = file_utils_uri_display_name (uri);
 
                 gimp_message (image->gimp, G_OBJECT (display),
                               GIMP_MESSAGE_ERROR,
                               _("Saving '%s' failed:\n\n%s"),
                               filename, error->message);
-
                 g_free (filename);
                 g_clear_error (&error);
               }
