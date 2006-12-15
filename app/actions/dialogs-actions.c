@@ -152,7 +152,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_FONT_DIALOG },
 
   { "dialogs-buffers", GIMP_STOCK_BUFFER,
-    N_("B_uffers"), "<control><shift>V", N_("Buffers"),
+    N_("B_uffers"), "", N_("Buffers"),
     "gimp-buffer-list|gimp-buffer-grid",
     GIMP_HELP_BUFFER_DIALOG },
 
