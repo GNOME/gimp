@@ -28,6 +28,9 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#ifdef G_OS_WIN32
+#include "libgimpbase/gimpwin32-io.h" /* For S_IRGRP etc */
+#endif
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
