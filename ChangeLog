@@ -1,3 +1,10 @@
+2006-12-16  Mukund Sivaraman  <muks@mukund.org>
+
+	* app/core/gimp-transform-resize.c: Fixed code in
+	gimp_transform_resize_crop() to calculate the maximum rectangle in
+	the quadrilateral which results after a transform; added a function
+	parameter for aspect ratio too.
+
 2006-12-16  Tor Lillqvist  <tml@novell.com>
 
 	* app/core/gimptooloptions.c: On Win32, include gimpwin32-io.h for

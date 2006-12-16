@@ -76,6 +76,7 @@ static void  gimp_transform_resize_crop   (gdouble  dx1,
                                            gdouble  dy3,
                                            gdouble  dx4,
                                            gdouble  dy4,
+                                           gdouble  aspect,
                                            gint    *x1,
                                            gint    *y1,
                                            gint    *x2,
@@ -139,6 +140,7 @@ gimp_transform_resize_boundary (const GimpMatrix3   *inv,
 
     case GIMP_TRANSFORM_SIZE_CROP:
       gimp_transform_resize_crop (dx1, dy1, dx2, dy2, dx3, dy3, dx4, dy4,
+                                  0.0,
                                   x1, y1, x2, y2);
       break;
     }
@@ -178,6 +180,7 @@ edge_init (Edge        *edge,
 {
   edge->xmin  = MIN (ceil (p->x), ceil (q->x));
   edge->xmax  = MAX (floor (p->x), floor (q->x));
+
   edge->ymin  = MIN (ceil (p->y), ceil (q->y));
   edge->ymax  = MAX (floor (p->y), floor (q->y));
 
@@ -194,15 +197,15 @@ find_edge (const Edge *edges,
            gboolean    top)
 {
   const Edge *emax = edges;
+  const Edge *e = edges;
   gint        i;
 
   for (i = 0; i < 4; i++)
     {
-      const Edge *e = edges + i;
-
-      if (e->xmin == x && e->xmax != e->xmin &&
+      if ((e->xmin == x) && (e->xmax != e->xmin) &&
           ((e->top && top) || (!e->top && !top)))
             emax = e;
+      e++;
     }
 
   return emax;
@@ -222,8 +225,8 @@ intersect_x (const Edge *edges,
   for (i = 0; i < 4; i++)
     if (edges[i].right && edges[i].ymin <= y && edges[i].ymax >= y)
       {
-        x0 = (double) (y + 0.5 - edges[i].b) / edges[i].m;
-        x1 = (double) (y - 0.5 - edges[i].b) / edges[i].m;
+        x0 = (y + 0.5 - edges[i].b) / edges[i].m;
+        x1 = (y - 0.5 - edges[i].b) / edges[i].m;
       }
 
   return (gint) floor (MIN (x0, x1));
@@ -236,7 +239,7 @@ intersect_y (const Edge *edge,
   gdouble yfirst = edge->m * (xi - 0.5) + edge->b;
   gdouble ylast  = edge->m * (xi + 0.5) + edge->b;
 
-  return (gint) floor (edge->top ? MAX (yfirst, ylast) : MIN (yfirst, ylast));
+  return (gint) (edge->top ? ceil (MAX (yfirst, ylast)) : floor (MIN (yfirst, ylast)));
 }
 
 static void
@@ -248,6 +251,7 @@ gimp_transform_resize_crop (gdouble  dx1,
                             gdouble  dy3,
                             gdouble  dx4,
                             gdouble  dy4,
+                            gdouble  aspect,
                             gint    *x1,
                             gint    *y1,
                             gint    *x2,
@@ -259,11 +263,13 @@ gimp_transform_resize_crop (gdouble  dx1,
   const Point *b;
   const Edge  *top;
   const Edge  *bottom;
-  gint        *px;
-  gint         xmin, ymin;
-  gint         xmax, ymax;
+  gint         cxmin, cymin;
+  gint         cxmax, cymax;
+  Point       *xint;
+  
+  gint         ymin, ymax;
   gint         maxarea = 0;
-  gint         xi, y;
+  gint         xi;
   gint         i;
 
   /*  fill in the points array  */
@@ -277,48 +283,47 @@ gimp_transform_resize_crop (gdouble  dx1,
   points[3].y = dy4;
 
   /*  create an array of edges  */
+  
+  cxmin = cxmax = points[3].x;
+  cymin = cymax = points[3].y;
+  
   for (i = 0, a = points + 3, b = points; i < 4; i++, a = b, b++)
-    edge_init (edges + i, a, b);
-
-  /*  determine the bounding box  */
-  xmin = edges[0].xmin;
-  xmax = edges[0].xmax;
-  ymin = edges[0].ymin;
-  ymax = edges[0].ymax;
-
-  for (i = 1; i < 4; i++)
     {
-      const Edge *edge = edges + i;
+      if (G_UNLIKELY(i == 0))
+        {
+          cxmin = cxmax = a->x;
+          cymin = cymax = a->y;
+        }
+      else
+        {
+          if (a->x < cxmin)
+            cxmin = a->x;
 
-      if (edge->xmin < xmin)
-        xmin = edge->xmin;
+          if (a->x > cxmax)
+              cxmax = a->x;
 
-      if (edge->xmax > xmax)
-        xmax = edge->xmax;
+          if (a->y < cymin)
+            cymin = a->y;
 
-      if (edge->ymin < ymin)
-        ymin = edge->ymin;
-
-      if (edge->ymax > ymax)
-        ymax = edge->ymax;
+          if (a->y > cymax)
+            cymax = a->y;
+        }
+        
+      edge_init (edges + i, a, b);
     }
 
-  g_printerr ("%d, %d -> %d, %d\n", xmin, ymin, xmax, ymax);
+  xint = g_new (Point, cymax);
+  
+  for (i = 0; i < cymax; i++)
+    {
+      xint[i].x = intersect_x (edges, i);
+      xint[i].y = i;
+    }
 
-  px = g_new (gint, ymax - ymin + 1);
+  top    = find_edge (edges, cxmin, TRUE);
+  bottom = find_edge (edges, cxmin, FALSE);
 
-  for (y = ymin, i = 0; y <= ymax; y++, i++)
-    px[i] = intersect_x (edges, y);
-
-  top    = find_edge (edges, xmin, TRUE);
-  bottom = find_edge (edges, xmax, FALSE);
-
-  g_printerr ("top: %d, %d -> %d, %d\n",
-              top->xmin, top->ymin, top->xmax, top->ymax);
-  g_printerr ("bottom: %d, %d -> %d, %d\n",
-              bottom->xmin, bottom->ymin, bottom->xmax, bottom->ymax);
-
-  for (xi = xmin; xi < xmax; xi++)
+  for (xi = cxmin; xi < cxmax; xi++)
     {
       gint ylo, yhi;
 
@@ -331,11 +336,30 @@ gimp_transform_resize_crop (gdouble  dx1,
             {
               if (yhi > ylo)
                 {
-                  gint xlo    = px[ylo - ymin];
-                  gint xhi    = px[yhi - ymin];
-                  gint width  = MIN (xlo, xhi) - xi;
-                  gint height = yhi - ylo;
-                  gint area   = width * height;
+                  gint     xlo, xhi;
+                  gint     xright;
+                  gint     height, width, fixed_width;
+                  gint     area;
+
+                  xlo = xint[ylo].x;
+                  xhi = xint[yhi].x;
+                        
+                  xright = MIN (xlo, xhi);
+
+                  height = yhi - ylo;
+                  width = xright - xi;
+
+                  if (aspect != 0)
+                    {
+                      fixed_width = (int) ceil((gdouble) height * aspect);
+
+                      if (fixed_width <= width)
+                        width = fixed_width;
+                      else
+                        width = 0;
+                    }
+                  
+                  area = width * height;
 
                   if (area > maxarea)
                     {
@@ -357,7 +381,5 @@ gimp_transform_resize_crop (gdouble  dx1,
         bottom = find_edge (edges, xi, FALSE);
     }
 
-  g_printerr ("%d, %d -> %d, %d\n", *x1, *y1, *x2, *y2);
-
-  g_free (px);
+  g_free (xint);
 }
