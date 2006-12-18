@@ -1925,11 +1925,15 @@ gimp_prop_text_buffer_notify (GObject       *config,
 /*************************/
 
 
-static void  gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
-                                                     GObject        *config);
-static void  gimp_prop_file_chooser_button_notify   (GObject        *config,
-                                                     GParamSpec     *param_spec,
-                                                     GtkFileChooser *button);
+static GtkWidget * gimp_prop_file_chooser_button_setup    (GtkWidget      *button,
+                                                           GObject        *config,
+                                                           GParamSpec     *param_spec);
+static void        gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
+                                                           GObject        *config);
+static void        gimp_prop_file_chooser_button_notify   (GObject        *config,
+                                                           GParamSpec     *param_spec,
+                                                           GtkFileChooser *button);
+
 
 /**
  * gimp_prop_file_chooser_button_new:
@@ -1955,9 +1959,6 @@ gimp_prop_file_chooser_button_new (GObject              *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *button;
-  GtkWidget  *widget;
-  gchar      *filename;
-  gchar      *value;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
@@ -1967,14 +1968,78 @@ gimp_prop_file_chooser_button_new (GObject              *config,
   if (! param_spec)
     return NULL;
 
+  button = gtk_file_chooser_button_new (title, action);
+
+  return gimp_prop_file_chooser_button_setup (button, config, param_spec);
+}
+
+/**
+ * gimp_prop_file_chooser_button_new_with_dialog:
+ * @config:        object to which property is attached.
+ * @property_name: name of path property.
+ * @dialog:        the #GtkFileChooserDialog widget to use.
+ *
+ * Creates a #GtkFileChooserButton to edit the specified path property.
+ *
+ * The button uses @dialog as it's file-picking window. Note that @dialog
+ * must be a #GtkFileChooserDialog (or subclass) and must not have
+ * %GTK_DIALOG_DESTROY_WITH_PARENT set.
+ *
+ * Note that #GtkFileChooserButton implements the #GtkFileChooser
+ * interface; you can use the #GtkFileChooser API with it.
+ *
+ * Return value:  A new #GtkFileChooserButton.
+ *
+ * Since GIMP 2.4
+ */
+GtkWidget *
+gimp_prop_file_chooser_button_new_with_dialog (GObject     *config,
+                                               const gchar *property_name,
+                                               GtkWidget   *dialog)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *button;
+  gchar      *title;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+  g_return_val_if_fail (GTK_IS_FILE_CHOOSER_DIALOG (dialog), NULL);
+
+  param_spec = check_param_spec (config, property_name,
+                                 GIMP_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  /* work around bug in GtkFileChooserButton */
+  title = g_strdup (gtk_window_get_title (GTK_WINDOW (dialog)));
+
+  button = gtk_file_chooser_button_new_with_dialog (dialog);
+
+  if (title)
+    {
+      gtk_file_chooser_button_set_title (GTK_FILE_CHOOSER_BUTTON (button),
+                                         title);
+      g_free (title);
+    }
+
+  return gimp_prop_file_chooser_button_setup (button, config, param_spec);
+}
+
+static GtkWidget *
+gimp_prop_file_chooser_button_setup (GtkWidget  *button,
+                                     GObject    *config,
+                                     GParamSpec *param_spec)
+{
+  GtkWidget *widget;
+  gchar     *value;
+  gchar     *filename;
+
   g_object_get (config,
-                property_name, &value,
+                param_spec->name, &value,
                 NULL);
 
   filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
   g_free (value);
-
-  button = gtk_file_chooser_button_new (title, action);
 
   if (filename)
     {
@@ -2000,7 +2065,7 @@ gimp_prop_file_chooser_button_new (GObject              *config,
                     G_CALLBACK (gimp_prop_file_chooser_button_callback),
                     config);
 
-  connect_notify (config, property_name,
+  connect_notify (config, param_spec->name,
                   G_CALLBACK (gimp_prop_file_chooser_button_notify),
                   button);
 

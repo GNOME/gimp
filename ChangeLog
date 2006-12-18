@@ -1,3 +1,9 @@
+2006-12-18  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppropwidgets.[ch]
+	* libgimpwidgets/gimpwidgets.def: added new function
+	gimp_prop_file_chooser_button_new_with_dialog().
+
 2006-12-16  Mukund Sivaraman  <muks@mukund.org>
 
 	* app/core/gimp-transform-resize.c: Fixed code in

@@ -144,6 +144,10 @@ GtkWidget     * gimp_prop_file_chooser_button_new (GObject              *config,
                                                    const gchar          *property_name,
                                                    const gchar          *title,
                                                    GtkFileChooserAction  action);
+GtkWidget     * gimp_prop_file_chooser_button_new_with_dialog (GObject     *config,
+                                                               const gchar *property_name,
+
+                                                               GtkWidget   *dialog);
 GtkWidget     * gimp_prop_path_editor_new         (GObject       *config,
                                                    const gchar   *path_property_name,
                                                    const gchar   *writable_property_name,
