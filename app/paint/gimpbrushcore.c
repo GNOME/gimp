@@ -647,8 +647,10 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
           jitter_y = g_rand_double_range (core->rand,
                                           -core->jitter, core->jitter);
 
-          paint_core->cur_coords.x += jitter_x * core->brush->x_axis.x * scale;
-          paint_core->cur_coords.y += jitter_y * core->brush->y_axis.y * scale;
+          paint_core->cur_coords.x +=
+            (core->brush->x_axis.x + core->brush->y_axis.x) * jitter_x * scale;
+          paint_core->cur_coords.y +=
+            (core->brush->y_axis.y + core->brush->x_axis.y) * jitter_y * scale;
         }
 
       paint_core->distance   = initial       + t * dist;
