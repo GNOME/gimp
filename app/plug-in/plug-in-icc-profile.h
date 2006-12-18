@@ -37,5 +37,14 @@ gboolean  plug_in_icc_profile_info      (GimpImage     *image,
                                          gchar        **info,
                                          GError       **error);
 
+gboolean  plug_in_icc_profile_file_info (Gimp          *gimp,
+                                         GimpContext   *context,
+                                         GimpProgress  *progress,
+                                         const gchar   *filename,
+                                         gchar        **name,
+                                         gchar        **desc,
+                                         gchar        **info,
+                                         GError       **error);
+
 
 #endif /* __PLUG_IN_ICC_PROFILE_H__ */

@@ -43,6 +43,7 @@
 #define PLUG_IN_PROC_APPLY_RGB  "plug-in-icc-profile-apply-rgb"
 
 #define PLUG_IN_PROC_INFO       "plug-in-icc-profile-info"
+#define PLUG_IN_PROC_FILE_INFO  "plug-in-icc-profile-file-info"
 
 
 enum
@@ -61,6 +62,7 @@ enum
   PROC_APPLY,
   PROC_APPLY_RGB,
   PROC_INFO,
+  PROC_FILE_INFO,
   NONE
 };
 
@@ -78,19 +80,23 @@ static void  run   (const gchar      *name,
                     gint             *nreturn_vals,
                     GimpParam       **return_vals);
 
-static GimpPDBStatusType  lcms_icc_set   (GimpColorConfig  *config,
-                                          gint32            image,
-                                          const gchar      *filename);
-static GimpPDBStatusType  lcms_icc_apply (GimpColorConfig  *config,
-                                          GimpRunMode       run_mode,
-                                          gint32            image,
-                                          const gchar      *filename,
-                                          gboolean         *dont_ask);
-static GimpPDBStatusType  lcms_icc_info  (GimpColorConfig  *config,
-                                          gint32           image,
-                                          gchar          **name,
-                                          gchar          **desc,
-                                          gchar          **info);
+static GimpPDBStatusType  lcms_icc_set       (GimpColorConfig  *config,
+                                              gint32            image,
+                                              const gchar      *filename);
+static GimpPDBStatusType  lcms_icc_apply     (GimpColorConfig  *config,
+                                              GimpRunMode       run_mode,
+                                              gint32            image,
+                                              const gchar      *filename,
+                                              gboolean         *dont_ask);
+static GimpPDBStatusType  lcms_icc_info      (GimpColorConfig  *config,
+                                              gint32            image,
+                                              gchar           **name,
+                                              gchar           **desc,
+                                              gchar           **info);
+static GimpPDBStatusType  lcms_icc_file_info (const gchar      *filename,
+                                              gchar           **name,
+                                              gchar           **desc,
+                                              gchar           **info);
 
 static cmsHPROFILE  lcms_image_get_profile       (GimpColorConfig *config,
                                                   gint32           image);
@@ -127,14 +133,23 @@ static const GimpParamDef args[] =
   { GIMP_PDB_IMAGE,  "image",        "Input image"                      },
   { GIMP_PDB_STRING, "profile",      "Filename of an ICC color profile" }
 };
+static const GimpParamDef image_args[] =
+{
+  { GIMP_PDB_IMAGE,  "image",        "Input image"                      },
+};
+static const GimpParamDef file_args[] =
+{
+  { GIMP_PDB_STRING, "profile",      "Filename of an ICC color profile" }
+};
 
 static const Procedure procedures[] =
 {
-  { PLUG_IN_PROC_SET,       G_N_ELEMENTS (args)      },
-  { PLUG_IN_PROC_SET_RGB,   G_N_ELEMENTS (base_args) },
-  { PLUG_IN_PROC_APPLY,     G_N_ELEMENTS (args)      },
-  { PLUG_IN_PROC_APPLY_RGB, G_N_ELEMENTS (base_args) },
-  { PLUG_IN_PROC_INFO,      G_N_ELEMENTS (base_args) }
+  { PLUG_IN_PROC_SET,       G_N_ELEMENTS (args)       },
+  { PLUG_IN_PROC_SET_RGB,   G_N_ELEMENTS (base_args)  },
+  { PLUG_IN_PROC_APPLY,     G_N_ELEMENTS (args)       },
+  { PLUG_IN_PROC_APPLY_RGB, G_N_ELEMENTS (base_args)  },
+  { PLUG_IN_PROC_INFO,      G_N_ELEMENTS (image_args) },
+  { PLUG_IN_PROC_FILE_INFO, G_N_ELEMENTS (file_args)  }
 };
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -232,9 +247,23 @@ query (void)
                           N_("Color Profile Information"),
                           "*",
                           GIMP_PLUGIN,
-                          G_N_ELEMENTS (base_args),
+                          G_N_ELEMENTS (image_args),
                           G_N_ELEMENTS (info_return_vals),
-                          base_args, info_return_vals);
+                          image_args, info_return_vals);
+
+  gimp_install_procedure (PLUG_IN_PROC_FILE_INFO,
+                          "Retrieve information about a color profile",
+                          "This procedure returns information about an ICC "
+                          "color profile on disk.",
+                          "Sven Neumann",
+                          "Sven Neumann",
+                          "2006",
+                          N_("Color Profile Information"),
+                          "*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (file_args),
+                          G_N_ELEMENTS (info_return_vals),
+                          file_args, info_return_vals);
 }
 
 static void
@@ -244,12 +273,12 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
-  gint               proc;
-  GimpRunMode        run_mode;
-  gint32             image;
-  const gchar       *filename;
-  GimpColorConfig   *config;
+  GimpPDBStatusType  status   = GIMP_PDB_CALLING_ERROR;
+  gint               proc     = NONE;
+  GimpRunMode        run_mode = GIMP_RUN_NONINTERACTIVE;
+  gint32             image    = -1;
+  const gchar       *filename = NULL;
+  GimpColorConfig   *config   = NULL;
   gboolean           dont_ask = FALSE;
   static GimpParam   values[6];
 
@@ -279,11 +308,30 @@ run (const gchar      *name,
       return;
     }
 
-  config = gimp_get_color_configuration ();
+  if (proc != PROC_FILE_INFO)
+    config = gimp_get_color_configuration ();
 
-  run_mode = param[0].data.d_int32;
-  image    = param[1].data.d_image;
-  filename = (procedures[proc].nparams > 2) ? param[2].data.d_string : NULL;
+  switch (proc)
+    {
+    case PROC_SET_RGB:
+    case PROC_APPLY_RGB:
+      filename = param[2].data.d_string;
+      /* fallthrough */
+
+    case PROC_SET:
+    case PROC_APPLY:
+      run_mode = param[0].data.d_int32;
+      image    = param[1].data.d_image;
+      break;
+
+    case PROC_INFO:
+      image    = param[0].data.d_image;
+      break;
+
+    case PROC_FILE_INFO:
+      filename = param[0].data.d_string;
+      break;
+    }
 
   switch (proc)
     {
@@ -306,12 +354,18 @@ run (const gchar      *name,
       break;
 
     case PROC_INFO:
+    case PROC_FILE_INFO:
       {
         gchar *name;
         gchar *desc;
         gchar *info;
 
-        status = lcms_icc_info (config, image, &name, &desc, &info);
+        cmsErrorAction (LCMS_ERROR_IGNORE);
+
+        if (proc == PROC_INFO)
+          status = lcms_icc_info (config, image, &name, &desc, &info);
+        else
+          status = lcms_icc_file_info (filename, &name, &desc, &info);
 
         if (status == GIMP_PDB_SUCCESS)
           {
@@ -330,7 +384,8 @@ run (const gchar      *name,
       break;
     }
 
-  g_object_unref (config);
+  if (config)
+    g_object_unref (config);
 
   values[0].data.d_status = status;
 }
@@ -520,6 +575,31 @@ lcms_icc_info (GimpColorConfig *config,
       *desc = g_strdup ("sRGB built-in");
       *info = g_strdup (_("Default RGB working space"));
     }
+
+  return GIMP_PDB_SUCCESS;
+}
+
+static GimpPDBStatusType
+lcms_icc_file_info (const gchar  *filename,
+                    gchar       **name,
+                    gchar       **desc,
+                    gchar       **info)
+{
+  cmsHPROFILE profile;
+
+  if (! g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+    return GIMP_PDB_EXECUTION_ERROR;
+
+  profile = cmsOpenProfileFromFile (filename, "r");
+
+  if (! profile)
+    return GIMP_PDB_EXECUTION_ERROR;
+
+  *name = lcms_icc_profile_get_name (profile);
+  *desc = lcms_icc_profile_get_desc (profile);
+  *info = lcms_icc_profile_get_info (profile);
+
+  cmsCloseProfile (profile);
 
   return GIMP_PDB_SUCCESS;
 }

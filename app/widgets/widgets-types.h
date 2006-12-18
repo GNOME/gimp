@@ -130,6 +130,7 @@ typedef struct _GimpColorDialog              GimpColorDialog;
 typedef struct _GimpErrorDialog              GimpErrorDialog;
 typedef struct _GimpFileDialog               GimpFileDialog;
 typedef struct _GimpMessageDialog            GimpMessageDialog;
+typedef struct _GimpProfileChooserDialog     GimpProfileChooserDialog;
 typedef struct _GimpProgressDialog           GimpProgressDialog;
 typedef struct _GimpTextEditor               GimpTextEditor;
 typedef struct _GimpToolDialog               GimpToolDialog;

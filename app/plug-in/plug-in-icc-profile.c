@@ -41,6 +41,14 @@
 
 #define ICC_PROFILE_APPLY_RGB_PROC  "plug-in-icc-profile-apply-rgb"
 #define ICC_PROFILE_INFO_PROC       "plug-in-icc-profile-info"
+#define ICC_PROFILE_FILE_INFO_PROC  "plug-in-icc-profile-file-info"
+
+
+static void
+plug_in_icc_profile_info_return (GValueArray  *return_vals,
+                                 gchar       **name,
+                                 gchar       **desc,
+                                 gchar       **info);
 
 
 gboolean
@@ -135,9 +143,8 @@ plug_in_icc_profile_info (GimpImage     *image,
   procedure = gimp_pdb_lookup_procedure (gimp->pdb, ICC_PROFILE_INFO_PROC);
 
   if (procedure &&
-      procedure->num_args >= 2 &&
-      GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]) &&
-      GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[1]))
+      procedure->num_args >= 1 &&
+      GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[0]))
     {
       GValueArray       *return_vals;
       GimpPDBStatusType  status;
@@ -145,8 +152,6 @@ plug_in_icc_profile_info (GimpImage     *image,
       return_vals =
         gimp_pdb_execute_procedure_by_name (gimp->pdb, context, progress,
                                             ICC_PROFILE_INFO_PROC,
-                                            GIMP_TYPE_INT32,
-                                            GIMP_RUN_NONINTERACTIVE,
                                             GIMP_TYPE_IMAGE_ID,
                                             gimp_image_get_ID (image),
                                             G_TYPE_NONE);
@@ -156,29 +161,7 @@ plug_in_icc_profile_info (GimpImage     *image,
       switch (status)
         {
         case GIMP_PDB_SUCCESS:
-          if (name)
-            {
-              GValue *value = g_value_array_get_nth (return_vals, 1);
-
-              *name = (G_VALUE_HOLDS_STRING (value) ?
-                       g_value_dup_string (value) : NULL);
-            }
-
-          if (desc)
-            {
-              GValue *value = g_value_array_get_nth (return_vals, 2);
-
-              *desc = (G_VALUE_HOLDS_STRING (value) ?
-                       g_value_dup_string (value) : NULL);
-            }
-
-          if (info)
-            {
-              GValue *value = g_value_array_get_nth (return_vals, 3);
-
-              *info = (G_VALUE_HOLDS_STRING (value) ?
-                       g_value_dup_string (value) : NULL);
-            }
+          plug_in_icc_profile_info_return (return_vals, name, desc, info);
           break;
 
         default:
@@ -196,4 +179,87 @@ plug_in_icc_profile_info (GimpImage     *image,
                _("Plug-In missing (%s)"), ICC_PROFILE_INFO_PROC);
 
   return FALSE;
+}
+
+gboolean
+plug_in_icc_profile_file_info (Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               const gchar   *filename,
+                               gchar        **name,
+                               gchar        **desc,
+                               gchar        **info,
+                               GError       **error)
+{
+  GimpProcedure *procedure;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (filename != NULL, FALSE);
+
+  procedure = gimp_pdb_lookup_procedure (gimp->pdb, ICC_PROFILE_FILE_INFO_PROC);
+
+  if (procedure &&
+      procedure->num_args >= 1 &&
+      GIMP_IS_PARAM_SPEC_STRING (procedure->args[0]))
+    {
+      GValueArray       *return_vals;
+      GimpPDBStatusType  status;
+
+      return_vals =
+        gimp_pdb_execute_procedure_by_name (gimp->pdb, context, progress,
+                                            ICC_PROFILE_FILE_INFO_PROC,
+                                            G_TYPE_STRING, filename,
+                                            G_TYPE_NONE);
+
+      status = g_value_get_enum (return_vals->values);
+
+      switch (status)
+        {
+        case GIMP_PDB_SUCCESS:
+          plug_in_icc_profile_info_return (return_vals, name, desc, info);
+          break;
+
+        default:
+          g_set_error (error, 0, 0,
+                       _("Error running '%s'"), ICC_PROFILE_FILE_INFO_PROC);
+          break;
+        }
+
+      g_value_array_free (return_vals);
+
+      return (status == GIMP_PDB_SUCCESS);
+    }
+
+  g_set_error (error, 0, 0,
+               _("Plug-In missing (%s)"), ICC_PROFILE_FILE_INFO_PROC);
+
+  return FALSE;
+}
+
+static void
+plug_in_icc_profile_info_return (GValueArray  *return_vals,
+                                 gchar       **name,
+                                 gchar       **desc,
+                                 gchar       **info)
+{
+  if (name)
+    {
+      GValue *value = g_value_array_get_nth (return_vals, 1);
+
+      *name = G_VALUE_HOLDS_STRING (value) ? g_value_dup_string (value) : NULL;
+    }
+
+  if (desc)
+    {
+      GValue *value = g_value_array_get_nth (return_vals, 2);
+
+      *desc = G_VALUE_HOLDS_STRING (value) ? g_value_dup_string (value) : NULL;
+    }
+
+  if (info)
+    {
+      GValue *value = g_value_array_get_nth (return_vals, 3);
+
+      *info = G_VALUE_HOLDS_STRING (value) ? g_value_dup_string (value) : NULL;
+    }
 }

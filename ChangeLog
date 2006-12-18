@@ -1,5 +1,19 @@
 2006-12-18  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/plug-in-icc-profile.[ch]
+	* plug-ins/common/lcms.c: removed run-mode argument from
+	plug-in-icc-profile-info. Added new procedure to obtain information
+	about a color profile on disk.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpprofilechooserdialog.[ch]: added a first draft
+	of a file-chooser dialog for selecting a color profile.
+
+	* app/dialogs/preferences-dialog.c: use it.
+
+2006-12-18  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppropwidgets.[ch]
 	* libgimpwidgets/gimpwidgets.def: added new function
 	gimp_prop_file_chooser_button_new_with_dialog().

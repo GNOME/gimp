@@ -46,6 +46,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
+#include "widgets/gimpprofilechooserdialog.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -2332,11 +2333,14 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (i = 0; i < G_N_ELEMENTS (profiles); i++)
       {
+        GtkWidget *chooser;
+
+        chooser = gimp_profile_chooser_dialog_new (gimp,
+                                                   gettext (profiles[i].fs_label));
         button =
-          gimp_prop_file_chooser_button_new (color_config,
-                                             profiles[i].property_name,
-                                             gettext (profiles[i].fs_label),
-                                             GTK_FILE_CHOOSER_ACTION_OPEN);
+          gimp_prop_file_chooser_button_new_with_dialog (color_config,
+                                                         profiles[i].property_name,
+                                                         chooser);
 
         gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                                    gettext (profiles[i].label), 0.0, 0.5,
