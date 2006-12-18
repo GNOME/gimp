@@ -124,15 +124,13 @@ static void       gui_menu_hide_tooltip         (GimpUIManager      *manager,
 static void       gui_display_changed           (GimpContext        *context,
                                                  GimpDisplay        *display,
                                                  Gimp               *gimp);
-static void       gui_image_disconnect          (GimpImage          *image,
-                                                 Gimp               *gimp);
+static void       gui_display_remove            (GimpContainer      *displays);
 
 
 /*  private variables  */
 
-static Gimp          *the_gui_gimp                = NULL;
-static GQuark         image_disconnect_handler_id = 0;
-static GimpUIManager *image_ui_manager            = NULL;
+static Gimp          *the_gui_gimp     = NULL;
+static GimpUIManager *image_ui_manager = NULL;
 
 
 /*  public functions  */
@@ -362,11 +360,6 @@ gui_restore_callback (Gimp               *gimp,
 
   gui_vtable_init (gimp);
 
-  image_disconnect_handler_id =
-    gimp_container_add_handler (gimp->images, "disconnect",
-                                G_CALLBACK (gui_image_disconnect),
-                                gimp);
-
   if (! gui_config->show_tooltips)
     gimp_help_disable_tooltips ();
 
@@ -387,6 +380,9 @@ gui_restore_callback (Gimp               *gimp,
   g_signal_connect (gimp_get_user_context (gimp), "display-changed",
                     G_CALLBACK (gui_display_changed),
                     gimp);
+  g_signal_connect (gimp->displays, "remove",
+                    G_CALLBACK (gui_display_remove),
+                    NULL);
 
   /* make sure the monitor resolution is valid */
   if (display_config->monitor_res_from_gdk               ||
@@ -523,16 +519,16 @@ gui_exit_after_callback (Gimp     *gimp,
   g_signal_handlers_disconnect_by_func (gimp->config,
                                         gui_show_help_button_notify,
                                         gimp);
-
   g_signal_handlers_disconnect_by_func (gimp->config,
                                         gui_show_tooltips_notify,
                                         gimp);
 
-  gimp_container_remove_handler (gimp->images, image_disconnect_handler_id);
-  image_disconnect_handler_id = 0;
-
   g_object_unref (image_ui_manager);
   image_ui_manager = NULL;
+
+  g_signal_handlers_disconnect_by_func (gimp->displays,
+                                        G_CALLBACK (gui_display_remove),
+                                        NULL);
 
   session_exit (gimp);
   menus_exit (gimp);
@@ -663,8 +659,8 @@ gui_display_changed (GimpContext *context,
                 {
                   gimp_context_set_display (context, display2);
 
-                  /*  stop the emission of the original signal (the emission of
-                   *  the recursive signal is finished)
+                  /* stop the emission of the original signal
+                   * (the emission of the recursive signal is finished)
                    */
                   g_signal_stop_emission_by_name (context, "display-changed");
                   return;
@@ -679,13 +675,10 @@ gui_display_changed (GimpContext *context,
 }
 
 static void
-gui_image_disconnect (GimpImage *image,
-                      Gimp      *gimp)
+gui_display_remove (GimpContainer *displays)
 {
-  /*  check if this is the last image and if it had a display  */
-  if (gimp_container_num_children (gimp->images) == 1 &&
-      image->instance_count > 0)
-    {
-      dialogs_show_toolbox ();
-    }
+  /* show the toolbox when the last image window is closed */
+
+  if (gimp_container_is_empty (displays))
+    dialogs_show_toolbox ();
 }

@@ -1,5 +1,10 @@
 2006-12-18  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/gui.c: cleanup up the code that shows the toolbox when
+	the last display is closed.
+
+2006-12-18  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimpbrushcore.c (gimp_brush_core_interpolate): applied
 	patch from Aurore D that improves jitter for brushes with an angle
 	close to 90° (bug #386061).
