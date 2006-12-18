@@ -1,6 +1,6 @@
 2006-12-18  Sven Neumann  <sven@gimp.org>
 
-	* app/gui/gui.c: cleanup up the code that shows the toolbox when
+	* app/gui/gui.c: cleaned up the code that shows the toolbox when
 	the last display is closed.
 
 2006-12-18  Sven Neumann  <sven@gimp.org>
