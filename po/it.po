@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-13 18:25+0100\n"
-"PO-Revision-Date: 2006-12-13 18:28+0100\n"
+"POT-Creation-Date: 2006-12-18 01:53+0100\n"
+"PO-Revision-Date: 2006-12-18 01:49+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -357,7 +357,7 @@ msgid "Layers"
 msgstr "Livelli"
 
 #: ../app/actions/actions.c:168 ../app/dialogs/dialogs.c:223
-#: ../app/widgets/gimppaletteeditor.c:156
+#: ../app/widgets/gimppaletteeditor.c:154
 msgid "Palette Editor"
 msgstr "Editor tavolozza"
 
@@ -832,7 +832,7 @@ msgstr "Campionamento diffuso"
 #: ../app/dialogs/file-open-location-dialog.c:228
 #: ../app/display/gimpdisplayshell-dnd.c:449
 #: ../app/widgets/gimplayertreeview.c:760 ../app/widgets/gimptoolbox-dnd.c:158
-#: ../app/widgets/gimptoolbox.c:916
+#: ../app/widgets/gimptoolbox.c:912
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -846,7 +846,7 @@ msgstr ""
 #: ../app/actions/data-commands.c:130
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1365
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
-#: ../app/core/gimppalette.c:335 ../app/dialogs/palette-import-dialog.c:771
+#: ../app/core/gimppalette.c:336 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/pdb/image_cmds.c:1978 ../app/widgets/gimpdnd-xds.c:97
 msgid "Untitled"
 msgstr "Immagine"
@@ -922,7 +922,7 @@ msgstr "Istogramma"
 
 #: ../app/actions/dialogs-actions.c:100
 msgid "_Selection Editor"
-msgstr "Editor _selezione"
+msgstr "Editor della _selezione"
 
 #: ../app/actions/dialogs-actions.c:100 ../app/dialogs/dialogs.c:189
 msgid "Selection Editor"
@@ -1701,7 +1701,7 @@ msgstr "Esci dal programma di elaborazione immagini GNU GIMP"
 msgid "Saving canceled"
 msgstr "Salvataggio annullato"
 
-#: ../app/actions/file-commands.c:255 ../app/dialogs/file-save-dialog.c:508
+#: ../app/actions/file-commands.c:253 ../app/dialogs/file-save-dialog.c:513
 #: ../app/widgets/gimpdnd-xds.c:174
 #, c-format
 msgid ""
@@ -1713,36 +1713,36 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:289 ../app/dialogs/file-save-dialog.c:82
+#: ../app/actions/file-commands.c:286 ../app/dialogs/file-save-dialog.c:82
 msgid "Save Image"
 msgstr "Salva immagine"
 
-#: ../app/actions/file-commands.c:305
+#: ../app/actions/file-commands.c:302
 msgid "Save a Copy of the Image"
 msgstr "Salva una copia dell'immagine"
 
-#: ../app/actions/file-commands.c:329
+#: ../app/actions/file-commands.c:326
 msgid "Create New Template"
 msgstr "Crea un nuovo modello"
 
-#: ../app/actions/file-commands.c:333
+#: ../app/actions/file-commands.c:330
 msgid "Enter a name for this template"
 msgstr "Inserisci un nome per questo modello"
 
-#: ../app/actions/file-commands.c:359
+#: ../app/actions/file-commands.c:356
 msgid "Revert failed. No file name associated with this image."
 msgstr "Fallita la ricarica. Nessun nome file associato a quest'immagine."
 
-#: ../app/actions/file-commands.c:372
+#: ../app/actions/file-commands.c:369
 msgid "Revert Image"
 msgstr "Ricarica immagine"
 
-#: ../app/actions/file-commands.c:398
+#: ../app/actions/file-commands.c:395
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Ricaricare \"%s\" a \"%s\"?"
 
-#: ../app/actions/file-commands.c:404
+#: ../app/actions/file-commands.c:401
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -1750,19 +1750,19 @@ msgstr ""
 "Ricaricando l'immagine salvata su disco, perderai tutte le modifiche, "
 "incluse tutte le informazioni di annullamento."
 
-#: ../app/actions/file-commands.c:476
+#: ../app/actions/file-commands.c:473
 msgid "Open Image as Layers"
 msgstr "Apri immagine come livelli"
 
-#: ../app/actions/file-commands.c:481 ../app/dialogs/file-open-dialog.c:75
+#: ../app/actions/file-commands.c:478 ../app/dialogs/file-open-dialog.c:75
 msgid "Open Image"
 msgstr "Apri immagine"
 
-#: ../app/actions/file-commands.c:552
+#: ../app/actions/file-commands.c:549
 msgid "(Unnamed Template)"
 msgstr "(modello senza nome)"
 
-#: ../app/actions/file-commands.c:600
+#: ../app/actions/file-commands.c:597
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3173,7 +3173,7 @@ msgstr "Menu modifica selezione"
 
 #: ../app/actions/select-actions.c:47
 msgid "_Select"
-msgstr "_Seleziona"
+msgstr "_Selezione"
 
 #: ../app/actions/select-actions.c:50
 msgid "select|_All"
@@ -5313,7 +5313,7 @@ msgstr "Mantieni il profilo incorporato"
 msgid "Convert to RGB workspace"
 msgstr "Converti in spazio colore RGB"
 
-#: ../app/core/gimp-contexts.c:141 ../app/core/gimptooloptions.c:236
+#: ../app/core/gimp-contexts.c:141 ../app/core/gimptooloptions.c:239
 #: ../app/gui/session.c:257 ../app/menus/menus.c:422
 #: ../app/widgets/gimpdevices.c:258
 #, c-format
@@ -6006,107 +6006,107 @@ msgstr "Aggiungi livello"
 msgid "Remove Layer"
 msgstr "Rimuovi livello"
 
-#: ../app/core/gimpimage.c:3023
+#: ../app/core/gimpimage.c:3031
 msgid "Layer cannot be raised higher."
 msgstr "Il livello non può essere alzato ulteriormente."
 
-#: ../app/core/gimpimage.c:3028
+#: ../app/core/gimpimage.c:3036
 msgid "Raise Layer"
 msgstr "Alza il livello"
 
-#: ../app/core/gimpimage.c:3045
+#: ../app/core/gimpimage.c:3053
 msgid "Layer cannot be lowered more."
 msgstr "Il livello non può essere abbassato ulteriormente."
 
-#: ../app/core/gimpimage.c:3050
+#: ../app/core/gimpimage.c:3058
 msgid "Lower Layer"
 msgstr "Abbassa il livello"
 
-#: ../app/core/gimpimage.c:3061
+#: ../app/core/gimpimage.c:3069
 msgid "Raise Layer to Top"
 msgstr "Alza il livello fino in cima"
 
-#: ../app/core/gimpimage.c:3076
+#: ../app/core/gimpimage.c:3084
 msgid "Lower Layer to Bottom"
 msgstr "Abbassa il livello fino in fondo"
 
-#: ../app/core/gimpimage.c:3149
+#: ../app/core/gimpimage.c:3157
 msgid "Add Channel"
 msgstr "Aggiungi canale"
 
-#: ../app/core/gimpimage.c:3194 ../app/core/gimpimage.c:3205
+#: ../app/core/gimpimage.c:3202 ../app/core/gimpimage.c:3213
 msgid "Remove Channel"
 msgstr "Rimuovi canale"
 
-#: ../app/core/gimpimage.c:3252
+#: ../app/core/gimpimage.c:3260
 msgid "Channel cannot be raised higher."
 msgstr "Il canale non può essere alzato ulteriormente."
 
-#: ../app/core/gimpimage.c:3257
+#: ../app/core/gimpimage.c:3265
 msgid "Raise Channel"
 msgstr "Alza il canale"
 
-#: ../app/core/gimpimage.c:3274
+#: ../app/core/gimpimage.c:3282
 msgid "Channel is already on top."
 msgstr "Il canale è già in cima."
 
-#: ../app/core/gimpimage.c:3279
+#: ../app/core/gimpimage.c:3287
 msgid "Raise Channel to Top"
 msgstr "Alza il canale fino in cima"
 
-#: ../app/core/gimpimage.c:3296
+#: ../app/core/gimpimage.c:3304
 msgid "Channel cannot be lowered more."
 msgstr "Il canale non può essere abbassato ulteriormente."
 
-#: ../app/core/gimpimage.c:3301
+#: ../app/core/gimpimage.c:3309
 msgid "Lower Channel"
 msgstr "Abbassa il canale"
 
-#: ../app/core/gimpimage.c:3321
+#: ../app/core/gimpimage.c:3329
 msgid "Channel is already on the bottom."
 msgstr "Il canale è già in fondo."
 
-#: ../app/core/gimpimage.c:3326
+#: ../app/core/gimpimage.c:3334
 msgid "Lower Channel to Bottom"
 msgstr "Abbassa il canale fino in fondo"
 
-#: ../app/core/gimpimage.c:3401
+#: ../app/core/gimpimage.c:3409
 msgid "Add Path"
 msgstr "Aggiungi tracciati"
 
-#: ../app/core/gimpimage.c:3447
+#: ../app/core/gimpimage.c:3455
 msgid "Remove Path"
 msgstr "Rimuovi tracciati"
 
-#: ../app/core/gimpimage.c:3491
+#: ../app/core/gimpimage.c:3499
 msgid "Path cannot be raised higher."
 msgstr "Il tracciato non può essere alzato ulteriormente."
 
-#: ../app/core/gimpimage.c:3496
+#: ../app/core/gimpimage.c:3504
 msgid "Raise Path"
 msgstr "Alza il tracciato"
 
-#: ../app/core/gimpimage.c:3513
+#: ../app/core/gimpimage.c:3521
 msgid "Path is already on top."
 msgstr "Il tracciato è già in cima."
 
-#: ../app/core/gimpimage.c:3518
+#: ../app/core/gimpimage.c:3526
 msgid "Raise Path to Top"
 msgstr "Alza il tracciato fino in cima"
 
-#: ../app/core/gimpimage.c:3535
+#: ../app/core/gimpimage.c:3543
 msgid "Path cannot be lowered more."
 msgstr "Il tracciato non può essere abbassato ulteriormente."
 
-#: ../app/core/gimpimage.c:3540
+#: ../app/core/gimpimage.c:3548
 msgid "Lower Path"
 msgstr "Abbassa il tracciato"
 
-#: ../app/core/gimpimage.c:3560
+#: ../app/core/gimpimage.c:3568
 msgid "Path is already on the bottom."
 msgstr "Il tracciato è già in fondo."
 
-#: ../app/core/gimpimage.c:3565
+#: ../app/core/gimpimage.c:3573
 msgid "Lower Path to Bottom"
 msgstr "Abbassa tracciato fino in fondo"
 
@@ -8100,14 +8100,14 @@ msgstr ""
 "Se non si salva l'immagine, le modifiche effettuate da %s fa ad ora, saranno "
 "perse."
 
-#: ../app/display/gimpdisplayshell-close.c:307
+#: ../app/display/gimpdisplayshell-close.c:299
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d ora"
 msgstr[1] "%d ore"
 
-#: ../app/display/gimpdisplayshell-close.c:313
+#: ../app/display/gimpdisplayshell-close.c:305
 #, c-format
 msgid "minute"
 msgid_plural "%d minutes"
@@ -10065,7 +10065,7 @@ msgstr ""
 msgid "_Rectangle Select"
 msgstr "_Rettangolare"
 
-#: ../app/tools/gimprectangletool.c:1053 ../app/tools/gimprectangletool.c:1697
+#: ../app/tools/gimprectangletool.c:1052 ../app/tools/gimprectangletool.c:1696
 msgid "Rectangle: "
 msgstr "Rettangolo: "
 
@@ -10583,18 +10583,6 @@ msgstr "Regola dei terzi"
 #: ../app/tools/tools-enums.c:61
 msgid "Golden sections"
 msgstr "Selezioni auree"
-
-#: ../app/tools/tools-enums.c:89
-msgid "No constraint"
-msgstr "Nessun vincolo"
-
-#: ../app/tools/tools-enums.c:90
-msgid "Image bounds"
-msgstr "Limiti immagine"
-
-#: ../app/tools/tools-enums.c:91
-msgid "Drawable bounds"
-msgstr "Limiti disegnabile"
 
 #: ../app/tools/tools-enums.c:119
 msgid "Free select"
@@ -11531,11 +11519,11 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "colori"
 
-#: ../app/widgets/gimpitemtreeview.c:977
+#: ../app/widgets/gimpitemtreeview.c:972
 msgid "Set Item Exclusive Visible"
 msgstr "Imposta voce esclusiva visibile"
 
-#: ../app/widgets/gimpitemtreeview.c:985
+#: ../app/widgets/gimpitemtreeview.c:980
 msgid "Set Item Exclusive Linked"
 msgstr "Imposta voce esclusiva collegata"
 
@@ -11575,12 +11563,12 @@ msgstr "Messaggio ripetuto %d volte."
 msgid "Message repeated once."
 msgstr "Messaggio ripetuto una volta."
 
-#: ../app/widgets/gimppaletteeditor.c:255
-#: ../app/widgets/gimppaletteeditor.c:795
+#: ../app/widgets/gimppaletteeditor.c:253
+#: ../app/widgets/gimppaletteeditor.c:739
 msgid "Undefined"
 msgstr "Non definito"
 
-#: ../app/widgets/gimppaletteeditor.c:263
+#: ../app/widgets/gimppaletteeditor.c:261
 msgid "Columns:"
 msgstr "Colonne:"
 
@@ -11767,7 +11755,7 @@ msgstr ""
 "Gradiente attivo.\n"
 "Fare clic per la finestra gradienti."
 
-#: ../app/widgets/gimptoolbox.c:697
+#: ../app/widgets/gimptoolbox.c:693
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Click to open the color selection dialog."
@@ -11788,20 +11776,22 @@ msgstr "Recupera le opzioni da..."
 msgid "Delete saved options..."
 msgstr "Elimina le opzioni salvate..."
 
-#: ../app/widgets/gimptooloptionseditor.c:477
+#: ../app/widgets/gimptooloptionseditor.c:472
 #, c-format
 msgid "Error saving tool options presets: %s"
-msgstr "Errore durante il salvataggio delle preimpostazioni delle opzioni degli strumenti: %s"
+msgstr ""
+"Errore durante il salvataggio delle preimpostazioni delle opzioni degli "
+"strumenti: %s"
 
-#: ../app/widgets/gimpuimanager.c:697
+#: ../app/widgets/gimpuimanager.c:716
 msgid "Your GIMP installation is incomplete:"
 msgstr "L'installazione di GIMP non è stata completata:"
 
-#: ../app/widgets/gimpuimanager.c:699
+#: ../app/widgets/gimpuimanager.c:718
 msgid "Plase make sure the menu XML files are correctly installed."
 msgstr "Controllare che i file XML dei menu siano installati correttamente."
 
-#: ../app/widgets/gimpuimanager.c:705
+#: ../app/widgets/gimpuimanager.c:724
 #, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
 msgstr ""
@@ -12053,3 +12043,12 @@ msgstr "Controlla che gli strumenti siano visibili!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Impossibile eseguire \"%s\": %s"
+
+#~ msgid "No constraint"
+#~ msgstr "Nessun vincolo"
+
+#~ msgid "Image bounds"
+#~ msgstr "Limiti immagine"
+
+#~ msgid "Drawable bounds"
+#~ msgstr "Limiti disegnabile"
