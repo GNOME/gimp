@@ -64,7 +64,7 @@ static const GimpActionEntry edit_actions[] =
   { "edit-paste-as-menu", NULL, N_("_Paste as") },
   { "edit-buffer-menu",   NULL, N_("_Buffer")   },
 
-  { "undo-editor-popup",
+  { "undo-popup",
     GTK_STOCK_UNDO, N_("Undo History Menu"), NULL, NULL, NULL,
     GIMP_HELP_UNDO_DIALOG },
 
