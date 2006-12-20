@@ -892,6 +892,8 @@ fi
 # Some plug-ins are X11 specific
 ################################
 
+GIMP_COMMAND='gimp-gimp_app_version'
+
 dnl Check if building for GTK+-X11
 gdk_target=`$PKG_CONFIG --variable=target gtk+-2.0`
 if test "$gdk_target" = x11; then
@@ -911,6 +913,7 @@ if test "$gdk_target" = x11; then
       AC_CHECK_LIB(Xmu, XmuClientWindow,
         [AC_CHECK_HEADERS(X11/Xmu/WinUtil.h,
           GIMP_REMOTE='gimp-remote-gimp_app_version$(EXEEXT)';
+	  GIMP_COMMAND='gimp-remote-gimp_app_version'
 	  have_libxmu=yes
           LIBXMU="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt",
 	  [enable_gimp_remote="no (XMU header file not found)"],[#include <gdk/gdkx.h>])],
@@ -923,8 +926,11 @@ fi
 
 AC_SUBST(LIBXMU)
 AC_SUBST(LIBSCREENSHOT)
-AC_SUBST(GIMP_REMOTE)
+
 AC_SUBST(DOC_SHOOTER)
+
+AC_SUBST(GIMP_REMOTE)
+AC_SUBST(GIMP_COMMAND)
 
 
 ###################

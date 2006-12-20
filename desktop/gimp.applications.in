@@ -1,5 +1,5 @@
 gimp
-	command=gimp-remote-@GIMP_APP_VERSION@
+	command=@GIMP_COMMAND@
 	name=GNU Image Manipulation Program
 	can_open_multiple_files=true
 	expects_uris=non-file
