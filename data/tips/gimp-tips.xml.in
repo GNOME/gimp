@@ -276,9 +276,9 @@
     <_thetip>
       If some of your scanned photos do not look colorful enough, you
       can easily improve their tonal range with the &quot;Auto&quot;
-      button in the Levels tool (Layer-&gt;Colors-&gt;Levels).  If
-      there are any color casts, you can correct them with the Curves
-      tool (Layer-&gt;Colors-&gt;Curves).
+      button in the Levels tool (Colors-&gt;Levels).  If there are any
+      color casts, you can correct them with the Curves tool
+      (Colors-&gt;Curves).
     </_thetip>
   </tip>
 

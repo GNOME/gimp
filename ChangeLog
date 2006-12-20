@@ -1,7 +1,8 @@
 2006-12-20  Sven Neumann  <sven@gimp.org>
 
 	* data/tips/gimp-tips.xml.in: changed tip based on a suggestion
-	from David Gowers.
+	from David Gowers. Corrected menu location of Curves and Levels
+	tools.
 
 2006-12-18  Sven Neumann  <sven@gimp.org>
 
