@@ -94,7 +94,7 @@
     <_thetip>
       You can drag and drop many things in GIMP.  For example, dragging
       a color from the toolbox or from a color palette and dropping it into
-      an image will fill the current image or selection with that color.
+      an image will fill the current selection with that color.
     </_thetip>
   </tip>
   <tip level="intermediate">
