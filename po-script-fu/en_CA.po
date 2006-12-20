@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-09 21:56+0200\n"
+"POT-Creation-Date: 2006-12-20 00:10-0500\n"
 "PO-Revision-Date: 2004-11-18 00:14-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
@@ -114,22 +114,22 @@ msgstr "Script Progress"
 msgid "(none)"
 msgstr "(none)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1058
+#: ../plug-ins/script-fu/script-fu-interface.c:1061
 #: ../plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Author:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1065
+#: ../plug-ins/script-fu/script-fu-interface.c:1068
 #: ../plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1072
+#: ../plug-ins/script-fu/script-fu-interface.c:1075
 #: ../plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Date:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1081
+#: ../plug-ins/script-fu/script-fu-interface.c:1084
 msgid "Image Types:"
 msgstr "Image Types:"
 
@@ -144,15 +144,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:642
+#: ../plug-ins/script-fu/script-fu-server.c:648
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu Server Options"
 
-#: ../plug-ins/script-fu/script-fu-server.c:670
+#: ../plug-ins/script-fu/script-fu-server.c:676
 msgid "Server Port:"
 msgstr "Server Port:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:676
+#: ../plug-ins/script-fu/script-fu-server.c:682
 msgid "Server Logfile:"
 msgstr "Server Logfile:"
 
@@ -299,7 +299,6 @@ msgstr "<Image>/Script-Fu/Alpha to Logo"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos"
@@ -348,7 +347,7 @@ msgstr "Default bumpmap settings"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:2
 msgid "Font"
@@ -387,7 +386,7 @@ msgstr "Font"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:3
 msgid "Font size (pixels)"
@@ -458,7 +457,7 @@ msgstr "Shadow blur radius"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:5
 msgid "Text"
@@ -672,7 +671,7 @@ msgid "_Hrule..."
 msgstr "_Hrule..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:6
 msgid "Radius"
 msgstr "Radius"
@@ -2234,7 +2233,7 @@ msgid "Square"
 msgstr "Square"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
 msgid "Start angle"
 msgstr "Start angle"
 
@@ -2318,17 +2317,17 @@ msgstr "Hit rate"
 msgid "_Particle Trace..."
 msgstr "_Particle Trace..."
 
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "Antialias"
 msgstr "Antialias"
 
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Fill angle"
 msgstr "Fill angle"
 
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:9
-msgid "Text Circle..."
-msgstr "Text Circle..."
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
+msgid "Text C_ircle..."
+msgstr "Text C_ircle..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Ending blend"
@@ -2509,15 +2508,3 @@ msgstr "Highlight opacity"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effect..."
-
-#~ msgid "Buffer amount (% height of text)"
-#~ msgstr "Buffer amount (% height of text)"
-
-#~ msgid "_ASCII to Image..."
-#~ msgstr "_ASCII to Image..."
-
-#~ msgid "_ASCII to Layer..."
-#~ msgstr "_ASCII to Layer..."
-
-#~ msgid "Copy _Visible"
-#~ msgstr "Copy _Visible"
