@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-12-13 18:35+0100\n"
-"PO-Revision-Date: 2006-12-13 18:35+0100\n"
+"PO-Revision-Date: 2006-12-20 15:58+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1055,17 +1055,17 @@ msgstr ""
 "Fare clic sul contagocce, poi fare clic su un colore in un punto qualsiasi "
 "dello schermo per selezionare quel colore."
 
-# Credo che qui check sia inteso come casella, scacco, non come verbo
-#   Dimensione casella/scacco
+# Qui check è inteso come casella, scacco, non come verbo
+#   Dimensione scacco
 #: ../libgimpwidgets/gimppreviewarea.c:94
 msgid "Check Size"
-msgstr "Ampiezza casella"
+msgstr "Dimensione scacco"
 
 # Analogamente qui
-#   Stile casella/scacco
+#   Stile scacchi
 #: ../libgimpwidgets/gimppreviewarea.c:101
 msgid "Check Style"
-msgstr "Stile casella"
+msgstr "Stile scacchi"
 
 #. toggle button to (des)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:265
@@ -1400,11 +1400,11 @@ msgstr "Nero"
 
 #: ../modules/colorsel_cmyk.c:195
 msgid "Black _pullout:"
-msgstr "Estra_zione nero:"
+msgstr "Estra_zione del nero:"
 
 #: ../modules/colorsel_cmyk.c:212
 msgid "The percentage of black to pull out of the colored inks."
-msgstr "La percentuale di estrazione nero dagli inchiostri colorati."
+msgstr "La percentuale di estrazione del nero dagli inchiostri colorati."
 
 #: ../modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"

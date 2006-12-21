@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-06 18:27+0100\n"
+"POT-Creation-Date: 2006-12-11 11:12+0100\n"
 "PO-Revision-Date: 2006-11-06 18:29+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -14,42 +14,42 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:333
+#: ../plug-ins/pygimp/gimpfu.py:335
 msgid "Missing exception information"
 msgstr "Informazioni sull'eccezione mancanti"
 
-#: ../plug-ins/pygimp/gimpfu.py:342
+#: ../plug-ins/pygimp/gimpfu.py:344
 #, python-format
 msgid "An error occured running %s"
 msgstr "Errore durante l'esecuzione di %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:353
+#: ../plug-ins/pygimp/gimpfu.py:355
 msgid "_More Information"
 msgstr "_Ulteriori informazioni"
 
-#: ../plug-ins/pygimp/gimpfu.py:459 ../plug-ins/pygimp/gimpfu.py:471
-#: ../plug-ins/pygimp/gimpfu.py:477
+#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
+#: ../plug-ins/pygimp/gimpfu.py:479
 msgid "No"
 msgstr "No"
 
-#: ../plug-ins/pygimp/gimpfu.py:469 ../plug-ins/pygimp/gimpfu.py:477
+#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
 msgid "Yes"
 msgstr "Sì"
 
-#: ../plug-ins/pygimp/gimpfu.py:515 ../plug-ins/pygimp/gimpui.py:200
+#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
 msgstr "Selezione file Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:526
+#: ../plug-ins/pygimp/gimpfu.py:528
 msgid "Python-Fu Folder Selection"
 msgstr "Selezione cartelle Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:615
+#: ../plug-ins/pygimp/gimpfu.py:618
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Ingresso non valido per \"%s\""
 
-#: ../plug-ins/pygimp/gimpui.py:153
+#: ../plug-ins/pygimp/gimpui.py:175
 msgid "Python-Fu Color Selection"
 msgstr "Selezione colore Python-Fu"
 
