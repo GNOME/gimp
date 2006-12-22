@@ -144,8 +144,7 @@
     <_thetip>
       You can adjust or move a selection by using <tt>Alt</tt>-drag.
       If this makes the window move, your window manager uses the
-      <tt>Alt</tt> key already. Try pressing <tt>Shift</tt> at the same
-      time.
+      <tt>Alt</tt> key already.
     </_thetip>
   </tip>
   <tip level="intermediate">
