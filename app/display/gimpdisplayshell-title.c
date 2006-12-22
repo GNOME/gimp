@@ -324,18 +324,10 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                 GimpDrawable *drawable = gimp_image_active_drawable (image);
 
                 if (drawable)
-                  {
-                    gchar *desc;
-
-                    desc = gimp_viewable_get_description (GIMP_VIEWABLE (drawable), NULL);
-                    i += print (title, title_len, i, "%s", desc);
-
-                    g_free (desc);
-                  }
+                  i += print (title, title_len, i, "%s",
+                              gimp_object_get_name (GIMP_OBJECT (drawable)));
                 else
-                  {
-                    i += print (title, title_len, i, "%s", _("(none)"));
-                  }
+                  i += print (title, title_len, i, "%s", _("(none)"));
               }
               break;
 

@@ -1,5 +1,12 @@
 2006-12-22  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-title.c
+	(gimp_display_shell_format_title): reverted previous change. The
+	viewable description can have multiple lines, it's not suited for
+	the window title and statusbar.
+
+2006-12-22  Sven Neumann  <sven@gimp.org>
+
 	* data/tips/gimp-tips.xml.in: use U+2192 RIGHTWARDS ARROW for menu
 	paths.
 
