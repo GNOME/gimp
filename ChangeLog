@@ -1,5 +1,10 @@
 2006-12-22  Sven Neumann  <sven@gimp.org>
 
+	* data/tips/gimp-tips.xml.in: applied patch from David Gowers (bug
+	#141443).
+
+2006-12-22  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-documents.c
 	* app/core/gimp-parasites.c
 	* app/core/gimp-templates.c

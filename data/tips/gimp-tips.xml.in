@@ -99,16 +99,8 @@
   </tip>
   <tip level="intermediate">
     <_thetip>
-      When using a drawing tool (Paintbrush, Airbrush, or Pencil),
-      <tt>Shift</tt>-click will draw a straight line from your last drawing
-      point to your current cursor position.  If you also press <tt>Ctrl</tt>,
-      the line will be constrained to 15 degree angles.
-    </_thetip>
-  </tip>
-  <tip level="intermediate">
-    <_thetip>
-      You can use the middle mouse button to pan around the image, if it's
-      larger than its display window.
+      You can use the middle mouse button to pan around the image 
+      (or optionally hold <tt>Spacebar</tt> while you move the mouse.)
     </_thetip>
   </tip>
   <tip level="intermediate">
@@ -146,13 +138,6 @@
       allows you to add to the current selection instead of replacing it.
       Using <tt>Ctrl</tt> before making a selection subtracts from the
       current one.
-    </_thetip>
-  </tip>
-  <tip level="intermediate">
-    <_thetip>
-      You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys
-      while you are making a selection in order to constrain it to a
-      square or a circle, or to have it centered on its starting point.
     </_thetip>
   </tip>
   <tip level="intermediate">
@@ -213,18 +198,15 @@
       up the menu, selecting a menu item, and pressing the desired key
       combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the
       key bindings are saved when you exit GIMP.
+      You should probably disable &quot;Dynamic Keyboard Shortcuts&quot; 
+      afterwards, to prevent accidentally assigning/reassigning shortcuts.
     </_thetip>
   </tip>
   <tip level="advanced">
     <_thetip>
-      If your screen is too cluttered, you can press <tt>Tab</tt> multiple
-      times in an image window to hide or show the toolbox and other dialogs.
-    </_thetip>
-  </tip>
-  <tip level="advanced">
-    <_thetip>
-      You can adjust the selection range for fuzzy select
-      by clicking and dragging left and right.
+      If your screen is too cluttered, you can press <tt>Tab</tt> 
+      in an image window to toggle the visibility of the toolbox 
+      and other dialogs.
     </_thetip>
   </tip>
   <tip level="advanced">
@@ -235,19 +217,14 @@
   </tip>
   <tip level="advanced">
     <_thetip>
-      <tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog
-      toggles the effect of the layer mask.
+      <tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog
+      toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer 
+      mask's preview in the Layers dialog toggles viewing the mask directly.
     </_thetip>
   </tip>
   <tip level="advanced">
     <_thetip>
-      <tt>Alt</tt>-click on the layer mask's preview in the Layers dialog
-      toggles viewing the mask directly.
-    </_thetip>
-  </tip>
-  <tip level="advanced">
-    <_thetip>
-      You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in
+      You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in
       an image (if your window manager doesn't trap those keys...).
     </_thetip>
   </tip>
@@ -255,6 +232,8 @@
     <_thetip>
       <tt>Ctrl</tt>-click with the Bucket Fill tool to have it use
       the background color instead of the foreground color.
+      Similarly, <tt>Ctrl</tt>-clicking with the eyedropper tool 
+      sets the background color instead of the foreground color.
     </_thetip>
   </tip>
   <tip level="advanced">
