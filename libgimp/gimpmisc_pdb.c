@@ -28,12 +28,12 @@
 /**
  * gimp_version:
  *
- * Returns the host gimp version.
+ * Returns the host GIMP version.
  *
  * This procedure returns the version number of the currently running
- * gimp.
+ * GIMP.
  *
- * Returns: The gimp version.
+ * Returns: GIMP version number.
  */
 gchar *
 gimp_version (void)
@@ -57,9 +57,9 @@ gimp_version (void)
 /**
  * gimp_getpid:
  *
- * Returns the PID of the host gimp process.
+ * Returns the PID of the host GIMP process.
  *
- * This procedure returns the process ID of the currently running gimp.
+ * This procedure returns the process ID of the currently running GIMP.
  *
  * Returns: The PID.
  *

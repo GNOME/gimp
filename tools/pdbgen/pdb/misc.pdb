@@ -18,17 +18,17 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub version {
-    $blurb = 'Returns the host gimp version.';
+    $blurb = 'Returns the host GIMP version.';
 
     $help = <<'HELP';
-This procedure returns the version number of the currently running gimp.
+This procedure returns the version number of the currently running GIMP.
 HELP
 
     &yosh_pdb_misc('1999');
 
     @outargs = (
 	{ name => 'version', type => 'string',
-	  desc => 'The gimp version' }
+	  desc => 'GIMP version number' }
     );
 
     %invoke = (
@@ -42,10 +42,10 @@ CODE
 }
 
 sub getpid {
-    $blurb = 'Returns the PID of the host gimp process.';
+    $blurb = 'Returns the PID of the host GIMP process.';
 
     $help = <<'HELP';
-This procedure returns the process ID of the currently running gimp.
+This procedure returns the process ID of the currently running GIMP.
 HELP
 
     &mitch_pdb_misc('2005', '2.4');
@@ -66,21 +66,19 @@ CODE
 }
 
 sub quit {
-    $blurb = 'Causes the gimp to exit gracefully.';
+    $blurb = 'Causes GIMP to exit gracefully.';
 
     $help = <<'HELP';
-The internal procedure which can either be used to make the gimp
-quit. If there are unsaved images in an interactive GIMP session, the
-user will be asked for confirmation. If force is TRUE, the application
-is quit without querying the user to save any dirty images.
+If there are unsaved images in an interactive GIMP session, the user
+will be asked for confirmation. If force is TRUE, the application is
+quit without querying the user to save any dirty images.
 HELP
 
     &std_pdb_misc;
 
     @inargs = (
 	{ name => 'force', type => 'boolean',
-	  desc => 'Flag specifying whether to force the gimp to or exit
-		   normally' }
+	  desc => 'Force GIMP to quit without asking' }
     );
 
     %invoke = (

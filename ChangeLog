@@ -1,5 +1,15 @@
 2006-12-22  Sven Neumann  <sven@gimp.org>
 
+	* app/pdb/misc_cmds.c
+	* app/pdb/parasite_cmds.c: changed wording in API docs.
+
+	* app/pdb/misc_cmds.c
+	* app/pdb/parasite_cmds.c
+	* libgimp/gimpmisc_pdb.c
+	* libgimp/gimpparasite_pdb.c: regenerated.
+
+2006-12-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/jpeg/jpeg-exif.c: added a "Don't ask me again" toggle
 	to the EXIF rotation query dialog. Store the user's choice in the
 	"exif-orientation-rotate" parasite.

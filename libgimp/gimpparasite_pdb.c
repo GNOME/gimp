@@ -29,10 +29,9 @@
  * gimp_parasite_find:
  * @name: The name of the parasite to find.
  *
- * Finds the named parasite.
+ * Look up a global parasite.
  *
- * Finds and returns the named parasite that was previously attached to
- * the gimp.
+ * Finds and returns the global parasite that was previously attached.
  *
  * Returns: The found parasite.
  */
@@ -58,12 +57,11 @@ gimp_parasite_find (const gchar *name)
 
 /**
  * gimp_parasite_attach:
- * @parasite: The parasite to attach to the gimp.
+ * @parasite: The parasite to attach.
  *
- * Add a parasite to the gimp.
+ * Add a global parasite.
  *
- * This procedure attaches a parasite to the gimp. It has no return
- * values.
+ * This procedure attaches a global parasite. It has no return values.
  *
  * Returns: TRUE on success.
  */
@@ -88,11 +86,11 @@ gimp_parasite_attach (const GimpParasite *parasite)
 
 /**
  * gimp_parasite_detach:
- * @name: The name of the parasite to detach from the gimp.
+ * @name: The name of the parasite to detach.
  *
- * Removes a parasite from the gimp.
+ * Removes a global parasite.
  *
- * This procedure detaches a parasite from the gimp. It has no return
+ * This procedure detaches a global parasite from. It has no return
  * values.
  *
  * Returns: TRUE on success.
@@ -123,7 +121,7 @@ gimp_parasite_detach (const gchar *name)
  *
  * List all parasites.
  *
- * Returns a list of all currently attached parasites.
+ * Returns a list of all currently attached global parasites.
  *
  * Returns: TRUE on success.
  */
@@ -163,10 +161,10 @@ gimp_parasite_list (gint    *num_parasites,
  * @image_ID: The image.
  * @name: The name of the parasite to find.
  *
- * Finds the named parasite in an image
+ * Look up a parasite in an image
  *
- * Finds and returns the named parasite that was previously attached to
- * an image.
+ * Finds and returns the parasite that was previously attached to an
+ * image.
  *
  * Returns: The found parasite.
  */
@@ -308,10 +306,10 @@ gimp_image_parasite_list (gint32    image_ID,
  * @drawable_ID: The drawable.
  * @name: The name of the parasite to find.
  *
- * Finds the named parasite in a drawable
+ * Look up a parasite in a drawable
  *
- * Finds and returns the named parasite that was previously attached to
- * a drawable.
+ * Finds and returns the parasite that was previously attached to a
+ * drawable.
  *
  * Returns: The found parasite.
  */
@@ -453,10 +451,10 @@ gimp_drawable_parasite_list (gint32    drawable_ID,
  * @vectors_ID: The vectors object.
  * @name: The name of the parasite to find.
  *
- * Finds the named parasite in a vectors object
+ * Look up a parasite in a vectors object
  *
- * Finds and returns the named parasite that was previously attached to
- * a vectors object.
+ * Finds and returns the parasite that was previously attached to a
+ * vectors object.
  *
  * Returns: The found parasite.
  *

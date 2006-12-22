@@ -115,8 +115,8 @@ register_misc_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-version");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-version",
-                                     "Returns the host gimp version.",
-                                     "This procedure returns the version number of the currently running gimp.",
+                                     "Returns the host GIMP version.",
+                                     "This procedure returns the version number of the currently running GIMP.",
                                      "Manish Singh",
                                      "Manish Singh",
                                      "1999",
@@ -124,7 +124,7 @@ register_misc_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("version",
                                                            "version",
-                                                           "The gimp version",
+                                                           "GIMP version number",
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
@@ -138,8 +138,8 @@ register_misc_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-getpid");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-getpid",
-                                     "Returns the PID of the host gimp process.",
-                                     "This procedure returns the process ID of the currently running gimp.",
+                                     "Returns the PID of the host GIMP process.",
+                                     "This procedure returns the process ID of the currently running GIMP.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2005",
@@ -160,8 +160,8 @@ register_misc_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-quit");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-quit",
-                                     "Causes the gimp to exit gracefully.",
-                                     "The internal procedure which can either be used to make the gimp quit. If there are unsaved images in an interactive GIMP session, the user will be asked for confirmation. If force is TRUE, the application is quit without querying the user to save any dirty images.",
+                                     "Causes GIMP to exit gracefully.",
+                                     "If there are unsaved images in an interactive GIMP session, the user will be asked for confirmation. If force is TRUE, the application is quit without querying the user to save any dirty images.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -169,7 +169,7 @@ register_misc_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("force",
                                                      "force",
-                                                     "Flag specifying whether to force the gimp to or exit normally",
+                                                     "Force GIMP to quit without asking",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

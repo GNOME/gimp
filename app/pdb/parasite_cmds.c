@@ -464,8 +464,8 @@ register_parasite_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-parasite-find");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-parasite-find",
-                                     "Finds the named parasite.",
-                                     "Finds and returns the named parasite that was previously attached to the gimp.",
+                                     "Look up a global parasite.",
+                                     "Finds and returns the global parasite that was previously attached.",
                                      "Jay Cox",
                                      "Jay Cox",
                                      "1998",
@@ -492,8 +492,8 @@ register_parasite_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-parasite-attach");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-parasite-attach",
-                                     "Add a parasite to the gimp.",
-                                     "This procedure attaches a parasite to the gimp. It has no return values.",
+                                     "Add a global parasite.",
+                                     "This procedure attaches a global parasite. It has no return values.",
                                      "Jay Cox",
                                      "Jay Cox",
                                      "1998",
@@ -501,7 +501,7 @@ register_parasite_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_parasite ("parasite",
                                                          "parasite",
-                                                         "The parasite to attach to the gimp",
+                                                         "The parasite to attach",
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -513,8 +513,8 @@ register_parasite_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-parasite-detach");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-parasite-detach",
-                                     "Removes a parasite from the gimp.",
-                                     "This procedure detaches a parasite from the gimp. It has no return values.",
+                                     "Removes a global parasite.",
+                                     "This procedure detaches a global parasite from. It has no return values.",
                                      "Jay Cox",
                                      "Jay Cox",
                                      "1998",
@@ -522,7 +522,7 @@ register_parasite_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
-                                                       "The name of the parasite to detach from the gimp.",
+                                                       "The name of the parasite to detach.",
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
@@ -537,7 +537,7 @@ register_parasite_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-parasite-list",
                                      "List all parasites.",
-                                     "Returns a list of all currently attached parasites.",
+                                     "Returns a list of all currently attached global parasites.",
                                      "Marc Lehmann",
                                      "Marc Lehmann",
                                      "1999",
@@ -563,8 +563,8 @@ register_parasite_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-parasite-find");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-parasite-find",
-                                     "Finds the named parasite in an image",
-                                     "Finds and returns the named parasite that was previously attached to an image.",
+                                     "Look up a parasite in an image",
+                                     "Finds and returns the parasite that was previously attached to an image.",
                                      "Jay Cox",
                                      "Jay Cox",
                                      "1998",
@@ -686,8 +686,8 @@ register_parasite_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-parasite-find");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-parasite-find",
-                                     "Finds the named parasite in a drawable",
-                                     "Finds and returns the named parasite that was previously attached to a drawable.",
+                                     "Look up a parasite in a drawable",
+                                     "Finds and returns the parasite that was previously attached to a drawable.",
                                      "Jay Cox",
                                      "Jay Cox",
                                      "1998",
@@ -809,8 +809,8 @@ register_parasite_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-parasite-find");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-parasite-find",
-                                     "Finds the named parasite in a vectors object",
-                                     "Finds and returns the named parasite that was previously attached to a vectors object.",
+                                     "Look up a parasite in a vectors object",
+                                     "Finds and returns the parasite that was previously attached to a vectors object.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2006",

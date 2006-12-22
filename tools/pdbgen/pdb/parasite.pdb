@@ -18,10 +18,10 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub parasite_find {
-    $blurb = 'Finds the named parasite.';
+    $blurb = 'Look up a global parasite.';
 
     $help = <<'HELP';
-Finds and returns the named parasite that was previously attached to the gimp.
+Finds and returns the global parasite that was previously attached.
 HELP
 
     &jay_pdb_misc('1998');
@@ -49,17 +49,17 @@ CODE
 }
 
 sub parasite_attach {
-    $blurb = 'Add a parasite to the gimp.';
+    $blurb = 'Add a global parasite.';
 
     $help = <<'HELP';
-This procedure attaches a parasite to the gimp. It has no return values.
+This procedure attaches a global parasite. It has no return values.
 HELP
 
     &jay_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'parasite', type => 'parasite',
-	  desc => 'The parasite to attach to the gimp' }
+	  desc => 'The parasite to attach' }
     );
 
     %invoke = (
@@ -72,17 +72,17 @@ CODE
 }
 
 sub parasite_detach {
-    $blurb = 'Removes a parasite from the gimp.';
+    $blurb = 'Removes a global parasite.';
 
     $help = <<'HELP';
-This procedure detaches a parasite from the gimp. It has no return values.
+This procedure detaches a global parasite from. It has no return values.
 HELP
 
     &jay_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'name', type => 'string',
-	  desc => 'The name of the parasite to detach from the gimp.' }
+	  desc => 'The name of the parasite to detach.' }
     );
 
     %invoke = (
@@ -96,7 +96,7 @@ CODE
 
 sub parasite_list {
     $blurb = 'List all parasites.';
-    $help  = 'Returns a list of all currently attached parasites.';
+    $help  = 'Returns a list of all currently attached global parasites.';
 
     &marc_pdb_misc('1999');
 
@@ -116,10 +116,10 @@ CODE
 }
 
 sub image_parasite_find {
-    $blurb = 'Finds the named parasite in an image';
+    $blurb = 'Look up a parasite in an image';
 
     $help = <<'HELP';
-Finds and returns the named parasite that was previously attached to an image.
+Finds and returns the parasite that was previously attached to an image.
 HELP
 
     &jay_pdb_misc('1998');
@@ -225,10 +225,10 @@ CODE
 }
 
 sub drawable_parasite_find {
-    $blurb = 'Finds the named parasite in a drawable';
+    $blurb = 'Look up a parasite in a drawable';
 
     $help = <<'HELP';
-Finds and returns the named parasite that was previously attached to a drawable.
+Finds and returns the parasite that was previously attached to a drawable.
 HELP
 
     &jay_pdb_misc('1998');
@@ -335,10 +335,10 @@ CODE
 }
 
 sub vectors_parasite_find {
-    $blurb = 'Finds the named parasite in a vectors object';
+    $blurb = 'Look up a parasite in a vectors object';
 
     $help = <<'HELP';
-Finds and returns the named parasite that was previously attached
+Finds and returns the parasite that was previously attached
 to a vectors object.
 HELP
 
