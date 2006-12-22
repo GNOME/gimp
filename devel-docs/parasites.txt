@@ -157,6 +157,12 @@ Global data follows no strict rules.
         The ExifData structure serialized into a character array by
         libexif (using exif_data_save_data).
 
+"exif-orientation-rotate" (GLOBAL, PERSISTENT)
+        Whether a load plug-in should automatically rotate the image
+        according to the orientation specified in the EXIF data. This
+        has values "yes" or "no". If the parasite is not set, the
+        plug-in should ask the user what to do.
+
 "icc-profile" (IMAGE, PERSISTENT)
 	This contains an ICC profile describing the color space the
 	image was produced in. TIFF images stored in PhotoShop do 
