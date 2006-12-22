@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-17 17:18+0200\n"
-"PO-Revision-Date: 2006-12-19 11:09+0200\n"
+"POT-Creation-Date: 2006-12-22 19:40+0200\n"
+"PO-Revision-Date: 2006-12-22 19:40+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -238,7 +238,7 @@ msgstr "Teptukų redaktorius"
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:102 ../app/actions/dialogs-actions.c:130
 #: ../app/core/gimp.c:817 ../app/dialogs/dialogs.c:148
-#: ../app/dialogs/preferences-dialog.c:2584
+#: ../app/dialogs/preferences-dialog.c:2588
 msgid "Brushes"
 msgstr "Teptukai"
 
@@ -284,7 +284,7 @@ msgstr "Pastatomas į doką"
 
 #. Document History
 #: ../app/actions/actions.c:132 ../app/actions/dialogs-actions.c:165
-#: ../app/dialogs/dialogs.c:162 ../app/dialogs/preferences-dialog.c:1509
+#: ../app/dialogs/dialogs.c:162 ../app/dialogs/preferences-dialog.c:1510
 msgid "Document History"
 msgstr "Dokumentų istorija"
 
@@ -308,7 +308,7 @@ msgstr "Rinkmena"
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:147 ../app/actions/dialogs-actions.c:150
 #: ../app/core/gimp.c:833 ../app/dialogs/dialogs.c:156
-#: ../app/dialogs/preferences-dialog.c:2600
+#: ../app/dialogs/preferences-dialog.c:2604
 msgid "Fonts"
 msgstr "Šriftai"
 
@@ -320,7 +320,7 @@ msgstr "Gradientų savybių nustatymas"
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:153 ../app/actions/dialogs-actions.c:140
 #: ../app/core/gimp.c:829 ../app/dialogs/dialogs.c:152
-#: ../app/dialogs/preferences-dialog.c:2596
+#: ../app/dialogs/preferences-dialog.c:2600
 msgid "Gradients"
 msgstr "Gradientai"
 
@@ -352,18 +352,18 @@ msgstr "Paletės savybių nustatymas"
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:171 ../app/actions/dialogs-actions.c:145
 #: ../app/core/gimp.c:825 ../app/dialogs/dialogs.c:154
-#: ../app/dialogs/preferences-dialog.c:2592
+#: ../app/dialogs/preferences-dialog.c:2596
 msgid "Palettes"
 msgstr "Paletės"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:174 ../app/actions/dialogs-actions.c:135
 #: ../app/core/gimp.c:821 ../app/dialogs/dialogs.c:150
-#: ../app/dialogs/preferences-dialog.c:2588
+#: ../app/dialogs/preferences-dialog.c:2592
 msgid "Patterns"
 msgstr "Raštai"
 
-#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2604
+#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2608
 msgid "Plug-Ins"
 msgstr "Įskiepiai"
 
@@ -392,8 +392,8 @@ msgid "Text Editor"
 msgstr "Teksto redaktorius"
 
 #: ../app/actions/actions.c:195 ../app/actions/dialogs-actions.c:65
-#: ../app/dialogs/dialogs.c:129 ../app/dialogs/preferences-dialog.c:1752
-#: ../app/gui/gui.c:427
+#: ../app/dialogs/dialogs.c:129 ../app/dialogs/preferences-dialog.c:1753
+#: ../app/gui/gui.c:423
 msgid "Tool Options"
 msgstr "Įrankių savybės"
 
@@ -735,12 +735,12 @@ msgid "_Tool"
 msgstr "Įra_nkis"
 
 #: ../app/actions/context-actions.c:51
-#: ../app/dialogs/preferences-dialog.c:1812
+#: ../app/dialogs/preferences-dialog.c:1813
 msgid "_Brush"
 msgstr "_Teptukas"
 
 #: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:98
-#: ../app/dialogs/preferences-dialog.c:1815
+#: ../app/dialogs/preferences-dialog.c:1816
 msgid "_Pattern"
 msgstr "_Raštas"
 
@@ -750,7 +750,7 @@ msgstr "_Paletė"
 
 #: ../app/actions/context-actions.c:54
 #: ../app/dialogs/palette-import-dialog.c:217
-#: ../app/dialogs/preferences-dialog.c:1818
+#: ../app/dialogs/preferences-dialog.c:1819
 msgid "_Gradient"
 msgstr "_Gradientas"
 
@@ -2390,7 +2390,7 @@ msgstr "Keisti paveikslėlio dydį"
 
 #. Scaling
 #: ../app/actions/image-commands.c:632 ../app/actions/layers-commands.c:1051
-#: ../app/dialogs/preferences-dialog.c:1797
+#: ../app/dialogs/preferences-dialog.c:1798
 #: ../app/pdb/drawable_transform_cmds.c:670
 #: ../app/pdb/drawable_transform_cmds.c:745
 #: ../app/pdb/transform_tools_cmds.c:283 ../app/tools/gimpscaletool.c:109
@@ -4266,11 +4266,11 @@ msgid ""
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
-"Tokie įrankiai kaip neaiškus pažymėjimas ir užpildymas randa regionus "
-"pagal sėklų-užpildymo algoritmą. Sėklų užpildymas prasideda pradžioje "
-"pasirinktame taškelyje ir plečiasi į visas kryptis kol taškelio sodrumo "
-"skirtumas nuo originalaus neviršija nurodyto slenksčio. Ši reikšmė nurodo "
-"numatytąjį slenkstį."
+"Tokie įrankiai kaip neaiškus pažymėjimas ir užpildymas randa regionus pagal "
+"sėklų-užpildymo algoritmą. Sėklų užpildymas prasideda pradžioje pasirinktame "
+"taškelyje ir plečiasi į visas kryptis kol taškelio sodrumo skirtumas nuo "
+"originalaus neviršija nurodyto slenksčio. Ši reikšmė nurodo numatytąjį "
+"slenkstį."
 
 #: ../app/config/gimprc-blurbs.h:92
 msgid ""
@@ -4406,11 +4406,11 @@ msgid ""
 "Perversely, on some X servers enabling this option results in faster "
 "painting."
 msgstr ""
-"Kai įjungta, X serveris gauna užklausas dėl esamos pelės pozicijos kiekvienio "
-"pelės judesio metu, o ne pasikliauja pozicijos užuomina. Tai reiškia, kad "
-"piešimas su dideliais teptukais turėtų būti tikslesnis, tačiau gali būti "
-"lėtesnis. Paradoksalu, tačiau kai kuriuose X serveriuose įjungus šią "
-"parinktį piešimas būna greitesnis."
+"Kai įjungta, X serveris gauna užklausas dėl esamos pelės pozicijos "
+"kiekvienio pelės judesio metu, o ne pasikliauja pozicijos užuomina. Tai "
+"reiškia, kad piešimas su dideliais teptukais turėtų būti tikslesnis, tačiau "
+"gali būti lėtesnis. Paradoksalu, tačiau kai kuriuose X serveriuose įjungus "
+"šią parinktį piešimas būna greitesnis."
 
 #: ../app/config/gimprc-blurbs.h:245
 msgid ""
@@ -4811,7 +4811,7 @@ msgstr "Baltas"
 
 #  Transparency
 #. Transparency
-#: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2183
+#: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2184
 msgid "Transparency"
 msgstr "Skaidrus"
 
@@ -4904,11 +4904,11 @@ msgstr "Apskritimas"
 msgid "Diamond"
 msgstr "Deimantas"
 
-#: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2215
+#: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2216
 msgid "Horizontal"
 msgstr "Horizontaliai"
 
-#: ../app/core/core-enums.c:473 ../app/dialogs/preferences-dialog.c:2217
+#: ../app/core/core-enums.c:473 ../app/dialogs/preferences-dialog.c:2218
 msgid "Vertical"
 msgstr "Vertikaliai"
 
@@ -5395,7 +5395,7 @@ msgid "Documents"
 msgstr "Dokumentai"
 
 #. initialize the module list
-#: ../app/core/gimp.c:846 ../app/dialogs/preferences-dialog.c:2612
+#: ../app/core/gimp.c:846 ../app/dialogs/preferences-dialog.c:2616
 msgid "Modules"
 msgstr "Moduliai"
 
@@ -5742,14 +5742,15 @@ msgstr "Transformavimas"
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Read error in line %d."
 msgstr ""
-"Kritinė apdorojimo klaida gradiento rinkmenoje „%s“: skaitymo klaida eilutėje "
-"%d."
+"Kritinė apdorojimo klaida gradiento rinkmenoje „%s“: skaitymo klaida "
+"eilutėje %d."
 
 #: ../app/core/gimpgradient-load.c:81
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 msgstr ""
-"Kritinė skaitymo klaida gradiento rinkmenoje „%s“: ne GIMP gradiento rinkmena."
+"Kritinė skaitymo klaida gradiento rinkmenoje „%s“: ne GIMP gradiento "
+"rinkmena."
 
 #: ../app/core/gimpgradient-load.c:109
 #, c-format
@@ -6071,7 +6072,7 @@ msgstr "Kontūras jau yra apačioje."
 msgid "Lower Path to Bottom"
 msgstr "Nuleisti kontūrą iki apačios"
 
-#: ../app/core/gimpimagefile.c:551 ../app/dialogs/preferences-dialog.c:1642
+#: ../app/core/gimpimagefile.c:551 ../app/dialogs/preferences-dialog.c:1643
 msgid "Folder"
 msgstr "Aplankas"
 
@@ -6554,7 +6555,7 @@ msgstr "_Nusodrinti"
 msgid "Choose shade of gray based on:"
 msgstr "Pasirinkti pilkumo atspalvį remiantis:"
 
-#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:156
+#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:154
 #: ../app/gui/gui-message.c:146
 msgid "GIMP Message"
 msgstr "GIMP pranešimas"
@@ -6688,7 +6689,7 @@ msgid "Create a New Image"
 msgstr "Sukurti naują paveikslėlį"
 
 #: ../app/dialogs/image-new-dialog.c:144
-#: ../app/dialogs/preferences-dialog.c:1893
+#: ../app/dialogs/preferences-dialog.c:1894
 msgid "_Template:"
 msgstr "Ša_blonas:"
 
@@ -6771,7 +6772,7 @@ msgstr ""
 "paspauskite naują akseleratorių, o norėdami išvalyti, spauskite backspace."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:89
-#: ../app/dialogs/preferences-dialog.c:1565
+#: ../app/dialogs/preferences-dialog.c:1566
 msgid "_Save keyboard shortcuts on exit"
 msgstr "_Išeinant išsaugoti klavišų kombinacijas"
 
@@ -7007,23 +7008,23 @@ msgstr "Peržiūra"
 msgid "The selected source contains no colors."
 msgstr "Pasirinktame šaltinyje nėra spalvų."
 
-#: ../app/dialogs/preferences-dialog.c:261
+#: ../app/dialogs/preferences-dialog.c:262
 msgid "Reset All Preferences"
 msgstr "Atstatyti visus nustatymus"
 
-#: ../app/dialogs/preferences-dialog.c:279
+#: ../app/dialogs/preferences-dialog.c:280
 msgid "Do you really want to reset all preferences to default values?"
 msgstr "Ar tikrai norite atstatyti visus nustatymus į numatytasias reikšmes?"
 
-#: ../app/dialogs/preferences-dialog.c:349
+#: ../app/dialogs/preferences-dialog.c:350
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "Kad įsigaliotų sekantys pakeitimai, turėsite paleisti GIMP iš naujo:"
 
-#: ../app/dialogs/preferences-dialog.c:488
+#: ../app/dialogs/preferences-dialog.c:489
 msgid "Configure Input Devices"
 msgstr "Konfigūruoti įvedimo įrengininius"
 
-#: ../app/dialogs/preferences-dialog.c:565
+#: ../app/dialogs/preferences-dialog.c:566
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
@@ -7031,15 +7032,15 @@ msgstr ""
 "Jūsų klavišų kombinacijos bus atstatytos į numatytasias reikšmes, kai kitą "
 "kartą paleisite GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:576
+#: ../app/dialogs/preferences-dialog.c:577
 msgid "Remove all Keyboard Shortcuts"
 msgstr "Pašalinti visas klavišų kombinacijas"
 
-#: ../app/dialogs/preferences-dialog.c:598
+#: ../app/dialogs/preferences-dialog.c:599
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
 msgstr "Ar tikrai norite pašalinti visas klavišų kombinacijas iš visų meniu?"
 
-#: ../app/dialogs/preferences-dialog.c:639
+#: ../app/dialogs/preferences-dialog.c:640
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
@@ -7047,7 +7048,7 @@ msgstr ""
 "Jūsų langų nustatymai bus atstatyti į numatytasias reikšmes, kai kitą kartą "
 "paleisite GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:674
+#: ../app/dialogs/preferences-dialog.c:675
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
@@ -7055,7 +7056,7 @@ msgstr ""
 "Jūsų įvedimo įrenginių nustatymai bus atstatyti į numatytasias reikšmes, kai "
 "kitą kartą paleisite GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:709
+#: ../app/dialogs/preferences-dialog.c:710
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
@@ -7063,699 +7064,699 @@ msgstr ""
 "Jūsų įrankių nustatymai bus atstatyti į numatytasias reikšmes, kai kitą "
 "kartą paleisite GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:1201
+#: ../app/dialogs/preferences-dialog.c:1202
 msgid "Show _menubar"
 msgstr "Rodyti _meniu juostą"
 
-#: ../app/dialogs/preferences-dialog.c:1204
+#: ../app/dialogs/preferences-dialog.c:1205
 msgid "Show _rulers"
 msgstr "Rodyti _liniuotes"
 
-#: ../app/dialogs/preferences-dialog.c:1207
+#: ../app/dialogs/preferences-dialog.c:1208
 msgid "Show scroll_bars"
 msgstr "Rodyti slin_kties juostas"
 
-#: ../app/dialogs/preferences-dialog.c:1210
+#: ../app/dialogs/preferences-dialog.c:1211
 msgid "Show s_tatusbar"
 msgstr "Rodyti bū_senos juostą"
 
-#: ../app/dialogs/preferences-dialog.c:1218
+#: ../app/dialogs/preferences-dialog.c:1219
 msgid "Show s_election"
 msgstr "Rodyti p_ažymėjimą"
 
-#: ../app/dialogs/preferences-dialog.c:1221
+#: ../app/dialogs/preferences-dialog.c:1222
 msgid "Show _layer boundary"
 msgstr "Rodyti sl_uoksnių ribas"
 
-#: ../app/dialogs/preferences-dialog.c:1224
+#: ../app/dialogs/preferences-dialog.c:1225
 msgid "Show _guides"
 msgstr "Rodyti pa_galbines linijas"
 
-#: ../app/dialogs/preferences-dialog.c:1227
+#: ../app/dialogs/preferences-dialog.c:1228
 msgid "Show gri_d"
 msgstr "Rodyti _tinklelį"
 
-#: ../app/dialogs/preferences-dialog.c:1233
+#: ../app/dialogs/preferences-dialog.c:1234
 msgid "Canvas _padding mode:"
 msgstr "Piešimo erdvės užpildo režimas:"
 
-#: ../app/dialogs/preferences-dialog.c:1238
+#: ../app/dialogs/preferences-dialog.c:1239
 msgid "Custom p_adding color:"
 msgstr "Kita _užpildo spalva:"
 
-#: ../app/dialogs/preferences-dialog.c:1239
+#: ../app/dialogs/preferences-dialog.c:1240
 msgid "Select Custom Canvas Padding Color"
 msgstr "Pasirinkti kitą piešimo erdvės užpildo spalvą"
 
-#: ../app/dialogs/preferences-dialog.c:1327
+#: ../app/dialogs/preferences-dialog.c:1328
 msgid "Preferences"
 msgstr "Nustatymai"
 
-#: ../app/dialogs/preferences-dialog.c:1443
-#: ../app/dialogs/preferences-dialog.c:2620
+#: ../app/dialogs/preferences-dialog.c:1444
+#: ../app/dialogs/preferences-dialog.c:2624
 msgid "Environment"
 msgstr "Aplinka"
 
-#: ../app/dialogs/preferences-dialog.c:1457
+#: ../app/dialogs/preferences-dialog.c:1458
 msgid "Resource Consumption"
 msgstr "Resursų naudojimas"
 
-#: ../app/dialogs/preferences-dialog.c:1467
+#: ../app/dialogs/preferences-dialog.c:1468
 msgid "Minimal number of _undo levels:"
 msgstr "Minimalus atša_ukimų skaičius:"
 
-#: ../app/dialogs/preferences-dialog.c:1470
+#: ../app/dialogs/preferences-dialog.c:1471
 msgid "Maximum undo _memory:"
 msgstr "Maksimali atšaukimų at_mintis:"
 
-#: ../app/dialogs/preferences-dialog.c:1473
+#: ../app/dialogs/preferences-dialog.c:1474
 msgid "Tile cache _size:"
 msgstr "Tekstūrų podėlio _dydis:"
 
-#: ../app/dialogs/preferences-dialog.c:1476
+#: ../app/dialogs/preferences-dialog.c:1477
 msgid "Maximum _new image size:"
 msgstr "Didžiausias _naujo paveikslėlio dydis:"
 
-#: ../app/dialogs/preferences-dialog.c:1481
+#: ../app/dialogs/preferences-dialog.c:1482
 msgid "Number of _processors to use:"
 msgstr "Naudotinų _procesorių skaičius:"
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1486
+#: ../app/dialogs/preferences-dialog.c:1487
 msgid "Image Thumbnails"
 msgstr "Paveikslėlių miniatiūros"
 
-#: ../app/dialogs/preferences-dialog.c:1491
+#: ../app/dialogs/preferences-dialog.c:1492
 msgid "Size of _thumbnails:"
 msgstr "Minia_tiūrų dydis:"
 
-#: ../app/dialogs/preferences-dialog.c:1495
+#: ../app/dialogs/preferences-dialog.c:1496
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Didžiausias miniatiūrų _rinkmenų dydis:"
 
 #  File Saving
 #. File Saving
-#: ../app/dialogs/preferences-dialog.c:1499
+#: ../app/dialogs/preferences-dialog.c:1500
 msgid "Saving Images"
 msgstr "Saugomi paveikslėliai"
 
-#: ../app/dialogs/preferences-dialog.c:1502
+#: ../app/dialogs/preferences-dialog.c:1503
 msgid "Confirm closing of unsa_ved images"
 msgstr "Patvirtinti neišsau_gotų paveikslėlių uždarymą"
 
-#: ../app/dialogs/preferences-dialog.c:1512
+#: ../app/dialogs/preferences-dialog.c:1513
 msgid "Save document _history on exit"
 msgstr "Išeinant išsaugoti dokumentų _istoriją"
 
-#: ../app/dialogs/preferences-dialog.c:1521
+#: ../app/dialogs/preferences-dialog.c:1522
 msgid "User Interface"
 msgstr "Naudotojo sąsaja"
 
-#: ../app/dialogs/preferences-dialog.c:1524
+#: ../app/dialogs/preferences-dialog.c:1525
 msgid "Interface"
 msgstr "Sąsaja"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1531
+#: ../app/dialogs/preferences-dialog.c:1532
 msgid "Previews"
 msgstr "Peržiūros"
 
-#: ../app/dialogs/preferences-dialog.c:1534
+#: ../app/dialogs/preferences-dialog.c:1535
 msgid "_Enable layer & channel previews"
 msgstr "Į_jungti sluoksnių ir kanalų peržiūras"
 
-#: ../app/dialogs/preferences-dialog.c:1540
+#: ../app/dialogs/preferences-dialog.c:1541
 msgid "_Default layer & channel preview size:"
 msgstr "Numatytasis s_luoksnių ir kanalų peržiūros dydis:"
 
-#: ../app/dialogs/preferences-dialog.c:1543
+#: ../app/dialogs/preferences-dialog.c:1544
 msgid "Na_vigation preview size:"
 msgstr "_Navigatoriaus peržiūros dydis:"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1547
+#: ../app/dialogs/preferences-dialog.c:1548
 msgid "Keyboard Shortcuts"
 msgstr "Klavišų kombinacijos"
 
-#: ../app/dialogs/preferences-dialog.c:1551
+#: ../app/dialogs/preferences-dialog.c:1552
 msgid "Show menu _mnemonics (access keys)"
 msgstr "Rodyti meniu _mnemoniką (pasiekimo klavišus)"
 
-#: ../app/dialogs/preferences-dialog.c:1554
+#: ../app/dialogs/preferences-dialog.c:1555
 msgid "_Use dynamic keyboard shortcuts"
 msgstr "Na_udoti dinamines klavišų kombinacijas"
 
-#: ../app/dialogs/preferences-dialog.c:1558
+#: ../app/dialogs/preferences-dialog.c:1559
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Konfigūruoti _klavišų kombinacijas..."
 
-#: ../app/dialogs/preferences-dialog.c:1569
+#: ../app/dialogs/preferences-dialog.c:1570
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Išsaugoti klavišų kombinacijas _dabar"
 
-#: ../app/dialogs/preferences-dialog.c:1576
+#: ../app/dialogs/preferences-dialog.c:1577
 msgid "_Reset Saved Keyboard Shortcuts to Default Values"
 msgstr "_Atstatyti numatytasias klavišų kombinacijų reikšmes"
 
-#: ../app/dialogs/preferences-dialog.c:1586
+#: ../app/dialogs/preferences-dialog.c:1587
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "Pašalinti _visas klavišų kombinacijas"
 
-#: ../app/dialogs/preferences-dialog.c:1598
-#: ../app/dialogs/preferences-dialog.c:1637
+#: ../app/dialogs/preferences-dialog.c:1599
+#: ../app/dialogs/preferences-dialog.c:1638
 msgid "Theme"
 msgstr "Tema"
 
-#: ../app/dialogs/preferences-dialog.c:1607
+#: ../app/dialogs/preferences-dialog.c:1608
 msgid "Select Theme"
 msgstr "Pasirinkite temą"
 
-#: ../app/dialogs/preferences-dialog.c:1689
+#: ../app/dialogs/preferences-dialog.c:1690
 msgid "Reload C_urrent Theme"
 msgstr "Perkra_uti esamą temą"
 
-#: ../app/dialogs/preferences-dialog.c:1701
+#: ../app/dialogs/preferences-dialog.c:1702
 msgid "Help System"
 msgstr "Žinyno sistema"
 
 #. General
-#: ../app/dialogs/preferences-dialog.c:1713
-#: ../app/dialogs/preferences-dialog.c:1764
-#: ../app/dialogs/preferences-dialog.c:1951
+#: ../app/dialogs/preferences-dialog.c:1714
+#: ../app/dialogs/preferences-dialog.c:1765
+#: ../app/dialogs/preferences-dialog.c:1952
 #: ../app/widgets/gimpcontrollereditor.c:183
 msgid "General"
 msgstr "Bendras"
 
-#: ../app/dialogs/preferences-dialog.c:1716
+#: ../app/dialogs/preferences-dialog.c:1717
 msgid "Show _tooltips"
 msgstr "Rodyti p_aaiškinimus"
 
-#: ../app/dialogs/preferences-dialog.c:1719
+#: ../app/dialogs/preferences-dialog.c:1720
 msgid "Show help _buttons"
 msgstr "Rodyti žinyno _mygtukus"
 
-#: ../app/dialogs/preferences-dialog.c:1722
+#: ../app/dialogs/preferences-dialog.c:1723
 msgid "Show tips on _startup"
 msgstr "Paleidimo metu rodyti patarimu_s"
 
 #. Help Browser
-#: ../app/dialogs/preferences-dialog.c:1726
+#: ../app/dialogs/preferences-dialog.c:1727
 msgid "Help Browser"
 msgstr "Žinyno naršyklė"
 
-#: ../app/dialogs/preferences-dialog.c:1730
+#: ../app/dialogs/preferences-dialog.c:1731
 msgid "H_elp browser to use:"
 msgstr "Naudotina žin_yno naršyklė:"
 
-#: ../app/dialogs/preferences-dialog.c:1735
+#: ../app/dialogs/preferences-dialog.c:1736
 msgid "Web Browser"
 msgstr "Interneto naršyklė"
 
-#: ../app/dialogs/preferences-dialog.c:1739
+#: ../app/dialogs/preferences-dialog.c:1740
 msgid "_Web browser to use:"
 msgstr "_Naudotina interneto naršyklė:"
 
-#: ../app/dialogs/preferences-dialog.c:1767
+#: ../app/dialogs/preferences-dialog.c:1768
 msgid "_Save tool options on exit"
 msgstr "_Išeinant išsaugoti įrankių nustatymus"
 
-#: ../app/dialogs/preferences-dialog.c:1771
+#: ../app/dialogs/preferences-dialog.c:1772
 msgid "Save Tool Options _Now"
 msgstr "Išsaugoti įrankių nustatymus _dabar"
 
-#: ../app/dialogs/preferences-dialog.c:1778
+#: ../app/dialogs/preferences-dialog.c:1779
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "_Atstatyti numatytasias įrankių nustatymų reikšmes"
 
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1788
+#: ../app/dialogs/preferences-dialog.c:1789
 msgid "Guide & Grid Snapping"
 msgstr "Gairių bei tinklelio kibumas"
 
-#: ../app/dialogs/preferences-dialog.c:1793
+#: ../app/dialogs/preferences-dialog.c:1794
 msgid "_Snap distance:"
 msgstr "_Kibumo nuotolis:"
 
-#: ../app/dialogs/preferences-dialog.c:1801
+#: ../app/dialogs/preferences-dialog.c:1802
 msgid "Default _interpolation:"
 msgstr "Numatytoji _interpoliacija:"
 
 #  Global Brush, Pattern, ...
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1808
+#: ../app/dialogs/preferences-dialog.c:1809
 msgid "Paint Options Shared Between Tools"
 msgstr "Bendri įrankių piešimo nustatymai"
 
-#: ../app/dialogs/preferences-dialog.c:1821
+#: ../app/dialogs/preferences-dialog.c:1822
 msgid "Move Tool"
 msgstr "Perkėlimo įrankis"
 
-#: ../app/dialogs/preferences-dialog.c:1825
+#: ../app/dialogs/preferences-dialog.c:1826
 msgid "Set layer or path as active"
 msgstr "Nustatyti sluoksnį ar kontūrą aktyviu"
 
-#: ../app/dialogs/preferences-dialog.c:1838
+#: ../app/dialogs/preferences-dialog.c:1839
 msgid "Toolbox"
 msgstr "Įrankių dėžė"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1850
-#: ../app/dialogs/preferences-dialog.c:2024
+#: ../app/dialogs/preferences-dialog.c:1851
+#: ../app/dialogs/preferences-dialog.c:2025
 #: ../app/widgets/gimpgrideditor.c:196
 msgid "Appearance"
 msgstr "Išvaizda"
 
-#: ../app/dialogs/preferences-dialog.c:1854
+#: ../app/dialogs/preferences-dialog.c:1855
 msgid "Show _foreground & background color"
 msgstr "Rodyti _priekinio plano ir fono spalvas"
 
-#: ../app/dialogs/preferences-dialog.c:1858
+#: ../app/dialogs/preferences-dialog.c:1859
 msgid "Show active _brush, pattern & gradient"
 msgstr "Rodyti aktyvų _teptuką, raštą ir gradientą"
 
-#: ../app/dialogs/preferences-dialog.c:1862
+#: ../app/dialogs/preferences-dialog.c:1863
 msgid "Show active _image"
 msgstr "Rodyti aktyvų _paveikslėlį"
 
-#: ../app/dialogs/preferences-dialog.c:1875
+#: ../app/dialogs/preferences-dialog.c:1876
 msgid "Default New Image"
 msgstr "Numatytasis naujas paveikslėlis"
 
-#: ../app/dialogs/preferences-dialog.c:1878
+#: ../app/dialogs/preferences-dialog.c:1879
 msgid "Default Image"
 msgstr "Numatytasis paveikslėlis"
 
-#: ../app/dialogs/preferences-dialog.c:1915
+#: ../app/dialogs/preferences-dialog.c:1916
 msgid "Default Image Grid"
 msgstr "Numatytasis paveikslėlio tinklelis"
 
-#: ../app/dialogs/preferences-dialog.c:1918
+#: ../app/dialogs/preferences-dialog.c:1919
 msgid "Default Grid"
 msgstr "Numatytasis tinklelis"
 
-#: ../app/dialogs/preferences-dialog.c:1939
+#: ../app/dialogs/preferences-dialog.c:1940
 msgid "Image Windows"
 msgstr "Paveikslėlių langai"
 
-#: ../app/dialogs/preferences-dialog.c:1954
+#: ../app/dialogs/preferences-dialog.c:1955
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Numatytasis „Taškas į tašką“ naudojimas"
 
-#: ../app/dialogs/preferences-dialog.c:1960
+#: ../app/dialogs/preferences-dialog.c:1961
 msgid "Marching _ants speed:"
 msgstr "Judančių _brūkšnelių greitis:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:1964
+#: ../app/dialogs/preferences-dialog.c:1965
 msgid "Zoom & Resize Behavior"
 msgstr "Mastelio ir dydžio keitimo elgsena"
 
-#: ../app/dialogs/preferences-dialog.c:1968
+#: ../app/dialogs/preferences-dialog.c:1969
 msgid "Resize window on _zoom"
 msgstr "_Pakeitus mastelį keisti ir lango dydį"
 
-#: ../app/dialogs/preferences-dialog.c:1971
+#: ../app/dialogs/preferences-dialog.c:1972
 msgid "Resize window on image _size change"
 msgstr "Pakeitus paveikslėlio _dydį keisti ir lango dydį"
 
-#: ../app/dialogs/preferences-dialog.c:1977
+#: ../app/dialogs/preferences-dialog.c:1978
 msgid "Fit to window"
 msgstr "Sutalpinti į langą"
 
-#: ../app/dialogs/preferences-dialog.c:1979
+#: ../app/dialogs/preferences-dialog.c:1980
 msgid "Initial zoom _ratio:"
 msgstr "Pradinis _mastelis:"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:1983
+#: ../app/dialogs/preferences-dialog.c:1984
 msgid "Space Bar"
 msgstr "Tarpo klavišas"
 
-#: ../app/dialogs/preferences-dialog.c:1989
+#: ../app/dialogs/preferences-dialog.c:1990
 msgid "_While space bar is pressed:"
 msgstr "_Paspaudus tarpo klavišą:"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:1993
+#: ../app/dialogs/preferences-dialog.c:1994
 msgid "Mouse Pointers"
 msgstr "Pelės žymekliai"
 
-#: ../app/dialogs/preferences-dialog.c:1997
+#: ../app/dialogs/preferences-dialog.c:1998
 msgid "Show _brush outline"
 msgstr "Rodyti _teptuko kontūrus"
 
-#: ../app/dialogs/preferences-dialog.c:2000
+#: ../app/dialogs/preferences-dialog.c:2001
 msgid "Show pointer for paint _tools"
 msgstr "Rodyti žymeklį piešimo įran_kiams"
 
-#: ../app/dialogs/preferences-dialog.c:2006
+#: ../app/dialogs/preferences-dialog.c:2007
 msgid "Pointer _mode:"
 msgstr "Žymeklio _režimas:"
 
-#: ../app/dialogs/preferences-dialog.c:2009
+#: ../app/dialogs/preferences-dialog.c:2010
 msgid "Pointer re_ndering:"
 msgstr "Žymeklių vai_zdavimas:"
 
-#: ../app/dialogs/preferences-dialog.c:2021
+#: ../app/dialogs/preferences-dialog.c:2022
 msgid "Image Window Appearance"
 msgstr "Paveikslėlio lango išvaizda"
 
-#: ../app/dialogs/preferences-dialog.c:2032
+#: ../app/dialogs/preferences-dialog.c:2033
 msgid "Default Appearance in Normal Mode"
 msgstr "Numatytoji išvaizda normaliame režime"
 
-#: ../app/dialogs/preferences-dialog.c:2037
+#: ../app/dialogs/preferences-dialog.c:2038
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Numatytoji išvaizda viso ekrano režime"
 
-#: ../app/dialogs/preferences-dialog.c:2046
+#: ../app/dialogs/preferences-dialog.c:2047
 msgid "Image Title & Statusbar Format"
 msgstr "Paveikslėlio pavadinimo ir būsenos juostos formatas"
 
-#: ../app/dialogs/preferences-dialog.c:2049
+#: ../app/dialogs/preferences-dialog.c:2050
 msgid "Title & Status"
 msgstr "Pavadinimas ir būsena"
 
-#: ../app/dialogs/preferences-dialog.c:2067
+#: ../app/dialogs/preferences-dialog.c:2068
 msgid "Current format"
 msgstr "Esamas formatas"
 
-#: ../app/dialogs/preferences-dialog.c:2068
+#: ../app/dialogs/preferences-dialog.c:2069
 msgid "Default format"
 msgstr "Numatytasis formatas"
 
-#: ../app/dialogs/preferences-dialog.c:2069
+#: ../app/dialogs/preferences-dialog.c:2070
 msgid "Show zoom percentage"
 msgstr "Rodyti mastelį procentais"
 
-#: ../app/dialogs/preferences-dialog.c:2070
+#: ../app/dialogs/preferences-dialog.c:2071
 msgid "Show zoom ratio"
 msgstr "Rodyti mastelį"
 
-#: ../app/dialogs/preferences-dialog.c:2071
+#: ../app/dialogs/preferences-dialog.c:2072
 msgid "Show image size"
 msgstr "Rodyti paveikslėlio dydį"
 
-#: ../app/dialogs/preferences-dialog.c:2084
+#: ../app/dialogs/preferences-dialog.c:2085
 msgid "Image Title Format"
 msgstr "Paveikslėlio pavadinimo formatas"
 
-#: ../app/dialogs/preferences-dialog.c:2086
+#: ../app/dialogs/preferences-dialog.c:2087
 msgid "Image Statusbar Format"
 msgstr "Paveikslėlio būsenos juostos formatas"
 
-#: ../app/dialogs/preferences-dialog.c:2171
+#: ../app/dialogs/preferences-dialog.c:2172
 msgid "Display"
 msgstr "Vaizdavimas"
 
-#: ../app/dialogs/preferences-dialog.c:2187
+#: ../app/dialogs/preferences-dialog.c:2188
 msgid "_Check style:"
 msgstr "_Kvadratėlių stilius:"
 
-#: ../app/dialogs/preferences-dialog.c:2190
+#: ../app/dialogs/preferences-dialog.c:2191
 msgid "Check _size:"
 msgstr "Kvadratėlių _dydis:"
 
-#: ../app/dialogs/preferences-dialog.c:2193
+#: ../app/dialogs/preferences-dialog.c:2194
 msgid "Get Monitor Resolution"
 msgstr "Gauti monitoriaus raišką"
 
-#: ../app/dialogs/preferences-dialog.c:2197
+#: ../app/dialogs/preferences-dialog.c:2198
 #: ../app/widgets/gimpcursorview.c:123 ../app/widgets/gimpgrideditor.c:261
 #: ../app/widgets/gimpgrideditor.c:293
 msgid "Pixels"
 msgstr "Taškų"
 
-#: ../app/dialogs/preferences-dialog.c:2219
+#: ../app/dialogs/preferences-dialog.c:2220
 #: ../app/widgets/gimpimagepropview.c:460
 msgid "ppi"
 msgstr "taškų colyje"
 
-#: ../app/dialogs/preferences-dialog.c:2235
+#: ../app/dialogs/preferences-dialog.c:2236
 #, c-format
 msgid "From _windowing system (currently %d × %d ppi)"
 msgstr "Iš _langų sistemos (šiuo metu %d × %d taškų colyje)"
 
-#: ../app/dialogs/preferences-dialog.c:2256
+#: ../app/dialogs/preferences-dialog.c:2257
 msgid "_Manually"
 msgstr "Ra_nkiniu būdu"
 
-#: ../app/dialogs/preferences-dialog.c:2271
+#: ../app/dialogs/preferences-dialog.c:2272
 msgid "C_alibrate..."
 msgstr "K_alibruoti..."
 
-#: ../app/dialogs/preferences-dialog.c:2293
+#: ../app/dialogs/preferences-dialog.c:2294
 msgid "Color Management"
 msgstr "Spalvų valdymas"
 
-#: ../app/dialogs/preferences-dialog.c:2313
+#: ../app/dialogs/preferences-dialog.c:2314
 msgid "_RGB profile:"
 msgstr "_RGB profilis:"
 
-#: ../app/dialogs/preferences-dialog.c:2314
+#: ../app/dialogs/preferences-dialog.c:2315
 msgid "Select RGB Color Profile"
 msgstr "Pasirinkite RGB spalvų profilį"
 
-#: ../app/dialogs/preferences-dialog.c:2315
+#: ../app/dialogs/preferences-dialog.c:2316
 msgid "_CMYK profile:"
 msgstr "_CMYK profilis:"
 
-#: ../app/dialogs/preferences-dialog.c:2316
+#: ../app/dialogs/preferences-dialog.c:2317
 msgid "Select CMYK Color Profile"
 msgstr "Pasirinkite CMYK spalvų profilį"
 
-#: ../app/dialogs/preferences-dialog.c:2317
+#: ../app/dialogs/preferences-dialog.c:2318
 msgid "_Monitor profile:"
 msgstr "_Monitoriaus profilis:"
 
-#: ../app/dialogs/preferences-dialog.c:2318
+#: ../app/dialogs/preferences-dialog.c:2319
 msgid "Select Monitor Color Profile"
 msgstr "Pasirinkite monitoriaus spalvų profilį"
 
-#: ../app/dialogs/preferences-dialog.c:2319
+#: ../app/dialogs/preferences-dialog.c:2320
 msgid "_Print simulation profile:"
 msgstr "_Spausdinimo simuliacijos profilis:"
 
-#: ../app/dialogs/preferences-dialog.c:2320
+#: ../app/dialogs/preferences-dialog.c:2321
 msgid "Select Printer Color Profile"
 msgstr "Pasirinkite spausdinimo spalvų profilį"
 
-#: ../app/dialogs/preferences-dialog.c:2329
+#: ../app/dialogs/preferences-dialog.c:2330
 msgid "_Mode of operation:"
 msgstr "_Operacijos režimas:"
 
-#: ../app/dialogs/preferences-dialog.c:2352
+#: ../app/dialogs/preferences-dialog.c:2356
 msgid "_Try to obtain the monitor profile from the X server"
 msgstr "_Pabandyti gauti monitoriaus profilį iš X serverio"
 
-#: ../app/dialogs/preferences-dialog.c:2363
+#: ../app/dialogs/preferences-dialog.c:2367
 msgid "_Display rendering intent:"
 msgstr "_Rodyti atvaizdavimo ketinimus:"
 
-#: ../app/dialogs/preferences-dialog.c:2371
+#: ../app/dialogs/preferences-dialog.c:2375
 msgid "_Softproof rendering intent:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2381
+#: ../app/dialogs/preferences-dialog.c:2385
 msgid "File Open behaviour:"
 msgstr "Rinkmenų atvėrimo dialogo elgsena:"
 
-#: ../app/dialogs/preferences-dialog.c:2391
+#: ../app/dialogs/preferences-dialog.c:2395
 msgid "Input Devices"
 msgstr "Įvesties įrenginiai"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2401
+#: ../app/dialogs/preferences-dialog.c:2405
 msgid "Extended Input Devices"
 msgstr "Papildomi įvesties įrenginiai"
 
-#: ../app/dialogs/preferences-dialog.c:2405
+#: ../app/dialogs/preferences-dialog.c:2409
 msgid "Configure E_xtended Input Devices..."
 msgstr "Konfigūruoti iš_plėstus įvedimo įrengininius..."
 
-#: ../app/dialogs/preferences-dialog.c:2412
+#: ../app/dialogs/preferences-dialog.c:2416
 msgid "_Save input device settings on exit"
 msgstr "Iš_einant išsaugoti įvesties įrenginių nustatymus"
 
-#: ../app/dialogs/preferences-dialog.c:2416
+#: ../app/dialogs/preferences-dialog.c:2420
 msgid "Save Input Device Settings _Now"
 msgstr "Išsaugoti įvesties įrenginių nustatymus _dabar"
 
-#: ../app/dialogs/preferences-dialog.c:2423
+#: ../app/dialogs/preferences-dialog.c:2427
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Atstatyti numatytasias įvesties įrenginių nustatymų reikšmes"
 
-#: ../app/dialogs/preferences-dialog.c:2438
+#: ../app/dialogs/preferences-dialog.c:2442
 msgid "Additional Input Controllers"
 msgstr "Papildomi įvesties kontroleriai"
 
-#: ../app/dialogs/preferences-dialog.c:2441
+#: ../app/dialogs/preferences-dialog.c:2445
 msgid "Input Controllers"
 msgstr "Įvesties kontroleriai"
 
-#: ../app/dialogs/preferences-dialog.c:2457
+#: ../app/dialogs/preferences-dialog.c:2461
 msgid "Window Management"
 msgstr "Langų valdymas"
 
-#: ../app/dialogs/preferences-dialog.c:2466
+#: ../app/dialogs/preferences-dialog.c:2470
 msgid "Window Manager Hints"
 msgstr "Langų valdyklės užuominos"
 
-#: ../app/dialogs/preferences-dialog.c:2472
+#: ../app/dialogs/preferences-dialog.c:2476
 msgid "Hint for the _toolbox:"
 msgstr "Užuomina įrankių _dėžei:"
 
-#: ../app/dialogs/preferences-dialog.c:2476
+#: ../app/dialogs/preferences-dialog.c:2480
 msgid "Hint for other _docks:"
 msgstr "Užuomina kitiems _dokams:"
 
-#: ../app/dialogs/preferences-dialog.c:2481
+#: ../app/dialogs/preferences-dialog.c:2485
 msgid "Toolbox and other docks are transient to the active image window"
 msgstr ""
 "Įrankių dėžė ir kiti dokai yra nerezidentiniai aktyvaus paveikslėlio langui"
 
-#: ../app/dialogs/preferences-dialog.c:2486
+#: ../app/dialogs/preferences-dialog.c:2490
 msgid "Focus"
 msgstr "Fokusas"
 
-#: ../app/dialogs/preferences-dialog.c:2490
+#: ../app/dialogs/preferences-dialog.c:2494
 msgid "Activate the _focused image"
 msgstr "Aktyvuoti _fokusuotą paveikslėlį"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2494
+#: ../app/dialogs/preferences-dialog.c:2498
 msgid "Window Positions"
 msgstr "Langų pozicijos"
 
-#: ../app/dialogs/preferences-dialog.c:2497
+#: ../app/dialogs/preferences-dialog.c:2501
 msgid "_Save window positions on exit"
 msgstr "Išeinant iš_saugoti langų pozicijas"
 
-#: ../app/dialogs/preferences-dialog.c:2501
+#: ../app/dialogs/preferences-dialog.c:2505
 msgid "Save Window Positions _Now"
 msgstr "Išsaugoti langų pozicijas _dabar"
 
-#: ../app/dialogs/preferences-dialog.c:2508
+#: ../app/dialogs/preferences-dialog.c:2512
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Atstatyti numatytasias langų pozicijų reikšmes"
 
-#: ../app/dialogs/preferences-dialog.c:2523
+#: ../app/dialogs/preferences-dialog.c:2527
 msgid "Folders"
 msgstr "Aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2543
+#: ../app/dialogs/preferences-dialog.c:2547
 msgid "Temporary folder:"
 msgstr "Laikinas aplankas:"
 
-#: ../app/dialogs/preferences-dialog.c:2544
+#: ../app/dialogs/preferences-dialog.c:2548
 msgid "Select Folder for Temporary Files"
 msgstr "Pasirinkite laikinųjų rinkmenų aplanką"
 
-#: ../app/dialogs/preferences-dialog.c:2548
+#: ../app/dialogs/preferences-dialog.c:2552
 msgid "Swap folder:"
 msgstr "Mainų aplankas:"
 
-#: ../app/dialogs/preferences-dialog.c:2549
+#: ../app/dialogs/preferences-dialog.c:2553
 msgid "Select Swap Folder"
 msgstr "Nurodykite mainų aplanką"
 
-#: ../app/dialogs/preferences-dialog.c:2584
+#: ../app/dialogs/preferences-dialog.c:2588
 msgid "Brush Folders"
 msgstr "Teptukų aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2586
+#: ../app/dialogs/preferences-dialog.c:2590
 msgid "Select Brush Folders"
 msgstr "Nurodykite teptukų aplanką"
 
-#: ../app/dialogs/preferences-dialog.c:2588
+#: ../app/dialogs/preferences-dialog.c:2592
 msgid "Pattern Folders"
 msgstr "Raštų aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2590
+#: ../app/dialogs/preferences-dialog.c:2594
 msgid "Select Pattern Folders"
 msgstr "Nurodykite raštų aplanką"
 
-#: ../app/dialogs/preferences-dialog.c:2592
+#: ../app/dialogs/preferences-dialog.c:2596
 msgid "Palette Folders"
 msgstr "Palečių aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2594
+#: ../app/dialogs/preferences-dialog.c:2598
 msgid "Select Palette Folders"
 msgstr "Nurodykite palečių aplankus"
 
-#: ../app/dialogs/preferences-dialog.c:2596
+#: ../app/dialogs/preferences-dialog.c:2600
 msgid "Gradient Folders"
 msgstr "Gradientų aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2598
+#: ../app/dialogs/preferences-dialog.c:2602
 msgid "Select Gradient Folders"
 msgstr "Nurodykite gradientų aplankus"
 
-#: ../app/dialogs/preferences-dialog.c:2600
+#: ../app/dialogs/preferences-dialog.c:2604
 msgid "Font Folders"
 msgstr "Šriftų aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2602
+#: ../app/dialogs/preferences-dialog.c:2606
 msgid "Select Font Folders"
 msgstr "Nurodykite šriftų aplankus"
 
-#: ../app/dialogs/preferences-dialog.c:2604
+#: ../app/dialogs/preferences-dialog.c:2608
 msgid "Plug-In Folders"
 msgstr "Įskiepių aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2606
+#: ../app/dialogs/preferences-dialog.c:2610
 msgid "Select Plug-In Folders"
 msgstr "Nurodykite įskiepių aplankus"
 
-#: ../app/dialogs/preferences-dialog.c:2608
+#: ../app/dialogs/preferences-dialog.c:2612
 msgid "Scripts"
 msgstr "Skriptai"
 
-#: ../app/dialogs/preferences-dialog.c:2608
+#: ../app/dialogs/preferences-dialog.c:2612
 msgid "Script-Fu Folders"
 msgstr "Script-Fu aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2610
+#: ../app/dialogs/preferences-dialog.c:2614
 msgid "Select Script-Fu Folders"
 msgstr "Pasirinkite Script-Fu aplankus"
 
-#: ../app/dialogs/preferences-dialog.c:2612
+#: ../app/dialogs/preferences-dialog.c:2616
 msgid "Module Folders"
 msgstr "Modulių aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2614
+#: ../app/dialogs/preferences-dialog.c:2618
 msgid "Select Module Folders"
 msgstr "Nurodykite modulių katalogus"
 
-#: ../app/dialogs/preferences-dialog.c:2616
+#: ../app/dialogs/preferences-dialog.c:2620
 msgid "Interpreters"
 msgstr "Interpretatoriai"
 
-#: ../app/dialogs/preferences-dialog.c:2616
+#: ../app/dialogs/preferences-dialog.c:2620
 msgid "Interpreter Folders"
 msgstr "Interpretatorių aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2618
+#: ../app/dialogs/preferences-dialog.c:2622
 msgid "Select Interpreter Folders"
 msgstr "Nurodykite interpretatorių aplankus"
 
-#: ../app/dialogs/preferences-dialog.c:2620
+#: ../app/dialogs/preferences-dialog.c:2624
 msgid "Environment Folders"
 msgstr "Aplinkos aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2622
+#: ../app/dialogs/preferences-dialog.c:2626
 msgid "Select Environment Folders"
 msgstr "Nurodykite aplinkos aplankus"
 
-#: ../app/dialogs/preferences-dialog.c:2624
+#: ../app/dialogs/preferences-dialog.c:2628
 msgid "Themes"
 msgstr "Temos"
 
-#: ../app/dialogs/preferences-dialog.c:2624
+#: ../app/dialogs/preferences-dialog.c:2628
 msgid "Theme Folders"
 msgstr "Temų aplankai"
 
-#: ../app/dialogs/preferences-dialog.c:2626
+#: ../app/dialogs/preferences-dialog.c:2630
 msgid "Select Theme Folders"
 msgstr "Nurodykite temų aplanką"
 
@@ -8148,8 +8149,8 @@ msgstr "(modifikuota)"
 msgid "(clean)"
 msgstr "(švarus)"
 
-#: ../app/display/gimpdisplayshell-title.c:337
-#: ../app/display/gimpdisplayshell-title.c:350
+#: ../app/display/gimpdisplayshell-title.c:330
+#: ../app/display/gimpdisplayshell-title.c:342
 #: ../app/widgets/gimpactiongroup.c:782
 msgid "(none)"
 msgstr "(nieko)"
@@ -8543,14 +8544,16 @@ msgstr "Paleidžiami išplėtimai"
 msgid "Starting extension: '%s'\n"
 msgstr "Paleidžiamas išplėtimas: „%s“\n"
 
-#: ../app/plug-in/plug-in-icc-profile.c:95
-#: ../app/plug-in/plug-in-icc-profile.c:186
+#: ../app/plug-in/plug-in-icc-profile.c:103
+#: ../app/plug-in/plug-in-icc-profile.c:169
+#: ../app/plug-in/plug-in-icc-profile.c:224
 #, c-format
 msgid "Error running '%s'"
 msgstr "Klaida vykdant „%s“"
 
-#: ../app/plug-in/plug-in-icc-profile.c:118
-#: ../app/plug-in/plug-in-icc-profile.c:196
+#: ../app/plug-in/plug-in-icc-profile.c:126
+#: ../app/plug-in/plug-in-icc-profile.c:179
+#: ../app/plug-in/plug-in-icc-profile.c:234
 #, c-format
 msgid "Plug-In missing (%s)"
 msgstr "Nėra įskiepio (%s)"
