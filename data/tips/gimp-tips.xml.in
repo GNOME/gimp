@@ -65,7 +65,7 @@
   <tip level="beginner">
     <_thetip>
       Most plug-ins work on the current layer of the current image.  In
-      some cases, you will have to merge all layers (Image-&gt;Flatten Image)
+      some cases, you will have to merge all layers (Image→Flatten Image)
       if you want the plug-in to work on the whole image.
     </_thetip>
   </tip>
@@ -73,16 +73,16 @@
     <_thetip>
       If a layer's name in the Layers dialog is displayed in <b>bold</b>,
       this layer doesn't have an alpha-channel. You can add an alpha-channel
-      using Layer-&gt;Transparency-&gt;Add Alpha Channel.
+      using Layer→Transparency→Add Alpha Channel.
     </_thetip>
   </tip>
   <tip level="beginner">
     <_thetip>
       Not all effects can be applied to all kinds of images.  This is
       indicated by a grayed-out menu-entry.  You may need to change
-      the image mode to RGB (Image-&gt;Mode-&gt;RGB), add an alpha-channel
-      (Layer-&gt;Transparency-&gt;Add Alpha Channel) or flatten it
-      (Image-&gt;Flatten Image).
+      the image mode to RGB (Image→Mode→RGB), add an alpha-channel
+      (Layer→Transparency→Add Alpha Channel) or flatten it
+      (Image→Flatten Image).
     </_thetip>
   </tip>
 
@@ -150,14 +150,14 @@
   </tip>
   <tip level="intermediate">
     <_thetip>
-      You can draw simple squares or circles using Edit-&gt;Stroke Selection.
+      You can draw simple squares or circles using Edit→Stroke Selection.
       It strokes the edge of your current selection. More complex shapes
-      can be drawn using the Path tool or with Filters-&gt;Render-&gt;Gfig.
+      can be drawn using the Path tool or with Filters→Render→Gfig.
     </_thetip>
   </tip>
   <tip level="intermediate">
     <_thetip>
-      If you stroke a path (Edit-&gt;Stroke Path), the paint tools can
+      If you stroke a path (Edit→Stroke Path), the paint tools can
       be used with their current settings.  You can use the Paintbrush in
       gradient mode or even the Eraser or the Smudge tool.
     </_thetip>
@@ -179,7 +179,7 @@
   </tip>
   <tip level="intermediate">
     <_thetip>
-      You can save a selection to a channel (Select-&gt;Save to Channel) and
+      You can save a selection to a channel (Select→Save to Channel) and
       then modify this channel with any paint tools.  Using the buttons in
       the Channels dialog, you can toggle the visibility of this new channel
       or convert it to a selection.
@@ -255,9 +255,9 @@
     <_thetip>
       If some of your scanned photos do not look colorful enough, you
       can easily improve their tonal range with the &quot;Auto&quot;
-      button in the Levels tool (Colors-&gt;Levels).  If there are any
+      button in the Levels tool (Colors→Levels).  If there are any
       color casts, you can correct them with the Curves tool
-      (Colors-&gt;Curves).
+      (Colors→Curves).
     </_thetip>
   </tip>
 
