@@ -34,7 +34,7 @@
 
 /* The history of this implementation is lonog and varied.  It was
  * orignally done by Spencer and Peter, and worked fine in the 0.54
- * (motif only) release of the gimp.  Later revisions (0.99.something
+ * (motif only) release of GIMP.  Later revisions (0.99.something
  * until about 1.1.4) completely changed the algorithm used, until it
  * bore little resemblance to the one described in the paper above.
  * The 0.54 version of the algorithm was then forwards ported to 1.1.4

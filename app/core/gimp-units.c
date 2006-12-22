@@ -196,8 +196,8 @@ gimp_unitrc_save (Gimp *gimp)
                                  "You can edit this list with the unit "
                                  "editor. You are not supposed to edit it "
                                  "manually, but of course you can do.\n"
-                                 "This file will be entirely rewritten every "
-                                 "time you quit the gimp.",
+                                 "This file will be entirely rewritten each "
+                                 "time you exit.",
                                  NULL);
 
   g_free (filename);
