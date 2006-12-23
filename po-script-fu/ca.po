@@ -11,69 +11,56 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-19 00:21+0200\n"
-"PO-Revision-Date: 2006-10-12 12:14+0200\n"
+"POT-Creation-Date: 2006-12-23 10:57+0100\n"
+"PO-Revision-Date: 2006-12-21 22:09+0100\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: KBabel 1.10.2\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:141
+#: ../plug-ins/script-fu/script-fu-console.c:143
+#: ../plug-ins/script-fu/script-fu-console.c:210
 msgid "Script-Fu Console"
 msgstr "Consola de les funcions"
 
-#: ../plug-ins/script-fu/script-fu-console.c:208
-msgid "Welcome to TinyScheme\n"
-msgstr ""
+#: ../plug-ins/script-fu/script-fu-console.c:206
+msgid "Welcome to TinyScheme"
+msgstr "Benvinguts al TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:209
-msgid ""
-"Copyright (c) Dimitrios Souflis\n"
-"\n"
-msgstr ""
-
-#: ../plug-ins/script-fu/script-fu-console.c:210
-#, fuzzy
-msgid "Script-Fu Console - "
-msgstr "Consola de les funcions"
-
-#: ../plug-ins/script-fu/script-fu-console.c:211
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu-console.c:212
 msgid "Interactive Scheme Development"
-msgstr "Consola interactiva per al desenvolupament de funcions"
+msgstr "Consola interactiva del Scheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:243
+#: ../plug-ins/script-fu/script-fu-console.c:248
 msgid "_Browse..."
 msgstr "_Cerca..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:305
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu-console.c:310
 msgid "Save Script-Fu Console Output"
-msgstr "Consola de les funcions"
+msgstr "Desa la sortida de la consola de funcions"
 
-#: ../plug-ins/script-fu/script-fu-console.c:349
+#: ../plug-ins/script-fu/script-fu-console.c:354
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr ""
+msgstr "No s'ha pogut obrir '%s' per escriure: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:378
+#: ../plug-ins/script-fu/script-fu-console.c:383
 msgid "Script-Fu Procedure Browser"
 msgstr "Gestor de funcions"
 
-#: ../plug-ins/script-fu/script-fu-console.c:714
+#: ../plug-ins/script-fu/script-fu-console.c:708
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Si s'activa l'avaluador de funcions només es permetrà la invocació no "
 "interactiva de les funcions"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:178
+#: ../plug-ins/script-fu/script-fu-interface.c:179
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Una funció no pot processar dues seqüències al mateix temps."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:180
+#: ../plug-ins/script-fu/script-fu-interface.c:181
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Ja esteu executant la funció «%s» ."
@@ -81,12 +68,12 @@ msgstr "Ja esteu executant la funció «%s» ."
 #  strip the first part of the menupath if it contains _("/Script-Fu/")
 #  strip the first part of the menupath if it contains _("/Script-Fu/")
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:203
-#: ../plug-ins/script-fu/script-fu-interface.c:205
+#: ../plug-ins/script-fu/script-fu-interface.c:204
+#: ../plug-ins/script-fu/script-fu-interface.c:207
 msgid "/Script-Fu/"
 msgstr "/Funcions/"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:223
+#: ../plug-ins/script-fu/script-fu-interface.c:225
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Funció: %s"
@@ -95,55 +82,55 @@ msgstr "Funció: %s"
 #  some languages want an extra space here
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:289
+#: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:332
+#: ../plug-ins/script-fu/script-fu-interface.c:335
 msgid "Script-Fu Color Selection"
 msgstr "Funció de selecció del color"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:439
+#: ../plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu File Selection"
 msgstr "Funció de selecció del fitxer"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:442
+#: ../plug-ins/script-fu/script-fu-interface.c:450
 msgid "Script-Fu Folder Selection"
 msgstr "Funció de selecció de la carpeta"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:454
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Font Selection"
 msgstr "Funció de selecció del tipus de lletra"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-Fu Palette Selection"
 msgstr "Funció de selecció de la paleta"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:471
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Pattern Selection"
 msgstr "Funció de selecció del patró"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:480
+#: ../plug-ins/script-fu/script-fu-interface.c:488
 msgid "Script-Fu Gradient Selection"
 msgstr "Funció de selecció del degradat"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:489
+#: ../plug-ins/script-fu/script-fu-interface.c:497
 msgid "Script-Fu Brush Selection"
 msgstr "Funció de selecció del pinzell"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:674
-#, fuzzy, c-format
+#: ../plug-ins/script-fu/script-fu-scripts.c:661
+#, c-format
 msgid ""
 "Error while executing\n"
 "%s\n"
 "\n"
 "%s"
 msgstr ""
-"S'ha produït un error en executar\n"
-"%s\n"
-"%s"
+"S'ha produït un error mentre s'executava\n"
+"%s \n"
+" \n"
+" %s"
 
 #: ../plug-ins/script-fu/script-fu-server.c:711
 msgid "Script-Fu Server Options"
@@ -161,141 +148,138 @@ msgstr "Port del servidor:"
 msgid "Server logfile:"
 msgstr "Fitxer de registre del servidor:"
 
-#: ../plug-ins/script-fu/script-fu.c:109
+#: ../plug-ins/script-fu/script-fu.c:110
 msgid "Interactive console for Script-Fu development"
 msgstr "Consola interactiva per al desenvolupament de funcions"
 
-#: ../plug-ins/script-fu/script-fu.c:115
+#: ../plug-ins/script-fu/script-fu.c:116
 msgid "Script-Fu _Console"
 msgstr "_Consola de les funcions"
 
-#: ../plug-ins/script-fu/script-fu.c:122 ../plug-ins/script-fu/script-fu.c:151
-#: ../plug-ins/script-fu/script-fu.c:332
+#: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
+#: ../plug-ins/script-fu/script-fu.c:365
 msgid "<Toolbox>/Xtns/Languages/Script-Fu"
 msgstr "<Toolbox>/Extensions/Llenguatges/Script"
 
-#: ../plug-ins/script-fu/script-fu.c:139
+#: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
 msgstr "Servidor per a l'execució remota de funcions"
 
-#: ../plug-ins/script-fu/script-fu.c:144
+#: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
 msgstr "_Inicia el servidor..."
 
-#: ../plug-ins/script-fu/script-fu.c:267
+#: ../plug-ins/script-fu/script-fu.c:300
 msgid "_GIMP Online"
 msgstr "_GIMP a la xarxa "
 
-#: ../plug-ins/script-fu/script-fu.c:268
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_User Manual"
 msgstr "_Manual d'usuari"
 
 #  strip the first part of the menupath if it contains _("/Script-Fu/")
 #  strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu.c:271
+#: ../plug-ins/script-fu/script-fu.c:304
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:273
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Buttons"
 msgstr "_Botons"
 
-#: ../plug-ins/script-fu/script-fu.c:275
+#: ../plug-ins/script-fu/script-fu.c:308
 msgid "_Logos"
 msgstr "_Logotips i rètols"
 
-#: ../plug-ins/script-fu/script-fu.c:277
+#: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Misc"
 msgstr "_Varis"
 
-#: ../plug-ins/script-fu/script-fu.c:279
+#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Patterns"
 msgstr "_Patrons"
 
-#: ../plug-ins/script-fu/script-fu.c:281
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:283
+#: ../plug-ins/script-fu/script-fu.c:316
 msgid "_Utils"
 msgstr "_Utilitats"
 
-#: ../plug-ins/script-fu/script-fu.c:285
+#: ../plug-ins/script-fu/script-fu.c:318
 msgid "_Web Page Themes"
 msgstr "_Temes de pàgina web"
 
-#: ../plug-ins/script-fu/script-fu.c:287
+#: ../plug-ins/script-fu/script-fu.c:320
 msgid "_Alien Glow"
 msgstr "Lluentor estil _Àlien"
 
-#: ../plug-ins/script-fu/script-fu.c:289
+#: ../plug-ins/script-fu/script-fu.c:322
 msgid "_Beveled Pattern"
 msgstr "Patró amb _relleu"
 
-#: ../plug-ins/script-fu/script-fu.c:291
+#: ../plug-ins/script-fu/script-fu.c:324
 msgid "_Classic.Gimp.Org"
 msgstr "_Clàssic.Gimp.org"
 
-#: ../plug-ins/script-fu/script-fu.c:294
+#: ../plug-ins/script-fu/script-fu.c:327
 msgid "Alpha to _Logo"
 msgstr "Capa transparent a _Logotip"
 
-#: ../plug-ins/script-fu/script-fu.c:296
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "An_imation"
-msgstr ""
+msgstr "An_imació"
 
-#: ../plug-ins/script-fu/script-fu.c:298
+#: ../plug-ins/script-fu/script-fu.c:331
 msgid "_Animators"
-msgstr ""
+msgstr "_Animadors"
 
-#: ../plug-ins/script-fu/script-fu.c:300
+#: ../plug-ins/script-fu/script-fu.c:333
 msgid "_Artistic"
-msgstr ""
+msgstr "_Artístic"
 
-#: ../plug-ins/script-fu/script-fu.c:302
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:335
 msgid "_Blur"
-msgstr "Difumina en X"
+msgstr "_Difumina"
 
-#: ../plug-ins/script-fu/script-fu.c:304
+#: ../plug-ins/script-fu/script-fu.c:337
 msgid "_Decor"
 msgstr "_Decora"
 
-#: ../plug-ins/script-fu/script-fu.c:306
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:339
 msgid "_Effects"
-msgstr "Ombra amb reflex _Xach..."
+msgstr "_Efectes"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:341
 msgid "En_hance"
-msgstr ""
+msgstr "_Millora"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: ../plug-ins/script-fu/script-fu.c:343
 msgid "_Light and Shadow"
-msgstr ""
+msgstr "_Llums i ombres"
 
-#: ../plug-ins/script-fu/script-fu.c:312
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:345
 msgid "S_hadow"
-msgstr "Ombra"
+msgstr "_Ombra"
 
-#: ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:347
 msgid "_Render"
 msgstr "_Composa"
 
-#: ../plug-ins/script-fu/script-fu.c:316
+#: ../plug-ins/script-fu/script-fu.c:349
 msgid "_Alchemy"
-msgstr ""
+msgstr "_Alquímia"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:352
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Torna a carregar totes les funcions disponibles"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid "_Refresh Scripts"
 msgstr "_Actualitza les funcions"
 
-#: ../plug-ins/script-fu/script-fu.c:347
+#: ../plug-ins/script-fu/script-fu.c:380
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -412,22 +396,33 @@ msgstr ""
 "afegeix una ombra"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:13
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
+msgid "Pattern"
+msgstr "Patró"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:10
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:16
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:6
 msgid "Shadow X offset"
 msgstr "Desplaçament X de l'ombra"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:11
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:17
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:7
 msgid "Shadow Y offset"
 msgstr "Desplaçament Y de l'ombra"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:12
 msgid "Shadow blur radius"
 msgstr "Amplada de l'ombra"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:12
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:13
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
@@ -546,8 +541,7 @@ msgid "Add B_evel..."
 msgstr "Emmarca amb _relleu..."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
-#, fuzzy
-msgid "Add a bevelled border to an image"
+msgid "Add a beveled border to an image"
 msgstr "Posa un marc amb relleu a la imatge"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
@@ -569,27 +563,30 @@ msgid "Add _Border..."
 msgstr "En_marca..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
+msgid "Add a border around an image"
+msgstr "Posa un marc al voltant de la imatge"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border X size"
 msgstr "Mida del marge X"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:3
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border Y size"
 msgstr "Mida del marge Y"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Border color"
 msgstr "Color del marge"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:6
 msgid "Delta value on color"
 msgstr "Valor delta del color"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
-#, fuzzy
 msgid "Create an arrow graphic with an eerie glow for web pages"
 msgstr ""
-"Crea un gràfic en forma de fletxa per a pàgines web amb una lluentor estil "
-"Àlien al voltant"
+"Crea un gràfic en forma de fletxa per a pàgines web amb una aura lluiminosa "
+"al voltant"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -657,10 +654,9 @@ msgid "Bar length"
 msgstr "Amplada de la barra"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
-#, fuzzy
 msgid "Create an Hrule graphic with an eerie glow for web pages"
 msgstr ""
-"Crea una barra horitzontal per a pàgines web amb una lluentor estil Àlien al "
+"Crea una barra horitzontal per a pàgines web amb una aura lluminosa al "
 "voltant"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
@@ -669,11 +665,10 @@ msgid "_Hrule..."
 msgstr "_Barra..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
-#, fuzzy
 msgid "Create a bullet graphic with an eerie glow for web pages"
 msgstr ""
-"Crea un gràfic en forma de rodona per a pàgines web amb una lluentor estil "
-"Àlien al voltant"
+"Crea un gràfic en forma de rodona per a pàgines web amb una aura lluminosa "
+"al voltant"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -692,9 +687,8 @@ msgid "B_utton..."
 msgstr "B_otó..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
-#, fuzzy
 msgid "Create a button graphic with an eerie glow for web pages"
-msgstr "Crea un botó per a pàgines web amb una lluentor estil Àlien al voltant"
+msgstr "Crea un botó per a pàgines web amb una aura lluminosa al voltant"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow radius"
@@ -777,13 +771,10 @@ msgstr ""
 "(o canal alfa)"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
-#, fuzzy
 msgid ""
 "Create a plain text logo with a gradient effect, a drop shadow, and a "
 "background"
-msgstr ""
-"Crea un logotip amb una textura, reflexos, ombres i un fons en forma de "
-"mosaic"
+msgstr "Crea un logotip amb un text que té efectes degradats, ombra i un fons"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -834,16 +825,6 @@ msgstr "Color superior esquerre"
 msgid "Create a beveled pattern arrow for webpages"
 msgstr "Crea una flexta per a pàgines web, amb bisell i coberta d'un patró"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:13
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
-msgid "Pattern"
-msgstr "Patró"
-
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "Create a beveled pattern bullet for webpages"
 msgstr "Crea una rodona per a pàgines web, amb bisell i coberta d'un patró"
@@ -892,7 +873,7 @@ msgstr "Amplada"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
 msgid "Blend Animation needs at least three source layers"
-msgstr ""
+msgstr "L'animació difumina necessita com a mínim tres capes"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
 msgid ""
@@ -985,7 +966,6 @@ msgstr "Afegeix una pell de vaca a la regió seleccionada (o canal alfa)"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
-#, fuzzy
 msgid "Background Color"
 msgstr "Color del fons"
 
@@ -1022,6 +1002,8 @@ msgid ""
 "Burn-In: Needs two layers in total!\n"
 "A foreground text layer with transparency and a background layer."
 msgstr ""
+"Creama: Necessita dos capes en total!\n"
+" Una capa transparent amb el text i una capa de fons. "
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Corona width"
@@ -1099,7 +1081,6 @@ msgid "Stencil C_arve..."
 msgstr "_Tallat amb patró..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
-#, fuzzy
 msgid "Background Image"
 msgstr "Imatge de fons"
 
@@ -1112,13 +1093,12 @@ msgid "Carved..."
 msgstr "_Esculpit sobre el patró..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
-#, fuzzy
 msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
 msgstr ""
-"Crea un logotip amb un text esculpit que sobresurt de la imatge de fons "
-"especificada"
+"Crea un logotip amb un text que sobresurt o està enfonsat en una imatge de "
+"fons"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
@@ -1346,11 +1326,10 @@ msgid "Comic Boo_k..."
 msgstr "Llibre de _còmics..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
-#, fuzzy
 msgid "Create a comic-book style logo by outlining and filling with a gradient"
 msgstr ""
-"Afegeix un efecte de llibre de còmics a la regió seleccionada (o canal alfa) "
-"resseguint les vores amb negre i omplint l'interior amb degradats"
+"Afegeix un efecte de llibre de còmics resseguint les vores amb negre i "
+"omplint l'interior amb degradats"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 msgid "Outline color"
@@ -1362,13 +1341,12 @@ msgid "Outline size"
 msgstr "Mida del contorn"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
-#, fuzzy
 msgid ""
 "Add a metallic effect to the selected region (or alpha) with reflections and "
 "perspective shadows"
 msgstr ""
-"Afegeix un efecte de logotip metàl·lic a la regió seleccionada (o canal "
-"alfa) amb reflexos i ombres "
+"Afegeix un efecte metàl·lic a la regió seleccionada (o canal alfa) amb "
+"reflexos i ombres "
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
@@ -1384,7 +1362,6 @@ msgid "Effect size (pixels)"
 msgstr "Mida de l'efecte (píxels)"
 
 #: ../plug-ins/script-fu/scripts/copy-visible.scm.h:1
-#, fuzzy
 msgid "This procedure is deprecated! use 'gimp-edit-copy-visible' instead."
 msgstr "Aquesta funció està en desús! utilitzeu 'gimp_edit_copy_visible'."
 
@@ -1400,6 +1377,14 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
 msgstr "_Cristal·lí..."
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
+msgid "Difference Clouds..."
+msgstr "Núvols per diferència..."
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
+msgid "Solid noise applied with Difference layer mode"
+msgstr "Soroll sòlid aplicat amb el mode de capa Diferència"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
@@ -1426,8 +1411,7 @@ msgid "Threshold (bigger 1<-->255 smaller)"
 msgstr "Llindar (més gran 1<-->255 més petit)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
-#, fuzzy
-msgid "_Disort..."
+msgid "_Distort..."
 msgstr "_Distorciona..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
@@ -1482,8 +1466,8 @@ msgid "Erase"
 msgstr "Esborra"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
-msgid "Erase every other row/column of pixels of the active drawable"
-msgstr "Esborra qualsevol altra fila o columna de píxels del dibuix actiu"
+msgid "Erase every other row or column"
+msgstr "Esborra totes les altres files i columnes"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
@@ -1514,8 +1498,7 @@ msgid "Rows/cols"
 msgstr "Files/Columnes"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:11
-#, fuzzy
-msgid "_Erase every other Row..."
+msgid "_Erase Every Other Row..."
 msgstr "_Esborra les altres files..."
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:1
@@ -1643,11 +1626,12 @@ msgid "_Text"
 msgstr "_Text"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
-#, fuzzy
 msgid ""
 "Add a frost effect to the selected region (or alpha) with an added drop "
 "shadow"
-msgstr "Afegeix un efecte de gel i glaç a la regió seleccionada (o canal alfa)"
+msgstr ""
+"Afegeix un efecte de gel i glaç a la regió seleccionada (o canal alfa) "
+"afegint-hi també una ombra"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
@@ -1687,14 +1671,12 @@ msgid "Autocrop"
 msgstr "Escapça automàticament"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-#, fuzzy
 msgid "Create an image of a large header using the gimp.org webpage theme"
 msgstr ""
 "Crea una imatge d'una capçalera de primer nivell, emprant el tema de la "
 "pàgina web del Gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
-#, fuzzy
 msgid "Create an image of a small header using the gimp.org webpage theme"
 msgstr ""
 "Crea una imatge d'una capçalera de segon nivell, emprant el tema de la "
@@ -1743,38 +1725,34 @@ msgid "_Small Header..."
 msgstr "C_apçalera petita..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-#, fuzzy
 msgid ""
 "Create an image of a Tube Button Label Header using the gimp.org webpage "
 "theme"
 msgstr ""
-"Crea una imatge d'una etiqueta grossa amb lletres tubulars, emprant el tema "
-"de la pàgina web del Gimp.org"
+"Crea una imatge d'una botó tubular d'una capçalera, emprant el tema de la "
+"pàgina web del Gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-#, fuzzy
 msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
 msgstr ""
-"Crea una imatge d'una etiqueta amb lletres tubulars, emprant el tema de la "
+"Crea una imatge d'una botó tubular d'una etiqueta, emprant el tema de la "
 "pàgina web del Gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-#, fuzzy
 msgid ""
 "Create an image of a second level Tube Button Label using the gimp.org "
 "webpage theme"
 msgstr ""
-"Crea una imatge d'una etiqueta amb lletres tubulars, emprant el tema de la "
-"pàgina web del Gimp.org"
+"Crea una imatge d'una botó tubular d'una etiqueta de segon nivell, emprant "
+"el tema de la pàgina web del Gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
-#, fuzzy
 msgid ""
 "Create an image of a third level Tube Button Label using the gimp.org "
 "webpage theme"
 msgstr ""
-"Crea una imatge d'una etiqueta amb lletres tubulars, emprant el tema de la "
-"pàgina web del Gimp.org"
+"Crea una imatge d'una botó tubular d'una etiqueta de tercer nivell, emprant "
+"el tema de la pàgina web del Gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
@@ -1888,7 +1866,6 @@ msgid "Border size (pixels)"
 msgstr "Mida del marge (píxels)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
-#, fuzzy
 msgid "Create a logo with a shiny look and beveled edges"
 msgstr "Crea un logotip amb una brillantor i un bisell arrodonit"
 
@@ -1984,9 +1961,7 @@ msgid "BG opacity"
 msgstr "Opacitat del fons"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid ""
-"Create a graph of the Hue, Saturation, and Value distributions of the "
-"current drawable"
+msgid "Create a graph of the Hue, Saturation, and Value distributions"
 msgstr ""
 "Crea una gràfica de la distribució del to, la saturació i el valor de la "
 "imatge actual"
@@ -2020,9 +1995,8 @@ msgid "Start Y"
 msgstr "Y inicial"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:10
-#, fuzzy
 msgid "Use selection bounds instead of values below"
-msgstr "Utilitza els límits de la selecció en comptes dels inferiors"
+msgstr "Utilitza els límits de la selecció en comptes dels següents valors"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
@@ -2185,7 +2159,6 @@ msgid "Density (%)"
 msgstr "Densitat (%)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:9
-#, fuzzy
 msgid "Newsprint Te_xt..."
 msgstr "Te_xt de diari..."
 
@@ -2344,7 +2317,6 @@ msgid "Create an image filled with an Earth-like map pattern"
 msgstr "Crea una imatge plena d'un patró en forma de mapa de la terra"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
-#, fuzzy
 msgid "Detail in Middle"
 msgstr "Detall al mig"
 
@@ -2415,9 +2387,8 @@ msgid "_Round Corners..."
 msgstr "A_rrodoneix les vores..."
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
-#, fuzzy
 msgid "Convert a selection to a brush"
-msgstr "Crea un pinzell el·líptic"
+msgstr "Converteix la selecció en un pinzell"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 msgid "To _Brush..."
@@ -2425,7 +2396,7 @@ msgstr "Fes-ne _un pinzell..."
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "Convert a selection to an image"
-msgstr ""
+msgstr "Converteix la selecció en una imatge"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:2
 msgid "To _Image"
@@ -2433,7 +2404,7 @@ msgstr "Fes-ne _imatge"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
 msgid "Convert a selection to a pattern"
-msgstr ""
+msgstr "Converteix la selecció en un patró"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "To _Pattern..."
@@ -2491,7 +2462,6 @@ msgid "SOTA Chrome..."
 msgstr "SOTA crom..."
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
-#, fuzzy
 msgid "Create a logo with a speedy text effect"
 msgstr "Crea un logotip emprant un efecte de text en moviment"
 
@@ -2542,7 +2512,6 @@ msgid "_Spinning Globe..."
 msgstr "_Món que roda..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-#, fuzzy
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr ""
@@ -2574,14 +2543,12 @@ msgid "Frame"
 msgstr "Marc"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
-#, fuzzy
 msgid "Gradient: Loop Sawtooth"
-msgstr "Degradat: estil dents de serra"
+msgstr "Degradat: serralada"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:11
-#, fuzzy
 msgid "Gradient: Loop Triangle"
-msgstr "Degradat: estil una sola dent"
+msgstr "Degradat: rampes"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Hexagon"
@@ -2696,24 +2663,22 @@ msgid "Starb_urst..."
 msgstr "_Llum d'estrella..."
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
-#, fuzzy
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
 msgstr ""
-"Crea un logotip emprant un text en forma de roca dura il·luminat per un "
-"focus de llum"
+"Crea un logotip emprant un text en forma de roca dura amb una ombra i  "
+"il·luminat per un focus de llum"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 msgid "Effect size (pixels * 4)"
 msgstr "Mida de l'efecte (píxels * 4)"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-#, fuzzy
 msgid ""
 "Fill the selected region (or alpha) with a rock-like texture, a nova glow, "
 "and shadow"
 msgstr ""
 "Omple la regió seleccionada (o canal alfa) emprant una textura de roca dura "
-"amb ombrai il·luminant l'escena amb un focus de llum"
+"amb ombra i il·luminant l'escena amb un focus de llum"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
 msgid "Sta_rscape..."
@@ -2901,6 +2866,14 @@ msgstr "Color de primer pla"
 msgid "T_ruchet..."
 msgstr "Can_onades 2D..."
 
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
+msgid "Mask opacity"
+msgstr "Opacitat de la màscara"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
+msgid "Mask size"
+msgstr "Mida de la màscara"
+
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:1
 msgid "Amplitude"
 msgstr "Amplitud"
@@ -2967,11 +2940,11 @@ msgstr "Tei_xit de cistella..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "Bookmark to the GIMP web site"
-msgstr ""
+msgstr "Punt al web del GIMP"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "Bookmark to the user manual"
-msgstr ""
+msgstr "Punt al manual de l'usuari"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "Create and Use _Selections"
@@ -3014,16 +2987,14 @@ msgid "_Preparing your Images for the Web"
 msgstr "_Prepara les teves imatges per la web"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
-#, fuzzy
 msgid "_User Manual Web Site"
-msgstr "Web _principal"
+msgstr "Web del manual de l'_usuari"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
 msgid "_Working with Digital Camera Photos"
 msgstr "_Manipula fotos fetes amb càmeres digitals"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
-#, fuzzy
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
 msgstr "Afegeix un efecte 3D translúcid a la regió seleccionada (o canal alfa)"
 
@@ -3062,38 +3033,3 @@ msgstr "Opacitat de la lluentor"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Ombra amb reflex _Xach..."
-
-#~ msgid "<Image>/Filters/Decor"
-#~ msgstr "<Image>/Filtres/Decora"
-
-#~ msgid "Add a border around an image"
-#~ msgstr "Posa un marc al voltant de la imatge"
-
-#~ msgid "Create a plain text logo and add a drop shadow"
-#~ msgstr "Crea un logotip amb un text pla i una ombra"
-
-#~ msgid "Burn-In: Need two layers in total!"
-#~ msgstr "Crema: es necessiten dues capes!"
-
-#~ msgid ""
-#~ "Create an image with a carved effect using the active (grayscale) "
-#~ "drawable as a mask"
-#~ msgstr ""
-#~ "Crea una imatge com si estigués esculpida emprant l'eina de dibuix activa "
-#~ "(escala de grisos) com a màscara"
-
-#~ msgid "Create a comic-book style logo"
-#~ msgstr "Crea un logotip a l'estil d'un llibre de còmics"
-
-#~ msgid "Create four guides around the bounding box of the current selection"
-#~ msgstr ""
-#~ "Crea quatre guies al voltant del quadre delimitador de la selecció actual"
-
-#~ msgid "Mask opacity"
-#~ msgstr "Opacitat de la màscara"
-
-#~ msgid "Mask size"
-#~ msgstr "Mida de la màscara"
-
-#~ msgid "_Unsharp Mask..."
-#~ msgstr "_Difuminat amb màscara..."
