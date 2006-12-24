@@ -212,7 +212,7 @@ gimp_drawable_transform_flip_default (gint32   drawable_ID,
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
  * @recursion_level: Level of recursion (3 is a nice default).
- * @clip_result: Whether to clip results.
+ * @clip_result: How to clip results.
  *
  * Perform a possibly non-affine transformation on the specified
  * drawable, with extra parameters.
@@ -251,7 +251,7 @@ gimp_drawable_transform_perspective (gint32                 drawable_ID,
                                      GimpInterpolationType  interpolation,
                                      gboolean               supersample,
                                      gint                   recursion_level,
-                                     gboolean               clip_result)
+                                     GimpTransformResize    clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -295,7 +295,7 @@ gimp_drawable_transform_perspective (gint32                 drawable_ID,
  * @x3: The new x coordinate of lower-right corner of original bounding box.
  * @y3: The new y coordinate of lower-right corner of original bounding box.
  * @interpolate: Whether to use interpolation and supersampling.
- * @clip_result: Whether to clip results.
+ * @clip_result: How to clip results.
  *
  * Perform a possibly non-affine transformation on the specified
  * drawable, with extra parameters.
@@ -309,17 +309,17 @@ gimp_drawable_transform_perspective (gint32                 drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_perspective_default (gint32   drawable_ID,
-                                             gdouble  x0,
-                                             gdouble  y0,
-                                             gdouble  x1,
-                                             gdouble  y1,
-                                             gdouble  x2,
-                                             gdouble  y2,
-                                             gdouble  x3,
-                                             gdouble  y3,
-                                             gboolean interpolate,
-                                             gboolean clip_result)
+gimp_drawable_transform_perspective_default (gint32              drawable_ID,
+                                             gdouble             x0,
+                                             gdouble             y0,
+                                             gdouble             x1,
+                                             gdouble             y1,
+                                             gdouble             x2,
+                                             gdouble             y2,
+                                             gdouble             x3,
+                                             gdouble             y3,
+                                             gboolean            interpolate,
+                                             GimpTransformResize clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -413,7 +413,7 @@ gimp_drawable_transform_rotate_simple (gint32           drawable_ID,
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
  * @recursion_level: Level of recursion (3 is a nice default).
- * @clip_result: Whether to clip results.
+ * @clip_result: How to clip results.
  *
  * Rotate the specified drawable about given coordinates through the
  * specified angle.
@@ -440,7 +440,7 @@ gimp_drawable_transform_rotate (gint32                 drawable_ID,
                                 GimpInterpolationType  interpolation,
                                 gboolean               supersample,
                                 gint                   recursion_level,
-                                gboolean               clip_result)
+                                GimpTransformResize    clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -476,7 +476,7 @@ gimp_drawable_transform_rotate (gint32                 drawable_ID,
  * @center_x: The hor. coordinate of the center of rotation.
  * @center_y: The vert. coordinate of the center of rotation.
  * @interpolate: Whether to use interpolation and supersampling.
- * @clip_result: Whether to clip results.
+ * @clip_result: How to clip results.
  *
  * Rotate the specified drawable about given coordinates through the
  * specified angle.
@@ -490,13 +490,13 @@ gimp_drawable_transform_rotate (gint32                 drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_rotate_default (gint32   drawable_ID,
-                                        gdouble  angle,
-                                        gboolean auto_center,
-                                        gint     center_x,
-                                        gint     center_y,
-                                        gboolean interpolate,
-                                        gboolean clip_result)
+gimp_drawable_transform_rotate_default (gint32              drawable_ID,
+                                        gdouble             angle,
+                                        gboolean            auto_center,
+                                        gint                center_x,
+                                        gint                center_y,
+                                        gboolean            interpolate,
+                                        GimpTransformResize clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -532,7 +532,7 @@ gimp_drawable_transform_rotate_default (gint32   drawable_ID,
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
  * @recursion_level: Level of recursion (3 is a nice default).
- * @clip_result: Whether to clip results.
+ * @clip_result: How to clip results.
  *
  * Scale the specified drawable with extra parameters
  *
@@ -558,7 +558,7 @@ gimp_drawable_transform_scale (gint32                 drawable_ID,
                                GimpInterpolationType  interpolation,
                                gboolean               supersample,
                                gint                   recursion_level,
-                               gboolean               clip_result)
+                               GimpTransformResize    clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -594,7 +594,7 @@ gimp_drawable_transform_scale (gint32                 drawable_ID,
  * @x1: The new x coordinate of the lower-right corner of the scaled region.
  * @y1: The new y coordinate of the lower-right corner of the scaled region.
  * @interpolate: Whether to use interpolation and supersampling.
- * @clip_result: Whether to clip results.
+ * @clip_result: How to clip results.
  *
  * Scale the specified drawable with extra parameters
  *
@@ -607,13 +607,13 @@ gimp_drawable_transform_scale (gint32                 drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_scale_default (gint32   drawable_ID,
-                                       gdouble  x0,
-                                       gdouble  y0,
-                                       gdouble  x1,
-                                       gdouble  y1,
-                                       gboolean interpolate,
-                                       gboolean clip_result)
+gimp_drawable_transform_scale_default (gint32              drawable_ID,
+                                       gdouble             x0,
+                                       gdouble             y0,
+                                       gdouble             x1,
+                                       gdouble             y1,
+                                       gboolean            interpolate,
+                                       GimpTransformResize clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -647,7 +647,7 @@ gimp_drawable_transform_scale_default (gint32   drawable_ID,
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
  * @recursion_level: Level of recursion (3 is a nice default).
- * @clip_result: Whether to clip results.
+ * @clip_result: How to clip results.
  *
  * Shear the specified drawable about its center by the specified
  * magnitude, with extra parameters.
@@ -675,7 +675,7 @@ gimp_drawable_transform_shear (gint32                 drawable_ID,
                                GimpInterpolationType  interpolation,
                                gboolean               supersample,
                                gint                   recursion_level,
-                               gboolean               clip_result)
+                               GimpTransformResize    clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -707,7 +707,7 @@ gimp_drawable_transform_shear (gint32                 drawable_ID,
  * @shear_type: Type of shear.
  * @magnitude: The magnitude of the shear.
  * @interpolate: Whether to use interpolation and supersampling.
- * @clip_result: Whether to clip results.
+ * @clip_result: How to clip results.
  *
  * Shear the specified drawable about its center by the specified
  * magnitude, with extra parameters.
@@ -725,7 +725,7 @@ gimp_drawable_transform_shear_default (gint32              drawable_ID,
                                        GimpOrientationType shear_type,
                                        gdouble             magnitude,
                                        gboolean            interpolate,
-                                       gboolean            clip_result)
+                                       GimpTransformResize clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -762,7 +762,7 @@ gimp_drawable_transform_shear_default (gint32              drawable_ID,
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
  * @recursion_level: Level of recursion (3 is a nice default).
- * @clip_result: Whether to clip results.
+ * @clip_result: How to clip results.
  *
  * Transform the specified drawable in 2d, with extra parameters.
  *
@@ -794,7 +794,7 @@ gimp_drawable_transform_2d (gint32                 drawable_ID,
                             GimpInterpolationType  interpolation,
                             gboolean               supersample,
                             gint                   recursion_level,
-                            gboolean               clip_result)
+                            GimpTransformResize    clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -836,7 +836,7 @@ gimp_drawable_transform_2d (gint32                 drawable_ID,
  * @dest_x: X coordinate of where the center goes.
  * @dest_y: Y coordinate of where the center goes.
  * @interpolate: Whether to use interpolation and supersampling.
- * @clip_result: Whether to clip results.
+ * @clip_result: How to clip results.
  *
  * Transform the specified drawable in 2d, with extra parameters.
  *
@@ -849,16 +849,16 @@ gimp_drawable_transform_2d (gint32                 drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_2d_default (gint32   drawable_ID,
-                                    gdouble  source_x,
-                                    gdouble  source_y,
-                                    gdouble  scale_x,
-                                    gdouble  scale_y,
-                                    gdouble  angle,
-                                    gdouble  dest_x,
-                                    gdouble  dest_y,
-                                    gboolean interpolate,
-                                    gboolean clip_result)
+gimp_drawable_transform_2d_default (gint32              drawable_ID,
+                                    gdouble             source_x,
+                                    gdouble             source_y,
+                                    gdouble             scale_x,
+                                    gdouble             scale_y,
+                                    gdouble             angle,
+                                    gdouble             dest_x,
+                                    gdouble             dest_y,
+                                    gboolean            interpolate,
+                                    GimpTransformResize clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -902,7 +902,7 @@ gimp_drawable_transform_2d_default (gint32   drawable_ID,
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
  * @recursion_level: Level of recursion (3 is a nice default).
- * @clip_result: Whether to clip results.
+ * @clip_result: How to clip results.
  *
  * Transform the specified drawable in 2d, with extra parameters.
  *
@@ -934,7 +934,7 @@ gimp_drawable_transform_matrix (gint32                 drawable_ID,
                                 GimpInterpolationType  interpolation,
                                 gboolean               supersample,
                                 gint                   recursion_level,
-                                gboolean               clip_result)
+                                GimpTransformResize    clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -980,7 +980,7 @@ gimp_drawable_transform_matrix (gint32                 drawable_ID,
  * @coeff_2_1: coefficient (2,1) of the transformation matrix.
  * @coeff_2_2: coefficient (2,2) of the transformation matrix.
  * @interpolate: Whether to use interpolation and supersampling.
- * @clip_result: Whether to clip results.
+ * @clip_result: How to clip results.
  *
  * Transform the specified drawable in 2d, with extra parameters.
  *
@@ -993,18 +993,18 @@ gimp_drawable_transform_matrix (gint32                 drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_matrix_default (gint32   drawable_ID,
-                                        gdouble  coeff_0_0,
-                                        gdouble  coeff_0_1,
-                                        gdouble  coeff_0_2,
-                                        gdouble  coeff_1_0,
-                                        gdouble  coeff_1_1,
-                                        gdouble  coeff_1_2,
-                                        gdouble  coeff_2_0,
-                                        gdouble  coeff_2_1,
-                                        gdouble  coeff_2_2,
-                                        gboolean interpolate,
-                                        gboolean clip_result)
+gimp_drawable_transform_matrix_default (gint32              drawable_ID,
+                                        gdouble             coeff_0_0,
+                                        gdouble             coeff_0_1,
+                                        gdouble             coeff_0_2,
+                                        gdouble             coeff_1_0,
+                                        gdouble             coeff_1_1,
+                                        gdouble             coeff_1_2,
+                                        gdouble             coeff_2_0,
+                                        gdouble             coeff_2_1,
+                                        gdouble             coeff_2_2,
+                                        gboolean            interpolate,
+                                        GimpTransformResize clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

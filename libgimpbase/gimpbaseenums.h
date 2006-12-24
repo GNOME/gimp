@@ -321,6 +321,19 @@ typedef enum
 } GimpTransformDirection;
 
 
+#define GIMP_TYPE_TRANSFORM_RESIZE (gimp_transform_resize_get_type ())
+
+GType gimp_transform_resize_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TRANSFORM_RESIZE_ADJUST           = 0, /*< desc="Adjust" >*/
+  GIMP_TRANSFORM_RESIZE_CLIP             = 1, /*< desc="Clip" >*/
+  GIMP_TRANSFORM_RESIZE_CROP,                 /*< desc="Crop to result" >*/
+  GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT,     /*< desc="Crop with aspect" >*/
+} GimpTransformResize;
+
+
 typedef enum /*< skip >*/
 {
   GIMP_UNIT_PIXEL   = 0,

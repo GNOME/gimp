@@ -259,7 +259,7 @@ drawable_transform_perspective_invoker (GimpProcedure     *procedure,
   gint32 interpolation;
   gboolean supersample;
   gint32 recursion_level;
-  gboolean clip_result;
+  gint32 clip_result;
 
   drawable = gimp_value_get_drawable (&args->values[0], gimp);
   x0 = g_value_get_double (&args->values[1]);
@@ -274,7 +274,7 @@ drawable_transform_perspective_invoker (GimpProcedure     *procedure,
   interpolation = g_value_get_enum (&args->values[10]);
   supersample = g_value_get_boolean (&args->values[11]);
   recursion_level = g_value_get_int (&args->values[12]);
-  clip_result = g_value_get_boolean (&args->values[13]);
+  clip_result = g_value_get_enum (&args->values[13]);
 
   if (success)
     {
@@ -342,7 +342,7 @@ drawable_transform_perspective_default_invoker (GimpProcedure     *procedure,
   gdouble x3;
   gdouble y3;
   gboolean interpolate;
-  gboolean clip_result;
+  gint32 clip_result;
 
   drawable = gimp_value_get_drawable (&args->values[0], gimp);
   x0 = g_value_get_double (&args->values[1]);
@@ -354,7 +354,7 @@ drawable_transform_perspective_default_invoker (GimpProcedure     *procedure,
   x3 = g_value_get_double (&args->values[7]);
   y3 = g_value_get_double (&args->values[8]);
   interpolate = g_value_get_boolean (&args->values[9]);
-  clip_result = g_value_get_boolean (&args->values[10]);
+  clip_result = g_value_get_enum (&args->values[10]);
 
   if (success)
     {
@@ -472,7 +472,7 @@ drawable_transform_rotate_invoker (GimpProcedure     *procedure,
   gint32 interpolation;
   gboolean supersample;
   gint32 recursion_level;
-  gboolean clip_result;
+  gint32 clip_result;
 
   drawable = gimp_value_get_drawable (&args->values[0], gimp);
   angle = g_value_get_double (&args->values[1]);
@@ -483,7 +483,7 @@ drawable_transform_rotate_invoker (GimpProcedure     *procedure,
   interpolation = g_value_get_enum (&args->values[6]);
   supersample = g_value_get_boolean (&args->values[7]);
   recursion_level = g_value_get_int (&args->values[8]);
-  clip_result = g_value_get_boolean (&args->values[9]);
+  clip_result = g_value_get_enum (&args->values[9]);
 
   if (success)
     {
@@ -549,7 +549,7 @@ drawable_transform_rotate_default_invoker (GimpProcedure     *procedure,
   gint32 center_x;
   gint32 center_y;
   gboolean interpolate;
-  gboolean clip_result;
+  gint32 clip_result;
 
   drawable = gimp_value_get_drawable (&args->values[0], gimp);
   angle = g_value_get_double (&args->values[1]);
@@ -557,7 +557,7 @@ drawable_transform_rotate_default_invoker (GimpProcedure     *procedure,
   center_x = g_value_get_int (&args->values[3]);
   center_y = g_value_get_int (&args->values[4]);
   interpolate = g_value_get_boolean (&args->values[5]);
-  clip_result = g_value_get_boolean (&args->values[6]);
+  clip_result = g_value_get_enum (&args->values[6]);
 
   if (success)
     {
@@ -630,7 +630,7 @@ drawable_transform_scale_invoker (GimpProcedure     *procedure,
   gint32 interpolation;
   gboolean supersample;
   gint32 recursion_level;
-  gboolean clip_result;
+  gint32 clip_result;
 
   drawable = gimp_value_get_drawable (&args->values[0], gimp);
   x0 = g_value_get_double (&args->values[1]);
@@ -641,7 +641,7 @@ drawable_transform_scale_invoker (GimpProcedure     *procedure,
   interpolation = g_value_get_enum (&args->values[6]);
   supersample = g_value_get_boolean (&args->values[7]);
   recursion_level = g_value_get_int (&args->values[8]);
-  clip_result = g_value_get_boolean (&args->values[9]);
+  clip_result = g_value_get_enum (&args->values[9]);
 
   if (success)
     {
@@ -704,7 +704,7 @@ drawable_transform_scale_default_invoker (GimpProcedure     *procedure,
   gdouble x1;
   gdouble y1;
   gboolean interpolate;
-  gboolean clip_result;
+  gint32 clip_result;
 
   drawable = gimp_value_get_drawable (&args->values[0], gimp);
   x0 = g_value_get_double (&args->values[1]);
@@ -712,7 +712,7 @@ drawable_transform_scale_default_invoker (GimpProcedure     *procedure,
   x1 = g_value_get_double (&args->values[3]);
   y1 = g_value_get_double (&args->values[4]);
   interpolate = g_value_get_boolean (&args->values[5]);
-  clip_result = g_value_get_boolean (&args->values[6]);
+  clip_result = g_value_get_enum (&args->values[6]);
 
   if (success)
     {
@@ -780,7 +780,7 @@ drawable_transform_shear_invoker (GimpProcedure     *procedure,
   gint32 interpolation;
   gboolean supersample;
   gint32 recursion_level;
-  gboolean clip_result;
+  gint32 clip_result;
 
   drawable = gimp_value_get_drawable (&args->values[0], gimp);
   shear_type = g_value_get_enum (&args->values[1]);
@@ -789,7 +789,7 @@ drawable_transform_shear_invoker (GimpProcedure     *procedure,
   interpolation = g_value_get_enum (&args->values[4]);
   supersample = g_value_get_boolean (&args->values[5]);
   recursion_level = g_value_get_int (&args->values[6]);
-  clip_result = g_value_get_boolean (&args->values[7]);
+  clip_result = g_value_get_enum (&args->values[7]);
 
   if (success)
     {
@@ -850,13 +850,13 @@ drawable_transform_shear_default_invoker (GimpProcedure     *procedure,
   gint32 shear_type;
   gdouble magnitude;
   gboolean interpolate;
-  gboolean clip_result;
+  gint32 clip_result;
 
   drawable = gimp_value_get_drawable (&args->values[0], gimp);
   shear_type = g_value_get_enum (&args->values[1]);
   magnitude = g_value_get_double (&args->values[2]);
   interpolate = g_value_get_boolean (&args->values[3]);
-  clip_result = g_value_get_boolean (&args->values[4]);
+  clip_result = g_value_get_enum (&args->values[4]);
 
   if (success)
     {
@@ -929,7 +929,7 @@ drawable_transform_2d_invoker (GimpProcedure     *procedure,
   gint32 interpolation;
   gboolean supersample;
   gint32 recursion_level;
-  gboolean clip_result;
+  gint32 clip_result;
 
   drawable = gimp_value_get_drawable (&args->values[0], gimp);
   source_x = g_value_get_double (&args->values[1]);
@@ -943,7 +943,7 @@ drawable_transform_2d_invoker (GimpProcedure     *procedure,
   interpolation = g_value_get_enum (&args->values[9]);
   supersample = g_value_get_boolean (&args->values[10]);
   recursion_level = g_value_get_int (&args->values[11]);
-  clip_result = g_value_get_boolean (&args->values[12]);
+  clip_result = g_value_get_enum (&args->values[12]);
 
   if (success)
     {
@@ -1010,7 +1010,7 @@ drawable_transform_2d_default_invoker (GimpProcedure     *procedure,
   gdouble dest_x;
   gdouble dest_y;
   gboolean interpolate;
-  gboolean clip_result;
+  gint32 clip_result;
 
   drawable = gimp_value_get_drawable (&args->values[0], gimp);
   source_x = g_value_get_double (&args->values[1]);
@@ -1021,7 +1021,7 @@ drawable_transform_2d_default_invoker (GimpProcedure     *procedure,
   dest_x = g_value_get_double (&args->values[6]);
   dest_y = g_value_get_double (&args->values[7]);
   interpolate = g_value_get_boolean (&args->values[8]);
-  clip_result = g_value_get_boolean (&args->values[9]);
+  clip_result = g_value_get_enum (&args->values[9]);
 
   if (success)
     {
@@ -1097,7 +1097,7 @@ drawable_transform_matrix_invoker (GimpProcedure     *procedure,
   gint32 interpolation;
   gboolean supersample;
   gint32 recursion_level;
-  gboolean clip_result;
+  gint32 clip_result;
 
   drawable = gimp_value_get_drawable (&args->values[0], gimp);
   coeff_0_0 = g_value_get_double (&args->values[1]);
@@ -1113,7 +1113,7 @@ drawable_transform_matrix_invoker (GimpProcedure     *procedure,
   interpolation = g_value_get_enum (&args->values[11]);
   supersample = g_value_get_boolean (&args->values[12]);
   recursion_level = g_value_get_int (&args->values[13]);
-  clip_result = g_value_get_boolean (&args->values[14]);
+  clip_result = g_value_get_enum (&args->values[14]);
 
   if (success)
     {
@@ -1186,7 +1186,7 @@ drawable_transform_matrix_default_invoker (GimpProcedure     *procedure,
   gdouble coeff_2_1;
   gdouble coeff_2_2;
   gboolean interpolate;
-  gboolean clip_result;
+  gint32 clip_result;
 
   drawable = gimp_value_get_drawable (&args->values[0], gimp);
   coeff_0_0 = g_value_get_double (&args->values[1]);
@@ -1199,7 +1199,7 @@ drawable_transform_matrix_default_invoker (GimpProcedure     *procedure,
   coeff_2_1 = g_value_get_double (&args->values[8]);
   coeff_2_2 = g_value_get_double (&args->values[9]);
   interpolate = g_value_get_boolean (&args->values[10]);
-  clip_result = g_value_get_boolean (&args->values[11]);
+  clip_result = g_value_get_enum (&args->values[11]);
 
   if (success)
     {
@@ -1558,11 +1558,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("clip-result",
-                                                     "clip result",
-                                                     "Whether to clip results",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_enum ("clip-result",
+                                                  "clip result",
+                                                  "How to clip results",
+                                                  GIMP_TYPE_TRANSFORM_RESIZE,
+                                                  GIMP_TRANSFORM_RESIZE_ADJUST,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
@@ -1646,11 +1647,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("clip-result",
-                                                     "clip result",
-                                                     "Whether to clip results",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_enum ("clip-result",
+                                                  "clip result",
+                                                  "How to clip results",
+                                                  GIMP_TYPE_TRANSFORM_RESIZE,
+                                                  GIMP_TRANSFORM_RESIZE_ADJUST,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
@@ -1789,11 +1791,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("clip-result",
-                                                     "clip result",
-                                                     "Whether to clip results",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_enum ("clip-result",
+                                                  "clip result",
+                                                  "How to clip results",
+                                                  GIMP_TYPE_TRANSFORM_RESIZE,
+                                                  GIMP_TRANSFORM_RESIZE_ADJUST,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
@@ -1853,11 +1856,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("clip-result",
-                                                     "clip result",
-                                                     "Whether to clip results",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_enum ("clip-result",
+                                                  "clip result",
+                                                  "How to clip results",
+                                                  GIMP_TYPE_TRANSFORM_RESIZE,
+                                                  GIMP_TRANSFORM_RESIZE_ADJUST,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
@@ -1937,11 +1941,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("clip-result",
-                                                     "clip result",
-                                                     "Whether to clip results",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_enum ("clip-result",
+                                                  "clip result",
+                                                  "How to clip results",
+                                                  GIMP_TYPE_TRANSFORM_RESIZE,
+                                                  GIMP_TRANSFORM_RESIZE_ADJUST,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
@@ -2001,11 +2006,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("clip-result",
-                                                     "clip result",
-                                                     "Whether to clip results",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_enum ("clip-result",
+                                                  "clip result",
+                                                  "How to clip results",
+                                                  GIMP_TYPE_TRANSFORM_RESIZE,
+                                                  GIMP_TRANSFORM_RESIZE_ADJUST,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
@@ -2076,11 +2082,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("clip-result",
-                                                     "clip result",
-                                                     "Whether to clip results",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_enum ("clip-result",
+                                                  "clip result",
+                                                  "How to clip results",
+                                                  GIMP_TYPE_TRANSFORM_RESIZE,
+                                                  GIMP_TRANSFORM_RESIZE_ADJUST,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
@@ -2131,11 +2138,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("clip-result",
-                                                     "clip result",
-                                                     "Whether to clip results",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_enum ("clip-result",
+                                                  "clip result",
+                                                  "How to clip results",
+                                                  GIMP_TYPE_TRANSFORM_RESIZE,
+                                                  GIMP_TRANSFORM_RESIZE_ADJUST,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
@@ -2233,11 +2241,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("clip-result",
-                                                     "clip result",
-                                                     "Whether to clip results",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_enum ("clip-result",
+                                                  "clip result",
+                                                  "How to clip results",
+                                                  GIMP_TYPE_TRANSFORM_RESIZE,
+                                                  GIMP_TRANSFORM_RESIZE_ADJUST,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
@@ -2315,11 +2324,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("clip-result",
-                                                     "clip result",
-                                                     "Whether to clip results",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_enum ("clip-result",
+                                                  "clip result",
+                                                  "How to clip results",
+                                                  GIMP_TYPE_TRANSFORM_RESIZE,
+                                                  GIMP_TRANSFORM_RESIZE_ADJUST,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
@@ -2429,11 +2439,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("clip-result",
-                                                     "clip result",
-                                                     "Whether to clip results",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_enum ("clip-result",
+                                                  "clip result",
+                                                  "How to clip results",
+                                                  GIMP_TYPE_TRANSFORM_RESIZE,
+                                                  GIMP_TRANSFORM_RESIZE_ADJUST,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
@@ -2523,11 +2534,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("clip-result",
-                                                     "clip result",
-                                                     "Whether to clip results",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_enum ("clip-result",
+                                                  "clip result",
+                                                  "How to clip results",
+                                                  GIMP_TYPE_TRANSFORM_RESIZE,
+                                                  GIMP_TRANSFORM_RESIZE_ADJUST,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",

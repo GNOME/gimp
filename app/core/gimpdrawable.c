@@ -112,7 +112,7 @@ static void       gimp_drawable_transform          (GimpItem          *item,
                                                     GimpInterpolationType   interpolation_type,
                                                     gboolean           supersample,
                                                     gint               recursion_level,
-                                                    gboolean           clip_result,
+                                                    GimpTransformResize     clip_result,
                                                     GimpProgress      *progress);
 
 static guchar   * gimp_drawable_get_color_at       (GimpPickable      *pickable,
@@ -558,7 +558,7 @@ gimp_drawable_transform (GimpItem               *item,
                          GimpInterpolationType   interpolation_type,
                          gboolean                supersample,
                          gint                    recursion_level,
-                         gboolean                clip_result,
+                         GimpTransformResize     clip_result,
                          GimpProgress           *progress)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);

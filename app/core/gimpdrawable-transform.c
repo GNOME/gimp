@@ -34,6 +34,7 @@
 
 #include "gimp.h"
 #include "gimp-transform-region.h"
+#include "gimp-transform-resize.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-transform.h"
@@ -75,7 +76,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                       GimpInterpolationType   interpolation_type,
                                       gboolean                supersample,
                                       gint                    recursion_level,
-                                      gboolean                clip_result,
+                                      GimpTransformResize     clip_result,
                                       GimpProgress           *progress)
 {
   GimpImage   *image;
@@ -118,56 +119,12 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   /*  Always clip unfloated tiles since they must keep their size  */
   if (G_TYPE_FROM_INSTANCE (drawable) == GIMP_TYPE_CHANNEL &&
       tile_manager_bpp (orig_tiles)   == 1)
-    clip_result = TRUE;
+    clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
 
   /*  Find the bounding coordinates of target */
-  if (clip_result)
-    {
-      x1 = u1;
-      y1 = v1;
-      x2 = u2;
-      y2 = v2;
-    }
-  else
-    {
-      gdouble dx1, dy1;
-      gdouble dx2, dy2;
-      gdouble dx3, dy3;
-      gdouble dx4, dy4;
-
-      gimp_matrix3_transform_point (&inv, u1, v1, &dx1, &dy1);
-      gimp_matrix3_transform_point (&inv, u2, v1, &dx2, &dy2);
-      gimp_matrix3_transform_point (&inv, u1, v2, &dx3, &dy3);
-      gimp_matrix3_transform_point (&inv, u2, v2, &dx4, &dy4);
-
-      if (! FINITE (dx1) || ! FINITE (dy1) ||
-          ! FINITE (dx2) || ! FINITE (dy2) ||
-          ! FINITE (dx3) || ! FINITE (dy3) ||
-          ! FINITE (dx4) || ! FINITE (dy4))
-        {
-          /*  fallback to clip_result if the passed matrix is broken  */
-
-          x1 = u1;
-          y1 = v1;
-          x2 = u2;
-          y2 = v2;
-        }
-      else
-        {
-          x1 = (gint) floor (MIN4 (dx1, dx2, dx3, dx4));
-          y1 = (gint) floor (MIN4 (dy1, dy2, dy3, dy4));
-
-          x2 = (gint) ceil (MAX4 (dx1, dx2, dx3, dx4));
-          y2 = (gint) ceil (MAX4 (dy1, dy2, dy3, dy4));
-
-          if (x1 == x2)
-            x2++;
-
-          if (y1 == y2)
-            y2++;
-        }
-    }
-
+  gimp_transform_resize_boundary (&inv, clip_result, u1, v1, u2, v2,
+                                        &x1, &y1, &x2, &y2);
+  
   /*  Get the new temporary buffer for the transformed result  */
   new_tiles = tile_manager_new (x2 - x1, y2 - y1,
                                 tile_manager_bpp (orig_tiles));
@@ -581,7 +538,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
                                 GimpInterpolationType   interpolation_type,
                                 gboolean                supersample,
                                 gint                    recursion_level,
-                                gboolean                clip_result,
+                                GimpTransformResize     clip_result,
                                 GimpProgress           *progress)
 {
   GimpImage   *image;
@@ -610,7 +567,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
 
       /*  always clip unfloated tiles so they keep their size  */
       if (GIMP_IS_CHANNEL (drawable) && tile_manager_bpp (orig_tiles) == 1)
-        clip_result = TRUE;
+        clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
 
       /* transform the buffer */
       new_tiles = gimp_drawable_transform_tiles_affine (drawable, context,

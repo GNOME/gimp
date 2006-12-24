@@ -759,6 +759,39 @@ gimp_transform_direction_get_type (void)
 }
 
 GType
+gimp_transform_resize_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_TRANSFORM_RESIZE_ADJUST, "GIMP_TRANSFORM_RESIZE_ADJUST", "adjust" },
+    { GIMP_TRANSFORM_RESIZE_CLIP, "GIMP_TRANSFORM_RESIZE_CLIP", "clip" },
+    { GIMP_TRANSFORM_RESIZE_CROP, "GIMP_TRANSFORM_RESIZE_CROP", "crop" },
+    { GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT, "GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT", "crop-with-aspect" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_TRANSFORM_RESIZE_ADJUST, N_("Adjust"), NULL },
+    { GIMP_TRANSFORM_RESIZE_CLIP, N_("Clip"), NULL },
+    { GIMP_TRANSFORM_RESIZE_CROP, N_("Crop to result"), NULL },
+    { GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT, N_("Crop with aspect"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpTransformResize", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_pdb_arg_type_get_type (void)
 {
   static const GEnumValue values[] =

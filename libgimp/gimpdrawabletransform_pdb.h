@@ -64,7 +64,7 @@ gint32 gimp_drawable_transform_perspective         (gint32                 drawa
                                                     GimpInterpolationType  interpolation,
                                                     gboolean               supersample,
                                                     gint                   recursion_level,
-                                                    gboolean               clip_result);
+                                                    GimpTransformResize    clip_result);
 gint32 gimp_drawable_transform_perspective_default (gint32                 drawable_ID,
                                                     gdouble                x0,
                                                     gdouble                y0,
@@ -75,7 +75,7 @@ gint32 gimp_drawable_transform_perspective_default (gint32                 drawa
                                                     gdouble                x3,
                                                     gdouble                y3,
                                                     gboolean               interpolate,
-                                                    gboolean               clip_result);
+                                                    GimpTransformResize    clip_result);
 gint32 gimp_drawable_transform_rotate_simple       (gint32                 drawable_ID,
                                                     GimpRotationType       rotate_type,
                                                     gboolean               auto_center,
@@ -91,14 +91,14 @@ gint32 gimp_drawable_transform_rotate              (gint32                 drawa
                                                     GimpInterpolationType  interpolation,
                                                     gboolean               supersample,
                                                     gint                   recursion_level,
-                                                    gboolean               clip_result);
+                                                    GimpTransformResize    clip_result);
 gint32 gimp_drawable_transform_rotate_default      (gint32                 drawable_ID,
                                                     gdouble                angle,
                                                     gboolean               auto_center,
                                                     gint                   center_x,
                                                     gint                   center_y,
                                                     gboolean               interpolate,
-                                                    gboolean               clip_result);
+                                                    GimpTransformResize    clip_result);
 gint32 gimp_drawable_transform_scale               (gint32                 drawable_ID,
                                                     gdouble                x0,
                                                     gdouble                y0,
@@ -108,14 +108,14 @@ gint32 gimp_drawable_transform_scale               (gint32                 drawa
                                                     GimpInterpolationType  interpolation,
                                                     gboolean               supersample,
                                                     gint                   recursion_level,
-                                                    gboolean               clip_result);
+                                                    GimpTransformResize    clip_result);
 gint32 gimp_drawable_transform_scale_default       (gint32                 drawable_ID,
                                                     gdouble                x0,
                                                     gdouble                y0,
                                                     gdouble                x1,
                                                     gdouble                y1,
                                                     gboolean               interpolate,
-                                                    gboolean               clip_result);
+                                                    GimpTransformResize    clip_result);
 gint32 gimp_drawable_transform_shear               (gint32                 drawable_ID,
                                                     GimpOrientationType    shear_type,
                                                     gdouble                magnitude,
@@ -123,12 +123,12 @@ gint32 gimp_drawable_transform_shear               (gint32                 drawa
                                                     GimpInterpolationType  interpolation,
                                                     gboolean               supersample,
                                                     gint                   recursion_level,
-                                                    gboolean               clip_result);
+                                                    GimpTransformResize    clip_result);
 gint32 gimp_drawable_transform_shear_default       (gint32                 drawable_ID,
                                                     GimpOrientationType    shear_type,
                                                     gdouble                magnitude,
                                                     gboolean               interpolate,
-                                                    gboolean               clip_result);
+                                                    GimpTransformResize    clip_result);
 gint32 gimp_drawable_transform_2d                  (gint32                 drawable_ID,
                                                     gdouble                source_x,
                                                     gdouble                source_y,
@@ -141,7 +141,7 @@ gint32 gimp_drawable_transform_2d                  (gint32                 drawa
                                                     GimpInterpolationType  interpolation,
                                                     gboolean               supersample,
                                                     gint                   recursion_level,
-                                                    gboolean               clip_result);
+                                                    GimpTransformResize    clip_result);
 gint32 gimp_drawable_transform_2d_default          (gint32                 drawable_ID,
                                                     gdouble                source_x,
                                                     gdouble                source_y,
@@ -151,7 +151,7 @@ gint32 gimp_drawable_transform_2d_default          (gint32                 drawa
                                                     gdouble                dest_x,
                                                     gdouble                dest_y,
                                                     gboolean               interpolate,
-                                                    gboolean               clip_result);
+                                                    GimpTransformResize    clip_result);
 gint32 gimp_drawable_transform_matrix              (gint32                 drawable_ID,
                                                     gdouble                coeff_0_0,
                                                     gdouble                coeff_0_1,
@@ -166,7 +166,7 @@ gint32 gimp_drawable_transform_matrix              (gint32                 drawa
                                                     GimpInterpolationType  interpolation,
                                                     gboolean               supersample,
                                                     gint                   recursion_level,
-                                                    gboolean               clip_result);
+                                                    GimpTransformResize    clip_result);
 gint32 gimp_drawable_transform_matrix_default      (gint32                 drawable_ID,
                                                     gdouble                coeff_0_0,
                                                     gdouble                coeff_0_1,
@@ -178,7 +178,7 @@ gint32 gimp_drawable_transform_matrix_default      (gint32                 drawa
                                                     gdouble                coeff_2_1,
                                                     gdouble                coeff_2_2,
                                                     gboolean               interpolate,
-                                                    gboolean               clip_result);
+                                                    GimpTransformResize    clip_result);
 
 
 G_END_DECLS

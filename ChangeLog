@@ -1,3 +1,37 @@
+2006-12-24  Mukund Sivaraman  <muks@mukund.org>
+
+	* app/core/Makefile.am
+	* app/core/gimp-transform-resize.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpdrawable-transform.h
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-item-list.c
+	* app/core/gimpimage-item-list.h
+	* app/core/gimpitem-linked.c
+	* app/core/gimpitem-linked.h
+	* app/core/gimpitem.c
+	* app/core/gimpitem.h
+	* app/core/gimplayer.c
+	* app/pdb/drawable_transform_cmds.c
+	* app/text/gimptextlayer-transform.c
+	* app/text/gimptextlayer-transform.h
+	* app/tools/gimptransformoptions.c
+	* app/tools/gimptransformtool.c
+	* app/vectors/gimpvectors.c
+	* libgimp/gimpdrawabletransform_pdb.c
+	* libgimp/gimpdrawabletransform_pdb.h
+	* libgimp/gimpenums.c.tail
+	* libgimpbase/gimpbase.def
+	* libgimpbase/gimpbaseenums.c
+	* libgimpbase/gimpbaseenums.h
+	* tools/pdbgen/enums.pl
+	* tools/pdbgen/pdb/drawable_transform.pdb: implemented UI and PDB
+	for new clipping modes for affine transforms (crop to largest
+	rectangle, and crop to largest rectangle with the source's aspect
+	ratio); fixed various bugs in the largest rectangle computation
+	code; set padding to 6 in the transformation tool options.
+
 2006-12-22  Sven Neumann  <sven@gimp.org>
 
 	* data/tips/gimp-tips.xml.in: another tips change (bug #141443).

@@ -94,6 +94,7 @@ EXPORTS
 	gimp_sysconf_directory
 	gimp_transfer_mode_get_type
 	gimp_transform_direction_get_type
+	gimp_transform_resize_get_type
 	gimp_type_get_translation_domain
 	gimp_type_set_translation_domain
 	gimp_unit_get_abbreviation

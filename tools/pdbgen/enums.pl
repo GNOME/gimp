@@ -231,6 +231,18 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_TRANSFORM_FORWARD => '0',
 		       GIMP_TRANSFORM_BACKWARD => '1' }
 	},
+    GimpTransformResize =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_TRANSFORM_RESIZE_ADJUST
+			  GIMP_TRANSFORM_RESIZE_CLIP
+			  GIMP_TRANSFORM_RESIZE_CROP
+			  GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT) ],
+	  mapping => { GIMP_TRANSFORM_RESIZE_ADJUST => '0',
+		       GIMP_TRANSFORM_RESIZE_CLIP => '1',
+		       GIMP_TRANSFORM_RESIZE_CROP => '2',
+		       GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT => '3' }
+	},
     GimpUnit =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',

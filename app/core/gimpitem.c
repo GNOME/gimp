@@ -976,7 +976,7 @@ gimp_item_transform (GimpItem               *item,
                      GimpInterpolationType   interpolation,
                      gboolean                supersample,
                      gint                    recursion_level,
-                     gboolean                clip_result,
+                     GimpTransformResize     clip_result,
                      GimpProgress           *progress)
 {
   GimpItemClass *item_class;

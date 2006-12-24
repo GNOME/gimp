@@ -46,7 +46,7 @@ void    gimp_image_item_list_transform (GimpImage              *image,
                                         GimpInterpolationType   interpolation_type,
                                         gboolean                supersample,
                                         gint                    recursion_level,
-                                        gboolean                clip_result,
+                                        GimpTransformResize     clip_result,
                                         GimpProgress           *progress);
 
 GList * gimp_image_item_list_get_list  (GimpImage              *image,

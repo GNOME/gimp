@@ -104,7 +104,7 @@ static void       gimp_vectors_transform    (GimpItem         *item,
                                              GimpInterpolationType interp_type,
                                              gboolean          supersample,
                                              gint              recursion_level,
-                                             gboolean          clip_result,
+                                             GimpTransformResize   clip_result,
                                              GimpProgress     *progress);
 static gboolean   gimp_vectors_stroke       (GimpItem         *item,
                                              GimpDrawable     *drawable,
@@ -461,7 +461,7 @@ gimp_vectors_transform (GimpItem               *item,
                         GimpInterpolationType   interpolation_type,
                         gboolean                supersample,
                         gint                    recursion_level,
-                        gboolean                clip_result,
+                        GimpTransformResize     clip_result,
                         GimpProgress           *progress)
 {
   GimpVectors *vectors = GIMP_VECTORS (item);

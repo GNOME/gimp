@@ -123,7 +123,7 @@ gimp_image_item_list_transform (GimpImage              *image,
                                 GimpInterpolationType   interpolation_type,
                                 gboolean                supersample,
                                 gint                    recursion_level,
-                                gboolean                clip_result,
+                                GimpTransformResize     clip_result,
                                 GimpProgress           *progress)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));

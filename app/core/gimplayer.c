@@ -135,7 +135,7 @@ static void       gimp_layer_transform          (GimpItem           *item,
                                                  GimpInterpolationType  interpolation_type,
                                                  gboolean            supersample,
                                                  gint                recursion_level,
-                                                 gboolean            clip_result,
+                                                 GimpTransformResize    clip_result,
                                                  GimpProgress       *progress);
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
@@ -778,7 +778,7 @@ gimp_layer_transform (GimpItem               *item,
                       GimpInterpolationType   interpolation_type,
                       gboolean                supersample,
                       gint                    recursion_level,
-                      gboolean                clip_result,
+                      GimpTransformResize     clip_result,
                       GimpProgress           *progress)
 {
   GimpLayer *layer = GIMP_LAYER (item);
