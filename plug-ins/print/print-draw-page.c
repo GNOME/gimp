@@ -31,17 +31,17 @@
 
 
 /* In points */
-#define HEADER_HEIGHT (20*72/25.4)
-#define EPSILON  0.0001
+#define HEADER_HEIGHT (20 * 72.0 / 25.4)
+#define EPSILON        0.0001
 
-static guchar * get_image_pixels     (PrintData       *data,
-                                      gint            *width_ptr,
-                                      gint            *height_ptr,
-                                      gint            *rowstride_ptr);
+static guchar * get_image_pixels (PrintData       *data,
+                                  gint            *width_ptr,
+                                  gint            *height_ptr,
+                                  gint            *rowstride_ptr);
 
-static void     draw_info_header     (GtkPrintContext *context,
-                                      cairo_t         *cr,
-                                      PrintData       *data);
+static void     draw_info_header (GtkPrintContext *context,
+                                  cairo_t         *cr,
+                                  PrintData       *data);
 
 
 gboolean

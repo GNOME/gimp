@@ -24,6 +24,8 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include <glib/gstdio.h>
+
 #include "print.h"
 #include "print-settings.h"
 
@@ -53,7 +55,7 @@ static GKeyFile * check_version                              (GKeyFile          
  * file of the same name
  */
 gboolean
-load_print_settings (PrintData         *data)
+load_print_settings (PrintData *data)
 {
   GKeyFile *key_file;
 
@@ -77,7 +79,7 @@ load_print_settings (PrintData         *data)
  * and as an image parasite
  */
 void
-save_print_settings (PrintData         *data)
+save_print_settings (PrintData *data)
 {
   GKeyFile *key_file;
 
@@ -150,15 +152,15 @@ save_print_settings_resource_file (GKeyFile *settings_key_file)
   contents = g_key_file_to_data (settings_key_file, &length, &error);
   if (error)
     {
-      g_message ("Unable to get contents of settings key file.\n");
+      g_message ("Unable to get contents of settings key file.");
       return;
     }
 
-  fname = g_strconcat (gimp_directory (), G_DIR_SEPARATOR_S, "print-settings", NULL);
-  settings_file = fopen (fname, "w");
+  fname = g_build_filename (gimp_directory (), "print-settings", NULL);
+  settings_file = g_fopen (fname, "w");
   if (! settings_file)
     {
-      g_message ("Unable to create resource file for print settings.\n");
+      g_message ("Unable to create resource file for print settings.");
       return;
     }
 
@@ -184,7 +186,7 @@ save_print_settings_as_parasite (GKeyFile *settings_key_file,
   contents = g_key_file_to_data (settings_key_file, &length, &error);
   if (error)
     {
-      g_message ("Unable to get contents of settings key file.\n");
+      g_message ("Unable to get contents of settings key file.");
       return;
     }
 
@@ -199,8 +201,8 @@ save_print_settings_as_parasite (GKeyFile *settings_key_file,
  */
 static void
 add_print_setting_to_key_file (const gchar *key,
-                         const gchar *value,
-                         gpointer     data)
+                               const gchar *value,
+                               gpointer     data)
 {
   GKeyFile *key_file = data;
 
@@ -276,8 +278,8 @@ print_settings_key_file_from_parasite (gint32 image_ID)
 }
 
 static gboolean
-load_print_settings_from_key_file (PrintData         *data,
-                                   GKeyFile          *key_file)
+load_print_settings_from_key_file (PrintData *data,
+                                   GKeyFile  *key_file)
 {
   GtkPrintOperation  *operation = data->operation;
   gchar             **keys;
@@ -317,8 +319,9 @@ load_print_settings_from_key_file (PrintData         *data,
     {
       GtkPageOrientation orientation;
 
-      orientation = g_key_file_get_integer (key_file, "page-setup",
-                                            "orientation", &error);
+      orientation = g_key_file_get_integer (key_file,
+                                            "page-setup", "orientation",
+                                            &error);
       gtk_page_setup_set_orientation (page_setup, orientation);
       gtk_print_settings_set_orientation (settings, orientation);
       data->orientation = orientation;
@@ -329,7 +332,8 @@ load_print_settings_from_key_file (PrintData         *data,
   /* other settings */
   if (g_key_file_has_key (key_file, "other-settings", "show-header", &error))
     {
-      data->show_info_header = g_key_file_get_boolean (key_file, "other-settings",
+      data->show_info_header = g_key_file_get_boolean (key_file,
+                                                       "other-settings",
                                                        "show-header", &error);
     }
   else
@@ -337,8 +341,8 @@ load_print_settings_from_key_file (PrintData         *data,
 
   if (g_key_file_has_key (key_file, "other-settings", "unit", &error))
     {
-      data->unit = g_key_file_get_integer (key_file, "other-settings",
-                                           "unit", &error);
+      data->unit = g_key_file_get_integer (key_file,
+                                           "other-settings", "unit", &error);
     }
   else
     data->unit = GIMP_UNIT_INCH;
@@ -358,12 +362,14 @@ check_version (GKeyFile *key_file)
   if (! g_key_file_has_group (key_file, "meta"))
     return NULL;
 
-  major_version = g_key_file_get_integer (key_file, "meta", "major-version", &error);
+  major_version = g_key_file_get_integer (key_file,
+                                          "meta", "major-version", &error);
 
   if (major_version != PRINT_SETTINGS_MAJOR_VERSION)
     return NULL;
 
-  minor_version = g_key_file_get_integer (key_file, "meta", "minor-version", &error);
+  minor_version = g_key_file_get_integer (key_file,
+                                          "meta", "minor-version", &error);
 
   if (minor_version != PRINT_SETTINGS_MINOR_VERSION)
     return NULL;

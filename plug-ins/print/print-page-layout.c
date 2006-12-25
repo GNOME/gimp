@@ -80,8 +80,8 @@ print_page_layout_gui (PrintData *data)
   button = gtk_button_new_with_label (_("Page Setup"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 5);
   g_signal_connect (G_OBJECT (button), "clicked",
-		    G_CALLBACK (run_page_setup_dialog),
-		    data);
+                    G_CALLBACK (run_page_setup_dialog),
+                    data);
   gtk_widget_show (button);
 
   button = gtk_check_button_new_with_label (_("Show image info header"));
@@ -89,8 +89,8 @@ print_page_layout_gui (PrintData *data)
                                 data->show_info_header);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 5);
   g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (gimp_toggle_button_update),
-		    &data->show_info_header);
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &data->show_info_header);
   gtk_widget_show (button);
 
   hbox = gtk_hbox_new (FALSE, 0);

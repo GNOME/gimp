@@ -49,29 +49,29 @@ static gboolean    print_image          (gint32             image_ID,
 
 static void        begin_print          (GtkPrintOperation *operation,
                                          GtkPrintContext   *context,
-                                         gpointer           user_data);
+                                         PrintData         *data);
 
 static void        end_print            (GtkPrintOperation *operation,
                                          GtkPrintContext   *context,
-                                         gpointer           user_data);
+                                         PrintData         *data);
 
 static void        draw_page            (GtkPrintOperation *print,
                                          GtkPrintContext   *context,
                                          int                page_nr,
-                                         gpointer           user_data);
+                                         PrintData         *data);
 
 static GtkWidget * create_custom_widget (GtkPrintOperation *operation,
-                                         gpointer           user_data);
+                                         PrintData         *data);
 
 static void        custom_widget_apply  (GtkPrintOperation *operation,
                                          GtkWidget         *widget,
-                                         gpointer           user_data);
+                                         PrintData         *data);
 
 static gboolean    print_preview        (GtkPrintOperation        *operation,
                                          GtkPrintOperationPreview *preview,
                                          GtkPrintContext          *context,
                                          GtkWindow                *parent,
-                                         gpointer                  user_data);
+                                         PrintData                *data);
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -100,7 +100,7 @@ query (void)
                           "Bill Skaggs  <weskaggs@primate.ucdavis.edu>",
                           "2006",
                           N_("_Print..."),
-			  "GRAY, RGB*",
+                          "GRAY, RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (print_args), 0,
                           print_args, NULL);
@@ -160,9 +160,9 @@ print_image (gint32    image_ID,
              gint32    drawable_ID,
              gboolean  interactive)
 {
-  GtkPrintOperation       *operation  = gtk_print_operation_new ();
-  GError                  *error      = NULL;
-  PrintData               *data;
+  GtkPrintOperation *operation = gtk_print_operation_new ();
+  GError            *error     = NULL;
+  PrintData         *data;
 
   data = g_new0 (PrintData, 1);
   data->num_pages   = 1;
@@ -174,20 +174,29 @@ print_image (gint32    image_ID,
 
   load_print_settings (data);
 
-  g_signal_connect (operation, "begin-print", G_CALLBACK (begin_print), data);
-  g_signal_connect (operation, "draw-page",   G_CALLBACK (draw_page),   data);
-  g_signal_connect (operation, "end-print",   G_CALLBACK (end_print),   data);
+  g_signal_connect (operation, "begin-print",
+                    G_CALLBACK (begin_print),
+                    data);
+  g_signal_connect (operation, "draw-page",
+                    G_CALLBACK (draw_page),
+                    data);
+  g_signal_connect (operation, "end-print",
+                    G_CALLBACK (end_print),
+                    data);
 
   if (interactive)
     {
       GtkPrintOperationResult  res;
 
       g_signal_connect (operation, "create-custom-widget",
-                        G_CALLBACK (create_custom_widget),   data);
+                        G_CALLBACK (create_custom_widget),
+                        data);
       g_signal_connect (operation, "custom-widget-apply",
-                        G_CALLBACK (custom_widget_apply),   data);
+                        G_CALLBACK (custom_widget_apply),
+                        data);
       g_signal_connect (operation, "preview",
-                        G_CALLBACK (print_preview),   data);
+                        G_CALLBACK (print_preview),
+                        data);
 
       gtk_print_operation_set_custom_tab_label (operation, _("Layout"));
 
@@ -202,9 +211,11 @@ print_image (gint32    image_ID,
         }
     }
   else
-    gtk_print_operation_run (operation,
-                             GTK_PRINT_OPERATION_ACTION_PRINT,
-                             NULL, &error);
+    {
+      gtk_print_operation_run (operation,
+                               GTK_PRINT_OPERATION_ACTION_PRINT,
+                               NULL, &error);
+    }
 
   g_object_unref (operation);
 
@@ -216,35 +227,31 @@ print_image (gint32    image_ID,
 
 static void
 begin_print (GtkPrintOperation *operation,
-	     GtkPrintContext   *context,
-	     gpointer           user_data)
+             GtkPrintContext   *context,
+             PrintData         *data)
 {
-  PrintData        *data = (PrintData *) user_data;
-
   data->num_pages = 1;
+
   gtk_print_operation_set_n_pages (operation, data->num_pages);
 }
 
 static void
 end_print (GtkPrintOperation *operation,
-	   GtkPrintContext   *context,
-	   gpointer           user_data)
+           GtkPrintContext   *context,
+           PrintData         *data)
 {
   GtkPrintSettings *settings;
 
   settings = gtk_print_operation_get_print_settings (operation);
-
 }
 
 
 static void
 draw_page (GtkPrintOperation *operation,
-	   GtkPrintContext   *context,
-	   int                page_nr,
-	   gpointer           user_data)
+           GtkPrintContext   *context,
+           int                page_nr,
+           PrintData         *data)
 {
-  PrintData        *data      = user_data;
-
   draw_page_cairo (context, data);
 }
 
@@ -254,14 +261,9 @@ draw_page (GtkPrintOperation *operation,
  */
 static GtkWidget *
 create_custom_widget (GtkPrintOperation *operation,
-                      gpointer           user_data)
+                      PrintData         *data)
 {
-  GtkWidget *vbox;
-  PrintData *data  = user_data;
-
-  vbox = print_page_layout_gui (data);
-
-  return vbox;
+  return print_page_layout_gui (data);
 }
 
 /*
@@ -274,10 +276,8 @@ create_custom_widget (GtkPrintOperation *operation,
 static void
 custom_widget_apply (GtkPrintOperation *operation,
                      GtkWidget         *widget,
-                     gpointer           user_data)
+                     PrintData         *data)
 {
-  PrintData *data  = user_data;
-
   if (data->print_size_changed)
     {
       gimp_image_undo_group_start (data->image_id);
@@ -298,9 +298,8 @@ print_preview (GtkPrintOperation        *operation,
                GtkPrintOperationPreview *preview,
                GtkPrintContext          *context,
                GtkWindow                *parent,
-               gpointer                  user_data)
+               PrintData                *data)
 {
-  PrintData       *data       = user_data;
   GtkPageSetup    *page_setup = gtk_print_context_get_page_setup (context);
   GtkPaperSize    *paper_size;
   gdouble          paper_width;
@@ -315,13 +314,13 @@ print_preview (GtkPrintOperation        *operation,
   cairo_surface_t *surface;
   GtkPageOrientation orientation;
 
-  paper_size      = gtk_page_setup_get_paper_size    (page_setup);
-  paper_width     = gtk_paper_size_get_width         (paper_size, GTK_UNIT_INCH);
-  paper_height    = gtk_paper_size_get_height        (paper_size,  GTK_UNIT_INCH);
-  top_margin      = gtk_page_setup_get_top_margin    (page_setup, GTK_UNIT_INCH);
-  bottom_margin   = gtk_page_setup_get_bottom_margin (page_setup, GTK_UNIT_INCH);
-  left_margin     = gtk_page_setup_get_left_margin   (page_setup, GTK_UNIT_INCH);
-  right_margin    = gtk_page_setup_get_right_margin  (page_setup, GTK_UNIT_INCH);
+  paper_size    = gtk_page_setup_get_paper_size (page_setup);
+  paper_width   = gtk_paper_size_get_width (paper_size, GTK_UNIT_INCH);
+  paper_height  = gtk_paper_size_get_height (paper_size, GTK_UNIT_INCH);
+  top_margin    = gtk_page_setup_get_top_margin (page_setup, GTK_UNIT_INCH);
+  bottom_margin = gtk_page_setup_get_bottom_margin (page_setup, GTK_UNIT_INCH);
+  left_margin   = gtk_page_setup_get_left_margin (page_setup, GTK_UNIT_INCH);
+  right_margin  = gtk_page_setup_get_right_margin (page_setup, GTK_UNIT_INCH);
 
   /* the print context does not have the page orientation, it is transformed */
   orientation     = data->orientation;
@@ -338,8 +337,8 @@ print_preview (GtkPrintOperation        *operation,
       preview_height = PREVIEW_SCALE * paper_width;
     }
 
-      surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
-                                            preview_width, preview_height);
+  surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
+                                        preview_width, preview_height);
 
   if (CAIRO_STATUS_SUCCESS != cairo_surface_status (surface))
     {
@@ -349,7 +348,8 @@ print_preview (GtkPrintOperation        *operation,
 
 
   cr = cairo_create (surface);
-  gtk_print_context_set_cairo_context (context, cr, PREVIEW_SCALE, PREVIEW_SCALE);
+  gtk_print_context_set_cairo_context (context,
+                                       cr, PREVIEW_SCALE, PREVIEW_SCALE);
 
   /* fill page with white */
   cairo_set_source_rgb (cr, 1, 1, 1);
@@ -357,7 +357,8 @@ print_preview (GtkPrintOperation        *operation,
   cairo_rectangle (cr, 0, 0, preview_width, preview_height);
   cairo_fill (cr);
 
-  cairo_translate (cr, left_margin * PREVIEW_SCALE, right_margin * PREVIEW_SCALE);
+  cairo_translate (cr,
+                   left_margin * PREVIEW_SCALE, right_margin * PREVIEW_SCALE);
 
   if (draw_page_cairo (context, data))
     {
@@ -381,7 +382,8 @@ print_preview (GtkPrintOperation        *operation,
           g_unlink (fname);
           g_free (fname);
 
-          gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), image, FALSE, FALSE, 0);
+          gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+                              image, FALSE, FALSE, 0);
           gtk_widget_show (image);
 
           gtk_dialog_run (GTK_DIALOG (dialog));
