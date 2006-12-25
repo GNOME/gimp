@@ -1,3 +1,9 @@
+2006-12-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimplayertreeview.c
+	(gimp_layer_tree_view_set_context): don't do stuff on NULL mask
+	view renderers. Fixes bug #389307.
+
 2006-12-24  Mukund Sivaraman  <muks@mukund.org>
 
 	* app/core/Makefile.am
