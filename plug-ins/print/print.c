@@ -167,12 +167,11 @@ print_image (gint32    image_ID,
 
   data = g_new0 (PrintData, 1);
 
-  data->num_pages          = 1;
-  data->image_id           = image_ID;
-  data->drawable_id        = drawable_ID;
-  data->operation          = operation;
-  data->print_size_changed = FALSE;
-
+  data->num_pages   = 1;
+  data->image_id    = image_ID;
+  data->drawable_id = drawable_ID;
+  data->operation   = operation;
+  data->unit        = gimp_image_get_unit (data->image_id);
   gimp_image_get_resolution (data->image_id, &data->xres, &data->yres);
 
   load_print_settings (data);
@@ -290,15 +289,6 @@ custom_widget_apply (GtkPrintOperation *operation,
                      GtkWidget         *widget,
                      PrintData         *data)
 {
-  if (data->print_size_changed)
-    {
-      gimp_image_undo_group_start (data->image_id);
-
-      gimp_image_set_resolution (data->image_id, data->xres, data->yres);
-      gimp_image_set_unit (data->image_id, data->unit);
-
-      gimp_image_undo_group_end (data->image_id);
-    }
 }
 
 

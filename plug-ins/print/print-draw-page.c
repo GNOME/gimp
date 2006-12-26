@@ -58,13 +58,10 @@ draw_page_cairo (GtkPrintContext *context,
   gint              image_rowstride;
   gdouble           scale_x;
   gdouble           scale_y;
-  gdouble           x0            = 0;
-  gdouble           y0            = 0;
+  gdouble           x0 = 0;
+  gdouble           y0 = 0;
   guchar           *pixels;
   cairo_surface_t  *surface;
-  gint32            image_id      = data->image_id;
-  gdouble           image_xres;
-  gdouble           image_yres;
 
   cr = gtk_print_context_get_cairo_context (context);
   cr_width  = gtk_print_context_get_width  (context);
@@ -72,17 +69,16 @@ draw_page_cairo (GtkPrintContext *context,
   cr_dpi_x  = gtk_print_context_get_dpi_x  (context);
   cr_dpi_y  = gtk_print_context_get_dpi_y  (context);
 
-  gimp_image_get_resolution (image_id, &image_xres, &image_yres);
   pixels = get_image_pixels (data, &image_width, &image_height,
                              &image_rowstride);
 
-  scale_x = cr_dpi_x / image_xres;
-  scale_y = cr_dpi_y / image_yres;
+  scale_x = cr_dpi_x / data->xres;
+  scale_y = cr_dpi_y / data->yres;
 
   if (scale_x * image_width > cr_width + EPSILON)
     {
       g_message (_("Image width (%lg in) is larger than printable width (%lg in)."),
-                 image_width / image_xres, cr_width / cr_dpi_x);
+                 image_width / data->xres, cr_width / cr_dpi_x);
       gtk_print_operation_cancel (data->operation);
       return FALSE;
     }
@@ -90,7 +86,7 @@ draw_page_cairo (GtkPrintContext *context,
   if (scale_y * image_height > cr_height + EPSILON)
     {
       g_message (_("Image height (%lg in) is larger than printable height (%lg in)."),
-                 image_height / image_yres, cr_height / cr_dpi_y);
+                 image_height / data->yres, cr_height / cr_dpi_y);
       gtk_print_operation_cancel (data->operation);
       return FALSE;
     }

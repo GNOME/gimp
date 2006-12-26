@@ -399,7 +399,6 @@ print_size_info_set_resolution (PrintSizeInfo *info,
 
   data->xres = xres;
   data->yres = yres;
-  data->print_size_changed = TRUE;
 
   g_signal_handlers_block_by_func (info->resolution_entry,
                                    print_size_info_resolution_changed,
