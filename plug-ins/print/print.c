@@ -33,7 +33,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PRINT_PROC_NAME "file-print-gtk"
+#define PRINT_PROC_NAME  "file-print-gtk"
 #define PLUG_IN_BINARY   "print"
 
 
@@ -386,12 +386,12 @@ print_preview (GtkPrintOperation        *operation,
           GtkWidget *dialog;
           GtkWidget *image;
 
+          /* FIXME: add a Print action to the Preview dialog */
+
           dialog = gtk_dialog_new ();
           gtk_window_set_title (GTK_WINDOW (dialog), _("Print Preview"));
+
           image = gtk_image_new_from_file (filename);
-
-          g_unlink (filename);
-
           gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
                               image, FALSE, FALSE, 0);
           gtk_widget_show (image);
@@ -401,6 +401,7 @@ print_preview (GtkPrintOperation        *operation,
           gtk_widget_destroy (dialog);
         }
 
+      g_unlink (filename);
       g_free (filename);
     }
 

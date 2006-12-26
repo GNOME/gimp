@@ -2,7 +2,7 @@
 
 	* plug-ins/print/print: minor cleanups.
 
-2006-12-26  Sven Neumann  <sven@gimp.org>
+	* plug-ins/print/print-page-layout.c: cleanup up GUI code.
 
 	* plug-ins/print/print-settings.c (check_version): check keyfile
 	before accessing it. Cleaned up error handling.
