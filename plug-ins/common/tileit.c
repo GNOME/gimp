@@ -3,8 +3,7 @@
  *
  * This is a plug-in for the GIMP.
  *
- * Tileit - This plugin will take an image an make repeated
- * copies of it the stepping is 1/(2**n); 1<=n<=6
+ * Tileit - This plugin take an image and makes repeated copies of it.
  *
  * Copyright (C) 1997 Andy Thomas  alt@picnic.demon.co.uk
  *
@@ -590,7 +589,7 @@ tileit_dialog (void)
   gtk_widget_set_sensitive (table2, has_alpha);
 
   scale = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                "1 / (2 ** _n)", SCALE_WIDTH, -1,
+                                "_n²", SCALE_WIDTH, -1,
                                 itvals.numtiles, 2, MAX_SEGS, 1, 1, 0,
                                 TRUE, 0, 0,
                                 NULL, NULL);
