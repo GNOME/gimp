@@ -32,16 +32,17 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#define PRINT_PROC_NAME        "file-print-gtk"
-#define PLUG_IN_BINARY         "print"
+
+#define PRINT_PROC_NAME "file-print-gtk"
+#define PLUG_IN_BINARY   "print"
 
 
-static void      query          (void);
-static void      run            (const gchar       *name,
-                                 gint               nparams,
-                                 const GimpParam   *param,
-                                 gint              *nreturn_vals,
-                                 GimpParam        **return_vals);
+static void        query (void);
+static void        run   (const gchar       *name,
+                          gint               nparams,
+                          const GimpParam   *param,
+                          gint              *nreturn_vals,
+                          GimpParam        **return_vals);
 
 static gboolean    print_image          (gint32             image_ID,
                                          gint32             drawable_ID,
@@ -88,9 +89,9 @@ query (void)
 {
   static const GimpParamDef print_args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to print"            }
+    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to print"            }
   };
 
   gimp_install_procedure (PRINT_PROC_NAME,
@@ -165,11 +166,13 @@ print_image (gint32    image_ID,
   PrintData         *data;
 
   data = g_new0 (PrintData, 1);
-  data->num_pages   = 1;
-  data->image_id    = image_ID;
-  data->drawable_id = drawable_ID;
-  data->operation   = operation;
+
+  data->num_pages          = 1;
+  data->image_id           = image_ID;
+  data->drawable_id        = drawable_ID;
+  data->operation          = operation;
   data->print_size_changed = FALSE;
+
   gimp_image_get_resolution (data->image_id, &data->xres, &data->yres);
 
   load_print_settings (data);
@@ -186,7 +189,7 @@ print_image (gint32    image_ID,
 
   if (interactive)
     {
-      GtkPrintOperationResult  res;
+      GtkPrintOperationResult  result;
 
       g_signal_connect (operation, "create-custom-widget",
                         G_CALLBACK (create_custom_widget),
@@ -200,14 +203,20 @@ print_image (gint32    image_ID,
 
       gtk_print_operation_set_custom_tab_label (operation, _("Layout"));
 
-      res = gtk_print_operation_run (operation,
-                                     GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
-                                     NULL, &error);
+      result = gtk_print_operation_run (operation,
+                                        GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
+                                        NULL, &error);
 
-      if (res == GTK_PRINT_OPERATION_RESULT_APPLY ||
-          res == GTK_PRINT_OPERATION_RESULT_IN_PROGRESS)
+      switch (result)
         {
+        case GTK_PRINT_OPERATION_RESULT_APPLY:
+        case GTK_PRINT_OPERATION_RESULT_IN_PROGRESS:
           save_print_settings (data);
+          break;
+
+        case GTK_PRINT_OPERATION_RESULT_ERROR:
+        case GTK_PRINT_OPERATION_RESULT_CANCEL:
+          break;
         }
     }
   else
@@ -220,7 +229,10 @@ print_image (gint32    image_ID,
   g_object_unref (operation);
 
   if (error)
-    g_message (error->message);
+    {
+      g_message (error->message);
+      g_error_free (error);
+    }
 
   return TRUE;
 }
@@ -282,8 +294,7 @@ custom_widget_apply (GtkPrintOperation *operation,
     {
       gimp_image_undo_group_start (data->image_id);
 
-      gimp_image_set_resolution (data->image_id,
-                                 data->xres, data->yres);
+      gimp_image_set_resolution (data->image_id, data->xres, data->yres);
       gimp_image_set_unit (data->image_id, data->unit);
 
       gimp_image_undo_group_end (data->image_id);
@@ -300,19 +311,19 @@ print_preview (GtkPrintOperation        *operation,
                GtkWindow                *parent,
                PrintData                *data)
 {
-  GtkPageSetup    *page_setup = gtk_print_context_get_page_setup (context);
-  GtkPaperSize    *paper_size;
-  gdouble          paper_width;
-  gdouble          paper_height;
-  gdouble          top_margin;
-  gdouble          bottom_margin;
-  gdouble          left_margin;
-  gdouble          right_margin;
-  gint             preview_width;
-  gint             preview_height;
-  cairo_t         *cr;
-  cairo_surface_t *surface;
-  GtkPageOrientation orientation;
+  GtkPageSetup       *page_setup = gtk_print_context_get_page_setup (context);
+  GtkPaperSize       *paper_size;
+  gdouble             paper_width;
+  gdouble             paper_height;
+  gdouble             top_margin;
+  gdouble             bottom_margin;
+  gdouble             left_margin;
+  gdouble             right_margin;
+  gint                preview_width;
+  gint                preview_height;
+  cairo_t            *cr;
+  cairo_surface_t    *surface;
+  GtkPageOrientation  orientation;
 
   paper_size    = gtk_page_setup_get_paper_size (page_setup);
   paper_width   = gtk_paper_size_get_width (paper_size, GTK_UNIT_INCH);
@@ -323,7 +334,7 @@ print_preview (GtkPrintOperation        *operation,
   right_margin  = gtk_page_setup_get_right_margin (page_setup, GTK_UNIT_INCH);
 
   /* the print context does not have the page orientation, it is transformed */
-  orientation     = data->orientation;
+  orientation   = data->orientation;
 
   if (orientation == GTK_PAGE_ORIENTATION_PORTRAIT ||
       orientation == GTK_PAGE_ORIENTATION_REVERSE_PORTRAIT)
@@ -363,10 +374,10 @@ print_preview (GtkPrintOperation        *operation,
   if (draw_page_cairo (context, data))
     {
       cairo_status_t   status;
-      gchar           *fname;
+      gchar           *filename;
 
-      fname = gimp_temp_name ("png");
-      status = cairo_surface_write_to_png (surface, fname);
+      filename = gimp_temp_name ("png");
+      status = cairo_surface_write_to_png (surface, filename);
       cairo_destroy (cr);
       cairo_surface_destroy (surface);
 
@@ -377,10 +388,9 @@ print_preview (GtkPrintOperation        *operation,
 
           dialog = gtk_dialog_new ();
           gtk_window_set_title (GTK_WINDOW (dialog), _("Print Preview"));
-          image = gtk_image_new_from_file (fname);
+          image = gtk_image_new_from_file (filename);
 
-          g_unlink (fname);
-          g_free (fname);
+          g_unlink (filename);
 
           gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
                               image, FALSE, FALSE, 0);
@@ -390,8 +400,9 @@ print_preview (GtkPrintOperation        *operation,
 
           gtk_widget_destroy (dialog);
         }
+
+      g_free (filename);
     }
 
   return TRUE;
 }
-
