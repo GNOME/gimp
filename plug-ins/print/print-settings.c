@@ -147,7 +147,7 @@ save_print_settings_resource_file (GKeyFile *settings_key_file)
   FILE      *settings_file;
   gchar     *contents;
   gsize      length;
-  GError    *error          = NULL;
+  GError    *error = NULL;
 
   contents = g_key_file_to_data (settings_key_file, &length, &error);
   if (error)
@@ -248,33 +248,32 @@ static GKeyFile *
 print_settings_key_file_from_parasite (gint32 image_ID)
 {
   GimpParasite *parasite;
-  GError    *error    = NULL;
+  GKeyFile     *key_file;
+  GError       *error = NULL;
 
   parasite = gimp_image_parasite_find (image_ID, "print-settings");
 
   if (! parasite)
     return NULL;
-  else
+
+  key_file = g_key_file_new ();
+
+  g_key_file_set_list_separator (key_file, '=');
+
+  if (! g_key_file_load_from_data (key_file,
+                                   gimp_parasite_data (parasite),
+                                   gimp_parasite_data_size (parasite),
+                                   G_KEY_FILE_NONE, &error))
     {
-      GKeyFile  *key_file = g_key_file_new ();
-
-      g_key_file_set_list_separator (key_file, '=');
-
-      if (! g_key_file_load_from_data (key_file,
-                                       gimp_parasite_data (parasite),
-                                       gimp_parasite_data_size (parasite),
-                                       G_KEY_FILE_NONE, &error))
-        {
-          g_key_file_free (key_file);
-          key_file = NULL;;
-        }
-
-      gimp_parasite_free (parasite);
-
-      key_file = check_version (key_file);
-
-      return key_file;
+      g_key_file_free (key_file);
+      key_file = NULL;;
     }
+
+  gimp_parasite_free (parasite);
+
+  key_file = check_version (key_file);
+
+  return key_file;
 }
 
 static gboolean
@@ -337,7 +336,9 @@ load_print_settings_from_key_file (PrintData *data,
                                                        "show-header", &error);
     }
   else
-    data->show_info_header = FALSE;
+    {
+      data->show_info_header = FALSE;
+    }
 
   if (g_key_file_has_key (key_file, "other-settings", "unit", &error))
     {
@@ -345,7 +346,9 @@ load_print_settings_from_key_file (PrintData *data,
                                            "other-settings", "unit", &error);
     }
   else
-    data->unit = GIMP_UNIT_INCH;
+    {
+      data->unit = GIMP_UNIT_INCH;
+    }
 
   gtk_print_operation_set_print_settings (operation, settings);
 
@@ -357,9 +360,9 @@ check_version (GKeyFile *key_file)
 {
   gint    major_version;
   gint    minor_version;
-  GError *error       = NULL;
+  GError *error = NULL;
 
-  if (! g_key_file_has_group (key_file, "meta"))
+  if (! key_file || ! g_key_file_has_group (key_file, "meta"))
     return NULL;
 
   major_version = g_key_file_get_integer (key_file,
