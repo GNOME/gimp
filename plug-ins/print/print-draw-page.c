@@ -36,8 +36,6 @@
 
 
 static cairo_surface_t * create_surface   (guchar          *pixels,
-                                           gint             x,
-                                           gint             y,
                                            gint             width,
                                            gint             height,
                                            gint             rowstride);
@@ -139,7 +137,7 @@ draw_page_cairo (GtkPrintContext *context,
 
       gimp_pixel_rgn_get_rect (&region, pixels, 0, y, width, h);
 
-      surface = create_surface (pixels, 0, 0, width, h, rowstride);
+      surface = create_surface (pixels, width, h, rowstride);
 
       cairo_set_source_surface (cr, surface, 0, y);
       cairo_mask_surface (cr, surface, 0, y);
@@ -147,7 +145,7 @@ draw_page_cairo (GtkPrintContext *context,
       cairo_surface_destroy (surface);
 
       gimp_progress_update ((gdouble) (y + h) / (gdouble) height);
-  }
+    }
 
   g_free (pixels);
 
@@ -161,8 +159,6 @@ draw_page_cairo (GtkPrintContext *context,
 
 static cairo_surface_t *
 create_surface (guchar *pixels,
-                gint    x,
-                gint    y,
                 gint    width,
                 gint    height,
                 gint    rowstride)
