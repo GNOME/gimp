@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-19 23:46-0500\n"
+"POT-Creation-Date: 2006-12-27 15:15-0500\n"
 "PO-Revision-Date: 2005-09-06 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -2139,12 +2139,12 @@ msgid "Orientation"
 msgstr "Orientation"
 
 #: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:542
-#: ../plug-ins/common/tileit.c:426 ../plug-ins/pagecurl/pagecurl.c:534
+#: ../plug-ins/common/tileit.c:425 ../plug-ins/pagecurl/pagecurl.c:534
 msgid "_Horizontal"
 msgstr "_Horizontal"
 
 #: ../plug-ins/common/blinds.c:264 ../plug-ins/common/ripple.c:543
-#: ../plug-ins/common/tileit.c:436 ../plug-ins/pagecurl/pagecurl.c:533
+#: ../plug-ins/common/tileit.c:435 ../plug-ins/pagecurl/pagecurl.c:533
 msgid "_Vertical"
 msgstr "_Vertical"
 
@@ -3248,8 +3248,9 @@ msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
 msgstr ""
-"Pixels in the foreground colour will appear black in all output images.  This "
-"can be used for things like crop marks that have to show up on all channels."
+"Pixels in the foreground colour will appear black in all output images.  "
+"This can be used for things like crop marks that have to show up on all "
+"channels."
 
 #: ../plug-ins/common/deinterlace.c:93
 msgid "Fix images where every other row is missing"
@@ -3380,6 +3381,7 @@ msgstr "Destripe"
 #: ../plug-ins/common/raw.c:1035 ../plug-ins/common/smooth_palette.c:436
 #: ../plug-ins/common/tile.c:423 ../plug-ins/imagemap/imap_cmd_guides.c:167
 #: ../plug-ins/imagemap/imap_rectangle.c:403
+#: ../plug-ins/print/print-page-layout.c:232
 msgid "_Width:"
 msgstr "_Width:"
 
@@ -3654,6 +3656,7 @@ msgstr "Engrave"
 #: ../plug-ins/common/smooth_palette.c:441 ../plug-ins/common/tile.c:427
 #: ../plug-ins/imagemap/imap_cmd_guides.c:177
 #: ../plug-ins/imagemap/imap_rectangle.c:410
+#: ../plug-ins/print/print-page-layout.c:234
 msgid "_Height:"
 msgstr "_Height:"
 
@@ -4487,7 +4490,7 @@ msgstr "Intersection"
 
 #. Width and Height
 #: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:759
-#: ../plug-ins/common/wmf.c:549 ../plug-ins/print/print-page-layout.c:218
+#: ../plug-ins/common/wmf.c:549
 msgid "Width:"
 msgstr "Width:"
 
@@ -4579,7 +4582,7 @@ msgstr ""
 "and the cellcontent.  This is only necessary for pixel level positioning "
 "control."
 
-#: ../plug-ins/common/gtm.c:509
+#: ../plug-ins/common/gtm.c:509 ../plug-ins/print/print-page-layout.c:112
 msgid "C_aption"
 msgstr "C_aption"
 
@@ -4977,7 +4980,7 @@ msgstr "_Keep"
 msgid "_Convert"
 msgstr "_Convert"
 
-#: ../plug-ins/common/lcms.c:981
+#: ../plug-ins/common/lcms.c:981 ../plug-ins/jpeg/jpeg-exif.c:389
 msgid "_Don't ask me again"
 msgstr "_Don't ask me again"
 
@@ -6550,7 +6553,7 @@ msgstr "Raw image data"
 msgid "Load Image from Raw Data"
 msgstr "Load Image from Raw Data"
 
-#: ../plug-ins/common/raw.c:992
+#: ../plug-ins/common/raw.c:992 ../plug-ins/print/print.c:186
 msgid "Image"
 msgstr "Image"
 
@@ -7693,7 +7696,6 @@ msgid "Render Scalable Vector Graphics"
 msgstr "Render Scalable Vector Graphics"
 
 #: ../plug-ins/common/svg.c:765 ../plug-ins/common/wmf.c:555
-#: ../plug-ins/print/print-page-layout.c:224
 msgid "Height:"
 msgstr "Height:"
 
@@ -7710,7 +7712,7 @@ msgid "Constrain aspect ratio"
 msgstr "Constrain aspect ratio"
 
 #: ../plug-ins/common/svg.c:886 ../plug-ins/common/wmf.c:676
-#: ../plug-ins/print/print-page-layout.c:288
+#: ../plug-ins/print/print-page-layout.c:258
 #, c-format
 msgid "pixels/%a"
 msgstr "pixels/%a"
@@ -7861,7 +7863,7 @@ msgid "_Tile..."
 msgstr "_Tile..."
 
 #. Set the tile cache size
-#: ../plug-ins/common/tile.c:191 ../plug-ins/common/tileit.c:321
+#: ../plug-ins/common/tile.c:191 ../plug-ins/common/tileit.c:320
 msgid "Tiling"
 msgstr "Tiling"
 
@@ -7877,55 +7879,55 @@ msgstr "Tile to New Size"
 msgid "C_reate new image"
 msgstr "C_reate new image"
 
-#: ../plug-ins/common/tileit.c:216
+#: ../plug-ins/common/tileit.c:215
 msgid "Tile image into smaller versions of the orginal"
 msgstr "Tile image into smaller versions of the original"
 
-#: ../plug-ins/common/tileit.c:221
+#: ../plug-ins/common/tileit.c:220
 msgid "_Small Tiles..."
 msgstr "_Small Tiles..."
 
-#: ../plug-ins/common/tileit.c:263
+#: ../plug-ins/common/tileit.c:262
 msgid "Region selected for filter is empty."
 msgstr "Region selected for filter is empty."
 
 #. Get the preview image
-#: ../plug-ins/common/tileit.c:364
+#: ../plug-ins/common/tileit.c:363
 msgid "Small Tiles"
 msgstr "Small Tiles"
 
 #. Area for buttons etc
 #. Flip
-#: ../plug-ins/common/tileit.c:414 ../plug-ins/ifscompose/ifscompose.c:609
+#: ../plug-ins/common/tileit.c:413 ../plug-ins/ifscompose/ifscompose.c:609
 msgid "Flip"
 msgstr "Flip"
 
-#: ../plug-ins/common/tileit.c:462
+#: ../plug-ins/common/tileit.c:461
 msgid "A_ll tiles"
 msgstr "A_ll tiles"
 
-#: ../plug-ins/common/tileit.c:476
+#: ../plug-ins/common/tileit.c:475
 msgid "Al_ternate tiles"
 msgstr "Al_ternate tiles"
 
-#: ../plug-ins/common/tileit.c:490
+#: ../plug-ins/common/tileit.c:489
 msgid "_Explicit tile"
 msgstr "_Explicit tile"
 
-#: ../plug-ins/common/tileit.c:496
+#: ../plug-ins/common/tileit.c:495
 msgid "Ro_w:"
 msgstr "Ro_w:"
 
-#: ../plug-ins/common/tileit.c:520
+#: ../plug-ins/common/tileit.c:519
 msgid "Col_umn:"
 msgstr "Col_umn:"
 
-#: ../plug-ins/common/tileit.c:572
+#: ../plug-ins/common/tileit.c:571
 msgid "O_pacity:"
 msgstr "O_pacity:"
 
 #. Lower frame saying howmany segments
-#: ../plug-ins/common/tileit.c:581
+#: ../plug-ins/common/tileit.c:580
 msgid "Number of Segments"
 msgstr "Number of Segments"
 
@@ -10999,19 +11001,19 @@ msgstr "View Source"
 msgid "Edit Map Info..."
 msgstr "Edit Map Info..."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:263
+#: ../plug-ins/jpeg/jpeg-exif.c:306
 msgid "Rotate Image?"
 msgstr "Rotate Image?"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:266
+#: ../plug-ins/jpeg/jpeg-exif.c:309
 msgid "_Keep Orientation"
 msgstr "_Keep Orientation"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:321
+#: ../plug-ins/jpeg/jpeg-exif.c:364
 msgid "According to the EXIF data, this image is rotated."
 msgstr "According to the EXIF data, this image is rotated."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:336
+#: ../plug-ins/jpeg/jpeg-exif.c:379
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Would you like GIMP to rotate it into the standard orientation?"
 
@@ -11422,55 +11424,47 @@ msgstr "Curl Layer"
 msgid "Page Curl"
 msgstr "Page Curl"
 
-#: ../plug-ins/print/print-draw-page.c:84
+#: ../plug-ins/print/print-draw-page.c:96
 #, c-format
 msgid "Image width (%lg in) is larger than printable width (%lg in)."
 msgstr "Image width (%lg in) is larger than printable width (%lg in)."
 
-#: ../plug-ins/print/print-draw-page.c:92
+#: ../plug-ins/print/print-draw-page.c:104
 #, c-format
 msgid "Image height (%lg in) is larger than printable height (%lg in)."
 msgstr "Image height (%lg in) is larger than printable height (%lg in)."
 
-#: ../plug-ins/print/print-page-layout.c:80
-msgid "Page Setup"
-msgstr "Page Setup"
+#: ../plug-ins/print/print-page-layout.c:92
+msgid "Page _Setup"
+msgstr "Page _Setup"
 
-#: ../plug-ins/print/print-page-layout.c:87
+#: ../plug-ins/print/print-page-layout.c:99
 msgid "Show image info header"
 msgstr "Show image info header"
 
-#: ../plug-ins/print/print-page-layout.c:115
-msgid "Caption"
-msgstr "Caption"
-
-#: ../plug-ins/print/print-page-layout.c:193
+#: ../plug-ins/print/print-page-layout.c:195
 msgid "Print Size"
 msgstr "Print Size"
 
-#: ../plug-ins/print/print-page-layout.c:271
-msgid "X resolution:"
-msgstr "X resolution:"
+#: ../plug-ins/print/print-page-layout.c:279
+msgid "_X resolution:"
+msgstr "_X resolution:"
 
-#: ../plug-ins/print/print-page-layout.c:278
-msgid "Y resolution:"
-msgstr "Y resolution:"
+#: ../plug-ins/print/print-page-layout.c:281
+msgid "_Y resolution:"
+msgstr "_Y resolution:"
 
-#: ../plug-ins/print/print.c:97
+#: ../plug-ins/print/print.c:87
 msgid "Print the image"
 msgstr "Print the image"
 
-#: ../plug-ins/print/print.c:102
+#: ../plug-ins/print/print.c:92
 msgid "_Print..."
 msgstr "_Print..."
 
-#: ../plug-ins/print/print.c:192
-msgid "Layout"
-msgstr "Layout"
-
-#: ../plug-ins/print/print.c:378
-msgid "Print Preview"
-msgstr "Print Preview"
+#: ../plug-ins/print/print.c:231
+msgid "Printing"
+msgstr "Printing"
 
 #: ../plug-ins/rcm/rcm.c:99
 msgid "Replace a range of colors with another"
