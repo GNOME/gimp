@@ -1,5 +1,12 @@
 2006-12-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print-page-layout.c
+	* plug-ins/print/print.h: Clarified labels. Removed unused caption
+	user interface.  Commented out the UI for the info header; it will
+	eventually come back.
+
+2006-12-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print-draw-page.c: paint the background in white.
 	Show progress, use a tile cache.
 

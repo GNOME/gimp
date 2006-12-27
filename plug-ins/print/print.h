@@ -25,8 +25,6 @@ typedef struct
   gboolean           show_info_header;
   GtkPrintOperation *operation;
   GtkWidget         *layout_preview_image;
-  GtkTextBuffer     *caption_buffer;
-  guchar            *caption;
   gdouble            xres;
   gdouble            yres;
   GtkPageOrientation orientation;

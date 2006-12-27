@@ -65,10 +65,6 @@ GtkWidget *
 print_page_layout_gui (PrintData *data)
 {
   GtkWidget *main_vbox;
-  GtkWidget *caption_vbox;
-  GtkWidget *scroll;
-  GtkWidget *text_view;
-  GtkWidget *label;
   GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *frame;
@@ -80,23 +76,19 @@ print_page_layout_gui (PrintData *data)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  /* size entry area for the image's print size */
-  frame = print_size_frame (data);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new_with_mnemonic (_("Page _Setup"));
+  button = gtk_button_new_with_mnemonic (_("_Adjust Page Size "
+                                           "and Orientation"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (run_page_setup_dialog),
                     data);
   gtk_widget_show (button);
 
-  button = gtk_check_button_new_with_label (_("Show image info header"));
+#if 0
+  /* Commented out until the header becomes a little more configurable
+   * and we can provide a user interface to include/exclude information.
+   */
+  button = gtk_check_button_new_with_label (_("Print image header"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 data->show_info_header);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -104,29 +96,16 @@ print_page_layout_gui (PrintData *data)
                     G_CALLBACK (gimp_toggle_button_update),
                     &data->show_info_header);
   gtk_widget_show (button);
+#endif
 
-  caption_vbox = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_end (GTK_BOX (main_vbox), caption_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (caption_vbox);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  label = gtk_label_new_with_mnemonic (_("C_aption"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-  gtk_box_pack_start (GTK_BOX (caption_vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  scroll = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_size_request (scroll, -1, 100);
-  gtk_box_pack_start (GTK_BOX (caption_vbox), scroll, TRUE, TRUE, 0);
-  gtk_widget_show (scroll);
-
-  text_view = gtk_text_view_new ();
-  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(text_view), GTK_WRAP_WORD);
-  gtk_container_add (GTK_CONTAINER (scroll), text_view);
-  data->caption_buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
-  gtk_widget_show (text_view);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), text_view);
+  /* size entry area for the image's print size */
+  frame = print_size_frame (data);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   return main_vbox;
 }
@@ -192,7 +171,7 @@ print_size_frame (PrintData *data)
   image_width  = gimp_image_width (data->image_id);
   image_height = gimp_image_height (data->image_id);
 
-  frame = gimp_frame_new (_("Print Size"));
+  frame = gimp_frame_new (_("Image Size"));
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
