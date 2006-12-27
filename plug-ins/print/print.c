@@ -23,8 +23,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include <glib/gstdio.h>
-
 #include "print.h"
 #include "print-settings.h"
 #include "print-page-layout.h"
@@ -64,15 +62,6 @@ static void        draw_page            (GtkPrintOperation *print,
 static GtkWidget * create_custom_widget (GtkPrintOperation *operation,
                                          PrintData         *data);
 
-static void        custom_widget_apply  (GtkPrintOperation *operation,
-                                         GtkWidget         *widget,
-                                         PrintData         *data);
-
-static gboolean    print_preview        (GtkPrintOperation        *operation,
-                                         GtkPrintOperationPreview *preview,
-                                         GtkPrintContext          *context,
-                                         GtkWindow                *parent,
-                                         PrintData                *data);
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -101,7 +90,7 @@ query (void)
                           "Bill Skaggs  <weskaggs@primate.ucdavis.edu>",
                           "2006",
                           N_("_Print..."),
-                          "GRAY, RGB*",
+                          "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (print_args), 0,
                           print_args, NULL);
@@ -193,14 +182,8 @@ print_image (gint32    image_ID,
       g_signal_connect (operation, "create-custom-widget",
                         G_CALLBACK (create_custom_widget),
                         data);
-      g_signal_connect (operation, "custom-widget-apply",
-                        G_CALLBACK (custom_widget_apply),
-                        data);
-      g_signal_connect (operation, "preview",
-                        G_CALLBACK (print_preview),
-                        data);
 
-      gtk_print_operation_set_custom_tab_label (operation, _("Layout"));
+      gtk_print_operation_set_custom_tab_label (operation, _("Image"));
 
       result = gtk_print_operation_run (operation,
                                         GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
@@ -244,6 +227,8 @@ begin_print (GtkPrintOperation *operation,
   data->num_pages = 1;
 
   gtk_print_operation_set_n_pages (operation, data->num_pages);
+
+  gimp_progress_init (_("Printing"));
 }
 
 static void
@@ -251,9 +236,7 @@ end_print (GtkPrintOperation *operation,
            GtkPrintContext   *context,
            PrintData         *data)
 {
-  GtkPrintSettings *settings;
-
-  settings = gtk_print_operation_get_print_settings (operation);
+  gimp_progress_update (1.0);
 }
 
 
@@ -275,125 +258,4 @@ create_custom_widget (GtkPrintOperation *operation,
                       PrintData         *data)
 {
   return print_page_layout_gui (data);
-}
-
-/*
- * This function is called once before printing begins, and should be
- * used to apply any changes that have been made to the contents of the
- * custom widget, since it is not guaranteed to be around later.  This
- * function is guaranteed to be called at least once, even if printing
- * is cancelled.
- */
-static void
-custom_widget_apply (GtkPrintOperation *operation,
-                     GtkWidget         *widget,
-                     PrintData         *data)
-{
-}
-
-
-#define PREVIEW_SCALE 72
-
-static gboolean
-print_preview (GtkPrintOperation        *operation,
-               GtkPrintOperationPreview *preview,
-               GtkPrintContext          *context,
-               GtkWindow                *parent,
-               PrintData                *data)
-{
-  GtkPageSetup       *page_setup = gtk_print_context_get_page_setup (context);
-  GtkPaperSize       *paper_size;
-  gdouble             paper_width;
-  gdouble             paper_height;
-  gdouble             top_margin;
-  gdouble             bottom_margin;
-  gdouble             left_margin;
-  gdouble             right_margin;
-  gint                preview_width;
-  gint                preview_height;
-  cairo_t            *cr;
-  cairo_surface_t    *surface;
-  GtkPageOrientation  orientation;
-
-  paper_size    = gtk_page_setup_get_paper_size (page_setup);
-  paper_width   = gtk_paper_size_get_width (paper_size, GTK_UNIT_INCH);
-  paper_height  = gtk_paper_size_get_height (paper_size, GTK_UNIT_INCH);
-  top_margin    = gtk_page_setup_get_top_margin (page_setup, GTK_UNIT_INCH);
-  bottom_margin = gtk_page_setup_get_bottom_margin (page_setup, GTK_UNIT_INCH);
-  left_margin   = gtk_page_setup_get_left_margin (page_setup, GTK_UNIT_INCH);
-  right_margin  = gtk_page_setup_get_right_margin (page_setup, GTK_UNIT_INCH);
-
-  /* the print context does not have the page orientation, it is transformed */
-  orientation   = data->orientation;
-
-  if (orientation == GTK_PAGE_ORIENTATION_PORTRAIT ||
-      orientation == GTK_PAGE_ORIENTATION_REVERSE_PORTRAIT)
-    {
-      preview_width  = PREVIEW_SCALE * paper_width;
-      preview_height = PREVIEW_SCALE * paper_height;
-    }
-  else
-    {
-      preview_width  = PREVIEW_SCALE * paper_height;
-      preview_height = PREVIEW_SCALE * paper_width;
-    }
-
-  surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
-                                        preview_width, preview_height);
-
-  if (CAIRO_STATUS_SUCCESS != cairo_surface_status (surface))
-    {
-      g_message ("Unable to create preview (not enough memory?)");
-      return TRUE;
-    }
-
-
-  cr = cairo_create (surface);
-  gtk_print_context_set_cairo_context (context,
-                                       cr, PREVIEW_SCALE, PREVIEW_SCALE);
-
-  /* fill page with white */
-  cairo_set_source_rgb (cr, 1, 1, 1);
-  cairo_new_path (cr);
-  cairo_rectangle (cr, 0, 0, preview_width, preview_height);
-  cairo_fill (cr);
-
-  cairo_translate (cr,
-                   left_margin * PREVIEW_SCALE, right_margin * PREVIEW_SCALE);
-
-  if (draw_page_cairo (context, data))
-    {
-      cairo_status_t   status;
-      gchar           *filename;
-
-      filename = gimp_temp_name ("png");
-      status = cairo_surface_write_to_png (surface, filename);
-      cairo_destroy (cr);
-      cairo_surface_destroy (surface);
-
-      if (status == CAIRO_STATUS_SUCCESS)
-        {
-          GtkWidget *dialog;
-          GtkWidget *image;
-
-          /* FIXME: add a Print action to the Preview dialog */
-
-          dialog = gtk_dialog_new ();
-          gtk_window_set_title (GTK_WINDOW (dialog), _("Print Preview"));
-
-          image = gtk_image_new_from_file (filename);
-          gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-                              image, FALSE, FALSE, 0);
-          gtk_widget_show (image);
-
-          gtk_dialog_run (GTK_DIALOG (dialog));
-
-          gtk_widget_destroy (dialog);
-        }
-
-      g_unlink (filename);
-      g_free (filename);
-    }
-
-  return TRUE;
 }

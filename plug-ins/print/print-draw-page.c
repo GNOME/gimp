@@ -84,6 +84,7 @@ draw_page_cairo (GtkPrintContext *context,
   rowstride = drawable->bpp * width;
 
   cr = gtk_print_context_get_cairo_context (context);
+
   cr_width  = gtk_print_context_get_width  (context);
   cr_height = gtk_print_context_get_height (context);
   cr_dpi_x  = gtk_print_context_get_dpi_x  (context);
@@ -108,6 +109,9 @@ draw_page_cairo (GtkPrintContext *context,
       return FALSE;
     }
 
+  cairo_set_source_rgb (cr, 1, 1, 1);
+  cairo_paint (cr);
+
   /* print header if it is requested */
   if (data->show_info_header)
     {
@@ -122,6 +126,8 @@ draw_page_cairo (GtkPrintContext *context,
 
   cairo_translate (cr, x0, y0);
   cairo_scale (cr, scale_x, scale_y);
+
+  gimp_tile_cache_ntiles (1 + width / gimp_tile_width ());
 
   gimp_pixel_rgn_init (&region, drawable, 0, 0, width, height, FALSE, FALSE);
 
@@ -139,7 +145,9 @@ draw_page_cairo (GtkPrintContext *context,
       cairo_mask_surface (cr, surface, 0, y);
 
       cairo_surface_destroy (surface);
-    }
+
+      gimp_progress_update ((gdouble) (y + h) / (gdouble) height);
+  }
 
   g_free (pixels);
 
