@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -30,6 +32,8 @@
 typedef struct
 {
   PrintData       *data;
+  gint             image_width;
+  gint             image_height;
   GimpSizeEntry   *size_entry;
   GimpSizeEntry   *resolution_entry;
   GimpChainButton *chain;
@@ -71,6 +75,12 @@ print_page_layout_gui (PrintData *data)
   GtkWidget *button;
   GtkWidget *label;
   GtkWidget *frame;
+
+  memset (&info, 0, sizeof (PrintSizeInfo));
+
+  info.data         = data;
+  info.image_width  = gimp_image_width (data->image_id);
+  info.image_height = gimp_image_height (data->image_id);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -187,11 +197,9 @@ print_size_frame (PrintData *data)
   gdouble       image_width;
   gdouble       image_height;
 
-  info.data = data;
-
-  image_width  = (gimp_image_width (data->image_id) *
+  image_width  = (info.image_width *
                   gimp_unit_get_factor (data->unit) / data->xres);
-  image_height = (gimp_image_height (data->image_id) *
+  image_height = (info.image_height *
                   gimp_unit_get_factor (data->unit) / data->yres);
 
   frame = gimp_frame_new (_("Image Size"));
@@ -320,22 +328,19 @@ print_size_frame (PrintData *data)
 static void
 print_size_info_size_changed (GtkWidget *widget)
 {
-  gdouble    width;
-  gdouble    height;
-  gdouble    xres;
-  gdouble    yres;
-  gdouble    scale;
-  PrintData *data         = info.data;
-  gint       image_width  = gimp_image_width (data->image_id);
-  gint       image_height = gimp_image_height (data->image_id);
+  gdouble width;
+  gdouble height;
+  gdouble xres;
+  gdouble yres;
+  gdouble scale;
 
   scale = gimp_unit_get_factor (gimp_size_entry_get_unit (info.size_entry));
 
   width  = gimp_size_entry_get_value (info.size_entry, 0);
   height = gimp_size_entry_get_value (info.size_entry, 1);
 
-  xres = scale * image_width  / MAX (0.0001, width);
-  yres = scale * image_height / MAX (0.0001, height);
+  xres = scale * info.image_width  / MAX (0.0001, width);
+  yres = scale * info.image_height / MAX (0.0001, height);
 
   print_size_info_set_resolution (&info, xres, yres);
 }
@@ -438,10 +443,10 @@ print_size_info_set_resolution (PrintSizeInfo *info,
                                    NULL);
 
   gimp_size_entry_set_value (info->size_entry, 0,
-                             gimp_image_width (data->image_id) *
+                             info->image_width *
                              gimp_unit_get_factor (data->unit) / xres);
   gimp_size_entry_set_value (info->size_entry, 1,
-                             gimp_image_height (data->image_id) *
+                             info->image_height *
                              gimp_unit_get_factor (data->unit) / yres);
 
   g_signal_handlers_unblock_by_func (info->size_entry,
@@ -455,8 +460,6 @@ print_size_info_set_page_setup (PrintSizeInfo *info,
 {
   PrintData *data = info->data;
   gchar     *text;
-  gint       image_width  = gimp_image_width (data->image_id);
-  gint       image_height = gimp_image_height (data->image_id);
   gdouble    page_width;
   gdouble    page_height;
   gdouble    x;
@@ -478,7 +481,9 @@ print_size_info_set_page_setup (PrintSizeInfo *info,
 
   if (info->chain && gimp_chain_button_get_active (info->chain))
     {
-      gdouble ratio = (gdouble) image_width / (gdouble) image_height;
+      gdouble ratio;
+
+      ratio = (gdouble) info->image_width / (gdouble) info->image_height;
 
       if (ratio < 1.0)
         x = y * ratio;
@@ -489,8 +494,8 @@ print_size_info_set_page_setup (PrintSizeInfo *info,
   gimp_size_entry_set_value_boundaries (info->size_entry, 0, 0.0, x);
   gimp_size_entry_set_value_boundaries (info->size_entry, 1, 0.0, y);
 
-  x = image_width / page_width;
-  y = image_height / page_height;
+  x = info->image_width / page_width;
+  y = info->image_height / page_height;
 
   if (info->chain && gimp_chain_button_get_active (info->chain))
     {
