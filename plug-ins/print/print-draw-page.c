@@ -126,7 +126,9 @@ draw_page_cairo (GtkPrintContext *context,
       surface = create_surface (pixels, width, h, rowstride);
 
       cairo_set_source_surface (cr, surface, 0, y);
-      cairo_mask_surface (cr, surface, 0, y);
+
+      cairo_rectangle (cr, 0, y, width, h);
+      cairo_fill (cr);
 
       cairo_surface_destroy (surface);
 

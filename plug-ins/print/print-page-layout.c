@@ -415,13 +415,9 @@ print_size_info_set_resolution (PrintSizeInfo *info,
   if (info->chain && gimp_chain_button_get_active (info->chain))
     {
       if (xres != data->xres)
-        {
-          yres = xres;
-        }
+        yres = xres;
       else
-        {
-          xres = yres;
-        }
+        xres = yres;
     }
 
   data->xres = xres;
