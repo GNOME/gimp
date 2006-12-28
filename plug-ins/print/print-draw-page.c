@@ -111,8 +111,6 @@ draw_page_cairo (GtkPrintContext *context,
   cairo_translate (cr, x0, y0);
   cairo_scale (cr, scale_x, scale_y);
 
-  gimp_tile_cache_ntiles (1 + width / gimp_tile_width ());
-
   gimp_pixel_rgn_init (&region, drawable, 0, 0, width, height, FALSE, FALSE);
 
   pixels = g_new (guchar, MIN (height, tile_height) * rowstride);

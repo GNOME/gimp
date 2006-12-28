@@ -17,7 +17,7 @@
  */
 
 #define PRINT_SETTINGS_MAJOR_VERSION 0
-#define PRINT_SETTINGS_MINOR_VERSION 1
+#define PRINT_SETTINGS_MINOR_VERSION 2
 
 #include "config.h"
 
@@ -83,7 +83,14 @@ save_print_settings (PrintData *data)
   GKeyFile *key_file;
 
   key_file = print_settings_key_file_from_settings (data);
+
   save_print_settings_resource_file (key_file);
+
+  /* image setup */
+  g_key_file_set_integer (key_file, "image-setup", "unit", data->unit);
+  g_key_file_set_double (key_file, "image-setup", "x-resolution", data->xres);
+  g_key_file_set_double (key_file, "image-setup", "y-resolution", data->yres);
+
   save_print_settings_as_parasite (key_file, data->image_id);
 
   g_key_file_free (key_file);
@@ -127,11 +134,11 @@ print_settings_key_file_from_settings (PrintData *data)
                               orientation);
     }
 
+#if 0
   /* other settings */
   g_key_file_set_boolean (key_file, "other-settings", "show-header",
                           data->show_info_header);
-  g_key_file_set_integer (key_file, "other-settings", "unit",
-                          data->unit);
+#endif
 
   return key_file;
 }
@@ -270,7 +277,6 @@ load_print_settings_from_key_file (PrintData *data,
                                    GKeyFile  *key_file)
 {
   GtkPrintOperation  *operation = data->operation;
-  GtkPageSetup       *page_setup;
   GtkPrintSettings   *settings;
   gchar             **keys;
   gsize               n_keys;
@@ -300,25 +306,42 @@ load_print_settings_from_key_file (PrintData *data,
 
   g_strfreev (keys);
 
-
   /* page setup parameters */
-  page_setup = gtk_print_operation_get_default_page_setup (operation);
-  if (! page_setup)
-    page_setup = gtk_page_setup_new ();
 
   if (g_key_file_has_key (key_file, "page-setup", "orientation", NULL))
     {
-      GtkPageOrientation orientation;
+      GtkPageSetup       *page_setup;
+      GtkPageOrientation  orientation;
+
+      page_setup = gtk_print_operation_get_default_page_setup (operation);
+      if (! page_setup)
+        page_setup = gtk_page_setup_new ();
 
       orientation = g_key_file_get_integer (key_file,
                                             "page-setup", "orientation", NULL);
       gtk_page_setup_set_orientation (page_setup, orientation);
       gtk_print_settings_set_orientation (settings, orientation);
       data->orientation = orientation;
+
+      gtk_print_operation_set_default_page_setup (operation, page_setup);
     }
 
-  gtk_print_operation_set_default_page_setup (operation, page_setup);
+  if (g_key_file_has_key (key_file, "image-setup", "unit", NULL))
+    {
+      data->unit = g_key_file_get_integer (key_file,
+                                           "image-setup", "unit", NULL);
+    }
 
+  if (g_key_file_has_key (key_file, "image-setup", "x-resolution", NULL) &&
+      g_key_file_has_key (key_file, "image-setup", "y-resolution", NULL))
+    {
+      data->xres = g_key_file_get_double (key_file,
+                                          "image-setup", "x-resolution", NULL);
+      data->yres = g_key_file_get_double (key_file,
+                                          "image-setup", "y-resolution", NULL);
+    }
+
+#if 0
   /* other settings */
   if (g_key_file_has_key (key_file, "other-settings", "show-header", NULL))
     {
@@ -327,18 +350,9 @@ load_print_settings_from_key_file (PrintData *data,
                                                        "show-header", NULL);
     }
   else
+#endif
     {
       data->show_info_header = FALSE;
-    }
-
-  if (g_key_file_has_key (key_file, "other-settings", "unit", NULL))
-    {
-      data->unit = g_key_file_get_integer (key_file,
-                                           "other-settings", "unit", NULL);
-    }
-  else
-    {
-      data->unit = GIMP_UNIT_INCH;
     }
 
   gtk_print_operation_set_print_settings (operation, settings);

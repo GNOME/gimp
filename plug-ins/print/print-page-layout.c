@@ -60,8 +60,7 @@ static void        print_size_info_set_resolution     (PrintSizeInfo *info,
                                                        gdouble        yres);
 
 
-static void        print_size_info_set_page_setup     (PrintSizeInfo *info,
-                                                       GtkPageSetup  *setup);
+static void        print_size_info_set_page_setup     (PrintSizeInfo *info);
 
 
 static PrintSizeInfo  info;
@@ -141,6 +140,8 @@ print_page_layout_gui (PrintData *data)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  print_size_info_set_page_setup (&info);
+
   return main_vbox;
 }
 
@@ -171,19 +172,15 @@ run_page_setup_dialog (GtkWidget *widget,
 
   gtk_print_operation_set_default_page_setup (operation, page_setup);
 
-  print_size_info_set_page_setup (&info, page_setup);
+  print_size_info_set_page_setup (&info);
 }
 
 #define SB_WIDTH 8
 
-/*
- * the code below is copied from app/dialogs/print-size-dialog.c
- * with minimal changes.  Bleeah!
- */
+
 static GtkWidget *
 print_size_frame (PrintData *data)
 {
-  GtkPageSetup *setup;
   GtkWidget    *entry;
   GtkWidget    *height;
   GtkWidget    *vbox;
@@ -251,8 +248,6 @@ print_size_frame (PrintData *data)
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1,
                                   data->yres, FALSE);
 
-  setup = gtk_print_operation_get_default_page_setup (data->operation);
-
   gimp_size_entry_set_value (GIMP_SIZE_ENTRY (entry), 0, image_width);
   gimp_size_entry_set_value (GIMP_SIZE_ENTRY (entry), 1, image_height);
 
@@ -262,7 +257,7 @@ print_size_frame (PrintData *data)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  entry = gimp_size_entry_new (1, data->unit, _("pixels/%a"),
+  entry = gimp_size_entry_new (1, GIMP_UNIT_INCH, _("pixels/%a"),
                                FALSE, FALSE, FALSE, SB_WIDTH,
                                GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
@@ -306,8 +301,6 @@ print_size_frame (PrintData *data)
   gtk_widget_show (chain);
 
   info.chain = GIMP_CHAIN_BUTTON (chain);
-
-  print_size_info_set_page_setup (&info, setup);
 
   g_signal_connect (info.size_entry, "value-changed",
                     G_CALLBACK (print_size_info_size_changed),
@@ -370,19 +363,14 @@ print_size_info_unit_changed (GtkWidget *widget)
   w = gimp_size_entry_get_value (entry, 0) * factor;
   h = gimp_size_entry_get_value (entry, 1) * factor;
 
-  print_size_info_set_page_setup (&info,
-                                  gtk_print_operation_get_default_page_setup (data->operation));
-
+  print_size_info_set_page_setup (&info);
   print_size_info_set_size (&info, w, h);
 }
 
 static void
 print_size_info_chain_toggled (GtkWidget *widget)
 {
-  PrintData *data = info.data;
-
-  print_size_info_set_page_setup (&info,
-                                  gtk_print_operation_get_default_page_setup (data->operation));
+  print_size_info_set_page_setup (&info);
 }
 
 static void
@@ -451,24 +439,36 @@ print_size_info_set_resolution (PrintSizeInfo *info,
 }
 
 static void
-print_size_info_set_page_setup (PrintSizeInfo *info,
-                                GtkPageSetup  *setup)
+print_size_info_set_page_setup (PrintSizeInfo *info)
 {
-  PrintData *data = info->data;
-  gchar     *text;
-  gdouble    page_width;
-  gdouble    page_height;
-  gdouble    x;
-  gdouble    y;
+  GtkPageSetup *setup;
+  PrintData    *data = info->data;
+  gchar        *format;
+  gchar        *text;
+  gdouble       page_width;
+  gdouble       page_height;
+  gdouble       x;
+  gdouble       y;
+
+  setup = gtk_print_operation_get_default_page_setup (data->operation);
+  if (! setup)
+    {
+      setup = gtk_page_setup_new ();
+      gtk_print_operation_set_default_page_setup (data->operation, setup);
+    }
 
   page_width  = (gtk_page_setup_get_page_width (setup, GTK_UNIT_INCH) *
                  gimp_unit_get_factor (data->unit));
   page_height = (gtk_page_setup_get_page_height (setup, GTK_UNIT_INCH) *
                  gimp_unit_get_factor (data->unit));
 
-  text = g_strdup_printf ("%g x %g %s",
-                          page_width, page_height,
-                          gimp_unit_get_plural (data->unit));
+  format = g_strdup_printf ("%%.%df x %%.%df %s",
+                            gimp_unit_get_digits (data->unit),
+                            gimp_unit_get_digits (data->unit),
+                            gimp_unit_get_plural (data->unit));
+  text = g_strdup_printf (format, page_width, page_height);
+  g_free (format);
+
   gtk_label_set_text (GTK_LABEL (info->area_label), text);
   g_free (text);
 
