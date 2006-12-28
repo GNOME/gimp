@@ -564,6 +564,7 @@ gimp_unit_menu_selection_row_activated_callback (GtkTreeView       *tv,
 static void
 gimp_unit_menu_create_selection (GimpUnitMenu *menu)
 {
+  GtkWidget        *parent = gtk_widget_get_toplevel (GTK_WIDGET (menu));
   GtkWidget        *vbox;
   GtkWidget        *scrolled_win;
   GtkListStore     *list;
@@ -574,7 +575,7 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
   gint              num_units;
 
   menu->selection = gimp_dialog_new (_("Unit Selection"), "gimp-unit-selection",
-                                     GTK_WIDGET (menu),
+                                     parent,
                                      GTK_DIALOG_DESTROY_WITH_PARENT,
                                      gimp_standard_help_func,
                                      "gimp-unit-dialog",
