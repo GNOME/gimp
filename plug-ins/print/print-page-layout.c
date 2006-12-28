@@ -27,27 +27,25 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define LAYOUT_PREVIEW_SIZE 200
-
-
 typedef struct
 {
   PrintData       *data;
   GimpSizeEntry   *size_entry;
   GimpSizeEntry   *resolution_entry;
   GimpChainButton *chain;
+  GtkWidget       *area_label;
 } PrintSizeInfo;
+
 
 static void        run_page_setup_dialog              (GtkWidget     *widget,
                                                        PrintData     *data);
 
 static GtkWidget * print_size_frame                   (PrintData     *data);
 
-static void        print_size_info_size_changed       (GtkWidget     *widget,
-                                                       PrintSizeInfo *info);
-
-static void        print_size_info_resolution_changed (GtkWidget     *widget,
-                                                       PrintSizeInfo *info);
+static void        print_size_info_size_changed       (GtkWidget     *widget);
+static void        print_size_info_resolution_changed (GtkWidget     *widget);
+static void        print_size_info_unit_changed       (GtkWidget     *widget);
+static void        print_size_info_chain_toggled      (GtkWidget     *widget);
 
 static void        print_size_info_set_size           (PrintSizeInfo *info,
                                                        gdouble        width,
@@ -57,8 +55,12 @@ static void        print_size_info_set_resolution     (PrintSizeInfo *info,
                                                        gdouble        xres,
                                                        gdouble        yres);
 
-static void        print_size_info_unit_changed       (GtkWidget     *widget,
-                                                       PrintSizeInfo *info);
+
+static void        print_size_info_set_page_setup     (PrintSizeInfo *info,
+                                                       GtkPageSetup  *setup);
+
+
+static PrintSizeInfo  info;
 
 
 GtkWidget *
@@ -67,6 +69,7 @@ print_page_layout_gui (PrintData *data)
   GtkWidget *main_vbox;
   GtkWidget *hbox;
   GtkWidget *button;
+  GtkWidget *label;
   GtkWidget *frame;
 
   main_vbox = gtk_vbox_new (FALSE, 12);
@@ -88,7 +91,7 @@ print_page_layout_gui (PrintData *data)
   /* Commented out until the header becomes a little more configurable
    * and we can provide a user interface to include/exclude information.
    */
-  button = gtk_check_button_new_with_label (_("Print image header"));
+  button = gtk_check_button_new_with_label ("Print image header");
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 data->show_info_header);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -98,11 +101,32 @@ print_page_layout_gui (PrintData *data)
   gtk_widget_show (button);
 #endif
 
+  /* label for the printable area */
+
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Printable area:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  label = gtk_label_new (NULL);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  info.area_label = label;
+
+  gtk_box_pack_start (GTK_BOX (hbox), info.area_label, FALSE, FALSE, 0);
+  gtk_widget_show (info.area_label);
+
+  /* size entry area for the image's print size */
+
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  /* size entry area for the image's print size */
   frame = print_size_frame (data);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -137,8 +161,7 @@ run_page_setup_dialog (GtkWidget *widget,
 
   gtk_print_operation_set_default_page_setup (operation, page_setup);
 
-  /* needed for previewing */
-  data->orientation = gtk_page_setup_get_orientation (page_setup);
+  print_size_info_set_page_setup (&info, page_setup);
 }
 
 #define SB_WIDTH 8
@@ -150,26 +173,26 @@ run_page_setup_dialog (GtkWidget *widget,
 static GtkWidget *
 print_size_frame (PrintData *data)
 {
-  PrintSizeInfo *info;
-  GtkWidget     *entry;
-  GtkWidget     *height;
-  GtkWidget     *vbox;
-  GtkWidget     *hbox;
-  GtkWidget     *chain;
-  GtkWidget     *frame;
-  GtkWidget     *label;
-  GtkSizeGroup  *label_group;
-  GtkSizeGroup  *entry_group;
-  GtkObject     *adj;
-  gint           image_width;
-  gint           image_height;
+  GtkPageSetup *setup;
+  GtkWidget    *entry;
+  GtkWidget    *height;
+  GtkWidget    *vbox;
+  GtkWidget    *hbox;
+  GtkWidget    *chain;
+  GtkWidget    *frame;
+  GtkWidget    *label;
+  GtkSizeGroup *label_group;
+  GtkSizeGroup *entry_group;
+  GtkObject    *adj;
+  gdouble       image_width;
+  gdouble       image_height;
 
-  info = g_new0 (PrintSizeInfo, 1);
+  info.data = data;
 
-  info->data = data;
-
-  image_width  = gimp_image_width (data->image_id);
-  image_height = gimp_image_height (data->image_id);
+  image_width  = (gimp_image_width (data->image_id) *
+                  gimp_unit_get_factor (data->unit) / data->xres);
+  image_height = (gimp_image_height (data->image_id) *
+                  gimp_unit_get_factor (data->unit) / data->yres);
 
   frame = gimp_frame_new (_("Image Size"));
 
@@ -188,11 +211,11 @@ print_size_frame (PrintData *data)
 
   entry = gimp_size_entry_new (1, data->unit, "%p",
                                FALSE, FALSE, FALSE, SB_WIDTH,
-                               GIMP_SIZE_ENTRY_UPDATE_SIZE);
+                               GIMP_SIZE_ENTRY_UPDATE_NONE);
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
-  info->size_entry = GIMP_SIZE_ENTRY (entry);
+  info.size_entry = GIMP_SIZE_ENTRY (entry);
 
   gtk_table_set_row_spacings (GTK_TABLE (entry), 2);
   gtk_table_set_col_spacing (GTK_TABLE (entry), 0, 6);
@@ -220,13 +243,10 @@ print_size_frame (PrintData *data)
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1,
                                   data->yres, FALSE);
 
-  gimp_size_entry_set_refval_boundaries
-    (GIMP_SIZE_ENTRY (entry), 0, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
-  gimp_size_entry_set_refval_boundaries
-    (GIMP_SIZE_ENTRY (entry), 1, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
+  setup = gtk_print_operation_get_default_page_setup (data->operation);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 0, image_width);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 1, image_height);
+  gimp_size_entry_set_value (GIMP_SIZE_ENTRY (entry), 0, image_width);
+  gimp_size_entry_set_value (GIMP_SIZE_ENTRY (entry), 1, image_height);
 
   /*  the resolution entry  */
 
@@ -240,7 +260,7 @@ print_size_frame (PrintData *data)
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
-  info->resolution_entry = GIMP_SIZE_ENTRY (entry);
+  info.resolution_entry = GIMP_SIZE_ENTRY (entry);
 
   gtk_table_set_row_spacings (GTK_TABLE (entry), 2);
   gtk_table_set_col_spacing (GTK_TABLE (entry), 0, 6);
@@ -277,67 +297,87 @@ print_size_frame (PrintData *data)
                     GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (chain);
 
-  info->chain = GIMP_CHAIN_BUTTON (chain);
+  info.chain = GIMP_CHAIN_BUTTON (chain);
 
-  g_signal_connect (info->size_entry, "value-changed",
+  print_size_info_set_page_setup (&info, setup);
+
+  g_signal_connect (info.size_entry, "value-changed",
                     G_CALLBACK (print_size_info_size_changed),
-                    info);
-  g_signal_connect (info->resolution_entry, "value-changed",
+                    NULL);
+  g_signal_connect (info.resolution_entry, "value-changed",
                     G_CALLBACK (print_size_info_resolution_changed),
-                    info);
-  g_signal_connect (info->size_entry, "unit-changed",
+                    NULL);
+  g_signal_connect (info.size_entry, "unit-changed",
                     G_CALLBACK (print_size_info_unit_changed),
-                    info);
+                    NULL);
+  g_signal_connect (info.chain, "toggled",
+                    G_CALLBACK (print_size_info_chain_toggled),
+                    NULL);
+
   return frame;
 }
 
 static void
-print_size_info_size_changed (GtkWidget     *widget,
-                              PrintSizeInfo *info)
+print_size_info_size_changed (GtkWidget *widget)
 {
   gdouble    width;
   gdouble    height;
   gdouble    xres;
   gdouble    yres;
   gdouble    scale;
-  PrintData *data         = info->data;
+  PrintData *data         = info.data;
   gint       image_width  = gimp_image_width (data->image_id);
   gint       image_height = gimp_image_height (data->image_id);
 
-  scale = gimp_unit_get_factor (gimp_size_entry_get_unit (info->size_entry));
+  scale = gimp_unit_get_factor (gimp_size_entry_get_unit (info.size_entry));
 
-  width  = gimp_size_entry_get_value (info->size_entry, 0);
-  height = gimp_size_entry_get_value (info->size_entry, 1);
+  width  = gimp_size_entry_get_value (info.size_entry, 0);
+  height = gimp_size_entry_get_value (info.size_entry, 1);
 
-  xres = scale * image_width  / MAX (0.001, width);
-  yres = scale * image_height / MAX (0.001, height);
+  xres = scale * image_width  / MAX (0.0001, width);
+  yres = scale * image_height / MAX (0.0001, height);
 
-  xres = CLAMP (xres, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
-  yres = CLAMP (yres, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
-
-  print_size_info_set_resolution (info, xres, yres);
-  print_size_info_set_size (info, image_width, image_height);
+  print_size_info_set_resolution (&info, xres, yres);
 }
 
 static void
-print_size_info_resolution_changed (GtkWidget     *widget,
-                                    PrintSizeInfo *info)
+print_size_info_resolution_changed (GtkWidget *widget)
 {
-  GimpSizeEntry *entry = info->resolution_entry;
+  GimpSizeEntry *entry = info.resolution_entry;
   gdouble        xres  = gimp_size_entry_get_refval (entry, 0);
   gdouble        yres  = gimp_size_entry_get_refval (entry, 1);
 
-  print_size_info_set_resolution (info, xres, yres);
+  print_size_info_set_resolution (&info, xres, yres);
 }
 
 static void
-print_size_info_unit_changed (GtkWidget     *widget,
-                              PrintSizeInfo *info)
+print_size_info_unit_changed (GtkWidget *widget)
 {
-  PrintData     *data  = info->data;
-  GimpSizeEntry *entry = info->resolution_entry;
+  PrintData     *data   = info.data;
+  GimpSizeEntry *entry  = info.size_entry;
+  gdouble        factor = gimp_unit_get_factor (data->unit);
+  gdouble        w, h;
 
   data->unit = gimp_size_entry_get_unit (entry);
+
+  factor = gimp_unit_get_factor (data->unit) / factor;
+
+  w = gimp_size_entry_get_value (entry, 0) * factor;
+  h = gimp_size_entry_get_value (entry, 1) * factor;
+
+  print_size_info_set_page_setup (&info,
+                                  gtk_print_operation_get_default_page_setup (data->operation));
+
+  print_size_info_set_size (&info, w, h);
+}
+
+static void
+print_size_info_chain_toggled (GtkWidget *widget)
+{
+  PrintData *data = info.data;
+
+  print_size_info_set_page_setup (&info,
+                                  gtk_print_operation_get_default_page_setup (data->operation));
 }
 
 static void
@@ -347,14 +387,14 @@ print_size_info_set_size (PrintSizeInfo *info,
 {
   g_signal_handlers_block_by_func (info->size_entry,
                                    print_size_info_size_changed,
-                                   info);
+                                   NULL);
 
-  gimp_size_entry_set_refval (info->size_entry, 0, width);
-  gimp_size_entry_set_refval (info->size_entry, 1, height);
+  gimp_size_entry_set_value (info->size_entry, 0, width);
+  gimp_size_entry_set_value (info->size_entry, 1, height);
 
   g_signal_handlers_unblock_by_func (info->size_entry,
                                      print_size_info_size_changed,
-                                     info);
+                                     NULL);
 }
 
 static void
@@ -363,6 +403,9 @@ print_size_info_set_resolution (PrintSizeInfo *info,
                                 gdouble        yres)
 {
   PrintData *data = info->data;
+
+  xres = CLAMP (xres, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
+  yres = CLAMP (yres, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
 
   if (info->chain && gimp_chain_button_get_active (info->chain))
     {
@@ -381,23 +424,86 @@ print_size_info_set_resolution (PrintSizeInfo *info,
 
   g_signal_handlers_block_by_func (info->resolution_entry,
                                    print_size_info_resolution_changed,
-                                   info);
+                                   NULL);
 
   gimp_size_entry_set_refval (info->resolution_entry, 0, xres);
   gimp_size_entry_set_refval (info->resolution_entry, 1, yres);
 
   g_signal_handlers_unblock_by_func (info->resolution_entry,
                                      print_size_info_resolution_changed,
-                                     info);
+                                     NULL);
 
   g_signal_handlers_block_by_func (info->size_entry,
                                    print_size_info_size_changed,
-                                   info);
+                                   NULL);
 
-  gimp_size_entry_set_resolution (info->size_entry, 0, xres, TRUE);
-  gimp_size_entry_set_resolution (info->size_entry, 1, yres, TRUE);
+  gimp_size_entry_set_value (info->size_entry, 0,
+                             gimp_image_width (data->image_id) *
+                             gimp_unit_get_factor (data->unit) / xres);
+  gimp_size_entry_set_value (info->size_entry, 1,
+                             gimp_image_height (data->image_id) *
+                             gimp_unit_get_factor (data->unit) / yres);
 
   g_signal_handlers_unblock_by_func (info->size_entry,
                                      print_size_info_size_changed,
-                                     info);
+                                     NULL);
+}
+
+static void
+print_size_info_set_page_setup (PrintSizeInfo *info,
+                                GtkPageSetup  *setup)
+{
+  PrintData *data = info->data;
+  gchar     *text;
+  gint       image_width  = gimp_image_width (data->image_id);
+  gint       image_height = gimp_image_height (data->image_id);
+  gdouble    page_width;
+  gdouble    page_height;
+  gdouble    x;
+  gdouble    y;
+
+  page_width  = (gtk_page_setup_get_page_width (setup, GTK_UNIT_INCH) *
+                 gimp_unit_get_factor (data->unit));
+  page_height = (gtk_page_setup_get_page_height (setup, GTK_UNIT_INCH) *
+                 gimp_unit_get_factor (data->unit));
+
+  text = g_strdup_printf ("%g x %g %s",
+                          page_width, page_height,
+                          gimp_unit_get_plural (data->unit));
+  gtk_label_set_text (GTK_LABEL (info->area_label), text);
+  g_free (text);
+
+  x = page_width;
+  y = page_height;
+
+  if (info->chain && gimp_chain_button_get_active (info->chain))
+    {
+      gdouble ratio = (gdouble) image_width / (gdouble) image_height;
+
+      if (ratio < 1.0)
+        x = y * ratio;
+      else
+        y = x / ratio;
+    }
+
+  gimp_size_entry_set_value_boundaries (info->size_entry, 0, 0.0, x);
+  gimp_size_entry_set_value_boundaries (info->size_entry, 1, 0.0, y);
+
+  x = image_width / page_width;
+  y = image_height / page_height;
+
+  if (info->chain && gimp_chain_button_get_active (info->chain))
+    {
+      gdouble max = MAX (x, y);
+
+      x = y = max;
+    }
+
+  gimp_size_entry_set_refval_boundaries (info->resolution_entry, 0,
+                                         x, GIMP_MAX_RESOLUTION);
+  gimp_size_entry_set_refval_boundaries (info->resolution_entry, 1,
+                                         y, GIMP_MAX_RESOLUTION);
+
+ /* FIXME: is this still needed at all? */
+  data->orientation = gtk_page_setup_get_orientation (setup);
 }

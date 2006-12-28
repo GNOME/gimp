@@ -89,22 +89,6 @@ draw_page_cairo (GtkPrintContext *context,
   scale_x = cr_dpi_x / data->xres;
   scale_y = cr_dpi_y / data->yres;
 
-  if (scale_x * width > cr_width + EPSILON)
-    {
-      g_message (_("Image width (%lg in) is larger than printable width (%lg in)."),
-                 width / data->xres, cr_width / cr_dpi_x);
-      gtk_print_operation_cancel (data->operation);
-      return FALSE;
-    }
-
-  if (scale_y * height > cr_height + EPSILON)
-    {
-      g_message (_("Image height (%lg in) is larger than printable height (%lg in)."),
-                 height / data->yres, cr_height / cr_dpi_y);
-      gtk_print_operation_cancel (data->operation);
-      return FALSE;
-    }
-
   cairo_set_source_rgb (cr, 1, 1, 1);
   cairo_paint (cr);
 
