@@ -574,7 +574,7 @@ gimp_size_entry_set_size (GimpSizeEntry *gse,
  * The current value of the @field will be clamped to fit in the @field's
  * new boundaries.
  *
- * NOTE: In most cases you won't be interested in these values because the
+ * NOTE: In most cases you won't be interested in this function because the
  *       #GimpSizeEntry's purpose is to shield the programmer from unit
  *       calculations. Use gimp_size_entry_set_refval_boundaries() instead.
  *       Whatever you do, don't mix these calls. A size entry should either
