@@ -18,9 +18,6 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <time.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -30,18 +27,19 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-/* In points */
-#define HEADER_HEIGHT (20 * 72.0 / 25.4)
-#define EPSILON        0.0001
+#define EPSILON 0.0001
 
 
 static cairo_surface_t * create_surface   (guchar          *pixels,
                                            gint             width,
                                            gint             height,
                                            gint             rowstride);
+
+#if 0
 static void              draw_info_header (GtkPrintContext *context,
                                            cairo_t         *cr,
                                            PrintData       *data);
+#endif
 
 
 gboolean
@@ -110,14 +108,18 @@ draw_page_cairo (GtkPrintContext *context,
   cairo_set_source_rgb (cr, 1, 1, 1);
   cairo_paint (cr);
 
+#if 0
   /* print header if it is requested */
   if (data->show_info_header)
     {
       draw_info_header (context, cr, data);
 
+/* In points */
+#define HEADER_HEIGHT (20 * 72.0 / 25.4)
       cairo_translate (cr, 0, HEADER_HEIGHT);
       cr_height -= HEADER_HEIGHT;
     }
+#endif
 
   x0 = (cr_width - scale_x * width) / 2;
   y0 = (cr_height - scale_y * height) / 2;
@@ -202,7 +204,7 @@ create_surface (guchar *pixels,
                                               width, height, rowstride);
 }
 
-
+#if 0
 static void
 draw_info_header (GtkPrintContext *context,
                   cairo_t         *cr,
@@ -331,3 +333,4 @@ draw_info_header (GtkPrintContext *context,
 
   cairo_restore (cr);
 }
+#endif
