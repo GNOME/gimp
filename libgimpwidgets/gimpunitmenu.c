@@ -263,8 +263,7 @@ gimp_unit_menu_new (const gchar *format,
       gtk_widget_set_sensitive (menuitem, FALSE);
       gtk_widget_show (menuitem);
 
-      menuitem =
-        gtk_menu_item_new_with_label (_("More..."));
+      menuitem = gtk_menu_item_new_with_label (_("More..."));
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu",
                          GINT_TO_POINTER (GIMP_UNIT_PERCENT + 1));
@@ -577,7 +576,8 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
   menu->selection = gimp_dialog_new (_("Unit Selection"), "gimp-unit-selection",
                                      GTK_WIDGET (menu),
                                      GTK_DIALOG_DESTROY_WITH_PARENT,
-                                     gimp_standard_help_func, "gimp-unit-dialog",
+                                     gimp_standard_help_func,
+                                     "gimp-unit-dialog",
 
                                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                      GTK_STOCK_OK,     GTK_RESPONSE_OK,
