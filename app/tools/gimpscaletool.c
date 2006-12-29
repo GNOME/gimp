@@ -365,6 +365,19 @@ gimp_scale_tool_size_notify (GtkWidget         *box,
 
       if (constrain != options->constrain)
         {
+          gint width;
+          gint height;
+
+          g_object_get (box,
+                        "width",  &width,
+                        "height", &height,
+                        NULL);
+
+          /*  Take the aspect ratio from the size box when the user
+           *  activates the constraint by pressing the chain button.
+           */
+          tr_tool->aspect = (gdouble) width / (gdouble) height;
+
           g_object_set (options,
                         "constrain", constrain,
                         NULL);

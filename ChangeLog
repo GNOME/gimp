@@ -1,5 +1,11 @@
 2006-12-29  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpscaletool.c (gimp_scale_tool_size_notify): take
+	the aspect ratio from the size box when the user activates the
+	constraint by pressing the chain button.
+
+2006-12-29  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptransformtool.[ch]: store the original aspect ratio.
 	Let the Ctrl key toggle the aspect ratio constraint also while the
 	mouse is being pressed.
