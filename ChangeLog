@@ -1,3 +1,9 @@
+2006-12-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.c
+	* app/main.c: call g_thread_init() as the very first function in
+	main().
+
 2006-12-29  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/gimprc.pdb: export gimp_get_default_unit() to

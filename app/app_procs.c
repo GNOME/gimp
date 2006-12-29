@@ -83,11 +83,6 @@ void
 app_libs_init (GOptionContext *context,
                gboolean        no_interface)
 {
-#ifdef ENABLE_MP
-  if (! g_thread_supported ())
-    g_thread_init (NULL);
-#endif
-
   if (no_interface)
     {
       g_type_init ();

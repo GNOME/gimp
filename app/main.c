@@ -250,6 +250,11 @@ main (int    argc,
   gchar          *basename;
   gint            i;
 
+#ifdef ENABLE_MP
+  if (! g_thread_supported ())
+    g_thread_init (NULL);
+#endif
+
   gimp_init_malloc ();
 
   gimp_env_init (FALSE);
