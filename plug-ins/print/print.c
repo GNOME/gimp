@@ -58,10 +58,7 @@ static void        draw_page            (GtkPrintOperation *print,
                                          GtkPrintContext   *context,
                                          int                page_nr,
                                          PrintData         *data);
-
-static void        print_done     (GtkPrintOperation       *operation,
-                                   GtkPrintOperationResult  result,
-                                   GtkPrintOperationResult *result_ptr);
+static void        print_status_changed (GtkPrintOperation *operation);
 
 static GtkWidget * create_custom_widget (GtkPrintOperation *operation,
                                          PrintData         *data);
@@ -125,6 +122,7 @@ run (const gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -190,39 +188,19 @@ print_image (gint32    image_ID,
 
       gtk_print_operation_set_custom_tab_label (operation, _("Image"));
 
-      gtk_print_operation_set_allow_async (operation, TRUE);
-
-      g_signal_connect (operation, "done",
-                        G_CALLBACK (print_done),
+      g_signal_connect (operation, "status-changed",
+                        G_CALLBACK (print_status_changed),
                         &result);
 
       result = gtk_print_operation_run (operation,
                                         GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
                                         NULL, &error);
 
-      while (result == GTK_PRINT_OPERATION_RESULT_IN_PROGRESS)
-        {
-          const gchar *status;
-
-          status = gtk_print_operation_get_status_string (operation);
-
-          if (status && strlen (status))
-            {
-              /* display status of the print operation in the status bar */
-              gimp_progress_set_text_printf (_("Print: %s"), status);
-            }
-
-          gtk_main_iteration ();
-        }
-
       switch (result)
         {
         case GTK_PRINT_OPERATION_RESULT_APPLY:
-          save_print_settings (data);
-          break;
-
         case GTK_PRINT_OPERATION_RESULT_IN_PROGRESS:
-          g_warning ("shouldn't get here");
+          save_print_settings (data);
           break;
 
         case GTK_PRINT_OPERATION_RESULT_ERROR:
@@ -269,11 +247,15 @@ end_print (GtkPrintOperation *operation,
 }
 
 static void
-print_done (GtkPrintOperation       *operation,
-            GtkPrintOperationResult  result,
-            GtkPrintOperationResult *result_ptr)
+print_status_changed (GtkPrintOperation *operation)
 {
-  *result_ptr = result;
+  const gchar *status = gtk_print_operation_get_status_string (operation);
+
+  if (status && strlen (status))
+    {
+      /* display status of the print operation in the status bar */
+      gimp_progress_set_text_printf (_("Print: %s"), status);
+    }
 }
 
 static void
