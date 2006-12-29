@@ -204,13 +204,13 @@ print_image (gint32    image_ID,
         {
           const gchar *status;
 
-          while (gtk_events_pending ())
-            gtk_main_iteration ();
-
           status = gtk_print_operation_get_status_string (operation);
 
           /* display status of the print operation in the status bar */
           gimp_progress_set_text_printf (_("Print: %s"), status);
+
+          while (gtk_events_pending ())
+            gtk_main_iteration ();
         }
 
       switch (result)
