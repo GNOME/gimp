@@ -106,7 +106,7 @@ gimp_gimprc_set (const gchar *token,
  *
  * Returns a copy of the default image comment.
  *
- * Returns: Default Image Comment.
+ * Returns: Default image comment.
  */
 gchar *
 gimp_get_default_comment (void)
@@ -125,6 +125,36 @@ gimp_get_default_comment (void)
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return comment;
+}
+
+/**
+ * gimp_get_default_unit:
+ *
+ * Get the default unit (taken from the user's locale).
+ *
+ * Returns the default unit's integer ID.
+ *
+ * Returns: Default unit.
+ *
+ * Since: GIMP 2.4
+ */
+GimpUnit
+gimp_get_default_unit (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpUnit unit_id = 0;
+
+  return_vals = gimp_run_procedure ("gimp-get-default-unit",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    unit_id = return_vals[1].data.d_unit;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return unit_id;
 }
 
 /**

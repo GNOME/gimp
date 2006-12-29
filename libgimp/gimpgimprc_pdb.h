@@ -33,6 +33,7 @@ gchar*                 gimp_gimprc_query             (const gchar *token);
 gboolean               gimp_gimprc_set               (const gchar *token,
                                                       const gchar *value);
 gchar*                 gimp_get_default_comment      (void);
+GimpUnit               gimp_get_default_unit         (void);
 gboolean               gimp_get_monitor_resolution   (gdouble     *xres,
                                                       gdouble     *yres);
 gchar*                 gimp_get_theme_dir            (void);

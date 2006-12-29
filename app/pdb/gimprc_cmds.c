@@ -24,6 +24,7 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpmodule/gimpmodule.h"
 
@@ -33,6 +34,7 @@
 #include "core/gimpparamspecs.h"
 
 #include "config/gimprc.h"
+#include "core/gimp-utils.h"
 #include "core/gimp.h"
 #include "core/gimptemplate.h"
 
@@ -117,6 +119,24 @@ get_default_comment_invoker (GimpProcedure     *procedure,
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE);
   g_value_take_string (&return_vals->values[1], comment);
+
+  return return_vals;
+}
+
+static GValueArray *
+get_default_unit_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
+{
+  GValueArray *return_vals;
+  GimpUnit unit_id = 0;
+
+  unit_id = gimp_get_default_unit ();
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  g_value_set_int (&return_vals->values[1], unit_id);
 
   return return_vals;
 }
@@ -278,10 +298,34 @@ register_gimprc_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("comment",
                                                            "comment",
-                                                           "Default Image Comment",
+                                                           "Default image comment",
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-get-default-unit
+   */
+  procedure = gimp_procedure_new (get_default_unit_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-get-default-unit");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-get-default-unit",
+                                     "Get the default unit (taken from the user's locale).",
+                                     "Returns the default unit's integer ID.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_unit ("unit-id",
+                                                         "unit id",
+                                                         "Default unit",
+                                                         TRUE,
+                                                         FALSE,
+                                                         GIMP_UNIT_PIXEL,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -135,7 +135,7 @@ sub get_default_comment {
 
     @outargs = (
 	{  name => 'comment', type => 'string',
-	   desc => 'Default Image Comment' }
+	   desc => 'Default image comment' }
     );
 
     %invoke = (
@@ -143,6 +143,29 @@ sub get_default_comment {
 	code => <<'CODE'
 {
   comment = g_strdup (gimp->config->default_image->comment);
+}
+CODE
+    );
+}
+
+sub get_default_unit {
+    $blurb = 'Get the default unit (taken from the user\'s locale).';
+    $help  = 'Returns the default unit\'s integer ID.';
+
+    &std_pdb_misc;
+    $since = '2.4';
+
+    @outargs = (
+	{  name => 'unit_id', type => 'unit',
+	   desc => 'Default unit' }
+    );
+
+    %invoke = (
+	headers => [ qw("libgimpbase/gimpbase.h"
+                        "core/gimp-utils.h") ],
+	code => <<'CODE'
+{
+  unit_id = gimp_get_default_unit ();
 }
 CODE
     );
@@ -217,8 +240,8 @@ CODE
               "core/gimp.h");
 
 @procs = qw(gimprc_query gimprc_set 
-	    get_default_comment get_monitor_resolution get_theme_dir
-            get_color_configuration get_module_load_inhibit);
+	    get_default_comment get_default_unit get_monitor_resolution
+	    get_theme_dir get_color_configuration get_module_load_inhibit);
 
 %exports = (app => [@procs], lib => [@procs]);
 

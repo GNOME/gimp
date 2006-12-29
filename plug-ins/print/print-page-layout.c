@@ -257,7 +257,8 @@ print_size_frame (PrintData *data)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  entry = gimp_size_entry_new (1, GIMP_UNIT_INCH, _("pixels/%a"),
+  entry = gimp_size_entry_new (1, gimp_image_get_unit (data->image_id),
+                               _("pixels/%a"),
                                FALSE, FALSE, FALSE, SB_WIDTH,
                                GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);

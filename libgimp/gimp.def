@@ -227,6 +227,7 @@ EXPORTS
 	gimp_gamma
 	gimp_get_color_configuration
 	gimp_get_default_comment
+	gimp_get_default_unit
 	gimp_get_module_load_inhibit
 	gimp_get_monitor_resolution
 	gimp_get_path_by_tattoo

@@ -160,7 +160,7 @@ print_image (gint32    image_ID,
   data->image_id    = image_ID;
   data->drawable_id = drawable_ID;
   data->operation   = operation;
-  data->unit        = gimp_image_get_unit (data->image_id);
+  data->unit        = gimp_get_default_unit ();
   gimp_image_get_resolution (data->image_id, &data->xres, &data->yres);
 
   load_print_settings (data);
