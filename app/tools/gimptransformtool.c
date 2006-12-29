@@ -175,6 +175,7 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   tool_class->motion         = gimp_transform_tool_motion;
   tool_class->key_press      = gimp_transform_tool_key_press;
   tool_class->modifier_key   = gimp_transform_tool_modifier_key;
+  tool_class->active_modifier_key = gimp_transform_tool_modifier_key;
   tool_class->oper_update    = gimp_transform_tool_oper_update;
   tool_class->cursor_update  = gimp_transform_tool_cursor_update;
 
@@ -1511,6 +1512,9 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
 
   tr_tool->cx = (gdouble) (tr_tool->x1 + tr_tool->x2) / 2.0;
   tr_tool->cy = (gdouble) (tr_tool->y1 + tr_tool->y2) / 2.0;
+
+  tr_tool->aspect = ((gdouble) (tr_tool->x2 - tr_tool->x1) /
+                     (gdouble) (tr_tool->y2 - tr_tool->y1));
 
   /*  changing the bounds invalidates any grid we may have  */
   if (tr_tool->use_grid)

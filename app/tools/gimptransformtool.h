@@ -59,6 +59,7 @@ struct _GimpTransformTool
   gint            x1, y1;          /*  upper left hand coordinate        */
   gint            x2, y2;          /*  lower right hand coords           */
   gdouble         cx, cy;          /*  center point (for rotation)       */
+  gdouble         aspect;          /*  original aspect ratio             */
 
   gdouble         tx1, ty1;        /*  transformed coords                */
   gdouble         tx2, ty2;
