@@ -59,8 +59,13 @@ static void        draw_page            (GtkPrintOperation *print,
                                          int                page_nr,
                                          PrintData         *data);
 
+static void        print_done     (GtkPrintOperation       *operation,
+                                   GtkPrintOperationResult  result,
+                                   GtkPrintOperationResult *result_ptr);
+
 static GtkWidget * create_custom_widget (GtkPrintOperation *operation,
                                          PrintData         *data);
+
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -185,15 +190,37 @@ print_image (gint32    image_ID,
 
       gtk_print_operation_set_custom_tab_label (operation, _("Image"));
 
+      gtk_print_operation_set_allow_async (operation, TRUE);
+
+      g_signal_connect (operation, "done",
+                        G_CALLBACK (print_done),
+                        &result);
+
       result = gtk_print_operation_run (operation,
                                         GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
                                         NULL, &error);
 
+      while (result == GTK_PRINT_OPERATION_RESULT_IN_PROGRESS)
+        {
+          const gchar *status;
+
+          while (gtk_events_pending ())
+            gtk_main_iteration ();
+
+          status = gtk_print_operation_get_status_string (operation);
+
+          /* display status of the print operation in the status bar */
+          gimp_progress_set_text_printf (_("Print: %s"), status);
+        }
+
       switch (result)
         {
         case GTK_PRINT_OPERATION_RESULT_APPLY:
-        case GTK_PRINT_OPERATION_RESULT_IN_PROGRESS:
           save_print_settings (data);
+          break;
+
+        case GTK_PRINT_OPERATION_RESULT_IN_PROGRESS:
+          g_warning ("shouldn't get here");
           break;
 
         case GTK_PRINT_OPERATION_RESULT_ERROR:
@@ -239,6 +266,13 @@ end_print (GtkPrintOperation *operation,
   gimp_progress_update (1.0);
 }
 
+static void
+print_done (GtkPrintOperation       *operation,
+            GtkPrintOperationResult  result,
+            GtkPrintOperationResult *result_ptr)
+{
+  *result_ptr = result;
+}
 
 static void
 draw_page (GtkPrintOperation *operation,
