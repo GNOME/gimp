@@ -696,7 +696,7 @@ gimp_prop_ratio_entry_notify (GObject    *config,
                 aspect_data->denominator_property, &denom,
                 NULL);
 
-  gimp_ratio_entry_set_fraction (GTK_RATIO_ENTRY (entry), num, denom);
+  gimp_ratio_entry_set_fraction (GIMP_RATIO_ENTRY (entry), num, denom);
 }
 
 static void
