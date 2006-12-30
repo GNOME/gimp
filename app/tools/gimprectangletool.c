@@ -1826,15 +1826,22 @@ gimp_rectangle_tool_synthesize_motion (GimpTool   *tool,
                                        GimpCoords *coords)
 {
   GimpRectangleToolPrivate *private;
+  GimpRectangleFunction     old_function;
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
 
   private->startx = startx;
   private->starty = starty;
 
-  gimp_rectangle_tool_set_function (GIMP_RECTANGLE_TOOL (tool), function);
+  old_function = private->function;
 
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+  gimp_rectangle_tool_set_function (GIMP_RECTANGLE_TOOL (tool), function);
   gimp_rectangle_tool_motion (tool, coords, 0, 0, tool->display);
+  gimp_rectangle_tool_set_function (GIMP_RECTANGLE_TOOL (tool), old_function);
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
   g_signal_emit_by_name (tool, "rectangle-changed", NULL);
 }

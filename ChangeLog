@@ -1,3 +1,9 @@
+2006-12-30  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_synthesize_motion): restore old function and
+	push a pause/resume to avoid tool redraws from the motion handler.
+
 2006-12-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppropwidgets.c
