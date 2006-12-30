@@ -219,8 +219,21 @@ print_image (gint32    image_ID,
 
   if (error)
     {
-      g_message (error->message);
+      GtkWidget *dialog;
+
+      dialog = gtk_message_dialog_new (NULL, 0,
+                                       GTK_MESSAGE_ERROR,
+                                       GTK_BUTTONS_OK,
+                                       _("An error occurred while trying to print:"));
+
+      gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                                error->message);
       g_error_free (error);
+
+      gimp_window_set_transient (GTK_WINDOW (dialog));
+
+      gtk_dialog_run (GTK_DIALOG (dialog));
+      gtk_widget_destroy (dialog);
     }
 
   return TRUE;

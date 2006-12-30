@@ -157,7 +157,7 @@ save_print_settings_resource_file (GKeyFile *settings_key_file)
   contents = g_key_file_to_data (settings_key_file, &length, &error);
   if (error)
     {
-      g_message ("Unable to get contents of settings key file: %s",
+      g_warning ("Unable to get contents of settings key file: %s",
                  error->message);
       g_error_free (error);
       return;
@@ -167,7 +167,7 @@ save_print_settings_resource_file (GKeyFile *settings_key_file)
 
   if (! g_file_set_contents (filename, contents, length, &error))
     {
-      g_message ("Unable to write print settings to '%s': %s",
+      g_warning ("Unable to write print settings to '%s': %s",
                  gimp_filename_to_utf8 (filename), error->message);
       g_error_free (error);
     }
@@ -191,7 +191,7 @@ save_print_settings_as_parasite (GKeyFile *settings_key_file,
   contents = g_key_file_to_data (settings_key_file, &length, &error);
   if (! contents)
     {
-      g_message ("Unable to get contents of settings key file: %s",
+      g_warning ("Unable to get contents of settings key file: %s",
                  error->message);
       g_error_free (error);
       return;
