@@ -1,9 +1,0 @@
-Makefile
-Makefile.in
-makefile.mingw
-test-md5
-*.lo
-_libs
-.libs
-.deps
-*.la
