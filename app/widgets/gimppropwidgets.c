@@ -558,19 +558,15 @@ typedef struct
   const gchar *height_property;
 } AspectData;
 
-static void gimp_prop_numeric_entry_notify        (GObject       *config,
+static void gimp_prop_ratio_entry_notify          (GObject       *config,
                                                    GParamSpec    *param_spec,
                                                    GtkEntry      *entry);
 
-static void gimp_prop_numeric_entry_callback      (GtkWidget     *widget,
-                                                   GObject       *config);
-
-static gboolean gimp_prop_numeric_entry_focus_out (GtkWidget     *widget,
-                                                   GdkEventFocus *event,
-                                                   GObject       *config);
 static void gimp_prop_aspect_ratio_flip           (GtkWidget     *widget,
                                                    gpointer       data);
 static void gimp_prop_aspect_ratio_square         (GtkWidget     *widget,
+                                                   gpointer       data);
+static void gimp_prop_aspect_ratio_ratio          (GtkWidget     *widget,
                                                    gpointer       data);
 static void gimp_prop_aspect_ratio_set            (GtkWidget     *widget,
                                                    gpointer       data);
@@ -614,14 +610,11 @@ gimp_prop_aspect_ratio_new (GObject     *config,
                             gint         col0)
 {
   AspectData *aspect_data;
-  GParamSpec *param_spec;
-  GtkWidget  *label;
   GtkWidget  *entry;
   GtkWidget  *hbox;
   GtkWidget  *button;
   gdouble     numerator;
   gdouble     denominator;
-  gchar       num_string[20];
 
   g_object_get (config,
                 numerator_property,   &numerator,
@@ -636,53 +629,23 @@ gimp_prop_aspect_ratio_new (GObject     *config,
   aspect_data->width_property        = width_property;
   aspect_data->height_property       = height_property;
 
-  /* numerator entry */
-  param_spec = find_param_spec (config, numerator_property, G_STRFUNC);
-  if (! param_spec)
-    return;
-  entry = gtk_entry_new ();
-  gtk_entry_set_width_chars (GTK_ENTRY (entry), 5);
-  sprintf (num_string, "%lg", numerator);
-  gtk_entry_set_text (GTK_ENTRY (entry), num_string);
+  entry = gimp_ratio_entry_new ();
+  g_object_set_data (G_OBJECT (entry),
+                     "gimp-ratio-entry-aspect-data",
+                     aspect_data);
+  gtk_entry_set_width_chars (GTK_ENTRY (entry), 9);
+  gimp_ratio_entry_set_fraction (GIMP_RATIO_ENTRY (entry),
+                                 numerator, denominator);
   gtk_table_attach_defaults (GTK_TABLE (table), entry,
-                             col0, col0 + 1, row0, row0 + 1);
-  set_param_spec (G_OBJECT (entry), entry, param_spec);
-  g_signal_connect (entry, "activate",
-                    G_CALLBACK (gimp_prop_numeric_entry_callback),
-                    config);
-  g_signal_connect (entry, "focus-out-event",
-                    G_CALLBACK (gimp_prop_numeric_entry_focus_out),
-                    config);
+                             col0, col0 + 3, row0, row0 + 1);
+  g_signal_connect (entry, "ratio-changed",
+                    G_CALLBACK (gimp_prop_aspect_ratio_ratio),
+                    aspect_data);
   connect_notify (config, numerator_property,
-                  G_CALLBACK (gimp_prop_numeric_entry_notify),
+                  G_CALLBACK (gimp_prop_ratio_entry_notify),
                   entry);
-  gtk_widget_show (entry);
-
-  /* ":" label */
-  label = gtk_label_new (":");
-  gtk_table_attach_defaults (GTK_TABLE (table), label,
-                             col0 + 1, col0 + 2, row0, row0 + 1);
-  gtk_widget_show (label);
-
-  /* denominator entry */
-  param_spec = find_param_spec (config, denominator_property, G_STRFUNC);
-  if (! param_spec)
-    return;
-  entry = gtk_entry_new ();
-  gtk_entry_set_width_chars (GTK_ENTRY (entry), 5);
-  sprintf (num_string, "%lg", denominator);
-  gtk_entry_set_text (GTK_ENTRY (entry), num_string);
-  gtk_table_attach_defaults (GTK_TABLE (table), entry,
-                             col0 + 2, col0 + 3, row0, row0 + 1);
-  set_param_spec (G_OBJECT (entry), entry, param_spec);
-  g_signal_connect (entry, "activate",
-                    G_CALLBACK (gimp_prop_numeric_entry_callback),
-                    config);
-  g_signal_connect (entry, "focus-out-event",
-                    G_CALLBACK (gimp_prop_numeric_entry_focus_out),
-                    config);
   connect_notify (config, denominator_property,
-                  G_CALLBACK (gimp_prop_numeric_entry_notify),
+                  G_CALLBACK (gimp_prop_ratio_entry_notify),
                   entry);
   gtk_widget_show (entry);
 
@@ -717,53 +680,23 @@ gimp_prop_aspect_ratio_new (GObject     *config,
 }
 
 static void
-gimp_prop_numeric_entry_notify (GObject       *config,
-                                GParamSpec    *param_spec,
-                                GtkEntry      *entry)
+gimp_prop_ratio_entry_notify (GObject    *config,
+                              GParamSpec *param_spec,
+                              GtkEntry   *entry)
 {
-  gdouble value;
-  gchar   text[20];
+  AspectData *aspect_data = g_object_get_data (G_OBJECT (entry),
+                                               "gimp-ratio-entry-aspect-data");
 
-  g_object_get (config, param_spec->name, &value, NULL);
+  gdouble num, denom;
 
-  sprintf (text, "%3lg", value);
+  g_return_if_fail (aspect_data != NULL);
 
-  gtk_entry_set_text (entry, text);
-}
+  g_object_get (config,
+                aspect_data->numerator_property, &num,
+                aspect_data->denominator_property, &denom,
+                NULL);
 
-static gboolean
-gimp_prop_numeric_entry_focus_out (GtkWidget     *widget,
-                                   GdkEventFocus *event,
-                                   GObject       *config)
-{
-  gimp_prop_numeric_entry_callback (widget, config);
-
-  return FALSE;
-}
-
-static void
-gimp_prop_numeric_entry_callback (GtkWidget *widget,
-                                  GObject   *config)
-{
-  GParamSpec  *param_spec;
-  gdouble      value;
-
-  g_return_if_fail (GTK_IS_ENTRY (widget));
-
-  param_spec = get_param_spec (G_OBJECT (widget));
-  if (! param_spec)
-    return;
-
-  /* we use strtod instead of g_ascii_strtod because it uses the locale,
-     which is what we want here */
-  value = strtod (gtk_entry_get_text (GTK_ENTRY (widget)), NULL);
-
-  if (value != 0)
-    g_object_set (config,
-                  param_spec->name, value,
-                  NULL);
-  else
-    g_message ("Invalid value entered for aspect ratio.");
+  gimp_ratio_entry_set_fraction (GTK_RATIO_ENTRY (entry), num, denom);
 }
 
 static void
@@ -826,6 +759,22 @@ gimp_prop_aspect_ratio_square (GtkWidget *widget,
   g_object_set (aspect_data->config,
                 aspect_data->numerator_property,    1.0,
                 aspect_data->denominator_property,  1.0,
+                aspect_data->fixed_aspect_property, TRUE,
+                NULL);
+}
+
+static void
+gimp_prop_aspect_ratio_ratio (GtkWidget *widget,
+                              gpointer   data)
+{
+  AspectData *aspect_data  = data;
+  gdouble num, denom;
+
+  gimp_ratio_entry_get_fraction (GIMP_RATIO_ENTRY (widget), &num, &denom);
+
+  g_object_set (aspect_data->config,
+                aspect_data->numerator_property,    num,
+                aspect_data->denominator_property,  denom,
                 aspect_data->fixed_aspect_property, TRUE,
                 NULL);
 }
