@@ -76,9 +76,6 @@
 
 #include <string.h>
 #include <stdlib.h>
-#ifndef __APPLE__
-# include <malloc.h>
-#endif
 
 #define min(a, b)  ((a <= b) ? a : b)
 
