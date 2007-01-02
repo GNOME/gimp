@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-19 23:17+0100\n"
-"PO-Revision-Date: 2006-12-20 19:26+0100\n"
+"POT-Creation-Date: 2007-01-02 19:17+0100\n"
+"PO-Revision-Date: 2007-01-02 17:20+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -81,11 +81,11 @@ msgstr ""
 "se così non fosse, scrivi alla Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 
-#: ../app/app_procs.c:138
+#: ../app/app_procs.c:133
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Questa finestra di console si chiuderà in 10 secondi)\n"
 
-#: ../app/app_procs.c:248
+#: ../app/app_procs.c:243
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -98,7 +98,7 @@ msgstr ""
 "Per evitare di perdere dati controllare la posizione ed i permessi della "
 "cartella di scambio nelle preferenze (attualmente è \"%s\")."
 
-#: ../app/app_procs.c:306
+#: ../app/app_procs.c:301
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "L'apertura di \"%s\" è fallita: %s"
@@ -196,11 +196,11 @@ msgstr "Fai in modo che tutti gli avvertimenti (warning) siano fatali"
 msgid "Output a gimprc file with default settings"
 msgstr "Genera un file gimprc con valori predefiniti"
 
-#: ../app/main.c:287
+#: ../app/main.c:292
 msgid "[FILE|URI...]"
 msgstr "[FILE|URI...]"
 
-#: ../app/main.c:302
+#: ../app/main.c:307
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -208,7 +208,7 @@ msgstr ""
 "GIMP non può inizializzare l'interfaccia grafica.\n"
 "Controllare la corretta esistenza dell'impostazione dell'ambiente grafico."
 
-#: ../app/main.c:452 ../tools/gimp-remote.c:321
+#: ../app/main.c:457 ../tools/gimp-remote.c:321
 #, c-format
 msgid "%s version %s"
 msgstr "%s versione %s"
@@ -677,7 +677,7 @@ msgstr "Nuovo colore del canale"
 #: ../app/actions/channels-commands.c:243
 #: ../app/display/gimpdisplayshell-dnd.c:497
 #: ../app/widgets/gimpchanneltreeview.c:247
-#: ../app/widgets/gimplayertreeview.c:803 ../app/widgets/gimptoolbox-dnd.c:307
+#: ../app/widgets/gimplayertreeview.c:806 ../app/widgets/gimptoolbox-dnd.c:307
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s copia canale"
@@ -831,7 +831,7 @@ msgstr "Campionamento diffuso"
 #: ../app/dialogs/file-open-location-dialog.c:216
 #: ../app/dialogs/file-open-location-dialog.c:228
 #: ../app/display/gimpdisplayshell-dnd.c:449
-#: ../app/widgets/gimplayertreeview.c:760 ../app/widgets/gimptoolbox-dnd.c:158
+#: ../app/widgets/gimplayertreeview.c:763 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:912
 #, c-format
 msgid ""
@@ -1647,7 +1647,7 @@ msgstr "Apri com_e livelli..."
 
 #: ../app/actions/file-actions.c:84
 msgid "Open _Location..."
-msgstr "Apri _posizione... "
+msgstr "Apri _indirizzo... "
 
 #: ../app/actions/file-actions.c:89
 msgid "_Save"
@@ -2785,7 +2785,7 @@ msgstr "Modifica attributi livello"
 #: ../app/actions/layers-commands.c:239 ../app/actions/layers-commands.c:241
 #: ../app/actions/layers-commands.c:298 ../app/actions/layers-commands.c:302
 #: ../app/widgets/gimpdrawabletreeview.c:326
-#: ../app/widgets/gimplayertreeview.c:865
+#: ../app/widgets/gimplayertreeview.c:868
 msgid "New Layer"
 msgstr "Nuovo livello"
 
@@ -4178,7 +4178,7 @@ msgstr "Non è possibile aprire \"%s\" in scrittura: %s"
 msgid "Error writing '%s': %s"
 msgstr "Errore durante la scrittura di \"%s\": %s"
 
-#: ../app/config/gimpconfig-file.c:90 ../app/tools/gimpimagemaptool.c:607
+#: ../app/config/gimpconfig-file.c:90 ../app/tools/gimpimagemaptool.c:617
 #, c-format
 msgid "Error reading '%s': %s"
 msgstr "Errore durante la lettura di \"%s\": %s"
@@ -5151,7 +5151,7 @@ msgid "Text"
 msgstr "Testo"
 
 #: ../app/core/core-enums.c:881 ../app/core/core-enums.c:924
-#: ../app/core/gimpdrawable-transform.c:602
+#: ../app/core/gimpdrawable-transform.c:559
 msgid "Transform"
 msgstr "Trasforma"
 
@@ -5611,7 +5611,7 @@ msgstr "Rifletti canale"
 msgid "Rotate Channel"
 msgstr "Ruota canale"
 
-#: ../app/core/gimpchannel.c:263 ../app/core/gimpdrawable-transform.c:869
+#: ../app/core/gimpchannel.c:263 ../app/core/gimpdrawable-transform.c:826
 msgid "Transform Channel"
 msgstr "Trasforma canale"
 
@@ -5752,20 +5752,20 @@ msgid "Render Stroke"
 msgstr "Disegna il delineato"
 
 #. Start a transform undo group
-#: ../app/core/gimpdrawable-transform.c:663 ../app/tools/gimpfliptool.c:111
+#: ../app/core/gimpdrawable-transform.c:620 ../app/tools/gimpfliptool.c:111
 msgid "command|Flip"
 msgstr "Inverti"
 
 #. Start a transform undo group
-#: ../app/core/gimpdrawable-transform.c:747 ../app/tools/gimprotatetool.c:114
+#: ../app/core/gimpdrawable-transform.c:704 ../app/tools/gimprotatetool.c:114
 msgid "command|Rotate"
 msgstr "Ruota"
 
-#: ../app/core/gimpdrawable-transform.c:867 ../app/core/gimplayer.c:252
+#: ../app/core/gimpdrawable-transform.c:824 ../app/core/gimplayer.c:252
 msgid "Transform Layer"
 msgstr "Trasforma livello"
 
-#: ../app/core/gimpdrawable-transform.c:882
+#: ../app/core/gimpdrawable-transform.c:839
 msgid "Transformation"
 msgstr "Trasformazione"
 
@@ -6651,11 +6651,11 @@ msgstr "Apri livelli"
 
 #: ../app/dialogs/file-open-location-dialog.c:74
 msgid "Open Location"
-msgstr "Apri indirizzo"
+msgstr "Apri posizione"
 
 #: ../app/dialogs/file-open-location-dialog.c:112
 msgid "Enter location (URI):"
-msgstr "Inserisci indirizzo (URI):"
+msgstr "Inserisci posizione (URI):"
 
 #: ../app/dialogs/file-save-dialog.c:286 ../app/dialogs/file-save-dialog.c:329
 msgid ""
@@ -6918,7 +6918,7 @@ msgstr "Data:"
 
 #: ../app/dialogs/module-dialog.c:512
 msgid "Location:"
-msgstr "Disposizione:"
+msgstr "Posizione:"
 
 #: ../app/dialogs/module-dialog.c:513
 #: ../app/widgets/gimpcontrollereditor.c:228
@@ -6935,15 +6935,15 @@ msgstr "Tipi disponibili:"
 
 #: ../app/dialogs/offset-dialog.c:105
 msgid "Offset Layer"
-msgstr "Posizione livello"
+msgstr "Spostamento livello"
 
 #: ../app/dialogs/offset-dialog.c:107
 msgid "Offset Layer Mask"
-msgstr "Posizione maschera di livello"
+msgstr "Spostamento maschera di livello"
 
 #: ../app/dialogs/offset-dialog.c:109
 msgid "Offset Channel"
-msgstr "Posizione canale"
+msgstr "Spostamento canale"
 
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:115 ../app/dialogs/offset-dialog.c:149
@@ -7994,6 +7994,7 @@ msgid "Import Paths from SVG"
 msgstr "Importa tracciato da SVG"
 
 #: ../app/dialogs/vectors-import-dialog.c:88
+#: ../app/widgets/gimpprofilechooserdialog.c:137
 msgid "All files (*.*)"
 msgstr "Tutti i file (*.*)"
 
@@ -8125,12 +8126,12 @@ msgid "Drop New Path"
 msgstr "Nuovo tracciato"
 
 #: ../app/display/gimpdisplayshell-dnd.c:439
-#: ../app/widgets/gimplayertreeview.c:749
+#: ../app/widgets/gimplayertreeview.c:752
 msgid "Drop layers"
 msgstr "Abbandona i livelli"
 
 #: ../app/display/gimpdisplayshell-dnd.c:541
-#: ../app/widgets/gimplayertreeview.c:831 ../app/widgets/gimptoolbox-dnd.c:355
+#: ../app/widgets/gimplayertreeview.c:834 ../app/widgets/gimptoolbox-dnd.c:355
 msgid "Dropped Buffer"
 msgstr "Buffer abbandonato"
 
@@ -8190,8 +8191,8 @@ msgstr "(modificato)"
 msgid "(clean)"
 msgstr "(pulito)"
 
-#: ../app/display/gimpdisplayshell-title.c:337
-#: ../app/display/gimpdisplayshell-title.c:350
+#: ../app/display/gimpdisplayshell-title.c:330
+#: ../app/display/gimpdisplayshell-title.c:342
 #: ../app/widgets/gimpactiongroup.c:782
 msgid "(none)"
 msgstr "(nessuno)"
@@ -9609,6 +9610,11 @@ msgstr "Caricamento veloce"
 msgid "Quick Save"
 msgstr "Salvataggio veloce"
 
+#: ../app/tools/gimpimagemaptool.c:608
+#, c-format
+msgid "Settings saved to '%s'"
+msgstr "Impostazioni salvate su \"%s\""
+
 #. adjust sliders
 #: ../app/tools/gimpinkoptions-gui.c:56
 msgid "Adjustment"
@@ -10345,50 +10351,49 @@ msgstr "La soglia non agisce su livelli indicizzati."
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Regolazione automatica della soglia di binarizzazione automatica"
 
-#: ../app/tools/gimptransformoptions.c:281
+#: ../app/tools/gimptransformoptions.c:282
 msgid "Transform:"
 msgstr "Trasforma:"
 
-#: ../app/tools/gimptransformoptions.c:287
+#: ../app/tools/gimptransformoptions.c:288
 msgid "Direction"
 msgstr "Direzione"
 
-#: ../app/tools/gimptransformoptions.c:296
+#: ../app/tools/gimptransformoptions.c:297
 msgid "Interpolation:"
 msgstr "Interpolazione:"
 
-#: ../app/tools/gimptransformoptions.c:306
+#: ../app/tools/gimptransformoptions.c:307
 msgid "Supersampling"
 msgstr "Sovracampionamento"
 
-#. the clip resulting image toggle button
-#: ../app/tools/gimptransformoptions.c:311
-msgid "Clip result"
-msgstr "Ritaglia il risultato"
+#: ../app/tools/gimptransformoptions.c:316
+msgid "Clipping:"
+msgstr "Ritaglio:"
 
-#: ../app/tools/gimptransformoptions.c:325
+#: ../app/tools/gimptransformoptions.c:334
 msgid "Preview:"
 msgstr "Anteprima:"
 
-#: ../app/tools/gimptransformoptions.c:366
+#: ../app/tools/gimptransformoptions.c:375
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 gradi  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:370
+#: ../app/tools/gimptransformoptions.c:379
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Mantieni l'aspetto  (%s)"
 
-#: ../app/tools/gimptransformtool.c:236
+#: ../app/tools/gimptransformtool.c:237
 msgid "Transforming"
 msgstr "Trasformazione"
 
-#: ../app/tools/gimptransformtool.c:1159
+#: ../app/tools/gimptransformtool.c:1160
 msgid "There is no layer to transform."
 msgstr "Nessun livello da trasformare."
 
-#: ../app/tools/gimptransformtool.c:1170
+#: ../app/tools/gimptransformtool.c:1171
 msgid "There is no path to transform."
 msgstr "Nessun tracciato da trasformare."
 
@@ -11354,7 +11359,7 @@ msgstr "Clic: selezione   Trascina: sposta"
 #: ../app/widgets/gimpgradienteditor.c:1566
 #, c-format
 msgid "Handle position: %0.6f"
-msgstr "Posizione attiva: %0.6f"
+msgstr "Posizione appiglio: %0.6f"
 
 #: ../app/widgets/gimpgradienteditor.c:1583
 #, c-format
@@ -11541,7 +11546,7 @@ msgstr "Blocca canale alfa"
 msgid "Lock:"
 msgstr "Blocca:"
 
-#: ../app/widgets/gimplayertreeview.c:871
+#: ../app/widgets/gimplayertreeview.c:874
 msgid "Empty Layer"
 msgstr "Livello vuoto"
 
@@ -11574,15 +11579,19 @@ msgstr "Non definito"
 msgid "Columns:"
 msgstr "Colonne:"
 
+#: ../app/widgets/gimpprofilechooserdialog.c:142
+msgid "ICC color profile (*.icc)"
+msgstr "Profilo colore ICC (*.icc)"
+
 #: ../app/widgets/gimpprogressdialog.c:215
 msgid "Progress"
 msgstr "Operazione in corso"
 
-#: ../app/widgets/gimppropwidgets.c:703
+#: ../app/widgets/gimppropwidgets.c:666
 msgid "1:1"
 msgstr "1:1"
 
-#: ../app/widgets/gimppropwidgets.c:710
+#: ../app/widgets/gimppropwidgets.c:673
 msgid "Set"
 msgstr "Imposta"
 
