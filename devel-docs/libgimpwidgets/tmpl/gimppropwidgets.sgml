@@ -262,6 +262,17 @@ GimpPropWidgets
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_prop_file_chooser_button_new_with_dialog ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@dialog: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_prop_path_editor_new ##### -->
 <para>
 

@@ -1,3 +1,12 @@
+2007-01-02  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* tools/widgets.c: added GimpRatioEntry.
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/tmpl/gimppropwidgets.sgml: regenerated.
+
 2006-12-04  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml

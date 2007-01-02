@@ -468,6 +468,26 @@ gimp_size_entry_update_policy_get_type
 </SECTION>
 
 <SECTION>
+<FILE>gimpratioentry</FILE>
+<TITLE>GimpRatioEntry</TITLE>
+GimpRatioEntry
+gimp_ratio_entry_new
+gimp_ratio_entry_set_fraction
+gimp_ratio_entry_get_fraction
+gimp_ratio_entry_set_ratio
+gimp_ratio_entry_get_ratio
+<SUBSECTION Standard>
+GIMP_RATIO_ENTRY
+GIMP_IS_RATIO_ENTRY
+GIMP_TYPE_RATIO_ENTRY
+gimp_ratio_entry_get_type
+GimpRatioEntryClass
+GIMP_RATIO_ENTRY_CLASS
+GIMP_IS_RATIO_ENTRY_CLASS
+GIMP_RATIO_ENTRY_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpunitmenu</FILE>
 <TITLE>GimpUnitMenu</TITLE>
 GimpUnitMenu
@@ -839,6 +859,7 @@ gimp_prop_label_new
 gimp_prop_entry_new
 gimp_prop_text_buffer_new
 gimp_prop_file_chooser_button_new
+gimp_prop_file_chooser_button_new_with_dialog
 gimp_prop_path_editor_new
 gimp_prop_size_entry_new
 gimp_prop_coordinates_new

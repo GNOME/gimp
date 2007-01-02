@@ -36,7 +36,7 @@ gimp_pick_button_get_type
 gimp_pixmap_get_type
 gimp_preview_area_get_type
 gimp_preview_get_type
-gimp_resolution_entry_get_type
+gimp_ratio_entry_get_type
 gimp_scrolled_preview_get_type
 gimp_size_entry_get_type
 gimp_unit_menu_get_type

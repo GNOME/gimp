@@ -614,6 +614,25 @@ create_preview_area (void)
 }
 
 static WidgetInfo *
+create_ratio_entry (void)
+{
+  GtkWidget *vbox;
+  GtkWidget *entry;
+  GtkWidget *align;
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
+  entry =  gimp_ratio_entry_new ();
+  gimp_ratio_entry_set_fraction (GIMP_RATIO_ENTRY (entry), 4, 3);
+  gtk_container_add (GTK_CONTAINER (align), entry);
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), align);
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_label_new ("Ratio Entry"), FALSE, FALSE, 0);
+
+  return new_widget_info ("gimp-ratio-entry", vbox, SMALL);
+}
+
+static WidgetInfo *
 create_unit_menu (void)
 {
   GtkWidget *vbox;
@@ -657,6 +676,7 @@ get_all_widgets (void)
   retval = g_list_append (retval, create_path_editor ());
   retval = g_list_append (retval, create_pick_button ());
   retval = g_list_append (retval, create_preview_area ());
+  retval = g_list_append (retval, create_ratio_entry ());
   retval = g_list_append (retval, create_unit_menu ());
 
   return retval;

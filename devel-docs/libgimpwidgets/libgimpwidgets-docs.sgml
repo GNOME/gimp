@@ -48,8 +48,9 @@
     <xi:include href="xml/gimppixmap.xml" />
     <xi:include href="xml/gimppreviewarea.xml" />
     <xi:include href="xml/gimppreview.xml" />
-    <xi:include href="xml/gimppropwidgets.xml" />
+    <xi:include href="xml/gimpratioentry.xml" />
     <xi:include href="xml/gimpscrolledpreview.xml" />
+    <xi:include href="xml/gimpsizeentry.xml" />
     <xi:include href="xml/gimpunitmenu.xml" />
   </part>
   
@@ -85,9 +86,9 @@
     <title>GIMP Widgets Utilities</title>
     <xi:include href="xml/gimphelpui.xml" />
     <xi:include href="xml/gimpquerybox.xml" />
-    <xi:include href="xml/gimpsizeentry.xml" />
     <xi:include href="xml/gimpstock.xml" />
     <xi:include href="xml/gimpenumwidgets.xml" />
+    <xi:include href="xml/gimppropwidgets.xml" />
     <xi:include href="xml/gimpwidgets.xml" />
   </part>
 
