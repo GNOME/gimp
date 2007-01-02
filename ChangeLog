@@ -1,5 +1,10 @@
 2007-01-02  Sven Neumann  <sven@gimp.org>
 
+	* modules/cdisplay_lcms.c: fixed order of parameters (pointed out
+	by Yoshinori Yamakawa).
+
+2007-01-02  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpratioentry.c: corrected API docs.
 
 2006-12-31  Kevin Cozens  <kcozens@cvs.gnome.org>

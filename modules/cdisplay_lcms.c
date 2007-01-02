@@ -394,8 +394,8 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
                                                      dest_profile :
                                                      src_profile), TYPE_RGB_8,
                                                     proof_profile,
-                                                    config->display_intent,
                                                     config->simulation_intent,
+                                                    config->display_intent,
                                                     cmsFLAGS_SOFTPROOFING);
       cmsCloseProfile (proof_profile);
     }
