@@ -313,13 +313,13 @@ run (const gchar      *name,
 
   switch (proc)
     {
-    case PROC_SET_RGB:
-    case PROC_APPLY_RGB:
+    case PROC_SET:
+    case PROC_APPLY:
       filename = param[2].data.d_string;
       /* fallthrough */
 
-    case PROC_SET:
-    case PROC_APPLY:
+    case PROC_SET_RGB:
+    case PROC_APPLY_RGB:
       run_mode = param[0].data.d_int32;
       image    = param[1].data.d_image;
       break;

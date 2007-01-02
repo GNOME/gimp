@@ -1,3 +1,8 @@
+2007-01-03  Tor Lillqvist  <tml@novell.com>
+
+	* plug-ins/common/lcms.c (run): Fix mixup in retrieving the
+	filename parameter.
+
 2007-01-02  Sven Neumann  <sven@gimp.org>
 
 	* modules/cdisplay_lcms.c: fixed order of parameters (pointed out
