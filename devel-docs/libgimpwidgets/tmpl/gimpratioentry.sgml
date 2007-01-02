@@ -22,9 +22,28 @@ GimpRatioEntry
 
 </para>
 
-@parent_instance: 
-@numerator: 
-@denominator: 
+
+<!-- ##### SIGNAL GimpRatioEntry::ratio-changed ##### -->
+<para>
+
+</para>
+
+@gimpratioentry: the object which received the signal.
+
+<!-- ##### ARG GimpRatioEntry:denominator ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpRatioEntry:numerator ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpRatioEntry:ratio ##### -->
+<para>
+
+</para>
 
 <!-- ##### FUNCTION gimp_ratio_entry_new ##### -->
 <para>
