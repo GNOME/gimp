@@ -191,7 +191,6 @@ gimp_ratio_entry_new (void)
  * gimp_ratio_entry_set_ratio:
  * @entry: a #GimpRatioEntry widget
  * @ratio: ratio to set in the widget
- * @calc_fraction: convert into a fraction?
  *
  * Sets the ratio displayed by a #GimpRatioEntry. If the new ratio is
  * different than the previous ratio, the "ratio-changed" signal is
@@ -251,6 +250,8 @@ gimp_ratio_entry_set_ratio (GimpRatioEntry *entry,
  *
  * Retrieves the ratio value displayed by a #GimpRatioEntry.
  *
+ * Returns: The ratio value.
+ *
  * Since: GIMP 2.4
  **/
 gdouble
@@ -281,6 +282,7 @@ gimp_ratio_entry_set_fraction (GimpRatioEntry *entry,
                                const gdouble   denominator)
 {
   gdouble old_ratio;
+
   g_return_if_fail (GIMP_IS_RATIO_ENTRY (entry));
 
   old_ratio = entry->numerator / entry->denominator;

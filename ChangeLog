@@ -1,3 +1,7 @@
+2007-01-02  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpratioentry.c: corrected API docs.
+
 2006-12-31  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.c: Don't include malloc.h
