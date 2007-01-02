@@ -1,0 +1,74 @@
+<!-- ##### SECTION Title ##### -->
+GimpRatioEntry
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GimpRatioEntry ##### -->
+<para>
+
+</para>
+
+@parent_instance: 
+@numerator: 
+@denominator: 
+
+<!-- ##### FUNCTION gimp_ratio_entry_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_ratio_entry_set_fraction ##### -->
+<para>
+
+</para>
+
+@entry: 
+@numerator: 
+@denominator: 
+
+
+<!-- ##### FUNCTION gimp_ratio_entry_get_fraction ##### -->
+<para>
+
+</para>
+
+@entry: 
+@numerator: 
+@denominator: 
+
+
+<!-- ##### FUNCTION gimp_ratio_entry_set_ratio ##### -->
+<para>
+
+</para>
+
+@entry: 
+@ratio: 
+
+
+<!-- ##### FUNCTION gimp_ratio_entry_get_ratio ##### -->
+<para>
+
+</para>
+
+@entry: 
+@Returns: 
+
+

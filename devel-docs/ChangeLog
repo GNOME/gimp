@@ -4,6 +4,8 @@
 	* libgimpwidgets/libgimpwidgets.types
 	* tools/widgets.c: added GimpRatioEntry.
 
+	* libgimpwidgets/tmpl/gimpratioentry.sgml: added generated file.
+
 	* libgimpwidgets/libgimpwidgets-docs.sgml
 	* libgimpwidgets/tmpl/gimppropwidgets.sgml: regenerated.
 
