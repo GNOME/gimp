@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 
 #include "imap_about.h"
+#include "imap_main.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -37,20 +38,26 @@ do_about_dialog(void)
      {
        const gchar* authors[] = {"Maurits Rijk (m.rijk@chello.nl)", NULL};
 
-       dialog = gtk_about_dialog_new ();
-       gtk_about_dialog_set_name (GTK_ABOUT_DIALOG (dialog),
-                                  "Image Map Plug-In");
-       gtk_about_dialog_set_version (GTK_ABOUT_DIALOG (dialog), "2.3");
-       gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG (dialog),
-                                       _("Copyright © 1999-2005 by Maurits Rijk"));
-       gtk_about_dialog_set_authors (GTK_ABOUT_DIALOG (dialog), authors);
-       gtk_about_dialog_set_license (GTK_ABOUT_DIALOG (dialog),
-                                     _("Released under the GNU General Public License"));
+       dialog = g_object_new (GTK_TYPE_ABOUT_DIALOG,
+                              "transient-for", get_dialog(),
+                              "name",    _("Image Map Plug-In"),
+                              "version", "2.3",
+                              "authors", authors,
+                              "copyright",
+                              _("Copyright © 1999-2005 by Maurits Rijk"),
+                              "license",
+                              _("Released under the GNU General Public License"),
+                              NULL);
+
+       g_signal_connect (dialog, "response",
+                         G_CALLBACK (gtk_widget_destroy),
+                         dialog);
 
        g_signal_connect (dialog, "destroy",
                          G_CALLBACK (gtk_widget_destroyed),
                          &dialog);
 
      }
-   gtk_widget_show (dialog);
+
+   gtk_window_present (GTK_WINDOW (dialog));
 }

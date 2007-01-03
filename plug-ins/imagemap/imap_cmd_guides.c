@@ -25,6 +25,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "imap_commands.h"
 #include "imap_default_dialog.h"
 #include "imap_main.h"
@@ -138,17 +140,13 @@ make_guides_dialog (void)
    dialog = data->dialog = make_default_dialog(_("Create Guides"));
    default_dialog_set_ok_cb (dialog, guides_ok_cb, data);
 
-   label = gtk_label_new (
+   hbox = gimp_hint_box_new (
       _("Guides are pre-defined rectangles covering the image. You define "
 	"them by their width, height, and spacing from each other. This "
 	"allows you to rapidly create the most common image map type - "
 	"image collection of \"thumbnails\", suitable for navigation bars."));
-
-   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-   gtk_box_pack_start (GTK_BOX (dialog->vbox), label, FALSE, FALSE, 0);
-   gtk_widget_show (label);
+   gtk_box_pack_start (GTK_BOX (dialog->vbox), hbox, FALSE, FALSE, 0);
+   gtk_widget_show (hbox);
 
    data->image_dimensions = gtk_label_new ("");
    gtk_misc_set_alignment (GTK_MISC (data->image_dimensions), 0.0, 0.5);

@@ -25,6 +25,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "imap_about.h"
 #include "imap_circle.h"
 #include "imap_file.h"
@@ -40,7 +42,6 @@
 #include "imap_source.h"
 
 #include "libgimp/stdplugins-intl.h"
-#include "libgimpwidgets/gimpstock.h"
 
 /* Fix me: move all of these prototypes to imap_menu.h */
 
@@ -177,83 +178,86 @@ paste_buffer_removed(Object_t *obj, gpointer data)
 
 /* Normal items */
 static const GtkActionEntry entries[] = {
-  { "FileMenu", NULL, "_File" },
-  { "Open", GTK_STOCK_OPEN, "_Open...", NULL, "Open", do_file_open_dialog},
-  { "OpenRecentMenu", NULL, "Open Recent" },
-  { "Save", GTK_STOCK_SAVE, "_Save...", NULL, "Save", save},
-  { "SaveAs", GTK_STOCK_SAVE_AS, "Save _As...", "<shift><control>S", NULL,
+  { "FileMenu", NULL, N_("_File") },
+  { "Open", GTK_STOCK_OPEN, N_("_Open..."), NULL, N_("Open"),
+    do_file_open_dialog},
+  { "Save", GTK_STOCK_SAVE, N_("_Save..."), NULL, N_("Save"),
+    save},
+  { "SaveAs", GTK_STOCK_SAVE_AS, N_("Save _As..."), "<shift><control>S", NULL,
     do_file_save_as_dialog},
   { "Close", GTK_STOCK_CLOSE, NULL, NULL, NULL, do_close},
   { "Quit", GTK_STOCK_QUIT, NULL, NULL, NULL, do_quit},
 
-  { "EditMenu", NULL, "_Edit" },
-  { "Undo", GTK_STOCK_UNDO, NULL, NULL, "Undo", NULL},
-  { "Redo", GTK_STOCK_REDO, NULL, NULL, "Redo", NULL},
-  { "Cut", GTK_STOCK_CUT, NULL, NULL, "Cut", do_cut},
-  { "Copy", GTK_STOCK_COPY, NULL, NULL, "Copy", do_copy},
-  { "Paste", GTK_STOCK_PASTE, NULL, NULL, "Paste", do_paste},
-  { "Clear", GTK_STOCK_DELETE, NULL, "Delete", NULL, do_clear},
-  { "SelectAll", NULL, "Select _All", "<control>A", NULL, do_select_all},
-  { "DeselectAll", NULL, "Deselect _All", "<shift><control>A", NULL,
+  { "EditMenu", NULL, N_("_Edit") },
+  { "Undo", GTK_STOCK_UNDO, NULL, NULL, N_("Undo"), NULL},
+  { "Redo", GTK_STOCK_REDO, NULL, NULL, N_("Redo"), NULL},
+  { "Cut", GTK_STOCK_CUT, NULL, NULL, N_("Cut"), do_cut},
+  { "Copy", GTK_STOCK_COPY, NULL, NULL, N_("Copy"), do_copy},
+  { "Paste", GTK_STOCK_PASTE, NULL, NULL, N_("Paste"), do_paste},
+  { "Clear", GTK_STOCK_DELETE, NULL, N_("Delete"), NULL, do_clear},
+  { "SelectAll", NULL, N_("Select _All"), "<control>A", NULL, do_select_all},
+  { "DeselectAll", NULL, N_("D_eselect All"), "<shift><control>A", NULL,
     do_deselect_all},
-  { "EditAreaInfo", GTK_STOCK_EDIT, "Edit Area Info...", NULL,
-    "Edit selected area info", do_edit_selected_shape},
-  { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL, "Preferences",
+  { "EditAreaInfo", GTK_STOCK_EDIT, N_("Edit Area _Info..."), NULL,
+    N_("Edit selected area info"), do_edit_selected_shape},
+  { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL, N_("Preferences"),
     do_preferences_dialog},
-  { "MoveToFront", IMAP_STOCK_TO_FRONT, "", NULL, "Move to Front",
+  { "MoveToFront", IMAP_STOCK_TO_FRONT, "", NULL, N_("Move to Front"),
     do_move_to_front},
-  { "SendToBack", IMAP_STOCK_TO_BACK, "", NULL, "Send to Back",
+  { "SendToBack", IMAP_STOCK_TO_BACK, "", NULL, N_("Send to Back"),
     do_send_to_back},
-  { "DeleteArea", NULL, "Delete Area", NULL, NULL, NULL},
-  { "MoveUp", GTK_STOCK_GO_UP, "Move Up", NULL, NULL, NULL},
-  { "MoveDown", GTK_STOCK_GO_DOWN, "Move Down", NULL, NULL, NULL},
+  { "DeleteArea", NULL, N_("Delete Area"), NULL, NULL, NULL},
+  { "MoveUp", GTK_STOCK_GO_UP, N_("Move Up"), NULL, NULL, NULL},
+  { "MoveDown", GTK_STOCK_GO_DOWN, N_("Move Down"), NULL, NULL, NULL},
 
-  { "InsertPoint", NULL, "Insert Point", NULL, NULL, polygon_insert_point},
-  { "DeletePoint", NULL, "Delete Point", NULL, NULL, polygon_delete_point},
+  { "InsertPoint", NULL, N_("Insert Point"), NULL, NULL, polygon_insert_point},
+  { "DeletePoint", NULL, N_("Delete Point"), NULL, NULL, polygon_delete_point},
 
-  { "ViewMenu", NULL, "_View" },
-  { "Source", NULL, "Source...", NULL, NULL, do_source_dialog},
-  { "ZoomIn", GTK_STOCK_ZOOM_IN, NULL, "plus", "Zoom in", do_zoom_in},
-  { "ZoomOut", GTK_STOCK_ZOOM_OUT, NULL, "minus", "Zoom out", do_zoom_out},
-  { "ZoomToMenu", NULL, "_Zoom To" },
+  { "ViewMenu", NULL, N_("_View") },
+  { "Source", NULL, N_("Source..."), NULL, NULL, do_source_dialog},
+  { "ZoomIn", GTK_STOCK_ZOOM_IN, NULL, "plus", N_("Zoom in"), do_zoom_in},
+  { "ZoomOut", GTK_STOCK_ZOOM_OUT, NULL, "minus", N_("Zoom out"), do_zoom_out},
+  { "ZoomToMenu", NULL, N_("_Zoom To") },
 
-  { "MappingMenu", NULL, "_Mapping" },
-  { "EditMapInfo", GTK_STOCK_INFO, "Edit Map Info...", NULL, NULL,
-    do_settings_dialog},
+  { "MappingMenu", NULL, N_("_Mapping") },
+  { "EditMapInfo", GTK_STOCK_INFO, N_("Edit Map Info..."), NULL,
+    N_("Edit Map Info"), do_settings_dialog},
 
-  { "ToolsMenu", NULL, "_Tools" },
-  { "GridSettings", NULL, "Grid Settings...", NULL, NULL,
+  { "ToolsMenu", NULL, N_("_Tools") },
+  { "GridSettings", NULL, N_("Grid Settings..."), NULL, NULL,
     do_grid_settings_dialog},
-  { "UseGimpGuides", NULL, "Use GIMP Guides...", NULL, NULL,
+  { "UseGimpGuides", NULL, N_("Use GIMP Guides..."), NULL, NULL,
     do_use_gimp_guides_dialog},
-  { "CreateGuides", NULL, "Create Guides...", NULL, NULL,
+  { "CreateGuides", NULL, N_("Create Guides..."), NULL, NULL,
     do_create_guides_dialog},
 
-  { "HelpMenu", NULL, "_Help" },
-  { "Contents", GTK_STOCK_HELP, "_Contents", NULL, NULL, imap_help},
-  { "About", GTK_STOCK_ABOUT, NULL, NULL, NULL,
-    do_about_dialog},
+  { "HelpMenu", NULL, N_("_Help") },
+  { "Contents", GTK_STOCK_HELP, N_("_Contents"), NULL, NULL, imap_help},
+  { "About", GTK_STOCK_ABOUT, NULL, NULL, NULL, do_about_dialog},
 
-  { "ZoomMenu", NULL, "_Zoom" },
+  { "ZoomMenu", NULL, N_("_Zoom") },
 };
 
 /* Toggle items */
 static const GtkToggleActionEntry toggle_entries[] = {
-  { "AreaList", NULL, "Area List", NULL, NULL, NULL, TRUE },
-  { "Grid", GIMP_STOCK_GRID, "_Grid", NULL, "Grid", toggle_grid, FALSE }
+  { "AreaList", NULL, N_("Area List"), NULL, NULL, NULL, TRUE },
+  { "Grid", GIMP_STOCK_GRID, N_("_Grid"), NULL, N_("Grid"), toggle_grid, FALSE }
 };
 
 static const GtkRadioActionEntry color_entries[] = {
-  { "Color", NULL, "Color", NULL, NULL, 0},
-  { "Gray", NULL, "Gray", NULL, NULL, 1},
+  { "Color", NULL, N_("Color"), NULL, NULL, 0},
+  { "Gray", NULL, N_("Gray"), NULL, NULL, 1},
 };
 
 static const GtkRadioActionEntry mapping_entries[] = {
-  { "Arrow", GIMP_STOCK_CURSOR, "Arrow", NULL, "Select existing area", 0},
-  { "Rectangle", IMAP_STOCK_RECTANGLE, "Rectangle", NULL,
-    "Define Rectangle area", 1},
-  { "Circle", IMAP_STOCK_CIRCLE, "Circle", NULL, "Define Circle/Oval area", 2},
-  { "Polygon", IMAP_STOCK_POLYGON, "Polygon", NULL, "Define Polygon area", 3},
+  { "Arrow", GIMP_STOCK_CURSOR, N_("Arrow"), NULL,
+    N_("Select existing area"), 0},
+  { "Rectangle", IMAP_STOCK_RECTANGLE, N_("Rectangle"), NULL,
+    N_("Define Rectangle area"), 1},
+  { "Circle", IMAP_STOCK_CIRCLE, N_("Circle"), NULL,
+    N_("Define Circle/Oval area"), 2},
+  { "Polygon", IMAP_STOCK_POLYGON, N_("Polygon"), NULL,
+    N_("Define Polygon area"), 3},
 };
 
 static const GtkRadioActionEntry zoom_entries[] = {
@@ -267,7 +271,7 @@ static const GtkRadioActionEntry zoom_entries[] = {
   { "Zoom1:8", NULL, "1:8", NULL, NULL, 7},
 };
 
-static const char *ui_description =
+static const gchar ui_description[] =
 "<ui>"
 "  <menubar name='MainMenu'>"
 "    <menu action='FileMenu'>"
@@ -420,6 +424,8 @@ make_menu(GtkWidget *main_vbox, GtkWidget *window)
   GError *error;
 
   action_group = gtk_action_group_new ("MenuActions");
+  gtk_action_group_set_translation_domain (action_group, NULL);
+
   gtk_action_group_add_actions (action_group, entries, G_N_ELEMENTS (entries),
 				window);
   gtk_action_group_add_toggle_actions (action_group, toggle_entries,
@@ -445,7 +451,7 @@ make_menu(GtkWidget *main_vbox, GtkWidget *window)
   if (!gtk_ui_manager_add_ui_from_string (ui_manager, ui_description, -1,
 					  &error))
     {
-      g_message ("building menus failed: %s", error->message);
+      g_warning ("building menus failed: %s", error->message);
       g_error_free (error);
       /* exit (EXIT_FAILURE); */
     }

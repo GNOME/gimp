@@ -1,5 +1,15 @@
 2007-01-03  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/imagemap/imap_about.c: make the About dialog transient
+	to the main window and close it when the Close button is pressed.
+
+	* plug-ins/imagemap/imap_cmd_guides.c: use a GimpHintBox.
+
+	* plug-ins/imagemap/imap_menu.c: marked menu labels and tooltips for
+	translation.
+
+2007-01-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/imagemap/images/Makefile.am
 	* plug-ins/imagemap/images/stock-map-info.png
 	* plug-ins/imagemap/imap_stock.[ch]: removed custom info icon.
