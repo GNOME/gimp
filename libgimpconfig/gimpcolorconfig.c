@@ -41,9 +41,9 @@
 #define DISPLAY_PROFILE_BLURB \
   N_("The color profile of your (primary) monitor.")
 #define DISPLAY_PROFILE_FROM_GDK_BLURB \
-  N_("When enabled, the GIMP will try to use the display color profile " \
-     "from the windowing system.  The configured monitor profile is then " \
-     "only used as a fallback.")
+  N_("When enabled, GIMP will try to use the display color profile from " \
+     "the windowing system.  The configured monitor profile is then only " \
+     "used as a fallback.")
 #define RGB_PROFILE_BLURB \
   N_("The default RGB working space color profile.")
 #define CMYK_PROFILE_BLURB \
