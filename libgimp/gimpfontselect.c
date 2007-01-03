@@ -62,9 +62,9 @@ gimp_font_select_new (const gchar         *title,
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_STRING, "str",           "String" },
+    { GIMP_PDB_STRING, "str",           "String"                     },
     { GIMP_PDB_INT32,  "dialog status", "If the dialog was closing "
-                                        "[0 = No, 1 = Yes]" },
+                                        "[0 = No, 1 = Yes]"          }
   };
 
   gchar *font_callback = gimp_procedural_db_temp_name ();
@@ -72,11 +72,11 @@ gimp_font_select_new (const gchar         *title,
   gimp_install_temp_proc (font_callback,
                           "Temporary font popup callback procedure",
                           "",
-                          "Andy Thomas",
-                          "Andy Thomas",
-                          "1997",
+                          "",
+                          "",
+                          "",
                           NULL,
-                          "RGB*, GRAY*",
+                          "",
                           GIMP_TEMPORARY,
                           G_N_ELEMENTS (args), 0,
                           args, NULL,

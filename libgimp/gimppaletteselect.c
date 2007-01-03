@@ -63,10 +63,10 @@ gimp_palette_select_new (const gchar            *title,
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_STRING, "str",           "String" },
-    { GIMP_PDB_INT32,  "num colors",    "Number of colors" },
+    { GIMP_PDB_STRING, "str",           "String"                      },
+    { GIMP_PDB_INT32,  "num colors",    "Number of colors"            },
     { GIMP_PDB_INT32,  "dialog status", "If the dialog was closing "
-                                        "[0 = No, 1 = Yes]" },
+                                        "[0 = No, 1 = Yes]"           }
   };
 
   gchar *palette_callback = gimp_procedural_db_temp_name ();
@@ -74,11 +74,11 @@ gimp_palette_select_new (const gchar            *title,
   gimp_install_temp_proc (palette_callback,
                           "Temporary palette popup callback procedure",
                           "",
-                          "Michael Natterer",
-                          "Michael Natterer",
-                          "2004",
+                          "",
+                          "",
+                          "",
                           NULL,
-                          "RGB*, GRAY*",
+                          "",
                           GIMP_TEMPORARY,
                           G_N_ELEMENTS (args), 0,
                           args, NULL,

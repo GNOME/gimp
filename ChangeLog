@@ -1,5 +1,15 @@
 2007-01-03  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpbrushselect.c
+	* libgimp/gimpprogress.c
+	* libgimp/gimpgradientselect.c
+	* libgimp/gimpfontselect.c
+	* libgimp/gimppatternselect.c
+	* libgimp/gimppaletteselect.c: removed pointless and partly wrong
+	information from gimp_install_temp_proc() calls.
+
+2007-01-03  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpbrushselectbutton.c (gimp_brush_select_button_new):
 	initialize opacity, spacing and paint mode as described by the API
 	docs. Fixes bug #356901.

@@ -65,11 +65,11 @@ gimp_gradient_select_new (const gchar             *title,
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_STRING,    "str",           "String" },
-    { GIMP_PDB_INT32,     "grad width",    "Gradient width" },
-    { GIMP_PDB_FLOATARRAY,"grad data",     "The gradient mask data" },
-    { GIMP_PDB_INT32,     "dialog status", "If the dialog was closing "
-                                           "[0 = No, 1 = Yes]" },
+    { GIMP_PDB_STRING,    "str",            "String"                     },
+    { GIMP_PDB_INT32,     "gradient width", "Gradient width"             },
+    { GIMP_PDB_FLOATARRAY,"gradient data",  "The gradient mask data"     },
+    { GIMP_PDB_INT32,     "dialog status",  "If the dialog was closing "
+                                            "[0 = No, 1 = Yes]"          }
   };
 
   gchar *gradient_callback = gimp_procedural_db_temp_name ();
@@ -77,11 +77,11 @@ gimp_gradient_select_new (const gchar             *title,
   gimp_install_temp_proc (gradient_callback,
                           "Temporary gradient popup callback procedure",
                           "",
-                          "Andy Thomas",
-                          "Andy Thomas",
-                          "1997",
+                          "",
+                          "",
+                          "",
                           NULL,
-                          "RGB*, GRAY*",
+                          "",
                           GIMP_TEMPORARY,
                           G_N_ELEMENTS (args), 0,
                           args, NULL,
